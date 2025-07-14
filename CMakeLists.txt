@@ -1,0 +1,125 @@
+cmake_minimum_required(VERSION 3.23.0 FATAL_ERROR)
+if(POLICY CMP0167)
+    cmake_policy(SET CMP0167 NEW)
+endif()
+
+project(tr LANGUAGES CXX VERSION 0.1.0)
+
+option(TR_BUILD_SYSGFX "Build the system and graphics module." ON)
+option(TR_BUILD_AUDIO "Build the audio module." ON)
+option(TR_BUILD_IMGUI "Build the Dear ImGui integration module." OFF)
+option(TR_BUILD_TESTS "Build tests" OFF)
+
+if((TR_BUILD_AUDIO OR TR_BUILD_IMGUI) AND NOT TR_BUILD_SYSGFX)
+	message("[tr] Setting 'TR_BUILD_SYSGFX' to 'ON' because another module depends on it.")
+	set(TR_BUILD_SYSGFX ON CACHE BOOL "Build the system and graphics module." FORCE)
+endif()
+
+include(Dependencies.cmake)
+
+add_library(tr STATIC)
+add_library(tr::tr ALIAS tr)
+set_target_properties (tr PROPERTIES DEBUG_POSTFIX "d")
+target_compile_features(tr PUBLIC cxx_std_20)
+if((CMAKE_CXX_COMPILER_ID STREQUAL "Clang" AND NOT (CMAKE_CXX_SIMULATE_ID STREQUAL "MSVC")) OR CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+	target_compile_options(tr PRIVATE
+		-Wall
+		-Wextra
+		-Wpedantic
+		-fno-trapping-math
+		-fno-math-errno
+		-fno-signed-zeros
+		-fassociative-math
+		-ffp-contract=fast
+	)
+elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Clang" AND CMAKE_CXX_SIMULATE_ID STREQUAL "MSVC")
+	target_compile_options(tr PRIVATE
+		/clang:-Wall
+		/clang:-Wextra
+		/clang:-Wpedantic
+		/clang:-fno-trapping-math
+		/clang:-fno-math-errno
+		/clang:-fno-signed-zeros
+		/clang:-fassociative-math
+		/clang:-ffp-contract=fast
+	)
+elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+	target_compile_options(tr PUBLIC
+		/Zc:preprocessor
+		/W3 
+		/WX
+	)
+endif()
+target_compile_definitions(tr PUBLIC $<$<CONFIG:Debug>:TR_ENABLE_ASSERTS>$<$<CONFIG:RelWithDebInfo>:TR_ENABLE_ASSERTS>)
+if(TR_BUILD_AUDIO)
+	target_compile_definitions(tr PUBLIC AL_LIBTYPE_STATIC)
+endif()
+
+target_include_directories(tr PUBLIC include)
+target_precompile_headers(tr PUBLIC include/tr/utility.hpp)
+target_sources(tr PRIVATE
+	src/utility/benchmark.cpp
+	src/utility/binary_io.cpp
+	src/utility/encryption.cpp
+	src/utility/exception.cpp
+	src/utility/iostream.cpp
+	src/utility/localization_map.cpp
+	src/utility/logger.cpp
+	src/utility/rng.cpp
+	src/utility/stopwatch.cpp
+	src/utility/timer.cpp
+)
+if(TR_BUILD_SYSGFX)
+	target_sources(tr PRIVATE
+		src/sysgfx/impl.cpp
+		src/sysgfx/gl_call.cpp
+		src/sysgfx/glad.cpp
+		src/sysgfx/atlas.cpp
+		src/sysgfx/backbuffer.cpp
+		src/sysgfx/bitmap_iterators.cpp
+		src/sysgfx/bitmap.cpp
+		src/sysgfx/cursor.cpp
+		src/sysgfx/debug_renderer.cpp
+		src/sysgfx/dialog.cpp
+		src/sysgfx/display.cpp
+		src/sysgfx/event.cpp
+		src/sysgfx/graphics_context.cpp
+		src/sysgfx/index_buffer.cpp
+		src/sysgfx/keyboard.cpp
+		src/sysgfx/mouse.cpp
+		src/sysgfx/path.cpp
+		src/sysgfx/render_target.cpp
+		src/sysgfx/renderer_2d.cpp
+		src/sysgfx/shader_buffer.cpp
+		src/sysgfx/shader_pipeline.cpp
+		src/sysgfx/shader.cpp
+		src/sysgfx/state_manager.cpp
+		src/sysgfx/texture_unit.cpp
+		src/sysgfx/texture.cpp
+		src/sysgfx/vertex_buffer.cpp
+		src/sysgfx/vertex_format.cpp
+		src/sysgfx/ttfont.cpp
+		src/sysgfx/window.cpp
+	)
+	target_link_libraries(tr SDL3::SDL3 SDL3_ttf::SDL3_ttf SDL3_image::SDL3_image)
+endif()
+if(TR_BUILD_AUDIO)
+	target_sources(tr PRIVATE
+		src/audio/al_call.cpp
+		src/audio/audio_buffer.cpp
+		src/audio/audio_source.cpp
+		src/audio/audio_stream.cpp
+		src/audio/audio_system.cpp
+		src/audio/impl.cpp
+	)
+	target_link_libraries(tr OpenAL::OpenAL vorbis vorbisenc vorbisfile)
+endif()
+if(TR_BUILD_IMGUI)
+	target_sources(tr PRIVATE
+		src/imgui.cpp
+	)
+endif()
+
+if (TR_BUILD_TESTS)
+	add_subdirectory(test)
+endif()

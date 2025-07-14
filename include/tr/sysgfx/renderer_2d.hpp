@@ -1,0 +1,99 @@
+#pragma once
+#include "backbuffer.hpp"
+#include "blending.hpp"
+#include "texture.hpp"
+
+namespace tr {
+	// Simple 2D renderer color mesh allocation reference.
+	struct simple_color_mesh_ref {
+		// Mesh position data.
+		std::ranges::subrange<std::vector<glm::vec2>::iterator> positions;
+		// Mesh color data.
+		std::ranges::subrange<std::vector<tr::rgba8>::iterator> colors;
+	};
+	// Full 2D renderer color mesh allocation reference.
+	struct color_mesh_ref {
+		// Mesh position data.
+		std::ranges::subrange<std::vector<glm::vec2>::iterator> positions;
+		// Mesh color data.
+		std::ranges::subrange<std::vector<tr::rgba8>::iterator> colors;
+		// Mesh indices.
+		std::ranges::subrange<std::vector<std::uint16_t>::iterator> indices;
+		// The base index.
+		std::uint16_t base_index;
+	};
+	// Simple 2D renderer textured mesh allocation reference.
+	struct simple_textured_mesh_ref {
+		// Mesh position data.
+		std::ranges::subrange<std::vector<glm::vec2>::iterator> positions;
+		// Mesh UV data.
+		std::ranges::subrange<std::vector<glm::vec2>::iterator> uvs;
+		// Mesh tint data.
+		std::ranges::subrange<std::vector<tr::rgba8>::iterator> tints;
+	};
+	// Full 2D renderer textured mesh allocation reference.
+	struct textured_mesh_ref {
+		// Mesh position data.
+		std::ranges::subrange<std::vector<glm::vec2>::iterator> positions;
+		// Mesh UV data.
+		std::ranges::subrange<std::vector<glm::vec2>::iterator> uvs;
+		// Mesh tint data.
+		std::ranges::subrange<std::vector<tr::rgba8>::iterator> tints;
+		// Mesh indices.
+		std::ranges::subrange<std::vector<std::uint16_t>::iterator> indices;
+		// The base index.
+		std::uint16_t base_index;
+	};
+
+	// 2D renderer.
+	struct renderer_2d {
+		// Initializes the 2D renderer.
+		static void initialize() noexcept;
+		// Shuts down the 2D renderer.
+		static void shut_down() noexcept;
+
+		// Sets the default transformation matrix used by primitives on any layer without its own default transform.
+		static void set_default_transform(const glm::mat4& mat) noexcept;
+		// Sets the default texture used by textured primitives on a layer.
+		static void set_default_layer_texture(int layer, texture_ref texture) noexcept;
+		// Sets the default transformation matrix used by primitives on a layer.
+		static void set_default_layer_transform(int layer, const glm::mat4& mat) noexcept;
+		// Sets the default blending mode used by primitives on a layer.
+		static void set_default_layer_blend_mode(int layer, const blend_mode& blend_mode) noexcept;
+
+		// Allocates a new color fan.
+		static simple_color_mesh_ref new_color_fan(int layer, std::size_t vertices);
+		// Allocates a new color fan.
+		static simple_color_mesh_ref new_color_fan(int layer, std::size_t vertices, const glm::mat4& mat, const blend_mode& blend_mode);
+		// Allocates a new color polygon outline.
+		static simple_color_mesh_ref new_color_outline(int layer, std::size_t vertices);
+		// Allocates a new color polygon outline.
+		static simple_color_mesh_ref new_color_outline(int layer, std::size_t vertices, const glm::mat4& mat, const blend_mode& blend_mode);
+		// Allocates a new color mesh.
+		static color_mesh_ref new_color_mesh(int layer, std::size_t vertices, std::size_t indices);
+		// Allocates a new color mesh.
+		static color_mesh_ref new_color_mesh(int layer, std::size_t vertices, std::size_t indices, const glm::mat4& mat,
+											 const blend_mode& blend_mode);
+		// Allocates a new textured fan.
+		static simple_textured_mesh_ref new_textured_fan(int layer, std::size_t vertices);
+		// Allocates a new textured fan.
+		static simple_textured_mesh_ref new_textured_fan(int layer, std::size_t vertices, texture_ref texture);
+		// Allocates a new textured fan.
+		static simple_textured_mesh_ref new_textured_fan(int layer, std::size_t vertices, texture_ref texture, const glm::mat4& mat,
+														 const blend_mode& blend_mode);
+		// Allocates a new textured mesh.
+		static textured_mesh_ref new_textured_mesh(int layer, std::size_t vertices, std::size_t indices);
+		// Allocates a new textured mesh.
+		static textured_mesh_ref new_textured_mesh(int layer, std::size_t vertices, std::size_t indices, texture_ref texture);
+		// Allocates a new textured mesh.
+		static textured_mesh_ref new_textured_mesh(int layer, std::size_t vertices, std::size_t indices, texture_ref texture,
+												   const glm::mat4& mat, const blend_mode& blend_mode);
+
+		// Draws a layer to a rendering target.
+		static void draw_layer(int layer, const render_target& target = backbuffer::render_target());
+		// Draws all layers of priority <= max_layer to a rendering target.
+		static void draw_up_to_layer(int max_layer, const render_target& target = backbuffer::render_target());
+		// Draws all added primitives to a rendering target.
+		static void draw(const render_target& target = backbuffer::render_target());
+	};
+} // namespace tr
