@@ -51,57 +51,24 @@ if(TR_BUILD_AUDIO)
 	set(ALSOFT_INSTALL_AMBDEC_PRESETS OFF)
 endif()
 
-FetchContent_Declare(
-	glm
-	GIT_REPOSITORY	https://github.com/g-truc/glm.git
-	GIT_TAG			55f22ef736ba6783e95351bc71a40a48ba305afc # 1.0.2
-)
-FetchContent_Declare(
-	lz4
-	GIT_REPOSITORY	https://github.com/lz4/lz4.git
-	GIT_TAG			v1.10.0
-	SOURCE_SUBDIR   build/cmake
-)
+# GLM 1.0.2
+FetchContent_Declare(glm GIT_REPOSITORY	https://github.com/g-truc/glm.git GIT_TAG 55f22ef736ba6783e95351bc71a40a48ba305afc)
+FetchContent_Declare(lz4 URL https://github.com/lz4/lz4/archive/refs/tags/v1.10.0.zip SOURCE_SUBDIR build/cmake DOWNLOAD_EXTRACT_TIMESTAMP)
 FetchContent_MakeAvailable(glm lz4)
 add_library(lz4::lz4 ALIAS lz4_static)
 
 if(TR_BUILD_SYSGFX)
-FetchContent_Declare(
-	sdl3
-		GIT_REPOSITORY	https://github.com/libsdl-org/SDL.git
-		GIT_TAG			release-3.2.16
-		OVERRIDE_FIND_PACKAGE 
-	)
-	FetchContent_Declare(
-		sdl3_ttf
-		GIT_REPOSITORY	https://github.com/libsdl-org/SDL_ttf.git
-		GIT_TAG			release-3.2.2
-	)
-	FetchContent_Declare(
-		sdl3_image
-		GIT_REPOSITORY	https://github.com/libsdl-org/SDL_image.git
-		GIT_TAG			release-3.2.4
-	)
+	FetchContent_Declare(sdl3 URL https://github.com/libsdl-org/SDL/archive/refs/tags/release-3.2.16.zip OVERRIDE_FIND_PACKAGE DOWNLOAD_EXTRACT_TIMESTAMP)
+	FetchContent_Declare(sdl3_ttf URL https://github.com/libsdl-org/SDL_ttf/archive/refs/tags/release-3.2.2.zip DOWNLOAD_EXTRACT_TIMESTAMP)
+	FetchContent_Declare(sdl3_image URL https://github.com/libsdl-org/SDL_image/archive/refs/tags/release-3.2.4.zip DOWNLOAD_EXTRACT_TIMESTAMP)
 	FetchContent_MakeAvailable(sdl3 sdl3_ttf sdl3_image)
 endif()
 
 if(TR_BUILD_AUDIO)
-	FetchContent_Declare(
-		ogg
-		GIT_REPOSITORY	https://github.com/xiph/ogg.git
-		GIT_TAG			v1.3.6
-	)
+	FetchContent_Declare(ogg URL https://github.com/xiph/ogg/archive/refs/tags/v1.3.6.zip DOWNLOAD_EXTRACT_TIMESTAMP)
 	set(OGG_INCLUDE_DIR ${ogg_SOURCE_DIR}/include)
 	set(OGG_LIBRARY ${ogg_BINARY_DIR})
-	FetchContent_Declare(
-		vorbis
-		GIT_REPOSITORY	https://github.com/xiph/vorbis.git
-		GIT_TAG			v1.3.7
-	)
-	FetchContent_Declare(
-		openal-soft
-		GIT_REPOSITORY	https://github.com/kcat/openal-soft.git
-		GIT_TAG			1.24.3
-	)
+	FetchContent_Declare(vorbis URL https://github.com/xiph/vorbis/archive/refs/tags/v1.3.7.zip DOWNLOAD_EXTRACT_TIMESTAMP)
+	FetchContent_Declare(openal-soft URL https://github.com/kcat/openal-soft/archive/refs/tags/1.24.3.zip DOWNLOAD_EXTRACT_TIMESTAMP)
 	FetchContent_MakeAvailable(ogg vorbis openal-soft)
 endif()
