@@ -69,6 +69,7 @@ target_sources(tr PRIVATE
 	src/utility/stopwatch.cpp
 	src/utility/timer.cpp
 )
+target_link_libraries(tr glm::glm lz4::lz4)
 if(TR_BUILD_SYSGFX)
 	target_sources(tr PRIVATE
 		src/sysgfx/impl.cpp
