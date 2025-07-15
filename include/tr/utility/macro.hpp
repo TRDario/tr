@@ -26,14 +26,3 @@
 #define TR_ASSERT(condition, fmt, ...) do {} while (0)
 // clang-format on
 #endif
-
-// Macro for throwing a tr exception.
-// clang-format off
-#define TR_THROW(type, ...) throw type{TR_FILENAME ":" TR_STRINGIFY(__LINE__), __VA_ARGS__}
-// clang-format on
-// Macro for constructing a tr custom exception.
-#define TR_MAKE_CUSTOM_EXCEPTION(name, description, details)                                                                               \
-	::tr::custom_exception                                                                                                                 \
-	{                                                                                                                                      \
-		TR_FILENAME ":" TR_STRINGIFY(__LINE__), name, description, details                                                                 \
-	}

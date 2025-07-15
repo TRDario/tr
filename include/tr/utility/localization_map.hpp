@@ -6,7 +6,7 @@ namespace tr {
 	class localization_load_error : public exception {
 	  public:
 		// Constructs an exception.
-		localization_load_error(std::string_view location, std::string&& description) noexcept;
+		localization_load_error(std::string&& description) noexcept;
 
 		// Gets the name of the error.
 		std::string_view name() const noexcept override;

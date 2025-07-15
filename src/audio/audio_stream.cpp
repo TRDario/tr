@@ -1,5 +1,4 @@
 #include "../../include/tr/audio/audio_stream.hpp"
-#include "../../include/tr/utility/macro.hpp"
 #include <vorbis/vorbisfile.h>
 
 namespace tr {
@@ -36,15 +35,15 @@ tr::_ogg_audio_stream::_ogg_audio_stream(const std::filesystem::path& path)
 	if (result != 0) {
 		switch (result) {
 		case OV_EREAD:
-			TR_THROW(audio_file_open_error, std::format("Failed to read .ogg file from '{}'.", path.string()));
+			throw audio_file_open_error{std::format("Failed to read .ogg file from '{}'.", path.string())};
 		case OV_ENOTVORBIS:
-			TR_THROW(audio_file_open_error, std::format("Invalid .ogg Vorbis file '{}'.", path.string()));
+			throw audio_file_open_error{std::format("Invalid .ogg Vorbis file '{}'.", path.string())};
 		case OV_EVERSION:
-			TR_THROW(audio_file_open_error, std::format(".ogg Vorbis version mismatch in '{}'.", path.string()));
+			throw audio_file_open_error{std::format(".ogg Vorbis version mismatch in '{}'.", path.string())};
 		case OV_EBADHEADER:
-			TR_THROW(audio_file_open_error, std::format("Invalid .ogg Vorbis header in '{}'.", path.string()));
+			throw audio_file_open_error{std::format("Invalid .ogg Vorbis header in '{}'.", path.string())};
 		case OV_EFAULT:
-			TR_THROW(audio_file_open_error, std::format("An internal error in Vorbis occurred while loading '{}'.", path.string()));
+			throw audio_file_open_error{std::format("An internal error in Vorbis occurred while loading '{}'.", path.string())};
 		}
 	}
 }
@@ -96,8 +95,8 @@ void tr::_ogg_audio_stream::raw_read(std::int16_t* dest, std::size_t samples) no
 
 ////////////////////////////////////////////////////////// AUDIO FILE OPEN ERROR //////////////////////////////////////////////////////////
 
-tr::audio_file_open_error::audio_file_open_error(std::string_view location, std::string&& description) noexcept
-	: exception{location}, _description{std::move(description)}
+tr::audio_file_open_error::audio_file_open_error(std::string&& description) noexcept
+	: _description{std::move(description)}
 {
 }
 
@@ -165,7 +164,7 @@ void tr::audio_stream::set_loop_end(std::size_t loop_end) noexcept
 std::unique_ptr<tr::audio_stream> tr::open_audio_file(const std::filesystem::path& path)
 {
 	if (!std::filesystem::exists(path)) {
-		TR_THROW(audio_file_open_error, std::format("File not found: '{}'", path.string()));
+		throw audio_file_open_error{std::format("File not found: '{}'", path.string())};
 	}
 
 	const std::string extension{path.extension().string()};
@@ -173,6 +172,6 @@ std::unique_ptr<tr::audio_stream> tr::open_audio_file(const std::filesystem::pat
 		return std::make_unique<_ogg_audio_stream>(path);
 	}
 	else {
-		TR_THROW(audio_file_open_error, std::format("Unsupported audio file extension '{}'", extension));
+		throw audio_file_open_error{std::format("Unsupported audio file extension '{}'", extension)};
 	}
 }

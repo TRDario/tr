@@ -2,8 +2,8 @@
 #include "../../include/tr/utility/binary_io.hpp"
 #include <lz4.h>
 
-tr::decryption_error::decryption_error(std::string_view location, std::string_view description) noexcept
-	: exception{location}, _description{description}
+tr::decryption_error::decryption_error(std::string_view description) noexcept
+	: _description{description}
 {
 }
 
@@ -22,8 +22,8 @@ std::string_view tr::decryption_error::details() const noexcept
 	return {};
 }
 
-tr::encryption_error::encryption_error(std::string_view location, std::string_view description) noexcept
-	: exception{location}, _description{description}
+tr::encryption_error::encryption_error(std::string_view description) noexcept
+	: _description{description}
 {
 }
 
@@ -46,7 +46,7 @@ void tr::decrypt_to(std::vector<std::byte>& out, std::vector<std::byte> encrypte
 {
 	std::span<const std::byte> span{encrypted};
 	if (encrypted.size() < 7 || !binary_read_magic<"tr">(span)) {
-		TR_THROW(decryption_error, "Invalid compressed data header.");
+		throw decryption_error{"Invalid compressed data header."};
 	}
 	const std::uint8_t key{binary_read<std::uint8_t>(span)};
 	for (std::byte& byte : std::views::drop(encrypted, 3)) {
@@ -57,7 +57,7 @@ void tr::decrypt_to(std::vector<std::byte>& out, std::vector<std::byte> encrypte
 	const int real_size{LZ4_decompress_safe(reinterpret_cast<const char*>(encrypted.data() + 7), reinterpret_cast<char*>(out.data()),
 											static_cast<int>(encrypted.size() - 7), static_cast<int>(out.size()))};
 	if (static_cast<std::uint32_t>(real_size) != out.size()) {
-		TR_THROW(decryption_error, "Failed to decompress data after decryption.");
+		throw decryption_error{"Failed to decompress data after decryption."};
 	}
 }
 
@@ -74,7 +74,7 @@ void tr::encrypt_to(std::vector<std::byte>& out, std::span<const std::byte> raw,
 		out.resize(LZ4_compressBound(static_cast<int>(raw.size()) + 7ULL));
 	}
 	catch (std::bad_alloc&) {
-		TR_THROW(encryption_error, "Failed to allocate memory for decompressed data.");
+		throw encryption_error{"Failed to allocate memory for decompressed data."};
 	}
 
 	const int used_size{LZ4_compress_default(reinterpret_cast<const char*>(raw.data()), reinterpret_cast<char*>(out.data() + 7),

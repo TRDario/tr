@@ -3,8 +3,8 @@
 #include "../../include/tr/sysgfx/shader_buffer.hpp"
 #include "../../include/tr/sysgfx/texture_unit.hpp"
 
-tr::shader_load_error::shader_load_error(std::string_view location, std::string_view path, std::string&& details) noexcept
-	: exception{location}, _description{std::format("Failed to load bitmap from '{}'", path)}, _details{std::move(details)}
+tr::shader_load_error::shader_load_error(std::string_view path, std::string&& details) noexcept
+	: _description{std::format("Failed to load bitmap from '{}'", path)}, _details{std::move(details)}
 {
 }
 
@@ -33,7 +33,7 @@ tr::shader_base::shader_base(const char* source, unsigned int type)
 		TR_GL_CALL(glGetProgramiv, _id.get(), GL_INFO_LOG_LENGTH, &buffer_size);
 		std::string buffer(buffer_size, '\0');
 		TR_GL_CALL(glGetProgramInfoLog, _id.get(), buffer_size, nullptr, buffer.data());
-		TR_THROW(shader_load_error, "(Embedded)", std::format("Failed to compile/link a shader\n{}", buffer));
+		throw shader_load_error{"(Embedded)", std::format("Failed to compile/link a shader\n{}", buffer)};
 	}
 }
 
@@ -300,16 +300,16 @@ tr::vertex_shader tr::load_vertex_shader(const std::filesystem::path& path)
 		return vertex_shader{source.c_str()};
 	}
 	catch (shader_load_error& err) {
-		TR_THROW(shader_load_error, path.string(), std::string{err.details()});
+		throw shader_load_error{path.string(), std::string{err.details()}};
 	}
 	catch (file_not_found&) {
-		TR_THROW(shader_load_error, path.string(), "File not found.");
+		throw shader_load_error{path.string(), "File not found."};
 	}
 	catch (file_open_error&) {
-		TR_THROW(shader_load_error, path.string(), "An error occurred when trying to open the file.");
+		throw shader_load_error{path.string(), "An error occurred when trying to open the file."};
 	}
 	catch (std::bad_alloc&) {
-		TR_THROW(shader_load_error, path.string(), "A memory allocation failed while loading the shader.");
+		throw shader_load_error{path.string(), "A memory allocation failed while loading the shader."};
 	}
 }
 
@@ -326,15 +326,15 @@ tr::fragment_shader tr::load_fragment_shader(const std::filesystem::path& path)
 		return fragment_shader{source.c_str()};
 	}
 	catch (shader_load_error& err) {
-		TR_THROW(shader_load_error, path.string(), std::string{err.details()});
+		throw shader_load_error{path.string(), std::string{err.details()}};
 	}
 	catch (file_not_found&) {
-		TR_THROW(shader_load_error, path.string(), "File not found.");
+		throw shader_load_error{path.string(), "File not found."};
 	}
 	catch (file_open_error&) {
-		TR_THROW(shader_load_error, path.string(), "An error occurred when trying to open the file.");
+		throw shader_load_error{path.string(), "An error occurred when trying to open the file."};
 	}
 	catch (std::bad_alloc&) {
-		TR_THROW(shader_load_error, path.string(), "A memory allocation failed while loading the shader.");
+		throw shader_load_error{path.string(), "A memory allocation failed while loading the shader."};
 	}
 }

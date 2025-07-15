@@ -1,5 +1,5 @@
-#include "../../include/tr/audio/al_call.hpp"
 #include "../../include/tr/audio/audio_source.hpp"
+#include "../../include/tr/audio/al_call.hpp"
 #include "../../include/tr/audio/audio_system.hpp"
 #include "../../include/tr/audio/impl.hpp"
 #include "../../include/tr/sysgfx/dialog.hpp"
@@ -23,7 +23,7 @@ void tr::_audio_source::lock_audio_mutex() const noexcept
 			_audio_mutex.lock();
 		}
 		catch (std::system_error&) {
-			TR_TERMINATE("System error", "Exception occurred while locking the audio mutex.");
+			terminate("System error", "Exception occurred while locking the audio mutex.");
 		}
 	}
 }
@@ -35,7 +35,7 @@ void tr::_audio_source::unlock_audio_mutex() const noexcept
 			_audio_mutex.unlock();
 		}
 		catch (std::system_error&) {
-			TR_TERMINATE("System error", "Exception occurred while unlocking the audio mutex.");
+			terminate("System error", "Exception occurred while unlocking the audio mutex.");
 		}
 	}
 }
@@ -47,7 +47,7 @@ tr::_audio_source::_audio_source(int priority)
 {
 	TR_AL_CALL(alGenSources, 1, &_id);
 	if (alGetError() == AL_OUT_OF_MEMORY) {
-		TR_TERMINATE("Out of memory", "Exception occurred while creating an audio source.");
+		terminate("Out of memory", "Exception occurred while creating an audio source.");
 	}
 }
 
@@ -69,10 +69,10 @@ tr::audio_source::audio_source(int priority) noexcept
 		_impl = *it;
 	}
 	catch (std::bad_alloc&) {
-		TR_TERMINATE("Out of memory", "Exception occurred while creating an audio source.");
+		terminate("Out of memory", "Exception occurred while creating an audio source.");
 	}
 	catch (std::system_error&) {
-		TR_TERMINATE("System error", "Exception occurred while creating an audio source.");
+		terminate("System error", "Exception occurred while creating an audio source.");
 	}
 }
 
@@ -90,11 +90,11 @@ void tr::_buffer_stream_buffer::refill(_buffer_stream& stream) noexcept
 		alBufferData(id, stream.stream->channels() == 2 ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16, data_buf.data(),
 					 static_cast<ALsizei>(data_buf.size() * sizeof(std::int16_t)), stream.stream->sample_rate());
 		if (alGetError() == AL_OUT_OF_MEMORY) {
-			TR_TERMINATE("Out of memory", "Exception occurred while refilling an audio buffer.");
+			terminate("Out of memory", "Exception occurred while refilling an audio buffer.");
 		}
 	}
 	catch (std::bad_alloc&) {
-		TR_TERMINATE("Out of memory", "Exception occurred while refilling an audio buffer.");
+		terminate("Out of memory", "Exception occurred while refilling an audio buffer.");
 	}
 }
 
@@ -213,7 +213,7 @@ void tr::audio_source::set_pitch(float pitch, fsecs time) noexcept
 		_impl->unlock_audio_mutex();
 	}
 	catch (std::bad_alloc&) {
-		TR_TERMINATE("Out of memory", "Exception occurred while setting the pitch of an audio source.");
+		terminate("Out of memory", "Exception occurred while setting the pitch of an audio source.");
 	}
 }
 
@@ -253,7 +253,7 @@ void tr::audio_source::set_gain(float gain, fsecs time) noexcept
 		_impl->unlock_audio_mutex();
 	}
 	catch (std::bad_alloc&) {
-		TR_TERMINATE("Out of memory", "Exception occurred while setting the gain of an audio source.");
+		terminate("Out of memory", "Exception occurred while setting the gain of an audio source.");
 	}
 }
 
@@ -289,7 +289,7 @@ void tr::audio_source::set_max_dist(float max_dist, fsecs time) noexcept
 		_impl->unlock_audio_mutex();
 	}
 	catch (std::bad_alloc&) {
-		TR_TERMINATE("Out of memory", "Exception occurred while setting the max distance of an audio source.");
+		terminate("Out of memory", "Exception occurred while setting the max distance of an audio source.");
 	}
 }
 
@@ -325,7 +325,7 @@ void tr::audio_source::set_rolloff(float rolloff, fsecs time) noexcept
 		_impl->unlock_audio_mutex();
 	}
 	catch (std::bad_alloc&) {
-		TR_TERMINATE("Out of memory", "Exception occurred while setting the rolloff of an audio source.");
+		terminate("Out of memory", "Exception occurred while setting the rolloff of an audio source.");
 	}
 }
 
@@ -361,7 +361,7 @@ void tr::audio_source::set_ref_dist(float ref_dist, fsecs time) noexcept
 		_impl->unlock_audio_mutex();
 	}
 	catch (std::bad_alloc&) {
-		TR_TERMINATE("Out of memory", "Exception occurred while setting the reference distance of an audio source.");
+		terminate("Out of memory", "Exception occurred while setting the reference distance of an audio source.");
 	}
 }
 
@@ -398,7 +398,7 @@ void tr::audio_source::set_out_cone_gain(float out_cone_gain, fsecs time) noexce
 		_impl->unlock_audio_mutex();
 	}
 	catch (std::bad_alloc&) {
-		TR_TERMINATE("Out of memory", "Exception occurred while setting the outer cone gain of an audio source.");
+		terminate("Out of memory", "Exception occurred while setting the outer cone gain of an audio source.");
 	}
 }
 
@@ -453,7 +453,7 @@ void tr::audio_source::set_cone_w(tr::fangle in_cone_w, tr::fangle out_cone_w, f
 		_impl->unlock_audio_mutex();
 	}
 	catch (std::bad_alloc&) {
-		TR_TERMINATE("Out of memory", "Exception occurred while setting the cone widths of an audio source.");
+		terminate("Out of memory", "Exception occurred while setting the cone widths of an audio source.");
 	}
 }
 
@@ -489,7 +489,7 @@ void tr::audio_source::set_pos(const glm::vec3& pos, fsecs time) noexcept
 		_impl->unlock_audio_mutex();
 	}
 	catch (std::bad_alloc&) {
-		TR_TERMINATE("Out of memory", "Exception occurred while setting the position of an audio source.");
+		terminate("Out of memory", "Exception occurred while setting the position of an audio source.");
 	}
 }
 
@@ -525,7 +525,7 @@ void tr::audio_source::set_vel(const glm::vec3& vel, fsecs time) noexcept
 		_impl->unlock_audio_mutex();
 	}
 	catch (std::bad_alloc&) {
-		TR_TERMINATE("Out of memory", "Exception occurred while setting the velocity of an audio source.");
+		terminate("Out of memory", "Exception occurred while setting the velocity of an audio source.");
 	}
 }
 
@@ -561,7 +561,7 @@ void tr::audio_source::set_dir(const glm::vec3& dir, fsecs time) noexcept
 		_impl->unlock_audio_mutex();
 	}
 	catch (std::bad_alloc&) {
-		TR_TERMINATE("Out of memory", "Exception occurred while setting the directory of an audio source.");
+		terminate("Out of memory", "Exception occurred while setting the directory of an audio source.");
 	}
 }
 

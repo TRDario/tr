@@ -18,7 +18,7 @@ namespace tr {
 template <class T> T tr::_check_not_null(T ptr) noexcept
 {
 	if (ptr == nullptr) {
-		TR_TERMINATE("Out of memory", "Exception occurred while allocating a bitmap.");
+		terminate("Out of memory", "Exception occurred while allocating a bitmap.");
 	}
 	return ptr;
 }
@@ -32,7 +32,7 @@ void tr::_save_bitmap(SDL_Surface* bitmap, const std::filesystem::path& path)
 #else
 	if (!IMG_SavePNG(bitmap, path.c_str())) {
 #endif
-		TR_THROW(bitmap_save_error, path.string(), SDL_GetError());
+		throw bitmap_save_error{path.string(), SDL_GetError()};
 	}
 }
 
@@ -43,8 +43,8 @@ int tr::pixel_bytes(pixel_format format) noexcept
 
 ////////////////////////////////////////////////////////// AUDIO FILE OPEN ERROR //////////////////////////////////////////////////////////
 
-tr::bitmap_load_error::bitmap_load_error(std::string_view location, std::string_view path, std::string&& details) noexcept
-	: exception{location}, _description{std::format("Failed to load bitmap from '{}'", path)}, _details{std::move(details)}
+tr::bitmap_load_error::bitmap_load_error(std::string_view path, std::string&& details) noexcept
+	: _description{std::format("Failed to load bitmap from '{}'", path)}, _details{std::move(details)}
 {
 }
 
@@ -63,8 +63,8 @@ std::string_view tr::bitmap_load_error::details() const noexcept
 	return _details;
 }
 
-tr::bitmap_save_error::bitmap_save_error(std::string_view location, std::string_view path, std::string&& details) noexcept
-	: exception{location}, _description{std::format("Failed to save bitmap to '{}'", path)}, _details{std::move(details)}
+tr::bitmap_save_error::bitmap_save_error(std::string_view path, std::string&& details) noexcept
+	: _description{std::format("Failed to save bitmap to '{}'", path)}, _details{std::move(details)}
 {
 }
 
@@ -420,7 +420,7 @@ tr::bitmap tr::load_embedded_bitmap(std::span<const std::byte> data) noexcept
 tr::bitmap tr::load_bitmap_file(const std::filesystem::path& path)
 {
 	if (!is_regular_file(path)) {
-		TR_THROW(bitmap_load_error, path.string(), "File not found.");
+		throw bitmap_load_error{path.string(), "File not found."};
 	}
 
 #ifdef _WIN32
@@ -429,7 +429,7 @@ tr::bitmap tr::load_bitmap_file(const std::filesystem::path& path)
 	SDL_Surface* ptr{IMG_Load(path.c_str())};
 #endif
 	if (ptr == nullptr) {
-		TR_THROW(bitmap_load_error, path.string(), SDL_GetError());
+		throw bitmap_load_error{path.string(), SDL_GetError()};
 	}
 	return bitmap{ptr};
 }

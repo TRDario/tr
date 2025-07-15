@@ -1,6 +1,6 @@
+#include "../../include/tr/sysgfx/debug_renderer.hpp"
 #include "../../include/tr/sysgfx/backbuffer.hpp"
 #include "../../include/tr/sysgfx/blending.hpp"
-#include "../../include/tr/sysgfx/debug_renderer.hpp"
 #include "../../include/tr/sysgfx/dialog.hpp"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/render_target.hpp"
@@ -341,7 +341,7 @@ void tr::debug_renderer::write_left(std::string_view text, rgba8 text_color, rgb
 		_handle_newline(context);
 	}
 	catch (std::bad_alloc&) {
-		TR_TERMINATE("Out of memory", "Exception occurred while writing to debug renderer.");
+		terminate("Out of memory", "Exception occurred while writing to debug renderer.");
 	}
 }
 
@@ -364,7 +364,7 @@ void tr::debug_renderer::write_right(std::string_view text, rgba8 text_color, rg
 		_handle_newline(context);
 	}
 	catch (std::bad_alloc&) {
-		TR_TERMINATE("Out of memory", "Exception occurred while writing to debug renderer.");
+		terminate("Out of memory", "Exception occurred while writing to debug renderer.");
 	}
 }
 

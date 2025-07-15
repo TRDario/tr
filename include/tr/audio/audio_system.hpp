@@ -6,7 +6,7 @@ namespace tr {
 	class audio_system_init_error : public exception {
 	  public:
 		// Constructs an exception.
-		audio_system_init_error(std::string_view location, std::string_view description) noexcept;
+		audio_system_init_error(std::string_view description) noexcept;
 
 		// Gets the name of the error.
 		std::string_view name() const noexcept override;

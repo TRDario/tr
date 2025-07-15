@@ -341,11 +341,11 @@ void tr::event_queue::push(const event& event) noexcept
 		}
 
 		if (!SDL_PushEvent(&sdl)) {
-			TR_TERMINATE("Failed to push event", SDL_GetError());
+			terminate("Failed to push event", SDL_GetError());
 		}
 	}
 	catch (std::bad_alloc&) {
-		TR_TERMINATE("Out of memory", "Exception occurred while copying an event.");
+		terminate("Out of memory", "Exception occurred while copying an event.");
 	}
 }
 
@@ -355,7 +355,7 @@ void tr::event_queue::push(event&& event) noexcept
 
 	SDL_Event sdl{std::bit_cast<SDL_Event>(event._impl)};
 	if (!SDL_PushEvent(&sdl)) {
-		TR_TERMINATE("Failed to push event", SDL_GetError());
+		terminate("Failed to push event", SDL_GetError());
 	}
 
 	if (event.type() >= SDL_EVENT_USER) {

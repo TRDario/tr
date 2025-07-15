@@ -1,5 +1,5 @@
-#include "../../include/tr/sysgfx/bitmap.hpp"
 #include "../../include/tr/sysgfx/cursor.hpp"
+#include "../../include/tr/sysgfx/bitmap.hpp"
 #include "../../include/tr/sysgfx/dialog.hpp"
 #include <SDL3/SDL.h>
 
@@ -11,7 +11,7 @@ namespace tr {
 SDL_Cursor* tr::_check_not_null(SDL_Cursor* ptr) noexcept
 {
 	if (ptr == nullptr) {
-		TR_TERMINATE("Out of memory", "Exception occurred while allocating a cursor.");
+		terminate("Out of memory", "Exception occurred while allocating a cursor.");
 	}
 	return ptr;
 }

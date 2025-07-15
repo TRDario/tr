@@ -25,7 +25,7 @@ tr::shader_buffer::shader_buffer(std::intptr_t header_size, std::intptr_t capaci
 
 	TR_GL_CALL(glNamedBufferStorage, id, header_size + capacity, nullptr, static_cast<GLenum>(access) | GL_DYNAMIC_STORAGE_BIT);
 	if (glGetError() == GL_OUT_OF_MEMORY) {
-		TR_TERMINATE("Out of video memory", "Exception occurred while allocating a shader buffer.");
+		terminate("Out of video memory", "Exception occurred while allocating a shader buffer.");
 	}
 }
 
@@ -95,7 +95,7 @@ tr::shader_buffer_map tr::shader_buffer::map_header() noexcept
 	std::byte* ptr{
 		static_cast<std::byte*>(TR_RETURNING_GL_CALL(glMapNamedBufferRange, _id.get(), 0, _header_size, static_cast<GLenum>(_access)))};
 	if (glGetError() == GL_OUT_OF_MEMORY) {
-		TR_TERMINATE("Out of memory", "Exception occurred while mapping a shader buffer.");
+		terminate("Out of memory", "Exception occurred while mapping a shader buffer.");
 	}
 	return shader_buffer_map{_id.get(), std::span{ptr, static_cast<std::size_t>(_array_size)}};
 }
@@ -108,7 +108,7 @@ tr::shader_buffer_map tr::shader_buffer::map_array() noexcept
 	std::byte* ptr{static_cast<std::byte*>(
 		TR_RETURNING_GL_CALL(glMapNamedBufferRange, _id.get(), _header_size, _array_size, static_cast<GLenum>(_access)))};
 	if (glGetError() == GL_OUT_OF_MEMORY) {
-		TR_TERMINATE("Out of memory", "Exception occurred while mapping a shader buffer.");
+		terminate("Out of memory", "Exception occurred while mapping a shader buffer.");
 	}
 	return shader_buffer_map{_id.get(), std::span{ptr, static_cast<std::size_t>(_array_size)}};
 }
@@ -120,7 +120,7 @@ tr::shader_buffer_map tr::shader_buffer::map() noexcept
 	std::byte* ptr{static_cast<std::byte*>(
 		TR_RETURNING_GL_CALL(glMapNamedBufferRange, _id.get(), 0, _header_size + _array_size, static_cast<GLenum>(_access)))};
 	if (glGetError() == GL_OUT_OF_MEMORY) {
-		TR_TERMINATE("Out of memory", "Exception occurred while mapping a shader buffer.");
+		terminate("Out of memory", "Exception occurred while mapping a shader buffer.");
 	}
 	return shader_buffer_map{_id.get(), std::span{ptr, static_cast<std::size_t>(_header_size + _array_size)}};
 }

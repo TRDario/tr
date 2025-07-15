@@ -23,7 +23,7 @@ bool tr::logger::active() const noexcept
 
 void tr::logger::log(severity level, const exception& err) noexcept
 {
-	log(level, "Exception raised: {} at {}", err.name(), err.location());
+	log(level, "Exception raised: {}.", err.name());
 	const std::string_view description{err.description()};
 	const std::string_view details{err.details()};
 	if (!description.empty()) {

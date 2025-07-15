@@ -87,7 +87,7 @@ tr::atlas_bitmap tr::build_atlas_bitmap(const _named_bitmaps& bitmaps, pixel_for
 		return {std::move(atlas), std::move(rects)};
 	}
 	catch (std::bad_alloc&) {
-		TR_TERMINATE("Out of memory", "Exception occurred while building an atlas bitmap.");
+		terminate("Out of memory", "Exception occurred while building an atlas bitmap.");
 	}
 }
 
@@ -102,7 +102,7 @@ tr::static_atlas::static_atlas(const atlas_bitmap& atlas_bitmap) noexcept
 		}
 	}
 	catch (std::bad_alloc&) {
-		TR_TERMINATE("Out of memory", "Exception occurred while creating a static atlas.");
+		terminate("Out of memory", "Exception occurred while creating a static atlas.");
 	}
 }
 
@@ -213,7 +213,7 @@ void tr::dyn_atlas::reserve(glm::ivec2 new_size) noexcept
 		}
 	}
 	catch (std::bad_alloc&) {
-		TR_TERMINATE("Out of memory", "Exception occurred while reserving space in a dynamic atlas.");
+		terminate("Out of memory", "Exception occurred while reserving space in a dynamic atlas.");
 	}
 }
 
@@ -249,7 +249,7 @@ std::forward_list<tr::irect2>::iterator tr::dyn_atlas::_find_free_rect_prev(glm:
 		}
 	}
 	catch (std::bad_alloc&) {
-		TR_TERMINATE("Out of memory", "Exception occurred while finding a free rectangle in a dynamic atlas.");
+		terminate("Out of memory", "Exception occurred while finding a free rectangle in a dynamic atlas.");
 	}
 }
 
@@ -264,7 +264,7 @@ void tr::dyn_atlas::add(const std::string& name, const tr::sub_bitmap& bitmap) n
 		_shrink_free_rect(_free_rects, prev, bitmap.size());
 	}
 	catch (std::bad_alloc&) {
-		TR_TERMINATE("Out of memory", "Exception occurred while adding a rectangle in a dynamic atlas.");
+		terminate("Out of memory", "Exception occurred while adding a rectangle in a dynamic atlas.");
 	}
 }
 
@@ -279,7 +279,7 @@ void tr::dyn_atlas::add(std::string&& name, const tr::sub_bitmap& bitmap) noexce
 		_shrink_free_rect(_free_rects, prev, bitmap.size());
 	}
 	catch (std::bad_alloc&) {
-		TR_TERMINATE("Out of memory", "Exception occurred while adding a rectangle in a dynamic atlas.");
+		terminate("Out of memory", "Exception occurred while adding a rectangle in a dynamic atlas.");
 	}
 }
 
@@ -293,7 +293,7 @@ void tr::dyn_atlas::remove(std::string_view name) noexcept
 		}
 	}
 	catch (std::bad_alloc&) {
-		TR_TERMINATE("Out of memory", "Exception occurred while removing a rectangle in a dynamic atlas.");
+		terminate("Out of memory", "Exception occurred while removing a rectangle in a dynamic atlas.");
 	}
 }
 
@@ -314,7 +314,7 @@ void tr::dyn_atlas::set_label(const std::string& label) noexcept
 		_tex.set_label(label);
 	}
 	catch (std::bad_alloc&) {
-		TR_TERMINATE("Out of memory", "Exception occurred while setting the label of a dynamic atlas.");
+		terminate("Out of memory", "Exception occurred while setting the label of a dynamic atlas.");
 	}
 }
 

@@ -1,10 +1,10 @@
-﻿#include "../../include/tr/sysgfx/bitmap.hpp"
+﻿#include "../../include/tr/sysgfx/window.hpp"
+#include "../../include/tr/sysgfx/bitmap.hpp"
 #include "../../include/tr/sysgfx/dialog.hpp"
 #include "../../include/tr/sysgfx/display.hpp"
 #include "../../include/tr/sysgfx/glad.h"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/impl.hpp"
-#include "../../include/tr/sysgfx/window.hpp"
 #include "tr/sysgfx/gl_call.hpp"
 #include <SDL3/SDL.h>
 
@@ -49,10 +49,10 @@ void tr::_set_sdl_gl_attributes(const gfx_properties& gfx_properties) noexcept
 void tr::_create_gl_context() noexcept
 {
 	if ((_glctx = SDL_GL_CreateContext(_window)) == nullptr) {
-		TR_TERMINATE("Failed to create OpenGL context", SDL_GetError());
+		terminate("Failed to create OpenGL context", SDL_GetError());
 	}
 	else if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(SDL_GL_GetProcAddress))) {
-		TR_TERMINATE("Failed to load OpenGL 4.5", {});
+		terminate("Failed to load OpenGL 4.5", {});
 	}
 	TR_LOG(log, severity::INFO, "Created an OpenGL context.");
 	TR_LOG_CONTINUE(log, "Vendor: {}", reinterpret_cast<const char*>(TR_RETURNING_GL_CALL(glGetString, GL_VENDOR)));
@@ -165,7 +165,7 @@ void tr::window::open_windowed(const char* title, glm::ivec2 size, window_flag f
 	const SDL_WindowFlags sdl_flags{static_cast<SDL_WindowFlags>(flags) | SDL_WINDOW_HIDDEN | SDL_WINDOW_OPENGL |
 									SDL_WINDOW_HIGH_PIXEL_DENSITY};
 	if ((_window = SDL_CreateWindow(title, size.x, size.y, sdl_flags)) == nullptr) {
-		TR_TERMINATE(std::format("Failed to open {}x{} window", size.x, size.y), SDL_GetError());
+		terminate(std::format("Failed to open {}x{} window", size.x, size.y), SDL_GetError());
 	}
 	_create_gl_context();
 	if (gfx_properties.debug_context) {
@@ -184,7 +184,7 @@ void tr::window::open_fullscreen(const char* title, window_flag flags, const gfx
 	const SDL_WindowFlags sdl_flags{static_cast<SDL_WindowFlags>(flags) | SDL_WINDOW_HIDDEN | SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL |
 									SDL_WINDOW_HIGH_PIXEL_DENSITY};
 	if ((_window = SDL_CreateWindow(title, size.x, size.y, sdl_flags)) == nullptr) {
-		TR_TERMINATE("Failed to open fullscreen window", SDL_GetError());
+		terminate("Failed to open fullscreen window", SDL_GetError());
 	}
 	_create_gl_context();
 	if (gfx_properties.debug_context) {

@@ -13,7 +13,7 @@ tr::basic_static_vertex_buffer::basic_static_vertex_buffer(std::span<const std::
 
 	TR_GL_CALL(glNamedBufferStorage, _id.get(), _size, data.data(), 0);
 	if (glGetError() == GL_OUT_OF_MEMORY) {
-		TR_TERMINATE("Out of video memory", "While allocating a vertex buffer.");
+		terminate("Out of video memory", "While allocating a vertex buffer.");
 	}
 }
 
@@ -83,7 +83,7 @@ void tr::basic_dyn_vertex_buffer::reserve(std::size_t capacity) noexcept
 
 		TR_GL_CALL(glNamedBufferStorage, _id.get(), static_cast<GLsizei>(capacity), nullptr, GL_DYNAMIC_STORAGE_BIT);
 		if (glGetError() == GL_OUT_OF_MEMORY) {
-			TR_TERMINATE("Out of video memory", "Exception occurred while allocating a vertex buffer.");
+			terminate("Out of video memory", "Exception occurred while allocating a vertex buffer.");
 		}
 		_capacity = capacity;
 	}
@@ -113,7 +113,7 @@ void tr::basic_dyn_vertex_buffer::set_label(const std::string& label) noexcept
 		set_label(std::string{label});
 	}
 	catch (std::bad_alloc&) {
-		TR_TERMINATE("Out of memory", "Exception occurred while setting a vertex buffer label.");
+		terminate("Out of memory", "Exception occurred while setting a vertex buffer label.");
 	}
 }
 

@@ -80,8 +80,8 @@ std::string tr::_process_value(std::string_view raw_value, std::vector<std::stri
 	return value;
 }
 
-tr::localization_load_error::localization_load_error(std::string_view location, std::string&& description) noexcept
-	: exception{location}, _description{description}
+tr::localization_load_error::localization_load_error(std::string&& description) noexcept
+	: _description{description}
 {
 }
 
@@ -177,13 +177,13 @@ std::vector<std::string> tr::localization_map::load(const std::filesystem::path&
 		return errors;
 	}
 	catch (file_open_error& err) {
-		TR_THROW(localization_load_error, std::format("{}: {}", err.name(), err.description()));
+		throw localization_load_error{std::format("{}: {}", err.name(), err.description())};
 	}
 	catch (file_not_found& err) {
-		TR_THROW(localization_load_error, std::format("{}: {}", err.name(), err.description()));
+		throw localization_load_error{std::format("{}: {}", err.name(), err.description())};
 	}
 	catch (std::bad_alloc&) {
-		TR_THROW(localization_load_error, "Failed to allocate memory while loading the localization.");
+		throw localization_load_error{"Failed to allocate memory while loading the localization."};
 	}
 }
 

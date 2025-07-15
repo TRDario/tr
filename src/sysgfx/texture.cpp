@@ -152,7 +152,7 @@ tr::texture::texture() noexcept
 		_id.reset(id);
 	}
 	catch (std::bad_alloc&) {
-		TR_TERMINATE("Out of memory", "Exception occurred while creating a texture.");
+		terminate("Out of memory", "Exception occurred while creating a texture.");
 	}
 }
 
@@ -161,7 +161,7 @@ void tr::texture::_allocate(glm::ivec2 size, bool mipmapped, pixel_format format
 	TR_GL_CALL(glTextureStorage2D, _id.get(), mipmapped ? static_cast<GLsizei>(std::floor(std::log2(std::max(size.x, size.y))) + 1) : 1,
 			   _tex_format(format), size.x, size.y);
 	if (glGetError() == GL_OUT_OF_MEMORY) {
-		TR_TERMINATE("Out of video memory", "Exception occurred while allocating a texture.");
+		terminate("Out of video memory", "Exception occurred while allocating a texture.");
 	}
 	_size = size;
 }

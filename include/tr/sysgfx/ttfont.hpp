@@ -14,7 +14,7 @@ namespace tr {
 	class ttfont_load_error : public exception {
 	  public:
 		// Constructs an exception.
-		ttfont_load_error(std::string_view location, std::string_view path, std::string&& details) noexcept;
+		ttfont_load_error(std::string_view path, std::string&& details) noexcept;
 
 		// Gets the name of the error.
 		std::string_view name() const noexcept override;
@@ -33,7 +33,7 @@ namespace tr {
 	class ttfont_render_error : public exception {
 	  public:
 		// Constructs an exception.
-		ttfont_render_error(std::string_view location, std::string_view description) noexcept;
+		ttfont_render_error(std::string_view description) noexcept;
 
 		// Gets the name of the error.
 		std::string_view name() const noexcept override;

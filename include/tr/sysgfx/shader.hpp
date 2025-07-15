@@ -12,7 +12,7 @@ namespace tr {
 	class shader_load_error : public exception {
 	  public:
 		// Constructs an exception.
-		shader_load_error(std::string_view location, std::string_view path, std::string&& details) noexcept;
+		shader_load_error(std::string_view path, std::string&& details) noexcept;
 
 		// Gets the name of the error.
 		std::string_view name() const noexcept override;

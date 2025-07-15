@@ -13,7 +13,7 @@ tr::static_index_buffer::static_index_buffer(std::span<const std::uint16_t> data
 
 	TR_GL_CALL(glNamedBufferStorage, _id.get(), _size * sizeof(std::uint16_t), data.data(), 0);
 	if (glGetError() == GL_OUT_OF_MEMORY) {
-		TR_TERMINATE("Out of video memory", "Exception occurred while allocating an index buffer.");
+		terminate("Out of video memory", "Exception occurred while allocating an index buffer.");
 	}
 }
 
@@ -84,7 +84,7 @@ void tr::dyn_index_buffer::reserve(std::size_t capacity) noexcept
 		TR_GL_CALL(glNamedBufferStorage, _id.get(), static_cast<GLsizei>(capacity * sizeof(std::uint16_t)), nullptr,
 				   GL_DYNAMIC_STORAGE_BIT);
 		if (glGetError() == GL_OUT_OF_MEMORY) {
-			TR_TERMINATE("Out of video memory", "Exception occurred while allocating an index buffer.");
+			terminate("Out of video memory", "Exception occurred while allocating an index buffer.");
 		}
 		_capacity = capacity;
 	}
@@ -114,7 +114,7 @@ void tr::dyn_index_buffer::set_label(const std::string& label) noexcept
 		set_label(std::string{label});
 	}
 	catch (std::bad_alloc&) {
-		TR_TERMINATE("Out of memory", "Exception occurred while setting an index buffer label.");
+		terminate("Out of memory", "Exception occurred while setting an index buffer label.");
 	}
 }
 

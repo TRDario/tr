@@ -44,7 +44,7 @@ void tr::_file_dialog_callback(void* userdata, const char* const* files, int) no
 				context.paths.emplace_back(*files++);
 			}
 			catch (std::bad_alloc&) {
-				TR_TERMINATE("Out of memory", "Exception occurred while allocating a file path.");
+				terminate("Out of memory", "Exception occurred while allocating a file path.");
 			}
 		}
 	}
@@ -104,14 +104,10 @@ tr::msg_button tr::show_message_box(msg_box_type type, msg_buttons buttons, cons
 	}
 }
 
-void tr::show_fatal_exception_message_box(const exception& exception) noexcept
+void tr::show_fatal_error_message_box(const exception& exception) noexcept
 {
-	TR_ASSERT(SDL_WasInit(0), "Tried to show fatal exception message box before initializing the application.");
-
 	try {
-		std::string message{"A fatal exception has occurred. Press OK to exit the application. Details:\n\n"};
-		message.append(exception.name());
-		message.push_back('.');
+		std::string message{std::format("A fatal error has occurred ({}).", exception.name())};
 		const std::string_view description{exception.description()};
 		if (!description.empty()) {
 			message.push_back('\n');
@@ -122,25 +118,24 @@ void tr::show_fatal_exception_message_box(const exception& exception) noexcept
 			message.push_back('\n');
 			message.append(details);
 		}
-		show_message_box(msg_box_type::ERROR, msg_buttons::OK, std::format("{} - Fatal Exception", _app_name).c_str(), message.c_str());
+		message.append("\nPress OK to exit the application.");
+		const std::string title{_app_name != nullptr ? std::format("{} - Fatal Error", _app_name) : "Fatal Error"};
+		show_message_box(msg_box_type::ERROR, msg_buttons::OK, title.c_str(), message.c_str());
 	}
 	catch (std::bad_alloc&) {
-		TR_TERMINATE("Out of memory", "Exception occurred while creating a fatal exception message box.");
+		terminate("Out of memory", "Exception occurred while creating a fatal error message box.");
 	}
 }
 
-void tr::show_fatal_exception_message_box(const std::exception& exception) noexcept
+void tr::show_fatal_error_message_box(const std::exception& exception) noexcept
 {
-	TR_ASSERT(SDL_WasInit(0), "Tried to show fatal exception message box before initializing the application.");
-
 	try {
-		std::string message{"A fatal exception has occurred. Press OK to exit the application. Details:\n\n"};
-		message.append(exception.what());
-		message.push_back('.');
-		show_message_box(msg_box_type::ERROR, msg_buttons::OK, std::format("{} - Fatal Exception", _app_name).c_str(), message.c_str());
+		std::string message{std::format("A fatal error has occurred ({}).\nPress OK to exit the application.", exception.what())};
+		const std::string title{_app_name != nullptr ? std::format("{} - Fatal Error", _app_name) : "Fatal Error"};
+		show_message_box(msg_box_type::ERROR, msg_buttons::OK, title.c_str(), message.c_str());
 	}
 	catch (std::bad_alloc&) {
-		TR_TERMINATE("Out of memory", "Exception occurred while creating a fatal exception message box.");
+		terminate("Out of memory", "Exception occurred while creating a fatal error message box.");
 	}
 }
 
@@ -178,19 +173,20 @@ std::filesystem::path tr::show_save_file_dialog(std::span<const dialog_filter> f
 	return ctx.paths.empty() ? std::filesystem::path{} : std::move(ctx.paths.front());
 }
 
-void tr::terminate(std::string_view location, std::string_view reason, std::string_view details) noexcept
+void tr::terminate(std::string_view reason, std::string_view details) noexcept
 {
 	try {
-		TR_LOG(log, severity::FATAL, "{} at {}, terminating.", reason, location);
+		TR_LOG(log, severity::FATAL, "{}, terminating.", reason);
 		TR_LOG_CONTINUE(log, "{}", details);
 
-		std::string message{reason};
-		message.push_back('.');
+		std::string message{std::format("A fatal error has occurred ({}).", reason)};
 		if (!details.empty()) {
 			message.push_back('\n');
 			message.append(details);
 		}
-		show_message_box(msg_box_type::ERROR, msg_buttons::OK, std::format("{} - Fatal Exception", _app_name).c_str(), message.c_str());
+		message.append("\nPress OK to exit the application.");
+		const std::string title{_app_name != nullptr ? std::format("{} - Fatal Error", _app_name) : "Fatal Error"};
+		show_message_box(msg_box_type::ERROR, msg_buttons::OK, title.c_str(), message.c_str());
 		std::abort();
 	}
 	catch (std::bad_alloc&) {

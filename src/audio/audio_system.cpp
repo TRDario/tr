@@ -1,6 +1,6 @@
+#include "../../include/tr/audio/audio_system.hpp"
 #include "../../include/tr/audio/al_call.hpp"
 #include "../../include/tr/audio/audio_source.hpp"
-#include "../../include/tr/audio/audio_system.hpp"
 #include "../../include/tr/audio/impl.hpp"
 #include "../../include/tr/utility/macro.hpp"
 #include "../../include/tr/utility/ranges.hpp"
@@ -14,8 +14,8 @@ namespace tr {
 	ALCcontext* _context{nullptr};
 } // namespace tr
 
-tr::audio_system_init_error::audio_system_init_error(std::string_view location, std::string_view description) noexcept
-	: exception{location}, _description{description}
+tr::audio_system_init_error::audio_system_init_error(std::string_view description) noexcept
+	: _description{description}
 {
 }
 
@@ -39,12 +39,12 @@ void tr::audio_system::initialize()
 	TR_ASSERT(_context == nullptr, "Tried to initialize an already initialized audio system.");
 
 	if ((_device = alcOpenDevice(nullptr)) == nullptr) {
-		TR_THROW(audio_system_init_error, "Failed to open audio device.");
+		throw audio_system_init_error{"Failed to open audio device."};
 	}
 	if ((_context = alcCreateContext(_device, nullptr)) == nullptr || !alcMakeContextCurrent(_context)) {
 		alcDestroyContext(_context);
 		alcCloseDevice(_device);
-		TR_THROW(audio_system_init_error, "Failed to create audio context.");
+		throw audio_system_init_error{"Failed to create audio context."};
 	}
 
 	_audio_gains.fill(1);

@@ -1,5 +1,5 @@
 #pragma once
-#include "../utility/macro.hpp"
+#include "../utility/exception.hpp"
 
 namespace tr {
 	// Message box type.
@@ -25,9 +25,9 @@ namespace tr {
 	// Shows a message box.
 	msg_button show_message_box(msg_box_type type, msg_buttons buttons, const char* title, const char* msg) noexcept;
 	// Shows an "Fatal exception" message box.
-	void show_fatal_exception_message_box(const exception& exception) noexcept;
+	void show_fatal_error_message_box(const exception& exception) noexcept;
 	// Shows an "Fatal exception" message box.
-	void show_fatal_exception_message_box(const std::exception& exception) noexcept;
+	void show_fatal_error_message_box(const std::exception& exception) noexcept;
 
 	// File dialog filter.
 	struct dialog_filter {
@@ -52,9 +52,5 @@ namespace tr {
 	std::filesystem::path show_save_file_dialog(std::span<const dialog_filter> filters = {}, const char* default_path = nullptr);
 
 	// Terminates the program while displaying an error box.
-	[[noreturn]] void terminate(std::string_view location, std::string_view reason, std::string_view details) noexcept;
-	// Terminates the program while displaying an error box.
-	// clang-format off
-#define TR_TERMINATE(reason, details) do { ::tr::terminate(TR_FILENAME ":" TR_STRINGIFY(__LINE__), reason, details); } while (0)
-	// clang-format on
+	[[noreturn]] void terminate(std::string_view reason, std::string_view details) noexcept;
 } // namespace tr

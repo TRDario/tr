@@ -6,7 +6,7 @@ namespace tr {
 	class file_not_found : public exception {
 	  public:
 		// Constructs an exception.
-		file_not_found(std::string_view location, std::string_view path) noexcept;
+		file_not_found(std::string_view path) noexcept;
 
 		// Gets the name of the error.
 		std::string_view name() const noexcept override;
@@ -23,7 +23,7 @@ namespace tr {
 	class file_open_error : public exception {
 	  public:
 		// Constructs an exception.
-		file_open_error(std::string_view location, std::string_view path) noexcept;
+		file_open_error(std::string_view path) noexcept;
 
 		// Gets the name of the error.
 		std::string_view name() const noexcept override;

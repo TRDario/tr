@@ -9,7 +9,7 @@ void tr::initialize_application(const char* developer, const char* name) noexcep
 	_app_name = name;
 	if (!SDL_WasInit(SDL_INIT_VIDEO)) {
 		if (!SDL_Init(SDL_INIT_VIDEO)) {
-			TR_TERMINATE("SDL3 initialization failure", SDL_GetError());
+			terminate("SDL3 initialization failure", SDL_GetError());
 		};
 		TR_LOG(log, severity::INFO, "Initialized SDL3.");
 		TR_LOG_CONTINUE(log, "Platform: {}", SDL_GetPlatform());
@@ -27,7 +27,7 @@ std::filesystem::path tr::executable_dir() noexcept
 		return SDL_GetBasePath();
 	}
 	catch (std::bad_alloc&) {
-		TR_TERMINATE("Executable directory fetching failure", "Out of memory.");
+		terminate("Executable directory fetching failure", "Out of memory.");
 	}
 }
 
@@ -37,13 +37,13 @@ std::filesystem::path tr::user_dir() noexcept
 
 	std::unique_ptr<char[], decltype([](void* ptr) { SDL_free(ptr); })> cpath{SDL_GetPrefPath(_app_developer, _app_name)};
 	if (cpath == nullptr) {
-		TR_TERMINATE("User directory fetching failure", SDL_GetError());
+		terminate("User directory fetching failure", SDL_GetError());
 	}
 	try {
 		std::filesystem::path userdir{cpath.get()};
 		return userdir;
 	}
 	catch (std::bad_alloc&) {
-		TR_TERMINATE("User directory fetching failure", "Out of memory.");
+		terminate("User directory fetching failure", "Out of memory.");
 	}
 }

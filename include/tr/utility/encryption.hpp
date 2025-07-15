@@ -6,7 +6,7 @@ namespace tr {
 	class decryption_error : public exception {
 	  public:
 		// Constructs an exception.
-		decryption_error(std::string_view location, std::string_view description) noexcept;
+		decryption_error(std::string_view description) noexcept;
 
 		// Gets the name of the error.
 		std::string_view name() const noexcept override;
@@ -24,7 +24,7 @@ namespace tr {
 	class encryption_error : public exception {
 	  public:
 		// Constructs an exception.
-		encryption_error(std::string_view location, std::string_view description) noexcept;
+		encryption_error(std::string_view description) noexcept;
 
 		// Gets the name of the error.
 		std::string_view name() const noexcept override;
