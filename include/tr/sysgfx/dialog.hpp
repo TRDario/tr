@@ -1,5 +1,5 @@
 #pragma once
-#include <tr/utility.hpp>
+#include "../utility/macro.hpp"
 
 namespace tr {
 	// Message box type.

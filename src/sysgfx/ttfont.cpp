@@ -1,6 +1,6 @@
-#include "../../include/tr/sysgfx/ttfont.hpp"
 #include "../../include/tr/sysgfx/bitmap.hpp"
 #include "../../include/tr/sysgfx/dialog.hpp"
+#include "../../include/tr/sysgfx/ttfont.hpp"
 #include <SDL3_ttf/SDL_textengine.h>
 #include <SDL3_ttf/SDL_ttf.h>
 
@@ -112,7 +112,7 @@ int tr::ttfont::line_skip() const noexcept
 	return TTF_GetFontLineSkip(_impl.get());
 }
 
-bool tr::ttfont::contains(codepoint glyph) const noexcept
+bool tr::ttfont::contains(std::uint32_t glyph) const noexcept
 {
 	return TTF_FontHasGlyph(_impl.get(), glyph);
 }

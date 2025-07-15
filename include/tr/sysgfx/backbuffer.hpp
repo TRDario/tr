@@ -1,7 +1,10 @@
 #pragma once
-#include "render_target.hpp"
+#include "../utility/color.hpp"
+#include "../utility/geometry.hpp"
 
 namespace tr {
+	class render_target;
+
 	// The display backbuffer.
 	struct backbuffer {
 		// Gets the size of the backbuffer.

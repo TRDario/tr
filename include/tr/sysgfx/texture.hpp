@@ -1,9 +1,10 @@
 #pragma once
+#include "../utility/handle.hpp"
 #include "bitmap.hpp"
-#include "render_target.hpp"
 
 namespace tr {
 	class texture_ref;
+	class render_target;
 	namespace imgui {
 		std::uint64_t get_texture_id(texture_ref texture) noexcept;
 	}

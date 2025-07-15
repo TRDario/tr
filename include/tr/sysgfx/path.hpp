@@ -1,5 +1,5 @@
 #pragma once
-#include <tr/utility.hpp>
+#include "../utility/common.hpp"
 
 namespace tr {
 	// Sets up the basic application info.

@@ -1,9 +1,12 @@
 #pragma once
-#include "bitmap.hpp"
+#include "../utility/common.hpp"
 
 struct SDL_Cursor;
 
 namespace tr {
+	class bitmap;
+	class bitmap_view;
+
 	// System mouse cursor icons.
 	enum class sys_cursor {
 		ARROW,      // Default arrow cursor.

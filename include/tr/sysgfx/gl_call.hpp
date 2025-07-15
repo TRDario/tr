@@ -1,5 +1,5 @@
 #pragma once
-#include "../utility.hpp"
+#include "../utility/logger.hpp"
 #include "glad.h"
 
 namespace tr {

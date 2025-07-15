@@ -1,15 +1,12 @@
 #pragma once
-#include <tr/utility.hpp>
+#include "../utility/handle.hpp"
+#include "../utility/ranges.hpp"
 
 namespace tr {
 	class vertex_format;
 }
 
 namespace tr {
-	// Concept defining a contiguous range holding a specific type.
-	template <class R, class T>
-	concept typed_contiguous_range = std::ranges::contiguous_range<R> && std::same_as<T, std::ranges::range_value_t<R>>;
-
 	// Static vertex buffer class for holding immutable vertex data.
 	class basic_static_vertex_buffer {
 	  public:

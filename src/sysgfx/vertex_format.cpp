@@ -1,7 +1,8 @@
-#include "../../include/tr/sysgfx/vertex_format.hpp"
 #include "../../include/tr/sysgfx/gl_call.hpp"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/impl.hpp"
+#include "../../include/tr/sysgfx/vertex_format.hpp"
+#include "../../include/tr/utility/overloaded_lambda.hpp"
 
 tr::vertex_format::vertex_format(std::initializer_list<vertex_attribute> attrs) noexcept
 	: vertex_format{std::span{attrs}}

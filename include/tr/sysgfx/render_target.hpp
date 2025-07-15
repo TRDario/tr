@@ -1,5 +1,5 @@
 #pragma once
-#include <tr/utility.hpp>
+#include "../utility/geometry.hpp"
 
 namespace tr {
 	// Abstraction over a rendering target.

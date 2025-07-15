@@ -161,5 +161,9 @@ namespace tr {
 	 ******************************************************************************************************************/
 	template <std::size_t S> using size_type_t = size_type<S>::type;
 
+	// Concept defining a contiguous range holding a specific type.
+	template <class R, class T>
+	concept typed_contiguous_range = std::ranges::contiguous_range<R> && std::same_as<T, std::ranges::range_value_t<R>>;
+
 	/// @}
 } // namespace tr

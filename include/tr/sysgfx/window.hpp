@@ -1,5 +1,5 @@
 #pragma once
-#include <tr/utility.hpp>
+#include "../utility/common.hpp"
 
 namespace tr {
 	class bitmap;

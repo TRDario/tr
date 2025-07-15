@@ -1,10 +1,13 @@
-#include "../../include/tr/sysgfx/renderer_2d.hpp"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/index_buffer.hpp"
+#include "../../include/tr/sysgfx/renderer_2d.hpp"
 #include "../../include/tr/sysgfx/shader_pipeline.hpp"
+#include "../../include/tr/sysgfx/texture.hpp"
 #include "../../include/tr/sysgfx/texture_unit.hpp"
 #include "../../include/tr/sysgfx/vertex_buffer.hpp"
 #include "../../include/tr/sysgfx/vertex_format.hpp"
+#include "../../include/tr/utility/draw_geometry.hpp"
+#include "../../include/tr/utility/overloaded_lambda.hpp"
 
 namespace tr {
 	// Untextured UV sentinel.

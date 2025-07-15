@@ -1,8 +1,6 @@
 #pragma once
 #include "render_target.hpp"
 #include "texture.hpp"
-#include "texture_unit.hpp"
-#include "vertex_buffer.hpp"
 #include "vertex_format.hpp"
 
 struct SDL_Window;

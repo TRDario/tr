@@ -1,8 +1,11 @@
 #pragma once
+#include "../utility/chrono.hpp"
 #include "display.hpp"
 #include "event_types.hpp"
 
 namespace tr {
+	class timer;
+
 	// Creates a timer that sends tick events.
 	timer create_tick_timer(float frequency, std::uint32_t id) noexcept;
 	// Creates a timer that sends draw events.

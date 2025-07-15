@@ -1,5 +1,5 @@
 #pragma once
-#include <tr/utility.hpp>
+#include "../utility/benchmark.hpp"
 
 namespace tr {
 	class event;

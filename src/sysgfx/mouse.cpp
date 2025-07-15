@@ -1,5 +1,6 @@
-#include "../../include/tr/sysgfx/mouse.hpp"
+#include "../../include/tr/sysgfx/cursor.hpp"
 #include "../../include/tr/sysgfx/impl.hpp"
+#include "../../include/tr/sysgfx/mouse.hpp"
 #include <SDL3/SDL.h>
 
 bool tr::mouse::set_relative_mode(bool relative) noexcept

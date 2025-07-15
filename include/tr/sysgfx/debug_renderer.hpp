@@ -1,7 +1,10 @@
 #pragma once
-#include <tr/utility.hpp>
+#include "../utility/chrono.hpp"
+#include "../utility/color.hpp"
 
 namespace tr {
+	class benchmark;
+
 	// Debug text renderer.
 	struct debug_renderer {
 		// Initializes the debug renderer.

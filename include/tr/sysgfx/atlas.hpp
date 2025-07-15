@@ -1,4 +1,5 @@
 #pragma once
+#include "../utility/hashmap.hpp"
 #include "texture.hpp"
 
 namespace tr {

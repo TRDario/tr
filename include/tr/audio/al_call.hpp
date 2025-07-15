@@ -1,4 +1,5 @@
 #pragma once
+#include "../utility/macro.hpp"
 #include <AL/al.h>
 #include <AL/alc.h>
 

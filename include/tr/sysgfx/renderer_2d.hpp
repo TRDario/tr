@@ -1,9 +1,11 @@
 #pragma once
 #include "backbuffer.hpp"
 #include "blending.hpp"
-#include "texture.hpp"
+#include "render_target.hpp"
 
 namespace tr {
+	class texture_ref;
+
 	// Simple 2D renderer color mesh allocation reference.
 	struct simple_color_mesh_ref {
 		// Mesh position data.

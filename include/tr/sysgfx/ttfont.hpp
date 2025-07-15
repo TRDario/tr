@@ -1,5 +1,7 @@
 #pragma once
-#include <tr/utility.hpp>
+#include "../utility/color.hpp"
+#include "../utility/exception.hpp"
+#include "../utility/geometry.hpp"
 
 struct TTF_Font;
 
@@ -78,7 +80,7 @@ namespace tr {
 		// Gets the distance between two lines.
 		int line_skip() const noexcept;
 		// Gets whether the font contains a glyph.
-		bool contains(codepoint glyph) const noexcept;
+		bool contains(std::uint32_t glyph) const noexcept;
 
 		// Resizes the font.
 		void resize(float size) noexcept;

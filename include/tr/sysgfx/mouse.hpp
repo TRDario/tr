@@ -1,9 +1,8 @@
 #pragma once
-#include "cursor.hpp"
-
-struct SDL_Cursor;
+#include "../utility/common.hpp"
 
 namespace tr {
+	class cursor;
 	struct mouse_motion_event;
 	struct mouse_down_event;
 	struct mouse_up_event;

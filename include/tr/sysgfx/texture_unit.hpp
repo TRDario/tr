@@ -1,5 +1,5 @@
 #pragma once
-#include <tr/utility.hpp>
+#include "../utility/handle.hpp"
 
 namespace tr {
 	class texture_ref;

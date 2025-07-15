@@ -1,5 +1,7 @@
 #pragma once
-#include <tr/utility.hpp>
+#include "../utility/color.hpp"
+#include "../utility/exception.hpp"
+#include "../utility/geometry.hpp"
 
 struct SDL_Surface;
 

@@ -1,7 +1,7 @@
-#include "../../include/tr/audio/audio_buffer.hpp"
 #include "../../include/tr/audio/al_call.hpp"
+#include "../../include/tr/audio/audio_buffer.hpp"
 #include "../../include/tr/audio/impl.hpp"
-#include <tr/sysgfx.hpp>
+#include "../../include/tr/sysgfx/dialog.hpp"
 
 tr::audio_buffer::audio_buffer() noexcept
 {

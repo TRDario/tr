@@ -1,3 +1,4 @@
+#include "../../include/tr/sysgfx/bitmap.hpp"
 #include "../../include/tr/sysgfx/cursor.hpp"
 #include "../../include/tr/sysgfx/dialog.hpp"
 #include <SDL3/SDL.h>

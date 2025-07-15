@@ -1,5 +1,6 @@
 #pragma once
-#include <tr/utility.hpp>
+#include "../utility/exception.hpp"
+#include "../utility/handle.hpp"
 
 namespace tr {
 	class shader_buffer;

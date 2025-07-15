@@ -6,6 +6,7 @@
 #include "../../include/tr/sysgfx/mouse_events.hpp"
 #include "../../include/tr/sysgfx/window.hpp"
 #include "../../include/tr/sysgfx/window_events.hpp"
+#include "../../include/tr/utility/timer.hpp"
 #include <SDL3/SDL.h>
 
 using namespace std::chrono_literals;

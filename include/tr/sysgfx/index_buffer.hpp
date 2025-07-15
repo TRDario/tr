@@ -1,5 +1,5 @@
 #pragma once
-#include "vertex_buffer.hpp"
+#include "../utility/handle.hpp"
 
 namespace tr {
 	// Concept defining a contiguous range that can be passed to index buffer functions.

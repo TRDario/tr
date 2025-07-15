@@ -1,4 +1,5 @@
 #include "../../include/tr/sysgfx/bitmap_iterators.hpp"
+#include "../../include/tr/utility/macro.hpp"
 #include <SDL3/SDL.h>
 #include <SDL3_image/SDL_image.h>
 
