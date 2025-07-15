@@ -173,13 +173,17 @@ std::filesystem::path tr::show_save_file_dialog(std::span<const dialog_filter> f
 	return ctx.paths.empty() ? std::filesystem::path{} : std::move(ctx.paths.front());
 }
 
-void tr::terminate(std::string_view reason, std::string_view details) noexcept
+void tr::terminate(std::string_view reason, std::string_view description, std::string_view details) noexcept
 {
 	try {
 		TR_LOG(log, severity::FATAL, "{}, terminating.", reason);
 		TR_LOG_CONTINUE(log, "{}", details);
 
 		std::string message{std::format("A fatal error has occurred ({}).", reason)};
+		if (!description.empty()) {
+			message.push_back('\n');
+			message.append(description);
+		}
 		if (!details.empty()) {
 			message.push_back('\n');
 			message.append(details);
