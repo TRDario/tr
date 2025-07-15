@@ -1,9 +1,11 @@
 #pragma once
-#include "audio_buffer.hpp"
-#include "audio_stream.hpp"
+#include "../utility/angle.hpp"
+#include "../utility/chrono.hpp"
 
 namespace tr {
 	class _audio_source;
+	class audio_buffer;
+	class audio_stream;
 
 	// Audio source position origin types.
 	enum class audio_origin : bool {

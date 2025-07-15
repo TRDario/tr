@@ -1,4 +1,5 @@
 #include "../../include/tr/audio/audio_stream.hpp"
+#include "../../include/tr/utility/macro.hpp"
 #include <vorbis/vorbisfile.h>
 
 namespace tr {

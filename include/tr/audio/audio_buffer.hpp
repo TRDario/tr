@@ -1,5 +1,6 @@
 #pragma once
-#include "audio_stream.hpp"
+#include "../utility/chrono.hpp"
+#include "../utility/handle.hpp"
 
 namespace tr {
 	// Audio data formats.

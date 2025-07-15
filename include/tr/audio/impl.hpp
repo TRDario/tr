@@ -1,9 +1,12 @@
 #pragma once
-#include "audio_source.hpp"
+#include "../utility/angle.hpp"
+#include "audio_buffer.hpp"
 #include "audio_stream.hpp"
 
 namespace tr {
 	struct _buffer_stream;
+	enum class audio_origin : bool;
+	enum class audio_state : std::uint8_t;
 
 	// Audio buffer used by the buffered stream.
 	struct _buffer_stream_buffer {

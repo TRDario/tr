@@ -1,9 +1,9 @@
-#include "../../include/tr/audio/audio_source.hpp"
 #include "../../include/tr/audio/al_call.hpp"
+#include "../../include/tr/audio/audio_source.hpp"
 #include "../../include/tr/audio/audio_system.hpp"
 #include "../../include/tr/audio/impl.hpp"
+#include "../../include/tr/sysgfx/dialog.hpp"
 #include <AL/alext.h>
-#include <tr/sysgfx.hpp>
 
 constexpr std::size_t AUDIO_STREAM_BUFFER_SIZE{16384};
 

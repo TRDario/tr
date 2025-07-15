@@ -1,5 +1,5 @@
 #pragma once
-#include <tr/utility.hpp>
+#include "../utility/exception.hpp"
 
 namespace tr {
 	// Error thrown when initializing the audio system fails.
