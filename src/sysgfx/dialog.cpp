@@ -177,7 +177,12 @@ void tr::terminate(std::string_view reason, std::string_view description, std::s
 {
 	try {
 		TR_LOG(log, severity::FATAL, "{}, terminating.", reason);
-		TR_LOG_CONTINUE(log, "{}", details);
+		if (!description.empty()) {
+			TR_LOG_CONTINUE(log, "", description);
+		}
+		if (!details.empty()) {
+			TR_LOG_CONTINUE(log, "", details);
+		}
 
 		std::string message{std::format("A fatal error has occurred ({}).", reason)};
 		if (!description.empty()) {
