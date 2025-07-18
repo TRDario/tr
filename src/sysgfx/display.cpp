@@ -29,7 +29,8 @@ std::uint8_t tr::max_msaa() noexcept
 			SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, max);
 			wrapped_window window{SDL_CreateWindow("", 500, 500, SDL_WINDOW_HIDDEN | SDL_WINDOW_OPENGL)};
 			if (window == nullptr) {
-				return (max = 0);
+				max = static_cast<std::uint8_t>(max / 2);
+				continue;
 			}
 			wrapped_context context{SDL_GL_CreateContext(window.get())};
 			if (context == nullptr) {
