@@ -44,8 +44,8 @@ tr::fsecs tr::audio_buffer::length() const noexcept
 
 void tr::audio_buffer::set(std::span<const std::int16_t> data, audio_format format, int frequency) noexcept
 {
-	TR_AL_CALL(alBufferData, _id.get(), static_cast<ALenum>(format), data.data(), static_cast<ALsizei>(data.size_bytes()),
-			   static_cast<ALsizei>(frequency));
+	const ALsizei size{static_cast<ALsizei>(data.size_bytes()) - static_cast<ALsizei>(data.size_bytes()) % 4};
+	TR_AL_CALL(alBufferData, _id.get(), static_cast<ALenum>(format), data.data(), size, static_cast<ALsizei>(frequency));
 	if (alGetError() == AL_OUT_OF_MEMORY) {
 		terminate("Out of memory", "Exception occurred during audio buffer allocation.");
 	}
