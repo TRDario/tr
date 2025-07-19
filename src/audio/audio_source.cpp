@@ -57,7 +57,7 @@ tr::audio_source::audio_source(int priority) noexcept
 
 	try {
 		std::lock_guard lock{_audio_mutex};
-		if (_audio_sources.size() == 128) {
+		if (_audio_sources.size() == _max_audio_sources) {
 			auto it{std::ranges::find_if(_audio_sources, [&](auto& s) { return s.use_count() == 1 && s->priority() <= priority; })};
 			_audio_sources.erase(it);
 		}

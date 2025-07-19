@@ -46,7 +46,9 @@ void tr::audio_system::initialize()
 		alcCloseDevice(_device);
 		throw audio_system_init_error{"Failed to create audio context."};
 	}
-
+	int max_sources;
+	alcGetIntegerv(_device, ALC_MONO_SOURCES, 1, &max_sources);
+	_max_audio_sources = static_cast<std::size_t>(max_sources);
 	_audio_gains.fill(1);
 }
 
@@ -174,7 +176,7 @@ void tr::audio_system::set_listener_orientation(orientation orientation) noexcep
 
 bool tr::audio_system::can_allocate_audio_source(int priority) noexcept
 {
-	if (_audio_sources.size() < 128) {
+	if (_audio_sources.size() < _max_audio_sources) {
 		return true;
 	}
 	const auto it{std::ranges::find_if(_audio_sources, [&](auto& s) { return s.use_count() == 1 && s->priority() <= priority; })};
