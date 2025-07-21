@@ -194,7 +194,7 @@ void tr::_audio_thread_loop(std::stop_token stoken) noexcept
 			for (auto it = _audio_buffers_cullable.begin(); it != _audio_buffers_cullable.end();) {
 				auto& [buffer, cullable]{*it};
 				if (cullable && std::ranges::none_of(_audio_sources, [&](auto& s) { return s->buffer() == buffer; })) {
-					alDeleteBuffers(1, &buffer);
+					TR_AL_CALL(alDeleteBuffers, 1, &buffer);
 					it = _audio_buffers_cullable.erase(it);
 				}
 				else {

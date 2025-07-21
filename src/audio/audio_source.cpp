@@ -87,8 +87,8 @@ void tr::_buffer_stream_buffer::refill(_buffer_stream& stream) noexcept
 		static std::vector<std::int16_t> data_buf(AUDIO_STREAM_BUFFER_SIZE);
 		start_offset = stream.stream->tell();
 		data_buf.resize(stream.stream->read(data_buf.begin(), AUDIO_STREAM_BUFFER_SIZE));
-		alBufferData(id, stream.stream->channels() == 2 ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16, data_buf.data(),
-					 static_cast<ALsizei>(data_buf.size() * sizeof(std::int16_t)), stream.stream->sample_rate());
+		TR_AL_CALL(alBufferData, id, stream.stream->channels() == 2 ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16, data_buf.data(),
+				   static_cast<ALsizei>(data_buf.size() * sizeof(std::int16_t)), stream.stream->sample_rate());
 		if (alGetError() == AL_OUT_OF_MEMORY) {
 			terminate("Out of memory", "Exception occurred while refilling an audio buffer.");
 		}
@@ -262,7 +262,7 @@ void tr::audio_source::set_gain(float gain, fsecs time) noexcept
 float tr::_audio_source::max_dist() const noexcept
 {
 	float max_dist;
-	alGetSourcef(_id, AL_MAX_DISTANCE, &max_dist);
+	TR_AL_CALL(alGetSourcef, _id, AL_MAX_DISTANCE, &max_dist);
 	return max_dist;
 }
 
@@ -273,7 +273,7 @@ float tr::audio_source::max_dist() const noexcept
 
 void tr::_audio_source::set_max_dist(float max_dist) noexcept
 {
-	alSourcef(_id, AL_MAX_DISTANCE, std::max(max_dist, 0.0f));
+	TR_AL_CALL(alSourcef, _id, AL_MAX_DISTANCE, std::max(max_dist, 0.0f));
 }
 
 void tr::audio_source::set_max_dist(float max_dist) noexcept
@@ -298,7 +298,7 @@ void tr::audio_source::set_max_dist(float max_dist, fsecs time) noexcept
 float tr::_audio_source::rolloff() const noexcept
 {
 	float rolloff;
-	alGetSourcef(_id, AL_ROLLOFF_FACTOR, &rolloff);
+	TR_AL_CALL(alGetSourcef, _id, AL_ROLLOFF_FACTOR, &rolloff);
 	return rolloff;
 }
 
@@ -309,7 +309,7 @@ float tr::audio_source::rolloff() const noexcept
 
 void tr::_audio_source::set_rolloff(float rolloff) noexcept
 {
-	alSourcef(_id, AL_ROLLOFF_FACTOR, std::max(rolloff, 0.0f));
+	TR_AL_CALL(alSourcef, _id, AL_ROLLOFF_FACTOR, std::max(rolloff, 0.0f));
 }
 
 void tr::audio_source::set_rolloff(float rolloff) noexcept
@@ -334,7 +334,7 @@ void tr::audio_source::set_rolloff(float rolloff, fsecs time) noexcept
 float tr::_audio_source::ref_dist() const noexcept
 {
 	float ref_dist;
-	alGetSourcef(_id, AL_REFERENCE_DISTANCE, &ref_dist);
+	TR_AL_CALL(alGetSourcef, _id, AL_REFERENCE_DISTANCE, &ref_dist);
 	return ref_dist;
 }
 
@@ -345,7 +345,7 @@ float tr::audio_source::ref_dist() const noexcept
 
 void tr::_audio_source::set_ref_dist(float ref_dist) noexcept
 {
-	alSourcef(_id, AL_REFERENCE_DISTANCE, std::max(ref_dist, 0.0f));
+	TR_AL_CALL(alSourcef, _id, AL_REFERENCE_DISTANCE, std::max(ref_dist, 0.0f));
 }
 
 void tr::audio_source::set_ref_dist(float ref_dist) noexcept
@@ -370,7 +370,7 @@ void tr::audio_source::set_ref_dist(float ref_dist, fsecs time) noexcept
 float tr::_audio_source::out_cone_gain() const noexcept
 {
 	float out_gain;
-	alGetSourcef(_id, AL_CONE_OUTER_GAIN, &out_gain);
+	TR_AL_CALL(alGetSourcef, _id, AL_CONE_OUTER_GAIN, &out_gain);
 	return out_gain;
 }
 
@@ -381,7 +381,7 @@ float tr::audio_source::out_cone_gain() const noexcept
 
 void tr::_audio_source::set_out_cone_gain(float out_cone_gain) noexcept
 {
-	alSourcef(_id, AL_CONE_OUTER_GAIN, std::clamp(out_cone_gain, 0.0f, 1.0f));
+	TR_AL_CALL(alSourcef, _id, AL_CONE_OUTER_GAIN, std::clamp(out_cone_gain, 0.0f, 1.0f));
 }
 
 void tr::audio_source::set_out_cone_gain(float out_cone_gain) noexcept
@@ -407,7 +407,7 @@ void tr::audio_source::set_out_cone_gain(float out_cone_gain, fsecs time) noexce
 tr::fangle tr::_audio_source::in_cone_w() const noexcept
 {
 	float in_cone_w;
-	alGetSourcef(_id, AL_CONE_INNER_ANGLE, &in_cone_w);
+	TR_AL_CALL(alGetSourcef, _id, AL_CONE_INNER_ANGLE, &in_cone_w);
 	return degs(in_cone_w);
 }
 
@@ -419,7 +419,7 @@ tr::fangle tr::audio_source::in_cone_w() const noexcept
 tr::fangle tr::_audio_source::out_cone_w() const noexcept
 {
 	float out_cone_w;
-	alGetSourcef(_id, AL_CONE_OUTER_ANGLE, &out_cone_w);
+	TR_AL_CALL(alGetSourcef, _id, AL_CONE_OUTER_ANGLE, &out_cone_w);
 	return degs(out_cone_w);
 }
 
@@ -435,8 +435,8 @@ void tr::_audio_source::set_cone_w(tr::fangle in_cone_w, tr::fangle out_cone_w) 
 	TR_ASSERT(in_cone_w < out_cone_w, "Tried to set audio source outer cone as thinner than inner cone (inner: {:d}, outer: {:d}).",
 			  in_cone_w, out_cone_w);
 
-	alSourcef(_id, AL_CONE_INNER_ANGLE, in_cone_w.degs());
-	alSourcef(_id, AL_CONE_OUTER_ANGLE, out_cone_w.degs());
+	TR_AL_CALL(alSourcef, _id, AL_CONE_INNER_ANGLE, in_cone_w.degs());
+	TR_AL_CALL(alSourcef, _id, AL_CONE_OUTER_ANGLE, out_cone_w.degs());
 }
 
 void tr::audio_source::set_cone_w(tr::fangle in_cone_w, tr::fangle out_cone_w) noexcept
@@ -462,7 +462,7 @@ void tr::audio_source::set_cone_w(tr::fangle in_cone_w, tr::fangle out_cone_w, f
 glm::vec3 tr::_audio_source::pos() const noexcept
 {
 	glm::vec3 pos;
-	alGetSourcefv(_id, AL_POSITION, value_ptr(pos));
+	TR_AL_CALL(alGetSourcefv, _id, AL_POSITION, value_ptr(pos));
 	return pos;
 }
 
@@ -473,7 +473,7 @@ glm::vec3 tr::audio_source::pos() const noexcept
 
 void tr::_audio_source::set_pos(const glm::vec3& pos) noexcept
 {
-	alSourcefv(_id, AL_POSITION, value_ptr(pos));
+	TR_AL_CALL(alSourcefv, _id, AL_POSITION, value_ptr(pos));
 }
 
 void tr::audio_source::set_pos(const glm::vec3& pos) noexcept
@@ -498,7 +498,7 @@ void tr::audio_source::set_pos(const glm::vec3& pos, fsecs time) noexcept
 glm::vec3 tr::_audio_source::vel() const noexcept
 {
 	glm::vec3 vel;
-	alGetSourcefv(_id, AL_VELOCITY, value_ptr(vel));
+	TR_AL_CALL(alGetSourcefv, _id, AL_VELOCITY, value_ptr(vel));
 	return vel;
 }
 
@@ -509,7 +509,7 @@ glm::vec3 tr::audio_source::vel() const noexcept
 
 void tr::_audio_source::set_vel(const glm::vec3& vel) noexcept
 {
-	alSourcefv(_id, AL_VELOCITY, value_ptr(vel));
+	TR_AL_CALL(alSourcefv, _id, AL_VELOCITY, value_ptr(vel));
 }
 
 void tr::audio_source::set_vel(const glm::vec3& vel) noexcept
@@ -534,7 +534,7 @@ void tr::audio_source::set_vel(const glm::vec3& vel, fsecs time) noexcept
 glm::vec3 tr::_audio_source::dir() const noexcept
 {
 	glm::vec3 dir;
-	alGetSourcefv(_id, AL_DIRECTION, value_ptr(dir));
+	TR_AL_CALL(alGetSourcefv, _id, AL_DIRECTION, value_ptr(dir));
 	return dir;
 }
 
@@ -545,7 +545,7 @@ glm::vec3 tr::audio_source::dir() const noexcept
 
 void tr::_audio_source::set_dir(const glm::vec3& dir) noexcept
 {
-	alSourcefv(_id, AL_DIRECTION, value_ptr(dir));
+	TR_AL_CALL(alSourcefv, _id, AL_DIRECTION, value_ptr(dir));
 }
 
 void tr::audio_source::set_dir(const glm::vec3& dir) noexcept
@@ -702,7 +702,7 @@ tr::fsecs tr::_audio_source::offset() const noexcept
 		}
 
 		ALint buf_id;
-		alGetSourcei(_id, AL_BUFFER, &buf_id);
+		TR_AL_CALL(alGetSourcei, _id, AL_BUFFER, &buf_id);
 
 		auto& buf{*std::ranges::find(_stream->buffers, static_cast<unsigned int>(buf_id), &_buffer_stream_buffer::id)};
 		unlock_audio_mutex();
