@@ -97,15 +97,10 @@ void tr::_buffer_stream_buffer::refill(_buffer_stream& stream) noexcept
 
 		start_offset = stream.stream->tell();
 		data_buf.resize(stream.stream->read(data_buf.begin(), AUDIO_STREAM_BUFFER_SIZE));
-<<<<<<< HEAD
-		TR_AL_CALL(alBufferData, id, stream.stream->channels() == 2 ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16, data_buf.data(),
-				   static_cast<ALsizei>(data_buf.size() * sizeof(std::int16_t)), stream.stream->sample_rate());
-=======
 		const ALenum format{stream.stream->channels() == 2 ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16};
 		ALsizei size{static_cast<ALsizei>(data_buf.size() * sizeof(std::int16_t))};
 		size = size - size % 4;
 		TR_AL_CALL(alBufferData, id, format, data_buf.data(), size, stream.stream->sample_rate());
->>>>>>> e2c937d (Audio stream fixes.)
 		if (alGetError() == AL_OUT_OF_MEMORY) {
 			terminate("Out of memory", "Exception occurred while refilling an audio buffer.");
 		}
