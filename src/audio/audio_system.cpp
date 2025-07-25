@@ -224,12 +224,15 @@ void tr::_audio_thread_loop(std::stop_token stoken) noexcept
 					std::array<ALuint, 4> buffers{};
 					TR_AL_CALL(alSourceUnqueueBuffers, source._id, nbuffers, buffers.data());
 					for (int i = 0; i < nbuffers; ++i) {
-						std::ranges::find(stream.buffers, buffers[i], &_buffer_stream_buffer::id)->refill(stream);
 						if (stream.stream->tell() == stream.stream->length()) {
-							nbuffers = i + 1;
+							nbuffers = i;
+							break;
 						}
+						std::ranges::find(stream.buffers, buffers[i], &_buffer_stream_buffer::id)->refill(stream);
 					}
-					TR_AL_CALL(alSourceQueueBuffers, source._id, nbuffers, buffers.data());
+					if (nbuffers > 0) {
+						TR_AL_CALL(alSourceQueueBuffers, source._id, nbuffers, buffers.data());
+					}
 				}
 				++it;
 			}
