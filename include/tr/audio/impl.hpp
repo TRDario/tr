@@ -15,6 +15,9 @@ namespace tr {
 		// Where the start offset of the audio data is within the stream.
 		std::size_t start_offset;
 
+		// Creates a buffer stream buffer.
+		_buffer_stream_buffer() noexcept;
+
 		// Refills the buffer with stream data.
 		void refill(_buffer_stream& stream) noexcept;
 	};
