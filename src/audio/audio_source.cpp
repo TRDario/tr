@@ -90,6 +90,11 @@ tr::_buffer_stream_buffer::_buffer_stream_buffer() noexcept
 	}
 }
 
+tr::_buffer_stream_buffer::~_buffer_stream_buffer() noexcept
+{
+	TR_AL_CALL(alDeleteBuffers, 1, &id);
+}
+
 void tr::_buffer_stream_buffer::refill(_buffer_stream& stream) noexcept
 {
 	try {

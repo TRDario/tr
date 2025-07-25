@@ -75,7 +75,7 @@ void tr::audio_system::shut_down() noexcept
 
 	for (auto& [buffer, cullable] : _audio_buffers_cullable) {
 		TR_ASSERT(cullable, "Tried to shut down audio system while one or more audio buffers still exists.");
-		alDeleteBuffers(1, &buffer);
+		TR_AL_CALL(alDeleteBuffers, 1, &buffer);
 	}
 	_audio_buffers_cullable.clear();
 
