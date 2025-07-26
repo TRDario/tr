@@ -95,15 +95,8 @@ template <tr::audio_stream_output_iterator It> std::size_t tr::audio_stream::rea
 		}
 	}
 	else {
-		const std::size_t samples_until_end{length() - tell()};
-		if (samples_until_end < samples) {
-			raw_read(std::to_address(it), samples_until_end);
-			std::fill(it + samples_until_end, it + samples, 0);
-			return samples_until_end;
-		}
-		else {
-			raw_read(std::to_address(it), samples);
-			return samples;
-		}
+		const std::size_t samples_to_read{std::min(length() - tell(), samples)};
+		raw_read(std::to_address(it), samples_to_read);
+		return samples_to_read;
 	}
 }
