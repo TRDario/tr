@@ -20,10 +20,6 @@ namespace tr {
 		std::string _description;
 	};
 
-	// Concept denoting an iterator suitable for audio_stream::read.
-	template <class It>
-	concept audio_stream_output_iterator = std::contiguous_iterator<It> && std::output_iterator<It, std::int16_t>;
-
 	// Audio stream interface.
 	class audio_stream {
 	  public:
@@ -42,9 +38,9 @@ namespace tr {
 		// Seeks to an offset relative to the beginning.
 		virtual void seek(std::size_t where) noexcept = 0;
 		// Reads samples to a destination buffer.
-		virtual void raw_read(std::int16_t* dest, std::size_t samples) noexcept = 0;
-		// Reads from the stream and returns the number of read samples.
-		template <audio_stream_output_iterator It> std::size_t read(It it, std::size_t samples) noexcept;
+		virtual void raw_read(std::span<std::int16_t> buffer) noexcept = 0;
+		// Reads from the stream and returns the span of the buffer that was written to.
+		std::span<std::int16_t> read(std::span<std::int16_t> buffer) noexcept;
 
 		// Gets whether the stream is looping.
 		bool looping() const noexcept;
@@ -73,30 +69,3 @@ namespace tr {
 	// May throw: audio_file_open_error.
 	std::unique_ptr<audio_stream> open_audio_file(const std::filesystem::path& path);
 } // namespace tr
-
-///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
-
-template <tr::audio_stream_output_iterator It> std::size_t tr::audio_stream::read(It it, std::size_t samples) noexcept
-{
-	if (_looping) {
-		std::size_t samples_left{samples};
-		while (true) {
-			const std::size_t samples_until_loop{loop_end() - tell()};
-			if (samples_until_loop < samples_left) {
-				raw_read(std::to_address(it), samples_until_loop);
-				samples_left -= samples_until_loop;
-				it += samples_until_loop;
-				seek(loop_start());
-			}
-			else {
-				raw_read(std::to_address(it), samples_left);
-				return samples;
-			}
-		}
-	}
-	else {
-		const std::size_t samples_to_read{std::min(length() - tell(), samples)};
-		raw_read(std::to_address(it), samples_to_read);
-		return samples_to_read;
-	}
-}

@@ -95,17 +95,16 @@ tr::_buffer_stream_buffer::~_buffer_stream_buffer() noexcept
 	TR_AL_CALL(alDeleteBuffers, 1, &id);
 }
 
-void tr::_buffer_stream_buffer::refill(_buffer_stream& stream) noexcept
+void tr::_buffer_stream_buffer::refill(_buffer_stream& buffer_stream) noexcept
 {
 	try {
-		static std::vector<std::int16_t> data_buf(AUDIO_STREAM_BUFFER_SIZE);
+		std::array<std::int16_t, AUDIO_STREAM_BUFFER_SIZE> buffer;
 
-		start_offset = stream.stream->tell();
-		data_buf.resize(stream.stream->read(data_buf.begin(), AUDIO_STREAM_BUFFER_SIZE));
-		const ALenum format{stream.stream->channels() == 2 ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16};
-		ALsizei size{static_cast<ALsizei>(data_buf.size() * sizeof(std::int16_t))};
-		size = size - size % 4;
-		TR_AL_CALL(alBufferData, id, format, data_buf.data(), size, stream.stream->sample_rate());
+		start_offset = buffer_stream.stream->tell();
+		const std::span<const std::int16_t> used_buffer{buffer_stream.stream->read(buffer)};
+		const ALenum format{buffer_stream.stream->channels() == 2 ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16};
+		const ALsizei size{static_cast<ALsizei>(used_buffer.size_bytes()) - static_cast<ALsizei>(used_buffer.size_bytes()) % 4};
+		TR_AL_CALL(alBufferData, id, format, used_buffer.data(), size, buffer_stream.stream->sample_rate());
 		if (alGetError() == AL_OUT_OF_MEMORY) {
 			terminate("Out of memory", "Exception occurred while refilling an audio buffer.");
 		}

@@ -55,8 +55,8 @@ tr::audio_buffer tr::load_audio_file(const std::filesystem::path& path)
 {
 	try {
 		std::unique_ptr<audio_stream> file{open_audio_file(path)};
-		std::vector<std::int16_t> data(file->length());
-		file->read(data.data(), data.size());
+		std::vector<std::int16_t> data(file->length() * file->channels());
+		file->read(data);
 		return audio_buffer{data, file->channels() == 2 ? audio_format::STEREO16 : audio_format::MONO16, file->sample_rate()};
 	}
 	catch (std::bad_alloc&) {

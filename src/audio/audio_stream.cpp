@@ -14,7 +14,7 @@ namespace tr {
 
 		std::size_t tell() const noexcept override;
 		void seek(std::size_t where) noexcept override;
-		void raw_read(std::int16_t* dest, std::size_t samples) noexcept override;
+		void raw_read(std::span<std::int16_t> buffer) noexcept override;
 
 	  private:
 		OggVorbis_File _file{};
@@ -66,7 +66,7 @@ tr::_ogg_audio_stream::_ogg_audio_stream(const std::filesystem::path& path)
 				set_loop_end(loop_end);
 			}
 		}
-		else if (comment == "LOOP=true" || comment == "LOOP=1") {
+		else if (comment.starts_with("LOOP=")) {
 			set_looping(true);
 		}
 	}
@@ -102,10 +102,10 @@ void tr::_ogg_audio_stream::seek(std::size_t where) noexcept
 	ov_pcm_seek(&_file, static_cast<ogg_int64_t>(where));
 }
 
-void tr::_ogg_audio_stream::raw_read(std::int16_t* dest, std::size_t samples) noexcept
+void tr::_ogg_audio_stream::raw_read(std::span<std::int16_t> buffer) noexcept
 {
-	char* raw_dest{reinterpret_cast<char*>(dest)};
-	int bytes_left{static_cast<int>(samples * sizeof(std::int16_t))};
+	char* raw_dest{reinterpret_cast<char*>(buffer.data())};
+	int bytes_left{static_cast<int>(buffer.size_bytes())};
 	int cur_section;
 	while (bytes_left > 0) {
 		const int read_bytes{static_cast<int>(ov_read(&_file, raw_dest, bytes_left, 0, 2, 1, &cur_section))};
@@ -144,6 +144,30 @@ std::string_view tr::audio_file_open_error::details() const noexcept
 tr::audio_stream::audio_stream() noexcept
 	: _looping{false}, _loop_start{0}, _loop_end{UNKNOWN_LOOP_POINT}
 {
+}
+
+std::span<std::int16_t> tr::audio_stream::read(std::span<std::int16_t> buffer) noexcept
+{
+	if (_looping) {
+		std::span<std::int16_t> remaining_buffer{buffer};
+		while (true) {
+			const std::size_t samples_until_loop{(loop_end() - tell()) * channels()};
+			if (samples_until_loop < remaining_buffer.size()) {
+				raw_read(remaining_buffer.subspan(0, samples_until_loop));
+				remaining_buffer = remaining_buffer.subspan(samples_until_loop);
+				seek(loop_start());
+			}
+			else {
+				raw_read(remaining_buffer);
+				return buffer;
+			}
+		}
+	}
+	else {
+		buffer = buffer.subspan(0, std::min((length() - tell()) * channels(), buffer.size()));
+		raw_read(buffer);
+		return buffer;
+	}
 }
 
 bool tr::audio_stream::looping() const noexcept
