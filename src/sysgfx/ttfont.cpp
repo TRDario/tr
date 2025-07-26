@@ -168,6 +168,16 @@ glm::ivec2 tr::ttfont::text_size(std::string_view text, int max_w) const noexcep
 	return size;
 }
 
+tr::bitmap tr::ttfont::render(std::uint32_t glyph, rgba8 color) const
+{
+	const SDL_Color sdl_color{color.r, color.g, color.b, color.a};
+	SDL_Surface* surface{TTF_RenderGlyph_Blended(_impl.get(), glyph, sdl_color)};
+	if (surface == nullptr) {
+		throw ttfont_render_error{SDL_GetError()};
+	}
+	return surface;
+}
+
 tr::bitmap tr::ttfont::render(std::string_view text, int max_w, halign align, rgba8 color) const
 {
 	TTF_SetFontWrapAlignment(_impl.get(), static_cast<TTF_HorizontalAlignment>(align));

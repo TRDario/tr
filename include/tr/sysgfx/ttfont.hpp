@@ -108,6 +108,9 @@ namespace tr {
 		// Gets the drawn size of a string of text given the current size, style, and outline.
 		glm::ivec2 text_size(std::string_view text, int max_w = UNLIMITED_WIDTH) const noexcept;
 
+		// Renders a glyph.
+		// May throw: ttfont_render_error.
+		bitmap render(std::uint32_t glyph, rgba8 color) const;
 		// Renders a string of text.
 		// May throw: ttfont_render_error.
 		bitmap render(std::string_view text, int max_w, halign align, rgba8 color) const;
