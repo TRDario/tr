@@ -20,7 +20,7 @@ namespace tr {
 		OggVorbis_File _file{};
 	};
 
-	constexpr std::size_t UNKNOWN_LOOP_END{std::numeric_limits<std::size_t>::max()};
+	constexpr std::size_t UNKNOWN_LOOP_POINT{std::numeric_limits<std::size_t>::max()};
 } // namespace tr
 
 ///////////////////////////////////////////////////////////// OGG AUDIO FILE //////////////////////////////////////////////////////////////
@@ -44,6 +44,30 @@ tr::_ogg_audio_stream::_ogg_audio_stream(const std::filesystem::path& path)
 			throw audio_file_open_error{std::format("Invalid .ogg Vorbis header in '{}'.", path.string())};
 		case OV_EFAULT:
 			throw audio_file_open_error{std::format("An internal error in Vorbis occurred while loading '{}'.", path.string())};
+		}
+	}
+
+	const vorbis_comment& comments{*ov_comment(&_file, -1)};
+	for (int i = 0; i < comments.comments; ++i) {
+		const std::string_view comment{comments.user_comments[i], static_cast<std::size_t>(comments.comment_lengths[i])};
+		if (comment.starts_with("LOOPSTART=")) {
+			std::size_t loop_start{UNKNOWN_LOOP_POINT};
+			std::from_chars(comment.data() + 10, comment.data() + comment.size(), loop_start);
+			if (loop_start != UNKNOWN_LOOP_POINT) {
+				set_looping(true);
+				set_loop_start(loop_start);
+			}
+		}
+		else if (comment.starts_with("LOOPEND=")) {
+			std::size_t loop_end{UNKNOWN_LOOP_POINT};
+			std::from_chars(comment.data() + 8, comment.data() + comment.size(), loop_end);
+			if (loop_end != UNKNOWN_LOOP_POINT) {
+				set_looping(true);
+				set_loop_end(loop_end);
+			}
+		}
+		else if (comment == "LOOP=true" || comment == "LOOP=1") {
+			set_looping(true);
 		}
 	}
 }
@@ -118,7 +142,7 @@ std::string_view tr::audio_file_open_error::details() const noexcept
 /////////////////////////////////////////////////////////////// AUDIO FILE ////////////////////////////////////////////////////////////////
 
 tr::audio_stream::audio_stream() noexcept
-	: _looping{false}, _loop_start{0}, _loop_end{UNKNOWN_LOOP_END}
+	: _looping{false}, _loop_start{0}, _loop_end{UNKNOWN_LOOP_POINT}
 {
 }
 
@@ -147,7 +171,7 @@ void tr::audio_stream::set_loop_start(std::size_t loop_start) noexcept
 
 std::size_t tr::audio_stream::loop_end() const noexcept
 {
-	if (_loop_end == UNKNOWN_LOOP_END) {
+	if (_loop_end == UNKNOWN_LOOP_POINT) {
 		_loop_end = length();
 	}
 	return _loop_end;

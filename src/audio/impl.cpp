@@ -39,7 +39,7 @@ std::shared_ptr<tr::_audio_source> tr::_audio_command::source() const noexcept
 tr::_audio_command::_arg tr::_audio_command::_value() noexcept
 {
 	const time_point now{clock::now()};
-	_elapsed = std::min(now - _last_update, _length);
+	_elapsed = std::min(_elapsed + now - _last_update, _length);
 	_last_update = now;
 	const float t{duration_cast<fsecs>(_elapsed) / _length};
 

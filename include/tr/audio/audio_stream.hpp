@@ -79,20 +79,31 @@ namespace tr {
 template <tr::audio_stream_output_iterator It> std::size_t tr::audio_stream::read(It it, std::size_t samples) noexcept
 {
 	if (_looping) {
-		while (samples > 0) {
+		std::size_t samples_left{samples};
+		while (true) {
 			const std::size_t samples_until_loop{loop_end() - tell()};
-			const std::size_t samples_to_read{std::min(samples_until_loop, samples)};
-			raw_read(std::to_address(it), samples_to_read);
-			if (samples > 0) {
+			if (samples_until_loop < samples_left) {
+				raw_read(std::to_address(it), samples_until_loop);
+				samples_left -= samples_until_loop;
+				it += samples_until_loop;
 				seek(loop_start());
-				samples -= samples_to_read;
+			}
+			else {
+				raw_read(std::to_address(it), samples_left);
+				return samples;
 			}
 		}
-		return samples;
 	}
 	else {
-		const std::size_t samples_to_read{std::min(length(), samples)};
-		raw_read(std::to_address(it), samples_to_read);
-		return samples_to_read;
+		const std::size_t samples_until_end{length() - tell()};
+		if (samples_until_end < samples) {
+			raw_read(std::to_address(it), samples_until_end);
+			std::fill(it + samples_until_end, it + samples, 0);
+			return samples_until_end;
+		}
+		else {
+			raw_read(std::to_address(it), samples);
+			return samples;
+		}
 	}
 }
