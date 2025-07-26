@@ -134,6 +134,20 @@ void tr::ttfont::set_outline(int outline) noexcept
 	TTF_SetFontOutline(_impl.get(), outline);
 }
 
+tr::glyph_metrics tr::ttfont::metrics(std::uint32_t glyph)
+{
+	tr::glyph_metrics metrics;
+	TTF_GetGlyphMetrics(_impl.get(), glyph, &metrics.min.x, &metrics.max.x, &metrics.min.y, &metrics.max.y, &metrics.advance);
+	return metrics;
+}
+
+int tr::ttfont::kerning(std::uint32_t prev_glyph, std::uint32_t next_glyph) noexcept
+{
+	int kerning;
+	TTF_GetGlyphKerning(_impl.get(), prev_glyph, next_glyph, &kerning);
+	return kerning;
+}
+
 tr::ttf_measure_result tr::ttfont::measure_text(std::string_view text, int max_w) const noexcept
 {
 	ttf_measure_result result;

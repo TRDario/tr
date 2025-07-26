@@ -57,6 +57,16 @@ namespace tr {
 	};
 	DEFINE_BITMASK_OPERATORS(ttf_style);
 
+	// Font glyph metrics.
+	struct glyph_metrics {
+		// Minimum coordinates of the glyph offset from the bottom-left of its bounding box.
+		glm::ivec2 min;
+		// Maximum coordinates of the glyph offset from the bottom-left of its bounding box.
+		glm::ivec2 max;
+		// Distance between the left edge of the glyph and the next glyph.
+		int advance;
+	};
+
 	// TTF font string measurement result.
 	struct ttf_measure_result {
 		// The string that will fit.
@@ -89,6 +99,10 @@ namespace tr {
 		// Sets the font outline.
 		void set_outline(int outline) noexcept;
 
+		// Gets the metrics of a glyph given the current size, style, and outline.
+		glyph_metrics metrics(std::uint32_t glyph);
+		// Gets the kerning between two glyphs given the current size, style, and outline.
+		int kerning(std::uint32_t prev_glyph, std::uint32_t next_glyph) noexcept;
 		// Measures the amount of text that will fit in a given width given the current size, style, and outline.
 		ttf_measure_result measure_text(std::string_view text, int max_w) const noexcept;
 		// Gets the drawn size of a string of text given the current size, style, and outline.
