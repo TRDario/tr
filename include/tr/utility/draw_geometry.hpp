@@ -27,7 +27,7 @@ namespace tr {
 	 *
 	 * @return The number of segments needed to draw a smooth arc.
 	 ******************************************************************************************************************/
-	inline std::size_t smooth_arc_vtx(float r, fangle sizeth, float scale = 1.0f) noexcept;
+	inline std::size_t smooth_arc_vtx(float r, angle sizeth, float scale = 1.0f) noexcept;
 
 	/******************************************************************************************************************
 	 * Calculates the number of indices needed for a convex polygon mesh.
@@ -231,7 +231,7 @@ namespace tr {
 	 * @return An iterator to the end of the outputted sequence.
 	 ******************************************************************************************************************/
 	template <std::output_iterator<glm::vec2> It>
-	inline It fill_rotated_rect_vtx(It out, glm::vec2 pos, glm::vec2 anchor, glm::vec2 size, fangle rot);
+	inline It fill_rotated_rect_vtx(It out, glm::vec2 pos, glm::vec2 anchor, glm::vec2 size, angle rot);
 
 	/******************************************************************************************************************
 	 * Outputs rotated rectangle vertices.
@@ -252,7 +252,7 @@ namespace tr {
 	 * @return An iterator to the end of the outputted sequence.
 	 ******************************************************************************************************************/
 	template <sized_output_range<glm::vec2> R>
-	inline std::ranges::iterator_t<R> fill_rotated_rect_vtx(R&& out, glm::vec2 pos, glm::vec2 anchor, glm::vec2 size, fangle rot);
+	inline std::ranges::iterator_t<R> fill_rotated_rect_vtx(R&& out, glm::vec2 pos, glm::vec2 anchor, glm::vec2 size, angle rot);
 
 	/******************************************************************************************************************
 	 * Outputs unrotated rectangle outline vertices.
@@ -351,7 +351,7 @@ namespace tr {
 	 * @return An iterator to the end of the outputted sequence.
 	 ******************************************************************************************************************/
 	template <std::output_iterator<glm::vec2> It>
-	inline It fill_rotated_rect_outline_vtx(It out, glm::vec2 pos, glm::vec2 anchor, glm::vec2 size, fangle rot, float thick);
+	inline It fill_rotated_rect_outline_vtx(It out, glm::vec2 pos, glm::vec2 anchor, glm::vec2 size, angle rot, float thick);
 
 	/******************************************************************************************************************
 	 * Outputs rotated rectangle outline vertices.
@@ -373,7 +373,7 @@ namespace tr {
 	 * @return An iterator to the end of the outputted sequence.
 	 ******************************************************************************************************************/
 	template <sized_output_range<glm::vec2> R>
-	inline std::ranges::iterator_t<R> fill_rotated_rect_outline_vtx(R&& out, glm::vec2 pos, glm::vec2 anchor, glm::vec2 size, fangle rot,
+	inline std::ranges::iterator_t<R> fill_rotated_rect_outline_vtx(R&& out, glm::vec2 pos, glm::vec2 anchor, glm::vec2 size, angle rot,
 																	float thick);
 
 	/******************************************************************************************************************
@@ -399,7 +399,7 @@ namespace tr {
 	 *
 	 * @return An iterator to the end of the outputted sequence.
 	 ******************************************************************************************************************/
-	template <std::output_iterator<glm::vec2> It> It fill_arc_vtx(It out, std::size_t vtx, fcircle circ, fangle startth, fangle sizeth);
+	template <std::output_iterator<glm::vec2> It> It fill_arc_vtx(It out, std::size_t vtx, circle circ, angle startth, angle sizeth);
 
 	/******************************************************************************************************************
 	 * Outputs vertex positions along an arc.
@@ -425,7 +425,7 @@ namespace tr {
 	 * @return An iterator to the end of the outputted sequence.
 	 ******************************************************************************************************************/
 	template <sized_output_range<glm::vec2> R>
-	std::ranges::iterator_t<R> fill_arc_vtx(R&& out, std::size_t vtx, fcircle circ, fangle startth, fangle sizeth);
+	std::ranges::iterator_t<R> fill_arc_vtx(R&& out, std::size_t vtx, circle circ, angle startth, angle sizeth);
 
 	/******************************************************************************************************************
 	 * Outputs vertex positions for a regular polygon.
@@ -449,7 +449,7 @@ namespace tr {
 	 *
 	 * @return An iterator to the end of the outputted sequence.
 	 ******************************************************************************************************************/
-	template <std::output_iterator<glm::vec2> It> It fill_poly_vtx(It out, std::size_t vtx, fcircle circ, fangle rot = 0_degf);
+	template <std::output_iterator<glm::vec2> It> It fill_poly_vtx(It out, std::size_t vtx, circle circ, angle rot = 0_deg);
 
 	/******************************************************************************************************************
 	 * Outputs vertex positions for a regular polygon.
@@ -474,7 +474,7 @@ namespace tr {
 	 * @return An iterator to the end of the outputted sequence.
 	 ******************************************************************************************************************/
 	template <sized_output_range<glm::vec2> R>
-	std::ranges::iterator_t<R> fill_poly_vtx(R&& out, std::size_t vtx, fcircle circ, fangle rot = 0_degf);
+	std::ranges::iterator_t<R> fill_poly_vtx(R&& out, std::size_t vtx, circle circ, angle rot = 0_deg);
 
 	/******************************************************************************************************************
 	 * Outputs vertex positions for a regular polygon's outline.
@@ -499,7 +499,7 @@ namespace tr {
 	 *
 	 * @return An iterator to the end of the outputted sequence.
 	 ******************************************************************************************************************/
-	template <std::output_iterator<glm::vec2> It> It fill_poly_outline_vtx(It out, std::size_t vtx, fcircle circ, fangle rot, float thick);
+	template <std::output_iterator<glm::vec2> It> It fill_poly_outline_vtx(It out, std::size_t vtx, circle circ, angle rot, float thick);
 
 	/******************************************************************************************************************
 	 * Outputs vertex positions for a regular polygon's outline.
@@ -525,7 +525,7 @@ namespace tr {
 	 * @return An iterator to the end of the outputted sequence.
 	 ******************************************************************************************************************/
 	template <sized_output_range<glm::vec2> R>
-	std::ranges::iterator_t<R> fill_poly_outline_vtx(R&& out, std::size_t vtx, fcircle circ, fangle rot, float thick);
+	std::ranges::iterator_t<R> fill_poly_outline_vtx(R&& out, std::size_t vtx, circle circ, angle rot, float thick);
 
 	/// @}
 } // namespace tr

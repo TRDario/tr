@@ -1,7 +1,7 @@
 #pragma once
 #include "utf8.hpp"
 
-template <tr::utf8::base_iterator T> constexpr tr::codepoint tr::utf8::to_cp(T it) noexcept
+template <tr::utf8::base_iterator T> constexpr tr::codepoint tr::utf8::to_cp(T it)
 {
 	if (static_cast<unsigned char>(*it) < 0x80) {
 		return static_cast<unsigned char>(*it);
@@ -19,7 +19,7 @@ template <tr::utf8::base_iterator T> constexpr tr::codepoint tr::utf8::to_cp(T i
 	}
 }
 
-template <tr::utf8::base_iterator T> constexpr T tr::utf8::next(T it) noexcept
+template <tr::utf8::base_iterator T> constexpr T tr::utf8::next(T it)
 {
 	if (static_cast<std::uint8_t>(*it) < 0x80) {
 		it += 1;
@@ -36,13 +36,13 @@ template <tr::utf8::base_iterator T> constexpr T tr::utf8::next(T it) noexcept
 	return it;
 }
 
-template <tr::utf8::base_iterator T> constexpr T tr::utf8::prev(T it) noexcept
+template <tr::utf8::base_iterator T> constexpr T tr::utf8::prev(T it)
 {
 	while ((*--it & 0xC0) == 0x80) {}
 	return it;
 }
 
-template <tr::utf8::string String> constexpr String::iterator tr::utf8::insert(String& str, String::iterator where, codepoint cp) noexcept
+template <tr::utf8::string String> constexpr String::iterator tr::utf8::insert(String& str, String::iterator where, codepoint cp)
 {
 	if (cp < 0x80) {
 		return str.insert(where, cp);
@@ -62,7 +62,7 @@ template <tr::utf8::string String> constexpr String::iterator tr::utf8::insert(S
 	}
 }
 
-template <tr::utf8::string String> constexpr String::iterator tr::utf8::erase(String& str, String::iterator where) noexcept
+template <tr::utf8::string String> constexpr String::iterator tr::utf8::erase(String& str, String::iterator where)
 {
 	if (static_cast<unsigned char>(*where) < 0x80) {
 		return str.erase(where);
@@ -78,7 +78,7 @@ template <tr::utf8::string String> constexpr String::iterator tr::utf8::erase(St
 	}
 }
 
-template <tr::utf8::string String> constexpr void tr::utf8::pop_back(String& str) noexcept
+template <tr::utf8::string String> constexpr void tr::utf8::pop_back(String& str)
 {
 	do {
 		str.pop_back();
@@ -87,57 +87,57 @@ template <tr::utf8::string String> constexpr void tr::utf8::pop_back(String& str
 
 //
 
-constexpr tr::utf8::const_it::const_it(const char* ptr) noexcept
-	: _impl{ptr}
+constexpr tr::utf8::const_it::const_it(const char* ptr)
+	: ptr{ptr}
 {
-	TR_ASSERT(_impl != nullptr, "Tried to create UTF-8 iterator to nullptr.");
+	TR_ASSERT(ptr != nullptr, "Tried to create UTF-8 iterator to nullptr.");
 }
 
-constexpr tr::codepoint tr::utf8::const_it::operator*() const noexcept
+constexpr tr::codepoint tr::utf8::const_it::operator*() const
 {
-	TR_ASSERT(_impl != nullptr, "Tried to dereference default-constructed UTF-8 iterator.");
+	TR_ASSERT(ptr != nullptr, "Tried to dereference default-constructed UTF-8 iterator.");
 
-	return to_cp(_impl);
+	return to_cp(ptr);
 }
 
-constexpr tr::utf8::const_it& tr::utf8::const_it::operator++() noexcept
+constexpr tr::utf8::const_it& tr::utf8::const_it::operator++()
 {
-	TR_ASSERT(_impl != nullptr, "Tried to increment default-constructed UTF-8 iterator.");
+	TR_ASSERT(ptr != nullptr, "Tried to increment default-constructed UTF-8 iterator.");
 
-	_impl = next(_impl);
+	ptr = next(ptr);
 	return *this;
 }
 
-constexpr tr::utf8::const_it tr::utf8::const_it::operator++(int) noexcept
+constexpr tr::utf8::const_it tr::utf8::const_it::operator++(int)
 {
-	auto prev{*this};
+	const_it prev{*this};
 	++(*this);
 	return prev;
 }
 
-constexpr tr::utf8::const_it& tr::utf8::const_it::operator--() noexcept
+constexpr tr::utf8::const_it& tr::utf8::const_it::operator--()
 {
-	TR_ASSERT(_impl != nullptr, "Tried to decrement default-constructed UTF-8 iterator.");
+	TR_ASSERT(ptr != nullptr, "Tried to decrement default-constructed UTF-8 iterator.");
 
-	_impl = prev(_impl);
+	ptr = prev(ptr);
 	return *this;
 }
 
-constexpr tr::utf8::const_it tr::utf8::const_it::operator--(int) noexcept
+constexpr tr::utf8::const_it tr::utf8::const_it::operator--(int)
 {
 	auto prev{*this};
 	--(*this);
 	return prev;
 }
 
-constexpr const char* tr::utf8::const_it::base() const noexcept
+constexpr const char* tr::utf8::const_it::base() const
 {
-	return _impl;
+	return ptr;
 }
 
 //
 
-constexpr tr::utf8::const_it tr::utf8::begin(std::string_view str) noexcept
+constexpr tr::utf8::const_it tr::utf8::begin(std::string_view str)
 {
 	if (str.empty()) {
 		return {};
@@ -145,7 +145,7 @@ constexpr tr::utf8::const_it tr::utf8::begin(std::string_view str) noexcept
 	return str.data();
 }
 
-constexpr tr::utf8::const_it tr::utf8::end(std::string_view str) noexcept
+constexpr tr::utf8::const_it tr::utf8::end(std::string_view str)
 {
 	if (str.empty()) {
 		return {};
@@ -153,7 +153,7 @@ constexpr tr::utf8::const_it tr::utf8::end(std::string_view str) noexcept
 	return str.data() + str.size();
 }
 
-constexpr tr::utf8::const_reverse_it tr::utf8::rbegin(std::string_view str) noexcept
+constexpr tr::utf8::const_reverse_it tr::utf8::rbegin(std::string_view str)
 {
 	if (str.empty()) {
 		return {};
@@ -161,7 +161,7 @@ constexpr tr::utf8::const_reverse_it tr::utf8::rbegin(std::string_view str) noex
 	return const_reverse_it{tr::utf8::end(str)};
 }
 
-constexpr tr::utf8::const_reverse_it tr::utf8::rend(std::string_view str) noexcept
+constexpr tr::utf8::const_reverse_it tr::utf8::rend(std::string_view str)
 {
 	if (str.empty()) {
 		return {};
@@ -169,12 +169,12 @@ constexpr tr::utf8::const_reverse_it tr::utf8::rend(std::string_view str) noexce
 	return const_reverse_it{tr::utf8::begin(str)};
 }
 
-constexpr std::ranges::subrange<tr::utf8::const_it> tr::utf8::range(std::string_view str) noexcept
+constexpr std::ranges::subrange<tr::utf8::const_it> tr::utf8::range(std::string_view str)
 {
 	return {utf8::begin(str), utf8::end(str)};
 }
 
-constexpr std::size_t tr::utf8::length(std::string_view str) noexcept
+constexpr std::size_t tr::utf8::length(std::string_view str)
 {
 	return std::distance(utf8::begin(str), utf8::end(str));
 }

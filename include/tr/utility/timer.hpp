@@ -9,35 +9,35 @@ namespace tr {
 		using callback = std::function<void()>;
 
 		// Constructs an inactive timer.
-		timer() noexcept = default;
+		timer() = default;
 		// Constructs an active timer.
-		template <class R, class P, class C> timer(const std::chrono::duration<R, P>& interval, C&& cb) noexcept;
+		template <class R, class P, class C> timer(const std::chrono::duration<R, P>& interval, C&& cb);
 		// Moves a timer.
 		timer(timer&& r) noexcept = default;
 		// Stops the timer.
-		~timer() noexcept;
+		~timer();
 
 		// Moves a timer.
 		timer& operator=(timer&& r) noexcept;
 
 		// Reports whether the timer is active.
-		bool active() const noexcept;
+		bool active() const;
 
 	  private:
 		// Dynamically allocated so the thread isn't interrupted when moving.
-		std::unique_ptr<bool> _active;
+		std::unique_ptr<bool> active_flag;
 		// The timer thread.
-		std::thread _thread;
+		std::thread thread;
 
-		static void _thread_fn(bool& active, duration interval, callback cb) noexcept;
+		static void timer_loop(bool& active, duration interval, callback cb);
 	};
 } // namespace tr
 
 ////////////////////////////////////////////////////////////// IMPLEMENTATION /////////////////////////////////////////////////////////////
 
 template <class R, class P, class C>
-tr::timer::timer(const std::chrono::duration<R, P>& interval, C&& cb) noexcept
-	: _active{std::make_unique<bool>(true)}
-	, _thread{_thread_fn, std::ref(*_active), std::chrono::duration_cast<duration>(interval), callback{std::forward<C>(cb)}}
+tr::timer::timer(const std::chrono::duration<R, P>& interval, C&& cb)
+	: active_flag{std::make_unique<bool>(true)}
+	, thread{timer_loop, std::ref(*active_flag), std::chrono::duration_cast<duration>(interval), callback{std::forward<C>(cb)}}
 {
 }

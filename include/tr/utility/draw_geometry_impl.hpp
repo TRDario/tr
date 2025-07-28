@@ -6,9 +6,9 @@ inline std::size_t tr::smooth_poly_vtx(float r, float scale) noexcept
 	return std::max(static_cast<std::size_t>(6 * scale * std::sqrt(std::abs(r))), std::size_t{3});
 }
 
-inline std::size_t tr::smooth_arc_vtx(float r, fangle sizeth, float scale) noexcept
+inline std::size_t tr::smooth_arc_vtx(float r, angle sizeth, float scale) noexcept
 {
-	return std::max(static_cast<std::size_t>(6 * scale * std::sqrt(std::abs(r)) / (360_degf / (sizeth % 360_degf))), std::size_t{3});
+	return std::max(static_cast<std::size_t>(6 * scale * std::sqrt(std::abs(r)) / (360_deg / (sizeth % 360_deg))), std::size_t{3});
 }
 
 constexpr std::size_t tr::poly_idx(std::uint16_t vtx) noexcept
@@ -102,7 +102,7 @@ constexpr std::ranges::iterator_t<Range> tr::fill_rect_vtx(Range&& out, const fr
 }
 
 template <std::output_iterator<glm::vec2> It>
-inline It tr::fill_rotated_rect_vtx(It out, glm::vec2 pos, glm::vec2 anchor, glm::vec2 size, fangle rot)
+inline It tr::fill_rotated_rect_vtx(It out, glm::vec2 pos, glm::vec2 anchor, glm::vec2 size, angle rot)
 {
 	if (rot == tr::rads(0)) {
 		return fill_rect_vtx(out, {pos - anchor, size});
@@ -114,7 +114,7 @@ inline It tr::fill_rotated_rect_vtx(It out, glm::vec2 pos, glm::vec2 anchor, glm
 }
 
 template <tr::sized_output_range<glm::vec2> Range>
-inline std::ranges::iterator_t<Range> tr::fill_rotated_rect_vtx(Range&& out, glm::vec2 pos, glm::vec2 anchor, glm::vec2 size, fangle rot)
+inline std::ranges::iterator_t<Range> tr::fill_rotated_rect_vtx(Range&& out, glm::vec2 pos, glm::vec2 anchor, glm::vec2 size, angle rot)
 {
 	TR_ASSERT(std::size(out) >= 4, "Tried to write 4 vertices into a range of size {}.", std::size(out));
 
@@ -151,7 +151,7 @@ constexpr std::ranges::iterator_t<Range> tr::fill_rect_outline_vtx(Range&& out, 
 }
 
 template <std::output_iterator<glm::vec2> It>
-inline It tr::fill_rotated_rect_outline_vtx(It out, glm::vec2 pos, glm::vec2 anchor, glm::vec2 size, fangle rot, float thick)
+inline It tr::fill_rotated_rect_outline_vtx(It out, glm::vec2 pos, glm::vec2 anchor, glm::vec2 size, angle rot, float thick)
 {
 	if (rot == tr::rads(0)) {
 		return fill_rect_outline_vtx(out, pos - anchor, size, thick);
@@ -164,16 +164,16 @@ inline It tr::fill_rotated_rect_outline_vtx(It out, glm::vec2 pos, glm::vec2 anc
 
 template <tr::sized_output_range<glm::vec2> Range>
 inline std::ranges::iterator_t<Range> tr::fill_rotated_rect_outline_vtx(Range&& out, glm::vec2 pos, glm::vec2 anchor, glm::vec2 size,
-																		fangle rot, float thick)
+																		angle rot, float thick)
 {
 	TR_ASSERT(std::size(out) >= 8, "Tried to write 8 vertices into a range of size {}.", std::size(out));
 
 	return fill_rotated_rect_outline_vtx(std::begin(out), pos, anchor, size, rot, thick);
 }
 
-template <std::output_iterator<glm::vec2> It> It tr::fill_arc_vtx(It out, std::size_t vtx, fcircle circ, fangle startth, fangle sizeth)
+template <std::output_iterator<glm::vec2> It> It tr::fill_arc_vtx(It out, std::size_t vtx, circle circ, angle startth, angle sizeth)
 {
-	fangle dth{sizeth / vtx};
+	angle dth{sizeth / vtx};
 	float dsin{dth.sin()};
 	float dcos{dth.cos()};
 	glm::vec2 delta{circ.r * startth.cos(), circ.r * startth.sin()};
@@ -185,32 +185,32 @@ template <std::output_iterator<glm::vec2> It> It tr::fill_arc_vtx(It out, std::s
 }
 
 template <tr::sized_output_range<glm::vec2> Range>
-inline std::ranges::iterator_t<Range> tr::fill_arc_vtx(Range&& out, std::size_t vtx, fcircle circ, fangle startth, fangle sizeth)
+inline std::ranges::iterator_t<Range> tr::fill_arc_vtx(Range&& out, std::size_t vtx, circle circ, angle startth, angle sizeth)
 {
 	TR_ASSERT(std::size(out) >= vtx, "Tried to write {} vertices into a range of size {}.", vtx, std::size(out));
 
 	return fill_arc_vtx(std::begin(out), vtx, circ, startth, sizeth);
 }
 
-template <std::output_iterator<glm::vec2> It> It tr::fill_poly_vtx(It out, std::size_t vtx, fcircle circ, fangle rot)
+template <std::output_iterator<glm::vec2> It> It tr::fill_poly_vtx(It out, std::size_t vtx, circle circ, angle rot)
 {
-	return fill_arc_vtx(out, vtx, circ, rot, 360_degf);
+	return fill_arc_vtx(out, vtx, circ, rot, 360_deg);
 }
 
 template <tr::sized_output_range<glm::vec2> Range>
-inline std::ranges::iterator_t<Range> tr::fill_poly_vtx(Range&& out, std::size_t vtx, fcircle circ, fangle rot)
+inline std::ranges::iterator_t<Range> tr::fill_poly_vtx(Range&& out, std::size_t vtx, circle circ, angle rot)
 {
 	return fill_poly_vtx(std::begin(out), vtx, circ, rot);
 }
 
-template <std::output_iterator<glm::vec2> It> It tr::fill_poly_outline_vtx(It out, std::size_t vtx, fcircle circ, fangle rot, float thick)
+template <std::output_iterator<glm::vec2> It> It tr::fill_poly_outline_vtx(It out, std::size_t vtx, circle circ, angle rot, float thick)
 {
 	out = fill_poly_vtx(out, vtx, {circ.c, circ.r + thick / 2}, rot);
 	return fill_poly_vtx(out, vtx, {circ.c, circ.r - thick / 2}, rot);
 }
 
 template <tr::sized_output_range<glm::vec2> Range>
-inline std::ranges::iterator_t<Range> tr::fill_poly_outline_vtx(Range&& out, std::size_t vtx, fcircle circ, fangle rot, float thick)
+inline std::ranges::iterator_t<Range> tr::fill_poly_outline_vtx(Range&& out, std::size_t vtx, circle circ, angle rot, float thick)
 {
 	TR_ASSERT(std::size(out) >= vtx * 2, "Tried to write {} vertices into a range of size {}", vtx * 2, std::size(out));
 

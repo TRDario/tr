@@ -3,106 +3,78 @@
 
 namespace tr {
 	// Angular value type.
-	template <std::floating_point T> class angle {
+	class angle {
 	  public:
 		constexpr angle() = default;
 		// Constructs an angle from a numeric value in radians.
-		constexpr explicit angle(T rads);
-		// Constructs an angle from another angle (potentially of a different type).
-		template <std::floating_point U> constexpr angle(angle<U> th);
+		constexpr explicit angle(float rads);
 
-		template <std::floating_point U> constexpr auto operator<=>(const angle<U>& r) const;
-		template <std::floating_point U> constexpr bool operator==(const angle<U>& r) const;
+		constexpr std::partial_ordering operator<=>(const angle& r) const = default;
+		constexpr bool operator==(const angle& r) const = default;
 
-		template <std::floating_point U> constexpr angle& operator+=(const angle<U>& r);
-		template <std::floating_point U> constexpr angle& operator-=(const angle<U>& r);
+		constexpr angle& operator+=(const angle& r);
+		constexpr angle& operator-=(const angle& r);
 		template <arithmetic U> constexpr angle& operator*=(const U& r);
 		template <arithmetic U> constexpr angle& operator/=(const U& r);
 
-		constexpr angle operator-() const;
-		template <std::floating_point U> constexpr auto operator+(const angle<U>& r) const;
-		template <std::floating_point U> constexpr auto operator-(const angle<U>& r) const;
-		template <arithmetic U> constexpr auto operator*(const U& r) const;
-		template <arithmetic U> constexpr auto operator/(const U& r) const;
-		template <std::floating_point U> constexpr auto operator/(const angle<U>& r) const;
-		template <std::floating_point U> constexpr auto operator%(const angle<U>& r) const;
+		friend constexpr angle operator+(const angle& l, const angle& r);
+		friend constexpr angle operator-(const angle& l, const angle& r);
+		friend constexpr angle operator-(const angle& l);
+		template <arithmetic U> friend constexpr angle operator*(const angle& l, const U& r);
+		template <arithmetic U> friend constexpr angle operator*(const U& l, const angle& r);
+		template <arithmetic U> friend constexpr angle operator/(const angle& l, const U& r);
+		friend constexpr float operator/(const angle& l, const angle& r);
+		friend constexpr angle operator%(const angle& l, const angle& r);
 
 		// Converts the angle value into a numeric radian value.
-		constexpr T rads() const;
+		constexpr float rads() const;
 		// Converts the angle value into a numeric degree value.
-		constexpr T degs() const;
+		constexpr float degs() const;
 		// Converts the angle value into a numeric turn value.
-		constexpr T turns() const;
+		constexpr float turns() const;
 
 		// Computes the sine of the angle.
-		constexpr T sin() const;
+		constexpr float sin() const;
 		// Computes the cosine of the angle.
-		constexpr T cos() const;
+		constexpr float cos() const;
 		// Computes the tangent of the angle.
-		constexpr T tan() const;
+		constexpr float tan() const;
 
 	  private:
 		// The underlying value in radians.
-		T base;
+		float base;
 	};
-	using fangle = angle<float>;
-	using dangle = angle<double>;
-	using langle = angle<long double>;
 
 	// Converts a numeric value in radians into an angle value.
-	template <arithmetic T> constexpr auto rads(T th);
+	template <arithmetic T> constexpr angle rads(T th);
 	// Converts a numeric value in degrees into an angle value.
-	template <arithmetic T> constexpr auto degs(T th);
+	template <arithmetic T> constexpr angle degs(T th);
 	// Converts a numeric value in turns into an angle value.
-	template <arithmetic T> constexpr auto turns(T th);
+	template <arithmetic T> constexpr angle turns(T th);
 
 	// Converts a sine value into an angle value.
-	template <arithmetic T> constexpr auto asin(T sin);
+	template <arithmetic T> constexpr angle asin(T sin);
 	// Converts a cosine value into an angle value.
-	template <arithmetic T> constexpr auto acos(T cos);
+	template <arithmetic T> constexpr angle acos(T cos);
 	// Converts a tangent value into an angle value.
-	template <arithmetic T> constexpr auto atan(T tan);
+	template <arithmetic T> constexpr angle atan(T tan);
 	// Converts tangent x and y values into an angle value.
-	template <arithmetic T> constexpr auto atan2(T y, T x);
+	template <arithmetic T> constexpr angle atan2(T y, T x);
 
 	// Inline namespace containing angle value literals.
 	inline namespace angle_literals {
-		// fangle degree literal.
-		consteval fangle operator""_degf(long double deg);
-		// fangle degree literal.
-		consteval fangle operator""_degf(unsigned long long deg);
-		// dangle degree literal.
-		consteval dangle operator""_deg(long double deg);
-		// dangle degree literal.
-		consteval dangle operator""_deg(unsigned long long deg);
-		// langle degree literal.
-		consteval langle operator""_degl(long double deg);
-		// langle degree literal.
-		consteval langle operator""_degl(unsigned long long deg);
-		// fangle radian literal.
-		consteval fangle operator""_radf(long double rad);
-		// fangle radian literal.
-		consteval fangle operator""_radf(unsigned long long rad);
-		// dangle radian literal.
-		consteval dangle operator""_rad(long double rad);
-		// dangle radian literal.
-		consteval dangle operator""_rad(unsigned long long rad);
-		// langle radian literal.
-		consteval langle operator""_radl(long double rad);
-		// langle radian literal.
-		consteval langle operator""_radl(unsigned long long rad);
-		// fangle turns literal.
-		consteval fangle operator""_turnsf(long double tr);
-		// fangle turns literal.
-		consteval fangle operator""_turnsf(unsigned long long tr);
-		// dangle turns literal.
-		consteval dangle operator""_turns(long double tr);
-		// dangle turns literal.
-		consteval dangle operator""_turns(unsigned long long tr);
-		// langle turns literal.
-		consteval langle operator""_turnsl(long double tr);
-		// langle turns literal.
-		consteval langle operator""_turnsl(unsigned long long tr);
+		// Degree literal.
+		consteval angle operator""_deg(long double deg);
+		// Degree literal.
+		consteval angle operator""_deg(unsigned long long deg);
+		// Radian literal.
+		consteval angle operator""_rad(long double rad);
+		// Radian literal.
+		consteval angle operator""_rad(unsigned long long rad);
+		// Turns literal.
+		consteval angle operator""_turns(long double tr);
+		// Turns literal.
+		consteval angle operator""_turns(unsigned long long tr);
 	} // namespace angle_literals
 
 	/// @}
@@ -110,7 +82,7 @@ namespace tr {
 
 // Angle formatter.
 // The formatting specification is: [r, d, t] + a valid floating point formatting specification.
-template <std::floating_point T> class std::formatter<tr::angle<T>> : public std::formatter<T>, std::formatter<const char*> {
+template <> class std::formatter<tr::angle> : public std::formatter<float>, public std::formatter<const char*> {
   public:
 	template <class ParseContext> constexpr auto parse(ParseContext& ctx)
 	{
@@ -132,22 +104,22 @@ template <std::floating_point T> class std::formatter<tr::angle<T>> : public std
 		}
 
 		ctx.advance_to(it + 1);
-		return std::formatter<T>::parse(ctx);
+		return std::formatter<float>::parse(ctx);
 	}
 
-	template <typename FormatContext> constexpr auto format(const tr::angle<T>& p, FormatContext& ctx) const
+	template <typename FormatContext> constexpr auto format(const tr::angle& p, FormatContext& ctx) const
 	{
 		switch (unit) {
 		case unit_type::RADS:
-			ctx.advance_to(std::formatter<T>::format(p.rads(), ctx));
+			ctx.advance_to(std::formatter<float>::format(p.rads(), ctx));
 			ctx.advance_to(std::formatter<const char*>::format("rad", ctx));
 			break;
 		case unit_type::DEGREES:
-			ctx.advance_to(std::formatter<T>::format(p.degs(), ctx));
+			ctx.advance_to(std::formatter<float>::format(p.degs(), ctx));
 			ctx.advance_to(std::formatter<const char*>::format("deg", ctx));
 			break;
 		case unit_type::TURNS:
-			ctx.advance_to(std::formatter<T>::format(p.turns(), ctx));
+			ctx.advance_to(std::formatter<float>::format(p.turns(), ctx));
 			ctx.advance_to(std::formatter<const char*>::format("tr", ctx));
 			break;
 		}

@@ -12,22 +12,22 @@ const char* tr::exception::what() const noexcept
 	return buffer.c_str();
 }
 
-tr::custom_exception::custom_exception(std::string&& name, std::string&& description, std::string&& details) noexcept
-	: _name{std::move(name)}, _description{std::move(description)}, _details{std::move(details)}
+tr::custom_exception::custom_exception(std::string&& name, std::string&& description, std::string&& details)
+	: name_str{std::move(name)}, description_str{std::move(description)}, details_str{std::move(details)}
 {
 }
 
-std::string_view tr::custom_exception::name() const noexcept
+std::string_view tr::custom_exception::name() const
 {
-	return _name;
+	return name_str;
 }
 
-std::string_view tr::custom_exception::description() const noexcept
+std::string_view tr::custom_exception::description() const
 {
-	return _description;
+	return description_str;
 }
 
-std::string_view tr::custom_exception::details() const noexcept
+std::string_view tr::custom_exception::details() const
 {
-	return _details;
+	return details_str;
 }

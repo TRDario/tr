@@ -420,34 +420,34 @@ void tr::audio_source::set_out_cone_gain(float out_cone_gain, fsecs time) noexce
 
 //
 
-tr::fangle tr::_audio_source::in_cone_w() const noexcept
+tr::angle tr::_audio_source::in_cone_w() const noexcept
 {
 	float in_cone_w;
 	TR_AL_CALL(alGetSourcef, _id, AL_CONE_INNER_ANGLE, &in_cone_w);
 	return degs(in_cone_w);
 }
 
-tr::fangle tr::audio_source::in_cone_w() const noexcept
+tr::angle tr::audio_source::in_cone_w() const noexcept
 {
 	return _impl->in_cone_w();
 }
 
-tr::fangle tr::_audio_source::out_cone_w() const noexcept
+tr::angle tr::_audio_source::out_cone_w() const noexcept
 {
 	float out_cone_w;
 	TR_AL_CALL(alGetSourcef, _id, AL_CONE_OUTER_ANGLE, &out_cone_w);
 	return degs(out_cone_w);
 }
 
-tr::fangle tr::audio_source::out_cone_w() const noexcept
+tr::angle tr::audio_source::out_cone_w() const noexcept
 {
 	return _impl->out_cone_w();
 }
 
-void tr::_audio_source::set_cone_w(tr::fangle in_cone_w, tr::fangle out_cone_w) noexcept
+void tr::_audio_source::set_cone_w(tr::angle in_cone_w, tr::angle out_cone_w) noexcept
 {
-	in_cone_w = std::clamp(in_cone_w, 0_degf, 360_degf);
-	out_cone_w = std::clamp(out_cone_w, 0_degf, 360_degf);
+	in_cone_w = std::clamp(in_cone_w, 0_deg, 360_deg);
+	out_cone_w = std::clamp(out_cone_w, 0_deg, 360_deg);
 	TR_ASSERT(in_cone_w < out_cone_w, "Tried to set audio source outer cone as thinner than inner cone (inner: {:d}, outer: {:d}).",
 			  in_cone_w, out_cone_w);
 
@@ -455,12 +455,12 @@ void tr::_audio_source::set_cone_w(tr::fangle in_cone_w, tr::fangle out_cone_w) 
 	TR_AL_CALL(alSourcef, _id, AL_CONE_OUTER_ANGLE, out_cone_w.degs());
 }
 
-void tr::audio_source::set_cone_w(tr::fangle in_cone_w, tr::fangle out_cone_w) noexcept
+void tr::audio_source::set_cone_w(tr::angle in_cone_w, tr::angle out_cone_w) noexcept
 {
 	_impl->set_cone_w(in_cone_w, out_cone_w);
 }
 
-void tr::audio_source::set_cone_w(tr::fangle in_cone_w, tr::fangle out_cone_w, fsecs time) noexcept
+void tr::audio_source::set_cone_w(tr::angle in_cone_w, tr::angle out_cone_w, fsecs time) noexcept
 {
 	try {
 		_impl->lock_audio_mutex();

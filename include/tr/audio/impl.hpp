@@ -56,9 +56,9 @@ namespace tr {
 		void set_ref_dist(float ref_dist) noexcept;
 		float out_cone_gain() const noexcept;
 		void set_out_cone_gain(float out_gain) noexcept;
-		fangle in_cone_w() const noexcept;
-		fangle out_cone_w() const noexcept;
-		void set_cone_w(fangle in_cone_w, fangle out_cone_w) noexcept;
+		angle in_cone_w() const noexcept;
+		angle out_cone_w() const noexcept;
+		void set_cone_w(angle in_cone_w, angle out_cone_w) noexcept;
 		glm::vec3 pos() const noexcept;
 		void set_pos(const glm::vec3& pos) noexcept;
 		glm::vec3 vel() const noexcept;

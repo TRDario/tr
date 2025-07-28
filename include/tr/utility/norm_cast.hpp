@@ -2,68 +2,33 @@
 #include "macro.hpp"
 
 namespace tr {
-	/** @ingroup utility
-	 *  @defgroup norm_cast Normalized Cast
-	 *  Functions for casting between normalized forms.
-	 *  @{
-	 */
-
-	/******************************************************************************************************************
-	 * Converts a floating point number in the range [0-1] to another floating point number in the range [0-1].
-	 *
-	 * @param[in] from A floating point number in the range [0-1].
-	 *
-	 * @return A floating point number in the range [0-1].
-	 ******************************************************************************************************************/
-	template <std::floating_point To, std::floating_point From> constexpr To norm_cast(From from) noexcept;
-
-	/******************************************************************************************************************
-	 * Converts a normalized integer value to a floating point number in the range [0-1].
-	 *
-	 * @param[in] from A normalized integer value.
-	 *
-	 * @return A floating point number in the range [0-1].
-	 ******************************************************************************************************************/
-	template <std::floating_point To, std::integral From> constexpr To norm_cast(From from) noexcept;
-
-	/******************************************************************************************************************
-	 * Converts a floating point number in the range [0-1] to a normalized integer.
-	 *
-	 * @param[in] from A floating point number in the range [0-1].
-	 *
-	 * @return A normalized integer.
-	 ******************************************************************************************************************/
-	template <std::integral To, std::floating_point From> constexpr To norm_cast(From from) noexcept;
-
-	/******************************************************************************************************************
-	 * Converts a normalized integer value to another normalied integer value.
-	 *
-	 * @param[in] from A normalized integer value.
-	 *
-	 * @return A normalized integer value.
-	 ******************************************************************************************************************/
-	template <std::integral To, std::integral From> constexpr To norm_cast(From from) noexcept;
-
-	/// @}
+	// Converts a floating point number in the range [0-1] to another floating point number in the range [0-1].
+	template <std::floating_point To, std::floating_point From> constexpr To norm_cast(From from);
+	// Converts a normalized integer value to a floating point number in the range [0-1].
+	template <std::floating_point To, std::integral From> constexpr To norm_cast(From from);
+	// Converts a floating point number in the range [0-1] to a normalized integer.
+	template <std::integral To, std::floating_point From> constexpr To norm_cast(From from);
+	// Converts a normalized integer value to another normalied integer value.
+	template <std::integral To, std::integral From> constexpr To norm_cast(From from);
 } // namespace tr
 
 /// @cond IMPLEMENTATION
 
-template <std::floating_point To, std::floating_point From> constexpr To tr::norm_cast(From from) noexcept
+template <std::floating_point To, std::floating_point From> constexpr To tr::norm_cast(From from)
 {
 	TR_ASSERT(from >= 0 && from <= 1, "Cannot perform a normalizing cast on value {} outside the range [0, 1].", from);
 
 	return static_cast<To>(from);
 }
 
-template <std::floating_point To, std::integral From> constexpr To tr::norm_cast(From from) noexcept
+template <std::floating_point To, std::integral From> constexpr To tr::norm_cast(From from)
 {
 	using UFrom = std::make_unsigned_t<From>;
 
 	return static_cast<To>(static_cast<double>(norm_cast<UFrom>(from)) / static_cast<double>(std::numeric_limits<UFrom>::max()));
 }
 
-template <std::integral To, std::floating_point From> constexpr To tr::norm_cast(From from) noexcept
+template <std::integral To, std::floating_point From> constexpr To tr::norm_cast(From from)
 {
 	TR_ASSERT(from >= 0 && from <= 1, "Cannot perform a normalizing cast on value {} outside the range [0, 1].", from);
 
@@ -80,7 +45,7 @@ template <std::integral To, std::floating_point From> constexpr To tr::norm_cast
 	}
 }
 
-template <std::integral To, std::integral From> constexpr To tr::norm_cast(From from) noexcept
+template <std::integral To, std::integral From> constexpr To tr::norm_cast(From from)
 {
 	using UFrom = std::make_unsigned_t<From>;
 	using UTo = std::make_unsigned_t<To>;

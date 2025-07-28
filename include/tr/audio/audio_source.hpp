@@ -96,13 +96,13 @@ namespace tr {
 		void set_out_cone_gain(float out_gain, fsecs time) noexcept;
 
 		// Gets the width of the inner cone of the source (where no direction attenuation is done).
-		fangle in_cone_w() const noexcept;
+		angle in_cone_w() const noexcept;
 		// Gets the width of the outer cone of the source (where direction attenuation is done).
-		fangle out_cone_w() const noexcept;
+		angle out_cone_w() const noexcept;
 		// Sets the width of the inner and outer cones of the source.
-		void set_cone_w(fangle in_cone_w, fangle out_cone_w) noexcept;
+		void set_cone_w(angle in_cone_w, angle out_cone_w) noexcept;
 		// Sets the width of the inner and outer cones of the source over time.
-		void set_cone_w(fangle in_cone_w, fangle out_cone_w, fsecs time) noexcept;
+		void set_cone_w(angle in_cone_w, angle out_cone_w, fsecs time) noexcept;
 
 		// Gets the position of the source.
 		glm::vec3 pos() const noexcept;

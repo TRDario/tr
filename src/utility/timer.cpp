@@ -2,12 +2,12 @@
 
 using namespace std::chrono_literals;
 
-tr::timer::~timer() noexcept
+tr::timer::~timer()
 {
-	if (_active != nullptr) {
-		*_active = false;
-		if (_thread.joinable()) {
-			_thread.join();
+	if (active_flag != nullptr) {
+		*active_flag = false;
+		if (thread.joinable()) {
+			thread.join();
 		}
 	}
 }
@@ -15,17 +15,17 @@ tr::timer::~timer() noexcept
 tr::timer& tr::timer::operator=(timer&& r) noexcept
 {
 	std::ignore = timer{std::move(*this)};
-	_active = std::move(r._active);
-	_thread = std::move(r._thread);
+	active_flag = std::move(r.active_flag);
+	thread = std::move(r.thread);
 	return *this;
 }
 
-bool tr::timer::active() const noexcept
+bool tr::timer::active() const
 {
-	return _active != nullptr;
+	return active_flag != nullptr;
 }
 
-void tr::timer::_thread_fn(bool& active, duration interval, callback cb) noexcept
+void tr::timer::timer_loop(bool& active, duration interval, callback cb)
 {
 	if (interval == 0s) {
 		return;

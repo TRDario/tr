@@ -2,42 +2,42 @@
 #include "../../include/tr/utility/binary_io.hpp"
 #include <lz4.h>
 
-tr::decryption_error::decryption_error(std::string_view description) noexcept
-	: _description{description}
+tr::decryption_error::decryption_error(std::string_view description)
+	: description_str{description}
 {
 }
 
-std::string_view tr::decryption_error::name() const noexcept
+std::string_view tr::decryption_error::name() const
 {
 	return "Decryption error";
 }
 
-std::string_view tr::decryption_error::description() const noexcept
+std::string_view tr::decryption_error::description() const
 {
-	return _description;
+	return description_str;
 }
 
-std::string_view tr::decryption_error::details() const noexcept
+std::string_view tr::decryption_error::details() const
 {
 	return {};
 }
 
-tr::encryption_error::encryption_error(std::string_view description) noexcept
-	: _description{description}
+tr::encryption_error::encryption_error(std::string_view description)
+	: description_str{description}
 {
 }
 
-std::string_view tr::encryption_error::name() const noexcept
+std::string_view tr::encryption_error::name() const
 {
 	return "Encryption error";
 }
 
-std::string_view tr::encryption_error::description() const noexcept
+std::string_view tr::encryption_error::description() const
 {
-	return _description;
+	return description_str;
 }
 
-std::string_view tr::encryption_error::details() const noexcept
+std::string_view tr::encryption_error::details() const
 {
 	return {};
 }

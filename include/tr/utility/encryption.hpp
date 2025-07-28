@@ -6,36 +6,36 @@ namespace tr {
 	class decryption_error : public exception {
 	  public:
 		// Constructs an exception.
-		decryption_error(std::string_view description) noexcept;
+		decryption_error(std::string_view description);
 
 		// Gets the name of the error.
-		std::string_view name() const noexcept override;
+		std::string_view name() const override;
 		// Gets the description of the error.
-		std::string_view description() const noexcept override;
+		std::string_view description() const override;
 		// Gets further details about the error.
-		std::string_view details() const noexcept override;
+		std::string_view details() const override;
 
 	  private:
 		// Details of the decryption error.
-		std::string_view _description;
+		std::string_view description_str;
 	};
 
 	// Error thrown when an encryption operation fails.
 	class encryption_error : public exception {
 	  public:
 		// Constructs an exception.
-		encryption_error(std::string_view description) noexcept;
+		encryption_error(std::string_view description);
 
 		// Gets the name of the error.
-		std::string_view name() const noexcept override;
+		std::string_view name() const override;
 		// Gets the description of the error.
-		std::string_view description() const noexcept override;
+		std::string_view description() const override;
 		// Gets further details about the error.
-		std::string_view details() const noexcept override;
+		std::string_view details() const override;
 
 	  private:
 		// Details of the decryption error.
-		std::string_view _description;
+		std::string_view description_str;
 	};
 
 	// Decrypts data encrypted by tr::encrypt().
