@@ -58,6 +58,7 @@ endif()
 target_include_directories(tr PUBLIC include)
 target_precompile_headers(tr PUBLIC include/tr/utility.hpp)
 target_sources(tr PRIVATE
+	src/utility/atlas_packer.cpp
 	src/utility/benchmark.cpp
 	src/utility/binary_io.cpp
 	src/utility/encryption.cpp

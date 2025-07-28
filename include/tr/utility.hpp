@@ -1,5 +1,6 @@
 #pragma once
 #include "utility/angle.hpp"             // IWYU pragma: export
+#include "utility/atlas_packer.hpp"      // IWYU pragma: export
 #include "utility/benchmark.hpp"         // IWYU pragma: export
 #include "utility/binary_io.hpp"         // IWYU pragma: export
 #include "utility/chrono.hpp"            // IWYU pragma: export
