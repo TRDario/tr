@@ -3,84 +3,84 @@
 
 template <std::floating_point T>
 constexpr tr::angle<T>::angle(T rads)
-	: _rads{rads}
+	: base{rads}
 {
 }
 
 template <std::floating_point T>
 template <std::floating_point U>
 constexpr tr::angle<T>::angle(angle<U> th)
-	: _rads{static_cast<T>(th.rads())}
+	: base{static_cast<T>(th.rads())}
 {
 }
 
 template <std::floating_point T> template <std::floating_point U> constexpr auto tr::angle<T>::operator<=>(const angle<U>& r) const
 {
-	return _rads <=> r.rads();
+	return base <=> r.rads();
 }
 
 template <std::floating_point T> template <std::floating_point U> constexpr bool tr::angle<T>::operator==(const angle<U>& r) const
 {
-	return _rads == r.rads();
+	return base == r.rads();
 }
 
 template <std::floating_point T> template <std::floating_point U> constexpr tr::angle<T>& tr::angle<T>::operator+=(const angle<U>& r)
 {
-	_rads += r.rads();
+	base += r.rads();
 	return *this;
 }
 
 template <std::floating_point T> template <std::floating_point U> constexpr tr::angle<T>& tr::angle<T>::operator-=(const angle<U>& r)
 {
-	_rads -= r.rads();
+	base -= r.rads();
 	return *this;
 }
 
 template <std::floating_point T> template <tr::arithmetic U> constexpr tr::angle<T>& tr::angle<T>::operator*=(const U& r)
 {
-	_rads *= r;
+	base *= r;
 	return *this;
 }
 
 template <std::floating_point T> template <tr::arithmetic U> constexpr tr::angle<T>& tr::angle<T>::operator/=(const U& r)
 {
-	_rads /= r;
+	base /= r;
 	return *this;
 }
 
 template <std::floating_point T> constexpr tr::angle<T> tr::angle<T>::operator-() const
 {
-	return angle<T>{-_rads};
+	return angle<T>{-base};
 }
 
 template <std::floating_point T> template <std::floating_point U> constexpr auto tr::angle<T>::operator+(const angle<U>& r) const
 {
-	return tr::rads(_rads + r.rads());
+	return tr::rads(base + r.rads());
 }
 
 template <std::floating_point T> template <std::floating_point U> constexpr auto tr::angle<T>::operator-(const angle<U>& r) const
 {
-	return tr::rads(_rads - r.rads());
+	return tr::rads(base - r.rads());
 }
 
 template <std::floating_point T> template <tr::arithmetic U> constexpr auto tr::angle<T>::operator*(const U& r) const
 {
-	return tr::rads(_rads * r);
+	return tr::rads(base * r);
 }
 
 template <std::floating_point T> template <tr::arithmetic U> constexpr auto tr::angle<T>::operator/(const U& r) const
 {
-	return tr::rads(_rads / r);
+	return tr::rads(base / r);
 }
 
 template <std::floating_point T> template <std::floating_point U> constexpr auto tr::angle<T>::operator/(const angle<U>& r) const
 {
-	return _rads / r.rads();
+	return base / r.rads();
 }
 
 template <std::floating_point T> template <std::floating_point U> constexpr auto tr::angle<T>::operator%(const angle<U>& r) const
 {
-	return tr::rads(std::fmod(_rads, r.rads()));
+	return tr::rads(std::fmod(base, r.rads()));
 }
 
 template <tr::arithmetic T> constexpr auto tr::rads(T th)
@@ -135,32 +135,32 @@ template <tr::arithmetic T> constexpr auto tr::atan2(T y, T x)
 
 template <std::floating_point T> constexpr T tr::angle<T>::rads() const
 {
-	return _rads;
+	return base;
 }
 
 template <std::floating_point T> constexpr T tr::angle<T>::degs() const
 {
-	return _rads * (180 / std::numbers::pi_v<T>);
+	return base * (180 / std::numbers::pi_v<T>);
 }
 
 template <std::floating_point T> constexpr T tr::angle<T>::turns() const
 {
-	return _rads / (2 * std::numbers::pi_v<T>);
+	return base / (2 * std::numbers::pi_v<T>);
 }
 
 template <std::floating_point T> constexpr T tr::angle<T>::sin() const
 {
-	return std::sin(_rads);
+	return std::sin(base);
 }
 
 template <std::floating_point T> constexpr T tr::angle<T>::cos() const
 {
-	return std::cos(_rads);
+	return std::cos(base);
 }
 
 template <std::floating_point T> constexpr T tr::angle<T>::tan() const
 {
-	return std::tan(_rads);
+	return std::tan(base);
 }
 
 consteval tr::fangle tr::angle_literals::operator""_degf(long double deg)
