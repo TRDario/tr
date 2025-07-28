@@ -10,27 +10,27 @@ namespace tr {
 		using deque = std::deque<std::pair<time_point, duration>>;
 
 		// Constructs an empty benchmark.
-		benchmark() noexcept = default;
+		benchmark() = default;
 
 		// Starts a new measurement.
-		void start() noexcept;
+		void start();
 		// Stops a measurement.
-		void stop() noexcept;
+		void stop();
 		// Clears all previous and ongoing measurements from the queue.
-		void clear() noexcept;
+		void clear();
 
 		// Gets the duration of the latest measurement.
-		duration latest() const noexcept;
+		duration latest() const;
 		// Gets the duration of the shortest available measurement.
-		duration min() const noexcept;
+		duration min() const;
 		// Gets the duration of the longest available measurement.
-		duration max() const noexcept;
+		duration max() const;
 		// Gets the average duration of the available measurements.
-		duration avg() const noexcept;
+		duration avg() const;
 		// Gets the average number of measurements per second.
-		double fps() const noexcept;
+		double fps() const;
 		// Gets the available measurements.
-		const deque& measurements() const noexcept;
+		const deque& measurements() const;
 
 	  private:
 		// The measurement deque.

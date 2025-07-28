@@ -24,7 +24,7 @@ namespace tr {
 		/**************************************************************************************************************
 		 * Default-constructs an angle to 0 radians.
 		 **************************************************************************************************************/
-		constexpr angle() noexcept = default;
+		constexpr angle() = default;
 
 		/**************************************************************************************************************
 		 * Constructs an angle from a numeric value.
@@ -33,28 +33,28 @@ namespace tr {
 		 *
 		 * @param[in] rads The numeric value of the angle in radians.
 		 **************************************************************************************************************/
-		constexpr explicit angle(T rads) noexcept;
+		constexpr explicit angle(T rads);
 
 		/**************************************************************************************************************
 		 * Constructs an angle from another angle (potentially of a different type).
 		 *
 		 * @param[in] th The angle whose value to copy.
 		 **************************************************************************************************************/
-		template <std::floating_point U> constexpr angle(angle<U> th) noexcept;
+		template <std::floating_point U> constexpr angle(angle<U> th);
 
 		/**************************************************************************************************************
 		 * Three-way comparison operator.
 		 *
 		 * @param[in] r An angle to compare against.
 		 **************************************************************************************************************/
-		template <std::floating_point U> constexpr auto operator<=>(const angle<U>& r) const noexcept;
+		template <std::floating_point U> constexpr auto operator<=>(const angle<U>& r) const;
 
 		/**************************************************************************************************************
 		 * Equality comparison operator.
 		 *
 		 * @param[in] r An angle to compare against.
 		 **************************************************************************************************************/
-		template <std::floating_point U> constexpr bool operator==(const angle<U>& r) const noexcept;
+		template <std::floating_point U> constexpr bool operator==(const angle<U>& r) const;
 
 		/**************************************************************************************************************
 		 * Performs addition on the angle.
@@ -63,7 +63,7 @@ namespace tr {
 		 *
 		 * @return A reference to the angle being added to.
 		 **************************************************************************************************************/
-		template <std::floating_point U> constexpr angle& operator+=(const angle<U>& r) noexcept;
+		template <std::floating_point U> constexpr angle& operator+=(const angle<U>& r);
 
 		/**************************************************************************************************************
 		 * Performs subtraction on the angle.
@@ -72,7 +72,7 @@ namespace tr {
 		 *
 		 * @return A reference to the angle being subtracted from.
 		 **************************************************************************************************************/
-		template <std::floating_point U> constexpr angle& operator-=(const angle<U>& r) noexcept;
+		template <std::floating_point U> constexpr angle& operator-=(const angle<U>& r);
 
 		/**************************************************************************************************************
 		 * Performs multiplication on the angle.
@@ -81,7 +81,7 @@ namespace tr {
 		 *
 		 * @return A reference to the angle being multiplied.
 		 **************************************************************************************************************/
-		template <arithmetic U> constexpr angle& operator*=(const U& r) noexcept;
+		template <arithmetic U> constexpr angle& operator*=(const U& r);
 
 		/**************************************************************************************************************
 		 * Performs division on the angle.
@@ -90,14 +90,14 @@ namespace tr {
 		 *
 		 * @return A reference to the angle being divided.
 		 **************************************************************************************************************/
-		template <arithmetic U> constexpr angle& operator/=(const U& r) noexcept;
+		template <arithmetic U> constexpr angle& operator/=(const U& r);
 
 		/**************************************************************************************************************
 		 * Negates the angle.
 
 		 * @return The negated value of the angle.
 		 **************************************************************************************************************/
-		constexpr angle operator-() const noexcept;
+		constexpr angle operator-() const;
 
 		/**************************************************************************************************************
 		 * Adds two angles.
@@ -106,7 +106,7 @@ namespace tr {
 		 *
 		 * @return The sum of the angles. Standard promotion rules apply to the resulting angle type.
 		 **************************************************************************************************************/
-		template <std::floating_point U> constexpr auto operator+(const angle<U>& r) const noexcept;
+		template <std::floating_point U> constexpr auto operator+(const angle<U>& r) const;
 
 		/**************************************************************************************************************
 		 * Subtracts two angles.
@@ -115,7 +115,7 @@ namespace tr {
 		 *
 		 * @return The difference of the angles. Standard promotion rules apply to the resulting angle type.
 		 **************************************************************************************************************/
-		template <std::floating_point U> constexpr auto operator-(const angle<U>& r) const noexcept;
+		template <std::floating_point U> constexpr auto operator-(const angle<U>& r) const;
 
 		/**************************************************************************************************************
 		 * Multiplies an angle by a factor.
@@ -125,7 +125,7 @@ namespace tr {
 		 * @return The value of the left side angle multiplied by the factor. Standard promotion rules apply to the
 		 *		   resulting angle type.
 		 **************************************************************************************************************/
-		template <arithmetic U> constexpr auto operator*(const U& r) const noexcept;
+		template <arithmetic U> constexpr auto operator*(const U& r) const;
 
 		/**************************************************************************************************************
 		 * Divides an angle by a factor.
@@ -135,7 +135,7 @@ namespace tr {
 		 * @return The value of the left side angle divided by the factor. Standard promotion rules apply to the
 		 * 		   resulting angle type.
 		 **************************************************************************************************************/
-		template <arithmetic U> constexpr auto operator/(const U& r) const noexcept;
+		template <arithmetic U> constexpr auto operator/(const U& r) const;
 
 		/**************************************************************************************************************
 		 * Divides two angles.
@@ -144,7 +144,7 @@ namespace tr {
 		 *
 		 * @return The ratio between the angles. Standard promotion rules apply to the resulting angle type.
 		 **************************************************************************************************************/
-		template <std::floating_point U> constexpr auto operator/(const angle<U>& r) const noexcept;
+		template <std::floating_point U> constexpr auto operator/(const angle<U>& r) const;
 
 		/**************************************************************************************************************
 		 * Modulos an angle by another.
@@ -153,49 +153,49 @@ namespace tr {
 		 *
 		 * @return The modulod value of the left side angle. Standard promotion rules apply to the resulting angle type.
 		 **************************************************************************************************************/
-		template <std::floating_point U> constexpr auto operator%(const angle<U>& r) const noexcept;
+		template <std::floating_point U> constexpr auto operator%(const angle<U>& r) const;
 
 		/**************************************************************************************************************
 		 * Converts the angle value into a numeric radian value.
 		 *
 		 * @return The value of the angle in radians.
 		 **************************************************************************************************************/
-		constexpr T rads() const noexcept;
+		constexpr T rads() const;
 
 		/**************************************************************************************************************
 		 * Converts the angle value into a numeric degree value.
 		 *
 		 * @return The value of the angle in degrees.
 		 **************************************************************************************************************/
-		constexpr T degs() const noexcept;
+		constexpr T degs() const;
 
 		/**************************************************************************************************************
 		 * Converts the angle value into a numeric turn value.
 		 *
 		 * @return The value of the angle in turns.
 		 **************************************************************************************************************/
-		constexpr T turns() const noexcept;
+		constexpr T turns() const;
 
 		/**************************************************************************************************************
 		 * Computes the sine of the angle
 		 *
 		 * @return The sine of the angle.
 		 **************************************************************************************************************/
-		constexpr T sin() const noexcept;
+		constexpr T sin() const;
 
 		/**************************************************************************************************************
 		 * Computes the cosine of the angle
 		 *
 		 * @return The cosine of the angle.
 		 **************************************************************************************************************/
-		constexpr T cos() const noexcept;
+		constexpr T cos() const;
 
 		/**************************************************************************************************************
 		 * Computes the tangent of the angle
 		 *
 		 * @return The tangent of the angle.
 		 **************************************************************************************************************/
-		constexpr T tan() const noexcept;
+		constexpr T tan() const;
 
 	  private:
 		T _rads;
@@ -226,7 +226,7 @@ namespace tr {
 	 *
 	 * @return An angle value.
 	 ******************************************************************************************************************/
-	template <arithmetic T> constexpr auto rads(T th) noexcept;
+	template <arithmetic T> constexpr auto rads(T th);
 
 	/******************************************************************************************************************
 	 * Converts a numeric value into an angle value.
@@ -238,7 +238,7 @@ namespace tr {
 	 *
 	 * @return An angle value.
 	 ******************************************************************************************************************/
-	template <arithmetic T> constexpr auto degs(T th) noexcept;
+	template <arithmetic T> constexpr auto degs(T th);
 
 	/******************************************************************************************************************
 	 * Converts a numeric value into an angle value.
@@ -250,7 +250,7 @@ namespace tr {
 	 *
 	 * @return An angle value.
 	 ******************************************************************************************************************/
-	template <arithmetic T> constexpr auto turns(T th) noexcept;
+	template <arithmetic T> constexpr auto turns(T th);
 
 	/******************************************************************************************************************
 	 * Converts a sine value into an angle value.
@@ -262,7 +262,7 @@ namespace tr {
 	 *
 	 * @return An angle value as if produced by `tr::rads(std::asin(sin))`.
 	 ******************************************************************************************************************/
-	template <arithmetic T> constexpr auto asin(T sin) noexcept;
+	template <arithmetic T> constexpr auto asin(T sin);
 
 	/******************************************************************************************************************
 	 * Converts a cosine value into an angle value.
@@ -274,7 +274,7 @@ namespace tr {
 	 *
 	 * @return An angle value as if produced by `tr::rads(std::acos(sin))`.
 	 ******************************************************************************************************************/
-	template <arithmetic T> constexpr auto acos(T cos) noexcept;
+	template <arithmetic T> constexpr auto acos(T cos);
 
 	/******************************************************************************************************************
 	 * Converts a tangent value into an angle value.
@@ -286,7 +286,7 @@ namespace tr {
 	 *
 	 * @return An angle value as if produced by `tr::rads(std::atan(sin))`.
 	 ******************************************************************************************************************/
-	template <arithmetic T> constexpr auto atan(T tan) noexcept;
+	template <arithmetic T> constexpr auto atan(T tan);
 
 	/******************************************************************************************************************
 	 * Converts tangent x and y values into an angle value.
@@ -298,7 +298,7 @@ namespace tr {
 	 *
 	 * @return An angle value as if produced by `tr::rads(std::atan2(y, x))`.
 	 ******************************************************************************************************************/
-	template <arithmetic T> constexpr auto atan2(T y, T x) noexcept;
+	template <arithmetic T> constexpr auto atan2(T y, T x);
 
 	/******************************************************************************************************************
 	 * Inline namespace containing angle value literals.
@@ -311,7 +311,7 @@ namespace tr {
 		 *
 		 * @return An fangle value.
 		 **************************************************************************************************************/
-		consteval fangle operator""_degf(long double deg) noexcept;
+		consteval fangle operator""_degf(long double deg);
 
 		/**************************************************************************************************************
 		 * fangle degree literal.
@@ -320,7 +320,7 @@ namespace tr {
 		 *
 		 * @return An fangle value.
 		 **************************************************************************************************************/
-		consteval fangle operator""_degf(unsigned long long deg) noexcept;
+		consteval fangle operator""_degf(unsigned long long deg);
 
 		/**************************************************************************************************************
 		 * dangle degree literal.
@@ -329,7 +329,7 @@ namespace tr {
 		 *
 		 * @return An dangle value.
 		 **************************************************************************************************************/
-		consteval dangle operator""_deg(long double deg) noexcept;
+		consteval dangle operator""_deg(long double deg);
 
 		/**************************************************************************************************************
 		 * dangle degree literal.
@@ -338,7 +338,7 @@ namespace tr {
 		 *
 		 * @return An dangle value.
 		 **************************************************************************************************************/
-		consteval dangle operator""_deg(unsigned long long deg) noexcept;
+		consteval dangle operator""_deg(unsigned long long deg);
 
 		/**************************************************************************************************************
 		 * langle degree literal.
@@ -347,7 +347,7 @@ namespace tr {
 		 *
 		 * @return An langle value.
 		 **************************************************************************************************************/
-		consteval langle operator""_degl(long double deg) noexcept;
+		consteval langle operator""_degl(long double deg);
 
 		/**************************************************************************************************************
 		 * langle degree literal.
@@ -356,7 +356,7 @@ namespace tr {
 		 *
 		 * @return An langle value.
 		 **************************************************************************************************************/
-		consteval langle operator""_degl(unsigned long long deg) noexcept;
+		consteval langle operator""_degl(unsigned long long deg);
 
 		/**************************************************************************************************************
 		 * langle radian literal.
@@ -365,7 +365,7 @@ namespace tr {
 		 *
 		 * @return An fangle value.
 		 **************************************************************************************************************/
-		consteval fangle operator""_radf(long double rad) noexcept;
+		consteval fangle operator""_radf(long double rad);
 
 		/**************************************************************************************************************
 		 * fangle radian literal.
@@ -374,7 +374,7 @@ namespace tr {
 		 *
 		 * @return An fangle value.
 		 **************************************************************************************************************/
-		consteval fangle operator""_radf(unsigned long long rad) noexcept;
+		consteval fangle operator""_radf(unsigned long long rad);
 
 		/**************************************************************************************************************
 		 * dangle radian literal.
@@ -383,7 +383,7 @@ namespace tr {
 		 *
 		 * @return An dangle value.
 		 **************************************************************************************************************/
-		consteval dangle operator""_rad(long double rad) noexcept;
+		consteval dangle operator""_rad(long double rad);
 
 		/**************************************************************************************************************
 		 * dangle radian literal.
@@ -392,7 +392,7 @@ namespace tr {
 		 *
 		 * @return An dangle value.
 		 **************************************************************************************************************/
-		consteval dangle operator""_rad(unsigned long long rad) noexcept;
+		consteval dangle operator""_rad(unsigned long long rad);
 
 		/**************************************************************************************************************
 		 * langle radian literal.
@@ -401,7 +401,7 @@ namespace tr {
 		 *
 		 * @return An langle value.
 		 **************************************************************************************************************/
-		consteval langle operator""_radl(long double rad) noexcept;
+		consteval langle operator""_radl(long double rad);
 
 		/**************************************************************************************************************
 		 * langle radian literal.
@@ -410,7 +410,7 @@ namespace tr {
 		 *
 		 * @return An langle value.
 		 **************************************************************************************************************/
-		consteval langle operator""_radl(unsigned long long rad) noexcept;
+		consteval langle operator""_radl(unsigned long long rad);
 
 		/**************************************************************************************************************
 		 * fangle turns literal.
@@ -419,7 +419,7 @@ namespace tr {
 		 *
 		 * @return An fangle value.
 		 **************************************************************************************************************/
-		consteval fangle operator""_turnsf(long double tr) noexcept;
+		consteval fangle operator""_turnsf(long double tr);
 
 		/**************************************************************************************************************
 		 * fangle turns literal.
@@ -428,7 +428,7 @@ namespace tr {
 		 *
 		 * @return An fangle value.
 		 **************************************************************************************************************/
-		consteval fangle operator""_turnsf(unsigned long long tr) noexcept;
+		consteval fangle operator""_turnsf(unsigned long long tr);
 
 		/**************************************************************************************************************
 		 * dangle turns literal.
@@ -437,7 +437,7 @@ namespace tr {
 		 *
 		 * @return An dangle value.
 		 **************************************************************************************************************/
-		consteval dangle operator""_turns(long double tr) noexcept;
+		consteval dangle operator""_turns(long double tr);
 
 		/**************************************************************************************************************
 		 * dangle turns literal.
@@ -446,7 +446,7 @@ namespace tr {
 		 *
 		 * @return An dangle value.
 		 **************************************************************************************************************/
-		consteval dangle operator""_turns(unsigned long long tr) noexcept;
+		consteval dangle operator""_turns(unsigned long long tr);
 
 		/**************************************************************************************************************
 		 * langle turns literal.
@@ -455,7 +455,7 @@ namespace tr {
 		 *
 		 * @return An langle value.
 		 **************************************************************************************************************/
-		consteval langle operator""_turnsl(long double tr) noexcept;
+		consteval langle operator""_turnsl(long double tr);
 
 		/**************************************************************************************************************
 		 * langle turns literal.
@@ -464,7 +464,7 @@ namespace tr {
 		 *
 		 * @return An langle value.
 		 **************************************************************************************************************/
-		consteval langle operator""_turnsl(unsigned long long tr) noexcept;
+		consteval langle operator""_turnsl(unsigned long long tr);
 	} // namespace angle_literals
 
 	/// @}

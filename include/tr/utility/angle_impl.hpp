@@ -2,92 +2,88 @@
 #include "angle.hpp"
 
 template <std::floating_point T>
-constexpr tr::angle<T>::angle(T rads) noexcept
+constexpr tr::angle<T>::angle(T rads)
 	: _rads{rads}
 {
 }
 
 template <std::floating_point T>
 template <std::floating_point U>
-constexpr tr::angle<T>::angle(angle<U> th) noexcept
+constexpr tr::angle<T>::angle(angle<U> th)
 	: _rads{static_cast<T>(th.rads())}
 {
 }
 
-template <std::floating_point T> template <std::floating_point U> constexpr auto tr::angle<T>::operator<=>(const angle<U>& r) const noexcept
+template <std::floating_point T> template <std::floating_point U> constexpr auto tr::angle<T>::operator<=>(const angle<U>& r) const
 {
 	return _rads <=> r.rads();
 }
 
-template <std::floating_point T> template <std::floating_point U> constexpr bool tr::angle<T>::operator==(const angle<U>& r) const noexcept
+template <std::floating_point T> template <std::floating_point U> constexpr bool tr::angle<T>::operator==(const angle<U>& r) const
 {
 	return _rads == r.rads();
 }
 
-template <std::floating_point T>
-template <std::floating_point U>
-constexpr tr::angle<T>& tr::angle<T>::operator+=(const angle<U>& r) noexcept
+template <std::floating_point T> template <std::floating_point U> constexpr tr::angle<T>& tr::angle<T>::operator+=(const angle<U>& r)
 {
 	_rads += r.rads();
 	return *this;
 }
 
-template <std::floating_point T>
-template <std::floating_point U>
-constexpr tr::angle<T>& tr::angle<T>::operator-=(const angle<U>& r) noexcept
+template <std::floating_point T> template <std::floating_point U> constexpr tr::angle<T>& tr::angle<T>::operator-=(const angle<U>& r)
 {
 	_rads -= r.rads();
 	return *this;
 }
 
-template <std::floating_point T> template <tr::arithmetic U> constexpr tr::angle<T>& tr::angle<T>::operator*=(const U& r) noexcept
+template <std::floating_point T> template <tr::arithmetic U> constexpr tr::angle<T>& tr::angle<T>::operator*=(const U& r)
 {
 	_rads *= r;
 	return *this;
 }
 
-template <std::floating_point T> template <tr::arithmetic U> constexpr tr::angle<T>& tr::angle<T>::operator/=(const U& r) noexcept
+template <std::floating_point T> template <tr::arithmetic U> constexpr tr::angle<T>& tr::angle<T>::operator/=(const U& r)
 {
 	_rads /= r;
 	return *this;
 }
 
-template <std::floating_point T> constexpr tr::angle<T> tr::angle<T>::operator-() const noexcept
+template <std::floating_point T> constexpr tr::angle<T> tr::angle<T>::operator-() const
 {
 	return angle<T>{-_rads};
 }
 
-template <std::floating_point T> template <std::floating_point U> constexpr auto tr::angle<T>::operator+(const angle<U>& r) const noexcept
+template <std::floating_point T> template <std::floating_point U> constexpr auto tr::angle<T>::operator+(const angle<U>& r) const
 {
 	return tr::rads(_rads + r.rads());
 }
 
-template <std::floating_point T> template <std::floating_point U> constexpr auto tr::angle<T>::operator-(const angle<U>& r) const noexcept
+template <std::floating_point T> template <std::floating_point U> constexpr auto tr::angle<T>::operator-(const angle<U>& r) const
 {
 	return tr::rads(_rads - r.rads());
 }
 
-template <std::floating_point T> template <tr::arithmetic U> constexpr auto tr::angle<T>::operator*(const U& r) const noexcept
+template <std::floating_point T> template <tr::arithmetic U> constexpr auto tr::angle<T>::operator*(const U& r) const
 {
 	return tr::rads(_rads * r);
 }
 
-template <std::floating_point T> template <tr::arithmetic U> constexpr auto tr::angle<T>::operator/(const U& r) const noexcept
+template <std::floating_point T> template <tr::arithmetic U> constexpr auto tr::angle<T>::operator/(const U& r) const
 {
 	return tr::rads(_rads / r);
 }
 
-template <std::floating_point T> template <std::floating_point U> constexpr auto tr::angle<T>::operator/(const angle<U>& r) const noexcept
+template <std::floating_point T> template <std::floating_point U> constexpr auto tr::angle<T>::operator/(const angle<U>& r) const
 {
 	return _rads / r.rads();
 }
 
-template <std::floating_point T> template <std::floating_point U> constexpr auto tr::angle<T>::operator%(const angle<U>& r) const noexcept
+template <std::floating_point T> template <std::floating_point U> constexpr auto tr::angle<T>::operator%(const angle<U>& r) const
 {
 	return tr::rads(std::fmod(_rads, r.rads()));
 }
 
-template <tr::arithmetic T> constexpr auto tr::rads(T th) noexcept
+template <tr::arithmetic T> constexpr auto tr::rads(T th)
 {
 	if constexpr (std::floating_point<T>) {
 		return angle<T>{th};
@@ -97,7 +93,7 @@ template <tr::arithmetic T> constexpr auto tr::rads(T th) noexcept
 	}
 }
 
-template <tr::arithmetic T> constexpr auto tr::degs(T th) noexcept
+template <tr::arithmetic T> constexpr auto tr::degs(T th)
 {
 	if constexpr (std::floating_point<T>) {
 		return angle<T>{std::numbers::pi_v<T> / 180 * th};
@@ -107,7 +103,7 @@ template <tr::arithmetic T> constexpr auto tr::degs(T th) noexcept
 	}
 }
 
-template <tr::arithmetic T> constexpr auto tr::turns(T th) noexcept
+template <tr::arithmetic T> constexpr auto tr::turns(T th)
 {
 	if constexpr (std::floating_point<T>) {
 		return angle<T>{std::numbers::pi_v<T> * 2 * th};
@@ -117,142 +113,142 @@ template <tr::arithmetic T> constexpr auto tr::turns(T th) noexcept
 	}
 }
 
-template <tr::arithmetic T> constexpr auto tr::asin(T sin) noexcept
+template <tr::arithmetic T> constexpr auto tr::asin(T sin)
 {
 	return angle{std::asin(sin)};
 }
 
-template <tr::arithmetic T> constexpr auto tr::acos(T cos) noexcept
+template <tr::arithmetic T> constexpr auto tr::acos(T cos)
 {
 	return angle{std::acos(cos)};
 }
 
-template <tr::arithmetic T> constexpr auto tr::atan(T tan) noexcept
+template <tr::arithmetic T> constexpr auto tr::atan(T tan)
 {
 	return angle{std::atan(tan)};
 }
 
-template <tr::arithmetic T> constexpr auto tr::atan2(T y, T x) noexcept
+template <tr::arithmetic T> constexpr auto tr::atan2(T y, T x)
 {
 	return angle{std::atan2(y, x)};
 }
 
-template <std::floating_point T> constexpr T tr::angle<T>::rads() const noexcept
+template <std::floating_point T> constexpr T tr::angle<T>::rads() const
 {
 	return _rads;
 }
 
-template <std::floating_point T> constexpr T tr::angle<T>::degs() const noexcept
+template <std::floating_point T> constexpr T tr::angle<T>::degs() const
 {
 	return _rads * (180 / std::numbers::pi_v<T>);
 }
 
-template <std::floating_point T> constexpr T tr::angle<T>::turns() const noexcept
+template <std::floating_point T> constexpr T tr::angle<T>::turns() const
 {
 	return _rads / (2 * std::numbers::pi_v<T>);
 }
 
-template <std::floating_point T> constexpr T tr::angle<T>::sin() const noexcept
+template <std::floating_point T> constexpr T tr::angle<T>::sin() const
 {
 	return std::sin(_rads);
 }
 
-template <std::floating_point T> constexpr T tr::angle<T>::cos() const noexcept
+template <std::floating_point T> constexpr T tr::angle<T>::cos() const
 {
 	return std::cos(_rads);
 }
 
-template <std::floating_point T> constexpr T tr::angle<T>::tan() const noexcept
+template <std::floating_point T> constexpr T tr::angle<T>::tan() const
 {
 	return std::tan(_rads);
 }
 
-consteval tr::fangle tr::angle_literals::operator""_degf(long double deg) noexcept
+consteval tr::fangle tr::angle_literals::operator""_degf(long double deg)
 {
 	return degs(static_cast<float>(deg));
 }
 
-consteval tr::fangle tr::angle_literals::operator""_degf(unsigned long long deg) noexcept
+consteval tr::fangle tr::angle_literals::operator""_degf(unsigned long long deg)
 {
 	return degs(static_cast<float>(deg));
 }
 
-consteval tr::dangle tr::angle_literals::operator""_deg(long double deg) noexcept
+consteval tr::dangle tr::angle_literals::operator""_deg(long double deg)
 {
 	return degs(static_cast<double>(deg));
 }
 
-consteval tr::dangle tr::angle_literals::operator""_deg(unsigned long long deg) noexcept
+consteval tr::dangle tr::angle_literals::operator""_deg(unsigned long long deg)
 {
 	return degs(static_cast<double>(deg));
 }
 
-consteval tr::langle tr::angle_literals::operator""_degl(long double deg) noexcept
+consteval tr::langle tr::angle_literals::operator""_degl(long double deg)
 {
 	return degs(deg);
 }
 
-consteval tr::langle tr::angle_literals::operator""_degl(unsigned long long deg) noexcept
+consteval tr::langle tr::angle_literals::operator""_degl(unsigned long long deg)
 {
 	return degs(static_cast<long double>(deg));
 }
 
-consteval tr::fangle tr::angle_literals::operator""_radf(long double rad) noexcept
+consteval tr::fangle tr::angle_literals::operator""_radf(long double rad)
 {
 	return rads(static_cast<float>(rad));
 }
 
-consteval tr::fangle tr::angle_literals::operator""_radf(unsigned long long rad) noexcept
+consteval tr::fangle tr::angle_literals::operator""_radf(unsigned long long rad)
 {
 	return rads(static_cast<float>(rad));
 }
 
-consteval tr::dangle tr::angle_literals::operator""_rad(long double rad) noexcept
+consteval tr::dangle tr::angle_literals::operator""_rad(long double rad)
 {
 	return rads(static_cast<double>(rad));
 }
 
-consteval tr::dangle tr::angle_literals::operator""_rad(unsigned long long rad) noexcept
+consteval tr::dangle tr::angle_literals::operator""_rad(unsigned long long rad)
 {
 	return rads(rad);
 }
 
-consteval tr::langle tr::angle_literals::operator""_radl(long double rad) noexcept
+consteval tr::langle tr::angle_literals::operator""_radl(long double rad)
 {
 	return rads(rad);
 }
 
-consteval tr::langle tr::angle_literals::operator""_radl(unsigned long long rad) noexcept
+consteval tr::langle tr::angle_literals::operator""_radl(unsigned long long rad)
 {
 	return rads(static_cast<long double>(rad));
 }
 
-consteval tr::fangle tr::angle_literals::operator""_turnsf(long double tr) noexcept
+consteval tr::fangle tr::angle_literals::operator""_turnsf(long double tr)
 {
 	return turns(static_cast<float>(tr));
 }
 
-consteval tr::fangle tr::angle_literals::operator""_turnsf(unsigned long long tr) noexcept
+consteval tr::fangle tr::angle_literals::operator""_turnsf(unsigned long long tr)
 {
 	return turns(static_cast<float>(tr));
 }
 
-consteval tr::dangle tr::angle_literals::operator""_turns(long double tr) noexcept
+consteval tr::dangle tr::angle_literals::operator""_turns(long double tr)
 {
 	return turns(static_cast<double>(tr));
 }
 
-consteval tr::dangle tr::angle_literals::operator""_turns(unsigned long long tr) noexcept
+consteval tr::dangle tr::angle_literals::operator""_turns(unsigned long long tr)
 {
 	return turns(static_cast<double>(tr));
 }
 
-consteval tr::langle tr::angle_literals::operator""_turnsl(long double tr) noexcept
+consteval tr::langle tr::angle_literals::operator""_turnsl(long double tr)
 {
 	return turns(tr);
 }
 
-consteval tr::langle tr::angle_literals::operator""_turnsl(unsigned long long tr) noexcept
+consteval tr::langle tr::angle_literals::operator""_turnsl(unsigned long long tr)
 {
 	return turns(static_cast<long double>(tr));
 }
