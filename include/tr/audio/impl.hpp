@@ -4,112 +4,112 @@
 #include "audio_stream.hpp"
 
 namespace tr {
-	struct _buffer_stream;
+	struct buffer_stream;
 	enum class audio_origin : bool;
 	enum class audio_state : std::uint8_t;
 
 	// Audio buffer used by the buffered stream.
-	struct _buffer_stream_buffer {
+	struct buffer_stream_buffer {
 		// The OpenAL ID of the buffer.
 		unsigned int id;
 		// Where the start offset of the audio data is within the stream.
 		std::size_t start_offset;
 
-		_buffer_stream_buffer() noexcept;
-		~_buffer_stream_buffer() noexcept;
+		buffer_stream_buffer();
+		~buffer_stream_buffer();
 
 		// Refills the buffer with stream data.
-		void refill(_buffer_stream& stream) noexcept;
+		void refill(buffer_stream& stream);
 	};
 
 	// Audio stream extrended with buffers.
-	struct _buffer_stream {
+	struct buffer_stream {
 		std::unique_ptr<audio_stream> stream;
-		std::array<_buffer_stream_buffer, 4> buffers;
+		std::array<buffer_stream_buffer, 4> buffers;
 	};
 
 	// Base audio source class.
-	class _audio_source {
+	class base_audio_source {
 	  public:
 		static constexpr fsecs START{fsecs::zero()};
 		static constexpr fsecs END{fsecs::max()};
 
 		// Creates an empty audio source.
-		_audio_source(int priority);
-		~_audio_source() noexcept;
+		base_audio_source(int priority);
+		~base_audio_source();
 
-		void use(const audio_buffer& buffer) noexcept;
+		void use(const audio_buffer& buffer);
 		void use(std::unique_ptr<audio_stream>&& stream);
-		void clear() noexcept;
-		int priority() const noexcept;
-		const std::bitset<32>& classes() const noexcept;
-		void set_classes(const std::bitset<32>& classes) noexcept;
-		float pitch() const noexcept;
-		void set_pitch(float pitch) noexcept;
-		float gain() const noexcept;
-		void set_gain(float gain) noexcept;
-		float max_dist() const noexcept;
-		void set_max_dist(float max_dist) noexcept;
-		float rolloff() const noexcept;
-		void set_rolloff(float rolloff) noexcept;
-		float ref_dist() const noexcept;
-		void set_ref_dist(float ref_dist) noexcept;
-		float out_cone_gain() const noexcept;
-		void set_out_cone_gain(float out_gain) noexcept;
-		angle in_cone_w() const noexcept;
-		angle out_cone_w() const noexcept;
-		void set_cone_w(angle in_cone_w, angle out_cone_w) noexcept;
-		glm::vec3 pos() const noexcept;
-		void set_pos(const glm::vec3& pos) noexcept;
-		glm::vec3 vel() const noexcept;
-		void set_vel(const glm::vec3& vel) noexcept;
-		glm::vec3 dir() const noexcept;
-		void set_dir(const glm::vec3& dir) noexcept;
-		audio_origin origin() const noexcept;
-		void set_origin(audio_origin type) noexcept;
-		audio_state state() const noexcept;
-		void play() noexcept;
-		void pause() noexcept;
-		void stop() noexcept;
-		fsecs length() const noexcept;
-		fsecs offset() const noexcept;
-		void set_offset(fsecs offset) noexcept;
-		bool looping() const noexcept;
-		fsecs loop_start() const noexcept;
-		fsecs loop_end() const noexcept;
-		void set_looping(bool looping) noexcept;
-		void set_loop_points(fsecs start, fsecs end) noexcept;
+		void clear();
+		int priority() const;
+		const std::bitset<32>& classes() const;
+		void set_classes(const std::bitset<32>& classes);
+		float pitch() const;
+		void set_pitch(float pitch);
+		float gain() const;
+		void set_gain(float gain);
+		float max_dist() const;
+		void set_max_dist(float max_dist);
+		float rolloff() const;
+		void set_rolloff(float rolloff);
+		float ref_dist() const;
+		void set_ref_dist(float ref_dist);
+		float out_cone_gain() const;
+		void set_out_cone_gain(float out_gain);
+		angle in_cone_w() const;
+		angle out_cone_w() const;
+		void set_cone_w(angle in_cone_w, angle out_cone_w);
+		glm::vec3 pos() const;
+		void set_pos(const glm::vec3& pos);
+		glm::vec3 vel() const;
+		void set_vel(const glm::vec3& vel);
+		glm::vec3 dir() const;
+		void set_dir(const glm::vec3& dir);
+		audio_origin origin() const;
+		void set_origin(audio_origin type);
+		audio_state state() const;
+		void play();
+		void pause();
+		void stop();
+		fsecs length() const;
+		fsecs offset() const;
+		void set_offset(fsecs offset);
+		bool looping() const;
+		fsecs loop_start() const;
+		fsecs loop_end() const;
+		void set_looping(bool looping);
+		void set_loop_points(fsecs start, fsecs end);
 
 		// Gets the ID of the audio source buffer.
-		unsigned int buffer() const noexcept;
+		unsigned int buffer() const;
 
 		// Locks the audio mutex.
-		void lock_audio_mutex() const noexcept;
+		void lock_audio_mutex() const;
 		// Unlocks the audio mutex.
-		void unlock_audio_mutex() const noexcept;
+		void unlock_audio_mutex() const;
 
 	  private:
 		// If the source is sourced from an audio stream, this is that stream.
-		std::optional<_buffer_stream> _stream;
+		std::optional<buffer_stream> stream;
 		// The OpenAL ID of the source.
-		unsigned int _id;
+		unsigned int id;
 		// The gain muiltiplier of the source.
-		float _gain;
+		float base_gain;
 		// The audio classes the source belongs to.
-		std::bitset<32> _classes;
+		std::bitset<32> class_flags;
 		// The priority of the source.
-		int _priority;
+		int priority_;
 		// Some functions that lock the audio mutex call other functions that also do that, so keep a ref counter.
-		mutable std::uint32_t _audio_mutex_refc;
+		mutable std::uint32_t audio_mutex_refc;
 
-		friend void _audio_thread_loop(std::stop_token) noexcept;
+		friend void audio_thread_loop(std::stop_token);
 	};
 
 	// Audio command for gradual changing of an audio property.
-	class _audio_command {
+	class audio_command {
 	  public:
 		// Audio command opcodes.
-		enum class type {
+		enum class command_type {
 			PITCH,
 			GAIN,
 			MAX_DIST,
@@ -123,61 +123,61 @@ namespace tr {
 		};
 
 		// Creates an audio command taking float arguments.
-		_audio_command(std::shared_ptr<_audio_source> source, type type, float start, float end, duration length) noexcept;
+		audio_command(std::shared_ptr<base_audio_source> source, command_type type, float start, float end, duration length);
 		// Creates an audio command taking vec2 arguments.
-		_audio_command(std::shared_ptr<_audio_source> source, type type, glm::vec2 start, glm::vec2 end, duration length) noexcept;
+		audio_command(std::shared_ptr<base_audio_source> source, command_type type, glm::vec2 start, glm::vec2 end, duration length);
 		// Creates an audio command taking vec3 arguments.
-		_audio_command(std::shared_ptr<_audio_source> source, type type, glm::vec3 start, glm::vec3 end, duration length) noexcept;
+		audio_command(std::shared_ptr<base_audio_source> source, command_type type, glm::vec3 start, glm::vec3 end, duration length);
 
 		// Gets the audio source of the command.
-		std::shared_ptr<_audio_source> source() const noexcept;
+		std::shared_ptr<base_audio_source> source() const;
 		// Executes the command.
-		void execute() noexcept;
+		void execute();
 		// Reports whether the command is done.
-		bool done() const noexcept;
+		bool done() const;
 
 	  private:
 		// Type-erased argument storage.
-		union _arg {
+		union arg {
 			float num;
 			glm::vec2 vec2;
 			glm::vec3 vec3;
 		};
 
 		// The source this command acts upon.
-		std::shared_ptr<_audio_source> _src;
+		std::shared_ptr<base_audio_source> src;
 		// The audio command type.
-		type _type;
+		command_type type;
 		// The initial value.
-		_arg _start;
+		arg start;
 		// The final value.
-		_arg _end;
+		arg end;
 		// The length of the command.
-		duration _length;
+		duration length;
 		// When the last update was.
-		time_point _last_update;
+		time_point last_update;
 		// How much time has elapsed for the command.
-		duration _elapsed;
+		duration elapsed;
 
 		// Gets the current value of the command.
-		_arg _value() noexcept;
+		arg value();
 	};
 
 	// Map holding the IDs of extant audio buffers and whether the're cullable.
-	inline std::unordered_map<unsigned int, bool> _audio_buffers_cullable;
+	inline std::unordered_map<unsigned int, bool> audio_buffers_cullable;
 	// The maximum allowed number of audio sources.
-	inline std::size_t _max_audio_sources;
+	inline std::size_t max_audio_sources;
 	// A list of active audio sources.
-	inline std::list<std::shared_ptr<_audio_source>> _audio_sources;
+	inline std::list<std::shared_ptr<base_audio_source>> audio_sources;
 	// The gain multipliers of audio classes.
-	inline std::array<float, 32> _audio_gains;
+	inline std::array<float, 32> audio_gains;
 	// A list of active audio commands.
-	inline std::list<_audio_command> _audio_commands;
+	inline std::list<audio_command> audio_commands;
 	// The audio mutex.
-	inline std::mutex _audio_mutex;
+	inline std::mutex audio_mutex;
 	// The audio thread.
-	inline std::jthread _audio_thread;
+	inline std::jthread audio_thread;
 
 	// Function used by the audio thread.
-	void _audio_thread_loop(std::stop_token stoken) noexcept;
+	void audio_thread_loop(std::stop_token stoken);
 } // namespace tr

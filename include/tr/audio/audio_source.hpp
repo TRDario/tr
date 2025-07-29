@@ -3,7 +3,7 @@
 #include "../utility/chrono.hpp"
 
 namespace tr {
-	class _audio_source;
+	class base_audio_source;
 	class audio_buffer;
 	class audio_stream;
 
@@ -33,132 +33,132 @@ namespace tr {
 		static constexpr fsecs END{fsecs::max()};
 
 		// Constructs an audio source.
-		audio_source(int priority) noexcept;
+		audio_source(int priority);
 		audio_source(const audio_source&) = delete;
 		audio_source(audio_source&&) noexcept = default;
 		audio_source& operator=(const audio_source&) = delete;
 		audio_source& operator=(audio_source&&) noexcept = default;
 
 		// Sets a buffer for the source to use.
-		void use(const audio_buffer& buffer) noexcept;
+		void use(const audio_buffer& buffer);
 		// Sets a audio stream for the source to use.
-		void use(std::unique_ptr<audio_stream>&& stream) noexcept;
+		void use(std::unique_ptr<audio_stream>&& stream);
 		// Unsets a buffer/stream attached to the source.
-		void clear() noexcept;
+		void clear();
 
 		// Gets the priority of the audio source.
-		int priority() const noexcept;
+		int priority() const;
 		// Gets the audio classes the source belongs to.
-		const std::bitset<32>& classes() const noexcept;
+		const std::bitset<32>& classes() const;
 		// Sets the audio classes the source belongs to.
-		void set_classes(const std::bitset<32>& classes) noexcept;
+		void set_classes(const std::bitset<32>& classes);
 
 		// Gets the pitch of the source.
-		float pitch() const noexcept;
+		float pitch() const;
 		// Sets the pitch (and speed) of the source.
-		void set_pitch(float pitch) noexcept;
+		void set_pitch(float pitch);
 		// Sets the pitch (and speed) of the source over time.
-		void set_pitch(float pitch, fsecs time) noexcept;
+		void set_pitch(float pitch, fsecs time);
 
 		// Gets the gain of the source.
-		float gain() const noexcept;
+		float gain() const;
 		// Sets the gain of the source.
-		void set_gain(float gain) noexcept;
+		void set_gain(float gain);
 		// Sets the gain of the source over time.
-		void set_gain(float gain, fsecs time) noexcept;
+		void set_gain(float gain, fsecs time);
 
 		// Gets the distance where the source will no longer be attenuated any further.
-		float max_dist() const noexcept;
+		float max_dist() const;
 		// Sets the distance where the source will no longer be attenuated any further.
-		void set_max_dist(float max_dist) noexcept;
+		void set_max_dist(float max_dist);
 		// Sets the distance where the source will no longer be attenuated any further over time.
-		void set_max_dist(float max_dist, fsecs time) noexcept;
+		void set_max_dist(float max_dist, fsecs time);
 
 		// Gets the distance rolloff factor of the source.
-		float rolloff() const noexcept;
+		float rolloff() const;
 		// Sets the distance rolloff factor of the source.
-		void set_rolloff(float rolloff) noexcept;
+		void set_rolloff(float rolloff);
 		// Sets the distance rolloff factor of the source over time.
-		void set_rolloff(float rolloff, fsecs time) noexcept;
+		void set_rolloff(float rolloff, fsecs time);
 
 		// Gets the reference distance of the source, where there is no attenuation.
-		float ref_dist() const noexcept;
+		float ref_dist() const;
 		// Sets the reference distance of the source, where there is no attenuation.
-		void set_ref_dist(float ref_dist) noexcept;
+		void set_ref_dist(float ref_dist);
 		// Sets the reference distance of the source, where there is no attenuation over time.
-		void set_ref_dist(float ref_dist, fsecs time) noexcept;
+		void set_ref_dist(float ref_dist, fsecs time);
 
 		// Gets the gain multiplier applied when the listener is outside the source's outer cone angle.
-		float out_cone_gain() const noexcept;
+		float out_cone_gain() const;
 		// Sets the gain multiplier applied when the listener is outside the source's outer cone angle.
-		void set_out_cone_gain(float out_gain) noexcept;
+		void set_out_cone_gain(float out_gain);
 		// Sets the gain multiplier applied when the listener is outside the source's outer cone angle over time.
-		void set_out_cone_gain(float out_gain, fsecs time) noexcept;
+		void set_out_cone_gain(float out_gain, fsecs time);
 
 		// Gets the width of the inner cone of the source (where no direction attenuation is done).
-		angle in_cone_w() const noexcept;
+		angle in_cone_w() const;
 		// Gets the width of the outer cone of the source (where direction attenuation is done).
-		angle out_cone_w() const noexcept;
+		angle out_cone_w() const;
 		// Sets the width of the inner and outer cones of the source.
-		void set_cone_w(angle in_cone_w, angle out_cone_w) noexcept;
+		void set_cone_w(angle in_cone_w, angle out_cone_w);
 		// Sets the width of the inner and outer cones of the source over time.
-		void set_cone_w(angle in_cone_w, angle out_cone_w, fsecs time) noexcept;
+		void set_cone_w(angle in_cone_w, angle out_cone_w, fsecs time);
 
 		// Gets the position of the source.
-		glm::vec3 pos() const noexcept;
+		glm::vec3 pos() const;
 		// Sets the position of the source.
-		void set_pos(const glm::vec3& pos) noexcept;
+		void set_pos(const glm::vec3& pos);
 		// Sets the position of the source over time.
-		void set_pos(const glm::vec3& pos, fsecs time) noexcept;
+		void set_pos(const glm::vec3& pos, fsecs time);
 
 		// Gets the velocity of the source.
-		glm::vec3 vel() const noexcept;
+		glm::vec3 vel() const;
 		// Sets the velocity of the source.
-		void set_vel(const glm::vec3& vel) noexcept;
+		void set_vel(const glm::vec3& vel);
 		// Sets the velocity of the source over time.
-		void set_vel(const glm::vec3& vel, fsecs time) noexcept;
+		void set_vel(const glm::vec3& vel, fsecs time);
 
 		// Gets the direction of the source cone.
-		glm::vec3 dir() const noexcept;
+		glm::vec3 dir() const;
 		// Sets the direction of the source cone.
-		void set_dir(const glm::vec3& dir) noexcept;
+		void set_dir(const glm::vec3& dir);
 		// Sets the direction of the source cone over time.
-		void set_dir(const glm::vec3& dir, fsecs time) noexcept;
+		void set_dir(const glm::vec3& dir, fsecs time);
 
 		// Gets the origin of the source's position.
-		audio_origin origin() const noexcept;
+		audio_origin origin() const;
 		// Sets the origin of the source's position.
-		void set_origin(audio_origin type) noexcept;
+		void set_origin(audio_origin type);
 
 		// Gets the state of the audio source.
-		audio_state state() const noexcept;
+		audio_state state() const;
 		// Plays the source.
-		void play() noexcept;
+		void play();
 		// Pauses the source.
-		void pause() noexcept;
+		void pause();
 		// Stops the source and rewinds it to the beginning.
-		void stop() noexcept;
+		void stop();
 
 		// Gets the length of the source audio.
-		fsecs length() const noexcept;
+		fsecs length() const;
 		// Gets the source's playback position within the current buffer.
-		fsecs offset() const noexcept;
+		fsecs offset() const;
 		// Sets the source's playback position within the current buffer.
-		void set_offset(fsecs offset) noexcept;
+		void set_offset(fsecs offset);
 
 		// Gets whether the source is looping.
-		bool looping() const noexcept;
+		bool looping() const;
 		// Gets a source's starting loop point.
-		fsecs loop_start() const noexcept;
+		fsecs loop_start() const;
 		// Gets a source's ending loop point.
-		fsecs loop_end() const noexcept;
+		fsecs loop_end() const;
 		// Sets whether the source is looping.
-		void set_looping(bool looping) noexcept;
+		void set_looping(bool looping);
 		// Sets a source's loop points.
-		void set_loop_points(fsecs start, fsecs end) noexcept;
+		void set_loop_points(fsecs start, fsecs end);
 
 	  private:
 		// Shared pointer to the actual audio source implementation.
-		std::shared_ptr<_audio_source> _impl;
+		std::shared_ptr<base_audio_source> base;
 	};
 } // namespace tr

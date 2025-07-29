@@ -4,7 +4,7 @@
 #include <AL/alc.h>
 
 namespace tr {
-	void _validate_al_call(const char* file, int line, const char* function) noexcept;
+	void _validate_al_call(const char* file, int line, const char* function);
 } // namespace tr
 
 #ifdef TR_ENABLE_ASSERTS

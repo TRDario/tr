@@ -48,8 +48,8 @@ void tr::audio_system::initialize()
 	}
 	int max_sources;
 	alcGetIntegerv(_device, ALC_MONO_SOURCES, 1, &max_sources);
-	_max_audio_sources = static_cast<std::size_t>(max_sources);
-	_audio_gains.fill(1);
+	max_audio_sources = static_cast<std::size_t>(max_sources);
+	audio_gains.fill(1);
 }
 
 bool tr::audio_system::active() noexcept
@@ -59,25 +59,25 @@ bool tr::audio_system::active() noexcept
 
 void tr::audio_system::shut_down() noexcept
 {
-	if (_audio_thread.joinable()) {
-		_audio_thread.request_stop();
-		_audio_thread.join();
+	if (audio_thread.joinable()) {
+		audio_thread.request_stop();
+		audio_thread.join();
 	}
 
-	_audio_commands.clear();
+	audio_commands.clear();
 
 #ifdef TR_ENABLE_ASSERTS
-	for (const std::shared_ptr<_audio_source>& ptr : _audio_sources) {
+	for (const std::shared_ptr<base_audio_source>& ptr : audio_sources) {
 		TR_ASSERT(ptr.use_count() == 1, "Tried to shut down audio system while one or more audio sources still exists.");
 	}
 #endif
-	_audio_sources.clear();
+	audio_sources.clear();
 
-	for (auto& [buffer, cullable] : _audio_buffers_cullable) {
+	for (auto& [buffer, cullable] : audio_buffers_cullable) {
 		TR_ASSERT(cullable, "Tried to shut down audio system while one or more audio buffers still exists.");
 		TR_AL_CALL(alDeleteBuffers, 1, &buffer);
 	}
-	_audio_buffers_cullable.clear();
+	audio_buffers_cullable.clear();
 
 	alcMakeContextCurrent(nullptr);
 	alcDestroyContext(_context);
@@ -101,7 +101,7 @@ float tr::audio_system::class_gain(int id) noexcept
 {
 	TR_ASSERT(active(), "Tried to get class gain before initializing the audio system.");
 
-	return _audio_gains[id];
+	return audio_gains[id];
 }
 
 void tr::audio_system::set_master_gain(float gain) noexcept
@@ -116,8 +116,8 @@ void tr::audio_system::set_class_gain(int id, float gain) noexcept
 {
 	TR_ASSERT(active(), "Tried to set class gain before initializing the audio system.");
 
-	_audio_gains[id] = gain;
-	for (_audio_source& source : deref(_audio_sources)) {
+	audio_gains[id] = gain;
+	for (base_audio_source& source : deref(audio_sources)) {
 		if (source.classes()[id]) {
 			source.set_gain(source.gain());
 		}
@@ -176,38 +176,38 @@ void tr::audio_system::set_listener_orientation(orientation orientation) noexcep
 
 bool tr::audio_system::can_allocate_audio_source(int priority) noexcept
 {
-	if (_audio_sources.size() < _max_audio_sources) {
+	if (audio_sources.size() < max_audio_sources) {
 		return true;
 	}
-	const auto it{std::ranges::find_if(_audio_sources, [&](auto& s) { return s.use_count() == 1 && s->priority() <= priority; })};
-	return it != _audio_sources.end();
+	const auto it{std::ranges::find_if(audio_sources, [&](auto& s) { return s.use_count() == 1 && s->priority() <= priority; })};
+	return it != audio_sources.end();
 }
 
 //
 
-void tr::_audio_thread_loop(std::stop_token stoken) noexcept
+void tr::audio_thread_loop(std::stop_token stoken) noexcept
 {
 	while (!stoken.stop_requested()) {
 		try {
-			std::lock_guard lock{_audio_mutex};
+			std::lock_guard lock{audio_mutex};
 
-			for (auto it = _audio_buffers_cullable.begin(); it != _audio_buffers_cullable.end();) {
+			for (auto it = audio_buffers_cullable.begin(); it != audio_buffers_cullable.end();) {
 				auto& [buffer, cullable]{*it};
-				if (cullable && std::ranges::none_of(_audio_sources, [&](auto& s) { return s->buffer() == buffer; })) {
+				if (cullable && std::ranges::none_of(audio_sources, [&](auto& s) { return s->buffer() == buffer; })) {
 					TR_AL_CALL(alDeleteBuffers, 1, &buffer);
-					it = _audio_buffers_cullable.erase(it);
+					it = audio_buffers_cullable.erase(it);
 				}
 				else {
 					++it;
 				}
 			}
 
-			for (std::list<std::shared_ptr<_audio_source>>::iterator it = _audio_sources.begin(); it != _audio_sources.end();) {
-				_audio_source& source{**it};
+			for (std::list<std::shared_ptr<base_audio_source>>::iterator it = audio_sources.begin(); it != audio_sources.end();) {
+				base_audio_source& source{**it};
 
 				if (it->use_count() == 1 && source.state() != audio_state::PLAYING) {
-					_audio_commands.remove_if([&](_audio_command& command) { return command.source() == *it; });
-					it = _audio_sources.erase(it);
+					audio_commands.remove_if([&](audio_command& command) { return command.source() == *it; });
+					it = audio_sources.erase(it);
 					continue;
 				}
 
@@ -216,7 +216,7 @@ void tr::_audio_thread_loop(std::stop_token stoken) noexcept
 					continue;
 				}
 
-				_buffer_stream& stream{*source._stream};
+				buffer_stream& stream{*source._stream};
 
 				ALint nbuffers;
 				TR_AL_CALL(alGetSourcei, source._id, AL_BUFFERS_PROCESSED, &nbuffers);
@@ -228,7 +228,7 @@ void tr::_audio_thread_loop(std::stop_token stoken) noexcept
 							nbuffers = i;
 							break;
 						}
-						std::ranges::find(stream.buffers, buffers[i], &_buffer_stream_buffer::id)->refill(stream);
+						std::ranges::find(stream.buffers, buffers[i], &buffer_stream_buffer::id)->refill(stream);
 					}
 					if (nbuffers > 0) {
 						TR_AL_CALL(alSourceQueueBuffers, source._id, nbuffers, buffers.data());
@@ -237,10 +237,10 @@ void tr::_audio_thread_loop(std::stop_token stoken) noexcept
 				++it;
 			}
 
-			for (std::list<_audio_command>::iterator it = _audio_commands.begin(); it != _audio_commands.end();) {
+			for (std::list<audio_command>::iterator it = audio_commands.begin(); it != audio_commands.end();) {
 				it->execute();
 				if (it->done()) {
-					it = _audio_commands.erase(it);
+					it = audio_commands.erase(it);
 				}
 				else {
 					++it;

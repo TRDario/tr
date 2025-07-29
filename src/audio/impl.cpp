@@ -2,102 +2,90 @@
 
 ////////////////////////////////////////////////////////////// AUDIO COMMAND //////////////////////////////////////////////////////////////
 
-tr::_audio_command::_audio_command(std::shared_ptr<_audio_source> source, type type, float start, float end, duration length) noexcept
-	: _src{std::move(source)}, _type{type}, _start{.num = start}, _end{.num = end}, _length{length}, _last_update{clock::now()}, _elapsed{}
+tr::audio_command::audio_command(std::shared_ptr<base_audio_source> source, command_type type, float start, float end, duration length)
+	: src{std::move(source)}, type{type}, start{.num = start}, end{.num = end}, length{length}, last_update{clock::now()}, elapsed{}
 {
 }
 
-tr::_audio_command::_audio_command(std::shared_ptr<_audio_source> source, type type, glm::vec2 start, glm::vec2 end,
-								   duration length) noexcept
-	: _src{std::move(source)}
-	, _type{type}
-	, _start{.vec2 = start}
-	, _end{.vec2 = end}
-	, _length{length}
-	, _last_update{clock::now()}
-	, _elapsed{}
+tr::audio_command::audio_command(std::shared_ptr<base_audio_source> source, command_type type, glm::vec2 start, glm::vec2 end,
+								 duration length)
+	: src{std::move(source)}, type{type}, start{.vec2 = start}, end{.vec2 = end}, length{length}, last_update{clock::now()}, elapsed{}
 {
 }
 
-tr::_audio_command::_audio_command(std::shared_ptr<_audio_source> source, type type, glm::vec3 start, glm::vec3 end,
-								   duration length) noexcept
-	: _src{std::move(source)}
-	, _type{type}
-	, _start{.vec3 = start}
-	, _end{.vec3 = end}
-	, _length{length}
-	, _last_update{clock::now()}
-	, _elapsed{}
+tr::audio_command::audio_command(std::shared_ptr<base_audio_source> source, command_type type, glm::vec3 start, glm::vec3 end,
+								 duration length)
+	: src{std::move(source)}, type{type}, start{.vec3 = start}, end{.vec3 = end}, length{length}, last_update{clock::now()}, elapsed{}
 {
 }
 
-std::shared_ptr<tr::_audio_source> tr::_audio_command::source() const noexcept
+std::shared_ptr<tr::base_audio_source> tr::audio_command::source() const
 {
-	return _src;
+	return src;
 }
 
-tr::_audio_command::_arg tr::_audio_command::_value() noexcept
+tr::audio_command::arg tr::audio_command::value()
 {
 	const time_point now{clock::now()};
-	_elapsed = std::min(_elapsed + now - _last_update, _length);
-	_last_update = now;
-	const float t{duration_cast<fsecs>(_elapsed) / _length};
+	elapsed = std::min(elapsed + now - last_update, length);
+	last_update = now;
+	const float t{duration_cast<fsecs>(elapsed) / length};
 
-	_arg value;
-	switch (_type) {
-	case type::POS:
-	case type::VEL:
-	case type::DIR:
-		value.vec3 = _start.vec3 + (_end.vec3 - _start.vec3) * t;
+	arg value;
+	switch (type) {
+	case command_type::POS:
+	case command_type::VEL:
+	case command_type::DIR:
+		value.vec3 = start.vec3 + (end.vec3 - start.vec3) * t;
 		break;
-	case type::CONE_W:
-		value.vec2 = _start.vec2 + (_end.vec2 - _start.vec2) * t;
+	case command_type::CONE_W:
+		value.vec2 = start.vec2 + (end.vec2 - start.vec2) * t;
 		break;
 	default:
-		value.num = _start.num + (_end.num - _start.num) * t;
+		value.num = start.num + (end.num - start.num) * t;
 		break;
 	}
 	return value;
 }
 
-void tr::_audio_command::execute() noexcept
+void tr::audio_command::execute()
 {
-	_arg value{_value()};
-	switch (_type) {
-	case type::PITCH:
-		_src->set_pitch(value.num);
+	arg v{value()};
+	switch (type) {
+	case command_type::PITCH:
+		src->set_pitch(v.num);
 		break;
-	case type::GAIN:
-		_src->set_gain(value.num);
+	case command_type::GAIN:
+		src->set_gain(v.num);
 		break;
-	case type::MAX_DIST:
-		_src->set_max_dist(value.num);
+	case command_type::MAX_DIST:
+		src->set_max_dist(v.num);
 		break;
-	case type::ROLLOFF:
-		_src->set_rolloff(value.num);
+	case command_type::ROLLOFF:
+		src->set_rolloff(v.num);
 		break;
-	case type::REF_DIST:
-		_src->set_ref_dist(value.num);
+	case command_type::REF_DIST:
+		src->set_ref_dist(v.num);
 		break;
-	case type::OUT_CONE_GAIN:
-		_src->set_out_cone_gain(value.num);
+	case command_type::OUT_CONE_GAIN:
+		src->set_out_cone_gain(v.num);
 		break;
-	case type::CONE_W:
-		_src->set_cone_w(rads(value.vec2.x), rads(value.vec2.y));
+	case command_type::CONE_W:
+		src->set_cone_w(rads(v.vec2.x), rads(v.vec2.y));
 		break;
-	case type::POS:
-		_src->set_pos(value.vec3);
+	case command_type::POS:
+		src->set_pos(v.vec3);
 		break;
-	case type::VEL:
-		_src->set_vel(value.vec3);
+	case command_type::VEL:
+		src->set_vel(v.vec3);
 		break;
-	case type::DIR:
-		_src->set_dir(value.vec3);
+	case command_type::DIR:
+		src->set_dir(v.vec3);
 		break;
 	}
 }
 
-bool tr::_audio_command::done() const noexcept
+bool tr::audio_command::done() const
 {
-	return _elapsed == _length;
+	return elapsed == length;
 }

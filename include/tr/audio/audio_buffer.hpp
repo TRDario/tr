@@ -13,25 +13,25 @@ namespace tr {
 	class audio_buffer {
 	  public:
 		// Constructs an empty audio buffer.
-		audio_buffer() noexcept;
+		audio_buffer();
 		// Constructs an audio buffer and immediately sets it.
-		audio_buffer(std::span<const std::int16_t> data, audio_format format, int frequency) noexcept;
+		audio_buffer(std::span<const std::int16_t> data, audio_format format, int frequency);
 
 		// Gets the size of the buffer's storage.
-		std::size_t size() const noexcept;
+		std::size_t size() const;
 		// Gets the length of the buffer's audio.
-		fsecs length() const noexcept;
+		fsecs length() const;
 
 		// Sets the data of the buffer.
-		void set(std::span<const std::int16_t> data, audio_format format, int frequency) noexcept;
+		void set(std::span<const std::int16_t> data, audio_format format, int frequency);
 
 	  private:
-		struct _deleter {
-			void operator()(unsigned int id) const noexcept;
+		struct deleter {
+			void operator()(unsigned int id) const;
 		};
 
 		// Handle to the OpenAL ID.
-		handle<unsigned int, 0, _deleter> _id;
+		handle<unsigned int, 0, deleter> id;
 
 		friend class _audio_source;
 	};

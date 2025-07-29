@@ -9,79 +9,61 @@ constexpr std::size_t AUDIO_STREAM_BUFFER_SIZE{16384};
 
 //
 
-unsigned int tr::_audio_source::buffer() const noexcept
+unsigned int tr::base_audio_source::buffer() const
 {
-	ALint id;
-	TR_AL_CALL(alGetSourcei, _id, AL_BUFFER, &id);
-	return static_cast<unsigned int>(id);
+	ALint buffer_id;
+	TR_AL_CALL(alGetSourcei, id, AL_BUFFER, &buffer_id);
+	return static_cast<unsigned int>(buffer_id);
 }
 
-void tr::_audio_source::lock_audio_mutex() const noexcept
+void tr::base_audio_source::lock_audio_mutex() const
 {
-	if (_audio_mutex_refc++ == 0) {
-		try {
-			_audio_mutex.lock();
-		}
-		catch (std::system_error&) {
-			terminate("System error", "Exception occurred while locking the audio mutex.");
-		}
+	if (audio_mutex_refc++ == 0) {
+		audio_mutex.lock();
 	}
 }
 
-void tr::_audio_source::unlock_audio_mutex() const noexcept
+void tr::base_audio_source::unlock_audio_mutex() const
 {
-	if (--_audio_mutex_refc == 0) {
-		try {
-			_audio_mutex.unlock();
-		}
-		catch (std::system_error&) {
-			terminate("System error", "Exception occurred while unlocking the audio mutex.");
-		}
+	if (--audio_mutex_refc == 0) {
+		audio_mutex.unlock();
 	}
 }
 
 //
 
-tr::_audio_source::_audio_source(int priority)
-	: _gain{1.0f}, _priority{priority}, _audio_mutex_refc{0}
+tr::base_audio_source::base_audio_source(int priority)
+	: base_gain{1.0f}, priority_{priority}, audio_mutex_refc{0}
 {
-	TR_AL_CALL(alGenSources, 1, &_id);
+	TR_AL_CALL(alGenSources, 1, &id);
 	if (alGetError() == AL_OUT_OF_MEMORY) {
 		terminate("Out of memory", "Exception occurred while creating an audio source.");
 	}
 }
 
-tr::audio_source::audio_source(int priority) noexcept
+tr::audio_source::audio_source(int priority)
 {
 	TR_ASSERT(audio_system::can_allocate_audio_source(priority), "Tried to allocate more than 128 audio sources at the same time.");
 
-	try {
-		std::lock_guard lock{_audio_mutex};
-		if (_audio_sources.size() == _max_audio_sources) {
-			auto it{std::ranges::find_if(_audio_sources, [&](auto& s) { return s.use_count() == 1 && s->priority() <= priority; })};
-			_audio_sources.erase(it);
-		}
-		auto it{std::ranges::find_if(_audio_sources, [&](auto& s) { return s->priority() < priority; })};
-		it = _audio_sources.emplace(it, std::make_shared<_audio_source>(priority));
-		if (!_audio_thread.joinable()) {
-			_audio_thread = std::jthread{_audio_thread_loop};
-		}
-		_impl = *it;
+	std::lock_guard lock{audio_mutex};
+	if (audio_sources.size() == max_audio_sources) {
+		auto it{std::ranges::find_if(audio_sources, [&](auto& s) { return s.use_count() == 1 && s->priority() <= priority; })};
+		audio_sources.erase(it);
 	}
-	catch (std::bad_alloc&) {
-		terminate("Out of memory", "Exception occurred while creating an audio source.");
+	auto it{std::ranges::find_if(audio_sources, [&](auto& s) { return s->priority() < priority; })};
+	it = audio_sources.emplace(it, std::make_shared<base_audio_source>(priority));
+	if (!audio_thread.joinable()) {
+		audio_thread = std::jthread{audio_thread_loop};
 	}
-	catch (std::system_error&) {
-		terminate("System error", "Exception occurred while creating an audio source.");
-	}
+	base = *it;
 }
 
-tr::_audio_source::~_audio_source() noexcept
+tr::base_audio_source::~base_audio_source()
 {
-	TR_AL_CALL(alDeleteSources, 1, &_id);
+	TR_AL_CALL(alDeleteSources, 1, &id);
 }
 
-tr::_buffer_stream_buffer::_buffer_stream_buffer() noexcept
+tr::buffer_stream_buffer::buffer_stream_buffer()
 	: start_offset{}
 {
 	TR_AL_CALL(alGenBuffers, 1, &id);
@@ -90,527 +72,472 @@ tr::_buffer_stream_buffer::_buffer_stream_buffer() noexcept
 	}
 }
 
-tr::_buffer_stream_buffer::~_buffer_stream_buffer() noexcept
+tr::buffer_stream_buffer::~buffer_stream_buffer() noexcept
 {
 	TR_AL_CALL(alDeleteBuffers, 1, &id);
 }
 
-void tr::_buffer_stream_buffer::refill(_buffer_stream& buffer_stream) noexcept
+void tr::buffer_stream_buffer::refill(buffer_stream& buffer_stream)
 {
-	try {
-		std::array<std::int16_t, AUDIO_STREAM_BUFFER_SIZE> buffer;
+	std::array<std::int16_t, AUDIO_STREAM_BUFFER_SIZE> buffer;
 
-		start_offset = buffer_stream.stream->tell();
-		const std::span<const std::int16_t> used_buffer{buffer_stream.stream->read(buffer)};
-		const ALenum format{buffer_stream.stream->channels() == 2 ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16};
-		const ALsizei size{static_cast<ALsizei>(used_buffer.size_bytes()) - static_cast<ALsizei>(used_buffer.size_bytes()) % 4};
-		TR_AL_CALL(alBufferData, id, format, used_buffer.data(), size, buffer_stream.stream->sample_rate());
-		if (alGetError() == AL_OUT_OF_MEMORY) {
-			terminate("Out of memory", "Exception occurred while refilling an audio buffer.");
-		}
-	}
-	catch (std::bad_alloc&) {
+	start_offset = buffer_stream.stream->tell();
+	const std::span<const std::int16_t> used_buffer{buffer_stream.stream->read(buffer)};
+	const ALenum format{buffer_stream.stream->channels() == 2 ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16};
+	const ALsizei size{static_cast<ALsizei>(used_buffer.size_bytes()) - static_cast<ALsizei>(used_buffer.size_bytes()) % 4};
+	TR_AL_CALL(alBufferData, id, format, used_buffer.data(), size, buffer_stream.stream->sample_rate());
+	if (alGetError() == AL_OUT_OF_MEMORY) {
 		terminate("Out of memory", "Exception occurred while refilling an audio buffer.");
 	}
 }
 
 //
 
-void tr::_audio_source::use(const audio_buffer& buffer) noexcept
+void tr::base_audio_source::use(const audio_buffer& buffer)
 {
 	clear();
-	TR_AL_CALL(alSourcei, _id, AL_BUFFER, buffer._id.get());
+	TR_AL_CALL(alSourcei, id, AL_BUFFER, buffer.id.get());
 	ALint channels;
-	TR_AL_CALL(alGetBufferi, buffer._id.get(), AL_CHANNELS, &channels);
-	TR_AL_CALL(alSourcei, _id, AL_DIRECT_CHANNELS_SOFT, channels == 2);
+	TR_AL_CALL(alGetBufferi, buffer.id.get(), AL_CHANNELS, &channels);
+	TR_AL_CALL(alSourcei, id, AL_DIRECT_CHANNELS_SOFT, channels == 2);
 }
 
-void tr::audio_source::use(const audio_buffer& buffer) noexcept
+void tr::audio_source::use(const audio_buffer& buffer)
 {
-	_impl->use(buffer);
+	base->use(buffer);
 }
 
-void tr::_audio_source::use(std::unique_ptr<audio_stream>&& stream)
+void tr::base_audio_source::use(std::unique_ptr<audio_stream>&& stream)
 {
 	lock_audio_mutex();
 	clear();
-	_stream.emplace(std::move(stream));
+	this->stream.emplace(std::move(stream));
 	unlock_audio_mutex();
 }
 
-void tr::audio_source::use(std::unique_ptr<audio_stream>&& stream) noexcept
+void tr::audio_source::use(std::unique_ptr<audio_stream>&& stream)
 {
-	_impl->use(std::move(stream));
+	base->use(std::move(stream));
 }
 
-void tr::_audio_source::clear() noexcept
+void tr::base_audio_source::clear()
 {
 	lock_audio_mutex();
 	stop();
-	if (_stream.has_value()) {
-		TR_AL_CALL(alSourcei, _id, AL_BUFFER, 0);
-		_stream.reset();
+	if (stream.has_value()) {
+		TR_AL_CALL(alSourcei, id, AL_BUFFER, 0);
+		stream.reset();
 	}
 	else if (buffer() != 0) {
 		set_loop_points(START, END);
-		TR_AL_CALL(alSourcei, _id, AL_LOOPING, 0);
-		TR_AL_CALL(alSourcei, _id, AL_BUFFER, 0);
+		TR_AL_CALL(alSourcei, id, AL_LOOPING, 0);
+		TR_AL_CALL(alSourcei, id, AL_BUFFER, 0);
 	}
 	unlock_audio_mutex();
 }
 
-void tr::audio_source::clear() noexcept
+void tr::audio_source::clear()
 {
-	_impl->clear();
+	base->clear();
 }
 
 //
 
-int tr::_audio_source::priority() const noexcept
+int tr::base_audio_source::priority() const
 {
-	return _priority;
+	return priority_;
 }
 
-int tr::audio_source::priority() const noexcept
+int tr::audio_source::priority() const
 {
-	return _impl->priority();
+	return base->priority();
 }
 
-const std::bitset<32>& tr::_audio_source::classes() const noexcept
+const std::bitset<32>& tr::base_audio_source::classes() const
 {
-	return _classes;
+	return class_flags;
 }
 
-const std::bitset<32>& tr::audio_source::classes() const noexcept
+const std::bitset<32>& tr::audio_source::classes() const
 {
-	return _impl->classes();
+	return base->classes();
 }
 
-void tr::_audio_source::set_classes(const std::bitset<32>& classes) noexcept
+void tr::base_audio_source::set_classes(const std::bitset<32>& classes)
 {
-	_classes = classes;
+	class_flags = classes;
 	set_gain(gain());
 }
 
-void tr::audio_source::set_classes(const std::bitset<32>& classes) noexcept
+void tr::audio_source::set_classes(const std::bitset<32>& classes)
 {
-	_impl->set_classes(classes);
+	base->set_classes(classes);
 }
 
 //
 
-float tr::_audio_source::pitch() const noexcept
+float tr::base_audio_source::pitch() const
 {
 	float pitch;
-	TR_AL_CALL(alGetSourcef, _id, AL_PITCH, &pitch);
+	TR_AL_CALL(alGetSourcef, id, AL_PITCH, &pitch);
 	return pitch;
 }
 
-float tr::audio_source::pitch() const noexcept
+float tr::audio_source::pitch() const
 {
-	return _impl->pitch();
+	return base->pitch();
 }
 
-void tr::_audio_source::set_pitch(float pitch) noexcept
+void tr::base_audio_source::set_pitch(float pitch)
 {
-	TR_AL_CALL(alSourcef, _id, AL_PITCH, std::clamp(pitch, 0.5f, 2.0f));
+	TR_AL_CALL(alSourcef, id, AL_PITCH, std::clamp(pitch, 0.5f, 2.0f));
 }
 
-void tr::audio_source::set_pitch(float pitch) noexcept
+void tr::audio_source::set_pitch(float pitch)
 {
-	_impl->set_pitch(pitch);
+	base->set_pitch(pitch);
 }
 
-void tr::audio_source::set_pitch(float pitch, fsecs time) noexcept
+void tr::audio_source::set_pitch(float pitch, fsecs time)
 {
-	try {
-		_impl->lock_audio_mutex();
-		_audio_commands.emplace_back(_impl, _audio_command::type::PITCH, this->pitch(), pitch, duration_cast<duration>(time));
-		_impl->unlock_audio_mutex();
-	}
-	catch (std::bad_alloc&) {
-		terminate("Out of memory", "Exception occurred while setting the pitch of an audio source.");
-	}
+	base->lock_audio_mutex();
+	audio_commands.emplace_back(base, audio_command::command_type::PITCH, this->pitch(), pitch, duration_cast<duration>(time));
+	base->unlock_audio_mutex();
 }
 
 //
 
-float tr::_audio_source::gain() const noexcept
+float tr::base_audio_source::gain() const
 {
-	return _gain;
+	return base_gain;
 }
 
-float tr::audio_source::gain() const noexcept
+float tr::audio_source::gain() const
 {
-	return _impl->gain();
+	return base->gain();
 }
 
-void tr::_audio_source::set_gain(float gain) noexcept
+void tr::base_audio_source::set_gain(float gain)
 {
-	_gain = gain;
+	base_gain = gain;
 	for (int i = 0; i < 32; ++i) {
-		if (_classes[i]) {
-			gain *= _audio_gains[i];
+		if (class_flags[i]) {
+			gain *= audio_gains[i];
 		}
 	}
-	TR_AL_CALL(alSourcef, _id, AL_GAIN, std::max(gain, 0.0f));
+	TR_AL_CALL(alSourcef, id, AL_GAIN, std::max(gain, 0.0f));
 }
 
-void tr::audio_source::set_gain(float gain) noexcept
+void tr::audio_source::set_gain(float gain)
 {
-	_impl->set_gain(gain);
+	base->set_gain(gain);
 }
 
-void tr::audio_source::set_gain(float gain, fsecs time) noexcept
+void tr::audio_source::set_gain(float gain, fsecs time)
 {
-	try {
-		_impl->lock_audio_mutex();
-		_audio_commands.emplace_back(_impl, _audio_command::type::GAIN, this->gain(), gain, duration_cast<duration>(time));
-		_impl->unlock_audio_mutex();
-	}
-	catch (std::bad_alloc&) {
-		terminate("Out of memory", "Exception occurred while setting the gain of an audio source.");
-	}
+	base->lock_audio_mutex();
+	audio_commands.emplace_back(base, audio_command::command_type::GAIN, this->gain(), gain, duration_cast<duration>(time));
+	base->unlock_audio_mutex();
 }
 
 //
 
-float tr::_audio_source::max_dist() const noexcept
+float tr::base_audio_source::max_dist() const
 {
 	float max_dist;
-	TR_AL_CALL(alGetSourcef, _id, AL_MAX_DISTANCE, &max_dist);
+	TR_AL_CALL(alGetSourcef, id, AL_MAX_DISTANCE, &max_dist);
 	return max_dist;
 }
 
-float tr::audio_source::max_dist() const noexcept
+float tr::audio_source::max_dist() const
 {
-	return _impl->max_dist();
+	return base->max_dist();
 }
 
-void tr::_audio_source::set_max_dist(float max_dist) noexcept
+void tr::base_audio_source::set_max_dist(float max_dist)
 {
-	TR_AL_CALL(alSourcef, _id, AL_MAX_DISTANCE, std::max(max_dist, 0.0f));
+	TR_AL_CALL(alSourcef, id, AL_MAX_DISTANCE, std::max(max_dist, 0.0f));
 }
 
-void tr::audio_source::set_max_dist(float max_dist) noexcept
+void tr::audio_source::set_max_dist(float max_dist)
 {
-	_impl->set_max_dist(max_dist);
+	base->set_max_dist(max_dist);
 }
 
-void tr::audio_source::set_max_dist(float max_dist, fsecs time) noexcept
+void tr::audio_source::set_max_dist(float max_dist, fsecs time)
 {
-	try {
-		_impl->lock_audio_mutex();
-		_audio_commands.emplace_back(_impl, _audio_command::type::MAX_DIST, this->max_dist(), max_dist, duration_cast<duration>(time));
-		_impl->unlock_audio_mutex();
-	}
-	catch (std::bad_alloc&) {
-		terminate("Out of memory", "Exception occurred while setting the max distance of an audio source.");
-	}
+	base->lock_audio_mutex();
+	audio_commands.emplace_back(base, audio_command::command_type::MAX_DIST, this->max_dist(), max_dist, duration_cast<duration>(time));
+	base->unlock_audio_mutex();
 }
 
 //
 
-float tr::_audio_source::rolloff() const noexcept
+float tr::base_audio_source::rolloff() const
 {
 	float rolloff;
-	TR_AL_CALL(alGetSourcef, _id, AL_ROLLOFF_FACTOR, &rolloff);
+	TR_AL_CALL(alGetSourcef, id, AL_ROLLOFF_FACTOR, &rolloff);
 	return rolloff;
 }
 
-float tr::audio_source::rolloff() const noexcept
+float tr::audio_source::rolloff() const
 {
-	return _impl->rolloff();
+	return base->rolloff();
 }
 
-void tr::_audio_source::set_rolloff(float rolloff) noexcept
+void tr::base_audio_source::set_rolloff(float rolloff)
 {
-	TR_AL_CALL(alSourcef, _id, AL_ROLLOFF_FACTOR, std::max(rolloff, 0.0f));
+	TR_AL_CALL(alSourcef, id, AL_ROLLOFF_FACTOR, std::max(rolloff, 0.0f));
 }
 
-void tr::audio_source::set_rolloff(float rolloff) noexcept
+void tr::audio_source::set_rolloff(float rolloff)
 {
-	_impl->set_rolloff(rolloff);
+	base->set_rolloff(rolloff);
 }
 
-void tr::audio_source::set_rolloff(float rolloff, fsecs time) noexcept
+void tr::audio_source::set_rolloff(float rolloff, fsecs time)
 {
-	try {
-		_impl->lock_audio_mutex();
-		_audio_commands.emplace_back(_impl, _audio_command::type::ROLLOFF, this->rolloff(), rolloff, duration_cast<duration>(time));
-		_impl->unlock_audio_mutex();
-	}
-	catch (std::bad_alloc&) {
-		terminate("Out of memory", "Exception occurred while setting the rolloff of an audio source.");
-	}
+	base->lock_audio_mutex();
+	audio_commands.emplace_back(base, audio_command::command_type::ROLLOFF, this->rolloff(), rolloff, duration_cast<duration>(time));
+	base->unlock_audio_mutex();
 }
 
 //
 
-float tr::_audio_source::ref_dist() const noexcept
+float tr::base_audio_source::ref_dist() const
 {
 	float ref_dist;
-	TR_AL_CALL(alGetSourcef, _id, AL_REFERENCE_DISTANCE, &ref_dist);
+	TR_AL_CALL(alGetSourcef, id, AL_REFERENCE_DISTANCE, &ref_dist);
 	return ref_dist;
 }
 
-float tr::audio_source::ref_dist() const noexcept
+float tr::audio_source::ref_dist() const
 {
-	return _impl->ref_dist();
+	return base->ref_dist();
 }
 
-void tr::_audio_source::set_ref_dist(float ref_dist) noexcept
+void tr::base_audio_source::set_ref_dist(float ref_dist)
 {
-	TR_AL_CALL(alSourcef, _id, AL_REFERENCE_DISTANCE, std::max(ref_dist, 0.0f));
+	TR_AL_CALL(alSourcef, id, AL_REFERENCE_DISTANCE, std::max(ref_dist, 0.0f));
 }
 
-void tr::audio_source::set_ref_dist(float ref_dist) noexcept
+void tr::audio_source::set_ref_dist(float ref_dist)
 {
-	_impl->set_ref_dist(ref_dist);
+	base->set_ref_dist(ref_dist);
 }
 
-void tr::audio_source::set_ref_dist(float ref_dist, fsecs time) noexcept
+void tr::audio_source::set_ref_dist(float ref_dist, fsecs time)
 {
-	try {
-		_impl->lock_audio_mutex();
-		_audio_commands.emplace_back(_impl, _audio_command::type::REF_DIST, this->ref_dist(), ref_dist, duration_cast<duration>(time));
-		_impl->unlock_audio_mutex();
-	}
-	catch (std::bad_alloc&) {
-		terminate("Out of memory", "Exception occurred while setting the reference distance of an audio source.");
-	}
+	base->lock_audio_mutex();
+	audio_commands.emplace_back(base, audio_command::command_type::REF_DIST, this->ref_dist(), ref_dist, duration_cast<duration>(time));
+	base->unlock_audio_mutex();
 }
 
 //
 
-float tr::_audio_source::out_cone_gain() const noexcept
+float tr::base_audio_source::out_cone_gain() const
 {
 	float out_gain;
-	TR_AL_CALL(alGetSourcef, _id, AL_CONE_OUTER_GAIN, &out_gain);
+	TR_AL_CALL(alGetSourcef, id, AL_CONE_OUTER_GAIN, &out_gain);
 	return out_gain;
 }
 
-float tr::audio_source::out_cone_gain() const noexcept
+float tr::audio_source::out_cone_gain() const
 {
-	return _impl->out_cone_gain();
+	return base->out_cone_gain();
 }
 
-void tr::_audio_source::set_out_cone_gain(float out_cone_gain) noexcept
+void tr::base_audio_source::set_out_cone_gain(float out_cone_gain)
 {
-	TR_AL_CALL(alSourcef, _id, AL_CONE_OUTER_GAIN, std::clamp(out_cone_gain, 0.0f, 1.0f));
+	TR_AL_CALL(alSourcef, id, AL_CONE_OUTER_GAIN, std::clamp(out_cone_gain, 0.0f, 1.0f));
 }
 
-void tr::audio_source::set_out_cone_gain(float out_cone_gain) noexcept
+void tr::audio_source::set_out_cone_gain(float out_cone_gain)
 {
-	_impl->set_out_cone_gain(out_cone_gain);
+	base->set_out_cone_gain(out_cone_gain);
 }
 
-void tr::audio_source::set_out_cone_gain(float out_cone_gain, fsecs time) noexcept
+void tr::audio_source::set_out_cone_gain(float out_cone_gain, fsecs time)
 {
-	try {
-		_impl->lock_audio_mutex();
-		_audio_commands.emplace_back(_impl, _audio_command::type::OUT_CONE_GAIN, this->out_cone_gain(), out_cone_gain,
-									 duration_cast<duration>(time));
-		_impl->unlock_audio_mutex();
-	}
-	catch (std::bad_alloc&) {
-		terminate("Out of memory", "Exception occurred while setting the outer cone gain of an audio source.");
-	}
+	base->lock_audio_mutex();
+	audio_commands.emplace_back(base, audio_command::command_type::OUT_CONE_GAIN, this->out_cone_gain(), out_cone_gain,
+								duration_cast<duration>(time));
+	base->unlock_audio_mutex();
 }
 
 //
 
-tr::angle tr::_audio_source::in_cone_w() const noexcept
+tr::angle tr::base_audio_source::in_cone_w() const
 {
 	float in_cone_w;
-	TR_AL_CALL(alGetSourcef, _id, AL_CONE_INNER_ANGLE, &in_cone_w);
+	TR_AL_CALL(alGetSourcef, id, AL_CONE_INNER_ANGLE, &in_cone_w);
 	return degs(in_cone_w);
 }
 
-tr::angle tr::audio_source::in_cone_w() const noexcept
+tr::angle tr::audio_source::in_cone_w() const
 {
-	return _impl->in_cone_w();
+	return base->in_cone_w();
 }
 
-tr::angle tr::_audio_source::out_cone_w() const noexcept
+tr::angle tr::base_audio_source::out_cone_w() const
 {
 	float out_cone_w;
-	TR_AL_CALL(alGetSourcef, _id, AL_CONE_OUTER_ANGLE, &out_cone_w);
+	TR_AL_CALL(alGetSourcef, id, AL_CONE_OUTER_ANGLE, &out_cone_w);
 	return degs(out_cone_w);
 }
 
-tr::angle tr::audio_source::out_cone_w() const noexcept
+tr::angle tr::audio_source::out_cone_w() const
 {
-	return _impl->out_cone_w();
+	return base->out_cone_w();
 }
 
-void tr::_audio_source::set_cone_w(tr::angle in_cone_w, tr::angle out_cone_w) noexcept
+void tr::base_audio_source::set_cone_w(tr::angle in_cone_w, tr::angle out_cone_w)
 {
 	in_cone_w = std::clamp(in_cone_w, 0_deg, 360_deg);
 	out_cone_w = std::clamp(out_cone_w, 0_deg, 360_deg);
 	TR_ASSERT(in_cone_w < out_cone_w, "Tried to set audio source outer cone as thinner than inner cone (inner: {:d}, outer: {:d}).",
 			  in_cone_w, out_cone_w);
 
-	TR_AL_CALL(alSourcef, _id, AL_CONE_INNER_ANGLE, in_cone_w.degs());
-	TR_AL_CALL(alSourcef, _id, AL_CONE_OUTER_ANGLE, out_cone_w.degs());
+	TR_AL_CALL(alSourcef, id, AL_CONE_INNER_ANGLE, in_cone_w.degs());
+	TR_AL_CALL(alSourcef, id, AL_CONE_OUTER_ANGLE, out_cone_w.degs());
 }
 
-void tr::audio_source::set_cone_w(tr::angle in_cone_w, tr::angle out_cone_w) noexcept
+void tr::audio_source::set_cone_w(tr::angle in_cone_w, tr::angle out_cone_w)
 {
-	_impl->set_cone_w(in_cone_w, out_cone_w);
+	base->set_cone_w(in_cone_w, out_cone_w);
 }
 
-void tr::audio_source::set_cone_w(tr::angle in_cone_w, tr::angle out_cone_w, fsecs time) noexcept
+void tr::audio_source::set_cone_w(tr::angle in_cone_w, tr::angle out_cone_w, fsecs time)
 {
-	try {
-		_impl->lock_audio_mutex();
-		_audio_commands.emplace_back(_impl, _audio_command::type::CONE_W, glm::vec2{this->in_cone_w().rads(), this->out_cone_w().rads()},
-									 glm::vec2{in_cone_w.rads(), out_cone_w.rads()}, duration_cast<duration>(time));
-		_impl->unlock_audio_mutex();
-	}
-	catch (std::bad_alloc&) {
-		terminate("Out of memory", "Exception occurred while setting the cone widths of an audio source.");
-	}
+	base->lock_audio_mutex();
+	audio_commands.emplace_back(base, audio_command::command_type::CONE_W, glm::vec2{this->in_cone_w().rads(), this->out_cone_w().rads()},
+								glm::vec2{in_cone_w.rads(), out_cone_w.rads()}, duration_cast<duration>(time));
+	base->unlock_audio_mutex();
 }
 
 //
 
-glm::vec3 tr::_audio_source::pos() const noexcept
+glm::vec3 tr::base_audio_source::pos() const
 {
 	glm::vec3 pos;
-	TR_AL_CALL(alGetSourcefv, _id, AL_POSITION, value_ptr(pos));
+	TR_AL_CALL(alGetSourcefv, id, AL_POSITION, value_ptr(pos));
 	return pos;
 }
 
-glm::vec3 tr::audio_source::pos() const noexcept
+glm::vec3 tr::audio_source::pos() const
 {
-	return _impl->pos();
+	return base->pos();
 }
 
-void tr::_audio_source::set_pos(const glm::vec3& pos) noexcept
+void tr::base_audio_source::set_pos(const glm::vec3& pos)
 {
-	TR_AL_CALL(alSourcefv, _id, AL_POSITION, value_ptr(pos));
+	TR_AL_CALL(alSourcefv, id, AL_POSITION, value_ptr(pos));
 }
 
-void tr::audio_source::set_pos(const glm::vec3& pos) noexcept
+void tr::audio_source::set_pos(const glm::vec3& pos)
 {
-	_impl->set_pos(pos);
+	base->set_pos(pos);
 }
 
-void tr::audio_source::set_pos(const glm::vec3& pos, fsecs time) noexcept
+void tr::audio_source::set_pos(const glm::vec3& pos, fsecs time)
 {
-	try {
-		_impl->lock_audio_mutex();
-		_audio_commands.emplace_back(_impl, _audio_command::type::POS, this->pos(), pos, duration_cast<duration>(time));
-		_impl->unlock_audio_mutex();
-	}
-	catch (std::bad_alloc&) {
-		terminate("Out of memory", "Exception occurred while setting the position of an audio source.");
-	}
+	base->lock_audio_mutex();
+	audio_commands.emplace_back(base, audio_command::command_type::POS, this->pos(), pos, duration_cast<duration>(time));
+	base->unlock_audio_mutex();
 }
 
 //
 
-glm::vec3 tr::_audio_source::vel() const noexcept
+glm::vec3 tr::base_audio_source::vel() const
 {
 	glm::vec3 vel;
-	TR_AL_CALL(alGetSourcefv, _id, AL_VELOCITY, value_ptr(vel));
+	TR_AL_CALL(alGetSourcefv, id, AL_VELOCITY, value_ptr(vel));
 	return vel;
 }
 
-glm::vec3 tr::audio_source::vel() const noexcept
+glm::vec3 tr::audio_source::vel() const
 {
-	return _impl->vel();
+	return base->vel();
 }
 
-void tr::_audio_source::set_vel(const glm::vec3& vel) noexcept
+void tr::base_audio_source::set_vel(const glm::vec3& vel)
 {
-	TR_AL_CALL(alSourcefv, _id, AL_VELOCITY, value_ptr(vel));
+	TR_AL_CALL(alSourcefv, id, AL_VELOCITY, value_ptr(vel));
 }
 
-void tr::audio_source::set_vel(const glm::vec3& vel) noexcept
+void tr::audio_source::set_vel(const glm::vec3& vel)
 {
-	_impl->set_vel(vel);
+	base->set_vel(vel);
 }
 
-void tr::audio_source::set_vel(const glm::vec3& vel, fsecs time) noexcept
+void tr::audio_source::set_vel(const glm::vec3& vel, fsecs time)
 {
-	try {
-		_impl->lock_audio_mutex();
-		_audio_commands.emplace_back(_impl, _audio_command::type::VEL, this->vel(), vel, duration_cast<duration>(time));
-		_impl->unlock_audio_mutex();
-	}
-	catch (std::bad_alloc&) {
-		terminate("Out of memory", "Exception occurred while setting the velocity of an audio source.");
-	}
+	base->lock_audio_mutex();
+	audio_commands.emplace_back(base, audio_command::command_type::VEL, this->vel(), vel, duration_cast<duration>(time));
+	base->unlock_audio_mutex();
 }
 
 //
 
-glm::vec3 tr::_audio_source::dir() const noexcept
+glm::vec3 tr::base_audio_source::dir() const
 {
 	glm::vec3 dir;
-	TR_AL_CALL(alGetSourcefv, _id, AL_DIRECTION, value_ptr(dir));
+	TR_AL_CALL(alGetSourcefv, id, AL_DIRECTION, value_ptr(dir));
 	return dir;
 }
 
-glm::vec3 tr::audio_source::dir() const noexcept
+glm::vec3 tr::audio_source::dir() const
 {
-	return _impl->dir();
+	return base->dir();
 }
 
-void tr::_audio_source::set_dir(const glm::vec3& dir) noexcept
+void tr::base_audio_source::set_dir(const glm::vec3& dir)
 {
-	TR_AL_CALL(alSourcefv, _id, AL_DIRECTION, value_ptr(dir));
+	TR_AL_CALL(alSourcefv, id, AL_DIRECTION, value_ptr(dir));
 }
 
-void tr::audio_source::set_dir(const glm::vec3& dir) noexcept
+void tr::audio_source::set_dir(const glm::vec3& dir)
 {
-	_impl->set_dir(dir);
+	base->set_dir(dir);
 }
 
-void tr::audio_source::set_dir(const glm::vec3& dir, fsecs time) noexcept
+void tr::audio_source::set_dir(const glm::vec3& dir, fsecs time)
 {
-	try {
-		_impl->lock_audio_mutex();
-		_audio_commands.emplace_back(_impl, _audio_command::type::DIR, this->dir(), dir, duration_cast<duration>(time));
-		_impl->unlock_audio_mutex();
-	}
-	catch (std::bad_alloc&) {
-		terminate("Out of memory", "Exception occurred while setting the directory of an audio source.");
-	}
+	base->lock_audio_mutex();
+	audio_commands.emplace_back(base, audio_command::command_type::DIR, this->dir(), dir, duration_cast<duration>(time));
+	base->unlock_audio_mutex();
 }
 
 //
 
-tr::audio_origin tr::_audio_source::origin() const noexcept
+tr::audio_origin tr::base_audio_source::origin() const
 {
 	ALint origin;
-	TR_AL_CALL(alGetSourcei, _id, AL_SOURCE_RELATIVE, &origin);
+	TR_AL_CALL(alGetSourcei, id, AL_SOURCE_RELATIVE, &origin);
 	return static_cast<audio_origin>(origin);
 }
 
-tr::audio_origin tr::audio_source::origin() const noexcept
+tr::audio_origin tr::audio_source::origin() const
 {
-	return _impl->origin();
+	return base->origin();
 }
 
-void tr::_audio_source::set_origin(audio_origin type) noexcept
+void tr::base_audio_source::set_origin(audio_origin type)
 {
-	TR_AL_CALL(alSourcei, _id, AL_SOURCE_RELATIVE, static_cast<ALint>(type));
+	TR_AL_CALL(alSourcei, id, AL_SOURCE_RELATIVE, static_cast<ALint>(type));
 }
 
-void tr::audio_source::set_origin(audio_origin type) noexcept
+void tr::audio_source::set_origin(audio_origin type)
 {
-	_impl->set_origin(type);
+	base->set_origin(type);
 }
 
 //
 
-tr::audio_state tr::_audio_source::state() const noexcept
+tr::audio_state tr::base_audio_source::state() const
 {
 	ALint state;
-	TR_AL_CALL(alGetSourcei, _id, AL_SOURCE_STATE, &state);
+	TR_AL_CALL(alGetSourcei, id, AL_SOURCE_STATE, &state);
 	switch (state) {
 	case AL_INITIAL:
 		return audio_state::INITIAL;
@@ -625,74 +552,74 @@ tr::audio_state tr::_audio_source::state() const noexcept
 	}
 }
 
-tr::audio_state tr::audio_source::state() const noexcept
+tr::audio_state tr::audio_source::state() const
 {
-	return _impl->state();
+	return base->state();
 }
 
-void tr::_audio_source::play() noexcept
+void tr::base_audio_source::play()
 {
 	lock_audio_mutex();
-	if (_stream.has_value()) {
+	if (stream.has_value()) {
 		if (state() == tr::audio_state::INITIAL || state() == tr::audio_state::STOPPED) {
-			TR_AL_CALL(alSourcei, _id, AL_BUFFER, 0);
-			for (auto& buffer : _stream->buffers) {
-				buffer.refill(*_stream);
-				TR_AL_CALL(alSourceQueueBuffers, _id, 1, &buffer.id);
-				if (_stream->stream->tell() == _stream->stream->length()) {
+			TR_AL_CALL(alSourcei, id, AL_BUFFER, 0);
+			for (auto& buffer : stream->buffers) {
+				buffer.refill(*stream);
+				TR_AL_CALL(alSourceQueueBuffers, id, 1, &buffer.id);
+				if (stream->stream->tell() == stream->stream->length()) {
 					break;
 				}
 			}
 		}
 	}
-	TR_AL_CALL(alSourcePlay, _id);
+	TR_AL_CALL(alSourcePlay, id);
 	unlock_audio_mutex();
 }
 
-void tr::audio_source::play() noexcept
+void tr::audio_source::play()
 {
-	_impl->play();
+	base->play();
 }
 
-void tr::_audio_source::pause() noexcept
+void tr::base_audio_source::pause()
 {
-	TR_AL_CALL(alSourcePause, _id);
+	TR_AL_CALL(alSourcePause, id);
 }
 
-void tr::audio_source::pause() noexcept
+void tr::audio_source::pause()
 {
-	return _impl->pause();
+	return base->pause();
 }
 
-void tr::_audio_source::stop() noexcept
+void tr::base_audio_source::stop()
 {
-	if (_stream.has_value()) {
+	if (stream.has_value()) {
 		lock_audio_mutex();
-		TR_AL_CALL(alSourceStop, _id);
-		_stream->stream->seek(_stream->stream->loop_start());
+		TR_AL_CALL(alSourceStop, id);
+		stream->stream->seek(stream->stream->loop_start());
 		unlock_audio_mutex();
 	}
 	else {
-		TR_AL_CALL(alSourceStop, _id);
+		TR_AL_CALL(alSourceStop, id);
 	}
 }
 
-void tr::audio_source::stop() noexcept
+void tr::audio_source::stop()
 {
-	_impl->stop();
+	base->stop();
 }
 
 //
 
-tr::fsecs tr::_audio_source::length() const noexcept
+tr::fsecs tr::base_audio_source::length() const
 {
-	if (_stream.has_value()) {
-		return fsecs{static_cast<float>(_stream->stream->length()) / _stream->stream->sample_rate()};
+	if (stream.has_value()) {
+		return fsecs{static_cast<float>(stream->stream->length()) / stream->stream->sample_rate()};
 	}
 	else if (buffer() != 0) {
 		ALint sample_rate, size;
-		TR_AL_CALL(alGetBufferi, _id, AL_FREQUENCY, &sample_rate);
-		TR_AL_CALL(alGetBufferi, _id, AL_SIZE, &size);
+		TR_AL_CALL(alGetBufferi, id, AL_FREQUENCY, &sample_rate);
+		TR_AL_CALL(alGetBufferi, id, AL_SIZE, &size);
 		return sample_rate == 0 ? fsecs::zero() : fsecs{static_cast<double>(size) / sample_rate};
 	}
 	else {
@@ -700,47 +627,47 @@ tr::fsecs tr::_audio_source::length() const noexcept
 	}
 }
 
-tr::fsecs tr::audio_source::length() const noexcept
+tr::fsecs tr::audio_source::length() const
 {
-	return _impl->length();
+	return base->length();
 }
 
-tr::fsecs tr::_audio_source::offset() const noexcept
+tr::fsecs tr::base_audio_source::offset() const
 {
 	float offset;
-	TR_AL_CALL(alGetSourcef, _id, AL_SEC_OFFSET, &offset);
+	TR_AL_CALL(alGetSourcef, id, AL_SEC_OFFSET, &offset);
 
-	if (_stream.has_value()) {
+	if (stream.has_value()) {
 		lock_audio_mutex();
 		const tr::audio_state state{this->state()};
 		if (state == tr::audio_state::INITIAL || state == tr::audio_state::STOPPED) {
-			return fsecs{_stream->stream->tell() / static_cast<float>(_stream->stream->sample_rate())};
+			return fsecs{stream->stream->tell() / static_cast<float>(stream->stream->sample_rate())};
 		}
 
 		ALint buf_id;
-		TR_AL_CALL(alGetSourcei, _id, AL_BUFFER, &buf_id);
+		TR_AL_CALL(alGetSourcei, id, AL_BUFFER, &buf_id);
 
-		auto& buf{*std::ranges::find(_stream->buffers, static_cast<unsigned int>(buf_id), &_buffer_stream_buffer::id)};
+		auto& buf{*std::ranges::find(stream->buffers, static_cast<unsigned int>(buf_id), &buffer_stream_buffer::id)};
 		unlock_audio_mutex();
-		return fsecs{buf.start_offset / static_cast<float>(_stream->stream->sample_rate()) + offset};
+		return fsecs{buf.start_offset / static_cast<float>(stream->stream->sample_rate()) + offset};
 	}
 	else {
 		return fsecs{offset};
 	}
 }
 
-tr::fsecs tr::audio_source::offset() const noexcept
+tr::fsecs tr::audio_source::offset() const
 {
-	return _impl->offset();
+	return base->offset();
 }
 
-void tr::_audio_source::set_offset(fsecs offset) noexcept
+void tr::base_audio_source::set_offset(fsecs offset)
 {
-	if (_stream.has_value()) {
+	if (stream.has_value()) {
 		lock_audio_mutex();
 		audio_state state{this->state()};
-		_stream->stream->seek(static_cast<int>(offset.count() * _stream->stream->sample_rate()));
-		TR_AL_CALL(alSourceStop, _id);
+		stream->stream->seek(static_cast<int>(offset.count() * stream->stream->sample_rate()));
+		TR_AL_CALL(alSourceStop, id);
 		switch (state) {
 		case audio_state::PLAYING:
 			play();
@@ -756,40 +683,40 @@ void tr::_audio_source::set_offset(fsecs offset) noexcept
 		unlock_audio_mutex();
 	}
 	else {
-		TR_AL_CALL(alSourcef, _id, AL_SEC_OFFSET, offset.count());
+		TR_AL_CALL(alSourcef, id, AL_SEC_OFFSET, offset.count());
 	}
 
-	TR_AL_CALL(alSourcef, _id, AL_SEC_OFFSET, offset.count());
+	TR_AL_CALL(alSourcef, id, AL_SEC_OFFSET, offset.count());
 }
 
-void tr::audio_source::set_offset(fsecs offset) noexcept
+void tr::audio_source::set_offset(fsecs offset)
 {
-	_impl->set_offset(offset);
+	base->set_offset(offset);
 }
 
 //
 
-bool tr::_audio_source::looping() const noexcept
+bool tr::base_audio_source::looping() const
 {
-	if (_stream.has_value()) {
-		return _stream->stream->looping();
+	if (stream.has_value()) {
+		return stream->stream->looping();
 	}
 	else {
 		ALint looping;
-		TR_AL_CALL(alGetSourcei, _id, AL_LOOPING, &looping);
+		TR_AL_CALL(alGetSourcei, id, AL_LOOPING, &looping);
 		return looping;
 	}
 }
 
-bool tr::audio_source::looping() const noexcept
+bool tr::audio_source::looping() const
 {
-	return _impl->looping();
+	return base->looping();
 }
 
-tr::fsecs tr::_audio_source::loop_start() const noexcept
+tr::fsecs tr::base_audio_source::loop_start() const
 {
-	if (_stream.has_value()) {
-		return fsecs{static_cast<float>(_stream->stream->loop_start()) / _stream->stream->sample_rate()};
+	if (stream.has_value()) {
+		return fsecs{static_cast<float>(stream->stream->loop_start()) / stream->stream->sample_rate()};
 	}
 	else if (buffer() != 0) {
 		ALint sample_rate;
@@ -798,7 +725,7 @@ tr::fsecs tr::_audio_source::loop_start() const noexcept
 		TR_AL_CALL(alGetBufferi, buffer(), AL_CHANNELS, &channels);
 
 		std::array<ALint, 2> loop_points;
-		TR_AL_CALL(alGetSourceiv, _id, AL_LOOP_POINTS_SOFT, loop_points.data());
+		TR_AL_CALL(alGetSourceiv, id, AL_LOOP_POINTS_SOFT, loop_points.data());
 		return fsecs{static_cast<float>(loop_points[0]) / sample_rate / channels};
 	}
 	else {
@@ -806,15 +733,15 @@ tr::fsecs tr::_audio_source::loop_start() const noexcept
 	}
 }
 
-tr::fsecs tr::audio_source::loop_start() const noexcept
+tr::fsecs tr::audio_source::loop_start() const
 {
-	return _impl->loop_start();
+	return base->loop_start();
 }
 
-tr::fsecs tr::_audio_source::loop_end() const noexcept
+tr::fsecs tr::base_audio_source::loop_end() const
 {
-	if (_stream.has_value()) {
-		return fsecs{static_cast<float>(_stream->stream->loop_end()) / _stream->stream->sample_rate()};
+	if (stream.has_value()) {
+		return fsecs{static_cast<float>(stream->stream->loop_end()) / stream->stream->sample_rate()};
 	}
 	else if (buffer() != 0) {
 		ALint sample_rate;
@@ -823,7 +750,7 @@ tr::fsecs tr::_audio_source::loop_end() const noexcept
 		TR_AL_CALL(alGetBufferi, buffer(), AL_CHANNELS, &channels);
 
 		std::array<ALint, 2> loop_points;
-		TR_AL_CALL(alGetSourceiv, _id, AL_LOOP_POINTS_SOFT, loop_points.data());
+		TR_AL_CALL(alGetSourceiv, id, AL_LOOP_POINTS_SOFT, loop_points.data());
 		return fsecs{static_cast<float>(loop_points[1]) / sample_rate / channels};
 	}
 	else {
@@ -831,12 +758,12 @@ tr::fsecs tr::_audio_source::loop_end() const noexcept
 	}
 }
 
-tr::fsecs tr::audio_source::loop_end() const noexcept
+tr::fsecs tr::audio_source::loop_end() const
 {
-	return _impl->loop_end();
+	return base->loop_end();
 }
 
-void tr::_audio_source::set_loop_points(fsecs start, fsecs end) noexcept
+void tr::base_audio_source::set_loop_points(fsecs start, fsecs end)
 {
 	if (length() == fsecs::zero()) {
 		return;
@@ -846,15 +773,15 @@ void tr::_audio_source::set_loop_points(fsecs start, fsecs end) noexcept
 	end = std::clamp(end, START, length());
 	TR_ASSERT(start < end, "Tried to set audio source loop end before start (start: {}s, end: {}s).", start.count(), end.count());
 
-	if (_stream.has_value()) {
+	if (stream.has_value()) {
 		lock_audio_mutex();
 		if (start >= loop_end()) {
-			_stream->stream->set_loop_end(static_cast<int>(end.count() * _stream->stream->sample_rate()));
-			_stream->stream->set_loop_start(static_cast<int>(start.count() * _stream->stream->sample_rate()));
+			stream->stream->set_loop_end(static_cast<int>(end.count() * stream->stream->sample_rate()));
+			stream->stream->set_loop_start(static_cast<int>(start.count() * stream->stream->sample_rate()));
 		}
 		else {
-			_stream->stream->set_loop_start(static_cast<int>(start.count() * _stream->stream->sample_rate()));
-			_stream->stream->set_loop_end(static_cast<int>(end.count() * _stream->stream->sample_rate()));
+			stream->stream->set_loop_start(static_cast<int>(start.count() * stream->stream->sample_rate()));
+			stream->stream->set_loop_end(static_cast<int>(end.count() * stream->stream->sample_rate()));
 		}
 		unlock_audio_mutex();
 	}
@@ -868,30 +795,30 @@ void tr::_audio_source::set_loop_points(fsecs start, fsecs end) noexcept
 
 		std::array<ALint, 2> loop_points{static_cast<ALint>(start.count() * sample_rate * channels),
 										 static_cast<ALint>(end.count() * sample_rate * channels)};
-		TR_AL_CALL(alSourcei, _id, AL_BUFFER, 0);
+		TR_AL_CALL(alSourcei, id, AL_BUFFER, 0);
 		TR_AL_CALL(alBufferiv, buffer, AL_LOOP_POINTS_SOFT, loop_points.data());
-		TR_AL_CALL(alSourcei, _id, AL_BUFFER, buffer);
+		TR_AL_CALL(alSourcei, id, AL_BUFFER, buffer);
 	}
 }
 
-void tr::audio_source::set_loop_points(fsecs start, fsecs end) noexcept
+void tr::audio_source::set_loop_points(fsecs start, fsecs end)
 {
-	_impl->set_loop_points(start, end);
+	base->set_loop_points(start, end);
 }
 
-void tr::_audio_source::set_looping(bool value) noexcept
+void tr::base_audio_source::set_looping(bool value)
 {
-	if (_stream.has_value()) {
+	if (stream.has_value()) {
 		lock_audio_mutex();
-		_stream->stream->set_looping(value);
+		stream->stream->set_looping(value);
 		unlock_audio_mutex();
 	}
 	else {
-		TR_AL_CALL(alSourcei, _id, AL_LOOPING, value);
+		TR_AL_CALL(alSourcei, id, AL_LOOPING, value);
 	}
 }
 
-void tr::audio_source::set_looping(bool value) noexcept
+void tr::audio_source::set_looping(bool value)
 {
-	_impl->set_looping(value);
+	base->set_looping(value);
 }
