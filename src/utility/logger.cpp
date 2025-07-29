@@ -1,27 +1,27 @@
 #include "../../include/tr/utility/logger.hpp"
 
-tr::logger::logger(std::string_view prefix) noexcept
-	: _prefix{prefix}
+tr::logger::logger(std::string_view prefix)
+	: prefix{prefix}
 {
 }
 
-tr::logger::logger(std::string_view prefix, std::filesystem::path path) noexcept
-	: _prefix{prefix}, _path{std::move(path)}
+tr::logger::logger(std::string_view prefix, std::filesystem::path path)
+	: prefix{prefix}, path{std::move(path)}
 {
 	try {
-		open_file_w(_path, std::ios::trunc);
+		open_file_w(path, std::ios::trunc);
 	}
 	catch (...) {
 		return;
 	}
 }
 
-bool tr::logger::active() const noexcept
+bool tr::logger::active() const
 {
-	return !_prefix.empty();
+	return !prefix.empty();
 }
 
-void tr::logger::log(severity level, const exception& err) noexcept
+void tr::logger::log(severity level, const exception& err)
 {
 	log(level, "Exception raised: {}.", err.name());
 	const std::string_view description{err.description()};
@@ -34,7 +34,7 @@ void tr::logger::log(severity level, const exception& err) noexcept
 	}
 }
 
-void tr::logger::log(severity level, const std::exception& err) noexcept
+void tr::logger::log(severity level, const std::exception& err)
 {
 	log(level, "Exception raised:");
 	log_continue("{}", err.what());

@@ -42,7 +42,7 @@ namespace tr {
 
 	  private:
 		// The internal state of the generator.
-		std::uint64_t _state[2];
+		std::uint64_t state[2];
 	};
 } // namespace tr
 

@@ -1,43 +1,43 @@
 #include "../../include/tr/utility/iostream.hpp"
 
-tr::file_not_found::file_not_found(std::string_view path) noexcept
-	: _path{std::format("'{}'", path)}
+tr::file_not_found::file_not_found(std::string_view path)
+	: path{std::format("'{}'", path)}
 {
 }
 
-std::string_view tr::file_not_found::name() const noexcept
+std::string_view tr::file_not_found::name() const
 {
 	return "File not found";
 }
 
-std::string_view tr::file_not_found::description() const noexcept
+std::string_view tr::file_not_found::description() const
 {
-	return _path;
+	return path;
 }
 
-std::string_view tr::file_not_found::details() const noexcept
+std::string_view tr::file_not_found::details() const
 {
 	return {};
 }
 
-tr::file_open_error::file_open_error(std::string_view path) noexcept
-	: _path{std::format("'{}'", path)}
+tr::file_open_error::file_open_error(std::string_view path)
+	: path{std::format("'{}'", path)}
 {
 }
 
-std::string_view tr::file_open_error::name() const noexcept
+std::string_view tr::file_open_error::name() const
 {
 	return "File opening error";
 }
 
-std::string_view tr::file_open_error::description() const noexcept
+std::string_view tr::file_open_error::description() const
 {
 	static std::string buffer;
-	buffer = std::format("'{}'", _path);
+	buffer = std::format("'{}'", path);
 	return buffer;
 }
 
-std::string_view tr::file_open_error::details() const noexcept
+std::string_view tr::file_open_error::details() const
 {
 	return {};
 }

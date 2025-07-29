@@ -17,7 +17,9 @@ std::span<const std::byte> tr::binary_reader<T>::read_from_span(std::span<const 
 	return span.subspan(sizeof(T));
 }
 
-template <tr::binary_readable T> void tr::binary_reader<std::span<T>>::read_from_stream(std::istream& is, const std::span<T>& out)
+template <class T>
+void tr::binary_reader<std::span<T>>::read_from_stream(std::istream& is, const std::span<T>& out)
+	requires(stream_binary_readable<T>)
 {
 	if constexpr (requires { requires std::same_as<typename binary_reader<T>::default_reader, std::true_type>; }) {
 		is.read(reinterpret_cast<char*>(out.data()), out.size_bytes());
@@ -29,8 +31,9 @@ template <tr::binary_readable T> void tr::binary_reader<std::span<T>>::read_from
 	}
 }
 
-template <tr::binary_readable T>
+template <class T>
 std::span<const std::byte> tr::binary_reader<std::span<T>>::read_from_span(std::span<const std::byte> span, const std::span<T>& out)
+	requires(span_binary_readable<T>)
 {
 	if constexpr (requires { requires std::same_as<typename binary_reader<T>::default_reader, std::true_type>; }) {
 		std::ranges::copy(as_objects<T>(span.subspan(0, out.size_bytes())), out.begin());
@@ -44,21 +47,25 @@ std::span<const std::byte> tr::binary_reader<std::span<T>>::read_from_span(std::
 	}
 }
 
-template <tr::binary_readable A, tr::binary_readable B>
+template <class A, class B>
 void tr::binary_reader<std::pair<A, B>>::read_from_stream(std::istream& is, std::pair<A, B>& out)
+	requires(stream_binary_readable<A> && stream_binary_readable<B>)
 {
 	binary_read(is, out.first);
 	binary_read(is, out.second);
 }
 
-template <tr::binary_readable A, tr::binary_readable B>
+template <class A, class B>
 std::span<const std::byte> tr::binary_reader<std::pair<A, B>>::read_from_span(std::span<const std::byte> span, std::pair<A, B>& out)
+	requires(span_binary_readable<A> && span_binary_readable<B>)
 {
 	span = binary_read(span, out.first);
 	return binary_read(span, out.second);
 }
 
-template <tr::binary_constructible T> void tr::binary_reader<std::vector<T>>::read_from_stream(std::istream& is, std::vector<T>& out)
+template <tr::binary_constructible T>
+void tr::binary_reader<std::vector<T>>::read_from_stream(std::istream& is, std::vector<T>& out)
+	requires(stream_binary_readable<T>)
 {
 	out.resize(binary_read<std::uint32_t>(is));
 	binary_reader<std::span<T>>::read_from_stream(is, std::span{out});
@@ -66,6 +73,7 @@ template <tr::binary_constructible T> void tr::binary_reader<std::vector<T>>::re
 
 template <tr::binary_constructible T>
 std::span<const std::byte> tr::binary_reader<std::vector<T>>::read_from_span(std::span<const std::byte> span, std::vector<T>& out)
+	requires(span_binary_readable<T>)
 {
 	out.resize(binary_read<std::uint32_t>(span));
 	return binary_reader<std::span<T>>::read_from_span(span, std::span{out});
@@ -73,6 +81,7 @@ std::span<const std::byte> tr::binary_reader<std::vector<T>>::read_from_span(std
 
 template <tr::binary_constructible K, class... Args>
 void tr::binary_reader<std::set<K, Args...>>::read_from_stream(std::istream& is, std::set<K, Args...>& out)
+	requires(stream_binary_readable<K>)
 {
 	const std::uint32_t size{binary_read<std::uint32_t>(is)};
 	out.clear();
@@ -84,6 +93,7 @@ void tr::binary_reader<std::set<K, Args...>>::read_from_stream(std::istream& is,
 template <tr::binary_constructible K, class... Args>
 std::span<const std::byte> tr::binary_reader<std::set<K, Args...>>::read_from_span(std::span<const std::byte> span,
 																				   std::set<K, Args...>& out)
+	requires(span_binary_readable<K>)
 {
 	const std::uint32_t size{binary_read<std::uint32_t>(span)};
 	out.clear();
@@ -95,6 +105,7 @@ std::span<const std::byte> tr::binary_reader<std::set<K, Args...>>::read_from_sp
 
 template <tr::binary_constructible K, tr::binary_constructible V, class... Args>
 void tr::binary_reader<std::map<K, V, Args...>>::read_from_stream(std::istream& is, std::map<K, V, Args...>& out)
+	requires(stream_binary_readable<K> && stream_binary_readable<V>)
 {
 	const std::uint32_t size{binary_read<std::uint32_t>(is)};
 	out.clear();
@@ -108,6 +119,7 @@ void tr::binary_reader<std::map<K, V, Args...>>::read_from_stream(std::istream& 
 template <tr::binary_constructible K, tr::binary_constructible V, class... Args>
 std::span<const std::byte> tr::binary_reader<std::map<K, V, Args...>>::read_from_span(std::span<const std::byte> span,
 																					  std::map<K, V, Args...>& out)
+	requires(span_binary_readable<K> && span_binary_readable<V>)
 {
 	const std::uint32_t size{binary_read<std::uint32_t>(span)};
 	out.clear();
@@ -121,6 +133,7 @@ std::span<const std::byte> tr::binary_reader<std::map<K, V, Args...>>::read_from
 
 template <tr::binary_constructible K, class... Args>
 void tr::binary_reader<std::unordered_set<K, Args...>>::read_from_stream(std::istream& is, std::unordered_set<K, Args...>& out)
+	requires(stream_binary_readable<K>)
 {
 	const std::uint32_t size{binary_read<std::uint32_t>(is)};
 	out.clear();
@@ -133,6 +146,7 @@ void tr::binary_reader<std::unordered_set<K, Args...>>::read_from_stream(std::is
 template <tr::binary_constructible K, class... Args>
 std::span<const std::byte> tr::binary_reader<std::unordered_set<K, Args...>>::read_from_span(std::span<const std::byte> span,
 																							 std::unordered_set<K, Args...>& out)
+	requires(span_binary_readable<K>)
 {
 	const std::uint32_t size{binary_read<std::uint32_t>(span)};
 	out.clear();
@@ -145,6 +159,7 @@ std::span<const std::byte> tr::binary_reader<std::unordered_set<K, Args...>>::re
 
 template <tr::binary_constructible K, tr::binary_constructible V, class... Args>
 void tr::binary_reader<std::unordered_map<K, V, Args...>>::read_from_stream(std::istream& is, std::unordered_map<K, V, Args...>& out)
+	requires(stream_binary_readable<K> && stream_binary_readable<V>)
 {
 	const std::uint32_t size{binary_read<std::uint32_t>(is)};
 	out.clear();
@@ -159,6 +174,7 @@ void tr::binary_reader<std::unordered_map<K, V, Args...>>::read_from_stream(std:
 template <tr::binary_constructible K, tr::binary_constructible V, class... Args>
 std::span<const std::byte> tr::binary_reader<std::unordered_map<K, V, Args...>>::read_from_span(std::span<const std::byte> span,
 																								std::unordered_map<K, V, Args...>& out)
+	requires(span_binary_readable<K> && span_binary_readable<V>)
 {
 	const std::uint32_t size{binary_read<std::uint32_t>(span)};
 	out.clear();
@@ -171,36 +187,36 @@ std::span<const std::byte> tr::binary_reader<std::unordered_map<K, V, Args...>>:
 	return span;
 }
 
-template <tr::binary_readable T> void tr::binary_read(std::istream& is, T& out)
+template <tr::stream_binary_readable T> void tr::binary_read(std::istream& is, T& out)
 {
 	binary_reader<T>::read_from_stream(is, out);
 }
 
-template <tr::binary_constructible T> T tr::binary_read(std::istream& is)
+template <tr::stream_binary_constructible T> T tr::binary_read(std::istream& is)
 {
 	T out;
 	binary_reader<T>::read_from_stream(is, out);
 	return out;
 }
 
-template <tr::binary_readable T> std::span<const std::byte> tr::binary_read(std::span<const std::byte> span, T& out)
+template <tr::span_binary_readable T> std::span<const std::byte> tr::binary_read(std::span<const std::byte> span, T& out)
 {
 	return binary_reader<T>::read_from_span(span, out);
 }
 
-template <tr::binary_readable T, std::ranges::contiguous_range Range> void tr::binary_read(Range&& range, T& out)
+template <tr::span_binary_readable T, std::ranges::contiguous_range Range> void tr::binary_read(Range&& range, T& out)
 {
 	binary_reader<T>::read_from_span(std::span<const std::byte>{range_bytes(range)}, out);
 }
 
-template <tr::binary_constructible T> T tr::binary_read(std::span<const std::byte>& span)
+template <tr::span_binary_constructible T> T tr::binary_read(std::span<const std::byte>& span)
 {
 	T out;
 	span = binary_reader<T>::read_from_span(span, out);
 	return out;
 }
 
-template <tr::binary_constructible T, std::ranges::contiguous_range Range> T tr::binary_read(Range&& range)
+template <tr::span_binary_constructible T, std::ranges::contiguous_range Range> T tr::binary_read(Range&& range)
 {
 	T out;
 	binary_reader<T>::read_from_span(std::span<const std::byte>{range_bytes(range)}, out);
@@ -265,7 +281,9 @@ template <std::size_t S> std::span<std::byte> tr::binary_writer<char[S]>::write_
 	return span.subspan(S - 1);
 }
 
-template <tr::binary_writable T> void tr::binary_writer<std::span<T>>::write_to_stream(std::ostream& os, const std::span<T>& in)
+template <class T>
+void tr::binary_writer<std::span<T>>::write_to_stream(std::ostream& os, const std::span<T>& in)
+	requires(stream_binary_writable<T>)
 {
 	if constexpr (requires { requires std::same_as<typename binary_writer<T>::default_writer, std::true_type>; }) {
 		os.write(reinterpret_cast<const char*>(in.data()), in.size_bytes());
@@ -277,8 +295,9 @@ template <tr::binary_writable T> void tr::binary_writer<std::span<T>>::write_to_
 	}
 }
 
-template <tr::binary_writable T>
+template <class T>
 std::span<std::byte> tr::binary_writer<std::span<T>>::write_to_span(std::span<std::byte> span, const std::span<T>& in)
+	requires(span_binary_writable<T>)
 {
 	if constexpr (requires { requires std::same_as<typename binary_writer<T>::default_writer, std::true_type>; }) {
 		std::ranges::copy(range_bytes(in), span.begin());
@@ -292,62 +311,41 @@ std::span<std::byte> tr::binary_writer<std::span<T>>::write_to_span(std::span<st
 	}
 }
 
-template <tr::binary_writable T> void tr::binary_writer<std::span<const T>>::write_to_stream(std::ostream& os, const std::span<const T>& in)
-{
-	if constexpr (requires { requires std::same_as<typename binary_writer<T>::default_writer, std::true_type>; }) {
-		os.write(reinterpret_cast<const char*>(in.data()), in.size_bytes());
-	}
-	else {
-		for (const T& v : in) {
-			binary_write(os, v);
-		}
-	}
-}
-
-template <tr::binary_writable T>
-std::span<std::byte> tr::binary_writer<std::span<const T>>::write_to_span(std::span<std::byte> span, const std::span<const T>& in)
-{
-	if constexpr (requires { requires std::same_as<typename binary_writer<T>::default_writer, std::true_type>; }) {
-		std::ranges::copy(range_bytes(in), span.begin());
-		return span.subspan(in.size_bytes());
-	}
-	else {
-		for (const T& v : in) {
-			span = binary_write(span, v);
-		}
-		return span;
-	}
-}
-
-template <tr::binary_writable A, tr::binary_writable B>
+template <class A, class B>
 void tr::binary_writer<std::pair<A, B>>::write_to_stream(std::ostream& os, const std::pair<A, B> in)
+	requires(stream_binary_writable<A> && stream_binary_writable<B>)
 {
 	binary_write(os, in.first);
 	binary_write(os, in.second);
 }
 
-template <tr::binary_writable A, tr::binary_writable B>
+template <class A, class B>
 std::span<std::byte> tr::binary_writer<std::pair<A, B>>::write_to_span(std::span<std::byte> span, const std::pair<A, B>& in)
+	requires(span_binary_writable<A> && span_binary_writable<B>)
 {
 	span = binary_write(span, in.first);
 	return binary_write(span, in.second);
 }
 
-template <tr::binary_writable T> void tr::binary_writer<std::vector<T>>::write_to_stream(std::ostream& os, const std::vector<T>& in)
+template <class T>
+void tr::binary_writer<std::vector<T>>::write_to_stream(std::ostream& os, const std::vector<T>& in)
+	requires(stream_binary_writable<T>)
 {
 	binary_write(os, static_cast<std::uint32_t>(in.size()));
 	binary_writer<std::span<const T>>::write_to_stream(os, std::span{in});
 }
 
-template <tr::binary_writable T>
+template <class T>
 std::span<std::byte> tr::binary_writer<std::vector<T>>::write_to_span(std::span<std::byte> span, const std::vector<T>& in)
+	requires(span_binary_writable<T>)
 {
 	span = binary_write(span, static_cast<std::uint32_t>(in.size()));
 	return binary_writer<std::span<const T>>::write_to_span(span, std::span{in});
 }
 
-template <tr::binary_writable K, class... Args>
+template <class K, class... Args>
 void tr::binary_writer<std::set<K, Args...>>::write_to_stream(std::ostream& os, const std::set<K, Args...>& in)
+	requires(stream_binary_writable<K>)
 {
 	binary_write(os, static_cast<std::uint32_t>(in.size()));
 	for (const auto& k : in) {
@@ -355,8 +353,9 @@ void tr::binary_writer<std::set<K, Args...>>::write_to_stream(std::ostream& os, 
 	}
 }
 
-template <tr::binary_writable K, class... Args>
+template <class K, class... Args>
 std::span<std::byte> tr::binary_writer<std::set<K, Args...>>::write_to_span(std::span<std::byte> span, const std::set<K, Args...>& in)
+	requires(span_binary_writable<K>)
 {
 	span = binary_write(span, static_cast<std::uint32_t>(in.size()));
 	for (const auto& k : in) {
@@ -365,8 +364,9 @@ std::span<std::byte> tr::binary_writer<std::set<K, Args...>>::write_to_span(std:
 	return span;
 }
 
-template <tr::binary_writable K, tr::binary_writable V, class... Args>
+template <class K, class V, class... Args>
 void tr::binary_writer<std::map<K, V, Args...>>::write_to_stream(std::ostream& os, const std::map<K, V, Args...>& in)
+	requires(stream_binary_writable<K> && stream_binary_writable<V>)
 {
 	binary_write(os, static_cast<std::uint32_t>(in.size()));
 	for (const auto& [k, v] : in) {
@@ -375,8 +375,9 @@ void tr::binary_writer<std::map<K, V, Args...>>::write_to_stream(std::ostream& o
 	}
 }
 
-template <tr::binary_writable K, tr::binary_writable V, class... Args>
+template <class K, class V, class... Args>
 std::span<std::byte> tr::binary_writer<std::map<K, V, Args...>>::write_to_span(std::span<std::byte> span, const std::map<K, V, Args...>& in)
+	requires(span_binary_writable<K> && span_binary_writable<V>)
 {
 	span = binary_write(span, static_cast<std::uint32_t>(in.size()));
 	for (const auto& [k, v] : in) {
@@ -386,8 +387,9 @@ std::span<std::byte> tr::binary_writer<std::map<K, V, Args...>>::write_to_span(s
 	return span;
 }
 
-template <tr::binary_writable K, class... Args>
+template <class K, class... Args>
 void tr::binary_writer<std::unordered_set<K, Args...>>::write_to_stream(std::ostream& os, const std::unordered_set<K, Args...>& in)
+	requires(stream_binary_writable<K>)
 {
 	binary_write(os, static_cast<std::uint32_t>(in.size()));
 	for (const auto& k : in) {
@@ -395,9 +397,10 @@ void tr::binary_writer<std::unordered_set<K, Args...>>::write_to_stream(std::ost
 	}
 }
 
-template <tr::binary_writable K, class... Args>
+template <class K, class... Args>
 std::span<std::byte> tr::binary_writer<std::unordered_set<K, Args...>>::write_to_span(std::span<std::byte> span,
 																					  const std::unordered_set<K, Args...>& in)
+	requires(span_binary_writable<K>)
 {
 	span = binary_write(span, static_cast<std::uint32_t>(in.size()));
 	for (const auto& k : in) {
@@ -406,8 +409,9 @@ std::span<std::byte> tr::binary_writer<std::unordered_set<K, Args...>>::write_to
 	return span;
 }
 
-template <tr::binary_writable K, tr::binary_writable V, class... Args>
+template <class K, class V, class... Args>
 void tr::binary_writer<std::unordered_map<K, V, Args...>>::write_to_stream(std::ostream& os, const std::unordered_map<K, V, Args...>& in)
+	requires(stream_binary_writable<K> && stream_binary_writable<V>)
 {
 	binary_write(os, static_cast<std::uint32_t>(in.size()));
 	for (const auto& [k, v] : in) {
@@ -416,9 +420,10 @@ void tr::binary_writer<std::unordered_map<K, V, Args...>>::write_to_stream(std::
 	}
 }
 
-template <tr::binary_writable K, tr::binary_writable V, class... Args>
+template <class K, class V, class... Args>
 std::span<std::byte> tr::binary_writer<std::unordered_map<K, V, Args...>>::write_to_span(std::span<std::byte> span,
 																						 const std::unordered_map<K, V, Args...>& in)
+	requires(span_binary_writable<K> && span_binary_writable<V>)
 {
 	span = binary_write(span, static_cast<std::uint32_t>(in.size()));
 	for (const auto& [k, v] : in) {
@@ -428,12 +433,12 @@ std::span<std::byte> tr::binary_writer<std::unordered_map<K, V, Args...>>::write
 	return span;
 }
 
-template <tr::binary_writable T> void tr::binary_write(std::ostream& os, const T& in)
+template <tr::stream_binary_writable T> void tr::binary_write(std::ostream& os, const T& in)
 {
 	binary_writer<T>::write_to_stream(os, in);
 }
 
-template <tr::binary_writable T> std::span<std::byte> tr::binary_write(std::span<std::byte> span, const T& in)
+template <tr::span_binary_writable T> std::span<std::byte> tr::binary_write(std::span<std::byte> span, const T& in)
 {
 	return binary_writer<T>::write_to_span(span, in);
 }

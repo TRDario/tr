@@ -6,35 +6,35 @@ namespace tr {
 	class file_not_found : public exception {
 	  public:
 		// Constructs an exception.
-		file_not_found(std::string_view path) noexcept;
+		file_not_found(std::string_view path);
 
 		// Gets the name of the error.
-		std::string_view name() const noexcept override;
+		std::string_view name() const override;
 		// Gets the description of the error.
-		std::string_view description() const noexcept override;
+		std::string_view description() const override;
 		// Gets further details about the error.
-		std::string_view details() const noexcept override;
+		std::string_view details() const override;
 
 	  private:
 		// Path to the affected file.
-		std::string _path;
+		std::string path;
 	};
 	// Exception thrown when a file opening fails.
 	class file_open_error : public exception {
 	  public:
 		// Constructs an exception.
-		file_open_error(std::string_view path) noexcept;
+		file_open_error(std::string_view path);
 
 		// Gets the name of the error.
-		std::string_view name() const noexcept override;
+		std::string_view name() const override;
 		// Gets the description of the error.
-		std::string_view description() const noexcept override;
+		std::string_view description() const override;
 		// Gets further details about the error.
-		std::string_view details() const noexcept override;
+		std::string_view details() const override;
 
 	  private:
 		// Path to the affected file.
-		std::string _path;
+		std::string path;
 	};
 
 	// Opens a file for writing with extra checks.

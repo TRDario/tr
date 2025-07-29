@@ -19,29 +19,29 @@ namespace tr {
 	class logger {
 	  public:
 		// Creates an inactive logger.
-		logger() noexcept = default;
+		logger() = default;
 		// Creates a logger that only logs to cout.
-		logger(std::string_view prefix) noexcept;
+		logger(std::string_view prefix);
 		// Creates a logger that logs to cout and file.
-		logger(std::string_view prefix, std::filesystem::path path) noexcept;
+		logger(std::string_view prefix, std::filesystem::path path);
 
 		// Gets whether the logger is active.
-		bool active() const noexcept;
+		bool active() const;
 
 		// Logs a message.
-		template <class... Args> void log(severity level, std::format_string<Args...> fmt, Args&&... args) noexcept;
+		template <class... Args> void log(severity level, std::format_string<Args...> fmt, Args&&... args);
 		// Logs a message continuing from a previous line.
-		template <class... Args> void log_continue(std::format_string<Args...> fmt, Args&&... args) noexcept;
+		template <class... Args> void log_continue(std::format_string<Args...> fmt, Args&&... args);
 		// Logs an exception.
-		void log(severity level, const exception& err) noexcept;
+		void log(severity level, const exception& err);
 		// Logs an exception.
-		void log(severity level, const std::exception& err) noexcept;
+		void log(severity level, const std::exception& err);
 
 	  private:
 		// The prefix of the logger.
-		std::string_view _prefix;
+		std::string_view prefix;
 		// The path to the log file (or empty to not log to file).
-		std::filesystem::path _path;
+		std::filesystem::path path;
 	};
 
 	// tr's default logger, can be redirected.
@@ -66,7 +66,7 @@ namespace tr {
 
 ///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
 
-template <class... Args> void tr::logger::log(severity level, std::format_string<Args...> fmt, Args&&... args) noexcept
+template <class... Args> void tr::logger::log(severity level, std::format_string<Args...> fmt, Args&&... args)
 {
 	try {
 		const auto time{std::chrono::floor<std::chrono::seconds>(
@@ -75,9 +75,9 @@ template <class... Args> void tr::logger::log(severity level, std::format_string
 		const std::string severity_str{std::format("[{}] ", static_cast<char>(level))};
 		const std::string fmt_str{std::format(fmt, std::forward<Args>(args)...)};
 
-		std::cout << time_str << "[" << _prefix << "] " << severity_str << fmt_str << "\n";
-		if (!_path.empty()) {
-			std::ofstream file{open_file_w(_path, std::ios::app)};
+		std::cout << time_str << "[" << prefix << "] " << severity_str << fmt_str << "\n";
+		if (!path.empty()) {
+			std::ofstream file{open_file_w(path, std::ios::app)};
 			file << time_str << severity_str << fmt_str << "\n";
 		}
 	}
@@ -86,16 +86,16 @@ template <class... Args> void tr::logger::log(severity level, std::format_string
 	}
 }
 
-template <class... Args> void tr::logger::log_continue(std::format_string<Args...> fmt, Args&&... args) noexcept
+template <class... Args> void tr::logger::log_continue(std::format_string<Args...> fmt, Args&&... args)
 {
 	try {
 		const std::string fmt_str{std::format(fmt, std::forward<Args>(args)...)};
-		const std::string fill(_prefix.size() + 14, ' ');
+		const std::string fill(prefix.size() + 14, ' ');
 
 		std::cout << fill << "--- " << fmt_str << "\n";
-		if (!_path.empty()) {
-			std::ofstream file{open_file_w(_path, std::ios::app)};
-			file << std::string_view{fill.begin(), fill.end() - (_prefix.size() + 3)} << "--- " << fmt_str << "\n";
+		if (!path.empty()) {
+			std::ofstream file{open_file_w(path, std::ios::app)};
+			file << std::string_view{fill.begin(), fill.end() - (prefix.size() + 3)} << "--- " << fmt_str << "\n";
 		}
 	}
 	catch (...) {

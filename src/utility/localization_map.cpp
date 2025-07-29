@@ -2,23 +2,23 @@
 
 namespace tr {
 	// Whether to skip a line.
-	bool _skip_line(const std::string& line) noexcept;
+	bool skip_line(const std::string& line) noexcept;
 	// Validates a delimiter.
-	bool _validate_delimiter(std::size_t delimiter, std::size_t lineSize, std::vector<std::string>& errors, int line_number);
+	bool validate_delimiter(std::size_t delimiter, std::size_t lineSize, std::vector<std::string>& errors, int line_number);
 	// Validates a key.
-	bool _validate_key(std::string_view key, const string_hash_map<std::string>& map, std::vector<std::string>& errors, int line_number);
+	bool validate_key(std::string_view key, const string_hash_map<std::string>& map, std::vector<std::string>& errors, int line_number);
 	// Processes a value.
-	std::string _process_value(std::string_view raw_value, std::vector<std::string>& errors, int line_number);
+	std::string process_value(std::string_view raw_value, std::vector<std::string>& errors, int line_number);
 } // namespace tr
 
-bool tr::_skip_line(const std::string& line) noexcept
+bool tr::skip_line(const std::string& line) noexcept
 {
 	constexpr auto WHITESPACE{[](char c) { return std::isspace(c); }};
 
 	return line.empty() || std::ranges::all_of(line, WHITESPACE) || *std::ranges::find_if_not(line, WHITESPACE) == '#';
 }
 
-bool tr::_validate_delimiter(std::size_t delimiter, std::size_t lineSize, std::vector<std::string>& errors, int line_number)
+bool tr::validate_delimiter(std::size_t delimiter, std::size_t lineSize, std::vector<std::string>& errors, int line_number)
 {
 	if (delimiter == std::string::npos) {
 		errors.emplace_back(std::format("line {}: Expected a delimiting colon.", line_number));
@@ -37,7 +37,7 @@ bool tr::_validate_delimiter(std::size_t delimiter, std::size_t lineSize, std::v
 	}
 }
 
-bool tr::_validate_key(std::string_view key, const string_hash_map<std::string>& map, std::vector<std::string>& errors, int line_number)
+bool tr::validate_key(std::string_view key, const string_hash_map<std::string>& map, std::vector<std::string>& errors, int line_number)
 {
 	if (map.contains(key)) {
 		errors.emplace_back(std::format("line {}: Duplicate key '{}'.", line_number, key));
@@ -48,7 +48,7 @@ bool tr::_validate_key(std::string_view key, const string_hash_map<std::string>&
 	}
 }
 
-std::string tr::_process_value(std::string_view raw_value, std::vector<std::string>& errors, int line)
+std::string tr::process_value(std::string_view raw_value, std::vector<std::string>& errors, int line)
 {
 	std::string value;
 	value.reserve(raw_value.size());
@@ -80,39 +80,39 @@ std::string tr::_process_value(std::string_view raw_value, std::vector<std::stri
 	return value;
 }
 
-tr::localization_load_error::localization_load_error(std::string&& description) noexcept
-	: _description{description}
+tr::localization_load_error::localization_load_error(std::string&& description)
+	: description_str{description}
 {
 }
 
-std::string_view tr::localization_load_error::name() const noexcept
+std::string_view tr::localization_load_error::name() const
 {
 	return "Unrecoverable localization loading error";
 }
 
-std::string_view tr::localization_load_error::description() const noexcept
+std::string_view tr::localization_load_error::description() const
 {
-	return _description;
+	return description_str;
 }
 
-std::string_view tr::localization_load_error::details() const noexcept
+std::string_view tr::localization_load_error::details() const
 {
 	return {};
 }
 
-tr::localization_map::localization_map(const string_hash_map<std::string>& map) noexcept
-	: _map{map}
+tr::localization_map::localization_map(const string_hash_map<std::string>& map)
+	: map{map}
 {
 }
 
-tr::localization_map::localization_map(string_hash_map<std::string>&& map) noexcept
-	: _map{std::move(map)}
+tr::localization_map::localization_map(string_hash_map<std::string>&& map)
+	: map{std::move(map)}
 {
 }
 
-void tr::localization_map::clear() noexcept
+void tr::localization_map::clear()
 {
-	_map.clear();
+	map.clear();
 }
 
 std::vector<std::string> tr::localization_map::load(const std::filesystem::path& path)
@@ -124,7 +124,7 @@ std::vector<std::string> tr::localization_map::load(const std::filesystem::path&
 		std::string buffer;
 		for (int line = 1; !file.eof(); ++line) {
 			std::getline(file, buffer);
-			if (_skip_line(buffer)) {
+			if (skip_line(buffer)) {
 				continue;
 			}
 
@@ -138,7 +138,7 @@ std::vector<std::string> tr::localization_map::load(const std::filesystem::path&
 				continue;
 			}
 			std::string_view key{begin, end};
-			if (_map.contains(key)) {
+			if (map.contains(key)) {
 				errors.emplace_back(std::format("line {}: Duplicate key '{}'.", line, key));
 				continue;
 			}
@@ -171,7 +171,7 @@ std::vector<std::string> tr::localization_map::load(const std::filesystem::path&
 			}
 			const std::string_view value{begin, end};
 
-			_map.emplace(key, _process_value(value, errors, line));
+			map.emplace(key, process_value(value, errors, line));
 		}
 
 		return errors;
@@ -182,18 +182,15 @@ std::vector<std::string> tr::localization_map::load(const std::filesystem::path&
 	catch (file_not_found& err) {
 		throw localization_load_error{std::format("{}: {}", err.name(), err.description())};
 	}
-	catch (std::bad_alloc&) {
-		throw localization_load_error{"Failed to allocate memory while loading the localization."};
-	}
 }
 
-bool tr::localization_map::contains(std::string_view key) const noexcept
+bool tr::localization_map::contains(std::string_view key) const
 {
-	return _map.contains(key);
+	return map.contains(key);
 }
 
-std::string_view tr::localization_map::operator[](std::string_view key) const noexcept
+std::string_view tr::localization_map::operator[](std::string_view key) const
 {
-	const string_hash_map<std::string>::const_iterator it{_map.find(key)};
-	return it != _map.end() ? it->second : key;
+	const string_hash_map<std::string>::const_iterator it{map.find(key)};
+	return it != map.end() ? it->second : key;
 }
