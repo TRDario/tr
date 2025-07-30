@@ -17,6 +17,8 @@ namespace tr {
 
 		// Creates an empty string.
 		constexpr static_string() = default;
+		// Creates a string with a starting size.
+		constexpr static_string(size_type size, char chr = '\0');
 		// Creates a string by copying from a string literal.
 		template <std::size_t S1> constexpr static_string(const char (&literal)[S1]);
 		// Creates a string by copying from another string.

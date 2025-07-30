@@ -70,12 +70,7 @@ std::vector<std::byte> tr::decrypt(std::vector<std::byte> encrypted)
 
 void tr::encrypt_to(std::vector<std::byte>& out, std::span<const std::byte> raw, std::uint8_t key)
 {
-	try {
-		out.resize(LZ4_compressBound(static_cast<int>(raw.size()) + 7ULL));
-	}
-	catch (std::bad_alloc&) {
-		throw encryption_error{"Failed to allocate memory for decompressed data."};
-	}
+	out.resize(LZ4_compressBound(static_cast<int>(raw.size()) + 7ULL));
 
 	const int used_size{LZ4_compress_default(reinterpret_cast<const char*>(raw.data()), reinterpret_cast<char*>(out.data() + 7),
 											 static_cast<int>(raw.size()), static_cast<int>(out.size() - 7))};

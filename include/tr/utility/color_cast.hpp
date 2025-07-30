@@ -49,7 +49,7 @@ namespace tr {
 	 *
 	 * @return The converted value.
 	 ******************************************************************************************************************/
-	template <built_in_color To, specialization_of<tr::r> From> constexpr To color_cast(const From& from) noexcept;
+	template <built_in_color To, specialization_of<tr::r> From> constexpr To color_cast(const From& from);
 
 	/******************************************************************************************************************
 	 * Converts a green channel color to a built-in color.
@@ -61,7 +61,7 @@ namespace tr {
 	 *
 	 * @return The converted value.
 	 ******************************************************************************************************************/
-	template <built_in_color To, specialization_of<tr::g> From> constexpr To color_cast(const From& from) noexcept;
+	template <built_in_color To, specialization_of<tr::g> From> constexpr To color_cast(const From& from);
 
 	/******************************************************************************************************************
 	 * Converts a blue channel color to a built-in color.
@@ -73,7 +73,7 @@ namespace tr {
 	 *
 	 * @return The converted value.
 	 ******************************************************************************************************************/
-	template <built_in_color To, specialization_of<tr::b> From> constexpr To color_cast(const From& from) noexcept;
+	template <built_in_color To, specialization_of<tr::b> From> constexpr To color_cast(const From& from);
 
 	/******************************************************************************************************************
 	 * Converts an RG channel color to a built-in color.
@@ -85,7 +85,7 @@ namespace tr {
 	 *
 	 * @return The converted value.
 	 ******************************************************************************************************************/
-	template <built_in_color To, specialization_of<tr::rg> From> constexpr To color_cast(const From& from) noexcept;
+	template <built_in_color To, specialization_of<tr::rg> From> constexpr To color_cast(const From& from);
 
 	/******************************************************************************************************************
 	 * Converts a three-channel (RGB/BGR) channel color to a built-in color.
@@ -99,7 +99,7 @@ namespace tr {
 	 ******************************************************************************************************************/
 	template <built_in_color To, class From>
 		requires specialization_of<From, tr::rgb> || specialization_of<From, tr::bgr>
-	constexpr To color_cast(const From& from) noexcept;
+	constexpr To color_cast(const From& from);
 
 	/******************************************************************************************************************
 	 * Converts a four-channel (RGBA/BGRA) channel color to a built-in color.
@@ -113,7 +113,7 @@ namespace tr {
 	 ******************************************************************************************************************/
 	template <built_in_color To, class From>
 		requires specialization_of<From, tr::rgba> || specialization_of<From, tr::bgra>
-	constexpr To color_cast(const From& from) noexcept;
+	constexpr To color_cast(const From& from);
 
 	/******************************************************************************************************************
 	 * Converts a RGB_Ui8_2_3_3 color to a built-in color.
@@ -124,7 +124,7 @@ namespace tr {
 	 *
 	 * @return The converted value.
 	 ******************************************************************************************************************/
-	template <built_in_color To> constexpr To color_cast(const rgb8_223& from) noexcept;
+	template <built_in_color To> constexpr To color_cast(const rgb8_223& from);
 
 	/******************************************************************************************************************
 	 * Converts a RGB_Ui16_5_6_5 color to a built-in color.
@@ -135,7 +135,7 @@ namespace tr {
 	 *
 	 * @return The converted value.
 	 ******************************************************************************************************************/
-	template <built_in_color To> constexpr To color_cast(const rgb16_565& from) noexcept;
+	template <built_in_color To> constexpr To color_cast(const rgb16_565& from);
 
 	/******************************************************************************************************************
 	 * Converts a BGR_Ui8_3_3_2 color to a built-in color.
@@ -146,7 +146,7 @@ namespace tr {
 	 *
 	 * @return The converted value.
 	 ******************************************************************************************************************/
-	template <built_in_color To> constexpr To color_cast(const bgr8_332& from) noexcept;
+	template <built_in_color To> constexpr To color_cast(const bgr8_332& from);
 
 	/******************************************************************************************************************
 	 * Converts a BGR_Ui16_5_6_5 color to a built-in color.
@@ -157,7 +157,7 @@ namespace tr {
 	 *
 	 * @return The converted value.
 	 ******************************************************************************************************************/
-	template <built_in_color To> constexpr To color_cast(const bgr16_565& from) noexcept;
+	template <built_in_color To> constexpr To color_cast(const bgr16_565& from);
 
 	/******************************************************************************************************************
 	 * Converts a RGBA_Ui16_4_4_4_4 color to a built-in color.
@@ -168,7 +168,7 @@ namespace tr {
 	 *
 	 * @return The converted value.
 	 ******************************************************************************************************************/
-	template <built_in_color To> constexpr To color_cast(const rgba16_4444& from) noexcept;
+	template <built_in_color To> constexpr To color_cast(const rgba16_4444& from);
 
 	/******************************************************************************************************************
 	 * Converts a RGBA_Ui16_5_5_5_1 color to a built-in color.
@@ -179,7 +179,7 @@ namespace tr {
 	 *
 	 * @return The converted value.
 	 ******************************************************************************************************************/
-	template <built_in_color To> constexpr To color_cast(const rgba16_5551& from) noexcept;
+	template <built_in_color To> constexpr To color_cast(const rgba16_5551& from);
 
 	/******************************************************************************************************************
 	 * Converts a RGBA_Ui32_10_10_10_2 color to a built-in color.
@@ -190,7 +190,7 @@ namespace tr {
 	 *
 	 * @return The converted value.
 	 ******************************************************************************************************************/
-	template <built_in_color To> constexpr To color_cast(const rgba32_1010102& from) noexcept;
+	template <built_in_color To> constexpr To color_cast(const rgba32_1010102& from);
 
 	/******************************************************************************************************************
 	 * Converts a ABGR_Ui16_4_4_4_4 color to a built-in color.
@@ -201,7 +201,7 @@ namespace tr {
 	 *
 	 * @return The converted value.
 	 ******************************************************************************************************************/
-	template <built_in_color To> constexpr To color_cast(const abgr16_4444& from) noexcept;
+	template <built_in_color To> constexpr To color_cast(const abgr16_4444& from);
 
 	/******************************************************************************************************************
 	 * Converts a ABGR_Ui16_1_5_5_5 color to a built-in color.
@@ -212,7 +212,7 @@ namespace tr {
 	 *
 	 * @return The converted value.
 	 ******************************************************************************************************************/
-	template <built_in_color To> constexpr To color_cast(const abgr16_1555& from) noexcept;
+	template <built_in_color To> constexpr To color_cast(const abgr16_1555& from);
 
 	/******************************************************************************************************************
 	 * Converts a ABGR_Ui32_2_10_10_10 color to a built-in color.
@@ -223,7 +223,7 @@ namespace tr {
 	 *
 	 * @return The converted value.
 	 ******************************************************************************************************************/
-	template <built_in_color To> constexpr To color_cast(const abgr32_2101010& from) noexcept;
+	template <built_in_color To> constexpr To color_cast(const abgr32_2101010& from);
 
 	/******************************************************************************************************************
 	 * Converts a BGRA_Ui16_4_4_4_4 color to a built-in color.
@@ -234,7 +234,7 @@ namespace tr {
 	 *
 	 * @return The converted value.
 	 ******************************************************************************************************************/
-	template <built_in_color To> constexpr To color_cast(const bgra16_4444& from) noexcept;
+	template <built_in_color To> constexpr To color_cast(const bgra16_4444& from);
 
 	/******************************************************************************************************************
 	 * Converts a BGRA_Ui16_5_5_5_1 color to a built-in color.
@@ -245,7 +245,7 @@ namespace tr {
 	 *
 	 * @return The converted value.
 	 ******************************************************************************************************************/
-	template <built_in_color To> constexpr To color_cast(const bgra16_5551& from) noexcept;
+	template <built_in_color To> constexpr To color_cast(const bgra16_5551& from);
 
 	/******************************************************************************************************************
 	 * Converts a BGRA_Ui32_10_10_10_2 color to a built-in color.
@@ -256,7 +256,7 @@ namespace tr {
 	 *
 	 * @return The converted value.
 	 ******************************************************************************************************************/
-	template <built_in_color To> constexpr To color_cast(const bgra32_1010102& from) noexcept;
+	template <built_in_color To> constexpr To color_cast(const bgra32_1010102& from);
 
 	/******************************************************************************************************************
 	 * Converts a ARGB_Ui16_4_4_4_4 color to a built-in color.
@@ -267,7 +267,7 @@ namespace tr {
 	 *
 	 * @return The converted value.
 	 ******************************************************************************************************************/
-	template <built_in_color To> constexpr To color_cast(const argb16_4444& from) noexcept;
+	template <built_in_color To> constexpr To color_cast(const argb16_4444& from);
 
 	/******************************************************************************************************************
 	 * Converts a ARGB_Ui16_1_5_5_5 color to a built-in color.
@@ -278,7 +278,7 @@ namespace tr {
 	 *
 	 * @return The converted value.
 	 ******************************************************************************************************************/
-	template <built_in_color To> constexpr To color_cast(const argb16_1555& from) noexcept;
+	template <built_in_color To> constexpr To color_cast(const argb16_1555& from);
 
 	/******************************************************************************************************************
 	 * Converts a ARGB_Ui32_2_10_10_10 color to a built-in color.
@@ -289,7 +289,7 @@ namespace tr {
 	 *
 	 * @return The converted value.
 	 ******************************************************************************************************************/
-	template <built_in_color To> constexpr To color_cast(const argb32_2101010& from) noexcept;
+	template <built_in_color To> constexpr To color_cast(const argb32_2101010& from);
 
 	/******************************************************************************************************************
 	 * Converts a custom castable color type to a built-in color.
@@ -301,7 +301,7 @@ namespace tr {
 	 *
 	 * @return The converted value.
 	 ******************************************************************************************************************/
-	template <built_in_color To, color_castable_from From> constexpr To color_cast(const From& from) noexcept;
+	template <built_in_color To, color_castable_from From> constexpr To color_cast(const From& from);
 
 	/******************************************************************************************************************
 	 * Converts a built-in color to a custom castable color type.
@@ -313,7 +313,7 @@ namespace tr {
 	 *
 	 * @return The converted value.
 	 ******************************************************************************************************************/
-	template <color_castable_to To, built_in_color From> constexpr To color_cast(const From& from) noexcept;
+	template <color_castable_to To, built_in_color From> constexpr To color_cast(const From& from);
 
 	/******************************************************************************************************************
 	 * Converts a custom castable color type to another custom castable color type.
@@ -325,7 +325,7 @@ namespace tr {
 	 *
 	 * @return The converted value.
 	 ******************************************************************************************************************/
-	template <color_castable_to To, color_castable_from From> constexpr To color_cast(const From& from) noexcept;
+	template <color_castable_to To, color_castable_from From> constexpr To color_cast(const From& from);
 
 	/******************************************************************************************************************
 	 * Specialization of color_caster for HSV.
@@ -338,7 +338,7 @@ namespace tr {
 		 *
 		 * @return The corresponding RGBAF value.
 		 ******************************************************************************************************************/
-		static constexpr rgbaf to_built_in(const hsv& from) noexcept;
+		static constexpr rgbaf to_built_in(const hsv& from);
 
 		/******************************************************************************************************************
 		 * Casts an RGBAF value to an HSV value.
@@ -347,7 +347,7 @@ namespace tr {
 		 *
 		 * @return The corresponding HSV value.
 		 ******************************************************************************************************************/
-		static constexpr hsv from_built_in(const rgbaf& from) noexcept;
+		static constexpr hsv from_built_in(const rgbaf& from);
 	};
 
 	/// @}

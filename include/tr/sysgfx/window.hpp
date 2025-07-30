@@ -46,59 +46,60 @@ namespace tr {
 	};
 
 	// The main application window.
-	struct window {
+	namespace window {
 		// Opens a windowed window.
-		static void open_windowed(const char* title, glm::ivec2 size, window_flag flags = window_flag::DEFAULT,
-								  const gfx_properties& gfx_properties = {}) noexcept;
+		// May throw: system_initialization_error.
+		void open_windowed(const char* title, glm::ivec2 size, window_flag flags = window_flag::DEFAULT,
+						   const gfx_properties& gfx_properties = {});
 		// Opens a fullscreen window.
-		static void open_fullscreen(const char* title, window_flag flags = window_flag::DEFAULT,
-									const gfx_properties& gfx_properties = {}) noexcept;
+		// May throw: system_initialization_error.
+		void open_fullscreen(const char* title, window_flag flags = window_flag::DEFAULT, const gfx_properties& gfx_properties = {});
 		// Closes the window.
-		static void close() noexcept;
+		void close();
 
 		// Gets the title of the window.
-		static const char* title() noexcept;
+		const char* title();
 		// Sets the title of the window.
-		static void set_title(const char* title) noexcept;
+		void set_title(const char* title);
 		// Sets the title of the window.
-		static void set_title(const std::string& title) noexcept;
+		void set_title(const std::string& title);
 
 		// Sets the icon of the window.
-		static void set_icon(const bitmap& bitmap) noexcept;
+		void set_icon(const bitmap& bitmap);
 		// Sets the icon of the window.
-		static void set_icon(const bitmap_view& view) noexcept;
+		void set_icon(const bitmap_view& view);
 
 		// Gets the size of the window.
-		static glm::ivec2 size() noexcept;
+		glm::ivec2 size();
 		// Gets the window's pixel density factor.
-		static float pixel_density() noexcept;
+		float pixel_density();
 		// Sets the size of the window.
-		static void set_size(glm::ivec2 size) noexcept;
+		void set_size(glm::ivec2 size);
 
 		// Gets whether the window is fullscreen or not.
-		static bool fullscreen() noexcept;
+		bool fullscreen();
 		// Sets whether the window is fullscreen or not.
-		static void set_fullscreen(bool fullscreen) noexcept;
+		void set_fullscreen(bool fullscreen);
 
 		// Unhides the window.
-		static void show() noexcept;
+		void show();
 		// Hides the window.
-		static void hide() noexcept;
+		void hide();
 
 		// Gets whether the window is maximized.
-		static bool maximized() noexcept;
+		bool maximized();
 		// Gets whether the window is minimized.
-		static bool minimized() noexcept;
+		bool minimized();
 		// Gets whether the window has input focus.
-		static bool has_focus() noexcept;
+		bool has_focus();
 
 		// Sets whether the mouse is grabbed and confined to this window.
-		static void set_mouse_grab(bool grab) noexcept;
+		void set_mouse_grab(bool grab);
 
 		// Flashes the window to get the user's attention.
-		static void flash(flash_operation operation) noexcept;
+		void flash(flash_operation operation);
 
 		// Sets the window's V-sync mode.
-		static void set_vsync(vsync vsync) noexcept;
-	};
+		void set_vsync(vsync vsync);
+	}; // namespace window
 } // namespace tr

@@ -7,37 +7,36 @@ namespace tr {
 	class timer;
 
 	// Creates a timer that sends tick events.
-	timer create_tick_timer(float frequency, std::uint32_t id) noexcept;
+	timer create_tick_timer(float frequency, std::uint32_t id);
 	// Creates a timer that sends draw events.
-	timer create_draw_timer(float frequency = refresh_rate()) noexcept;
+	timer create_draw_timer(float frequency = refresh_rate());
 
 	// Global event queue.
-	struct event_queue {
+	namespace event_queue {
 		// Polls for an event, returning it from the event queue if it exists.
-		static std::optional<event> poll() noexcept;
-
+		std::optional<event> poll();
 		// Gets an event from the event queue, or waits until one appears.
-		static event wait() noexcept;
+		event wait();
 		// Gets an event from the event queue, waiting until one appears or until a certain amount of time has passed.
-		static std::optional<event> wait(imsecs timeout) noexcept;
+		std::optional<event> wait(imsecs timeout);
 		// Handles all available events in a loop.
-		template <std::invocable<tr::event> Fn>
-		static void handle(const Fn& fn) noexcept(noexcept(std::declval<Fn>()(std::declval<event>())));
+		template <std::invocable<tr::event> Fn> void handle(const Fn& fn);
 
-		// Sets whether text input events should be sent to the event queue.
-		static void send_text_input_events(bool arg) noexcept;
+		// Enables sending text input events.
+		void enable_text_input_events();
+		// Disables sending text input events.
+		void disable_text_input_events();
 
 		// Pushes an event to the queue.
-		static void push(const event& event) noexcept;
+		void push(const event& event);
 		// Pushes an event to the queue.
-		static void push(event&& event) noexcept;
-	};
+		void push(event&& event);
+	}; // namespace event_queue
 } // namespace tr
 
 ///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
 
-template <std::invocable<tr::event> Fn>
-void tr::event_queue::handle(const Fn& fn) noexcept(noexcept(std::declval<Fn>()(std::declval<event>())))
+template <std::invocable<tr::event> Fn> void tr::event_queue::handle(const Fn& fn)
 {
 	for (std::optional<event> event = wait(imsecs{1}); event.has_value(); event = poll()) {
 		fn(*event);

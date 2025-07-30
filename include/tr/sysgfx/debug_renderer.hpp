@@ -5,46 +5,45 @@
 namespace tr {
 	class benchmark;
 
-	// Debug text renderer.
-	struct debug_renderer {
+	// Debug text renderer functionality.
+	namespace debug_renderer {
 		// Initializes the debug renderer.
-		static void initialize(float scale = 1.0f, std::uint8_t column_limit = 255) noexcept;
+		void initialize(float scale = 1.0f, std::uint8_t column_limit = 255);
 		// Gets whether the debug renderer is active.
-		static bool active() noexcept;
+		bool active();
 		// Shuts the debug renderer down.
-		static void shut_down() noexcept;
+		void shut_down();
 
 		// Sets the text's drawing scale.
-		static void set_scale(float scale) noexcept;
+		void set_scale(float scale);
 		// Sets the text's column limit.
-		static void set_column_limit(std::uint8_t columns) noexcept;
+		void set_column_limit(std::uint8_t columns);
 
 		// Writes a line of formatted text to the left side of the screen.
-		static void write_left(std::string_view text, rgba8 text_color = {255, 255, 255, 255}, rgba8 bg_color = {0, 0, 0, 255},
-							   std::span<rgba8> extra_colors = {}) noexcept;
+		void write_left(std::string_view text, rgba8 text_color = {255, 255, 255, 255}, rgba8 bg_color = {0, 0, 0, 255},
+						std::span<rgba8> extra_colors = {});
 		// Writes a line of formatted text to the right side of the screen.
-		static void write_right(std::string_view text, rgba8 text_color = {255, 255, 255, 255}, rgba8 bg_color = {0, 0, 0, 255},
-								std::span<rgba8> extra_colors = {}) noexcept;
+		void write_right(std::string_view text, rgba8 text_color = {255, 255, 255, 255}, rgba8 bg_color = {0, 0, 0, 255},
+						 std::span<rgba8> extra_colors = {});
 		// Writes benchmark data to the right side of the screen.
-		static void write_right(const benchmark& benchmark, std::string_view name, duration limit) noexcept;
+		void write_right(const benchmark& benchmark, std::string_view name, duration limit);
 		// Writes benchmark data to the right side of the screen.
-		template <class R, class P>
-		static void write_right(const benchmark& benchmark, std::string_view name, std::chrono::duration<R, P> limit) noexcept;
+		template <class R, class P> void write_right(const benchmark& benchmark, std::string_view name, std::chrono::duration<R, P> limit);
 
 		// Writes a newline on the left side of the screen.
-		static void newline_left() noexcept;
+		void newline_left();
 		// Writes a newline on the right side of the screen.
-		static void newline_right() noexcept;
+		void newline_right();
 
 		// Draws all written text to the screen and clears it.
-		static void draw() noexcept;
-	};
+		void draw();
+	}; // namespace debug_renderer
 } // namespace tr
 
 ///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
 
 template <class R, class P>
-void tr::debug_renderer::write_right(const benchmark& benchmark, std::string_view name, std::chrono::duration<R, P> limit) noexcept
+void tr::debug_renderer::write_right(const benchmark& benchmark, std::string_view name, std::chrono::duration<R, P> limit)
 {
 	write_right(benchmark, name, duration_cast<duration>(limit));
 }

@@ -120,27 +120,27 @@ namespace tr {
 		using enum enum_t;
 
 		// Default-constructs a scancode.
-		constexpr scancode() noexcept = default;
+		constexpr scancode() = default;
 		// Casts an integer into a scancode.
-		constexpr explicit scancode(int base) noexcept;
+		constexpr explicit scancode(int base);
 		// Constructs a keycode from the base enumerator.
-		constexpr scancode(enum_t base) noexcept;
+		constexpr scancode(enum_t base);
 		// Constructs a scancode by matching it against a key name string.
-		explicit scancode(const char* name) noexcept;
+		explicit scancode(const char* name);
 
-		constexpr bool operator==(const scancode&) const noexcept = default;
+		constexpr bool operator==(const scancode&) const = default;
 
 		// Casts the scancode into an integer.
-		constexpr explicit operator int() const noexcept;
+		constexpr explicit operator int() const;
 		// Casts the name of the key.
-		const char* name() const noexcept;
+		const char* name() const;
 
 	  private:
 		// The base enumerator.
-		enum_t _enum{};
+		enum_t base{};
 	};
 	// Gets a top row scancode from a numeric value.
-	constexpr scancode make_top_row_scancode(int v) noexcept;
+	constexpr scancode make_top_row_scancode(int v);
 
 	// Virtual keycode.
 	class keycode {
@@ -273,27 +273,27 @@ namespace tr {
 		using enum enum_t;
 
 		// Default-constructs a keycode.
-		constexpr keycode() noexcept = default;
+		constexpr keycode() = default;
 		// Casts an integer into a keycode.
-		constexpr explicit keycode(int base) noexcept;
+		constexpr explicit keycode(int base);
 		// Constructs a keycode from the base enumerator.
-		constexpr keycode(enum_t base) noexcept;
+		constexpr keycode(enum_t base);
 		// Constructs a scancode by matching it against a key name string.
-		explicit keycode(const char* name) noexcept;
+		explicit keycode(const char* name);
 
-		constexpr bool operator==(const keycode&) const noexcept = default;
+		constexpr bool operator==(const keycode&) const = default;
 
 		// Casts the keycode into an integer.
-		constexpr explicit operator int() const noexcept;
+		constexpr explicit operator int() const;
 
 		// Casts the name of the key.
-		std::string name() const noexcept;
+		std::string name() const;
 
 	  private:
-		enum_t _enum{};
+		enum_t base{};
 	};
 	// Gets a top row keycode from a numeric value.
-	constexpr keycode make_top_row_keycode(int v) noexcept;
+	constexpr keycode make_top_row_keycode(int v);
 
 	// Key modifier bitmasks.
 	enum class keymod : std::uint16_t {
@@ -310,7 +310,7 @@ namespace tr {
 		// The chord modifiers.
 		keymod mods{keymod::NONE};
 
-		constexpr bool operator==(const scan_chord&) const noexcept = default;
+		constexpr bool operator==(const scan_chord&) const = default;
 	};
 	// Key chord.
 	struct key_chord {
@@ -319,30 +319,30 @@ namespace tr {
 		// The chord modifiers.
 		keymod mods{keymod::NONE};
 
-		constexpr bool operator==(const key_chord&) const noexcept = default;
+		constexpr bool operator==(const key_chord&) const = default;
 	};
 
 	// Keyboard key state.
 	class key_state {
 	  public:
 		// Constructs an empty key state.
-		key_state() noexcept = default;
+		key_state() = default;
 
 		// Gets whether a key is held.
-		bool held(scancode key) const noexcept;
+		bool held(scancode key) const;
 
 		// Updates the key state.
-		void update(const key_down_event& event) noexcept;
+		void update(const key_down_event& event);
 		// Updates the key state.
-		void update(const key_up_event& event) noexcept;
+		void update(const key_up_event& event);
 		// Forces a key to be considered held down.
-		void force_down(scancode key) noexcept;
+		void force_down(scancode key);
 		// Forces a key to the considered up.
-		void force_up(scancode key) noexcept;
+		void force_up(scancode key);
 
 	  private:
 		// The state is stored in the form of bitflags.
-		std::array<std::byte, 14> _data{};
+		std::array<std::byte, 14> buffer{};
 	};
 	// Keyboard key and modifier state.
 	class keyboard_state : public key_state {
@@ -351,71 +351,71 @@ namespace tr {
 		keymod mods{keymod::NONE};
 
 		// Constructs an empty keyboard state.
-		keyboard_state() noexcept = default;
+		keyboard_state() = default;
 
 		// Updates the key state.
-		void update(const key_down_event& event) noexcept;
+		void update(const key_down_event& event);
 		// Updates the key state.
-		void update(const key_up_event& event) noexcept;
+		void update(const key_up_event& event);
 
 	  private:
 		using key_state::update;
 	};
 
 	// Text clipboard functionality.
-	struct clipboard {
+	namespace clipboard {
 		// Gets whether the clipboard is empty.
-		static bool empty() noexcept;
+		bool empty();
 		// Gets the clipboard text.
-		static std::string get() noexcept;
+		std::string get();
 
 		// Sets the clipboard text.
-		static void set(const char* text) noexcept;
+		void set(const char* text);
 		// Sets the clipboard text.
-		static void set(const std::string& text) noexcept;
-	};
+		void set(const std::string& text);
+	}; // namespace clipboard
 } // namespace tr
 
 ///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
 
-constexpr tr::scancode::scancode(int base) noexcept
-	: _enum{static_cast<enum_t>(base)}
+constexpr tr::scancode::scancode(int base)
+	: base{static_cast<enum_t>(base)}
 {
 }
 
-constexpr tr::scancode::scancode(enum_t base) noexcept
-	: _enum{base}
+constexpr tr::scancode::scancode(enum_t base)
+	: base{base}
 {
 }
 
-constexpr tr::scancode::operator int() const noexcept
+constexpr tr::scancode::operator int() const
 {
-	return static_cast<int>(_enum);
+	return static_cast<int>(base);
 }
 
-constexpr tr::scancode tr::make_top_row_scancode(int v) noexcept
+constexpr tr::scancode tr::make_top_row_scancode(int v)
 {
 	TR_ASSERT(v >= 0 && v < 10, "Tried to create top row number scancode {} outside the range [0-9]", v);
 
 	return static_cast<scancode>(static_cast<int>(scancode::TOP_ROW_0) + v);
 }
 
-constexpr tr::keycode::keycode(int base) noexcept
-	: _enum{static_cast<enum_t>(base)}
+constexpr tr::keycode::keycode(int base)
+	: base{static_cast<enum_t>(base)}
 {
 }
 
-constexpr tr::keycode::keycode(enum_t base) noexcept
-	: _enum{base}
+constexpr tr::keycode::keycode(enum_t base)
+	: base{base}
 {
 }
 
-constexpr tr::keycode::operator int() const noexcept
+constexpr tr::keycode::operator int() const
 {
-	return static_cast<int>(_enum);
+	return static_cast<int>(base);
 }
 
-constexpr tr::keycode tr::make_top_row_keycode(int v) noexcept
+constexpr tr::keycode tr::make_top_row_keycode(int v)
 {
 	TR_ASSERT(v >= 0 && v < 10, "Tried to create top row number keycode {} outside the range [0-9]", v);
 

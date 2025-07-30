@@ -8,6 +8,10 @@ struct SDL_Surface;
 namespace tr {
 	class bitmap;
 	class bitmap_view;
+	namespace window {
+		void set_icon(const bitmap& bitmap);
+		void set_icon(const bitmap_view& view);
+	}; // namespace window
 
 	// Bitmap/texture pixel format.
 	enum class pixel_format {
@@ -39,45 +43,45 @@ namespace tr {
 		ARGB32 = 377888772,
 	};
 	// Gets the number of bytes per pixel for a given format.
-	int pixel_bytes(pixel_format format) noexcept;
+	int pixel_bytes(pixel_format format);
 
 	// Error thrown when bitmap loading fails.
 	class bitmap_load_error : public exception {
 	  public:
 		// Constructs an exception.
-		bitmap_load_error(std::string_view path, std::string&& details) noexcept;
+		bitmap_load_error(std::string_view path, std::string&& details);
 
 		// Gets the name of the error.
-		std::string_view name() const noexcept override;
+		std::string_view name() const override;
 		// Gets the description of the error.
-		std::string_view description() const noexcept override;
+		std::string_view description() const override;
 		// Gets further details about the error.
-		std::string_view details() const noexcept override;
+		std::string_view details() const override;
 
 	  private:
 		// The description of the error.
-		std::string _description;
+		std::string description_str;
 		// The details of the error.
-		std::string _details;
+		std::string details_str;
 	};
 	// Error thrown when bitmap saving fails.
 	class bitmap_save_error : public exception {
 	  public:
 		// Constructs an exception.
-		bitmap_save_error(std::string_view path, std::string&& details) noexcept;
+		bitmap_save_error(std::string_view path, std::string&& details);
 
 		// Gets the name of the error.
-		std::string_view name() const noexcept override;
+		std::string_view name() const override;
 		// Gets the description of the error.
-		std::string_view description() const noexcept override;
+		std::string_view description() const override;
 		// Gets further details about the error.
-		std::string_view details() const noexcept override;
+		std::string_view details() const override;
 
 	  private:
 		// The description of the error.
-		std::string _description;
+		std::string description_str;
 		// The details of the error.
-		std::string _details;
+		std::string details_str;
 	};
 
 	// View over a rectangular region of a bitmap.
@@ -87,41 +91,41 @@ namespace tr {
 		class iterator;
 
 		// Constructs a sub-bitmap.
-		sub_bitmap(const bitmap& bitmap, const irect2& rect) noexcept;
+		sub_bitmap(const bitmap& bitmap, const irect2& rect);
 		// Constructs a sub-bitmap.
-		sub_bitmap(const bitmap_view& view, const irect2& rect) noexcept;
+		sub_bitmap(const bitmap_view& view, const irect2& rect);
 
 		// Gets the size of the sub-bitmap.
-		glm::ivec2 size() const noexcept;
+		glm::ivec2 size() const;
 
 		// Creates a sub-bitmap of the sub-bitmap.
-		sub_bitmap sub(const irect2& rect) noexcept;
+		sub_bitmap sub(const irect2& rect);
 
 		// Gets immutable access to a pixel of the bitmap.
-		pixel_ref operator[](glm::ivec2 pos) const noexcept;
+		pixel_ref operator[](glm::ivec2 pos) const;
 
 		// Gets an immutable iterator to the beginning of the sub-bitmap.
-		iterator begin() const noexcept;
+		iterator begin() const;
 		// Gets an immutable iterator to the beginning of the sub-bitmap.
-		iterator cbegin() const noexcept;
+		iterator cbegin() const;
 		// Gets an immutable iterator to one past the end of the sub-bitmap.
-		iterator end() const noexcept;
+		iterator end() const;
 		// Gets an immutable iterator to one past the end of the sub-bitmap.
-		iterator cend() const noexcept;
+		iterator cend() const;
 
 		// Gets the raw data of the sub-bitmap.
-		const std::byte* data() const noexcept;
+		const std::byte* data() const;
 
 		// Gets the format of the bitmap.
-		pixel_format format() const noexcept;
+		pixel_format format() const;
 		// Gets the pitch of the bitmap.
-		int pitch() const noexcept;
+		int pitch() const;
 
 	  private:
 		// Pointer to the bitmap.
-		SDL_Surface* _bitmap;
+		SDL_Surface* ptr;
 		// The rect of the sub-bitmap within the bitmap.
-		irect2 _rect;
+		irect2 rect;
 
 		friend class bitmap;
 	};
@@ -135,39 +139,39 @@ namespace tr {
 		using iterator = sub_bitmap::iterator;
 
 		// Creates a bitmap view over contiguous pixel data.
-		bitmap_view(std::span<const std::byte> raw_data, glm::ivec2 size, pixel_format format) noexcept;
+		bitmap_view(std::span<const std::byte> raw_data, glm::ivec2 size, pixel_format format);
 		// Creates a bitmap view over a range of pixel data.
-		template <std::ranges::contiguous_range T> bitmap_view(T&& range, glm::ivec2 size, pixel_format format) noexcept;
+		template <std::ranges::contiguous_range T> bitmap_view(T&& range, glm::ivec2 size, pixel_format format);
 		// Creates a bitmap view over pixel data.
-		bitmap_view(const std::byte* raw_data_start, int pitch, glm::ivec2 size, pixel_format format) noexcept;
+		bitmap_view(const std::byte* raw_data_start, int pitch, glm::ivec2 size, pixel_format format);
 
 		// Gets the size of the bitmap.
-		glm::ivec2 size() const noexcept;
+		glm::ivec2 size() const;
 
 		// Gets immutable access to a pixel of the bitmap.
-		pixel_ref operator[](glm::ivec2 pos) const noexcept;
+		pixel_ref operator[](glm::ivec2 pos) const;
 
 		// Gets an immutable iterator to the beginning of the bitmap.
-		iterator begin() const noexcept;
+		iterator begin() const;
 		// Gets an immutable iterator to the beginning of the bitmap.
-		iterator cbegin() const noexcept;
+		iterator cbegin() const;
 		// Gets an immutable iterator to one past the end of the bitmap.
-		iterator end() const noexcept;
+		iterator end() const;
 		// Gets an immutable iterator to one past the end of the bitmap.
-		iterator cend() const noexcept;
+		iterator cend() const;
 
 		// Creates a sub-bitmap spanning the entire bitmap view.
-		operator sub_bitmap() const noexcept;
+		operator sub_bitmap() const;
 		// Creates a sub-bitmap of the bitmap.
-		sub_bitmap sub(const irect2& rect) const noexcept;
+		sub_bitmap sub(const irect2& rect) const;
 
 		// Gets the raw data of the bitmap.
-		const std::byte* data() const noexcept;
+		const std::byte* data() const;
 
 		// Gets the format of the bitmap.
-		pixel_format format() const noexcept;
+		pixel_format format() const;
 		// Gets the pitch of the bitmap.
-		int pitch() const noexcept;
+		int pitch() const;
 
 		// Saves the bitmap to a .png file.
 		// May throw: bitmap_save_error.
@@ -175,16 +179,16 @@ namespace tr {
 
 	  private:
 		struct deleter {
-			void operator()(SDL_Surface* ptr) const noexcept;
+			void operator()(SDL_Surface* ptr) const;
 		};
 
 		// Handle to the SDL surface.
-		std::unique_ptr<SDL_Surface, deleter> _impl;
+		std::unique_ptr<SDL_Surface, deleter> ptr;
 
 		friend class bitmap;
 		friend class sub_bitmap;
 		friend class cursor;
-		friend struct window;
+		friend void window::set_icon(const bitmap_view& view);
 	};
 
 	// Class containing owned bitmap data.
@@ -199,57 +203,57 @@ namespace tr {
 		using const_it = tr::sub_bitmap::iterator;
 
 		// Creates a blank bitmap.
-		bitmap(glm::ivec2 size, pixel_format format = pixel_format::RGBA32) noexcept;
+		bitmap(glm::ivec2 size, pixel_format format = pixel_format::RGBA32);
 		// Clones a bitmap.
-		explicit bitmap(const bitmap& bitmap, pixel_format format = pixel_format::RGBA32) noexcept;
+		explicit bitmap(const bitmap& bitmap, pixel_format format = pixel_format::RGBA32);
 		// Clones a bitmap view.
-		explicit bitmap(const bitmap_view& view, pixel_format format = pixel_format::RGBA32) noexcept;
+		explicit bitmap(const bitmap_view& view, pixel_format format = pixel_format::RGBA32);
 		// Clones a sub-bitmap.
-		explicit bitmap(const sub_bitmap& source, pixel_format format = pixel_format::RGBA32) noexcept;
+		explicit bitmap(const sub_bitmap& source, pixel_format format = pixel_format::RGBA32);
 		bitmap(bitmap&& bitmap) noexcept = default;
 
 		bitmap& operator=(bitmap&& r) noexcept = default;
 
 		// Gets the size of the bitmap.
-		glm::ivec2 size() const noexcept;
+		glm::ivec2 size() const;
 
 		// Gets mutable access to a pixel of the bitmap.
-		pixel_ref operator[](glm::ivec2 pos) noexcept;
+		pixel_ref operator[](glm::ivec2 pos);
 		// Gets immutable access to a pixel of the bitmap.
-		pixel_cref operator[](glm::ivec2 pos) const noexcept;
+		pixel_cref operator[](glm::ivec2 pos) const;
 
 		// Gets a mutable iterator to the beginning of the bitmap.
-		mut_it begin() noexcept;
+		mut_it begin();
 		// Gets an immutable iterator to the beginning of the bitmap.
-		const_it begin() const noexcept;
+		const_it begin() const;
 		// Gets an immutable iterator to the beginning of the bitmap.
-		const_it cbegin() const noexcept;
+		const_it cbegin() const;
 		// Gets a mutable iterator to one past the end of the bitmap.
-		mut_it end() noexcept;
+		mut_it end();
 		// Gets an immutable iterator to one past the end of the bitmap.
-		const_it end() const noexcept;
+		const_it end() const;
 		// Gets an immutable iterator to one past the end of the bitmap.
-		const_it cend() const noexcept;
+		const_it cend() const;
 
 		// Blits a sub-bitmap to the bitmap.
-		void blit(glm::ivec2 tl, const sub_bitmap& source) noexcept;
+		void blit(glm::ivec2 tl, const sub_bitmap& source);
 		// Fills a region of the bitmap with a solid color.
-		void fill(const irect2& rect, rgba8 color) noexcept;
+		void fill(const irect2& rect, rgba8 color);
 
 		// Creates a sub-bitmap spanning the entire bitmap.
-		operator sub_bitmap() const noexcept;
+		operator sub_bitmap() const;
 		// Creates a sub-bitmap of the bitmap.
-		sub_bitmap sub(const irect2& rect) const noexcept;
+		sub_bitmap sub(const irect2& rect) const;
 
 		// Gets the raw data of the bitmap.
-		std::byte* data() noexcept;
+		std::byte* data();
 		// Gets the raw data of the bitmap.
-		const std::byte* data() const noexcept;
+		const std::byte* data() const;
 
 		// Gets the format of the bitmap.
-		pixel_format format() const noexcept;
+		pixel_format format() const;
 		// Gets the pitch of the bitmap.
-		int pitch() const noexcept;
+		int pitch() const;
 
 		// Saves the bitmap to a .png file.
 		// May throw: bitmap_save_error.
@@ -257,7 +261,7 @@ namespace tr {
 
 	  private:
 		// Handle to the SDL surface.
-		std::unique_ptr<SDL_Surface, bitmap_view::deleter> _impl;
+		std::unique_ptr<SDL_Surface, bitmap_view::deleter> ptr;
 
 		bitmap(SDL_Surface* ptr);
 
@@ -266,17 +270,17 @@ namespace tr {
 		friend class mut_it;
 		friend class cursor;
 		friend class ttfont;
-		friend struct window;
+		friend void window::set_icon(const bitmap& bitmap);
 
-		friend bitmap load_embedded_bitmap(std::span<const std::byte> data) noexcept;
+		friend bitmap load_embedded_bitmap(std::span<const std::byte> data);
 		friend bitmap load_bitmap_file(const std::filesystem::path& path);
 	};
 	// Creates a bitmap with the missing texture checkerboard pattern.
-	bitmap create_checkerboard(glm::ivec2 size) noexcept;
+	bitmap create_checkerboard(glm::ivec2 size);
 	// Loads an embedded bitmap file.
-	bitmap load_embedded_bitmap(std::span<const std::byte> data) noexcept;
+	bitmap load_embedded_bitmap(std::span<const std::byte> data);
 	// Loads an embedded bitmap file.
-	template <std::ranges::contiguous_range R> bitmap load_embedded_bitmap(R&& range) noexcept;
+	template <std::ranges::contiguous_range R> bitmap load_embedded_bitmap(R&& range);
 	// Loads a bitmap from file (BMP/PNG/JPG/QOI).
 	// May throw: file_not_found, bitmap_load_error.
 	bitmap load_bitmap_file(const std::filesystem::path& path);
@@ -285,12 +289,12 @@ namespace tr {
 ///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
 
 template <std::ranges::contiguous_range T>
-tr::bitmap_view::bitmap_view(T&& range, glm::ivec2 size, pixel_format format) noexcept
+tr::bitmap_view::bitmap_view(T&& range, glm::ivec2 size, pixel_format format)
 	: bitmap_view{std::span<const std::byte>{range_bytes(range)}, size, format}
 {
 }
 
-template <std::ranges::contiguous_range R> tr::bitmap tr::load_embedded_bitmap(R&& range) noexcept
+template <std::ranges::contiguous_range R> tr::bitmap tr::load_embedded_bitmap(R&& range)
 {
 	return load_embedded_bitmap(std::span<const std::byte>{range_bytes(range)});
 }

@@ -1,26 +1,46 @@
+#include "../../include/tr/sysgfx/mouse.hpp"
 #include "../../include/tr/sysgfx/cursor.hpp"
 #include "../../include/tr/sysgfx/impl.hpp"
-#include "../../include/tr/sysgfx/mouse.hpp"
 #include <SDL3/SDL.h>
 
-bool tr::mouse::set_relative_mode(bool relative) noexcept
+void tr::mouse::set_relative_mode(bool relative)
 {
 	TR_ASSERT(sdl_window != nullptr, "Tried to set mouse relative mode state before opening the window.");
 
-	return !SDL_SetWindowRelativeMouseMode(sdl_window, relative);
+	if (!SDL_SetWindowRelativeMouseMode(sdl_window, relative)) {
+		TR_LOG(log, tr::severity::ERROR, "Failed to set relative mouse mode.");
+		TR_LOG_CONTINUE(log, "{}", SDL_GetError());
+	}
 }
 
-bool tr::mouse::set_captured(bool captured) noexcept
+void tr::mouse::set_captured(bool captured)
 {
-	return !SDL_CaptureMouse(captured);
+	if (!SDL_CaptureMouse(captured)) {
+		TR_LOG(log, tr::severity::ERROR, "Failed to set mouse capture state.");
+		TR_LOG_CONTINUE(log, "{}", SDL_GetError());
+	}
 }
 
-void tr::mouse::set_cursor(const cursor& cursor) noexcept
+void tr::mouse::set_cursor(const cursor& cursor)
 {
-	SDL_SetCursor(cursor._impl.get());
+	if (!SDL_SetCursor(cursor.ptr.get())) {
+		TR_LOG(log, tr::severity::ERROR, "Failed to set mouse cursor.");
+		TR_LOG_CONTINUE(log, "{}", SDL_GetError());
+	}
 }
 
-void tr::mouse::show_cursor(bool show) noexcept
+void tr::mouse::show_cursor(bool show)
 {
-	show ? SDL_ShowCursor() : SDL_HideCursor();
+	if (show) {
+		if (!SDL_ShowCursor()) {
+			TR_LOG(log, tr::severity::ERROR, "Failed to show mouse cursor.");
+			TR_LOG_CONTINUE(log, "{}", SDL_GetError());
+		}
+	}
+	else {
+		if (!SDL_HideCursor()) {
+			TR_LOG(log, tr::severity::ERROR, "Failed to hide mouse cursor.");
+			TR_LOG_CONTINUE(log, "{}", SDL_GetError());
+		}
+	}
 }

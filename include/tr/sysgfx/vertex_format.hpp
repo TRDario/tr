@@ -2,6 +2,11 @@
 #include "../utility/handle.hpp"
 
 namespace tr {
+	class vertex_format;
+	namespace gfx_context {
+		void set_vertex_format(const vertex_format& format);
+	}
+
 	// Single-precision float vertex attribute.
 	struct vertex_attributef {
 		// The source data's type.
@@ -62,24 +67,24 @@ namespace tr {
 	class vertex_format {
 	  public:
 		// Creates a new vertex format.
-		vertex_format(std::initializer_list<vertex_attribute> attrs) noexcept;
+		vertex_format(std::initializer_list<vertex_attribute> attrs);
 		// Creates a new vertex format.
-		vertex_format(std::span<const vertex_attribute> attrs) noexcept;
+		vertex_format(std::span<const vertex_attribute> attrs);
 
 		// Sets the debug label of the vertex format.
-		void set_label(std::string_view label) noexcept;
+		void set_label(std::string_view label);
 
 	  private:
 		struct deleter {
-			void operator()(unsigned int id) const noexcept;
+			void operator()(unsigned int id) const;
 		};
 
 		// Handle to the OpenGL VAO.
-		handle<unsigned int, 0, deleter> _id;
+		handle<unsigned int, 0, deleter> vao;
 
-		friend struct gfx_context;
+		friend void gfx_context::set_vertex_format(const vertex_format& format);
 	};
 
 	// Gets the vertex format for a common 2D vertex type (separated position, uv, tint).
-	vertex_format& vertex2_format() noexcept;
+	vertex_format& vertex2_format();
 } // namespace tr

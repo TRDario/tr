@@ -21,21 +21,22 @@ bool tr::logger::active() const
 	return !prefix.empty();
 }
 
-void tr::logger::log(severity level, const exception& err)
-{
-	log(level, "Exception raised: {}.", err.name());
-	const std::string_view description{err.description()};
-	const std::string_view details{err.details()};
-	if (!description.empty()) {
-		log_continue("{}", description);
-	}
-	if (!details.empty()) {
-		log_continue("{}", details);
-	}
-}
-
 void tr::logger::log(severity level, const std::exception& err)
 {
-	log(level, "Exception raised:");
-	log_continue("{}", err.what());
+	const exception* tr_exception{dynamic_cast<const exception*>(&err)};
+	if (tr_exception != nullptr) {
+		log(level, "Exception raised: {}.", tr_exception->name());
+		const std::string_view description{tr_exception->description()};
+		const std::string_view details{tr_exception->details()};
+		if (!description.empty()) {
+			log_continue("{}", description);
+		}
+		if (!details.empty()) {
+			log_continue("{}", details);
+		}
+	}
+	else {
+		log(level, "Exception raised:");
+		log_continue("{}", err.what());
+	}
 }

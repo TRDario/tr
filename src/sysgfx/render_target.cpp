@@ -1,11 +1,11 @@
 #include "../../include/tr/sysgfx/render_target.hpp"
 
-const glm::ivec2& tr::render_target::size() const noexcept
+const glm::ivec2& tr::render_target::size() const
 {
-	return _viewport.size;
+	return viewport.size;
 }
 
-tr::render_target::render_target(unsigned int fbo, const irect2& viewport) noexcept
-	: _fbo{fbo}, _viewport{viewport}
+tr::render_target::render_target(unsigned int fbo, const irect2& viewport)
+	: fbo{fbo}, viewport{viewport}
 {
 }

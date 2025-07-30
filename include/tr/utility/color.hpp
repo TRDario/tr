@@ -27,7 +27,7 @@ namespace tr {
 		 **************************************************************************************************************/
 		T r;
 
-		constexpr friend bool operator==(const tr::r<T>&, const tr::r<T>&) noexcept = default;
+		constexpr friend bool operator==(const tr::r<T>&, const tr::r<T>&) = default;
 	};
 
 	/******************************************************************************************************************
@@ -41,7 +41,7 @@ namespace tr {
 		 **************************************************************************************************************/
 		T g;
 
-		constexpr friend bool operator==(const tr::g<T>&, const tr::g<T>&) noexcept = default;
+		constexpr friend bool operator==(const tr::g<T>&, const tr::g<T>&) = default;
 	};
 
 	/******************************************************************************************************************
@@ -55,7 +55,7 @@ namespace tr {
 		 **************************************************************************************************************/
 		T b;
 
-		constexpr friend bool operator==(const tr::b<T>&, const tr::b<T>&) noexcept = default;
+		constexpr friend bool operator==(const tr::b<T>&, const tr::b<T>&) = default;
 	};
 
 	/******************************************************************************************************************
@@ -74,7 +74,7 @@ namespace tr {
 		 **************************************************************************************************************/
 		T g;
 
-		constexpr friend bool operator==(const rg&, const rg&) noexcept = default;
+		constexpr friend bool operator==(const rg&, const rg&) = default;
 	};
 
 	/******************************************************************************************************************
@@ -98,7 +98,7 @@ namespace tr {
 		 **************************************************************************************************************/
 		T b;
 
-		constexpr friend bool operator==(const rgb&, const rgb&) noexcept = default;
+		constexpr friend bool operator==(const rgb&, const rgb&) = default;
 	};
 
 	/******************************************************************************************************************
@@ -132,7 +132,7 @@ namespace tr {
 		 **************************************************************************************************************/
 		T r;
 
-		constexpr friend bool operator==(const bgr&, const bgr&) noexcept = default;
+		constexpr friend bool operator==(const bgr&, const bgr&) = default;
 	};
 
 	/******************************************************************************************************************
@@ -164,14 +164,14 @@ namespace tr {
 		/**************************************************************************************************************
 		 * Default-constructs an RGBA value.
 		 **************************************************************************************************************/
-		constexpr rgba() noexcept = default;
+		constexpr rgba() = default;
 
 		/**************************************************************************************************************
 		 * Initializes an RGBA value.
 		 *
 		 * @param[in] r, g, b, a Channel values.
 		 **************************************************************************************************************/
-		constexpr rgba(T r, T g, T b, T a) noexcept;
+		constexpr rgba(T r, T g, T b, T a);
 
 		/**************************************************************************************************************
 		 * Initializes an RGBA value from an RGB value and an alpha channel.
@@ -179,9 +179,9 @@ namespace tr {
 		 * @param rgb The RGB values.
 		 * @param[in] a The alpha channel value.
 		 **************************************************************************************************************/
-		constexpr rgba(rgb<T> rgb, T a) noexcept;
+		constexpr rgba(rgb<T> rgb, T a);
 
-		constexpr friend bool operator==(const rgba&, const rgba&) noexcept = default;
+		constexpr friend bool operator==(const rgba&, const rgba&) = default;
 	};
 
 	/******************************************************************************************************************
@@ -220,7 +220,7 @@ namespace tr {
 		 **************************************************************************************************************/
 		T a;
 
-		constexpr friend bool operator==(const bgra&, const bgra&) noexcept = default;
+		constexpr friend bool operator==(const bgra&, const bgra&) = default;
 	};
 
 	/******************************************************************************************************************
@@ -242,7 +242,7 @@ namespace tr {
 		 **************************************************************************************************************/
 		float v;
 
-		constexpr friend bool operator==(const hsv&, const hsv&) noexcept = default;
+		constexpr friend bool operator==(const hsv&, const hsv&) = default;
 	};
 
 	/******************************************************************************************************************
@@ -264,7 +264,7 @@ namespace tr {
 		 **************************************************************************************************************/
 		std::uint8_t b : 3;
 
-		constexpr friend bool operator==(const rgb8_223&, const rgb8_223&) noexcept = default;
+		constexpr friend bool operator==(const rgb8_223&, const rgb8_223&) = default;
 	};
 
 	/******************************************************************************************************************
@@ -286,7 +286,7 @@ namespace tr {
 		 **************************************************************************************************************/
 		std::uint16_t b : 5;
 
-		constexpr friend bool operator==(const rgb16_565&, const rgb16_565&) noexcept = default;
+		constexpr friend bool operator==(const rgb16_565&, const rgb16_565&) = default;
 	};
 
 	/******************************************************************************************************************
@@ -308,7 +308,7 @@ namespace tr {
 		 **************************************************************************************************************/
 		std::uint8_t r : 2;
 
-		constexpr friend bool operator==(const bgr8_332&, const bgr8_332&) noexcept = default;
+		constexpr friend bool operator==(const bgr8_332&, const bgr8_332&) = default;
 	};
 
 	/******************************************************************************************************************
@@ -330,7 +330,7 @@ namespace tr {
 		 **************************************************************************************************************/
 		std::uint16_t r : 5;
 
-		constexpr friend bool operator==(const bgr16_565&, const bgr16_565&) noexcept = default;
+		constexpr friend bool operator==(const bgr16_565&, const bgr16_565&) = default;
 	};
 
 	/******************************************************************************************************************
@@ -357,7 +357,7 @@ namespace tr {
 		 **************************************************************************************************************/
 		std::uint16_t a : 4;
 
-		constexpr friend bool operator==(const rgba16_4444&, const rgba16_4444&) noexcept = default;
+		constexpr friend bool operator==(const rgba16_4444&, const rgba16_4444&) = default;
 	};
 
 	/******************************************************************************************************************
@@ -384,7 +384,7 @@ namespace tr {
 		 **************************************************************************************************************/
 		std::uint16_t a : 1;
 
-		constexpr friend bool operator==(const rgba16_5551&, const rgba16_5551&) noexcept = default;
+		constexpr friend bool operator==(const rgba16_5551&, const rgba16_5551&) = default;
 	};
 
 	/******************************************************************************************************************
@@ -411,7 +411,7 @@ namespace tr {
 		 **************************************************************************************************************/
 		std::uint32_t a : 2;
 
-		constexpr friend bool operator==(const rgba32_1010102&, const rgba32_1010102&) noexcept = default;
+		constexpr friend bool operator==(const rgba32_1010102&, const rgba32_1010102&) = default;
 	};
 
 	/******************************************************************************************************************
@@ -438,7 +438,7 @@ namespace tr {
 		 **************************************************************************************************************/
 		std::uint16_t r : 4;
 
-		constexpr friend bool operator==(const abgr16_4444&, const abgr16_4444&) noexcept = default;
+		constexpr friend bool operator==(const abgr16_4444&, const abgr16_4444&) = default;
 	};
 
 	/******************************************************************************************************************
@@ -465,7 +465,7 @@ namespace tr {
 		 **************************************************************************************************************/
 		std::uint16_t r : 5;
 
-		constexpr friend bool operator==(const abgr16_1555&, const abgr16_1555&) noexcept = default;
+		constexpr friend bool operator==(const abgr16_1555&, const abgr16_1555&) = default;
 	};
 
 	/******************************************************************************************************************
@@ -492,7 +492,7 @@ namespace tr {
 		 **************************************************************************************************************/
 		std::uint32_t r : 10;
 
-		constexpr friend bool operator==(const abgr32_2101010&, const abgr32_2101010&) noexcept = default;
+		constexpr friend bool operator==(const abgr32_2101010&, const abgr32_2101010&) = default;
 	};
 
 	/******************************************************************************************************************
@@ -518,7 +518,7 @@ namespace tr {
 		 **************************************************************************************************************/
 		std::uint16_t a : 4;
 
-		constexpr friend bool operator==(const bgra16_4444&, const bgra16_4444&) noexcept = default;
+		constexpr friend bool operator==(const bgra16_4444&, const bgra16_4444&) = default;
 	};
 
 	/******************************************************************************************************************
@@ -545,7 +545,7 @@ namespace tr {
 		 **************************************************************************************************************/
 		std::uint16_t a : 1;
 
-		constexpr friend bool operator==(const bgra16_5551&, const bgra16_5551&) noexcept = default;
+		constexpr friend bool operator==(const bgra16_5551&, const bgra16_5551&) = default;
 	};
 
 	/******************************************************************************************************************
@@ -572,7 +572,7 @@ namespace tr {
 		 **************************************************************************************************************/
 		std::uint32_t a : 2;
 
-		constexpr friend bool operator==(const bgra32_1010102&, const bgra32_1010102&) noexcept = default;
+		constexpr friend bool operator==(const bgra32_1010102&, const bgra32_1010102&) = default;
 	};
 
 	/******************************************************************************************************************
@@ -599,7 +599,7 @@ namespace tr {
 		 **************************************************************************************************************/
 		std::uint16_t b : 4;
 
-		constexpr friend bool operator==(const argb16_4444&, const argb16_4444&) noexcept = default;
+		constexpr friend bool operator==(const argb16_4444&, const argb16_4444&) = default;
 	};
 
 	/******************************************************************************************************************
@@ -626,7 +626,7 @@ namespace tr {
 		 **************************************************************************************************************/
 		std::uint16_t b : 5;
 
-		constexpr friend bool operator==(const argb16_1555&, const argb16_1555&) noexcept = default;
+		constexpr friend bool operator==(const argb16_1555&, const argb16_1555&) = default;
 	};
 
 	/******************************************************************************************************************
@@ -653,7 +653,7 @@ namespace tr {
 		 **************************************************************************************************************/
 		std::uint32_t b : 10;
 
-		constexpr friend bool operator==(const argb32_2101010&, const argb32_2101010&) noexcept = default;
+		constexpr friend bool operator==(const argb32_2101010&, const argb32_2101010&) = default;
 	};
 
 	/******************************************************************************************************************
@@ -674,13 +674,13 @@ namespace tr {
 /// @cond IMPLEMENTATION
 
 template <tr::color_datatype T>
-constexpr tr::rgba<T>::rgba(T r, T g, T b, T a) noexcept
+constexpr tr::rgba<T>::rgba(T r, T g, T b, T a)
 	: r{r}, g{g}, b{b}, a{a}
 {
 }
 
 template <tr::color_datatype T>
-constexpr tr::rgba<T>::rgba(rgb<T> rgb, T a) noexcept
+constexpr tr::rgba<T>::rgba(rgb<T> rgb, T a)
 	: r{rgb.r}, g{rgb.g}, b{rgb.b}, a{a}
 {
 }

@@ -5,26 +5,26 @@
 namespace tr {
 	class render_target;
 
-	// The display backbuffer.
-	struct backbuffer {
+	// Display backbuffer functionality.
+	namespace backbuffer {
 		// Gets the size of the backbuffer.
-		static glm::ivec2 size() noexcept;
+		glm::ivec2 size();
 
 		// Gets a render target spanning the entire backbuffer.
-		static render_target render_target() noexcept;
+		tr::render_target render_target();
 		// Gets a render target spanning a region of the backbuffer.
-		static tr::render_target region_render_target(const irect2& rect) noexcept;
+		tr::render_target region_render_target(const irect2& rect);
 
 		// Clears the backbuffer's color.
-		static void clear(const tr::rgbaf& color = {0, 0, 0, 0}) noexcept;
+		void clear(const tr::rgbaf& color = {0, 0, 0, 0});
 		// Clears the backbuffer.
-		static void clear(const tr::rgbaf& color, double depth, int stencil) noexcept;
+		void clear(const tr::rgbaf& color, double depth, int stencil);
 		// Clears a backbuffer region's color.
-		static void clear_region(const tr::irect2& rect, const tr::rgbaf& color = {0, 0, 0, 0}) noexcept;
+		void clear_region(const tr::irect2& rect, const tr::rgbaf& color = {0, 0, 0, 0});
 		// Clears a backbuffer region.
-		static void clear_region(const tr::irect2& rect, const tr::rgbaf& color, double depth, int stencil) noexcept;
+		void clear_region(const tr::irect2& rect, const tr::rgbaf& color, double depth, int stencil);
 
 		// Swaps the front- and backbuffer.
-		static void flip() noexcept;
-	};
+		void flip();
+	} // namespace backbuffer
 } // namespace tr

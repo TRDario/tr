@@ -16,7 +16,7 @@ namespace tr {
 	 *
 	 * @return The number of segments needed to draw a smooth circle with pixel radius r.
 	 ******************************************************************************************************************/
-	inline std::size_t smooth_poly_vtx(float r, float scale = 1.0f) noexcept;
+	inline std::size_t smooth_poly_vtx(float r, float scale = 1.0f);
 
 	/******************************************************************************************************************
 	 * Calculates the number of segments needed to draw a smooth arc.
@@ -27,7 +27,7 @@ namespace tr {
 	 *
 	 * @return The number of segments needed to draw a smooth arc.
 	 ******************************************************************************************************************/
-	inline std::size_t smooth_arc_vtx(float r, angle sizeth, float scale = 1.0f) noexcept;
+	inline std::size_t smooth_arc_vtx(float r, angle sizeth, float scale = 1.0f);
 
 	/******************************************************************************************************************
 	 * Calculates the number of indices needed for a convex polygon mesh.
@@ -36,7 +36,7 @@ namespace tr {
 	 *
 	 * @return The number of indices needed for the polygon mesh.
 	 *****************************************************************************************************************/
-	constexpr std::size_t poly_idx(std::uint16_t vtx) noexcept;
+	constexpr std::size_t poly_idx(std::uint16_t vtx);
 
 	/******************************************************************************************************************
 	 * Calculates the number of indices needed for a convex polygon mesh.
@@ -45,7 +45,7 @@ namespace tr {
 	 *
 	 * @return The number of indices needed for the polygon mesh.
 	 *****************************************************************************************************************/
-	constexpr std::size_t poly_outline_idx(std::uint16_t vtx) noexcept;
+	constexpr std::size_t poly_outline_idx(std::uint16_t vtx);
 
 	/******************************************************************************************************************
 	 * Outputs indices for a convex polygon.

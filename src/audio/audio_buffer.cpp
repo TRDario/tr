@@ -1,5 +1,5 @@
-#include "../../include/tr/audio/al_call.hpp"
 #include "../../include/tr/audio/audio_buffer.hpp"
+#include "../../include/tr/audio/al_call.hpp"
 #include "../../include/tr/audio/impl.hpp"
 #include "../../include/tr/sysgfx/dialog.hpp"
 
@@ -8,7 +8,7 @@ tr::audio_buffer::audio_buffer()
 	ALuint id;
 	TR_AL_CALL(alGenBuffers, 1, &id);
 	if (alGetError() == AL_OUT_OF_MEMORY) {
-		terminate("Out of memory", "Exception occurred during audio buffer allocation.");
+		throw out_of_memory{"audio buffer allocation"};
 	}
 	this->id.reset(id);
 	audio_buffers.emplace(id, false);
@@ -47,7 +47,7 @@ void tr::audio_buffer::set(std::span<const std::int16_t> data, audio_format form
 	const ALsizei size{static_cast<ALsizei>(data.size_bytes()) - static_cast<ALsizei>(data.size_bytes()) % 4};
 	TR_AL_CALL(alBufferData, id.get(), static_cast<ALenum>(format), data.data(), size, static_cast<ALsizei>(frequency));
 	if (alGetError() == AL_OUT_OF_MEMORY) {
-		terminate("Out of memory", "Exception occurred during audio buffer allocation.");
+		throw out_of_memory{"audio buffer allocation"};
 	}
 }
 

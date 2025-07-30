@@ -6,19 +6,19 @@ namespace tr {
 	class shader_buffer_map {
 	  public:
 		// Casts the map into a regular span.
-		template <standard_layout T> operator std::span<T>() const noexcept;
+		template <standard_layout T> operator std::span<T>() const;
 
 	  private:
 		struct deleter {
-			void operator()(unsigned int id) const noexcept;
+			void operator()(unsigned int id) const;
 		};
 
 		// Reference to the buffer.
-		handle<unsigned int, 0, deleter> _buffer;
+		handle<unsigned int, 0, deleter> buffer;
 		// The actual span.
-		std::span<std::byte> _span;
+		std::span<std::byte> span;
 
-		shader_buffer_map(unsigned int buffer, std::span<std::byte> span) noexcept;
+		shader_buffer_map(unsigned int buffer, std::span<std::byte> span);
 
 		friend class shader_buffer;
 	};
@@ -34,55 +34,55 @@ namespace tr {
 		};
 
 		// Allocates an uninitialized shader buffer.
-		shader_buffer(std::intptr_t header_size, std::intptr_t capacity, access access) noexcept;
+		shader_buffer(std::intptr_t header_size, std::intptr_t capacity, access access);
 
 		// Gets the size of the fixed header block.
-		std::intptr_t header_size() const noexcept;
+		std::intptr_t header_size() const;
 		// Gets the size of the dynamic array.
-		std::intptr_t array_size() const noexcept;
+		std::intptr_t array_size() const;
 		// Gets the maximum capacity of the dynamic array.
-		std::intptr_t array_capacity() const noexcept;
+		std::intptr_t array_capacity() const;
 
 		// Sets the data of the header.
-		void set_header(std::span<const std::byte> data) noexcept;
+		void set_header(std::span<const std::byte> data);
 		// Sets the data of the header.
-		template <std::ranges::contiguous_range R> void set_header(R&& range) noexcept;
+		template <std::ranges::contiguous_range R> void set_header(R&& range);
 		// Sets the data of the header.
-		template <class T> void set_header(const T& value) noexcept;
+		template <class T> void set_header(const T& value);
 		// Sets the data of the dynamic array.
-		void set_array(std::span<const std::byte> data) noexcept;
+		void set_array(std::span<const std::byte> data);
 		// Sets the data of the dynamic array.
-		template <std::ranges::contiguous_range R> void set_array(R&& range) noexcept;
+		template <std::ranges::contiguous_range R> void set_array(R&& range);
 		// Resizes the dynamic array.
-		void resize_array(std::intptr_t size) noexcept;
+		void resize_array(std::intptr_t size);
 
 		// Gets whether the buffer is mapped.
-		bool mapped() const noexcept;
+		bool mapped() const;
 		// Maps the fixed header.
-		shader_buffer_map map_header() noexcept;
+		shader_buffer_map map_header();
 		// Maps the dynamic array.
-		shader_buffer_map map_array() noexcept;
+		shader_buffer_map map_array();
 		// Maps the entire buffer.
-		shader_buffer_map map() noexcept;
+		shader_buffer_map map();
 
 		// Sets the debug label of the shader buffer.
-		void set_label(std::string_view label) noexcept;
+		void set_label(std::string_view label);
 
 	  private:
 		struct deleter {
-			void operator()(unsigned int id) const noexcept;
+			void operator()(unsigned int id) const;
 		};
 
 		// Handle to the OpenGL buffer.
-		handle<unsigned int, 0, deleter> _id;
+		handle<unsigned int, 0, deleter> sbo;
 		// The access type of the buffer.
-		access _access;
+		access access_;
 		// The size of the header.
-		std::intptr_t _header_size;
+		std::intptr_t hsize;
 		// The current size of the array.
-		std::intptr_t _array_size;
+		std::intptr_t asize;
 		// The capacity of the array.
-		std::intptr_t _array_capacity;
+		std::intptr_t acapacity;
 
 		friend class shader_base;
 	};
@@ -90,22 +90,22 @@ namespace tr {
 
 ///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
 
-template <tr::standard_layout T> tr::shader_buffer_map::operator std::span<T>() const noexcept
+template <tr::standard_layout T> tr::shader_buffer_map::operator std::span<T>() const
 {
-	return as_mut_objects<T>(_span);
+	return as_mut_objects<T>(span);
 }
 
-template <std::ranges::contiguous_range R> void tr::shader_buffer::set_header(R&& range) noexcept
+template <std::ranges::contiguous_range R> void tr::shader_buffer::set_header(R&& range)
 {
 	set_header(std::span<const std::byte>{range_bytes(range)});
 }
 
-template <class T> void tr::shader_buffer::set_header(const T& value) noexcept
+template <class T> void tr::shader_buffer::set_header(const T& value)
 {
 	set_header(std::span<const std::byte>{as_bytes(value)});
 }
 
-template <std::ranges::contiguous_range R> void tr::shader_buffer::set_array(R&& range) noexcept
+template <std::ranges::contiguous_range R> void tr::shader_buffer::set_array(R&& range)
 {
 	set_array(std::span<const std::byte>{range_bytes(range)});
 }

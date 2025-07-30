@@ -49,48 +49,48 @@ namespace tr {
 	class texture {
 	  public:
 		// Allocates an uninitialized 2D texture.
-		texture(glm::ivec2 size, bool mipmapped = false, pixel_format format = pixel_format::RGBA32) noexcept;
+		texture(glm::ivec2 size, bool mipmapped = false, pixel_format format = pixel_format::RGBA32);
 		// Constructs a 2D texture with data uploaded from a bitmap.
-		texture(const sub_bitmap& bitmap, bool mipmapped = false, std::optional<pixel_format> format = std::nullopt) noexcept;
+		texture(const sub_bitmap& bitmap, bool mipmapped = false, std::optional<pixel_format> format = std::nullopt);
 
 		// Gets the size of the texture.
-		const glm::ivec2& size() const noexcept;
+		const glm::ivec2& size() const;
 
 		// Sets the filters used by the texture sampler.
-		void set_filtering(min_filter min_filter, mag_filter mag_filter) noexcept;
+		void set_filtering(min_filter min_filter, mag_filter mag_filter);
 		// Sets the wrapping used for by the texture sampler.
-		void set_wrap(wrap wrap) noexcept;
+		void set_wrap(wrap wrap);
 		// Sets the swizzle parameters of the texture.
-		void set_swizzle(swizzle r, swizzle g, swizzle b, swizzle a) noexcept;
+		void set_swizzle(swizzle r, swizzle g, swizzle b, swizzle a);
 		// Sets the border color of the texture sampler (used when wrap::BORDER_CLAMP is in use).
-		void set_border_color(rgbaf color) noexcept;
+		void set_border_color(rgbaf color);
 
 		// Clears the texture.
-		void clear(const rgbaf& color) noexcept;
+		void clear(const rgbaf& color);
 		// Clears a region of the texture.
-		void clear_region(const irect2& rect, const rgbaf& color) noexcept;
+		void clear_region(const irect2& rect, const rgbaf& color);
 		// Copies a region from another texture.
-		void copy_region(glm::ivec2 tl, const texture& src, const irect2& rect) noexcept;
+		void copy_region(glm::ivec2 tl, const texture& src, const irect2& rect);
 		// Sets a region of the texture.
-		void set_region(glm::ivec2 tl, const sub_bitmap& bitmap) noexcept;
+		void set_region(glm::ivec2 tl, const sub_bitmap& bitmap);
 
 		// Sets the debug label of the texture.
-		void set_label(std::string_view label) noexcept;
+		void set_label(std::string_view label);
 
 	  protected:
 		struct deleter {
-			void operator()(unsigned int id) const noexcept;
+			void operator()(unsigned int id) const;
 		};
 
 		// Handle to the OpenGL texture.
-		handle<unsigned int, 0, deleter> _id;
+		handle<unsigned int, 0, deleter> id;
 		// The size of the texture.
-		glm::ivec2 _size;
+		glm::ivec2 size_;
 
 		// Creates an unallocated texture.
-		texture() noexcept;
+		texture();
 		// Allocates the texture.
-		void _allocate(glm::ivec2 size, bool mipmapped, pixel_format format) noexcept;
+		void allocate(glm::ivec2 size, bool mipmapped, pixel_format format);
 
 		friend class dyn_atlas;
 		friend class ttf_renderer;
@@ -101,18 +101,18 @@ namespace tr {
 	class texture_ref {
 	  public:
 		// Creates an empty texture reference.
-		constexpr texture_ref() noexcept = default;
+		constexpr texture_ref() = default;
 		// Creates a texture reference.
-		texture_ref(const texture& texture) noexcept;
+		texture_ref(const texture& texture);
 
-		friend bool operator==(texture_ref l, texture_ref r) noexcept = default;
+		friend bool operator==(texture_ref l, texture_ref r) = default;
 
 		// Checks whether the reference is pointing to an extant texture.
-		bool valid() const noexcept;
+		bool valid() const;
 
 	  private:
 		// The OpenGL ID of the texture (or 0).
-		unsigned int _id{0};
+		unsigned int id{0};
 
 		friend class texture_unit;
 		friend std::uint64_t imgui::get_texture_id(texture_ref texture);
@@ -124,27 +124,27 @@ namespace tr {
 	class render_texture : public texture {
 	  public:
 		// Allocates an uninitialized 2D texture.
-		render_texture(glm::ivec2 size, bool mipmapped = false, pixel_format format = pixel_format::RGBA32) noexcept;
+		render_texture(glm::ivec2 size, bool mipmapped = false, pixel_format format = pixel_format::RGBA32);
 		// Constructs a 2D texture with data uploaded from a bitmap.
-		render_texture(const sub_bitmap& bitmap, bool mipmapped = false, std::optional<pixel_format> format = std::nullopt) noexcept;
-		render_texture(render_texture&&) = default;
-		~render_texture() noexcept;
+		render_texture(const sub_bitmap& bitmap, bool mipmapped = false, std::optional<pixel_format> format = std::nullopt);
+		render_texture(render_texture&&) noexcept = default;
+		~render_texture();
 
-		render_texture& operator=(render_texture&&) = default;
+		render_texture& operator=(render_texture&&) noexcept = default;
 
 		// Gets a render target spanning the entire texture.
-		operator render_target() const noexcept;
+		operator render_target() const;
 		// Gets a render target spanning the entire texture.
-		render_target render_target() const noexcept;
+		render_target render_target() const;
 		// Gets a render target spanning a region of the texture.
-		tr::render_target region_render_target(const irect2& rect) const noexcept;
+		tr::render_target region_render_target(const irect2& rect) const;
 
 	  private:
 		struct fbo_deleter {
-			void operator()(unsigned int id) const noexcept;
+			void operator()(unsigned int id) const;
 		};
 
 		// Handle to an OpenGL FBO.
-		handle<unsigned int, 0, fbo_deleter> _fbo;
+		handle<unsigned int, 0, fbo_deleter> fbo;
 	};
 } // namespace tr

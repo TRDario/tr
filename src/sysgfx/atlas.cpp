@@ -177,7 +177,7 @@ const tr::irect2& tr::dyn_atlas::raw_at(std::string_view name) const noexcept
 void tr::dyn_atlas::_raw_reserve(glm::ivec2 new_size) noexcept
 {
 	if (_tex.size() == glm::ivec2{0}) {
-		_tex._allocate(new_size, true, pixel_format::RGBA32);
+		_tex.allocate(new_size, true, pixel_format::RGBA32);
 	}
 	else {
 		glm::ivec2 old_size{_tex.size()};
@@ -186,7 +186,7 @@ void tr::dyn_atlas::_raw_reserve(glm::ivec2 new_size) noexcept
 		}
 		texture new_tex{new_size};
 		new_tex.copy_region({}, _tex, {{}, _tex.size()});
-		for (auto& unit : _tex_unit_textures) {
+		for (auto& unit : texure_unit_textures) {
 			if (unit == _tex) {
 				unit = new_tex;
 			}

@@ -1,5 +1,5 @@
-#include "../../include/tr/audio/al_call.hpp"
 #include "../../include/tr/audio/audio_source.hpp"
+#include "../../include/tr/audio/al_call.hpp"
 #include "../../include/tr/audio/audio_system.hpp"
 #include "../../include/tr/audio/impl.hpp"
 #include "../../include/tr/sysgfx/dialog.hpp"
@@ -37,7 +37,7 @@ tr::base_audio_source::base_audio_source(int priority)
 {
 	TR_AL_CALL(alGenSources, 1, &id);
 	if (alGetError() == AL_OUT_OF_MEMORY) {
-		terminate("Out of memory", "Exception occurred while creating an audio source.");
+		throw out_of_memory{"audio source allocation"};
 	}
 }
 
@@ -68,7 +68,7 @@ tr::buffer_stream_buffer::buffer_stream_buffer()
 {
 	TR_AL_CALL(alGenBuffers, 1, &id);
 	if (alGetError() == AL_OUT_OF_MEMORY) {
-		terminate("Out of memory", "Exception occurred during audio buffer allocation.");
+		throw out_of_memory{"audio buffer allocation"};
 	}
 }
 
@@ -87,7 +87,7 @@ void tr::buffer_stream_buffer::refill(buffer_stream& buffer_stream)
 	const ALsizei size{static_cast<ALsizei>(used_buffer.size_bytes()) - static_cast<ALsizei>(used_buffer.size_bytes()) % 4};
 	TR_AL_CALL(alBufferData, id, format, used_buffer.data(), size, buffer_stream.stream->sample_rate());
 	if (alGetError() == AL_OUT_OF_MEMORY) {
-		terminate("Out of memory", "Exception occurred while refilling an audio buffer.");
+		throw out_of_memory{"audio buffer reallocation"};
 	}
 }
 

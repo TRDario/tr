@@ -1,21 +1,22 @@
 #include "../../include/tr/sysgfx/gl_call.hpp"
-#include "../../include/tr/sysgfx/dialog.hpp"
 
-void tr::_validate_gl_call(const char* file, int line, const char* function) noexcept
+void tr::validate_gl_call(const char* file, int line, const char* function)
 {
-	switch (glGetError()) {
-	case GL_INVALID_ENUM:
-		terminate("OpenGL validation error", std::format("Call to {} at {}:{} returned GL_INVALID_ENUM.", function, file, line));
-	case GL_INVALID_VALUE:
-		terminate("OpenGL validation error", std::format("Call to {} at {}:{} returned GL_INVALID_VALUE.", function, file, line));
-	case GL_INVALID_OPERATION:
-		terminate("OpenGL validation error", std::format("Call to {} at {}:{} returned GL_INVALID_OPERATION.", function, file, line));
-	case GL_OUT_OF_MEMORY:
-		terminate("OpenGL validation error", std::format("Call to {} at {}:{} returned GL_OUT_OF_MEMORY.", function, file, line));
-	case GL_INVALID_FRAMEBUFFER_OPERATION:
-		terminate("OpenGL validation error",
-				  std::format("Call to {} at {}:{} returned GL_INVALID_FRAMEBUFFER_OPERATION.", function, file, line));
-	default:
-		break;
+	const GLenum error{glGetError()};
+	if (error != GL_NO_ERROR) {
+		TR_LOG(log, tr::severity::FATAL, "OpenGL validation error.");
+		switch (error) {
+		case GL_INVALID_ENUM:
+			TR_LOG_CONTINUE(log, "Call to {} at {}:{} returned GL_INVALID_ENUM.", function, file, line);
+		case GL_INVALID_VALUE:
+			TR_LOG_CONTINUE(log, "Call to {} at {}:{} returned GL_INVALID_VALUE.", function, file, line);
+		case GL_INVALID_OPERATION:
+			TR_LOG_CONTINUE(log, "Call to {} at {}:{} returned GL_INVALID_OPERATION.", function, file, line);
+		case GL_OUT_OF_MEMORY:
+			TR_LOG_CONTINUE(log, "Call to {} at {}:{} returned GL_OUT_OF_MEMORY.", function, file, line);
+		case GL_INVALID_FRAMEBUFFER_OPERATION:
+			TR_LOG_CONTINUE(log, "Call to {} at {}:{} returned GL_INVALID_FRAMEBUFFER_OPERATION.", function, file, line);
+		}
+		std::abort();
 	}
 }

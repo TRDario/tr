@@ -119,22 +119,22 @@ void tr::ogg_audio_stream::raw_read(std::span<std::int16_t> buffer)
 
 ////////////////////////////////////////////////////////// AUDIO FILE OPEN ERROR //////////////////////////////////////////////////////////
 
-tr::audio_file_open_error::audio_file_open_error(std::string&& description) noexcept
+tr::audio_file_open_error::audio_file_open_error(std::string&& description)
 	: description_str{std::move(description)}
 {
 }
 
-std::string_view tr::audio_file_open_error::name() const noexcept
+std::string_view tr::audio_file_open_error::name() const
 {
 	return "Audio file opening error";
 }
 
-std::string_view tr::audio_file_open_error::description() const noexcept
+std::string_view tr::audio_file_open_error::description() const
 {
 	return description_str;
 }
 
-std::string_view tr::audio_file_open_error::details() const noexcept
+std::string_view tr::audio_file_open_error::details() const
 {
 	return {};
 }

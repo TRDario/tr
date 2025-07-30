@@ -1,21 +1,20 @@
 #include "../../include/tr/sysgfx/texture.hpp"
-#include "../../include/tr/sysgfx/dialog.hpp"
 #include "../../include/tr/sysgfx/gl_call.hpp"
 #include "../../include/tr/sysgfx/impl.hpp"
 
 namespace tr {
 	// Converts a pixel format to a texture format.
-	GLenum _tex_format(pixel_format format) noexcept;
+	GLenum tex_format(pixel_format format);
 	// Converts a pixel format to an OpenGL format.
-	GLenum _format(pixel_format format) noexcept;
+	GLenum format(pixel_format format);
 	// Converts a pixel format to an OpenGL type.
-	GLenum _type(pixel_format format) noexcept;
+	GLenum type(pixel_format format);
 
 	// List of known textures.
-	std::unordered_set<unsigned int> _textures;
+	std::unordered_set<unsigned int> textures;
 } // namespace tr
 
-GLenum tr::_tex_format(pixel_format format) noexcept
+GLenum tr::tex_format(pixel_format format)
 {
 	switch (format) {
 	case pixel_format::R8:
@@ -58,7 +57,7 @@ GLenum tr::_tex_format(pixel_format format) noexcept
 	}
 }
 
-GLenum tr::_format(pixel_format format) noexcept
+GLenum tr::format(pixel_format format)
 {
 	switch (format) {
 	case pixel_format::R8:
@@ -97,7 +96,7 @@ GLenum tr::_format(pixel_format format) noexcept
 	}
 }
 
-GLenum tr::_type(pixel_format format) noexcept
+GLenum tr::type(pixel_format format)
 {
 	switch (format) {
 	case pixel_format::R8:
@@ -142,170 +141,165 @@ GLenum tr::_type(pixel_format format) noexcept
 
 ///////////////////////////////////////////////////////////////// TEXTURE /////////////////////////////////////////////////////////////////
 
-tr::texture::texture() noexcept
-	: _size{0, 0}
+tr::texture::texture()
+	: size_{0, 0}
 {
-	try {
-		GLuint id;
-		TR_GL_CALL(glCreateTextures, GL_TEXTURE_2D, 1, &id);
-		_textures.insert(id);
-		_id.reset(id);
-	}
-	catch (std::bad_alloc&) {
-		terminate("Out of memory", "Exception occurred while creating a texture.");
-	}
+	GLuint temp;
+	TR_GL_CALL(glCreateTextures, GL_TEXTURE_2D, 1, &temp);
+	textures.insert(temp);
+	id.reset(temp);
 }
 
-void tr::texture::_allocate(glm::ivec2 size, bool mipmapped, pixel_format format) noexcept
+void tr::texture::allocate(glm::ivec2 size, bool mipmapped, pixel_format format)
 {
-	TR_GL_CALL(glTextureStorage2D, _id.get(), mipmapped ? static_cast<GLsizei>(std::floor(std::log2(std::max(size.x, size.y))) + 1) : 1,
-			   _tex_format(format), size.x, size.y);
+	TR_GL_CALL(glTextureStorage2D, id.get(), mipmapped ? static_cast<GLsizei>(std::floor(std::log2(std::max(size.x, size.y))) + 1) : 1,
+			   tex_format(format), size.x, size.y);
 	if (glGetError() == GL_OUT_OF_MEMORY) {
-		terminate("Out of video memory", "Exception occurred while allocating a texture.");
+		throw out_of_memory{"texture allocation"};
 	}
-	_size = size;
+	size_ = size;
 }
 
-tr::texture::texture(glm::ivec2 size, bool mipmapped, pixel_format format) noexcept
+tr::texture::texture(glm::ivec2 size, bool mipmapped, pixel_format format)
 	: texture{}
 {
 	TR_ASSERT(size.x > 0 && size.y > 0, "Tried to allocate a texture with an invalid size of {}x{}", size.x, size.y);
 
-	_size = size;
-	_allocate(size, mipmapped, format);
+	size_ = size;
+	allocate(size, mipmapped, format);
 }
 
-tr::texture::texture(const sub_bitmap& bitmap, bool mipmapped, std::optional<pixel_format> format) noexcept
+tr::texture::texture(const sub_bitmap& bitmap, bool mipmapped, std::optional<pixel_format> format)
 	: texture{bitmap.size(), mipmapped, format.value_or(bitmap.format())}
 {
 	set_region({}, bitmap);
 }
 
-void tr::texture::deleter::operator()(unsigned int id) const noexcept
+void tr::texture::deleter::operator()(unsigned int id) const
 {
 	TR_GL_CALL(glDeleteTextures, 1, &id);
-	_textures.erase(id);
+	textures.erase(id);
 }
 
-tr::render_texture::~render_texture() noexcept
+tr::render_texture::~render_texture()
 {
-	if (_fbo.has_value() && _render_target.has_value() && _render_target->_fbo == _fbo.get()) {
-		_render_target.reset();
+	if (fbo.has_value() && current_render_target.has_value() && current_render_target->fbo == fbo.get()) {
+		current_render_target.reset();
 	}
 }
 
-const glm::ivec2& tr::texture::size() const noexcept
+const glm::ivec2& tr::texture::size() const
 {
-	return _size;
+	return size_;
 }
 
-void tr::texture::set_filtering(min_filter min_filter, mag_filter mag_filter) noexcept
+void tr::texture::set_filtering(min_filter min_filter, mag_filter mag_filter)
 {
-	TR_GL_CALL(glTextureParameteri, _id.get(), GL_TEXTURE_MIN_FILTER, static_cast<GLint>(min_filter));
-	TR_GL_CALL(glTextureParameteri, _id.get(), GL_TEXTURE_MAG_FILTER, static_cast<GLint>(mag_filter));
+	TR_GL_CALL(glTextureParameteri, id.get(), GL_TEXTURE_MIN_FILTER, static_cast<GLint>(min_filter));
+	TR_GL_CALL(glTextureParameteri, id.get(), GL_TEXTURE_MAG_FILTER, static_cast<GLint>(mag_filter));
 }
 
-void tr::texture::set_wrap(wrap wrap) noexcept
+void tr::texture::set_wrap(wrap wrap)
 {
-	TR_GL_CALL(glTextureParameteri, _id.get(), GL_TEXTURE_WRAP_S, static_cast<GLint>(wrap));
-	TR_GL_CALL(glTextureParameteri, _id.get(), GL_TEXTURE_WRAP_T, static_cast<GLint>(wrap));
-	TR_GL_CALL(glTextureParameteri, _id.get(), GL_TEXTURE_WRAP_R, static_cast<GLint>(wrap));
+	TR_GL_CALL(glTextureParameteri, id.get(), GL_TEXTURE_WRAP_S, static_cast<GLint>(wrap));
+	TR_GL_CALL(glTextureParameteri, id.get(), GL_TEXTURE_WRAP_T, static_cast<GLint>(wrap));
+	TR_GL_CALL(glTextureParameteri, id.get(), GL_TEXTURE_WRAP_R, static_cast<GLint>(wrap));
 }
 
-void tr::texture::set_swizzle(swizzle r, swizzle g, swizzle b, swizzle a) noexcept
+void tr::texture::set_swizzle(swizzle r, swizzle g, swizzle b, swizzle a)
 {
 	std::array<int, 4> glSwizzle{static_cast<int>(r), static_cast<int>(g), static_cast<int>(b), static_cast<int>(a)};
-	TR_GL_CALL(glTextureParameteriv, _id.get(), GL_TEXTURE_SWIZZLE_RGBA, glSwizzle.data());
+	TR_GL_CALL(glTextureParameteriv, id.get(), GL_TEXTURE_SWIZZLE_RGBA, glSwizzle.data());
 }
 
-void tr::texture::set_border_color(rgbaf color) noexcept
+void tr::texture::set_border_color(rgbaf color)
 {
-	TR_GL_CALL(glTextureParameterfv, _id.get(), GL_TEXTURE_BORDER_COLOR, &color.r);
+	TR_GL_CALL(glTextureParameterfv, id.get(), GL_TEXTURE_BORDER_COLOR, &color.r);
 }
 
-void tr::texture::clear(const rgbaf& color) noexcept
+void tr::texture::clear(const rgbaf& color)
 {
-	TR_GL_CALL(glClearTexImage, _id.get(), 0, GL_RGBA, GL_FLOAT, &color);
+	TR_GL_CALL(glClearTexImage, id.get(), 0, GL_RGBA, GL_FLOAT, &color);
 }
 
-void tr::texture::clear_region(const irect2& rect, const rgbaf& color) noexcept
+void tr::texture::clear_region(const irect2& rect, const rgbaf& color)
 {
-	TR_GL_CALL(glClearTexSubImage, _id.get(), 0, rect.tl.x, rect.tl.y, 0, rect.size.x, rect.size.y, 1, GL_RGBA, GL_FLOAT, &color);
+	TR_GL_CALL(glClearTexSubImage, id.get(), 0, rect.tl.x, rect.tl.y, 0, rect.size.x, rect.size.y, 1, GL_RGBA, GL_FLOAT, &color);
 }
 
-void tr::texture::copy_region(glm::ivec2 tl, const texture& src, const irect2& rect) noexcept
+void tr::texture::copy_region(glm::ivec2 tl, const texture& src, const irect2& rect)
 {
-	TR_GL_CALL(glCopyImageSubData, src._id.get(), GL_TEXTURE_2D, 0, rect.tl.x, rect.tl.y, 0, _id.get(), GL_TEXTURE_2D, 0, tl.x, tl.y, 0,
+	TR_GL_CALL(glCopyImageSubData, src.id.get(), GL_TEXTURE_2D, 0, rect.tl.x, rect.tl.y, 0, id.get(), GL_TEXTURE_2D, 0, tl.x, tl.y, 0,
 			   rect.size.x, rect.size.y, 1);
 }
 
-void tr::texture::set_region(glm::ivec2 tl, const sub_bitmap& bitmap) noexcept
+void tr::texture::set_region(glm::ivec2 tl, const sub_bitmap& bitmap)
 {
 	TR_ASSERT(irect2{size()}.contains(tl + bitmap.size()),
 			  "Tried to set out-of-bounds region from ({}, {}) to ({}, {}) in a texture with size {}x{}.", tl.x, tl.y,
-			  tl.x + bitmap.size().x, tl.y + bitmap.size().y, _size.x, _size.y);
+			  tl.x + bitmap.size().x, tl.y + bitmap.size().y, size_.x, size_.y);
 
 	TR_GL_CALL(glPixelStorei, GL_UNPACK_ROW_LENGTH, bitmap.pitch() / pixel_bytes(bitmap.format()));
-	TR_GL_CALL(glTextureSubImage2D, _id.get(), 0, tl.x, tl.y, bitmap.size().x, bitmap.size().y, _format(bitmap.format()),
-			   _type(bitmap.format()), bitmap.data());
-	TR_GL_CALL(glGenerateTextureMipmap, _id.get());
+	TR_GL_CALL(glTextureSubImage2D, id.get(), 0, tl.x, tl.y, bitmap.size().x, bitmap.size().y, format(bitmap.format()),
+			   type(bitmap.format()), bitmap.data());
+	TR_GL_CALL(glGenerateTextureMipmap, id.get());
 }
 
-void tr::texture::set_label(std::string_view label) noexcept
+void tr::texture::set_label(std::string_view label)
 {
-	TR_GL_CALL(glObjectLabel, GL_TEXTURE, _id.get(), static_cast<GLsizei>(label.size()), label.data());
+	TR_GL_CALL(glObjectLabel, GL_TEXTURE, id.get(), static_cast<GLsizei>(label.size()), label.data());
 }
 
 /////////////////////////////////////////////////////////////// TEXTURE REF ///////////////////////////////////////////////////////////////
 
-tr::texture_ref::texture_ref(const texture& texture) noexcept
-	: _id{texture._id.get()}
+tr::texture_ref::texture_ref(const texture& texture)
+	: id{texture.id.get()}
 {
 }
 
-bool tr::texture_ref::valid() const noexcept
+bool tr::texture_ref::valid() const
 {
-	return _textures.contains(_id);
+	return textures.contains(id);
 }
 
 ///////////////////////////////////////////////////////////// RENDER TEXTURE //////////////////////////////////////////////////////////////
 
-tr::render_texture::render_texture(glm::ivec2 size, bool mipmapped, pixel_format format) noexcept
+tr::render_texture::render_texture(glm::ivec2 size, bool mipmapped, pixel_format format)
 	: texture{size, mipmapped, format}
 {
-	unsigned int fbo;
-	TR_GL_CALL(glCreateFramebuffers, 1, &fbo);
-	TR_GL_CALL(glNamedFramebufferTexture, fbo, GL_COLOR_ATTACHMENT0, _id.get(), 0);
-	_fbo.reset(fbo);
+	unsigned int temp;
+	TR_GL_CALL(glCreateFramebuffers, 1, &temp);
+	TR_GL_CALL(glNamedFramebufferTexture, temp, GL_COLOR_ATTACHMENT0, id.get(), 0);
+	fbo.reset(temp);
 }
 
-tr::render_texture::render_texture(const sub_bitmap& bitmap, bool mipmapped, std::optional<pixel_format> format) noexcept
+tr::render_texture::render_texture(const sub_bitmap& bitmap, bool mipmapped, std::optional<pixel_format> format)
 	: render_texture{bitmap.size(), mipmapped, format.value_or(bitmap.format())}
 {
 	set_region({}, bitmap);
 }
 
-void tr::render_texture::fbo_deleter::operator()(unsigned int id) const noexcept
+void tr::render_texture::fbo_deleter::operator()(unsigned int id) const
 {
 	TR_GL_CALL(glDeleteFramebuffers, 1, &id);
 }
 
-tr::render_texture::operator tr::render_target() const noexcept
+tr::render_texture::operator tr::render_target() const
 {
 	return render_target();
 }
 
-tr::render_target tr::render_texture::render_target() const noexcept
+tr::render_target tr::render_texture::render_target() const
 {
-	return tr::render_target{_fbo.get(), {{}, _size}};
+	return tr::render_target{fbo.get(), {{}, size_}};
 }
 
-tr::render_target tr::render_texture::region_render_target(const irect2& rect) const noexcept
+tr::render_target tr::render_texture::region_render_target(const irect2& rect) const
 {
-	TR_ASSERT(irect2{_size}.contains(rect.tl + rect.size),
+	TR_ASSERT(irect2{size_}.contains(rect.tl + rect.size),
 			  "Tried to create render target for out-of-bounds region from ({}, {}) to ({}, {}) in a texture with size "
 			  "%dx%d.",
-			  rect.tl.x, rect.tl.y, rect.tl.x + rect.size.x, rect.tl.y + rect.size.y, _size.x, _size.y);
+			  rect.tl.x, rect.tl.y, rect.tl.x + rect.size.x, rect.tl.y + rect.size.y, size_.x, size_.y);
 
-	return tr::render_target{_fbo.get(), rect};
+	return tr::render_target{fbo.get(), rect};
 }

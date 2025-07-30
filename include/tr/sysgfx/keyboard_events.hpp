@@ -19,16 +19,16 @@ namespace tr {
 		keymod mods;
 
 		// Converts a generic event into a key down event.
-		key_down_event(const event& event) noexcept;
+		key_down_event(const event& event);
 	};
 	// Checks if a key chord was pressed.
-	bool operator==(const key_down_event& event, const key_chord& chord) noexcept;
+	bool operator==(const key_down_event& event, const key_chord& chord);
 	// Checks if a scan chord was pressed.
-	bool operator==(const key_down_event& event, const scan_chord& chord) noexcept;
+	bool operator==(const key_down_event& event, const scan_chord& chord);
 	// Checks if a key chord was pressed.
-	bool operator==(const key_chord& chord, const key_down_event& event) noexcept;
+	bool operator==(const key_chord& chord, const key_down_event& event);
 	// Checks if a scan chord was pressed.
-	bool operator==(const scan_chord& chord, const key_down_event& event) noexcept;
+	bool operator==(const scan_chord& chord, const key_down_event& event);
 
 	// Event emitted when a key is release.
 	struct key_up_event {
@@ -43,7 +43,7 @@ namespace tr {
 		keymod mods;
 
 		// Converts a generic event into a key up event.
-		key_up_event(const event& event) noexcept;
+		key_up_event(const event& event);
 	};
 
 	// Event emitted when text is inputted.
@@ -55,6 +55,6 @@ namespace tr {
 		std::string_view text;
 
 		// Converts a generic event into a text input event.
-		text_input_event(const event& event) noexcept;
+		text_input_event(const event& event);
 	};
 } // namespace tr

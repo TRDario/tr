@@ -14,37 +14,37 @@ namespace tr {
 	class ttfont_load_error : public exception {
 	  public:
 		// Constructs an exception.
-		ttfont_load_error(std::string_view path, std::string&& details) noexcept;
+		ttfont_load_error(std::string_view path, std::string&& details);
 
 		// Gets the name of the error.
-		std::string_view name() const noexcept override;
+		std::string_view name() const override;
 		// Gets the description of the error.
-		std::string_view description() const noexcept override;
+		std::string_view description() const override;
 		// Gets further details about the error.
-		std::string_view details() const noexcept override;
+		std::string_view details() const override;
 
 	  private:
 		// The description of the error.
-		std::string _description;
+		std::string description_str;
 		// The details of the error.
-		std::string _details;
+		std::string details_str;
 	};
 	// Error thrown when font bitmap rendering fails.
 	class ttfont_render_error : public exception {
 	  public:
 		// Constructs an exception.
-		ttfont_render_error(std::string_view description) noexcept;
+		ttfont_render_error(std::string_view description);
 
 		// Gets the name of the error.
-		std::string_view name() const noexcept override;
+		std::string_view name() const override;
 		// Gets the description of the error.
-		std::string_view description() const noexcept override;
+		std::string_view description() const override;
 		// Gets further details about the error.
-		std::string_view details() const noexcept override;
+		std::string_view details() const override;
 
 	  private:
 		// The details of the error.
-		std::string_view _description;
+		std::string_view description_str;
 	};
 
 	// Font style types. May be ORed together.
@@ -82,31 +82,31 @@ namespace tr {
 	class ttfont {
 	  public:
 		// Gets the ascent of the font.
-		int ascent() const noexcept;
+		int ascent() const;
 		// Gets the descent of the font.
-		int descent() const noexcept;
+		int descent() const;
 		// Gets the height of the font.
-		int height() const noexcept;
+		int height() const;
 		// Gets the distance between two lines.
-		int line_skip() const noexcept;
+		int line_skip() const;
 		// Gets whether the font contains a glyph.
-		bool contains(std::uint32_t glyph) const noexcept;
+		bool contains(std::uint32_t glyph) const;
 
 		// Resizes the font.
-		void resize(float size) noexcept;
+		void resize(float size);
 		// Sets the font style.
-		void set_style(ttf_style style) noexcept;
+		void set_style(ttf_style style);
 		// Sets the font outline.
-		void set_outline(int outline) noexcept;
+		void set_outline(int outline);
 
 		// Gets the metrics of a glyph given the current size, style, and outline.
 		glyph_metrics metrics(std::uint32_t glyph);
 		// Gets the kerning between two glyphs given the current size, style, and outline.
-		int kerning(std::uint32_t prev_glyph, std::uint32_t next_glyph) noexcept;
+		int kerning(std::uint32_t prev_glyph, std::uint32_t next_glyph);
 		// Measures the amount of text that will fit in a given width given the current size, style, and outline.
-		ttf_measure_result measure_text(std::string_view text, int max_w) const noexcept;
+		ttf_measure_result measure_text(std::string_view text, int max_w) const;
 		// Gets the drawn size of a string of text given the current size, style, and outline.
-		glm::ivec2 text_size(std::string_view text, int max_w = UNLIMITED_WIDTH) const noexcept;
+		glm::ivec2 text_size(std::string_view text, int max_w = UNLIMITED_WIDTH) const;
 
 		// Renders a glyph.
 		// May throw: ttfont_render_error.
@@ -117,13 +117,13 @@ namespace tr {
 
 	  private:
 		struct deleter {
-			void operator()(TTF_Font* ptr) const noexcept;
+			void operator()(TTF_Font* ptr) const;
 		};
 
 		// Handle to the SDL TTF font.
-		std::unique_ptr<TTF_Font, deleter> _impl;
+		std::unique_ptr<TTF_Font, deleter> ptr;
 
-		ttfont(TTF_Font* impl) noexcept;
+		ttfont(TTF_Font* ptr);
 
 		friend ttfont load_embedded_ttfont(std::span<const std::byte> data, float size);
 		friend ttfont load_ttfont_file(const std::filesystem::path& path, float size);

@@ -6,14 +6,14 @@ namespace tr {
 	class audio_file_open_error : public exception {
 	  public:
 		// Constructs an exception.
-		audio_file_open_error(std::string&& description) noexcept;
+		audio_file_open_error(std::string&& description);
 
 		// Gets the name of the error.
-		std::string_view name() const noexcept override;
+		std::string_view name() const override;
 		// Gets the description of the error.
-		std::string_view description() const noexcept override;
+		std::string_view description() const override;
 		// Gets further details about the error.
-		std::string_view details() const noexcept override;
+		std::string_view details() const override;
 
 	  private:
 		// The description of the error.

@@ -7,26 +7,29 @@ struct SDL_Window;
 struct SDL_GLContextState;
 
 namespace tr {
+	// Buffer allocated to be freed in case of an out-of-memory error.
+	inline std::unique_ptr<char[]> emergency_buffer{new char[16384]};
+
 	// The name of the application developer.
-	inline const char* _app_developer{nullptr};
+	inline const char* app_developer{nullptr};
 	// The name of the application.
-	inline const char* _app_name{nullptr};
+	inline const char* app_name{nullptr};
 
 	// Pointer to the SDL window.
 	inline SDL_Window* sdl_window{nullptr};
 	// Pointer to the SDL OpenGL context.
 	inline SDL_GLContextState* ogl_context{nullptr};
 	// Whether the OpenGL context is a debug one.
-	inline bool _debug_context{false};
+	inline bool debug_ogl_context{false};
 
 	// Tracks which units are allocated.
-	inline std::array<bool, 80> _tex_units;
+	inline std::array<bool, 80> texture_units;
 	// Tracks the texture bound to any given texture unit.
-	inline std::array<texture_ref, 80> _tex_unit_textures{};
+	inline std::array<texture_ref, 80> texure_unit_textures{};
 	// 2D vertex format.
-	inline std::optional<vertex_format> _vertex2_format;
+	inline std::optional<vertex_format> vertex2_format_;
 	// The current render target.
-	inline std::optional<render_target> _render_target;
+	inline std::optional<render_target> current_render_target;
 
 	// Alias for a list of free rects.
 	using _free_rect_list = std::forward_list<tr::irect2>;

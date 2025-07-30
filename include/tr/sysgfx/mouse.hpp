@@ -3,9 +3,6 @@
 
 namespace tr {
 	class cursor;
-	struct mouse_motion_event;
-	struct mouse_down_event;
-	struct mouse_up_event;
 
 	// Mouse buttons (may be ORed together).
 	enum class mouse_button : std::uint8_t {
@@ -19,14 +16,14 @@ namespace tr {
 	DEFINE_BITMASK_OPERATORS(mouse_button);
 
 	// Mouse functionality.
-	struct mouse {
+	namespace mouse {
 		// Sets whether relative mouse mode is enabled.
-		static bool set_relative_mode(bool relative) noexcept;
+		void set_relative_mode(bool relative);
 		// Sets whether the mouse is captured.
-		static bool set_captured(bool captured) noexcept;
+		void set_captured(bool captured);
 		// Sets whether the mouse cursor is visible.
-		static void show_cursor(bool show) noexcept;
+		void show_cursor(bool show);
 		// Sets the mouse cursor.
-		static void set_cursor(const cursor& cursor) noexcept;
-	};
+		void set_cursor(const cursor& cursor);
+	}; // namespace mouse
 } // namespace tr

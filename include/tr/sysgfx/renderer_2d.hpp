@@ -48,54 +48,54 @@ namespace tr {
 	};
 
 	// 2D renderer.
-	struct renderer_2d {
+	namespace renderer_2d {
 		// Initializes the 2D renderer.
-		static void initialize() noexcept;
+		void initialize();
 		// Shuts down the 2D renderer.
-		static void shut_down() noexcept;
+		void shut_down();
 
 		// Sets the default transformation matrix used by primitives on any layer without its own default transform.
-		static void set_default_transform(const glm::mat4& mat) noexcept;
+		void set_default_transform(const glm::mat4& mat);
 		// Sets the default texture used by textured primitives on a layer.
-		static void set_default_layer_texture(int layer, texture_ref texture) noexcept;
+		void set_default_layer_texture(int layer, texture_ref texture);
 		// Sets the default transformation matrix used by primitives on a layer.
-		static void set_default_layer_transform(int layer, const glm::mat4& mat) noexcept;
+		void set_default_layer_transform(int layer, const glm::mat4& mat);
 		// Sets the default blending mode used by primitives on a layer.
-		static void set_default_layer_blend_mode(int layer, const blend_mode& blend_mode) noexcept;
+		void set_default_layer_blend_mode(int layer, const blend_mode& blend_mode);
 
 		// Allocates a new color fan.
-		static simple_color_mesh_ref new_color_fan(int layer, std::size_t vertices);
+		simple_color_mesh_ref new_color_fan(int layer, std::size_t vertices);
 		// Allocates a new color fan.
-		static simple_color_mesh_ref new_color_fan(int layer, std::size_t vertices, const glm::mat4& mat, const blend_mode& blend_mode);
+		simple_color_mesh_ref new_color_fan(int layer, std::size_t vertices, const glm::mat4& mat, const blend_mode& blend_mode);
 		// Allocates a new color polygon outline.
-		static simple_color_mesh_ref new_color_outline(int layer, std::size_t vertices);
+		simple_color_mesh_ref new_color_outline(int layer, std::size_t vertices);
 		// Allocates a new color polygon outline.
-		static simple_color_mesh_ref new_color_outline(int layer, std::size_t vertices, const glm::mat4& mat, const blend_mode& blend_mode);
+		simple_color_mesh_ref new_color_outline(int layer, std::size_t vertices, const glm::mat4& mat, const blend_mode& blend_mode);
 		// Allocates a new color mesh.
-		static color_mesh_ref new_color_mesh(int layer, std::size_t vertices, std::size_t indices);
+		color_mesh_ref new_color_mesh(int layer, std::size_t vertices, std::size_t indices);
 		// Allocates a new color mesh.
-		static color_mesh_ref new_color_mesh(int layer, std::size_t vertices, std::size_t indices, const glm::mat4& mat,
-											 const blend_mode& blend_mode);
+		color_mesh_ref new_color_mesh(int layer, std::size_t vertices, std::size_t indices, const glm::mat4& mat,
+									  const blend_mode& blend_mode);
 		// Allocates a new textured fan.
-		static simple_textured_mesh_ref new_textured_fan(int layer, std::size_t vertices);
+		simple_textured_mesh_ref new_textured_fan(int layer, std::size_t vertices);
 		// Allocates a new textured fan.
-		static simple_textured_mesh_ref new_textured_fan(int layer, std::size_t vertices, texture_ref texture);
+		simple_textured_mesh_ref new_textured_fan(int layer, std::size_t vertices, texture_ref texture);
 		// Allocates a new textured fan.
-		static simple_textured_mesh_ref new_textured_fan(int layer, std::size_t vertices, texture_ref texture, const glm::mat4& mat,
-														 const blend_mode& blend_mode);
+		simple_textured_mesh_ref new_textured_fan(int layer, std::size_t vertices, texture_ref texture, const glm::mat4& mat,
+												  const blend_mode& blend_mode);
 		// Allocates a new textured mesh.
-		static textured_mesh_ref new_textured_mesh(int layer, std::size_t vertices, std::size_t indices);
+		textured_mesh_ref new_textured_mesh(int layer, std::size_t vertices, std::size_t indices);
 		// Allocates a new textured mesh.
-		static textured_mesh_ref new_textured_mesh(int layer, std::size_t vertices, std::size_t indices, texture_ref texture);
+		textured_mesh_ref new_textured_mesh(int layer, std::size_t vertices, std::size_t indices, texture_ref texture);
 		// Allocates a new textured mesh.
-		static textured_mesh_ref new_textured_mesh(int layer, std::size_t vertices, std::size_t indices, texture_ref texture,
-												   const glm::mat4& mat, const blend_mode& blend_mode);
+		textured_mesh_ref new_textured_mesh(int layer, std::size_t vertices, std::size_t indices, texture_ref texture, const glm::mat4& mat,
+											const blend_mode& blend_mode);
 
 		// Draws a layer to a rendering target.
-		static void draw_layer(int layer, const render_target& target = backbuffer::render_target());
+		void draw_layer(int layer, const render_target& target = backbuffer::render_target());
 		// Draws all layers of priority <= max_layer to a rendering target.
-		static void draw_up_to_layer(int max_layer, const render_target& target = backbuffer::render_target());
+		void draw_up_to_layer(int max_layer, const render_target& target = backbuffer::render_target());
 		// Draws all added primitives to a rendering target.
-		static void draw(const render_target& target = backbuffer::render_target());
-	};
+		void draw(const render_target& target = backbuffer::render_target());
+	}; // namespace renderer_2d
 } // namespace tr

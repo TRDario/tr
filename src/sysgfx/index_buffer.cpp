@@ -1,125 +1,119 @@
 #include "../../include/tr/sysgfx/index_buffer.hpp"
-#include "../../include/tr/sysgfx/dialog.hpp"
 #include "../../include/tr/sysgfx/gl_call.hpp"
 
-/********************************************** static_index_buffer **********************************************/
+/////////////////////////////////////////////////////////// STATIC INDEX BUFFER ///////////////////////////////////////////////////////////
 
-tr::static_index_buffer::static_index_buffer(std::span<const std::uint16_t> data) noexcept
-	: _size{ssize(data)}
+tr::static_index_buffer::static_index_buffer(std::span<const std::uint16_t> data)
+	: size{ssize(data)}
 {
-	unsigned int id;
-	TR_GL_CALL(glCreateBuffers, 1, &id);
-	_id.reset(id);
+	unsigned int temp;
+	TR_GL_CALL(glCreateBuffers, 1, &temp);
+	ibo.reset(temp);
 
-	TR_GL_CALL(glNamedBufferStorage, _id.get(), _size * sizeof(std::uint16_t), data.data(), 0);
+	TR_GL_CALL(glNamedBufferStorage, ibo.get(), size * sizeof(std::uint16_t), data.data(), 0);
 	if (glGetError() == GL_OUT_OF_MEMORY) {
-		terminate("Out of video memory", "Exception occurred while allocating an index buffer.");
+		throw out_of_memory{"index buffer allocation"};
 	}
 }
 
-void tr::static_index_buffer::deleter::operator()(unsigned int id) const noexcept
+void tr::static_index_buffer::deleter::operator()(unsigned int id) const
 {
 	TR_GL_CALL(glDeleteBuffers, 1, &id);
 }
 
-void tr::static_index_buffer::set_label(std::string_view label) noexcept
+void tr::static_index_buffer::set_label(std::string_view label)
 {
-	TR_GL_CALL(glObjectLabel, GL_BUFFER, _id.get(), static_cast<GLsizei>(label.size()), label.data());
+	TR_GL_CALL(glObjectLabel, GL_BUFFER, ibo.get(), static_cast<GLsizei>(label.size()), label.data());
 }
 
-/************************************************* dyn_index_buffer **************************************************/
+////////////////////////////////////////////////////////// DYNAMIC INDEX BUFFER ///////////////////////////////////////////////////////////
 
-tr::dyn_index_buffer::dyn_index_buffer() noexcept
-	: _size{0}, _capacity{0}
+tr::dyn_index_buffer::dyn_index_buffer()
+	: size_{0}, capacity_{0}
 {
-	unsigned int id;
-	TR_GL_CALL(glCreateBuffers, 1, &id);
-	_id.reset(id);
+	unsigned int temp;
+	TR_GL_CALL(glCreateBuffers, 1, &temp);
+	ibo.reset(temp);
 }
 
-void tr::dyn_index_buffer::deleter::operator()(unsigned int id) const noexcept
+void tr::dyn_index_buffer::deleter::operator()(unsigned int id) const
 {
 	TR_GL_CALL(glDeleteBuffers, 1, &id);
 }
 
-bool tr::dyn_index_buffer::empty() const noexcept
+bool tr::dyn_index_buffer::empty() const
 {
-	return _size == 0;
+	return size_ == 0;
 }
 
-std::size_t tr::dyn_index_buffer::size() const noexcept
+std::size_t tr::dyn_index_buffer::size() const
 {
-	return _size;
+	return size_;
 }
 
-std::size_t tr::dyn_index_buffer::capacity() const noexcept
+std::size_t tr::dyn_index_buffer::capacity() const
 {
-	return _capacity;
+	return capacity_;
 }
 
-void tr::dyn_index_buffer::clear() noexcept
+void tr::dyn_index_buffer::clear()
 {
-	_size = 0;
+	size_ = 0;
 }
 
-void tr::dyn_index_buffer::resize(std::size_t size) noexcept
+void tr::dyn_index_buffer::resize(std::size_t size)
 {
 	reserve(size);
-	_size = size;
+	size_ = size;
 }
 
-void tr::dyn_index_buffer::reserve(std::size_t capacity) noexcept
+void tr::dyn_index_buffer::reserve(std::size_t capacity)
 {
-	if (capacity > _capacity) {
+	if (capacity > capacity_) {
 		capacity = std::bit_ceil(capacity);
 
-		unsigned int id;
-		TR_GL_CALL(glCreateBuffers, 1, &id);
-		TR_GL_CALL(glDeleteBuffers, 1, &_id.get());
-		_id.reset(id);
-		if (!_label.empty()) {
-			TR_GL_CALL(glObjectLabel, GL_BUFFER, _id.get(), static_cast<GLsizei>(_label.size()), _label.data());
+		unsigned int temp;
+		TR_GL_CALL(glCreateBuffers, 1, &temp);
+		TR_GL_CALL(glDeleteBuffers, 1, &ibo.get());
+		ibo.reset(temp);
+		if (!label.empty()) {
+			TR_GL_CALL(glObjectLabel, GL_BUFFER, ibo.get(), static_cast<GLsizei>(label.size()), label.data());
 		}
 
-		TR_GL_CALL(glNamedBufferStorage, _id.get(), static_cast<GLsizei>(capacity * sizeof(std::uint16_t)), nullptr,
+		TR_GL_CALL(glNamedBufferStorage, ibo.get(), static_cast<GLsizei>(capacity * sizeof(std::uint16_t)), nullptr,
 				   GL_DYNAMIC_STORAGE_BIT);
 		if (glGetError() == GL_OUT_OF_MEMORY) {
-			terminate("Out of video memory", "Exception occurred while allocating an index buffer.");
+			throw out_of_memory{"index buffer allocation"};
 		}
-		_capacity = capacity;
+		capacity_ = capacity;
 	}
 	else {
-		TR_GL_CALL(glInvalidateBufferData, _id.get());
+		TR_GL_CALL(glInvalidateBufferData, ibo.get());
 	}
-	_size = 0;
+	size_ = 0;
 }
 
-void tr::dyn_index_buffer::set_region(std::size_t offset, std::span<const std::uint16_t> data) noexcept
+void tr::dyn_index_buffer::set_region(std::size_t offset, std::span<const std::uint16_t> data)
 {
-	TR_ASSERT(offset + ssize(data) <= _size, "Tried to set out-of-bounds region [{}, {}) in an index buffer of size {}.", offset,
-			  offset + ssize(data), _size);
+	TR_ASSERT(offset + ssize(data) <= size_, "Tried to set out-of-bounds region [{}, {}) in an index buffer of size {}.", offset,
+			  offset + ssize(data), size_);
 
-	TR_GL_CALL(glNamedBufferSubData, _id.get(), offset * sizeof(std::uint16_t), ssize(data) * sizeof(std::uint16_t), data.data());
+	TR_GL_CALL(glNamedBufferSubData, ibo.get(), offset * sizeof(std::uint16_t), ssize(data) * sizeof(std::uint16_t), data.data());
 }
 
-void tr::dyn_index_buffer::set(std::span<const std::uint16_t> data) noexcept
+void tr::dyn_index_buffer::set(std::span<const std::uint16_t> data)
 {
 	resize(data.size());
 	set_region(0, data);
 }
 
-void tr::dyn_index_buffer::set_label(const std::string& label) noexcept
+void tr::dyn_index_buffer::set_label(const std::string& label)
 {
-	try {
-		set_label(std::string{label});
-	}
-	catch (std::bad_alloc&) {
-		terminate("Out of memory", "Exception occurred while setting an index buffer label.");
-	}
+	set_label(std::string{label});
 }
 
-void tr::dyn_index_buffer::set_label(std::string&& label) noexcept
+void tr::dyn_index_buffer::set_label(std::string&& new_label)
 {
-	_label = std::move(label);
-	TR_GL_CALL(glObjectLabel, GL_BUFFER, _id.get(), static_cast<GLsizei>(_label.size()), _label.data());
+	label = std::move(new_label);
+	TR_GL_CALL(glObjectLabel, GL_BUFFER, ibo.get(), static_cast<GLsizei>(label.size()), label.data());
 }

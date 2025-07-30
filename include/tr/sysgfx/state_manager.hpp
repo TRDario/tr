@@ -12,7 +12,7 @@ namespace tr {
 		virtual ~state() = default;
 
 		// Gets the type of the state.
-		virtual std::uint32_t type() const noexcept;
+		virtual std::uint32_t type() const;
 		// Handles an event.
 		// Returning nullptr mains the current state, drop_state will drop the current state, any other pointer will replace the state.
 		virtual std::unique_ptr<state> handle_event(const event& event) = 0;
@@ -25,10 +25,10 @@ namespace tr {
 
 	// Sentinel state thats tells the state manager to drop the current state when returned from a state operation.
 	struct drop_state : state {
-		std::uint32_t type() const noexcept override;
-		std::unique_ptr<state> handle_event(const event&) noexcept override;
-		std::unique_ptr<state> update(duration) noexcept override;
-		void draw() noexcept override;
+		std::uint32_t type() const override;
+		std::unique_ptr<state> handle_event(const event&) override;
+		std::unique_ptr<state> update(duration) override;
+		void draw() override;
 	};
 
 	// Game state manager.
@@ -38,12 +38,12 @@ namespace tr {
 		std::unique_ptr<state> state;
 
 		// Constructs a state manager.
-		state_manager(std::unique_ptr<tr::state>&& state = nullptr) noexcept;
+		state_manager(std::unique_ptr<tr::state>&& state = nullptr);
 
 		// Gets the benchmark that measures update time.
-		const benchmark& update_benchmark() const noexcept;
+		const benchmark& update_benchmark() const;
 		// Gets the benchmark that measures drawing time.
-		const benchmark& draw_benchmark() const noexcept;
+		const benchmark& draw_benchmark() const;
 
 		// Passes an event to the held state.
 		void handle_event(const event& event);
@@ -56,9 +56,9 @@ namespace tr {
 
 	  private:
 		// Benchmark measuring the update times.
-		benchmark _update_benchmark;
+		benchmark update_bench;
 		// Benchmark measuring the drawing times.
-		benchmark _draw_benchmark;
+		benchmark draw_bench;
 	};
 } // namespace tr
 

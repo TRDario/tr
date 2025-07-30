@@ -1,4 +1,5 @@
 #pragma once
+#include "exception.hpp"
 #include "ranges.hpp"
 
 namespace tr {

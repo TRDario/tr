@@ -39,7 +39,7 @@ namespace tr {
 		// The multiplier used for the destination alpha.
 		blend_multiplier alpha_dst;
 
-		friend bool operator==(const blend_mode& l, const blend_mode& r) noexcept = default;
+		friend bool operator==(const blend_mode& l, const blend_mode& r) = default;
 	};
 
 	// Alpha blending mode.

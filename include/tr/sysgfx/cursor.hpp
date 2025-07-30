@@ -6,6 +6,10 @@ struct SDL_Cursor;
 namespace tr {
 	class bitmap;
 	class bitmap_view;
+	class cursor;
+	namespace mouse {
+		void set_cursor(const cursor& cursor);
+	}
 
 	// System mouse cursor icons.
 	enum class sys_cursor {
@@ -27,35 +31,35 @@ namespace tr {
 	class cursor {
 	  public:
 		// Creates the default mouse cursor.
-		cursor() noexcept;
+		cursor();
 		// Creates a system cursor.
-		cursor(sys_cursor icon) noexcept;
+		cursor(sys_cursor icon);
 		// Creates a cursor from a bitmap.
-		cursor(const bitmap& bitmap, glm::ivec2 focus) noexcept;
+		cursor(const bitmap& bitmap, glm::ivec2 focus);
 		// Creates a cursor from a bitmap view.
-		cursor(const bitmap_view& view, glm::ivec2 focus) noexcept;
+		cursor(const bitmap_view& view, glm::ivec2 focus);
 		// Creates a simple black-and-white cursor from color and mask bitfields.
-		cursor(std::span<const std::byte> color, std::span<const std::byte> mask, glm::ivec2 size, glm::ivec2 focus) noexcept;
+		cursor(std::span<const std::byte> color, std::span<const std::byte> mask, glm::ivec2 size, glm::ivec2 focus);
 		// Creates a simple black-and-white cursor from color and mask bitfields.
 		template <std::ranges::contiguous_range R1, std::ranges::contiguous_range R2>
-		cursor(R1&& color, R2&& mask, glm::ivec2 size, glm::ivec2 focus) noexcept;
+		cursor(R1&& color, R2&& mask, glm::ivec2 size, glm::ivec2 focus);
 
 	  private:
 		struct deleter {
-			void operator()(SDL_Cursor* ptr) const noexcept;
+			void operator()(SDL_Cursor* ptr) const;
 		};
 
 		// Handle to the SDL cursor.
-		std::unique_ptr<SDL_Cursor, deleter> _impl;
+		std::unique_ptr<SDL_Cursor, deleter> ptr;
 
-		friend struct mouse;
+		friend void mouse::set_cursor(const cursor& cursor);
 	};
 } // namespace tr
 
 ///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
 
 template <std::ranges::contiguous_range R1, std::ranges::contiguous_range R2>
-tr::cursor::cursor(R1&& color, R2&& mask, glm::ivec2 size, glm::ivec2 focus) noexcept
+tr::cursor::cursor(R1&& color, R2&& mask, glm::ivec2 size, glm::ivec2 focus)
 	: cursor{range_bytes(color), range_bytes(mask), size, focus}
 {
 }

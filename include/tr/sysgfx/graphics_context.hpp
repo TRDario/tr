@@ -13,7 +13,7 @@ namespace tr {
 	// The ID used to represent no particular renderer being used.
 	inline constexpr std::uint32_t NO_RENDERER{0};
 	// Allocates a fresh renderer ID.
-	std::uint32_t alloc_renderer_id() noexcept;
+	std::uint32_t alloc_renderer_id();
 
 	// Rendering primitives.
 	enum class primitive {
@@ -27,65 +27,61 @@ namespace tr {
 	};
 
 	// Direct graphics context access.
-	struct gfx_context {
+	namespace gfx_context {
 		// The graphics context log.
-		static inline logger log{"gl"};
+		inline logger log{"gl"};
 
 		// Gets whether the context is a debug context.
-		static bool debug() noexcept;
+		bool debug();
 
 		// Sets the active render target.
-		static void set_render_target(const render_target& target) noexcept;
+		void set_render_target(const render_target& target);
 		// Resets the active render target.
-		static void reset_render_target() noexcept;
+		void reset_render_target();
 		// Sets the active shader pipeline.
-		static void set_shader_pipeline(const shader_pipeline& pipeline) noexcept;
+		void set_shader_pipeline(const shader_pipeline& pipeline);
 		// Sets the active blending mode.
-		static void set_blend_mode(const blend_mode& blend_mode) noexcept;
+		void set_blend_mode(const blend_mode& blend_mode);
 		// Sets the active vertex format.
-		static void set_vertex_format(const vertex_format& format) noexcept;
+		void set_vertex_format(const vertex_format& format);
 		// Sets an active vertex buffer.
-		static void set_vertex_buffer(const basic_static_vertex_buffer& buffer, int slot, std::intptr_t offset,
-									  std::size_t stride) noexcept;
+		void set_vertex_buffer(const basic_static_vertex_buffer& buffer, int slot, std::intptr_t offset, std::size_t stride);
 		// Sets an active vertex buffer.
-		template <standard_layout T>
-		static void set_vertex_buffer(const static_vertex_buffer<T>& buffer, int slot, std::intptr_t offset) noexcept;
+		template <standard_layout T> void set_vertex_buffer(const static_vertex_buffer<T>& buffer, int slot, std::intptr_t offset);
 		// Sets an active vertex buffer.
-		static void set_vertex_buffer(const basic_dyn_vertex_buffer& buffer, int slot, std::intptr_t offset, std::size_t stride) noexcept;
+		void set_vertex_buffer(const basic_dyn_vertex_buffer& buffer, int slot, std::intptr_t offset, std::size_t stride);
 		// // Sets an active vertex buffer.
-		template <standard_layout T>
-		static void set_vertex_buffer(const dyn_vertex_buffer<T>& buffer, int slot, std::intptr_t offset) noexcept;
+		template <standard_layout T> void set_vertex_buffer(const dyn_vertex_buffer<T>& buffer, int slot, std::intptr_t offset);
 		// Sets the active index buffer.
-		static void set_index_buffer(const static_index_buffer& buffer) noexcept;
+		void set_index_buffer(const static_index_buffer& buffer);
 		// Sets the active index buffer.
-		static void set_index_buffer(const dyn_index_buffer& buffer) noexcept;
+		void set_index_buffer(const dyn_index_buffer& buffer);
 
 		// Gets the ID of the currently set renderer.
-		static std::uint32_t current_renderer() noexcept;
+		std::uint32_t current_renderer();
 		// Sets the renderer ID.
-		static void set_renderer(std::uint32_t id) noexcept;
+		void set_renderer(std::uint32_t id);
 
 		// Draws a mesh from a vertex buffer.
-		static void draw(primitive type, std::size_t offset, std::size_t vertices) noexcept;
+		void draw(primitive type, std::size_t offset, std::size_t vertices);
 		// Draws an instanced mesh from a vertex buffer.
-		static void draw_instances(primitive type, std::size_t offset, std::size_t vertices, int instances) noexcept;
+		void draw_instances(primitive type, std::size_t offset, std::size_t vertices, int instances);
 		// Draws an indexed mesh.
-		static void draw_indexed(primitive type, std::size_t offset, std::size_t indices) noexcept;
+		void draw_indexed(primitive type, std::size_t offset, std::size_t indices);
 		// Draws an instanced indexed mesh.
-		static void draw_indexed_instances(primitive type, std::size_t offset, std::size_t indices, int instances) noexcept;
-	};
+		void draw_indexed_instances(primitive type, std::size_t offset, std::size_t indices, int instances);
+	}; // namespace gfx_context
 } // namespace tr
 
 ///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
 
 template <tr::standard_layout T>
-void tr::gfx_context::set_vertex_buffer(const static_vertex_buffer<T>& buffer, int slot, std::intptr_t offset) noexcept
+void tr::gfx_context::set_vertex_buffer(const static_vertex_buffer<T>& buffer, int slot, std::intptr_t offset)
 {
 	set_vertex_buffer(buffer, slot, offset * sizeof(T), sizeof(T));
 }
 
-template <tr::standard_layout T>
-void tr::gfx_context::set_vertex_buffer(const dyn_vertex_buffer<T>& buffer, int slot, std::intptr_t offset) noexcept
+template <tr::standard_layout T> void tr::gfx_context::set_vertex_buffer(const dyn_vertex_buffer<T>& buffer, int slot, std::intptr_t offset)
 {
 	set_vertex_buffer(buffer, slot, offset * sizeof(T), sizeof(T));
 }

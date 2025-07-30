@@ -1,5 +1,13 @@
 #pragma once
+#include "macro.hpp"
 #include "static_string.hpp"
+
+template <std::size_t S>
+constexpr tr::static_string<S>::static_string(size_type size, char chr)
+	: size_{size}
+{
+	std::fill(begin(), end(), chr);
+}
 
 template <std::size_t S>
 template <std::size_t S1>

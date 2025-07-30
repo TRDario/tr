@@ -18,46 +18,41 @@ namespace tr {
 	}};
 
 	// File dialog callback context.
-	struct _file_dialog_context {
+	struct file_dialog_context {
 		// List of selected file paths.
 		std::vector<std::filesystem::path> paths;
 		// Whether the dialog is done.
 		bool done{false};
 	};
 	// The file dialog callback function.
-	void _file_dialog_callback(void* userdata, const char* const* files, int) noexcept;
+	void file_dialog_callback(void* userdata, const char* const* files, int);
 
 	// Base open file dialog function.
-	std::vector<std::filesystem::path> _show_open_file_dialog(std::span<const dialog_filter> filters, const char* default_path,
-															  bool allow_multiple);
+	std::vector<std::filesystem::path> show_open_file_dialog(std::span<const dialog_filter> filters, const char* default_path,
+															 bool allow_multiple);
 	// Base open folder dialog function.
-	std::vector<std::filesystem::path> _show_open_folder_dialog(const char* default_path, bool allow_multiple);
+	std::vector<std::filesystem::path> show_open_folder_dialog(const char* default_path, bool allow_multiple);
 
 } // namespace tr
 
-void tr::_file_dialog_callback(void* userdata, const char* const* files, int) noexcept
+void tr::file_dialog_callback(void* userdata, const char* const* files, int)
 {
-	_file_dialog_context& context{*static_cast<_file_dialog_context*>(userdata)};
+	file_dialog_context& context{*static_cast<file_dialog_context*>(userdata)};
 	if (files != nullptr) {
 		while (*files != nullptr) {
-			try {
-				context.paths.emplace_back(*files++);
-			}
-			catch (std::bad_alloc&) {
-				terminate("Out of memory", "Exception occurred while allocating a file path.");
-			}
+			context.paths.emplace_back(*files++);
 		}
 	}
 	context.done = true;
 }
 
-std::vector<std::filesystem::path> tr::_show_open_file_dialog(std::span<const dialog_filter> filters, const char* default_path,
-															  bool allow_multiple)
+std::vector<std::filesystem::path> tr::show_open_file_dialog(std::span<const dialog_filter> filters, const char* default_path,
+															 bool allow_multiple)
 {
 	TR_ASSERT(SDL_WasInit(0), "Tried to open a file dialog before initializing the application.");
 
-	_file_dialog_context ctx{};
-	SDL_ShowOpenFileDialog(_file_dialog_callback, &ctx, nullptr, reinterpret_cast<const SDL_DialogFileFilter*>(filters.data()),
+	file_dialog_context ctx{};
+	SDL_ShowOpenFileDialog(file_dialog_callback, &ctx, nullptr, reinterpret_cast<const SDL_DialogFileFilter*>(filters.data()),
 						   static_cast<int>(filters.size()), default_path, allow_multiple);
 	while (!ctx.done) {
 		SDL_PumpEvents();
@@ -66,12 +61,12 @@ std::vector<std::filesystem::path> tr::_show_open_file_dialog(std::span<const di
 	return std::move(ctx.paths);
 }
 
-std::vector<std::filesystem::path> tr::_show_open_folder_dialog(const char* default_path, bool allow_multiple)
+std::vector<std::filesystem::path> tr::show_open_folder_dialog(const char* default_path, bool allow_multiple)
 {
 	TR_ASSERT(SDL_WasInit(0), "Tried to open a folder dialog before initializing the application.");
 
-	_file_dialog_context ctx{};
-	SDL_ShowOpenFolderDialog(_file_dialog_callback, &ctx, nullptr, default_path, allow_multiple);
+	file_dialog_context ctx{};
+	SDL_ShowOpenFolderDialog(file_dialog_callback, &ctx, nullptr, default_path, allow_multiple);
 	while (!ctx.done) {
 		SDL_PumpEvents();
 		std::this_thread::sleep_for(10ms);
@@ -79,7 +74,7 @@ std::vector<std::filesystem::path> tr::_show_open_folder_dialog(const char* defa
 	return std::move(ctx.paths);
 }
 
-tr::msg_button tr::show_message_box(msg_box_type type, msg_buttons buttons, const char* title, const char* message) noexcept
+tr::msg_button tr::show_message_box(msg_box_type type, msg_buttons buttons, const char* title, const char* message)
 {
 	const SDL_MessageBoxFlags flags{static_cast<SDL_MessageBoxFlags>(type)};
 
@@ -104,101 +99,68 @@ tr::msg_button tr::show_message_box(msg_box_type type, msg_buttons buttons, cons
 	}
 }
 
-void tr::show_fatal_error_message_box(const exception& exception) noexcept
+void tr::show_fatal_error_message_box(const std::exception& exception)
 {
-	try {
-		std::string message{std::format("A fatal error has occurred ({}).", exception.name())};
-		const std::string_view description{exception.description()};
+	if (dynamic_cast<const std::bad_alloc*>(&exception) || dynamic_cast<const out_of_memory*>(&exception)) {
+		emergency_buffer.reset();
+	}
+
+	const std::string title{app_name != nullptr ? std::format("{} - Fatal Error", app_name) : "Fatal Error"};
+
+	const tr::exception* tr_exception{dynamic_cast<const tr::exception*>(&exception)};
+	std::string message;
+	if (tr_exception) {
+		message = std::format("A fatal error has occurred ({}).", tr_exception->name());
+		const std::string_view description{tr_exception->description()};
 		if (!description.empty()) {
 			message.push_back('\n');
 			message.append(description);
 		}
-		const std::string_view details{exception.details()};
+		const std::string_view details{tr_exception->details()};
 		if (!details.empty()) {
 			message.push_back('\n');
 			message.append(details);
 		}
-		message.append("\nPress OK to exit the application.");
-		const std::string title{_app_name != nullptr ? std::format("{} - Fatal Error", _app_name) : "Fatal Error"};
-		show_message_box(msg_box_type::ERROR, msg_buttons::OK, title.c_str(), message.c_str());
+		TR_LOG(log, tr::severity::FATAL, *tr_exception);
 	}
-	catch (std::bad_alloc&) {
-		terminate("Out of memory", "Exception occurred while creating a fatal error message box.");
+	else {
+		message = std::format("A fatal error has occurred ({}).", exception.what());
+		TR_LOG(log, tr::severity::FATAL, exception);
 	}
-}
-
-void tr::show_fatal_error_message_box(const std::exception& exception) noexcept
-{
-	try {
-		std::string message{std::format("A fatal error has occurred ({}).\nPress OK to exit the application.", exception.what())};
-		const std::string title{_app_name != nullptr ? std::format("{} - Fatal Error", _app_name) : "Fatal Error"};
-		show_message_box(msg_box_type::ERROR, msg_buttons::OK, title.c_str(), message.c_str());
-	}
-	catch (std::bad_alloc&) {
-		terminate("Out of memory", "Exception occurred while creating a fatal error message box.");
-	}
+	message.append("\nPress OK to exit the application.");
+	show_message_box(msg_box_type::ERROR, msg_buttons::OK, title.c_str(), message.c_str());
 }
 
 std::filesystem::path tr::show_open_file_dialog(std::span<const dialog_filter> filters, const char* default_path)
 {
-	std::vector<std::filesystem::path> vec{_show_open_file_dialog(filters, default_path, false)};
+	std::vector<std::filesystem::path> vec{show_open_file_dialog(filters, default_path, false)};
 	return vec.empty() ? std::filesystem::path{} : std::move(vec.front());
 }
 
 std::vector<std::filesystem::path> tr::show_open_files_dialog(std::span<const dialog_filter> filters, const char* default_path)
 {
-	return _show_open_file_dialog(filters, default_path, true);
+	return show_open_file_dialog(filters, default_path, true);
 }
 
 std::filesystem::path tr::show_open_folder_dialog(const char* default_path)
 {
-	std::vector<std::filesystem::path> vec{_show_open_folder_dialog(default_path, false)};
+	std::vector<std::filesystem::path> vec{show_open_folder_dialog(default_path, false)};
 	return vec.empty() ? std::filesystem::path{} : std::move(vec.front());
 }
 
 std::vector<std::filesystem::path> tr::show_open_folders_dialog(const char* default_path)
 {
-	return _show_open_folder_dialog(default_path, true);
+	return show_open_folder_dialog(default_path, true);
 }
 
 std::filesystem::path tr::show_save_file_dialog(std::span<const dialog_filter> filters, const char* default_path)
 {
-	_file_dialog_context ctx{};
-	SDL_ShowSaveFileDialog(_file_dialog_callback, &ctx, nullptr, reinterpret_cast<const SDL_DialogFileFilter*>(filters.data()),
+	file_dialog_context ctx{};
+	SDL_ShowSaveFileDialog(file_dialog_callback, &ctx, nullptr, reinterpret_cast<const SDL_DialogFileFilter*>(filters.data()),
 						   static_cast<int>(filters.size()), default_path);
 	while (!ctx.done) {
 		SDL_PumpEvents();
 		std::this_thread::sleep_for(10ms);
 	}
 	return ctx.paths.empty() ? std::filesystem::path{} : std::move(ctx.paths.front());
-}
-
-void tr::terminate(std::string_view reason, std::string_view description, std::string_view details) noexcept
-{
-	try {
-		TR_LOG(log, severity::FATAL, "{}, terminating.", reason);
-		if (!description.empty()) {
-			TR_LOG_CONTINUE(log, "{}", description);
-		}
-		if (!details.empty()) {
-			TR_LOG_CONTINUE(log, "{}", details);
-		}
-
-		std::string message{std::format("A fatal error has occurred ({}).", reason)};
-		if (!description.empty()) {
-			message.push_back('\n');
-			message.append(description);
-		}
-		if (!details.empty()) {
-			message.push_back('\n');
-			message.append(details);
-		}
-		message.append("\nPress OK to exit the application.");
-		const std::string title{_app_name != nullptr ? std::format("{} - Fatal Error", _app_name) : "Fatal Error"};
-		show_message_box(msg_box_type::ERROR, msg_buttons::OK, title.c_str(), message.c_str());
-		std::abort();
-	}
-	catch (std::bad_alloc&) {
-		std::abort();
-	}
 }

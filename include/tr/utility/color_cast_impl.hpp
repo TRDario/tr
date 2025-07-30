@@ -4,15 +4,15 @@
 #include "norm_cast.hpp"
 
 namespace tr {
-	consteval std::size_t umax(std::uint8_t bits) noexcept;
+	consteval std::size_t umax(std::uint8_t bits);
 }
 
-consteval std::size_t tr::umax(std::uint8_t bits) noexcept
+consteval std::size_t tr::umax(std::uint8_t bits)
 {
 	return (std::size_t{1} << bits) - 1;
 }
 
-template <tr::built_in_color To, tr::specialization_of<tr::r> From> constexpr To tr::color_cast(const From& from) noexcept
+template <tr::built_in_color To, tr::specialization_of<tr::r> From> constexpr To tr::color_cast(const From& from)
 {
 	if constexpr (specialization_of<To, g> || specialization_of<To, b>) {
 		return {0};
@@ -102,7 +102,7 @@ template <tr::built_in_color To, tr::specialization_of<tr::r> From> constexpr To
 	}
 }
 
-template <tr::built_in_color To, tr::specialization_of<tr::g> From> constexpr To tr::color_cast(const From& from) noexcept
+template <tr::built_in_color To, tr::specialization_of<tr::g> From> constexpr To tr::color_cast(const From& from)
 {
 	if constexpr (specialization_of<To, r> || specialization_of<To, b>) {
 		return {0};
@@ -189,7 +189,7 @@ template <tr::built_in_color To, tr::specialization_of<tr::g> From> constexpr To
 	}
 }
 
-template <tr::built_in_color To, tr::specialization_of<tr::b> From> constexpr To tr::color_cast(const From& from) noexcept
+template <tr::built_in_color To, tr::specialization_of<tr::b> From> constexpr To tr::color_cast(const From& from)
 {
 	if constexpr (specialization_of<To, r> || specialization_of<To, g> || specialization_of<To, rg>) {
 		return {0};
@@ -276,7 +276,7 @@ template <tr::built_in_color To, tr::specialization_of<tr::b> From> constexpr To
 	}
 }
 
-template <tr::built_in_color To, tr::specialization_of<tr::rg> From> constexpr To tr::color_cast(const From& from) noexcept
+template <tr::built_in_color To, tr::specialization_of<tr::rg> From> constexpr To tr::color_cast(const From& from)
 {
 	if constexpr (specialization_of<To, b>) {
 		return {0};
@@ -379,7 +379,7 @@ template <tr::built_in_color To, tr::specialization_of<tr::rg> From> constexpr T
 
 template <tr::built_in_color To, class From>
 	requires tr::specialization_of<From, tr::rgb> || tr::specialization_of<From, tr::bgr>
-constexpr To tr::color_cast(const From& from) noexcept
+constexpr To tr::color_cast(const From& from)
 {
 	using T = decltype(To::r);
 	constexpr std::uint32_t UI32_MAX{std::numeric_limits<std::uint32_t>::max()};
@@ -486,7 +486,7 @@ constexpr To tr::color_cast(const From& from) noexcept
 
 template <tr::built_in_color To, class From>
 	requires tr::specialization_of<From, tr::rgba> || tr::specialization_of<From, tr::bgra>
-constexpr To tr::color_cast(const From& from) noexcept
+constexpr To tr::color_cast(const From& from)
 {
 	using T = decltype(To::r);
 	constexpr std::uint32_t UI32_MAX{std::numeric_limits<std::uint32_t>::max()};
@@ -603,7 +603,7 @@ constexpr To tr::color_cast(const From& from) noexcept
 	}
 }
 
-template <tr::built_in_color To> constexpr To tr::color_cast(const rgb8_223& from) noexcept
+template <tr::built_in_color To> constexpr To tr::color_cast(const rgb8_223& from)
 {
 	if constexpr (std::same_as<To, rgb8>) {
 		return {
@@ -617,7 +617,7 @@ template <tr::built_in_color To> constexpr To tr::color_cast(const rgb8_223& fro
 	}
 }
 
-template <tr::built_in_color To> constexpr To tr::color_cast(const rgb16_565& from) noexcept
+template <tr::built_in_color To> constexpr To tr::color_cast(const rgb16_565& from)
 {
 	if constexpr (std::same_as<To, rgb8>) {
 		return {
@@ -631,7 +631,7 @@ template <tr::built_in_color To> constexpr To tr::color_cast(const rgb16_565& fr
 	}
 }
 
-template <tr::built_in_color To> constexpr To tr::color_cast(const bgr8_332& from) noexcept
+template <tr::built_in_color To> constexpr To tr::color_cast(const bgr8_332& from)
 {
 	if constexpr (std::same_as<To, rgb8>) {
 		return {
@@ -645,7 +645,7 @@ template <tr::built_in_color To> constexpr To tr::color_cast(const bgr8_332& fro
 	}
 }
 
-template <tr::built_in_color To> constexpr To tr::color_cast(const bgr16_565& from) noexcept
+template <tr::built_in_color To> constexpr To tr::color_cast(const bgr16_565& from)
 {
 	if constexpr (std::same_as<To, rgb8>) {
 		return {
@@ -659,7 +659,7 @@ template <tr::built_in_color To> constexpr To tr::color_cast(const bgr16_565& fr
 	}
 }
 
-template <tr::built_in_color To> constexpr To tr::color_cast(const rgba16_4444& from) noexcept
+template <tr::built_in_color To> constexpr To tr::color_cast(const rgba16_4444& from)
 {
 	if constexpr (std::same_as<To, rgba<std::uint8_t>>) {
 		return {static_cast<std::uint8_t>(from.r * 255 / umax(4)), static_cast<std::uint8_t>(from.g * 255 / umax(4)),
@@ -670,7 +670,7 @@ template <tr::built_in_color To> constexpr To tr::color_cast(const rgba16_4444& 
 	}
 }
 
-template <tr::built_in_color To> constexpr To tr::color_cast(const rgba16_5551& from) noexcept
+template <tr::built_in_color To> constexpr To tr::color_cast(const rgba16_5551& from)
 {
 	if constexpr (std::same_as<To, rgba<std::uint8_t>>) {
 		return {static_cast<std::uint8_t>(from.r * 255 / umax(5)), static_cast<std::uint8_t>(from.g * 255 / umax(5)),
@@ -681,7 +681,7 @@ template <tr::built_in_color To> constexpr To tr::color_cast(const rgba16_5551& 
 	}
 }
 
-template <tr::built_in_color To> constexpr To tr::color_cast(const rgba32_1010102& from) noexcept
+template <tr::built_in_color To> constexpr To tr::color_cast(const rgba32_1010102& from)
 {
 	if constexpr (std::same_as<To, rgba<std::uint16_t>>) {
 		return {static_cast<std::uint16_t>(from.r * 65535 / umax(10)), static_cast<std::uint16_t>(from.g * 65535 / umax(10)),
@@ -692,7 +692,7 @@ template <tr::built_in_color To> constexpr To tr::color_cast(const rgba32_101010
 	}
 }
 
-template <tr::built_in_color To> constexpr To tr::color_cast(const abgr16_4444& from) noexcept
+template <tr::built_in_color To> constexpr To tr::color_cast(const abgr16_4444& from)
 {
 	if constexpr (std::same_as<To, rgba<std::uint8_t>>) {
 		return {static_cast<std::uint8_t>(from.r * 255 / umax(4)), static_cast<std::uint8_t>(from.g * 255 / umax(4)),
@@ -703,7 +703,7 @@ template <tr::built_in_color To> constexpr To tr::color_cast(const abgr16_4444& 
 	}
 }
 
-template <tr::built_in_color To> constexpr To tr::color_cast(const abgr16_1555& from) noexcept
+template <tr::built_in_color To> constexpr To tr::color_cast(const abgr16_1555& from)
 {
 	if constexpr (std::same_as<To, rgba<std::uint8_t>>) {
 		return {static_cast<std::uint8_t>(from.r * 255 / umax(5)), static_cast<std::uint8_t>(from.g * 255 / umax(5)),
@@ -714,7 +714,7 @@ template <tr::built_in_color To> constexpr To tr::color_cast(const abgr16_1555& 
 	}
 }
 
-template <tr::built_in_color To> constexpr To tr::color_cast(const abgr32_2101010& from) noexcept
+template <tr::built_in_color To> constexpr To tr::color_cast(const abgr32_2101010& from)
 {
 	if constexpr (std::same_as<To, rgba<std::uint16_t>>) {
 		return {static_cast<std::uint16_t>(from.r * 65535 / umax(10)), static_cast<std::uint16_t>(from.g * 65535 / umax(10)),
@@ -725,7 +725,7 @@ template <tr::built_in_color To> constexpr To tr::color_cast(const abgr32_210101
 	}
 }
 
-template <tr::built_in_color To> constexpr To tr::color_cast(const bgra16_4444& from) noexcept
+template <tr::built_in_color To> constexpr To tr::color_cast(const bgra16_4444& from)
 {
 	if constexpr (std::same_as<To, rgba<std::uint8_t>>) {
 		return {static_cast<std::uint8_t>(from.r * 255 / umax(4)), static_cast<std::uint8_t>(from.g * 255 / umax(4)),
@@ -736,7 +736,7 @@ template <tr::built_in_color To> constexpr To tr::color_cast(const bgra16_4444& 
 	}
 }
 
-template <tr::built_in_color To> constexpr To tr::color_cast(const bgra16_5551& from) noexcept
+template <tr::built_in_color To> constexpr To tr::color_cast(const bgra16_5551& from)
 {
 	if constexpr (std::same_as<To, rgba<std::uint8_t>>) {
 		return {static_cast<std::uint8_t>(from.r * 255 / umax(5)), static_cast<std::uint8_t>(from.g * 255 / umax(5)),
@@ -747,7 +747,7 @@ template <tr::built_in_color To> constexpr To tr::color_cast(const bgra16_5551& 
 	}
 }
 
-template <tr::built_in_color To> constexpr To tr::color_cast(const bgra32_1010102& from) noexcept
+template <tr::built_in_color To> constexpr To tr::color_cast(const bgra32_1010102& from)
 {
 	if constexpr (std::same_as<To, rgba<std::uint16_t>>) {
 		return {static_cast<std::uint16_t>(from.r * 65535 / umax(10)), static_cast<std::uint16_t>(from.g * 65535 / umax(10)),
@@ -758,7 +758,7 @@ template <tr::built_in_color To> constexpr To tr::color_cast(const bgra32_101010
 	}
 }
 
-template <tr::built_in_color To> constexpr To tr::color_cast(const argb16_4444& from) noexcept
+template <tr::built_in_color To> constexpr To tr::color_cast(const argb16_4444& from)
 {
 	if constexpr (std::same_as<To, rgba<std::uint8_t>>) {
 		return {static_cast<std::uint8_t>(from.r * 255 / umax(4)), static_cast<std::uint8_t>(from.g * 255 / umax(4)),
@@ -769,7 +769,7 @@ template <tr::built_in_color To> constexpr To tr::color_cast(const argb16_4444& 
 	}
 }
 
-template <tr::built_in_color To> constexpr To tr::color_cast(const argb16_1555& from) noexcept
+template <tr::built_in_color To> constexpr To tr::color_cast(const argb16_1555& from)
 {
 	if constexpr (std::same_as<To, rgba<std::uint8_t>>) {
 		return {static_cast<std::uint8_t>(from.r * 255 / umax(5)), static_cast<std::uint8_t>(from.g * 255 / umax(5)),
@@ -780,7 +780,7 @@ template <tr::built_in_color To> constexpr To tr::color_cast(const argb16_1555& 
 	}
 }
 
-template <tr::built_in_color To> constexpr To tr::color_cast(const argb32_2101010& from) noexcept
+template <tr::built_in_color To> constexpr To tr::color_cast(const argb32_2101010& from)
 {
 	if constexpr (std::same_as<To, rgba<std::uint16_t>>) {
 		return {static_cast<std::uint16_t>(from.r * 65535 / umax(10)), static_cast<std::uint16_t>(from.g * 65535 / umax(10)),
@@ -791,7 +791,7 @@ template <tr::built_in_color To> constexpr To tr::color_cast(const argb32_210101
 	}
 }
 
-template <tr::built_in_color To, tr::color_castable_from From> constexpr To tr::color_cast(const From& from) noexcept
+template <tr::built_in_color To, tr::color_castable_from From> constexpr To tr::color_cast(const From& from)
 {
 	if constexpr (std::same_as<std::remove_cvref_t<return_type_t<decltype(color_caster<From>::to_built_in)>>, To>) {
 		return color_caster<From>::to_built_in(from);
@@ -801,7 +801,7 @@ template <tr::built_in_color To, tr::color_castable_from From> constexpr To tr::
 	}
 }
 
-template <tr::color_castable_to To, tr::built_in_color From> constexpr To tr::color_cast(const From& from) noexcept
+template <tr::color_castable_to To, tr::built_in_color From> constexpr To tr::color_cast(const From& from)
 {
 	using NaturalBuiltin = std::remove_cvref_t<arg_type_t<decltype(color_caster<To>::from_built_in)>>;
 
@@ -813,12 +813,12 @@ template <tr::color_castable_to To, tr::built_in_color From> constexpr To tr::co
 	}
 }
 
-template <tr::color_castable_to To, tr::color_castable_from From> constexpr To tr::color_cast(const From& from) noexcept
+template <tr::color_castable_to To, tr::color_castable_from From> constexpr To tr::color_cast(const From& from)
 {
 	return color_cast<To>(color_cast<std::remove_cvref_t<arg_type_t<decltype(color_caster<To>::from_built_in)>>>(from));
 }
 
-constexpr tr::rgbaf tr::color_caster<tr::hsv>::to_built_in(const hsv& from) noexcept
+constexpr tr::rgbaf tr::color_caster<tr::hsv>::to_built_in(const hsv& from)
 {
 	constexpr auto constexpr_abs{[](auto v) { return v > 0 ? v : -v; }};
 
@@ -847,7 +847,7 @@ constexpr tr::rgbaf tr::color_caster<tr::hsv>::to_built_in(const hsv& from) noex
 	}
 }
 
-constexpr tr::hsv tr::color_caster<tr::hsv>::from_built_in(const rgbaf& from) noexcept
+constexpr tr::hsv tr::color_caster<tr::hsv>::from_built_in(const rgbaf& from)
 {
 	hsv hsv{};
 	hsv.v = std::max({from.r, from.g, from.b});
