@@ -79,7 +79,7 @@ template <class Key, class Hash, class Pred> tr::rect2<std::uint16_t> tr::atlas_
 {
 	TR_ASSERT(contains(key), "Tried to get a rect at a nonexistant key from an atlas packer.");
 
-	return *rects.find(key);
+	return rects.find(key)->second;
 }
 
 template <class Key, class Hash, class Pred> void tr::atlas_rects<Key, Hash, Pred>::clear()
