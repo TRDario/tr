@@ -25,7 +25,7 @@ namespace tr {
 	// Tracks which units are allocated.
 	inline std::array<bool, 80> texture_units;
 	// Tracks the texture bound to any given texture unit.
-	inline std::array<texture_ref, 80> texure_unit_textures{};
+	inline std::array<texture_ref, 80> texture_unit_textures{};
 	// 2D vertex format.
 	inline std::optional<vertex_format> vertex2_format_;
 	// The current render target.

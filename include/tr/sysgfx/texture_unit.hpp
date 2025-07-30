@@ -3,7 +3,6 @@
 
 namespace tr {
 	class texture_ref;
-	class dyn_atlas;
 } // namespace tr
 
 namespace tr {
@@ -15,8 +14,6 @@ namespace tr {
 
 		// Binds a texture to the texture unit.
 		void set_texture(texture_ref texture);
-		// Binds a dynamic atlas texture to the texture unit.
-		void set_texture(const dyn_atlas& atlas);
 
 	  private:
 		struct deleter {
@@ -28,4 +25,7 @@ namespace tr {
 
 		friend class shader_base;
 	};
+
+	// Replaces all bindings of a certain texture with another.
+	void replace_texture_bindings(texture_ref old, texture_ref fresh);
 } // namespace tr

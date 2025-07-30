@@ -77,7 +77,6 @@ if(TR_BUILD_SYSGFX)
 		src/sysgfx/impl.cpp
 		src/sysgfx/gl_call.cpp
 		src/sysgfx/glad.cpp
-		src/sysgfx/atlas.cpp
 		src/sysgfx/backbuffer.cpp
 		src/sysgfx/bitmap_iterators.cpp
 		src/sysgfx/bitmap.cpp

@@ -92,9 +92,9 @@ namespace tr {
 		// Allocates the texture.
 		void allocate(glm::ivec2 size, bool mipmapped, pixel_format format);
 
-		friend class dyn_atlas;
-		friend class ttf_renderer;
 		friend class texture_ref;
+		friend class ttf_renderer;
+		template <class Key, class Hash, class Pred> friend class dyn_atlas;
 	};
 
 	// Non-owning texture reference.

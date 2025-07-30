@@ -1,13 +1,8 @@
 #include "../../include/tr/utility/atlas_packer.hpp"
 
-tr::atlas_packer::atlas_packer(glm::u16vec2 size)
-	: skyline{{0, 0}}, texture_size{size}
+tr::atlas_packer::atlas_packer()
+	: skyline{{0, 0}}
 {
-}
-
-glm::u16vec2 tr::atlas_packer::size() const
-{
-	return texture_size;
 }
 
 void tr::atlas_packer::clear()
@@ -16,15 +11,7 @@ void tr::atlas_packer::clear()
 	skyline.push_back({});
 }
 
-void tr::atlas_packer::resize(glm::u16vec2 size)
-{
-	TR_ASSERT(texture_size.x <= size.x && texture_size.y <= size.y, "Tried to reduce the size of an atlas packer from {}x{} to {}x{}.",
-			  texture_size.x, texture_size.y, size.x, size.y);
-
-	texture_size = size;
-}
-
-std::optional<glm::u16vec2> tr::atlas_packer::try_insert(glm::u16vec2 size)
+std::optional<glm::u16vec2> tr::atlas_packer::try_insert(glm::u16vec2 size, glm::u16vec2 texture_size)
 {
 	std::vector<glm::u16vec2>::iterator best_begin{skyline.end()};
 	std::vector<glm::u16vec2>::iterator best_end{skyline.end()};
