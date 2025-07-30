@@ -2,7 +2,7 @@
 
 namespace tr {
 	// Whether to skip a line.
-	bool skip_line(const std::string& line) noexcept;
+	bool skip_line(const std::string& line);
 	// Validates a delimiter.
 	bool validate_delimiter(std::size_t delimiter, std::size_t lineSize, std::vector<std::string>& errors, int line_number);
 	// Validates a key.
@@ -11,7 +11,7 @@ namespace tr {
 	std::string process_value(std::string_view raw_value, std::vector<std::string>& errors, int line_number);
 } // namespace tr
 
-bool tr::skip_line(const std::string& line) noexcept
+bool tr::skip_line(const std::string& line)
 {
 	constexpr auto WHITESPACE{[](char c) { return std::isspace(c); }};
 

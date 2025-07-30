@@ -1,22 +1,22 @@
 #pragma once
 #include "draw_geometry.hpp"
 
-inline std::size_t tr::smooth_poly_vtx(float r, float scale) noexcept
+inline std::size_t tr::smooth_poly_vtx(float r, float scale)
 {
 	return std::max(static_cast<std::size_t>(6 * scale * std::sqrt(std::abs(r))), std::size_t{3});
 }
 
-inline std::size_t tr::smooth_arc_vtx(float r, angle sizeth, float scale) noexcept
+inline std::size_t tr::smooth_arc_vtx(float r, angle sizeth, float scale)
 {
 	return std::max(static_cast<std::size_t>(6 * scale * std::sqrt(std::abs(r)) / (360_deg / (sizeth % 360_deg))), std::size_t{3});
 }
 
-constexpr std::size_t tr::poly_idx(std::uint16_t vtx) noexcept
+constexpr std::size_t tr::poly_idx(std::uint16_t vtx)
 {
 	return (vtx - 2) * 3;
 }
 
-constexpr std::size_t tr::poly_outline_idx(std::uint16_t vtx) noexcept
+constexpr std::size_t tr::poly_outline_idx(std::uint16_t vtx)
 {
 	return vtx * 6;
 }
