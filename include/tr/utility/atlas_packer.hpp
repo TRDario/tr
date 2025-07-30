@@ -97,7 +97,7 @@ template <class Key, class Hash, class Pred> bool tr::atlas_rects<Key, Hash, Pre
 
 	std::optional<glm::u16vec2> packing_result{packer.try_insert(size)};
 	if (packing_result.has_value()) {
-		rects.emplace(std::move(key), size);
+		rects.emplace(std::move(key), rect2<std::uint16_t>{*packing_result, size});
 		return true;
 	}
 	else {
