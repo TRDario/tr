@@ -48,7 +48,4 @@ namespace tr {
 
 	// Shows a "Save File" dialog.
 	std::filesystem::path show_save_file_dialog(std::span<const dialog_filter> filters = {}, const char* default_path = nullptr);
-
-	// Terminates the program while displaying an error box.
-	[[noreturn]] void terminate(std::string_view reason, std::string_view description = {}, std::string_view details = {});
 } // namespace tr
