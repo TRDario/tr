@@ -22,7 +22,7 @@ void tr::shader_pipeline::set_label(std::string_view label)
 }
 
 tr::owning_shader_pipeline::owning_shader_pipeline(tr::vertex_shader&& vshader, tr::fragment_shader&& fshader)
-	: vshader{std::move(vshader)}, fshader{std::move(fshader)}, base{vshader, fshader}
+	: vshader{std::move(vshader)}, fshader{std::move(fshader)}, base{this->vshader, this->fshader}
 {
 }
 
