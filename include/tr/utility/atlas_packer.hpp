@@ -21,9 +21,9 @@ namespace tr {
 
 	  private:
 		// The skyline silhouette points.
-		std::vector<glm::u16vec2> _skyline;
+		std::vector<glm::u16vec2> skyline;
 		// The size of the texture.
-		glm::u16vec2 _size;
+		glm::u16vec2 texture_size;
 	};
 
 	// Atlas packer combined with a list of rects.
@@ -48,9 +48,9 @@ namespace tr {
 
 	  private:
 		// The atlas packer.
-		atlas_packer _packer;
+		atlas_packer packer;
 		// The atlas rects.
-		std::unordered_map<Key, rect2<std::uint16_t>, Hash, Pred> _rects;
+		std::unordered_map<Key, rect2<std::uint16_t>, Hash, Pred> rects;
 	};
 
 } // namespace tr
@@ -59,45 +59,45 @@ namespace tr {
 
 template <class Key, class Hash, class Pred>
 tr::atlas_rects<Key, Hash, Pred>::atlas_rects(glm::u16vec2 size)
-	: _packer{size}
+	: packer{size}
 {
 }
 
 template <class Key, class Hash, class Pred> bool tr::atlas_rects<Key, Hash, Pred>::contains(const auto& key) const
 {
-	return _rects.contains(key);
+	return rects.contains(key);
 }
 
 template <class Key, class Hash, class Pred> glm::vec2 tr::atlas_rects<Key, Hash, Pred>::operator[](const auto& key) const
 {
-	return unnormalized(key) / glm::vec2{_packer.size()};
+	return unnormalized(key) / glm::vec2{packer.size()};
 }
 
 template <class Key, class Hash, class Pred> glm::u16vec2 tr::atlas_rects<Key, Hash, Pred>::unnormalized(const auto& key) const
 {
 	TR_ASSERT(contains(key), "Tried to get a rect at a nonexistant key from an atlas packer.");
 
-	return *_rects.find(key);
+	return *rects.find(key);
 }
 
 template <class Key, class Hash, class Pred> void tr::atlas_rects<Key, Hash, Pred>::clear()
 {
-	_packer.clear();
-	_rects.clear();
+	packer.clear();
+	rects.clear();
 }
 
 template <class Key, class Hash, class Pred> void tr::atlas_rects<Key, Hash, Pred>::resize(glm::u16vec2 size)
 {
-	_packer.resize(size);
+	packer.resize(size);
 }
 
 template <class Key, class Hash, class Pred> bool tr::atlas_rects<Key, Hash, Pred>::try_insert(auto&& key, glm::u16vec2 size)
 {
 	TR_ASSERT(!contains(key), "Tried to insert a rect with the same key as an existing rect into an atlas packer.");
 
-	std::optional<glm::u16vec2> packing_result{_packer.try_insert(size)};
+	std::optional<glm::u16vec2> packing_result{packer.try_insert(size)};
 	if (packing_result.has_value()) {
-		_rects.emplace(std::move(key), size);
+		rects.emplace(std::move(key), size);
 		return true;
 	}
 	else {
