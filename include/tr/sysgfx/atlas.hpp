@@ -29,7 +29,7 @@ namespace tr {
 		// Returns the rect associated with an entry.
 		frect2 operator[](const auto& key) const;
 		// Returns the unnormalized rect associated with an entry.
-		const irect2& unnormalized(const auto& key) const;
+		irect2 unnormalized(const auto& key) const;
 
 		// Reserves a certain amount of space in the bitmap.
 		void reserve(glm::ivec2 capacity);
@@ -102,7 +102,7 @@ template <class Key, class Hash, class Pred> tr::frect2 tr::dyn_atlas<Key, Hash,
 	return rect;
 }
 
-template <class Key, class Hash, class Pred> const tr::irect2& tr::dyn_atlas<Key, Hash, Pred>::unnormalized(const auto& key) const
+template <class Key, class Hash, class Pred> tr::irect2 tr::dyn_atlas<Key, Hash, Pred>::unnormalized(const auto& key) const
 {
 	TR_ASSERT(contains(key), "Tried to get nonexistent dynamic atlas entry.");
 
