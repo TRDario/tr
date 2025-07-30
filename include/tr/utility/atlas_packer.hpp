@@ -35,9 +35,9 @@ namespace tr {
 		// Gets whether the atlas contains a key.
 		bool contains(const auto& key) const;
 		// Gets a rect associated with a certain key.
-		glm::vec2 operator[](const auto& key) const;
+		frect2 operator[](const auto& key) const;
 		// Gets the unnormalized rect associated with a certain key.
-		glm::u16vec2 unnormalized(const auto& key) const;
+		rect2<std::uint16_t> unnormalized(const auto& key) const;
 
 		// Clears the packer.
 		void clear();
@@ -68,12 +68,14 @@ template <class Key, class Hash, class Pred> bool tr::atlas_rects<Key, Hash, Pre
 	return rects.contains(key);
 }
 
-template <class Key, class Hash, class Pred> glm::vec2 tr::atlas_rects<Key, Hash, Pred>::operator[](const auto& key) const
+template <class Key, class Hash, class Pred> tr::frect2 tr::atlas_rects<Key, Hash, Pred>::operator[](const auto& key) const
 {
-	return unnormalized(key) / glm::vec2{packer.size()};
+	const rect2<std::uint16_t> unnorm{unnormalized(key)};
+	return {static_cast<glm::vec2>(unnorm.tl) / static_cast<glm::vec2>(packer.size()),
+			static_cast<glm::vec2>(unnorm.size) / static_cast<glm::vec2>(packer.size())};
 }
 
-template <class Key, class Hash, class Pred> glm::u16vec2 tr::atlas_rects<Key, Hash, Pred>::unnormalized(const auto& key) const
+template <class Key, class Hash, class Pred> tr::rect2<std::uint16_t> tr::atlas_rects<Key, Hash, Pred>::unnormalized(const auto& key) const
 {
 	TR_ASSERT(contains(key), "Tried to get a rect at a nonexistant key from an atlas packer.");
 
