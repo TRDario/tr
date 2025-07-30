@@ -12,6 +12,7 @@
 #include "sysgfx/event_types.hpp"      // IWYU pragma: export
 #include "sysgfx/graphics_context.hpp" // IWYU pragma: export
 #include "sysgfx/index_buffer.hpp"     // IWYU pragma: export
+#include "sysgfx/initialization.hpp"   // IWYU pragma: export
 #include "sysgfx/keyboard.hpp"         // IWYU pragma: export
 #include "sysgfx/keyboard_events.hpp"  // IWYU pragma: export
 #include "sysgfx/mouse.hpp"            // IWYU pragma: export
