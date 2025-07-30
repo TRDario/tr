@@ -2,7 +2,7 @@
 #include "../../include/tr/sysgfx/dialog.hpp"
 #include <AL/al.h>
 
-void tr::_validate_al_call(const char* file, int line, const char* function) noexcept
+void tr::_validate_al_call(const char* file, int line, const char* function)
 {
 	switch (alGetError()) {
 	case AL_INVALID_NAME:

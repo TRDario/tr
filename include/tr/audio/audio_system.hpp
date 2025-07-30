@@ -6,18 +6,18 @@ namespace tr {
 	class audio_system_init_error : public exception {
 	  public:
 		// Constructs an exception.
-		audio_system_init_error(std::string_view description) noexcept;
+		audio_system_init_error(std::string_view description);
 
 		// Gets the name of the error.
-		std::string_view name() const noexcept override;
+		std::string_view name() const override;
 		// Gets the description of the error.
-		std::string_view description() const noexcept override;
+		std::string_view description() const override;
 		// Gets further details about the error.
-		std::string_view details() const noexcept override;
+		std::string_view details() const override;
 
 	  private:
 		// The description of the error.
-		std::string_view _description;
+		std::string_view description_str;
 	};
 
 	// Listener orientation.
@@ -36,37 +36,37 @@ namespace tr {
 		// May throw: audio_system_init_error.
 		static void initialize();
 		// Reports whether the audio system is active.
-		static bool active() noexcept;
+		static bool active();
 		// Shuts the audio system down.
 		// Any handles to audio buffers or audio sources must have been destroyed before calling this function.
-		static void shut_down() noexcept;
+		static void shut_down();
 
 		// Gets the master gain.
-		static float master_gain() noexcept;
+		static float master_gain();
 		// Sets the master gain.
-		static void set_master_gain(float gain) noexcept;
+		static void set_master_gain(float gain);
 
 		// Gets an audio class (0-31)'s gain modifier.
-		static float class_gain(int id) noexcept;
+		static float class_gain(int id);
 		// Sets an audio class (0-31)'s gain modifier.
-		static void set_class_gain(int id, float gain) noexcept;
+		static void set_class_gain(int id, float gain);
 
 		// Gets the position of the listener.
-		static glm::vec3 listener_pos() noexcept;
+		static glm::vec3 listener_pos();
 		// Sets the position of the listener.
-		static void set_listener_pos(const glm::vec3& pos) noexcept;
+		static void set_listener_pos(const glm::vec3& pos);
 
 		// Gets the velocity of the listener.
-		static glm::vec3 listener_vel() noexcept;
+		static glm::vec3 listener_vel();
 		// Sets the velocity of the listener.
-		static void set_listener_vel(const glm::vec3& vel) noexcept;
+		static void set_listener_vel(const glm::vec3& vel);
 
 		// Gets the orientation of the listener.
-		static orientation listener_orientation() noexcept;
+		static orientation listener_orientation();
 		// Sets the orientation of the listener.
-		static void set_listener_orientation(orientation orientation) noexcept;
+		static void set_listener_orientation(orientation orientation);
 
 		// Reports whether an audio source with a given priority can be allocated.
-		static bool can_allocate_audio_source(int priority) noexcept;
+		static bool can_allocate_audio_source(int priority);
 	};
 } // namespace tr

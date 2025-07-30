@@ -1,11 +1,11 @@
-#include "../include/tr/imgui.hpp"
-#include "../../include/tr/sysgfx/system_impl.hpp"
 #include "../include/tr/dependencies/imgui_impl_opengl3.h"
 #include "../include/tr/dependencies/imgui_impl_sdl3.h"
+#include "../include/tr/imgui.hpp"
+#include "../include/tr/sysgfx/impl.hpp"
 
 void tr::imgui::initialize()
 {
-	ImGui_ImplSDL3_InitForOpenGL(_window, _glctx);
+	ImGui_ImplSDL3_InitForOpenGL(sdl_window, ogl_context);
 	ImGui_ImplOpenGL3_Init("#version 150");
 }
 
@@ -15,7 +15,7 @@ void tr::imgui::shut_down()
 	ImGui_ImplSDL3_Shutdown();
 }
 
-std::uint64_t tr::imgui::get_texture_id(texture_ref texture) noexcept
+std::uint64_t tr::imgui::get_texture_id(texture_ref texture)
 {
 	return texture._id;
 }

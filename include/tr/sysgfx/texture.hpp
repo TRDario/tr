@@ -6,7 +6,7 @@ namespace tr {
 	class texture_ref;
 	class render_target;
 	namespace imgui {
-		std::uint64_t get_texture_id(texture_ref texture) noexcept;
+		std::uint64_t get_texture_id(texture_ref texture);
 	}
 } // namespace tr
 
@@ -115,7 +115,7 @@ namespace tr {
 		unsigned int _id{0};
 
 		friend class texture_unit;
-		friend std::uint64_t imgui::get_texture_id(texture_ref texture) noexcept;
+		friend std::uint64_t imgui::get_texture_id(texture_ref texture);
 	};
 	// Empty texture reference.
 	constexpr texture_ref NO_TEXTURE{};

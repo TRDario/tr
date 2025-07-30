@@ -33,7 +33,7 @@ namespace tr {
 		// Handle to the OpenAL ID.
 		handle<unsigned int, 0, deleter> id;
 
-		friend class _audio_source;
+		friend class base_audio_source;
 	};
 	// Loads audio data from file into a buffer.
 	// May throw: audio_file_open_error.

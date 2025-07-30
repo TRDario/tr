@@ -5,9 +5,9 @@
 
 bool tr::mouse::set_relative_mode(bool relative) noexcept
 {
-	TR_ASSERT(_window != nullptr, "Tried to set mouse relative mode state before opening the window.");
+	TR_ASSERT(sdl_window != nullptr, "Tried to set mouse relative mode state before opening the window.");
 
-	return !SDL_SetWindowRelativeMouseMode(_window, relative);
+	return !SDL_SetWindowRelativeMouseMode(sdl_window, relative);
 }
 
 bool tr::mouse::set_captured(bool captured) noexcept

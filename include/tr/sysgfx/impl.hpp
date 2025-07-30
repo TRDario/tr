@@ -13,9 +13,9 @@ namespace tr {
 	inline const char* _app_name{nullptr};
 
 	// Pointer to the SDL window.
-	inline SDL_Window* _window{nullptr};
+	inline SDL_Window* sdl_window{nullptr};
 	// Pointer to the SDL OpenGL context.
-	inline SDL_GLContextState* _glctx{nullptr};
+	inline SDL_GLContextState* ogl_context{nullptr};
 	// Whether the OpenGL context is a debug one.
 	inline bool _debug_context{false};
 

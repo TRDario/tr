@@ -293,7 +293,7 @@ tr::timer tr::create_draw_timer(float frequency) noexcept
 
 std::optional<tr::event> tr::event_queue::poll() noexcept
 {
-	TR_ASSERT(_window != nullptr, "Tried to poll for events before opening the window.");
+	TR_ASSERT(sdl_window != nullptr, "Tried to poll for events before opening the window.");
 
 	event event;
 	return SDL_PollEvent(reinterpret_cast<SDL_Event*>(&event)) ? std::optional<tr::event>{std::move(event)} : std::nullopt;
@@ -301,7 +301,7 @@ std::optional<tr::event> tr::event_queue::poll() noexcept
 
 tr::event tr::event_queue::wait() noexcept
 {
-	TR_ASSERT(_window != nullptr, "Tried to wait for events before opening the window.");
+	TR_ASSERT(sdl_window != nullptr, "Tried to wait for events before opening the window.");
 
 	event event;
 	SDL_WaitEvent(reinterpret_cast<SDL_Event*>(&event));
@@ -310,7 +310,7 @@ tr::event tr::event_queue::wait() noexcept
 
 std::optional<tr::event> tr::event_queue::wait(imsecs timeout) noexcept
 {
-	TR_ASSERT(_window != nullptr, "Tried to wait for events before opening the window.");
+	TR_ASSERT(sdl_window != nullptr, "Tried to wait for events before opening the window.");
 
 	event event;
 	if (SDL_WaitEventTimeout(reinterpret_cast<SDL_Event*>(&event), static_cast<Sint32>(timeout.count()))) {
@@ -323,14 +323,14 @@ std::optional<tr::event> tr::event_queue::wait(imsecs timeout) noexcept
 
 void tr::event_queue::send_text_input_events(bool arg) noexcept
 {
-	TR_ASSERT(_window != nullptr, "Tried to modify text input event sending before opening the window.");
+	TR_ASSERT(sdl_window != nullptr, "Tried to modify text input event sending before opening the window.");
 
-	arg ? SDL_StartTextInput(_window) : SDL_StopTextInput(_window);
+	arg ? SDL_StartTextInput(sdl_window) : SDL_StopTextInput(sdl_window);
 }
 
 void tr::event_queue::push(const event& event) noexcept
 {
-	TR_ASSERT(_window != nullptr, "Tried to push an event before opening the window.");
+	TR_ASSERT(sdl_window != nullptr, "Tried to push an event before opening the window.");
 
 	try {
 		SDL_Event sdl{std::bit_cast<SDL_Event>(event._impl)};
@@ -351,7 +351,7 @@ void tr::event_queue::push(const event& event) noexcept
 
 void tr::event_queue::push(event&& event) noexcept
 {
-	TR_ASSERT(_window != nullptr, "Tried to push an event before opening the window.");
+	TR_ASSERT(sdl_window != nullptr, "Tried to push an event before opening the window.");
 
 	SDL_Event sdl{std::bit_cast<SDL_Event>(event._impl)};
 	if (!SDL_PushEvent(&sdl)) {

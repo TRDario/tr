@@ -49,8 +49,8 @@ std::uint8_t tr::max_msaa() noexcept
 			}
 		}
 
-		if (_glctx != nullptr) {
-			SDL_GL_MakeCurrent(_window, _glctx);
+		if (ogl_context != nullptr) {
+			SDL_GL_MakeCurrent(sdl_window, ogl_context);
 		}
 	}
 	return max;

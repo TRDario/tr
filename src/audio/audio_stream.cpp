@@ -3,21 +3,21 @@
 
 namespace tr {
 	// Ogg audio file backend.
-	class _ogg_audio_stream : public audio_stream {
+	class ogg_audio_stream : public audio_stream {
 	  public:
-		_ogg_audio_stream(const std::filesystem::path& path);
-		~_ogg_audio_stream() noexcept;
+		ogg_audio_stream(const std::filesystem::path& path);
+		~ogg_audio_stream();
 
-		std::size_t length() const noexcept override;
-		int channels() const noexcept override;
-		int sample_rate() const noexcept override;
+		std::size_t length() const override;
+		int channels() const override;
+		int sample_rate() const override;
 
-		std::size_t tell() const noexcept override;
-		void seek(std::size_t where) noexcept override;
-		void raw_read(std::span<std::int16_t> buffer) noexcept override;
+		std::size_t tell() const override;
+		void seek(std::size_t where) override;
+		void raw_read(std::span<std::int16_t> buffer) override;
 
 	  private:
-		OggVorbis_File _file{};
+		OggVorbis_File file{};
 	};
 
 	constexpr std::size_t UNKNOWN_LOOP_POINT{std::numeric_limits<std::size_t>::max()};
@@ -25,12 +25,12 @@ namespace tr {
 
 ///////////////////////////////////////////////////////////// OGG AUDIO FILE //////////////////////////////////////////////////////////////
 
-tr::_ogg_audio_stream::_ogg_audio_stream(const std::filesystem::path& path)
+tr::ogg_audio_stream::ogg_audio_stream(const std::filesystem::path& path)
 {
 #ifdef _WIN32
-	const int result{ov_fopen(path.string().c_str(), &_file)};
+	const int result{ov_fopen(path.string().c_str(), &file)};
 #else
-	const int result{ov_fopen(path.c_str(), &_file)};
+	const int result{ov_fopen(path.c_str(), &file)};
 #endif
 	if (result != 0) {
 		switch (result) {
@@ -47,7 +47,7 @@ tr::_ogg_audio_stream::_ogg_audio_stream(const std::filesystem::path& path)
 		}
 	}
 
-	const vorbis_comment& comments{*ov_comment(&_file, -1)};
+	const vorbis_comment& comments{*ov_comment(&file, -1)};
 	for (int i = 0; i < comments.comments; ++i) {
 		const std::string_view comment{comments.user_comments[i], static_cast<std::size_t>(comments.comment_lengths[i])};
 		if (comment.starts_with("LOOPSTART=")) {
@@ -72,43 +72,43 @@ tr::_ogg_audio_stream::_ogg_audio_stream(const std::filesystem::path& path)
 	}
 }
 
-tr::_ogg_audio_stream::~_ogg_audio_stream() noexcept
+tr::ogg_audio_stream::~ogg_audio_stream()
 {
-	ov_clear(&_file);
+	ov_clear(&file);
 }
 
-std::size_t tr::_ogg_audio_stream::length() const noexcept
+std::size_t tr::ogg_audio_stream::length() const
 {
-	return static_cast<std::size_t>(ov_pcm_total(const_cast<OggVorbis_File*>(&_file), -1));
+	return static_cast<std::size_t>(ov_pcm_total(const_cast<OggVorbis_File*>(&file), -1));
 }
 
-int tr::_ogg_audio_stream::channels() const noexcept
+int tr::ogg_audio_stream::channels() const
 {
-	return ov_info(const_cast<OggVorbis_File*>(&_file), -1)->channels;
+	return ov_info(const_cast<OggVorbis_File*>(&file), -1)->channels;
 }
 
-int tr::_ogg_audio_stream::sample_rate() const noexcept
+int tr::ogg_audio_stream::sample_rate() const
 {
-	return static_cast<int>(ov_info(const_cast<OggVorbis_File*>(&_file), -1)->rate);
+	return static_cast<int>(ov_info(const_cast<OggVorbis_File*>(&file), -1)->rate);
 }
 
-std::size_t tr::_ogg_audio_stream::tell() const noexcept
+std::size_t tr::ogg_audio_stream::tell() const
 {
-	return static_cast<std::size_t>(ov_pcm_tell(const_cast<OggVorbis_File*>(&_file)));
+	return static_cast<std::size_t>(ov_pcm_tell(const_cast<OggVorbis_File*>(&file)));
 }
 
-void tr::_ogg_audio_stream::seek(std::size_t where) noexcept
+void tr::ogg_audio_stream::seek(std::size_t where)
 {
-	ov_pcm_seek(&_file, static_cast<ogg_int64_t>(where));
+	ov_pcm_seek(&file, static_cast<ogg_int64_t>(where));
 }
 
-void tr::_ogg_audio_stream::raw_read(std::span<std::int16_t> buffer) noexcept
+void tr::ogg_audio_stream::raw_read(std::span<std::int16_t> buffer)
 {
 	char* raw_dest{reinterpret_cast<char*>(buffer.data())};
 	int bytes_left{static_cast<int>(buffer.size_bytes())};
 	int cur_section;
 	while (bytes_left > 0) {
-		const int read_bytes{static_cast<int>(ov_read(&_file, raw_dest, bytes_left, 0, 2, 1, &cur_section))};
+		const int read_bytes{static_cast<int>(ov_read(&file, raw_dest, bytes_left, 0, 2, 1, &cur_section))};
 		if (read_bytes <= 0) {
 			return;
 		}
@@ -120,7 +120,7 @@ void tr::_ogg_audio_stream::raw_read(std::span<std::int16_t> buffer) noexcept
 ////////////////////////////////////////////////////////// AUDIO FILE OPEN ERROR //////////////////////////////////////////////////////////
 
 tr::audio_file_open_error::audio_file_open_error(std::string&& description) noexcept
-	: _description{std::move(description)}
+	: description_str{std::move(description)}
 {
 }
 
@@ -131,7 +131,7 @@ std::string_view tr::audio_file_open_error::name() const noexcept
 
 std::string_view tr::audio_file_open_error::description() const noexcept
 {
-	return _description;
+	return description_str;
 }
 
 std::string_view tr::audio_file_open_error::details() const noexcept
@@ -141,14 +141,14 @@ std::string_view tr::audio_file_open_error::details() const noexcept
 
 /////////////////////////////////////////////////////////////// AUDIO FILE ////////////////////////////////////////////////////////////////
 
-tr::audio_stream::audio_stream() noexcept
-	: _looping{false}, _loop_start{0}, _loop_end{UNKNOWN_LOOP_POINT}
+tr::audio_stream::audio_stream()
+	: looping_{false}, loop_start_{0}, loop_end_{UNKNOWN_LOOP_POINT}
 {
 }
 
-std::span<std::int16_t> tr::audio_stream::read(std::span<std::int16_t> buffer) noexcept
+std::span<std::int16_t> tr::audio_stream::read(std::span<std::int16_t> buffer)
 {
-	if (_looping) {
+	if (looping_) {
 		std::span<std::int16_t> remaining_buffer{buffer};
 		while (true) {
 			const std::size_t samples_until_loop{(loop_end() - tell()) * channels()};
@@ -170,41 +170,41 @@ std::span<std::int16_t> tr::audio_stream::read(std::span<std::int16_t> buffer) n
 	}
 }
 
-bool tr::audio_stream::looping() const noexcept
+bool tr::audio_stream::looping() const
 {
-	return _looping;
+	return looping_;
 }
 
-void tr::audio_stream::set_looping(bool looping) noexcept
+void tr::audio_stream::set_looping(bool looping)
 {
-	_looping = looping;
+	looping_ = looping;
 	if (looping && tell() >= loop_end()) {
 		seek(loop_start());
 	}
 }
 
-std::size_t tr::audio_stream::loop_start() const noexcept
+std::size_t tr::audio_stream::loop_start() const
 {
-	return _loop_start;
+	return loop_start_;
 }
 
-void tr::audio_stream::set_loop_start(std::size_t loop_start) noexcept
+void tr::audio_stream::set_loop_start(std::size_t loop_start)
 {
-	_loop_start = std::clamp(loop_start, std::size_t{0}, loop_end() - 1);
+	loop_start_ = std::clamp(loop_start, std::size_t{0}, loop_end() - 1);
 }
 
-std::size_t tr::audio_stream::loop_end() const noexcept
+std::size_t tr::audio_stream::loop_end() const
 {
-	if (_loop_end == UNKNOWN_LOOP_POINT) {
-		_loop_end = length();
+	if (loop_end_ == UNKNOWN_LOOP_POINT) {
+		loop_end_ = length();
 	}
-	return _loop_end;
+	return loop_end_;
 }
 
-void tr::audio_stream::set_loop_end(std::size_t loop_end) noexcept
+void tr::audio_stream::set_loop_end(std::size_t loop_end)
 {
-	_loop_end = std::clamp(loop_end, loop_start() + 1, length());
-	if (looping() && tell() >= _loop_end) {
+	loop_end_ = std::clamp(loop_end, loop_start() + 1, length());
+	if (looping() && tell() >= loop_end_) {
 		seek(loop_start());
 	}
 }
@@ -217,7 +217,7 @@ std::unique_ptr<tr::audio_stream> tr::open_audio_file(const std::filesystem::pat
 
 	const std::string extension{path.extension().string()};
 	if (extension == ".ogg") {
-		return std::make_unique<_ogg_audio_stream>(path);
+		return std::make_unique<ogg_audio_stream>(path);
 	}
 	else {
 		throw audio_file_open_error{std::format("Unsupported audio file extension '{}'", extension)};

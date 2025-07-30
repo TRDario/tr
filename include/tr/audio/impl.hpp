@@ -164,7 +164,7 @@ namespace tr {
 	};
 
 	// Map holding the IDs of extant audio buffers and whether the're cullable.
-	inline std::unordered_map<unsigned int, bool> audio_buffers_cullable;
+	inline std::unordered_map<unsigned int, bool> audio_buffers;
 	// The maximum allowed number of audio sources.
 	inline std::size_t max_audio_sources;
 	// A list of active audio sources.

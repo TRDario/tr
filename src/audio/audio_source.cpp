@@ -1,5 +1,5 @@
-#include "../../include/tr/audio/audio_source.hpp"
 #include "../../include/tr/audio/al_call.hpp"
+#include "../../include/tr/audio/audio_source.hpp"
 #include "../../include/tr/audio/audio_system.hpp"
 #include "../../include/tr/audio/impl.hpp"
 #include "../../include/tr/sysgfx/dialog.hpp"
@@ -72,7 +72,7 @@ tr::buffer_stream_buffer::buffer_stream_buffer()
 	}
 }
 
-tr::buffer_stream_buffer::~buffer_stream_buffer() noexcept
+tr::buffer_stream_buffer::~buffer_stream_buffer()
 {
 	TR_AL_CALL(alDeleteBuffers, 1, &id);
 }
