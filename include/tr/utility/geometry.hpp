@@ -1,5 +1,6 @@
 #pragma once
 #include "angle.hpp"
+#include "binary_io.hpp"
 
 namespace tr {
 	// Horizontal alignment.
@@ -67,6 +68,8 @@ namespace tr {
 	using irect3 = rect3<int>;
 	// Shorthand for a float 3D rect.
 	using frect3 = rect3<float>;
+	// Rect binary readers.
+	template <int S, class T> struct binary_reader<rect<S, T>> : default_binary_reader<rect<S, T>> {};
 	// Determines if two rects intersect.
 	template <class T1, class T2> constexpr bool intersecting(const rect2<T1>& r1, const rect2<T2>& r2);
 
@@ -80,6 +83,8 @@ namespace tr {
 		// Determines whether a point is contained inside the circle.
 		bool contains(glm::vec2 point) const;
 	};
+	// Circle binary reader.
+	template <> struct binary_reader<circle> : default_binary_reader<circle> {};
 	// Determines if two circles intersect.
 	bool intersecting(const circle& c1, const circle& c2);
 

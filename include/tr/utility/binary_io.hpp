@@ -35,6 +35,13 @@ namespace tr {
 
 	// Arithmetic binary readers.
 	template <arithmetic T> struct binary_reader<T> : default_binary_reader<T> {};
+	// Enumerator binary readers.
+	template <enumerator T> struct binary_reader<T> : default_binary_reader<T> {};
+	// Vector binary readers.
+	template <int S, class T> struct binary_reader<glm::vec<S, T>> : default_binary_reader<glm::vec<S, T>> {};
+	// Matrix binary readers.
+	template <int C, int R, class T> struct binary_reader<glm::mat<C, R, T>> : default_binary_reader<glm::mat<C, R, T>> {};
+
 	// Span binary reader.
 	template <class T> struct binary_reader<std::span<T>> {
 		static void read_from_stream(std::istream& is, const std::span<T>& out)
@@ -144,7 +151,12 @@ namespace tr {
 
 	// Arithmetic binary writers.
 	template <arithmetic T> struct binary_writer<T> : default_binary_writer<T> {};
-
+	// Enumerator binary writers.
+	template <enumerator T> struct binary_writer<T> : default_binary_writer<T> {};
+	// Vector binary writers.
+	template <int S, class T> struct binary_writer<glm::vec<S, T>> : default_binary_writer<glm::vec<S, T>> {};
+	// Matrix binary writers.
+	template <int C, int R, class T> struct binary_writer<glm::mat<C, R, T>> : default_binary_writer<glm::mat<C, R, T>> {};
 	// String literal binary writer.
 	template <std::size_t S> struct binary_writer<char[S]> {
 		static void write_to_stream(std::ostream& os, const char (&in)[S]);
