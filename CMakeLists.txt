@@ -10,7 +10,7 @@ option(TR_BUILD_AUDIO "Build the audio module." ON)
 option(TR_BUILD_IMGUI "Build the Dear ImGui integration module." OFF)
 option(TR_BUILD_TESTS "Build tests" OFF)
 
-if(TR_BUILD_IMGUI AND NOT TR_BUILD_SYSGFX)
+if((TR_BUILD_AUDIO OR TR_BUILD_IMGUI) AND NOT TR_BUILD_SYSGFX)
 	message("[tr] Setting 'TR_BUILD_SYSGFX' to 'ON' because another module depends on it.")
 	set(TR_BUILD_SYSGFX ON CACHE BOOL "Build the system and graphics module." FORCE)
 endif()
@@ -58,7 +58,7 @@ endif()
 target_include_directories(tr PUBLIC include)
 target_precompile_headers(tr PUBLIC include/tr/utility.hpp)
 target_sources(tr PRIVATE
-	src/utility/atlas_packer.cpp
+	# src/utility/atlas_packer.cpp
 	src/utility/benchmark.cpp
 	src/utility/binary_io.cpp
 	src/utility/encryption.cpp
@@ -87,7 +87,6 @@ if(TR_BUILD_SYSGFX)
 		src/sysgfx/event.cpp
 		src/sysgfx/graphics_context.cpp
 		src/sysgfx/index_buffer.cpp
-		src/sysgfx/initialization.cpp
 		src/sysgfx/keyboard.cpp
 		src/sysgfx/mouse.cpp
 		src/sysgfx/path.cpp

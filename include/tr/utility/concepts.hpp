@@ -18,6 +18,7 @@ namespace tr {
 	// Concept wrapper over std::is_arithmetic_v.
 	template <class T>
 	concept arithmetic = std::is_arithmetic_v<T>;
+
 	// Concept denoting a non-const reference.
 	template <class T>
 	concept non_const_ref = std::is_lvalue_reference_v<T> && !std::is_const_v<std::remove_reference_t<T>>;

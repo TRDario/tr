@@ -2,13 +2,13 @@
 #include "binary_io.hpp"
 #include "ranges.hpp"
 
-template <tr::default_binary_readable T> void tr::binary_reader<T>::read_from_stream(std::istream& is, T& out)
+template <tr::default_binary_readable T> void tr::default_binary_reader<T>::read_from_stream(std::istream& is, T& out)
 {
 	is.read(reinterpret_cast<char*>(std::addressof(out)), sizeof(T));
 }
 
 template <tr::default_binary_readable T>
-std::span<const std::byte> tr::binary_reader<T>::read_from_span(std::span<const std::byte> span, T& out)
+std::span<const std::byte> tr::default_binary_reader<T>::read_from_span(std::span<const std::byte> span, T& out)
 {
 	if (span.size() < sizeof(T)) {
 		throw std::out_of_range{"Tried to binary read an object larger than the size of the input range."};
@@ -21,7 +21,7 @@ template <class T>
 void tr::binary_reader<std::span<T>>::read_from_stream(std::istream& is, const std::span<T>& out)
 	requires(stream_binary_readable<T>)
 {
-	if constexpr (requires { requires std::same_as<typename binary_reader<T>::default_reader, std::true_type>; }) {
+	if constexpr (std::is_base_of_v<default_binary_reader<T>, binary_reader<T>>) {
 		is.read(reinterpret_cast<char*>(out.data()), out.size_bytes());
 	}
 	else {
@@ -253,12 +253,15 @@ template <tr::binary_flushable_iterator It> void tr::flush_binary(std::istream& 
 	}
 }
 
-template <tr::default_binary_writable T> void tr::binary_writer<T>::write_to_stream(std::ostream& os, const T& in)
+//
+
+template <tr::default_binary_writable T> void tr::default_binary_writer<T>::write_to_stream(std::ostream& os, const T& in)
 {
 	os.write(reinterpret_cast<const char*>(std::addressof(in)), sizeof(T));
 }
 
-template <tr::default_binary_writable T> std::span<std::byte> tr::binary_writer<T>::write_to_span(std::span<std::byte> span, const T& in)
+template <tr::default_binary_writable T>
+std::span<std::byte> tr::default_binary_writer<T>::write_to_span(std::span<std::byte> span, const T& in)
 {
 	if (span.size() < sizeof(T)) {
 		throw std::out_of_range{"Tried to binary write an object larger than the size of the output range."};
@@ -435,10 +438,10 @@ std::span<std::byte> tr::binary_writer<std::unordered_map<K, V, Args...>>::write
 
 template <tr::stream_binary_writable T> void tr::binary_write(std::ostream& os, const T& in)
 {
-	binary_writer<T>::write_to_stream(os, in);
+	binary_writer<std::remove_cvref_t<T>>::write_to_stream(os, in);
 }
 
 template <tr::span_binary_writable T> std::span<std::byte> tr::binary_write(std::span<std::byte> span, const T& in)
 {
-	return binary_writer<T>::write_to_span(span, in);
+	return binary_writer<std::remove_cvref_t<T>>::write_to_span(span, in);
 }

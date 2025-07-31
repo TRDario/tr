@@ -3,7 +3,18 @@
 
 namespace tr {
 	// Interface for custom readers for use in binary_read.
-	template <class T> struct binary_reader {};
+	template <class T> struct binary_reader {
+		static_assert(ALWAYS_FALSE<T>, "binary_reader is not specialized for this type!");
+	};
+
+	// Concept that denotes a type able to use the default binary reader.
+	template <class T>
+	concept default_binary_readable = std::is_standard_layout_v<T> && std::same_as<T, std::remove_cvref_t<T>>;
+	// Default binary reader.
+	template <default_binary_readable T> struct default_binary_reader {
+		static void read_from_stream(std::istream& is, T& out);
+		static std::span<const std::byte> read_from_span(std::span<const std::byte> span, T& out);
+	};
 
 	// Concept that denotes a type able to be read with a stream binary_read.
 	template <class T>
@@ -21,18 +32,9 @@ namespace tr {
 	// Concept that denotes a type able to be constructed with a span binary_read.
 	template <class T>
 	concept span_binary_constructible = span_binary_readable<T> && binary_constructible<T>;
-	// Concept that denotes a type able to use the default binary reader.
-	template <class T>
-	concept default_binary_readable = std::is_standard_layout_v<T>;
 
-	// Default binary reader.
-	template <default_binary_readable T> struct binary_reader<T> {
-		using default_reader = std::true_type;
-
-		static void read_from_stream(std::istream& is, T& out);
-		static std::span<const std::byte> read_from_span(std::span<const std::byte> span, T& out);
-	};
-
+	// Arithmetic binary readers.
+	template <arithmetic T> struct binary_reader<T> : default_binary_reader<T> {};
 	// Span binary reader.
 	template <class T> struct binary_reader<std::span<T>> {
 		static void read_from_stream(std::istream& is, const std::span<T>& out)
@@ -40,6 +42,8 @@ namespace tr {
 		static std::span<const std::byte> read_from_span(std::span<const std::byte> span, const std::span<T>& out)
 			requires(span_binary_readable<T>);
 	};
+	// Array binary reader.
+	template <class T, std::size_t S> struct binary_reader<std::array<T, S>> : binary_reader<std::span<T>> {};
 	// Pair binary reader.
 	template <class A, class B> struct binary_reader<std::pair<A, B>> {
 		static void read_from_stream(std::istream& is, std::pair<A, B>& out)
@@ -115,26 +119,32 @@ namespace tr {
 	std::vector<std::byte> flush_binary(std::istream& is);
 
 	// Interface for custom writers for use in binary_write.
-	template <class T> struct binary_writer {};
+	template <class T> struct binary_writer {
+		static_assert(ALWAYS_FALSE<T>, "binary_writer is not specialized for this type!");
+	};
 
-	// Concept that denotes a type able to be read with a stream binary_read.
-	template <class T>
-	concept stream_binary_writable = std::invocable<decltype(binary_writer<T>::write_to_stream), std::ostream&, const T&>;
-	// Concept that denotes a type able to be read with a span binary_read.
-	template <class T>
-	concept span_binary_writable = std::invocable<decltype(binary_writer<T>::write_to_span), std::span<std::byte>, const T&> &&
-								   std::same_as<return_type_t<decltype(binary_writer<T>::write_to_span)>, std::span<std::byte>>;
 	// Concept that denotes a type able to use the default binary writer.
 	template <class T>
 	concept default_binary_writable = std::is_standard_layout_v<T>;
-
 	// Default binary writer.
-	template <default_binary_writable T> struct binary_writer<T> {
-		using default_writer = std::true_type;
-
+	template <default_binary_writable T> struct default_binary_writer {
 		static void write_to_stream(std::ostream& os, const T& in);
 		static std::span<std::byte> write_to_span(std::span<std::byte> span, const T& in);
 	};
+
+	// Concept that denotes a type able to be read with a stream binary_read.
+	template <class T>
+	concept stream_binary_writable =
+		std::invocable<decltype(binary_writer<std::remove_cvref_t<T>>::write_to_stream), std::ostream&, const T&>;
+	// Concept that denotes a type able to be read with a span binary_read.
+	template <class T>
+	concept span_binary_writable =
+		std::invocable<decltype(binary_writer<std::remove_cvref_t<T>>::write_to_span), std::span<std::byte>, const T&> &&
+		std::same_as<return_type_t<decltype(binary_writer<std::remove_cvref_t<T>>::write_to_span)>, std::span<std::byte>>;
+
+	// Arithmetic binary writers.
+	template <arithmetic T> struct binary_writer<T> : default_binary_writer<T> {};
+
 	// String literal binary writer.
 	template <std::size_t S> struct binary_writer<char[S]> {
 		static void write_to_stream(std::ostream& os, const char (&in)[S]);
@@ -146,10 +156,7 @@ namespace tr {
 		static std::span<std::byte> write_to_span(std::span<std::byte> span, const std::span<const std::byte>& in);
 	};
 	// Unformatted span binary writer.
-	template <> struct binary_writer<std::span<std::byte>> {
-		static void write_to_stream(std::ostream& os, const std::span<std::byte>& in);
-		static std::span<std::byte> write_to_span(std::span<std::byte> span, const std::span<std::byte>& in);
-	};
+	template <> struct binary_writer<std::span<std::byte>> : binary_writer<std::span<const std::byte>> {};
 	// Span binary writer.
 	template <class T> struct binary_writer<std::span<T>> {
 		static void write_to_stream(std::ostream& os, const std::span<T>& in)

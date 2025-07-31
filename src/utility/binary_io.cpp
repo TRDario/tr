@@ -60,17 +60,3 @@ std::span<std::byte> tr::binary_writer<std::span<const std::byte>>::write_to_spa
 	std::ranges::copy(in, span.begin());
 	return span.subspan(in.size());
 }
-
-void tr::binary_writer<std::span<std::byte>>::write_to_stream(std::ostream& os, const std::span<std::byte>& in)
-{
-	os.write(reinterpret_cast<const char*>(in.data()), in.size());
-}
-
-std::span<std::byte> tr::binary_writer<std::span<std::byte>>::write_to_span(std::span<std::byte> span, const std::span<std::byte>& in)
-{
-	if (span.size() < in.size()) {
-		throw std::out_of_range{"Tried to binary write a span larger than the size of the output range."};
-	}
-	std::ranges::copy(in, span.begin());
-	return span.subspan(in.size());
-}
