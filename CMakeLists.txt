@@ -58,7 +58,7 @@ endif()
 target_include_directories(tr PUBLIC include)
 target_precompile_headers(tr PUBLIC include/tr/utility.hpp)
 target_sources(tr PRIVATE
-	# src/utility/atlas_packer.cpp
+	src/utility/atlas_packer.cpp
 	src/utility/benchmark.cpp
 	src/utility/binary_io.cpp
 	src/utility/encryption.cpp
@@ -87,6 +87,7 @@ if(TR_BUILD_SYSGFX)
 		src/sysgfx/event.cpp
 		src/sysgfx/graphics_context.cpp
 		src/sysgfx/index_buffer.cpp
+		src/sysgfx/initialization.cpp
 		src/sysgfx/keyboard.cpp
 		src/sysgfx/mouse.cpp
 		src/sysgfx/path.cpp
