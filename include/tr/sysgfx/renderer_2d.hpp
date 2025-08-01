@@ -3,7 +3,7 @@
 #include "blending.hpp"
 #include "render_target.hpp"
 
-namespace tr {
+namespace tr::gfx {
 	class texture_ref;
 
 	// Simple 2D renderer color mesh allocation reference.
@@ -92,10 +92,10 @@ namespace tr {
 											const blend_mode& blend_mode);
 
 		// Draws a layer to a rendering target.
-		void draw_layer(int layer, const render_target& target = backbuffer::render_target());
+		void draw_layer(int layer, const render_target& target = backbuffer_render_target());
 		// Draws all layers of priority <= max_layer to a rendering target.
-		void draw_up_to_layer(int max_layer, const render_target& target = backbuffer::render_target());
+		void draw_up_to_layer(int max_layer, const render_target& target = backbuffer_render_target());
 		// Draws all added primitives to a rendering target.
-		void draw(const render_target& target = backbuffer::render_target());
+		void draw(const render_target& target = backbuffer_render_target());
 	}; // namespace renderer_2d
-} // namespace tr
+} // namespace tr::gfx

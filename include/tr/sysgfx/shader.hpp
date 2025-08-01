@@ -2,12 +2,10 @@
 #include "../utility/exception.hpp"
 #include "../utility/handle.hpp"
 
-namespace tr {
+namespace tr::gfx {
 	class shader_buffer;
 	class texture_unit;
-} // namespace tr
 
-namespace tr {
 	// Error thrown when shader loading fails.
 	class shader_load_error : public exception {
 	  public:
@@ -143,7 +141,7 @@ namespace tr {
 		};
 
 		// Handle to the OpenGL program.
-		handle<unsigned int, 0, deleter> program;
+		handle<unsigned int, 0, deleter> m_program;
 
 		// Constructs a shader.
 		shader_base(const char* source, unsigned int type);
@@ -173,4 +171,4 @@ namespace tr {
 	// Loads a fragment shader from file.
 	// May throw: shader_load_error.
 	fragment_shader load_fragment_shader(const std::filesystem::path& path);
-} // namespace tr
+} // namespace tr::gfx

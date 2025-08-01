@@ -9,7 +9,7 @@ namespace tr {
 	class bitmap;
 }
 
-namespace tr {
+namespace tr::system {
 	// Error thrown when font loading fails.
 	class ttfont_load_error : public exception {
 	  public:
@@ -121,7 +121,7 @@ namespace tr {
 		};
 
 		// Handle to the SDL TTF font.
-		std::unique_ptr<TTF_Font, deleter> ptr;
+		std::unique_ptr<TTF_Font, deleter> m_ptr;
 
 		ttfont(TTF_Font* ptr);
 
@@ -137,11 +137,11 @@ namespace tr {
 	// Loads a font from file.
 	// May throw: file_not_found, ttfont_file_load_error.
 	ttfont load_ttfont_file(const std::filesystem::path& path, float size = 16);
-} // namespace tr
+} // namespace tr::system
 
 ///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
 
-template <std::ranges::contiguous_range R> tr::ttfont tr::load_embedded_ttfont(R&& range, float size)
+template <std::ranges::contiguous_range R> tr::system::ttfont tr::system::load_embedded_ttfont(R&& range, float size)
 {
 	return load_embedded_ttfont(std::span<const std::byte>{range_bytes(range)}, size);
 };

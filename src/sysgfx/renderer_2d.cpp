@@ -7,7 +7,7 @@
 #include "../../include/tr/sysgfx/vertex_buffer.hpp"
 #include "../../include/tr/sysgfx/vertex_format.hpp"
 
-namespace tr::renderer_2d {
+namespace tr::gfx::renderer_2d {
 	// Untextured UV sentinel.
 	inline constexpr glm::vec2 UNTEXTURED_UV{-100, -100};
 	// Renderer ID.
@@ -99,13 +99,13 @@ namespace tr::renderer_2d {
 	};
 	// 2D renderer state.
 	std::optional<state_t> state;
-} // namespace tr::renderer_2d
+} // namespace tr::gfx::renderer_2d
 
-tr::renderer_2d::state_t::state_t()
+tr::gfx::renderer_2d::state_t::state_t()
 {
 	pipeline.vertex_shader().set_uniform(0, glm::mat4{1.0f});
 	pipeline.fragment_shader().set_uniform(1, tex_unit);
-	if (gfx_context::debug()) {
+	if (debug()) {
 		pipeline.set_label("(tr) 2D Renderer Pipeline");
 		pipeline.vertex_shader().set_label("(tr) 2D Renderer Vertex Shader");
 		pipeline.fragment_shader().set_label("(tr) 2D Renderer Fragment Shader");
@@ -116,8 +116,8 @@ tr::renderer_2d::state_t::state_t()
 	}
 }
 
-tr::renderer_2d::mesh& tr::renderer_2d::state_t::find_mesh(int layer, texture_ref texture, const glm::mat4& mat,
-														   const blend_mode& blend_mode, std::size_t space_needed)
+tr::gfx::renderer_2d::mesh& tr::gfx::renderer_2d::state_t::find_mesh(int layer, texture_ref texture, const glm::mat4& mat,
+																	 const blend_mode& blend_mode, std::size_t space_needed)
 {
 	auto range{std::ranges::equal_range(meshes, layer, std::less{}, &mesh::layer)};
 	std::vector<mesh>::iterator it;
@@ -144,18 +144,18 @@ tr::renderer_2d::mesh& tr::renderer_2d::state_t::find_mesh(int layer, texture_re
 	return *it;
 }
 
-void tr::renderer_2d::state_t::setup_context()
+void tr::gfx::renderer_2d::state_t::setup_context()
 {
-	if (gfx_context::current_renderer() != RENDERER_2D) {
-		gfx_context::set_renderer(RENDERER_2D);
-		gfx_context::set_shader_pipeline(pipeline);
-		gfx_context::set_blend_mode(last_blend_mode);
-		gfx_context::set_vertex_format(vertex2_format());
+	if (current_renderer() != RENDERER_2D) {
+		set_renderer(RENDERER_2D);
+		set_shader_pipeline(pipeline);
+		set_blend_mode(last_blend_mode);
+		set_vertex_format(vertex2_format());
 	}
 }
 
-std::vector<tr::renderer_2d::mesh_draw_info> tr::renderer_2d::state_t::upload_meshes(std::vector<mesh>::iterator first,
-																					 std::vector<mesh>::iterator last)
+std::vector<tr::gfx::renderer_2d::mesh_draw_info> tr::gfx::renderer_2d::state_t::upload_meshes(std::vector<mesh>::iterator first,
+																							   std::vector<mesh>::iterator last)
 {
 	std::vector<mesh_draw_info> mesh_borders;
 	mesh_borders.emplace_back(0, 0);
@@ -179,11 +179,11 @@ std::vector<tr::renderer_2d::mesh_draw_info> tr::renderer_2d::state_t::upload_me
 		ibuffer.set_region(start.index_offset, mesh.indices);
 		mesh_borders.emplace_back(start.vertex_offset + mesh.positions.size(), start.index_offset + mesh.indices.size());
 	}
-	gfx_context::set_index_buffer(ibuffer);
+	set_index_buffer(ibuffer);
 	return mesh_borders;
 }
 
-void tr::renderer_2d::state_t::setup_draw_call_state(texture_ref texture, const glm::mat4& transform, const blend_mode& blend_mode)
+void tr::gfx::renderer_2d::state_t::setup_draw_call_state(texture_ref texture, const glm::mat4& transform, const blend_mode& blend_mode)
 {
 	tex_unit.set_texture(texture);
 	if (last_transform != transform) {
@@ -192,27 +192,27 @@ void tr::renderer_2d::state_t::setup_draw_call_state(texture_ref texture, const 
 	}
 	if (last_blend_mode != blend_mode) {
 		last_blend_mode = blend_mode;
-		gfx_context::set_blend_mode(last_blend_mode);
+		set_blend_mode(last_blend_mode);
 	}
 }
 
-void tr::renderer_2d::state_t::draw(std::vector<mesh>::iterator first, std::vector<mesh>::iterator last, const render_target& target)
+void tr::gfx::renderer_2d::state_t::draw(std::vector<mesh>::iterator first, std::vector<mesh>::iterator last, const render_target& target)
 {
 	if (first == last) {
 		return;
 	};
 
 	setup_context();
-	gfx_context::set_render_target(target);
+	set_render_target(target);
 
 	const std::vector<mesh_draw_info> draw_info{upload_meshes(first, last)};
 	std::vector<mesh_draw_info>::const_iterator it{draw_info.begin()};
 	for (const mesh& mesh : std::ranges::subrange{first, last}) {
 		setup_draw_call_state(mesh.texture, mesh.mat, mesh.blend_mode);
-		gfx_context::set_vertex_buffer(vbuffer_positions, 0, it->vertex_offset);
-		gfx_context::set_vertex_buffer(vbuffer_uvs, 1, it->vertex_offset);
-		gfx_context::set_vertex_buffer(vbuffer_tints, 2, it->vertex_offset);
-		gfx_context::draw_indexed(primitive::TRIS, it->index_offset, std::next(it)->index_offset - it->index_offset);
+		set_vertex_buffer(vbuffer_positions, 0, it->vertex_offset);
+		set_vertex_buffer(vbuffer_uvs, 1, it->vertex_offset);
+		set_vertex_buffer(vbuffer_tints, 2, it->vertex_offset);
+		draw_indexed(primitive::TRIS, it->index_offset, std::next(it)->index_offset - it->index_offset);
 		++it;
 	}
 	meshes.erase(first, last);
@@ -220,42 +220,42 @@ void tr::renderer_2d::state_t::draw(std::vector<mesh>::iterator first, std::vect
 
 //
 
-void tr::renderer_2d::initialize()
+void tr::gfx::renderer_2d::initialize()
 {
 	TR_ASSERT(!state.has_value(), "Tried to reinitialize 2D renderer without shutting it down first.");
 
 	state.emplace();
 }
 
-void tr::renderer_2d::shut_down()
+void tr::gfx::renderer_2d::shut_down()
 {
 	state.reset();
 }
 
 //
 
-void tr::renderer_2d::set_default_transform(const glm::mat4& mat)
+void tr::gfx::renderer_2d::set_default_transform(const glm::mat4& mat)
 {
 	TR_ASSERT(state.has_value(), "Tried to set 2D renderer's default transform before initializing it.");
 
 	state->default_transform = mat;
 }
 
-void tr::renderer_2d::set_default_layer_texture(int layer, texture_ref texture)
+void tr::gfx::renderer_2d::set_default_layer_texture(int layer, texture_ref texture)
 {
 	TR_ASSERT(state.has_value(), "Tried to set a 2D renderer's layer's default texture before initializing the renderer.");
 
 	state->layer_defaults[layer].texture = texture;
 }
 
-void tr::renderer_2d::set_default_layer_transform(int layer, const glm::mat4& mat)
+void tr::gfx::renderer_2d::set_default_layer_transform(int layer, const glm::mat4& mat)
 {
 	TR_ASSERT(state.has_value(), "Tried to set a 2D renderer's layer's default transform before initializing the renderer.");
 
 	state->layer_defaults[layer].transform = mat;
 }
 
-void tr::renderer_2d::set_default_layer_blend_mode(int layer, const blend_mode& blend_mode)
+void tr::gfx::renderer_2d::set_default_layer_blend_mode(int layer, const blend_mode& blend_mode)
 {
 	TR_ASSERT(state.has_value(), "Tried to set a 2D renderer's layer's default blend mode before initializing the renderer.");
 
@@ -264,7 +264,7 @@ void tr::renderer_2d::set_default_layer_blend_mode(int layer, const blend_mode& 
 
 //
 
-tr::simple_color_mesh_ref tr::renderer_2d::new_color_fan(int layer, std::size_t vertices)
+tr::gfx::simple_color_mesh_ref tr::gfx::renderer_2d::new_color_fan(int layer, std::size_t vertices)
 {
 	TR_ASSERT(state.has_value(), "Tried to allocate a new color fan before initializing the 2D renderer.");
 
@@ -279,8 +279,8 @@ tr::simple_color_mesh_ref tr::renderer_2d::new_color_fan(int layer, std::size_t 
 	}
 }
 
-tr::simple_color_mesh_ref tr::renderer_2d::new_color_fan(int layer, std::size_t vertices, const glm::mat4& mat,
-														 const blend_mode& blend_mode)
+tr::gfx::simple_color_mesh_ref tr::gfx::renderer_2d::new_color_fan(int layer, std::size_t vertices, const glm::mat4& mat,
+																   const blend_mode& blend_mode)
 {
 	TR_ASSERT(state.has_value(), "Tried to allocate a new color fan before initializing the 2D renderer.");
 
@@ -294,7 +294,7 @@ tr::simple_color_mesh_ref tr::renderer_2d::new_color_fan(int layer, std::size_t 
 	return {{mesh.positions.end() - vertices, mesh.positions.end()}, {mesh.tints.end() - vertices, mesh.tints.end()}};
 }
 
-tr::simple_color_mesh_ref tr::renderer_2d::new_color_outline(int layer, std::size_t vertices)
+tr::gfx::simple_color_mesh_ref tr::gfx::renderer_2d::new_color_outline(int layer, std::size_t vertices)
 {
 	TR_ASSERT(state.has_value(), "Tried to allocate a new color outline before initializing the 2D renderer.");
 
@@ -309,8 +309,8 @@ tr::simple_color_mesh_ref tr::renderer_2d::new_color_outline(int layer, std::siz
 	}
 }
 
-tr::simple_color_mesh_ref tr::renderer_2d::new_color_outline(int layer, std::size_t vertices, const glm::mat4& mat,
-															 const blend_mode& blend_mode)
+tr::gfx::simple_color_mesh_ref tr::gfx::renderer_2d::new_color_outline(int layer, std::size_t vertices, const glm::mat4& mat,
+																	   const blend_mode& blend_mode)
 {
 	TR_ASSERT(state.has_value(), "Tried to allocate a new color outline before initializing the 2D renderer.");
 
@@ -327,7 +327,7 @@ tr::simple_color_mesh_ref tr::renderer_2d::new_color_outline(int layer, std::siz
 	};
 }
 
-tr::color_mesh_ref tr::renderer_2d::new_color_mesh(int layer, std::size_t vertices, std::size_t indices)
+tr::gfx::color_mesh_ref tr::gfx::renderer_2d::new_color_mesh(int layer, std::size_t vertices, std::size_t indices)
 {
 	TR_ASSERT(state.has_value(), "Tried to allocate a new color mesh before initializing the 2D renderer.");
 
@@ -342,8 +342,8 @@ tr::color_mesh_ref tr::renderer_2d::new_color_mesh(int layer, std::size_t vertic
 	}
 }
 
-tr::color_mesh_ref tr::renderer_2d::new_color_mesh(int layer, std::size_t vertices, std::size_t indices, const glm::mat4& mat,
-												   const blend_mode& blend_mode)
+tr::gfx::color_mesh_ref tr::gfx::renderer_2d::new_color_mesh(int layer, std::size_t vertices, std::size_t indices, const glm::mat4& mat,
+															 const blend_mode& blend_mode)
 {
 	TR_ASSERT(state.has_value(), "Tried to allocate a new color mesh before initializing the 2D renderer.");
 
@@ -362,7 +362,7 @@ tr::color_mesh_ref tr::renderer_2d::new_color_mesh(int layer, std::size_t vertic
 	};
 }
 
-tr::simple_textured_mesh_ref tr::renderer_2d::new_textured_fan(int layer, std::size_t vertices)
+tr::gfx::simple_textured_mesh_ref tr::gfx::renderer_2d::new_textured_fan(int layer, std::size_t vertices)
 {
 	TR_ASSERT(state.has_value(), "Tried to allocate a new textured fan before initializing the 2D renderer.");
 
@@ -377,7 +377,7 @@ tr::simple_textured_mesh_ref tr::renderer_2d::new_textured_fan(int layer, std::s
 	}
 }
 
-tr::simple_textured_mesh_ref tr::renderer_2d::new_textured_fan(int layer, std::size_t vertices, texture_ref texture)
+tr::gfx::simple_textured_mesh_ref tr::gfx::renderer_2d::new_textured_fan(int layer, std::size_t vertices, texture_ref texture)
 {
 	TR_ASSERT(state.has_value(), "Tried to allocate a new textured fan before initializing the 2D renderer.");
 	TR_ASSERT(texture != NO_TEXTURE, "Cannot pass NO_TEXTURE as texture for textured mesh.");
@@ -393,8 +393,8 @@ tr::simple_textured_mesh_ref tr::renderer_2d::new_textured_fan(int layer, std::s
 	}
 }
 
-tr::simple_textured_mesh_ref tr::renderer_2d::new_textured_fan(int layer, std::size_t vertices, texture_ref texture, const glm::mat4& mat,
-															   const blend_mode& blend_mode)
+tr::gfx::simple_textured_mesh_ref tr::gfx::renderer_2d::new_textured_fan(int layer, std::size_t vertices, texture_ref texture,
+																		 const glm::mat4& mat, const blend_mode& blend_mode)
 {
 	TR_ASSERT(state.has_value(), "Tried to allocate a new textured fan before initializing the 2D renderer.");
 	TR_ASSERT(texture != NO_TEXTURE, "Cannot pass NO_TEXTURE as texture for textured fan.");
@@ -412,7 +412,7 @@ tr::simple_textured_mesh_ref tr::renderer_2d::new_textured_fan(int layer, std::s
 	};
 }
 
-tr::textured_mesh_ref tr::renderer_2d::new_textured_mesh(int layer, std::size_t vertices, std::size_t indices)
+tr::gfx::textured_mesh_ref tr::gfx::renderer_2d::new_textured_mesh(int layer, std::size_t vertices, std::size_t indices)
 {
 	TR_ASSERT(state.has_value(), "Tried to allocate a new textured mesh before initializing the 2D renderer.");
 
@@ -427,7 +427,8 @@ tr::textured_mesh_ref tr::renderer_2d::new_textured_mesh(int layer, std::size_t 
 	}
 }
 
-tr::textured_mesh_ref tr::renderer_2d::new_textured_mesh(int layer, std::size_t vertices, std::size_t indices, texture_ref texture)
+tr::gfx::textured_mesh_ref tr::gfx::renderer_2d::new_textured_mesh(int layer, std::size_t vertices, std::size_t indices,
+																   texture_ref texture)
 {
 	TR_ASSERT(state.has_value(), "Tried to allocate a new textured mesh before initializing the 2D renderer.");
 	TR_ASSERT(texture != NO_TEXTURE, "Cannot pass NO_TEXTURE as texture for textured mesh.");
@@ -443,8 +444,8 @@ tr::textured_mesh_ref tr::renderer_2d::new_textured_mesh(int layer, std::size_t 
 	}
 }
 
-tr::textured_mesh_ref tr::renderer_2d::new_textured_mesh(int layer, std::size_t vertices, std::size_t indices, texture_ref texture,
-														 const glm::mat4& mat, const blend_mode& blend_mode)
+tr::gfx::textured_mesh_ref tr::gfx::renderer_2d::new_textured_mesh(int layer, std::size_t vertices, std::size_t indices,
+																   texture_ref texture, const glm::mat4& mat, const blend_mode& blend_mode)
 {
 	TR_ASSERT(state.has_value(), "Tried to allocate a new textured mesh before initializing the 2D renderer.");
 	TR_ASSERT(texture != NO_TEXTURE, "Cannot pass NO_TEXTURE as texture for textured mesh.");
@@ -466,7 +467,7 @@ tr::textured_mesh_ref tr::renderer_2d::new_textured_mesh(int layer, std::size_t 
 
 //
 
-void tr::renderer_2d::draw_layer(int layer, const render_target& target)
+void tr::gfx::renderer_2d::draw_layer(int layer, const render_target& target)
 {
 	TR_ASSERT(state.has_value(), "Tried to draw a layer before initializing the 2D renderer.");
 
@@ -474,13 +475,13 @@ void tr::renderer_2d::draw_layer(int layer, const render_target& target)
 	state->draw(range.begin(), range.end(), target);
 }
 
-void tr::renderer_2d::draw_up_to_layer(int max_layer, const render_target& target)
+void tr::gfx::renderer_2d::draw_up_to_layer(int max_layer, const render_target& target)
 {
 	auto last{std::ranges::upper_bound(state->meshes, max_layer, std::less{}, &mesh::layer)};
 	state->draw(state->meshes.begin(), last, target);
 }
 
-void tr::renderer_2d::draw(const render_target& target)
+void tr::gfx::renderer_2d::draw(const render_target& target)
 {
 	draw_up_to_layer(INT_MAX, target);
 }

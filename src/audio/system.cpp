@@ -46,9 +46,9 @@ void tr::audio::initialize()
 		alcCloseDevice(device);
 		throw init_error{"Failed to create audio context."};
 	}
-	int max_sources;
-	alcGetIntegerv(device, ALC_MONO_SOURCES, 1, &max_sources);
-	max_sources = static_cast<std::size_t>(max_sources);
+	int al_max_sources;
+	alcGetIntegerv(device, ALC_MONO_SOURCES, 1, &al_max_sources);
+	max_sources = static_cast<std::size_t>(al_max_sources);
 	gains.fill(1);
 }
 
@@ -213,17 +213,17 @@ void tr::audio::thread_fn(std::stop_token stoken)
 				ALint nbuffers;
 				TR_AL_CALL(alGetSourcei, source.m_id, AL_BUFFERS_PROCESSED, &nbuffers);
 				if (nbuffers > 0) {
-					std::array<ALuint, 4> buffers{};
-					TR_AL_CALL(alSourceUnqueueBuffers, source.m_id, nbuffers, buffers.data());
+					std::array<ALuint, 4> ids{};
+					TR_AL_CALL(alSourceUnqueueBuffers, source.m_id, nbuffers, ids.data());
 					for (int i = 0; i < nbuffers; ++i) {
 						if (!stream.stream->looping() && stream.stream->tell() == stream.stream->length()) {
 							nbuffers = i;
 							break;
 						}
-						refill(*stream.stream, *std::ranges::find(stream.buffers, buffers[i], &buffer_stream_buffer::id));
+						refill(*stream.stream, *std::ranges::find(stream.buffers, ids[i], &buffer_stream_buffer::id));
 					}
 					if (nbuffers > 0) {
-						TR_AL_CALL(alSourceQueueBuffers, source.m_id, nbuffers, buffers.data());
+						TR_AL_CALL(alSourceQueueBuffers, source.m_id, nbuffers, ids.data());
 					}
 				}
 				++it;

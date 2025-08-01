@@ -3,14 +3,16 @@
 #include "bitmap.hpp"
 
 namespace tr {
-	class texture_ref;
-	class render_target;
+	namespace gfx {
+		class texture_ref;
+		class render_target;
+	} // namespace gfx
 	namespace imgui {
-		std::uint64_t get_texture_id(texture_ref texture);
+		std::uint64_t get_texture_id(gfx::texture_ref texture);
 	}
 } // namespace tr
 
-namespace tr {
+namespace tr::gfx {
 	// Texture wrapping types.
 	enum class wrap {
 		REPEAT = 0x2901,        // The texture is repeated.
@@ -83,9 +85,9 @@ namespace tr {
 		};
 
 		// Handle to the OpenGL texture.
-		handle<unsigned int, 0, deleter> id;
+		handle<unsigned int, 0, deleter> m_id;
 		// The size of the texture.
-		glm::ivec2 size_;
+		glm::ivec2 m_size;
 
 		// Creates an unallocated texture.
 		texture();
@@ -112,7 +114,7 @@ namespace tr {
 
 	  private:
 		// The OpenGL ID of the texture (or 0).
-		unsigned int id{0};
+		unsigned int m_id{0};
 
 		friend class texture_unit;
 		friend std::uint64_t imgui::get_texture_id(texture_ref texture);
@@ -137,7 +139,7 @@ namespace tr {
 		// Gets a render target spanning the entire texture.
 		render_target render_target() const;
 		// Gets a render target spanning a region of the texture.
-		tr::render_target region_render_target(const irect2& rect) const;
+		gfx::render_target region_render_target(const irect2& rect) const;
 
 	  private:
 		struct fbo_deleter {
@@ -145,6 +147,6 @@ namespace tr {
 		};
 
 		// Handle to an OpenGL FBO.
-		handle<unsigned int, 0, fbo_deleter> fbo;
+		handle<unsigned int, 0, fbo_deleter> m_fbo;
 	};
-} // namespace tr
+} // namespace tr::gfx

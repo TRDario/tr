@@ -1,12 +1,7 @@
 #pragma once
 #include "shader.hpp"
 
-namespace tr {
-	class shader_pipeline;
-	namespace gfx_context {
-		void set_shader_pipeline(const shader_pipeline& pipeline);
-	}
-
+namespace tr::gfx {
 	// Shader program pipeline.
 	class shader_pipeline {
 	  public:
@@ -22,9 +17,9 @@ namespace tr {
 		};
 
 		// Handle to the OpenGL shader pipeline.
-		handle<unsigned int, 0, deleter> ppo;
+		handle<unsigned int, 0, deleter> m_ppo;
 
-		friend void gfx_context::set_shader_pipeline(const shader_pipeline& pipeline);
+		friend void set_shader_pipeline(const shader_pipeline& pipeline);
 	};
 
 	// Shader program pipeline that owns its shaders.
@@ -38,21 +33,21 @@ namespace tr {
 		// Gets the vertex shader.
 		vertex_shader& vertex_shader();
 		// Gets the vertex shader.
-		const tr::vertex_shader& vertex_shader() const;
+		const gfx::vertex_shader& vertex_shader() const;
 		// Gets the fragment shader.
 		fragment_shader& fragment_shader();
 		// Gets the fragment shader.
-		const tr::fragment_shader& fragment_shader() const;
+		const gfx::fragment_shader& fragment_shader() const;
 
 		// Sets the debug label of the pipeline.
 		void set_label(std::string_view label);
 
 	  private:
 		// The vertex shader.
-		tr::vertex_shader vshader;
+		gfx::vertex_shader m_vshader;
 		// The fragment shader.
-		tr::fragment_shader fshader;
+		gfx::fragment_shader m_fshader;
 		// The base shader pipeline.
-		shader_pipeline base;
+		shader_pipeline m_base;
 	};
-} // namespace tr
+} // namespace tr::gfx

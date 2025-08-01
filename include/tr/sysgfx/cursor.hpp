@@ -7,10 +7,9 @@ namespace tr {
 	class bitmap;
 	class bitmap_view;
 	class cursor;
-	namespace mouse {
-		void set_cursor(const cursor& cursor);
-	}
+} // namespace tr
 
+namespace tr::system {
 	// System mouse cursor icons.
 	enum class sys_cursor {
 		ARROW,      // Default arrow cursor.
@@ -50,16 +49,16 @@ namespace tr {
 		};
 
 		// Handle to the SDL cursor.
-		std::unique_ptr<SDL_Cursor, deleter> ptr;
+		std::unique_ptr<SDL_Cursor, deleter> m_ptr;
 
-		friend void mouse::set_cursor(const cursor& cursor);
+		friend void set_cursor(const cursor& cursor);
 	};
-} // namespace tr
+} // namespace tr::system
 
 ///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
 
 template <std::ranges::contiguous_range R1, std::ranges::contiguous_range R2>
-tr::cursor::cursor(R1&& color, R2&& mask, glm::ivec2 size, glm::ivec2 focus)
+tr::system::cursor::cursor(R1&& color, R2&& mask, glm::ivec2 size, glm::ivec2 focus)
 	: cursor{range_bytes(color), range_bytes(mask), size, focus}
 {
 }

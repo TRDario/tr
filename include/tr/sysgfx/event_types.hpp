@@ -1,7 +1,7 @@
 #pragma once
 #include "../utility/common.hpp"
 
-namespace tr {
+namespace tr::system {
 	class event;
 
 	// ID of the first user defined event.
@@ -92,14 +92,14 @@ namespace tr {
 
 	  private:
 		// Storage for SDL_Event.
-		alignas(8) std::byte buffer[128];
+		alignas(8) std::byte m_buffer[128];
 	};
-} // namespace tr
+} // namespace tr::system
 
 ///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
 
 template <class T1, class T2>
-tr::custom_event_base::custom_event_base(std::uint32_t type, std::uint32_t uint, std::int32_t sint, T1&& any1, T2&& any2)
+tr::system::custom_event_base::custom_event_base(std::uint32_t type, std::uint32_t uint, std::int32_t sint, T1&& any1, T2&& any2)
 	: custom_event_base{type, uint, sint, std::any{std::forward<T1>(any1)}, std::any{std::forward<T2>(any2)}}
 {
 }

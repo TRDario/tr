@@ -2,20 +2,21 @@
 #include "../utility/macro.hpp"
 #include "glad.h"
 
-namespace tr {
+namespace tr::gfx {
 	// Validates an OpenGL call and kills the application if it fails.
 	void validate_gl_call(const char* file, int line, const char* function);
 	// Validates an OpenGL call and kills the application if it fails.
 	inline auto validate_returning_gl_call(const char* file, int line, const char* function, auto value);
-} // namespace tr
+} // namespace tr::gfx
 
 #ifdef TR_ENABLE_ASSERTS
 #define TR_GL_CALL_IMPL(file, line, function, ...)                                                                                         \
 	do {                                                                                                                                   \
 		function(__VA_ARGS__);                                                                                                             \
-		tr::validate_gl_call(file, line, #function);                                                                                       \
+		tr::gfx::validate_gl_call(file, line, #function);                                                                                  \
 	} while (0)
-#define TR_RETURNING_GL_CALL_IMPL(file, line, function, ...) tr::validate_returning_gl_call(file, line, #function, function(__VA_ARGS__))
+#define TR_RETURNING_GL_CALL_IMPL(file, line, function, ...)                                                                               \
+	tr::gfx::validate_returning_gl_call(file, line, #function, function(__VA_ARGS__))
 #define TR_GL_CALL(function, ...) TR_GL_CALL_IMPL(TR_FILENAME, __LINE__, function, __VA_ARGS__)
 #define TR_RETURNING_GL_CALL(function, ...) TR_RETURNING_GL_CALL_IMPL(TR_FILENAME, __LINE__, function, __VA_ARGS__)
 #else
@@ -25,7 +26,7 @@ namespace tr {
 
 ///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
 
-inline auto tr::validate_returning_gl_call(const char* file, int line, const char* function, auto value)
+inline auto tr::gfx::validate_returning_gl_call(const char* file, int line, const char* function, auto value)
 {
 	validate_gl_call(file, line, function);
 	return value;

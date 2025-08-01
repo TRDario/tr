@@ -1,12 +1,12 @@
 #pragma once
 #include "../utility/exception.hpp"
 
-namespace tr {
+namespace tr::system {
 	// Error thrown when system initialization fails.
-	class system_initialization_error : public tr::exception {
+	class init_error : public tr::exception {
 	  public:
 		// Constructs an exception.
-		system_initialization_error(std::string_view description);
+		init_error(std::string_view description);
 
 		// Gets the name of the error.
 		std::string_view name() const override;
@@ -21,6 +21,6 @@ namespace tr {
 	};
 
 	// Sets up the basic application info.
-	// May throw: system_initialization_error.
-	void initialize_application(const char* developer, const char* name);
-} // namespace tr
+	// May throw: init_error.
+	void initialize(const char* developer, const char* name);
+} // namespace tr::system

@@ -1,7 +1,7 @@
 #pragma once
 #include "keyboard.hpp"
 
-namespace tr {
+namespace tr::system {
 	class event;
 
 	// Event emitted when a key is pressed.
@@ -57,4 +57,4 @@ namespace tr {
 		// Converts a generic event into a text input event.
 		text_input_event(const event& event);
 	};
-} // namespace tr
+} // namespace tr::system

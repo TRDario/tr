@@ -109,7 +109,7 @@ void tr::audio::source_base::use(std::unique_ptr<stream>&& stream)
 {
 	lock_audio_mutex();
 	clear();
-	this->m_stream.emplace(std::move(stream));
+	m_stream.emplace(std::move(stream));
 	unlock_audio_mutex();
 }
 

@@ -1,11 +1,9 @@
 #pragma once
 #include "../utility/handle.hpp"
 
-namespace tr {
+namespace tr::gfx {
 	class texture_ref;
-} // namespace tr
 
-namespace tr {
 	// A texture unit onto which textures can be bound.
 	class texture_unit {
 	  public:
@@ -21,11 +19,11 @@ namespace tr {
 		};
 
 		// Handle to the ID of the texture unit.
-		handle<unsigned int, std::numeric_limits<unsigned int>::max(), deleter> unit;
+		handle<unsigned int, std::numeric_limits<unsigned int>::max(), deleter> m_unit;
 
 		friend class shader_base;
 	};
 
 	// Replaces all bindings of a certain texture with another.
 	void replace_texture_bindings(texture_ref old, texture_ref fresh);
-} // namespace tr
+} // namespace tr::gfx

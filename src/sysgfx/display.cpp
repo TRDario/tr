@@ -2,7 +2,7 @@
 #include "../../include/tr/sysgfx/impl.hpp"
 #include <SDL3/SDL.h>
 
-glm::ivec2 tr::display_size()
+glm::ivec2 tr::system::display_size()
 {
 	TR_ASSERT(SDL_WasInit(0), "Tried to get display size before initializing the application.");
 
@@ -10,7 +10,7 @@ glm::ivec2 tr::display_size()
 	return {mode.w, mode.h};
 }
 
-std::uint8_t tr::max_msaa()
+std::uint8_t tr::system::max_msaa()
 {
 	TR_ASSERT(SDL_WasInit(0), "Tried to get max MSAA before initializing the application.");
 
@@ -49,14 +49,14 @@ std::uint8_t tr::max_msaa()
 			}
 		}
 
-		if (ogl_context != nullptr) {
-			SDL_GL_MakeCurrent(sdl_window, ogl_context);
+		if (gfx::ogl_context != nullptr) {
+			SDL_GL_MakeCurrent(sdl_window, gfx::ogl_context);
 		}
 	}
 	return max;
 }
 
-float tr::refresh_rate()
+float tr::system::refresh_rate()
 {
 	TR_ASSERT(SDL_WasInit(0), "Tried to get refresh rate before initializing the application.");
 

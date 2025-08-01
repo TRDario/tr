@@ -4,62 +4,62 @@
 #include "../../include/tr/sysgfx/impl.hpp"
 #include <SDL3/SDL.h>
 
-glm::ivec2 tr::backbuffer::size()
+glm::ivec2 tr::gfx::backbuffer_size()
 {
-	TR_ASSERT(sdl_window != nullptr, "Tried to get the size of the backbuffer before opening the window.");
+	TR_ASSERT(system::sdl_window != nullptr, "Tried to get the size of the backbuffer before opening the window.");
 
 	glm::ivec2 size;
-	SDL_GetWindowSizeInPixels(sdl_window, &size.x, &size.y);
+	SDL_GetWindowSizeInPixels(system::sdl_window, &size.x, &size.y);
 	return size;
 }
 
-tr::render_target tr::backbuffer::render_target()
+tr::gfx::render_target tr::gfx::backbuffer_render_target()
 {
-	return tr::render_target{0, {{}, size()}};
+	return render_target{0, {{}, backbuffer_size()}};
 }
 
-tr::render_target tr::backbuffer::region_render_target(const irect2& rect)
+tr::gfx::render_target tr::gfx::backbuffer_region_render_target(const irect2& rect)
 {
-	TR_ASSERT(irect2{size()}.contains(rect.tl + rect.size),
+	TR_ASSERT(irect2{backbuffer_size()}.contains(rect.tl + rect.size),
 			  "Tried to create render target for out-of-bounds region from ({}, {}) to ({}, {}) in a backbuffer with size {}x{}.",
-			  rect.tl.x, rect.tl.y, rect.tl.x + rect.size.x, rect.tl.y + rect.size.y, size().x, size().y);
+			  rect.tl.x, rect.tl.y, rect.tl.x + rect.size.x, rect.tl.y + rect.size.y, backbuffer_size().x, backbuffer_size().y);
 
-	return tr::render_target{0, rect};
+	return render_target{0, rect};
 }
 
-void tr::backbuffer::clear(const tr::rgbaf& color)
+void tr::gfx::clear_backbuffer(const tr::rgbaf& color)
 {
-	gfx_context::set_render_target(render_target());
+	set_render_target(backbuffer_render_target());
 	TR_GL_CALL(glClearColor, color.r, color.g, color.b, color.a);
 	TR_GL_CALL(glClear, GL_COLOR_BUFFER_BIT);
 }
 
-void tr::backbuffer::clear(const tr::rgbaf& color, double depth, int stencil)
+void tr::gfx::clear_backbuffer(const tr::rgbaf& color, double depth, int stencil)
 {
-	gfx_context::set_render_target(render_target());
+	set_render_target(backbuffer_render_target());
 	TR_GL_CALL(glClearColor, color.r, color.g, color.b, color.a);
 	TR_GL_CALL(glClearDepth, depth);
 	TR_GL_CALL(glClearStencil, stencil);
 	TR_GL_CALL(glClear, GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 }
 
-void tr::backbuffer::clear_region(const tr::irect2& rect, const tr::rgbaf& color)
+void tr::gfx::clear_backbuffer_region(const tr::irect2& rect, const tr::rgbaf& color)
 {
-	gfx_context::set_render_target(region_render_target(rect));
+	set_render_target(backbuffer_region_render_target(rect));
 	TR_GL_CALL(glClearColor, color.r, color.g, color.b, color.a);
 	TR_GL_CALL(glClear, GL_COLOR_BUFFER_BIT);
 }
 
-void tr::backbuffer::clear_region(const tr::irect2& rect, const tr::rgbaf& color, double depth, int stencil)
+void tr::gfx::clear_backbuffer_region(const tr::irect2& rect, const tr::rgbaf& color, double depth, int stencil)
 {
-	gfx_context::set_render_target(region_render_target(rect));
+	set_render_target(backbuffer_region_render_target(rect));
 	TR_GL_CALL(glClearColor, color.r, color.g, color.b, color.a);
 	TR_GL_CALL(glClearDepth, depth);
 	TR_GL_CALL(glClearStencil, stencil);
 	TR_GL_CALL(glClear, GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 }
 
-void tr::backbuffer::flip()
+void tr::gfx::flip_backbuffer()
 {
-	SDL_GL_SwapWindow(sdl_window);
+	SDL_GL_SwapWindow(system::sdl_window);
 }

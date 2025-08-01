@@ -4,21 +4,11 @@
 namespace tr {
 	class bitmap;
 	class bitmap_view;
+} // namespace tr
 
-	// Window flag bitmasks.
-	enum class window_flag : std::uint32_t {
-		DEFAULT = 0x0,         // Default flags.
-		BORDERLESS = 0x10,     // The window has no decoration (topbar, etc.).
-		RESIZABLE = 0x20,      // The window is resizable.
-		MINIMIZED = 0x40,      // The window is minimized.
-		MAXIMIZED = 0x80,      // The window is maximized.
-		GRAB_INPUT = 0x200,    // The window has grabbed input focus.
-		ALWAYS_ON_TOP = 0x8000 // The window is always on top.
-	};
-	DEFINE_BITMASK_OPERATORS(window_flag);
-
+namespace tr::gfx {
 	// Graphics context properties.
-	struct gfx_properties {
+	struct properties {
 		// Whether a debug context should be used.
 		bool debug_context = false;
 		// Whether to use double buffering.
@@ -30,6 +20,20 @@ namespace tr {
 		// The number of samples used around a pixel for multisampled anti-aliasing.
 		std::uint8_t multisamples = 0;
 	};
+} // namespace tr::gfx
+
+namespace tr::system {
+	// Window flag bitmasks.
+	enum class window_flag : std::uint32_t {
+		DEFAULT = 0x0,         // Default flags.
+		BORDERLESS = 0x10,     // The window has no decoration (topbar, etc.).
+		RESIZABLE = 0x20,      // The window is resizable.
+		MINIMIZED = 0x40,      // The window is minimized.
+		MAXIMIZED = 0x80,      // The window is maximized.
+		GRAB_INPUT = 0x200,    // The window has grabbed input focus.
+		ALWAYS_ON_TOP = 0x8000 // The window is always on top.
+	};
+	DEFINE_BITMASK_OPERATORS(window_flag);
 
 	// Flash operations.
 	enum class flash_operation {
@@ -45,61 +49,58 @@ namespace tr {
 		ENABLED        // Vsync is enabled.
 	};
 
-	// The main application window.
-	namespace window {
-		// Opens a windowed window.
-		// May throw: system_initialization_error.
-		void open_windowed(const char* title, glm::ivec2 size, window_flag flags = window_flag::DEFAULT,
-						   const gfx_properties& gfx_properties = {});
-		// Opens a fullscreen window.
-		// May throw: system_initialization_error.
-		void open_fullscreen(const char* title, window_flag flags = window_flag::DEFAULT, const gfx_properties& gfx_properties = {});
-		// Closes the window.
-		void close();
+	// Opens a windowed window.
+	// May throw: init_error.
+	void open_window(const char* title, glm::ivec2 size, window_flag flags = window_flag::DEFAULT,
+					 const gfx::properties& gfx_properties = {});
+	// Opens a fullscreen window.
+	// May throw: init_error.
+	void open_fullscreen_window(const char* title, window_flag flags = window_flag::DEFAULT, const gfx::properties& gfx_properties = {});
+	// Closes the window.
+	void close_window();
 
-		// Gets the title of the window.
-		const char* title();
-		// Sets the title of the window.
-		void set_title(const char* title);
-		// Sets the title of the window.
-		void set_title(const std::string& title);
+	// Gets the title of the window.
+	const char* window_title();
+	// Sets the title of the window.
+	void set_window_title(const char* title);
+	// Sets the title of the window.
+	void set_window_title(const std::string& title);
 
-		// Sets the icon of the window.
-		void set_icon(const bitmap& bitmap);
-		// Sets the icon of the window.
-		void set_icon(const bitmap_view& view);
+	// Sets the icon of the window.
+	void set_window_icon(const bitmap& bitmap);
+	// Sets the icon of the window.
+	void set_window_icon(const bitmap_view& view);
 
-		// Gets the size of the window.
-		glm::ivec2 size();
-		// Gets the window's pixel density factor.
-		float pixel_density();
-		// Sets the size of the window.
-		void set_size(glm::ivec2 size);
+	// Gets the size of the window.
+	glm::ivec2 window_size();
+	// Gets the window's pixel density factor.
+	float window_pixel_density();
+	// Sets the size of the window.
+	void set_window_size(glm::ivec2 size);
 
-		// Gets whether the window is fullscreen or not.
-		bool fullscreen();
-		// Sets whether the window is fullscreen or not.
-		void set_fullscreen(bool fullscreen);
+	// Gets whether the window is fullscreen or not.
+	bool window_fullscreen();
+	// Sets whether the window is fullscreen or not.
+	void set_window_fullscreen(bool fullscreen);
 
-		// Unhides the window.
-		void show();
-		// Hides the window.
-		void hide();
+	// Unhides the window.
+	void show_window();
+	// Hides the window.
+	void hide_window();
 
-		// Gets whether the window is maximized.
-		bool maximized();
-		// Gets whether the window is minimized.
-		bool minimized();
-		// Gets whether the window has input focus.
-		bool has_focus();
+	// Gets whether the window is maximized.
+	bool window_maximized();
+	// Gets whether the window is minimized.
+	bool window_minimized();
+	// Gets whether the window has input focus.
+	bool window_has_focus();
 
-		// Sets whether the mouse is grabbed and confined to this window.
-		void set_mouse_grab(bool grab);
+	// Sets whether the mouse is grabbed and confined to this window.
+	void set_window_mouse_grab(bool grab);
 
-		// Flashes the window to get the user's attention.
-		void flash(flash_operation operation);
+	// Flashes the window to get the user's attention.
+	void flash_window(flash_operation operation);
 
-		// Sets the window's V-sync mode.
-		void set_vsync(vsync vsync);
-	}; // namespace window
-} // namespace tr
+	// Sets the window's V-sync mode.
+	void set_window_vsync(vsync vsync);
+} // namespace tr::system

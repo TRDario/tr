@@ -10,9 +10,9 @@ namespace tr {
 
 	  private:
 		// A pointer to the pixel data.
-		const std::byte* ptr;
+		const std::byte* m_ptr;
 		// The format of the pixel.
-		pixel_format format;
+		pixel_format m_format;
 
 		pixel_ref() = default;
 		pixel_ref(const std::byte* ptr, pixel_format format);
@@ -86,13 +86,13 @@ namespace tr {
 
 	  private:
 		// Reference to a pixel, needed for the pointer dereference.
-		pixel_ref pixel;
+		pixel_ref m_pixel;
 		// The size of the pointed-to bitmap.
-		glm::ivec2 bitmap_size;
+		glm::ivec2 m_bitmap_size;
 		// The pitch of the pointed-to-bitmap.
-		int bitmap_pitch;
+		int m_bitmap_pitch;
 		// The position of the iterator within the bitmap.
-		glm::ivec2 bitmap_pos;
+		glm::ivec2 m_bitmap_pos;
 	};
 
 	// Mutable reference to a bitmap pixel.
@@ -105,9 +105,9 @@ namespace tr {
 
 	  private:
 		// A pointer to the pixel data.
-		std::byte* ptr;
+		std::byte* m_ptr;
 		// The format of the pixel.
-		pixel_format format;
+		pixel_format m_format;
 
 		pixel_ref() = default;
 		pixel_ref(std::byte* ptr, pixel_format format);
@@ -180,10 +180,10 @@ namespace tr {
 
 	  private:
 		// Reference to a pixel, needed for the pointer dereference.
-		pixel_ref pixel;
+		pixel_ref m_pixel;
 		// The pointed-to-bitmap.
-		bitmap* bitmap;
+		bitmap* m_bitmap;
 		// The position of the iterator within the bitmap.
-		glm::ivec2 bitmap_pos;
+		glm::ivec2 m_bitmap_pos;
 	};
 } // namespace tr

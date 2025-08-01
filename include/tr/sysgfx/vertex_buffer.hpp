@@ -2,18 +2,7 @@
 #include "../utility/handle.hpp"
 #include "../utility/ranges.hpp"
 
-namespace tr {
-	class vertex_format;
-}
-
-namespace tr {
-	class basic_static_vertex_buffer;
-	class basic_dyn_vertex_buffer;
-	namespace gfx_context {
-		void set_vertex_buffer(const basic_static_vertex_buffer& buffer, int slot, std::intptr_t offset, std::size_t stride);
-		void set_vertex_buffer(const basic_dyn_vertex_buffer& buffer, int slot, std::intptr_t offset, std::size_t stride);
-	} // namespace gfx_context
-
+namespace tr::gfx {
 	// Static vertex buffer class for holding immutable vertex data.
 	class basic_static_vertex_buffer {
 	  public:
@@ -29,12 +18,11 @@ namespace tr {
 		};
 
 		// Handle to the OpenGL buffer.
-		handle<unsigned int, 0, deleter> vbo;
+		handle<unsigned int, 0, deleter> m_vbo;
 		// The size of the vertex buffer.
-		std::intptr_t size;
+		std::intptr_t m_size;
 
-		friend void gfx_context::set_vertex_buffer(const basic_static_vertex_buffer& buffer, int slot, std::intptr_t offset,
-												   std::size_t stride);
+		friend void set_vertex_buffer(const basic_static_vertex_buffer& buffer, int slot, std::intptr_t offset, std::size_t stride);
 	};
 
 	// Typed static vertex buffer class for holding immutable vertex data of a single type.
@@ -79,16 +67,15 @@ namespace tr {
 		};
 
 		// Handle to the OpenGL buffer.
-		handle<unsigned int, 0, deleter> vbo;
+		handle<unsigned int, 0, deleter> m_vbo;
 		// The used size of the buffer.
-		std::size_t size_;
+		std::size_t m_size;
 		// The capacity of the buffer.
-		std::size_t capacity_;
+		std::size_t m_capacity;
 		// The label of the vertex buffer.
-		std::string label;
+		std::string m_label;
 
-		friend void gfx_context::set_vertex_buffer(const basic_dyn_vertex_buffer& buffer, int slot, std::intptr_t offset,
-												   std::size_t stride);
+		friend void set_vertex_buffer(const basic_dyn_vertex_buffer& buffer, int slot, std::intptr_t offset, std::size_t stride);
 	};
 
 	// Typed dynamic vertex buffer class.
@@ -117,45 +104,45 @@ namespace tr {
 		using basic_dyn_vertex_buffer::set_region;
 		using basic_dyn_vertex_buffer::size;
 	};
-} // namespace tr
+} // namespace tr::gfx
 
 ///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
 
 template <tr::standard_layout T>
 template <tr::typed_contiguous_range<T> R>
-tr::static_vertex_buffer<T>::static_vertex_buffer(R&& range)
+tr::gfx::static_vertex_buffer<T>::static_vertex_buffer(R&& range)
 	: basic_static_vertex_buffer{range_bytes(range)}
 {
 }
 
-template <tr::standard_layout T> std::size_t tr::dyn_vertex_buffer<T>::size() const
+template <tr::standard_layout T> std::size_t tr::gfx::dyn_vertex_buffer<T>::size() const
 {
 	return basic_dyn_vertex_buffer::size() / sizeof(T);
 }
 
-template <tr::standard_layout T> std::size_t tr::dyn_vertex_buffer<T>::capacity() const
+template <tr::standard_layout T> std::size_t tr::gfx::dyn_vertex_buffer<T>::capacity() const
 {
 	return basic_dyn_vertex_buffer::capacity() / sizeof(T);
 }
 
-template <tr::standard_layout T> void tr::dyn_vertex_buffer<T>::resize(std::size_t size)
+template <tr::standard_layout T> void tr::gfx::dyn_vertex_buffer<T>::resize(std::size_t size)
 {
 	basic_dyn_vertex_buffer::resize(size * sizeof(T));
 }
 
-template <tr::standard_layout T> void tr::dyn_vertex_buffer<T>::reserve(std::size_t size)
+template <tr::standard_layout T> void tr::gfx::dyn_vertex_buffer<T>::reserve(std::size_t size)
 {
 	basic_dyn_vertex_buffer::reserve(size * sizeof(T));
 }
 
-template <tr::standard_layout T> template <tr::typed_contiguous_range<T> R> void tr::dyn_vertex_buffer<T>::set(R&& data)
+template <tr::standard_layout T> template <tr::typed_contiguous_range<T> R> void tr::gfx::dyn_vertex_buffer<T>::set(R&& data)
 {
 	basic_dyn_vertex_buffer::set(range_bytes(data));
 }
 
 template <tr::standard_layout T>
 template <tr::typed_contiguous_range<T> R>
-void tr::dyn_vertex_buffer<T>::set_region(std::size_t offset, R&& data)
+void tr::gfx::dyn_vertex_buffer<T>::set_region(std::size_t offset, R&& data)
 {
 	basic_dyn_vertex_buffer::set_region(offset * sizeof(T), range_bytes(data));
 }

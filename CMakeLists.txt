@@ -26,6 +26,7 @@ if((CMAKE_CXX_COMPILER_ID STREQUAL "Clang" AND NOT (CMAKE_CXX_SIMULATE_ID STREQU
 		-Wall
 		-Wextra
 		-Wpedantic
+		-Wshadow
 		-fno-trapping-math
 		-fno-math-errno
 		-fno-signed-zeros
@@ -37,6 +38,7 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Clang" AND CMAKE_CXX_SIMULATE_ID STREQUAL
 		/clang:-Wall
 		/clang:-Wextra
 		/clang:-Wpedantic
+		/clang:-Wshadow
 		/clang:-fno-trapping-math
 		/clang:-fno-math-errno
 		/clang:-fno-signed-zeros
@@ -74,7 +76,6 @@ target_sources(tr PRIVATE
 target_link_libraries(tr glm::glm lz4::lz4)
 if(TR_BUILD_SYSGFX)
 	target_sources(tr PRIVATE
-		src/sysgfx/impl.cpp
 		src/sysgfx/gl_call.cpp
 		src/sysgfx/glad.cpp
 		src/sysgfx/backbuffer.cpp

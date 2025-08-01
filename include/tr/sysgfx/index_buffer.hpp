@@ -1,14 +1,7 @@
 #pragma once
 #include "../utility/handle.hpp"
 
-namespace tr {
-	class static_index_buffer;
-	class dyn_index_buffer;
-	namespace gfx_context {
-		void set_index_buffer(const static_index_buffer& buffer);
-		void set_index_buffer(const dyn_index_buffer& buffer);
-	} // namespace gfx_context
-
+namespace tr::gfx {
 	// Concept defining a contiguous range that can be passed to index buffer functions.
 	template <class Range>
 	concept index_range = typed_contiguous_range<Range, std::uint16_t>;
@@ -28,11 +21,11 @@ namespace tr {
 		};
 
 		// Handle to the OpenGL buffer.
-		handle<unsigned int, 0, deleter> ibo;
+		handle<unsigned int, 0, deleter> m_ibo;
 		// The size of the buffer.
 		std::intptr_t size;
 
-		friend void gfx_context::set_index_buffer(const static_index_buffer& buffer);
+		friend void set_index_buffer(const static_index_buffer& buffer);
 	};
 
 	// Dynamic index buffer class.
@@ -70,14 +63,14 @@ namespace tr {
 		};
 
 		// Handle to the OpenGL buffer.
-		handle<unsigned int, 0, deleter> ibo;
+		handle<unsigned int, 0, deleter> m_ibo;
 		// The used size of the buffer.
-		std::size_t size_;
+		std::size_t m_size;
 		// The capacity of the buffer.
-		std::size_t capacity_;
+		std::size_t m_capacity;
 		// The label of the index buffer.
-		std::string label;
+		std::string m_label;
 
-		friend void gfx_context::set_index_buffer(const dyn_index_buffer& buffer);
+		friend void set_index_buffer(const dyn_index_buffer& buffer);
 	};
-} // namespace tr
+} // namespace tr::gfx

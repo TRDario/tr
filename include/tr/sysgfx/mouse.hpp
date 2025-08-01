@@ -1,7 +1,7 @@
 #pragma once
 #include "../utility/common.hpp"
 
-namespace tr {
+namespace tr::system {
 	class cursor;
 
 	// Mouse buttons (may be ORed together).
@@ -15,15 +15,12 @@ namespace tr {
 	};
 	DEFINE_BITMASK_OPERATORS(mouse_button);
 
-	// Mouse functionality.
-	namespace mouse {
-		// Sets whether relative mouse mode is enabled.
-		void set_relative_mode(bool relative);
-		// Sets whether the mouse is captured.
-		void set_captured(bool captured);
-		// Sets whether the mouse cursor is visible.
-		void show_cursor(bool show);
-		// Sets the mouse cursor.
-		void set_cursor(const cursor& cursor);
-	}; // namespace mouse
-} // namespace tr
+	// Sets whether relative mouse mode is enabled.
+	void set_mouse_relative_mode(bool relative);
+	// Sets whether the mouse is captured.
+	void set_mouse_captured(bool captured);
+	// Sets whether the mouse cursor is visible.
+	void show_cursor(bool show);
+	// Sets the mouse cursor.
+	void set_cursor(const cursor& cursor);
+} // namespace tr::system

@@ -10,7 +10,7 @@ std::uint32_t tr::drop_state::type() const
 	return std::numeric_limits<std::uint32_t>::max();
 }
 
-std::unique_ptr<tr::state> tr::drop_state::handle_event(const event&)
+std::unique_ptr<tr::state> tr::drop_state::handle_event(const system::event&)
 {
 	return nullptr;
 }
@@ -29,15 +29,15 @@ tr::state_manager::state_manager(std::unique_ptr<tr::state>&& state)
 
 const tr::benchmark& tr::state_manager::update_benchmark() const
 {
-	return update_bench;
+	return m_update;
 }
 
 const tr::benchmark& tr::state_manager::draw_benchmark() const
 {
-	return draw_bench;
+	return m_draw;
 }
 
-void tr::state_manager::handle_event(const event& event)
+void tr::state_manager::handle_event(const system::event& event)
 {
 	if (state != nullptr) {
 		std::unique_ptr<tr::state> next{state->handle_event(event)};
@@ -50,13 +50,13 @@ void tr::state_manager::handle_event(const event& event)
 void tr::state_manager::update(duration delta)
 {
 	if (state != nullptr) {
-		update_bench.start();
+		m_update.start();
 		std::unique_ptr<tr::state> next{state->update(delta)};
-		update_bench.stop();
+		m_update.stop();
 		if (next != nullptr) {
 			state = next->type() != std::numeric_limits<std::uint32_t>::max() ? std::move(next) : nullptr;
-			update_bench.clear();
-			draw_bench.clear();
+			m_update.clear();
+			m_draw.clear();
 		}
 	}
 }
@@ -64,8 +64,8 @@ void tr::state_manager::update(duration delta)
 void tr::state_manager::draw()
 {
 	if (state != nullptr) {
-		draw_bench.start();
+		m_draw.start();
 		state->draw();
-		draw_bench.stop();
+		m_draw.stop();
 	}
 }

@@ -1,6 +1,6 @@
 #include "../../include/tr/sysgfx/gl_call.hpp"
 
-void tr::validate_gl_call(const char* file, int line, const char* function)
+void tr::gfx::validate_gl_call(const char* file, int line, const char* function)
 {
 	const GLenum error{glGetError()};
 	if (error != GL_NO_ERROR) {

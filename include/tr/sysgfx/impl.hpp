@@ -6,7 +6,7 @@
 struct SDL_Window;
 struct SDL_GLContextState;
 
-namespace tr {
+namespace tr::system {
 	// Buffer allocated to be freed in case of an out-of-memory error.
 	inline std::unique_ptr<char[]> emergency_buffer{new char[16384]};
 
@@ -17,11 +17,13 @@ namespace tr {
 
 	// Pointer to the SDL window.
 	inline SDL_Window* sdl_window{nullptr};
+} // namespace tr::system
+
+namespace tr::gfx {
 	// Pointer to the SDL OpenGL context.
 	inline SDL_GLContextState* ogl_context{nullptr};
 	// Whether the OpenGL context is a debug one.
-	inline bool debug_ogl_context{false};
-
+	inline bool debug_context{false};
 	// Tracks which units are allocated.
 	inline std::array<bool, 80> texture_units;
 	// Tracks the texture bound to any given texture unit.
@@ -30,17 +32,4 @@ namespace tr {
 	inline std::optional<vertex_format> vertex2_format_;
 	// The current render target.
 	inline std::optional<render_target> current_render_target;
-
-	// Alias for a list of free rects.
-	using _free_rect_list = std::forward_list<tr::irect2>;
-	// Alias for an iterator to a free list.
-	using _free_rect_it = _free_rect_list::iterator;
-	// Doubles the smaller component of a vector.
-	glm::ivec2 _double_smaller_component(glm::ivec2 size) noexcept;
-	// Gets the area of a rectangle.
-	int _area(glm::ivec2 size) noexcept;
-	// Finds the predecessor to the smallest suitable free rect or end() if none could be found.
-	_free_rect_it _find_free_rect_prev(_free_rect_list& free_rects, glm::ivec2 size) noexcept;
-	// Shrinks a free rect that has partially or fully been allocated to a bitmap.
-	void _shrink_free_rect(_free_rect_list& free_rects, _free_rect_it prev, glm::ivec2 size);
-} // namespace tr
+} // namespace tr::gfx

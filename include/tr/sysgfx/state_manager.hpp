@@ -2,7 +2,9 @@
 #include "../utility/benchmark.hpp"
 
 namespace tr {
-	class event;
+	namespace system {
+		class event;
+	}
 
 	// ID of a state with no special given ID.
 	constexpr std::uint32_t NO_ID{0};
@@ -15,7 +17,7 @@ namespace tr {
 		virtual std::uint32_t type() const;
 		// Handles an event.
 		// Returning nullptr mains the current state, drop_state will drop the current state, any other pointer will replace the state.
-		virtual std::unique_ptr<state> handle_event(const event& event) = 0;
+		virtual std::unique_ptr<state> handle_event(const system::event& event) = 0;
 		// Updates the state.
 		// Returning nullptr mains the current state, drop_state will drop the current state, any other pointer will replace the state.
 		virtual std::unique_ptr<state> update(duration delta) = 0;
@@ -26,7 +28,7 @@ namespace tr {
 	// Sentinel state thats tells the state manager to drop the current state when returned from a state operation.
 	struct drop_state : state {
 		std::uint32_t type() const override;
-		std::unique_ptr<state> handle_event(const event&) override;
+		std::unique_ptr<state> handle_event(const system::event&) override;
 		std::unique_ptr<state> update(duration) override;
 		void draw() override;
 	};
@@ -46,7 +48,7 @@ namespace tr {
 		const benchmark& draw_benchmark() const;
 
 		// Passes an event to the held state.
-		void handle_event(const event& event);
+		void handle_event(const system::event& event);
 		// Updates the state.
 		void update(duration delta);
 		// Updates the state.
@@ -56,9 +58,9 @@ namespace tr {
 
 	  private:
 		// Benchmark measuring the update times.
-		benchmark update_bench;
+		benchmark m_update;
 		// Benchmark measuring the drawing times.
-		benchmark draw_bench;
+		benchmark m_draw;
 	};
 } // namespace tr
 

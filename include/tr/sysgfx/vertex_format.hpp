@@ -1,12 +1,7 @@
 #pragma once
 #include "../utility/handle.hpp"
 
-namespace tr {
-	class vertex_format;
-	namespace gfx_context {
-		void set_vertex_format(const vertex_format& format);
-	}
-
+namespace tr::gfx {
 	// Single-precision float vertex attribute.
 	struct vertex_attributef {
 		// The source data's type.
@@ -80,11 +75,11 @@ namespace tr {
 		};
 
 		// Handle to the OpenGL VAO.
-		handle<unsigned int, 0, deleter> vao;
+		handle<unsigned int, 0, deleter> m_vao;
 
-		friend void gfx_context::set_vertex_format(const vertex_format& format);
+		friend void set_vertex_format(const vertex_format& format);
 	};
 
 	// Gets the vertex format for a common 2D vertex type (separated position, uv, tint).
 	vertex_format& vertex2_format();
-} // namespace tr
+} // namespace tr::gfx

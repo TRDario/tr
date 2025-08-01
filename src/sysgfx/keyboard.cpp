@@ -2,7 +2,7 @@
 #include "../../include/tr/sysgfx/keyboard_events.hpp"
 #include <SDL3/SDL.h>
 
-namespace tr {
+namespace tr::system {
 	// Basic offset of all key state indices compared to the scancodes.
 	inline constexpr int KEY_STATE_INDEX_OFFSET_1{static_cast<int>(scancode::A)};
 	// Offset of modifier key state indices compared to the scan
@@ -15,9 +15,9 @@ namespace tr {
 	inline constexpr int INVALID_KEY_STATE_INDEX{-1};
 	// Converts a scancode into a key state index.
 	constexpr int key_state_index(scancode key);
-} // namespace tr
+} // namespace tr::system
 
-constexpr int tr::key_state_index(scancode key)
+constexpr int tr::system::key_state_index(scancode key)
 {
 	int index{static_cast<int>(key) - KEY_STATE_INDEX_OFFSET_1};
 	if (index >= KEY_STATE_INDEX_OFFSET_2_START) {
@@ -26,33 +26,33 @@ constexpr int tr::key_state_index(scancode key)
 	return (index >= 0 && index <= KEY_STATE_MAX_INDEX) ? index : INVALID_KEY_STATE_INDEX;
 }
 
-tr::scancode::scancode(const char* name)
-	: base{static_cast<enum_t>(SDL_GetScancodeFromName(name))}
+tr::system::scancode::scancode(const char* name)
+	: m_base{static_cast<enum_t>(SDL_GetScancodeFromName(name))}
 {
 	TR_ASSERT(SDL_WasInit(0), "Tried to get scancode from name before initializing the application.");
 }
 
-const char* tr::scancode::name() const
+const char* tr::system::scancode::name() const
 {
 	TR_ASSERT(SDL_WasInit(0), "Tried to get scancode name before initializing the application.");
 
-	return SDL_GetScancodeName(static_cast<SDL_Scancode>(base));
+	return SDL_GetScancodeName(static_cast<SDL_Scancode>(m_base));
 }
 
-tr::keycode::keycode(const char* name)
-	: base{static_cast<enum_t>(SDL_GetKeyFromName(name))}
+tr::system::keycode::keycode(const char* name)
+	: m_base{static_cast<enum_t>(SDL_GetKeyFromName(name))}
 {
 	TR_ASSERT(SDL_WasInit(0), "Tried to get keycode from name before initializing the application.");
 }
 
-std::string tr::keycode::name() const
+std::string tr::system::keycode::name() const
 {
 	TR_ASSERT(SDL_WasInit(0), "Tried to get keycode name before initializing the application.");
 
-	return SDL_GetKeyName(static_cast<SDL_Keycode>(base));
+	return SDL_GetKeyName(static_cast<SDL_Keycode>(m_base));
 }
 
-bool tr::key_state::held(scancode key) const
+bool tr::system::key_state::held(scancode key) const
 {
 	const int index{key_state_index(key)};
 	if (index == INVALID_KEY_STATE_INDEX) {
@@ -62,17 +62,17 @@ bool tr::key_state::held(scancode key) const
 	return static_cast<bool>(byte & static_cast<std::byte>(1 << (index % 8)));
 }
 
-void tr::key_state::update(const key_down_event& event)
+void tr::system::key_state::update(const key_down_event& event)
 {
 	force_down(event.scan);
 }
 
-void tr::key_state::update(const key_up_event& event)
+void tr::system::key_state::update(const key_up_event& event)
 {
 	force_up(event.scan);
 }
 
-void tr::key_state::force_down(scancode key)
+void tr::system::key_state::force_down(scancode key)
 {
 	const int index{key_state_index(key)};
 	if (index == INVALID_KEY_STATE_INDEX) {
@@ -82,7 +82,7 @@ void tr::key_state::force_down(scancode key)
 	byte |= static_cast<std::byte>(1 << (index % 8));
 }
 
-void tr::key_state::force_up(scancode key)
+void tr::system::key_state::force_up(scancode key)
 {
 	const int index{key_state_index(key)};
 	if (index == INVALID_KEY_STATE_INDEX) {
@@ -92,26 +92,26 @@ void tr::key_state::force_up(scancode key)
 	byte &= ~static_cast<std::byte>(1 << (index % 8));
 }
 
-void tr::keyboard_state::update(const key_down_event& event)
+void tr::system::keyboard_state::update(const key_down_event& event)
 {
 	key_state::update(event);
 	mods = event.mods;
 }
 
-void tr::keyboard_state::update(const key_up_event& event)
+void tr::system::keyboard_state::update(const key_up_event& event)
 {
 	key_state::update(event);
 	mods = event.mods;
 }
 
-bool tr::clipboard::empty()
+bool tr::system::clipboard_empty()
 {
 	TR_ASSERT(SDL_WasInit(0), "Tried to query clipboard state before initializing the application.");
 
 	return !SDL_HasClipboardText();
 }
 
-std::string tr::clipboard::get()
+std::string tr::system::clipboard_text()
 {
 	TR_ASSERT(SDL_WasInit(0), "Tried to get clipboard text before initializing the application.");
 
@@ -119,7 +119,7 @@ std::string tr::clipboard::get()
 	return std::string{ptr != nullptr ? ptr.get() : std::string{}};
 }
 
-void tr::clipboard::set(const char* text)
+void tr::system::set_clipboard_text(const char* text)
 {
 	TR_ASSERT(SDL_WasInit(0), "Tried to set clipboard text before initializing the application.");
 
@@ -129,7 +129,7 @@ void tr::clipboard::set(const char* text)
 	}
 }
 
-void tr::clipboard::set(const std::string& text)
+void tr::system::set_clipboard_text(const std::string& text)
 {
-	set(text.c_str());
+	set_clipboard_text(text.c_str());
 }

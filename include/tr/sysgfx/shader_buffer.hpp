@@ -1,7 +1,7 @@
 #pragma once
 #include "../utility/handle.hpp"
 
-namespace tr {
+namespace tr::gfx {
 	// RAII wrapper over a shader buffer map.
 	class shader_buffer_map {
 	  public:
@@ -14,9 +14,9 @@ namespace tr {
 		};
 
 		// Reference to the buffer.
-		handle<unsigned int, 0, deleter> buffer;
+		handle<unsigned int, 0, deleter> m_sbo;
 		// The actual span.
-		std::span<std::byte> span;
+		std::span<std::byte> m_span;
 
 		shader_buffer_map(unsigned int buffer, std::span<std::byte> span);
 
@@ -74,38 +74,38 @@ namespace tr {
 		};
 
 		// Handle to the OpenGL buffer.
-		handle<unsigned int, 0, deleter> sbo;
+		handle<unsigned int, 0, deleter> m_sbo;
 		// The access type of the buffer.
-		access access_;
+		access m_access;
 		// The size of the header.
-		std::intptr_t hsize;
+		std::intptr_t m_header_size;
 		// The current size of the array.
-		std::intptr_t asize;
+		std::intptr_t m_array_size;
 		// The capacity of the array.
-		std::intptr_t acapacity;
+		std::intptr_t m_array_capacity;
 
 		friend class shader_base;
 	};
-} // namespace tr
+} // namespace tr::gfx
 
 ///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
 
-template <tr::standard_layout T> tr::shader_buffer_map::operator std::span<T>() const
+template <tr::standard_layout T> tr::gfx::shader_buffer_map::operator std::span<T>() const
 {
-	return as_mut_objects<T>(span);
+	return as_mut_objects<T>(m_span);
 }
 
-template <std::ranges::contiguous_range R> void tr::shader_buffer::set_header(R&& range)
+template <std::ranges::contiguous_range R> void tr::gfx::shader_buffer::set_header(R&& range)
 {
 	set_header(std::span<const std::byte>{range_bytes(range)});
 }
 
-template <class T> void tr::shader_buffer::set_header(const T& value)
+template <class T> void tr::gfx::shader_buffer::set_header(const T& value)
 {
 	set_header(std::span<const std::byte>{as_bytes(value)});
 }
 
-template <std::ranges::contiguous_range R> void tr::shader_buffer::set_array(R&& range)
+template <std::ranges::contiguous_range R> void tr::gfx::shader_buffer::set_array(R&& range)
 {
 	set_array(std::span<const std::byte>{range_bytes(range)});
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-namespace tr {
+namespace tr::gfx {
 	// Blending functions.
 	enum class blend_fn {
 		ADD = 0x8006,      // The source and destination colors are added together.
@@ -49,4 +49,4 @@ namespace tr {
 	// Premultiplied alpha blending mode.
 	inline constexpr blend_mode PREMUL_ALPHA_BLENDING{blend_multiplier::ONE, blend_fn::ADD, blend_multiplier::ONE_MINUS_SRC_ALPHA,
 													  blend_multiplier::ONE, blend_fn::ADD, blend_multiplier::ONE_MINUS_SRC_ALPHA};
-} // namespace tr
+} // namespace tr::gfx

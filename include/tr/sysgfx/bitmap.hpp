@@ -8,10 +8,13 @@ struct SDL_Surface;
 namespace tr {
 	class bitmap;
 	class bitmap_view;
-	namespace window {
-		void set_icon(const bitmap& bitmap);
-		void set_icon(const bitmap_view& view);
-	}; // namespace window
+	namespace system {
+		class cursor;
+		class ttfont;
+
+		void set_window_icon(const bitmap& bitmap);
+		void set_window_icon(const bitmap_view& view);
+	}; // namespace system
 
 	// Bitmap/texture pixel format.
 	enum class pixel_format {
@@ -123,9 +126,9 @@ namespace tr {
 
 	  private:
 		// Pointer to the bitmap.
-		SDL_Surface* ptr;
+		SDL_Surface* m_ptr;
 		// The rect of the sub-bitmap within the bitmap.
-		irect2 rect;
+		irect2 m_rect;
 
 		friend class bitmap;
 	};
@@ -183,12 +186,12 @@ namespace tr {
 		};
 
 		// Handle to the SDL surface.
-		std::unique_ptr<SDL_Surface, deleter> ptr;
+		std::unique_ptr<SDL_Surface, deleter> m_ptr;
 
 		friend class bitmap;
 		friend class sub_bitmap;
-		friend class cursor;
-		friend void window::set_icon(const bitmap_view& view);
+		friend class system::cursor;
+		friend void system::set_window_icon(const bitmap_view& view);
 	};
 
 	// Class containing owned bitmap data.
@@ -261,16 +264,16 @@ namespace tr {
 
 	  private:
 		// Handle to the SDL surface.
-		std::unique_ptr<SDL_Surface, bitmap_view::deleter> ptr;
+		std::unique_ptr<SDL_Surface, bitmap_view::deleter> m_ptr;
 
 		bitmap(SDL_Surface* ptr);
 
 		friend class sub_bitmap;
-		friend class tr::sub_bitmap::iterator;
+		friend class sub_bitmap::iterator;
 		friend class mut_it;
-		friend class cursor;
-		friend class ttfont;
-		friend void window::set_icon(const bitmap& bitmap);
+		friend class system::cursor;
+		friend class system::ttfont;
+		friend void system::set_window_icon(const bitmap& bitmap);
 
 		friend bitmap load_embedded_bitmap(std::span<const std::byte> data);
 		friend bitmap load_bitmap_file(const std::filesystem::path& path);

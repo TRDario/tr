@@ -1,7 +1,7 @@
 #pragma once
 #include "../utility/macro.hpp"
 
-namespace tr {
+namespace tr::system {
 	struct key_down_event;
 	struct key_up_event;
 
@@ -137,7 +137,7 @@ namespace tr {
 
 	  private:
 		// The base enumerator.
-		enum_t base{};
+		enum_t m_base{};
 	};
 	// Gets a top row scancode from a numeric value.
 	constexpr scancode make_top_row_scancode(int v);
@@ -290,7 +290,7 @@ namespace tr {
 		std::string name() const;
 
 	  private:
-		enum_t base{};
+		enum_t m_base{};
 	};
 	// Gets a top row keycode from a numeric value.
 	constexpr keycode make_top_row_keycode(int v);
@@ -362,60 +362,57 @@ namespace tr {
 		using key_state::update;
 	};
 
-	// Text clipboard functionality.
-	namespace clipboard {
-		// Gets whether the clipboard is empty.
-		bool empty();
-		// Gets the clipboard text.
-		std::string get();
+	// Gets whether the clipboard is empty.
+	bool clipboard_empty();
+	// Gets the clipboard text.
+	std::string clipboard_text();
 
-		// Sets the clipboard text.
-		void set(const char* text);
-		// Sets the clipboard text.
-		void set(const std::string& text);
-	}; // namespace clipboard
-} // namespace tr
+	// Sets the clipboard text.
+	void set_clipboard_text(const char* text);
+	// Sets the clipboard text.
+	void set_clipboard_text(const std::string& text);
+} // namespace tr::system
 
 ///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
 
-constexpr tr::scancode::scancode(int base)
-	: base{static_cast<enum_t>(base)}
+constexpr tr::system::scancode::scancode(int base)
+	: m_base{static_cast<enum_t>(base)}
 {
 }
 
-constexpr tr::scancode::scancode(enum_t base)
-	: base{base}
+constexpr tr::system::scancode::scancode(enum_t base)
+	: m_base{base}
 {
 }
 
-constexpr tr::scancode::operator int() const
+constexpr tr::system::scancode::operator int() const
 {
-	return static_cast<int>(base);
+	return static_cast<int>(m_base);
 }
 
-constexpr tr::scancode tr::make_top_row_scancode(int v)
+constexpr tr::system::scancode tr::system::make_top_row_scancode(int v)
 {
 	TR_ASSERT(v >= 0 && v < 10, "Tried to create top row number scancode {} outside the range [0-9]", v);
 
 	return static_cast<scancode>(static_cast<int>(scancode::TOP_ROW_0) + v);
 }
 
-constexpr tr::keycode::keycode(int base)
-	: base{static_cast<enum_t>(base)}
+constexpr tr::system::keycode::keycode(int base)
+	: m_base{static_cast<enum_t>(base)}
 {
 }
 
-constexpr tr::keycode::keycode(enum_t base)
-	: base{base}
+constexpr tr::system::keycode::keycode(enum_t base)
+	: m_base{base}
 {
 }
 
-constexpr tr::keycode::operator int() const
+constexpr tr::system::keycode::operator int() const
 {
-	return static_cast<int>(base);
+	return static_cast<int>(m_base);
 }
 
-constexpr tr::keycode tr::make_top_row_keycode(int v)
+constexpr tr::system::keycode tr::system::make_top_row_keycode(int v)
 {
 	TR_ASSERT(v >= 0 && v < 10, "Tried to create top row number keycode {} outside the range [0-9]", v);
 

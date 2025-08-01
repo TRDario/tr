@@ -9,9 +9,9 @@
 #include "tr/sysgfx/gl_call.hpp"
 #include <SDL3/SDL.h>
 
-namespace tr {
+namespace tr::gfx {
 	// Sets up SDL OpenGL attributes.
-	void set_sdl_ogl_attributes(const gfx_properties& gfx_properties);
+	void set_sdl_ogl_attributes(const properties& gfx_properties);
 	// Creates an OpenGL context.
 	void create_ogl_context();
 
@@ -27,9 +27,9 @@ namespace tr {
 	void ogl_debug_cb(GLenum source, GLenum type, GLuint, GLenum severity, GLsizei length, const GLchar* message, const void*);
 	// Sets up OpenGL debugging.
 	void setup_ogl_debugging();
-} // namespace tr
+} // namespace tr::gfx
 
-void tr::set_sdl_ogl_attributes(const gfx_properties& gfx_properties)
+void tr::gfx::set_sdl_ogl_attributes(const properties& gfx_properties)
 {
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 5);
@@ -47,13 +47,13 @@ void tr::set_sdl_ogl_attributes(const gfx_properties& gfx_properties)
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, gfx_properties.double_buffer);
 }
 
-void tr::create_ogl_context()
+void tr::gfx::create_ogl_context()
 {
-	if ((ogl_context = SDL_GL_CreateContext(sdl_window)) == nullptr) {
-		throw system_initialization_error{"Failed to create OpenGL context."};
+	if ((gfx::ogl_context = SDL_GL_CreateContext(system::sdl_window)) == nullptr) {
+		throw system::init_error{"Failed to create OpenGL context."};
 	}
 	else if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(SDL_GL_GetProcAddress))) {
-		throw system_initialization_error{"Failed to load OpenGL 4.5."};
+		throw system::init_error{"Failed to load OpenGL 4.5."};
 	}
 	TR_LOG(log, severity::INFO, "Created an OpenGL context.");
 	TR_LOG_CONTINUE(log, "Vendor: {}", reinterpret_cast<const char*>(TR_RETURNING_GL_CALL(glGetString, GL_VENDOR)));
@@ -63,7 +63,7 @@ void tr::create_ogl_context()
 	glEnable(GL_SCISSOR_TEST);
 }
 
-std::string_view tr::ogl_source(GLenum value)
+std::string_view tr::gfx::ogl_source(GLenum value)
 {
 	switch (value) {
 	case GL_DEBUG_SOURCE_API:
@@ -83,7 +83,7 @@ std::string_view tr::ogl_source(GLenum value)
 	}
 }
 
-std::string_view tr::ogl_type(GLenum value)
+std::string_view tr::gfx::ogl_type(GLenum value)
 {
 	switch (value) {
 	case GL_DEBUG_TYPE_ERROR:
@@ -109,7 +109,7 @@ std::string_view tr::ogl_type(GLenum value)
 	}
 }
 
-std::string_view tr::ogl_severity(GLenum value)
+std::string_view tr::gfx::ogl_severity(GLenum value)
 {
 	switch (value) {
 	case GL_DEBUG_SEVERITY_NOTIFICATION:
@@ -125,7 +125,7 @@ std::string_view tr::ogl_severity(GLenum value)
 	}
 }
 
-tr::severity tr::tr_severity(GLenum value)
+tr::severity tr::gfx::tr_severity(GLenum value)
 {
 	switch (value) {
 	case GL_DEBUG_SEVERITY_NOTIFICATION:
@@ -141,14 +141,13 @@ tr::severity tr::tr_severity(GLenum value)
 	}
 }
 
-void tr::ogl_debug_cb(GLenum source, GLenum type, GLuint, GLenum severity, GLsizei length, const GLchar* message, const void*)
+void tr::gfx::ogl_debug_cb(GLenum source, GLenum type, GLuint, GLenum severity, GLsizei length, const GLchar* message, const void*)
 {
 	const std::string_view msg{reinterpret_cast<const char*>(message), static_cast<std::size_t>(length)};
-	TR_LOG(gfx_context::log, tr_severity(severity), "[{}] | [{}] | [{}] | {}", ogl_severity(severity), ogl_type(type), ogl_source(source),
-		   msg);
+	TR_LOG(gfx::log, tr_severity(severity), "[{}] | [{}] | [{}] | {}", ogl_severity(severity), ogl_type(type), ogl_source(source), msg);
 }
 
-void tr::setup_ogl_debugging()
+void tr::gfx::setup_ogl_debugging()
 {
 	glEnable(GL_DEBUG_OUTPUT);
 	glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
@@ -157,7 +156,7 @@ void tr::setup_ogl_debugging()
 	glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_NOTIFICATION, 0, NULL, GL_FALSE);
 }
 
-void tr::window::open_windowed(const char* title, glm::ivec2 size, window_flag flags, const gfx_properties& gfx_properties)
+void tr::system::open_window(const char* title, glm::ivec2 size, window_flag flags, const gfx::properties& gfx_properties)
 {
 	TR_ASSERT(SDL_WasInit(0), "Tried to open window before initializing the application.");
 	TR_ASSERT(sdl_window == nullptr, "Tried to reopen window without closing it first.");
@@ -166,16 +165,16 @@ void tr::window::open_windowed(const char* title, glm::ivec2 size, window_flag f
 	const SDL_WindowFlags sdl_flags{static_cast<SDL_WindowFlags>(flags) | SDL_WINDOW_HIDDEN | SDL_WINDOW_OPENGL |
 									SDL_WINDOW_HIGH_PIXEL_DENSITY};
 	if ((sdl_window = SDL_CreateWindow(title, size.x, size.y, sdl_flags)) == nullptr) {
-		throw system_initialization_error{"Failed to open window."};
+		throw init_error{"Failed to open window."};
 	}
-	create_ogl_context();
+	gfx::create_ogl_context();
 	if (gfx_properties.debug_context) {
-		setup_ogl_debugging();
+		gfx::setup_ogl_debugging();
 	}
-	debug_ogl_context = gfx_properties.debug_context;
+	gfx::debug_context = gfx_properties.debug_context;
 }
 
-void tr::window::open_fullscreen(const char* title, window_flag flags, const gfx_properties& gfx_properties)
+void tr::system::open_fullscreen_window(const char* title, window_flag flags, const gfx::properties& gfx_properties)
 {
 	TR_ASSERT(SDL_WasInit(0), "Tried to open window before initializing the application.");
 	TR_ASSERT(sdl_window == nullptr, "Tried to reopen window without closing it first.");
@@ -185,35 +184,35 @@ void tr::window::open_fullscreen(const char* title, window_flag flags, const gfx
 	const SDL_WindowFlags sdl_flags{static_cast<SDL_WindowFlags>(flags) | SDL_WINDOW_HIDDEN | SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL |
 									SDL_WINDOW_HIGH_PIXEL_DENSITY};
 	if ((sdl_window = SDL_CreateWindow(title, size.x, size.y, sdl_flags)) == nullptr) {
-		throw system_initialization_error{"Failed to open fullscreen window."};
+		throw init_error{"Failed to open fullscreen window."};
 	}
-	create_ogl_context();
+	gfx::create_ogl_context();
 	if (gfx_properties.debug_context) {
-		setup_ogl_debugging();
+		gfx::setup_ogl_debugging();
 	}
-	debug_ogl_context = gfx_properties.debug_context;
+	gfx::debug_context = gfx_properties.debug_context;
 }
 
-void tr::window::close()
+void tr::system::close_window()
 {
-	tr::gfx_context::set_renderer(NO_RENDERER);
-	current_render_target.reset();
-	texture_units.fill(false);
-	vertex2_format_.reset();
-	SDL_GL_DestroyContext(ogl_context);
+	tr::gfx::set_renderer(gfx::NO_RENDERER);
+	gfx::current_render_target.reset();
+	gfx::texture_units.fill(false);
+	gfx::vertex2_format_.reset();
+	SDL_GL_DestroyContext(gfx::ogl_context);
 	SDL_DestroyWindow(sdl_window);
-	ogl_context = nullptr;
+	gfx::ogl_context = nullptr;
 	sdl_window = nullptr;
 }
 
-const char* tr::window::title()
+const char* tr::system::window_title()
 {
 	TR_ASSERT(sdl_window != nullptr, "Tried to get window title before opening it.");
 
 	return SDL_GetWindowTitle(sdl_window);
 }
 
-void tr::window::set_title(const char* title)
+void tr::system::set_window_title(const char* title)
 {
 	TR_ASSERT(sdl_window != nullptr, "Tried to set window title before opening it.");
 
@@ -223,32 +222,32 @@ void tr::window::set_title(const char* title)
 	};
 }
 
-void tr::window::set_title(const std::string& title)
+void tr::system::set_window_title(const std::string& title)
 {
-	set_title(title.c_str());
+	set_window_title(title.c_str());
 }
 
-void tr::window::set_icon(const bitmap& bitmap)
+void tr::system::set_window_icon(const bitmap& bitmap)
 {
 	TR_ASSERT(sdl_window != nullptr, "Tried to set window icon before opening it.");
 
-	if (!SDL_SetWindowIcon(sdl_window, bitmap.ptr.get())) {
+	if (!SDL_SetWindowIcon(sdl_window, bitmap.m_ptr.get())) {
 		TR_LOG(log, tr::severity::ERROR, "Failed to set window icon.");
 		TR_LOG_CONTINUE(log, "{}", SDL_GetError());
 	}
 }
 
-void tr::window::set_icon(const bitmap_view& view)
+void tr::system::set_window_icon(const bitmap_view& view)
 {
 	TR_ASSERT(sdl_window != nullptr, "Tried to set window icon before opening it.");
 
-	if (!SDL_SetWindowIcon(sdl_window, view.ptr.get())) {
+	if (!SDL_SetWindowIcon(sdl_window, view.m_ptr.get())) {
 		TR_LOG(log, tr::severity::ERROR, "Failed to set window icon.");
 		TR_LOG_CONTINUE(log, "{}", SDL_GetError());
 	}
 }
 
-glm::ivec2 tr::window::size()
+glm::ivec2 tr::system::window_size()
 {
 	TR_ASSERT(sdl_window != nullptr, "Tried to get window size before opening it.");
 
@@ -260,7 +259,7 @@ glm::ivec2 tr::window::size()
 	return size;
 }
 
-float tr::window::pixel_density()
+float tr::system::window_pixel_density()
 {
 	TR_ASSERT(sdl_window != nullptr, "Tried to get window pixel density before opening it.");
 
@@ -273,26 +272,27 @@ float tr::window::pixel_density()
 	return density;
 }
 
-void tr::window::set_size(glm::ivec2 size)
+void tr::system::set_window_size(glm::ivec2 size)
 {
 	TR_ASSERT(sdl_window != nullptr, "Tried to set window size before opening it.");
 	TR_ASSERT(size.x > 0 && size.y > 0, "Tried to set window size to an invalid value of {}x{}.", size.x, size.y);
 
-	if (!SDL_SetWindowSize(sdl_window, static_cast<int>(size.x / pixel_density()), static_cast<int>(size.y / pixel_density())) ||
+	if (!SDL_SetWindowSize(sdl_window, static_cast<int>(size.x / window_pixel_density()),
+						   static_cast<int>(size.y / window_pixel_density())) ||
 		!SDL_SetWindowPosition(sdl_window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED)) {
 		TR_LOG(log, tr::severity::ERROR, "Failed to set window size.");
 		TR_LOG_CONTINUE(log, "{}", SDL_GetError());
 	}
 }
 
-bool tr::window::fullscreen()
+bool tr::system::window_fullscreen()
 {
 	TR_ASSERT(sdl_window != nullptr, "Tried to get window fullscreen status before opening it.");
 
 	return SDL_GetWindowFlags(sdl_window) & SDL_WINDOW_FULLSCREEN;
 }
 
-void tr::window::set_fullscreen(bool fullscreen)
+void tr::system::set_window_fullscreen(bool fullscreen)
 {
 	TR_ASSERT(sdl_window != nullptr, "Tried to set window to fullscreen before opening it.");
 
@@ -302,7 +302,7 @@ void tr::window::set_fullscreen(bool fullscreen)
 	}
 }
 
-void tr::window::show()
+void tr::system::show_window()
 {
 	TR_ASSERT(sdl_window != nullptr, "Tried to show window before opening it.");
 
@@ -312,7 +312,7 @@ void tr::window::show()
 	}
 }
 
-void tr::window::hide()
+void tr::system::hide_window()
 {
 	TR_ASSERT(sdl_window != nullptr, "Tried to hide window before opening it.");
 
@@ -322,12 +322,12 @@ void tr::window::hide()
 	}
 }
 
-bool tr::window::has_focus()
+bool tr::system::window_has_focus()
 {
 	return SDL_GetWindowFlags(sdl_window) & SDL_WINDOW_INPUT_FOCUS;
 }
 
-void tr::window::set_mouse_grab(bool grab)
+void tr::system::set_window_mouse_grab(bool grab)
 {
 	TR_ASSERT(sdl_window != nullptr, "Tried to set window mouse grab before opening it.");
 
@@ -337,7 +337,7 @@ void tr::window::set_mouse_grab(bool grab)
 	}
 }
 
-void tr::window::flash(flash_operation operation)
+void tr::system::flash_window(flash_operation operation)
 {
 	TR_ASSERT(sdl_window != nullptr, "Tried to flash window before opening it.");
 
@@ -347,7 +347,7 @@ void tr::window::flash(flash_operation operation)
 	}
 }
 
-void tr::window::set_vsync(vsync vsync)
+void tr::system::set_window_vsync(vsync vsync)
 {
 	TR_ASSERT(sdl_window != nullptr, "Tried to set window V-sync before opening it.");
 
@@ -355,7 +355,7 @@ void tr::window::set_vsync(vsync vsync)
 		if (vsync == vsync::ADAPTIVE) {
 			TR_LOG(log, tr::severity::WARN, "Failed to set V-sync to adaptive, falling back to regular.");
 			TR_LOG_CONTINUE(log, "{}", SDL_GetError());
-			set_vsync(vsync::ENABLED);
+			set_window_vsync(vsync::ENABLED);
 		}
 		else {
 			TR_LOG(log, tr::severity::ERROR, "Failed to set V-sync.");
