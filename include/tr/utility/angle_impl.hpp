@@ -2,52 +2,52 @@
 #include "angle.hpp"
 
 constexpr tr::angle::angle(float rads)
-	: base{rads}
+	: m_rads{rads}
 {
 }
 
 constexpr tr::angle& tr::angle::operator+=(const angle& r)
 {
-	base += r.base;
+	m_rads += r.m_rads;
 	return *this;
 }
 
 constexpr tr::angle& tr::angle::operator-=(const angle& r)
 {
-	base -= r.base;
+	m_rads -= r.m_rads;
 	return *this;
 }
 
 template <tr::arithmetic U> constexpr tr::angle& tr::angle::operator*=(const U& r)
 {
-	base *= r;
+	m_rads *= r;
 	return *this;
 }
 
 template <tr::arithmetic U> constexpr tr::angle& tr::angle::operator/=(const U& r)
 {
-	base /= r;
+	m_rads /= r;
 	return *this;
 }
 
 constexpr tr::angle tr::operator+(const angle& l, const angle& r)
 {
-	return angle{l.base + r.base};
+	return angle{l.m_rads + r.m_rads};
 }
 
 constexpr tr::angle tr::operator-(const angle& l, const angle& r)
 {
-	return angle{l.base - r.base};
+	return angle{l.m_rads - r.m_rads};
 }
 
 constexpr tr::angle tr::operator-(const angle& l)
 {
-	return angle{-l.base};
+	return angle{-l.m_rads};
 }
 
 template <tr::arithmetic U> constexpr tr::angle tr::operator*(const angle& l, const U& r)
 {
-	return angle{l.base * r};
+	return angle{l.m_rads * r};
 }
 
 template <tr::arithmetic U> constexpr tr::angle tr::operator*(const U& l, const angle& r)
@@ -57,17 +57,17 @@ template <tr::arithmetic U> constexpr tr::angle tr::operator*(const U& l, const 
 
 template <tr::arithmetic U> constexpr tr::angle tr::operator/(const angle& l, const U& r)
 {
-	return angle{l.base / r};
+	return angle{l.m_rads / r};
 }
 
 constexpr float tr::operator/(const angle& l, const angle& r)
 {
-	return l.base / r.base;
+	return l.m_rads / r.m_rads;
 }
 
 constexpr tr::angle tr::operator%(const angle& l, const angle& r)
 {
-	return angle{std::fmod(l.base, r.base)};
+	return angle{std::fmod(l.m_rads, r.m_rads)};
 }
 
 template <tr::arithmetic T> constexpr tr::angle tr::rads(T th)
@@ -107,32 +107,32 @@ template <tr::arithmetic T> constexpr tr::angle tr::atan2(T y, T x)
 
 constexpr float tr::angle::rads() const
 {
-	return base;
+	return m_rads;
 }
 
 constexpr float tr::angle::degs() const
 {
-	return base * (180 / std::numbers::pi_v<float>);
+	return m_rads * (180 / std::numbers::pi_v<float>);
 }
 
 constexpr float tr::angle::turns() const
 {
-	return base / (2 * std::numbers::pi_v<float>);
+	return m_rads / (2 * std::numbers::pi_v<float>);
 }
 
 constexpr float tr::angle::sin() const
 {
-	return std::sin(base);
+	return std::sin(m_rads);
 }
 
 constexpr float tr::angle::cos() const
 {
-	return std::cos(base);
+	return std::cos(m_rads);
 }
 
 constexpr float tr::angle::tan() const
 {
-	return std::tan(base);
+	return std::tan(m_rads);
 }
 
 consteval tr::angle tr::angle_literals::operator""_deg(long double deg)

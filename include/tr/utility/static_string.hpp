@@ -100,8 +100,8 @@ namespace tr {
 		constexpr void resize(size_type size, char chr = '\0');
 
 	  private:
-		std::array<char, S> buffer{};
-		size_type size_{0};
+		std::array<char, S> m_buffer{};
+		size_type m_size{0};
 	};
 	template <std::size_t S> constexpr std::strong_ordering operator<=>(const static_string<S>& l, const static_string<S>& r);
 	template <std::size_t S> constexpr bool operator==(const static_string<S>& l, const static_string<S>& r);

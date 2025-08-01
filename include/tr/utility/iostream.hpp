@@ -17,7 +17,7 @@ namespace tr {
 
 	  private:
 		// Path to the affected file.
-		std::string path;
+		std::string m_path;
 	};
 	// Exception thrown when a file opening fails.
 	class file_open_error : public exception {
@@ -34,7 +34,7 @@ namespace tr {
 
 	  private:
 		// Path to the affected file.
-		std::string path;
+		std::string m_path;
 	};
 
 	// Opens a file for writing with extra checks.

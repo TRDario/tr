@@ -4,7 +4,7 @@
 
 template <std::size_t S>
 constexpr tr::static_string<S>::static_string(size_type size, char chr)
-	: size_{size}
+	: m_size{size}
 {
 	std::fill(begin(), end(), chr);
 }
@@ -12,25 +12,25 @@ constexpr tr::static_string<S>::static_string(size_type size, char chr)
 template <std::size_t S>
 template <std::size_t S1>
 constexpr tr::static_string<S>::static_string(const char (&literal)[S1])
-	: buffer{}, size_{static_cast<size_type>(S1 - 1)}
+	: m_buffer{}, m_size{static_cast<size_type>(S1 - 1)}
 {
 	static_assert(S1 - 1 <= S, "Tried to initialize a static string with a stirng literal that would be too long.");
-	std::copy(literal, literal + S1 - 1, buffer.begin());
+	std::copy(literal, literal + S1 - 1, m_buffer.begin());
 }
 
 template <std::size_t S>
 constexpr tr::static_string<S>::static_string(std::string_view str)
-	: buffer{}, size_{static_cast<size_type>(str.size())}
+	: m_buffer{}, m_size{static_cast<size_type>(str.size())}
 {
 	TR_ASSERT(str.size() <= S, "Tried to copy a string of size {} into a static string of capacity {}.", str.size(), S);
-	std::ranges::copy(str, buffer.begin());
+	std::ranges::copy(str, m_buffer.begin());
 }
 
 //
 
 template <std::size_t S> constexpr tr::static_string<S>::operator std::string_view() const
 {
-	return {buffer.data(), size_};
+	return {m_buffer.data(), m_size};
 }
 
 template <std::size_t S> constexpr tr::static_string<S>::operator std::string() const
@@ -74,16 +74,16 @@ template <std::size_t S> constexpr bool tr::operator==(const std::string_view& l
 
 template <std::size_t S> constexpr tr::static_string<S>::reference tr::static_string<S>::operator[](size_type offset)
 {
-	TR_ASSERT(offset < size_, "Tried to get out-of-bounds element {} in static string of size {}.", offset, size_);
+	TR_ASSERT(offset < m_size, "Tried to get out-of-bounds element {} in static string of size {}.", offset, m_size);
 
-	return buffer[offset];
+	return m_buffer[offset];
 }
 
 template <std::size_t S> constexpr tr::static_string<S>::const_reference tr::static_string<S>::operator[](size_type offset) const
 {
-	TR_ASSERT(offset < size_, "Tried to get out-of-bounds element {} in static string of size {}.", offset, size_);
+	TR_ASSERT(offset < m_size, "Tried to get out-of-bounds element {} in static string of size {}.", offset, m_size);
 
-	return buffer[offset];
+	return m_buffer[offset];
 }
 
 template <std::size_t S> constexpr tr::static_string<S>::reference tr::static_string<S>::front()
@@ -116,56 +116,56 @@ template <std::size_t S> constexpr tr::static_string<S>::const_reference tr::sta
 
 template <std::size_t S> constexpr tr::static_string<S>::pointer tr::static_string<S>::data()
 {
-	return buffer.data();
+	return m_buffer.data();
 }
 
 template <std::size_t S> constexpr tr::static_string<S>::const_pointer tr::static_string<S>::data() const
 {
-	return buffer.data();
+	return m_buffer.data();
 }
 
 //
 
 template <std::size_t S> constexpr tr::static_string<S>::iterator tr::static_string<S>::begin()
 {
-	return buffer.data();
+	return m_buffer.data();
 }
 
 template <std::size_t S> constexpr tr::static_string<S>::const_iterator tr::static_string<S>::begin() const
 {
-	return buffer.data();
+	return m_buffer.data();
 }
 
 template <std::size_t S> constexpr tr::static_string<S>::const_iterator tr::static_string<S>::cbegin() const
 {
-	return buffer.data();
+	return m_buffer.data();
 }
 
 template <std::size_t S> constexpr tr::static_string<S>::iterator tr::static_string<S>::end()
 {
-	return buffer.data() + size_;
+	return m_buffer.data() + m_size;
 }
 
 template <std::size_t S> constexpr tr::static_string<S>::const_iterator tr::static_string<S>::end() const
 {
-	return buffer.data() + size_;
+	return m_buffer.data() + m_size;
 }
 
 template <std::size_t S> constexpr tr::static_string<S>::const_iterator tr::static_string<S>::cend() const
 {
-	return buffer.data() + size_;
+	return m_buffer.data() + m_size;
 }
 
 //
 
 template <std::size_t S> constexpr bool tr::static_string<S>::empty() const
 {
-	return size_ == 0;
+	return m_size == 0;
 }
 
 template <std::size_t S> constexpr tr::static_string<S>::size_type tr::static_string<S>::size() const
 {
-	return size_;
+	return m_size;
 }
 
 template <std::size_t S> constexpr tr::static_string<S>::size_type tr::static_string<S>::max_size()
@@ -177,13 +177,13 @@ template <std::size_t S> constexpr tr::static_string<S>::size_type tr::static_st
 
 template <std::size_t S> constexpr void tr::static_string<S>::clear()
 {
-	size_ = 0;
+	m_size = 0;
 }
 
 template <std::size_t S> constexpr void tr::static_string<S>::push_back(char chr)
 {
-	TR_ASSERT(size_ < S, "Tried to push back into a static string that is already at its capacity of {}.", S);
-	buffer[size_++] = chr;
+	TR_ASSERT(m_size < S, "Tried to push back into a static string that is already at its capacity of {}.", S);
+	m_buffer[m_size++] = chr;
 }
 
 template <std::size_t S> constexpr void tr::static_string<S>::append(char chr)
@@ -203,15 +203,15 @@ template <std::input_iterator It>
 constexpr void tr::static_string<S>::append(It begin, It end)
 {
 	std::copy(begin, end, this->end());
-	size_ = static_cast<size_type>(size_ + std::distance(begin, end));
+	m_size = static_cast<size_type>(m_size + std::distance(begin, end));
 }
 
 template <std::size_t S> constexpr void tr::static_string<S>::append(std::string_view str)
 {
-	TR_ASSERT(size_ + str.size() <= S, "Tried to do an append onto a static string that would put it past its capacity of {}.", S);
+	TR_ASSERT(m_size + str.size() <= S, "Tried to do an append onto a static string that would put it past its capacity of {}.", S);
 
 	std::ranges::copy(str, end());
-	size_ = static_cast<size_type>(size_ + str.size());
+	m_size = static_cast<size_type>(m_size + str.size());
 }
 
 template <std::size_t S> constexpr tr::static_string<S>& tr::static_string<S>::operator+=(std::string_view str)
@@ -222,12 +222,12 @@ template <std::size_t S> constexpr tr::static_string<S>& tr::static_string<S>::o
 
 template <std::size_t S> constexpr void tr::static_string<S>::insert(const_iterator where, char chr)
 {
-	TR_ASSERT(size_ < S, "Tried to insert into a static string that is already at its capacity of {}.", S);
+	TR_ASSERT(m_size < S, "Tried to insert into a static string that is already at its capacity of {}.", S);
 	TR_ASSERT(where >= begin() && where <= end(), "Tried to pass an invalid iterator to static_string::insert.");
 
 	std::copy_backward(begin() + (where - begin()), end(), end() + 1);
 	*(begin() + (where - begin())) = chr;
-	++size_;
+	++m_size;
 }
 
 template <std::size_t S>
@@ -237,28 +237,28 @@ constexpr void tr::static_string<S>::insert(const_iterator where, It first, It l
 {
 	const auto size{std::distance(first, last)};
 
-	TR_ASSERT(size_ + size <= S, "Tried to do an insert into a static string that would put it past its capacity of {}.", S);
+	TR_ASSERT(m_size + size <= S, "Tried to do an insert into a static string that would put it past its capacity of {}.", S);
 	TR_ASSERT(where >= begin() && where <= end(), "Tried to pass an invalid iterator to static_string::insert.");
 
 	std::copy_backward(begin() + (where - begin()), end(), end() + size);
 	std::copy(first, last, begin() + (where - begin()));
-	size_ = static_cast<size_type>(size_ + size);
+	m_size = static_cast<size_type>(m_size + size);
 }
 
 template <std::size_t S> constexpr void tr::static_string<S>::insert(const_iterator where, std::string_view str)
 {
-	TR_ASSERT(size_ + str.size() <= S, "Tried to do an insert into a static string that would put it past its capacity of {}.", S);
+	TR_ASSERT(m_size + str.size() <= S, "Tried to do an insert into a static string that would put it past its capacity of {}.", S);
 	TR_ASSERT(where >= begin() && where <= end(), "Tried to pass an invalid iterator to static_string::insert.");
 
 	std::copy_backward(begin() + (where - begin()), end(), end() + str.size());
 	std::ranges::copy(str, begin() + (where - begin()));
-	size_ = static_cast<size_type>(size_ + str.size());
+	m_size = static_cast<size_type>(m_size + str.size());
 }
 
 template <std::size_t S> constexpr void tr::static_string<S>::pop_back()
 {
-	if (size_ > 0) {
-		--size_;
+	if (m_size > 0) {
+		--m_size;
 	}
 }
 
@@ -267,7 +267,7 @@ template <std::size_t S> constexpr void tr::static_string<S>::erase(const_iterat
 	TR_ASSERT(where >= begin() && where < end(), "Tried to pass an invalid iterator to static_string::erase.");
 
 	std::copy(begin() + (where - begin()) + 1, end(), begin() + (where - begin()));
-	--size_;
+	--m_size;
 }
 
 template <std::size_t S> constexpr void tr::static_string<S>::erase(const_iterator start, const_iterator end)
@@ -276,17 +276,17 @@ template <std::size_t S> constexpr void tr::static_string<S>::erase(const_iterat
 	TR_ASSERT(end >= begin() && end <= this->end(), "Tried to pass an invalid end iterator to static_string::erase.");
 
 	std::copy(begin() + (start - begin()) + (end - start), this->end(), begin() + (start - begin()));
-	size_ = static_cast<size_type>(size_ - (end - start));
+	m_size = static_cast<size_type>(m_size - (end - start));
 }
 
 template <std::size_t S> constexpr void tr::static_string<S>::resize(size_type size, char chr)
 {
 	TR_ASSERT(size <= S, "Tried to resize a static string past its capacity of {}.", S);
 
-	for (size_type i = size_; i < size; ++i) {
-		buffer[i] = chr;
+	for (size_type i = m_size; i < size; ++i) {
+		m_buffer[i] = chr;
 	}
-	size_ = size;
+	m_size = size;
 }
 
 //

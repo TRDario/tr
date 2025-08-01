@@ -25,9 +25,9 @@ namespace tr {
 
 	  private:
 		// Dynamically allocated so the thread isn't interrupted when moving.
-		std::unique_ptr<bool> active_flag;
+		std::unique_ptr<bool> m_active;
 		// The timer thread.
-		std::thread thread;
+		std::thread m_thread;
 
 		static void timer_loop(bool& active, duration interval, callback cb);
 	};
@@ -37,7 +37,7 @@ namespace tr {
 
 template <class R, class P, class C>
 tr::timer::timer(const std::chrono::duration<R, P>& interval, C&& cb)
-	: active_flag{std::make_unique<bool>(true)}
-	, thread{timer_loop, std::ref(*active_flag), std::chrono::duration_cast<duration>(interval), callback{std::forward<C>(cb)}}
+	: m_active{std::make_unique<bool>(true)}
+	, m_thread{timer_loop, std::ref(*m_active), std::chrono::duration_cast<duration>(interval), callback{std::forward<C>(cb)}}
 {
 }

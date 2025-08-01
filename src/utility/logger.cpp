@@ -1,12 +1,12 @@
 #include "../../include/tr/utility/logger.hpp"
 
 tr::logger::logger(std::string_view prefix)
-	: prefix{prefix}
+	: m_prefix{prefix}
 {
 }
 
 tr::logger::logger(std::string_view prefix, std::filesystem::path path)
-	: prefix{prefix}, path{std::move(path)}
+	: m_prefix{prefix}, m_path{std::move(path)}
 {
 	try {
 		open_file_w(path, std::ios::trunc);
@@ -18,7 +18,7 @@ tr::logger::logger(std::string_view prefix, std::filesystem::path path)
 
 bool tr::logger::active() const
 {
-	return !prefix.empty();
+	return !m_prefix.empty();
 }
 
 void tr::logger::log(severity level, const std::exception& err)

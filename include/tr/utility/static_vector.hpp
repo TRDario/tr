@@ -157,8 +157,8 @@ namespace tr {
 			requires(std::copy_constructible<T>);
 
 	  private:
-		alignas(T) std::byte buffer[sizeof(T) * S]{};
-		size_type size_{};
+		alignas(T) std::byte m_buffer[sizeof(T) * S]{};
+		size_type m_size{};
 	};
 
 	// Static vector binary reader.

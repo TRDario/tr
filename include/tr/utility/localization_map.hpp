@@ -42,6 +42,6 @@ namespace tr {
 		std::string_view operator[](std::string_view key) const;
 
 	  private:
-		string_hash_map<std::string> map;
+		string_hash_map<std::string> m_map;
 	};
 } // namespace tr

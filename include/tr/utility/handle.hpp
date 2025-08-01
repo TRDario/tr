@@ -83,7 +83,7 @@ namespace tr {
 		constexpr void swap(handle& other);
 
 	  private:
-		T base;
+		T m_base;
 	};
 } // namespace tr
 
@@ -99,14 +99,14 @@ template <tr::handleable T, T E, tr::handle_deleter<T> D> struct std::hash<tr::h
 template <tr::handleable T, T E, tr::handle_deleter<T> D>
 constexpr tr::handle<T, E, D>::handle()
 	requires(default_constructible_handle_deleter<D>)
-	: base{E}
+	: m_base{E}
 {
 }
 
 template <tr::handleable T, T E, tr::handle_deleter<T> D>
 constexpr tr::handle<T, E, D>::handle(T value)
 	requires(default_constructible_handle_deleter<D>)
-	: base{value}
+	: m_base{value}
 {
 	TR_ASSERT(value != E, "Cannot construct a handle from a value set aside as the empty value.");
 }
@@ -114,7 +114,7 @@ constexpr tr::handle<T, E, D>::handle(T value)
 template <tr::handleable T, T E, tr::handle_deleter<T> D>
 constexpr tr::handle<T, E, D>::handle(T value, D& deleter)
 	requires(std::copy_constructible<D>)
-	: D{deleter}, base{value}
+	: D{deleter}, m_base{value}
 {
 	TR_ASSERT(value != E, "Cannot construct a handle from a value set aside as the empty value.");
 }
@@ -122,7 +122,7 @@ constexpr tr::handle<T, E, D>::handle(T value, D& deleter)
 template <tr::handleable T, T E, tr::handle_deleter<T> D>
 constexpr tr::handle<T, E, D>::handle(T value, const D& deleter)
 	requires(std::copy_constructible<D> && !non_const_ref<D>)
-	: D{deleter}, base{value}
+	: D{deleter}, m_base{value}
 {
 	TR_ASSERT(value != E, "Cannot construct a handle from a value set aside as the empty value.");
 }
@@ -130,7 +130,7 @@ constexpr tr::handle<T, E, D>::handle(T value, const D& deleter)
 template <tr::handleable T, T E, tr::handle_deleter<T> D>
 constexpr tr::handle<T, E, D>::handle(T value, D&& deleter)
 	requires(std::move_constructible<D> && !std::is_lvalue_reference_v<D>)
-	: D{std::move(deleter)}, base{value}
+	: D{std::move(deleter)}, m_base{value}
 {
 	TR_ASSERT(value != E, "Cannot construct a handle from a value set aside as the empty value.");
 }
@@ -138,55 +138,55 @@ constexpr tr::handle<T, E, D>::handle(T value, D&& deleter)
 template <tr::handleable T, T E, tr::handle_deleter<T> D>
 constexpr tr::handle<T, E, D>::handle(T value, no_empty_handle_check_t)
 	requires(default_constructible_handle_deleter<D>)
-	: base{value}
+	: m_base{value}
 {
 }
 
 template <tr::handleable T, T E, tr::handle_deleter<T> D>
 constexpr tr::handle<T, E, D>::handle(T value, D& deleter, no_empty_handle_check_t)
 	requires(std::copy_constructible<D>)
-	: D{deleter}, base{value}
+	: D{deleter}, m_base{value}
 {
 }
 
 template <tr::handleable T, T E, tr::handle_deleter<T> D>
 constexpr tr::handle<T, E, D>::handle(T value, const D& deleter, no_empty_handle_check_t)
 	requires(std::copy_constructible<D> && !non_const_ref<D>)
-	: D{deleter}, base{value}
+	: D{deleter}, m_base{value}
 {
 }
 
 template <tr::handleable T, T E, tr::handle_deleter<T> D>
 constexpr tr::handle<T, E, D>::handle(T value, D&& deleter, no_empty_handle_check_t)
 	requires(std::move_constructible<D> && !std::is_lvalue_reference_v<D>)
-	: D{std::move(deleter)}, base{value}
+	: D{std::move(deleter)}, m_base{value}
 {
 }
 
 template <tr::handleable T, T E, tr::handle_deleter<T> D>
 template <tr::handle_deleter<T> D1>
 constexpr tr::handle<T, E, D>::handle(handle<T, E, D1>&& move) noexcept
-	: base{std::exchange(move.base, E)}
+	: m_base{std::exchange(move.m_base, E)}
 {
 }
 
 template <tr::handleable T, T E, tr::handle_deleter<T> D> constexpr tr::handle<T, E, D>::~handle<T, E, D>()
 {
-	if (base != E) {
-		D::operator()(base);
+	if (m_base != E) {
+		D::operator()(m_base);
 	}
 }
 
 template <tr::handleable T, T E, tr::handle_deleter<T> D> constexpr tr::handle<T, E, D>& tr::handle<T, E, D>::operator=(handle&& r) noexcept
 {
 	std::ignore = handle{std::move(*this)};
-	std::swap(base, r.base);
+	std::swap(m_base, r.m_base);
 	return *this;
 }
 
 template <tr::handleable T, T E, tr::handle_deleter<T> D> constexpr bool tr::handle<T, E, D>::has_value() const
 {
-	return base != E;
+	return m_base != E;
 }
 
 template <tr::handleable T, T E, tr::handle_deleter<T> D> constexpr tr::handle<T, E, D>::operator bool() const
@@ -196,14 +196,14 @@ template <tr::handleable T, T E, tr::handle_deleter<T> D> constexpr tr::handle<T
 
 template <tr::handleable T, T E, tr::handle_deleter<T> D> constexpr const T& tr::handle<T, E, D>::get() const
 {
-	TR_ASSERT(base != E, "Cannot get the value of an empty handle.");
+	TR_ASSERT(m_base != E, "Cannot get the value of an empty handle.");
 
-	return base;
+	return m_base;
 }
 
 template <tr::handleable T, T E, tr::handle_deleter<T> D> constexpr const T& tr::handle<T, E, D>::get(no_empty_handle_check_t) const
 {
-	return base;
+	return m_base;
 }
 
 template <tr::handleable T, T E, tr::handle_deleter<T> D> constexpr D& tr::handle<T, E, D>::get_deleter()
@@ -218,7 +218,7 @@ template <tr::handleable T, T E, tr::handle_deleter<T> D> constexpr D& tr::handl
 
 template <tr::handleable T, T E, tr::handle_deleter<T> D> constexpr T tr::handle<T, E, D>::release()
 {
-	return std::exchange(base, E);
+	return std::exchange(m_base, E);
 }
 
 template <tr::handleable T, T E, tr::handle_deleter<T> D> constexpr void tr::handle<T, E, D>::reset()
@@ -238,5 +238,5 @@ template <tr::handleable T, T E, tr::handle_deleter<T> D> constexpr void tr::han
 
 template <tr::handleable T, T E, tr::handle_deleter<T> D> constexpr void tr::handle<T, E, D>::swap(handle& other)
 {
-	std::swap(base, other.base);
+	std::swap(m_base, other.m_base);
 }

@@ -4,10 +4,10 @@ using namespace std::chrono_literals;
 
 tr::timer::~timer()
 {
-	if (active_flag != nullptr) {
-		*active_flag = false;
-		if (thread.joinable()) {
-			thread.join();
+	if (m_active != nullptr) {
+		*m_active = false;
+		if (m_thread.joinable()) {
+			m_thread.join();
 		}
 	}
 }
@@ -15,14 +15,14 @@ tr::timer::~timer()
 tr::timer& tr::timer::operator=(timer&& r) noexcept
 {
 	std::ignore = timer{std::move(*this)};
-	active_flag = std::move(r.active_flag);
-	thread = std::move(r.thread);
+	m_active = std::move(r.m_active);
+	m_thread = std::move(r.m_thread);
 	return *this;
 }
 
 bool tr::timer::active() const
 {
-	return active_flag != nullptr;
+	return m_active != nullptr;
 }
 
 void tr::timer::timer_loop(bool& active, duration interval, callback cb)

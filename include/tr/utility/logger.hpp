@@ -36,9 +36,9 @@ namespace tr {
 
 	  private:
 		// The prefix of the logger.
-		std::string_view prefix;
+		std::string_view m_prefix;
 		// The path to the log file (or empty to not log to file).
-		std::filesystem::path path;
+		std::filesystem::path m_path;
 	};
 
 	// tr's default logger, can be redirected.
@@ -71,9 +71,9 @@ template <class... Args> void tr::logger::log(severity level, std::format_string
 	const std::string severity_str{std::format("[{}] ", static_cast<char>(level))};
 	const std::string fmt_str{std::format(fmt, std::forward<Args>(args)...)};
 
-	std::cout << time_str << "[" << prefix << "] " << severity_str << fmt_str << "\n";
-	if (!path.empty()) {
-		std::ofstream file{path, std::ios::app};
+	std::cout << time_str << "[" << m_prefix << "] " << severity_str << fmt_str << "\n";
+	if (!m_path.empty()) {
+		std::ofstream file{m_path, std::ios::app};
 		if (file.is_open()) {
 			file << time_str << severity_str << fmt_str << "\n";
 		}
@@ -83,13 +83,13 @@ template <class... Args> void tr::logger::log(severity level, std::format_string
 template <class... Args> void tr::logger::log_continue(std::format_string<Args...> fmt, Args&&... args)
 {
 	const std::string fmt_str{std::format(fmt, std::forward<Args>(args)...)};
-	const std::string fill(prefix.size() + 14, ' ');
+	const std::string fill(m_prefix.size() + 14, ' ');
 
 	std::cout << fill << "--- " << fmt_str << "\n";
-	if (!path.empty()) {
-		std::ofstream file{path, std::ios::app};
+	if (!m_path.empty()) {
+		std::ofstream file{m_path, std::ios::app};
 		if (file.is_open()) {
-			file << std::string_view{fill.begin(), fill.end() - (prefix.size() + 3)} << "--- " << fmt_str << "\n";
+			file << std::string_view{fill.begin(), fill.end() - (m_prefix.size() + 3)} << "--- " << fmt_str << "\n";
 		}
 	}
 }

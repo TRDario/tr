@@ -101,18 +101,18 @@ std::string_view tr::localization_load_error::details() const
 }
 
 tr::localization_map::localization_map(const string_hash_map<std::string>& map)
-	: map{map}
+	: m_map{map}
 {
 }
 
 tr::localization_map::localization_map(string_hash_map<std::string>&& map)
-	: map{std::move(map)}
+	: m_map{std::move(map)}
 {
 }
 
 void tr::localization_map::clear()
 {
-	map.clear();
+	m_map.clear();
 }
 
 std::vector<std::string> tr::localization_map::load(const std::filesystem::path& path)
@@ -138,7 +138,7 @@ std::vector<std::string> tr::localization_map::load(const std::filesystem::path&
 				continue;
 			}
 			std::string_view key{begin, end};
-			if (map.contains(key)) {
+			if (m_map.contains(key)) {
 				errors.emplace_back(std::format("line {}: Duplicate key '{}'.", line, key));
 				continue;
 			}
@@ -171,7 +171,7 @@ std::vector<std::string> tr::localization_map::load(const std::filesystem::path&
 			}
 			const std::string_view value{begin, end};
 
-			map.emplace(key, process_value(value, errors, line));
+			m_map.emplace(key, process_value(value, errors, line));
 		}
 
 		return errors;
@@ -186,11 +186,11 @@ std::vector<std::string> tr::localization_map::load(const std::filesystem::path&
 
 bool tr::localization_map::contains(std::string_view key) const
 {
-	return map.contains(key);
+	return m_map.contains(key);
 }
 
 std::string_view tr::localization_map::operator[](std::string_view key) const
 {
-	const string_hash_map<std::string>::const_iterator it{map.find(key)};
-	return it != map.end() ? it->second : key;
+	const string_hash_map<std::string>::const_iterator it{m_map.find(key)};
+	return it != m_map.end() ? it->second : key;
 }

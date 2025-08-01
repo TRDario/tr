@@ -53,7 +53,7 @@ namespace tr::utf8 {
 
 	  private:
 		// Pointer to a valid UTF-8 char sequence.
-		const char* ptr{nullptr};
+		const char* m_ptr{nullptr};
 	};
 	using const_reverse_it = std::reverse_iterator<const_it>;
 

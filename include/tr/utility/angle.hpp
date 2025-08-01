@@ -42,7 +42,7 @@ namespace tr {
 
 	  private:
 		// The underlying value in radians.
-		float base;
+		float m_rads;
 	};
 
 	// Converts a numeric value in radians into an angle value.
@@ -93,13 +93,13 @@ template <> class std::formatter<tr::angle> : public std::formatter<float>, publ
 
 		switch (*it) {
 		case 'r':
-			unit = unit_type::RADS;
+			m_unit = unit::RADS;
 			break;
 		case 'd':
-			unit = unit_type::DEGREES;
+			m_unit = unit::DEGREES;
 			break;
 		case 't':
-			unit = unit_type::TURNS;
+			m_unit = unit::TURNS;
 			break;
 		}
 
@@ -109,16 +109,16 @@ template <> class std::formatter<tr::angle> : public std::formatter<float>, publ
 
 	template <typename FormatContext> constexpr auto format(const tr::angle& p, FormatContext& ctx) const
 	{
-		switch (unit) {
-		case unit_type::RADS:
+		switch (m_unit) {
+		case unit::RADS:
 			ctx.advance_to(std::formatter<float>::format(p.rads(), ctx));
 			ctx.advance_to(std::formatter<const char*>::format("rad", ctx));
 			break;
-		case unit_type::DEGREES:
+		case unit::DEGREES:
 			ctx.advance_to(std::formatter<float>::format(p.degs(), ctx));
 			ctx.advance_to(std::formatter<const char*>::format("deg", ctx));
 			break;
-		case unit_type::TURNS:
+		case unit::TURNS:
 			ctx.advance_to(std::formatter<float>::format(p.turns(), ctx));
 			ctx.advance_to(std::formatter<const char*>::format("tr", ctx));
 			break;
@@ -127,13 +127,13 @@ template <> class std::formatter<tr::angle> : public std::formatter<float>, publ
 	}
 
   private:
-	enum class unit_type {
+	enum class unit {
 		RADS,
 		DEGREES,
 		TURNS
 	};
 
-	unit_type unit{unit_type::RADS};
+	unit m_unit{unit::RADS};
 };
 
 #include "angle_impl.hpp"

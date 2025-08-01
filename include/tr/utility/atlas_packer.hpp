@@ -16,7 +16,7 @@ namespace tr {
 
 	  private:
 		// The skyline silhouette points.
-		std::vector<glm::u16vec2> skyline;
+		std::vector<glm::u16vec2> m_skyline;
 	};
 
 	// Atlas packer combined with a list of rects.
@@ -37,9 +37,9 @@ namespace tr {
 
 	  private:
 		// The atlas packer.
-		atlas_packer packer;
+		atlas_packer m_packer;
 		// The atlas rects.
-		std::unordered_map<Key, rect2<std::uint16_t>, Hash, Pred> rects;
+		std::unordered_map<Key, rect2<std::uint16_t>, Hash, Pred> m_rects;
 	};
 
 } // namespace tr
@@ -48,25 +48,25 @@ namespace tr {
 
 template <class Key, class Hash, class Pred> bool tr::atlas_rects<Key, Hash, Pred>::contains(const auto& key) const
 {
-	return rects.contains(key);
+	return m_rects.contains(key);
 }
 
 template <class Key, class Hash, class Pred> std::size_t tr::atlas_rects<Key, Hash, Pred>::entries() const
 {
-	return rects.size();
+	return m_rects.size();
 }
 
 template <class Key, class Hash, class Pred> tr::rect2<std::uint16_t> tr::atlas_rects<Key, Hash, Pred>::operator[](const auto& key) const
 {
 	TR_ASSERT(contains(key), "Tried to get a rect at a nonexistant key from an atlas packer.");
 
-	return rects.find(key)->second;
+	return m_rects.find(key)->second;
 }
 
 template <class Key, class Hash, class Pred> void tr::atlas_rects<Key, Hash, Pred>::clear()
 {
-	packer.clear();
-	rects.clear();
+	m_packer.clear();
+	m_rects.clear();
 }
 
 template <class Key, class Hash, class Pred>
@@ -74,9 +74,9 @@ std::optional<glm::u16vec2> tr::atlas_rects<Key, Hash, Pred>::try_insert(auto&& 
 {
 	TR_ASSERT(!contains(key), "Tried to insert a rect with the same key as an existing rect into an atlas packer.");
 
-	std::optional<glm::u16vec2> packing_result{packer.try_insert(size, texture_size)};
+	std::optional<glm::u16vec2> packing_result{m_packer.try_insert(size, texture_size)};
 	if (packing_result.has_value()) {
-		rects.emplace(std::move(key), rect2<std::uint16_t>{*packing_result, size});
+		m_rects.emplace(std::move(key), rect2<std::uint16_t>{*packing_result, size});
 	}
 	return packing_result;
 }

@@ -14,6 +14,6 @@ namespace tr {
 		duration lap();
 
 	  private:
-		time_point start_time;
+		time_point m_start;
 	};
 } // namespace tr

@@ -9,7 +9,7 @@ std::uint64_t tr::gen_random_seed()
 }
 
 tr::xorshiftr_128p::xorshiftr_128p(std::uint64_t seed)
-	: state{seed++, seed}
+	: m_state{seed++, seed}
 {
 	advance();
 	advance();
@@ -17,13 +17,13 @@ tr::xorshiftr_128p::xorshiftr_128p(std::uint64_t seed)
 
 std::uint64_t tr::xorshiftr_128p::advance()
 {
-	uint64_t x = state[0];
-	uint64_t y = state[1];
-	state[0] = y;
+	uint64_t x = m_state[0];
+	uint64_t y = m_state[1];
+	m_state[0] = y;
 	x ^= x << 23;
 	x ^= x >> 17;
 	x ^= y;
-	state[1] = x + y;
+	m_state[1] = x + y;
 	return x;
 }
 

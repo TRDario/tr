@@ -1,7 +1,7 @@
 #include "../../include/tr/utility/iostream.hpp"
 
 tr::file_not_found::file_not_found(std::string_view path)
-	: path{std::format("'{}'", path)}
+	: m_path{std::format("'{}'", path)}
 {
 }
 
@@ -12,7 +12,7 @@ std::string_view tr::file_not_found::name() const
 
 std::string_view tr::file_not_found::description() const
 {
-	return path;
+	return m_path;
 }
 
 std::string_view tr::file_not_found::details() const
@@ -21,7 +21,7 @@ std::string_view tr::file_not_found::details() const
 }
 
 tr::file_open_error::file_open_error(std::string_view path)
-	: path{std::format("'{}'", path)}
+	: m_path{std::format("'{}'", path)}
 {
 }
 
@@ -33,7 +33,7 @@ std::string_view tr::file_open_error::name() const
 std::string_view tr::file_open_error::description() const
 {
 	static std::string buffer;
-	buffer = std::format("'{}'", path);
+	buffer = std::format("'{}'", m_path);
 	return buffer;
 }
 

@@ -4,7 +4,7 @@
 tr::stopwatch::stopwatch()
 {
 	atomic_thread_fence(std::memory_order::relaxed);
-	start_time = clock::now();
+	m_start = clock::now();
 	atomic_thread_fence(std::memory_order::relaxed);
 }
 
@@ -13,14 +13,14 @@ tr::duration tr::stopwatch::elapsed() const
 	atomic_thread_fence(std::memory_order::relaxed);
 	const time_point now{clock::now()};
 	atomic_thread_fence(std::memory_order::relaxed);
-	return now - start_time;
+	return now - m_start;
 }
 
 tr::duration tr::stopwatch::lap()
 {
-	const time_point start = start_time;
+	const time_point start = m_start;
 	atomic_thread_fence(std::memory_order::relaxed);
-	start_time = clock::now();
+	m_start = clock::now();
 	atomic_thread_fence(std::memory_order::relaxed);
-	return start_time - start;
+	return m_start - start;
 }

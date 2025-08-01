@@ -34,8 +34,8 @@ namespace tr {
 
 	  private:
 		// The measurement deque.
-		deque duration_queue;
+		deque m_durations;
 		// The start point of the latest started (but not ended) measurement.
-		time_point start_time;
+		time_point m_start;
 	};
 } // namespace tr

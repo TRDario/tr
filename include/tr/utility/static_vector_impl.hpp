@@ -4,24 +4,24 @@
 template <class T, std::size_t S>
 tr::static_vector<T, S>::static_vector(size_type size)
 	requires(std::default_initializable<T>)
-	: size_{static_cast<size_type>(size)}
+	: m_size{static_cast<size_type>(size)}
 {
 	TR_ASSERT(size <= S, "Tried to create a static vector of size {} but with a max capacity of only {}.", size, S);
 
-	for (std::size_t i = 0; i < size_; ++i) {
-		new (buffer + sizeof(T) * i) T{};
+	for (std::size_t i = 0; i < m_size; ++i) {
+		new (m_buffer + sizeof(T) * i) T{};
 	}
 }
 
 template <class T, std::size_t S>
 tr::static_vector<T, S>::static_vector(size_type size, const T& v)
 	requires(std::copy_constructible<T>)
-	: size_{static_cast<size_type>(size)}
+	: m_size{static_cast<size_type>(size)}
 {
 	TR_ASSERT(size <= S, "Tried to create a static vector of size {} but with a max capacity of only {}.", size, S);
 
-	for (std::size_t i = 0; i < size_; ++i) {
-		new (buffer + sizeof(T) * i) T{v};
+	for (std::size_t i = 0; i < m_size; ++i) {
+		new (m_buffer + sizeof(T) * i) T{v};
 	}
 }
 
@@ -29,9 +29,9 @@ template <class T, std::size_t S>
 template <std::input_iterator It>
 	requires(std::same_as<typename std::iterator_traits<It>::value_type, T>)
 tr::static_vector<T, S>::static_vector(It first, It last)
-	: size_{std::distance(first, last)}
+	: m_size{std::distance(first, last)}
 {
-	TR_ASSERT(size_ <= S, "Tried to create a static vector of size {} but with a max capacity of only {}.", size_, S);
+	TR_ASSERT(m_size <= S, "Tried to create a static vector of size {} but with a max capacity of only {}.", m_size, S);
 
 	std::move(first, last, begin());
 }
@@ -68,8 +68,8 @@ tr::static_vector<T, S>::static_vector(static_vector&& r) noexcept(std::is_nothr
 
 template <class T, std::size_t S> tr::static_vector<T, S>::~static_vector<T, S>()
 {
-	for (std::size_t i = 0; i < size_; ++i) {
-		(reinterpret_cast<T*>(buffer) + i)->~T();
+	for (std::size_t i = 0; i < m_size; ++i) {
+		(reinterpret_cast<T*>(m_buffer) + i)->~T();
 	}
 }
 
@@ -77,13 +77,13 @@ template <class T, std::size_t S> tr::static_vector<T, S>::~static_vector<T, S>(
 
 template <class T, std::size_t S> tr::static_vector<T, S>::reference tr::static_vector<T, S>::at(size_type offset)
 {
-	TR_ASSERT(offset < size_, "Tried to do an out-of-bounds read at position {} of static vector with size {}.", offset, size_);
+	TR_ASSERT(offset < m_size, "Tried to do an out-of-bounds read at position {} of static vector with size {}.", offset, m_size);
 	return data()[offset];
 }
 
 template <class T, std::size_t S> tr::static_vector<T, S>::const_reference tr::static_vector<T, S>::at(size_type offset) const
 {
-	TR_ASSERT(offset < size_, "Tried to do an out-of-bounds read at position {} of static vector with size {}.", offset, size_);
+	TR_ASSERT(offset < m_size, "Tried to do an out-of-bounds read at position {} of static vector with size {}.", offset, m_size);
 	return data()[offset];
 }
 
@@ -109,22 +109,22 @@ template <class T, std::size_t S> tr::static_vector<T, S>::const_reference tr::s
 
 template <class T, std::size_t S> tr::static_vector<T, S>::reference tr::static_vector<T, S>::back()
 {
-	return at(size_ - 1);
+	return at(m_size - 1);
 }
 
 template <class T, std::size_t S> tr::static_vector<T, S>::const_reference tr::static_vector<T, S>::back() const
 {
-	return at(size_ - 1);
+	return at(m_size - 1);
 }
 
 template <class T, std::size_t S> tr::static_vector<T, S>::pointer tr::static_vector<T, S>::data()
 {
-	return reinterpret_cast<T*>(buffer);
+	return reinterpret_cast<T*>(m_buffer);
 }
 
 template <class T, std::size_t S> tr::static_vector<T, S>::const_pointer tr::static_vector<T, S>::data() const
 {
-	return reinterpret_cast<const T*>(buffer);
+	return reinterpret_cast<const T*>(m_buffer);
 }
 
 //
@@ -146,17 +146,17 @@ template <class T, std::size_t S> tr::static_vector<T, S>::const_iterator tr::st
 
 template <class T, std::size_t S> tr::static_vector<T, S>::iterator tr::static_vector<T, S>::end()
 {
-	return begin() + size_;
+	return begin() + m_size;
 }
 
 template <class T, std::size_t S> tr::static_vector<T, S>::const_iterator tr::static_vector<T, S>::end() const
 {
-	return begin() + size_;
+	return begin() + m_size;
 }
 
 template <class T, std::size_t S> tr::static_vector<T, S>::const_iterator tr::static_vector<T, S>::cend() const
 {
-	return begin() + size_;
+	return begin() + m_size;
 }
 
 template <class T, std::size_t S> tr::static_vector<T, S>::reverse_iterator tr::static_vector<T, S>::rbegin()
@@ -193,12 +193,12 @@ template <class T, std::size_t S> tr::static_vector<T, S>::const_reverse_iterato
 
 template <class T, std::size_t S> constexpr bool tr::static_vector<T, S>::empty() const
 {
-	return size_ == 0;
+	return m_size == 0;
 }
 
 template <class T, std::size_t S> constexpr tr::static_vector<T, S>::size_type tr::static_vector<T, S>::size() const
 {
-	return size_;
+	return m_size;
 }
 
 template <class T, std::size_t S> constexpr tr::static_vector<T, S>::size_type tr::static_vector<T, S>::max_size()
@@ -210,10 +210,10 @@ template <class T, std::size_t S> constexpr tr::static_vector<T, S>::size_type t
 
 template <class T, std::size_t S> void tr::static_vector<T, S>::clear()
 {
-	for (std::size_t i = 0; i < size_; ++i) {
-		(reinterpret_cast<T*>(buffer) + i)->~T();
+	for (std::size_t i = 0; i < m_size; ++i) {
+		(reinterpret_cast<T*>(m_buffer) + i)->~T();
 	}
-	size_ = 0;
+	m_size = 0;
 }
 
 template <class T, std::size_t S>
@@ -237,12 +237,12 @@ tr::static_vector<T, S>::iterator tr::static_vector<T, S>::insert(const_iterator
 {
 	const auto range_size{std::distance(first, last)};
 
-	TR_ASSERT(size_ + range_size <= S, "Tried to do an insert into a static vector that would put it past its capacity of {}.", S);
+	TR_ASSERT(m_size + range_size <= S, "Tried to do an insert into a static vector that would put it past its capacity of {}.", S);
 	TR_ASSERT(where >= begin() && where <= end(), "Tried to pass an invalid iterator to static_vector::insert.");
 
 	std::move_backward(const_cast<iterator>(where), end(), end() + range_size);
 	std::move(first, last, const_cast<iterator>(where));
-	size_ = static_cast<size_type>(size_ + range_size);
+	m_size = static_cast<size_type>(m_size + range_size);
 	return const_cast<iterator>(where);
 }
 
@@ -266,12 +266,12 @@ template <class... Args>
 	requires(std::constructible_from<T, Args...>)
 tr::static_vector<T, S>::iterator tr::static_vector<T, S>::emplace(const_iterator where, Args&&... args)
 {
-	TR_ASSERT(size_ < S, "Tried to insert into a static vector that is already at its capacity of {}.", S);
+	TR_ASSERT(m_size < S, "Tried to insert into a static vector that is already at its capacity of {}.", S);
 	TR_ASSERT(where >= begin() && where <= end(), "Tried to pass an invalid iterator to static_vector::insert.");
 
 	std::move_backward(const_cast<iterator>(where), end(), end() + 1);
 	new (&*const_cast<iterator>(where)) T{std::forward<Args>(args)...};
-	++size_;
+	++m_size;
 	return const_cast<iterator>(where);
 }
 
@@ -281,7 +281,7 @@ template <class T, std::size_t S> tr::static_vector<T, S>::iterator tr::static_v
 
 	const_cast<iterator>(where)->~T();
 	std::move(const_cast<iterator>(where) + 1, end(), const_cast<iterator>(where));
-	--size_;
+	--m_size;
 	return const_cast<iterator>(where);
 }
 
@@ -295,7 +295,7 @@ tr::static_vector<T, S>::iterator tr::static_vector<T, S>::erase(const_iterator 
 		it->~T();
 	}
 	std::move(const_cast<iterator>(first) + (first - last), end(), const_cast<iterator>(first));
-	size_ = static_cast<size_type>(size_ - (first - last));
+	m_size = static_cast<size_type>(m_size - (first - last));
 	return first;
 }
 
@@ -318,7 +318,7 @@ template <class... Args>
 	requires(std::constructible_from<T, Args...>)
 tr::static_vector<T, S>::reference tr::static_vector<T, S>::emplace_back(Args&&... args)
 {
-	new (buffer + size_++ * sizeof(T)) T{std::forward<Args>(args)...};
+	new (m_buffer + m_size++ * sizeof(T)) T{std::forward<Args>(args)...};
 	return back();
 }
 
@@ -348,41 +348,41 @@ tr::static_vector<T, S>::iterator tr::static_vector<T, S>::append(std::initializ
 template <class T, std::size_t S> void tr::static_vector<T, S>::pop_back()
 {
 	back()->~T();
-	--size_;
+	--m_size;
 }
 
 template <class T, std::size_t S>
 void tr::static_vector<T, S>::resize(size_type size)
 	requires(std::default_initializable<T>)
 {
-	if (size < size_) {
-		for (size_type i = size; i != size_; ++i) {
+	if (size < m_size) {
+		for (size_type i = size; i != m_size; ++i) {
 			(data() + i)->~T();
 		}
 	}
-	else if (size > size_) {
-		for (size_type i = size_; i != size; ++i) {
-			new (reinterpret_cast<T*>(buffer) + i) T{};
+	else if (size > m_size) {
+		for (size_type i = m_size; i != size; ++i) {
+			new (reinterpret_cast<T*>(m_buffer) + i) T{};
 		}
 	}
-	size_ = size;
+	m_size = size;
 }
 
 template <class T, std::size_t S>
 void tr::static_vector<T, S>::resize(size_type size, const T& v)
 	requires(std::copy_constructible<T>)
 {
-	if (size < size_) {
-		for (size_type i = size; i != size_; ++i) {
+	if (size < m_size) {
+		for (size_type i = size; i != m_size; ++i) {
 			(data() + i)->~T();
 		}
 	}
-	else if (size > size_) {
-		for (size_type i = size_; i != size; ++i) {
-			new (reinterpret_cast<T*>(buffer) + i) T{v};
+	else if (size > m_size) {
+		for (size_type i = m_size; i != size; ++i) {
+			new (reinterpret_cast<T*>(m_buffer) + i) T{v};
 		}
 	}
-	size_ = size;
+	m_size = size;
 }
 
 //

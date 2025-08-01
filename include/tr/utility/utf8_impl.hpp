@@ -88,23 +88,23 @@ template <tr::utf8::string String> constexpr void tr::utf8::pop_back(String& str
 //
 
 constexpr tr::utf8::const_it::const_it(const char* ptr)
-	: ptr{ptr}
+	: m_ptr{ptr}
 {
 	TR_ASSERT(ptr != nullptr, "Tried to create UTF-8 iterator to nullptr.");
 }
 
 constexpr tr::codepoint tr::utf8::const_it::operator*() const
 {
-	TR_ASSERT(ptr != nullptr, "Tried to dereference default-constructed UTF-8 iterator.");
+	TR_ASSERT(m_ptr != nullptr, "Tried to dereference default-constructed UTF-8 iterator.");
 
-	return to_cp(ptr);
+	return to_cp(m_ptr);
 }
 
 constexpr tr::utf8::const_it& tr::utf8::const_it::operator++()
 {
-	TR_ASSERT(ptr != nullptr, "Tried to increment default-constructed UTF-8 iterator.");
+	TR_ASSERT(m_ptr != nullptr, "Tried to increment default-constructed UTF-8 iterator.");
 
-	ptr = next(ptr);
+	m_ptr = next(m_ptr);
 	return *this;
 }
 
@@ -117,9 +117,9 @@ constexpr tr::utf8::const_it tr::utf8::const_it::operator++(int)
 
 constexpr tr::utf8::const_it& tr::utf8::const_it::operator--()
 {
-	TR_ASSERT(ptr != nullptr, "Tried to decrement default-constructed UTF-8 iterator.");
+	TR_ASSERT(m_ptr != nullptr, "Tried to decrement default-constructed UTF-8 iterator.");
 
-	ptr = prev(ptr);
+	m_ptr = prev(m_ptr);
 	return *this;
 }
 
@@ -132,7 +132,7 @@ constexpr tr::utf8::const_it tr::utf8::const_it::operator--(int)
 
 constexpr const char* tr::utf8::const_it::base() const
 {
-	return ptr;
+	return m_ptr;
 }
 
 //

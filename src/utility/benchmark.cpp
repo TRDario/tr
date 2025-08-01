@@ -5,70 +5,70 @@ using namespace std::chrono_literals;
 
 void tr::benchmark::start()
 {
-	TR_ASSERT(start_time == time_point{}, "Tried to start a benchmark measurement before stopping the previous one.");
+	TR_ASSERT(m_start == time_point{}, "Tried to start a benchmark measurement before stopping the previous one.");
 	atomic_thread_fence(std::memory_order::relaxed);
-	start_time = clock::now();
+	m_start = clock::now();
 	atomic_thread_fence(std::memory_order::relaxed);
 }
 
 void tr::benchmark::stop()
 {
-	TR_ASSERT(start_time != time_point{}, "Tried to stop a benchmark measurement before starting one.");
+	TR_ASSERT(m_start != time_point{}, "Tried to stop a benchmark measurement before starting one.");
 
 	try {
 		atomic_thread_fence(std::memory_order::relaxed);
 		const time_point now{clock::now()};
-		duration_queue.emplace_back(start_time, now - start_time);
-		const auto it{std::ranges::upper_bound(duration_queue, now - 2.5s, std::less{}, &deque::value_type::first)};
-		if (it != duration_queue.end()) {
-			duration_queue.erase(duration_queue.begin(), it);
+		m_durations.emplace_back(m_start, now - m_start);
+		const auto it{std::ranges::upper_bound(m_durations, now - 2.5s, std::less{}, &deque::value_type::first)};
+		if (it != m_durations.end()) {
+			m_durations.erase(m_durations.begin(), it);
 		}
-		start_time = time_point{};
+		m_start = time_point{};
 		atomic_thread_fence(std::memory_order::relaxed);
 	}
 	catch (std::exception&) {
-		start_time = time_point{};
+		m_start = time_point{};
 	}
 }
 
 void tr::benchmark::clear()
 {
-	start_time = time_point{};
-	duration_queue.clear();
+	m_start = time_point{};
+	m_durations.clear();
 }
 
 tr::duration tr::benchmark::latest() const
 {
-	return !duration_queue.empty() ? duration_queue.back().second : duration{0};
+	return !m_durations.empty() ? m_durations.back().second : duration{0};
 }
 
 tr::duration tr::benchmark::min() const
 {
-	return !duration_queue.empty() ? *std::ranges::min_element(std::views::values(duration_queue)) : duration{0};
+	return !m_durations.empty() ? *std::ranges::min_element(std::views::values(m_durations)) : duration{0};
 }
 
 tr::duration tr::benchmark::max() const
 {
-	return !duration_queue.empty() ? *std::ranges::max_element(std::views::values(duration_queue)) : duration{0};
+	return !m_durations.empty() ? *std::ranges::max_element(std::views::values(m_durations)) : duration{0};
 }
 
 tr::duration tr::benchmark::avg() const
 {
-	if (duration_queue.empty()) {
+	if (m_durations.empty()) {
 		return duration{0};
 	}
 	else {
-		const auto durations{std::views::values(duration_queue)};
-		return std::accumulate(durations.begin(), durations.end(), duration{0}) / duration_queue.size();
+		const auto durations{std::views::values(m_durations)};
+		return std::accumulate(durations.begin(), durations.end(), duration{0}) / m_durations.size();
 	}
 }
 
 double tr::benchmark::fps() const
 {
-	return !duration_queue.empty() ? duration_queue.size() / 2.5 : 0;
+	return !m_durations.empty() ? m_durations.size() / 2.5 : 0;
 }
 
 const tr::benchmark::deque& tr::benchmark::measurements() const
 {
-	return duration_queue;
+	return m_durations;
 }
