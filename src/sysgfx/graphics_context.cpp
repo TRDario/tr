@@ -27,12 +27,12 @@ void tr::gfx::set_render_target(const render_target& target)
 	TR_ASSERT(ogl_context != nullptr, "Tried to set graphics context render target before opening the window.");
 
 	if (target != current_render_target) {
-		if ((!current_render_target.has_value() && target.fbo != 0) ||
-			(current_render_target.has_value() && target.fbo != current_render_target->fbo)) {
-			TR_GL_CALL(glBindFramebuffer, GL_DRAW_FRAMEBUFFER, target.fbo);
+		if ((!current_render_target.has_value() && target.m_fbo != 0) ||
+			(current_render_target.has_value() && target.m_fbo != current_render_target->m_fbo)) {
+			TR_GL_CALL(glBindFramebuffer, GL_DRAW_FRAMEBUFFER, target.m_fbo);
 		}
-		TR_GL_CALL(glViewport, target.viewport.tl.x, target.viewport.tl.y, target.viewport.size.x, target.viewport.size.y);
-		TR_GL_CALL(glScissor, target.viewport.tl.x, target.viewport.tl.y, target.viewport.size.x, target.viewport.size.y);
+		TR_GL_CALL(glViewport, target.m_viewport.tl.x, target.m_viewport.tl.y, target.m_viewport.size.x, target.m_viewport.size.y);
+		TR_GL_CALL(glScissor, target.m_viewport.tl.x, target.m_viewport.tl.y, target.m_viewport.size.x, target.m_viewport.size.y);
 		current_render_target = target;
 	}
 }

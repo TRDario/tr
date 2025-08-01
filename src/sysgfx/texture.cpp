@@ -183,7 +183,7 @@ void tr::gfx::texture::deleter::operator()(unsigned int id) const
 
 tr::gfx::render_texture::~render_texture()
 {
-	if (m_fbo.has_value() && current_render_target.has_value() && current_render_target->fbo == m_fbo.get()) {
+	if (m_fbo.has_value() && current_render_target.has_value() && current_render_target->m_fbo == m_fbo.get()) {
 		current_render_target.reset();
 	}
 }

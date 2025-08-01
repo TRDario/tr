@@ -4,13 +4,13 @@
 /////////////////////////////////////////////////////////// STATIC INDEX BUFFER ///////////////////////////////////////////////////////////
 
 tr::gfx::static_index_buffer::static_index_buffer(std::span<const std::uint16_t> data)
-	: size{ssize(data)}
+	: m_size{ssize(data)}
 {
 	unsigned int ibo;
 	TR_GL_CALL(glCreateBuffers, 1, &ibo);
 	m_ibo.reset(ibo);
 
-	TR_GL_CALL(glNamedBufferStorage, m_ibo.get(), size * sizeof(std::uint16_t), data.data(), 0);
+	TR_GL_CALL(glNamedBufferStorage, m_ibo.get(), m_size * sizeof(std::uint16_t), data.data(), 0);
 	if (glGetError() == GL_OUT_OF_MEMORY) {
 		throw out_of_memory{"index buffer allocation"};
 	}

@@ -12,9 +12,9 @@ namespace tr::gfx {
 
 	  private:
 		// The OpenGL ID of the render target's FBO.
-		unsigned int fbo;
+		unsigned int m_fbo;
 		// The viewport of the render target.
-		irect2 viewport;
+		irect2 m_viewport;
 
 		render_target(unsigned int fbo, const irect2& viewport);
 

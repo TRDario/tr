@@ -23,7 +23,7 @@ namespace tr::gfx {
 		// Handle to the OpenGL buffer.
 		handle<unsigned int, 0, deleter> m_ibo;
 		// The size of the buffer.
-		std::intptr_t size;
+		std::intptr_t m_size;
 
 		friend void set_index_buffer(const static_index_buffer& buffer);
 	};
