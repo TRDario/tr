@@ -1,12 +1,11 @@
 #pragma once
 #include "../utility/angle.hpp"
-#include "audio_buffer.hpp"
-#include "audio_stream.hpp"
+#include "buffer.hpp"
+#include "stream.hpp"
 
-namespace tr {
-	struct buffer_stream;
-	enum class audio_origin : bool;
-	enum class audio_state : std::uint8_t;
+namespace tr::audio {
+	enum class origin : bool;
+	enum class state : std::uint8_t;
 
 	// Audio buffer used by the buffered stream.
 	struct buffer_stream_buffer {
@@ -17,29 +16,27 @@ namespace tr {
 
 		buffer_stream_buffer();
 		~buffer_stream_buffer();
-
-		// Refills the buffer with stream data.
-		void refill(buffer_stream& stream);
 	};
-
 	// Audio stream extrended with buffers.
 	struct buffer_stream {
-		std::unique_ptr<audio_stream> stream;
+		std::unique_ptr<stream> stream;
 		std::array<buffer_stream_buffer, 4> buffers;
 	};
+	// Refills the buffer with stream data.
+	void refill(stream& stream, buffer_stream_buffer& buffer);
 
 	// Base audio source class.
-	class base_audio_source {
+	class source_base {
 	  public:
 		static constexpr fsecs START{fsecs::zero()};
 		static constexpr fsecs END{fsecs::max()};
 
 		// Creates an empty audio source.
-		base_audio_source(int priority);
-		~base_audio_source();
+		source_base(int priority);
+		~source_base();
 
-		void use(const audio_buffer& buffer);
-		void use(std::unique_ptr<audio_stream>&& stream);
+		void use(const buffer& buffer);
+		void use(std::unique_ptr<stream>&& stream);
 		void clear();
 		int priority() const;
 		const std::bitset<32>& classes() const;
@@ -65,9 +62,9 @@ namespace tr {
 		void set_vel(const glm::vec3& vel);
 		glm::vec3 dir() const;
 		void set_dir(const glm::vec3& dir);
-		audio_origin origin() const;
-		void set_origin(audio_origin type);
-		audio_state state() const;
+		origin origin() const;
+		void set_origin(audio::origin type);
+		state state() const;
 		void play();
 		void pause();
 		void stop();
@@ -90,26 +87,26 @@ namespace tr {
 
 	  private:
 		// If the source is sourced from an audio stream, this is that stream.
-		std::optional<buffer_stream> stream;
+		std::optional<buffer_stream> m_stream;
 		// The OpenAL ID of the source.
-		unsigned int id;
+		unsigned int m_id;
 		// The gain muiltiplier of the source.
-		float base_gain;
+		float m_gain;
 		// The audio classes the source belongs to.
-		std::bitset<32> class_flags;
+		std::bitset<32> m_classes;
 		// The priority of the source.
-		int priority_;
+		int m_priority;
 		// Some functions that lock the audio mutex call other functions that also do that, so keep a ref counter.
-		mutable std::uint32_t audio_mutex_refc;
+		mutable std::uint32_t m_mutex_refc;
 
-		friend void audio_thread_loop(std::stop_token);
+		friend void thread_fn(std::stop_token);
 	};
 
 	// Audio command for gradual changing of an audio property.
-	class audio_command {
+	class command {
 	  public:
 		// Audio command opcodes.
-		enum class command_type {
+		enum class type {
 			PITCH,
 			GAIN,
 			MAX_DIST,
@@ -123,14 +120,14 @@ namespace tr {
 		};
 
 		// Creates an audio command taking float arguments.
-		audio_command(std::shared_ptr<base_audio_source> source, command_type type, float start, float end, duration length);
+		command(std::shared_ptr<source_base> source, type type, float start, float end, duration length);
 		// Creates an audio command taking vec2 arguments.
-		audio_command(std::shared_ptr<base_audio_source> source, command_type type, glm::vec2 start, glm::vec2 end, duration length);
+		command(std::shared_ptr<source_base> source, type type, glm::vec2 start, glm::vec2 end, duration length);
 		// Creates an audio command taking vec3 arguments.
-		audio_command(std::shared_ptr<base_audio_source> source, command_type type, glm::vec3 start, glm::vec3 end, duration length);
+		command(std::shared_ptr<source_base> source, type type, glm::vec3 start, glm::vec3 end, duration length);
 
 		// Gets the audio source of the command.
-		std::shared_ptr<base_audio_source> source() const;
+		std::shared_ptr<source_base> source() const;
 		// Executes the command.
 		void execute();
 		// Reports whether the command is done.
@@ -145,39 +142,39 @@ namespace tr {
 		};
 
 		// The source this command acts upon.
-		std::shared_ptr<base_audio_source> src;
+		std::shared_ptr<source_base> m_src;
 		// The audio command type.
-		command_type type;
+		type m_type;
 		// The initial value.
-		arg start;
+		arg m_start;
 		// The final value.
-		arg end;
+		arg m_end;
 		// The length of the command.
-		duration length;
+		duration m_length;
 		// When the last update was.
-		time_point last_update;
+		time_point m_last_update;
 		// How much time has elapsed for the command.
-		duration elapsed;
+		duration m_elapsed;
 
 		// Gets the current value of the command.
 		arg value();
 	};
 
 	// Map holding the IDs of extant audio buffers and whether the're cullable.
-	inline std::unordered_map<unsigned int, bool> audio_buffers;
+	inline std::unordered_map<unsigned int, bool> buffers;
 	// The maximum allowed number of audio sources.
-	inline std::size_t max_audio_sources;
+	inline std::size_t max_sources;
 	// A list of active audio sources.
-	inline std::list<std::shared_ptr<base_audio_source>> audio_sources;
+	inline std::list<std::shared_ptr<source_base>> sources;
 	// The gain multipliers of audio classes.
-	inline std::array<float, 32> audio_gains;
+	inline std::array<float, 32> gains;
 	// A list of active audio commands.
-	inline std::list<audio_command> audio_commands;
+	inline std::list<command> commands;
 	// The audio mutex.
-	inline std::mutex audio_mutex;
+	inline std::mutex mutex;
 	// The audio thread.
-	inline std::jthread audio_thread;
+	inline std::jthread thread;
 
 	// Function used by the audio thread.
-	void audio_thread_loop(std::stop_token stoken);
-} // namespace tr
+	void thread_fn(std::stop_token stoken);
+} // namespace tr::audio

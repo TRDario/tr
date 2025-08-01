@@ -1,7 +1,7 @@
 #include "../../include/tr/audio/al_call.hpp"
 #include <AL/al.h>
 
-void tr::validate_al_call(const char* file, int line, const char* function)
+void tr::audio::validate_al_call(const char* file, int line, const char* function)
 {
 	const ALenum error{alGetError()};
 	if (error != AL_NO_ERROR) {

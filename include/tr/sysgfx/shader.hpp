@@ -23,9 +23,9 @@ namespace tr {
 
 	  private:
 		// The description of the error.
-		std::string description_str;
+		std::string m_description;
 		// The details of the error.
-		std::string details_str;
+		std::string m_details;
 	};
 
 	// Base GPU shader program class.

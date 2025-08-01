@@ -43,7 +43,7 @@ int tr::pixel_bytes(pixel_format format)
 ////////////////////////////////////////////////////////// AUDIO FILE OPEN ERROR //////////////////////////////////////////////////////////
 
 tr::bitmap_load_error::bitmap_load_error(std::string_view path, std::string&& details)
-	: description_str{std::format("Failed to load bitmap from '{}'", path)}, details_str{std::move(details)}
+	: m_description{std::format("Failed to load bitmap from '{}'", path)}, m_details{std::move(details)}
 {
 }
 
@@ -54,16 +54,16 @@ std::string_view tr::bitmap_load_error::name() const
 
 std::string_view tr::bitmap_load_error::description() const
 {
-	return description_str;
+	return m_description;
 }
 
 std::string_view tr::bitmap_load_error::details() const
 {
-	return details_str;
+	return m_details;
 }
 
 tr::bitmap_save_error::bitmap_save_error(std::string_view path, std::string&& details)
-	: description_str{std::format("Failed to save bitmap to '{}'", path)}, details_str{std::move(details)}
+	: m_description{std::format("Failed to save bitmap to '{}'", path)}, m_details{std::move(details)}
 {
 }
 
@@ -74,12 +74,12 @@ std::string_view tr::bitmap_save_error::name() const
 
 std::string_view tr::bitmap_save_error::description() const
 {
-	return description_str;
+	return m_description;
 }
 
 std::string_view tr::bitmap_save_error::details() const
 {
-	return details_str;
+	return m_details;
 }
 
 tr::sub_bitmap::sub_bitmap(const bitmap& bitmap, const irect2& rect)

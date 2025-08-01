@@ -2,20 +2,20 @@
 #include "../utility/chrono.hpp"
 #include "../utility/handle.hpp"
 
-namespace tr {
+namespace tr::audio {
 	// Audio data formats.
-	enum class audio_format {
+	enum class format {
 		MONO16 = 0x1101,  // 16-bit mono audio.
 		STEREO16 = 0x1103 // 16-bit stereo audio.
 	};
 
 	// Audio data buffer.
-	class audio_buffer {
+	class buffer {
 	  public:
 		// Constructs an empty audio buffer.
-		audio_buffer();
+		buffer();
 		// Constructs an audio buffer and immediately sets it.
-		audio_buffer(std::span<const std::int16_t> data, audio_format format, int frequency);
+		buffer(std::span<const std::int16_t> data, format format, int frequency);
 
 		// Gets the size of the buffer's storage.
 		std::size_t size() const;
@@ -23,7 +23,7 @@ namespace tr {
 		fsecs length() const;
 
 		// Sets the data of the buffer.
-		void set(std::span<const std::int16_t> data, audio_format format, int frequency);
+		void set(std::span<const std::int16_t> data, format format, int frequency);
 
 	  private:
 		struct deleter {
@@ -31,11 +31,11 @@ namespace tr {
 		};
 
 		// Handle to the OpenAL ID.
-		handle<unsigned int, 0, deleter> id;
+		handle<unsigned int, 0, deleter> m_id;
 
-		friend class base_audio_source;
+		friend class source_base;
 	};
 	// Loads audio data from file into a buffer.
 	// May throw: audio_file_open_error.
-	audio_buffer load_audio_file(const std::filesystem::path& path);
-} // namespace tr
+	buffer load_file(const std::filesystem::path& path);
+} // namespace tr::audio

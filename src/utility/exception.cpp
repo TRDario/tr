@@ -16,13 +16,13 @@ const char* tr::exception::what() const noexcept
 }
 
 tr::custom_exception::custom_exception(std::string&& name, std::string&& description, std::string&& details)
-	: name_str{std::move(name)}, description_str{std::move(description)}, details_str{std::move(details)}
+	: m_name{std::move(name)}, m_description{std::move(description)}, m_details{std::move(details)}
 {
 }
 
 tr::out_of_memory::out_of_memory(std::string_view description)
 {
-	std::format_to_n(std::back_inserter(description_str), description_str.max_size(), "During {}.", description);
+	std::format_to_n(std::back_inserter(m_description), m_description.max_size(), "During {}.", description);
 }
 
 std::string_view tr::out_of_memory::name() const
@@ -32,7 +32,7 @@ std::string_view tr::out_of_memory::name() const
 
 std::string_view tr::out_of_memory::description() const
 {
-	return description_str;
+	return m_description;
 }
 
 std::string_view tr::out_of_memory::details() const
@@ -42,15 +42,15 @@ std::string_view tr::out_of_memory::details() const
 
 std::string_view tr::custom_exception::name() const
 {
-	return name_str;
+	return m_name;
 }
 
 std::string_view tr::custom_exception::description() const
 {
-	return description_str;
+	return m_description;
 }
 
 std::string_view tr::custom_exception::details() const
 {
-	return details_str;
+	return m_details;
 }

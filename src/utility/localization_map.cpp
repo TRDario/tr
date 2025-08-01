@@ -81,7 +81,7 @@ std::string tr::process_value(std::string_view raw_value, std::vector<std::strin
 }
 
 tr::localization_load_error::localization_load_error(std::string&& description)
-	: description_str{description}
+	: m_description{description}
 {
 }
 
@@ -92,7 +92,7 @@ std::string_view tr::localization_load_error::name() const
 
 std::string_view tr::localization_load_error::description() const
 {
-	return description_str;
+	return m_description;
 }
 
 std::string_view tr::localization_load_error::details() const

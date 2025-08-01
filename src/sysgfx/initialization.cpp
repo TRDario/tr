@@ -3,7 +3,7 @@
 #include <SDL3/SDL.h>
 
 tr::system_initialization_error::system_initialization_error(std::string_view description)
-	: description_str{description}
+	: m_description{description}
 {
 }
 
@@ -14,7 +14,7 @@ std::string_view tr::system_initialization_error::name() const
 
 std::string_view tr::system_initialization_error::description() const
 {
-	return description_str;
+	return m_description;
 }
 
 std::string_view tr::system_initialization_error::details() const

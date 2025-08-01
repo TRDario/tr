@@ -17,7 +17,7 @@ namespace tr {
 
 	  private:
 		// The description of the error.
-		std::string description_str;
+		std::string m_description;
 	};
 
 	// Wrapper over a string -> string hashmap with support for a custom file format for use in localization.

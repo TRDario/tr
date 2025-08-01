@@ -28,7 +28,7 @@ namespace tr {
 
 	  private:
 		// The description of the error.
-		static_string<255> description_str;
+		static_string<255> m_description;
 	};
 
 	// Specialization of tr::exception for one-off exceptions.
@@ -46,10 +46,10 @@ namespace tr {
 
 	  private:
 		// The name of the error.
-		std::string name_str;
+		std::string m_name;
 		// The description of the error.
-		std::string description_str;
+		std::string m_description;
 		// Further details about the error.
-		std::string details_str;
+		std::string m_details;
 	};
 } // namespace tr

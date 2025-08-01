@@ -2,19 +2,19 @@
 #include "../utility/angle.hpp"
 #include "../utility/chrono.hpp"
 
-namespace tr {
-	class base_audio_source;
-	class audio_buffer;
-	class audio_stream;
+namespace tr::audio {
+	class source_base;
+	class buffer;
+	class stream;
 
 	// Audio source position origin types.
-	enum class audio_origin : bool {
+	enum class origin : bool {
 		ABSOLUTE, // Absolute coordinates.
 		LISTENER  // Coordinates relative to the listener's position.
 	};
 
 	// Audio source states.
-	enum class audio_state : std::uint8_t {
+	enum class state : std::uint8_t {
 		INITIAL, // The source has not been played yet.
 		PLAYING, // The source is playing.
 		PAUSED,  // The source is paused.
@@ -25,7 +25,7 @@ namespace tr {
 	inline constexpr glm::vec3 OMNIDIRECTIONAL{0, 0, 0};
 
 	// 3D Audio source.
-	class audio_source {
+	class source {
 	  public:
 		// Sentinel value representing the beginning of the audio.
 		static constexpr fsecs START{fsecs::zero()};
@@ -33,16 +33,16 @@ namespace tr {
 		static constexpr fsecs END{fsecs::max()};
 
 		// Constructs an audio source.
-		audio_source(int priority);
-		audio_source(const audio_source&) = delete;
-		audio_source(audio_source&&) noexcept = default;
-		audio_source& operator=(const audio_source&) = delete;
-		audio_source& operator=(audio_source&&) noexcept = default;
+		source(int priority);
+		source(const source&) = delete;
+		source(source&&) noexcept = default;
+		source& operator=(const source&) = delete;
+		source& operator=(source&&) noexcept = default;
 
 		// Sets a buffer for the source to use.
-		void use(const audio_buffer& buffer);
+		void use(const buffer& buffer);
 		// Sets a audio stream for the source to use.
-		void use(std::unique_ptr<audio_stream>&& stream);
+		void use(std::unique_ptr<stream>&& stream);
 		// Unsets a buffer/stream attached to the source.
 		void clear();
 
@@ -126,12 +126,12 @@ namespace tr {
 		void set_dir(const glm::vec3& dir, fsecs time);
 
 		// Gets the origin of the source's position.
-		audio_origin origin() const;
+		origin origin() const;
 		// Sets the origin of the source's position.
-		void set_origin(audio_origin type);
+		void set_origin(audio::origin type);
 
 		// Gets the state of the audio source.
-		audio_state state() const;
+		state state() const;
 		// Plays the source.
 		void play();
 		// Pauses the source.
@@ -159,6 +159,10 @@ namespace tr {
 
 	  private:
 		// Shared pointer to the actual audio source implementation.
-		std::shared_ptr<base_audio_source> base;
+		std::shared_ptr<source_base> m_base;
 	};
-} // namespace tr
+	// Gets whether an audio source of a given priority can be allocated.
+	bool can_allocate_source(int priority);
+	// Tries to allocate an audio source.
+	std::optional<source> try_allocating_source(int priority);
+} // namespace tr::audio

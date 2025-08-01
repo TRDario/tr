@@ -25,9 +25,9 @@ namespace tr {
 
 	  private:
 		// The description of the error.
-		std::string description_str;
+		std::string m_description;
 		// The details of the error.
-		std::string details_str;
+		std::string m_details;
 	};
 	// Error thrown when font bitmap rendering fails.
 	class ttfont_render_error : public exception {
@@ -44,7 +44,7 @@ namespace tr {
 
 	  private:
 		// The details of the error.
-		std::string_view description_str;
+		std::string_view m_description;
 	};
 
 	// Font style types. May be ORed together.

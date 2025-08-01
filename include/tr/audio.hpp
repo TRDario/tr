@@ -1,5 +1,5 @@
 #pragma once
-#include "audio/audio_buffer.hpp" // IWYU pragma: export
-#include "audio/audio_source.hpp" // IWYU pragma: export
-#include "audio/audio_stream.hpp" // IWYU pragma: export
-#include "audio/audio_system.hpp" // IWYU pragma: export
+#include "audio/buffer.hpp" // IWYU pragma: export
+#include "audio/source.hpp" // IWYU pragma: export
+#include "audio/stream.hpp" // IWYU pragma: export
+#include "audio/system.hpp" // IWYU pragma: export

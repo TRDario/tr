@@ -17,7 +17,7 @@ namespace tr {
 
 	  private:
 		// The description of the error.
-		std::string_view description_str;
+		std::string_view m_description;
 	};
 
 	// Sets up the basic application info.

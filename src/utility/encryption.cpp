@@ -3,7 +3,7 @@
 #include <lz4.h>
 
 tr::decryption_error::decryption_error(std::string_view description)
-	: description_str{description}
+	: m_description{description}
 {
 }
 
@@ -14,7 +14,7 @@ std::string_view tr::decryption_error::name() const
 
 std::string_view tr::decryption_error::description() const
 {
-	return description_str;
+	return m_description;
 }
 
 std::string_view tr::decryption_error::details() const
@@ -23,7 +23,7 @@ std::string_view tr::decryption_error::details() const
 }
 
 tr::encryption_error::encryption_error(std::string_view description)
-	: description_str{description}
+	: m_description{description}
 {
 }
 
@@ -34,7 +34,7 @@ std::string_view tr::encryption_error::name() const
 
 std::string_view tr::encryption_error::description() const
 {
-	return description_str;
+	return m_description;
 }
 
 std::string_view tr::encryption_error::details() const

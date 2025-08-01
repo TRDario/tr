@@ -18,7 +18,7 @@ namespace tr {
 
 	  private:
 		// Details of the decryption error.
-		std::string_view description_str;
+		std::string_view m_description;
 	};
 
 	// Error thrown when an encryption operation fails.
@@ -36,7 +36,7 @@ namespace tr {
 
 	  private:
 		// Details of the decryption error.
-		std::string_view description_str;
+		std::string_view m_description;
 	};
 
 	// Decrypts data encrypted by tr::encrypt().

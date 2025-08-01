@@ -1,12 +1,12 @@
 #pragma once
 #include "../utility/exception.hpp"
 
-namespace tr {
+namespace tr::audio {
 	// Error thrown when opening an audio file failed.
-	class audio_file_open_error : public exception {
+	class file_open_error : public exception {
 	  public:
 		// Constructs an exception.
-		audio_file_open_error(std::string&& description);
+		file_open_error(std::string&& description);
 
 		// Gets the name of the error.
 		std::string_view name() const override;
@@ -17,14 +17,14 @@ namespace tr {
 
 	  private:
 		// The description of the error.
-		std::string description_str;
+		std::string m_description;
 	};
 
 	// Audio stream interface.
-	class audio_stream {
+	class stream {
 	  public:
-		audio_stream();
-		virtual ~audio_stream() = default;
+		stream();
+		virtual ~stream() = default;
 
 		// Gets the length of the stream in samples.
 		virtual std::size_t length() const = 0;
@@ -59,13 +59,13 @@ namespace tr {
 
 	  private:
 		// Whether the stream is looping.
-		bool looping_;
+		bool m_looping;
 		// The loop starting sample offset.
-		std::size_t loop_start_;
+		std::size_t m_loop_start;
 		// The loop ending sample offset.
-		mutable std::size_t loop_end_;
+		mutable std::size_t m_loop_end;
 	};
 	// Opens an audio stream.
-	// May throw: audio_file_open_error.
-	std::unique_ptr<audio_stream> open_audio_file(const std::filesystem::path& path);
-} // namespace tr
+	// May throw: file_open_error.
+	std::unique_ptr<stream> open_file(const std::filesystem::path& path);
+} // namespace tr::audio

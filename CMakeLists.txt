@@ -109,10 +109,10 @@ endif()
 if(TR_BUILD_AUDIO)
 	target_sources(tr PRIVATE
 		src/audio/al_call.cpp
-		src/audio/audio_buffer.cpp
-		src/audio/audio_source.cpp
-		src/audio/audio_stream.cpp
-		src/audio/audio_system.cpp
+		src/audio/buffer.cpp
+		src/audio/source.cpp
+		src/audio/stream.cpp
+		src/audio/system.cpp
 		src/audio/impl.cpp
 	)
 	target_link_libraries(tr OpenAL::OpenAL vorbis vorbisenc vorbisfile)

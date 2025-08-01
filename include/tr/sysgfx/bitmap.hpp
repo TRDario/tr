@@ -60,9 +60,9 @@ namespace tr {
 
 	  private:
 		// The description of the error.
-		std::string description_str;
+		std::string m_description;
 		// The details of the error.
-		std::string details_str;
+		std::string m_details;
 	};
 	// Error thrown when bitmap saving fails.
 	class bitmap_save_error : public exception {
@@ -79,9 +79,9 @@ namespace tr {
 
 	  private:
 		// The description of the error.
-		std::string description_str;
+		std::string m_description;
 		// The details of the error.
-		std::string details_str;
+		std::string m_details;
 	};
 
 	// View over a rectangular region of a bitmap.

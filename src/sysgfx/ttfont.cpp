@@ -42,7 +42,7 @@ void tr::fix_alpha_artifacts(bitmap& bitmap, std::uint8_t max_alpha)
 }
 
 tr::ttfont_load_error::ttfont_load_error(std::string_view path, std::string&& details)
-	: description_str{std::format("Failed to load bitmap from '{}'", path)}, details_str{std::move(details)}
+	: m_description{std::format("Failed to load bitmap from '{}'", path)}, m_details{std::move(details)}
 {
 }
 
@@ -53,16 +53,16 @@ std::string_view tr::ttfont_load_error::name() const
 
 std::string_view tr::ttfont_load_error::description() const
 {
-	return description_str;
+	return m_description;
 }
 
 std::string_view tr::ttfont_load_error::details() const
 {
-	return details_str;
+	return m_details;
 }
 
 tr::ttfont_render_error::ttfont_render_error(std::string_view description)
-	: description_str{description}
+	: m_description{description}
 {
 }
 
@@ -73,7 +73,7 @@ std::string_view tr::ttfont_render_error::name() const
 
 std::string_view tr::ttfont_render_error::description() const
 {
-	return description_str;
+	return m_description;
 }
 
 std::string_view tr::ttfont_render_error::details() const

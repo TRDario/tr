@@ -4,7 +4,7 @@
 #include "../../include/tr/sysgfx/texture_unit.hpp"
 
 tr::shader_load_error::shader_load_error(std::string_view path, std::string&& details)
-	: description_str{std::format("Failed to load bitmap from '{}'", path)}, details_str{std::move(details)}
+	: m_description{std::format("Failed to load bitmap from '{}'", path)}, m_details{std::move(details)}
 {
 }
 
@@ -15,12 +15,12 @@ std::string_view tr::shader_load_error::name() const
 
 std::string_view tr::shader_load_error::description() const
 {
-	return description_str;
+	return m_description;
 }
 
 std::string_view tr::shader_load_error::details() const
 {
-	return details_str;
+	return m_details;
 }
 
 tr::shader_base::shader_base(const char* source, unsigned int type)
