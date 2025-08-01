@@ -33,6 +33,8 @@ namespace tr {
 		template <class... Args> void log_continue(std::format_string<Args...> fmt, Args&&... args);
 		// Logs an exception.
 		void log(severity level, const std::exception& err);
+		// Logs an exception continuing from a previous line.
+		void log_continue(const std::exception& err);
 
 	  private:
 		// The prefix of the logger.

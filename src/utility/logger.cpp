@@ -40,3 +40,8 @@ void tr::logger::log(severity level, const std::exception& err)
 		log_continue("{}", err.what());
 	}
 }
+
+void tr::logger::log_continue(const std::exception& err)
+{
+	log_continue("{}", err.what());
+}
