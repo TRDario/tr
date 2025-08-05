@@ -23,6 +23,8 @@ namespace tr {
 		template <std::size_t S1> constexpr static_string(const char (&literal)[S1]);
 		// Creates a string by copying from another string.
 		constexpr static_string(std::string_view str);
+		// Creates a string by copying from another string.
+		template <std::convertible_to<std::string_view> T> constexpr static_string(T&& str);
 
 		// Gets a string view over the string.
 		constexpr operator std::string_view() const;

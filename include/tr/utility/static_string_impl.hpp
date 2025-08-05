@@ -26,6 +26,13 @@ constexpr tr::static_string<S>::static_string(std::string_view str)
 	std::ranges::copy(str, m_buffer.begin());
 }
 
+template <std::size_t S>
+template <std::convertible_to<std::string_view> T>
+constexpr tr::static_string<S>::static_string(T&& str)
+	: static_string{std::string_view{str}}
+{
+}
+
 //
 
 template <std::size_t S> constexpr tr::static_string<S>::operator std::string_view() const
