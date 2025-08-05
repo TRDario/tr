@@ -96,9 +96,12 @@ template <tr::utf8::string String> constexpr String::iterator tr::utf8::erase(St
 
 template <tr::utf8::string String> constexpr void tr::utf8::pop_back(String& str)
 {
-	do {
+	if (!str.empty()) {
+		while (!str.empty() && (str.back() & 0xC0) == 0x80) {
+			str.pop_back();
+		}
 		str.pop_back();
-	} while (!str.empty() && (str.back() & 0xC0) == 0x80);
+	}
 }
 
 //
