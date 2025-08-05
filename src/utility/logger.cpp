@@ -9,7 +9,7 @@ tr::logger::logger(std::string_view prefix, std::filesystem::path path)
 	: m_prefix{prefix}, m_path{std::move(path)}
 {
 	try {
-		open_file_w(path, std::ios::trunc);
+		open_file_w(m_path, std::ios::trunc);
 	}
 	catch (...) {
 		return;
