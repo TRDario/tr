@@ -20,8 +20,12 @@ namespace tr::utf8 {
 	template <base_iterator T> constexpr codepoint to_cp(T it);
 	// Gets an iterator to the next character.
 	template <base_iterator T> constexpr T next(T it);
+	// Gets an iterator to the nth next character.
+	template <base_iterator T> constexpr T next(T it, std::size_t n);
 	// Gets an iterator to the previous character.
 	template <base_iterator T> constexpr T prev(T it);
+	// Gets an iterator to the nth previous character.
+	template <base_iterator T> constexpr T prev(T it, std::size_t n);
 	// Inserts a character into a UTF-8-encoded string.
 	template <string String> constexpr String::iterator insert(String& str, typename String::iterator where, codepoint cp);
 	// Erases a character from a UTF-8-encoded string.

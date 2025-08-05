@@ -36,9 +36,25 @@ template <tr::utf8::base_iterator T> constexpr T tr::utf8::next(T it)
 	return it;
 }
 
+template <tr::utf8::base_iterator T> constexpr T tr::utf8::next(T it, std::size_t n)
+{
+	for (std::size_t i = 0; i < n; ++i) {
+		it = tr::utf8::next(it);
+	}
+	return it;
+}
+
 template <tr::utf8::base_iterator T> constexpr T tr::utf8::prev(T it)
 {
 	while ((*--it & 0xC0) == 0x80) {}
+	return it;
+}
+
+template <tr::utf8::base_iterator T> constexpr T tr::utf8::prev(T it, std::size_t n)
+{
+	for (std::size_t i = 0; i < n; ++i) {
+		it = tr::utf8::prev(it);
+	}
 	return it;
 }
 
