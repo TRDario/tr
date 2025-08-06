@@ -27,8 +27,6 @@ namespace tr::gfx {
 		std::uint8_t elements;
 		// Whether integer data is normalized when converted to floating point. Must be false for floats.
 		bool normalized;
-		// The binding point of the attribute.
-		std::uint8_t binding;
 		// The relative position of the attribute within a binding point element in bytes.
 		std::uint32_t offset;
 	};
@@ -50,21 +48,27 @@ namespace tr::gfx {
 		type type;
 		// The number of elements in the attribute (1 - 4).
 		std::uint8_t elements;
-		// The binding point of the attribute.
-		std::uint8_t binding;
 		// The relative position of the attribute within a binding point element in bytes.
 		std::uint32_t offset;
 	};
 	// Union of vertex attribute types.
 	using vertex_attribute = std::variant<vertex_attributef, vertex_attributei>;
 
+	// Sentinel for a vertex binding that is not instanced (that is, the attributes are per vertex).
+	constexpr std::uint32_t NOT_INSTANCED{0};
+	// A vertex binding point.
+	struct vertex_binding {
+		// The divisor of the binding.
+		std::uint32_t divisor;
+		// The attributes of the binding.
+		std::initializer_list<vertex_attribute> attrs;
+	};
+
 	// GPU Vertex format.
 	class vertex_format {
 	  public:
 		// Creates a new vertex format.
-		vertex_format(std::initializer_list<vertex_attribute> attrs);
-		// Creates a new vertex format.
-		vertex_format(std::span<const vertex_attribute> attrs);
+		vertex_format(std::initializer_list<vertex_binding> bindings);
 
 		// Sets the debug label of the vertex format.
 		void set_label(std::string_view label);

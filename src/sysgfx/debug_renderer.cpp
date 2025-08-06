@@ -1,6 +1,6 @@
-#include "../../include/tr/sysgfx/debug_renderer.hpp"
 #include "../../include/tr/sysgfx/backbuffer.hpp"
 #include "../../include/tr/sysgfx/blending.hpp"
+#include "../../include/tr/sysgfx/debug_renderer.hpp"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/render_target.hpp"
 #include "../../include/tr/sysgfx/shader_buffer.hpp"
@@ -121,7 +121,7 @@ using namespace std::chrono_literals;
 
 tr::gfx::debug_renderer::state_t::state_t()
 	: pipeline{vertex_shader{DEBUG_RENDERER_VERT_SRC}, fragment_shader{DEBUG_RENDERER_FRAG_SRC}}
-	, format{vertex_attributef{vertex_attributef::type::UI8, 2, false, 0, 0}}
+	, format{{NOT_INSTANCED, {vertex_attributef{vertex_attributef::type::UI8, 2, false, 0}}}}
 	, sbuffer{0, 256 * sizeof(glyph), shader_buffer::access::WRITE_ONLY}
 	, font{load_embedded_bitmap(DEBUG_RENDERER_FONT)}
 	, vbuffer{std::array<glm::u8vec2, 4>{{{0, 0}, {0, 1}, {1, 1}, {1, 0}}}}
