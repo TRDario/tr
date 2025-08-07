@@ -1,9 +1,8 @@
+#include "../../include/tr/sysgfx/debug_renderer.hpp"
 #include "../../include/tr/sysgfx/backbuffer.hpp"
 #include "../../include/tr/sysgfx/blending.hpp"
-#include "../../include/tr/sysgfx/debug_renderer.hpp"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/render_target.hpp"
-#include "../../include/tr/sysgfx/shader_buffer.hpp"
 #include "../../include/tr/sysgfx/shader_pipeline.hpp"
 #include "../../include/tr/sysgfx/texture.hpp"
 #include "../../include/tr/sysgfx/texture_unit.hpp"
@@ -14,14 +13,26 @@
 namespace tr::gfx::debug_renderer {
 #include "resources/debug_font.bmp.hpp"
 
+	constexpr std::initializer_list<vertex_binding> DEBUG_FORMAT_ATTRS{
+		{NOT_INSTANCED,
+		 {
+			 vertex_attributef{vertex_attributef::type::UI8, 2, false, 0},
+		 }},
+		{1,
+		 {
+			 vertex_attributef{vertex_attributef::type::UI8, 2, false, 0},
+			 vertex_attributei{vertex_attributei::type::UI8, 1, 2},
+			 vertex_attributei{vertex_attributei::type::UI8, 1, 3},
+			 vertex_attributef{vertex_attributef::type::UI8, 4, true, 4},
+			 vertex_attributef{vertex_attributef::type::UI8, 4, true, 8},
+		 }},
+	};
 	// Debug vertex shader.
 	inline constexpr const char* DEBUG_RENDERER_VERT_SRC =
-		"#version 450\n#define L(l) layout(location=l)\nlayout(std430,binding=0)buffer G{int g[];};L(0)uniform vec2 "
-		"r;L(1)uniform float s;L(0)in vec2 p;out gl_PerVertex{vec4 gl_Position;};L(0)out vec2 o;L(1)out vec4 T;L(2)out vec4 B;void "
-		"main(){const int m=255,i=gl_InstanceID*3,a=g[i],t=g[i+1],b=g[i+2],h=a>>24&m;o=(vec2(h%16,h/16)+p)/"
-		"16;T=vec4(t&m,t>>8&m,t>>16&m,t>>24&m)/m;B=vec4(b&m,b>>8&m,b>>16&m,b>>24&m)/m;vec2 "
-		"C=vec2(a&m,a>>8&m),P;if((a>>16&m)!=0){P=C*8*s;P.x=r.x-P.x;P+=p*8*s;}else{P=(p+C)*8*s;}gl_Position=vec4(P.x/"
-		"r.x*2-1,-P.y/r.y*2+1,0,1);}";
+		"#version 450\n#define L(l) layout(location=l)\nL(0)uniform vec2 r;L(1)uniform float s;L(0)in vec2 p;L(1)in vec2 P;L(2)in int "
+		"R;L(3)in int c;L(4)in vec4 t;L(5)in vec4 b;out gl_PerVertex{vec4 gl_Position;};L(0)out vec2 o;L(1)out vec4 T;L(2)out vec4 B;void "
+		"main(){o=(vec2(c%16,c/16)+p)/16;T=t;B=b;vec2 "
+		"F;if(R==1){F=P*8*s;F.x=r.x-P.x;F+=p*8*s;}else{F=(p+P)*8*s;}gl_Position=vec4(P.x/r.x*2-1,-P.y/r.y*2+1,0,1);}";
 	// Debug fragment shader.
 	inline constexpr const char* DEBUG_RENDERER_FRAG_SRC =
 		"#version 450\n#define L(l) layout(location=l)\nL(2)uniform sampler2D t;L(0)in vec2 u;L(1)in vec4 c;L(2)in "
@@ -49,14 +60,14 @@ namespace tr::gfx::debug_renderer {
 		owning_shader_pipeline pipeline;
 		// The debug vertex format.
 		vertex_format format;
-		// The shader buffer holding the glyphs.
-		shader_buffer sbuffer;
 		// The font texture.
 		texture font;
 		// The texture unit used by the renderer.
 		texture_unit tex_unit;
 		// The vertex buffer holding a glyph shape.
-		static_vertex_buffer<glm::u8vec2> vbuffer;
+		static_vertex_buffer<glm::u8vec2> shape_buffer;
+		// The vertex buffer holding the glyph information
+		dyn_vertex_buffer<glyph> glyph_buffer;
 		// List of glyphs to draw.
 		std::vector<glyph> glyphs;
 		// Maximum allowed number of glyphs per line.
@@ -121,10 +132,9 @@ using namespace std::chrono_literals;
 
 tr::gfx::debug_renderer::state_t::state_t()
 	: pipeline{vertex_shader{DEBUG_RENDERER_VERT_SRC}, fragment_shader{DEBUG_RENDERER_FRAG_SRC}}
-	, format{{NOT_INSTANCED, {vertex_attributef{vertex_attributef::type::UI8, 2, false, 0}}}}
-	, sbuffer{0, 256 * sizeof(glyph), shader_buffer::access::WRITE_ONLY}
+	, format{DEBUG_FORMAT_ATTRS}
 	, font{load_embedded_bitmap(DEBUG_RENDERER_FONT)}
-	, vbuffer{std::array<glm::u8vec2, 4>{{{0, 0}, {0, 1}, {1, 1}, {1, 0}}}}
+	, shape_buffer{std::array<glm::u8vec2, 4>{{{0, 0}, {0, 1}, {1, 1}, {1, 0}}}}
 	, column_limit{255}
 	, left_line{0}
 	, right_line{0}
@@ -137,9 +147,9 @@ tr::gfx::debug_renderer::state_t::state_t()
 		pipeline.vertex_shader().set_label("(tr) Debug Renderer Vertex Shader");
 		pipeline.fragment_shader().set_label("(tr) Debug Renderer Fragment Shader");
 		format.set_label("(tr) Debug Renderer Vertex Format");
-		sbuffer.set_label("(tr) Debug Renderer Shader Glyph Buffer");
 		font.set_label("(tr) Debug Renderer Font Texture");
-		vbuffer.set_label("(tr) Debug Renderer Vertex Buffer");
+		shape_buffer.set_label("(tr) Debug Renderer Vertex Buffer");
+		glyph_buffer.set_label("(tr) Debug Renderer Glyph buffer");
 	}
 }
 
@@ -383,19 +393,11 @@ void tr::gfx::debug_renderer::draw()
 			set_blend_mode(ALPHA_BLENDING);
 			set_shader_pipeline(state->pipeline);
 			set_vertex_format(state->format);
-			set_vertex_buffer(state->vbuffer, 0, 0);
+			set_vertex_buffer(state->shape_buffer, 0, 0);
+			set_vertex_buffer(state->glyph_buffer, 1, 0);
 		}
-
-		if (static_cast<std::size_t>(state->sbuffer.array_capacity()) < state->glyphs.size() * sizeof(glyph)) {
-			std::intptr_t cap{static_cast<std::intptr_t>(std::bit_ceil(state->glyphs.size() * sizeof(glyph)))};
-			state->sbuffer = shader_buffer{0, cap, shader_buffer::access::WRITE_ONLY};
-			if (debug()) {
-				state->sbuffer.set_label("(tr) Debug Renderer Glyph Buffer");
-			}
-		}
-		state->sbuffer.set_array(state->glyphs);
+		state->glyph_buffer.set(state->glyphs);
 		state->pipeline.vertex_shader().set_uniform(0, static_cast<glm::vec2>(backbuffer_size()));
-		state->pipeline.vertex_shader().set_storage_buffer(0, state->sbuffer);
 		draw_instances(primitive::TRI_FAN, 0, 4, static_cast<int>(state->glyphs.size()));
 		state->glyphs.clear();
 	}
