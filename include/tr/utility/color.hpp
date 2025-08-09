@@ -700,6 +700,7 @@ template <tr::color_datatype T> constexpr tr::rgba<T>& tr::rgba<T>::operator+=(c
 	g += v.g;
 	b += v.b;
 	a += v.a;
+	return *this;
 }
 
 template <tr::color_datatype T> constexpr tr::rgba<T>& tr::rgba<T>::operator-=(const rgba& v)
@@ -708,6 +709,7 @@ template <tr::color_datatype T> constexpr tr::rgba<T>& tr::rgba<T>::operator-=(c
 	g -= v.g;
 	b -= v.b;
 	a -= v.a;
+	return *this;
 }
 
 template <tr::color_datatype T> template <tr::arithmetic T1> constexpr tr::rgba<T>& tr::rgba<T>::operator*=(const T1& v)
@@ -716,6 +718,7 @@ template <tr::color_datatype T> template <tr::arithmetic T1> constexpr tr::rgba<
 	g *= v;
 	b *= v;
 	a *= v;
+	return *this;
 }
 
 template <tr::color_datatype T> template <tr::arithmetic T1> constexpr tr::rgba<T>& tr::rgba<T>::operator/=(const T1& v)
@@ -724,6 +727,7 @@ template <tr::color_datatype T> template <tr::arithmetic T1> constexpr tr::rgba<
 	g /= v;
 	b /= v;
 	a /= v;
+	return *this;
 }
 
 template <tr::color_datatype T> constexpr tr::rgba<T> tr::operator+(const rgba<T>& l, const rgba<T>& r)
