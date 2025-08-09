@@ -190,8 +190,8 @@ namespace tr {
 	};
 	template <color_datatype T> constexpr rgba<T> operator+(const rgba<T>& l, const rgba<T>& r);
 	template <color_datatype T> constexpr rgba<T> operator-(const rgba<T>& l, const rgba<T>& r);
-	template <color_datatype T, arithmetic T1> constexpr rgba<T>& operator*(const rgba<T>& l, const T1& r);
-	template <color_datatype T, arithmetic T1> constexpr rgba<T>& operator/(const rgba<T>& l, const T1& r);
+	template <color_datatype T, arithmetic T1> constexpr rgba<T> operator*(const rgba<T>& l, const T1& r);
+	template <color_datatype T, arithmetic T1> constexpr rgba<T> operator/(const rgba<T>& l, const T1& r);
 
 	/******************************************************************************************************************
 	 * Shorthand for the common 8-bit RGBA color.
@@ -740,12 +740,12 @@ template <tr::color_datatype T> constexpr tr::rgba<T> tr::operator-(const rgba<T
 	return rgba<T>{l} -= r;
 }
 
-template <tr::color_datatype T, tr::arithmetic T1> constexpr tr::rgba<T>& tr::operator*(const rgba<T>& l, const T1& r)
+template <tr::color_datatype T, tr::arithmetic T1> constexpr tr::rgba<T> tr::operator*(const rgba<T>& l, const T1& r)
 {
 	return rgba<T>{l} *= r;
 }
 
-template <tr::color_datatype T, tr::arithmetic T1> constexpr tr::rgba<T>& tr::operator/(const rgba<T>& l, const T1& r)
+template <tr::color_datatype T, tr::arithmetic T1> constexpr tr::rgba<T> tr::operator/(const rgba<T>& l, const T1& r)
 {
 	return rgba<T>{l} /= r;
 }
