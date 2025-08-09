@@ -133,3 +133,23 @@ void tr::system::set_clipboard_text(const std::string& text)
 {
 	set_clipboard_text(text.c_str());
 }
+
+std::uint64_t std::hash<tr::system::scancode>::operator()(tr::system::scancode code) const
+{
+	return static_cast<std::uint64_t>(static_cast<int>(code));
+}
+
+std::uint64_t std::hash<tr::system::keycode>::operator()(tr::system::keycode code) const
+{
+	return static_cast<std::uint64_t>(static_cast<int>(code));
+}
+
+std::uint64_t std::hash<tr::system::scan_chord>::operator()(tr::system::scan_chord chord) const
+{
+	return (static_cast<std::uint64_t>(static_cast<int>(chord.scan)) << 32) | static_cast<std::uint64_t>(chord.mods);
+}
+
+std::uint64_t std::hash<tr::system::key_chord>::operator()(tr::system::key_chord chord) const
+{
+	return (static_cast<std::uint64_t>(static_cast<int>(chord.key)) << 32) | static_cast<std::uint64_t>(chord.mods);
+}

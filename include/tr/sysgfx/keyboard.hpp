@@ -373,6 +373,19 @@ namespace tr::system {
 	void set_clipboard_text(const std::string& text);
 } // namespace tr::system
 
+template <> struct std::hash<tr::system::scancode> {
+	std::uint64_t operator()(tr::system::scancode code) const;
+};
+template <> struct std::hash<tr::system::keycode> {
+	std::uint64_t operator()(tr::system::keycode code) const;
+};
+template <> struct std::hash<tr::system::scan_chord> {
+	std::uint64_t operator()(tr::system::scan_chord chord) const;
+};
+template <> struct std::hash<tr::system::key_chord> {
+	std::uint64_t operator()(tr::system::key_chord chord) const;
+};
+
 ///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
 
 constexpr tr::system::scancode::scancode(int base)
