@@ -24,16 +24,17 @@ std::string_view tr::system::init_error::details() const
 
 void tr::system::initialize(const char* developer, const char* name)
 {
+	TR_ASSERT(!SDL_WasInit(SDL_INIT_VIDEO), "Tried to initialize the problem more than once.");
+
 	app_developer = developer;
 	app_name = name;
-	if (!SDL_WasInit(SDL_INIT_VIDEO)) {
-		if (!SDL_Init(SDL_INIT_VIDEO)) {
-			throw init_error{"Failed to initialize SDL3."};
-		};
-		TR_LOG(log, severity::INFO, "Initialized SDL3.");
-		TR_LOG_CONTINUE(log, "Platform: {}", SDL_GetPlatform());
-		TR_LOG_CONTINUE(log, "CPU cores: {}", SDL_GetNumLogicalCPUCores());
-		TR_LOG_CONTINUE(log, "RAM: {}mb", SDL_GetSystemRAM());
-		atexit(SDL_Quit);
-	}
+	SDL_SetHint(SDL_HINT_APP_NAME, name);
+	if (!SDL_Init(SDL_INIT_VIDEO)) {
+		throw init_error{"Failed to initialize SDL3."};
+	};
+	TR_LOG(log, severity::INFO, "Initialized SDL3.");
+	TR_LOG_CONTINUE(log, "Platform: {}", SDL_GetPlatform());
+	TR_LOG_CONTINUE(log, "CPU cores: {}", SDL_GetNumLogicalCPUCores());
+	TR_LOG_CONTINUE(log, "RAM: {}mb", SDL_GetSystemRAM());
+	atexit(SDL_Quit);
 }
