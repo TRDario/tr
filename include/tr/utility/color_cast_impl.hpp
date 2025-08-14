@@ -820,12 +820,12 @@ template <tr::color_castable_to To, tr::color_castable_from From> constexpr To t
 
 constexpr tr::rgbaf tr::color_caster<tr::hsv>::to_built_in(const hsv& from)
 {
-	constexpr auto constexpr_abs{[](auto v) { return v > 0 ? v : -v; }};
+	constexpr auto constexpr_abs{[](auto v) { return v >= 0 ? v : -v; }};
 
-	const float h{eucmod(from.h, 360.0f)};
+	const float h{eucmod(from.h, 360)};
 	const float c{from.v * from.s};
 	const float m{from.v - c};
-	const float x{c * (1 - constexpr_abs(eucmod((h / 60.0f), 2.0f) - 1)) + m};
+	const float x{c * (1 - constexpr_abs(mod(h / 60, 2) - 1)) + m};
 
 	if (h < 60) {
 		return {from.v, x, m, 1.0f};

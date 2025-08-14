@@ -41,7 +41,7 @@ template <tr::arithmetic T> constexpr T tr::abs(T v)
 template <tr::arithmetic T1, tr::arithmetic T2> constexpr std::common_type_t<T1, T2> tr::mod(T1 v, T2 mod)
 {
 	if constexpr (std::floating_point<T1> || std::floating_point<T2>) {
-		return static_cast<std::common_type_t<T1, T2>>(v) - static_cast<std::int64_t>(v / mod);
+		return static_cast<std::common_type_t<T1, T2>>(v) - static_cast<std::int64_t>(v / mod) * mod;
 	}
 	else {
 		return static_cast<std::common_type_t<T1, T2>>(v % mod);
