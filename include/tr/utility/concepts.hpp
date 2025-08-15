@@ -9,9 +9,19 @@ namespace tr {
 	template <std::size_t N> struct template_string_literal {
 		char data[N - 1];
 
-		constexpr template_string_literal(const char (&str)[N])
+		consteval template_string_literal(const char (&str)[N])
 		{
 			std::copy_n(str, N - 1, data);
+		}
+
+		consteval operator std::string_view() const
+		{
+			return {data, N - 1};
+		}
+
+		template <class... Args> consteval operator std::format_string<Args...>() const
+		{
+			return std::string_view{*this};
 		}
 	};
 
