@@ -197,6 +197,7 @@ void tr::system::close_window()
 {
 	tr::gfx::set_renderer(gfx::NO_RENDERER);
 	gfx::current_render_target.reset();
+	gfx::textures.clear();
 	gfx::texture_units.fill(false);
 	gfx::vertex2_format_.reset();
 	SDL_GL_DestroyContext(gfx::ogl_context);

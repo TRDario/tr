@@ -24,6 +24,8 @@ namespace tr::gfx {
 	inline SDL_GLContextState* ogl_context{nullptr};
 	// Whether the OpenGL context is a debug one.
 	inline bool debug_context{false};
+	// List of known textures.
+	inline std::unordered_set<unsigned int> textures;
 	// Tracks which units are allocated.
 	inline std::array<bool, 80> texture_units;
 	// Tracks the texture bound to any given texture unit.

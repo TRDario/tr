@@ -2,19 +2,16 @@
 #include "../../include/tr/sysgfx/gl_call.hpp"
 #include "../../include/tr/sysgfx/impl.hpp"
 
-namespace tr {
+namespace tr::gfx {
 	// Converts a pixel format to a texture format.
 	GLenum tex_format(pixel_format format);
 	// Converts a pixel format to an OpenGL format.
 	GLenum format(pixel_format format);
 	// Converts a pixel format to an OpenGL type.
 	GLenum type(pixel_format format);
+} // namespace tr::gfx
 
-	// List of known textures.
-	std::unordered_set<unsigned int> textures;
-} // namespace tr
-
-GLenum tr::tex_format(pixel_format format)
+GLenum tr::gfx::tex_format(pixel_format format)
 {
 	switch (format) {
 	case pixel_format::R8:
@@ -57,7 +54,7 @@ GLenum tr::tex_format(pixel_format format)
 	}
 }
 
-GLenum tr::format(pixel_format format)
+GLenum tr::gfx::format(pixel_format format)
 {
 	switch (format) {
 	case pixel_format::R8:
@@ -96,7 +93,7 @@ GLenum tr::format(pixel_format format)
 	}
 }
 
-GLenum tr::type(pixel_format format)
+GLenum tr::gfx::type(pixel_format format)
 {
 	switch (format) {
 	case pixel_format::R8:
