@@ -9,6 +9,9 @@ namespace tr::gfx {
 	GLenum format(pixel_format format);
 	// Converts a pixel format to an OpenGL type.
 	GLenum type(pixel_format format);
+
+	// List of known textures.
+	std::unordered_set<unsigned int> textures;
 } // namespace tr::gfx
 
 GLenum tr::gfx::tex_format(pixel_format format)
