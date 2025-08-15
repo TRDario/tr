@@ -9,14 +9,19 @@ void tr::audio::validate_al_call(const char* file, int line, const char* functio
 		switch (error) {
 		case AL_INVALID_NAME:
 			TR_LOG_CONTINUE(log, "Call to {} at {}:{} returned AL_INVALID_NAME.", function, file, line);
+			break;
 		case AL_INVALID_ENUM:
 			TR_LOG_CONTINUE(log, "Call to {} at {}:{} returned AL_INVALID_ENUM.", function, file, line);
+			break;
 		case AL_INVALID_VALUE:
 			TR_LOG_CONTINUE(log, "Call to {} at {}:{} returned AL_INVALID_VALUE.", function, file, line);
+			break;
 		case AL_INVALID_OPERATION:
 			TR_LOG_CONTINUE(log, "Call to {} at {}:{} returned AL_INVALID_OPERATION.", function, file, line);
+			break;
 		case AL_OUT_OF_MEMORY:
 			TR_LOG_CONTINUE(log, "Call to {} at {}:{} returned AL_OUT_OF_MEMORY.", function, file, line);
+			break;
 		}
 		std::abort();
 	}
