@@ -32,8 +32,6 @@ if((CMAKE_CXX_COMPILER_ID STREQUAL "Clang" AND NOT (CMAKE_CXX_SIMULATE_ID STREQU
 		-fno-signed-zeros
 		-fassociative-math
 		-ffp-contract=fast
-		-fpch-instantiate-templates
-		-fpch-codegen
 	)
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Clang" AND CMAKE_CXX_SIMULATE_ID STREQUAL "MSVC")
 	target_compile_options(tr PRIVATE
@@ -46,8 +44,6 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Clang" AND CMAKE_CXX_SIMULATE_ID STREQUAL
 		/clang:-fno-signed-zeros
 		/clang:-fassociative-math
 		/clang:-ffp-contract=fast
-		/clang:-fpch-instantiate-templates
-		/clang:-fpch-codegen
 	)
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
 	target_compile_options(tr PUBLIC
