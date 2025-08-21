@@ -387,6 +387,7 @@ void tr::gfx::debug_renderer::newline_right()
 void tr::gfx::debug_renderer::draw()
 {
 	if (!state->glyphs.empty()) {
+		state->glyph_buffer.set(state->glyphs);
 		set_render_target(backbuffer_render_target());
 		if (current_renderer() != DEBUG_RENDERER) {
 			set_renderer(DEBUG_RENDERER);
@@ -396,7 +397,6 @@ void tr::gfx::debug_renderer::draw()
 			set_vertex_buffer(state->shape_buffer, 0, 0);
 			set_vertex_buffer(state->glyph_buffer, 1, 0);
 		}
-		state->glyph_buffer.set(state->glyphs);
 		state->pipeline.vertex_shader().set_uniform(0, static_cast<glm::vec2>(backbuffer_size()));
 		draw_instances(primitive::TRI_FAN, 0, 4, static_cast<int>(state->glyphs.size()));
 		state->glyphs.clear();
