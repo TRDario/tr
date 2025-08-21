@@ -4,6 +4,7 @@
 #include "../../include/tr/audio/source.hpp"
 #include "../../include/tr/utility/macro.hpp"
 #include "../../include/tr/utility/ranges.hpp"
+#include <AL/alext.h>
 
 using namespace std::chrono_literals;
 
@@ -12,6 +13,9 @@ namespace tr::audio {
 	ALCdevice* device{nullptr};
 	// The global audio context.
 	ALCcontext* context{nullptr};
+
+	// OpenAL context attributes.
+	constexpr std::array<ALCint, 3> CONTEXT_ATTRS{ALC_HRTF_SOFT, ALC_FALSE, 0};
 } // namespace tr::audio
 
 tr::audio::init_error::init_error(std::string_view description)
@@ -41,7 +45,7 @@ void tr::audio::initialize()
 	if ((device = alcOpenDevice(nullptr)) == nullptr) {
 		throw init_error{"Failed to open audio device."};
 	}
-	if ((context = alcCreateContext(device, nullptr)) == nullptr || !alcMakeContextCurrent(context)) {
+	if ((context = alcCreateContext(device, CONTEXT_ATTRS.data())) == nullptr || !alcMakeContextCurrent(context)) {
 		alcDestroyContext(context);
 		alcCloseDevice(device);
 		throw init_error{"Failed to create audio context."};
