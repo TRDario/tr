@@ -33,6 +33,7 @@ if((CMAKE_CXX_COMPILER_ID STREQUAL "Clang" AND NOT (CMAKE_CXX_SIMULATE_ID STREQU
 		-fassociative-math
 		-ffp-contract=fast
 	)
+	target_link_options(tr PRIVATE -fuse-ld=lld)
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Clang" AND CMAKE_CXX_SIMULATE_ID STREQUAL "MSVC")
 	target_compile_options(tr PRIVATE
 		/clang:-Wall
