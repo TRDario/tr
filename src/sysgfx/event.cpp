@@ -320,6 +320,12 @@ std::optional<tr::system::event> tr::system::wait_for_event(imsecs timeout)
 	}
 }
 
+void tr::system::flush_events()
+{
+	SDL_PumpEvents();
+	SDL_FlushEvents(SDL_EVENT_FIRST, SDL_EVENT_LAST);
+}
+
 void tr::system::enable_text_input_events()
 {
 	TR_ASSERT(sdl_window != nullptr, "Tried to enable text input event sending before opening the window.");

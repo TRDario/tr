@@ -21,6 +21,8 @@ namespace tr::system {
 	std::optional<event> wait_for_event(imsecs timeout);
 	// Handles all available events in a loop.
 	template <std::invocable<event> Fn> void handle_events(const Fn& fn);
+	// Flushes all events out of the event queue.
+	void flush_events();
 
 	// Enables sending text input events.
 	void enable_text_input_events();
