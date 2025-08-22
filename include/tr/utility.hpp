@@ -23,6 +23,7 @@
 #include "utility/norm_cast.hpp"         // IWYU pragma: export
 #include "utility/overloaded_lambda.hpp" // IWYU pragma: export
 #include "utility/ranges.hpp"            // IWYU pragma: export
+#include "utility/reference.hpp"         // IWYU pragma: export
 #include "utility/rng.hpp"               // IWYU pragma: export
 #include "utility/static_string.hpp"     // IWYU pragma: export
 #include "utility/static_vector.hpp"     // IWYU pragma: export
