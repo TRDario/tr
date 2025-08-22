@@ -20,7 +20,7 @@ namespace tr::system {
 	// Gets an event from the event queue, waiting until one appears or until a certain amount of time has passed.
 	std::optional<event> wait_for_event(imsecs timeout);
 	// Handles all available events in a loop.
-	template <std::invocable<event> Fn> void handle_events(const Fn& fn);
+	template <std::invocable<tr::system::event> Fn> void handle_events(const Fn& fn);
 	// Flushes all events out of the event queue.
 	void flush_events();
 
