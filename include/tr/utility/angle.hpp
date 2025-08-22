@@ -34,11 +34,11 @@ namespace tr {
 		constexpr float turns() const;
 
 		// Computes the sine of the angle.
-		constexpr float sin() const;
+		inline float sin() const;
 		// Computes the cosine of the angle.
-		constexpr float cos() const;
+		inline float cos() const;
 		// Computes the tangent of the angle.
-		constexpr float tan() const;
+		inline float tan() const;
 
 	  private:
 		// The underlying value in radians.
@@ -53,13 +53,13 @@ namespace tr {
 	template <arithmetic T> constexpr angle turns(T th);
 
 	// Converts a sine value into an angle value.
-	template <arithmetic T> constexpr angle asin(T sin);
+	template <arithmetic T> inline angle asin(T sin);
 	// Converts a cosine value into an angle value.
-	template <arithmetic T> constexpr angle acos(T cos);
+	template <arithmetic T> inline angle acos(T cos);
 	// Converts a tangent value into an angle value.
-	template <arithmetic T> constexpr angle atan(T tan);
+	template <arithmetic T> inline angle atan(T tan);
 	// Converts tangent x and y values into an angle value.
-	template <arithmetic T> constexpr angle atan2(T y, T x);
+	template <arithmetic T> inline angle atan2(T y, T x);
 
 	// Inline namespace containing angle value literals.
 	inline namespace angle_literals {

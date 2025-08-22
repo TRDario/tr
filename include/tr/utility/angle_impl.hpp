@@ -85,22 +85,22 @@ template <tr::arithmetic T> constexpr tr::angle tr::turns(T th)
 	return angle{std::numbers::pi_v<float> * 2 * static_cast<float>(th)};
 }
 
-template <tr::arithmetic T> constexpr tr::angle tr::asin(T sin)
+template <tr::arithmetic T> inline tr::angle tr::asin(T sin)
 {
 	return angle{std::asin(sin)};
 }
 
-template <tr::arithmetic T> constexpr tr::angle tr::acos(T cos)
+template <tr::arithmetic T> inline tr::angle tr::acos(T cos)
 {
 	return angle{std::acos(cos)};
 }
 
-template <tr::arithmetic T> constexpr tr::angle tr::atan(T tan)
+template <tr::arithmetic T> inline tr::angle tr::atan(T tan)
 {
 	return angle{std::atan(tan)};
 }
 
-template <tr::arithmetic T> constexpr tr::angle tr::atan2(T y, T x)
+template <tr::arithmetic T> inline tr::angle tr::atan2(T y, T x)
 {
 	return angle{std::atan2(y, x)};
 }
@@ -120,17 +120,17 @@ constexpr float tr::angle::turns() const
 	return m_rads / (2 * std::numbers::pi_v<float>);
 }
 
-constexpr float tr::angle::sin() const
+inline float tr::angle::sin() const
 {
 	return std::sin(m_rads);
 }
 
-constexpr float tr::angle::cos() const
+inline float tr::angle::cos() const
 {
 	return std::cos(m_rads);
 }
 
-constexpr float tr::angle::tan() const
+inline float tr::angle::tan() const
 {
 	return std::tan(m_rads);
 }
