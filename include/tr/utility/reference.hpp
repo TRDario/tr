@@ -11,7 +11,7 @@ namespace tr {
 
 		constexpr operator opt_ref<const T>() const;
 
-		constexpr operator==(const opt_ref&) const = default;
+		constexpr bool operator==(const opt_ref&) const = default;
 
 		constexpr explicit operator bool() const;
 		constexpr bool has_value() const;
