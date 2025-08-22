@@ -16,15 +16,15 @@ namespace tr::gfx::debug_renderer {
 	constexpr std::initializer_list<vertex_binding> DEBUG_FORMAT_ATTRS{
 		{NOT_INSTANCED,
 		 {
-			 vertex_attributef{vertex_attributef::type::UI8, 2, false, 0},
+			 {vertex_attribute::type::UI8, 2, false, 0},
 		 }},
 		{1,
 		 {
-			 vertex_attributef{vertex_attributef::type::UI8, 2, false, 0},
-			 vertex_attributei{vertex_attributei::type::UI8, 1, 2},
-			 vertex_attributei{vertex_attributei::type::UI8, 1, 3},
-			 vertex_attributef{vertex_attributef::type::UI8, 4, true, 4},
-			 vertex_attributef{vertex_attributef::type::UI8, 4, true, 8},
+			 {vertex_attribute::type::UI8, 2, false, 0},
+			 {vertex_attribute::type::UI8, 1, false, 2},
+			 {vertex_attribute::type::UI8, 1, false, 3},
+			 {vertex_attribute::type::UI8, 4, true, 4},
+			 {vertex_attribute::type::UI8, 4, true, 8},
 		 }},
 	};
 	// Debug vertex shader.

@@ -14,16 +14,8 @@ tr::gfx::vertex_format::vertex_format(std::initializer_list<vertex_binding> bind
 		const vertex_binding& binding{bindings.begin()[binding_id]};
 
 		TR_GL_CALL(glVertexArrayBindingDivisor, m_vao.get(), binding_id, binding.divisor);
-		for (const vertex_attribute& attr : binding.attrs) {
-			visit(overloaded{
-					  [=, i = attr_id, v = m_vao.get()](const vertex_attributef& a) {
-						  TR_GL_CALL(glVertexArrayAttribFormat, v, i, a.elements, static_cast<GLenum>(a.type), a.normalized, a.offset);
-					  },
-					  [=, i = attr_id, v = m_vao.get()](const vertex_attributei& a) {
-						  TR_GL_CALL(glVertexArrayAttribIFormat, v, i, a.elements, static_cast<GLenum>(a.type), a.offset);
-					  },
-				  },
-				  attr);
+		for (const vertex_attribute& a : binding.attrs) {
+			TR_GL_CALL(glVertexArrayAttribFormat, m_vao.get(), attr_id, a.elements, static_cast<GLenum>(a.type), a.normalized, a.offset);
 			TR_GL_CALL(glEnableVertexArrayAttrib, m_vao.get(), attr_id);
 			TR_GL_CALL(glVertexArrayAttribBinding, m_vao.get(), attr_id++, binding_id);
 		}
@@ -44,9 +36,9 @@ tr::gfx::vertex_format& tr::gfx::vertex2_format()
 {
 	if (!vertex2_format_.has_value()) {
 		vertex2_format_ = {
-			{NOT_INSTANCED, {vertex_attributef{vertex_attributef::type::FP32, 2, false, 0}}},
-			{NOT_INSTANCED, {vertex_attributef{vertex_attributef::type::FP32, 2, false, 0}}},
-			{NOT_INSTANCED, {vertex_attributef{vertex_attributef::type::UI8, 4, true, 0}}},
+			{NOT_INSTANCED, {{vertex_attribute::type::FP32, 2, false, 0}}},
+			{NOT_INSTANCED, {{vertex_attribute::type::FP32, 2, false, 0}}},
+			{NOT_INSTANCED, {{vertex_attribute::type::UI8, 4, true, 0}}},
 		};
 		if (debug()) {
 			vertex2_format_->set_label("(tr) 2D Vertex Format");

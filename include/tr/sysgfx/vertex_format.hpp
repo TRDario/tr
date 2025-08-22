@@ -2,8 +2,8 @@
 #include "../utility/handle.hpp"
 
 namespace tr::gfx {
-	// Single-precision float vertex attribute.
-	struct vertex_attributef {
+	// Vertex attribute.
+	struct vertex_attribute {
 		// The source data's type.
 		enum class type {
 			SI8 = 0x1400,
@@ -30,29 +30,6 @@ namespace tr::gfx {
 		// The relative position of the attribute within a binding point element in bytes.
 		std::uint32_t offset;
 	};
-	// Integer vertex attribute.
-	struct vertex_attributei {
-		// The source data's type.
-		enum class type {
-			SI8 = 0x1400,
-			UI8,
-			SI16,
-			UI16,
-			SI32,
-			UI32,
-			SI2_10_10_10 = 0x8D9F,
-			UI2_10_10_10 = 0x8368
-		};
-
-		// The type being converted to an intger.
-		type type;
-		// The number of elements in the attribute (1 - 4).
-		std::uint8_t elements;
-		// The relative position of the attribute within a binding point element in bytes.
-		std::uint32_t offset;
-	};
-	// Union of vertex attribute types.
-	using vertex_attribute = std::variant<vertex_attributef, vertex_attributei>;
 
 	// Sentinel for a vertex binding that is not instanced (that is, the attributes are per vertex).
 	constexpr std::uint32_t NOT_INSTANCED{0};
