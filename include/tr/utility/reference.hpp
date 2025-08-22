@@ -8,9 +8,10 @@ namespace tr {
 		constexpr opt_ref(std::nullopt_t);
 		constexpr opt_ref(T& ref);
 		constexpr opt_ref(T&&) = delete;
-		constexpr opt_ref(const T&&) = delete;
 
 		constexpr operator opt_ref<const T>() const;
+
+		constexpr operator==(const opt_ref&) const = default;
 
 		constexpr explicit operator bool() const;
 		constexpr bool has_value() const;
