@@ -29,9 +29,9 @@ namespace tr::gfx::debug_renderer {
 	};
 	// Debug vertex shader.
 	inline constexpr const char* DEBUG_RENDERER_VERT_SRC =
-		"#version 450\n#define L(l) layout(location=l)\nL(0)uniform vec2 r;L(1)uniform float s;L(0)in vec2 p;L(1)in vec2 P;L(2)in int "
-		"R;L(3)in int c;L(4)in vec4 t;L(5)in vec4 b;out gl_PerVertex{vec4 gl_Position;};L(0)out vec2 o;L(1)out vec4 T;L(2)out vec4 B;void "
-		"main(){o=(vec2(c%16,c/16)+p)/16;T=t;B=b;vec2 "
+		"#version 450\n#define L(l) layout(location=l)\nL(0)uniform vec2 r;L(1)uniform float s;L(0)in vec2 p;L(1)in vec2 P;L(2)in float "
+		"R;L(3)in float c;L(4)in vec4 t;L(5)in vec4 b;out gl_PerVertex{vec4 gl_Position;};L(0)out vec2 o;L(1)out vec4 T;L(2)out vec4 B;void "
+		"main(){o=(vec2(mod(c,16),floor(c/16))+p)/16;T=t;B=b;vec2 "
 		"F;if(R==1){F=P*8*s;F.x=r.x-F.x;F+=p*8*s;}else{F=(p+P)*8*s;}gl_Position=vec4(F.x/r.x*2-1,-F.y/r.y*2+1,0,1);}";
 	// Debug fragment shader.
 	inline constexpr const char* DEBUG_RENDERER_FRAG_SRC =
