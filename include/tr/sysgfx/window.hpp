@@ -94,6 +94,8 @@ namespace tr::system {
 	bool window_minimized();
 	// Gets whether the window has input focus.
 	bool window_has_focus();
+	// Raises the window to have input focus.
+	void raise_window();
 
 	// Sets whether the mouse is grabbed and confined to this window.
 	void set_window_mouse_grab(bool grab);

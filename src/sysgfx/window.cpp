@@ -327,6 +327,26 @@ bool tr::system::window_has_focus()
 	return SDL_GetWindowFlags(sdl_window) & SDL_WINDOW_INPUT_FOCUS;
 }
 
+
+bool tr::system::window_maximized()
+{
+	return SDL_GetWindowFlags(sdl_window) & SDL_WINDOW_MAXIMIZED;
+}
+
+bool tr::system::window_minimized()
+{
+	return SDL_GetWindowFlags(sdl_window) & SDL_WINDOW_MINIMIZED;
+}
+
+void tr::system::raise_window() {
+	TR_ASSERT(sdl_window != nullptr, "Tried to raise window before opening it.");
+
+	if (!SDL_RaiseWindow(sdl_window)) {
+		TR_LOG(log, tr::severity::ERROR, "Failed to raise window.");
+		TR_LOG_CONTINUE(log, "{}", SDL_GetError());
+	}
+}
+
 void tr::system::set_window_mouse_grab(bool grab)
 {
 	TR_ASSERT(sdl_window != nullptr, "Tried to set window mouse grab before opening it.");
