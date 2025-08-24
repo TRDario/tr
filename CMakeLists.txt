@@ -16,6 +16,7 @@ if((TR_BUILD_AUDIO OR TR_BUILD_IMGUI) AND NOT TR_BUILD_SYSGFX)
 endif()
 
 include(Dependencies.cmake)
+include(check_compiler.cmake)
 include(target_template.cmake)
 
 add_library(tr STATIC)

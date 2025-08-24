@@ -1,7 +1,7 @@
 function(tr_target_template TARGET)
 	set_target_properties (${TARGET} PROPERTIES DEBUG_POSTFIX "d")
 	target_compile_features(${TARGET} PUBLIC cxx_std_20)
-	if((CMAKE_CXX_COMPILER_ID STREQUAL "Clang" AND NOT (CMAKE_CXX_SIMULATE_ID STREQUAL "MSVC")) OR CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+	if(TR_HAS_CLANG OR TR_HAS_GCC)
 		target_compile_options(${TARGET} PRIVATE
 			-Wall
 			-Wextra
@@ -13,10 +13,10 @@ function(tr_target_template TARGET)
 			-fassociative-math
 			-ffp-contract=fast
 		)
-		if(NOT CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+		if(TR_HAS_CLANG)
 			target_link_options(${TARGET} PRIVATE -fuse-ld=lld)
 		endif()
-	elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Clang" AND CMAKE_CXX_SIMULATE_ID STREQUAL "MSVC")
+	elseif(TR_HAS_CLANG_CL)
 		target_compile_options(${TARGET} PRIVATE
 			/clang:-Wall
 			/clang:-Wextra
@@ -28,7 +28,7 @@ function(tr_target_template TARGET)
 			/clang:-fassociative-math
 			/clang:-ffp-contract=fast
 		)
-	elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+	elseif(TR_HAS_MSVC)
 		target_compile_options(${TARGET} PUBLIC
 			/Zc:preprocessor
 			/W3 
