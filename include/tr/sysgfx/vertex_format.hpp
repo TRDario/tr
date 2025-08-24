@@ -24,19 +24,19 @@ namespace tr::gfx {
 		// The type being converted to a float.
 		type type;
 		// The number of elements in the attribute (1 - 4).
-		std::uint8_t elements;
+		u8 elements;
 		// Whether integer data is normalized when converted to floating point. Must be false for floats.
 		bool normalized;
 		// The relative position of the attribute within a binding point element in bytes.
-		std::uint32_t offset;
+		u32 offset;
 	};
 
 	// Sentinel for a vertex binding that is not instanced (that is, the attributes are per vertex).
-	constexpr std::uint32_t NOT_INSTANCED{0};
+	constexpr u32 NOT_INSTANCED{0};
 	// A vertex binding point.
 	struct vertex_binding {
 		// The divisor of the binding.
-		std::uint32_t divisor;
+		u32 divisor;
 		// The attributes of the binding.
 		std::initializer_list<vertex_attribute> attrs;
 	};

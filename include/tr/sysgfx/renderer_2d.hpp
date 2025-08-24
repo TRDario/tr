@@ -20,9 +20,9 @@ namespace tr::gfx {
 		// Mesh color data.
 		std::ranges::subrange<std::vector<tr::rgba8>::iterator> colors;
 		// Mesh indices.
-		std::ranges::subrange<std::vector<std::uint16_t>::iterator> indices;
+		std::ranges::subrange<std::vector<u16>::iterator> indices;
 		// The base index.
-		std::uint16_t base_index;
+		u16 base_index;
 	};
 	// Simple 2D renderer textured mesh allocation reference.
 	struct simple_textured_mesh_ref {
@@ -42,9 +42,9 @@ namespace tr::gfx {
 		// Mesh tint data.
 		std::ranges::subrange<std::vector<tr::rgba8>::iterator> tints;
 		// Mesh indices.
-		std::ranges::subrange<std::vector<std::uint16_t>::iterator> indices;
+		std::ranges::subrange<std::vector<u16>::iterator> indices;
 		// The base index.
-		std::uint16_t base_index;
+		u16 base_index;
 	};
 
 	// 2D renderer.
@@ -64,31 +64,30 @@ namespace tr::gfx {
 		void set_default_layer_blend_mode(int layer, const blend_mode& blend_mode);
 
 		// Allocates a new color fan.
-		simple_color_mesh_ref new_color_fan(int layer, std::size_t vertices);
+		simple_color_mesh_ref new_color_fan(int layer, usize vertices);
 		// Allocates a new color fan.
-		simple_color_mesh_ref new_color_fan(int layer, std::size_t vertices, const glm::mat4& mat, const blend_mode& blend_mode);
+		simple_color_mesh_ref new_color_fan(int layer, usize vertices, const glm::mat4& mat, const blend_mode& blend_mode);
 		// Allocates a new color polygon outline.
-		simple_color_mesh_ref new_color_outline(int layer, std::size_t vertices);
+		simple_color_mesh_ref new_color_outline(int layer, usize vertices);
 		// Allocates a new color polygon outline.
-		simple_color_mesh_ref new_color_outline(int layer, std::size_t vertices, const glm::mat4& mat, const blend_mode& blend_mode);
+		simple_color_mesh_ref new_color_outline(int layer, usize vertices, const glm::mat4& mat, const blend_mode& blend_mode);
 		// Allocates a new color mesh.
-		color_mesh_ref new_color_mesh(int layer, std::size_t vertices, std::size_t indices);
+		color_mesh_ref new_color_mesh(int layer, usize vertices, usize indices);
 		// Allocates a new color mesh.
-		color_mesh_ref new_color_mesh(int layer, std::size_t vertices, std::size_t indices, const glm::mat4& mat,
-									  const blend_mode& blend_mode);
+		color_mesh_ref new_color_mesh(int layer, usize vertices, usize indices, const glm::mat4& mat, const blend_mode& blend_mode);
 		// Allocates a new textured fan.
-		simple_textured_mesh_ref new_textured_fan(int layer, std::size_t vertices);
-		// Allocates a new textured fan.
-		simple_textured_mesh_ref new_textured_fan(int layer, std::size_t vertices, texture_ref texture);
-		// Allocates a new textured fan.
-		simple_textured_mesh_ref new_textured_fan(int layer, std::size_t vertices, texture_ref texture, const glm::mat4& mat,
+		simple_textured_mesh_ref new_textured_fan(int layer, usize vertices);
+		// Allocates a new textured fan.usize
+		simple_textured_mesh_ref new_textured_fan(int layer, usize vertices, texture_ref texture);
+		// Allocates a new textured fan.usize
+		simple_textured_mesh_ref new_textured_fan(int layer, usize vertices, texture_ref texture, const glm::mat4& mat,
 												  const blend_mode& blend_mode);
 		// Allocates a new textured mesh.
-		textured_mesh_ref new_textured_mesh(int layer, std::size_t vertices, std::size_t indices);
+		textured_mesh_ref new_textured_mesh(int layer, usize vertices, usize indices);
 		// Allocates a new textured mesh.
-		textured_mesh_ref new_textured_mesh(int layer, std::size_t vertices, std::size_t indices, texture_ref texture);
+		textured_mesh_ref new_textured_mesh(int layer, usize vertices, usize indices, texture_ref texture);
 		// Allocates a new textured mesh.
-		textured_mesh_ref new_textured_mesh(int layer, std::size_t vertices, std::size_t indices, texture_ref texture, const glm::mat4& mat,
+		textured_mesh_ref new_textured_mesh(int layer, usize vertices, usize indices, texture_ref texture, const glm::mat4& mat,
 											const blend_mode& blend_mode);
 
 		// Draws a layer to a rendering target.

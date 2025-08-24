@@ -1,6 +1,6 @@
+#include "../../include/tr/sysgfx/ttfont.hpp"
 #include "../../include/tr/sysgfx/bitmap.hpp"
 #include "../../include/tr/sysgfx/initialization.hpp"
-#include "../../include/tr/sysgfx/ttfont.hpp"
 #include <SDL3_ttf/SDL_ttf.h>
 
 namespace tr::system {
@@ -9,7 +9,7 @@ namespace tr::system {
 	// atexit callback for SDL TTF.
 	void atexit_sdl_ttf();
 	// Fixes certain edge artifacts when rendering partially transparent text.
-	void fix_alpha_artifacts(bitmap& bitmap, std::uint8_t max_alpha);
+	void fix_alpha_artifacts(bitmap& bitmap, u8 max_alpha);
 
 } // namespace tr::system
 
@@ -29,10 +29,10 @@ void tr::system::atexit_sdl_ttf()
 	TTF_Quit();
 }
 
-void tr::system::fix_alpha_artifacts(bitmap& bitmap, std::uint8_t max_alpha)
+void tr::system::fix_alpha_artifacts(bitmap& bitmap, u8 max_alpha)
 {
 	// We know the bitmap is ARGB_8888.
-	std::uint8_t* it{reinterpret_cast<std::uint8_t*>(bitmap.data())};
+	u8* it{(u8*)bitmap.data()};
 	for (int y = 0; y < bitmap.size().y; ++y) {
 		for (int x = 0; x < bitmap.size().x; ++x) {
 			it[x * 4 + 3] = std::min(it[x * 4 + 3], max_alpha);
@@ -111,7 +111,7 @@ int tr::system::ttfont::line_skip() const
 	return TTF_GetFontLineSkip(m_ptr.get());
 }
 
-bool tr::system::ttfont::contains(std::uint32_t glyph) const
+bool tr::system::ttfont::contains(u32 glyph) const
 {
 	return TTF_FontHasGlyph(m_ptr.get(), glyph);
 }
@@ -128,7 +128,7 @@ void tr::system::ttfont::resize(float size)
 
 void tr::system::ttfont::set_style(ttf_style style)
 {
-	TTF_SetFontStyle(m_ptr.get(), static_cast<TTF_FontStyleFlags>(style));
+	TTF_SetFontStyle(m_ptr.get(), TTF_FontStyleFlags(style));
 }
 
 void tr::system::ttfont::set_outline(int outline)
@@ -139,7 +139,7 @@ void tr::system::ttfont::set_outline(int outline)
 	}
 }
 
-tr::system::glyph_metrics tr::system::ttfont::metrics(std::uint32_t glyph)
+tr::system::glyph_metrics tr::system::ttfont::metrics(u32 glyph)
 {
 	system::glyph_metrics metrics{};
 	if (!TTF_GetGlyphMetrics(m_ptr.get(), glyph, &metrics.min.x, &metrics.max.x, &metrics.min.y, &metrics.max.y, &metrics.advance)) {
@@ -149,7 +149,7 @@ tr::system::glyph_metrics tr::system::ttfont::metrics(std::uint32_t glyph)
 	return metrics;
 }
 
-int tr::system::ttfont::kerning(std::uint32_t prev_glyph, std::uint32_t next_glyph)
+int tr::system::ttfont::kerning(u32 prev_glyph, u32 next_glyph)
 {
 	int kerning{};
 	if (!TTF_GetGlyphKerning(m_ptr.get(), prev_glyph, next_glyph, &kerning)) {
@@ -162,7 +162,7 @@ int tr::system::ttfont::kerning(std::uint32_t prev_glyph, std::uint32_t next_gly
 tr::system::ttf_measure_result tr::system::ttfont::measure_text(std::string_view text, int max_w) const
 {
 	ttf_measure_result result{};
-	std::size_t length{};
+	usize length{};
 	if (!TTF_MeasureString(m_ptr.get(), text.data(), text.size(), max_w, &result.size, &length)) {
 		TR_LOG(log, tr::severity::ERROR, "Failed to measure text.");
 		TR_LOG_CONTINUE(log, "{}", SDL_GetError());
@@ -181,7 +181,7 @@ glm::ivec2 tr::system::ttfont::text_size(std::string_view text, int max_w) const
 	return size;
 }
 
-tr::bitmap tr::system::ttfont::render(std::uint32_t glyph, rgba8 color) const
+tr::bitmap tr::system::ttfont::render(u32 glyph, rgba8 color) const
 {
 	const SDL_Color sdl_color{color.r, color.g, color.b, color.a};
 	SDL_Surface* surface{TTF_RenderGlyph_Blended(m_ptr.get(), glyph, sdl_color)};
@@ -193,7 +193,7 @@ tr::bitmap tr::system::ttfont::render(std::uint32_t glyph, rgba8 color) const
 
 tr::bitmap tr::system::ttfont::render(std::string_view text, int max_w, halign align, rgba8 color) const
 {
-	TTF_SetFontWrapAlignment(m_ptr.get(), static_cast<TTF_HorizontalAlignment>(align));
+	TTF_SetFontWrapAlignment(m_ptr.get(), TTF_HorizontalAlignment(align));
 
 	const SDL_Color sdl_color{color.r, color.g, color.b, color.a};
 	SDL_Surface* surface{TTF_RenderText_Blended_Wrapped(m_ptr.get(), text.data(), text.size(), sdl_color, max_w)};

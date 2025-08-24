@@ -70,7 +70,7 @@ template <class... Args> void tr::logger::log(severity level, TR_FMT::format_str
 	const auto time{std::chrono::floor<std::chrono::seconds>(
 		std::chrono::current_zone()->std::chrono::time_zone::to_local(std::chrono::system_clock::now()))};
 	const std::string time_str{TR_FMT::format("[{:%T}] ", time)};
-	const std::string severity_str{TR_FMT::format("[{}] ", static_cast<char>(level))};
+	const std::string severity_str{TR_FMT::format("[{}] ", char(level))};
 	const std::string fmt_str{TR_FMT::format(fmt, std::forward<Args>(args)...)};
 
 	std::cout << time_str << "[" << m_prefix << "] " << severity_str << fmt_str << "\n";

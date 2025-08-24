@@ -10,7 +10,7 @@ tr::gfx::texture_unit::texture_unit()
 	auto it{std::ranges::find(texture_units, false)};
 	*it = true;
 	texture_unit_textures[it - texture_units.begin()] = NO_TEXTURE;
-	m_unit.reset(static_cast<unsigned int>(it - texture_units.begin()));
+	m_unit.reset((unsigned int)(it - texture_units.begin()));
 }
 
 void tr::gfx::texture_unit::deleter::operator()(unsigned int id)

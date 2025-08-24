@@ -7,7 +7,7 @@ namespace tr::system {
 	// Event emitted when a key is pressed.
 	struct key_down_event {
 		// The event ID of key down events.
-		static inline constexpr std::uint32_t ID{0x300};
+		static inline constexpr u32 ID{0x300};
 
 		// Whether the event is a repeat.
 		bool repeat;
@@ -33,7 +33,7 @@ namespace tr::system {
 	// Event emitted when a key is release.
 	struct key_up_event {
 		// The event ID of key up events.
-		static inline constexpr std::uint32_t ID{0x301};
+		static inline constexpr u32 ID{0x301};
 
 		// The physical keycode of the released key.
 		scancode scan;
@@ -49,7 +49,7 @@ namespace tr::system {
 	// Event emitted when text is inputted.
 	struct text_input_event {
 		// The event ID of text input events.
-		static inline constexpr std::uint32_t ID{0x303};
+		static inline constexpr u32 ID{0x303};
 
 		// A view over the inputted text string.
 		std::string_view text;

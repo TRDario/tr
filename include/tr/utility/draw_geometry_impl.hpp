@@ -1,29 +1,29 @@
 #pragma once
 #include "draw_geometry.hpp"
 
-inline std::size_t tr::smooth_poly_vtx(float r, float scale)
+inline tr::usize tr::smooth_poly_vtx(float r, float scale)
 {
-	return std::max(static_cast<std::size_t>(6 * scale * std::sqrt(std::abs(r))), std::size_t{3});
+	return std::max(usize(6 * scale * std::sqrt(std::abs(r))), 3_uz);
 }
 
-inline std::size_t tr::smooth_arc_vtx(float r, angle sizeth, float scale)
+inline tr::usize tr::smooth_arc_vtx(float r, angle sizeth, float scale)
 {
-	return std::max(static_cast<std::size_t>(6 * scale * std::sqrt(std::abs(r)) / (360_deg / (sizeth % 360_deg))), std::size_t{3});
+	return std::max(usize(6 * scale * std::sqrt(std::abs(r)) / (360_deg / (sizeth % 360_deg))), 3_uz);
 }
 
-constexpr std::size_t tr::poly_idx(std::uint16_t vtx)
+constexpr tr::usize tr::poly_idx(u16 vtx)
 {
 	return (vtx - 2) * 3;
 }
 
-constexpr std::size_t tr::poly_outline_idx(std::uint16_t vtx)
+constexpr tr::usize tr::poly_outline_idx(u16 vtx)
 {
 	return vtx * 6;
 }
 
-template <std::output_iterator<std::uint16_t> It> constexpr It tr::fill_poly_idx(It out, std::uint16_t vtx, std::uint16_t base)
+template <std::output_iterator<tr::u16> It> constexpr It tr::fill_poly_idx(It out, u16 vtx, u16 base)
 {
-	for (std::uint16_t i = 0; i < vtx - 2; ++i) {
+	for (u16 i = 0; i < vtx - 2; ++i) {
 		*out++ = base;
 		*out++ = base + i + 1;
 		*out++ = base + i + 2;
@@ -31,17 +31,16 @@ template <std::output_iterator<std::uint16_t> It> constexpr It tr::fill_poly_idx
 	return out;
 }
 
-template <tr::sized_output_range<std::uint16_t> Range>
-constexpr std::ranges::iterator_t<Range> tr::fill_poly_idx(Range&& out, std::uint16_t vtx, std::uint16_t base)
+template <tr::sized_output_range<tr::u16> Range> constexpr std::ranges::iterator_t<Range> tr::fill_poly_idx(Range&& out, u16 vtx, u16 base)
 {
 	TR_ASSERT(std::size(out) >= poly_idx(vtx), "Tried to write {} indices into a range of size {}.", poly_idx(vtx), std::size(out));
 
 	return fill_poly_idx(std::begin(out), vtx, base);
 }
 
-template <std::output_iterator<std::uint16_t> It> constexpr It tr::fill_poly_outline_idx(It out, std::uint16_t vtx, std::uint16_t base)
+template <std::output_iterator<tr::u16> It> constexpr It tr::fill_poly_outline_idx(It out, u16 vtx, u16 base)
 {
-	for (std::uint16_t i = 0; i < vtx - 1; ++i) {
+	for (u16 i = 0; i < vtx - 1; ++i) {
 		*out++ = base + i;
 		*out++ = base + i + 1;
 		*out++ = base + i + vtx;
@@ -58,8 +57,8 @@ template <std::output_iterator<std::uint16_t> It> constexpr It tr::fill_poly_out
 	return out;
 }
 
-template <tr::sized_output_range<std::uint16_t> Range>
-constexpr std::ranges::iterator_t<Range> tr::fill_poly_outline_idx(Range&& out, std::uint16_t vtx, std::uint16_t base)
+template <tr::sized_output_range<tr::u16> Range>
+constexpr std::ranges::iterator_t<Range> tr::fill_poly_outline_idx(Range&& out, u16 vtx, u16 base)
 {
 	TR_ASSERT(std::size(out) >= poly_outline_idx(vtx), "Tried to write {} indices into a range of size {}.", poly_outline_idx(vtx),
 			  std::size(out));
@@ -171,13 +170,13 @@ inline std::ranges::iterator_t<Range> tr::fill_rotated_rect_outline_vtx(Range&& 
 	return fill_rotated_rect_outline_vtx(std::begin(out), pos, anchor, size, rot, thick);
 }
 
-template <std::output_iterator<glm::vec2> It> It tr::fill_arc_vtx(It out, std::size_t vtx, circle circ, angle startth, angle sizeth)
+template <std::output_iterator<glm::vec2> It> It tr::fill_arc_vtx(It out, usize vtx, circle circ, angle startth, angle sizeth)
 {
 	angle dth{sizeth / vtx};
 	float dsin{dth.sin()};
 	float dcos{dth.cos()};
 	glm::vec2 delta{circ.r * startth.cos(), circ.r * startth.sin()};
-	for (std::size_t i = 0; i < vtx; ++i) {
+	for (usize i = 0; i < vtx; ++i) {
 		*out++ = delta + circ.c;
 		delta = glm::vec2{dcos * delta.x - dsin * delta.y, dsin * delta.x + dcos * delta.y};
 	}
@@ -185,32 +184,32 @@ template <std::output_iterator<glm::vec2> It> It tr::fill_arc_vtx(It out, std::s
 }
 
 template <tr::sized_output_range<glm::vec2> Range>
-inline std::ranges::iterator_t<Range> tr::fill_arc_vtx(Range&& out, std::size_t vtx, circle circ, angle startth, angle sizeth)
+inline std::ranges::iterator_t<Range> tr::fill_arc_vtx(Range&& out, usize vtx, circle circ, angle startth, angle sizeth)
 {
 	TR_ASSERT(std::size(out) >= vtx, "Tried to write {} vertices into a range of size {}.", vtx, std::size(out));
 
 	return fill_arc_vtx(std::begin(out), vtx, circ, startth, sizeth);
 }
 
-template <std::output_iterator<glm::vec2> It> It tr::fill_poly_vtx(It out, std::size_t vtx, circle circ, angle rot)
+template <std::output_iterator<glm::vec2> It> It tr::fill_poly_vtx(It out, usize vtx, circle circ, angle rot)
 {
 	return fill_arc_vtx(out, vtx, circ, rot, 360_deg);
 }
 
 template <tr::sized_output_range<glm::vec2> Range>
-inline std::ranges::iterator_t<Range> tr::fill_poly_vtx(Range&& out, std::size_t vtx, circle circ, angle rot)
+inline std::ranges::iterator_t<Range> tr::fill_poly_vtx(Range&& out, usize vtx, circle circ, angle rot)
 {
 	return fill_poly_vtx(std::begin(out), vtx, circ, rot);
 }
 
-template <std::output_iterator<glm::vec2> It> It tr::fill_poly_outline_vtx(It out, std::size_t vtx, circle circ, angle rot, float thick)
+template <std::output_iterator<glm::vec2> It> It tr::fill_poly_outline_vtx(It out, usize vtx, circle circ, angle rot, float thick)
 {
 	out = fill_poly_vtx(out, vtx, {circ.c, circ.r + thick / 2}, rot);
 	return fill_poly_vtx(out, vtx, {circ.c, circ.r - thick / 2}, rot);
 }
 
 template <tr::sized_output_range<glm::vec2> Range>
-inline std::ranges::iterator_t<Range> tr::fill_poly_outline_vtx(Range&& out, std::size_t vtx, circle circ, angle rot, float thick)
+inline std::ranges::iterator_t<Range> tr::fill_poly_outline_vtx(Range&& out, usize vtx, circle circ, angle rot, float thick)
 {
 	TR_ASSERT(std::size(out) >= vtx * 2, "Tried to write {} vertices into a range of size {}", vtx * 2, std::size(out));
 

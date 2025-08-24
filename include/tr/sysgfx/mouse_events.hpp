@@ -7,7 +7,7 @@ namespace tr::system {
 	// Event emitted when the mouse is moved.
 	struct mouse_motion_event {
 		// The event ID of mouse motion events.
-		static inline constexpr std::uint32_t ID{0x400};
+		static inline constexpr u32 ID{0x400};
 
 		// A mask of the held mouse buttons.
 		mouse_button buttons;
@@ -23,12 +23,12 @@ namespace tr::system {
 	// Event emitted when a mouse button is pressed.
 	struct mouse_down_event {
 		// The event ID of mouse down events.
-		static inline constexpr std::uint32_t ID{0x401};
+		static inline constexpr u32 ID{0x401};
 
 		// The pressed mouse button.
 		mouse_button button;
 		// The number of consecutive clicks.
-		std::uint8_t clicks;
+		u8 clicks;
 		// The position of the mouse.
 		glm::vec2 pos;
 
@@ -39,7 +39,7 @@ namespace tr::system {
 	// Event emitted when a mouse button is released.
 	struct mouse_up_event {
 		// The event ID of mouse up events.
-		static inline constexpr std::uint32_t ID{0x402};
+		static inline constexpr u32 ID{0x402};
 
 		// The released mouse button.
 		mouse_button button;
@@ -53,7 +53,7 @@ namespace tr::system {
 	// Event emitted when the mouse wheel is moved.
 	struct mouse_wheel_event {
 		// The event ID of mouse wheel events.
-		static inline constexpr std::uint32_t ID{0x403};
+		static inline constexpr u32 ID{0x403};
 
 		// The change in wheel value.
 		glm::vec2 delta;

@@ -3,7 +3,7 @@
 
 namespace tr {
 	// Datatype used for Unicode codepoints.
-	using codepoint = std::uint32_t;
+	using codepoint = u32;
 } // namespace tr
 
 // Namespace containing UTF-8-related functionality.
@@ -21,11 +21,11 @@ namespace tr::utf8 {
 	// Gets an iterator to the next character.
 	template <base_iterator T> constexpr T next(T it);
 	// Gets an iterator to the nth next character.
-	template <base_iterator T> constexpr T next(T it, std::size_t n);
+	template <base_iterator T> constexpr T next(T it, usize n);
 	// Gets an iterator to the previous character.
 	template <base_iterator T> constexpr T prev(T it);
 	// Gets an iterator to the nth previous character.
-	template <base_iterator T> constexpr T prev(T it, std::size_t n);
+	template <base_iterator T> constexpr T prev(T it, usize n);
 	// Inserts a character into a UTF-8-encoded string.
 	template <string String> constexpr String::iterator insert(String& str, typename String::iterator where, codepoint cp);
 	// Erases a character from a UTF-8-encoded string.
@@ -37,7 +37,7 @@ namespace tr::utf8 {
 	class const_it {
 	  public:
 		using value_type = codepoint;
-		using difference_type = std::ptrdiff_t;
+		using difference_type = ssize;
 
 		constexpr const_it() = default;
 		constexpr const_it(const char* ptr);
@@ -74,7 +74,7 @@ namespace tr::utf8 {
 	// Creates a codepoint iterator range pair for a UTF-8 string view.
 	constexpr std::ranges::subrange<const_it> range(std::string_view str);
 	// Counts the number of unicode characters in a UTF-8 string view.
-	constexpr std::size_t length(std::string_view str);
+	constexpr usize length(std::string_view str);
 } // namespace tr::utf8
 
 #include "utf8_impl.hpp"

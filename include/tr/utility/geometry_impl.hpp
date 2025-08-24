@@ -4,22 +4,22 @@
 
 constexpr tr::halign tr::to_halign(align align)
 {
-	return static_cast<tr::halign>(static_cast<int>(align) % 3);
+	return halign(int(align) % 3);
 }
 
 constexpr tr::valign tr::to_valign(align align)
 {
-	return static_cast<tr::valign>(static_cast<int>(align) / 3);
+	return valign(int(align) / 3);
 }
 
 constexpr tr::align tr::operator|(const valign& valign, const halign& halign)
 {
-	return static_cast<align>(static_cast<int>(halign) + static_cast<int>(valign));
+	return align(int(halign) + int(valign));
 }
 
 constexpr tr::align tr::operator|(const halign& halign, const valign& valign)
 {
-	return static_cast<align>(static_cast<int>(halign) + static_cast<int>(valign));
+	return align(int(halign) + int(valign));
 }
 
 template <int S, class T>
@@ -37,7 +37,7 @@ constexpr tr::rect<S, T>::rect(glm::vec<S, T> size)
 template <int S, class T>
 template <class T1>
 constexpr tr::rect<S, T>::rect(const rect<S, T1>& rect)
-	: tl{static_cast<glm::vec<S, T>>(rect.tl)}, size{static_cast<glm::vec<S, T>>(rect.size)}
+	: tl{rect.tl}, size{rect.size}
 {
 }
 
@@ -86,11 +86,11 @@ template <class T> constexpr glm::tvec2<T> tr::tl(glm::tvec2<T> pos, glm::tvec2<
 	}
 }
 
-template <std::size_t S, tr::arithmetic T> constexpr glm::vec<S, float> tr::inverse(const glm::vec<S, T>& vec)
+template <int S, tr::arithmetic T> constexpr glm::vec<S, float> tr::inverse(const glm::vec<S, T>& vec)
 {
 	glm::vec<S, float> result;
-	for (std::size_t i = 0; i < S; ++i) {
-		result[i] = static_cast<float>(1.0f / vec[i]);
+	for (int i = 0; i < S; ++i) {
+		result[i] = float(1.0f / vec[i]);
 	}
 	return result;
 }
@@ -117,7 +117,7 @@ template <int S, tr::arithmetic T> constexpr glm::vec<S, T> tr::mirror_repeat(gl
 	return result;
 }
 
-template <std::size_t S, tr::arithmetic T> constexpr glm::vec<S, T> tr::mirror_repeat(glm::vec<S, T> v, const rect<S, T>& rect)
+template <int S, tr::arithmetic T> constexpr glm::vec<S, T> tr::mirror_repeat(glm::vec<S, T> v, const rect<S, T>& rect)
 {
 	return mirror_repeat(v, rect.tl, rect.tl + rect.size);
 }

@@ -15,6 +15,7 @@
 #include "utility/get.hpp"               // IWYU pragma: export
 #include "utility/handle.hpp"            // IWYU pragma: export
 #include "utility/hashmap.hpp"           // IWYU pragma: export
+#include "utility/integer.hpp"           // IWYU pragma: export
 #include "utility/iostream.hpp"          // IWYU pragma: export
 #include "utility/localization_map.hpp"  // IWYU pragma: export
 #include "utility/logger.hpp"            // IWYU pragma: export

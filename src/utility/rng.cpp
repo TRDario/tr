@@ -2,23 +2,23 @@
 #include <ctime>
 #include <random>
 
-std::uint64_t tr::gen_random_seed()
+tr::u64 tr::gen_random_seed()
 {
 	std::random_device rng;
 	return rng() ^ std::time(nullptr);
 }
 
-tr::xorshiftr_128p::xorshiftr_128p(std::uint64_t seed)
+tr::xorshiftr_128p::xorshiftr_128p(u64 seed)
 	: m_state{seed++, seed}
 {
 	advance();
 	advance();
 }
 
-std::uint64_t tr::xorshiftr_128p::advance()
+tr::u64 tr::xorshiftr_128p::advance()
 {
-	uint64_t x = m_state[0];
-	uint64_t y = m_state[1];
+	u64 x{m_state[0]};
+	u64 y{m_state[1]};
 	m_state[0] = y;
 	x ^= x << 23;
 	x ^= x >> 17;

@@ -18,7 +18,7 @@ void tr::gfx::shader_pipeline::deleter::operator()(unsigned int id) const
 
 void tr::gfx::shader_pipeline::set_label(std::string_view label)
 {
-	TR_GL_CALL(glObjectLabel, GL_PROGRAM_PIPELINE, m_ppo.get(), static_cast<GLsizei>(label.size()), label.data());
+	TR_GL_CALL(glObjectLabel, GL_PROGRAM_PIPELINE, m_ppo.get(), GLsizei(label.size()), label.data());
 }
 
 tr::gfx::owning_shader_pipeline::owning_shader_pipeline(gfx::vertex_shader&& vshader, gfx::fragment_shader&& fshader)

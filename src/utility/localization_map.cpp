@@ -4,7 +4,7 @@ namespace tr {
 	// Whether to skip a line.
 	bool skip_line(const std::string& line);
 	// Validates a delimiter.
-	bool validate_delimiter(std::size_t delimiter, std::size_t lineSize, std::vector<std::string>& errors, int line_number);
+	bool validate_delimiter(usize delimiter, usize lineSize, std::vector<std::string>& errors, int line_number);
 	// Validates a key.
 	bool validate_key(std::string_view key, const string_hash_map<std::string>& map, std::vector<std::string>& errors, int line_number);
 	// Processes a value.
@@ -18,7 +18,7 @@ bool tr::skip_line(const std::string& line)
 	return line.empty() || std::ranges::all_of(line, WHITESPACE) || *std::ranges::find_if_not(line, WHITESPACE) == '#';
 }
 
-bool tr::validate_delimiter(std::size_t delimiter, std::size_t lineSize, std::vector<std::string>& errors, int line_number)
+bool tr::validate_delimiter(usize delimiter, usize lineSize, std::vector<std::string>& errors, int line_number)
 {
 	if (delimiter == std::string::npos) {
 		errors.emplace_back(TR_FMT::format("line {}: Expected a delimiting colon.", line_number));

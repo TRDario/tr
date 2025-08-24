@@ -15,7 +15,7 @@ std::optional<glm::u16vec2> tr::atlas_packer::try_insert(glm::u16vec2 size, glm:
 {
 	std::vector<glm::u16vec2>::iterator best_begin{m_skyline.end()};
 	std::vector<glm::u16vec2>::iterator best_end{m_skyline.end()};
-	glm::u16vec2 best{std::numeric_limits<std::uint16_t>::max()};
+	glm::u16vec2 best{UINT16_MAX};
 	for (std::vector<glm::u16vec2>::iterator it = m_skyline.begin(); it != m_skyline.end(); ++it) {
 		glm::u16vec2 p{*it};
 
@@ -26,7 +26,7 @@ std::optional<glm::u16vec2> tr::atlas_packer::try_insert(glm::u16vec2 size, glm:
 			continue;
 		}
 
-		const std::uint16_t x_max = p.x + size.x;
+		const u16 x_max = p.x + size.x;
 		std::vector<glm::u16vec2>::iterator jt;
 		for (jt = std::next(it); jt < m_skyline.end(); ++jt) {
 			if (x_max <= jt->x) {

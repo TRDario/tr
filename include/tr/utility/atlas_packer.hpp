@@ -25,10 +25,10 @@ namespace tr {
 		// Gets whether the atlas contains a key.
 		bool contains(const auto& key) const;
 		// Gets the number of entries in the atlas.
-		std::size_t entries() const;
+		usize entries() const;
 
 		// Gets a rect associated with a certain key.
-		rect2<std::uint16_t> operator[](const auto& key) const;
+		rect2<u16> operator[](const auto& key) const;
 
 		// Clears the packer.
 		void clear();
@@ -39,7 +39,7 @@ namespace tr {
 		// The atlas packer.
 		atlas_packer m_packer;
 		// The atlas rects.
-		std::unordered_map<Key, rect2<std::uint16_t>, Hash, Pred> m_rects;
+		std::unordered_map<Key, rect2<u16>, Hash, Pred> m_rects;
 	};
 
 } // namespace tr
@@ -51,12 +51,12 @@ template <class Key, class Hash, class Pred> bool tr::atlas_rects<Key, Hash, Pre
 	return m_rects.contains(key);
 }
 
-template <class Key, class Hash, class Pred> std::size_t tr::atlas_rects<Key, Hash, Pred>::entries() const
+template <class Key, class Hash, class Pred> tr::usize tr::atlas_rects<Key, Hash, Pred>::entries() const
 {
 	return m_rects.size();
 }
 
-template <class Key, class Hash, class Pred> tr::rect2<std::uint16_t> tr::atlas_rects<Key, Hash, Pred>::operator[](const auto& key) const
+template <class Key, class Hash, class Pred> tr::rect2<tr::u16> tr::atlas_rects<Key, Hash, Pred>::operator[](const auto& key) const
 {
 	TR_ASSERT(contains(key), "Tried to get a rect at a nonexistant key from an atlas packer.");
 
@@ -76,7 +76,7 @@ std::optional<glm::u16vec2> tr::atlas_rects<Key, Hash, Pred>::try_insert(auto&& 
 
 	std::optional<glm::u16vec2> packing_result{m_packer.try_insert(size, texture_size)};
 	if (packing_result.has_value()) {
-		m_rects.emplace(std::move(key), rect2<std::uint16_t>{*packing_result, size});
+		m_rects.emplace(std::move(key), rect2<u16>{*packing_result, size});
 	}
 	return packing_result;
 }

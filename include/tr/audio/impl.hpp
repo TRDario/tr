@@ -5,14 +5,14 @@
 
 namespace tr::audio {
 	enum class origin : bool;
-	enum class state : std::uint8_t;
+	enum class state : u8;
 
 	// Audio buffer used by the buffered stream.
 	struct buffer_stream_buffer {
 		// The OpenAL ID of the buffer.
 		unsigned int id;
 		// Where the start offset of the audio data is within the stream.
-		std::size_t start_offset;
+		usize start_offset;
 
 		buffer_stream_buffer();
 		~buffer_stream_buffer();
@@ -97,7 +97,7 @@ namespace tr::audio {
 		// The priority of the source.
 		int m_priority;
 		// Some functions that lock the audio mutex call other functions that also do that, so keep a ref counter.
-		mutable std::uint32_t m_mutex_refc;
+		mutable u32 m_mutex_refc;
 
 		friend void thread_fn(std::stop_token);
 	};
@@ -163,7 +163,7 @@ namespace tr::audio {
 	// Map holding the IDs of extant audio buffers and whether the're cullable.
 	inline std::unordered_map<unsigned int, bool> buffers;
 	// The maximum allowed number of audio sources.
-	inline std::size_t max_sources;
+	inline usize max_sources;
 	// A list of active audio sources.
 	inline std::list<std::shared_ptr<source_base>> sources;
 	// The gain multipliers of audio classes.

@@ -50,7 +50,7 @@ namespace tr {
 			requires(span_binary_readable<T>);
 	};
 	// Array binary reader.
-	template <class T, std::size_t S> struct binary_reader<std::array<T, S>> : binary_reader<std::span<T>> {};
+	template <class T, usize S> struct binary_reader<std::array<T, S>> : binary_reader<std::span<T>> {};
 	// Pair binary reader.
 	template <class A, class B> struct binary_reader<std::pair<A, B>> {
 		static void read_from_stream(std::istream& is, std::pair<A, B>& out)
@@ -158,7 +158,7 @@ namespace tr {
 	// Matrix binary writers.
 	template <int C, int R, class T> struct binary_writer<glm::mat<C, R, T>> : default_binary_writer<glm::mat<C, R, T>> {};
 	// String literal binary writer.
-	template <std::size_t S> struct binary_writer<char[S]> {
+	template <usize S> struct binary_writer<char[S]> {
 		static void write_to_stream(std::ostream& os, const char (&in)[S]);
 		static std::span<std::byte> write_to_span(std::span<std::byte> span, const char (&in)[S]);
 	};

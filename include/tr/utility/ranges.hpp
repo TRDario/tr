@@ -13,9 +13,9 @@ namespace tr {
 	template <standard_layout T> std::span<std::byte, sizeof(T)> as_mut_bytes(T& object);
 
 	// Reinterprets a span of mutable bytes as a span of objects.
-	template <standard_layout T, std::size_t S> auto as_mut_objects(std::span<std::byte, S> bytes);
+	template <standard_layout T, usize S> auto as_mut_objects(std::span<std::byte, S> bytes);
 	// Reinterprets a span of immutable bytes as a span of const objects.
-	template <standard_layout T, std::size_t S> auto as_objects(std::span<const std::byte, S> bytes);
+	template <standard_layout T, usize S> auto as_objects(std::span<const std::byte, S> bytes);
 
 	// Creates an adaptor for a transformed view over a range as a range of one of its members.
 	template <class R> constexpr auto project(auto R::* ptr);
@@ -47,27 +47,27 @@ template <tr::standard_layout T> std::span<std::byte, sizeof(T)> tr::as_mut_byte
 	return std::as_writable_bytes(std::span<T, 1>{std::addressof(object), 1});
 }
 
-template <tr::standard_layout T, std::size_t S> auto tr::as_mut_objects(std::span<std::byte, S> bytes)
+template <tr::standard_layout T, tr::usize S> auto tr::as_mut_objects(std::span<std::byte, S> bytes)
 {
 	if constexpr (S != std::dynamic_extent) {
 		static_assert(S % sizeof(T) == 0, "Cannot reinterpret byte span due to size / sizeof(T) not being an integer.");
-		return std::span<T, S / sizeof(T)>{(T*)(bytes.data())};
+		return std::span<T, S / sizeof(T)>{(T*)bytes.data()};
 	}
 	else {
 		TR_ASSERT(bytes.size() % sizeof(T) == 0, "Cannot reinterpret byte span due to size / sizeof(T) not being an integer.");
-		return std::span{(T*)(bytes.data()), bytes.size() / sizeof(T)};
+		return std::span{(T*)bytes.data(), bytes.size() / sizeof(T)};
 	}
 }
 
-template <tr::standard_layout T, std::size_t S> auto tr::as_objects(std::span<const std::byte, S> bytes)
+template <tr::standard_layout T, tr::usize S> auto tr::as_objects(std::span<const std::byte, S> bytes)
 {
 	if constexpr (S != std::dynamic_extent) {
 		static_assert(S % sizeof(T) == 0, "Cannot reinterpret byte span due to size / sizeof(T) not being an integer.");
-		return std::span<const T, S / sizeof(T)>{reinterpret_cast<const T*>(bytes.data())};
+		return std::span<const T, S / sizeof(T)>{(const T*)bytes.data()};
 	}
 	else {
 		TR_ASSERT(bytes.size() % sizeof(T) == 0, "Cannot reinterpret byte span due to size / sizeof(T) not being an integer.");
-		return std::span{(const T*)(bytes.data()), bytes.size() / sizeof(T)};
+		return std::span{(const T*)bytes.data(), bytes.size() / sizeof(T)};
 	}
 }
 

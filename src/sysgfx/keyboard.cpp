@@ -4,13 +4,13 @@
 
 namespace tr::system {
 	// Basic offset of all key state indices compared to the scancodes.
-	inline constexpr int KEY_STATE_INDEX_OFFSET_1{static_cast<int>(scancode::A)};
+	inline constexpr int KEY_STATE_INDEX_OFFSET_1{int(scancode::A)};
 	// Offset of modifier key state indices compared to the scan
-	inline constexpr int KEY_STATE_INDEX_OFFSET_2{static_cast<int>(scancode::LCTRL) - static_cast<int>(scancode::APPLICATION) - 1};
+	inline constexpr int KEY_STATE_INDEX_OFFSET_2{int(scancode::LCTRL) - int(scancode::APPLICATION) - 1};
 	// Marker for when to start applying the second index offset.
-	inline constexpr int KEY_STATE_INDEX_OFFSET_2_START{static_cast<int>(scancode::APPLICATION) + 1};
+	inline constexpr int KEY_STATE_INDEX_OFFSET_2_START{int(scancode::APPLICATION) + 1};
 	// The maximum allowed key state index.
-	inline constexpr int KEY_STATE_MAX_INDEX{static_cast<int>(scancode::RWIN) - KEY_STATE_INDEX_OFFSET_2};
+	inline constexpr int KEY_STATE_MAX_INDEX{int(scancode::RWIN) - KEY_STATE_INDEX_OFFSET_2};
 	// Sentinel for an invalid key state index.
 	inline constexpr int INVALID_KEY_STATE_INDEX{-1};
 	// Converts a scancode into a key state index.
@@ -19,7 +19,7 @@ namespace tr::system {
 
 constexpr int tr::system::key_state_index(scancode key)
 {
-	int index{static_cast<int>(key) - KEY_STATE_INDEX_OFFSET_1};
+	int index{int(key) - KEY_STATE_INDEX_OFFSET_1};
 	if (index >= KEY_STATE_INDEX_OFFSET_2_START) {
 		index -= KEY_STATE_INDEX_OFFSET_2;
 	}
@@ -27,7 +27,7 @@ constexpr int tr::system::key_state_index(scancode key)
 }
 
 tr::system::scancode::scancode(const char* name)
-	: m_base{static_cast<enum_t>(SDL_GetScancodeFromName(name))}
+	: m_base{enum_t(SDL_GetScancodeFromName(name))}
 {
 	TR_ASSERT(SDL_WasInit(0), "Tried to get scancode from name before initializing the application.");
 }
@@ -36,11 +36,11 @@ const char* tr::system::scancode::name() const
 {
 	TR_ASSERT(SDL_WasInit(0), "Tried to get scancode name before initializing the application.");
 
-	return SDL_GetScancodeName(static_cast<SDL_Scancode>(m_base));
+	return SDL_GetScancodeName(SDL_Scancode(m_base));
 }
 
 tr::system::keycode::keycode(const char* name)
-	: m_base{static_cast<enum_t>(SDL_GetKeyFromName(name))}
+	: m_base{enum_t(SDL_GetKeyFromName(name))}
 {
 	TR_ASSERT(SDL_WasInit(0), "Tried to get keycode from name before initializing the application.");
 }
@@ -49,7 +49,7 @@ std::string tr::system::keycode::name() const
 {
 	TR_ASSERT(SDL_WasInit(0), "Tried to get keycode name before initializing the application.");
 
-	return SDL_GetKeyName(static_cast<SDL_Keycode>(m_base));
+	return SDL_GetKeyName(SDL_Keycode(m_base));
 }
 
 bool tr::system::key_state::held(scancode key) const
@@ -59,7 +59,7 @@ bool tr::system::key_state::held(scancode key) const
 		return false;
 	}
 	const std::byte& byte{buffer[index / 8]};
-	return static_cast<bool>(byte & static_cast<std::byte>(1 << (index % 8)));
+	return bool(byte & std::byte(1 << (index % 8)));
 }
 
 void tr::system::key_state::update(const key_down_event& event)
@@ -79,7 +79,7 @@ void tr::system::key_state::force_down(scancode key)
 		return;
 	}
 	std::byte& byte{buffer[index / 8]};
-	byte |= static_cast<std::byte>(1 << (index % 8));
+	byte |= std::byte(1 << (index % 8));
 }
 
 void tr::system::key_state::force_up(scancode key)
@@ -89,7 +89,7 @@ void tr::system::key_state::force_up(scancode key)
 		return;
 	}
 	std::byte& byte{buffer[index / 8]};
-	byte &= ~static_cast<std::byte>(1 << (index % 8));
+	byte &= ~std::byte(1 << (index % 8));
 }
 
 void tr::system::keyboard_state::update(const key_down_event& event)
@@ -134,22 +134,22 @@ void tr::system::set_clipboard_text(const std::string& text)
 	set_clipboard_text(text.c_str());
 }
 
-std::uint64_t std::hash<tr::system::scancode>::operator()(tr::system::scancode code) const
+tr::u64 std::hash<tr::system::scancode>::operator()(tr::system::scancode code) const
 {
-	return static_cast<std::uint64_t>(static_cast<int>(code));
+	return tr::u64(int(code));
 }
 
-std::uint64_t std::hash<tr::system::keycode>::operator()(tr::system::keycode code) const
+tr::u64 std::hash<tr::system::keycode>::operator()(tr::system::keycode code) const
 {
-	return static_cast<std::uint64_t>(static_cast<int>(code));
+	return tr::u64(int(code));
 }
 
-std::uint64_t std::hash<tr::system::scan_chord>::operator()(tr::system::scan_chord chord) const
+tr::u64 std::hash<tr::system::scan_chord>::operator()(tr::system::scan_chord chord) const
 {
-	return (static_cast<std::uint64_t>(static_cast<int>(chord.scan)) << 32) | static_cast<std::uint64_t>(chord.mods);
+	return (tr::u64(int(chord.scan)) << 32) | tr::u64(chord.mods);
 }
 
-std::uint64_t std::hash<tr::system::key_chord>::operator()(tr::system::key_chord chord) const
+tr::u64 std::hash<tr::system::key_chord>::operator()(tr::system::key_chord chord) const
 {
-	return (static_cast<std::uint64_t>(static_cast<int>(chord.key)) << 32) | static_cast<std::uint64_t>(chord.mods);
+	return (tr::u64(int(chord.key)) << 32) | tr::u64(chord.mods);
 }

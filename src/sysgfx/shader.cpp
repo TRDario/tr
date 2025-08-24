@@ -1,5 +1,5 @@
-#include "../../include/tr/sysgfx/gl_call.hpp"
 #include "../../include/tr/sysgfx/shader.hpp"
+#include "../../include/tr/sysgfx/gl_call.hpp"
 #include "../../include/tr/sysgfx/shader_buffer.hpp"
 #include "../../include/tr/sysgfx/texture_unit.hpp"
 
@@ -49,17 +49,17 @@ void tr::gfx::shader_base::set_uniform(int index, bool value)
 
 void tr::gfx::shader_base::set_uniform(int index, glm::bvec2 value)
 {
-	set_uniform(index, static_cast<glm::ivec2>(value));
+	set_uniform(index, glm::ivec2{value});
 }
 
 void tr::gfx::shader_base::set_uniform(int index, glm::bvec3 value)
 {
-	set_uniform(index, static_cast<glm::ivec3>(value));
+	set_uniform(index, glm::ivec3{value});
 }
 
 void tr::gfx::shader_base::set_uniform(int index, glm::bvec4 value)
 {
-	set_uniform(index, static_cast<glm::ivec4>(value));
+	set_uniform(index, glm::ivec4{value});
 }
 
 void tr::gfx::shader_base::set_uniform(int index, int value)
@@ -69,7 +69,7 @@ void tr::gfx::shader_base::set_uniform(int index, int value)
 
 void tr::gfx::shader_base::set_uniform(int index, std::span<const int> value)
 {
-	TR_GL_CALL(glProgramUniform1iv, m_program.get(), index, static_cast<GLsizei>(value.size()), value.data());
+	TR_GL_CALL(glProgramUniform1iv, m_program.get(), index, GLsizei(value.size()), value.data());
 }
 
 void tr::gfx::shader_base::set_uniform(int index, glm::ivec2 value)
@@ -79,7 +79,7 @@ void tr::gfx::shader_base::set_uniform(int index, glm::ivec2 value)
 
 void tr::gfx::shader_base::set_uniform(int index, std::span<const glm::ivec2> value)
 {
-	TR_GL_CALL(glProgramUniform2iv, m_program.get(), index, static_cast<GLsizei>(value.size()), value_ptr(value[0]));
+	TR_GL_CALL(glProgramUniform2iv, m_program.get(), index, GLsizei(value.size()), value_ptr(value[0]));
 }
 
 void tr::gfx::shader_base::set_uniform(int index, glm::ivec3 value)
@@ -89,7 +89,7 @@ void tr::gfx::shader_base::set_uniform(int index, glm::ivec3 value)
 
 void tr::gfx::shader_base::set_uniform(int index, std::span<const glm::ivec3> value)
 {
-	TR_GL_CALL(glProgramUniform3iv, m_program.get(), index, static_cast<GLsizei>(value.size()), value_ptr(value[0]));
+	TR_GL_CALL(glProgramUniform3iv, m_program.get(), index, GLsizei(value.size()), value_ptr(value[0]));
 }
 
 void tr::gfx::shader_base::set_uniform(int index, glm::ivec4 value)
@@ -99,7 +99,7 @@ void tr::gfx::shader_base::set_uniform(int index, glm::ivec4 value)
 
 void tr::gfx::shader_base::set_uniform(int index, std::span<const glm::ivec4> value)
 {
-	TR_GL_CALL(glProgramUniform4iv, m_program.get(), index, static_cast<GLsizei>(value.size()), value_ptr(value[0]));
+	TR_GL_CALL(glProgramUniform4iv, m_program.get(), index, GLsizei(value.size()), value_ptr(value[0]));
 }
 
 void tr::gfx::shader_base::set_uniform(int index, unsigned int value)
@@ -109,7 +109,7 @@ void tr::gfx::shader_base::set_uniform(int index, unsigned int value)
 
 void tr::gfx::shader_base::set_uniform(int index, std::span<const unsigned int> value)
 {
-	TR_GL_CALL(glProgramUniform1uiv, m_program.get(), index, static_cast<GLsizei>(value.size()), value.data());
+	TR_GL_CALL(glProgramUniform1uiv, m_program.get(), index, GLsizei(value.size()), value.data());
 }
 
 void tr::gfx::shader_base::set_uniform(int index, glm::uvec2 value)
@@ -119,7 +119,7 @@ void tr::gfx::shader_base::set_uniform(int index, glm::uvec2 value)
 
 void tr::gfx::shader_base::set_uniform(int index, std::span<const glm::uvec2> value)
 {
-	TR_GL_CALL(glProgramUniform2uiv, m_program.get(), index, static_cast<GLsizei>(value.size()), value_ptr(value[0]));
+	TR_GL_CALL(glProgramUniform2uiv, m_program.get(), index, GLsizei(value.size()), value_ptr(value[0]));
 }
 
 void tr::gfx::shader_base::set_uniform(int index, glm::uvec3 value)
@@ -129,7 +129,7 @@ void tr::gfx::shader_base::set_uniform(int index, glm::uvec3 value)
 
 void tr::gfx::shader_base::set_uniform(int index, std::span<const glm::uvec3> value)
 {
-	TR_GL_CALL(glProgramUniform3uiv, m_program.get(), index, static_cast<GLsizei>(value.size()), value_ptr(value[0]));
+	TR_GL_CALL(glProgramUniform3uiv, m_program.get(), index, GLsizei(value.size()), value_ptr(value[0]));
 }
 
 void tr::gfx::shader_base::set_uniform(int index, glm::uvec4 value)
@@ -139,7 +139,7 @@ void tr::gfx::shader_base::set_uniform(int index, glm::uvec4 value)
 
 void tr::gfx::shader_base::set_uniform(int index, std::span<const glm::uvec4> value)
 {
-	TR_GL_CALL(glProgramUniform4uiv, m_program.get(), index, static_cast<GLsizei>(value.size()), value_ptr(value[0]));
+	TR_GL_CALL(glProgramUniform4uiv, m_program.get(), index, GLsizei(value.size()), value_ptr(value[0]));
 }
 
 void tr::gfx::shader_base::set_uniform(int index, float value)
@@ -149,7 +149,7 @@ void tr::gfx::shader_base::set_uniform(int index, float value)
 
 void tr::gfx::shader_base::set_uniform(int index, std::span<const float> value)
 {
-	TR_GL_CALL(glProgramUniform1fv, m_program.get(), index, static_cast<GLsizei>(value.size()), value.data());
+	TR_GL_CALL(glProgramUniform1fv, m_program.get(), index, GLsizei(value.size()), value.data());
 }
 
 void tr::gfx::shader_base::set_uniform(int index, glm::vec2 value)
@@ -159,7 +159,7 @@ void tr::gfx::shader_base::set_uniform(int index, glm::vec2 value)
 
 void tr::gfx::shader_base::set_uniform(int index, std::span<const glm::vec2> value)
 {
-	TR_GL_CALL(glProgramUniform2fv, m_program.get(), index, static_cast<GLsizei>(value.size()), value_ptr(value[0]));
+	TR_GL_CALL(glProgramUniform2fv, m_program.get(), index, GLsizei(value.size()), value_ptr(value[0]));
 }
 
 void tr::gfx::shader_base::set_uniform(int index, glm::vec3 value)
@@ -169,7 +169,7 @@ void tr::gfx::shader_base::set_uniform(int index, glm::vec3 value)
 
 void tr::gfx::shader_base::set_uniform(int index, std::span<const glm::vec3> value)
 {
-	TR_GL_CALL(glProgramUniform3fv, m_program.get(), index, static_cast<GLsizei>(value.size()), value_ptr(value[0]));
+	TR_GL_CALL(glProgramUniform3fv, m_program.get(), index, GLsizei(value.size()), value_ptr(value[0]));
 }
 
 void tr::gfx::shader_base::set_uniform(int index, glm::vec4 value)
@@ -179,7 +179,7 @@ void tr::gfx::shader_base::set_uniform(int index, glm::vec4 value)
 
 void tr::gfx::shader_base::set_uniform(int index, std::span<const glm::vec4> value)
 {
-	TR_GL_CALL(glProgramUniform4fv, m_program.get(), index, static_cast<GLsizei>(value.size()), value_ptr(value[0]));
+	TR_GL_CALL(glProgramUniform4fv, m_program.get(), index, GLsizei(value.size()), value_ptr(value[0]));
 }
 
 void tr::gfx::shader_base::set_uniform(int index, const glm::mat2& value)
@@ -189,7 +189,7 @@ void tr::gfx::shader_base::set_uniform(int index, const glm::mat2& value)
 
 void tr::gfx::shader_base::set_uniform(int index, std::span<const glm::mat2> value)
 {
-	TR_GL_CALL(glProgramUniformMatrix2fv, m_program.get(), index, static_cast<GLsizei>(value.size()), false, value_ptr(value[0]));
+	TR_GL_CALL(glProgramUniformMatrix2fv, m_program.get(), index, GLsizei(value.size()), false, value_ptr(value[0]));
 }
 
 void tr::gfx::shader_base::set_uniform(int index, const glm::mat3& value)
@@ -199,7 +199,7 @@ void tr::gfx::shader_base::set_uniform(int index, const glm::mat3& value)
 
 void tr::gfx::shader_base::set_uniform(int index, std::span<const glm::mat3> value)
 {
-	TR_GL_CALL(glProgramUniformMatrix3fv, m_program.get(), index, static_cast<GLsizei>(value.size()), false, value_ptr(value[0]));
+	TR_GL_CALL(glProgramUniformMatrix3fv, m_program.get(), index, GLsizei(value.size()), false, value_ptr(value[0]));
 }
 
 void tr::gfx::shader_base::set_uniform(int index, const glm::mat4& value)
@@ -209,7 +209,7 @@ void tr::gfx::shader_base::set_uniform(int index, const glm::mat4& value)
 
 void tr::gfx::shader_base::set_uniform(int index, std::span<const glm::mat4> value)
 {
-	TR_GL_CALL(glProgramUniformMatrix4fv, m_program.get(), index, static_cast<GLsizei>(value.size()), false, value_ptr(value[0]));
+	TR_GL_CALL(glProgramUniformMatrix4fv, m_program.get(), index, GLsizei(value.size()), false, value_ptr(value[0]));
 }
 
 void tr::gfx::shader_base::set_uniform(int index, const glm::mat2x3& value)
@@ -219,7 +219,7 @@ void tr::gfx::shader_base::set_uniform(int index, const glm::mat2x3& value)
 
 void tr::gfx::shader_base::set_uniform(int index, std::span<const glm::mat2x3> value)
 {
-	TR_GL_CALL(glProgramUniformMatrix2x3fv, m_program.get(), index, static_cast<GLsizei>(value.size()), false, value_ptr(value[0]));
+	TR_GL_CALL(glProgramUniformMatrix2x3fv, m_program.get(), index, GLsizei(value.size()), false, value_ptr(value[0]));
 }
 
 void tr::gfx::shader_base::set_uniform(int index, const glm::mat2x4& value)
@@ -229,7 +229,7 @@ void tr::gfx::shader_base::set_uniform(int index, const glm::mat2x4& value)
 
 void tr::gfx::shader_base::set_uniform(int index, std::span<const glm::mat2x4> value)
 {
-	TR_GL_CALL(glProgramUniformMatrix2x4fv, m_program.get(), index, static_cast<GLsizei>(value.size()), false, value_ptr(value[0]));
+	TR_GL_CALL(glProgramUniformMatrix2x4fv, m_program.get(), index, GLsizei(value.size()), false, value_ptr(value[0]));
 }
 
 void tr::gfx::shader_base::set_uniform(int index, const glm::mat3x2& value)
@@ -239,7 +239,7 @@ void tr::gfx::shader_base::set_uniform(int index, const glm::mat3x2& value)
 
 void tr::gfx::shader_base::set_uniform(int index, std::span<const glm::mat3x2> value)
 {
-	TR_GL_CALL(glProgramUniformMatrix3x2fv, m_program.get(), index, static_cast<GLsizei>(value.size()), false, value_ptr(value[0]));
+	TR_GL_CALL(glProgramUniformMatrix3x2fv, m_program.get(), index, GLsizei(value.size()), false, value_ptr(value[0]));
 }
 
 void tr::gfx::shader_base::set_uniform(int index, const glm::mat3x4& value)
@@ -249,7 +249,7 @@ void tr::gfx::shader_base::set_uniform(int index, const glm::mat3x4& value)
 
 void tr::gfx::shader_base::set_uniform(int index, std::span<const glm::mat3x4> value)
 {
-	TR_GL_CALL(glProgramUniformMatrix3x4fv, m_program.get(), index, static_cast<GLsizei>(value.size()), false, value_ptr(value[0]));
+	TR_GL_CALL(glProgramUniformMatrix3x4fv, m_program.get(), index, GLsizei(value.size()), false, value_ptr(value[0]));
 }
 
 void tr::gfx::shader_base::set_uniform(int index, const glm::mat4x2& value)
@@ -259,7 +259,7 @@ void tr::gfx::shader_base::set_uniform(int index, const glm::mat4x2& value)
 
 void tr::gfx::shader_base::set_uniform(int index, std::span<const glm::mat4x2> value)
 {
-	TR_GL_CALL(glProgramUniformMatrix4x2fv, m_program.get(), index, static_cast<GLsizei>(value.size()), false, value_ptr(value[0]));
+	TR_GL_CALL(glProgramUniformMatrix4x2fv, m_program.get(), index, GLsizei(value.size()), false, value_ptr(value[0]));
 }
 
 void tr::gfx::shader_base::set_uniform(int index, const glm::mat4x3& value)
@@ -269,7 +269,7 @@ void tr::gfx::shader_base::set_uniform(int index, const glm::mat4x3& value)
 
 void tr::gfx::shader_base::set_uniform(int index, std::span<const glm::mat4x3> value)
 {
-	TR_GL_CALL(glProgramUniformMatrix4x3fv, m_program.get(), index, static_cast<GLsizei>(value.size()), false, value_ptr(value[0]));
+	TR_GL_CALL(glProgramUniformMatrix4x3fv, m_program.get(), index, GLsizei(value.size()), false, value_ptr(value[0]));
 }
 
 void tr::gfx::shader_base::set_uniform(int index, const texture_unit& value)
@@ -284,7 +284,7 @@ void tr::gfx::shader_base::set_storage_buffer(unsigned int index, shader_buffer&
 
 void tr::gfx::shader_base::set_label(std::string_view label)
 {
-	TR_GL_CALL(glObjectLabel, GL_PROGRAM, m_program.get(), static_cast<GLsizei>(label.size()), label.data());
+	TR_GL_CALL(glObjectLabel, GL_PROGRAM, m_program.get(), GLsizei(label.size()), label.data());
 }
 
 tr::gfx::vertex_shader::vertex_shader(const char* source)

@@ -10,9 +10,9 @@ namespace tr::gfx {
 	class vertex_format;
 
 	// The ID used to represent no particular renderer being used.
-	inline constexpr std::uint32_t NO_RENDERER{0};
+	inline constexpr u32 NO_RENDERER{0};
 	// Allocates a fresh renderer ID.
-	std::uint32_t alloc_renderer_id();
+	u32 alloc_renderer_id();
 
 	// Rendering primitives.
 	enum class primitive {
@@ -42,11 +42,11 @@ namespace tr::gfx {
 	// Sets the active vertex format.
 	void set_vertex_format(const vertex_format& format);
 	// Sets an active vertex buffer.
-	void set_vertex_buffer(const basic_static_vertex_buffer& buffer, int slot, std::intptr_t offset, std::size_t stride);
+	void set_vertex_buffer(const basic_static_vertex_buffer& buffer, int slot, std::intptr_t offset, usize stride);
 	// Sets an active vertex buffer.
 	template <standard_layout T> void set_vertex_buffer(const static_vertex_buffer<T>& buffer, int slot, std::intptr_t offset);
 	// Sets an active vertex buffer.
-	void set_vertex_buffer(const basic_dyn_vertex_buffer& buffer, int slot, std::intptr_t offset, std::size_t stride);
+	void set_vertex_buffer(const basic_dyn_vertex_buffer& buffer, int slot, std::intptr_t offset, usize stride);
 	// // Sets an active vertex buffer.
 	template <standard_layout T> void set_vertex_buffer(const dyn_vertex_buffer<T>& buffer, int slot, std::intptr_t offset);
 	// Sets the active index buffer.
@@ -55,18 +55,18 @@ namespace tr::gfx {
 	void set_index_buffer(const dyn_index_buffer& buffer);
 
 	// Gets the ID of the currently set renderer.
-	std::uint32_t current_renderer();
+	u32 current_renderer();
 	// Sets the renderer ID.
-	void set_renderer(std::uint32_t id);
+	void set_renderer(u32 id);
 
 	// Draws a mesh from a vertex buffer.
-	void draw(primitive type, std::size_t offset, std::size_t vertices);
+	void draw(primitive type, usize offset, usize vertices);
 	// Draws an instanced mesh from a vertex buffer.
-	void draw_instances(primitive type, std::size_t offset, std::size_t vertices, int instances);
+	void draw_instances(primitive type, usize offset, usize vertices, int instances);
 	// Draws an indexed mesh.
-	void draw_indexed(primitive type, std::size_t offset, std::size_t indices);
+	void draw_indexed(primitive type, usize offset, usize indices);
 	// Draws an instanced indexed mesh.
-	void draw_indexed_instances(primitive type, std::size_t offset, std::size_t indices, int instances);
+	void draw_indexed_instances(primitive type, usize offset, usize indices, int instances);
 } // namespace tr::gfx
 
 ///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////

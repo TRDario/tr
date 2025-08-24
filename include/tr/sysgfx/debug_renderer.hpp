@@ -8,7 +8,7 @@ namespace tr {
 
 namespace tr::gfx::debug_renderer {
 	// Initializes the debug renderer.
-	void initialize(float scale = 1.0f, std::uint8_t column_limit = 255);
+	void initialize(float scale = 1.0f, u8 column_limit = 255);
 	// Gets whether the debug renderer is active.
 	bool active();
 	// Shuts the debug renderer down.
@@ -17,7 +17,7 @@ namespace tr::gfx::debug_renderer {
 	// Sets the text's drawing scale.
 	void set_scale(float scale);
 	// Sets the text's column limit.
-	void set_column_limit(std::uint8_t columns);
+	void set_column_limit(u8 columns);
 
 	// Writes a line of formatted text to the left side of the screen.
 	void write_left(std::string_view text, rgba8 text_color = {255, 255, 255, 255}, rgba8 bg_color = {0, 0, 0, 255},

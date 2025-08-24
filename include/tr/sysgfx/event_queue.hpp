@@ -9,7 +9,7 @@ namespace tr {
 
 namespace tr::system {
 	// Creates a timer that sends tick events.
-	timer create_tick_timer(float frequency, std::uint32_t id);
+	timer create_tick_timer(float frequency, u32 id);
 	// Creates a timer that sends draw events.
 	timer create_draw_timer(float frequency = refresh_rate());
 

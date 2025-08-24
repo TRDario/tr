@@ -4,19 +4,19 @@
 
 namespace tr {
 	// Horizontal alignment.
-	enum class halign : std::uint8_t {
+	enum class halign : u8 {
 		LEFT,
 		CENTER,
 		RIGHT
 	};
 	// Vertical alignment.
-	enum class valign : std::uint8_t {
+	enum class valign : u8 {
 		TOP,
 		CENTER = 3,
 		BOTTOM = 6
 	};
 	// 2D alignment.
-	enum class align : std::uint8_t {
+	enum class align : u8 {
 		TOP_LEFT,
 		TOP_CENTER,
 		TOP_RIGHT,
@@ -102,7 +102,7 @@ namespace tr {
 	// Computes the top-left corner of a rectangle given a position, size, and anchor point.
 	template <class T> constexpr glm::tvec2<T> tl(glm::tvec2<T> pos, glm::tvec2<T> size, align pos_anchor);
 	// Gets the inverse of a vector.
-	template <std::size_t S, arithmetic T> constexpr glm::vec<S, float> inverse(const glm::vec<S, T>& vec);
+	template <int S, arithmetic T> constexpr glm::vec<S, float> inverse(const glm::vec<S, T>& vec);
 	// Calculates the 2D cross product of two vectors.
 	template <class T1, class T2> constexpr std::common_type_t<T1, T2> cross2(glm::tvec2<T1> a, glm::tvec2<T2> b);
 
@@ -126,7 +126,7 @@ namespace tr {
 	// Performs a mirror repeat mapping.
 	template <int S, arithmetic T> constexpr glm::vec<S, T> mirror_repeat(glm::vec<S, T> v, glm::vec<S, T> min, glm::vec<S, T> max);
 	// Performs a mirror repeat mapping of a vector on a rect.
-	template <std::size_t S, arithmetic T> glm::vec<S, T> constexpr mirror_repeat(glm::vec<S, T> v, const rect<S, T>& rect);
+	template <int S, arithmetic T> glm::vec<S, T> constexpr mirror_repeat(glm::vec<S, T> v, const rect<S, T>& rect);
 
 	// Matrix multiplication operators.
 	inline namespace matrix_operators {

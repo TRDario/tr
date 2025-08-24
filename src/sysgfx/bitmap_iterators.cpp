@@ -10,26 +10,26 @@ namespace tr {
 
 tr::rgba8 tr::pixel_color(const std::byte* data, pixel_format format)
 {
-	std::uint32_t value{};
+	u32 value{};
 	switch (pixel_bytes(format)) {
 	case 1:
-		value = *reinterpret_cast<const std::uint8_t*>(data);
+		value = *(const u8*)data;
 		break;
 	case 2:
-		value = *reinterpret_cast<const std::uint16_t*>(data);
+		value = *(const u16*)data;
 		break;
 	case 3: {
-		const std::uint8_t (&arr)[3]{*reinterpret_cast<const std::uint8_t (*)[3]>(data)};
+		const u8(&arr)[3]{*(const u8(*)[3])data};
 		value = arr[0] << 16 | arr[1] << 8 | arr[2];
 		break;
 	}
 	case 4:
-		value = *reinterpret_cast<const std::uint32_t*>(data);
+		value = *(const u32*)data;
 		break;
 	}
 
 	rgba8 color;
-	SDL_GetRGBA(value, SDL_GetPixelFormatDetails(static_cast<SDL_PixelFormat>(format)), nullptr, &color.r, &color.g, &color.b, &color.a);
+	SDL_GetRGBA(value, SDL_GetPixelFormatDetails(SDL_PixelFormat(format)), nullptr, &color.r, &color.g, &color.b, &color.a);
 	return color;
 }
 
@@ -210,24 +210,24 @@ tr::bitmap::pixel_ref::operator tr::rgba8() const
 
 tr::bitmap::pixel_ref& tr::bitmap::pixel_ref::operator=(rgba8 color)
 {
-	const SDL_PixelFormatDetails* format_details{SDL_GetPixelFormatDetails(static_cast<SDL_PixelFormat>(m_format))};
-	const std::uint32_t formatted{SDL_MapRGBA(format_details, nullptr, color.r, color.g, color.b, color.a)};
+	const SDL_PixelFormatDetails* format_details{SDL_GetPixelFormatDetails(SDL_PixelFormat(m_format))};
+	const u32 formatted{SDL_MapRGBA(format_details, nullptr, color.r, color.g, color.b, color.a)};
 	switch (pixel_bytes(m_format)) {
 	case 1:
-		*reinterpret_cast<std::uint8_t*>(m_ptr) = static_cast<std::uint8_t>(formatted);
+		*(u8*)m_ptr = u8(formatted);
 		break;
 	case 2:
-		*reinterpret_cast<std::uint16_t*>(m_ptr) = static_cast<std::uint16_t>(formatted);
+		*(u16*)m_ptr = u16(formatted);
 		break;
 	case 3: {
-		std::uint8_t (&arr)[3]{*reinterpret_cast<std::uint8_t (*)[3]>(m_ptr)};
-		arr[0] = static_cast<std::uint8_t>(formatted >> 16);
-		arr[1] = static_cast<std::uint8_t>(formatted >> 8);
-		arr[2] = static_cast<std::uint8_t>(formatted);
+		u8(&arr)[3]{*(u8(*)[3])m_ptr};
+		arr[0] = u8(formatted >> 16);
+		arr[1] = u8(formatted >> 8);
+		arr[2] = u8(formatted);
 		break;
 	}
 	case 4:
-		*reinterpret_cast<std::uint32_t*>(m_ptr) = formatted;
+		*(u32*)m_ptr = formatted;
 	}
 	return *this;
 }

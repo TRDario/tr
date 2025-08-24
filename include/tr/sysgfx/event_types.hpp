@@ -5,24 +5,24 @@ namespace tr::system {
 	class event;
 
 	// ID of the first user defined event.
-	inline constexpr std::uint32_t USER_EVENT_START{0x9000};
+	inline constexpr u32 USER_EVENT_START{0x9000};
 
 	// Event emitted when the application wants to quit.
 	struct quit_event {
 		// The event ID of quit events.
-		static inline constexpr std::uint32_t ID{0x100};
+		static inline constexpr u32 ID{0x100};
 	};
 
 	// The event type emitted by ticker timers.
 	struct tick_event {
 		// The event ID of tick events.
-		static inline constexpr std::uint32_t ID{0x8000};
+		static inline constexpr u32 ID{0x8000};
 
 		// The user-assigned type ID attached to the ticker emitting the event.
-		std::uint32_t id;
+		u32 id;
 
 		// Constructs a tick event.
-		tick_event(std::uint32_t id);
+		tick_event(u32 id);
 		// Converts a generic event into a tick event.
 		tick_event(const event& event);
 
@@ -33,7 +33,7 @@ namespace tr::system {
 	// Event emitted when the application wants to redraw.
 	struct draw_event {
 		// The event ID of draw events.
-		static inline constexpr std::uint32_t ID{0x8001};
+		static inline constexpr u32 ID{0x8001};
 
 		// Converts the event into a generic event.
 		operator event() const;
@@ -42,24 +42,24 @@ namespace tr::system {
 	// Intermediate interface between custom event types and tr::event.
 	struct custom_event_base {
 		// The type of the event.
-		std::uint32_t type;
+		u32 type;
 		// An unsigned integer value.
-		std::uint32_t uint;
+		u32 uint;
 		// A signed integer value.
-		std::int32_t sint;
+		i32 sint;
 		// A generic value.
 		std::any any1;
 		// A generic value.
 		std::any any2;
 
 		// Constructs a simple event base.
-		custom_event_base(std::uint32_t type);
+		custom_event_base(u32 type);
 		// Constructs a simple event base.
-		custom_event_base(std::uint32_t type, std::uint32_t uint, std::int32_t sint);
+		custom_event_base(u32 type, u32 uint, i32 sint);
 		// Constructs an event base.
-		custom_event_base(std::uint32_t type, std::uint32_t uint, std::int32_t sint, std::any&& any1, std::any&& any2);
+		custom_event_base(u32 type, u32 uint, i32 sint, std::any&& any1, std::any&& any2);
 		// Constructs an event base.
-		template <class T1, class T2> custom_event_base(std::uint32_t type, std::uint32_t uint, std::int32_t sint, T1&& any1, T2&& any2);
+		template <class T1, class T2> custom_event_base(u32 type, u32 uint, i32 sint, T1&& any1, T2&& any2);
 		// Converts an event into an event base.
 		custom_event_base(const event& event);
 		// Converts an event into an event base.
@@ -88,7 +88,7 @@ namespace tr::system {
 		event& operator=(event&& r) noexcept;
 
 		// Gets the type ID of the event.
-		std::uint32_t type() const;
+		u32 type() const;
 
 	  private:
 		// Storage for SDL_Event.
@@ -99,7 +99,7 @@ namespace tr::system {
 ///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
 
 template <class T1, class T2>
-tr::system::custom_event_base::custom_event_base(std::uint32_t type, std::uint32_t uint, std::int32_t sint, T1&& any1, T2&& any2)
+tr::system::custom_event_base::custom_event_base(u32 type, u32 uint, i32 sint, T1&& any1, T2&& any2)
 	: custom_event_base{type, uint, sint, std::any{std::forward<T1>(any1)}, std::any{std::forward<T2>(any2)}}
 {
 }

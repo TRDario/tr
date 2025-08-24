@@ -16,7 +16,7 @@ namespace tr {
 	 *
 	 * @return The number of segments needed to draw a smooth circle with pixel radius r.
 	 ******************************************************************************************************************/
-	inline std::size_t smooth_poly_vtx(float r, float scale = 1.0f);
+	inline usize smooth_poly_vtx(float r, float scale = 1.0f);
 
 	/******************************************************************************************************************
 	 * Calculates the number of segments needed to draw a smooth arc.
@@ -27,7 +27,7 @@ namespace tr {
 	 *
 	 * @return The number of segments needed to draw a smooth arc.
 	 ******************************************************************************************************************/
-	inline std::size_t smooth_arc_vtx(float r, angle sizeth, float scale = 1.0f);
+	inline usize smooth_arc_vtx(float r, angle sizeth, float scale = 1.0f);
 
 	/******************************************************************************************************************
 	 * Calculates the number of indices needed for a convex polygon mesh.
@@ -36,7 +36,7 @@ namespace tr {
 	 *
 	 * @return The number of indices needed for the polygon mesh.
 	 *****************************************************************************************************************/
-	constexpr std::size_t poly_idx(std::uint16_t vtx);
+	constexpr usize poly_idx(u16 vtx);
 
 	/******************************************************************************************************************
 	 * Calculates the number of indices needed for a convex polygon mesh.
@@ -45,7 +45,7 @@ namespace tr {
 	 *
 	 * @return The number of indices needed for the polygon mesh.
 	 *****************************************************************************************************************/
-	constexpr std::size_t poly_outline_idx(std::uint16_t vtx);
+	constexpr usize poly_outline_idx(u16 vtx);
 
 	/******************************************************************************************************************
 	 * Outputs indices for a convex polygon.
@@ -68,12 +68,12 @@ namespace tr {
 	 *
 	 * @return An iterator to the end of the outputted sequence.
 	 ******************************************************************************************************************/
-	template <std::output_iterator<std::uint16_t> It> constexpr It fill_poly_idx(It out, std::uint16_t vtx, std::uint16_t base);
+	template <std::output_iterator<u16> It> constexpr It fill_poly_idx(It out, u16 vtx, u16 base);
 
 	/******************************************************************************************************************
 	 * Outputs indices for a convex polygon.
 	 *
-	 * @tparam R A sized output range of std::uint16_t.
+	 * @tparam R A sized output range of u16.
 	 *
 	 * @param[out] out
 	 * @parblock
@@ -91,8 +91,7 @@ namespace tr {
 	 *
 	 * @return An iterator to the end of the outputted sequence.
 	 ******************************************************************************************************************/
-	template <sized_output_range<std::uint16_t> R>
-	constexpr std::ranges::iterator_t<R> fill_poly_idx(R&& out, std::uint16_t vtx, std::uint16_t base);
+	template <sized_output_range<u16> R> constexpr std::ranges::iterator_t<R> fill_poly_idx(R&& out, u16 vtx, u16 base);
 
 	/******************************************************************************************************************
 	 * Outputs indices for a convex polygon outline.
@@ -115,12 +114,12 @@ namespace tr {
 	 *
 	 * @return An iterator to the end of the outputted sequence.
 	 ******************************************************************************************************************/
-	template <std::output_iterator<std::uint16_t> It> constexpr It fill_poly_outline_idx(It out, std::uint16_t vtx, std::uint16_t base);
+	template <std::output_iterator<u16> It> constexpr It fill_poly_outline_idx(It out, u16 vtx, u16 base);
 
 	/******************************************************************************************************************
 	 * Outputs indices for a convex polygon outline.
 	 *
-	 * @tparam R A sized output range of std::uint16_t.
+	 * @tparam R A sized output range of u16.
 	 *
 	 * @param[out] out
 	 * @parblock
@@ -138,8 +137,7 @@ namespace tr {
 	 *
 	 * @return An iterator to the end of the outputted sequence.
 	 ******************************************************************************************************************/
-	template <sized_output_range<std::uint16_t> R>
-	constexpr std::ranges::iterator_t<R> fill_poly_outline_idx(R&& out, std::uint16_t vtx, std::uint16_t base);
+	template <sized_output_range<u16> R> constexpr std::ranges::iterator_t<R> fill_poly_outline_idx(R&& out, u16 vtx, u16 base);
 
 	/******************************************************************************************************************
 	 * Outputs unrotated rectangle vertices.
@@ -399,7 +397,7 @@ namespace tr {
 	 *
 	 * @return An iterator to the end of the outputted sequence.
 	 ******************************************************************************************************************/
-	template <std::output_iterator<glm::vec2> It> It fill_arc_vtx(It out, std::size_t vtx, circle circ, angle startth, angle sizeth);
+	template <std::output_iterator<glm::vec2> It> It fill_arc_vtx(It out, usize vtx, circle circ, angle startth, angle sizeth);
 
 	/******************************************************************************************************************
 	 * Outputs vertex positions along an arc.
@@ -425,7 +423,7 @@ namespace tr {
 	 * @return An iterator to the end of the outputted sequence.
 	 ******************************************************************************************************************/
 	template <sized_output_range<glm::vec2> R>
-	std::ranges::iterator_t<R> fill_arc_vtx(R&& out, std::size_t vtx, circle circ, angle startth, angle sizeth);
+	std::ranges::iterator_t<R> fill_arc_vtx(R&& out, usize vtx, circle circ, angle startth, angle sizeth);
 
 	/******************************************************************************************************************
 	 * Outputs vertex positions for a regular polygon.
@@ -449,7 +447,7 @@ namespace tr {
 	 *
 	 * @return An iterator to the end of the outputted sequence.
 	 ******************************************************************************************************************/
-	template <std::output_iterator<glm::vec2> It> It fill_poly_vtx(It out, std::size_t vtx, circle circ, angle rot = 0_deg);
+	template <std::output_iterator<glm::vec2> It> It fill_poly_vtx(It out, usize vtx, circle circ, angle rot = 0_deg);
 
 	/******************************************************************************************************************
 	 * Outputs vertex positions for a regular polygon.
@@ -473,8 +471,7 @@ namespace tr {
 	 *
 	 * @return An iterator to the end of the outputted sequence.
 	 ******************************************************************************************************************/
-	template <sized_output_range<glm::vec2> R>
-	std::ranges::iterator_t<R> fill_poly_vtx(R&& out, std::size_t vtx, circle circ, angle rot = 0_deg);
+	template <sized_output_range<glm::vec2> R> std::ranges::iterator_t<R> fill_poly_vtx(R&& out, usize vtx, circle circ, angle rot = 0_deg);
 
 	/******************************************************************************************************************
 	 * Outputs vertex positions for a regular polygon's outline.
@@ -499,7 +496,7 @@ namespace tr {
 	 *
 	 * @return An iterator to the end of the outputted sequence.
 	 ******************************************************************************************************************/
-	template <std::output_iterator<glm::vec2> It> It fill_poly_outline_vtx(It out, std::size_t vtx, circle circ, angle rot, float thick);
+	template <std::output_iterator<glm::vec2> It> It fill_poly_outline_vtx(It out, usize vtx, circle circ, angle rot, float thick);
 
 	/******************************************************************************************************************
 	 * Outputs vertex positions for a regular polygon's outline.
@@ -525,7 +522,7 @@ namespace tr {
 	 * @return An iterator to the end of the outputted sequence.
 	 ******************************************************************************************************************/
 	template <sized_output_range<glm::vec2> R>
-	std::ranges::iterator_t<R> fill_poly_outline_vtx(R&& out, std::size_t vtx, circle circ, angle rot, float thick);
+	std::ranges::iterator_t<R> fill_poly_outline_vtx(R&& out, usize vtx, circle circ, angle rot, float thick);
 
 	/// @}
 } // namespace tr

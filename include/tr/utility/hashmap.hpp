@@ -21,8 +21,7 @@ namespace tr {
 	// Typedef for a string-key hash map.
 	template <class Value> using string_hash_map = std::unordered_map<std::string, Value, string_hash, string_eq>;
 	// Typedef for a static string-key hash map.
-	template <std::size_t S, class Value>
-	using static_string_hash_map = std::unordered_map<static_string<S>, Value, string_hash, string_eq>;
+	template <usize S, class Value> using static_string_hash_map = std::unordered_map<static_string<S>, Value, string_hash, string_eq>;
 } // namespace tr
 
 template <tr::enumerator T> auto tr::enum_hash<T>::operator()(T arg) const

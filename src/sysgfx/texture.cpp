@@ -152,7 +152,7 @@ tr::gfx::texture::texture()
 
 void tr::gfx::texture::allocate(glm::ivec2 size, bool mipmapped, pixel_format format)
 {
-	TR_GL_CALL(glTextureStorage2D, m_id.get(), mipmapped ? static_cast<GLsizei>(std::floor(std::log2(std::max(size.x, size.y))) + 1) : 1,
+	TR_GL_CALL(glTextureStorage2D, m_id.get(), mipmapped ? GLsizei(std::floor(std::log2(std::max(size.x, size.y))) + 1) : 1,
 			   tex_format(format), size.x, size.y);
 	if (glGetError() == GL_OUT_OF_MEMORY) {
 		throw out_of_memory{"texture allocation"};
@@ -195,20 +195,20 @@ const glm::ivec2& tr::gfx::texture::size() const
 
 void tr::gfx::texture::set_filtering(min_filter min_filter, mag_filter mag_filter)
 {
-	TR_GL_CALL(glTextureParameteri, m_id.get(), GL_TEXTURE_MIN_FILTER, static_cast<GLint>(min_filter));
-	TR_GL_CALL(glTextureParameteri, m_id.get(), GL_TEXTURE_MAG_FILTER, static_cast<GLint>(mag_filter));
+	TR_GL_CALL(glTextureParameteri, m_id.get(), GL_TEXTURE_MIN_FILTER, GLint(min_filter));
+	TR_GL_CALL(glTextureParameteri, m_id.get(), GL_TEXTURE_MAG_FILTER, GLint(mag_filter));
 }
 
 void tr::gfx::texture::set_wrap(wrap wrap)
 {
-	TR_GL_CALL(glTextureParameteri, m_id.get(), GL_TEXTURE_WRAP_S, static_cast<GLint>(wrap));
-	TR_GL_CALL(glTextureParameteri, m_id.get(), GL_TEXTURE_WRAP_T, static_cast<GLint>(wrap));
-	TR_GL_CALL(glTextureParameteri, m_id.get(), GL_TEXTURE_WRAP_R, static_cast<GLint>(wrap));
+	TR_GL_CALL(glTextureParameteri, m_id.get(), GL_TEXTURE_WRAP_S, GLint(wrap));
+	TR_GL_CALL(glTextureParameteri, m_id.get(), GL_TEXTURE_WRAP_T, GLint(wrap));
+	TR_GL_CALL(glTextureParameteri, m_id.get(), GL_TEXTURE_WRAP_R, GLint(wrap));
 }
 
 void tr::gfx::texture::set_swizzle(swizzle r, swizzle g, swizzle b, swizzle a)
 {
-	std::array<int, 4> glSwizzle{static_cast<int>(r), static_cast<int>(g), static_cast<int>(b), static_cast<int>(a)};
+	std::array<int, 4> glSwizzle{int(r), int(g), int(b), int(a)};
 	TR_GL_CALL(glTextureParameteriv, m_id.get(), GL_TEXTURE_SWIZZLE_RGBA, glSwizzle.data());
 }
 
@@ -247,7 +247,7 @@ void tr::gfx::texture::set_region(glm::ivec2 tl, const sub_bitmap& bitmap)
 
 void tr::gfx::texture::set_label(std::string_view label)
 {
-	TR_GL_CALL(glObjectLabel, GL_TEXTURE, m_id.get(), static_cast<GLsizei>(label.size()), label.data());
+	TR_GL_CALL(glObjectLabel, GL_TEXTURE, m_id.get(), GLsizei(label.size()), label.data());
 }
 
 /////////////////////////////////////////////////////////////// TEXTURE REF ///////////////////////////////////////////////////////////////

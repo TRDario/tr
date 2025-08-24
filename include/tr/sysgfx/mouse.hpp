@@ -5,7 +5,7 @@ namespace tr::system {
 	class cursor;
 
 	// Mouse buttons (may be ORed together).
-	enum class mouse_button : std::uint8_t {
+	enum class mouse_button : u8 {
 		NONE = 0x0,
 		LEFT = 0x1,
 		MIDDLE = 0x2,

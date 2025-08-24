@@ -14,7 +14,7 @@ namespace tr::audio {
 	};
 
 	// Audio source states.
-	enum class state : std::uint8_t {
+	enum class state : u8 {
 		INITIAL, // The source has not been played yet.
 		PLAYING, // The source is playing.
 		PAUSED,  // The source is paused.

@@ -48,7 +48,7 @@ namespace tr::system {
 	};
 
 	// Font style types. May be ORed together.
-	enum class ttf_style : std::uint8_t {
+	enum class ttf_style : u8 {
 		NORMAL = 0,       // Normal font.
 		BOLD = 1,         // Bold font.
 		ITALIC = 2,       // Italic font.
@@ -90,7 +90,7 @@ namespace tr::system {
 		// Gets the distance between two lines.
 		int line_skip() const;
 		// Gets whether the font contains a glyph.
-		bool contains(std::uint32_t glyph) const;
+		bool contains(u32 glyph) const;
 
 		// Resizes the font.
 		void resize(float size);
@@ -100,9 +100,9 @@ namespace tr::system {
 		void set_outline(int outline);
 
 		// Gets the metrics of a glyph given the current size, style, and outline.
-		glyph_metrics metrics(std::uint32_t glyph);
+		glyph_metrics metrics(u32 glyph);
 		// Gets the kerning between two glyphs given the current size, style, and outline.
-		int kerning(std::uint32_t prev_glyph, std::uint32_t next_glyph);
+		int kerning(u32 prev_glyph, u32 next_glyph);
 		// Measures the amount of text that will fit in a given width given the current size, style, and outline.
 		ttf_measure_result measure_text(std::string_view text, int max_w) const;
 		// Gets the drawn size of a string of text given the current size, style, and outline.
@@ -110,7 +110,7 @@ namespace tr::system {
 
 		// Renders a glyph.
 		// May throw: ttfont_render_error.
-		bitmap render(std::uint32_t glyph, rgba8 color) const;
+		bitmap render(u32 glyph, rgba8 color) const;
 		// Renders a string of text.
 		// May throw: ttfont_render_error.
 		bitmap render(std::string_view text, int max_w, halign align, rgba8 color) const;

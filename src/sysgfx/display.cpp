@@ -10,15 +10,15 @@ glm::ivec2 tr::system::display_size()
 	return {mode.w, mode.h};
 }
 
-std::uint8_t tr::system::max_msaa()
+tr::u8 tr::system::max_msaa()
 {
 	TR_ASSERT(SDL_WasInit(0), "Tried to get max MSAA before initializing the application.");
 
-	constexpr std::uint8_t UNKNOWN{255};
+	constexpr u8 UNKNOWN{255};
 	using wrapped_window = std::unique_ptr<SDL_Window, decltype([](SDL_Window* w) { SDL_DestroyWindow(w); })>;
 	using wrapped_context = std::unique_ptr<SDL_GLContextState, decltype([](SDL_GLContext c) { SDL_GL_DestroyContext(c); })>;
 
-	static std::uint8_t max{UNKNOWN};
+	static u8 max{UNKNOWN};
 	if (max == UNKNOWN) {
 		max = 32;
 		while (max > 0) {
@@ -29,19 +29,19 @@ std::uint8_t tr::system::max_msaa()
 			SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, max);
 			wrapped_window window{SDL_CreateWindow("", 500, 500, SDL_WINDOW_HIDDEN | SDL_WINDOW_OPENGL)};
 			if (window == nullptr) {
-				max = static_cast<std::uint8_t>(max / 2);
+				max = u8(max / 2);
 				continue;
 			}
 			wrapped_context context{SDL_GL_CreateContext(window.get())};
 			if (context == nullptr) {
-				max = static_cast<std::uint8_t>(max / 2);
+				max = u8(max / 2);
 				continue;
 			}
 
 			int real_samples;
 			SDL_GL_GetAttribute(SDL_GL_MULTISAMPLESAMPLES, &real_samples);
-			if (static_cast<std::uint8_t>(real_samples) != max) {
-				max = static_cast<std::uint8_t>(max / 2);
+			if (u8(real_samples) != max) {
+				max = u8(max / 2);
 				continue;
 			}
 			else {

@@ -1,12 +1,12 @@
 #pragma once
-#include "common.hpp"
+#include "integer.hpp"
 
 namespace tr {
 	// Circumvents static_assert(false) not being a valid expression.
 	template <class...> inline constexpr bool ALWAYS_FALSE = false;
 
 	// Template for string literals passed as template arguments.
-	template <std::size_t N> struct template_string_literal {
+	template <usize N> struct template_string_literal {
 		char data[N - 1];
 
 		consteval template_string_literal(const char (&str)[N])
@@ -98,23 +98,19 @@ namespace tr {
 	// Gets the type of the argument of a function.
 	template <typename T> using arg_type_t = arg_type<T>::type;
 
-	template <std::size_t S, class = void> struct size_type;
-	template <std::size_t S> struct size_type<S, std::enable_if_t<(S > std::numeric_limits<std::uint32_t>::max())>> {
-		using type = std::uint64_t;
+	template <usize S, class = void> struct size_type;
+	template <usize S> struct size_type<S, std::enable_if_t<(S > UINT32_MAX)>> {
+		using type = u64;
 	};
-	template <std::size_t S>
-	struct size_type<S,
-					 std::enable_if_t<(S > std::numeric_limits<std::uint16_t>::max() && S <= std::numeric_limits<std::uint32_t>::max())>> {
-		using type = std::uint32_t;
+	template <usize S> struct size_type<S, std::enable_if_t<(S > UINT16_MAX && S <= UINT32_MAX)>> {
+		using type = u32;
 	};
-	template <std::size_t S>
-	struct size_type<S,
-					 std::enable_if_t<(S > std::numeric_limits<std::uint8_t>::max() && S <= std::numeric_limits<std::uint16_t>::max())>> {
-		using type = std::uint16_t;
+	template <usize S> struct size_type<S, std::enable_if_t<(S > UINT8_MAX && S <= UINT16_MAX)>> {
+		using type = u16;
 	};
-	template <std::size_t S> struct size_type<S, std::enable_if_t<(S <= std::numeric_limits<std::uint8_t>::max())>> {
-		using type = std::uint8_t;
+	template <usize S> struct size_type<S, std::enable_if_t<(S <= UINT8_MAX)>> {
+		using type = u8;
 	};
 	// Gets the type needed to store an integer constant.
-	template <std::size_t S> using size_type_t = size_type<S>::type;
+	template <usize S> using size_type_t = size_type<S>::type;
 } // namespace tr

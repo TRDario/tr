@@ -3,7 +3,7 @@
 
 namespace tr {
 	// Inplace-allocated fixed-capacity string.
-	template <std::size_t S> class static_string {
+	template <usize S> class static_string {
 	  public:
 		using value_type = char;
 		using size_type = size_type_t<S>;
@@ -20,7 +20,7 @@ namespace tr {
 		// Creates a string with a starting size.
 		constexpr static_string(size_type size, char chr = '\0');
 		// Creates a string by copying from a string literal.
-		template <std::size_t S1> constexpr static_string(const char (&literal)[S1]);
+		template <usize S1> constexpr static_string(const char (&literal)[S1]);
 		// Creates a string by copying from another string.
 		constexpr static_string(std::string_view str);
 		// Creates a string by copying from another string.
@@ -105,23 +105,23 @@ namespace tr {
 		std::array<char, S> m_buffer{};
 		size_type m_size{0};
 	};
-	template <std::size_t S> constexpr std::strong_ordering operator<=>(const static_string<S>& l, const static_string<S>& r);
-	template <std::size_t S> constexpr bool operator==(const static_string<S>& l, const static_string<S>& r);
-	template <std::size_t S> constexpr std::strong_ordering operator<=>(const static_string<S>& l, const std::string_view& r);
-	template <std::size_t S> constexpr bool operator==(const static_string<S>& l, const std::string_view& r);
-	template <std::size_t S> constexpr std::strong_ordering operator<=>(const std::string_view& l, const static_string<S>& r);
-	template <std::size_t S> constexpr bool operator==(const std::string_view& l, const static_string<S>& r);
+	template <usize S> constexpr std::strong_ordering operator<=>(const static_string<S>& l, const static_string<S>& r);
+	template <usize S> constexpr bool operator==(const static_string<S>& l, const static_string<S>& r);
+	template <usize S> constexpr std::strong_ordering operator<=>(const static_string<S>& l, const std::string_view& r);
+	template <usize S> constexpr bool operator==(const static_string<S>& l, const std::string_view& r);
+	template <usize S> constexpr std::strong_ordering operator<=>(const std::string_view& l, const static_string<S>& r);
+	template <usize S> constexpr bool operator==(const std::string_view& l, const static_string<S>& r);
 
 	// Output stream formatter for static strings.
-	template <std::size_t S> inline std::ostream& operator<<(std::ostream& os, const static_string<S>& str);
+	template <usize S> inline std::ostream& operator<<(std::ostream& os, const static_string<S>& str);
 
 	// Static string binary reader.
-	template <std::size_t S> struct binary_reader<static_string<S>> {
+	template <usize S> struct binary_reader<static_string<S>> {
 		static void read_from_stream(std::istream& is, static_string<S>& out);
 		static std::span<const std::byte> read_from_span(std::span<const std::byte> span, static_string<S>& out);
 	};
 	// Static string binary writer.
-	template <std::size_t S> struct binary_writer<static_string<S>> {
+	template <usize S> struct binary_writer<static_string<S>> {
 		static void write_to_stream(std::ostream& os, const static_string<S>& in);
 		static std::span<std::byte> write_to_span(std::span<std::byte> span, const static_string<S>& in);
 	};
@@ -129,6 +129,6 @@ namespace tr {
 } // namespace tr
 
 // Formatter for static strings.
-template <std::size_t S> struct TR_FMT::formatter<tr::static_string<S>> : TR_FMT::formatter<std::string_view> {};
+template <tr::usize S> struct TR_FMT::formatter<tr::static_string<S>> : TR_FMT::formatter<std::string_view> {};
 
 #include "static_string_impl.hpp"

@@ -22,7 +22,7 @@ tr::gfx::shader_buffer::shader_buffer(std::intptr_t header_size, std::intptr_t c
 	TR_GL_CALL(glCreateBuffers, 1, &sbo);
 	m_sbo.reset(sbo);
 
-	TR_GL_CALL(glNamedBufferStorage, sbo, header_size + capacity, nullptr, static_cast<GLenum>(access) | GL_DYNAMIC_STORAGE_BIT);
+	TR_GL_CALL(glNamedBufferStorage, sbo, header_size + capacity, nullptr, GLenum(access) | GL_DYNAMIC_STORAGE_BIT);
 	if (glGetError() == GL_OUT_OF_MEMORY) {
 		throw out_of_memory{"shader buffer allocation"};
 	}
@@ -52,8 +52,8 @@ void tr::gfx::shader_buffer::set_header(std::span<const std::byte> data)
 {
 	TR_ASSERT(!mapped(), "Tried to set the header of a mapped shader buffer.");
 	TR_ASSERT(header_size() != 0, "Tried to set the header for a shader buffer without one.");
-	TR_ASSERT(ssize(data) == header_size(), "Tried to set a shader buffer header of size {} with data of size {}.", header_size(),
-			  ssize(data));
+	TR_ASSERT(std::ssize(data) == header_size(), "Tried to set a shader buffer header of size {} with data of size {}.", header_size(),
+			  std::ssize(data));
 
 	TR_GL_CALL(glNamedBufferSubData, m_sbo.get(), 0, data.size(), data.data());
 }
@@ -62,8 +62,8 @@ void tr::gfx::shader_buffer::set_array(std::span<const std::byte> data)
 {
 	TR_ASSERT(!mapped(), "Tried to set the array of a mapped shader buffer.");
 	TR_ASSERT(array_capacity() != 0, "Tried to set the array for a shader buffer without one.");
-	TR_ASSERT(ssize(data) <= array_capacity(), "Tried to set a shader buffer array of capacity {} with data of size {}.", array_capacity(),
-			  ssize(data));
+	TR_ASSERT(std::ssize(data) <= array_capacity(), "Tried to set a shader buffer array of capacity {} with data of size {}.",
+			  array_capacity(), std::ssize(data));
 
 	if (!data.empty()) {
 		TR_GL_CALL(glNamedBufferSubData, m_sbo.get(), m_header_size, data.size(), data.data());
@@ -91,12 +91,11 @@ tr::gfx::shader_buffer_map tr::gfx::shader_buffer::map_header()
 	TR_ASSERT(!mapped(), "Tried to map the header of an already-mapped buffer.");
 	TR_ASSERT(header_size() != 0, "Tried to map the header of a buffer without one.");
 
-	std::byte* ptr{
-		static_cast<std::byte*>(TR_RETURNING_GL_CALL(glMapNamedBufferRange, m_sbo.get(), 0, m_header_size, static_cast<GLenum>(m_access)))};
+	std::byte* ptr{(std::byte*)(TR_RETURNING_GL_CALL(glMapNamedBufferRange, m_sbo.get(), 0, m_header_size, GLenum(m_access)))};
 	if (glGetError() == GL_OUT_OF_MEMORY) {
 		throw out_of_memory{"shader buffer mapping"};
 	}
-	return shader_buffer_map{m_sbo.get(), std::span{ptr, static_cast<std::size_t>(m_array_size)}};
+	return shader_buffer_map{m_sbo.get(), std::span{ptr, usize(m_array_size)}};
 }
 
 tr::gfx::shader_buffer_map tr::gfx::shader_buffer::map_array()
@@ -104,27 +103,26 @@ tr::gfx::shader_buffer_map tr::gfx::shader_buffer::map_array()
 	TR_ASSERT(!mapped(), "Tried to map the array of an already-mapped buffer.");
 	TR_ASSERT(array_size() != 0, "Tried to map the array of a buffer without one.");
 
-	std::byte* ptr{static_cast<std::byte*>(
-		TR_RETURNING_GL_CALL(glMapNamedBufferRange, m_sbo.get(), m_header_size, m_array_size, static_cast<GLenum>(m_access)))};
+	std::byte* ptr{(std::byte*)(TR_RETURNING_GL_CALL(glMapNamedBufferRange, m_sbo.get(), m_header_size, m_array_size, GLenum(m_access)))};
 	if (glGetError() == GL_OUT_OF_MEMORY) {
 		throw out_of_memory{"shader buffer mapping"};
 	}
-	return shader_buffer_map{m_sbo.get(), std::span{ptr, static_cast<std::size_t>(m_array_size)}};
+	return shader_buffer_map{m_sbo.get(), std::span{ptr, usize(m_array_size)}};
 }
 
 tr::gfx::shader_buffer_map tr::gfx::shader_buffer::map()
 {
 	TR_ASSERT(!mapped(), "Tried to map an already-mapped buffer.");
 
-	std::byte* ptr{static_cast<std::byte*>(
-		TR_RETURNING_GL_CALL(glMapNamedBufferRange, m_sbo.get(), 0, m_header_size + m_array_size, static_cast<GLenum>(m_access)))};
+	std::byte* ptr{
+		(std::byte*)(TR_RETURNING_GL_CALL(glMapNamedBufferRange, m_sbo.get(), 0, m_header_size + m_array_size, GLenum(m_access)))};
 	if (glGetError() == GL_OUT_OF_MEMORY) {
 		throw out_of_memory{"shader buffer mapping"};
 	}
-	return shader_buffer_map{m_sbo.get(), std::span{ptr, static_cast<std::size_t>(m_header_size + m_array_size)}};
+	return shader_buffer_map{m_sbo.get(), std::span{ptr, usize(m_header_size + m_array_size)}};
 }
 
 void tr::gfx::shader_buffer::set_label(std::string_view label)
 {
-	TR_GL_CALL(glObjectLabel, GL_BUFFER, m_sbo.get(), static_cast<GLsizei>(label.size()), label.data());
+	TR_GL_CALL(glObjectLabel, GL_BUFFER, m_sbo.get(), GLsizei(label.size()), label.data());
 }

@@ -7,14 +7,14 @@ namespace tr {
 	}
 
 	// ID of a state with no special given ID.
-	constexpr std::uint32_t NO_ID{0};
+	constexpr u32 NO_ID{0};
 
 	// Abstract game state interface.
 	struct state {
 		virtual ~state() = default;
 
 		// Gets the type of the state.
-		virtual std::uint32_t type() const;
+		virtual u32 type() const;
 		// Handles an event.
 		// Returning nullptr mains the current state, drop_state will drop the current state, any other pointer will replace the state.
 		virtual std::unique_ptr<state> handle_event(const system::event& event) = 0;
@@ -27,7 +27,7 @@ namespace tr {
 
 	// Sentinel state thats tells the state manager to drop the current state when returned from a state operation.
 	struct drop_state : state {
-		std::uint32_t type() const override;
+		u32 type() const override;
 		std::unique_ptr<state> handle_event(const system::event&) override;
 		std::unique_ptr<state> update(duration) override;
 		void draw() override;

@@ -15,15 +15,15 @@ namespace tr::audio {
 		// Constructs an empty audio buffer.
 		buffer();
 		// Constructs an audio buffer and immediately sets it.
-		buffer(std::span<const std::int16_t> data, format format, int frequency);
+		buffer(std::span<const i16> data, format format, int frequency);
 
 		// Gets the size of the buffer's storage.
-		std::size_t size() const;
+		usize size() const;
 		// Gets the length of the buffer's audio.
 		fsecs length() const;
 
 		// Sets the data of the buffer.
-		void set(std::span<const std::int16_t> data, format format, int frequency);
+		void set(std::span<const i16> data, format format, int frequency);
 
 	  private:
 		struct deleter {

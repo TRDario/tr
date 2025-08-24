@@ -20,17 +20,17 @@ namespace tr {
 
 template <std::integral To, std::floating_point From> constexpr To tr::round_cast(From from)
 {
-	return static_cast<To>(std::round(from));
+	return To(std::round(from));
 }
 
 template <std::integral To, std::floating_point From> constexpr To tr::floor_cast(From from)
 {
-	return static_cast<To>(std::floor(from));
+	return To(std::floor(from));
 }
 
 template <std::integral To, std::floating_point From> constexpr To tr::ceil_cast(From from)
 {
-	return static_cast<To>(std::ceil(from));
+	return To(std::ceil(from));
 }
 
 template <tr::arithmetic T> constexpr T tr::abs(T v)
@@ -41,10 +41,10 @@ template <tr::arithmetic T> constexpr T tr::abs(T v)
 template <tr::arithmetic T1, tr::arithmetic T2> constexpr std::common_type_t<T1, T2> tr::mod(T1 v, T2 mod)
 {
 	if constexpr (std::floating_point<T1> || std::floating_point<T2>) {
-		return static_cast<std::common_type_t<T1, T2>>(v) - static_cast<std::int64_t>(v / mod) * mod;
+		return std::common_type_t<T1, T2>(v) - i64(v / mod) * mod;
 	}
 	else {
-		return static_cast<std::common_type_t<T1, T2>>(v % mod);
+		return std::common_type_t<T1, T2>(v % mod);
 	}
 }
 

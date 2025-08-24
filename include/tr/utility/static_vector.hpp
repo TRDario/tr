@@ -3,7 +3,7 @@
 
 namespace tr {
 	// Inplace-allocated fixed-capacity vector.
-	template <class T, std::size_t S> class static_vector {
+	template <class T, usize S> class static_vector {
 	  public:
 		using size_type = size_type_t<S>;
 		using difference_type = std::make_signed_t<size_type>;
@@ -162,14 +162,14 @@ namespace tr {
 	};
 
 	// Static vector binary reader.
-	template <binary_constructible T, std::size_t S> struct binary_reader<static_vector<T, S>> {
+	template <binary_constructible T, usize S> struct binary_reader<static_vector<T, S>> {
 		static void read_from_stream(std::istream& is, static_vector<T, S>& out)
 			requires(stream_binary_readable<T>);
 		static std::span<const std::byte> read_from_span(std::span<const std::byte> span, static_vector<T, S>& out)
 			requires(span_binary_readable<T>);
 	};
 	// Static vector binary writer.
-	template <class T, std::size_t S> struct binary_writer<static_vector<T, S>> {
+	template <class T, usize S> struct binary_writer<static_vector<T, S>> {
 		static void write_to_stream(std::ostream& os, const static_vector<T, S>& in)
 			requires(stream_binary_writable<T>);
 		static std::span<std::byte> write_to_span(std::span<std::byte> span, const static_vector<T, S>& in)

@@ -1,6 +1,6 @@
+#include "../../include/tr/sysgfx/debug_renderer.hpp"
 #include "../../include/tr/sysgfx/backbuffer.hpp"
 #include "../../include/tr/sysgfx/blending.hpp"
-#include "../../include/tr/sysgfx/debug_renderer.hpp"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/render_target.hpp"
 #include "../../include/tr/sysgfx/shader_pipeline.hpp"
@@ -38,7 +38,7 @@ namespace tr::gfx::debug_renderer {
 		"#version 450\n#define L(l) layout(location=l)\nL(2)uniform sampler2D t;L(0)in vec2 u;L(1)in vec4 c;L(2)in "
 		"vec4 b;L(0)out vec4 o;void main(){o=texture(t,u).r==1?c:b;}";
 	// Debug renderer ID.
-	inline constexpr std::uint32_t DEBUG_RENDERER{2};
+	inline constexpr u32 DEBUG_RENDERER{2};
 
 	// Debug renderer glyph.
 	struct glyph {
@@ -71,11 +71,11 @@ namespace tr::gfx::debug_renderer {
 		// List of glyphs to draw.
 		std::vector<glyph> glyphs;
 		// Maximum allowed number of glyphs per line.
-		std::uint8_t column_limit;
+		u8 column_limit;
 		// The current left line position.
-		std::uint8_t left_line;
+		u8 left_line;
 		// The current right line position.
-		std::uint8_t right_line;
+		u8 right_line;
 
 		// Creates the debug renderer.
 		state_t();
@@ -86,7 +86,7 @@ namespace tr::gfx::debug_renderer {
 	// Context passed to text formatting functions.
 	struct context {
 		// The current line number.
-		std::uint8_t& line;
+		u8& line;
 		// Whether the text is right-aligned.
 		bool right_aligned;
 		// The text color.
@@ -94,19 +94,19 @@ namespace tr::gfx::debug_renderer {
 		// The background color.
 		rgba8 bg_color;
 		// The length of the current line.
-		std::uint8_t line_length;
+		u8 line_length;
 		// The offset to the start of the text.
-		std::size_t text_start;
+		usize text_start;
 		// The offset to the start of the line.
-		std::size_t line_start;
+		usize line_start;
 		// The offset to the start of the word.
-		std::size_t word_start;
+		usize word_start;
 	};
 
 	// Formats a duration into a string.
 	std::string format_duration(std::string_view prefix, duration duration);
 	// Right-aligns a line.
-	void right_align_line(std::size_t begin, std::size_t end);
+	void right_align_line(usize begin, usize end);
 	// Trims trailing whitespace in a line.
 	void trim_trailing_whitespace(context& context);
 	// Moves a word to the next line.
@@ -177,16 +177,16 @@ std::string tr::gfx::debug_renderer::format_duration(std::string_view prefix, du
 	}
 }
 
-void tr::gfx::debug_renderer::right_align_line(std::size_t begin, std::size_t end)
+void tr::gfx::debug_renderer::right_align_line(usize begin, usize end)
 {
-	for (std::size_t i = begin; i < end; ++i) {
-		state->glyphs[i].pos.x = static_cast<std::uint8_t>(end - i);
+	for (usize i = begin; i < end; ++i) {
+		state->glyphs[i].pos.x = u8(end - i);
 	}
 }
 
 void tr::gfx::debug_renderer::trim_trailing_whitespace(context& context)
 {
-	std::size_t line_end = context.word_start - 1;
+	usize line_end = context.word_start - 1;
 	while (line_end > context.line_start && state->glyphs[line_end].chr != ' ') {
 		--line_end;
 	}
@@ -276,7 +276,7 @@ void tr::gfx::debug_renderer::handle_control_sequence(std::string_view::iterator
 {
 	switch (*it) {
 	case 'b':
-		if (std::next(it) != end && std::isdigit(*++it) && std::uint8_t(*it - '0') < extra_colors.size()) {
+		if (std::next(it) != end && std::isdigit(*++it) && u8(*it - '0') < extra_colors.size()) {
 			context.bg_color = extra_colors[*it - '0'];
 		}
 		break;
@@ -284,7 +284,7 @@ void tr::gfx::debug_renderer::handle_control_sequence(std::string_view::iterator
 		context.bg_color = bg_color;
 		break;
 	case 'c':
-		if (std::next(it) != end && std::isdigit(*++it) && std::uint8_t(*it - '0') < extra_colors.size()) {
+		if (std::next(it) != end && std::isdigit(*++it) && u8(*it - '0') < extra_colors.size()) {
 			context.text_color = extra_colors[*it - '0'];
 		}
 		break;
@@ -304,7 +304,7 @@ void tr::gfx::debug_renderer::handle_control_sequence(std::string_view::iterator
 
 void tr::gfx::debug_renderer::write(bool right, std::string_view text, rgba8 text_color, rgba8 bg_color, std::span<rgba8> extra_colors)
 {
-	const std::size_t old_size{state->glyphs.size()};
+	const usize old_size{state->glyphs.size()};
 	context context{right ? state->right_line : state->left_line, right, text_color, bg_color, 0, old_size, old_size, old_size};
 
 	for (std::string_view::iterator it = text.begin(); it != text.end(); ++it) {
@@ -322,7 +322,7 @@ void tr::gfx::debug_renderer::write(bool right, std::string_view text, rgba8 tex
 
 //
 
-void tr::gfx::debug_renderer::initialize(float scale, std::uint8_t column_limit)
+void tr::gfx::debug_renderer::initialize(float scale, u8 column_limit)
 {
 	state.emplace();
 	set_scale(scale);
@@ -346,7 +346,7 @@ void tr::gfx::debug_renderer::set_scale(float scale)
 	state->pipeline.vertex_shader().set_uniform(1, scale);
 }
 
-void tr::gfx::debug_renderer::set_column_limit(std::uint8_t columns)
+void tr::gfx::debug_renderer::set_column_limit(u8 columns)
 {
 	state->column_limit = columns;
 }
@@ -397,7 +397,7 @@ void tr::gfx::debug_renderer::draw()
 			set_vertex_buffer(state->shape_buffer, 0, 0);
 			set_vertex_buffer(state->glyph_buffer, 1, 0);
 		}
-		state->pipeline.vertex_shader().set_uniform(0, static_cast<glm::vec2>(backbuffer_size()));
+		state->pipeline.vertex_shader().set_uniform(0, glm::vec2{backbuffer_size()});
 		draw_instances(primitive::TRI_FAN, 0, 4, int(state->glyphs.size()));
 		state->glyphs.clear();
 	}

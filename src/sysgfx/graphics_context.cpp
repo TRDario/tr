@@ -8,12 +8,12 @@
 
 namespace tr::gfx {
 	// The ID of the current renderer.
-	inline std::uint32_t current_renderer_{0};
+	inline u32 current_renderer_{0};
 } // namespace tr::gfx
 
-std::uint32_t tr::gfx::alloc_renderer_id()
+tr::u32 tr::gfx::alloc_renderer_id()
 {
-	static std::uint32_t id{1000};
+	static u32 id{1000};
 	return id++;
 }
 
@@ -48,9 +48,9 @@ void tr::gfx::set_blend_mode(const blend_mode& blend_mode)
 {
 	TR_ASSERT(ogl_context != nullptr, "Tried to set graphics context blending mode before opening the window.");
 
-	TR_GL_CALL(glBlendEquationSeparate, static_cast<GLenum>(blend_mode.rgb_fn), static_cast<GLenum>(blend_mode.alpha_fn));
-	TR_GL_CALL(glBlendFuncSeparate, static_cast<GLenum>(blend_mode.rgb_src), static_cast<GLenum>(blend_mode.rgb_dst),
-			   static_cast<GLenum>(blend_mode.alpha_src), static_cast<GLenum>(blend_mode.alpha_dst));
+	TR_GL_CALL(glBlendEquationSeparate, GLenum(blend_mode.rgb_fn), GLenum(blend_mode.alpha_fn));
+	TR_GL_CALL(glBlendFuncSeparate, GLenum(blend_mode.rgb_src), GLenum(blend_mode.rgb_dst), GLenum(blend_mode.alpha_src),
+			   GLenum(blend_mode.alpha_dst));
 }
 
 void tr::gfx::set_vertex_format(const vertex_format& format)
@@ -60,18 +60,18 @@ void tr::gfx::set_vertex_format(const vertex_format& format)
 	TR_GL_CALL(glBindVertexArray, format.m_vao.get());
 }
 
-void tr::gfx::set_vertex_buffer(const basic_static_vertex_buffer& buffer, int slot, std::intptr_t offset, std::size_t stride)
+void tr::gfx::set_vertex_buffer(const basic_static_vertex_buffer& buffer, int slot, std::intptr_t offset, usize stride)
 {
 	TR_ASSERT(ogl_context != nullptr, "Tried to set graphics context vertex buffer before opening the window.");
 
-	TR_GL_CALL(glBindVertexBuffer, slot, buffer.m_vbo.get(), offset, static_cast<GLsizei>(stride));
+	TR_GL_CALL(glBindVertexBuffer, slot, buffer.m_vbo.get(), offset, GLsizei(stride));
 }
 
-void tr::gfx::set_vertex_buffer(const basic_dyn_vertex_buffer& buffer, int slot, std::intptr_t offset, std::size_t stride)
+void tr::gfx::set_vertex_buffer(const basic_dyn_vertex_buffer& buffer, int slot, std::intptr_t offset, usize stride)
 {
 	TR_ASSERT(ogl_context != nullptr, "Tried to set graphics context vertex buffer before opening the window.");
 
-	TR_GL_CALL(glBindVertexBuffer, slot, buffer.m_vbo.get(), offset, static_cast<GLsizei>(stride));
+	TR_GL_CALL(glBindVertexBuffer, slot, buffer.m_vbo.get(), offset, GLsizei(stride));
 }
 
 void tr::gfx::set_index_buffer(const static_index_buffer& buffer)
@@ -88,42 +88,40 @@ void tr::gfx::set_index_buffer(const dyn_index_buffer& buffer)
 	TR_GL_CALL(glBindBuffer, GL_ELEMENT_ARRAY_BUFFER, buffer.m_ibo.get());
 }
 
-std::uint32_t tr::gfx::current_renderer()
+tr::u32 tr::gfx::current_renderer()
 {
 	return current_renderer_;
 }
 
-void tr::gfx::set_renderer(std::uint32_t id)
+void tr::gfx::set_renderer(u32 id)
 {
 	current_renderer_ = id;
 }
 
-void tr::gfx::draw(primitive type, std::size_t offset, std::size_t vertices)
+void tr::gfx::draw(primitive type, usize offset, usize vertices)
 {
 	TR_ASSERT(ogl_context != nullptr, "Tried to perform a drawing operation before opening the window.");
 
-	TR_GL_CALL(glDrawArrays, static_cast<GLenum>(type), static_cast<GLint>(offset), static_cast<GLsizei>(vertices));
+	TR_GL_CALL(glDrawArrays, GLenum(type), GLint(offset), GLsizei(vertices));
 }
 
-void tr::gfx::draw_instances(primitive type, std::size_t offset, std::size_t vertices, int instances)
+void tr::gfx::draw_instances(primitive type, usize offset, usize vertices, int instances)
 {
 	TR_ASSERT(ogl_context != nullptr, "Tried to perform a drawing operation before opening the window.");
 
-	TR_GL_CALL(glDrawArraysInstanced, static_cast<GLenum>(type), static_cast<GLint>(offset), static_cast<GLsizei>(vertices), instances);
+	TR_GL_CALL(glDrawArraysInstanced, GLenum(type), GLint(offset), GLsizei(vertices), instances);
 }
 
-void tr::gfx::draw_indexed(primitive type, std::size_t offset, std::size_t indices)
+void tr::gfx::draw_indexed(primitive type, usize offset, usize indices)
 {
 	TR_ASSERT(ogl_context != nullptr, "Tried to perform a drawing operation before opening the window.");
 
-	TR_GL_CALL(glDrawElements, static_cast<GLenum>(type), static_cast<GLsizei>(indices), GL_UNSIGNED_SHORT,
-			   reinterpret_cast<const void*>(offset * sizeof(std::uint16_t)));
+	TR_GL_CALL(glDrawElements, GLenum(type), GLsizei(indices), GL_UNSIGNED_SHORT, (const void*)(offset * sizeof(u16)));
 }
 
-void tr::gfx::draw_indexed_instances(primitive type, std::size_t offset, std::size_t indices, int instances)
+void tr::gfx::draw_indexed_instances(primitive type, usize offset, usize indices, int instances)
 {
 	TR_ASSERT(ogl_context != nullptr, "Tried to perform a drawing operation before opening the window.");
 
-	TR_GL_CALL(glDrawElementsInstanced, static_cast<GLenum>(type), static_cast<GLsizei>(indices), GL_UNSIGNED_SHORT,
-			   reinterpret_cast<const void*>(offset * sizeof(std::uint16_t)), instances);
+	TR_GL_CALL(glDrawElementsInstanced, GLenum(type), GLsizei(indices), GL_UNSIGNED_SHORT, (const void*)(offset * sizeof(u16)), instances);
 }

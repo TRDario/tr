@@ -3,7 +3,7 @@
 #include "../../include/tr/audio/impl.hpp"
 #include <AL/alext.h>
 
-constexpr std::size_t AUDIO_STREAM_BUFFER_SIZE{16384};
+constexpr tr::usize AUDIO_STREAM_BUFFER_SIZE{16384};
 
 //
 
@@ -11,7 +11,7 @@ unsigned int tr::audio::source_base::buffer() const
 {
 	ALint id;
 	TR_AL_CALL(alGetSourcei, m_id, AL_BUFFER, &id);
-	return static_cast<unsigned int>(id);
+	return (unsigned int)(id);
 }
 
 void tr::audio::source_base::lock_audio_mutex() const
@@ -77,12 +77,12 @@ tr::audio::buffer_stream_buffer::~buffer_stream_buffer()
 
 void tr::audio::refill(stream& stream, buffer_stream_buffer& buffer)
 {
-	std::array<std::int16_t, AUDIO_STREAM_BUFFER_SIZE> data;
+	std::array<i16, AUDIO_STREAM_BUFFER_SIZE> data;
 
 	buffer.start_offset = stream.tell();
-	const std::span<const std::int16_t> used_data{stream.read(data)};
+	const std::span<const i16> used_data{stream.read(data)};
 	const ALenum format{stream.channels() == 2 ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16};
-	const ALsizei size{static_cast<ALsizei>(used_data.size_bytes()) - static_cast<ALsizei>(used_data.size_bytes()) % 4};
+	const ALsizei size{ALsizei(used_data.size_bytes()) - ALsizei(used_data.size_bytes()) % 4};
 	TR_AL_CALL(alBufferData, buffer.id, format, used_data.data(), size, stream.sample_rate());
 	if (alGetError() == AL_OUT_OF_MEMORY) {
 		throw out_of_memory{"audio buffer reallocation"};
@@ -511,7 +511,7 @@ tr::audio::origin tr::audio::source_base::origin() const
 {
 	ALint origin;
 	TR_AL_CALL(alGetSourcei, m_id, AL_SOURCE_RELATIVE, &origin);
-	return static_cast<audio::origin>(origin);
+	return audio::origin(origin);
 }
 
 tr::audio::origin tr::audio::source::origin() const
@@ -521,7 +521,7 @@ tr::audio::origin tr::audio::source::origin() const
 
 void tr::audio::source_base::set_origin(audio::origin type)
 {
-	TR_AL_CALL(alSourcei, m_id, AL_SOURCE_RELATIVE, static_cast<ALint>(type));
+	TR_AL_CALL(alSourcei, m_id, AL_SOURCE_RELATIVE, ALint(type));
 }
 
 void tr::audio::source::set_origin(audio::origin type)
@@ -611,13 +611,13 @@ void tr::audio::source::stop()
 tr::fsecs tr::audio::source_base::length() const
 {
 	if (m_stream.has_value()) {
-		return fsecs{static_cast<float>(m_stream->stream->length()) / m_stream->stream->sample_rate()};
+		return fsecs{float(m_stream->stream->length()) / m_stream->stream->sample_rate()};
 	}
 	else if (buffer() != 0) {
 		ALint sample_rate, size;
 		TR_AL_CALL(alGetBufferi, m_id, AL_FREQUENCY, &sample_rate);
 		TR_AL_CALL(alGetBufferi, m_id, AL_SIZE, &size);
-		return sample_rate == 0 ? fsecs::zero() : fsecs{static_cast<double>(size) / sample_rate};
+		return sample_rate == 0 ? fsecs::zero() : fsecs{double(size) / sample_rate};
 	}
 	else {
 		return fsecs::zero();
@@ -638,15 +638,15 @@ tr::fsecs tr::audio::source_base::offset() const
 		lock_audio_mutex();
 		const audio::state state{this->state()};
 		if (state == state::INITIAL || state == state::STOPPED) {
-			return fsecs{m_stream->stream->tell() / static_cast<float>(m_stream->stream->sample_rate())};
+			return fsecs{m_stream->stream->tell() / float(m_stream->stream->sample_rate())};
 		}
 
 		ALint buf_id;
 		TR_AL_CALL(alGetSourcei, m_id, AL_BUFFER, &buf_id);
 
-		auto& buf{*std::ranges::find(m_stream->buffers, static_cast<unsigned int>(buf_id), &buffer_stream_buffer::id)};
+		auto& buf{*std::ranges::find(m_stream->buffers, (unsigned int)(buf_id), &buffer_stream_buffer::id)};
 		unlock_audio_mutex();
-		return fsecs{buf.start_offset / static_cast<float>(m_stream->stream->sample_rate()) + offset};
+		return fsecs{buf.start_offset / float(m_stream->stream->sample_rate()) + offset};
 	}
 	else {
 		return fsecs{offset};
@@ -663,7 +663,7 @@ void tr::audio::source_base::set_offset(fsecs offset)
 	if (m_stream.has_value()) {
 		lock_audio_mutex();
 		audio::state state{this->state()};
-		m_stream->stream->seek(static_cast<int>(offset.count() * m_stream->stream->sample_rate()));
+		m_stream->stream->seek(int(offset.count() * m_stream->stream->sample_rate()));
 		TR_AL_CALL(alSourceStop, m_id);
 		switch (state) {
 		case state::PLAYING:
@@ -713,7 +713,7 @@ bool tr::audio::source::looping() const
 tr::fsecs tr::audio::source_base::loop_start() const
 {
 	if (m_stream.has_value()) {
-		return fsecs{static_cast<float>(m_stream->stream->loop_start()) / m_stream->stream->sample_rate()};
+		return fsecs{float(m_stream->stream->loop_start()) / m_stream->stream->sample_rate()};
 	}
 	else if (buffer() != 0) {
 		ALint sample_rate;
@@ -723,7 +723,7 @@ tr::fsecs tr::audio::source_base::loop_start() const
 
 		std::array<ALint, 2> loop_points;
 		TR_AL_CALL(alGetSourceiv, m_id, AL_LOOP_POINTS_SOFT, loop_points.data());
-		return fsecs{static_cast<float>(loop_points[0]) / sample_rate / channels};
+		return fsecs{float(loop_points[0]) / sample_rate / channels};
 	}
 	else {
 		return fsecs::zero();
@@ -738,7 +738,7 @@ tr::fsecs tr::audio::source::loop_start() const
 tr::fsecs tr::audio::source_base::loop_end() const
 {
 	if (m_stream.has_value()) {
-		return fsecs{static_cast<float>(m_stream->stream->loop_end()) / m_stream->stream->sample_rate()};
+		return fsecs{float(m_stream->stream->loop_end()) / m_stream->stream->sample_rate()};
 	}
 	else if (buffer() != 0) {
 		ALint sample_rate;
@@ -748,7 +748,7 @@ tr::fsecs tr::audio::source_base::loop_end() const
 
 		std::array<ALint, 2> loop_points;
 		TR_AL_CALL(alGetSourceiv, m_id, AL_LOOP_POINTS_SOFT, loop_points.data());
-		return fsecs{static_cast<float>(loop_points[1]) / sample_rate / channels};
+		return fsecs{float(loop_points[1]) / sample_rate / channels};
 	}
 	else {
 		return fsecs::zero();
@@ -773,12 +773,12 @@ void tr::audio::source_base::set_loop_points(fsecs start, fsecs end)
 	if (m_stream.has_value()) {
 		lock_audio_mutex();
 		if (start >= loop_end()) {
-			m_stream->stream->set_loop_end(static_cast<int>(end.count() * m_stream->stream->sample_rate()));
-			m_stream->stream->set_loop_start(static_cast<int>(start.count() * m_stream->stream->sample_rate()));
+			m_stream->stream->set_loop_end(int(end.count() * m_stream->stream->sample_rate()));
+			m_stream->stream->set_loop_start(int(start.count() * m_stream->stream->sample_rate()));
 		}
 		else {
-			m_stream->stream->set_loop_start(static_cast<int>(start.count() * m_stream->stream->sample_rate()));
-			m_stream->stream->set_loop_end(static_cast<int>(end.count() * m_stream->stream->sample_rate()));
+			m_stream->stream->set_loop_start(int(start.count() * m_stream->stream->sample_rate()));
+			m_stream->stream->set_loop_end(int(end.count() * m_stream->stream->sample_rate()));
 		}
 		unlock_audio_mutex();
 	}
@@ -790,8 +790,7 @@ void tr::audio::source_base::set_loop_points(fsecs start, fsecs end)
 		ALint channels;
 		TR_AL_CALL(alGetBufferi, buffer, AL_CHANNELS, &channels);
 
-		std::array<ALint, 2> loop_points{static_cast<ALint>(start.count() * sample_rate * channels),
-										 static_cast<ALint>(end.count() * sample_rate * channels)};
+		std::array<ALint, 2> loop_points{ALint(start.count() * sample_rate * channels), ALint(end.count() * sample_rate * channels)};
 		TR_AL_CALL(alSourcei, m_id, AL_BUFFER, 0);
 		TR_AL_CALL(alBufferiv, buffer, AL_LOOP_POINTS_SOFT, loop_points.data());
 		TR_AL_CALL(alSourcei, m_id, AL_BUFFER, buffer);

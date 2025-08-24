@@ -14,17 +14,17 @@ namespace tr::gfx {
 		// Whether to use double buffering.
 		bool double_buffer = true;
 		// The number of bits to use for backbuffer depth.
-		std::uint8_t depth_bits = 0;
+		u8 depth_bits = 0;
 		// The number of bits to use for backbuffer stencil.
-		std::uint8_t stencil_bits = 0;
+		u8 stencil_bits = 0;
 		// The number of samples used around a pixel for multisampled anti-aliasing.
-		std::uint8_t multisamples = 0;
+		u8 multisamples = 0;
 	};
 } // namespace tr::gfx
 
 namespace tr::system {
 	// Window flag bitmasks.
-	enum class window_flag : std::uint32_t {
+	enum class window_flag : u32 {
 		DEFAULT = 0x0,         // Default flags.
 		BORDERLESS = 0x10,     // The window has no decoration (topbar, etc.).
 		RESIZABLE = 0x20,      // The window is resizable.
@@ -43,7 +43,7 @@ namespace tr::system {
 	};
 
 	// V-sync modes.
-	enum class vsync : std::int8_t {
+	enum class vsync : i8 {
 		ADAPTIVE = -1, // Vsync is enabled, but late swaps happen immediately instead of waiting for the next retrace.
 		DISABLED,      // Vsync is disabled.
 		ENABLED        // Vsync is enabled.

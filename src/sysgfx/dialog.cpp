@@ -37,7 +37,7 @@ namespace tr::system {
 
 void tr::system::file_dialog_callback(void* userdata, const char* const* files, int)
 {
-	file_dialog_context& context{*static_cast<file_dialog_context*>(userdata)};
+	file_dialog_context& context{*(file_dialog_context*)userdata};
 	if (files != nullptr) {
 		while (*files != nullptr) {
 			context.paths.emplace_back(*files++);
@@ -52,8 +52,8 @@ std::vector<std::filesystem::path> tr::system::show_open_file_dialog(std::span<c
 	TR_ASSERT(SDL_WasInit(0), "Tried to open a file dialog before initializing the application.");
 
 	file_dialog_context ctx{};
-	SDL_ShowOpenFileDialog(file_dialog_callback, &ctx, nullptr, reinterpret_cast<const SDL_DialogFileFilter*>(filters.data()),
-						   int(filters.size()), default_path, allow_multiple);
+	SDL_ShowOpenFileDialog(file_dialog_callback, &ctx, nullptr, (const SDL_DialogFileFilter*)filters.data(), int(filters.size()),
+						   default_path, allow_multiple);
 	while (!ctx.done) {
 		SDL_PumpEvents();
 		std::this_thread::sleep_for(10ms);
@@ -76,7 +76,7 @@ std::vector<std::filesystem::path> tr::system::show_open_folder_dialog(const cha
 
 tr::system::msg_button tr::system::show_message_box(msg_box_type type, msg_buttons buttons, const char* title, const char* message)
 {
-	const SDL_MessageBoxFlags flags{static_cast<SDL_MessageBoxFlags>(type)};
+	const SDL_MessageBoxFlags flags{SDL_MessageBoxFlags(type)};
 
 	switch (buttons) {
 	case msg_buttons::OK:
@@ -86,13 +86,13 @@ tr::system::msg_button tr::system::show_message_box(msg_box_type type, msg_butto
 		int selected{int(msg_button::NO)};
 		SDL_MessageBoxData data{flags, nullptr, title, message, 2, YES_NO_BUTTONS.data(), nullptr};
 		SDL_ShowMessageBox(&data, &selected);
-		return static_cast<msg_button>(selected);
+		return msg_button(selected);
 	}
 	case msg_buttons::YES_NO_CANCEL: {
 		int selected{int(msg_button::CANCEL)};
 		SDL_MessageBoxData data{flags, nullptr, title, message, 3, YES_NO_CANCEL_BUTTONS.data(), nullptr};
 		SDL_ShowMessageBox(&data, &selected);
-		return static_cast<msg_button>(selected);
+		return msg_button(selected);
 	}
 	default:
 		return msg_button::OK;
@@ -156,8 +156,8 @@ std::vector<std::filesystem::path> tr::system::show_open_folders_dialog(const ch
 std::filesystem::path tr::system::show_save_file_dialog(std::span<const dialog_filter> filters, const char* default_path)
 {
 	file_dialog_context ctx{};
-	SDL_ShowSaveFileDialog(file_dialog_callback, &ctx, nullptr, reinterpret_cast<const SDL_DialogFileFilter*>(filters.data()),
-						   int(filters.size()), default_path);
+	SDL_ShowSaveFileDialog(file_dialog_callback, &ctx, nullptr, (const SDL_DialogFileFilter*)filters.data(), int(filters.size()),
+						   default_path);
 	while (!ctx.done) {
 		SDL_PumpEvents();
 		std::this_thread::sleep_for(10ms);

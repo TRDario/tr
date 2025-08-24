@@ -27,7 +27,7 @@ namespace tr::gfx {
 	class shader_buffer {
 	  public:
 		// Shader buffer map access type.
-		enum class access : std::uint32_t {
+		enum class access : u32 {
 			READ_ONLY = 1,  // Buffer maps are read-only.
 			WRITE_ONLY = 2, // Buffer maps are write-only.
 			READ_WRITE = 3  // Buffer maps are readable and writable.

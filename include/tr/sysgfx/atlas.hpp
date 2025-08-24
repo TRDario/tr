@@ -24,7 +24,7 @@ namespace tr::gfx {
 		// Gets whether the atlas contains an entry.
 		bool contains(const auto& key) const;
 		// Gets the number of entries in the atlas.
-		std::size_t entries() const;
+		usize entries() const;
 
 		// Returns the rect associated with an entry.
 		frect2 operator[](const auto& key) const;
@@ -89,7 +89,7 @@ template <class Key, class Hash, class Pred> bool tr::gfx::dyn_atlas<Key, Hash, 
 	return m_rects.contains(key);
 }
 
-template <class Key, class Hash, class Pred> std::size_t tr::gfx::dyn_atlas<Key, Hash, Pred>::entries() const
+template <class Key, class Hash, class Pred> tr::usize tr::gfx::dyn_atlas<Key, Hash, Pred>::entries() const
 {
 	return m_rects.entries();
 }
@@ -134,7 +134,7 @@ template <class Key, class Hash, class Pred> void tr::gfx::dyn_atlas<Key, Hash, 
 	if (!packing_result.has_value()) {
 		glm::u16vec2 new_size;
 		if (m_tex.size() == glm::ivec2{}) {
-			const glm::uvec2 usize{static_cast<glm::u16vec2>(bitmap.size())};
+			const glm::uvec2 usize{bitmap.size()};
 			new_size = {std::bit_ceil(usize.x), std::bit_ceil(usize.y)};
 			packing_result = m_rects.try_insert(std::move(key), usize, new_size);
 		}
@@ -142,8 +142,7 @@ template <class Key, class Hash, class Pred> void tr::gfx::dyn_atlas<Key, Hash, 
 			new_size = size();
 			do {
 				new_size.y < new_size.x ? new_size.y *= 2 : new_size.x *= 2;
-			} while (
-				!(packing_result = m_rects.try_insert(std::move(key), static_cast<glm::u16vec2>(bitmap.size()), new_size)).has_value());
+			} while (!(packing_result = m_rects.try_insert(std::move(key), bitmap.size(), new_size)).has_value());
 		}
 		reserve(new_size);
 	}

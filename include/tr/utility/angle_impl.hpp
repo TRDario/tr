@@ -72,17 +72,17 @@ constexpr tr::angle tr::operator%(const angle& l, const angle& r)
 
 template <tr::arithmetic T> constexpr tr::angle tr::rads(T th)
 {
-	return angle{static_cast<float>(th)};
+	return angle{float(th)};
 }
 
 template <tr::arithmetic T> constexpr tr::angle tr::degs(T th)
 {
-	return angle{std::numbers::pi_v<float> / 180 * static_cast<float>(th)};
+	return angle{std::numbers::pi_v<float> / 180 * float(th)};
 }
 
 template <tr::arithmetic T> constexpr tr::angle tr::turns(T th)
 {
-	return angle{std::numbers::pi_v<float> * 2 * static_cast<float>(th)};
+	return angle{std::numbers::pi_v<float> * 2 * float(th)};
 }
 
 template <tr::arithmetic T> inline tr::angle tr::asin(T sin)
@@ -137,30 +137,30 @@ inline float tr::angle::tan() const
 
 consteval tr::angle tr::angle_literals::operator""_deg(long double deg)
 {
-	return degs(static_cast<float>(deg));
+	return degs(float(deg));
 }
 
 consteval tr::angle tr::angle_literals::operator""_deg(unsigned long long deg)
 {
-	return degs(static_cast<float>(deg));
+	return degs(float(deg));
 }
 
 consteval tr::angle tr::angle_literals::operator""_rad(long double rad)
 {
-	return rads(static_cast<float>(rad));
+	return rads(float(rad));
 }
 
 consteval tr::angle tr::angle_literals::operator""_rad(unsigned long long rad)
 {
-	return rads(static_cast<float>(rad));
+	return rads(float(rad));
 }
 
 consteval tr::angle tr::angle_literals::operator""_turns(long double tr)
 {
-	return turns(static_cast<float>(tr));
+	return turns(float(tr));
 }
 
 consteval tr::angle tr::angle_literals::operator""_turns(unsigned long long tr)
 {
-	return turns(static_cast<float>(tr));
+	return turns(float(tr));
 }

@@ -1,13 +1,13 @@
 #include "../../include/tr/sysgfx/state_manager.hpp"
 
-std::uint32_t tr::state::type() const
+tr::u32 tr::state::type() const
 {
 	return NO_ID;
 }
 
-std::uint32_t tr::drop_state::type() const
+tr::u32 tr::drop_state::type() const
 {
-	return std::numeric_limits<std::uint32_t>::max();
+	return std::numeric_limits<u32>::max();
 }
 
 std::unique_ptr<tr::state> tr::drop_state::handle_event(const system::event&)
@@ -42,7 +42,7 @@ void tr::state_manager::handle_event(const system::event& event)
 	if (state != nullptr) {
 		std::unique_ptr<tr::state> next{state->handle_event(event)};
 		if (next != nullptr) {
-			state = next->type() != std::numeric_limits<std::uint32_t>::max() ? std::move(next) : nullptr;
+			state = next->type() != UINT32_MAX ? std::move(next) : nullptr;
 		}
 	}
 }
@@ -54,7 +54,7 @@ void tr::state_manager::update(duration delta)
 		std::unique_ptr<tr::state> next{state->update(delta)};
 		m_update.stop();
 		if (next != nullptr) {
-			state = next->type() != std::numeric_limits<std::uint32_t>::max() ? std::move(next) : nullptr;
+			state = next->type() != UINT32_MAX ? std::move(next) : nullptr;
 			m_update.clear();
 			m_draw.clear();
 		}

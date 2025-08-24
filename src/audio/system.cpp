@@ -52,7 +52,7 @@ void tr::audio::initialize()
 	}
 	int al_max_sources;
 	alcGetIntegerv(device, ALC_MONO_SOURCES, 1, &al_max_sources);
-	max_sources = static_cast<std::size_t>(al_max_sources);
+	max_sources = usize(al_max_sources);
 	gains.fill(1);
 }
 

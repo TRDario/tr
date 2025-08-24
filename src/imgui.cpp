@@ -5,7 +5,7 @@
 
 void tr::imgui::initialize()
 {
-	ImGui_ImplSDL3_InitForOpenGL(system::sdl_window, system::ogl_context);
+	ImGui_ImplSDL3_InitForOpenGL(system::sdl_window, gfx::ogl_context);
 	ImGui_ImplOpenGL3_Init("#version 150");
 }
 
@@ -15,14 +15,14 @@ void tr::imgui::shut_down()
 	ImGui_ImplSDL3_Shutdown();
 }
 
-std::uint64_t tr::imgui::get_texture_id(gfx::texture_ref texture)
+tr::u64 tr::imgui::get_texture_id(gfx::texture_ref texture)
 {
-	return texture._id;
+	return texture.m_id;
 }
 
 void tr::imgui::process_event(const system::event& event)
 {
-	ImGui_ImplSDL3_ProcessEvent(reinterpret_cast<const SDL_Event*>(&event));
+	ImGui_ImplSDL3_ProcessEvent((const SDL_Event*)&event);
 }
 
 void tr::imgui::new_frame()

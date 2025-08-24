@@ -48,26 +48,26 @@ namespace tr {
 
 	// Encrypts data.
 	// May throw: tr::encryption_error.
-	void encrypt_to(std::vector<std::byte>& out, std::span<const std::byte> raw, std::uint8_t key);
+	void encrypt_to(std::vector<std::byte>& out, std::span<const std::byte> raw, u8 key);
 	// Encrypts data.
 	// May throw: tr::encryption_error.
-	template <std::ranges::contiguous_range Range> void encrypt_to(std::vector<std::byte>& out, Range&& range, std::uint8_t key);
+	template <std::ranges::contiguous_range Range> void encrypt_to(std::vector<std::byte>& out, Range&& range, u8 key);
 	// Encrypts data.
 	// May throw: tr::encryption_error.
-	std::vector<std::byte> encrypt(std::span<const std::byte> raw, std::uint8_t key);
+	std::vector<std::byte> encrypt(std::span<const std::byte> raw, u8 key);
 	// Encrypts data.
 	// May throw: tr::encryption_error.
-	template <std::ranges::contiguous_range Range> std::vector<std::byte> encrypt(Range&& range, std::uint8_t key);
+	template <std::ranges::contiguous_range Range> std::vector<std::byte> encrypt(Range&& range, u8 key);
 } // namespace tr
 
 ////////////////////////////////////////////////////////////// IMPLEMENTATION /////////////////////////////////////////////////////////////
 
-template <std::ranges::contiguous_range Range> void tr::encrypt_to(std::vector<std::byte>& out, Range&& range, std::uint8_t key)
+template <std::ranges::contiguous_range Range> void tr::encrypt_to(std::vector<std::byte>& out, Range&& range, u8 key)
 {
 	encrypt_to(out, std::span<const std::byte>{range_bytes(range)}, key);
 }
 
-template <std::ranges::contiguous_range Range> std::vector<std::byte> tr::encrypt(Range&& range, std::uint8_t key)
+template <std::ranges::contiguous_range Range> std::vector<std::byte> tr::encrypt(Range&& range, u8 key)
 {
 	return encrypt(std::span<const std::byte>{range_bytes(range)}, key);
 }

@@ -37,7 +37,7 @@ void tr::save_bitmap(SDL_Surface* bitmap, const std::filesystem::path& path)
 
 int tr::pixel_bytes(pixel_format format)
 {
-	return SDL_BYTESPERPIXEL(static_cast<SDL_PixelFormat>(format));
+	return SDL_BYTESPERPIXEL(SDL_PixelFormat(format));
 }
 
 ////////////////////////////////////////////////////////// AUDIO FILE OPEN ERROR //////////////////////////////////////////////////////////
@@ -132,12 +132,12 @@ tr::sub_bitmap::iterator tr::sub_bitmap::cend() const
 
 const std::byte* tr::sub_bitmap::data() const
 {
-	return reinterpret_cast<const std::byte*>(m_ptr->pixels) + pitch() * m_rect.tl.y + pixel_bytes(format()) * m_rect.tl.x;
+	return (const std::byte*)m_ptr->pixels + pitch() * m_rect.tl.y + pixel_bytes(format()) * m_rect.tl.x;
 }
 
 tr::pixel_format tr::sub_bitmap::format() const
 {
-	return static_cast<pixel_format>(m_ptr->format);
+	return pixel_format(m_ptr->format);
 }
 
 int tr::sub_bitmap::pitch() const
@@ -153,14 +153,13 @@ int tr::operator-(const tr::sub_bitmap::iterator& l, const tr::sub_bitmap::itera
 tr::bitmap_view::bitmap_view(std::span<const std::byte> raw_data, glm::ivec2 size, pixel_format format)
 	: bitmap_view(raw_data.data(), size.x * pixel_bytes(format), size, format)
 {
-	TR_ASSERT(raw_data.size() == size.x * size.y * static_cast<std::size_t>(pixel_bytes(format)),
+	TR_ASSERT(raw_data.size() == size.x * size.y * usize(pixel_bytes(format)),
 			  "Tried to create a bitmap view from data with unexpected (expected {} bytes vs. actual {} bytes).",
-			  size.x * size.y * static_cast<std::size_t>(pixel_bytes(format)), raw_data.size());
+			  size.x * size.y * usize(pixel_bytes(format)), raw_data.size());
 }
 
 tr::bitmap_view::bitmap_view(const std::byte* raw_data_start, int pitch, glm::ivec2 size, pixel_format format)
-	: m_ptr{check_not_null(
-		  SDL_CreateSurfaceFrom(size.x, size.y, static_cast<SDL_PixelFormat>(format), const_cast<std::byte*>(raw_data_start), pitch))}
+	: m_ptr{check_not_null(SDL_CreateSurfaceFrom(size.x, size.y, SDL_PixelFormat(format), (std::byte*)raw_data_start, pitch))}
 {
 }
 
@@ -217,14 +216,14 @@ const std::byte* tr::bitmap_view::data() const
 {
 	TR_ASSERT(m_ptr != nullptr, "Tried to get the data of a moved-from bitmap view.");
 
-	return static_cast<const std::byte*>(m_ptr->pixels);
+	return (const std::byte*)m_ptr->pixels;
 }
 
 tr::pixel_format tr::bitmap_view::format() const
 {
 	TR_ASSERT(m_ptr != nullptr, "Tried to get the format of a moved-from bitmap view.");
 
-	return static_cast<pixel_format>(m_ptr->format);
+	return pixel_format(m_ptr->format);
 }
 
 int tr::bitmap_view::pitch() const
@@ -254,17 +253,17 @@ tr::bitmap::bitmap(SDL_Surface* ptr)
 }
 
 tr::bitmap::bitmap(glm::ivec2 size, pixel_format format)
-	: m_ptr{check_not_null(SDL_CreateSurface(size.x, size.y, static_cast<SDL_PixelFormat>(format)))}
+	: m_ptr{check_not_null(SDL_CreateSurface(size.x, size.y, SDL_PixelFormat(format)))}
 {
 }
 
 tr::bitmap::bitmap(const bitmap& bitmap, pixel_format format)
-	: m_ptr{check_not_null(SDL_ConvertSurface(bitmap.m_ptr.get(), static_cast<SDL_PixelFormat>(format)))}
+	: m_ptr{check_not_null(SDL_ConvertSurface(bitmap.m_ptr.get(), SDL_PixelFormat(format)))}
 {
 }
 
 tr::bitmap::bitmap(const bitmap_view& view, pixel_format format)
-	: m_ptr{check_not_null(SDL_ConvertSurface(view.m_ptr.get(), static_cast<SDL_PixelFormat>(format)))}
+	: m_ptr{check_not_null(SDL_ConvertSurface(view.m_ptr.get(), SDL_PixelFormat(format)))}
 {
 }
 
@@ -348,7 +347,7 @@ void tr::bitmap::fill(const irect2& rect, rgba8 color)
 			  rect.tl.x + rect.size.x, rect.tl.y + rect.size.y, size().x, size().y);
 
 	const SDL_Rect sdlRect{rect.tl.x, rect.tl.y, rect.size.x, rect.size.y};
-	const std::uint32_t sdl_color{
+	const u32 sdl_color{
 		SDL_MapRGBA(SDL_GetPixelFormatDetails(m_ptr->format), SDL_GetSurfacePalette(m_ptr.get()), color.r, color.g, color.b, color.a),
 	};
 	SDL_FillSurfaceRect(m_ptr.get(), &sdlRect, sdl_color);
@@ -368,21 +367,21 @@ std::byte* tr::bitmap::data()
 {
 	TR_ASSERT(m_ptr != nullptr, "Tried to get the data of a moved-from bitmap.");
 
-	return static_cast<std::byte*>(m_ptr->pixels);
+	return (std::byte*)m_ptr->pixels;
 }
 
 const std::byte* tr::bitmap::data() const
 {
 	TR_ASSERT(m_ptr != nullptr, "Tried to get the data of a moved-from bitmap.");
 
-	return static_cast<const std::byte*>(m_ptr->pixels);
+	return (const std::byte*)m_ptr->pixels;
 }
 
 tr::pixel_format tr::bitmap::format() const
 {
 	TR_ASSERT(m_ptr != nullptr, "Tried to get the format of a moved-from bitmap.");
 
-	return static_cast<pixel_format>(m_ptr->format);
+	return pixel_format(m_ptr->format);
 }
 
 int tr::bitmap::pitch() const

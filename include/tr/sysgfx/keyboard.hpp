@@ -296,7 +296,7 @@ namespace tr::system {
 	constexpr keycode make_top_row_keycode(int v);
 
 	// Key modifier bitmasks.
-	enum class keymod : std::uint16_t {
+	enum class keymod : u16 {
 		NONE = 0x0000,
 		SHIFT = 0x0003,
 		CTRL = 0x00C0,
@@ -374,22 +374,22 @@ namespace tr::system {
 } // namespace tr::system
 
 template <> struct std::hash<tr::system::scancode> {
-	std::uint64_t operator()(tr::system::scancode code) const;
+	tr::u64 operator()(tr::system::scancode code) const;
 };
 template <> struct std::hash<tr::system::keycode> {
-	std::uint64_t operator()(tr::system::keycode code) const;
+	tr::u64 operator()(tr::system::keycode code) const;
 };
 template <> struct std::hash<tr::system::scan_chord> {
-	std::uint64_t operator()(tr::system::scan_chord chord) const;
+	tr::u64 operator()(tr::system::scan_chord chord) const;
 };
 template <> struct std::hash<tr::system::key_chord> {
-	std::uint64_t operator()(tr::system::key_chord chord) const;
+	tr::u64 operator()(tr::system::key_chord chord) const;
 };
 
 ///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
 
 constexpr tr::system::scancode::scancode(int base)
-	: m_base{static_cast<enum_t>(base)}
+	: m_base{enum_t(base)}
 {
 }
 
@@ -400,18 +400,18 @@ constexpr tr::system::scancode::scancode(enum_t base)
 
 constexpr tr::system::scancode::operator int() const
 {
-	return static_cast<int>(m_base);
+	return int(m_base);
 }
 
 constexpr tr::system::scancode tr::system::make_top_row_scancode(int v)
 {
 	TR_ASSERT(v >= 0 && v < 10, "Tried to create top row number scancode {} outside the range [0-9]", v);
 
-	return static_cast<scancode>(static_cast<int>(scancode::TOP_ROW_0) + v);
+	return scancode(int(scancode::TOP_ROW_0) + v);
 }
 
 constexpr tr::system::keycode::keycode(int base)
-	: m_base{static_cast<enum_t>(base)}
+	: m_base{enum_t(base)}
 {
 }
 
@@ -422,12 +422,12 @@ constexpr tr::system::keycode::keycode(enum_t base)
 
 constexpr tr::system::keycode::operator int() const
 {
-	return static_cast<int>(m_base);
+	return int(m_base);
 }
 
 constexpr tr::system::keycode tr::system::make_top_row_keycode(int v)
 {
 	TR_ASSERT(v >= 0 && v < 10, "Tried to create top row number keycode {} outside the range [0-9]", v);
 
-	return static_cast<keycode>(static_cast<int>(keycode::TOP_ROW_0) + v);
+	return keycode(int(keycode::TOP_ROW_0) + v);
 }

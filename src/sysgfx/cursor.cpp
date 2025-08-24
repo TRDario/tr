@@ -26,7 +26,7 @@ tr::system::cursor::cursor(sys_cursor icon)
 {
 	TR_ASSERT(SDL_WasInit(0), "Tried to create cursor before initializing the application.");
 
-	m_ptr.reset(check_not_null(SDL_CreateSystemCursor(static_cast<SDL_SystemCursor>(icon))));
+	m_ptr.reset(check_not_null(SDL_CreateSystemCursor(SDL_SystemCursor(icon))));
 }
 
 tr::system::cursor::cursor(const bitmap& bitmap, glm::ivec2 focus)
@@ -51,8 +51,8 @@ tr::system::cursor::cursor(std::span<const std::byte> color, std::span<const std
 	TR_ASSERT(color.size() == size.x * size.y / 64ull, "Mismatched cursor data and size: {} bytes for color/mask vs {}x{} size ({} bytes)",
 			  color.size(), size.x, size.y, size.x * size.y / 64);
 
-	const std::uint8_t* ccolor{reinterpret_cast<const std::uint8_t*>(color.data())};
-	const std::uint8_t* cmask{reinterpret_cast<const std::uint8_t*>(mask.data())};
+	const u8* ccolor{(const u8*)color.data()};
+	const u8* cmask{(const u8*)mask.data()};
 	m_ptr.reset(check_not_null(SDL_CreateCursor(ccolor, cmask, size.x, size.y, focus.x, focus.y)));
 }
 
