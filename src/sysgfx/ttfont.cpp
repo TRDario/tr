@@ -1,6 +1,6 @@
-#include "../../include/tr/sysgfx/ttfont.hpp"
 #include "../../include/tr/sysgfx/bitmap.hpp"
 #include "../../include/tr/sysgfx/initialization.hpp"
+#include "../../include/tr/sysgfx/ttfont.hpp"
 #include <SDL3_ttf/SDL_ttf.h>
 
 namespace tr::system {
@@ -42,7 +42,7 @@ void tr::system::fix_alpha_artifacts(bitmap& bitmap, std::uint8_t max_alpha)
 }
 
 tr::system::ttfont_load_error::ttfont_load_error(std::string_view path, std::string&& details)
-	: m_description{std::format("Failed to load bitmap from '{}'", path)}, m_details{std::move(details)}
+	: m_description{TR_FMT::format("Failed to load bitmap from '{}'", path)}, m_details{std::move(details)}
 {
 }
 

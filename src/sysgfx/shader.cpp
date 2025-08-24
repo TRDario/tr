@@ -1,10 +1,10 @@
-#include "../../include/tr/sysgfx/shader.hpp"
 #include "../../include/tr/sysgfx/gl_call.hpp"
+#include "../../include/tr/sysgfx/shader.hpp"
 #include "../../include/tr/sysgfx/shader_buffer.hpp"
 #include "../../include/tr/sysgfx/texture_unit.hpp"
 
 tr::gfx::shader_load_error::shader_load_error(std::string_view path, std::string&& details)
-	: m_description{std::format("Failed to load bitmap from '{}'", path)}, m_details{std::move(details)}
+	: m_description{TR_FMT::format("Failed to load bitmap from '{}'", path)}, m_details{std::move(details)}
 {
 }
 
@@ -33,7 +33,7 @@ tr::gfx::shader_base::shader_base(const char* source, unsigned int type)
 		TR_GL_CALL(glGetProgramiv, m_program.get(), GL_INFO_LOG_LENGTH, &buffer_size);
 		std::string buffer(buffer_size, '\0');
 		TR_GL_CALL(glGetProgramInfoLog, m_program.get(), buffer_size, nullptr, buffer.data());
-		throw shader_load_error{"(Embedded)", std::format("Failed to compile/link a shader\n{}", buffer)};
+		throw shader_load_error{"(Embedded)", TR_FMT::format("Failed to compile/link a shader\n{}", buffer)};
 	}
 }
 
@@ -44,7 +44,7 @@ void tr::gfx::shader_base::deleter::operator()(unsigned int id) const
 
 void tr::gfx::shader_base::set_uniform(int index, bool value)
 {
-	set_uniform(index, static_cast<int>(value));
+	set_uniform(index, int(value));
 }
 
 void tr::gfx::shader_base::set_uniform(int index, glm::bvec2 value)
@@ -274,7 +274,7 @@ void tr::gfx::shader_base::set_uniform(int index, std::span<const glm::mat4x3> v
 
 void tr::gfx::shader_base::set_uniform(int index, const texture_unit& value)
 {
-	set_uniform(index, static_cast<int>(value.m_unit.get()));
+	set_uniform(index, int(value.m_unit.get()));
 }
 
 void tr::gfx::shader_base::set_storage_buffer(unsigned int index, shader_buffer& buffer)

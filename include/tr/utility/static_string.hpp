@@ -129,11 +129,6 @@ namespace tr {
 } // namespace tr
 
 // Formatter for static strings.
-template <std::size_t S> struct std::formatter<tr::static_string<S>> : std::formatter<std::string_view> {
-	template <typename FormatContext> constexpr auto format(const tr::static_string<S>& str, FormatContext& ctx) const
-	{
-		return std::formatter<std::string_view>::format(std::string_view{str}, ctx);
-	}
-};
+template <std::size_t S> struct TR_FMT::formatter<tr::static_string<S>> : TR_FMT::formatter<std::string_view> {};
 
 #include "static_string_impl.hpp"

@@ -8,9 +8,9 @@ namespace tr {
 const char* tr::exception::what() const noexcept
 {
 	what_buffer.clear();
-	std::format_to_n(std::back_inserter(what_buffer), what_buffer.max_size() - 1, "{}: {}", name(), description());
+	TR_FMT::format_to_n(std::back_inserter(what_buffer), what_buffer.max_size() - 1, "{}: {}", name(), description());
 	if (!details().empty()) {
-		std::format_to_n(std::back_inserter(what_buffer), what_buffer.max_size() - 1 - what_buffer.size(), " ({})", details());
+		TR_FMT::format_to_n(std::back_inserter(what_buffer), what_buffer.max_size() - 1 - what_buffer.size(), " ({})", details());
 	}
 	return what_buffer.data();
 }
@@ -22,7 +22,7 @@ tr::custom_exception::custom_exception(std::string&& name, std::string&& descrip
 
 tr::out_of_memory::out_of_memory(std::string_view description)
 {
-	std::format_to_n(std::back_inserter(m_description), m_description.max_size(), "During {}.", description);
+	TR_FMT::format_to_n(std::back_inserter(m_description), m_description.max_size(), "During {}.", description);
 }
 
 std::string_view tr::out_of_memory::name() const

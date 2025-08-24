@@ -12,7 +12,6 @@
 #include <cstdlib>                         // IWYU pragma: export
 #include <exception>                       // IWYU pragma: export
 #include <filesystem>                      // IWYU pragma: export
-#include <format>                          // IWYU pragma: export
 #include <forward_list>                    // IWYU pragma: export
 #include <fstream>                         // IWYU pragma: export
 #include <functional>                      // IWYU pragma: export
@@ -41,3 +40,13 @@
 #include <utility>                         // IWYU pragma: export
 #include <variant>                         // IWYU pragma: export
 #include <vector>                          // IWYU pragma: export
+
+#ifdef TR_HAS_STD_FORMAT
+#include <format> // IWYU pragma: export
+#define TR_FMT std
+#else
+#include <fmt/base.h>
+#include <fmt/chrono.h>
+#include <fmt/format.h>
+#define TR_FMT fmt
+#endif

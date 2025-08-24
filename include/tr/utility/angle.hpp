@@ -82,13 +82,13 @@ namespace tr {
 
 // Angle formatter.
 // The formatting specification is: [r, d, t] + a valid floating point formatting specification.
-template <> class std::formatter<tr::angle> : public std::formatter<float>, public std::formatter<const char*> {
+template <> class TR_FMT::formatter<tr::angle> : public TR_FMT::formatter<float>, public TR_FMT::formatter<const char*> {
   public:
 	template <class ParseContext> constexpr auto parse(ParseContext& ctx)
 	{
 		auto it = ctx.begin();
 		if (it == ctx.end() || (*it != 'r' && *it != 'd' && *it != 't')) {
-			throw std::format_error{"One of {r, d, t} must start an angle formatting specification."};
+			throw TR_FMT::format_error{"One of {r, d, t} must start an angle formatting specification."};
 		}
 
 		switch (*it) {
@@ -104,23 +104,23 @@ template <> class std::formatter<tr::angle> : public std::formatter<float>, publ
 		}
 
 		ctx.advance_to(it + 1);
-		return std::formatter<float>::parse(ctx);
+		return TR_FMT::formatter<float>::parse(ctx);
 	}
 
 	template <typename FormatContext> constexpr auto format(const tr::angle& p, FormatContext& ctx) const
 	{
 		switch (m_unit) {
 		case unit::RADS:
-			ctx.advance_to(std::formatter<float>::format(p.rads(), ctx));
-			ctx.advance_to(std::formatter<const char*>::format("rad", ctx));
+			ctx.advance_to(TR_FMT::formatter<float>::format(p.rads(), ctx));
+			ctx.advance_to(TR_FMT::formatter<const char*>::format("rad", ctx));
 			break;
 		case unit::DEGREES:
-			ctx.advance_to(std::formatter<float>::format(p.degs(), ctx));
-			ctx.advance_to(std::formatter<const char*>::format("deg", ctx));
+			ctx.advance_to(TR_FMT::formatter<float>::format(p.degs(), ctx));
+			ctx.advance_to(TR_FMT::formatter<const char*>::format("deg", ctx));
 			break;
 		case unit::TURNS:
-			ctx.advance_to(std::formatter<float>::format(p.turns(), ctx));
-			ctx.advance_to(std::formatter<const char*>::format("tr", ctx));
+			ctx.advance_to(TR_FMT::formatter<float>::format(p.turns(), ctx));
+			ctx.advance_to(TR_FMT::formatter<const char*>::format("tr", ctx));
 			break;
 		}
 		return ctx.out();

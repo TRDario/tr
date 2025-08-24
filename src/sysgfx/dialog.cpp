@@ -53,7 +53,7 @@ std::vector<std::filesystem::path> tr::system::show_open_file_dialog(std::span<c
 
 	file_dialog_context ctx{};
 	SDL_ShowOpenFileDialog(file_dialog_callback, &ctx, nullptr, reinterpret_cast<const SDL_DialogFileFilter*>(filters.data()),
-						   static_cast<int>(filters.size()), default_path, allow_multiple);
+						   int(filters.size()), default_path, allow_multiple);
 	while (!ctx.done) {
 		SDL_PumpEvents();
 		std::this_thread::sleep_for(10ms);
@@ -83,13 +83,13 @@ tr::system::msg_button tr::system::show_message_box(msg_box_type type, msg_butto
 		SDL_ShowSimpleMessageBox(flags, title, message, nullptr);
 		return msg_button::OK;
 	case msg_buttons::YES_NO: {
-		int selected{static_cast<int>(msg_button::NO)};
+		int selected{int(msg_button::NO)};
 		SDL_MessageBoxData data{flags, nullptr, title, message, 2, YES_NO_BUTTONS.data(), nullptr};
 		SDL_ShowMessageBox(&data, &selected);
 		return static_cast<msg_button>(selected);
 	}
 	case msg_buttons::YES_NO_CANCEL: {
-		int selected{static_cast<int>(msg_button::CANCEL)};
+		int selected{int(msg_button::CANCEL)};
 		SDL_MessageBoxData data{flags, nullptr, title, message, 3, YES_NO_CANCEL_BUTTONS.data(), nullptr};
 		SDL_ShowMessageBox(&data, &selected);
 		return static_cast<msg_button>(selected);
@@ -105,12 +105,12 @@ void tr::system::show_fatal_error_message_box(const std::exception& exception)
 		emergency_buffer.reset();
 	}
 
-	const std::string title{app_name != nullptr ? std::format("{} - Fatal Error", app_name) : "Fatal Error"};
+	const std::string title{app_name != nullptr ? TR_FMT::format("{} - Fatal Error", app_name) : "Fatal Error"};
 
 	const tr::exception* tr_exception{dynamic_cast<const tr::exception*>(&exception)};
 	std::string message;
 	if (tr_exception) {
-		message = std::format("A fatal error has occurred ({}).", tr_exception->name());
+		message = TR_FMT::format("A fatal error has occurred ({}).", tr_exception->name());
 		const std::string_view description{tr_exception->description()};
 		if (!description.empty()) {
 			message.push_back('\n');
@@ -124,7 +124,7 @@ void tr::system::show_fatal_error_message_box(const std::exception& exception)
 		TR_LOG(log, tr::severity::FATAL, *tr_exception);
 	}
 	else {
-		message = std::format("A fatal error has occurred ({}).", exception.what());
+		message = TR_FMT::format("A fatal error has occurred ({}).", exception.what());
 		TR_LOG(log, tr::severity::FATAL, exception);
 	}
 	message.append("\nPress OK to exit the application.");
@@ -157,7 +157,7 @@ std::filesystem::path tr::system::show_save_file_dialog(std::span<const dialog_f
 {
 	file_dialog_context ctx{};
 	SDL_ShowSaveFileDialog(file_dialog_callback, &ctx, nullptr, reinterpret_cast<const SDL_DialogFileFilter*>(filters.data()),
-						   static_cast<int>(filters.size()), default_path);
+						   int(filters.size()), default_path);
 	while (!ctx.done) {
 		SDL_PumpEvents();
 		std::this_thread::sleep_for(10ms);

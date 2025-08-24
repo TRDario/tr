@@ -1,4 +1,5 @@
 include(FetchContent)
+include(CheckIncludeFileCXX)
 
 set(LZ4_BUILD_CLI OFF)
 
@@ -57,6 +58,16 @@ FetchContent_Declare(glm GIT_REPOSITORY	https://github.com/g-truc/glm.git GIT_TA
 FetchContent_Declare(lz4 URL https://github.com/lz4/lz4/archive/refs/tags/v1.10.0.zip SOURCE_SUBDIR build/cmake DOWNLOAD_EXTRACT_TIMESTAMP true)
 FetchContent_MakeAvailable(glm lz4)
 add_library(lz4::lz4 ALIAS lz4_static)
+
+check_include_file_cxx(format TR_HAS_STD_FORMAT)
+if(TR_HAS_STD_FORMAT)
+	message("[tr] Found <format>.")	
+	add_compile_definitions(TR_HAS_STD_FORMAT)
+else()
+	message("[tr] <format> not found, falling back to libfmt...")
+	FetchContent_Declare(fmt URL https://github.com/fmtlib/fmt/releases/download/11.2.0/fmt-11.2.0.zip DOWNLOAD_EXTRACT_TIMESTAMP true)
+	FetchContent_MakeAvailable(fmt)
+endif()
 
 if(TR_BUILD_SYSGFX)
 	FetchContent_Declare(sdl3 URL https://github.com/libsdl-org/SDL/archive/refs/tags/release-3.2.16.zip OVERRIDE_FIND_PACKAGE DOWNLOAD_EXTRACT_TIMESTAMP true)

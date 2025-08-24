@@ -1,6 +1,6 @@
-#include "../../include/tr/sysgfx/debug_renderer.hpp"
 #include "../../include/tr/sysgfx/backbuffer.hpp"
 #include "../../include/tr/sysgfx/blending.hpp"
+#include "../../include/tr/sysgfx/debug_renderer.hpp"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/render_target.hpp"
 #include "../../include/tr/sysgfx/shader_pipeline.hpp"
@@ -30,8 +30,8 @@ namespace tr::gfx::debug_renderer {
 	// Debug vertex shader.
 	inline constexpr const char* DEBUG_RENDERER_VERT_SRC =
 		"#version 450\n#define L(l) layout(location=l)\nL(0)uniform vec2 r;L(1)uniform float s;L(0)in vec2 p;L(1)in vec2 P;L(2)in float "
-		"R;L(3)in float c;L(4)in vec4 t;L(5)in vec4 b;out gl_PerVertex{vec4 gl_Position;};L(0)out vec2 o;L(1)out vec4 T;L(2)out vec4 B;void "
-		"main(){o=(vec2(mod(c,16),floor(c/16))+p)/16;T=t;B=b;vec2 "
+		"R;L(3)in float c;L(4)in vec4 t;L(5)in vec4 b;out gl_PerVertex{vec4 gl_Position;};L(0)out vec2 o;L(1)out vec4 T;L(2)out vec4 "
+		"B;void main(){o=(vec2(mod(c,16),floor(c/16))+p)/16;T=t;B=b;vec2 "
 		"F;if(R==1){F=P*8*s;F.x=r.x-F.x;F+=p*8*s;}else{F=(p+P)*8*s;}gl_Position=vec4(F.x/r.x*2-1,-F.y/r.y*2+1,0,1);}";
 	// Debug fragment shader.
 	inline constexpr const char* DEBUG_RENDERER_FRAG_SRC =
@@ -157,23 +157,23 @@ std::string tr::gfx::debug_renderer::format_duration(std::string_view prefix, du
 {
 	if (duration <= 1us) {
 		const double count{duration_cast<dnsecs>(duration).count()};
-		const int precision{6 - std::clamp(static_cast<int>(std::log10(count)), 0, 5)};
-		return std::vformat(std::format("{}{{:#08.{}f}}ns", prefix, precision), std::make_format_args(count));
+		const int precision{6 - std::clamp(int(std::log10(count)), 0, 5)};
+		return std::vformat(TR_FMT::format("{}{{:#08.{}f}}ns", prefix, precision), std::make_format_args(count));
 	}
 	else if (duration <= 1ms) {
 		const double count{duration_cast<dusecs>(duration).count()};
-		const int precision{6 - std::clamp(static_cast<int>(std::log10(count)), 0, 5)};
-		return std::vformat(std::format("{}{{:#08.{}f}}us", prefix, precision), std::make_format_args(count));
+		const int precision{6 - std::clamp(int(std::log10(count)), 0, 5)};
+		return std::vformat(TR_FMT::format("{}{{:#08.{}f}}us", prefix, precision), std::make_format_args(count));
 	}
 	else if (duration <= 1s) {
 		const double count{duration_cast<dmsecs>(duration).count()};
-		const int precision{6 - std::clamp(static_cast<int>(std::log10(count)), 0, 5)};
-		return std::vformat(std::format("{}{{:#08.{}f}}ms", prefix, precision), std::make_format_args(count));
+		const int precision{6 - std::clamp(int(std::log10(count)), 0, 5)};
+		return std::vformat(TR_FMT::format("{}{{:#08.{}f}}ms", prefix, precision), std::make_format_args(count));
 	}
 	else {
 		const double count{duration_cast<dsecs>(duration).count()};
-		const int precision{6 - std::clamp(static_cast<int>(std::log10(count)), 0, 5)};
-		return std::vformat(std::format("{}{{:#08.{}f}}s ", prefix, precision), std::make_format_args(count));
+		const int precision{6 - std::clamp(int(std::log10(count)), 0, 5)};
+		return std::vformat(TR_FMT::format("{}{{:#08.{}f}}s ", prefix, precision), std::make_format_args(count));
 	}
 }
 
@@ -367,7 +367,7 @@ void tr::gfx::debug_renderer::write_right(const benchmark& benchmark, std::strin
 	constexpr tr::rgba8 ALT_COLOR{255, 0, 0, 255};
 
 	if (!name.empty()) {
-		write_right(std::format("{:<15}", name));
+		write_right(TR_FMT::format("{:<15}", name));
 	}
 	write_right(format_duration("MIN: ", benchmark.min()), benchmark.min() < limit ? TEXT_COLOR : ALT_COLOR);
 	write_right(format_duration("AVG: ", benchmark.avg()), benchmark.avg() < limit ? TEXT_COLOR : ALT_COLOR);
@@ -398,7 +398,7 @@ void tr::gfx::debug_renderer::draw()
 			set_vertex_buffer(state->glyph_buffer, 1, 0);
 		}
 		state->pipeline.vertex_shader().set_uniform(0, static_cast<glm::vec2>(backbuffer_size()));
-		draw_instances(primitive::TRI_FAN, 0, 4, static_cast<int>(state->glyphs.size()));
+		draw_instances(primitive::TRI_FAN, 0, 4, int(state->glyphs.size()));
 		state->glyphs.clear();
 	}
 

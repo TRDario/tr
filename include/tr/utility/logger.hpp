@@ -28,9 +28,9 @@ namespace tr {
 		bool active() const;
 
 		// Logs a message.
-		template <class... Args> void log(severity level, std::format_string<Args...> fmt, Args&&... args);
+		template <class... Args> void log(severity level, TR_FMT::format_string<Args...> fmt, Args&&... args);
 		// Logs a message continuing from a previous line.
-		template <class... Args> void log_continue(std::format_string<Args...> fmt, Args&&... args);
+		template <class... Args> void log_continue(TR_FMT::format_string<Args...> fmt, Args&&... args);
 		// Logs an exception.
 		void log(severity level, const std::exception& err);
 		// Logs an exception continuing from a previous line.
@@ -65,13 +65,13 @@ namespace tr {
 
 ///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
 
-template <class... Args> void tr::logger::log(severity level, std::format_string<Args...> fmt, Args&&... args)
+template <class... Args> void tr::logger::log(severity level, TR_FMT::format_string<Args...> fmt, Args&&... args)
 {
 	const auto time{std::chrono::floor<std::chrono::seconds>(
 		std::chrono::current_zone()->std::chrono::time_zone::to_local(std::chrono::system_clock::now()))};
-	const std::string time_str{std::format("[{:%T}] ", time)};
-	const std::string severity_str{std::format("[{}] ", static_cast<char>(level))};
-	const std::string fmt_str{std::format(fmt, std::forward<Args>(args)...)};
+	const std::string time_str{TR_FMT::format("[{:%T}] ", time)};
+	const std::string severity_str{TR_FMT::format("[{}] ", static_cast<char>(level))};
+	const std::string fmt_str{TR_FMT::format(fmt, std::forward<Args>(args)...)};
 
 	std::cout << time_str << "[" << m_prefix << "] " << severity_str << fmt_str << "\n";
 	if (!m_path.empty()) {
@@ -82,9 +82,9 @@ template <class... Args> void tr::logger::log(severity level, std::format_string
 	}
 }
 
-template <class... Args> void tr::logger::log_continue(std::format_string<Args...> fmt, Args&&... args)
+template <class... Args> void tr::logger::log_continue(TR_FMT::format_string<Args...> fmt, Args&&... args)
 {
-	const std::string fmt_str{std::format(fmt, std::forward<Args>(args)...)};
+	const std::string fmt_str{TR_FMT::format(fmt, std::forward<Args>(args)...)};
 	const std::string fill(m_prefix.size() + 14, ' ');
 
 	std::cout << fill << "--- " << fmt_str << "\n";
