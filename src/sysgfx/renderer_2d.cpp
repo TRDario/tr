@@ -161,10 +161,10 @@ std::vector<tr::gfx::renderer_2d::mesh_draw_info> tr::gfx::renderer_2d::state_t:
 	mesh_borders.emplace_back(0, 0);
 
 	const usize total_vertices{
-		std::accumulate(first, last, usize{0}, [](usize sum, const mesh& m) { return sum + m.positions.size(); }),
+		std::accumulate(first, last, 0_uz, [](usize sum, const mesh& m) { return sum + m.positions.size(); }),
 	};
 	const usize total_indices{
-		std::accumulate(first, last, usize{0}, [](usize sum, const mesh& m) { return sum + m.indices.size(); }),
+		std::accumulate(first, last, 0_uz, [](usize sum, const mesh& m) { return sum + m.indices.size(); }),
 	};
 	vbuffer_positions.resize(total_vertices);
 	vbuffer_uvs.resize(total_vertices);
