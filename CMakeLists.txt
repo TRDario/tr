@@ -41,7 +41,7 @@ target_sources(tr PRIVATE
 )
 target_link_libraries(tr glm::glm lz4::lz4)
 if(NOT TR_HAS_STD_FORMAT)
-	target_link_libraries(tr fmt::fmt-header-only)
+	target_link_libraries(tr fmt::fmt)
 endif()
 if(TR_BUILD_SYSGFX)
 	target_sources(tr PRIVATE
