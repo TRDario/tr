@@ -67,9 +67,9 @@ namespace tr {
 
 template <class... Args> void tr::logger::log(severity level, TR_FMT::format_string<Args...> fmt, Args&&... args)
 {
-	const auto time{std::chrono::floor<std::chrono::seconds>(
-		std::chrono::current_zone()->std::chrono::time_zone::to_local(std::chrono::system_clock::now()))};
-	const std::string time_str{TR_FMT::format("[{:%T}] ", time)};
+	const time_t time{std::time(nullptr)};
+	const tm* tm{std::localtime(&time)};
+	const std::string time_str{TR_FMT::format("[{:02}:{:02}:{:02}] ", tm->tm_hour, tm->tm_min, tm->tm_sec)};
 	const std::string severity_str{TR_FMT::format("[{}] ", char(level))};
 	const std::string fmt_str{TR_FMT::format(fmt, std::forward<Args>(args)...)};
 
