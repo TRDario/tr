@@ -19,7 +19,7 @@ namespace tr {
 			return {data, N - 1};
 		}
 
-		template <class... Args> consteval operator TR_FMT::format_string<Args...>() const
+		template <class... Args> consteval operator TR_FORMAT_STRING<Args...>() const
 		{
 			return std::string_view{*this};
 		}

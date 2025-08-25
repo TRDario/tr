@@ -44,9 +44,11 @@
 #ifdef TR_HAS_STD_FORMAT
 #include <format> // IWYU pragma: export
 #define TR_FMT std
+#define TR_FORMAT_STRING std::format_string
 #else
 #include <fmt/base.h>
 #include <fmt/chrono.h>
 #include <fmt/format.h>
 #define TR_FMT fmt
+#define TR_FORMAT_STRING fmt::fstring
 #endif
