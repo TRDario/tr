@@ -158,22 +158,22 @@ std::string tr::gfx::debug_renderer::format_duration(std::string_view prefix, du
 	if (duration <= 1us) {
 		const double count{duration_cast<dnsecs>(duration).count()};
 		const int precision{6 - std::clamp(int(std::log10(count)), 0, 5)};
-		return std::vformat(TR_FMT::format("{}{{:#08.{}f}}ns", prefix, precision), std::make_format_args(count));
+		return TR_FMT::vformat(TR_FMT::format("{}{{:#08.{}f}}ns", prefix, precision), TR_FMT::make_format_args(count));
 	}
 	else if (duration <= 1ms) {
 		const double count{duration_cast<dusecs>(duration).count()};
 		const int precision{6 - std::clamp(int(std::log10(count)), 0, 5)};
-		return std::vformat(TR_FMT::format("{}{{:#08.{}f}}us", prefix, precision), std::make_format_args(count));
+		return TR_FMT::vformat(TR_FMT::format("{}{{:#08.{}f}}us", prefix, precision), TR_FMT::make_format_args(count));
 	}
 	else if (duration <= 1s) {
 		const double count{duration_cast<dmsecs>(duration).count()};
 		const int precision{6 - std::clamp(int(std::log10(count)), 0, 5)};
-		return std::vformat(TR_FMT::format("{}{{:#08.{}f}}ms", prefix, precision), std::make_format_args(count));
+		return TR_FMT::vformat(TR_FMT::format("{}{{:#08.{}f}}ms", prefix, precision), TR_FMT::make_format_args(count));
 	}
 	else {
 		const double count{duration_cast<dsecs>(duration).count()};
 		const int precision{6 - std::clamp(int(std::log10(count)), 0, 5)};
-		return std::vformat(TR_FMT::format("{}{{:#08.{}f}}s ", prefix, precision), std::make_format_args(count));
+		return TR_FMT::vformat(TR_FMT::format("{}{{:#08.{}f}}s ", prefix, precision), TR_FMT::make_format_args(count));
 	}
 }
 
