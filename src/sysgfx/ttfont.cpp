@@ -1,6 +1,6 @@
-#include "../../include/tr/sysgfx/ttfont.hpp"
 #include "../../include/tr/sysgfx/bitmap.hpp"
 #include "../../include/tr/sysgfx/initialization.hpp"
+#include "../../include/tr/sysgfx/ttfont.hpp"
 #include <SDL3_ttf/SDL_ttf.h>
 
 namespace tr::system {
@@ -231,4 +231,41 @@ tr::system::ttfont tr::system::load_ttfont_file(const std::filesystem::path& pat
 		throw ttfont_load_error{path.string(), SDL_GetError()};
 	}
 	return ttfont{font};
+}
+
+//
+
+std::vector<std::string_view> tr::system::split_into_lines(std::string_view str)
+{
+	std::vector<std::string_view> lines;
+	std::string_view::iterator start{str.begin()};
+	std::string_view::iterator end{std::find(start, str.end(), '\n')};
+	while (end != str.end()) {
+		lines.push_back({start, end});
+		start = end + 1;
+		end = std::find(start, str.end(), '\n');
+	}
+	lines.push_back({start, end});
+	return lines;
+}
+
+std::vector<std::string_view> tr::system::break_overlong_lines(std::vector<std::string_view>&& lines, const ttfont& font, int max_w)
+{
+	for (std::vector<std::string_view>::iterator it = lines.begin(); it != lines.end(); ++it) {
+		if (it->empty()) {
+			continue;
+		}
+
+		const tr::system::ttf_measure_result measure{font.measure_text(*it, int(max_w))};
+		if (measure.text != std::string_view{*it}) {
+			it = std::prev(lines.emplace(std::next(it), it->begin() + measure.text.size(), it->end()));
+			*it = it->substr(0, measure.text.size());
+		}
+	}
+	return std::move(lines);
+}
+
+std::vector<std::string_view> tr::system::split_into_lines(std::string_view str, const ttfont& font, int max_w)
+{
+	return break_overlong_lines(split_into_lines(str), font, max_w);
 }

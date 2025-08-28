@@ -137,6 +137,13 @@ namespace tr::system {
 	// Loads a font from file.
 	// May throw: file_not_found, ttfont_file_load_error.
 	ttfont load_ttfont_file(const std::filesystem::path& path, float size = 16);
+
+	// Splits a string view into a list of lines.
+	std::vector<std::string_view> split_into_lines(std::string_view str);
+	// Splits a vector of lines, breaking overlong lines according to the font's current size, style, and outline.
+	std::vector<std::string_view> break_overlong_lines(std::vector<std::string_view>&& lines, const ttfont& font, int max_w);
+	// Splits a string view into a list of lines, breaking overlong lines according to the font's current size, style, and outline.
+	std::vector<std::string_view> split_into_lines(std::string_view str, const ttfont& font, int max_w);
 } // namespace tr::system
 
 ///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
