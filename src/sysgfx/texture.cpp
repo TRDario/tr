@@ -315,6 +315,7 @@ tr::gfx::texture_ref::texture_ref(texture_ref&& r) noexcept
 	if (!empty()) {
 		std::ranges::replace(m_ref->m_refs, tr::ref{r}, tr::ref{*this});
 	}
+	r.m_ref = std::nullopt;
 }
 
 tr::gfx::texture_ref::~texture_ref()
@@ -355,6 +356,7 @@ tr::gfx::texture_ref& tr::gfx::texture_ref::operator=(texture_ref&& r) noexcept
 	if (!empty()) {
 		std::ranges::replace(m_ref->m_refs, tr::ref{r}, tr::ref{*this});
 	}
+	r.m_ref = std::nullopt;
 	return *this;
 }
 
