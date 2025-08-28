@@ -10,7 +10,7 @@ namespace tr {
 		constexpr operator T&() const;
 		constexpr operator ref<const T>() const;
 
-		constexpr bool operator==(const ref&) const = default;
+		constexpr friend bool operator==(const ref&, const ref&) = default;
 
 		constexpr T* as_ptr() const;
 		constexpr T* operator->() const;
@@ -19,6 +19,9 @@ namespace tr {
 	  private:
 		T* m_base;
 	};
+	template <class T> constexpr bool operator==(const T& l, const ref<T>& r);
+	template <class T> constexpr bool operator==(const ref<T>& l, const T& r);
+
 	// Wrapper over a pointer representing optional reference semantics.
 	template <class T> class opt_ref {
 	  public:
@@ -29,7 +32,7 @@ namespace tr {
 
 		constexpr operator opt_ref<const T>() const;
 
-		constexpr bool operator==(const opt_ref&) const = default;
+		constexpr friend bool operator==(const opt_ref&, const opt_ref&) = default;
 
 		constexpr explicit operator bool() const;
 		constexpr bool has_value() const;
