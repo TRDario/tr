@@ -19,6 +19,8 @@ namespace tr {
 	  private:
 		T* m_base;
 	};
+	template <class T> constexpr bool operator==(const T& l, const ref<T>& r);
+	template <class T> constexpr bool operator==(const ref<T>& l, const T& r);
 
 	// Wrapper over a pointer representing optional reference semantics.
 	template <class T> class opt_ref {
