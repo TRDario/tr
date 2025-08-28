@@ -21,7 +21,7 @@ void tr::gfx::texture_unit::deleter::operator()(unsigned int id)
 void tr::gfx::texture_unit::set_texture(texture_ref ref)
 {
 	if (!ref.empty()) {
-		if (texture_unit_textures[m_unit.get()] != ref) {
+		if (texture_unit_textures[m_unit.get()] != ref && ref.m_ref->m_handle != 0) {
 			TR_GL_CALL(glBindTextures, m_unit.get(), 1, &ref.m_ref->m_handle);
 		}
 	}

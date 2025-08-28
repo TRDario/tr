@@ -144,11 +144,11 @@ tr::gfx::texture::texture()
 }
 
 tr::gfx::texture::texture(glm::ivec2 size, bool mipmapped, pixel_format format)
-	: texture{}
+	: m_size{size}
 {
 	TR_ASSERT(size.x > 0 && size.y > 0, "Tried to allocate a texture with an invalid size of {}x{}", size.x, size.y);
 
-	m_size = size;
+	TR_GL_CALL(glCreateTextures, GL_TEXTURE_2D, 1, &m_handle);
 	TR_GL_CALL(glTextureStorage2D, m_handle, mipmapped ? floor_cast<GLsizei>(std::log2(std::max(size.x, size.y)) + 1) : 1,
 			   tex_format(format), size.x, size.y);
 	if (glGetError() == GL_OUT_OF_MEMORY) {
@@ -192,9 +192,16 @@ tr::gfx::texture& tr::gfx::texture::operator=(texture&& r) noexcept
 
 void tr::gfx::texture::take_storage(texture&& r) noexcept
 {
+	TR_ASSERT(!r.empty(), "Tried to take the storage of a texture without a storage.");
+
 	m_handle = r.m_handle;
 	m_size = r.m_size;
 	r.m_handle = 0;
+	for (int i = 0; i < 80; ++i) {
+		if (texture_unit_textures[i] == *this) {
+			TR_GL_CALL(glBindTextures, i, 1, &m_handle);
+		}
+	}
 	if (!m_label.empty()) {
 		TR_GL_CALL(glObjectLabel, GL_TEXTURE, m_handle, GLsizei(m_label.size()), m_label.data());
 	}
