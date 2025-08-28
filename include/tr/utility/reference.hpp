@@ -34,8 +34,7 @@ namespace tr {
 
 		constexpr friend bool operator==(const opt_ref&, const opt_ref&) = default;
 
-		constexpr explicit operator bool() const;
-		constexpr bool has_value() const;
+		constexpr bool has_ref() const;
 
 		constexpr T* as_ptr() const;
 		constexpr T* operator->() const;
