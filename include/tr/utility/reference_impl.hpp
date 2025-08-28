@@ -19,16 +19,6 @@ template <class T> constexpr tr::ref<T>::operator ref<const T>() const
 	return tr::ref<const T>{*m_base};
 }
 
-template <class T> constexpr bool tr::operator==(const T& l, const ref<T>& r)
-{
-	return ref{l} == r;
-}
-
-template <class T> constexpr bool tr::operator==(const ref<T>& l, const T& r)
-{
-	return l == ref{r};
-}
-
 template <class T> constexpr T* tr::ref<T>::as_ptr() const
 {
 	return m_base;

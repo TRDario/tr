@@ -313,21 +313,25 @@ tr::gfx::texture_ref::texture_ref(texture_ref&& r) noexcept
 	: m_ref{r.m_ref}
 {
 	if (!empty()) {
-		std::ranges::replace(m_ref->m_refs, tr::ref{r}, tr::ref{*this});
+		for (texture_ref& ref : m_ref->m_refs) {
+			if (ref == r) {
+				ref = *this;
+			}
+		}
 	}
 }
 
 tr::gfx::texture_ref::~texture_ref()
 {
 	if (!empty()) {
-		m_ref->m_refs.erase(std::ranges::find(m_ref->m_refs, *this));
+		m_ref->m_refs.erase(std::ranges::find(m_ref->m_refs, ref{*this}));
 	}
 }
 
 tr::gfx::texture_ref& tr::gfx::texture_ref::operator=(const texture& tex)
 {
 	if (!empty()) {
-		m_ref->m_refs.erase(std::ranges::find(m_ref->m_refs, *this));
+		m_ref->m_refs.erase(std::ranges::find(m_ref->m_refs, ref{*this}));
 	}
 	m_ref = tex;
 	tex.m_refs.emplace_back(*this);
@@ -337,7 +341,7 @@ tr::gfx::texture_ref& tr::gfx::texture_ref::operator=(const texture& tex)
 tr::gfx::texture_ref& tr::gfx::texture_ref::operator=(const texture_ref& r)
 {
 	if (!empty()) {
-		m_ref->m_refs.erase(std::ranges::find(m_ref->m_refs, *this));
+		m_ref->m_refs.erase(std::ranges::find(m_ref->m_refs, ref{*this}));
 	}
 	m_ref = r.m_ref;
 	if (!empty()) {
@@ -349,7 +353,7 @@ tr::gfx::texture_ref& tr::gfx::texture_ref::operator=(const texture_ref& r)
 tr::gfx::texture_ref& tr::gfx::texture_ref::operator=(texture_ref&& r) noexcept
 {
 	if (!empty()) {
-		m_ref->m_refs.erase(std::ranges::find(m_ref->m_refs, *this));
+		m_ref->m_refs.erase(std::ranges::find(m_ref->m_refs, ref{*this}));
 	}
 	m_ref = r.m_ref;
 	if (!empty()) {
