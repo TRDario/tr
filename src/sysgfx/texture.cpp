@@ -351,6 +351,11 @@ tr::gfx::texture_ref& tr::gfx::texture_ref::operator=(texture_ref&& r) noexcept
 	return *this;
 }
 
+bool tr::gfx::texture_ref::empty() const
+{
+	return !m_ref.has_ref();
+}
+
 ///////////////////////////////////////////////////////////// RENDER TEXTURE //////////////////////////////////////////////////////////////
 
 tr::gfx::render_texture::render_texture(glm::ivec2 size, bool mipmapped, pixel_format format)
