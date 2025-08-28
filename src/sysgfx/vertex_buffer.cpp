@@ -106,12 +106,7 @@ void tr::gfx::basic_dyn_vertex_buffer::set_region(usize offset, std::span<const 
 	TR_GL_CALL(glNamedBufferSubData, m_vbo.get(), offset, std::ssize(data), data.data());
 }
 
-void tr::gfx::basic_dyn_vertex_buffer::set_label(const std::string& label)
-{
-	set_label(std::string{label});
-}
-
-void tr::gfx::basic_dyn_vertex_buffer::set_label(std::string&& label)
+void tr::gfx::basic_dyn_vertex_buffer::set_label(std::string label)
 {
 	m_label = std::move(label);
 	TR_GL_CALL(glObjectLabel, GL_BUFFER, m_vbo.get(), GLsizei(m_label.size()), m_label.data());

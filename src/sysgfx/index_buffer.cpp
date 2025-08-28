@@ -106,12 +106,7 @@ void tr::gfx::dyn_index_buffer::set(std::span<const u16> data)
 	set_region(0, data);
 }
 
-void tr::gfx::dyn_index_buffer::set_label(const std::string& label)
-{
-	set_label(std::string{label});
-}
-
-void tr::gfx::dyn_index_buffer::set_label(std::string&& label)
+void tr::gfx::dyn_index_buffer::set_label(std::string label)
 {
 	m_label = std::move(label);
 	TR_GL_CALL(glObjectLabel, GL_BUFFER, m_ibo.get(), GLsizei(m_label.size()), m_label.data());

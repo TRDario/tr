@@ -57,9 +57,7 @@ namespace tr::gfx {
 		void set_region(usize offset, std::span<const std::byte> data);
 
 		// Sets the debug label of the vertex buffer.
-		void set_label(const std::string& label);
-		// Sets the debug label of the vertex buffer.
-		void set_label(std::string&& label);
+		void set_label(std::string label);
 
 	  private:
 		struct deleter {
