@@ -25,7 +25,7 @@ namespace tr::gfx::renderer_2d {
 
 	// Default layer information.
 	struct layer_defaults {
-		texture_ref texture{NO_TEXTURE};
+		texture_ref texture;
 		std::optional<glm::mat4> transform;
 		blend_mode blend_mode{ALPHA_BLENDING};
 	};
@@ -121,7 +121,7 @@ tr::gfx::renderer_2d::mesh& tr::gfx::renderer_2d::state_t::find_mesh(int layer, 
 {
 	auto range{std::ranges::equal_range(meshes, layer, std::less{}, &mesh::layer)};
 	std::vector<mesh>::iterator it;
-	if (texture == NO_TEXTURE) {
+	if (texture.empty()) {
 		auto find_suitable{[&](const mesh& mesh) {
 			return mesh.mat == mat && mesh.blend_mode == blend_mode && mesh.positions.size() + space_needed <= UINT16_MAX;
 		}};
@@ -129,11 +129,11 @@ tr::gfx::renderer_2d::mesh& tr::gfx::renderer_2d::state_t::find_mesh(int layer, 
 	}
 	else {
 		auto find_suitable{[&](const mesh& mesh) {
-			return (mesh.texture == NO_TEXTURE || mesh.texture == texture) && mesh.mat == mat && mesh.blend_mode == blend_mode &&
+			return (mesh.texture.empty() || mesh.texture == texture) && mesh.mat == mat && mesh.blend_mode == blend_mode &&
 				   mesh.positions.size() + space_needed <= UINT16_MAX;
 		}};
 		it = std::ranges::find_if(range, find_suitable);
-		if (it != range.end() && it->texture == NO_TEXTURE) {
+		if (it != range.end() && it->texture.empty()) {
 			it->texture = texture;
 		}
 	}
@@ -284,7 +284,7 @@ tr::gfx::simple_color_mesh_ref tr::gfx::renderer_2d::new_color_fan(int layer, us
 {
 	TR_ASSERT(state.has_value(), "Tried to allocate a new color fan before initializing the 2D renderer.");
 
-	mesh& mesh{state->find_mesh(layer, NO_TEXTURE, mat, blend_mode, vertices)};
+	mesh& mesh{state->find_mesh(layer, std::nullopt, mat, blend_mode, vertices)};
 	const u16 base_index{u16(mesh.positions.size())};
 	mesh.positions.resize(mesh.positions.size() + vertices);
 	mesh.uvs.resize(mesh.uvs.size() + vertices);
@@ -314,7 +314,7 @@ tr::gfx::simple_color_mesh_ref tr::gfx::renderer_2d::new_color_outline(int layer
 {
 	TR_ASSERT(state.has_value(), "Tried to allocate a new color outline before initializing the 2D renderer.");
 
-	mesh& mesh{state->find_mesh(layer, NO_TEXTURE, mat, blend_mode, vertices * 2)};
+	mesh& mesh{state->find_mesh(layer, std::nullopt, mat, blend_mode, vertices * 2)};
 	const u16 base_index{u16(mesh.positions.size())};
 	mesh.positions.resize(mesh.positions.size() + vertices * 2);
 	mesh.uvs.resize(mesh.uvs.size() + vertices * 2);
@@ -347,7 +347,7 @@ tr::gfx::color_mesh_ref tr::gfx::renderer_2d::new_color_mesh(int layer, usize ve
 {
 	TR_ASSERT(state.has_value(), "Tried to allocate a new color mesh before initializing the 2D renderer.");
 
-	mesh& mesh{state->find_mesh(layer, NO_TEXTURE, mat, blend_mode, vertices)};
+	mesh& mesh{state->find_mesh(layer, std::nullopt, mat, blend_mode, vertices)};
 	const u16 base_index{u16(mesh.positions.size())};
 	mesh.positions.resize(mesh.positions.size() + vertices);
 	mesh.uvs.resize(mesh.uvs.size() + vertices);
@@ -373,14 +373,14 @@ tr::gfx::simple_textured_mesh_ref tr::gfx::renderer_2d::new_textured_fan(int lay
 								defaults.transform.has_value() ? *defaults.transform : state->default_transform, defaults.blend_mode);
 	}
 	else {
-		return new_textured_fan(layer, vertices, NO_TEXTURE, state->default_transform, ALPHA_BLENDING);
+		return new_textured_fan(layer, vertices, std::nullopt, state->default_transform, ALPHA_BLENDING);
 	}
 }
 
 tr::gfx::simple_textured_mesh_ref tr::gfx::renderer_2d::new_textured_fan(int layer, usize vertices, texture_ref texture)
 {
 	TR_ASSERT(state.has_value(), "Tried to allocate a new textured fan before initializing the 2D renderer.");
-	TR_ASSERT(texture != NO_TEXTURE, "Cannot pass NO_TEXTURE as texture for textured mesh.");
+	TR_ASSERT(!texture.empty(), "Cannot pass std::nullopt as texture for textured mesh.");
 
 	std::unordered_map<int, layer_defaults>::iterator it{state->layer_defaults.find(layer)};
 	if (it != state->layer_defaults.end()) {
@@ -397,7 +397,7 @@ tr::gfx::simple_textured_mesh_ref tr::gfx::renderer_2d::new_textured_fan(int lay
 																		 const glm::mat4& mat, const blend_mode& blend_mode)
 {
 	TR_ASSERT(state.has_value(), "Tried to allocate a new textured fan before initializing the 2D renderer.");
-	TR_ASSERT(texture != NO_TEXTURE, "Cannot pass NO_TEXTURE as texture for textured fan.");
+	TR_ASSERT(!texture.empty(), "Cannot pass std::nullopt as texture for textured fan.");
 
 	mesh& mesh{state->find_mesh(layer, texture, mat, blend_mode, vertices)};
 	const u16 base_index{u16(mesh.positions.size())};
@@ -423,14 +423,14 @@ tr::gfx::textured_mesh_ref tr::gfx::renderer_2d::new_textured_mesh(int layer, us
 								 defaults.transform.has_value() ? *defaults.transform : state->default_transform, defaults.blend_mode);
 	}
 	else {
-		return new_textured_mesh(layer, vertices, indices, NO_TEXTURE, state->default_transform, ALPHA_BLENDING);
+		return new_textured_mesh(layer, vertices, indices, std::nullopt, state->default_transform, ALPHA_BLENDING);
 	}
 }
 
 tr::gfx::textured_mesh_ref tr::gfx::renderer_2d::new_textured_mesh(int layer, usize vertices, usize indices, texture_ref texture)
 {
 	TR_ASSERT(state.has_value(), "Tried to allocate a new textured mesh before initializing the 2D renderer.");
-	TR_ASSERT(texture != NO_TEXTURE, "Cannot pass NO_TEXTURE as texture for textured mesh.");
+	TR_ASSERT(!texture.empty(), "Cannot pass std::nullopt as texture for textured mesh.");
 
 	std::unordered_map<int, layer_defaults>::iterator it{state->layer_defaults.find(layer)};
 	if (it != state->layer_defaults.end()) {
@@ -447,7 +447,7 @@ tr::gfx::textured_mesh_ref tr::gfx::renderer_2d::new_textured_mesh(int layer, us
 																   const glm::mat4& mat, const blend_mode& blend_mode)
 {
 	TR_ASSERT(state.has_value(), "Tried to allocate a new textured mesh before initializing the 2D renderer.");
-	TR_ASSERT(texture != NO_TEXTURE, "Cannot pass NO_TEXTURE as texture for textured mesh.");
+	TR_ASSERT(!texture.empty(), "Cannot pass std::nullopt as texture for textured mesh.");
 
 	mesh& mesh{state->find_mesh(layer, texture, mat, blend_mode, vertices)};
 	const u16 base_index{u16(mesh.positions.size())};

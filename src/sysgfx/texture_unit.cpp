@@ -9,7 +9,7 @@ tr::gfx::texture_unit::texture_unit()
 
 	auto it{std::ranges::find(texture_units, false)};
 	*it = true;
-	texture_unit_textures[it - texture_units.begin()] = NO_TEXTURE;
+	texture_unit_textures[it - texture_units.begin()] = std::nullopt;
 	m_unit.reset((unsigned int)(it - texture_units.begin()));
 }
 
@@ -18,24 +18,12 @@ void tr::gfx::texture_unit::deleter::operator()(unsigned int id)
 	texture_units[id] = false;
 }
 
-void tr::gfx::texture_unit::set_texture(texture_ref texture)
+void tr::gfx::texture_unit::set_texture(texture_ref ref)
 {
-	if (texture.valid()) {
-		if (texture_unit_textures[m_unit.get()] != texture) {
-			TR_GL_CALL(glBindTextures, m_unit.get(), 1, &texture.m_id);
-			texture_unit_textures[m_unit.get()] = texture;
+	if (!ref.empty()) {
+		if (texture_unit_textures[m_unit.get()] != ref) {
+			TR_GL_CALL(glBindTextures, m_unit.get(), 1, &ref.m_ref->m_handle);
 		}
 	}
-	else {
-		texture_unit_textures[m_unit.get()] = NO_TEXTURE;
-	}
-}
-
-void tr::gfx::replace_texture_bindings(texture_ref old, texture_ref fresh)
-{
-	for (auto& unit : texture_unit_textures) {
-		if (unit == old) {
-			unit = fresh;
-		}
-	}
+	texture_unit_textures[m_unit.get()] = std::move(ref);
 }

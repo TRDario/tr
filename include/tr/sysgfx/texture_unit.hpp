@@ -11,7 +11,7 @@ namespace tr::gfx {
 		texture_unit();
 
 		// Binds a texture to the texture unit.
-		void set_texture(texture_ref texture);
+		void set_texture(texture_ref ref);
 
 	  private:
 		struct deleter {
@@ -19,11 +19,8 @@ namespace tr::gfx {
 		};
 
 		// Handle to the ID of the texture unit.
-		handle<unsigned int, std::numeric_limits<unsigned int>::max(), deleter> m_unit;
+		handle<unsigned int, UINT_MAX, deleter> m_unit;
 
 		friend class shader_base;
 	};
-
-	// Replaces all bindings of a certain texture with another.
-	void replace_texture_bindings(texture_ref old, texture_ref fresh);
 } // namespace tr::gfx

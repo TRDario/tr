@@ -4,11 +4,12 @@
 
 namespace tr {
 	namespace gfx {
+		class texture;
 		class texture_ref;
 		class render_target;
 	} // namespace gfx
 	namespace imgui {
-		u64 get_texture_id(gfx::texture_ref texture);
+		u64 get_texture_id(const gfx::texture& texture);
 	}
 } // namespace tr
 
@@ -50,11 +51,25 @@ namespace tr::gfx {
 	// 2D texture living on the GPU.
 	class texture {
 	  public:
-		// Allocates an uninitialized 2D texture.
+		// Creates an empty texture.
+		texture();
+		// Allocates an uninitialized texture.
 		texture(glm::ivec2 size, bool mipmapped = false, pixel_format format = pixel_format::RGBA32);
-		// Constructs a 2D texture with data uploaded from a bitmap.
+		// Constructs a texture with data uploaded from a bitmap.
 		texture(const sub_bitmap& bitmap, bool mipmapped = false, std::optional<pixel_format> format = std::nullopt);
+		// Moves a texture, updating all references pointing to it.
+		texture(texture&& r) noexcept;
+		// Destroys the texture, emptying all references pointing to it.
+		~texture();
 
+		// Moves a texture, updating all references pointing to it.
+		texture& operator=(texture&& r) noexcept;
+		// Takes the storage of a texture without adopting its references, instead preserving existing ones.
+		// Texture parameters are tied to the storage, so this also makes the texture adopt those.
+		void take_storage(texture&& r) noexcept;
+
+		// Gets whether the texture is empty.
+		bool empty() const;
 		// Gets the size of the texture.
 		const glm::ivec2& size() const;
 
@@ -77,62 +92,69 @@ namespace tr::gfx {
 		void set_region(glm::ivec2 tl, const sub_bitmap& bitmap);
 
 		// Sets the debug label of the texture.
-		void set_label(std::string_view label);
+		void set_label(std::string label);
 
 	  protected:
-		struct deleter {
-			void operator()(unsigned int id) const;
-		};
-
 		// Handle to the OpenGL texture.
-		handle<unsigned int, 0, deleter> m_id;
-		// The size of the texture.
+		unsigned int m_handle;
+		// The cached size of the texture.
 		glm::ivec2 m_size;
-
-		// Creates an unallocated texture.
-		texture();
-		// Allocates the texture.
-		void allocate(glm::ivec2 size, bool mipmapped, pixel_format format);
+		// List of active references to this texture.
+		mutable std::vector<ref<texture_ref>> m_refs;
+		// The debug label of the texture.
+		std::string m_label;
 
 		friend class texture_ref;
-		friend class ttf_renderer;
-		template <class Key, class Hash, class Pred> friend class dyn_atlas;
+		friend class texture_unit;
 	};
 
-	// Non-owning texture reference.
+	// Smart texture reference (updated on texture moves and updates, emptied on deletion).
 	class texture_ref {
 	  public:
-		// Creates an empty texture reference.
+		// Creates an empty reference.
 		constexpr texture_ref() = default;
-		// Creates a texture reference.
-		texture_ref(const texture& texture);
+		constexpr texture_ref(std::nullopt_t) {};
+		// Creates a non-empty reference.
+		texture_ref(const texture& tex);
+		texture_ref(const texture_ref& r);
+		texture_ref(texture_ref&& r) noexcept;
+		~texture_ref();
 
-		friend bool operator==(texture_ref l, texture_ref r) = default;
+		texture_ref& operator=(const texture& tex);
+		texture_ref& operator=(const texture_ref& r);
+		texture_ref& operator=(texture_ref&& r) noexcept;
 
-		// Checks whether the reference is pointing to an extant texture.
-		bool valid() const;
+		friend bool operator==(const texture_ref& l, const texture_ref& r) = default;
+
+		// Checks whether the reference is empty.
+		bool empty() const;
 
 	  private:
-		// The OpenGL ID of the texture (or 0).
-		unsigned int m_id{0};
+		opt_ref<const texture> m_ref;
 
+		friend class texture;
 		friend class texture_unit;
-		friend u64 imgui::get_texture_id(texture_ref texture);
 	};
-	// Empty texture reference.
-	constexpr texture_ref NO_TEXTURE{};
 
 	// 2D texture that can be rendered to.
 	class render_texture : public texture {
 	  public:
-		// Allocates an uninitialized 2D texture.
+		// Creates an empty texture.
+		render_texture() = default;
+		// Allocates an uninitialized texture.
 		render_texture(glm::ivec2 size, bool mipmapped = false, pixel_format format = pixel_format::RGBA32);
-		// Constructs a 2D texture with data uploaded from a bitmap.
+		// Constructs a texture with data uploaded from a bitmap.
 		render_texture(const sub_bitmap& bitmap, bool mipmapped = false, std::optional<pixel_format> format = std::nullopt);
+		// Moves a texture, updating all references pointing to it.
 		render_texture(render_texture&&) noexcept = default;
+		// Destroys the texture, emptying all references pointing to it.
 		~render_texture();
 
-		render_texture& operator=(render_texture&&) noexcept = default;
+		// Moves a texture, updating all references pointing to it.
+		render_texture& operator=(render_texture&& r) noexcept = default;
+		// Takes the storage of a texture without adopting its references, instead preserving existing ones.
+		// Texture parameters are tied to the storage, so this also makes the texture adopt those.
+		void take_storage(texture&& r) noexcept;
 
 		// Gets a render target spanning the entire texture.
 		operator render_target() const;
@@ -148,5 +170,7 @@ namespace tr::gfx {
 
 		// Handle to an OpenGL FBO.
 		handle<unsigned int, 0, fbo_deleter> m_fbo;
+
+		using texture::take_storage;
 	};
 } // namespace tr::gfx

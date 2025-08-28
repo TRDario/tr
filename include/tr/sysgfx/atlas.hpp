@@ -41,17 +41,13 @@ namespace tr::gfx {
 		void clear();
 
 		// Sets the debug label of the atlas texture.
-		void set_label(const std::string& label);
-		// Sets the debug label of the atlas texture.
-		void set_label(std::string&& label);
+		void set_label(std::string label);
 
 	  private:
 		// The atlas texture.
 		texture m_tex;
 		// The atlas entries.
 		atlas_rects<Key, Hash, Pred> m_rects;
-		// The texture label of the atlas.
-		std::string m_label;
 	};
 } // namespace tr::gfx
 
@@ -115,16 +111,12 @@ template <class Key, class Hash, class Pred> void tr::gfx::dyn_atlas<Key, Hash, 
 		return;
 	}
 	else if (m_tex.size() == glm::ivec2{}) {
-		m_tex.allocate(capacity, true, pixel_format::RGBA32);
+		m_tex.take_storage(texture{capacity, true, pixel_format::RGBA32});
 	}
 	else {
 		texture new_tex{capacity};
 		new_tex.copy_region({}, m_tex, {{}, m_tex.size()});
-		replace_texture_bindings(m_tex, new_tex);
-		m_tex = std::move(new_tex);
-		if (!m_label.empty()) {
-			m_tex.set_label(m_label);
-		}
+		m_tex.take_storage(std::move(new_tex));
 	}
 }
 
@@ -157,14 +149,7 @@ template <class Key, class Hash, class Pred> void tr::gfx::dyn_atlas<Key, Hash, 
 	}
 }
 
-template <class Key, class Hash, class Pred> void tr::gfx::dyn_atlas<Key, Hash, Pred>::set_label(const std::string& new_label)
+template <class Key, class Hash, class Pred> void tr::gfx::dyn_atlas<Key, Hash, Pred>::set_label(std::string label)
 {
-	m_label = new_label;
-	m_tex.set_label(new_label);
-}
-
-template <class Key, class Hash, class Pred> void tr::gfx::dyn_atlas<Key, Hash, Pred>::set_label(std::string&& new_label)
-{
-	m_label = std::move(new_label);
-	m_tex.set_label(m_label);
+	m_tex.set_label(std::move(label));
 }
