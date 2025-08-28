@@ -470,7 +470,7 @@ void tr::gfx::renderer_2d::draw_layer(int layer, const render_target& target)
 {
 	TR_ASSERT(state.has_value(), "Tried to draw a layer before initializing the 2D renderer.");
 
-	auto range{std::ranges::equal_range(state->meshes, layer, std::equal_to{}, &mesh::layer)};
+	auto range{std::ranges::equal_range(state->meshes, layer, std::less{}, &mesh::layer)};
 	state->draw(range.begin(), range.end(), target);
 }
 
