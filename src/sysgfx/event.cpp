@@ -251,7 +251,7 @@ tr::system::event::~event()
 
 tr::system::event& tr::system::event::operator=(const event& r)
 {
-	std::ignore = std::move(*this);
+	this->~event();
 	std::ranges::copy(r.m_buffer, m_buffer);
 	if (type() >= SDL_EVENT_USER) {
 		SDL_UserEvent& lsdl{((SDL_Event*)m_buffer)->user};
@@ -264,7 +264,7 @@ tr::system::event& tr::system::event::operator=(const event& r)
 
 tr::system::event& tr::system::event::operator=(event&& r) noexcept
 {
-	std::ignore = std::move(*this);
+	this->~event();
 	std::ranges::copy(r.m_buffer, m_buffer);
 	if (type() >= SDL_EVENT_USER) {
 		SDL_UserEvent& rsdl{((SDL_Event*)r.m_buffer)->user};
