@@ -1,6 +1,41 @@
 #pragma once
 #include "reference.hpp"
 
+//////////////////////////////////////////////////////////// REFERENCE WRAPPER ////////////////////////////////////////////////////////////
+
+template <class T>
+constexpr tr::ref<T>::ref(T& ref)
+	: m_base{std::addressof(ref)}
+{
+}
+
+template <class T> constexpr tr::ref<T>::operator T&() const
+{
+	return *m_base;
+}
+
+template <class T> constexpr tr::ref<T>::operator ref<const T>() const
+{
+	return tr::ref<const T>{*m_base};
+}
+
+template <class T> constexpr T* tr::ref<T>::as_ptr() const
+{
+	return m_base;
+}
+
+template <class T> constexpr T* tr::ref<T>::operator->() const
+{
+	return m_base;
+}
+
+template <class T> constexpr T& tr::ref<T>::operator*() const
+{
+	return *m_base;
+}
+
+//////////////////////////////////////////////////////// OPTIONAL REFERENCE WRAPPER ///////////////////////////////////////////////////////
+
 template <class T>
 constexpr tr::opt_ref<T>::opt_ref(std::nullopt_t)
 	: m_base{nullptr}
@@ -15,7 +50,7 @@ constexpr tr::opt_ref<T>::opt_ref(T* ptr)
 
 template <class T>
 constexpr tr::opt_ref<T>::opt_ref(T& ref)
-	: m_base{&ref}
+	: m_base{std::addressof(ref)}
 {
 }
 

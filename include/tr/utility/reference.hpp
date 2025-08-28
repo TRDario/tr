@@ -1,6 +1,24 @@
 #pragma once
 
 namespace tr {
+	// Alternative reference wrapper.
+	template <class T> class ref {
+	  public:
+		constexpr ref(T& ref);
+		constexpr ref(T&&) = delete;
+
+		constexpr operator T&() const;
+		constexpr operator ref<const T>() const;
+
+		constexpr bool operator==(const ref&) const = default;
+
+		constexpr T* as_ptr() const;
+		constexpr T* operator->() const;
+		constexpr T& operator*() const;
+
+	  private:
+		T* m_base;
+	};
 	// Wrapper over a pointer representing optional reference semantics.
 	template <class T> class opt_ref {
 	  public:

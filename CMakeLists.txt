@@ -3,7 +3,7 @@ if(POLICY CMP0167)
     cmake_policy(SET CMP0167 NEW)
 endif()
 
-project(tr LANGUAGES CXX VERSION 1.0.1)
+project(tr LANGUAGES CXX VERSION 1.0.2)
 
 option(TR_BUILD_SYSGFX "Build the system and graphics module." ON)
 option(TR_BUILD_AUDIO "Build the audio module." ON)
