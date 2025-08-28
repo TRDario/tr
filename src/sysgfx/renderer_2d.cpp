@@ -116,12 +116,12 @@ tr::gfx::renderer_2d::state_t::state_t()
 	}
 }
 
-tr::gfx::renderer_2d::mesh& tr::gfx::renderer_2d::state_t::find_mesh(int layer, texture_ref texture, const glm::mat4& mat,
+tr::gfx::renderer_2d::mesh& tr::gfx::renderer_2d::state_t::find_mesh(int layer, texture_ref texture_ref, const glm::mat4& mat,
 																	 const blend_mode& blend_mode, usize space_needed)
 {
 	auto range{std::ranges::equal_range(meshes, layer, std::less{}, &mesh::layer)};
 	std::vector<mesh>::iterator it;
-	if (texture.empty()) {
+	if (texture_ref.empty()) {
 		auto find_suitable{[&](const mesh& mesh) {
 			return mesh.mat == mat && mesh.blend_mode == blend_mode && mesh.positions.size() + space_needed <= UINT16_MAX;
 		}};
@@ -129,17 +129,17 @@ tr::gfx::renderer_2d::mesh& tr::gfx::renderer_2d::state_t::find_mesh(int layer, 
 	}
 	else {
 		auto find_suitable{[&](const mesh& mesh) {
-			return (mesh.texture.empty() || mesh.texture == texture) && mesh.mat == mat && mesh.blend_mode == blend_mode &&
+			return (mesh.texture.empty() || mesh.texture == texture_ref) && mesh.mat == mat && mesh.blend_mode == blend_mode &&
 				   mesh.positions.size() + space_needed <= UINT16_MAX;
 		}};
 		it = std::ranges::find_if(range, find_suitable);
 		if (it != range.end() && it->texture.empty()) {
-			it->texture = texture;
+			it->texture = std::move(texture_ref);
 		}
 	}
 
 	if (it == range.end()) {
-		it = meshes.emplace(range.end(), layer, texture, mat, blend_mode);
+		it = meshes.emplace(range.end(), layer, std::move(texture_ref), mat, blend_mode);
 	}
 	return *it;
 }
@@ -183,9 +183,9 @@ std::vector<tr::gfx::renderer_2d::mesh_draw_info> tr::gfx::renderer_2d::state_t:
 	return mesh_borders;
 }
 
-void tr::gfx::renderer_2d::state_t::setup_draw_call_state(texture_ref texture, const glm::mat4& transform, const blend_mode& blend_mode)
+void tr::gfx::renderer_2d::state_t::setup_draw_call_state(texture_ref texture_ref, const glm::mat4& transform, const blend_mode& blend_mode)
 {
-	tex_unit.set_texture(texture);
+	tex_unit.set_texture(std::move(texture_ref));
 	if (last_transform != transform) {
 		last_transform = transform;
 		pipeline.vertex_shader().set_uniform(0, last_transform);
@@ -245,7 +245,7 @@ void tr::gfx::renderer_2d::set_default_layer_texture(int layer, texture_ref text
 {
 	TR_ASSERT(state.has_value(), "Tried to set a 2D renderer's layer's default texture before initializing the renderer.");
 
-	state->layer_defaults[layer].texture = texture;
+	state->layer_defaults[layer].texture = std::move(texture);
 }
 
 void tr::gfx::renderer_2d::set_default_layer_transform(int layer, const glm::mat4& mat)
@@ -377,29 +377,29 @@ tr::gfx::simple_textured_mesh_ref tr::gfx::renderer_2d::new_textured_fan(int lay
 	}
 }
 
-tr::gfx::simple_textured_mesh_ref tr::gfx::renderer_2d::new_textured_fan(int layer, usize vertices, texture_ref texture)
+tr::gfx::simple_textured_mesh_ref tr::gfx::renderer_2d::new_textured_fan(int layer, usize vertices, texture_ref texture_ref)
 {
 	TR_ASSERT(state.has_value(), "Tried to allocate a new textured fan before initializing the 2D renderer.");
-	TR_ASSERT(!texture.empty(), "Cannot pass std::nullopt as texture for textured mesh.");
+	TR_ASSERT(!texture_ref.empty(), "Cannot pass std::nullopt as texture for textured mesh.");
 
 	std::unordered_map<int, layer_defaults>::iterator it{state->layer_defaults.find(layer)};
 	if (it != state->layer_defaults.end()) {
 		const layer_defaults& defaults{it->second};
-		return new_textured_fan(layer, vertices, texture, defaults.transform.has_value() ? *defaults.transform : state->default_transform,
-								defaults.blend_mode);
+		return new_textured_fan(layer, vertices, std::move(texture_ref),
+								defaults.transform.has_value() ? *defaults.transform : state->default_transform, defaults.blend_mode);
 	}
 	else {
-		return new_textured_fan(layer, vertices, texture, state->default_transform, ALPHA_BLENDING);
+		return new_textured_fan(layer, vertices, std::move(texture_ref), state->default_transform, ALPHA_BLENDING);
 	}
 }
 
-tr::gfx::simple_textured_mesh_ref tr::gfx::renderer_2d::new_textured_fan(int layer, usize vertices, texture_ref texture,
+tr::gfx::simple_textured_mesh_ref tr::gfx::renderer_2d::new_textured_fan(int layer, usize vertices, texture_ref texture_ref,
 																		 const glm::mat4& mat, const blend_mode& blend_mode)
 {
 	TR_ASSERT(state.has_value(), "Tried to allocate a new textured fan before initializing the 2D renderer.");
-	TR_ASSERT(!texture.empty(), "Cannot pass std::nullopt as texture for textured fan.");
+	TR_ASSERT(!texture_ref.empty(), "Cannot pass std::nullopt as texture for textured fan.");
 
-	mesh& mesh{state->find_mesh(layer, texture, mat, blend_mode, vertices)};
+	mesh& mesh{state->find_mesh(layer, std::move(texture_ref), mat, blend_mode, vertices)};
 	const u16 base_index{u16(mesh.positions.size())};
 	mesh.positions.resize(mesh.positions.size() + vertices);
 	mesh.uvs.resize(mesh.uvs.size() + vertices);
@@ -427,29 +427,29 @@ tr::gfx::textured_mesh_ref tr::gfx::renderer_2d::new_textured_mesh(int layer, us
 	}
 }
 
-tr::gfx::textured_mesh_ref tr::gfx::renderer_2d::new_textured_mesh(int layer, usize vertices, usize indices, texture_ref texture)
+tr::gfx::textured_mesh_ref tr::gfx::renderer_2d::new_textured_mesh(int layer, usize vertices, usize indices, texture_ref texture_ref)
 {
 	TR_ASSERT(state.has_value(), "Tried to allocate a new textured mesh before initializing the 2D renderer.");
-	TR_ASSERT(!texture.empty(), "Cannot pass std::nullopt as texture for textured mesh.");
+	TR_ASSERT(!texture_ref.empty(), "Cannot pass std::nullopt as texture for textured mesh.");
 
 	std::unordered_map<int, layer_defaults>::iterator it{state->layer_defaults.find(layer)};
 	if (it != state->layer_defaults.end()) {
 		const layer_defaults& defaults{it->second};
-		return new_textured_mesh(layer, vertices, indices, texture,
+		return new_textured_mesh(layer, vertices, indices, std::move(texture_ref),
 								 defaults.transform.has_value() ? *defaults.transform : state->default_transform, defaults.blend_mode);
 	}
 	else {
-		return new_textured_mesh(layer, vertices, indices, texture, state->default_transform, ALPHA_BLENDING);
+		return new_textured_mesh(layer, vertices, indices, std::move(texture_ref), state->default_transform, ALPHA_BLENDING);
 	}
 }
 
-tr::gfx::textured_mesh_ref tr::gfx::renderer_2d::new_textured_mesh(int layer, usize vertices, usize indices, texture_ref texture,
+tr::gfx::textured_mesh_ref tr::gfx::renderer_2d::new_textured_mesh(int layer, usize vertices, usize indices, texture_ref texture_ref,
 																   const glm::mat4& mat, const blend_mode& blend_mode)
 {
 	TR_ASSERT(state.has_value(), "Tried to allocate a new textured mesh before initializing the 2D renderer.");
-	TR_ASSERT(!texture.empty(), "Cannot pass std::nullopt as texture for textured mesh.");
+	TR_ASSERT(!texture_ref.empty(), "Cannot pass std::nullopt as texture for textured mesh.");
 
-	mesh& mesh{state->find_mesh(layer, texture, mat, blend_mode, vertices)};
+	mesh& mesh{state->find_mesh(layer, std::move(texture_ref), mat, blend_mode, vertices)};
 	const u16 base_index{u16(mesh.positions.size())};
 	mesh.positions.resize(mesh.positions.size() + vertices);
 	mesh.uvs.resize(mesh.uvs.size() + vertices);

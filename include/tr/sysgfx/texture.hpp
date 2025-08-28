@@ -130,7 +130,7 @@ namespace tr::gfx {
 		bool empty() const;
 
 	  private:
-		opt_ref<const texture> m_ref;
+		opt_ref<const texture> m_ref{};
 
 		friend class texture;
 		friend class texture_unit;
