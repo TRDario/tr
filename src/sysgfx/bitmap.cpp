@@ -244,10 +244,10 @@ tr::bitmap::bitmap(SDL_Surface* ptr)
 	if (SDL_ISPIXELFORMAT_INDEXED(ptr->format) && format() != pixel_format::R8) {
 		*this = bitmap{*this, pixel_format::R8};
 	}
-	if (SDL_ISPIXELFORMAT_FOURCC(ptr->format) || SDL_ISPIXELFORMAT_FLOAT(ptr->format) ||
-		(SDL_ISPIXELFORMAT_ARRAY(ptr->format) &&
-		 (SDL_PIXELTYPE(ptr->format) == SDL_PIXELTYPE_ARRAYU16 || SDL_PIXELTYPE(ptr->format) == SDL_PIXELTYPE_ARRAYU32)) ||
-		SDL_ISPIXELFORMAT_10BIT(ptr->format)) {
+	else if (SDL_ISPIXELFORMAT_FOURCC(ptr->format) || SDL_ISPIXELFORMAT_FLOAT(ptr->format) ||
+			 (SDL_ISPIXELFORMAT_ARRAY(ptr->format) &&
+			  (SDL_PIXELTYPE(ptr->format) == SDL_PIXELTYPE_ARRAYU16 || SDL_PIXELTYPE(ptr->format) == SDL_PIXELTYPE_ARRAYU32)) ||
+			 SDL_ISPIXELFORMAT_10BIT(ptr->format)) {
 		*this = bitmap{*this, pixel_format::RGBA32};
 	}
 }
