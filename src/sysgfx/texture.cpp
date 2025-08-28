@@ -375,14 +375,14 @@ tr::gfx::render_texture::render_texture(const sub_bitmap& bitmap, bool mipmapped
 
 tr::gfx::render_texture::~render_texture()
 {
-	if (empty()) {
-		return;
-	}
-
-	if (current_render_target.has_value() && current_render_target->m_fbo == m_fbo.get()) {
+	if (!empty() && current_render_target.has_value() && current_render_target->m_fbo == m_fbo.get()) {
 		current_render_target.reset();
 	}
-	TR_GL_CALL(glDeleteFramebuffers, 1, &m_fbo.get());
+}
+
+void tr::gfx::render_texture::fbo_deleter::operator()(unsigned int id) const
+{
+	TR_GL_CALL(glDeleteFramebuffers, 1, &id);
 }
 
 void tr::gfx::render_texture::take_storage(texture&& r) noexcept
