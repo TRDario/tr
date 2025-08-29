@@ -153,7 +153,7 @@ void tr::gfx::atlased_font::fill_mesh(std::string_view text, const text_style& s
 				tl.x += m_font.kerning(prev, cp) * style.scale;
 			}
 			if (!is_whitespace(cp)) {
-				pos_it = fill_rect_vtx(pos_it, {tl * style.scale, m_atlas.unnormalized(key).size * style.scale});
+				pos_it = fill_rect_vtx(pos_it, {tl, m_atlas.unnormalized(key).size * style.scale});
 				uv_it = fill_rect_vtx(uv_it, m_atlas[key]);
 				tints_it = std::fill_n(tints_it, 4, style.tint);
 			}
