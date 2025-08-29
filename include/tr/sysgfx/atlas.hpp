@@ -125,7 +125,7 @@ template <class Key, class Hash, class Pred> void tr::gfx::dyn_atlas<Key, Hash, 
 	if (!packing_result.has_value()) {
 		glm::u16vec2 new_size;
 		if (m_tex.size() == glm::ivec2{}) {
-			const glm::uvec2 usize{bitmap.size()};
+			const glm::uvec2 usize{bitmap.size() + 2};
 			new_size = {std::bit_ceil(usize.x), std::bit_ceil(usize.y)};
 			packing_result = m_rects.try_insert(std::move(key), usize, new_size);
 		}
