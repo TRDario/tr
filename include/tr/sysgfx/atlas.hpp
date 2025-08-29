@@ -112,9 +112,11 @@ template <class Key, class Hash, class Pred> void tr::gfx::dyn_atlas<Key, Hash, 
 	}
 	else if (m_tex.size() == glm::ivec2{}) {
 		m_tex.reallocate(capacity);
+		m_tex.clear({});
 	}
 	else {
 		const texture old_tex{m_tex.reallocate(capacity)};
+		m_tex.clear({});
 		m_tex.copy_region({}, old_tex, {{}, old_tex.size()});
 	}
 }
@@ -125,8 +127,8 @@ template <class Key, class Hash, class Pred> void tr::gfx::dyn_atlas<Key, Hash, 
 	if (!packing_result.has_value()) {
 		glm::u16vec2 new_size;
 		if (m_tex.size() == glm::ivec2{}) {
-			const glm::uvec2 usize{bitmap.size() + 1};
-			new_size = {std::bit_ceil(usize.x), std::bit_ceil(usize.y)};
+			const glm::uvec2 usize{bitmap.size()};
+			new_size = {std::bit_ceil(usize.x + 1), std::bit_ceil(usize.y + 1)};
 			packing_result = m_rects.try_insert(std::move(key), usize, new_size);
 		}
 		else {

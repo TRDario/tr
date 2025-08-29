@@ -61,5 +61,5 @@ std::optional<glm::u16vec2> tr::atlas_packer::try_insert(glm::u16vec2 size, glm:
 		m_skyline.emplace(best_end, br);
 	}
 
-	return best + 1_u16;
+	return best;
 }

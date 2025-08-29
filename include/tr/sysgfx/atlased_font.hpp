@@ -41,10 +41,11 @@ namespace tr::gfx {
 		// Clears the font atlas.
 		void clear_cache();
 
+		// Gets the line skip of the font at a certain size and style.
+		float line_skip(float font_size, system::ttf_style style, float scale) const;
 		// Gets the size of text.
-		glm::vec2 text_size(std::string_view text, const text_style& style, float box_width = system::UNLIMITED_WIDTH) const;
-		// Gets the size of outlined text.
-		glm::vec2 text_size(std::string_view text, const outlined_text_style& style, float box_width = system::UNLIMITED_WIDTH) const;
+		glm::vec2 text_size(std::string_view text, float font_size, system::ttf_style style, float outline_thickness, float scale,
+							float box_width = system::UNLIMITED_WIDTH) const;
 
 		// Adds text without an outline to the 2D renderer.
 		void add_to_2d_renderer(std::string_view text, const text_style& style, const text_box& box, int layer) const;
@@ -76,10 +77,13 @@ namespace tr::gfx {
 		mutable dyn_atlas<glyph_key, glyph_hash> m_atlas;
 
 		bool is_whitespace(codepoint cp) const;
+		glm::vec2 text_size(const std::vector<std::string_view>& lines, float font_size, system::ttf_style style, float scale) const;
 		usize count_glyphs_and_add_to_cache(std::string_view str, const text_style& style) const;
 		usize count_glyphs_and_add_to_cache(std::string_view str, const outlined_text_style& style) const;
 		void fill_mesh(std::string_view text, const text_style& style, const text_box& box, textured_mesh_ref mesh) const;
-		void fill_mesh_text(std::string_view text, const outlined_text_style& style, const text_box& box, textured_mesh_ref mesh) const;
-		void fill_mesh_outline(std::string_view text, const outlined_text_style& style, const text_box& box, textured_mesh_ref mesh) const;
+		void fill_outlined_mesh_text(std::string_view text, const outlined_text_style& style, const text_box& box,
+									 textured_mesh_ref mesh) const;
+		void fill_outlined_mesh_outline(std::string_view text, const outlined_text_style& style, const text_box& box,
+										textured_mesh_ref mesh) const;
 	};
 } // namespace tr::gfx
