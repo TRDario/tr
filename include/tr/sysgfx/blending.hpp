@@ -45,8 +45,13 @@ namespace tr::gfx {
 	// Alpha blending mode.
 	inline constexpr blend_mode ALPHA_BLENDING{blend_multiplier::SRC_ALPHA, blend_fn::ADD, blend_multiplier::ONE_MINUS_SRC_ALPHA,
 											   blend_multiplier::ONE,       blend_fn::ADD, blend_multiplier::ONE_MINUS_SRC_ALPHA};
-
 	// Premultiplied alpha blending mode.
 	inline constexpr blend_mode PREMUL_ALPHA_BLENDING{blend_multiplier::ONE, blend_fn::ADD, blend_multiplier::ONE_MINUS_SRC_ALPHA,
 													  blend_multiplier::ONE, blend_fn::ADD, blend_multiplier::ONE_MINUS_SRC_ALPHA};
+	// Writes the maximum of two values into the buffer.
+	inline constexpr blend_mode MAX_BLENDING{blend_multiplier::ONE, blend_fn::MAX, blend_multiplier::ONE,
+											 blend_multiplier::ONE, blend_fn::MAX, blend_multiplier::ONE};
+	// Applied after MAX_BLENDING to achieve normal alpha blending.
+	inline constexpr blend_mode REVERSE_ALPHA_BLENDING{blend_multiplier::ONE_MINUS_DST_ALPHA, blend_fn::ADD, blend_multiplier::DST_ALPHA,
+													   blend_multiplier::ONE_MINUS_DST_ALPHA, blend_fn::MAX, blend_multiplier::DST_ALPHA};
 } // namespace tr::gfx
