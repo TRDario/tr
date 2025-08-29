@@ -39,6 +39,28 @@ void tr::gfx::atlased_font::clear_cache()
 
 //
 
+glm::vec2 tr::gfx::atlased_font::text_size(std::string_view text, const text_style& style, float box_width) const
+{
+	if (box_width == system::UNLIMITED_WIDTH) {
+		return glm::vec2{m_font.text_size(text) * style.scale};
+	}
+	else {
+		return glm::vec2{m_font.text_size(text, box_width / style.scale) * style.scale};
+	}
+}
+
+glm::vec2 tr::gfx::atlased_font::text_size(std::string_view text, const outlined_text_style& style, float box_width) const
+{
+	if (box_width == system::UNLIMITED_WIDTH) {
+		return (glm::vec2{m_font.text_size(text)} + 2 * style.outline_thickness) * style.scale;
+	}
+	else {
+		return (glm::vec2{m_font.text_size(text, box_width / style.scale)} + 2 * style.outline_thickness) * style.scale;
+	}
+}
+
+//
+
 void tr::gfx::atlased_font::add_to_2d_renderer(std::string_view text, const text_style& style, const text_box& box, int layer) const
 {
 	usize count{count_glyphs_and_add_to_cache(text, style)};
@@ -131,11 +153,11 @@ void tr::gfx::atlased_font::fill_mesh(std::string_view text, const text_style& s
 	glm::vec2 start;
 	std::vector<std::string_view> lines;
 	if (box.size == UNSIZED) {
-		start = tl(box.pos, glm::vec2{m_font.text_size(text)}, box.alignment);
+		start = tl(box.pos, text_size(text, style), box.alignment);
 		lines = system::split_into_lines(text);
 	}
 	else {
-		start = tl(tl(box.pos, box.size, box.alignment), glm::vec2{m_font.text_size(text) * style.scale}, box.text_alignment);
+		start = tl(tl(box.pos, box.size, box.alignment), text_size(text, style, box.size.x), box.text_alignment);
 		lines = system::split_into_lines(text, m_font, box.size.x / style.scale);
 	}
 
@@ -177,13 +199,12 @@ void tr::gfx::atlased_font::fill_mesh_text(std::string_view text, const outlined
 
 	glm::vec2 start;
 	std::vector<std::string_view> lines;
-	const glm::vec2 text_size{(glm::vec2{m_font.text_size(text)} + 2 * style.outline_thickness) * style.scale};
 	if (box.size == UNSIZED) {
-		start = tl(box.pos, text_size, box.alignment);
+		start = tl(box.pos, text_size(text, style), box.alignment);
 		lines = system::split_into_lines(text);
 	}
 	else {
-		start = tl(tl(box.pos, box.size, box.alignment), text_size, box.text_alignment);
+		start = tl(tl(box.pos, box.size, box.alignment), text_size(text, style, box.size.x), box.text_alignment);
 		lines = system::split_into_lines(text, m_font, (box.size.x - 2 * style.outline_thickness) / style.scale);
 	}
 
@@ -226,13 +247,12 @@ void tr::gfx::atlased_font::fill_mesh_outline(std::string_view text, const outli
 
 	glm::vec2 start;
 	std::vector<std::string_view> lines;
-	const glm::vec2 text_size{(glm::vec2{m_font.text_size(text)} + 2 * style.outline_thickness) * style.scale};
 	if (box.size == UNSIZED) {
-		start = tl(box.pos, text_size, box.alignment);
+		start = tl(box.pos, text_size(text, style), box.alignment);
 		lines = system::split_into_lines(text);
 	}
 	else {
-		start = tl(tl(box.pos, box.size, box.alignment), text_size, box.text_alignment);
+		start = tl(tl(box.pos, box.size, box.alignment), text_size(text, style, box.size.x), box.text_alignment);
 		lines = system::split_into_lines(text, m_font, (box.size.x - 2 * style.outline_thickness) / style.scale);
 	}
 

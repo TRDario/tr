@@ -41,7 +41,7 @@ namespace tr::gfx {
 		void clear();
 
 		// Sets the debug label of the atlas texture.
-		void set_label(std::string label);
+		void set_label(std::string_view label);
 
 	  private:
 		// The atlas texture.
@@ -137,7 +137,7 @@ template <class Key, class Hash, class Pred> void tr::gfx::dyn_atlas<Key, Hash, 
 		}
 		reserve(new_size);
 	}
-	m_tex.set_region(*packing_result, bitmap);
+	m_tex.set_region(*packing_result + 1_u16, bitmap);
 }
 
 template <class Key, class Hash, class Pred> void tr::gfx::dyn_atlas<Key, Hash, Pred>::clear()
@@ -148,7 +148,7 @@ template <class Key, class Hash, class Pred> void tr::gfx::dyn_atlas<Key, Hash, 
 	}
 }
 
-template <class Key, class Hash, class Pred> void tr::gfx::dyn_atlas<Key, Hash, Pred>::set_label(std::string label)
+template <class Key, class Hash, class Pred> void tr::gfx::dyn_atlas<Key, Hash, Pred>::set_label(std::string_view label)
 {
-	m_tex.set_label(std::move(label));
+	m_tex.set_label(label);
 }

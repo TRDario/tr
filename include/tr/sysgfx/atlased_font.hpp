@@ -38,8 +38,13 @@ namespace tr::gfx {
 		// Gets a reference to the base font.
 		system::ttfont& ttfont() const;
 
-		// Clears the font atlas, but does not release the texture.
+		// Clears the font atlas.
 		void clear_cache();
+
+		// Gets the size of text.
+		glm::vec2 text_size(std::string_view text, const text_style& style, float box_width = system::UNLIMITED_WIDTH) const;
+		// Gets the size of outlined text.
+		glm::vec2 text_size(std::string_view text, const outlined_text_style& style, float box_width = system::UNLIMITED_WIDTH) const;
 
 		// Adds text without an outline to the 2D renderer.
 		void add_to_2d_renderer(std::string_view text, const text_style& style, const text_box& box, int layer) const;
