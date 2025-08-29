@@ -41,6 +41,9 @@ void tr::gfx::atlased_font::clear_cache()
 
 glm::vec2 tr::gfx::atlased_font::text_size(std::string_view text, const text_style& style, float box_width) const
 {
+	m_font.resize(style.font_size);
+	m_font.set_style(style.style);
+	m_font.set_outline(0);
 	if (box_width == system::UNLIMITED_WIDTH) {
 		return glm::vec2{m_font.text_size(text) * style.scale};
 	}
@@ -51,6 +54,9 @@ glm::vec2 tr::gfx::atlased_font::text_size(std::string_view text, const text_sty
 
 glm::vec2 tr::gfx::atlased_font::text_size(std::string_view text, const outlined_text_style& style, float box_width) const
 {
+	m_font.resize(style.font_size);
+	m_font.set_style(style.style);
+	m_font.set_outline(0);
 	if (box_width == system::UNLIMITED_WIDTH) {
 		return (glm::vec2{m_font.text_size(text)} + 2 * style.outline_thickness) * style.scale;
 	}
