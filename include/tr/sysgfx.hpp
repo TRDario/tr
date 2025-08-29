@@ -1,6 +1,5 @@
 #pragma once
 #include "sysgfx/atlas.hpp"            // IWYU pragma: export
-#include "sysgfx/atlased_font.hpp"     // IWYU pragma: export
 #include "sysgfx/backbuffer.hpp"       // IWYU pragma: export
 #include "sysgfx/bitmap.hpp"           // IWYU pragma: export
 #include "sysgfx/bitmap_iterators.hpp" // IWYU pragma: export

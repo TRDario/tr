@@ -47,7 +47,6 @@ if(TR_BUILD_SYSGFX)
 	target_sources(tr PRIVATE
 		src/sysgfx/gl_call.cpp
 		src/sysgfx/glad.cpp
-		src/sysgfx/atlased_font.cpp
 		src/sysgfx/backbuffer.cpp
 		src/sysgfx/bitmap_iterators.cpp
 		src/sysgfx/bitmap.cpp
