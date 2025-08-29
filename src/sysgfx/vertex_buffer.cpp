@@ -72,12 +72,15 @@ void tr::gfx::basic_dyn_vertex_buffer::reserve(usize capacity)
 	if (capacity > m_capacity) {
 		capacity = std::bit_ceil(capacity);
 
+		char label_buffer[128];
+		GLsizei label_length;
+		TR_GL_CALL(glGetObjectLabel, GL_BUFFER, m_vbo.get(), 128, &label_length, label_buffer);
+
 		unsigned int vbo;
 		TR_GL_CALL(glCreateBuffers, 1, &vbo);
-		TR_GL_CALL(glDeleteBuffers, 1, &m_vbo.get());
 		m_vbo.reset(vbo);
-		if (!m_label.empty()) {
-			TR_GL_CALL(glObjectLabel, GL_BUFFER, m_vbo.get(), GLsizei(m_label.size()), m_label.data());
+		if (label_length > 0) {
+			TR_GL_CALL(glObjectLabel, GL_BUFFER, m_vbo.get(), label_length, label_buffer);
 		}
 
 		TR_GL_CALL(glNamedBufferStorage, m_vbo.get(), GLsizei(capacity), nullptr, GL_DYNAMIC_STORAGE_BIT);
@@ -106,8 +109,7 @@ void tr::gfx::basic_dyn_vertex_buffer::set_region(usize offset, std::span<const 
 	TR_GL_CALL(glNamedBufferSubData, m_vbo.get(), offset, std::ssize(data), data.data());
 }
 
-void tr::gfx::basic_dyn_vertex_buffer::set_label(std::string label)
+void tr::gfx::basic_dyn_vertex_buffer::set_label(std::string_view label)
 {
-	m_label = std::move(label);
-	TR_GL_CALL(glObjectLabel, GL_BUFFER, m_vbo.get(), GLsizei(m_label.size()), m_label.data());
+	TR_GL_CALL(glObjectLabel, GL_BUFFER, m_vbo.get(), GLsizei(label.size()), label.data());
 }

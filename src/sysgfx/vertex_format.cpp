@@ -6,9 +6,9 @@
 
 tr::gfx::vertex_format::vertex_format(std::initializer_list<vertex_binding> bindings)
 {
-	GLuint temp;
-	TR_GL_CALL(glCreateVertexArrays, 1, &temp);
-	m_vao.reset(temp);
+	GLuint vao;
+	TR_GL_CALL(glCreateVertexArrays, 1, &vao);
+	m_vao.reset(vao);
 	int attr_id{0};
 	for (int binding_id = 0; binding_id < int(bindings.size()); ++binding_id) {
 		const vertex_binding& binding{bindings.begin()[binding_id]};

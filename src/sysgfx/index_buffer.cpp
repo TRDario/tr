@@ -72,12 +72,15 @@ void tr::gfx::dyn_index_buffer::reserve(usize capacity)
 	if (capacity > m_capacity) {
 		capacity = std::bit_ceil(capacity);
 
+		char label_buffer[128];
+		GLsizei label_length;
+		TR_GL_CALL(glGetObjectLabel, GL_BUFFER, m_ibo.get(), 128, &label_length, label_buffer);
+
 		unsigned int ibo;
 		TR_GL_CALL(glCreateBuffers, 1, &ibo);
-		TR_GL_CALL(glDeleteBuffers, 1, &m_ibo.get());
 		m_ibo.reset(ibo);
-		if (!m_label.empty()) {
-			TR_GL_CALL(glObjectLabel, GL_BUFFER, m_ibo.get(), GLsizei(m_label.size()), m_label.data());
+		if (label_length > 0) {
+			TR_GL_CALL(glObjectLabel, GL_BUFFER, m_ibo.get(), label_length, label_buffer);
 		}
 
 		TR_GL_CALL(glNamedBufferStorage, m_ibo.get(), GLsizei(capacity * sizeof(u16)), nullptr, GL_DYNAMIC_STORAGE_BIT);
@@ -106,8 +109,7 @@ void tr::gfx::dyn_index_buffer::set(std::span<const u16> data)
 	set_region(0, data);
 }
 
-void tr::gfx::dyn_index_buffer::set_label(std::string label)
+void tr::gfx::dyn_index_buffer::set_label(std::string_view label)
 {
-	m_label = std::move(label);
-	TR_GL_CALL(glObjectLabel, GL_BUFFER, m_ibo.get(), GLsizei(m_label.size()), m_label.data());
+	TR_GL_CALL(glObjectLabel, GL_BUFFER, m_ibo.get(), GLsizei(label.size()), label.data());
 }

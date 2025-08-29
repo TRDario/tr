@@ -57,7 +57,7 @@ namespace tr::gfx {
 		void set_region(usize offset, std::span<const std::byte> data);
 
 		// Sets the debug label of the vertex buffer.
-		void set_label(std::string label);
+		void set_label(std::string_view label);
 
 	  private:
 		struct deleter {
@@ -70,8 +70,6 @@ namespace tr::gfx {
 		usize m_size;
 		// The capacity of the buffer.
 		usize m_capacity;
-		// The label of the vertex buffer.
-		std::string m_label;
 
 		friend void set_vertex_buffer(const basic_dyn_vertex_buffer& buffer, int slot, std::intptr_t offset, usize stride);
 	};

@@ -205,7 +205,7 @@ tr::gfx::texture tr::gfx::texture::reallocate(glm::ivec2 size, bool mipmapped, p
 		TR_GL_CALL(glGetTextureParameteriv, m_handle, GL_TEXTURE_MAG_FILTER, &mag_filter);
 		TR_GL_CALL(glGetTextureParameteriv, m_handle, GL_TEXTURE_WRAP_S, &wrap);
 		TR_GL_CALL(glGetTextureParameterfv, m_handle, GL_TEXTURE_BORDER_COLOR, &border_color.r);
-		TR_GL_CALL(glGetObjectLabel, GL_TEXTURE, m_handle, 127, &label_length, label_buffer);
+		TR_GL_CALL(glGetObjectLabel, GL_TEXTURE, m_handle, 128, &label_length, label_buffer);
 
 		TR_GL_CALL(glCreateTextures, GL_TEXTURE_2D, 1, &m_handle);
 		TR_GL_CALL(glTextureParameteri, m_handle, GL_TEXTURE_MIN_FILTER, min_filter);
