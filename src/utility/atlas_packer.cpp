@@ -13,6 +13,9 @@ void tr::atlas_packer::clear()
 
 std::optional<glm::u16vec2> tr::atlas_packer::try_insert(glm::u16vec2 size, glm::u16vec2 texture_size)
 {
+	// Add a little buffer space to prevent filtering artifacts.
+	size += 1;
+
 	std::vector<glm::u16vec2>::iterator best_begin{m_skyline.end()};
 	std::vector<glm::u16vec2>::iterator best_end{m_skyline.end()};
 	glm::u16vec2 best{UINT16_MAX};
