@@ -35,6 +35,8 @@ namespace tr::gfx {
 
 		// Gets a reference to the font's atlas texture.
 		operator texture_ref() const;
+		// Gets a reference to the base font.
+		system::ttfont& ttfont() const;
 
 		// Clears the font atlas, but does not release the texture.
 		void clear_cache();

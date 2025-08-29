@@ -25,6 +25,11 @@ tr::gfx::atlased_font::operator texture_ref() const
 	return m_atlas;
 }
 
+tr::system::ttfont& tr::gfx::atlased_font::ttfont() const
+{
+	return m_font;
+}
+
 //
 
 void tr::gfx::atlased_font::clear_cache()
