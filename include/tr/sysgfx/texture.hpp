@@ -38,16 +38,6 @@ namespace tr::gfx {
 		LINEAR = 0x2601   // The average of the four texture elements that are closest to the specified texture coordinates is used.
 	};
 
-	// Texture swizzles.
-	enum class swizzle {
-		ZERO,       // The channel is set to 0.0.
-		ONE,        // The channel is set to 1.0.
-		R = 0x1903, // The channel will use the red channel value.
-		G,          // The channel will use the green channel value.
-		B,          // The channel will use the blue channel value.
-		A           // The channel will use the alpha channel value.
-	};
-
 	// 2D texture living on the GPU.
 	class texture {
 	  public:
@@ -64,21 +54,19 @@ namespace tr::gfx {
 
 		// Moves a texture, updating all references pointing to it.
 		texture& operator=(texture&& r) noexcept;
-		// Takes the storage of a texture without adopting its references, instead preserving existing ones.
-		// Texture parameters are tied to the storage, so this also makes the texture adopt those.
-		void take_storage(texture&& r) noexcept;
 
 		// Gets whether the texture is empty.
 		bool empty() const;
 		// Gets the size of the texture.
 		const glm::ivec2& size() const;
 
+		// Reallocates the texture and releases the previously held storage as a new texture.
+		texture reallocate(glm::ivec2 size, bool mipmapped = false, pixel_format format = pixel_format::RGBA32);
+
 		// Sets the filters used by the texture sampler.
 		void set_filtering(min_filter min_filter, mag_filter mag_filter);
 		// Sets the wrapping used for by the texture sampler.
 		void set_wrap(wrap wrap);
-		// Sets the swizzle parameters of the texture.
-		void set_swizzle(swizzle r, swizzle g, swizzle b, swizzle a);
 		// Sets the border color of the texture sampler (used when wrap::BORDER_CLAMP is in use).
 		void set_border_color(rgbaf color);
 
@@ -92,7 +80,7 @@ namespace tr::gfx {
 		void set_region(glm::ivec2 tl, const sub_bitmap& bitmap);
 
 		// Sets the debug label of the texture.
-		void set_label(std::string label);
+		void set_label(std::string_view label);
 
 	  protected:
 		// Handle to the OpenGL texture.
@@ -101,8 +89,9 @@ namespace tr::gfx {
 		glm::ivec2 m_size;
 		// List of active references to this texture.
 		mutable std::vector<ref<texture_ref>> m_refs;
-		// The debug label of the texture.
-		std::string m_label;
+
+		// Creates a released texture.
+		texture(unsigned int handle, glm::ivec2 size);
 
 		friend class texture_ref;
 		friend class texture_unit;
@@ -152,9 +141,9 @@ namespace tr::gfx {
 
 		// Moves a texture, updating all references pointing to it.
 		render_texture& operator=(render_texture&& r) noexcept = default;
-		// Takes the storage of a texture without adopting its references, instead preserving existing ones.
-		// Texture parameters are tied to the storage, so this also makes the texture adopt those.
-		void take_storage(texture&& r) noexcept;
+
+		// Reallocates the texture and releases the previously held storage as a new texture.
+		texture reallocate(glm::ivec2 size, bool mipmapped = false, pixel_format format = pixel_format::RGBA32);
 
 		// Gets a render target spanning the entire texture.
 		operator render_target() const;
@@ -171,6 +160,6 @@ namespace tr::gfx {
 		// Handle to an OpenGL FBO.
 		handle<unsigned int, 0, fbo_deleter> m_fbo;
 
-		using texture::take_storage;
+		using texture::reallocate;
 	};
 } // namespace tr::gfx

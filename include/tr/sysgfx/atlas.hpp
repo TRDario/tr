@@ -111,12 +111,11 @@ template <class Key, class Hash, class Pred> void tr::gfx::dyn_atlas<Key, Hash, 
 		return;
 	}
 	else if (m_tex.size() == glm::ivec2{}) {
-		m_tex.take_storage(texture{capacity, true, pixel_format::RGBA32});
+		m_tex.reallocate(capacity);
 	}
 	else {
-		texture new_tex{capacity};
-		new_tex.copy_region({}, m_tex, {{}, m_tex.size()});
-		m_tex.take_storage(std::move(new_tex));
+		const texture old_tex{m_tex.reallocate(capacity)};
+		m_tex.copy_region({}, old_tex, {{}, old_tex.size()});
 	}
 }
 

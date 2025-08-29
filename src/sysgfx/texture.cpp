@@ -139,21 +139,15 @@ GLenum tr::gfx::type(pixel_format format)
 ///////////////////////////////////////////////////////////////// TEXTURE /////////////////////////////////////////////////////////////////
 
 tr::gfx::texture::texture()
-	: m_handle{0}, m_size{0, 0}
+	: m_size{0, 0}
 {
+	TR_GL_CALL(glCreateTextures, GL_TEXTURE_2D, 1, &m_handle);
 }
 
 tr::gfx::texture::texture(glm::ivec2 size, bool mipmapped, pixel_format format)
-	: m_size{size}
+	: texture{}
 {
-	TR_ASSERT(size.x > 0 && size.y > 0, "Tried to allocate a texture with an invalid size of {}x{}", size.x, size.y);
-
-	TR_GL_CALL(glCreateTextures, GL_TEXTURE_2D, 1, &m_handle);
-	TR_GL_CALL(glTextureStorage2D, m_handle, mipmapped ? floor_cast<GLsizei>(std::log2(std::max(size.x, size.y)) + 1) : 1,
-			   tex_format(format), size.x, size.y);
-	if (glGetError() == GL_OUT_OF_MEMORY) {
-		throw out_of_memory{"texture allocation"};
-	}
+	reallocate(size, mipmapped, format);
 }
 
 tr::gfx::texture::texture(const sub_bitmap& bitmap, bool mipmapped, std::optional<pixel_format> format)
@@ -163,7 +157,7 @@ tr::gfx::texture::texture(const sub_bitmap& bitmap, bool mipmapped, std::optiona
 }
 
 tr::gfx::texture::texture(texture&& r) noexcept
-	: m_handle{r.m_handle}, m_size{r.m_size}, m_refs{std::move(r.m_refs)}, m_label{std::move(r.m_label)}
+	: m_handle{r.m_handle}, m_size{r.m_size}, m_refs{std::move(r.m_refs)}
 {
 	r.m_handle = 0;
 	for (texture_ref& ref : m_refs) {
@@ -181,30 +175,63 @@ tr::gfx::texture::~texture()
 
 tr::gfx::texture& tr::gfx::texture::operator=(texture&& r) noexcept
 {
-	this->~texture();
+	TR_GL_CALL(glDeleteTextures, 1, &m_handle);
+	for (texture_ref& ref : m_refs) {
+		ref = std::nullopt;
+	}
+
 	m_handle = r.m_handle;
 	m_size = r.m_size;
 	m_refs = std::move(r.m_refs);
-	m_label = std::move(r.m_label);
 	r.m_handle = 0;
 	return *this;
 }
 
-void tr::gfx::texture::take_storage(texture&& r) noexcept
+tr::gfx::texture tr::gfx::texture::reallocate(glm::ivec2 size, bool mipmapped, pixel_format format)
 {
-	TR_ASSERT(!r.empty(), "Tried to take the storage of a texture without a storage.");
+	TR_ASSERT(size.x > 0 && size.y > 0, "Tried to allocate a texture with an invalid size of {}x{}", size.x, size.y);
 
-	m_handle = r.m_handle;
-	m_size = r.m_size;
-	r.m_handle = 0;
+	const GLuint old_handle{m_handle};
+	glm::ivec2 old_size{m_size};
+
+	if (m_size != glm::ivec2{0, 0}) {
+		GLint min_filter;
+		GLint mag_filter;
+		GLint wrap;
+		rgbaf border_color;
+		char label_buffer[128];
+		GLsizei label_length;
+		TR_GL_CALL(glGetTextureParameteriv, m_handle, GL_TEXTURE_MIN_FILTER, &min_filter);
+		TR_GL_CALL(glGetTextureParameteriv, m_handle, GL_TEXTURE_MAG_FILTER, &mag_filter);
+		TR_GL_CALL(glGetTextureParameteriv, m_handle, GL_TEXTURE_WRAP_S, &wrap);
+		TR_GL_CALL(glGetTextureParameterfv, m_handle, GL_TEXTURE_BORDER_COLOR, &border_color.r);
+		TR_GL_CALL(glGetObjectLabel, GL_TEXTURE, m_handle, 127, &label_length, label_buffer);
+
+		TR_GL_CALL(glCreateTextures, GL_TEXTURE_2D, 1, &m_handle);
+		TR_GL_CALL(glTextureParameteri, m_handle, GL_TEXTURE_MIN_FILTER, min_filter);
+		TR_GL_CALL(glTextureParameteri, m_handle, GL_TEXTURE_MAG_FILTER, mag_filter);
+		TR_GL_CALL(glTextureParameteri, m_handle, GL_TEXTURE_WRAP_S, wrap);
+		TR_GL_CALL(glTextureParameteri, m_handle, GL_TEXTURE_WRAP_T, wrap);
+		TR_GL_CALL(glTextureParameteri, m_handle, GL_TEXTURE_WRAP_R, wrap);
+		if (label_length > 0) {
+			TR_GL_CALL(glObjectLabel, GL_TEXTURE, m_handle, label_length, label_buffer);
+		}
+	}
+
+	TR_GL_CALL(glTextureStorage2D, m_handle, mipmapped ? floor_cast<GLsizei>(std::log2(std::max(size.x, size.y)) + 1) : 1,
+			   tex_format(format), size.x, size.y);
+	if (glGetError() == GL_OUT_OF_MEMORY) {
+		throw out_of_memory{"texture allocation"};
+	}
+	m_size = size;
+
 	for (int i = 0; i < 80; ++i) {
 		if (texture_unit_textures[i] == *this) {
 			TR_GL_CALL(glBindTextures, i, 1, &m_handle);
 		}
 	}
-	if (!m_label.empty()) {
-		TR_GL_CALL(glObjectLabel, GL_TEXTURE, m_handle, GLsizei(m_label.size()), m_label.data());
-	}
+
+	return texture{old_handle, old_size};
 }
 
 bool tr::gfx::texture::empty() const
@@ -232,14 +259,6 @@ void tr::gfx::texture::set_wrap(wrap wrap)
 	TR_GL_CALL(glTextureParameteri, m_handle, GL_TEXTURE_WRAP_S, GLint(wrap));
 	TR_GL_CALL(glTextureParameteri, m_handle, GL_TEXTURE_WRAP_T, GLint(wrap));
 	TR_GL_CALL(glTextureParameteri, m_handle, GL_TEXTURE_WRAP_R, GLint(wrap));
-}
-
-void tr::gfx::texture::set_swizzle(swizzle r, swizzle g, swizzle b, swizzle a)
-{
-	TR_ASSERT(!empty(), "Tried to set swizzle on an empty texture.");
-
-	std::array<int, 4> glSwizzle{int(r), int(g), int(b), int(a)};
-	TR_GL_CALL(glTextureParameteriv, m_handle, GL_TEXTURE_SWIZZLE_RGBA, glSwizzle.data());
 }
 
 void tr::gfx::texture::set_border_color(rgbaf color)
@@ -285,11 +304,10 @@ void tr::gfx::texture::set_region(glm::ivec2 tl, const sub_bitmap& bitmap)
 	TR_GL_CALL(glGenerateTextureMipmap, m_handle);
 }
 
-void tr::gfx::texture::set_label(std::string label)
+void tr::gfx::texture::set_label(std::string_view label)
 {
-	m_label = std::move(label);
 	if (!empty()) {
-		TR_GL_CALL(glObjectLabel, GL_TEXTURE, m_handle, GLsizei(m_label.size()), m_label.data());
+		TR_GL_CALL(glObjectLabel, GL_TEXTURE, m_handle, GLsizei(label.size()), label.data());
 	}
 }
 
@@ -394,15 +412,16 @@ void tr::gfx::render_texture::fbo_deleter::operator()(unsigned int id) const
 	TR_GL_CALL(glDeleteFramebuffers, 1, &id);
 }
 
-void tr::gfx::render_texture::take_storage(texture&& r) noexcept
+tr::gfx::texture tr::gfx::render_texture::reallocate(glm::ivec2 size, bool mipmapped, pixel_format format)
 {
-	texture::take_storage(std::move(r));
+	texture old_data{texture::reallocate(size, mipmapped, format)};
 	if (!m_fbo.has_value()) {
 		unsigned int temp;
 		TR_GL_CALL(glCreateFramebuffers, 1, &temp);
 		m_fbo.reset(temp);
 	}
 	TR_GL_CALL(glNamedFramebufferTexture, m_fbo.get(), GL_COLOR_ATTACHMENT0, m_handle, 0);
+	return old_data;
 }
 
 tr::gfx::render_texture::operator tr::gfx::render_target() const
