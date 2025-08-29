@@ -43,7 +43,7 @@ void tr::gfx::atlased_font::add_to_2d_renderer(std::string_view text, const text
 {
 	usize count{count_glyphs_and_add_to_cache(text, style)};
 	if (count > 0) {
-		fill_mesh(text, style, box, renderer_2d::new_textured_mesh(layer, count * 4, poly_idx(4) * count));
+		fill_mesh(text, style, box, renderer_2d::new_textured_mesh(layer, count * 4, poly_idx(4) * count, m_atlas));
 	}
 }
 
@@ -61,8 +61,8 @@ void tr::gfx::atlased_font::add_to_2d_renderer(std::string_view text, const outl
 {
 	usize count{count_glyphs_and_add_to_cache(text, style)};
 	if (count > 0) {
-		fill_mesh_text(text, style, box, renderer_2d::new_textured_mesh(text_layer, count * 4, poly_idx(4) * count));
-		fill_mesh_outline(text, style, box, renderer_2d::new_textured_mesh(outline_layer, count * 4, poly_idx(4) * count));
+		fill_mesh_text(text, style, box, renderer_2d::new_textured_mesh(text_layer, count * 4, poly_idx(4) * count, m_atlas));
+		fill_mesh_outline(text, style, box, renderer_2d::new_textured_mesh(outline_layer, count * 4, poly_idx(4) * count, m_atlas));
 	}
 }
 
