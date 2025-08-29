@@ -144,6 +144,11 @@ tr::gfx::texture::texture()
 	TR_GL_CALL(glCreateTextures, GL_TEXTURE_2D, 1, &m_handle);
 }
 
+tr::gfx::texture::texture(unsigned int handle, glm::ivec2 size)
+	: m_handle{handle}, m_size{size}
+{
+}
+
 tr::gfx::texture::texture(glm::ivec2 size, bool mipmapped, pixel_format format)
 	: texture{}
 {
