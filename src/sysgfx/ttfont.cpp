@@ -1,6 +1,6 @@
+#include "../../include/tr/sysgfx/ttfont.hpp"
 #include "../../include/tr/sysgfx/bitmap.hpp"
 #include "../../include/tr/sysgfx/initialization.hpp"
-#include "../../include/tr/sysgfx/ttfont.hpp"
 #include <SDL3_ttf/SDL_ttf.h>
 
 namespace tr::system {
@@ -258,8 +258,15 @@ std::vector<std::string_view> tr::system::break_overlong_lines(std::vector<std::
 
 		const tr::system::ttf_measure_result measure{font.measure_text(*it, int(max_w))};
 		if (measure.text != std::string_view{*it}) {
-			it = std::prev(lines.emplace(std::next(it), it->begin() + measure.text.size(), it->end()));
-			*it = it->substr(0, measure.text.size());
+			usize last_ws{measure.text.find_last_of(" \t")};
+			if (last_ws != std::string_view::npos) {
+				it = std::prev(lines.emplace(std::next(it), it->begin() + last_ws + 1, it->end()));
+				*it = it->substr(0, last_ws);
+			}
+			else {
+				it = std::prev(lines.emplace(std::next(it), it->begin() + measure.text.size(), it->end()));
+				*it = it->substr(0, measure.text.size());
+			}
 		}
 	}
 	return std::move(lines);
