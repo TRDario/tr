@@ -9,7 +9,7 @@ namespace tr {
 
 namespace tr::system {
 	// Creates a timer that sends tick events.
-	timer create_tick_timer(float frequency, u32 id);
+	timer create_tick_timer(float frequency, int id = 0);
 	// Creates a timer that sends draw events.
 	timer create_draw_timer(float frequency = refresh_rate());
 
@@ -21,18 +21,11 @@ namespace tr::system {
 	std::optional<event> wait_for_event(imsecs timeout);
 	// Handles all available events in a loop.
 	template <std::invocable<tr::system::event> Fn> void handle_events(const Fn& fn);
-	// Flushes all events out of the event queue.
-	void flush_events();
 
 	// Enables sending text input events.
 	void enable_text_input_events();
 	// Disables sending text input events.
 	void disable_text_input_events();
-
-	// Pushes an event to the queue.
-	void push_event(const event& event);
-	// Pushes an event to the queue.
-	void push_event(event&& event);
 } // namespace tr::system
 
 ///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
