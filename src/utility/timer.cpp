@@ -4,17 +4,12 @@ using namespace std::chrono_literals;
 
 tr::timer::~timer()
 {
-	if (m_active != nullptr) {
-		*m_active = false;
-		if (m_thread.joinable()) {
-			m_thread.join();
-		}
-	}
+	clear();
 }
 
 tr::timer& tr::timer::operator=(timer&& r) noexcept
 {
-	std::ignore = timer{std::move(*this)};
+	clear();
 	m_active = std::move(r.m_active);
 	m_thread = std::move(r.m_thread);
 	return *this;
@@ -60,5 +55,15 @@ void tr::timer::timer_loop(bool& active, duration interval, callback cb)
 		// Exit gracefully if an exception occurs.
 		active = false;
 		return;
+	}
+}
+
+void tr::timer::clear()
+{
+	if (m_active != nullptr) {
+		*m_active = false;
+		if (m_thread.joinable()) {
+			m_thread.join();
+		}
 	}
 }

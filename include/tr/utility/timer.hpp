@@ -30,6 +30,7 @@ namespace tr {
 		std::thread m_thread;
 
 		static void timer_loop(bool& active, duration interval, callback cb);
+		void clear();
 	};
 } // namespace tr
 
