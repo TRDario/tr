@@ -196,7 +196,7 @@ tr::gfx::texture tr::gfx::texture::reallocate(glm::ivec2 size, bool mipmapped, p
 {
 	TR_ASSERT(size.x > 0 && size.y > 0, "Tried to allocate a texture with an invalid size of {}x{}", size.x, size.y);
 
-	const GLuint old_handle{m_handle};
+	GLuint old_handle{m_handle};
 	glm::ivec2 old_size{m_size};
 
 	if (m_size != glm::ivec2{0, 0}) {
@@ -221,6 +221,13 @@ tr::gfx::texture tr::gfx::texture::reallocate(glm::ivec2 size, bool mipmapped, p
 		if (label_length > 0) {
 			TR_GL_CALL(glObjectLabel, GL_TEXTURE, m_handle, label_length, label_buffer);
 		}
+	}
+	else if (m_handle == 0) {
+		TR_GL_CALL(glCreateTextures, GL_TEXTURE_2D, 1, &m_handle);
+	}
+	else {
+		old_handle = 0;
+		old_size = {};
 	}
 
 	TR_GL_CALL(glTextureStorage2D, m_handle, mipmapped ? floor_cast<GLsizei>(std::log2(std::max(size.x, size.y)) + 1) : 1,
