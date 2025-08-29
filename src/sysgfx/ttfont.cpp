@@ -258,7 +258,7 @@ std::vector<std::string_view> tr::system::break_overlong_lines(std::vector<std::
 
 		const tr::system::ttf_measure_result measure{font.measure_text(*it, int(max_w))};
 		if (measure.text != std::string_view{*it}) {
-			usize last_ws{measure.text.find_last_of(" \t")};
+			usize last_ws{std::string_view{it->begin(), it->begin() + measure.text.size() + 1}.find_last_of(" \t")};
 			if (last_ws != std::string_view::npos) {
 				it = std::prev(lines.emplace(std::next(it), it->begin() + last_ws + 1, it->end()));
 				*it = it->substr(0, last_ws);
