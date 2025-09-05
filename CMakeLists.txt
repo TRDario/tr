@@ -15,8 +15,8 @@ if((TR_BUILD_AUDIO OR TR_BUILD_IMGUI) AND NOT TR_BUILD_SYSGFX)
 	set(TR_BUILD_SYSGFX ON CACHE BOOL "Build the system and graphics module." FORCE)
 endif()
 
-include(Dependencies.cmake)
-include(check_compiler.cmake)
+include(dependencies.cmake)
+include(defines.cmake)
 include(target_template.cmake)
 
 add_library(tr STATIC)
