@@ -76,11 +76,12 @@ void tr::audio::shut_down()
 	}
 #endif
 	sources.clear();
-
+#ifdef TR_ENABLE_ASSERTS
 	for (auto& [buffer, cullable] : buffers) {
 		TR_ASSERT(cullable, "Tried to shut down audio system while one or more audio buffers still exists.");
 		TR_AL_CALL(alDeleteBuffers, 1, &buffer);
 	}
+#endif
 	buffers.clear();
 
 	alcMakeContextCurrent(nullptr);
