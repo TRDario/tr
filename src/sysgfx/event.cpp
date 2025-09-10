@@ -32,8 +32,6 @@ constexpr tr::sys::keymod tr::sys::convert_keymods(SDL_Keymod mods)
 
 tr::sys::key_down_event::key_down_event(const event& event)
 {
-	TR_ASSERT(event.type() == ID, "Tried to cast an unrelated event to key_down_event.");
-
 	const SDL_KeyboardEvent& sdl{((const SDL_Event&)event).key};
 	repeat = sdl.repeat;
 	scan = scancode::enum_t(sdl.scancode);
@@ -63,8 +61,6 @@ bool tr::sys::operator==(const scan_chord& chord, const key_down_event& event)
 
 tr::sys::key_up_event::key_up_event(const event& event)
 {
-	TR_ASSERT(event.type() == ID, "Tried to cast an unrelated event to key_up_event.");
-
 	const SDL_KeyboardEvent& sdl{((const SDL_Event&)event).key};
 	scan = scancode::enum_t(sdl.scancode);
 	key = keycode::enum_t(sdl.key);
@@ -73,16 +69,12 @@ tr::sys::key_up_event::key_up_event(const event& event)
 
 tr::sys::text_input_event::text_input_event(const event& event)
 {
-	TR_ASSERT(event.type() == ID, "Tried to cast an unrelated event to text_input_event.");
-
 	const SDL_TextInputEvent& sdl{((const SDL_Event&)event).text};
 	text = sdl.text;
 }
 
 tr::sys::mouse_motion_event::mouse_motion_event(const event& event)
 {
-	TR_ASSERT(event.type() == ID, "Tried to cast an unrelated event to mouse_motion_event.");
-
 	const SDL_MouseMotionEvent& sdl{((const SDL_Event&)event).motion};
 	buttons = mouse_button(sdl.state);
 	pos = glm::vec2{sdl.x, sdl.y} * window_pixel_density();
@@ -91,8 +83,6 @@ tr::sys::mouse_motion_event::mouse_motion_event(const event& event)
 
 tr::sys::mouse_down_event::mouse_down_event(const event& event)
 {
-	TR_ASSERT(event.type() == ID, "Tried to cast an unrelated event to mouse_down_event.");
-
 	const SDL_MouseButtonEvent& sdl{((const SDL_Event&)event).button};
 	button = mouse_button(1 << (sdl.button - 1));
 	clicks = sdl.clicks;
@@ -101,8 +91,6 @@ tr::sys::mouse_down_event::mouse_down_event(const event& event)
 
 tr::sys::mouse_up_event::mouse_up_event(const event& event)
 {
-	TR_ASSERT(event.type() == ID, "Tried to cast an unrelated event to mouse_up_event.");
-
 	const SDL_MouseButtonEvent& sdl{((const SDL_Event&)event).button};
 	button = mouse_button(1 << (sdl.button - 1));
 	pos = glm::vec2{sdl.x, sdl.y} * window_pixel_density();
@@ -110,8 +98,6 @@ tr::sys::mouse_up_event::mouse_up_event(const event& event)
 
 tr::sys::mouse_wheel_event::mouse_wheel_event(const event& event)
 {
-	TR_ASSERT(event.type() == ID, "Tried to cast an unrelated event to mouse_wheel_event.");
-
 	const SDL_MouseWheelEvent& sdl{((const SDL_Event&)event).wheel};
 	delta = {sdl.x, sdl.y};
 	mouse_pos = glm::vec2{sdl.mouse_x, sdl.mouse_y} * window_pixel_density();
@@ -119,8 +105,6 @@ tr::sys::mouse_wheel_event::mouse_wheel_event(const event& event)
 
 tr::sys::backbuffer_resize_event::backbuffer_resize_event(const event& event)
 {
-	TR_ASSERT(event.type() == ID, "Tried to cast an unrelated event to backbuffer_resize_event.");
-
 	const SDL_WindowEvent& sdl{((const SDL_Event&)event).window};
 	size = {sdl.data1, sdl.data2};
 }
@@ -128,7 +112,6 @@ tr::sys::backbuffer_resize_event::backbuffer_resize_event(const event& event)
 tr::sys::tick_event::tick_event(const event& event)
 	: id{((const SDL_Event&)event).user.code}
 {
-	TR_ASSERT(event.type() == ID, "Tried to cast an unrelated event to tick_event.");
 }
 
 tr::u32 tr::sys::event::type() const
@@ -142,7 +125,7 @@ tr::timer tr::sys::create_tick_timer(float frequency, int id)
 		1.0s / frequency,
 		[=] {
 			SDL_Event event;
-			event.type = tick_event::ID;
+			event.type = 0x8000;
 			event.user.code = id;
 			SDL_PushEvent(&event);
 		},
@@ -154,7 +137,7 @@ tr::timer tr::sys::create_draw_timer(float frequency)
 	return timer{
 		1.0s / frequency,
 		[] {
-			SDL_Event event{.type = draw_event::ID};
+			SDL_Event event{.type = 0x8001};
 			SDL_PushEvent(&event);
 		},
 	};

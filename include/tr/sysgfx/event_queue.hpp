@@ -20,7 +20,9 @@ namespace tr::sys {
 	// Gets an event from the event queue, waiting until one appears or until a certain amount of time has passed.
 	std::optional<event> wait_for_event(imsecs timeout);
 	// Handles all available events in a loop.
-	template <std::invocable<tr::sys::event> Fn> void handle_events(const Fn& fn);
+	template <std::invocable<tr::sys::event> Handler> void handle_events(Handler&& handler);
+	// Handles all available events in a loop (through a visitor).
+	template <class Visitor> void handle_events(Visitor&& visitor);
 
 	// Enables sending text input events.
 	void enable_text_input_events();
@@ -30,9 +32,14 @@ namespace tr::sys {
 
 ///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
 
-template <std::invocable<tr::sys::event> Fn> void tr::sys::handle_events(const Fn& fn)
+template <std::invocable<tr::sys::event> Handler> void tr::sys::handle_events(Handler&& handler)
 {
 	for (std::optional<event> event = wait_for_event(imsecs{1}); event.has_value(); event = poll_event()) {
-		fn(*event);
+		handler(*event);
 	}
+}
+
+template <class Visitor> void tr::sys::handle_events(Visitor&& visitor)
+{
+	handle_events([&](const event& event) { event.visit(visitor); });
 }
