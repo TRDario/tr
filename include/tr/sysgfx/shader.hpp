@@ -2,6 +2,10 @@
 #include "../utility/exception.hpp"
 #include "../utility/handle.hpp"
 
+#ifdef TR_ENABLE_GL_CHECKS
+#include "gl_checks.hpp"
+#endif
+
 namespace tr::gfx {
 	class shader_buffer;
 	class texture_unit;
@@ -31,12 +35,6 @@ namespace tr::gfx {
 	  public:
 		// Sets a boolean uniform.
 		void set_uniform(int index, bool value);
-		// Sets a bvec2 uniform.
-		void set_uniform(int index, glm::bvec2 value);
-		// Sets a bvec3 uniform.
-		void set_uniform(int index, glm::bvec3 value);
-		// Sets a bvec4 uniform.
-		void set_uniform(int index, glm::bvec4 value);
 
 		// Sets an integer uniform.
 		void set_uniform(int index, int value);
@@ -142,6 +140,10 @@ namespace tr::gfx {
 
 		// Handle to the OpenGL program.
 		handle<unsigned int, 0, deleter> m_program;
+#ifdef TR_ENABLE_GL_CHECKS
+		// List of uniforms obtained by introspection.
+		std::unordered_map<unsigned int, glsl_variable> m_uniforms;
+#endif
 
 		// Constructs a shader.
 		shader_base(const char* source, unsigned int type);
