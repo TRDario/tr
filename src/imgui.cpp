@@ -5,7 +5,7 @@
 
 void tr::imgui::initialize()
 {
-	ImGui_ImplSDL3_InitForOpenGL(system::sdl_window, gfx::ogl_context);
+	ImGui_ImplSDL3_InitForOpenGL(sys::sdl_window, gfx::ogl_context);
 	ImGui_ImplOpenGL3_Init("#version 150");
 }
 
@@ -20,7 +20,7 @@ tr::u64 tr::imgui::get_texture_id(gfx::texture_ref texture)
 	return texture.m_id;
 }
 
-void tr::imgui::process_event(const system::event& event)
+void tr::imgui::process_event(const sys::event& event)
 {
 	ImGui_ImplSDL3_ProcessEvent((const SDL_Event*)&event);
 }

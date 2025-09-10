@@ -1,7 +1,7 @@
 #pragma once
 #include "../utility/common.hpp"
 
-namespace tr::system {
+namespace tr::sys {
 	class cursor;
 
 	// Mouse buttons (may be ORed together).
@@ -23,4 +23,4 @@ namespace tr::system {
 	void show_cursor(bool show);
 	// Sets the mouse cursor.
 	void set_cursor(const cursor& cursor);
-} // namespace tr::system
+} // namespace tr::sys

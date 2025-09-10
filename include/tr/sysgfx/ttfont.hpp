@@ -9,7 +9,7 @@ namespace tr {
 	class bitmap;
 }
 
-namespace tr::system {
+namespace tr::sys {
 	// Error thrown when font loading fails.
 	class ttfont_load_error : public exception {
 	  public:
@@ -144,11 +144,11 @@ namespace tr::system {
 	std::vector<std::string_view> break_overlong_lines(std::vector<std::string_view>&& lines, const ttfont& font, int max_w);
 	// Splits a string view into a list of lines, breaking overlong lines according to the font's current size, style, and outline.
 	std::vector<std::string_view> split_into_lines(std::string_view str, const ttfont& font, int max_w);
-} // namespace tr::system
+} // namespace tr::sys
 
 ///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
 
-template <std::ranges::contiguous_range R> tr::system::ttfont tr::system::load_embedded_ttfont(R&& range, float size)
+template <std::ranges::contiguous_range R> tr::sys::ttfont tr::sys::load_embedded_ttfont(R&& range, float size)
 {
 	return load_embedded_ttfont(std::span<const std::byte>{range_bytes(range)}, size);
 };

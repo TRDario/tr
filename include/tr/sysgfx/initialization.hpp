@@ -1,7 +1,7 @@
 #pragma once
 #include "../utility/exception.hpp"
 
-namespace tr::system {
+namespace tr::sys {
 	// Error thrown when system initialization fails.
 	class init_error : public tr::exception {
 	  public:
@@ -23,4 +23,4 @@ namespace tr::system {
 	// Sets up the basic application info.
 	// May throw: init_error.
 	void initialize(const char* developer, const char* name);
-} // namespace tr::system
+} // namespace tr::sys

@@ -10,7 +10,7 @@ tr::u32 tr::drop_state::type() const
 	return std::numeric_limits<u32>::max();
 }
 
-std::unique_ptr<tr::state> tr::drop_state::handle_event(const system::event&)
+std::unique_ptr<tr::state> tr::drop_state::handle_event(const sys::event&)
 {
 	return nullptr;
 }
@@ -37,7 +37,7 @@ const tr::benchmark& tr::state_manager::draw_benchmark() const
 	return m_draw;
 }
 
-void tr::state_manager::handle_event(const system::event& event)
+void tr::state_manager::handle_event(const sys::event& event)
 {
 	if (state != nullptr) {
 		std::unique_ptr<tr::state> next{state->handle_event(event)};

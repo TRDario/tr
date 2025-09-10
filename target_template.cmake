@@ -35,7 +35,7 @@ function(tr_target_template TARGET)
 			/WX
 		)
 	endif()
-	target_compile_definitions(${TARGET} PUBLIC $<CONFIG:Debug>:TR_ENABLE_GL_CHECKS $<$<CONFIG:Debug>:TR_ENABLE_ASSERTS>$<$<CONFIG:RelWithDebInfo>:TR_ENABLE_ASSERTS>)
+	target_compile_definitions(${TARGET} PUBLIC $<$<CONFIG:Debug>:TR_ENABLE_GL_CHECKS> $<$<CONFIG:Debug>:TR_ENABLE_ASSERTS>$<$<CONFIG:RelWithDebInfo>:TR_ENABLE_ASSERTS>)
 	if(TR_HAS_STD_FORMAT)
 		target_compile_definitions(${TARGET} PUBLIC TR_HAS_STD_FORMAT)
 	endif()

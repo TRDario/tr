@@ -1,7 +1,7 @@
 #pragma once
 #include "../utility/macro.hpp"
 
-namespace tr::system {
+namespace tr::sys {
 	struct key_down_event;
 	struct key_up_event;
 
@@ -371,61 +371,61 @@ namespace tr::system {
 	void set_clipboard_text(const char* text);
 	// Sets the clipboard text.
 	void set_clipboard_text(const std::string& text);
-} // namespace tr::system
+} // namespace tr::sys
 
-template <> struct std::hash<tr::system::scancode> {
-	tr::u64 operator()(tr::system::scancode code) const;
+template <> struct std::hash<tr::sys::scancode> {
+	tr::u64 operator()(tr::sys::scancode code) const;
 };
-template <> struct std::hash<tr::system::keycode> {
-	tr::u64 operator()(tr::system::keycode code) const;
+template <> struct std::hash<tr::sys::keycode> {
+	tr::u64 operator()(tr::sys::keycode code) const;
 };
-template <> struct std::hash<tr::system::scan_chord> {
-	tr::u64 operator()(tr::system::scan_chord chord) const;
+template <> struct std::hash<tr::sys::scan_chord> {
+	tr::u64 operator()(tr::sys::scan_chord chord) const;
 };
-template <> struct std::hash<tr::system::key_chord> {
-	tr::u64 operator()(tr::system::key_chord chord) const;
+template <> struct std::hash<tr::sys::key_chord> {
+	tr::u64 operator()(tr::sys::key_chord chord) const;
 };
 
 ///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
 
-constexpr tr::system::scancode::scancode(int base)
+constexpr tr::sys::scancode::scancode(int base)
 	: m_base{enum_t(base)}
 {
 }
 
-constexpr tr::system::scancode::scancode(enum_t base)
+constexpr tr::sys::scancode::scancode(enum_t base)
 	: m_base{base}
 {
 }
 
-constexpr tr::system::scancode::operator int() const
+constexpr tr::sys::scancode::operator int() const
 {
 	return int(m_base);
 }
 
-constexpr tr::system::scancode tr::system::make_top_row_scancode(int v)
+constexpr tr::sys::scancode tr::sys::make_top_row_scancode(int v)
 {
 	TR_ASSERT(v >= 0 && v < 10, "Tried to create top row number scancode {} outside the range [0-9]", v);
 
 	return scancode(int(scancode::TOP_ROW_0) + v);
 }
 
-constexpr tr::system::keycode::keycode(int base)
+constexpr tr::sys::keycode::keycode(int base)
 	: m_base{enum_t(base)}
 {
 }
 
-constexpr tr::system::keycode::keycode(enum_t base)
+constexpr tr::sys::keycode::keycode(enum_t base)
 	: m_base{base}
 {
 }
 
-constexpr tr::system::keycode::operator int() const
+constexpr tr::sys::keycode::operator int() const
 {
 	return int(m_base);
 }
 
-constexpr tr::system::keycode tr::system::make_top_row_keycode(int v)
+constexpr tr::sys::keycode tr::sys::make_top_row_keycode(int v)
 {
 	TR_ASSERT(v >= 0 && v < 10, "Tried to create top row number keycode {} outside the range [0-9]", v);
 

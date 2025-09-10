@@ -2,27 +2,27 @@
 #include "../../include/tr/sysgfx/impl.hpp"
 #include <SDL3/SDL.h>
 
-tr::system::init_error::init_error(std::string_view description)
+tr::sys::init_error::init_error(std::string_view description)
 	: m_description{description}
 {
 }
 
-std::string_view tr::system::init_error::name() const
+std::string_view tr::sys::init_error::name() const
 {
 	return "System initialization error";
 }
 
-std::string_view tr::system::init_error::description() const
+std::string_view tr::sys::init_error::description() const
 {
 	return m_description;
 }
 
-std::string_view tr::system::init_error::details() const
+std::string_view tr::sys::init_error::details() const
 {
 	return SDL_GetError();
 }
 
-void tr::system::initialize(const char* developer, const char* name)
+void tr::sys::initialize(const char* developer, const char* name)
 {
 	TR_ASSERT(!SDL_WasInit(SDL_INIT_VIDEO), "Tried to initialize the problem more than once.");
 

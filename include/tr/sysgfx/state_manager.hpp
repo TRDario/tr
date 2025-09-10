@@ -2,7 +2,7 @@
 #include "../utility/benchmark.hpp"
 
 namespace tr {
-	namespace system {
+	namespace sys {
 		class event;
 	}
 
@@ -17,7 +17,7 @@ namespace tr {
 		virtual u32 type() const;
 		// Handles an event.
 		// Returning nullptr mains the current state, drop_state will drop the current state, any other pointer will replace the state.
-		virtual std::unique_ptr<state> handle_event(const system::event& event) = 0;
+		virtual std::unique_ptr<state> handle_event(const sys::event& event) = 0;
 		// Updates the state.
 		// Returning nullptr mains the current state, drop_state will drop the current state, any other pointer will replace the state.
 		virtual std::unique_ptr<state> update(duration delta) = 0;
@@ -28,7 +28,7 @@ namespace tr {
 	// Sentinel state thats tells the state manager to drop the current state when returned from a state operation.
 	struct drop_state : state {
 		u32 type() const override;
-		std::unique_ptr<state> handle_event(const system::event&) override;
+		std::unique_ptr<state> handle_event(const sys::event&) override;
 		std::unique_ptr<state> update(duration) override;
 		void draw() override;
 	};
@@ -48,7 +48,7 @@ namespace tr {
 		const benchmark& draw_benchmark() const;
 
 		// Passes an event to the held state.
-		void handle_event(const system::event& event);
+		void handle_event(const sys::event& event);
 		// Updates the state.
 		void update(duration delta);
 		// Updates the state.

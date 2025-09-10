@@ -4,7 +4,7 @@
 
 using namespace std::chrono_literals;
 
-namespace tr::system {
+namespace tr::sys {
 	// Button layout for the YES/NO message box.
 	constexpr std::array<SDL_MessageBoxButtonData, 2> YES_NO_BUTTONS{{
 		{.flags = SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT, .buttonID = 0, .text = "Yes"},
@@ -33,9 +33,9 @@ namespace tr::system {
 	// Base open folder dialog function.
 	std::vector<std::filesystem::path> show_open_folder_dialog(const char* default_path, bool allow_multiple);
 
-} // namespace tr::system
+} // namespace tr::sys
 
-void tr::system::file_dialog_callback(void* userdata, const char* const* files, int)
+void tr::sys::file_dialog_callback(void* userdata, const char* const* files, int)
 {
 	file_dialog_context& context{*(file_dialog_context*)userdata};
 	if (files != nullptr) {
@@ -46,8 +46,8 @@ void tr::system::file_dialog_callback(void* userdata, const char* const* files, 
 	context.done = true;
 }
 
-std::vector<std::filesystem::path> tr::system::show_open_file_dialog(std::span<const dialog_filter> filters, const char* default_path,
-																	 bool allow_multiple)
+std::vector<std::filesystem::path> tr::sys::show_open_file_dialog(std::span<const dialog_filter> filters, const char* default_path,
+																  bool allow_multiple)
 {
 	TR_ASSERT(SDL_WasInit(0), "Tried to open a file dialog before initializing the application.");
 
@@ -61,7 +61,7 @@ std::vector<std::filesystem::path> tr::system::show_open_file_dialog(std::span<c
 	return std::move(ctx.paths);
 }
 
-std::vector<std::filesystem::path> tr::system::show_open_folder_dialog(const char* default_path, bool allow_multiple)
+std::vector<std::filesystem::path> tr::sys::show_open_folder_dialog(const char* default_path, bool allow_multiple)
 {
 	TR_ASSERT(SDL_WasInit(0), "Tried to open a folder dialog before initializing the application.");
 
@@ -74,7 +74,7 @@ std::vector<std::filesystem::path> tr::system::show_open_folder_dialog(const cha
 	return std::move(ctx.paths);
 }
 
-tr::system::msg_button tr::system::show_message_box(msg_box_type type, msg_buttons buttons, const char* title, const char* message)
+tr::sys::msg_button tr::sys::show_message_box(msg_box_type type, msg_buttons buttons, const char* title, const char* message)
 {
 	const SDL_MessageBoxFlags flags{SDL_MessageBoxFlags(type)};
 
@@ -99,7 +99,7 @@ tr::system::msg_button tr::system::show_message_box(msg_box_type type, msg_butto
 	}
 }
 
-void tr::system::show_fatal_error_message_box(const std::exception& exception)
+void tr::sys::show_fatal_error_message_box(const std::exception& exception)
 {
 	if (dynamic_cast<const std::bad_alloc*>(&exception) || dynamic_cast<const out_of_memory*>(&exception)) {
 		emergency_buffer.reset();
@@ -131,29 +131,29 @@ void tr::system::show_fatal_error_message_box(const std::exception& exception)
 	show_message_box(msg_box_type::ERROR, msg_buttons::OK, title.c_str(), message.c_str());
 }
 
-std::filesystem::path tr::system::show_open_file_dialog(std::span<const dialog_filter> filters, const char* default_path)
+std::filesystem::path tr::sys::show_open_file_dialog(std::span<const dialog_filter> filters, const char* default_path)
 {
 	std::vector<std::filesystem::path> vec{show_open_file_dialog(filters, default_path, false)};
 	return vec.empty() ? std::filesystem::path{} : std::move(vec.front());
 }
 
-std::vector<std::filesystem::path> tr::system::show_open_files_dialog(std::span<const dialog_filter> filters, const char* default_path)
+std::vector<std::filesystem::path> tr::sys::show_open_files_dialog(std::span<const dialog_filter> filters, const char* default_path)
 {
 	return show_open_file_dialog(filters, default_path, true);
 }
 
-std::filesystem::path tr::system::show_open_folder_dialog(const char* default_path)
+std::filesystem::path tr::sys::show_open_folder_dialog(const char* default_path)
 {
 	std::vector<std::filesystem::path> vec{show_open_folder_dialog(default_path, false)};
 	return vec.empty() ? std::filesystem::path{} : std::move(vec.front());
 }
 
-std::vector<std::filesystem::path> tr::system::show_open_folders_dialog(const char* default_path)
+std::vector<std::filesystem::path> tr::sys::show_open_folders_dialog(const char* default_path)
 {
 	return show_open_folder_dialog(default_path, true);
 }
 
-std::filesystem::path tr::system::show_save_file_dialog(std::span<const dialog_filter> filters, const char* default_path)
+std::filesystem::path tr::sys::show_save_file_dialog(std::span<const dialog_filter> filters, const char* default_path)
 {
 	file_dialog_context ctx{};
 	SDL_ShowSaveFileDialog(file_dialog_callback, &ctx, nullptr, (const SDL_DialogFileFilter*)filters.data(), int(filters.size()),

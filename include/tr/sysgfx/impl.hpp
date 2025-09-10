@@ -6,7 +6,7 @@
 struct SDL_Window;
 struct SDL_GLContextState;
 
-namespace tr::system {
+namespace tr::sys {
 	// Buffer allocated to be freed in case of an out-of-memory error.
 	inline std::unique_ptr<char[]> emergency_buffer{new char[16384]};
 
@@ -17,7 +17,7 @@ namespace tr::system {
 
 	// Pointer to the SDL window.
 	inline SDL_Window* sdl_window{nullptr};
-} // namespace tr::system
+} // namespace tr::sys
 
 namespace tr::gfx {
 	// Pointer to the SDL OpenGL context.

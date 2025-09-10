@@ -1,6 +1,6 @@
 #pragma once
 
-namespace tr::system {
+namespace tr::sys {
 	// Message box type.
 	enum class msg_box_type {
 		ERROR = 16,   // Error message box.
@@ -48,4 +48,4 @@ namespace tr::system {
 
 	// Shows a "Save File" dialog.
 	std::filesystem::path show_save_file_dialog(std::span<const dialog_filter> filters = {}, const char* default_path = nullptr);
-} // namespace tr::system
+} // namespace tr::sys

@@ -8,13 +8,13 @@ struct SDL_Surface;
 namespace tr {
 	class bitmap;
 	class bitmap_view;
-	namespace system {
+	namespace sys {
 		class cursor;
 		class ttfont;
 
 		void set_window_icon(const bitmap& bitmap);
 		void set_window_icon(const bitmap_view& view);
-	}; // namespace system
+	}; // namespace sys
 
 	// Bitmap/texture pixel format.
 	enum class pixel_format {
@@ -190,8 +190,8 @@ namespace tr {
 
 		friend class bitmap;
 		friend class sub_bitmap;
-		friend class system::cursor;
-		friend void system::set_window_icon(const bitmap_view& view);
+		friend class sys::cursor;
+		friend void sys::set_window_icon(const bitmap_view& view);
 	};
 
 	// Class containing owned bitmap data.
@@ -271,9 +271,9 @@ namespace tr {
 		friend class sub_bitmap;
 		friend class sub_bitmap::iterator;
 		friend class mut_it;
-		friend class system::cursor;
-		friend class system::ttfont;
-		friend void system::set_window_icon(const bitmap& bitmap);
+		friend class sys::cursor;
+		friend class sys::ttfont;
+		friend void sys::set_window_icon(const bitmap& bitmap);
 
 		friend bitmap load_embedded_bitmap(std::span<const std::byte> data);
 		friend bitmap load_bitmap_file(const std::filesystem::path& path);

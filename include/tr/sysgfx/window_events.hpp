@@ -1,7 +1,7 @@
 #pragma once
 #include "../utility/common.hpp"
 
-namespace tr::system {
+namespace tr::sys {
 	class event;
 
 	// Event emitted when a window is shown.
@@ -51,4 +51,4 @@ namespace tr::system {
 		// The event ID of window losing focus events.
 		static inline constexpr u32 ID{0x20F};
 	};
-} // namespace tr::system
+} // namespace tr::sys

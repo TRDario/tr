@@ -9,7 +9,7 @@ namespace tr {
 	class cursor;
 } // namespace tr
 
-namespace tr::system {
+namespace tr::sys {
 	// System mouse cursor icons.
 	enum class sys_cursor {
 		ARROW,      // Default arrow cursor.
@@ -53,12 +53,12 @@ namespace tr::system {
 
 		friend void set_cursor(const cursor& cursor);
 	};
-} // namespace tr::system
+} // namespace tr::sys
 
 ///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
 
 template <std::ranges::contiguous_range R1, std::ranges::contiguous_range R2>
-tr::system::cursor::cursor(R1&& color, R2&& mask, glm::ivec2 size, glm::ivec2 focus)
+tr::sys::cursor::cursor(R1&& color, R2&& mask, glm::ivec2 size, glm::ivec2 focus)
 	: cursor{range_bytes(color), range_bytes(mask), size, focus}
 {
 }

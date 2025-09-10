@@ -22,7 +22,7 @@ namespace tr::gfx {
 	};
 } // namespace tr::gfx
 
-namespace tr::system {
+namespace tr::sys {
 	// Window flag bitmasks.
 	enum class window_flag : u32 {
 		DEFAULT = 0x0,         // Default flags.
@@ -105,4 +105,4 @@ namespace tr::system {
 
 	// Sets the window's V-sync mode.
 	void set_window_vsync(vsync vsync);
-} // namespace tr::system
+} // namespace tr::sys

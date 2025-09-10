@@ -1,7 +1,7 @@
 #pragma once
 #include "mouse.hpp"
 
-namespace tr::system {
+namespace tr::sys {
 	class event;
 
 	// Event emitted when the mouse is moved.
@@ -63,4 +63,4 @@ namespace tr::system {
 		// Converts a generic event into a mouse wheel event.
 		mouse_wheel_event(const event& event);
 	};
-} // namespace tr::system
+} // namespace tr::sys

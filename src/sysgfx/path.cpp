@@ -3,14 +3,14 @@
 #include "../../include/tr/sysgfx/initialization.hpp"
 #include <SDL3/SDL.h>
 
-std::filesystem::path tr::system::executable_dir()
+std::filesystem::path tr::sys::executable_dir()
 {
 	TR_ASSERT(SDL_WasInit(0), "Tried to get executable directory before initializing the application.");
 
 	return SDL_GetBasePath();
 }
 
-std::filesystem::path tr::system::user_dir()
+std::filesystem::path tr::sys::user_dir()
 {
 	TR_ASSERT(SDL_WasInit(0), "Tried to get user directory before initializing the application.");
 

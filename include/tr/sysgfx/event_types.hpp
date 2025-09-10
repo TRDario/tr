@@ -1,7 +1,7 @@
 #pragma once
 #include "../utility/common.hpp"
 
-namespace tr::system {
+namespace tr::sys {
 	class event;
 
 	// Event emitted when the application wants to quit.
@@ -40,4 +40,4 @@ namespace tr::system {
 
 		event() = default;
 	};
-} // namespace tr::system
+} // namespace tr::sys
