@@ -148,6 +148,8 @@ void tr::gfx::renderer_2d::state_t::setup_context()
 {
 	if (current_renderer() != RENDERER_2D) {
 		set_renderer(RENDERER_2D);
+		set_face_culling(false);
+		set_depth_test(false);
 		set_shader_pipeline(pipeline);
 		set_blend_mode(last_blend_mode);
 		set_vertex_format(vertex2_format());

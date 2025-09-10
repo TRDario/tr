@@ -59,8 +59,8 @@ void tr::gfx::create_ogl_context()
 	TR_LOG_CONTINUE(log, "Vendor: {}", (const char*)(TR_RETURNING_GL_CALL(glGetString, GL_VENDOR)));
 	TR_LOG_CONTINUE(log, "Renderer: {}", (const char*)(TR_RETURNING_GL_CALL(glGetString, GL_RENDERER)));
 	TR_LOG_CONTINUE(log, "Version: {}", (const char*)(TR_RETURNING_GL_CALL(glGetString, GL_VERSION)));
-	glEnable(GL_BLEND);
-	glEnable(GL_SCISSOR_TEST);
+	TR_GL_CALL(glEnable, GL_BLEND);
+	TR_GL_CALL(glEnable, GL_SCISSOR_TEST);
 }
 
 std::string_view tr::gfx::ogl_source(GLenum value)

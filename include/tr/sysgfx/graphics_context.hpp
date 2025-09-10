@@ -31,6 +31,11 @@ namespace tr::gfx {
 	// Gets whether the context is a debug context.
 	bool debug();
 
+	// Sets whether face culling should be used.
+	void set_face_culling(bool arg);
+	// Sets whether depth testing should be used.
+	void set_depth_test(bool arg);
+
 	// Sets the active render target.
 	void set_render_target(const render_target& target);
 	// Resets the active render target.

@@ -391,6 +391,8 @@ void tr::gfx::debug_renderer::draw()
 		set_render_target(backbuffer_render_target());
 		if (current_renderer() != DEBUG_RENDERER) {
 			set_renderer(DEBUG_RENDERER);
+			set_face_culling(false);
+			set_depth_test(false);
 			set_blend_mode(ALPHA_BLENDING);
 			set_shader_pipeline(state->pipeline);
 			set_vertex_format(state->format);

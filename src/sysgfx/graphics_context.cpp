@@ -22,6 +22,30 @@ bool tr::gfx::debug()
 	return debug_context;
 }
 
+void tr::gfx::set_face_culling(bool arg)
+{
+	TR_ASSERT(ogl_context != nullptr, "Tried to set face culling before opening the window.");
+
+	if (arg) {
+		TR_GL_CALL(glEnable, GL_CULL_FACE);
+	}
+	else {
+		TR_GL_CALL(glDisable, GL_CULL_FACE);
+	}
+}
+
+void tr::gfx::set_depth_test(bool arg)
+{
+	TR_ASSERT(ogl_context != nullptr, "Tried to set depth testing before opening the window.");
+
+	if (arg) {
+		TR_GL_CALL(glEnable, GL_DEPTH_TEST);
+	}
+	else {
+		TR_GL_CALL(glDisable, GL_DEPTH_TEST);
+	}
+}
+
 void tr::gfx::set_render_target(const render_target& target)
 {
 	TR_ASSERT(ogl_context != nullptr, "Tried to set graphics context render target before opening the window.");
