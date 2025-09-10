@@ -94,7 +94,7 @@ namespace tr::gfx {
 		texture(unsigned int handle, glm::ivec2 size);
 
 		friend class texture_ref;
-		friend class texture_unit;
+		friend class shader_base;
 	};
 
 	// Smart texture reference (updated on texture moves and updates, emptied on deletion).
@@ -122,7 +122,7 @@ namespace tr::gfx {
 		opt_ref<const texture> m_ref{};
 
 		friend class texture;
-		friend class texture_unit;
+		friend class shader_base;
 	};
 
 	// 2D texture that can be rendered to.

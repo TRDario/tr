@@ -8,7 +8,7 @@
 
 namespace tr::gfx {
 	class shader_buffer;
-	class texture_unit;
+	class texture_ref;
 
 	// Error thrown when shader loading fails.
 	class shader_load_error : public exception {
@@ -125,7 +125,7 @@ namespace tr::gfx {
 		void set_uniform(int index, std::span<const glm::mat4x3> value);
 
 		// Sets a texture sampler uniform.
-		void set_uniform(int index, const texture_unit& unit);
+		void set_uniform(int index, texture_ref texture);
 
 		// Sets a shader storage buffer.
 		void set_storage_buffer(unsigned int index, shader_buffer& buffer);
@@ -134,12 +134,23 @@ namespace tr::gfx {
 		void set_label(std::string_view label);
 
 	  protected:
+		struct texture_unit {
+			struct deleter {
+				void operator()(unsigned int unit) const;
+			};
+
+			handle<unsigned int, UINT_MAX, deleter> id;
+
+			texture_unit();
+		};
 		struct deleter {
 			void operator()(unsigned int id) const;
 		};
 
 		// Handle to the OpenGL program.
 		handle<unsigned int, 0, deleter> m_program;
+		// Texture units allocated to this shader.
+		std::unordered_map<int, texture_unit> m_texture_units;
 #ifdef TR_ENABLE_GL_CHECKS
 		// List of uniforms obtained by introspection.
 		std::unordered_map<unsigned int, glsl_variable> m_uniforms;

@@ -1,6 +1,5 @@
 #pragma once
 #include "texture.hpp"
-#include "texture_unit.hpp"
 
 namespace tr::gfx {
 	// Dynamically-allocated texture atlas.

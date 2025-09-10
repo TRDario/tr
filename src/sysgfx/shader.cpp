@@ -1,12 +1,15 @@
-#include "../../include/tr/sysgfx/gl_call.hpp"
+#include "../../include/tr/sysgfx/impl.hpp"
 #include "../../include/tr/sysgfx/shader.hpp"
 #include "../../include/tr/sysgfx/shader_buffer.hpp"
-#include "../../include/tr/sysgfx/texture_unit.hpp"
+#include "../../include/tr/sysgfx/texture.hpp"
 
-namespace tr {
+namespace tr::gfx {
 	// Properties queried for uniforms.
 	constexpr std::array<GLenum, 5> UNIFORM_PROPERTIES{GL_BLOCK_INDEX, GL_TYPE, GL_ARRAY_SIZE, GL_NAME_LENGTH, GL_LOCATION};
-} // namespace tr
+
+	// Tracks which units are allocated.
+	std::array<bool, 80> texture_units;
+} // namespace tr::gfx
 
 tr::gfx::shader_load_error::shader_load_error(std::string_view path, std::string&& details)
 	: m_description{TR_FMT::format("Failed to load bitmap from '{}'", path)}, m_details{std::move(details)}
@@ -27,6 +30,25 @@ std::string_view tr::gfx::shader_load_error::details() const
 {
 	return m_details;
 }
+
+//
+
+tr::gfx::shader_base::texture_unit::texture_unit()
+{
+	TR_ASSERT(std::ranges::find(texture_units, false) != texture_units.end(), "Ran out of texture units for shaders.");
+
+	auto it{std::ranges::find(texture_units, false)};
+	*it = true;
+	texture_unit_textures[it - texture_units.begin()] = std::nullopt;
+	id.reset((unsigned int)(it - texture_units.begin()));
+}
+
+void tr::gfx::shader_base::texture_unit::deleter::operator()(unsigned int unit) const
+{
+	texture_units[unit] = false;
+}
+
+//
 
 tr::gfx::shader_base::shader_base(const char* source, unsigned int type)
 {
@@ -539,15 +561,28 @@ void tr::gfx::shader_base::set_uniform(int index, std::span<const glm::mat4x3> v
 	TR_GL_CALL(glProgramUniformMatrix4x3fv, m_program.get(), index, GLsizei(value.size()), false, value_ptr(value[0]));
 }
 
-void tr::gfx::shader_base::set_uniform(int index, const texture_unit& value)
+void tr::gfx::shader_base::set_uniform(int index, texture_ref texture)
 {
 #ifdef TR_ENABLE_GL_CHECKS
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
 	TR_ASSERT(it->second.type == glsl_type::MAT2 && it->second.array_size == 1,
-			  "Tried to set uniform with signature '{}' with a value of type 'mat2'.", it->second);
+			  "Tried to set uniform with signature '{}' with a value of type 'sampler2D'.", it->second);
 #endif
-	TR_GL_CALL(glProgramUniform1i, m_program.get(), index, value.m_unit.get());
+
+	auto unit_it{m_texture_units.find(index)};
+	if (unit_it == m_texture_units.end()) {
+		unit_it = m_texture_units.insert({index, texture_unit{}}).first;
+		TR_GL_CALL(glProgramUniform1i, m_program.get(), index, unit_it->second.id.get());
+	}
+
+	const unsigned int unit_id{unit_it->second.id.get()};
+	if (!texture.empty()) {
+		if (texture_unit_textures[unit_id] != texture && texture.m_ref->m_handle != 0) {
+			TR_GL_CALL(glBindTextures, unit_id, 1, &texture.m_ref->m_handle);
+		}
+	}
+	texture_unit_textures[unit_id] = std::move(texture);
 }
 
 void tr::gfx::shader_base::set_storage_buffer(unsigned int index, shader_buffer& buffer)

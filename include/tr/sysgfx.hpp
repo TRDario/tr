@@ -25,7 +25,6 @@
 #include "sysgfx/shader_pipeline.hpp"  // IWYU pragma: export
 #include "sysgfx/state_manager.hpp"    // IWYU pragma: export
 #include "sysgfx/texture.hpp"          // IWYU pragma: export
-#include "sysgfx/texture_unit.hpp"     // IWYU pragma: export
 #include "sysgfx/ttfont.hpp"           // IWYU pragma: export
 #include "sysgfx/vertex_buffer.hpp"    // IWYU pragma: export
 #include "sysgfx/vertex_format.hpp"    // IWYU pragma: export

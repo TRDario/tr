@@ -1,9 +1,8 @@
-#include "../../include/tr/sysgfx/renderer_2d.hpp"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/index_buffer.hpp"
+#include "../../include/tr/sysgfx/renderer_2d.hpp"
 #include "../../include/tr/sysgfx/shader_pipeline.hpp"
 #include "../../include/tr/sysgfx/texture.hpp"
-#include "../../include/tr/sysgfx/texture_unit.hpp"
 #include "../../include/tr/sysgfx/vertex_buffer.hpp"
 #include "../../include/tr/sysgfx/vertex_format.hpp"
 
@@ -68,8 +67,6 @@ namespace tr::gfx::renderer_2d {
 		std::vector<mesh> meshes;
 		// The pipeline and shaders used by the renderer.
 		owning_shader_pipeline pipeline{vertex_shader{RENDERER_2D_VERT_SRC}, fragment_shader{RENDERER_2D_FRAG_SRC}};
-		// The texture unit used by the renderer.
-		texture_unit tex_unit;
 		// Vertex buffer for the positions of the vertices.
 		dyn_vertex_buffer<glm::vec2> vbuffer_positions;
 		// Vertex buffer for the UVs of the vertices.
@@ -104,7 +101,6 @@ namespace tr::gfx::renderer_2d {
 tr::gfx::renderer_2d::state_t::state_t()
 {
 	pipeline.vertex_shader().set_uniform(0, glm::mat4{1.0f});
-	pipeline.fragment_shader().set_uniform(1, tex_unit);
 	if (debug()) {
 		pipeline.set_label("(tr) 2D Renderer Pipeline");
 		pipeline.vertex_shader().set_label("(tr) 2D Renderer Vertex Shader");
@@ -187,7 +183,7 @@ std::vector<tr::gfx::renderer_2d::mesh_draw_info> tr::gfx::renderer_2d::state_t:
 
 void tr::gfx::renderer_2d::state_t::setup_draw_call_state(texture_ref texture_ref, const glm::mat4& transform, const blend_mode& blend_mode)
 {
-	tex_unit.set_texture(std::move(texture_ref));
+	pipeline.fragment_shader().set_uniform(1, std::move(texture_ref));
 	if (last_transform != transform) {
 		last_transform = transform;
 		pipeline.vertex_shader().set_uniform(0, last_transform);

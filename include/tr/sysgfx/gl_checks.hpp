@@ -2,8 +2,6 @@
 #include "gl_call.hpp"
 
 namespace tr::gfx {
-	class texture_unit;
-
 	// GLSL variable types.
 	enum class glsl_type {
 		UNDEFINED,

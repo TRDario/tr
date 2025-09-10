@@ -1,11 +1,10 @@
-#include "../../include/tr/sysgfx/debug_renderer.hpp"
 #include "../../include/tr/sysgfx/backbuffer.hpp"
 #include "../../include/tr/sysgfx/blending.hpp"
+#include "../../include/tr/sysgfx/debug_renderer.hpp"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/render_target.hpp"
 #include "../../include/tr/sysgfx/shader_pipeline.hpp"
 #include "../../include/tr/sysgfx/texture.hpp"
-#include "../../include/tr/sysgfx/texture_unit.hpp"
 #include "../../include/tr/sysgfx/vertex_buffer.hpp"
 #include "../../include/tr/sysgfx/vertex_format.hpp"
 #include "../../include/tr/utility/benchmark.hpp"
@@ -62,8 +61,6 @@ namespace tr::gfx::debug_renderer {
 		vertex_format format;
 		// The font texture.
 		texture font;
-		// The texture unit used by the renderer.
-		texture_unit tex_unit;
 		// The vertex buffer holding a glyph shape.
 		static_vertex_buffer<glm::u8vec2> shape_buffer;
 		// The vertex buffer holding the glyph information
@@ -140,8 +137,7 @@ tr::gfx::debug_renderer::state_t::state_t()
 	, right_line{0}
 {
 	font.set_filtering(min_filter::NEAREST, mag_filter::NEAREST);
-	tex_unit.set_texture(font);
-	pipeline.fragment_shader().set_uniform(2, tex_unit);
+	pipeline.fragment_shader().set_uniform(2, font);
 	if (debug()) {
 		pipeline.set_label("(tr) Debug Renderer Pipeline");
 		pipeline.vertex_shader().set_label("(tr) Debug Renderer Vertex Shader");
