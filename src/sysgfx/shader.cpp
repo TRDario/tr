@@ -71,7 +71,8 @@ void tr::gfx::shader_base::set_uniform(int index, bool value)
 #ifdef TR_ENABLE_GL_CHECKS
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
-	TR_ASSERT(it->second.type == glsl_type::BOOL && it->second.array_size == 1, "Tried to set uniform '{}' with a bool value", it->second);
+	TR_ASSERT(it->second.type == glsl_type::BOOL && it->second.array_size == 1,
+			  "Tried to set uniform with signature '{}' with a value of type 'bool'.", it->second);
 #endif
 	TR_GL_CALL(glProgramUniform1i, m_program.get(), index, value);
 }
@@ -81,7 +82,8 @@ void tr::gfx::shader_base::set_uniform(int index, int value)
 #ifdef TR_ENABLE_GL_CHECKS
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
-	TR_ASSERT(it->second.type == glsl_type::INT && it->second.array_size == 1, "Tried to set uniform '{}' with an int value", it->second);
+	TR_ASSERT(it->second.type == glsl_type::INT && it->second.array_size == 1,
+			  "Tried to set uniform with signature '{}' with a value of type 'int'.", it->second);
 #endif
 	TR_GL_CALL(glProgramUniform1i, m_program.get(), index, value);
 }
@@ -92,7 +94,7 @@ void tr::gfx::shader_base::set_uniform(int index, std::span<const int> value)
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
 	TR_ASSERT(it->second.type == glsl_type::INT && it->second.array_size == int(value.size()),
-			  "Tried to set uniform '{}' with an int[{}] value", it->second, value.size());
+			  "Tried to set uniform with signature '{}' with a value of type 'int[{}]'.", it->second, value.size());
 #endif
 	TR_GL_CALL(glProgramUniform1iv, m_program.get(), index, GLsizei(value.size()), value.data());
 }
@@ -102,8 +104,8 @@ void tr::gfx::shader_base::set_uniform(int index, glm::ivec2 value)
 #ifdef TR_ENABLE_GL_CHECKS
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
-	TR_ASSERT(it->second.type == glsl_type::IVEC2 && it->second.array_size == 1, "Tried to set uniform '{}' with an ivec2 value",
-			  it->second);
+	TR_ASSERT(it->second.type == glsl_type::IVEC2 && it->second.array_size == 1,
+			  "Tried to set uniform with signature '{}' with a value of type 'ivec2'.", it->second);
 #endif
 	TR_GL_CALL(glProgramUniform2i, m_program.get(), index, value.x, value.y);
 }
@@ -114,7 +116,7 @@ void tr::gfx::shader_base::set_uniform(int index, std::span<const glm::ivec2> va
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
 	TR_ASSERT(it->second.type == glsl_type::IVEC2 && it->second.array_size == int(value.size()),
-			  "Tried to set uniform '{}' with an ivec2[{}] value", it->second, value.size());
+			  "Tried to set uniform with signature '{}' with a value of type 'ivec2[{}]'.", it->second, value.size());
 #endif
 	TR_GL_CALL(glProgramUniform2iv, m_program.get(), index, GLsizei(value.size()), value_ptr(value[0]));
 }
@@ -124,8 +126,8 @@ void tr::gfx::shader_base::set_uniform(int index, glm::ivec3 value)
 #ifdef TR_ENABLE_GL_CHECKS
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
-	TR_ASSERT(it->second.type == glsl_type::IVEC3 && it->second.array_size == 1, "Tried to set uniform '{}' with an ivec3 value",
-			  it->second);
+	TR_ASSERT(it->second.type == glsl_type::IVEC3 && it->second.array_size == 1,
+			  "Tried to set uniform with signature '{}' with a value of type 'ivec3'.", it->second);
 #endif
 	TR_GL_CALL(glProgramUniform3i, m_program.get(), index, value.x, value.y, value.z);
 }
@@ -136,7 +138,7 @@ void tr::gfx::shader_base::set_uniform(int index, std::span<const glm::ivec3> va
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
 	TR_ASSERT(it->second.type == glsl_type::IVEC3 && it->second.array_size == int(value.size()),
-			  "Tried to set uniform '{}' with an ivec3[{}] value", it->second, value.size());
+			  "Tried to set uniform with signature '{}' with a value of type 'ivec3[{}]'.", it->second, value.size());
 #endif
 	TR_GL_CALL(glProgramUniform3iv, m_program.get(), index, GLsizei(value.size()), value_ptr(value[0]));
 }
@@ -146,8 +148,8 @@ void tr::gfx::shader_base::set_uniform(int index, glm::ivec4 value)
 #ifdef TR_ENABLE_GL_CHECKS
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
-	TR_ASSERT(it->second.type == glsl_type::IVEC4 && it->second.array_size == 1, "Tried to set uniform '{}' with an ivec4 value",
-			  it->second);
+	TR_ASSERT(it->second.type == glsl_type::IVEC4 && it->second.array_size == 1,
+			  "Tried to set uniform with signature '{}' with a value of type 'ivec4'.", it->second);
 #endif
 	TR_GL_CALL(glProgramUniform4i, m_program.get(), index, value.x, value.y, value.z, value.w);
 }
@@ -158,7 +160,7 @@ void tr::gfx::shader_base::set_uniform(int index, std::span<const glm::ivec4> va
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
 	TR_ASSERT(it->second.type == glsl_type::IVEC4 && it->second.array_size == int(value.size()),
-			  "Tried to set uniform '{}' with an ivec4[{}] value", it->second, value.size());
+			  "Tried to set uniform with signature '{}' with a value of type 'ivec4[{}]'.", it->second, value.size());
 #endif
 	TR_GL_CALL(glProgramUniform4iv, m_program.get(), index, GLsizei(value.size()), value_ptr(value[0]));
 }
@@ -168,8 +170,8 @@ void tr::gfx::shader_base::set_uniform(int index, unsigned int value)
 #ifdef TR_ENABLE_GL_CHECKS
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
-	TR_ASSERT(it->second.type == glsl_type::UINT && it->second.array_size == 1, "Tried to set uniform '{}' with an unsigned int value",
-			  it->second);
+	TR_ASSERT(it->second.type == glsl_type::UINT && it->second.array_size == 1,
+			  "Tried to set uniform with signature '{}' with an unsigned int value.", it->second);
 #endif
 	TR_GL_CALL(glProgramUniform1ui, m_program.get(), index, value);
 }
@@ -180,7 +182,7 @@ void tr::gfx::shader_base::set_uniform(int index, std::span<const unsigned int> 
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
 	TR_ASSERT(it->second.type == glsl_type::UINT && it->second.array_size == int(value.size()),
-			  "Tried to set uniform '{}' with an unsigned int[{}] value", it->second, value.size());
+			  "Tried to set uniform with signature '{}' with an unsigned int[{}] value.", it->second, value.size());
 #endif
 	TR_GL_CALL(glProgramUniform1uiv, m_program.get(), index, GLsizei(value.size()), value.data());
 }
@@ -190,8 +192,8 @@ void tr::gfx::shader_base::set_uniform(int index, glm::uvec2 value)
 #ifdef TR_ENABLE_GL_CHECKS
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
-	TR_ASSERT(it->second.type == glsl_type::UVEC2 && it->second.array_size == 1, "Tried to set uniform '{}' with a uvec2 value",
-			  it->second);
+	TR_ASSERT(it->second.type == glsl_type::UVEC2 && it->second.array_size == 1,
+			  "Tried to set uniform with signature '{}' with a value of type 'uvec2'.", it->second);
 #endif
 	TR_GL_CALL(glProgramUniform2ui, m_program.get(), index, value.x, value.y);
 }
@@ -202,7 +204,7 @@ void tr::gfx::shader_base::set_uniform(int index, std::span<const glm::uvec2> va
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
 	TR_ASSERT(it->second.type == glsl_type::UVEC2 && it->second.array_size == int(value.size()),
-			  "Tried to set uniform '{}' with a uvec2[{}] value", it->second, value.size());
+			  "Tried to set uniform with signature '{}' with a value of type 'uvec2[{}]'.", it->second, value.size());
 #endif
 	TR_GL_CALL(glProgramUniform2uiv, m_program.get(), index, GLsizei(value.size()), value_ptr(value[0]));
 }
@@ -212,8 +214,8 @@ void tr::gfx::shader_base::set_uniform(int index, glm::uvec3 value)
 #ifdef TR_ENABLE_GL_CHECKS
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
-	TR_ASSERT(it->second.type == glsl_type::UVEC3 && it->second.array_size == 1, "Tried to set uniform '{}' with a uvec3 value",
-			  it->second);
+	TR_ASSERT(it->second.type == glsl_type::UVEC3 && it->second.array_size == 1,
+			  "Tried to set uniform with signature '{}' with a value of type 'uvec3'.", it->second);
 #endif
 	TR_GL_CALL(glProgramUniform3ui, m_program.get(), index, value.x, value.y, value.z);
 }
@@ -224,7 +226,7 @@ void tr::gfx::shader_base::set_uniform(int index, std::span<const glm::uvec3> va
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
 	TR_ASSERT(it->second.type == glsl_type::UVEC3 && it->second.array_size == int(value.size()),
-			  "Tried to set uniform '{}' with a uvec3[{}] value", it->second, value.size());
+			  "Tried to set uniform with signature '{}' with a value of type 'uvec3[{}]'.", it->second, value.size());
 #endif
 	TR_GL_CALL(glProgramUniform3uiv, m_program.get(), index, GLsizei(value.size()), value_ptr(value[0]));
 }
@@ -234,8 +236,8 @@ void tr::gfx::shader_base::set_uniform(int index, glm::uvec4 value)
 #ifdef TR_ENABLE_GL_CHECKS
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
-	TR_ASSERT(it->second.type == glsl_type::UVEC4 && it->second.array_size == 1, "Tried to set uniform '{}' with a uvec4 value",
-			  it->second);
+	TR_ASSERT(it->second.type == glsl_type::UVEC4 && it->second.array_size == 1,
+			  "Tried to set uniform with signature '{}' with a value of type 'uvec4'.", it->second);
 #endif
 	TR_GL_CALL(glProgramUniform4ui, m_program.get(), index, value.x, value.y, value.z, value.w);
 }
@@ -246,7 +248,7 @@ void tr::gfx::shader_base::set_uniform(int index, std::span<const glm::uvec4> va
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
 	TR_ASSERT(it->second.type == glsl_type::UVEC4 && it->second.array_size == int(value.size()),
-			  "Tried to set uniform '{}' with a uvec4[{}] value", it->second, value.size());
+			  "Tried to set uniform with signature '{}' with a value of type 'uvec4[{}]'.", it->second, value.size());
 #endif
 	TR_GL_CALL(glProgramUniform4uiv, m_program.get(), index, GLsizei(value.size()), value_ptr(value[0]));
 }
@@ -256,8 +258,8 @@ void tr::gfx::shader_base::set_uniform(int index, float value)
 #ifdef TR_ENABLE_GL_CHECKS
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
-	TR_ASSERT(it->second.type == glsl_type::FLOAT && it->second.array_size == 1, "Tried to set uniform '{}' with a float value",
-			  it->second);
+	TR_ASSERT(it->second.type == glsl_type::FLOAT && it->second.array_size == 1,
+			  "Tried to set uniform with signature '{}' with a value of type 'float'.", it->second);
 #endif
 	TR_GL_CALL(glProgramUniform1f, m_program.get(), index, value);
 }
@@ -268,7 +270,7 @@ void tr::gfx::shader_base::set_uniform(int index, std::span<const float> value)
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
 	TR_ASSERT(it->second.type == glsl_type::FLOAT && it->second.array_size == int(value.size()),
-			  "Tried to set uniform '{}' with a float[{}] value", it->second, value.size());
+			  "Tried to set uniform with signature '{}' with a value of type 'float[{}]'.", it->second, value.size());
 #endif
 	TR_GL_CALL(glProgramUniform1fv, m_program.get(), index, GLsizei(value.size()), value.data());
 }
@@ -278,7 +280,8 @@ void tr::gfx::shader_base::set_uniform(int index, glm::vec2 value)
 #ifdef TR_ENABLE_GL_CHECKS
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
-	TR_ASSERT(it->second.type == glsl_type::VEC2 && it->second.array_size == 1, "Tried to set uniform '{}' with a vec2 value", it->second);
+	TR_ASSERT(it->second.type == glsl_type::VEC2 && it->second.array_size == 1,
+			  "Tried to set uniform with signature '{}' with a value of type 'vec2'.", it->second);
 #endif
 	TR_GL_CALL(glProgramUniform2f, m_program.get(), index, value.x, value.y);
 }
@@ -289,7 +292,7 @@ void tr::gfx::shader_base::set_uniform(int index, std::span<const glm::vec2> val
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
 	TR_ASSERT(it->second.type == glsl_type::VEC2 && it->second.array_size == int(value.size()),
-			  "Tried to set uniform '{}' with a vec2[{}] value", it->second, value.size());
+			  "Tried to set uniform with signature '{}' with a value of type 'vec2[{}]'.", it->second, value.size());
 #endif
 	TR_GL_CALL(glProgramUniform2fv, m_program.get(), index, GLsizei(value.size()), value_ptr(value[0]));
 }
@@ -299,7 +302,8 @@ void tr::gfx::shader_base::set_uniform(int index, glm::vec3 value)
 #ifdef TR_ENABLE_GL_CHECKS
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
-	TR_ASSERT(it->second.type == glsl_type::VEC3 && it->second.array_size == 1, "Tried to set uniform '{}' with a vec3 value", it->second);
+	TR_ASSERT(it->second.type == glsl_type::VEC3 && it->second.array_size == 1,
+			  "Tried to set uniform with signature '{}' with a value of type 'vec3'.", it->second);
 #endif
 	TR_GL_CALL(glProgramUniform3f, m_program.get(), index, value.x, value.y, value.z);
 }
@@ -310,7 +314,7 @@ void tr::gfx::shader_base::set_uniform(int index, std::span<const glm::vec3> val
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
 	TR_ASSERT(it->second.type == glsl_type::VEC3 && it->second.array_size == int(value.size()),
-			  "Tried to set uniform '{}' with a vec3[{}] value", it->second, value.size());
+			  "Tried to set uniform with signature '{}' with a value of type 'vec3[{}]'.", it->second, value.size());
 #endif
 	TR_GL_CALL(glProgramUniform3fv, m_program.get(), index, GLsizei(value.size()), value_ptr(value[0]));
 }
@@ -320,7 +324,8 @@ void tr::gfx::shader_base::set_uniform(int index, glm::vec4 value)
 #ifdef TR_ENABLE_GL_CHECKS
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
-	TR_ASSERT(it->second.type == glsl_type::VEC4 && it->second.array_size == 1, "Tried to set uniform '{}' with a vec4 value", it->second);
+	TR_ASSERT(it->second.type == glsl_type::VEC4 && it->second.array_size == 1,
+			  "Tried to set uniform with signature '{}' with a value of type 'vec4'.", it->second);
 #endif
 	TR_GL_CALL(glProgramUniform4f, m_program.get(), index, value.x, value.y, value.z, value.w);
 }
@@ -331,7 +336,7 @@ void tr::gfx::shader_base::set_uniform(int index, std::span<const glm::vec4> val
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
 	TR_ASSERT(it->second.type == glsl_type::VEC4 && it->second.array_size == int(value.size()),
-			  "Tried to set uniform '{}' with a vec4[{}] value", it->second, value.size());
+			  "Tried to set uniform with signature '{}' with a value of type 'vec4[{}]'.", it->second, value.size());
 #endif
 	TR_GL_CALL(glProgramUniform4fv, m_program.get(), index, GLsizei(value.size()), value_ptr(value[0]));
 }
@@ -341,7 +346,8 @@ void tr::gfx::shader_base::set_uniform(int index, const glm::mat2& value)
 #ifdef TR_ENABLE_GL_CHECKS
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
-	TR_ASSERT(it->second.type == glsl_type::MAT2 && it->second.array_size == 1, "Tried to set uniform '{}' with a mat2 value", it->second);
+	TR_ASSERT(it->second.type == glsl_type::MAT2 && it->second.array_size == 1,
+			  "Tried to set uniform with signature '{}' with a value of type 'mat2'.", it->second);
 #endif
 	TR_GL_CALL(glProgramUniformMatrix2fv, m_program.get(), index, 1, false, value_ptr(value));
 }
@@ -352,7 +358,7 @@ void tr::gfx::shader_base::set_uniform(int index, std::span<const glm::mat2> val
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
 	TR_ASSERT(it->second.type == glsl_type::MAT2 && it->second.array_size == int(value.size()),
-			  "Tried to set uniform '{}' with a mat2[{}] value", it->second, value.size());
+			  "Tried to set uniform with signature '{}' with a value of type 'mat2[{}]'.", it->second, value.size());
 #endif
 	TR_GL_CALL(glProgramUniformMatrix2fv, m_program.get(), index, GLsizei(value.size()), false, value_ptr(value[0]));
 }
@@ -362,7 +368,8 @@ void tr::gfx::shader_base::set_uniform(int index, const glm::mat3& value)
 #ifdef TR_ENABLE_GL_CHECKS
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
-	TR_ASSERT(it->second.type == glsl_type::MAT3 && it->second.array_size == 1, "Tried to set uniform '{}' with a mat3 value", it->second);
+	TR_ASSERT(it->second.type == glsl_type::MAT3 && it->second.array_size == 1,
+			  "Tried to set uniform with signature '{}' with a value of type 'mat3'.", it->second);
 #endif
 	TR_GL_CALL(glProgramUniformMatrix3fv, m_program.get(), index, 1, false, value_ptr(value));
 }
@@ -373,7 +380,7 @@ void tr::gfx::shader_base::set_uniform(int index, std::span<const glm::mat3> val
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
 	TR_ASSERT(it->second.type == glsl_type::MAT3 && it->second.array_size == int(value.size()),
-			  "Tried to set uniform '{}' with a mat3[{}] value", it->second, value.size());
+			  "Tried to set uniform with signature '{}' with a value of type 'mat3[{}]'.", it->second, value.size());
 #endif
 	TR_GL_CALL(glProgramUniformMatrix3fv, m_program.get(), index, GLsizei(value.size()), false, value_ptr(value[0]));
 }
@@ -383,7 +390,8 @@ void tr::gfx::shader_base::set_uniform(int index, const glm::mat4& value)
 #ifdef TR_ENABLE_GL_CHECKS
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
-	TR_ASSERT(it->second.type == glsl_type::MAT4 && it->second.array_size == 1, "Tried to set uniform '{}' with a mat4 value", it->second);
+	TR_ASSERT(it->second.type == glsl_type::MAT4 && it->second.array_size == 1,
+			  "Tried to set uniform with signature '{}' with a value of type 'mat4'.", it->second);
 #endif
 	TR_GL_CALL(glProgramUniformMatrix4fv, m_program.get(), index, 1, false, value_ptr(value));
 }
@@ -394,7 +402,7 @@ void tr::gfx::shader_base::set_uniform(int index, std::span<const glm::mat4> val
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
 	TR_ASSERT(it->second.type == glsl_type::MAT4 && it->second.array_size == int(value.size()),
-			  "Tried to set uniform '{}' with a mat4[{}] value", it->second, value.size());
+			  "Tried to set uniform with signature '{}' with a value of type 'mat4[{}]'.", it->second, value.size());
 #endif
 	TR_GL_CALL(glProgramUniformMatrix4fv, m_program.get(), index, GLsizei(value.size()), false, value_ptr(value[0]));
 }
@@ -404,8 +412,8 @@ void tr::gfx::shader_base::set_uniform(int index, const glm::mat2x3& value)
 #ifdef TR_ENABLE_GL_CHECKS
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
-	TR_ASSERT(it->second.type == glsl_type::MAT2x3 && it->second.array_size == 1, "Tried to set uniform '{}' with a mat2x3 value",
-			  it->second);
+	TR_ASSERT(it->second.type == glsl_type::MAT2x3 && it->second.array_size == 1,
+			  "Tried to set uniform with signature '{}' with a value of type 'mat2x3'.", it->second);
 #endif
 	TR_GL_CALL(glProgramUniformMatrix2x3fv, m_program.get(), index, 1, false, value_ptr(value));
 }
@@ -416,7 +424,7 @@ void tr::gfx::shader_base::set_uniform(int index, std::span<const glm::mat2x3> v
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
 	TR_ASSERT(it->second.type == glsl_type::MAT2x3 && it->second.array_size == int(value.size()),
-			  "Tried to set uniform '{}' with a mat2x3[{}] value", it->second, value.size());
+			  "Tried to set uniform with signature '{}' with a value of type 'mat2x3[{}]'.", it->second, value.size());
 #endif
 	TR_GL_CALL(glProgramUniformMatrix2x3fv, m_program.get(), index, GLsizei(value.size()), false, value_ptr(value[0]));
 }
@@ -426,8 +434,8 @@ void tr::gfx::shader_base::set_uniform(int index, const glm::mat2x4& value)
 #ifdef TR_ENABLE_GL_CHECKS
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
-	TR_ASSERT(it->second.type == glsl_type::MAT2x4 && it->second.array_size == 1, "Tried to set uniform '{}' with a mat2x4 value",
-			  it->second);
+	TR_ASSERT(it->second.type == glsl_type::MAT2x4 && it->second.array_size == 1,
+			  "Tried to set uniform with signature '{}' with a value of type 'mat2x4'.", it->second);
 #endif
 	TR_GL_CALL(glProgramUniformMatrix2x4fv, m_program.get(), index, 1, false, value_ptr(value));
 }
@@ -438,7 +446,7 @@ void tr::gfx::shader_base::set_uniform(int index, std::span<const glm::mat2x4> v
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
 	TR_ASSERT(it->second.type == glsl_type::MAT2x4 && it->second.array_size == int(value.size()),
-			  "Tried to set uniform '{}' with a mat2x4[{}] value", it->second, value.size());
+			  "Tried to set uniform with signature '{}' with a value of type 'mat2x4[{}]'.", it->second, value.size());
 #endif
 	TR_GL_CALL(glProgramUniformMatrix2x4fv, m_program.get(), index, GLsizei(value.size()), false, value_ptr(value[0]));
 }
@@ -448,8 +456,8 @@ void tr::gfx::shader_base::set_uniform(int index, const glm::mat3x2& value)
 #ifdef TR_ENABLE_GL_CHECKS
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
-	TR_ASSERT(it->second.type == glsl_type::MAT3x2 && it->second.array_size == 1, "Tried to set uniform '{}' with a mat3x2 value",
-			  it->second);
+	TR_ASSERT(it->second.type == glsl_type::MAT3x2 && it->second.array_size == 1,
+			  "Tried to set uniform with signature '{}' with a value of type 'mat3x2'.", it->second);
 #endif
 	TR_GL_CALL(glProgramUniformMatrix3x2fv, m_program.get(), index, 1, false, value_ptr(value));
 }
@@ -460,7 +468,7 @@ void tr::gfx::shader_base::set_uniform(int index, std::span<const glm::mat3x2> v
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
 	TR_ASSERT(it->second.type == glsl_type::MAT3x2 && it->second.array_size == int(value.size()),
-			  "Tried to set uniform '{}' with a mat3x2[{}] value", it->second, value.size());
+			  "Tried to set uniform with signature '{}' with a value of type 'mat3x2[{}]'.", it->second, value.size());
 #endif
 	TR_GL_CALL(glProgramUniformMatrix3x2fv, m_program.get(), index, GLsizei(value.size()), false, value_ptr(value[0]));
 }
@@ -470,8 +478,8 @@ void tr::gfx::shader_base::set_uniform(int index, const glm::mat3x4& value)
 #ifdef TR_ENABLE_GL_CHECKS
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
-	TR_ASSERT(it->second.type == glsl_type::MAT3x4 && it->second.array_size == 1, "Tried to set uniform '{}' with a mat3x4 value",
-			  it->second);
+	TR_ASSERT(it->second.type == glsl_type::MAT3x4 && it->second.array_size == 1,
+			  "Tried to set uniform with signature '{}' with a value of type 'mat3x4'.", it->second);
 #endif
 	TR_GL_CALL(glProgramUniformMatrix3x4fv, m_program.get(), index, 1, false, value_ptr(value));
 }
@@ -482,7 +490,7 @@ void tr::gfx::shader_base::set_uniform(int index, std::span<const glm::mat3x4> v
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
 	TR_ASSERT(it->second.type == glsl_type::MAT3x4 && it->second.array_size == int(value.size()),
-			  "Tried to set uniform '{}' with a mat3x4[{}] value", it->second, value.size());
+			  "Tried to set uniform with signature '{}' with a value of type 'mat3x4[{}]'.", it->second, value.size());
 #endif
 	TR_GL_CALL(glProgramUniformMatrix3x4fv, m_program.get(), index, GLsizei(value.size()), false, value_ptr(value[0]));
 }
@@ -492,8 +500,8 @@ void tr::gfx::shader_base::set_uniform(int index, const glm::mat4x2& value)
 #ifdef TR_ENABLE_GL_CHECKS
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
-	TR_ASSERT(it->second.type == glsl_type::MAT4x2 && it->second.array_size == 1, "Tried to set uniform '{}' with a mat4x2 value",
-			  it->second);
+	TR_ASSERT(it->second.type == glsl_type::MAT4x2 && it->second.array_size == 1,
+			  "Tried to set uniform with signature '{}' with a value of type 'mat4x2'.", it->second);
 #endif
 	TR_GL_CALL(glProgramUniformMatrix4x2fv, m_program.get(), index, 1, false, value_ptr(value));
 }
@@ -504,7 +512,7 @@ void tr::gfx::shader_base::set_uniform(int index, std::span<const glm::mat4x2> v
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
 	TR_ASSERT(it->second.type == glsl_type::MAT4x2 && it->second.array_size == int(value.size()),
-			  "Tried to set uniform '{}' with a mat4x2[{}] value", it->second, value.size());
+			  "Tried to set uniform with signature '{}' with a value of type 'mat4x2[{}]'.", it->second, value.size());
 #endif
 	TR_GL_CALL(glProgramUniformMatrix4x2fv, m_program.get(), index, GLsizei(value.size()), false, value_ptr(value[0]));
 }
@@ -514,8 +522,8 @@ void tr::gfx::shader_base::set_uniform(int index, const glm::mat4x3& value)
 #ifdef TR_ENABLE_GL_CHECKS
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
-	TR_ASSERT(it->second.type == glsl_type::MAT4x3 && it->second.array_size == 1, "Tried to set uniform '{}' with a mat4x3 value",
-			  it->second);
+	TR_ASSERT(it->second.type == glsl_type::MAT4x3 && it->second.array_size == 1,
+			  "Tried to set uniform with signature '{}' with a value of type 'mat4x3'.", it->second);
 #endif
 	TR_GL_CALL(glProgramUniformMatrix4x3fv, m_program.get(), index, 1, false, value_ptr(value));
 }
@@ -526,7 +534,7 @@ void tr::gfx::shader_base::set_uniform(int index, std::span<const glm::mat4x3> v
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
 	TR_ASSERT(it->second.type == glsl_type::MAT4x3 && it->second.array_size == int(value.size()),
-			  "Tried to set uniform '{}' with a mat4x3[{}] value", it->second, value.size());
+			  "Tried to set uniform with signature '{}' with a value of type 'mat4x3[{}]'.", it->second, value.size());
 #endif
 	TR_GL_CALL(glProgramUniformMatrix4x3fv, m_program.get(), index, GLsizei(value.size()), false, value_ptr(value[0]));
 }
@@ -536,7 +544,8 @@ void tr::gfx::shader_base::set_uniform(int index, const texture_unit& value)
 #ifdef TR_ENABLE_GL_CHECKS
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
-	TR_ASSERT(it->second.type == glsl_type::MAT2 && it->second.array_size == 1, "Tried to set uniform '{}' with a mat2 value", it->second);
+	TR_ASSERT(it->second.type == glsl_type::MAT2 && it->second.array_size == 1,
+			  "Tried to set uniform with signature '{}' with a value of type 'mat2'.", it->second);
 #endif
 	TR_GL_CALL(glProgramUniform1i, m_program.get(), index, value.m_unit.get());
 }
