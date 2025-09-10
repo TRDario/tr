@@ -193,7 +193,7 @@ void tr::gfx::shader_base::set_uniform(int index, unsigned int value)
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
 	TR_ASSERT(it->second.type == glsl_type::UINT && it->second.array_size == 1,
-			  "Tried to set uniform with signature '{}' with an unsigned int value.", it->second);
+			  "Tried to set uniform with signature '{}' with a value of type 'unsigned int'.", it->second);
 #endif
 	TR_GL_CALL(glProgramUniform1ui, m_program.get(), index, value);
 }
@@ -204,7 +204,7 @@ void tr::gfx::shader_base::set_uniform(int index, std::span<const unsigned int> 
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
 	TR_ASSERT(it->second.type == glsl_type::UINT && it->second.array_size == int(value.size()),
-			  "Tried to set uniform with signature '{}' with an unsigned int[{}] value.", it->second, value.size());
+			  "Tried to set uniform with signature '{}' with a value of type 'unsigned int[{}]'.", it->second, value.size());
 #endif
 	TR_GL_CALL(glProgramUniform1uiv, m_program.get(), index, GLsizei(value.size()), value.data());
 }
@@ -566,7 +566,7 @@ void tr::gfx::shader_base::set_uniform(int index, texture_ref texture)
 #ifdef TR_ENABLE_GL_CHECKS
 	const auto it{m_uniforms.find(index)};
 	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}'.", index);
-	TR_ASSERT(it->second.type == glsl_type::MAT2 && it->second.array_size == 1,
+	TR_ASSERT(it->second.type == glsl_type::SAMPLER2D && it->second.array_size == 1,
 			  "Tried to set uniform with signature '{}' with a value of type 'sampler2D'.", it->second);
 #endif
 
