@@ -43,7 +43,7 @@ tr::gfx::shader_base::shader_base(const char* source, unsigned int type)
 
 #ifdef TR_ENABLE_GL_CHECKS
 	GLint uniforms{0};
-	glGetProgramInterfaceiv(m_program.get(), GL_PROGRAM, GL_ACTIVE_RESOURCES, &uniforms);
+	glGetProgramInterfaceiv(m_program.get(), GL_UNIFORM, GL_ACTIVE_RESOURCES, &uniforms);
 	for (GLint i = 0; i < uniforms; ++i) {
 		std::array<GLint, UNIFORM_PROPERTIES.size()> values;
 		const auto& [block_index, var_type, array_size, name_length, location]{values};
