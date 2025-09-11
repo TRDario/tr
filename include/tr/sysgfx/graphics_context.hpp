@@ -1,5 +1,6 @@
 #pragma once
 #include "vertex_buffer.hpp"
+#include "vertex_format.hpp"
 
 namespace tr::gfx {
 	struct blend_mode;
@@ -7,7 +8,6 @@ namespace tr::gfx {
 	class render_target;
 	class shader_pipeline;
 	class static_index_buffer;
-	class vertex_format;
 
 	// The ID used to represent no particular renderer being used.
 	inline constexpr u32 NO_RENDERER{0};
@@ -76,12 +76,31 @@ namespace tr::gfx {
 
 ///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
 
+#ifdef TR_ENABLE_GL_CHECKS
+namespace tr::gfx {
+	// Sets an active vertex buffer.
+	void set_vertex_buffer_checked(const basic_static_vertex_buffer& buffer, int slot, std::intptr_t offset, usize stride,
+								   std::initializer_list<vertex_attribute> attributes);
+	// Sets an active vertex buffer.
+	void set_vertex_buffer_checked(const basic_dyn_vertex_buffer& buffer, int slot, std::intptr_t offset, usize stride,
+								   std::initializer_list<vertex_attribute> attributes);
+} // namespace tr::gfx
+#endif
+
 template <tr::standard_layout T> void tr::gfx::set_vertex_buffer(const static_vertex_buffer<T>& buffer, int slot, std::intptr_t offset)
 {
+#ifdef TR_ENABLE_GL_CHECKS
+	set_vertex_buffer_checked(buffer, slot, offset * sizeof(T), sizeof(T), vertex_attributes<T>::list());
+#else
 	set_vertex_buffer(buffer, slot, offset * sizeof(T), sizeof(T));
+#endif
 }
 
 template <tr::standard_layout T> void tr::gfx::set_vertex_buffer(const dyn_vertex_buffer<T>& buffer, int slot, std::intptr_t offset)
 {
+#ifdef TR_ENABLE_GL_CHECKS
+	set_vertex_buffer_checked(buffer, slot, offset * sizeof(T), sizeof(T), vertex_attributes<T>::list());
+#else
 	set_vertex_buffer(buffer, slot, offset * sizeof(T), sizeof(T));
+#endif
 }

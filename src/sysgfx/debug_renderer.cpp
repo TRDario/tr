@@ -15,15 +15,15 @@ namespace tr::gfx::debug_renderer {
 	constexpr std::initializer_list<vertex_binding> DEBUG_FORMAT_ATTRS{
 		{NOT_INSTANCED,
 		 {
-			 {vertex_attribute::type::UI8, 2, false, 0},
+			 as_vertex_attribute<glm::u8vec2>,
 		 }},
 		{1,
 		 {
-			 {vertex_attribute::type::UI8, 2, false, 0},
-			 {vertex_attribute::type::UI8, 1, false, 2},
-			 {vertex_attribute::type::UI8, 1, false, 3},
-			 {vertex_attribute::type::UI8, 4, true, 4},
-			 {vertex_attribute::type::UI8, 4, true, 8},
+			 as_vertex_attribute<glm::u8vec2>,
+			 as_vertex_attribute<u8>,
+			 as_vertex_attribute<u8>,
+			 as_vertex_attribute<rgba8>,
+			 as_vertex_attribute<rgba8>,
 		 }},
 	};
 	// Debug vertex shader.
@@ -124,6 +124,8 @@ namespace tr::gfx::debug_renderer {
 	// Writes a line of formatted text.
 	void write(bool right, std::string_view text, rgba8 text_color, rgba8 bg_color, std::span<rgba8> extra_colors);
 } // namespace tr::gfx::debug_renderer
+
+template <> struct tr::gfx::vertex_attributes<tr::gfx::debug_renderer::glyph> : unpacked_vertex_attributes<u8, u8, u8, u8, u8> {};
 
 using namespace std::chrono_literals;
 

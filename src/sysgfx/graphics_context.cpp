@@ -1,6 +1,6 @@
-#include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/blending.hpp"
 #include "../../include/tr/sysgfx/gl_call.hpp"
+#include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/impl.hpp"
 #include "../../include/tr/sysgfx/index_buffer.hpp"
 #include "../../include/tr/sysgfx/shader_pipeline.hpp"
@@ -9,6 +9,14 @@
 namespace tr::gfx {
 	// The ID of the current renderer.
 	inline u32 current_renderer_{0};
+
+#ifdef TR_ENABLE_GL_CHECKS
+	// Bindings of the last bound vertex buffer.
+	inline std::initializer_list<vertex_binding> last_bound_vertex_buffer_bindings;
+
+	// Fails an assertion if a type mismatch is detected.
+	void check_vertex_buffer(int slot, std::initializer_list<vertex_attribute> attributes);
+#endif
 } // namespace tr::gfx
 
 tr::u32 tr::gfx::alloc_renderer_id()
@@ -82,7 +90,32 @@ void tr::gfx::set_vertex_format(const vertex_format& format)
 	TR_ASSERT(ogl_context != nullptr, "Tried to set graphics context vertex format before opening the window.");
 
 	TR_GL_CALL(glBindVertexArray, format.m_vao.get());
+
+#ifdef TR_ENABLE_GL_CHECKS
+	last_bound_vertex_buffer_bindings = format.m_bindings;
+#endif
 }
+
+#ifdef TR_ENABLE_GL_CHECKS
+void tr::gfx::check_vertex_buffer(int slot, std::initializer_list<vertex_attribute> attrs)
+{
+	TR_ASSERT(usize(slot) < last_bound_vertex_buffer_bindings.size(), "Tried to bind vertex buffer to invalid slot {} (max: {}).", slot,
+			  last_bound_vertex_buffer_bindings.size());
+
+	const std::initializer_list<vertex_attribute> ref(last_bound_vertex_buffer_bindings.begin()[slot].attrs);
+	TR_ASSERT(attrs.size() == ref.size(),
+			  "Tried to bind vertex buffer of a different type from the one in the vertex format (has {} attributes instead of {}).",
+			  attrs.size(), ref.size());
+	for (usize i = 0; i < attrs.size(); ++i) {
+		const vertex_attribute& l{attrs.begin()[i]};
+		const vertex_attribute& r{ref.begin()[i]};
+		TR_ASSERT(l.type == r.type && l.elements == r.elements,
+				  "Tried to bind vertex buffer of a type different from than the one in the vertex format (expected '{}' in attribute {}, "
+				  "got '{}').",
+				  r, i, l);
+	}
+}
+#endif
 
 void tr::gfx::set_vertex_buffer(const basic_static_vertex_buffer& buffer, int slot, std::intptr_t offset, usize stride)
 {
@@ -91,11 +124,25 @@ void tr::gfx::set_vertex_buffer(const basic_static_vertex_buffer& buffer, int sl
 	TR_GL_CALL(glBindVertexBuffer, slot, buffer.m_vbo.get(), offset, GLsizei(stride));
 }
 
+void tr::gfx::set_vertex_buffer_checked(const basic_static_vertex_buffer& buffer, int slot, std::intptr_t offset, usize stride,
+										std::initializer_list<vertex_attribute> attrs)
+{
+	check_vertex_buffer(slot, attrs);
+	set_vertex_buffer(buffer, slot, offset, stride);
+}
+
 void tr::gfx::set_vertex_buffer(const basic_dyn_vertex_buffer& buffer, int slot, std::intptr_t offset, usize stride)
 {
 	TR_ASSERT(ogl_context != nullptr, "Tried to set graphics context vertex buffer before opening the window.");
 
 	TR_GL_CALL(glBindVertexBuffer, slot, buffer.m_vbo.get(), offset, GLsizei(stride));
+}
+
+void tr::gfx::set_vertex_buffer_checked(const basic_dyn_vertex_buffer& buffer, int slot, std::intptr_t offset, usize stride,
+										std::initializer_list<vertex_attribute> attrs)
+{
+	check_vertex_buffer(slot, attrs);
+	set_vertex_buffer(buffer, slot, offset, stride);
 }
 
 void tr::gfx::set_index_buffer(const static_index_buffer& buffer)
