@@ -1,8 +1,24 @@
-#include "../../include/tr/sysgfx/shader_pipeline.hpp"
 #include "../../include/tr/sysgfx/gl_call.hpp"
+#include "../../include/tr/sysgfx/shader_pipeline.hpp"
 
 tr::gfx::shader_pipeline::shader_pipeline(const vertex_shader& vshader, const fragment_shader& fshader)
 {
+#ifdef TR_ENABLE_GL_CHECKS
+	TR_ASSERT(vshader.m_outputs.size() == fshader.m_inputs.size(),
+			  "Mismatched shader inputs/outputs (vertex shader has {} outputs, fragment shader has {} inputs).", vshader.m_outputs.size(),
+			  fshader.m_inputs.size());
+	for (const auto& [location, info] : vshader.m_outputs) {
+		TR_ASSERT(fshader.m_inputs.contains(location),
+				  "Mismatched shader inputs/outputs (vertex shader has output '{}' at location {} that was not found in the fragment "
+				  "shader's inputs).",
+				  info, location);
+		TR_ASSERT(fshader.m_inputs.at(location) == info,
+				  "Mismatched shader inputs/outputs (vertex shader has output '{}' at location {}, but the input '{}' at the same location "
+				  "in the fragment shader is not compatible with it).",
+				  info, location, fshader.m_inputs.at(location));
+	}
+#endif
+
 	GLuint ppo;
 	TR_GL_CALL(glCreateProgramPipelines, 1, &ppo);
 	m_ppo.reset(ppo);

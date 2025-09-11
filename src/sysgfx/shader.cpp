@@ -6,6 +6,8 @@
 namespace tr::gfx {
 	// Properties queried for uniforms.
 	constexpr std::array<GLenum, 5> UNIFORM_PROPERTIES{GL_BLOCK_INDEX, GL_TYPE, GL_ARRAY_SIZE, GL_NAME_LENGTH, GL_LOCATION};
+	// Properties queried for inputs and outputs.
+	constexpr std::array<GLenum, 4> INPUT_OUTPUT_PROPERTIES{GL_TYPE, GL_ARRAY_SIZE, GL_NAME_LENGTH, GL_LOCATION};
 
 	// Tracks which units are allocated.
 	std::array<bool, 80> texture_units;
@@ -64,6 +66,15 @@ tr::gfx::shader_base::shader_base(const char* source, unsigned int type)
 	}
 
 #ifdef TR_ENABLE_GL_CHECKS
+	find_uniforms();
+	find_inputs();
+	find_outputs();
+#endif
+}
+
+#ifdef TR_ENABLE_GL_CHECKS
+void tr::gfx::shader_base::find_uniforms()
+{
 	GLint uniforms{0};
 	glGetProgramInterfaceiv(m_program.get(), GL_UNIFORM, GL_ACTIVE_RESOURCES, &uniforms);
 	for (GLint i = 0; i < uniforms; ++i) {
@@ -72,7 +83,7 @@ tr::gfx::shader_base::shader_base(const char* source, unsigned int type)
 		glGetProgramResourceiv(m_program.get(), GL_UNIFORM, i, UNIFORM_PROPERTIES.size(), UNIFORM_PROPERTIES.data(),
 							   UNIFORM_PROPERTIES.size(), NULL, values.data());
 
-		if (values[0] != -1) {
+		if (block_index != -1) {
 			continue;
 		}
 
@@ -80,8 +91,40 @@ tr::gfx::shader_base::shader_base(const char* source, unsigned int type)
 		glGetProgramResourceName(m_program.get(), GL_UNIFORM, i, buffer.size(), NULL, buffer.data());
 		m_uniforms.insert({(unsigned int)(location), {std::move(buffer), tr::gfx::glsl_type(var_type), array_size}});
 	}
-#endif
 }
+
+void tr::gfx::shader_base::find_inputs()
+{
+	GLint inputs{0};
+	glGetProgramInterfaceiv(m_program.get(), GL_PROGRAM_INPUT, GL_ACTIVE_RESOURCES, &inputs);
+	for (GLint i = 0; i < inputs; ++i) {
+		std::array<GLint, INPUT_OUTPUT_PROPERTIES.size()> values;
+		const auto& [var_type, array_size, name_length, location]{values};
+		glGetProgramResourceiv(m_program.get(), GL_PROGRAM_INPUT, i, INPUT_OUTPUT_PROPERTIES.size(), INPUT_OUTPUT_PROPERTIES.data(),
+							   INPUT_OUTPUT_PROPERTIES.size(), NULL, values.data());
+
+		std::string buffer(name_length, '\0');
+		glGetProgramResourceName(m_program.get(), GL_PROGRAM_INPUT, i, buffer.size(), NULL, buffer.data());
+		m_inputs.insert({(unsigned int)(location), {std::move(buffer), tr::gfx::glsl_type(var_type), array_size}});
+	}
+}
+
+void tr::gfx::shader_base::find_outputs()
+{
+	GLint inputs{0};
+	glGetProgramInterfaceiv(m_program.get(), GL_PROGRAM_OUTPUT, GL_ACTIVE_RESOURCES, &inputs);
+	for (GLint i = 0; i < inputs; ++i) {
+		std::array<GLint, INPUT_OUTPUT_PROPERTIES.size()> values;
+		const auto& [var_type, array_size, name_length, location]{values};
+		glGetProgramResourceiv(m_program.get(), GL_PROGRAM_OUTPUT, i, INPUT_OUTPUT_PROPERTIES.size(), INPUT_OUTPUT_PROPERTIES.data(),
+							   INPUT_OUTPUT_PROPERTIES.size(), NULL, values.data());
+
+		std::string buffer(name_length, '\0');
+		glGetProgramResourceName(m_program.get(), GL_PROGRAM_OUTPUT, i, buffer.size(), NULL, buffer.data());
+		m_outputs.insert({(unsigned int)(location), {std::move(buffer), tr::gfx::glsl_type(var_type), array_size}});
+	}
+}
+#endif
 
 void tr::gfx::shader_base::deleter::operator()(unsigned int id) const
 {

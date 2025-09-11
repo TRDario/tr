@@ -151,16 +151,25 @@ namespace tr::gfx {
 		handle<unsigned int, 0, deleter> m_program;
 		// Texture units allocated to this shader.
 		std::unordered_map<int, texture_unit> m_texture_units;
-#ifdef TR_ENABLE_GL_CHECKS
-		// List of uniforms obtained by introspection.
-		std::unordered_map<unsigned int, glsl_variable> m_uniforms;
-#endif
 
 		// Constructs a shader.
 		shader_base(const char* source, unsigned int type);
 
 		friend class shader_pipeline;
 		friend class ping_pong_buffer;
+
+#ifdef TR_ENABLE_GL_CHECKS
+		// List of non-block uniforms obtained by introspection.
+		std::unordered_map<unsigned int, glsl_variable> m_uniforms;
+		// List of input variables obtained by introspection.
+		std::unordered_map<unsigned int, glsl_variable> m_inputs;
+		// List of output variables obtained by introspection.
+		std::unordered_map<unsigned int, glsl_variable> m_outputs;
+
+		void find_uniforms();
+		void find_inputs();
+		void find_outputs();
+#endif
 	};
 
 	// GPU vertex shader program.

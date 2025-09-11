@@ -38,34 +38,36 @@ namespace tr::gfx {
 		std::string name;
 		glsl_type type;
 		int array_size;
+
+		friend constexpr bool operator==(const glsl_variable&, const glsl_variable&) = default;
 	};
 
-	template <class T> inline constexpr glsl_type glsl_enum_of{glsl_type::UNDEFINED};
-	template <> inline constexpr glsl_type glsl_enum_of<bool>{glsl_type::BOOL};
-	template <> inline constexpr glsl_type glsl_enum_of<glm::bvec2>{glsl_type::BVEC2};
-	template <> inline constexpr glsl_type glsl_enum_of<glm::bvec3>{glsl_type::BVEC3};
-	template <> inline constexpr glsl_type glsl_enum_of<glm::bvec4>{glsl_type::BVEC4};
-	template <> inline constexpr glsl_type glsl_enum_of<int>{glsl_type::INT};
-	template <> inline constexpr glsl_type glsl_enum_of<glm::ivec2>{glsl_type::IVEC2};
-	template <> inline constexpr glsl_type glsl_enum_of<glm::ivec3>{glsl_type::IVEC3};
-	template <> inline constexpr glsl_type glsl_enum_of<glm::ivec4>{glsl_type::IVEC4};
-	template <> inline constexpr glsl_type glsl_enum_of<unsigned int>{glsl_type::UINT};
-	template <> inline constexpr glsl_type glsl_enum_of<glm::uvec2>{glsl_type::UVEC2};
-	template <> inline constexpr glsl_type glsl_enum_of<glm::uvec3>{glsl_type::UVEC3};
-	template <> inline constexpr glsl_type glsl_enum_of<glm::uvec4>{glsl_type::UVEC4};
-	template <> inline constexpr glsl_type glsl_enum_of<float>{glsl_type::FLOAT};
-	template <> inline constexpr glsl_type glsl_enum_of<glm::vec2>{glsl_type::VEC2};
-	template <> inline constexpr glsl_type glsl_enum_of<glm::vec3>{glsl_type::VEC3};
-	template <> inline constexpr glsl_type glsl_enum_of<glm::vec4>{glsl_type::VEC4};
-	template <> inline constexpr glsl_type glsl_enum_of<glm::mat2>{glsl_type::MAT2};
-	template <> inline constexpr glsl_type glsl_enum_of<glm::mat3>{glsl_type::MAT3};
-	template <> inline constexpr glsl_type glsl_enum_of<glm::mat4>{glsl_type::MAT4};
-	template <> inline constexpr glsl_type glsl_enum_of<glm::mat2x3>{glsl_type::MAT2x3};
-	template <> inline constexpr glsl_type glsl_enum_of<glm::mat2x4>{glsl_type::MAT2x4};
-	template <> inline constexpr glsl_type glsl_enum_of<glm::mat3x2>{glsl_type::MAT3x2};
-	template <> inline constexpr glsl_type glsl_enum_of<glm::mat3x4>{glsl_type::MAT3x4};
-	template <> inline constexpr glsl_type glsl_enum_of<glm::mat4x2>{glsl_type::MAT4x2};
-	template <> inline constexpr glsl_type glsl_enum_of<glm::mat4x3>{glsl_type::MAT4x3};
+	template <class T> inline constexpr glsl_type as_glsl_type{glsl_type::UNDEFINED};
+	template <> inline constexpr glsl_type as_glsl_type<bool>{glsl_type::BOOL};
+	template <> inline constexpr glsl_type as_glsl_type<glm::bvec2>{glsl_type::BVEC2};
+	template <> inline constexpr glsl_type as_glsl_type<glm::bvec3>{glsl_type::BVEC3};
+	template <> inline constexpr glsl_type as_glsl_type<glm::bvec4>{glsl_type::BVEC4};
+	template <> inline constexpr glsl_type as_glsl_type<int>{glsl_type::INT};
+	template <> inline constexpr glsl_type as_glsl_type<glm::ivec2>{glsl_type::IVEC2};
+	template <> inline constexpr glsl_type as_glsl_type<glm::ivec3>{glsl_type::IVEC3};
+	template <> inline constexpr glsl_type as_glsl_type<glm::ivec4>{glsl_type::IVEC4};
+	template <> inline constexpr glsl_type as_glsl_type<unsigned int>{glsl_type::UINT};
+	template <> inline constexpr glsl_type as_glsl_type<glm::uvec2>{glsl_type::UVEC2};
+	template <> inline constexpr glsl_type as_glsl_type<glm::uvec3>{glsl_type::UVEC3};
+	template <> inline constexpr glsl_type as_glsl_type<glm::uvec4>{glsl_type::UVEC4};
+	template <> inline constexpr glsl_type as_glsl_type<float>{glsl_type::FLOAT};
+	template <> inline constexpr glsl_type as_glsl_type<glm::vec2>{glsl_type::VEC2};
+	template <> inline constexpr glsl_type as_glsl_type<glm::vec3>{glsl_type::VEC3};
+	template <> inline constexpr glsl_type as_glsl_type<glm::vec4>{glsl_type::VEC4};
+	template <> inline constexpr glsl_type as_glsl_type<glm::mat2>{glsl_type::MAT2};
+	template <> inline constexpr glsl_type as_glsl_type<glm::mat3>{glsl_type::MAT3};
+	template <> inline constexpr glsl_type as_glsl_type<glm::mat4>{glsl_type::MAT4};
+	template <> inline constexpr glsl_type as_glsl_type<glm::mat2x3>{glsl_type::MAT2x3};
+	template <> inline constexpr glsl_type as_glsl_type<glm::mat2x4>{glsl_type::MAT2x4};
+	template <> inline constexpr glsl_type as_glsl_type<glm::mat3x2>{glsl_type::MAT3x2};
+	template <> inline constexpr glsl_type as_glsl_type<glm::mat3x4>{glsl_type::MAT3x4};
+	template <> inline constexpr glsl_type as_glsl_type<glm::mat4x2>{glsl_type::MAT4x2};
+	template <> inline constexpr glsl_type as_glsl_type<glm::mat4x3>{glsl_type::MAT4x3};
 }; // namespace tr::gfx
 
 template <> class TR_FMT::formatter<tr::gfx::glsl_type> : protected TR_FMT::formatter<const char*> {
