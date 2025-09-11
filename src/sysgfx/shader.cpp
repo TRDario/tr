@@ -121,7 +121,9 @@ void tr::gfx::shader_base::find_outputs()
 
 		std::string buffer(name_length, '\0');
 		glGetProgramResourceName(m_program.get(), GL_PROGRAM_OUTPUT, i, buffer.size(), NULL, buffer.data());
-		m_outputs.insert({(unsigned int)(location), {std::move(buffer), tr::gfx::glsl_type(var_type), array_size}});
+		if (!buffer.starts_with("gl_")) {
+			m_outputs.insert({(unsigned int)(location), {std::move(buffer), tr::gfx::glsl_type(var_type), array_size}});
+		}
 	}
 }
 #endif
