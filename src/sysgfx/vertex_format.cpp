@@ -4,6 +4,9 @@
 #include "../../include/tr/sysgfx/vertex_format.hpp"
 
 tr::gfx::vertex_format::vertex_format(std::initializer_list<vertex_binding> bindings)
+#ifdef TR_ENABLE_GL_CHECKS
+	: m_bindings(bindings)
+#endif
 {
 	GLuint vao;
 	TR_GL_CALL(glCreateVertexArrays, 1, &vao);
