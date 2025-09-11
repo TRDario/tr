@@ -20,7 +20,7 @@ namespace tr::gfx {
 		u8 elements{0};
 		bool normalized{false};
 
-		int size_bytes() const;
+		constexpr int size_bytes() const;
 	};
 	// Tag to signify an integral vertex attribute should be normalized.
 	struct normalized {};
@@ -172,6 +172,24 @@ struct TR_FMT::formatter<tr::gfx::vertex_attribute> : private TR_FMT::formatter<
 		return ctx.out();
 	}
 };
+
+constexpr int tr::gfx::vertex_attribute::size_bytes() const
+{
+	switch (type) {
+	case vertex_attribute_type::I8:
+	case vertex_attribute_type::U8:
+		return elements;
+	case vertex_attribute_type::I16:
+	case vertex_attribute_type::U16:
+		return 2 * elements;
+	case vertex_attribute_type::I32:
+	case vertex_attribute_type::U32:
+	case vertex_attribute_type::F32:
+		return 4 * elements;
+	default:
+		return 0;
+	}
+}
 
 template <class... Ts> std::initializer_list<tr::gfx::vertex_attribute> tr::gfx::unpacked_vertex_attributes<Ts...>::list()
 {
