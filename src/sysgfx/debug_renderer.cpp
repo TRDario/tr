@@ -125,7 +125,8 @@ namespace tr::gfx::debug_renderer {
 	void write(bool right, std::string_view text, rgba8 text_color, rgba8 bg_color, std::span<rgba8> extra_colors);
 } // namespace tr::gfx::debug_renderer
 
-template <> struct tr::gfx::vertex_attributes<tr::gfx::debug_renderer::glyph> : unpacked_vertex_attributes<u8, u8, u8, u8, u8> {};
+template <>
+struct tr::gfx::vertex_attributes<tr::gfx::debug_renderer::glyph> : unpacked_vertex_attributes<glm::u8vec2, u8, u8, rgba8, rgba8> {};
 
 using namespace std::chrono_literals;
 
