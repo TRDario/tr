@@ -20,9 +20,9 @@ namespace tr::gfx {
 		// Handle to the OpenGL buffer.
 		handle<unsigned int, 0, deleter> m_vbo;
 		// The size of the vertex buffer.
-		std::intptr_t m_size;
+		ssize m_size;
 
-		friend void set_vertex_buffer(const basic_static_vertex_buffer& buffer, int slot, std::intptr_t offset, usize stride);
+		friend void set_vertex_buffer(const basic_static_vertex_buffer& buffer, int slot, ssize offset, usize stride);
 	};
 
 	// Typed static vertex buffer class for holding immutable vertex data of a single type.
@@ -71,7 +71,7 @@ namespace tr::gfx {
 		// The capacity of the buffer.
 		usize m_capacity;
 
-		friend void set_vertex_buffer(const basic_dyn_vertex_buffer& buffer, int slot, std::intptr_t offset, usize stride);
+		friend void set_vertex_buffer(const basic_dyn_vertex_buffer& buffer, int slot, ssize offset, usize stride);
 	};
 
 	// Typed dynamic vertex buffer class.

@@ -117,28 +117,28 @@ void tr::gfx::check_vertex_buffer(int slot, std::initializer_list<vertex_attribu
 }
 #endif
 
-void tr::gfx::set_vertex_buffer(const basic_static_vertex_buffer& buffer, int slot, std::intptr_t offset, usize stride)
+void tr::gfx::set_vertex_buffer(const basic_static_vertex_buffer& buffer, int slot, ssize offset, usize stride)
 {
 	TR_ASSERT(ogl_context != nullptr, "Tried to set graphics context vertex buffer before opening the window.");
 
 	TR_GL_CALL(glBindVertexBuffer, slot, buffer.m_vbo.get(), offset, GLsizei(stride));
 }
 
-void tr::gfx::set_vertex_buffer_checked(const basic_static_vertex_buffer& buffer, int slot, std::intptr_t offset, usize stride,
+void tr::gfx::set_vertex_buffer_checked(const basic_static_vertex_buffer& buffer, int slot, ssize offset, usize stride,
 										std::initializer_list<vertex_attribute> attrs)
 {
 	check_vertex_buffer(slot, attrs);
 	set_vertex_buffer(buffer, slot, offset, stride);
 }
 
-void tr::gfx::set_vertex_buffer(const basic_dyn_vertex_buffer& buffer, int slot, std::intptr_t offset, usize stride)
+void tr::gfx::set_vertex_buffer(const basic_dyn_vertex_buffer& buffer, int slot, ssize offset, usize stride)
 {
 	TR_ASSERT(ogl_context != nullptr, "Tried to set graphics context vertex buffer before opening the window.");
 
 	TR_GL_CALL(glBindVertexBuffer, slot, buffer.m_vbo.get(), offset, GLsizei(stride));
 }
 
-void tr::gfx::set_vertex_buffer_checked(const basic_dyn_vertex_buffer& buffer, int slot, std::intptr_t offset, usize stride,
+void tr::gfx::set_vertex_buffer_checked(const basic_dyn_vertex_buffer& buffer, int slot, ssize offset, usize stride,
 										std::initializer_list<vertex_attribute> attrs)
 {
 	check_vertex_buffer(slot, attrs);

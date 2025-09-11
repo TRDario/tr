@@ -47,13 +47,13 @@ namespace tr::gfx {
 	// Sets the active vertex format.
 	void set_vertex_format(const vertex_format& format);
 	// Sets an active vertex buffer.
-	void set_vertex_buffer(const basic_static_vertex_buffer& buffer, int slot, std::intptr_t offset, usize stride);
+	void set_vertex_buffer(const basic_static_vertex_buffer& buffer, int slot, ssize offset, usize stride);
 	// Sets an active vertex buffer.
-	template <standard_layout T> void set_vertex_buffer(const static_vertex_buffer<T>& buffer, int slot, std::intptr_t offset);
+	template <standard_layout T> void set_vertex_buffer(const static_vertex_buffer<T>& buffer, int slot, ssize offset);
 	// Sets an active vertex buffer.
-	void set_vertex_buffer(const basic_dyn_vertex_buffer& buffer, int slot, std::intptr_t offset, usize stride);
+	void set_vertex_buffer(const basic_dyn_vertex_buffer& buffer, int slot, ssize offset, usize stride);
 	// // Sets an active vertex buffer.
-	template <standard_layout T> void set_vertex_buffer(const dyn_vertex_buffer<T>& buffer, int slot, std::intptr_t offset);
+	template <standard_layout T> void set_vertex_buffer(const dyn_vertex_buffer<T>& buffer, int slot, ssize offset);
 	// Sets the active index buffer.
 	void set_index_buffer(const static_index_buffer& buffer);
 	// Sets the active index buffer.
@@ -79,15 +79,15 @@ namespace tr::gfx {
 #ifdef TR_ENABLE_GL_CHECKS
 namespace tr::gfx {
 	// Sets an active vertex buffer.
-	void set_vertex_buffer_checked(const basic_static_vertex_buffer& buffer, int slot, std::intptr_t offset, usize stride,
+	void set_vertex_buffer_checked(const basic_static_vertex_buffer& buffer, int slot, ssize offset, usize stride,
 								   std::initializer_list<vertex_attribute> attributes);
 	// Sets an active vertex buffer.
-	void set_vertex_buffer_checked(const basic_dyn_vertex_buffer& buffer, int slot, std::intptr_t offset, usize stride,
+	void set_vertex_buffer_checked(const basic_dyn_vertex_buffer& buffer, int slot, ssize offset, usize stride,
 								   std::initializer_list<vertex_attribute> attributes);
 } // namespace tr::gfx
 #endif
 
-template <tr::standard_layout T> void tr::gfx::set_vertex_buffer(const static_vertex_buffer<T>& buffer, int slot, std::intptr_t offset)
+template <tr::standard_layout T> void tr::gfx::set_vertex_buffer(const static_vertex_buffer<T>& buffer, int slot, ssize offset)
 {
 #ifdef TR_ENABLE_GL_CHECKS
 	set_vertex_buffer_checked(buffer, slot, offset * sizeof(T), sizeof(T), vertex_attributes<T>::list());
@@ -96,7 +96,7 @@ template <tr::standard_layout T> void tr::gfx::set_vertex_buffer(const static_ve
 #endif
 }
 
-template <tr::standard_layout T> void tr::gfx::set_vertex_buffer(const dyn_vertex_buffer<T>& buffer, int slot, std::intptr_t offset)
+template <tr::standard_layout T> void tr::gfx::set_vertex_buffer(const dyn_vertex_buffer<T>& buffer, int slot, ssize offset)
 {
 #ifdef TR_ENABLE_GL_CHECKS
 	set_vertex_buffer_checked(buffer, slot, offset * sizeof(T), sizeof(T), vertex_attributes<T>::list());

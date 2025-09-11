@@ -20,7 +20,7 @@ namespace tr::gfx {
 
 		basic_shader_buffer_map(unsigned int buffer, std::span<std::byte> span);
 
-		friend class shader_buffer;
+		friend class basic_shader_buffer;
 	};
 
 	// Mapped shader buffer object.
@@ -36,7 +36,7 @@ namespace tr::gfx {
 	  private:
 		shader_buffer_object_map(basic_shader_buffer_map&& map);
 
-		friend class shader_buffer;
+		friend class basic_shader_buffer;
 	};
 
 	// Mapped shader buffer span.
@@ -48,11 +48,11 @@ namespace tr::gfx {
 	  private:
 		shader_buffer_span_map(basic_shader_buffer_map&& map);
 
-		friend class shader_buffer;
+		friend class basic_shader_buffer;
 	};
 
 	// GPU buffer accessable to a shader.
-	class shader_buffer {
+	class basic_shader_buffer {
 	  public:
 		// Shader buffer map access type.
 		enum class access : u32 {
@@ -62,27 +62,21 @@ namespace tr::gfx {
 		};
 
 		// Allocates an uninitialized shader buffer.
-		shader_buffer(std::intptr_t header_size, std::intptr_t capacity, access access);
+		basic_shader_buffer(ssize header_size, ssize capacity, access access);
 
 		// Gets the size of the fixed header block.
-		std::intptr_t header_size() const;
+		ssize header_size() const;
 		// Gets the size of the dynamic array.
-		std::intptr_t array_size() const;
+		ssize array_size() const;
 		// Gets the maximum capacity of the dynamic array.
-		std::intptr_t array_capacity() const;
+		ssize array_capacity() const;
 
 		// Sets the data of the header.
 		void set_header(std::span<const std::byte> data);
-		// Sets the data of the header.
-		template <std::ranges::contiguous_range R> void set_header(R&& range);
-		// Sets the data of the header.
-		template <class T> void set_header(const T& value);
 		// Sets the data of the dynamic array.
 		void set_array(std::span<const std::byte> data);
-		// Sets the data of the dynamic array.
-		template <std::ranges::contiguous_range R> void set_array(R&& range);
 		// Resizes the dynamic array.
-		void resize_array(std::intptr_t size);
+		void resize_array(ssize size);
 
 		// Gets whether the buffer is mapped.
 		bool mapped() const;
@@ -106,11 +100,11 @@ namespace tr::gfx {
 		// The access type of the buffer.
 		access m_access;
 		// The size of the header.
-		std::intptr_t m_header_size;
+		ssize m_header_size;
 		// The current size of the array.
-		std::intptr_t m_array_size;
+		ssize m_array_size;
 		// The capacity of the array.
-		std::intptr_t m_array_capacity;
+		ssize m_array_capacity;
 
 		friend class shader_base;
 	};
@@ -148,19 +142,4 @@ template <class T>
 tr::gfx::shader_buffer_span_map<T>::shader_buffer_span_map(basic_shader_buffer_map&& map)
 	: basic_shader_buffer_map{std::move(map)}
 {
-}
-
-template <std::ranges::contiguous_range R> void tr::gfx::shader_buffer::set_header(R&& range)
-{
-	set_header(std::span<const std::byte>{range_bytes(range)});
-}
-
-template <class T> void tr::gfx::shader_buffer::set_header(const T& value)
-{
-	set_header(std::span<const std::byte>{as_bytes(value)});
-}
-
-template <std::ranges::contiguous_range R> void tr::gfx::shader_buffer::set_array(R&& range)
-{
-	set_array(std::span<const std::byte>{range_bytes(range)});
 }

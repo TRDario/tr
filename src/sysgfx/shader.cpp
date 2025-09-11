@@ -630,7 +630,7 @@ void tr::gfx::shader_base::set_uniform(int index, texture_ref texture)
 	texture_unit_textures[unit_id] = std::move(texture);
 }
 
-void tr::gfx::shader_base::set_storage_buffer(unsigned int index, shader_buffer& buffer)
+void tr::gfx::shader_base::set_storage_buffer(unsigned int index, basic_shader_buffer& buffer)
 {
 	TR_GL_CALL(glBindBufferRange, GL_SHADER_STORAGE_BUFFER, index, buffer.m_sbo.get(), 0, buffer.header_size() + buffer.array_size());
 }
