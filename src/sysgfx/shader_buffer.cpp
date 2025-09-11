@@ -1,14 +1,19 @@
-#include "../../include/tr/sysgfx/shader_buffer.hpp"
 #include "../../include/tr/sysgfx/gl_call.hpp"
+#include "../../include/tr/sysgfx/shader_buffer.hpp"
 
 //////////////////////////////////////////////////////////// SHADER BUFFER MAP ////////////////////////////////////////////////////////////
 
-tr::gfx::shader_buffer_map::shader_buffer_map(unsigned int buffer, std::span<std::byte> span)
+tr::gfx::basic_shader_buffer_map::basic_shader_buffer_map(unsigned int buffer, std::span<std::byte> span)
 	: m_sbo{buffer}, m_span{span}
 {
 }
 
-void tr::gfx::shader_buffer_map::deleter::operator()(unsigned int id) const
+tr::gfx::basic_shader_buffer_map::operator std::span<std::byte>() const
+{
+	return m_span;
+}
+
+void tr::gfx::basic_shader_buffer_map::deleter::operator()(unsigned int id) const
 {
 	TR_GL_CALL(glUnmapNamedBuffer, id);
 }
@@ -86,7 +91,7 @@ bool tr::gfx::shader_buffer::mapped() const
 	return mapped;
 }
 
-tr::gfx::shader_buffer_map tr::gfx::shader_buffer::map_header()
+tr::gfx::basic_shader_buffer_map tr::gfx::shader_buffer::map_header()
 {
 	TR_ASSERT(!mapped(), "Tried to map the header of an already-mapped buffer.");
 	TR_ASSERT(header_size() != 0, "Tried to map the header of a buffer without one.");
@@ -95,10 +100,10 @@ tr::gfx::shader_buffer_map tr::gfx::shader_buffer::map_header()
 	if (glGetError() == GL_OUT_OF_MEMORY) {
 		throw out_of_memory{"shader buffer mapping"};
 	}
-	return shader_buffer_map{m_sbo.get(), std::span{ptr, usize(m_array_size)}};
+	return basic_shader_buffer_map{m_sbo.get(), std::span{ptr, usize(m_array_size)}};
 }
 
-tr::gfx::shader_buffer_map tr::gfx::shader_buffer::map_array()
+tr::gfx::basic_shader_buffer_map tr::gfx::shader_buffer::map_array()
 {
 	TR_ASSERT(!mapped(), "Tried to map the array of an already-mapped buffer.");
 	TR_ASSERT(array_size() != 0, "Tried to map the array of a buffer without one.");
@@ -107,10 +112,10 @@ tr::gfx::shader_buffer_map tr::gfx::shader_buffer::map_array()
 	if (glGetError() == GL_OUT_OF_MEMORY) {
 		throw out_of_memory{"shader buffer mapping"};
 	}
-	return shader_buffer_map{m_sbo.get(), std::span{ptr, usize(m_array_size)}};
+	return basic_shader_buffer_map{m_sbo.get(), std::span{ptr, usize(m_array_size)}};
 }
 
-tr::gfx::shader_buffer_map tr::gfx::shader_buffer::map()
+tr::gfx::basic_shader_buffer_map tr::gfx::shader_buffer::map()
 {
 	TR_ASSERT(!mapped(), "Tried to map an already-mapped buffer.");
 
@@ -119,7 +124,7 @@ tr::gfx::shader_buffer_map tr::gfx::shader_buffer::map()
 	if (glGetError() == GL_OUT_OF_MEMORY) {
 		throw out_of_memory{"shader buffer mapping"};
 	}
-	return shader_buffer_map{m_sbo.get(), std::span{ptr, usize(m_header_size + m_array_size)}};
+	return basic_shader_buffer_map{m_sbo.get(), std::span{ptr, usize(m_header_size + m_array_size)}};
 }
 
 void tr::gfx::shader_buffer::set_label(std::string_view label)
