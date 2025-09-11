@@ -12,7 +12,8 @@ tr::gfx::shader_pipeline::shader_pipeline(const vertex_shader& vshader, const fr
 				  "Mismatched shader inputs/outputs (vertex shader has output '{}' at location {} that was not found in the fragment "
 				  "shader's inputs).",
 				  info, location);
-		TR_ASSERT(fshader.m_inputs.at(location) == info,
+		const glsl_variable& frag_info{fshader.m_inputs.at(location)};
+		TR_ASSERT(frag_info.type == info.type && frag_info.array_size == info.array_size,
 				  "Mismatched shader inputs/outputs (vertex shader has output '{}' at location {}, but the input '{}' at the same location "
 				  "in the fragment shader is not compatible with it).",
 				  info, location, fshader.m_inputs.at(location));

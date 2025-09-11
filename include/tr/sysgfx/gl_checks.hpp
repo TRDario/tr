@@ -38,8 +38,6 @@ namespace tr::gfx {
 		std::string name;
 		glsl_type type;
 		int array_size;
-
-		friend constexpr bool operator==(const glsl_variable&, const glsl_variable&) = default;
 	};
 
 	template <class T> inline constexpr glsl_type as_glsl_type{glsl_type::UNDEFINED};
