@@ -62,7 +62,7 @@ namespace tr::gfx {
 		};
 
 		// Allocates an uninitialized shader buffer.
-		basic_shader_buffer(ssize header_size, ssize capacity, access access);
+		basic_shader_buffer(ssize header_size, ssize capacity, access access = access::WRITE_ONLY);
 
 		// Gets the size of the fixed header block.
 		ssize header_size() const;
@@ -113,7 +113,7 @@ namespace tr::gfx {
 	template <class Header, class ArrayElement> class shader_buffer : public basic_shader_buffer {
 	  public:
 		// Allocates an uninitialized shader buffer.
-		shader_buffer(ssize capacity, access access);
+		shader_buffer(ssize capacity, access access = access::WRITE_ONLY);
 
 		// Gets the size of the dynamic array.
 		ssize array_size() const;
@@ -148,7 +148,7 @@ namespace tr::gfx {
 	template <class T> class shader_array : public basic_shader_buffer {
 	  public:
 		// Allocates an uninitialized shader array.
-		shader_array(ssize capacity, access access);
+		shader_array(ssize capacity, access access = access::WRITE_ONLY);
 
 		// Gets the size of the array.
 		ssize size() const;
@@ -156,7 +156,7 @@ namespace tr::gfx {
 		ssize capacity() const;
 
 		// Sets the data of the array.
-		template <typed_contiguous_range<T> R> void set_array(R&& data);
+		template <typed_contiguous_range<T> R> void set(R&& data);
 		// Resizes the array.
 		void resize(ssize size);
 
@@ -212,7 +212,7 @@ tr::gfx::shader_buffer_span_map<T>::shader_buffer_span_map(basic_shader_buffer_m
 
 template <class Header, class ArrayElement>
 tr::gfx::shader_buffer<Header, ArrayElement>::shader_buffer(ssize capacity, access access)
-	: basic_shader_buffer{sizeof(Header), sizeof(ArrayElement) * capacity, access}
+	: basic_shader_buffer{ssize(sizeof(Header)), ssize(sizeof(ArrayElement) * capacity), access}
 {
 }
 
@@ -259,7 +259,7 @@ tr::gfx::shader_buffer_span_map<ArrayElement> tr::gfx::shader_buffer<Header, Arr
 
 template <class T>
 tr::gfx::shader_array<T>::shader_array(ssize capacity, access access)
-	: basic_shader_buffer{0, sizeof(T) * capacity, access}
+	: basic_shader_buffer{0, ssize(sizeof(T) * capacity), access}
 {
 }
 
@@ -273,7 +273,7 @@ template <class T> tr::ssize tr::gfx::shader_array<T>::capacity() const
 	return basic_shader_buffer::array_capacity() / sizeof(T);
 }
 
-template <class T> template <tr::typed_contiguous_range<T> R> void tr::gfx::shader_array<T>::set_array(R&& data)
+template <class T> template <tr::typed_contiguous_range<T> R> void tr::gfx::shader_array<T>::set(R&& data)
 {
 	basic_shader_buffer::set_array(as_bytes(data));
 }
