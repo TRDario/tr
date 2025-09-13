@@ -174,7 +174,7 @@ tr::gfx::texture::~texture()
 {
 	TR_GL_CALL(glDeleteTextures, 1, &m_handle);
 	for (texture_ref& ref : m_refs) {
-		ref = std::nullopt;
+		ref.m_ref = std::nullopt;
 	}
 }
 
@@ -182,7 +182,7 @@ tr::gfx::texture& tr::gfx::texture::operator=(texture&& r) noexcept
 {
 	TR_GL_CALL(glDeleteTextures, 1, &m_handle);
 	for (texture_ref& ref : m_refs) {
-		ref = std::nullopt;
+		ref.m_ref = std::nullopt;
 	}
 
 	m_handle = r.m_handle;
