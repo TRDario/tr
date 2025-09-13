@@ -1,6 +1,7 @@
 function(tr_target_template TARGET)
 	set_target_properties (${TARGET} PROPERTIES DEBUG_POSTFIX "d")
 	target_compile_features(${TARGET} PUBLIC cxx_std_20)
+
 	if(TR_HAS_CLANG OR TR_HAS_GCC)
 		target_compile_options(${TARGET} PRIVATE
 			-Wall
@@ -35,8 +36,12 @@ function(tr_target_template TARGET)
 			/WX
 		)
 	endif()
-	target_compile_definitions(${TARGET} PUBLIC $<$<CONFIG:Debug>:TR_ENABLE_GL_CHECKS> $<$<CONFIG:Debug>:TR_ENABLE_ASSERTS>$<$<CONFIG:RelWithDebInfo>:TR_ENABLE_ASSERTS>)
+	
+	if(LINUX)
+		target_compile_definitions(${TARGET} PUBLIC $<$<CONFIG:Debug>:_GLIBCXX_DEBUG _GLIBCXX_DEBUG_PEDANTIC>)
+	endif()
 	if(TR_HAS_STD_FORMAT)
 		target_compile_definitions(${TARGET} PUBLIC TR_HAS_STD_FORMAT)
 	endif()
+	target_compile_definitions(${TARGET} PUBLIC $<$<CONFIG:Debug>:TR_ENABLE_GL_CHECKS> $<$<CONFIG:Debug>:TR_ENABLE_ASSERTS>$<$<CONFIG:RelWithDebInfo>:TR_ENABLE_ASSERTS>)
 endfunction()

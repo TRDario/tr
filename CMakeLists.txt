@@ -94,6 +94,6 @@ if(TR_BUILD_IMGUI)
 		src/imgui.cpp
 	)
 endif()
-if (TR_BUILD_TESTS)
+if(TR_BUILD_TESTS)
 	add_subdirectory(test)
 endif()
