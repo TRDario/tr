@@ -8,6 +8,7 @@
 
 namespace tr::gfx {
 	class basic_shader_buffer;
+	class basic_uniform_buffer;
 	class texture_ref;
 
 	// Error thrown when shader loading fails.
@@ -129,6 +130,8 @@ namespace tr::gfx {
 
 		// Sets a shader storage buffer.
 		void set_storage_buffer(unsigned int index, basic_shader_buffer& buffer);
+		// Sets a uniform storage buffer.
+		void set_uniform_buffer(unsigned int index, const basic_uniform_buffer& buffer);
 
 		// Sets the debug label of the shader.
 		void set_label(std::string_view label);

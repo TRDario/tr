@@ -50,6 +50,7 @@ if(TR_BUILD_SYSGFX)
 		src/sysgfx/backbuffer.cpp
 		src/sysgfx/bitmap_iterators.cpp
 		src/sysgfx/bitmap.cpp
+		src/sysgfx/buffer_map.cpp
 		src/sysgfx/cursor.cpp
 		src/sysgfx/debug_renderer.cpp
 		src/sysgfx/dialog.cpp
@@ -68,6 +69,7 @@ if(TR_BUILD_SYSGFX)
 		src/sysgfx/shader.cpp
 		src/sysgfx/state_manager.cpp
 		src/sysgfx/texture.cpp
+		src/sysgfx/uniform_buffer.cpp
 		src/sysgfx/vertex_buffer.cpp
 		src/sysgfx/vertex_format.cpp
 		src/sysgfx/ttfont.cpp

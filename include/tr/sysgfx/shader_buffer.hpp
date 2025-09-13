@@ -1,56 +1,7 @@
 #pragma once
-#include "../utility/handle.hpp"
+#include "buffer_map.hpp"
 
 namespace tr::gfx {
-	// RAII wrapper over a shader buffer map.
-	class basic_shader_buffer_map {
-	  public:
-		// Casts the map into a regular span.
-		operator std::span<std::byte>() const;
-
-	  private:
-		struct deleter {
-			void operator()(unsigned int id) const;
-		};
-
-		// Reference to the buffer.
-		handle<unsigned int, 0, deleter> m_sbo;
-		// The actual span.
-		std::span<std::byte> m_span;
-
-		basic_shader_buffer_map(unsigned int buffer, std::span<std::byte> span);
-
-		friend class basic_shader_buffer;
-	};
-
-	// Mapped shader buffer object.
-	template <class T> class shader_buffer_object_map : basic_shader_buffer_map {
-	  public:
-		// Casts the map into a reference to the object.
-		operator T&() const;
-		// Pointer access to the mapped object.
-		T* operator->() const;
-		// Assigns the object.
-		template <class T1> T& operator=(T1&& r) const;
-
-	  private:
-		shader_buffer_object_map(basic_shader_buffer_map&& map);
-
-		friend class basic_shader_buffer;
-	};
-
-	// Mapped shader buffer span.
-	template <class T> class shader_buffer_span_map : basic_shader_buffer_map {
-	  public:
-		// Casts the map into a regular span.
-		operator std::span<T>() const;
-
-	  private:
-		shader_buffer_span_map(basic_shader_buffer_map&& map);
-
-		friend class basic_shader_buffer;
-	};
-
 	// GPU buffer accessable to a shader.
 	class basic_shader_buffer {
 	  public:
@@ -81,11 +32,11 @@ namespace tr::gfx {
 		// Gets whether the buffer is mapped.
 		bool mapped() const;
 		// Maps the fixed header.
-		basic_shader_buffer_map map_header();
+		basic_buffer_map map_header();
 		// Maps the dynamic array.
-		basic_shader_buffer_map map_array();
+		basic_buffer_map map_array();
 		// Maps the entire buffer.
-		basic_shader_buffer_map map();
+		basic_buffer_map map();
 
 		// Sets the debug label of the shader buffer.
 		void set_label(std::string_view label);
@@ -128,9 +79,9 @@ namespace tr::gfx {
 		void resize_array(ssize size);
 
 		// Maps the fixed header.
-		shader_buffer_object_map<Header> map_header();
+		buffer_object_map<Header> map_header();
 		// Maps the dynamic array.
-		shader_buffer_span_map<ArrayElement> map_array();
+		buffer_span_map<ArrayElement> map_array();
 
 	  private:
 		using basic_shader_buffer::array_capacity;
@@ -161,7 +112,7 @@ namespace tr::gfx {
 		void resize(ssize size);
 
 		// Maps the array.
-		shader_buffer_span_map<T> map();
+		buffer_span_map<T> map();
 
 	  private:
 		using basic_shader_buffer::array_capacity;
@@ -177,38 +128,6 @@ namespace tr::gfx {
 } // namespace tr::gfx
 
 ///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
-
-template <class T> tr::gfx::shader_buffer_object_map<T>::operator T&() const
-{
-	return *(T*)std::span<std::byte>{*this}.data();
-}
-
-template <class T> T* tr::gfx::shader_buffer_object_map<T>::operator->() const
-{
-	return (T*)std::span<std::byte>{*this}.data();
-}
-
-template <class T> template <class T1> T& tr::gfx::shader_buffer_object_map<T>::operator=(T1&& r) const
-{
-	return ((T&)*this) = std::forward<T1>(r);
-}
-
-template <class T>
-tr::gfx::shader_buffer_object_map<T>::shader_buffer_object_map(basic_shader_buffer_map&& map)
-	: basic_shader_buffer_map{std::move(map)}
-{
-}
-
-template <class T> tr::gfx::shader_buffer_span_map<T>::operator std::span<T>() const
-{
-	return as_mut_objects<T>(*this);
-}
-
-template <class T>
-tr::gfx::shader_buffer_span_map<T>::shader_buffer_span_map(basic_shader_buffer_map&& map)
-	: basic_shader_buffer_map{std::move(map)}
-{
-}
 
 template <class Header, class ArrayElement>
 tr::gfx::shader_buffer<Header, ArrayElement>::shader_buffer(ssize capacity, access access)
@@ -235,7 +154,7 @@ template <class Header, class ArrayElement>
 template <tr::typed_contiguous_range<ArrayElement> R>
 void tr::gfx::shader_buffer<Header, ArrayElement>::set_array(R&& data)
 {
-	basic_shader_buffer::set_array(as_bytes(data));
+	basic_shader_buffer::set_array(range_bytes(data));
 }
 
 template <class Header, class ArrayElement> void tr::gfx::shader_buffer<Header, ArrayElement>::resize_array(ssize size)
@@ -243,14 +162,12 @@ template <class Header, class ArrayElement> void tr::gfx::shader_buffer<Header, 
 	basic_shader_buffer::resize_array(size * sizeof(ArrayElement));
 }
 
-template <class Header, class ArrayElement>
-tr::gfx::shader_buffer_object_map<Header> tr::gfx::shader_buffer<Header, ArrayElement>::map_header()
+template <class Header, class ArrayElement> tr::gfx::buffer_object_map<Header> tr::gfx::shader_buffer<Header, ArrayElement>::map_header()
 {
 	return basic_shader_buffer::map_header();
 }
 
-template <class Header, class ArrayElement>
-tr::gfx::shader_buffer_span_map<ArrayElement> tr::gfx::shader_buffer<Header, ArrayElement>::map_array()
+template <class Header, class ArrayElement> tr::gfx::buffer_span_map<ArrayElement> tr::gfx::shader_buffer<Header, ArrayElement>::map_array()
 {
 	return basic_shader_buffer::map_array();
 }
@@ -275,7 +192,7 @@ template <class T> tr::ssize tr::gfx::shader_array<T>::capacity() const
 
 template <class T> template <tr::typed_contiguous_range<T> R> void tr::gfx::shader_array<T>::set(R&& data)
 {
-	basic_shader_buffer::set_array(as_bytes(data));
+	basic_shader_buffer::set_array(range_bytes(data));
 }
 
 template <class T> void tr::gfx::shader_array<T>::resize(ssize size)
@@ -283,7 +200,7 @@ template <class T> void tr::gfx::shader_array<T>::resize(ssize size)
 	basic_shader_buffer::resize_array(size * sizeof(T));
 }
 
-template <class T> tr::gfx::shader_buffer_span_map<T> tr::gfx::shader_array<T>::map()
+template <class T> tr::gfx::buffer_span_map<T> tr::gfx::shader_array<T>::map()
 {
 	return basic_shader_buffer::map_array();
 }

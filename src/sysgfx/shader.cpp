@@ -1,7 +1,8 @@
-#include "../../include/tr/sysgfx/impl.hpp"
 #include "../../include/tr/sysgfx/shader.hpp"
+#include "../../include/tr/sysgfx/impl.hpp"
 #include "../../include/tr/sysgfx/shader_buffer.hpp"
 #include "../../include/tr/sysgfx/texture.hpp"
+#include "../../include/tr/sysgfx/uniform_buffer.hpp"
 
 namespace tr::gfx {
 	// Properties queried for uniforms.
@@ -633,6 +634,11 @@ void tr::gfx::shader_base::set_uniform(int index, texture_ref texture)
 void tr::gfx::shader_base::set_storage_buffer(unsigned int index, basic_shader_buffer& buffer)
 {
 	TR_GL_CALL(glBindBufferRange, GL_SHADER_STORAGE_BUFFER, index, buffer.m_sbo.get(), 0, buffer.header_size() + buffer.array_size());
+}
+
+void tr::gfx::shader_base::set_uniform_buffer(unsigned int index, const basic_uniform_buffer& buffer)
+{
+	TR_GL_CALL(glBindBufferBase, GL_UNIFORM_BUFFER, index, buffer.m_ubo.get());
 }
 
 void tr::gfx::shader_base::set_label(std::string_view label)
