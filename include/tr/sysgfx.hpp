@@ -4,6 +4,7 @@
 #include "sysgfx/bitmap.hpp"           // IWYU pragma: export
 #include "sysgfx/bitmap_iterators.hpp" // IWYU pragma: export
 #include "sysgfx/blending.hpp"         // IWYU pragma: export
+#include "sysgfx/buffer_map.hpp"       // IWYU pragma: export
 #include "sysgfx/cursor.hpp"           // IWYU pragma: export
 #include "sysgfx/debug_renderer.hpp"   // IWYU pragma: export
 #include "sysgfx/dialog.hpp"           // IWYU pragma: export
@@ -26,6 +27,7 @@
 #include "sysgfx/state_manager.hpp"    // IWYU pragma: export
 #include "sysgfx/texture.hpp"          // IWYU pragma: export
 #include "sysgfx/ttfont.hpp"           // IWYU pragma: export
+#include "sysgfx/uniform_buffer.hpp"   // IWYU pragma: export
 #include "sysgfx/vertex_buffer.hpp"    // IWYU pragma: export
 #include "sysgfx/vertex_format.hpp"    // IWYU pragma: export
 #include "sysgfx/window.hpp"           // IWYU pragma: export

@@ -8,7 +8,7 @@ tr::gfx::basic_uniform_buffer::basic_uniform_buffer(ssize size)
 	TR_GL_CALL(glCreateBuffers, 1, &ubo);
 	m_ubo.reset(ubo);
 
-	TR_GL_CALL(glNamedBufferStorage, ubo, size, nullptr, GL_DYNAMIC_STORAGE_BIT | GL_WRITE_ONLY);
+	TR_GL_CALL(glNamedBufferStorage, ubo, size, nullptr, GL_DYNAMIC_STORAGE_BIT | GL_MAP_WRITE_BIT);
 	if (glGetError() == GL_OUT_OF_MEMORY) {
 		throw out_of_memory{"uniform buffer allocation"};
 	}
@@ -44,7 +44,7 @@ tr::gfx::basic_buffer_map tr::gfx::basic_uniform_buffer::map()
 	TR_ASSERT(!mapped(), "Tried to map an already-mapped buffer.");
 
 	std::byte* ptr{
-		(std::byte*)(TR_RETURNING_GL_CALL(glMapNamedBufferRange, m_ubo.get(), 0, m_size, GL_DYNAMIC_STORAGE_BIT | GL_WRITE_ONLY))};
+		(std::byte*)(TR_RETURNING_GL_CALL(glMapNamedBufferRange, m_ubo.get(), 0, m_size, GL_DYNAMIC_STORAGE_BIT | GL_MAP_WRITE_BIT))};
 	if (glGetError() == GL_OUT_OF_MEMORY) {
 		throw out_of_memory{"uniform buffer mapping"};
 	}
