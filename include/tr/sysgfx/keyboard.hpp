@@ -130,9 +130,9 @@ namespace tr::sys {
 
 		constexpr bool operator==(const scancode&) const = default;
 
-		// Casts the scancode into an integer.
 		constexpr explicit operator int() const;
-		// Casts the name of the key.
+		constexpr operator enum_t() const;
+
 		const char* name() const;
 
 	  private:
@@ -283,8 +283,8 @@ namespace tr::sys {
 
 		constexpr bool operator==(const keycode&) const = default;
 
-		// Casts the keycode into an integer.
 		constexpr explicit operator int() const;
+		constexpr operator enum_t() const;
 
 		// Casts the name of the key.
 		std::string name() const;
@@ -403,6 +403,11 @@ constexpr tr::sys::scancode::operator int() const
 	return int(m_base);
 }
 
+constexpr tr::sys::scancode::operator enum_t() const
+{
+	return m_base;
+}
+
 constexpr tr::sys::scancode tr::sys::make_top_row_scancode(int v)
 {
 	TR_ASSERT(v >= 0 && v < 10, "Tried to create top row number scancode {} outside the range [0-9]", v);
@@ -423,6 +428,11 @@ constexpr tr::sys::keycode::keycode(enum_t base)
 constexpr tr::sys::keycode::operator int() const
 {
 	return int(m_base);
+}
+
+constexpr tr::sys::keycode::operator enum_t() const
+{
+	return m_base;
 }
 
 constexpr tr::sys::keycode tr::sys::make_top_row_keycode(int v)

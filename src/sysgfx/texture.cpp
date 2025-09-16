@@ -1,6 +1,6 @@
-#include "../../include/tr/sysgfx/texture.hpp"
 #include "../../include/tr/sysgfx/gl_call.hpp"
 #include "../../include/tr/sysgfx/impl.hpp"
+#include "../../include/tr/sysgfx/texture.hpp"
 
 namespace tr::gfx {
 	// Converts a pixel format to a texture format.
@@ -230,8 +230,8 @@ tr::gfx::texture tr::gfx::texture::reallocate(glm::ivec2 size, bool mipmapped, p
 		old_size = {};
 	}
 
-	TR_GL_CALL(glTextureStorage2D, m_handle, mipmapped ? floor_cast<GLsizei>(std::log2(std::max(size.x, size.y)) + 1) : 1,
-			   tex_format(format), size.x, size.y);
+	const GLsizei levels{mipmapped ? floor_cast<GLsizei>(std::log2(std::max(size.x, size.y)) + 1) : 1};
+	TR_GL_CALL(glTextureStorage2D, m_handle, levels, tex_format(format), size.x, size.y);
 	if (glGetError() == GL_OUT_OF_MEMORY) {
 		throw out_of_memory{"texture allocation"};
 	}

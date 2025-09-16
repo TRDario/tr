@@ -76,13 +76,12 @@ void tr::gfx::set_shader_pipeline(const shader_pipeline& pipeline)
 	TR_GL_CALL(glBindProgramPipeline, pipeline.m_ppo.get());
 }
 
-void tr::gfx::set_blend_mode(const blend_mode& blend_mode)
+void tr::gfx::set_blend_mode(const blend_mode& bm)
 {
 	TR_ASSERT(ogl_context != nullptr, "Tried to set graphics context blending mode before opening the window.");
 
-	TR_GL_CALL(glBlendEquationSeparate, GLenum(blend_mode.rgb_fn), GLenum(blend_mode.alpha_fn));
-	TR_GL_CALL(glBlendFuncSeparate, GLenum(blend_mode.rgb_src), GLenum(blend_mode.rgb_dst), GLenum(blend_mode.alpha_src),
-			   GLenum(blend_mode.alpha_dst));
+	TR_GL_CALL(glBlendEquationSeparate, GLenum(bm.rgb_fn), GLenum(bm.alpha_fn));
+	TR_GL_CALL(glBlendFuncSeparate, GLenum(bm.rgb_src), GLenum(bm.rgb_dst), GLenum(bm.alpha_src), GLenum(bm.alpha_dst));
 }
 
 void tr::gfx::set_vertex_format(const vertex_format& format)

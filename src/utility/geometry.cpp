@@ -24,8 +24,8 @@ bool tr::intersecting(const circle& c1, const circle& c2)
 
 bool tr::collinear(glm::vec2 a, glm::vec2 b, glm::vec2 c)
 {
-	const float tol{std::abs(std::max({a.x, a.y, b.x, b.y, c.x, c.y})) * 0.000001f};
-	return std::abs((b.x - a.x) * (c.y - a.y) - (c.x - a.x) * (b.y - a.y)) < tol;
+	const float tolerance{std::abs(std::max({a.x, a.y, b.x, b.y, c.x, c.y})) * 0.000001f};
+	return std::abs((b.x - a.x) * (c.y - a.y) - (c.x - a.x) * (b.y - a.y)) < tolerance;
 }
 
 glm::vec2 tr::closest_point(glm::vec2 p, glm::vec2 a, glm::vec2 b)

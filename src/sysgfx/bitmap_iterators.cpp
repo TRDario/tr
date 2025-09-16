@@ -114,7 +114,7 @@ tr::sub_bitmap::iterator& tr::sub_bitmap::iterator::operator+=(int diff)
 		--lines;
 		diff += m_bitmap_size.x;
 	}
-	m_pixel.m_ptr = m_pixel.m_ptr + m_bitmap_pitch * lines + pixel_bytes(m_pixel.m_format) * diff;
+	m_pixel.m_ptr += m_bitmap_pitch * lines + pixel_bytes(m_pixel.m_format) * diff;
 	return *this;
 }
 
@@ -307,7 +307,7 @@ tr::bitmap::mut_it& tr::bitmap::mut_it::operator+=(int diff)
 		--lines;
 		diff += bitmap_size.x;
 	}
-	m_pixel.m_ptr = m_pixel.m_ptr + m_bitmap->pitch() * lines + pixel_bytes(m_pixel.m_format) * diff;
+	m_pixel.m_ptr += m_bitmap->pitch() * lines + pixel_bytes(m_pixel.m_format) * diff;
 	m_bitmap_pos += glm::ivec2{diff, lines};
 	return *this;
 }

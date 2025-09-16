@@ -1,7 +1,7 @@
-#include "../../include/tr/audio/system.hpp"
 #include "../../include/tr/audio/al_call.hpp"
 #include "../../include/tr/audio/impl.hpp"
 #include "../../include/tr/audio/source.hpp"
+#include "../../include/tr/audio/system.hpp"
 #include "../../include/tr/utility/macro.hpp"
 #include "../../include/tr/utility/ranges.hpp"
 #include <AL/alext.h>
@@ -15,7 +15,7 @@ namespace tr::audio {
 	ALCcontext* context{nullptr};
 
 	// OpenAL context attributes.
-	constexpr std::array<ALCint, 3> CONTEXT_ATTRS{ALC_HRTF_SOFT, ALC_FALSE, 0};
+	constexpr std::array<ALCint, 3> CONTEXT_ATTRIBUTES{ALC_HRTF_SOFT, ALC_FALSE, 0};
 } // namespace tr::audio
 
 tr::audio::init_error::init_error(std::string_view description)
@@ -45,7 +45,7 @@ void tr::audio::initialize()
 	if ((device = alcOpenDevice(nullptr)) == nullptr) {
 		throw init_error{"Failed to open audio device."};
 	}
-	if ((context = alcCreateContext(device, CONTEXT_ATTRS.data())) == nullptr || !alcMakeContextCurrent(context)) {
+	if ((context = alcCreateContext(device, CONTEXT_ATTRIBUTES.data())) == nullptr || !alcMakeContextCurrent(context)) {
 		alcDestroyContext(context);
 		alcCloseDevice(device);
 		throw init_error{"Failed to create audio context."};
@@ -188,14 +188,16 @@ void tr::audio::thread_fn(std::stop_token stoken)
 		try {
 			std::lock_guard lock{mutex};
 
-			for (auto it = buffers.begin(); it != buffers.end();) {
-				auto& [buffer, cullable]{*it};
-				if (cullable && std::ranges::none_of(sources, [&](auto& s) { return s->buffer() == buffer; })) {
+			for (auto buffer_it = buffers.begin(); buffer_it != buffers.end();) {
+				auto& [buffer, cullable]{*buffer_it};
+				const auto using_buffer{[&](auto& s) { return s->buffer() == buffer; }};
+
+				if (cullable && std::ranges::none_of(sources, using_buffer)) {
 					TR_AL_CALL(alDeleteBuffers, 1, &buffer);
-					it = buffers.erase(it);
+					buffer_it = buffers.erase(buffer_it);
 				}
 				else {
-					++it;
+					++buffer_it;
 				}
 			}
 
@@ -203,7 +205,9 @@ void tr::audio::thread_fn(std::stop_token stoken)
 				source_base& source{**it};
 
 				if (it->use_count() == 1 && source.state() != state::PLAYING) {
-					commands.remove_if([&](command& command) { return command.source() == *it; });
+					const auto using_source{[&](command& command) { return command.source() == *it; }};
+
+					commands.remove_if(using_source);
 					it = sources.erase(it);
 					continue;
 				}

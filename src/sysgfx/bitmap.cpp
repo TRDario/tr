@@ -335,8 +335,8 @@ void tr::bitmap::blit(glm::ivec2 tl, const sub_bitmap& source)
 			  "Tried to blit to out-of-bounds region from ({}, {}) to ({}, {}) in a bitmap of size {}x{}.", tl.x, tl.y,
 			  tl.x + source.size().x, tl.y + source.size().y, size().x, size().y);
 
-	SDL_Rect sdl_src{source.m_rect.tl.x, source.m_rect.tl.y, source.size().x, source.size().y};
-	SDL_Rect sdl_dest{tl.x, tl.y, source.size().x, source.size().y};
+	const SDL_Rect sdl_src{source.m_rect.tl.x, source.m_rect.tl.y, source.size().x, source.size().y};
+	const SDL_Rect sdl_dest{tl.x, tl.y, source.size().x, source.size().y};
 	SDL_BlitSurface(source.m_ptr, &sdl_src, m_ptr.get(), &sdl_dest);
 }
 
@@ -346,11 +346,11 @@ void tr::bitmap::fill(const irect2& rect, rgba8 color)
 			  "Tried to fill out-of-bounds region from ({}, {}) to ({}, {}) in a bitmap of size {}x{}.", rect.tl.x, rect.tl.y,
 			  rect.tl.x + rect.size.x, rect.tl.y + rect.size.y, size().x, size().y);
 
-	const SDL_Rect sdlRect{rect.tl.x, rect.tl.y, rect.size.x, rect.size.y};
-	const u32 sdl_color{
-		SDL_MapRGBA(SDL_GetPixelFormatDetails(m_ptr->format), SDL_GetSurfacePalette(m_ptr.get()), color.r, color.g, color.b, color.a),
-	};
-	SDL_FillSurfaceRect(m_ptr.get(), &sdlRect, sdl_color);
+	const SDL_Rect sdl_rect{rect.tl.x, rect.tl.y, rect.size.x, rect.size.y};
+	const SDL_PixelFormatDetails* sdl_details{SDL_GetPixelFormatDetails(m_ptr->format)};
+	const SDL_Palette* sdl_palette{SDL_GetSurfacePalette(m_ptr.get())};
+	const u32 sdl_color{SDL_MapRGBA(sdl_details, sdl_palette, color.r, color.g, color.b, color.a)};
+	SDL_FillSurfaceRect(m_ptr.get(), &sdl_rect, sdl_color);
 }
 
 tr::bitmap::operator tr::sub_bitmap() const

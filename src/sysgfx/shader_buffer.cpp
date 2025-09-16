@@ -1,5 +1,5 @@
-#include "../../include/tr/sysgfx/shader_buffer.hpp"
 #include "../../include/tr/sysgfx/gl_call.hpp"
+#include "../../include/tr/sysgfx/shader_buffer.hpp"
 
 tr::gfx::basic_shader_buffer::basic_shader_buffer(ssize header_size, ssize capacity, access access)
 	: m_access{access}, m_header_size{header_size}, m_array_size{0}, m_array_capacity{capacity}
@@ -100,12 +100,12 @@ tr::gfx::basic_buffer_map tr::gfx::basic_shader_buffer::map()
 {
 	TR_ASSERT(!mapped(), "Tried to map an already-mapped buffer.");
 
-	std::byte* ptr{
-		(std::byte*)(TR_RETURNING_GL_CALL(glMapNamedBufferRange, m_sbo.get(), 0, m_header_size + m_array_size, GLenum(m_access)))};
+	const ssize size{m_header_size + m_array_size};
+	std::byte* ptr{(std::byte*)(TR_RETURNING_GL_CALL(glMapNamedBufferRange, m_sbo.get(), 0, size, GLenum(m_access)))};
 	if (glGetError() == GL_OUT_OF_MEMORY) {
 		throw out_of_memory{"shader buffer mapping"};
 	}
-	return basic_buffer_map{m_sbo.get(), std::span{ptr, usize(m_header_size + m_array_size)}};
+	return basic_buffer_map{m_sbo.get(), std::span{ptr, usize(size)}};
 }
 
 void tr::gfx::basic_shader_buffer::set_label(std::string_view label)

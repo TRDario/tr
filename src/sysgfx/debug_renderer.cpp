@@ -3,11 +3,6 @@
 #include "../../include/tr/sysgfx/debug_renderer.hpp"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/render_target.hpp"
-#include "../../include/tr/sysgfx/shader_pipeline.hpp"
-#include "../../include/tr/sysgfx/texture.hpp"
-#include "../../include/tr/sysgfx/vertex_buffer.hpp"
-#include "../../include/tr/sysgfx/vertex_format.hpp"
-#include "../../include/tr/utility/benchmark.hpp"
 
 namespace tr::gfx {
 // Debug font texture.
@@ -76,22 +71,26 @@ std::string tr::gfx::format_duration(std::string_view prefix, duration duration)
 	if (duration <= 1us) {
 		const double count{duration_cast<dnsecs>(duration).count()};
 		const int precision{6 - std::clamp(int(std::log10(count)), 0, 5)};
-		return TR_FMT::vformat(TR_FMT::format("{}{{:#08.{}f}}ns", prefix, precision), TR_FMT::make_format_args(count));
+		const std::string format{TR_FMT::format("{}{{:#08.{}f}}ns", prefix, precision)};
+		return TR_FMT::vformat(format, TR_FMT::make_format_args(count));
 	}
 	else if (duration <= 1ms) {
 		const double count{duration_cast<dusecs>(duration).count()};
 		const int precision{6 - std::clamp(int(std::log10(count)), 0, 5)};
-		return TR_FMT::vformat(TR_FMT::format("{}{{:#08.{}f}}us", prefix, precision), TR_FMT::make_format_args(count));
+		const std::string format{TR_FMT::format("{}{{:#08.{}f}}us", prefix, precision)};
+		return TR_FMT::vformat(format, TR_FMT::make_format_args(count));
 	}
 	else if (duration <= 1s) {
 		const double count{duration_cast<dmsecs>(duration).count()};
 		const int precision{6 - std::clamp(int(std::log10(count)), 0, 5)};
-		return TR_FMT::vformat(TR_FMT::format("{}{{:#08.{}f}}ms", prefix, precision), TR_FMT::make_format_args(count));
+		const std::string format{TR_FMT::format("{}{{:#08.{}f}}ms", prefix, precision)};
+		return TR_FMT::vformat(format, TR_FMT::make_format_args(count));
 	}
 	else {
 		const double count{duration_cast<dsecs>(duration).count()};
 		const int precision{6 - std::clamp(int(std::log10(count)), 0, 5)};
-		return TR_FMT::vformat(TR_FMT::format("{}{{:#08.{}f}}s ", prefix, precision), TR_FMT::make_format_args(count));
+		const std::string format{TR_FMT::format("{}{{:#08.{}f}}s", prefix, precision)};
+		return TR_FMT::vformat(format, TR_FMT::make_format_args(count));
 	}
 }
 
@@ -108,6 +107,8 @@ tr::gfx::debug_renderer::debug_renderer(float scale, u8 column_limit)
 {
 	m_font.set_filtering(min_filter::NEAREST, mag_filter::NEAREST);
 	m_pipeline.fragment_shader().set_uniform(2, m_font);
+	set_scale(scale);
+
 	if (debug()) {
 		m_pipeline.set_label("(tr) Debug Renderer Pipeline");
 		m_pipeline.vertex_shader().set_label("(tr) Debug Renderer Vertex Shader");
@@ -117,7 +118,6 @@ tr::gfx::debug_renderer::debug_renderer(float scale, u8 column_limit)
 		m_mesh.set_label("(tr) Debug Renderer Vertex Buffer");
 		m_glyph_buffer.set_label("(tr) Debug Renderer Glyph buffer");
 	}
-	set_scale(scale);
 }
 
 void tr::gfx::debug_renderer::set_scale(float scale)
@@ -166,7 +166,6 @@ void tr::gfx::debug_renderer::newline_right()
 void tr::gfx::debug_renderer::draw()
 {
 	if (!m_glyphs.empty()) {
-		m_glyph_buffer.set(m_glyphs);
 		set_render_target(backbuffer_render_target());
 		if (current_renderer() != DEBUG_RENDERER) {
 			set_renderer(DEBUG_RENDERER);
@@ -178,8 +177,10 @@ void tr::gfx::debug_renderer::draw()
 			set_vertex_buffer(m_mesh, 0, 0);
 			set_vertex_buffer(m_glyph_buffer, 1, 0);
 		}
+		m_glyph_buffer.set(m_glyphs);
 		m_pipeline.vertex_shader().set_uniform(0, glm::vec2{backbuffer_size()});
 		draw_instances(primitive::TRI_FAN, 0, 4, int(m_glyphs.size()));
+
 		m_glyphs.clear();
 	}
 
@@ -211,8 +212,8 @@ void tr::gfx::debug_renderer::trim_trailing_whitespace(context& context)
 
 void tr::gfx::debug_renderer::move_word_to_next_line(context& context)
 {
-	for (auto it = m_glyphs.begin() + context.word_start; it != m_glyphs.end(); ++it) {
-		it->pos = {context.line_length++, context.line};
+	for (glyph& glyph : std::ranges::subrange{m_glyphs.begin() + context.word_start, m_glyphs.end()}) {
+		glyph.pos = {context.line_length++, context.line};
 	}
 	context.line_start = context.word_start;
 }

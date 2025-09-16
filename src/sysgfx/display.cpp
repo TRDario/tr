@@ -29,19 +29,19 @@ tr::u8 tr::sys::max_msaa()
 			SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, max);
 			wrapped_window window{SDL_CreateWindow("", 500, 500, SDL_WINDOW_HIDDEN | SDL_WINDOW_OPENGL)};
 			if (window == nullptr) {
-				max = u8(max / 2);
+				max /= 2;
 				continue;
 			}
 			wrapped_context context{SDL_GL_CreateContext(window.get())};
 			if (context == nullptr) {
-				max = u8(max / 2);
+				max /= 2;
 				continue;
 			}
 
 			int real_samples;
 			SDL_GL_GetAttribute(SDL_GL_MULTISAMPLESAMPLES, &real_samples);
 			if (u8(real_samples) != max) {
-				max = u8(max / 2);
+				max /= 2;
 				continue;
 			}
 			else {
