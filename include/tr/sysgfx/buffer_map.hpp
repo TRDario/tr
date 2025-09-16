@@ -93,32 +93,32 @@ tr::gfx::buffer_object_map<T>::buffer_object_map(basic_buffer_map&& map)
 
 template <class T> tr::gfx::buffer_span_map<T>::operator std::span<T>() const
 {
-	return as_mut_objects<T>(*this);
+	return as_mut_objects<T>(std::span<std::byte>{*this});
 }
 
 template <class T> tr::gfx::buffer_span_map<T>::reference tr::gfx::buffer_span_map<T>::operator[](usize index) const
 {
-	return as_mut_objects<T>(*this)[index];
+	return std::span<T>{*this}[index];
 }
 
 template <class T> tr::gfx::buffer_span_map<T>::pointer tr::gfx::buffer_span_map<T>::data() const
 {
-	return as_mut_objects<T>(*this).data();
+	return std::span<T>{*this}.data();
 }
 
 template <class T> tr::gfx::buffer_span_map<T>::size_type tr::gfx::buffer_span_map<T>::size() const
 {
-	return as_mut_objects<T>(*this).size();
+	return std::span<T>{*this}.size();
 }
 
 template <class T> tr::gfx::buffer_span_map<T>::iterator tr::gfx::buffer_span_map<T>::begin() const
 {
-	return as_mut_objects<T>(*this).begin();
+	return std::span<T>{*this}.begin();
 }
 
 template <class T> tr::gfx::buffer_span_map<T>::iterator tr::gfx::buffer_span_map<T>::end() const
 {
-	return as_mut_objects<T>(*this).end();
+	return std::span<T>{*this}.end();
 }
 
 template <class T>
