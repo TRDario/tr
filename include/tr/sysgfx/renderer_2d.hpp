@@ -1,11 +1,13 @@
 #pragma once
 #include "backbuffer.hpp"
 #include "blending.hpp"
+#include "index_buffer.hpp"
 #include "render_target.hpp"
+#include "shader_pipeline.hpp"
+#include "texture.hpp"
+#include "vertex_buffer.hpp"
 
 namespace tr::gfx {
-	class texture_ref;
-
 	// Simple 2D renderer color mesh allocation reference.
 	struct simple_color_mesh_ref {
 		// Mesh position data.
@@ -47,12 +49,9 @@ namespace tr::gfx {
 		u16 base_index;
 	};
 
-	// 2D renderer.
-	namespace renderer_2d {
-		// Initializes the 2D renderer.
-		void initialize();
-		// Shuts down the 2D renderer.
-		void shut_down();
+	class renderer_2d {
+	  public:
+		renderer_2d();
 
 		// Sets the default transformation matrix used by primitives on any layer without its own default transform.
 		void set_default_transform(const glm::mat4& mat);
@@ -96,5 +95,71 @@ namespace tr::gfx {
 		void draw_up_to_layer(int max_layer, const render_target& target = backbuffer_render_target());
 		// Draws all added primitives to a rendering target.
 		void draw(const render_target& target = backbuffer_render_target());
-	}; // namespace renderer_2d
+
+	  private:
+		// Default layer information.
+		struct layer_defaults {
+			texture_ref texture;
+			std::optional<glm::mat4> transform;
+			blend_mode blend_mode{ALPHA_BLENDING};
+		};
+		// Mesh data.
+		struct mesh {
+			// The drawing priority of the mesh.
+			int layer;
+			// The texture used by the mesh.
+			texture_ref texture;
+			// The transformation matrix used by the mesh.
+			glm::mat4 mat;
+			// The blending mode used by the mesh.
+			blend_mode blend_mode;
+			// The positions of the vertices of the mesh.
+			std::vector<glm::vec2> positions;
+			// The UVs of the vertices of the mesh.
+			std::vector<glm::vec2> uvs;
+			// The tints of the vertices of the mesh.
+			std::vector<tr::rgba8> tints;
+			// The indices of the mesh.
+			std::vector<u16> indices;
+		};
+		// Mesh drawing information.
+		struct mesh_draw_info {
+			// Starting offset within the vertex buffer.
+			usize vertex_offset;
+			// Starting offset within the index buffer.
+			usize index_offset;
+		};
+
+		// Global default transform.
+		glm::mat4 m_default_transform{1.0f};
+		// Layer defaults.
+		std::unordered_map<int, layer_defaults> m_layer_defaults;
+		// The list of meshes to draw.
+		std::vector<mesh> m_meshes;
+		// The pipeline and shaders used by the renderer.
+		owning_shader_pipeline m_pipeline;
+		// Vertex buffer for the positions of the vertices.
+		dyn_vertex_buffer<glm::vec2> m_vbuffer_positions;
+		// Vertex buffer for the UVs of the vertices.
+		dyn_vertex_buffer<glm::vec2> m_vbuffer_uvs;
+		// Vertex buffer for the tints of the vertices.
+		dyn_vertex_buffer<tr::rgba8> m_vbuffer_tints;
+		// The index buffer used by the renderer.
+		dyn_index_buffer m_ibuffer;
+		// Last used transform.
+		glm::mat4 m_last_transform{1.0f};
+		// Last used blending mode.
+		blend_mode m_last_blend_mode{ALPHA_BLENDING};
+
+		// Finds an appropriate mesh.
+		mesh& find_mesh(int layer, texture_ref texture, const glm::mat4& mat, const blend_mode& blend_mode, usize space_needed);
+		// Sets up the graphical context for drawing.
+		void setup_context();
+		// Uploads meshes to the GPU buffers.
+		std::vector<mesh_draw_info> upload_meshes(std::vector<mesh>::iterator first, std::vector<mesh>::iterator last);
+		// Sets up the graphical context for a specific draw call.
+		void setup_draw_call_state(texture_ref texture, const glm::mat4& transform, const blend_mode& blend_mode);
+		// Draws meshes.
+		void draw(std::vector<mesh>::iterator first, std::vector<mesh>::iterator last, const render_target& target);
+	};
 } // namespace tr::gfx
