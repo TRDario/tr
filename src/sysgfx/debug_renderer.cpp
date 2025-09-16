@@ -9,10 +9,14 @@
 #include "../../include/tr/sysgfx/vertex_format.hpp"
 #include "../../include/tr/utility/benchmark.hpp"
 
-namespace tr::gfx::debug_renderer {
+namespace tr::gfx {
+// Debug font texture.
 #include "resources/debug_font.bmp.hpp"
 
-	constexpr std::initializer_list<vertex_binding> DEBUG_FORMAT_ATTRS{
+	// Debug renderer glyph vertex definition.
+	template <> struct vertex_attributes<debug_renderer::glyph> : unpacked_vertex_attributes<glm::u8vec2, u8, u8, rgba8, rgba8> {};
+	// Debug vertex format.
+	constexpr std::initializer_list<vertex_binding> DEBUG_FORMAT_ATTRIBUTES{
 		{NOT_INSTANCED,
 		 {
 			 as_vertex_attribute<glm::u8vec2>,
@@ -39,49 +43,8 @@ namespace tr::gfx::debug_renderer {
 	// Debug renderer ID.
 	inline constexpr u32 DEBUG_RENDERER{2};
 
-	// Debug renderer glyph.
-	struct glyph {
-		// Position on the glyph grid.
-		glm::u8vec2 pos;
-		// Whether the glyph should be right-aligned.
-		bool align_right;
-		// The ASCII value of the glyph.
-		char chr;
-		// The color of the text.
-		rgba8 text_color;
-		// The color of the background.
-		rgba8 bg_color;
-	};
-
-	// Debug renderer implementation.
-	struct state_t {
-		// The pipeline and shaders used by the renderer.
-		owning_shader_pipeline pipeline;
-		// The debug vertex format.
-		vertex_format format;
-		// The font texture.
-		texture font;
-		// The vertex buffer holding a glyph shape.
-		static_vertex_buffer<glm::u8vec2> shape_buffer;
-		// The vertex buffer holding the glyph information
-		dyn_vertex_buffer<glyph> glyph_buffer;
-		// List of glyphs to draw.
-		std::vector<glyph> glyphs;
-		// Maximum allowed number of glyphs per line.
-		u8 column_limit;
-		// The current left line position.
-		u8 left_line;
-		// The current right line position.
-		u8 right_line;
-
-		// Creates the debug renderer.
-		state_t();
-	};
-	// Debug renderer state.
-	std::optional<state_t> state;
-
 	// Context passed to text formatting functions.
-	struct context {
+	struct debug_renderer::context {
 		// The current line number.
 		u8& line;
 		// Whether the text is right-aligned.
@@ -102,57 +65,13 @@ namespace tr::gfx::debug_renderer {
 
 	// Formats a duration into a string.
 	std::string format_duration(std::string_view prefix, duration duration);
-	// Right-aligns a line.
-	void right_align_line(usize begin, usize end);
-	// Trims trailing whitespace in a line.
-	void trim_trailing_whitespace(context& context);
-	// Moves a word to the next line.
-	void move_word_to_next_line(context& context);
-	// Breaks a line at the last whitespace.
-	void break_at_last_whitespace(context& context);
-	// Breaks an overlong word.
-	void break_overlong_word(context& context);
-	// Handles a line reaching the column limit.
-	void handle_column_limit(context& context);
-	// Writes a character.
-	void write_character(char chr, context& context);
-	// Handles a newline.
-	void handle_newline(context& context);
-	// Handles a control sequence.
-	void handle_control_sequence(std::string_view::iterator& it, std::string_view::iterator end, context& context, rgba8 text_color,
-								 rgba8 bg_color, std::span<rgba8> extra_colors);
-	// Writes a line of formatted text.
-	void write(bool right, std::string_view text, rgba8 text_color, rgba8 bg_color, std::span<rgba8> extra_colors);
-} // namespace tr::gfx::debug_renderer
-
-template <>
-struct tr::gfx::vertex_attributes<tr::gfx::debug_renderer::glyph> : unpacked_vertex_attributes<glm::u8vec2, u8, u8, rgba8, rgba8> {};
+} // namespace tr::gfx
 
 using namespace std::chrono_literals;
 
-tr::gfx::debug_renderer::state_t::state_t()
-	: pipeline{vertex_shader{DEBUG_RENDERER_VERT_SRC}, fragment_shader{DEBUG_RENDERER_FRAG_SRC}}
-	, format{DEBUG_FORMAT_ATTRS}
-	, font{load_embedded_bitmap(DEBUG_RENDERER_FONT)}
-	, shape_buffer{std::array<glm::u8vec2, 4>{{{0, 0}, {0, 1}, {1, 1}, {1, 0}}}}
-	, column_limit{255}
-	, left_line{0}
-	, right_line{0}
-{
-	font.set_filtering(min_filter::NEAREST, mag_filter::NEAREST);
-	pipeline.fragment_shader().set_uniform(2, font);
-	if (debug()) {
-		pipeline.set_label("(tr) Debug Renderer Pipeline");
-		pipeline.vertex_shader().set_label("(tr) Debug Renderer Vertex Shader");
-		pipeline.fragment_shader().set_label("(tr) Debug Renderer Fragment Shader");
-		format.set_label("(tr) Debug Renderer Vertex Format");
-		font.set_label("(tr) Debug Renderer Font Texture");
-		shape_buffer.set_label("(tr) Debug Renderer Vertex Buffer");
-		glyph_buffer.set_label("(tr) Debug Renderer Glyph buffer");
-	}
-}
+//
 
-std::string tr::gfx::debug_renderer::format_duration(std::string_view prefix, duration duration)
+std::string tr::gfx::format_duration(std::string_view prefix, duration duration)
 {
 	if (duration <= 1us) {
 		const double count{duration_cast<dnsecs>(duration).count()};
@@ -176,29 +95,123 @@ std::string tr::gfx::debug_renderer::format_duration(std::string_view prefix, du
 	}
 }
 
+//
+
+tr::gfx::debug_renderer::debug_renderer(float scale, u8 column_limit)
+	: m_pipeline{vertex_shader{DEBUG_RENDERER_VERT_SRC}, fragment_shader{DEBUG_RENDERER_FRAG_SRC}}
+	, m_format{DEBUG_FORMAT_ATTRIBUTES}
+	, m_font{load_embedded_bitmap(DEBUG_RENDERER_FONT)}
+	, m_mesh{std::array<glm::u8vec2, 4>{{{0, 0}, {0, 1}, {1, 1}, {1, 0}}}}
+	, m_column_limit{column_limit}
+	, m_left_line{0}
+	, m_right_line{0}
+{
+	m_font.set_filtering(min_filter::NEAREST, mag_filter::NEAREST);
+	m_pipeline.fragment_shader().set_uniform(2, m_font);
+	if (debug()) {
+		m_pipeline.set_label("(tr) Debug Renderer Pipeline");
+		m_pipeline.vertex_shader().set_label("(tr) Debug Renderer Vertex Shader");
+		m_pipeline.fragment_shader().set_label("(tr) Debug Renderer Fragment Shader");
+		m_format.set_label("(tr) Debug Renderer Vertex Format");
+		m_font.set_label("(tr) Debug Renderer Font Texture");
+		m_mesh.set_label("(tr) Debug Renderer Vertex Buffer");
+		m_glyph_buffer.set_label("(tr) Debug Renderer Glyph buffer");
+	}
+	set_scale(scale);
+}
+
+void tr::gfx::debug_renderer::set_scale(float scale)
+{
+	m_pipeline.vertex_shader().set_uniform(1, scale);
+}
+
+void tr::gfx::debug_renderer::set_column_limit(u8 columns)
+{
+	m_column_limit = columns;
+}
+
+void tr::gfx::debug_renderer::write_left(std::string_view text, rgba8 text_color, rgba8 bg_color, std::span<rgba8> extra_colors)
+{
+	write(false, text, text_color, bg_color, extra_colors);
+}
+
+void tr::gfx::debug_renderer::write_right(std::string_view text, rgba8 text_color, rgba8 bg_color, std::span<rgba8> extra_colors)
+{
+	write(true, text, text_color, bg_color, extra_colors);
+}
+
+void tr::gfx::debug_renderer::write_right(const benchmark& benchmark, std::string_view name, duration limit)
+{
+	constexpr tr::rgba8 TEXT_COLOR{255, 255, 255, 255};
+	constexpr tr::rgba8 ALT_COLOR{255, 0, 0, 255};
+
+	if (!name.empty()) {
+		write_right(TR_FMT::format("{:<15}", name));
+	}
+	write_right(format_duration("MIN: ", benchmark.min()), benchmark.min() < limit ? TEXT_COLOR : ALT_COLOR);
+	write_right(format_duration("AVG: ", benchmark.avg()), benchmark.avg() < limit ? TEXT_COLOR : ALT_COLOR);
+	write_right(format_duration("MAX: ", benchmark.max()), benchmark.max() < limit ? TEXT_COLOR : ALT_COLOR);
+}
+
+void tr::gfx::debug_renderer::newline_left()
+{
+	++m_left_line;
+}
+
+void tr::gfx::debug_renderer::newline_right()
+{
+	++m_right_line;
+}
+
+void tr::gfx::debug_renderer::draw()
+{
+	if (!m_glyphs.empty()) {
+		m_glyph_buffer.set(m_glyphs);
+		set_render_target(backbuffer_render_target());
+		if (current_renderer() != DEBUG_RENDERER) {
+			set_renderer(DEBUG_RENDERER);
+			set_face_culling(false);
+			set_depth_test(false);
+			set_blend_mode(ALPHA_BLENDING);
+			set_shader_pipeline(m_pipeline);
+			set_vertex_format(m_format);
+			set_vertex_buffer(m_mesh, 0, 0);
+			set_vertex_buffer(m_glyph_buffer, 1, 0);
+		}
+		m_pipeline.vertex_shader().set_uniform(0, glm::vec2{backbuffer_size()});
+		draw_instances(primitive::TRI_FAN, 0, 4, int(m_glyphs.size()));
+		m_glyphs.clear();
+	}
+
+	m_left_line = 0;
+	m_right_line = 0;
+}
+
+//
+
 void tr::gfx::debug_renderer::right_align_line(usize begin, usize end)
 {
 	for (usize i = begin; i < end; ++i) {
-		state->glyphs[i].pos.x = u8(end - i);
+		m_glyphs[i].pos.x = u8(end - i);
 	}
 }
 
 void tr::gfx::debug_renderer::trim_trailing_whitespace(context& context)
 {
 	usize line_end = context.word_start - 1;
-	while (line_end > context.line_start && state->glyphs[line_end].chr != ' ') {
+	while (line_end > context.line_start && m_glyphs[line_end].chr != ' ') {
 		--line_end;
 	}
 
 	if (line_end != context.word_start) {
-		state->glyphs.erase(state->glyphs.begin() + line_end, state->glyphs.begin() + context.word_start);
+		m_glyphs.erase(m_glyphs.begin() + line_end, m_glyphs.begin() + context.word_start);
 		context.word_start = line_end;
 	}
 }
 
 void tr::gfx::debug_renderer::move_word_to_next_line(context& context)
 {
-	for (auto it = state->glyphs.begin() + context.word_start; it != state->glyphs.end(); ++it) {
+	for (auto it = m_glyphs.begin() + context.word_start; it != m_glyphs.end(); ++it) {
 		it->pos = {context.line_length++, context.line};
 	}
 	context.line_start = context.word_start;
@@ -216,11 +229,11 @@ void tr::gfx::debug_renderer::break_at_last_whitespace(context& context)
 void tr::gfx::debug_renderer::break_overlong_word(context& context)
 {
 	if (context.right_aligned) {
-		right_align_line(context.line_start, context.line_start + state->column_limit);
+		right_align_line(context.line_start, context.line_start + m_column_limit);
 	}
-	state->glyphs.back().pos = {context.line_length++, context.line};
+	m_glyphs.back().pos = {context.line_length++, context.line};
 
-	context.line_start += state->column_limit;
+	context.line_start += m_column_limit;
 	context.word_start = context.line_start;
 }
 
@@ -239,20 +252,20 @@ void tr::gfx::debug_renderer::handle_column_limit(context& context)
 
 void tr::gfx::debug_renderer::write_character(char chr, context& context)
 {
-	if (context.line_length == state->column_limit && chr == ' ') {
+	if (context.line_length == m_column_limit && chr == ' ') {
 		handle_newline(context);
 	}
 	else {
-		state->glyphs.push_back({{context.line_length, context.line}, context.right_aligned, chr, context.text_color, context.bg_color});
+		m_glyphs.push_back({{context.line_length, context.line}, context.right_aligned, chr, context.text_color, context.bg_color});
 
-		if (state->glyphs.size() - context.text_start > 1) {
-			const char prev{state->glyphs[state->glyphs.size() - 2].chr};
+		if (m_glyphs.size() - context.text_start > 1) {
+			const char prev{m_glyphs[m_glyphs.size() - 2].chr};
 			if (prev == ' ' && chr != ' ') {
-				context.word_start = state->glyphs.size() - 1;
+				context.word_start = m_glyphs.size() - 1;
 			}
 		}
 
-		if (++context.line_length > state->column_limit) {
+		if (++context.line_length > m_column_limit) {
 			handle_column_limit(context);
 		}
 	}
@@ -261,12 +274,12 @@ void tr::gfx::debug_renderer::write_character(char chr, context& context)
 void tr::gfx::debug_renderer::handle_newline(context& context)
 {
 	if (context.right_aligned) {
-		right_align_line(context.line_start, state->glyphs.size());
+		right_align_line(context.line_start, m_glyphs.size());
 	}
 
 	context.line_length = 0;
-	context.word_start = state->glyphs.size();
-	context.line_start = state->glyphs.size();
+	context.word_start = m_glyphs.size();
+	context.line_start = m_glyphs.size();
 	++context.line;
 }
 
@@ -303,8 +316,8 @@ void tr::gfx::debug_renderer::handle_control_sequence(std::string_view::iterator
 
 void tr::gfx::debug_renderer::write(bool right, std::string_view text, rgba8 text_color, rgba8 bg_color, std::span<rgba8> extra_colors)
 {
-	const usize old_size{state->glyphs.size()};
-	context context{right ? state->right_line : state->left_line, right, text_color, bg_color, 0, old_size, old_size, old_size};
+	const usize old_size{m_glyphs.size()};
+	context context{right ? m_right_line : m_left_line, right, text_color, bg_color, 0, old_size, old_size, old_size};
 
 	for (std::string_view::iterator it = text.begin(); it != text.end(); ++it) {
 		if (*it == '$') {
@@ -317,92 +330,4 @@ void tr::gfx::debug_renderer::write(bool right, std::string_view text, rgba8 tex
 		}
 	}
 	handle_newline(context);
-}
-
-//
-
-void tr::gfx::debug_renderer::initialize(float scale, u8 column_limit)
-{
-	state.emplace();
-	set_scale(scale);
-	set_column_limit(column_limit);
-}
-
-bool tr::gfx::debug_renderer::active()
-{
-	return state.has_value();
-}
-
-void tr::gfx::debug_renderer::shut_down()
-{
-	state.reset();
-}
-
-//
-
-void tr::gfx::debug_renderer::set_scale(float scale)
-{
-	state->pipeline.vertex_shader().set_uniform(1, scale);
-}
-
-void tr::gfx::debug_renderer::set_column_limit(u8 columns)
-{
-	state->column_limit = columns;
-}
-
-void tr::gfx::debug_renderer::write_left(std::string_view text, rgba8 text_color, rgba8 bg_color, std::span<rgba8> extra_colors)
-{
-	write(false, text, text_color, bg_color, extra_colors);
-}
-
-void tr::gfx::debug_renderer::write_right(std::string_view text, rgba8 text_color, rgba8 bg_color, std::span<rgba8> extra_colors)
-{
-	write(true, text, text_color, bg_color, extra_colors);
-}
-
-void tr::gfx::debug_renderer::write_right(const benchmark& benchmark, std::string_view name, duration limit)
-{
-	constexpr tr::rgba8 TEXT_COLOR{255, 255, 255, 255};
-	constexpr tr::rgba8 ALT_COLOR{255, 0, 0, 255};
-
-	if (!name.empty()) {
-		write_right(TR_FMT::format("{:<15}", name));
-	}
-	write_right(format_duration("MIN: ", benchmark.min()), benchmark.min() < limit ? TEXT_COLOR : ALT_COLOR);
-	write_right(format_duration("AVG: ", benchmark.avg()), benchmark.avg() < limit ? TEXT_COLOR : ALT_COLOR);
-	write_right(format_duration("MAX: ", benchmark.max()), benchmark.max() < limit ? TEXT_COLOR : ALT_COLOR);
-}
-
-void tr::gfx::debug_renderer::newline_left()
-{
-	++state->left_line;
-}
-
-void tr::gfx::debug_renderer::newline_right()
-{
-	++state->right_line;
-}
-
-void tr::gfx::debug_renderer::draw()
-{
-	if (!state->glyphs.empty()) {
-		state->glyph_buffer.set(state->glyphs);
-		set_render_target(backbuffer_render_target());
-		if (current_renderer() != DEBUG_RENDERER) {
-			set_renderer(DEBUG_RENDERER);
-			set_face_culling(false);
-			set_depth_test(false);
-			set_blend_mode(ALPHA_BLENDING);
-			set_shader_pipeline(state->pipeline);
-			set_vertex_format(state->format);
-			set_vertex_buffer(state->shape_buffer, 0, 0);
-			set_vertex_buffer(state->glyph_buffer, 1, 0);
-		}
-		state->pipeline.vertex_shader().set_uniform(0, glm::vec2{backbuffer_size()});
-		draw_instances(primitive::TRI_FAN, 0, 4, int(state->glyphs.size()));
-		state->glyphs.clear();
-	}
-
-	state->left_line = 0;
-	state->right_line = 0;
 }
