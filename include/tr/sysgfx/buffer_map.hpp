@@ -37,20 +37,34 @@ namespace tr::gfx {
 	  private:
 		buffer_object_map(basic_buffer_map&& map);
 
-		friend class basic_shader_buffer;
+		template <class Header, class ArrayElement> friend class shader_buffer;
 	};
 
 	// Mapped buffer span.
 	template <class T> class buffer_span_map : basic_buffer_map {
 	  public:
-		// Casts the map into a regular span.
+		using element_type = T;
+		using value_type = T;
+		using pointer = T*;
+		using const_pointer = const T*;
+		using reference = T&;
+		using const_reference = const T&;
+		using size_type = std::span<T>::size_type;
+		using difference_type = std::span<T>::difference_type;
+		using iterator = std::span<T>::iterator;
+
 		operator std::span<T>() const;
+		reference operator[](usize index) const;
+		pointer data() const;
+		size_type size() const;
+		iterator begin() const;
+		iterator end() const;
 
 	  private:
 		buffer_span_map(basic_buffer_map&& map);
 
-		friend class basic_shader_buffer;
-		friend class basic_uniform_buffer;
+		template <class Header, class ArrayElement> friend class shader_buffer;
+		template <class T1> class uniform_buffer;
 	};
 }; // namespace tr::gfx
 
@@ -80,6 +94,31 @@ tr::gfx::buffer_object_map<T>::buffer_object_map(basic_buffer_map&& map)
 template <class T> tr::gfx::buffer_span_map<T>::operator std::span<T>() const
 {
 	return as_mut_objects<T>(*this);
+}
+
+template <class T> tr::gfx::buffer_span_map<T>::reference tr::gfx::buffer_span_map<T>::operator[](usize index) const
+{
+	return as_mut_objects<T>(*this)[index];
+}
+
+template <class T> tr::gfx::buffer_span_map<T>::pointer tr::gfx::buffer_span_map<T>::data() const
+{
+	return as_mut_objects<T>(*this).data();
+}
+
+template <class T> tr::gfx::buffer_span_map<T>::size_type tr::gfx::buffer_span_map<T>::size() const
+{
+	return as_mut_objects<T>(*this).size();
+}
+
+template <class T> tr::gfx::buffer_span_map<T>::iterator tr::gfx::buffer_span_map<T>::begin() const
+{
+	return as_mut_objects<T>(*this).begin();
+}
+
+template <class T> tr::gfx::buffer_span_map<T>::iterator tr::gfx::buffer_span_map<T>::end() const
+{
+	return as_mut_objects<T>(*this).end();
 }
 
 template <class T>
