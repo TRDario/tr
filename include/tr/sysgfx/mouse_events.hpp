@@ -14,7 +14,7 @@ namespace tr::sys {
 		glm::vec2 delta;
 
 		// Converts a generic event into a mouse motion event.
-		mouse_motion_event(const event& event);
+		explicit mouse_motion_event(const event& event);
 	};
 
 	// Event emitted when a mouse button is pressed.
@@ -27,7 +27,7 @@ namespace tr::sys {
 		glm::vec2 pos;
 
 		// Converts a generic event into a mouse down event.
-		mouse_down_event(const event& event);
+		explicit mouse_down_event(const event& event);
 	};
 
 	// Event emitted when a mouse button is released.
@@ -38,7 +38,7 @@ namespace tr::sys {
 		glm::vec2 pos;
 
 		// Converts a generic event into a mouse up event.
-		mouse_up_event(const event& event);
+		explicit mouse_up_event(const event& event);
 	};
 
 	// Event emitted when the mouse wheel is moved.
@@ -49,6 +49,6 @@ namespace tr::sys {
 		glm::vec2 mouse_pos;
 
 		// Converts a generic event into a mouse wheel event.
-		mouse_wheel_event(const event& event);
+		explicit mouse_wheel_event(const event& event);
 	};
 } // namespace tr::sys

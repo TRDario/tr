@@ -15,7 +15,7 @@ namespace tr::sys {
 		int id;
 
 		// Converts a generic event into a tick event.
-		tick_event(const event& event);
+		explicit tick_event(const event& event);
 	};
 	// Event emitted when the application wants to redraw.
 	struct draw_event {};

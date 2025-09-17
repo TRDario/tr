@@ -14,7 +14,7 @@ namespace tr::sys {
 		glm::ivec2 size;
 
 		// Converts a generic event into a window backbuffer resizing event.
-		backbuffer_resize_event(const event& event);
+		explicit backbuffer_resize_event(const event& event);
 	};
 	// Event emitted when the mouse enters a window.
 	struct window_mouse_enter_event {};

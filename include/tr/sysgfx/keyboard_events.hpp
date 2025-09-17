@@ -16,7 +16,7 @@ namespace tr::sys {
 		keymod mods;
 
 		// Converts a generic event into a key down event.
-		key_down_event(const event& event);
+		explicit key_down_event(const event& event);
 	};
 	// Checks if a key chord was pressed.
 	bool operator==(const key_down_event& event, const key_chord& chord);
@@ -37,7 +37,7 @@ namespace tr::sys {
 		keymod mods;
 
 		// Converts a generic event into a key up event.
-		key_up_event(const event& event);
+		explicit key_up_event(const event& event);
 	};
 
 	// Event emitted when text is inputted.
@@ -46,6 +46,6 @@ namespace tr::sys {
 		std::string_view text;
 
 		// Converts a generic event into a text input event.
-		text_input_event(const event& event);
+		explicit text_input_event(const event& event);
 	};
 } // namespace tr::sys
