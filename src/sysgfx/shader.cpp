@@ -1,4 +1,5 @@
 #include "../../include/tr/sysgfx/shader.hpp"
+#include "../../include/tr/sysgfx/gl_call.hpp"
 #include "../../include/tr/sysgfx/impl.hpp"
 #include "../../include/tr/sysgfx/shader_buffer.hpp"
 #include "../../include/tr/sysgfx/texture.hpp"
