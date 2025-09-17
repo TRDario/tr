@@ -1,6 +1,6 @@
+#include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/blending.hpp"
 #include "../../include/tr/sysgfx/gl_call.hpp"
-#include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/impl.hpp"
 #include "../../include/tr/sysgfx/index_buffer.hpp"
 #include "../../include/tr/sysgfx/shader_pipeline.hpp"
@@ -123,12 +123,14 @@ void tr::gfx::set_vertex_buffer(const basic_static_vertex_buffer& buffer, int sl
 	TR_GL_CALL(glBindVertexBuffer, slot, buffer.m_vbo.get(), offset, GLsizei(stride));
 }
 
+#ifdef TR_ENABLE_GL_CHECKS
 void tr::gfx::set_vertex_buffer_checked(const basic_static_vertex_buffer& buffer, int slot, ssize offset, usize stride,
 										std::initializer_list<vertex_attribute> attrs)
 {
 	check_vertex_buffer(slot, attrs);
 	set_vertex_buffer(buffer, slot, offset, stride);
 }
+#endif
 
 void tr::gfx::set_vertex_buffer(const basic_dyn_vertex_buffer& buffer, int slot, ssize offset, usize stride)
 {
@@ -137,12 +139,14 @@ void tr::gfx::set_vertex_buffer(const basic_dyn_vertex_buffer& buffer, int slot,
 	TR_GL_CALL(glBindVertexBuffer, slot, buffer.m_vbo.get(), offset, GLsizei(stride));
 }
 
+#ifdef TR_ENABLE_GL_CHECKS
 void tr::gfx::set_vertex_buffer_checked(const basic_dyn_vertex_buffer& buffer, int slot, ssize offset, usize stride,
 										std::initializer_list<vertex_attribute> attrs)
 {
 	check_vertex_buffer(slot, attrs);
 	set_vertex_buffer(buffer, slot, offset, stride);
 }
+#endif
 
 void tr::gfx::set_index_buffer(const static_index_buffer& buffer)
 {
