@@ -98,27 +98,27 @@ template <class T> tr::gfx::buffer_span_map<T>::operator std::span<T>() const
 
 template <class T> tr::gfx::buffer_span_map<T>::reference tr::gfx::buffer_span_map<T>::operator[](usize index) const
 {
-	return std::span<T>{*this}[index];
+	return (operator std::span<T>())[index];
 }
 
 template <class T> tr::gfx::buffer_span_map<T>::pointer tr::gfx::buffer_span_map<T>::data() const
 {
-	return std::span<T>{*this}.data();
+	return (operator std::span<T>()).data();
 }
 
 template <class T> tr::gfx::buffer_span_map<T>::size_type tr::gfx::buffer_span_map<T>::size() const
 {
-	return std::span<T>{*this}.size();
+	return (operator std::span<T>()).size();
 }
 
 template <class T> tr::gfx::buffer_span_map<T>::iterator tr::gfx::buffer_span_map<T>::begin() const
 {
-	return std::span<T>{*this}.begin();
+	return (operator std::span<T>()).begin();
 }
 
 template <class T> tr::gfx::buffer_span_map<T>::iterator tr::gfx::buffer_span_map<T>::end() const
 {
-	return std::span<T>{*this}.end();
+	return (operator std::span<T>()).end();
 }
 
 template <class T>
