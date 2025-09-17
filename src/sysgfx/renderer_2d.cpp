@@ -1,6 +1,6 @@
+#include "../../include/tr/sysgfx/renderer_2d.hpp"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/index_buffer.hpp"
-#include "../../include/tr/sysgfx/renderer_2d.hpp"
 #include "../../include/tr/sysgfx/shader_pipeline.hpp"
 #include "../../include/tr/sysgfx/texture.hpp"
 #include "../../include/tr/sysgfx/vertex_buffer.hpp"
@@ -10,7 +10,7 @@ namespace tr::gfx {
 	// Untextured UV sentinel.
 	inline constexpr glm::vec2 UNTEXTURED_UV{-100, -100};
 	// 2D renderer ID.
-	inline constexpr u32 RENDERER_2D{3};
+	inline constexpr u32 RENDERER_2D_ID{3};
 	// Vertex shader source code.
 	inline constexpr const char* RENDERER_2D_VERT_SRC{
 		"#version 450\n#define L(l) layout(location=l)\nL(0)uniform mat4 m;L(0)in vec2 p;L(1)in vec2 u;L(2)in vec4 c;out gl_PerVertex{vec4 "
@@ -307,8 +307,8 @@ tr::gfx::renderer_2d::mesh& tr::gfx::renderer_2d::find_mesh(int layer, texture_r
 
 void tr::gfx::renderer_2d::setup_context()
 {
-	if (current_renderer() != RENDERER_2D) {
-		set_renderer(RENDERER_2D);
+	if (active_renderer != RENDERER_2D_ID) {
+		active_renderer = RENDERER_2D_ID;
 		set_face_culling(false);
 		set_depth_test(false);
 		set_shader_pipeline(m_pipeline);

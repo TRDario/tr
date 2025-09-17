@@ -105,8 +105,12 @@ namespace tr::gfx {
 		// Creates a new vertex format.
 		vertex_format(std::initializer_list<vertex_binding> bindings);
 
+#ifdef TR_ENABLE_ASSERTS
 		// Sets the debug label of the vertex format.
 		void set_label(std::string_view label);
+		// Gets the debug label of the vertex format.
+		std::string label() const;
+#endif
 
 	  private:
 		struct deleter {

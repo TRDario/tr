@@ -31,6 +31,14 @@ namespace tr::gfx {
 	// Gets whether the context is a debug context.
 	bool debug();
 
+#ifdef TR_ENABLE_ASSERTS
+#define TR_SET_LABEL(object, label) (object).set_label(label)
+#else
+#define TR_SET_LABEL(object, label)                                                                                                        \
+	do {                                                                                                                                   \
+	} while (0)
+#endif
+
 	// Sets whether face culling should be used.
 	void set_face_culling(bool arg);
 	// Sets whether depth testing should be used.
@@ -59,10 +67,8 @@ namespace tr::gfx {
 	// Sets the active index buffer.
 	void set_index_buffer(const dyn_index_buffer& buffer);
 
-	// Gets the ID of the currently set renderer.
-	u32 current_renderer();
-	// Sets the renderer ID.
-	void set_renderer(u32 id);
+	// Flag hinting the currently setup renderer.
+	inline u32 active_renderer;
 
 	// Draws a mesh from a vertex buffer.
 	void draw(primitive type, usize offset, usize vertices);

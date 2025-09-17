@@ -36,7 +36,7 @@ namespace tr::gfx {
 		"#version 450\n#define L(l) layout(location=l)\nL(2)uniform sampler2D t;L(0)in vec2 u;L(1)in vec4 c;L(2)in "
 		"vec4 b;L(0)out vec4 o;void main(){o=texture(t,u).r==1?c:b;}";
 	// Debug renderer ID.
-	inline constexpr u32 DEBUG_RENDERER{2};
+	inline constexpr u32 DEBUG_RENDERER_ID{2};
 
 	// Context passed to text formatting functions.
 	struct debug_renderer::context {
@@ -113,7 +113,7 @@ tr::gfx::debug_renderer::debug_renderer(float scale, u8 column_limit)
 		m_pipeline.set_label("(tr) Debug Renderer Pipeline");
 		m_pipeline.vertex_shader().set_label("(tr) Debug Renderer Vertex Shader");
 		m_pipeline.fragment_shader().set_label("(tr) Debug Renderer Fragment Shader");
-		m_format.set_label("(tr) Debug Renderer Vertex Format");
+		TR_SET_LABEL(m_format, "(tr) Debug Renderer Vertex Format");
 		m_font.set_label("(tr) Debug Renderer Font Texture");
 		m_mesh.set_label("(tr) Debug Renderer Vertex Buffer");
 		m_glyph_buffer.set_label("(tr) Debug Renderer Glyph buffer");
@@ -170,8 +170,8 @@ void tr::gfx::debug_renderer::draw()
 		m_pipeline.vertex_shader().set_uniform(0, glm::vec2{backbuffer_size()});
 
 		set_render_target(backbuffer_render_target());
-		if (current_renderer() != DEBUG_RENDERER) {
-			set_renderer(DEBUG_RENDERER);
+		if (active_renderer != DEBUG_RENDERER_ID) {
+			active_renderer = DEBUG_RENDERER_ID;
 			set_face_culling(false);
 			set_depth_test(false);
 			set_blend_mode(ALPHA_BLENDING);

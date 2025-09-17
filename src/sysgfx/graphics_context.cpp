@@ -7,12 +7,11 @@
 #include "../../include/tr/sysgfx/vertex_format.hpp"
 
 namespace tr::gfx {
-	// The ID of the current renderer.
-	inline u32 current_renderer_{0};
-
 #ifdef TR_ENABLE_GL_CHECKS
-	// Bindings of the last bound vertex buffer.
-	inline std::initializer_list<vertex_binding> last_bound_vertex_buffer_bindings;
+	// Bindings of the last bound vertex format.
+	inline std::initializer_list<vertex_binding> last_bound_vertex_format_bindings;
+	// Label of the last bound vertex format.
+	std::string last_bound_vertex_format_label;
 
 	// Fails an assertion if a type mismatch is detected.
 	void check_vertex_buffer(int slot, std::initializer_list<vertex_attribute> attributes);
@@ -91,27 +90,29 @@ void tr::gfx::set_vertex_format(const vertex_format& format)
 	TR_GL_CALL(glBindVertexArray, format.m_vao.get());
 
 #ifdef TR_ENABLE_GL_CHECKS
-	last_bound_vertex_buffer_bindings = format.m_bindings;
+	last_bound_vertex_format_bindings = format.m_bindings;
+	last_bound_vertex_format_label = format.label();
 #endif
 }
 
 #ifdef TR_ENABLE_GL_CHECKS
 void tr::gfx::check_vertex_buffer(int slot, std::initializer_list<vertex_attribute> attrs)
 {
-	TR_ASSERT(usize(slot) < last_bound_vertex_buffer_bindings.size(), "Tried to bind vertex buffer to invalid slot {} (max: {}).", slot,
-			  last_bound_vertex_buffer_bindings.size());
+	TR_ASSERT(usize(slot) < last_bound_vertex_format_bindings.size(),
+			  "Tried to bind vertex buffer to invalid slot {} (max in vertex format '{}': {}).", slot, last_bound_vertex_format_label,
+			  last_bound_vertex_format_bindings.size());
 
-	const std::initializer_list<vertex_attribute> ref(last_bound_vertex_buffer_bindings.begin()[slot].attrs);
+	const std::initializer_list<vertex_attribute> ref(last_bound_vertex_format_bindings.begin()[slot].attrs);
 	TR_ASSERT(attrs.size() == ref.size(),
-			  "Tried to bind vertex buffer of a different type from the one in the vertex format (has {} attributes instead of {}).",
-			  attrs.size(), ref.size());
+			  "Tried to bind vertex buffer of a different type from the one in the vertex format '{}' (has {} attributes instead of {}).",
+			  last_bound_vertex_format_label, attrs.size(), ref.size());
 	for (usize i = 0; i < attrs.size(); ++i) {
 		const vertex_attribute& l{attrs.begin()[i]};
 		const vertex_attribute& r{ref.begin()[i]};
 		TR_ASSERT(l.type == r.type && l.elements == r.elements,
-				  "Tried to bind vertex buffer of a type different from than the one in the vertex format (expected '{}' in attribute {}, "
-				  "got '{}').",
-				  r, i, l);
+				  "Tried to bind vertex buffer of a type different from than the one in the vertex format '{}' (expected '{}' in attribute "
+				  "{}, got '{}').",
+				  last_bound_vertex_format_label, r, i, l);
 	}
 }
 #endif
@@ -160,16 +161,6 @@ void tr::gfx::set_index_buffer(const dyn_index_buffer& buffer)
 	TR_ASSERT(ogl_context != nullptr, "Tried to set graphics context index buffer before opening the window.");
 
 	TR_GL_CALL(glBindBuffer, GL_ELEMENT_ARRAY_BUFFER, buffer.m_ibo.get());
-}
-
-tr::u32 tr::gfx::current_renderer()
-{
-	return current_renderer_;
-}
-
-void tr::gfx::set_renderer(u32 id)
-{
-	current_renderer_ = id;
 }
 
 void tr::gfx::draw(primitive type, usize offset, usize vertices)

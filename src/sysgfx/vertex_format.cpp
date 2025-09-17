@@ -1,7 +1,7 @@
+#include "../../include/tr/sysgfx/vertex_format.hpp"
 #include "../../include/tr/sysgfx/gl_call.hpp"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/impl.hpp"
-#include "../../include/tr/sysgfx/vertex_format.hpp"
 
 tr::gfx::vertex_format::vertex_format(std::initializer_list<vertex_binding> bindings)
 #ifdef TR_ENABLE_GL_CHECKS
@@ -31,10 +31,22 @@ void tr::gfx::vertex_format::deleter::operator()(unsigned int id) const
 	TR_GL_CALL(glDeleteVertexArrays, 1, &id);
 }
 
+#ifdef TR_ENABLE_ASSERTS
 void tr::gfx::vertex_format::set_label(std::string_view label)
 {
 	TR_GL_CALL(glObjectLabel, GL_VERTEX_ARRAY, m_vao.get(), GLsizei(label.size()), label.data());
 }
+
+std::string tr::gfx::vertex_format::label() const
+{
+	std::string out;
+	GLsizei length;
+	TR_GL_CALL(glGetObjectLabel, GL_VERTEX_ARRAY, m_vao.get(), 0, &length, nullptr);
+	out.resize(length);
+	TR_GL_CALL(glGetObjectLabel, GL_VERTEX_ARRAY, m_vao.get(), length, nullptr, out.data());
+	return out;
+}
+#endif
 
 tr::gfx::vertex_format& tr::gfx::vertex2_format()
 {
@@ -42,9 +54,7 @@ tr::gfx::vertex_format& tr::gfx::vertex2_format()
 		vertex2_format_ = {{NOT_INSTANCED, {as_vertex_attribute<glm::vec2>}},
 						   {NOT_INSTANCED, {as_vertex_attribute<glm::vec2>}},
 						   {NOT_INSTANCED, {as_vertex_attribute<rgba8>}}};
-		if (debug()) {
-			vertex2_format_->set_label("(tr) 2D Vertex Format");
-		}
+		TR_SET_LABEL(*vertex2_format_, "(tr) 2D Vertex Format");
 	}
 	return *vertex2_format_;
 }

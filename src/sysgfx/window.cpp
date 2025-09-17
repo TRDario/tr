@@ -194,7 +194,7 @@ void tr::sys::open_fullscreen_window(const char* title, window_flag flags, const
 
 void tr::sys::close_window()
 {
-	tr::gfx::set_renderer(gfx::NO_RENDERER);
+	gfx::active_renderer = gfx::NO_RENDERER;
 	gfx::current_render_target.reset();
 	gfx::vertex2_format_.reset();
 	SDL_GL_DestroyContext(gfx::ogl_context);
