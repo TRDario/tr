@@ -1,6 +1,6 @@
+#include "../../include/tr/sysgfx/debug_renderer.hpp"
 #include "../../include/tr/sysgfx/backbuffer.hpp"
 #include "../../include/tr/sysgfx/blending.hpp"
-#include "../../include/tr/sysgfx/debug_renderer.hpp"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/render_target.hpp"
 
@@ -166,6 +166,9 @@ void tr::gfx::debug_renderer::newline_right()
 void tr::gfx::debug_renderer::draw()
 {
 	if (!m_glyphs.empty()) {
+		m_glyph_buffer.set(m_glyphs);
+		m_pipeline.vertex_shader().set_uniform(0, glm::vec2{backbuffer_size()});
+
 		set_render_target(backbuffer_render_target());
 		if (current_renderer() != DEBUG_RENDERER) {
 			set_renderer(DEBUG_RENDERER);
@@ -177,8 +180,6 @@ void tr::gfx::debug_renderer::draw()
 			set_vertex_buffer(m_mesh, 0, 0);
 			set_vertex_buffer(m_glyph_buffer, 1, 0);
 		}
-		m_glyph_buffer.set(m_glyphs);
-		m_pipeline.vertex_shader().set_uniform(0, glm::vec2{backbuffer_size()});
 		draw_instances(primitive::TRI_FAN, 0, 4, int(m_glyphs.size()));
 
 		m_glyphs.clear();
