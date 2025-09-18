@@ -1,6 +1,6 @@
-#include "../../include/tr/sysgfx/renderer_2d.hpp"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/index_buffer.hpp"
+#include "../../include/tr/sysgfx/renderer_2d.hpp"
 #include "../../include/tr/sysgfx/shader_pipeline.hpp"
 #include "../../include/tr/sysgfx/texture.hpp"
 #include "../../include/tr/sysgfx/vertex_buffer.hpp"
@@ -28,16 +28,15 @@ namespace tr::gfx {
 tr::gfx::renderer_2d::renderer_2d()
 	: m_pipeline{vertex_shader{RENDERER_2D_VERT_SRC}, fragment_shader{RENDERER_2D_FRAG_SRC}}
 {
+	TR_SET_LABEL(m_pipeline, "(tr) 2D Renderer Pipeline");
+	TR_SET_LABEL(m_pipeline.vertex_shader(), "(tr) 2D Renderer Vertex Shader");
+	TR_SET_LABEL(m_pipeline.fragment_shader(), "(tr) 2D Renderer Fragment Shader");
+	TR_SET_LABEL(m_vbuffer_positions, "(tr) 2D Renderer Vertex Position Buffer");
+	TR_SET_LABEL(m_vbuffer_uvs, "(tr) 2D Renderer Vertex UV Buffer");
+	TR_SET_LABEL(m_vbuffer_tints, "(tr) 2D Renderer Vertex Tint Buffer");
+	TR_SET_LABEL(m_ibuffer, "(tr) 2D Renderer Index Buffer");
+
 	m_pipeline.vertex_shader().set_uniform(0, glm::mat4{1.0f});
-	if (debug()) {
-		m_pipeline.set_label("(tr) 2D Renderer Pipeline");
-		m_pipeline.vertex_shader().set_label("(tr) 2D Renderer Vertex Shader");
-		m_pipeline.fragment_shader().set_label("(tr) 2D Renderer Fragment Shader");
-		m_vbuffer_positions.set_label("(tr) 2D Renderer Vertex Position Buffer");
-		m_vbuffer_uvs.set_label("(tr) 2D Renderer Vertex UV Buffer");
-		m_vbuffer_tints.set_label("(tr) 2D Renderer Vertex Tint Buffer");
-		m_ibuffer.set_label("(tr) 2D Renderer Index Buffer");
-	}
 }
 
 //

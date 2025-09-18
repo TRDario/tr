@@ -8,8 +8,12 @@ namespace tr::gfx {
 		// Creates a shader pipeline.
 		shader_pipeline(const vertex_shader& vshader, const fragment_shader& fshader);
 
+#ifdef TR_ENABLE_ASSERTS
 		// Sets the debug label of the pipeline.
 		void set_label(std::string_view label);
+		// Gets the debug label of the pipeline.
+		std::string label() const;
+#endif
 
 	  private:
 		struct deleter {
@@ -39,8 +43,12 @@ namespace tr::gfx {
 		// Gets the fragment shader.
 		const gfx::fragment_shader& fragment_shader() const;
 
+#ifdef TR_ENABLE_ASSERTS
 		// Sets the debug label of the pipeline.
 		void set_label(std::string_view label);
+		// Gets the debug label of the pipeline.
+		std::string label() const;
+#endif
 
 	  private:
 		// The vertex shader.

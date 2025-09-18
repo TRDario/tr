@@ -33,10 +33,28 @@ void tr::gfx::shader_pipeline::deleter::operator()(unsigned int id) const
 	TR_GL_CALL(glDeleteProgramPipelines, 1, &id);
 }
 
+#ifdef TR_ENABLE_ASSERTS
 void tr::gfx::shader_pipeline::set_label(std::string_view label)
 {
 	TR_GL_CALL(glObjectLabel, GL_PROGRAM_PIPELINE, m_ppo.get(), GLsizei(label.size()), label.data());
 }
+
+std::string tr::gfx::shader_pipeline::label() const
+{
+	GLsizei length;
+	TR_GL_CALL(glGetObjectLabel, GL_PROGRAM_PIPELINE, m_ppo.get(), 0, &length, nullptr);
+	if (length > 0) {
+		std::string str(length, '\0');
+		TR_GL_CALL(glGetObjectLabel, GL_PROGRAM_PIPELINE, m_ppo.get(), length, nullptr, str.data());
+		return str;
+	}
+	else {
+		return "<unnamed>";
+	}
+}
+#endif
+
+//
 
 tr::gfx::owning_shader_pipeline::owning_shader_pipeline(gfx::vertex_shader&& vshader, gfx::fragment_shader&& fshader)
 	: m_vshader{std::move(vshader)}, m_fshader{std::move(fshader)}, m_base{m_vshader, m_fshader}
@@ -68,7 +86,14 @@ const tr::gfx::fragment_shader& tr::gfx::owning_shader_pipeline::fragment_shader
 	return m_fshader;
 }
 
+#ifdef TR_ENABLE_ASSERTS
 void tr::gfx::owning_shader_pipeline::set_label(std::string_view label)
 {
 	m_base.set_label(label);
 }
+
+std::string tr::gfx::owning_shader_pipeline::label() const
+{
+	return m_base.label();
+}
+#endif

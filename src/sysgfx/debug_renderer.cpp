@@ -1,6 +1,6 @@
-#include "../../include/tr/sysgfx/debug_renderer.hpp"
 #include "../../include/tr/sysgfx/backbuffer.hpp"
 #include "../../include/tr/sysgfx/blending.hpp"
+#include "../../include/tr/sysgfx/debug_renderer.hpp"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/render_target.hpp"
 
@@ -105,19 +105,17 @@ tr::gfx::debug_renderer::debug_renderer(float scale, u8 column_limit)
 	, m_left_line{0}
 	, m_right_line{0}
 {
+	TR_SET_LABEL(m_pipeline, "(tr) Debug Renderer Pipeline");
+	TR_SET_LABEL(m_pipeline.vertex_shader(), "(tr) Debug Renderer Vertex Shader");
+	TR_SET_LABEL(m_pipeline.fragment_shader(), "(tr) Debug Renderer Fragment Shader");
+	TR_SET_LABEL(m_format, "(tr) Debug Renderer Vertex Format");
+	TR_SET_LABEL(m_font, "(tr) Debug Renderer Font Texture");
+	TR_SET_LABEL(m_mesh, "(tr) Debug Renderer Vertex Buffer");
+	TR_SET_LABEL(m_glyph_buffer, "(tr) Debug Renderer Glyph buffer");
+
 	m_font.set_filtering(min_filter::NEAREST, mag_filter::NEAREST);
 	m_pipeline.fragment_shader().set_uniform(2, m_font);
 	set_scale(scale);
-
-	if (debug()) {
-		m_pipeline.set_label("(tr) Debug Renderer Pipeline");
-		m_pipeline.vertex_shader().set_label("(tr) Debug Renderer Vertex Shader");
-		m_pipeline.fragment_shader().set_label("(tr) Debug Renderer Fragment Shader");
-		TR_SET_LABEL(m_format, "(tr) Debug Renderer Vertex Format");
-		m_font.set_label("(tr) Debug Renderer Font Texture");
-		m_mesh.set_label("(tr) Debug Renderer Vertex Buffer");
-		m_glyph_buffer.set_label("(tr) Debug Renderer Glyph buffer");
-	}
 }
 
 void tr::gfx::debug_renderer::set_scale(float scale)
