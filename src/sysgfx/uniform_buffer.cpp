@@ -52,7 +52,7 @@ tr::gfx::basic_buffer_map tr::gfx::basic_uniform_buffer::map()
 		throw out_of_memory{"uniform buffer mapping"};
 #endif
 	}
-	return basic_buffer_map{m_ubo.get(), std::span{ptr, usize(m_size)}};
+	return basic_buffer_map{m_ubo.get(), std::span{ptr, m_size}};
 }
 
 #ifdef TR_ENABLE_ASSERTS
