@@ -133,8 +133,12 @@ namespace tr::gfx {
 		// Sets a uniform storage buffer.
 		void set_uniform_buffer(unsigned int index, const basic_uniform_buffer& buffer);
 
+#ifdef TR_ENABLE_ASSERTS
 		// Sets the debug label of the shader.
 		void set_label(std::string_view label);
+		// Gets the debug label of the shader.
+		std::string label() const;
+#endif
 
 	  protected:
 		struct texture_unit {

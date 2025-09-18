@@ -5,18 +5,18 @@ tr::gfx::shader_pipeline::shader_pipeline(const vertex_shader& vshader, const fr
 {
 #ifdef TR_ENABLE_GL_CHECKS
 	TR_ASSERT(vshader.m_outputs.size() == fshader.m_inputs.size(),
-			  "Mismatched shader inputs/outputs (vertex shader has {} outputs, fragment shader has {} inputs).", vshader.m_outputs.size(),
-			  fshader.m_inputs.size());
+			  "Mismatched shader inputs/outputs (vertex shader '{}' has {} outputs, fragment shader '{}' has {} inputs).", vshader.label(),
+			  vshader.m_outputs.size(), fshader.label(), fshader.m_inputs.size());
 	for (const auto& [location, info] : vshader.m_outputs) {
 		TR_ASSERT(fshader.m_inputs.contains(location),
-				  "Mismatched shader inputs/outputs (vertex shader has output '{}' at location {} that was not found in the fragment "
-				  "shader's inputs).",
-				  info, location);
+				  "Mismatched shader inputs/outputs (vertex shader '{}' has output '{}' at location {} that was not found in fragment "
+				  "shader '{}''s inputs).",
+				  vshader.label(), info, location, fshader.label());
 		const glsl_variable& frag_info{fshader.m_inputs.at(location)};
 		TR_ASSERT(frag_info.type == info.type && frag_info.array_size == info.array_size,
-				  "Mismatched shader inputs/outputs (vertex shader has output '{}' at location {}, but the input '{}' at the same location "
-				  "in the fragment shader is not compatible with it).",
-				  info, location, fshader.m_inputs.at(location));
+				  "Mismatched shader inputs/outputs (vertex shader '{}' has output '{}' at location {}, but the input '{}' at the same "
+				  "location in fragment shader '{}' is not compatible with it).",
+				  vshader.label(), info, location, fshader.m_inputs.at(location), fshader.label());
 	}
 #endif
 
