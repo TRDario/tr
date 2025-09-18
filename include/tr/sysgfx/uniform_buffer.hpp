@@ -6,10 +6,10 @@ namespace tr::gfx {
 	class basic_uniform_buffer {
 	  public:
 		// Allocates an uninitialized uniform buffer.
-		basic_uniform_buffer(ssize size);
+		basic_uniform_buffer(usize size);
 
 		// Gets the size of the buffer.
-		ssize size() const;
+		usize size() const;
 
 		// Sets the data of the buffer.
 		void set(std::span<const std::byte> data);
@@ -20,8 +20,12 @@ namespace tr::gfx {
 		// This map is write-only!
 		basic_buffer_map map();
 
+#ifdef TR_ENABLE_ASSERTS
 		// Sets the debug label of the uniform buffer.
 		void set_label(std::string_view label);
+		// Gets the debug label of the uniform buffer.
+		std::string label() const;
+#endif
 
 	  private:
 		struct deleter {
@@ -31,7 +35,7 @@ namespace tr::gfx {
 		// Handle to the OpenGL buffer.
 		handle<unsigned int, 0, deleter> m_ubo;
 		// The size of the buffer.
-		ssize m_size;
+		usize m_size;
 
 		friend class shader_base;
 	};

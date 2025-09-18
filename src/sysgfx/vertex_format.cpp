@@ -1,7 +1,7 @@
-#include "../../include/tr/sysgfx/vertex_format.hpp"
 #include "../../include/tr/sysgfx/gl_call.hpp"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/impl.hpp"
+#include "../../include/tr/sysgfx/vertex_format.hpp"
 
 tr::gfx::vertex_format::vertex_format(std::initializer_list<vertex_binding> bindings)
 #ifdef TR_ENABLE_GL_CHECKS
@@ -11,7 +11,7 @@ tr::gfx::vertex_format::vertex_format(std::initializer_list<vertex_binding> bind
 	GLuint vao;
 	TR_GL_CALL(glCreateVertexArrays, 1, &vao);
 	m_vao.reset(vao);
-	int attr_id{0};
+	GLuint attr_id{0};
 	for (int binding_id = 0; binding_id < int(bindings.size()); ++binding_id) {
 		const vertex_binding& binding{bindings.begin()[binding_id]};
 
@@ -39,12 +39,16 @@ void tr::gfx::vertex_format::set_label(std::string_view label)
 
 std::string tr::gfx::vertex_format::label() const
 {
-	std::string out;
 	GLsizei length;
 	TR_GL_CALL(glGetObjectLabel, GL_VERTEX_ARRAY, m_vao.get(), 0, &length, nullptr);
-	out.resize(length);
-	TR_GL_CALL(glGetObjectLabel, GL_VERTEX_ARRAY, m_vao.get(), length, nullptr, out.data());
-	return out;
+	if (length > 0) {
+		std::string str(length, '\0');
+		TR_GL_CALL(glGetObjectLabel, GL_VERTEX_ARRAY, m_vao.get(), length, nullptr, str.data());
+		return str;
+	}
+	else {
+		return "<unnamed>";
+	}
 }
 #endif
 
