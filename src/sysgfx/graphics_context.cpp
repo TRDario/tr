@@ -1,6 +1,6 @@
-#include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/blending.hpp"
 #include "../../include/tr/sysgfx/gl_call.hpp"
+#include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/impl.hpp"
 #include "../../include/tr/sysgfx/index_buffer.hpp"
 #include "../../include/tr/sysgfx/shader_pipeline.hpp"
@@ -14,7 +14,7 @@ namespace tr::gfx {
 	std::string last_bound_vertex_format_label;
 
 	// Fails an assertion if a type mismatch is detected.
-	void check_vertex_buffer(int slot, std::initializer_list<vertex_attribute> attributes);
+	void check_vertex_buffer(std::string label, int slot, std::initializer_list<vertex_attribute> attributes);
 #endif
 } // namespace tr::gfx
 
@@ -96,23 +96,23 @@ void tr::gfx::set_vertex_format(const vertex_format& format)
 }
 
 #ifdef TR_ENABLE_GL_CHECKS
-void tr::gfx::check_vertex_buffer(int slot, std::initializer_list<vertex_attribute> attrs)
+void tr::gfx::check_vertex_buffer(std::string label, int slot, std::initializer_list<vertex_attribute> attrs)
 {
 	TR_ASSERT(usize(slot) < last_bound_vertex_format_bindings.size(),
-			  "Tried to bind vertex buffer to invalid slot {} (max in vertex format '{}': {}).", slot, last_bound_vertex_format_label,
-			  last_bound_vertex_format_bindings.size());
+			  "Tried to bind vertex buffer '{}' to invalid slot {} (max in vertex format '{}': {}).", label, slot,
+			  last_bound_vertex_format_label, last_bound_vertex_format_bindings.size());
 
 	const std::initializer_list<vertex_attribute> ref(last_bound_vertex_format_bindings.begin()[slot].attrs);
 	TR_ASSERT(attrs.size() == ref.size(),
-			  "Tried to bind vertex buffer of a different type from the one in the vertex format '{}' (has {} attributes instead of {}).",
-			  last_bound_vertex_format_label, attrs.size(), ref.size());
+			  "Tried to bind vertex buffer '{}' of a different type from the one in vertex format '{}' (has {} attributes instead of {}).",
+			  label, last_bound_vertex_format_label, attrs.size(), ref.size());
 	for (usize i = 0; i < attrs.size(); ++i) {
 		const vertex_attribute& l{attrs.begin()[i]};
 		const vertex_attribute& r{ref.begin()[i]};
 		TR_ASSERT(l.type == r.type && l.elements == r.elements,
-				  "Tried to bind vertex buffer of a type different from than the one in the vertex format '{}' (expected '{}' in attribute "
-				  "{}, got '{}').",
-				  last_bound_vertex_format_label, r, i, l);
+				  "Tried to bind vertex buffer '{}' of a type different from than the one in vertex format '{}' (expected '{}' in "
+				  "attribute {}, got '{}').",
+				  label, last_bound_vertex_format_label, r, i, l);
 	}
 }
 #endif
@@ -128,7 +128,7 @@ void tr::gfx::set_vertex_buffer(const basic_static_vertex_buffer& buffer, int sl
 void tr::gfx::set_vertex_buffer_checked(const basic_static_vertex_buffer& buffer, int slot, ssize offset, usize stride,
 										std::initializer_list<vertex_attribute> attrs)
 {
-	check_vertex_buffer(slot, attrs);
+	check_vertex_buffer(buffer.label(), slot, attrs);
 	set_vertex_buffer(buffer, slot, offset, stride);
 }
 #endif
@@ -144,7 +144,7 @@ void tr::gfx::set_vertex_buffer(const basic_dyn_vertex_buffer& buffer, int slot,
 void tr::gfx::set_vertex_buffer_checked(const basic_dyn_vertex_buffer& buffer, int slot, ssize offset, usize stride,
 										std::initializer_list<vertex_attribute> attrs)
 {
-	check_vertex_buffer(slot, attrs);
+	check_vertex_buffer(buffer.label(), slot, attrs);
 	set_vertex_buffer(buffer, slot, offset, stride);
 }
 #endif
