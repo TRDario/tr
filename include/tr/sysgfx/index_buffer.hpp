@@ -12,8 +12,12 @@ namespace tr::gfx {
 		// Uploads index data into a static index buffer.
 		static_index_buffer(std::span<const u16> data);
 
+#ifdef TR_ENABLE_ASSERTS
 		// Sets the debug label of the index buffer.
 		void set_label(std::string_view label);
+		// Gets the debug label of the index buffer.
+		std::string label() const;
+#endif
 
 	  private:
 		struct deleter {
@@ -52,8 +56,12 @@ namespace tr::gfx {
 		// Sets a region of the buffer.
 		void set_region(usize offset, std::span<const u16> data);
 
-		// Sets the debug label of the vertex buffer.
+#ifdef TR_ENABLE_ASSERTS
+		// Sets the debug label of the index buffer.
 		void set_label(std::string_view label);
+		// Gets the debug label of the index buffer.
+		std::string label() const;
+#endif
 
 	  private:
 		struct deleter {
