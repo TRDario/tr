@@ -28,9 +28,6 @@ namespace tr::gfx {
 	// The graphics context log.
 	inline logger log{"gl"};
 
-	// Gets whether the context is a debug context.
-	bool debug();
-
 #ifdef TR_ENABLE_ASSERTS
 #define TR_SET_LABEL(object, label) (object).set_label(label)
 #else

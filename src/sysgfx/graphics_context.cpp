@@ -6,8 +6,8 @@
 #include "../../include/tr/sysgfx/shader_pipeline.hpp"
 #include "../../include/tr/sysgfx/vertex_format.hpp"
 
-namespace tr::gfx {
 #ifdef TR_ENABLE_GL_CHECKS
+namespace tr::gfx {
 	// Bindings of the last bound vertex format.
 	inline std::initializer_list<vertex_binding> last_bound_vertex_format_bindings;
 	// Label of the last bound vertex format.
@@ -15,18 +15,13 @@ namespace tr::gfx {
 
 	// Fails an assertion if a type mismatch is detected.
 	void check_vertex_buffer(std::string label, int slot, std::initializer_list<vertex_attribute> attributes);
-#endif
 } // namespace tr::gfx
+#endif
 
 tr::u32 tr::gfx::alloc_renderer_id()
 {
 	static u32 id{1000};
 	return id++;
-}
-
-bool tr::gfx::debug()
-{
-	return debug_context;
 }
 
 void tr::gfx::set_face_culling(bool arg)

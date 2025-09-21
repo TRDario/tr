@@ -22,8 +22,6 @@ namespace tr::sys {
 namespace tr::gfx {
 	// Pointer to the SDL OpenGL context.
 	inline SDL_GLContextState* ogl_context{nullptr};
-	// Whether the OpenGL context is a debug one.
-	inline bool debug_context{false};
 	// Tracks the texture bound to any given texture unit.
 	inline std::array<texture_ref, 80> texture_unit_textures{};
 	// 2D vertex format.

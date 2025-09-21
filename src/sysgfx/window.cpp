@@ -1,11 +1,11 @@
-﻿#include "../../include/tr/sysgfx/window.hpp"
-#include "../../include/tr/sysgfx/bitmap.hpp"
+﻿#include "../../include/tr/sysgfx/bitmap.hpp"
 #include "../../include/tr/sysgfx/dialog.hpp"
 #include "../../include/tr/sysgfx/display.hpp"
 #include "../../include/tr/sysgfx/glad.h"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/impl.hpp"
 #include "../../include/tr/sysgfx/initialization.hpp"
+#include "../../include/tr/sysgfx/window.hpp"
 #include "tr/sysgfx/gl_call.hpp"
 #include <SDL3/SDL.h>
 
@@ -15,6 +15,7 @@ namespace tr::gfx {
 	// Creates an OpenGL context.
 	void create_ogl_context();
 
+#ifdef TR_ENABLE_ASSERTS
 	// Gets a readable string for an OpenGL debug log source.
 	std::string_view ogl_source(GLenum value);
 	// Gets a readable string for an OpenGL debug log message type.
@@ -27,24 +28,31 @@ namespace tr::gfx {
 	void ogl_debug_cb(GLenum source, GLenum type, GLuint, GLenum severity, GLsizei length, const GLchar* message, const void*);
 	// Sets up OpenGL debugging.
 	void setup_ogl_debugging();
+#endif
 } // namespace tr::gfx
 
 void tr::gfx::set_sdl_ogl_attributes(const properties& gfx_properties)
 {
+#ifdef TR_ENABLE_ASSERTS
+	constexpr int CONTEXT_FLAGS{SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG | SDL_GL_CONTEXT_DEBUG_FLAG};
+#else
+	constexpr int CONTEXT_FLAGS{SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG};
+#endif
+
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 5);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG | int(gfx_properties.debug_context));
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, CONTEXT_FLAGS);
 	SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, true);
 	SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
 	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
 	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
 	SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8);
-	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, gfx_properties.depth_bits);
-	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, gfx_properties.stencil_bits);
+	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, gfx_properties.enable_depth_stencil ? 24 : 0);
+	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, gfx_properties.enable_depth_stencil ? 8 : 0);
 	SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, bool(gfx_properties.multisamples));
 	SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, gfx_properties.multisamples);
-	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, gfx_properties.double_buffer);
+	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, true);
 }
 
 void tr::gfx::create_ogl_context()
@@ -55,14 +63,17 @@ void tr::gfx::create_ogl_context()
 	else if (!gladLoadGLLoader(GLADloadproc(SDL_GL_GetProcAddress))) {
 		throw sys::init_error{"Failed to load OpenGL 4.5."};
 	}
+#ifdef TR_ENABLE_ASSERTS
 	TR_LOG(log, severity::INFO, "Created an OpenGL context.");
 	TR_LOG_CONTINUE(log, "Vendor: {}", (const char*)(TR_RETURNING_GL_CALL(glGetString, GL_VENDOR)));
 	TR_LOG_CONTINUE(log, "Renderer: {}", (const char*)(TR_RETURNING_GL_CALL(glGetString, GL_RENDERER)));
 	TR_LOG_CONTINUE(log, "Version: {}", (const char*)(TR_RETURNING_GL_CALL(glGetString, GL_VERSION)));
+#endif
 	TR_GL_CALL(glEnable, GL_BLEND);
 	TR_GL_CALL(glEnable, GL_SCISSOR_TEST);
 }
 
+#ifdef TR_ENABLE_ASSERTS
 std::string_view tr::gfx::ogl_source(GLenum value)
 {
 	switch (value) {
@@ -155,41 +166,41 @@ void tr::gfx::setup_ogl_debugging()
 	glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, NULL, GL_TRUE);
 	glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_NOTIFICATION, 0, NULL, GL_FALSE);
 }
+#endif
 
-void tr::sys::open_window(const char* title, glm::ivec2 size, window_flag flags, const gfx::properties& gfx_properties)
+void tr::sys::open_window(const char* title, glm::ivec2 size, bool resizable, const gfx::properties& gfx_properties)
 {
 	TR_ASSERT(SDL_WasInit(0), "Tried to open window before initializing the application.");
 	TR_ASSERT(sdl_window == nullptr, "Tried to reopen window without closing it first.");
 
 	set_sdl_ogl_attributes(gfx_properties);
-	const SDL_WindowFlags sdl_flags{SDL_WindowFlags(flags) | SDL_WINDOW_HIDDEN | SDL_WINDOW_OPENGL | SDL_WINDOW_HIGH_PIXEL_DENSITY};
+	const SDL_WindowFlags sdl_flags{(resizable ? SDL_WINDOW_RESIZABLE : 0) | SDL_WINDOW_HIDDEN | SDL_WINDOW_OPENGL |
+									SDL_WINDOW_HIGH_PIXEL_DENSITY};
 	if ((sdl_window = SDL_CreateWindow(title, size.x, size.y, sdl_flags)) == nullptr) {
 		throw init_error{"Failed to open window."};
 	}
 	gfx::create_ogl_context();
-	if (gfx_properties.debug_context) {
-		gfx::setup_ogl_debugging();
-	}
-	gfx::debug_context = gfx_properties.debug_context;
+#ifdef TR_ENABLE_ASSERTS
+	gfx::setup_ogl_debugging();
+#endif
 }
 
-void tr::sys::open_fullscreen_window(const char* title, window_flag flags, const gfx::properties& gfx_properties)
+void tr::sys::open_fullscreen_window(const char* title, bool resizable, const gfx::properties& gfx_properties)
 {
 	TR_ASSERT(SDL_WasInit(0), "Tried to open window before initializing the application.");
 	TR_ASSERT(sdl_window == nullptr, "Tried to reopen window without closing it first.");
 
 	set_sdl_ogl_attributes(gfx_properties);
 	const glm::ivec2 size{display_size()};
-	const SDL_WindowFlags sdl_flags{SDL_WindowFlags(flags) | SDL_WINDOW_HIDDEN | SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL |
+	const SDL_WindowFlags sdl_flags{(resizable ? SDL_WINDOW_RESIZABLE : 0) | SDL_WINDOW_HIDDEN | SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL |
 									SDL_WINDOW_HIGH_PIXEL_DENSITY};
 	if ((sdl_window = SDL_CreateWindow(title, size.x, size.y, sdl_flags)) == nullptr) {
 		throw init_error{"Failed to open fullscreen window."};
 	}
 	gfx::create_ogl_context();
-	if (gfx_properties.debug_context) {
-		gfx::setup_ogl_debugging();
-	}
-	gfx::debug_context = gfx_properties.debug_context;
+#ifdef TR_ENABLE_ASSERTS
+	gfx::setup_ogl_debugging();
+#endif
 }
 
 void tr::sys::close_window()

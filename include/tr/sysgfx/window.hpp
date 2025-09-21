@@ -9,32 +9,14 @@ namespace tr {
 namespace tr::gfx {
 	// Graphics context properties.
 	struct properties {
-		// Whether a debug context should be used.
-		bool debug_context = false;
-		// Whether to use double buffering.
-		bool double_buffer = true;
-		// The number of bits to use for backbuffer depth.
-		u8 depth_bits = 0;
-		// The number of bits to use for backbuffer stencil.
-		u8 stencil_bits = 0;
+		// Enables the use of depth and stencil buffers.
+		bool enable_depth_stencil = false;
 		// The number of samples used around a pixel for multisampled anti-aliasing.
 		u8 multisamples = 0;
 	};
 } // namespace tr::gfx
 
 namespace tr::sys {
-	// Window flag bitmasks.
-	enum class window_flag : u32 {
-		DEFAULT = 0x0,         // Default flags.
-		BORDERLESS = 0x10,     // The window has no decoration (topbar, etc.).
-		RESIZABLE = 0x20,      // The window is resizable.
-		MINIMIZED = 0x40,      // The window is minimized.
-		MAXIMIZED = 0x80,      // The window is maximized.
-		GRAB_INPUT = 0x200,    // The window has grabbed input focus.
-		ALWAYS_ON_TOP = 0x8000 // The window is always on top.
-	};
-	DEFINE_BITMASK_OPERATORS(window_flag);
-
 	// Flash operations.
 	enum class flash_operation {
 		CANCEL,       // Cancel any existing window flashing, if there is any.
@@ -51,11 +33,10 @@ namespace tr::sys {
 
 	// Opens a windowed window.
 	// May throw: init_error.
-	void open_window(const char* title, glm::ivec2 size, window_flag flags = window_flag::DEFAULT,
-					 const gfx::properties& gfx_properties = {});
+	void open_window(const char* title, glm::ivec2 size, bool resizable = false, const gfx::properties& gfx_properties = {});
 	// Opens a fullscreen window.
 	// May throw: init_error.
-	void open_fullscreen_window(const char* title, window_flag flags = window_flag::DEFAULT, const gfx::properties& gfx_properties = {});
+	void open_fullscreen_window(const char* title, bool resizable = false, const gfx::properties& gfx_properties = {});
 	// Closes the window.
 	void close_window();
 
