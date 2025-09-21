@@ -25,17 +25,6 @@ namespace tr::gfx {
 		TRI_FAN     // The vertices are drawn as a continuous triangle fan.
 	};
 
-	// The graphics context log.
-	inline logger log{"gl"};
-
-#ifdef TR_ENABLE_ASSERTS
-#define TR_SET_LABEL(object, label) (object).set_label(label)
-#else
-#define TR_SET_LABEL(object, label)                                                                                                        \
-	do {                                                                                                                                   \
-	} while (0)
-#endif
-
 	// Sets whether face culling should be used.
 	void set_face_culling(bool arg);
 	// Sets whether depth testing should be used.
@@ -75,6 +64,17 @@ namespace tr::gfx {
 	void draw_indexed(primitive type, usize offset, usize indices);
 	// Draws an instanced indexed mesh.
 	void draw_indexed_instances(primitive type, usize offset, usize indices, int instances);
+
+#ifdef TR_ENABLE_ASSERTS
+	// The graphics context log.
+	inline logger log{"gl"};
+
+#define TR_SET_LABEL(object, label) (object).set_label(label)
+#else
+#define TR_SET_LABEL(object, label)                                                                                                        \
+	do {                                                                                                                                   \
+	} while (0)
+#endif
 } // namespace tr::gfx
 
 ///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
