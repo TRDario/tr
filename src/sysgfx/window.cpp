@@ -1,5 +1,4 @@
 ﻿#include "../../include/tr/sysgfx/bitmap.hpp"
-#include "../../include/tr/sysgfx/dialog.hpp"
 #include "../../include/tr/sysgfx/display.hpp"
 #include "../../include/tr/sysgfx/glad.h"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
@@ -168,35 +167,45 @@ void tr::gfx::setup_ogl_debugging()
 }
 #endif
 
-void tr::sys::open_window(const char* title, glm::ivec2 size, bool resizable, const gfx::properties& gfx_properties)
+void tr::sys::open_window(const char* title, glm::ivec2 size, std::optional<glm::ivec2> min_size, const gfx::properties& gfx_properties)
 {
 	TR_ASSERT(SDL_WasInit(0), "Tried to open window before initializing the application.");
 	TR_ASSERT(sdl_window == nullptr, "Tried to reopen window without closing it first.");
 
 	set_sdl_ogl_attributes(gfx_properties);
-	const SDL_WindowFlags sdl_flags{(resizable ? SDL_WINDOW_RESIZABLE : 0) | SDL_WINDOW_HIDDEN | SDL_WINDOW_OPENGL |
+
+	const SDL_WindowFlags sdl_flags{(min_size.has_value() ? SDL_WINDOW_RESIZABLE : 0) | SDL_WINDOW_HIDDEN | SDL_WINDOW_OPENGL |
 									SDL_WINDOW_HIGH_PIXEL_DENSITY};
 	if ((sdl_window = SDL_CreateWindow(title, size.x, size.y, sdl_flags)) == nullptr) {
 		throw init_error{"Failed to open window."};
 	}
+	if (min_size.has_value()) {
+		SDL_SetWindowMinimumSize(sdl_window, min_size->x, min_size->y);
+	}
+
 	gfx::create_ogl_context();
 #ifdef TR_ENABLE_ASSERTS
 	gfx::setup_ogl_debugging();
 #endif
 }
 
-void tr::sys::open_fullscreen_window(const char* title, bool resizable, const gfx::properties& gfx_properties)
+void tr::sys::open_fullscreen_window(const char* title, std::optional<glm::ivec2> min_size, const gfx::properties& gfx_properties)
 {
 	TR_ASSERT(SDL_WasInit(0), "Tried to open window before initializing the application.");
 	TR_ASSERT(sdl_window == nullptr, "Tried to reopen window without closing it first.");
 
 	set_sdl_ogl_attributes(gfx_properties);
+
 	const glm::ivec2 size{display_size()};
-	const SDL_WindowFlags sdl_flags{(resizable ? SDL_WINDOW_RESIZABLE : 0) | SDL_WINDOW_HIDDEN | SDL_WINDOW_FULLSCREEN | SDL_WINDOW_OPENGL |
-									SDL_WINDOW_HIGH_PIXEL_DENSITY};
+	const SDL_WindowFlags sdl_flags{(min_size.has_value() ? SDL_WINDOW_RESIZABLE : 0) | SDL_WINDOW_HIDDEN | SDL_WINDOW_FULLSCREEN |
+									SDL_WINDOW_OPENGL | SDL_WINDOW_HIGH_PIXEL_DENSITY};
 	if ((sdl_window = SDL_CreateWindow(title, size.x, size.y, sdl_flags)) == nullptr) {
 		throw init_error{"Failed to open fullscreen window."};
 	}
+	if (min_size.has_value()) {
+		SDL_SetWindowMinimumSize(sdl_window, min_size->x, min_size->y);
+	}
+
 	gfx::create_ogl_context();
 #ifdef TR_ENABLE_ASSERTS
 	gfx::setup_ogl_debugging();
