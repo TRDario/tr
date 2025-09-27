@@ -139,6 +139,8 @@ namespace tr::sys {
 		// The base enumerator.
 		enum_t m_base{};
 	};
+	constexpr bool operator==(const scancode& l, const scancode::enum_t& r);
+	constexpr bool operator==(const scancode::enum_t& l, const scancode& r);
 	// Gets a top row scancode from a numeric value.
 	constexpr scancode make_top_row_scancode(int v);
 
@@ -292,6 +294,8 @@ namespace tr::sys {
 	  private:
 		enum_t m_base{};
 	};
+	constexpr bool operator==(const keycode& l, const keycode::enum_t& r);
+	constexpr bool operator==(const keycode::enum_t& l, const keycode& r);
 	// Gets a top row keycode from a numeric value.
 	constexpr keycode make_top_row_keycode(int v);
 
@@ -408,6 +412,16 @@ constexpr tr::sys::scancode::operator enum_t() const
 	return m_base;
 }
 
+constexpr bool tr::sys::operator==(const scancode& l, const scancode::enum_t& r)
+{
+	return scancode::enum_t(l) == r;
+}
+
+constexpr bool tr::sys::operator==(const scancode::enum_t& l, const scancode& r)
+{
+	return l == scancode::enum_t(r);
+}
+
 constexpr tr::sys::scancode tr::sys::make_top_row_scancode(int v)
 {
 	TR_ASSERT(v >= 0 && v < 10, "Tried to create top row number scancode {} outside the range [0-9]", v);
@@ -433,6 +447,16 @@ constexpr tr::sys::keycode::operator int() const
 constexpr tr::sys::keycode::operator enum_t() const
 {
 	return m_base;
+}
+
+constexpr bool tr::sys::operator==(const keycode& l, const keycode::enum_t& r)
+{
+	return keycode::enum_t(l) == r;
+}
+
+constexpr bool tr::sys::operator==(const keycode::enum_t& l, const keycode& r)
+{
+	return l == keycode::enum_t(r);
 }
 
 constexpr tr::sys::keycode tr::sys::make_top_row_keycode(int v)
