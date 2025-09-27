@@ -20,13 +20,41 @@ namespace tr::sys {
 	// Event emitted when the application wants to redraw.
 	struct draw_event {};
 
+	// An event visitor must be callable with all event types, and all overloads must return the same type.
+	template <class T>
+	concept event_visitor =
+		std::invocable<T, quit_event> && std::invocable<T, window_show_event> && std::invocable<T, window_hide_event> &&
+		std::invocable<T, backbuffer_resize_event> && std::invocable<T, window_gain_focus_event> &&
+		std::invocable<T, window_lose_focus_event> && std::invocable<T, window_mouse_enter_event> &&
+		std::invocable<T, window_mouse_leave_event> && std::invocable<T, key_down_event> && std::invocable<T, key_up_event> &&
+		std::invocable<T, text_input_event> && std::invocable<T, mouse_motion_event> && std::invocable<T, mouse_down_event> &&
+		std::invocable<T, mouse_up_event> && std::invocable<T, mouse_wheel_event> && std::invocable<T, tick_event> &&
+		std::invocable<T, draw_event> && requires(T visitor) {
+			requires std::same_as<decltype(visitor(quit_event{})), decltype(visitor(std::declval<window_show_event>()))>;
+			requires std::same_as<decltype(visitor(quit_event{})), decltype(visitor(std::declval<window_hide_event>()))>;
+			requires std::same_as<decltype(visitor(quit_event{})), decltype(visitor(std::declval<backbuffer_resize_event>()))>;
+			requires std::same_as<decltype(visitor(quit_event{})), decltype(visitor(std::declval<window_gain_focus_event>()))>;
+			requires std::same_as<decltype(visitor(quit_event{})), decltype(visitor(std::declval<window_lose_focus_event>()))>;
+			requires std::same_as<decltype(visitor(quit_event{})), decltype(visitor(std::declval<window_mouse_enter_event>()))>;
+			requires std::same_as<decltype(visitor(quit_event{})), decltype(visitor(std::declval<window_mouse_leave_event>()))>;
+			requires std::same_as<decltype(visitor(quit_event{})), decltype(visitor(std::declval<key_down_event>()))>;
+			requires std::same_as<decltype(visitor(quit_event{})), decltype(visitor(std::declval<key_up_event>()))>;
+			requires std::same_as<decltype(visitor(quit_event{})), decltype(visitor(std::declval<text_input_event>()))>;
+			requires std::same_as<decltype(visitor(quit_event{})), decltype(visitor(std::declval<mouse_motion_event>()))>;
+			requires std::same_as<decltype(visitor(quit_event{})), decltype(visitor(std::declval<mouse_down_event>()))>;
+			requires std::same_as<decltype(visitor(quit_event{})), decltype(visitor(std::declval<mouse_up_event>()))>;
+			requires std::same_as<decltype(visitor(quit_event{})), decltype(visitor(std::declval<mouse_wheel_event>()))>;
+			requires std::same_as<decltype(visitor(quit_event{})), decltype(visitor(std::declval<tick_event>()))>;
+			requires std::same_as<decltype(visitor(quit_event{})), decltype(visitor(std::declval<draw_event>()))>;
+		};
+
 	// Unified event type.
 	class event {
 	  public:
 		// Gets the type ID of the event.
 		u32 type() const;
 
-		template <class Visitor> void visit(Visitor&& visitor) const;
+		template <event_visitor Visitor> auto visit(Visitor&& visitor) const;
 
 	  private:
 		// Storage for SDL_Event.
@@ -38,93 +66,48 @@ namespace tr::sys {
 
 ///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
 
-template <class Visitor> void tr::sys::event::visit(Visitor&& visitor) const
+template <tr::sys::event_visitor Visitor> auto tr::sys::event::visit(Visitor&& visitor) const
 {
 	switch (type()) {
 	case 0x100:
-		if constexpr (std::is_invocable_v<Visitor, quit_event>) {
-			visitor(quit_event{});
-		}
-		break;
+		return visitor(quit_event{});
 	case 0x202:
-		if constexpr (std::is_invocable_v<Visitor, window_show_event>) {
-			visitor(window_show_event{});
-		}
-		break;
+		return visitor(window_show_event{});
 	case 0x203:
-		if constexpr (std::is_invocable_v<Visitor, window_hide_event>) {
-			visitor(window_hide_event{});
-		}
-		break;
+		return visitor(window_hide_event{});
 	case 0x207:
-		if constexpr (std::is_invocable_v<Visitor, backbuffer_resize_event>) {
-			visitor(backbuffer_resize_event{*this});
-		}
-		break;
+		return visitor(backbuffer_resize_event{*this});
 	case 0x20C:
-		if constexpr (std::is_invocable_v<Visitor, window_mouse_enter_event>) {
-			visitor(window_mouse_enter_event{});
-		}
-		break;
+		return visitor(window_mouse_enter_event{});
 	case 0x20D:
-		if constexpr (std::is_invocable_v<Visitor, window_mouse_leave_event>) {
-			visitor(window_mouse_leave_event{});
-		}
-		break;
+		return visitor(window_mouse_leave_event{});
 	case 0x20E:
-		if constexpr (std::is_invocable_v<Visitor, window_gain_focus_event>) {
-			visitor(window_gain_focus_event{});
-		}
-		break;
+		return visitor(window_gain_focus_event{});
 	case 0x20F:
-		if constexpr (std::is_invocable_v<Visitor, window_lose_focus_event>) {
-			visitor(window_lose_focus_event{});
-		}
-		break;
+		return visitor(window_lose_focus_event{});
 	case 0x300:
-		if constexpr (std::is_invocable_v<Visitor, key_down_event>) {
-			visitor(key_down_event{*this});
-		}
-		break;
+		return visitor(key_down_event{*this});
 	case 0x301:
-		if constexpr (std::is_invocable_v<Visitor, key_up_event>) {
-			visitor(key_up_event{*this});
-		}
-		break;
+		return visitor(key_up_event{*this});
 	case 0x303:
-		if constexpr (std::is_invocable_v<Visitor, text_input_event>) {
-			visitor(text_input_event{*this});
-		}
-		break;
+		return visitor(text_input_event{*this});
 	case 0x400:
-		if constexpr (std::is_invocable_v<Visitor, mouse_motion_event>) {
-			visitor(mouse_motion_event{*this});
-		}
-		break;
+		return visitor(mouse_motion_event{*this});
 	case 0x401:
-		if constexpr (std::is_invocable_v<Visitor, mouse_down_event>) {
-			visitor(mouse_down_event{*this});
-		}
-		break;
+		return visitor(mouse_down_event{*this});
 	case 0x402:
-		if constexpr (std::is_invocable_v<Visitor, mouse_up_event>) {
-			visitor(mouse_up_event{*this});
-		}
-		break;
+		return visitor(mouse_up_event{*this});
 	case 0x403:
-		if constexpr (std::is_invocable_v<Visitor, mouse_wheel_event>) {
-			visitor(mouse_wheel_event{*this});
-		}
-		break;
+		return visitor(mouse_wheel_event{*this});
 	case 0x8000:
-		if constexpr (std::is_invocable_v<Visitor, tick_event>) {
-			visitor(tick_event{*this});
-		}
-		break;
+		return visitor(tick_event{*this});
 	case 0x8001:
-		if constexpr (std::is_invocable_v<Visitor, draw_event>) {
-			visitor(draw_event{});
-		}
-		break;
+		return visitor(draw_event{});
+	default:
+#if defined(_MSC_VER) && !defined(__clang__) // MSVC
+		__assume(false);
+#else // GCC, Clang
+		__builtin_unreachable();
+#endif
 	}
 }

@@ -22,7 +22,7 @@ namespace tr::sys {
 	// Handles all available events in a loop.
 	template <std::invocable<tr::sys::event> Handler> void handle_events(Handler&& handler);
 	// Handles all available events in a loop (through a visitor).
-	template <class Visitor> void handle_events(Visitor&& visitor);
+	template <event_visitor Visitor> void handle_events(Visitor&& visitor);
 
 	// Enables sending text input events.
 	void enable_text_input_events();
@@ -39,7 +39,7 @@ template <std::invocable<tr::sys::event> Handler> void tr::sys::handle_events(Ha
 	}
 }
 
-template <class Visitor> void tr::sys::handle_events(Visitor&& visitor)
+template <tr::sys::event_visitor Visitor> void tr::sys::handle_events(Visitor&& visitor)
 {
-	handle_events([&](const event& event) { event.visit(visitor); });
+	handle_events([v = std::forward<Visitor>(visitor)](const event& event) { event.visit(v); });
 }
