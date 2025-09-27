@@ -288,7 +288,7 @@ template <class T>
 void tr::binary_writer<std::span<T>>::write_to_stream(std::ostream& os, const std::span<T>& in)
 	requires(stream_binary_writable<T>)
 {
-	if constexpr (requires { requires std::same_as<typename binary_writer<T>::default_writer, std::true_type>; }) {
+	if constexpr (requires { requires std::same_as<typename binary_writer<std::remove_cv_t<T>>::default_writer, std::true_type>; }) {
 		os.write((const char*)in.data(), in.size_bytes());
 	}
 	else {
@@ -302,7 +302,7 @@ template <class T>
 std::span<std::byte> tr::binary_writer<std::span<T>>::write_to_span(std::span<std::byte> span, const std::span<T>& in)
 	requires(span_binary_writable<T>)
 {
-	if constexpr (requires { requires std::same_as<typename binary_writer<T>::default_writer, std::true_type>; }) {
+	if constexpr (requires { requires std::same_as<typename binary_writer<std::remove_cv_t<T>>::default_writer, std::true_type>; }) {
 		std::ranges::copy(range_bytes(in), span.begin());
 		return span.subspan(in.size_bytes());
 	}
