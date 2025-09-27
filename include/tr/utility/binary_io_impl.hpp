@@ -21,7 +21,7 @@ template <class T>
 void tr::binary_reader<std::span<T>>::read_from_stream(std::istream& is, const std::span<T>& out)
 	requires(stream_binary_readable<T>)
 {
-	if constexpr (std::is_base_of_v<default_binary_reader<T>, binary_reader<T>>) {
+	if constexpr (requires { requires std::same_as<typename binary_reader<T>::default_reader, std::true_type>; }) {
 		is.read((char*)out.data(), out.size_bytes());
 	}
 	else {
