@@ -12,6 +12,8 @@ namespace tr {
 	concept default_binary_readable = std::is_standard_layout_v<T> && std::same_as<T, std::remove_cvref_t<T>>;
 	// Default binary reader.
 	template <default_binary_readable T> struct default_binary_reader {
+		using default_reader = std::true_type;
+
 		static void read_from_stream(std::istream& is, T& out);
 		static std::span<const std::byte> read_from_span(std::span<const std::byte> span, T& out);
 	};
@@ -135,6 +137,8 @@ namespace tr {
 	concept default_binary_writable = std::is_standard_layout_v<T>;
 	// Default binary writer.
 	template <default_binary_writable T> struct default_binary_writer {
+		using default_writer = std::true_type;
+
 		static void write_to_stream(std::ostream& os, const T& in);
 		static std::span<std::byte> write_to_span(std::span<std::byte> span, const T& in);
 	};
