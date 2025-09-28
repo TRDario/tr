@@ -2,529 +2,73 @@
 #include "geometry.hpp"
 
 namespace tr {
-	/** @ingroup utility
-	 *  @defgroup drawing Drawing
-	 *  Helper functionality for drawing.
-	 *  @{
-	 */
+	// Calculates the number of segments needed to draw a smooth circle with pixel radius r.
+	inline usize smooth_polygon_vertices(float r);
+	// Calculates the number of segments needed to draw a smooth arc with pixel radius r.
+	inline usize smooth_arc_vertices(float r, angle sizeth);
+	// Calculates the number of indices needed for a convex polygon mesh.
+	constexpr usize polygon_indices(u16 vtx);
+	// Calculates the number of indices needed for a convex polygon mesh.
+	constexpr usize polygon_outline_indices(u16 vtx);
 
-	/******************************************************************************************************************
-	 * Calculates the number of segments needed to draw a smooth circle with pixel radius r.
-	 *
-	 * @param[in] r The radius of the circle.
-	 * @param[in] scale The field scale parameter to apply to the calculation.
-	 *
-	 * @return The number of segments needed to draw a smooth circle with pixel radius r.
-	 ******************************************************************************************************************/
-	inline usize smooth_poly_vtx(float r, float scale = 1.0f);
+	// Outputs indices for a convex polygon to an output iterator.
+	// out needs to have space for poly_idx(vtx) indices.
+	template <std::output_iterator<u16> O> constexpr O fill_polygon_indices(u16 vtx, u16 base, O out);
+	// Outputs indices for a convex polygon outline to an output iterator.
+	// out needs to have space for poly_outline_idx(vtx) indices.
+	// vtx is the number of vertices in the polygon, not the mesh.
+	template <std::output_iterator<u16> O> constexpr O fill_polygon_outline_indices(u16 vtx, u16 base, O out);
 
-	/******************************************************************************************************************
-	 * Calculates the number of segments needed to draw a smooth arc.
-	 *
-	 * @param[in] r The radius of the arc circle.
-	 * @param[in] sizeth The angular size of the arc.
-	 * @param[in] scale The field scale parameter to apply to the calculation.
-	 *
-	 * @return The number of segments needed to draw a smooth arc.
-	 ******************************************************************************************************************/
-	inline usize smooth_arc_vtx(float r, angle sizeth, float scale = 1.0f);
+	// Outputs rectangle vertices to an output iterator.
+	// out needs to have space for 4 vertices.
+	template <std::output_iterator<glm::vec2> O> constexpr O fill_rectangle_vertices(const frect2& rect, O out);
+	// Outputs transformed rectangle vertices to an output iterator.
+	// out needs to have space for 4 vertices.
+	template <std::output_iterator<glm::vec2> O> constexpr O fill_rectangle_vertices(const frect2& rect, const glm::mat4& mat, O out);
+	// Outputs rotated rectangle vertices to an output iterator.
+	// out needs to have space for 4 vertices.
+	template <std::output_iterator<glm::vec2> O>
+	O fill_rectangle_vertices(glm::vec2 pos, glm::vec2 anchor, glm::vec2 size, angle rotation, O out);
 
-	/******************************************************************************************************************
-	 * Calculates the number of indices needed for a convex polygon mesh.
-	 *
-	 * @param[in] vtx The number of vertices in the polygon.
-	 *
-	 * @return The number of indices needed for the polygon mesh.
-	 *****************************************************************************************************************/
-	constexpr usize poly_idx(u16 vtx);
+	// Outputs rectangle outline vertices to an output iterator.
+	// out needs to have space for 8 vertices.
+	template <std::output_iterator<glm::vec2> O> constexpr O fill_rectangle_outline_vertices(const frect2& rect, float thickness, O out);
+	// Outputs transformed rectangle outline vertices to an output iterator.
+	// out needs to have space for 8 vertices.
+	template <std::output_iterator<glm::vec2> O>
+	constexpr O fill_rectangle_outline_vertices(const frect2& rect, float thickness, const glm::mat4& mat, O out);
+	// Outputs rotated rectangle outline vertices to an output iterator.
+	// out needs to have space for 8 vertices.
+	template <std::output_iterator<glm::vec2> O>
+	O fill_rectangle_outline_vertices(glm::vec2 pos, glm::vec2 anchor, glm::vec2 size, angle rotation, float thickness, O out);
 
-	/******************************************************************************************************************
-	 * Calculates the number of indices needed for a convex polygon mesh.
-	 *
-	 * @param[in] vtx The number of vertices in the polygon.
-	 *
-	 * @return The number of indices needed for the polygon mesh.
-	 *****************************************************************************************************************/
-	constexpr usize poly_outline_idx(u16 vtx);
+	// Outputs arc vertices to an output iterator.
+	// out needs to have space for vtx vertices.
+	template <std::output_iterator<glm::vec2> O> O fill_arc_vertices(usize vtx, circle circle, angle start, angle size, O out);
+	// Outputs arc vertices to a range.
+	template <sized_output_range<glm::vec2> R> void fill_arc_vertices(circle circle, angle start, angle size, R&& out);
+	// Outputs regular polygon vertices to an output iterator.
+	// out needs to have space for vtx vertices.
+	template <std::output_iterator<glm::vec2> O> O fill_polygon_vertices(usize vtx, circle circle, angle rotation, O out);
+	// Outputs regular polygon vertices to a range.
+	template <sized_output_range<glm::vec2> R> void fill_polygon_vertices(circle circle, angle rotation, R&& out);
+	// Outputs circle vertices to an output iterator.
+	// out needs to have space for vtx vertices.
+	template <std::output_iterator<glm::vec2> O> O fill_circle_vertices(usize vtx, circle circle, O out);
+	// Outputs circle vertices to a range.
+	template <sized_output_range<glm::vec2> R> void fill_circle_vertices(circle circle, R&& out);
 
-	/******************************************************************************************************************
-	 * Outputs indices for a convex polygon.
-	 *
-	 * @tparam It An index output iterator type.
-	 *
-	 * @param[out] out
-	 * @parblock
-	 * The output iterator.
-	 *
-	 * @pre There has to be space for `(vtx - 2) * 3` indices.
-	 * @endparblock
-	 * @param[in] vtx
-	 * @parblock
-	 * The number of vertices in the polygon.
-	 *
-	 * @pre @em vtx must be greater than 2.
-	 * @endparblock
-	 * @param[in] base The "base" index offset added to every index value.
-	 *
-	 * @return An iterator to the end of the outputted sequence.
-	 ******************************************************************************************************************/
-	template <std::output_iterator<u16> It> constexpr It fill_poly_idx(It out, u16 vtx, u16 base);
-
-	/******************************************************************************************************************
-	 * Outputs indices for a convex polygon.
-	 *
-	 * @tparam R A sized output range of u16.
-	 *
-	 * @param[out] out
-	 * @parblock
-	 * The output range which will be filled from the beginning.
-	 *
-	 * @pre There has to be space for `(vtx - 2) * 3` indices.
-	 * @endparblock
-	 * @param[in] vtx
-	 * @parblock
-	 * The number of vertices in the polygon.
-	 *
-	 * @pre @em vtx must be greater than 2.
-	 * @endparblock
-	 * @param[in] base The "base" index offset added to every index value.
-	 *
-	 * @return An iterator to the end of the outputted sequence.
-	 ******************************************************************************************************************/
-	template <sized_output_range<u16> R> constexpr std::ranges::iterator_t<R> fill_poly_idx(R&& out, u16 vtx, u16 base);
-
-	/******************************************************************************************************************
-	 * Outputs indices for a convex polygon outline.
-	 *
-	 * @tparam It An index output iterator type.
-	 *
-	 * @param[out] out
-	 * @parblock
-	 * The output iterator.
-	 *
-	 * @pre There has to be space for `vtx * 6` indices.
-	 * @endparblock
-	 * @param[in] vtx
-	 * @parblock
-	 * The number of vertices in the polygon.
-	 *
-	 * @pre @em vtx must be greater than 2.
-	 * @endparblock
-	 * @param[in] base The "base" index offset added to every index value.
-	 *
-	 * @return An iterator to the end of the outputted sequence.
-	 ******************************************************************************************************************/
-	template <std::output_iterator<u16> It> constexpr It fill_poly_outline_idx(It out, u16 vtx, u16 base);
-
-	/******************************************************************************************************************
-	 * Outputs indices for a convex polygon outline.
-	 *
-	 * @tparam R A sized output range of u16.
-	 *
-	 * @param[out] out
-	 * @parblock
-	 * The output range which will be filled from the beginning.
-	 *
-	 * @pre There has to be space for `vtx * 6` indices.
-	 * @endparblock
-	 * @param[in] vtx
-	 * @parblock
-	 * The number of vertices in the polygon.
-	 *
-	 * @pre @em vtx must be greater than 2.
-	 * @endparblock
-	 * @param[in] base The "base" index offset added to every index value.
-	 *
-	 * @return An iterator to the end of the outputted sequence.
-	 ******************************************************************************************************************/
-	template <sized_output_range<u16> R> constexpr std::ranges::iterator_t<R> fill_poly_outline_idx(R&& out, u16 vtx, u16 base);
-
-	/******************************************************************************************************************
-	 * Outputs unrotated rectangle vertices.
-	 *
-	 * @tparam It A position vector output iterator type.
-	 *
-	 * @param[out] out
-	 * @parblock
-	 * The output iterator.
-	 *
-	 * @pre There has to be space for 4 vertices.
-	 * @endparblock
-	 * @param[in] rect The rect to produce vertices for.
-	 *
-	 * @return An iterator to the end of the outputted sequence.
-	 ******************************************************************************************************************/
-	template <std::output_iterator<glm::vec2> It> constexpr It fill_rect_vtx(It out, const frect2& rect);
-
-	/******************************************************************************************************************
-	 * Outputs unrotated rectangle vertices.
-	 *
-	 * @tparam R A sized output range of glm::vec2.
-	 *
-	 * @param[out] out
-	 * @parblock
-	 * The output range which will be filled from the beginning.
-	 *
-	 * @pre There has to be space for 4 vertices.
-	 * @endparblock
-	 * @param[in] rect The rect to produce vertices for.
-	 *
-	 * @return An iterator to the end of the outputted sequence.
-	 ******************************************************************************************************************/
-	template <sized_output_range<glm::vec2> R> constexpr std::ranges::iterator_t<R> fill_rect_vtx(R&& out, const frect2& rect);
-
-	/******************************************************************************************************************
-	 * Outputs rectangle vertices.
-	 *
-	 * @tparam It A position vector output iterator type.
-	 *
-	 * @param[out] out
-	 * @parblock
-	 * The output iterator.
-	 *
-	 * @pre There has to be space for 4 vertices.
-	 * @endparblock
-	 * @param[in] rect The rectangle to produce vertices for.
-	 * @param[in] mat A transformation matrix to apply to the vertices.
-	 *
-	 * @return An iterator to the end of the outputted sequence.
-	 ******************************************************************************************************************/
-	template <std::output_iterator<glm::vec2> It> constexpr It fill_rect_vtx(It out, const frect2& rect, const glm::mat4& mat);
-
-	/******************************************************************************************************************
-	 * Outputs unrotated rectangle vertices.
-	 *
-	 * @tparam R A sized output range of glm::vec2.
-	 *
-	 * @param[out] out
-	 * @parblock
-	 * The output range which will be filled from the beginning.
-	 *
-	 * @pre There has to be space for 4 vertices.
-	 * @endparblock
-	 * @param[in] rect The rect to produce vertices for.
-	 * @param[in] mat A transformation matrix to apply to the vertices.
-	 *
-	 * @return An iterator to the end of the outputted sequence.
-	 ******************************************************************************************************************/
-	template <sized_output_range<glm::vec2> R>
-	constexpr std::ranges::iterator_t<R> fill_rect_vtx(R&& out, const frect2& rect, const glm::mat4& mat);
-
-	/******************************************************************************************************************
-	 * Outputs rotated rectangle vertices.
-	 *
-	 * @tparam It A position vector output iterator type.
-	 *
-	 * @param[out] out
-	 * @parblock
-	 * The output iterator.
-	 *
-	 * @pre There has to be space for 4 vertices.
-	 * @endparblock
-	 * @param[in] pos The position of the anchor point of the rectangle.
-	 * @param[in] anchor The position of the anchor point within the rectangle ((0, 0) = top-left).
-	 * @param[in] size The size of the rectangle.
-	 * @param[in] rot The rotation of the rectangle.
-	 *
-	 * @return An iterator to the end of the outputted sequence.
-	 ******************************************************************************************************************/
-	template <std::output_iterator<glm::vec2> It>
-	inline It fill_rotated_rect_vtx(It out, glm::vec2 pos, glm::vec2 anchor, glm::vec2 size, angle rot);
-
-	/******************************************************************************************************************
-	 * Outputs rotated rectangle vertices.
-	 *
-	 * @tparam R A sized output range of glm::vec2.
-	 *
-	 * @param[out] out
-	 * @parblock
-	 * The output range which will be filled from the beginning.
-	 *
-	 * @pre There has to be space for 4 vertices.
-	 * @endparblock
-	 * @param[in] pos The position of the anchor point of the rectangle.
-	 * @param[in] anchor The position of the anchor point within the rectangle ((0, 0) = top-left).
-	 * @param[in] size The size of the rectangle.
-	 * @param[in] rot The rotation of the rectangle.
-	 *
-	 * @return An iterator to the end of the outputted sequence.
-	 ******************************************************************************************************************/
-	template <sized_output_range<glm::vec2> R>
-	inline std::ranges::iterator_t<R> fill_rotated_rect_vtx(R&& out, glm::vec2 pos, glm::vec2 anchor, glm::vec2 size, angle rot);
-
-	/******************************************************************************************************************
-	 * Outputs unrotated rectangle outline vertices.
-	 *
-	 * @tparam It A position vector output iterator type.
-	 *
-	 * @param[out] out
-	 * @parblock
-	 * The output iterator.
-	 *
-	 * @pre There has to be space for 8 vertices.
-	 * @endparblock
-	 * @param[in] rect The rect to produce vertices for.
-	 * @param[in] thick The thickness of the outline.
-	 *
-	 * @return An iterator to the end of the outputted sequence.
-	 ******************************************************************************************************************/
-	template <std::output_iterator<glm::vec2> It> constexpr It fill_rect_outline_vtx(It out, const frect2& rect, float thick);
-
-	/******************************************************************************************************************
-	 * Outputs rectangle outline vertices.
-	 *
-	 * @tparam R A sized output range of glm::vec2.
-	 *
-	 * @param[out] out
-	 * @parblock
-	 * The output range which will be filled from the beginning.
-	 *
-	 * @pre There has to be space for 8 vertices.
-	 * @endparblock
-	 * @param[in] rect The rect to produce vertices for.
-	 * @param[in] thick The thickness of the outline.
-	 *
-	 * @return An iterator to the end of the outputted sequence.
-	 ******************************************************************************************************************/
-	template <sized_output_range<glm::vec2> R>
-	constexpr std::ranges::iterator_t<R> fill_rect_outline_vtx(R&& out, const frect2& rect, float thick);
-
-	/******************************************************************************************************************
-	 * Outputs rectangle outline vertices.
-	 *
-	 * @tparam It A position vector output iterator type.
-	 *
-	 * @param[out] out
-	 * @parblock
-	 * The output iterator.
-	 *
-	 * @pre There has to be space for 8 vertices.
-	 * @endparblock
-	 * @param[in] rect The rect to produce vertices for.
-	 * @param[in] thick The thickness of the outline.
-	 * @param[in] mat A transformation matrix to apply to the vertices.
-	 *
-	 * @return An iterator to the end of the outputted sequence.
-	 ******************************************************************************************************************/
-	template <std::output_iterator<glm::vec2> It>
-	constexpr It fill_rect_outline_vtx(It out, const frect2& rect, float thick, const glm::mat4& mat);
-
-	/******************************************************************************************************************
-	 * Outputs rectangle outline vertices.
-	 *
-	 * @tparam R A sized output range of glm::vec2.
-	 *
-	 * @param[out] out
-	 * @parblock
-	 * The output range which will be filled from the beginning.
-	 *
-	 * @pre There has to be space for 8 vertices.
-	 * @endparblock
-	 * @param[in] rect The rect to produce vertices for.
-	 * @param[in] thick The thickness of the outline.
-	 * @param[in] mat A transformation matrix to apply to the vertices.
-	 *
-	 * @return An iterator to the end of the outputted sequence.
-	 ******************************************************************************************************************/
-	template <sized_output_range<glm::vec2> R>
-	constexpr std::ranges::iterator_t<R> fill_rect_outline_vtx(R&& out, const frect2& rect, float thick, const glm::mat4& mat);
-
-	/******************************************************************************************************************
-	 * Outputs rotated rectangle outline vertices.
-	 *
-	 * @tparam It A position vector output iterator type.
-	 *
-	 * @param[out] out
-	 * @parblock
-	 * The output iterator.
-	 *
-	 * @pre There has to be space for 8 vertices.
-	 * @endparblock
-	 * @param[in] pos The position of the anchor point of the rectangle.
-	 * @param[in] anchor The position of the anchor point within the rectangle ((0, 0) = top-left).
-	 * @param[in] size The size of the rectangle.
-	 * @param[in] rot The rotation of the rectangle.
-	 * @param[in] thick The thickness of the outline.
-	 *
-	 * @return An iterator to the end of the outputted sequence.
-	 ******************************************************************************************************************/
-	template <std::output_iterator<glm::vec2> It>
-	inline It fill_rotated_rect_outline_vtx(It out, glm::vec2 pos, glm::vec2 anchor, glm::vec2 size, angle rot, float thick);
-
-	/******************************************************************************************************************
-	 * Outputs rotated rectangle outline vertices.
-	 *
-	 * @tparam R A sized output range of glm::vec2.
-	 *
-	 * @param[out] out
-	 * @parblock
-	 * The output range which will be filled from the beginning.
-	 *
-	 * @pre There has to be space for 8 vertices.
-	 * @endparblock
-	 * @param[in] pos The position of the anchor point of the rectangle.
-	 * @param[in] anchor The position of the anchor point within the rectangle ((0, 0) = top-left).
-	 * @param[in] size The size of the rectangle.
-	 * @param[in] rot The rotation of the rectangle.
-	 * @param[in] thick The thickness of the outline.
-	 *
-	 * @return An iterator to the end of the outputted sequence.
-	 ******************************************************************************************************************/
-	template <sized_output_range<glm::vec2> R>
-	inline std::ranges::iterator_t<R> fill_rotated_rect_outline_vtx(R&& out, glm::vec2 pos, glm::vec2 anchor, glm::vec2 size, angle rot,
-																	float thick);
-
-	/******************************************************************************************************************
-	 * Outputs vertex positions along an arc.
-	 *
-	 * @tparam It A position vector output iterator type.
-	 *
-	 * @param[out] out
-	 * @parblock
-	 * The output iterator.
-	 *
-	 * @pre There has to be space for all of the vertices.
-	 * @endparblock
-	 * @param[in] vtx
-	 * @parblock
-	 * The number of vertices on the arc.
-	 *
-	 * @pre @em vtx must be greater than 2.
-	 * @endparblock
-	 * @param[in] circ The arc circle.
-	 * @param[in] startth The starting angle on the arc circle of the arc.
-	 * @param[in] sizeth The angular size of the arc.
-	 *
-	 * @return An iterator to the end of the outputted sequence.
-	 ******************************************************************************************************************/
-	template <std::output_iterator<glm::vec2> It> It fill_arc_vtx(It out, usize vtx, circle circ, angle startth, angle sizeth);
-
-	/******************************************************************************************************************
-	 * Outputs vertex positions along an arc.
-	 *
-	 * @tparam R A sized output range of glm::vec2.
-	 *
-	 * @param[out] out
-	 * @parblock
-	 * The output range which will be filled from the beginning.
-	 *
-	 * @pre There has to be space for all of the vertices.
-	 * @endparblock
-	 * @param[in] vtx
-	 * @parblock
-	 * The number of vertices on the arc.
-	 *
-	 * @pre @em vtx must be greater than 2.
-	 * @endparblock
-	 * @param[in] circ The arc circle.
-	 * @param[in] startth The starting angle on the arc circle of the arc.
-	 * @param[in] sizeth The angular size of the arc.
-	 *
-	 * @return An iterator to the end of the outputted sequence.
-	 ******************************************************************************************************************/
-	template <sized_output_range<glm::vec2> R>
-	std::ranges::iterator_t<R> fill_arc_vtx(R&& out, usize vtx, circle circ, angle startth, angle sizeth);
-
-	/******************************************************************************************************************
-	 * Outputs vertex positions for a regular polygon.
-	 *
-	 * @tparam It A position vector output iterator type.
-	 *
-	 * @param[out] out
-	 * @parblock
-	 * The output iterator.
-	 *
-	 * @pre There has to be space for all of the vertices.
-	 * @endparblock
-	 * @param[in] vtx
-	 * @parblock
-	 * The number of vertices in the polygon.
-	 *
-	 * @pre @em vtx must be greater than 2.
-	 * @endparblock
-	 * @param[in] circ The tangent circle of the polygon.
-	 * @param[in] rot The rotation of the polygon.
-	 *
-	 * @return An iterator to the end of the outputted sequence.
-	 ******************************************************************************************************************/
-	template <std::output_iterator<glm::vec2> It> It fill_poly_vtx(It out, usize vtx, circle circ, angle rot = 0_deg);
-
-	/******************************************************************************************************************
-	 * Outputs vertex positions for a regular polygon.
-	 *
-	 * @tparam R A sized output range of glm::vec2.
-	 *
-	 * @param[out] out
-	 * @parblock
-	 * The output range which will be filled from the beginning.
-	 *
-	 * @pre There has to be space for all of the vertices.
-	 * @endparblock
-	 * @param[in] vtx
-	 * @parblock
-	 * The number of vertices in the polygon.
-	 *
-	 * @pre @em vertices must be greater than 2.
-	 * @endparblock
-	 * @param[in] circ The tangent circle of the polygon.
-	 * @param[in] rot The rotation of the polygon.
-	 *
-	 * @return An iterator to the end of the outputted sequence.
-	 ******************************************************************************************************************/
-	template <sized_output_range<glm::vec2> R> std::ranges::iterator_t<R> fill_poly_vtx(R&& out, usize vtx, circle circ, angle rot = 0_deg);
-
-	/******************************************************************************************************************
-	 * Outputs vertex positions for a regular polygon's outline.
-	 *
-	 * @tparam It A position vector output iterator type.
-	 *
-	 * @param[out] out
-	 * @parblock
-	 * The output iterator.
-	 *
-	 * @pre There has to be space for `vtx * 2` vertices.
-	 * @endparblock
-	 * @param[in] vtx
-	 * @parblock
-	 * The number of vertices in the polygon.
-	 *
-	 * @pre @em vtx must be greater than 2.
-	 * @endparblock
-	 * @param[in] circ The tangent circle of the polygon.
-	 * @param[in] rot The rotation of the polygon.
-	 * @param[in] thick The thickness of the polygon.
-	 *
-	 * @return An iterator to the end of the outputted sequence.
-	 ******************************************************************************************************************/
-	template <std::output_iterator<glm::vec2> It> It fill_poly_outline_vtx(It out, usize vtx, circle circ, angle rot, float thick);
-
-	/******************************************************************************************************************
-	 * Outputs vertex positions for a regular polygon's outline.
-	 *
-	 * @tparam R A sized output range of glm::vec2.
-	 *
-	 * @param[out] out
-	 * @parblock
-	 * The output range which will be filled from the beginning.
-	 *
-	 * @pre There has to be space for `vtx * 2` vertices.
-	 * @endparblock
-	 * @param[in] vtx
-	 * @parblock
-	 * The number of vertices in the polygon.
-	 *
-	 * @pre @em vtx must be greater than 2.
-	 * @endparblock
-	 * @param[in] circ The tangent circle of the polygon.
-	 * @param[in] rot The rotation of the polygon.
-	 * @param[in] thick The thickness of the polygon.
-	 *
-	 * @return An iterator to the end of the outputted sequence.
-	 ******************************************************************************************************************/
-	template <sized_output_range<glm::vec2> R>
-	std::ranges::iterator_t<R> fill_poly_outline_vtx(R&& out, usize vtx, circle circ, angle rot, float thick);
-
-	/// @}
+	// Outputs regular polygon outline vertices to an output iterator.
+	// out needs to have space for vtx * 2 vertices.
+	template <std::output_iterator<glm::vec2> O>
+	O fill_polygon_outline_vertices(usize vtx, circle circle, angle rotation, float thickness, O out);
+	// Outputs regular polygon outline vertices to a range.
+	template <sized_output_range<glm::vec2> R> void fill_polygon_outline_vertices(circle circle, angle rotation, float thickness, R&& out);
+	// Outputs circle outline vertices to an output iterator.
+	// out needs to have space for vtx * 2 vertices.
+	template <std::output_iterator<glm::vec2> O> O fill_circle_outline_vertices(usize vtx, circle circle, float thickness, O out);
+	// Outputs circle outline vertices to a range.
+	template <sized_output_range<glm::vec2> R> void fill_circle_outline_vertices(circle circle, float thickness, R&& out);
 } // namespace tr
 
-#include "draw_geometry_impl.hpp"
+#include "draw_geometry_impl.hpp" // IWYU pragma: keep
