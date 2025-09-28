@@ -50,4 +50,4 @@ namespace tr {
 	template <class T> opt_ref<T> make_opt_ref(T* ptr);
 } // namespace tr
 
-#include "reference_impl.hpp"
+#include "reference_impl.hpp" // IWYU pragma: keep

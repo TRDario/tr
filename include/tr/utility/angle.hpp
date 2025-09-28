@@ -136,4 +136,4 @@ template <> class TR_FMT::formatter<tr::angle> : public TR_FMT::formatter<float>
 	unit m_unit{unit::RADS};
 };
 
-#include "angle_impl.hpp"
+#include "angle_impl.hpp" // IWYU pragma: keep

@@ -239,4 +239,4 @@ namespace tr {
 	template <span_binary_writable T> std::span<std::byte> binary_write(std::span<std::byte> span, const T& in);
 } // namespace tr
 
-#include "binary_io_impl.hpp"
+#include "binary_io_impl.hpp" // IWYU pragma: keep

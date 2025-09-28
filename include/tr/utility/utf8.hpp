@@ -77,4 +77,4 @@ namespace tr::utf8 {
 	constexpr usize length(std::string_view str);
 } // namespace tr::utf8
 
-#include "utf8_impl.hpp"
+#include "utf8_impl.hpp" // IWYU pragma: keep

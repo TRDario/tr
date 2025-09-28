@@ -353,4 +353,4 @@ namespace tr {
 	/// @}
 } // namespace tr
 
-#include "color_cast_impl.hpp"
+#include "color_cast_impl.hpp" // IWYU pragma: keep

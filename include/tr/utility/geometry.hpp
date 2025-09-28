@@ -152,4 +152,4 @@ namespace tr {
 	glm::mat4 rotate_around(const glm::mat4& mat, const glm::vec3& c, const angle& th, const glm::vec3& axis);
 } // namespace tr
 
-#include "geometry_impl.hpp"
+#include "geometry_impl.hpp" // IWYU pragma: keep

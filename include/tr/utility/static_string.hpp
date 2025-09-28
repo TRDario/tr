@@ -131,4 +131,4 @@ namespace tr {
 // Formatter for static strings.
 template <tr::usize S> struct TR_FMT::formatter<tr::static_string<S>> : TR_FMT::formatter<std::string_view> {};
 
-#include "static_string_impl.hpp"
+#include "static_string_impl.hpp" // IWYU pragma: keep

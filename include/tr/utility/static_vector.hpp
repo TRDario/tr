@@ -177,4 +177,4 @@ namespace tr {
 	};
 } // namespace tr
 
-#include "static_vector_impl.hpp"
+#include "static_vector_impl.hpp" // IWYU pragma: keep
