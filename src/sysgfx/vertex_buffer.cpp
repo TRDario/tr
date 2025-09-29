@@ -1,5 +1,5 @@
-#include "../../include/tr/sysgfx/gl_call.hpp"
 #include "../../include/tr/sysgfx/vertex_buffer.hpp"
+#include "../../include/tr/sysgfx/gl_call.hpp"
 
 /////////////////////////////////////////////////////// BASIC STATIC VERTEX BUFFER ////////////////////////////////////////////////////////
 
@@ -89,9 +89,9 @@ void tr::gfx::basic_dyn_vertex_buffer::reserve(usize capacity)
 		capacity = std::bit_ceil(capacity);
 
 #ifdef TR_ENABLE_ASSERTS
-		char label_buffer[128];
+		char label_buffer[64];
 		GLsizei label_length;
-		TR_GL_CALL(glGetObjectLabel, GL_BUFFER, m_vbo.get(), 128, &label_length, label_buffer);
+		TR_GL_CALL(glGetObjectLabel, GL_BUFFER, m_vbo.get(), std::size(label_buffer), &label_length, label_buffer);
 #endif
 
 		GLuint vbo;
@@ -137,6 +137,8 @@ void tr::gfx::basic_dyn_vertex_buffer::set_region(usize offset, std::span<const 
 #ifdef TR_ENABLE_ASSERTS
 void tr::gfx::basic_dyn_vertex_buffer::set_label(std::string_view label)
 {
+	TR_ASSERT(label.size() <= 64, "Tried to set an overlong vertex buffer label of {} characters (max is 64).", label.size());
+
 	TR_GL_CALL(glObjectLabel, GL_BUFFER, m_vbo.get(), GLsizei(label.size()), label.data());
 }
 

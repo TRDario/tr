@@ -79,8 +79,12 @@ namespace tr::gfx {
 		// Sets a region of the texture.
 		void set_region(glm::ivec2 tl, const sub_bitmap& bitmap);
 
+#ifdef TR_ENABLE_ASSERTS
+		// Gets the debug label of the texture.
+		std::string label() const;
 		// Sets the debug label of the texture.
 		void set_label(std::string_view label);
+#endif
 
 	  protected:
 		// Handle to the OpenGL texture.

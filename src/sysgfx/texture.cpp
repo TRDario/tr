@@ -1,6 +1,6 @@
+#include "../../include/tr/sysgfx/texture.hpp"
 #include "../../include/tr/sysgfx/gl_call.hpp"
 #include "../../include/tr/sysgfx/impl.hpp"
-#include "../../include/tr/sysgfx/texture.hpp"
 
 namespace tr::gfx {
 	// Converts a pixel format to a texture format.
@@ -204,13 +204,17 @@ tr::gfx::texture tr::gfx::texture::reallocate(glm::ivec2 size, bool mipmapped, p
 		GLint mag_filter;
 		GLint wrap;
 		rgbaf border_color;
-		char label_buffer[128];
-		GLsizei label_length;
+
 		TR_GL_CALL(glGetTextureParameteriv, m_handle, GL_TEXTURE_MIN_FILTER, &min_filter);
 		TR_GL_CALL(glGetTextureParameteriv, m_handle, GL_TEXTURE_MAG_FILTER, &mag_filter);
 		TR_GL_CALL(glGetTextureParameteriv, m_handle, GL_TEXTURE_WRAP_S, &wrap);
 		TR_GL_CALL(glGetTextureParameterfv, m_handle, GL_TEXTURE_BORDER_COLOR, &border_color.r);
-		TR_GL_CALL(glGetObjectLabel, GL_TEXTURE, m_handle, 128, &label_length, label_buffer);
+
+#ifdef TR_ENABLE_ASSERTS
+		char label_buffer[64];
+		GLsizei label_length;
+		TR_GL_CALL(glGetObjectLabel, GL_TEXTURE, m_handle, std::size(label_buffer), &label_length, label_buffer);
+#endif
 
 		TR_GL_CALL(glCreateTextures, GL_TEXTURE_2D, 1, &m_handle);
 		TR_GL_CALL(glTextureParameteri, m_handle, GL_TEXTURE_MIN_FILTER, min_filter);
@@ -218,9 +222,12 @@ tr::gfx::texture tr::gfx::texture::reallocate(glm::ivec2 size, bool mipmapped, p
 		TR_GL_CALL(glTextureParameteri, m_handle, GL_TEXTURE_WRAP_S, wrap);
 		TR_GL_CALL(glTextureParameteri, m_handle, GL_TEXTURE_WRAP_T, wrap);
 		TR_GL_CALL(glTextureParameteri, m_handle, GL_TEXTURE_WRAP_R, wrap);
+#ifdef TR_ENABLE_ASSERTS
 		if (label_length > 0) {
 			TR_GL_CALL(glObjectLabel, GL_TEXTURE, m_handle, label_length, label_buffer);
+			TR_GL_CALL(glObjectLabel, GL_TEXTURE, old_handle, 0, nullptr);
 		}
+#endif
 	}
 	else if (m_handle == 0) {
 		TR_GL_CALL(glCreateTextures, GL_TEXTURE_2D, 1, &m_handle);
@@ -316,12 +323,30 @@ void tr::gfx::texture::set_region(glm::ivec2 tl, const sub_bitmap& bitmap)
 	TR_GL_CALL(glGenerateTextureMipmap, m_handle);
 }
 
+#ifdef TR_ENABLE_ASSERTS
+std::string tr::gfx::texture::label() const
+{
+	GLsizei length;
+	TR_GL_CALL(glGetObjectLabel, GL_TEXTURE, m_handle, 0, &length, nullptr);
+	if (length > 0) {
+		std::string str(length, '\0');
+		TR_GL_CALL(glGetObjectLabel, GL_TEXTURE, m_handle, length, nullptr, str.data());
+		return str;
+	}
+	else {
+		return "<unnamed>";
+	}
+}
+
 void tr::gfx::texture::set_label(std::string_view label)
 {
+	TR_ASSERT(label.size() <= 64, "Tried to set an overlong texture label of {} characters (max is 64).", label.size());
+
 	if (!empty()) {
 		TR_GL_CALL(glObjectLabel, GL_TEXTURE, m_handle, GLsizei(label.size()), label.data());
 	}
 }
+#endif
 
 /////////////////////////////////////////////////////////////// TEXTURE REF ///////////////////////////////////////////////////////////////
 
