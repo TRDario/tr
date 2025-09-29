@@ -1,7 +1,17 @@
+#include "../../include/tr/sysgfx/vertex_format.hpp"
 #include "../../include/tr/sysgfx/gl_call.hpp"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/impl.hpp"
-#include "../../include/tr/sysgfx/vertex_format.hpp"
+
+#ifdef TR_ENABLE_ASSERTS
+namespace tr::gfx {
+	constexpr std::initializer_list<vertex_binding> VERTEX2_ATTRIBUTES{
+		{NOT_INSTANCED, {as_vertex_attribute<glm::vec2>}},
+		{NOT_INSTANCED, {as_vertex_attribute<glm::vec2>}},
+		{NOT_INSTANCED, {as_vertex_attribute<rgba8>}},
+	};
+}
+#endif
 
 tr::gfx::vertex_format::vertex_format(std::initializer_list<vertex_binding> bindings)
 #ifdef TR_ENABLE_GL_CHECKS
@@ -55,9 +65,7 @@ std::string tr::gfx::vertex_format::label() const
 tr::gfx::vertex_format& tr::gfx::vertex2_format()
 {
 	if (!vertex2_format_.has_value()) {
-		vertex2_format_ = {{NOT_INSTANCED, {as_vertex_attribute<glm::vec2>}},
-						   {NOT_INSTANCED, {as_vertex_attribute<glm::vec2>}},
-						   {NOT_INSTANCED, {as_vertex_attribute<rgba8>}}};
+		vertex2_format_.emplace(VERTEX2_ATTRIBUTES);
 		TR_SET_LABEL(*vertex2_format_, "(tr) 2D Vertex Format");
 	}
 	return *vertex2_format_;
