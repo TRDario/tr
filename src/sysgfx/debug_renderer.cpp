@@ -1,6 +1,6 @@
+#include "../../include/tr/sysgfx/debug_renderer.hpp"
 #include "../../include/tr/sysgfx/backbuffer.hpp"
 #include "../../include/tr/sysgfx/blending.hpp"
-#include "../../include/tr/sysgfx/debug_renderer.hpp"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/render_target.hpp"
 
@@ -11,20 +11,10 @@ namespace tr::gfx {
 	// Debug renderer glyph vertex definition.
 	template <> struct vertex_attributes<debug_renderer::glyph> : unpacked_vertex_attributes<glm::u8vec2, u8, u8, rgba8, rgba8> {};
 	// Debug vertex format.
-	constexpr std::initializer_list<vertex_binding> DEBUG_FORMAT_ATTRIBUTES{
-		{NOT_INSTANCED,
-		 {
-			 as_vertex_attribute<glm::u8vec2>,
-		 }},
-		{1,
-		 {
-			 as_vertex_attribute<glm::u8vec2>,
-			 as_vertex_attribute<u8>,
-			 as_vertex_attribute<u8>,
-			 as_vertex_attribute<rgba8>,
-			 as_vertex_attribute<rgba8>,
-		 }},
-	};
+	constexpr std::array<vertex_binding, 2> DEBUG_FORMAT_ATTRIBUTES{{
+		{NOT_INSTANCED, vertex_attributes<glm::vec2>::list},
+		{1, unpacked_vertex_attributes<glm::u8vec2, u8, u8, rgba8, rgba8>::list},
+	}};
 	// Debug vertex shader.
 	inline constexpr const char* DEBUG_RENDERER_VERT_SRC =
 		"#version 450\n#define L(l) layout(location=l)\nL(0)uniform vec2 r;L(1)uniform float s;L(0)in vec2 p;L(1)in vec2 P;L(2)in float "

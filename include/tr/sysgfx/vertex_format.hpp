@@ -23,68 +23,47 @@ namespace tr::gfx {
 		constexpr int size_bytes() const;
 	};
 	// Tag to signify an integral vertex attribute should be normalized.
-	struct normalized {};
+	template <class T> struct normalized {};
 
-	template <class T, class AdditionalTag = void> inline constexpr vertex_attribute as_vertex_attribute{};
+	template <class T> inline constexpr vertex_attribute as_vertex_attribute{};
 	template <> inline constexpr vertex_attribute as_vertex_attribute<i8>{vertex_attribute_type::I8, 1, false};
 	template <> inline constexpr vertex_attribute as_vertex_attribute<glm::i8vec2>{vertex_attribute_type::I8, 2, false};
 	template <> inline constexpr vertex_attribute as_vertex_attribute<glm::i8vec3>{vertex_attribute_type::I8, 3, false};
 	template <> inline constexpr vertex_attribute as_vertex_attribute<glm::i8vec4>{vertex_attribute_type::I8, 4, false};
-	template <> inline constexpr vertex_attribute as_vertex_attribute<i8, normalized>{vertex_attribute_type::I8, 1, true};
-	template <> inline constexpr vertex_attribute as_vertex_attribute<glm::i8vec2, normalized>{vertex_attribute_type::I8, 2, true};
-	template <> inline constexpr vertex_attribute as_vertex_attribute<glm::i8vec3, normalized>{vertex_attribute_type::I8, 3, true};
-	template <> inline constexpr vertex_attribute as_vertex_attribute<glm::i8vec4, normalized>{vertex_attribute_type::I8, 4, true};
 	template <> inline constexpr vertex_attribute as_vertex_attribute<u8>{vertex_attribute_type::U8, 1, false};
 	template <> inline constexpr vertex_attribute as_vertex_attribute<glm::u8vec2>{vertex_attribute_type::U8, 2, false};
 	template <> inline constexpr vertex_attribute as_vertex_attribute<glm::u8vec3>{vertex_attribute_type::U8, 3, false};
 	template <> inline constexpr vertex_attribute as_vertex_attribute<glm::u8vec4>{vertex_attribute_type::U8, 4, false};
-	template <> inline constexpr vertex_attribute as_vertex_attribute<u8, normalized>{vertex_attribute_type::U8, 1, true};
-	template <> inline constexpr vertex_attribute as_vertex_attribute<glm::u8vec2, normalized>{vertex_attribute_type::U8, 2, true};
-	template <> inline constexpr vertex_attribute as_vertex_attribute<glm::u8vec3, normalized>{vertex_attribute_type::U8, 3, true};
-	template <> inline constexpr vertex_attribute as_vertex_attribute<glm::u8vec4, normalized>{vertex_attribute_type::U8, 4, true};
 	template <> inline constexpr vertex_attribute as_vertex_attribute<i16>{vertex_attribute_type::I16, 1, false};
 	template <> inline constexpr vertex_attribute as_vertex_attribute<glm::i16vec2>{vertex_attribute_type::I16, 2, false};
 	template <> inline constexpr vertex_attribute as_vertex_attribute<glm::i16vec3>{vertex_attribute_type::I16, 3, false};
 	template <> inline constexpr vertex_attribute as_vertex_attribute<glm::i16vec4>{vertex_attribute_type::I16, 4, false};
-	template <> inline constexpr vertex_attribute as_vertex_attribute<i16, normalized>{vertex_attribute_type::I16, 1, true};
-	template <> inline constexpr vertex_attribute as_vertex_attribute<glm::i16vec2, normalized>{vertex_attribute_type::I16, 2, true};
-	template <> inline constexpr vertex_attribute as_vertex_attribute<glm::i16vec3, normalized>{vertex_attribute_type::I16, 3, true};
-	template <> inline constexpr vertex_attribute as_vertex_attribute<glm::i16vec4, normalized>{vertex_attribute_type::I16, 4, true};
 	template <> inline constexpr vertex_attribute as_vertex_attribute<u16>{vertex_attribute_type::U16, 1, false};
 	template <> inline constexpr vertex_attribute as_vertex_attribute<glm::u16vec2>{vertex_attribute_type::U16, 2, false};
 	template <> inline constexpr vertex_attribute as_vertex_attribute<glm::u16vec3>{vertex_attribute_type::U16, 3, false};
 	template <> inline constexpr vertex_attribute as_vertex_attribute<glm::u16vec4>{vertex_attribute_type::U16, 4, false};
-	template <> inline constexpr vertex_attribute as_vertex_attribute<u16, normalized>{vertex_attribute_type::U16, 1, true};
-	template <> inline constexpr vertex_attribute as_vertex_attribute<glm::u16vec2, normalized>{vertex_attribute_type::U16, 2, true};
-	template <> inline constexpr vertex_attribute as_vertex_attribute<glm::u16vec3, normalized>{vertex_attribute_type::U16, 3, true};
-	template <> inline constexpr vertex_attribute as_vertex_attribute<glm::u16vec4, normalized>{vertex_attribute_type::U16, 4, true};
 	template <> inline constexpr vertex_attribute as_vertex_attribute<i32>{vertex_attribute_type::I32, 1, false};
 	template <> inline constexpr vertex_attribute as_vertex_attribute<glm::i32vec2>{vertex_attribute_type::I32, 2, false};
 	template <> inline constexpr vertex_attribute as_vertex_attribute<glm::i32vec3>{vertex_attribute_type::I32, 3, false};
 	template <> inline constexpr vertex_attribute as_vertex_attribute<glm::i32vec4>{vertex_attribute_type::I32, 4, false};
-	template <> inline constexpr vertex_attribute as_vertex_attribute<i32, normalized>{vertex_attribute_type::I32, 1, true};
-	template <> inline constexpr vertex_attribute as_vertex_attribute<glm::i32vec2, normalized>{vertex_attribute_type::I32, 2, true};
-	template <> inline constexpr vertex_attribute as_vertex_attribute<glm::i32vec3, normalized>{vertex_attribute_type::I32, 3, true};
-	template <> inline constexpr vertex_attribute as_vertex_attribute<glm::i32vec4, normalized>{vertex_attribute_type::I32, 4, true};
 	template <> inline constexpr vertex_attribute as_vertex_attribute<u32>{vertex_attribute_type::U32, 1, false};
 	template <> inline constexpr vertex_attribute as_vertex_attribute<glm::u32vec2>{vertex_attribute_type::U32, 2, false};
 	template <> inline constexpr vertex_attribute as_vertex_attribute<glm::u32vec3>{vertex_attribute_type::U32, 3, false};
 	template <> inline constexpr vertex_attribute as_vertex_attribute<glm::u32vec4>{vertex_attribute_type::U32, 4, false};
-	template <> inline constexpr vertex_attribute as_vertex_attribute<u32, normalized>{vertex_attribute_type::U32, 1, true};
-	template <> inline constexpr vertex_attribute as_vertex_attribute<glm::u32vec2, normalized>{vertex_attribute_type::U32, 2, true};
-	template <> inline constexpr vertex_attribute as_vertex_attribute<glm::u32vec3, normalized>{vertex_attribute_type::U32, 3, true};
-	template <> inline constexpr vertex_attribute as_vertex_attribute<glm::u32vec4, normalized>{vertex_attribute_type::U32, 4, true};
 	template <> inline constexpr vertex_attribute as_vertex_attribute<float>{vertex_attribute_type::F32, 1, false};
 	template <> inline constexpr vertex_attribute as_vertex_attribute<glm::vec2>{vertex_attribute_type::F32, 2, false};
 	template <> inline constexpr vertex_attribute as_vertex_attribute<glm::vec3>{vertex_attribute_type::F32, 3, false};
 	template <> inline constexpr vertex_attribute as_vertex_attribute<glm::vec4>{vertex_attribute_type::F32, 4, false};
-	template <> inline constexpr vertex_attribute as_vertex_attribute<rgb8>{as_vertex_attribute<glm::u8vec3, normalized>};
-	template <> inline constexpr vertex_attribute as_vertex_attribute<rgba8>{as_vertex_attribute<glm::u8vec4, normalized>};
+	template <> inline constexpr vertex_attribute as_vertex_attribute<rgb8>{as_vertex_attribute<normalized<glm::u8vec3>>};
+	template <> inline constexpr vertex_attribute as_vertex_attribute<rgba8>{as_vertex_attribute<normalized<glm::u8vec4>>};
+	template <class T>
+	inline constexpr vertex_attribute as_vertex_attribute<normalized<T>>{as_vertex_attribute<T>.type, as_vertex_attribute<T>.elements,
+																		 true};
 
 	// Helper mechanism for generating a vertex attribute initializer list.
 	template <class... Ts> struct unpacked_vertex_attributes {
-		// Converts the type signature into a list of attributes.
-		static std::initializer_list<vertex_attribute> list();
+		// The list of vertex attributes.
+		static constexpr std::array<vertex_attribute, sizeof...(Ts)> list{as_vertex_attribute<Ts>...};
 	};
 	// Must be overloaded for custom structs by defining for example 'vertex_attributes<foo> : unpacked_vertex_attributes<int, float>'!
 	template <class T> struct vertex_attributes : unpacked_vertex_attributes<T> {};
@@ -96,14 +75,14 @@ namespace tr::gfx {
 		// The divisor of the binding.
 		u32 divisor;
 		// The attributes of the binding.
-		std::initializer_list<vertex_attribute> attrs;
+		std::span<const vertex_attribute> attrs;
 	};
 
 	// GPU Vertex format.
 	class vertex_format {
 	  public:
 		// Creates a new vertex format.
-		vertex_format(std::initializer_list<vertex_binding> bindings);
+		vertex_format(std::span<const vertex_binding> bindings);
 
 #ifdef TR_ENABLE_ASSERTS
 		// Sets the debug label of the vertex format.
@@ -121,7 +100,7 @@ namespace tr::gfx {
 		handle<unsigned int, 0, deleter> m_vao;
 #ifdef TR_ENABLE_GL_CHECKS
 		// Information about the vertex format's bindings.
-		std::initializer_list<vertex_binding> m_bindings;
+		std::span<const vertex_binding> m_bindings;
 #endif
 
 		friend void set_vertex_format(const vertex_format& format);
@@ -193,10 +172,4 @@ constexpr int tr::gfx::vertex_attribute::size_bytes() const
 	default:
 		return 0;
 	}
-}
-
-template <class... Ts> std::initializer_list<tr::gfx::vertex_attribute> tr::gfx::unpacked_vertex_attributes<Ts...>::list()
-{
-	static std::initializer_list<vertex_attribute> attrs{as_vertex_attribute<Ts>...};
-	return attrs;
 }

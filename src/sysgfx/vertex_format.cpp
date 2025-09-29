@@ -5,15 +5,15 @@
 
 #ifdef TR_ENABLE_ASSERTS
 namespace tr::gfx {
-	constexpr std::initializer_list<vertex_binding> VERTEX2_ATTRIBUTES{
-		{NOT_INSTANCED, {as_vertex_attribute<glm::vec2>}},
-		{NOT_INSTANCED, {as_vertex_attribute<glm::vec2>}},
-		{NOT_INSTANCED, {as_vertex_attribute<rgba8>}},
-	};
+	constexpr std::array<vertex_binding, 3> VERTEX2_ATTRIBUTES{{
+		{NOT_INSTANCED, vertex_attributes<glm::vec2>::list},
+		{NOT_INSTANCED, vertex_attributes<glm::vec2>::list},
+		{NOT_INSTANCED, vertex_attributes<rgba8>::list},
+	}};
 }
 #endif
 
-tr::gfx::vertex_format::vertex_format(std::initializer_list<vertex_binding> bindings)
+tr::gfx::vertex_format::vertex_format(std::span<const vertex_binding> bindings)
 #ifdef TR_ENABLE_GL_CHECKS
 	: m_bindings(bindings)
 #endif
