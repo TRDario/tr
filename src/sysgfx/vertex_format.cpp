@@ -3,7 +3,6 @@
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/impl.hpp"
 
-#ifdef TR_ENABLE_ASSERTS
 namespace tr::gfx {
 	constexpr std::array<vertex_binding, 3> VERTEX2_ATTRIBUTES{{
 		{NOT_INSTANCED, vertex_attributes<glm::vec2>::list},
@@ -11,7 +10,6 @@ namespace tr::gfx {
 		{NOT_INSTANCED, vertex_attributes<rgba8>::list},
 	}};
 }
-#endif
 
 tr::gfx::vertex_format::vertex_format(std::span<const vertex_binding> bindings)
 #ifdef TR_ENABLE_GL_CHECKS
