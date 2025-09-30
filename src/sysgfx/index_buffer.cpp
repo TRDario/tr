@@ -33,7 +33,7 @@ std::string tr::gfx::static_index_buffer::label() const
 	TR_GL_CALL(glGetObjectLabel, GL_BUFFER, m_ibo.get(), 0, &length, nullptr);
 	if (length > 0) {
 		std::string str(length, '\0');
-		TR_GL_CALL(glGetObjectLabel, GL_BUFFER, m_ibo.get(), length, nullptr, str.data());
+		TR_GL_CALL(glGetObjectLabel, GL_BUFFER, m_ibo.get(), length + 1, nullptr, str.data());
 		return str;
 	}
 	else {
@@ -148,7 +148,7 @@ std::string tr::gfx::dyn_index_buffer::label() const
 	TR_GL_CALL(glGetObjectLabel, GL_BUFFER, m_ibo.get(), 0, &length, nullptr);
 	if (length > 0) {
 		std::string str(length, '\0');
-		TR_GL_CALL(glGetObjectLabel, GL_BUFFER, m_ibo.get(), length, nullptr, str.data());
+		TR_GL_CALL(glGetObjectLabel, GL_BUFFER, m_ibo.get(), length + 1, nullptr, str.data());
 		return str;
 	}
 	else {

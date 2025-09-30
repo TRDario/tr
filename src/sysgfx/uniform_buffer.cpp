@@ -1,5 +1,5 @@
-#include "../../include/tr/sysgfx/gl_call.hpp"
 #include "../../include/tr/sysgfx/uniform_buffer.hpp"
+#include "../../include/tr/sysgfx/gl_call.hpp"
 
 tr::gfx::basic_uniform_buffer::basic_uniform_buffer(usize size)
 	: m_size{size}
@@ -67,7 +67,7 @@ std::string tr::gfx::basic_uniform_buffer::label() const
 	TR_GL_CALL(glGetObjectLabel, GL_BUFFER, m_ubo.get(), 0, &length, nullptr);
 	if (length > 0) {
 		std::string str(length, '\0');
-		TR_GL_CALL(glGetObjectLabel, GL_BUFFER, m_ubo.get(), length, nullptr, str.data());
+		TR_GL_CALL(glGetObjectLabel, GL_BUFFER, m_ubo.get(), length + 1, nullptr, str.data());
 		return str;
 	}
 	else {

@@ -33,7 +33,7 @@ std::string tr::gfx::basic_static_vertex_buffer::label() const
 	TR_GL_CALL(glGetObjectLabel, GL_BUFFER, m_vbo.get(), 0, &length, nullptr);
 	if (length > 0) {
 		std::string str(length, '\0');
-		TR_GL_CALL(glGetObjectLabel, GL_BUFFER, m_vbo.get(), length, nullptr, str.data());
+		TR_GL_CALL(glGetObjectLabel, GL_BUFFER, m_vbo.get(), length + 1, nullptr, str.data());
 		return str;
 	}
 	else {
@@ -148,7 +148,7 @@ std::string tr::gfx::basic_dyn_vertex_buffer::label() const
 	TR_GL_CALL(glGetObjectLabel, GL_BUFFER, m_vbo.get(), 0, &length, nullptr);
 	if (length > 0) {
 		std::string str(length, '\0');
-		TR_GL_CALL(glGetObjectLabel, GL_BUFFER, m_vbo.get(), length, nullptr, str.data());
+		TR_GL_CALL(glGetObjectLabel, GL_BUFFER, m_vbo.get(), length + 1, nullptr, str.data());
 		return str;
 	}
 	else {

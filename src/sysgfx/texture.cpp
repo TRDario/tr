@@ -330,7 +330,7 @@ std::string tr::gfx::texture::label() const
 	TR_GL_CALL(glGetObjectLabel, GL_TEXTURE, m_handle, 0, &length, nullptr);
 	if (length > 0) {
 		std::string str(length, '\0');
-		TR_GL_CALL(glGetObjectLabel, GL_TEXTURE, m_handle, length, nullptr, str.data());
+		TR_GL_CALL(glGetObjectLabel, GL_TEXTURE, m_handle, length + 1, nullptr, str.data());
 		return str;
 	}
 	else {

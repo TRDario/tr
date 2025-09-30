@@ -1,5 +1,5 @@
-#include "../../include/tr/sysgfx/gl_call.hpp"
 #include "../../include/tr/sysgfx/shader_buffer.hpp"
+#include "../../include/tr/sysgfx/gl_call.hpp"
 
 tr::gfx::basic_shader_buffer::basic_shader_buffer(usize header_size, usize capacity, access access)
 	: m_access{access}, m_header_size{header_size}, m_array_size{0}, m_array_capacity{capacity}
@@ -130,7 +130,7 @@ std::string tr::gfx::basic_shader_buffer::label() const
 	TR_GL_CALL(glGetObjectLabel, GL_BUFFER, m_sbo.get(), 0, &length, nullptr);
 	if (length > 0) {
 		std::string str(length, '\0');
-		TR_GL_CALL(glGetObjectLabel, GL_BUFFER, m_sbo.get(), length, nullptr, str.data());
+		TR_GL_CALL(glGetObjectLabel, GL_BUFFER, m_sbo.get(), length + 1, nullptr, str.data());
 		return str;
 	}
 	else {

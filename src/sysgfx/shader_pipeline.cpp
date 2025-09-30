@@ -1,5 +1,5 @@
-#include "../../include/tr/sysgfx/gl_call.hpp"
 #include "../../include/tr/sysgfx/shader_pipeline.hpp"
+#include "../../include/tr/sysgfx/gl_call.hpp"
 
 tr::gfx::shader_pipeline::shader_pipeline(const vertex_shader& vshader, const fragment_shader& fshader)
 {
@@ -45,7 +45,7 @@ std::string tr::gfx::shader_pipeline::label() const
 	TR_GL_CALL(glGetObjectLabel, GL_PROGRAM_PIPELINE, m_ppo.get(), 0, &length, nullptr);
 	if (length > 0) {
 		std::string str(length, '\0');
-		TR_GL_CALL(glGetObjectLabel, GL_PROGRAM_PIPELINE, m_ppo.get(), length, nullptr, str.data());
+		TR_GL_CALL(glGetObjectLabel, GL_PROGRAM_PIPELINE, m_ppo.get(), length + 1, nullptr, str.data());
 		return str;
 	}
 	else {

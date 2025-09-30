@@ -1,7 +1,7 @@
+#include "../../include/tr/sysgfx/shader.hpp"
 #include "../../include/tr/sysgfx/gl_call.hpp"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/impl.hpp"
-#include "../../include/tr/sysgfx/shader.hpp"
 #include "../../include/tr/sysgfx/shader_buffer.hpp"
 #include "../../include/tr/sysgfx/texture.hpp"
 #include "../../include/tr/sysgfx/uniform_buffer.hpp"
@@ -679,7 +679,7 @@ std::string tr::gfx::shader_base::label() const
 	TR_GL_CALL(glGetObjectLabel, GL_PROGRAM, m_program.get(), 0, &length, nullptr);
 	if (length > 0) {
 		std::string str(length, '\0');
-		TR_GL_CALL(glGetObjectLabel, GL_PROGRAM, m_program.get(), length, nullptr, str.data());
+		TR_GL_CALL(glGetObjectLabel, GL_PROGRAM, m_program.get(), length + 1, nullptr, str.data());
 		return str;
 	}
 	else {
