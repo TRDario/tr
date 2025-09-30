@@ -39,8 +39,12 @@ namespace tr::gfx {
 		// Removes all entries from the atlas.
 		void clear();
 
-		// Sets the debug label of the atlas texture.
+#ifdef TR_ENABLE_ASSERTS
+		// Gets the debug label of the atlas.
+		std::string label() const;
+		// Sets the debug label of the atlas.
 		void set_label(std::string_view label);
+#endif
 
 	  private:
 		// The atlas texture.
@@ -149,7 +153,14 @@ template <class Key, class Hash, class Pred> void tr::gfx::dyn_atlas<Key, Hash, 
 	}
 }
 
+#ifdef TR_ENABLE_ASSERTS
+template <class Key, class Hash, class Pred> std::string tr::gfx::dyn_atlas<Key, Hash, Pred>::label() const
+{
+	return m_tex.label();
+}
+
 template <class Key, class Hash, class Pred> void tr::gfx::dyn_atlas<Key, Hash, Pred>::set_label(std::string_view label)
 {
 	m_tex.set_label(label);
 }
+#endif
