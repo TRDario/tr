@@ -87,7 +87,7 @@ tr::gfx::simple_color_mesh_ref tr::gfx::renderer_2d::new_color_fan(int layer, us
 	mesh.tints.resize(mesh.tints.size() + vertices);
 
 	std::fill(mesh.uvs.end() - vertices, mesh.uvs.end(), UNTEXTURED_UV);
-	fill_polygon_indices(u16(vertices), base_index, back_inserter(mesh.indices));
+	fill_polygon_indices(back_inserter(mesh.indices), u16(vertices), base_index);
 
 	return {{mesh.positions.end() - vertices, mesh.positions.end()}, {mesh.tints.end() - vertices, mesh.tints.end()}};
 }
@@ -117,7 +117,7 @@ tr::gfx::simple_color_mesh_ref tr::gfx::renderer_2d::new_color_outline(int layer
 	mesh.tints.resize(mesh.tints.size() + vertices);
 
 	std::fill(mesh.uvs.end() - vertices, mesh.uvs.end(), UNTEXTURED_UV);
-	fill_polygon_outline_indices(u16(polygon_vertices), base_index, back_inserter(mesh.indices));
+	fill_polygon_outline_indices(back_inserter(mesh.indices), u16(polygon_vertices), base_index);
 
 	return {{mesh.positions.end() - vertices, mesh.positions.end()}, {mesh.tints.end() - vertices, mesh.tints.end()}};
 }
@@ -196,7 +196,7 @@ tr::gfx::simple_textured_mesh_ref tr::gfx::renderer_2d::new_textured_fan(int lay
 	mesh.uvs.resize(mesh.uvs.size() + vertices);
 	mesh.tints.resize(mesh.tints.size() + vertices);
 
-	fill_polygon_indices(u16(vertices), base_index, back_inserter(mesh.indices));
+	fill_polygon_indices(back_inserter(mesh.indices), u16(vertices), base_index);
 
 	return {
 		{mesh.positions.end() - vertices, mesh.positions.end()},
