@@ -12,7 +12,7 @@ namespace tr::gfx {
 	template <> struct vertex_attributes<debug_renderer::glyph> : unpacked_vertex_attributes<glm::u8vec2, u8, u8, rgba8, rgba8> {};
 	// Debug vertex format.
 	constexpr std::array<vertex_binding, 2> DEBUG_FORMAT_ATTRIBUTES{{
-		{NOT_INSTANCED, vertex_attributes<glm::vec2>::list},
+		{NOT_INSTANCED, vertex_attributes<glm::u8vec2>::list},
 		{1, unpacked_vertex_attributes<glm::u8vec2, u8, u8, rgba8, rgba8>::list},
 	}};
 	// Debug vertex shader.
