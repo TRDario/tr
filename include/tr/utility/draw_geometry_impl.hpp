@@ -185,7 +185,7 @@ template <std::output_iterator<glm::vec2> O> O tr::fill_polygon_vertices(O out, 
 
 template <tr::sized_output_range<glm::vec2> R> void tr::fill_polygon_vertices(R&& out, circle circle, angle rotation)
 {
-	fill_polygon_vertices(std::begin(out), std::size(out), circle, rotation, 1_turns);
+	fill_polygon_vertices(std::begin(out), std::size(out), circle, rotation);
 }
 
 template <std::output_iterator<glm::vec2> O> O tr::fill_circle_vertices(O out, usize vtx, circle circle)
