@@ -54,11 +54,11 @@ namespace tr::gfx {
 	template <> inline constexpr vertex_attribute as_vertex_attribute<glm::vec2>{vertex_attribute_type::F32, 2, false};
 	template <> inline constexpr vertex_attribute as_vertex_attribute<glm::vec3>{vertex_attribute_type::F32, 3, false};
 	template <> inline constexpr vertex_attribute as_vertex_attribute<glm::vec4>{vertex_attribute_type::F32, 4, false};
-	template <> inline constexpr vertex_attribute as_vertex_attribute<rgb8>{as_vertex_attribute<normalized<glm::u8vec3>>};
-	template <> inline constexpr vertex_attribute as_vertex_attribute<rgba8>{as_vertex_attribute<normalized<glm::u8vec4>>};
 	template <class T>
 	inline constexpr vertex_attribute as_vertex_attribute<normalized<T>>{as_vertex_attribute<T>.type, as_vertex_attribute<T>.elements,
 																		 true};
+	template <> inline constexpr vertex_attribute as_vertex_attribute<rgb8>{as_vertex_attribute<normalized<glm::u8vec3>>};
+	template <> inline constexpr vertex_attribute as_vertex_attribute<rgba8>{as_vertex_attribute<normalized<glm::u8vec4>>};
 
 	// Helper mechanism for generating a vertex attribute initializer list.
 	template <class... Ts> struct unpacked_vertex_attributes {
