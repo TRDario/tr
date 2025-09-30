@@ -100,7 +100,7 @@ O tr::fill_rectangle_vertices(O out, glm::vec2 pos, glm::vec2 anchor, glm::vec2 
 		return fill_rectangle_vertices(out, {pos - anchor, size});
 	}
 	else {
-		return fill_rectangle_vertices(out, {pos - anchor, size}, rotate_around(glm::mat4{}, pos, rotation));
+		return fill_rectangle_vertices(out, {pos - anchor, size}, rotate_around(glm::mat4{1.0f}, pos, rotation));
 	}
 }
 
@@ -148,7 +148,7 @@ O tr::fill_rectangle_outline_vertices(O out, glm::vec2 pos, glm::vec2 anchor, gl
 		return fill_rectangle_outline_vertices(out, pos - anchor, size, thickness);
 	}
 	else {
-		return fill_rectangle_outline_vertices(out, pos - anchor, size, thickness, rotate_around(glm::mat4{}, pos, rotation));
+		return fill_rectangle_outline_vertices(out, pos - anchor, size, thickness, rotate_around(glm::mat4{1.0f}, pos, rotation));
 	}
 }
 
