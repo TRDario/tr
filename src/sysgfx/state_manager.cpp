@@ -55,8 +55,6 @@ void tr::state_manager::update(duration delta)
 		m_update.stop();
 		if (next != nullptr) {
 			state = next->type() != UINT32_MAX ? std::move(next) : nullptr;
-			m_update.clear();
-			m_draw.clear();
 		}
 	}
 }
