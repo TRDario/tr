@@ -41,5 +41,5 @@ template <std::invocable<tr::sys::event> Handler> void tr::sys::handle_events(Ha
 
 template <tr::sys::event_visitor Visitor> void tr::sys::handle_events(Visitor&& visitor)
 {
-	handle_events([v = std::forward<Visitor>(visitor)](const event& event) { event.visit(v); });
+	handle_events([&](event event) { event.visit(std::forward<Visitor>(visitor)); });
 }
