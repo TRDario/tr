@@ -29,6 +29,7 @@ target_sources(tr PRIVATE
 	src/utility/atlas_packer.cpp
 	src/utility/benchmark.cpp
 	src/utility/binary_io.cpp
+	src/utility/chrono.cpp
 	src/utility/encryption.cpp
 	src/utility/exception.cpp
 	src/utility/geometry.cpp

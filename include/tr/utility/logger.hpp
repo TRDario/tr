@@ -1,5 +1,5 @@
 #pragma once
-#include "common.hpp"
+#include "chrono.hpp"
 
 namespace tr {
 	// Log message severity levels.
@@ -67,9 +67,8 @@ namespace tr {
 
 template <class... Args> void tr::logger::log(severity level, TR_FMT::format_string<Args...> fmt, Args&&... args)
 {
-	const time_t time{std::time(nullptr)};
-	const tm* tm{std::localtime(&time)};
-	const std::string time_str{TR_FMT::format("[{:02}:{:02}:{:02}] ", tm->tm_hour, tm->tm_min, tm->tm_sec)};
+	const std::tm time{tr::localtime(std::time(nullptr))};
+	const std::string time_str{TR_FMT::format("[{:02}:{:02}:{:02}] ", time.tm_hour, time.tm_min, time.tm_sec)};
 	const std::string severity_str{TR_FMT::format("[{}] ", char(level))};
 	const std::string fmt_str{TR_FMT::format(fmt, std::forward<Args>(args)...)};
 
