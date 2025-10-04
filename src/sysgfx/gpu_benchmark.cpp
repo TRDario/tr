@@ -22,7 +22,7 @@ void tr::gfx::gpu_benchmark::start()
 
 void tr::gfx::gpu_benchmark::stop()
 {
-	TR_GL_CALL(glEndQuery, m_qo.get());
+	TR_GL_CALL(glEndQuery, GL_TIME_ELAPSED);
 }
 
 void tr::gfx::gpu_benchmark::fetch()
