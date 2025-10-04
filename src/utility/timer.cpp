@@ -1,5 +1,9 @@
 #include "../../include/tr/utility/timer.hpp"
 
+#if defined(WIN32) && defined(TR_HAS_SYSGFX)
+#include <SDL3/SDL.h>
+#endif
+
 using namespace std::chrono_literals;
 
 tr::timer::~timer()
@@ -48,7 +52,11 @@ void tr::timer::timer_loop(bool& active, duration interval, callback cb)
 			cb();
 
 			prev = now;
+#if defined(WIN32) && defined(TR_HAS_SYSGFX)
+			SDL_DelayPrecise(tr::insecs{next_interval}.count());
+#else
 			std::this_thread::sleep_until(now + next_interval);
+			#endif
 		}
 	}
 	catch (...) {

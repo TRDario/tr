@@ -75,6 +75,7 @@ if(TR_BUILD_SYSGFX)
 		src/sysgfx/ttfont.cpp
 		src/sysgfx/window.cpp
 	)
+	target_compile_definitions(tr PUBLIC TR_HAS_SYSGFX)
 	target_link_libraries(tr SDL3::SDL3 SDL3_ttf::SDL3_ttf SDL3_image::SDL3_image)
 endif()
 if(TR_BUILD_AUDIO)
