@@ -66,7 +66,7 @@ constexpr tr::opt_ref<T>::opt_ref(T& ref)
 
 template <class T> constexpr tr::opt_ref<T>::operator opt_ref<const T>() const
 {
-	return opt_ref<const T>{m_base};
+	return make_opt_ref((const T*)as_ptr());
 }
 
 template <class T> constexpr bool tr::opt_ref<T>::has_ref() const
