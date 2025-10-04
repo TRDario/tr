@@ -29,6 +29,9 @@ void tr::gfx::gpu_benchmark::fetch()
 {
 	i64 result;
 	TR_GL_CALL(glGetQueryObjecti64v, m_qo.get(), GL_QUERY_RESULT, &result);
+	if (m_durations.size() == 256) {
+		m_durations.pop_front();
+	}
 	m_durations.emplace_back(tr::insecs{result});
 }
 
@@ -41,17 +44,17 @@ void tr::gfx::gpu_benchmark::clear()
 
 tr::duration tr::gfx::gpu_benchmark::latest() const
 {
-	return !m_durations.empty() ? m_durations.back().second : duration{0};
+	return !m_durations.empty() ? m_durations.back() : duration{0};
 }
 
 tr::duration tr::gfx::gpu_benchmark::min() const
 {
-	return !m_durations.empty() ? *std::ranges::min_element(std::views::values(m_durations)) : duration{0};
+	return !m_durations.empty() ? *std::ranges::min_element(m_durations) : duration{0};
 }
 
 tr::duration tr::gfx::gpu_benchmark::max() const
 {
-	return !m_durations.empty() ? *std::ranges::max_element(std::views::values(m_durations)) : duration{0};
+	return !m_durations.empty() ? *std::ranges::max_element(m_durations) : duration{0};
 }
 
 tr::duration tr::gfx::gpu_benchmark::avg() const
@@ -60,14 +63,8 @@ tr::duration tr::gfx::gpu_benchmark::avg() const
 		return duration{0};
 	}
 	else {
-		const auto durations{std::views::values(m_durations)};
-		return std::accumulate(durations.begin(), durations.end(), duration{0}) / m_durations.size();
+		return std::accumulate(m_durations.begin(), m_durations.end(), duration{0}) / m_durations.size();
 	}
-}
-
-double tr::gfx::gpu_benchmark::fps() const
-{
-	return !m_durations.empty() ? m_durations.size() / 2.5 : 0;
 }
 
 const tr::gfx::gpu_benchmark::deque& tr::gfx::gpu_benchmark::measurements() const

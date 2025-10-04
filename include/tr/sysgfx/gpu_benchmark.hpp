@@ -5,7 +5,7 @@ namespace tr::gfx {
 	class gpu_benchmark {
 	  public:
 		// Shorthand for the deque type used by the benchmark.
-		using deque = std::deque<std::pair<time_point, duration>>;
+		using deque = std::deque<duration>;
 
 		// Constructs an empty GPU benchmark.
 		gpu_benchmark();
@@ -27,8 +27,6 @@ namespace tr::gfx {
 		duration max() const;
 		// Gets the average duration of the available measurements.
 		duration avg() const;
-		// Gets the average number of measurements per second.
-		double fps() const;
 		// Gets the available measurements.
 		const deque& measurements() const;
 
