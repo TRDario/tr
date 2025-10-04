@@ -2,6 +2,17 @@
 #include "texture.hpp"
 
 namespace tr::gfx {
+	// Basic bitmap atlas structure.
+	template <class Key, class Hash = std::hash<Key>, class Pred = std::equal_to<Key>> struct bitmap_atlas {
+		// The atlas bitmap.
+		tr::bitmap bitmap;
+		// The atlas entries.
+		atlas_rects<Key, Hash, Pred> rects;
+	};
+	// Builds a bitmap atlas from individual bitmaps.
+	template <class Key, class Hash = std::hash<Key>, class Pred = std::equal_to<Key>>
+	bitmap_atlas<Key, Hash, Pred> build_bitmap_atlas(const std::unordered_map<Key, tr::bitmap, Hash, Pred>& entries);
+
 	// Dynamically-allocated texture atlas.
 	template <class Key, class Hash = std::hash<Key>, class Pred = std::equal_to<Key>> class dyn_atlas {
 	  public:
@@ -9,6 +20,8 @@ namespace tr::gfx {
 		dyn_atlas() = default;
 		// Creates an empty atlas with an initial size.
 		dyn_atlas(glm::ivec2 size);
+		// Uploads a bitmap atlas.
+		dyn_atlas(bitmap_atlas<Key, Hash, Pred>&& source);
 
 		// Gets the atlas texture.
 		operator const texture&() const;
@@ -57,8 +70,41 @@ namespace tr::gfx {
 ///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
 
 template <class Key, class Hash, class Pred>
+tr::gfx::bitmap_atlas<Key, Hash, Pred> tr::gfx::build_bitmap_atlas(const std::unordered_map<Key, tr::bitmap, Hash, Pred>& entries)
+{
+	glm::ivec2 size{};
+	atlas_rects<Key, Hash, Pred> rects;
+	for (auto& [key, entry] : entries) {
+		std::optional<glm::u16vec2> packing_result{rects.try_insert(std::move(key), entry.size(), size)};
+		if (!packing_result.has_value()) {
+			if (size == glm::ivec2{}) {
+				const glm::uvec2 usize{entry.size()};
+				size = {std::bit_ceil(usize.x + 1), std::bit_ceil(usize.y + 1)};
+				packing_result = rects.try_insert(std::move(key), usize, size);
+			}
+			else {
+				do {
+					size.y < size.x ? size.y *= 2 : size.x *= 2;
+				} while (!(packing_result = rects.try_insert(std::move(key), entry.size(), size)).has_value());
+			}
+		}
+	}
+	tr::bitmap bitmap{size};
+	for (const Key& k : std::views::keys(entries)) {
+		bitmap.blit(rects[k].tl, entries.at(k));
+	}
+	return {std::move(bitmap), std::move(rects)};
+}
+
+template <class Key, class Hash, class Pred>
 tr::gfx::dyn_atlas<Key, Hash, Pred>::dyn_atlas(glm::ivec2 size)
 	: m_tex{size, true}
+{
+}
+
+template <class Key, class Hash, class Pred>
+tr::gfx::dyn_atlas<Key, Hash, Pred>::dyn_atlas(bitmap_atlas<Key, Hash, Pred>&& source)
+	: m_tex{source.bitmap, true}, m_rects{std::move(source.rects)}
 {
 }
 
