@@ -7,6 +7,8 @@
 namespace tr::sys {
 	class event;
 
+	// Event emitted for unrecognized event types.
+	struct unknown_event {};
 	// Event emitted when the application wants to quit.
 	struct quit_event {};
 	// The event type emitted by ticker timers.
@@ -46,6 +48,7 @@ namespace tr::sys {
 			requires std::same_as<decltype(visitor(quit_event{})), decltype(visitor(std::declval<mouse_wheel_event>()))>;
 			requires std::same_as<decltype(visitor(quit_event{})), decltype(visitor(std::declval<tick_event>()))>;
 			requires std::same_as<decltype(visitor(quit_event{})), decltype(visitor(std::declval<draw_event>()))>;
+			requires std::same_as<decltype(visitor(quit_event{})), decltype(visitor(std::declval<unknown_event>()))>;
 		};
 
 	// Unified event type.
@@ -104,10 +107,6 @@ template <tr::sys::event_visitor Visitor> auto tr::sys::event::visit(Visitor&& v
 	case 0x8001:
 		return visitor(draw_event{});
 	default:
-#if defined(_MSC_VER) && !defined(__clang__) // MSVC
-		__assume(false);
-#else // GCC, Clang
-		__builtin_unreachable();
-#endif
+		return visitor(unknown_event{});
 	}
 }
