@@ -25,4 +25,7 @@ namespace tr {
 	using fnsecs = nsecs<float>;
 	using dnsecs = nsecs<double>;
 	using insecs = std::chrono::nanoseconds;
+
+	// Cross-platform, thread-safe localtime.
+	std::tm localtime(std::time_t time);
 } // namespace tr

@@ -44,7 +44,7 @@ namespace tr {
 		T* m_base{nullptr};
 
 		constexpr explicit opt_ref(T* ptr);
-		friend opt_ref<T> make_opt_ref(T* ptr);
+		template <class U> friend opt_ref<U> make_opt_ref(U* ptr);
 	};
 	// Converts a pointer into an optional reference.
 	template <class T> opt_ref<T> make_opt_ref(T* ptr);
