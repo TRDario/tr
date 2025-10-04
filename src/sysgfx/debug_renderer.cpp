@@ -1,6 +1,7 @@
 #include "../../include/tr/sysgfx/debug_renderer.hpp"
 #include "../../include/tr/sysgfx/backbuffer.hpp"
 #include "../../include/tr/sysgfx/blending.hpp"
+#include "../../include/tr/sysgfx/gpu_benchmark.hpp"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/render_target.hpp"
 
@@ -129,6 +130,19 @@ void tr::gfx::debug_renderer::write_right(std::string_view text, rgba8 text_colo
 }
 
 void tr::gfx::debug_renderer::write_right(const benchmark& benchmark, std::string_view name, duration limit)
+{
+	constexpr tr::rgba8 TEXT_COLOR{255, 255, 255, 255};
+	constexpr tr::rgba8 ALT_COLOR{255, 0, 0, 255};
+
+	if (!name.empty()) {
+		write_right(TR_FMT::format("{:<15}", name));
+	}
+	write_right(format_duration("MIN: ", benchmark.min()), benchmark.min() < limit ? TEXT_COLOR : ALT_COLOR);
+	write_right(format_duration("AVG: ", benchmark.avg()), benchmark.avg() < limit ? TEXT_COLOR : ALT_COLOR);
+	write_right(format_duration("MAX: ", benchmark.max()), benchmark.max() < limit ? TEXT_COLOR : ALT_COLOR);
+}
+
+void tr::gfx::debug_renderer::write_right(const gpu_benchmark& benchmark, std::string_view name, duration limit)
 {
 	constexpr tr::rgba8 TEXT_COLOR{255, 255, 255, 255};
 	constexpr tr::rgba8 ALT_COLOR{255, 0, 0, 255};

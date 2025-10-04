@@ -11,6 +11,7 @@
 #include "sysgfx/display.hpp"          // IWYU pragma: export
 #include "sysgfx/event_queue.hpp"      // IWYU pragma: export
 #include "sysgfx/event_types.hpp"      // IWYU pragma: export
+#include "sysgfx/gpu_benchmark.hpp"    // IWYU pragma: export
 #include "sysgfx/graphics_context.hpp" // IWYU pragma: export
 #include "sysgfx/index_buffer.hpp"     // IWYU pragma: export
 #include "sysgfx/initialization.hpp"   // IWYU pragma: export

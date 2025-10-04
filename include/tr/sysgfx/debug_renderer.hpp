@@ -6,9 +6,11 @@
 
 namespace tr {
 	class benchmark;
-}
+} // namespace tr
 
 namespace tr::gfx {
+	class gpu_benchmark;
+
 	class debug_renderer {
 	  public:
 		debug_renderer(float scale = 1.0f, u8 column_limit = 255);
@@ -28,6 +30,11 @@ namespace tr::gfx {
 		void write_right(const benchmark& benchmark, std::string_view name, duration limit);
 		// Writes benchmark data to the right side of the screen.
 		template <class R, class P> void write_right(const benchmark& benchmark, std::string_view name, std::chrono::duration<R, P> limit);
+		// Writes GPU benchmark data to the right side of the screen.
+		void write_right(const gpu_benchmark& benchmark, std::string_view name, duration limit);
+		// Writes GPU benchmark data to the right side of the screen.
+		template <class R, class P>
+		void write_right(const gpu_benchmark& benchmark, std::string_view name, std::chrono::duration<R, P> limit);
 
 		// Writes a newline on the left side of the screen.
 		void newline_left();
@@ -99,6 +106,12 @@ namespace tr::gfx {
 
 template <class R, class P>
 void tr::gfx::debug_renderer::write_right(const benchmark& benchmark, std::string_view name, std::chrono::duration<R, P> limit)
+{
+	write_right(benchmark, name, duration_cast<duration>(limit));
+}
+
+template <class R, class P>
+void tr::gfx::debug_renderer::write_right(const gpu_benchmark& benchmark, std::string_view name, std::chrono::duration<R, P> limit)
 {
 	write_right(benchmark, name, duration_cast<duration>(limit));
 }
