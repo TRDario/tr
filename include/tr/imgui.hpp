@@ -10,7 +10,7 @@ namespace tr {
 		void shut_down();
 
 		// Gets the Dear ImGui texture ID for a libtr texture.
-		u64 get_texture_id(gfx::texture_ref texture);
+		u64 get_texture_id(const gfx::texture& texture);
 
 		// Processes an event for Dear ImGui.
 		void process_event(const sys::event& event);

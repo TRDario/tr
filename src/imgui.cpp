@@ -15,9 +15,9 @@ void tr::imgui::shut_down()
 	ImGui_ImplSDL3_Shutdown();
 }
 
-tr::u64 tr::imgui::get_texture_id(gfx::texture_ref texture)
+tr::u64 tr::imgui::get_texture_id(const gfx::texture& texture)
 {
-	return texture.m_id;
+	return texture.m_handle;
 }
 
 void tr::imgui::process_event(const sys::event& event)
