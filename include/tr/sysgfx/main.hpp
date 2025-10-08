@@ -20,8 +20,8 @@ namespace tr::sys {
 		std::string_view m_description;
 	};
 
-	// Return codes used for controlling control flow of the user defined callbacks.
-	enum class result {
+	// Signals used for controlling control flow of the user defined callbacks.
+	enum class signal {
 		// Continue execution.
 		CONTINUE,
 		// Regular exit.
@@ -38,11 +38,11 @@ namespace tr::sys {
 	// User-defined functions (mandatory). Uncaught exception will display a dialog box and quit the application.
 	namespace user_defined {
 		// Called once at the beginning of execution.
-		result initialize(std::span<const char*> args);
+		signal initialize(std::span<const char*> args);
 		// Called whenever an event needs to be handled.
-		result handle_event(event& event);
+		signal handle_event(event& event);
 		// Main-body function to be used for rendering and the like.
-		result iterate();
+		signal iterate();
 		// Called once at the end of execution.
 		void quit();
 	} // namespace user_defined
