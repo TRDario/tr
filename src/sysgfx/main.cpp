@@ -91,7 +91,12 @@ extern "C"
 
 	void SDL_AppQuit(void*, SDL_AppResult)
 	{
-		tr::sys::user_defined::quit();
+		try {
+			tr::sys::user_defined::quit();
+		}
+		catch (std::exception& err) {
+			tr::sys::show_fatal_error_message_box(err);
+		}
 		SDL_Quit();
 	}
 }
