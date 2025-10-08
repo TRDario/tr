@@ -143,36 +143,6 @@ tr::timer tr::sys::create_draw_timer(float frequency)
 	};
 }
 
-std::optional<tr::sys::event> tr::sys::poll_event()
-{
-	TR_ASSERT(sdl_window != nullptr, "Tried to poll for events before opening the window.");
-
-	SDL_Event sdl;
-	return SDL_PollEvent(&sdl) ? std::optional<sys::event>{std::bit_cast<event>(sdl)} : std::nullopt;
-}
-
-tr::sys::event tr::sys::wait_for_event()
-{
-	TR_ASSERT(sdl_window != nullptr, "Tried to wait for events before opening the window.");
-
-	SDL_Event sdl;
-	SDL_WaitEvent(&sdl);
-	return std::bit_cast<event>(sdl);
-}
-
-std::optional<tr::sys::event> tr::sys::wait_for_event(imsecs timeout)
-{
-	TR_ASSERT(sdl_window != nullptr, "Tried to wait for events before opening the window.");
-
-	SDL_Event sdl;
-	if (SDL_WaitEventTimeout(&sdl, i32(timeout.count()))) {
-		return std::bit_cast<event>(sdl);
-	}
-	else {
-		return std::nullopt;
-	}
-}
-
 void tr::sys::enable_text_input_events()
 {
 	TR_ASSERT(sdl_window != nullptr, "Tried to enable text input event sending before opening the window.");

@@ -60,8 +60,8 @@ if(TR_BUILD_SYSGFX)
 		src/sysgfx/graphics_context.cpp
 		src/sysgfx/gpu_benchmark.cpp
 		src/sysgfx/index_buffer.cpp
-		src/sysgfx/initialization.cpp
 		src/sysgfx/keyboard.cpp
+		src/sysgfx/main.cpp
 		src/sysgfx/mouse.cpp
 		src/sysgfx/path.cpp
 		src/sysgfx/render_target.cpp
