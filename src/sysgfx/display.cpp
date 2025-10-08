@@ -4,16 +4,12 @@
 
 glm::ivec2 tr::sys::display_size()
 {
-	TR_ASSERT(SDL_WasInit(0), "Tried to get display size before initializing the application.");
-
 	const SDL_DisplayMode& mode{*SDL_GetDesktopDisplayMode(SDL_GetPrimaryDisplay())};
 	return {mode.w, mode.h};
 }
 
 tr::u8 tr::sys::max_msaa()
 {
-	TR_ASSERT(SDL_WasInit(0), "Tried to get max MSAA before initializing the application.");
-
 	constexpr u8 UNKNOWN{255};
 	using wrapped_window = std::unique_ptr<SDL_Window, decltype([](SDL_Window* w) { SDL_DestroyWindow(w); })>;
 	using wrapped_context = std::unique_ptr<SDL_GLContextState, decltype([](SDL_GLContext c) { SDL_GL_DestroyContext(c); })>;
@@ -58,7 +54,5 @@ tr::u8 tr::sys::max_msaa()
 
 float tr::sys::refresh_rate()
 {
-	TR_ASSERT(SDL_WasInit(0), "Tried to get refresh rate before initializing the application.");
-
 	return SDL_GetDesktopDisplayMode(SDL_GetPrimaryDisplay())->refresh_rate;
 }

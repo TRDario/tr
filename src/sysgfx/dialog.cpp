@@ -49,8 +49,6 @@ void tr::sys::file_dialog_callback(void* userdata, const char* const* files, int
 std::vector<std::filesystem::path> tr::sys::show_open_file_dialog(std::span<const dialog_filter> filters, const char* default_path,
 																  bool allow_multiple)
 {
-	TR_ASSERT(SDL_WasInit(0), "Tried to open a file dialog before initializing the application.");
-
 	file_dialog_context ctx{};
 	SDL_ShowOpenFileDialog(file_dialog_callback, &ctx, nullptr, (const SDL_DialogFileFilter*)filters.data(), int(filters.size()),
 						   default_path, allow_multiple);
@@ -63,8 +61,6 @@ std::vector<std::filesystem::path> tr::sys::show_open_file_dialog(std::span<cons
 
 std::vector<std::filesystem::path> tr::sys::show_open_folder_dialog(const char* default_path, bool allow_multiple)
 {
-	TR_ASSERT(SDL_WasInit(0), "Tried to open a folder dialog before initializing the application.");
-
 	file_dialog_context ctx{};
 	SDL_ShowOpenFolderDialog(file_dialog_callback, &ctx, nullptr, default_path, allow_multiple);
 	while (!ctx.done) {

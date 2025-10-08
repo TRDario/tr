@@ -169,7 +169,6 @@ void tr::gfx::setup_ogl_debugging()
 
 void tr::sys::open_window(const char* title, glm::ivec2 size, std::optional<glm::ivec2> min_size, const gfx::properties& gfx_properties)
 {
-	TR_ASSERT(SDL_WasInit(0), "Tried to open window before initializing the application.");
 	TR_ASSERT(sdl_window == nullptr, "Tried to reopen window without closing it first.");
 
 	set_sdl_ogl_attributes(gfx_properties);
@@ -191,7 +190,6 @@ void tr::sys::open_window(const char* title, glm::ivec2 size, std::optional<glm:
 
 void tr::sys::open_fullscreen_window(const char* title, std::optional<glm::ivec2> min_size, const gfx::properties& gfx_properties)
 {
-	TR_ASSERT(SDL_WasInit(0), "Tried to open window before initializing the application.");
 	TR_ASSERT(sdl_window == nullptr, "Tried to reopen window without closing it first.");
 
 	set_sdl_ogl_attributes(gfx_properties);

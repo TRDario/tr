@@ -21,13 +21,13 @@ namespace tr::sys {
 	};
 
 	// Return codes used for controlling control flow of the user defined callbacks.
-	enum class return_code {
+	enum class result {
 		// Continue execution.
 		CONTINUE,
 		// Regular exit.
-		EXIT,
+		SUCCESS,
 		// Abnormal exit.
-		ABORT
+		FAILURE
 	};
 
 	// Sets various app information.
@@ -35,15 +35,15 @@ namespace tr::sys {
 	// Sets the frequency at which tr::sys::user_defined::iterate() is called.
 	void set_iteration_frequency(float frequency);
 
-	// User-defined functions (mandatory).
+	// User-defined functions (mandatory). Uncaught exception will display a dialog box and quit the application.
 	namespace user_defined {
 		// Called once at the beginning of execution.
-		return_code initialize(std::span<const char*> args) noexcept;
+		result initialize(std::span<const char*> args);
 		// Called whenever an event needs to be handled.
-		return_code handle_event(event& event) noexcept;
+		result handle_event(event& event);
 		// Main-body function to be used for rendering and the like.
-		return_code iterate() noexcept;
+		result iterate();
 		// Called once at the end of execution.
-		void quit() noexcept;
+		void quit();
 	} // namespace user_defined
 } // namespace tr::sys

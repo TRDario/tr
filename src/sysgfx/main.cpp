@@ -1,4 +1,5 @@
 #include "../../include/tr/sysgfx/main.hpp"
+#include "../../include/tr/sysgfx/dialog.hpp"
 #include "../../include/tr/sysgfx/impl.hpp"
 #include <SDL3/SDL.h>
 
@@ -56,17 +57,36 @@ extern "C"
 		TR_LOG_CONTINUE(tr::log, "Platform: {}", SDL_GetPlatform());
 		TR_LOG_CONTINUE(tr::log, "CPU cores: {}", SDL_GetNumLogicalCPUCores());
 		TR_LOG_CONTINUE(tr::log, "RAM: {}mb", SDL_GetSystemRAM());
-		return SDL_AppResult(tr::sys::user_defined::initialize({(const char**)argv, std::size_t(argc)}));
+
+		try {
+			return SDL_AppResult(tr::sys::user_defined::initialize({(const char**)argv, std::size_t(argc)}));
+		}
+		catch (std::exception& err) {
+			tr::sys::show_fatal_error_message_box(err);
+			return SDL_APP_FAILURE;
+		}
 	}
 
 	SDL_AppResult SDL_AppEvent(void*, SDL_Event* event)
 	{
-		return SDL_AppResult(tr::sys::user_defined::handle_event((tr::sys::event&)*event));
+		try {
+			return SDL_AppResult(tr::sys::user_defined::handle_event((tr::sys::event&)*event));
+		}
+		catch (std::exception& err) {
+			tr::sys::show_fatal_error_message_box(err);
+			return SDL_APP_FAILURE;
+		}
 	}
 
 	SDL_AppResult SDL_AppIterate(void*)
 	{
-		return SDL_AppResult(tr::sys::user_defined::iterate());
+		try {
+			return SDL_AppResult(tr::sys::user_defined::iterate());
+		}
+		catch (std::exception& err) {
+			tr::sys::show_fatal_error_message_box(err);
+			return SDL_APP_FAILURE;
+		}
 	}
 
 	void SDL_AppQuit(void*, SDL_AppResult)

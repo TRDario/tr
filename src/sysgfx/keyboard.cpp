@@ -29,26 +29,20 @@ constexpr int tr::sys::key_state_index(scancode key)
 tr::sys::scancode::scancode(const char* name)
 	: m_base{enum_t(SDL_GetScancodeFromName(name))}
 {
-	TR_ASSERT(SDL_WasInit(0), "Tried to get scancode from name before initializing the application.");
 }
 
 const char* tr::sys::scancode::name() const
 {
-	TR_ASSERT(SDL_WasInit(0), "Tried to get scancode name before initializing the application.");
-
 	return SDL_GetScancodeName(SDL_Scancode(m_base));
 }
 
 tr::sys::keycode::keycode(const char* name)
 	: m_base{enum_t(SDL_GetKeyFromName(name))}
 {
-	TR_ASSERT(SDL_WasInit(0), "Tried to get keycode from name before initializing the application.");
 }
 
 std::string tr::sys::keycode::name() const
 {
-	TR_ASSERT(SDL_WasInit(0), "Tried to get keycode name before initializing the application.");
-
 	return SDL_GetKeyName(SDL_Keycode(m_base));
 }
 
@@ -106,23 +100,17 @@ void tr::sys::keyboard_state::update(const key_up_event& event)
 
 bool tr::sys::clipboard_empty()
 {
-	TR_ASSERT(SDL_WasInit(0), "Tried to query clipboard state before initializing the application.");
-
 	return !SDL_HasClipboardText();
 }
 
 std::string tr::sys::clipboard_text()
 {
-	TR_ASSERT(SDL_WasInit(0), "Tried to get clipboard text before initializing the application.");
-
 	std::unique_ptr<char, decltype(&SDL_free)> ptr{SDL_GetClipboardText(), SDL_free};
 	return std::string{ptr != nullptr ? ptr.get() : std::string{}};
 }
 
 void tr::sys::set_clipboard_text(const char* text)
 {
-	TR_ASSERT(SDL_WasInit(0), "Tried to set clipboard text before initializing the application.");
-
 	if (!SDL_SetClipboardText(text)) {
 		TR_LOG(log, tr::severity::ERROR, "Failed to set clipboard text.");
 		TR_LOG_CONTINUE(log, "{}", SDL_GetError());
