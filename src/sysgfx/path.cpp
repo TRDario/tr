@@ -1,6 +1,6 @@
 #include "../../include/tr/sysgfx/path.hpp"
 #include "../../include/tr/sysgfx/impl.hpp"
-#include "../../include/tr/sysgfx/initialization.hpp"
+#include "../../include/tr/sysgfx/main.hpp"
 #include <SDL3/SDL.h>
 
 std::filesystem::path tr::sys::executable_dir()

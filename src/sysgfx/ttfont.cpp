@@ -1,6 +1,6 @@
 #include "../../include/tr/sysgfx/ttfont.hpp"
 #include "../../include/tr/sysgfx/bitmap.hpp"
-#include "../../include/tr/sysgfx/initialization.hpp"
+#include "../../include/tr/sysgfx/main.hpp"
 #include <SDL3_ttf/SDL_ttf.h>
 
 namespace tr::sys {

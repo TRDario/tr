@@ -1,10 +1,10 @@
-﻿#include "../../include/tr/sysgfx/bitmap.hpp"
+﻿#include "../../include/tr/sysgfx/window.hpp"
+#include "../../include/tr/sysgfx/bitmap.hpp"
 #include "../../include/tr/sysgfx/display.hpp"
 #include "../../include/tr/sysgfx/glad.h"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/impl.hpp"
-#include "../../include/tr/sysgfx/initialization.hpp"
-#include "../../include/tr/sysgfx/window.hpp"
+#include "../../include/tr/sysgfx/main.hpp"
 #include "tr/sysgfx/gl_call.hpp"
 #include <SDL3/SDL.h>
 
