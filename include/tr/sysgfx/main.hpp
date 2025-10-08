@@ -2,6 +2,24 @@
 #include "event_types.hpp"
 
 namespace tr::sys {
+	// Error thrown when system initialization fails.
+	class init_error : public tr::exception {
+	  public:
+		// Constructs an exception.
+		init_error(std::string_view description);
+
+		// Gets the name of the error.
+		std::string_view name() const override;
+		// Gets the description of the error.
+		std::string_view description() const override;
+		// Gets further details about the error.
+		std::string_view details() const override;
+
+	  private:
+		// The description of the error.
+		std::string_view m_description;
+	};
+
 	// Return codes used for controlling control flow of the user defined callbacks.
 	enum class return_code {
 		// Continue execution.

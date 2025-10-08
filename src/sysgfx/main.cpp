@@ -5,6 +5,30 @@
 #define SDL_MAIN_USE_CALLBACKS 1
 #include <SDL3/SDL_main.h>
 
+//
+
+tr::sys::init_error::init_error(std::string_view description)
+	: m_description{description}
+{
+}
+
+std::string_view tr::sys::init_error::name() const
+{
+	return "System initialization error";
+}
+
+std::string_view tr::sys::init_error::description() const
+{
+	return m_description;
+}
+
+std::string_view tr::sys::init_error::details() const
+{
+	return SDL_GetError();
+}
+
+//
+
 void tr::sys::set_app_information(const char* developer, const char* name, const char* version)
 {
 	app_developer = developer;
