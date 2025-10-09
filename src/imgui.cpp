@@ -1,37 +1,37 @@
 #include "../include/tr/imgui.hpp"
-#include "../include/tr/dependencies/imgui_impl_opengl3.h"
-#include "../include/tr/dependencies/imgui_impl_sdl3.h"
 #include "../include/tr/sysgfx/impl.hpp"
+#include <backends/imgui_impl_opengl3.h>
+#include <backends/imgui_impl_sdl3.h>
 
-void tr::imgui::initialize()
+void tr::ImGui::Init()
 {
 	ImGui_ImplSDL3_InitForOpenGL(sys::sdl_window, gfx::ogl_context);
 	ImGui_ImplOpenGL3_Init("#version 150");
 }
 
-void tr::imgui::shut_down()
+void tr::ImGui::Shutdown()
 {
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplSDL3_Shutdown();
 }
 
-tr::u64 tr::imgui::get_texture_id(const gfx::texture& texture)
+tr::u64 tr::ImGui::GetTextureID(const gfx::texture& texture)
 {
 	return texture.m_handle;
 }
 
-void tr::imgui::process_event(const sys::event& event)
+void tr::ImGui::ProcessEvent(const sys::event& event)
 {
 	ImGui_ImplSDL3_ProcessEvent((const SDL_Event*)&event);
 }
 
-void tr::imgui::new_frame()
+void tr::ImGui::NewFrame()
 {
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL3_NewFrame();
 }
 
-void tr::imgui::draw()
+void tr::ImGui::Draw()
 {
 	ImGui_ImplOpenGL3_RenderDrawData(::ImGui::GetDrawData());
 }

@@ -1,23 +1,24 @@
 #pragma once
+#include <imgui.h>
 #include <tr/sysgfx.hpp>
 
 namespace tr {
 	// Namespace containing functionality for integrating Dear ImGui with libtr.
-	namespace imgui {
+	namespace ImGui {
 		// Initializes the Dear ImGui backends needed for work with libtr.
-		void initialize();
+		void Init();
 		// Shuts the Dear ImGui backends needed for work with libtr down.
-		void shut_down();
+		void Shutdown();
 
 		// Gets the Dear ImGui texture ID for a libtr texture.
-		u64 get_texture_id(const gfx::texture& texture);
+		u64 GetTextureID(const gfx::texture& texture);
 
 		// Processes an event for Dear ImGui.
-		void process_event(const sys::event& event);
+		void ProcessEvent(const sys::event& event);
 
 		// Prepares the Dear ImGui backends needed for work with libtr for a new frame.
-		void new_frame();
+		void NewFrame();
 		// Draws a Dear ImGui frame.
-		void draw();
-	} // namespace imgui
+		void Draw();
+	} // namespace ImGui
 } // namespace tr

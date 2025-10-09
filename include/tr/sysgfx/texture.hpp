@@ -8,8 +8,8 @@ namespace tr {
 		class texture_ref;
 		class render_target;
 	} // namespace gfx
-	namespace imgui {
-		u64 get_texture_id(const gfx::texture& texture);
+	namespace ImGui {
+		u64 GetTextureID(const gfx::texture& texture);
 	}
 } // namespace tr
 
@@ -99,7 +99,7 @@ namespace tr::gfx {
 
 		friend class texture_ref;
 		friend class shader_base;
-		friend u64 imgui::get_texture_id(const gfx::texture& texture);
+		friend u64 ImGui::GetTextureID(const gfx::texture& texture);
 	};
 
 	// Smart texture reference (updated on texture moves and updates, emptied on deletion).
