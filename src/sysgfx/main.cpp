@@ -59,7 +59,7 @@ extern "C"
 		TR_LOG_CONTINUE(tr::log, "RAM: {}mb", SDL_GetSystemRAM());
 
 		try {
-			return SDL_AppResult(tr::sys::user_defined::initialize({(const char**)argv, std::size_t(argc)}));
+			return SDL_AppResult(::initialize({(const char**)argv, std::size_t(argc)}));
 		}
 		catch (std::exception& err) {
 			tr::sys::show_fatal_error_message_box(err);
@@ -70,7 +70,7 @@ extern "C"
 	SDL_AppResult SDL_AppEvent(void*, SDL_Event* event)
 	{
 		try {
-			return SDL_AppResult(tr::sys::user_defined::handle_event((tr::sys::event&)*event));
+			return SDL_AppResult(::handle_event((tr::sys::event&)*event));
 		}
 		catch (std::exception& err) {
 			tr::sys::show_fatal_error_message_box(err);
@@ -81,7 +81,7 @@ extern "C"
 	SDL_AppResult SDL_AppIterate(void*)
 	{
 		try {
-			return SDL_AppResult(tr::sys::user_defined::iterate());
+			return SDL_AppResult(::iterate());
 		}
 		catch (std::exception& err) {
 			tr::sys::show_fatal_error_message_box(err);
@@ -92,7 +92,7 @@ extern "C"
 	void SDL_AppQuit(void*, SDL_AppResult)
 	{
 		try {
-			tr::sys::user_defined::quit();
+			::quit();
 		}
 		catch (std::exception& err) {
 			tr::sys::show_fatal_error_message_box(err);

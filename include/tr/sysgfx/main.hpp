@@ -34,16 +34,15 @@ namespace tr::sys {
 	void set_app_information(const char* developer, const char* name, const char* version);
 	// Sets the frequency at which tr::sys::user_defined::iterate() is called.
 	void set_iteration_frequency(float frequency);
-
-	// User-defined functions (mandatory). Uncaught exception will display a dialog box and quit the application.
-	namespace user_defined {
-		// Called once at the beginning of execution.
-		signal initialize(std::span<const char*> args);
-		// Called whenever an event needs to be handled.
-		signal handle_event(event& event);
-		// Main-body function to be used for rendering and the like.
-		signal iterate();
-		// Called once at the end of execution.
-		void quit();
-	} // namespace user_defined
 } // namespace tr::sys
+
+/////////////// User-defined functions (mandatory). Uncaught exceptions will display a dialog box and quit the application. ///////////////
+
+// Called once at the beginning of execution.
+tr::sys::signal initialize(std::span<const char*> args);
+// Called whenever an event needs to be handled.
+tr::sys::signal handle_event(tr::sys::event& event);
+// Main-body function to be used for rendering and the like.
+tr::sys::signal iterate();
+// Called once at the end of execution.
+void quit();
