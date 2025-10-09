@@ -167,19 +167,26 @@ void tr::gfx::setup_ogl_debugging()
 }
 #endif
 
-void tr::sys::open_window(const char* title, glm::ivec2 size, std::optional<glm::ivec2> min_size, const gfx::properties& gfx_properties)
+void tr::sys::open_window(const char* title, glm::ivec2 size, glm::ivec2 min_size, const gfx::properties& gfx_properties)
 {
 	TR_ASSERT(sdl_window == nullptr, "Tried to reopen window without closing it first.");
 
 	set_sdl_ogl_attributes(gfx_properties);
 
-	const SDL_WindowFlags sdl_flags{(min_size.has_value() ? SDL_WINDOW_RESIZABLE : 0) | SDL_WINDOW_HIDDEN | SDL_WINDOW_OPENGL |
-									SDL_WINDOW_HIGH_PIXEL_DENSITY};
+	SDL_WindowFlags sdl_flags{SDL_WINDOW_HIDDEN | SDL_WINDOW_OPENGL | SDL_WINDOW_HIGH_PIXEL_DENSITY};
+	if (size == MAXIMIZED) {
+		sdl_flags |= SDL_WINDOW_MAXIMIZED;
+		size = min_size != NOT_RESIZABLE ? min_size : glm::ivec2{640, 480};
+	}
+	if (min_size != NOT_RESIZABLE) {
+		sdl_flags |= SDL_WINDOW_RESIZABLE;
+	}
+
 	if ((sdl_window = SDL_CreateWindow(title, size.x, size.y, sdl_flags)) == nullptr) {
 		throw init_error{"Failed to open window."};
 	}
-	if (min_size.has_value()) {
-		SDL_SetWindowMinimumSize(sdl_window, min_size->x, min_size->y);
+	if (min_size != NOT_RESIZABLE) {
+		SDL_SetWindowMinimumSize(sdl_window, min_size.x, min_size.y);
 	}
 
 	gfx::create_ogl_context();

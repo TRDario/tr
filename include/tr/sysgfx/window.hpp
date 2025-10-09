@@ -17,8 +17,10 @@ namespace tr::gfx {
 } // namespace tr::gfx
 
 namespace tr::sys {
+	// Marks a window as maximized.
+	constexpr glm::ivec2 MAXIMIZED{};
 	// Marks a window as not resizable.
-	constexpr std::nullopt_t NOT_RESIZABLE{std::nullopt};
+	constexpr glm::ivec2 NOT_RESIZABLE{};
 
 	// Flash operations.
 	enum class flash_operation {
@@ -36,7 +38,7 @@ namespace tr::sys {
 
 	// Opens a windowed window.
 	// May throw: init_error.
-	void open_window(const char* title, glm::ivec2 size, std::optional<glm::ivec2> min_size = NOT_RESIZABLE,
+	void open_window(const char* title, glm::ivec2 size = MAXIMIZED, glm::ivec2 min_size = NOT_RESIZABLE,
 					 const gfx::properties& gfx_properties = {});
 	// Opens a fullscreen window.
 	// May throw: init_error.
