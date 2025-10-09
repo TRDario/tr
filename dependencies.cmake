@@ -66,7 +66,7 @@ if(NOT TR_HAS_STD_FORMAT)
 endif()
 
 if(TR_BUILD_SYSGFX)
-	FetchContent_Declare(sdl3 URL https://github.com/libsdl-org/SDL/archive/refs/tags/release-3.2.16.zip OVERRIDE_FIND_PACKAGE DOWNLOAD_EXTRACT_TIMESTAMP true)
+	FetchContent_Declare(sdl3 URL https://github.com/libsdl-org/SDL/archive/refs/tags/release-3.2.24.zip OVERRIDE_FIND_PACKAGE DOWNLOAD_EXTRACT_TIMESTAMP true)
 	FetchContent_Declare(sdl3_ttf GIT_REPOSITORY https://github.com/libsdl-org/sdl_ttf.git GIT_TAG release-3.2.2 GIT_SHALLOW true)
 	FetchContent_Declare(sdl3_image URL https://github.com/libsdl-org/SDL_image/archive/refs/tags/release-3.2.4.zip DOWNLOAD_EXTRACT_TIMESTAMP true)
 	FetchContent_MakeAvailable(sdl3_ttf sdl3_image sdl3)
@@ -80,4 +80,18 @@ if(TR_BUILD_AUDIO)
 	FetchContent_Declare(vorbis URL https://github.com/xiph/vorbis/archive/refs/tags/v1.3.7.zip DOWNLOAD_EXTRACT_TIMESTAMP true)
 	FetchContent_Declare(openal-soft URL https://github.com/kcat/openal-soft/archive/refs/tags/1.24.3.zip DOWNLOAD_EXTRACT_TIMESTAMP true)
 	FetchContent_MakeAvailable(openal-soft vorbis)
+endif()
+
+if(TR_BUILD_IMGUI)
+	FetchContent_Declare(imgui GIT_REPOSITORY https://github.com/ocornut/imgui.git GIT_TAG v1.92.3)
+	FetchContent_MakeAvailable(imgui)
+	add_library(imgui STATIC
+		${imgui_SOURCE_DIR}/backends/imgui_impl_opengl3.cpp
+		${imgui_SOURCE_DIR}/backends/imgui_impl_sdl3.cpp 
+		${imgui_SOURCE_DIR}/imgui.cpp
+		${imgui_SOURCE_DIR}/imgui_draw.cpp
+		${imgui_SOURCE_DIR}/imgui_tables.cpp
+		${imgui_SOURCE_DIR}/imgui_widgets.cpp
+	)
+	target_include_directories(imgui PUBLIC ${imgui_SOURCE_DIR})
 endif()

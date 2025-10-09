@@ -93,9 +93,8 @@ if(TR_BUILD_AUDIO)
 	target_link_libraries(tr OpenAL::OpenAL vorbis vorbisenc vorbisfile)
 endif()
 if(TR_BUILD_IMGUI)
-	target_sources(tr PRIVATE
-		src/imgui.cpp
-	)
+	target_sources(tr PRIVATE src/imgui.cpp)
+	target_link_libraries(tr imgui)
 endif()
 if(TR_BUILD_TESTS)
 	add_subdirectory(test)
