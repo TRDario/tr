@@ -70,6 +70,8 @@ namespace tr {
 	using frect3 = rect3<float>;
 	// Rect binary readers.
 	template <int S, class T> struct binary_reader<rect<S, T>> : default_binary_reader<rect<S, T>> {};
+	// Rect binary writers.
+	template <int S, class T> struct binary_writer<rect<S, T>> : default_binary_writer<rect<S, T>> {};
 	// Determines if two rects intersect.
 	template <class T1, class T2> constexpr bool intersecting(const rect2<T1>& r1, const rect2<T2>& r2);
 
@@ -85,6 +87,8 @@ namespace tr {
 	};
 	// Circle binary reader.
 	template <> struct binary_reader<circle> : default_binary_reader<circle> {};
+	// Circle binary writer.
+	template <> struct binary_writer<circle> : default_binary_writer<circle> {};
 	// Determines if two circles intersect.
 	bool intersecting(const circle& c1, const circle& c2);
 
