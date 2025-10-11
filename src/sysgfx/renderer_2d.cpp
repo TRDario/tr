@@ -79,7 +79,7 @@ tr::gfx::simple_color_mesh_ref tr::gfx::renderer_2d::new_color_fan(int layer, us
 tr::gfx::simple_color_mesh_ref tr::gfx::renderer_2d::new_color_fan(int layer, usize vertices, const glm::mat4& mat,
 																   const blend_mode& blend_mode)
 {
-	mesh& mesh{find_mesh(layer, std::nullopt, mat, blend_mode, vertices)};
+	mesh& mesh{find_mesh(layer, primitive::TRIS, std::nullopt, mat, blend_mode, vertices)};
 	const u16 base_index{u16(mesh.positions.size())};
 
 	mesh.positions.resize(mesh.positions.size() + vertices);
@@ -109,7 +109,7 @@ tr::gfx::simple_color_mesh_ref tr::gfx::renderer_2d::new_color_outline(int layer
 																	   const blend_mode& blend_mode)
 {
 	const usize vertices{polygon_vertices * 2};
-	mesh& mesh{find_mesh(layer, std::nullopt, mat, blend_mode, vertices)};
+	mesh& mesh{find_mesh(layer, primitive::TRIS, std::nullopt, mat, blend_mode, vertices)};
 	const u16 base_index{u16(mesh.positions.size())};
 
 	mesh.positions.resize(mesh.positions.size() + vertices);
@@ -138,7 +138,7 @@ tr::gfx::color_mesh_ref tr::gfx::renderer_2d::new_color_mesh(int layer, usize ve
 tr::gfx::color_mesh_ref tr::gfx::renderer_2d::new_color_mesh(int layer, usize vertices, usize indices, const glm::mat4& mat,
 															 const blend_mode& blend_mode)
 {
-	mesh& mesh{find_mesh(layer, std::nullopt, mat, blend_mode, vertices)};
+	mesh& mesh{find_mesh(layer, primitive::TRIS, std::nullopt, mat, blend_mode, vertices)};
 	const u16 base_index{u16(mesh.positions.size())};
 
 	mesh.positions.resize(mesh.positions.size() + vertices);
@@ -189,7 +189,7 @@ tr::gfx::simple_textured_mesh_ref tr::gfx::renderer_2d::new_textured_fan(int lay
 {
 	TR_ASSERT(!texture_ref.empty(), "Cannot pass std::nullopt as texture for textured fan.");
 
-	mesh& mesh{find_mesh(layer, std::move(texture_ref), mat, blend_mode, vertices)};
+	mesh& mesh{find_mesh(layer, primitive::TRIS, std::move(texture_ref), mat, blend_mode, vertices)};
 	const u16 base_index{u16(mesh.positions.size())};
 
 	mesh.positions.resize(mesh.positions.size() + vertices);
@@ -238,7 +238,7 @@ tr::gfx::textured_mesh_ref tr::gfx::renderer_2d::new_textured_mesh(int layer, us
 {
 	TR_ASSERT(!texture_ref.empty(), "Cannot pass std::nullopt as texture for textured mesh.");
 
-	mesh& mesh{find_mesh(layer, std::move(texture_ref), mat, blend_mode, vertices)};
+	mesh& mesh{find_mesh(layer, primitive::TRIS, std::move(texture_ref), mat, blend_mode, vertices)};
 	const u16 base_index{u16(mesh.positions.size())};
 
 	mesh.positions.resize(mesh.positions.size() + vertices);
@@ -253,6 +253,103 @@ tr::gfx::textured_mesh_ref tr::gfx::renderer_2d::new_textured_mesh(int layer, us
 		{mesh.indices.end() - indices, mesh.indices.end()},
 		base_index,
 	};
+}
+
+//
+
+tr::gfx::simple_color_mesh_ref tr::gfx::renderer_2d::new_lines(int layer, usize lines)
+{
+	std::unordered_map<int, layer_defaults>::iterator it{m_layer_defaults.find(layer)};
+	if (it != m_layer_defaults.end()) {
+		const layer_defaults& defaults{it->second};
+		const glm::mat4& transform{defaults.transform.has_value() ? *defaults.transform : m_default_transform};
+		return new_lines(layer, lines, transform, defaults.blend_mode);
+	}
+	else {
+		return new_lines(layer, lines, m_default_transform, ALPHA_BLENDING);
+	}
+}
+
+tr::gfx::simple_color_mesh_ref tr::gfx::renderer_2d::new_lines(int layer, usize lines, const glm::mat4& mat, const blend_mode& blend_mode)
+{
+	const usize vertices{lines * 2};
+	mesh& mesh{find_mesh(layer, primitive::LINES, std::nullopt, mat, blend_mode, vertices)};
+	const u16 base_index{u16(mesh.positions.size())};
+
+	mesh.positions.resize(mesh.positions.size() + vertices);
+	mesh.uvs.resize(mesh.uvs.size() + vertices);
+	mesh.tints.resize(mesh.tints.size() + vertices);
+	mesh.indices.resize(mesh.indices.size() + vertices);
+
+	std::fill(mesh.uvs.end() - vertices, mesh.uvs.end(), UNTEXTURED_UV);
+	std::iota(mesh.indices.end() - vertices, mesh.indices.end(), base_index);
+	return {{mesh.positions.end() - vertices, mesh.positions.end()}, {mesh.tints.end() - vertices, mesh.tints.end()}};
+}
+
+tr::gfx::simple_color_mesh_ref tr::gfx::renderer_2d::new_line_strip(int layer, usize vertices)
+{
+	std::unordered_map<int, layer_defaults>::iterator it{m_layer_defaults.find(layer)};
+	if (it != m_layer_defaults.end()) {
+		const layer_defaults& defaults{it->second};
+		const glm::mat4& transform{defaults.transform.has_value() ? *defaults.transform : m_default_transform};
+		return new_line_strip(layer, vertices, transform, defaults.blend_mode);
+	}
+	else {
+		return new_line_strip(layer, vertices, m_default_transform, ALPHA_BLENDING);
+	}
+}
+
+tr::gfx::simple_color_mesh_ref tr::gfx::renderer_2d::new_line_strip(int layer, usize vertices, const glm::mat4& mat,
+																	const blend_mode& blend_mode)
+{
+	mesh& mesh{find_mesh(layer, primitive::LINES, std::nullopt, mat, blend_mode, vertices)};
+	const u16 base_index{u16(mesh.positions.size())};
+
+	mesh.positions.resize(mesh.positions.size() + vertices);
+	mesh.uvs.resize(mesh.uvs.size() + vertices);
+	mesh.tints.resize(mesh.tints.size() + vertices);
+
+	std::fill(mesh.uvs.end() - vertices, mesh.uvs.end(), UNTEXTURED_UV);
+	for (usize i = 0; i < vertices - 1; ++i) {
+		mesh.indices.push_back(base_index + i);
+		mesh.indices.push_back(base_index + i + 1);
+	}
+
+	return {{mesh.positions.end() - vertices, mesh.positions.end()}, {mesh.tints.end() - vertices, mesh.tints.end()}};
+}
+
+tr::gfx::simple_color_mesh_ref tr::gfx::renderer_2d::new_line_loop(int layer, usize vertices)
+{
+	std::unordered_map<int, layer_defaults>::iterator it{m_layer_defaults.find(layer)};
+	if (it != m_layer_defaults.end()) {
+		const layer_defaults& defaults{it->second};
+		const glm::mat4& transform{defaults.transform.has_value() ? *defaults.transform : m_default_transform};
+		return new_line_loop(layer, vertices, transform, defaults.blend_mode);
+	}
+	else {
+		return new_line_loop(layer, vertices, m_default_transform, ALPHA_BLENDING);
+	}
+}
+
+tr::gfx::simple_color_mesh_ref tr::gfx::renderer_2d::new_line_loop(int layer, usize vertices, const glm::mat4& mat,
+																   const blend_mode& blend_mode)
+{
+	mesh& mesh{find_mesh(layer, primitive::LINES, std::nullopt, mat, blend_mode, vertices)};
+	const u16 base_index{u16(mesh.positions.size())};
+
+	mesh.positions.resize(mesh.positions.size() + vertices);
+	mesh.uvs.resize(mesh.uvs.size() + vertices);
+	mesh.tints.resize(mesh.tints.size() + vertices);
+
+	std::fill(mesh.uvs.end() - vertices, mesh.uvs.end(), UNTEXTURED_UV);
+	for (usize i = 0; i < vertices - 1; ++i) {
+		mesh.indices.push_back(base_index + i);
+		mesh.indices.push_back(base_index + i + 1);
+	}
+	mesh.indices.push_back(base_index + vertices - 1);
+	mesh.indices.push_back(base_index);
+
+	return {{mesh.positions.end() - vertices, mesh.positions.end()}, {mesh.tints.end() - vertices, mesh.tints.end()}};
 }
 
 //
@@ -276,21 +373,22 @@ void tr::gfx::renderer_2d::draw(const render_target& target)
 
 //
 
-tr::gfx::renderer_2d::mesh& tr::gfx::renderer_2d::find_mesh(int layer, texture_ref texture_ref, const glm::mat4& mat,
+tr::gfx::renderer_2d::mesh& tr::gfx::renderer_2d::find_mesh(int layer, primitive type, texture_ref texture_ref, const glm::mat4& mat,
 															const blend_mode& blend_mode, usize space_needed)
 {
 	auto range{std::ranges::equal_range(m_meshes, layer, std::less{}, &mesh::layer)};
 	std::vector<mesh>::iterator it;
 	if (texture_ref.empty()) {
 		auto find_suitable{[&](const mesh& mesh) {
-			return mesh.mat == mat && mesh.blend_mode == blend_mode && mesh.positions.size() + space_needed <= UINT16_MAX;
+			return mesh.type == type && mesh.mat == mat && mesh.blend_mode == blend_mode &&
+				   mesh.positions.size() + space_needed <= UINT16_MAX;
 		}};
 		it = std::ranges::find_if(range, find_suitable);
 	}
 	else {
 		auto find_suitable{[&](const mesh& mesh) {
-			return (mesh.texture.empty() || mesh.texture == texture_ref) && mesh.mat == mat && mesh.blend_mode == blend_mode &&
-				   mesh.positions.size() + space_needed <= UINT16_MAX;
+			return mesh.type == type && (mesh.texture.empty() || mesh.texture == texture_ref) && mesh.mat == mat &&
+				   mesh.blend_mode == blend_mode && mesh.positions.size() + space_needed <= UINT16_MAX;
 		}};
 		it = std::ranges::find_if(range, find_suitable);
 		if (it != range.end() && it->texture.empty()) {
@@ -299,7 +397,7 @@ tr::gfx::renderer_2d::mesh& tr::gfx::renderer_2d::find_mesh(int layer, texture_r
 	}
 
 	if (it == range.end()) {
-		it = m_meshes.emplace(range.end(), layer, std::move(texture_ref), mat, blend_mode);
+		it = m_meshes.emplace(range.end(), layer, type, std::move(texture_ref), mat, blend_mode);
 	}
 	return *it;
 }
@@ -378,7 +476,7 @@ void tr::gfx::renderer_2d::draw(std::vector<mesh>::iterator first, std::vector<m
 		set_vertex_buffer(m_vbuffer_positions, 0, mesh_info_it->vertex_offset);
 		set_vertex_buffer(m_vbuffer_uvs, 1, mesh_info_it->vertex_offset);
 		set_vertex_buffer(m_vbuffer_tints, 2, mesh_info_it->vertex_offset);
-		draw_indexed(primitive::TRIS, mesh_info_it->index_offset, mesh_indices);
+		draw_indexed(mesh.type, mesh_info_it->index_offset, mesh_indices);
 
 		++mesh_info_it;
 	}

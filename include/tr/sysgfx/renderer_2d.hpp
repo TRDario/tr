@@ -1,11 +1,11 @@
 #pragma once
 #include "backbuffer.hpp"
 #include "blending.hpp"
+#include "graphics_context.hpp"
 #include "index_buffer.hpp"
 #include "render_target.hpp"
 #include "shader_pipeline.hpp"
 #include "texture.hpp"
-#include "vertex_buffer.hpp"
 
 namespace tr::gfx {
 	// Simple 2D renderer color mesh allocation reference.
@@ -89,6 +89,19 @@ namespace tr::gfx {
 		textured_mesh_ref new_textured_mesh(int layer, usize vertices, usize indices, texture_ref texture, const glm::mat4& mat,
 											const blend_mode& blend_mode);
 
+		// Allocates a number of new color lines.
+		simple_color_mesh_ref new_lines(int layer, usize lines);
+		// Allocates a number of new color lines.
+		simple_color_mesh_ref new_lines(int layer, usize lines, const glm::mat4& mat, const blend_mode& blend_mode);
+		// Allocates a new color line strip.
+		simple_color_mesh_ref new_line_strip(int layer, usize vertices);
+		// Allocates a new color line strip.
+		simple_color_mesh_ref new_line_strip(int layer, usize vertices, const glm::mat4& mat, const blend_mode& blend_mode);
+		// Allocates a new color line loop.
+		simple_color_mesh_ref new_line_loop(int layer, usize vertices);
+		// Allocates a new color line loop.
+		simple_color_mesh_ref new_line_loop(int layer, usize vertices, const glm::mat4& mat, const blend_mode& blend_mode);
+
 		// Draws a layer to a rendering target.
 		void draw_layer(int layer, const render_target& target = backbuffer_render_target());
 		// Draws all layers of priority <= max_layer to a rendering target.
@@ -107,6 +120,8 @@ namespace tr::gfx {
 		struct mesh {
 			// The drawing priority of the mesh.
 			int layer;
+			// The mesh type.
+			primitive type;
 			// The texture used by the mesh.
 			texture_ref texture;
 			// The transformation matrix used by the mesh.
@@ -152,7 +167,8 @@ namespace tr::gfx {
 		blend_mode m_last_blend_mode{ALPHA_BLENDING};
 
 		// Finds an appropriate mesh.
-		mesh& find_mesh(int layer, texture_ref texture, const glm::mat4& mat, const blend_mode& blend_mode, usize space_needed);
+		mesh& find_mesh(int layer, primitive type, texture_ref texture, const glm::mat4& mat, const blend_mode& blend_mode,
+						usize space_needed);
 		// Sets up the graphical context for drawing.
 		void setup_context();
 		// Uploads meshes to the GPU buffers.
