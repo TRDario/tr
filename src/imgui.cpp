@@ -3,6 +3,10 @@
 #include <backends/imgui_impl_opengl3.h>
 #include <backends/imgui_impl_sdl3.h>
 
+namespace tr::ImGui {
+	constexpr u32 IMGUI_RENDERER_ID{4};
+}
+
 void tr::ImGui::Init()
 {
 	ImGui_ImplSDL3_InitForOpenGL(sys::sdl_window, gfx::ogl_context);
@@ -33,5 +37,6 @@ void tr::ImGui::NewFrame()
 
 void tr::ImGui::Draw()
 {
+	tr::gfx::active_renderer = IMGUI_RENDERER_ID;
 	ImGui_ImplOpenGL3_RenderDrawData(::ImGui::GetDrawData());
 }
