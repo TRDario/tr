@@ -92,6 +92,7 @@ if(TR_BUILD_IMGUI)
 		${imgui_SOURCE_DIR}/imgui_draw.cpp
 		${imgui_SOURCE_DIR}/imgui_tables.cpp
 		${imgui_SOURCE_DIR}/imgui_widgets.cpp
+		${imgui_SOURCE_DIR}/misc/cpp/imgui_stdlib.cpp
 	)
 	target_include_directories(imgui PUBLIC ${imgui_SOURCE_DIR})
 endif()
