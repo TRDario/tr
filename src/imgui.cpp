@@ -15,9 +15,11 @@ int tr::ImGui::string_callback(ImGuiInputTextCallbackData* data)
 
 	if (data->EventFlag == ImGuiInputTextFlags_CallbackResize) {
 		str.resize(data->BufTextLen);
+		data->Buf = str.data();
 	}
 	else if (data->EventFlag == ImGuiInputTextFlags_CallbackEdit) {
 		str.resize(data->BufTextLen);
+		data->BufSize = str.size() + 1;
 	}
 
 	return 0;
