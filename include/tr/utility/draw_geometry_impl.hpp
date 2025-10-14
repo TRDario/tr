@@ -26,10 +26,10 @@ constexpr tr::usize tr::polygon_outline_indices(u16 vtx)
 	return vtx * 6;
 }
 
-template <std::output_iterator<tr::u16> O> constexpr O tr::fill_polygon_indices(O out, u16 vtx, u16 base)
+template <std::output_iterator<tr::u16> O> constexpr O tr::fill_convex_polygon_indices(O out, u16 vtx, u16 base)
 {
 	TR_ASSERT(vtx >= 3, "Tried to calculate indices for {}-sided polygon.", vtx);
-	TR_ASSERT(base + polygon_indices(vtx) <= UINT16_MAX, "Index overflow detected in fill_poly_idx.");
+	TR_ASSERT(base + vtx <= UINT16_MAX, "Index overflow detected in fill_poly_idx.");
 
 	for (u16 i = 0; i < vtx - 2; ++i) {
 		*out++ = base;
@@ -39,10 +39,10 @@ template <std::output_iterator<tr::u16> O> constexpr O tr::fill_polygon_indices(
 	return out;
 }
 
-template <std::output_iterator<tr::u16> O> constexpr O tr::fill_polygon_outline_indices(O out, u16 vtx, u16 base)
+template <std::output_iterator<tr::u16> O> constexpr O tr::fill_convex_polygon_outline_indices(O out, u16 vtx, u16 base)
 {
 	TR_ASSERT(vtx >= 3, "Tried to calculate indices for {}-sided polygon outline.", vtx);
-	TR_ASSERT(base + polygon_outline_indices(vtx) <= UINT16_MAX, "Index overflow detected in fill_poly_outline_idx.");
+	TR_ASSERT(base + vtx <= UINT16_MAX, "Index overflow detected in fill_poly_outline_idx.");
 
 	for (u16 i = 0; i < vtx - 1; ++i) {
 		*out++ = base + i;
@@ -178,14 +178,14 @@ template <tr::sized_output_range<glm::vec2> R> void tr::fill_arc_vertices(R&& ou
 	fill_arc_vertices(std::begin(out), std::size(out), circle, start, size);
 }
 
-template <std::output_iterator<glm::vec2> O> O tr::fill_polygon_vertices(O out, usize vtx, circle circle, angle rotation)
+template <std::output_iterator<glm::vec2> O> O tr::fill_regular_polygon_vertices(O out, usize vtx, circle circle, angle rotation)
 {
 	return fill_arc_vertices(out, vtx, circle, rotation, 1_turns);
 }
 
-template <tr::sized_output_range<glm::vec2> R> void tr::fill_polygon_vertices(R&& out, circle circle, angle rotation)
+template <tr::sized_output_range<glm::vec2> R> void tr::fill_regular_polygon_vertices(R&& out, circle circle, angle rotation)
 {
-	fill_polygon_vertices(std::begin(out), std::size(out), circle, rotation);
+	fill_regular_polygon_vertices(std::begin(out), std::size(out), circle, rotation);
 }
 
 template <std::output_iterator<glm::vec2> O> O tr::fill_circle_vertices(O out, usize vtx, circle circle)
@@ -199,16 +199,16 @@ template <tr::sized_output_range<glm::vec2> R> void tr::fill_circle_vertices(R&&
 }
 
 template <std::output_iterator<glm::vec2> O>
-O tr::fill_polygon_outline_vertices(O out, usize vtx, circle circle, angle rotation, float thickness)
+O tr::fill_regular_polygon_outline_vertices(O out, usize vtx, circle circle, angle rotation, float thickness)
 {
-	out = fill_polygon_vertices(out, vtx, {circle.c, circle.r + thickness / 2}, rotation);
-	return fill_polygon_vertices(out, vtx, {circle.c, circle.r - thickness / 2}, rotation);
+	out = fill_regular_polygon_vertices(out, vtx, {circle.c, circle.r + thickness / 2}, rotation);
+	return fill_regular_polygon_vertices(out, vtx, {circle.c, circle.r - thickness / 2}, rotation);
 }
 
 template <tr::sized_output_range<glm::vec2> R>
-void tr::fill_polygon_outline_vertices(R&& out, circle circle, angle rotation, float thickness)
+void tr::fill_regular_polygon_outline_vertices(R&& out, circle circle, angle rotation, float thickness)
 {
-	fill_polygon_outline_vertices(std::begin(out), std::size(out) / 2, circle, rotation, thickness);
+	fill_regular_polygon_outline_vertices(std::begin(out), std::size(out) / 2, circle, rotation, thickness);
 }
 
 template <std::output_iterator<glm::vec2> O> O tr::fill_circle_outline_vertices(O out, usize vtx, circle circle, float thickness)

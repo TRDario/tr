@@ -6,18 +6,18 @@ namespace tr {
 	inline usize smooth_polygon_vertices(float r);
 	// Calculates the number of segments needed to draw a smooth arc with pixel radius r.
 	inline usize smooth_arc_vertices(float r, angle sizeth);
-	// Calculates the number of indices needed for a convex polygon mesh.
+	// Calculates the number of indices needed for a simple polygon mesh with no holes.
 	constexpr usize polygon_indices(u16 vtx);
-	// Calculates the number of indices needed for a convex polygon mesh.
+	// Calculates the number of indices needed for a simple polygon mesh with no holes.
 	constexpr usize polygon_outline_indices(u16 vtx);
 
 	// Outputs indices for a convex polygon to an output iterator.
 	// out needs to have space for poly_idx(vtx) indices.
-	template <std::output_iterator<u16> O> constexpr O fill_polygon_indices(O out, u16 vtx, u16 base);
+	template <std::output_iterator<u16> O> constexpr O fill_convex_polygon_indices(O out, u16 vtx, u16 base);
 	// Outputs indices for a convex polygon outline to an output iterator.
 	// out needs to have space for poly_outline_idx(vtx) indices.
 	// vtx is the number of vertices in the polygon, not the mesh.
-	template <std::output_iterator<u16> O> constexpr O fill_polygon_outline_indices(O out, u16 vtx, u16 base);
+	template <std::output_iterator<u16> O> constexpr O fill_convex_polygon_outline_indices(O out, u16 vtx, u16 base);
 
 	// Outputs rectangle vertices to an output iterator.
 	// out needs to have space for 4 vertices.
@@ -64,9 +64,9 @@ namespace tr {
 	template <sized_output_range<glm::vec2> R> void fill_arc_vertices(R&& out, circle circle, angle start, angle size);
 	// Outputs regular polygon vertices to an output iterator.
 	// out needs to have space for vtx vertices.
-	template <std::output_iterator<glm::vec2> O> O fill_polygon_vertices(O out, usize vtx, circle circle, angle rotation);
+	template <std::output_iterator<glm::vec2> O> O fill_regular_polygon_vertices(O out, usize vtx, circle circle, angle rotation);
 	// Outputs regular polygon vertices to a range.
-	template <sized_output_range<glm::vec2> R> void fill_polygon_vertices(R&& out, circle circle, angle rotation);
+	template <sized_output_range<glm::vec2> R> void fill_regular_polygon_vertices(R&& out, circle circle, angle rotation);
 	// Outputs circle vertices to an output iterator.
 	// out needs to have space for vtx vertices.
 	template <std::output_iterator<glm::vec2> O> O fill_circle_vertices(O out, usize vtx, circle circle);
@@ -76,9 +76,10 @@ namespace tr {
 	// Outputs regular polygon outline vertices to an output iterator.
 	// out needs to have space for vtx * 2 vertices.
 	template <std::output_iterator<glm::vec2> O>
-	O fill_polygon_outline_vertices(O out, usize vtx, circle circle, angle rotation, float thickness);
+	O fill_regular_polygon_outline_vertices(O out, usize vtx, circle circle, angle rotation, float thickness);
 	// Outputs regular polygon outline vertices to a range.
-	template <sized_output_range<glm::vec2> R> void fill_polygon_outline_vertices(R&& out, circle circle, angle rotation, float thickness);
+	template <sized_output_range<glm::vec2> R>
+	void fill_regular_polygon_outline_vertices(R&& out, circle circle, angle rotation, float thickness);
 	// Outputs circle outline vertices to an output iterator.
 	// out needs to have space for vtx * 2 vertices.
 	template <std::output_iterator<glm::vec2> O> O fill_circle_outline_vertices(O out, usize vtx, circle circle, float thickness);
