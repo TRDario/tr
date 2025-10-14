@@ -79,7 +79,7 @@ constexpr void tr::fill_simple_polygon_indices(O out, std::span<const glm::vec2>
 				std::swap(left, right);
 			}
 
-			if (indices.size() > 4) {
+			if (indices.size() > 3) {
 				const triangle tri{vertices[indices[left]], vertices[indices[i]], vertices[indices[right]]};
 				const auto is_in_tri{[&](usize j) { return j != left && j != i && j != right && tri.contains(vertices[indices[j]]); }};
 				if (tri.winding_order() != winding_order::CCW || std::ranges::any_of(std::views::iota(0_uz, indices.size()), is_in_tri)) {
