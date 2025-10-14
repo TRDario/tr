@@ -61,23 +61,25 @@ template <std::output_iterator<tr::u16> O> constexpr O tr::fill_convex_polygon_o
 	return out;
 }
 
-template <std::output_iterator<tr::u16> O>
-constexpr void tr::fill_simple_polygon_indices(O out, std::span<const glm::vec2> vertices, u16 base)
+template <std::output_iterator<tr::u16> O> constexpr O tr::fill_simple_polygon_indices(O out, std::span<const glm::vec2> vertices, u16 base)
 {
 	TR_ASSERT(vertices.size() >= 3, "Tried to calculate indices for {}-sided polygon.", vertices.size());
 	TR_ASSERT(base + vertices.size() <= UINT16_MAX, "Index overflow detected in fill_poly_outline_idx.");
 
-	std::vector<u16> indices;
-	std::iota(indices.begin(), indices.end(), 0_u16);
+	std::vector<u16> indices(vertices.size());
+	switch (polygon_winding_order(vertices)) {
+	case tr::winding_order::CCW:
+		std::iota(indices.begin(), indices.end(), 0_u16);
+		break;
+	case tr::winding_order::CW:
+		std::iota(indices.rbegin(), indices.rend(), 0_u16);
+		break;
+	}
 
-	const winding_order winding_order(polygon_winding_order(vertices));
 	while (indices.size() >= 3) {
 		for (usize i = 0; i < indices.size(); ++i) {
-			u16 left{u16(i == 0 ? indices.size() - 1 : i - 1)};
-			u16 right{u16(i == indices.size() - 1 ? 0 : i + 1)};
-			if (winding_order == winding_order::CW) {
-				std::swap(left, right);
-			}
+			const u16 left{u16(i == 0 ? indices.size() - 1 : i - 1)};
+			const u16 right{u16(i == indices.size() - 1 ? 0 : i + 1)};
 
 			if (indices.size() > 3) {
 				const triangle tri{vertices[indices[left]], vertices[indices[i]], vertices[indices[right]]};
@@ -91,10 +93,11 @@ constexpr void tr::fill_simple_polygon_indices(O out, std::span<const glm::vec2>
 			*out++ = indices[i] + base;
 			*out++ = indices[right] + base;
 			indices.erase(indices.begin() + i);
-
 			break;
 		}
 	}
+
+	return out;
 }
 
 template <std::output_iterator<glm::vec2> O> constexpr O tr::fill_rectangle_vertices(O out, const frect2& rect)

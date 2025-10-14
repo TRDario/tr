@@ -20,7 +20,7 @@ namespace tr {
 	template <std::output_iterator<u16> O> constexpr O fill_convex_polygon_outline_indices(O out, u16 vtx, u16 base);
 	// Outputs indices for a simple polygon to an output iterator.
 	// out needs to have space for poly_idx(vtx) indices.
-	template <std::output_iterator<u16> O> constexpr void fill_simple_polygon_indices(O out, std::span<const glm::vec2> vertices, u16 base);
+	template <std::output_iterator<u16> O> constexpr O fill_simple_polygon_indices(O out, std::span<const glm::vec2> vertices, u16 base);
 
 	// Outputs rectangle vertices to an output iterator.
 	// out needs to have space for 4 vertices.
