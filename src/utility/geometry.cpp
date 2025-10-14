@@ -10,6 +10,11 @@ glm::vec2 tr::magth(float mag, angle th)
 	return normal(th) * mag;
 }
 
+tr::winding_order tr::triangle::winding_order() const
+{
+	return cross2(b - a, c - a) >= 0 ? winding_order::CCW : winding_order::CW;
+}
+
 bool tr::triangle::contains(glm::vec2 p) const
 {
 	const glm::vec2 r{p - a};
@@ -180,5 +185,5 @@ tr::winding_order tr::polygon_winding_order(std::span<const glm::vec2> vertices)
 	const glm::vec2 a{vertices[min_y_index == 0 ? vertices.size() - 1 : min_y_index - 1]};
 	const glm::vec2 b{vertices[min_y_index]};
 	const glm::vec2 c{vertices[min_y_index == vertices.size() - 1 ? 0 : min_y_index + 1]};
-	return cross2(b - a, c - a) > 0 ? winding_order::CCW : winding_order::CW;
+	return triangle{a, b, c}.winding_order();
 }

@@ -36,6 +36,12 @@ namespace tr {
 	// Combines a horizontal and vertical alignment into a 2D alignment.
 	constexpr align operator|(const halign& halign, const valign& valign);
 
+	// Polygon winding order.
+	enum class winding_order : bool {
+		CW,
+		CCW
+	};
+
 	// Rectangle object.
 	template <int S, class T> struct rect {
 		// The offset of the top-left corner of the rect.
@@ -81,6 +87,8 @@ namespace tr {
 		glm::vec2 b;
 		glm::vec2 c;
 
+		// Determines the winding order of the triangle.
+		winding_order winding_order() const;
 		// Determines whether a point is contained inside the triangle.
 		bool contains(glm::vec2 point) const;
 	};
@@ -169,11 +177,6 @@ namespace tr {
 	// Applies a 3D rotation around a point to a matrix.
 	glm::mat4 rotate_around(const glm::mat4& mat, const glm::vec3& c, const angle& th, const glm::vec3& axis);
 
-	// Polygon winding order.
-	enum class winding_order : bool {
-		CW,
-		CCW
-	};
 	// Finds the winding order of a polygon.
 	winding_order polygon_winding_order(std::span<const glm::vec2> vertices);
 } // namespace tr
