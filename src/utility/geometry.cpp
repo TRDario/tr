@@ -10,6 +10,19 @@ glm::vec2 tr::magth(float mag, angle th)
 	return normal(th) * mag;
 }
 
+bool tr::triangle::contains(glm::vec2 p) const
+{
+	const glm::vec2 r{p - a};
+	const bool sign = (b.x - a.x) * r.y - (b.y - a.y) * r.x > 0;
+
+	if ((c.x - a.x) * r.y - (c.y - a.y) * r.x > 0 == sign || (c.x - b.x) * (p.y - b.y) - (c.y - b.y) * (p.x - b.x) > 0 != sign) {
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+
 bool tr::circle::contains(glm::vec2 point) const
 {
 	const float dx{point.x - c.x};
@@ -153,4 +166,19 @@ glm::mat4 tr::rotate_around(const glm::mat4& mat, const glm::vec2& c, const angl
 glm::mat4 tr::rotate_around(const glm::mat4& mat, const glm::vec3& c, const angle& th, const glm::vec3& axis)
 {
 	return glm::translate(glm::rotate(glm::translate(mat, c), th.rads(), axis), -c);
+}
+
+tr::winding_order tr::polygon_winding_order(std::span<const glm::vec2> vertices)
+{
+	usize min_y_index{0};
+	for (usize i = 1; i < vertices.size(); ++i) {
+		if (vertices[i].y < vertices[min_y_index].y) {
+			min_y_index = i;
+		}
+	}
+
+	const glm::vec2 a{vertices[min_y_index == 0 ? vertices.size() - 1 : min_y_index - 1]};
+	const glm::vec2 b{vertices[min_y_index]};
+	const glm::vec2 c{vertices[min_y_index == vertices.size() - 1 ? 0 : min_y_index + 1]};
+	return cross2(b - a, c - a) > 0 ? winding_order::CCW : winding_order::CW;
 }

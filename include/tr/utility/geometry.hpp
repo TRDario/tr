@@ -75,6 +75,20 @@ namespace tr {
 	// Determines if two rects intersect.
 	template <class T1, class T2> constexpr bool intersecting(const rect2<T1>& r1, const rect2<T2>& r2);
 
+	// 2D triangle.
+	struct triangle {
+		glm::vec2 a;
+		glm::vec2 b;
+		glm::vec2 c;
+
+		// Determines whether a point is contained inside the triangle.
+		bool contains(glm::vec2 point) const;
+	};
+	// Triangle binary reader.
+	template <> struct binary_reader<triangle> : default_binary_reader<triangle> {};
+	// Triangle binary writer.
+	template <> struct binary_writer<triangle> : default_binary_writer<triangle> {};
+
 	// 2D circle.
 	struct circle {
 		// The offset of the center of the circle.
@@ -154,6 +168,14 @@ namespace tr {
 	glm::mat4 rotate_around(const glm::mat4& mat, const glm::vec2& c, const angle& th);
 	// Applies a 3D rotation around a point to a matrix.
 	glm::mat4 rotate_around(const glm::mat4& mat, const glm::vec3& c, const angle& th, const glm::vec3& axis);
+
+	// Polygon winding order.
+	enum class winding_order : bool {
+		CW,
+		CCW
+	};
+	// Finds the winding order of a polygon.
+	winding_order polygon_winding_order(std::span<const glm::vec2> vertices);
 } // namespace tr
 
 #include "geometry_impl.hpp" // IWYU pragma: keep
