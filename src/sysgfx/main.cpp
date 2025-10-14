@@ -1,5 +1,6 @@
 #include "../../include/tr/sysgfx/main.hpp"
 #include "../../include/tr/sysgfx/dialog.hpp"
+#include "../../include/tr/sysgfx/display.hpp"
 #include "../../include/tr/sysgfx/impl.hpp"
 #include <SDL3/SDL.h>
 
@@ -57,6 +58,7 @@ extern "C"
 		TR_LOG_CONTINUE(tr::log, "Platform: {}", SDL_GetPlatform());
 		TR_LOG_CONTINUE(tr::log, "CPU cores: {}", SDL_GetNumLogicalCPUCores());
 		TR_LOG_CONTINUE(tr::log, "RAM: {}mb", SDL_GetSystemRAM());
+		tr::sys::set_iteration_frequency(tr::sys::refresh_rate());
 
 		try {
 			return SDL_AppResult(::initialize({(const char**)argv, std::size_t(argc)}));
