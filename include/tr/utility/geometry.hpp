@@ -179,6 +179,8 @@ namespace tr {
 
 	// Finds the winding order of a polygon.
 	winding_order polygon_winding_order(std::span<const glm::vec2> vertices);
+	// Determines whether a polygon is self-intersecting.
+	bool self_intersecting(std::span<const glm::vec2> vertices);
 } // namespace tr
 
 #include "geometry_impl.hpp" // IWYU pragma: keep

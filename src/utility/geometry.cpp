@@ -187,3 +187,88 @@ tr::winding_order tr::polygon_winding_order(std::span<const glm::vec2> vertices)
 	const glm::vec2 c{vertices[min_y_index == vertices.size() - 1 ? 0 : min_y_index + 1]};
 	return triangle{a, b, c}.winding_order();
 }
+
+bool tr::self_intersecting(std::span<const glm::vec2> vertices)
+{
+	enum class endpoint_type {
+		LEFT,
+		RIGHT
+	};
+	struct endpoint {
+		int index;
+		endpoint_type type;
+	};
+	const auto endpoint_comparator{[&](endpoint l, endpoint r) {
+		glm::vec2 lv{vertices[l.index]};
+		glm::vec2 rv{vertices[r.index]};
+		return lv.x < rv.x || (lv.x == rv.x && lv.y < rv.y);
+	}};
+	struct segment {
+		glm::vec2 a;
+		glm::vec2 b;
+
+		bool operator==(const segment& r) const = default;
+
+		float y_at(float x) const
+		{
+			if (a.x == a.x) {
+				return a.y;
+			}
+			else {
+				return a.y + ((x - a.x) / (b.x - a.x)) * (b.y - a.y);
+			}
+		}
+	};
+
+	if (vertices.size() <= 3) {
+		return false;
+	}
+
+	std::vector<segment> sweep_line;
+	std::vector<endpoint> queue;
+	for (usize i = 0; i < vertices.size() - 1; ++i) {
+		queue.push_back({int(i), endpoint_type::LEFT});
+		queue.push_back({int(i + 1), endpoint_type::RIGHT});
+	}
+	std::ranges::sort(queue, endpoint_comparator);
+
+	for (usize i = 0; i < queue.size(); ++i) {
+		const endpoint ep{queue[i]};
+		const auto comparator{[x = vertices[ep.index].x](const segment& l, const segment& r) { return l.y_at(x) < r.y_at(x); }};
+
+		std::ranges::sort(sweep_line, comparator);
+		switch (ep.type) {
+		case endpoint_type::LEFT: {
+			const segment segment{vertices[ep.index], vertices[ep.index + 1]};
+			const auto it{sweep_line.insert(std::ranges::upper_bound(sweep_line, segment, comparator), segment)};
+			if (it < std::prev(sweep_line.end())) {
+				const auto next{std::next(it)};
+				if (intersect(it->a, it->b, next->a, next->b).has_value()) {
+					return true;
+				}
+			}
+			if (it > sweep_line.begin()) {
+				const auto prev{std::prev(it)};
+				if (intersect(it->a, it->b, prev->a, prev->b).has_value()) {
+					return true;
+				}
+			}
+		} break;
+		case endpoint_type::RIGHT: {
+			const segment segment{vertices[ep.index - 1], vertices[ep.index]};
+			const auto it{std::ranges::find(sweep_line, segment)};
+			if (it > sweep_line.begin() && it < std::prev(sweep_line.end())) {
+				const auto prev{std::prev(it)};
+				const auto next{std::next(it)};
+				if (intersect(prev->a, prev->b, next->a, next->b).has_value()) {
+					return true;
+				}
+			}
+			if (it != sweep_line.end()) {
+				sweep_line.erase(it);
+			}
+		} break;
+		}
+	}
+	return false;
+}
