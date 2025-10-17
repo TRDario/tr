@@ -243,13 +243,13 @@ bool tr::self_intersecting(std::span<const glm::vec2> vertices)
 			const auto it{sweep_line.insert(std::ranges::upper_bound(sweep_line, segment, comparator), segment)};
 			if (it < std::prev(sweep_line.end())) {
 				const auto next{std::next(it)};
-				if (intersect(it->a, it->b, next->a, next->b).has_value()) {
+				if (segment_intersect(it->a, it->b, next->a, next->b).has_value()) {
 					return true;
 				}
 			}
 			if (it > sweep_line.begin()) {
 				const auto prev{std::prev(it)};
-				if (intersect(it->a, it->b, prev->a, prev->b).has_value()) {
+				if (segment_intersect(it->a, it->b, prev->a, prev->b).has_value()) {
 					return true;
 				}
 			}
@@ -260,7 +260,7 @@ bool tr::self_intersecting(std::span<const glm::vec2> vertices)
 			if (it > sweep_line.begin() && it < std::prev(sweep_line.end())) {
 				const auto prev{std::prev(it)};
 				const auto next{std::next(it)};
-				if (intersect(prev->a, prev->b, next->a, next->b).has_value()) {
+				if (segment_intersect(prev->a, prev->b, next->a, next->b).has_value()) {
 					return true;
 				}
 			}
