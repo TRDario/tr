@@ -173,6 +173,8 @@ glm::mat4 tr::rotate_around(const glm::mat4& mat, const glm::vec3& c, const angl
 	return glm::translate(glm::rotate(glm::translate(mat, c), th.rads(), axis), -c);
 }
 
+//
+
 tr::winding_order tr::polygon_winding_order(std::span<const glm::vec2> vertices)
 {
 	usize min_y_index{0};
@@ -271,4 +273,19 @@ bool tr::self_intersecting(std::span<const glm::vec2> vertices)
 		}
 	}
 	return false;
+}
+
+bool tr::point_in_polygon(glm::vec2 p, std::span<const glm::vec2> vertices)
+{
+	const auto ray_intersecting{[](glm::vec2 p, glm::vec2 a, glm::vec2 b) {
+		std::optional<glm::vec2> intersection{segment_intersect(p, 0_deg, a, b)};
+		return intersection.has_value() && intersection->x >= p.x;
+	}};
+
+	int hits{0};
+	for (usize i = 0; i < vertices.size() - 1; ++i) {
+		hits += ray_intersecting(p, vertices[i], vertices[i + 1]);
+	}
+	hits += ray_intersecting(p, vertices.back(), vertices.front());
+	return bool(hits % 2);
 }
