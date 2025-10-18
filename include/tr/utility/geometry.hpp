@@ -134,6 +134,8 @@ namespace tr {
 
 	// Determines whether 3 points are collinear.
 	bool collinear(glm::vec2 a, glm::vec2 b, glm::vec2 c);
+	// Determines whether two line segments are intersecting.
+	bool intersecting(glm::vec2 a1, glm::vec2 b1, glm::vec2 a2, glm::vec2 b2);
 	// Calculates the closest point to p on the line ab.
 	glm::vec2 closest_point(glm::vec2 p, glm::vec2 a, glm::vec2 b);
 	// Calculates the intersection point of two line segments.
