@@ -66,22 +66,6 @@ namespace tr {
 	// Removes noexcept qualification from a function type.
 	template <typename T> using remove_noexcept_t = remove_noexcept<T>::type;
 
-	template <class T> struct return_type {};
-	template <class T, class... Ts> struct return_type<T(Ts...)> {
-		using type = T;
-	};
-	template <class T, class... Ts> struct return_type<T (*)(Ts...)> {
-		using type = T;
-	};
-	template <class T, class... Ts> struct return_type<T(Ts...) noexcept> {
-		using type = T;
-	};
-	template <class T, class... Ts> struct return_type<T (*)(Ts...) noexcept> {
-		using type = T;
-	};
-	// Gets the return type of a function.
-	template <typename T> using return_type_t = return_type<T>::type;
-
 	template <class T> struct arg_type {};
 	template <class T, class T1> struct arg_type<T(T1)> {
 		using type = T1;

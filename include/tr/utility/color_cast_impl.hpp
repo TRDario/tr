@@ -688,7 +688,7 @@ template <tr::built_in_color To> constexpr To tr::color_cast(const argb32_210101
 
 template <tr::built_in_color To, tr::color_castable_from From> constexpr To tr::color_cast(const From& from)
 {
-	if constexpr (std::same_as<std::remove_cvref_t<return_type_t<decltype(color_caster<From>::to_built_in)>>, To>) {
+	if constexpr (std::same_as<std::remove_cvref_t<std::invoke_result_t<decltype(color_caster<From>::to_built_in), From>>, To>) {
 		return color_caster<From>::to_built_in(from);
 	}
 	else {

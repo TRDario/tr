@@ -23,8 +23,9 @@ namespace tr {
 	concept stream_binary_readable = std::invocable<decltype(binary_reader<T>::read_from_stream), std::istream&, T&>;
 	// Concept that denotes a type able to be read with a span binary_read.
 	template <class T>
-	concept span_binary_readable = std::invocable<decltype(binary_reader<T>::read_from_span), std::span<const std::byte>, T&> &&
-								   std::same_as<return_type_t<decltype(binary_reader<T>::read_from_span)>, std::span<const std::byte>>;
+	concept span_binary_readable =
+		std::same_as<std::invoke_result_t<decltype(binary_reader<T>::read_from_span), std::span<const std::byte>, T&>,
+					 std::span<const std::byte>>;
 	// Concept that denotes a type able to be constructed with binary_read.
 	template <class T>
 	concept binary_constructible = std::default_initializable<T>;
@@ -150,8 +151,8 @@ namespace tr {
 	// Concept that denotes a type able to be read with a span binary_read.
 	template <class T>
 	concept span_binary_writable =
-		std::invocable<decltype(binary_writer<std::remove_cvref_t<T>>::write_to_span), std::span<std::byte>, const T&> &&
-		std::same_as<return_type_t<decltype(binary_writer<std::remove_cvref_t<T>>::write_to_span)>, std::span<std::byte>>;
+		std::same_as<std::invoke_result_t<decltype(binary_writer<std::remove_cvref_t<T>>::write_to_span), std::span<std::byte>, const T&>,
+					 std::span<std::byte>>;
 
 	// Arithmetic binary writers.
 	template <arithmetic T> struct binary_writer<T> : default_binary_writer<T> {};

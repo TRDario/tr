@@ -27,7 +27,7 @@ namespace tr {
 	 * and returning a builtin color type.
 	 *******************************************************************************************************************/
 	template <class T>
-	concept color_castable_from = built_in_color<std::remove_cvref_t<return_type_t<decltype(color_caster<T>::to_built_in)>>>;
+	concept color_castable_from = built_in_color<std::remove_cvref_t<std::invoke_result_t<decltype(color_caster<T>::to_built_in), T>>>;
 
 	/******************************************************************************************************************
 	 * Concept that denotes a type able to be color casted to.
@@ -36,8 +36,11 @@ namespace tr {
 	 * and returning <em>T</em>.
 	 ******************************************************************************************************************/
 	template <class T>
-	concept color_castable_to = built_in_color<std::remove_cvref_t<arg_type_t<decltype(color_caster<T>::from_built_in)>>> &&
-								std::same_as<std::remove_cvref_t<return_type_t<decltype(color_caster<T>::from_built_in)>>, T>;
+	concept color_castable_to =
+		built_in_color<std::remove_cvref_t<arg_type_t<decltype(color_caster<T>::from_built_in)>>> &&
+		std::same_as<std::remove_cvref_t<std::invoke_result_t<decltype(color_caster<T>::from_built_in),
+															  arg_type_t<decltype(color_caster<T>::from_built_in)>>>,
+					 T>;
 
 	/******************************************************************************************************************
 	 * Converts a red channel color to a built-in color.
