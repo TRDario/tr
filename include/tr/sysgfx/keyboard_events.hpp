@@ -22,10 +22,6 @@ namespace tr::sys {
 	bool operator==(const key_down_event& event, const key_chord& chord);
 	// Checks if a scan chord was pressed.
 	bool operator==(const key_down_event& event, const scan_chord& chord);
-	// Checks if a key chord was pressed.
-	bool operator==(const key_chord& chord, const key_down_event& event);
-	// Checks if a scan chord was pressed.
-	bool operator==(const scan_chord& chord, const key_down_event& event);
 
 	// Event emitted when a key is release.
 	struct key_up_event {
@@ -39,6 +35,10 @@ namespace tr::sys {
 		// Converts a generic event into a key up event.
 		explicit key_up_event(const event& event);
 	};
+	// Checks if a key chord was released.
+	bool operator==(const key_up_event& event, const key_chord& chord);
+	// Checks if a scan chord was released.
+	bool operator==(const key_up_event& event, const scan_chord& chord);
 
 	// Event emitted when text is inputted.
 	struct text_input_event {

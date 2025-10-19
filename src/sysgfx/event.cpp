@@ -49,22 +49,22 @@ bool tr::sys::operator==(const key_down_event& event, const scan_chord& chord)
 	return scan_chord{event.scan, event.mods} == chord;
 }
 
-bool tr::sys::operator==(const key_chord& chord, const key_down_event& event)
-{
-	return key_chord{event.key, event.mods} == chord;
-}
-
-bool tr::sys::operator==(const scan_chord& chord, const key_down_event& event)
-{
-	return scan_chord{event.scan, event.mods} == chord;
-}
-
 tr::sys::key_up_event::key_up_event(const event& event)
 {
 	const SDL_KeyboardEvent& sdl{((const SDL_Event&)event).key};
 	scan = scancode::enum_t(sdl.scancode);
 	key = keycode::enum_t(sdl.key);
 	mods = convert_keymods(sdl.mod);
+}
+
+bool tr::sys::operator==(const key_up_event& event, const key_chord& chord)
+{
+	return key_chord{event.key, event.mods} == chord;
+}
+
+bool tr::sys::operator==(const key_up_event& event, const scan_chord& chord)
+{
+	return scan_chord{event.scan, event.mods} == chord;
 }
 
 tr::sys::text_input_event::text_input_event(const event& event)
