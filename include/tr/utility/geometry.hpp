@@ -130,24 +130,34 @@ namespace tr {
 	// Gets the inverse of a vector.
 	template <int S, arithmetic T> constexpr glm::vec<S, float> inverse(const glm::vec<S, T>& vec);
 	// Calculates the 2D cross product of two vectors.
-	template <class T1, class T2> constexpr std::common_type_t<T1, T2> cross2(glm::tvec2<T1> a, glm::tvec2<T2> b);
-
+	template <class T1, class T2> constexpr std::common_type_t<T1, T2> cross(glm::tvec2<T1> a, glm::tvec2<T2> b);
 	// Determines whether 3 points are collinear.
 	bool collinear(glm::vec2 a, glm::vec2 b, glm::vec2 c);
-	// Determines whether two line segments are intersecting.
-	bool intersecting(glm::vec2 a1, glm::vec2 b1, glm::vec2 a2, glm::vec2 b2);
-	// Calculates the closest point to p on the line ab.
-	glm::vec2 closest_point(glm::vec2 p, glm::vec2 a, glm::vec2 b);
+
+	// 2D line segment.
+	struct line_segment {
+		glm::vec2 a;
+		glm::vec2 b;
+
+		// Calculates the closest point to p on the line segment.
+		glm::vec2 closest_point(glm::vec2 p) const;
+	};
+	// Circle binary reader.
+	template <> struct binary_reader<line_segment> : default_binary_reader<line_segment> {};
+	// Circle binary writer.
+	template <> struct binary_writer<line_segment> : default_binary_writer<line_segment> {};
+	// Determines if two line segments intersect.
+	bool intersecting(const line_segment& l, const line_segment& r);
 	// Calculates the intersection point of two line segments.
-	std::optional<glm::vec2> segment_intersect(glm::vec2 a1, glm::vec2 b1, glm::vec2 a2, glm::vec2 b2);
+	std::optional<glm::vec2> intersection(const line_segment& l, const line_segment& r);
 	// Calculates the intersection point of a line with a line segment.
-	std::optional<glm::vec2> segment_intersect(glm::vec2 a1, angle th1, glm::vec2 a2, glm::vec2 b2);
+	std::optional<glm::vec2> intersection(glm::vec2 lp, angle lth, const line_segment& r);
 	// Calculates the intersection point of two lines.
-	std::optional<glm::vec2> intersect(glm::vec2 a1, angle th1, glm::vec2 a2, angle th2);
+	std::optional<glm::vec2> intersection(glm::vec2 a1, angle th1, glm::vec2 a2, angle th2);
 	// Calculates the intersection point of two lines.
-	std::optional<glm::vec2> intersect(glm::vec2 a1, glm::vec2 b1, glm::vec2 a2, glm::vec2 b2);
+	std::optional<glm::vec2> insersection(glm::vec2 a1, glm::vec2 b1, glm::vec2 a2, glm::vec2 b2);
 	// Calculates the intersection point of two lines.
-	std::optional<glm::vec2> intersect(glm::vec2 a1, angle th1, glm::vec2 a2, glm::vec2 b2);
+	std::optional<glm::vec2> intersection(glm::vec2 a1, angle th1, glm::vec2 a2, glm::vec2 b2);
 
 	// Performs a mirror repeat mapping.
 	template <arithmetic T> constexpr T mirror_repeat(T v, T min, T max);
@@ -181,8 +191,8 @@ namespace tr {
 
 	// Finds the winding order of a polygon.
 	winding_order polygon_winding_order(std::span<const glm::vec2> vertices);
-	// Determines whether a polygon is self-intersecting.
-	bool self_intersecting(std::span<const glm::vec2> vertices);
+	// Determines whether a polygon is simple (not self-intersecting).
+	bool simple_polygon(std::span<const glm::vec2> vertices);
 	// Determines whether a point is contained in a polygon.
 	bool point_in_polygon(glm::vec2 p, std::span<const glm::vec2> vertices);
 } // namespace tr

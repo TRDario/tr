@@ -95,7 +95,7 @@ template <int S, tr::arithmetic T> constexpr glm::vec<S, float> tr::inverse(cons
 	return result;
 }
 
-template <class T1, class T2> constexpr std::common_type_t<T1, T2> tr::cross2(glm::tvec2<T1> a, glm::tvec2<T2> b)
+template <class T1, class T2> constexpr std::common_type_t<T1, T2> tr::cross(glm::tvec2<T1> a, glm::tvec2<T2> b)
 {
 	return a.x * b.y - a.y * b.x;
 }
