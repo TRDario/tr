@@ -53,7 +53,7 @@ glm::vec2 tr::line_segment::closest_point(glm::vec2 p) const
 
 bool tr::intersecting(const line_segment& l, const line_segment& r)
 {
-	const glm::vec2 delta{r.b - l.b};
+	const glm::vec2 delta{r.b - r.a};
 	const glm::vec2 normal{l.b.y - l.a.y, -l.b.x + l.a.x};
 	const float dot{glm::dot(delta, normal)};
 	if (std::abs(dot) < 1e-6f) {
@@ -65,13 +65,13 @@ bool tr::intersecting(const line_segment& l, const line_segment& r)
 	}
 	const glm::vec2 result{r.a + delta * t};
 	const glm::vec2 min{glm::min(l.a, l.b)};
-	const glm::vec2 max{glm::min(l.a, l.b)};
+	const glm::vec2 max{glm::max(l.a, l.b)};
 	return result.x >= min.x && result.x <= max.x && (result.x != l.a.x || (result.y >= min.y && result.y <= max.y));
 }
 
 std::optional<glm::vec2> tr::intersection(const line_segment& l, const line_segment& r)
 {
-	const glm::vec2 delta{r.b - l.b};
+	const glm::vec2 delta{r.b - r.a};
 	const glm::vec2 normal{l.b.y - l.a.y, -l.b.x + l.a.x};
 	const float dot{glm::dot(delta, normal)};
 	if (std::abs(dot) < 1e-6f) {
@@ -83,7 +83,7 @@ std::optional<glm::vec2> tr::intersection(const line_segment& l, const line_segm
 	}
 	const glm::vec2 result{r.a + delta * t};
 	const glm::vec2 min{glm::min(l.a, l.b)};
-	const glm::vec2 max{glm::min(l.a, l.b)};
+	const glm::vec2 max{glm::max(l.a, l.b)};
 	if ((result.x < min.x || result.x > max.x) || (result.x == l.a.x && (result.y < min.y || result.y > max.y))) {
 		return std::nullopt;
 	}
