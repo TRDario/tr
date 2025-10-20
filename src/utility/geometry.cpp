@@ -226,10 +226,10 @@ bool tr::simple_polygon(std::span<const glm::vec2> vertices)
 bool tr::point_in_polygon(glm::vec2 p, std::span<const glm::vec2> vertices)
 {
 	usize hits{0};
-	for (usize i = 0; i < vertices.size() - 1; ++i) {
+	for (usize i = 0; i < vertices.size(); ++i) {
 		const line_segment segment{vertices[i], vertices[(i + 1) % vertices.size()]};
 		const std::optional<glm::vec2> ray_intersection{intersection(p, 0_deg, segment)};
-		hits += ray_intersection.has_value() && ray_intersection->x >= p.x;
+		hits += ray_intersection.has_value() && ray_intersection->x >= p.x && *ray_intersection != segment.b;
 	}
 	return hits % 2 == 1;
 }
