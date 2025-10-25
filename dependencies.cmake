@@ -53,8 +53,7 @@ if(TR_BUILD_AUDIO)
 	set(LIBTYPE "STATIC")
 endif()
 
-# GLM 1.0.2
-FetchContent_Declare(glm GIT_REPOSITORY	https://github.com/g-truc/glm.git GIT_TAG 55f22ef736ba6783e95351bc71a40a48ba305afc)
+FetchContent_Declare(glm URL https://github.com/g-truc/glm/releases/download/1.0.2/glm-1.0.2.zip DOWNLOAD_EXTRACT_TIMESTAMP true)
 FetchContent_Declare(lz4 URL https://github.com/lz4/lz4/archive/refs/tags/v1.10.0.zip SOURCE_SUBDIR build/cmake DOWNLOAD_EXTRACT_TIMESTAMP true)
 FetchContent_MakeAvailable(glm lz4)
 add_library(lz4::lz4 ALIAS lz4_static)
