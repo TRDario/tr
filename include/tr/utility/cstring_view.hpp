@@ -32,13 +32,18 @@ namespace tr {
 		const char* m_cstr;
 	};
 
-	inline namespace literals {
-		// Constructs a cstring_view literal.
-		consteval cstring_view operator""_cv(const char* str, usize);
-	}; // namespace literals
-
 	// Compares two C-string views lexicographically.
-	std::strong_ordering operator<=>(const cstring_view& l, const cstring_view& r);
+	std::strong_ordering operator<=>(cstring_view l, cstring_view r);
+	// Compares two C-string views lexicographically.
+	std::strong_ordering operator<=>(const char* l, cstring_view r);
+	// Compares two C-string views lexicographically.
+	std::strong_ordering operator<=>(cstring_view l, const char* r);
+	// Compares two C-string views for equality.
+	bool operator==(cstring_view l, cstring_view r);
+	// Compares two C-string views for equality.
+	bool operator==(const char* l, cstring_view r);
+	// Compares two C-string views for equality.
+	bool operator==(cstring_view l, const char* r);
 
 	// Output stream formatter for static strings.
 	std::ostream& operator<<(std::ostream& os, const cstring_view& str);
@@ -60,11 +65,6 @@ constexpr tr::cstring_view::cstring_view(const char* cstr)
 constexpr tr::cstring_view::cstring_view(const std::string& str)
 	: cstring_view{str.c_str()}
 {
-}
-
-consteval tr::cstring_view tr::operator""_cv(const char* str, usize)
-{
-	return str;
 }
 
 //
