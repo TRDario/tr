@@ -1,5 +1,5 @@
 #pragma once
-#include "../utility/common.hpp"
+#include "../utility/variant.hpp"
 #include "keyboard_events.hpp"
 #include "mouse_events.hpp"
 #include "window_events.hpp"
@@ -58,6 +58,9 @@ namespace tr::sys {
 		u32 type() const;
 
 		template <event_visitor Visitor> auto visit(Visitor&& visitor) const;
+		template <class... Fs>
+			requires(event_visitor<match<Fs...>>)
+		auto operator|(match<Fs...>&& match) const;
 
 	  private:
 		// Storage for SDL_Event.
@@ -109,4 +112,11 @@ template <tr::sys::event_visitor Visitor> auto tr::sys::event::visit(Visitor&& v
 	default:
 		return visitor(unknown_event{});
 	}
+}
+
+template <class... Fs>
+	requires(tr::sys::event_visitor<tr::match<Fs...>>)
+auto tr::sys::event::operator|(match<Fs...>&& match) const
+{
+	return visit(std::move(match));
 }
