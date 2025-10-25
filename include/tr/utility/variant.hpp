@@ -59,20 +59,20 @@ template <class T, class... Args> const T&& tr::unchecked_get(const std::variant
 
 template <class... Ts, class... Fs> auto tr::operator|(std::variant<Ts...>& v, match<Fs...>&& match)
 {
-	return std::visit(v, std::move(match));
+	return std::visit(std::move(match), v);
 }
 
 template <class... Ts, class... Fs> auto tr::operator|(std::variant<Ts...>&& v, match<Fs...>&& match)
 {
-	return std::visit(std::move(v), std::move(match));
+	return std::visit(std::move(match), std::move(v));
 }
 
 template <class... Ts, class... Fs> auto tr::operator|(const std::variant<Ts...>& v, match<Fs...>&& match)
 {
-	return std::visit(v, std::move(match));
+	return std::visit(std::move(match), v);
 }
 
 template <class... Ts, class... Fs> auto tr::operator|(const std::variant<Ts...>&& v, match<Fs...>&& match)
 {
-	return std::visit(std::move(v), std::move(match));
+	return std::visit(std::move(match), std::move(v));
 }
