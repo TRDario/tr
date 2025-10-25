@@ -31,7 +31,7 @@ namespace tr::sys {
 	};
 
 	// Sets various app information.
-	void set_app_information(const char* developer, const char* name, const char* version);
+	void set_app_information(cstring_view developer, cstring_view name, cstring_view version);
 	// Sets the frequency at which tr::sys::user_defined::iterate() is called.
 	void set_iteration_frequency(float frequency);
 } // namespace tr::sys
@@ -39,7 +39,7 @@ namespace tr::sys {
 /////////////// User-defined functions (mandatory). Uncaught exceptions will display a dialog box and quit the application. ///////////////
 
 // Called once at the beginning of execution.
-tr::sys::signal initialize(std::span<const char*> args);
+tr::sys::signal initialize(std::span<tr::cstring_view> args);
 // Called whenever an event needs to be handled.
 tr::sys::signal handle_event(tr::sys::event& event);
 // Main-body function to be used for rendering and the like.

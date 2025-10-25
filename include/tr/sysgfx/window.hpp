@@ -38,21 +38,19 @@ namespace tr::sys {
 
 	// Opens a windowed window.
 	// May throw: init_error.
-	void open_window(const char* title, glm::ivec2 size = MAXIMIZED, glm::ivec2 min_size = NOT_RESIZABLE,
+	void open_window(cstring_view title, glm::ivec2 size = MAXIMIZED, glm::ivec2 min_size = NOT_RESIZABLE,
 					 const gfx::properties& gfx_properties = {});
 	// Opens a fullscreen window.
 	// May throw: init_error.
-	void open_fullscreen_window(const char* title, std::optional<glm::ivec2> min_size = NOT_RESIZABLE,
+	void open_fullscreen_window(cstring_view title, std::optional<glm::ivec2> min_size = NOT_RESIZABLE,
 								const gfx::properties& gfx_properties = {});
 	// Closes the window.
 	void close_window();
 
 	// Gets the title of the window.
-	const char* window_title();
+	cstring_view window_title();
 	// Sets the title of the window.
-	void set_window_title(const char* title);
-	// Sets the title of the window.
-	void set_window_title(const std::string& title);
+	void set_window_title(cstring_view title);
 
 	// Sets the icon of the window.
 	void set_window_icon(const bitmap& bitmap);

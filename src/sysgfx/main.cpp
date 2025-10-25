@@ -31,7 +31,7 @@ std::string_view tr::sys::init_error::details() const
 
 //
 
-void tr::sys::set_app_information(const char* developer, const char* name, const char* version)
+void tr::sys::set_app_information(cstring_view developer, cstring_view name, cstring_view version)
 {
 	app_developer = developer;
 	app_name = name;
@@ -61,7 +61,7 @@ extern "C"
 		tr::sys::set_iteration_frequency(tr::sys::refresh_rate());
 
 		try {
-			return SDL_AppResult(::initialize({(const char**)argv, std::size_t(argc)}));
+			return SDL_AppResult(::initialize({(tr::cstring_view*)argv, std::size_t(argc)}));
 		}
 		catch (std::exception& err) {
 			tr::sys::show_fatal_error_message_box(err);

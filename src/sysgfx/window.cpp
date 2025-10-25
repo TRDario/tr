@@ -167,7 +167,7 @@ void tr::gfx::setup_ogl_debugging()
 }
 #endif
 
-void tr::sys::open_window(const char* title, glm::ivec2 size, glm::ivec2 min_size, const gfx::properties& gfx_properties)
+void tr::sys::open_window(cstring_view title, glm::ivec2 size, glm::ivec2 min_size, const gfx::properties& gfx_properties)
 {
 	TR_ASSERT(sdl_window == nullptr, "Tried to reopen window without closing it first.");
 
@@ -195,7 +195,7 @@ void tr::sys::open_window(const char* title, glm::ivec2 size, glm::ivec2 min_siz
 #endif
 }
 
-void tr::sys::open_fullscreen_window(const char* title, std::optional<glm::ivec2> min_size, const gfx::properties& gfx_properties)
+void tr::sys::open_fullscreen_window(cstring_view title, std::optional<glm::ivec2> min_size, const gfx::properties& gfx_properties)
 {
 	TR_ASSERT(sdl_window == nullptr, "Tried to reopen window without closing it first.");
 
@@ -228,14 +228,14 @@ void tr::sys::close_window()
 	sdl_window = nullptr;
 }
 
-const char* tr::sys::window_title()
+tr::cstring_view tr::sys::window_title()
 {
 	TR_ASSERT(sdl_window != nullptr, "Tried to get window title before opening it.");
 
 	return SDL_GetWindowTitle(sdl_window);
 }
 
-void tr::sys::set_window_title(const char* title)
+void tr::sys::set_window_title(cstring_view title)
 {
 	TR_ASSERT(sdl_window != nullptr, "Tried to set window title before opening it.");
 
@@ -243,11 +243,6 @@ void tr::sys::set_window_title(const char* title)
 		TR_LOG(log, tr::severity::ERROR, "Failed to set window title to '{}'.", title);
 		TR_LOG_CONTINUE(log, "{}", SDL_GetError());
 	};
-}
-
-void tr::sys::set_window_title(const std::string& title)
-{
-	set_window_title(title.c_str());
 }
 
 void tr::sys::set_window_icon(const bitmap& bitmap)

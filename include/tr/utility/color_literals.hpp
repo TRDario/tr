@@ -3,12 +3,12 @@
 
 namespace tr::color_literals {
 	// 8-bit RGBA color literal.
-	constexpr rgba8 operator""_rgba8(const char* str, usize length);
+	consteval rgba8 operator""_rgba8(const char* str, usize length);
 } // namespace tr::color_literals
 
 ////////////////////////////////////////////////////////////// IMPLEMENTATION /////////////////////////////////////////////////////////////
 
-constexpr tr::rgba8 tr::color_literals::operator""_rgba8(const char* str, usize length)
+consteval tr::rgba8 tr::color_literals::operator""_rgba8(const char* str, usize length)
 {
 	TR_ASSERT(length == 6 || length == 8, "Invalid color literal string length {} (must be 6 or 8).", length);
 	TR_ASSERT(std::ranges::all_of(
