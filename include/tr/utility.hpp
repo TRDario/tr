@@ -8,6 +8,7 @@
 #include "utility/color_cast.hpp"       // IWYU pragma: export
 #include "utility/color_literals.hpp"   // IWYU pragma: export
 #include "utility/concepts.hpp"         // IWYU pragma: export
+#include "utility/cstring_view.hpp"     // IWYU pragma: export
 #include "utility/draw_geometry.hpp"    // IWYU pragma: export
 #include "utility/encryption.hpp"       // IWYU pragma: export
 #include "utility/exception.hpp"        // IWYU pragma: export
