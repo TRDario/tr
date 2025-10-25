@@ -126,14 +126,14 @@ namespace tr::sys {
 		// Constructs a keycode from the base enumerator.
 		constexpr scancode(enum_t base);
 		// Constructs a scancode by matching it against a key name string.
-		explicit scancode(const char* name);
+		explicit scancode(cstring_view name);
 
 		constexpr bool operator==(const scancode&) const = default;
 
 		constexpr explicit operator int() const;
 		constexpr operator enum_t() const;
 
-		const char* name() const;
+		cstring_view name() const;
 
 	  private:
 		// The base enumerator.
@@ -281,7 +281,7 @@ namespace tr::sys {
 		// Constructs a keycode from the base enumerator.
 		constexpr keycode(enum_t base);
 		// Constructs a scancode by matching it against a key name string.
-		explicit keycode(const char* name);
+		explicit keycode(cstring_view name);
 
 		constexpr bool operator==(const keycode&) const = default;
 
@@ -370,11 +370,8 @@ namespace tr::sys {
 	bool clipboard_empty();
 	// Gets the clipboard text.
 	std::string clipboard_text();
-
 	// Sets the clipboard text.
-	void set_clipboard_text(const char* text);
-	// Sets the clipboard text.
-	void set_clipboard_text(const std::string& text);
+	void set_clipboard_text(cstring_view text);
 } // namespace tr::sys
 
 template <> struct std::hash<tr::sys::scancode> {

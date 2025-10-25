@@ -11,9 +11,9 @@ namespace tr::sys {
 	inline std::unique_ptr<char[]> emergency_buffer{new char[16384]};
 
 	// The name of the application developer.
-	inline const char* app_developer{nullptr};
+	inline cstring_view app_developer;
 	// The name of the application.
-	inline const char* app_name{nullptr};
+	inline cstring_view app_name;
 
 	// Pointer to the SDL window.
 	inline SDL_Window* sdl_window{nullptr};

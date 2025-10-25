@@ -57,9 +57,9 @@ void tr::gfx::shader_base::texture_unit::deleter::operator()(unsigned int unit) 
 
 //
 
-tr::gfx::shader_base::shader_base(const char* source, unsigned int type)
+tr::gfx::shader_base::shader_base(cstring_view source, unsigned int type)
 {
-	m_program.reset(TR_RETURNING_GL_CALL(glCreateShaderProgramv, type, 1, &source));
+	m_program.reset(TR_RETURNING_GL_CALL(glCreateShaderProgramv, type, 1, (const char**)&source));
 	int linked;
 	TR_GL_CALL(glGetProgramiv, m_program.get(), GL_LINK_STATUS, &linked);
 	if (!linked) {
@@ -688,7 +688,7 @@ std::string tr::gfx::shader_base::label() const
 }
 #endif
 
-tr::gfx::vertex_shader::vertex_shader(const char* source)
+tr::gfx::vertex_shader::vertex_shader(cstring_view source)
 	: shader_base{source, GL_VERTEX_SHADER}
 {
 }
@@ -697,8 +697,7 @@ tr::gfx::vertex_shader tr::gfx::load_vertex_shader(const std::filesystem::path& 
 {
 	try {
 		std::ifstream file{open_file_r(path)};
-		const std::string source{std::istreambuf_iterator<char>{file}, std::istreambuf_iterator<char>{}};
-		vertex_shader shader{source.c_str()};
+		vertex_shader shader{std::string{std::istreambuf_iterator<char>{file}, std::istreambuf_iterator<char>{}}};
 		TR_SET_LABEL(shader, path.filename().string());
 		return shader;
 	}
@@ -713,7 +712,7 @@ tr::gfx::vertex_shader tr::gfx::load_vertex_shader(const std::filesystem::path& 
 	}
 }
 
-tr::gfx::fragment_shader::fragment_shader(const char* source)
+tr::gfx::fragment_shader::fragment_shader(cstring_view source)
 	: shader_base{source, GL_FRAGMENT_SHADER}
 {
 }
@@ -722,8 +721,7 @@ tr::gfx::fragment_shader tr::gfx::load_fragment_shader(const std::filesystem::pa
 {
 	try {
 		std::ifstream file{open_file_r(path)};
-		const std::string source{std::istreambuf_iterator<char>{file}, std::istreambuf_iterator<char>{}};
-		fragment_shader shader{source.c_str()};
+		fragment_shader shader{std::string{std::istreambuf_iterator<char>{file}, std::istreambuf_iterator<char>{}}};
 		TR_SET_LABEL(shader, path.filename().string());
 		return shader;
 	}

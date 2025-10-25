@@ -26,17 +26,17 @@ constexpr int tr::sys::key_state_index(scancode key)
 	return (index >= 0 && index <= KEY_STATE_MAX_INDEX) ? index : INVALID_KEY_STATE_INDEX;
 }
 
-tr::sys::scancode::scancode(const char* name)
+tr::sys::scancode::scancode(cstring_view name)
 	: m_base{enum_t(SDL_GetScancodeFromName(name))}
 {
 }
 
-const char* tr::sys::scancode::name() const
+tr::cstring_view tr::sys::scancode::name() const
 {
 	return SDL_GetScancodeName(SDL_Scancode(m_base));
 }
 
-tr::sys::keycode::keycode(const char* name)
+tr::sys::keycode::keycode(cstring_view name)
 	: m_base{enum_t(SDL_GetKeyFromName(name))}
 {
 }
@@ -109,17 +109,12 @@ std::string tr::sys::clipboard_text()
 	return std::string{ptr != nullptr ? ptr.get() : std::string{}};
 }
 
-void tr::sys::set_clipboard_text(const char* text)
+void tr::sys::set_clipboard_text(cstring_view text)
 {
 	if (!SDL_SetClipboardText(text)) {
 		TR_LOG(log, tr::severity::ERROR, "Failed to set clipboard text.");
 		TR_LOG_CONTINUE(log, "{}", SDL_GetError());
 	}
-}
-
-void tr::sys::set_clipboard_text(const std::string& text)
-{
-	set_clipboard_text(text.c_str());
 }
 
 tr::u64 std::hash<tr::sys::scancode>::operator()(tr::sys::scancode code) const

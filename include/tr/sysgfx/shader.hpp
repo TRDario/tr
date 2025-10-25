@@ -160,7 +160,7 @@ namespace tr::gfx {
 		std::unordered_map<int, texture_unit> m_texture_units;
 
 		// Constructs a shader.
-		shader_base(const char* source, unsigned int type);
+		shader_base(cstring_view source, unsigned int type);
 
 		friend class shader_pipeline;
 		friend class ping_pong_buffer;
@@ -184,7 +184,7 @@ namespace tr::gfx {
 	  public:
 		// Creates a vertex shader from source code.
 		// May throw: shader_load_error.
-		explicit vertex_shader(const char* source);
+		explicit vertex_shader(cstring_view source);
 	};
 	// Loads a vertex shader from file.
 	// May throw: shader_load_error.
@@ -195,7 +195,7 @@ namespace tr::gfx {
 	  public:
 		// Creates a fragment shader from source code.
 		// May throw: shader_load_error.
-		explicit fragment_shader(const char* source);
+		explicit fragment_shader(cstring_view source);
 	};
 	// Loads a fragment shader from file.
 	// May throw: shader_load_error.

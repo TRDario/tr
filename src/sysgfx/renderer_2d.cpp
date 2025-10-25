@@ -12,12 +12,12 @@ namespace tr::gfx {
 	// 2D renderer ID.
 	inline constexpr u32 RENDERER_2D_ID{3};
 	// Vertex shader source code.
-	inline constexpr const char* RENDERER_2D_VERT_SRC{
+	inline constexpr cstring_view RENDERER_2D_VERT_SRC{
 		"#version 450\n#define L(l) layout(location=l)\nL(0)uniform mat4 m;L(0)in vec2 p;L(1)in vec2 u;L(2)in vec4 c;out gl_PerVertex{vec4 "
 		"gl_Position;};L(0)out vec2 U;L(1)out vec4 C;void main(){U=u;C=c;gl_Position=m*vec4(p,0,1);}",
 	};
 	// Fragment shader source code.
-	inline constexpr const char* RENDERER_2D_FRAG_SRC{
+	inline constexpr cstring_view RENDERER_2D_FRAG_SRC{
 		"#version 450\n#define L(l) layout(location=l)\nL(1)uniform sampler2D t;L(0)in vec2 u;L(1)in vec4 c;L(0)out vec4 C;void "
 		"main(){C=u.x==-100?c:c*texture(t,u);}",
 	};
