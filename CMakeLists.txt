@@ -30,6 +30,7 @@ target_sources(tr PRIVATE
 	src/utility/benchmark.cpp
 	src/utility/binary_io.cpp
 	src/utility/chrono.cpp
+	src/utility/cstring_view.cpp
 	src/utility/encryption.cpp
 	src/utility/exception.cpp
 	src/utility/geometry.cpp
