@@ -6,7 +6,7 @@ namespace tr {
 	class cstring_view {
 	  public:
 		// Constructs an empty view.
-		constexpr cstring_view();
+		constexpr cstring_view() = default;
 		// Constructs a view from a C-string.
 		constexpr cstring_view(const char* cstr);
 		// Constructs a view from a standard string.
@@ -29,7 +29,7 @@ namespace tr {
 
 	  private:
 		// Pointer to the character data.
-		const char* m_cstr;
+		const char* m_cstr{nullptr};
 	};
 
 	// Compares two C-string views lexicographically.
