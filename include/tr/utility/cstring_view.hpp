@@ -26,6 +26,8 @@ namespace tr {
 
 		// Creates a new string from the view.
 		constexpr explicit operator std::string() const;
+		// Creates a path from the view.
+		explicit operator std::filesystem::path() const;
 
 	  private:
 		// Pointer to the character data.
@@ -45,8 +47,10 @@ namespace tr {
 	// Compares two C-string views for equality.
 	bool operator==(cstring_view l, const char* r);
 
-	// Output stream formatter for static strings.
+	// Output stream formatter for C-string views.
 	std::ostream& operator<<(std::ostream& os, const cstring_view& str);
+	// Path construction operator for C-string views.
+	std::filesystem::path operator/(const std::filesystem::path& l, tr::cstring_view r);
 
 	// Static string binary writer.
 	template <> struct binary_writer<cstring_view> : binary_writer<std::string_view> {};

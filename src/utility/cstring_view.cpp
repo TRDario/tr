@@ -1,5 +1,12 @@
 #include "../../include/tr/utility/cstring_view.hpp"
 
+tr::cstring_view::operator std::filesystem::path() const
+{
+	return m_cstr;
+}
+
+//
+
 std::strong_ordering tr::operator<=>(cstring_view l, cstring_view r)
 {
 	int comp{std::strcmp(l, r)};
@@ -44,4 +51,9 @@ bool tr::operator==(cstring_view l, const char* r)
 inline std::ostream& tr::operator<<(std::ostream& os, const cstring_view& str)
 {
 	return os << str.data();
+}
+
+std::filesystem::path tr::operator/(const std::filesystem::path& l, tr::cstring_view r)
+{
+	return l / std::filesystem::path{r};
 }
