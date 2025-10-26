@@ -44,7 +44,7 @@ namespace tr::sys::impl {
 		"8",
 		"9",
 		"0",
-		"Return",
+		"Enter",
 		"Escape",
 		"Backspace",
 		"Tab",
