@@ -672,10 +672,8 @@ namespace tr {
 	concept built_in_color =
 		specialization_of<T, r> || specialization_of<T, g> || specialization_of<T, b> || specialization_of<T, rg> ||
 		specialization_of<T, rgb> || specialization_of<T, bgr> || specialization_of<T, rgba> || specialization_of<T, bgra> ||
-		std::same_as<T, rgb8_223> || std::same_as<T, rgb16_565> || std::same_as<T, bgr8_332> || std::same_as<T, bgr16_565> ||
-		std::same_as<T, rgba16_4444> || std::same_as<T, rgba16_5551> || std::same_as<T, rgba32_1010102> || std::same_as<T, abgr16_4444> ||
-		std::same_as<T, abgr16_1555> || std::same_as<T, abgr32_2101010> || std::same_as<T, bgra16_4444> || std::same_as<T, bgra16_5551> ||
-		std::same_as<T, bgra32_1010102> || std::same_as<T, argb16_4444> || std::same_as<T, argb16_1555> || std::same_as<T, argb32_2101010>;
+		one_of<T, rgb8_223, rgb16_565, bgr8_332, bgr16_565, rgba16_4444, rgba16_5551, rgba32_1010102, abgr16_4444, abgr16_1555,
+			   abgr32_2101010, bgra16_4444, bgra16_5551, bgra32_1010102, argb16_4444, argb16_1555, argb32_2101010>;
 
 	/// @}
 } // namespace tr

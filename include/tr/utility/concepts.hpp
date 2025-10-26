@@ -97,4 +97,8 @@ namespace tr {
 	};
 	// Gets the type needed to store an integer constant.
 	template <usize S> using size_type_t = size_type<S>::type;
+
+	// Concept checking if a type is in a list.
+	template <class T, class... Ts>
+	concept one_of = (std::same_as<T, Ts> || ...);
 } // namespace tr

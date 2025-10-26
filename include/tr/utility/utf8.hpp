@@ -10,8 +10,8 @@ namespace tr {
 namespace tr::utf8 {
 	// Iterator types supported by the UTF-8 functions.
 	template <class T>
-	concept base_iterator = std::same_as<T, char*> || std::same_as<T, const char*> || std::same_as<T, std::string_view::iterator> ||
-							std::same_as<T, std::string::iterator> || std::same_as<T, std::string::const_iterator>;
+	concept base_iterator = one_of<T, char*, const char*, std::string_view::iterator, std::string::iterator, std::string::const_iterator>;
+
 	// String types supported by the UTF-8 functions.
 	template <class T>
 	concept string = std::same_as<T, std::string> || std::same_as<T, static_string<T::max_size()>>;
