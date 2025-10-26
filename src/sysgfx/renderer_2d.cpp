@@ -81,15 +81,22 @@ tr::gfx::simple_color_mesh_ref tr::gfx::renderer_2d::new_color_fan(int layer, us
 {
 	mesh& mesh{find_mesh(layer, primitive::TRIS, std::nullopt, mat, blend_mode, vertices)};
 	const u16 base_index{u16(mesh.positions.size())};
+	const usize indices{polygon_indices(vertices)};
 
 	mesh.positions.resize(mesh.positions.size() + vertices);
 	mesh.uvs.resize(mesh.uvs.size() + vertices);
 	mesh.tints.resize(mesh.tints.size() + vertices);
+	mesh.indices.resize(mesh.indices.size() + indices);
 
-	std::fill(mesh.uvs.end() - vertices, mesh.uvs.end(), UNTEXTURED_UV);
-	fill_convex_polygon_indices(back_inserter(mesh.indices), u16(vertices), base_index);
+	const std::ranges::subrange positions{mesh.positions.end() - vertices, mesh.positions.end()};
+	const std::ranges::subrange uvs{mesh.uvs.end() - vertices, mesh.uvs.end()};
+	const std::ranges::subrange colors{mesh.tints.end() - vertices, mesh.tints.end()};
+	const std::ranges::subrange index_range{mesh.indices.end() - indices, mesh.indices.end()};
 
-	return {{mesh.positions.end() - vertices, mesh.positions.end()}, {mesh.tints.end() - vertices, mesh.tints.end()}};
+	std::ranges::fill(uvs, UNTEXTURED_UV);
+	fill_convex_polygon_indices(index_range.begin(), u16(vertices), base_index);
+
+	return {positions, colors};
 }
 
 tr::gfx::simple_color_mesh_ref tr::gfx::renderer_2d::new_color_outline(int layer, usize vertices)
@@ -111,15 +118,22 @@ tr::gfx::simple_color_mesh_ref tr::gfx::renderer_2d::new_color_outline(int layer
 	const usize vertices{polygon_vertices * 2};
 	mesh& mesh{find_mesh(layer, primitive::TRIS, std::nullopt, mat, blend_mode, vertices)};
 	const u16 base_index{u16(mesh.positions.size())};
+	const usize indices{polygon_outline_indices(polygon_vertices)};
 
 	mesh.positions.resize(mesh.positions.size() + vertices);
 	mesh.uvs.resize(mesh.uvs.size() + vertices);
 	mesh.tints.resize(mesh.tints.size() + vertices);
+	mesh.indices.resize(mesh.indices.size() + indices);
 
-	std::fill(mesh.uvs.end() - vertices, mesh.uvs.end(), UNTEXTURED_UV);
-	fill_convex_polygon_outline_indices(back_inserter(mesh.indices), u16(polygon_vertices), base_index);
+	const std::ranges::subrange positions{mesh.positions.end() - vertices, mesh.positions.end()};
+	const std::ranges::subrange uvs{mesh.uvs.end() - vertices, mesh.uvs.end()};
+	const std::ranges::subrange colors{mesh.tints.end() - vertices, mesh.tints.end()};
+	const std::ranges::subrange index_range{mesh.indices.end() - indices, mesh.indices.end()};
 
-	return {{mesh.positions.end() - vertices, mesh.positions.end()}, {mesh.tints.end() - vertices, mesh.tints.end()}};
+	std::ranges::fill(uvs, UNTEXTURED_UV);
+	fill_convex_polygon_outline_indices(index_range.begin(), u16(polygon_vertices), base_index);
+
+	return {positions, colors};
 }
 
 tr::gfx::color_mesh_ref tr::gfx::renderer_2d::new_color_mesh(int layer, usize vertices, usize indices)
@@ -146,14 +160,14 @@ tr::gfx::color_mesh_ref tr::gfx::renderer_2d::new_color_mesh(int layer, usize ve
 	mesh.tints.resize(mesh.tints.size() + vertices);
 	mesh.indices.resize(mesh.indices.size() + indices);
 
-	std::fill(mesh.uvs.end() - vertices, mesh.uvs.end(), UNTEXTURED_UV);
+	const std::ranges::subrange positions{mesh.positions.end() - vertices, mesh.positions.end()};
+	const std::ranges::subrange uvs{mesh.uvs.end() - vertices, mesh.uvs.end()};
+	const std::ranges::subrange colors{mesh.tints.end() - vertices, mesh.tints.end()};
+	const std::ranges::subrange index_range{mesh.indices.end() - indices, mesh.indices.end()};
 
-	return {
-		{mesh.positions.end() - vertices, mesh.positions.end()},
-		{mesh.tints.end() - vertices, mesh.tints.end()},
-		{mesh.indices.end() - indices, mesh.indices.end()},
-		base_index,
-	};
+	std::ranges::fill(uvs, UNTEXTURED_UV);
+
+	return {positions, colors, index_range, base_index};
 }
 
 tr::gfx::simple_textured_mesh_ref tr::gfx::renderer_2d::new_textured_fan(int layer, usize vertices)
@@ -191,18 +205,21 @@ tr::gfx::simple_textured_mesh_ref tr::gfx::renderer_2d::new_textured_fan(int lay
 
 	mesh& mesh{find_mesh(layer, primitive::TRIS, std::move(texture_ref), mat, blend_mode, vertices)};
 	const u16 base_index{u16(mesh.positions.size())};
+	const usize indices{polygon_indices(vertices)};
 
 	mesh.positions.resize(mesh.positions.size() + vertices);
 	mesh.uvs.resize(mesh.uvs.size() + vertices);
 	mesh.tints.resize(mesh.tints.size() + vertices);
+	mesh.indices.resize(mesh.indices.size() + indices);
 
-	fill_convex_polygon_indices(back_inserter(mesh.indices), u16(vertices), base_index);
+	const std::ranges::subrange positions{mesh.positions.end() - vertices, mesh.positions.end()};
+	const std::ranges::subrange uvs{mesh.uvs.end() - vertices, mesh.uvs.end()};
+	const std::ranges::subrange tints{mesh.tints.end() - vertices, mesh.tints.end()};
+	const std::ranges::subrange index_range{mesh.indices.end() - indices, mesh.indices.end()};
 
-	return {
-		{mesh.positions.end() - vertices, mesh.positions.end()},
-		{mesh.uvs.end() - vertices, mesh.uvs.end()},
-		{mesh.tints.end() - vertices, mesh.tints.end()},
-	};
+	fill_convex_polygon_indices(index_range.begin(), u16(vertices), base_index);
+
+	return {positions, uvs, tints};
 }
 
 tr::gfx::textured_mesh_ref tr::gfx::renderer_2d::new_textured_mesh(int layer, usize vertices, usize indices)
@@ -246,13 +263,12 @@ tr::gfx::textured_mesh_ref tr::gfx::renderer_2d::new_textured_mesh(int layer, us
 	mesh.tints.resize(mesh.tints.size() + vertices);
 	mesh.indices.resize(mesh.indices.size() + indices);
 
-	return {
-		{mesh.positions.end() - vertices, mesh.positions.end()},
-		{mesh.uvs.end() - vertices, mesh.uvs.end()},
-		{mesh.tints.end() - vertices, mesh.tints.end()},
-		{mesh.indices.end() - indices, mesh.indices.end()},
-		base_index,
-	};
+	const std::ranges::subrange positions{mesh.positions.end() - vertices, mesh.positions.end()};
+	const std::ranges::subrange uvs{mesh.uvs.end() - vertices, mesh.uvs.end()};
+	const std::ranges::subrange tints{mesh.tints.end() - vertices, mesh.tints.end()};
+	const std::ranges::subrange index_range{mesh.indices.end() - indices, mesh.indices.end()};
+
+	return {positions, uvs, tints, index_range, base_index};
 }
 
 //
@@ -281,9 +297,15 @@ tr::gfx::simple_color_mesh_ref tr::gfx::renderer_2d::new_lines(int layer, usize 
 	mesh.tints.resize(mesh.tints.size() + vertices);
 	mesh.indices.resize(mesh.indices.size() + vertices);
 
-	std::fill(mesh.uvs.end() - vertices, mesh.uvs.end(), UNTEXTURED_UV);
-	std::iota(mesh.indices.end() - vertices, mesh.indices.end(), base_index);
-	return {{mesh.positions.end() - vertices, mesh.positions.end()}, {mesh.tints.end() - vertices, mesh.tints.end()}};
+	const std::ranges::subrange positions{mesh.positions.end() - vertices, mesh.positions.end()};
+	const std::ranges::subrange uvs{mesh.uvs.end() - vertices, mesh.uvs.end()};
+	const std::ranges::subrange colors{mesh.tints.end() - vertices, mesh.tints.end()};
+	const std::ranges::subrange index_range{mesh.indices.end() - vertices, mesh.indices.end()};
+
+	std::ranges::fill(uvs, UNTEXTURED_UV);
+	std::iota(index_range.begin(), index_range.end(), base_index);
+
+	return {positions, colors};
 }
 
 tr::gfx::simple_color_mesh_ref tr::gfx::renderer_2d::new_line_strip(int layer, usize vertices)
@@ -304,18 +326,22 @@ tr::gfx::simple_color_mesh_ref tr::gfx::renderer_2d::new_line_strip(int layer, u
 {
 	mesh& mesh{find_mesh(layer, primitive::LINES, std::nullopt, mat, blend_mode, vertices)};
 	const u16 base_index{u16(mesh.positions.size())};
+	const usize indices{line_strip_indices(vertices)};
 
 	mesh.positions.resize(mesh.positions.size() + vertices);
 	mesh.uvs.resize(mesh.uvs.size() + vertices);
 	mesh.tints.resize(mesh.tints.size() + vertices);
+	mesh.indices.resize(mesh.indices.size() + indices);
 
-	std::fill(mesh.uvs.end() - vertices, mesh.uvs.end(), UNTEXTURED_UV);
-	for (usize i = 0; i < vertices - 1; ++i) {
-		mesh.indices.push_back(base_index + i);
-		mesh.indices.push_back(base_index + i + 1);
-	}
+	const std::ranges::subrange positions{mesh.positions.end() - vertices, mesh.positions.end()};
+	const std::ranges::subrange uvs{mesh.uvs.end() - vertices, mesh.uvs.end()};
+	const std::ranges::subrange colors{mesh.tints.end() - vertices, mesh.tints.end()};
+	const std::ranges::subrange index_range{mesh.indices.end() - indices, mesh.indices.end()};
 
-	return {{mesh.positions.end() - vertices, mesh.positions.end()}, {mesh.tints.end() - vertices, mesh.tints.end()}};
+	std::ranges::fill(uvs, UNTEXTURED_UV);
+	fill_line_strip_indices(index_range.begin(), vertices, base_index);
+
+	return {positions, colors};
 }
 
 tr::gfx::simple_color_mesh_ref tr::gfx::renderer_2d::new_line_loop(int layer, usize vertices)
@@ -336,20 +362,43 @@ tr::gfx::simple_color_mesh_ref tr::gfx::renderer_2d::new_line_loop(int layer, us
 {
 	mesh& mesh{find_mesh(layer, primitive::LINES, std::nullopt, mat, blend_mode, vertices)};
 	const u16 base_index{u16(mesh.positions.size())};
+	const usize indices{line_loop_indices(vertices)};
 
 	mesh.positions.resize(mesh.positions.size() + vertices);
 	mesh.uvs.resize(mesh.uvs.size() + vertices);
 	mesh.tints.resize(mesh.tints.size() + vertices);
+	mesh.indices.resize(mesh.indices.size() + indices);
 
-	std::fill(mesh.uvs.end() - vertices, mesh.uvs.end(), UNTEXTURED_UV);
-	for (usize i = 0; i < vertices - 1; ++i) {
-		mesh.indices.push_back(base_index + i);
-		mesh.indices.push_back(base_index + i + 1);
-	}
-	mesh.indices.push_back(base_index + vertices - 1);
-	mesh.indices.push_back(base_index);
+	const std::ranges::subrange positions{mesh.positions.end() - vertices, mesh.positions.end()};
+	const std::ranges::subrange uvs{mesh.uvs.end() - vertices, mesh.uvs.end()};
+	const std::ranges::subrange colors{mesh.tints.end() - vertices, mesh.tints.end()};
+	const std::ranges::subrange index_range{mesh.indices.end() - indices, mesh.indices.end()};
 
-	return {{mesh.positions.end() - vertices, mesh.positions.end()}, {mesh.tints.end() - vertices, mesh.tints.end()}};
+	std::ranges::fill(uvs, UNTEXTURED_UV);
+	fill_line_loop_indices(index_range.begin(), vertices, base_index);
+
+	return {positions, colors};
+}
+
+tr::gfx::color_mesh_ref tr::gfx::renderer_2d::new_line_mesh(int layer, usize vertices, usize indices, const glm::mat4& mat,
+															const blend_mode& blend_mode)
+{
+	mesh& mesh{find_mesh(layer, primitive::LINES, std::nullopt, mat, blend_mode, vertices)};
+	const u16 base_index{u16(mesh.positions.size())};
+
+	mesh.positions.resize(mesh.positions.size() + vertices);
+	mesh.uvs.resize(mesh.uvs.size() + vertices);
+	mesh.tints.resize(mesh.tints.size() + vertices);
+	mesh.indices.resize(mesh.indices.size() + indices);
+
+	const std::ranges::subrange positions{mesh.positions.end() - vertices, mesh.positions.end()};
+	const std::ranges::subrange uvs{mesh.uvs.end() - vertices, mesh.uvs.end()};
+	const std::ranges::subrange colors{mesh.tints.end() - vertices, mesh.tints.end()};
+	const std::ranges::subrange index_range{mesh.indices.end() - indices, mesh.indices.end()};
+
+	std::ranges::fill(uvs, UNTEXTURED_UV);
+
+	return {positions, colors, index_range, base_index};
 }
 
 //

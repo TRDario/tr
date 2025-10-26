@@ -101,6 +101,10 @@ namespace tr::gfx {
 		simple_color_mesh_ref new_line_loop(int layer, usize vertices);
 		// Allocates a new color line loop.
 		simple_color_mesh_ref new_line_loop(int layer, usize vertices, const glm::mat4& mat, const blend_mode& blend_mode);
+		// Allocates a new color line mesh.
+		color_mesh_ref new_line_mesh(int layer, usize vertices, usize indices);
+		// Allocates a new color line mesh.
+		color_mesh_ref new_line_mesh(int layer, usize vertices, usize indices, const glm::mat4& mat, const blend_mode& blend_mode);
 
 		// Draws a layer to a rendering target.
 		void draw_layer(int layer, const render_target& target = backbuffer_render_target());
