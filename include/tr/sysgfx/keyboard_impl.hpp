@@ -332,20 +332,20 @@ constexpr std::string tr::sys::name(scan_chord scan)
 	return str;
 }
 
-consteval tr::sys::scancode tr::sys::operator""_scan(const char* cstr, usize size)
+consteval tr::sys::scancode tr::sys::operator""_s(const char* cstr, usize size)
 {
 	scancode result{to_scancode({cstr, size})};
 	TR_ASSERT(result != scancode::UNKNOWN, "Invalid scancode name.");
 	return result;
 }
 
-consteval tr::sys::scan_chord tr::sys::operator""_schord(const char* cstr, usize size)
+consteval tr::sys::scan_chord tr::sys::operator""_sc(const char* cstr, usize size)
 {
 	tr::sys::scan_chord chord{};
 	const std::string_view str{cstr, size};
 
 	if (str.find('+') == str.npos) {
-		chord.scan = operator""_scan(cstr, size);
+		chord.scan = operator""_s(cstr, size);
 		return chord;
 	}
 
@@ -414,20 +414,20 @@ constexpr tr::sys::keycode tr::sys::to_keycode(cstring_view cstr)
 	return impl::to_keycode(cstr);
 }
 
-consteval tr::sys::keycode tr::sys::operator""_key(const char* cstr, usize)
+consteval tr::sys::keycode tr::sys::operator""_k(const char* cstr, usize)
 {
 	keycode result{to_keycode(cstr)};
 	TR_ASSERT(result != keycode::UNKNOWN, "Invalid keycode name.");
 	return result;
 }
 
-consteval tr::sys::key_chord tr::sys::operator""_kchord(const char* cstr, usize size)
+consteval tr::sys::key_chord tr::sys::operator""_kc(const char* cstr, usize size)
 {
 	tr::sys::key_chord chord{};
 	const std::string_view str{cstr, size};
 
 	if (str.find('+') == str.npos) {
-		chord.key = operator""_key(cstr, size);
+		chord.key = operator""_k(cstr, size);
 		return chord;
 	}
 

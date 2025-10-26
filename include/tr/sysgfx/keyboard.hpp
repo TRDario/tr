@@ -143,9 +143,9 @@ namespace tr::sys {
 
 	inline namespace keyboard_literals {
 		// Creates a scancode matching a string.
-		consteval scancode operator""_scan(const char* str, usize size);
+		consteval scancode operator""_s(const char* str, usize size);
 		// Creates a scancode chord matching a string.
-		consteval scan_chord operator""_schord(const char* str, usize size);
+		consteval scan_chord operator""_sc(const char* str, usize size);
 	} // namespace keyboard_literals
 
 	//
@@ -227,10 +227,10 @@ namespace tr::sys {
 	inline namespace keyboard_literals {
 		// Creates a keycode matching a string.
 		// Keycodes corresponding to unicode characters cannot be currently created using this.
-		consteval keycode operator""_key(const char* str, usize size);
+		consteval keycode operator""_k(const char* str, usize size);
 		// Creates a keycode chord matching a string.
 		// Keycodes corresponding to unicode characters cannot be currently created using this.
-		consteval key_chord operator""_kchord(const char* str, usize size);
+		consteval key_chord operator""_kc(const char* str, usize size);
 	} // namespace keyboard_literals
 
 	//
