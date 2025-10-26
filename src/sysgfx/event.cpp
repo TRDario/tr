@@ -34,37 +34,37 @@ tr::sys::key_down_event::key_down_event(const event& event)
 {
 	const SDL_KeyboardEvent& sdl{((const SDL_Event&)event).key};
 	repeat = sdl.repeat;
-	scan = scancode::enum_t(sdl.scancode);
-	key = keycode::enum_t(sdl.key);
+	scan = scancode(sdl.scancode);
+	key = keycode(sdl.key);
 	mods = convert_keymods(sdl.mod);
 }
 
 bool tr::sys::operator==(const key_down_event& event, const key_chord& chord)
 {
-	return key_chord{event.key, event.mods} == chord;
+	return key_chord{event.mods, event.key} == chord;
 }
 
 bool tr::sys::operator==(const key_down_event& event, const scan_chord& chord)
 {
-	return scan_chord{event.scan, event.mods} == chord;
+	return scan_chord{event.mods, event.scan} == chord;
 }
 
 tr::sys::key_up_event::key_up_event(const event& event)
 {
 	const SDL_KeyboardEvent& sdl{((const SDL_Event&)event).key};
-	scan = scancode::enum_t(sdl.scancode);
-	key = keycode::enum_t(sdl.key);
+	scan = scancode(sdl.scancode);
+	key = keycode(sdl.key);
 	mods = convert_keymods(sdl.mod);
 }
 
 bool tr::sys::operator==(const key_up_event& event, const key_chord& chord)
 {
-	return key_chord{event.key, event.mods} == chord;
+	return key_chord{event.mods, event.key} == chord;
 }
 
 bool tr::sys::operator==(const key_up_event& event, const scan_chord& chord)
 {
-	return scan_chord{event.scan, event.mods} == chord;
+	return scan_chord{event.mods, event.scan} == chord;
 }
 
 tr::sys::text_input_event::text_input_event(const event& event)
