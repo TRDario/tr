@@ -380,6 +380,19 @@ tr::gfx::simple_color_mesh_ref tr::gfx::renderer_2d::new_line_loop(int layer, us
 	return {positions, colors};
 }
 
+tr::gfx::color_mesh_ref tr::gfx::renderer_2d::new_line_mesh(int layer, usize vertices, usize indices)
+{
+	std::unordered_map<int, layer_defaults>::iterator it{m_layer_defaults.find(layer)};
+	if (it != m_layer_defaults.end()) {
+		const layer_defaults& defaults{it->second};
+		const glm::mat4& transform{defaults.transform.has_value() ? *defaults.transform : m_default_transform};
+		return new_line_mesh(layer, vertices, indices, transform, defaults.blend_mode);
+	}
+	else {
+		return new_line_mesh(layer, vertices, indices, m_default_transform, ALPHA_BLENDING);
+	}
+}
+
 tr::gfx::color_mesh_ref tr::gfx::renderer_2d::new_line_mesh(int layer, usize vertices, usize indices, const glm::mat4& mat,
 															const blend_mode& blend_mode)
 {
