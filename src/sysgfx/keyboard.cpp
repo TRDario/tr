@@ -1,4 +1,5 @@
 #include "../../include/tr/sysgfx/keyboard.hpp"
+#include "../../include/tr/sysgfx/event_types.hpp"
 #include "../../include/tr/sysgfx/keyboard_events.hpp"
 #include <SDL3/SDL.h>
 
@@ -66,12 +67,22 @@ bool tr::sys::scan_state::held(scancode key) const
 	return bool(byte & std::byte(1 << (index % 8)));
 }
 
-void tr::sys::scan_state::update(const key_down_event& event)
+void tr::sys::scan_state::handle_event(const event& event)
+{
+	if (event.is<key_down_event>()) {
+		handle_event(event.as<key_down_event>());
+	}
+	else if (event.is<key_up_event>()) {
+		handle_event(event.as<key_up_event>());
+	}
+}
+
+void tr::sys::scan_state::handle_event(const key_down_event& event)
 {
 	force_down(event.scan);
 }
 
-void tr::sys::scan_state::update(const key_up_event& event)
+void tr::sys::scan_state::handle_event(const key_up_event& event)
 {
 	force_up(event.scan);
 }
@@ -96,15 +107,25 @@ void tr::sys::scan_state::force_up(scancode key)
 	byte &= ~std::byte(1 << (index % 8));
 }
 
-void tr::sys::keyboard_state::update(const key_down_event& event)
+void tr::sys::keyboard_state::handle_event(const event& event)
 {
-	scan_state::update(event);
+	if (event.is<key_down_event>()) {
+		handle_event(event.as<key_down_event>());
+	}
+	else if (event.is<key_up_event>()) {
+		handle_event(event.as<key_up_event>());
+	}
+}
+
+void tr::sys::keyboard_state::handle_event(const key_down_event& event)
+{
+	scan_state::handle_event(event);
 	mods = event.mods;
 }
 
-void tr::sys::keyboard_state::update(const key_up_event& event)
+void tr::sys::keyboard_state::handle_event(const key_up_event& event)
 {
-	scan_state::update(event);
+	scan_state::handle_event(event);
 	mods = event.mods;
 }
 

@@ -4,6 +4,7 @@
 namespace tr::sys {
 	struct key_down_event;
 	struct key_up_event;
+	class event;
 
 	// Physical keycode.
 	enum class scancode {
@@ -245,9 +246,11 @@ namespace tr::sys {
 		bool held(scancode scan) const;
 
 		// Updates the key state.
-		void update(const key_down_event& event);
+		void handle_event(const event& event);
 		// Updates the key state.
-		void update(const key_up_event& event);
+		void handle_event(const key_down_event& event);
+		// Updates the key state.
+		void handle_event(const key_up_event& event);
 		// Forces a key to be considered held down.
 		void force_down(scancode scan);
 		// Forces a key to the considered up.
@@ -268,12 +271,14 @@ namespace tr::sys {
 		keyboard_state() = default;
 
 		// Updates the key state.
-		void update(const key_down_event& event);
+		void handle_event(const event& event);
 		// Updates the key state.
-		void update(const key_up_event& event);
+		void handle_event(const key_down_event& event);
+		// Updates the key state.
+		void handle_event(const key_up_event& event);
 
 	  private:
-		using scan_state::update;
+		using scan_state::handle_event;
 	};
 
 	//
