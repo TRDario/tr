@@ -235,6 +235,49 @@ namespace tr::sys {
 
 	//
 
+	// Keyboard key state.
+	class scan_state {
+	  public:
+		// Constructs an empty key state.
+		scan_state() = default;
+
+		// Gets whether a key is held.
+		bool held(scancode scan) const;
+
+		// Updates the key state.
+		void update(const key_down_event& event);
+		// Updates the key state.
+		void update(const key_up_event& event);
+		// Forces a key to be considered held down.
+		void force_down(scancode scan);
+		// Forces a key to the considered up.
+		void force_up(scancode scan);
+
+	  private:
+		// The state is stored in the form of bitflags.
+		std::array<std::byte, 14> buffer{};
+	};
+
+	// Keyboard key and modifier state.
+	class keyboard_state : public scan_state {
+	  public:
+		// The currently held modifiers.
+		keymod mods{keymod::NONE};
+
+		// Constructs an empty keyboard state.
+		keyboard_state() = default;
+
+		// Updates the key state.
+		void update(const key_down_event& event);
+		// Updates the key state.
+		void update(const key_up_event& event);
+
+	  private:
+		using scan_state::update;
+	};
+
+	//
+
 	// Gets whether the clipboard is empty.
 	bool clipboard_empty();
 	// Gets the clipboard text.
