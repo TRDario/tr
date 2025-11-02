@@ -12,6 +12,9 @@ namespace tr {
 	// Unchecked variant getter.
 	template <class T, class... Ts> const T&& unchecked_get(const std::variant<Ts...>&& v);
 
+	// Casts a variant into another variant that is a superset of it.
+	template <class To, class From> To superset_cast(From&& v);
+
 	// Match statement helper class.
 	template <class... Fs> struct match : Fs... {
 		using Fs::operator()...;
@@ -53,6 +56,13 @@ template <class T, class... Args> const T&& tr::unchecked_get(const std::variant
 {
 	TR_ASSERT(std::holds_alternative<T>(v), "Tried to access wrong type on a variant holding the type at index {}.", v.index());
 	return std::move(*std::get_if<T>(&v));
+}
+
+//
+
+template <class To, class From> To tr::superset_cast(From&& v)
+{
+	return std::visit([]<class T>(T&& v) { return To{std::forward<T>(v)}; }, std::forward<From>(v));
 }
 
 //
