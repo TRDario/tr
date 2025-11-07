@@ -17,9 +17,15 @@ tr::winding_order tr::triangle::winding_order() const
 
 bool tr::triangle::contains(glm::vec2 p) const
 {
-	const glm::vec2 delta{p - a};
-	const bool sign{winding_order() == winding_order::CCW};
-	return cross(c - a, delta) > 0 != sign && cross(c - b, p - b) > 0 == sign;
+	const float s{cross(a - c, p - c)};
+	const float t{cross(b - a, p - a)};
+
+	if ((s < 0) != (t < 0) && s != 0 && t != 0) {
+		return false;
+	}
+
+	const float d{cross(c - b, p - b)};
+	return d == 0 || (d < 0) == (s + t <= 0);
 }
 
 bool tr::circle::contains(glm::vec2 point) const

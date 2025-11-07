@@ -99,16 +99,10 @@ template <std::output_iterator<tr::u16> O> constexpr O tr::fill_simple_polygon_i
 	TR_ASSERT(vertices.size() >= 3, "Tried to calculate indices for {}-sided polygon.", vertices.size());
 	TR_ASSERT(base + vertices.size() <= UINT16_MAX, "Index overflow detected in fill_simple_polygon_indices.");
 
-	std::vector<u16> indices(vertices.size());
-	switch (polygon_winding_order(vertices)) {
-	case tr::winding_order::CCW:
-		std::iota(indices.begin(), indices.end(), 0_u16);
-		break;
-	case tr::winding_order::CW:
-		std::iota(indices.rbegin(), indices.rend(), 0_u16);
-		break;
-	}
+	const winding_order winding_order{polygon_winding_order(vertices)};
 
+	std::vector<u16> indices(vertices.size());
+	std::iota(indices.begin(), indices.end(), 0_u16);
 	while (indices.size() >= 3) {
 		for (usize i = 0; i < indices.size(); ++i) {
 			const u16 left{u16(i == 0 ? indices.size() - 1 : i - 1)};
@@ -117,7 +111,7 @@ template <std::output_iterator<tr::u16> O> constexpr O tr::fill_simple_polygon_i
 			if (indices.size() > 3) {
 				const triangle tri{vertices[indices[left]], vertices[indices[i]], vertices[indices[right]]};
 				const auto is_in_tri{[&](usize j) { return j != left && j != i && j != right && tri.contains(vertices[indices[j]]); }};
-				if (tri.winding_order() != winding_order::CCW || std::ranges::any_of(std::views::iota(0_uz, indices.size()), is_in_tri)) {
+				if (tri.winding_order() != winding_order || std::ranges::any_of(std::views::iota(0_uz, indices.size()), is_in_tri)) {
 					continue;
 				}
 			}
@@ -125,7 +119,7 @@ template <std::output_iterator<tr::u16> O> constexpr O tr::fill_simple_polygon_i
 			*out++ = indices[left] + base;
 			*out++ = indices[i] + base;
 			*out++ = indices[right] + base;
-			indices.erase(indices.begin() + i);
+			indices.erase(indices.begin() + i--);
 			break;
 		}
 	}
