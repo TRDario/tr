@@ -195,6 +195,8 @@ namespace tr {
 	bool simple_polygon(std::span<const glm::vec2> vertices);
 	// Determines whether a point is contained in a polygon.
 	bool point_in_polygon(glm::vec2 p, std::span<const glm::vec2> vertices);
+	// Determines whether two polygons are intersecting.
+	bool intersecting(std::span<const glm::vec2> a, std::span<const glm::vec2> b);
 } // namespace tr
 
 #include "geometry_impl.hpp" // IWYU pragma: keep

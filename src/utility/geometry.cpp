@@ -239,3 +239,25 @@ bool tr::point_in_polygon(glm::vec2 p, std::span<const glm::vec2> vertices)
 	}
 	return hits % 2 == 1;
 }
+
+bool tr::intersecting(std::span<const glm::vec2> a, std::span<const glm::vec2> b)
+{
+	if (std::ranges::any_of(a, [&](glm::vec2 p) { return point_in_polygon(p, b); })) {
+		return true;
+	}
+	if (std::ranges::any_of(b, [&](glm::vec2 p) { return point_in_polygon(p, a); })) {
+		return true;
+	}
+
+	for (usize i = 0; i < a.size(); ++i) {
+		const line_segment la{a[i], a[(i + 1) % a.size()]};
+		for (usize j = 0; j < b.size(); ++j) {
+			const line_segment lb{b[j], b[(j + 1) % b.size()]};
+			if (intersecting(la, lb)) {
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
