@@ -94,4 +94,5 @@ if(TR_BUILD_IMGUI)
 		${imgui_SOURCE_DIR}/misc/cpp/imgui_stdlib.cpp
 	)
 	target_include_directories(imgui PUBLIC ${imgui_SOURCE_DIR})
+	target_link_libraries(imgui PRIVATE SDL3::SDL3)
 endif()
