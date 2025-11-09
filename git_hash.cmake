@@ -29,7 +29,7 @@ function(tr_check_git_hash)
         set(GIT_HASH_CACHE "INVALID")
     endif()
 
-    if (NOT ${GIT_HASH} STREQUAL ${GIT_HASH_CACHE} OR NOT EXISTS ${post_configure_file})
+    if (NOT ${GIT_HASH} STREQUAL ${GIT_HASH_CACHE} OR NOT EXISTS ${CMAKE_BINARY_DIR}/git_hash/git_hash.hpp)
         tr_write_git_hash(${GIT_HASH})
         configure_file(${CMAKE_BINARY_DIR}/git_hash/git_hash.hpp.in ${CMAKE_BINARY_DIR}/git_hash/git_hash.hpp @ONLY)
     endif()
@@ -38,11 +38,10 @@ endfunction()
 function(tr_git_hash_setup)
     add_custom_target(always_check_git COMMAND ${CMAKE_COMMAND}
         -DRUN_CHECK_GIT_HASH=1
-        -Dpre_configure_dir=${pre_configure_dir}
-        -Dpost_configure_file=${post_configure_dir}
         -DGIT_HASH_CACHE=${GIT_HASH_CACHE}
         -P ${tr_SOURCE_DIR}/git_hash.cmake
-        BYPRODUCTS ${post_configure_file}
+        BYPRODUCTS ${CMAKE_BINARY_DIR}/git_hash/git_hash.hpp
+        COMMENT "Checking git hash for changes"
     )
 
     add_library(git_hash INTERFACE)
