@@ -125,6 +125,8 @@ namespace tr {
 	// Creates a vector from a magnitude and angle.
 	glm::vec2 magth(float mag, angle th);
 
+	// Gets the squared distance between two points.
+	template <class T1, class T2> constexpr std::common_type_t<T1, T2> dist2(glm::tvec2<T1> a, glm::tvec2<T2> b);
 	// Computes the top-left corner of a rectangle given a position, size, and anchor point.
 	template <class T> constexpr glm::tvec2<T> tl(glm::tvec2<T> pos, glm::tvec2<T> size, align pos_anchor);
 	// Gets the inverse of a vector.

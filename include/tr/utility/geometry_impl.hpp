@@ -62,6 +62,12 @@ template <class T1, class T2> constexpr bool tr::intersecting(const rect2<T1>& r
 		   r2.contains(r1.tl + glm::tvec2<T1>{0, r1.size.y});
 }
 
+template <class T1, class T2> constexpr std::common_type_t<T1, T2> dist2(glm::tvec2<T1> a, glm::tvec2<T2> b)
+{
+	const glm::tvec2<std::common_type_t<T1, T2>> d{b.x - a.x, b.y - a.y};
+	return d.x * d.x + d.y * d.y;
+}
+
 template <class T> constexpr glm::tvec2<T> tr::tl(glm::tvec2<T> pos, glm::tvec2<T> size, tr::align pos_anchor)
 {
 	switch (pos_anchor) {
