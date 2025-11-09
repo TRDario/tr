@@ -14,7 +14,7 @@ endfunction()
 function(tr_check_git_hash)
     execute_process(
         COMMAND git log -1 --format=%h
-        WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
         OUTPUT_VARIABLE GIT_HASH
         OUTPUT_STRIP_TRAILING_WHITESPACE
     )
