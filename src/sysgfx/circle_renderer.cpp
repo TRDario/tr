@@ -13,7 +13,7 @@ namespace tr::gfx {
 		"#version 450\n#define L(l) layout(location=l)\nL(0)uniform mat4 t;L(1)uniform float R;L(0)in vec2 p;L(1)in vec2 c;L(2)in "
 		"float r;L(3)in float T;L(4)in vec4 f;L(5)in vec4 o;out gl_PerVertex{vec4 gl_Position;};L(0)out vec2 u;L(1)flat out float "
 		"s;L(2)flat out vec4 F;L(3)flat out vec4 O;void main(){float "
-		"h=T/2,S=r+h+(1/R);gl_Position=t*vec4(c+S*2*(p-0.5),0,1);u=(p*2-1)*(S/(r+h));s=(r-h)/S;F=f;O=o;}"};
+		"h=T/2,v=r+h,S=v+(1/R);gl_Position=t*vec4(c+S*2*(p-0.5),0,1);u=(p*2-1)*(S/v);s=(r-h)/v;F=f;O=o;}"};
 	// Circle renderer fragment shader.
 	constexpr const char* CIRCLE_RENDERER_FRAG_SRC{
 		"#version 450\n#define L(l) layout(location=l)\nL(0)in vec2 u;L(1)flat in float s;L(2)flat in vec4 f;L(3)flat in vec4 o;L(0)"
