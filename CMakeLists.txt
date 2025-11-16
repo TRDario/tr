@@ -53,6 +53,7 @@ if(TR_BUILD_SYSGFX)
 		src/sysgfx/bitmap_iterators.cpp
 		src/sysgfx/bitmap.cpp
 		src/sysgfx/buffer_map.cpp
+		src/sysgfx/circle_renderer.cpp
 		src/sysgfx/cursor.cpp
 		src/sysgfx/debug_renderer.cpp
 		src/sysgfx/dialog.cpp
