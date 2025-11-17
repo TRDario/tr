@@ -5,7 +5,6 @@
 #include "../../include/tr/sysgfx/mouse_events.hpp"
 #include "../../include/tr/sysgfx/window.hpp"
 #include "../../include/tr/sysgfx/window_events.hpp"
-#include "../../include/tr/utility/timer.hpp"
 #include <SDL3/SDL.h>
 
 using namespace std::chrono_literals;
@@ -109,39 +108,14 @@ tr::sys::backbuffer_resize_event::backbuffer_resize_event(const event& event)
 	size = {sdl.data1, sdl.data2};
 }
 
-tr::sys::tick_event::tick_event(const event& event)
-	: id{((const SDL_Event&)event).user.code}
-{
-}
+//
 
 tr::u32 tr::sys::event::type() const
 {
 	return ((const SDL_Event*)m_buffer)->type;
 }
 
-tr::timer tr::sys::create_tick_timer(float frequency, int id)
-{
-	return timer{
-		1.0s / frequency,
-		[=] {
-			SDL_Event event;
-			event.type = 0x8000;
-			event.user.code = id;
-			SDL_PushEvent(&event);
-		},
-	};
-}
-
-tr::timer tr::sys::create_draw_timer(float frequency)
-{
-	return timer{
-		1.0s / frequency,
-		[] {
-			SDL_Event event{.type = 0x8001};
-			SDL_PushEvent(&event);
-		},
-	};
-}
+//
 
 void tr::sys::enable_text_input_events()
 {

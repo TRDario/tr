@@ -11,23 +11,12 @@ namespace tr::sys {
 	struct unknown_event {};
 	// Event emitted when the application wants to quit.
 	struct quit_event {};
-	// The event type emitted by ticker timers.
-	struct tick_event {
-		// The user-assigned type ID attached to the ticker emitting the event.
-		int id;
-
-		// Converts a generic event into a tick event.
-		explicit tick_event(const event& event);
-	};
-	// Event emitted when the application wants to redraw.
-	struct draw_event {};
 
 	// Concept denoting the list of valid event types.
 	template <class T>
-	concept event_type =
-		one_of<T, quit_event, window_show_event, window_hide_event, backbuffer_resize_event, window_gain_focus_event,
-			   window_lose_focus_event, window_mouse_enter_event, window_mouse_leave_event, key_down_event, key_up_event, text_input_event,
-			   mouse_motion_event, mouse_down_event, mouse_up_event, mouse_wheel_event, tick_event, draw_event>;
+	concept event_type = one_of<T, quit_event, window_show_event, window_hide_event, backbuffer_resize_event, window_gain_focus_event,
+								window_lose_focus_event, window_mouse_enter_event, window_mouse_leave_event, key_down_event, key_up_event,
+								text_input_event, mouse_motion_event, mouse_down_event, mouse_up_event, mouse_wheel_event>;
 
 	// An event visitor must be callable with all event types, and all overloads must return the same type.
 	template <class T>
@@ -37,8 +26,7 @@ namespace tr::sys {
 		std::invocable<T, window_lose_focus_event> && std::invocable<T, window_mouse_enter_event> &&
 		std::invocable<T, window_mouse_leave_event> && std::invocable<T, key_down_event> && std::invocable<T, key_up_event> &&
 		std::invocable<T, text_input_event> && std::invocable<T, mouse_motion_event> && std::invocable<T, mouse_down_event> &&
-		std::invocable<T, mouse_up_event> && std::invocable<T, mouse_wheel_event> && std::invocable<T, tick_event> &&
-		std::invocable<T, draw_event> && requires(T visitor) {
+		std::invocable<T, mouse_up_event> && std::invocable<T, mouse_wheel_event> && requires(T visitor) {
 			requires std::same_as<decltype(visitor(quit_event{})), decltype(visitor(std::declval<window_show_event>()))>;
 			requires std::same_as<decltype(visitor(quit_event{})), decltype(visitor(std::declval<window_hide_event>()))>;
 			requires std::same_as<decltype(visitor(quit_event{})), decltype(visitor(std::declval<backbuffer_resize_event>()))>;
@@ -53,8 +41,6 @@ namespace tr::sys {
 			requires std::same_as<decltype(visitor(quit_event{})), decltype(visitor(std::declval<mouse_down_event>()))>;
 			requires std::same_as<decltype(visitor(quit_event{})), decltype(visitor(std::declval<mouse_up_event>()))>;
 			requires std::same_as<decltype(visitor(quit_event{})), decltype(visitor(std::declval<mouse_wheel_event>()))>;
-			requires std::same_as<decltype(visitor(quit_event{})), decltype(visitor(std::declval<tick_event>()))>;
-			requires std::same_as<decltype(visitor(quit_event{})), decltype(visitor(std::declval<draw_event>()))>;
 			requires std::same_as<decltype(visitor(quit_event{})), decltype(visitor(std::declval<unknown_event>()))>;
 		};
 
@@ -132,12 +118,6 @@ template <tr::sys::event_type T> bool tr::sys::event::is() const
 	else if constexpr (std::same_as<T, mouse_wheel_event>) {
 		return type() == 0x403;
 	}
-	else if constexpr (std::same_as<T, tick_event>) {
-		return type() == 0x8000;
-	}
-	else if constexpr (std::same_as<T, draw_event>) {
-		return type() == 0x8001;
-	}
 }
 
 template <tr::sys::event_type T> T tr::sys::event::as() const
@@ -189,12 +169,6 @@ template <tr::sys::event_type T> T tr::sys::event::as() const
 	else if constexpr (std::same_as<T, mouse_wheel_event>) {
 		return mouse_wheel_event{*this};
 	}
-	else if constexpr (std::same_as<T, tick_event>) {
-		return tick_event{*this};
-	}
-	else if constexpr (std::same_as<T, draw_event>) {
-		return draw_event{};
-	}
 }
 
 template <tr::sys::event_visitor Visitor> auto tr::sys::event::visit(Visitor&& visitor) const
@@ -230,10 +204,6 @@ template <tr::sys::event_visitor Visitor> auto tr::sys::event::visit(Visitor&& v
 		return visitor(mouse_up_event{*this});
 	case 0x403:
 		return visitor(mouse_wheel_event{*this});
-	case 0x8000:
-		return visitor(tick_event{*this});
-	case 0x8001:
-		return visitor(draw_event{});
 	default:
 		return visitor(unknown_event{});
 	}

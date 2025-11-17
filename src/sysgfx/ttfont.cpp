@@ -1,35 +1,13 @@
 #include "../../include/tr/sysgfx/ttfont.hpp"
 #include "../../include/tr/sysgfx/bitmap.hpp"
-#include "../../include/tr/sysgfx/main.hpp"
 #include <SDL3_ttf/SDL_ttf.h>
 
 namespace tr::sys {
-	// Initializes SDL TTF if needed.
-	void initialize_sdl_ttf_if_needed();
-	// atexit callback for SDL TTF.
-	void atexit_sdl_ttf();
 	// Fixes certain edge artifacts when rendering partially transparent text.
-	void fix_alpha_artifacts(bitmap& bitmap, u8 max_alpha);
-
+	tr::bitmap fix_alpha_artifacts(tr::bitmap&& bitmap, u8 max_alpha);
 } // namespace tr::sys
 
-void tr::sys::initialize_sdl_ttf_if_needed()
-{
-	if (!TTF_WasInit()) {
-		if (!TTF_Init()) {
-			throw init_error{"Failed to initialize SDL_ttf."};
-		}
-		TR_LOG(log, severity::INFO, "Initialized SDL3_ttf.");
-		atexit(atexit_sdl_ttf);
-	}
-}
-
-void tr::sys::atexit_sdl_ttf()
-{
-	TTF_Quit();
-}
-
-void tr::sys::fix_alpha_artifacts(bitmap& bitmap, u8 max_alpha)
+tr::bitmap tr::sys::fix_alpha_artifacts(tr::bitmap&& bitmap, u8 max_alpha)
 {
 	// We know the bitmap is ARGB_8888.
 	u8* it{(u8*)bitmap.data()};
@@ -39,7 +17,10 @@ void tr::sys::fix_alpha_artifacts(bitmap& bitmap, u8 max_alpha)
 		}
 		it += bitmap.pitch();
 	}
+	return std::move(bitmap);
 }
+
+//
 
 tr::sys::ttfont_load_error::ttfont_load_error(std::string_view path, std::string&& details)
 	: m_description{TR_FMT::format("Failed to load bitmap from '{}'", path)}, m_details{std::move(details)}
@@ -194,17 +175,11 @@ tr::bitmap tr::sys::ttfont::render(std::string_view text, int max_w, halign alig
 
 	const SDL_Color sdl_color{color.r, color.g, color.b, color.a};
 	SDL_Surface* const ptr{TTF_RenderText_Blended_Wrapped(m_ptr.get(), text.data(), text.size(), sdl_color, max_w)};
-	if (ptr == nullptr) {
-		throw ttfont_render_error{SDL_GetError()};
-	}
-	bitmap output{ptr};
-	fix_alpha_artifacts(output, color.a);
-	return output;
+	return ptr != nullptr ? fix_alpha_artifacts(bitmap{ptr}, color.a) : nullptr;
 }
 
 tr::sys::ttfont tr::sys::load_embedded_ttfont(std::span<const std::byte> data, float size)
 {
-	initialize_sdl_ttf_if_needed();
 	TTF_Font* const ptr{TTF_OpenFontIO(SDL_IOFromConstMem(data.data(), data.size()), true, size)};
 	return ptr != nullptr ? ttfont{ptr} : throw ttfont_load_error{"(Embedded)", SDL_GetError()};
 }
@@ -215,7 +190,6 @@ tr::sys::ttfont tr::sys::load_ttfont_file(const std::filesystem::path& path, flo
 		throw ttfont_load_error{path.string(), "File not found."};
 	}
 
-	initialize_sdl_ttf_if_needed();
 	TTF_Font* const ptr{TTF_OpenFont(TR_PATH_CSTR(path), size)};
 	return ptr != nullptr ? ttfont{ptr} : throw ttfont_load_error{path.string(), SDL_GetError()};
 }
