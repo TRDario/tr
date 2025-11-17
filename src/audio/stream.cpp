@@ -28,11 +28,7 @@ namespace tr::audio {
 
 tr::audio::ogg_stream::ogg_stream(const std::filesystem::path& path)
 {
-#ifdef _WIN32
-	const int result{ov_fopen(path.string().c_str(), &file)};
-#else
-	const int result{ov_fopen(path.c_str(), &file)};
-#endif
+	const int result{ov_fopen(TR_PATH_CSTR(path), &file)};
 	if (result != 0) {
 		switch (result) {
 		case OV_EREAD:

@@ -26,3 +26,9 @@
 #define TR_ASSERT(condition, fmt, ...) do {} while (0)
 // clang-format on
 #endif
+
+#ifdef _WIN32
+#define TR_PATH_CSTR(path) (path).string().c_str()
+#else
+#define TR_PATH_CSTR(path) (path).c_str()
+#endif

@@ -3,10 +3,6 @@
 #include <SDL3/SDL.h>
 #include <SDL3_image/SDL_image.h>
 
-#ifdef _WIN32
-#include <windows.h>
-#endif
-
 namespace tr {
 	// Checks that a pointer is not null.
 	SDL_Surface* check_not_null(SDL_Surface* ptr);
@@ -26,11 +22,7 @@ void tr::save_bitmap(SDL_Surface* bitmap, const std::filesystem::path& path)
 {
 	TR_ASSERT(bitmap != nullptr, "Tried to save a moved-from bitmap.");
 
-#ifdef _WIN32
-	if (!IMG_SavePNG(bitmap, path.string().c_str())) {
-#else
-	if (!IMG_SavePNG(bitmap, path.c_str())) {
-#endif
+	if (!IMG_SavePNG(bitmap, TR_PATH_CSTR(path))) {
 		throw bitmap_save_error{path.string(), SDL_GetError()};
 	}
 }
@@ -421,11 +413,7 @@ tr::bitmap tr::load_bitmap_file(const std::filesystem::path& path)
 		throw bitmap_load_error{path.string(), "File not found."};
 	}
 
-#ifdef _WIN32
-	SDL_Surface* ptr{IMG_Load(path.string().c_str())};
-#else
-	SDL_Surface* ptr{IMG_Load(path.c_str())};
-#endif
+	SDL_Surface* ptr{IMG_Load(TR_PATH_CSTR(path))};
 	if (ptr == nullptr) {
 		throw bitmap_load_error{path.string(), SDL_GetError()};
 	}

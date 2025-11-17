@@ -184,11 +184,8 @@ glm::ivec2 tr::sys::ttfont::text_size(std::string_view text, int max_w) const
 tr::bitmap tr::sys::ttfont::render(u32 glyph, rgba8 color) const
 {
 	const SDL_Color sdl_color{color.r, color.g, color.b, color.a};
-	SDL_Surface* surface{TTF_RenderGlyph_Blended(m_ptr.get(), glyph, sdl_color)};
-	if (surface == nullptr) {
-		throw ttfont_render_error{SDL_GetError()};
-	}
-	return surface;
+	SDL_Surface* const ptr{TTF_RenderGlyph_Blended(m_ptr.get(), glyph, sdl_color)};
+	return ptr != nullptr ? bitmap{ptr} : throw ttfont_render_error{SDL_GetError()};
 }
 
 tr::bitmap tr::sys::ttfont::render(std::string_view text, int max_w, halign align, rgba8 color) const
@@ -196,11 +193,11 @@ tr::bitmap tr::sys::ttfont::render(std::string_view text, int max_w, halign alig
 	TTF_SetFontWrapAlignment(m_ptr.get(), TTF_HorizontalAlignment(align));
 
 	const SDL_Color sdl_color{color.r, color.g, color.b, color.a};
-	SDL_Surface* surface{TTF_RenderText_Blended_Wrapped(m_ptr.get(), text.data(), text.size(), sdl_color, max_w)};
-	if (surface == nullptr) {
+	SDL_Surface* const ptr{TTF_RenderText_Blended_Wrapped(m_ptr.get(), text.data(), text.size(), sdl_color, max_w)};
+	if (ptr == nullptr) {
 		throw ttfont_render_error{SDL_GetError()};
 	}
-	bitmap output{surface};
+	bitmap output{ptr};
 	fix_alpha_artifacts(output, color.a);
 	return output;
 }
@@ -208,11 +205,8 @@ tr::bitmap tr::sys::ttfont::render(std::string_view text, int max_w, halign alig
 tr::sys::ttfont tr::sys::load_embedded_ttfont(std::span<const std::byte> data, float size)
 {
 	initialize_sdl_ttf_if_needed();
-	TTF_Font* font{TTF_OpenFontIO(SDL_IOFromConstMem(data.data(), data.size()), true, size)};
-	if (font == nullptr) {
-		throw ttfont_load_error{"(Embedded)", SDL_GetError()};
-	}
-	return ttfont{font};
+	TTF_Font* const ptr{TTF_OpenFontIO(SDL_IOFromConstMem(data.data(), data.size()), true, size)};
+	return ptr != nullptr ? ttfont{ptr} : throw ttfont_load_error{"(Embedded)", SDL_GetError()};
 }
 
 tr::sys::ttfont tr::sys::load_ttfont_file(const std::filesystem::path& path, float size)
@@ -222,15 +216,8 @@ tr::sys::ttfont tr::sys::load_ttfont_file(const std::filesystem::path& path, flo
 	}
 
 	initialize_sdl_ttf_if_needed();
-#ifdef _WIN32
-	TTF_Font* font{TTF_OpenFont(path.string().c_str(), size)};
-#else
-	TTF_Font* font{TTF_OpenFont(path.c_str(), size)};
-#endif
-	if (font == nullptr) {
-		throw ttfont_load_error{path.string(), SDL_GetError()};
-	}
-	return ttfont{font};
+	TTF_Font* const ptr{TTF_OpenFont(TR_PATH_CSTR(path), size)};
+	return ptr != nullptr ? ttfont{ptr} : throw ttfont_load_error{path.string(), SDL_GetError()};
 }
 
 //
