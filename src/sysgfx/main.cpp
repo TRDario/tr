@@ -71,7 +71,10 @@ extern "C"
 	SDL_AppResult SDL_AppInit(void**, int argc, char** argv)
 	{
 		try {
-			return SDL_AppResult(::parse_command_line({(tr::cstring_view*)argv, std::size_t(argc)}));
+			tr::sys::signal parse_result{::parse_command_line({(tr::cstring_view*)argv, std::size_t(argc)})};
+			if (parse_result != tr::sys::signal::CONTINUE) {
+				return SDL_AppResult(parse_result);
+			}
 		}
 		catch (std::exception& err) {
 			tr::sys::show_fatal_error_message_box(err);
