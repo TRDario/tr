@@ -10,6 +10,8 @@ namespace tr {
 	} DROP_STATE; // Special return value signalling the state machine to drop the current state.
 	inline constexpr struct keep_state_t {
 	} KEEP_STATE; // Special return value signalling the state machine to keep the current state.
+	// Alias template for the return type of state functions.
+	template <class... States> using next_state = std::variant<drop_state_t, keep_state_t, States...>;
 
 	// State machine manager class.
 	// States may define any of handle_event(), tick(), update() or draw(), which will then be called by the state machine when needed.
@@ -17,7 +19,7 @@ namespace tr {
 	template <class... States> class state_machine {
 	  public:
 		// The type that states should return from handle_event, tick and update.
-		using next_state = std::variant<std::monostate, drop_state_t, States...>;
+		using next_state = tr::next_state<States...>;
 
 		// Constructs an empty state machine.
 		state_machine() = default;
