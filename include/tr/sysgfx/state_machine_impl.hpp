@@ -18,6 +18,23 @@ template <class... States> template <class Visitor> auto tr::state_machine<State
 
 //
 
+template <class... States> const tr::benchmark& tr::state_machine<States...>::tick_benchmark() const
+{
+	return m_tick_benchmark;
+}
+
+template <class... States> const tr::benchmark& tr::state_machine<States...>::update_benchmark() const
+{
+	return m_update_benchmark;
+}
+
+template <class... States> const tr::benchmark& tr::state_machine<States...>::draw_benchmark() const
+{
+	return m_draw_benchmark;
+}
+
+//
+
 template <class... States> void tr::state_machine<States...>::clear()
 {
 	m_current_state = std::monostate{};
@@ -38,6 +55,22 @@ template <class... States> template <class Visitor> auto tr::state_machine<State
 
 //
 
+template <class... States> struct tr::state_machine<States...>::next_state_assigner {
+	std::variant<std::monostate, States...>& current_state;
+
+	void operator()(drop_state_t) const
+	{
+		current_state = std::monostate{};
+	}
+
+	void operator()(keep_state_t) const {}
+
+	void operator()(auto&& v) const
+	{
+		current_state = std::move(v);
+	}
+};
+
 template <class... States> struct tr::state_machine<States...>::event_handler {
 	std::variant<std::monostate, States...>& current_state;
 	const tr::sys::event& event;
@@ -48,13 +81,7 @@ template <class... States> struct tr::state_machine<States...>::event_handler {
 		})
 	void operator()(T& state) const
 	{
-		tr::state_machine<States...>::next_state next{state.handle_event(event)};
-		if (std::holds_alternative<drop_state_t>(next)) {
-			current_state = std::monostate{};
-		}
-		else if (!std::holds_alternative<keep_state_t>(next)) {
-			current_state = std::move(next);
-		}
+		std::visit(next_state_assigner{current_state}, state.handle_event(event));
 	}
 
 	void operator()(auto&) const {}
@@ -74,13 +101,7 @@ template <class... States> struct tr::state_machine<States...>::tick_handler {
 		})
 	void operator()(T& state) const
 	{
-		tr::state_machine<States...>::next_state next{state.tick()};
-		if (std::holds_alternative<drop_state_t>(next)) {
-			current_state = std::monostate{};
-		}
-		else if (!std::holds_alternative<keep_state_t>(next)) {
-			current_state = std::move(next);
-		}
+		std::visit(next_state_assigner{current_state}, state.tick());
 	}
 
 	void operator()(auto&) const {}
@@ -103,13 +124,7 @@ template <class... States> struct tr::state_machine<States...>::update_handler {
 		})
 	void operator()(T& state) const
 	{
-		tr::state_machine<States...>::next_state next{state.update(delta)};
-		if (std::holds_alternative<drop_state_t>(next)) {
-			current_state = std::monostate{};
-		}
-		else if (!std::holds_alternative<keep_state_t>(next)) {
-			current_state = std::move(next);
-		}
+		std::visit(next_state_assigner{current_state}, state.update(delta));
 	}
 
 	void operator()(auto&) const {}

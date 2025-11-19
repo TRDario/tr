@@ -31,6 +31,13 @@ namespace tr {
 		// Visits the state machine.
 		template <class Visitor> auto visit(Visitor&& visitor) const;
 
+		// Gets the tick benchmark.
+		const tr::benchmark& tick_benchmark() const;
+		// Gets the update benchmark.
+		const tr::benchmark& update_benchmark() const;
+		// Gets the draw benchmark.
+		const tr::benchmark& draw_benchmark() const;
+
 		// Clears the state machine.
 		void clear();
 		// Emplaces a state.
@@ -59,6 +66,7 @@ namespace tr {
 		// Benchmark measuring the drawing times.
 		benchmark m_draw_benchmark;
 
+		struct next_state_assigner;
 		struct event_handler;
 		struct tick_handler;
 		struct update_handler;
