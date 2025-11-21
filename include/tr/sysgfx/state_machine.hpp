@@ -13,16 +13,16 @@ namespace tr {
 	// Alias template for the return type of state functions.
 	template <class... States> using next_state = std::variant<drop_state_t, keep_state_t, States...>;
 
-	// State machine manager class.
+	// Static state machine manager class.
 	// States may define any of handle_event(), tick(), update() or draw(), which will then be called by the state machine when needed.
 	// Defaults are provided in case any of these are not provided.
-	template <class... States> class state_machine {
+	template <class... States> class static_state_machine {
 	  public:
 		// The type that states should return from handle_event, tick and update.
 		using next_state = tr::next_state<States...>;
 
 		// Constructs an empty state machine.
-		state_machine() = default;
+		static_state_machine() = default;
 
 		// Checks whether the state machine is in an empty states.
 		bool empty() const;
@@ -75,6 +75,68 @@ namespace tr {
 		struct tick_handler;
 		struct update_handler;
 		struct draw_handler;
+	};
+
+	// Dynamic state manager class.
+	class dyn_state_machine {
+	  public:
+		// The base state type.
+		struct state {
+			// Virtual destructor.
+			virtual ~state() noexcept = default;
+
+			// Handles an event.
+			std::unique_ptr<state> handle_event(const tr::sys::event& event);
+			// Does a fixed 'tick' update on the state.
+			std::unique_ptr<state> tick();
+			// Does a delta-time update on the state.
+			std::unique_ptr<state> update(tr::duration delta);
+			// Draws the state.
+			void draw();
+
+		  private:
+			virtual bool drop() const = 0;
+		};
+		// Special state that is to be returned when dropping the current state is desired.
+		struct drop_state : state {};
+
+		// Constructs an empty state machine.
+		dyn_state_machine() = default;
+
+		// Checks whether the state machine is in an empty states.
+		bool empty() const;
+		// Gets the tick benchmark.
+		const tr::benchmark& tick_benchmark() const;
+		// Gets the update benchmark.
+		const tr::benchmark& update_benchmark() const;
+		// Gets the draw benchmark.
+		const tr::benchmark& draw_benchmark() const;
+
+		// Clears the state machine.
+		void clear();
+		// Emplaces a state.
+		template <class T, class... Args>
+			requires(std::constructible_from<T, Args...>)
+		void emplace(Args&&... args);
+
+		// Handles an event.
+		void handle_event(const tr::sys::event& event);
+		// Does a fixed 'tick' update on the state.
+		void tick();
+		// Does a delta-time update on the state.
+		template <class R, class P> void update(std::chrono::duration<R, P> delta);
+		// Draws the state.
+		void draw();
+
+	  private:
+		// The currently held state.
+		std::unique_ptr<state> m_current_state;
+		// Benchmark measuring the tick times.
+		benchmark m_tick_benchmark;
+		// Benchmark measuring the update times.
+		benchmark m_update_benchmark;
+		// Benchmark measuring the drawing times.
+		benchmark m_draw_benchmark;
 	};
 } // namespace tr
 
