@@ -27,7 +27,9 @@ namespace tr {
 		// Checks whether the state machine is in an empty states.
 		bool empty() const;
 		// Checks whether the state machine is in a particular state.
-		template <tr::one_of<States...> T> bool is() const;
+		template <one_of<States...> T> bool is() const;
+		// Gets a reference to the current state.
+		template <one_of<States...> T> const T& as() const;
 		// Visits the state machine.
 		template <class Visitor> auto visit(Visitor&& visitor) const;
 
@@ -44,6 +46,8 @@ namespace tr {
 		template <class T, class... Args>
 			requires(std::constructible_from<T, Args...>)
 		void emplace(Args&&... args);
+		// Gets a reference to the current state.
+		template <one_of<States...> T> T& as();
 		// Visits the state machine.
 		template <class Visitor> auto visit(Visitor&& visitor);
 
