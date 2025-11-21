@@ -11,7 +11,7 @@ template <class... States> template <tr::one_of<States...> T> bool tr::state_mac
 	return std::holds_alternative<T>(m_current_state);
 }
 
-template <class... States> template <tr::one_of<States...> T> const T& tr::state_machine<States...>::as() const
+template <class... States> template <tr::one_of<States...> T> const T& tr::state_machine<States...>::get() const
 {
 	return unchecked_get<T>(m_current_state);
 }
@@ -53,7 +53,7 @@ void tr::state_machine<States...>::emplace(Args&&... args)
 	m_current_state.template emplace<T>(std::forward<T>(args)...);
 }
 
-template <class... States> template <tr::one_of<States...> T> T& tr::state_machine<States...>::as()
+template <class... States> template <tr::one_of<States...> T> T& tr::state_machine<States...>::get()
 {
 	return unchecked_get<T>(m_current_state);
 }
