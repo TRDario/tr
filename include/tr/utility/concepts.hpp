@@ -5,6 +5,9 @@ namespace tr {
 	// Circumvents static_assert(false) not being a valid expression.
 	template <class...> inline constexpr bool ALWAYS_FALSE = false;
 
+	// Tag class.
+	template <typename> struct tag {};
+
 	// Template for string literals passed as template arguments.
 	template <usize N> struct template_string_literal {
 		char data[N - 1];

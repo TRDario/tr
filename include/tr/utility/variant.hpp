@@ -1,8 +1,29 @@
 #pragma once
-#include "common.hpp"
+#include "concepts.hpp"
 #include "macro.hpp"
 
 namespace tr {
+	template <class T, class V> struct type_in_variant : std::false_type {};
+	template <class T, class... Ts>
+		requires(one_of<T, Ts...>)
+	struct type_in_variant<T, std::variant<Ts...>> : std::true_type {};
+	// Determines whether a type is in a variant's type list.
+	template <class T, class V>
+	concept in_variant = type_in_variant<T, V>::value;
+
+	template <class T>
+		requires(specialization_of<T, std::variant>)
+	struct tag_variant {};
+	template <class... Ts> struct tag_variant<std::variant<Ts...>> {
+		using type = std::variant<tag<Ts>...>;
+	};
+	template <class T> using tag_variant_t = tag_variant<T>::type;
+
+	// Gets the index of a type in a variant.
+	template <class T, class V>
+		requires(in_variant<T, V>)
+	constexpr std::size_t type_index{tag_variant_t<V>(tag<T>{}).index()};
+
 	// Unchecked variant getter.
 	template <class T, class... Ts> T& unchecked_get(std::variant<Ts...>& v);
 	// Unchecked variant getter.
