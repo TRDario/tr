@@ -9,8 +9,8 @@ tr::cstring_view::operator std::filesystem::path() const
 
 std::strong_ordering tr::operator<=>(cstring_view l, cstring_view r)
 {
-	TR_ASSERT(!l.empty(), "Cannot compare two C string view when left-hand argument is empty.");
-	TR_ASSERT(!r.empty(), "Cannot compare two C string view when right-hand argument is empty.");
+	TR_ASSERT(!l.empty(), "Cannot compare two C string views when left-hand argument is empty.");
+	TR_ASSERT(!r.empty(), "Cannot compare two C string views when right-hand argument is empty.");
 
 	int comp{std::strcmp(l, r)};
 	if (comp < 0) {
