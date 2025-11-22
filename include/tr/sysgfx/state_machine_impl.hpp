@@ -164,16 +164,3 @@ template <class... States> void tr::static_state_machine<States...>::draw()
 	std::visit(draw_handler{}, m_current_state);
 	m_draw_benchmark.stop();
 }
-
-//
-
-template <class T, class... Args>
-	requires(std::constructible_from<T, Args...>)
-void tr::dyn_state_machine::emplace(Args&&... args);
-
-// Does a delta-time update on the state.
-template <class R, class P> void tr::dyn_state_machine::update(std::chrono::duration<R, P> delta)
-{
-	std::unique_ptr<state> next{m_current_state->update(std::chrono::duration_cast<duration>(delta))};
-	if ()
-}
