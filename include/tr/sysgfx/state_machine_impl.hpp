@@ -1,46 +1,46 @@
 #pragma once
 #include "state_machine.hpp"
 
-template <class... States> bool tr::static_state_machine<States...>::empty() const
+template <class... States> bool tr::state_machine<States...>::empty() const
 {
 	return std::holds_alternative<std::monostate>(m_current_state);
 }
 
-template <class... States> template <tr::one_of<States...> T> bool tr::static_state_machine<States...>::is() const
+template <class... States> template <tr::one_of<States...> T> bool tr::state_machine<States...>::is() const
 {
 	return std::holds_alternative<T>(m_current_state);
 }
 
-template <class... States> template <tr::one_of<States...> T> const T& tr::static_state_machine<States...>::get() const
+template <class... States> template <tr::one_of<States...> T> const T& tr::state_machine<States...>::get() const
 {
 	return unchecked_get<T>(m_current_state);
 }
 
-template <class... States> template <class Visitor> auto tr::static_state_machine<States...>::visit(Visitor&& visitor) const
+template <class... States> template <class Visitor> auto tr::state_machine<States...>::visit(Visitor&& visitor) const
 {
 	return std::visit(std::forward<Visitor>(visitor), m_current_state);
 }
 
 //
 
-template <class... States> const tr::benchmark& tr::static_state_machine<States...>::tick_benchmark() const
+template <class... States> const tr::benchmark& tr::state_machine<States...>::tick_benchmark() const
 {
 	return m_tick_benchmark;
 }
 
-template <class... States> const tr::benchmark& tr::static_state_machine<States...>::update_benchmark() const
+template <class... States> const tr::benchmark& tr::state_machine<States...>::update_benchmark() const
 {
 	return m_update_benchmark;
 }
 
-template <class... States> const tr::benchmark& tr::static_state_machine<States...>::draw_benchmark() const
+template <class... States> const tr::benchmark& tr::state_machine<States...>::draw_benchmark() const
 {
 	return m_draw_benchmark;
 }
 
 //
 
-template <class... States> void tr::static_state_machine<States...>::clear()
+template <class... States> void tr::state_machine<States...>::clear()
 {
 	m_current_state = std::monostate{};
 }
@@ -48,24 +48,24 @@ template <class... States> void tr::static_state_machine<States...>::clear()
 template <class... States>
 template <class T, class... Args>
 	requires(std::constructible_from<T, Args...>)
-void tr::static_state_machine<States...>::emplace(Args&&... args)
+void tr::state_machine<States...>::emplace(Args&&... args)
 {
 	m_current_state.template emplace<T>(std::forward<T>(args)...);
 }
 
-template <class... States> template <tr::one_of<States...> T> T& tr::static_state_machine<States...>::get()
+template <class... States> template <tr::one_of<States...> T> T& tr::state_machine<States...>::get()
 {
 	return unchecked_get<T>(m_current_state);
 }
 
-template <class... States> template <class Visitor> auto tr::static_state_machine<States...>::visit(Visitor&& visitor)
+template <class... States> template <class Visitor> auto tr::state_machine<States...>::visit(Visitor&& visitor)
 {
 	return std::visit(std::forward<Visitor>(visitor), m_current_state);
 }
 
 //
 
-template <class... States> struct tr::static_state_machine<States...>::next_state_assigner {
+template <class... States> struct tr::state_machine<States...>::next_state_assigner {
 	std::variant<std::monostate, States...>& current_state;
 
 	void operator()(drop_state_t) const
@@ -81,13 +81,13 @@ template <class... States> struct tr::static_state_machine<States...>::next_stat
 	}
 };
 
-template <class... States> struct tr::static_state_machine<States...>::event_handler {
+template <class... States> struct tr::state_machine<States...>::event_handler {
 	std::variant<std::monostate, States...>& current_state;
 	const tr::sys::event& event;
 
 	template <class T>
 		requires(requires(T state) {
-			{ state.handle_event(event) } -> std::same_as<tr::static_state_machine<States...>::next_state>;
+			{ state.handle_event(event) } -> std::same_as<tr::state_machine<States...>::next_state>;
 		})
 	void operator()(T& state) const
 	{
@@ -97,17 +97,17 @@ template <class... States> struct tr::static_state_machine<States...>::event_han
 	void operator()(auto&) const {}
 };
 
-template <class... States> void tr::static_state_machine<States...>::handle_event(const tr::sys::event& event)
+template <class... States> void tr::state_machine<States...>::handle_event(const tr::sys::event& event)
 {
 	std::visit(event_handler{m_current_state, event}, m_current_state);
 }
 
-template <class... States> struct tr::static_state_machine<States...>::tick_handler {
+template <class... States> struct tr::state_machine<States...>::tick_handler {
 	std::variant<std::monostate, States...>& current_state;
 
 	template <class T>
 		requires(requires(T state) {
-			{ state.tick() } -> std::same_as<tr::static_state_machine<States...>::next_state>;
+			{ state.tick() } -> std::same_as<tr::state_machine<States...>::next_state>;
 		})
 	void operator()(T& state) const
 	{
@@ -117,20 +117,20 @@ template <class... States> struct tr::static_state_machine<States...>::tick_hand
 	void operator()(auto&) const {}
 };
 
-template <class... States> void tr::static_state_machine<States...>::tick()
+template <class... States> void tr::state_machine<States...>::tick()
 {
 	m_tick_benchmark.start();
 	std::visit(tick_handler{m_current_state}, m_current_state);
 	m_tick_benchmark.stop();
 }
 
-template <class... States> struct tr::static_state_machine<States...>::update_handler {
+template <class... States> struct tr::state_machine<States...>::update_handler {
 	std::variant<std::monostate, States...>& current_state;
 	duration delta;
 
 	template <class T>
 		requires(requires(T state) {
-			{ state.update(delta) } -> std::same_as<tr::static_state_machine<States...>::next_state>;
+			{ state.update(delta) } -> std::same_as<tr::state_machine<States...>::next_state>;
 		})
 	void operator()(T& state) const
 	{
@@ -140,14 +140,14 @@ template <class... States> struct tr::static_state_machine<States...>::update_ha
 	void operator()(auto&) const {}
 };
 
-template <class... States> template <class R, class P> void tr::static_state_machine<States...>::update(std::chrono::duration<R, P> delta)
+template <class... States> template <class R, class P> void tr::state_machine<States...>::update(std::chrono::duration<R, P> delta)
 {
 	m_update_benchmark.start();
 	std::visit(update_handler{m_current_state, std::chrono::duration_cast<duration>(delta)}, m_current_state);
 	m_update_benchmark.stop();
 }
 
-template <class... States> struct tr::static_state_machine<States...>::draw_handler {
+template <class... States> struct tr::state_machine<States...>::draw_handler {
 	template <class T>
 		requires(requires(T state) { state.draw(); })
 	void operator()(T& state) const
@@ -158,7 +158,7 @@ template <class... States> struct tr::static_state_machine<States...>::draw_hand
 	void operator()(auto&) const {}
 };
 
-template <class... States> void tr::static_state_machine<States...>::draw()
+template <class... States> void tr::state_machine<States...>::draw()
 {
 	m_draw_benchmark.start();
 	std::visit(draw_handler{}, m_current_state);
