@@ -9,6 +9,9 @@ tr::cstring_view::operator std::filesystem::path() const
 
 std::strong_ordering tr::operator<=>(cstring_view l, cstring_view r)
 {
+	TR_ASSERT(!l.empty(), "Cannot compare two C string view when left-hand argument is empty.");
+	TR_ASSERT(!r.empty(), "Cannot compare two C string view when right-hand argument is empty.");
+
 	int comp{std::strcmp(l, r)};
 	if (comp < 0) {
 		return std::strong_ordering::less;
@@ -53,7 +56,7 @@ inline std::ostream& tr::operator<<(std::ostream& os, const cstring_view& str)
 	return os << str.data();
 }
 
-std::filesystem::path tr::operator/(const std::filesystem::path& l, tr::cstring_view r)
+std::filesystem::path tr::operator/(const std::filesystem::path& l, cstring_view r)
 {
 	return l / std::filesystem::path{r};
 }

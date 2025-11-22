@@ -102,7 +102,7 @@ void tr::sys::show_fatal_error_message_box(const std::exception& exception)
 		emergency_buffer.reset();
 	}
 
-	const std::string title{app_name != nullptr ? TR_FMT::format("{} - Fatal Error", app_name) : "Fatal Error"};
+	const std::string title{!app_name.empty() ? TR_FMT::format("{} - Fatal Error", app_name) : "Fatal Error"};
 
 	const tr::exception* tr_exception{dynamic_cast<const tr::exception*>(&exception)};
 	std::string message;
