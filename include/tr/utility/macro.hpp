@@ -1,6 +1,18 @@
 #pragma once
 #include "logger.hpp"
 
+#ifdef __clang__
+#define TR_ASSUME(x) __builtin_assume(x)
+#elif defined(_MSC_VER)
+#define TR_ASSUME(x) __assume(x)
+#elif defined(__GNUC__)
+#define TR_ASSUME(x) ((x) ? (void(0)) : (__builtin_unreachable()))
+#else
+#define TR_ASSUME(x)                                                                                                                       \
+	do {                                                                                                                                   \
+	} while (0)
+#endif
+
 #define TR_STRINGIFY_IMPL(x) #x
 #define TR_STRINGIFY(x) TR_STRINGIFY_IMPL(x)
 
@@ -22,9 +34,9 @@
 #define TR_ASSERT(condition, fmt, ...) TR_ASSERT_IMPL(condition, TR_FILENAME, __LINE__, fmt, __VA_ARGS__)
 #else
 // Assertion macro.
-// clang-format off
-#define TR_ASSERT(condition, fmt, ...) do {} while (0)
-// clang-format on
+#define TR_ASSERT(condition, fmt, ...)                                                                                                     \
+	do {                                                                                                                                   \
+	} while (0)
 #endif
 
 #ifdef _WIN32

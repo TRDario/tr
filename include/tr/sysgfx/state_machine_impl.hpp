@@ -13,7 +13,7 @@ template <class... States> template <tr::one_of<States...> T> bool tr::state_mac
 
 template <class... States> template <tr::one_of<States...> T> const T& tr::state_machine<States...>::get() const
 {
-	return unchecked_get<T>(m_current_state);
+	return tr::get<T>(m_current_state);
 }
 
 template <class... States> template <class Visitor> auto tr::state_machine<States...>::visit(Visitor&& visitor) const
@@ -55,7 +55,7 @@ void tr::state_machine<States...>::emplace(Args&&... args)
 
 template <class... States> template <tr::one_of<States...> T> T& tr::state_machine<States...>::get()
 {
-	return unchecked_get<T>(m_current_state);
+	return tr::get<T>(m_current_state);
 }
 
 template <class... States> template <class Visitor> auto tr::state_machine<States...>::visit(Visitor&& visitor)

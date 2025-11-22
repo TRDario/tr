@@ -25,13 +25,13 @@ namespace tr {
 	constexpr std::size_t type_index{tag_variant_t<V>(tag<T>{}).index()};
 
 	// Unchecked variant getter.
-	template <class T, class... Ts> T& unchecked_get(std::variant<Ts...>& v);
+	template <class T, class... Ts> T& get(std::variant<Ts...>& v);
 	// Unchecked variant getter.
-	template <class T, class... Ts> T&& unchecked_get(std::variant<Ts...>&& v);
+	template <class T, class... Ts> T&& get(std::variant<Ts...>&& v);
 	// Unchecked variant getter.
-	template <class T, class... Ts> const T& unchecked_get(const std::variant<Ts...>& v);
+	template <class T, class... Ts> const T& get(const std::variant<Ts...>& v);
 	// Unchecked variant getter.
-	template <class T, class... Ts> const T&& unchecked_get(const std::variant<Ts...>&& v);
+	template <class T, class... Ts> const T&& get(const std::variant<Ts...>&& v);
 
 	// Casts a variant into another variant that is a superset of it.
 	template <class To, class From> To superset_cast(From&& v);
@@ -55,28 +55,40 @@ namespace tr {
 
 ////////////////////////////////////////////////////////////// IMPLEMENTATION /////////////////////////////////////////////////////////////
 
-template <class T, class... Args> T& tr::unchecked_get(std::variant<Args...>& v)
+template <class T, class... Args> T& tr::get(std::variant<Args...>& v)
 {
 	TR_ASSERT(std::holds_alternative<T>(v), "Tried to access wrong type on a variant holding the type at index {}.", v.index());
-	return *std::get_if<T>(&v);
+
+	T* const ptr{std::get_if<T>(&v)};
+	TR_ASSUME(ptr != nullptr);
+	return *ptr;
 }
 
-template <class T, class... Args> T&& tr::unchecked_get(std::variant<Args...>&& v)
+template <class T, class... Args> T&& tr::get(std::variant<Args...>&& v)
 {
 	TR_ASSERT(std::holds_alternative<T>(v), "Tried to access wrong type on a variant holding the type at index {}.", v.index());
-	return std::move(*std::get_if<T>(&v));
+
+	T* const ptr{std::get_if<T>(&v)};
+	TR_ASSUME(ptr != nullptr);
+	return std::move(*ptr);
 }
 
-template <class T, class... Args> const T& tr::unchecked_get(const std::variant<Args...>& v)
+template <class T, class... Args> const T& tr::get(const std::variant<Args...>& v)
 {
 	TR_ASSERT(std::holds_alternative<T>(v), "Tried to access wrong type on a variant holding the type at index {}.", v.index());
-	return *std::get_if<T>(&v);
+
+	T* const ptr{std::get_if<T>(&v)};
+	TR_ASSUME(ptr != nullptr);
+	return std::move(*ptr);
 }
 
-template <class T, class... Args> const T&& tr::unchecked_get(const std::variant<Args...>&& v)
+template <class T, class... Args> const T&& tr::get(const std::variant<Args...>&& v)
 {
 	TR_ASSERT(std::holds_alternative<T>(v), "Tried to access wrong type on a variant holding the type at index {}.", v.index());
-	return std::move(*std::get_if<T>(&v));
+
+	const T* const ptr{std::get_if<T>(&v)};
+	TR_ASSUME(ptr != nullptr);
+	return std::move(*ptr);
 }
 
 //
