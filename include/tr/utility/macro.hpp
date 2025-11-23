@@ -1,6 +1,22 @@
 #pragma once
 #include "logger.hpp"
 
+namespace tr {
+#if defined(__GNUC__) || defined(__clang__)
+	[[noreturn]] inline __attribute__((always_inline)) void unreachable()
+	{
+		__builtin_unreachable();
+	}
+#elif defined(_MSC_VER)
+	[[noreturn]] __forceinline void unreachable()
+	{
+		__assume(false);
+	}
+#else
+	inline void unreachable() {}
+#endif
+} // namespace tr
+
 #ifdef __clang__
 #define TR_ASSUME(x) __builtin_assume(x)
 #elif defined(_MSC_VER)
