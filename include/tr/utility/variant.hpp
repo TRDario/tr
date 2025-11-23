@@ -5,11 +5,22 @@
 namespace tr {
 	template <class T, class V> struct type_in_variant : std::false_type {};
 	template <class T, class... Ts>
-		requires(one_of<T, Ts...>)
+		requires(one_of<std::remove_cvref_t<T>, Ts...>)
 	struct type_in_variant<T, std::variant<Ts...>> : std::true_type {};
 	// Determines whether a type is in a variant's type list.
 	template <class T, class V>
-	concept in_variant = type_in_variant<T, V>::value;
+	concept in_variant = type_in_variant<T, std::remove_cvref_t<V>>::value;
+
+	template <class T, class V> struct is_superset_of : std::false_type {};
+	template <class... Ts, class... Us>
+		requires(one_of<Us, Ts...> && ...)
+	struct is_superset_of<std::variant<Ts...>, std::variant<Us...>> : std::true_type {};
+	// Determines whether a variant type is a superset of another variant type.
+	template <class T, class V>
+	concept superset_of = is_superset_of<std::remove_cvref_t<T>, std::remove_cvref_t<V>>::value;
+	// Determines whether a variant type is a subset of another variant type.
+	template <class T, class V>
+	concept subset_of = superset_of<V, T>;
 
 	template <class T>
 		requires(specialization_of<T, std::variant>)
@@ -22,7 +33,7 @@ namespace tr {
 	// Gets the index of a type in a variant.
 	template <class T, class V>
 		requires(in_variant<T, V>)
-	constexpr std::size_t type_index{tag_variant_t<V>(tag<T>{}).index()};
+	constexpr std::size_t type_index{tag_variant_t<V>(tag<std::remove_cvref_t<T>>{}).index()};
 
 	// Unchecked variant getter.
 	template <class T, class... Ts> T& get(std::variant<Ts...>& v);
@@ -34,7 +45,13 @@ namespace tr {
 	template <class T, class... Ts> const T&& get(const std::variant<Ts...>&& v);
 
 	// Casts a variant into another variant that is a superset of it.
-	template <class To, class From> To superset_cast(From&& v);
+	template <class To, class From>
+		requires(superset_of<To, From>)
+	constexpr To superset_cast(From&& v);
+	// Casts a variant into another variant that is a subset of it.
+	template <class To, class From>
+		requires(subset_of<To, From>)
+	constexpr To subset_cast(From&& v);
 
 	// Match statement helper class.
 	template <class... Fs> struct match : Fs... {
@@ -93,9 +110,19 @@ template <class T, class... Args> const T&& tr::get(const std::variant<Args...>&
 
 //
 
-template <class To, class From> To tr::superset_cast(From&& v)
+template <class To, class From>
+	requires(tr::superset_of<To, From>)
+constexpr To tr::superset_cast(From&& v)
 {
 	return std::visit([]<class T>(T&& v) { return To{std::forward<T>(v)}; }, std::forward<From>(v));
+}
+
+template <class To, class From>
+	requires(tr::subset_of<To, From>)
+constexpr To tr::subset_cast(From&& v)
+{
+	return std::visit(tr::match{[]<in_variant<To> T>(T&& v) { return To{std::forward<T>(v)}; }, [](auto&&) -> To { unreachable(); }},
+					  std::forward<From>(v));
 }
 
 //
