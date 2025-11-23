@@ -77,7 +77,7 @@ template <class T, class... Args> const T& tr::get(const std::variant<Args...>& 
 {
 	TR_ASSERT(std::holds_alternative<T>(v), "Tried to access wrong type on a variant holding the type at index {}.", v.index());
 
-	T* const ptr{std::get_if<T>(&v)};
+	const T* const ptr{std::get_if<T>(&v)};
 	TR_ASSUME(ptr != nullptr);
 	return std::move(*ptr);
 }
