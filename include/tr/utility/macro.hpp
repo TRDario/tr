@@ -3,16 +3,19 @@
 
 namespace tr {
 #if defined(__GNUC__) || defined(__clang__)
+	// Marks an unreachable branch of code.
 	[[noreturn]] inline __attribute__((always_inline)) void unreachable()
 	{
 		__builtin_unreachable();
 	}
 #elif defined(_MSC_VER)
+	// Marks an unreachable branch of code.
 	[[noreturn]] __forceinline void unreachable()
 	{
 		__assume(false);
 	}
 #else
+	// Marks an unreachable branch of code.
 	inline void unreachable() {}
 #endif
 } // namespace tr
