@@ -29,11 +29,23 @@ namespace tr {
 		using type = std::variant<tag<Ts>...>;
 	};
 	template <class T> using tag_variant_t = tag_variant<T>::type;
-
 	// Gets the index of a type in a variant.
 	template <class T, class V>
 		requires(in_variant<T, V>)
 	constexpr std::size_t type_index{tag_variant_t<V>(tag<std::remove_cvref_t<T>>{}).index()};
+
+	template <class T, class V> struct subset_castable_to_t {};
+	template <class... Ts, class... Us>
+		requires(subset_of<std::variant<Ts...>, std::variant<Us...>>)
+	struct subset_castable_to_t<std::variant<Ts...>, std::variant<Us...>> {
+		constexpr bool operator()(const std::variant<Us...>& v) const;
+	};
+	// Gets whether a variant is holding one of a number of types.
+	template <class... Ts, class... Us> constexpr bool holds_one_of(const std::variant<Us...>& v);
+	// Gets whether a variant can be casted using subset_cast to another type.
+	template <class T, class V>
+		requires(subset_of<T, V>)
+	constexpr bool subset_castable_to(const V& v);
 
 	// Unchecked variant getter.
 	template <class T, class... Ts> T& get(std::variant<Ts...>& v);
@@ -71,6 +83,27 @@ namespace tr {
 } // namespace tr
 
 ////////////////////////////////////////////////////////////// IMPLEMENTATION /////////////////////////////////////////////////////////////
+
+template <class... Ts, class... Us> constexpr bool tr::holds_one_of(const std::variant<Us...>& v)
+{
+	return (std::holds_alternative<Ts>(v) || ...);
+}
+
+template <class... Ts, class... Us>
+	requires(tr::subset_of<std::variant<Ts...>, std::variant<Us...>>)
+constexpr bool tr::subset_castable_to_t<std::variant<Ts...>, std::variant<Us...>>::operator()(const std::variant<Us...>& v) const
+{
+	return holds_one_of<Ts...>(v);
+}
+
+template <class T, class V>
+	requires(tr::subset_of<T, V>)
+constexpr bool tr::subset_castable_to(const V& v)
+{
+	return subset_castable_to_t<T, V>{}(v);
+}
+
+//
 
 template <class T, class... Args> T& tr::get(std::variant<Args...>& v)
 {
@@ -121,6 +154,8 @@ template <class To, class From>
 	requires(tr::subset_of<To, From>)
 constexpr To tr::subset_cast(From&& v)
 {
+	TR_ASSERT(subset_castable_to<To>(v), "Tried to subset_cast a variant holding a value of a type not in the subset.");
+
 	return std::visit(tr::match{[]<in_variant<To> T>(T&& v) { return To{std::forward<T>(v)}; }, [](auto&&) -> To { unreachable(); }},
 					  std::forward<From>(v));
 }
