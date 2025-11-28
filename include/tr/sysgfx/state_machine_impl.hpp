@@ -48,9 +48,9 @@ template <class... States> void tr::state_machine<States...>::clear()
 template <class... States>
 template <class T, class... Args>
 	requires(std::constructible_from<T, Args...>)
-void tr::state_machine<States...>::emplace(Args&&... args)
+T& tr::state_machine<States...>::emplace(Args&&... args)
 {
-	m_current_state.template emplace<T>(std::forward<T>(args)...);
+	return m_current_state.template emplace<T>(std::forward<T>(args)...);
 }
 
 template <class... States> template <tr::one_of<States...> T> T& tr::state_machine<States...>::get()

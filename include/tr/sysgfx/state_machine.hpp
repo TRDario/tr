@@ -45,7 +45,7 @@ namespace tr {
 		// Emplaces a state.
 		template <class T, class... Args>
 			requires(std::constructible_from<T, Args...>)
-		void emplace(Args&&... args);
+		T& emplace(Args&&... args);
 		// Gets a reference to the current state.
 		template <one_of<States...> T> T& get();
 		// Visits the state machine.
