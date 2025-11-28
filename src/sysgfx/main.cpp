@@ -53,7 +53,7 @@ void tr::sys::set_app_information(cstring_view developer, cstring_view name, cst
 void tr::sys::set_tick_frequency(float frequency)
 {
 	g_tick_timer.emplace(dsecs{1} / frequency, [] {
-		SDL_Event event;
+		SDL_Event event{};
 		event.type = 0x8000;
 		SDL_PushEvent(&event);
 	});
