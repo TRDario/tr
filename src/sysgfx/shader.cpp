@@ -15,7 +15,7 @@ namespace tr::gfx {
 #endif
 
 	// Tracks which units are allocated.
-	std::array<bool, 80> texture_units;
+	std::array<bool, 80> g_texture_units;
 } // namespace tr::gfx
 
 tr::gfx::shader_load_error::shader_load_error(std::string_view path, std::string&& details)
@@ -42,17 +42,17 @@ std::string_view tr::gfx::shader_load_error::details() const
 
 tr::gfx::shader_base::texture_unit::texture_unit()
 {
-	TR_ASSERT(std::ranges::find(texture_units, false) != texture_units.end(), "Ran out of texture units for shaders.");
+	TR_ASSERT(std::ranges::find(g_texture_units, false) != g_texture_units.end(), "Ran out of texture units for shaders.");
 
-	auto it{std::ranges::find(texture_units, false)};
+	auto it{std::ranges::find(g_texture_units, false)};
 	*it = true;
-	texture_unit_textures[it - texture_units.begin()] = std::nullopt;
-	id.reset((unsigned int)(it - texture_units.begin()));
+	g_texture_unit_textures[it - g_texture_units.begin()] = std::nullopt;
+	id.reset((unsigned int)(it - g_texture_units.begin()));
 }
 
 void tr::gfx::shader_base::texture_unit::deleter::operator()(unsigned int unit) const
 {
-	texture_units[unit] = false;
+	g_texture_units[unit] = false;
 }
 
 //
@@ -649,11 +649,11 @@ void tr::gfx::shader_base::set_uniform(int index, texture_ref texture)
 
 	const unsigned int unit_id{unit_it->second.id.get()};
 	if (!texture.empty()) {
-		if (texture_unit_textures[unit_id] != texture && texture.m_ref->m_handle != 0) {
+		if (g_texture_unit_textures[unit_id] != texture && texture.m_ref->m_handle != 0) {
 			TR_GL_CALL(glBindTextures, unit_id, 1, &texture.m_ref->m_handle);
 		}
 	}
-	texture_unit_textures[unit_id] = std::move(texture);
+	g_texture_unit_textures[unit_id] = std::move(texture);
 }
 
 void tr::gfx::shader_base::set_storage_buffer(unsigned int index, basic_shader_buffer& buffer)

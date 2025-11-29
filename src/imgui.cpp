@@ -11,7 +11,7 @@ namespace tr::ImGui {
 
 void tr::ImGui::Init()
 {
-	ImGui_ImplSDL3_InitForOpenGL(sys::sdl_window, gfx::ogl_context);
+	ImGui_ImplSDL3_InitForOpenGL(sys::g_sdl_window, gfx::g_ogl_context);
 	ImGui_ImplOpenGL3_Init("#version 150");
 }
 

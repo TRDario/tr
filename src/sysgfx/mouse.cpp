@@ -10,9 +10,9 @@ namespace tr::sys {
 
 void tr::sys::set_mouse_relative_mode(bool relative)
 {
-	TR_ASSERT(sdl_window != nullptr, "Tried to set mouse relative mode state before opening the window.");
+	TR_ASSERT(g_sdl_window != nullptr, "Tried to set mouse relative mode state before opening the window.");
 
-	if (!SDL_SetWindowRelativeMouseMode(sdl_window, relative)) {
+	if (!SDL_SetWindowRelativeMouseMode(g_sdl_window, relative)) {
 		TR_LOG(log, tr::severity::ERROR, "Failed to set relative mouse mode.");
 		TR_LOG_CONTINUE(log, "{}", SDL_GetError());
 	}
@@ -22,16 +22,16 @@ void tr::sys::set_mouse_relative_mode(bool relative)
 		g_cursor_reset_timer.emplace(std::chrono::seconds{1}, [] {
 			float x, y;
 			SDL_GetMouseState(&x, &y);
-			SDL_SetWindowRelativeMouseMode(sdl_window, false);
+			SDL_SetWindowRelativeMouseMode(g_sdl_window, false);
 			const bool cursor_visible{SDL_CursorVisible()};
 			if (cursor_visible) {
 				SDL_HideCursor();
 			}
-			SDL_WarpMouseInWindow(sdl_window, x, y);
+			SDL_WarpMouseInWindow(g_sdl_window, x, y);
 			if (cursor_visible) {
 				SDL_ShowCursor();
 			}
-			SDL_SetWindowRelativeMouseMode(sdl_window, true);
+			SDL_SetWindowRelativeMouseMode(g_sdl_window, true);
 		});
 	}
 	else if (!relative) {

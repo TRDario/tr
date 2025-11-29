@@ -10,7 +10,7 @@ std::filesystem::path tr::sys::executable_dir()
 
 std::filesystem::path tr::sys::user_dir()
 {
-	std::unique_ptr<char[], decltype([](void* ptr) { SDL_free(ptr); })> cpath{SDL_GetPrefPath(app_developer, app_name)};
+	std::unique_ptr<char[], decltype([](void* ptr) { SDL_free(ptr); })> cpath{SDL_GetPrefPath(g_app_developer, g_app_name)};
 	if (cpath == nullptr) {
 		throw init_error{"Failed to get user directory path."};
 	}

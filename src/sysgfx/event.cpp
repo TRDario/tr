@@ -119,14 +119,14 @@ tr::u32 tr::sys::event::type() const
 
 void tr::sys::enable_text_input_events()
 {
-	TR_ASSERT(sdl_window != nullptr, "Tried to enable text input event sending before opening the window.");
+	TR_ASSERT(g_sdl_window != nullptr, "Tried to enable text input event sending before opening the window.");
 
-	SDL_StartTextInput(sdl_window);
+	SDL_StartTextInput(g_sdl_window);
 }
 
 void tr::sys::disable_text_input_events()
 {
-	TR_ASSERT(sdl_window != nullptr, "Tried to disable text input event sending before opening the window.");
+	TR_ASSERT(g_sdl_window != nullptr, "Tried to disable text input event sending before opening the window.");
 
-	SDL_StopTextInput(sdl_window);
+	SDL_StopTextInput(g_sdl_window);
 }

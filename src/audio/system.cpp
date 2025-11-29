@@ -1,7 +1,7 @@
+#include "../../include/tr/audio/system.hpp"
 #include "../../include/tr/audio/al_call.hpp"
 #include "../../include/tr/audio/impl.hpp"
 #include "../../include/tr/audio/source.hpp"
-#include "../../include/tr/audio/system.hpp"
 #include "../../include/tr/utility/macro.hpp"
 #include "../../include/tr/utility/ranges.hpp"
 #include <AL/alext.h>
@@ -10,9 +10,9 @@ using namespace std::chrono_literals;
 
 namespace tr::audio {
 	// The global audio device.
-	ALCdevice* device{nullptr};
+	ALCdevice* g_device{nullptr};
 	// The global audio context.
-	ALCcontext* context{nullptr};
+	ALCcontext* g_context{nullptr};
 
 	// OpenAL context attributes.
 	constexpr std::array<ALCint, 3> CONTEXT_ATTRIBUTES{ALC_HRTF_SOFT, ALC_FALSE, 0};
@@ -40,55 +40,55 @@ std::string_view tr::audio::init_error::details() const
 
 void tr::audio::initialize()
 {
-	TR_ASSERT(context == nullptr, "Tried to initialize an already initialized audio system.");
+	TR_ASSERT(g_context == nullptr, "Tried to initialize an already initialized audio system.");
 
-	if ((device = alcOpenDevice(nullptr)) == nullptr) {
+	if ((g_device = alcOpenDevice(nullptr)) == nullptr) {
 		throw init_error{"Failed to open audio device."};
 	}
-	if ((context = alcCreateContext(device, CONTEXT_ATTRIBUTES.data())) == nullptr || !alcMakeContextCurrent(context)) {
-		alcDestroyContext(context);
-		alcCloseDevice(device);
+	if ((g_context = alcCreateContext(g_device, CONTEXT_ATTRIBUTES.data())) == nullptr || !alcMakeContextCurrent(g_context)) {
+		alcDestroyContext(g_context);
+		alcCloseDevice(g_device);
 		throw init_error{"Failed to create audio context."};
 	}
 	int al_max_sources;
-	alcGetIntegerv(device, ALC_MONO_SOURCES, 1, &al_max_sources);
-	max_sources = usize(al_max_sources);
-	gains.fill(1);
+	alcGetIntegerv(g_device, ALC_MONO_SOURCES, 1, &al_max_sources);
+	g_max_sources = usize(al_max_sources);
+	g_gains.fill(1);
 }
 
 bool tr::audio::active()
 {
-	return context != nullptr;
+	return g_context != nullptr;
 }
 
 void tr::audio::shut_down()
 {
-	if (thread.joinable()) {
-		thread.request_stop();
-		thread.join();
+	if (g_thread.joinable()) {
+		g_thread.request_stop();
+		g_thread.join();
 	}
 
-	commands.clear();
+	g_commands.clear();
 
 #ifdef TR_ENABLE_ASSERTS
-	for (const std::shared_ptr<source_base>& ptr : sources) {
+	for (const std::shared_ptr<source_base>& ptr : g_sources) {
 		TR_ASSERT(ptr.use_count() == 1, "Tried to shut down audio system while one or more audio sources still exists.");
 	}
 #endif
-	sources.clear();
+	g_sources.clear();
 #ifdef TR_ENABLE_ASSERTS
-	for (auto& [buffer, cullable] : buffers) {
+	for (auto& [buffer, cullable] : g_buffers) {
 		TR_ASSERT(cullable, "Tried to shut down audio system while one or more audio buffers still exists.");
 		TR_AL_CALL(alDeleteBuffers, 1, &buffer);
 	}
 #endif
-	buffers.clear();
+	g_buffers.clear();
 
 	alcMakeContextCurrent(nullptr);
-	alcDestroyContext(context);
-	alcCloseDevice(device);
+	alcDestroyContext(g_context);
+	alcCloseDevice(g_device);
 
-	context = nullptr;
+	g_context = nullptr;
 }
 
 //
@@ -106,7 +106,7 @@ float tr::audio::class_gain(int id)
 {
 	TR_ASSERT(active(), "Tried to get class gain before initializing the audio system.");
 
-	return gains[id];
+	return g_gains[id];
 }
 
 void tr::audio::set_master_gain(float gain)
@@ -121,8 +121,8 @@ void tr::audio::set_class_gain(int id, float gain)
 {
 	TR_ASSERT(active(), "Tried to set class gain before initializing the audio system.");
 
-	gains[id] = gain;
-	for (source_base& source : deref(sources)) {
+	g_gains[id] = gain;
+	for (source_base& source : deref(g_sources)) {
 		if (source.classes()[id]) {
 			source.set_gain(source.gain());
 		}
@@ -186,29 +186,29 @@ void tr::audio::thread_fn(std::stop_token stoken)
 	TR_LOG(log, tr::severity::INFO, "Launched audio thread.");
 	while (!stoken.stop_requested()) {
 		try {
-			std::lock_guard lock{mutex};
+			std::lock_guard lock{g_mutex};
 
-			for (auto buffer_it = buffers.begin(); buffer_it != buffers.end();) {
+			for (auto buffer_it = g_buffers.begin(); buffer_it != g_buffers.end();) {
 				auto& [buffer, cullable]{*buffer_it};
 				const auto using_buffer{[&](auto& s) { return s->buffer() == buffer; }};
 
-				if (cullable && std::ranges::none_of(sources, using_buffer)) {
+				if (cullable && std::ranges::none_of(g_sources, using_buffer)) {
 					TR_AL_CALL(alDeleteBuffers, 1, &buffer);
-					buffer_it = buffers.erase(buffer_it);
+					buffer_it = g_buffers.erase(buffer_it);
 				}
 				else {
 					++buffer_it;
 				}
 			}
 
-			for (std::list<std::shared_ptr<source_base>>::iterator it = sources.begin(); it != sources.end();) {
+			for (std::list<std::shared_ptr<source_base>>::iterator it = g_sources.begin(); it != g_sources.end();) {
 				source_base& source{**it};
 
 				if (it->use_count() == 1 && source.state() != state::PLAYING) {
 					const auto using_source{[&](command& command) { return command.source() == *it; }};
 
-					commands.remove_if(using_source);
-					it = sources.erase(it);
+					g_commands.remove_if(using_source);
+					it = g_sources.erase(it);
 					continue;
 				}
 
@@ -238,10 +238,10 @@ void tr::audio::thread_fn(std::stop_token stoken)
 				++it;
 			}
 
-			for (std::list<command>::iterator it = commands.begin(); it != commands.end();) {
+			for (std::list<command>::iterator it = g_commands.begin(); it != g_commands.end();) {
 				it->execute();
 				if (it->done()) {
-					it = commands.erase(it);
+					it = g_commands.erase(it);
 				}
 				else {
 					++it;

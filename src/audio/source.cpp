@@ -17,14 +17,14 @@ unsigned int tr::audio::source_base::buffer() const
 void tr::audio::source_base::lock_audio_mutex() const
 {
 	if (m_mutex_refc++ == 0) {
-		mutex.lock();
+		g_mutex.lock();
 	}
 }
 
 void tr::audio::source_base::unlock_audio_mutex() const
 {
 	if (--m_mutex_refc == 0) {
-		mutex.unlock();
+		g_mutex.unlock();
 	}
 }
 
@@ -43,15 +43,15 @@ tr::audio::source::source(int priority)
 {
 	TR_ASSERT(can_allocate_source(priority), "Tried to allocate more than the maximum allowed number of sources at the same time.");
 
-	std::lock_guard lock{mutex};
-	if (sources.size() == max_sources) {
-		auto it{std::ranges::find_if(sources, [&](auto& s) { return s.use_count() == 1 && s->priority() <= priority; })};
-		sources.erase(it);
+	std::lock_guard lock{g_mutex};
+	if (g_sources.size() == g_max_sources) {
+		auto it{std::ranges::find_if(g_sources, [&](auto& s) { return s.use_count() == 1 && s->priority() <= priority; })};
+		g_sources.erase(it);
 	}
-	auto it{std::ranges::find_if(sources, [&](auto& s) { return s->priority() < priority; })};
-	it = sources.emplace(it, std::make_shared<source_base>(priority));
-	if (!thread.joinable()) {
-		thread = std::jthread{thread_fn};
+	auto it{std::ranges::find_if(g_sources, [&](auto& s) { return s->priority() < priority; })};
+	it = g_sources.emplace(it, std::make_shared<source_base>(priority));
+	if (!g_thread.joinable()) {
+		g_thread = std::jthread{thread_fn};
 	}
 	m_base = *it;
 }
@@ -199,7 +199,7 @@ void tr::audio::source::set_pitch(float pitch)
 void tr::audio::source::set_pitch(float pitch, fsecs time)
 {
 	m_base->lock_audio_mutex();
-	commands.emplace_back(m_base, command::type::PITCH, this->pitch(), pitch, duration_cast<duration>(time));
+	g_commands.emplace_back(m_base, command::type::PITCH, this->pitch(), pitch, duration_cast<duration>(time));
 	m_base->unlock_audio_mutex();
 }
 
@@ -220,7 +220,7 @@ void tr::audio::source_base::set_gain(float gain)
 	m_gain = gain;
 	for (int i = 0; i < 32; ++i) {
 		if (m_classes[i]) {
-			gain *= gains[i];
+			gain *= g_gains[i];
 		}
 	}
 	TR_AL_CALL(alSourcef, m_id, AL_GAIN, std::max(gain, 0.0f));
@@ -234,7 +234,7 @@ void tr::audio::source::set_gain(float gain)
 void tr::audio::source::set_gain(float gain, fsecs time)
 {
 	m_base->lock_audio_mutex();
-	commands.emplace_back(m_base, command::type::GAIN, this->gain(), gain, duration_cast<duration>(time));
+	g_commands.emplace_back(m_base, command::type::GAIN, this->gain(), gain, duration_cast<duration>(time));
 	m_base->unlock_audio_mutex();
 }
 
@@ -265,7 +265,7 @@ void tr::audio::source::set_max_dist(float max_dist)
 void tr::audio::source::set_max_dist(float max_dist, fsecs time)
 {
 	m_base->lock_audio_mutex();
-	commands.emplace_back(m_base, command::type::MAX_DIST, this->max_dist(), max_dist, duration_cast<duration>(time));
+	g_commands.emplace_back(m_base, command::type::MAX_DIST, this->max_dist(), max_dist, duration_cast<duration>(time));
 	m_base->unlock_audio_mutex();
 }
 
@@ -296,7 +296,7 @@ void tr::audio::source::set_rolloff(float rolloff)
 void tr::audio::source::set_rolloff(float rolloff, fsecs time)
 {
 	m_base->lock_audio_mutex();
-	commands.emplace_back(m_base, command::type::ROLLOFF, this->rolloff(), rolloff, duration_cast<duration>(time));
+	g_commands.emplace_back(m_base, command::type::ROLLOFF, this->rolloff(), rolloff, duration_cast<duration>(time));
 	m_base->unlock_audio_mutex();
 }
 
@@ -327,7 +327,7 @@ void tr::audio::source::set_ref_dist(float ref_dist)
 void tr::audio::source::set_ref_dist(float ref_dist, fsecs time)
 {
 	m_base->lock_audio_mutex();
-	commands.emplace_back(m_base, command::type::REF_DIST, this->ref_dist(), ref_dist, duration_cast<duration>(time));
+	g_commands.emplace_back(m_base, command::type::REF_DIST, this->ref_dist(), ref_dist, duration_cast<duration>(time));
 	m_base->unlock_audio_mutex();
 }
 
@@ -358,7 +358,7 @@ void tr::audio::source::set_out_cone_gain(float out_cone_gain)
 void tr::audio::source::set_out_cone_gain(float out_cone_gain, fsecs time)
 {
 	m_base->lock_audio_mutex();
-	commands.emplace_back(m_base, command::type::OUT_CONE_GAIN, this->out_cone_gain(), out_cone_gain, duration_cast<duration>(time));
+	g_commands.emplace_back(m_base, command::type::OUT_CONE_GAIN, this->out_cone_gain(), out_cone_gain, duration_cast<duration>(time));
 	m_base->unlock_audio_mutex();
 }
 
@@ -407,8 +407,8 @@ void tr::audio::source::set_cone_w(tr::angle in_cone_w, tr::angle out_cone_w)
 void tr::audio::source::set_cone_w(tr::angle in_cone_w, tr::angle out_cone_w, fsecs time)
 {
 	m_base->lock_audio_mutex();
-	commands.emplace_back(m_base, command::type::CONE_W, glm::vec2{this->in_cone_w().rads(), this->out_cone_w().rads()},
-						  glm::vec2{in_cone_w.rads(), out_cone_w.rads()}, duration_cast<duration>(time));
+	g_commands.emplace_back(m_base, command::type::CONE_W, glm::vec2{this->in_cone_w().rads(), this->out_cone_w().rads()},
+							glm::vec2{in_cone_w.rads(), out_cone_w.rads()}, duration_cast<duration>(time));
 	m_base->unlock_audio_mutex();
 }
 
@@ -439,7 +439,7 @@ void tr::audio::source::set_pos(const glm::vec3& pos)
 void tr::audio::source::set_pos(const glm::vec3& pos, fsecs time)
 {
 	m_base->lock_audio_mutex();
-	commands.emplace_back(m_base, command::type::POS, this->pos(), pos, duration_cast<duration>(time));
+	g_commands.emplace_back(m_base, command::type::POS, this->pos(), pos, duration_cast<duration>(time));
 	m_base->unlock_audio_mutex();
 }
 
@@ -470,7 +470,7 @@ void tr::audio::source::set_vel(const glm::vec3& vel)
 void tr::audio::source::set_vel(const glm::vec3& vel, fsecs time)
 {
 	m_base->lock_audio_mutex();
-	commands.emplace_back(m_base, command::type::VEL, this->vel(), vel, duration_cast<duration>(time));
+	g_commands.emplace_back(m_base, command::type::VEL, this->vel(), vel, duration_cast<duration>(time));
 	m_base->unlock_audio_mutex();
 }
 
@@ -501,7 +501,7 @@ void tr::audio::source::set_dir(const glm::vec3& dir)
 void tr::audio::source::set_dir(const glm::vec3& dir, fsecs time)
 {
 	m_base->lock_audio_mutex();
-	commands.emplace_back(m_base, command::type::DIR, this->dir(), dir, duration_cast<duration>(time));
+	g_commands.emplace_back(m_base, command::type::DIR, this->dir(), dir, duration_cast<duration>(time));
 	m_base->unlock_audio_mutex();
 }
 
@@ -823,11 +823,11 @@ void tr::audio::source::set_looping(bool value)
 
 bool tr::audio::can_allocate_source(int priority)
 {
-	if (sources.size() < max_sources) {
+	if (g_sources.size() < g_max_sources) {
 		return true;
 	}
-	const auto it{std::ranges::find_if(sources, [&](auto& s) { return s.use_count() == 1 && s->priority() <= priority; })};
-	return it != sources.end();
+	const auto it{std::ranges::find_if(g_sources, [&](auto& s) { return s.use_count() == 1 && s->priority() <= priority; })};
+	return it != g_sources.end();
 }
 
 std::optional<tr::audio::source> tr::audio::try_allocating_source(int priority)

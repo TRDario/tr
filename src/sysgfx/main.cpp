@@ -45,8 +45,8 @@ std::string_view tr::sys::init_error::details() const
 
 void tr::sys::set_app_information(cstring_view developer, cstring_view name, cstring_view version)
 {
-	app_developer = developer;
-	app_name = name;
+	g_app_developer = developer;
+	g_app_name = name;
 	SDL_SetAppMetadata(name, version, nullptr);
 }
 

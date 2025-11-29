@@ -161,19 +161,19 @@ namespace tr::audio {
 	};
 
 	// Map holding the IDs of extant audio buffers and whether the're cullable.
-	inline std::unordered_map<unsigned int, bool> buffers;
+	inline std::unordered_map<unsigned int, bool> g_buffers;
 	// The maximum allowed number of audio sources.
-	inline usize max_sources;
+	inline usize g_max_sources;
 	// A list of active audio sources.
-	inline std::list<std::shared_ptr<source_base>> sources;
+	inline std::list<std::shared_ptr<source_base>> g_sources;
 	// The gain multipliers of audio classes.
-	inline std::array<float, 32> gains;
+	inline std::array<float, 32> g_gains;
 	// A list of active audio commands.
-	inline std::list<command> commands;
+	inline std::list<command> g_commands;
 	// The audio mutex.
-	inline std::mutex mutex;
+	inline std::mutex g_mutex;
 	// The audio thread.
-	inline std::jthread thread;
+	inline std::jthread g_thread;
 
 	// Function used by the audio thread.
 	void thread_fn(std::stop_token stoken);

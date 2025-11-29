@@ -10,9 +10,9 @@ tr::audio::buffer::buffer()
 		throw out_of_memory{"audio buffer allocation"};
 	}
 	m_id.reset(id);
-	buffers.emplace(id, false);
-	if (!thread.joinable()) {
-		thread = std::jthread{thread_fn};
+	g_buffers.emplace(id, false);
+	if (!g_thread.joinable()) {
+		g_thread = std::jthread{thread_fn};
 	}
 }
 
@@ -24,7 +24,7 @@ tr::audio::buffer::buffer(std::span<const i16> data, format format, int frequenc
 
 void tr::audio::buffer::deleter::operator()(unsigned int id) const
 {
-	buffers.at(id) = true;
+	g_buffers.at(id) = true;
 }
 
 tr::usize tr::audio::buffer::size() const

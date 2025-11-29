@@ -245,7 +245,7 @@ tr::gfx::texture tr::gfx::texture::reallocate(glm::ivec2 size, bool mipmapped, p
 	m_size = size;
 
 	for (int i = 0; i < 80; ++i) {
-		if (texture_unit_textures[i] == *this) {
+		if (g_texture_unit_textures[i] == *this) {
 			TR_GL_CALL(glBindTextures, i, 1, &m_handle);
 		}
 	}
@@ -439,8 +439,8 @@ tr::gfx::render_texture::render_texture(const sub_bitmap& bitmap, bool mipmapped
 
 tr::gfx::render_texture::~render_texture()
 {
-	if (!empty() && current_render_target.has_value() && current_render_target->m_fbo == m_fbo.get()) {
-		current_render_target.reset();
+	if (!empty() && g_current_render_target.has_value() && g_current_render_target->m_fbo == m_fbo.get()) {
+		g_current_render_target.reset();
 	}
 }
 

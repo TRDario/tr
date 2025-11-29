@@ -62,9 +62,9 @@ std::string tr::gfx::vertex_format::label() const
 
 tr::gfx::vertex_format& tr::gfx::vertex2_format()
 {
-	if (!vertex2_format_.has_value()) {
-		vertex2_format_.emplace(VERTEX2_ATTRIBUTES);
-		TR_SET_LABEL(*vertex2_format_, "(tr) 2D Vertex Format");
+	if (!g_vertex2_format.has_value()) {
+		g_vertex2_format.emplace(VERTEX2_ATTRIBUTES);
+		TR_SET_LABEL(*g_vertex2_format, "(tr) 2D Vertex Format");
 	}
-	return *vertex2_format_;
+	return *g_vertex2_format;
 }

@@ -45,8 +45,8 @@ tr::u8 tr::sys::max_msaa()
 			}
 		}
 
-		if (gfx::ogl_context != nullptr) {
-			SDL_GL_MakeCurrent(sdl_window, gfx::ogl_context);
+		if (gfx::g_ogl_context != nullptr) {
+			SDL_GL_MakeCurrent(g_sdl_window, gfx::g_ogl_context);
 		}
 	}
 	return max;

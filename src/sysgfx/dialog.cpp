@@ -99,10 +99,10 @@ tr::sys::message_box_button tr::sys::show_message_box(message_box_type type, mes
 void tr::sys::show_fatal_error_message_box(const std::exception& exception)
 {
 	if (dynamic_cast<const std::bad_alloc*>(&exception) || dynamic_cast<const out_of_memory*>(&exception)) {
-		emergency_buffer.reset();
+		g_emergency_buffer.reset();
 	}
 
-	const std::string title{!app_name.empty() ? TR_FMT::format("{} - Fatal Error", app_name) : "Fatal Error"};
+	const std::string title{!g_app_name.empty() ? TR_FMT::format("{} - Fatal Error", g_app_name) : "Fatal Error"};
 
 	const tr::exception* tr_exception{dynamic_cast<const tr::exception*>(&exception)};
 	std::string message;
