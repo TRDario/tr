@@ -71,6 +71,7 @@ if(TR_BUILD_SYSGFX)
 		src/sysgfx/shader_buffer.cpp
 		src/sysgfx/shader_pipeline.cpp
 		src/sysgfx/shader.cpp
+		src/sysgfx/state_machine.cpp
 		src/sysgfx/texture.cpp
 		src/sysgfx/uniform_buffer.cpp
 		src/sysgfx/vertex_buffer.cpp

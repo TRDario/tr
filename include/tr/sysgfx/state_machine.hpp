@@ -6,33 +6,34 @@ namespace tr {
 		class event;
 	}
 
-	inline constexpr struct drop_state_t {
-	} DROP_STATE; // Special return value signalling the state machine to drop the current state.
-	inline constexpr struct keep_state_t {
-	} KEEP_STATE; // Special return value signalling the state machine to keep the current state.
-	// Alias template for the return type of state functions.
-	template <class... States> using next_state = std::variant<drop_state_t, keep_state_t, States...>;
+	// The base state type.
+	struct state {
+		// Virtual destructor.
+		virtual ~state() noexcept = default;
 
-	// Static machine manager class.
-	// States may define any of handle_event(), tick(), update() or draw(), which will then be called by the state machine when needed.
-	// Defaults are provided in case any of these are not provided.
-	template <class... States> class state_machine {
-	  public:
-		// The type that states should return from handle_event, tick and update.
-		using next_state = tr::next_state<States...>;
+		// Handles an event.
+		virtual std::optional<std::unique_ptr<state>> handle_event(const tr::sys::event& event);
+		// Does a fixed 'tick' update on the state.
+		virtual std::optional<std::unique_ptr<state>> tick();
+		// Does a delta-time update on the state.
+		virtual std::optional<std::unique_ptr<state>> update(tr::duration delta);
+		// Draws the state.
+		virtual void draw();
+	};
+	// Sentinel indicating that the current state should be kept.
+	inline constexpr std::nullopt_t KEEP_STATE{std::nullopt};
+	// Sentinel indicating that the current state should be dropped.
+	inline constexpr std::nullptr_t DROP_STATE{};
 
+	// State machine manager class.
+	class state_machine {
 		// Constructs an empty state machine.
 		state_machine() = default;
 
 		// Checks whether the state machine is in an empty states.
 		bool empty() const;
-		// Checks whether the state machine is in a particular state.
-		template <one_of<States...> T> bool is() const;
-		// Gets a reference to the current state.
-		template <one_of<States...> T> const T& get() const;
-		// Visits the state machine.
-		template <class Visitor> auto visit(Visitor&& visitor) const;
-
+		// Gets access to the current state.
+		template <std::derived_from<state> T> const T& get() const;
 		// Gets the tick benchmark.
 		const tr::benchmark& tick_benchmark() const;
 		// Gets the update benchmark.
@@ -43,13 +44,11 @@ namespace tr {
 		// Clears the state machine.
 		void clear();
 		// Emplaces a state.
-		template <class T, class... Args>
+		template <std::derived_from<state> T, class... Args>
 			requires(std::constructible_from<T, Args...>)
-		T& emplace(Args&&... args);
-		// Gets a reference to the current state.
-		template <one_of<States...> T> T& get();
-		// Visits the state machine.
-		template <class Visitor> auto visit(Visitor&& visitor);
+		void emplace(Args&&... args);
+		// Gets access to the current state.
+		template <std::derived_from<state> T> T& get();
 
 		// Handles an event.
 		void handle_event(const tr::sys::event& event);
@@ -61,21 +60,44 @@ namespace tr {
 		void draw();
 
 	  private:
-		// The base state variant.
-		std::variant<std::monostate, States...> m_current_state;
+		// The currently held state.
+		std::unique_ptr<state> m_current_state;
 		// Benchmark measuring the tick times.
 		benchmark m_tick_benchmark;
 		// Benchmark measuring the update times.
 		benchmark m_update_benchmark;
 		// Benchmark measuring the drawing times.
 		benchmark m_draw_benchmark;
-
-		struct next_state_assigner;
-		struct event_handler;
-		struct tick_handler;
-		struct update_handler;
-		struct draw_handler;
 	};
 } // namespace tr
 
-#include "state_machine_impl.hpp" // IWYU pragma: keep
+////////////////////////////////////////////////////////////// IMPLEMENTATION /////////////////////////////////////////////////////////////
+
+template <std::derived_from<tr::state> T> const T& tr::state_machine::get() const
+{
+	return static_cast<const T&>(*m_current_state);
+}
+
+template <std::derived_from<tr::state> T, class... Args>
+	requires(std::constructible_from<T, Args...>)
+void tr::state_machine::emplace(Args&&... args)
+{
+	m_current_state = std::make_unique<T>(std::forward<Args>(args)...);
+}
+
+template <std::derived_from<tr::state> T> T& tr::state_machine::get()
+{
+	return static_cast<T&>(*m_current_state);
+}
+
+template <class R, class P> void tr::state_machine::update(std::chrono::duration<R, P> delta)
+{
+	if (m_current_state != nullptr) {
+		m_update_benchmark.start();
+		std::optional<std::unique_ptr<state>> next{m_current_state->update(std::chrono::duration_cast<duration>(delta))};
+		m_update_benchmark.stop();
+		if (next.has_value()) {
+			m_current_state = *std::move(next);
+		}
+	}
+}
