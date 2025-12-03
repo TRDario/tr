@@ -27,6 +27,7 @@ namespace tr {
 
 	// State machine manager class.
 	class state_machine {
+	  public:
 		// Constructs an empty state machine.
 		state_machine() = default;
 
