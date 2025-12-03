@@ -3,11 +3,6 @@
 #include "../../include/tr/sysgfx/impl.hpp"
 #include <SDL3/SDL.h>
 
-namespace tr::sys {
-	// Cursor graphic reset timer needed as a workaround for an SDL bug.
-	std::optional<timer> g_cursor_reset_timer;
-} // namespace tr::sys
-
 void tr::sys::set_mouse_relative_mode(bool relative)
 {
 	TR_ASSERT(g_sdl_window != nullptr, "Tried to set mouse relative mode state before opening the window.");
@@ -17,6 +12,7 @@ void tr::sys::set_mouse_relative_mode(bool relative)
 		TR_LOG_CONTINUE(log, "{}", SDL_GetError());
 	}
 
+#ifdef _WIN32
 	if (relative && !g_cursor_reset_timer.has_value()) {
 		// Workaround for an SDL bug where the cursor does not properly disappear sometimes in relative mode.
 		g_cursor_reset_timer.emplace(std::chrono::seconds{1}, [] {
@@ -37,6 +33,7 @@ void tr::sys::set_mouse_relative_mode(bool relative)
 	else if (!relative) {
 		g_cursor_reset_timer.reset();
 	}
+#endif
 }
 
 void tr::sys::set_mouse_captured(bool captured)

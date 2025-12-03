@@ -136,6 +136,10 @@ extern "C"
 		catch (std::exception& err) {
 			tr::sys::show_fatal_error_message_box(err);
 		}
+#ifdef _WIN32
+		tr::sys::g_cursor_reset_timer.reset();
+#endif
+		tr::sys::g_tick_timer.reset();
 		TTF_Quit();
 		SDL_Quit();
 	}

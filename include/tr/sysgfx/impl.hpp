@@ -17,6 +17,11 @@ namespace tr::sys {
 
 	// Pointer to the SDL window.
 	inline SDL_Window* g_sdl_window{nullptr};
+
+#ifdef _WIN32
+	// Cursor graphic reset timer needed as a workaround for an SDL bug.
+	inline std::optional<timer> g_cursor_reset_timer;
+#endif
 } // namespace tr::sys
 
 namespace tr::gfx {
