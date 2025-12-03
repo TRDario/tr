@@ -5,6 +5,10 @@ namespace tr {
 	namespace sys {
 		class event;
 	}
+	struct state;
+
+	// Shorthand for the return type of most state functions: the pointer to the next state, KEEP_STATE, or DROP_STATE.
+	using next_state = std::optional<std::unique_ptr<state>>;
 
 	// The base state type.
 	struct state {
@@ -12,11 +16,11 @@ namespace tr {
 		virtual ~state() noexcept = default;
 
 		// Handles an event.
-		virtual std::optional<std::unique_ptr<state>> handle_event(const tr::sys::event& event);
+		virtual next_state handle_event(const tr::sys::event& event);
 		// Does a fixed 'tick' update on the state.
-		virtual std::optional<std::unique_ptr<state>> tick();
+		virtual next_state tick();
 		// Does a delta-time update on the state.
-		virtual std::optional<std::unique_ptr<state>> update(tr::duration delta);
+		virtual next_state update(tr::duration delta);
 		// Draws the state.
 		virtual void draw();
 	};
@@ -95,9 +99,9 @@ template <class R, class P> void tr::state_machine::update(std::chrono::duration
 {
 	if (m_current_state != nullptr) {
 		m_update_benchmark.start();
-		std::optional<std::unique_ptr<state>> next{m_current_state->update(std::chrono::duration_cast<duration>(delta))};
+		next_state next{m_current_state->update(std::chrono::duration_cast<duration>(delta))};
 		m_update_benchmark.stop();
-		if (next.has_value()) {
+		if (next != KEEP_STATE) {
 			m_current_state = *std::move(next);
 		}
 	}

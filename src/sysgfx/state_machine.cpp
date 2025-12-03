@@ -1,16 +1,16 @@
 #include "../../include/tr/sysgfx/state_machine.hpp"
 
-std::optional<std::unique_ptr<tr::state>> tr::state::handle_event(const sys::event&)
+tr::next_state tr::state::handle_event(const sys::event&)
 {
 	return KEEP_STATE;
 }
 
-std::optional<std::unique_ptr<tr::state>> tr::state::tick()
+tr::next_state tr::state::tick()
 {
 	return KEEP_STATE;
 }
 
-std::optional<std::unique_ptr<tr::state>> tr::state::update(duration)
+tr::next_state tr::state::update(duration)
 {
 	return KEEP_STATE;
 }
@@ -51,8 +51,8 @@ void tr::state_machine::clear()
 void tr::state_machine::handle_event(const sys::event& event)
 {
 	if (m_current_state != nullptr) {
-		std::optional<std::unique_ptr<tr::state>> next{m_current_state->handle_event(event)};
-		if (next.has_value()) {
+		next_state next{m_current_state->handle_event(event)};
+		if (next != KEEP_STATE) {
 			m_current_state = *std::move(next);
 		}
 	}
@@ -62,9 +62,9 @@ void tr::state_machine::tick()
 {
 	if (m_current_state != nullptr) {
 		m_tick_benchmark.start();
-		std::optional<std::unique_ptr<tr::state>> next{m_current_state->tick()};
+		next_state next{m_current_state->tick()};
 		m_tick_benchmark.stop();
-		if (next.has_value()) {
+		if (next != KEEP_STATE) {
 			m_current_state = *std::move(next);
 		}
 	}
