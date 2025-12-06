@@ -62,9 +62,7 @@ tr::gfx::renderer_2d::staggered_draw_manager& tr::gfx::renderer_2d::staggered_dr
 
 void tr::gfx::renderer_2d::staggered_draw_manager::draw_layer(int layer, const render_target& target)
 {
-	if (m_renderer == nullptr) {
-		return;
-	}
+	TR_ASSERT(m_renderer != nullptr, "Tried to draw a layer from a moved-from 2D renderer staggered draw manager.");
 
 	const auto range{std::ranges::equal_range(m_range, layer, std::less{}, &mesh::layer)};
 	if (range.empty()) {
@@ -90,7 +88,9 @@ void tr::gfx::renderer_2d::staggered_draw_manager::draw_layer(int layer, const r
 
 void tr::gfx::renderer_2d::staggered_draw_manager::draw(const render_target& target)
 {
-	if (m_renderer == nullptr || m_range.empty()) {
+	TR_ASSERT(m_renderer != nullptr, "Tried to draw from a moved-from 2D renderer staggered draw manager.");
+
+	if (m_range.empty()) {
 		return;
 	};
 

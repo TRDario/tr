@@ -47,8 +47,7 @@ tr::gfx::circle_renderer::staggered_draw_manager& tr::gfx::circle_renderer::stag
 
 void tr::gfx::circle_renderer::staggered_draw_manager::draw_layer(int layer, const render_target& target)
 {
-	setup_context();
-	set_render_target(target);
+	TR_ASSERT(m_renderer != nullptr, "Tried to draw a layer from a moved-from circle renderer staggered draw manager.");
 
 	const auto it{m_renderer->m_layers.find(layer)};
 	if (it == m_renderer->m_layers.end()) {
@@ -58,6 +57,8 @@ void tr::gfx::circle_renderer::staggered_draw_manager::draw_layer(int layer, con
 	const circle_renderer::layer& info{it->second};
 	const ssize offset{std::accumulate(m_range.begin(), it, 0_z, [](ssize sum, auto& pair) { return sum + pair.second.circles.size(); })};
 
+	setup_context();
+	set_render_target(target);
 	setup_draw_call_state(info.transform.has_value() ? *info.transform : m_renderer->m_default_transform, info.blend_mode);
 	set_vertex_buffer(m_renderer->m_shader_circles, 1, offset);
 	draw_instances(primitive::TRI_FAN, 0, 4, info.circles.size());
@@ -65,6 +66,12 @@ void tr::gfx::circle_renderer::staggered_draw_manager::draw_layer(int layer, con
 
 void tr::gfx::circle_renderer::staggered_draw_manager::draw(const render_target& target)
 {
+	TR_ASSERT(m_renderer != nullptr, "Tried to draw from a moved-from circle renderer staggered draw manager.");
+
+	if (m_range.empty()) {
+		return;
+	}
+
 	setup_context();
 	set_render_target(target);
 
