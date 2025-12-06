@@ -50,7 +50,10 @@ namespace tr::gfx {
 	};
 
 	class renderer_2d {
+	  private:
 	  public:
+		class staggered_draw_manager;
+
 		renderer_2d();
 
 		// Sets the default transformation matrix used by primitives on any layer without its own default transform.
@@ -106,10 +109,15 @@ namespace tr::gfx {
 		// Allocates a new color line mesh.
 		color_mesh_ref new_line_mesh(int layer, usize vertices, usize indices, const glm::mat4& mat, const blend_mode& blend_mode);
 
+		// Prepares a staggered draw manager for all layers in a priority range. The renderer is "locked" and can't be interacted with while
+		// this manager exists.
+		staggered_draw_manager prepare_staggered_draw_range(int min_layer, int max_layer);
+		// Prepares a staggered draw manager. The renderer is "locked" and can't be interacted with while this manager exists.
+		staggered_draw_manager prepare_staggered_draw();
 		// Draws a layer to a rendering target.
 		void draw_layer(int layer, const render_target& target = backbuffer_render_target());
-		// Draws all layers of priority <= max_layer to a rendering target.
-		void draw_up_to_layer(int max_layer, const render_target& target = backbuffer_render_target());
+		// Draws all layers in a priority range to a rendering target.
+		void draw_layer_range(int min_layer, int max_layer, const render_target& target = backbuffer_render_target());
 		// Draws all added primitives to a rendering target.
 		void draw(const render_target& target = backbuffer_render_target());
 
@@ -141,13 +149,6 @@ namespace tr::gfx {
 			// The indices of the mesh.
 			std::vector<u16> indices;
 		};
-		// Mesh drawing information.
-		struct mesh_draw_info {
-			// Starting offset within the vertex buffer.
-			usize vertex_offset;
-			// Starting offset within the index buffer.
-			usize index_offset;
-		};
 
 		// Global default transform.
 		glm::mat4 m_default_transform{1.0f};
@@ -169,17 +170,57 @@ namespace tr::gfx {
 		glm::mat4 m_last_transform{1.0f};
 		// Last used blending mode.
 		blend_mode m_last_blend_mode{ALPHA_BLENDING};
+#ifdef TR_ENABLE_ASSERTS
+		// Flag that is set to true when a staggered draw is ongoing.
+		bool m_locked{false};
+#endif
 
 		// Finds an appropriate mesh.
 		mesh& find_mesh(int layer, primitive type, texture_ref texture, const glm::mat4& mat, const blend_mode& blend_mode,
 						usize space_needed);
+	};
+
+	// Manager class to which the 2D renderer delegates handling a staggered drawing process.
+	class renderer_2d::staggered_draw_manager {
+	  public:
+		staggered_draw_manager(staggered_draw_manager&& r) noexcept;
+		// Cleans up the drawing data and unlocks the parent renderer.
+		~staggered_draw_manager();
+
+		staggered_draw_manager& operator=(staggered_draw_manager&& r) noexcept;
+
+		// Draws a single layer.
+		void draw_layer(int layer, const render_target& target);
+		// Draws everything.
+		void draw(const render_target& target);
+
+	  private:
+		// Mesh drawing information.
+		struct mesh_draw_info {
+			// Starting offset within the vertex buffer.
+			usize vertex_offset;
+			// Starting offset within the index buffer.
+			usize index_offset;
+		};
+
+		// Reference to the parent renderer.
+		renderer_2d* m_renderer;
+		// The range of meshes to draw.
+		std::ranges::subrange<std::vector<mesh>::iterator> m_range;
+		// The drawing data.
+		std::vector<mesh_draw_info> m_data;
+
+		// Creates a staggered draw manager.
+		staggered_draw_manager(renderer_2d& renderer, std::ranges::subrange<std::vector<mesh>::iterator> range);
+
 		// Sets up the graphical context for drawing.
 		void setup_context();
-		// Uploads meshes to the GPU buffers.
-		std::vector<mesh_draw_info> upload_meshes(std::vector<mesh>::iterator first, std::vector<mesh>::iterator last);
 		// Sets up the graphical context for a specific draw call.
 		void setup_draw_call_state(texture_ref texture, const glm::mat4& transform, const blend_mode& blend_mode);
-		// Draws meshes.
-		void draw(std::vector<mesh>::iterator first, std::vector<mesh>::iterator last, const render_target& target);
+
+		// Cleans up the drawing data and unlocks the parent renderer.
+		void clean_up();
+
+		friend class renderer_2d;
 	};
 } // namespace tr::gfx

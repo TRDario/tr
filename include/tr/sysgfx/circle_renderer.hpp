@@ -8,6 +8,8 @@ namespace tr::gfx {
 	// Efficient circle renderer.
 	class circle_renderer {
 	  public:
+		class staggered_draw_manager;
+
 		// Initializes the circle renderer.
 		circle_renderer(float render_scale = 1.0f);
 
@@ -27,10 +29,15 @@ namespace tr::gfx {
 		// Adds an outlined circle to the renderer.
 		void add_outlined_circle(int layer, const circle& circle, float outline_thickness, rgba8 fill_color, rgba8 outline_color);
 
+		// Prepares a staggered draw manager for all layers in a priority range. The renderer is "locked" and can't be interacted with while
+		// this manager exists.
+		staggered_draw_manager prepare_staggered_draw_range(int min_layer, int max_layer);
+		// Prepares a staggered draw manager. The renderer is "locked" and can't be interacted with while this manager exists.
+		staggered_draw_manager prepare_staggered_draw();
 		// Draws a layer to a rendering target.
 		void draw_layer(int layer, const render_target& target = backbuffer_render_target());
-		// Draws all layers of priority <= max_layer to a rendering target.
-		void draw_up_to_layer(int max_layer, const render_target& target = backbuffer_render_target());
+		// Draws all layers in a priority range to a rendering target.
+		void draw_layer_range(int min_layer, int max_layer, const render_target& target = backbuffer_render_target());
 		// Draws all added circles to a rendering target.
 		void draw(const render_target& target = backbuffer_render_target());
 
@@ -74,12 +81,43 @@ namespace tr::gfx {
 		glm::mat4 m_last_transform{1.0f};
 		// Last used blending mode.
 		blend_mode m_last_blend_mode{ALPHA_BLENDING};
+#ifdef TR_ENABLE_ASSERTS
+		// Flag that is set to true when a staggered draw is ongoing.
+		bool m_locked{false};
+#endif
+	};
+
+	// Manager class to which the circle renderer delegates handling a staggered drawing process.
+	class circle_renderer::staggered_draw_manager {
+	  public:
+		staggered_draw_manager(staggered_draw_manager&& r) noexcept;
+		// Cleans up the drawing data and unlocks the parent renderer.
+		~staggered_draw_manager();
+
+		staggered_draw_manager& operator=(staggered_draw_manager&& r) noexcept;
+
+		// Draws a single layer.
+		void draw_layer(int layer, const render_target& target);
+		// Draws everything.
+		void draw(const render_target& target);
+
+	  private:
+		// Reference to the parent renderer.
+		circle_renderer* m_renderer;
+		// The range of circles to draw.
+		std::ranges::subrange<std::map<int, layer>::iterator> m_range;
+
+		// Creates a staggered draw manager.
+		staggered_draw_manager(circle_renderer& renderer, std::ranges::subrange<std::map<int, layer>::iterator> range);
 
 		// Sets up the graphical context for drawing.
 		void setup_context();
 		// Sets up the graphical context for a specific draw call.
 		void setup_draw_call_state(const glm::mat4& transform, const blend_mode& blend_mode);
-		// Draws layers.
-		void draw_layers(std::map<int, layer>::iterator first, std::map<int, layer>::iterator last, const render_target& target);
+
+		// Cleans up the drawing data and unlocks the parent renderer.
+		void clean_up();
+
+		friend class circle_renderer;
 	};
 } // namespace tr::gfx

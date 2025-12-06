@@ -1,10 +1,7 @@
 #include "../../include/tr/sysgfx/renderer_2d.hpp"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
-#include "../../include/tr/sysgfx/index_buffer.hpp"
 #include "../../include/tr/sysgfx/shader_pipeline.hpp"
 #include "../../include/tr/sysgfx/texture.hpp"
-#include "../../include/tr/sysgfx/vertex_buffer.hpp"
-#include "../../include/tr/sysgfx/vertex_format.hpp"
 
 namespace tr::gfx {
 	// Untextured UV sentinel.
@@ -43,21 +40,29 @@ tr::gfx::renderer_2d::renderer_2d()
 
 void tr::gfx::renderer_2d::set_default_transform(const glm::mat4& mat)
 {
+	TR_ASSERT(!m_locked, "Tried to set default transform of locked 2D renderer.");
+
 	m_default_transform = mat;
 }
 
 void tr::gfx::renderer_2d::set_default_layer_texture(int layer, texture_ref texture)
 {
+	TR_ASSERT(!m_locked, "Tried to set default layer texture of locked 2D renderer.");
+
 	m_layer_defaults[layer].texture = std::move(texture);
 }
 
 void tr::gfx::renderer_2d::set_default_layer_transform(int layer, const glm::mat4& mat)
 {
+	TR_ASSERT(!m_locked, "Tried to set default layer transform of locked 2D renderer.");
+
 	m_layer_defaults[layer].transform = mat;
 }
 
 void tr::gfx::renderer_2d::set_default_layer_blend_mode(int layer, const blend_mode& blend_mode)
 {
+	TR_ASSERT(!m_locked, "Tried to set default layer blending mode of locked 2D renderer.");
+
 	m_layer_defaults[layer].blend_mode = blend_mode;
 }
 
@@ -79,6 +84,8 @@ tr::gfx::simple_color_mesh_ref tr::gfx::renderer_2d::new_color_fan(int layer, us
 tr::gfx::simple_color_mesh_ref tr::gfx::renderer_2d::new_color_fan(int layer, usize vertices, const glm::mat4& mat,
 																   const blend_mode& blend_mode)
 {
+	TR_ASSERT(!m_locked, "Tried to allocate a new color fan on a locked 2D renderer.");
+
 	mesh& mesh{find_mesh(layer, primitive::TRIS, std::nullopt, mat, blend_mode, vertices)};
 	const u16 base_index{u16(mesh.positions.size())};
 	const usize indices{polygon_indices(vertices)};
@@ -115,6 +122,8 @@ tr::gfx::simple_color_mesh_ref tr::gfx::renderer_2d::new_color_outline(int layer
 tr::gfx::simple_color_mesh_ref tr::gfx::renderer_2d::new_color_outline(int layer, usize polygon_vertices, const glm::mat4& mat,
 																	   const blend_mode& blend_mode)
 {
+	TR_ASSERT(!m_locked, "Tried to allocate a new color outline on a locked 2D renderer.");
+
 	const usize vertices{polygon_vertices * 2};
 	mesh& mesh{find_mesh(layer, primitive::TRIS, std::nullopt, mat, blend_mode, vertices)};
 	const u16 base_index{u16(mesh.positions.size())};
@@ -152,6 +161,8 @@ tr::gfx::color_mesh_ref tr::gfx::renderer_2d::new_color_mesh(int layer, usize ve
 tr::gfx::color_mesh_ref tr::gfx::renderer_2d::new_color_mesh(int layer, usize vertices, usize indices, const glm::mat4& mat,
 															 const blend_mode& blend_mode)
 {
+	TR_ASSERT(!m_locked, "Tried to allocate a new color mesh on a locked 2D renderer.");
+
 	mesh& mesh{find_mesh(layer, primitive::TRIS, std::nullopt, mat, blend_mode, vertices)};
 	const u16 base_index{u16(mesh.positions.size())};
 
@@ -185,8 +196,6 @@ tr::gfx::simple_textured_mesh_ref tr::gfx::renderer_2d::new_textured_fan(int lay
 
 tr::gfx::simple_textured_mesh_ref tr::gfx::renderer_2d::new_textured_fan(int layer, usize vertices, texture_ref texture_ref)
 {
-	TR_ASSERT(!texture_ref.empty(), "Cannot pass std::nullopt as texture for textured mesh.");
-
 	std::unordered_map<int, layer_defaults>::iterator it{m_layer_defaults.find(layer)};
 	if (it != m_layer_defaults.end()) {
 		const layer_defaults& defaults{it->second};
@@ -201,6 +210,7 @@ tr::gfx::simple_textured_mesh_ref tr::gfx::renderer_2d::new_textured_fan(int lay
 tr::gfx::simple_textured_mesh_ref tr::gfx::renderer_2d::new_textured_fan(int layer, usize vertices, texture_ref texture_ref,
 																		 const glm::mat4& mat, const blend_mode& blend_mode)
 {
+	TR_ASSERT(!m_locked, "Tried to allocate a new textured fan on a locked 2D renderer.");
 	TR_ASSERT(!texture_ref.empty(), "Cannot pass std::nullopt as texture for textured fan.");
 
 	mesh& mesh{find_mesh(layer, primitive::TRIS, std::move(texture_ref), mat, blend_mode, vertices)};
@@ -237,8 +247,6 @@ tr::gfx::textured_mesh_ref tr::gfx::renderer_2d::new_textured_mesh(int layer, us
 
 tr::gfx::textured_mesh_ref tr::gfx::renderer_2d::new_textured_mesh(int layer, usize vertices, usize indices, texture_ref texture_ref)
 {
-	TR_ASSERT(!texture_ref.empty(), "Cannot pass std::nullopt as texture for textured mesh.");
-
 	std::unordered_map<int, layer_defaults>::iterator it{m_layer_defaults.find(layer)};
 	if (it != m_layer_defaults.end()) {
 		const layer_defaults& defaults{it->second};
@@ -253,6 +261,7 @@ tr::gfx::textured_mesh_ref tr::gfx::renderer_2d::new_textured_mesh(int layer, us
 tr::gfx::textured_mesh_ref tr::gfx::renderer_2d::new_textured_mesh(int layer, usize vertices, usize indices, texture_ref texture_ref,
 																   const glm::mat4& mat, const blend_mode& blend_mode)
 {
+	TR_ASSERT(!m_locked, "Tried to allocate a new textured mesh on a locked 2D renderer.");
 	TR_ASSERT(!texture_ref.empty(), "Cannot pass std::nullopt as texture for textured mesh.");
 
 	mesh& mesh{find_mesh(layer, primitive::TRIS, std::move(texture_ref), mat, blend_mode, vertices)};
@@ -288,6 +297,8 @@ tr::gfx::simple_color_mesh_ref tr::gfx::renderer_2d::new_lines(int layer, usize 
 
 tr::gfx::simple_color_mesh_ref tr::gfx::renderer_2d::new_lines(int layer, usize lines, const glm::mat4& mat, const blend_mode& blend_mode)
 {
+	TR_ASSERT(!m_locked, "Tried to allocate a new lines on a locked 2D renderer.");
+
 	const usize vertices{lines * 2};
 	mesh& mesh{find_mesh(layer, primitive::LINES, std::nullopt, mat, blend_mode, vertices)};
 	const u16 base_index{u16(mesh.positions.size())};
@@ -324,6 +335,8 @@ tr::gfx::simple_color_mesh_ref tr::gfx::renderer_2d::new_line_strip(int layer, u
 tr::gfx::simple_color_mesh_ref tr::gfx::renderer_2d::new_line_strip(int layer, usize vertices, const glm::mat4& mat,
 																	const blend_mode& blend_mode)
 {
+	TR_ASSERT(!m_locked, "Tried to allocate a new line strip on a locked 2D renderer.");
+
 	mesh& mesh{find_mesh(layer, primitive::LINES, std::nullopt, mat, blend_mode, vertices)};
 	const u16 base_index{u16(mesh.positions.size())};
 	const usize indices{line_strip_indices(vertices)};
@@ -360,6 +373,8 @@ tr::gfx::simple_color_mesh_ref tr::gfx::renderer_2d::new_line_loop(int layer, us
 tr::gfx::simple_color_mesh_ref tr::gfx::renderer_2d::new_line_loop(int layer, usize vertices, const glm::mat4& mat,
 																   const blend_mode& blend_mode)
 {
+	TR_ASSERT(!m_locked, "Tried to allocate a new line loop on a locked 2D renderer.");
+
 	mesh& mesh{find_mesh(layer, primitive::LINES, std::nullopt, mat, blend_mode, vertices)};
 	const u16 base_index{u16(mesh.positions.size())};
 	const usize indices{line_loop_indices(vertices)};
@@ -396,6 +411,8 @@ tr::gfx::color_mesh_ref tr::gfx::renderer_2d::new_line_mesh(int layer, usize ver
 tr::gfx::color_mesh_ref tr::gfx::renderer_2d::new_line_mesh(int layer, usize vertices, usize indices, const glm::mat4& mat,
 															const blend_mode& blend_mode)
 {
+	TR_ASSERT(!m_locked, "Tried to allocate a new line mesh on a locked 2D renderer.");
+
 	mesh& mesh{find_mesh(layer, primitive::LINES, std::nullopt, mat, blend_mode, vertices)};
 	const u16 base_index{u16(mesh.positions.size())};
 
@@ -416,21 +433,31 @@ tr::gfx::color_mesh_ref tr::gfx::renderer_2d::new_line_mesh(int layer, usize ver
 
 //
 
-void tr::gfx::renderer_2d::draw_layer(int layer, const render_target& target)
+tr::gfx::renderer_2d::staggered_draw_manager tr::gfx::renderer_2d::prepare_staggered_draw_range(int min_layer, int max_layer)
 {
-	auto range{std::ranges::equal_range(m_meshes, layer, std::less{}, &mesh::layer)};
-	draw(range.begin(), range.end(), target);
+	return staggered_draw_manager{*this,
+								  {std::ranges::lower_bound(m_meshes, min_layer, std::less{}, &mesh::layer),
+								   std::ranges::upper_bound(m_meshes, max_layer, std::less{}, &mesh::layer)}};
 }
 
-void tr::gfx::renderer_2d::draw_up_to_layer(int max_layer, const render_target& target)
+tr::gfx::renderer_2d::staggered_draw_manager tr::gfx::renderer_2d::prepare_staggered_draw()
 {
-	auto last{std::ranges::upper_bound(m_meshes, max_layer, std::less{}, &mesh::layer)};
-	draw(m_meshes.begin(), last, target);
+	return staggered_draw_manager{*this, m_meshes};
+}
+
+void tr::gfx::renderer_2d::draw_layer(int layer, const render_target& target)
+{
+	staggered_draw_manager{*this, std::ranges::equal_range(m_meshes, layer, std::less{}, &mesh::layer)}.draw(target);
+}
+
+void tr::gfx::renderer_2d::draw_layer_range(int min_layer, int max_layer, const render_target& target)
+{
+	prepare_staggered_draw_range(min_layer, max_layer).draw(target);
 }
 
 void tr::gfx::renderer_2d::draw(const render_target& target)
 {
-	draw_up_to_layer(INT_MAX, target);
+	prepare_staggered_draw().draw(target);
 }
 
 //
@@ -462,86 +489,4 @@ tr::gfx::renderer_2d::mesh& tr::gfx::renderer_2d::find_mesh(int layer, primitive
 		it = m_meshes.emplace(range.end(), layer, type, std::move(texture_ref), mat, blend_mode);
 	}
 	return *it;
-}
-
-void tr::gfx::renderer_2d::setup_context()
-{
-	if (active_renderer != RENDERER_2D_ID) {
-		active_renderer = RENDERER_2D_ID;
-		set_face_culling(false);
-		set_depth_test(false);
-		set_shader_pipeline(m_pipeline);
-		set_blend_mode(m_last_blend_mode);
-		set_vertex_format(vertex2_format());
-	}
-}
-
-std::vector<tr::gfx::renderer_2d::mesh_draw_info> tr::gfx::renderer_2d::upload_meshes(std::vector<mesh>::iterator first,
-																					  std::vector<mesh>::iterator last)
-{
-	std::vector<mesh_draw_info> mesh_borders;
-	mesh_borders.emplace_back(0, 0);
-
-	const usize vertices{std::accumulate(first, last, 0_uz, [](usize s, const mesh& m) { return s + m.positions.size(); })};
-	const usize indices{std::accumulate(first, last, 0_uz, [](usize s, const mesh& m) { return s + m.indices.size(); })};
-
-	m_vbuffer_positions.resize(vertices);
-	m_vbuffer_uvs.resize(vertices);
-	m_vbuffer_tints.resize(vertices);
-	m_ibuffer.resize(indices);
-
-	for (const mesh& mesh : std::ranges::subrange{first, last}) {
-		const mesh_draw_info start{mesh_borders.back()};
-
-		m_vbuffer_positions.set_region(start.vertex_offset, mesh.positions);
-		m_vbuffer_uvs.set_region(start.vertex_offset, mesh.uvs);
-		m_vbuffer_tints.set_region(start.vertex_offset, mesh.tints);
-		m_ibuffer.set_region(start.index_offset, mesh.indices);
-		mesh_borders.emplace_back(start.vertex_offset + mesh.positions.size(), start.index_offset + mesh.indices.size());
-	}
-
-	set_index_buffer(m_ibuffer);
-
-	return mesh_borders;
-}
-
-void tr::gfx::renderer_2d::setup_draw_call_state(texture_ref texture_ref, const glm::mat4& transform, const blend_mode& blend_mode)
-{
-	m_pipeline.fragment_shader().set_uniform(1, std::move(texture_ref));
-
-	if (m_last_transform != transform) {
-		m_last_transform = transform;
-		m_pipeline.vertex_shader().set_uniform(0, m_last_transform);
-	}
-
-	if (m_last_blend_mode != blend_mode) {
-		m_last_blend_mode = blend_mode;
-		set_blend_mode(m_last_blend_mode);
-	}
-}
-
-void tr::gfx::renderer_2d::draw(std::vector<mesh>::iterator first, std::vector<mesh>::iterator last, const render_target& target)
-{
-	if (first == last) {
-		return;
-	};
-
-	setup_context();
-	set_render_target(target);
-
-	const std::vector<mesh_draw_info> meshes_info{upload_meshes(first, last)};
-	std::vector<mesh_draw_info>::const_iterator mesh_info_it{meshes_info.begin()};
-	for (const mesh& mesh : std::ranges::subrange{first, last}) {
-		const usize mesh_indices{std::next(mesh_info_it)->index_offset - mesh_info_it->index_offset};
-
-		setup_draw_call_state(mesh.texture, mesh.mat, mesh.blend_mode);
-		set_vertex_buffer(m_vbuffer_positions, 0, mesh_info_it->vertex_offset);
-		set_vertex_buffer(m_vbuffer_uvs, 1, mesh_info_it->vertex_offset);
-		set_vertex_buffer(m_vbuffer_tints, 2, mesh_info_it->vertex_offset);
-		draw_indexed(mesh.type, mesh_info_it->index_offset, mesh_indices);
-
-		++mesh_info_it;
-	}
-
-	m_meshes.erase(first, last);
 }

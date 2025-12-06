@@ -54,6 +54,7 @@ if(TR_BUILD_SYSGFX)
 		src/sysgfx/bitmap.cpp
 		src/sysgfx/buffer_map.cpp
 		src/sysgfx/circle_renderer.cpp
+		src/sysgfx/circle_renderer_staggered_draw_manager.cpp
 		src/sysgfx/cursor.cpp
 		src/sysgfx/debug_renderer.cpp
 		src/sysgfx/dialog.cpp
@@ -68,6 +69,7 @@ if(TR_BUILD_SYSGFX)
 		src/sysgfx/path.cpp
 		src/sysgfx/render_target.cpp
 		src/sysgfx/renderer_2d.cpp
+		src/sysgfx/renderer_2d_staggered_draw_manager.cpp
 		src/sysgfx/shader_buffer.cpp
 		src/sysgfx/shader_pipeline.cpp
 		src/sysgfx/shader.cpp

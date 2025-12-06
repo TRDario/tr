@@ -19,8 +19,6 @@ namespace tr::gfx {
 		"#version 450\n#define L(l) layout(location=l)\nL(0)in vec2 u;L(1)flat in float s;L(2)flat in vec4 f;L(3)flat in vec4 o;L(0)"
 		"out vec4 c;void main(){float D=length(u),d=fwidth(D),h=d/2;if(D<s-h)c=f;else if(D<=s+h)c=mix(o,f,(s-D+h)/d);else "
 		"if(D<=1-h)c=o;else if(D<=1+h)c=mix(vec4(o.rgb,0),o,(1-D+h)/d);else c=vec4(o.rgb,0);}"};
-	// Circle renderer ID.
-	constexpr u32 CIRCLE_RENDERER_ID{5};
 } // namespace tr::gfx
 
 //
@@ -82,72 +80,27 @@ void tr::gfx::circle_renderer::add_outlined_circle(int layer, const tr::circle& 
 
 //
 
-void tr::gfx::circle_renderer::setup_context()
+tr::gfx::circle_renderer::staggered_draw_manager tr::gfx::circle_renderer::prepare_staggered_draw_range(int min_layer, int max_layer)
 {
-	if (active_renderer != CIRCLE_RENDERER_ID) {
-		active_renderer = CIRCLE_RENDERER_ID;
-		set_face_culling(false);
-		set_depth_test(false);
-		set_shader_pipeline(m_pipeline);
-		set_blend_mode(m_last_blend_mode);
-		set_vertex_format(m_vertex_format);
-		set_vertex_buffer(m_quad_vertices, 0, 0);
-	}
+	return staggered_draw_manager{*this, {m_layers.lower_bound(min_layer), m_layers.upper_bound(max_layer)}};
 }
 
-void tr::gfx::circle_renderer::setup_draw_call_state(const glm::mat4& transform, const blend_mode& blend_mode)
+tr::gfx::circle_renderer::staggered_draw_manager tr::gfx::circle_renderer::prepare_staggered_draw()
 {
-	if (m_last_transform != transform) {
-		m_last_transform = transform;
-		m_pipeline.vertex_shader().set_uniform(0, m_last_transform);
-	}
-
-	if (m_last_blend_mode != blend_mode) {
-		m_last_blend_mode = blend_mode;
-		set_blend_mode(m_last_blend_mode);
-	}
+	return staggered_draw_manager{*this, m_layers};
 }
-
-void tr::gfx::circle_renderer::draw_layers(std::map<int, layer>::iterator first, std::map<int, layer>::iterator last,
-										   const render_target& target)
-{
-	if (first == last) {
-		return;
-	};
-
-	setup_context();
-	set_render_target(target);
-
-	std::vector<circle> circles;
-	for (const auto& [priority, layer] : std::ranges::subrange{first, last}) {
-		circles.insert(circles.end(), layer.circles.begin(), layer.circles.end());
-	}
-	m_shader_circles.set(circles);
-
-	ssize offset{0};
-	for (const auto& [priority, layer] : std::ranges::subrange{first, last}) {
-		setup_draw_call_state(layer.transform.has_value() ? *layer.transform : m_default_transform, layer.blend_mode);
-		set_vertex_buffer(m_shader_circles, 1, offset);
-		draw_instances(primitive::TRI_FAN, 0, 4, layer.circles.size());
-		offset += layer.circles.size();
-	}
-	m_layers.erase(first, last);
-}
-
-//
 
 void tr::gfx::circle_renderer::draw_layer(int layer, const render_target& target)
 {
-	const auto range{m_layers.equal_range(layer)};
-	draw_layers(range.first, range.second, target);
+	staggered_draw_manager{*this, {m_layers.lower_bound(layer), m_layers.upper_bound(layer)}}.draw(target);
 }
 
-void tr::gfx::circle_renderer::draw_up_to_layer(int max_layer, const render_target& target)
+void tr::gfx::circle_renderer::draw_layer_range(int min_layer, int max_layer, const render_target& target)
 {
-	draw_layers(m_layers.begin(), m_layers.upper_bound(max_layer), target);
+	prepare_staggered_draw_range(min_layer, max_layer).draw(target);
 }
 
 void tr::gfx::circle_renderer::draw(const render_target& target)
 {
-	draw_layers(m_layers.begin(), m_layers.end(), target);
+	prepare_staggered_draw().draw(target);
 }
