@@ -13,6 +13,12 @@ tr::gfx::circle_renderer::staggered_draw_manager::staggered_draw_manager(circle_
 																		 std::ranges::subrange<std::map<int, layer>::iterator> range)
 	: m_renderer{&renderer}, m_range{range}
 {
+	TR_ASSERT(!m_renderer->m_locked, "Tried to create multiple simultaneous circle renderer staggered draw managers.");
+
+#ifdef TR_ENABLE_ASSERTS
+	m_renderer->m_locked = true;
+#endif
+
 	std::vector<circle> circles;
 	for (const auto& [priority, layer] : m_range) {
 		circles.insert(circles.end(), layer.circles.begin(), layer.circles.end());
