@@ -1,6 +1,8 @@
 #include "../../include/tr/sysgfx/circle_renderer.hpp"
 
 namespace tr::gfx {
+	// Circle renderer instance attributes.
+	template <> struct vertex_attributes<circle_renderer::circle> : unpacked_vertex_attributes<glm::vec2, float, float, rgba8, rgba8> {};
 	// Circle renderer ID.
 	constexpr u32 CIRCLE_RENDERER_ID{5};
 } // namespace tr::gfx
@@ -48,17 +50,17 @@ void tr::gfx::circle_renderer::staggered_draw_manager::draw_layer(int layer, con
 	setup_context();
 	set_render_target(target);
 
-	const auto equal_range_result{m_renderer->m_layers.equal_range(layer)};
-	const auto range{std::views::values(std::ranges::subrange{equal_range_result.first, equal_range_result.second})};
-
-	ssize offset{std::distance(m_range.begin(), range.begin().base())};
-	for (const circle_renderer::layer& layer_info : range) {
-		setup_draw_call_state(layer_info.transform.has_value() ? *layer_info.transform : m_renderer->m_default_transform,
-							  layer_info.blend_mode);
-		set_vertex_buffer(m_renderer->m_shader_circles, 1, offset);
-		draw_instances(primitive::TRI_FAN, 0, 4, layer_info.circles.size());
-		offset += layer_info.circles.size();
+	const auto it{m_renderer->m_layers.find(layer)};
+	if (it == m_renderer->m_layers.end()) {
+		return;
 	}
+
+	const circle_renderer::layer& info{it->second};
+	const ssize offset{std::accumulate(m_range.begin(), it, 0_z, [](ssize sum, auto& pair) { return sum + pair.second.circles.size(); })};
+
+	setup_draw_call_state(info.transform.has_value() ? *info.transform : m_renderer->m_default_transform, info.blend_mode);
+	set_vertex_buffer(m_renderer->m_shader_circles, 1, offset);
+	draw_instances(primitive::TRI_FAN, 0, 4, info.circles.size());
 }
 
 void tr::gfx::circle_renderer::staggered_draw_manager::draw(const render_target& target)

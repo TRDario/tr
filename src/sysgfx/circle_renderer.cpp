@@ -1,8 +1,6 @@
 #include "../include/tr/sysgfx/circle_renderer.hpp"
 
 namespace tr::gfx {
-	// Circle renderer instance attributes.
-	template <> struct vertex_attributes<circle_renderer::circle> : unpacked_vertex_attributes<glm::vec2, float, float, rgba8, rgba8> {};
 	// Circle renderer vertex format.
 	constexpr std::array<vertex_binding, 2> CIRCLE_FORMAT_ATTRIBUTES{{
 		{NOT_INSTANCED, vertex_attributes<glm::u8vec2>::list},

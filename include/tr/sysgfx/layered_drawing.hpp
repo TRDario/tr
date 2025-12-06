@@ -33,7 +33,7 @@ void tr::gfx::draw_layer(int layer, const render_target& target, Renderers&&... 
 template <tr::gfx::layer_range_drawable_renderer... Renderers>
 void tr::gfx::draw_layer_range(int min_layer, int max_layer, const render_target& target, Renderers&&... renderers)
 {
-	std::tuple managers{(renderers.prepare_staggered_draw_range(min_layer, max_layer), ...)};
+	std::tuple managers{renderers.prepare_staggered_draw_range(min_layer, max_layer)...};
 	for (int layer = min_layer; layer <= max_layer; ++layer) {
 		std::apply([&, layer](auto&... managers) { (managers.draw_layer(layer, target), ...); }, managers);
 	}
