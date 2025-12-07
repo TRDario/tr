@@ -4,6 +4,7 @@
 #include <any>                             // IWYU pragma: export
 #include <array>                           // IWYU pragma: export
 #include <bitset>                          // IWYU pragma: export
+#include <charconv>                        // IWYU pragma: export
 #include <chrono>                          // IWYU pragma: export
 #include <cmath>                           // IWYU pragma: export
 #include <compare>                         // IWYU pragma: export
@@ -46,9 +47,9 @@
 #define TR_FMT std
 #define TR_FORMAT_STRING std::format_string
 #else
-#include <fmt/base.h>
-#include <fmt/chrono.h>
-#include <fmt/format.h>
+#include <fmt/base.h>   // IWYU pragma: export
+#include <fmt/chrono.h> // IWYU pragma: export
+#include <fmt/format.h> // IWYU pragma: export
 #define TR_FMT fmt
 #define TR_FORMAT_STRING fmt::fstring
 #endif
