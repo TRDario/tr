@@ -33,6 +33,8 @@ tr::gfx::renderer_2d::staggered_draw_manager::staggered_draw_manager(renderer_2d
 		m_renderer->m_ibuffer.set_region(start.index_offset, mesh.indices);
 		m_data.emplace_back(start.vertex_offset + mesh.positions.size(), start.index_offset + mesh.indices.size());
 	}
+
+	set_index_buffer(m_renderer->m_ibuffer);
 }
 
 tr::gfx::renderer_2d::staggered_draw_manager::staggered_draw_manager(staggered_draw_manager&& r) noexcept
