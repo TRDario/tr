@@ -1,5 +1,6 @@
 #pragma once
 #include "concepts.hpp"
+#include <concepts>
 
 namespace tr {
 	// Casts a floating point number to an integer by rounding the value.
@@ -14,6 +15,8 @@ namespace tr {
 	template <arithmetic T1, arithmetic T2> constexpr std::common_type_t<T1, T2> mod(T1 v, T2 mod);
 	// Euclidian modulo operation.
 	template <arithmetic T1, arithmetic T2> constexpr std::common_type_t<T1, T2> eucmod(T1 v, T2 mod);
+	// Linearly interpolates between two values.
+	template <class T1, std::floating_point T2> constexpr T1 lerp(const T1& x, const T1& y, T2 a);
 } // namespace tr
 
 ///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
@@ -52,4 +55,9 @@ template <tr::arithmetic T1, tr::arithmetic T2> constexpr std::common_type_t<T1,
 {
 	const std::common_type_t<T1, T2> normal_mod{tr::mod(v, mod)};
 	return mod >= 0 ? normal_mod : normal_mod + mod;
+}
+
+template <class T1, std::floating_point T2> constexpr T1 tr::lerp(const T1& x, const T1& y, T2 a)
+{
+	return x * (1 - a) + y * a;
 }

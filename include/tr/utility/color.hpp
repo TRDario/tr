@@ -2,748 +2,261 @@
 #include "concepts.hpp"
 
 namespace tr {
-	/** @ingroup utility
-	 *  @defgroup color Colors
-	 *  Color datatypes and related functionality.
-	 *  @{
-	 */
+	struct rgb8;
+	struct rgbf;
+	struct rgba8;
+	struct rgbaf;
+	struct hsv;
 
-	/******************************************************************************************************************
-	 * Concept denoting a valid color datatype.
-	 *
-	 * To fulfill this, a type must be an arithmetic type taking up up to 4 bytes.
-	 ******************************************************************************************************************/
-	template <class T>
-	concept color_datatype = (std::integral<T> || std::floating_point<T>) && sizeof(T) <= 4;
+	// 8-bit RGB color.
+	struct rgb8 {
+		// The red color channel.
+		u8 r;
+		// The green color channel.
+		u8 g;
+		// The blue color channel.
+		u8 b;
 
-	/******************************************************************************************************************
-	 * Single-channel red color.
-	 *
-	 * @tparam A valid color datatype.
-	 ******************************************************************************************************************/
-	template <color_datatype T> struct r {
-		/**************************************************************************************************************
-		 * The red channel.
-		 **************************************************************************************************************/
-		T r;
+		constexpr rgb8() = default;
+		// Creates a color from its components.
+		constexpr rgb8(u8 r, u8 g, u8 b);
+		// Converts a float RGB color into an 8-bit one.
+		constexpr rgb8(const rgbf& rgb);
+		// Removes the alpha component from an RGBA color.
+		constexpr rgb8(const rgba8& rgba);
+		// Removes the alpha component from an RGBA color and converts it to 8-bit.
+		constexpr rgb8(const rgbaf& rgba);
+		// Converts an HSV color to an RGB one.
+		constexpr rgb8(const hsv& hsv);
 
-		constexpr friend bool operator==(const tr::r<T>&, const tr::r<T>&) = default;
+		friend constexpr bool operator==(const rgb8&, const rgb8&) = default;
+
+		// Adds a scalar to the color.
+		template <arithmetic T> constexpr rgb8& operator+=(T addend);
+		// Adds two colors.
+		constexpr rgb8& operator+=(const rgb8& addend);
+		// Adds a scalar to the color.
+		template <arithmetic T> friend constexpr rgb8 operator+(const rgb8& l, T addend);
+		// Adds two colors.
+		friend constexpr rgb8 operator+(const rgb8& l, const rgb8& r);
+		// Subtracts a scalar from the color.
+		template <arithmetic T> constexpr rgb8& operator-=(T subtrahend);
+		// Subtracts two colors.
+		constexpr rgb8& operator-=(const rgb8& subtrahend);
+		// Subtracts a scalar from the color.
+		template <arithmetic T> friend constexpr rgb8 operator-(const rgb8& l, T subtrahend);
+		// Subtracts two colors.
+		friend constexpr rgb8 operator-(const rgb8& l, const rgb8& r);
+		// Multiplies the color by a scalar.
+		template <arithmetic T> constexpr rgb8& operator*=(T multiplier);
+		// Multiplies two colors.
+		constexpr rgb8& operator*=(const rgb8& multiplier);
+		// Multiplies the color by a scalar.
+		template <arithmetic T> friend constexpr rgb8 operator*(const rgb8& l, T multiplier);
+		// Multiplies two colors.
+		friend constexpr rgb8 operator*(const rgb8& l, const rgb8& r);
+		// Divides the color by a scalar.
+		template <arithmetic T> constexpr rgb8& operator/=(T divisor);
+		// Divides the color by a scalar.
+		template <arithmetic T> friend constexpr rgb8 operator/(const rgb8& l, T divisor);
 	};
 
-	/******************************************************************************************************************
-	 * Single-channel green color.
-	 *
-	 * @tparam A valid color datatype.
-	 ******************************************************************************************************************/
-	template <color_datatype T> struct g {
-		/**************************************************************************************************************
-		 * The green channel.
-		 **************************************************************************************************************/
-		T g;
+	// Floating-point RGB color.
+	struct rgbf {
+		// The red color channel.
+		float r;
+		// The green color channel.
+		float g;
+		// The blue color channel.
+		float b;
 
-		constexpr friend bool operator==(const tr::g<T>&, const tr::g<T>&) = default;
+		constexpr rgbf() = default;
+		// Creates a color from its components.
+		constexpr rgbf(float r, float g, float b);
+		// Converts an 8-bit RGB color into a float one.
+		constexpr rgbf(const rgb8& rgb);
+		// Removes the alpha component from an RGBA color and converts it to float.
+		constexpr rgbf(const rgba8& rgba);
+		// Removes the alpha component from an RGBA color.
+		constexpr rgbf(const rgbaf& rgba);
+		// Converts an HSV color to an RGB one.
+		constexpr rgbf(const hsv& hsv);
+
+		friend constexpr bool operator==(const rgbf&, const rgbf&) = default;
+
+		// Adds a scalar to the color.
+		template <arithmetic T> constexpr rgbf& operator+=(T addend);
+		// Adds two colors.
+		constexpr rgbf& operator+=(const rgbf& addend);
+		// Adds a scalar to the color.
+		template <arithmetic T> friend constexpr rgbf operator+(const rgbf& l, T addend);
+		// Adds two colors.
+		friend constexpr rgbf operator+(const rgbf& l, const rgbf& r);
+		// Subtracts a scalar from the color.
+		template <arithmetic T> constexpr rgbf& operator-=(T subtrahend);
+		// Subtracts two colors.
+		constexpr rgbf& operator-=(const rgbf& subtrahend);
+		// Subtracts a scalar from the color.
+		template <arithmetic T> friend constexpr rgbf operator-(const rgbf& l, T subtrahend);
+		// Subtracts two colors.
+		friend constexpr rgbf operator-(const rgbf& l, const rgbf& r);
+		// Multiplies the color by a scalar.
+		template <arithmetic T> constexpr rgbf& operator*=(T multiplier);
+		// Multiplies two colors.
+		constexpr rgbf& operator*=(const rgbf& multiplier);
+		// Multiplies the color by a scalar.
+		template <arithmetic T> friend constexpr rgbf operator*(const rgbf& l, T multiplier);
+		// Multiplies two colors.
+		friend constexpr rgbf operator*(const rgbf& l, const rgbf& r);
+		// Divides the color by a scalar.
+		template <arithmetic T> constexpr rgbf& operator/=(T divisor);
+		// Divides the color by a scalar.
+		template <arithmetic T> friend constexpr rgbf operator/(const rgbf& l, T divisor);
 	};
 
-	/******************************************************************************************************************
-	 * Single-channel blue color.
-	 *
-	 * @tparam A valid color datatype.
-	 ******************************************************************************************************************/
-	template <color_datatype T> struct b {
-		/**************************************************************************************************************
-		 * The blue channel.
-		 **************************************************************************************************************/
-		T b;
+	// 8-bit RGBA color.
+	struct rgba8 {
+		// The red color channel.
+		u8 r;
+		// The green color channel.
+		u8 g;
+		// The blue color channel.
+		u8 b;
+		// The alpha channel.
+		u8 a;
 
-		constexpr friend bool operator==(const tr::b<T>&, const tr::b<T>&) = default;
+		constexpr rgba8() = default;
+		// Creates a color from its components.
+		constexpr rgba8(u8 r, u8 g, u8 b, u8 a);
+		// Adds an alpha component to an RGB color.
+		constexpr rgba8(const rgb8& rgb, u8 a = 255);
+		// Converts a float RGB color into an 8-bit one and adds an alpha component.
+		constexpr rgba8(const rgbf& rgb, u8 a = 255);
+		// Converts a float RGBA color into an 8-bit one.
+		constexpr rgba8(const rgbaf& rgba);
+		// Converts an HSV color to an RGBA one.
+		constexpr rgba8(const hsv& hsv, u8 a = 255);
+
+		friend constexpr bool operator==(const rgba8&, const rgba8&) = default;
+
+		// Adds a scalar to the color.
+		template <arithmetic T> constexpr rgba8& operator+=(T addend);
+		// Adds two colors.
+		constexpr rgba8& operator+=(const rgba8& addend);
+		// Adds a scalar to the color.
+		template <arithmetic T> friend constexpr rgba8 operator+(const rgba8& l, T addend);
+		// Adds two colors.
+		friend constexpr rgba8 operator+(const rgba8& l, const rgba8& r);
+		// Subtracts a scalar from the color.
+		template <arithmetic T> constexpr rgba8& operator-=(T subtrahend);
+		// Subtracts two colors.
+		constexpr rgba8& operator-=(const rgba8& subtrahend);
+		// Subtracts a scalar from the color.
+		template <arithmetic T> friend constexpr rgba8 operator-(const rgba8& l, T subtrahend);
+		// Subtracts two colors.
+		friend constexpr rgba8 operator-(const rgba8& l, const rgba8& r);
+		// Multiplies the color by a scalar.
+		template <arithmetic T> constexpr rgba8& operator*=(T multiplier);
+		// Multiplies two colors.
+		constexpr rgba8& operator*=(const rgba8& multiplier);
+		// Multiplies the color by a scalar.
+		template <arithmetic T> friend constexpr rgba8 operator*(const rgba8& l, T multiplier);
+		// Multiplies two colors.
+		friend constexpr rgba8 operator*(const rgba8& l, const rgba8& r);
+		// Divides the color by a scalar.
+		template <arithmetic T> constexpr rgba8& operator/=(T divisor);
+		// Divides the color by a scalar.
+		template <arithmetic T> friend constexpr rgba8 operator/(const rgba8& l, T divisor);
 	};
 
-	/******************************************************************************************************************
-	 * Two-channel RG color.
-	 *
-	 * @tparam A valid color datatype.
-	 ******************************************************************************************************************/
-	template <color_datatype T> struct rg {
-		/**************************************************************************************************************
-		 * The red channel.
-		 **************************************************************************************************************/
-		T r;
+	// Floating-point RGBA color.
+	struct rgbaf {
+		// The red color channel.
+		float r;
+		// The green color channel.
+		float g;
+		// The blue color channel.
+		float b;
+		// The alpha channel.
+		float a;
 
-		/**************************************************************************************************************
-		 * The green channel.
-		 **************************************************************************************************************/
-		T g;
+		constexpr rgbaf() = default;
+		// Creates a color from its components.
+		constexpr rgbaf(float r, float g, float b, float a);
+		// Converts an 8-bit RGB color into a float one and adds an alpha component.
+		constexpr rgbaf(const rgb8& rgb, float a = 1.0f);
+		// Adds an alpha component to an RGB color.
+		constexpr rgbaf(const rgbf& rgb, float a = 1.0f);
+		// Converts a float RGBA color to float.
+		constexpr rgbaf(const rgba8& rgba);
+		// Converts an HSV color to an RGBA one.
+		constexpr rgbaf(const hsv& hsv, float a = 1.0f);
 
-		constexpr friend bool operator==(const rg&, const rg&) = default;
+		friend constexpr bool operator==(const rgbaf&, const rgbaf&) = default;
+
+		// Adds a scalar to the color.
+		template <arithmetic T> constexpr rgbaf& operator+=(T addend);
+		// Adds two colors.
+		constexpr rgbaf& operator+=(const rgbaf& addend);
+		// Adds a scalar to the color.
+		template <arithmetic T> friend constexpr rgbaf operator+(const rgbaf& l, T addend);
+		// Adds two colors.
+		friend constexpr rgbaf operator+(const rgbaf& l, const rgbaf& r);
+		// Subtracts a scalar from the color.
+		template <arithmetic T> constexpr rgbaf& operator-=(T subtrahend);
+		// Subtracts two colors.
+		constexpr rgbaf& operator-=(const rgbaf& subtrahend);
+		// Subtracts a scalar from the color.
+		template <arithmetic T> friend constexpr rgbaf operator-(const rgbaf& l, T subtrahend);
+		// Subtracts two colors.
+		friend constexpr rgbaf operator-(const rgbaf& l, const rgbaf& r);
+		// Multiplies the color by a scalar.
+		template <arithmetic T> constexpr rgbaf& operator*=(T multiplier);
+		// Multiplies two colors.
+		constexpr rgbaf& operator*=(const rgbaf& multiplier);
+		// Multiplies the color by a scalar.
+		template <arithmetic T> friend constexpr rgbaf operator*(const rgbaf& l, T multiplier);
+		// Multiplies two colors.
+		friend constexpr rgbaf operator*(const rgbaf& l, const rgbaf& r);
+		// Divides the color by a scalar.
+		template <arithmetic T> constexpr rgbaf& operator/=(T divisor);
+		// Divides the color by a scalar.
+		template <arithmetic T> friend constexpr rgbaf operator/(const rgbaf& l, T divisor);
 	};
 
-	/******************************************************************************************************************
-	 * Three-channel RGB color.
-	 *
-	 * @tparam A valid color datatype.
-	 ******************************************************************************************************************/
-	template <color_datatype T> struct rgb {
-		/**************************************************************************************************************
-		 * The red channel.
-		 **************************************************************************************************************/
-		T r;
-
-		/**************************************************************************************************************
-		 * The green channel.
-		 **************************************************************************************************************/
-		T g;
-
-		/**************************************************************************************************************
-		 * The blue channel.
-		 **************************************************************************************************************/
-		T b;
-
-		constexpr friend bool operator==(const rgb&, const rgb&) = default;
-	};
-
-	/******************************************************************************************************************
-	 * Shorthand for the common 8-bit RGB color.
-	 ******************************************************************************************************************/
-	using rgb8 = rgb<u8>;
-
-	/******************************************************************************************************************
-	 * Shorthand for the common floating-point RGB color.
-	 ******************************************************************************************************************/
-	using rgbf = rgb<float>;
-
-	/******************************************************************************************************************
-	 * Three-channel BGR color.
-	 *
-	 * @tparam A valid color datatype.
-	 ******************************************************************************************************************/
-	template <color_datatype T> struct bgr {
-		/**************************************************************************************************************
-		 * The blue channel.
-		 **************************************************************************************************************/
-		T b;
-
-		/**************************************************************************************************************
-		 * The green channel.
-		 **************************************************************************************************************/
-		T g;
-
-		/**************************************************************************************************************
-		 * The red channel.
-		 **************************************************************************************************************/
-		T r;
-
-		constexpr friend bool operator==(const bgr&, const bgr&) = default;
-	};
-
-	/******************************************************************************************************************
-	 * Four-channel RGBA color.
-	 *
-	 * @tparam A valid color datatype.
-	 ******************************************************************************************************************/
-	template <color_datatype T> struct rgba {
-		/**************************************************************************************************************
-		 * The red channel.
-		 **************************************************************************************************************/
-		T r;
-
-		/**************************************************************************************************************
-		 * The green channel.
-		 **************************************************************************************************************/
-		T g;
-
-		/**************************************************************************************************************
-		 * The blue channel.
-		 **************************************************************************************************************/
-		T b;
-
-		/**************************************************************************************************************
-		 * The alpha channel.
-		 **************************************************************************************************************/
-		T a;
-
-		/**************************************************************************************************************
-		 * Default-constructs an RGBA value.
-		 **************************************************************************************************************/
-		constexpr rgba() = default;
-
-		/**************************************************************************************************************
-		 * Initializes an RGBA value.
-		 *
-		 * @param[in] r, g, b, a Channel values.
-		 **************************************************************************************************************/
-		constexpr rgba(T r, T g, T b, T a);
-
-		/**************************************************************************************************************
-		 * Initializes an RGBA value from an RGB value and an alpha channel.
-		 *
-		 * @param rgb The RGB values.
-		 * @param[in] a The alpha channel value.
-		 **************************************************************************************************************/
-		constexpr rgba(rgb<T> rgb, T a);
-
-		constexpr friend bool operator==(const rgba&, const rgba&) = default;
-
-		constexpr rgba& operator+=(const rgba& r);
-		constexpr rgba& operator-=(const rgba& r);
-		template <arithmetic T1> constexpr rgba& operator*=(const T1& r);
-		template <arithmetic T1> constexpr rgba& operator/=(const T1& r);
-	};
-	template <color_datatype T> constexpr rgba<T> operator+(const rgba<T>& l, const rgba<T>& r);
-	template <color_datatype T> constexpr rgba<T> operator-(const rgba<T>& l, const rgba<T>& r);
-	template <color_datatype T, arithmetic T1> constexpr rgba<T> operator*(const rgba<T>& l, const T1& r);
-	template <color_datatype T, arithmetic T1> constexpr rgba<T> operator/(const rgba<T>& l, const T1& r);
-
-	/******************************************************************************************************************
-	 * Shorthand for the common 8-bit RGBA color.
-	 ******************************************************************************************************************/
-	using rgba8 = rgba<u8>;
-
-	/******************************************************************************************************************
-	 * Shorthand for the common floating-point RGBA color.
-	 ******************************************************************************************************************/
-	using rgbaf = rgba<float>;
-
-	/******************************************************************************************************************
-	 * Four-channel BGRA color.
-	 *
-	 * @tparam A valid color datatype.
-	 ******************************************************************************************************************/
-	template <color_datatype T> struct bgra {
-		/**************************************************************************************************************
-		 * The blue channel.
-		 **************************************************************************************************************/
-		T b;
-
-		/**************************************************************************************************************
-		 * The green channel.
-		 **************************************************************************************************************/
-		T g;
-
-		/**************************************************************************************************************
-		 * The red channel.
-		 **************************************************************************************************************/
-		T r;
-
-		/**************************************************************************************************************
-		 * The alpha channel.
-		 **************************************************************************************************************/
-		T a;
-
-		constexpr friend bool operator==(const bgra&, const bgra&) = default;
-	};
-
-	/******************************************************************************************************************
-	 * Three-channel HSV color.
-	 ******************************************************************************************************************/
 	struct hsv {
-		/**************************************************************************************************************
-		 * The hue channel.
-		 **************************************************************************************************************/
+		// The hue channel.
 		float h;
-
-		/**************************************************************************************************************
-		 * The saturation channel.
-		 **************************************************************************************************************/
+		// The saturation channel.
 		float s;
-
-		/**************************************************************************************************************
-		 * The value channel.
-		 **************************************************************************************************************/
+		// The value channel.
 		float v;
 
-		constexpr friend bool operator==(const hsv&, const hsv&) = default;
+		constexpr hsv() = default;
+		// Creates a color from its components.
+		constexpr hsv(float h, float s, float v);
+		// Converts an RGB color into an HSV one.
+		constexpr hsv(const rgb8& rgb);
+		// Converts an RGB color into an HSV one.
+		constexpr hsv(const rgbf& rgb);
+		// Converts an RGBA color into an HSV one.
+		constexpr hsv(const rgba8& rgba);
+		// Converts an RGBA color into an HSV one.
+		constexpr hsv(const rgbaf& rgba);
 	};
 
-	/******************************************************************************************************************
-	 * Special packed RGB color format.
-	 ******************************************************************************************************************/
-	struct rgb8_223 {
-		/**************************************************************************************************************
-		 * The red channel.
-		 **************************************************************************************************************/
-		u8 r : 2;
-
-		/**************************************************************************************************************
-		 * The green channel.
-		 **************************************************************************************************************/
-		u8 g : 3;
-
-		/**************************************************************************************************************
-		 * The blue channel.
-		 **************************************************************************************************************/
-		u8 b : 3;
-
-		constexpr friend bool operator==(const rgb8_223&, const rgb8_223&) = default;
-	};
-
-	/******************************************************************************************************************
-	 * Special packed RGB color format.
-	 ******************************************************************************************************************/
-	struct rgb16_565 {
-		/**************************************************************************************************************
-		 * The red channel.
-		 **************************************************************************************************************/
-		u16 r : 5;
-
-		/**************************************************************************************************************
-		 * The green channel.
-		 **************************************************************************************************************/
-		u16 g : 6;
-
-		/**************************************************************************************************************
-		 * The blue channel.
-		 **************************************************************************************************************/
-		u16 b : 5;
-
-		constexpr friend bool operator==(const rgb16_565&, const rgb16_565&) = default;
-	};
-
-	/******************************************************************************************************************
-	 * Special packed BGR color format.
-	 ******************************************************************************************************************/
-	struct bgr8_332 {
-		/**************************************************************************************************************
-		 * The blue channel.
-		 **************************************************************************************************************/
-		u8 b : 3;
-
-		/**************************************************************************************************************
-		 * The green channel.
-		 **************************************************************************************************************/
-		u8 g : 3;
-
-		/**************************************************************************************************************
-		 * The red channel.
-		 **************************************************************************************************************/
-		u8 r : 2;
-
-		constexpr friend bool operator==(const bgr8_332&, const bgr8_332&) = default;
-	};
-
-	/******************************************************************************************************************
-	 * Special packed BGR color format.
-	 ******************************************************************************************************************/
-	struct bgr16_565 {
-		/**************************************************************************************************************
-		 * The blue channel.
-		 **************************************************************************************************************/
-		u16 b : 5;
-
-		/**************************************************************************************************************
-		 * The green channel.
-		 **************************************************************************************************************/
-		u16 g : 6;
-
-		/**************************************************************************************************************
-		 * The red channel.
-		 **************************************************************************************************************/
-		u16 r : 5;
-
-		constexpr friend bool operator==(const bgr16_565&, const bgr16_565&) = default;
-	};
-
-	/******************************************************************************************************************
-	 * Special packed RGBA color format.
-	 ******************************************************************************************************************/
-	struct rgba16_4444 {
-		/**************************************************************************************************************
-		 * The red channel.
-		 **************************************************************************************************************/
-		u16 r : 4;
-
-		/**************************************************************************************************************
-		 * The green channel.
-		 **************************************************************************************************************/
-		u16 g : 4;
-
-		/**************************************************************************************************************
-		 * The blue channel.
-		 **************************************************************************************************************/
-		u16 b : 4;
-
-		/**************************************************************************************************************
-		 * The alpha channel.
-		 **************************************************************************************************************/
-		u16 a : 4;
-
-		constexpr friend bool operator==(const rgba16_4444&, const rgba16_4444&) = default;
-	};
-
-	/******************************************************************************************************************
-	 * Special packed RGBA color format.
-	 ******************************************************************************************************************/
-	struct rgba16_5551 {
-		/**************************************************************************************************************
-		 * The red channel.
-		 **************************************************************************************************************/
-		u16 r : 5;
-
-		/**************************************************************************************************************
-		 * The green channel.
-		 **************************************************************************************************************/
-		u16 g : 5;
-
-		/**************************************************************************************************************
-		 * The blue channel.
-		 **************************************************************************************************************/
-		u16 b : 5;
-
-		/**************************************************************************************************************
-		 * The alpha channel.
-		 **************************************************************************************************************/
-		u16 a : 1;
-
-		constexpr friend bool operator==(const rgba16_5551&, const rgba16_5551&) = default;
-	};
-
-	/******************************************************************************************************************
-	 * Special packed RGBA color format.
-	 ******************************************************************************************************************/
-	struct rgba32_1010102 {
-		/**************************************************************************************************************
-		 * The red channel.
-		 **************************************************************************************************************/
-		u32 r : 10;
-
-		/**************************************************************************************************************
-		 * The green channel.
-		 **************************************************************************************************************/
-		u32 g : 10;
-
-		/**************************************************************************************************************
-		 * The blue channel.
-		 **************************************************************************************************************/
-		u32 b : 10;
-
-		/**************************************************************************************************************
-		 * The alpha channel.
-		 **************************************************************************************************************/
-		u32 a : 2;
-
-		constexpr friend bool operator==(const rgba32_1010102&, const rgba32_1010102&) = default;
-	};
-
-	/******************************************************************************************************************
-	 * Special packed ABGR color format.
-	 ******************************************************************************************************************/
-	struct abgr16_4444 {
-		/**************************************************************************************************************
-		 * The alpha channel.
-		 **************************************************************************************************************/
-		u16 a : 4;
-
-		/**************************************************************************************************************
-		 * The blue channel.
-		 **************************************************************************************************************/
-		u16 b : 4;
-
-		/**************************************************************************************************************
-		 * The green channel.
-		 **************************************************************************************************************/
-		u16 g : 4;
-
-		/**************************************************************************************************************
-		 * The red channel.
-		 **************************************************************************************************************/
-		u16 r : 4;
-
-		constexpr friend bool operator==(const abgr16_4444&, const abgr16_4444&) = default;
-	};
-
-	/******************************************************************************************************************
-	 * Special packed ABGR color format.
-	 ******************************************************************************************************************/
-	struct abgr16_1555 {
-		/**************************************************************************************************************
-		 * The alpha channel.
-		 **************************************************************************************************************/
-		u16 a : 1;
-
-		/**************************************************************************************************************
-		 * The blue channel.
-		 **************************************************************************************************************/
-		u16 b : 5;
-
-		/**************************************************************************************************************
-		 * The green channel.
-		 **************************************************************************************************************/
-		u16 g : 5;
-
-		/**************************************************************************************************************
-		 * The red channel.
-		 **************************************************************************************************************/
-		u16 r : 5;
-
-		constexpr friend bool operator==(const abgr16_1555&, const abgr16_1555&) = default;
-	};
-
-	/******************************************************************************************************************
-	 * Special packed ABGR color format.
-	 ******************************************************************************************************************/
-	struct abgr32_2101010 {
-		/**************************************************************************************************************
-		 * The alpha channel.
-		 **************************************************************************************************************/
-		u32 a : 2;
-
-		/**************************************************************************************************************
-		 * The blue channel.
-		 **************************************************************************************************************/
-		u32 b : 10;
-
-		/**************************************************************************************************************
-		 * The green channel.
-		 **************************************************************************************************************/
-		u32 g : 10;
-
-		/**************************************************************************************************************
-		 * The red channel.
-		 **************************************************************************************************************/
-		u32 r : 10;
-
-		constexpr friend bool operator==(const abgr32_2101010&, const abgr32_2101010&) = default;
-	};
-
-	/******************************************************************************************************************
-	 * Special packed BGRA color format.
-	 ******************************************************************************************************************/
-	struct bgra16_4444 {
-		/**************************************************************************************************************
-		 * The blue channel.
-		 **************************************************************************************************************/
-		u16 b : 4;
-
-		/**************************************************************************************************************
-		 * The green channel.
-		 **************************************************************************************************************/
-		u16 g : 4;
-		/**************************************************************************************************************
-		 * The red channel.
-		 **************************************************************************************************************/
-		u16 r : 4;
-
-		/**************************************************************************************************************
-		 * The alpha channel.
-		 **************************************************************************************************************/
-		u16 a : 4;
-
-		constexpr friend bool operator==(const bgra16_4444&, const bgra16_4444&) = default;
-	};
-
-	/******************************************************************************************************************
-	 * Special packed BGRA color format.
-	 ******************************************************************************************************************/
-	struct bgra16_5551 {
-		/**************************************************************************************************************
-		 * The blue channel.
-		 **************************************************************************************************************/
-		u16 b : 5;
-
-		/**************************************************************************************************************
-		 * The green channel.
-		 **************************************************************************************************************/
-		u16 g : 5;
-
-		/**************************************************************************************************************
-		 * The red channel.
-		 **************************************************************************************************************/
-		u16 r : 5;
-
-		/**************************************************************************************************************
-		 * The alpha channel.
-		 **************************************************************************************************************/
-		u16 a : 1;
-
-		constexpr friend bool operator==(const bgra16_5551&, const bgra16_5551&) = default;
-	};
-
-	/******************************************************************************************************************
-	 * Special packed BGRA color format.
-	 ******************************************************************************************************************/
-	struct bgra32_1010102 {
-		/**************************************************************************************************************
-		 * The blue channel.
-		 **************************************************************************************************************/
-		u32 b : 10;
-
-		/**************************************************************************************************************
-		 * The green channel.
-		 **************************************************************************************************************/
-		u32 g : 10;
-
-		/**************************************************************************************************************
-		 * The red channel.
-		 **************************************************************************************************************/
-		u32 r : 10;
-
-		/**************************************************************************************************************
-		 * The alpha channel.
-		 **************************************************************************************************************/
-		u32 a : 2;
-
-		constexpr friend bool operator==(const bgra32_1010102&, const bgra32_1010102&) = default;
-	};
-
-	/******************************************************************************************************************
-	 * Special packed ARGB color format.
-	 ******************************************************************************************************************/
-	struct argb16_4444 {
-		/**************************************************************************************************************
-		 * The alpha channel.
-		 **************************************************************************************************************/
-		u16 a : 4;
-
-		/**************************************************************************************************************
-		 * The red channel.
-		 **************************************************************************************************************/
-		u16 r : 4;
-
-		/**************************************************************************************************************
-		 * The green channel.
-		 **************************************************************************************************************/
-		u16 g : 4;
-
-		/**************************************************************************************************************
-		 * The blue channel.
-		 **************************************************************************************************************/
-		u16 b : 4;
-
-		constexpr friend bool operator==(const argb16_4444&, const argb16_4444&) = default;
-	};
-
-	/******************************************************************************************************************
-	 * Special packed ARGB color format.
-	 ******************************************************************************************************************/
-	struct argb16_1555 {
-		/**************************************************************************************************************
-		 * The alpha channel.
-		 **************************************************************************************************************/
-		u16 a : 1;
-
-		/**************************************************************************************************************
-		 * The red channel.
-		 **************************************************************************************************************/
-		u16 r : 5;
-
-		/**************************************************************************************************************
-		 * The green channel.
-		 **************************************************************************************************************/
-		u16 g : 5;
-
-		/**************************************************************************************************************
-		 * The blue channel.
-		 **************************************************************************************************************/
-		u16 b : 5;
-
-		constexpr friend bool operator==(const argb16_1555&, const argb16_1555&) = default;
-	};
-
-	/******************************************************************************************************************
-	 * Special packed ARGB color format.
-	 ******************************************************************************************************************/
-	struct argb32_2101010 {
-		/**************************************************************************************************************
-		 * The alpha channel.
-		 **************************************************************************************************************/
-		u32 a : 2;
-
-		/**************************************************************************************************************
-		 * The red channel.
-		 **************************************************************************************************************/
-		u32 r : 10;
-
-		/**************************************************************************************************************
-		 * The green channel.
-		 **************************************************************************************************************/
-		u32 g : 10;
-
-		/**************************************************************************************************************
-		 * The blue channel.
-		 **************************************************************************************************************/
-		u32 b : 10;
-
-		constexpr friend bool operator==(const argb32_2101010&, const argb32_2101010&) = default;
-	};
-
-	/******************************************************************************************************************
-	 * Concept denoting a built-in color type (as opposed to custom castable color types).
-	 ******************************************************************************************************************/
-	template <class T>
-	concept built_in_color =
-		specialization_of<T, r> || specialization_of<T, g> || specialization_of<T, b> || specialization_of<T, rg> ||
-		specialization_of<T, rgb> || specialization_of<T, bgr> || specialization_of<T, rgba> || specialization_of<T, bgra> ||
-		one_of<T, rgb8_223, rgb16_565, bgr8_332, bgr16_565, rgba16_4444, rgba16_5551, rgba32_1010102, abgr16_4444, abgr16_1555,
-			   abgr32_2101010, bgra16_4444, bgra16_5551, bgra32_1010102, argb16_4444, argb16_1555, argb32_2101010>;
-
-	/// @}
+	inline namespace literals {
+		inline namespace color_literals {
+			// 8-bit RGB color literal.
+			consteval rgb8 operator""_rgb8(const char* str, usize length);
+			// Floating-point RGB color literal.
+			consteval rgbf operator""_rgbf(const char* str, usize length);
+			// 8-bit RGBA color literal.
+			consteval rgba8 operator""_rgba8(const char* str, usize length);
+			// Floating-point RGBA color literal.
+			consteval rgbaf operator""_rgbaf(const char* str, usize length);
+		} // namespace color_literals
+	} // namespace literals
 } // namespace tr
 
-////////////////////////////////////////////////////////////// IMPLEMENTATION /////////////////////////////////////////////////////////////
-
-template <tr::color_datatype T>
-constexpr tr::rgba<T>::rgba(T r, T g, T b, T a)
-	: r{r}, g{g}, b{b}, a{a}
-{
-}
-
-template <tr::color_datatype T>
-constexpr tr::rgba<T>::rgba(rgb<T> rgb, T a)
-	: r{rgb.r}, g{rgb.g}, b{rgb.b}, a{a}
-{
-}
-
-template <tr::color_datatype T> constexpr tr::rgba<T>& tr::rgba<T>::operator+=(const rgba& v)
-{
-	r += v.r;
-	g += v.g;
-	b += v.b;
-	a += v.a;
-	return *this;
-}
-
-template <tr::color_datatype T> constexpr tr::rgba<T>& tr::rgba<T>::operator-=(const rgba& v)
-{
-	r -= v.r;
-	g -= v.g;
-	b -= v.b;
-	a -= v.a;
-	return *this;
-}
-
-template <tr::color_datatype T> template <tr::arithmetic T1> constexpr tr::rgba<T>& tr::rgba<T>::operator*=(const T1& v)
-{
-	r *= v;
-	g *= v;
-	b *= v;
-	a *= v;
-	return *this;
-}
-
-template <tr::color_datatype T> template <tr::arithmetic T1> constexpr tr::rgba<T>& tr::rgba<T>::operator/=(const T1& v)
-{
-	r /= v;
-	g /= v;
-	b /= v;
-	a /= v;
-	return *this;
-}
-
-template <tr::color_datatype T> constexpr tr::rgba<T> tr::operator+(const rgba<T>& l, const rgba<T>& r)
-{
-	return rgba<T>{l} += r;
-}
-
-template <tr::color_datatype T> constexpr tr::rgba<T> tr::operator-(const rgba<T>& l, const rgba<T>& r)
-{
-	return rgba<T>{l} -= r;
-}
-
-template <tr::color_datatype T, tr::arithmetic T1> constexpr tr::rgba<T> tr::operator*(const rgba<T>& l, const T1& r)
-{
-	return rgba<T>{l} *= r;
-}
-
-template <tr::color_datatype T, tr::arithmetic T1> constexpr tr::rgba<T> tr::operator/(const rgba<T>& l, const T1& r)
-{
-	return rgba<T>{l} /= r;
-}
+#include "color_impl.hpp" // IWYU pragma: keep

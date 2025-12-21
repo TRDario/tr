@@ -5,8 +5,6 @@
 #include "utility/binary_io.hpp"        // IWYU pragma: export
 #include "utility/chrono.hpp"           // IWYU pragma: export
 #include "utility/color.hpp"            // IWYU pragma: export
-#include "utility/color_cast.hpp"       // IWYU pragma: export
-#include "utility/color_literals.hpp"   // IWYU pragma: export
 #include "utility/concepts.hpp"         // IWYU pragma: export
 #include "utility/cstring_view.hpp"     // IWYU pragma: export
 #include "utility/draw_geometry.hpp"    // IWYU pragma: export
