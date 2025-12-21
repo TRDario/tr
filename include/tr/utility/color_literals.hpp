@@ -1,14 +1,18 @@
 #pragma once
 #include "color.hpp"
 
-namespace tr::color_literals {
-	// 8-bit RGBA color literal.
-	consteval rgba8 operator""_rgba8(const char* str, usize length);
-} // namespace tr::color_literals
+namespace tr {
+	inline namespace literals {
+		inline namespace color_literals {
+			// 8-bit RGBA color literal.
+			consteval rgba8 operator""_rgba8(const char* str, usize length);
+		} // namespace color_literals
+	} // namespace literals
+} // namespace tr
 
 ////////////////////////////////////////////////////////////// IMPLEMENTATION /////////////////////////////////////////////////////////////
 
-consteval tr::rgba8 tr::color_literals::operator""_rgba8(const char* str, usize length)
+consteval tr::rgba8 tr::literals::color_literals::operator""_rgba8(const char* str, usize length)
 {
 	TR_ASSERT(length == 6 || length == 8, "Invalid color literal string length {} (must be 6 or 8).", length);
 	TR_ASSERT(std::ranges::all_of(

@@ -61,23 +61,23 @@ namespace tr {
 	// Converts tangent x and y values into an angle value.
 	template <arithmetic T> inline angle atan2(T y, T x);
 
-	// Inline namespace containing angle value literals.
-	inline namespace angle_literals {
-		// Degree literal.
-		consteval angle operator""_deg(long double deg);
-		// Degree literal.
-		consteval angle operator""_deg(unsigned long long deg);
-		// Radian literal.
-		consteval angle operator""_rad(long double rad);
-		// Radian literal.
-		consteval angle operator""_rad(unsigned long long rad);
-		// Turns literal.
-		consteval angle operator""_turns(long double tr);
-		// Turns literal.
-		consteval angle operator""_turns(unsigned long long tr);
-	} // namespace angle_literals
-
-	/// @}
+	inline namespace literals {
+		// Angle literals.
+		inline namespace angle_literals {
+			// Degree literal.
+			consteval angle operator""_deg(long double deg);
+			// Degree literal.
+			consteval angle operator""_deg(unsigned long long deg);
+			// Radian literal.
+			consteval angle operator""_rad(long double rad);
+			// Radian literal.
+			consteval angle operator""_rad(unsigned long long rad);
+			// Turns literal.
+			consteval angle operator""_turns(long double tr);
+			// Turns literal.
+			consteval angle operator""_turns(unsigned long long tr);
+		} // namespace angle_literals
+	} // namespace literals
 } // namespace tr
 
 // Angle formatter.
@@ -107,7 +107,7 @@ template <> class TR_FMT::formatter<tr::angle> : public TR_FMT::formatter<float>
 		return TR_FMT::formatter<float>::parse(ctx);
 	}
 
-	template <typename FormatContext> constexpr auto format(const tr::angle& p, FormatContext& ctx) const
+	template <class FormatContext> constexpr auto format(const tr::angle& p, FormatContext& ctx) const
 	{
 		switch (m_unit) {
 		case unit::RADS:

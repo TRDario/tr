@@ -135,32 +135,32 @@ inline float tr::angle::tan() const
 	return std::tan(m_rads);
 }
 
-consteval tr::angle tr::angle_literals::operator""_deg(long double deg)
+consteval tr::angle tr::literals::angle_literals::operator""_deg(long double deg)
 {
 	return degs(float(deg));
 }
 
-consteval tr::angle tr::angle_literals::operator""_deg(unsigned long long deg)
+consteval tr::angle tr::literals::angle_literals::operator""_deg(unsigned long long deg)
 {
 	return degs(float(deg));
 }
 
-consteval tr::angle tr::angle_literals::operator""_rad(long double rad)
+consteval tr::angle tr::literals::angle_literals::operator""_rad(long double rad)
 {
 	return rads(float(rad));
 }
 
-consteval tr::angle tr::angle_literals::operator""_rad(unsigned long long rad)
+consteval tr::angle tr::literals::angle_literals::operator""_rad(unsigned long long rad)
 {
 	return rads(float(rad));
 }
 
-consteval tr::angle tr::angle_literals::operator""_turns(long double tr)
+consteval tr::angle tr::literals::angle_literals::operator""_turns(long double tr)
 {
 	return turns(float(tr));
 }
 
-consteval tr::angle tr::angle_literals::operator""_turns(unsigned long long tr)
+consteval tr::angle tr::literals::angle_literals::operator""_turns(unsigned long long tr)
 {
 	return turns(float(tr));
 }
