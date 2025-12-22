@@ -712,6 +712,54 @@ tr::gfx::vertex_shader tr::gfx::load_vertex_shader(const std::filesystem::path& 
 	}
 }
 
+tr::gfx::tessellation_control_shader::tessellation_control_shader(cstring_view source)
+	: shader_base{source, GL_TESS_CONTROL_SHADER}
+{
+}
+
+tr::gfx::tessellation_control_shader tr::gfx::load_tessellation_control_shader(const std::filesystem::path& path)
+{
+	try {
+		std::ifstream file{open_file_r(path)};
+		tessellation_control_shader shader{std::string{std::istreambuf_iterator<char>{file}, std::istreambuf_iterator<char>{}}};
+		TR_SET_LABEL(shader, path.filename().string());
+		return shader;
+	}
+	catch (shader_load_error& err) {
+		throw shader_load_error{path.string(), std::string{err.details()}};
+	}
+	catch (file_not_found&) {
+		throw shader_load_error{path.string(), "File not found."};
+	}
+	catch (file_open_error&) {
+		throw shader_load_error{path.string(), "An error occurred when trying to open the file."};
+	}
+}
+
+tr::gfx::tessellation_evaluation_shader::tessellation_evaluation_shader(cstring_view source)
+	: shader_base{source, GL_TESS_EVALUATION_SHADER}
+{
+}
+
+tr::gfx::tessellation_evaluation_shader tr::gfx::load_tessellation_evaluation_shader(const std::filesystem::path& path)
+{
+	try {
+		std::ifstream file{open_file_r(path)};
+		tessellation_evaluation_shader shader{std::string{std::istreambuf_iterator<char>{file}, std::istreambuf_iterator<char>{}}};
+		TR_SET_LABEL(shader, path.filename().string());
+		return shader;
+	}
+	catch (shader_load_error& err) {
+		throw shader_load_error{path.string(), std::string{err.details()}};
+	}
+	catch (file_not_found&) {
+		throw shader_load_error{path.string(), "File not found."};
+	}
+	catch (file_open_error&) {
+		throw shader_load_error{path.string(), "An error occurred when trying to open the file."};
+	}
+}
+
 tr::gfx::fragment_shader::fragment_shader(cstring_view source)
 	: shader_base{source, GL_FRAGMENT_SHADER}
 {

@@ -1,7 +1,16 @@
 #include "../../include/tr/sysgfx/shader_pipeline.hpp"
 #include "../../include/tr/sysgfx/gl_call.hpp"
+#include "tr/sysgfx/shader.hpp"
+
+tr::gfx::shader_pipeline::shader_pipeline()
+{
+	GLuint ppo;
+	TR_GL_CALL(glCreateProgramPipelines, 1, &ppo);
+	m_ppo.reset(ppo);
+}
 
 tr::gfx::shader_pipeline::shader_pipeline(const vertex_shader& vshader, const fragment_shader& fshader)
+	: shader_pipeline{}
 {
 #ifdef TR_ENABLE_GL_CHECKS
 	TR_ASSERT(vshader.m_outputs.size() == fshader.m_inputs.size(),
@@ -20,11 +29,19 @@ tr::gfx::shader_pipeline::shader_pipeline(const vertex_shader& vshader, const fr
 	}
 #endif
 
-	GLuint ppo;
-	TR_GL_CALL(glCreateProgramPipelines, 1, &ppo);
-	m_ppo.reset(ppo);
+	TR_GL_CALL(glUseProgramStages, m_ppo.get(), GL_VERTEX_SHADER_BIT, vshader.m_program.get());
+	TR_GL_CALL(glUseProgramStages, m_ppo.get(), GL_FRAGMENT_SHADER_BIT, fshader.m_program.get());
+}
+
+tr::gfx::shader_pipeline::shader_pipeline(const vertex_shader& vshader, const tessellation_control_shader& tcshader,
+										  const tessellation_evaluation_shader& teshader, const fragment_shader& fshader)
+	: shader_pipeline{}
+{
+	// TO-DO: Implement checks.
 
 	TR_GL_CALL(glUseProgramStages, m_ppo.get(), GL_VERTEX_SHADER_BIT, vshader.m_program.get());
+	TR_GL_CALL(glUseProgramStages, m_ppo.get(), GL_TESS_CONTROL_SHADER_BIT, tcshader.m_program.get());
+	TR_GL_CALL(glUseProgramStages, m_ppo.get(), GL_TESS_EVALUATION_SHADER_BIT, teshader.m_program.get());
 	TR_GL_CALL(glUseProgramStages, m_ppo.get(), GL_FRAGMENT_SHADER_BIT, fshader.m_program.get());
 }
 
@@ -93,6 +110,77 @@ void tr::gfx::owning_shader_pipeline::set_label(std::string_view label)
 }
 
 std::string tr::gfx::owning_shader_pipeline::label() const
+{
+	return m_base.label();
+}
+#endif
+
+//
+
+tr::gfx::owning_tessellation_shader_pipeline::owning_tessellation_shader_pipeline(gfx::vertex_shader&& vshader,
+																				  gfx::tessellation_control_shader&& tcshader,
+																				  gfx::tessellation_evaluation_shader&& teshader,
+																				  gfx::fragment_shader&& fshader)
+	: m_vshader{std::move(vshader)}
+	, m_tcshader{std::move(tcshader)}
+	, m_teshader{std::move(teshader)}
+	, m_fshader{std::move(fshader)}
+	, m_base{m_vshader, m_tcshader, m_teshader, m_fshader}
+{
+}
+
+tr::gfx::owning_tessellation_shader_pipeline::operator const tr::gfx::shader_pipeline&() const
+{
+	return m_base;
+}
+
+tr::gfx::vertex_shader& tr::gfx::owning_tessellation_shader_pipeline::vertex_shader()
+{
+	return m_vshader;
+}
+
+const tr::gfx::vertex_shader& tr::gfx::owning_tessellation_shader_pipeline::vertex_shader() const
+{
+	return m_vshader;
+}
+
+tr::gfx::tessellation_control_shader& tr::gfx::owning_tessellation_shader_pipeline::tessellation_control_shader()
+{
+	return m_tcshader;
+}
+
+const tr::gfx::tessellation_control_shader& tr::gfx::owning_tessellation_shader_pipeline::tessellation_control_shader() const
+{
+	return m_tcshader;
+}
+
+tr::gfx::tessellation_evaluation_shader& tr::gfx::owning_tessellation_shader_pipeline::tessellation_evaluation_shader()
+{
+	return m_teshader;
+}
+
+const tr::gfx::tessellation_evaluation_shader& tr::gfx::owning_tessellation_shader_pipeline::tessellation_evaluation_shader() const
+{
+	return m_teshader;
+}
+
+tr::gfx::fragment_shader& tr::gfx::owning_tessellation_shader_pipeline::fragment_shader()
+{
+	return m_fshader;
+}
+
+const tr::gfx::fragment_shader& tr::gfx::owning_tessellation_shader_pipeline::fragment_shader() const
+{
+	return m_fshader;
+}
+
+#ifdef TR_ENABLE_ASSERTS
+void tr::gfx::owning_tessellation_shader_pipeline::set_label(std::string_view label)
+{
+	m_base.set_label(label);
+}
+
+std::string tr::gfx::owning_tessellation_shader_pipeline::label() const
 {
 	return m_base.label();
 }

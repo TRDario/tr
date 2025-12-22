@@ -190,6 +190,28 @@ namespace tr::gfx {
 	// May throw: shader_load_error.
 	vertex_shader load_vertex_shader(const std::filesystem::path& path);
 
+	// GPU tessellation control shader program.
+	class tessellation_control_shader : public shader_base {
+	  public:
+		// Creates a tessellation control shader from source code.
+		// May throw: shader_load_error.
+		explicit tessellation_control_shader(cstring_view source);
+	};
+	// Loads a tessellation control shader from file.
+	// May throw: shader_load_error.
+	tessellation_control_shader load_tessellation_control_shader(const std::filesystem::path& path);
+
+	// GPU tessellation evaluation shader program.
+	class tessellation_evaluation_shader : public shader_base {
+	  public:
+		// Creates a tessellation evaluation shader from source code.
+		// May throw: shader_load_error.
+		explicit tessellation_evaluation_shader(cstring_view source);
+	};
+	// Loads a tessellation evaluation shader from file.
+	// May throw: shader_load_error.
+	tessellation_evaluation_shader load_tessellation_evaluation_shader(const std::filesystem::path& path);
+
 	// GPU fragment shader program.
 	class fragment_shader : public shader_base {
 	  public:

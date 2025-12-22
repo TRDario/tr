@@ -16,13 +16,14 @@ namespace tr::gfx {
 
 	// Rendering primitives.
 	enum class primitive {
-		POINTS,     // The vertices are drawn as individual points.
-		LINES,      // The vertices are drawn in pairs as lines.
-		LINE_LOOP,  // The vertices are drawn as a continuous line loop.
-		LINE_STRIP, // The vertices are drawn as a continuous line strip.
-		TRIS,       // The vertices are drawn in groups of three as triangles.
-		TRI_STRIP,  // The vertices are drawn as a continuous triangle strip.
-		TRI_FAN     // The vertices are drawn as a continuous triangle fan.
+		POINTS,      // The vertices are drawn as individual points.
+		LINES,       // The vertices are drawn in pairs as lines.
+		LINE_LOOP,   // The vertices are drawn as a continuous line loop.
+		LINE_STRIP,  // The vertices are drawn as a continuous line strip.
+		TRIS,        // The vertices are drawn in groups of three as triangles.
+		TRI_STRIP,   // The vertices are drawn as a continuous triangle strip.
+		TRI_FAN,     // The vertices are drawn as a continuous triangle fan.
+		PATCHES = 14 // The vertices are sent to the tessellation shaders as patches.
 	};
 
 	// Sets whether face culling should be used.
@@ -36,6 +37,8 @@ namespace tr::gfx {
 	void reset_render_target();
 	// Sets the active shader pipeline.
 	void set_shader_pipeline(const shader_pipeline& pipeline);
+	// Sets the number of vertices per tessellation patch.
+	void set_tessellation_patch_size(int vertices);
 	// Sets the active blending mode.
 	void set_blend_mode(const blend_mode& blend_mode);
 	// Sets the active vertex format.

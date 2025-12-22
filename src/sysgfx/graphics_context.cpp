@@ -70,6 +70,13 @@ void tr::gfx::set_shader_pipeline(const shader_pipeline& pipeline)
 	TR_GL_CALL(glBindProgramPipeline, pipeline.m_ppo.get());
 }
 
+void tr::gfx::set_tessellation_patch_size(int vertices)
+{
+	TR_ASSERT(g_ogl_context != nullptr, "Tried to set tessellation patch size before opening the window.");
+
+	TR_GL_CALL(glPatchParameteri, GL_PATCH_VERTICES, vertices);
+}
+
 void tr::gfx::set_blend_mode(const blend_mode& bm)
 {
 	TR_ASSERT(g_ogl_context != nullptr, "Tried to set graphics context blending mode before opening the window.");
