@@ -26,6 +26,8 @@ namespace tr::gfx {
 		PATCHES = 14 // The vertices are sent to the tessellation shaders as patches.
 	};
 
+	// Sets whether rendering should be done as a wireframe.
+	void set_wireframe_mode(bool arg);
 	// Sets whether face culling should be used.
 	void set_face_culling(bool arg);
 	// Sets whether depth testing should be used.

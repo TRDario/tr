@@ -24,6 +24,13 @@ tr::u32 tr::gfx::alloc_renderer_id()
 	return id++;
 }
 
+void tr::gfx::set_wireframe_mode(bool arg)
+{
+	TR_ASSERT(g_ogl_context != nullptr, "Tried to set wireframe mode before opening the window.");
+
+	TR_GL_CALL(glPolygonMode, GL_FRONT_AND_BACK, arg ? GL_LINE : GL_FILL);
+}
+
 void tr::gfx::set_face_culling(bool arg)
 {
 	TR_ASSERT(g_ogl_context != nullptr, "Tried to set face culling before opening the window.");
