@@ -26,7 +26,7 @@ tr::gfx::renderer_id tr::gfx::alloc_renderer_id()
 
 bool tr::gfx::should_setup_context(renderer_id id)
 {
-	const bool result{g_active_renderer == id};
+	const bool result{g_active_renderer != id};
 	g_active_renderer = id;
 	return result;
 }
