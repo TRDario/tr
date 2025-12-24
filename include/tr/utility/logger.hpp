@@ -73,7 +73,7 @@ template <class... Args> void tr::logger::log(severity level, TR_FMT::format_str
 	const std::string severity_str{TR_FMT::format("[{}] ", char(level))};
 	const std::string fmt_str{TR_FMT::format(fmt, std::forward<Args>(args)...)};
 
-	println("{}[{}]{}{}", time_str, m_prefix, severity_str, fmt_str);
+	println("{}[{}] {}{}", time_str, m_prefix, severity_str, fmt_str);
 	if (!m_path.empty()) {
 		std::ofstream file{m_path, std::ios::app};
 		if (file.is_open()) {
