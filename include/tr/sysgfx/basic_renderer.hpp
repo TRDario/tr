@@ -8,14 +8,14 @@
 #include "texture.hpp"
 
 namespace tr::gfx {
-	// Simple 2D renderer color mesh allocation reference.
+	// Simple basic renderer color mesh allocation reference.
 	struct simple_color_mesh_ref {
 		// Mesh position data.
 		std::ranges::subrange<std::vector<glm::vec2>::iterator> positions;
 		// Mesh color data.
 		std::ranges::subrange<std::vector<tr::rgba8>::iterator> colors;
 	};
-	// Full 2D renderer color mesh allocation reference.
+	// Full basic renderer color mesh allocation reference.
 	struct color_mesh_ref {
 		// Mesh position data.
 		std::ranges::subrange<std::vector<glm::vec2>::iterator> positions;
@@ -26,7 +26,7 @@ namespace tr::gfx {
 		// The base index.
 		u16 base_index;
 	};
-	// Simple 2D renderer textured mesh allocation reference.
+	// Simple basic renderer textured mesh allocation reference.
 	struct simple_textured_mesh_ref {
 		// Mesh position data.
 		std::ranges::subrange<std::vector<glm::vec2>::iterator> positions;
@@ -35,7 +35,7 @@ namespace tr::gfx {
 		// Mesh tint data.
 		std::ranges::subrange<std::vector<tr::rgba8>::iterator> tints;
 	};
-	// Full 2D renderer textured mesh allocation reference.
+	// Full basic renderer textured mesh allocation reference.
 	struct textured_mesh_ref {
 		// Mesh position data.
 		std::ranges::subrange<std::vector<glm::vec2>::iterator> positions;
@@ -49,12 +49,14 @@ namespace tr::gfx {
 		u16 base_index;
 	};
 
-	class renderer_2d {
+	// Basic renderer for batched rawing in 2D.
+	class basic_renderer {
 	  private:
 	  public:
 		class staggered_draw_manager;
 
-		renderer_2d();
+		// Creates a basic renderer.
+		basic_renderer();
 
 		// Sets the default transformation matrix used by primitives on any layer without its own default transform.
 		void set_default_transform(const glm::mat4& mat);
@@ -180,8 +182,8 @@ namespace tr::gfx {
 						usize space_needed);
 	};
 
-	// Manager class to which the 2D renderer delegates handling a staggered drawing process.
-	class renderer_2d::staggered_draw_manager {
+	// Manager class to which the basic renderer delegates handling a staggered drawing process.
+	class basic_renderer::staggered_draw_manager {
 	  public:
 		staggered_draw_manager(staggered_draw_manager&& r) noexcept;
 		// Cleans up the drawing data and unlocks the parent renderer.
@@ -204,14 +206,14 @@ namespace tr::gfx {
 		};
 
 		// Reference to the parent renderer.
-		renderer_2d* m_renderer;
+		basic_renderer* m_renderer;
 		// The range of meshes to draw.
 		std::ranges::subrange<std::vector<mesh>::iterator> m_range;
 		// The drawing data.
 		std::vector<mesh_draw_info> m_data;
 
 		// Creates a staggered draw manager.
-		staggered_draw_manager(renderer_2d& renderer, std::ranges::subrange<std::vector<mesh>::iterator> range);
+		staggered_draw_manager(basic_renderer& renderer, std::ranges::subrange<std::vector<mesh>::iterator> range);
 
 		// Sets up the graphical context for drawing.
 		void setup_context();
@@ -221,6 +223,6 @@ namespace tr::gfx {
 		// Cleans up the drawing data and unlocks the parent renderer.
 		void clean_up();
 
-		friend class renderer_2d;
+		friend class basic_renderer;
 	};
 } // namespace tr::gfx

@@ -59,6 +59,8 @@ if(TR_BUILD_SYSGFX)
 		src/sysgfx/gl_call.cpp
 		src/sysgfx/glad.cpp
 		src/sysgfx/backbuffer.cpp
+		src/sysgfx/basic_renderer.cpp
+		src/sysgfx/basic_renderer_staggered_draw_manager.cpp
 		src/sysgfx/bitmap_iterators.cpp
 		src/sysgfx/bitmap.cpp
 		src/sysgfx/buffer_map.cpp
@@ -77,8 +79,6 @@ if(TR_BUILD_SYSGFX)
 		src/sysgfx/mouse.cpp
 		src/sysgfx/path.cpp
 		src/sysgfx/render_target.cpp
-		src/sysgfx/renderer_2d.cpp
-		src/sysgfx/renderer_2d_staggered_draw_manager.cpp
 		src/sysgfx/shader_buffer.cpp
 		src/sysgfx/shader_pipeline.cpp
 		src/sysgfx/shader.cpp

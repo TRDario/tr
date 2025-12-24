@@ -1,6 +1,7 @@
 #pragma once
 #include "sysgfx/atlas.hpp"            // IWYU pragma: export
 #include "sysgfx/backbuffer.hpp"       // IWYU pragma: export
+#include "sysgfx/basic_renderer.hpp"   // IWYU pragma: export
 #include "sysgfx/bitmap.hpp"           // IWYU pragma: export
 #include "sysgfx/bitmap_iterators.hpp" // IWYU pragma: export
 #include "sysgfx/blending.hpp"         // IWYU pragma: export
@@ -23,7 +24,6 @@
 #include "sysgfx/mouse_events.hpp"     // IWYU pragma: export
 #include "sysgfx/path.hpp"             // IWYU pragma: export
 #include "sysgfx/render_target.hpp"    // IWYU pragma: export
-#include "sysgfx/renderer_2d.hpp"      // IWYU pragma: export
 #include "sysgfx/shader.hpp"           // IWYU pragma: export
 #include "sysgfx/shader_buffer.hpp"    // IWYU pragma: export
 #include "sysgfx/shader_pipeline.hpp"  // IWYU pragma: export
