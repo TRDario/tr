@@ -17,6 +17,7 @@ endif()
 
 include(dependencies.cmake)
 include(defines.cmake)
+include(generate_embeddable.cmake)
 include(target_template.cmake)
 
 add_library(tr STATIC)
@@ -45,7 +46,15 @@ target_link_libraries(tr glm::glm lz4::lz4)
 if(NOT TR_HAS_STD_FORMAT)
 	target_link_libraries(tr fmt::fmt)
 endif()
+
 if(TR_BUILD_SYSGFX)
+	tr_generate_embeddable_string(resources/basic_renderer.vert resources/generated/BASIC_RENDERER_VERT.hpp BASIC_RENDERER_VERT)
+	tr_generate_embeddable_string(resources/basic_renderer.frag resources/generated/BASIC_RENDERER_FRAG.hpp BASIC_RENDERER_FRAG)
+	tr_generate_embeddable_string(resources/circle_renderer.vert resources/generated/CIRCLE_RENDERER_VERT.hpp CIRCLE_RENDERER_VERT)
+	tr_generate_embeddable_string(resources/circle_renderer.frag resources/generated/CIRCLE_RENDERER_FRAG.hpp CIRCLE_RENDERER_FRAG)
+	tr_generate_embeddable_string(resources/debug_renderer.vert resources/generated/DEBUG_RENDERER_VERT.hpp DEBUG_RENDERER_VERT)
+	tr_generate_embeddable_string(resources/debug_renderer.frag resources/generated/DEBUG_RENDERER_FRAG.hpp DEBUG_RENDERER_FRAG)
+	tr_generate_embeddable_binary(resources/debug_font.bmp resources/generated/DEBUG_RENDERER_FONT.hpp DEBUG_RENDERER_FONT)
 	target_sources(tr PRIVATE
 		src/sysgfx/gl_call.cpp
 		src/sysgfx/glad.cpp

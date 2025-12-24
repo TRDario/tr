@@ -1,28 +1,20 @@
 #include "../include/tr/sysgfx/circle_renderer.hpp"
 
 namespace tr::gfx {
+#include "../../resources/generated/CIRCLE_RENDERER_FRAG.hpp"
+#include "../../resources/generated/CIRCLE_RENDERER_VERT.hpp"
+
 	// Circle renderer vertex format.
 	constexpr std::array<vertex_binding, 2> CIRCLE_FORMAT_ATTRIBUTES{{
 		{NOT_INSTANCED, vertex_attributes<glm::u8vec2>::list},
 		{1, unpacked_vertex_attributes<glm::vec2, float, float, rgba8, rgba8>::list},
 	}};
-	// Circle renderer vertex shader.
-	constexpr const char* CIRCLE_RENDERER_VERT_SRC{
-		"#version 450\n#define L(l) layout(location=l)\nL(0)uniform mat4 t;L(1)uniform float R;L(0)in vec2 p;L(1)in vec2 c;L(2)in "
-		"float r;L(3)in float T;L(4)in vec4 f;L(5)in vec4 o;out gl_PerVertex{vec4 gl_Position;};L(0)out vec2 u;L(1)flat out float "
-		"s;L(2)flat out vec4 F;L(3)flat out vec4 O;void main(){float "
-		"h=T/2,v=r+h,S=v+(1/R);gl_Position=t*vec4(c+S*2*(p-0.5),0,1);u=(p*2-1)*(S/v);s=(r-h)/v;F=f;O=o;}"};
-	// Circle renderer fragment shader.
-	constexpr const char* CIRCLE_RENDERER_FRAG_SRC{
-		"#version 450\n#define L(l) layout(location=l)\nL(0)in vec2 u;L(1)flat in float s;L(2)flat in vec4 f;L(3)flat in vec4 o;L(0)"
-		"out vec4 c;void main(){float D=length(u),d=fwidth(D),h=d/2;if(D<s-h)c=f;else if(D<=s+h)c=mix(o,f,(s-D+h)/d);else "
-		"if(D<=1-h)c=o;else if(D<=1+h)c=mix(vec4(o.rgb,0),o,(1-D+h)/d);else c=vec4(o.rgb,0);}"};
 } // namespace tr::gfx
 
 //
 
 tr::gfx::circle_renderer::circle_renderer(float render_scale)
-	: m_pipeline{vertex_shader{CIRCLE_RENDERER_VERT_SRC}, fragment_shader{CIRCLE_RENDERER_FRAG_SRC}}
+	: m_pipeline{vertex_shader{CIRCLE_RENDERER_VERT}, fragment_shader{CIRCLE_RENDERER_FRAG}}
 	, m_vertex_format{CIRCLE_FORMAT_ATTRIBUTES}
 	, m_quad_vertices{std::array<glm::u8vec2, 4>{{{0, 0}, {0, 1}, {1, 1}, {1, 0}}}}
 {

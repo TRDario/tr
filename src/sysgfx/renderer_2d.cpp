@@ -4,24 +4,17 @@
 #include "../../include/tr/sysgfx/texture.hpp"
 
 namespace tr::gfx {
+#include "../../resources/generated/BASIC_RENDERER_FRAG.hpp"
+#include "../../resources/generated/BASIC_RENDERER_VERT.hpp"
+
 	// Untextured UV sentinel.
 	inline constexpr glm::vec2 UNTEXTURED_UV{-100, -100};
-	// Vertex shader source code.
-	inline constexpr cstring_view RENDERER_2D_VERT_SRC{
-		"#version 450\n#define L(l) layout(location=l)\nL(0)uniform mat4 m;L(0)in vec2 p;L(1)in vec2 u;L(2)in vec4 c;out gl_PerVertex{vec4 "
-		"gl_Position;};L(0)out vec2 U;L(1)out vec4 C;void main(){U=u;C=c;gl_Position=m*vec4(p,0,1);}",
-	};
-	// Fragment shader source code.
-	inline constexpr cstring_view RENDERER_2D_FRAG_SRC{
-		"#version 450\n#define L(l) layout(location=l)\nL(1)uniform sampler2D t;L(0)in vec2 u;L(1)in vec4 c;L(0)out vec4 C;void "
-		"main(){C=u.x==-100?c:c*texture(t,u);}",
-	};
 } // namespace tr::gfx
 
 //
 
 tr::gfx::renderer_2d::renderer_2d()
-	: m_pipeline{vertex_shader{RENDERER_2D_VERT_SRC}, fragment_shader{RENDERER_2D_FRAG_SRC}}
+	: m_pipeline{vertex_shader{BASIC_RENDERER_VERT}, fragment_shader{BASIC_RENDERER_FRAG}}
 {
 	TR_SET_LABEL(m_pipeline, "(tr) 2D Renderer Pipeline");
 	TR_SET_LABEL(m_pipeline.vertex_shader(), "(tr) 2D Renderer Vertex Shader");
