@@ -9,10 +9,18 @@ namespace tr::gfx {
 	class shader_pipeline;
 	class static_index_buffer;
 
-	// The ID used to represent no particular renderer being used.
-	inline constexpr u32 NO_RENDERER{0};
+	// Renderer ID.
+	enum class renderer_id : u32 {
+		NO_RENDERER,     // No particular renderer is being used.
+		DEBUG_RENDERER,  // tr::gfx::debug_renderer
+		BASIC_RENDERER,  // tr::gfx::basic_renderer
+		CIRCLE_RENDERER, // tr::gfx::circle_renderer
+		IMGUI_RENDERER   // tr::ImGui::Draw
+	};
 	// Allocates a fresh renderer ID.
-	u32 alloc_renderer_id();
+	renderer_id alloc_renderer_id();
+	// Checks whether the passed renderer ID is the active renderer, sets it as active and returns true if not.
+	bool should_setup_context(renderer_id id);
 
 	// Rendering primitives.
 	enum class primitive {
@@ -57,9 +65,6 @@ namespace tr::gfx {
 	void set_index_buffer(const static_index_buffer& buffer);
 	// Sets the active index buffer.
 	void set_index_buffer(const dyn_index_buffer& buffer);
-
-	// Flag hinting the currently setup renderer.
-	inline u32 active_renderer;
 
 	// Draws a mesh from a vertex buffer.
 	void draw(primitive type, usize offset, usize vertices);

@@ -1,10 +1,5 @@
 #include "../../include/tr/sysgfx/renderer_2d.hpp"
 
-namespace tr::gfx {
-	// 2D renderer ID.
-	constexpr u32 RENDERER_2D_ID{3};
-} // namespace tr::gfx
-
 tr::gfx::renderer_2d::staggered_draw_manager::staggered_draw_manager(renderer_2d& renderer,
 																	 std::ranges::subrange<std::vector<mesh>::iterator> range)
 	: m_renderer{&renderer}, m_range{range}
@@ -117,8 +112,7 @@ void tr::gfx::renderer_2d::staggered_draw_manager::draw(const render_target& tar
 
 void tr::gfx::renderer_2d::staggered_draw_manager::setup_context()
 {
-	if (active_renderer != RENDERER_2D_ID) {
-		active_renderer = RENDERER_2D_ID;
+	if (should_setup_context(renderer_id::BASIC_RENDERER)) {
 		set_face_culling(false);
 		set_depth_test(false);
 		set_shader_pipeline(m_renderer->m_pipeline);

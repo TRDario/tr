@@ -17,17 +17,15 @@ namespace tr::gfx {
 		{1, unpacked_vertex_attributes<glm::u8vec2, u8, u8, rgba8, rgba8>::list},
 	}};
 	// Debug vertex shader.
-	inline constexpr cstring_view DEBUG_RENDERER_VERT_SRC =
+	constexpr cstring_view DEBUG_RENDERER_VERT_SRC =
 		"#version 450\n#define L(l) layout(location=l)\nL(0)uniform vec2 r;L(1)uniform float s;L(0)in vec2 p;L(1)in vec2 P;L(2)in float "
 		"R;L(3)in float c;L(4)in vec4 t;L(5)in vec4 b;out gl_PerVertex{vec4 gl_Position;};L(0)out vec2 o;L(1)out vec4 T;L(2)out vec4 "
 		"B;void main(){o=(vec2(mod(c,16),floor(c/16))+p)/16;T=t;B=b;vec2 "
 		"F;if(R==1){F=P*8*s;F.x=r.x-F.x;F+=p*8*s;}else{F=(p+P)*8*s;}gl_Position=vec4(F.x/r.x*2-1,-F.y/r.y*2+1,0,1);}";
 	// Debug fragment shader.
-	inline constexpr cstring_view DEBUG_RENDERER_FRAG_SRC =
+	constexpr cstring_view DEBUG_RENDERER_FRAG_SRC =
 		"#version 450\n#define L(l) layout(location=l)\nL(2)uniform sampler2D t;L(0)in vec2 u;L(1)in vec4 c;L(2)in "
 		"vec4 b;L(0)out vec4 o;void main(){o=texture(t,u).r==1?c:b;}";
-	// Debug renderer ID.
-	inline constexpr u32 DEBUG_RENDERER_ID{2};
 
 	// Context passed to text formatting functions.
 	struct debug_renderer::context {
@@ -172,8 +170,7 @@ void tr::gfx::debug_renderer::draw()
 		m_pipeline.vertex_shader().set_uniform(0, glm::vec2{backbuffer_size()});
 
 		set_render_target(backbuffer_render_target());
-		if (active_renderer != DEBUG_RENDERER_ID) {
-			active_renderer = DEBUG_RENDERER_ID;
+		if (should_setup_context(renderer_id::DEBUG_RENDERER)) {
 			set_face_culling(false);
 			set_depth_test(false);
 			set_blend_mode(ALPHA_BLENDING);

@@ -1,6 +1,6 @@
-#include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/blending.hpp"
 #include "../../include/tr/sysgfx/gl_call.hpp"
+#include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/impl.hpp"
 #include "../../include/tr/sysgfx/index_buffer.hpp"
 #include "../../include/tr/sysgfx/shader_pipeline.hpp"
@@ -18,10 +18,17 @@ namespace tr::gfx {
 } // namespace tr::gfx
 #endif
 
-tr::u32 tr::gfx::alloc_renderer_id()
+tr::gfx::renderer_id tr::gfx::alloc_renderer_id()
 {
 	static u32 id{1000};
-	return id++;
+	return tr::gfx::renderer_id{id++};
+}
+
+bool tr::gfx::should_setup_context(renderer_id id)
+{
+	const bool result{g_active_renderer == id};
+	g_active_renderer = id;
+	return result;
 }
 
 void tr::gfx::set_wireframe_mode(bool arg)

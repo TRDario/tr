@@ -1,13 +1,11 @@
-#include "../../include/tr/sysgfx/renderer_2d.hpp"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
+#include "../../include/tr/sysgfx/renderer_2d.hpp"
 #include "../../include/tr/sysgfx/shader_pipeline.hpp"
 #include "../../include/tr/sysgfx/texture.hpp"
 
 namespace tr::gfx {
 	// Untextured UV sentinel.
 	inline constexpr glm::vec2 UNTEXTURED_UV{-100, -100};
-	// 2D renderer ID.
-	inline constexpr u32 RENDERER_2D_ID{3};
 	// Vertex shader source code.
 	inline constexpr cstring_view RENDERER_2D_VERT_SRC{
 		"#version 450\n#define L(l) layout(location=l)\nL(0)uniform mat4 m;L(0)in vec2 p;L(1)in vec2 u;L(2)in vec4 c;out gl_PerVertex{vec4 "

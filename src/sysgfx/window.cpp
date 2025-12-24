@@ -1,10 +1,10 @@
-﻿#include "../../include/tr/sysgfx/window.hpp"
-#include "../../include/tr/sysgfx/bitmap.hpp"
+﻿#include "../../include/tr/sysgfx/bitmap.hpp"
 #include "../../include/tr/sysgfx/display.hpp"
 #include "../../include/tr/sysgfx/glad.h"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/impl.hpp"
 #include "../../include/tr/sysgfx/main.hpp"
+#include "../../include/tr/sysgfx/window.hpp"
 #include "tr/sysgfx/gl_call.hpp"
 #include <SDL3/SDL.h>
 
@@ -219,7 +219,7 @@ void tr::sys::open_fullscreen_window(cstring_view title, std::optional<glm::ivec
 
 void tr::sys::close_window()
 {
-	gfx::active_renderer = gfx::NO_RENDERER;
+	gfx::g_active_renderer = gfx::renderer_id::NO_RENDERER;
 	gfx::g_current_render_target.reset();
 	gfx::g_vertex2_format.reset();
 	SDL_GL_DestroyContext(gfx::g_ogl_context);

@@ -3,8 +3,6 @@
 namespace tr::gfx {
 	// Circle renderer instance attributes.
 	template <> struct vertex_attributes<circle_renderer::circle> : unpacked_vertex_attributes<glm::vec2, float, float, rgba8, rgba8> {};
-	// Circle renderer ID.
-	constexpr u32 CIRCLE_RENDERER_ID{5};
 } // namespace tr::gfx
 
 //
@@ -94,8 +92,7 @@ void tr::gfx::circle_renderer::staggered_draw_manager::draw(const render_target&
 
 void tr::gfx::circle_renderer::staggered_draw_manager::setup_context()
 {
-	if (active_renderer != CIRCLE_RENDERER_ID) {
-		active_renderer = CIRCLE_RENDERER_ID;
+	if (should_setup_context(renderer_id::CIRCLE_RENDERER)) {
 		set_face_culling(false);
 		set_depth_test(false);
 		set_shader_pipeline(m_renderer->m_pipeline);
