@@ -1,5 +1,6 @@
 #pragma once
 #include "chrono.hpp"
+#include "print.hpp"
 
 namespace tr {
 	// Log message severity levels.
@@ -72,11 +73,11 @@ template <class... Args> void tr::logger::log(severity level, TR_FMT::format_str
 	const std::string severity_str{TR_FMT::format("[{}] ", char(level))};
 	const std::string fmt_str{TR_FMT::format(fmt, std::forward<Args>(args)...)};
 
-	std::cout << time_str << "[" << m_prefix << "] " << severity_str << fmt_str << "\n";
+	println("{}[{}]{}{}", time_str, m_prefix, severity_str, fmt_str);
 	if (!m_path.empty()) {
 		std::ofstream file{m_path, std::ios::app};
 		if (file.is_open()) {
-			file << time_str << severity_str << fmt_str << "\n";
+			println_to(file, "{}{}{}", time_str, severity_str, fmt_str);
 		}
 	}
 }
@@ -86,11 +87,11 @@ template <class... Args> void tr::logger::log_continue(TR_FMT::format_string<Arg
 	const std::string fmt_str{TR_FMT::format(fmt, std::forward<Args>(args)...)};
 	const std::string fill(m_prefix.size() + 14, ' ');
 
-	std::cout << fill << "--- " << fmt_str << "\n";
+	println("{}--- {}", fill, fmt_str);
 	if (!m_path.empty()) {
 		std::ofstream file{m_path, std::ios::app};
 		if (file.is_open()) {
-			file << std::string_view{fill.begin(), fill.end() - (m_prefix.size() + 3)} << "--- " << fmt_str << "\n";
+			println_to(file, "{}--- {}", std::string_view{fill.begin(), fill.end() - (m_prefix.size() + 3)}, fmt_str);
 		}
 	}
 }

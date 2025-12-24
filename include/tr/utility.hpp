@@ -21,6 +21,7 @@
 #include "utility/math.hpp"             // IWYU pragma: export
 #include "utility/norm_cast.hpp"        // IWYU pragma: export
 #include "utility/optional.hpp"         // IWYU pragma: export
+#include "utility/print.hpp"            // IWYU pragma: export
 #include "utility/ranges.hpp"           // IWYU pragma: export
 #include "utility/reference.hpp"        // IWYU pragma: export
 #include "utility/rng.hpp"              // IWYU pragma: export
