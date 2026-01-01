@@ -62,10 +62,28 @@ template <class T1, class T2> constexpr bool tr::intersecting(const rect2<T1>& r
 		   r2.contains(r1.tl + glm::tvec2<T1>{0, r1.size.y});
 }
 
-template <class T1, class T2> constexpr std::common_type_t<T1, T2> tr::dist2(glm::tvec2<T1> a, glm::tvec2<T2> b)
+template <int S, class T> constexpr T tr::length2(glm::vec<S, T> v)
 {
-	const glm::tvec2<std::common_type_t<T1, T2>> d{b.x - a.x, b.y - a.y};
-	return d.x * d.x + d.y * d.y;
+	if constexpr (S == 1) {
+		return sqr(v.x);
+	}
+	else if constexpr (S == 2) {
+		return sqr(v.x) + sqr(v.y);
+	}
+	else if constexpr (S == 3) {
+		return sqr(v.x) + sqr(v.y) + sqr(v.z);
+	}
+	else if constexpr (S == 4) {
+		return sqr(v.x) + sqr(v.y) + sqr(v.z) + sqr(v.w);
+	}
+	else {
+		unreachable();
+	}
+}
+
+template <int S, class T1, class T2> constexpr std::common_type_t<T1, T2> tr::dist2(glm::vec<S, T1> a, glm::vec<S, T2> b)
+{
+	return length2(glm::vec<S, std::common_type_t<T1, T2>>{b} - glm::vec<S, std::common_type_t<T1, T2>>{a});
 }
 
 template <class T> constexpr glm::tvec2<T> tr::tl(glm::tvec2<T> pos, glm::tvec2<T> size, tr::align pos_anchor)

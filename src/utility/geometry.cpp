@@ -30,7 +30,7 @@ bool tr::triangle::contains(glm::vec2 p) const
 
 bool tr::circle::contains(glm::vec2 point) const
 {
-	return dist2(c, point) <= r * r;
+	return dist2(c, point) <= sqr(r);
 }
 
 bool tr::intersecting(const circle& c1, const circle& c2)

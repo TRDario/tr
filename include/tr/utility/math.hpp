@@ -17,6 +17,8 @@ namespace tr {
 	template <arithmetic T1, arithmetic T2> constexpr std::common_type_t<T1, T2> eucmod(T1 v, T2 mod);
 	// Linearly interpolates between two values.
 	template <class T1, std::floating_point T2> constexpr T1 lerp(const T1& x, const T1& y, T2 a);
+	// Square operation.
+	template <arithmetic T> constexpr T sqr(const T& v);
 } // namespace tr
 
 ///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
@@ -60,4 +62,9 @@ template <tr::arithmetic T1, tr::arithmetic T2> constexpr std::common_type_t<T1,
 template <class T1, std::floating_point T2> constexpr T1 tr::lerp(const T1& x, const T1& y, T2 a)
 {
 	return x * (1 - a) + y * a;
+}
+
+template <tr::arithmetic T> constexpr T tr::sqr(const T& v)
+{
+	return v * v;
 }
