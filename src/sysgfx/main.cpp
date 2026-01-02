@@ -1,7 +1,7 @@
-#include "../../include/tr/sysgfx/main.hpp"
 #include "../../include/tr/sysgfx/dialog.hpp"
 #include "../../include/tr/sysgfx/display.hpp"
 #include "../../include/tr/sysgfx/impl.hpp"
+#include "../../include/tr/sysgfx/main.hpp"
 #include <SDL3/SDL.h>
 #include <SDL3_ttf/SDL_ttf.h>
 
@@ -10,6 +10,10 @@
 
 #if defined _MSC_VER and not defined TR_ENABLE_ASSERTS
 #pragma comment(linker, "/subsystem:windows /ENTRY:mainCRTStartup")
+#endif
+
+#ifdef TR_HAS_AUDIO
+#include "../../include/tr/audio/impl.hpp"
 #endif
 
 //
@@ -92,6 +96,13 @@ extern "C"
 		TR_LOG_CONTINUE(tr::log, "RAM: {}mb", SDL_GetSystemRAM());
 		tr::sys::set_draw_frequency(tr::sys::refresh_rate());
 
+#ifdef TR_HAS_AUDIO
+		if (!tr::audio::g_manager.initialize()) {
+			TR_LOG(tr::log, tr::severity::FATAL, "Failed to initialize audio system.");
+			return SDL_APP_FAILURE;
+		}
+#endif
+
 		try {
 			return SDL_AppResult(::initialize());
 		}
@@ -136,6 +147,11 @@ extern "C"
 		catch (std::exception& err) {
 			tr::sys::show_fatal_error_message_box(err);
 		}
+
+#ifdef TR_HAS_AUDIO
+		tr::audio::g_manager.shut_down();
+#endif
+
 #ifdef _WIN32
 		tr::sys::g_cursor_reset_timer.reset();
 #endif

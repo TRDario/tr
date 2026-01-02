@@ -32,8 +32,6 @@ namespace tr::audio {
 		// Sentinel value representing the end of the audio.
 		static constexpr fsecs END{fsecs::max()};
 
-		// Constructs an audio source.
-		source(int priority);
 		source(const source&) = delete;
 		source(source&&) noexcept = default;
 		source& operator=(const source&) = delete;
@@ -160,9 +158,12 @@ namespace tr::audio {
 	  private:
 		// Shared pointer to the actual audio source implementation.
 		std::shared_ptr<source_base> m_base;
+
+		// Allocates an audio source.
+		source(std::shared_ptr<source_base> base);
+
+		friend std::optional<source> try_allocating_source(int priority);
 	};
-	// Gets whether an audio source of a given priority can be allocated.
-	bool can_allocate_source(int priority);
 	// Tries to allocate an audio source.
 	std::optional<source> try_allocating_source(int priority);
 } // namespace tr::audio

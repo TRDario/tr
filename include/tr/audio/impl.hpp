@@ -3,27 +3,63 @@
 #include "buffer.hpp"
 #include "stream.hpp"
 
+struct ALCdevice;
+struct ALCcontext;
+
 namespace tr::audio {
 	enum class origin : bool;
 	enum class state : u8;
 
-	// Audio buffer used by the buffered stream.
-	struct buffer_stream_buffer {
-		// The OpenAL ID of the buffer.
-		unsigned int id;
-		// Where the start offset of the audio data is within the stream.
-		usize start_offset;
+	// Base audio buffer class.
+	class buffer_base {
+	  public:
+		// Audio buffer ID.
+		using id = buffer::id;
+		// Hashes audio buffers by ID.
+		struct hasher {
+			using is_transparent = std::true_type;
 
-		buffer_stream_buffer();
-		~buffer_stream_buffer();
+			usize operator()(id v) const;
+		};
+		// Compares audio buffers by ID.
+		struct equals {
+			using is_transparent = std::true_type;
+
+			bool operator()(id l, id r) const;
+		};
+
+		// Creates an audio buffer.
+		buffer_base();
+
+		// Gets the ID of the buffer.
+		operator id() const;
+
+	  private:
+		// Destroys the buffer.
+		struct deleter {
+			void operator()(id id) const;
+		};
+
+		// The underlying buffer handle.
+		handle<id, id::EMPTY, deleter> m_handle;
 	};
-	// Audio stream extrended with buffers.
-	struct buffer_stream {
+
+	// Audio stream extended with buffers.
+	struct buffered_stream {
+		// Audio buffer used by the buffered stream.
+		struct buffer : buffer_base {
+			// Where the start offset of the audio data is within the stream.
+			usize start_offset{0};
+
+			// Refills the buffer with stream data.
+			void refill_from(stream& source);
+		};
+
+		// The audio stream.
 		std::unique_ptr<stream> stream;
-		std::array<buffer_stream_buffer, 4> buffers;
+		// Buffers associated with the stream.
+		std::array<buffer, 4> buffers;
 	};
-	// Refills the buffer with stream data.
-	void refill(stream& stream, buffer_stream_buffer& buffer);
 
 	// Base audio source class.
 	class source_base {
@@ -33,6 +69,7 @@ namespace tr::audio {
 
 		// Creates an empty audio source.
 		source_base(int priority);
+		// Destroys the audio source.
 		~source_base();
 
 		void use(const buffer& buffer);
@@ -78,7 +115,7 @@ namespace tr::audio {
 		void set_loop_points(fsecs start, fsecs end);
 
 		// Gets the ID of the audio source buffer.
-		unsigned int buffer() const;
+		buffer::id buffer() const;
 
 		// Locks the audio mutex.
 		void lock_audio_mutex() const;
@@ -87,7 +124,7 @@ namespace tr::audio {
 
 	  private:
 		// If the source is sourced from an audio stream, this is that stream.
-		std::optional<buffer_stream> m_stream;
+		std::optional<buffered_stream> m_stream;
 		// The OpenAL ID of the source.
 		unsigned int m_id;
 		// The gain muiltiplier of the source.
@@ -99,7 +136,7 @@ namespace tr::audio {
 		// Some functions that lock the audio mutex call other functions that also do that, so keep a ref counter.
 		mutable u32 m_mutex_refc;
 
-		friend void thread_fn(std::stop_token);
+		friend class manager;
 	};
 
 	// Audio command for gradual changing of an audio property.
@@ -135,7 +172,7 @@ namespace tr::audio {
 
 	  private:
 		// Type-erased argument storage.
-		union arg {
+		union argument {
 			float num;
 			glm::vec2 vec2;
 			glm::vec3 vec3;
@@ -146,9 +183,9 @@ namespace tr::audio {
 		// The audio command type.
 		type m_type;
 		// The initial value.
-		arg m_start;
+		argument m_start;
 		// The final value.
-		arg m_end;
+		argument m_end;
 		// The length of the command.
 		duration m_length;
 		// When the last update was.
@@ -157,24 +194,82 @@ namespace tr::audio {
 		duration m_elapsed;
 
 		// Gets the current value of the command.
-		arg value();
+		argument value();
 	};
 
-	// Map holding the IDs of extant audio buffers and whether the're cullable.
-	inline std::unordered_map<unsigned int, bool> g_buffers;
-	// The maximum allowed number of audio sources.
-	inline usize g_max_sources;
-	// A list of active audio sources.
-	inline std::list<std::shared_ptr<source_base>> g_sources;
-	// The gain multipliers of audio classes.
-	inline std::array<float, 32> g_gains;
-	// A list of active audio commands.
-	inline std::list<command> g_commands;
-	// The audio mutex.
-	inline std::mutex g_mutex;
-	// The audio thread.
-	inline std::jthread g_thread;
+	// Global audio manager class.
+	inline class manager {
+	  public:
+		// Initializes the audio system and returns if initialization was successful.
+		bool initialize();
+		// Shuts down and cleans up the audio system.
+		void shut_down();
 
-	// Function used by the audio thread.
-	void thread_fn(std::stop_token stoken);
+		// Locks the audio mutex.
+		void lock_mutex();
+		// Unlocks the audio mutex.
+		void unlock_mutex();
+
+		// Gets an audio class (0-31)'s gain modifier.
+		float class_gain(int id) const;
+		// Calculates the gain multiplier based on a bitset of classes.
+		float gain_multiplier(std::bitset<32> classes) const;
+		// Sets an audio class (0-31)'s gain modifier.
+		void set_class_gain(int id, float gain);
+
+		// Allocates an audio buffer and returns its ID.
+		buffer::id allocate_buffer();
+		// Marks an audio buffer as cullable.
+		void mark_buffer_as_cullable(buffer::id id);
+
+		// Allocates an audio source and returns a pointer to it or nullptr if the allocation failed.
+		std::shared_ptr<source_base> allocate_source(int priority);
+
+		// Submits an audio command.
+		template <class... Args>
+			requires(std::constructible_from<command, Args...>)
+		void submit_command(Args&&... args);
+
+	  private:
+		// Closes an audio device.
+		struct device_closer {
+			void operator()(ALCdevice* device) const;
+		};
+		// Destroys an audio context.
+		struct context_destroyer {
+			void operator()(ALCcontext* context) const;
+		};
+
+		// The audio device.
+		std::unique_ptr<ALCdevice, device_closer> m_device;
+		// The audio context.
+		std::unique_ptr<ALCcontext, context_destroyer> m_context;
+		// The audio thread.
+		std::jthread m_thread;
+		// The audio mutex.
+		std::mutex m_mutex;
+		// A list of active audio commands.
+		std::list<command> m_commands;
+		// Map holding the handles to extant audio buffer and whether they're cullable.
+		std::unordered_map<buffer_base, bool, buffer_base::hasher, buffer_base::equals> m_buffers;
+		// The maximum allowed number of audio sources.
+		usize m_max_sources;
+		// A list of active audio sources.
+		std::list<std::shared_ptr<source_base>> m_sources;
+		// The gain multipliers of audio classes.
+		std::array<float, 32> m_gains;
+
+		// Function used by the audio thread.
+		void thread_fn(std::stop_token stoken);
+	} g_manager; // Global audio manager.
 } // namespace tr::audio
+
+////////////////////////////////////////////////////////////// IMPLEMENTATION /////////////////////////////////////////////////////////////
+
+template <class... Args>
+	requires(std::constructible_from<tr::audio::command, Args...>)
+void tr::audio::manager::submit_command(Args&&... args)
+{
+	std::lock_guard lock{m_mutex};
+	m_commands.emplace_back(std::forward<Args>(args)...);
+}

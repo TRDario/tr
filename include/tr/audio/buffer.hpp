@@ -26,14 +26,22 @@ namespace tr::audio {
 		void set(std::span<const i16> data, format format, int frequency);
 
 	  private:
+		// The ID of the buffer in the audio manager.
+		enum class id : unsigned int {
+			// Special ID denoting no held buffer.
+			EMPTY
+		};
+		// Marks the buffer as cullable in the global audio manager.
 		struct deleter {
-			void operator()(unsigned int id) const;
+			void operator()(id id) const;
 		};
 
-		// Handle to the OpenAL ID.
-		handle<unsigned int, 0, deleter> m_id;
+		// Managed audio manager buffer ID.
+		handle<id, id::EMPTY, deleter> m_id;
 
+		friend class buffer_base;
 		friend class source_base;
+		friend class manager;
 	};
 	// Loads audio data from file into a buffer.
 	// May throw: audio_file_open_error.

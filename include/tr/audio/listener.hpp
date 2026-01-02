@@ -1,25 +1,7 @@
 #pragma once
-#include "../utility/exception.hpp"
+#include "../utility/common.hpp"
 
 namespace tr::audio {
-	// Error thrown when initializing the audio system fails.
-	class init_error : public exception {
-	  public:
-		// Constructs an exception.
-		init_error(std::string_view description);
-
-		// Gets the name of the error.
-		std::string_view name() const override;
-		// Gets the description of the error.
-		std::string_view description() const override;
-		// Gets further details about the error.
-		std::string_view details() const override;
-
-	  private:
-		// The description of the error.
-		std::string_view m_description;
-	};
-
 	// Listener orientation.
 	struct orientation {
 		// View vector.
@@ -27,15 +9,6 @@ namespace tr::audio {
 		// Up vector.
 		glm::vec3 up;
 	};
-
-	// Initializes the audio system.
-	// May throw: audio_init_error.
-	void initialize();
-	// Reports whether the audio system is active.
-	bool active();
-	// Shuts the audio system down.
-	// Any handles to audio buffers or audio sources must have been destroyed before calling this function.
-	void shut_down();
 
 	// Gets the master gain.
 	float master_gain();

@@ -1,30 +1,28 @@
-#include "../../include/tr/audio/source.hpp"
 #include "../../include/tr/audio/al_call.hpp"
 #include "../../include/tr/audio/impl.hpp"
+#include "../../include/tr/audio/source.hpp"
 #include <AL/alext.h>
-
-constexpr tr::usize AUDIO_STREAM_BUFFER_SIZE{16384};
 
 //
 
-unsigned int tr::audio::source_base::buffer() const
+tr::audio::buffer::id tr::audio::source_base::buffer() const
 {
 	ALint id;
 	TR_AL_CALL(alGetSourcei, m_id, AL_BUFFER, &id);
-	return (unsigned int)(id);
+	return audio::buffer::id(id);
 }
 
 void tr::audio::source_base::lock_audio_mutex() const
 {
 	if (m_mutex_refc++ == 0) {
-		g_mutex.lock();
+		g_manager.lock_mutex();
 	}
 }
 
 void tr::audio::source_base::unlock_audio_mutex() const
 {
 	if (--m_mutex_refc == 0) {
-		g_mutex.unlock();
+		g_manager.unlock_mutex();
 	}
 }
 
@@ -39,21 +37,9 @@ tr::audio::source_base::source_base(int priority)
 	}
 }
 
-tr::audio::source::source(int priority)
+tr::audio::source::source(std::shared_ptr<source_base> base)
+	: m_base{base}
 {
-	TR_ASSERT(can_allocate_source(priority), "Tried to allocate more than the maximum allowed number of sources at the same time.");
-
-	std::lock_guard lock{g_mutex};
-	if (g_sources.size() == g_max_sources) {
-		auto it{std::ranges::find_if(g_sources, [&](auto& s) { return s.use_count() == 1 && s->priority() <= priority; })};
-		g_sources.erase(it);
-	}
-	auto it{std::ranges::find_if(g_sources, [&](auto& s) { return s->priority() < priority; })};
-	it = g_sources.emplace(it, std::make_shared<source_base>(priority));
-	if (!g_thread.joinable()) {
-		g_thread = std::jthread{thread_fn};
-	}
-	m_base = *it;
 }
 
 tr::audio::source_base::~source_base()
@@ -61,42 +47,14 @@ tr::audio::source_base::~source_base()
 	TR_AL_CALL(alDeleteSources, 1, &m_id);
 }
 
-tr::audio::buffer_stream_buffer::buffer_stream_buffer()
-	: start_offset{}
-{
-	TR_AL_CALL(alGenBuffers, 1, &id);
-	if (alGetError() == AL_OUT_OF_MEMORY) {
-		throw out_of_memory{"audio buffer allocation"};
-	}
-}
-
-tr::audio::buffer_stream_buffer::~buffer_stream_buffer()
-{
-	TR_AL_CALL(alDeleteBuffers, 1, &id);
-}
-
-void tr::audio::refill(stream& stream, buffer_stream_buffer& buffer)
-{
-	std::array<i16, AUDIO_STREAM_BUFFER_SIZE> data;
-
-	buffer.start_offset = stream.tell();
-	const std::span<const i16> used_data{stream.read(data)};
-	const ALenum format{stream.channels() == 2 ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16};
-	const ALsizei size{ALsizei(used_data.size_bytes()) - ALsizei(used_data.size_bytes()) % 4};
-	TR_AL_CALL(alBufferData, buffer.id, format, used_data.data(), size, stream.sample_rate());
-	if (alGetError() == AL_OUT_OF_MEMORY) {
-		throw out_of_memory{"audio buffer reallocation"};
-	}
-}
-
 //
 
 void tr::audio::source_base::use(const audio::buffer& buffer)
 {
 	clear();
-	TR_AL_CALL(alSourcei, m_id, AL_BUFFER, buffer.m_id.get());
+	TR_AL_CALL(alSourcei, m_id, AL_BUFFER, ALuint(buffer.m_id.get()));
 	ALint channels;
-	TR_AL_CALL(alGetBufferi, buffer.m_id.get(), AL_CHANNELS, &channels);
+	TR_AL_CALL(alGetBufferi, ALuint(buffer.m_id.get()), AL_CHANNELS, &channels);
 	TR_AL_CALL(alSourcei, m_id, AL_DIRECT_CHANNELS_SOFT, channels == 2);
 }
 
@@ -126,7 +84,7 @@ void tr::audio::source_base::clear()
 		TR_AL_CALL(alSourcei, m_id, AL_BUFFER, 0);
 		m_stream.reset();
 	}
-	else if (buffer() != 0) {
+	else if (buffer() != buffer::id::EMPTY) {
 		set_loop_points(START, END);
 		TR_AL_CALL(alSourcei, m_id, AL_LOOPING, 0);
 		TR_AL_CALL(alSourcei, m_id, AL_BUFFER, 0);
@@ -198,9 +156,7 @@ void tr::audio::source::set_pitch(float pitch)
 
 void tr::audio::source::set_pitch(float pitch, fsecs time)
 {
-	m_base->lock_audio_mutex();
-	g_commands.emplace_back(m_base, command::type::PITCH, this->pitch(), pitch, duration_cast<duration>(time));
-	m_base->unlock_audio_mutex();
+	g_manager.submit_command(m_base, command::type::PITCH, this->pitch(), pitch, duration_cast<duration>(time));
 }
 
 //
@@ -218,12 +174,7 @@ float tr::audio::source::gain() const
 void tr::audio::source_base::set_gain(float gain)
 {
 	m_gain = gain;
-	for (int i = 0; i < 32; ++i) {
-		if (m_classes[i]) {
-			gain *= g_gains[i];
-		}
-	}
-	TR_AL_CALL(alSourcef, m_id, AL_GAIN, std::max(gain, 0.0f));
+	TR_AL_CALL(alSourcef, m_id, AL_GAIN, std::max(g_manager.gain_multiplier(m_classes) * gain, 0.0f));
 }
 
 void tr::audio::source::set_gain(float gain)
@@ -233,9 +184,7 @@ void tr::audio::source::set_gain(float gain)
 
 void tr::audio::source::set_gain(float gain, fsecs time)
 {
-	m_base->lock_audio_mutex();
-	g_commands.emplace_back(m_base, command::type::GAIN, this->gain(), gain, duration_cast<duration>(time));
-	m_base->unlock_audio_mutex();
+	g_manager.submit_command(m_base, command::type::GAIN, this->gain(), gain, duration_cast<duration>(time));
 }
 
 //
@@ -264,9 +213,7 @@ void tr::audio::source::set_max_dist(float max_dist)
 
 void tr::audio::source::set_max_dist(float max_dist, fsecs time)
 {
-	m_base->lock_audio_mutex();
-	g_commands.emplace_back(m_base, command::type::MAX_DIST, this->max_dist(), max_dist, duration_cast<duration>(time));
-	m_base->unlock_audio_mutex();
+	g_manager.submit_command(m_base, command::type::MAX_DIST, this->max_dist(), max_dist, duration_cast<duration>(time));
 }
 
 //
@@ -295,9 +242,7 @@ void tr::audio::source::set_rolloff(float rolloff)
 
 void tr::audio::source::set_rolloff(float rolloff, fsecs time)
 {
-	m_base->lock_audio_mutex();
-	g_commands.emplace_back(m_base, command::type::ROLLOFF, this->rolloff(), rolloff, duration_cast<duration>(time));
-	m_base->unlock_audio_mutex();
+	g_manager.submit_command(m_base, command::type::ROLLOFF, this->rolloff(), rolloff, duration_cast<duration>(time));
 }
 
 //
@@ -326,9 +271,7 @@ void tr::audio::source::set_ref_dist(float ref_dist)
 
 void tr::audio::source::set_ref_dist(float ref_dist, fsecs time)
 {
-	m_base->lock_audio_mutex();
-	g_commands.emplace_back(m_base, command::type::REF_DIST, this->ref_dist(), ref_dist, duration_cast<duration>(time));
-	m_base->unlock_audio_mutex();
+	g_manager.submit_command(m_base, command::type::REF_DIST, this->ref_dist(), ref_dist, duration_cast<duration>(time));
 }
 
 //
@@ -357,9 +300,7 @@ void tr::audio::source::set_out_cone_gain(float out_cone_gain)
 
 void tr::audio::source::set_out_cone_gain(float out_cone_gain, fsecs time)
 {
-	m_base->lock_audio_mutex();
-	g_commands.emplace_back(m_base, command::type::OUT_CONE_GAIN, this->out_cone_gain(), out_cone_gain, duration_cast<duration>(time));
-	m_base->unlock_audio_mutex();
+	g_manager.submit_command(m_base, command::type::OUT_CONE_GAIN, this->out_cone_gain(), out_cone_gain, duration_cast<duration>(time));
 }
 
 //
@@ -388,7 +329,7 @@ tr::angle tr::audio::source::out_cone_w() const
 	return m_base->out_cone_w();
 }
 
-void tr::audio::source_base::set_cone_w(tr::angle in_cone_w, tr::angle out_cone_w)
+void tr::audio::source_base::set_cone_w(angle in_cone_w, angle out_cone_w)
 {
 	in_cone_w = std::clamp(in_cone_w, 0_deg, 360_deg);
 	out_cone_w = std::clamp(out_cone_w, 0_deg, 360_deg);
@@ -399,17 +340,15 @@ void tr::audio::source_base::set_cone_w(tr::angle in_cone_w, tr::angle out_cone_
 	TR_AL_CALL(alSourcef, m_id, AL_CONE_OUTER_ANGLE, out_cone_w.degs());
 }
 
-void tr::audio::source::set_cone_w(tr::angle in_cone_w, tr::angle out_cone_w)
+void tr::audio::source::set_cone_w(angle in_cone_w, angle out_cone_w)
 {
 	m_base->set_cone_w(in_cone_w, out_cone_w);
 }
 
-void tr::audio::source::set_cone_w(tr::angle in_cone_w, tr::angle out_cone_w, fsecs time)
+void tr::audio::source::set_cone_w(angle in_cone_w, angle out_cone_w, fsecs time)
 {
-	m_base->lock_audio_mutex();
-	g_commands.emplace_back(m_base, command::type::CONE_W, glm::vec2{this->in_cone_w().rads(), this->out_cone_w().rads()},
-							glm::vec2{in_cone_w.rads(), out_cone_w.rads()}, duration_cast<duration>(time));
-	m_base->unlock_audio_mutex();
+	g_manager.submit_command(m_base, command::type::CONE_W, glm::vec2{this->in_cone_w().rads(), this->out_cone_w().rads()},
+							 glm::vec2{in_cone_w.rads(), out_cone_w.rads()}, duration_cast<duration>(time));
 }
 
 //
@@ -438,9 +377,7 @@ void tr::audio::source::set_pos(const glm::vec3& pos)
 
 void tr::audio::source::set_pos(const glm::vec3& pos, fsecs time)
 {
-	m_base->lock_audio_mutex();
-	g_commands.emplace_back(m_base, command::type::POS, this->pos(), pos, duration_cast<duration>(time));
-	m_base->unlock_audio_mutex();
+	g_manager.submit_command(m_base, command::type::POS, this->pos(), pos, duration_cast<duration>(time));
 }
 
 //
@@ -469,9 +406,7 @@ void tr::audio::source::set_vel(const glm::vec3& vel)
 
 void tr::audio::source::set_vel(const glm::vec3& vel, fsecs time)
 {
-	m_base->lock_audio_mutex();
-	g_commands.emplace_back(m_base, command::type::VEL, this->vel(), vel, duration_cast<duration>(time));
-	m_base->unlock_audio_mutex();
+	g_manager.submit_command(m_base, command::type::VEL, this->vel(), vel, duration_cast<duration>(time));
 }
 
 //
@@ -500,9 +435,7 @@ void tr::audio::source::set_dir(const glm::vec3& dir)
 
 void tr::audio::source::set_dir(const glm::vec3& dir, fsecs time)
 {
-	m_base->lock_audio_mutex();
-	g_commands.emplace_back(m_base, command::type::DIR, this->dir(), dir, duration_cast<duration>(time));
-	m_base->unlock_audio_mutex();
+	g_manager.submit_command(m_base, command::type::DIR, this->dir(), dir, duration_cast<duration>(time));
 }
 
 //
@@ -561,8 +494,8 @@ void tr::audio::source_base::play()
 		if (state() == state::INITIAL || state() == state::STOPPED) {
 			TR_AL_CALL(alSourcei, m_id, AL_BUFFER, 0);
 			for (auto& buffer : m_stream->buffers) {
-				refill(*m_stream->stream, buffer);
-				TR_AL_CALL(alSourceQueueBuffers, m_id, 1, &buffer.id);
+				buffer.refill_from(*m_stream->stream);
+				TR_AL_CALL(alSourceQueueBuffers, m_id, 1, (const ALuint*)&buffer);
 				if (m_stream->stream->tell() == m_stream->stream->length()) {
 					break;
 				}
@@ -613,7 +546,7 @@ tr::fsecs tr::audio::source_base::length() const
 	if (m_stream.has_value()) {
 		return fsecs{float(m_stream->stream->length()) / m_stream->stream->sample_rate()};
 	}
-	else if (buffer() != 0) {
+	else if (buffer() != buffer::id::EMPTY) {
 		ALint sample_rate, size;
 		TR_AL_CALL(alGetBufferi, m_id, AL_FREQUENCY, &sample_rate);
 		TR_AL_CALL(alGetBufferi, m_id, AL_SIZE, &size);
@@ -635,18 +568,13 @@ tr::fsecs tr::audio::source_base::offset() const
 	TR_AL_CALL(alGetSourcef, m_id, AL_SEC_OFFSET, &offset);
 
 	if (m_stream.has_value()) {
-		lock_audio_mutex();
 		const audio::state state{this->state()};
 		if (state == state::INITIAL || state == state::STOPPED) {
 			return fsecs{m_stream->stream->tell() / float(m_stream->stream->sample_rate())};
 		}
 
-		ALint buf_id;
-		TR_AL_CALL(alGetSourcei, m_id, AL_BUFFER, &buf_id);
-
-		auto& buf{*std::ranges::find(m_stream->buffers, (unsigned int)(buf_id), &buffer_stream_buffer::id)};
-		unlock_audio_mutex();
-		return fsecs{buf.start_offset / float(m_stream->stream->sample_rate()) + offset};
+		auto& buffer{*std::ranges::find(m_stream->buffers, this->buffer())};
+		return fsecs{buffer.start_offset / float(m_stream->stream->sample_rate()) + offset};
 	}
 	else {
 		return fsecs{offset};
@@ -715,11 +643,11 @@ tr::fsecs tr::audio::source_base::loop_start() const
 	if (m_stream.has_value()) {
 		return fsecs{float(m_stream->stream->loop_start()) / m_stream->stream->sample_rate()};
 	}
-	else if (buffer() != 0) {
+	else if (buffer() != buffer::id::EMPTY) {
 		ALint sample_rate;
-		TR_AL_CALL(alGetBufferi, buffer(), AL_FREQUENCY, &sample_rate);
+		TR_AL_CALL(alGetBufferi, ALuint(buffer()), AL_FREQUENCY, &sample_rate);
 		ALint channels;
-		TR_AL_CALL(alGetBufferi, buffer(), AL_CHANNELS, &channels);
+		TR_AL_CALL(alGetBufferi, ALuint(buffer()), AL_CHANNELS, &channels);
 
 		std::array<ALint, 2> loop_points;
 		TR_AL_CALL(alGetSourceiv, m_id, AL_LOOP_POINTS_SOFT, loop_points.data());
@@ -740,11 +668,11 @@ tr::fsecs tr::audio::source_base::loop_end() const
 	if (m_stream.has_value()) {
 		return fsecs{float(m_stream->stream->loop_end()) / m_stream->stream->sample_rate()};
 	}
-	else if (buffer() != 0) {
+	else if (buffer() != buffer::id::EMPTY) {
 		ALint sample_rate;
-		TR_AL_CALL(alGetBufferi, buffer(), AL_FREQUENCY, &sample_rate);
+		TR_AL_CALL(alGetBufferi, ALuint(buffer()), AL_FREQUENCY, &sample_rate);
 		ALint channels;
-		TR_AL_CALL(alGetBufferi, buffer(), AL_CHANNELS, &channels);
+		TR_AL_CALL(alGetBufferi, ALuint(buffer()), AL_CHANNELS, &channels);
 
 		std::array<ALint, 2> loop_points;
 		TR_AL_CALL(alGetSourceiv, m_id, AL_LOOP_POINTS_SOFT, loop_points.data());
@@ -783,17 +711,17 @@ void tr::audio::source_base::set_loop_points(fsecs start, fsecs end)
 		unlock_audio_mutex();
 	}
 	else {
-		const ALuint buffer{this->buffer()};
+		const ALuint buffer_id{ALuint(buffer())};
 
 		ALint sample_rate;
-		TR_AL_CALL(alGetBufferi, buffer, AL_FREQUENCY, &sample_rate);
+		TR_AL_CALL(alGetBufferi, buffer_id, AL_FREQUENCY, &sample_rate);
 		ALint channels;
-		TR_AL_CALL(alGetBufferi, buffer, AL_CHANNELS, &channels);
+		TR_AL_CALL(alGetBufferi, buffer_id, AL_CHANNELS, &channels);
 
 		std::array<ALint, 2> loop_points{ALint(start.count() * sample_rate * channels), ALint(end.count() * sample_rate * channels)};
 		TR_AL_CALL(alSourcei, m_id, AL_BUFFER, 0);
-		TR_AL_CALL(alBufferiv, buffer, AL_LOOP_POINTS_SOFT, loop_points.data());
-		TR_AL_CALL(alSourcei, m_id, AL_BUFFER, buffer);
+		TR_AL_CALL(alBufferiv, buffer_id, AL_LOOP_POINTS_SOFT, loop_points.data());
+		TR_AL_CALL(alSourcei, m_id, AL_BUFFER, buffer_id);
 	}
 }
 
@@ -821,16 +749,8 @@ void tr::audio::source::set_looping(bool value)
 
 //
 
-bool tr::audio::can_allocate_source(int priority)
-{
-	if (g_sources.size() < g_max_sources) {
-		return true;
-	}
-	const auto it{std::ranges::find_if(g_sources, [&](auto& s) { return s.use_count() == 1 && s->priority() <= priority; })};
-	return it != g_sources.end();
-}
-
 std::optional<tr::audio::source> tr::audio::try_allocating_source(int priority)
 {
-	return can_allocate_source(priority) ? std::optional<tr::audio::source>{priority} : std::nullopt;
+	std::shared_ptr<source_base> base{g_manager.allocate_source(priority)};
+	return base != nullptr ? std::optional{source{std::move(base)}} : std::nullopt;
 }

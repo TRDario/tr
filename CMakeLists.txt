@@ -97,12 +97,12 @@ if(TR_BUILD_AUDIO)
 	target_sources(tr PRIVATE
 		src/audio/al_call.cpp
 		src/audio/buffer.cpp
+		src/audio/impl.cpp
+		src/audio/listener.cpp
 		src/audio/source.cpp
 		src/audio/stream.cpp
-		src/audio/system.cpp
-		src/audio/impl.cpp
 	)
-	target_compile_definitions(tr PUBLIC AL_LIBTYPE_STATIC)
+	target_compile_definitions(tr PUBLIC AL_LIBTYPE_STATIC TR_HAS_AUDIO)
 	target_link_libraries(tr OpenAL::OpenAL vorbis vorbisenc vorbisfile)
 endif()
 if(TR_BUILD_IMGUI)
