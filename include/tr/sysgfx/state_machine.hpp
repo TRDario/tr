@@ -29,6 +29,11 @@ namespace tr {
 	// Sentinel indicating that the current state should be dropped.
 	inline constexpr std::nullptr_t DROP_STATE{};
 
+	// Convenience function for constructing a next state.
+	template <std::derived_from<state> T, class... Args>
+		requires(std::constructible_from<T, Args...>)
+	next_state make_next_state(Args&&... args);
+
 	// State machine manager class.
 	class state_machine {
 	  public:
@@ -78,9 +83,16 @@ namespace tr {
 
 ////////////////////////////////////////////////////////////// IMPLEMENTATION /////////////////////////////////////////////////////////////
 
+template <std::derived_from<tr::state> T, class... Args>
+	requires(std::constructible_from<T, Args...>)
+tr::next_state tr::make_next_state(Args&&... args)
+{
+	return std::optional{next_state(std::make_unique<T>(std::forward<Args>(args)...))};
+}
+
 template <std::derived_from<tr::state> T> const T& tr::state_machine::get() const
 {
-	return static_cast<const T&>(*m_current_state);
+	return (const T&)(*m_current_state);
 }
 
 template <std::derived_from<tr::state> T, class... Args>
@@ -92,7 +104,7 @@ void tr::state_machine::emplace(Args&&... args)
 
 template <std::derived_from<tr::state> T> T& tr::state_machine::get()
 {
-	return static_cast<T&>(*m_current_state);
+	return (T&)(*m_current_state);
 }
 
 template <class R, class P> void tr::state_machine::update(std::chrono::duration<R, P> delta)
