@@ -1,10 +1,85 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Implements angle.hpp.                                                                                                                 //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include "angle.hpp"
+
+//////////////////////////////////////////////////////// CONSTRUCTORS AND LITERALS ////////////////////////////////////////////////////////
 
 constexpr tr::angle::angle(float rads)
 	: m_rads{rads}
 {
 }
+
+template <tr::arithmetic T> constexpr tr::angle tr::rads(T th)
+{
+	return angle{float(th)};
+}
+
+template <tr::arithmetic T> constexpr tr::angle tr::degs(T th)
+{
+	return rads(std::numbers::pi_v<float> / 180 * float(th));
+}
+
+template <tr::arithmetic T> constexpr tr::angle tr::turns(T th)
+{
+	return rads(std::numbers::pi_v<float> * 2 * float(th));
+}
+
+template <tr::arithmetic T> inline tr::angle tr::asin(T sin)
+{
+	return rads(std::asin(sin));
+}
+
+template <tr::arithmetic T> inline tr::angle tr::acos(T cos)
+{
+	return rads(std::acos(cos));
+}
+
+template <tr::arithmetic T> inline tr::angle tr::atan(T tan)
+{
+	return rads(std::atan(tan));
+}
+
+template <tr::arithmetic T> inline tr::angle tr::atan2(T y, T x)
+{
+	return rads(std::atan2(y, x));
+}
+
+consteval tr::angle tr::literals::angle_literals::operator""_deg(long double deg)
+{
+	return degs(float(deg));
+}
+
+consteval tr::angle tr::literals::angle_literals::operator""_deg(unsigned long long deg)
+{
+	return degs(float(deg));
+}
+
+consteval tr::angle tr::literals::angle_literals::operator""_rad(long double rad)
+{
+	return rads(float(rad));
+}
+
+consteval tr::angle tr::literals::angle_literals::operator""_rad(unsigned long long rad)
+{
+	return rads(float(rad));
+}
+
+consteval tr::angle tr::literals::angle_literals::operator""_turns(long double tr)
+{
+	return turns(float(tr));
+}
+
+consteval tr::angle tr::literals::angle_literals::operator""_turns(unsigned long long tr)
+{
+	return turns(float(tr));
+}
+
+//////////////////////////////////////////////////////////////// OPERATORS ////////////////////////////////////////////////////////////////
 
 constexpr tr::angle& tr::angle::operator+=(const angle& r)
 {
@@ -70,40 +145,7 @@ constexpr tr::angle tr::operator%(const angle& l, const angle& r)
 	return angle{std::fmod(l.m_rads, r.m_rads)};
 }
 
-template <tr::arithmetic T> constexpr tr::angle tr::rads(T th)
-{
-	return angle{float(th)};
-}
-
-template <tr::arithmetic T> constexpr tr::angle tr::degs(T th)
-{
-	return angle{std::numbers::pi_v<float> / 180 * float(th)};
-}
-
-template <tr::arithmetic T> constexpr tr::angle tr::turns(T th)
-{
-	return angle{std::numbers::pi_v<float> * 2 * float(th)};
-}
-
-template <tr::arithmetic T> inline tr::angle tr::asin(T sin)
-{
-	return angle{std::asin(sin)};
-}
-
-template <tr::arithmetic T> inline tr::angle tr::acos(T cos)
-{
-	return angle{std::acos(cos)};
-}
-
-template <tr::arithmetic T> inline tr::angle tr::atan(T tan)
-{
-	return angle{std::atan(tan)};
-}
-
-template <tr::arithmetic T> inline tr::angle tr::atan2(T y, T x)
-{
-	return angle{std::atan2(y, x)};
-}
+///////////////////////////////////////////////////// UNIT AND TRIGONOMETRIC FUNCTIONS ////////////////////////////////////////////////////
 
 constexpr float tr::angle::rads() const
 {
@@ -135,32 +177,46 @@ inline float tr::angle::tan() const
 	return std::tan(m_rads);
 }
 
-consteval tr::angle tr::literals::angle_literals::operator""_deg(long double deg)
+//////////////////////////////////////////////////////////////// FORMATTING ///////////////////////////////////////////////////////////////
+
+template <class ParseContext> constexpr auto TR_FMT::formatter<tr::angle>::parse(ParseContext& ctx)
 {
-	return degs(float(deg));
+	auto it = ctx.begin();
+	if (it == ctx.end() || (*it != 'r' && *it != 'd' && *it != 't')) {
+		throw TR_FMT::format_error{"One of {r, d, t} must start an angle formatting specification."};
+	}
+
+	switch (*it) {
+	case 'r':
+		m_unit = unit::RADIANS;
+		break;
+	case 'd':
+		m_unit = unit::DEGREES;
+		break;
+	case 't':
+		m_unit = unit::TURNS;
+		break;
+	}
+
+	ctx.advance_to(it + 1);
+	return formatter<float>::parse(ctx);
 }
 
-consteval tr::angle tr::literals::angle_literals::operator""_deg(unsigned long long deg)
+template <class FormatContext> constexpr auto TR_FMT::formatter<tr::angle>::format(const tr::angle& p, FormatContext& ctx) const
 {
-	return degs(float(deg));
-}
-
-consteval tr::angle tr::literals::angle_literals::operator""_rad(long double rad)
-{
-	return rads(float(rad));
-}
-
-consteval tr::angle tr::literals::angle_literals::operator""_rad(unsigned long long rad)
-{
-	return rads(float(rad));
-}
-
-consteval tr::angle tr::literals::angle_literals::operator""_turns(long double tr)
-{
-	return turns(float(tr));
-}
-
-consteval tr::angle tr::literals::angle_literals::operator""_turns(unsigned long long tr)
-{
-	return turns(float(tr));
+	switch (m_unit) {
+	case unit::RADIANS:
+		ctx.advance_to(formatter<float>::format(p.rads(), ctx));
+		ctx.advance_to(formatter<const char*>::format("rad", ctx));
+		break;
+	case unit::DEGREES:
+		ctx.advance_to(formatter<float>::format(p.degs(), ctx));
+		ctx.advance_to(formatter<const char*>::format("deg", ctx));
+		break;
+	case unit::TURNS:
+		ctx.advance_to(formatter<float>::format(p.turns(), ctx));
+		ctx.advance_to(formatter<const char*>::format("tr", ctx));
+		break;
+	}
+	return ctx.out();
 }

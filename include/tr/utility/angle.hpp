@@ -1,13 +1,56 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Provides an abstract angle datatype, as well as related functions and literals.                                                       //
+//                                                                                                                                       //
+// Angles are internally stored with their value in radians in 32-bit floating point form, so all caveats pertaining to precision and    //
+// comparison of floating-point values applies to angles as well.                                                                        //
+//                                                                                                                                       //
+// Angles are constructed with one of three unit functions/literals, or with one of the trigonometric functions:                         //
+//     - tr::rads(5) or 5_rad -> 5-radian angle.                                                                                         //
+//     - tr::degs(45) or 45_deg -> 45-degree angle.                                                                                      //
+//     - tr::turns(1) or 1_tr -> 1-turn angle.                                                                                           //
+//     - tr::asin(1) -> 90-degree angle.                                                                                                 //
+//     - tr::acos(0) -> 90-degree angle.                                                                                                 //
+//     - tr::atan(1) -> 45-degree angle.                                                                                                 //
+//     - tr::atan2(-1, 1) -> 335-degree angle.                                                                                           //
+// The literals are in the inline namespace tr::angle_literals, as well as tr::literals.                                                 //
+//                                                                                                                                       //
+// Angles can be added, subtracted, divided or moduloed, or can be multiplied and divided with a scalar:                                 //
+//     - 0.5_tr + 90_deg -> 270-degree angle.                                                                                            //
+//     - 1_tr - 45_deg -> 335-degree angle.                                                                                              //
+//     - 1_tr / 1_deg -> 360.0f                                                                                                          //
+//     - 414_deg % 1_tr -> 54-degree angle.                                                                                              //
+//     - 1_rad * 2.5 -> 2.5-radian angle.                                                                                                //
+//     - 1_tr / 4 -> 0.25-turn angle.                                                                                                    //
+//                                                                                                                                       //
+// The sine, cosine, or tangent of an angle can be gotten through a method:                                                              //
+//     - (90_deg).sin() -> 1.0f                                                                                                          //
+//     - (90_deg).cos() -> 0.0f                                                                                                          //
+//     - (45_deg).tan() -> 1.0f                                                                                                          //
+//                                                                                                                                       //
+// Angles can be turned back into raw numbers using one of three unit methods:                                                           //
+//     - (1_tr).rads() -> 6.28319f                                                                                                       //
+//     - (1_tr).degs() -> 360.0f                                                                                                         //
+//     - (1_tr).turns() -> 1.0f                                                                                                          //
+//                                                                                                                                       //
+// Angles can be formatted with std::format in radians, degrees, or turns, and may use floating-point formatting specifications:         //
+//     - std::format("{:r.2f}", 90_deg) -> 1.57rad                                                                                       //
+//     - std::format("{:d05.1f}", 90_deg) -> 090.0deg                                                                                    //
+//     - std::format("{:t}", 90_deg) -> 0.25tr                                                                                           //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include "concepts.hpp"
 
+//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
+
 namespace tr {
-	// Angular value type.
+	// Abstract angle datatype.
 	class angle {
 	  public:
+		// Constructs a zero angle.
 		constexpr angle() = default;
-		// Constructs an angle from a numeric value in radians.
-		constexpr explicit angle(float rads);
 
 		constexpr std::partial_ordering operator<=>(const angle& r) const = default;
 		constexpr bool operator==(const angle& r) const = default;
@@ -41,24 +84,29 @@ namespace tr {
 		inline float tan() const;
 
 	  private:
-		// The underlying value in radians.
+		// The value of the angle in radians.
 		float m_rads;
+
+		// Constructs an angle from a numeric value in radians.
+		constexpr explicit angle(float rads);
+
+		template <arithmetic T> friend constexpr angle rads(T th);
 	};
 
-	// Converts a numeric value in radians into an angle value.
+	// Constructs an angle expressed in radians.
 	template <arithmetic T> constexpr angle rads(T th);
-	// Converts a numeric value in degrees into an angle value.
+	// Constructs an angle expressed in degrees.
 	template <arithmetic T> constexpr angle degs(T th);
-	// Converts a numeric value in turns into an angle value.
+	// Constructs ang angle expressed in turns.
 	template <arithmetic T> constexpr angle turns(T th);
 
-	// Converts a sine value into an angle value.
+	// Computes the principal value of the arc sine.
 	template <arithmetic T> inline angle asin(T sin);
-	// Converts a cosine value into an angle value.
+	// Computes the principal value of the arc cosine.
 	template <arithmetic T> inline angle acos(T cos);
-	// Converts a tangent value into an angle value.
+	// Computes the principal value of the arc tangent.
 	template <arithmetic T> inline angle atan(T tan);
-	// Converts tangent x and y values into an angle value.
+	// Computes the principal value of the arc tangent y/x.
 	template <arithmetic T> inline angle atan2(T y, T x);
 
 	inline namespace literals {
@@ -80,60 +128,31 @@ namespace tr {
 	} // namespace literals
 } // namespace tr
 
-// Angle formatter.
-// The formatting specification is: [r, d, t] + a valid floating point formatting specification.
-template <> class TR_FMT::formatter<tr::angle> : public TR_FMT::formatter<float>, public TR_FMT::formatter<const char*> {
-  public:
-	template <class ParseContext> constexpr auto parse(ParseContext& ctx)
-	{
-		auto it = ctx.begin();
-		if (it == ctx.end() || (*it != 'r' && *it != 'd' && *it != 't')) {
-			throw TR_FMT::format_error{"One of {r, d, t} must start an angle formatting specification."};
-		}
+namespace TR_FMT {
+	// Angle formatter.
+	template <> class formatter<tr::angle> : public formatter<float>, public formatter<const char*> {
+	  public:
+		// Parses the format specification.
+		template <class ParseContext> constexpr auto parse(ParseContext& ctx);
+		// Formats an angle.
+		template <class FormatContext> constexpr auto format(const tr::angle& p, FormatContext& ctx) const;
 
-		switch (*it) {
-		case 'r':
-			m_unit = unit::RADS;
-			break;
-		case 'd':
-			m_unit = unit::DEGREES;
-			break;
-		case 't':
-			m_unit = unit::TURNS;
-			break;
-		}
+	  private:
+		// Units the formatted angle can be displayed in.
+		enum class unit {
+			// Display the angle in radians.
+			RADIANS,
+			// Display the angle in degrees.
+			DEGREES,
+			// Display the angle in turns.
+			TURNS
+		};
 
-		ctx.advance_to(it + 1);
-		return TR_FMT::formatter<float>::parse(ctx);
-	}
-
-	template <class FormatContext> constexpr auto format(const tr::angle& p, FormatContext& ctx) const
-	{
-		switch (m_unit) {
-		case unit::RADS:
-			ctx.advance_to(TR_FMT::formatter<float>::format(p.rads(), ctx));
-			ctx.advance_to(TR_FMT::formatter<const char*>::format("rad", ctx));
-			break;
-		case unit::DEGREES:
-			ctx.advance_to(TR_FMT::formatter<float>::format(p.degs(), ctx));
-			ctx.advance_to(TR_FMT::formatter<const char*>::format("deg", ctx));
-			break;
-		case unit::TURNS:
-			ctx.advance_to(TR_FMT::formatter<float>::format(p.turns(), ctx));
-			ctx.advance_to(TR_FMT::formatter<const char*>::format("tr", ctx));
-			break;
-		}
-		return ctx.out();
-	}
-
-  private:
-	enum class unit {
-		RADS,
-		DEGREES,
-		TURNS
+		// The unit to use for the formatted angle.
+		unit m_unit;
 	};
+} // namespace TR_FMT
 
-	unit m_unit{unit::RADS};
-};
+////////////////////////////////////////////////////////////// IMPLEMENTATION /////////////////////////////////////////////////////////////
 
 #include "angle_impl.hpp" // IWYU pragma: keep
