@@ -28,6 +28,8 @@
 #include "concepts.hpp"
 #include <concepts>
 
+//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
+
 namespace tr {
 	// Casts a floating point number to an integer by rounding the value.
 	template <std::integral To, std::floating_point From> constexpr To round_cast(From from);

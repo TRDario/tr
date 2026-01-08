@@ -1,5 +1,38 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Provides miscellaneous macros.                                                                                                        //
+//                                                                                                                                       //
+// tr::unreachable() is a backport of C++23 std::unreachable and marks a code segment as unreachable.                                    //
+//     -  return x > 0 ? 1 : x < 0 ? -1 : tr::unreachable() -> Assume that x cannot possibly be 0 in this context.                       //
+//                                                                                                                                       //
+// TR_ASSUME(condition) hints to the compiler that the condition is assumed and can be optimized for.                                    //
+//     - TR_ASSUME(ptr != nullptr) -> Assume that the point is not null.                                                                 //
+//                                                                                                                                       //
+// TR_STRINGIFY(x) expands into the string representation of x.                                                                          //
+//     - TR_STRINGIFY(a < 9) -> "a < 9"                                                                                                  //
+//                                                                                                                                       //
+// TR_FILENAME expands into a string literal of the source filename (may fall back to the full path if not supported by the compiler).   //
+//     - TR_FILENAME -> "macro.hpp"                                                                                                      //
+//                                                                                                                                       //
+// TR_ASSERT(condition, fmt, ...) is a custom assertion macro.                                                                           //
+// If TR_ENABLE_ASSERTS is defined, it checks if condition is true, and if not, logs a formatted error message and aborts the program.   //
+// If TR_ENABLE_ASSERTS is not defined, the macro does nothing.                                                                          //
+// Error formatting is done through std::format, so fmt must be a valid format string and all further arguments must be formattable.     //
+//     - int a = -1; TR_ASSERT(a > 0, "Tried to pass negative value {}.", a);                                                            //
+//       -> Assertion failed at macro.hpp:19:                                                                                            //
+//          Tried to pass negative value -1.                                                                                             //
+//                                                                                                                                       //
+// TR_PATH_CSTR(path) gets a char pointer representation of a standard path; this pointer should always be assumed to be a temporary.    //
+// std::filesystem::path::c_str returns a wide char pointer on Windows, so paths must first be converted to a char string.               //
+// We can avoid doing this on Unix and thus save on a string allocation over just writing path.string().c_str() everywhere.              //
+//     - std::filesystem::path path = "~/example"; path /= "sub"; std::format("{}", TR_PATH_CSTR(path)) -> "~/example/sub"               //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include "logger.hpp"
+
+////////////////////////////////////////////////////////////// IMPLEMENTATION /////////////////////////////////////////////////////////////
 
 namespace tr {
 #if defined(__GNUC__) || defined(__clang__)
@@ -21,13 +54,13 @@ namespace tr {
 } // namespace tr
 
 #ifdef __clang__
-#define TR_ASSUME(x) __builtin_assume(x)
+#define TR_ASSUME(condition) __builtin_assume(condition)
 #elif defined(_MSC_VER)
-#define TR_ASSUME(x) __assume(x)
+#define TR_ASSUME(condition) __assume(condition)
 #elif defined(__GNUC__)
-#define TR_ASSUME(x) ((x) ? (void(0)) : (__builtin_unreachable()))
+#define TR_ASSUME(condition) ((condition) ? (void(0)) : (__builtin_unreachable()))
 #else
-#define TR_ASSUME(x)                                                                                                                       \
+#define TR_ASSUME(condition)                                                                                                               \
 	do {                                                                                                                                   \
 	} while (0)
 #endif
