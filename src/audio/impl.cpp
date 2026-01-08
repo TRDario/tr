@@ -1,7 +1,8 @@
-#include "../../include/tr/audio/al_call.hpp"
 #include "../../include/tr/audio/impl.hpp"
+#include "../../include/tr/audio/al_call.hpp"
 #include "../../include/tr/audio/source.hpp"
 #include <AL/alext.h>
+#include <chrono>
 
 ///////////////////////////////////////////////////////////////// COMMAND /////////////////////////////////////////////////////////////////
 
@@ -11,7 +12,7 @@ tr::audio::command::command(std::shared_ptr<source_base> source, type type, floa
 	, m_start{.num = start}
 	, m_end{.num = end}
 	, m_length{length}
-	, m_last_update{clock::now()}
+	, m_last_update{std::chrono::steady_clock::now()}
 	, m_elapsed{}
 {
 }
@@ -22,7 +23,7 @@ tr::audio::command::command(std::shared_ptr<source_base> source, type type, glm:
 	, m_start{.vec2 = start}
 	, m_end{.vec2 = end}
 	, m_length{length}
-	, m_last_update{clock::now()}
+	, m_last_update{std::chrono::steady_clock::now()}
 	, m_elapsed{}
 {
 }
@@ -33,7 +34,7 @@ tr::audio::command::command(std::shared_ptr<source_base> source, type type, glm:
 	, m_start{.vec3 = start}
 	, m_end{.vec3 = end}
 	, m_length{length}
-	, m_last_update{clock::now()}
+	, m_last_update{std::chrono::steady_clock::now()}
 	, m_elapsed{}
 {
 }
@@ -45,7 +46,7 @@ std::shared_ptr<tr::audio::source_base> tr::audio::command::source() const
 
 tr::audio::command::argument tr::audio::command::value()
 {
-	const time_point now{clock::now()};
+	const std::chrono::steady_clock::time_point now{std::chrono::steady_clock::now()};
 	m_elapsed = std::min(m_elapsed + now - m_last_update, m_length);
 	m_last_update = now;
 	const float t{duration_cast<fsecs>(m_elapsed) / m_length};

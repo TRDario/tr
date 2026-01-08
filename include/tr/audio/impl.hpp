@@ -189,7 +189,7 @@ namespace tr::audio {
 		// The length of the command.
 		duration m_length;
 		// When the last update was.
-		time_point m_last_update;
+		std::chrono::steady_clock::time_point m_last_update;
 		// How much time has elapsed for the command.
 		duration m_elapsed;
 

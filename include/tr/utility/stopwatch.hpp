@@ -14,6 +14,6 @@ namespace tr {
 		duration lap();
 
 	  private:
-		time_point m_start;
+		std::chrono::steady_clock::time_point m_start;
 	};
 } // namespace tr

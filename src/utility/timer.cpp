@@ -1,5 +1,6 @@
 #include "../../include/tr/utility/timer.hpp"
 
+// Use SDL_DelayPrecise on Windows if available.
 #if defined(WIN32) && defined(TR_HAS_SYSGFX)
 #include <SDL3/SDL.h>
 #endif
@@ -31,13 +32,13 @@ void tr::timer::timer_loop(bool& active, duration interval, callback cb)
 	}
 
 	try {
-		time_point prev{clock::now()};
+		std::chrono::steady_clock::time_point prev{std::chrono::steady_clock::now()};
 		duration total_error{};
 
 		std::this_thread::sleep_for(interval);
 		while (active) {
 			atomic_thread_fence(std::memory_order::relaxed);
-			const time_point now{clock::now()};
+			const std::chrono::steady_clock::time_point now{std::chrono::steady_clock::now()};
 			atomic_thread_fence(std::memory_order::relaxed);
 
 			const duration last_interval{now - prev};
@@ -56,7 +57,7 @@ void tr::timer::timer_loop(bool& active, duration interval, callback cb)
 			SDL_DelayPrecise(tr::insecs{next_interval}.count());
 #else
 			std::this_thread::sleep_until(now + next_interval);
-			#endif
+#endif
 		}
 	}
 	catch (...) {
