@@ -2,7 +2,7 @@
 //                                                                                                                                       //
 // Provides miscellaneous macros.                                                                                                        //
 //                                                                                                                                       //
-// tr::unreachable() is a backport of C++23 std::unreachable and marks a code segment as unreachable.                                    //
+// tr::unreachable is a backport of C++23 std::unreachable and marks a code segment as unreachable.                                      //
 //     -  return x > 0 ? 1 : x < 0 ? -1 : tr::unreachable() -> Assume that x cannot possibly be 0 in this context.                       //
 //                                                                                                                                       //
 // TR_ASSUME(condition) hints to the compiler that the condition is assumed and can be optimized for.                                    //
