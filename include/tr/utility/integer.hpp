@@ -1,5 +1,19 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Provides a set of integer aliases and fixed-width integer literals.                                                                   //
+//                                                                                                                                       //
+// Integer aliases are in the format iX/uX (for signed and unsigned respectively) alongside ssize/usize, and are in the namespace        //
+// tr::integer_aliases, as well as tr::aliases.                                                                                          //
+//                                                                                                                                       //
+// Integer literals are in the format _iX/_uX (for signed and unsigned respectively) alongside _z/_uz, and are in the namespace          //
+// tr::integer_literals, as well as tr::literals.                                                                                        //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include "common.hpp"
+
+//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
 namespace tr {
 	inline namespace aliases {
