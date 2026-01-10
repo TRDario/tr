@@ -1,6 +1,15 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Implements al_call.hpp.                                                                                                               //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #include "../../include/tr/audio/al_call.hpp"
 #include <AL/al.h>
 
+//////////////////////////////////////////////////////////////// VALIDATION ///////////////////////////////////////////////////////////////
+
+#ifdef TR_ENABLE_ASSERTS
 void tr::audio::validate_al_call(const char* file, int line, const char* function)
 {
 	const ALenum error{alGetError()};
@@ -26,3 +35,4 @@ void tr::audio::validate_al_call(const char* file, int line, const char* functio
 		std::abort();
 	}
 }
+#endif
