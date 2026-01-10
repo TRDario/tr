@@ -1,5 +1,13 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Implements utf8.hpp.                                                                                                                  //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include "utf8.hpp"
+
+///////////////////////////////////////////////////// BASIC TRAVERSAL AND MANIPULATION ////////////////////////////////////////////////////
 
 template <tr::utf8::base_iterator T> constexpr tr::codepoint tr::utf8::to_cp(T it)
 {
@@ -101,7 +109,7 @@ template <tr::utf8::string String> constexpr void tr::utf8::pop_back(String& str
 	}
 }
 
-//
+///////////////////////////////////////////////////////////////// ITERATOR ////////////////////////////////////////////////////////////////
 
 constexpr tr::utf8::const_it::const_it(const char* ptr)
 	: m_ptr{ptr}
@@ -151,7 +159,7 @@ constexpr const char* tr::utf8::const_it::base() const
 	return m_ptr;
 }
 
-//
+///////////////////////////////////////////////////////////// CODEPOINT VIEWS /////////////////////////////////////////////////////////////
 
 constexpr tr::utf8::const_it tr::utf8::begin(std::string_view str)
 {
