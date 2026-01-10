@@ -107,7 +107,7 @@ void tr::gfx::basic_dyn_vertex_buffer::reserve(usize capacity)
 		TR_GL_CALL(glNamedBufferStorage, m_vbo.get(), GLsizeiptr(capacity), nullptr, GL_DYNAMIC_STORAGE_BIT);
 		if (glGetError() == GL_OUT_OF_MEMORY) {
 #ifdef TR_ENABLE_ASSERTS
-			throw out_of_memory{std::format("allocation of vertex buffer '{}'", label())};
+			throw out_of_memory{"allocation of vertex buffer '{}'", label()};
 #else
 			throw out_of_memory{"vertex buffer allocation"};
 #endif

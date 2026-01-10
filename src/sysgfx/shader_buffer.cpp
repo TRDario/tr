@@ -81,7 +81,7 @@ tr::gfx::basic_buffer_map tr::gfx::basic_shader_buffer::map_header()
 	std::byte* ptr{(std::byte*)(TR_RETURNING_GL_CALL(glMapNamedBufferRange, m_sbo.get(), 0, GLsizeiptr(m_header_size), GLenum(m_access)))};
 	if (glGetError() == GL_OUT_OF_MEMORY) {
 #ifdef TR_ENABLE_ASSERTS
-		throw out_of_memory{std::format("mapping of shader buffer '{}'", label())};
+		throw out_of_memory{"mapping of shader buffer '{}'", label()};
 #else
 		throw out_of_memory{"shader buffer mapping"};
 #endif
@@ -98,7 +98,7 @@ tr::gfx::basic_buffer_map tr::gfx::basic_shader_buffer::map_array()
 													 GLenum(m_access)))};
 	if (glGetError() == GL_OUT_OF_MEMORY) {
 #ifdef TR_ENABLE_ASSERTS
-		throw out_of_memory{std::format("mapping of shader buffer '{}'", label())};
+		throw out_of_memory{"mapping of shader buffer '{}'", label()};
 #else
 		throw out_of_memory{"shader buffer mapping"};
 #endif

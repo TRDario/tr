@@ -1,9 +1,30 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Provides various basic exception types.                                                                                               //
+//                                                                                                                                       //
+// tr::exception provides an interface for tr-style exceptions, which instead of having a single "what" message can consist of up to     //
+// three: name, description, and details. The actual .what() method combines these into the format "<NAME>: <DESCRIPTION> (<DETAILS>)".  //
+//     - tr::custom_exception{"foo error", "bar not found", "baz"}.what() -> "foo error: bar not found (baz)"                            //
+// NOTE: tr::exception uses a single statically allocated buffer for what() string, so it is not possible to have multiple what()        //
+// messages at once.                                                                                                                     //
+//                                                                                                                                       //
+// tr::out_of_memory is a custom out-of-memory exception whose description can be formatted, while tr::custom_exception forwards the     //
+// strings it is passed as the name/description/details strings.                                                                         //
+//     - tr::out_of_memory{"bitmap allocation"}.what() -> "Out of memory error: During bitmap allocation."                               //
+//     - tr::custom_exception{"foo error", "bar not found", "baz"}.what() -> "foo error: bar not found (baz)"                            //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include "static_string.hpp"
+#include <iterator>
+
+//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
 namespace tr {
 	// Extension of std::exception.
-	struct exception : public std::exception {
+	class exception : public std::exception {
+	  public:
 		// Gets the name of the error.
 		virtual std::string_view name() const = 0;
 		// Gets the description of the error.
@@ -12,12 +33,16 @@ namespace tr {
 		virtual std::string_view details() const = 0;
 		// Gets a formatted error message.
 		const char* what() const noexcept final;
+
+	  private:
+		// Buffer used for exception explanation messages.
+		static thread_local static_string<1024> g_what_buffer;
 	};
 
 	// Custom out-of-memory exception.
 	struct out_of_memory : public exception {
-		// Constructs an exception.
-		out_of_memory(std::string_view description);
+		// Constructs an out-of-memory exception (arguments are formatted in-place).
+		template <class... Args> out_of_memory(TR_FMT::format_string<Args...> fmt, Args&&... args);
 
 		// Gets the name of the error.
 		std::string_view name() const override;
@@ -53,3 +78,13 @@ namespace tr {
 		std::string m_details;
 	};
 } // namespace tr
+
+///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
+
+template <class... Args> tr::out_of_memory::out_of_memory(TR_FMT::format_string<Args...> fmt, Args&&... args)
+{
+	auto it{std::back_inserter(m_description)};
+	TR_FMT::format_to(it, "During ");
+	TR_FMT::format_to_n(it, m_description.max_size() - 2 - m_description.size(), fmt, std::forward<Args>(args)...);
+	TR_FMT::format_to(it, ".");
+}

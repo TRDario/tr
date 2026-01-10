@@ -47,7 +47,7 @@ tr::gfx::basic_buffer_map tr::gfx::basic_uniform_buffer::map()
 	std::byte* ptr{(std::byte*)(TR_RETURNING_GL_CALL(glMapNamedBufferRange, m_ubo.get(), 0, m_size, flags))};
 	if (glGetError() == GL_OUT_OF_MEMORY) {
 #ifdef TR_ENABLE_ASSERTS
-		throw out_of_memory{std::format("mapping of uniform buffer '{}'", label())};
+		throw out_of_memory{"mapping of uniform buffer '{}'", label()};
 #else
 		throw out_of_memory{"uniform buffer mapping"};
 #endif

@@ -107,7 +107,7 @@ void tr::gfx::dyn_index_buffer::reserve(usize capacity)
 		TR_GL_CALL(glNamedBufferStorage, m_ibo.get(), GLsizeiptr(capacity * sizeof(u16)), nullptr, GL_DYNAMIC_STORAGE_BIT);
 		if (glGetError() == GL_OUT_OF_MEMORY) {
 #ifdef TR_ENABLE_ASSERTS
-			throw out_of_memory{std::format("allocation of index buffer '{}'", label())};
+			throw out_of_memory{"allocation of index buffer '{}'", label()};
 #else
 			throw out_of_memory{"index buffer allocation"};
 #endif
