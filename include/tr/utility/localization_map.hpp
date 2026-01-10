@@ -8,9 +8,9 @@
 //     - tr::localization_map loc -> empty localization map                                                                              //
 //     - tr::localization_map loc{{"key", "value"}, {"key2", "value2"}} -> localization map with values for keys "key" and "key2"        //
 //                                                                                                                                       //
-// The primary benefit of the class, however, is being able to load key-value pairs from a custom localization text file using the load  //
-// method. The parser silently handles lines with syntax errors; a vector of error messages is returned by load if you wish to display   //
-// them to the user. Loading multiple files is allowed: any duplicate keys are silently overwritten; this is not considered an error.    //
+// The primary benefit of the class, however, is being able to load key-value pairs from a custom localization text file using the       //
+// .load() method. The parser silently handles lines with syntax errors; a vector of error messages is returned by .load() if you wish   //
+// to display them to the user. Loading multiple files is allowed: any duplicate keys are silently overwritten; this is not an error.    //
 // Besides loading files, clearing the map is the only other allowed operation.                                                          //
 //     - loc.load("loc.txt") -> {"line 5: Unterminated quoted string."}; map now contains key-value pairs from loc.txt                   //
 //     - loc.load("loc2.txt") -> map now contains key-value pairs from loc.txt AND loc2.txt                                              //
@@ -23,9 +23,9 @@
 //     - example_key = "Example Message" # This is an example line                                                                       //
 //     - example_key2 = "Value with \"escaped\" characters: /\\_/\\" # Value with "escaped" characters: /\_/\                            //
 //                                                                                                                                       //
-// The presence of a key in the map can be checked with contains, and a view to the value can be gotten through the subscript operator.  //
-// If there is no corresponding value for a queried key, the operator returns a view to the key itself, so passing temporaries to the    //
-// subscript operator is not recommended to avoid dangling references.                                                                   //
+// The presence of a key in the map can be checked with .contains(), and a view to the value can be gotten through operator[].           //
+// If there is no corresponding value for a queried key, operator[] returns a view to the key itself, so passing temporaries to          //
+// operator[] is not recommended to avoid dangling references.                                                                           //
 //     - loc.contains("example_key") -> true                                                                                             //
 //     - loc["example_key"] -> "Example Message"                                                                                         //
 //     - loc.contains("nonexistant_key") -> false                                                                                        //
