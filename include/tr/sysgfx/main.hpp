@@ -30,8 +30,34 @@ namespace tr::sys {
 		FAILURE
 	};
 
-	// Sets various app information.
-	void set_app_information(cstring_view developer, cstring_view name, cstring_view version);
+	// Supported application types.
+	enum class app_type {
+		// The application is a game.
+		GAME,
+		// The application type is unspecified.
+		APPLICATION
+	};
+
+	// Application metadata.
+	struct app_metadata {
+		// The name of the application.
+		cstring_view name{};
+		// The version of the application.
+		cstring_view version{};
+		// The identifier of the application.
+		cstring_view identifier{};
+		// The developer of the application.
+		cstring_view developer{};
+		// A short copyright notice.
+		cstring_view copyright{};
+		// A URL relevant to the application.
+		cstring_view url{};
+		// The type of the application.
+		app_type type{app_type::APPLICATION};
+	};
+
+	// Sets application metadata.
+	void set_app_metadata(const app_metadata& metadata);
 	// Sets the frequency at which tick() is called (by default not active).
 	void set_tick_frequency(float frequency);
 	// Sets the frequency at which draw() is called (by default set to the refresh rate).

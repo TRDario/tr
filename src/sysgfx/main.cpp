@@ -1,12 +1,10 @@
+#define SDL_MAIN_USE_CALLBACKS 1
+#include "../../include/tr/sysgfx/main.hpp"
 #include "../../include/tr/sysgfx/dialog.hpp"
 #include "../../include/tr/sysgfx/display.hpp"
-#include "../../include/tr/sysgfx/impl.hpp"
-#include "../../include/tr/sysgfx/main.hpp"
 #include <SDL3/SDL.h>
-#include <SDL3_ttf/SDL_ttf.h>
-
-#define SDL_MAIN_USE_CALLBACKS 1
 #include <SDL3/SDL_main.h>
+#include <SDL3_ttf/SDL_ttf.h>
 
 #if defined _MSC_VER and not defined TR_ENABLE_ASSERTS
 #pragma comment(linker, "/subsystem:windows /ENTRY:mainCRTStartup")
@@ -47,11 +45,15 @@ std::string_view tr::sys::init_error::details() const
 
 //
 
-void tr::sys::set_app_information(cstring_view developer, cstring_view name, cstring_view version)
+void tr::sys::set_app_metadata(const app_metadata& metadata)
 {
-	g_app_developer = developer;
-	g_app_name = name;
-	SDL_SetAppMetadata(name, version, nullptr);
+	SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_NAME_STRING, metadata.name);
+	SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_VERSION_STRING, metadata.version);
+	SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_IDENTIFIER_STRING, metadata.identifier);
+	SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_CREATOR_STRING, metadata.developer);
+	SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_COPYRIGHT_STRING, metadata.copyright);
+	SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_URL_STRING, metadata.url);
+	SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_TYPE_STRING, metadata.type == app_type::GAME ? "game" : "application");
 }
 
 void tr::sys::set_tick_frequency(float frequency)

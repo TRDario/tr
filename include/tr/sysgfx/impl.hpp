@@ -10,11 +10,6 @@ namespace tr::sys {
 	// Buffer allocated to be freed in case of an out-of-memory error.
 	inline std::unique_ptr<char[]> g_emergency_buffer{new char[16384]};
 
-	// The name of the application developer.
-	inline cstring_view g_app_developer;
-	// The name of the application.
-	inline cstring_view g_app_name;
-
 	// Pointer to the SDL window.
 	inline SDL_Window* g_sdl_window{nullptr};
 
