@@ -5,7 +5,8 @@
 // Angles are internally stored with their value in radians in 32-bit floating point form, so all caveats pertaining to precision and    //
 // comparison of floating-point values applies to angles as well.                                                                        //
 //                                                                                                                                       //
-// Angles are constructed with one of three unit functions/literals, or with one of the trigonometric functions:                         //
+// Angles are constructed with the deafult constructor, one of three unit functions/literals, or one of the trigonometric functions:     //
+//     - tr::angle th; -> zero angle.                                                                                                    //
 //     - tr::rads(5) or 5_rad -> 5-radian angle.                                                                                         //
 //     - tr::degs(45) or 45_deg -> 45-degree angle.                                                                                      //
 //     - tr::turns(1) or 1_tr -> 1-turn angle.                                                                                           //
