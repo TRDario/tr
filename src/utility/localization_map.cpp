@@ -1,4 +1,12 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Implements localization_map.hpp.                                                                                                      //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #include "../../include/tr/utility/localization_map.hpp"
+
+///////////////////////////////////////////////////////// LOCALIZATION LOAD ERROR /////////////////////////////////////////////////////////
 
 tr::localization_load_error::localization_load_error(std::string&& description)
 	: m_description{description}
@@ -20,7 +28,7 @@ std::string_view tr::localization_load_error::details() const
 	return {};
 }
 
-//
+///////////////////////////////////////////////////////// LOCALIZATION MAP PARSER /////////////////////////////////////////////////////////
 
 std::string::iterator tr::localization_map::parser::skip_whitespace(std::string::iterator it)
 {
@@ -135,7 +143,7 @@ std::vector<std::string> tr::localization_map::parser::errors()
 	return std::move(m_errors);
 }
 
-//
+///////////////////////////////////////////////////////////// LOCALIZATION MAP ////////////////////////////////////////////////////////////
 
 tr::localization_map::localization_map(const string_hash_map<std::string>& map)
 	: m_map{map}
