@@ -1,3 +1,22 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Provides an audio buffer class.                                                                                                       //
+//                                                                                                                                       //
+// Audio buffers are attached to audio sources and may store 16-bit mono or stereo audio data. They may be constructed with initial data //
+// or have it set later with .set(). Attached audio buffers can be destroyed without worry for the sources: the system will keep their   //
+// data allocated until all sources have stopped using it.                                                                               //
+//     - tr::audio::buffer buf{data, tr::audio::format::MONO16, 44100}                                                                   //
+//       -> equivalent to tr::audio::buffer{}; buf.set(data, tr::audio::format::MONO16, 44100)                                           //
+//                                                                                                                                       //
+// Audio buffers can also directly be loaded from .ogg files using tr::audio::open_file.                                                 //
+//     - tr::audio::buffer buf{tr::audio::load_file("sound.ogg")}                                                                        //
+//                                                                                                                                       //
+// The size (in bytes) and length (in seconds) of the buffer's audio can be queried using the .size() and .length() methods.             //
+//     - buf.size() -> 88200                                                                                                             //
+//     - buf.length() -> 1.0s                                                                                                            //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include "../utility/chrono.hpp"
 #include "../utility/handle.hpp"
