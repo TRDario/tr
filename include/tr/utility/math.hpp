@@ -7,19 +7,19 @@
 //     - tr::floor_cast<u8>(10.9) -> u8(10)                                                                                              //
 //     - tr::ceil_cast<i16>(10.1) -> i16(11)                                                                                             //
 //                                                                                                                                       //
-// tr::abs is a constexpr alternative to std::abs.                                                                                       //
+// tr::abs is a constexpr alternative to std::abs:                                                                                       //
 //     - tr::abs(-4) -> 4                                                                                                                //
 //                                                                                                                                       //
-// tr::mod is a generic modulo operation (defaults to the % operator, but has custom overloads for floating-point numbers).              //
+// tr::mod is a generic modulo operation (defaults to the % operator, but has custom overloads for floating-point numbers):              //
 //     - tr::mod(9.5f, 5) -> 4.5f                                                                                                        //
 //                                                                                                                                       //
-// tr::eucmod is a euclidian modulo operation (unlike regular modulo cannot return a negative result).                                   //
+// tr::eucmod is a euclidian modulo operation (unlike regular modulo cannot return a negative result):                                   //
 //     - tr::eucmod(-1.5f, 5) -> 3.5f                                                                                                    //
 //                                                                                                                                       //
-// tr::lerp linearly interpolates between two values.                                                                                    //
+// tr::lerp linearly interpolates between two values:                                                                                    //
 //     - tr::lerp(1, 5, 0.5) -> 3                                                                                                        //
 //                                                                                                                                       //
-// tr::sqr returns the square of a value.                                                                                                //
+// tr::sqr returns the square of a value:                                                                                                //
 //     - tr::sqr(3) -> 9                                                                                                                 //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

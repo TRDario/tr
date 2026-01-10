@@ -2,12 +2,12 @@
 //                                                                                                                                       //
 // Provides miscellaneous iostream functionality.                                                                                        //
 //                                                                                                                                       //
-// tr::open_file_r and tr::open_file_w act as wrappers over the iostream constructor primarily to provide better error messages.         //
+// tr::open_file_r and tr::open_file_w act as wrappers over the iostream constructor primarily to provide better error messages:         //
 //     - tr::open_file_w("input.txt") -> std::ofstream to "input.txt"                                                                    //
 //     - tr::open_file_r("nonexistant.txt") -> File not found: nonexistant.txt                                                           //
 //     - tr::open_file_w("restricted.txt") -> File opening error: restricted.txt                                                         //
 //                                                                                                                                       //
-// tr::reached_eof provides a way of checking for end-of-file without having to trigger eofbit or badbit on operations.                  //
+// tr::reached_eof provides a way of checking for end-of-file without having to trigger eofbit or badbit on operations:                  //
 //     - tr::reached_eof(file) -> true, any further operations will set eofbit.                                                          //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -4,14 +4,14 @@
 //                                                                                                                                       //
 // A localization map is a fairly thin wrapper around a string -> string map meant to serve as a map between localization keys and       //
 // localization strings. As such, it can be manually constructed from one. The only other constructor is the default one, which creates  //
-// an empty map.                                                                                                                         //
+// an empty map:                                                                                                                         //
 //     - tr::localization_map loc -> empty localization map                                                                              //
 //     - tr::localization_map loc{{"key", "value"}, {"key2", "value2"}} -> localization map with values for keys "key" and "key2"        //
 //                                                                                                                                       //
 // The primary benefit of the class, however, is being able to load key-value pairs from a custom localization text file using the       //
 // .load() method. The parser silently handles lines with syntax errors; a vector of error messages is returned by .load() if you wish   //
 // to display them to the user. Loading multiple files is allowed: any duplicate keys are silently overwritten; this is not an error.    //
-// Besides loading files, clearing the map is the only other allowed operation.                                                          //
+// Besides loading files, clearing the map is the only other allowed operation:                                                          //
 //     - loc.load("loc.txt") -> {"line 5: Unterminated quoted string."}; map now contains key-value pairs from loc.txt                   //
 //     - loc.load("loc2.txt") -> map now contains key-value pairs from loc.txt AND loc2.txt                                              //
 //     - loc.clear() -> map is now empty again                                                                                           //
@@ -19,13 +19,13 @@
 // The localization file consists of lines in the format: [<KEY> = "<VALUE>"] [#COMMENT]                                                 //
 // Empty lines and lines consisting entirely of comments are ignored, as is any whitespace between the tokens.                           //
 // KEY must consist entirely of ASCII alphanumeric characters and '_'.                                                                   //
-// VALUE can contain any Unicode characters, but a few have to be escaped: newlines with '\n', backslashes with '\\', quotes with '\"'.  //
+// VALUE can contain any Unicode characters, but a few have to be escaped: newlines with '\n', backslashes with '\\', quotes with '\"':  //
 //     - example_key = "Example Message" # This is an example line                                                                       //
 //     - example_key2 = "Value with \"escaped\" characters: /\\_/\\" # Value with "escaped" characters: /\_/\                            //
 //                                                                                                                                       //
 // The presence of a key in the map can be checked with .contains(), and a view to the value can be gotten through operator[].           //
 // If there is no corresponding value for a queried key, operator[] returns a view to the key itself, so passing temporaries to          //
-// operator[] is not recommended to avoid dangling references.                                                                           //
+// operator[] is not recommended to avoid dangling references:                                                                           //
 //     - loc.contains("example_key") -> true                                                                                             //
 //     - loc["example_key"] -> "Example Message"                                                                                         //
 //     - loc.contains("nonexistant_key") -> false                                                                                        //

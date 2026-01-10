@@ -3,7 +3,7 @@
 // Provides a cast between normalized values.                                                                                            //
 //                                                                                                                                       //
 // For integers, their entire range of values can be interpreted as representing fractional values between 0 and 1. tr::norm_cast allows //
-// casting between different types of integers in this format, or converting to or from a floating point value in the range [0, 1].      //
+// casting between different types of integers in this format, or converting to or from a floating point value in the range [0, 1]:      //
 //     - tr::norm_cast<u8>(i16(0)) -> 128                                                                                                //
 //     - tr::norm_cast<u8>(0.75) -> 191                                                                                                  //
 //     - tr::norm_cast<float>(u8(255)) -> 1.0f                                                                                           //

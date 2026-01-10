@@ -4,7 +4,7 @@
 //                                                                                                                                       //
 // tr::string_hash and tr::string_eq are provided as transparent alternatives for string hashing and comparison.                         //
 // The aliases tr::string_hash_map and tr::static_string_hash_map use these types to allow searching with std::string_view or const char*//
-// instead of having to allocate an std::string.                                                                                         //
+// instead of having to allocate an std::string:                                                                                         //
 //     - tr::string_hash_map<int> test; *test.find("key") = 10 -> Doesn't allocate a std::string like it usually would.                  //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

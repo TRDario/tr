@@ -3,13 +3,13 @@
 // Provides various basic exception types.                                                                                               //
 //                                                                                                                                       //
 // tr::exception provides an interface for tr-style exceptions, which instead of having a single "what" message can consist of up to     //
-// three: name, description, and details. The actual .what() method combines these into the format "<NAME>: <DESCRIPTION> (<DETAILS>)".  //
+// three: name, description, and details. The actual .what() method combines these into the format "<NAME>: <DESCRIPTION> (<DETAILS>)":  //
 //     - tr::custom_exception{"foo error", "bar not found", "baz"}.what() -> "foo error: bar not found (baz)"                            //
 // NOTE: tr::exception uses a single statically allocated buffer for what() string, so it is not possible to have multiple what()        //
 // messages at once.                                                                                                                     //
 //                                                                                                                                       //
 // tr::out_of_memory is a custom out-of-memory exception whose description can be formatted, while tr::custom_exception forwards the     //
-// strings it is passed as the name/description/details strings.                                                                         //
+// strings it is passed as the name/description/details strings:                                                                         //
 //     - tr::out_of_memory{"bitmap allocation"}.what() -> "Out of memory error: During bitmap allocation."                               //
 //     - tr::custom_exception{"foo error", "bar not found", "baz"}.what() -> "foo error: bar not found (baz)"                            //
 //                                                                                                                                       //
