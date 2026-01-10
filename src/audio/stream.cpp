@@ -1,10 +1,26 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Implements stream.hpp.                                                                                                                //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #include "../../include/tr/audio/stream.hpp"
 #include <vorbis/vorbisfile.h>
+
+//////////////////////////////////////////////////////////////// CONSTANTS ////////////////////////////////////////////////////////////////
+
+namespace tr::audio {
+	// Sentinel representing an unknown ending loop point.
+	constexpr usize UNKNOWN_LOOP_POINT{std::numeric_limits<usize>::max()};
+} // namespace tr::audio
+
+///////////////////////////////////////////////////////////// OGG AUDIO FILE //////////////////////////////////////////////////////////////
 
 namespace tr::audio {
 	// Ogg audio file backend.
 	class ogg_stream : public stream {
 	  public:
+		// Loads an Ogg stream from file.
 		ogg_stream(const std::filesystem::path& path);
 		~ogg_stream();
 
@@ -17,17 +33,14 @@ namespace tr::audio {
 		void raw_read(std::span<i16> buffer) override;
 
 	  private:
-		mutable OggVorbis_File file{};
+		// A handle to the Ogg file.
+		mutable OggVorbis_File m_file{};
 	};
-
-	constexpr usize UNKNOWN_LOOP_POINT{std::numeric_limits<usize>::max()};
 } // namespace tr::audio
-
-///////////////////////////////////////////////////////////// OGG AUDIO FILE //////////////////////////////////////////////////////////////
 
 tr::audio::ogg_stream::ogg_stream(const std::filesystem::path& path)
 {
-	const int result{ov_fopen(TR_PATH_CSTR(path), &file)};
+	const int result{ov_fopen(TR_PATH_CSTR(path), &m_file)};
 	if (result != 0) {
 		switch (result) {
 		case OV_EREAD:
@@ -43,7 +56,7 @@ tr::audio::ogg_stream::ogg_stream(const std::filesystem::path& path)
 		}
 	}
 
-	const vorbis_comment& comments{*ov_comment(&file, -1)};
+	const vorbis_comment& comments{*ov_comment(&m_file, -1)};
 	for (int i = 0; i < comments.comments; ++i) {
 		const std::string_view comment{comments.user_comments[i], usize(comments.comment_lengths[i])};
 		if (comment.starts_with("LOOPSTART=")) {
@@ -70,32 +83,32 @@ tr::audio::ogg_stream::ogg_stream(const std::filesystem::path& path)
 
 tr::audio::ogg_stream::~ogg_stream()
 {
-	ov_clear(&file);
+	ov_clear(&m_file);
 }
 
 tr::usize tr::audio::ogg_stream::length() const
 {
-	return usize(ov_pcm_total(&file, -1));
+	return usize(ov_pcm_total(&m_file, -1));
 }
 
 int tr::audio::ogg_stream::channels() const
 {
-	return ov_info(&file, -1)->channels;
+	return ov_info(&m_file, -1)->channels;
 }
 
 int tr::audio::ogg_stream::sample_rate() const
 {
-	return int(ov_info(&file, -1)->rate);
+	return int(ov_info(&m_file, -1)->rate);
 }
 
 tr::usize tr::audio::ogg_stream::tell() const
 {
-	return usize(ov_pcm_tell(&file));
+	return usize(ov_pcm_tell(&m_file));
 }
 
 void tr::audio::ogg_stream::seek(usize where)
 {
-	ov_pcm_seek(&file, ogg_int64_t(where));
+	ov_pcm_seek(&m_file, ogg_int64_t(where));
 }
 
 void tr::audio::ogg_stream::raw_read(std::span<i16> buffer)
@@ -104,7 +117,7 @@ void tr::audio::ogg_stream::raw_read(std::span<i16> buffer)
 	int bytes_left{int(buffer.size_bytes())};
 	int cur_section;
 	while (bytes_left > 0) {
-		const int read_bytes{int(ov_read(&file, raw_dest, bytes_left, 0, 2, 1, &cur_section))};
+		const int read_bytes{int(ov_read(&m_file, raw_dest, bytes_left, 0, 2, 1, &cur_section))};
 		if (read_bytes <= 0) {
 			return;
 		}

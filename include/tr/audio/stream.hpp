@@ -1,3 +1,29 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Provides an audio stream interface and a function to load an audio stream from file.                                                  //
+//                                                                                                                                       //
+// tr::audio::stream provides an interface for a 16-bit mono or stereo audio stream. Currently, the only way to get an audio stream is   //
+// to open a file using tr::audio::open_file, which creates an audio stream using data from an .ogg file.                                //
+//     - std::unique_ptr<tr::audio::stream> stream{tr::audio::open_file("audio.ogg")}                                                    //
+//                                                                                                                                       //
+// The length, number of channels, and sample rate of the stream can be queried using methods:                                           //
+//     - stream.length() -> 2205000                                                                                                      //
+//     - stream.channels() -> 2                                                                                                          //
+//     - stream.sample_rate() -> 44100                                                                                                   //
+//                                                                                                                                       //
+// The current position of the stream can be queried or set, and data can be read to a buffer:                                           //
+//     - stream.tell() -> 0                                                                                                              //
+//     - stream.seek(88200) -> stream is now at 2.0s                                                                                     //
+//     - std::array<i16, 8192> buffer; stream.read(buffer) -> reads data into buffer, returns a span to the region that was written to   //
+//                                                                                                                                       //
+// A stream can be looped between arbitrary loop points (by default the beginning and end). These parameters can also be queried:        //
+//     - stream.looping() -> false                                                                                                       //
+//     - stream.loop_start() -> 0                                                                                                        //
+//     - stream.loop_end() -> 2205000                                                                                                    //
+//     - stream.set_looping(true); stream.set_loop_start(88200) -> stream now loops in the interval [2.0s, 50.0s]                        //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include "../utility/exception.hpp"
 
