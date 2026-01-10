@@ -64,3 +64,8 @@ std::ifstream tr::open_file_r(const std::filesystem::path& path, std::ios::openm
 	file.exceptions(std::ios::badbit | std::ios::failbit);
 	return file;
 }
+
+bool tr::reached_eof(std::istream& stream)
+{
+	return !stream.eof() && stream.peek() != EOF;
+}

@@ -122,7 +122,7 @@ std::vector<std::string> tr::localization_map::load(const std::filesystem::path&
 		std::vector<std::string> errors;
 
 		std::string buffer;
-		for (int line = 1; !file.eof() && file.peek() != EOF; ++line) {
+		for (int line = 1; !reached_eof(file); ++line) {
 			std::getline(file, buffer);
 			if (skip_line(buffer)) {
 				continue;
