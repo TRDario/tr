@@ -27,6 +27,8 @@
 #pragma once
 #include "../utility/exception.hpp"
 
+//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
+
 namespace tr::audio {
 	// Error thrown when opening an audio file failed.
 	class file_open_error : public exception {

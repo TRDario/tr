@@ -6,6 +6,7 @@
 // In order to simplify the process of debugging, OpenAL functions called with TR_AL_CALL in builds where TR_ENABLE_ASSERTS is defined   //
 // will inject some validation code which prints the type and location of the error before aborting the program.                         //
 // In builds where TR_ENABLE_ASSERTS is not defined, the macro just calls the corresponding OpenAL function with no other effects.       //
+//     - TR_AL_CALL(alGenBuffers, 1, &id) -> calls alGenBuffers(1, &id)                                                                  //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -13,6 +14,8 @@
 #include "../utility/macro.hpp"
 #include <AL/al.h>
 #include <AL/alc.h>
+
+////////////////////////////////////////////////////////////// IMPLEMENTATION /////////////////////////////////////////////////////////////
 
 #ifdef TR_ENABLE_ASSERTS
 namespace tr::audio {
