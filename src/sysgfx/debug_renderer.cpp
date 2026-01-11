@@ -1,9 +1,18 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Implements debug_renderer.hpp.                                                                                                        //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+#include "../../include/tr/sysgfx/debug_renderer.hpp"
 #include "../../include/tr/sysgfx/backbuffer.hpp"
 #include "../../include/tr/sysgfx/blending.hpp"
-#include "../../include/tr/sysgfx/debug_renderer.hpp"
-#include "../../include/tr/sysgfx/gpu_benchmark.hpp"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/render_target.hpp"
+
+using namespace std::chrono_literals;
+
+////////////////////////////////////////////////////////////// DEBUG RENDERER /////////////////////////////////////////////////////////////
 
 namespace tr::gfx {
 #include "../../resources/generated/DEBUG_RENDERER_FONT.hpp"
@@ -18,33 +27,9 @@ namespace tr::gfx {
 		{1, unpacked_vertex_attributes<glm::u8vec2, u8, u8, rgba8, rgba8>::list},
 	}};
 
-	// Context passed to text formatting functions.
-	struct debug_renderer::context {
-		// The current line number.
-		u8& line;
-		// Whether the text is right-aligned.
-		bool right_aligned;
-		// The text color.
-		rgba8 text_color;
-		// The background color.
-		rgba8 bg_color;
-		// The length of the current line.
-		u8 line_length;
-		// The offset to the start of the text.
-		usize text_start;
-		// The offset to the start of the line.
-		usize line_start;
-		// The offset to the start of the word.
-		usize word_start;
-	};
-
 	// Formats a duration into a string.
-	std::string format_duration(std::string_view prefix, duration duration);
+	static std::string format_duration(std::string_view prefix, duration duration);
 } // namespace tr::gfx
-
-using namespace std::chrono_literals;
-
-//
 
 std::string tr::gfx::format_duration(std::string_view prefix, duration duration)
 {
@@ -73,8 +58,6 @@ std::string tr::gfx::format_duration(std::string_view prefix, duration duration)
 		return TR_FMT::vformat(format, TR_FMT::make_format_args(count));
 	}
 }
-
-//
 
 tr::gfx::debug_renderer::debug_renderer(float scale, u8 column_limit)
 	: m_pipeline{vertex_shader{DEBUG_RENDERER_VERT}, fragment_shader{DEBUG_RENDERER_FRAG}}
@@ -108,40 +91,26 @@ void tr::gfx::debug_renderer::set_column_limit(u8 columns)
 	m_column_limit = columns;
 }
 
-void tr::gfx::debug_renderer::write_left(std::string_view text, rgba8 text_color, rgba8 bg_color, std::span<rgba8> extra_colors)
+void tr::gfx::debug_renderer::write_left(std::string_view text, const style& style)
 {
-	write(false, text, text_color, bg_color, extra_colors);
+	writer{style, m_glyphs, m_left_line, false, m_column_limit, m_glyphs.size()}.write(text);
 }
 
-void tr::gfx::debug_renderer::write_right(std::string_view text, rgba8 text_color, rgba8 bg_color, std::span<rgba8> extra_colors)
+void tr::gfx::debug_renderer::write_right(std::string_view text, const style& style)
 {
-	write(true, text, text_color, bg_color, extra_colors);
+	writer{style, m_glyphs, m_right_line, true, m_column_limit, m_glyphs.size()}.write(text);
 }
 
-void tr::gfx::debug_renderer::write_right(const benchmark& benchmark, std::string_view name, duration limit)
+void tr::gfx::debug_renderer::write_benchmark(duration min, duration avg, duration max, std::string_view name, duration limit)
 {
-	constexpr tr::rgba8 TEXT_COLOR{255, 255, 255, 255};
-	constexpr tr::rgba8 ALT_COLOR{255, 0, 0, 255};
+	constexpr style ALT_STYLE{.text_color{255, 0, 0, 255}};
 
 	if (!name.empty()) {
 		write_right(TR_FMT::format("{:<15}", name));
 	}
-	write_right(format_duration("MIN: ", benchmark.min()), benchmark.min() < limit ? TEXT_COLOR : ALT_COLOR);
-	write_right(format_duration("AVG: ", benchmark.avg()), benchmark.avg() < limit ? TEXT_COLOR : ALT_COLOR);
-	write_right(format_duration("MAX: ", benchmark.max()), benchmark.max() < limit ? TEXT_COLOR : ALT_COLOR);
-}
-
-void tr::gfx::debug_renderer::write_right(const gpu_benchmark& benchmark, std::string_view name, duration limit)
-{
-	constexpr tr::rgba8 TEXT_COLOR{255, 255, 255, 255};
-	constexpr tr::rgba8 ALT_COLOR{255, 0, 0, 255};
-
-	if (!name.empty()) {
-		write_right(TR_FMT::format("{:<15}", name));
-	}
-	write_right(format_duration("MIN: ", benchmark.min()), benchmark.min() < limit ? TEXT_COLOR : ALT_COLOR);
-	write_right(format_duration("AVG: ", benchmark.avg()), benchmark.avg() < limit ? TEXT_COLOR : ALT_COLOR);
-	write_right(format_duration("MAX: ", benchmark.max()), benchmark.max() < limit ? TEXT_COLOR : ALT_COLOR);
+	write_right(format_duration("MIN: ", min), min < limit ? DEFAULT_STYLE : ALT_STYLE);
+	write_right(format_duration("AVG: ", avg), avg < limit ? DEFAULT_STYLE : ALT_STYLE);
+	write_right(format_duration("MAX: ", max), max < limit ? DEFAULT_STYLE : ALT_STYLE);
 }
 
 void tr::gfx::debug_renderer::newline_left()
@@ -179,147 +148,159 @@ void tr::gfx::debug_renderer::draw()
 	m_right_line = 0;
 }
 
-//
+////////////////////////////////////////////////////////////////// WRITER /////////////////////////////////////////////////////////////////
 
-void tr::gfx::debug_renderer::right_align_line(usize begin, usize end)
+tr::gfx::debug_renderer::writer::writer(const style& style, std::vector<glyph>& glyphs, u8& line, bool right_aligned, u8 column_limit,
+										usize offset)
+	: m_style{style}
+	, m_glyphs{glyphs}
+	, m_line{line}
+	, m_right_aligned{right_aligned}
+	, m_column_limit{column_limit}
+	, m_text_color{style.text_color}
+	, m_background_color{style.background_color}
+	, m_line_length{0}
+	, m_current_text_start{offset}
+	, m_current_line_start{offset}
+	, m_current_word_start{offset}
 {
-	for (usize i = begin; i < end; ++i) {
-		m_glyphs[i].pos.x = u8(end - i);
+}
+
+void tr::gfx::debug_renderer::writer::right_align_current_line_up_to(usize line_end)
+{
+	for (usize i = m_current_line_start; i < line_end; ++i) {
+		m_glyphs[i].pos.x = u8(line_end - i);
 	}
 }
 
-void tr::gfx::debug_renderer::trim_trailing_whitespace(context& context)
+void tr::gfx::debug_renderer::writer::trim_whitespace_before_current_word()
 {
-	usize line_end = context.word_start - 1;
-	while (line_end > context.line_start && m_glyphs[line_end].chr != ' ') {
+	usize line_end = m_current_word_start - 1;
+	while (line_end > m_current_line_start && m_glyphs[line_end].chr != ' ') {
 		--line_end;
 	}
 
-	if (line_end != context.word_start) {
-		m_glyphs.erase(m_glyphs.begin() + line_end, m_glyphs.begin() + context.word_start);
-		context.word_start = line_end;
+	if (line_end != m_current_word_start) {
+		m_glyphs.erase(m_glyphs.begin() + line_end, m_glyphs.begin() + m_current_word_start);
+		m_current_word_start = line_end;
 	}
 }
 
-void tr::gfx::debug_renderer::move_word_to_next_line(context& context)
+void tr::gfx::debug_renderer::writer::move_current_word_to_next_line()
 {
-	for (glyph& glyph : std::ranges::subrange{m_glyphs.begin() + context.word_start, m_glyphs.end()}) {
-		glyph.pos = {context.line_length++, context.line};
+	for (glyph& glyph : std::ranges::subrange{m_glyphs.begin() + m_current_word_start, m_glyphs.end()}) {
+		glyph.pos = {m_line_length++, m_line};
 	}
-	context.line_start = context.word_start;
+	m_current_line_start = m_current_word_start;
 }
 
-void tr::gfx::debug_renderer::break_at_last_whitespace(context& context)
+void tr::gfx::debug_renderer::writer::break_before_current_word()
 {
-	trim_trailing_whitespace(context);
-	if (context.right_aligned) {
-		right_align_line(context.line_start, context.word_start);
+	trim_whitespace_before_current_word();
+	if (m_right_aligned) {
+		right_align_current_line_up_to(m_current_word_start);
 	}
-	move_word_to_next_line(context);
+	move_current_word_to_next_line();
 }
 
-void tr::gfx::debug_renderer::break_overlong_word(context& context)
+void tr::gfx::debug_renderer::writer::break_current_word()
 {
-	if (context.right_aligned) {
-		right_align_line(context.line_start, context.line_start + m_column_limit);
+	if (m_right_aligned) {
+		right_align_current_line_up_to(m_current_line_start + m_column_limit);
 	}
-	m_glyphs.back().pos = {context.line_length++, context.line};
+	m_glyphs.back().pos = {m_line_length++, m_line};
 
-	context.line_start += m_column_limit;
-	context.word_start = context.line_start;
+	m_current_line_start += m_column_limit;
+	m_current_word_start = m_current_line_start;
 }
 
-void tr::gfx::debug_renderer::handle_column_limit(context& context)
+void tr::gfx::debug_renderer::writer::break_current_line()
 {
-	context.line_length = 0;
-	++context.line;
+	m_line_length = 0;
+	++m_line;
 
-	if (context.word_start > context.line_start) {
-		break_at_last_whitespace(context);
+	if (m_current_word_start > m_current_line_start) {
+		break_before_current_word();
 	}
 	else {
-		break_overlong_word(context);
+		break_current_word();
 	}
 }
 
-void tr::gfx::debug_renderer::write_character(char chr, context& context)
+void tr::gfx::debug_renderer::writer::handle_newline()
 {
-	if (context.line_length == m_column_limit && chr == ' ') {
-		handle_newline(context);
+	if (m_right_aligned) {
+		right_align_current_line_up_to(m_glyphs.size());
+	}
+
+	m_line_length = 0;
+	m_current_word_start = m_glyphs.size();
+	m_current_line_start = m_glyphs.size();
+	++m_line;
+}
+
+void tr::gfx::debug_renderer::writer::write_character(char chr)
+{
+	if (m_line_length == m_column_limit && chr == ' ') {
+		handle_newline();
 	}
 	else {
-		m_glyphs.push_back({{context.line_length, context.line}, context.right_aligned, chr, context.text_color, context.bg_color});
+		m_glyphs.push_back({{m_line_length, m_line}, m_right_aligned, chr, m_text_color, m_background_color});
 
-		if (m_glyphs.size() - context.text_start > 1) {
+		if (m_current_text_start < m_glyphs.size() - 1) {
 			const char prev{m_glyphs[m_glyphs.size() - 2].chr};
 			if (prev == ' ' && chr != ' ') {
-				context.word_start = m_glyphs.size() - 1;
+				m_current_word_start = m_glyphs.size() - 1;
 			}
 		}
 
-		if (++context.line_length > m_column_limit) {
-			handle_column_limit(context);
+		if (++m_line_length > m_column_limit) {
+			break_current_line();
 		}
 	}
 }
 
-void tr::gfx::debug_renderer::handle_newline(context& context)
-{
-	if (context.right_aligned) {
-		right_align_line(context.line_start, m_glyphs.size());
-	}
-
-	context.line_length = 0;
-	context.word_start = m_glyphs.size();
-	context.line_start = m_glyphs.size();
-	++context.line;
-}
-
-void tr::gfx::debug_renderer::handle_control_sequence(std::string_view::iterator& it, std::string_view::iterator end, context& context,
-													  rgba8 text_color, rgba8 bg_color, std::span<rgba8> extra_colors)
+void tr::gfx::debug_renderer::writer::handle_control_sequence(std::string_view::iterator& it, std::string_view::iterator end)
 {
 	switch (*it) {
 	case 'b':
-		if (std::next(it) != end && std::isdigit(*++it) && u8(*it - '0') < extra_colors.size()) {
-			context.bg_color = extra_colors[*it - '0'];
+		if (std::next(it) != end && std::isdigit(*++it) && u8(*it - '0') < m_style.extra_colors.size()) {
+			m_background_color = m_style.extra_colors[*it - '0'];
 		}
 		break;
 	case 'B':
-		context.bg_color = bg_color;
+		m_background_color = m_style.background_color;
 		break;
 	case 'c':
-		if (std::next(it) != end && std::isdigit(*++it) && u8(*it - '0') < extra_colors.size()) {
-			context.text_color = extra_colors[*it - '0'];
+		if (std::next(it) != end && std::isdigit(*++it) && u8(*it - '0') < m_style.extra_colors.size()) {
+			m_text_color = m_style.extra_colors[*it - '0'];
 		}
 		break;
 	case 'C':
-		context.text_color = text_color;
+		m_text_color = m_style.text_color;
 		break;
 	case 'n':
-		handle_newline(context);
+		handle_newline();
 		break;
 	case '$':
-		write_character('$', context);
+		write_character('$');
 		break;
 	default:
 		break;
 	}
 }
 
-void tr::gfx::debug_renderer::write(bool right, std::string_view text, rgba8 text_color, rgba8 bg_color, std::span<rgba8> extra_colors)
+void tr::gfx::debug_renderer::writer::write(std::string_view text)
 {
-	const usize old_size{m_glyphs.size()};
-	context context{right ? m_right_line : m_left_line, right, text_color, bg_color, 0, old_size, old_size, old_size};
-
 	for (std::string_view::iterator it = text.begin(); it != text.end(); ++it) {
 		if (*it == '$') {
 			if (std::next(it) != text.end()) {
-				handle_control_sequence(++it, text.end(), context, text_color, bg_color, extra_colors);
+				handle_control_sequence(++it, text.end());
 			}
 		}
 		else {
-			write_character(*it, context);
+			write_character(*it);
 		}
 	}
-	handle_newline(context);
+	handle_newline();
 }
