@@ -29,9 +29,9 @@ namespace tr {
 		bool active() const;
 
 		// Logs a message.
-		template <class... Args> void log(severity level, TR_FMT::format_string<Args...> fmt, Args&&... args);
+		template <class... Args> void log(severity level, TR_FORMAT_STRING<Args...> fmt, Args&&... args);
 		// Logs a message continuing from a previous line.
-		template <class... Args> void log_continue(TR_FMT::format_string<Args...> fmt, Args&&... args);
+		template <class... Args> void log_continue(TR_FORMAT_STRING<Args...> fmt, Args&&... args);
 		// Logs an exception.
 		void log(severity level, const std::exception& err);
 		// Logs an exception continuing from a previous line.
@@ -66,7 +66,7 @@ namespace tr {
 
 ///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
 
-template <class... Args> void tr::logger::log(severity level, TR_FMT::format_string<Args...> fmt, Args&&... args)
+template <class... Args> void tr::logger::log(severity level, TR_FORMAT_STRING<Args...> fmt, Args&&... args)
 {
 	const std::tm time{tr::localtime(std::time(nullptr))};
 	const std::string time_str{TR_FMT::format("[{:02}:{:02}:{:02}] ", time.tm_hour, time.tm_min, time.tm_sec)};
@@ -82,7 +82,7 @@ template <class... Args> void tr::logger::log(severity level, TR_FMT::format_str
 	}
 }
 
-template <class... Args> void tr::logger::log_continue(TR_FMT::format_string<Args...> fmt, Args&&... args)
+template <class... Args> void tr::logger::log_continue(TR_FORMAT_STRING<Args...> fmt, Args&&... args)
 {
 	const std::string fmt_str{TR_FMT::format(fmt, std::forward<Args>(args)...)};
 	const std::string fill(m_prefix.size() + 14, ' ');

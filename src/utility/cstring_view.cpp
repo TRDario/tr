@@ -60,8 +60,3 @@ std::filesystem::path tr::operator/(const std::filesystem::path& l, cstring_view
 {
 	return l / std::filesystem::path{r};
 }
-
-std::size_t std::hash<tr::cstring_view>::operator()(tr::cstring_view str) const
-{
-	return std::hash<std::string_view>{}(str);
-}

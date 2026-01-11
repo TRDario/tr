@@ -42,7 +42,7 @@ namespace tr {
 	// Custom out-of-memory exception.
 	struct out_of_memory : public exception {
 		// Constructs an out-of-memory exception (arguments are formatted in-place).
-		template <class... Args> out_of_memory(TR_FMT::format_string<Args...> fmt, Args&&... args);
+		template <class... Args> out_of_memory(TR_FORMAT_STRING<Args...> fmt, Args&&... args);
 
 		// Gets the name of the error.
 		std::string_view name() const override;
@@ -81,7 +81,7 @@ namespace tr {
 
 ///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
 
-template <class... Args> tr::out_of_memory::out_of_memory(TR_FMT::format_string<Args...> fmt, Args&&... args)
+template <class... Args> tr::out_of_memory::out_of_memory(TR_FORMAT_STRING<Args...> fmt, Args&&... args)
 {
 	auto it{std::back_inserter(m_description)};
 	TR_FMT::format_to(it, "During ");
