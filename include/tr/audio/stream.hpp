@@ -5,6 +5,10 @@
 // tr::audio::stream provides an interface for a 16-bit mono or stereo audio stream. Currently, the only way to get an audio stream is   //
 // to open a file using tr::audio::open_file, which creates an audio stream using data from an .ogg file.                                //
 //     - std::unique_ptr<tr::audio::stream> stream{tr::audio::open_file("audio.ogg")}                                                    //
+// Ogg files may have embedded loop point metadata which is automatically detected and set by the opening function:                      //
+//   LOOPSTART=[SAMPLE] sets the starting loop point and enables looping.                                                                //
+//   LOOPEND=[SAMPLE] sets the ending loop point and enables looping.                                                                    //
+//   LOOP enables looping.                                                                                                               //
 //                                                                                                                                       //
 // The length, number of channels, and sample rate of the stream can be queried using methods:                                           //
 //     - stream.length() -> 2205000                                                                                                      //
@@ -84,6 +88,10 @@ namespace tr::audio {
 		usize loop_end() const;
 		// Sets the loop end of the stream.
 		void set_loop_end(usize loop_end);
+
+	  protected:
+		// Sentinel representing an unknown ending loop point.
+		static constexpr usize UNKNOWN_LOOP_POINT{std::numeric_limits<usize>::max()};
 
 	  private:
 		// Whether the stream is looping.

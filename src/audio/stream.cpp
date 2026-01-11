@@ -7,14 +7,29 @@
 #include "../../include/tr/audio/stream.hpp"
 #include <vorbis/vorbisfile.h>
 
-//////////////////////////////////////////////////////////////// CONSTANTS ////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////// AUDIO FILE OPEN ERROR //////////////////////////////////////////////////////////
 
-namespace tr::audio {
-	// Sentinel representing an unknown ending loop point.
-	constexpr usize UNKNOWN_LOOP_POINT{std::numeric_limits<usize>::max()};
-} // namespace tr::audio
+tr::audio::file_open_error::file_open_error(std::string&& description)
+	: m_description{std::move(description)}
+{
+}
 
-///////////////////////////////////////////////////////////// OGG AUDIO FILE //////////////////////////////////////////////////////////////
+std::string_view tr::audio::file_open_error::name() const
+{
+	return "Audio file opening error";
+}
+
+std::string_view tr::audio::file_open_error::description() const
+{
+	return m_description;
+}
+
+std::string_view tr::audio::file_open_error::details() const
+{
+	return {};
+}
+
+//////////////////////////////////////////////////////////// OGG AUDIO STREAM /////////////////////////////////////////////////////////////
 
 namespace tr::audio {
 	// Ogg audio file backend.
@@ -126,29 +141,7 @@ void tr::audio::ogg_stream::raw_read(std::span<i16> buffer)
 	}
 }
 
-////////////////////////////////////////////////////////// AUDIO FILE OPEN ERROR //////////////////////////////////////////////////////////
-
-tr::audio::file_open_error::file_open_error(std::string&& description)
-	: m_description{std::move(description)}
-{
-}
-
-std::string_view tr::audio::file_open_error::name() const
-{
-	return "Audio file opening error";
-}
-
-std::string_view tr::audio::file_open_error::description() const
-{
-	return m_description;
-}
-
-std::string_view tr::audio::file_open_error::details() const
-{
-	return {};
-}
-
-/////////////////////////////////////////////////////////////// AUDIO FILE ////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////// AUDIO STREAM ///////////////////////////////////////////////////////////////
 
 tr::audio::stream::stream()
 	: m_looping{false}, m_loop_start{0}, m_loop_end{UNKNOWN_LOOP_POINT}
