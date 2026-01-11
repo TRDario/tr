@@ -7,12 +7,8 @@ struct SDL_Window;
 struct SDL_GLContextState;
 
 namespace tr::sys {
-	// Buffer allocated to be freed in case of an out-of-memory error.
-	inline std::unique_ptr<char[]> g_emergency_buffer{new char[16384]};
-
 	// Pointer to the SDL window.
 	inline SDL_Window* g_sdl_window{nullptr};
-
 #ifdef _WIN32
 	// Cursor graphic reset timer needed as a workaround for an SDL bug.
 	inline std::optional<timer> g_cursor_reset_timer;
