@@ -1,6 +1,14 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Implements path.hpp.                                                                                                                  //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #include "../../include/tr/sysgfx/path.hpp"
 #include "../../include/tr/sysgfx/main.hpp"
 #include <SDL3/SDL.h>
+
+////////////////////////////////////////////////////////////// STANDARD PATHS /////////////////////////////////////////////////////////////
 
 std::filesystem::path tr::sys::executable_dir()
 {
@@ -9,8 +17,9 @@ std::filesystem::path tr::sys::executable_dir()
 
 std::filesystem::path tr::sys::user_dir()
 {
-	std::unique_ptr<char[], decltype([](void* ptr) { SDL_free(ptr); })> cpath{SDL_GetPrefPath(
-		SDL_GetAppMetadataProperty(SDL_PROP_APP_METADATA_CREATOR_STRING), SDL_GetAppMetadataProperty(SDL_PROP_APP_METADATA_NAME_STRING))};
+	const char* const developer{SDL_GetAppMetadataProperty(SDL_PROP_APP_METADATA_CREATOR_STRING)};
+	const char* const app{SDL_GetAppMetadataProperty(SDL_PROP_APP_METADATA_NAME_STRING)};
+	std::unique_ptr<char[], decltype([](void* ptr) { SDL_free(ptr); })> cpath{SDL_GetPrefPath(developer, app)};
 	if (cpath == nullptr) {
 		throw init_error{"Failed to get user directory path."};
 	}
