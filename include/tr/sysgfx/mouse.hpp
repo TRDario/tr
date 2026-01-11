@@ -15,6 +15,14 @@ namespace tr::sys {
 	};
 	DEFINE_BITMASK_OPERATORS(mouse_button);
 
+	// Mouse state.
+	struct mouse_state {
+		// The current position of the mouse.
+		glm::vec2 pos;
+		// The currently-held mouse buttons.
+		mouse_button held_buttons;
+	};
+
 	// Sets whether relative mouse mode is enabled.
 	void set_mouse_relative_mode(bool relative);
 	// Sets whether the mouse is captured.
