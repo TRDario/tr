@@ -389,13 +389,13 @@ void tr::static_vector<T, S>::resize(size_type size, const T& v)
 template <tr::binary_constructible T, tr::usize S>
 void tr::binary_reader<tr::static_vector<T, S>>::operator()(std::istream& is, static_vector<T, S>& out) const
 {
-	out.resize(binary_read<typename tr::static_vector<T, S>::size_type>(is));
-	binary_read(is, std::span{out});
+	out.resize(read_binary<typename tr::static_vector<T, S>::size_type>(is));
+	read_binary(is, std::span{out});
 }
 
 template <tr::binary_writable T, tr::usize S>
 void tr::binary_writer<tr::static_vector<T, S>>::operator()(std::ostream& os, const static_vector<T, S>& in) const
 {
-	binary_write(os, in.size());
-	binary_write(os, std::span{in});
+	write_binary(os, in.size());
+	write_binary(os, std::span{in});
 }

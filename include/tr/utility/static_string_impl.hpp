@@ -300,14 +300,14 @@ template <tr::usize S> constexpr void tr::static_string<S>::resize(size_type siz
 
 template <tr::usize S> void tr::binary_reader<tr::static_string<S>>::operator()(std::istream& is, static_string<S>& out) const
 {
-	out.resize(binary_read<typename static_string<S>::size_type>(is));
+	out.resize(read_binary<typename static_string<S>::size_type>(is));
 	is.read(out.data(), out.size());
 }
 
 template <tr::usize S> void tr::binary_writer<tr::static_string<S>>::operator()(std::ostream& os, const static_string<S>& in) const
 {
-	binary_write(os, in.size());
-	binary_write(os, std::span{in});
+	write_binary(os, in.size());
+	write_binary(os, std::span{in});
 }
 
 //

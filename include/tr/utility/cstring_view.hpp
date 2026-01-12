@@ -22,7 +22,7 @@
 // output with std::format or ostreams, binary-written, or used to concatenate paths:                                                    //
 //     - tr::cstring_view str{"test"}; str == "test" -> true                                                                             //
 //     - tr::cstring_view str{"test"}; std::format("{}", str) -> "test"                                                                  //
-//     - tr::cstring_view str{"test"}; tr::binary_write(out, str) -> "test" written to out                                               //
+//     - tr::cstring_view str{"test"}; tr::write_binary(out, str) -> "test" written to out                                               //
 //     - tr::cstring_view str{"bin"}; std::filesystem::path{"/usr"} / str -> std::filesystem::path{"/usr/bin"}                           //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
