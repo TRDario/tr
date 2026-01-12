@@ -38,6 +38,7 @@ target_sources(tr PRIVATE
 	src/utility/iostream.cpp
 	src/utility/localization_map.cpp
 	src/utility/logger.cpp
+	src/utility/mstream.cpp
 	src/utility/rng.cpp
 	src/utility/stopwatch.cpp
 	src/utility/timer.cpp

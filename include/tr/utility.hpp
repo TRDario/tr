@@ -19,6 +19,7 @@
 #include "utility/logger.hpp"           // IWYU pragma: export
 #include "utility/macro.hpp"            // IWYU pragma: export
 #include "utility/math.hpp"             // IWYU pragma: export
+#include "utility/mstream.hpp"          // IWYU pragma: export
 #include "utility/norm_cast.hpp"        // IWYU pragma: export
 #include "utility/print.hpp"            // IWYU pragma: export
 #include "utility/ranges.hpp"           // IWYU pragma: export
