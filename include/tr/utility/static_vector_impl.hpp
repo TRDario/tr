@@ -387,34 +387,15 @@ void tr::static_vector<T, S>::resize(size_type size, const T& v)
 //
 
 template <tr::binary_constructible T, tr::usize S>
-void tr::binary_reader<tr::static_vector<T, S>>::read_from_stream(std::istream& is, static_vector<T, S>& out)
-	requires(stream_binary_readable<T>)
+void tr::binary_reader<tr::static_vector<T, S>>::operator()(std::istream& is, static_vector<T, S>& out) const
 {
 	out.resize(binary_read<typename tr::static_vector<T, S>::size_type>(is));
-	binary_reader<std::span<T>>::read_from_stream(is, std::span{out});
+	binary_read(is, std::span{out});
 }
 
-template <tr::binary_constructible T, tr::usize S>
-std::span<const std::byte> tr::binary_reader<tr::static_vector<T, S>>::read_from_span(std::span<const std::byte> span,
-																					  static_vector<T, S>& out)
-	requires(span_binary_readable<T>)
-{
-	out.resize(binary_read<typename tr::static_vector<T, S>::size_type>(span));
-	return binary_reader<std::span<T>>::read_from_span(span, std::span{out});
-}
-
-template <class T, tr::usize S>
-void tr::binary_writer<tr::static_vector<T, S>>::write_to_stream(std::ostream& os, const static_vector<T, S>& in)
-	requires(stream_binary_writable<T>)
+template <tr::binary_writable T, tr::usize S>
+void tr::binary_writer<tr::static_vector<T, S>>::operator()(std::ostream& os, const static_vector<T, S>& in) const
 {
 	binary_write(os, in.size());
-	binary_writer<std::span<const T>>::write_to_stream(os, std::span{in});
-}
-
-template <class T, tr::usize S>
-std::span<std::byte> tr::binary_writer<tr::static_vector<T, S>>::write_to_span(std::span<std::byte> span, const static_vector<T, S>& in)
-	requires(span_binary_writable<T>)
-{
-	span = binary_write(span, in.size());
-	return binary_writer<std::span<const T>>::write_to_span(span, std::span{in});
+	binary_write(os, std::span{in});
 }

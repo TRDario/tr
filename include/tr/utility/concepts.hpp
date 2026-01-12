@@ -32,6 +32,9 @@ namespace tr {
 	template <class T>
 	concept arithmetic = std::is_arithmetic_v<T>;
 
+	// Concept denoting a cv-unqualified object.
+	template <class T>
+	concept cv_unqualified_object = std::is_object_v<T> && !std::is_const_v<T> && !std::is_volatile_v<T>;
 	// Concept denoting a non-const reference.
 	template <class T>
 	concept non_const_ref = std::is_lvalue_reference_v<T> && !std::is_const_v<std::remove_reference_t<T>>;

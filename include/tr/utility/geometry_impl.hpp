@@ -1,5 +1,6 @@
 #pragma once
 #include "geometry.hpp"
+#include "macro.hpp"
 #include "math.hpp"
 
 constexpr tr::halign tr::to_halign(align align)

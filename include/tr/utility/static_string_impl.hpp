@@ -298,30 +298,16 @@ template <tr::usize S> constexpr void tr::static_string<S>::resize(size_type siz
 
 //
 
-template <tr::usize S> void tr::binary_reader<tr::static_string<S>>::read_from_stream(std::istream& is, static_string<S>& out)
+template <tr::usize S> void tr::binary_reader<tr::static_string<S>>::operator()(std::istream& is, static_string<S>& out) const
 {
 	out.resize(binary_read<typename static_string<S>::size_type>(is));
 	is.read(out.data(), out.size());
 }
 
-template <tr::usize S>
-std::span<const std::byte> tr::binary_reader<tr::static_string<S>>::read_from_span(std::span<const std::byte> span, static_string<S>& out)
-{
-	out.resize(binary_read<typename static_string<S>::size_type>(span));
-	return tr::binary_reader<std::span<char>>::read_from_span(span, std::span{out});
-}
-
-template <tr::usize S> void tr::binary_writer<tr::static_string<S>>::write_to_stream(std::ostream& os, const static_string<S>& in)
+template <tr::usize S> void tr::binary_writer<tr::static_string<S>>::operator()(std::ostream& os, const static_string<S>& in) const
 {
 	binary_write(os, in.size());
 	binary_write(os, std::span{in});
-}
-
-template <tr::usize S>
-std::span<std::byte> tr::binary_writer<tr::static_string<S>>::write_to_span(std::span<std::byte> span, const static_string<S>& in)
-{
-	span = binary_write(span, in.size());
-	span = binary_write(span, std::span{in});
 }
 
 //

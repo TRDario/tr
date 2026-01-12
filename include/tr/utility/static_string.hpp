@@ -117,13 +117,11 @@ namespace tr {
 
 	// Static string binary reader.
 	template <usize S> struct binary_reader<static_string<S>> {
-		static void read_from_stream(std::istream& is, static_string<S>& out);
-		static std::span<const std::byte> read_from_span(std::span<const std::byte> span, static_string<S>& out);
+		void operator()(std::istream& is, static_string<S>& out) const;
 	};
 	// Static string binary writer.
 	template <usize S> struct binary_writer<static_string<S>> {
-		static void write_to_stream(std::ostream& os, const static_string<S>& in);
-		static std::span<std::byte> write_to_span(std::span<std::byte> span, const static_string<S>& in);
+		void operator()(std::ostream& os, const static_string<S>& in) const;
 	};
 
 } // namespace tr
