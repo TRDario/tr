@@ -2,11 +2,10 @@
 
 tr::gfx::basic_renderer::staggered_draw_manager::staggered_draw_manager(basic_renderer& renderer,
 																		std::ranges::subrange<std::vector<mesh>::iterator> range)
-	: m_renderer{&renderer}, m_range{range}
+	: m_renderer{renderer}, m_range{range}
 {
-	TR_ASSERT(!m_renderer->m_locked, "Tried to create multiple simultaneous basic renderer staggered draw managers.");
-
 #ifdef TR_ENABLE_ASSERTS
+	TR_ASSERT(!m_renderer->m_locked, "Tried to create multiple simultaneous basic renderer staggered draw managers.");
 	m_renderer->m_locked = true;
 #endif
 
@@ -33,9 +32,8 @@ tr::gfx::basic_renderer::staggered_draw_manager::staggered_draw_manager(basic_re
 }
 
 tr::gfx::basic_renderer::staggered_draw_manager::staggered_draw_manager(staggered_draw_manager&& r) noexcept
-	: m_renderer{r.m_renderer}, m_range{r.m_range}, m_data{std::move(r.m_data)}
+	: m_renderer{std::exchange(r.m_renderer, std::nullopt)}, m_range{r.m_range}, m_data{std::move(r.m_data)}
 {
-	r.m_renderer = nullptr;
 }
 
 tr::gfx::basic_renderer::staggered_draw_manager::~staggered_draw_manager()
@@ -47,12 +45,9 @@ tr::gfx::basic_renderer::staggered_draw_manager& tr::gfx::basic_renderer::stagge
 	staggered_draw_manager&& r) noexcept
 {
 	clean_up();
-
-	m_renderer = r.m_renderer;
+	m_renderer = std::exchange(r.m_renderer, std::nullopt);
 	m_range = r.m_range;
 	m_data = std::move(r.m_data);
-
-	r.m_renderer = nullptr;
 	return *this;
 }
 
@@ -60,7 +55,7 @@ tr::gfx::basic_renderer::staggered_draw_manager& tr::gfx::basic_renderer::stagge
 
 void tr::gfx::basic_renderer::staggered_draw_manager::draw_layer(int layer, const render_target& target)
 {
-	TR_ASSERT(m_renderer != nullptr, "Tried to draw a layer from a moved-from basic renderer staggered draw manager.");
+	TR_ASSERT(m_renderer.has_ref(), "Tried to draw a layer from a moved-from basic renderer staggered draw manager.");
 
 	const auto range{std::ranges::equal_range(m_range, layer, std::less{}, &mesh::layer)};
 	if (range.empty()) {
@@ -86,7 +81,7 @@ void tr::gfx::basic_renderer::staggered_draw_manager::draw_layer(int layer, cons
 
 void tr::gfx::basic_renderer::staggered_draw_manager::draw(const render_target& target)
 {
-	TR_ASSERT(m_renderer != nullptr, "Tried to draw from a moved-from basic renderer staggered draw manager.");
+	TR_ASSERT(m_renderer.has_ref(), "Tried to draw from a moved-from basic renderer staggered draw manager.");
 
 	if (m_range.empty()) {
 		return;
@@ -143,7 +138,7 @@ void tr::gfx::basic_renderer::staggered_draw_manager::setup_draw_call_state(text
 
 void tr::gfx::basic_renderer::staggered_draw_manager::clean_up()
 {
-	if (m_renderer != nullptr) {
+	if (m_renderer.has_ref()) {
 		m_renderer->m_meshes.erase(m_range.begin(), m_range.end());
 #ifdef TR_ENABLE_ASSERTS
 		m_renderer->m_locked = false;

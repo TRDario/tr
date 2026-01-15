@@ -162,9 +162,8 @@ tr::gfx::texture::texture(const sub_bitmap& bitmap, bool mipmapped, std::optiona
 }
 
 tr::gfx::texture::texture(texture&& r) noexcept
-	: m_handle{r.m_handle}, m_size{r.m_size}, m_refs{std::move(r.m_refs)}
+	: m_handle{std::exchange(r.m_handle, 0)}, m_size{r.m_size}, m_refs{std::move(r.m_refs)}
 {
-	r.m_handle = 0;
 	for (texture_ref& ref : m_refs) {
 		ref.m_ref = *this;
 	}
@@ -185,10 +184,9 @@ tr::gfx::texture& tr::gfx::texture::operator=(texture&& r) noexcept
 		ref.m_ref = std::nullopt;
 	}
 
-	m_handle = r.m_handle;
+	m_handle = std::exchange(r.m_handle, 0);
 	m_size = r.m_size;
 	m_refs = std::move(r.m_refs);
-	r.m_handle = 0;
 	return *this;
 }
 
@@ -365,12 +363,11 @@ tr::gfx::texture_ref::texture_ref(const texture_ref& r)
 }
 
 tr::gfx::texture_ref::texture_ref(texture_ref&& r) noexcept
-	: m_ref{r.m_ref}
+	: m_ref{std::exchange(r.m_ref, std::nullopt)}
 {
 	if (!empty()) {
 		std::ranges::replace(m_ref->m_refs, tr::ref{r}, tr::ref{*this});
 	}
-	r.m_ref = std::nullopt;
 }
 
 tr::gfx::texture_ref::~texture_ref()
@@ -407,11 +404,10 @@ tr::gfx::texture_ref& tr::gfx::texture_ref::operator=(texture_ref&& r) noexcept
 	if (!empty()) {
 		m_ref->m_refs.erase(std::ranges::find(m_ref->m_refs, *this));
 	}
-	m_ref = r.m_ref;
+	m_ref = std::exchange(r.m_ref, std::nullopt);
 	if (!empty()) {
 		std::ranges::replace(m_ref->m_refs, tr::ref{r}, tr::ref{*this});
 	}
-	r.m_ref = std::nullopt;
 	return *this;
 }
 

@@ -9,7 +9,7 @@ namespace tr::gfx {
 
 tr::gfx::circle_renderer::staggered_draw_manager::staggered_draw_manager(circle_renderer& renderer,
 																		 std::ranges::subrange<std::map<int, layer>::iterator> range)
-	: m_renderer{&renderer}, m_range{range}
+	: m_renderer{renderer}, m_range{range}
 {
 	TR_ASSERT(!m_renderer->m_locked, "Tried to create multiple simultaneous circle renderer staggered draw managers.");
 
@@ -25,9 +25,8 @@ tr::gfx::circle_renderer::staggered_draw_manager::staggered_draw_manager(circle_
 }
 
 tr::gfx::circle_renderer::staggered_draw_manager::staggered_draw_manager(staggered_draw_manager&& r) noexcept
-	: m_renderer{r.m_renderer}, m_range{r.m_range}
+	: m_renderer{std::exchange(r.m_renderer, std::nullopt)}, m_range{r.m_range}
 {
-	r.m_renderer = nullptr;
 }
 
 tr::gfx::circle_renderer::staggered_draw_manager::~staggered_draw_manager()
@@ -39,11 +38,8 @@ tr::gfx::circle_renderer::staggered_draw_manager& tr::gfx::circle_renderer::stag
 	staggered_draw_manager&& r) noexcept
 {
 	clean_up();
-
-	m_renderer = r.m_renderer;
+	m_renderer = std::exchange(r.m_renderer, std::nullopt);
 	m_range = r.m_range;
-
-	r.m_renderer = nullptr;
 	return *this;
 }
 
@@ -51,7 +47,7 @@ tr::gfx::circle_renderer::staggered_draw_manager& tr::gfx::circle_renderer::stag
 
 void tr::gfx::circle_renderer::staggered_draw_manager::draw_layer(int layer, const render_target& target)
 {
-	TR_ASSERT(m_renderer != nullptr, "Tried to draw a layer from a moved-from circle renderer staggered draw manager.");
+	TR_ASSERT(m_renderer.has_ref(), "Tried to draw a layer from a moved-from circle renderer staggered draw manager.");
 
 	const auto it{m_renderer->m_layers.find(layer)};
 	if (it == m_renderer->m_layers.end()) {
@@ -70,7 +66,7 @@ void tr::gfx::circle_renderer::staggered_draw_manager::draw_layer(int layer, con
 
 void tr::gfx::circle_renderer::staggered_draw_manager::draw(const render_target& target)
 {
-	TR_ASSERT(m_renderer != nullptr, "Tried to draw from a moved-from circle renderer staggered draw manager.");
+	TR_ASSERT(m_renderer.has_ref(), "Tried to draw from a moved-from circle renderer staggered draw manager.");
 
 	if (m_range.empty()) {
 		return;
@@ -119,7 +115,7 @@ void tr::gfx::circle_renderer::staggered_draw_manager::setup_draw_call_state(con
 
 void tr::gfx::circle_renderer::staggered_draw_manager::clean_up()
 {
-	if (m_renderer != nullptr) {
+	if (m_renderer.has_ref()) {
 		m_renderer->m_layers.erase(m_range.begin(), m_range.end());
 #ifdef TR_ENABLE_ASSERTS
 		m_renderer->m_locked = false;

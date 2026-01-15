@@ -105,7 +105,7 @@ namespace tr::gfx {
 
 	  private:
 		// Reference to the parent renderer.
-		circle_renderer* m_renderer;
+		opt_ref<circle_renderer> m_renderer;
 		// The range of circles to draw.
 		std::ranges::subrange<std::map<int, layer>::iterator> m_range;
 

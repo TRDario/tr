@@ -208,7 +208,7 @@ namespace tr::gfx {
 		};
 
 		// Reference to the parent renderer.
-		basic_renderer* m_renderer;
+		opt_ref<basic_renderer> m_renderer;
 		// The range of meshes to draw.
 		std::ranges::subrange<std::vector<mesh>::iterator> m_range;
 		// The drawing data.
