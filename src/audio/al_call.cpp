@@ -14,7 +14,7 @@ void tr::audio::validate_al_call(const char* file, int line, const char* functio
 {
 	const ALenum error{alGetError()};
 	if (error != AL_NO_ERROR) {
-		TR_LOG(log, tr::severity::FATAL, "OpenAL validation error.");
+		TR_LOG(log, tr::severity::fatal, "OpenAL validation error.");
 		switch (error) {
 		case AL_INVALID_NAME:
 			TR_LOG_CONTINUE(log, "Call to {} at {}:{} returned AL_INVALID_NAME.", function, file, line);

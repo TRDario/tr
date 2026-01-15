@@ -91,7 +91,7 @@ namespace tr::audio {
 
 	  protected:
 		// Sentinel representing an unknown ending loop point.
-		static constexpr usize UNKNOWN_LOOP_POINT{std::numeric_limits<usize>::max()};
+		static constexpr usize unknown_loop_point{std::numeric_limits<usize>::max()};
 
 	  private:
 		// Whether the stream is looping.

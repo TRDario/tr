@@ -15,15 +15,15 @@ using namespace std::chrono_literals;
 ////////////////////////////////////////////////////////////// DEBUG RENDERER /////////////////////////////////////////////////////////////
 
 namespace tr::gfx {
-#include "../../resources/generated/DEBUG_RENDERER_FONT.hpp"
-#include "../../resources/generated/DEBUG_RENDERER_FRAG.hpp"
-#include "../../resources/generated/DEBUG_RENDERER_VERT.hpp"
+#include "../../resources/generated/debug_renderer_font.hpp"
+#include "../../resources/generated/debug_renderer_frag.hpp"
+#include "../../resources/generated/debug_renderer_vert.hpp"
 
 	// Debug renderer glyph vertex definition.
 	template <> struct vertex_attributes<debug_renderer::glyph> : unpacked_vertex_attributes<glm::u8vec2, u8, u8, rgba8, rgba8> {};
 	// Debug vertex format.
-	constexpr std::array<vertex_binding, 2> DEBUG_FORMAT_ATTRIBUTES{{
-		{NOT_INSTANCED, vertex_attributes<glm::u8vec2>::list},
+	constexpr std::array<vertex_binding, 2> debug_format_attributes{{
+		{not_instanced, vertex_attributes<glm::u8vec2>::list},
 		{1, unpacked_vertex_attributes<glm::u8vec2, u8, u8, rgba8, rgba8>::list},
 	}};
 
@@ -60,10 +60,11 @@ std::string tr::gfx::format_duration(std::string_view prefix, duration duration)
 }
 
 tr::gfx::debug_renderer::debug_renderer(float scale, u8 column_limit)
-	: m_pipeline{vertex_shader{DEBUG_RENDERER_VERT}, fragment_shader{DEBUG_RENDERER_FRAG}}
-	, m_format{DEBUG_FORMAT_ATTRIBUTES}
-	, m_font{load_embedded_bitmap(DEBUG_RENDERER_FONT)}
+	: m_pipeline{vertex_shader{debug_renderer_vert}, fragment_shader{debug_renderer_frag}}
+	, m_format{debug_format_attributes}
+	, m_font{load_embedded_bitmap(debug_renderer_font)}
 	, m_mesh{std::array<glm::u8vec2, 4>{{{0, 0}, {0, 1}, {1, 1}, {1, 0}}}}
+	, m_id{allocate_renderer_id()}
 	, m_column_limit{column_limit}
 	, m_left_line{0}
 	, m_right_line{0}
@@ -76,7 +77,7 @@ tr::gfx::debug_renderer::debug_renderer(float scale, u8 column_limit)
 	TR_SET_LABEL(m_mesh, "(tr) Debug Renderer Vertex Buffer");
 	TR_SET_LABEL(m_glyph_buffer, "(tr) Debug Renderer Glyph buffer");
 
-	m_font.set_filtering(min_filter::NEAREST, mag_filter::NEAREST);
+	m_font.set_filtering(min_filter::nearest, mag_filter::nearest);
 	m_pipeline.fragment_shader().set_uniform(2, m_font);
 	set_scale(scale);
 }
@@ -103,14 +104,14 @@ void tr::gfx::debug_renderer::write_right(std::string_view text, const style& st
 
 void tr::gfx::debug_renderer::write_benchmark(duration min, duration avg, duration max, std::string_view name, duration limit)
 {
-	constexpr style ALT_STYLE{.text_color{255, 0, 0, 255}};
+	constexpr style alt_style{.text_color{255, 0, 0, 255}};
 
 	if (!name.empty()) {
 		write_right(TR_FMT::format("{:<15}", name));
 	}
-	write_right(format_duration("MIN: ", min), min < limit ? DEFAULT_STYLE : ALT_STYLE);
-	write_right(format_duration("AVG: ", avg), avg < limit ? DEFAULT_STYLE : ALT_STYLE);
-	write_right(format_duration("MAX: ", max), max < limit ? DEFAULT_STYLE : ALT_STYLE);
+	write_right(format_duration("MIN: ", min), min < limit ? default_style : alt_style);
+	write_right(format_duration("AVG: ", avg), avg < limit ? default_style : alt_style);
+	write_right(format_duration("MAX: ", max), max < limit ? default_style : alt_style);
 }
 
 void tr::gfx::debug_renderer::newline_left()
@@ -130,16 +131,16 @@ void tr::gfx::debug_renderer::draw()
 		m_pipeline.vertex_shader().set_uniform(0, glm::vec2{backbuffer_size()});
 
 		set_render_target(backbuffer_render_target());
-		if (should_setup_context(renderer_id::DEBUG_RENDERER)) {
+		if (should_setup_context(m_id)) {
 			set_face_culling(false);
 			set_depth_test(false);
-			set_blend_mode(ALPHA_BLENDING);
+			set_blend_mode(alpha_blending);
 			set_shader_pipeline(m_pipeline);
 			set_vertex_format(m_format);
 			set_vertex_buffer(m_mesh, 0, 0);
 			set_vertex_buffer(m_glyph_buffer, 1, 0);
 		}
-		draw_instances(primitive::TRI_FAN, 0, 4, int(m_glyphs.size()));
+		draw_instances(primitive::tri_fan, 0, 4, int(m_glyphs.size()));
 
 		m_glyphs.clear();
 	}

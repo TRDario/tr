@@ -1,6 +1,6 @@
+#include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/blending.hpp"
 #include "../../include/tr/sysgfx/gl_call.hpp"
-#include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/impl.hpp"
 #include "../../include/tr/sysgfx/index_buffer.hpp"
 #include "../../include/tr/sysgfx/shader_pipeline.hpp"
@@ -18,9 +18,9 @@ namespace tr::gfx {
 } // namespace tr::gfx
 #endif
 
-tr::gfx::renderer_id tr::gfx::alloc_renderer_id()
+tr::gfx::renderer_id tr::gfx::allocate_renderer_id()
 {
-	static u32 id{1000};
+	static u32 id{2};
 	return tr::gfx::renderer_id{id++};
 }
 

@@ -13,19 +13,19 @@ using namespace std::chrono_literals;
 
 namespace tr::sys {
 	// Button layout for the YES/NO message box.
-	constexpr std::array<SDL_MessageBoxButtonData, 2> YES_NO_BUTTONS{{
+	constexpr std::array<SDL_MessageBoxButtonData, 2> yes_no_buttons{{
 		{.flags = SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT, .buttonID = 0, .text = "Yes"},
 		{.flags = SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT, .buttonID = 1, .text = "No"},
 	}};
 	// Button layout for the YES/NO/CANCEL message box.
-	constexpr std::array<SDL_MessageBoxButtonData, 3> YES_NO_CANCEL_BUTTONS{{
+	constexpr std::array<SDL_MessageBoxButtonData, 3> yes_no_cancel_buttons{{
 		{.flags = SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT, .buttonID = 0, .text = "Yes"},
 		{.flags = 0, .buttonID = 1, .text = "No"},
 		{.flags = SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT, .buttonID = 2, .text = "Cancel"},
 	}};
 
 	// Buffer allocated to be freed in case of an out-of-memory error.
-	inline std::unique_ptr<char[]> g_emergency_buffer{new char[16384]};
+	std::unique_ptr<char[]> g_emergency_buffer{new char[16384]};
 } // namespace tr::sys
 
 tr::sys::message_box_button tr::sys::show_message_box(message_box_type type, message_box_layout buttons, cstring_view title,
@@ -34,23 +34,23 @@ tr::sys::message_box_button tr::sys::show_message_box(message_box_type type, mes
 	const SDL_MessageBoxFlags flags{SDL_MessageBoxFlags(type)};
 
 	switch (buttons) {
-	case message_box_layout::OK:
+	case message_box_layout::ok:
 		SDL_ShowSimpleMessageBox(flags, title, message, nullptr);
-		return message_box_button::OK;
-	case message_box_layout::YES_NO: {
-		int selected{int(message_box_button::NO)};
-		SDL_MessageBoxData data{flags, nullptr, title, message, 2, YES_NO_BUTTONS.data(), nullptr};
+		return message_box_button::ok;
+	case message_box_layout::yes_no: {
+		int selected{int(message_box_button::no)};
+		SDL_MessageBoxData data{flags, nullptr, title, message, 2, yes_no_buttons.data(), nullptr};
 		SDL_ShowMessageBox(&data, &selected);
 		return message_box_button(selected);
 	}
-	case message_box_layout::YES_NO_CANCEL: {
-		int selected{int(message_box_button::CANCEL)};
-		SDL_MessageBoxData data{flags, nullptr, title, message, 3, YES_NO_CANCEL_BUTTONS.data(), nullptr};
+	case message_box_layout::yes_no_cancel: {
+		int selected{int(message_box_button::cancel)};
+		SDL_MessageBoxData data{flags, nullptr, title, message, 3, yes_no_cancel_buttons.data(), nullptr};
 		SDL_ShowMessageBox(&data, &selected);
 		return message_box_button(selected);
 	}
 	default:
-		return message_box_button::OK;
+		return message_box_button::ok;
 	}
 }
 
@@ -77,15 +77,15 @@ void tr::sys::show_fatal_error_message_box(const std::exception& exception)
 			message.push_back('\n');
 			message.append(details);
 		}
-		TR_LOG(log, tr::severity::FATAL, *tr_exception);
+		TR_LOG(log, tr::severity::fatal, *tr_exception);
 	}
 	else {
 		message = TR_FMT::format("A fatal error has occurred ({}).", exception.what());
-		TR_LOG(log, tr::severity::FATAL, exception);
+		TR_LOG(log, tr::severity::fatal, exception);
 	}
 	message.append("\nPress OK to exit the application.");
 
-	show_message_box(message_box_type::ERROR, message_box_layout::OK, title, message);
+	show_message_box(message_box_type::error, message_box_layout::ok, title, message);
 }
 
 /////////////////////////////////////////////////////////// FILE/FOLDER DIALOGS ///////////////////////////////////////////////////////////

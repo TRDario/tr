@@ -12,18 +12,18 @@ namespace tr {
 namespace tr::sys {
 	// System mouse cursor icons.
 	enum class sys_cursor {
-		ARROW,      // Default arrow cursor.
-		IBEAM,      // I-shaped cursor.
-		WAIT,       // Waiting cursor.
-		CROSSHAIR,  // Crosshair cursor.
-		WAIT_ARROW, // Waiting arrow cursor.
-		SIZE_NWSE,  // Resizing (northwest-southeast) cursor.
-		SIZE_NESW,  // Resizing (northeast-southwest) cursor.
-		SIZE_WE,    // Resizing (west-east) cursor.
-		SIZE_NS,    // Resizing (north-south) cursor.
-		SIZE_ALL,   // Resizing (all directions) cursor.
-		NO,         // Forbidden action cursor.
-		HAND        // Pointing hand cursor.
+		arrow,      // Default arrow cursor.
+		ibeam,      // I-shaped cursor.
+		wait,       // Waiting cursor.
+		crosshair,  // Crosshair cursor.
+		wait_arrow, // Waiting arrow cursor.
+		size_nwse,  // Resizing (northwest-southeast) cursor.
+		size_nesw,  // Resizing (northeast-southwest) cursor.
+		size_we,    // Resizing (west-east) cursor.
+		size_ns,    // Resizing (north-south) cursor.
+		size_all,   // Resizing (all directions) cursor.
+		no,         // Forbidden action cursor.
+		hand        // Pointing hand cursor.
 	};
 
 	// Mouse cursor graphic.

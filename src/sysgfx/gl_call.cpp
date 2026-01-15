@@ -4,7 +4,7 @@ void tr::gfx::validate_gl_call(const char* file, int line, const char* function)
 {
 	const GLenum error{glGetError()};
 	if (error != GL_NO_ERROR) {
-		TR_LOG(log, tr::severity::FATAL, "OpenGL validation error.");
+		TR_LOG(log, tr::severity::fatal, "OpenGL validation error.");
 		switch (error) {
 		case GL_INVALID_ENUM:
 			TR_LOG_CONTINUE(log, "Call to {} at {}:{} returned GL_INVALID_ENUM.", function, file, line);

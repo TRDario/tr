@@ -18,32 +18,32 @@ namespace tr {
 
 	// Bitmap/texture pixel format.
 	enum class pixel_format {
-		R8 = 318769153,
-		RGB_P332 = 336660481,
-		XRGB_P4444 = 353504258,
-		XBGR_P4444 = 357698562,
-		XRGB_P1555 = 353570562,
-		XBGR_P1555 = 357764866,
-		ARGB_P4444 = 355602434,
-		RGBA_P4444 = 356651010,
-		ABGR_P4444 = 359796738,
-		BGRA_P4444 = 360845314,
-		ARGB_P1555 = 355667970,
-		RGBA_P5551 = 356782082,
-		ABGR_P1555 = 359862274,
-		BGRA_P5551 = 360976386,
-		RGB_P565 = 353701890,
-		BGR_P565 = 357896194,
-		RGB24 = 386930691,
-		BGR24 = 390076419,
-		BGRX32 = 370546692,
-		XBGR32 = 371595268,
-		RGBX32 = 374740996,
-		XRGB32 = 375789572,
-		BGRA32 = 372645892,
-		ABGR32 = 373694468,
-		RGBA32 = 376840196,
-		ARGB32 = 377888772,
+		r8 = 318769153,
+		rgb_p332 = 336660481,
+		xrgb_p4444 = 353504258,
+		xbgr_p4444 = 357698562,
+		xrgb_p1555 = 353570562,
+		xbgr_p1555 = 357764866,
+		argb_p4444 = 355602434,
+		rgba_p4444 = 356651010,
+		abgr_p4444 = 359796738,
+		bgra_p4444 = 360845314,
+		argb_p1555 = 355667970,
+		rgba_p5551 = 356782082,
+		abgr_p1555 = 359862274,
+		bgra_p5551 = 360976386,
+		rgb_p565 = 353701890,
+		bgr_p565 = 357896194,
+		rgb24 = 386930691,
+		bgr24 = 390076419,
+		bgrx32 = 370546692,
+		xbgr32 = 371595268,
+		rgbx32 = 374740996,
+		xrgb32 = 375789572,
+		bgra32 = 372645892,
+		abgr32 = 373694468,
+		rgba32 = 376840196,
+		argb32 = 377888772,
 	};
 	// Gets the number of bytes per pixel for a given format.
 	int pixel_bytes(pixel_format format);
@@ -206,13 +206,13 @@ namespace tr {
 		using const_it = tr::sub_bitmap::iterator;
 
 		// Creates a blank bitmap.
-		bitmap(glm::ivec2 size, pixel_format format = pixel_format::RGBA32);
+		bitmap(glm::ivec2 size, pixel_format format = pixel_format::rgba32);
 		// Clones a bitmap.
-		explicit bitmap(const bitmap& bitmap, pixel_format format = pixel_format::RGBA32);
+		explicit bitmap(const bitmap& bitmap, pixel_format format = pixel_format::rgba32);
 		// Clones a bitmap view.
-		explicit bitmap(const bitmap_view& view, pixel_format format = pixel_format::RGBA32);
+		explicit bitmap(const bitmap_view& view, pixel_format format = pixel_format::rgba32);
 		// Clones a sub-bitmap.
-		explicit bitmap(const sub_bitmap& source, pixel_format format = pixel_format::RGBA32);
+		explicit bitmap(const sub_bitmap& source, pixel_format format = pixel_format::rgba32);
 		bitmap(bitmap&& bitmap) noexcept = default;
 
 		bitmap& operator=(bitmap&& r) noexcept = default;

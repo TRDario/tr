@@ -2,14 +2,14 @@
 //                                                                                                                                       //
 // Provides an interface for triggering native OS dialog boxes.                                                                          //
 //                                                                                                                                       //
-// Message boxes can be shown with tr::sys::show_message_box. There are three classes of message box (ERROR, WARNING, INFO), as well as  //
-// three button layouts (OK, YES/NO, YES/NO/CANCEL). The function blocks until a button is pressed, at which point the value of the      //
+// Message boxes can be shown with tr::sys::show_message_box. There are three classes of message box (error, warning, info), as well as  //
+// three button layouts (ok, yes/no, yes/no/cancel). The function blocks until a button is pressed, at which point the value of the      //
 // pressed button is returned. tr::sys::show_fatal_error_message_box shows a "Fatal exception" message box given an exception:           //
-//     - tr::sys::show_message_box(tr::sys::message_box_type::ERROR, tr::sys::message_box_layout::OK, "Foo", "Bar")                      //
+//     - tr::sys::show_message_box(tr::sys::message_box_type::error, tr::sys::message_box_layout::ok, "Foo", "Bar")                      //
 //       -> displays an error message box with an "OK" button with the title "Foo" and message "Bar", returns message_box_button::OK     //
-//     - tr::sys::show_message_box(tr::sys::message_box_type::INFO, tr::sys::MESSAGE_BOX_LAYOUT::YES_NO_CANCEL, "Foo", "Save?")          //
+//     - tr::sys::show_message_box(tr::sys::message_box_type::info, tr::sys::message_box_layout::yes_no_cancel, "Foo", "Save?")          //
 //       -> displays an info message box with the buttons "Yes", "No", and "Cancel" with the title "Foo" and message "Save?",            //
-//          may return message_box_button::YES, message_box_button::NO, or message_box_button::CANCEL                                    //
+//          may return message_box_button::yes, message_box_button::no, or message_box_button::cancel                                    //
 //     - tr::sys::show_fatal_error_message_box(tr::custom_exception{"Example error", "Reason goes here.", "Details go here."})           //
 //       -> displays an error message box with an "Ok" button with the title "[APP NAME] - Fatal Error" and message:                     //
 //            A fatal error has occured (Example error).                                                                                 //
@@ -45,22 +45,22 @@
 namespace tr::sys {
 	// Message box type.
 	enum class message_box_type {
-		ERROR = 16,   // Error message box.
-		WARNING = 32, // Warning message box.
-		INFO = 64     // Information message box.
+		error = 16,   // Error message box.
+		warning = 32, // Warning message box.
+		info = 64     // Information message box.
 	};
 	// Message box button layout.
 	enum class message_box_layout {
-		OK,           // Message box with a single "OK" button.
-		YES_NO,       // Message box with "Yes" and "No" buttons.
-		YES_NO_CANCEL // Message box with "Yes", "No" and "Cancel" buttons.
+		ok,           // Message box with a single "OK" button.
+		yes_no,       // Message box with "Yes" and "No" buttons.
+		yes_no_cancel // Message box with "Yes", "No" and "Cancel" buttons.
 	};
 	// Message box selection.
 	enum class message_box_button {
-		OK = 0,
-		YES = 0,
-		NO,
-		CANCEL
+		ok = 0,
+		yes = 0,
+		no,
+		cancel
 	};
 
 	// Shows a message box.

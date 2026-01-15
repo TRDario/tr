@@ -65,7 +65,7 @@ void tr::gfx::circle_renderer::staggered_draw_manager::draw_layer(int layer, con
 	set_render_target(target);
 	setup_draw_call_state(info.transform.has_value() ? *info.transform : m_renderer->m_default_transform, info.blend_mode);
 	set_vertex_buffer(m_renderer->m_shader_circles, 1, offset);
-	draw_instances(primitive::TRI_FAN, 0, 4, info.circles.size());
+	draw_instances(primitive::tri_fan, 0, 4, info.circles.size());
 }
 
 void tr::gfx::circle_renderer::staggered_draw_manager::draw(const render_target& target)
@@ -83,7 +83,7 @@ void tr::gfx::circle_renderer::staggered_draw_manager::draw(const render_target&
 	for (const auto& [priority, layer] : m_range) {
 		setup_draw_call_state(layer.transform.has_value() ? *layer.transform : m_renderer->m_default_transform, layer.blend_mode);
 		set_vertex_buffer(m_renderer->m_shader_circles, 1, offset);
-		draw_instances(primitive::TRI_FAN, 0, 4, layer.circles.size());
+		draw_instances(primitive::tri_fan, 0, 4, layer.circles.size());
 		offset += layer.circles.size();
 	}
 }

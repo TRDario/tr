@@ -49,13 +49,13 @@ if(NOT TR_HAS_STD_FORMAT)
 endif()
 
 if(TR_BUILD_SYSGFX)
-	tr_generate_embeddable_string(resources/basic_renderer.vert resources/generated/BASIC_RENDERER_VERT.hpp BASIC_RENDERER_VERT)
-	tr_generate_embeddable_string(resources/basic_renderer.frag resources/generated/BASIC_RENDERER_FRAG.hpp BASIC_RENDERER_FRAG)
-	tr_generate_embeddable_string(resources/circle_renderer.vert resources/generated/CIRCLE_RENDERER_VERT.hpp CIRCLE_RENDERER_VERT)
-	tr_generate_embeddable_string(resources/circle_renderer.frag resources/generated/CIRCLE_RENDERER_FRAG.hpp CIRCLE_RENDERER_FRAG)
-	tr_generate_embeddable_string(resources/debug_renderer.vert resources/generated/DEBUG_RENDERER_VERT.hpp DEBUG_RENDERER_VERT)
-	tr_generate_embeddable_string(resources/debug_renderer.frag resources/generated/DEBUG_RENDERER_FRAG.hpp DEBUG_RENDERER_FRAG)
-	tr_generate_embeddable_binary(resources/debug_font.bmp resources/generated/DEBUG_RENDERER_FONT.hpp DEBUG_RENDERER_FONT)
+	tr_generate_embeddable_string(resources/basic_renderer.vert resources/generated/basic_renderer_vert.hpp basic_renderer_vert)
+	tr_generate_embeddable_string(resources/basic_renderer.frag resources/generated/basic_renderer_frag.hpp basic_renderer_frag)
+	tr_generate_embeddable_string(resources/circle_renderer.vert resources/generated/circle_renderer_vert.hpp circle_renderer_vert)
+	tr_generate_embeddable_string(resources/circle_renderer.frag resources/generated/circle_renderer_frag.hpp circle_renderer_frag)
+	tr_generate_embeddable_string(resources/debug_renderer.vert resources/generated/debug_renderer_vert.hpp debug_renderer_vert)
+	tr_generate_embeddable_string(resources/debug_renderer.frag resources/generated/debug_renderer_frag.hpp debug_renderer_frag)
+	tr_generate_embeddable_binary(resources/debug_font.bmp resources/generated/debug_renderer_font.hpp debug_renderer_font)
 	target_sources(tr PRIVATE
 		src/sysgfx/gl_call.cpp
 		src/sysgfx/glad.cpp

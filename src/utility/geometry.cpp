@@ -12,7 +12,7 @@ glm::vec2 tr::magth(float mag, angle th)
 
 tr::winding_order tr::triangle::winding_order() const
 {
-	return cross(b - a, c - a) >= 0 ? winding_order::CCW : winding_order::CW;
+	return cross(b - a, c - a) >= 0 ? winding_order::ccw : winding_order::cw;
 }
 
 bool tr::triangle::contains(glm::vec2 p) const
@@ -187,7 +187,7 @@ glm::mat4 tr::scale_around(const glm::mat4& mat, const glm::vec3& c, const glm::
 
 glm::mat4 tr::rotate_around(const glm::mat4& mat, const glm::vec2& c, const angle& th)
 {
-	return rotate_around(mat, {c, 0}, th, Z_AXIS);
+	return rotate_around(mat, {c, 0}, th, z_axis);
 }
 
 glm::mat4 tr::rotate_around(const glm::mat4& mat, const glm::vec3& c, const angle& th, const glm::vec3& axis)

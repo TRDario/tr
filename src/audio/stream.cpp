@@ -75,17 +75,17 @@ tr::audio::ogg_stream::ogg_stream(const std::filesystem::path& path)
 	for (int i = 0; i < comments.comments; ++i) {
 		const std::string_view comment{comments.user_comments[i], usize(comments.comment_lengths[i])};
 		if (comment.starts_with("LOOPSTART=")) {
-			usize loop_start{UNKNOWN_LOOP_POINT};
+			usize loop_start{unknown_loop_point};
 			std::from_chars(comment.data() + 10, comment.data() + comment.size(), loop_start);
-			if (loop_start != UNKNOWN_LOOP_POINT) {
+			if (loop_start != unknown_loop_point) {
 				set_looping(true);
 				set_loop_start(loop_start);
 			}
 		}
 		else if (comment.starts_with("LOOPEND=")) {
-			usize loop_end{UNKNOWN_LOOP_POINT};
+			usize loop_end{unknown_loop_point};
 			std::from_chars(comment.data() + 8, comment.data() + comment.size(), loop_end);
-			if (loop_end != UNKNOWN_LOOP_POINT) {
+			if (loop_end != unknown_loop_point) {
 				set_looping(true);
 				set_loop_end(loop_end);
 			}
@@ -144,7 +144,7 @@ void tr::audio::ogg_stream::raw_read(std::span<i16> buffer)
 ////////////////////////////////////////////////////////////// AUDIO STREAM ///////////////////////////////////////////////////////////////
 
 tr::audio::stream::stream()
-	: m_looping{false}, m_loop_start{0}, m_loop_end{UNKNOWN_LOOP_POINT}
+	: m_looping{false}, m_loop_start{0}, m_loop_end{unknown_loop_point}
 {
 }
 
@@ -197,7 +197,7 @@ void tr::audio::stream::set_loop_start(usize loop_start)
 
 tr::usize tr::audio::stream::loop_end() const
 {
-	if (m_loop_end == UNKNOWN_LOOP_POINT) {
+	if (m_loop_end == unknown_loop_point) {
 		m_loop_end = length();
 	}
 	return m_loop_end;

@@ -5,27 +5,27 @@
 namespace tr {
 	// Horizontal alignment.
 	enum class halign : u8 {
-		LEFT,
-		CENTER,
-		RIGHT
+		left,   // Left horizontal alignment.
+		center, // Center horizontal alignment.
+		right   // Right horizontal alignment.
 	};
 	// Vertical alignment.
 	enum class valign : u8 {
-		TOP,
-		CENTER = 3,
-		BOTTOM = 6
+		top,        // Top vertical alignment.
+		center = 3, // Center vertical alignment.
+		bottom = 6  // Bottom vertical alignment.
 	};
 	// 2D alignment.
 	enum class align : u8 {
-		TOP_LEFT,
-		TOP_CENTER,
-		TOP_RIGHT,
-		CENTER_LEFT,
-		CENTER,
-		CENTER_RIGHT,
-		BOTTOM_LEFT,
-		BOTTOM_CENTER,
-		BOTTOM_RIGHT
+		tl = u8(valign::top) + u8(halign::left),      // Top-left alignment.
+		tc = u8(valign::top) + u8(halign::center),    // Top-center alignment.
+		tr = u8(valign::top) + u8(halign::right),     // Top-right alignment.
+		cl = u8(valign::center) + u8(halign::left),   // Center-left alignment.
+		cc = u8(valign::center) + u8(halign::center), // Center alignment.
+		cr = u8(valign::center) + u8(halign::right),  // Center-right alignment.
+		bl = u8(valign::bottom) + u8(halign::left),   // Bottom-left alignment.
+		bc = u8(valign::bottom) + u8(halign::center), // Bottom-center alignment.
+		br = u8(valign::bottom) + u8(halign::right)   // Bottom-right alignment.
 	};
 	// Converts a 2D alignment to a horizontal alignment.
 	constexpr halign to_halign(align align);
@@ -38,8 +38,8 @@ namespace tr {
 
 	// Polygon winding order.
 	enum class winding_order : bool {
-		CW,
-		CCW
+		cw, // Clockwise winding order.
+		ccw // Counter-clockwise winding order.
 	};
 
 	// Rectangle object.
@@ -115,11 +115,11 @@ namespace tr {
 	bool intersecting(const circle& c1, const circle& c2);
 
 	// Normalized X-axis vector.
-	inline constexpr glm::vec3 X_AXIS{1.0f, 0.0f, 0.0f};
+	inline constexpr glm::vec3 x_axis{1.0f, 0.0f, 0.0f};
 	// Normalized Y-axis vector.
-	inline constexpr glm::vec3 Y_AXIS{0.0f, 1.0f, 0.0f};
+	inline constexpr glm::vec3 y_axis{0.0f, 1.0f, 0.0f};
 	// Normalized Z-axis vector.
-	inline constexpr glm::vec3 Z_AXIS{0.0f, 0.0f, 1.0f};
+	inline constexpr glm::vec3 z_axis{0.0f, 0.0f, 1.0f};
 	// Computes a normalized vector from an angle value.
 	glm::vec2 normal(angle th);
 	// Creates a vector from a magnitude and angle.

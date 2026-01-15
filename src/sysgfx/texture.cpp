@@ -14,40 +14,40 @@ namespace tr::gfx {
 GLenum tr::gfx::tex_format(pixel_format format)
 {
 	switch (format) {
-	case pixel_format::R8:
+	case pixel_format::r8:
 		return GL_R8;
-	case pixel_format::RGB_P332:
+	case pixel_format::rgb_p332:
 		return GL_R3_G3_B2;
-	case pixel_format::XRGB_P4444:
-	case pixel_format::XBGR_P4444:
+	case pixel_format::xrgb_p4444:
+	case pixel_format::xbgr_p4444:
 		return GL_RGB4;
-	case pixel_format::XRGB_P1555:
-	case pixel_format::XBGR_P1555:
+	case pixel_format::xrgb_p1555:
+	case pixel_format::xbgr_p1555:
 		return GL_RGB5;
-	case pixel_format::ARGB_P4444:
-	case pixel_format::RGBA_P4444:
-	case pixel_format::ABGR_P4444:
-	case pixel_format::BGRA_P4444:
+	case pixel_format::argb_p4444:
+	case pixel_format::rgba_p4444:
+	case pixel_format::abgr_p4444:
+	case pixel_format::bgra_p4444:
 		return GL_RGBA4;
-	case pixel_format::ARGB_P1555:
-	case pixel_format::RGBA_P5551:
-	case pixel_format::ABGR_P1555:
-	case pixel_format::BGRA_P5551:
+	case pixel_format::argb_p1555:
+	case pixel_format::rgba_p5551:
+	case pixel_format::abgr_p1555:
+	case pixel_format::bgra_p5551:
 		return GL_RGB5_A1;
-	case pixel_format::RGB_P565:
-	case pixel_format::BGR_P565:
+	case pixel_format::rgb_p565:
+	case pixel_format::bgr_p565:
 		return GL_RGB565;
-	case pixel_format::RGB24:
-	case pixel_format::BGR24:
-	case pixel_format::BGRX32:
-	case pixel_format::XBGR32:
-	case pixel_format::RGBX32:
-	case pixel_format::XRGB32:
+	case pixel_format::rgb24:
+	case pixel_format::bgr24:
+	case pixel_format::bgrx32:
+	case pixel_format::xbgr32:
+	case pixel_format::rgbx32:
+	case pixel_format::xrgb32:
 		return GL_RGB8;
-	case pixel_format::BGRA32:
-	case pixel_format::ABGR32:
-	case pixel_format::ARGB32:
-	case pixel_format::RGBA32:
+	case pixel_format::bgra32:
+	case pixel_format::abgr32:
+	case pixel_format::argb32:
+	case pixel_format::rgba32:
 		return GL_RGBA8;
 	default:
 		return 0;
@@ -57,36 +57,36 @@ GLenum tr::gfx::tex_format(pixel_format format)
 GLenum tr::gfx::format(pixel_format format)
 {
 	switch (format) {
-	case pixel_format::R8:
+	case pixel_format::r8:
 		return GL_RED;
-	case pixel_format::RGB_P332:
-	case pixel_format::XBGR_P4444:
-	case pixel_format::XBGR_P1555:
-	case pixel_format::RGB_P565:
-	case pixel_format::RGB24:
-	case pixel_format::XBGR32:
-	case pixel_format::RGBX32:
+	case pixel_format::rgb_p332:
+	case pixel_format::xbgr_p4444:
+	case pixel_format::xbgr_p1555:
+	case pixel_format::rgb_p565:
+	case pixel_format::rgb24:
+	case pixel_format::xbgr32:
+	case pixel_format::rgbx32:
 		return GL_RGB;
-	case pixel_format::XRGB_P4444:
-	case pixel_format::XRGB_P1555:
-	case pixel_format::BGR_P565:
-	case pixel_format::BGR24:
-	case pixel_format::BGRX32:
-	case pixel_format::XRGB32:
+	case pixel_format::xrgb_p4444:
+	case pixel_format::xrgb_p1555:
+	case pixel_format::bgr_p565:
+	case pixel_format::bgr24:
+	case pixel_format::bgrx32:
+	case pixel_format::xrgb32:
 		return GL_BGR;
-	case pixel_format::RGBA_P4444:
-	case pixel_format::ABGR_P4444:
-	case pixel_format::RGBA_P5551:
-	case pixel_format::ABGR_P1555:
-	case pixel_format::ABGR32:
-	case pixel_format::RGBA32:
+	case pixel_format::rgba_p4444:
+	case pixel_format::abgr_p4444:
+	case pixel_format::rgba_p5551:
+	case pixel_format::abgr_p1555:
+	case pixel_format::abgr32:
+	case pixel_format::rgba32:
 		return GL_RGBA;
-	case pixel_format::ARGB_P4444:
-	case pixel_format::BGRA_P4444:
-	case pixel_format::ARGB_P1555:
-	case pixel_format::BGRA_P5551:
-	case pixel_format::BGRA32:
-	case pixel_format::ARGB32:
+	case pixel_format::argb_p4444:
+	case pixel_format::bgra_p4444:
+	case pixel_format::argb_p1555:
+	case pixel_format::bgra_p5551:
+	case pixel_format::bgra32:
+	case pixel_format::argb32:
 		return GL_BGRA;
 	default:
 		return 0;
@@ -96,40 +96,40 @@ GLenum tr::gfx::format(pixel_format format)
 GLenum tr::gfx::type(pixel_format format)
 {
 	switch (format) {
-	case pixel_format::R8:
-	case pixel_format::RGB24:
-	case pixel_format::RGBA32:
-	case pixel_format::BGR24:
-	case pixel_format::BGRA32:
+	case pixel_format::r8:
+	case pixel_format::rgb24:
+	case pixel_format::rgba32:
+	case pixel_format::bgr24:
+	case pixel_format::bgra32:
 		return GL_UNSIGNED_BYTE;
-	case pixel_format::RGB_P332:
+	case pixel_format::rgb_p332:
 		return GL_UNSIGNED_BYTE_3_3_2;
-	case pixel_format::RGBA_P4444:
-	case pixel_format::BGRA_P4444:
+	case pixel_format::rgba_p4444:
+	case pixel_format::bgra_p4444:
 		return GL_UNSIGNED_SHORT_4_4_4_4;
-	case pixel_format::XRGB_P4444:
-	case pixel_format::XBGR_P4444:
-	case pixel_format::ARGB_P4444:
-	case pixel_format::ABGR_P4444:
+	case pixel_format::xrgb_p4444:
+	case pixel_format::xbgr_p4444:
+	case pixel_format::argb_p4444:
+	case pixel_format::abgr_p4444:
 		return GL_UNSIGNED_SHORT_4_4_4_4_REV;
-	case pixel_format::RGBA_P5551:
-	case pixel_format::BGRA_P5551:
+	case pixel_format::rgba_p5551:
+	case pixel_format::bgra_p5551:
 		return GL_UNSIGNED_SHORT_5_5_5_1;
-	case pixel_format::XRGB_P1555:
-	case pixel_format::XBGR_P1555:
-	case pixel_format::ARGB_P1555:
-	case pixel_format::ABGR_P1555:
+	case pixel_format::xrgb_p1555:
+	case pixel_format::xbgr_p1555:
+	case pixel_format::argb_p1555:
+	case pixel_format::abgr_p1555:
 		return GL_UNSIGNED_SHORT_1_5_5_5_REV;
-	case pixel_format::RGB_P565:
-	case pixel_format::BGR_P565:
+	case pixel_format::rgb_p565:
+	case pixel_format::bgr_p565:
 		return GL_UNSIGNED_SHORT_5_6_5;
-	case pixel_format::RGBX32:
-	case pixel_format::BGRX32:
+	case pixel_format::rgbx32:
+	case pixel_format::bgrx32:
 		return GL_UNSIGNED_INT_8_8_8_8_REV;
-	case pixel_format::XRGB32:
-	case pixel_format::XBGR32:
-	case pixel_format::ARGB32:
-	case pixel_format::ABGR32:
+	case pixel_format::xrgb32:
+	case pixel_format::xbgr32:
+	case pixel_format::argb32:
+	case pixel_format::abgr32:
 		return GL_UNSIGNED_INT_8_8_8_8;
 	default:
 		return 0;

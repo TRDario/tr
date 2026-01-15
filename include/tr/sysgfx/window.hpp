@@ -18,31 +18,31 @@ namespace tr::gfx {
 
 namespace tr::sys {
 	// Marks a window as maximized.
-	constexpr glm::ivec2 MAXIMIZED{};
+	constexpr glm::ivec2 maximized{};
 	// Marks a window as not resizable.
-	constexpr glm::ivec2 NOT_RESIZABLE{};
+	constexpr glm::ivec2 not_resizable{};
 
 	// Flash operations.
 	enum class flash_operation {
-		CANCEL,       // Cancel any existing window flashing, if there is any.
-		BRIEF,        // Flash the window briefly.
-		UNTIL_FOCUSED // Flash the window continuously until the window regains focus.
+		cancel,       // Cancel any existing window flashing, if there is any.
+		brief,        // Flash the window briefly.
+		until_focused // Flash the window continuously until the window regains focus.
 	};
 
 	// V-sync modes.
 	enum class vsync : i8 {
-		ADAPTIVE = -1, // Vsync is enabled, but late swaps happen immediately instead of waiting for the next retrace.
-		DISABLED,      // Vsync is disabled.
-		ENABLED        // Vsync is enabled.
+		adaptive = -1, // Vsync is enabled, but late swaps happen immediately instead of waiting for the next retrace.
+		disabled,      // Vsync is disabled.
+		enabled        // Vsync is enabled.
 	};
 
 	// Opens a windowed window.
 	// May throw: init_error.
-	void open_window(cstring_view title, glm::ivec2 size = MAXIMIZED, glm::ivec2 min_size = NOT_RESIZABLE,
+	void open_window(cstring_view title, glm::ivec2 size = maximized, glm::ivec2 min_size = not_resizable,
 					 const gfx::properties& gfx_properties = {});
 	// Opens a fullscreen window.
 	// May throw: init_error.
-	void open_fullscreen_window(cstring_view title, std::optional<glm::ivec2> min_size = NOT_RESIZABLE,
+	void open_fullscreen_window(cstring_view title, std::optional<glm::ivec2> min_size = not_resizable,
 								const gfx::properties& gfx_properties = {});
 	// Closes the window.
 	void close_window();

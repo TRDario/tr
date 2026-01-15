@@ -43,6 +43,8 @@
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
 namespace tr::gfx {
+	enum class renderer_id : u32;
+
 	// Defines a benchmark interface compatible with debug_renderer.
 	template <class T>
 	concept debug_writable_benchmark = requires(const T& benchmark) {
@@ -64,7 +66,7 @@ namespace tr::gfx {
 			std::span<rgba8> extra_colors{};
 		};
 		// The default text style: white text on black background.
-		static constexpr style DEFAULT_STYLE{{255, 255, 255, 255}, {0, 0, 0, 255}, {}};
+		static constexpr style default_style{{255, 255, 255, 255}, {0, 0, 0, 255}, {}};
 
 		// Creates a debug text renderer.
 		debug_renderer(float scale = 1.0f, u8 column_limit = 255);
@@ -75,13 +77,13 @@ namespace tr::gfx {
 		void set_column_limit(u8 columns);
 
 		// Writes a line of formatted text to the left side of the screen.
-		void write_left(std::string_view text, const style& style = DEFAULT_STYLE);
+		void write_left(std::string_view text, const style& style = default_style);
 		// Writes a line of text formatted as if by std::format to the left side of the screen in the default style.
 		template <class... Args> void write_left_format(TR_FORMAT_STRING<Args...> fmt, Args&&... args);
 		// Writes a line of text formatted as if by std::format to the left side of the screen.
 		template <class... Args> void write_left_format(const style& style, TR_FORMAT_STRING<Args...> fmt, Args&&... args);
 		// Writes a line of formatted text to the right side of the screen.
-		void write_right(std::string_view text, const style& style = DEFAULT_STYLE);
+		void write_right(std::string_view text, const style& style = default_style);
 		// Writes a line of text formatted as if by std::format to the right side of the screen in the default style.
 		template <class... Args> void write_right_format(TR_FORMAT_STRING<Args...> fmt, Args&&... args);
 		// Writes a line of text formatted as if by std::format to the right side of the screen.
@@ -178,6 +180,8 @@ namespace tr::gfx {
 		dyn_vertex_buffer<glyph> m_glyph_buffer;
 		// List of glyphs to draw.
 		std::vector<glyph> m_glyphs;
+		// The ID of the renderer.
+		renderer_id m_id;
 		// Maximum allowed number of glyphs per line.
 		u8 m_column_limit;
 		// The current left line position.
@@ -194,7 +198,7 @@ namespace tr::gfx {
 
 template <class... Args> void tr::gfx::debug_renderer::write_left_format(TR_FORMAT_STRING<Args...> fmt, Args&&... args)
 {
-	write_left(std::format(fmt, std::forward<Args>(args)...), DEFAULT_STYLE);
+	write_left(std::format(fmt, std::forward<Args>(args)...), default_style);
 }
 
 template <class... Args> void tr::gfx::debug_renderer::write_left_format(const style& style, TR_FORMAT_STRING<Args...> fmt, Args&&... args)
@@ -204,7 +208,7 @@ template <class... Args> void tr::gfx::debug_renderer::write_left_format(const s
 
 template <class... Args> void tr::gfx::debug_renderer::write_right_format(TR_FORMAT_STRING<Args...> fmt, Args&&... args)
 {
-	write_left(std::format(fmt, std::forward<Args>(args)...), DEFAULT_STYLE);
+	write_left(std::format(fmt, std::forward<Args>(args)...), default_style);
 }
 
 template <class... Args> void tr::gfx::debug_renderer::write_right_format(const style& style, TR_FORMAT_STRING<Args...> fmt, Args&&... args)

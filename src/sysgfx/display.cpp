@@ -10,12 +10,12 @@ glm::ivec2 tr::sys::display_size()
 
 tr::u8 tr::sys::max_msaa()
 {
-	constexpr u8 UNKNOWN{255};
+	constexpr u8 unknown{255};
 	using wrapped_window = std::unique_ptr<SDL_Window, decltype([](SDL_Window* w) { SDL_DestroyWindow(w); })>;
 	using wrapped_context = std::unique_ptr<SDL_GLContextState, decltype([](SDL_GLContext c) { SDL_GL_DestroyContext(c); })>;
 
-	static u8 max{UNKNOWN};
-	if (max == UNKNOWN) {
+	static u8 max{unknown};
+	if (max == unknown) {
 		max = 32;
 		while (max > 0) {
 			SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);

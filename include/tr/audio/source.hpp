@@ -9,28 +9,28 @@ namespace tr::audio {
 
 	// Audio source position origin types.
 	enum class origin : bool {
-		ABSOLUTE, // Absolute coordinates.
-		LISTENER  // Coordinates relative to the listener's position.
+		absolute, // Absolute coordinates.
+		listener  // Coordinates relative to the listener's position.
 	};
 
 	// Audio source states.
 	enum class state : u8 {
-		INITIAL, // The source has not been played yet.
-		PLAYING, // The source is playing.
-		PAUSED,  // The source is paused.
-		STOPPED  // The source stopped playing.
+		initial, // The source has not been played yet.
+		playing, // The source is playing.
+		paused,  // The source is paused.
+		stopped  // The source stopped playing.
 	};
 
 	// 0-length direction vector representing an omnidirectional audio source.
-	inline constexpr glm::vec3 OMNIDIRECTIONAL{0, 0, 0};
+	inline constexpr glm::vec3 omnidirectional{0, 0, 0};
 
 	// 3D Audio source.
 	class source {
 	  public:
 		// Sentinel value representing the beginning of the audio.
-		static constexpr fsecs START{fsecs::zero()};
+		static constexpr fsecs start{fsecs::zero()};
 		// Sentinel value representing the end of the audio.
-		static constexpr fsecs END{fsecs::max()};
+		static constexpr fsecs end{fsecs::max()};
 
 		source(const source&) = delete;
 		source(source&&) noexcept = default;

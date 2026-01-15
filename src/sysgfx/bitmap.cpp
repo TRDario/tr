@@ -233,14 +233,14 @@ void tr::bitmap_view::save(const std::filesystem::path& path) const
 tr::bitmap::bitmap(SDL_Surface* ptr)
 	: m_ptr{check_not_null(ptr)}
 {
-	if (SDL_ISPIXELFORMAT_INDEXED(ptr->format) && format() != pixel_format::R8) {
-		*this = bitmap{*this, pixel_format::R8};
+	if (SDL_ISPIXELFORMAT_INDEXED(ptr->format) && format() != pixel_format::r8) {
+		*this = bitmap{*this, pixel_format::r8};
 	}
 	else if (SDL_ISPIXELFORMAT_FOURCC(ptr->format) || SDL_ISPIXELFORMAT_FLOAT(ptr->format) ||
 			 (SDL_ISPIXELFORMAT_ARRAY(ptr->format) &&
 			  (SDL_PIXELTYPE(ptr->format) == SDL_PIXELTYPE_ARRAYU16 || SDL_PIXELTYPE(ptr->format) == SDL_PIXELTYPE_ARRAYU32)) ||
 			 SDL_ISPIXELFORMAT_10BIT(ptr->format)) {
-		*this = bitmap{*this, pixel_format::RGBA32};
+		*this = bitmap{*this, pixel_format::rgba32};
 	}
 }
 
@@ -390,15 +390,15 @@ void tr::bitmap::save(const std::filesystem::path& path) const
 
 tr::bitmap tr::create_checkerboard(glm::ivec2 size)
 {
-	constexpr rgba8 BLACK{0, 0, 0, 255};
-	constexpr rgba8 MAGENTA{255, 0, 255, 255};
+	constexpr rgba8 black{0, 0, 0, 255};
+	constexpr rgba8 magenta{255, 0, 255, 255};
 	const glm::ivec2 half_size{size / 2};
 
-	bitmap bitmap{size, pixel_format::RGB24};
-	bitmap.fill({{0, 0}, half_size}, BLACK);
-	bitmap.fill({{half_size.x, 0}, half_size}, MAGENTA);
-	bitmap.fill({{0, half_size.x}, half_size}, MAGENTA);
-	bitmap.fill({half_size, half_size}, BLACK);
+	bitmap bitmap{size, pixel_format::rgb24};
+	bitmap.fill({{0, 0}, half_size}, black);
+	bitmap.fill({{half_size.x, 0}, half_size}, magenta);
+	bitmap.fill({{0, half_size.x}, half_size}, magenta);
+	bitmap.fill({half_size, half_size}, black);
 	return bitmap;
 }
 

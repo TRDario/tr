@@ -78,7 +78,7 @@ namespace tr {
 #define TR_ASSERT_IMPL(condition, file, line, fmt, ...)                                                                                    \
 	do {                                                                                                                                   \
 		if (!(condition)) {                                                                                                                \
-			TR_LOG(::tr::log, ::tr::severity::FATAL, "Assertion failed at " file ":" TR_STRINGIFY(line) ":");                              \
+			TR_LOG(::tr::log, ::tr::severity::fatal, "Assertion failed at " file ":" TR_STRINGIFY(line) ":");                              \
 			TR_LOG_CONTINUE(::tr::log, fmt __VA_OPT__(, ) __VA_ARGS__);                                                                    \
 			std::abort();                                                                                                                  \
 		}                                                                                                                                  \

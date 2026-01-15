@@ -11,27 +11,24 @@ namespace tr::gfx {
 
 	// Renderer ID.
 	enum class renderer_id : u32 {
-		NO_RENDERER,     // No particular renderer is being used.
-		DEBUG_RENDERER,  // tr::gfx::debug_renderer
-		BASIC_RENDERER,  // tr::gfx::basic_renderer
-		CIRCLE_RENDERER, // tr::gfx::circle_renderer
-		IMGUI_RENDERER   // tr::ImGui::Draw
+		no_renderer,   // No particular renderer is being used.
+		imgui_renderer // tr::ImGui::Draw
 	};
 	// Allocates a fresh renderer ID.
-	renderer_id alloc_renderer_id();
+	renderer_id allocate_renderer_id();
 	// Checks whether the passed renderer ID is the active renderer, sets it as active and returns true if not.
 	bool should_setup_context(renderer_id id);
 
 	// Rendering primitives.
 	enum class primitive {
-		POINTS,      // The vertices are drawn as individual points.
-		LINES,       // The vertices are drawn in pairs as lines.
-		LINE_LOOP,   // The vertices are drawn as a continuous line loop.
-		LINE_STRIP,  // The vertices are drawn as a continuous line strip.
-		TRIS,        // The vertices are drawn in groups of three as triangles.
-		TRI_STRIP,   // The vertices are drawn as a continuous triangle strip.
-		TRI_FAN,     // The vertices are drawn as a continuous triangle fan.
-		PATCHES = 14 // The vertices are sent to the tessellation shaders as patches.
+		points,      // The vertices are drawn as individual points.
+		lines,       // The vertices are drawn in pairs as lines.
+		line_loop,   // The vertices are drawn as a continuous line loop.
+		line_strip,  // The vertices are drawn as a continuous line strip.
+		tris,        // The vertices are drawn in groups of three as triangles.
+		tri_strip,   // The vertices are drawn as a continuous triangle strip.
+		tri_fan,     // The vertices are drawn as a continuous triangle fan.
+		patches = 14 // The vertices are sent to the tessellation shaders as patches.
 	};
 
 	// Sets whether rendering should be done as a wireframe.

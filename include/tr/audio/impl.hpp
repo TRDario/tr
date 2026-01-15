@@ -41,7 +41,7 @@ namespace tr::audio {
 		};
 
 		// The underlying buffer handle.
-		handle<id, id::EMPTY, deleter> m_handle;
+		handle<id, id::empty, deleter> m_handle;
 	};
 
 	// Audio stream extended with buffers.
@@ -64,8 +64,8 @@ namespace tr::audio {
 	// Base audio source class.
 	class source_base {
 	  public:
-		static constexpr fsecs START{fsecs::zero()};
-		static constexpr fsecs END{fsecs::max()};
+		static constexpr fsecs start{fsecs::zero()};
+		static constexpr fsecs end{fsecs::max()};
 
 		// Creates an empty audio source.
 		source_base(int priority);
@@ -144,16 +144,16 @@ namespace tr::audio {
 	  public:
 		// Audio command opcodes.
 		enum class type {
-			PITCH,
-			GAIN,
-			MAX_DIST,
-			ROLLOFF,
-			REF_DIST,
-			OUT_CONE_GAIN,
-			CONE_W,
-			POS,
-			VEL,
-			DIR
+			pitch,
+			gain,
+			max_distance,
+			rolloff,
+			reference_distance,
+			out_cone_gain,
+			cone_width,
+			position,
+			velocity,
+			direction
 		};
 
 		// Creates an audio command taking float arguments.

@@ -128,7 +128,7 @@ namespace tr::gfx {
 		struct layer_defaults {
 			texture_ref texture;
 			std::optional<glm::mat4> transform;
-			blend_mode blend_mode{ALPHA_BLENDING};
+			blend_mode blend_mode{alpha_blending};
 		};
 		// Mesh data.
 		struct mesh {
@@ -152,6 +152,8 @@ namespace tr::gfx {
 			std::vector<u16> indices;
 		};
 
+		// The ID of the renderer.
+		renderer_id m_id;
 		// Global default transform.
 		glm::mat4 m_default_transform{1.0f};
 		// Layer defaults.
@@ -171,7 +173,7 @@ namespace tr::gfx {
 		// Last used transform.
 		glm::mat4 m_last_transform{1.0f};
 		// Last used blending mode.
-		blend_mode m_last_blend_mode{ALPHA_BLENDING};
+		blend_mode m_last_blend_mode{alpha_blending};
 #ifdef TR_ENABLE_ASSERTS
 		// Flag that is set to true when a staggered draw is ongoing.
 		bool m_locked{false};

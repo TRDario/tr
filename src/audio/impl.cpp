@@ -53,12 +53,12 @@ tr::audio::command::argument tr::audio::command::value()
 
 	argument value;
 	switch (m_type) {
-	case type::POS:
-	case type::VEL:
-	case type::DIR:
+	case type::position:
+	case type::velocity:
+	case type::direction:
 		value.vec3 = m_start.vec3 + (m_end.vec3 - m_start.vec3) * t;
 		break;
-	case type::CONE_W:
+	case type::cone_width:
 		value.vec2 = m_start.vec2 + (m_end.vec2 - m_start.vec2) * t;
 		break;
 	default:
@@ -72,34 +72,34 @@ void tr::audio::command::execute()
 {
 	argument v{value()};
 	switch (m_type) {
-	case type::PITCH:
+	case type::pitch:
 		m_src->set_pitch(v.num);
 		break;
-	case type::GAIN:
+	case type::gain:
 		m_src->set_gain(v.num);
 		break;
-	case type::MAX_DIST:
+	case type::max_distance:
 		m_src->set_max_dist(v.num);
 		break;
-	case type::ROLLOFF:
+	case type::rolloff:
 		m_src->set_rolloff(v.num);
 		break;
-	case type::REF_DIST:
+	case type::reference_distance:
 		m_src->set_ref_dist(v.num);
 		break;
-	case type::OUT_CONE_GAIN:
+	case type::out_cone_gain:
 		m_src->set_out_cone_gain(v.num);
 		break;
-	case type::CONE_W:
+	case type::cone_width:
 		m_src->set_cone_w(rads(v.vec2.x), rads(v.vec2.y));
 		break;
-	case type::POS:
+	case type::position:
 		m_src->set_pos(v.vec3);
 		break;
-	case type::VEL:
+	case type::velocity:
 		m_src->set_vel(v.vec3);
 		break;
-	case type::DIR:
+	case type::direction:
 		m_src->set_dir(v.vec3);
 		break;
 	}
@@ -114,14 +114,14 @@ bool tr::audio::command::done() const
 
 bool tr::audio::manager::initialize()
 {
-	constexpr std::array<ALCint, 3> CONTEXT_ATTRIBUTES{ALC_HRTF_SOFT, ALC_FALSE, 0};
+	constexpr std::array<ALCint, 3> context_attributes{ALC_HRTF_SOFT, ALC_FALSE, 0};
 
 	std::unique_ptr<ALCdevice, device_closer> device{alcOpenDevice(nullptr)};
 	if (device == nullptr) {
 		return false;
 	}
 
-	std::unique_ptr<ALCcontext, context_destroyer> context{alcCreateContext(device.get(), CONTEXT_ATTRIBUTES.data())};
+	std::unique_ptr<ALCcontext, context_destroyer> context{alcCreateContext(device.get(), context_attributes.data())};
 	if (context == nullptr || !alcMakeContextCurrent(context.get())) {
 		return false;
 	}
@@ -249,7 +249,7 @@ std::shared_ptr<tr::audio::source_base> tr::audio::manager::allocate_source(int 
 
 void tr::audio::manager::thread_fn(std::stop_token stoken)
 {
-	TR_LOG(log, tr::severity::INFO, "Launched audio thread.");
+	TR_LOG(log, tr::severity::info, "Launched audio thread.");
 	while (!stoken.stop_requested()) {
 		try {
 			std::lock_guard lock{m_mutex};
@@ -259,7 +259,7 @@ void tr::audio::manager::thread_fn(std::stop_token stoken)
 				return cullable && std::ranges::none_of(m_sources, [&](auto& s) { return s->buffer() == buffer; });
 			});
 
-			m_sources.remove_if([](const auto& ptr) { return ptr.use_count() == 1 && ptr->state() != state::PLAYING; });
+			m_sources.remove_if([](const auto& ptr) { return ptr.use_count() == 1 && ptr->state() != state::playing; });
 			for (source_base& source : deref(std::views::filter(m_sources, [](const auto& s) { return s->m_stream.has_value(); }))) {
 				buffered_stream& stream{*source.m_stream};
 
@@ -287,11 +287,11 @@ void tr::audio::manager::thread_fn(std::stop_token stoken)
 			});
 		}
 		catch (std::exception& err) {
-			TR_LOG(log, severity::ERROR, "Exception in audio thread, terminating.");
+			TR_LOG(log, severity::error, "Exception in audio thread, terminating.");
 			TR_LOG_CONTINUE(log, "{}", err.what());
 			return;
 		}
 		std::this_thread::sleep_for(std::chrono::milliseconds{10});
 	}
-	TR_LOG(log, severity::INFO, "Returned from audio thread.");
+	TR_LOG(log, severity::info, "Returned from audio thread.");
 }

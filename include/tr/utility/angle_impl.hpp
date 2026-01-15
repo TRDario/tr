@@ -188,13 +188,13 @@ template <class ParseContext> constexpr auto TR_FMT::formatter<tr::angle>::parse
 
 	switch (*it) {
 	case 'r':
-		m_unit = unit::RADIANS;
+		m_unit = unit::radians;
 		break;
 	case 'd':
-		m_unit = unit::DEGREES;
+		m_unit = unit::degrees;
 		break;
 	case 't':
-		m_unit = unit::TURNS;
+		m_unit = unit::turns;
 		break;
 	}
 
@@ -205,15 +205,15 @@ template <class ParseContext> constexpr auto TR_FMT::formatter<tr::angle>::parse
 template <class FormatContext> constexpr auto TR_FMT::formatter<tr::angle>::format(const tr::angle& p, FormatContext& ctx) const
 {
 	switch (m_unit) {
-	case unit::RADIANS:
+	case unit::radians:
 		ctx.advance_to(formatter<float>::format(p.rads(), ctx));
 		ctx.advance_to(formatter<const char*>::format("rad", ctx));
 		break;
-	case unit::DEGREES:
+	case unit::degrees:
 		ctx.advance_to(formatter<float>::format(p.degs(), ctx));
 		ctx.advance_to(formatter<const char*>::format("deg", ctx));
 		break;
-	case unit::TURNS:
+	case unit::turns:
 		ctx.advance_to(formatter<float>::format(p.turns(), ctx));
 		ctx.advance_to(formatter<const char*>::format("tr", ctx));
 		break;

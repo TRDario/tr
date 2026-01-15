@@ -2,17 +2,17 @@
 
 tr::next_state tr::state::handle_event(const sys::event&)
 {
-	return KEEP_STATE;
+	return keep_state;
 }
 
 tr::next_state tr::state::tick()
 {
-	return KEEP_STATE;
+	return keep_state;
 }
 
 tr::next_state tr::state::update(duration)
 {
-	return KEEP_STATE;
+	return keep_state;
 }
 
 void tr::state::draw() {}
@@ -52,7 +52,7 @@ void tr::state_machine::handle_event(const sys::event& event)
 {
 	if (m_current_state != nullptr) {
 		next_state next{m_current_state->handle_event(event)};
-		if (next != KEEP_STATE) {
+		if (next != keep_state) {
 			m_current_state = *std::move(next);
 		}
 	}
@@ -64,7 +64,7 @@ void tr::state_machine::tick()
 		m_tick_benchmark.start();
 		next_state next{m_current_state->tick()};
 		m_tick_benchmark.stop();
-		if (next != KEEP_STATE) {
+		if (next != keep_state) {
 			m_current_state = *std::move(next);
 		}
 	}

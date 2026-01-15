@@ -53,7 +53,7 @@ void tr::sys::set_app_metadata(const app_metadata& metadata)
 	SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_CREATOR_STRING, metadata.developer);
 	SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_COPYRIGHT_STRING, metadata.copyright);
 	SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_URL_STRING, metadata.url);
-	SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_TYPE_STRING, metadata.type == app_type::GAME ? "game" : "application");
+	SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_TYPE_STRING, metadata.type == app_type::game ? "game" : "application");
 }
 
 void tr::sys::set_tick_frequency(float frequency)
@@ -78,7 +78,7 @@ extern "C"
 	{
 		try {
 			tr::sys::signal parse_result{::parse_command_line({(tr::cstring_view*)argv, std::size_t(argc)})};
-			if (parse_result != tr::sys::signal::CONTINUE) {
+			if (parse_result != tr::sys::signal::proceed) {
 				return SDL_AppResult(parse_result);
 			}
 		}
@@ -88,11 +88,11 @@ extern "C"
 		}
 
 		if (!SDL_Init(SDL_INIT_VIDEO) || !TTF_Init()) {
-			TR_LOG(tr::log, tr::severity::FATAL, "Failed to initialize SDL3.");
+			TR_LOG(tr::log, tr::severity::fatal, "Failed to initialize SDL3.");
 			TR_LOG_CONTINUE(tr::log, "{}", SDL_GetError());
 			return SDL_APP_FAILURE;
 		};
-		TR_LOG(tr::log, tr::severity::INFO, "Initialized SDL3.");
+		TR_LOG(tr::log, tr::severity::info, "Initialized SDL3.");
 		TR_LOG_CONTINUE(tr::log, "Platform: {}", SDL_GetPlatform());
 		TR_LOG_CONTINUE(tr::log, "CPU cores: {}", SDL_GetNumLogicalCPUCores());
 		TR_LOG_CONTINUE(tr::log, "RAM: {}mb", SDL_GetSystemRAM());
@@ -100,7 +100,7 @@ extern "C"
 
 #ifdef TR_HAS_AUDIO
 		if (!tr::audio::g_manager.initialize()) {
-			TR_LOG(tr::log, tr::severity::FATAL, "Failed to initialize audio system.");
+			TR_LOG(tr::log, tr::severity::fatal, "Failed to initialize audio system.");
 			return SDL_APP_FAILURE;
 		}
 #endif

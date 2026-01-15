@@ -49,11 +49,11 @@ namespace tr::sys {
 
 	// Font style types. May be ORed together.
 	enum class ttf_style : u8 {
-		NORMAL = 0,       // Normal font.
-		BOLD = 1,         // Bold font.
-		ITALIC = 2,       // Italic font.
-		UNDERLINE = 4,    // Underlined font.
-		STRIKETHROUGH = 8 // Striked font.
+		normal = 0,       // Normal font.
+		bold = 1,         // Bold font.
+		italic = 2,       // Italic font.
+		underline = 4,    // Underlined font.
+		strikethrough = 8 // Striked font.
 	};
 	DEFINE_BITMASK_OPERATORS(ttf_style);
 
@@ -76,7 +76,7 @@ namespace tr::sys {
 	};
 
 	// Sentinel value signifying that a string can be of unlimited length (instead of being wrapped).
-	inline constexpr int UNLIMITED_WIDTH{0};
+	inline constexpr int unlimited_width{0};
 
 	// TrueType font.
 	class ttfont {
@@ -106,7 +106,7 @@ namespace tr::sys {
 		// Measures the amount of text that will fit in a given width given the current size, style, and outline.
 		ttf_measure_result measure_text(std::string_view text, int max_w) const;
 		// Gets the drawn size of a string of text given the current size, style, and outline.
-		glm::ivec2 text_size(std::string_view text, int max_w = UNLIMITED_WIDTH) const;
+		glm::ivec2 text_size(std::string_view text, int max_w = unlimited_width) const;
 
 		// Renders a glyph.
 		// May throw: ttfont_render_error.

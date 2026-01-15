@@ -16,7 +16,7 @@ namespace tr {
 	// Tag struct used in some handle functions to suppress empty value checking.
 	struct no_empty_handle_check_t {};
 	// Tag value used in some handle functions to suppress empty value checking.
-	constexpr no_empty_handle_check_t NO_EMPTY_HANDLE_CHECK{};
+	constexpr no_empty_handle_check_t no_empty_handle_check{};
 
 	// RAII wrapper over non-pointer handles.
 	template <handleable T, T E, handle_deleter<T> D> class handle : private D {
@@ -92,7 +92,7 @@ namespace tr {
 template <tr::handleable T, T E, tr::handle_deleter<T> D> struct std::hash<tr::handle<T, E, D>> {
 	constexpr auto operator()(const tr::handle<T, E, D>& handle) const
 	{
-		return std::hash<T>{}(handle.get(tr::NO_EMPTY_HANDLE_CHECK));
+		return std::hash<T>{}(handle.get(tr::no_empty_handle_check));
 	}
 };
 
@@ -233,7 +233,7 @@ template <tr::handleable T, T E, tr::handle_deleter<T> D> constexpr void tr::han
 
 template <tr::handleable T, T E, tr::handle_deleter<T> D> constexpr void tr::handle<T, E, D>::reset(T value, no_empty_handle_check_t)
 {
-	std::ignore = std::exchange(*this, handle{value, NO_EMPTY_HANDLE_CHECK});
+	std::ignore = std::exchange(*this, handle{value, no_empty_handle_check});
 }
 
 template <tr::handleable T, T E, tr::handle_deleter<T> D> constexpr void tr::handle<T, E, D>::swap(handle& other)

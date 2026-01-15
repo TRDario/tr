@@ -60,6 +60,8 @@
 #pragma once
 #include "concepts.hpp"
 
+//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
+
 namespace tr {
 	// Determines whether a type is in a variant's type list.
 	template <class T, specialization_of<std::variant> V> struct type_in_variant;

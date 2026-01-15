@@ -7,13 +7,13 @@ namespace tr::gfx {
 	  public:
 		// Shader buffer map access type.
 		enum class access : u32 {
-			READ_ONLY = 1,  // Buffer maps are read-only.
-			WRITE_ONLY = 2, // Buffer maps are write-only.
-			READ_WRITE = 3  // Buffer maps are readable and writable.
+			read_only = 1,  // Buffer maps are read-only.
+			write_only = 2, // Buffer maps are write-only.
+			read_write = 3  // Buffer maps are readable and writable.
 		};
 
 		// Allocates an uninitialized shader buffer.
-		basic_shader_buffer(usize header_size, usize capacity, access access = access::WRITE_ONLY);
+		basic_shader_buffer(usize header_size, usize capacity, access access = access::write_only);
 
 		// Gets the size of the fixed header block.
 		usize header_size() const;
@@ -68,7 +68,7 @@ namespace tr::gfx {
 	template <class Header, class ArrayElement> class shader_buffer : public basic_shader_buffer {
 	  public:
 		// Allocates an uninitialized shader buffer.
-		shader_buffer(usize capacity, access access = access::WRITE_ONLY);
+		shader_buffer(usize capacity, access access = access::write_only);
 
 		// Gets the size of the dynamic array.
 		usize array_size() const;
@@ -103,7 +103,7 @@ namespace tr::gfx {
 	template <class T> class shader_array : public basic_shader_buffer {
 	  public:
 		// Allocates an uninitialized shader array.
-		shader_array(usize capacity, access access = access::WRITE_ONLY);
+		shader_array(usize capacity, access access = access::write_only);
 
 		// Gets the size of the array.
 		usize size() const;

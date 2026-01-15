@@ -5,14 +5,10 @@
 namespace tr {
 	// Log message severity levels.
 	enum class severity : char {
-		// Information.
-		INFO = 'I',
-		// Warning.
-		WARN = 'W',
-		// Non-fatal error.
-		ERROR = 'E',
-		// Fatal error.
-		FATAL = 'F'
+		info = 'I',    // Information.
+		warning = 'W', // Warning.
+		error = 'E',   // Non-fatal error.
+		fatal = 'F'    // Fatal error.
 	};
 
 	// Simple logger class.

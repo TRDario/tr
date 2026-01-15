@@ -16,26 +16,26 @@ namespace tr {
 namespace tr::gfx {
 	// Texture wrapping types.
 	enum class wrap {
-		REPEAT = 0x2901,        // The texture is repeated.
-		MIRROR_REPEAT = 0x8370, // The texture is repeated and mirrored.
-		EDGE_CLAMP = 0x812F,    // The value of the edge pixel is used.
-		BORDER_CLAMP = 0x812D   // The value of the border color is used.
+		repeat = 0x2901,        // The texture is repeated.
+		mirror_repeat = 0x8370, // The texture is repeated and mirrored.
+		edge_clamp = 0x812F,    // The value of the edge pixel is used.
+		border_clamp = 0x812D   // The value of the border color is used.
 	};
 
 	// Minifying filter types.
 	enum class min_filter {
-		NEAREST = 0x2600,       // The value of the texture element that is nearest to the specified texture coordinates is used.
-		LINEAR = 0x2601,        // The average of the four texture elements that are closest to the specified texture coordinates is used.
-		NMIP_NEAREST = 0x2700,  // Chooses the mipmap that most closely matches the size of the pixel being textured and uses "nearest".
-		NMIP_LINEAR = 0x2702,   // Chooses the mipmap that most closely matches the size of the pixel being textured and uses "linear".
-		LMIPS_NEAREST = 0x2701, // Chooses the two mipmaps that most closely match the size of the pixel being textured and uses "nearest".
-		LMIPS_LINEAR = 0x2703   // Chooses the two mipmaps that most closely match the size of the pixel being textured and uses "linear".
+		nearest = 0x2600,       // The value of the texture element that is nearest to the specified texture coordinates is used.
+		linear = 0x2601,        // The average of the four texture elements that are closest to the specified texture coordinates is used.
+		nmip_nearest = 0x2700,  // Chooses the mipmap that most closely matches the size of the pixel being textured and uses "nearest".
+		nmip_linear = 0x2702,   // Chooses the mipmap that most closely matches the size of the pixel being textured and uses "linear".
+		lmips_nearest = 0x2701, // Chooses the two mipmaps that most closely match the size of the pixel being textured and uses "nearest".
+		lmips_linear = 0x2703   // Chooses the two mipmaps that most closely match the size of the pixel being textured and uses "linear".
 	};
 
 	// Magnifying filter types.
 	enum class mag_filter {
-		NEAREST = 0x2600, // The value of the texture element that is nearest to the specified texture coordinates is used.
-		LINEAR = 0x2601   // The average of the four texture elements that are closest to the specified texture coordinates is used.
+		nearest = 0x2600, // The value of the texture element that is nearest to the specified texture coordinates is used.
+		linear = 0x2601   // The average of the four texture elements that are closest to the specified texture coordinates is used.
 	};
 
 	// 2D texture living on the GPU.
@@ -44,7 +44,7 @@ namespace tr::gfx {
 		// Creates an empty texture.
 		texture();
 		// Allocates an uninitialized texture.
-		texture(glm::ivec2 size, bool mipmapped = false, pixel_format format = pixel_format::RGBA32);
+		texture(glm::ivec2 size, bool mipmapped = false, pixel_format format = pixel_format::rgba32);
 		// Constructs a texture with data uploaded from a bitmap.
 		texture(const sub_bitmap& bitmap, bool mipmapped = false, std::optional<pixel_format> format = std::nullopt);
 		// Moves a texture, updating all references pointing to it.
@@ -61,7 +61,7 @@ namespace tr::gfx {
 		const glm::ivec2& size() const;
 
 		// Reallocates the texture and releases the previously held storage as a new texture.
-		texture reallocate(glm::ivec2 size, bool mipmapped = false, pixel_format format = pixel_format::RGBA32);
+		texture reallocate(glm::ivec2 size, bool mipmapped = false, pixel_format format = pixel_format::rgba32);
 
 		// Sets the filters used by the texture sampler.
 		void set_filtering(min_filter min_filter, mag_filter mag_filter);
@@ -136,7 +136,7 @@ namespace tr::gfx {
 		// Creates an empty texture.
 		render_texture() = default;
 		// Allocates an uninitialized texture.
-		render_texture(glm::ivec2 size, bool mipmapped = false, pixel_format format = pixel_format::RGBA32);
+		render_texture(glm::ivec2 size, bool mipmapped = false, pixel_format format = pixel_format::rgba32);
 		// Constructs a texture with data uploaded from a bitmap.
 		render_texture(const sub_bitmap& bitmap, bool mipmapped = false, std::optional<pixel_format> format = std::nullopt);
 		// Moves a texture, updating all references pointing to it.
@@ -148,7 +148,7 @@ namespace tr::gfx {
 		render_texture& operator=(render_texture&& r) noexcept = default;
 
 		// Reallocates the texture and releases the previously held storage as a new texture.
-		texture reallocate(glm::ivec2 size, bool mipmapped = false, pixel_format format = pixel_format::RGBA32);
+		texture reallocate(glm::ivec2 size, bool mipmapped = false, pixel_format format = pixel_format::rgba32);
 
 		// Gets a render target spanning the entire texture.
 		operator render_target() const;

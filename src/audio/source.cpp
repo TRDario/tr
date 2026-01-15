@@ -1,6 +1,6 @@
+#include "../../include/tr/audio/source.hpp"
 #include "../../include/tr/audio/al_call.hpp"
 #include "../../include/tr/audio/impl.hpp"
-#include "../../include/tr/audio/source.hpp"
 #include <AL/alext.h>
 
 //
@@ -84,8 +84,8 @@ void tr::audio::source_base::clear()
 		TR_AL_CALL(alSourcei, m_id, AL_BUFFER, 0);
 		m_stream.reset();
 	}
-	else if (buffer() != buffer::id::EMPTY) {
-		set_loop_points(START, END);
+	else if (buffer() != buffer::id::empty) {
+		set_loop_points(start, end);
 		TR_AL_CALL(alSourcei, m_id, AL_LOOPING, 0);
 		TR_AL_CALL(alSourcei, m_id, AL_BUFFER, 0);
 	}
@@ -156,7 +156,7 @@ void tr::audio::source::set_pitch(float pitch)
 
 void tr::audio::source::set_pitch(float pitch, fsecs time)
 {
-	g_manager.submit_command(m_base, command::type::PITCH, this->pitch(), pitch, duration_cast<duration>(time));
+	g_manager.submit_command(m_base, command::type::pitch, this->pitch(), pitch, duration_cast<duration>(time));
 }
 
 //
@@ -184,7 +184,7 @@ void tr::audio::source::set_gain(float gain)
 
 void tr::audio::source::set_gain(float gain, fsecs time)
 {
-	g_manager.submit_command(m_base, command::type::GAIN, this->gain(), gain, duration_cast<duration>(time));
+	g_manager.submit_command(m_base, command::type::gain, this->gain(), gain, duration_cast<duration>(time));
 }
 
 //
@@ -213,7 +213,7 @@ void tr::audio::source::set_max_dist(float max_dist)
 
 void tr::audio::source::set_max_dist(float max_dist, fsecs time)
 {
-	g_manager.submit_command(m_base, command::type::MAX_DIST, this->max_dist(), max_dist, duration_cast<duration>(time));
+	g_manager.submit_command(m_base, command::type::max_distance, this->max_dist(), max_dist, duration_cast<duration>(time));
 }
 
 //
@@ -242,7 +242,7 @@ void tr::audio::source::set_rolloff(float rolloff)
 
 void tr::audio::source::set_rolloff(float rolloff, fsecs time)
 {
-	g_manager.submit_command(m_base, command::type::ROLLOFF, this->rolloff(), rolloff, duration_cast<duration>(time));
+	g_manager.submit_command(m_base, command::type::rolloff, this->rolloff(), rolloff, duration_cast<duration>(time));
 }
 
 //
@@ -271,7 +271,7 @@ void tr::audio::source::set_ref_dist(float ref_dist)
 
 void tr::audio::source::set_ref_dist(float ref_dist, fsecs time)
 {
-	g_manager.submit_command(m_base, command::type::REF_DIST, this->ref_dist(), ref_dist, duration_cast<duration>(time));
+	g_manager.submit_command(m_base, command::type::reference_distance, this->ref_dist(), ref_dist, duration_cast<duration>(time));
 }
 
 //
@@ -300,7 +300,7 @@ void tr::audio::source::set_out_cone_gain(float out_cone_gain)
 
 void tr::audio::source::set_out_cone_gain(float out_cone_gain, fsecs time)
 {
-	g_manager.submit_command(m_base, command::type::OUT_CONE_GAIN, this->out_cone_gain(), out_cone_gain, duration_cast<duration>(time));
+	g_manager.submit_command(m_base, command::type::out_cone_gain, this->out_cone_gain(), out_cone_gain, duration_cast<duration>(time));
 }
 
 //
@@ -347,7 +347,7 @@ void tr::audio::source::set_cone_w(angle in_cone_w, angle out_cone_w)
 
 void tr::audio::source::set_cone_w(angle in_cone_w, angle out_cone_w, fsecs time)
 {
-	g_manager.submit_command(m_base, command::type::CONE_W, glm::vec2{this->in_cone_w().rads(), this->out_cone_w().rads()},
+	g_manager.submit_command(m_base, command::type::cone_width, glm::vec2{this->in_cone_w().rads(), this->out_cone_w().rads()},
 							 glm::vec2{in_cone_w.rads(), out_cone_w.rads()}, duration_cast<duration>(time));
 }
 
@@ -377,7 +377,7 @@ void tr::audio::source::set_pos(const glm::vec3& pos)
 
 void tr::audio::source::set_pos(const glm::vec3& pos, fsecs time)
 {
-	g_manager.submit_command(m_base, command::type::POS, this->pos(), pos, duration_cast<duration>(time));
+	g_manager.submit_command(m_base, command::type::position, this->pos(), pos, duration_cast<duration>(time));
 }
 
 //
@@ -406,7 +406,7 @@ void tr::audio::source::set_vel(const glm::vec3& vel)
 
 void tr::audio::source::set_vel(const glm::vec3& vel, fsecs time)
 {
-	g_manager.submit_command(m_base, command::type::VEL, this->vel(), vel, duration_cast<duration>(time));
+	g_manager.submit_command(m_base, command::type::velocity, this->vel(), vel, duration_cast<duration>(time));
 }
 
 //
@@ -435,7 +435,7 @@ void tr::audio::source::set_dir(const glm::vec3& dir)
 
 void tr::audio::source::set_dir(const glm::vec3& dir, fsecs time)
 {
-	g_manager.submit_command(m_base, command::type::DIR, this->dir(), dir, duration_cast<duration>(time));
+	g_manager.submit_command(m_base, command::type::direction, this->dir(), dir, duration_cast<duration>(time));
 }
 
 //
@@ -470,15 +470,15 @@ tr::audio::state tr::audio::source_base::state() const
 	TR_AL_CALL(alGetSourcei, m_id, AL_SOURCE_STATE, &state);
 	switch (state) {
 	case AL_INITIAL:
-		return state::INITIAL;
+		return state::initial;
 	case AL_PLAYING:
-		return state::PLAYING;
+		return state::playing;
 	case AL_PAUSED:
-		return state::PAUSED;
+		return state::paused;
 	case AL_STOPPED:
-		return state::STOPPED;
+		return state::stopped;
 	default:
-		return state::INITIAL;
+		return state::initial;
 	}
 }
 
@@ -491,7 +491,7 @@ void tr::audio::source_base::play()
 {
 	lock_audio_mutex();
 	if (m_stream.has_value()) {
-		if (state() == state::INITIAL || state() == state::STOPPED) {
+		if (state() == state::initial || state() == state::stopped) {
 			TR_AL_CALL(alSourcei, m_id, AL_BUFFER, 0);
 			for (auto& buffer : m_stream->buffers) {
 				buffer.refill_from(*m_stream->stream);
@@ -546,7 +546,7 @@ tr::fsecs tr::audio::source_base::length() const
 	if (m_stream.has_value()) {
 		return fsecs{float(m_stream->stream->length()) / m_stream->stream->sample_rate()};
 	}
-	else if (buffer() != buffer::id::EMPTY) {
+	else if (buffer() != buffer::id::empty) {
 		ALint sample_rate, size;
 		TR_AL_CALL(alGetBufferi, m_id, AL_FREQUENCY, &sample_rate);
 		TR_AL_CALL(alGetBufferi, m_id, AL_SIZE, &size);
@@ -569,7 +569,7 @@ tr::fsecs tr::audio::source_base::offset() const
 
 	if (m_stream.has_value()) {
 		const audio::state state{this->state()};
-		if (state == state::INITIAL || state == state::STOPPED) {
+		if (state == state::initial || state == state::stopped) {
 			return fsecs{m_stream->stream->tell() / float(m_stream->stream->sample_rate())};
 		}
 
@@ -594,15 +594,15 @@ void tr::audio::source_base::set_offset(fsecs offset)
 		m_stream->stream->seek(int(offset.count() * m_stream->stream->sample_rate()));
 		TR_AL_CALL(alSourceStop, m_id);
 		switch (state) {
-		case state::PLAYING:
+		case state::playing:
 			play();
 			break;
-		case state::PAUSED:
+		case state::paused:
 			play();
 			pause();
 			break;
-		case state::INITIAL:
-		case state::STOPPED:
+		case state::initial:
+		case state::stopped:
 			break;
 		}
 		unlock_audio_mutex();
@@ -643,7 +643,7 @@ tr::fsecs tr::audio::source_base::loop_start() const
 	if (m_stream.has_value()) {
 		return fsecs{float(m_stream->stream->loop_start()) / m_stream->stream->sample_rate()};
 	}
-	else if (buffer() != buffer::id::EMPTY) {
+	else if (buffer() != buffer::id::empty) {
 		ALint sample_rate;
 		TR_AL_CALL(alGetBufferi, ALuint(buffer()), AL_FREQUENCY, &sample_rate);
 		ALint channels;
@@ -668,7 +668,7 @@ tr::fsecs tr::audio::source_base::loop_end() const
 	if (m_stream.has_value()) {
 		return fsecs{float(m_stream->stream->loop_end()) / m_stream->stream->sample_rate()};
 	}
-	else if (buffer() != buffer::id::EMPTY) {
+	else if (buffer() != buffer::id::empty) {
 		ALint sample_rate;
 		TR_AL_CALL(alGetBufferi, ALuint(buffer()), AL_FREQUENCY, &sample_rate);
 		ALint channels;
@@ -688,25 +688,26 @@ tr::fsecs tr::audio::source::loop_end() const
 	return m_base->loop_end();
 }
 
-void tr::audio::source_base::set_loop_points(fsecs start, fsecs end)
+void tr::audio::source_base::set_loop_points(fsecs start_secs, fsecs end_secs)
 {
 	if (length() == fsecs::zero()) {
 		return;
 	}
 
-	start = std::clamp(start, START, length());
-	end = std::clamp(end, START, length());
-	TR_ASSERT(start < end, "Tried to set audio source loop end before start (start: {}s, end: {}s).", start.count(), end.count());
+	start_secs = std::clamp(start_secs, start_secs, length());
+	end_secs = std::clamp(end_secs, start_secs, length());
+	TR_ASSERT(start_secs < end_secs, "Tried to set audio source loop end before start (start: {}s, end: {}s).", start_secs.count(),
+			  end_secs.count());
 
 	if (m_stream.has_value()) {
 		lock_audio_mutex();
-		if (start >= loop_end()) {
-			m_stream->stream->set_loop_end(int(end.count() * m_stream->stream->sample_rate()));
-			m_stream->stream->set_loop_start(int(start.count() * m_stream->stream->sample_rate()));
+		if (start_secs >= loop_end()) {
+			m_stream->stream->set_loop_end(int(end_secs.count() * m_stream->stream->sample_rate()));
+			m_stream->stream->set_loop_start(int(start_secs.count() * m_stream->stream->sample_rate()));
 		}
 		else {
-			m_stream->stream->set_loop_start(int(start.count() * m_stream->stream->sample_rate()));
-			m_stream->stream->set_loop_end(int(end.count() * m_stream->stream->sample_rate()));
+			m_stream->stream->set_loop_start(int(start_secs.count() * m_stream->stream->sample_rate()));
+			m_stream->stream->set_loop_end(int(end_secs.count() * m_stream->stream->sample_rate()));
 		}
 		unlock_audio_mutex();
 	}
@@ -718,7 +719,8 @@ void tr::audio::source_base::set_loop_points(fsecs start, fsecs end)
 		ALint channels;
 		TR_AL_CALL(alGetBufferi, buffer_id, AL_CHANNELS, &channels);
 
-		std::array<ALint, 2> loop_points{ALint(start.count() * sample_rate * channels), ALint(end.count() * sample_rate * channels)};
+		std::array<ALint, 2> loop_points{ALint(start_secs.count() * sample_rate * channels),
+										 ALint(end_secs.count() * sample_rate * channels)};
 		TR_AL_CALL(alSourcei, m_id, AL_BUFFER, 0);
 		TR_AL_CALL(alBufferiv, buffer_id, AL_LOOP_POINTS_SOFT, loop_points.data());
 		TR_AL_CALL(alSourcei, m_id, AL_BUFFER, buffer_id);

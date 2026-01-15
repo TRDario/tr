@@ -22,20 +22,15 @@ namespace tr::sys {
 
 	// Signals used for controlling control flow of the user defined callbacks.
 	enum class signal {
-		// Continue execution.
-		CONTINUE,
-		// Regular exit.
-		SUCCESS,
-		// Abnormal exit.
-		FAILURE
+		proceed, // Continue execution.
+		exit,    // Regular exit.
+		abort    // Abnormal exit.
 	};
 
 	// Supported application types.
 	enum class app_type {
-		// The application is a game.
-		GAME,
-		// The application type is unspecified.
-		APPLICATION
+		game,       // The application is a game.
+		application // The application type is unspecified.
 	};
 
 	// Application metadata.
@@ -53,7 +48,7 @@ namespace tr::sys {
 		// A URL relevant to the application.
 		cstring_view url{};
 		// The type of the application.
-		app_type type{app_type::APPLICATION};
+		app_type type{app_type::application};
 	};
 
 	// Sets application metadata.

@@ -113,7 +113,7 @@ void tr::gfx::basic_renderer::staggered_draw_manager::draw(const render_target& 
 
 void tr::gfx::basic_renderer::staggered_draw_manager::setup_context()
 {
-	if (should_setup_context(renderer_id::BASIC_RENDERER)) {
+	if (should_setup_context(m_renderer->m_id)) {
 		set_face_culling(false);
 		set_depth_test(false);
 		set_shader_pipeline(m_renderer->m_pipeline);

@@ -4,17 +4,17 @@
 #include "../../include/tr/sysgfx/texture.hpp"
 
 namespace tr::gfx {
-#include "../../resources/generated/BASIC_RENDERER_FRAG.hpp"
-#include "../../resources/generated/BASIC_RENDERER_VERT.hpp"
+#include "../../resources/generated/basic_renderer_frag.hpp"
+#include "../../resources/generated/basic_renderer_vert.hpp"
 
 	// Untextured UV sentinel.
-	inline constexpr glm::vec2 UNTEXTURED_UV{-100, -100};
+	constexpr glm::vec2 untextured_uv{-100, -100};
 } // namespace tr::gfx
 
 //
 
 tr::gfx::basic_renderer::basic_renderer()
-	: m_pipeline{vertex_shader{BASIC_RENDERER_VERT}, fragment_shader{BASIC_RENDERER_FRAG}}
+	: m_id{allocate_renderer_id()}, m_pipeline{vertex_shader{basic_renderer_vert}, fragment_shader{basic_renderer_frag}}
 {
 	TR_SET_LABEL(m_pipeline, "(tr) Basic Renderer Pipeline");
 	TR_SET_LABEL(m_pipeline.vertex_shader(), "(tr) Basic Renderer Vertex Shader");
@@ -68,7 +68,7 @@ tr::gfx::simple_color_mesh_ref tr::gfx::basic_renderer::new_color_fan(int layer,
 		return new_color_fan(layer, vertices, transform, defaults.blend_mode);
 	}
 	else {
-		return new_color_fan(layer, vertices, m_default_transform, ALPHA_BLENDING);
+		return new_color_fan(layer, vertices, m_default_transform, alpha_blending);
 	}
 }
 
@@ -77,7 +77,7 @@ tr::gfx::simple_color_mesh_ref tr::gfx::basic_renderer::new_color_fan(int layer,
 {
 	TR_ASSERT(!m_locked, "Tried to allocate a new color fan on a locked basic renderer.");
 
-	mesh& mesh{find_mesh(layer, primitive::TRIS, std::nullopt, mat, blend_mode, vertices)};
+	mesh& mesh{find_mesh(layer, primitive::tris, std::nullopt, mat, blend_mode, vertices)};
 	const u16 base_index{u16(mesh.positions.size())};
 	const usize indices{polygon_indices(vertices)};
 
@@ -91,7 +91,7 @@ tr::gfx::simple_color_mesh_ref tr::gfx::basic_renderer::new_color_fan(int layer,
 	const std::ranges::subrange colors{mesh.tints.end() - vertices, mesh.tints.end()};
 	const std::ranges::subrange index_range{mesh.indices.end() - indices, mesh.indices.end()};
 
-	std::ranges::fill(uvs, UNTEXTURED_UV);
+	std::ranges::fill(uvs, untextured_uv);
 	fill_convex_polygon_indices(index_range.begin(), u16(vertices), base_index);
 
 	return {positions, colors};
@@ -106,7 +106,7 @@ tr::gfx::simple_color_mesh_ref tr::gfx::basic_renderer::new_color_outline(int la
 		return new_color_outline(layer, vertices, transform, defaults.blend_mode);
 	}
 	else {
-		return new_color_outline(layer, vertices, m_default_transform, ALPHA_BLENDING);
+		return new_color_outline(layer, vertices, m_default_transform, alpha_blending);
 	}
 }
 
@@ -116,7 +116,7 @@ tr::gfx::simple_color_mesh_ref tr::gfx::basic_renderer::new_color_outline(int la
 	TR_ASSERT(!m_locked, "Tried to allocate a new color outline on a locked basic renderer.");
 
 	const usize vertices{polygon_vertices * 2};
-	mesh& mesh{find_mesh(layer, primitive::TRIS, std::nullopt, mat, blend_mode, vertices)};
+	mesh& mesh{find_mesh(layer, primitive::tris, std::nullopt, mat, blend_mode, vertices)};
 	const u16 base_index{u16(mesh.positions.size())};
 	const usize indices{polygon_outline_indices(polygon_vertices)};
 
@@ -130,7 +130,7 @@ tr::gfx::simple_color_mesh_ref tr::gfx::basic_renderer::new_color_outline(int la
 	const std::ranges::subrange colors{mesh.tints.end() - vertices, mesh.tints.end()};
 	const std::ranges::subrange index_range{mesh.indices.end() - indices, mesh.indices.end()};
 
-	std::ranges::fill(uvs, UNTEXTURED_UV);
+	std::ranges::fill(uvs, untextured_uv);
 	fill_convex_polygon_outline_indices(index_range.begin(), u16(polygon_vertices), base_index);
 
 	return {positions, colors};
@@ -145,7 +145,7 @@ tr::gfx::color_mesh_ref tr::gfx::basic_renderer::new_color_mesh(int layer, usize
 		return new_color_mesh(layer, vertices, indices, transform, defaults.blend_mode);
 	}
 	else {
-		return new_color_mesh(layer, vertices, indices, m_default_transform, ALPHA_BLENDING);
+		return new_color_mesh(layer, vertices, indices, m_default_transform, alpha_blending);
 	}
 }
 
@@ -154,7 +154,7 @@ tr::gfx::color_mesh_ref tr::gfx::basic_renderer::new_color_mesh(int layer, usize
 {
 	TR_ASSERT(!m_locked, "Tried to allocate a new color mesh on a locked basic renderer.");
 
-	mesh& mesh{find_mesh(layer, primitive::TRIS, std::nullopt, mat, blend_mode, vertices)};
+	mesh& mesh{find_mesh(layer, primitive::tris, std::nullopt, mat, blend_mode, vertices)};
 	const u16 base_index{u16(mesh.positions.size())};
 
 	mesh.positions.resize(mesh.positions.size() + vertices);
@@ -167,7 +167,7 @@ tr::gfx::color_mesh_ref tr::gfx::basic_renderer::new_color_mesh(int layer, usize
 	const std::ranges::subrange colors{mesh.tints.end() - vertices, mesh.tints.end()};
 	const std::ranges::subrange index_range{mesh.indices.end() - indices, mesh.indices.end()};
 
-	std::ranges::fill(uvs, UNTEXTURED_UV);
+	std::ranges::fill(uvs, untextured_uv);
 
 	return {positions, colors, index_range, base_index};
 }
@@ -181,7 +181,7 @@ tr::gfx::simple_textured_mesh_ref tr::gfx::basic_renderer::new_textured_fan(int 
 		return new_textured_fan(layer, vertices, defaults.texture, transform, defaults.blend_mode);
 	}
 	else {
-		return new_textured_fan(layer, vertices, std::nullopt, m_default_transform, ALPHA_BLENDING);
+		return new_textured_fan(layer, vertices, std::nullopt, m_default_transform, alpha_blending);
 	}
 }
 
@@ -194,7 +194,7 @@ tr::gfx::simple_textured_mesh_ref tr::gfx::basic_renderer::new_textured_fan(int 
 		return new_textured_fan(layer, vertices, std::move(texture_ref), transform, defaults.blend_mode);
 	}
 	else {
-		return new_textured_fan(layer, vertices, std::move(texture_ref), m_default_transform, ALPHA_BLENDING);
+		return new_textured_fan(layer, vertices, std::move(texture_ref), m_default_transform, alpha_blending);
 	}
 }
 
@@ -204,7 +204,7 @@ tr::gfx::simple_textured_mesh_ref tr::gfx::basic_renderer::new_textured_fan(int 
 	TR_ASSERT(!m_locked, "Tried to allocate a new textured fan on a locked basic renderer.");
 	TR_ASSERT(!texture_ref.empty(), "Cannot pass std::nullopt as texture for textured fan.");
 
-	mesh& mesh{find_mesh(layer, primitive::TRIS, std::move(texture_ref), mat, blend_mode, vertices)};
+	mesh& mesh{find_mesh(layer, primitive::tris, std::move(texture_ref), mat, blend_mode, vertices)};
 	const u16 base_index{u16(mesh.positions.size())};
 	const usize indices{polygon_indices(vertices)};
 
@@ -232,7 +232,7 @@ tr::gfx::textured_mesh_ref tr::gfx::basic_renderer::new_textured_mesh(int layer,
 		return new_textured_mesh(layer, vertices, indices, defaults.texture, transform, defaults.blend_mode);
 	}
 	else {
-		return new_textured_mesh(layer, vertices, indices, std::nullopt, m_default_transform, ALPHA_BLENDING);
+		return new_textured_mesh(layer, vertices, indices, std::nullopt, m_default_transform, alpha_blending);
 	}
 }
 
@@ -245,7 +245,7 @@ tr::gfx::textured_mesh_ref tr::gfx::basic_renderer::new_textured_mesh(int layer,
 		return new_textured_mesh(layer, vertices, indices, std::move(texture_ref), transform, defaults.blend_mode);
 	}
 	else {
-		return new_textured_mesh(layer, vertices, indices, std::move(texture_ref), m_default_transform, ALPHA_BLENDING);
+		return new_textured_mesh(layer, vertices, indices, std::move(texture_ref), m_default_transform, alpha_blending);
 	}
 }
 
@@ -255,7 +255,7 @@ tr::gfx::textured_mesh_ref tr::gfx::basic_renderer::new_textured_mesh(int layer,
 	TR_ASSERT(!m_locked, "Tried to allocate a new textured mesh on a locked basic renderer.");
 	TR_ASSERT(!texture_ref.empty(), "Cannot pass std::nullopt as texture for textured mesh.");
 
-	mesh& mesh{find_mesh(layer, primitive::TRIS, std::move(texture_ref), mat, blend_mode, vertices)};
+	mesh& mesh{find_mesh(layer, primitive::tris, std::move(texture_ref), mat, blend_mode, vertices)};
 	const u16 base_index{u16(mesh.positions.size())};
 
 	mesh.positions.resize(mesh.positions.size() + vertices);
@@ -282,7 +282,7 @@ tr::gfx::simple_color_mesh_ref tr::gfx::basic_renderer::new_lines(int layer, usi
 		return new_lines(layer, lines, transform, defaults.blend_mode);
 	}
 	else {
-		return new_lines(layer, lines, m_default_transform, ALPHA_BLENDING);
+		return new_lines(layer, lines, m_default_transform, alpha_blending);
 	}
 }
 
@@ -292,7 +292,7 @@ tr::gfx::simple_color_mesh_ref tr::gfx::basic_renderer::new_lines(int layer, usi
 	TR_ASSERT(!m_locked, "Tried to allocate a new lines on a locked basic renderer.");
 
 	const usize vertices{lines * 2};
-	mesh& mesh{find_mesh(layer, primitive::LINES, std::nullopt, mat, blend_mode, vertices)};
+	mesh& mesh{find_mesh(layer, primitive::lines, std::nullopt, mat, blend_mode, vertices)};
 	const u16 base_index{u16(mesh.positions.size())};
 
 	mesh.positions.resize(mesh.positions.size() + vertices);
@@ -305,7 +305,7 @@ tr::gfx::simple_color_mesh_ref tr::gfx::basic_renderer::new_lines(int layer, usi
 	const std::ranges::subrange colors{mesh.tints.end() - vertices, mesh.tints.end()};
 	const std::ranges::subrange index_range{mesh.indices.end() - vertices, mesh.indices.end()};
 
-	std::ranges::fill(uvs, UNTEXTURED_UV);
+	std::ranges::fill(uvs, untextured_uv);
 	std::iota(index_range.begin(), index_range.end(), base_index);
 
 	return {positions, colors};
@@ -320,7 +320,7 @@ tr::gfx::simple_color_mesh_ref tr::gfx::basic_renderer::new_line_strip(int layer
 		return new_line_strip(layer, vertices, transform, defaults.blend_mode);
 	}
 	else {
-		return new_line_strip(layer, vertices, m_default_transform, ALPHA_BLENDING);
+		return new_line_strip(layer, vertices, m_default_transform, alpha_blending);
 	}
 }
 
@@ -329,7 +329,7 @@ tr::gfx::simple_color_mesh_ref tr::gfx::basic_renderer::new_line_strip(int layer
 {
 	TR_ASSERT(!m_locked, "Tried to allocate a new line strip on a locked basic renderer.");
 
-	mesh& mesh{find_mesh(layer, primitive::LINES, std::nullopt, mat, blend_mode, vertices)};
+	mesh& mesh{find_mesh(layer, primitive::lines, std::nullopt, mat, blend_mode, vertices)};
 	const u16 base_index{u16(mesh.positions.size())};
 	const usize indices{line_strip_indices(vertices)};
 
@@ -343,7 +343,7 @@ tr::gfx::simple_color_mesh_ref tr::gfx::basic_renderer::new_line_strip(int layer
 	const std::ranges::subrange colors{mesh.tints.end() - vertices, mesh.tints.end()};
 	const std::ranges::subrange index_range{mesh.indices.end() - indices, mesh.indices.end()};
 
-	std::ranges::fill(uvs, UNTEXTURED_UV);
+	std::ranges::fill(uvs, untextured_uv);
 	fill_line_strip_indices(index_range.begin(), vertices, base_index);
 
 	return {positions, colors};
@@ -358,7 +358,7 @@ tr::gfx::simple_color_mesh_ref tr::gfx::basic_renderer::new_line_loop(int layer,
 		return new_line_loop(layer, vertices, transform, defaults.blend_mode);
 	}
 	else {
-		return new_line_loop(layer, vertices, m_default_transform, ALPHA_BLENDING);
+		return new_line_loop(layer, vertices, m_default_transform, alpha_blending);
 	}
 }
 
@@ -367,7 +367,7 @@ tr::gfx::simple_color_mesh_ref tr::gfx::basic_renderer::new_line_loop(int layer,
 {
 	TR_ASSERT(!m_locked, "Tried to allocate a new line loop on a locked basic renderer.");
 
-	mesh& mesh{find_mesh(layer, primitive::LINES, std::nullopt, mat, blend_mode, vertices)};
+	mesh& mesh{find_mesh(layer, primitive::lines, std::nullopt, mat, blend_mode, vertices)};
 	const u16 base_index{u16(mesh.positions.size())};
 	const usize indices{line_loop_indices(vertices)};
 
@@ -381,7 +381,7 @@ tr::gfx::simple_color_mesh_ref tr::gfx::basic_renderer::new_line_loop(int layer,
 	const std::ranges::subrange colors{mesh.tints.end() - vertices, mesh.tints.end()};
 	const std::ranges::subrange index_range{mesh.indices.end() - indices, mesh.indices.end()};
 
-	std::ranges::fill(uvs, UNTEXTURED_UV);
+	std::ranges::fill(uvs, untextured_uv);
 	fill_line_loop_indices(index_range.begin(), vertices, base_index);
 
 	return {positions, colors};
@@ -396,7 +396,7 @@ tr::gfx::color_mesh_ref tr::gfx::basic_renderer::new_line_mesh(int layer, usize 
 		return new_line_mesh(layer, vertices, indices, transform, defaults.blend_mode);
 	}
 	else {
-		return new_line_mesh(layer, vertices, indices, m_default_transform, ALPHA_BLENDING);
+		return new_line_mesh(layer, vertices, indices, m_default_transform, alpha_blending);
 	}
 }
 
@@ -405,7 +405,7 @@ tr::gfx::color_mesh_ref tr::gfx::basic_renderer::new_line_mesh(int layer, usize 
 {
 	TR_ASSERT(!m_locked, "Tried to allocate a new line mesh on a locked basic renderer.");
 
-	mesh& mesh{find_mesh(layer, primitive::LINES, std::nullopt, mat, blend_mode, vertices)};
+	mesh& mesh{find_mesh(layer, primitive::lines, std::nullopt, mat, blend_mode, vertices)};
 	const u16 base_index{u16(mesh.positions.size())};
 
 	mesh.positions.resize(mesh.positions.size() + vertices);
@@ -418,7 +418,7 @@ tr::gfx::color_mesh_ref tr::gfx::basic_renderer::new_line_mesh(int layer, usize 
 	const std::ranges::subrange colors{mesh.tints.end() - vertices, mesh.tints.end()};
 	const std::ranges::subrange index_range{mesh.indices.end() - indices, mesh.indices.end()};
 
-	std::ranges::fill(uvs, UNTEXTURED_UV);
+	std::ranges::fill(uvs, untextured_uv);
 
 	return {positions, colors, index_range, base_index};
 }

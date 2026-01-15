@@ -141,12 +141,9 @@ namespace TR_FMT {
 	  private:
 		// Units the formatted angle can be displayed in.
 		enum class unit {
-			// Display the angle in radians.
-			RADIANS,
-			// Display the angle in degrees.
-			DEGREES,
-			// Display the angle in turns.
-			TURNS
+			radians, // Display the angle in radians.
+			degrees, // Display the angle in degrees.
+			turns    // Display the angle in turns.
 		};
 
 		// The unit to use for the formatted angle.

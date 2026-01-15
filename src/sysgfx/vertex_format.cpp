@@ -4,10 +4,10 @@
 #include "../../include/tr/sysgfx/impl.hpp"
 
 namespace tr::gfx {
-	constexpr std::array<vertex_binding, 3> VERTEX2_ATTRIBUTES{{
-		{NOT_INSTANCED, vertex_attributes<glm::vec2>::list},
-		{NOT_INSTANCED, vertex_attributes<glm::vec2>::list},
-		{NOT_INSTANCED, vertex_attributes<rgba8>::list},
+	constexpr std::array<vertex_binding, 3> vertex2_attributes{{
+		{not_instanced, vertex_attributes<glm::vec2>::list},
+		{not_instanced, vertex_attributes<glm::vec2>::list},
+		{not_instanced, vertex_attributes<rgba8>::list},
 	}};
 }
 
@@ -63,7 +63,7 @@ std::string tr::gfx::vertex_format::label() const
 tr::gfx::vertex_format& tr::gfx::vertex2_format()
 {
 	if (!g_vertex2_format.has_value()) {
-		g_vertex2_format.emplace(VERTEX2_ATTRIBUTES);
+		g_vertex2_format.emplace(vertex2_attributes);
 		TR_SET_LABEL(*g_vertex2_format, "(tr) 2D Vertex Format");
 	}
 	return *g_vertex2_format;

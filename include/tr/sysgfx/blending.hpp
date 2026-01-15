@@ -3,25 +3,25 @@
 namespace tr::gfx {
 	// Blending functions.
 	enum class blend_fn {
-		ADD = 0x8006,      // The source and destination colors are added together.
-		MIN,               // The minimum channel values of the source and destination colors are selected.
-		MAX,               // The maximum channel values of the source and destination colors are selected.
-		SUBTRACT = 0x800A, // The source and destination colors are subtracted in the form (src - dst).
-		REVERSE_SUBTRACT   // The source and destination colors are subtracted in the form (dst - src).
+		add = 0x8006,      // The source and destination colors are added together.
+		min,               // The minimum channel values of the source and destination colors are selected.
+		max,               // The maximum channel values of the source and destination colors are selected.
+		subtract = 0x800A, // The source and destination colors are subtracted in the form (src - dst).
+		reverse_subtract   // The source and destination colors are subtracted in the form (dst - src).
 	};
 
 	// Blending parameter multipliers.
 	enum class blend_multiplier {
-		ZERO,                // The parameter is multiplied by 0.
-		ONE,                 // The parameter is multiplied by 1.
-		SRC_COLOR = 0x300,   // The parameter is multiplied by the source color.
-		ONE_MINUS_SRC_COLOR, // The parameter is multiplied by 1 - the source color.
-		SRC_ALPHA,           // The parameter is multiplied by the source alpha.
-		ONE_MINUS_SRC_ALPHA, // The parameter is multiplied by 1 - the source alpha.
-		DST_ALPHA,           // The parameter is multiplied by the destination alpha.
-		ONE_MINUS_DST_ALPHA, // The parameter is multiplied by 1 - the destination alpha.
-		DST_COLOR,           // The parameter is multiplied by the destination color.
-		ONE_MINUS_DST_COLOR  // The parameter is multiplied by 1 - the destination color.
+		zero,                // The parameter is multiplied by 0.
+		one,                 // The parameter is multiplied by 1.
+		src_color = 0x300,   // The parameter is multiplied by the source color.
+		one_minus_src_color, // The parameter is multiplied by 1 - the source color.
+		src_alpha,           // The parameter is multiplied by the source alpha.
+		one_minus_src_alpha, // The parameter is multiplied by 1 - the source alpha.
+		dst_alpha,           // The parameter is multiplied by the destination alpha.
+		one_minus_dst_alpha, // The parameter is multiplied by 1 - the destination alpha.
+		dst_color,           // The parameter is multiplied by the destination color.
+		one_minus_dst_color  // The parameter is multiplied by 1 - the destination color.
 	};
 
 	// Blending mode information.
@@ -43,15 +43,15 @@ namespace tr::gfx {
 	};
 
 	// Alpha blending mode.
-	inline constexpr blend_mode ALPHA_BLENDING{blend_multiplier::SRC_ALPHA, blend_fn::ADD, blend_multiplier::ONE_MINUS_SRC_ALPHA,
-											   blend_multiplier::ONE,       blend_fn::ADD, blend_multiplier::ONE_MINUS_SRC_ALPHA};
+	inline constexpr blend_mode alpha_blending{blend_multiplier::src_alpha, blend_fn::add, blend_multiplier::one_minus_src_alpha,
+											   blend_multiplier::one,       blend_fn::add, blend_multiplier::one_minus_src_alpha};
 	// Premultiplied alpha blending mode.
-	inline constexpr blend_mode PREMUL_ALPHA_BLENDING{blend_multiplier::ONE, blend_fn::ADD, blend_multiplier::ONE_MINUS_SRC_ALPHA,
-													  blend_multiplier::ONE, blend_fn::ADD, blend_multiplier::ONE_MINUS_SRC_ALPHA};
+	inline constexpr blend_mode premultiplied_alpha_blending{blend_multiplier::one, blend_fn::add, blend_multiplier::one_minus_src_alpha,
+															 blend_multiplier::one, blend_fn::add, blend_multiplier::one_minus_src_alpha};
 	// Writes the maximum of two values into the buffer.
-	inline constexpr blend_mode MAX_BLENDING{blend_multiplier::ONE, blend_fn::MAX, blend_multiplier::ONE,
-											 blend_multiplier::ONE, blend_fn::MAX, blend_multiplier::ONE};
+	inline constexpr blend_mode max_blending{blend_multiplier::one, blend_fn::max, blend_multiplier::one,
+											 blend_multiplier::one, blend_fn::max, blend_multiplier::one};
 	// Applied after MAX_BLENDING to achieve normal alpha blending.
-	inline constexpr blend_mode REVERSE_ALPHA_BLENDING{blend_multiplier::ONE_MINUS_DST_ALPHA, blend_fn::ADD, blend_multiplier::DST_ALPHA,
-													   blend_multiplier::ONE_MINUS_DST_ALPHA, blend_fn::MAX, blend_multiplier::DST_ALPHA};
+	inline constexpr blend_mode reverse_alpha_blending{blend_multiplier::one_minus_dst_alpha, blend_fn::add, blend_multiplier::dst_alpha,
+													   blend_multiplier::one_minus_dst_alpha, blend_fn::max, blend_multiplier::dst_alpha};
 } // namespace tr::gfx

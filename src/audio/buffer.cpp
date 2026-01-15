@@ -22,7 +22,7 @@ tr::audio::buffer_base::buffer_base()
 
 tr::audio::buffer_base::operator id() const
 {
-	return m_handle.get(tr::NO_EMPTY_HANDLE_CHECK);
+	return m_handle.get(tr::no_empty_handle_check);
 }
 
 void tr::audio::buffer_base::deleter::operator()(id id) const
@@ -102,5 +102,5 @@ tr::audio::buffer tr::audio::load_file(const std::filesystem::path& path)
 	std::unique_ptr<stream> file{open_file(path)};
 	std::vector<i16> data(file->length() * file->channels());
 	file->read(data);
-	return buffer{data, file->channels() == 2 ? format::STEREO16 : format::MONO16, file->sample_rate()};
+	return buffer{data, file->channels() == 2 ? format::stereo16 : format::mono16, file->sample_rate()};
 }

@@ -19,7 +19,7 @@ namespace tr::gfx {
 	// Pointer to the SDL OpenGL context.
 	inline SDL_GLContextState* g_ogl_context{nullptr};
 	// ID of the current active renderer.
-	inline renderer_id g_active_renderer{renderer_id::NO_RENDERER};
+	inline renderer_id g_active_renderer{renderer_id::no_renderer};
 	// Tracks the texture bound to any given texture unit.
 	inline std::array<texture_ref, 80> g_texture_unit_textures{};
 	// 2D vertex format.

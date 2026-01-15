@@ -6,7 +6,7 @@ using namespace std::chrono_literals;
 
 void tr::benchmark::start()
 {
-	TR_ASSERT(m_start == NOT_STARTED, "Tried to start a benchmark measurement before stopping the previous one.");
+	TR_ASSERT(m_start == not_started, "Tried to start a benchmark measurement before stopping the previous one.");
 
 	atomic_thread_fence(std::memory_order::relaxed);
 	m_start = std::chrono::steady_clock::now();
@@ -15,7 +15,7 @@ void tr::benchmark::start()
 
 void tr::benchmark::stop()
 {
-	TR_ASSERT(m_start != NOT_STARTED, "Tried to stop a benchmark measurement before starting one.");
+	TR_ASSERT(m_start != not_started, "Tried to stop a benchmark measurement before starting one.");
 
 	try {
 		atomic_thread_fence(std::memory_order::relaxed);
@@ -25,17 +25,17 @@ void tr::benchmark::stop()
 		if (it != m_measurements.end()) {
 			m_measurements.erase(m_measurements.begin(), it);
 		}
-		m_start = NOT_STARTED;
+		m_start = not_started;
 		atomic_thread_fence(std::memory_order::relaxed);
 	}
 	catch (std::exception&) {
-		m_start = NOT_STARTED;
+		m_start = not_started;
 	}
 }
 
 void tr::benchmark::clear()
 {
-	m_start = NOT_STARTED;
+	m_start = not_started;
 	m_measurements.clear();
 }
 

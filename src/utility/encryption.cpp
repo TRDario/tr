@@ -5,7 +5,7 @@
 
 namespace tr {
 	// Size of an encrypted chunk header.
-	constexpr usize HEADER_SIZE{7};
+	constexpr usize header_size{7};
 } // namespace tr
 
 tr::decryption_error::decryption_error(std::string_view description)
@@ -50,10 +50,10 @@ std::string_view tr::encryption_error::details() const
 
 void tr::decrypt_to(std::vector<std::byte>& out, std::vector<std::byte> encrypted)
 {
-	imstream header{std::views::take(encrypted, HEADER_SIZE)};
-	const std::span<const char> compressed{(const char*)(encrypted.data() + HEADER_SIZE), encrypted.size() - HEADER_SIZE};
+	imstream header{std::views::take(encrypted, header_size)};
+	const std::span<const char> compressed{(const char*)(encrypted.data() + header_size), encrypted.size() - header_size};
 
-	if (encrypted.size() < HEADER_SIZE || !read_binary_magic<"tr">(header)) {
+	if (encrypted.size() < header_size || !read_binary_magic<"tr">(header)) {
 		throw decryption_error{"Invalid compressed data header."};
 	}
 
@@ -78,16 +78,16 @@ std::vector<std::byte> tr::decrypt(std::vector<std::byte> encrypted)
 
 void tr::encrypt_to(std::vector<std::byte>& out, std::span<const std::byte> raw, u8 key)
 {
-	out.resize(LZ4_compressBound(int(raw.size())) + HEADER_SIZE);
-	const std::span<char> compress_out{(char*)(out.data() + HEADER_SIZE), out.size() - HEADER_SIZE};
+	out.resize(LZ4_compressBound(int(raw.size())) + header_size);
+	const std::span<char> compress_out{(char*)(out.data() + header_size), out.size() - header_size};
 
-	omstream header{std::views::take(out, HEADER_SIZE)};
+	omstream header{std::views::take(out, header_size)};
 	write_binary(header, "tr");
 	write_binary(header, key);
 	write_binary(header, u32(raw.size()));
 
 	const int used_size{LZ4_compress_default((const char*)raw.data(), compress_out.data(), int(raw.size()), int(compress_out.size()))};
-	out.resize(used_size + HEADER_SIZE);
+	out.resize(used_size + header_size);
 
 	for (std::byte& byte : std::views::drop(out, 3)) {
 		byte = std::byte(int(byte ^ std::byte(key)) - 170);

@@ -40,11 +40,11 @@ namespace tr {
 
 	  private:
 		// Sentinel starting point for a measurement that hasn't been started.
-		static constexpr std::chrono::steady_clock::time_point NOT_STARTED{};
+		static constexpr std::chrono::steady_clock::time_point not_started{};
 
 		// The measurement deque.
 		std::deque<measurement> m_measurements;
 		// The start point of the latest started (but not ended) measurement.
-		std::chrono::steady_clock::time_point m_start{NOT_STARTED};
+		std::chrono::steady_clock::time_point m_start{not_started};
 	};
 } // namespace tr

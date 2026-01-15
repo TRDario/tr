@@ -26,8 +26,8 @@
 namespace tr::audio {
 	// Audio data formats.
 	enum class format {
-		MONO16 = 0x1101,  // 16-bit mono audio.
-		STEREO16 = 0x1103 // 16-bit stereo audio.
+		mono16 = 0x1101,  // 16-bit mono audio.
+		stereo16 = 0x1103 // 16-bit stereo audio.
 	};
 
 	// Audio data buffer.
@@ -50,7 +50,7 @@ namespace tr::audio {
 		// The ID of the buffer in the audio manager.
 		enum class id : unsigned int {
 			// Special ID denoting no held buffer.
-			EMPTY
+			empty
 		};
 		// Marks the buffer as cullable in the global audio manager.
 		struct deleter {
@@ -58,7 +58,7 @@ namespace tr::audio {
 		};
 
 		// Managed audio manager buffer ID.
-		handle<id, id::EMPTY, deleter> m_id;
+		handle<id, id::empty, deleter> m_id;
 
 		friend class buffer_base;
 		friend class source_base;

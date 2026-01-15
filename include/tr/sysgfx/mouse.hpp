@@ -6,12 +6,12 @@ namespace tr::sys {
 
 	// Mouse buttons (may be ORed together).
 	enum class mouse_button : u8 {
-		NONE = 0x0,
-		LEFT = 0x1,
-		MIDDLE = 0x2,
-		RIGHT = 0x4,
-		X1 = 0x8,
-		X2 = 0x10
+		none = 0x0,
+		left = 0x1,
+		middle = 0x2,
+		right = 0x4,
+		x1 = 0x8,
+		x2 = 0x10
 	};
 	DEFINE_BITMASK_OPERATORS(mouse_button);
 

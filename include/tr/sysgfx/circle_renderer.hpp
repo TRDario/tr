@@ -60,11 +60,13 @@ namespace tr::gfx {
 			// The transormation matrix of the layer (or empty for the global default).
 			std::optional<glm::mat4> transform;
 			// The blending mode of the layer.
-			blend_mode blend_mode{ALPHA_BLENDING};
+			blend_mode blend_mode{alpha_blending};
 			// The circles to draw on this layer.
 			std::vector<circle> circles;
 		};
 
+		// The ID of the renderer.
+		renderer_id m_id;
 		// Global default transform.
 		glm::mat4 m_default_transform{1.0f};
 		// Drawing layers.
@@ -80,7 +82,7 @@ namespace tr::gfx {
 		// Last used transform.
 		glm::mat4 m_last_transform{1.0f};
 		// Last used blending mode.
-		blend_mode m_last_blend_mode{ALPHA_BLENDING};
+		blend_mode m_last_blend_mode{alpha_blending};
 #ifdef TR_ENABLE_ASSERTS
 		// Flag that is set to true when a staggered draw is ongoing.
 		bool m_locked{false};

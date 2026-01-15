@@ -3,7 +3,7 @@
 
 namespace tr {
 	// Circumvents static_assert(false) not being a valid expression.
-	template <class...> inline constexpr bool ALWAYS_FALSE = false;
+	template <class...> inline constexpr bool always_false = false;
 
 	// Tag class.
 	template <typename> struct tag {};
@@ -62,6 +62,8 @@ namespace tr {
 	// Concept that denotes a type is a specialization of a certain template.
 	template <class T, template <class...> class Z>
 	concept specialization_of = is_specialization_of<T, Z>::value;
+	template <class T, template <class...> class Z>
+	concept remove_cvref_specialization_of = specialization_of<std::remove_cvref_t<T>, Z>;
 
 	template <typename T> struct remove_noexcept {
 		using type = T;

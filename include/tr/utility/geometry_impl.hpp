@@ -90,23 +90,23 @@ template <int S, class T1, class T2> constexpr std::common_type_t<T1, T2> tr::di
 template <class T> constexpr glm::tvec2<T> tr::tl(glm::tvec2<T> pos, glm::tvec2<T> size, tr::align pos_anchor)
 {
 	switch (pos_anchor) {
-	case align::TOP_LEFT:
+	case align::tl:
 		return pos;
-	case align::TOP_CENTER:
+	case align::tc:
 		return {pos.x - size.x / 2, pos.y};
-	case align::TOP_RIGHT:
+	case align::tr:
 		return {pos.x - size.x, pos.y};
-	case align::CENTER_LEFT:
+	case align::cl:
 		return {pos.x, pos.y - size.y / 2};
-	case align::CENTER:
+	case align::cc:
 		return pos - size / T(2);
-	case align::CENTER_RIGHT:
+	case align::cr:
 		return {pos.x - size.x, pos.y - size.y / 2};
-	case align::BOTTOM_LEFT:
+	case align::bl:
 		return {pos.x, pos.y - size.y};
-	case align::BOTTOM_CENTER:
+	case align::bc:
 		return {pos.x - size.x / 2, pos.y - size.y};
-	case align::BOTTOM_RIGHT:
+	case align::br:
 		return pos - size;
 	}
 }

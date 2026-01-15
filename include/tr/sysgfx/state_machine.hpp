@@ -7,7 +7,7 @@ namespace tr {
 	}
 	struct state;
 
-	// Shorthand for the return type of most state functions: the pointer to the next state, KEEP_STATE, or DROP_STATE.
+	// Shorthand for the return type of most state functions: the pointer to the next state, keep_state, or drop_state.
 	using next_state = std::optional<std::unique_ptr<state>>;
 
 	// The base state type.
@@ -25,9 +25,9 @@ namespace tr {
 		virtual void draw();
 	};
 	// Sentinel indicating that the current state should be kept.
-	inline constexpr std::nullopt_t KEEP_STATE{std::nullopt};
+	inline constexpr std::nullopt_t keep_state{std::nullopt};
 	// Sentinel indicating that the current state should be dropped.
-	inline constexpr std::nullptr_t DROP_STATE{};
+	inline constexpr std::nullptr_t drop_state{};
 
 	// Convenience function for constructing a next state.
 	template <std::derived_from<state> T, class... Args>
@@ -113,7 +113,7 @@ template <class R, class P> void tr::state_machine::update(std::chrono::duration
 		m_update_benchmark.start();
 		next_state next{m_current_state->update(std::chrono::duration_cast<duration>(delta))};
 		m_update_benchmark.stop();
-		if (next != KEEP_STATE) {
+		if (next != keep_state) {
 			m_current_state = *std::move(next);
 		}
 	}
