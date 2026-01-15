@@ -1,5 +1,13 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Implements static_vector.hpp.                                                                                                         //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include "static_vector.hpp"
+
+////////////////////////////////////////////////////////////// STATIC VECTOR //////////////////////////////////////////////////////////////
 
 template <class T, tr::usize S>
 tr::static_vector<T, S>::static_vector(size_type size)
@@ -384,7 +392,7 @@ void tr::static_vector<T, S>::resize(size_type size, const T& v)
 	m_size = size;
 }
 
-//
+//////////////////////////////////////////////////////////////// BINARY IO ////////////////////////////////////////////////////////////////
 
 template <tr::binary_constructible T, tr::usize S>
 void tr::binary_reader<tr::static_vector<T, S>>::operator()(std::istream& is, static_vector<T, S>& out) const

@@ -1,8 +1,20 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Provides an inplace-allocated, fixed capacity vector class.                                                                           //
+//                                                                                                                                       //
+// tr::static_vector<T, S> is fundamentally a vector interface implemented over a fixed-size in-place array. The entire std::vector      //
+// interface is implemented except functions relating to memory allocation, though errors do not throw exceptions and there are never    //
+// checks in release mode. tr::static_vector is also binary readable and writable.                                                       //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include "common.hpp"
 
+//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
+
 namespace tr {
-	// Inplace-allocated fixed-capacity vector.
+	// Inplace-allocated, fixed-capacity vector.
 	template <class T, usize S> class static_vector {
 	  public:
 		using size_type = size_type_t<S>;
@@ -157,7 +169,9 @@ namespace tr {
 			requires(std::copy_constructible<T>);
 
 	  private:
+		// The buffer where elements are stored.
 		alignas(T) std::byte m_buffer[sizeof(T) * S]{};
+		// The number of elements in the vector.
 		size_type m_size{};
 	};
 
@@ -170,5 +184,7 @@ namespace tr {
 		void operator()(std::ostream& os, const static_vector<T, S>& in) const;
 	};
 } // namespace tr
+
+////////////////////////////////////////////////////////////// IMPLEMENTATION /////////////////////////////////////////////////////////////
 
 #include "static_vector_impl.hpp" // IWYU pragma: keep

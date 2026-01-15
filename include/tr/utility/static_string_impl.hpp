@@ -1,6 +1,14 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Implements static_string.hpp.                                                                                                         //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include "macro.hpp"
 #include "static_string.hpp"
+
+////////////////////////////////////////////////////////////// STATIC STRING //////////////////////////////////////////////////////////////
 
 template <tr::usize S>
 constexpr tr::static_string<S>::static_string(size_type size, char chr)
@@ -296,7 +304,7 @@ template <tr::usize S> constexpr void tr::static_string<S>::resize(size_type siz
 	m_size = size;
 }
 
-//
+//////////////////////////////////////////////////////////////////// IO ///////////////////////////////////////////////////////////////////
 
 template <tr::usize S> void tr::binary_reader<tr::static_string<S>>::operator()(std::istream& is, static_string<S>& out) const
 {
@@ -309,8 +317,6 @@ template <tr::usize S> void tr::binary_writer<tr::static_string<S>>::operator()(
 	write_binary(os, in.size());
 	write_binary(os, std::span{in});
 }
-
-//
 
 template <tr::usize S> inline std::ostream& tr::operator<<(std::ostream& os, const static_string<S>& str)
 {

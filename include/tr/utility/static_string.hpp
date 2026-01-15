@@ -1,5 +1,18 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Provides an inplace-allocated, fixed capacity string class.                                                                           //
+//                                                                                                                                       //
+// tr::static_string<T, S> is fundamentally a string interface implemented over a fixed-size in-place array of characters. Almost the    //
+// entire std::string interface is implemented, functions relating to memory allocation are not implemented, and neither is .c_str(), as //
+// tr::static_string is not guaranteed to be NUL-terminated. Additionally, errors do not throw exceptions and there are never checks in  //
+// release mode. tr::static_string is binary readable and writable, as well as formattable.                                              //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include "binary_io.hpp"
+
+//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
 namespace tr {
 	// Inplace-allocated fixed-capacity string.
@@ -128,5 +141,7 @@ namespace tr {
 
 // Formatter for static strings.
 template <tr::usize S> struct TR_FMT::formatter<tr::static_string<S>> : TR_FMT::formatter<std::string_view> {};
+
+////////////////////////////////////////////////////////////// IMPLEMENTATION /////////////////////////////////////////////////////////////
 
 #include "static_string_impl.hpp" // IWYU pragma: keep
