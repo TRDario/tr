@@ -13,6 +13,13 @@ namespace tr::sys {
 	// Cursor graphic reset timer needed as a workaround for an SDL bug.
 	inline std::optional<timer> g_cursor_reset_timer;
 #endif
+
+// Logs a formatted SDL error to tr::log.
+#define TR_LOG_SDL_ERROR(...)                                                                                                              \
+	do {                                                                                                                                   \
+		TR_LOG(::tr::log, ::tr::severity::error, __VA_ARGS__);                                                                             \
+		TR_LOG_CONTINUE(::tr::log, "{}", SDL_GetError());                                                                                  \
+	} while (0)
 } // namespace tr::sys
 
 namespace tr::gfx {

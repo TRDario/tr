@@ -6,6 +6,7 @@
 
 #include "../../include/tr/sysgfx/keyboard.hpp"
 #include "../../include/tr/sysgfx/event_types.hpp"
+#include "../../include/tr/sysgfx/impl.hpp"
 #include "../../include/tr/sysgfx/keyboard_events.hpp"
 #include <SDL3/SDL.h>
 
@@ -148,8 +149,7 @@ std::string tr::sys::clipboard_text()
 void tr::sys::set_clipboard_text(cstring_view text)
 {
 	if (!SDL_SetClipboardText(text)) {
-		TR_LOG(log, tr::severity::error, "Failed to set clipboard text.");
-		TR_LOG_CONTINUE(log, "{}", SDL_GetError());
+		TR_LOG_SDL_ERROR("Failed to set clipboard text.");
 	}
 }
 

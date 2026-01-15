@@ -240,8 +240,7 @@ void tr::sys::set_window_title(cstring_view title)
 	TR_ASSERT(g_sdl_window != nullptr, "Tried to set window title before opening it.");
 
 	if (!SDL_SetWindowTitle(g_sdl_window, title)) {
-		TR_LOG(log, tr::severity::error, "Failed to set window title to '{}'.", title);
-		TR_LOG_CONTINUE(log, "{}", SDL_GetError());
+		TR_LOG_SDL_ERROR("Failed to set window title to '{}'.", title);
 	};
 }
 
@@ -250,8 +249,7 @@ void tr::sys::set_window_icon(const bitmap& bitmap)
 	TR_ASSERT(g_sdl_window != nullptr, "Tried to set window icon before opening it.");
 
 	if (!SDL_SetWindowIcon(g_sdl_window, bitmap.m_ptr.get())) {
-		TR_LOG(log, tr::severity::error, "Failed to set window icon.");
-		TR_LOG_CONTINUE(log, "{}", SDL_GetError());
+		TR_LOG_SDL_ERROR("Failed to set window icon.");
 	}
 }
 
@@ -260,8 +258,7 @@ void tr::sys::set_window_icon(const bitmap_view& view)
 	TR_ASSERT(g_sdl_window != nullptr, "Tried to set window icon before opening it.");
 
 	if (!SDL_SetWindowIcon(g_sdl_window, view.m_ptr.get())) {
-		TR_LOG(log, tr::severity::error, "Failed to set window icon.");
-		TR_LOG_CONTINUE(log, "{}", SDL_GetError());
+		TR_LOG_SDL_ERROR("Failed to set window icon.");
 	}
 }
 
@@ -271,8 +268,7 @@ glm::ivec2 tr::sys::window_size()
 
 	glm::ivec2 size{};
 	if (!SDL_GetWindowSizeInPixels(g_sdl_window, &size.x, &size.y)) {
-		TR_LOG(log, tr::severity::error, "Failed to get window size.");
-		TR_LOG_CONTINUE(log, "{}", SDL_GetError());
+		TR_LOG_SDL_ERROR("Failed to get window size.");
 	}
 	return size;
 }
@@ -283,8 +279,7 @@ float tr::sys::window_pixel_density()
 
 	const float density{SDL_GetWindowPixelDensity(g_sdl_window)};
 	if (density == 0.0f) {
-		TR_LOG(log, tr::severity::error, "Failed to get window pixel density.");
-		TR_LOG_CONTINUE(log, "{}", SDL_GetError());
+		TR_LOG_SDL_ERROR("Failed to get window pixel density.");
 		return 1.0f;
 	}
 	return density;
@@ -295,10 +290,10 @@ void tr::sys::set_window_size(glm::ivec2 size)
 	TR_ASSERT(g_sdl_window != nullptr, "Tried to set window size before opening it.");
 	TR_ASSERT(size.x > 0 && size.y > 0, "Tried to set window size to an invalid value of {}x{}.", size.x, size.y);
 
-	if (!SDL_SetWindowSize(g_sdl_window, int(size.x / window_pixel_density()), int(size.y / window_pixel_density())) ||
+	const glm::ivec2 real_size{glm::vec2{size} / window_pixel_density()};
+	if (!SDL_SetWindowSize(g_sdl_window, real_size.x, real_size.y) ||
 		!SDL_SetWindowPosition(g_sdl_window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED)) {
-		TR_LOG(log, tr::severity::error, "Failed to set window size.");
-		TR_LOG_CONTINUE(log, "{}", SDL_GetError());
+		TR_LOG_SDL_ERROR("Failed to set window size.");
 	}
 }
 
@@ -314,8 +309,7 @@ void tr::sys::set_window_fullscreen(bool fullscreen)
 	TR_ASSERT(g_sdl_window != nullptr, "Tried to set window to fullscreen before opening it.");
 
 	if (!SDL_SetWindowFullscreen(g_sdl_window, fullscreen)) {
-		TR_LOG(log, tr::severity::error, "Failed to set window {} fullscreen.", fullscreen ? "to" : "from");
-		TR_LOG_CONTINUE(log, "{}", SDL_GetError());
+		TR_LOG_SDL_ERROR("Failed to set window {} fullscreen.", fullscreen ? "to" : "from");
 	}
 }
 
@@ -324,8 +318,7 @@ void tr::sys::show_window()
 	TR_ASSERT(g_sdl_window != nullptr, "Tried to show window before opening it.");
 
 	if (!SDL_ShowWindow(g_sdl_window)) {
-		TR_LOG(log, tr::severity::error, "Failed to show window.");
-		TR_LOG_CONTINUE(log, "{}", SDL_GetError());
+		TR_LOG_SDL_ERROR("Failed to show window.");
 	}
 }
 
@@ -334,8 +327,7 @@ void tr::sys::hide_window()
 	TR_ASSERT(g_sdl_window != nullptr, "Tried to hide window before opening it.");
 
 	if (!SDL_HideWindow(g_sdl_window)) {
-		TR_LOG(log, tr::severity::error, "Failed to hide window.");
-		TR_LOG_CONTINUE(log, "{}", SDL_GetError());
+		TR_LOG_SDL_ERROR("Failed to hide window.");
 	}
 }
 
@@ -359,8 +351,7 @@ void tr::sys::raise_window()
 	TR_ASSERT(g_sdl_window != nullptr, "Tried to raise window before opening it.");
 
 	if (!SDL_RaiseWindow(g_sdl_window)) {
-		TR_LOG(log, tr::severity::error, "Failed to raise window.");
-		TR_LOG_CONTINUE(log, "{}", SDL_GetError());
+		TR_LOG_SDL_ERROR("Failed to raise window.");
 	}
 }
 
@@ -369,8 +360,7 @@ void tr::sys::set_window_mouse_grab(bool grab)
 	TR_ASSERT(g_sdl_window != nullptr, "Tried to set window mouse grab before opening it.");
 
 	if (!SDL_SetWindowMouseGrab(g_sdl_window, grab)) {
-		TR_LOG(log, tr::severity::error, "Failed to set mouse grab.");
-		TR_LOG_CONTINUE(log, "{}", SDL_GetError());
+		TR_LOG_SDL_ERROR("Failed to set mouse grab.");
 	}
 }
 
@@ -379,8 +369,7 @@ void tr::sys::flash_window(flash_operation operation)
 	TR_ASSERT(g_sdl_window != nullptr, "Tried to flash window before opening it.");
 
 	if (!SDL_FlashWindow(g_sdl_window, SDL_FlashOperation(operation))) {
-		TR_LOG(log, tr::severity::error, "Failed to flash window.");
-		TR_LOG_CONTINUE(log, "{}", SDL_GetError());
+		TR_LOG_SDL_ERROR("Failed to flash window.");
 	}
 }
 
@@ -395,8 +384,7 @@ void tr::sys::set_window_vsync(vsync vsync)
 			set_window_vsync(vsync::enabled);
 		}
 		else {
-			TR_LOG(log, tr::severity::error, "Failed to set V-sync.");
-			TR_LOG_CONTINUE(log, "{}", SDL_GetError());
+			TR_LOG_SDL_ERROR("Failed to set V-sync.");
 		}
 	}
 }
