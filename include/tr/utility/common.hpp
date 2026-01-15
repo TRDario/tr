@@ -1,3 +1,14 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Provides commonly included headers.                                                                                                   //
+//                                                                                                                                       //
+// In addition, the macros TR_FMT and TR_FMT_STRING are included to facilitate being able to use fmtlib in case of std::format not being //
+// implemented in the standard library.                                                                                                  //
+//     - TR_FMT::format("example") -> resolves to either std::format or fmt::format                                                      //
+//     - TR_FORMAT_STRING -> resolves to either std::format_string or fmt::fstring                                                       //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include "../dependencies/EnumBitmask.hpp" // IWYU pragma: export
 #include <algorithm>                       // IWYU pragma: export
