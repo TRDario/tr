@@ -688,26 +688,27 @@ tr::fsecs tr::audio::source::loop_end() const
 	return m_base->loop_end();
 }
 
-void tr::audio::source_base::set_loop_points(fsecs start_secs, fsecs end_secs)
+void tr::audio::source_base::set_loop_points(fsecs start_point, fsecs end_point)
 {
 	if (length() == fsecs::zero()) {
 		return;
 	}
 
-	start_secs = std::clamp(start_secs, start_secs, length());
-	end_secs = std::clamp(end_secs, start_secs, length());
-	TR_ASSERT(start_secs < end_secs, "Tried to set audio source loop end before start (start: {}s, end: {}s).", start_secs.count(),
-			  end_secs.count());
+	start_point = std::clamp(start_point, start_point, length());
+	end_point = std::clamp(end_point, start_point, length());
+	TR_ASSERT(start_point < end_point, "Tried to set audio source loop end before start (start: {}s, end: {}s).", start_point.count(),
+			  end_point.count());
 
 	if (m_stream.has_value()) {
+		stream& stream{*m_stream->stream};
 		lock_audio_mutex();
-		if (start_secs >= loop_end()) {
-			m_stream->stream->set_loop_end(int(end_secs.count() * m_stream->stream->sample_rate()));
-			m_stream->stream->set_loop_start(int(start_secs.count() * m_stream->stream->sample_rate()));
+		if (start_point >= loop_end()) {
+			stream.set_loop_end(int(end_point.count() * stream.sample_rate()));
+			stream.set_loop_start(int(start_point.count() * stream.sample_rate()));
 		}
 		else {
-			m_stream->stream->set_loop_start(int(start_secs.count() * m_stream->stream->sample_rate()));
-			m_stream->stream->set_loop_end(int(end_secs.count() * m_stream->stream->sample_rate()));
+			stream.set_loop_start(int(start_point.count() * stream.sample_rate()));
+			stream.set_loop_end(int(end_point.count() * stream.sample_rate()));
 		}
 		unlock_audio_mutex();
 	}
@@ -719,17 +720,17 @@ void tr::audio::source_base::set_loop_points(fsecs start_secs, fsecs end_secs)
 		ALint channels;
 		TR_AL_CALL(alGetBufferi, buffer_id, AL_CHANNELS, &channels);
 
-		std::array<ALint, 2> loop_points{ALint(start_secs.count() * sample_rate * channels),
-										 ALint(end_secs.count() * sample_rate * channels)};
+		std::array<ALint, 2> loop_points{ALint(start_point.count() * sample_rate * channels),
+										 ALint(end_point.count() * sample_rate * channels)};
 		TR_AL_CALL(alSourcei, m_id, AL_BUFFER, 0);
 		TR_AL_CALL(alBufferiv, buffer_id, AL_LOOP_POINTS_SOFT, loop_points.data());
 		TR_AL_CALL(alSourcei, m_id, AL_BUFFER, buffer_id);
 	}
 }
 
-void tr::audio::source::set_loop_points(fsecs start, fsecs end)
+void tr::audio::source::set_loop_points(fsecs start_point, fsecs end_point)
 {
-	m_base->set_loop_points(start, end);
+	m_base->set_loop_points(start_point, end_point);
 }
 
 void tr::audio::source_base::set_looping(bool value)
