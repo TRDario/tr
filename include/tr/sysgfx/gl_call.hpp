@@ -1,12 +1,28 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Provides standard macros for calling OpenGL functions.                                                                                //
+//                                                                                                                                       //
+// Errors in OpenGL functions are set into global state and must be queried with glGetError(), which returns a rather opaque error code. //
+// In order to simplify the process of debugging, OpenGGL functions called with TR_GL_CALL or TR_RETURNING_GL_CALL in builds where       //
+// TR_ENABLE_ASSERTS is defined will inject some validation code which prints the type and location of the error before aborting the     //
+// program. In builds where TR_ENABLE_ASSERTS is not defined, the macros just call the corresponding OpenGL function with no other       //
+// effects.                                                                                                                              //
+//     - TR_GL_CALL(glProgramUniform1i, program, index, value) -> calls glProgramUniform1i(program, index, value)                        //
+//     - TR_RETURNING_GL_CALL(glCreateShaderProgramv, type, 1, &source) -> calls glCreateShaderProgramv(type, 1, &source)                //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include "../utility/macro.hpp"
 #include "glad.h"
+
+///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
 
 namespace tr::gfx {
 	// Validates an OpenGL call and kills the application if it fails.
 	void validate_gl_call(const char* file, int line, const char* function);
 	// Validates an OpenGL call and kills the application if it fails.
-	inline auto validate_returning_gl_call(const char* file, int line, const char* function, auto value);
+	auto validate_returning_gl_call(const char* file, int line, const char* function, auto value);
 } // namespace tr::gfx
 
 #ifdef TR_ENABLE_ASSERTS
@@ -24,9 +40,7 @@ namespace tr::gfx {
 #define TR_RETURNING_GL_CALL(function, ...) function(__VA_ARGS__)
 #endif
 
-///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
-
-inline auto tr::gfx::validate_returning_gl_call(const char* file, int line, const char* function, auto value)
+auto tr::gfx::validate_returning_gl_call(const char* file, int line, const char* function, auto value)
 {
 	validate_gl_call(file, line, function);
 	return value;
