@@ -1,5 +1,55 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Provides keyboard datatypes and functionality.                                                                                        //
+//                                                                                                                                       //
+// Physical keys (scancodes) and virtual keys (keycodes) are separated, as are their chords, which also consist of modifiers             //
+// (represented as a bitmask). All of the aforementioned are primarily constructed through literals provided in                          //
+// tr::sys::keyboard_literals, as well as tr::literals, but keycodes can also be constructed with any Unicode codepoint (Unicode         //
+// characters currently aren't supported in the literals), while chords can be constructed from their components. All of the above       //
+// datatypes are hashable, binary readable/writable, and formattable:                                                                    //
+//     - "A"_s -> code belonging to the physical key associated with 'A' on the English keyboard                                         //
+//     - "A"_k -> code of the virtual 'A' key                                                                                            //
+//     - tr::sys::keycode{0x010D} -> code of the virtual 'ć' key                                                                         //
+//     - "Ctrl+K"_sc -> chord where Ctrl is held and the physical key associated with 'K' on the english keyboard is pressed             //
+//     - tr::sys::scan_chord{tr::sys::keymod::ctrl | tr::sys::keymod::shift, "K"_s} -> equivalent to "Ctrl+Shift+K"_sc                   //
+//     - "Ctrl+K"_kc -> chord where Ctrl is held and the virtual 'K' key is pressed                                                      //
+//     - tr::sys::key_chord{tr::sys::keymod::ctrl | tr::sys::keymod::shift, "K"_k} -> equivalent to "Ctrl+Shift+K"_kc                    //
+//                                                                                                                                       //
+// All of the above can be converted to and from strings:                                                                                //
+//     - tr::sys::scancode{"A"} -> equivalent to "A"_s                                                                                   //
+//     - tr::sys::scancode{"Invalid"} -> scancode::unknown                                                                               //
+//     - tr::sys::name("Shift"_s) -> "Shift"                                                                                             //
+//     - tr::sys::keycode{"ć"} -> equivalent to tr::sys::keycode{0x010D}                                                                 //
+//     - tr::sys::keycode{"Invalid"} -> keycode::unknown                                                                                 //
+//     - tr::sys::name("Ctrl"_k) -> "Ctrl"                                                                                               //
+//     - tr::sys::scan_chord{"Shift+A"} -> equivalent to "Shift+A"_sc                                                                    //
+//     - tr::sys::scan_chord{"Invalid"} -> .scan = scancode::unknown                                                                     //
+//     - tr::sys::scan_chord{tr::sys::keymod::ctrl, "S"_s}.name() -> "Ctrl+S"                                                            //
+//     - tr::sys::key_chord{"Ctrl+ć"} -> equivalent to {tr::sys::keymod::ctrl, tr::sys::keycode{0x010D}}                                 //
+//     - tr::sys::key_chord{"Invalid"} -> .key = keycode::unknown                                                                        //
+//     - tr::sys::key_chord{tr::sys::keymod::ctrl, "N"_k}.name() -> "Ctrl+N"                                                             //
+//                                                                                                                                       //
+// Keyboard state can be stored in tr::sys::scan_state (just keys) or tr::sys::keyboard_state (including modifiers). Their state can be  //
+// queried, updated with events, or manually manipulated:                                                                                //
+//     - keyboard.held("A"_s) -> returns whether the physical 'A' key is held                                                            //
+//     - keyboard.held(tr::sys::keymod::ctrl | tr::sys::keymod::shift) -> returns whether Ctrl + Shift is held                           //
+//     - keyboard.mods == tr::sys::keymod::ctrl | tr::sys::keymod::shift -> returns whether exactly Ctrl + Shift is held                 //
+//     - keyboard.held("Ctrl+A"_sc) -> returns whether Ctrl + A is held                                                                  //
+//     - keyboard.handle_event(evt) -> updates the keyboard state based on the received event                                            //
+//     - keyboard.force_down("B"_s) -> forces B to be considered held                                                                    //
+//     - keyboard.force_up("B"_s) -> forces B to be considered unheld                                                                    //
+//                                                                                                                                       //
+// The clipboard can be queried for text and set:                                                                                        //
+//     - tr::sys::clipboard_empty() -> false if the clipboard has text, true otherwise                                                   //
+//     - tr::sys::clipboard_text() -> string containing the text that was in the clipboard                                               //
+//     - tr::sys::set_clipboard_text("example") -> clipboard now contains "example"                                                      //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
-#include "../utility/macro.hpp"
+#include "../utility/common.hpp"
+
+//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
 namespace tr::sys {
 	struct key_down_event;
@@ -8,235 +58,75 @@ namespace tr::sys {
 
 	// Physical keycode.
 	enum class scancode {
-		UNKNOWN,
-		A = 4,
-		B,
-		C,
-		D,
-		E,
-		F,
-		G,
-		H,
-		I,
-		J,
-		K,
-		L,
-		M,
-		N,
-		O,
-		P,
-		Q,
-		R,
-		S,
-		T,
-		U,
-		V,
-		W,
-		X,
-		Y,
-		Z,
-		TOP_ROW_1,
-		TOP_ROW_2,
-		TOP_ROW_3,
-		TOP_ROW_4,
-		TOP_ROW_5,
-		TOP_ROW_6,
-		TOP_ROW_7,
-		TOP_ROW_8,
-		TOP_ROW_9,
-		TOP_ROW_0,
-		ENTER,
-		ESCAPE,
-		BACKSPACE,
-		TAB,
-		SPACE,
-		MINUS,
-		EQUALS,
-		LEFT_BRACKET,
-		RIGHT_BRACKET,
-		BACKSLASH,
-		HASH,
-		SEMICOLON,
-		APOSTROPHE,
-		GRAVE,
-		COMMA,
-		PERIOD,
-		SLASH,
-		CAPSLOCK,
-		F1,
-		F2,
-		F3,
-		F4,
-		F5,
-		F6,
-		F7,
-		F8,
-		F9,
-		F10,
-		F11,
-		F12,
-		PRINT_SCREEN,
-		SCROLL_LOCK,
-		PAUSE,
-		INSERT,
-		HOME,
-		PAGE_UP,
-		DELETE,
-		END,
-		PAGE_DOWN,
-		RIGHT,
-		LEFT,
-		DOWN,
-		UP,
-		NUM_LOCK,
-		KEYPAD_DIVIDE,
-		KEYPAD_MULTIPLY,
-		KEYPAD_MINUS,
-		KEYPAD_PLUS,
-		KEYPAD_ENTER,
-		KEYPAD_1,
-		KEYPAD_2,
-		KEYPAD_3,
-		KEYPAD_4,
-		KEYPAD_5,
-		KEYPAD_6,
-		KEYPAD_7,
-		KEYPAD_8,
-		KEYPAD_9,
-		KEYPAD_0,
-		KEYPAD_PERIOD,
-		NONUS_BACKSLASH,
-		APPLICATION,
-		LCTRL = 224,
-		LSHIFT,
-		LALT,
-		LWIN,
-		RCTRL,
-		RSHIFT,
-		RALT,
-		RWIN
+		unknown // Unknown scancode.
 	};
-	// Converts a string to a scancode.
-	constexpr scancode to_scancode(std::string_view str);
-	// Gets the name of a scancode.
-	constexpr cstring_view name(scancode scan);
+
+	// Labelled keycode.
+	enum class keycode {
+		unknown, // Unknown keycode.
+	};
 
 	// Key modifier bitmasks
 	enum class keymod : u16 {
-		NONE = 0x0000,
-		SHIFT = 0x0003,
-		CTRL = 0x00C0,
-		ALT = 0x0300
+		none = 0x0000,
+		shift = 0x0003,
+		ctrl = 0x00C0,
+		alt = 0x0300,
+		unknown = 0xFFFF
 	};
 	DEFINE_BITMASK_OPERATORS(keymod);
+
+	// Converts a string to a scancode.
+	constexpr scancode to_scancode(std::string_view str);
+	// Converts a string to a keycode.
+	constexpr keycode to_keycode(cstring_view str);
+	// Gets the name of a scancode.
+	constexpr cstring_view name(scancode scan);
+	// Gets the name of a keycode.
+	std::string name(keycode scan);
 
 	// Scancode chord.
 	struct scan_chord {
 		// The chord modifiers.
-		keymod mods;
+		keymod mods{keymod::none};
 		// The chord scancode.
-		scancode scan;
+		scancode scan{scancode::unknown};
+
+		// Default-constructs a scan chord.
+		constexpr scan_chord() = default;
+		// Constructs a scan chord without modifiers.
+		constexpr scan_chord(scancode scan);
+		// Constructs a scan chord from components.
+		constexpr scan_chord(keymod mods, scancode scan);
+		// Converts a string to a scan chord. An invalid string results in a chord with scancode::unknown.
+		constexpr explicit scan_chord(std::string_view str);
 
 		constexpr bool operator==(const scan_chord&) const = default;
+
+		// Gets the name of the scan chord.
+		constexpr std::string name() const;
 	};
-	// Gets the name of a scan chord.
-	constexpr std::string name(scan_chord scan);
-
-	inline namespace literals {
-		inline namespace keyboard_literals {
-			// Creates a scancode matching a string.
-			consteval scancode operator""_s(const char* str, usize size);
-			// Creates a scancode chord matching a string.
-			consteval scan_chord operator""_sc(const char* str, usize size);
-		} // namespace keyboard_literals
-	} // namespace literals
-
-	//
-
-	// Labelled keycode.
-	enum class keycode {
-		UNKNOWN,
-		// All unicode codepoints are valid.
-		CAPSLOCK = 0x40000039,
-		F1,
-		F2,
-		F3,
-		F4,
-		F5,
-		F6,
-		F7,
-		F8,
-		F9,
-		F10,
-		F11,
-		F12,
-		PRINT_SCREEN,
-		SCROLL_LOCK,
-		PAUSE,
-		INSERT,
-		HOME,
-		PAGE_UP,
-		DELETE,
-		END,
-		PAGE_DOWN,
-		RIGHT,
-		LEFT,
-		DOWN,
-		UP,
-		NUM_LOCK,
-		KEYPAD_DIVIDE,
-		KEYPAD_MULTIPLY,
-		KEYPAD_MINUS,
-		KEYPAD_PLUS,
-		KEYPAD_ENTER,
-		KEYPAD_1,
-		KEYPAD_2,
-		KEYPAD_3,
-		KEYPAD_4,
-		KEYPAD_5,
-		KEYPAD_6,
-		KEYPAD_7,
-		KEYPAD_8,
-		KEYPAD_9,
-		KEYPAD_0,
-		KEYPAD_PERIOD,
-		APPLICATION = 0x40000065,
-		LCTRL = 0x400000E0,
-		LSHIFT,
-		LALT,
-		LWIN,
-		RCTRL,
-		RSHIFT,
-		RALT,
-		RWIN
-	};
-	// Converts a string to a keycode.
-	constexpr keycode to_keycode(cstring_view str);
-	// Gets the name of a keycode.
-	std::string name(keycode scan);
-
 	// Keycode chord.
 	struct key_chord {
 		// The chord modifiers.
-		keymod mods;
+		keymod mods{keymod::none};
 		// The chord keycode.
-		keycode key;
+		keycode key{keycode::unknown};
+
+		// Default-constructs a key chord.
+		constexpr key_chord() = default;
+		// Constructs a key chord without modifiers.
+		constexpr key_chord(keycode key);
+		// Constructs a key chord from components.
+		constexpr key_chord(keymod mods, keycode key);
+		// Converts a string to a key chord. An invalid string results in a chord with keycode::unknown.
+		constexpr explicit key_chord(cstring_view cstr);
 
 		constexpr bool operator==(const key_chord&) const = default;
-	};
-	// Gets the name of a key_chord.
-	std::string name(key_chord scan);
 
-	inline namespace literals {
-		inline namespace keyboard_literals {
-			// Creates a keycode matching a string.
-			// Keycodes corresponding to unicode characters cannot be currently created using this.
-			consteval keycode operator""_k(const char* str, usize size);
-			// Creates a keycode chord matching a string.
-			// Keycodes corresponding to unicode characters cannot be currently created using this.
-			consteval key_chord operator""_kc(const char* str, usize size);
-		} // namespace keyboard_literals
-	} // namespace literals
+		// Gets the name of the key chord.
+		std::string name() const;
+	};
 
 	// Keyboard key state.
 	class scan_state {
@@ -259,18 +149,29 @@ namespace tr::sys {
 		void force_up(scancode scan);
 
 	  private:
+		// Sentinel for an invalid key state index.
+		static constexpr int invalid_key_state_index{-1};
+
 		// The state is stored in the form of bitflags.
 		std::array<std::byte, 14> buffer{};
+
+		// Converts a scancode into a key state index.
+		static constexpr int to_index(scancode key);
 	};
 
 	// Keyboard key and modifier state.
 	class keyboard_state : public scan_state {
 	  public:
 		// The currently held modifiers.
-		keymod mods{keymod::NONE};
+		keymod mods{keymod::none};
 
 		// Constructs an empty keyboard state.
 		keyboard_state() = default;
+
+		// Gets whether one or more modifiers is held.
+		bool held(keymod mods) const;
+		// Gets whether a chord is held.
+		bool held(scan_chord chord) const;
 
 		// Updates the key state.
 		void handle_event(const event& event);
@@ -283,7 +184,19 @@ namespace tr::sys {
 		using scan_state::handle_event;
 	};
 
-	//
+	// Keyboard literals.
+	inline namespace keyboard_literals {
+		// Creates a scancode matching a string.
+		consteval scancode operator""_s(const char* str, usize size);
+		// Creates a scancode chord matching a string.
+		consteval scan_chord operator""_sc(const char* str, usize size);
+		// Creates a keycode matching a string.
+		// Keycodes corresponding to unicode characters cannot be currently created using this.
+		consteval keycode operator""_k(const char* str, usize size);
+		// Creates a keycode chord matching a string.
+		// Keycodes corresponding to unicode characters cannot be currently created using this.
+		consteval key_chord operator""_kc(const char* str, usize size);
+	} // namespace keyboard_literals
 
 	// Gets whether the clipboard is empty.
 	bool clipboard_empty();
@@ -293,50 +206,78 @@ namespace tr::sys {
 	void set_clipboard_text(cstring_view text);
 } // namespace tr::sys
 
+namespace tr {
+	inline namespace literals {
+		using namespace tr::sys::keyboard_literals;
+	} // namespace literals
+} // namespace tr
+
+// Scancode hasher.
 template <> struct std::hash<tr::sys::scancode> {
-	tr::u64 operator()(tr::sys::scancode code) const;
+	std::size_t operator()(tr::sys::scancode code) const;
 };
+// Keycode hasher.
 template <> struct std::hash<tr::sys::keycode> {
-	tr::u64 operator()(tr::sys::keycode code) const;
+	std::size_t operator()(tr::sys::keycode code) const;
 };
+// Scan chord hasher.
 template <> struct std::hash<tr::sys::scan_chord> {
-	tr::u64 operator()(tr::sys::scan_chord chord) const;
+	std::size_t operator()(tr::sys::scan_chord chord) const;
 };
+// Key chord hasher.
 template <> struct std::hash<tr::sys::key_chord> {
-	tr::u64 operator()(tr::sys::key_chord chord) const;
+	std::size_t operator()(tr::sys::key_chord chord) const;
 };
 
 // Scancode formatter.
 template <> struct TR_FMT::formatter<tr::sys::scancode> : public TR_FMT::formatter<const char*> {
-	template <typename FormatContext> constexpr auto format(tr::sys::scancode scan, FormatContext& ctx) const
-	{
-		ctx.advance_to(TR_FMT::formatter<const char*>::format(name(scan), ctx));
-		return ctx.out();
-	}
+	// Formats a scancode.
+	template <typename FormatContext> constexpr auto format(tr::sys::scancode scan, FormatContext& ctx) const;
 };
 // Scan chord formatter.
 template <> struct TR_FMT::formatter<tr::sys::scan_chord> : public TR_FMT::formatter<std::string> {
-	template <typename FormatContext> constexpr auto format(tr::sys::scan_chord chord, FormatContext& ctx) const
-	{
-		ctx.advance_to(TR_FMT::formatter<std::string>::format(name(chord), ctx));
-		return ctx.out();
-	}
+	// Formats a scan chord.
+	template <typename FormatContext> constexpr auto format(tr::sys::scan_chord chord, FormatContext& ctx) const;
 };
 // Keycode formatter.
 template <> struct TR_FMT::formatter<tr::sys::keycode> : public TR_FMT::formatter<std::string> {
-	template <typename FormatContext> constexpr auto format(tr::sys::keycode key, FormatContext& ctx) const
-	{
-		ctx.advance_to(TR_FMT::formatter<std::string>::format(name(key), ctx));
-		return ctx.out();
-	}
+	// Formats a keycode.
+	template <typename FormatContext> constexpr auto format(tr::sys::keycode key, FormatContext& ctx) const;
 };
 // Key chord formatter.
 template <> struct TR_FMT::formatter<tr::sys::key_chord> : public TR_FMT::formatter<std::string> {
-	template <typename FormatContext> constexpr auto format(tr::sys::key_chord chord, FormatContext& ctx) const
-	{
-		ctx.advance_to(TR_FMT::formatter<std::string>::format(name(chord), ctx));
-		return ctx.out();
-	}
+	// Formats a key chord.
+	template <typename FormatContext> constexpr auto format(tr::sys::key_chord chord, FormatContext& ctx) const;
 };
 
-#include "keyboard_impl.hpp"
+// Scancode binary reader.
+template <> struct tr::binary_reader<tr::sys::scancode> : tr::raw_binary_reader<tr::sys::scancode> {};
+// Scancode binary writer.
+template <> struct tr::binary_writer<tr::sys::scancode> : tr::raw_binary_writer<tr::sys::scancode> {};
+
+// Scan chord binary reader.
+template <> struct tr::binary_reader<tr::sys::scan_chord> {
+	void operator()(std::istream& is, tr::sys::scan_chord& out) const;
+};
+// Scan chord binary writer.
+template <> struct tr::binary_writer<tr::sys::scan_chord> {
+	void operator()(std::ostream& os, const tr::sys::scan_chord& in) const;
+};
+
+// Keycode bianry reader.
+template <> struct tr::binary_reader<tr::sys::keycode> : tr::raw_binary_reader<tr::sys::keycode> {};
+// Keycode binary writer.
+template <> struct tr::binary_writer<tr::sys::keycode> : tr::raw_binary_writer<tr::sys::keycode> {};
+
+// Key chord binary reader.
+template <> struct tr::binary_reader<tr::sys::key_chord> {
+	void operator()(std::istream& is, tr::sys::key_chord& out) const;
+};
+// Key chord binary writer.
+template <> struct tr::binary_writer<tr::sys::key_chord> {
+	void operator()(std::ostream& os, const tr::sys::key_chord& in) const;
+};
+
+////////////////////////////////////////////////////////////// IMPLEMENTATION /////////////////////////////////////////////////////////////
+
+#include "keyboard_impl.hpp" // IWYU pragma: keep

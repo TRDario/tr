@@ -1,9 +1,17 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Implements the constexpr parts of keyboard.hpp.                                                                                       //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include "keyboard.hpp"
 
-namespace tr::sys::impl {
+/////////////////////////////////////////////////////////// SCANCODE AND KEYCODE //////////////////////////////////////////////////////////
+
+namespace tr::sys {
 	// Copied from SDL with modifications.
-	constexpr std::array<cstring_view, 291> SCANCODE_NAME_TABLE{{
+	constexpr std::array<cstring_view, 291> scancode_name_table{{
 		{},
 		{},
 		{},
@@ -298,88 +306,23 @@ namespace tr::sys::impl {
 	}};
 
 	// Fallback for Unicode characters.
-	keycode to_keycode(cstring_view str);
-} // namespace tr::sys::impl
+	keycode to_keycode_fallback(cstring_view str);
+} // namespace tr::sys
 
 constexpr tr::sys::scancode tr::sys::to_scancode(std::string_view str)
 {
-	for (usize i = 0; i < impl::SCANCODE_NAME_TABLE.size(); ++i) {
-		if (!impl::SCANCODE_NAME_TABLE[i].empty() && impl::SCANCODE_NAME_TABLE[i] == str) {
+	for (usize i = 0; i < scancode_name_table.size(); ++i) {
+		if (!scancode_name_table[i].empty() && scancode_name_table[i] == str) {
 			return scancode(i);
 		}
 	}
-	return tr::sys::scancode::UNKNOWN;
+	return tr::sys::scancode::unknown;
 }
-
-constexpr tr::cstring_view tr::sys::name(scancode scan)
-{
-	return impl::SCANCODE_NAME_TABLE[int(scan)];
-}
-
-constexpr std::string tr::sys::name(scan_chord scan)
-{
-	std::string str;
-	if (scan.mods & keymod::CTRL) {
-		str.append("Ctrl+");
-	}
-	if (scan.mods & keymod::ALT) {
-		str.append("Alt+");
-	}
-	if (scan.mods & keymod::SHIFT) {
-		str.append("Shift+");
-	}
-	str.append(name(scan.scan));
-	return str;
-}
-
-consteval tr::sys::scancode tr::sys::literals::keyboard_literals::operator""_s(const char* cstr, usize size)
-{
-	scancode result{to_scancode({cstr, size})};
-	TR_ASSERT(result != scancode::UNKNOWN, "Invalid scancode name.");
-	return result;
-}
-
-consteval tr::sys::scan_chord tr::sys::literals::keyboard_literals::operator""_sc(const char* cstr, usize size)
-{
-	tr::sys::scan_chord chord{};
-	const std::string_view str{cstr, size};
-
-	if (str.find('+') == str.npos) {
-		chord.scan = operator""_s(cstr, size);
-		return chord;
-	}
-
-	std::string_view substr{str.begin(), str.begin() + str.find('+')};
-	while (substr.end() != str.end()) {
-		if (substr == "Shift") {
-			chord.mods |= keymod::SHIFT;
-		}
-		else if (substr == "Ctrl") {
-			chord.mods |= keymod::CTRL;
-		}
-		else if (substr == "Alt") {
-			chord.mods |= keymod::ALT;
-		}
-		else {
-			TR_ASSERT(false, "Invalid keyboard modifier name.");
-		}
-
-		const usize next_start{str.find('+', substr.end() - str.begin() + 1)};
-		substr = {substr.end() + 1, next_start == str.npos ? str.end() : str.begin() + next_start};
-	}
-	chord.scan = to_scancode(substr);
-	if (chord.scan == scancode::UNKNOWN) {
-		TR_ASSERT(false, "Invalid key name.");
-	}
-	return chord;
-}
-
-//
 
 constexpr tr::sys::keycode tr::sys::to_keycode(cstring_view cstr)
 {
 	if (cstr.empty()) {
-		return keycode::UNKNOWN;
+		return keycode::unknown;
 	}
 
 	const std::string_view str{cstr};
@@ -407,51 +350,186 @@ constexpr tr::sys::keycode tr::sys::to_keycode(cstring_view cstr)
 	}
 
 	const scancode scan{to_scancode(str)};
-	if (int(scan) >= int(scancode::CAPSLOCK)) {
+	if (int(scan) >= 57) {
 		return keycode{int(scan) | (1 << 30)};
 	}
 
-	return impl::to_keycode(cstr);
+	return to_keycode_fallback(cstr);
 }
 
-consteval tr::sys::keycode tr::sys::literals::keyboard_literals::operator""_k(const char* cstr, usize)
+constexpr tr::cstring_view tr::sys::name(scancode scan)
 {
-	keycode result{to_keycode(cstr)};
-	TR_ASSERT(result != keycode::UNKNOWN, "Invalid keycode name.");
-	return result;
+	return scancode_name_table[int(scan)];
 }
 
-consteval tr::sys::key_chord tr::sys::literals::keyboard_literals::operator""_kc(const char* cstr, usize size)
-{
-	tr::sys::key_chord chord{};
-	const std::string_view str{cstr, size};
+////////////////////////////////////////////////////////////////// CHORDS /////////////////////////////////////////////////////////////////
 
-	if (str.find('+') == str.npos) {
-		chord.key = operator""_k(cstr, size);
-		return chord;
+constexpr tr::sys::scan_chord::scan_chord(scancode scan)
+	: scan{scan}
+{
+}
+
+constexpr tr::sys::scan_chord::scan_chord(keymod mods, scancode scan)
+	: mods{mods}, scan{scan}
+{
+}
+
+constexpr tr::sys::scan_chord::scan_chord(std::string_view str)
+{
+	const auto first_delimiter_pos{str.find('+')};
+	if (first_delimiter_pos == str.npos) {
+		scan = to_scancode(str);
+		return;
 	}
 
-	std::string_view substr{str.begin(), str.begin() + str.find('+')};
+	std::string_view substr{str.begin(), str.begin() + first_delimiter_pos};
 	while (substr.end() != str.end()) {
 		if (substr == "Shift") {
-			chord.mods |= keymod::SHIFT;
+			mods |= keymod::shift;
 		}
 		else if (substr == "Ctrl") {
-			chord.mods |= keymod::CTRL;
+			mods |= keymod::ctrl;
 		}
 		else if (substr == "Alt") {
-			chord.mods |= keymod::ALT;
+			mods |= keymod::alt;
 		}
 		else {
-			TR_ASSERT(false, "Invalid keyboard modifier name.");
+			mods = keymod::unknown;
+			return;
 		}
 
 		const usize next_start{str.find('+', substr.end() - str.begin() + 1)};
 		substr = {substr.end() + 1, next_start == str.npos ? str.end() : str.begin() + next_start};
 	}
-	chord.key = to_keycode(substr.data());
-	if (chord.key == keycode::UNKNOWN) {
-		TR_ASSERT(false, "Invalid key name.");
+	scan = to_scancode(substr);
+}
+
+constexpr std::string tr::sys::scan_chord::name() const
+{
+	std::string str;
+	if (mods & keymod::ctrl) {
+		str.append("Ctrl+");
+	}
+	if (mods & keymod::alt) {
+		str.append("Alt+");
+	}
+	if (mods & keymod::shift) {
+		str.append("Shift+");
+	}
+	str.append(sys::name(scan));
+	return str;
+}
+
+constexpr tr::sys::key_chord::key_chord(keycode key)
+	: key{key}
+{
+}
+
+constexpr tr::sys::key_chord::key_chord(keymod mods, keycode key)
+	: mods{mods}, key{key}
+{
+}
+
+constexpr tr::sys::key_chord::key_chord(cstring_view cstr)
+{
+	const std::string_view str{cstr};
+	const auto first_delimiter_pos{str.find('+')};
+	if (first_delimiter_pos == str.npos) {
+		key = to_keycode(cstr);
+		return;
+	}
+
+	std::string_view substr{str.begin(), str.begin() + str.find('+')};
+	while (substr.end() != str.end()) {
+		if (substr == "Shift") {
+			mods |= keymod::shift;
+		}
+		else if (substr == "Ctrl") {
+			mods |= keymod::ctrl;
+		}
+		else if (substr == "Alt") {
+			mods |= keymod::alt;
+		}
+		else {
+			mods = keymod::unknown;
+			return;
+		}
+
+		const usize next_start{str.find('+', substr.end() - str.begin() + 1)};
+		substr = {substr.end() + 1, next_start == str.npos ? str.end() : str.begin() + next_start};
+	}
+	key = to_keycode(substr.data());
+}
+
+///////////////////////////////////////////////////////////////// LITERALS ////////////////////////////////////////////////////////////////
+
+consteval tr::sys::scancode tr::sys::keyboard_literals::operator""_s(const char* cstr, usize size)
+{
+	scancode result{to_scancode({cstr, size})};
+	if (result == scancode::unknown) {
+		throw std::invalid_argument{"Invalid scancode name."};
+	}
+	return result;
+}
+
+consteval tr::sys::scan_chord tr::sys::keyboard_literals::operator""_sc(const char* cstr, usize size)
+{
+	tr::sys::scan_chord chord{{cstr, size}};
+	if (chord.scan == scancode::unknown) {
+		throw std::invalid_argument{"Invalid scancode name."};
+	}
+	if (chord.mods == keymod::unknown) {
+		throw std::invalid_argument{"Invalid keyboard modifier name."};
 	}
 	return chord;
+}
+
+//
+
+consteval tr::sys::keycode tr::sys::keyboard_literals::operator""_k(const char* cstr, usize)
+{
+	keycode result{to_keycode(cstr)};
+	TR_ASSERT(result != keycode::unknown, "Invalid keycode name.");
+	return result;
+}
+
+consteval tr::sys::key_chord tr::sys::keyboard_literals::operator""_kc(const char* cstr, usize)
+{
+	tr::sys::key_chord chord{cstr};
+	if (chord.key == keycode::unknown) {
+		throw std::invalid_argument{"Invalid keycode name."};
+	}
+	if (chord.mods == keymod::unknown) {
+		throw std::invalid_argument{"Invalid keyboard modifier name."};
+	}
+	return chord;
+}
+
+//////////////////////////////////////////////////////////////// FORMATTERS ///////////////////////////////////////////////////////////////
+
+template <typename FormatContext>
+constexpr auto TR_FMT::formatter<tr::sys::scancode>::format(tr::sys::scancode scan, FormatContext& ctx) const
+{
+	ctx.advance_to(TR_FMT::formatter<const char*>::format(name(scan), ctx));
+	return ctx.out();
+}
+
+template <typename FormatContext>
+constexpr auto TR_FMT::formatter<tr::sys::scan_chord>::format(tr::sys::scan_chord chord, FormatContext& ctx) const
+{
+	ctx.advance_to(TR_FMT::formatter<std::string>::format(chord.name(), ctx));
+	return ctx.out();
+}
+
+template <typename FormatContext> constexpr auto TR_FMT::formatter<tr::sys::keycode>::format(tr::sys::keycode key, FormatContext& ctx) const
+{
+	ctx.advance_to(TR_FMT::formatter<std::string>::format(name(key), ctx));
+	return ctx.out();
+}
+
+template <typename FormatContext>
+constexpr auto TR_FMT::formatter<tr::sys::key_chord>::format(tr::sys::key_chord chord, FormatContext& ctx) const
+{
+	ctx.advance_to(TR_FMT::formatter<std::string>::format(chord.name(), ctx));
+	return ctx.out();
 }
