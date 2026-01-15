@@ -5,12 +5,12 @@
 // The GPU benchmark mostly has the same usage pattern as the regular benchmark, with .start() and .stop() methods delineating the       //
 // benchmarked region of code, however it has an additional .fetch() method that much be called to make the measurement accessable to    //
 // the CPU and add it to the measurement deque. Other than that, the benchmark can be cleared much like tr::benchmark:                   //
-//     - tr::sys::gpu_benchmark gpu_benchmark{} -> creates an empty benchmark                                                            //
+//     - tr::gfx::gpu_benchmark gpu_benchmark{} -> creates an empty benchmark                                                            //
 //     - gpu_benchmark.start();                                                                                                          //
 //       draw_things();                                                                                                                  //
 //       gpu_benchmark.stop();                                                                                                           //
 //       ...                                                                                                                             //
-//       tr::sys::flip_backbuffer();                                                                                                     //
+//       tr::gfx::flip_backbuffer();                                                                                                     //
 //       gpu_benchmark.fetch();                                                                                                          //
 //       -> measures the GPU time of draw_things                                                                                         //
 //     - gpu_benchmark.clear() -> clears the benchmark measurement deque                                                                 //

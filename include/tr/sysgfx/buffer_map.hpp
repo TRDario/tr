@@ -1,5 +1,36 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Provides RAII wrappers over GPU buffer maps.                                                                                          //
+//                                                                                                                                       //
+// Some GPU buffers can be mapped; mapping a buffer returns one of the buffer map types:                                                 //
+//     - shader_buffer.map_header() -> tr::gfx::buffer_object_map<Header>                                                                //
+//     - shader_buffer.map_array() -> tr::gfx::buffer_span_map<ArrayElement>                                                             //
+//     - uniform_buffer.map() -> tr::gfx::buffer_object_map<T>                                                                           //
+//                                                                                                                                       //
+// tr::gfx::basic_buffer_map is primarily an implementation detail, wrapping a map and being able to return it as a span of bytes, but   //
+// otherwise not further abstracting it. The buffer is unmapped once the map goes out of scope.                                          //
+//                                                                                                                                       //
+// tr::gfx::buffer_object_map represents the map as a reference to an object in the buffer (the header of a shader buffer, for example). //
+// A reference to the object can be taken, its members can be accessed, or it can be assigned:                                           //
+//     - tr::gfx::buffer_object_map<tr::rgba8> map{uniform_buffer.map()}                                                                 //
+//     - tr::rgba8 copy{map} -> using tr::rgba8&                                                                                         //
+//     - tr::u8 red{map->r} -> gets the red component of the mapped color                                                                //
+//     - map = "FFFFFF"_rgba8 -> sets the mapped color to white                                                                          //
+//                                                                                                                                       //
+// tr::gfx::buffer_span_map represents the map as a span of objects in the buffer (the array of a shader buffer, for example).           //
+// The map can be converted to a regular span, indexed into, or iterated through:                                                        //
+//     - tr::gfx::buffer_span_map<int> map{shader_buffer.map_array()}                                                                    //
+//     - std::span<int> span{map} -> conversion to span                                                                                  //
+//     - map[3] -> gets the int at index 3 of the map                                                                                    //
+//     - map.data() -> gets a pointer to the map data                                                                                    //
+//     - for (int& v : map) { ++v } -> iterating through the map                                                                         //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include "../utility/handle.hpp"
+
+//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
 namespace tr::gfx {
 	// RAII wrapper over a buffer map.
@@ -18,6 +49,7 @@ namespace tr::gfx {
 		// The actual span.
 		std::span<std::byte> m_span;
 
+		// Wraps a raw buffer map.
 		basic_buffer_map(unsigned int buffer, std::span<std::byte> span);
 
 		friend class basic_shader_buffer;
@@ -35,6 +67,7 @@ namespace tr::gfx {
 		template <class T1> T& operator=(T1&& r) const;
 
 	  private:
+		// Wraps a basic buffer map.
 		buffer_object_map(basic_buffer_map&& map);
 
 		template <class Header, class ArrayElement> friend class shader_buffer;
@@ -53,14 +86,21 @@ namespace tr::gfx {
 		using difference_type = std::span<T>::difference_type;
 		using iterator = std::span<T>::iterator;
 
+		// Casts the map into a regular span.
 		operator std::span<T>() const;
+		// Indexes into the map.
 		reference operator[](usize index) const;
+		// Gets a pointer to the data of the map.
 		pointer data() const;
+		// Gets the size of the map in elements.
 		size_type size() const;
+		// Gets an iterator to the beginning of the map.
 		iterator begin() const;
+		// Gets an iterator to the end of the map.
 		iterator end() const;
 
 	  private:
+		// Wraps a basic buffer map.
 		buffer_span_map(basic_buffer_map&& map);
 
 		template <class Header, class ArrayElement> friend class shader_buffer;
@@ -70,59 +110,4 @@ namespace tr::gfx {
 
 ////////////////////////////////////////////////////////////// IMPLEMENTATION /////////////////////////////////////////////////////////////
 
-template <class T> tr::gfx::buffer_object_map<T>::operator T&() const
-{
-	return *(T*)std::span<std::byte>{*this}.data();
-}
-
-template <class T> T* tr::gfx::buffer_object_map<T>::operator->() const
-{
-	return (T*)std::span<std::byte>{*this}.data();
-}
-
-template <class T> template <class T1> T& tr::gfx::buffer_object_map<T>::operator=(T1&& r) const
-{
-	return ((T&)*this) = std::forward<T1>(r);
-}
-
-template <class T>
-tr::gfx::buffer_object_map<T>::buffer_object_map(basic_buffer_map&& map)
-	: basic_buffer_map{std::move(map)}
-{
-}
-
-template <class T> tr::gfx::buffer_span_map<T>::operator std::span<T>() const
-{
-	return as_mut_objects<T>(std::span<std::byte>{*this});
-}
-
-template <class T> tr::gfx::buffer_span_map<T>::reference tr::gfx::buffer_span_map<T>::operator[](usize index) const
-{
-	return (operator std::span<T>())[index];
-}
-
-template <class T> tr::gfx::buffer_span_map<T>::pointer tr::gfx::buffer_span_map<T>::data() const
-{
-	return (operator std::span<T>()).data();
-}
-
-template <class T> tr::gfx::buffer_span_map<T>::size_type tr::gfx::buffer_span_map<T>::size() const
-{
-	return (operator std::span<T>()).size();
-}
-
-template <class T> tr::gfx::buffer_span_map<T>::iterator tr::gfx::buffer_span_map<T>::begin() const
-{
-	return (operator std::span<T>()).begin();
-}
-
-template <class T> tr::gfx::buffer_span_map<T>::iterator tr::gfx::buffer_span_map<T>::end() const
-{
-	return (operator std::span<T>()).end();
-}
-
-template <class T>
-tr::gfx::buffer_span_map<T>::buffer_span_map(basic_buffer_map&& map)
-	: basic_buffer_map{std::move(map)}
-{
-}
+#include "buffer_map_impl.hpp" // IWYU pragma: keep
