@@ -1,4 +1,24 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Provides blending datatypes and constants.                                                                                            //
+//                                                                                                                                       //
+// tr always uses separated rgb and alpha blending modes, so blending modes consist of two sets of (function, multiplier, function).     //
+//     - blend_mode alpha_blending{                                                                                                      //
+//           tr::sys::blend_multiplier::src_alpha,                                                                                       //
+//           tr::sys::blend_fn::add,                                                                                                     //
+//           tr::sys::blend_multiplier::one_minus_src_alpha,                                                                             //
+//           tr::sys::blend_multiplier::one,                                                                                             //
+//           tr::sys::blend_fn::add,                                                                                                     //
+//           tr::sys::blend_multiplier::one_minus_src_alpha                                                                              //
+//       }                                                                                                                               //
+//                                                                                                                                       //
+// Alpha blending, premultiplied alpha blending, maximum blending and reverse alpha blending are provided as constants.                  //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
+
+//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
 namespace tr::gfx {
 	// Blending functions.
