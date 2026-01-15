@@ -1,5 +1,18 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Provides display querying functions.                                                                                                  //
+//                                                                                                                                       //
+// The display size, maximum supported level of MSAA, and the refresh rate of the display are all queryable:                             //
+//     - tr::sys::display_size() -> {1920, 1080}                                                                                         //
+//     - tr::sys::max_msaa() -> 8                                                                                                        //
+//     - tr::sys::refresh_rate() -> 60.0f                                                                                                //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include "../utility/common.hpp"
+
+//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
 namespace tr::sys {
 	// Gets the size of the display.

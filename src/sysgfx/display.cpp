@@ -1,6 +1,14 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Implements display.hpp.                                                                                                               //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #include "../../include/tr/sysgfx/display.hpp"
 #include "../../include/tr/sysgfx/impl.hpp"
 #include <SDL3/SDL.h>
+
+///////////////////////////////////////////////////////////////// DISPLAY /////////////////////////////////////////////////////////////////
 
 glm::ivec2 tr::sys::display_size()
 {
@@ -10,9 +18,9 @@ glm::ivec2 tr::sys::display_size()
 
 tr::u8 tr::sys::max_msaa()
 {
-	constexpr u8 unknown{255};
 	using wrapped_window = std::unique_ptr<SDL_Window, decltype([](SDL_Window* w) { SDL_DestroyWindow(w); })>;
 	using wrapped_context = std::unique_ptr<SDL_GLContextState, decltype([](SDL_GLContext c) { SDL_GL_DestroyContext(c); })>;
+	constexpr u8 unknown{255};
 
 	static u8 max{unknown};
 	if (max == unknown) {
