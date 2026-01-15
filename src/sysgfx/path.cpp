@@ -17,9 +17,7 @@ std::filesystem::path tr::sys::executable_dir()
 
 std::filesystem::path tr::sys::user_dir()
 {
-	const char* const developer{SDL_GetAppMetadataProperty(SDL_PROP_APP_METADATA_CREATOR_STRING)};
-	const char* const app{SDL_GetAppMetadataProperty(SDL_PROP_APP_METADATA_NAME_STRING)};
-	std::unique_ptr<char[], decltype([](void* ptr) { SDL_free(ptr); })> cpath{SDL_GetPrefPath(developer, app)};
+	std::unique_ptr<char[], decltype([](void* p) { SDL_free(p); })> cpath{SDL_GetPrefPath(main::metadata.developer, main::metadata.name)};
 	if (cpath == nullptr) {
 		throw init_error{"Failed to get user directory path."};
 	}

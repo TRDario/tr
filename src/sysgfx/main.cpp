@@ -46,17 +46,6 @@ std::string_view tr::sys::init_error::details() const
 
 //
 
-void tr::sys::set_app_metadata(const app_metadata& metadata)
-{
-	SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_NAME_STRING, metadata.name);
-	SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_VERSION_STRING, metadata.version);
-	SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_IDENTIFIER_STRING, metadata.identifier);
-	SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_CREATOR_STRING, metadata.developer);
-	SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_COPYRIGHT_STRING, metadata.copyright);
-	SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_URL_STRING, metadata.url);
-	SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_TYPE_STRING, metadata.type == app_type::game ? "game" : "application");
-}
-
 void tr::sys::set_tick_frequency(float frequency)
 {
 	g_tick_timer.emplace(dsecs{1} / frequency, [] {
@@ -77,6 +66,23 @@ extern "C"
 {
 	SDL_AppResult SDL_AppInit(void**, int argc, char** argv)
 	{
+		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_NAME_STRING, tr::sys::main::metadata.name);
+		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_VERSION_STRING, tr::sys::main::metadata.version);
+		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_IDENTIFIER_STRING, tr::sys::main::metadata.identifier);
+		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_CREATOR_STRING, tr::sys::main::metadata.developer);
+		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_COPYRIGHT_STRING, tr::sys::main::metadata.copyright);
+		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_URL_STRING, tr::sys::main::metadata.url);
+		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_TYPE_STRING,
+								   tr::sys::main::metadata.type == tr::sys::app_type::game ? "game" : "application");
+		if (!tr::sys::main::metadata.name.empty()) {
+			if (!tr::sys::main::metadata.version.empty()) {
+				TR_LOG(tr::log, tr::severity::info, "Launching {} {}.", tr::sys::main::metadata.name, tr::sys::main::metadata.version);
+			}
+			else {
+				TR_LOG(tr::log, tr::severity::info, "Launching {}.", tr::sys::main::metadata.name);
+			}
+		}
+
 		try {
 			tr::sys::signal parse_result{tr::sys::main::parse_command_line({(tr::cstring_view*)argv, std::size_t(argc)})};
 			if (parse_result != tr::sys::signal::proceed) {

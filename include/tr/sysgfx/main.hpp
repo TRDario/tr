@@ -51,15 +51,16 @@ namespace tr::sys {
 		app_type type{app_type::application};
 	};
 
-	// Sets application metadata.
-	void set_app_metadata(const app_metadata& metadata);
 	// Sets the frequency at which tick() is called (by default not active).
 	void set_tick_frequency(float frequency);
 	// Sets the frequency at which draw() is called (by default set to the refresh rate).
 	void set_draw_frequency(float frequency);
 
-	// User-defined functions (mandatory). Uncaught exceptions will display a dialog box and quit the application.
+	// User-defined functions and data (mandatory). Uncaught exceptions will display a dialog box and quit the application.
 	namespace main {
+		// Application metadata.
+		extern const app_metadata metadata;
+
 		// Called once at the beginning of execution, but before the initialization of any systems.
 		signal parse_command_line(std::span<cstring_view> args);
 		// Called once at the beginning of execution after the parsing of the command line arguments.

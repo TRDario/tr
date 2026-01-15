@@ -5,6 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include "../../include/tr/sysgfx/dialog.hpp"
+#include "../../include/tr/sysgfx/main.hpp"
 #include <SDL3/SDL.h>
 
 using namespace std::chrono_literals;
@@ -60,8 +61,7 @@ void tr::sys::show_fatal_error_message_box(const std::exception& exception)
 		g_emergency_buffer.reset();
 	}
 
-	const cstring_view app_name{SDL_GetAppMetadataProperty(SDL_PROP_APP_METADATA_NAME_STRING)};
-	const std::string title{TR_FMT::format("{} - Fatal Error", app_name)};
+	const std::string title{TR_FMT::format("{} - Fatal Error", main::metadata.name)};
 
 	const tr::exception* tr_exception{dynamic_cast<const tr::exception*>(&exception)};
 	std::string message;
