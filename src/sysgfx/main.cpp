@@ -5,6 +5,7 @@
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
 #include <SDL3_ttf/SDL_ttf.h>
+#undef main
 
 #if defined _MSC_VER and not defined TR_ENABLE_ASSERTS
 #pragma comment(linker, "/subsystem:windows /ENTRY:mainCRTStartup")
@@ -77,7 +78,7 @@ extern "C"
 	SDL_AppResult SDL_AppInit(void**, int argc, char** argv)
 	{
 		try {
-			tr::sys::signal parse_result{::parse_command_line({(tr::cstring_view*)argv, std::size_t(argc)})};
+			tr::sys::signal parse_result{tr::sys::main::parse_command_line({(tr::cstring_view*)argv, std::size_t(argc)})};
 			if (parse_result != tr::sys::signal::proceed) {
 				return SDL_AppResult(parse_result);
 			}
@@ -106,7 +107,7 @@ extern "C"
 #endif
 
 		try {
-			return SDL_AppResult(::initialize());
+			return SDL_AppResult(tr::sys::main::initialize());
 		}
 		catch (std::exception& err) {
 			tr::sys::show_fatal_error_message_box(err);
@@ -118,10 +119,10 @@ extern "C"
 	{
 		try {
 			if (event->type == 0x8000) {
-				return SDL_AppResult(::tick());
+				return SDL_AppResult(tr::sys::main::tick());
 			}
 			else {
-				return SDL_AppResult(::handle_event((tr::sys::event&)*event));
+				return SDL_AppResult(tr::sys::main::handle_event((tr::sys::event&)*event));
 			}
 		}
 		catch (std::exception& err) {
@@ -133,7 +134,7 @@ extern "C"
 	SDL_AppResult SDL_AppIterate(void*)
 	{
 		try {
-			return SDL_AppResult(::draw());
+			return SDL_AppResult(tr::sys::main::draw());
 		}
 		catch (std::exception& err) {
 			tr::sys::show_fatal_error_message_box(err);
@@ -144,7 +145,7 @@ extern "C"
 	void SDL_AppQuit(void*, SDL_AppResult)
 	{
 		try {
-			::shut_down();
+			tr::sys::main::shut_down();
 		}
 		catch (std::exception& err) {
 			tr::sys::show_fatal_error_message_box(err);

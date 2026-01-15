@@ -57,19 +57,20 @@ namespace tr::sys {
 	void set_tick_frequency(float frequency);
 	// Sets the frequency at which draw() is called (by default set to the refresh rate).
 	void set_draw_frequency(float frequency);
+
+	// User-defined functions (mandatory). Uncaught exceptions will display a dialog box and quit the application.
+	namespace main {
+		// Called once at the beginning of execution, but before the initialization of any systems.
+		signal parse_command_line(std::span<cstring_view> args);
+		// Called once at the beginning of execution after the parsing of the command line arguments.
+		signal initialize();
+		// Called whenever an event needs to be handled.
+		signal handle_event(event& event);
+		// Main-body function used for game state ticks.
+		signal tick();
+		// Main-body function used for drawing and related updated.
+		signal draw();
+		// Called once at the end of execution.
+		void shut_down();
+	} // namespace main
 } // namespace tr::sys
-
-/////////////// User-defined functions (mandatory). Uncaught exceptions will display a dialog box and quit the application. ///////////////
-
-// Called once at the beginning of execution, but before the initialization of any systems.
-tr::sys::signal parse_command_line(std::span<tr::cstring_view> args);
-// Called once at the beginning of execution after the parsing of the command line arguments.
-tr::sys::signal initialize();
-// Called whenever an event needs to be handled.
-tr::sys::signal handle_event(tr::sys::event& event);
-// Main-body function used for game state ticks.
-tr::sys::signal tick();
-// Main-body function used for drawing and related updated.
-tr::sys::signal draw();
-// Called once at the end of execution.
-void shut_down();
