@@ -1,8 +1,16 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Implements benchmark.hpp.                                                                                                             //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #include "../../include/tr/utility/benchmark.hpp"
 #include "../../include/tr/utility/macro.hpp"
 #include "../../include/tr/utility/ranges.hpp"
 
 using namespace std::chrono_literals;
+
+//////////////////////////////////////////////////////////////// BENCHMARK ////////////////////////////////////////////////////////////////
 
 void tr::benchmark::start()
 {
@@ -21,7 +29,7 @@ void tr::benchmark::stop()
 		atomic_thread_fence(std::memory_order::relaxed);
 		const std::chrono::steady_clock::time_point now{std::chrono::steady_clock::now()};
 		m_measurements.emplace_back(m_start, now - m_start);
-		const auto it{std::ranges::upper_bound(m_measurements, now - 2.5s, std::less{}, &measurement::start)};
+		const auto it{std::ranges::upper_bound(m_measurements, now - max_measurement_age, std::less{}, &measurement::start)};
 		if (it != m_measurements.end()) {
 			m_measurements.erase(m_measurements.begin(), it);
 		}
@@ -69,7 +77,7 @@ tr::duration tr::benchmark::avg() const
 
 double tr::benchmark::fps() const
 {
-	return !m_measurements.empty() ? m_measurements.size() / 2.5 : 0;
+	return !m_measurements.empty() ? m_measurements.size() / (max_measurement_age / 1.0s) : 0;
 }
 
 const std::deque<tr::benchmark::measurement>& tr::benchmark::measurements() const

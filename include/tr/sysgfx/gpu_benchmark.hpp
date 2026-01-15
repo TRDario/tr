@@ -1,7 +1,38 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Provides a GPU benchmark class.                                                                                                       //
+//                                                                                                                                       //
+// The GPU benchmark mostly has the same usage pattern as the regular benchmark, with .start() and .stop() methods delineating the       //
+// benchmarked region of code, however it has an additional .fetch() method that much be called to make the measurement accessable to    //
+// the CPU and add it to the measurement deque. Other than that, the benchmark can be cleared much like tr::benchmark:                   //
+//     - tr::sys::gpu_benchmark gpu_benchmark{} -> creates an empty benchmark                                                            //
+//     - gpu_benchmark.start();                                                                                                          //
+//       draw_things();                                                                                                                  //
+//       gpu_benchmark.stop();                                                                                                           //
+//       ...                                                                                                                             //
+//       tr::sys::flip_backbuffer();                                                                                                     //
+//       gpu_benchmark.fetch();                                                                                                          //
+//       -> measures the GPU time of draw_things                                                                                         //
+//     - gpu_benchmark.clear() -> clears the benchmark measurement deque                                                                 //
+//                                                                                                                                       //
+// Again, must like the regular benchmark, the latest, fastest, average, and slowest time can be obtained using the appropriate method,  //
+// though the GPU benchmark doesn't have an equivalent to tr::benchmark::fps. The measurement deque also doesn't contain starting time   //
+// points, unlike the regular benchmark:                                                                                                 //
+//     - gpu_benchmark.latest() -> gets the latest measurement                                                                           //
+//     - gpu_benchmark.min() -> gets the shortest measurement time                                                                       //
+//     - gpu_benchmark.avg() -> gets the average of recent measurement times                                                             //
+//     - gpu_benchmark.max() -> gets the longest measurement time                                                                        //
+//     - gpu_benchmark.measurements() -> gets the deque holding recent measurement times                                                 //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include "../utility/handle.hpp"
 
+//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
+
 namespace tr::gfx {
+	// GPU benchmark.
 	class gpu_benchmark {
 	  public:
 		// Shorthand for the deque type used by the benchmark.
