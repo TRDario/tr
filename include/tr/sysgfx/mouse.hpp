@@ -1,9 +1,24 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Provides mouse datatypes and functionality.                                                                                           //
+//                                                                                                                                       //
+// Mouse buttons are represented with a bitmask. A mouse state structure containing the position and held buttons of the mouse is also   //
+// provided:                                                                                                                             //
+//     - tr::sys::mouse_button buttons{tr::sys::mouse_button::left | tr::sys::mouse_button::right} -> left and right mouse buttons held  //
+//     - tr::sys::mouse_state state{.pos = {500, 500}, .held_buttonstr::sys::mouse_button::left} -> mouse at (500, 500), holding LMB     //
+//                                                                                                                                       //
+// The mouse mode can be changed between absolute and relative:                                                                          //
+//     - tr::sys::set_mouse_mode(tr::sys::mouse_mode::absolute) -> absolute mouse controls: normal operation                             //
+//     - tr::sys::set_mouse_mode(tr::sys::mouse_mode::relative) -> relative mouse controls: cursor is hidden and only reports deltas     //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include "../utility/common.hpp"
 
-namespace tr::sys {
-	class cursor;
+//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
+namespace tr::sys {
 	// Mouse buttons (may be ORed together).
 	enum class mouse_button : u8 {
 		none = 0x0,
@@ -23,12 +38,11 @@ namespace tr::sys {
 		mouse_button held_buttons;
 	};
 
-	// Sets whether relative mouse mode is enabled.
-	void set_mouse_relative_mode(bool relative);
-	// Sets whether the mouse is captured.
-	void set_mouse_captured(bool captured);
-	// Sets whether the mouse cursor is visible.
-	void show_cursor(bool show);
-	// Sets the mouse cursor.
-	void set_cursor(const cursor& cursor);
+	// Mouse modes.
+	enum class mouse_mode : bool {
+		absolute, // Absolute mouse controls: normal operation.
+		relative  // Relative mouse controls: cursor is hidden, stuck to the center, and only reports deltas.
+	};
+	// Sets the mouse mode.
+	void set_mouse_mode(mouse_mode mode);
 } // namespace tr::sys

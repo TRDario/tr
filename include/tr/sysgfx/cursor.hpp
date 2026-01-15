@@ -1,13 +1,29 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Provides a mouse cursor class and related functionality.                                                                              //
+//                                                                                                                                       //
+// A cursor can be created with a stock system graphic, or a bitmap:                                                                     //
+//     - tr::sys::cursor{} -> default system cursor                                                                                      //
+//     - tr::sys::cursor{tr::sys::sys_cursor::hand} -> pointing hand system cursor                                                       //
+//     - tr::sys::cursor{bmp, {5, 5}} -> cursor with the graphics of bmp, the actual position of the cursor is at pixel (5, 5) of bmp    //
+//                                                                                                                                       //
+// The cursor can be shown or hidden, and its graphic can be changed:                                                                    //
+//     - tr::sys::show_cursor() -> shows the cursor                                                                                      //
+//     - tr::sys::hide_cursor() -> hides the cursor                                                                                      //
+//     - tr::sys::cursor hand{tr::sys::sys_cursor::hand}; tr::sys::set_cursor(hand) -> sets the cursor to the pointing hand              //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include "../utility/common.hpp"
 
 struct SDL_Cursor;
-
 namespace tr {
 	class bitmap;
 	class bitmap_view;
-	class cursor;
 } // namespace tr
+
+//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
 namespace tr::sys {
 	// System mouse cursor icons.
@@ -37,11 +53,6 @@ namespace tr::sys {
 		cursor(const bitmap& bitmap, glm::ivec2 focus);
 		// Creates a cursor from a bitmap view.
 		cursor(const bitmap_view& view, glm::ivec2 focus);
-		// Creates a simple black-and-white cursor from color and mask bitfields.
-		cursor(std::span<const std::byte> color, std::span<const std::byte> mask, glm::ivec2 size, glm::ivec2 focus);
-		// Creates a simple black-and-white cursor from color and mask bitfields.
-		template <std::ranges::contiguous_range R1, std::ranges::contiguous_range R2>
-		cursor(R1&& color, R2&& mask, glm::ivec2 size, glm::ivec2 focus);
 
 	  private:
 		struct deleter {
@@ -51,14 +62,16 @@ namespace tr::sys {
 		// Handle to the SDL cursor.
 		std::unique_ptr<SDL_Cursor, deleter> m_ptr;
 
+		// Wraps an SDL_Cursor.
+		cursor(SDL_Cursor* ptr);
+
 		friend void set_cursor(const cursor& cursor);
 	};
+
+	// Shows the cursor.
+	void show_cursor();
+	// Hides the cursor.
+	void hide_cursor();
+	// Sets the mouse cursor.
+	void set_cursor(const cursor& cursor);
 } // namespace tr::sys
-
-///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
-
-template <std::ranges::contiguous_range R1, std::ranges::contiguous_range R2>
-tr::sys::cursor::cursor(R1&& color, R2&& mask, glm::ivec2 size, glm::ivec2 focus)
-	: cursor{range_bytes(color), range_bytes(mask), size, focus}
-{
-}
