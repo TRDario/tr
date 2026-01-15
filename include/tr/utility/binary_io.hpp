@@ -94,9 +94,13 @@ namespace tr {
 
 namespace tr {
 	// Arithmetic binary readers.
-	template <arithmetic T> struct binary_reader<T> : raw_binary_reader<T> {};
+	template <arithmetic T>
+		requires(cv_unqualified_object<T>)
+	struct binary_reader<T> : raw_binary_reader<T> {};
 	// Enumerator binary readers.
-	template <enumerator T> struct binary_reader<T> : raw_binary_reader<T> {};
+	template <enumerator T>
+		requires(cv_unqualified_object<T>)
+	struct binary_reader<T> : raw_binary_reader<T> {};
 	// Vector binary readers.
 	template <int S, class T> struct binary_reader<glm::vec<S, T>> : raw_binary_reader<glm::vec<S, T>> {};
 	// Matrix binary readers.
@@ -136,9 +140,13 @@ namespace tr {
 	};
 
 	// Arithmetic binary writers.
-	template <arithmetic T> struct binary_writer<T> : raw_binary_writer<T> {};
+	template <arithmetic T>
+		requires(cv_unqualified_object<T>)
+	struct binary_writer<T> : raw_binary_writer<T> {};
 	// Enumerator binary writers.
-	template <enumerator T> struct binary_writer<T> : raw_binary_writer<T> {};
+	template <enumerator T>
+		requires(cv_unqualified_object<T>)
+	struct binary_writer<T> : raw_binary_writer<T> {};
 	// Vector binary writers.
 	template <int S, class T> struct binary_writer<glm::vec<S, T>> : raw_binary_writer<glm::vec<S, T>> {};
 	// Matrix binary writers.
