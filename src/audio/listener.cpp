@@ -1,8 +1,14 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Implements listener.hpp.                                                                                                              //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+#include "../../include/tr/audio/listener.hpp"
 #include "../../include/tr/audio/al_call.hpp"
 #include "../../include/tr/audio/impl.hpp"
-#include "../../include/tr/audio/listener.hpp"
 
-//
+///////////////////////////////////////////////////////////////// LISTENER ////////////////////////////////////////////////////////////////
 
 float tr::audio::master_gain()
 {
@@ -18,8 +24,6 @@ void tr::audio::set_master_gain(float gain)
 	TR_AL_CALL(alListenerf, AL_GAIN, gain);
 }
 
-//
-
 float tr::audio::class_gain(int id)
 {
 	return g_manager.class_gain(id);
@@ -29,8 +33,6 @@ void tr::audio::set_class_gain(int id, float gain)
 {
 	g_manager.set_class_gain(id, gain);
 }
-
-//
 
 glm::vec3 tr::audio::listener_pos()
 {

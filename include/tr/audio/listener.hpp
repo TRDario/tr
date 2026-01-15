@@ -1,5 +1,25 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Provides functions for manipulating audio listener state.                                                                             //
+//                                                                                                                                       //
+// The master gain, as well as the gains of any of the 32 audio classes can be gotten and set:                                           //
+//     - tr::audio::set_master_gain(tr::audio::master_gain() / 2) -> halve the master gain                                               //
+//     - tr::audio::set_class_gain(1, tr::audio::class_gain(1) * 2) -> double the gain of audio class 1                                  //
+//                                                                                                                                       //
+// The position, velocity, and orientation of the listener can be gotten and set:                                                        //
+//     - tr::audio::listener_pos() -> {0, 0, 0}                                                                                          //
+//     - tr::audio::set_listener_pos({5, 0, 5}) -> listener is now at {5, 0, 5}                                                          //
+//     - tr::audio::listener_vel() -> {0, 0, 0}                                                                                          //
+//     - tr::audio::set_listener_vel({5, 0, 5}) -> listener is now treated as if it has a velocity of {5, 0, 5}                          //
+//     - tr::audio::listener_orientation() -> gets the listener's orientation                                                            //
+//     - tr::audio::set_listener_orientation(view, up) -> sets the listener's orientation                                                //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include "../utility/common.hpp"
+
+//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
 namespace tr::audio {
 	// Listener orientation.
