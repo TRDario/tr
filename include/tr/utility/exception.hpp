@@ -10,7 +10,7 @@
 //                                                                                                                                       //
 // tr::out_of_memory is a custom out-of-memory exception whose description can be formatted, while tr::custom_exception forwards the     //
 // strings it is passed as the name/description/details strings:                                                                         //
-//     - tr::out_of_memory{"bitmap allocation"}.what() -> "Out of memory error: During bitmap allocation."                               //
+//     - tr::out_of_memory{"bitmap allocation"}.what() -> "Out of memory: Error occurred during bitmap allocation."                      //
 //     - tr::custom_exception{"foo error", "bar not found", "baz"}.what() -> "foo error: bar not found (baz)"                            //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -84,7 +84,7 @@ namespace tr {
 template <class... Args> tr::out_of_memory::out_of_memory(TR_FORMAT_STRING<Args...> fmt, Args&&... args)
 {
 	auto it{std::back_inserter(m_description)};
-	TR_FMT::format_to(it, "During ");
+	TR_FMT::format_to(it, "Error occurred during ");
 	TR_FMT::format_to_n(it, m_description.max_size() - 2 - m_description.size(), fmt, std::forward<Args>(args)...);
 	TR_FMT::format_to(it, ".");
 }

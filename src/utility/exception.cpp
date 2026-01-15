@@ -24,7 +24,7 @@ const char* tr::exception::what() const noexcept
 
 std::string_view tr::out_of_memory::name() const
 {
-	return "Out of memory error";
+	return "Out of memory";
 }
 
 std::string_view tr::out_of_memory::description() const

@@ -12,7 +12,7 @@
 //          may return message_box_button::yes, message_box_button::no, or message_box_button::cancel                                    //
 //     - tr::sys::show_fatal_error_message_box(tr::custom_exception{"Example error", "Reason goes here.", "Details go here."})           //
 //       -> displays an error message box with an "Ok" button with the title "[APP NAME] - Fatal Error" and message:                     //
-//            A fatal error has occured (Example error).                                                                                 //
+//            A fatal error has occurred (Example error).                                                                                //
 //            Reason goes here.                                                                                                          //
 //            Details go here.                                                                                                           //
 //            Press OK to exit the application.                                                                                          //
