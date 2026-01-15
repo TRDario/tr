@@ -1,17 +1,21 @@
-#include "../../include/tr/sysgfx/event_queue.hpp"
-#include "../../include/tr/sysgfx/event_types.hpp"
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Implements the non-constexpr parts of event.hpp.                                                                                      //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+#include "../../include/tr/sysgfx/event.hpp"
 #include "../../include/tr/sysgfx/impl.hpp"
-#include "../../include/tr/sysgfx/keyboard_events.hpp"
-#include "../../include/tr/sysgfx/mouse_events.hpp"
 #include "../../include/tr/sysgfx/window.hpp"
-#include "../../include/tr/sysgfx/window_events.hpp"
 #include <SDL3/SDL.h>
 
 using namespace std::chrono_literals;
 
+/////////////////////////////////////////////////////////////// EVENT TYPES ///////////////////////////////////////////////////////////////
+
 namespace tr::sys {
 	// Converts SDL keymods to tr keymods.
-	constexpr keymod convert_keymods(SDL_Keymod mods);
+	static constexpr keymod convert_keymods(SDL_Keymod mods);
 } // namespace tr::sys
 
 constexpr tr::sys::keymod tr::sys::convert_keymods(SDL_Keymod mods)
@@ -38,14 +42,14 @@ tr::sys::key_down_event::key_down_event(const event& event)
 	mods = convert_keymods(sdl.mod);
 }
 
-bool tr::sys::operator==(const key_down_event& event, const key_chord& chord)
+tr::sys::key_down_event::operator scan_chord() const
 {
-	return key_chord{event.mods, event.key} == chord;
+	return {mods, scan};
 }
 
-bool tr::sys::operator==(const key_down_event& event, const scan_chord& chord)
+tr::sys::key_down_event::operator key_chord() const
 {
-	return scan_chord{event.mods, event.scan} == chord;
+	return {mods, key};
 }
 
 tr::sys::key_up_event::key_up_event(const event& event)
@@ -54,16 +58,6 @@ tr::sys::key_up_event::key_up_event(const event& event)
 	scan = scancode(sdl.scancode);
 	key = keycode(sdl.key);
 	mods = convert_keymods(sdl.mod);
-}
-
-bool tr::sys::operator==(const key_up_event& event, const key_chord& chord)
-{
-	return key_chord{event.mods, event.key} == chord;
-}
-
-bool tr::sys::operator==(const key_up_event& event, const scan_chord& chord)
-{
-	return scan_chord{event.mods, event.scan} == chord;
 }
 
 tr::sys::text_input_event::text_input_event(const event& event)
@@ -75,9 +69,11 @@ tr::sys::text_input_event::text_input_event(const event& event)
 tr::sys::mouse_motion_event::mouse_motion_event(const event& event)
 {
 	const SDL_MouseMotionEvent& sdl{((const SDL_Event&)event).motion};
+	const glm::vec2 pixel_density{window_pixel_density()};
+
 	buttons = mouse_button(sdl.state);
-	pos = glm::vec2{sdl.x, sdl.y} * window_pixel_density();
-	delta = glm::vec2{sdl.xrel, sdl.yrel} * window_pixel_density();
+	pos = glm::vec2{sdl.x, sdl.y} * pixel_density;
+	delta = glm::vec2{sdl.xrel, sdl.yrel} * pixel_density;
 }
 
 tr::sys::mouse_down_event::mouse_down_event(const event& event)
@@ -108,14 +104,12 @@ tr::sys::backbuffer_resize_event::backbuffer_resize_event(const event& event)
 	size = {sdl.data1, sdl.data2};
 }
 
-//
-
 tr::u32 tr::sys::event::type() const
 {
 	return ((const SDL_Event*)m_buffer)->type;
 }
 
-//
+/////////////////////////////////////////////////////////////// EVENT STATE ///////////////////////////////////////////////////////////////
 
 void tr::sys::enable_text_input_events()
 {

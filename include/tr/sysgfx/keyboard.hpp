@@ -9,7 +9,7 @@
 // datatypes are hashable, binary readable/writable, and formattable:                                                                    //
 //     - "A"_s -> code belonging to the physical key associated with 'A' on the English keyboard                                         //
 //     - "A"_k -> code of the virtual 'A' key                                                                                            //
-//     - tr::sys::keycode{0x010D} -> code of the virtual 'ć' key                                                                         //
+//     - tr::sys::keycode{0x010D} -> code of the virtual 'Ć' key                                                                         //
 //     - "Ctrl+K"_sc -> chord where Ctrl is held and the physical key associated with 'K' on the english keyboard is pressed             //
 //     - tr::sys::scan_chord{tr::sys::keymod::ctrl | tr::sys::keymod::shift, "K"_s} -> equivalent to "Ctrl+Shift+K"_sc                   //
 //     - "Ctrl+K"_kc -> chord where Ctrl is held and the virtual 'K' key is pressed                                                      //
@@ -19,13 +19,13 @@
 //     - tr::sys::scancode{"A"} -> equivalent to "A"_s                                                                                   //
 //     - tr::sys::scancode{"Invalid"} -> scancode::unknown                                                                               //
 //     - tr::sys::name("Shift"_s) -> "Shift"                                                                                             //
-//     - tr::sys::keycode{"ć"} -> equivalent to tr::sys::keycode{0x010D}                                                                 //
+//     - tr::sys::keycode{"Ć"} -> equivalent to tr::sys::keycode{0x010D}                                                                 //
 //     - tr::sys::keycode{"Invalid"} -> keycode::unknown                                                                                 //
 //     - tr::sys::name("Ctrl"_k) -> "Ctrl"                                                                                               //
 //     - tr::sys::scan_chord{"Shift+A"} -> equivalent to "Shift+A"_sc                                                                    //
 //     - tr::sys::scan_chord{"Invalid"} -> .scan = scancode::unknown                                                                     //
 //     - tr::sys::scan_chord{tr::sys::keymod::ctrl, "S"_s}.name() -> "Ctrl+S"                                                            //
-//     - tr::sys::key_chord{"Ctrl+ć"} -> equivalent to {tr::sys::keymod::ctrl, tr::sys::keycode{0x010D}}                                 //
+//     - tr::sys::key_chord{"Ctrl+Ć"} -> equivalent to {tr::sys::keymod::ctrl, tr::sys::keycode{0x010D}}                                 //
 //     - tr::sys::key_chord{"Invalid"} -> .key = keycode::unknown                                                                        //
 //     - tr::sys::key_chord{tr::sys::keymod::ctrl, "N"_k}.name() -> "Ctrl+N"                                                             //
 //                                                                                                                                       //

@@ -11,17 +11,14 @@
 #include "sysgfx/debug_renderer.hpp"   // IWYU pragma: export
 #include "sysgfx/dialog.hpp"           // IWYU pragma: export
 #include "sysgfx/display.hpp"          // IWYU pragma: export
-#include "sysgfx/event_queue.hpp"      // IWYU pragma: export
-#include "sysgfx/event_types.hpp"      // IWYU pragma: export
+#include "sysgfx/event.hpp"            // IWYU pragma: export
 #include "sysgfx/gpu_benchmark.hpp"    // IWYU pragma: export
 #include "sysgfx/graphics_context.hpp" // IWYU pragma: export
 #include "sysgfx/index_buffer.hpp"     // IWYU pragma: export
 #include "sysgfx/keyboard.hpp"         // IWYU pragma: export
-#include "sysgfx/keyboard_events.hpp"  // IWYU pragma: export
 #include "sysgfx/layered_drawing.hpp"  // IWYU pragma: export
 #include "sysgfx/main.hpp"             // IWYU pragma: export
 #include "sysgfx/mouse.hpp"            // IWYU pragma: export
-#include "sysgfx/mouse_events.hpp"     // IWYU pragma: export
 #include "sysgfx/path.hpp"             // IWYU pragma: export
 #include "sysgfx/render_target.hpp"    // IWYU pragma: export
 #include "sysgfx/shader.hpp"           // IWYU pragma: export
@@ -34,4 +31,3 @@
 #include "sysgfx/vertex_buffer.hpp"    // IWYU pragma: export
 #include "sysgfx/vertex_format.hpp"    // IWYU pragma: export
 #include "sysgfx/window.hpp"           // IWYU pragma: export
-#include "sysgfx/window_events.hpp"    // IWYU pragma: export

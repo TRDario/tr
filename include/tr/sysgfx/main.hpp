@@ -1,5 +1,5 @@
 #pragma once
-#include "event_types.hpp"
+#include "event.hpp"
 
 namespace tr::sys {
 	// Error thrown when system initialization fails.
