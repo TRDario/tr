@@ -1,3 +1,22 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Provides shader classes.                                                                                                              //
+//                                                                                                                                       //
+// Shaders can be constructed directly from GLSL source code, or loaded from a file:                                                     //
+//     - tr::gfx::vertex_shader{src} -> constructs a vertex shader from an embedded source code string                                   //
+//     - tr::gfx::load_vertex_shader("source.vert") -> loads a vertex shader from a source file                                          //
+//     - tr::gfx::tessellation_control_shader{src} -> constructs a tessellation control shader from an embedded source code string       //
+//     - tr::gfx::load_tessellation_control_shader("source.tesc") -> loads a tessellation control shader from a source file              //
+//     - tr::gfx::tessellation_evaluation_shader{src} -> constructs a tessellation evaluation shader from an embedded source code string //
+//     - tr::gfx::load_tessellation_evaluation_shader("source.tese") -> loads a tessellation evaluation shader from a source file        //
+//     - tr::gfx::fragment_shader{src} -> constructs a fragment shader from an embedded source code string                               //
+//     - tr::gfx::load_fragment_shader("source.frag") -> loads a fragment shader from a source file                                      //
+//                                                                                                                                       //
+// Setting shader uniforms of any GLSL type except doubles is supported:                                                                 //
+//     - shader.set_uniform(0, glm::vec2{100, 100}) -> sets the vec2 uniform at location 0                                               //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include "../utility/exception.hpp"
 #include "../utility/handle.hpp"
@@ -141,14 +160,22 @@ namespace tr::gfx {
 #endif
 
 	  protected:
-		struct texture_unit {
+		// OpenGL texture unit.
+		class texture_unit {
+		  public:
 			struct deleter {
 				void operator()(unsigned int unit) const;
 			};
 
+			// The ID of the texture unit.
 			handle<unsigned int, UINT_MAX, deleter> id;
 
+			// Allocates a texture unit.
 			texture_unit();
+
+		  private:
+			// Tracks which units are allocated.
+			static std::array<bool, 80> g_texture_units;
 		};
 		struct deleter {
 			void operator()(unsigned int id) const;
@@ -173,8 +200,11 @@ namespace tr::gfx {
 		// List of output variables obtained by introspection.
 		std::unordered_map<unsigned int, glsl_variable> m_outputs;
 
+		// Finds the uniforms of the shader using introspection.
 		void find_uniforms();
+		// Finds the input variables of the shader using introspection.
 		void find_inputs();
+		// Finds the output variables of the shader using introspection.
 		void find_outputs();
 #endif
 	};
