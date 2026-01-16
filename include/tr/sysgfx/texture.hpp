@@ -2,16 +2,18 @@
 #include "../utility/handle.hpp"
 #include "bitmap.hpp"
 
-namespace tr {
-	namespace gfx {
-		class texture;
-		class texture_ref;
-		class render_target;
-	} // namespace gfx
-	namespace ImGui {
-		u64 GetTextureID(const gfx::texture& texture);
-	}
-} // namespace tr
+namespace tr::gfx {
+	class texture;
+	class texture_ref;
+	class render_target;
+} // namespace tr::gfx
+
+#ifdef TR_HAS_IMGUI
+using ImTextureID = unsigned long long;
+namespace tr::ImGui {
+	ImTextureID GetTextureID(const gfx::texture& texture);
+}
+#endif
 
 namespace tr::gfx {
 	// Texture wrapping types.
@@ -99,7 +101,10 @@ namespace tr::gfx {
 
 		friend class texture_ref;
 		friend class shader_base;
-		friend u64 ImGui::GetTextureID(const gfx::texture& texture);
+
+#ifdef TR_HAS_IMGUI
+		friend ImTextureID ImGui::GetTextureID(const gfx::texture& texture);
+#endif
 	};
 
 	// Smart texture reference (updated on texture moves and updates, emptied on deletion).
