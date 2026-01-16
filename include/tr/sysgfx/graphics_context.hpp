@@ -1,3 +1,48 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Provides functionality related to the graphical context.                                                                              //
+//                                                                                                                                       //
+// To allow for renderers to avoid having to set up graphical context on every draw call, tr provides a global 'active renderer' flag,   //
+// which renderers should check for and set with tr::gfx::should_setup_context, and only set the context up if that returns true.        //
+// All built-in renderers expect you to set this flag before meddling with the context, so don't forget to do that.                      //
+// Allocating renderer IDs is done with tr::gfx::allocate_renderer_id:                                                                   //
+//     - tr::gfx::renderer_id my_renderer_id{tr::gfx::allocate_renderer_id()} -> allocates a new renderer ID                             //
+//     - if (tr::gfx::should_setup_context(my_renderer_id)) { /* DO STUFF */ } -> graphical context setup                                //
+//                                                                                                                                       //
+// A few features of the rendering pipeline can be enabled or disabled:                                                                  //
+//     - tr::gfx::set_wireframe_mode(true) -> enables wireframe mode, onyl the edges of triangles are drawn                              //
+//     - tr::gfx::set_face_culling(true) -> enables culling of faces facing away from the camera                                         //
+//     - tr::gfx::set_depth_test(true) -> enables depth testing                                                                          //
+//                                                                                                                                       //
+// A number of components of the rendering pipeline can be set:                                                                          //
+//     - tr::gfx::set_render_target(target) -> sets the target to draw to                                                                //
+//     - tr::gfx::set_shader_pipeline(pipeline) -> sets the shader pipeline that will be used during drawing                             //
+//     - tr::gfx::set_tessellation_patch_size(4) -> sets the number of vertices in a tessellation patch                                  //
+//     - tr::gfx::set_blend_mode(mode) -> sets the blending mode                                                                         //
+//     - tr::gfx::set_vertex_format(format) -> sets the expected format of vertex data                                                   //
+//     - tr::gfx::set_vertex_buffer(buffer, 0, 100) -> sets a buffer vertex data is pulled from, starting at offset 100, in slot 0       //
+//     - tr::gfx::set_index_buffer(buffer) -> sets the buffer index data is pulled from                                                  //
+//                                                                                                                                       //
+// After setting up the graphical context, one of the four drawing functions may be called:                                              //
+//     - tr::gfx::draw(tr::gfx::primitive::tri_fan, 0, 4)                                                                                //
+//       -> draws a triangle fan from the set vertex buffer                                                                              //
+//     - tr::gfx::draw_indexed(tr::gfx::primitive::tris, 10, 15)                                                                         //
+//       -> draws 5 triangles using data from the set vertex and index buffers, starting from index 10 in the index buffer               //
+//     - tr::gfx::draw_instances(tr::gfx::primitive::line_loop, 0, 10, 10)                                                               //
+//       -> draws 10 instances of a line loop from the set vertex buffer                                                                 //
+//     - tr::gfx::draw_indexed_instances(tr::gfx::primitive::line_strip, 0, 10, 10)                                                      //
+//       -> draws 10 instances of a line strip using data from the set vertex and index buffers                                          //
+//                                                                                                                                       //
+// If TR_ENABLE_ASSERTS is defined, tr may output information relating to the graphical subsystem to tr::gfx::log, which may freely be   //
+// redirected to file or disabled, much like tr::log.                                                                                    //
+//     - tr::gfx::log = tr::logger{"gl", "logs/gl.txt"} -> the tr::gfx logger will now output to logs/gl.txt                             //
+//                                                                                                                                       //
+// The TR_SET_LABEL macro is provided as a way to set the label of graphical resources when TR_ENABLE_ASSERTS is defined.                //
+// If TR_ENABLE_ASSERTS is not defined, the macro does nothing.                                                                          //
+//     - TR_SET_LABEL(my_shader, "My Shader") -> calls my_shader.set_label("My Shader") with TR_ENABLE_ASSERTS, does nothing otherwise   //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include "vertex_buffer.hpp"
 #include "vertex_format.hpp"
@@ -8,7 +53,11 @@ namespace tr::gfx {
 	class render_target;
 	class shader_pipeline;
 	class static_index_buffer;
+} // namespace tr::gfx
 
+//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
+
+namespace tr::gfx {
 	// Renderer ID.
 	enum class renderer_id : u32 {
 		no_renderer,   // No particular renderer is being used.
@@ -40,8 +89,6 @@ namespace tr::gfx {
 
 	// Sets the active render target.
 	void set_render_target(const render_target& target);
-	// Resets the active render target.
-	void reset_render_target();
 	// Sets the active shader pipeline.
 	void set_shader_pipeline(const shader_pipeline& pipeline);
 	// Sets the number of vertices per tessellation patch.
@@ -76,6 +123,7 @@ namespace tr::gfx {
 	// The graphics context log.
 	inline logger log{"gl"};
 
+// Sets an object's label.
 #define TR_SET_LABEL(object, label) (object).set_label(label)
 #else
 #define TR_SET_LABEL(object, label)                                                                                                        \
