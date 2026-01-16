@@ -1,6 +1,34 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Provides utilities for packing textures into an atlas.                                                                                //
+//                                                                                                                                       //
+// tr::atlas_packer serves as an implementation of the skyline packing algorithm; it is almost always used in tandem with something to   //
+// store the calculated rectangles (like tr::atlas_rects). Inserting a new rectangle is done with the .try_insert() method, which        //
+// returns the position of top-left corner of the rectangle, or std::nullopt if no suitable spot was found for it. The packer can be     //
+// cleared with the .clear() method:                                                                                                     //
+//     - tr::atlas_packer packer{} -> creates an empty packer                                                                            //
+//     - packer.try_insert({32, 32}, {256, 256})                                                                                         //
+//       -> inserts a 32x32 rectangle into the packer (within a 256x256 limit) and returns the top-left corner of the rectangle          //
+//     - packer.try_insert({512, 256}, {256, 256}) -> std::nullopt                                                                       //
+//     - packer.clear() -> packer is now empty again                                                                                     //
+// NOTE: the packer assumes the texture is of constant size or growing.                                                                  //
+//                                                                                                                                       //
+// tr::atlas_rects<Key> extends the atlas packer by storing the rectangles inserted with .try_insert() in a map with an arbitrary key.   //
+// This map can be queried, or cleared with the rest of the packer:                                                                      //
+//     - tr::atlas_rects<int> packer{} -> creates an empty packer                                                                        //
+//     - packer.try_insert(10, {32, 32}, {256, 256}) -> inserts a rectangle with the key '10' into the packer                            //
+//     - packer.contains(10) -> true                                                                                                     //
+//     - packer.entries() -> 1                                                                                                           //
+//     - packer[10] -> {{0, 0}, {32, 32}}                                                                                                //
+//     - packer.clear() -> packer is now empty again                                                                                     //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include "geometry.hpp"
 #include "macro.hpp"
+
+////////////////////////////////////////////////////////////// IMPLEMENTATION /////////////////////////////////////////////////////////////
 
 namespace tr {
 	// Skyline rect packer for atlas textures.
@@ -33,7 +61,7 @@ namespace tr {
 		// Clears the packer.
 		void clear();
 		// Tries to insert a rectangle.
-		std::optional<glm::u16vec2> try_insert(auto&& key, glm::u16vec2 size, glm::u16vec2 texture_size);
+		template <class T> std::optional<glm::u16vec2> try_insert(T&& key, glm::u16vec2 size, glm::u16vec2 texture_size);
 
 	  private:
 		// The atlas packer.
@@ -41,7 +69,6 @@ namespace tr {
 		// The atlas rects.
 		std::unordered_map<Key, rect2<u16>, Hash, Pred> m_rects;
 	};
-
 } // namespace tr
 
 ///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
@@ -70,13 +97,14 @@ template <class Key, class Hash, class Pred> void tr::atlas_rects<Key, Hash, Pre
 }
 
 template <class Key, class Hash, class Pred>
-std::optional<glm::u16vec2> tr::atlas_rects<Key, Hash, Pred>::try_insert(auto&& key, glm::u16vec2 size, glm::u16vec2 texture_size)
+template <class T>
+std::optional<glm::u16vec2> tr::atlas_rects<Key, Hash, Pred>::try_insert(T&& key, glm::u16vec2 size, glm::u16vec2 texture_size)
 {
 	TR_ASSERT(!contains(key), "Tried to insert a rect with the same key as an existing rect into an atlas packer.");
 
 	std::optional<glm::u16vec2> packing_result{m_packer.try_insert(size, texture_size)};
 	if (packing_result.has_value()) {
-		m_rects.emplace(std::move(key), rect2<u16>{*packing_result, size});
+		m_rects.emplace(std::forward<T>(key), rect2<u16>{*packing_result, size});
 	}
 	return packing_result;
 }
