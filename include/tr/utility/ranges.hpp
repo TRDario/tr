@@ -1,6 +1,31 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Provides miscellaneous range functionality.                                                                                           //
+//                                                                                                                                       //
+// Objects and ranges can be converted to spans of bytes, and conversely, byte spans can be converted to spans of objects:               //
+//     - glm::mat4 transform; -> tr::as_bytes(transform) -> std::span<const std::byte, 64> over 'transform'                              //
+//     - glm::mat4 transform; -> tr::as_mut_bytes(transform) -> std::span<std::byte, 64> over 'transform'                                //
+//     - int data[5]{0, 1, 2, 3, 4}; tr::range_bytes(data) -> std::span<const std::byte, 20> over 'data'                                 //
+//     - int data[5]{0, 1, 2, 3, 4}; tr::range_mut_bytes(data) -> std::span<std::byte, 20> over 'data'                                   //
+//     - std::vector<float> data; tr::range_bytes(data) -> std::span<float> over 'data'                                                  //
+//     - std::span<std::byte, 64> bytes; tr::as_objects<int>(bytes) -> std::span<int, 16> over 'bytes'                                   //
+//     - std::span<std::byte> bytes; tr::as_mut_objects<float>(bytes) -> std::span<float> over 'bytes'                                   //
+// NOTE: using tr::as_bytes on a range object will literally get the bytes of the object, which works for in-place allocated containers, //
+// but not with something like std::vector. Prefer to use tr::range_bytes over ranges, even where the former works.                      //
+//                                                                                                                                       //
+// View adaptors for projecting a class member, as well as dereferencing the objects of a range are provided:                            //
+//     - std::vector<tr::rgba8> colors; for (char red : tr::project(colors, &tr::rgba8::r)) {} -> iterates over the red channels         //
+//     - std::vector<tr::rgba8> colors; for (char red : colors | tr::project(&tr::rgba8::r)) {} -> iterates over the red channels        //
+//     - std::vector<std::unique_ptr<int>> ptrs; for (int value : tr::deref(ptrs)) -> iterates over the dereferenced pointers            //
+//     - std::vector<std::unique_ptr<int>> ptrs; for (int value : ptrs | tr::deref) -> iterates over the dereferenced pointers           //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include "concepts.hpp"
 #include "macro.hpp"
+
+//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
 namespace tr {
 	// Gets a view of a contiguous range as a span of immutable bytes.
@@ -22,7 +47,7 @@ namespace tr {
 	// Creates a transformed view over a range as a range of one of its members.
 	template <std::ranges::range R> constexpr auto project(R&& range, auto std::ranges::range_value_t<R>::* ptr);
 	// Dereferencing range view.
-	inline constexpr auto deref{std::views::transform([](auto& v) -> auto& { return *v; })};
+	inline constexpr auto deref{std::views::transform([](auto& v) -> decltype(auto) { return *v; })};
 } // namespace tr
 
 ///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
