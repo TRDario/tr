@@ -1,7 +1,15 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Implements the constexpr and templated parts of geometry.hpp.                                                                         //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include "geometry.hpp"
 #include "macro.hpp"
 #include "math.hpp"
+
+//////////////////////////////////////////////////////////////// ALIGNMENT ////////////////////////////////////////////////////////////////
 
 constexpr tr::halign tr::to_halign(align align)
 {
@@ -22,6 +30,8 @@ constexpr tr::align tr::operator|(const halign& halign, const valign& valign)
 {
 	return align(int(halign) + int(valign));
 }
+
+/////////////////////////////////////////////////////////////////// RECT //////////////////////////////////////////////////////////////////
 
 template <int S, class T>
 constexpr tr::rect<S, T>::rect(glm::vec<S, T> tl, glm::vec<S, T> size)
@@ -62,6 +72,8 @@ template <class T1, class T2> constexpr bool tr::intersecting(const rect2<T1>& r
 	return r1.contains(r2.tl) || r1.contains(r2.tl + r2.size) || r2.contains(r1.tl + glm::tvec2<T1>{r1.size.x, 0}) ||
 		   r2.contains(r1.tl + glm::tvec2<T1>{0, r1.size.y});
 }
+
+///////////////////////////////////////////////////////////// VECTOR FUNCTIONS ////////////////////////////////////////////////////////////
 
 template <int S, class T> constexpr T tr::length2(glm::vec<S, T> v)
 {

@@ -1,14 +1,12 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Implements the non-constexpr, non-templated parts of geometry.hpp.                                                                    //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #include "../../include/tr/utility/geometry.hpp"
 
-glm::vec2 tr::normal(angle th)
-{
-	return glm::vec2{th.cos(), th.sin()};
-}
-
-glm::vec2 tr::magth(float mag, angle th)
-{
-	return normal(th) * mag;
-}
+///////////////////////////////////////////////////////////////// TRIANGLE ////////////////////////////////////////////////////////////////
 
 tr::winding_order tr::triangle::winding_order() const
 {
@@ -28,6 +26,8 @@ bool tr::triangle::contains(glm::vec2 p) const
 	return d == 0 || (d < 0) == (s + t <= 0);
 }
 
+////////////////////////////////////////////////////////////////// CIRCLE /////////////////////////////////////////////////////////////////
+
 bool tr::circle::contains(glm::vec2 point) const
 {
 	return dist2(c, point) <= sqr(r);
@@ -38,7 +38,17 @@ bool tr::intersecting(const circle& c1, const circle& c2)
 	return glm::distance(c1.c, c2.c) <= (c1.r + c2.r);
 }
 
-//
+///////////////////////////////////////////////////////////// VECTOR FUNCTIONS ////////////////////////////////////////////////////////////
+
+glm::vec2 tr::normal(angle th)
+{
+	return glm::vec2{th.cos(), th.sin()};
+}
+
+glm::vec2 tr::magth(float mag, angle th)
+{
+	return normal(th) * mag;
+}
 
 bool tr::collinear(glm::vec2 a, glm::vec2 b, glm::vec2 c)
 {
@@ -46,7 +56,7 @@ bool tr::collinear(glm::vec2 a, glm::vec2 b, glm::vec2 c)
 	return std::abs((b.x - a.x) * (c.y - a.y) - (c.x - a.x) * (b.y - a.y)) < tolerance;
 }
 
-//
+////////////////////////////////////////////////////// LINE SEGMENT AND INTERSECTION //////////////////////////////////////////////////////
 
 glm::vec2 tr::line_segment::closest_point(glm::vec2 p) const
 {
@@ -150,6 +160,8 @@ std::optional<glm::vec2> tr::intersection(glm::vec2 a1, angle th1, glm::vec2 a2,
 	return a2 + delta * t;
 }
 
+///////////////////////////////////////////////////////////////// MATRICES ////////////////////////////////////////////////////////////////
+
 glm::vec2 tr::matrix_operators::operator*(const glm::vec2& v, const glm::mat4& m)
 {
 	return glm::vec4{v, 0, 1} * m;
@@ -195,7 +207,7 @@ glm::mat4 tr::rotate_around(const glm::mat4& mat, const glm::vec3& c, const angl
 	return glm::translate(glm::rotate(glm::translate(mat, c), th.rads(), axis), -c);
 }
 
-//
+///////////////////////////////////////////////////////////////// POLYGONS ////////////////////////////////////////////////////////////////
 
 tr::winding_order tr::polygon_winding_order(std::span<const glm::vec2> vertices)
 {
