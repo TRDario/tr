@@ -1,110 +1,83 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Provides concepts.                                                                                                                    //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
-#include "integer.hpp"
+#include "template.hpp"
 
 namespace tr {
-	// Circumvents static_assert(false) not being a valid expression.
-	template <class...> inline constexpr bool always_false = false;
-
-	// Tag class.
-	template <typename> struct tag {};
-
-	// Template for string literals passed as template arguments.
-	template <usize N> struct template_string_literal {
-		char data[N - 1];
-
-		consteval template_string_literal(const char (&str)[N])
-		{
-			std::copy_n(str, N - 1, data);
-		}
-
-		consteval operator std::string_view() const
-		{
-			return {data, N - 1};
-		}
-
-		template <class... Args> consteval operator TR_FORMAT_STRING<Args...>() const
-		{
-			return std::string_view{*this};
-		}
-	};
-
-	// Concept wrapper over std::is_arithmetic_v.
+	// Concept denoting an arithmetic type.
 	template <class T>
 	concept arithmetic = std::is_arithmetic_v<T>;
-
-	// Concept denoting a cv-unqualified object.
-	template <class T>
-	concept cv_unqualified_object = std::is_object_v<T> && !std::is_const_v<T> && !std::is_volatile_v<T>;
-	// Concept denoting a non-const reference.
-	template <class T>
-	concept non_const_ref = std::is_lvalue_reference_v<T> && !std::is_const_v<std::remove_reference_t<T>>;
-	// Concept denoting a reference to const.
-	template <class T>
-	concept const_ref = std::is_lvalue_reference_v<T> && std::is_const_v<std::remove_reference_t<T>>;
-	// Concept wrapper over std::is_enum_v.
+	// Concept denoting an enumerator type.
 	template <class T>
 	concept enumerator = std::is_enum_v<T>;
-	// Concept wrapper over std::is_standard_layout_v.
+
+	// Concept denoting an object type (i.e. not a reference).
+	template <class T>
+	concept object = std::is_object_v<T>;
+	// Concept denoting a reference.
+	template <class T>
+	concept reference = std::is_reference_v<T>;
+	// Concept denoting an lvalue reference.
+	template <class T>
+	concept lvalue_reference = std::is_lvalue_reference_v<T>;
+	// Concept denoting an rvalue reference.
+	template <class T>
+	concept rvalue_reference = std::is_rvalue_reference_v<T>;
+
+	// Concept denoting a const-qualified type.
+	template <class T>
+	concept const_qualified = std::is_const_v<T>;
+	// Concept denoting a volatile-qualified type.
+	template <class T>
+	concept volatile_qualified = std::is_volatile_v<T>;
+	// Concept denoting a cv-unqualified type.
+	template <class T>
+	concept cv_unqualified = !const_qualified<T> && !volatile_qualified<T>;
+	// Concept denoting a cv-unqualified object.
+	template <class T>
+	concept cv_unqualified_object = object<T> && cv_unqualified<T>;
+
+	// Concept denoting a standard layout type.
 	template <class T>
 	concept standard_layout = std::is_standard_layout_v<T>;
-	// Concept denoting a contiguous range of standard layout objects.
+	// Concept denoting a contiguous range.
 	template <class T>
 	concept standard_layout_range = std::ranges::contiguous_range<T> && standard_layout<std::ranges::range_value_t<T>>;
-	// Concept denoting an output range.
+	// Concept denoting a sized output range.
 	template <class R, class T>
 	concept sized_output_range = std::ranges::sized_range<R> && std::output_iterator<std::ranges::iterator_t<R>, T>;
-	// Concept defining a contiguous range holding a specific type.
+	// Concept denoting a typed contiguous range.
 	template <class R, class T>
 	concept typed_contiguous_range = std::ranges::contiguous_range<R> && std::same_as<T, std::ranges::range_value_t<R>>;
 
-	template <class T, template <class...> class Z> struct is_specialization_of : std::false_type {};
-	template <class... Args, template <class...> class Z> struct is_specialization_of<Z<Args...>, Z> : std::true_type {};
-	// Concept that denotes a type is a specialization of a certain template.
+	// Concept denoting a specialization of a template with type parameters.
 	template <class T, template <class...> class Z>
 	concept specialization_of = is_specialization_of<T, Z>::value;
+	// Concept denoting a specialization of a template with value parameters.
+	template <class T, template <auto...> class Z>
+	concept specialization_of_v = is_specialization_of_v<T, Z>::value;
+	// Concept denoting a specialization of a template with a leading value parameter.
+	template <class T, template <auto, class...> class Z>
+	concept specialization_of_vt = is_specialization_of_vt<T, Z>::value;
+	// Concept denoting a specialization of a template with a leading type and value parameter.
+	template <class T, template <class, auto, class...> class Z>
+	concept specialization_of_tv = is_specialization_of_tv<T, Z>::value;
+	// Concept denoting a (potentially cv-qualified or reference to a) specialization of a template with type parameters.
 	template <class T, template <class...> class Z>
-	concept remove_cvref_specialization_of = specialization_of<std::remove_cvref_t<T>, Z>;
-
-	template <typename T> struct remove_noexcept {
-		using type = T;
-	};
-	template <typename R, typename... P> struct remove_noexcept<R(P...) noexcept> {
-		using type = R(P...);
-	};
-	// Removes noexcept qualification from a function type.
-	template <typename T> using remove_noexcept_t = remove_noexcept<T>::type;
-
-	template <class T> struct arg_type {};
-	template <class T, class T1> struct arg_type<T(T1)> {
-		using type = T1;
-	};
-	template <class T, class T1> struct arg_type<T (*)(T1)> {
-		using type = T1;
-	};
-	template <class T, class T1> struct arg_type<T(T1) noexcept> {
-		using type = T1;
-	};
-	template <class T, class T1> struct arg_type<T (*)(T1) noexcept> {
-		using type = T1;
-	};
-	// Gets the type of the argument of a function.
-	template <typename T> using arg_type_t = arg_type<T>::type;
-
-	template <usize S, class = void> struct size_type;
-	template <usize S> struct size_type<S, std::enable_if_t<(S > UINT32_MAX)>> {
-		using type = u64;
-	};
-	template <usize S> struct size_type<S, std::enable_if_t<(S > UINT16_MAX && S <= UINT32_MAX)>> {
-		using type = u32;
-	};
-	template <usize S> struct size_type<S, std::enable_if_t<(S > UINT8_MAX && S <= UINT16_MAX)>> {
-		using type = u16;
-	};
-	template <usize S> struct size_type<S, std::enable_if_t<(S <= UINT8_MAX)>> {
-		using type = u8;
-	};
-	// Gets the type needed to store an integer constant.
-	template <usize S> using size_type_t = size_type<S>::type;
+	concept cvref_specialization_of = specialization_of<std::remove_cvref_t<T>, Z>;
+	// Concept denoting a (potentially cv-qualified or reference to a) specialization of a template with value parameters.
+	template <class T, template <auto...> class Z>
+	concept cvref_specialization_of_v = specialization_of_v<std::remove_cvref_t<T>, Z>;
+	// Concept denoting a (potentially cv-qualified or reference to a) specialization of a template with a leading value parameter.
+	template <class T, template <auto, class...> class Z>
+	concept cvref_specialization_of_vt = specialization_of_vt<std::remove_cvref_t<T>, Z>;
+	// Concept denoting a (potentially cv-qualified or reference to a) specialization of a template with a leading type and value parameter.
+	template <class T, template <class, auto, class...> class Z>
+	concept cvref_specialization_of_tv = specialization_of_tv<std::remove_cvref_t<T>, Z>;
 
 	// Concept checking if a type is in a list.
 	template <class T, class... Ts>

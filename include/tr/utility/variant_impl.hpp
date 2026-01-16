@@ -23,7 +23,7 @@ template <class... Ts, tr::one_of<Ts...>... Us> constexpr bool tr::holds_one_of(
 ///////////////////////////////////////////////////////////// SUBSET/SUPERSET /////////////////////////////////////////////////////////////
 
 namespace tr {
-	template <class T, class V> struct subset_castable_to_t;
+	template <class T, class V> struct subset_castable_to_helper;
 } // namespace tr
 
 template <tr::specialization_of<std::variant> T, tr::specialization_of<std::variant> V> struct tr::is_superset_of : std::false_type {};
@@ -32,7 +32,7 @@ template <class... Ts, class... Us>
 	requires(tr::one_of<Us, Ts...> && ...)
 struct tr::is_superset_of<std::variant<Ts...>, std::variant<Us...>> : std::true_type {};
 
-template <class... Ts, class... Us> struct tr::subset_castable_to_t<std::variant<Ts...>, std::variant<Us...>> {
+template <class... Ts, class... Us> struct tr::subset_castable_to_helper<std::variant<Ts...>, std::variant<Us...>> {
 	constexpr bool operator()(const std::variant<Us...>& v) const
 	{
 		return holds_one_of<Ts...>(v);
@@ -43,7 +43,7 @@ template <class T, class V>
 	requires(tr::subset_of<T, V>)
 constexpr bool tr::subset_castable_to(const V& v)
 {
-	return subset_castable_to_t<T, V>{}(v);
+	return subset_castable_to_helper<T, V>{}(v);
 }
 
 ///////////////////////////////////////////////////////////////// INDICES /////////////////////////////////////////////////////////////////
@@ -85,7 +85,7 @@ namespace tr {
 	template <class State, class... Fs> stateful_match(State&&, Fs&&...) -> stateful_match<State, Fs...>;
 } // namespace tr
 
-template <tr::remove_cvref_specialization_of<std::variant> Variant, tr::remove_cvref_specialization_of<tr::match> Match>
+template <tr::cvref_specialization_of<std::variant> Variant, tr::cvref_specialization_of<tr::match> Match>
 decltype(auto) tr::operator|(Variant&& v, Match&& m)
 {
 	return std::visit(std::forward<Match>(m), std::forward<Variant>(v));
@@ -96,7 +96,7 @@ template <class State, class... Fs> template <class... Args> decltype(auto) tr::
 	return match<Fs...>::operator()(std::move(m_state), std::forward<Args>(args)...);
 }
 
-template <tr::remove_cvref_specialization_of<std::variant> Variant, tr::remove_cvref_specialization_of<tr::stateful_match> Match>
+template <tr::cvref_specialization_of<std::variant> Variant, tr::cvref_specialization_of<tr::stateful_match> Match>
 decltype(auto) tr::operator|(Variant&& v, Match&& m)
 {
 	return std::visit(std::forward<Match>(m), std::forward<Variant>(v));

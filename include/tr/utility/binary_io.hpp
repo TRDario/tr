@@ -79,7 +79,7 @@ namespace tr {
 	// Reads binary data from a stream.
 	template <binary_constructible T> T read_binary(std::istream& is);
 	// Checks for magic bytes from a stream.
-	template <template_string_literal Literal> bool read_binary_magic(std::istream& is);
+	template <string_literal Literal> bool read_binary_magic(std::istream& is);
 
 	// Flushes the rest of the stream into an output iterator.
 	template <tr::binary_flushable_iterator It> void flush_binary(std::istream& is, It out);

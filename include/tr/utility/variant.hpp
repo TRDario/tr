@@ -63,6 +63,7 @@
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
 namespace tr {
+
 	// Determines whether a type is in a variant's type list.
 	template <class T, specialization_of<std::variant> V> struct type_in_variant;
 	// Determines whether a type is in a variant's type list.
@@ -109,7 +110,7 @@ namespace tr {
 		using Fs::operator()...;
 	};
 	// Match statement.
-	template <remove_cvref_specialization_of<std::variant> Variant, remove_cvref_specialization_of<match> Match>
+	template <cvref_specialization_of<std::variant> Variant, cvref_specialization_of<match> Match>
 	decltype(auto) operator|(Variant&& v, Match&& m);
 
 	// Stateful match statement helper class.
@@ -125,7 +126,7 @@ namespace tr {
 		State m_state;
 	};
 	// Stateful match statement.
-	template <remove_cvref_specialization_of<std::variant> Variant, remove_cvref_specialization_of<stateful_match> Match>
+	template <cvref_specialization_of<std::variant> Variant, cvref_specialization_of<stateful_match> Match>
 	decltype(auto) operator|(Variant&& v, Match&& m);
 
 	// Used in a match statement to mark all other cases as ignorable.

@@ -33,10 +33,10 @@ template <tr::binary_constructible T> T tr::read_binary(std::istream& is)
 	return out;
 }
 
-template <tr::template_string_literal Literal> bool tr::read_binary_magic(std::istream& is)
+template <tr::string_literal Literal> bool tr::read_binary_magic(std::istream& is)
 {
 	const std::array<char, sizeof(Literal)> buffer{read_binary<std::array<char, sizeof(Literal)>>(is)};
-	return std::string_view{buffer.data(), sizeof(Literal)} == std::string_view{Literal.data, sizeof(Literal)};
+	return std::string_view{buffer.data(), sizeof(Literal)} == Literal;
 }
 
 template <tr::binary_flushable_iterator It> void tr::flush_binary(std::istream& is, It out)

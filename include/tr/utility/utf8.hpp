@@ -58,7 +58,7 @@ namespace tr::utf8 {
 
 	// String types supported by the UTF-8 functions.
 	template <class T>
-	concept string = std::same_as<T, std::string> || std::same_as<T, static_string<T::max_size()>>;
+	concept string = std::same_as<T, std::string> || specialization_of_v<T, static_string>;
 
 	// Converts a UTF-8 sequence to a Unicode codepoint.
 	template <base_iterator T> constexpr codepoint to_cp(T it);
