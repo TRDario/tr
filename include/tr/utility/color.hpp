@@ -1,3 +1,25 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Provides color datatypes.                                                                                                             //
+//                                                                                                                                       //
+// RGB(A) color datatypes with 8-bit and floating point components are provided, as well as tr::hsv for HSV colors. All colors can be    //
+// default-constructed to zero, constructed from their components, or converted from one of the other color types. Literals to construct //
+// any of the RGB(A) color types using hex codes are also provided in tr::color_literals, as well as tr::literals:                       //
+//     - tr::rgb8{} -> constructs an 8-bit RGB color with {.r = 0, .g = 0, .b = 0}                                                       //
+//     - tr::rgba8{255, 0, 0, 127} -> constructs an 8-bit RGBA color with {.r = 255, .g = 0, .b = 0, .a = 127}                           //
+//     - tr::rgbf{"FF0000FF"_rgba8} -> constructs a floating-point RGB color with {.r = 1.0f, .g = 0.0f, b = 0.0f}                       //
+//     - "FF0000"_rgbf -> equivalent to the above                                                                                        //
+//     - tr::rgbaf{tr::hsv{0, 1, 1}, 0.5f} -> constructs a floating-point RGBA color with {.r = 1.0f, .g = 0.0f, b = 0.,0f, a = 0.5f}    //
+//                                                                                                                                       //
+// All RGB(A) colors can be compared for equality, added, subtracted and multiplied together with another color or scalar, and divided   //
+// with a scalar. The type of the left operand will be used for the returned value:                                                      //
+//     - "808080"_rgb8 + 64 -> "C0C0C0"_rgb8                                                                                             //
+//     - "FF0000"_rgba8 - "800000"_rgbf -> "7F0000FF"_rgba8                                                                              //
+//     - "FFFFFF"_rgbf * 0.75f -> tr::rgbf{0.75f, 0.75f, 0.75f}                                                                          //
+//     - "FFFFFF"_rgbaf / 2 -> tr::rgbaf{0.5f, 0.5f, 0.5f, 0.5f}                                                                         //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include "concepts.hpp"
 
@@ -7,7 +29,11 @@ namespace tr {
 	struct rgba8;
 	struct rgbaf;
 	struct hsv;
+} // namespace tr
 
+//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
+
+namespace tr {
 	// 8-bit RGB color.
 	struct rgb8 {
 		// The red color channel.
@@ -224,6 +250,7 @@ namespace tr {
 		template <arithmetic T> friend constexpr rgbaf operator/(const rgbaf& l, T divisor);
 	};
 
+	// Floating-point HSV color.
 	struct hsv {
 		// The hue channel.
 		float h;
@@ -246,6 +273,7 @@ namespace tr {
 	};
 
 	inline namespace literals {
+		// Color literals.
 		inline namespace color_literals {
 			// 8-bit RGB color literal.
 			consteval rgb8 operator""_rgb8(const char* str, usize length);
@@ -258,5 +286,7 @@ namespace tr {
 		} // namespace color_literals
 	} // namespace literals
 } // namespace tr
+
+////////////////////////////////////////////////////////////// IMPLEMENTATION /////////////////////////////////////////////////////////////
 
 #include "color_impl.hpp" // IWYU pragma: keep

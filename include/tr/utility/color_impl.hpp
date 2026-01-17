@@ -1,9 +1,15 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Implements color.hpp.                                                                                                                 //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include "color.hpp"
 #include "math.hpp"
 #include "norm_cast.hpp"
 
-//
+/////////////////////////////////////////////////////////////////// RGB8 //////////////////////////////////////////////////////////////////
 
 constexpr tr::rgb8::rgb8(u8 r, u8 g, u8 b)
 	: r{r}, g{g}, b{b}
@@ -135,7 +141,7 @@ template <tr::arithmetic T> constexpr tr::rgb8 tr::operator/(const rgb8& l, T di
 	return temp;
 }
 
-//
+/////////////////////////////////////////////////////////////////// RGBF //////////////////////////////////////////////////////////////////
 
 constexpr tr::rgbf::rgbf(float r, float g, float b)
 	: r{r}, g{g}, b{b}
@@ -301,7 +307,7 @@ template <tr::arithmetic T> constexpr tr::rgbf tr::operator/(const rgbf& l, T di
 	return temp;
 }
 
-//
+////////////////////////////////////////////////////////////////// RGBA8 //////////////////////////////////////////////////////////////////
 
 constexpr tr::rgba8::rgba8(u8 r, u8 g, u8 b, u8 a)
 	: r{r}, g{g}, b{b}, a{a}
@@ -440,7 +446,7 @@ template <tr::arithmetic T> constexpr tr::rgba8 tr::operator/(const rgba8& l, T 
 	return temp;
 }
 
-//
+////////////////////////////////////////////////////////////////// RGBAF //////////////////////////////////////////////////////////////////
 
 constexpr tr::rgbaf::rgbaf(float r, float g, float b, float a)
 	: r{r}, g{g}, b{b}, a{a}
@@ -579,7 +585,7 @@ template <tr::arithmetic T> constexpr tr::rgbaf tr::operator/(const rgbaf& l, T 
 	return temp;
 }
 
-//
+/////////////////////////////////////////////////////////////////// HSV ///////////////////////////////////////////////////////////////////
 
 constexpr tr::hsv::hsv(float h, float s, float v)
 	: h{h}, s{s}, v{v}
@@ -622,7 +628,7 @@ constexpr tr::hsv::hsv(const rgbaf& rgba)
 {
 }
 
-//
+///////////////////////////////////////////////////////////////// LITERALS ////////////////////////////////////////////////////////////////
 
 consteval tr::rgb8 tr::literals::color_literals::operator""_rgb8(const char* str, usize length)
 {
