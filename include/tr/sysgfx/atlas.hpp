@@ -1,7 +1,47 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Provides atlas textures.                                                                                                              //
+//                                                                                                                                       //
+// A hashmap of bitmaps can be stitched together into a single atlased bitmap using tr::build_bitmap_atlas:                              //
+//     - tr::string_hash_map<tr::bitmap> bitmaps{{"a", tr::load_bitmap_file("a.bmp")}, {"b", tr::load_bitmap_file("b.bmp")}}             //
+//       tr::bitmap_atlas atlas{tr::build_bitmap_atlas(bitmaps)}                                                                         //
+//       -> stitches all bitmaps in 'bitmaps' into a single bitmap contained in atlas.bitmap, with information on where the constituents //
+//          are located in atlas.rects                                                                                                   //
+//                                                                                                                                       //
+// tr::gfx::dyn_atlas abstracts over a tr::gfx::texture to provide an atlas interface, automatically handling insertion, removal,        //
+// resizing, and so on of the underlying texture. A dynamic atlas can be created empty, with an initial reserved size, or using a        //
+// pre-assembled bitmap atlas as a source. The .reserve() method can also be called at any time to reserve texture space:                //
+//     - tr::gfx::dyn_atlas{} -> creates an empty atlas                                                                                  //
+//     - tr::gfx::dyn_atlas{{512, 512}} -> creates an empty atlas with a pre-allocated 512x512 texture                                   //
+//     - tr::gfx::dyn_atlas atlas{}; atlas.reserve({512, 512}) -> equivalent to the above                                                //
+//     - tr::gfx::dyn_atlas{bitmaps} -> uploads the 'bitmaps' atlas into a texture and takes its rect information                        //
+//                                                                                                                                       //
+// The underlying bitmap can be accessed with an implicit conversion, but only in a read-only manner. Filtering can be set with          //
+// .set_filtering(), as in a regular texture.                                                                                            //
+//                                                                                                                                       //
+// Entries in the atlas can be checked for and accessed: using operator[] gets the normalized uv of the entry, while .unnormalized()     //
+// gets the unnormalized region in the atlas. The total number of entries in the atlas can be obtained with .entries(), while the        //
+// size of the atlas texture in pixels can be obtained with .size(). An entry is added into the atlas with .add(), and the atlas can be  //
+// cleared with the .clear() method:                                                                                                     //
+//     - atlas.size() -> {512, 512}                                                                                                      //
+//     - atlas.add("C", tr::load_bitmap_file("c.bmp")) -> adds "C" to the atlas                                                          //
+//     - atlas.entries() -> 1                                                                                                            //
+//     - atlas.contains("C") -> true                                                                                                     //
+//     - atlas["C"] -> gets the normalized UV rect of "C"                                                                                //
+//     - atlas.unnormalized("C") -> gets the unnormalized UV rect of "C"                                                                 //
+//     - atlas.clear() -> atlas is now empty again, but retains the reserved space                                                       //
+//                                                                                                                                       //
+// The label of an atlas can be set with TR_SET_LABEL(atlas, label):                                                                     //
+//     - TR_SET_LABEL(atlas, "Example atlas") -> 'atlas' is now labelled "Example atlas"                                                 //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include "texture.hpp"
 
-namespace tr::gfx {
+//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
+
+namespace tr {
 	// Basic bitmap atlas structure.
 	template <class Key, class Hash = std::hash<Key>, class Pred = std::equal_to<Key>> struct bitmap_atlas {
 		// The atlas bitmap.
@@ -12,7 +52,9 @@ namespace tr::gfx {
 	// Builds a bitmap atlas from individual bitmaps.
 	template <class Key, class Hash = std::hash<Key>, class Pred = std::equal_to<Key>>
 	bitmap_atlas<Key, Hash, Pred> build_bitmap_atlas(const std::unordered_map<Key, tr::bitmap, Hash, Pred>& entries);
+} // namespace tr
 
+namespace tr::gfx {
 	// Dynamically-allocated texture atlas.
 	template <class Key, class Hash = std::hash<Key>, class Pred = std::equal_to<Key>> class dyn_atlas {
 	  public:
@@ -70,7 +112,7 @@ namespace tr::gfx {
 ///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
 
 template <class Key, class Hash, class Pred>
-tr::gfx::bitmap_atlas<Key, Hash, Pred> tr::gfx::build_bitmap_atlas(const std::unordered_map<Key, tr::bitmap, Hash, Pred>& entries)
+tr::bitmap_atlas<Key, Hash, Pred> tr::build_bitmap_atlas(const std::unordered_map<Key, tr::bitmap, Hash, Pred>& entries)
 {
 	glm::ivec2 size{};
 	atlas_rects<Key, Hash, Pred> rects;
