@@ -11,6 +11,10 @@
 // TR_STRINGIFY(x) expands into the string representation of x:                                                                          //
 //     - TR_STRINGIFY(a < 9) -> "a < 9"                                                                                                  //
 //                                                                                                                                       //
+// TR_MACRO_COMMA_GUARD(...) is used to circumvent macros taking expressions with macros as multiple arguments:                          //
+//     - MY_MACRO(std::array<int, 4>) -> arguments are 'std::array<int', '4>'                                                            //
+//     - MY_MACRO(TR_MACRO_COMMA_GUARD(std::array<int, 4>)) -> argument is 'std::array<int, 4>'                                          //
+//                                                                                                                                       //
 // TR_FILENAME expands into a string literal of the source filename (may fall back to the full path if not supported by the compiler):   //
 //     - TR_FILENAME -> "macro.hpp"                                                                                                      //
 //                                                                                                                                       //
@@ -26,6 +30,11 @@
 // std::filesystem::path::c_str returns a wide char pointer on Windows, so paths must first be converted to a char string.               //
 // We can avoid doing this on Unix and thus save on a string allocation over just writing path.string().c_str() everywhere:              //
 //     - std::filesystem::path path = "~/example"; path /= "sub"; std::format("{}", TR_PATH_CSTR(path)) -> "~/example/sub"               //
+//                                                                                                                                       //
+// TR_UNSPECIALIZED_VARIABLE_TEMPLATE(template_arg, return_type, message) is used when declaring variable templates to disable the       //
+// default specialization with an error:                                                                                                 //
+//     - template <class T> constexpr int my_const{TR_UNSPECIALIZED_VARIABLE_TEMPLATE(T, int, "Nope!")}                                  //
+//     - my_const<int> -> static assertion failed to requirement 'unspecialized<int>': Nope!                                             //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -68,6 +77,8 @@ namespace tr {
 #define TR_STRINGIFY_IMPL(x) #x
 #define TR_STRINGIFY(x) TR_STRINGIFY_IMPL(x)
 
+#define TR_MACRO_COMMA_GUARD(...) __VA_ARGS__
+
 #if defined(__GNUG__) || defined(__clang__)
 #define TR_FILENAME __FILE_NAME__
 #else
@@ -96,3 +107,6 @@ namespace tr {
 #else
 #define TR_PATH_CSTR(path) (path).c_str()
 #endif
+
+#define TR_UNSPECIALIZED_VARIABLE_TEMPLATE(template_arg, return_type, message)                                                             \
+	[]() -> return_type { static_assert(unspecialized<template_arg>, message); }()

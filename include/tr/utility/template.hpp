@@ -2,6 +2,10 @@
 //                                                                                                                                       //
 // Provides template utilities.                                                                                                          //
 //                                                                                                                                       //
+// tr::unspecialized<Ts...> is used to circumvent the fact that static_assert(false) is not a valid expression on older compilers and is //
+// primarily meant for disabling template specializations.                                                                               //
+//     - template <class... Ts> struct example { static_assert(unspecialized<Ts...>); } -> causes a compilation error for example<Ts...> //
+//                                                                                                                                       //
 // tr::tag<T> wraps any type to produce a constexpr-constructible tag:                                                                   //
 //     - std::variant<tag<Ts>...>{tag<T>{}}.index()                                                                                      //
 //       -> Any of 'Ts' could not be constexpr or default-constructible, wrapping them bypasses that and always allows getting the index //
@@ -34,6 +38,9 @@
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
 namespace tr {
+	// Circumvents static_assert(false) not being a valid expression on older compilers, meant for unspecialized templates.
+	template <class...> inline constexpr bool unspecialized{false};
+
 	// Tag class.
 	template <class> struct tag {};
 

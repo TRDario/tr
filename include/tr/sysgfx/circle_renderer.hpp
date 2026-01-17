@@ -54,6 +54,9 @@ namespace tr::gfx {
 			rgba8 fill_color;
 			// The color of the outline of the circle.
 			rgba8 outline_color;
+
+			// Provided for tr::gfx::as_vertex_attribute_list.
+			static constexpr auto as_vertex_attribute_list{gfx::as_vertex_attribute_list<glm::vec2, float, float, rgba8, rgba8>};
 		};
 		// Layer information.
 		struct layer {
@@ -64,6 +67,9 @@ namespace tr::gfx {
 			// The circles to draw on this layer.
 			std::vector<circle> circles;
 		};
+
+		// The bindings of the circle renderer vertex format.
+		static constexpr std::array vertex_format_bindings{make_vertex_binding<glm::u8vec2>(), make_vertex_binding<circle>()};
 
 		// The ID of the renderer.
 		renderer_id m_id;

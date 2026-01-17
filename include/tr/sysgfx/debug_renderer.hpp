@@ -113,6 +113,9 @@ namespace tr::gfx {
 			rgba8 text_color;
 			// The color of the background.
 			rgba8 bg_color;
+
+			// Provided for tr::gfx::as_vertex_attribute_list.
+			static constexpr auto as_vertex_attribute_list{gfx::as_vertex_attribute_list<glm::u8vec2, u8, u8, rgba8, rgba8>};
 		};
 
 		// Class that the debug renderer delegates writing of glyph information to.
@@ -167,6 +170,9 @@ namespace tr::gfx {
 			// Handles a control sequence.
 			void handle_control_sequence(std::string_view::iterator& it, std::string_view::iterator end);
 		};
+
+		// The bindings of the debug renderer vertex format.
+		static constexpr std::array vertex_format_bindings{make_vertex_binding<glm::u8vec2>(), make_vertex_binding<glyph>(1)};
 
 		// The pipeline and shaders used by the renderer.
 		owning_shader_pipeline m_pipeline;

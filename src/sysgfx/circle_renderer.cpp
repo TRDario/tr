@@ -3,12 +3,6 @@
 namespace tr::gfx {
 #include "../../resources/generated/circle_renderer_frag.hpp"
 #include "../../resources/generated/circle_renderer_vert.hpp"
-
-	// Circle renderer vertex format.
-	constexpr std::array<vertex_binding, 2> circle_format_attributes{{
-		{not_instanced, vertex_attributes<glm::u8vec2>::list},
-		{1, unpacked_vertex_attributes<glm::vec2, float, float, rgba8, rgba8>::list},
-	}};
 } // namespace tr::gfx
 
 //
@@ -16,7 +10,7 @@ namespace tr::gfx {
 tr::gfx::circle_renderer::circle_renderer(float render_scale)
 	: m_id{allocate_renderer_id()}
 	, m_pipeline{vertex_shader{circle_renderer_vert}, fragment_shader{circle_renderer_frag}}
-	, m_vertex_format{circle_format_attributes}
+	, m_vertex_format{vertex_format_bindings}
 	, m_quad_vertices{std::array<glm::u8vec2, 4>{{{0, 0}, {0, 1}, {1, 1}, {1, 0}}}}
 {
 	TR_SET_LABEL(m_pipeline, "(tr) Circle Renderer Pipeline");

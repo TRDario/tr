@@ -1,12 +1,5 @@
 #include "../../include/tr/sysgfx/circle_renderer.hpp"
 
-namespace tr::gfx {
-	// Circle renderer instance attributes.
-	template <> struct vertex_attributes<circle_renderer::circle> : unpacked_vertex_attributes<glm::vec2, float, float, rgba8, rgba8> {};
-} // namespace tr::gfx
-
-//
-
 tr::gfx::circle_renderer::staggered_draw_manager::staggered_draw_manager(circle_renderer& renderer,
 																		 std::ranges::subrange<std::map<int, layer>::iterator> range)
 	: m_renderer{renderer}, m_range{range}

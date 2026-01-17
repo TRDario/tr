@@ -19,14 +19,6 @@ namespace tr::gfx {
 #include "../../resources/generated/debug_renderer_frag.hpp"
 #include "../../resources/generated/debug_renderer_vert.hpp"
 
-	// Debug renderer glyph vertex definition.
-	template <> struct vertex_attributes<debug_renderer::glyph> : unpacked_vertex_attributes<glm::u8vec2, u8, u8, rgba8, rgba8> {};
-	// Debug vertex format.
-	constexpr std::array<vertex_binding, 2> debug_format_attributes{{
-		{not_instanced, vertex_attributes<glm::u8vec2>::list},
-		{1, unpacked_vertex_attributes<glm::u8vec2, u8, u8, rgba8, rgba8>::list},
-	}};
-
 	// Formats a duration into a string.
 	static std::string format_duration(std::string_view prefix, duration duration);
 } // namespace tr::gfx
@@ -61,7 +53,7 @@ std::string tr::gfx::format_duration(std::string_view prefix, duration duration)
 
 tr::gfx::debug_renderer::debug_renderer(float scale, u8 column_limit)
 	: m_pipeline{vertex_shader{debug_renderer_vert}, fragment_shader{debug_renderer_frag}}
-	, m_format{debug_format_attributes}
+	, m_format{vertex_format_bindings}
 	, m_font{load_embedded_bitmap(debug_renderer_font)}
 	, m_mesh{std::array<glm::u8vec2, 4>{{{0, 0}, {0, 1}, {1, 1}, {1, 0}}}}
 	, m_id{allocate_renderer_id()}

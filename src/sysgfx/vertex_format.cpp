@@ -1,15 +1,15 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Implements the non-templated parts of vertex_format.hpp.                                                                              //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #include "../../include/tr/sysgfx/vertex_format.hpp"
 #include "../../include/tr/sysgfx/gl_call.hpp"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/impl.hpp"
 
-namespace tr::gfx {
-	constexpr std::array<vertex_binding, 3> vertex2_attributes{{
-		{not_instanced, vertex_attributes<glm::vec2>::list},
-		{not_instanced, vertex_attributes<glm::vec2>::list},
-		{not_instanced, vertex_attributes<rgba8>::list},
-	}};
-}
+////////////////////////////////////////////////////////////// VERTEX FORMAT //////////////////////////////////////////////////////////////
 
 tr::gfx::vertex_format::vertex_format(std::span<const vertex_binding> bindings)
 #ifdef TR_ENABLE_GL_CHECKS
@@ -25,11 +25,27 @@ tr::gfx::vertex_format::vertex_format(std::span<const vertex_binding> bindings)
 
 		TR_GL_CALL(glVertexArrayBindingDivisor, m_vao.get(), binding_id, binding.divisor);
 		GLuint offset{0};
-		for (const vertex_attribute& a : binding.attrs) {
-			TR_GL_CALL(glVertexArrayAttribFormat, m_vao.get(), attr_id, a.elements, GLenum(a.type), a.normalized, offset);
+		for (const vertex_attribute& attr : binding.attrs) {
+			TR_ASSERT(attr.type != vertex_attribute_type::unknown, "Tried to construct vertex format with invalid attribute '{}'.", attr);
+
+			TR_GL_CALL(glVertexArrayAttribFormat, m_vao.get(), attr_id, attr.elements, GLenum(attr.type), attr.normalized, offset);
 			TR_GL_CALL(glEnableVertexArrayAttrib, m_vao.get(), attr_id);
 			TR_GL_CALL(glVertexArrayAttribBinding, m_vao.get(), attr_id++, binding_id);
-			offset += a.size_bytes();
+
+			switch (attr.type) {
+			case vertex_attribute_type::i8:
+			case vertex_attribute_type::u8:
+				offset += attr.elements;
+			case vertex_attribute_type::i16:
+			case vertex_attribute_type::u16:
+				offset += 2 * attr.elements;
+			case vertex_attribute_type::i32:
+			case vertex_attribute_type::u32:
+			case vertex_attribute_type::f32:
+				offset += 4 * attr.elements;
+			default:
+				unreachable();
+			}
 		}
 	}
 }
@@ -62,8 +78,14 @@ std::string tr::gfx::vertex_format::label() const
 
 tr::gfx::vertex_format& tr::gfx::vertex2_format()
 {
+	static constexpr std::array<vertex_binding, 3> bindings{{
+		{not_instanced, as_vertex_attribute_list<glm::vec2>},
+		{not_instanced, as_vertex_attribute_list<glm::vec2>},
+		{not_instanced, as_vertex_attribute_list<rgba8>},
+	}};
+
 	if (!g_vertex2_format.has_value()) {
-		g_vertex2_format.emplace(vertex2_attributes);
+		g_vertex2_format.emplace(bindings);
 		TR_SET_LABEL(*g_vertex2_format, "(tr) 2D Vertex Format");
 	}
 	return *g_vertex2_format;
