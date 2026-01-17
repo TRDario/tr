@@ -45,6 +45,8 @@
 #pragma once
 #include "../utility/handle.hpp"
 
+//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
+
 namespace tr::gfx {
 	// A variable type that can be passed as a vertex attribute.
 	enum class vertex_attribute_type : u16 {

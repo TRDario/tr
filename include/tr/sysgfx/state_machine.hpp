@@ -1,5 +1,44 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Provides a state machine class and related functionality.                                                                             //
+//                                                                                                                                       //
+// The state machine works with the polymorphic tr::state. States inherited from tr::state may overload the                              //
+// .handle_event(const tr::sys::event& event) method used to handle incoming events, the .tick() method used to do fixed 'tick' updates, //
+// the .update() method used to do delta-time updates, and the .draw() method used to draw the state.                                    //
+// .handle_event(), .tick(), and .update() all return tr::next_state, which is a sum type containing either a state, tr::keep_state, or  //
+// tr::drop_state. A tr::next_state can be constructed with tr::make_next_state:                                                         //
+//     - struct my_state : tr::state { next_state tick() override { return tr::make_next_state<my_other_state>(); } };                   //
+//       -> provides a tick function that returns the next state                                                                         //
+// If any of the above functions returns tr::keep_state, the state machine keeps that state.                                             //
+// If any of the above functions returns tr::drop_state, the state machine drops that state and becomes empty.                           //
+// Otherwise, the state machine replaces the current state with the returned one.                                                        //
+//                                                                                                                                       //
+// The state machine is constructed empty; a state can be emplaced into it with the .emplace<T>(args...) method, and can also be cleared //
+// with the .clear() method. Whether a state machine is empty can be queried with the .empty() method. The current state can be accessed //
+// using the .get<T>() method:                                                                                                           //
+//     - tr::state_machine state_machine -> creates an empty state machine                                                               //
+//     - state_machine.empty() -> true                                                                                                   //
+//     - state_machine.emplace<my_state>() -> state_machine now holds a state of type 'my_state'                                         //
+//     - state_machine.empty() -> false                                                                                                  //
+//     - state_machine.get<my_state>() -> gets the state                                                                                 //
+//     - state_machine.clear() -> clears the state machine, state_machine is now empty again                                             //
+//                                                                                                                                       //
+// The state machine provides the methods .handle_event(), .tick(), .update(), and .draw() that call the corresponding method in the     //
+// contained state, if one is present. .tick(), .update(), and .draw() are benchmarked internally, the results of which can be queried:  //
+//     - state_machine.handle_event(event) -> calls .handle_event() on the contained state, or does nothing if empty                     //
+//     - state_machine.tick() -> calls .tick() on the contained state and measures the taken time, or does nothing if empty              //
+//     - state_machine.tick_benchmark() -> gets access to the tick benchmark                                                             //
+//     - state_machine.update(10ms) -> calls .update() on the contained state and measures the taken time, or does nothing if empty      //
+//     - state_machine.update_benchmark() -> gets access to the update benchmark                                                         //
+//     - state_machine.draw() -> calls .draw() on the contained state and measures the taken time, or does nothing if empty              //
+//     - state_machine.draw_benchmark() -> gets access to the draw benchmark                                                             //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include "../utility/benchmark.hpp"
+
+//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
 namespace tr {
 	namespace sys {

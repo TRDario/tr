@@ -1,4 +1,12 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Implements state_machine.hpp.                                                                                                         //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #include "../../include/tr/sysgfx/state_machine.hpp"
+
+////////////////////////////////////////////////////////////////// STATE //////////////////////////////////////////////////////////////////
 
 tr::next_state tr::state::handle_event(const sys::event&)
 {
@@ -17,7 +25,7 @@ tr::next_state tr::state::update(duration)
 
 void tr::state::draw() {}
 
-//
+////////////////////////////////////////////////////////////// STATE MACHINE //////////////////////////////////////////////////////////////
 
 bool tr::state_machine::empty() const
 {
@@ -39,14 +47,10 @@ const tr::benchmark& tr::state_machine::draw_benchmark() const
 	return m_draw_benchmark;
 }
 
-//
-
 void tr::state_machine::clear()
 {
 	m_current_state.reset();
 }
-
-//
 
 void tr::state_machine::handle_event(const sys::event& event)
 {
