@@ -1,6 +1,14 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Implements shader_pipeline.hpp.                                                                                                       //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #include "../../include/tr/sysgfx/shader_pipeline.hpp"
 #include "../../include/tr/sysgfx/gl_call.hpp"
 #include "tr/sysgfx/shader.hpp"
+
+///////////////////////////////////////////////////////////// SHADER PIPELINE /////////////////////////////////////////////////////////////
 
 tr::gfx::shader_pipeline::shader_pipeline()
 {
@@ -71,7 +79,7 @@ std::string tr::gfx::shader_pipeline::label() const
 }
 #endif
 
-//
+////////////////////////////////////////////////////////// OWNING SHADER PIPELINE /////////////////////////////////////////////////////////
 
 tr::gfx::owning_shader_pipeline::owning_shader_pipeline(gfx::vertex_shader&& vshader, gfx::fragment_shader&& fshader)
 	: m_vshader{std::move(vshader)}, m_fshader{std::move(fshader)}, m_base{m_vshader, m_fshader}
@@ -115,7 +123,7 @@ std::string tr::gfx::owning_shader_pipeline::label() const
 }
 #endif
 
-//
+/////////////////////////////////////////////////// OWNING TESSELLATION SHADER PIPELINE ///////////////////////////////////////////////////
 
 tr::gfx::owning_tessellation_shader_pipeline::owning_tessellation_shader_pipeline(gfx::vertex_shader&& vshader,
 																				  gfx::tessellation_control_shader&& tcshader,

@@ -170,6 +170,7 @@ namespace tr::gfx {
 		// Handle to an OpenGL FBO.
 		handle<unsigned int, 0, fbo_deleter> m_fbo;
 
+		// Hide the base reallocation function since we provide our own.
 		using texture::reallocate;
 	};
 } // namespace tr::gfx

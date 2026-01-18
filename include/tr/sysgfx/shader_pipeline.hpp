@@ -1,5 +1,30 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Provides shader pipeline classes.                                                                                                     //
+//                                                                                                                                       //
+// Shader pipelines are an abstraction over OpenGL program pipeline objects.                                                             //
+//                                                                                                                                       //
+// tr::gfx::shader_pipeline is an object that references a shader of each stage and combines them into a single pipeline. It does not    //
+// take ownership of the shaders passed to it. A pipeline can be created with just the vertex and fragment shaders, or with the two      //
+// tessellation shader stages included:                                                                                                  //
+//     - tr::gfx::shader_pipeline{vshader, fshader} -> creates a pipeline with vertex and fragment shader stages                         //
+//     - tr::gfx::shader_pipeline{vshader, tcshader, teshader, fshader} -> creates a pipeline with tessellation stages included          //
+//                                                                                                                                       //
+// tr::gfx::owning_shader_pipeline and tr::gfx::owning_tessellation_shader_pipeline are objects that *do* own the shader stages within   //
+// them. After construction, these shaders can be accessed from the pipeline:                                                            //
+//     - tr::gfx::owning_shader_pipeline pipeline{tr::gfx::vertex_shader{vshader_src}, tr::gfx::fragment_shader{fshader_src}}            //
+//       -> creates vertex and fragment shaders and then stores them in the pipeline                                                     //
+//     - pipeline.vertex_shader().set_uniform(0, 5.0f) -> sets uniform 0 of the vertex shader of the pipeline                            //
+//                                                                                                                                       //
+// The label of a shader pipeline can be set with TR_SET_LABEL(pipeline, label):                                                         //
+//     - TR_SET_LABEL(pipeline, "Example pipeline") -> 'atlas' is now labelled "Example pipeline"                                        //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include "shader.hpp"
+
+//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
 namespace tr::gfx {
 	// Shader program pipeline.
