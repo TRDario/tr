@@ -36,6 +36,17 @@
 //     - template <class T> constexpr int my_const{TR_UNSPECIALIZED_VARIABLE_TEMPLATE(T, int, "Nope!")}                                  //
 //     - my_const<int> -> static assertion failed to requirement 'unspecialized<int>': Nope!                                             //
 //                                                                                                                                       //
+// TR_DEFINE_ENUM_BITMASK_OPERATORS(type) defines bitmask operators (&, |, ^, ~) for enum class types:                                   //
+//     - enum class my_enum {                                                                                                            //
+//           l = 1,                                                                                                                      //
+//           r = 2,                                                                                                                      //
+//           lr = 3                                                                                                                      //
+//       };                                                                                                                              //
+//       TR_DEFINE_ENUM_BITMASK_OPERATORS(my_enum);                                                                                      //
+//     - my_enum::lr & my_enum::r -> my_enum::r                                                                                          //
+//     - my_enum::l | my_enum::r -> my_enum::lr                                                                                          //
+//     - my_enum::lr ^ my_enum::r -> my_enum::l                                                                                          //
+//                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
@@ -110,3 +121,58 @@ namespace tr {
 
 #define TR_UNSPECIALIZED_VARIABLE_TEMPLATE(template_arg, return_type, message)                                                             \
 	[]() -> return_type { static_assert(unspecialized<template_arg>, message); }()
+
+namespace tr {
+	// Wraps an enum class to allow conversion to bool.
+	template <enumerator T> struct enum_wrapper {
+		T base;
+
+		// Converts the enumerator to bool.
+		constexpr explicit operator bool() const
+		{
+			return (base != T{0});
+		}
+
+		// Unwraps the enumerator.
+		constexpr operator T() const
+		{
+			return base;
+		}
+
+		// Unwraps the enumerator.
+		constexpr T unwrap() const
+		{
+			return base;
+		}
+	};
+} // namespace tr
+
+#define TR_DEFINE_ENUM_BITMASK_OPERATORS(type)                                                                                             \
+	constexpr tr::enum_wrapper<type> operator&(type l, type r)                                                                             \
+	{                                                                                                                                      \
+		return tr::enum_wrapper{type(std::underlying_type_t<type>(l) & std::underlying_type_t<type>(r))};                                  \
+	}                                                                                                                                      \
+	constexpr tr::enum_wrapper<type> operator|(type l, type r)                                                                             \
+	{                                                                                                                                      \
+		return tr::enum_wrapper{type(std::underlying_type_t<type>(l) | std::underlying_type_t<type>(r))};                                  \
+	}                                                                                                                                      \
+	constexpr tr::enum_wrapper<type> operator^(type l, type r)                                                                             \
+	{                                                                                                                                      \
+		return tr::enum_wrapper{type(std::underlying_type_t<type>(l) ^ std::underlying_type_t<type>(r))};                                  \
+	}                                                                                                                                      \
+	constexpr tr::enum_wrapper<type> operator~(type l)                                                                                     \
+	{                                                                                                                                      \
+		return tr::enum_wrapper{type(~std::underlying_type_t<type>(l))};                                                                   \
+	}                                                                                                                                      \
+	constexpr type& operator&=(type& l, type r)                                                                                            \
+	{                                                                                                                                      \
+		return l = (l & r);                                                                                                                \
+	}                                                                                                                                      \
+	constexpr type& operator|=(type& l, type r)                                                                                            \
+	{                                                                                                                                      \
+		return l = (l | r);                                                                                                                \
+	}                                                                                                                                      \
+	constexpr type& operator^=(type& l, type r)                                                                                            \
+	{                                                                                                                                      \
+		return l = (l ^ r);                                                                                                                \
+	}

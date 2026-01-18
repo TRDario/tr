@@ -55,7 +55,7 @@ namespace tr::sys {
 		underline = 4,    // Underlined font.
 		strikethrough = 8 // Striked font.
 	};
-	DEFINE_BITMASK_OPERATORS(ttf_style);
+	TR_DEFINE_ENUM_BITMASK_OPERATORS(ttf_style);
 
 	// Font glyph metrics.
 	struct glyph_metrics {

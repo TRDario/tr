@@ -74,7 +74,7 @@ namespace tr::sys {
 		alt = 0x0300,
 		unknown = 0xFFFF
 	};
-	DEFINE_BITMASK_OPERATORS(keymod);
+	TR_DEFINE_ENUM_BITMASK_OPERATORS(keymod);
 
 	// Converts a string to a scancode.
 	constexpr scancode to_scancode(std::string_view str);
