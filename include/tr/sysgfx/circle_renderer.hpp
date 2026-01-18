@@ -1,8 +1,47 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Provides an efficient circle renderer.                                                                                                //
+//                                                                                                                                       //
+// The circle renderer is constructed with an initial render scale (by default 1.0f). The render scale is used to determine the ratio    //
+// between logical pixels and physical pixels on the render target. The render scale can be modified with the .set_render_scale() method //
+// at any point afterwards:                                                                                                              //
+//     - tr::gfx::circle_renderer{}                                                                                                      //
+//       -> creates a circle render with render scale 1.0f: a circle with radius 5.0f will have a real radius of 5px                     //
+//     - tr::gfx::circle_renderer{2.0f}                                                                                                  //
+//       -> creates a circle render with render scale 2.0f: a circle with radius 5.0f will have a real radius of 10px                    //
+//     - tr::gfx::circle_renderer circle{}; circle.set_render_scale(2.0f)                                                                //
+//       -> equivalent to the above                                                                                                      //
+//                                                                                                                                       //
+// The circle renderer is a layer-based renderer, compatible with the utilities provided in layered_drawing.hpp. Each layer has its own  //
+// transformation matrix (falls back to the global default if not provided) and blending mode (falls back to alpha blending if not       //
+// provided) that can be set. The global default transformation matrix can also be set:                                                  //
+//     - circle.set_default_transform(tr::ortho(tr::frect2{{1000, 1000}})) -> sets the global transformation matrix                      //
+//     - circle.set_layer_transform(1, tr::ortho(tr::frect2{{500, 500}})) -> sets the transformation matrix for layer 1                  //
+//     - circle.set_layer_blend_mode(1, tr::gfx::premultiplied_alpha_blending) -> sets the blending mode for layer 1                     //
+//                                                                                                                                       //
+// Circles are appended to the drawing list of the circle renderer one-by-one. Each circle can be filled, outlined, or both:             //
+//     - circle.add_circle(0, {{500, 500}, 10}, "FFFFFF"_rgba8)                                                                          //
+//       -> adds a white circle of radius 10 centered at (500, 500) to layer 0                                                           //
+//     - circle.add_circle_outline(0, {{200, 200}, 20}, 5, "FF0000"_rgba8)                                                               //
+//       -> adds a red circle outline of radius 20 and thickness 5 centered at (200, 200) to layer 0                                     //
+//     - circle.add_outlined_circle(0, {{100, 250}, 15}, 4, "0000FF"_rgba8, "00FF00"_rgba8)                                              //
+//       -> adds a blue circle of radius 15 centered at (100, 250)  with a green outline of thickness 4 to layer 0                       //
+//                                                                                                                                       //
+// Added circles are not drawn until a call to one of the drawing functions. Aside from supporting the functions in layered_drawing.hpp, //
+// the circle renderer can be drawn alone. Drawn circles are erased from the renderer:                                                   //
+//     - circle.draw_layer(0, target) -> draws layer 0 to the target                                                                     //
+//     - circle.draw_layer_range(0, 10, target) -> draws layers 0-10 to the target                                                       //
+//     - circle.draw(target) -> draws all layers to the target                                                                           //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #include "backbuffer.hpp"
 #include "blending.hpp"
 #include "graphics_context.hpp"
 #include "render_target.hpp"
 #include "shader_pipeline.hpp"
+
+///////////////////////////////////////////////////////////// CIRCLE RENDERER /////////////////////////////////////////////////////////////
 
 namespace tr::gfx {
 	// Efficient circle renderer.
@@ -17,10 +56,10 @@ namespace tr::gfx {
 		void set_render_scale(float render_scale);
 		// Sets the default transformation matrix used by circles on any layer without its own default transform.
 		void set_default_transform(const glm::mat4& mat);
-		// Sets the default transformation matrix used by circles on a layer.
-		void set_default_layer_transform(int layer, const glm::mat4& mat);
-		// Sets the default blending mode used by circles on a layer.
-		void set_default_layer_blend_mode(int layer, const blend_mode& blend_mode);
+		// Sets the transformation matrix used by circles on a layer.
+		void set_layer_transform(int layer, const glm::mat4& mat);
+		// Sets the blending mode used by circles on a layer.
+		void set_layer_blend_mode(int layer, const blend_mode& blend_mode);
 
 		// Adds a filled circle to the renderer.
 		void add_circle(int layer, const circle& circle, rgba8 color);

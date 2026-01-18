@@ -1,11 +1,17 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Implements circle_renderer.hpp.                                                                                                       //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #include "../include/tr/sysgfx/circle_renderer.hpp"
+
+///////////////////////////////////////////////////////////// CIRCLE RENDERER /////////////////////////////////////////////////////////////
 
 namespace tr::gfx {
 #include "../../resources/generated/circle_renderer_frag.hpp"
 #include "../../resources/generated/circle_renderer_vert.hpp"
 } // namespace tr::gfx
-
-//
 
 tr::gfx::circle_renderer::circle_renderer(float render_scale)
 	: m_id{allocate_renderer_id()}
@@ -39,14 +45,14 @@ void tr::gfx::circle_renderer::set_default_transform(const glm::mat4& mat)
 	m_default_transform = mat;
 }
 
-void tr::gfx::circle_renderer::set_default_layer_transform(int layer, const glm::mat4& mat)
+void tr::gfx::circle_renderer::set_layer_transform(int layer, const glm::mat4& mat)
 {
 	TR_ASSERT(!m_locked, "Tried to set default layer transform on a locked circle renderer.");
 
 	m_layers[layer].transform = mat;
 }
 
-void tr::gfx::circle_renderer::set_default_layer_blend_mode(int layer, const blend_mode& blend_mode)
+void tr::gfx::circle_renderer::set_layer_blend_mode(int layer, const blend_mode& blend_mode)
 {
 	TR_ASSERT(!m_locked, "Tried to set default layer blending mode on a locked circle renderer.");
 
