@@ -40,11 +40,13 @@
 #include "vertex_buffer.hpp"
 #include "vertex_format.hpp"
 
+namespace tr::gfx {
+	enum class renderer_id : u32;
+}
+
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
 namespace tr::gfx {
-	enum class renderer_id : u32;
-
 	// Defines a benchmark interface compatible with debug_renderer.
 	template <class T>
 	concept debug_writable_benchmark = requires(const T& benchmark) {

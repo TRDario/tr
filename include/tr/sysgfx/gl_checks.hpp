@@ -76,4 +76,4 @@ struct TR_FMT::formatter<tr::gfx::glsl_variable> : private TR_FMT::formatter<tr:
 
 ////////////////////////////////////////////////////////////// IMPLEMENTATION /////////////////////////////////////////////////////////////
 
-#include "gl_checks_impl.hpp" // IWYU pragma: keep
+#include "gl_checks_impl.hpp" // IWYU pragma: export

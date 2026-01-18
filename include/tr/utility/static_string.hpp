@@ -144,4 +144,4 @@ template <tr::usize S> struct TR_FMT::formatter<tr::static_string<S>> : TR_FMT::
 
 ////////////////////////////////////////////////////////////// IMPLEMENTATION /////////////////////////////////////////////////////////////
 
-#include "static_string_impl.hpp" // IWYU pragma: keep
+#include "static_string_impl.hpp" // IWYU pragma: export

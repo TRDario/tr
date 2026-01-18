@@ -3,10 +3,12 @@
 #include "../../include/tr/utility/mstream.hpp"
 #include <lz4.h>
 
-namespace tr {
+namespace {
 	// Size of an encrypted chunk header.
-	constexpr usize header_size{7};
-} // namespace tr
+	constexpr tr::usize header_size{7};
+} // namespace
+
+////////////////////////////////////////////////////////////////// ERRORS /////////////////////////////////////////////////////////////////
 
 tr::decryption_error::decryption_error(std::string_view description)
 	: m_description{description}
@@ -48,6 +50,35 @@ std::string_view tr::encryption_error::details() const
 	return {};
 }
 
+////////////////////////////////////////////////////////// ENCRYPTION/DECRYPTION //////////////////////////////////////////////////////////
+
+void tr::encrypt_to(std::vector<std::byte>& out, std::span<const std::byte> raw)
+{
+	const u8 key{u8(gen_random_seed())};
+
+	out.resize(LZ4_compressBound(int(raw.size())) + header_size);
+	const std::span<char> compress_out{(char*)(out.data() + header_size), out.size() - header_size};
+
+	omstream header{std::views::take(out, header_size)};
+	write_binary(header, "tr");
+	write_binary(header, key);
+	write_binary(header, u32(raw.size()));
+
+	const int used_size{LZ4_compress_default((const char*)raw.data(), compress_out.data(), int(raw.size()), int(compress_out.size()))};
+	out.resize(used_size + header_size);
+
+	for (std::byte& byte : std::views::drop(out, 3)) {
+		byte = std::byte(int(byte ^ std::byte(key)) - 170);
+	}
+}
+
+std::vector<std::byte> tr::encrypt(std::span<const std::byte> raw)
+{
+	std::vector<std::byte> out;
+	encrypt_to(out, raw);
+	return out;
+}
+
 void tr::decrypt_to(std::vector<std::byte>& out, std::vector<std::byte> encrypted)
 {
 	imstream header{std::views::take(encrypted, header_size)};
@@ -73,30 +104,5 @@ std::vector<std::byte> tr::decrypt(std::vector<std::byte> encrypted)
 {
 	std::vector<std::byte> out;
 	decrypt_to(out, std::move(encrypted));
-	return out;
-}
-
-void tr::encrypt_to(std::vector<std::byte>& out, std::span<const std::byte> raw, u8 key)
-{
-	out.resize(LZ4_compressBound(int(raw.size())) + header_size);
-	const std::span<char> compress_out{(char*)(out.data() + header_size), out.size() - header_size};
-
-	omstream header{std::views::take(out, header_size)};
-	write_binary(header, "tr");
-	write_binary(header, key);
-	write_binary(header, u32(raw.size()));
-
-	const int used_size{LZ4_compress_default((const char*)raw.data(), compress_out.data(), int(raw.size()), int(compress_out.size()))};
-	out.resize(used_size + header_size);
-
-	for (std::byte& byte : std::views::drop(out, 3)) {
-		byte = std::byte(int(byte ^ std::byte(key)) - 170);
-	}
-}
-
-std::vector<std::byte> tr::encrypt(std::span<const std::byte> raw, u8 key)
-{
-	std::vector<std::byte> out;
-	encrypt_to(out, raw, key);
 	return out;
 }

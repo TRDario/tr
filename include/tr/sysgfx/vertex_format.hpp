@@ -143,4 +143,4 @@ struct TR_FMT::formatter<tr::gfx::vertex_attribute> : private TR_FMT::formatter<
 
 ////////////////////////////////////////////////////////////// IMPLEMENTATION /////////////////////////////////////////////////////////////
 
-#include "vertex_format_impl.hpp" // IWYU pragma: keep
+#include "vertex_format_impl.hpp" // IWYU pragma: export

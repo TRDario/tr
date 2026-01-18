@@ -30,11 +30,13 @@
 #include "../utility/color.hpp"
 #include "../utility/geometry.hpp"
 
+namespace tr::gfx {
+	class render_target;
+}
+
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
 namespace tr::gfx {
-	class render_target;
-
 	// Gets the size of the backbuffer.
 	glm::ivec2 backbuffer_size();
 
