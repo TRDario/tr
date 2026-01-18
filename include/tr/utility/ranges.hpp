@@ -2,12 +2,14 @@
 //                                                                                                                                       //
 // Provides miscellaneous range functionality.                                                                                           //
 //                                                                                                                                       //
-// Objects and ranges can be converted to spans of bytes, and conversely, byte spans can be converted to spans of objects:               //
+// Objects and ranges can be converted to spans of bytes, and conversely, byte spans can be converted to an object or spans of objects:  //
 //     - glm::mat4 transform; -> tr::as_bytes(transform) -> std::span<const std::byte, 64> over 'transform'                              //
 //     - glm::mat4 transform; -> tr::as_mut_bytes(transform) -> std::span<std::byte, 64> over 'transform'                                //
 //     - int data[5]{0, 1, 2, 3, 4}; tr::range_bytes(data) -> std::span<const std::byte, 20> over 'data'                                 //
 //     - int data[5]{0, 1, 2, 3, 4}; tr::range_mut_bytes(data) -> std::span<std::byte, 20> over 'data'                                   //
 //     - std::vector<float> data; tr::range_bytes(data) -> std::span<float> over 'data'                                                  //
+//     - std::span<std::byte, 64> bytes; tr::as_object<glm::mat4>(bytes) -> const glm::mat4&                                             //
+//     - std::span<std::byte, 64> bytes; tr::as_mut_object<glm::mat4>(bytes) -> glm::mat4&                                               //
 //     - std::span<std::byte, 64> bytes; tr::as_objects<int>(bytes) -> std::span<int, 16> over 'bytes'                                   //
 //     - std::span<std::byte> bytes; tr::as_mut_objects<float>(bytes) -> std::span<float> over 'bytes'                                   //
 // NOTE: using tr::as_bytes on a range object will literally get the bytes of the object, which works for in-place allocated containers, //
@@ -37,6 +39,10 @@ namespace tr {
 	// Gets a view of an object as a span of mutable bytes.
 	template <standard_layout T> std::span<std::byte, sizeof(T)> as_mut_bytes(T& object);
 
+	// Reinterprets a span of mutable bytes as an object and returns a reference to it.
+	template <standard_layout T, usize S> T& as_mut_object(std::span<std::byte, S> bytes);
+	// Reinterprets a span of immutable bytes as a const object and returns a reference to it.
+	template <standard_layout T, usize S> const T& as_object(std::span<const std::byte, S> bytes);
 	// Reinterprets a span of mutable bytes as a span of objects.
 	template <standard_layout T, usize S> auto as_mut_objects(std::span<std::byte, S> bytes);
 	// Reinterprets a span of immutable bytes as a span of const objects.
@@ -70,6 +76,30 @@ template <tr::standard_layout T> std::span<const std::byte, sizeof(T)> tr::as_by
 template <tr::standard_layout T> std::span<std::byte, sizeof(T)> tr::as_mut_bytes(T& object)
 {
 	return std::as_writable_bytes(std::span<T, 1>{std::addressof(object), 1});
+}
+
+template <tr::standard_layout T, tr::usize S> T& tr::as_mut_object(std::span<std::byte, S> bytes)
+{
+	if constexpr (S != std::dynamic_extent) {
+		static_assert(S == sizeof(T), "Cannot reinterpret byte span as object due to size != sizeof(T).");
+	}
+	else {
+		TR_ASSERT(S == sizeof(T), "Cannot reinterpret byte span as object due to size != sizeof(T).");
+	}
+
+	return *(T*)bytes.data();
+}
+
+template <tr::standard_layout T, tr::usize S> const T& tr::as_object(std::span<const std::byte, S> bytes)
+{
+	if constexpr (S != std::dynamic_extent) {
+		static_assert(S == sizeof(T), "Cannot reinterpret byte span as object due to size != sizeof(T).");
+	}
+	else {
+		TR_ASSERT(S == sizeof(T), "Cannot reinterpret byte span as object due to size != sizeof(T).");
+	}
+
+	return *(const T*)bytes.data();
 }
 
 template <tr::standard_layout T, tr::usize S> auto tr::as_mut_objects(std::span<std::byte, S> bytes)

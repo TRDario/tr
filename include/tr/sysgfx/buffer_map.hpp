@@ -59,8 +59,10 @@ namespace tr::gfx {
 	// Mapped buffer object.
 	template <class T> class buffer_object_map : basic_buffer_map {
 	  public:
-		// Casts the map into a reference to the object.
+		// Gets a reference to the object.
 		operator T&() const;
+		//  Gets a reference to the object.
+		T& operator*() const;
 		// Pointer access to the mapped object.
 		T* operator->() const;
 		// Assigns the object.

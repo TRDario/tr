@@ -131,7 +131,7 @@ tr::next_state tr::make_next_state(Args&&... args)
 
 template <std::derived_from<tr::state> T> const T& tr::state_machine::get() const
 {
-	return (const T&)(*m_current_state);
+	return (const T&)*m_current_state;
 }
 
 template <std::derived_from<tr::state> T, class... Args>
@@ -143,7 +143,7 @@ void tr::state_machine::emplace(Args&&... args)
 
 template <std::derived_from<tr::state> T> T& tr::state_machine::get()
 {
-	return (T&)(*m_current_state);
+	return (T&)*m_current_state;
 }
 
 template <class R, class P> void tr::state_machine::update(std::chrono::duration<R, P> delta)

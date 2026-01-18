@@ -17,17 +17,22 @@ tr::gfx::buffer_object_map<T>::buffer_object_map(basic_buffer_map&& map)
 
 template <class T> tr::gfx::buffer_object_map<T>::operator T&() const
 {
-	return *(T*)std::span<std::byte>{*this}.data();
+	return as_mut_object<T>(std::span<std::byte>{*this});
+}
+
+template <class T> T& tr::gfx::buffer_object_map<T>::operator*() const
+{
+	return *this;
 }
 
 template <class T> T* tr::gfx::buffer_object_map<T>::operator->() const
 {
-	return (T*)std::span<std::byte>{*this}.data();
+	return &**this;
 }
 
 template <class T> template <class T1> T& tr::gfx::buffer_object_map<T>::operator=(T1&& r) const
 {
-	return ((T&)*this) = std::forward<T1>(r);
+	return **this = std::forward<T1>(r);
 }
 
 ///////////////////////////////////////////////////////////// BUFFER SPAN MAP /////////////////////////////////////////////////////////////
