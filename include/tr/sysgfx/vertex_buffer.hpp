@@ -1,6 +1,43 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Provides vertex buffer classes.                                                                                                       //
+//                                                                                                                                       //
+// Vertex buffers are an abstraction over OpenGL VBOs.                                                                                   //
+//                                                                                                                                       //
+// The vertex buffer comes in two variants: static vertex buffers are initialized once and are immutable, while dynamic vertex buffers   //
+// can be resized and modified at will. An untyped (prefixed with basic_) and typed variant of each of these is provided:                //
+//     - tr::gfx::basic_static_vertex_buffer -> untyped static vertex buffer                                                             //
+//     - tr::gfx::static_vertex_buffer<T> -> typed static vertex buffer                                                                  //
+//     - tr::gfx::basic_dyn_vertex_buffer -> untyped dynamic vertex buffer                                                               //
+//     - tr::gfx::dyn_vertex_buffer<T> -> typed dynamic vertex buffer                                                                    //
+//                                                                                                                                       //
+// Static vertex buffers are constructed with a span of data that will be copied into the buffer:                                        //
+//     - tr::gfx::static_vertex_buffer<glm::vec2> buffer{data} -> copies 'data' into the buffer                                          //
+//                                                                                                                                       //
+// Dynamic vertex buffers are constructed empty. Whether a buffer is empty can be checked with the .empty() method. Much like            //
+// std::vector, dynamic vertex buffers distinguish between buffer size and capacity, both of which can be queried with the respective    //
+// method. The buffer automatically reallocates itself if its current capacity is insufficient, but the user can reserve a capacity in   //
+// advance with the .advance() method. Note that unlike std::vector, this clears any previous buffer data. The buffer can be resized     //
+// with .resize() or set to a copy of a span with .set(), which automatically sets its size to match that of the copied buffer.          //
+// The .set_region() method can be used to set a region of the buffer; this function never affects the size or capacity of the buffer.   //
+// The buffer can be cleared with the .clear() method, but like with std::vector, the allocated capacity is retained:                    //
+//     - tr::gfx::dyn_vertex_buffer<glm::vec2> buffer; buffer.empty() -> true                                                            //
+//     - buffer.reserve(100); buffer.resize(50) -> buffer now has size 50, capacity 128                                                  //
+//     - buffer.size(); buffer.capacity() -> 50, 128                                                                                     //
+//     - std::array<glm::vec2, 500> data; buffer.set(data) -> buffer now stores a copy of 'data', has size 500, capacity 512             //
+//     - std::array<glm::vec2, 100> data2; buffer.set_region(400, data2) -> a copy of data2 is now in buffer[400-499]                    //
+//     - buffer.clear() -> buffer now has size 0, capacity 512                                                                           //
+//                                                                                                                                       //
+// The label of a vertex buffer can be set with TR_SET_LABEL(vbuf, label):                                                               //
+//     - TR_SET_LABEL(vbuf, "Example buffer") -> 'atlas' is now labelled "Example buffer"                                                //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include "../utility/handle.hpp"
 #include "../utility/ranges.hpp"
+
+//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
 namespace tr::gfx {
 	// Static vertex buffer class for holding immutable vertex data.
