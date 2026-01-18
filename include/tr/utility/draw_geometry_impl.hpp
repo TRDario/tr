@@ -1,5 +1,13 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Implements draw_geometry.hpp.                                                                                                         //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include "draw_geometry.hpp"
+
+//////////////////////////////////////////////////////////// SIZE CALCULATIONS ////////////////////////////////////////////////////////////
 
 inline tr::usize tr::smooth_polygon_vertices(float r)
 {
@@ -15,8 +23,6 @@ inline tr::usize tr::smooth_arc_vertices(float r, angle sizeth)
 
 	return std::max(usize(7 * std::pow(r, 1 / 2.4f) / (sizeth / 1_turns)), 3_uz);
 }
-
-//
 
 constexpr tr::usize tr::line_strip_indices(u16 vertices)
 {
@@ -38,7 +44,7 @@ constexpr tr::usize tr::polygon_outline_indices(u16 vertices)
 	return vertices * 6;
 }
 
-//
+///////////////////////////////////////////////////////////////// INDICES /////////////////////////////////////////////////////////////////
 
 template <std::output_iterator<tr::u16> O> constexpr O tr::fill_line_strip_indices(O out, u16 vertices, u16 base)
 {
@@ -127,7 +133,7 @@ template <std::output_iterator<tr::u16> O> constexpr O tr::fill_simple_polygon_i
 	return out;
 }
 
-//
+///////////////////////////////////////////////////////////////// VERTICES ////////////////////////////////////////////////////////////////
 
 template <std::output_iterator<glm::vec2> O> constexpr O tr::fill_rectangle_vertices(O out, const frect2& rect)
 {

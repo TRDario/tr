@@ -1,5 +1,63 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Defines functions related to generating mesh geometry.                                                                                //
+//                                                                                                                                       //
+// Functions for outputting different types of shapes and primitives and primitives are provided. Said functions take iterators to where //
+// the indices will be written, as well as the base index value to start counting from, and return the end iterator of the written range.//
+// To ensure you have the space to store the indices, you may use functions that determine the amount of indices needed for a shape of   //
+// N vertices:                                                                                                                           //
+//     - tr::line_strip_indices(20) -> 38                                                                                                //
+//     - it = tr::fill_line_strip_indices(it, 20, 0)                                                                                     //
+//       -> buffer now contains indices for a line strip of 20 vertices                                                                  //
+//     - tr::line_loop_indices(20) -> 40                                                                                                 //
+//     - tr::fill_line_loop_indices(std::back_inserter(indices), 20, 20)                                                                 //
+//       -> 'indices' now contains indices for a line loop of 20 vertices, indices count up from 20                                      //
+//     - tr::polygon_indices(10) -> 24                                                                                                   //
+//     - tr::fill_convex_polygon_indices(std::back_inserter(indices), 10, 40)                                                            //
+//       -> 'indices' now contains indices for a convex polygon of 10 vertices, indices count up from 40                                 //
+//     - tr::fill_convex_polygon_indices(std::back_inserter(indices), polygon, 50)                                                       //
+//       -> 'indices' now contains indices for a simple polygon triangulated from 'polygon', indices count up from 50                    //
+//     - tr::polygon_outline_indices(10) -> 60                                                                                           //
+//     - tr::fill_convex_polygon_outline_indices(std::back_inserter(indices), 10, 60)                                                    //
+//       -> 'indices' now contains indices for an outline of a convex polygon of 10 vertices, indices count up from 60                   //
+//                                                                                                                                       //
+// Vertex filling functions are provided for rectangles, rectangle outlines, arcs, regular polygons/circles, and regular polygon/circle  //
+// outlins. Generally, These functions accept either iterators (in which case the end iterator is returned and arcs and                  //
+// regular polygons/circles take a number of vertices to fill) or ranges (rectangles and their outlines only accept ranges of 4/8        //
+// vertices respectively, arcs and regular polygons/circles fill the entire range):                                                      //
+//     - it = tr::fill_rectangle_vertices(it, rect)                                                                                      //
+//       -> buffer now contains the 4 vertices of the rectangle                                                                          //
+//     - tr::fill_rectangle_vertices(range, rect, mat)                                                                                   //
+//       -> range now contains the 4 vertices of the rectangle, transformed by 'mat'                                                     //
+//     - it = tr::fill_rectangle_vertices(it, pos, size / 2, size, 45_deg)                                                               //
+//       -> buffer now contains the 4 vertices of a rectangle positioned and rotated around its center point by 45 degrees               //
+//     - it = tr::fill_rectangle_outline_vertices(it, rect, thickness)                                                                   //
+//       -> buffer now contains the 8 vertices of the rectangle outline                                                                  //
+//     - tr::fill_rectangle_outline_vertices(range, rect, thickness, mat)                                                                //
+//       -> range now contains the 8 vertices of the rectangle outline, transformed by 'mat'                                             //
+//     - it = tr::fill_rectangle_outline_vertices(it, pos, size / 2, size, 45_deg, thickness)                                            //
+//       -> buffer now contains the 8 vertices of a rectangle outline positioned and rotated around its center point by 45 degrees       //
+//     - tr::fill_arc_vertices(range, circle, 45_deg, 90_deg)                                                                            //
+//       -> range now contains vertices of an arc spanning from 45 degrees to 135 degrees on a circle                                    //
+//     - it = tr::fill_regular_polygon_vertices(it, 20, circle, 20_deg)                                                                  //
+//       -> buffer now contains the 20 vertices of a regular polygon described by a circle, rotated by 20 degrees                        //
+//     - tr::fill_circle_vertices(range, circle)                                                                                         //
+//       -> range now contains the vertices of a circle                                                                                  //
+//     - tr::fill_regular_polygon_outline_vertices(range, circle, 20_deg, thickness)                                                     //
+//       -> range now contins the vertices of a regular polygon outline describe by a circle, rotated by 20 degrees                      //
+//     - it = tr::fill_circle_outline_vertices(it, 20, circle, thickness)                                                                //
+//       -> range now contains the 40 (20 inner, 20 outer) vertices of a circle outline                                                  //
+//                                                                                                                                       //
+// Functions for calculating the number of vertices needed to draw a smooth polygon or arc are provided:                                 //
+//     - tr::smooth_polygon_vertices(10.0f) -> calculates the number of vertices needed to draw a smooth circle                          //
+//     - tr::smooth_arc_vertices(10.0f, 45_deg) -> calculates the number of vertices needed to draw a smooth arc of 45 degrees           //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include "geometry.hpp"
+
+//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
 namespace tr {
 	// Calculates the number of segments needed to draw a smooth circle with pixel radius r.
@@ -100,5 +158,7 @@ namespace tr {
 	// Outputs circle outline vertices to a range.
 	template <sized_output_range<glm::vec2> R> void fill_circle_outline_vertices(R&& out, circle circle, float thickness);
 } // namespace tr
+
+////////////////////////////////////////////////////////////// IMPLEMENTATION /////////////////////////////////////////////////////////////
 
 #include "draw_geometry_impl.hpp" // IWYU pragma: keep
