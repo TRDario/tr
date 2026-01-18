@@ -1,6 +1,40 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Provides an RAII handle class.                                                                                                        //
+//                                                                                                                                       //
+// Handles take ownership over a resource managed by a simple handle (like an integer) and automatically clean them up with the          //
+// appropriate deleter. One value of the underlying type is reserved for an 'empty' value that won't be cleaned up and is used as the    //
+// default. Construction and setting will consider setting the handle to the empty value an error by default, as will getters when       //
+// getting from an empty handle, but this can be suppressed by using tr::no_empty_handle_check as an extra parameter:                    //
+//     - tr::handle<int, 0, deleter> -> 0 indicates an empty handle, deleter::operator() is used to clean up the handle                  //
+//     - tr::handle<int, 0, deleter>{} -> empty handle                                                                                   //
+//     - tr::handle<int, 0, deleter>{0} -> ERROR!                                                                                        //
+//     - tr::handle<int, 0, deleter>{0, tr::no_empty_handle_check} -> empty handle                                                       //
+//     - tr::handle<int, 0, deleter>{5} -> non-empty handle                                                                              //
+//                                                                                                                                       //
+// Whether a handle has a value can be checked with operator bool or the .has_value() method, while the value can be gotten with .get(): //
+//     - tr::handle<int, 0, deleter>{}.has_value() -> false                                                                              //
+//     - tr::handle<int, 0, deleter>{}.get() -> ERROR!                                                                                   //
+//     - tr::handle<int, 0, deleter>{}.get(tr::no_empty_handle_check) -> 0                                                               //
+//     - tr::handle<int, 0, deleter>{5}.has_value() -> true                                                                              //
+//     - tr::handle<int, 0, deleter>{5}.get() -> 5                                                                                       //
+//                                                                                                                                       //
+// The value of the handle can be released, reset, or swapped:                                                                           //
+//     - tr::handle<int, 0, deleter> handle{5}; handle.release() -> 5, handle is now empty                                               //
+//     - tr::handle<int, 0, deleter> handle{5}; handle.reset() -> deleter called, handle is now empty                                    //
+//     - tr::handle<int, 0, deleter> handle{5}; handle.reset(4) -> deleter called, handle now holds 4                                    //
+//     - tr::handle<int, 0, deleter> handle{5}; handle.reset(0) -> ERROR!                                                                //
+//     - tr::handle<int, 0, deleter> handle{5}; handle.reset(0, tr::no_empty_handle_check) -> deleter called, handle is now empty        //
+//     - handle.swap(handle2) -> 'handle' and 'handle2' now hold eachother's value                                                       //
+//                                                                                                                                       //
+// Non-trivial destructors are supported: they can be passed in the constructor, or gotten with .get_deleter().                          //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include "concepts.hpp"
-#include "macro.hpp"
+
+//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
 namespace tr {
 	// Concept that denotes a valid handle deleter type for a handle of base type @em H.
@@ -87,154 +121,4 @@ namespace tr {
 
 ///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
 
-template <std::regular T, T E, tr::handle_deleter<T> D> struct std::hash<tr::handle<T, E, D>> {
-	constexpr auto operator()(const tr::handle<T, E, D>& handle) const
-	{
-		return std::hash<T>{}(handle.get(tr::no_empty_handle_check));
-	}
-};
-
-template <std::regular T, T E, tr::handle_deleter<T> D>
-constexpr tr::handle<T, E, D>::handle()
-	requires(default_constructible_handle_deleter<D>)
-	: m_base{E}
-{
-}
-
-template <std::regular T, T E, tr::handle_deleter<T> D>
-constexpr tr::handle<T, E, D>::handle(T value)
-	requires(default_constructible_handle_deleter<D>)
-	: m_base{value}
-{
-	TR_ASSERT(value != E, "Cannot construct a handle from a value set aside as the empty value.");
-}
-
-template <std::regular T, T E, tr::handle_deleter<T> D>
-constexpr tr::handle<T, E, D>::handle(T value, D& deleter)
-	requires(std::copy_constructible<D>)
-	: D{deleter}, m_base{value}
-{
-	TR_ASSERT(value != E, "Cannot construct a handle from a value set aside as the empty value.");
-}
-
-template <std::regular T, T E, tr::handle_deleter<T> D>
-constexpr tr::handle<T, E, D>::handle(T value, const D& deleter)
-	requires(std::copy_constructible<D> && !(lvalue_reference<D> && !const_qualified<D>))
-	: D{deleter}, m_base{value}
-{
-	TR_ASSERT(value != E, "Cannot construct a handle from a value set aside as the empty value.");
-}
-
-template <std::regular T, T E, tr::handle_deleter<T> D>
-constexpr tr::handle<T, E, D>::handle(T value, D&& deleter)
-	requires(std::move_constructible<D> && !lvalue_reference<D>)
-	: D{std::move(deleter)}, m_base{value}
-{
-	TR_ASSERT(value != E, "Cannot construct a handle from a value set aside as the empty value.");
-}
-
-template <std::regular T, T E, tr::handle_deleter<T> D>
-constexpr tr::handle<T, E, D>::handle(T value, no_empty_handle_check_t)
-	requires(default_constructible_handle_deleter<D>)
-	: m_base{value}
-{
-}
-
-template <std::regular T, T E, tr::handle_deleter<T> D>
-constexpr tr::handle<T, E, D>::handle(T value, D& deleter, no_empty_handle_check_t)
-	requires(std::copy_constructible<D>)
-	: D{deleter}, m_base{value}
-{
-}
-
-template <std::regular T, T E, tr::handle_deleter<T> D>
-constexpr tr::handle<T, E, D>::handle(T value, const D& deleter, no_empty_handle_check_t)
-	requires(std::copy_constructible<D> && !(lvalue_reference<D> && !const_qualified<D>))
-	: D{deleter}, m_base{value}
-{
-}
-
-template <std::regular T, T E, tr::handle_deleter<T> D>
-constexpr tr::handle<T, E, D>::handle(T value, D&& deleter, no_empty_handle_check_t)
-	requires(std::move_constructible<D> && !lvalue_reference<D>)
-	: D{std::move(deleter)}, m_base{value}
-{
-}
-
-template <std::regular T, T E, tr::handle_deleter<T> D>
-template <tr::handle_deleter<T> D1>
-constexpr tr::handle<T, E, D>::handle(handle<T, E, D1>&& move) noexcept
-	: m_base{std::exchange(move.m_base, E)}
-{
-}
-
-template <std::regular T, T E, tr::handle_deleter<T> D> constexpr tr::handle<T, E, D>::~handle<T, E, D>()
-{
-	if (m_base != E) {
-		D::operator()(m_base);
-	}
-}
-
-template <std::regular T, T E, tr::handle_deleter<T> D> constexpr tr::handle<T, E, D>& tr::handle<T, E, D>::operator=(handle&& r) noexcept
-{
-	std::ignore = handle{std::move(*this)};
-	std::swap(m_base, r.m_base);
-	return *this;
-}
-
-template <std::regular T, T E, tr::handle_deleter<T> D> constexpr bool tr::handle<T, E, D>::has_value() const
-{
-	return m_base != E;
-}
-
-template <std::regular T, T E, tr::handle_deleter<T> D> constexpr tr::handle<T, E, D>::operator bool() const
-{
-	return has_value();
-}
-
-template <std::regular T, T E, tr::handle_deleter<T> D> constexpr const T& tr::handle<T, E, D>::get() const
-{
-	TR_ASSERT(m_base != E, "Cannot get the value of an empty handle.");
-
-	return m_base;
-}
-
-template <std::regular T, T E, tr::handle_deleter<T> D> constexpr const T& tr::handle<T, E, D>::get(no_empty_handle_check_t) const
-{
-	return m_base;
-}
-
-template <std::regular T, T E, tr::handle_deleter<T> D> constexpr D& tr::handle<T, E, D>::get_deleter()
-{
-	return *this;
-}
-
-template <std::regular T, T E, tr::handle_deleter<T> D> constexpr D& tr::handle<T, E, D>::get_deleter() const
-{
-	return *this;
-}
-
-template <std::regular T, T E, tr::handle_deleter<T> D> constexpr T tr::handle<T, E, D>::release()
-{
-	return std::exchange(m_base, E);
-}
-
-template <std::regular T, T E, tr::handle_deleter<T> D> constexpr void tr::handle<T, E, D>::reset()
-{
-	std::ignore = std::exchange(*this, handle{});
-}
-
-template <std::regular T, T E, tr::handle_deleter<T> D> constexpr void tr::handle<T, E, D>::reset(T value)
-{
-	std::ignore = std::exchange(*this, handle{value});
-}
-
-template <std::regular T, T E, tr::handle_deleter<T> D> constexpr void tr::handle<T, E, D>::reset(T value, no_empty_handle_check_t)
-{
-	std::ignore = std::exchange(*this, handle{value, no_empty_handle_check});
-}
-
-template <std::regular T, T E, tr::handle_deleter<T> D> constexpr void tr::handle<T, E, D>::swap(handle& other)
-{
-	std::swap(m_base, other.m_base);
-}
+#include "handle_impl.hpp" // IWYU pragma: keep
