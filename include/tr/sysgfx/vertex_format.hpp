@@ -2,6 +2,8 @@
 //                                                                                                                                       //
 // Provides a vertex format class and related functionality.                                                                             //
 //                                                                                                                                       //
+// Vertex formats are an abstraction over OpenGL VAOs.                                                                                   //
+//                                                                                                                                       //
 // Vertex formats are composed of a list of vertex bindings (points to which vertex buffers are bound), which in turn are composed of a  //
 // divisor for instanced attributes (or tr::gfx::not_instanced) and a list of vertex attributes. tr::gfx::as_vertex_attribute<T> is used //
 // to map C++ types to vertex attributes; it is defined for primitives and vectors, as well as tr colors, and may be specialized for     //

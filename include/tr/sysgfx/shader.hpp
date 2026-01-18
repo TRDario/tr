@@ -2,6 +2,8 @@
 //                                                                                                                                       //
 // Provides shader classes.                                                                                                              //
 //                                                                                                                                       //
+// Shaders are an abstraction over OpenGL separate program objects.                                                                      //
+//                                                                                                                                       //
 // Shaders can be constructed directly from GLSL source code, or loaded from a file:                                                     //
 //     - tr::gfx::vertex_shader{src} -> constructs a vertex shader from an embedded source code string                                   //
 //     - tr::gfx::load_vertex_shader("source.vert") -> loads a vertex shader from a source file                                          //
@@ -14,6 +16,9 @@
 //                                                                                                                                       //
 // Setting shader uniforms of any GLSL type except doubles is supported:                                                                 //
 //     - shader.set_uniform(0, glm::vec2{100, 100}) -> sets the vec2 uniform at location 0                                               //
+//                                                                                                                                       //
+// The label of a shader can be set with TR_SET_LABEL(shader, label):                                                                    //
+//     - TR_SET_LABEL(shader, "Example shader") -> 'atlas' is now labelled "Example shader"                                              //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -29,7 +34,11 @@ namespace tr::gfx {
 	class basic_shader_buffer;
 	class basic_uniform_buffer;
 	class texture_ref;
+} // namespace tr::gfx
 
+//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
+
+namespace tr::gfx {
 	// Error thrown when shader loading fails.
 	class shader_load_error : public exception {
 	  public:
