@@ -1,3 +1,19 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Provides bitmap iterators.                                                                                                            //
+//                                                                                                                                       //
+// All bitmap iterators iterate through the bitmap left-to-right, top-to-bottom. They fulfill the requirements of random-access          //
+// iterators, but not contiguous iterators due to bitmaps not being guaranteed to be contiguous. As an extension to the iterator         //
+// interface, bitmap iterators can report their 2D position within the bitmap using the .pos() method:                                   //
+//     - tr::bitmap bmp{{100, 100}}; (bmp.begin() + 2413).pos() -> {13, 24}                                                              //
+//                                                                                                                                       //
+// The iterators return proxy objects representing pixels. These proxies may be converted to tr::rgba8, and mutable proxies may set the  //
+// pixel to the closest equivalent of an tr::rgba8 color:                                                                                //
+//     - tr::rgba8 color{*it} -> gets a pixel's color                                                                                    //
+//     - *it = "FF0000"_rgba8 -> sets a pixel's color                                                                                    //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include "bitmap.hpp"
 
@@ -14,11 +30,13 @@ namespace tr {
 		// The format of the pixel.
 		pixel_format m_format;
 
+		// Undefined, required to default-construct iterators.
 		pixel_ref() = default;
+		// Wraps a pointer to the pixel data.
 		pixel_ref(const std::byte* ptr, pixel_format format);
 
 		friend class sub_bitmap;
-		friend class Iterator;
+		friend class iterator;
 	};
 
 	// Immutable bitmap pixel iterator.
@@ -109,7 +127,9 @@ namespace tr {
 		// The format of the pixel.
 		pixel_format m_format;
 
+		// Undefined, required to default-construct iterators.
 		pixel_ref() = default;
+		// Wraps a pointer to the pixel data.
 		pixel_ref(std::byte* ptr, pixel_format format);
 
 		friend class mut_it;
@@ -182,7 +202,7 @@ namespace tr {
 		// Reference to a pixel, needed for the pointer dereference.
 		pixel_ref m_pixel;
 		// The pointed-to-bitmap.
-		bitmap* m_bitmap;
+		opt_ref<bitmap> m_bitmap;
 		// The position of the iterator within the bitmap.
 		glm::ivec2 m_bitmap_pos;
 	};

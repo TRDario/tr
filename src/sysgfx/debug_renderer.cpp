@@ -18,33 +18,31 @@ namespace tr::gfx {
 #include "../../resources/generated/debug_renderer_font.hpp"
 #include "../../resources/generated/debug_renderer_frag.hpp"
 #include "../../resources/generated/debug_renderer_vert.hpp"
-
-	// Formats a duration into a string.
-	static std::string format_duration(std::string_view prefix, duration duration);
 } // namespace tr::gfx
 
-std::string tr::gfx::format_duration(std::string_view prefix, duration duration)
+// Formats a duration into a string.
+static std::string format_duration(std::string_view prefix, tr::duration duration)
 {
 	if (duration <= 1us) {
-		const double count{duration_cast<dnsecs>(duration).count()};
+		const double count{duration_cast<tr::dnsecs>(duration).count()};
 		const int precision{6 - std::clamp(int(std::log10(count)), 0, 5)};
 		const std::string format{TR_FMT::format("{}{{:#08.{}f}}ns", prefix, precision)};
 		return TR_FMT::vformat(format, TR_FMT::make_format_args(count));
 	}
 	else if (duration <= 1ms) {
-		const double count{duration_cast<dusecs>(duration).count()};
+		const double count{duration_cast<tr::dusecs>(duration).count()};
 		const int precision{6 - std::clamp(int(std::log10(count)), 0, 5)};
 		const std::string format{TR_FMT::format("{}{{:#08.{}f}}us", prefix, precision)};
 		return TR_FMT::vformat(format, TR_FMT::make_format_args(count));
 	}
 	else if (duration <= 1s) {
-		const double count{duration_cast<dmsecs>(duration).count()};
+		const double count{duration_cast<tr::dmsecs>(duration).count()};
 		const int precision{6 - std::clamp(int(std::log10(count)), 0, 5)};
 		const std::string format{TR_FMT::format("{}{{:#08.{}f}}ms", prefix, precision)};
 		return TR_FMT::vformat(format, TR_FMT::make_format_args(count));
 	}
 	else {
-		const double count{duration_cast<dsecs>(duration).count()};
+		const double count{duration_cast<tr::dsecs>(duration).count()};
 		const int precision{6 - std::clamp(int(std::log10(count)), 0, 5)};
 		const std::string format{TR_FMT::format("{}{{:#08.{}f}}s", prefix, precision)};
 		return TR_FMT::vformat(format, TR_FMT::make_format_args(count));

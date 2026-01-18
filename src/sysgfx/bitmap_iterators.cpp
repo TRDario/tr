@@ -1,37 +1,43 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Implements bitmap_iterators.hpp.                                                                                                      //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #include "../../include/tr/sysgfx/bitmap_iterators.hpp"
 #include "../../include/tr/utility/macro.hpp"
 #include <SDL3/SDL.h>
 #include <SDL3_image/SDL_image.h>
 
-namespace tr {
-	// Extracts an RGBA8 color value from a pixel.
-	rgba8 pixel_color(const std::byte* data, pixel_format format);
-} // namespace tr
+/////////////////////////////////////////////////////////////// PIXEL COLOR ///////////////////////////////////////////////////////////////
 
-tr::rgba8 tr::pixel_color(const std::byte* data, pixel_format format)
+// Extracts an RGBA8 color value from a pixel.
+static tr::rgba8 pixel_color(const std::byte* data, tr::pixel_format format)
 {
-	u32 value{};
+	tr::u32 value{};
 	switch (pixel_bytes(format)) {
 	case 1:
-		value = *(const u8*)data;
+		value = *(const tr::u8*)data;
 		break;
 	case 2:
-		value = *(const u16*)data;
+		value = *(const tr::u16*)data;
 		break;
 	case 3: {
-		const u8(&arr)[3]{*(const u8(*)[3])data};
+		const tr::u8(&arr)[3]{*(const tr::u8(*)[3])data};
 		value = arr[0] << 16 | arr[1] << 8 | arr[2];
 		break;
 	}
 	case 4:
-		value = *(const u32*)data;
+		value = *(const tr::u32*)data;
 		break;
 	}
 
-	rgba8 color;
+	tr::rgba8 color;
 	SDL_GetRGBA(value, SDL_GetPixelFormatDetails(SDL_PixelFormat(format)), nullptr, &color.r, &color.g, &color.b, &color.a);
 	return color;
 }
+
+//////////////////////////////////////////////////////// CONST/SUB-BITMAP ITERATOR ////////////////////////////////////////////////////////
 
 tr::sub_bitmap::pixel_ref::pixel_ref(const std::byte* ptr, pixel_format format)
 	: m_ptr{ptr}, m_format{format}
@@ -198,6 +204,8 @@ glm::ivec2 tr::sub_bitmap::iterator::pos() const
 	return m_bitmap_pos;
 }
 
+///////////////////////////////////////////////////////////// BITMAP ITERATOR /////////////////////////////////////////////////////////////
+
 tr::bitmap::pixel_ref::pixel_ref(std::byte* ptr, pixel_format format)
 	: m_ptr{ptr}, m_format{format}
 {
@@ -234,7 +242,7 @@ tr::bitmap::pixel_ref& tr::bitmap::pixel_ref::operator=(rgba8 color)
 
 tr::bitmap::mut_it::mut_it(class bitmap& bitmap, glm::ivec2 pos)
 	: m_pixel{bitmap.data() + bitmap.pitch() * pos.y + pixel_bytes(bitmap.format()) * pos.x, bitmap.format()}
-	, m_bitmap{&bitmap}
+	, m_bitmap{bitmap}
 	, m_bitmap_pos{pos}
 {
 }
@@ -389,7 +397,7 @@ tr::bitmap::mut_it tr::operator-(glm::ivec2 diff, const tr::bitmap::mut_it& it)
 
 int tr::operator-(const tr::bitmap::mut_it& l, const tr::bitmap::mut_it& r)
 {
-	TR_ASSERT(l.m_bitmap == r.m_bitmap && l.m_bitmap != nullptr, "Tried to subtract iterators to different bitmaps.");
+	TR_ASSERT(l.m_bitmap == r.m_bitmap, "Tried to subtract iterators to different bitmaps.");
 
 	return (l.m_bitmap_pos.y * l.m_bitmap->size().x + l.m_bitmap_pos.x) - (r.m_bitmap_pos.y * r.m_bitmap->size().x + r.m_bitmap_pos.x);
 }
