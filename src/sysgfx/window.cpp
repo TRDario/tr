@@ -1,4 +1,10 @@
-﻿#include "../../include/tr/sysgfx/window.hpp"
+﻿///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Implements window.hpp.                                                                                                                //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+#include "../../include/tr/sysgfx/window.hpp"
 #include "../../include/tr/sysgfx/bitmap.hpp"
 #include "../../include/tr/sysgfx/display.hpp"
 #include "../../include/tr/sysgfx/glad.h"
@@ -8,29 +14,10 @@
 #include "tr/sysgfx/gl_call.hpp"
 #include <SDL3/SDL.h>
 
-namespace tr::gfx {
-	// Sets up SDL OpenGL attributes.
-	void set_sdl_ogl_attributes(const properties& gfx_properties);
-	// Creates an OpenGL context.
-	void create_ogl_context();
+/////////////////////////////////////////////////////////////// OPENGL SETUP //////////////////////////////////////////////////////////////
 
-#ifdef TR_ENABLE_ASSERTS
-	// Gets a readable string for an OpenGL debug log source.
-	std::string_view ogl_source(GLenum value);
-	// Gets a readable string for an OpenGL debug log message type.
-	std::string_view ogl_type(GLenum value);
-	// Gets a readable string for an OpenGL debug log severity.
-	std::string_view ogl_severity(GLenum value);
-	// Converts OpenGL debug severity to tr severity.
-	severity tr_severity(GLenum value);
-	// OpenGL debug log callback.
-	void ogl_debug_cb(GLenum source, GLenum type, GLuint, GLenum severity, GLsizei length, const GLchar* message, const void*);
-	// Sets up OpenGL debugging.
-	void setup_ogl_debugging();
-#endif
-} // namespace tr::gfx
-
-void tr::gfx::set_sdl_ogl_attributes(const properties& gfx_properties)
+// Sets up SDL OpenGL attributes.
+static void set_sdl_ogl_attributes(const tr::gfx::properties& gfx_properties)
 {
 #ifdef TR_ENABLE_ASSERTS
 	constexpr int context_flags{SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG | SDL_GL_CONTEXT_DEBUG_FLAG};
@@ -54,26 +41,29 @@ void tr::gfx::set_sdl_ogl_attributes(const properties& gfx_properties)
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, true);
 }
 
-void tr::gfx::create_ogl_context()
+// Creates an OpenGL context.
+static void create_ogl_context()
 {
-	if ((gfx::g_ogl_context = SDL_GL_CreateContext(sys::g_sdl_window)) == nullptr) {
-		throw sys::init_error{"Failed to create OpenGL context."};
+	if ((tr::gfx::g_ogl_context = SDL_GL_CreateContext(tr::sys::g_sdl_window)) == nullptr) {
+		throw tr::sys::init_error{"Failed to create OpenGL context."};
 	}
 	else if (!gladLoadGLLoader(GLADloadproc(SDL_GL_GetProcAddress))) {
-		throw sys::init_error{"Failed to load OpenGL 4.5."};
+		throw tr::sys::init_error{"Failed to load OpenGL 4.5."};
 	}
 #ifdef TR_ENABLE_ASSERTS
-	TR_LOG(log, severity::info, "Created an OpenGL context.");
-	TR_LOG_CONTINUE(log, "Vendor: {}", (const char*)(TR_RETURNING_GL_CALL(glGetString, GL_VENDOR)));
-	TR_LOG_CONTINUE(log, "Renderer: {}", (const char*)(TR_RETURNING_GL_CALL(glGetString, GL_RENDERER)));
-	TR_LOG_CONTINUE(log, "Version: {}", (const char*)(TR_RETURNING_GL_CALL(glGetString, GL_VERSION)));
+	TR_LOG(tr::gfx::log, tr::severity::info, "Created an OpenGL context.");
+	TR_LOG_CONTINUE(tr::gfx::log, "Vendor: {}", (const char*)(TR_RETURNING_GL_CALL(glGetString, GL_VENDOR)));
+	TR_LOG_CONTINUE(tr::gfx::log, "Renderer: {}", (const char*)(TR_RETURNING_GL_CALL(glGetString, GL_RENDERER)));
+	TR_LOG_CONTINUE(tr::gfx::log, "Version: {}", (const char*)(TR_RETURNING_GL_CALL(glGetString, GL_VERSION)));
 #endif
 	TR_GL_CALL(glEnable, GL_BLEND);
 	TR_GL_CALL(glEnable, GL_SCISSOR_TEST);
 }
 
 #ifdef TR_ENABLE_ASSERTS
-std::string_view tr::gfx::ogl_source(GLenum value)
+
+// Gets a readable string for an OpenGL debug log source.
+static std::string_view ogl_source(GLenum value)
 {
 	switch (value) {
 	case GL_DEBUG_SOURCE_API:
@@ -93,7 +83,8 @@ std::string_view tr::gfx::ogl_source(GLenum value)
 	}
 }
 
-std::string_view tr::gfx::ogl_type(GLenum value)
+// Gets a readable string for an OpenGL debug log message type.
+static std::string_view ogl_type(GLenum value)
 {
 	switch (value) {
 	case GL_DEBUG_TYPE_ERROR:
@@ -119,7 +110,8 @@ std::string_view tr::gfx::ogl_type(GLenum value)
 	}
 }
 
-std::string_view tr::gfx::ogl_severity(GLenum value)
+// Gets a readable string for an OpenGL debug log severity.
+static std::string_view ogl_severity(GLenum value)
 {
 	switch (value) {
 	case GL_DEBUG_SEVERITY_NOTIFICATION:
@@ -135,29 +127,32 @@ std::string_view tr::gfx::ogl_severity(GLenum value)
 	}
 }
 
-tr::severity tr::gfx::tr_severity(GLenum value)
+// Converts OpenGL debug severity to tr severity.
+static tr::severity tr_severity(GLenum value)
 {
 	switch (value) {
 	case GL_DEBUG_SEVERITY_NOTIFICATION:
-		return severity::info;
+		return tr::severity::info;
 	case GL_DEBUG_SEVERITY_LOW:
-		return severity::info;
+		return tr::severity::info;
 	case GL_DEBUG_SEVERITY_MEDIUM:
-		return severity::warning;
+		return tr::severity::warning;
 	case GL_DEBUG_SEVERITY_HIGH:
-		return severity::error;
+		return tr::severity::error;
 	default:
-		return severity::info;
+		return tr::severity::info;
 	}
 }
 
-void tr::gfx::ogl_debug_cb(GLenum source, GLenum type, GLuint, GLenum severity, GLsizei length, const GLchar* message, const void*)
+// OpenGL debug log callback.
+static void ogl_debug_cb(GLenum source, GLenum type, GLuint, GLenum severity, GLsizei length, const GLchar* message, const void*)
 {
-	const std::string_view msg{(const char*)message, usize(length)};
-	TR_LOG(gfx::log, tr_severity(severity), "[{}] | [{}] | [{}] | {}", ogl_severity(severity), ogl_type(type), ogl_source(source), msg);
+	const std::string_view msg{(const char*)message, tr::usize(length)};
+	TR_LOG(tr::gfx::log, tr_severity(severity), "[{}] | [{}] | [{}] | {}", ogl_severity(severity), ogl_type(type), ogl_source(source), msg);
 }
 
-void tr::gfx::setup_ogl_debugging()
+// Sets up OpenGL debugging.
+static void setup_ogl_debugging()
 {
 	glEnable(GL_DEBUG_OUTPUT);
 	glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
@@ -165,7 +160,10 @@ void tr::gfx::setup_ogl_debugging()
 	glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, NULL, GL_TRUE);
 	glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_NOTIFICATION, 0, NULL, GL_FALSE);
 }
+
 #endif
+
+////////////////////////////////////////////////////////////////// WINDOW /////////////////////////////////////////////////////////////////
 
 void tr::sys::open_window(cstring_view title, glm::ivec2 size, glm::ivec2 min_size, const gfx::properties& gfx_properties)
 {
@@ -189,31 +187,30 @@ void tr::sys::open_window(cstring_view title, glm::ivec2 size, glm::ivec2 min_si
 		SDL_SetWindowMinimumSize(g_sdl_window, min_size.x, min_size.y);
 	}
 
-	gfx::create_ogl_context();
+	create_ogl_context();
 #ifdef TR_ENABLE_ASSERTS
-	gfx::setup_ogl_debugging();
+	setup_ogl_debugging();
 #endif
 }
 
-void tr::sys::open_fullscreen_window(cstring_view title, std::optional<glm::ivec2> min_size, const gfx::properties& gfx_properties)
+void tr::sys::open_fullscreen_window(cstring_view title, glm::ivec2 min_size, const gfx::properties& gfx_properties)
 {
 	TR_ASSERT(g_sdl_window == nullptr, "Tried to reopen window without closing it first.");
 
 	set_sdl_ogl_attributes(gfx_properties);
 
-	const glm::ivec2 size{display_size()};
-	const SDL_WindowFlags sdl_flags{(min_size.has_value() ? SDL_WINDOW_RESIZABLE : 0) | SDL_WINDOW_HIDDEN | SDL_WINDOW_FULLSCREEN |
-									SDL_WINDOW_OPENGL | SDL_WINDOW_HIGH_PIXEL_DENSITY};
+	SDL_WindowFlags sdl_flags{SDL_WINDOW_HIDDEN | SDL_WINDOW_OPENGL | SDL_WINDOW_HIGH_PIXEL_DENSITY | SDL_WINDOW_FULLSCREEN};
+	const glm::ivec2 size{min_size != not_resizable ? min_size : display_size()};
 	if ((g_sdl_window = SDL_CreateWindow(title, size.x, size.y, sdl_flags)) == nullptr) {
 		throw init_error{"Failed to open fullscreen window."};
 	}
-	if (min_size.has_value()) {
-		SDL_SetWindowMinimumSize(g_sdl_window, min_size->x, min_size->y);
+	if (min_size != not_resizable) {
+		SDL_SetWindowMinimumSize(g_sdl_window, min_size.x, min_size.y);
 	}
 
-	gfx::create_ogl_context();
+	create_ogl_context();
 #ifdef TR_ENABLE_ASSERTS
-	gfx::setup_ogl_debugging();
+	setup_ogl_debugging();
 #endif
 }
 
@@ -352,24 +349,6 @@ void tr::sys::raise_window()
 
 	if (!SDL_RaiseWindow(g_sdl_window)) {
 		TR_LOG_SDL_ERROR("Failed to raise window.");
-	}
-}
-
-void tr::sys::set_window_mouse_grab(bool grab)
-{
-	TR_ASSERT(g_sdl_window != nullptr, "Tried to set window mouse grab before opening it.");
-
-	if (!SDL_SetWindowMouseGrab(g_sdl_window, grab)) {
-		TR_LOG_SDL_ERROR("Failed to set mouse grab.");
-	}
-}
-
-void tr::sys::flash_window(flash_operation operation)
-{
-	TR_ASSERT(g_sdl_window != nullptr, "Tried to flash window before opening it.");
-
-	if (!SDL_FlashWindow(g_sdl_window, SDL_FlashOperation(operation))) {
-		TR_LOG_SDL_ERROR("Failed to flash window.");
 	}
 }
 
