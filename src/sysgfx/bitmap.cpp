@@ -1,29 +1,23 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Implements bitmap.hpp.                                                                                                                //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #include "../../include/tr/sysgfx/bitmap.hpp"
 #include "../../include/tr/sysgfx/bitmap_iterators.hpp"
 #include <SDL3/SDL.h>
 #include <SDL3_image/SDL_image.h>
 
-namespace tr {
-	// Checks that a pointer is not null.
-	SDL_Surface* check_not_null(SDL_Surface* ptr);
-	// Base bitmap saving function.
-	void save_bitmap(SDL_Surface* bitmap, const std::filesystem::path& path);
-} // namespace tr
+////////////////////////////////////////////////////////////// MISCELLANEOUS //////////////////////////////////////////////////////////////
 
-SDL_Surface* tr::check_not_null(SDL_Surface* ptr)
-{
-	if (ptr == nullptr) {
-		throw out_of_memory{"bitmap allocation"};
-	}
-	return ptr;
-}
-
-void tr::save_bitmap(SDL_Surface* bitmap, const std::filesystem::path& path)
+// Base bitmap saving function.
+static void save_bitmap(SDL_Surface* bitmap, const std::filesystem::path& path)
 {
 	TR_ASSERT(bitmap != nullptr, "Tried to save a moved-from bitmap.");
 
 	if (!IMG_SavePNG(bitmap, TR_PATH_CSTR(path))) {
-		throw bitmap_save_error{path.string(), SDL_GetError()};
+		throw tr::bitmap_save_error{path.string(), SDL_GetError()};
 	}
 }
 
@@ -32,7 +26,7 @@ int tr::pixel_bytes(pixel_format format)
 	return SDL_BYTESPERPIXEL(SDL_PixelFormat(format));
 }
 
-////////////////////////////////////////////////////////// AUDIO FILE OPEN ERROR //////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////// BITMAP ERRORS //////////////////////////////////////////////////////////////
 
 tr::bitmap_load_error::bitmap_load_error(std::string_view path, std::string&& details)
 	: m_description{TR_FMT::format("Failed to load bitmap from '{}'", path)}, m_details{std::move(details)}
@@ -73,6 +67,8 @@ std::string_view tr::bitmap_save_error::details() const
 {
 	return m_details;
 }
+
+//////////////////////////////////////////////////////////////// SUB-BITMAP ///////////////////////////////////////////////////////////////
 
 tr::sub_bitmap::sub_bitmap(const bitmap& bitmap, const irect2& rect)
 	: m_ptr{bitmap.m_ptr.get()}, m_rect{rect}
@@ -137,10 +133,7 @@ int tr::sub_bitmap::pitch() const
 	return m_ptr->pitch;
 }
 
-int tr::operator-(const tr::sub_bitmap::iterator& l, const tr::sub_bitmap::iterator& r)
-{
-	return (l.m_bitmap_pos.y * l.m_bitmap_size.x + l.m_bitmap_pos.x) - (r.m_bitmap_pos.y * r.m_bitmap_size.x + r.m_bitmap_pos.x);
-}
+/////////////////////////////////////////////////////////////// BITMAP VIEW ///////////////////////////////////////////////////////////////
 
 tr::bitmap_view::bitmap_view(std::span<const std::byte> raw_data, glm::ivec2 size, pixel_format format)
 	: bitmap_view(raw_data.data(), size.x * pixel_bytes(format), size, format)
@@ -151,8 +144,11 @@ tr::bitmap_view::bitmap_view(std::span<const std::byte> raw_data, glm::ivec2 siz
 }
 
 tr::bitmap_view::bitmap_view(const std::byte* raw_data_start, int pitch, glm::ivec2 size, pixel_format format)
-	: m_ptr{check_not_null(SDL_CreateSurfaceFrom(size.x, size.y, SDL_PixelFormat(format), (std::byte*)raw_data_start, pitch))}
+	: m_ptr{SDL_CreateSurfaceFrom(size.x, size.y, SDL_PixelFormat(format), (std::byte*)raw_data_start, pitch)}
 {
+	if (m_ptr == nullptr) {
+		throw out_of_memory{"bitmap view allocation"};
+	}
 }
 
 void tr::bitmap_view::deleter::operator()(SDL_Surface* ptr) const
@@ -230,32 +226,37 @@ void tr::bitmap_view::save(const std::filesystem::path& path) const
 	save_bitmap(m_ptr.get(), path);
 }
 
+////////////////////////////////////////////////////////////////// BITMAP /////////////////////////////////////////////////////////////////
+
 tr::bitmap::bitmap(SDL_Surface* ptr)
-	: m_ptr{check_not_null(ptr)}
+	: m_ptr{ptr}
 {
-	if (SDL_ISPIXELFORMAT_INDEXED(ptr->format) && format() != pixel_format::r8) {
+	if (ptr == nullptr) {
+		throw out_of_memory{"bitmap allocation"};
+	}
+
+	const SDL_PixelFormat format{ptr->format};
+	if (SDL_ISPIXELFORMAT_INDEXED(format) && SDL_PIXELTYPE(format) != SDL_PIXELTYPE_INDEX8) {
 		*this = bitmap{*this, pixel_format::r8};
 	}
-	else if (SDL_ISPIXELFORMAT_FOURCC(ptr->format) || SDL_ISPIXELFORMAT_FLOAT(ptr->format) ||
-			 (SDL_ISPIXELFORMAT_ARRAY(ptr->format) &&
-			  (SDL_PIXELTYPE(ptr->format) == SDL_PIXELTYPE_ARRAYU16 || SDL_PIXELTYPE(ptr->format) == SDL_PIXELTYPE_ARRAYU32)) ||
-			 SDL_ISPIXELFORMAT_10BIT(ptr->format)) {
+	else if (SDL_ISPIXELFORMAT_FOURCC(format) || SDL_ISPIXELFORMAT_FLOAT(format) ||
+			 (SDL_ISPIXELFORMAT_ARRAY(format) && SDL_PIXELTYPE(format) >= SDL_PIXELTYPE_ARRAYU16) || SDL_ISPIXELFORMAT_10BIT(format)) {
 		*this = bitmap{*this, pixel_format::rgba32};
 	}
 }
 
 tr::bitmap::bitmap(glm::ivec2 size, pixel_format format)
-	: m_ptr{check_not_null(SDL_CreateSurface(size.x, size.y, SDL_PixelFormat(format)))}
+	: bitmap{SDL_CreateSurface(size.x, size.y, SDL_PixelFormat(format))}
 {
 }
 
 tr::bitmap::bitmap(const bitmap& bitmap, pixel_format format)
-	: m_ptr{check_not_null(SDL_ConvertSurface(bitmap.m_ptr.get(), SDL_PixelFormat(format)))}
+	: tr::bitmap{SDL_ConvertSurface(bitmap.m_ptr.get(), SDL_PixelFormat(format))}
 {
 }
 
 tr::bitmap::bitmap(const bitmap_view& view, pixel_format format)
-	: m_ptr{check_not_null(SDL_ConvertSurface(view.m_ptr.get(), SDL_PixelFormat(format)))}
+	: bitmap{SDL_ConvertSurface(view.m_ptr.get(), SDL_PixelFormat(format))}
 {
 }
 
@@ -388,6 +389,8 @@ void tr::bitmap::save(const std::filesystem::path& path) const
 	save_bitmap(m_ptr.get(), path);
 }
 
+//////////////////////////////////////////////////////// BITMAP CREATION FUNCTIONS ////////////////////////////////////////////////////////
+
 tr::bitmap tr::create_checkerboard(glm::ivec2 size)
 {
 	constexpr rgba8 black{0, 0, 0, 255};
@@ -404,7 +407,7 @@ tr::bitmap tr::create_checkerboard(glm::ivec2 size)
 
 tr::bitmap tr::load_embedded_bitmap(std::span<const std::byte> data)
 {
-	return bitmap{check_not_null(IMG_Load_IO(SDL_IOFromConstMem(data.data(), data.size()), true))};
+	return bitmap{IMG_Load_IO(SDL_IOFromConstMem(data.data(), data.size()), true)};
 }
 
 tr::bitmap tr::load_bitmap_file(const std::filesystem::path& path)

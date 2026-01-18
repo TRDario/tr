@@ -1,10 +1,60 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Provides bitmap classes and related functionality.                                                                                    //
+//                                                                                                                                       //
+// Bitmaps are collections of owned pixel data representing 2D images. Bitmaps can be constructed uninitialized (with a specified size), //
+// cloned from another bitmap or sub-bitmap, loaded from embedded data or a file (BMP/PNG/JPG/QOI), or created with a checkerboard       //
+// pattern (for missing textures, for example). Bitmaps may store their pixels in one of a number of pixel formats, which may be set     //
+// during construction and queried with the .pixel_format() method. The size of bitmaps cannot be changed after construction and can be  //
+// queried with the .size() method.                                                                                                      //
+//     - tr::bitmap bitmap{512, 512} -> creates an uninitialized rgba32 bitmap of size 512x512                                           //
+//     - bitmap.size() -> {512, 512}                                                                                                     //
+//     - tr::bitmap bitmap{another_bitmap, tr::pixel_format::rgb24} -> clones another bitmap and converts it to rgb24                    //
+//     - bitmap.pixel_format() -> tr::pixel_format::rgb24                                                                                //
+//     - tr::bitmap{tr::create_checkerboard({32, 32})} -> creates a 32x32 bitmap with a checkerboard pattern                             //
+//     - tr::bitmap{tr::load_embedded_bitmap(embedded_qoi)} -> loads an embedded QOI file                                                //
+//     - tr::bitmap{tr::load_bitmap_file("bitmap.png")} -> loads a bitmap from bitmap.png                                                //
+//                                                                                                                                       //
+// Pixels of a bitmap may be accessed via a 2D index. In addition, bitmaps may be iterated through (for the details of the iterators and //
+// pixel proxies see bitmap_iterators.hpp), or have their data directly taken via .data(). Note that the data in a bitmap isn't required //
+// to be contiguous, bitmap.size().x * tr::pixel_bytes(bitmap.pixel_format()) != bitmap.pitch() (the actual length of a row in bytes) in //
+// some cases:                                                                                                                           //
+//     - bitmap[{50, 50}] = "FFFFFF"_rgba8 -> sets the pixel at (50, 50) to white                                                        //
+//     - for (tr::pixel_ref p : bitmap) { p = tr::rgb8{p} * 0.75f } -> reduces the brightness of every pixel by 25%                      //
+//     - &*(bitmap.begin() + 50) == bitmap.data() + bitmap.pitch() -> true                                                               //
+//                                                                                                                                       //
+// A bitmap or a region of another bitmap may be blitted onto a bitmap with the .blit() method, and the bitmap may be cleared to a       //
+// single color using the .fill() method:                                                                                                //
+//     - bitmap.blit({25, 25}, other) -> blits 'other' to bitmap with the top-left corner at (25, 25)                                    //
+//     - bitmap.fill("FF00FF"_rgba8) -> fills the bitmap with magenta                                                                    //
+//                                                                                                                                       //
+// Bitmaps may be saved to a .png file using the .save() method:                                                                         //
+//     - bitmap.save("bitmap.png") -> the contents of bitmap are saved to bitmap.png                                                     //
+//                                                                                                                                       //
+// Bitmap views share the interface of bitmaps, but do not own their data and are read-only:                                             //
+//     - tr::bitmap_view view{embedded_bitmap_data, {256, 256}, tr::pixel_format::rgba32}                                                //
+//       -> creates a 256x256 view over embedded contiguous raw bitmap data                                                              //
+//     - tr::bitmap_view view{embedded_bitmap_data, 800, {256, 256}, tr::pixel_format::rgb24}                                            //
+//       -> creates a 256x256 view over embedded raw bitmap data with a pitch of 800 bytes                                               //
+//                                                                                                                                       //
+// Sub-bitmaps are views over a region of a bitmap, bitmap view, or another sub-bitmap. They share most of their interface with bitmaps, //
+// but cannot be saved to file or passed to certain tr::sys functions. Like bitmap views, they are read-only. Bitmaps and bitmap views   //
+// can be implicitly converted to sub-bitmaps, and any of the three source types can create sub-bitmaps with the .sub() method:          //
+//     - tr::sub_bitmap{bitmap}                                                                                                          //
+//       -> creates a sub-bitmap over an entire bitmap                                                                                   //
+//     - tr::sub_bitmap{bitmap, {{128, 128}, {128, 128}}}                                                                                //
+//       -> creates a sub-bitmap over 'bitmap' with the top-left corner at (128, 128) and of size 128x128                                //
+//     - bitmap.sub({{128, 128}, {128, 128}})                                                                                            //
+//       -> equivalent to the above                                                                                                      //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include "../utility/color.hpp"
 #include "../utility/exception.hpp"
 #include "../utility/geometry.hpp"
 
 struct SDL_Surface;
-
 namespace tr {
 	class bitmap;
 	class bitmap_view;
@@ -15,7 +65,11 @@ namespace tr {
 		void set_window_icon(const bitmap& bitmap);
 		void set_window_icon(const bitmap_view& view);
 	}; // namespace sys
+} // namespace tr
 
+//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
+
+namespace tr {
 	// Bitmap/texture pixel format.
 	enum class pixel_format {
 		r8 = 318769153,
@@ -266,6 +320,7 @@ namespace tr {
 		// Handle to the SDL surface.
 		std::unique_ptr<SDL_Surface, bitmap_view::deleter> m_ptr;
 
+		// Wraps an SDL surface pointer.
 		bitmap(SDL_Surface* ptr);
 
 		friend class sub_bitmap;

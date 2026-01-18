@@ -199,6 +199,11 @@ tr::sub_bitmap::iterator tr::operator-(glm::ivec2 diff, const tr::sub_bitmap::it
 	return it - diff;
 }
 
+int tr::operator-(const tr::sub_bitmap::iterator& l, const tr::sub_bitmap::iterator& r)
+{
+	return (l.m_bitmap_pos.y * l.m_bitmap_size.x + l.m_bitmap_pos.x) - (r.m_bitmap_pos.y * r.m_bitmap_size.x + r.m_bitmap_pos.x);
+}
+
 glm::ivec2 tr::sub_bitmap::iterator::pos() const
 {
 	return m_bitmap_pos;
