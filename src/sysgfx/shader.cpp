@@ -36,19 +36,20 @@ std::string_view tr::gfx::shader_load_error::details() const
 
 /////////////////////////////////////////////////////////////// TEXTURE UNIT //////////////////////////////////////////////////////////////
 
-tr::gfx::shader_base::texture_unit::texture_unit()
+tr::gfx::shader_base::texture_unit::texture_unit(unsigned int program, int index)
 {
-	TR_ASSERT(std::ranges::find(g_texture_units, false) != g_texture_units.end(), "Ran out of texture units for shaders.");
-
-	auto it{std::ranges::find(g_texture_units, false)};
-	*it = true;
-	g_texture_unit_textures[it - g_texture_units.begin()] = std::nullopt;
-	id.reset((unsigned int)(it - g_texture_units.begin()));
+	m_id.reset(sys::g_window.gfx_context().allocate_texture_unit());
+	TR_GL_CALL(glProgramUniform1i, program, index, m_id.get());
 }
 
 void tr::gfx::shader_base::texture_unit::deleter::operator()(unsigned int unit) const
 {
-	g_texture_units[unit] = false;
+	sys::g_window.gfx_context().free_texture_unit(unit);
+}
+
+void tr::gfx::shader_base::texture_unit::set(texture_ref texture)
+{
+	sys::g_window.gfx_context().set_texture_unit(m_id.get(), std::move(texture));
 }
 
 ////////////////////////////////////////////////////////////////// SHADER /////////////////////////////////////////////////////////////////
@@ -97,7 +98,7 @@ void tr::gfx::shader_base::find_uniforms()
 
 		std::string buffer(name_length, '\0');
 		glGetProgramResourceName(m_program.get(), GL_UNIFORM, i, buffer.size(), NULL, buffer.data());
-		m_uniforms.insert({(unsigned int)(location), {std::move(buffer), tr::gfx::glsl_type(var_type), array_size}});
+		m_uniforms.insert({(unsigned int)(location), {std::move(buffer), glsl_type(var_type), array_size}});
 	}
 }
 
@@ -113,7 +114,7 @@ void tr::gfx::shader_base::find_inputs()
 
 		std::string buffer(name_length, '\0');
 		glGetProgramResourceName(m_program.get(), GL_PROGRAM_INPUT, i, buffer.size(), NULL, buffer.data());
-		m_inputs.insert({(unsigned int)(location), {std::move(buffer), tr::gfx::glsl_type(var_type), array_size}});
+		m_inputs.insert({(unsigned int)(location), {std::move(buffer), glsl_type(var_type), array_size}});
 	}
 }
 
@@ -130,7 +131,7 @@ void tr::gfx::shader_base::find_outputs()
 		std::string buffer(name_length, '\0');
 		glGetProgramResourceName(m_program.get(), GL_PROGRAM_OUTPUT, i, buffer.size(), NULL, buffer.data());
 		if (!buffer.starts_with("gl_")) {
-			m_outputs.insert({(unsigned int)(location), {std::move(buffer), tr::gfx::glsl_type(var_type), array_size}});
+			m_outputs.insert({(unsigned int)(location), {std::move(buffer), glsl_type(var_type), array_size}});
 		}
 	}
 }
@@ -439,17 +440,9 @@ void tr::gfx::shader_base::set_uniform(int index, texture_ref texture)
 
 	auto unit_it{m_texture_units.find(index)};
 	if (unit_it == m_texture_units.end()) {
-		unit_it = m_texture_units.insert({index, texture_unit{}}).first;
-		TR_GL_CALL(glProgramUniform1i, m_program.get(), index, unit_it->second.id.get());
+		unit_it = m_texture_units.insert({index, texture_unit{m_program.get(), index}}).first;
 	}
-
-	const unsigned int unit_id{unit_it->second.id.get()};
-	if (!texture.empty()) {
-		if (g_texture_unit_textures[unit_id] != texture && texture.m_ref->m_handle != 0) {
-			TR_GL_CALL(glBindTextures, unit_id, 1, &texture.m_ref->m_handle);
-		}
-	}
-	g_texture_unit_textures[unit_id] = std::move(texture);
+	unit_it->second.set(std::move(texture));
 }
 
 void tr::gfx::shader_base::set_storage_buffer(unsigned int index, basic_shader_buffer& buffer)

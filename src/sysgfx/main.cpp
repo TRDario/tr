@@ -2,6 +2,7 @@
 #include "../../include/tr/sysgfx/main.hpp"
 #include "../../include/tr/sysgfx/dialog.hpp"
 #include "../../include/tr/sysgfx/display.hpp"
+#include "../../include/tr/sysgfx/impl.hpp"
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
 #include <SDL3_ttf/SDL_ttf.h>
@@ -66,20 +67,20 @@ extern "C"
 {
 	SDL_AppResult SDL_AppInit(void**, int argc, char** argv)
 	{
-		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_NAME_STRING, tr::sys::main::metadata.name);
-		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_VERSION_STRING, tr::sys::main::metadata.version);
-		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_IDENTIFIER_STRING, tr::sys::main::metadata.identifier);
-		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_CREATOR_STRING, tr::sys::main::metadata.developer);
-		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_COPYRIGHT_STRING, tr::sys::main::metadata.copyright);
-		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_URL_STRING, tr::sys::main::metadata.url);
-		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_TYPE_STRING,
-								   tr::sys::main::metadata.type == tr::sys::app_type::game ? "game" : "application");
-		if (!tr::sys::main::metadata.name.empty()) {
-			if (!tr::sys::main::metadata.version.empty()) {
-				TR_LOG(tr::log, tr::severity::info, "Launching {} {}.", tr::sys::main::metadata.name, tr::sys::main::metadata.version);
+		using tr::sys::main::metadata;
+		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_NAME_STRING, metadata.name);
+		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_VERSION_STRING, metadata.version);
+		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_IDENTIFIER_STRING, metadata.identifier);
+		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_CREATOR_STRING, metadata.developer);
+		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_COPYRIGHT_STRING, metadata.copyright);
+		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_URL_STRING, metadata.url);
+		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_TYPE_STRING, metadata.type == tr::sys::app_type::game ? "game" : "application");
+		if (!metadata.name.empty()) {
+			if (!metadata.version.empty()) {
+				TR_LOG(tr::log, tr::severity::info, "Launching {} {}.", metadata.name, metadata.version);
 			}
 			else {
-				TR_LOG(tr::log, tr::severity::info, "Launching {}.", tr::sys::main::metadata.name);
+				TR_LOG(tr::log, tr::severity::info, "Launching {}.", metadata.name);
 			}
 		}
 
@@ -98,11 +99,13 @@ extern "C"
 			TR_LOG(tr::log, tr::severity::fatal, "Failed to initialize SDL3.");
 			TR_LOG_CONTINUE(tr::log, "{}", SDL_GetError());
 			return SDL_APP_FAILURE;
-		};
-		TR_LOG(tr::log, tr::severity::info, "Initialized SDL3.");
-		TR_LOG_CONTINUE(tr::log, "Platform: {}", SDL_GetPlatform());
-		TR_LOG_CONTINUE(tr::log, "CPU cores: {}", SDL_GetNumLogicalCPUCores());
-		TR_LOG_CONTINUE(tr::log, "RAM: {}mb", SDL_GetSystemRAM());
+		}
+		else {
+			TR_LOG(tr::log, tr::severity::info, "Initialized SDL3.");
+			TR_LOG_CONTINUE(tr::log, "Platform: {}", SDL_GetPlatform());
+			TR_LOG_CONTINUE(tr::log, "CPU cores: {}", SDL_GetNumLogicalCPUCores());
+			TR_LOG_CONTINUE(tr::log, "RAM: {}mb", SDL_GetSystemRAM());
+		}
 		tr::sys::set_draw_frequency(tr::sys::refresh_rate());
 
 #ifdef TR_HAS_AUDIO
@@ -152,6 +155,7 @@ extern "C"
 	{
 		try {
 			tr::sys::main::shut_down();
+			TR_ASSERT(!tr::sys::g_window.is_open(), "Did not close window during main::shut_down.");
 		}
 		catch (std::exception& err) {
 			tr::sys::show_fatal_error_message_box(err);
@@ -161,9 +165,6 @@ extern "C"
 		tr::audio::g_manager.shut_down();
 #endif
 
-#ifdef _WIN32
-		tr::sys::g_cursor_reset_timer.reset();
-#endif
 		tr::sys::g_tick_timer.reset();
 		TTF_Quit();
 		SDL_Quit();

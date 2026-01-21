@@ -73,6 +73,7 @@ if(TR_BUILD_SYSGFX)
 		src/sysgfx/display.cpp
 		src/sysgfx/event.cpp
 		src/sysgfx/graphics_context.cpp
+		src/sysgfx/impl.cpp
 		src/sysgfx/gpu_benchmark.cpp
 		src/sysgfx/index_buffer.cpp
 		src/sysgfx/keyboard.cpp

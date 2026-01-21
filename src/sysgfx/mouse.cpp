@@ -12,9 +12,9 @@
 
 void tr::sys::set_mouse_mode(mouse_mode mode)
 {
-	TR_ASSERT(g_sdl_window != nullptr, "Tried to set mouse mode before opening the window.");
+	TR_ASSERT(g_window.is_open(), "Tried to set mouse mode before opening the window.");
 
-	if (!SDL_SetWindowRelativeMouseMode(g_sdl_window, bool(mode))) {
+	if (!SDL_SetWindowRelativeMouseMode(g_window.ptr(), bool(mode))) {
 		TR_LOG_SDL_ERROR("Failed to set mouse mode.");
 	}
 
@@ -22,25 +22,10 @@ void tr::sys::set_mouse_mode(mouse_mode mode)
 #ifdef _WIN32
 	switch (mode) {
 	case mouse_mode::absolute:
-		g_cursor_reset_timer.reset();
+		g_window.disable_cursor_resets();
 		break;
 	case mouse_mode::relative:
-		if (!g_cursor_reset_timer.has_value()) {
-			g_cursor_reset_timer.emplace(std::chrono::seconds{1}, [] {
-				float x, y;
-				SDL_GetMouseState(&x, &y);
-				SDL_SetWindowRelativeMouseMode(g_sdl_window, false);
-				const bool cursor_visible{SDL_CursorVisible()};
-				if (cursor_visible) {
-					SDL_HideCursor();
-				}
-				SDL_WarpMouseInWindow(g_sdl_window, x, y);
-				if (cursor_visible) {
-					SDL_ShowCursor();
-				}
-				SDL_SetWindowRelativeMouseMode(g_sdl_window, true);
-			});
-		}
+		g_window.enable_cursor_resets();
 		break;
 	}
 #endif

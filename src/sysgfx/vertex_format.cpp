@@ -6,7 +6,6 @@
 
 #include "../../include/tr/sysgfx/vertex_format.hpp"
 #include "../../include/tr/sysgfx/gl_call.hpp"
-#include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/impl.hpp"
 
 ////////////////////////////////////////////////////////////// VERTEX FORMAT //////////////////////////////////////////////////////////////
@@ -78,15 +77,5 @@ std::string tr::gfx::vertex_format::label() const
 
 tr::gfx::vertex_format& tr::gfx::vertex2_format()
 {
-	static constexpr std::array<vertex_binding, 3> bindings{{
-		{not_instanced, as_vertex_attribute_list<glm::vec2>},
-		{not_instanced, as_vertex_attribute_list<glm::vec2>},
-		{not_instanced, as_vertex_attribute_list<rgba8>},
-	}};
-
-	if (!g_vertex2_format.has_value()) {
-		g_vertex2_format.emplace(bindings);
-		TR_SET_LABEL(*g_vertex2_format, "(tr) 2D Vertex Format");
-	}
-	return *g_vertex2_format;
+	return sys::g_window.gfx_context().vertex2_format();
 }

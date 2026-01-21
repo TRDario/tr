@@ -33,7 +33,7 @@ namespace tr::gfx {
 
 		friend render_target backbuffer_render_target();
 		friend render_target backbuffer_region_render_target(const irect2& rect);
-		friend void set_render_target(const render_target& target);
 		friend class render_texture;
+		friend class context;
 	};
 } // namespace tr::gfx

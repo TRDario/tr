@@ -101,6 +101,7 @@ namespace tr::gfx {
 
 		friend class texture_ref;
 		friend class shader_base;
+		friend class context;
 
 #ifdef TR_HAS_IMGUI
 		friend ImTextureID ImGui::GetTextureID(const gfx::texture& texture);
@@ -133,6 +134,7 @@ namespace tr::gfx {
 
 		friend class texture;
 		friend class shader_base;
+		friend class context;
 	};
 
 	// 2D texture that can be rendered to.

@@ -172,19 +172,19 @@ namespace tr::gfx {
 		// OpenGL texture unit.
 		class texture_unit {
 		  public:
+			// Allocates a texture unit and binds it to a uniform in a shader.
+			texture_unit(unsigned int program, int index);
+
+			// Sets the texture unit.
+			void set(texture_ref texture);
+
+		  private:
 			struct deleter {
 				void operator()(unsigned int unit) const;
 			};
 
 			// The ID of the texture unit.
-			handle<unsigned int, UINT_MAX, deleter> id;
-
-			// Allocates a texture unit.
-			texture_unit();
-
-		  private:
-			// Tracks which units are allocated.
-			static std::array<bool, 80> g_texture_units;
+			handle<unsigned int, UINT_MAX, deleter> m_id;
 		};
 		struct deleter {
 			void operator()(unsigned int id) const;

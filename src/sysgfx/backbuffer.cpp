@@ -14,10 +14,10 @@
 
 glm::ivec2 tr::gfx::backbuffer_size()
 {
-	TR_ASSERT(sys::g_sdl_window != nullptr, "Tried to get the size of the backbuffer before opening the window.");
+	TR_ASSERT(sys::g_window.is_open(), "Tried to get the size of the backbuffer before opening the window.");
 
 	glm::ivec2 size;
-	SDL_GetWindowSizeInPixels(sys::g_sdl_window, &size.x, &size.y);
+	SDL_GetWindowSizeInPixels(sys::g_window.ptr(), &size.x, &size.y);
 	return size;
 }
 
@@ -69,5 +69,5 @@ void tr::gfx::clear_backbuffer_region(const tr::irect2& rect, const tr::rgbaf& c
 
 void tr::gfx::flip_backbuffer()
 {
-	SDL_GL_SwapWindow(sys::g_sdl_window);
+	SDL_GL_SwapWindow(sys::g_window.ptr());
 }

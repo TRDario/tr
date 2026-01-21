@@ -13,7 +13,7 @@
 
 void tr::ImGui::Init()
 {
-	ImGui_ImplSDL3_InitForOpenGL(sys::g_sdl_window, gfx::g_ogl_context);
+	ImGui_ImplSDL3_InitForOpenGL(sys::g_window.ptr(), sys::g_window.gfx_context().ptr());
 	ImGui_ImplOpenGL3_Init("#version 150");
 }
 
@@ -41,6 +41,6 @@ void tr::ImGui::NewFrame()
 
 void tr::ImGui::Draw()
 {
-	gfx::g_active_renderer = gfx::renderer_id::imgui_renderer;
+	std::ignore = sys::g_window.gfx_context().should_setup_context(gfx::renderer_id::imgui_renderer);
 	ImGui_ImplOpenGL3_RenderDrawData(::ImGui::GetDrawData());
 }

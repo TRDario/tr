@@ -2,134 +2,128 @@
 #include "../../include/tr/sysgfx/gl_call.hpp"
 #include "../../include/tr/sysgfx/impl.hpp"
 
-namespace tr::gfx {
-	// Converts a pixel format to a texture format.
-	GLenum tex_format(pixel_format format);
-	// Converts a pixel format to an OpenGL format.
-	GLenum format(pixel_format format);
-	// Converts a pixel format to an OpenGL type.
-	GLenum type(pixel_format format);
-} // namespace tr::gfx
-
-GLenum tr::gfx::tex_format(pixel_format format)
+// Converts a pixel format to an OpenGL texture format.
+static GLenum gl_tex_format(tr::pixel_format format)
 {
 	switch (format) {
-	case pixel_format::r8:
+	case tr::pixel_format::r8:
 		return GL_R8;
-	case pixel_format::rgb_p332:
+	case tr::pixel_format::rgb_p332:
 		return GL_R3_G3_B2;
-	case pixel_format::xrgb_p4444:
-	case pixel_format::xbgr_p4444:
+	case tr::pixel_format::xrgb_p4444:
+	case tr::pixel_format::xbgr_p4444:
 		return GL_RGB4;
-	case pixel_format::xrgb_p1555:
-	case pixel_format::xbgr_p1555:
+	case tr::pixel_format::xrgb_p1555:
+	case tr::pixel_format::xbgr_p1555:
 		return GL_RGB5;
-	case pixel_format::argb_p4444:
-	case pixel_format::rgba_p4444:
-	case pixel_format::abgr_p4444:
-	case pixel_format::bgra_p4444:
+	case tr::pixel_format::argb_p4444:
+	case tr::pixel_format::rgba_p4444:
+	case tr::pixel_format::abgr_p4444:
+	case tr::pixel_format::bgra_p4444:
 		return GL_RGBA4;
-	case pixel_format::argb_p1555:
-	case pixel_format::rgba_p5551:
-	case pixel_format::abgr_p1555:
-	case pixel_format::bgra_p5551:
+	case tr::pixel_format::argb_p1555:
+	case tr::pixel_format::rgba_p5551:
+	case tr::pixel_format::abgr_p1555:
+	case tr::pixel_format::bgra_p5551:
 		return GL_RGB5_A1;
-	case pixel_format::rgb_p565:
-	case pixel_format::bgr_p565:
+	case tr::pixel_format::rgb_p565:
+	case tr::pixel_format::bgr_p565:
 		return GL_RGB565;
-	case pixel_format::rgb24:
-	case pixel_format::bgr24:
-	case pixel_format::bgrx32:
-	case pixel_format::xbgr32:
-	case pixel_format::rgbx32:
-	case pixel_format::xrgb32:
+	case tr::pixel_format::rgb24:
+	case tr::pixel_format::bgr24:
+	case tr::pixel_format::bgrx32:
+	case tr::pixel_format::xbgr32:
+	case tr::pixel_format::rgbx32:
+	case tr::pixel_format::xrgb32:
 		return GL_RGB8;
-	case pixel_format::bgra32:
-	case pixel_format::abgr32:
-	case pixel_format::argb32:
-	case pixel_format::rgba32:
+	case tr::pixel_format::bgra32:
+	case tr::pixel_format::abgr32:
+	case tr::pixel_format::argb32:
+	case tr::pixel_format::rgba32:
 		return GL_RGBA8;
 	default:
 		return 0;
 	}
 }
 
-GLenum tr::gfx::format(pixel_format format)
+// Converts a pixel format to an OpenGL format.
+static GLenum gl_format(tr::pixel_format format)
 {
 	switch (format) {
-	case pixel_format::r8:
+	case tr::pixel_format::r8:
 		return GL_RED;
-	case pixel_format::rgb_p332:
-	case pixel_format::xbgr_p4444:
-	case pixel_format::xbgr_p1555:
-	case pixel_format::rgb_p565:
-	case pixel_format::rgb24:
-	case pixel_format::xbgr32:
-	case pixel_format::rgbx32:
+	case tr::pixel_format::rgb_p332:
+	case tr::pixel_format::xbgr_p4444:
+	case tr::pixel_format::xbgr_p1555:
+	case tr::pixel_format::rgb_p565:
+	case tr::pixel_format::rgb24:
+	case tr::pixel_format::xbgr32:
+	case tr::pixel_format::rgbx32:
 		return GL_RGB;
-	case pixel_format::xrgb_p4444:
-	case pixel_format::xrgb_p1555:
-	case pixel_format::bgr_p565:
-	case pixel_format::bgr24:
-	case pixel_format::bgrx32:
-	case pixel_format::xrgb32:
+	case tr::pixel_format::xrgb_p4444:
+	case tr::pixel_format::xrgb_p1555:
+	case tr::pixel_format::bgr_p565:
+	case tr::pixel_format::bgr24:
+	case tr::pixel_format::bgrx32:
+	case tr::pixel_format::xrgb32:
 		return GL_BGR;
-	case pixel_format::rgba_p4444:
-	case pixel_format::abgr_p4444:
-	case pixel_format::rgba_p5551:
-	case pixel_format::abgr_p1555:
-	case pixel_format::abgr32:
-	case pixel_format::rgba32:
+	case tr::pixel_format::rgba_p4444:
+	case tr::pixel_format::abgr_p4444:
+	case tr::pixel_format::rgba_p5551:
+	case tr::pixel_format::abgr_p1555:
+	case tr::pixel_format::abgr32:
+	case tr::pixel_format::rgba32:
 		return GL_RGBA;
-	case pixel_format::argb_p4444:
-	case pixel_format::bgra_p4444:
-	case pixel_format::argb_p1555:
-	case pixel_format::bgra_p5551:
-	case pixel_format::bgra32:
-	case pixel_format::argb32:
+	case tr::pixel_format::argb_p4444:
+	case tr::pixel_format::bgra_p4444:
+	case tr::pixel_format::argb_p1555:
+	case tr::pixel_format::bgra_p5551:
+	case tr::pixel_format::bgra32:
+	case tr::pixel_format::argb32:
 		return GL_BGRA;
 	default:
 		return 0;
 	}
 }
 
-GLenum tr::gfx::type(pixel_format format)
+// Converts a pixel format to an OpenGL type.
+static GLenum gl_type(tr::pixel_format format)
 {
 	switch (format) {
-	case pixel_format::r8:
-	case pixel_format::rgb24:
-	case pixel_format::rgba32:
-	case pixel_format::bgr24:
-	case pixel_format::bgra32:
+	case tr::pixel_format::r8:
+	case tr::pixel_format::rgb24:
+	case tr::pixel_format::rgba32:
+	case tr::pixel_format::bgr24:
+	case tr::pixel_format::bgra32:
 		return GL_UNSIGNED_BYTE;
-	case pixel_format::rgb_p332:
+	case tr::pixel_format::rgb_p332:
 		return GL_UNSIGNED_BYTE_3_3_2;
-	case pixel_format::rgba_p4444:
-	case pixel_format::bgra_p4444:
+	case tr::pixel_format::rgba_p4444:
+	case tr::pixel_format::bgra_p4444:
 		return GL_UNSIGNED_SHORT_4_4_4_4;
-	case pixel_format::xrgb_p4444:
-	case pixel_format::xbgr_p4444:
-	case pixel_format::argb_p4444:
-	case pixel_format::abgr_p4444:
+	case tr::pixel_format::xrgb_p4444:
+	case tr::pixel_format::xbgr_p4444:
+	case tr::pixel_format::argb_p4444:
+	case tr::pixel_format::abgr_p4444:
 		return GL_UNSIGNED_SHORT_4_4_4_4_REV;
-	case pixel_format::rgba_p5551:
-	case pixel_format::bgra_p5551:
+	case tr::pixel_format::rgba_p5551:
+	case tr::pixel_format::bgra_p5551:
 		return GL_UNSIGNED_SHORT_5_5_5_1;
-	case pixel_format::xrgb_p1555:
-	case pixel_format::xbgr_p1555:
-	case pixel_format::argb_p1555:
-	case pixel_format::abgr_p1555:
+	case tr::pixel_format::xrgb_p1555:
+	case tr::pixel_format::xbgr_p1555:
+	case tr::pixel_format::argb_p1555:
+	case tr::pixel_format::abgr_p1555:
 		return GL_UNSIGNED_SHORT_1_5_5_5_REV;
-	case pixel_format::rgb_p565:
-	case pixel_format::bgr_p565:
+	case tr::pixel_format::rgb_p565:
+	case tr::pixel_format::bgr_p565:
 		return GL_UNSIGNED_SHORT_5_6_5;
-	case pixel_format::rgbx32:
-	case pixel_format::bgrx32:
+	case tr::pixel_format::rgbx32:
+	case tr::pixel_format::bgrx32:
 		return GL_UNSIGNED_INT_8_8_8_8_REV;
-	case pixel_format::xrgb32:
-	case pixel_format::xbgr32:
-	case pixel_format::argb32:
-	case pixel_format::abgr32:
+	case tr::pixel_format::xrgb32:
+	case tr::pixel_format::xbgr32:
+	case tr::pixel_format::argb32:
+	case tr::pixel_format::abgr32:
 		return GL_UNSIGNED_INT_8_8_8_8;
 	default:
 		return 0;
@@ -236,17 +230,13 @@ tr::gfx::texture tr::gfx::texture::reallocate(glm::ivec2 size, bool mipmapped, p
 	}
 
 	const GLsizei levels{mipmapped ? floor_cast<GLsizei>(std::log2(std::max(size.x, size.y)) + 1) : 1};
-	TR_GL_CALL(glTextureStorage2D, m_handle, levels, tex_format(format), size.x, size.y);
+	TR_GL_CALL(glTextureStorage2D, m_handle, levels, gl_tex_format(format), size.x, size.y);
 	if (glGetError() == GL_OUT_OF_MEMORY) {
 		throw out_of_memory{"texture allocation"};
 	}
 	m_size = size;
 
-	for (int i = 0; i < 80; ++i) {
-		if (g_texture_unit_textures[i] == *this) {
-			TR_GL_CALL(glBindTextures, i, 1, &m_handle);
-		}
-	}
+	sys::g_window.gfx_context().rebind_texture_units(*this);
 
 	return texture{old_handle, old_size};
 }
@@ -316,8 +306,8 @@ void tr::gfx::texture::set_region(glm::ivec2 tl, const sub_bitmap& bitmap)
 			  tl.x + bitmap.size().x, tl.y + bitmap.size().y, m_size.x, m_size.y);
 
 	TR_GL_CALL(glPixelStorei, GL_UNPACK_ROW_LENGTH, bitmap.pitch() / pixel_bytes(bitmap.format()));
-	TR_GL_CALL(glTextureSubImage2D, m_handle, 0, tl.x, tl.y, bitmap.size().x, bitmap.size().y, format(bitmap.format()),
-			   type(bitmap.format()), bitmap.data());
+	TR_GL_CALL(glTextureSubImage2D, m_handle, 0, tl.x, tl.y, bitmap.size().x, bitmap.size().y, gl_format(bitmap.format()),
+			   gl_type(bitmap.format()), bitmap.data());
 	TR_GL_CALL(glGenerateTextureMipmap, m_handle);
 }
 
@@ -435,8 +425,8 @@ tr::gfx::render_texture::render_texture(const sub_bitmap& bitmap, bool mipmapped
 
 tr::gfx::render_texture::~render_texture()
 {
-	if (!empty() && g_current_render_target.has_value() && g_current_render_target->m_fbo == m_fbo.get()) {
-		g_current_render_target.reset();
+	if (!empty() && sys::g_window.gfx_context().is_fbo_of_render_target(m_fbo.get())) {
+		sys::g_window.gfx_context().clear_render_target();
 	}
 }
 
