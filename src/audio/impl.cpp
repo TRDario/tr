@@ -6,7 +6,7 @@
 
 ///////////////////////////////////////////////////////////////// COMMAND /////////////////////////////////////////////////////////////////
 
-tr::audio::command::command(std::shared_ptr<source_base> source, type type, float start, float end, duration length)
+tr::audio::command::command(std::shared_ptr<owning_source> source, type type, float start, float end, duration length)
 	: m_src{std::move(source)}
 	, m_type{type}
 	, m_start{.num = start}
@@ -17,7 +17,7 @@ tr::audio::command::command(std::shared_ptr<source_base> source, type type, floa
 {
 }
 
-tr::audio::command::command(std::shared_ptr<source_base> source, type type, glm::vec2 start, glm::vec2 end, duration length)
+tr::audio::command::command(std::shared_ptr<owning_source> source, type type, glm::vec2 start, glm::vec2 end, duration length)
 	: m_src{std::move(source)}
 	, m_type{type}
 	, m_start{.vec2 = start}
@@ -28,7 +28,7 @@ tr::audio::command::command(std::shared_ptr<source_base> source, type type, glm:
 {
 }
 
-tr::audio::command::command(std::shared_ptr<source_base> source, type type, glm::vec3 start, glm::vec3 end, duration length)
+tr::audio::command::command(std::shared_ptr<owning_source> source, type type, glm::vec3 start, glm::vec3 end, duration length)
 	: m_src{std::move(source)}
 	, m_type{type}
 	, m_start{.vec3 = start}
@@ -39,7 +39,7 @@ tr::audio::command::command(std::shared_ptr<source_base> source, type type, glm:
 {
 }
 
-std::shared_ptr<tr::audio::source_base> tr::audio::command::source() const
+std::shared_ptr<tr::audio::owning_source> tr::audio::command::source() const
 {
 	return m_src;
 }
@@ -150,7 +150,7 @@ void tr::audio::manager::shut_down()
 
 	m_commands.clear();
 
-	TR_ASSERT(std::ranges::all_of(m_sources, [](const std::shared_ptr<source_base>& ptr) { return ptr.use_count() == 1; }),
+	TR_ASSERT(std::ranges::all_of(m_sources, [](const std::shared_ptr<owning_source>& ptr) { return ptr.use_count() == 1; }),
 			  "Tried to shut down audio system while one or more audio sources still exists.");
 	m_sources.clear();
 
@@ -206,7 +206,7 @@ float tr::audio::manager::gain_multiplier(std::bitset<32> classes) const
 void tr::audio::manager::set_class_gain(int id, float gain)
 {
 	m_gains[id] = gain;
-	for (source_base& source : deref(m_sources)) {
+	for (owning_source& source : deref(m_sources)) {
 		if (source.classes()[id]) {
 			source.set_gain(source.gain());
 		}
@@ -217,7 +217,7 @@ void tr::audio::manager::set_class_gain(int id, float gain)
 
 tr::audio::buffer::id tr::audio::manager::allocate_buffer()
 {
-	return m_buffers.emplace(buffer_base{}, false).first->first;
+	return m_buffers.emplace(owning_buffer{}, false).first->first;
 }
 
 void tr::audio::manager::mark_buffer_as_cullable(buffer::id id)
@@ -227,7 +227,7 @@ void tr::audio::manager::mark_buffer_as_cullable(buffer::id id)
 
 //
 
-std::shared_ptr<tr::audio::source_base> tr::audio::manager::allocate_source(int priority)
+std::shared_ptr<tr::audio::owning_source> tr::audio::manager::allocate_source(int priority)
 {
 	std::lock_guard lock{m_mutex};
 
@@ -242,7 +242,7 @@ std::shared_ptr<tr::audio::source_base> tr::audio::manager::allocate_source(int 
 	}
 
 	return *m_sources.emplace(std::ranges::find_if(m_sources, [&](auto& s) { return s->priority() < priority; }),
-							  std::make_shared<source_base>(priority));
+							  std::make_shared<owning_source>(priority));
 }
 
 //
@@ -260,13 +260,13 @@ void tr::audio::manager::thread_fn(std::stop_token stoken)
 			});
 
 			m_sources.remove_if([](const auto& ptr) { return ptr.use_count() == 1 && ptr->state() != state::playing; });
-			for (source_base& source : deref(std::views::filter(m_sources, [](const auto& s) { return s->m_stream.has_value(); }))) {
+			for (owning_source& source : deref(std::views::filter(m_sources, [](const auto& s) { return s->m_stream.has_value(); }))) {
 				buffered_stream& stream{*source.m_stream};
 
 				ALint nbuffers;
 				TR_AL_CALL(alGetSourcei, source.m_id, AL_BUFFERS_PROCESSED, &nbuffers);
 				if (nbuffers > 0) {
-					std::array<buffer_base::id, 4> ids{};
+					std::array<owning_buffer::id, 4> ids{};
 					TR_AL_CALL(alSourceUnqueueBuffers, source.m_id, nbuffers, (ALuint*)ids.data());
 					for (int i = 0; i < nbuffers; ++i) {
 						if (!stream.stream->looping() && stream.stream->tell() == stream.stream->length()) {

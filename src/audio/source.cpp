@@ -1,34 +1,17 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Implements source.hpp and owning_source from audio/impl.hpp.                                                                          //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #include "../../include/tr/audio/source.hpp"
 #include "../../include/tr/audio/al_call.hpp"
 #include "../../include/tr/audio/impl.hpp"
 #include <AL/alext.h>
 
-//
+////////////////////////////////////////////////////////////// OWNING SOURCE //////////////////////////////////////////////////////////////
 
-tr::audio::buffer::id tr::audio::source_base::buffer() const
-{
-	ALint id;
-	TR_AL_CALL(alGetSourcei, m_id, AL_BUFFER, &id);
-	return audio::buffer::id(id);
-}
-
-void tr::audio::source_base::lock_audio_mutex() const
-{
-	if (m_mutex_refc++ == 0) {
-		g_manager.lock_mutex();
-	}
-}
-
-void tr::audio::source_base::unlock_audio_mutex() const
-{
-	if (--m_mutex_refc == 0) {
-		g_manager.unlock_mutex();
-	}
-}
-
-//
-
-tr::audio::source_base::source_base(int priority)
+tr::audio::owning_source::owning_source(int priority)
 	: m_gain{1.0f}, m_priority{priority}, m_mutex_refc{0}
 {
 	TR_AL_CALL(alGenSources, 1, &m_id);
@@ -37,19 +20,14 @@ tr::audio::source_base::source_base(int priority)
 	}
 }
 
-tr::audio::source::source(std::shared_ptr<source_base> base)
-	: m_base{base}
-{
-}
-
-tr::audio::source_base::~source_base()
+tr::audio::owning_source::~owning_source()
 {
 	TR_AL_CALL(alDeleteSources, 1, &m_id);
 }
 
 //
 
-void tr::audio::source_base::use(const audio::buffer& buffer)
+void tr::audio::owning_source::use(const audio::buffer& buffer)
 {
 	clear();
 	TR_AL_CALL(alSourcei, m_id, AL_BUFFER, ALuint(buffer.m_id.get()));
@@ -58,12 +36,7 @@ void tr::audio::source_base::use(const audio::buffer& buffer)
 	TR_AL_CALL(alSourcei, m_id, AL_DIRECT_CHANNELS_SOFT, channels == 2);
 }
 
-void tr::audio::source::use(const buffer& buffer)
-{
-	m_base->use(buffer);
-}
-
-void tr::audio::source_base::use(std::unique_ptr<stream>&& stream)
+void tr::audio::owning_source::use(std::unique_ptr<stream>&& stream)
 {
 	lock_audio_mutex();
 	clear();
@@ -71,12 +44,7 @@ void tr::audio::source_base::use(std::unique_ptr<stream>&& stream)
 	unlock_audio_mutex();
 }
 
-void tr::audio::source::use(std::unique_ptr<stream>&& stream)
-{
-	m_base->use(std::move(stream));
-}
-
-void tr::audio::source_base::clear()
+void tr::audio::owning_source::clear()
 {
 	lock_audio_mutex();
 	stop();
@@ -92,244 +60,124 @@ void tr::audio::source_base::clear()
 	unlock_audio_mutex();
 }
 
-void tr::audio::source::clear()
-{
-	m_base->clear();
-}
-
 //
 
-int tr::audio::source_base::priority() const
+int tr::audio::owning_source::priority() const
 {
 	return m_priority;
 }
 
-int tr::audio::source::priority() const
-{
-	return m_base->priority();
-}
-
-const std::bitset<32>& tr::audio::source_base::classes() const
+const std::bitset<32>& tr::audio::owning_source::classes() const
 {
 	return m_classes;
 }
 
-const std::bitset<32>& tr::audio::source::classes() const
-{
-	return m_base->classes();
-}
-
-void tr::audio::source_base::set_classes(const std::bitset<32>& classes)
+void tr::audio::owning_source::set_classes(const std::bitset<32>& classes)
 {
 	m_classes = classes;
 	set_gain(gain());
 }
 
-void tr::audio::source::set_classes(const std::bitset<32>& classes)
-{
-	m_base->set_classes(classes);
-}
-
 //
 
-float tr::audio::source_base::pitch() const
+float tr::audio::owning_source::pitch() const
 {
 	float pitch;
 	TR_AL_CALL(alGetSourcef, m_id, AL_PITCH, &pitch);
 	return pitch;
 }
 
-float tr::audio::source::pitch() const
-{
-	return m_base->pitch();
-}
-
-void tr::audio::source_base::set_pitch(float pitch)
+void tr::audio::owning_source::set_pitch(float pitch)
 {
 	TR_AL_CALL(alSourcef, m_id, AL_PITCH, std::clamp(pitch, 0.5f, 2.0f));
 }
 
-void tr::audio::source::set_pitch(float pitch)
-{
-	m_base->set_pitch(pitch);
-}
-
-void tr::audio::source::set_pitch(float pitch, fsecs time)
-{
-	g_manager.submit_command(m_base, command::type::pitch, this->pitch(), pitch, duration_cast<duration>(time));
-}
-
 //
 
-float tr::audio::source_base::gain() const
+float tr::audio::owning_source::gain() const
 {
 	return m_gain;
 }
 
-float tr::audio::source::gain() const
-{
-	return m_base->gain();
-}
-
-void tr::audio::source_base::set_gain(float gain)
+void tr::audio::owning_source::set_gain(float gain)
 {
 	m_gain = gain;
 	TR_AL_CALL(alSourcef, m_id, AL_GAIN, std::max(g_manager.gain_multiplier(m_classes) * gain, 0.0f));
 }
 
-void tr::audio::source::set_gain(float gain)
-{
-	m_base->set_gain(gain);
-}
-
-void tr::audio::source::set_gain(float gain, fsecs time)
-{
-	g_manager.submit_command(m_base, command::type::gain, this->gain(), gain, duration_cast<duration>(time));
-}
-
 //
 
-float tr::audio::source_base::max_dist() const
+float tr::audio::owning_source::max_dist() const
 {
 	float max_dist;
 	TR_AL_CALL(alGetSourcef, m_id, AL_MAX_DISTANCE, &max_dist);
 	return max_dist;
 }
 
-float tr::audio::source::max_dist() const
-{
-	return m_base->max_dist();
-}
-
-void tr::audio::source_base::set_max_dist(float max_dist)
+void tr::audio::owning_source::set_max_dist(float max_dist)
 {
 	TR_AL_CALL(alSourcef, m_id, AL_MAX_DISTANCE, std::max(max_dist, 0.0f));
 }
 
-void tr::audio::source::set_max_dist(float max_dist)
-{
-	m_base->set_max_dist(max_dist);
-}
-
-void tr::audio::source::set_max_dist(float max_dist, fsecs time)
-{
-	g_manager.submit_command(m_base, command::type::max_distance, this->max_dist(), max_dist, duration_cast<duration>(time));
-}
-
 //
 
-float tr::audio::source_base::rolloff() const
+float tr::audio::owning_source::rolloff() const
 {
 	float rolloff;
 	TR_AL_CALL(alGetSourcef, m_id, AL_ROLLOFF_FACTOR, &rolloff);
 	return rolloff;
 }
 
-float tr::audio::source::rolloff() const
-{
-	return m_base->rolloff();
-}
-
-void tr::audio::source_base::set_rolloff(float rolloff)
+void tr::audio::owning_source::set_rolloff(float rolloff)
 {
 	TR_AL_CALL(alSourcef, m_id, AL_ROLLOFF_FACTOR, std::max(rolloff, 0.0f));
 }
 
-void tr::audio::source::set_rolloff(float rolloff)
-{
-	m_base->set_rolloff(rolloff);
-}
-
-void tr::audio::source::set_rolloff(float rolloff, fsecs time)
-{
-	g_manager.submit_command(m_base, command::type::rolloff, this->rolloff(), rolloff, duration_cast<duration>(time));
-}
-
 //
 
-float tr::audio::source_base::ref_dist() const
+float tr::audio::owning_source::ref_dist() const
 {
 	float ref_dist;
 	TR_AL_CALL(alGetSourcef, m_id, AL_REFERENCE_DISTANCE, &ref_dist);
 	return ref_dist;
 }
 
-float tr::audio::source::ref_dist() const
-{
-	return m_base->ref_dist();
-}
-
-void tr::audio::source_base::set_ref_dist(float ref_dist)
+void tr::audio::owning_source::set_ref_dist(float ref_dist)
 {
 	TR_AL_CALL(alSourcef, m_id, AL_REFERENCE_DISTANCE, std::max(ref_dist, 0.0f));
 }
 
-void tr::audio::source::set_ref_dist(float ref_dist)
-{
-	m_base->set_ref_dist(ref_dist);
-}
-
-void tr::audio::source::set_ref_dist(float ref_dist, fsecs time)
-{
-	g_manager.submit_command(m_base, command::type::reference_distance, this->ref_dist(), ref_dist, duration_cast<duration>(time));
-}
-
 //
 
-float tr::audio::source_base::out_cone_gain() const
+float tr::audio::owning_source::out_cone_gain() const
 {
 	float out_gain;
 	TR_AL_CALL(alGetSourcef, m_id, AL_CONE_OUTER_GAIN, &out_gain);
 	return out_gain;
 }
 
-float tr::audio::source::out_cone_gain() const
-{
-	return m_base->out_cone_gain();
-}
-
-void tr::audio::source_base::set_out_cone_gain(float out_cone_gain)
+void tr::audio::owning_source::set_out_cone_gain(float out_cone_gain)
 {
 	TR_AL_CALL(alSourcef, m_id, AL_CONE_OUTER_GAIN, std::clamp(out_cone_gain, 0.0f, 1.0f));
 }
 
-void tr::audio::source::set_out_cone_gain(float out_cone_gain)
-{
-	m_base->set_out_cone_gain(out_cone_gain);
-}
-
-void tr::audio::source::set_out_cone_gain(float out_cone_gain, fsecs time)
-{
-	g_manager.submit_command(m_base, command::type::out_cone_gain, this->out_cone_gain(), out_cone_gain, duration_cast<duration>(time));
-}
-
 //
 
-tr::angle tr::audio::source_base::in_cone_w() const
+tr::angle tr::audio::owning_source::in_cone_w() const
 {
 	float in_cone_w;
 	TR_AL_CALL(alGetSourcef, m_id, AL_CONE_INNER_ANGLE, &in_cone_w);
 	return degs(in_cone_w);
 }
 
-tr::angle tr::audio::source::in_cone_w() const
-{
-	return m_base->in_cone_w();
-}
-
-tr::angle tr::audio::source_base::out_cone_w() const
+tr::angle tr::audio::owning_source::out_cone_w() const
 {
 	float out_cone_w;
 	TR_AL_CALL(alGetSourcef, m_id, AL_CONE_OUTER_ANGLE, &out_cone_w);
 	return degs(out_cone_w);
 }
 
-tr::angle tr::audio::source::out_cone_w() const
-{
-	return m_base->out_cone_w();
-}
-
-void tr::audio::source_base::set_cone_w(angle in_cone_w, angle out_cone_w)
+void tr::audio::owning_source::set_cone_w(angle in_cone_w, angle out_cone_w)
 {
 	in_cone_w = std::clamp(in_cone_w, 0_deg, 360_deg);
 	out_cone_w = std::clamp(out_cone_w, 0_deg, 360_deg);
@@ -340,131 +188,65 @@ void tr::audio::source_base::set_cone_w(angle in_cone_w, angle out_cone_w)
 	TR_AL_CALL(alSourcef, m_id, AL_CONE_OUTER_ANGLE, out_cone_w.degs());
 }
 
-void tr::audio::source::set_cone_w(angle in_cone_w, angle out_cone_w)
-{
-	m_base->set_cone_w(in_cone_w, out_cone_w);
-}
-
-void tr::audio::source::set_cone_w(angle in_cone_w, angle out_cone_w, fsecs time)
-{
-	g_manager.submit_command(m_base, command::type::cone_width, glm::vec2{this->in_cone_w().rads(), this->out_cone_w().rads()},
-							 glm::vec2{in_cone_w.rads(), out_cone_w.rads()}, duration_cast<duration>(time));
-}
-
 //
 
-glm::vec3 tr::audio::source_base::pos() const
+glm::vec3 tr::audio::owning_source::pos() const
 {
 	glm::vec3 pos;
 	TR_AL_CALL(alGetSourcefv, m_id, AL_POSITION, value_ptr(pos));
 	return pos;
 }
 
-glm::vec3 tr::audio::source::pos() const
-{
-	return m_base->pos();
-}
-
-void tr::audio::source_base::set_pos(const glm::vec3& pos)
+void tr::audio::owning_source::set_pos(const glm::vec3& pos)
 {
 	TR_AL_CALL(alSourcefv, m_id, AL_POSITION, value_ptr(pos));
 }
 
-void tr::audio::source::set_pos(const glm::vec3& pos)
-{
-	m_base->set_pos(pos);
-}
-
-void tr::audio::source::set_pos(const glm::vec3& pos, fsecs time)
-{
-	g_manager.submit_command(m_base, command::type::position, this->pos(), pos, duration_cast<duration>(time));
-}
-
 //
 
-glm::vec3 tr::audio::source_base::vel() const
+glm::vec3 tr::audio::owning_source::vel() const
 {
 	glm::vec3 vel;
 	TR_AL_CALL(alGetSourcefv, m_id, AL_VELOCITY, value_ptr(vel));
 	return vel;
 }
 
-glm::vec3 tr::audio::source::vel() const
-{
-	return m_base->vel();
-}
-
-void tr::audio::source_base::set_vel(const glm::vec3& vel)
+void tr::audio::owning_source::set_vel(const glm::vec3& vel)
 {
 	TR_AL_CALL(alSourcefv, m_id, AL_VELOCITY, value_ptr(vel));
 }
 
-void tr::audio::source::set_vel(const glm::vec3& vel)
-{
-	m_base->set_vel(vel);
-}
-
-void tr::audio::source::set_vel(const glm::vec3& vel, fsecs time)
-{
-	g_manager.submit_command(m_base, command::type::velocity, this->vel(), vel, duration_cast<duration>(time));
-}
-
 //
 
-glm::vec3 tr::audio::source_base::dir() const
+glm::vec3 tr::audio::owning_source::dir() const
 {
 	glm::vec3 dir;
 	TR_AL_CALL(alGetSourcefv, m_id, AL_DIRECTION, value_ptr(dir));
 	return dir;
 }
 
-glm::vec3 tr::audio::source::dir() const
-{
-	return m_base->dir();
-}
-
-void tr::audio::source_base::set_dir(const glm::vec3& dir)
+void tr::audio::owning_source::set_dir(const glm::vec3& dir)
 {
 	TR_AL_CALL(alSourcefv, m_id, AL_DIRECTION, value_ptr(dir));
 }
 
-void tr::audio::source::set_dir(const glm::vec3& dir)
-{
-	m_base->set_dir(dir);
-}
-
-void tr::audio::source::set_dir(const glm::vec3& dir, fsecs time)
-{
-	g_manager.submit_command(m_base, command::type::direction, this->dir(), dir, duration_cast<duration>(time));
-}
-
 //
 
-tr::audio::origin tr::audio::source_base::origin() const
+tr::audio::origin tr::audio::owning_source::origin() const
 {
 	ALint origin;
 	TR_AL_CALL(alGetSourcei, m_id, AL_SOURCE_RELATIVE, &origin);
 	return audio::origin(origin);
 }
 
-tr::audio::origin tr::audio::source::origin() const
-{
-	return m_base->origin();
-}
-
-void tr::audio::source_base::set_origin(audio::origin type)
+void tr::audio::owning_source::set_origin(audio::origin type)
 {
 	TR_AL_CALL(alSourcei, m_id, AL_SOURCE_RELATIVE, ALint(type));
 }
 
-void tr::audio::source::set_origin(audio::origin type)
-{
-	m_base->set_origin(type);
-}
-
 //
 
-tr::audio::state tr::audio::source_base::state() const
+tr::audio::state tr::audio::owning_source::state() const
 {
 	ALint state;
 	TR_AL_CALL(alGetSourcei, m_id, AL_SOURCE_STATE, &state);
@@ -482,12 +264,7 @@ tr::audio::state tr::audio::source_base::state() const
 	}
 }
 
-tr::audio::state tr::audio::source::state() const
-{
-	return m_base->state();
-}
-
-void tr::audio::source_base::play()
+void tr::audio::owning_source::play()
 {
 	lock_audio_mutex();
 	if (m_stream.has_value()) {
@@ -506,22 +283,12 @@ void tr::audio::source_base::play()
 	unlock_audio_mutex();
 }
 
-void tr::audio::source::play()
-{
-	m_base->play();
-}
-
-void tr::audio::source_base::pause()
+void tr::audio::owning_source::pause()
 {
 	TR_AL_CALL(alSourcePause, m_id);
 }
 
-void tr::audio::source::pause()
-{
-	return m_base->pause();
-}
-
-void tr::audio::source_base::stop()
+void tr::audio::owning_source::stop()
 {
 	if (m_stream.has_value()) {
 		lock_audio_mutex();
@@ -534,14 +301,9 @@ void tr::audio::source_base::stop()
 	}
 }
 
-void tr::audio::source::stop()
-{
-	m_base->stop();
-}
-
 //
 
-tr::fsecs tr::audio::source_base::length() const
+tr::fsecs tr::audio::owning_source::length() const
 {
 	if (m_stream.has_value()) {
 		return fsecs{float(m_stream->stream->length()) / m_stream->stream->sample_rate()};
@@ -557,12 +319,7 @@ tr::fsecs tr::audio::source_base::length() const
 	}
 }
 
-tr::fsecs tr::audio::source::length() const
-{
-	return m_base->length();
-}
-
-tr::fsecs tr::audio::source_base::offset() const
+tr::fsecs tr::audio::owning_source::offset() const
 {
 	float offset;
 	TR_AL_CALL(alGetSourcef, m_id, AL_SEC_OFFSET, &offset);
@@ -581,12 +338,7 @@ tr::fsecs tr::audio::source_base::offset() const
 	}
 }
 
-tr::fsecs tr::audio::source::offset() const
-{
-	return m_base->offset();
-}
-
-void tr::audio::source_base::set_offset(fsecs offset)
+void tr::audio::owning_source::set_offset(fsecs offset)
 {
 	if (m_stream.has_value()) {
 		lock_audio_mutex();
@@ -614,14 +366,9 @@ void tr::audio::source_base::set_offset(fsecs offset)
 	TR_AL_CALL(alSourcef, m_id, AL_SEC_OFFSET, offset.count());
 }
 
-void tr::audio::source::set_offset(fsecs offset)
-{
-	m_base->set_offset(offset);
-}
-
 //
 
-bool tr::audio::source_base::looping() const
+bool tr::audio::owning_source::looping() const
 {
 	if (m_stream.has_value()) {
 		return m_stream->stream->looping();
@@ -633,12 +380,7 @@ bool tr::audio::source_base::looping() const
 	}
 }
 
-bool tr::audio::source::looping() const
-{
-	return m_base->looping();
-}
-
-tr::fsecs tr::audio::source_base::loop_start() const
+tr::fsecs tr::audio::owning_source::loop_start() const
 {
 	if (m_stream.has_value()) {
 		return fsecs{float(m_stream->stream->loop_start()) / m_stream->stream->sample_rate()};
@@ -658,12 +400,7 @@ tr::fsecs tr::audio::source_base::loop_start() const
 	}
 }
 
-tr::fsecs tr::audio::source::loop_start() const
-{
-	return m_base->loop_start();
-}
-
-tr::fsecs tr::audio::source_base::loop_end() const
+tr::fsecs tr::audio::owning_source::loop_end() const
 {
 	if (m_stream.has_value()) {
 		return fsecs{float(m_stream->stream->loop_end()) / m_stream->stream->sample_rate()};
@@ -683,12 +420,7 @@ tr::fsecs tr::audio::source_base::loop_end() const
 	}
 }
 
-tr::fsecs tr::audio::source::loop_end() const
-{
-	return m_base->loop_end();
-}
-
-void tr::audio::source_base::set_loop_points(fsecs start_point, fsecs end_point)
+void tr::audio::owning_source::set_loop_points(fsecs start_point, fsecs end_point)
 {
 	if (length() == fsecs::zero()) {
 		return;
@@ -728,12 +460,7 @@ void tr::audio::source_base::set_loop_points(fsecs start_point, fsecs end_point)
 	}
 }
 
-void tr::audio::source::set_loop_points(fsecs start_point, fsecs end_point)
-{
-	m_base->set_loop_points(start_point, end_point);
-}
-
-void tr::audio::source_base::set_looping(bool value)
+void tr::audio::owning_source::set_looping(bool value)
 {
 	if (m_stream.has_value()) {
 		lock_audio_mutex();
@@ -745,15 +472,328 @@ void tr::audio::source_base::set_looping(bool value)
 	}
 }
 
-void tr::audio::source::set_looping(bool value)
+//
+
+tr::audio::buffer::id tr::audio::owning_source::buffer() const
 {
-	m_base->set_looping(value);
+	ALint id;
+	TR_AL_CALL(alGetSourcei, m_id, AL_BUFFER, &id);
+	return audio::buffer::id(id);
 }
 
 //
 
+void tr::audio::owning_source::lock_audio_mutex() const
+{
+	if (m_mutex_refc++ == 0) {
+		g_manager.lock_mutex();
+	}
+}
+
+void tr::audio::owning_source::unlock_audio_mutex() const
+{
+	if (--m_mutex_refc == 0) {
+		g_manager.unlock_mutex();
+	}
+}
+
+////////////////////////////////////////////////////////////////// SOURCE /////////////////////////////////////////////////////////////////
+
 std::optional<tr::audio::source> tr::audio::try_allocating_source(int priority)
 {
-	std::shared_ptr<source_base> base{g_manager.allocate_source(priority)};
+	std::shared_ptr<owning_source> base{g_manager.allocate_source(priority)};
 	return base != nullptr ? std::optional{source{std::move(base)}} : std::nullopt;
+}
+
+tr::audio::source::source(std::shared_ptr<owning_source> base)
+	: m_base{base}
+{
+}
+
+//
+
+void tr::audio::source::use(const buffer& buffer)
+{
+	m_base->use(buffer);
+}
+
+void tr::audio::source::use(std::unique_ptr<stream>&& stream)
+{
+	m_base->use(std::move(stream));
+}
+
+void tr::audio::source::clear()
+{
+	m_base->clear();
+}
+
+//
+
+int tr::audio::source::priority() const
+{
+	return m_base->priority();
+}
+
+const std::bitset<32>& tr::audio::source::classes() const
+{
+	return m_base->classes();
+}
+
+void tr::audio::source::set_classes(const std::bitset<32>& classes)
+{
+	m_base->set_classes(classes);
+}
+
+//
+
+float tr::audio::source::pitch() const
+{
+	return m_base->pitch();
+}
+
+void tr::audio::source::set_pitch(float pitch)
+{
+	m_base->set_pitch(pitch);
+}
+
+void tr::audio::source::set_pitch(float pitch, fsecs time)
+{
+	g_manager.submit_command(m_base, command::type::pitch, this->pitch(), pitch, duration_cast<duration>(time));
+}
+
+//
+
+float tr::audio::source::gain() const
+{
+	return m_base->gain();
+}
+
+void tr::audio::source::set_gain(float gain)
+{
+	m_base->set_gain(gain);
+}
+
+void tr::audio::source::set_gain(float gain, fsecs time)
+{
+	g_manager.submit_command(m_base, command::type::gain, this->gain(), gain, duration_cast<duration>(time));
+}
+
+//
+
+float tr::audio::source::max_dist() const
+{
+	return m_base->max_dist();
+}
+
+void tr::audio::source::set_max_dist(float max_dist)
+{
+	m_base->set_max_dist(max_dist);
+}
+
+void tr::audio::source::set_max_dist(float max_dist, fsecs time)
+{
+	g_manager.submit_command(m_base, command::type::max_distance, this->max_dist(), max_dist, duration_cast<duration>(time));
+}
+
+//
+
+float tr::audio::source::rolloff() const
+{
+	return m_base->rolloff();
+}
+
+void tr::audio::source::set_rolloff(float rolloff)
+{
+	m_base->set_rolloff(rolloff);
+}
+
+void tr::audio::source::set_rolloff(float rolloff, fsecs time)
+{
+	g_manager.submit_command(m_base, command::type::rolloff, this->rolloff(), rolloff, duration_cast<duration>(time));
+}
+
+//
+
+float tr::audio::source::ref_dist() const
+{
+	return m_base->ref_dist();
+}
+
+void tr::audio::source::set_ref_dist(float ref_dist)
+{
+	m_base->set_ref_dist(ref_dist);
+}
+
+void tr::audio::source::set_ref_dist(float ref_dist, fsecs time)
+{
+	g_manager.submit_command(m_base, command::type::reference_distance, this->ref_dist(), ref_dist, duration_cast<duration>(time));
+}
+
+//
+
+float tr::audio::source::out_cone_gain() const
+{
+	return m_base->out_cone_gain();
+}
+
+void tr::audio::source::set_out_cone_gain(float out_cone_gain)
+{
+	m_base->set_out_cone_gain(out_cone_gain);
+}
+
+void tr::audio::source::set_out_cone_gain(float out_cone_gain, fsecs time)
+{
+	g_manager.submit_command(m_base, command::type::out_cone_gain, this->out_cone_gain(), out_cone_gain, duration_cast<duration>(time));
+}
+
+//
+
+tr::angle tr::audio::source::in_cone_w() const
+{
+	return m_base->in_cone_w();
+}
+
+tr::angle tr::audio::source::out_cone_w() const
+{
+	return m_base->out_cone_w();
+}
+
+void tr::audio::source::set_cone_w(angle in_cone_w, angle out_cone_w)
+{
+	m_base->set_cone_w(in_cone_w, out_cone_w);
+}
+
+void tr::audio::source::set_cone_w(angle in_cone_w, angle out_cone_w, fsecs time)
+{
+	g_manager.submit_command(m_base, command::type::cone_width, glm::vec2{this->in_cone_w().rads(), this->out_cone_w().rads()},
+							 glm::vec2{in_cone_w.rads(), out_cone_w.rads()}, duration_cast<duration>(time));
+}
+
+//
+
+glm::vec3 tr::audio::source::pos() const
+{
+	return m_base->pos();
+}
+
+void tr::audio::source::set_pos(const glm::vec3& pos)
+{
+	m_base->set_pos(pos);
+}
+
+void tr::audio::source::set_pos(const glm::vec3& pos, fsecs time)
+{
+	g_manager.submit_command(m_base, command::type::position, this->pos(), pos, duration_cast<duration>(time));
+}
+
+//
+
+glm::vec3 tr::audio::source::vel() const
+{
+	return m_base->vel();
+}
+
+void tr::audio::source::set_vel(const glm::vec3& vel)
+{
+	m_base->set_vel(vel);
+}
+
+void tr::audio::source::set_vel(const glm::vec3& vel, fsecs time)
+{
+	g_manager.submit_command(m_base, command::type::velocity, this->vel(), vel, duration_cast<duration>(time));
+}
+
+//
+
+glm::vec3 tr::audio::source::dir() const
+{
+	return m_base->dir();
+}
+
+void tr::audio::source::set_dir(const glm::vec3& dir)
+{
+	m_base->set_dir(dir);
+}
+
+void tr::audio::source::set_dir(const glm::vec3& dir, fsecs time)
+{
+	g_manager.submit_command(m_base, command::type::direction, this->dir(), dir, duration_cast<duration>(time));
+}
+
+//
+
+tr::audio::origin tr::audio::source::origin() const
+{
+	return m_base->origin();
+}
+
+void tr::audio::source::set_origin(audio::origin type)
+{
+	m_base->set_origin(type);
+}
+
+//
+
+tr::audio::state tr::audio::source::state() const
+{
+	return m_base->state();
+}
+
+void tr::audio::source::play()
+{
+	m_base->play();
+}
+
+void tr::audio::source::pause()
+{
+	return m_base->pause();
+}
+
+void tr::audio::source::stop()
+{
+	m_base->stop();
+}
+
+//
+
+tr::fsecs tr::audio::source::length() const
+{
+	return m_base->length();
+}
+
+tr::fsecs tr::audio::source::offset() const
+{
+	return m_base->offset();
+}
+
+void tr::audio::source::set_offset(fsecs offset)
+{
+	m_base->set_offset(offset);
+}
+
+//
+
+bool tr::audio::source::looping() const
+{
+	return m_base->looping();
+}
+
+tr::fsecs tr::audio::source::loop_start() const
+{
+	return m_base->loop_start();
+}
+
+tr::fsecs tr::audio::source::loop_end() const
+{
+	return m_base->loop_end();
+}
+
+void tr::audio::source::set_loop_points(fsecs start_point, fsecs end_point)
+{
+	m_base->set_loop_points(start_point, end_point);
+}
+
+void tr::audio::source::set_looping(bool value)
+{
+	m_base->set_looping(value);
 }

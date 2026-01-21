@@ -1,3 +1,23 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Provides implementation details of the audio module.                                                                                  //
+//                                                                                                                                       //
+// tr::audio::owning_buffer is an RAII wrapper over an OpenAL buffer. tr::audio::buffer is in reality just a glorified counted reference //
+// to a tr::audio::owning_buffer owned by tr::audio::g_manager and does not own the audio data. To be specific, it wraps around          //
+// g_manager.allocate_buffer() and g_manager.mark_buffer_as_cullable().                                                                  //
+//                                                                                                                                       //
+// tr::audio::owning_source implements most of the interface of tr::audio::source, but actually owns its OpenAL source. tr::audio::source//
+// is in reality just a shared pointer to an owning source also held by tr::audio::g_manager and does not own the OpenAL source.         //
+// To be specific, tr::audio::try_allocating_source wraps around g_manager.allocate_source().                                            //
+//                                                                                                                                       //
+// Gradual changing of audio source attributes is handled by submitting commands via g_manager.submit_command(args...),                  //
+// which then handles the commands internally until they are fully executed.                                                             //
+//                                                                                                                                       //
+// tr::audio::g_manager is the global audio manager and is an encapsulation of various audio state. It is automatically initialized and  //
+// shut down by the library during execution.                                                                                            //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include "../utility/angle.hpp"
 #include "buffer.hpp"
@@ -5,13 +25,17 @@
 
 struct ALCdevice;
 struct ALCcontext;
-
 namespace tr::audio {
 	enum class origin : bool;
 	enum class state : u8;
+} // namespace tr::audio
 
-	// Base audio buffer class.
-	class buffer_base {
+//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
+
+namespace tr::audio {
+
+	// Audio buffer class that owns the underlying OpenAL buffer.
+	class owning_buffer {
 	  public:
 		// Audio buffer ID.
 		using id = buffer::id;
@@ -29,7 +53,7 @@ namespace tr::audio {
 		};
 
 		// Creates an audio buffer.
-		buffer_base();
+		owning_buffer();
 
 		// Gets the ID of the buffer.
 		operator id() const;
@@ -47,7 +71,7 @@ namespace tr::audio {
 	// Audio stream extended with buffers.
 	struct buffered_stream {
 		// Audio buffer used by the buffered stream.
-		struct buffer : buffer_base {
+		struct buffer : owning_buffer {
 			// Where the start offset of the audio data is within the stream.
 			usize start_offset{0};
 
@@ -61,16 +85,16 @@ namespace tr::audio {
 		std::array<buffer, 4> buffers;
 	};
 
-	// Base audio source class.
-	class source_base {
+	// Audio source class that owns the underlying OpenAL source.
+	class owning_source {
 	  public:
 		static constexpr fsecs start{fsecs::zero()};
 		static constexpr fsecs end{fsecs::max()};
 
 		// Creates an empty audio source.
-		source_base(int priority);
+		owning_source(int priority);
 		// Destroys the audio source.
-		~source_base();
+		~owning_source();
 
 		void use(const buffer& buffer);
 		void use(std::unique_ptr<stream>&& stream);
@@ -157,14 +181,14 @@ namespace tr::audio {
 		};
 
 		// Creates an audio command taking float arguments.
-		command(std::shared_ptr<source_base> source, type type, float start, float end, duration length);
+		command(std::shared_ptr<owning_source> source, type type, float start, float end, duration length);
 		// Creates an audio command taking vec2 arguments.
-		command(std::shared_ptr<source_base> source, type type, glm::vec2 start, glm::vec2 end, duration length);
+		command(std::shared_ptr<owning_source> source, type type, glm::vec2 start, glm::vec2 end, duration length);
 		// Creates an audio command taking vec3 arguments.
-		command(std::shared_ptr<source_base> source, type type, glm::vec3 start, glm::vec3 end, duration length);
+		command(std::shared_ptr<owning_source> source, type type, glm::vec3 start, glm::vec3 end, duration length);
 
 		// Gets the audio source of the command.
-		std::shared_ptr<source_base> source() const;
+		std::shared_ptr<owning_source> source() const;
 		// Executes the command.
 		void execute();
 		// Reports whether the command is done.
@@ -179,7 +203,7 @@ namespace tr::audio {
 		};
 
 		// The source this command acts upon.
-		std::shared_ptr<source_base> m_src;
+		std::shared_ptr<owning_source> m_src;
 		// The audio command type.
 		type m_type;
 		// The initial value.
@@ -223,7 +247,7 @@ namespace tr::audio {
 		void mark_buffer_as_cullable(buffer::id id);
 
 		// Allocates an audio source and returns a pointer to it or nullptr if the allocation failed.
-		std::shared_ptr<source_base> allocate_source(int priority);
+		std::shared_ptr<owning_source> allocate_source(int priority);
 
 		// Submits an audio command.
 		template <class... Args>
@@ -251,11 +275,11 @@ namespace tr::audio {
 		// A list of active audio commands.
 		std::list<command> m_commands;
 		// Map holding the handles to extant audio buffer and whether they're cullable.
-		std::unordered_map<buffer_base, bool, buffer_base::hasher, buffer_base::equals> m_buffers;
+		std::unordered_map<owning_buffer, bool, owning_buffer::hasher, owning_buffer::equals> m_buffers;
 		// The maximum allowed number of audio sources.
 		usize m_max_sources;
 		// A list of active audio sources.
-		std::list<std::shared_ptr<source_base>> m_sources;
+		std::list<std::shared_ptr<owning_source>> m_sources;
 		// The gain multipliers of audio classes.
 		std::array<float, 32> m_gains;
 

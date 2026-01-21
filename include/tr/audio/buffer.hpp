@@ -7,6 +7,7 @@
 // data allocated until all sources have stopped using it.                                                                               //
 //     - tr::audio::buffer buf{data, tr::audio::format::MONO16, 44100}                                                                   //
 //       -> equivalent to tr::audio::buffer{}; buf.set(data, tr::audio::format::MONO16, 44100)                                           //
+// Leaving audio buffers alive at the end of the program is erroneous and may trigger an assertion in debug builds.                      //
 //                                                                                                                                       //
 // Audio buffers can also directly be loaded from .ogg files using tr::audio::open_file.                                                 //
 //     - tr::audio::buffer buf{tr::audio::load_file("sound.ogg")}                                                                        //
@@ -60,8 +61,8 @@ namespace tr::audio {
 		// Managed audio manager buffer ID.
 		handle<id, id::empty, deleter> m_id;
 
-		friend class buffer_base;
-		friend class source_base;
+		friend class owning_buffer;
+		friend class owning_source;
 		friend class manager;
 	};
 	// Loads audio data from file into a buffer.

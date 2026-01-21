@@ -8,9 +8,9 @@
 #include "../../include/tr/audio/al_call.hpp"
 #include "../../include/tr/audio/impl.hpp"
 
-/////////////////////////////////////////////////////////////// BUFFER BASE ///////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////// OWNING BUFFER //////////////////////////////////////////////////////////////
 
-tr::audio::buffer_base::buffer_base()
+tr::audio::owning_buffer::owning_buffer()
 {
 	ALuint al_id;
 	TR_AL_CALL(alGenBuffers, 1, &al_id);
@@ -20,22 +20,22 @@ tr::audio::buffer_base::buffer_base()
 	m_handle.reset(id{al_id});
 }
 
-tr::audio::buffer_base::operator id() const
+tr::audio::owning_buffer::operator id() const
 {
 	return m_handle.get(tr::no_empty_handle_check);
 }
 
-void tr::audio::buffer_base::deleter::operator()(id id) const
+void tr::audio::owning_buffer::deleter::operator()(id id) const
 {
 	alDeleteBuffers(1, (ALuint*)&id);
 }
 
-tr::usize tr::audio::buffer_base::hasher::operator()(id v) const
+tr::usize tr::audio::owning_buffer::hasher::operator()(id v) const
 {
 	return std::hash<id>{}(v);
 }
 
-bool tr::audio::buffer_base::equals::operator()(id l, id r) const
+bool tr::audio::owning_buffer::equals::operator()(id l, id r) const
 {
 	return l == r;
 }
@@ -50,7 +50,7 @@ void tr::audio::buffered_stream::buffer::refill_from(audio::stream& source)
 	const std::span<const i16> used_data{source.read(data)};
 	const ALenum format{source.channels() == 2 ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16};
 	const ALsizei size{ALsizei(used_data.size_bytes()) - ALsizei(used_data.size_bytes()) % 4};
-	TR_AL_CALL(alBufferData, ALuint(buffer_base::id(*this)), format, used_data.data(), size, source.sample_rate());
+	TR_AL_CALL(alBufferData, ALuint(owning_buffer::id(*this)), format, used_data.data(), size, source.sample_rate());
 	if (alGetError() == AL_OUT_OF_MEMORY) {
 		throw out_of_memory{"audio buffer reallocation"};
 	}

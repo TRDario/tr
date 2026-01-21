@@ -20,28 +20,26 @@ namespace tr::gfx {
 	inline std::span<const vertex_binding> g_last_bound_vertex_format_bindings;
 	// Label of the last bound vertex format.
 	std::string g_last_bound_vertex_format_label;
-
-	// Fails an assertion if a type mismatch is detected.
-	void check_vertex_buffer(std::string label, int slot, std::span<const vertex_attribute> attributes);
 } // namespace tr::gfx
 
-void tr::gfx::check_vertex_buffer(std::string label, int slot, std::span<const vertex_attribute> attrs)
+// Fails an assertion if a type mismatch is detected.
+static void check_vertex_buffer(std::string label, int slot, std::span<const tr::gfx::vertex_attribute> attrs)
 {
-	TR_ASSERT(usize(slot) < g_last_bound_vertex_format_bindings.size(),
+	TR_ASSERT(tr::usize(slot) < tr::gfx::g_last_bound_vertex_format_bindings.size(),
 			  "Tried to bind vertex buffer '{}' to invalid slot {} (max in vertex format '{}': {}).", label, slot,
-			  g_last_bound_vertex_format_label, g_last_bound_vertex_format_bindings.size());
+			  tr::gfx::g_last_bound_vertex_format_label, tr::gfx::g_last_bound_vertex_format_bindings.size());
 
-	const std::span<const vertex_attribute> ref(g_last_bound_vertex_format_bindings.begin()[slot].attrs);
+	const std::span<const tr::gfx::vertex_attribute> ref(tr::gfx::g_last_bound_vertex_format_bindings.begin()[slot].attrs);
 	TR_ASSERT(attrs.size() == ref.size(),
 			  "Tried to bind vertex buffer '{}' of a different type from the one in vertex format '{}' (has {} attributes instead of {}).",
-			  label, g_last_bound_vertex_format_label, attrs.size(), ref.size());
-	for (usize i = 0; i < attrs.size(); ++i) {
-		const vertex_attribute& l{attrs.begin()[i]};
-		const vertex_attribute& r{ref.begin()[i]};
+			  label, tr::gfx::g_last_bound_vertex_format_label, attrs.size(), ref.size());
+	for (tr::usize i = 0; i < attrs.size(); ++i) {
+		const tr::gfx::vertex_attribute& l{attrs.begin()[i]};
+		const tr::gfx::vertex_attribute& r{ref.begin()[i]};
 		TR_ASSERT(l.type == r.type && l.elements == r.elements,
 				  "Tried to bind vertex buffer '{}' of a type different from than the one in vertex format '{}' (expected '{}' in "
 				  "attribute {}, got '{}').",
-				  label, g_last_bound_vertex_format_label, r, i, l);
+				  label, tr::gfx::g_last_bound_vertex_format_label, r, i, l);
 	}
 }
 

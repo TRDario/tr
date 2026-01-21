@@ -1,12 +1,77 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Provides an audio source class and related datatypes.                                                                                 //
+//                                                                                                                                       //
+// tr::audio::source represents a source of audio in the 3D world. The number of audio sources that may exist at one time is potentially //
+// very limited (128 by default), so the only "constructor" of audio sources explicitly only tries to allocate one, culling lower        //
+// priority sources without any remaining references if necessary. Audio sources have an associated priority level that is used when     //
+// evaluating whether they can get culled; this is what is specified in teh allocation function, and also returned by .priority():       //
+//     - tr::audio::source src{*tr::audio::try_allocating_source(1)}                                                                     //
+//       -> tries to allocate a source with priority 1; if the limit of audio sources is reached, a lower priority source is sacrificed  //
+//          to make space; if no such source exists, the allocation fails                                                                //
+//     - src.priority() -> 1                                                                                                             //
+// Leaving audio sources alive at the end of the program is erroneous and may trigger an assertion in debug builds.                      //
+//                                                                                                                                       //
+// Audio sources may play audio from audio buffers, or from audio streams. This may be set at any time with the .use() method, or        //
+// cleared with the .clear() method:                                                                                                     //
+//     - source.set(tr::audio::load_file("sound.ogg")) -> sets the source to use an audio buffer containing sound.ogg                    //
+//     - source.set(tr::audio::open_file("music.ogg")) -> sets the source to use an audio stream of music.ogg                            //
+//     - source.clear() -> unsets the previously set audio data source without providing a replacement                                   //
+//                                                                                                                                       //
+// Audio sources may be assigned to any combination of 32 available audio classes. The meaning of these classes is left up to the        //
+// application to decide. Audio classes may be used as a convenient way of grouping related audio sources together for volume control,   //
+// see tr::audio::set_class_gain in listener.hpp:                                                                                        //
+//     - src.set_classes(0b11) -> associates 'src' with audio classes 0 and 1                                                            //
+//     - src.classes() -> bitmask where the flags [0] and [1] are set                                                                    //
+//                                                                                                                                       //
+// A number of attributes (including gain, pitch, position...) of audio sources can be queried, set, or set to gradually change to a set //
+// value. The exact meaning of these attributes can be found at https://www.openal.org/documentation/OpenAL_Programmers_Guide.pdf:       //
+//     - src.pitch() -> 1.0f                                                                                                             //
+//     - src.set_gain(0.5f) -> halves the gain of 'src'                                                                                  //
+//     - src.set_position({10, 10, 0}, 5.0s) -> moves 'src' to (10, 10, 0) over the next 5 seconds                                       //
+//                                                                                                                                       //
+// Sources can be positioned in absolute coordinates within the world (tr::audio::origin::absolute) or relative to the listener's        //
+// position (tr::audio::origin::listener). A source's origin can be queried or set, and by default is absolute:                          //
+//     - src.origin() -> tr::audio::origin::absolute                                                                                     //
+//     - src.set_origin(tr::audio::origin::listener); src.origin() -> tr::audio::origin::listener                                        //
+//                                                                                                                                       //
+// Sources can be played, paused (and unpaused) and stopped (unlike pausing, this rewinds the offset to the beginning). A source's       //
+// current state can be checked with the .state() method:                                                                                //
+//     - src.state() -> tr::audio::state::initial                                                                                        //
+//     - src.play(); src.state() -> tr::audio::state::playing                                                                            //
+//     - src.pause(); src.state() -> tr::audio::state::paused                                                                            //
+//     - src.stop(); src.state() -> tr::audio::state::stopped                                                                            //
+// Sources will stop on their own once they reach the end of their audio data.                                                           //
+//                                                                                                                                       //
+// The length of the audio data a source is playing, as well as the current offset within it, can be gotten through the .length() and    //
+// .offset() methods respectively. The offset can be set with the .set_offset() method:                                                  //
+//     - src.length() -> 50.0s                                                                                                           //
+//     - src.offset() -> 2.0s                                                                                                            //
+//     - src.set_offset(10.0s); src.offset() -> 10.0s                                                                                    //
+//                                                                                                                                       //
+// Much like audio streams, sources can be looped between arbitrary loop points (by default the beginning and end).                      //
+// These parameters can also be queried:                                                                                                 //
+//     - src.looping() -> false                                                                                                          //
+//     - src.loop_start() -> 0.0s                                                                                                        //
+//     - src.loop_end() -> 50.0s                                                                                                         //
+//     - src.set_looping(true); stream.set_loop_start(2.0s) -> stream now loops in the interval [2.0s, 50.0s]                            //
+//     - src.set_loop_points(0.5s, 10.0s) -> source now loops in the interval [0.5s, 10.0s]                                              //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include "../utility/angle.hpp"
 #include "../utility/chrono.hpp"
 
 namespace tr::audio {
-	class source_base;
+	class owning_source;
 	class buffer;
 	class stream;
+} // namespace tr::audio
 
+//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
+
+namespace tr::audio {
 	// Audio source position origin types.
 	enum class origin : bool {
 		absolute, // Absolute coordinates.
@@ -156,11 +221,11 @@ namespace tr::audio {
 		void set_loop_points(fsecs start, fsecs end);
 
 	  private:
-		// Shared pointer to the actual audio source implementation.
-		std::shared_ptr<source_base> m_base;
+		// Shared pointer to an owning audio source in the audio manager.
+		std::shared_ptr<owning_source> m_base;
 
-		// Allocates an audio source.
-		source(std::shared_ptr<source_base> base);
+		// Wraps a pointer to the owning audio source.
+		source(std::shared_ptr<owning_source> base);
 
 		friend std::optional<source> try_allocating_source(int priority);
 	};
