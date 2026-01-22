@@ -1,3 +1,9 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Implements sysgfx/main.hpp.                                                                                                           //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #define SDL_MAIN_USE_CALLBACKS 1
 #include "../../include/tr/sysgfx/main.hpp"
 #include "../../include/tr/sysgfx/dialog.hpp"
@@ -16,14 +22,12 @@
 #include "../../include/tr/audio/impl.hpp"
 #endif
 
-//
-
 namespace tr::sys {
 	// Timer used to emit ticks.
 	std::optional<timer> g_tick_timer;
 } // namespace tr::sys
 
-//
+//////////////////////////////////////////////////////////////// INIT ERROR ///////////////////////////////////////////////////////////////
 
 tr::sys::init_error::init_error(std::string_view description)
 	: m_description{description}
@@ -45,7 +49,7 @@ std::string_view tr::sys::init_error::details() const
 	return SDL_GetError();
 }
 
-//
+//////////////////////////////////////////////////////////// FREQUENCY SETTERS ////////////////////////////////////////////////////////////
 
 void tr::sys::set_tick_frequency(float frequency)
 {
@@ -61,7 +65,7 @@ void tr::sys::set_draw_frequency(float frequency)
 	SDL_SetHint(SDL_HINT_MAIN_CALLBACK_RATE, std::to_string(frequency).c_str());
 }
 
-//
+////////////////////////////////////////////////////////////// MAIN CALLBACKS /////////////////////////////////////////////////////////////
 
 extern "C"
 {

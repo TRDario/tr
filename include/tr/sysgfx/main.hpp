@@ -1,3 +1,34 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Provides functionality related to the main loop of the program.                                                                       //
+//                                                                                                                                       //
+// Unlike a standard C++ program, programs using tr do not have to define main(). Instead, a number of functions in the namespace        //
+// tr::sys::main have to be defined, as well as tr::sys::main::metadata, a struct containing basic application metadata:                 //
+//     - tr::sys::main::metadata{.name = "Example", .version = "v0", .developer = "Me"}                                                  //
+//       -> example metadata struct definition                                                                                           //
+//     - tr::sys::main::parse_command_line(std::span<cstring_view> args)                                                                 //
+//       -> called before any system initialization, meant for parsing command-line arguments and other preinitialization                //
+//     - tr::sys::main::initialize()                                                                                                     //
+//       -> called after system initialization, meant to initialize the application state and open the window                            //
+//     - tr::sys::main::handle_event(const event& event)                                                                                 //
+//       -> called when an event is recieved, meant to handle the event                                                                  //
+//     - tr::sys::main::tick()                                                                                                           //
+//       -> called at the rate defined in set_tick_frequency (by default not active), meant for fixed-rate updates                       //
+//     - tr::sys::main::draw()                                                                                                           //
+//       -> called at the rate defined in set_draw_frequency (the refresh rate, by default), meant for delta-time updates and drawing    //
+//     - tr::sys::main::shut_down()                                                                                                      //
+//       -> called after an exit signal is returned by one of the other main functions, meant to clean up the application state          //
+//                                                                                                                                       //
+// Most functions in tr::sys::main, with the exception of shut_down, return a signal. If tr::sys::signal::proceed is returned, execution //
+// will continue as normal. If tr::sys::signal::exit or tr::sys::signal::abort is returned, further execution is stopped and shut_down   //
+// is called to clean up the application state.                                                                                          //
+//                                                                                                                                       //
+// The rates at which main::tick() and main::draw() are called can be adjusted at any time with the corresponding function:              //
+//     - tr::sys::set_tick_frequency(240) -> tr::sys::main::tick() will be called 240 times a second                                     //
+//     - tr::sys::set_draw_frequency(60) --> tr::sys::main::draw() will be called 60 times a second                                      //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include "event.hpp"
 
