@@ -1,3 +1,18 @@
+###########################################################################################################################################
+##                                                                                                                                       ##
+## Provides a utility for setting a target's properties in a standard manner.                                                            ##
+##                                                                                                                                       ##
+## The target will be set to use C++20.                                                                                                  ##
+## The target will have a 'd' suffix in debug builds, for example 'foobar' -> foobard.exe.                                               ##
+## The target will have a number of compiler flags set, mostly enabling warnings, but with some floating point optimizations enabled.    ##
+## On Linux, the libstdc++ debug mode will be used in the debug configuration.                                                           ##
+## If std::format is detected, TR_HAS_STD_FORMAT is defined.                                                                             ##
+## In the RelWithDebInfo and Debug configurations, TR_ENABLE_ASSERTS is defined.                                                         ##
+## In the Debug configuration, TR_ENABLE_GL_CHECKS is defined.                                                                           ##
+##                                                                                                                                       ##
+###########################################################################################################################################
+
+# Sets a target's properties.
 function(tr_target_template TARGET)
 	set_target_properties (${TARGET} PROPERTIES DEBUG_POSTFIX "d")
 	target_compile_features(${TARGET} PUBLIC cxx_std_20)
@@ -43,5 +58,8 @@ function(tr_target_template TARGET)
 	if(TR_HAS_STD_FORMAT)
 		target_compile_definitions(${TARGET} PUBLIC TR_HAS_STD_FORMAT)
 	endif()
-	target_compile_definitions(${TARGET} PUBLIC $<$<CONFIG:Debug>:TR_ENABLE_GL_CHECKS> $<$<CONFIG:Debug>:TR_ENABLE_ASSERTS>$<$<CONFIG:RelWithDebInfo>:TR_ENABLE_ASSERTS>)
+	target_compile_definitions(${TARGET} PUBLIC
+		$<$<CONFIG:Debug>:TR_ENABLE_GL_CHECKS>
+		$<$<CONFIG:Debug>:TR_ENABLE_ASSERTS>$<$<CONFIG:RelWithDebInfo>:TR_ENABLE_ASSERTS>
+	)
 endfunction()

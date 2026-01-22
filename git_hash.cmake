@@ -1,7 +1,18 @@
+###########################################################################################################################################
+##                                                                                                                                       ##
+## Provides utilities for embedding the hash of the source git repository into an application.                                           ##
+##                                                                                                                                       ##
+## To be able to embed the git hash, tr_git_hash_setup() should be called in the project configuration.                                  ##
+## Afterwards, a header file which can be included with '#include <git_hash.hpp>' will be generated, containing the hash as a macro.     ##
+##                                                                                                                                       ##
+###########################################################################################################################################
+
+# Writes the git hash to a file.
 function(tr_write_git_hash GIT_HASH)
     file(WRITE ${CMAKE_BINARY_DIR}/git-state.txt ${GIT_HASH})
 endfunction()
 
+# Reads the git hash previously written by tr_write_git_hash
 function(tr_read_git_hash GIT_HASH)
     if (EXISTS ${CMAKE_BINARY_DIR}/git-state.txt)
         file(STRINGS ${CMAKE_BINARY_DIR}/git-state.txt CONTENT)
@@ -11,6 +22,7 @@ function(tr_read_git_hash GIT_HASH)
     endif()
 endfunction()
 
+# Checks for the git hash and writes git_hash/git_hash.hpp.
 function(tr_check_git_hash)
     execute_process(
         COMMAND git log -1 --format=%h
@@ -35,6 +47,7 @@ function(tr_check_git_hash)
     endif()
 endfunction()
 
+# Sets up automatic git hash checks for a project
 function(tr_git_hash_setup)
     add_custom_target(always_check_git COMMAND ${CMAKE_COMMAND}
         -DRUN_CHECK_GIT_HASH=1

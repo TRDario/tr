@@ -1,3 +1,13 @@
+###########################################################################################################################################
+##                                                                                                                                       ##
+## Provides miscellaneous CMake defines.                                                                                                 ##
+##                                                                                                                                       ##
+## TR_HAS_GCC, TR_HAS_CLANG, TR_HAS_CLANG_CL, TR_HAS_MSVC are defined for simpler compiler detection.                                    ##
+##                                                                                                                                       ##
+## TR_DO_NOTHING defines a dummy command that when called does nothing, useful in generator expressions.                                 ##
+##                                                                                                                                       ##
+###########################################################################################################################################
+
 if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
 	if(CMAKE_CXX_SIMULATE_ID STREQUAL "MSVC")
 		set(TR_HAS_CLANG_CL 1 CACHE BOOL INTERNAL)

@@ -1,3 +1,10 @@
+###########################################################################################################################################
+##                                                                                                                                       ##
+## Provides functions for generating headers for embedding data within C++ source files.                                                 ##
+##                                                                                                                                       ##
+###########################################################################################################################################
+
+# Processes text from INPUT_FILE into an embeddable string named VARIABLE_NAME and output to OUTPUT_FILE.
 function(tr_generate_embeddable_string INPUT_FILE OUTPUT_FILE VARIABLE_NAME)
     file(READ ${INPUT_FILE} CONTENT)
     set(DELIMITER "for_c++_include")
@@ -5,6 +12,7 @@ function(tr_generate_embeddable_string INPUT_FILE OUTPUT_FILE VARIABLE_NAME)
     file(WRITE ${OUTPUT_FILE} "${CONTENT}")
 endfunction()
 
+# Processes binary data from INPUT_FILE into an embeddable array named VARIABLE_NAME and output to OUTPUT_FILE.
 function(tr_generate_embeddable_binary INPUT_FILE OUTPUT_FILE VARIABLE_NAME)
     file(READ ${INPUT_FILE} HEX_CONTENT HEX)
     string(REPEAT "[0-9a-f]" 16 COLUMN_PATTERN)
