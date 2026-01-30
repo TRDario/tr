@@ -1,17 +1,12 @@
-#include "../../include/tr/sysgfx/ttfont.hpp"
 #include "../../include/tr/sysgfx/bitmap.hpp"
 #include "../../include/tr/sysgfx/impl.hpp"
+#include "../../include/tr/sysgfx/ttfont.hpp"
 #include <SDL3_ttf/SDL_ttf.h>
 
-namespace tr::sys {
-	// Fixes certain edge artifacts when rendering partially transparent text.
-	tr::bitmap fix_alpha_artifacts(tr::bitmap&& bitmap, u8 max_alpha);
-} // namespace tr::sys
-
-tr::bitmap tr::sys::fix_alpha_artifacts(tr::bitmap&& bitmap, u8 max_alpha)
+static tr::bitmap fix_alpha_artifacts(tr::bitmap&& bitmap, tr::u8 max_alpha)
 {
 	// We know the bitmap is ARGB_8888.
-	u8* it{(u8*)bitmap.data()};
+	tr::u8* it{(tr::u8*)bitmap.data()};
 	for (int y = 0; y < bitmap.size().y; ++y) {
 		for (int x = 0; x < bitmap.size().x; ++x) {
 			it[x * 4 + 3] = std::min(it[x * 4 + 3], max_alpha);

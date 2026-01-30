@@ -1,13 +1,61 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Provides a TrueType font class and related functions.                                                                                 //
+//                                                                                                                                       //
+// Fonts can be loaded from embedded data, or from file. The initial point size can optionally be set (defaults to 16 otherwise):        //
+//     - tr::sys::ttfont font{tr::sys::load_embedded_font(data)} -> loads a font from embedded data with the default point size of 16    //
+//     - tr::sys::ttfont font{tr::sys::load_font_file("font.ttf", 24)} -> loads a font from 'font.ttf' with initial point size 24        //
+//                                                                                                                                       //
+// The point size, style, and outline thickness of fonts can be set:                                                                     //
+//     - font.resize(32) -> 'font' now has point size 32                                                                                 //
+//     - font.set_style(tr::sys::ttf_style::bold | tr::sys::ttf_style::italic) -> 'font' is now bold and italicized                      //
+//     - font.set_outline(12) -> 'font' now has a 12-pixel outline                                                                       //
+//                                                                                                                                       //
+// Various font metrics can be queried for. For the meaning of these metrics, see                                                        //
+// https://freetype.org/freetype2/docs/glyphs/glyphs-3.html:                                                                             //
+//     - font.ascent() -> gets the ascent of the font                                                                                    //
+//     - font.descent() -> gets the descent of the font                                                                                  //
+//     - font.height() -> gets the height of the font                                                                                    //
+//     - font.line_height() -> gets the line height of the font                                                                          //
+//     - font.contains('a') -> gets whether the font contains the character 'a'                                                          //
+//                                                                                                                                       //
+// Various glyph and text metrics can be obtained:                                                                                       //
+//     - font.metrics('X') -> gets the glyph metrics of the character 'X'                                                                //
+//     - font.kerning('x', 'y') -> gets the kerning needed when going from 'x' to 'y'                                                    //
+//     - font.measure_text("blahblahblahblah", 100) -> computes how much of the string will fit in a 100-pixel-wide box                  //
+//     - font.text_size("blahblahblah") -> gets the size of text with no restrictions on width                                           //
+//     - font.text_size("blahblahblah", 100) -> gets the size of text when limited to a 100-pixel-wide box                               //
+//                                                                                                                                       //
+// Glyphs and strings of text may be rendered to bitmaps. Strings may have the maximum width of a line constrained, or left as           //
+// tr::sys::unlimited_width:                                                                                                             //
+//     - font.render('a', "FF0000"_rgba8)                                                                                                //
+//       -> renders a red 'a'                                                                                                            //
+//     - font.render("Example String", tr::sys::unlimited_width, tr::halign::left, "FFFFFF"_rgba8)                                       //
+//       -> renders a left-aligned, white "Example String"                                                                               //
+//     - font.render("Example String 2", 200, tr::halign::center, "FFFF00"_rgba8)                                                        //
+//       -> renders a center-aligned, yellow "Example String 2" with a max line width of 200                                             //
+//                                                                                                                                       //
+// Helper functions for splitting lines are provided:                                                                                    //
+//     - tr::sys::split_into_lines("line1\nline2\nline3")                                                                                //
+//       -> std::vector<std::string_view>{"line1", "line2", "line3"}                                                                     //
+//     - tr::sys::split_overlong_lines(lines, font, 200)                                                                                 //
+//       -> 'lines' is moved from and a vector containing lines split such that none are 200+ pixels wide when using 'font' is returned  //
+//     - tr::sys::split_into_lines("line1\nline2\line3", font, 200)                                                                      //
+//       -> equivalent to tr::sys::split_overlong_lines(tr::sys::split_into_lines("line1\nline2\line3"), font, 200)                      //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include "../utility/color.hpp"
 #include "../utility/exception.hpp"
 #include "../utility/geometry.hpp"
 
 struct TTF_Font;
-
 namespace tr {
 	class bitmap;
 }
+
+//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
 namespace tr::sys {
 	// Error thrown when font loading fails.
@@ -123,6 +171,7 @@ namespace tr::sys {
 		// Handle to the SDL TTF font.
 		std::unique_ptr<TTF_Font, deleter> m_ptr;
 
+		// Wraps an SDL font.
 		ttfont(TTF_Font* ptr);
 
 		friend ttfont load_embedded_ttfont(std::span<const std::byte> data, float size);
