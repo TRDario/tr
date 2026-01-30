@@ -4,8 +4,9 @@
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#include "../../include/tr/sysgfx/vertex_buffer.hpp"
 #include "../../include/tr/sysgfx/gl_call.hpp"
+#include "../../include/tr/sysgfx/impl.hpp"
+#include "../../include/tr/sysgfx/vertex_buffer.hpp"
 
 /////////////////////////////////////////////////////// BASIC STATIC VERTEX BUFFER ////////////////////////////////////////////////////////
 
@@ -94,21 +95,10 @@ void tr::gfx::basic_dyn_vertex_buffer::reserve(usize capacity)
 	if (capacity > m_capacity) {
 		capacity = std::bit_ceil(capacity);
 
-#ifdef TR_ENABLE_ASSERTS
-		char label_buffer[64];
-		GLsizei label_length;
-		TR_GL_CALL(glGetObjectLabel, GL_BUFFER, m_vbo.get(), std::size(label_buffer), &label_length, label_buffer);
-#endif
-
 		GLuint vbo;
 		TR_GL_CALL(glCreateBuffers, 1, &vbo);
+		TR_MOVE_LABEL(GL_BUFFER, m_vbo.get(), vbo);
 		m_vbo.reset(vbo);
-
-#ifdef TR_ENABLE_ASSERTS
-		if (label_length > 0) {
-			TR_GL_CALL(glObjectLabel, GL_BUFFER, m_vbo.get(), label_length, label_buffer);
-		}
-#endif
 
 		TR_GL_CALL(glNamedBufferStorage, m_vbo.get(), GLsizeiptr(capacity), nullptr, GL_DYNAMIC_STORAGE_BIT);
 		if (glGetError() == GL_OUT_OF_MEMORY) {

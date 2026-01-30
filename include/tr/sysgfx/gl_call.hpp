@@ -18,14 +18,18 @@
 
 ///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
 
+#ifdef TR_ENABLE_ASSERTS
 namespace tr::gfx {
 	// Validates an OpenGL call and kills the application if it fails.
 	void validate_gl_call(const char* file, int line, const char* function);
 	// Validates an OpenGL call and kills the application if it fails.
-	auto validate_returning_gl_call(const char* file, int line, const char* function, auto value);
+	auto validate_returning_gl_call(const char* file, int line, const char* function, auto value)
+	{
+		validate_gl_call(file, line, function);
+		return value;
+	}
 } // namespace tr::gfx
 
-#ifdef TR_ENABLE_ASSERTS
 #define TR_GL_CALL_IMPL(file, line, function, ...)                                                                                         \
 	do {                                                                                                                                   \
 		function(__VA_ARGS__);                                                                                                             \
@@ -39,9 +43,3 @@ namespace tr::gfx {
 #define TR_GL_CALL(function, ...) function(__VA_ARGS__)
 #define TR_RETURNING_GL_CALL(function, ...) function(__VA_ARGS__)
 #endif
-
-auto tr::gfx::validate_returning_gl_call(const char* file, int line, const char* function, auto value)
-{
-	validate_gl_call(file, line, function);
-	return value;
-}

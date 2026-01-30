@@ -1,6 +1,14 @@
-#include "../../include/tr/sysgfx/texture.hpp"
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Implements texture.hpp.                                                                                                               //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #include "../../include/tr/sysgfx/gl_call.hpp"
 #include "../../include/tr/sysgfx/impl.hpp"
+#include "../../include/tr/sysgfx/texture.hpp"
+
+///////////////////////////////////////////////////////////// HELPER FUNCTIONS ////////////////////////////////////////////////////////////
 
 // Converts a pixel format to an OpenGL texture format.
 static GLenum gl_tex_format(tr::pixel_format format)
@@ -42,7 +50,7 @@ static GLenum gl_tex_format(tr::pixel_format format)
 	case tr::pixel_format::rgba32:
 		return GL_RGBA8;
 	default:
-		return 0;
+		tr::unreachable();
 	}
 }
 
@@ -82,7 +90,7 @@ static GLenum gl_format(tr::pixel_format format)
 	case tr::pixel_format::argb32:
 		return GL_BGRA;
 	default:
-		return 0;
+		tr::unreachable();
 	}
 }
 
@@ -126,7 +134,7 @@ static GLenum gl_type(tr::pixel_format format)
 	case tr::pixel_format::abgr32:
 		return GL_UNSIGNED_INT_8_8_8_8;
 	default:
-		return 0;
+		tr::unreachable();
 	}
 }
 
@@ -143,14 +151,14 @@ tr::gfx::texture::texture(unsigned int handle, glm::ivec2 size)
 {
 }
 
-tr::gfx::texture::texture(glm::ivec2 size, bool mipmapped, pixel_format format)
+tr::gfx::texture::texture(glm::ivec2 size, mipmaps mipmaps, pixel_format format)
 	: texture{}
 {
-	reallocate(size, mipmapped, format);
+	reallocate(size, mipmaps, format);
 }
 
-tr::gfx::texture::texture(const sub_bitmap& bitmap, bool mipmapped, std::optional<pixel_format> format)
-	: texture{bitmap.size(), mipmapped, format.value_or(bitmap.format())}
+tr::gfx::texture::texture(const sub_bitmap& bitmap, mipmaps mipmaps, std::optional<pixel_format> format)
+	: texture{bitmap.size(), mipmaps, format.value_or(bitmap.format())}
 {
 	set_region({}, bitmap);
 }
@@ -184,7 +192,7 @@ tr::gfx::texture& tr::gfx::texture::operator=(texture&& r) noexcept
 	return *this;
 }
 
-tr::gfx::texture tr::gfx::texture::reallocate(glm::ivec2 size, bool mipmapped, pixel_format format)
+tr::gfx::texture tr::gfx::texture::reallocate(glm::ivec2 size, mipmaps mipmaps, pixel_format format)
 {
 	TR_ASSERT(size.x > 0 && size.y > 0, "Tried to allocate a texture with an invalid size of {}x{}", size.x, size.y);
 
@@ -192,34 +200,29 @@ tr::gfx::texture tr::gfx::texture::reallocate(glm::ivec2 size, bool mipmapped, p
 	glm::ivec2 old_size{m_size};
 
 	if (m_size != glm::ivec2{0, 0}) {
+		GLuint new_handle;
+		TR_GL_CALL(glCreateTextures, GL_TEXTURE_2D, 1, &new_handle);
+
 		GLint min_filter;
-		GLint mag_filter;
-		GLint wrap;
-		rgbaf border_color;
-
 		TR_GL_CALL(glGetTextureParameteriv, m_handle, GL_TEXTURE_MIN_FILTER, &min_filter);
+		TR_GL_CALL(glTextureParameteri, new_handle, GL_TEXTURE_MIN_FILTER, min_filter);
+
+		GLint mag_filter;
 		TR_GL_CALL(glGetTextureParameteriv, m_handle, GL_TEXTURE_MAG_FILTER, &mag_filter);
+		TR_GL_CALL(glTextureParameteri, new_handle, GL_TEXTURE_MAG_FILTER, mag_filter);
+
+		GLint wrap;
 		TR_GL_CALL(glGetTextureParameteriv, m_handle, GL_TEXTURE_WRAP_S, &wrap);
+		TR_GL_CALL(glTextureParameteri, new_handle, GL_TEXTURE_WRAP_S, wrap);
+		TR_GL_CALL(glTextureParameteri, new_handle, GL_TEXTURE_WRAP_T, wrap);
+		TR_GL_CALL(glTextureParameteri, new_handle, GL_TEXTURE_WRAP_R, wrap);
+
+		rgbaf border_color;
 		TR_GL_CALL(glGetTextureParameterfv, m_handle, GL_TEXTURE_BORDER_COLOR, &border_color.r);
+		TR_GL_CALL(glTextureParameterfv, new_handle, GL_TEXTURE_BORDER_COLOR, &border_color.r);
 
-#ifdef TR_ENABLE_ASSERTS
-		char label_buffer[64];
-		GLsizei label_length;
-		TR_GL_CALL(glGetObjectLabel, GL_TEXTURE, m_handle, std::size(label_buffer), &label_length, label_buffer);
-#endif
-
-		TR_GL_CALL(glCreateTextures, GL_TEXTURE_2D, 1, &m_handle);
-		TR_GL_CALL(glTextureParameteri, m_handle, GL_TEXTURE_MIN_FILTER, min_filter);
-		TR_GL_CALL(glTextureParameteri, m_handle, GL_TEXTURE_MAG_FILTER, mag_filter);
-		TR_GL_CALL(glTextureParameteri, m_handle, GL_TEXTURE_WRAP_S, wrap);
-		TR_GL_CALL(glTextureParameteri, m_handle, GL_TEXTURE_WRAP_T, wrap);
-		TR_GL_CALL(glTextureParameteri, m_handle, GL_TEXTURE_WRAP_R, wrap);
-#ifdef TR_ENABLE_ASSERTS
-		if (label_length > 0) {
-			TR_GL_CALL(glObjectLabel, GL_TEXTURE, m_handle, label_length, label_buffer);
-			TR_GL_CALL(glObjectLabel, GL_TEXTURE, old_handle, 0, nullptr);
-		}
-#endif
+		TR_MOVE_LABEL(GL_TEXTURE, m_handle, new_handle);
+		m_handle = new_handle;
 	}
 	else if (m_handle == 0) {
 		TR_GL_CALL(glCreateTextures, GL_TEXTURE_2D, 1, &m_handle);
@@ -229,7 +232,7 @@ tr::gfx::texture tr::gfx::texture::reallocate(glm::ivec2 size, bool mipmapped, p
 		old_size = {};
 	}
 
-	const GLsizei levels{mipmapped ? floor_cast<GLsizei>(std::log2(std::max(size.x, size.y)) + 1) : 1};
+	const GLsizei levels{mipmaps == mipmaps::enabled ? floor_cast<GLsizei>(std::log2(std::max(size.x, size.y)) + 1) : 1};
 	TR_GL_CALL(glTextureStorage2D, m_handle, levels, gl_tex_format(format), size.x, size.y);
 	if (glGetError() == GL_OUT_OF_MEMORY) {
 		throw out_of_memory{"texture allocation"};
@@ -408,8 +411,8 @@ bool tr::gfx::texture_ref::empty() const
 
 ///////////////////////////////////////////////////////////// RENDER TEXTURE //////////////////////////////////////////////////////////////
 
-tr::gfx::render_texture::render_texture(glm::ivec2 size, bool mipmapped, pixel_format format)
-	: texture{size, mipmapped, format}
+tr::gfx::render_texture::render_texture(glm::ivec2 size, mipmaps mipmaps, pixel_format format)
+	: texture{size, mipmaps, format}
 {
 	unsigned int temp;
 	TR_GL_CALL(glCreateFramebuffers, 1, &temp);
@@ -417,8 +420,8 @@ tr::gfx::render_texture::render_texture(glm::ivec2 size, bool mipmapped, pixel_f
 	m_fbo.reset(temp);
 }
 
-tr::gfx::render_texture::render_texture(const sub_bitmap& bitmap, bool mipmapped, std::optional<pixel_format> format)
-	: render_texture{bitmap.size(), mipmapped, format.value_or(bitmap.format())}
+tr::gfx::render_texture::render_texture(const sub_bitmap& bitmap, mipmaps mipmaps, std::optional<pixel_format> format)
+	: render_texture{bitmap.size(), mipmaps, format.value_or(bitmap.format())}
 {
 	set_region({}, bitmap);
 }
@@ -435,9 +438,9 @@ void tr::gfx::render_texture::fbo_deleter::operator()(unsigned int id) const
 	TR_GL_CALL(glDeleteFramebuffers, 1, &id);
 }
 
-tr::gfx::texture tr::gfx::render_texture::reallocate(glm::ivec2 size, bool mipmapped, pixel_format format)
+tr::gfx::texture tr::gfx::render_texture::reallocate(glm::ivec2 size, mipmaps mipmaps, pixel_format format)
 {
-	texture old_data{texture::reallocate(size, mipmapped, format)};
+	texture old_data{texture::reallocate(size, mipmaps, format)};
 	if (!m_fbo.has_value()) {
 		unsigned int temp;
 		TR_GL_CALL(glCreateFramebuffers, 1, &temp);

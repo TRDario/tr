@@ -4,8 +4,8 @@
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#include "../../include/tr/sysgfx/impl.hpp"
 #include "../../include/tr/sysgfx/gl_call.hpp"
+#include "../../include/tr/sysgfx/impl.hpp"
 #include "../../include/tr/sysgfx/main.hpp"
 #include "../../include/tr/sysgfx/window.hpp"
 #include <SDL3/SDL.h>
@@ -275,6 +275,23 @@ void tr::gfx::context::check_vertex_buffer(std::string label, int slot, std::spa
 	}
 }
 
+#endif
+
+/////////////////////////////////////////////////////////////// OBJECT LABEL //////////////////////////////////////////////////////////////
+
+#ifdef TR_ENABLE_ASSERTS
+void tr::gfx::move_label(unsigned int type, unsigned int old_id, unsigned int new_id)
+{
+	tr::static_string<64> label(64);
+	GLsizei label_length;
+	TR_GL_CALL(glGetObjectLabel, type, old_id, label.size(), &label_length, label.data());
+	label.resize(label_length);
+
+	if (!label.empty()) {
+		TR_GL_CALL(glObjectLabel, type, new_id, label.size(), label.data());
+		TR_GL_CALL(glObjectLabel, type, old_id, 0, nullptr);
+	}
+}
 #endif
 
 ////////////////////////////////////////////////////////////////// WINDOW /////////////////////////////////////////////////////////////////

@@ -4,8 +4,9 @@
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#include "../../include/tr/sysgfx/index_buffer.hpp"
 #include "../../include/tr/sysgfx/gl_call.hpp"
+#include "../../include/tr/sysgfx/impl.hpp"
+#include "../../include/tr/sysgfx/index_buffer.hpp"
 
 /////////////////////////////////////////////////////////// STATIC INDEX BUFFER ///////////////////////////////////////////////////////////
 
@@ -94,21 +95,10 @@ void tr::gfx::dyn_index_buffer::reserve(usize capacity)
 	if (capacity > m_capacity) {
 		capacity = std::bit_ceil(capacity);
 
-#ifdef TR_ENABLE_ASSERTS
-		char label_buffer[64];
-		GLsizei label_length;
-		TR_GL_CALL(glGetObjectLabel, GL_BUFFER, m_ibo.get(), std::size(label_buffer), &label_length, label_buffer);
-#endif
-
 		unsigned int ibo;
 		TR_GL_CALL(glCreateBuffers, 1, &ibo);
+		TR_MOVE_LABEL(GL_BUFFER, m_ibo.get(), ibo);
 		m_ibo.reset(ibo);
-
-#ifdef TR_ENABLE_ASSERTS
-		if (label_length > 0) {
-			TR_GL_CALL(glObjectLabel, GL_BUFFER, m_ibo.get(), label_length, label_buffer);
-		}
-#endif
 
 		TR_GL_CALL(glNamedBufferStorage, m_ibo.get(), GLsizeiptr(capacity * sizeof(u16)), nullptr, GL_DYNAMIC_STORAGE_BIT);
 		if (glGetError() == GL_OUT_OF_MEMORY) {

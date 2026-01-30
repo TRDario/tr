@@ -90,6 +90,19 @@ namespace tr::gfx {
 		std::string m_vertex_format_label;
 #endif
 	};
+
+#ifdef TR_ENABLE_ASSERTS
+	// Moves the label of an OpenGL object to a new ID.
+	void move_label(unsigned int type, unsigned int old_id, unsigned int new_id);
+#define TR_MOVE_LABEL(type, old_id, new_id)                                                                                                \
+	do {                                                                                                                                   \
+		tr::gfx::move_label(type, old_id, new_id);                                                                                         \
+	} while (0)
+#else
+#define TR_MOVE_LABEL(type, old_id, new_Id)                                                                                                \
+	do {                                                                                                                                   \
+	} while (0)
+#endif
 } // namespace tr::gfx
 
 namespace tr::sys {
