@@ -1,22 +1,15 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Implements ttfont.hpp.                                                                                                                //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+#include "../../include/tr/sysgfx/ttfont.hpp"
 #include "../../include/tr/sysgfx/bitmap.hpp"
 #include "../../include/tr/sysgfx/impl.hpp"
-#include "../../include/tr/sysgfx/ttfont.hpp"
 #include <SDL3_ttf/SDL_ttf.h>
 
-static tr::bitmap fix_alpha_artifacts(tr::bitmap&& bitmap, tr::u8 max_alpha)
-{
-	// We know the bitmap is ARGB_8888.
-	tr::u8* it{(tr::u8*)bitmap.data()};
-	for (int y = 0; y < bitmap.size().y; ++y) {
-		for (int x = 0; x < bitmap.size().x; ++x) {
-			it[x * 4 + 3] = std::min(it[x * 4 + 3], max_alpha);
-		}
-		it += bitmap.pitch();
-	}
-	return std::move(bitmap);
-}
-
-//
+////////////////////////////////////////////////////////////////// ERRORS /////////////////////////////////////////////////////////////////
 
 tr::sys::ttfont_load_error::ttfont_load_error(std::string_view path, std::string&& details)
 	: m_description{TR_FMT::format("Failed to load bitmap from '{}'", path)}, m_details{std::move(details)}
@@ -57,6 +50,8 @@ std::string_view tr::sys::ttfont_render_error::details() const
 {
 	return {};
 }
+
+/////////////////////////////////////////////////////////// MISC. FONT FUNCTIONS //////////////////////////////////////////////////////////
 
 tr::sys::ttfont::ttfont(TTF_Font* font)
 	: m_ptr{font}
@@ -152,21 +147,35 @@ glm::ivec2 tr::sys::ttfont::text_size(std::string_view text, int max_w) const
 	return size;
 }
 
+//////////////////////////////////////////////////////////////// RENDERING ////////////////////////////////////////////////////////////////
+
+static tr::bitmap fix_alpha_artifacts(tr::bitmap&& bitmap, tr::u8 max_alpha)
+{
+	// We know the bitmap is ARGB_8888.
+	tr::u8* row_it{(tr::u8*)bitmap.data()};
+	for (int y = 0; y < bitmap.size().y; ++y) {
+		for (int x = 0; x < bitmap.size().x; ++x) {
+			row_it[x * 4 + 3] = std::min(row_it[x * 4 + 3], max_alpha);
+		}
+		row_it += bitmap.pitch();
+	}
+	return std::move(bitmap);
+}
+
 tr::bitmap tr::sys::ttfont::render(u32 glyph, rgba8 color) const
 {
-	const SDL_Color sdl_color{color.r, color.g, color.b, color.a};
-	SDL_Surface* const ptr{TTF_RenderGlyph_Blended(m_ptr.get(), glyph, sdl_color)};
+	SDL_Surface* const ptr{TTF_RenderGlyph_Blended(m_ptr.get(), glyph, std::bit_cast<SDL_Color>(color))};
 	return ptr != nullptr ? bitmap{ptr} : throw ttfont_render_error{SDL_GetError()};
 }
 
 tr::bitmap tr::sys::ttfont::render(std::string_view text, int max_w, halign align, rgba8 color) const
 {
 	TTF_SetFontWrapAlignment(m_ptr.get(), TTF_HorizontalAlignment(align));
-
-	const SDL_Color sdl_color{color.r, color.g, color.b, color.a};
-	SDL_Surface* const ptr{TTF_RenderText_Blended_Wrapped(m_ptr.get(), text.data(), text.size(), sdl_color, max_w)};
-	return ptr != nullptr ? fix_alpha_artifacts(bitmap{ptr}, color.a) : nullptr;
+	SDL_Surface* const ptr{TTF_RenderText_Blended_Wrapped(m_ptr.get(), text.data(), text.size(), std::bit_cast<SDL_Color>(color), max_w)};
+	return ptr != nullptr ? fix_alpha_artifacts(bitmap{ptr}, color.a) : throw ttfont_render_error{SDL_GetError()};
 }
+
+//////////////////////////////////////////////////////////// LOADING FUNCTIONS ////////////////////////////////////////////////////////////
 
 tr::sys::ttfont tr::sys::load_embedded_ttfont(std::span<const std::byte> data, float size)
 {
@@ -184,7 +193,7 @@ tr::sys::ttfont tr::sys::load_ttfont_file(const std::filesystem::path& path, flo
 	return ptr != nullptr ? ttfont{ptr} : throw ttfont_load_error{path.string(), SDL_GetError()};
 }
 
-//
+////////////////////////////////////////////////////////////// LINE SPLITTING /////////////////////////////////////////////////////////////
 
 std::vector<std::string_view> tr::sys::split_into_lines(std::string_view str)
 {
