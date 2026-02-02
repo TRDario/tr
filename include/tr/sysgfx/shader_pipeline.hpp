@@ -17,7 +17,7 @@
 //     - pipeline.vertex_shader().set_uniform(0, 5.0f) -> sets uniform 0 of the vertex shader of the pipeline                            //
 //                                                                                                                                       //
 // The label of a shader pipeline can be set with TR_SET_LABEL(pipeline, label):                                                         //
-//     - TR_SET_LABEL(pipeline, "Example pipeline") -> 'atlas' is now labelled "Example pipeline"                                        //
+//     - TR_SET_LABEL(pipeline, "Example pipeline") -> 'pipeline' is now labelled "Example pipeline"                                     //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -56,7 +56,7 @@ void tr::gfx::shader_base::texture_unit::set(texture_ref texture)
 
 tr::gfx::shader_base::shader_base(cstring_view source, unsigned int type)
 {
-	m_program.reset(TR_RETURNING_GL_CALL(glCreateShaderProgramv, type, 1, (const char**)&source));
+	m_program.reset(TR_RET_GL_CALL(glCreateShaderProgramv, type, 1, (const char**)&source));
 	int linked;
 	TR_GL_CALL(glGetProgramiv, m_program.get(), GL_LINK_STATUS, &linked);
 	if (!linked) {

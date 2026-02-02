@@ -7,6 +7,8 @@
 //     - shader_buffer.map_array() -> tr::gfx::buffer_span_map<ArrayElement>                                                             //
 //     - uniform_buffer.map() -> tr::gfx::buffer_object_map<T>                                                                           //
 //                                                                                                                                       //
+// The type of access a map allows can be specified for certain buffers, and may be read/write only or read+write.                       //
+//                                                                                                                                       //
 // tr::gfx::basic_buffer_map is primarily an implementation detail, wrapping a map and being able to return it as a span of bytes, but   //
 // otherwise not further abstracting it. The buffer is unmapped once the map goes out of scope.                                          //
 //                                                                                                                                       //
@@ -33,6 +35,13 @@
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
 namespace tr::gfx {
+	// Buffer map access type.
+	enum class map_type : u32 {
+		read_only = 1,  // Buffer maps are read-only.
+		write_only = 2, // Buffer maps are write-only.
+		read_write = 3  // Buffer maps are readable and writable.
+	};
+
 	// RAII wrapper over a buffer map.
 	class basic_buffer_map {
 	  public:

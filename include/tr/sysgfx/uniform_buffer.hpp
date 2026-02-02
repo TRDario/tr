@@ -18,7 +18,7 @@
 //     - unibuf.mapped() -> true                                                                                                         //
 //                                                                                                                                       //
 // The label of a uniform buffer can be set with TR_SET_LABEL(unibuf, label):                                                            //
-//     - TR_SET_LABEL(unibuf, "Example buffer") -> 'atlas' is now labelled "Example buffer"                                              //
+//     - TR_SET_LABEL(unibuf, "Example buffer") -> 'unibuf' is now labelled "Example buffer"                                             //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

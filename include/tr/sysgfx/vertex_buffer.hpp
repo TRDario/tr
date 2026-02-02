@@ -29,7 +29,7 @@
 //     - buffer.clear() -> buffer now has size 0, capacity 512                                                                           //
 //                                                                                                                                       //
 // The label of a vertex buffer can be set with TR_SET_LABEL(vbuf, label):                                                               //
-//     - TR_SET_LABEL(vbuf, "Example buffer") -> 'atlas' is now labelled "Example buffer"                                                //
+//     - TR_SET_LABEL(vbuf, "Example buffer") -> 'vbuf' is now labelled "Example buffer"                                                 //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

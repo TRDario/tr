@@ -47,6 +47,9 @@
 //     - tr::gfx::set_render_target(rtex.region_render_target({{128, 128}, {128, 128}}))                                                 //
 //       -> the bottom-right quadrant of 'rtex' is set as the render target                                                              //
 //                                                                                                                                       //
+// The label of a texture can be set with TR_SET_LABEL(tex, label):                                                                      //
+//     - TR_SET_LABEL(tex, "Example texture") -> 'tex' is now labelled "Example texture"                                                 //
+//                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once

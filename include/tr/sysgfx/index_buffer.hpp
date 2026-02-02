@@ -25,7 +25,7 @@
 //     - buffer.clear() -> buffer now has size 0, capacity 512                                                                           //
 //                                                                                                                                       //
 // The label of a index buffer can be set with TR_SET_LABEL(ibuf, label):                                                                //
-//     - TR_SET_LABEL(ibuf, "Example buffer") -> 'atlas' is now labelled "Example buffer"                                                //
+//     - TR_SET_LABEL(ibuf, "Example buffer") -> 'ibuf' is now labelled "Example buffer"                                                 //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -18,7 +18,7 @@
 //     - shader.set_uniform(0, glm::vec2{100, 100}) -> sets the vec2 uniform at location 0                                               //
 //                                                                                                                                       //
 // The label of a shader can be set with TR_SET_LABEL(shader, label):                                                                    //
-//     - TR_SET_LABEL(shader, "Example shader") -> 'atlas' is now labelled "Example shader"                                              //
+//     - TR_SET_LABEL(shader, "Example shader") -> 'shader' is now labelled "Example shader"                                             //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

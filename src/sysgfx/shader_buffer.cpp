@@ -1,14 +1,22 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Implements shader_buffer.hpp.                                                                                                         //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #include "../../include/tr/sysgfx/shader_buffer.hpp"
 #include "../../include/tr/sysgfx/gl_call.hpp"
 
-tr::gfx::basic_shader_buffer::basic_shader_buffer(usize header_size, usize capacity, access access)
-	: m_access{access}, m_header_size{header_size}, m_array_size{0}, m_array_capacity{capacity}
+/////////////////////////////////////////////////////////// BASIC SHADER BUFFER ///////////////////////////////////////////////////////////
+
+tr::gfx::basic_shader_buffer::basic_shader_buffer(usize header_size, usize capacity, map_type map_type)
+	: m_map_type{map_type}, m_header_size{header_size}, m_array_size{0}, m_array_capacity{capacity}
 {
 	GLuint sbo;
 	TR_GL_CALL(glCreateBuffers, 1, &sbo);
 	m_sbo.reset(sbo);
 
-	TR_GL_CALL(glNamedBufferStorage, sbo, GLsizeiptr(header_size + capacity), nullptr, GLenum(access) | GL_DYNAMIC_STORAGE_BIT);
+	TR_GL_CALL(glNamedBufferStorage, sbo, GLsizeiptr(header_size + capacity), nullptr, GLenum(map_type) | GL_DYNAMIC_STORAGE_BIT);
 	if (glGetError() == GL_OUT_OF_MEMORY) {
 		throw out_of_memory{"shader buffer allocation"};
 	}
@@ -73,12 +81,11 @@ bool tr::gfx::basic_shader_buffer::mapped() const
 	return mapped;
 }
 
-tr::gfx::basic_buffer_map tr::gfx::basic_shader_buffer::map_header()
+tr::gfx::basic_buffer_map tr::gfx::basic_shader_buffer::map_range(usize offset, usize size)
 {
 	TR_ASSERT(!mapped(), "Tried to map the header of already-mapped shader buffer '{}'.", label());
-	TR_ASSERT(header_size() != 0, "Tried to map the header of shader buffer '{}' that doesn't have one.", label());
 
-	std::byte* ptr{(std::byte*)(TR_RETURNING_GL_CALL(glMapNamedBufferRange, m_sbo.get(), 0, GLsizeiptr(m_header_size), GLenum(m_access)))};
+	std::byte* ptr{(std::byte*)(TR_RET_GL_CALL(glMapNamedBufferRange, m_sbo.get(), GLintptr(offset), GLintptr(size), GLenum(m_map_type)))};
 	if (glGetError() == GL_OUT_OF_MEMORY) {
 #ifdef TR_ENABLE_ASSERTS
 		throw out_of_memory{"mapping of shader buffer '{}'", label()};
@@ -86,36 +93,26 @@ tr::gfx::basic_buffer_map tr::gfx::basic_shader_buffer::map_header()
 		throw out_of_memory{"shader buffer mapping"};
 #endif
 	}
-	return basic_buffer_map{m_sbo.get(), std::span{ptr, m_array_size}};
+	return basic_buffer_map{m_sbo.get(), std::span{ptr, size}};
+}
+
+tr::gfx::basic_buffer_map tr::gfx::basic_shader_buffer::map_header()
+{
+	TR_ASSERT(header_size() != 0, "Tried to map the header of shader buffer '{}' that doesn't have one.", label());
+
+	return map_range(0, m_header_size);
 }
 
 tr::gfx::basic_buffer_map tr::gfx::basic_shader_buffer::map_array()
 {
-	TR_ASSERT(!mapped(), "Tried to map the array of already-mapped shader buffer '{}'.", label());
 	TR_ASSERT(array_size() != 0, "Tried to map the array of shader buffer '{}' that doesn't have one.", label());
 
-	std::byte* ptr{(std::byte*)(TR_RETURNING_GL_CALL(glMapNamedBufferRange, m_sbo.get(), GLintptr(m_header_size), GLintptr(m_array_size),
-													 GLenum(m_access)))};
-	if (glGetError() == GL_OUT_OF_MEMORY) {
-#ifdef TR_ENABLE_ASSERTS
-		throw out_of_memory{"mapping of shader buffer '{}'", label()};
-#else
-		throw out_of_memory{"shader buffer mapping"};
-#endif
-	}
-	return basic_buffer_map{m_sbo.get(), std::span{ptr, m_array_size}};
+	return map_range(m_array_size, m_array_size);
 }
 
 tr::gfx::basic_buffer_map tr::gfx::basic_shader_buffer::map()
 {
-	TR_ASSERT(!mapped(), "Tried to map already-mapped buffer '{}'.", label());
-
-	const GLsizeiptr size{GLsizeiptr(m_header_size + m_array_size)};
-	std::byte* ptr{(std::byte*)(TR_RETURNING_GL_CALL(glMapNamedBufferRange, m_sbo.get(), 0, size, GLenum(m_access)))};
-	if (glGetError() == GL_OUT_OF_MEMORY) {
-		throw out_of_memory{"shader buffer mapping"};
-	}
-	return basic_buffer_map{m_sbo.get(), std::span{ptr, usize(size)}};
+	return map_range(0, m_header_size + m_array_size);
 }
 
 #ifdef TR_ENABLE_ASSERTS

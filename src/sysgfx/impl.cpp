@@ -4,8 +4,8 @@
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#include "../../include/tr/sysgfx/gl_call.hpp"
 #include "../../include/tr/sysgfx/impl.hpp"
+#include "../../include/tr/sysgfx/gl_call.hpp"
 #include "../../include/tr/sysgfx/main.hpp"
 #include "../../include/tr/sysgfx/window.hpp"
 #include <SDL3/SDL.h>
@@ -126,9 +126,9 @@ void tr::gfx::context::create()
 	}
 #ifdef TR_ENABLE_ASSERTS
 	TR_LOG(log, severity::info, "Created an OpenGL context.");
-	TR_LOG_CONTINUE(log, "Vendor: {}", (const char*)(TR_RETURNING_GL_CALL(glGetString, GL_VENDOR)));
-	TR_LOG_CONTINUE(log, "Renderer: {}", (const char*)(TR_RETURNING_GL_CALL(glGetString, GL_RENDERER)));
-	TR_LOG_CONTINUE(log, "Version: {}", (const char*)(TR_RETURNING_GL_CALL(glGetString, GL_VERSION)));
+	TR_LOG_CONTINUE(log, "Vendor: {}", (const char*)(TR_RET_GL_CALL(glGetString, GL_VENDOR)));
+	TR_LOG_CONTINUE(log, "Renderer: {}", (const char*)(TR_RET_GL_CALL(glGetString, GL_RENDERER)));
+	TR_LOG_CONTINUE(log, "Version: {}", (const char*)(TR_RET_GL_CALL(glGetString, GL_VERSION)));
 #endif
 	TR_GL_CALL(glEnable, GL_BLEND);
 	TR_GL_CALL(glEnable, GL_SCISSOR_TEST);
