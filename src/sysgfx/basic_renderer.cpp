@@ -1,17 +1,23 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Implements the renderer from basic_renderer.hpp.                                                                                      //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #include "../../include/tr/sysgfx/basic_renderer.hpp"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/shader_pipeline.hpp"
 #include "../../include/tr/sysgfx/texture.hpp"
 
-namespace tr::gfx {
+// Untextured UV sentinel.
+constexpr glm::vec2 untextured_uv{-100, -100};
+
+////////////////////////////////////////////////////////////// BASIC RENDERER /////////////////////////////////////////////////////////////
+
+// Fragment shader source code.
 #include "../../resources/generated/basic_renderer_frag.hpp"
+// Vertex shader source code.
 #include "../../resources/generated/basic_renderer_vert.hpp"
-
-	// Untextured UV sentinel.
-	constexpr glm::vec2 untextured_uv{-100, -100};
-} // namespace tr::gfx
-
-//
 
 tr::gfx::basic_renderer::basic_renderer()
 	: m_id{allocate_renderer_id()}, m_pipeline{vertex_shader{basic_renderer_vert}, fragment_shader{basic_renderer_frag}}

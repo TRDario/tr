@@ -1,3 +1,41 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Provides a batched 2D renderer capable enough for most simple rendering.                                                              //
+//                                                                                                                                       //
+// The basic renderer is a layer-based renderer, compatible with the utilities provided in layered_drawing.hpp. Each layer has its own   //
+// default transformation matrix (falls back to the global default if not provided), blending mode (falls back to alpha blending if not  //
+// provided) and texture that can be set. The global default transformation matrix can also be set. Individual primitives are allowed    //
+// to use different parameters from the layer defaults:                                                                                  //
+//     - tr::gfx::basic_renderer basic -> creates an empty renderer                                                                      //
+//     - basic.set_default_transform(tr::ortho(tr::frect2{{1000, 1000}})) -> sets the global transformation matrix                       //
+//     - basic.set_default_layer_texture(1, tex) -> sets the default texture used by primitives on layer 1                               //
+//     - basic.set_default_layer_transform(1, tr::ortho(tr::frect2{{500, 500}})) -> sets the default transformation matrix for layer 1   //
+//     - basic.set_default_layer_blend_mode(1, tr::gfx::premultiplied_alpha_blending) -> sets the default blending mode for layer 1      //
+//                                                                                                                                       //
+// Primitives to be drawn by the basic renderer are allocated through the provided methods. Said methods return a reference to the mesh  //
+// that must be filled in by the user. This includes the positions, colors, UVs (if textured), and indices (for custom meshes).          //
+// These references are not guaranteed to persist after another call to an allocation function, so primitives should be added one-by-one.//
+// The primitives that can be drawn by the basic renderer include fans, polygon outlines, custom triangle meshes, lines, line strips,    //
+// line loops, and custom line meshes. Triangle meshes may be textured. Primitives use the layer default parameters by default, but      //
+// custom ones may also be provided:                                                                                                     //
+//     - tr::gfx::simple_color_mesh_ref mesh{basic.new_color_fan(0, 4)}                                                                  //
+//       tr::fill_rectangle_vertices(mesh.positions, {{0, 0}, {200, 200}})                                                               //
+//       std::ranges::fill(mesh.colors, "FF0000"_rgba8)                                                                                  //
+//       -> adds a colored rectangle to the renderer on layer 0                                                                          //
+//     - tr::gfx::simple_textured_mesh_ref mesh{basic.new_textured_fan(1, tex, mat, blend_mode)}                                         //
+//       tr::fill_rectangle_vertices(mesh.positions, {{0, 0}, {200, 200}})                                                               //
+//       tr::fill_rectangle_vertices(mesh.uvs, {{0, 0}, {0.5f, 0.5f}})                                                                   //
+//       std::ranges::fill(mesh.colors, "FFFFFF"_rgba8)                                                                                  //
+//       -> adds a textured rectangle to the renderer on layer 1 using a custom texture, transformation matrix, and blending mode        //
+//                                                                                                                                       //
+// Added primitives are not drawn until a call to one of the drawing functions. Aside from supporting the functions in                   //
+// layered_drawing.hpp, the basic renderer can be drawn alone. Drawn primitives are erased from the renderer:                            //
+//     - basic.draw_layer(0, target) -> draws layer 0 to the target                                                                      //
+//     - basic.draw_layer_range(0, 10, target) -> draws layers 0-10 to the target                                                        //
+//     - basic.draw(target) -> draws all layers to the target                                                                            //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include "backbuffer.hpp"
 #include "blending.hpp"
@@ -6,6 +44,8 @@
 #include "render_target.hpp"
 #include "shader_pipeline.hpp"
 #include "texture.hpp"
+
+//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
 namespace tr::gfx {
 	// Simple basic renderer color mesh allocation reference.
@@ -53,6 +93,7 @@ namespace tr::gfx {
 	class basic_renderer {
 	  private:
 	  public:
+		// Manager class to which the basic renderer delegates handling a staggered drawing process.
 		class staggered_draw_manager;
 
 		// Creates a basic renderer.
@@ -126,8 +167,11 @@ namespace tr::gfx {
 	  private:
 		// Default layer information.
 		struct layer_defaults {
+			// Texture used by textured primitives in a layer.
 			texture_ref texture;
+			// Transformation matrix used by primitives a layer.
 			std::optional<glm::mat4> transform;
+			// Blending mode used by primitives a layer.
 			blend_mode blend_mode{alpha_blending};
 		};
 		// Mesh data.
@@ -187,10 +231,12 @@ namespace tr::gfx {
 	// Manager class to which the basic renderer delegates handling a staggered drawing process.
 	class basic_renderer::staggered_draw_manager {
 	  public:
+		// Moves a staggered draw manager.
 		staggered_draw_manager(staggered_draw_manager&& r) noexcept;
 		// Cleans up the drawing data and unlocks the parent renderer.
 		~staggered_draw_manager();
 
+		// Moves a staggered draw manager.
 		staggered_draw_manager& operator=(staggered_draw_manager&& r) noexcept;
 
 		// Draws a single layer.

@@ -1,4 +1,12 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Implements the staggered draw manager from basic_renderer.hpp.                                                                        //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #include "../../include/tr/sysgfx/basic_renderer.hpp"
+
+////////////////////////////////////////////////////////// STAGGERED DRAW MANAGER /////////////////////////////////////////////////////////
 
 tr::gfx::basic_renderer::staggered_draw_manager::staggered_draw_manager(basic_renderer& renderer,
 																		std::ranges::subrange<std::vector<mesh>::iterator> range)
