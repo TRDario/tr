@@ -35,11 +35,6 @@ tr::usize tr::audio::owning_buffer::hasher::operator()(id v) const
 	return std::hash<id>{}(v);
 }
 
-bool tr::audio::owning_buffer::equals::operator()(id l, id r) const
-{
-	return l == r;
-}
-
 ////////////////////////////////////////////////////////// BUFFERED STREAM BUFFER /////////////////////////////////////////////////////////
 
 void tr::audio::buffered_stream::buffer::refill_from(audio::stream& source)
