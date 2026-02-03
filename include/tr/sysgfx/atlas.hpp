@@ -43,20 +43,20 @@
 
 namespace tr {
 	// Basic bitmap atlas structure.
-	template <class Key, class Hash = std::hash<Key>, class Pred = std::equal_to<Key>> struct bitmap_atlas {
+	template <class Key, class Hash = std::hash<Key>, class Pred = std::equal_to<>> struct bitmap_atlas {
 		// The atlas bitmap.
 		tr::bitmap bitmap;
 		// The atlas entries.
 		atlas_rects<Key, Hash, Pred> rects;
 	};
 	// Builds a bitmap atlas from individual bitmaps.
-	template <class Key, class Hash = std::hash<Key>, class Pred = std::equal_to<Key>>
+	template <class Key, class Hash = std::hash<Key>, class Pred = std::equal_to<>>
 	bitmap_atlas<Key, Hash, Pred> build_bitmap_atlas(const std::unordered_map<Key, tr::bitmap, Hash, Pred>& entries);
 } // namespace tr
 
 namespace tr::gfx {
 	// Dynamically-allocated texture atlas.
-	template <class Key, class Hash = std::hash<Key>, class Pred = std::equal_to<Key>> class dyn_atlas {
+	template <class Key, class Hash = std::hash<Key>, class Pred = std::equal_to<>> class dyn_atlas {
 	  public:
 		// Creates an empty atlas.
 		dyn_atlas() = default;
@@ -140,13 +140,13 @@ tr::bitmap_atlas<Key, Hash, Pred> tr::build_bitmap_atlas(const std::unordered_ma
 
 template <class Key, class Hash, class Pred>
 tr::gfx::dyn_atlas<Key, Hash, Pred>::dyn_atlas(glm::ivec2 size)
-	: m_tex{size, true}
+	: m_tex{size, tr::gfx::mipmaps::enabled}
 {
 }
 
 template <class Key, class Hash, class Pred>
 tr::gfx::dyn_atlas<Key, Hash, Pred>::dyn_atlas(bitmap_atlas<Key, Hash, Pred>&& source)
-	: m_tex{source.bitmap, true}, m_rects{std::move(source.rects)}
+	: m_tex{source.bitmap, tr::gfx::mipmaps::enabled}, m_rects{std::move(source.rects)}
 {
 }
 

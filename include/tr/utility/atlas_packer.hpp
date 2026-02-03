@@ -48,7 +48,7 @@ namespace tr {
 	};
 
 	// Atlas packer combined with a list of rects.
-	template <class Key, class Hash = std::hash<Key>, class Pred = std::equal_to<Key>> class atlas_rects {
+	template <class Key, class Hash = std::hash<Key>, class Pred = std::equal_to<>> class atlas_rects {
 	  public:
 		// Gets whether the atlas contains a key.
 		bool contains(const auto& key) const;
