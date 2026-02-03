@@ -4,9 +4,9 @@
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#include "../../include/tr/sysgfx/ttfont.hpp"
 #include "../../include/tr/sysgfx/bitmap.hpp"
 #include "../../include/tr/sysgfx/impl.hpp"
+#include "../../include/tr/sysgfx/ttfont.hpp"
 #include <SDL3_ttf/SDL_ttf.h>
 
 ////////////////////////////////////////////////////////////////// ERRORS /////////////////////////////////////////////////////////////////
@@ -149,6 +149,7 @@ glm::ivec2 tr::sys::ttfont::text_size(std::string_view text, int max_w) const
 
 //////////////////////////////////////////////////////////////// RENDERING ////////////////////////////////////////////////////////////////
 
+// Fixes alpha artifacts in transparent text.
 static tr::bitmap fix_alpha_artifacts(tr::bitmap&& bitmap, tr::u8 max_alpha)
 {
 	// We know the bitmap is ARGB_8888.

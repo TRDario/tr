@@ -4,9 +4,9 @@
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#include "../../include/tr/sysgfx/debug_renderer.hpp"
 #include "../../include/tr/sysgfx/backbuffer.hpp"
 #include "../../include/tr/sysgfx/blending.hpp"
+#include "../../include/tr/sysgfx/debug_renderer.hpp"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/render_target.hpp"
 
@@ -14,11 +14,11 @@ using namespace std::chrono_literals;
 
 ////////////////////////////////////////////////////////////// DEBUG RENDERER /////////////////////////////////////////////////////////////
 
-namespace tr::gfx {
+namespace {
 #include "../../resources/generated/debug_renderer_font.hpp"
 #include "../../resources/generated/debug_renderer_frag.hpp"
 #include "../../resources/generated/debug_renderer_vert.hpp"
-} // namespace tr::gfx
+} // namespace
 
 // Formats a duration into a string.
 static std::string format_duration(std::string_view prefix, tr::duration duration)

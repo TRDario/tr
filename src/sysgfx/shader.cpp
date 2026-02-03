@@ -4,10 +4,10 @@
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#include "../../include/tr/sysgfx/shader.hpp"
 #include "../../include/tr/sysgfx/gl_call.hpp"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/impl.hpp"
+#include "../../include/tr/sysgfx/shader.hpp"
 #include "../../include/tr/sysgfx/shader_buffer.hpp"
 #include "../../include/tr/sysgfx/texture.hpp"
 #include "../../include/tr/sysgfx/uniform_buffer.hpp"
@@ -75,12 +75,10 @@ tr::gfx::shader_base::shader_base(cstring_view source, unsigned int type)
 }
 
 #ifdef TR_ENABLE_GL_CHECKS
-namespace tr::gfx {
-	// Properties queried for uniforms.
-	constexpr std::array<GLenum, 5> uniform_properties{GL_BLOCK_INDEX, GL_TYPE, GL_ARRAY_SIZE, GL_NAME_LENGTH, GL_LOCATION};
-	// Properties queried for inputs and outputs.
-	constexpr std::array<GLenum, 4> input_output_properties{GL_TYPE, GL_ARRAY_SIZE, GL_NAME_LENGTH, GL_LOCATION};
-} // namespace tr::gfx
+// Properties queried for uniforms.
+static constexpr std::array<GLenum, 5> uniform_properties{GL_BLOCK_INDEX, GL_TYPE, GL_ARRAY_SIZE, GL_NAME_LENGTH, GL_LOCATION};
+// Properties queried for inputs and outputs.
+static constexpr std::array<GLenum, 4> input_output_properties{GL_TYPE, GL_ARRAY_SIZE, GL_NAME_LENGTH, GL_LOCATION};
 
 void tr::gfx::shader_base::find_uniforms()
 {

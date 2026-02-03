@@ -12,22 +12,20 @@ using namespace std::chrono_literals;
 
 ////////////////////////////////////////////////////////////// MESSAGE BOXES //////////////////////////////////////////////////////////////
 
-namespace tr::sys {
-	// Button layout for the YES/NO message box.
-	constexpr std::array<SDL_MessageBoxButtonData, 2> yes_no_buttons{{
-		{.flags = SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT, .buttonID = 0, .text = "Yes"},
-		{.flags = SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT, .buttonID = 1, .text = "No"},
-	}};
-	// Button layout for the YES/NO/CANCEL message box.
-	constexpr std::array<SDL_MessageBoxButtonData, 3> yes_no_cancel_buttons{{
-		{.flags = SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT, .buttonID = 0, .text = "Yes"},
-		{.flags = 0, .buttonID = 1, .text = "No"},
-		{.flags = SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT, .buttonID = 2, .text = "Cancel"},
-	}};
+// Button layout for the YES/NO message box.
+static constexpr std::array<SDL_MessageBoxButtonData, 2> yes_no_buttons{{
+	{.flags = SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT, .buttonID = 0, .text = "Yes"},
+	{.flags = SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT, .buttonID = 1, .text = "No"},
+}};
+// Button layout for the YES/NO/CANCEL message box.
+static constexpr std::array<SDL_MessageBoxButtonData, 3> yes_no_cancel_buttons{{
+	{.flags = SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT, .buttonID = 0, .text = "Yes"},
+	{.flags = 0, .buttonID = 1, .text = "No"},
+	{.flags = SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT, .buttonID = 2, .text = "Cancel"},
+}};
 
-	// Buffer allocated to be freed in case of an out-of-memory error.
-	std::unique_ptr<char[]> g_emergency_buffer{new char[16384]};
-} // namespace tr::sys
+// Buffer allocated to be freed in case of an out-of-memory error.
+static std::unique_ptr<char[]> g_emergency_buffer{new char[16384]};
 
 tr::sys::message_box_button tr::sys::show_message_box(message_box_type type, message_box_layout buttons, cstring_view title,
 													  cstring_view message)
@@ -90,7 +88,7 @@ void tr::sys::show_fatal_error_message_box(const std::exception& exception)
 
 /////////////////////////////////////////////////////////// FILE/FOLDER DIALOGS ///////////////////////////////////////////////////////////
 
-namespace tr::sys {
+namespace {
 	// File dialog callback context.
 	struct file_dialog_context {
 		// List of selected file paths.
@@ -98,17 +96,10 @@ namespace tr::sys {
 		// Whether the dialog is done.
 		bool done{false};
 	};
+} // namespace
 
-	// The file dialog callback function.
-	static void file_dialog_callback(void* userdata, const char* const* files, int);
-	// Base open file dialog function.
-	static std::vector<std::filesystem::path> show_open_file_dialog_base(std::span<const dialog_filter> filters, cstring_view default_path,
-																		 bool allow_multiple);
-	// Base open folder dialog function.
-	static std::vector<std::filesystem::path> show_open_folder_dialog_base(cstring_view default_path, bool allow_multiple);
-} // namespace tr::sys
-
-void tr::sys::file_dialog_callback(void* userdata, const char* const* files, int)
+// The file dialog callback function.
+static void file_dialog_callback(void* userdata, const char* const* files, int)
 {
 	file_dialog_context& context{*(file_dialog_context*)userdata};
 	if (files != nullptr) {
@@ -119,8 +110,9 @@ void tr::sys::file_dialog_callback(void* userdata, const char* const* files, int
 	context.done = true;
 }
 
-std::vector<std::filesystem::path> tr::sys::show_open_file_dialog_base(std::span<const dialog_filter> filters, cstring_view default_path,
-																	   bool allow_multiple)
+// Base open file dialog function.
+static std::vector<std::filesystem::path> show_open_file_dialog_base(std::span<const tr::sys::dialog_filter> filters,
+																	 tr::cstring_view default_path, bool allow_multiple)
 {
 	file_dialog_context ctx{};
 	SDL_ShowOpenFileDialog(file_dialog_callback, &ctx, nullptr, (const SDL_DialogFileFilter*)filters.data(), int(filters.size()),
@@ -132,7 +124,8 @@ std::vector<std::filesystem::path> tr::sys::show_open_file_dialog_base(std::span
 	return std::move(ctx.paths);
 }
 
-std::vector<std::filesystem::path> tr::sys::show_open_folder_dialog_base(cstring_view default_path, bool allow_multiple)
+// Base open folder dialog function.
+static std::vector<std::filesystem::path> show_open_folder_dialog_base(tr::cstring_view default_path, bool allow_multiple)
 {
 	file_dialog_context ctx{};
 	SDL_ShowOpenFolderDialog(file_dialog_callback, &ctx, nullptr, default_path, allow_multiple);

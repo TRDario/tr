@@ -31,51 +31,51 @@ std::string_view tr::audio::file_open_error::details() const
 
 //////////////////////////////////////////////////////////// OGG AUDIO STREAM /////////////////////////////////////////////////////////////
 
-namespace tr::audio {
+namespace {
 	// Ogg audio file backend.
-	class ogg_stream : public stream {
+	class ogg_stream : public tr::audio::stream {
 	  public:
 		// Loads an Ogg stream from file.
 		ogg_stream(const std::filesystem::path& path);
 		~ogg_stream();
 
-		usize length() const override;
+		tr::usize length() const override;
 		int channels() const override;
 		int sample_rate() const override;
 
-		usize tell() const override;
-		void seek(usize where) override;
-		void raw_read(std::span<i16> buffer) override;
+		tr::usize tell() const override;
+		void seek(tr::usize where) override;
+		void raw_read(std::span<tr::i16> buffer) override;
 
 	  private:
 		// A handle to the Ogg file.
 		mutable OggVorbis_File m_file{};
 	};
-} // namespace tr::audio
+} // namespace
 
-tr::audio::ogg_stream::ogg_stream(const std::filesystem::path& path)
+ogg_stream::ogg_stream(const std::filesystem::path& path)
 {
 	const int result{ov_fopen(TR_PATH_CSTR(path), &m_file)};
 	if (result != 0) {
 		switch (result) {
 		case OV_EREAD:
-			throw file_open_error{TR_FMT::format("Failed to read .ogg file from '{}'.", path.string())};
+			throw tr::file_open_error{TR_FMT::format("Failed to read .ogg file from '{}'.", path.string())};
 		case OV_ENOTVORBIS:
-			throw file_open_error{TR_FMT::format("Invalid .ogg Vorbis file '{}'.", path.string())};
+			throw tr::file_open_error{TR_FMT::format("Invalid .ogg Vorbis file '{}'.", path.string())};
 		case OV_EVERSION:
-			throw file_open_error{TR_FMT::format(".ogg Vorbis version mismatch in '{}'.", path.string())};
+			throw tr::file_open_error{TR_FMT::format(".ogg Vorbis version mismatch in '{}'.", path.string())};
 		case OV_EBADHEADER:
-			throw file_open_error{TR_FMT::format("Invalid .ogg Vorbis header in '{}'.", path.string())};
+			throw tr::file_open_error{TR_FMT::format("Invalid .ogg Vorbis header in '{}'.", path.string())};
 		case OV_EFAULT:
-			throw file_open_error{TR_FMT::format("An internal error in Vorbis occurred while loading '{}'.", path.string())};
+			throw tr::file_open_error{TR_FMT::format("An internal error in Vorbis occurred while loading '{}'.", path.string())};
 		}
 	}
 
 	const vorbis_comment& comments{*ov_comment(&m_file, -1)};
 	for (int i = 0; i < comments.comments; ++i) {
-		const std::string_view comment{comments.user_comments[i], usize(comments.comment_lengths[i])};
+		const std::string_view comment{comments.user_comments[i], tr::usize(comments.comment_lengths[i])};
 		if (comment.starts_with("LOOPSTART=")) {
-			usize loop_start{unknown_loop_point};
+			tr::usize loop_start{unknown_loop_point};
 			std::from_chars(comment.data() + 10, comment.data() + comment.size(), loop_start);
 			if (loop_start != unknown_loop_point) {
 				set_looping(true);
@@ -83,7 +83,7 @@ tr::audio::ogg_stream::ogg_stream(const std::filesystem::path& path)
 			}
 		}
 		else if (comment.starts_with("LOOPEND=")) {
-			usize loop_end{unknown_loop_point};
+			tr::usize loop_end{unknown_loop_point};
 			std::from_chars(comment.data() + 8, comment.data() + comment.size(), loop_end);
 			if (loop_end != unknown_loop_point) {
 				set_looping(true);
@@ -96,37 +96,37 @@ tr::audio::ogg_stream::ogg_stream(const std::filesystem::path& path)
 	}
 }
 
-tr::audio::ogg_stream::~ogg_stream()
+ogg_stream::~ogg_stream()
 {
 	ov_clear(&m_file);
 }
 
-tr::usize tr::audio::ogg_stream::length() const
+tr::usize ogg_stream::length() const
 {
-	return usize(ov_pcm_total(&m_file, -1));
+	return tr::usize(ov_pcm_total(&m_file, -1));
 }
 
-int tr::audio::ogg_stream::channels() const
+int ogg_stream::channels() const
 {
 	return ov_info(&m_file, -1)->channels;
 }
 
-int tr::audio::ogg_stream::sample_rate() const
+int ogg_stream::sample_rate() const
 {
 	return int(ov_info(&m_file, -1)->rate);
 }
 
-tr::usize tr::audio::ogg_stream::tell() const
+tr::usize ogg_stream::tell() const
 {
-	return usize(ov_pcm_tell(&m_file));
+	return tr::usize(ov_pcm_tell(&m_file));
 }
 
-void tr::audio::ogg_stream::seek(usize where)
+void ogg_stream::seek(tr::usize where)
 {
 	ov_pcm_seek(&m_file, ogg_int64_t(where));
 }
 
-void tr::audio::ogg_stream::raw_read(std::span<i16> buffer)
+void ogg_stream::raw_read(std::span<tr::i16> buffer)
 {
 	char* raw_dest{(char*)buffer.data()};
 	int bytes_left{int(buffer.size_bytes())};

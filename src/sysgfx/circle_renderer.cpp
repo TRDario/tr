@@ -8,10 +8,10 @@
 
 ///////////////////////////////////////////////////////////// CIRCLE RENDERER /////////////////////////////////////////////////////////////
 
-namespace tr::gfx {
+namespace {
 #include "../../resources/generated/circle_renderer_frag.hpp"
 #include "../../resources/generated/circle_renderer_vert.hpp"
-} // namespace tr::gfx
+} // namespace
 
 tr::gfx::circle_renderer::circle_renderer(float render_scale)
 	: m_id{allocate_renderer_id()}

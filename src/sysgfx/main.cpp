@@ -5,10 +5,10 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #define SDL_MAIN_USE_CALLBACKS 1
-#include "../../include/tr/sysgfx/main.hpp"
 #include "../../include/tr/sysgfx/dialog.hpp"
 #include "../../include/tr/sysgfx/display.hpp"
 #include "../../include/tr/sysgfx/impl.hpp"
+#include "../../include/tr/sysgfx/main.hpp"
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
 #include <SDL3_ttf/SDL_ttf.h>
@@ -22,10 +22,8 @@
 #include "../../include/tr/audio/impl.hpp"
 #endif
 
-namespace tr::sys {
-	// Timer used to emit ticks.
-	std::optional<timer> g_tick_timer;
-} // namespace tr::sys
+// Timer used to emit ticks.
+static std::optional<tr::timer> g_tick_timer;
 
 //////////////////////////////////////////////////////////////// INIT ERROR ///////////////////////////////////////////////////////////////
 
@@ -169,7 +167,7 @@ extern "C"
 		tr::audio::g_manager.shut_down();
 #endif
 
-		tr::sys::g_tick_timer.reset();
+		g_tick_timer.reset();
 		TTF_Quit();
 		SDL_Quit();
 	}
