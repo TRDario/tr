@@ -42,13 +42,13 @@ void tr::gfx::circle_renderer::staggered_draw_manager::draw_layer(int layer, con
 {
 	TR_ASSERT(m_renderer.has_ref(), "Tried to draw a layer from a moved-from circle renderer staggered draw manager.");
 
-	const auto it{m_renderer->m_layers.find(layer)};
-	if (it == m_renderer->m_layers.end()) {
+	const auto layer_it{m_renderer->m_layers.find(layer)};
+	if (layer_it == m_renderer->m_layers.end()) {
 		return;
 	}
 
-	const circle_renderer::layer& info{it->second};
-	const ssize offset{std::accumulate(m_range.begin(), it, 0_z, [](ssize sum, auto& pair) { return sum + pair.second.circles.size(); })};
+	const circle_renderer::layer& info{layer_it->second};
+	const ssize offset{std::accumulate(m_range.begin(), layer_it, 0_z, [](ssize s, auto& p) { return s + p.second.circles.size(); })};
 
 	setup_context();
 	set_render_target(target);

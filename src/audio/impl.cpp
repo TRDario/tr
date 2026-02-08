@@ -238,12 +238,12 @@ std::shared_ptr<tr::audio::owning_source> tr::audio::manager::allocate_source(in
 	std::lock_guard lock{m_mutex};
 
 	if (m_sources.size() == m_max_sources) {
-		auto it{std::ranges::find_if(m_sources, [&](auto& s) { return s.use_count() == 1 && s->priority() <= priority; })};
-		if (it == m_sources.end()) {
+		auto erasable_it{std::ranges::find_if(m_sources, [&](auto& s) { return s.use_count() == 1 && s->priority() <= priority; })};
+		if (erasable_it == m_sources.end()) {
 			return nullptr;
 		}
 		else {
-			m_sources.erase(it);
+			m_sources.erase(erasable_it);
 		}
 	}
 

@@ -251,20 +251,20 @@ void tr::gfx::debug_renderer::writer::write_character(char chr)
 	}
 }
 
-void tr::gfx::debug_renderer::writer::handle_control_sequence(std::string_view::iterator& it, std::string_view::iterator end)
+void tr::gfx::debug_renderer::writer::handle_control_sequence(std::string_view::iterator& control_it, std::string_view::iterator end)
 {
-	switch (*it) {
+	switch (*control_it) {
 	case 'b':
-		if (std::next(it) != end && std::isdigit(*++it) && u8(*it - '0') < m_style.extra_colors.size()) {
-			m_background_color = m_style.extra_colors[*it - '0'];
+		if (std::next(control_it) != end && std::isdigit(*++control_it) && u8(*control_it - '0') < m_style.extra_colors.size()) {
+			m_background_color = m_style.extra_colors[*control_it - '0'];
 		}
 		break;
 	case 'B':
 		m_background_color = m_style.background_color;
 		break;
 	case 'c':
-		if (std::next(it) != end && std::isdigit(*++it) && u8(*it - '0') < m_style.extra_colors.size()) {
-			m_text_color = m_style.extra_colors[*it - '0'];
+		if (std::next(control_it) != end && std::isdigit(*++control_it) && u8(*control_it - '0') < m_style.extra_colors.size()) {
+			m_text_color = m_style.extra_colors[*control_it - '0'];
 		}
 		break;
 	case 'C':
@@ -283,14 +283,14 @@ void tr::gfx::debug_renderer::writer::handle_control_sequence(std::string_view::
 
 void tr::gfx::debug_renderer::writer::write(std::string_view text)
 {
-	for (std::string_view::iterator it = text.begin(); it != text.end(); ++it) {
-		if (*it == '$') {
-			if (std::next(it) != text.end()) {
-				handle_control_sequence(++it, text.end());
+	for (std::string_view::iterator chr_it = text.begin(); chr_it != text.end(); ++chr_it) {
+		if (*chr_it == '$') {
+			if (std::next(chr_it) != text.end()) {
+				handle_control_sequence(++chr_it, text.end());
 			}
 		}
 		else {
-			write_character(*it);
+			write_character(*chr_it);
 		}
 	}
 	handle_newline();

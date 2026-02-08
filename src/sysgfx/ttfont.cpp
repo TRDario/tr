@@ -212,21 +212,21 @@ std::vector<std::string_view> tr::sys::split_into_lines(std::string_view str)
 
 std::vector<std::string_view> tr::sys::break_overlong_lines(std::vector<std::string_view>&& lines, const ttfont& font, int max_w)
 {
-	for (std::vector<std::string_view>::iterator it = lines.begin(); it != lines.end(); ++it) {
-		if (it->empty()) {
+	for (std::vector<std::string_view>::iterator line_it = lines.begin(); line_it != lines.end(); ++line_it) {
+		if (line_it->empty()) {
 			continue;
 		}
 
-		const tr::sys::ttf_measure_result measure{font.measure_text(*it, int(max_w))};
-		if (measure.text != std::string_view{*it}) {
-			usize last_ws{std::string_view{it->begin(), it->begin() + measure.text.size() + 1}.find_last_of(" \t")};
+		const tr::sys::ttf_measure_result measure{font.measure_text(*line_it, int(max_w))};
+		if (measure.text != std::string_view{*line_it}) {
+			usize last_ws{std::string_view{line_it->begin(), line_it->begin() + measure.text.size() + 1}.find_last_of(" \t")};
 			if (last_ws != std::string_view::npos) {
-				it = std::prev(lines.emplace(std::next(it), it->begin() + last_ws + 1, it->end()));
-				*it = it->substr(0, last_ws);
+				line_it = std::prev(lines.emplace(std::next(line_it), line_it->begin() + last_ws + 1, line_it->end()));
+				*line_it = line_it->substr(0, last_ws);
 			}
 			else {
-				it = std::prev(lines.emplace(std::next(it), it->begin() + measure.text.size(), it->end()));
-				*it = it->substr(0, measure.text.size());
+				line_it = std::prev(lines.emplace(std::next(line_it), line_it->begin() + measure.text.size(), line_it->end()));
+				*line_it = line_it->substr(0, measure.text.size());
 			}
 		}
 	}

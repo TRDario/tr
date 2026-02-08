@@ -29,9 +29,9 @@ void tr::benchmark::stop()
 		atomic_thread_fence(std::memory_order::relaxed);
 		const std::chrono::steady_clock::time_point now{std::chrono::steady_clock::now()};
 		m_measurements.emplace_back(m_start, now - m_start);
-		const auto it{std::ranges::upper_bound(m_measurements, now - max_measurement_age, std::less{}, &measurement::start)};
-		if (it != m_measurements.end()) {
-			m_measurements.erase(m_measurements.begin(), it);
+		const auto erase_end_it{std::ranges::upper_bound(m_measurements, now - max_measurement_age, std::less{}, &measurement::start)};
+		if (erase_end_it != m_measurements.end()) {
+			m_measurements.erase(m_measurements.begin(), erase_end_it);
 		}
 		m_start = not_started;
 		atomic_thread_fence(std::memory_order::relaxed);

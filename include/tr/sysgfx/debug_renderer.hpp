@@ -170,7 +170,7 @@ namespace tr::gfx {
 			// Writes a character.
 			void write_character(char chr);
 			// Handles a control sequence.
-			void handle_control_sequence(std::string_view::iterator& it, std::string_view::iterator end);
+			void handle_control_sequence(std::string_view::iterator& control_it, std::string_view::iterator end);
 		};
 
 		// The bindings of the debug renderer vertex format.

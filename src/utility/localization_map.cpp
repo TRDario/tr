@@ -72,29 +72,29 @@ bool tr::localization_map::parser::parse_delimiter()
 bool tr::localization_map::parser::process_escape_sequences(std::string& out, std::string_view raw)
 {
 	out.reserve(raw.size());
-	for (std::string_view::iterator it = raw.begin(); it != raw.end(); ++it) {
-		if (*it == '\\') {
-			if (++it == raw.end()) {
+	for (std::string_view::iterator chr_it = raw.begin(); chr_it != raw.end(); ++chr_it) {
+		if (*chr_it == '\\') {
+			if (++chr_it == raw.end()) {
 				m_errors.emplace_back(TR_FMT::format("line {}: Unterminated escape sequence in value string.", m_line));
 				return false;
 			}
 
-			if (*it == 'n') {
+			if (*chr_it == 'n') {
 				out.push_back('\n');
 			}
-			else if (*it == '\\') {
+			else if (*chr_it == '\\') {
 				out.push_back('\\');
 			}
-			else if (*it == '"') {
+			else if (*chr_it == '"') {
 				out.push_back('"');
 			}
 			else {
-				m_errors.emplace_back(TR_FMT::format("line {}: Unknown escape sequence \\{} in value string.", m_line, *it));
+				m_errors.emplace_back(TR_FMT::format("line {}: Unknown escape sequence \\{} in value string.", m_line, *chr_it));
 				return false;
 			}
 		}
 		else {
-			out.push_back(*it);
+			out.push_back(*chr_it);
 		}
 	}
 	out.shrink_to_fit();

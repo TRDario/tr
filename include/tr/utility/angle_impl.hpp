@@ -181,12 +181,12 @@ inline float tr::angle::tan() const
 
 template <class ParseContext> constexpr auto TR_FMT::formatter<tr::angle>::parse(ParseContext& ctx)
 {
-	auto it = ctx.begin();
-	if (it == ctx.end() || (*it != 'r' && *it != 'd' && *it != 't')) {
+	auto ctx_it = ctx.begin();
+	if (ctx_it == ctx.end() || (*ctx_it != 'r' && *ctx_it != 'd' && *ctx_it != 't')) {
 		throw TR_FMT::format_error{"One of {r, d, t} must start an angle formatting specification."};
 	}
 
-	switch (*it) {
+	switch (*ctx_it) {
 	case 'r':
 		m_unit = unit::radians;
 		break;
@@ -198,7 +198,7 @@ template <class ParseContext> constexpr auto TR_FMT::formatter<tr::angle>::parse
 		break;
 	}
 
-	ctx.advance_to(it + 1);
+	ctx.advance_to(ctx_it + 1);
 	return formatter<float>::parse(ctx);
 }
 

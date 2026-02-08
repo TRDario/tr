@@ -137,19 +137,19 @@ void tr::gfx::shader_base::find_outputs()
 // Asserts that a shader uniform exists and is of the correct type.
 #define TR_ASSERT_SHADER_UNIFORM(target_type)                                                                                              \
 	do {                                                                                                                                   \
-		const auto it{m_uniforms.find(index)};                                                                                             \
-		TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}' in shader '{}'.", index, label());                 \
-		TR_ASSERT(it->second.type == as_glsl_type<target_type> && it->second.array_size == 1,                                              \
-				  "Tried to set uniform with signature '{}' in shader '{}' with a value of type '{}'.", it->second, label(), label(),      \
-				  as_glsl_type<target_type>);                                                                                              \
+		const auto uniform_it{m_uniforms.find(index)};                                                                                     \
+		TR_ASSERT(uniform_it != m_uniforms.end(), "Tried to set uniform with invalid index '{}' in shader '{}'.", index, label());         \
+		TR_ASSERT(uniform_it->second.type == as_glsl_type<target_type> && uniform_it->second.array_size == 1,                              \
+				  "Tried to set uniform with signature '{}' in shader '{}' with a value of type '{}'.", uniform_it->second, label(),       \
+				  label(), as_glsl_type<target_type>);                                                                                     \
 	} while (0)
 // Asserts that a shader array uniform exists and is of the correct type.
 #define TR_ASSERT_SHADER_ARRAY_UNIFORM(target_type)                                                                                        \
 	do {                                                                                                                                   \
-		const auto it{m_uniforms.find(index)};                                                                                             \
-		TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}' in shader '{}'.", index, label());                 \
-		TR_ASSERT(it->second.type == as_glsl_type<target_type> && it->second.array_size == int(value.size()),                              \
-				  "Tried to set uniform with signature '{}' in shader '{}' with a value of type '{}[{}]'.", it->second, label(),           \
+		const auto uniform_it{m_uniforms.find(index)};                                                                                     \
+		TR_ASSERT(uniform_it != m_uniforms.end(), "Tried to set uniform with invalid index '{}' in shader '{}'.", index, label());         \
+		TR_ASSERT(uniform_it->second.type == as_glsl_type<target_type> && uniform_it->second.array_size == int(value.size()),              \
+				  "Tried to set uniform with signature '{}' in shader '{}' with a value of type '{}[{}]'.", uniform_it->second, label(),   \
 				  as_glsl_type<target_type>, value.size());                                                                                \
 	} while (0)
 
@@ -430,10 +430,10 @@ void tr::gfx::shader_base::set_uniform(int index, std::span<const glm::mat4x3> v
 void tr::gfx::shader_base::set_uniform(int index, texture_ref texture)
 {
 #ifdef TR_ENABLE_GL_CHECKS
-	const auto it{m_uniforms.find(index)};
-	TR_ASSERT(it != m_uniforms.end(), "Tried to set uniform with invalid index '{}' in shader '{}'.", index, label());
-	TR_ASSERT(it->second.type == glsl_type::sampler2D && it->second.array_size == 1,
-			  "Tried to set uniform with signature '{}' in shader '{}' with a value of type 'sampler2D'.", it->second, label());
+	const auto uniform_it{m_uniforms.find(index)};
+	TR_ASSERT(uniform_it != m_uniforms.end(), "Tried to set uniform with invalid index '{}' in shader '{}'.", index, label());
+	TR_ASSERT(uniform_it->second.type == glsl_type::sampler2D && uniform_it->second.array_size == 1,
+			  "Tried to set uniform with signature '{}' in shader '{}' with a value of type 'sampler2D'.", uniform_it->second, label());
 #endif
 
 	auto unit_it{m_texture_units.find(index)};

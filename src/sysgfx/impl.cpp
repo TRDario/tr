@@ -212,9 +212,9 @@ unsigned int tr::gfx::context::allocate_texture_unit()
 	TR_ASSERT(std::ranges::find(m_texture_units, std::optional<texture_ref>{}) != m_texture_units.end(),
 			  "Ran out of texture units for shaders.");
 
-	auto it{std::ranges::find(m_texture_units, std::optional<texture_ref>{})};
-	*it = texture_ref{};
-	return it - m_texture_units.begin();
+	auto free_unit_it{std::ranges::find(m_texture_units, std::optional<texture_ref>{})};
+	*free_unit_it = texture_ref{};
+	return std::distance(m_texture_units.begin(), free_unit_it);
 }
 
 void tr::gfx::context::set_texture_unit(unsigned int unit, texture_ref texture)
