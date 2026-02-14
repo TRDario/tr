@@ -188,7 +188,7 @@ float tr::audio::source::pitch() const
 
 void tr::audio::source_base::set_pitch(float pitch)
 {
-	TR_AL_CALL(alSourcef, m_id, AL_PITCH, std::clamp(pitch, 0.5f, 2.0f));
+	TR_AL_CALL(alSourcef, m_id, AL_PITCH, pitch);
 }
 
 void tr::audio::source::set_pitch(float pitch)
@@ -223,7 +223,7 @@ void tr::audio::source_base::set_gain(float gain)
 			gain *= g_gains[i];
 		}
 	}
-	TR_AL_CALL(alSourcef, m_id, AL_GAIN, std::max(gain, 0.0f));
+	TR_AL_CALL(alSourcef, m_id, AL_GAIN, gain);
 }
 
 void tr::audio::source::set_gain(float gain)
@@ -254,7 +254,7 @@ float tr::audio::source::max_dist() const
 
 void tr::audio::source_base::set_max_dist(float max_dist)
 {
-	TR_AL_CALL(alSourcef, m_id, AL_MAX_DISTANCE, std::max(max_dist, 0.0f));
+	TR_AL_CALL(alSourcef, m_id, AL_MAX_DISTANCE, max_dist);
 }
 
 void tr::audio::source::set_max_dist(float max_dist)
@@ -285,7 +285,7 @@ float tr::audio::source::rolloff() const
 
 void tr::audio::source_base::set_rolloff(float rolloff)
 {
-	TR_AL_CALL(alSourcef, m_id, AL_ROLLOFF_FACTOR, std::max(rolloff, 0.0f));
+	TR_AL_CALL(alSourcef, m_id, AL_ROLLOFF_FACTOR, rolloff);
 }
 
 void tr::audio::source::set_rolloff(float rolloff)
@@ -316,7 +316,7 @@ float tr::audio::source::ref_dist() const
 
 void tr::audio::source_base::set_ref_dist(float ref_dist)
 {
-	TR_AL_CALL(alSourcef, m_id, AL_REFERENCE_DISTANCE, std::max(ref_dist, 0.0f));
+	TR_AL_CALL(alSourcef, m_id, AL_REFERENCE_DISTANCE, ref_dist);
 }
 
 void tr::audio::source::set_ref_dist(float ref_dist)
@@ -347,7 +347,7 @@ float tr::audio::source::out_cone_gain() const
 
 void tr::audio::source_base::set_out_cone_gain(float out_cone_gain)
 {
-	TR_AL_CALL(alSourcef, m_id, AL_CONE_OUTER_GAIN, std::clamp(out_cone_gain, 0.0f, 1.0f));
+	TR_AL_CALL(alSourcef, m_id, AL_CONE_OUTER_GAIN, out_cone_gain);
 }
 
 void tr::audio::source::set_out_cone_gain(float out_cone_gain)
