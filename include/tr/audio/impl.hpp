@@ -117,46 +117,46 @@ namespace tr::audio {
 		void set_gain(float gain);
 
 		// Gets the distance where the source will no longer be attenuated any further.
-		float max_dist() const;
+		float max_distance() const;
 		// Sets the distance where the source will no longer be attenuated any further.
-		void set_max_dist(float max_dist);
+		void set_max_distance(float distance);
 
 		// Gets the distance rolloff factor of the source.
-		float rolloff() const;
+		float rolloff_factor() const;
 		// Sets the distance rolloff factor of the source.
-		void set_rolloff(float rolloff);
+		void set_rolloff_factor(float rolloff);
 
 		// Gets the reference distance of the source, where there is no attenuation.
-		float ref_dist() const;
+		float reference_distance() const;
 		// Sets the reference distance of the source, where there is no attenuation.
-		void set_ref_dist(float ref_dist);
+		void set_reference_distance(float distance);
 
 		// Gets the gain multiplier applied when the listener is outside the source's outer cone angle.
-		float out_cone_gain() const;
+		float gain_outside_cone() const;
 		// Sets the gain multiplier applied when the listener is outside the source's outer cone angle.
-		void set_out_cone_gain(float out_gain);
+		void set_gain_outside_cone(float gain);
 
 		// Gets the width of the inner cone of the source (where no direction attenuation is done).
-		angle in_cone_w() const;
+		angle inner_cone_width() const;
 		// Gets the width of the outer cone of the source (where direction attenuation is done).
-		angle out_cone_w() const;
+		angle outer_cone_width() const;
 		// Sets the width of the inner and outer cones of the source.
-		void set_cone_w(angle in_cone_w, angle out_cone_w);
+		void set_cone_widths(angle inner, angle outer);
 
 		// Gets the position of the source.
-		glm::vec3 pos() const;
+		glm::vec3 position() const;
 		// Sets the position of the source.
-		void set_pos(const glm::vec3& pos);
+		void set_position(const glm::vec3& pos);
 
 		// Gets the velocity of the source.
-		glm::vec3 vel() const;
+		glm::vec3 velocity() const;
 		// Sets the velocity of the source.
-		void set_vel(const glm::vec3& vel);
+		void set_velocity(const glm::vec3& vel);
 
 		// Gets the direction of the source cone.
-		glm::vec3 dir() const;
+		glm::vec3 direction() const;
 		// Sets the direction of the source cone.
-		void set_dir(const glm::vec3& dir);
+		void set_direction(const glm::vec3& dir);
 
 		// Gets the origin of the source's position.
 		origin origin() const;

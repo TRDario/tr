@@ -131,62 +131,62 @@ namespace tr::audio {
 		void set_gain(float gain, fsecs time);
 
 		// Gets the distance where the source will no longer be attenuated any further.
-		float max_dist() const;
+		float max_distance() const;
 		// Sets the distance where the source will no longer be attenuated any further.
-		void set_max_dist(float max_dist);
+		void set_max_distance(float distance);
 		// Sets the distance where the source will no longer be attenuated any further over time.
-		void set_max_dist(float max_dist, fsecs time);
+		void set_max_distance(float distance, fsecs time);
 
 		// Gets the distance rolloff factor of the source.
-		float rolloff() const;
+		float rolloff_factor() const;
 		// Sets the distance rolloff factor of the source.
-		void set_rolloff(float rolloff);
+		void set_rolloff_factor(float rolloff);
 		// Sets the distance rolloff factor of the source over time.
-		void set_rolloff(float rolloff, fsecs time);
+		void set_rolloff_factor(float rolloff, fsecs time);
 
 		// Gets the reference distance of the source, where there is no attenuation.
-		float ref_dist() const;
+		float reference_distance() const;
 		// Sets the reference distance of the source, where there is no attenuation.
-		void set_ref_dist(float ref_dist);
+		void set_reference_distance(float distance);
 		// Sets the reference distance of the source, where there is no attenuation over time.
-		void set_ref_dist(float ref_dist, fsecs time);
+		void set_reference_distance(float distance, fsecs time);
 
 		// Gets the gain multiplier applied when the listener is outside the source's outer cone angle.
-		float out_cone_gain() const;
+		float gain_outside_cone() const;
 		// Sets the gain multiplier applied when the listener is outside the source's outer cone angle.
-		void set_out_cone_gain(float out_gain);
+		void set_gain_outside_cone(float gain);
 		// Sets the gain multiplier applied when the listener is outside the source's outer cone angle over time.
-		void set_out_cone_gain(float out_gain, fsecs time);
+		void set_gain_outside_cone(float gain, fsecs time);
 
 		// Gets the width of the inner cone of the source (where no direction attenuation is done).
-		angle in_cone_w() const;
+		angle inner_cone_width() const;
 		// Gets the width of the outer cone of the source (where direction attenuation is done).
-		angle out_cone_w() const;
+		angle outer_cone_width() const;
 		// Sets the width of the inner and outer cones of the source.
-		void set_cone_w(angle in_cone_w, angle out_cone_w);
+		void set_cone_widths(angle inner, angle outer);
 		// Sets the width of the inner and outer cones of the source over time.
-		void set_cone_w(angle in_cone_w, angle out_cone_w, fsecs time);
+		void set_cone_widths(angle inner, angle outer, fsecs time);
 
 		// Gets the position of the source.
-		glm::vec3 pos() const;
+		glm::vec3 position() const;
 		// Sets the position of the source.
-		void set_pos(const glm::vec3& pos);
+		void set_position(const glm::vec3& pos);
 		// Sets the position of the source over time.
-		void set_pos(const glm::vec3& pos, fsecs time);
+		void set_position(const glm::vec3& pos, fsecs time);
 
 		// Gets the velocity of the source.
-		glm::vec3 vel() const;
+		glm::vec3 velocity() const;
 		// Sets the velocity of the source.
-		void set_vel(const glm::vec3& vel);
+		void set_velocity(const glm::vec3& vel);
 		// Sets the velocity of the source over time.
-		void set_vel(const glm::vec3& vel, fsecs time);
+		void set_velocity(const glm::vec3& vel, fsecs time);
 
 		// Gets the direction of the source cone.
-		glm::vec3 dir() const;
+		glm::vec3 direction() const;
 		// Sets the direction of the source cone.
-		void set_dir(const glm::vec3& dir);
+		void set_direction(const glm::vec3& dir);
 		// Sets the direction of the source cone over time.
-		void set_dir(const glm::vec3& dir, fsecs time);
+		void set_direction(const glm::vec3& dir, fsecs time);
 
 		// Gets the origin of the source's position.
 		origin origin() const;
