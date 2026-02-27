@@ -198,6 +198,13 @@ namespace tr {
 		static void write_to_stream(std::ostream& os, const std::string& in);
 		static std::span<std::byte> write_to_span(std::span<std::byte> span, const std::string& in);
 	};
+	// Array binary writer.
+	template <class T, usize S> struct binary_writer<std::array<T, S>> {
+		static void write_to_stream(std::ostream& os, const std::array<T, S>& in)
+			requires(stream_binary_writable<T>);
+		static std::span<std::byte> write_to_span(std::span<std::byte> span, const std::array<T, S>& in)
+			requires(span_binary_writable<T>);
+	};
 	// Vector binary writer.
 	template <class T> struct binary_writer<std::vector<T>> {
 		static void write_to_stream(std::ostream& os, const std::vector<T>& in)

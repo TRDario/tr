@@ -330,6 +330,20 @@ std::span<std::byte> tr::binary_writer<std::pair<A, B>>::write_to_span(std::span
 	return binary_write(span, in.second);
 }
 
+template <class T, tr::usize S>
+void tr::binary_writer<std::array<T, S>>::write_to_stream(std::ostream& os, const std::array<T, S>& in)
+	requires(stream_binary_writable<T>)
+{
+	binary_write(os, std::span{in});
+}
+
+template <class T, tr::usize S>
+std::span<std::byte> tr::binary_writer<std::array<T, S>>::write_to_span(std::span<std::byte> span, const std::array<T, S>& in)
+	requires(span_binary_writable<T>)
+{
+	return binary_write(span, std::span{in});
+}
+
 template <class T>
 void tr::binary_writer<std::vector<T>>::write_to_stream(std::ostream& os, const std::vector<T>& in)
 	requires(stream_binary_writable<T>)
