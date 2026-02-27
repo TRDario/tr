@@ -334,14 +334,14 @@ template <class T, tr::usize S>
 void tr::binary_writer<std::array<T, S>>::write_to_stream(std::ostream& os, const std::array<T, S>& in)
 	requires(stream_binary_writable<T>)
 {
-	binary_write(os, std::span<T>{in});
+	binary_write(os, std::span<const T>{in});
 }
 
 template <class T, tr::usize S>
 std::span<std::byte> tr::binary_writer<std::array<T, S>>::write_to_span(std::span<std::byte> span, const std::array<T, S>& in)
 	requires(span_binary_writable<T>)
 {
-	return binary_write(span, std::span<T>{in});
+	return binary_write(span, std::span<const T>{in});
 }
 
 template <class T>
