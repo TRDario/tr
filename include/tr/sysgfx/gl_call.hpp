@@ -19,12 +19,14 @@
 ///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
 
 #ifdef TR_ENABLE_ASSERTS
+#include "impl.hpp"
 namespace tr::gfx {
 	// Validates an OpenGL call and kills the application if it fails.
 	void validate_gl_call(const char* file, int line, const char* function);
 	// Validates an OpenGL call and kills the application if it fails.
 	auto validate_returning_gl_call(const char* file, int line, const char* function, auto value)
 	{
+		TR_ASSERT(tr::sys::g_window.on_same_thread(), "Tried to call {} on a thread other than the main thread.", function);
 		validate_gl_call(file, line, function);
 		return value;
 	}
@@ -36,11 +38,7 @@ namespace tr::gfx {
 		function(__VA_ARGS__);                                                                                                             \
 		tr::gfx::validate_gl_call(file, line, #function);                                                                                  \
 	} while (0)
-#define TR_RET_GL_CALL_IMPL(file, line, function, ...)                                                                                     \
-	do {                                                                                                                                   \
-		TR_ASSERT(tr::sys::g_window.on_same_thread(), "Tried to call " #function " on a thread other than the main thread.");              \
-		tr::gfx::validate_returning_gl_call(file, line, #function, function(__VA_ARGS__))                                                  \
-	} while (0) {}
+#define TR_RET_GL_CALL_IMPL(file, line, function, ...) tr::gfx::validate_returning_gl_call(file, line, #function, function(__VA_ARGS__))
 #define TR_GL_CALL(function, ...) TR_GL_CALL_IMPL(TR_FILENAME, __LINE__, function, __VA_ARGS__)
 #define TR_RET_GL_CALL(function, ...) TR_RET_GL_CALL_IMPL(TR_FILENAME, __LINE__, function, __VA_ARGS__)
 #else
