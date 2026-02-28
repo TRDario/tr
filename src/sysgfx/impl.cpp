@@ -334,6 +334,7 @@ bool tr::sys::window::open(cstring_view title, glm::ivec2 size, unsigned long fl
 	if (min_size != not_resizable) {
 		SDL_SetWindowMinimumSize(m_ptr.get(), min_size.x, min_size.y);
 	}
+	m_thread_id = std::this_thread::get_id();
 	m_context.create();
 	return true;
 }
@@ -357,6 +358,11 @@ void tr::sys::window::deleter::operator()(SDL_Window* window) const
 bool tr::sys::window::is_open() const
 {
 	return m_ptr != nullptr;
+}
+
+bool tr::sys::window::on_same_thread() const
+{
+	return std::this_thread::get_id() == m_thread_id;
 }
 
 SDL_Window* tr::sys::window::ptr()

@@ -116,6 +116,8 @@ namespace tr::sys {
 
 		// Gets whether the window is open.
 		bool is_open() const;
+		// Returns true if run on the same thread as the window/graphics context, false otherwise.
+		bool on_same_thread() const;
 		// Gets the base SDL window pointer.
 		SDL_Window* ptr();
 		// Gets the graphical context.
@@ -135,6 +137,8 @@ namespace tr::sys {
 
 		// Pointer to the SDL window.
 		std::unique_ptr<SDL_Window, deleter> m_ptr{nullptr};
+		// ID of the window/graphics thread.
+		std::thread::id m_thread_id;
 		// Graphical context.
 		gfx::context m_context{};
 #ifdef _WIN32
