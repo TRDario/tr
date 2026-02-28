@@ -7,10 +7,6 @@
 // Shaders can be constructed directly from GLSL source code, or loaded from a file:                                                     //
 //     - tr::gfx::vertex_shader{src} -> constructs a vertex shader from an embedded source code string                                   //
 //     - tr::gfx::load_vertex_shader("source.vert") -> loads a vertex shader from a source file                                          //
-//     - tr::gfx::tessellation_control_shader{src} -> constructs a tessellation control shader from an embedded source code string       //
-//     - tr::gfx::load_tessellation_control_shader("source.tesc") -> loads a tessellation control shader from a source file              //
-//     - tr::gfx::tessellation_evaluation_shader{src} -> constructs a tessellation evaluation shader from an embedded source code string //
-//     - tr::gfx::load_tessellation_evaluation_shader("source.tese") -> loads a tessellation evaluation shader from a source file        //
 //     - tr::gfx::fragment_shader{src} -> constructs a fragment shader from an embedded source code string                               //
 //     - tr::gfx::load_fragment_shader("source.frag") -> loads a fragment shader from a source file                                      //
 //                                                                                                                                       //
@@ -228,28 +224,6 @@ namespace tr::gfx {
 	// Loads a vertex shader from file.
 	// May throw: shader_load_error.
 	vertex_shader load_vertex_shader(const std::filesystem::path& path);
-
-	// GPU tessellation control shader program.
-	class tessellation_control_shader : public shader_base {
-	  public:
-		// Creates a tessellation control shader from source code.
-		// May throw: shader_load_error.
-		explicit tessellation_control_shader(cstring_view source);
-	};
-	// Loads a tessellation control shader from file.
-	// May throw: shader_load_error.
-	tessellation_control_shader load_tessellation_control_shader(const std::filesystem::path& path);
-
-	// GPU tessellation evaluation shader program.
-	class tessellation_evaluation_shader : public shader_base {
-	  public:
-		// Creates a tessellation evaluation shader from source code.
-		// May throw: shader_load_error.
-		explicit tessellation_evaluation_shader(cstring_view source);
-	};
-	// Loads a tessellation evaluation shader from file.
-	// May throw: shader_load_error.
-	tessellation_evaluation_shader load_tessellation_evaluation_shader(const std::filesystem::path& path);
 
 	// GPU fragment shader program.
 	class fragment_shader : public shader_base {
