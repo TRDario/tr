@@ -85,28 +85,28 @@ void tr::audio::command::execute()
 		m_src->set_gain(v.num);
 		break;
 	case type::max_distance:
-		m_src->set_max_dist(v.num);
+		m_src->set_max_distance(v.num);
 		break;
 	case type::rolloff:
-		m_src->set_rolloff(v.num);
+		m_src->set_rolloff_factor(v.num);
 		break;
 	case type::reference_distance:
-		m_src->set_ref_dist(v.num);
+		m_src->set_reference_distance(v.num);
 		break;
 	case type::out_cone_gain:
-		m_src->set_out_cone_gain(v.num);
+		m_src->set_gain_outside_cone(v.num);
 		break;
 	case type::cone_width:
-		m_src->set_cone_w(rads(v.vec2.x), rads(v.vec2.y));
+		m_src->set_cone_widths(rads(v.vec2.x), rads(v.vec2.y));
 		break;
 	case type::position:
-		m_src->set_pos(v.vec3);
+		m_src->set_position(v.vec3);
 		break;
 	case type::velocity:
-		m_src->set_vel(v.vec3);
+		m_src->set_velocity(v.vec3);
 		break;
 	case type::direction:
-		m_src->set_dir(v.vec3);
+		m_src->set_direction(v.vec3);
 		break;
 	}
 }
