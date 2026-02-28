@@ -26,6 +26,14 @@ template <tr::binary_readable T, tr::usize S> void tr::read_binary(std::istream&
 	}
 }
 
+template <class... Ts>
+	requires(((tr::lvalue_reference<Ts> && tr::binary_readable<std::remove_reference_t<Ts>>) || tr::specialization_of_tv<Ts, std::span>) &&
+			 ...)
+void tr::read_binary(std::istream& is, Ts&&... out)
+{
+	(read_binary(is, out), ...);
+}
+
 template <tr::binary_constructible T> T tr::read_binary(std::istream& is)
 {
 	T out;
@@ -62,6 +70,11 @@ template <tr::binary_writable T> void tr::write_binary(std::ostream& os, const T
 	binary_writer<std::remove_cv_t<T>>{}(os, in);
 }
 
+template <tr::binary_writable... Ts> void tr::write_binary(std::ostream& os, const Ts&... in)
+{
+	(write_binary(os, in), ...);
+}
+
 ////////////////////////////////////////////////////// BINARY READER SPECIALIZATIONS //////////////////////////////////////////////////////
 
 template <tr::standard_layout T> void tr::raw_binary_reader<T>::operator()(std::istream& is, T& out) const
@@ -78,8 +91,7 @@ void tr::binary_reader<std::array<T, S>>::operator()(std::istream& is, std::arra
 template <tr::binary_readable A, tr::binary_readable B>
 void tr::binary_reader<std::pair<A, B>>::operator()(std::istream& is, std::pair<A, B>& out) const
 {
-	read_binary(is, out.first);
-	read_binary(is, out.second);
+	read_binary(is, out.first, out.second);
 }
 
 template <tr::binary_constructible T> void tr::binary_reader<std::vector<T>>::operator()(std::istream& is, std::vector<T>& out) const
@@ -162,14 +174,12 @@ void tr::binary_writer<std::span<T, S>>::operator()(std::ostream& os, const std:
 template <tr::binary_writable A, tr::binary_writable B>
 void tr::binary_writer<std::pair<A, B>>::operator()(std::ostream& os, const std::pair<A, B> in) const
 {
-	write_binary(os, in.first);
-	write_binary(os, in.second);
+	write_binary(os, in.first, in.second);
 }
 
 template <tr::binary_writable T> void tr::binary_writer<std::vector<T>>::operator()(std::ostream& os, const std::vector<T>& in) const
 {
-	write_binary(os, u32(in.size()));
-	write_binary(os, std::span{in});
+	write_binary(os, u32(in.size()), std::span{in});
 }
 
 template <tr::binary_writable K, class... Args>
@@ -186,8 +196,7 @@ void tr::binary_writer<std::map<K, V, Args...>>::operator()(std::ostream& os, co
 {
 	write_binary(os, u32(in.size()));
 	for (const auto& [k, v] : in) {
-		write_binary(os, k);
-		write_binary(os, v);
+		write_binary(os, k, v);
 	}
 }
 
@@ -205,7 +214,6 @@ void tr::binary_writer<std::unordered_map<K, V, Args...>>::operator()(std::ostre
 {
 	write_binary(os, u32(in.size()));
 	for (const auto& [k, v] : in) {
-		write_binary(os, k);
-		write_binary(os, v);
+		write_binary(os, k, v);
 	}
 }

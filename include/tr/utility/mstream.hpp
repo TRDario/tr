@@ -5,8 +5,8 @@
 // tr::memorybuf is provided as a memory-backed stream buffer, while the mstream family (imstream, omstream, mstream) is provided as a   //
 // set of streams using said memory buffer. This allows traversing arbitrary buffers as if they were streams (for example with           //
 // tr::write_binary or tr::read_binary):                                                                                                 //
-//     - tr::imstream in{buffer}; tr::read_binary(in, x); tr::read_binary(in, y) -> reads the binary data of x and y from the buffer     //
-//     - tr::omstream out{buffer}; tr::write_binary(out, x); tr::write_binary(out, y) -> writes the binary data of x and y to the buffer //
+//     - tr::imstream in{buffer}; tr::read_binary(in, x, y); -> reads the binary data of x and y from the buffer                         //
+//     - tr::omstream out{buffer}; tr::write_binary(out, x, y); -> writes the binary data of x and y to the buffer                       //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

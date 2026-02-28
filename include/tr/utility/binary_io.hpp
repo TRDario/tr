@@ -2,9 +2,11 @@
 //                                                                                                                                       //
 // Provides an interface for reading and writing binary data.                                                                            //
 //                                                                                                                                       //
-// Binary data can be read to an output variable from a stream using tr::read_binary. If the output type is default-constructible, a     //
-// variant of the function may be used that returns the read value. A special reading operation exists for checking for magic bytes:     //
+// Binary data can be read to one or multiple output variables from a stream using tr::read_binary. If the output type is                //
+// default-constructible, a variant of the function may be used that returns the read value. A special reading operation exists for      //
+// checking for magic bytes:                                                                                                             //
 //     - int x; tr::read_binary(is, x) -> reads an integer value from 'is' into x                                                        //
+//     - int x; char y; tr::read_binary(is, x, y) -> reads an integer to 'x' and a character into 'y' from 'is'                          //
 //     - tr::read_binary<int>(is) -> reads an integer value from 'is'                                                                    //
 //     - tr::read_binary_magic<"tr">(is) -> reads 2 bytes from 'is' and returns true if they match 'tr', and false otherwise             //
 //                                                                                                                                       //
@@ -14,7 +16,7 @@
 //     - tr::flush_binary(is) -> extracts all data from 'is' into a new vector                                                           //
 //                                                                                                                                       //
 // Binary data can be written to an output stream using tr::write_binary:                                                                //
-//     - tr::write_binary(os, 50) -> writes the bytes of integer value '50' to 'os'                                                      //
+//     - tr::write_binary(os, 50, 1.0f) -> writes the bytes of integer value '50' and float '1.0f' to 'os'                               //
 //                                                                                                                                       //
 // To enable binary reading and/or writing for a custom type, the structs tr::binary_reader and tr::binary_writer respectively must be   //
 // specialized, tr::binary_reader with operator()(std::istream&, T&) and tr::binary_writer with operator()(std::ostream&, const T&).     //
@@ -77,6 +79,10 @@ namespace tr {
 	// Reads binary data from a stream.
 	template <binary_readable T, usize S> void read_binary(std::istream& is, std::span<T, S> out);
 	// Reads binary data from a stream.
+	template <class... Ts>
+		requires(((lvalue_reference<Ts> && binary_readable<std::remove_reference_t<Ts>>) || specialization_of_tv<Ts, std::span>) && ...)
+	void read_binary(std::istream& is, Ts&&... out);
+	// Reads binary data from a stream.
 	template <binary_constructible T> T read_binary(std::istream& is);
 	// Checks for magic bytes from a stream.
 	template <string_literal Literal> bool read_binary_magic(std::istream& is);
@@ -88,6 +94,8 @@ namespace tr {
 
 	// Writes binary data to a stream.
 	template <binary_writable T> void write_binary(std::ostream& os, const T& in);
+	// Writes binary data to a stream.
+	template <binary_writable... Ts> void write_binary(std::ostream& os, const Ts&... in);
 } // namespace tr
 
 ///////////////////////////////////////////////////////////// SPECIALIZATIONS /////////////////////////////////////////////////////////////

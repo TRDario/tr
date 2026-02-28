@@ -178,24 +178,20 @@ std::size_t std::hash<tr::sys::key_chord>::operator()(tr::sys::key_chord chord) 
 
 void tr::binary_reader<tr::sys::scan_chord>::operator()(std::istream& is, tr::sys::scan_chord& out) const
 {
-	read_binary(is, out.mods);
-	read_binary(is, out.scan);
+	read_binary(is, out.mods, out.scan);
 }
 
 void tr::binary_writer<tr::sys::scan_chord>::operator()(std::ostream& os, const tr::sys::scan_chord& in) const
 {
-	write_binary(os, in.mods);
-	write_binary(os, in.scan);
+	write_binary(os, in.mods, in.scan);
 }
 
 void tr::binary_reader<tr::sys::key_chord>::operator()(std::istream& is, tr::sys::key_chord& out) const
 {
-	read_binary(is, out.mods);
-	read_binary(is, out.key);
+	read_binary(is, out.mods, out.key);
 }
 
 void tr::binary_writer<tr::sys::key_chord>::operator()(std::ostream& os, const tr::sys::key_chord& in) const
 {
-	write_binary(os, in.mods);
-	write_binary(os, in.key);
+	write_binary(os, in.mods, in.key);
 }
