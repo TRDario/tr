@@ -325,13 +325,13 @@ namespace tr::audio {
 		// The audio mutex.
 		std::mutex m_mutex;
 		// A list of active audio commands.
-		std::list<command> m_commands;
+		std::vector<command> m_commands;
 		// Map holding the handles to extant audio buffer and whether they're cullable.
 		std::unordered_map<owning_buffer, bool, owning_buffer::hasher, std::equal_to<>> m_buffers;
 		// The maximum allowed number of audio sources.
 		usize m_max_sources;
 		// A list of active audio sources.
-		std::list<std::shared_ptr<owning_source>> m_sources;
+		std::vector<std::shared_ptr<owning_source>> m_sources;
 		// The gain multipliers of audio classes.
 		std::array<float, 32> m_gains;
 

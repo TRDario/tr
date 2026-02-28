@@ -265,7 +265,7 @@ void tr::audio::manager::thread_fn(std::stop_token stoken)
 				return cullable && std::ranges::none_of(m_sources, [&](auto& s) { return s->buffer() == buffer; });
 			});
 
-			m_sources.remove_if([](const auto& ptr) { return ptr.use_count() == 1 && ptr->state() != state::playing; });
+			std::erase_if(m_sources, [](const auto& ptr) { return ptr.use_count() == 1 && ptr->state() != state::playing; });
 			for (owning_source& source : deref(std::views::filter(m_sources, [](const auto& s) { return s->m_stream.has_value(); }))) {
 				buffered_stream& stream{*source.m_stream};
 
@@ -287,7 +287,7 @@ void tr::audio::manager::thread_fn(std::stop_token stoken)
 				}
 			}
 
-			m_commands.remove_if([](command& c) {
+			std::erase_if(m_commands, [](command& c) {
 				c.execute();
 				return c.done();
 			});
