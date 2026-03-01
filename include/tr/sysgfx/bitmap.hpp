@@ -73,6 +73,7 @@ namespace tr {
 	// Bitmap/texture pixel format.
 	enum class pixel_format {
 		r8 = 318769153,
+		index8 = r8,
 		rgb_p332 = 336660481,
 		xrgb_p4444 = 353504258,
 		xbgr_p4444 = 357698562,
@@ -339,7 +340,7 @@ namespace tr {
 	bitmap load_embedded_bitmap(std::span<const std::byte> data);
 	// Loads an embedded bitmap file.
 	template <std::ranges::contiguous_range R> bitmap load_embedded_bitmap(R&& range);
-	// Loads a bitmap from file (BMP/PNG/JPG/QOI).
+	// Loads a bitmap from file (BMP/PNG/QOI).
 	// May throw: file_not_found, bitmap_load_error.
 	bitmap load_bitmap_file(const std::filesystem::path& path);
 } // namespace tr
