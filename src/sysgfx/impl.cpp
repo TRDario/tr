@@ -370,6 +370,11 @@ SDL_Window* tr::sys::window::ptr()
 	return m_ptr.get();
 }
 
+tr::gfx::context& tr::sys::window::gfx_context()
+{
+	return m_context;
+}
+
 //
 
 #ifdef _WIN32
