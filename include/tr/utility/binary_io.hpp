@@ -52,6 +52,10 @@ namespace tr {
 	// Concept that denotes a type able to be read with read_binary.
 	template <class T>
 	concept binary_readable = requires(std::istream& is, T& out) { tr::binary_reader<std::remove_volatile_t<T>>{}(is, out); };
+	// Concept that denotes a type passable to the variadic read_binary: a span or a reference to a binary readable.
+	template <class T>
+	concept span_or_ref_to_binary_readable =
+		(lvalue_reference<T> && binary_readable<std::remove_reference_t<T>>) || specialization_of_tv<std::remove_cvref_t<T>, std::span>;
 	// Concept that denotes a type able to be constructed with read_binary.
 	template <class T>
 	concept binary_constructible = binary_readable<T> && std::default_initializable<T>;
@@ -79,8 +83,8 @@ namespace tr {
 	// Reads binary data from a stream.
 	template <binary_readable T, usize S> void read_binary(std::istream& is, std::span<T, S> out);
 	// Reads binary data from a stream.
-	template <class... Ts>
-		requires(((lvalue_reference<Ts> && binary_readable<std::remove_reference_t<Ts>>) || specialization_of_tv<Ts, std::span>) && ...)
+	template <span_or_ref_to_binary_readable... Ts>
+		requires(sizeof...(Ts) >= 2)
 	void read_binary(std::istream& is, Ts&&... out);
 	// Reads binary data from a stream.
 	template <binary_constructible T> T read_binary(std::istream& is);
@@ -95,7 +99,9 @@ namespace tr {
 	// Writes binary data to a stream.
 	template <binary_writable T> void write_binary(std::ostream& os, const T& in);
 	// Writes binary data to a stream.
-	template <binary_writable... Ts> void write_binary(std::ostream& os, const Ts&... in);
+	template <binary_writable... Ts>
+		requires(sizeof...(Ts) >= 2)
+	void write_binary(std::ostream& os, const Ts&... in);
 } // namespace tr
 
 ///////////////////////////////////////////////////////////// SPECIALIZATIONS /////////////////////////////////////////////////////////////
@@ -184,6 +190,10 @@ namespace tr {
 	// String binary writer.
 	template <> struct binary_writer<std::string> {
 		void operator()(std::ostream& os, const std::string& in) const;
+	};
+	// Array binary writer.
+	template <binary_writable T, usize S> struct binary_writer<std::array<T, S>> {
+		void operator()(std::ostream& os, const std::array<T, S>& in) const;
 	};
 	// Vector binary writer.
 	template <binary_writable T> struct binary_writer<std::vector<T>> {

@@ -26,9 +26,8 @@ template <tr::binary_readable T, tr::usize S> void tr::read_binary(std::istream&
 	}
 }
 
-template <class... Ts>
-	requires(((tr::lvalue_reference<Ts> && tr::binary_readable<std::remove_reference_t<Ts>>) || tr::specialization_of_tv<Ts, std::span>) &&
-			 ...)
+template <tr::span_or_ref_to_binary_readable... Ts>
+	requires(sizeof...(Ts) >= 2)
 void tr::read_binary(std::istream& is, Ts&&... out)
 {
 	(read_binary(is, out), ...);
@@ -70,7 +69,9 @@ template <tr::binary_writable T> void tr::write_binary(std::ostream& os, const T
 	binary_writer<std::remove_cv_t<T>>{}(os, in);
 }
 
-template <tr::binary_writable... Ts> void tr::write_binary(std::ostream& os, const Ts&... in)
+template <tr::binary_writable... Ts>
+	requires(sizeof...(Ts) >= 2)
+void tr::write_binary(std::ostream& os, const Ts&... in)
 {
 	(write_binary(os, in), ...);
 }
@@ -175,6 +176,12 @@ template <tr::binary_writable A, tr::binary_writable B>
 void tr::binary_writer<std::pair<A, B>>::operator()(std::ostream& os, const std::pair<A, B> in) const
 {
 	write_binary(os, in.first, in.second);
+}
+
+template <tr::binary_writable T, tr::usize S>
+void tr::binary_writer<std::array<T, S>>::operator()(std::ostream& os, const std::array<T, S>& in) const
+{
+	write_binary(os, std::span{in});
 }
 
 template <tr::binary_writable T> void tr::binary_writer<std::vector<T>>::operator()(std::ostream& os, const std::vector<T>& in) const
