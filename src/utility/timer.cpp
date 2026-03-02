@@ -45,9 +45,7 @@ void tr::timer::timer_loop(bool& active, duration interval, callback cb)
 
 		std::this_thread::sleep_for(interval);
 		while (active) {
-			atomic_thread_fence(std::memory_order::relaxed);
 			const std::chrono::steady_clock::time_point now{std::chrono::steady_clock::now()};
-			atomic_thread_fence(std::memory_order::relaxed);
 
 			const duration last_interval{now - prev};
 			total_error += last_interval - interval;

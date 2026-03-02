@@ -16,9 +16,7 @@ void tr::benchmark::start()
 {
 	TR_ASSERT(m_start == not_started, "Tried to start a benchmark measurement before stopping the previous one.");
 
-	atomic_thread_fence(std::memory_order::relaxed);
 	m_start = std::chrono::steady_clock::now();
-	atomic_thread_fence(std::memory_order::relaxed);
 }
 
 void tr::benchmark::stop()
@@ -26,7 +24,6 @@ void tr::benchmark::stop()
 	TR_ASSERT(m_start != not_started, "Tried to stop a benchmark measurement before starting one.");
 
 	try {
-		atomic_thread_fence(std::memory_order::relaxed);
 		const std::chrono::steady_clock::time_point now{std::chrono::steady_clock::now()};
 		m_measurements.emplace_back(m_start, now - m_start);
 		const auto erase_end_it{std::ranges::upper_bound(m_measurements, now - max_measurement_age, std::less{}, &measurement::start)};
@@ -34,7 +31,6 @@ void tr::benchmark::stop()
 			m_measurements.erase(m_measurements.begin(), erase_end_it);
 		}
 		m_start = not_started;
-		atomic_thread_fence(std::memory_order::relaxed);
 	}
 	catch (std::exception&) {
 		m_start = not_started;
