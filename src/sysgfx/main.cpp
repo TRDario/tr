@@ -5,10 +5,9 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #define SDL_MAIN_USE_CALLBACKS 1
-#include "../../include/tr/sysgfx/dialog.hpp"
-#include "../../include/tr/sysgfx/display.hpp"
-#include "../../include/tr/sysgfx/impl.hpp"
 #include "../../include/tr/sysgfx/main.hpp"
+#include "../../include/tr/sysgfx/dialog.hpp"
+#include "../../include/tr/sysgfx/impl.hpp"
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
 #include <SDL3_ttf/SDL_ttf.h>
@@ -21,9 +20,6 @@
 #ifdef TR_HAS_AUDIO
 #include "../../include/tr/audio/impl.hpp"
 #endif
-
-// Timer used to emit ticks.
-static std::optional<tr::timer> g_tick_timer;
 
 //////////////////////////////////////////////////////////////// INIT ERROR ///////////////////////////////////////////////////////////////
 
@@ -47,20 +43,11 @@ std::string_view tr::sys::init_error::details() const
 	return SDL_GetError();
 }
 
-//////////////////////////////////////////////////////////// FREQUENCY SETTERS ////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////// FREQUENCY SETTER ////////////////////////////////////////////////////////////
 
-void tr::sys::set_tick_frequency(float frequency)
+void tr::sys::set_update_frequency(float frequency)
 {
-	g_tick_timer.emplace(dsecs{1} / frequency, [] {
-		SDL_Event event{};
-		event.type = 0x8000;
-		SDL_PushEvent(&event);
-	});
-}
-
-void tr::sys::set_draw_frequency(float frequency)
-{
-	SDL_SetHint(SDL_HINT_MAIN_CALLBACK_RATE, std::to_string(frequency).c_str());
+	SDL_SetHint(SDL_HINT_MAIN_CALLBACK_RATE, frequency == uncapped_update_frequency ? "0" : std::to_string(frequency).c_str());
 }
 
 ////////////////////////////////////////////////////////////// MAIN CALLBACKS /////////////////////////////////////////////////////////////
@@ -108,7 +95,6 @@ extern "C"
 			TR_LOG_CONTINUE(tr::log, "CPU cores: {}", SDL_GetNumLogicalCPUCores());
 			TR_LOG_CONTINUE(tr::log, "RAM: {}mb", SDL_GetSystemRAM());
 		}
-		tr::sys::set_draw_frequency(tr::sys::refresh_rate());
 
 #ifdef TR_HAS_AUDIO
 		if (!tr::audio::g_manager.initialize()) {
@@ -129,12 +115,7 @@ extern "C"
 	SDL_AppResult SDL_AppEvent(void*, SDL_Event* event)
 	{
 		try {
-			if (event->type == 0x8000) {
-				return SDL_AppResult(tr::sys::main::tick());
-			}
-			else {
-				return SDL_AppResult(tr::sys::main::handle_event((tr::sys::event&)*event));
-			}
+			return SDL_AppResult(tr::sys::main::handle_event((tr::sys::event&)*event));
 		}
 		catch (std::exception& err) {
 			tr::sys::show_fatal_error_message_box(err);
@@ -145,7 +126,11 @@ extern "C"
 	SDL_AppResult SDL_AppIterate(void*)
 	{
 		try {
-			return SDL_AppResult(tr::sys::main::draw());
+			static std::chrono::steady_clock::time_point prev{std::chrono::steady_clock::now()};
+			const std::chrono::steady_clock::time_point now{std::chrono::steady_clock::now()};
+			const tr::duration delta{now - prev};
+			prev = now;
+			return SDL_AppResult(tr::sys::main::update(delta));
 		}
 		catch (std::exception& err) {
 			tr::sys::show_fatal_error_message_box(err);
@@ -167,7 +152,6 @@ extern "C"
 		tr::audio::g_manager.shut_down();
 #endif
 
-		g_tick_timer.reset();
 		TTF_Quit();
 		SDL_Quit();
 	}

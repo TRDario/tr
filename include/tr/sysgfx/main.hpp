@@ -12,10 +12,8 @@
 //       -> called after system initialization, meant to initialize the application state and open the window                            //
 //     - tr::sys::main::handle_event(const event& event)                                                                                 //
 //       -> called when an event is recieved, meant to handle the event                                                                  //
-//     - tr::sys::main::tick()                                                                                                           //
-//       -> called at the rate defined in set_tick_frequency (by default not active), meant for fixed-rate updates                       //
-//     - tr::sys::main::draw()                                                                                                           //
-//       -> called at the rate defined in set_draw_frequency (the refresh rate, by default), meant for delta-time updates and drawing    //
+//     - tr::sys::main::update(duration delta)                                                                                           //
+//       -> called at the rate defined in set_update_frequency (uncapped by default), meant for updating and drawing the application     //
 //     - tr::sys::main::shut_down()                                                                                                      //
 //       -> called after an exit signal is returned by one of the other main functions, meant to clean up the application state          //
 //                                                                                                                                       //
@@ -23,9 +21,10 @@
 // will continue as normal. If tr::sys::signal::exit or tr::sys::signal::abort is returned, further execution is stopped and shut_down   //
 // is called to clean up the application state.                                                                                          //
 //                                                                                                                                       //
-// The rates at which main::tick() and main::draw() are called can be adjusted at any time with the corresponding function:              //
-//     - tr::sys::set_tick_frequency(240) -> tr::sys::main::tick() will be called 240 times a second                                     //
-//     - tr::sys::set_draw_frequency(60) --> tr::sys::main::draw() will be called 60 times a second                                      //
+// The rate at which tr::sys::main::update() is called can be set with set_update_frequency, and can be reset to the default behavior    //
+// by setting it to tr::sys::uncapped_update_frequency:                                                                                  //
+//     - tr::sys::set_update_frequency(60) -> tr::sys::main::update() will be called 60 times a second                                   //
+//     - tr::sys::set_update_frequency(tr::sys::uncapped_update_frequency) -> tr::sys::main::update() will be called as often as possible//
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -82,10 +81,10 @@ namespace tr::sys {
 		app_type type{app_type::application};
 	};
 
-	// Sets the frequency at which tick() is called (by default not active).
-	void set_tick_frequency(float frequency);
-	// Sets the frequency at which draw() is called (by default set to the refresh rate).
-	void set_draw_frequency(float frequency);
+	// Sentinel representing an uncapped update frequency (the default behavior).
+	inline constexpr float uncapped_update_frequency{0};
+	// Sets the frequency at which update() is called (by default uncapped).
+	void set_update_frequency(float frequency);
 
 	// User-defined functions and data (mandatory). Uncaught exceptions will display a dialog box and quit the application.
 	namespace main {
@@ -96,12 +95,10 @@ namespace tr::sys {
 		signal parse_command_line(std::span<cstring_view> args);
 		// Called once at the beginning of execution after the parsing of the command line arguments.
 		signal initialize();
-		// Called whenever an event needs to be handled.
-		signal handle_event(event& event);
-		// Main-body function used for game state ticks.
-		signal tick();
-		// Main-body function used for drawing and related updated.
-		signal draw();
+		// Called whenever an event needs to be handled. Not guaranteed to be called on the main thread.
+		signal handle_event(const event& event);
+		// Primary update function.
+		signal update(duration delta);
 		// Called once at the end of execution.
 		void shut_down();
 	} // namespace main
