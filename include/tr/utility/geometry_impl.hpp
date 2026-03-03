@@ -90,7 +90,7 @@ template <int S, class T> constexpr T tr::length2(glm::vec<S, T> v)
 		return sqr(v.x) + sqr(v.y) + sqr(v.z) + sqr(v.w);
 	}
 	else {
-		unreachable();
+		TR_UNREACHABLE;
 	}
 }
 

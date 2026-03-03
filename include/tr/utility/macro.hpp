@@ -2,11 +2,19 @@
 //                                                                                                                                       //
 // Provides miscellaneous macros.                                                                                                        //
 //                                                                                                                                       //
-// tr::unreachable is a backport of C++23 std::unreachable and marks a code segment as unreachable:                                      //
-//     -  return x > 0 ? 1 : x < 0 ? -1 : tr::unreachable() -> Assume that x cannot possibly be 0 in this context.                       //
+// TR_UNREACHABLE marks a code segment as unreachable:                                                                                   //
+//     - switch (value) {                                                                                                                //
+//       case 1:                                                                                                                         //
+//           /* Code here */                                                                                                             //
+//       case 2:                                                                                                                         //
+//           /* Code here */                                                                                                             //
+//       default:                                                                                                                        //
+//           TR_UNREACHABLE;                                                                                                             //
+//       }                                                                                                                               //
+//       -> Cases besides 1 and 2 are marked as unreachable                                                                              //
 //                                                                                                                                       //
 // TR_ASSUME(condition) hints to the compiler that the condition is assumed and can be optimized for:                                    //
-//     - TR_ASSUME(ptr != nullptr) -> Assume that the point is not null.                                                                 //
+//     - TR_ASSUME(ptr != nullptr) -> Assume that the pointer is not null.                                                               //
 //                                                                                                                                       //
 // TR_STRINGIFY(x) expands into the string representation of x:                                                                          //
 //     - TR_STRINGIFY(a < 9) -> "a < 9"                                                                                                  //
@@ -54,24 +62,22 @@
 
 ////////////////////////////////////////////////////////////// IMPLEMENTATION /////////////////////////////////////////////////////////////
 
-namespace tr {
-#if defined(__GNUC__) || defined(__clang__)
-	// Marks an unreachable branch of code.
-	[[noreturn]] inline __attribute__((always_inline)) void unreachable()
-	{
-		__builtin_unreachable();
-	}
+#ifdef TR_ENABLE_ASSERTS
+#define TR_IMPL_UNREACHABLE(file, line)                                                                                                    \
+	do {                                                                                                                                   \
+		TR_LOG(::tr::log, ::tr::severity::fatal, "Unreachable code section reached at " file ":" TR_STRINGIFY(line) ".");                  \
+		std::abort();                                                                                                                      \
+	} while (0)
+#define TR_UNREACHABLE TR_IMPL_UNREACHABLE(TR_FILENAME, __LINE__)
+#elif defined(__GNUC__) || defined(__clang__)
+#define TR_UNREACHABLE __builtin_unreachable()
 #elif defined(_MSC_VER)
-	// Marks an unreachable branch of code.
-	[[noreturn]] __forceinline void unreachable()
-	{
-		__assume(false);
-	}
+#define TR_UNREACHABLE __assume(false)
 #else
-	// Marks an unreachable branch of code.
-	inline void unreachable() {}
+#define TR_UNREACHABLE                                                                                                                     \
+	do {                                                                                                                                   \
+	} while (0)
 #endif
-} // namespace tr
 
 #ifdef __clang__
 #define TR_ASSUME(condition) __builtin_assume(condition)
@@ -85,8 +91,8 @@ namespace tr {
 	} while (0)
 #endif
 
-#define TR_STRINGIFY_IMPL(x) #x
-#define TR_STRINGIFY(x) TR_STRINGIFY_IMPL(x)
+#define TR_IMPL_STRINGIFY(x) #x
+#define TR_STRINGIFY(x) TR_IMPL_STRINGIFY(x)
 
 #define TR_MACRO_COMMA_GUARD(...) __VA_ARGS__
 
@@ -97,7 +103,7 @@ namespace tr {
 #endif
 
 #ifdef TR_ENABLE_ASSERTS
-#define TR_ASSERT_IMPL(condition, file, line, fmt, ...)                                                                                    \
+#define TR_IMPL_ASSERT(condition, file, line, fmt, ...)                                                                                    \
 	do {                                                                                                                                   \
 		if (!(condition)) {                                                                                                                \
 			TR_LOG(::tr::log, ::tr::severity::fatal, "Assertion failed at " file ":" TR_STRINGIFY(line) ":");                              \
@@ -105,7 +111,7 @@ namespace tr {
 			std::abort();                                                                                                                  \
 		}                                                                                                                                  \
 	} while (0)
-#define TR_ASSERT(condition, fmt, ...) TR_ASSERT_IMPL(condition, TR_FILENAME, __LINE__, fmt, __VA_ARGS__)
+#define TR_ASSERT(condition, fmt, ...) TR_IMPL_ASSERT(condition, TR_FILENAME, __LINE__, fmt, __VA_ARGS__)
 #else
 // Assertion macro.
 #define TR_ASSERT(condition, fmt, ...)                                                                                                     \

@@ -50,7 +50,7 @@ static GLenum gl_tex_format(tr::pixel_format format)
 	case tr::pixel_format::rgba32:
 		return GL_RGBA8;
 	default:
-		tr::unreachable();
+		TR_UNREACHABLE;
 	}
 }
 
@@ -90,7 +90,7 @@ static GLenum gl_format(tr::pixel_format format)
 	case tr::pixel_format::argb32:
 		return GL_BGRA;
 	default:
-		tr::unreachable();
+		TR_UNREACHABLE;
 	}
 }
 
@@ -134,7 +134,7 @@ static GLenum gl_type(tr::pixel_format format)
 	case tr::pixel_format::abgr32:
 		return GL_UNSIGNED_INT_8_8_8_8;
 	default:
-		tr::unreachable();
+		TR_UNREACHABLE;
 	}
 }
 

@@ -46,7 +46,7 @@ tr::gfx::vertex_format::vertex_format(std::span<const vertex_binding> bindings)
 				offset += 4 * attr.elements;
 				break;
 			default:
-				unreachable();
+				TR_UNREACHABLE;
 			}
 		}
 	}
