@@ -35,13 +35,16 @@ tr::gfx::vertex_format::vertex_format(std::span<const vertex_binding> bindings)
 			case vertex_attribute_type::i8:
 			case vertex_attribute_type::u8:
 				offset += attr.elements;
+				break;
 			case vertex_attribute_type::i16:
 			case vertex_attribute_type::u16:
 				offset += 2 * attr.elements;
+				break;
 			case vertex_attribute_type::i32:
 			case vertex_attribute_type::u32:
 			case vertex_attribute_type::f32:
 				offset += 4 * attr.elements;
+				break;
 			default:
 				unreachable();
 			}
