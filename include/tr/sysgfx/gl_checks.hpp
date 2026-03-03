@@ -9,7 +9,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "gl_call.hpp"
+#include "../utility/common.hpp"
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
@@ -17,32 +17,32 @@ namespace tr::gfx {
 	// GLSL variable types.
 	enum class glsl_type {
 		undefined,
-		bool_ = GL_BOOL,
-		bvec2 = GL_BOOL_VEC2,
-		bvec3 = GL_BOOL_VEC3,
-		bvec4 = GL_BOOL_VEC4,
-		int_ = GL_INT,
-		ivec2 = GL_INT_VEC2,
-		ivec3 = GL_INT_VEC3,
-		ivec4 = GL_INT_VEC4,
-		uint = GL_UNSIGNED_INT,
-		uvec2 = GL_UNSIGNED_INT_VEC2,
-		uvec3 = GL_UNSIGNED_INT_VEC3,
-		uvec4 = GL_UNSIGNED_INT_VEC4,
-		float_ = GL_FLOAT,
-		vec2 = GL_FLOAT_VEC2,
-		vec3 = GL_FLOAT_VEC3,
-		vec4 = GL_FLOAT_VEC4,
-		mat2 = GL_FLOAT_MAT2,
-		mat3 = GL_FLOAT_MAT3,
-		mat4 = GL_FLOAT_MAT4,
-		mat2x3 = GL_FLOAT_MAT2x3,
-		mat2x4 = GL_FLOAT_MAT2x4,
-		mat3x2 = GL_FLOAT_MAT3x2,
-		mat3x4 = GL_FLOAT_MAT3x4,
-		mat4x2 = GL_FLOAT_MAT4x2,
-		mat4x3 = GL_FLOAT_MAT4x3,
-		sampler2D = GL_SAMPLER_2D,
+		bool_ = 0x8B56,
+		bvec2,
+		bvec3,
+		bvec4,
+		int_ = 0x1404,
+		ivec2 = 0x8B53,
+		ivec3,
+		ivec4,
+		uint = 0x1405,
+		uvec2 = 0x8DC6,
+		uvec3,
+		uvec4,
+		float_ = 0x1406,
+		vec2 = 0x8B50,
+		vec3,
+		vec4,
+		mat2 = 0x8B5A,
+		mat3,
+		mat4,
+		mat2x3 = 0x8B65,
+		mat2x4,
+		mat3x2,
+		mat3x4,
+		mat4x2,
+		mat4x3,
+		sampler2D = 0x8B5E
 	};
 
 	// GLSL variable information.
