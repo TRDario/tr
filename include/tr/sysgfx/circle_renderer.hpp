@@ -108,7 +108,7 @@ namespace tr::gfx {
 		};
 
 		// The bindings of the circle renderer vertex format.
-		static constexpr std::array vertex_format_bindings{make_vertex_binding<glm::u8vec2>(), make_vertex_binding<circle>()};
+		static constexpr std::array vertex_format_bindings{make_vertex_binding<glm::u8vec2>(), make_vertex_binding<circle>(1)};
 
 		// The ID of the renderer.
 		renderer_id m_id;
