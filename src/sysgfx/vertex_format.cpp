@@ -12,7 +12,7 @@
 
 tr::gfx::vertex_format::vertex_format(std::span<const vertex_binding> bindings)
 #ifdef TR_ENABLE_GL_CHECKS
-	: m_bindings(bindings)
+	: m_bindings{bindings}
 #endif
 {
 	GLuint vao;
