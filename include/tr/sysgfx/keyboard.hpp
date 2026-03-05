@@ -170,6 +170,7 @@ namespace tr::sys {
 		// Constructs an empty keyboard state.
 		keyboard_state() = default;
 
+		using scan_state::held;
 		// Gets whether one or more modifiers is held.
 		bool held(keymod mods) const;
 		// Gets whether a chord is held.
