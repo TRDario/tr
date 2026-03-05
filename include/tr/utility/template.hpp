@@ -30,6 +30,13 @@
 //     - tr::is_specialization_of_tv<std::array<int, 30>, std::array>                                                                    //
 //       -> for templates taking a type and value parameter and zero or more trailing type parameters                                    //
 //                                                                                                                                       //
+// tr::function_traits is used to extract various information out of class types. This includes the return type, argument types, and for //
+// member function pointer types the class they belong to:                                                                               //
+//     - tr::function_traits<void(*)(int, float)>::return_type -> void                                                                   //
+//     - tr::function_traits<void(*)(int, float)>::args_tuple -> std::tuple<int, float>                                                  //
+//     - tr::function_traits<void(*)(int, float)>::nth_argument_type<1> -> float                                                         //
+//     - tr::function_traits<void(my_type::*)(int)>::class_type -> my_type                                                               //
+//                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
@@ -73,6 +80,9 @@ namespace tr {
 	template <class T, template <auto, class...> class Z> struct is_specialization_of_vt;
 	// Gets whether a type is a specialization of a template with a leading type and size parameter and stores it in ::value.
 	template <class T, template <class, auto, class...> class Z> struct is_specialization_of_tv;
+
+	// Allows extraction of various properties of function types.
+	template <class T> struct function_traits;
 } // namespace tr
 
 ////////////////////////////////////////////////////////////// IMPLEMENTATION /////////////////////////////////////////////////////////////
@@ -123,3 +133,42 @@ struct tr::is_specialization_of_vt<Z<S, Args...>, Z> : std::true_type {};
 template <class T, template <class, auto, class...> class Z> struct tr::is_specialization_of_tv : std::false_type {};
 template <class T, auto S, class... Args, template <class, auto, class...> class Z>
 struct tr::is_specialization_of_tv<Z<T, S, Args...>, Z> : std::true_type {};
+
+template <class Return, class... Args> struct tr::function_traits<Return(Args...)> {
+	using return_type = Return;
+	using args_tuple = std::tuple<Args...>;
+	template <usize N> using nth_argument_type = std::tuple_element_t<N, args_tuple>;
+};
+template <class Return, class Class, class... Args> struct tr::function_traits<Return (Class::*)(Args...)> {
+	using return_type = Return;
+	using class_type = Class;
+	using args_tuple = std::tuple<Args...>;
+	template <usize N> using nth_argument_type = std::tuple_element_t<N, args_tuple>;
+};
+template <class Return, class... Args> struct tr::function_traits<Return (*)(Args...)> : function_traits<Return(Args...)> {};
+template <class Return, class... Args> struct tr::function_traits<Return (&)(Args...)> : function_traits<Return(Args...)> {};
+template <class Return, class... Args> struct tr::function_traits<Return(Args...) noexcept> : function_traits<Return(Args...)> {};
+template <class Return, class... Args> struct tr::function_traits<Return (*)(Args...) noexcept> : function_traits<Return(Args...)> {};
+template <class Return, class... Args> struct tr::function_traits<Return (&)(Args...) noexcept> : function_traits<Return(Args...)> {};
+template <class Return, class Class, class... Args>
+struct tr::function_traits<Return (Class::*)(Args...) const> : function_traits<Return (Class::*)(Args...)> {};
+template <class Return, class Class, class... Args>
+struct tr::function_traits<Return (Class::*)(Args...) &> : function_traits<Return (Class::*)(Args...)> {};
+template <class Return, class Class, class... Args>
+struct tr::function_traits<Return (Class::*)(Args...) const&> : function_traits<Return (Class::*)(Args...)> {};
+template <class Return, class Class, class... Args>
+struct tr::function_traits<Return (Class::*)(Args...) &&> : function_traits<Return (Class::*)(Args...)> {};
+template <class Return, class Class, class... Args>
+struct tr::function_traits<Return (Class::*)(Args...) const&&> : function_traits<Return (Class::*)(Args...)> {};
+template <class Return, class Class, class... Args>
+struct tr::function_traits<Return (Class::*)(Args...) noexcept> : function_traits<Return (Class::*)(Args...)> {};
+template <class Return, class Class, class... Args>
+struct tr::function_traits<Return (Class::*)(Args...) const noexcept> : function_traits<Return (Class::*)(Args...)> {};
+template <class Return, class Class, class... Args>
+struct tr::function_traits<Return (Class::*)(Args...) & noexcept> : function_traits<Return (Class::*)(Args...)> {};
+template <class Return, class Class, class... Args>
+struct tr::function_traits<Return (Class::*)(Args...) const & noexcept> : function_traits<Return (Class::*)(Args...)> {};
+template <class Return, class Class, class... Args>
+struct tr::function_traits<Return (Class::*)(Args...) && noexcept> : function_traits<Return (Class::*)(Args...)> {};
+template <class Return, class Class, class... Args>
+struct tr::function_traits<Return (Class::*)(Args...) const && noexcept> : function_traits<Return (Class::*)(Args...)> {};
