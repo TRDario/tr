@@ -15,8 +15,8 @@
 //     - debug.write_right_format("Total: {}", total) -> writes formatted text on the right side of the screen in the default style      //
 //     - debug.write_right_format({.background_color{64, 64, 64, 255}}, "Total: {}", total)                                              //
 //       -> writes formatted text on the right side of the screen with a gray background                                                 //
-//     - debug.write_benchmark(tick_benchmark, "Tick: ", 1.0s / 240)                                                                     //
-//       -> writes benchmark data with the label "Tick", if any of the measurements is above 1/240s, it's marked in red                  //
+//     - debug.write_benchmark(update_benchmark, "Update: ", 1.0s / 240)                                                                 //
+//       -> writes benchmark data with the label "Update", if any of the measurements is above 1/240s, it's marked in red                //
 //     - debug.newline_left(); debug.newline_right() -> skips a line on both of the sides of the screen                                  //
 //     - debug.draw() -> draws any text previously written to the backbuffer and resets the canvas to empty                              //
 //                                                                                                                                       //

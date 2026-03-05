@@ -3,12 +3,12 @@
 // Provides a state machine class and related functionality.                                                                             //
 //                                                                                                                                       //
 // The state machine works with the polymorphic tr::state. States inherited from tr::state may overload the                              //
-// .handle_event(const tr::sys::event& event) method used to handle incoming events, the .tick() method used to do fixed 'tick' updates, //
-// the .update() method used to do delta-time updates, and the .draw() method used to draw the state.                                    //
-// .handle_event(), .tick(), and .update() all return tr::next_state, which is a sum type containing either a state, tr::keep_state, or  //
-// tr::drop_state. A tr::next_state can be constructed with tr::make_next_state:                                                         //
-//     - struct my_state : tr::state { next_state tick() override { return tr::make_next_state<my_other_state>(); } };                   //
-//       -> provides a tick function that returns the next state                                                                         //
+// .handle_event(const tr::sys::event& event) method used to handle incoming events, the .update() method used to update the state, and  //
+// the .draw() method used to draw the state. .handle_event() and .update() return tr::next_state, which is a sum type containing either //
+// a state, tr::keep_state, or tr::drop_state.                                                                                           //
+// A tr::next_state can be constructed with tr::make_next_state:                                                                         //
+//     - struct my_state : tr::state { next_state update(tr::duration) override { return tr::make_next_state<my_other_state>(); } };     //
+//       -> provides an update function that returns the next state                                                                      //
 // If any of the above functions returns tr::keep_state, the state machine keeps that state.                                             //
 // If any of the above functions returns tr::drop_state, the state machine drops that state and becomes empty.                           //
 // Otherwise, the state machine replaces the current state with the returned one.                                                        //
@@ -23,11 +23,9 @@
 //     - state_machine.get<my_state>() -> gets the state                                                                                 //
 //     - state_machine.clear() -> clears the state machine, state_machine is now empty again                                             //
 //                                                                                                                                       //
-// The state machine provides the methods .handle_event(), .tick(), .update(), and .draw() that call the corresponding method in the     //
-// contained state, if one is present. .tick(), .update(), and .draw() are benchmarked internally, the results of which can be queried:  //
+// The state machine provides the methods .handle_event(), .update(), and .draw() that call the corresponding method in the contained    //
+// state, if one is present. .update(), and .draw() are benchmarked internally, the results of which can be queried:                     //
 //     - state_machine.handle_event(event) -> calls .handle_event() on the contained state, or does nothing if empty                     //
-//     - state_machine.tick() -> calls .tick() on the contained state and measures the taken time, or does nothing if empty              //
-//     - state_machine.tick_benchmark() -> gets access to the tick benchmark                                                             //
 //     - state_machine.update(10ms) -> calls .update() on the contained state and measures the taken time, or does nothing if empty      //
 //     - state_machine.update_benchmark() -> gets access to the update benchmark                                                         //
 //     - state_machine.draw() -> calls .draw() on the contained state and measures the taken time, or does nothing if empty              //
@@ -58,9 +56,7 @@ namespace tr {
 
 		// Handles an event.
 		virtual next_state handle_event(const tr::sys::event& event);
-		// Does a fixed 'tick' update on the state.
-		virtual next_state tick();
-		// Does a delta-time update on the state.
+		// Updates the state.
 		virtual next_state update(tr::duration delta);
 		// Draws the state.
 		virtual void draw();
@@ -85,8 +81,6 @@ namespace tr {
 		bool empty() const;
 		// Gets access to the current state.
 		template <std::derived_from<state> T> const T& get() const;
-		// Gets the tick benchmark.
-		const tr::benchmark& tick_benchmark() const;
 		// Gets the update benchmark.
 		const tr::benchmark& update_benchmark() const;
 		// Gets the draw benchmark.
@@ -103,9 +97,7 @@ namespace tr {
 
 		// Handles an event.
 		void handle_event(const tr::sys::event& event);
-		// Does a fixed 'tick' update on the state.
-		void tick();
-		// Does a delta-time update on the state.
+		// Updates the state.
 		template <class R, class P> void update(std::chrono::duration<R, P> delta);
 		// Draws the state.
 		void draw();
@@ -113,8 +105,6 @@ namespace tr {
 	  private:
 		// The currently held state.
 		std::unique_ptr<state> m_current_state;
-		// Benchmark measuring the tick times.
-		benchmark m_tick_benchmark;
 		// Benchmark measuring the update times.
 		benchmark m_update_benchmark;
 		// Benchmark measuring the drawing times.
