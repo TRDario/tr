@@ -21,8 +21,9 @@
 #include <concepts>      // IWYU pragma: export
 #include <cstdint>       // IWYU pragma: export
 #include <cstdlib>       // IWYU pragma: export
+#include <deque>         // IWYU pragma: export
 #include <exception>     // IWYU pragma: export
-#include <filesystem>    // IWYU pragma: export
+#include <filesystem>    // IWYU pragma: exports
 #include <forward_list>  // IWYU pragma: export
 #include <fstream>       // IWYU pragma: export
 #include <functional>    // IWYU pragma: export
