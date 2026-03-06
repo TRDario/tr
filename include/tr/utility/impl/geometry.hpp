@@ -126,6 +126,8 @@ template <typename Element> constexpr glm::tvec2<Element> tr::tl(glm::tvec2<Elem
 		return {pos.x - size.x / 2, pos.y - size.y};
 	case align::br:
 		return pos - size;
+	default:
+		TR_UNREACHABLE;
 	}
 }
 

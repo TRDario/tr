@@ -23,6 +23,7 @@ function(tr_target_template TARGET)
 			-Wextra
 			-Wpedantic
 			-Wshadow
+			-Werror=return-type
 			-fno-trapping-math
 			-fno-math-errno
 			-fno-signed-zeros
@@ -38,6 +39,7 @@ function(tr_target_template TARGET)
 			/clang:-Wextra
 			/clang:-Wpedantic
 			/clang:-Wshadow
+			/clang:-Werror=return-type
 			/clang:-fno-trapping-math
 			/clang:-fno-math-errno
 			/clang:-fno-signed-zeros
