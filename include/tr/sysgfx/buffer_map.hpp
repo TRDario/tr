@@ -66,39 +66,39 @@ namespace tr::gfx {
 	};
 
 	// Mapped buffer object.
-	template <class T> class buffer_object_map : basic_buffer_map {
+	template <typename Object> class buffer_object_map : basic_buffer_map {
 	  public:
 		// Gets a reference to the object.
-		operator T&() const;
+		operator Object&() const;
 		//  Gets a reference to the object.
-		T& operator*() const;
+		Object& operator*() const;
 		// Pointer access to the mapped object.
-		T* operator->() const;
+		Object* operator->() const;
 		// Assigns the object.
-		template <class T1> T& operator=(T1&& r) const;
+		template <std::assignable_from<Object> T> Object& operator=(T&& r) const;
 
 	  private:
 		// Wraps a basic buffer map.
 		buffer_object_map(basic_buffer_map&& map);
 
-		template <class Header, class ArrayElement> friend class shader_buffer;
+		template <typename Header, typename ArrayElement> friend class shader_buffer;
 	};
 
 	// Mapped buffer span.
-	template <class T> class buffer_span_map : basic_buffer_map {
+	template <typename Element> class buffer_span_map : basic_buffer_map {
 	  public:
-		using element_type = T;
-		using value_type = T;
-		using pointer = T*;
-		using const_pointer = const T*;
-		using reference = T&;
-		using const_reference = const T&;
-		using size_type = std::span<T>::size_type;
-		using difference_type = std::span<T>::difference_type;
-		using iterator = std::span<T>::iterator;
+		using element_type = Element;
+		using value_type = Element;
+		using pointer = Element*;
+		using const_pointer = const Element*;
+		using reference = Element&;
+		using const_reference = const Element&;
+		using size_type = std::span<Element>::size_type;
+		using difference_type = std::span<Element>::difference_type;
+		using iterator = std::span<Element>::iterator;
 
 		// Casts the map into a regular span.
-		operator std::span<T>() const;
+		operator std::span<Element>() const;
 		// Indexes into the map.
 		reference operator[](usize index) const;
 		// Gets a pointer to the data of the map.
@@ -114,11 +114,9 @@ namespace tr::gfx {
 		// Wraps a basic buffer map.
 		buffer_span_map(basic_buffer_map&& map);
 
-		template <class Header, class ArrayElement> friend class shader_buffer;
-		template <class T1> class uniform_buffer;
+		template <typename Header, typename ArrayElement> friend class shader_buffer;
+		template <typename Object> class uniform_buffer;
 	};
 }; // namespace tr::gfx
 
-////////////////////////////////////////////////////////////// IMPLEMENTATION /////////////////////////////////////////////////////////////
-
-#include "buffer_map_impl.hpp" // IWYU pragma: export
+#include "impl/buffer_map.hpp" // IWYU pragma: export

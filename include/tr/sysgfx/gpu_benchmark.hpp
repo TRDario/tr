@@ -35,9 +35,6 @@ namespace tr::gfx {
 	// GPU benchmark.
 	class gpu_benchmark {
 	  public:
-		// Shorthand for the deque type used by the benchmark.
-		using deque = std::deque<duration>;
-
 		// Constructs an empty GPU benchmark.
 		gpu_benchmark();
 
@@ -59,7 +56,7 @@ namespace tr::gfx {
 		// Gets the average duration of the available measurements.
 		duration avg() const;
 		// Gets the available measurements.
-		const deque& measurements() const;
+		const std::deque<duration>& measurements() const;
 
 	  private:
 		struct deleter {
@@ -69,6 +66,6 @@ namespace tr::gfx {
 		// OpenGL query object handle.
 		tr::handle<unsigned int, 0, deleter> m_qo;
 		// The measurement deque.
-		deque m_durations;
+		std::deque<duration> m_durations;
 	};
 } // namespace tr::gfx

@@ -195,9 +195,4 @@ namespace tr::sys {
 	std::vector<std::string_view> split_into_lines(std::string_view str, const ttfont& font, int max_w);
 } // namespace tr::sys
 
-///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
-
-template <std::ranges::contiguous_range R> tr::sys::ttfont tr::sys::load_embedded_ttfont(R&& range, float size)
-{
-	return load_embedded_ttfont(std::span<const std::byte>{range_bytes(range)}, size);
-};
+#include "impl/ttfont.hpp" // IWYU pragma: export

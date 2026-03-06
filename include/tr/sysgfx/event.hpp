@@ -156,13 +156,13 @@ namespace tr::sys {
 	struct quit_event {};
 
 	// Concept denoting the list of valid event types.
-	template <class T>
+	template <typename T>
 	concept event_type = one_of<T, quit_event, window_show_event, window_hide_event, backbuffer_resize_event, window_gain_focus_event,
 								window_lose_focus_event, window_mouse_enter_event, window_mouse_leave_event, key_down_event, key_up_event,
 								text_input_event, mouse_motion_event, mouse_down_event, mouse_up_event, mouse_wheel_event>;
 
 	// An event visitor must be callable with all event types, and all overloads must return the same type.
-	template <class T>
+	template <typename T>
 	concept event_visitor =
 		std::invocable<T, quit_event> && std::invocable<T, window_show_event> && std::invocable<T, window_hide_event> &&
 		std::invocable<T, backbuffer_resize_event> && std::invocable<T, window_gain_focus_event> &&
@@ -199,13 +199,13 @@ namespace tr::sys {
 		// Visits the event.
 		template <event_visitor Visitor> auto visit(Visitor&& visitor) const;
 		// Visits the event with a match helper.
-		template <class... Fs>
-			requires(event_visitor<match<Fs...>>)
-		decltype(auto) operator|(match<Fs...>&& match) const;
+		template <typename... Functions>
+			requires(event_visitor<match<Functions...>>)
+		decltype(auto) operator|(match<Functions...>&& match) const;
 		// Visits the event with a stateful match helper.
-		template <class State, class... Fs>
-			requires(event_visitor<stateful_match<State, Fs...>>)
-		decltype(auto) operator|(stateful_match<State, Fs...>&& match) const;
+		template <typename State, typename... Functions>
+			requires(event_visitor<stateful_match<State, Functions...>>)
+		decltype(auto) operator|(stateful_match<State, Functions...>&& match) const;
 
 	  private:
 		// Storage for SDL_Event.
@@ -223,6 +223,4 @@ namespace tr::sys {
 	void disable_text_input_events();
 } // namespace tr::sys
 
-///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
-
-#include "event_impl.hpp" // IWYU pragma: export
+#include "impl/event.hpp" // IWYU pragma: export

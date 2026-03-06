@@ -24,7 +24,7 @@ namespace tr {
 		// Common chrono aliases.
 		inline namespace chrono_aliases {
 			// Duration in seconds.
-			template <class T> using secs = std::chrono::duration<T>;
+			template <typename Rep> using secs = std::chrono::duration<Rep>;
 			// Duration in seconds.
 			using fsecs = secs<float>;
 			// Duration in seconds.
@@ -33,7 +33,7 @@ namespace tr {
 			using isecs = std::chrono::seconds;
 
 			// Duration in milliseconds.
-			template <class T> using msecs = std::chrono::duration<T, std::milli>;
+			template <typename Rep> using msecs = std::chrono::duration<Rep, std::milli>;
 			// Duration in milliseconds.
 			using fmsecs = msecs<float>;
 			// Duration in milliseconds.
@@ -42,7 +42,7 @@ namespace tr {
 			using imsecs = std::chrono::milliseconds;
 
 			// Duration in microseconds.
-			template <class T> using usecs = std::chrono::duration<T, std::micro>;
+			template <typename Rep> using usecs = std::chrono::duration<Rep, std::micro>;
 			// Duration in microseconds.
 			using fusecs = usecs<float>;
 			// Duration in microseconds.
@@ -51,7 +51,7 @@ namespace tr {
 			using iusecs = std::chrono::microseconds;
 
 			// Duration in nanoseconds.
-			template <class T> using nsecs = std::chrono::duration<T, std::nano>;
+			template <typename Rep> using nsecs = std::chrono::duration<Rep, std::nano>;
 			// Duration in nanoseconds.
 			using fnsecs = nsecs<float>;
 			// Duration in nanoseconds.

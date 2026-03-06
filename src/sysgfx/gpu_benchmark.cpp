@@ -75,7 +75,7 @@ tr::duration tr::gfx::gpu_benchmark::avg() const
 	}
 }
 
-const tr::gfx::gpu_benchmark::deque& tr::gfx::gpu_benchmark::measurements() const
+const std::deque<tr::duration>& tr::gfx::gpu_benchmark::measurements() const
 {
 	return m_durations;
 }

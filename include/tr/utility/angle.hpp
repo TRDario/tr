@@ -58,15 +58,15 @@ namespace tr {
 
 		constexpr angle& operator+=(const angle& r);
 		constexpr angle& operator-=(const angle& r);
-		template <arithmetic U> constexpr angle& operator*=(const U& r);
-		template <arithmetic U> constexpr angle& operator/=(const U& r);
+		template <arithmetic Factor> constexpr angle& operator*=(const Factor& r);
+		template <arithmetic Factor> constexpr angle& operator/=(const Factor& r);
 
 		friend constexpr angle operator+(const angle& l, const angle& r);
 		friend constexpr angle operator-(const angle& l, const angle& r);
 		friend constexpr angle operator-(const angle& l);
-		template <arithmetic U> friend constexpr angle operator*(const angle& l, const U& r);
-		template <arithmetic U> friend constexpr angle operator*(const U& l, const angle& r);
-		template <arithmetic U> friend constexpr angle operator/(const angle& l, const U& r);
+		template <arithmetic Factor> friend constexpr angle operator*(const angle& l, const Factor& r);
+		template <arithmetic Factor> friend constexpr angle operator*(const Factor& l, const angle& r);
+		template <arithmetic Factor> friend constexpr angle operator/(const angle& l, const Factor& r);
 		friend constexpr float operator/(const angle& l, const angle& r);
 		friend constexpr angle operator%(const angle& l, const angle& r);
 
@@ -91,24 +91,24 @@ namespace tr {
 		// Constructs an angle from a numeric value in radians.
 		constexpr explicit angle(float rads);
 
-		template <arithmetic T> friend constexpr angle rads(T th);
+		template <arithmetic Number> friend constexpr angle rads(Number th);
 	};
 
 	// Constructs an angle expressed in radians.
-	template <arithmetic T> constexpr angle rads(T th);
+	template <arithmetic Number> constexpr angle rads(Number th);
 	// Constructs an angle expressed in degrees.
-	template <arithmetic T> constexpr angle degs(T th);
+	template <arithmetic Number> constexpr angle degs(Number th);
 	// Constructs ang angle expressed in turns.
-	template <arithmetic T> constexpr angle turns(T th);
+	template <arithmetic Number> constexpr angle turns(Number th);
 
 	// Computes the principal value of the arc sine.
-	template <arithmetic T> inline angle asin(T sin);
+	template <arithmetic Number> inline angle asin(Number sin);
 	// Computes the principal value of the arc cosine.
-	template <arithmetic T> inline angle acos(T cos);
+	template <arithmetic Number> inline angle acos(Number cos);
 	// Computes the principal value of the arc tangent.
-	template <arithmetic T> inline angle atan(T tan);
+	template <arithmetic Number> inline angle atan(Number tan);
 	// Computes the principal value of the arc tangent y/x.
-	template <arithmetic T> inline angle atan2(T y, T x);
+	template <arithmetic Number> inline angle atan2(Number y, Number x);
 
 	inline namespace literals {
 		// Angle literals.
@@ -134,9 +134,9 @@ namespace TR_FMT {
 	template <> class formatter<tr::angle> : public formatter<float>, public formatter<const char*> {
 	  public:
 		// Parses the format specification.
-		template <class ParseContext> constexpr auto parse(ParseContext& ctx);
+		template <typename ParseContext> constexpr auto parse(ParseContext& ctx);
 		// Formats an angle.
-		template <class FormatContext> constexpr auto format(const tr::angle& p, FormatContext& ctx) const;
+		template <typename FormatContext> constexpr auto format(const tr::angle& p, FormatContext& ctx) const;
 
 	  private:
 		// Units the formatted angle can be displayed in.
@@ -151,6 +151,4 @@ namespace TR_FMT {
 	};
 } // namespace TR_FMT
 
-////////////////////////////////////////////////////////////// IMPLEMENTATION /////////////////////////////////////////////////////////////
-
-#include "angle_impl.hpp" // IWYU pragma: export
+#include "impl/angle.hpp" // IWYU pragma: export

@@ -40,7 +40,7 @@
 
 namespace tr {
 	// Alternative reference wrapper.
-	template <class T> class ref {
+	template <typename T> class ref {
 	  public:
 		// Wraps a reference.
 		constexpr ref(T& ref);
@@ -66,11 +66,11 @@ namespace tr {
 		// Pointer to the referenced object.
 		T* m_base;
 	};
-	template <class T> constexpr bool operator==(const T& l, const ref<T>& r);
-	template <class T> constexpr bool operator==(const ref<T>& l, const T& r);
+	template <typename T> constexpr bool operator==(const T& l, const ref<T>& r);
+	template <typename T> constexpr bool operator==(const ref<T>& l, const T& r);
 
 	// Wrapper over a pointer representing optional reference semantics.
-	template <class T> class opt_ref {
+	template <typename T> class opt_ref {
 	  public:
 		// Creates an empty optional reference.
 		constexpr opt_ref() = default;
@@ -104,12 +104,10 @@ namespace tr {
 		// Wraps a pointer.
 		constexpr explicit opt_ref(T* ptr);
 
-		template <class U> friend opt_ref<U> make_opt_ref(U* ptr);
+		template <typename U> friend opt_ref<U> make_opt_ref(U* ptr);
 	};
 	// Converts a pointer into an optional reference.
-	template <class T> opt_ref<T> make_opt_ref(T* ptr);
+	template <typename T> opt_ref<T> make_opt_ref(T* ptr);
 } // namespace tr
 
-////////////////////////////////////////////////////////////// IMPLEMENTATION /////////////////////////////////////////////////////////////
-
-#include "reference_impl.hpp" // IWYU pragma: export
+#include "impl/reference.hpp" // IWYU pragma: export

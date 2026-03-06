@@ -5,11 +5,11 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "utf8.hpp"
+#include "../utf8.hpp"
 
 ///////////////////////////////////////////////////// BASIC TRAVERSAL AND MANIPULATION ////////////////////////////////////////////////////
 
-template <tr::utf8::base_iterator T> constexpr tr::codepoint tr::utf8::to_cp(T it)
+template <tr::utf8::base_iterator Iterator> constexpr tr::codepoint tr::utf8::to_cp(Iterator it)
 {
 	if (u8(*it) < 0x80) {
 		return u8(*it);
@@ -25,7 +25,7 @@ template <tr::utf8::base_iterator T> constexpr tr::codepoint tr::utf8::to_cp(T i
 	}
 }
 
-template <tr::utf8::base_iterator T> constexpr T tr::utf8::next(T it)
+template <tr::utf8::base_iterator Iterator> constexpr Iterator tr::utf8::next(Iterator it)
 {
 	if (u8(*it) < 0x80) {
 		it += 1;
@@ -42,7 +42,7 @@ template <tr::utf8::base_iterator T> constexpr T tr::utf8::next(T it)
 	return it;
 }
 
-template <tr::utf8::base_iterator T> constexpr T tr::utf8::next(T it, usize n)
+template <tr::utf8::base_iterator Iterator> constexpr Iterator tr::utf8::next(Iterator it, usize n)
 {
 	for (usize i = 0; i < n; ++i) {
 		it = tr::utf8::next(it);
@@ -50,13 +50,13 @@ template <tr::utf8::base_iterator T> constexpr T tr::utf8::next(T it, usize n)
 	return it;
 }
 
-template <tr::utf8::base_iterator T> constexpr T tr::utf8::prev(T it)
+template <tr::utf8::base_iterator Iterator> constexpr Iterator tr::utf8::prev(Iterator it)
 {
 	while ((*--it & 0xC0) == 0x80) {}
 	return it;
 }
 
-template <tr::utf8::base_iterator T> constexpr T tr::utf8::prev(T it, usize n)
+template <tr::utf8::base_iterator Iterator> constexpr Iterator tr::utf8::prev(Iterator it, usize n)
 {
 	for (usize i = 0; i < n; ++i) {
 		it = tr::utf8::prev(it);

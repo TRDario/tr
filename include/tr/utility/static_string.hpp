@@ -16,10 +16,10 @@
 
 namespace tr {
 	// Inplace-allocated fixed-capacity string.
-	template <usize S> class static_string {
+	template <usize Capacity> class static_string {
 	  public:
 		using value_type = char;
-		using size_type = size_type_t<S>;
+		using size_type = size_type_t<Capacity>;
 		using difference_type = std::make_signed_t<size_type>;
 		using reference = char&;
 		using const_reference = const char&;
@@ -33,11 +33,11 @@ namespace tr {
 		// Creates a string with a starting size.
 		constexpr static_string(size_type size, char chr = '\0');
 		// Creates a string by copying from a string literal.
-		template <usize S1> constexpr static_string(const char (&literal)[S1]);
+		template <usize Size> constexpr static_string(const char (&literal)[Size]);
 		// Creates a string by copying from another string.
 		constexpr static_string(std::string_view str);
 		// Creates a string by copying from another string.
-		template <std::convertible_to<std::string_view> T> constexpr static_string(T&& str);
+		template <std::convertible_to<std::string_view> String> constexpr static_string(String&& str);
 
 		// Gets a string view over the string.
 		constexpr operator std::string_view() const;
@@ -90,9 +90,9 @@ namespace tr {
 		// Appends a character to the string.
 		constexpr static_string& operator+=(char chr);
 		// Appends a range to the string.
-		template <std::input_iterator It>
-			requires(std::same_as<typename std::iterator_traits<It>::value_type, char>)
-		constexpr void append(It begin, It end);
+		template <std::input_iterator Iterator>
+			requires(std::same_as<typename std::iterator_traits<Iterator>::value_type, char>)
+		constexpr void append(Iterator begin, Iterator end);
 		// Appends a substring to the string.
 		constexpr void append(std::string_view str);
 		// Appends a substring to the string.
@@ -100,9 +100,9 @@ namespace tr {
 		// Inserts a character into the string.
 		constexpr void insert(const_iterator where, char chr);
 		// Inserts a range into the string.
-		template <std::input_iterator It>
-			requires(std::same_as<typename std::iterator_traits<It>::value_type, char>)
-		constexpr void insert(const_iterator where, It first, It last);
+		template <std::input_iterator Iterator>
+			requires(std::same_as<typename std::iterator_traits<Iterator>::value_type, char>)
+		constexpr void insert(const_iterator where, Iterator first, Iterator last);
 		// Inserts a substring into the string.
 		constexpr void insert(const_iterator where, std::string_view str);
 		// Erases a character from the end of the string.
@@ -115,33 +115,32 @@ namespace tr {
 		constexpr void resize(size_type size, char chr = '\0');
 
 	  private:
-		std::array<char, S> m_buffer{};
+		std::array<char, Capacity> m_buffer{};
 		size_type m_size{0};
 	};
-	template <usize S> constexpr std::strong_ordering operator<=>(const static_string<S>& l, const static_string<S>& r);
-	template <usize S> constexpr bool operator==(const static_string<S>& l, const static_string<S>& r);
-	template <usize S> constexpr std::strong_ordering operator<=>(const static_string<S>& l, const std::string_view& r);
-	template <usize S> constexpr bool operator==(const static_string<S>& l, const std::string_view& r);
-	template <usize S> constexpr std::strong_ordering operator<=>(const std::string_view& l, const static_string<S>& r);
-	template <usize S> constexpr bool operator==(const std::string_view& l, const static_string<S>& r);
+	template <usize Capacity>
+	constexpr std::strong_ordering operator<=>(const static_string<Capacity>& l, const static_string<Capacity>& r);
+	template <usize Capacity> constexpr bool operator==(const static_string<Capacity>& l, const static_string<Capacity>& r);
+	template <usize Capacity> constexpr std::strong_ordering operator<=>(const static_string<Capacity>& l, const std::string_view& r);
+	template <usize Capacity> constexpr bool operator==(const static_string<Capacity>& l, const std::string_view& r);
+	template <usize Capacity> constexpr std::strong_ordering operator<=>(const std::string_view& l, const static_string<Capacity>& r);
+	template <usize Capacity> constexpr bool operator==(const std::string_view& l, const static_string<Capacity>& r);
 
 	// Output stream formatter for static strings.
-	template <usize S> inline std::ostream& operator<<(std::ostream& os, const static_string<S>& str);
+	template <usize Capacity> inline std::ostream& operator<<(std::ostream& os, const static_string<Capacity>& str);
 
 	// Static string binary reader.
-	template <usize S> struct binary_reader<static_string<S>> {
-		void operator()(std::istream& is, static_string<S>& out) const;
+	template <usize Capacity> struct binary_reader<static_string<Capacity>> {
+		void operator()(std::istream& is, static_string<Capacity>& out) const;
 	};
 	// Static string binary writer.
-	template <usize S> struct binary_writer<static_string<S>> {
-		void operator()(std::ostream& os, const static_string<S>& in) const;
+	template <usize Capacity> struct binary_writer<static_string<Capacity>> {
+		void operator()(std::ostream& os, const static_string<Capacity>& in) const;
 	};
 
 } // namespace tr
 
 // Formatter for static strings.
-template <tr::usize S> struct TR_FMT::formatter<tr::static_string<S>> : TR_FMT::formatter<std::string_view> {};
+template <tr::usize Capacity> struct TR_FMT::formatter<tr::static_string<Capacity>> : TR_FMT::formatter<std::string_view> {};
 
-////////////////////////////////////////////////////////////// IMPLEMENTATION /////////////////////////////////////////////////////////////
-
-#include "static_string_impl.hpp" // IWYU pragma: export
+#include "impl/static_string.hpp" // IWYU pragma: export

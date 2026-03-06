@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "event.hpp"
+#include "../event.hpp"
 
 ////////////////////////////////////////////////////////////////// EVENT //////////////////////////////////////////////////////////////////
 
@@ -147,14 +147,14 @@ template <tr::sys::event_visitor Visitor> auto tr::sys::event::visit(Visitor&& v
 	}
 }
 
-template <class... Fs>
+template <typename... Fs>
 	requires(tr::sys::event_visitor<tr::match<Fs...>>)
 decltype(auto) tr::sys::event::operator|(match<Fs...>&& match) const
 {
 	return visit(std::move(match));
 }
 
-template <class State, class... Fs>
+template <typename State, typename... Fs>
 	requires(tr::sys::event_visitor<tr::stateful_match<State, Fs...>>)
 decltype(auto) tr::sys::event::operator|(stateful_match<State, Fs...>&& match) const
 {

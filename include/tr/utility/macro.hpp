@@ -41,7 +41,7 @@
 //                                                                                                                                       //
 // TR_UNSPECIALIZED_VARIABLE_TEMPLATE(template_arg, return_type, message) is used when declaring variable templates to disable the       //
 // default specialization with an error:                                                                                                 //
-//     - template <class T> constexpr int my_const{TR_UNSPECIALIZED_VARIABLE_TEMPLATE(T, int, "Nope!")}                                  //
+//     - template <typename T> constexpr int my_const{TR_UNSPECIALIZED_VARIABLE_TEMPLATE(T, int, "Nope!")} //
 //     - my_const<int> -> static assertion failed to requirement 'unspecialized<int>': Nope!                                             //
 //                                                                                                                                       //
 // TR_DEFINE_ENUM_BITMASK_OPERATORS(type) defines bitmask operators (&, |, ^, ~) for enum class types:                                   //
@@ -75,9 +75,7 @@
 #elif defined(_MSC_VER)
 #define TR_UNREACHABLE __assume(false)
 #else
-#define TR_UNREACHABLE                                                                                                                     \
-	do {                                                                                                                                   \
-	} while (0)
+#define TR_UNREACHABLE void(0)
 #endif
 
 #ifdef __clang__
@@ -87,9 +85,7 @@
 #elif defined(__GNUC__)
 #define TR_ASSUME(condition) ((condition) ? (void(0)) : (__builtin_unreachable()))
 #else
-#define TR_ASSUME(condition)                                                                                                               \
-	do {                                                                                                                                   \
-	} while (0)
+#define TR_ASSUME(condition) void(0)
 #endif
 
 #define TR_IMPL_STRINGIFY(x) #x
@@ -114,10 +110,7 @@
 	} while (0)
 #define TR_ASSERT(condition, fmt, ...) TR_IMPL_ASSERT(condition, TR_FILENAME, __LINE__, fmt, __VA_ARGS__)
 #else
-// Assertion macro.
-#define TR_ASSERT(condition, fmt, ...)                                                                                                     \
-	do {                                                                                                                                   \
-	} while (0)
+#define TR_ASSERT(condition, fmt, ...) void(0)
 #endif
 
 #ifdef _WIN32

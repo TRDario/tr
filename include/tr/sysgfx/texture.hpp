@@ -54,6 +54,7 @@
 
 #pragma once
 #include "../utility/handle.hpp"
+#include "../utility/reference.hpp"
 #include "bitmap.hpp"
 
 namespace tr::gfx {

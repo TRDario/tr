@@ -35,6 +35,7 @@
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+#include "../utility/reference.hpp"
 #include "backbuffer.hpp"
 #include "blending.hpp"
 #include "graphics_context.hpp"

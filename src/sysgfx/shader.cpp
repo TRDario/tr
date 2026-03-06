@@ -11,6 +11,7 @@
 #include "../../include/tr/sysgfx/shader_buffer.hpp"
 #include "../../include/tr/sysgfx/texture.hpp"
 #include "../../include/tr/sysgfx/uniform_buffer.hpp"
+#include "../../include/tr/utility/iostream.hpp"
 
 //////////////////////////////////////////////////////////// SHADER LOAD ERROR ////////////////////////////////////////////////////////////
 
@@ -154,12 +155,8 @@ void tr::gfx::shader_base::find_outputs()
 	} while (0)
 
 #else
-#define TR_SHADER_ASSERT_UNIFORM                                                                                                           \
-	do {                                                                                                                                   \
-	} while (0)
-#define TR_SHADER_ASSERT_ARRAY_UNIFORM                                                                                                     \
-	do {                                                                                                                                   \
-	} while (0)
+#define TR_SHADER_ASSERT_UNIFORM void(0)
+#define TR_SHADER_ASSERT_ARRAY_UNIFORM void(0)
 #endif
 
 void tr::gfx::shader_base::deleter::operator()(unsigned int id) const

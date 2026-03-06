@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "draw_geometry.hpp"
+#include "../draw_geometry.hpp"
 
 //////////////////////////////////////////////////////////// SIZE CALCULATIONS ////////////////////////////////////////////////////////////
 
@@ -46,7 +46,7 @@ constexpr tr::usize tr::polygon_outline_indices(u16 vertices)
 
 ///////////////////////////////////////////////////////////////// INDICES /////////////////////////////////////////////////////////////////
 
-template <std::output_iterator<tr::u16> O> constexpr O tr::fill_line_strip_indices(O out, u16 vertices, u16 base)
+template <std::output_iterator<tr::u16> Iterator> constexpr Iterator tr::fill_line_strip_indices(Iterator out, u16 vertices, u16 base)
 {
 	TR_ASSERT(base + vertices <= UINT16_MAX, "Index overflow detected in fill_line_strip_indices.");
 
@@ -57,7 +57,7 @@ template <std::output_iterator<tr::u16> O> constexpr O tr::fill_line_strip_indic
 	return out;
 }
 
-template <std::output_iterator<tr::u16> O> constexpr O tr::fill_line_loop_indices(O out, u16 vertices, u16 base)
+template <std::output_iterator<tr::u16> Iterator> constexpr Iterator tr::fill_line_loop_indices(Iterator out, u16 vertices, u16 base)
 {
 	out = fill_line_strip_indices(out, vertices, base);
 	*out++ = base + vertices - 1;
@@ -65,7 +65,7 @@ template <std::output_iterator<tr::u16> O> constexpr O tr::fill_line_loop_indice
 	return out;
 }
 
-template <std::output_iterator<tr::u16> O> constexpr O tr::fill_convex_polygon_indices(O out, u16 vertices, u16 base)
+template <std::output_iterator<tr::u16> Iterator> constexpr Iterator tr::fill_convex_polygon_indices(Iterator out, u16 vertices, u16 base)
 {
 	TR_ASSERT(vertices >= 3, "Tried to calculate indices for {}-sided polygon.", vertices);
 	TR_ASSERT(base + vertices <= UINT16_MAX, "Index overflow detected in fill_convex_polygon_indices.");
@@ -78,7 +78,8 @@ template <std::output_iterator<tr::u16> O> constexpr O tr::fill_convex_polygon_i
 	return out;
 }
 
-template <std::output_iterator<tr::u16> O> constexpr O tr::fill_convex_polygon_outline_indices(O out, u16 vertices, u16 base)
+template <std::output_iterator<tr::u16> Iterator>
+constexpr Iterator tr::fill_convex_polygon_outline_indices(Iterator out, u16 vertices, u16 base)
 {
 	TR_ASSERT(vertices >= 3, "Tried to calculate indices for {}-sided polygon outline.", vertices);
 	TR_ASSERT(base + vertices <= UINT16_MAX, "Index overflow detected in fill_convex_polygon_outline_indices.");
@@ -100,7 +101,8 @@ template <std::output_iterator<tr::u16> O> constexpr O tr::fill_convex_polygon_o
 	return out;
 }
 
-template <std::output_iterator<tr::u16> O> constexpr O tr::fill_simple_polygon_indices(O out, std::span<const glm::vec2> vertices, u16 base)
+template <std::output_iterator<tr::u16> Iterator>
+constexpr Iterator tr::fill_simple_polygon_indices(Iterator out, std::span<const glm::vec2> vertices, u16 base)
 {
 	TR_ASSERT(vertices.size() >= 3, "Tried to calculate indices for {}-sided polygon.", vertices.size());
 	TR_ASSERT(base + vertices.size() <= UINT16_MAX, "Index overflow detected in fill_simple_polygon_indices.");
@@ -135,7 +137,7 @@ template <std::output_iterator<tr::u16> O> constexpr O tr::fill_simple_polygon_i
 
 ///////////////////////////////////////////////////////////////// VERTICES ////////////////////////////////////////////////////////////////
 
-template <std::output_iterator<glm::vec2> O> constexpr O tr::fill_rectangle_vertices(O out, const frect2& rect)
+template <std::output_iterator<glm::vec2> Iterator> constexpr Iterator tr::fill_rectangle_vertices(Iterator out, const frect2& rect)
 {
 	*out++ = rect.tl;
 	*out++ = glm::vec2{rect.tl.x, rect.tl.y + rect.size.y};
@@ -144,14 +146,15 @@ template <std::output_iterator<glm::vec2> O> constexpr O tr::fill_rectangle_vert
 	return out;
 }
 
-template <tr::sized_output_range<glm::vec2> R> constexpr void tr::fill_rectangle_vertices(R&& out, const frect2& rect)
+template <tr::sized_output_range<glm::vec2> Range> constexpr void tr::fill_rectangle_vertices(Range&& out, const frect2& rect)
 {
 	TR_ASSERT(std::size(out) == 4, "Tried to fill a range of size {} with rectangle vertices", std::size(out));
 
 	fill_rectangle_vertices(std::begin(out), rect);
 }
 
-template <std::output_iterator<glm::vec2> O> constexpr O tr::fill_rectangle_vertices(O out, const frect2& rect, const glm::mat4& mat)
+template <std::output_iterator<glm::vec2> Iterator>
+constexpr Iterator tr::fill_rectangle_vertices(Iterator out, const frect2& rect, const glm::mat4& mat)
 {
 	*out++ = mat * rect.tl;
 	*out++ = mat * glm::vec2{rect.tl.x, rect.tl.y + rect.size.y};
@@ -160,15 +163,16 @@ template <std::output_iterator<glm::vec2> O> constexpr O tr::fill_rectangle_vert
 	return out;
 }
 
-template <tr::sized_output_range<glm::vec2> R> constexpr void tr::fill_rectangle_vertices(R&& out, const frect2& rect, const glm::mat4& mat)
+template <tr::sized_output_range<glm::vec2> Range>
+constexpr void tr::fill_rectangle_vertices(Range&& out, const frect2& rect, const glm::mat4& mat)
 {
 	TR_ASSERT(std::size(out) == 4, "Tried to fill a range of size {} with rectangle vertices", std::size(out));
 
 	fill_rectangle_vertices(std::begin(out), rect, mat);
 }
 
-template <std::output_iterator<glm::vec2> O>
-O tr::fill_rectangle_vertices(O out, glm::vec2 pos, glm::vec2 anchor, glm::vec2 size, angle rotation)
+template <std::output_iterator<glm::vec2> Iterator>
+Iterator tr::fill_rectangle_vertices(Iterator out, glm::vec2 pos, glm::vec2 anchor, glm::vec2 size, angle rotation)
 {
 	if (rotation == 0_rad) {
 		return fill_rectangle_vertices(out, {pos - anchor, size});
@@ -178,8 +182,8 @@ O tr::fill_rectangle_vertices(O out, glm::vec2 pos, glm::vec2 anchor, glm::vec2 
 	}
 }
 
-template <tr::sized_output_range<glm::vec2> R>
-void tr::fill_rectangle_vertices(R&& out, glm::vec2 pos, glm::vec2 anchor, glm::vec2 size, angle rotation)
+template <tr::sized_output_range<glm::vec2> Range>
+void tr::fill_rectangle_vertices(Range&& out, glm::vec2 pos, glm::vec2 anchor, glm::vec2 size, angle rotation)
 {
 	TR_ASSERT(std::size(out) == 4, "Tried to fill a range of size {} with rectangle vertices", std::size(out));
 
@@ -188,37 +192,38 @@ void tr::fill_rectangle_vertices(R&& out, glm::vec2 pos, glm::vec2 anchor, glm::
 
 //
 
-template <std::output_iterator<glm::vec2> O> constexpr O tr::fill_rectangle_outline_vertices(O out, const frect2& rect, float thickness)
+template <std::output_iterator<glm::vec2> Iterator>
+constexpr Iterator tr::fill_rectangle_outline_vertices(Iterator out, const frect2& rect, float thickness)
 {
 	out = fill_rectangle_vertices(out, {rect.tl - thickness / 2, rect.size + thickness});
 	return fill_rectangle_vertices(out, {rect.tl + thickness / 2, rect.size - thickness});
 }
 
-template <tr::sized_output_range<glm::vec2> R>
-constexpr void tr::fill_rectangle_outline_vertices(R&& out, const frect2& rect, float thickness)
+template <tr::sized_output_range<glm::vec2> Range>
+constexpr void tr::fill_rectangle_outline_vertices(Range&& out, const frect2& rect, float thickness)
 {
 	TR_ASSERT(std::size(out) == 8, "Tried to fill a range of size {} with rectangle outline vertices", std::size(out));
 
 	fill_rectangle_outline_vertices(std::begin(out), rect, thickness);
 }
 
-template <std::output_iterator<glm::vec2> O>
-constexpr O tr::fill_rectangle_outline_vertices(O out, const frect2& rect, float thickness, const glm::mat4& mat)
+template <std::output_iterator<glm::vec2> Iterator>
+constexpr Iterator tr::fill_rectangle_outline_vertices(Iterator out, const frect2& rect, float thickness, const glm::mat4& mat)
 {
 	out = fill_rectangle_vertices(out, {rect.tl - thickness / 2, rect.size + thickness}, mat);
 	return fill_rectangle_vertices(out, {rect.tl + thickness / 2, rect.size - thickness}, mat);
 }
 
-template <tr::sized_output_range<glm::vec2> R>
-constexpr void tr::fill_rectangle_outline_vertices(R&& out, const frect2& rect, float thickness, const glm::mat4& mat)
+template <tr::sized_output_range<glm::vec2> Range>
+constexpr void tr::fill_rectangle_outline_vertices(Range&& out, const frect2& rect, float thickness, const glm::mat4& mat)
 {
 	TR_ASSERT(std::size(out) == 8, "Tried to fill a range of size {} with rectangle outline vertices", std::size(out));
 
 	fill_rectangle_outline_vertices(std::begin(out), rect, thickness, mat);
 }
 
-template <std::output_iterator<glm::vec2> O>
-O tr::fill_rectangle_outline_vertices(O out, glm::vec2 pos, glm::vec2 anchor, glm::vec2 size, angle rotation, float thickness)
+template <std::output_iterator<glm::vec2> Iterator>
+Iterator tr::fill_rectangle_outline_vertices(Iterator out, glm::vec2 pos, glm::vec2 anchor, glm::vec2 size, angle rotation, float thickness)
 {
 	if (rotation == 0_rad) {
 		return fill_rectangle_outline_vertices(out, pos - anchor, size, thickness);
@@ -228,8 +233,8 @@ O tr::fill_rectangle_outline_vertices(O out, glm::vec2 pos, glm::vec2 anchor, gl
 	}
 }
 
-template <tr::sized_output_range<glm::vec2> R>
-void tr::fill_rectangle_outline_vertices(R&& out, glm::vec2 pos, glm::vec2 anchor, glm::vec2 size, angle rotation, float thickness)
+template <tr::sized_output_range<glm::vec2> Range>
+void tr::fill_rectangle_outline_vertices(Range&& out, glm::vec2 pos, glm::vec2 anchor, glm::vec2 size, angle rotation, float thickness)
 {
 	TR_ASSERT(std::size(out) == 8, "Tried to fill a range of size {} with rectangle outline vertices", std::size(out));
 
@@ -238,7 +243,8 @@ void tr::fill_rectangle_outline_vertices(R&& out, glm::vec2 pos, glm::vec2 ancho
 
 //
 
-template <std::output_iterator<glm::vec2> O> O tr::fill_arc_vertices(O out, usize vertices, circle circle, angle start, angle size)
+template <std::output_iterator<glm::vec2> Iterator>
+Iterator tr::fill_arc_vertices(Iterator out, usize vertices, circle circle, angle start, angle size)
 {
 	angle dth{size / vertices};
 	float dsin{dth.sin()};
@@ -251,53 +257,55 @@ template <std::output_iterator<glm::vec2> O> O tr::fill_arc_vertices(O out, usiz
 	return out;
 }
 
-template <tr::sized_output_range<glm::vec2> R> void tr::fill_arc_vertices(R&& out, circle circle, angle start, angle size)
+template <tr::sized_output_range<glm::vec2> Range> void tr::fill_arc_vertices(Range&& out, circle circle, angle start, angle size)
 {
 	fill_arc_vertices(std::begin(out), std::size(out), circle, start, size);
 }
 
-template <std::output_iterator<glm::vec2> O> O tr::fill_regular_polygon_vertices(O out, usize vertices, circle circle, angle rotation)
+template <std::output_iterator<glm::vec2> Iterator>
+Iterator tr::fill_regular_polygon_vertices(Iterator out, usize vertices, circle circle, angle rotation)
 {
 	return fill_arc_vertices(out, vertices, circle, rotation, 1_turns);
 }
 
-template <tr::sized_output_range<glm::vec2> R> void tr::fill_regular_polygon_vertices(R&& out, circle circle, angle rotation)
+template <tr::sized_output_range<glm::vec2> Range> void tr::fill_regular_polygon_vertices(Range&& out, circle circle, angle rotation)
 {
 	fill_regular_polygon_vertices(std::begin(out), std::size(out), circle, rotation);
 }
 
-template <std::output_iterator<glm::vec2> O> O tr::fill_circle_vertices(O out, usize vertices, circle circle)
+template <std::output_iterator<glm::vec2> Iterator> Iterator tr::fill_circle_vertices(Iterator out, usize vertices, circle circle)
 {
 	return fill_arc_vertices(out, vertices, circle, 0_turns, 1_turns);
 }
 
-template <tr::sized_output_range<glm::vec2> R> void tr::fill_circle_vertices(R&& out, circle circle)
+template <tr::sized_output_range<glm::vec2> Range> void tr::fill_circle_vertices(Range&& out, circle circle)
 {
 	fill_circle_vertices(std::begin(out), std::size(out), circle);
 }
 
 //
 
-template <std::output_iterator<glm::vec2> O>
-O tr::fill_regular_polygon_outline_vertices(O out, usize vertices, circle circle, angle rotation, float thickness)
+template <std::output_iterator<glm::vec2> Iterator>
+Iterator tr::fill_regular_polygon_outline_vertices(Iterator out, usize vertices, circle circle, angle rotation, float thickness)
 {
 	out = fill_regular_polygon_vertices(out, vertices, {circle.c, circle.r + thickness / 2}, rotation);
 	return fill_regular_polygon_vertices(out, vertices, {circle.c, circle.r - thickness / 2}, rotation);
 }
 
-template <tr::sized_output_range<glm::vec2> R>
-void tr::fill_regular_polygon_outline_vertices(R&& out, circle circle, angle rotation, float thickness)
+template <tr::sized_output_range<glm::vec2> Range>
+void tr::fill_regular_polygon_outline_vertices(Range&& out, circle circle, angle rotation, float thickness)
 {
 	fill_regular_polygon_outline_vertices(std::begin(out), std::size(out) / 2, circle, rotation, thickness);
 }
 
-template <std::output_iterator<glm::vec2> O> O tr::fill_circle_outline_vertices(O out, usize vertices, circle circle, float thickness)
+template <std::output_iterator<glm::vec2> Iterator>
+Iterator tr::fill_circle_outline_vertices(Iterator out, usize vertices, circle circle, float thickness)
 {
 	out = fill_circle_vertices(out, vertices, {circle.c, circle.r + thickness / 2});
 	return fill_circle_vertices(out, vertices, {circle.c, circle.r - thickness / 2});
 }
 
-template <tr::sized_output_range<glm::vec2> R> void tr::fill_circle_outline_vertices(R&& out, circle circle, float thickness)
+template <tr::sized_output_range<glm::vec2> Range> void tr::fill_circle_outline_vertices(Range&& out, circle circle, float thickness)
 {
 	fill_circle_outline_vertices(std::begin(out), std::size(out) / 2, circle, thickness);
 }

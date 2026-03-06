@@ -8,6 +8,7 @@
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/shader_pipeline.hpp"
 #include "../../include/tr/sysgfx/texture.hpp"
+#include "../../include/tr/utility/draw_geometry.hpp"
 
 // Untextured UV sentinel.
 constexpr glm::vec2 untextured_uv{-100, -100};

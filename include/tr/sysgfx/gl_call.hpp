@@ -16,7 +16,7 @@
 #include "../utility/macro.hpp"
 #include "glad.h"
 
-///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////// IMPLEMENTATION /////////////////////////////////////////////////////////////
 
 #ifdef TR_ENABLE_ASSERTS
 #include "impl.hpp"
@@ -38,7 +38,7 @@ namespace tr::gfx {
 		function(__VA_ARGS__);                                                                                                             \
 		tr::gfx::validate_gl_call(file, line, #function);                                                                                  \
 	} while (0)
-#define TR_RET_GL_CALL_IMPL(file, line, function, ...) tr::gfx::validate_returning_gl_call(file, line, #function, function(__VA_ARGS__))
+#define TR_RET_GL_CALL_IMPL(file, line, function, ...) ::tr::gfx::validate_returning_gl_call(file, line, #function, function(__VA_ARGS__))
 #define TR_GL_CALL(function, ...) TR_GL_CALL_IMPL(TR_FILENAME, __LINE__, function, __VA_ARGS__)
 #define TR_RET_GL_CALL(function, ...) TR_RET_GL_CALL_IMPL(TR_FILENAME, __LINE__, function, __VA_ARGS__)
 #else

@@ -67,17 +67,17 @@ namespace tr::gfx {
 	};
 
 	// Typed shader uniform buffer.
-	template <class T> class uniform_buffer : public basic_uniform_buffer {
+	template <typename Object> class uniform_buffer : public basic_uniform_buffer {
 	  public:
 		// Allocates an uninitialized uniform buffer.
 		uniform_buffer();
 
 		// Sets the contents of the buffer.
-		void set(const T& data);
+		void set(const Object& data);
 
 		// Maps the buffer.
 		// This map is write-only!
-		buffer_object_map<T> map();
+		buffer_object_map<Object> map();
 
 	  private:
 		using basic_uniform_buffer::map;
@@ -86,20 +86,4 @@ namespace tr::gfx {
 	};
 } // namespace tr::gfx
 
-////////////////////////////////////////////////////////////// IMPLEMENTATION /////////////////////////////////////////////////////////////
-
-template <class T>
-tr::gfx::uniform_buffer<T>::uniform_buffer()
-	: basic_uniform_buffer{sizeof(T)}
-{
-}
-
-template <class T> void tr::gfx::uniform_buffer<T>::set(const T& data)
-{
-	basic_uniform_buffer::set(as_bytes(data));
-}
-
-template <class T> tr::gfx::buffer_object_map<T> tr::gfx::uniform_buffer<T>::map()
-{
-	return basic_uniform_buffer::map();
-}
+#include "impl/uniform_buffer.hpp" // IWYU pragma: export

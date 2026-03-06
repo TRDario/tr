@@ -37,11 +37,11 @@
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
 namespace tr {
-	// Concept that denotes a valid handle deleter type for a handle of base type @em H.
-	template <class T, class H>
-	concept handle_deleter = std::invocable<T, H> && (std::move_constructible<T> || std::copy_constructible<T>);
+	// Concept that denotes a valid handle deleter type for a handle of base type H.
+	template <typename T, typename Base>
+	concept handle_deleter = std::invocable<T, Base> && (std::move_constructible<T> || std::copy_constructible<T>);
 	// Concept that denotes a default constructible handle deleter.
-	template <class T>
+	template <typename T>
 	concept default_constructible_handle_deleter = std::default_initializable<T> && !std::is_pointer_v<T>;
 
 	// Tag struct used in some handle functions to suppress empty value checking.
@@ -50,37 +50,37 @@ namespace tr {
 	constexpr no_empty_handle_check_t no_empty_handle_check{};
 
 	// RAII wrapper over non-pointer handles.
-	template <std::regular T, T E, handle_deleter<T> D> class handle : private D {
+	template <std::regular Base, Base Empty, handle_deleter<Base> Deleter> class handle : private Deleter {
 	  public:
 		// Default-constructs an empty handle.
 		constexpr handle()
-			requires(default_constructible_handle_deleter<D>);
+			requires(default_constructible_handle_deleter<Deleter>);
 		// Constructs a handle from a base type value.
-		constexpr explicit handle(T value)
-			requires(default_constructible_handle_deleter<D>);
+		constexpr explicit handle(Base value)
+			requires(default_constructible_handle_deleter<Deleter>);
 		// Constructs a handle from a base type value and a deleter.
-		constexpr explicit handle(T value, D& deleter)
-			requires(std::copy_constructible<D>);
+		constexpr explicit handle(Base value, Deleter& deleter)
+			requires(std::copy_constructible<Deleter>);
 		// Constructs a handle from a base type value and a deleter.
-		constexpr explicit handle(T value, const D& deleter)
-			requires(std::copy_constructible<D> && !(lvalue_reference<D> && !const_qualified<D>));
+		constexpr explicit handle(Base value, const Deleter& deleter)
+			requires(std::copy_constructible<Deleter> && !(lvalue_reference<Deleter> && !const_qualified<Deleter>));
 		// Constructs a handle from a base type value and a deleter.
-		constexpr explicit handle(T value, D&& deleter)
-			requires(std::move_constructible<D> && !lvalue_reference<D>);
+		constexpr explicit handle(Base value, Deleter&& deleter)
+			requires(std::move_constructible<Deleter> && !lvalue_reference<Deleter>);
 		// Constructs a handle from a base type value without checking for the invalid E case.
-		constexpr explicit handle(T value, no_empty_handle_check_t)
-			requires(default_constructible_handle_deleter<D>);
+		constexpr explicit handle(Base value, no_empty_handle_check_t)
+			requires(default_constructible_handle_deleter<Deleter>);
 		// Constructs a handle from a base type value and a deleter without checking for the invalid E case.
-		constexpr explicit handle(T value, D& deleter, no_empty_handle_check_t)
-			requires(std::copy_constructible<D>);
+		constexpr explicit handle(Base value, Deleter& deleter, no_empty_handle_check_t)
+			requires(std::copy_constructible<Deleter>);
 		// Constructs a handle from a base type value and a deleter without checking for the invalid E case.
-		constexpr explicit handle(T value, const D& deleter, no_empty_handle_check_t)
-			requires(std::copy_constructible<D> && !(lvalue_reference<D> && !const_qualified<D>));
+		constexpr explicit handle(Base value, const Deleter& deleter, no_empty_handle_check_t)
+			requires(std::copy_constructible<Deleter> && !(lvalue_reference<Deleter> && !const_qualified<Deleter>));
 		// Constructs a handle from a base type value and a deleter without checking for the invalid E case.
-		constexpr explicit handle(T value, D&& deleter, no_empty_handle_check_t)
-			requires(std::move_constructible<D> && !lvalue_reference<D>);
+		constexpr explicit handle(Base value, Deleter&& deleter, no_empty_handle_check_t)
+			requires(std::move_constructible<Deleter> && !lvalue_reference<Deleter>);
 		// Constructs a handle by moving from another handle.
-		template <handle_deleter<T> D1> constexpr handle(handle<T, E, D1>&& move) noexcept;
+		template <handle_deleter<Base> DeleterR> constexpr handle(handle<Base, Empty, DeleterR>&& move) noexcept;
 		// Destroys the handle.
 		constexpr ~handle();
 
@@ -93,32 +93,30 @@ namespace tr {
 		constexpr explicit operator bool() const;
 
 		// Gets the handle's base type value.
-		constexpr const T& get() const;
+		constexpr const Base& get() const;
 		// Gets the handle's base type value.
-		constexpr const T& get(no_empty_handle_check_t) const;
+		constexpr const Base& get(no_empty_handle_check_t) const;
 		// Gets the handle's deleter.
-		constexpr D& get_deleter();
+		constexpr Deleter& get_deleter();
 		// Gets the handle's deleter.
-		constexpr D& get_deleter() const;
+		constexpr Deleter& get_deleter() const;
 
 		// Releases ownership over the handle, if any.
-		constexpr T release();
+		constexpr Base release();
 		// Resets the handle to an empty state.
 		constexpr void reset();
 		// Resets the handle to a non-empty state.
-		constexpr void reset(T value);
+		constexpr void reset(Base value);
 		// Resets the handle to a new state.
-		constexpr void reset(T value, no_empty_handle_check_t);
+		constexpr void reset(Base value, no_empty_handle_check_t);
 
 		// Swaps the ownership over values between two handles.
 		constexpr void swap(handle& other);
 
 	  private:
 		// The wrapped value.
-		T m_base;
+		Base m_base;
 	};
 } // namespace tr
 
-///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
-
-#include "handle_impl.hpp" // IWYU pragma: export
+#include "impl/handle.hpp" // IWYU pragma: export

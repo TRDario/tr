@@ -302,9 +302,13 @@ namespace tr::audio {
 		std::shared_ptr<owning_source> allocate_source(int priority);
 
 		// Submits an audio command.
-		template <class... Args>
+		template <typename... Args>
 			requires(std::constructible_from<command, Args...>)
-		void submit_command(Args&&... args);
+		void submit_command(Args&&... args)
+		{
+			std::lock_guard lock{m_mutex};
+			m_commands.emplace_back(std::forward<Args>(args)...);
+		}
 
 	  private:
 		// Closes an audio device.
@@ -339,13 +343,3 @@ namespace tr::audio {
 		void thread_fn(std::stop_token stoken);
 	} g_manager; // Global audio manager.
 } // namespace tr::audio
-
-////////////////////////////////////////////////////////////// IMPLEMENTATION /////////////////////////////////////////////////////////////
-
-template <class... Args>
-	requires(std::constructible_from<tr::audio::command, Args...>)
-void tr::audio::manager::submit_command(Args&&... args)
-{
-	std::lock_guard lock{m_mutex};
-	m_commands.emplace_back(std::forward<Args>(args)...);
-}

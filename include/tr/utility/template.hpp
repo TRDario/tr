@@ -4,7 +4,8 @@
 //                                                                                                                                       //
 // tr::unspecialized<Ts...> is used to circumvent the fact that static_assert(false) is not a valid expression on older compilers and is //
 // primarily meant for disabling template specializations.                                                                               //
-//     - template <class... Ts> struct example { static_assert(unspecialized<Ts...>); } -> causes a compilation error for example<Ts...> //
+//     - template <typename... Ts> struct example { static_assert(unspecialized<Ts...>); }                                               //
+//       -> causes a compilation error for example<Ts...>                                                                                //
 //                                                                                                                                       //
 // tr::tag<T> wraps any type to produce a constexpr-constructible tag:                                                                   //
 //     - std::variant<tag<Ts>...>{tag<T>{}}.index()                                                                                      //
@@ -13,6 +14,9 @@
 // tr::string_literal is used to pass string literals as template parameters. It can be converted to a char pointer, a string view, or a //
 // format string:                                                                                                                        //
 //     - template <string_literal String> class example {}; example<"string"> value{};                                                   //
+//                                                                                                                                       //
+// tr::type_name<T>() is used to get a human-readable name string for a type:                                                            //
+//     - tr::type_name<float>() -> "float"                                                                                               //
 //                                                                                                                                       //
 // tr::size_type determines the smallest unsigned integer type able to store the given value:                                            //
 //     - tr::size_type_t<30> -> u8                                                                                                       //
@@ -30,12 +34,11 @@
 //     - tr::is_specialization_of_tv<std::array<int, 30>, std::array>                                                                    //
 //       -> for templates taking a type and value parameter and zero or more trailing type parameters                                    //
 //                                                                                                                                       //
-// tr::function_traits is used to extract various information out of class types. This includes the return type, argument types, and for //
-// member function pointer types the class they belong to:                                                                               //
-//     - tr::function_traits<void(*)(int, float)>::return_type -> void                                                                   //
-//     - tr::function_traits<void(*)(int, float)>::args_tuple -> std::tuple<int, float>                                                  //
-//     - tr::function_traits<void(*)(int, float)>::nth_argument_type<1> -> float                                                         //
-//     - tr::function_traits<void(my_type::*)(int)>::class_type -> my_type                                                               //
+// Various information can be extracted from function types, including the return type, class type (for methods), and arugment types:    //
+//     - tr::return_type_t<int(int, float)> -> int                                                                                       //
+//     - tr::class_type_t<int(my_type::*)(int, float)> -> my_type                                                                        //
+//     - tr::args_tuple_t<int(int, float)> -> std::tuple<int, float>                                                                     //
+//     - tr::nth_arg_t<1, int(int, float)> -> float                                                                                      //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -46,129 +49,54 @@
 
 namespace tr {
 	// Circumvents static_assert(false) not being a valid expression on older compilers, meant for unspecialized templates.
-	template <class...> inline constexpr bool unspecialized{false};
+	template <typename...> inline constexpr bool unspecialized{false};
 
 	// Tag class.
-	template <class> struct tag {};
+	template <typename> struct tag {};
 
 	// Template for string literals passed as template arguments.
-	template <usize S> struct string_literal {
+	template <usize Size> struct string_literal {
 		// The backing char array.
-		char data[S];
+		char data[Size];
 
 		// Constructs the literal from a string literal.
-		consteval string_literal(const char (&str)[S]);
+		consteval string_literal(const char (&str)[Size]);
 
 		// Converts the literal to a C-string.
 		consteval operator const char*() const;
 		// Converts the literal to a string view.
 		consteval operator std::string_view() const;
 		// Converts the literal to a format string.
-		template <class... Args> consteval operator TR_FORMAT_STRING<Args...>() const;
+		template <typename... Args> consteval operator TR_FORMAT_STRING<Args...>() const;
 	};
 
+	// Human-readable type name.
+	template <typename T> consteval std::string_view type_name();
+
 	// Gets the type needed to store an integer constant and stores it in ::type.
-	template <usize S, class = void> struct size_type;
+	template <usize S, typename = void> struct size_type;
 	// Gets the type needed to store an integer constant.
 	template <usize S> using size_type_t = size_type<S>::type;
 
 	// Gets whether a type is a specialization of a template with type parameters and stores it in ::value.
-	template <class T, template <class...> class Z> struct is_specialization_of;
+	template <typename T, template <typename...> typename Template> struct is_specialization_of;
 	// Gets whether a type is a specialization of a template with value parameters and stores it in ::value.
-	template <class T, template <auto...> class Z> struct is_specialization_of_v;
+	template <typename T, template <auto...> typename Template> struct is_specialization_of_v;
 	// Gets whether a type is a specialization of a template with a leading value parameter and stores it in ::value.
-	template <class T, template <auto, class...> class Z> struct is_specialization_of_vt;
+	template <typename T, template <auto, typename...> typename Template> struct is_specialization_of_vt;
 	// Gets whether a type is a specialization of a template with a leading type and size parameter and stores it in ::value.
-	template <class T, template <class, auto, class...> class Z> struct is_specialization_of_tv;
+	template <typename T, template <typename, auto, typename...> typename Template> struct is_specialization_of_tv;
 
 	// Allows extraction of various properties of function types.
-	template <class T> struct function_traits;
+	template <typename Function> struct function_traits;
+	// Gets the return type of a function.
+	template <typename Function> using return_type_t = function_traits<Function>::return_type;
+	// Gets the class of a method type.
+	template <typename Function> using class_type_t = function_traits<Function>::return_type;
+	// Gets the arguments of a function as a tuple.
+	template <typename Function> using args_tuple_t = function_traits<Function>::args_tuple;
+	// Gets the type of the N-th argument to a function.
+	template <usize N, typename Function> using nth_arg_type_t = function_traits<Function>::template nth_arg_type<N>;
 } // namespace tr
 
-////////////////////////////////////////////////////////////// IMPLEMENTATION /////////////////////////////////////////////////////////////
-
-template <tr::usize S> consteval tr::string_literal<S>::string_literal(const char (&str)[S])
-{
-	std::ranges::copy(str, data);
-}
-
-template <tr::usize S> consteval tr::string_literal<S>::operator const char*() const
-{
-	return data;
-}
-
-template <tr::usize S> consteval tr::string_literal<S>::operator std::string_view() const
-{
-	return data;
-}
-
-template <tr::usize S> template <class... Args> consteval tr::string_literal<S>::operator TR_FORMAT_STRING<Args...>() const
-{
-	return std::string_view{*this};
-}
-
-template <tr::usize S> struct tr::size_type<S, std::enable_if_t<(S > UINT32_MAX)>> {
-	using type = u64;
-};
-template <tr::usize S> struct tr::size_type<S, std::enable_if_t<(S > UINT16_MAX && S <= UINT32_MAX)>> {
-	using type = u32;
-};
-template <tr::usize S> struct tr::size_type<S, std::enable_if_t<(S > UINT8_MAX && S <= UINT16_MAX)>> {
-	using type = u16;
-};
-template <tr::usize S> struct tr::size_type<S, std::enable_if_t<(S <= UINT8_MAX)>> {
-	using type = u8;
-};
-
-template <class T, template <class...> class Z> struct tr::is_specialization_of : std::false_type {};
-template <class... Args, template <class...> class Z> struct tr::is_specialization_of<Z<Args...>, Z> : std::true_type {};
-
-template <class T, template <auto...> class Z> struct tr::is_specialization_of_v : std::false_type {};
-template <auto... Values, template <auto...> class Z> struct tr::is_specialization_of_v<Z<Values...>, Z> : std::true_type {};
-
-template <class T, template <auto, class...> class Z> struct tr::is_specialization_of_vt : std::false_type {};
-template <auto S, class... Args, template <auto, class...> class Z>
-struct tr::is_specialization_of_vt<Z<S, Args...>, Z> : std::true_type {};
-
-template <class T, template <class, auto, class...> class Z> struct tr::is_specialization_of_tv : std::false_type {};
-template <class T, auto S, class... Args, template <class, auto, class...> class Z>
-struct tr::is_specialization_of_tv<Z<T, S, Args...>, Z> : std::true_type {};
-
-template <class Return, class... Args> struct tr::function_traits<Return(Args...)> {
-	using return_type = Return;
-	using args_tuple = std::tuple<Args...>;
-	template <usize N> using nth_argument_type = std::tuple_element_t<N, args_tuple>;
-};
-template <class Return, class Class, class... Args> struct tr::function_traits<Return (Class::*)(Args...)> {
-	using return_type = Return;
-	using class_type = Class;
-	using args_tuple = std::tuple<Args...>;
-	template <usize N> using nth_argument_type = std::tuple_element_t<N, args_tuple>;
-};
-template <class Return, class... Args> struct tr::function_traits<Return (*)(Args...)> : function_traits<Return(Args...)> {};
-template <class Return, class... Args> struct tr::function_traits<Return (&)(Args...)> : function_traits<Return(Args...)> {};
-template <class Return, class... Args> struct tr::function_traits<Return(Args...) noexcept> : function_traits<Return(Args...)> {};
-template <class Return, class... Args> struct tr::function_traits<Return (*)(Args...) noexcept> : function_traits<Return(Args...)> {};
-template <class Return, class... Args> struct tr::function_traits<Return (&)(Args...) noexcept> : function_traits<Return(Args...)> {};
-template <class Return, class Class, class... Args>
-struct tr::function_traits<Return (Class::*)(Args...) const> : function_traits<Return (Class::*)(Args...)> {};
-template <class Return, class Class, class... Args>
-struct tr::function_traits<Return (Class::*)(Args...) &> : function_traits<Return (Class::*)(Args...)> {};
-template <class Return, class Class, class... Args>
-struct tr::function_traits<Return (Class::*)(Args...) const&> : function_traits<Return (Class::*)(Args...)> {};
-template <class Return, class Class, class... Args>
-struct tr::function_traits<Return (Class::*)(Args...) &&> : function_traits<Return (Class::*)(Args...)> {};
-template <class Return, class Class, class... Args>
-struct tr::function_traits<Return (Class::*)(Args...) const&&> : function_traits<Return (Class::*)(Args...)> {};
-template <class Return, class Class, class... Args>
-struct tr::function_traits<Return (Class::*)(Args...) noexcept> : function_traits<Return (Class::*)(Args...)> {};
-template <class Return, class Class, class... Args>
-struct tr::function_traits<Return (Class::*)(Args...) const noexcept> : function_traits<Return (Class::*)(Args...)> {};
-template <class Return, class Class, class... Args>
-struct tr::function_traits<Return (Class::*)(Args...) & noexcept> : function_traits<Return (Class::*)(Args...)> {};
-template <class Return, class Class, class... Args>
-struct tr::function_traits<Return (Class::*)(Args...) const & noexcept> : function_traits<Return (Class::*)(Args...)> {};
-template <class Return, class Class, class... Args>
-struct tr::function_traits<Return (Class::*)(Args...) && noexcept> : function_traits<Return (Class::*)(Args...)> {};
-template <class Return, class Class, class... Args>
-struct tr::function_traits<Return (Class::*)(Args...) const && noexcept> : function_traits<Return (Class::*)(Args...)> {};
+#include "impl/template.hpp" // IWYU pragma: export

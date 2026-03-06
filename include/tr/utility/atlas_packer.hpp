@@ -26,9 +26,8 @@
 
 #pragma once
 #include "geometry.hpp"
-#include "macro.hpp"
 
-////////////////////////////////////////////////////////////// IMPLEMENTATION /////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
 namespace tr {
 	// Skyline rect packer for atlas textures.
@@ -48,7 +47,7 @@ namespace tr {
 	};
 
 	// Atlas packer combined with a list of rects.
-	template <class Key, class Hash = std::hash<Key>, class Pred = std::equal_to<>> class atlas_rects {
+	template <typename Key, typename Hash = std::hash<Key>, typename Pred = std::equal_to<>> class atlas_rects {
 	  public:
 		// Gets whether the atlas contains a key.
 		bool contains(const auto& key) const;
@@ -61,7 +60,7 @@ namespace tr {
 		// Clears the packer.
 		void clear();
 		// Tries to insert a rectangle.
-		template <class T> std::optional<glm::u16vec2> try_insert(T&& key, glm::u16vec2 size, glm::u16vec2 texture_size);
+		template <typename T> std::optional<glm::u16vec2> try_insert(T&& key, glm::u16vec2 size, glm::u16vec2 texture_size);
 
 	  private:
 		// The atlas packer.
@@ -71,40 +70,4 @@ namespace tr {
 	};
 } // namespace tr
 
-///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
-
-template <class Key, class Hash, class Pred> bool tr::atlas_rects<Key, Hash, Pred>::contains(const auto& key) const
-{
-	return m_rects.contains(key);
-}
-
-template <class Key, class Hash, class Pred> tr::usize tr::atlas_rects<Key, Hash, Pred>::entries() const
-{
-	return m_rects.size();
-}
-
-template <class Key, class Hash, class Pred> tr::rect2<tr::u16> tr::atlas_rects<Key, Hash, Pred>::operator[](const auto& key) const
-{
-	TR_ASSERT(contains(key), "Tried to get a rect at a nonexistant key from an atlas packer.");
-
-	return m_rects.find(key)->second;
-}
-
-template <class Key, class Hash, class Pred> void tr::atlas_rects<Key, Hash, Pred>::clear()
-{
-	m_packer.clear();
-	m_rects.clear();
-}
-
-template <class Key, class Hash, class Pred>
-template <class T>
-std::optional<glm::u16vec2> tr::atlas_rects<Key, Hash, Pred>::try_insert(T&& key, glm::u16vec2 size, glm::u16vec2 texture_size)
-{
-	TR_ASSERT(!contains(key), "Tried to insert a rect with the same key as an existing rect into an atlas packer.");
-
-	std::optional<glm::u16vec2> packing_result{m_packer.try_insert(size, texture_size)};
-	if (packing_result.has_value()) {
-		m_rects.emplace(std::forward<T>(key), rect2<u16>{*packing_result, size});
-	}
-	return packing_result;
-}
+#include "impl/atlas_packer.hpp" // IWYU pragma: export

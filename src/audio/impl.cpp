@@ -7,6 +7,7 @@
 #include "../../include/tr/audio/impl.hpp"
 #include "../../include/tr/audio/al_call.hpp"
 #include "../../include/tr/audio/source.hpp"
+#include "../../include/tr/utility/ranges.hpp"
 #include <AL/alext.h>
 #include <chrono>
 

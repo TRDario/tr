@@ -48,7 +48,7 @@ namespace tr::gfx {
 
 namespace tr::gfx {
 	// Defines a benchmark interface compatible with debug_renderer.
-	template <class T>
+	template <typename T>
 	concept debug_writable_benchmark = requires(const T& benchmark) {
 		std::chrono::duration_cast<duration>(benchmark.min());
 		std::chrono::duration_cast<duration>(benchmark.avg());
@@ -81,18 +81,18 @@ namespace tr::gfx {
 		// Writes a line of formatted text to the left side of the screen.
 		void write_left(std::string_view text, const style& style = default_style);
 		// Writes a line of text formatted as if by std::format to the left side of the screen in the default style.
-		template <class... Args> void write_left_format(TR_FORMAT_STRING<Args...> fmt, Args&&... args);
+		template <typename... Args> void write_left_format(TR_FORMAT_STRING<Args...> fmt, Args&&... args);
 		// Writes a line of text formatted as if by std::format to the left side of the screen.
-		template <class... Args> void write_left_format(const style& style, TR_FORMAT_STRING<Args...> fmt, Args&&... args);
+		template <typename... Args> void write_left_format(const style& style, TR_FORMAT_STRING<Args...> fmt, Args&&... args);
 		// Writes a line of formatted text to the right side of the screen.
 		void write_right(std::string_view text, const style& style = default_style);
 		// Writes a line of text formatted as if by std::format to the right side of the screen in the default style.
-		template <class... Args> void write_right_format(TR_FORMAT_STRING<Args...> fmt, Args&&... args);
+		template <typename... Args> void write_right_format(TR_FORMAT_STRING<Args...> fmt, Args&&... args);
 		// Writes a line of text formatted as if by std::format to the right side of the screen.
-		template <class... Args> void write_right_format(const style& style, TR_FORMAT_STRING<Args...> fmt, Args&&... args);
+		template <typename... Args> void write_right_format(const style& style, TR_FORMAT_STRING<Args...> fmt, Args&&... args);
 		// Writes benchmark data to the right side of the screen.
-		template <debug_writable_benchmark Benchmark, class R, class P>
-		void write_benchmark(const Benchmark& benchmark, std::string_view name, std::chrono::duration<R, P> limit);
+		template <debug_writable_benchmark Benchmark, typename Rep, typename Period>
+		void write_benchmark(const Benchmark& benchmark, std::string_view name, std::chrono::duration<Rep, Period> limit);
 
 		// Writes a newline on the left side of the screen.
 		void newline_left();
@@ -202,31 +202,4 @@ namespace tr::gfx {
 	};
 }; // namespace tr::gfx
 
-///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
-
-template <class... Args> void tr::gfx::debug_renderer::write_left_format(TR_FORMAT_STRING<Args...> fmt, Args&&... args)
-{
-	write_left(std::format(fmt, std::forward<Args>(args)...), default_style);
-}
-
-template <class... Args> void tr::gfx::debug_renderer::write_left_format(const style& style, TR_FORMAT_STRING<Args...> fmt, Args&&... args)
-{
-	write_left(std::format(fmt, std::forward<Args>(args)...), style);
-}
-
-template <class... Args> void tr::gfx::debug_renderer::write_right_format(TR_FORMAT_STRING<Args...> fmt, Args&&... args)
-{
-	write_left(std::format(fmt, std::forward<Args>(args)...), default_style);
-}
-
-template <class... Args> void tr::gfx::debug_renderer::write_right_format(const style& style, TR_FORMAT_STRING<Args...> fmt, Args&&... args)
-{
-	write_right(std::format(fmt, std::forward<Args>(args)...), style);
-}
-
-template <tr::gfx::debug_writable_benchmark Benchmark, class R, class P>
-void tr::gfx::debug_renderer::write_benchmark(const Benchmark& benchmark, std::string_view name, std::chrono::duration<R, P> limit)
-{
-	write_benchmark(std::chrono::duration_cast<duration>(benchmark.min()), std::chrono::duration_cast<duration>(benchmark.avg()),
-					std::chrono::duration_cast<duration>(benchmark.max()), name, std::chrono::duration_cast<duration>(limit));
-}
+#include "impl/debug_renderer.hpp" // IWYU pragma: export

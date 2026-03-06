@@ -5,9 +5,9 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "color.hpp"
-#include "math.hpp"
-#include "norm_cast.hpp"
+#include "../color.hpp"
+#include "../math.hpp"
+#include "../norm_cast.hpp"
 
 /////////////////////////////////////////////////////////////////// RGB8 //////////////////////////////////////////////////////////////////
 
@@ -36,7 +36,7 @@ constexpr tr::rgb8::rgb8(const hsv& hsv)
 {
 }
 
-template <tr::arithmetic T> constexpr tr::rgb8& tr::rgb8::operator+=(T addend)
+template <tr::arithmetic Scalar> constexpr tr::rgb8& tr::rgb8::operator+=(Scalar addend)
 {
 	r += addend;
 	g += addend;
@@ -52,7 +52,7 @@ constexpr tr::rgb8& tr::rgb8::operator+=(const rgb8& addend)
 	return *this;
 }
 
-template <tr::arithmetic T> constexpr tr::rgb8 tr::operator+(const rgb8& l, T addend)
+template <tr::arithmetic Scalar> constexpr tr::rgb8 tr::operator+(const rgb8& l, Scalar addend)
 {
 	rgb8 temp{l};
 	temp += addend;
@@ -66,7 +66,7 @@ constexpr tr::rgb8 tr::operator+(const rgb8& l, const rgb8& r)
 	return temp;
 }
 
-template <tr::arithmetic T> constexpr tr::rgb8& tr::rgb8::operator-=(T subtrahend)
+template <tr::arithmetic Scalar> constexpr tr::rgb8& tr::rgb8::operator-=(Scalar subtrahend)
 {
 	r -= subtrahend;
 	g -= subtrahend;
@@ -82,7 +82,7 @@ constexpr tr::rgb8& tr::rgb8::operator-=(const rgb8& subtrahend)
 	return *this;
 }
 
-template <tr::arithmetic T> constexpr tr::rgb8 tr::operator-(const rgb8& l, T subtrahend)
+template <tr::arithmetic Scalar> constexpr tr::rgb8 tr::operator-(const rgb8& l, Scalar subtrahend)
 {
 	rgb8 temp{l};
 	temp -= subtrahend;
@@ -96,7 +96,7 @@ constexpr tr::rgb8 tr::operator-(const rgb8& l, const rgb8& r)
 	return temp;
 }
 
-template <tr::arithmetic T> constexpr tr::rgb8& tr::rgb8::operator*=(T multiplier)
+template <tr::arithmetic Scalar> constexpr tr::rgb8& tr::rgb8::operator*=(Scalar multiplier)
 {
 	r *= multiplier;
 	g *= multiplier;
@@ -112,7 +112,7 @@ constexpr tr::rgb8& tr::rgb8::operator*=(const rgb8& multiplier)
 	return *this;
 }
 
-template <tr::arithmetic T> constexpr tr::rgb8 tr::operator*(const rgb8& l, T multiplier)
+template <tr::arithmetic Scalar> constexpr tr::rgb8 tr::operator*(const rgb8& l, Scalar multiplier)
 {
 	rgb8 temp{l};
 	temp *= multiplier;
@@ -126,7 +126,7 @@ constexpr tr::rgb8 tr::operator*(const rgb8& l, const rgb8& r)
 	return temp;
 }
 
-template <tr::arithmetic T> constexpr tr::rgb8& tr::rgb8::operator/=(T divisor)
+template <tr::arithmetic Scalar> constexpr tr::rgb8& tr::rgb8::operator/=(Scalar divisor)
 {
 	r /= divisor;
 	g /= divisor;
@@ -134,7 +134,7 @@ template <tr::arithmetic T> constexpr tr::rgb8& tr::rgb8::operator/=(T divisor)
 	return *this;
 }
 
-template <tr::arithmetic T> constexpr tr::rgb8 tr::operator/(const rgb8& l, T divisor)
+template <tr::arithmetic Scalar> constexpr tr::rgb8 tr::operator/(const rgb8& l, Scalar divisor)
 {
 	rgb8 temp{l};
 	temp /= divisor;
@@ -202,7 +202,7 @@ constexpr tr::rgbf::rgbf(const hsv& hsv)
 	}
 }
 
-template <tr::arithmetic T> constexpr tr::rgbf& tr::rgbf::operator+=(T addend)
+template <tr::arithmetic Scalar> constexpr tr::rgbf& tr::rgbf::operator+=(Scalar addend)
 {
 	r += addend;
 	g += addend;
@@ -218,7 +218,7 @@ constexpr tr::rgbf& tr::rgbf::operator+=(const rgbf& addend)
 	return *this;
 }
 
-template <tr::arithmetic T> constexpr tr::rgbf tr::operator+(const rgbf& l, T addend)
+template <tr::arithmetic Scalar> constexpr tr::rgbf tr::operator+(const rgbf& l, Scalar addend)
 {
 	rgbf temp{l};
 	temp += addend;
@@ -232,7 +232,7 @@ constexpr tr::rgbf tr::operator+(const rgbf& l, const rgbf& r)
 	return temp;
 }
 
-template <tr::arithmetic T> constexpr tr::rgbf& tr::rgbf::operator-=(T subtrahend)
+template <tr::arithmetic Scalar> constexpr tr::rgbf& tr::rgbf::operator-=(Scalar subtrahend)
 {
 	r -= subtrahend;
 	g -= subtrahend;
@@ -248,7 +248,7 @@ constexpr tr::rgbf& tr::rgbf::operator-=(const rgbf& subtrahend)
 	return *this;
 }
 
-template <tr::arithmetic T> constexpr tr::rgbf tr::operator-(const rgbf& l, T subtrahend)
+template <tr::arithmetic Scalar> constexpr tr::rgbf tr::operator-(const rgbf& l, Scalar subtrahend)
 {
 	rgbf temp{l};
 	temp -= subtrahend;
@@ -262,7 +262,7 @@ constexpr tr::rgbf tr::operator-(const rgbf& l, const rgbf& r)
 	return temp;
 }
 
-template <tr::arithmetic T> constexpr tr::rgbf& tr::rgbf::operator*=(T multiplier)
+template <tr::arithmetic Scalar> constexpr tr::rgbf& tr::rgbf::operator*=(Scalar multiplier)
 {
 	r *= multiplier;
 	g *= multiplier;
@@ -278,7 +278,7 @@ constexpr tr::rgbf& tr::rgbf::operator*=(const rgbf& multiplier)
 	return *this;
 }
 
-template <tr::arithmetic T> constexpr tr::rgbf tr::operator*(const rgbf& l, T multiplier)
+template <tr::arithmetic Scalar> constexpr tr::rgbf tr::operator*(const rgbf& l, Scalar multiplier)
 {
 	rgbf temp{l};
 	temp *= multiplier;
@@ -292,7 +292,7 @@ constexpr tr::rgbf tr::operator*(const rgbf& l, const rgbf& r)
 	return temp;
 }
 
-template <tr::arithmetic T> constexpr tr::rgbf& tr::rgbf::operator/=(T divisor)
+template <tr::arithmetic Scalar> constexpr tr::rgbf& tr::rgbf::operator/=(Scalar divisor)
 {
 	r /= divisor;
 	g /= divisor;
@@ -300,7 +300,7 @@ template <tr::arithmetic T> constexpr tr::rgbf& tr::rgbf::operator/=(T divisor)
 	return *this;
 }
 
-template <tr::arithmetic T> constexpr tr::rgbf tr::operator/(const rgbf& l, T divisor)
+template <tr::arithmetic Scalar> constexpr tr::rgbf tr::operator/(const rgbf& l, Scalar divisor)
 {
 	rgbf temp{l};
 	temp /= divisor;
@@ -334,7 +334,7 @@ constexpr tr::rgba8::rgba8(const hsv& hsv, u8 a)
 {
 }
 
-template <tr::arithmetic T> constexpr tr::rgba8& tr::rgba8::operator+=(T addend)
+template <tr::arithmetic Scalar> constexpr tr::rgba8& tr::rgba8::operator+=(Scalar addend)
 {
 	r += addend;
 	g += addend;
@@ -352,7 +352,7 @@ constexpr tr::rgba8& tr::rgba8::operator+=(const rgba8& addend)
 	return *this;
 }
 
-template <tr::arithmetic T> constexpr tr::rgba8 tr::operator+(const rgba8& l, T addend)
+template <tr::arithmetic Scalar> constexpr tr::rgba8 tr::operator+(const rgba8& l, Scalar addend)
 {
 	rgba8 temp{l};
 	temp += addend;
@@ -366,7 +366,7 @@ constexpr tr::rgba8 tr::operator+(const rgba8& l, const rgba8& r)
 	return temp;
 }
 
-template <tr::arithmetic T> constexpr tr::rgba8& tr::rgba8::operator-=(T subtrahend)
+template <tr::arithmetic Scalar> constexpr tr::rgba8& tr::rgba8::operator-=(Scalar subtrahend)
 {
 	r -= subtrahend;
 	g -= subtrahend;
@@ -384,7 +384,7 @@ constexpr tr::rgba8& tr::rgba8::operator-=(const rgba8& subtrahend)
 	return *this;
 }
 
-template <tr::arithmetic T> constexpr tr::rgba8 tr::operator-(const rgba8& l, T subtrahend)
+template <tr::arithmetic Scalar> constexpr tr::rgba8 tr::operator-(const rgba8& l, Scalar subtrahend)
 {
 	rgba8 temp{l};
 	temp -= subtrahend;
@@ -398,7 +398,7 @@ constexpr tr::rgba8 tr::operator-(const rgba8& l, const rgba8& r)
 	return temp;
 }
 
-template <tr::arithmetic T> constexpr tr::rgba8& tr::rgba8::operator*=(T multiplier)
+template <tr::arithmetic Scalar> constexpr tr::rgba8& tr::rgba8::operator*=(Scalar multiplier)
 {
 	r *= multiplier;
 	g *= multiplier;
@@ -416,7 +416,7 @@ constexpr tr::rgba8& tr::rgba8::operator*=(const rgba8& multiplier)
 	return *this;
 }
 
-template <tr::arithmetic T> constexpr tr::rgba8 tr::operator*(const rgba8& l, T multiplier)
+template <tr::arithmetic Scalar> constexpr tr::rgba8 tr::operator*(const rgba8& l, Scalar multiplier)
 {
 	rgba8 temp{l};
 	temp *= multiplier;
@@ -430,7 +430,7 @@ constexpr tr::rgba8 tr::operator*(const rgba8& l, const rgba8& r)
 	return temp;
 }
 
-template <tr::arithmetic T> constexpr tr::rgba8& tr::rgba8::operator/=(T divisor)
+template <tr::arithmetic Scalar> constexpr tr::rgba8& tr::rgba8::operator/=(Scalar divisor)
 {
 	r /= divisor;
 	g /= divisor;
@@ -439,7 +439,7 @@ template <tr::arithmetic T> constexpr tr::rgba8& tr::rgba8::operator/=(T divisor
 	return *this;
 }
 
-template <tr::arithmetic T> constexpr tr::rgba8 tr::operator/(const rgba8& l, T divisor)
+template <tr::arithmetic Scalar> constexpr tr::rgba8 tr::operator/(const rgba8& l, Scalar divisor)
 {
 	rgba8 temp{l};
 	temp /= divisor;
@@ -473,7 +473,7 @@ constexpr tr::rgbaf::rgbaf(const hsv& hsv, float a)
 {
 }
 
-template <tr::arithmetic T> constexpr tr::rgbaf& tr::rgbaf::operator+=(T addend)
+template <tr::arithmetic Scalar> constexpr tr::rgbaf& tr::rgbaf::operator+=(Scalar addend)
 {
 	r += addend;
 	g += addend;
@@ -491,7 +491,7 @@ constexpr tr::rgbaf& tr::rgbaf::operator+=(const rgbaf& addend)
 	return *this;
 }
 
-template <tr::arithmetic T> constexpr tr::rgbaf tr::operator+(const rgbaf& l, T addend)
+template <tr::arithmetic Scalar> constexpr tr::rgbaf tr::operator+(const rgbaf& l, Scalar addend)
 {
 	rgbaf temp{l};
 	temp += addend;
@@ -505,7 +505,7 @@ constexpr tr::rgbaf tr::operator+(const rgbaf& l, const rgbaf& r)
 	return temp;
 }
 
-template <tr::arithmetic T> constexpr tr::rgbaf& tr::rgbaf::operator-=(T subtrahend)
+template <tr::arithmetic Scalar> constexpr tr::rgbaf& tr::rgbaf::operator-=(Scalar subtrahend)
 {
 	r -= subtrahend;
 	g -= subtrahend;
@@ -523,7 +523,7 @@ constexpr tr::rgbaf& tr::rgbaf::operator-=(const rgbaf& subtrahend)
 	return *this;
 }
 
-template <tr::arithmetic T> constexpr tr::rgbaf tr::operator-(const rgbaf& l, T subtrahend)
+template <tr::arithmetic Scalar> constexpr tr::rgbaf tr::operator-(const rgbaf& l, Scalar subtrahend)
 {
 	rgbaf temp{l};
 	temp -= subtrahend;
@@ -537,7 +537,7 @@ constexpr tr::rgbaf tr::operator-(const rgbaf& l, const rgbaf& r)
 	return temp;
 }
 
-template <tr::arithmetic T> constexpr tr::rgbaf& tr::rgbaf::operator*=(T multiplier)
+template <tr::arithmetic Scalar> constexpr tr::rgbaf& tr::rgbaf::operator*=(Scalar multiplier)
 {
 	r *= multiplier;
 	g *= multiplier;
@@ -555,7 +555,7 @@ constexpr tr::rgbaf& tr::rgbaf::operator*=(const rgbaf& multiplier)
 	return *this;
 }
 
-template <tr::arithmetic T> constexpr tr::rgbaf tr::operator*(const rgbaf& l, T multiplier)
+template <tr::arithmetic Scalar> constexpr tr::rgbaf tr::operator*(const rgbaf& l, Scalar multiplier)
 {
 	rgbaf temp{l};
 	temp *= multiplier;
@@ -569,7 +569,7 @@ constexpr tr::rgbaf tr::operator*(const rgbaf& l, const rgbaf& r)
 	return temp;
 }
 
-template <tr::arithmetic T> constexpr tr::rgbaf& tr::rgbaf::operator/=(T divisor)
+template <tr::arithmetic Scalar> constexpr tr::rgbaf& tr::rgbaf::operator/=(Scalar divisor)
 {
 	r /= divisor;
 	g /= divisor;
@@ -578,7 +578,7 @@ template <tr::arithmetic T> constexpr tr::rgbaf& tr::rgbaf::operator/=(T divisor
 	return *this;
 }
 
-template <tr::arithmetic T> constexpr tr::rgbaf tr::operator/(const rgbaf& l, T divisor)
+template <tr::arithmetic Scalar> constexpr tr::rgbaf tr::operator/(const rgbaf& l, Scalar divisor)
 {
 	rgbaf temp{l};
 	temp /= divisor;

@@ -53,23 +53,23 @@ namespace tr {
 // Namespace containing UTF-8-related functionality.
 namespace tr::utf8 {
 	// Iterator types supported by the UTF-8 functions.
-	template <class T>
+	template <typename T>
 	concept base_iterator = one_of<T, char*, const char*, std::string_view::iterator, std::string::iterator, std::string::const_iterator>;
 
 	// String types supported by the UTF-8 functions.
-	template <class T>
+	template <typename T>
 	concept string = std::same_as<T, std::string> || specialization_of_v<T, static_string>;
 
 	// Converts a UTF-8 sequence to a Unicode codepoint.
-	template <base_iterator T> constexpr codepoint to_cp(T it);
+	template <base_iterator Iterator> constexpr codepoint to_cp(Iterator it);
 	// Gets an iterator to the next character.
-	template <base_iterator T> constexpr T next(T it);
+	template <base_iterator Iterator> constexpr Iterator next(Iterator it);
 	// Gets an iterator to the nth next character.
-	template <base_iterator T> constexpr T next(T it, usize n);
+	template <base_iterator Iterator> constexpr Iterator next(Iterator it, usize n);
 	// Gets an iterator to the previous character.
-	template <base_iterator T> constexpr T prev(T it);
+	template <base_iterator Iterator> constexpr Iterator prev(Iterator it);
 	// Gets an iterator to the nth previous character.
-	template <base_iterator T> constexpr T prev(T it, usize n);
+	template <base_iterator Iterator> constexpr Iterator prev(Iterator it, usize n);
 	// Inserts a character into a UTF-8-encoded string.
 	template <string String> constexpr String::iterator insert(String& str, typename String::iterator where, codepoint cp);
 	// Erases a character from a UTF-8-encoded string.
@@ -122,6 +122,4 @@ namespace tr::utf8 {
 	constexpr usize length(std::string_view str);
 } // namespace tr::utf8
 
-////////////////////////////////////////////////////////////// IMPLEMENTATION /////////////////////////////////////////////////////////////
-
-#include "utf8_impl.hpp" // IWYU pragma: export
+#include "impl/utf8.hpp" // IWYU pragma: export

@@ -16,6 +16,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
+#include "../utility/cstring_view.hpp"
 #include "graphics_context.hpp"
 #include "render_target.hpp"
 #include "texture.hpp"
@@ -94,14 +95,9 @@ namespace tr::gfx {
 #ifdef TR_ENABLE_ASSERTS
 	// Moves the label of an OpenGL object to a new ID.
 	void move_label(unsigned int type, unsigned int old_id, unsigned int new_id);
-#define TR_MOVE_LABEL(type, old_id, new_id)                                                                                                \
-	do {                                                                                                                                   \
-		tr::gfx::move_label(type, old_id, new_id);                                                                                         \
-	} while (0)
+#define TR_MOVE_LABEL(type, old_id, new_id) ::tr::gfx::move_label(type, old_id, new_id)
 #else
-#define TR_MOVE_LABEL(type, old_id, new_Id)                                                                                                \
-	do {                                                                                                                                   \
-	} while (0)
+#define TR_MOVE_LABEL(type, old_id, new_Id) void(0)
 #endif
 } // namespace tr::gfx
 

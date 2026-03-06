@@ -16,34 +16,17 @@
 
 namespace tr {
 	// Transparent string hasher.
-	struct string_hash {
+	struct string_hash : std::hash<std::string_view> {
 		using is_transparent = std::true_type;
-
-		// Hashes a string.
-		inline auto operator()(std::string_view str) const;
 	};
 	// Transparent string equality comparator.
-	struct string_eq {
+	struct string_eq : std::equal_to<std::string_view> {
 		using is_transparent = std::true_type;
-
-		// Compares two strings for equality.
-		constexpr bool operator()(std::string_view l, std::string_view r) const;
 	};
 
 	// Typedef for a string-key hash map.
-	template <class Value> using string_hash_map = std::unordered_map<std::string, Value, string_hash, string_eq>;
+	template <typename Value> using string_hash_map = std::unordered_map<std::string, Value, string_hash, string_eq>;
 	// Typedef for a static string-key hash map.
-	template <usize S, class Value> using static_string_hash_map = std::unordered_map<static_string<S>, Value, string_hash, string_eq>;
+	template <usize KeyCapacity, typename Value>
+	using static_string_hash_map = std::unordered_map<static_string<KeyCapacity>, Value, string_hash, string_eq>;
 } // namespace tr
-
-///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
-
-auto tr::string_hash::operator()(std::string_view str) const
-{
-	return std::hash<std::string_view>{}(str);
-}
-
-constexpr bool tr::string_eq::operator()(std::string_view l, std::string_view r) const
-{
-	return l == r;
-}

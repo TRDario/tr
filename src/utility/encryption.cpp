@@ -1,6 +1,13 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Implements the non-templated parts of encryption.hpp.                                                                                 //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #include "../../include/tr/utility/encryption.hpp"
 #include "../../include/tr/utility/binary_io.hpp"
 #include "../../include/tr/utility/mstream.hpp"
+#include "../../include/tr/utility/rng.hpp"
 #include <lz4.h>
 
 namespace {
@@ -54,7 +61,7 @@ std::string_view tr::encryption_error::details() const
 
 void tr::encrypt_to(std::vector<std::byte>& out, std::span<const std::byte> raw)
 {
-	const u8 key{u8(gen_random_seed())};
+	const u8 key{u8(generate_random_seed())};
 
 	out.resize(LZ4_compressBound(int(raw.size())) + header_size);
 	const std::span<char> compress_out{(char*)(out.data() + header_size), out.size() - header_size};

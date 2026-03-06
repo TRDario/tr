@@ -71,11 +71,11 @@ namespace tr::gfx {
 		bool normalized{false};
 	};
 	// Tag to signify an integral vertex attribute should be normalized.
-	template <class T> struct normalized {};
+	template <typename T> struct normalized {};
 
 	// Maps a C++ type to a vertex attribute. Mappings for 32-bit or smaller integers (wrapped in normalized or not) and floats, glm::vecs
 	// of such, and colors are defined by default.
-	template <class T>
+	template <typename T>
 	inline constexpr vertex_attribute as_vertex_attribute{
 		TR_UNSPECIALIZED_VARIABLE_TEMPLATE(T, vertex_attribute, "Type is not convertible to vertex_attribute!"),
 	};
@@ -83,7 +83,7 @@ namespace tr::gfx {
 	// Maps a C++ type or a list of C++ types to a list of vertex attributes. If the list is composed entirely of types convertible to
 	// vertex attributes, they will be grouped into a list. If the type has as_vertex_attribute_list as a public static array of vertex
 	// attributes, that list will be used. Otherwise, the type must be manually specialized.
-	template <class... Ts>
+	template <typename... Ts>
 	inline constexpr std::array as_vertex_attribute_list{
 		TR_UNSPECIALIZED_VARIABLE_TEMPLATE(Ts..., TR_MACRO_COMMA_GUARD(std::array<vertex_attribute, 0>),
 										   "Type(s) is/are not convertible to vertex attribute list!"),
@@ -99,7 +99,7 @@ namespace tr::gfx {
 		std::span<const vertex_attribute> attrs;
 	};
 	// Constructs a vertex binding using tr::gfx::as_vertex_attribute_list<T>.
-	template <class T> constexpr vertex_binding make_vertex_binding(u32 divisor = not_instanced);
+	template <typename T> constexpr vertex_binding make_vertex_binding(u32 divisor = not_instanced);
 
 	// GPU vertex format.
 	class vertex_format {
@@ -141,6 +141,4 @@ struct TR_FMT::formatter<tr::gfx::vertex_attribute> : private TR_FMT::formatter<
 	template <typename FormatContext> constexpr auto format(tr::gfx::vertex_attribute v, FormatContext& ctx) const;
 };
 
-////////////////////////////////////////////////////////////// IMPLEMENTATION /////////////////////////////////////////////////////////////
-
-#include "vertex_format_impl.hpp" // IWYU pragma: export
+#include "impl/vertex_format.hpp" // IWYU pragma: export

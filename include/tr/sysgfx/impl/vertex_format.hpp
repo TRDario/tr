@@ -5,8 +5,8 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "../utility/color.hpp"
-#include "vertex_format.hpp"
+#include "../../utility/color.hpp"
+#include "../vertex_format.hpp"
 
 //////////////////////////////////////////////////////////// VERTEX ATTRIBUTES ////////////////////////////////////////////////////////////
 
@@ -39,7 +39,7 @@ template <> inline constexpr tr::gfx::vertex_attribute tr::gfx::as_vertex_attrib
 template <> inline constexpr tr::gfx::vertex_attribute tr::gfx::as_vertex_attribute<glm::vec3>{vertex_attribute_type::f32, 3, false};
 template <> inline constexpr tr::gfx::vertex_attribute tr::gfx::as_vertex_attribute<glm::vec4>{vertex_attribute_type::f32, 4, false};
 
-template <class T>
+template <typename T>
 inline constexpr tr::gfx::vertex_attribute tr::gfx::as_vertex_attribute<tr::gfx::normalized<T>>{as_vertex_attribute<T>.type,
 																								as_vertex_attribute<T>.elements, true};
 
@@ -51,14 +51,14 @@ inline constexpr tr::gfx::vertex_attribute tr::gfx::as_vertex_attribute<tr::rgba
 ////////////////////////////////////////////////////////// VERTEX ATTRIBUTE LIST //////////////////////////////////////////////////////////
 
 namespace tr::gfx {
-	template <class T>
+	template <typename T>
 	concept convertible_to_vertex_attribute = requires { as_vertex_attribute<T>; };
 } // namespace tr::gfx
 
 template <tr::gfx::convertible_to_vertex_attribute... Ts>
 inline constexpr std::array tr::gfx::as_vertex_attribute_list<Ts...>{as_vertex_attribute<Ts>...};
 
-template <class T>
+template <typename T>
 	requires(requires {
 		{ T::as_vertex_attribute_list } -> tr::cvref_specialization_of_tv<std::array>;
 	})
@@ -66,7 +66,7 @@ inline constexpr std::array tr::gfx::as_vertex_attribute_list<T>{T::as_vertex_at
 
 ////////////////////////////////////////////////////////////// VERTEX BINDING /////////////////////////////////////////////////////////////
 
-template <class T> constexpr tr::gfx::vertex_binding tr::gfx::make_vertex_binding(u32 divisor)
+template <typename T> constexpr tr::gfx::vertex_binding tr::gfx::make_vertex_binding(u32 divisor)
 {
 	return {divisor, as_vertex_attribute_list<T>};
 }

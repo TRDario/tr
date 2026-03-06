@@ -63,64 +63,65 @@
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
 namespace tr {
-
 	// Determines whether a type is in a variant's type list.
-	template <class T, specialization_of<std::variant> V> struct type_in_variant;
+	template <typename T, specialization_of<std::variant> Variant> struct type_in_variant;
 	// Determines whether a type is in a variant's type list.
-	template <class T, class V>
-	concept in_variant = type_in_variant<T, V>::value;
+	template <typename T, typename Variant>
+	concept in_variant = type_in_variant<T, Variant>::value;
 	// Gets whether a variant is holding one of a number of types.
-	template <class... Ts, one_of<Ts...>... Us> constexpr bool holds_one_of(const std::variant<Us...>& v);
+	template <typename... Choices, one_of<Choices...>... Alternatives> constexpr bool holds_one_of(const std::variant<Alternatives...>& v);
+	// Gets the type name of a varint's held alternative.
+	template <typename... Alternatives> constexpr std::string_view type_name_of_held_alternative(const std::variant<Alternatives...>& v);
 
 	// Determines whether a variant type is a superset of another variant type.
-	template <specialization_of<std::variant> T, specialization_of<std::variant> V> struct is_superset_of;
+	template <specialization_of<std::variant> Variant1, specialization_of<std::variant> Variant2> struct is_superset_of;
 	// Determines whether a variant type is a superset of another variant type.
-	template <class T, class V>
-	concept superset_of = is_superset_of<T, V>::value;
+	template <typename VariantL, typename VariantR>
+	concept superset_of = is_superset_of<VariantL, VariantR>::value;
 	// Determines whether a variant type is a subset of another variant type.
-	template <class T, class V>
-	concept subset_of = superset_of<V, T>;
+	template <typename VariantL, typename VariantR>
+	concept subset_of = superset_of<VariantR, VariantL>;
 	// Gets whether a variant can be casted using subset_cast to another type.
-	template <class T, class V>
-		requires(subset_of<T, V>)
-	constexpr bool subset_castable_to(const V& v);
+	template <typename OutVariant, typename InVariant>
+		requires(subset_of<OutVariant, InVariant>)
+	constexpr bool subset_castable_to(const InVariant& v);
 	// Casts a variant into another variant that is a superset of it.
-	template <class To, class From>
-		requires(superset_of<To, std::remove_cvref_t<From>>)
-	constexpr To superset_cast(From&& v);
+	template <typename OutVariant, typename InVariant>
+		requires(superset_of<OutVariant, std::remove_cvref_t<InVariant>>)
+	constexpr OutVariant superset_cast(InVariant&& v);
 	// Casts a variant into another variant that is a subset of it.
-	template <class To, class From>
-		requires(subset_of<To, std::remove_cvref_t<From>>)
-	constexpr To subset_cast(From&& v);
+	template <typename OutVariant, typename InVariant>
+		requires(subset_of<OutVariant, std::remove_cvref_t<InVariant>>)
+	constexpr OutVariant subset_cast(InVariant&& v);
 
 	// Struct which can be used to get the indices of types in a variant though get<T>.
-	template <specialization_of<std::variant> T> struct variant_indices;
+	template <specialization_of<std::variant> Variant> struct variant_indices;
 
 	// Unchecked variant getter.
-	template <class T, class... Ts> T& get(std::variant<Ts...>& v);
+	template <typename Alternative, typename... Alternatives> Alternative& get(std::variant<Alternatives...>& v);
 	// Unchecked variant getter.
-	template <class T, class... Ts> T&& get(std::variant<Ts...>&& v);
+	template <typename Alternative, typename... Alternatives> Alternative&& get(std::variant<Alternatives...>&& v);
 	// Unchecked variant getter.
-	template <class T, class... Ts> const T& get(const std::variant<Ts...>& v);
+	template <typename Alternative, typename... Alternatives> const Alternative& get(const std::variant<Alternatives...>& v);
 	// Unchecked variant getter.
-	template <class T, class... Ts> const T&& get(const std::variant<Ts...>&& v);
+	template <typename Alternative, typename... Alternatives> const Alternative&& get(const std::variant<Alternatives...>&& v);
 
 	// Match statement helper class.
-	template <class... Fs> struct match : Fs... {
-		using Fs::operator()...;
+	template <typename... Functions> struct match : Functions... {
+		using Functions::operator()...;
 	};
 	// Match statement.
 	template <cvref_specialization_of<std::variant> Variant, cvref_specialization_of<match> Match>
 	decltype(auto) operator|(Variant&& v, Match&& m);
 
 	// Stateful match statement helper class.
-	template <class State, class... Fs> class stateful_match : match<Fs...> {
+	template <typename State, typename... Functions> class stateful_match : match<Functions...> {
 	  public:
 		// Constructs a stateful match statement.
-		stateful_match(State&& state, Fs... fns);
+		stateful_match(State&& state, Functions... fns);
 
 		// Calls one of the underlying callables.
-		template <class... Args> decltype(auto) operator()(Args&&... args);
+		template <typename... Args> decltype(auto) operator()(Args&&... args);
 
 	  private:
 		// The match state.
@@ -133,9 +134,7 @@ namespace tr {
 	// Used in a match statement to mark all other cases as ignorable.
 	constexpr auto ignore_other_cases{[](auto&&...) {}};
 	// Used in a match statement to give all other cases a default result.
-	template <class T> constexpr auto default_result(T&& value);
+	template <typename Value> constexpr auto default_result(Value&& value);
 } // namespace tr
 
-////////////////////////////////////////////////////////////// IMPLEMENTATION /////////////////////////////////////////////////////////////
-
-#include "variant_impl.hpp"
+#include "impl/variant.hpp" // IWYU pragma: export

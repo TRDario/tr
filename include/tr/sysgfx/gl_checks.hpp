@@ -9,7 +9,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "../utility/common.hpp"
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
@@ -56,7 +55,7 @@ namespace tr::gfx {
 	};
 
 	// Maps a C++ type to a glsl_type enum value.
-	template <class T> inline constexpr glsl_type as_glsl_type{glsl_type::undefined};
+	template <typename T> inline constexpr glsl_type as_glsl_type{glsl_type::undefined};
 }; // namespace tr::gfx
 
 // GLSL type formatter.
@@ -74,6 +73,4 @@ struct TR_FMT::formatter<tr::gfx::glsl_variable> : private TR_FMT::formatter<tr:
 	template <typename FormatContext> constexpr auto format(const tr::gfx::glsl_variable& v, FormatContext& ctx) const;
 };
 
-////////////////////////////////////////////////////////////// IMPLEMENTATION /////////////////////////////////////////////////////////////
-
-#include "gl_checks_impl.hpp" // IWYU pragma: export
+#include "impl/gl_checks.hpp" // IWYU pragma: export

@@ -120,44 +120,46 @@ namespace tr {
 	};
 
 	// Rectangle object.
-	template <int S, class T> struct rect {
+	template <int Dimensions, typename Element> struct rect {
 		// The offset of the top-left corner of the rect.
-		glm::vec<S, T> tl;
+		glm::vec<Dimensions, Element> tl;
 		// The size of the rectangle.
-		glm::vec<S, T> size;
+		glm::vec<Dimensions, Element> size;
 
 		// Default-constructs a rect.
 		constexpr rect() = default;
 		// Constructs a rect from a top-left corner and size.
-		constexpr rect(glm::vec<S, T> tl, glm::vec<S, T> size);
+		constexpr rect(glm::vec<Dimensions, Element> tl, glm::vec<Dimensions, Element> size);
 		// Constructs a rect with the top-left corner at the origin.
-		constexpr rect(glm::vec<S, T> size);
+		constexpr rect(glm::vec<Dimensions, Element> size);
 		// Copy-constructs a rect.
-		template <class T1> constexpr rect(const rect<S, T1>& rect);
+		template <typename ElementR> constexpr rect(const rect<Dimensions, ElementR>& rect);
 
-		template <class T1> constexpr bool operator==(const rect<S, T1>&) const;
+		template <typename ElementR> constexpr bool operator==(const rect<Dimensions, ElementR>&) const;
 
 		// Determines whether a point is contained inside the rect.
-		template <class T1> constexpr bool contains(glm::vec<S, T1> point) const;
+		template <typename ElementR> constexpr bool contains(glm::vec<Dimensions, ElementR> point) const;
 	};
 	// 2D rectangle.
-	template <class T> using rect2 = rect<2, T>;
+	template <typename Element> using rect2 = rect<2, Element>;
 	// Shorthand for an int 2D rect.
 	using irect2 = rect2<int>;
 	// Shorthand for a float 2D rect.
 	using frect2 = rect2<float>;
 	// 3D rectangle.
-	template <class T> using rect3 = rect<3, T>;
+	template <typename Element> using rect3 = rect<3, Element>;
 	// Shorthand for an int 3D rect.
 	using irect3 = rect3<int>;
 	// Shorthand for a float 3D rect.
 	using frect3 = rect3<float>;
 	// Rect binary readers.
-	template <int S, class T> struct binary_reader<rect<S, T>> : raw_binary_reader<rect<S, T>> {};
+	template <int Dimensions, typename Element>
+	struct binary_reader<rect<Dimensions, Element>> : raw_binary_reader<rect<Dimensions, Element>> {};
 	// Rect binary writers.
-	template <int S, class T> struct binary_writer<rect<S, T>> : raw_binary_writer<rect<S, T>> {};
+	template <int Dimensions, typename Element>
+	struct binary_writer<rect<Dimensions, Element>> : raw_binary_writer<rect<Dimensions, Element>> {};
 	// Determines if two rects intersect.
-	template <class T1, class T2> constexpr bool intersecting(const rect2<T1>& r1, const rect2<T2>& r2);
+	template <typename ElementL, typename ElementR> constexpr bool intersecting(const rect2<ElementL>& r1, const rect2<ElementR>& r2);
 
 	// 2D triangle.
 	struct triangle {
@@ -207,15 +209,17 @@ namespace tr {
 	glm::vec2 magth(float mag, angle th);
 
 	// Gets the squared length of a vector.
-	template <int S, class T> constexpr T length2(glm::vec<S, T> a);
+	template <int Dimensions, typename Element> constexpr Element length2(glm::vec<Dimensions, Element> a);
 	// Gets the squared distance between two points.
-	template <int S, class T1, class T2> constexpr std::common_type_t<T1, T2> dist2(glm::vec<S, T1> a, glm::vec<S, T2> b);
+	template <int Dimensions, typename ElementL, typename ElementR>
+	constexpr std::common_type_t<ElementL, ElementR> dist2(glm::vec<Dimensions, ElementL> a, glm::vec<Dimensions, ElementR> b);
 	// Computes the top-left corner of a rectangle given a position, size, and anchor point.
-	template <class T> constexpr glm::tvec2<T> tl(glm::tvec2<T> pos, glm::tvec2<T> size, align pos_anchor);
+	template <typename Element> constexpr glm::tvec2<Element> tl(glm::tvec2<Element> pos, glm::tvec2<Element> size, align pos_anchor);
 	// Gets the inverse of a vector.
-	template <int S, arithmetic T> constexpr glm::vec<S, float> inverse(const glm::vec<S, T>& vec);
+	template <int Dimensions, arithmetic Element> constexpr glm::vec<Dimensions, float> inverse(const glm::vec<Dimensions, Element>& vec);
 	// Calculates the 2D cross product of two vectors.
-	template <class T1, class T2> constexpr std::common_type_t<T1, T2> cross(glm::tvec2<T1> a, glm::tvec2<T2> b);
+	template <typename ElementL, typename ElementR>
+	constexpr std::common_type_t<ElementL, ElementR> cross(glm::tvec2<ElementL> a, glm::tvec2<ElementR> b);
 	// Determines whether 3 points are collinear.
 	bool collinear(glm::vec2 a, glm::vec2 b, glm::vec2 c);
 
@@ -247,11 +251,14 @@ namespace tr {
 	std::optional<glm::vec2> intersection(glm::vec2 a1, angle th1, glm::vec2 a2, glm::vec2 b2);
 
 	// Performs a mirror repeat mapping.
-	template <arithmetic T> constexpr T mirror_repeat(T v, T min, T max);
+	template <arithmetic Number> constexpr Number mirror_repeat(Number v, Number min, Number max);
 	// Performs a mirror repeat mapping.
-	template <int S, arithmetic T> constexpr glm::vec<S, T> mirror_repeat(glm::vec<S, T> v, glm::vec<S, T> min, glm::vec<S, T> max);
+	template <int Dimensions, arithmetic Element>
+	constexpr glm::vec<Dimensions, Element> mirror_repeat(glm::vec<Dimensions, Element> v, glm::vec<Dimensions, Element> min,
+														  glm::vec<Dimensions, Element> max);
 	// Performs a mirror repeat mapping of a vector on a rect.
-	template <int S, arithmetic T> glm::vec<S, T> constexpr mirror_repeat(glm::vec<S, T> v, const rect<S, T>& rect);
+	template <int Dimensions, arithmetic Element>
+	glm::vec<Dimensions, Element> constexpr mirror_repeat(glm::vec<Dimensions, Element> v, const rect<Dimensions, Element>& rect);
 
 	inline namespace literals {
 		// Matrix multiplication operators.
@@ -288,6 +295,4 @@ namespace tr {
 	bool intersecting(std::span<const glm::vec2> a, std::span<const glm::vec2> b);
 } // namespace tr
 
-////////////////////////////////////////////////////////////// IMPLEMENTATION /////////////////////////////////////////////////////////////
-
-#include "geometry_impl.hpp" // IWYU pragma: export
+#include "impl/geometry.hpp" // IWYU pragma: export

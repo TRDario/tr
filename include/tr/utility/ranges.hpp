@@ -24,113 +24,35 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "macro.hpp"
+#include "concepts.hpp"
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
 namespace tr {
 	// Gets a view of a contiguous range as a span of immutable bytes.
-	template <standard_layout_range T> auto range_bytes(const T& range);
+	template <standard_layout_range Range> auto range_bytes(const Range& range);
 	// Gets a view of an object as a span of immutable bytes.
-	template <standard_layout T> std::span<const std::byte, sizeof(T)> as_bytes(const T& object);
+	template <standard_layout Object> std::span<const std::byte, sizeof(Object)> as_bytes(const Object& object);
 	// Gets a view of a contiguous range as a span of mutable bytes.
-	template <standard_layout_range T> auto range_mut_bytes(T& range);
+	template <standard_layout_range Range> auto range_mut_bytes(Range& range);
 	// Gets a view of an object as a span of mutable bytes.
-	template <standard_layout T> std::span<std::byte, sizeof(T)> as_mut_bytes(T& object);
+	template <standard_layout Object> std::span<std::byte, sizeof(Object)> as_mut_bytes(Object& object);
 
 	// Reinterprets a span of mutable bytes as an object and returns a reference to it.
-	template <standard_layout T, usize S> T& as_mut_object(std::span<std::byte, S> bytes);
+	template <standard_layout Object, usize Size> Object& as_mut_object(std::span<std::byte, Size> bytes);
 	// Reinterprets a span of immutable bytes as a const object and returns a reference to it.
-	template <standard_layout T, usize S> const T& as_object(std::span<const std::byte, S> bytes);
+	template <standard_layout Object, usize Size> const Object& as_object(std::span<const std::byte, Size> bytes);
 	// Reinterprets a span of mutable bytes as a span of objects.
-	template <standard_layout T, usize S> auto as_mut_objects(std::span<std::byte, S> bytes);
+	template <standard_layout Element, usize Size> auto as_mut_objects(std::span<std::byte, Size> bytes);
 	// Reinterprets a span of immutable bytes as a span of const objects.
-	template <standard_layout T, usize S> auto as_objects(std::span<const std::byte, S> bytes);
+	template <standard_layout Element, usize Size> auto as_objects(std::span<const std::byte, Size> bytes);
 
 	// Creates an adaptor for a transformed view over a range as a range of one of its members.
-	template <class R> constexpr auto project(auto R::* ptr);
+	template <typename Range> constexpr auto project(auto Range::* ptr);
 	// Creates a transformed view over a range as a range of one of its members.
-	template <std::ranges::range R> constexpr auto project(R&& range, auto std::ranges::range_value_t<R>::* ptr);
+	template <std::ranges::range Range> constexpr auto project(Range&& range, auto std::ranges::range_value_t<Range>::* ptr);
 	// Dereferencing range view.
 	inline constexpr auto deref{std::views::transform([](auto& v) -> decltype(auto) { return *v; })};
 } // namespace tr
 
-///////////////////////////////////////////////////////////// IMPLEMENTATION //////////////////////////////////////////////////////////////
-
-template <tr::standard_layout_range T> auto tr::range_bytes(const T& range)
-{
-	return std::as_bytes(std::span{range});
-}
-
-template <tr::standard_layout_range T> auto tr::range_mut_bytes(T& range)
-{
-	return std::as_writable_bytes(std::span{range});
-}
-
-template <tr::standard_layout T> std::span<const std::byte, sizeof(T)> tr::as_bytes(const T& object)
-{
-	return std::as_bytes(std::span<const T, 1>{std::addressof(object), 1});
-}
-
-template <tr::standard_layout T> std::span<std::byte, sizeof(T)> tr::as_mut_bytes(T& object)
-{
-	return std::as_writable_bytes(std::span<T, 1>{std::addressof(object), 1});
-}
-
-template <tr::standard_layout T, tr::usize S> T& tr::as_mut_object(std::span<std::byte, S> bytes)
-{
-	if constexpr (S != std::dynamic_extent) {
-		static_assert(S == sizeof(T), "Cannot reinterpret byte span as object due to size != sizeof(T).");
-	}
-	else {
-		TR_ASSERT(S == sizeof(T), "Cannot reinterpret byte span as object due to size != sizeof(T).");
-	}
-
-	return *(T*)bytes.data();
-}
-
-template <tr::standard_layout T, tr::usize S> const T& tr::as_object(std::span<const std::byte, S> bytes)
-{
-	if constexpr (S != std::dynamic_extent) {
-		static_assert(S == sizeof(T), "Cannot reinterpret byte span as object due to size != sizeof(T).");
-	}
-	else {
-		TR_ASSERT(S == sizeof(T), "Cannot reinterpret byte span as object due to size != sizeof(T).");
-	}
-
-	return *(const T*)bytes.data();
-}
-
-template <tr::standard_layout T, tr::usize S> auto tr::as_mut_objects(std::span<std::byte, S> bytes)
-{
-	if constexpr (S != std::dynamic_extent) {
-		static_assert(S % sizeof(T) == 0, "Cannot reinterpret byte span due to size / sizeof(T) not being an integer.");
-		return std::span<T, S / sizeof(T)>{(T*)bytes.data()};
-	}
-	else {
-		TR_ASSERT(bytes.size() % sizeof(T) == 0, "Cannot reinterpret byte span due to size / sizeof(T) not being an integer.");
-		return std::span{(T*)bytes.data(), bytes.size() / sizeof(T)};
-	}
-}
-
-template <tr::standard_layout T, tr::usize S> auto tr::as_objects(std::span<const std::byte, S> bytes)
-{
-	if constexpr (S != std::dynamic_extent) {
-		static_assert(S % sizeof(T) == 0, "Cannot reinterpret byte span due to size / sizeof(T) not being an integer.");
-		return std::span<const T, S / sizeof(T)>{(const T*)bytes.data()};
-	}
-	else {
-		TR_ASSERT(bytes.size() % sizeof(T) == 0, "Cannot reinterpret byte span due to size / sizeof(T) not being an integer.");
-		return std::span{(const T*)bytes.data(), bytes.size() / sizeof(T)};
-	}
-}
-
-template <class R> constexpr auto tr::project(auto R::* ptr)
-{
-	return std::views::transform([=](auto&& val) -> auto&& { return val.*ptr; });
-}
-
-template <std::ranges::range R> constexpr auto tr::project(R&& range, auto std::ranges::range_value_t<R>::* ptr)
-{
-	return std::views::transform(std::forward<R&&>(range), [=](auto&& val) -> auto&& { return val.*ptr; });
-}
+#include "impl/ranges.hpp" // IWYU pragma: export

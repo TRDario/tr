@@ -245,7 +245,7 @@ tr::bitmap::pixel_ref& tr::bitmap::pixel_ref::operator=(rgba8 color)
 	return *this;
 }
 
-tr::bitmap::mut_it::mut_it(class bitmap& bitmap, glm::ivec2 pos)
+tr::bitmap::mut_it::mut_it(bitmap& bitmap, glm::ivec2 pos)
 	: m_pixel{bitmap.data() + bitmap.pitch() * pos.y + pixel_bytes(bitmap.format()) * pos.x, bitmap.format()}
 	, m_bitmap{bitmap}
 	, m_bitmap_pos{pos}

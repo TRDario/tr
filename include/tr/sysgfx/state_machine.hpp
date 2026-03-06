@@ -67,7 +67,7 @@ namespace tr {
 	inline constexpr std::nullptr_t drop_state{};
 
 	// Convenience function for constructing a next state.
-	template <std::derived_from<state> T, class... Args>
+	template <std::derived_from<state> T, typename... Args>
 		requires(std::constructible_from<T, Args...>)
 	next_state make_next_state(Args&&... args);
 
@@ -89,7 +89,7 @@ namespace tr {
 		// Clears the state machine.
 		void clear();
 		// Emplaces a state.
-		template <std::derived_from<state> T, class... Args>
+		template <std::derived_from<state> T, typename... Args>
 			requires(std::constructible_from<T, Args...>)
 		void emplace(Args&&... args);
 		// Gets access to the current state.
@@ -98,7 +98,7 @@ namespace tr {
 		// Handles an event.
 		void handle_event(const tr::sys::event& event);
 		// Updates the state.
-		template <class R, class P> void update(std::chrono::duration<R, P> delta);
+		template <typename Rep, typename Period> void update(std::chrono::duration<Rep, Period> delta);
 		// Draws the state.
 		void draw();
 
@@ -112,40 +112,4 @@ namespace tr {
 	};
 } // namespace tr
 
-////////////////////////////////////////////////////////////// IMPLEMENTATION /////////////////////////////////////////////////////////////
-
-template <std::derived_from<tr::state> T, class... Args>
-	requires(std::constructible_from<T, Args...>)
-tr::next_state tr::make_next_state(Args&&... args)
-{
-	return std::optional{next_state(std::make_unique<T>(std::forward<Args>(args)...))};
-}
-
-template <std::derived_from<tr::state> T> const T& tr::state_machine::get() const
-{
-	return (const T&)*m_current_state;
-}
-
-template <std::derived_from<tr::state> T, class... Args>
-	requires(std::constructible_from<T, Args...>)
-void tr::state_machine::emplace(Args&&... args)
-{
-	m_current_state = std::make_unique<T>(std::forward<Args>(args)...);
-}
-
-template <std::derived_from<tr::state> T> T& tr::state_machine::get()
-{
-	return (T&)*m_current_state;
-}
-
-template <class R, class P> void tr::state_machine::update(std::chrono::duration<R, P> delta)
-{
-	if (m_current_state != nullptr) {
-		m_update_benchmark.start();
-		next_state next{m_current_state->update(std::chrono::duration_cast<duration>(delta))};
-		m_update_benchmark.stop();
-		if (next != keep_state) {
-			m_current_state = *std::move(next);
-		}
-	}
-}
+#include "impl/state_machine.hpp" // IWYU pragma: export

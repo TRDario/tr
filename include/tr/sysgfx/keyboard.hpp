@@ -47,7 +47,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "../utility/common.hpp"
+#include "../utility/cstring_view.hpp"
 
 namespace tr::sys {
 	struct key_down_event;
@@ -281,6 +281,4 @@ template <> struct tr::binary_writer<tr::sys::key_chord> {
 	void operator()(std::ostream& os, const tr::sys::key_chord& in) const;
 };
 
-////////////////////////////////////////////////////////////// IMPLEMENTATION /////////////////////////////////////////////////////////////
-
-#include "keyboard_impl.hpp" // IWYU pragma: export
+#include "impl/keyboard.hpp" // IWYU pragma: export

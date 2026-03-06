@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                                                       //
-// Implements rng.hpp.                                                                                                                   //
+// Implements the non-templated parts of rng.hpp.                                                                                        //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -10,22 +10,22 @@
 
 ///////////////////////////////////////////////////////////// GEN RANDOM SEED /////////////////////////////////////////////////////////////
 
-tr::u64 tr::gen_random_seed()
+tr::u64 tr::generate_random_seed()
 {
 	std::random_device rng;
 	return rng() ^ std::time(nullptr);
 }
 
-////////////////////////////////////////////////////////////// XORSHIFTR128+ //////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////// RNG ///////////////////////////////////////////////////////////////////
 
-tr::xorshiftr_128p::xorshiftr_128p(u64 seed)
+tr::rng::rng(u64 seed)
 	: m_state{seed++, seed}
 {
 	advance();
 	advance();
 }
 
-tr::u64 tr::xorshiftr_128p::advance()
+tr::u64 tr::rng::advance()
 {
 	u64 x{m_state[0]};
 	u64 y{m_state[1]};
@@ -37,17 +37,17 @@ tr::u64 tr::xorshiftr_128p::advance()
 	return x;
 }
 
-int tr::xorshiftr_128p::generate_sign()
+int tr::rng::generate_sign()
 {
 	return generate(2) * 2 - 1;
 }
 
-tr::angle tr::xorshiftr_128p::generate(angle max)
+tr::angle tr::rng::generate(angle max)
 {
 	return rads(generate(max.rads()));
 }
 
-tr::angle tr::xorshiftr_128p::generate(angle min, angle max)
+tr::angle tr::rng::generate(angle min, angle max)
 {
 	TR_ASSERT(min < max, "RNG range minimum must be less than the maximum (Currenly: {:r} !< {:r})", min, max);
 
