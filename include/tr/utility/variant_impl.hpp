@@ -82,7 +82,7 @@ template <class T, class... Args> const T&& tr::get(const std::variant<Args...>&
 
 namespace tr {
 	template <class... Fs> match(Fs...) -> match<Fs...>;
-	template <class State, class... Fs> stateful_match(State&&, Fs&&...) -> stateful_match<State, Fs...>;
+	template <class State, class... Fs> stateful_match(State&&, Fs...) -> stateful_match<State, Fs...>;
 } // namespace tr
 
 template <tr::cvref_specialization_of<std::variant> Variant, tr::cvref_specialization_of<tr::match> Match>
@@ -91,9 +91,15 @@ decltype(auto) tr::operator|(Variant&& v, Match&& m)
 	return std::visit(std::forward<Match>(m), std::forward<Variant>(v));
 }
 
+template <class State, class... Fs>
+tr::stateful_match<State, Fs...>::stateful_match(State&& state, Fs... fns)
+	: tr::match<Fs...>{std::move(fns)...}, m_state{std::forward<State>(state)}
+{
+}
+
 template <class State, class... Fs> template <class... Args> decltype(auto) tr::stateful_match<State, Fs...>::operator()(Args&&... args)
 {
-	return match<Fs...>::operator()(std::move(m_state), std::forward<Args>(args)...);
+	return match<Fs...>::operator()(std::forward<State>(m_state), std::forward<Args>(args)...);
 }
 
 template <tr::cvref_specialization_of<std::variant> Variant, tr::cvref_specialization_of<tr::stateful_match> Match>

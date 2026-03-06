@@ -117,7 +117,8 @@ namespace tr {
 	template <class State, class... Fs> class stateful_match : match<Fs...> {
 	  public:
 		// Constructs a stateful match statement.
-		stateful_match(State&& state, Fs&&... fns);
+		stateful_match(State&& state, Fs... fns);
+
 		// Calls one of the underlying callables.
 		template <class... Args> decltype(auto) operator()(Args&&... args);
 
