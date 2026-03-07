@@ -30,6 +30,8 @@ template <tr::standard_layout Object> std::span<std::byte, sizeof(Object)> tr::a
 	return std::as_writable_bytes(std::span<Object, 1>{std::addressof(object), 1});
 }
 
+//
+
 template <tr::standard_layout Object, tr::usize Size> Object& tr::as_mut_object(std::span<std::byte, Size> bytes)
 {
 	if constexpr (Size != std::dynamic_extent) {
@@ -77,6 +79,21 @@ template <tr::standard_layout Element, tr::usize Size> auto tr::as_objects(std::
 		return std::span{(const Element*)bytes.data(), bytes.size() / sizeof(Element)};
 	}
 }
+
+//
+
+template <std::ranges::range Range, typename T, std::invocable<T, std::ranges::range_value_t<Range>> BinaryOp>
+T tr::fold_left(Range&& range, T initial_value, BinaryOp&& pred)
+{
+	return std::accumulate(std::ranges::begin(range), std::ranges::end(range), initial_value, std::forward<BinaryOp>(pred));
+}
+
+template <std::ranges::range Range, typename T> T tr::sum(Range&& range, T initial_value)
+{
+	return std::accumulate(std::ranges::begin(range), std::ranges::end(range), initial_value);
+}
+
+//
 
 template <typename Range> constexpr auto tr::project(auto Range::* ptr)
 {

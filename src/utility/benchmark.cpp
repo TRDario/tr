@@ -66,8 +66,7 @@ tr::duration tr::benchmark::avg() const
 		return duration{0};
 	}
 	else {
-		const auto durations{project(m_measurements, &measurement::duration)};
-		return std::accumulate(durations.begin(), durations.end(), duration{0}) / m_measurements.size();
+		return sum(project(m_measurements, &measurement::duration), duration{0}) / m_measurements.size();
 	}
 }
 

@@ -47,6 +47,12 @@ namespace tr {
 	// Reinterprets a span of immutable bytes as a span of const objects.
 	template <standard_layout Element, usize Size> auto as_objects(std::span<const std::byte, Size> bytes);
 
+	// Left-folds the elements of a range.
+	template <std::ranges::range Range, typename T, std::invocable<T, std::ranges::range_value_t<Range>> BinaryOp>
+	T fold_left(Range&& range, T initial_value, BinaryOp&& pred);
+	// Sums the elements of a range.
+	template <std::ranges::range Range, typename T> T sum(Range&& range, T initial_value);
+
 	// Creates an adaptor for a transformed view over a range as a range of one of its members.
 	template <typename Range> constexpr auto project(auto Range::* ptr);
 	// Creates a transformed view over a range as a range of one of its members.

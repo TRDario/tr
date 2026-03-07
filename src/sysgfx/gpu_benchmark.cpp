@@ -71,7 +71,7 @@ tr::duration tr::gfx::gpu_benchmark::avg() const
 		return duration{0};
 	}
 	else {
-		return std::accumulate(m_durations.begin(), m_durations.end(), duration{0}) / m_durations.size();
+		return sum(m_durations, duration{0}) / m_durations.size();
 	}
 }
 

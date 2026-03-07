@@ -17,8 +17,8 @@ tr::gfx::basic_renderer::staggered_draw_manager::staggered_draw_manager(basic_re
 	m_renderer->m_locked = true;
 #endif
 
-	const usize vertices{std::accumulate(range.begin(), range.end(), 0_uz, [](usize s, const mesh& m) { return s + m.positions.size(); })};
-	const usize indices{std::accumulate(range.begin(), range.end(), 0_uz, [](usize s, const mesh& m) { return s + m.indices.size(); })};
+	const usize vertices{fold_left(range, 0_uz, [](usize s, const mesh& m) { return s + m.positions.size(); })};
+	const usize indices{fold_left(range, 0_uz, [](usize s, const mesh& m) { return s + m.indices.size(); })};
 
 	m_renderer->m_vbuffer_positions.resize(vertices);
 	m_renderer->m_vbuffer_uvs.resize(vertices);
