@@ -9,6 +9,8 @@
 ## If std::format is detected, TR_HAS_STD_FORMAT is defined.                                                                             ##
 ## In the RelWithDebInfo and Debug configurations, TR_ENABLE_ASSERTS is defined.                                                         ##
 ## In the Debug configuration, TR_ENABLE_GL_CHECKS is defined.                                                                           ##
+## The target will be linked with tr::tr.                                                                                                ##
+## The target will precompile <tr/utility/common.hpp>                                                                                    ##
 ##                                                                                                                                       ##
 ###########################################################################################################################################
 
@@ -64,4 +66,11 @@ function(tr_target_template TARGET)
 		$<$<CONFIG:Debug>:TR_ENABLE_GL_CHECKS>
 		$<$<CONFIG:Debug>:TR_ENABLE_ASSERTS>$<$<CONFIG:RelWithDebInfo>:TR_ENABLE_ASSERTS>
 	)
+
+	if(NOT ${TARGET} STREQUAL "tr")
+		target_link_libraries(${TARGET} PUBLIC tr::tr)
+		target_precompile_headers(${TARGET} PUBLIC <tr/utility/common.hpp>)
+	else()
+		target_precompile_headers(${TARGET} PUBLIC include/tr/utility/common.hpp)
+	endif()
 endfunction()
