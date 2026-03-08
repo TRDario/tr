@@ -46,8 +46,13 @@ namespace tr {
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
 namespace tr {
+	// Tag struct indicating that the current state should be kept.
+	struct keep_state {};
+	// Tag struct indicating that the current state should be dropped.
+	struct drop_state {};
+
 	// Shorthand for the return type of most state functions: the pointer to the next state, keep_state, or drop_state.
-	using next_state = std::optional<std::unique_ptr<state>>;
+	using next_state = std::variant<keep_state, drop_state, std::unique_ptr<state>>;
 
 	// The base state type.
 	struct state {
@@ -61,10 +66,6 @@ namespace tr {
 		// Draws the state.
 		virtual void draw();
 	};
-	// Sentinel indicating that the current state should be kept.
-	inline constexpr std::nullopt_t keep_state{std::nullopt};
-	// Sentinel indicating that the current state should be dropped.
-	inline constexpr std::nullptr_t drop_state{};
 
 	// Convenience function for constructing a next state.
 	template <std::derived_from<state> T, typename... Args>
@@ -109,6 +110,18 @@ namespace tr {
 		benchmark m_update_benchmark;
 		// Benchmark measuring the drawing times.
 		benchmark m_draw_benchmark;
+
+		// Visitor that handles tr::next_state returns.
+		struct next_state_handler {
+			std::unique_ptr<state>& m_current_state;
+
+			// Keeps the current state.
+			void operator()(keep_state);
+			// Drops the current state.
+			void operator()(drop_state);
+			// Assigns a new state.
+			void operator()(std::unique_ptr<state>&& next);
+		};
 	};
 } // namespace tr
 

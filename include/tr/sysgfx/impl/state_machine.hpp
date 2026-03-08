@@ -13,7 +13,7 @@ template <std::derived_from<tr::state> T, typename... Args>
 	requires(std::constructible_from<T, Args...>)
 tr::next_state tr::make_next_state(Args&&... args)
 {
-	return std::optional{next_state(std::make_unique<T>(std::forward<Args>(args)...))};
+	return (std::unique_ptr<state>)std::make_unique<T>(std::forward<Args>(args)...);
 }
 
 ////////////////////////////////////////////////////////////// STATE MACHINE //////////////////////////////////////////////////////////////
@@ -41,8 +41,6 @@ template <typename R, typename P> void tr::state_machine::update(std::chrono::du
 		m_update_benchmark.start();
 		next_state next{m_current_state->update(std::chrono::duration_cast<duration>(delta))};
 		m_update_benchmark.stop();
-		if (next != keep_state) {
-			m_current_state = *std::move(next);
-		}
+		std::visit(next_state_handler{m_current_state}, std::move(next));
 	}
 }

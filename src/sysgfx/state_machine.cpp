@@ -10,15 +10,29 @@
 
 tr::next_state tr::state::handle_event(const sys::event&)
 {
-	return keep_state;
+	return keep_state{};
 }
 
 tr::next_state tr::state::update(duration)
 {
-	return keep_state;
+	return keep_state{};
 }
 
 void tr::state::draw() {}
+
+//////////////////////////////////////////////////////////// NEXT STATE HANDLER ///////////////////////////////////////////////////////////
+
+void tr::state_machine::next_state_handler::operator()(keep_state) {}
+
+void tr::state_machine::next_state_handler::operator()(drop_state)
+{
+	m_current_state.reset();
+}
+
+void tr::state_machine::next_state_handler::operator()(std::unique_ptr<state>&& next)
+{
+	m_current_state = std::move(next);
+}
 
 ////////////////////////////////////////////////////////////// STATE MACHINE //////////////////////////////////////////////////////////////
 
@@ -45,10 +59,7 @@ void tr::state_machine::clear()
 void tr::state_machine::handle_event(const sys::event& event)
 {
 	if (m_current_state != nullptr) {
-		next_state next{m_current_state->handle_event(event)};
-		if (next != keep_state) {
-			m_current_state = *std::move(next);
-		}
+		std::visit(next_state_handler{m_current_state}, m_current_state->handle_event(event));
 	}
 }
 
