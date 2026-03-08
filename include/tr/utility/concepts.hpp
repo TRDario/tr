@@ -82,4 +82,19 @@ namespace tr {
 	// Concept checking if a type is in a list.
 	template <typename T, typename... Ts>
 	concept one_of = (std::same_as<T, Ts> || ...);
+
+	// Concept checking whether a type is formattable.
+	template <class T, class Context, class Formatter = typename Context::template formatter_type<std::remove_const_t<T>>>
+	concept formattable_with = std::semiregular<Formatter> && requires(Formatter& f, Formatter const& cf, T&& t, Context fc,
+																	   TR_FMT::basic_format_parse_context<typename Context::char_type> pc) {
+		{ f.parse(pc) } -> std::same_as<typename decltype(pc)::iterator>;
+		{ cf.format(t, fc) } -> std::same_as<typename Context::iterator>;
+	};
+	// Concept checking whether a type is formattable.
+	template <class T, class CharT = char>
+	concept formattable = formattable_with<std::remove_reference_t<T>, TR_FMT::basic_format_context<CharT*, CharT>>;
+	// Concept checking whether a format string is valid for a set of types.
+	template <string_literal Fmt, class... Args>
+	concept valid_format_string_for =
+		(formattable<Args, char> && ...) && requires { typename std::integral_constant<int, (std::format_string<Args...>(Fmt.data), 1)>; };
 } // namespace tr
