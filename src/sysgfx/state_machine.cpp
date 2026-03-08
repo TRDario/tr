@@ -10,21 +10,21 @@
 
 tr::next_state tr::state::handle_event(const sys::event&)
 {
-	return keep_state{};
+	return keep_state();
 }
 
 tr::next_state tr::state::update(duration)
 {
-	return keep_state{};
+	return keep_state();
 }
 
 void tr::state::draw() {}
 
 //////////////////////////////////////////////////////////// NEXT STATE HANDLER ///////////////////////////////////////////////////////////
 
-void tr::state_machine::next_state_handler::operator()(keep_state) {}
+void tr::state_machine::next_state_handler::operator()(keep_state_t) {}
 
-void tr::state_machine::next_state_handler::operator()(drop_state)
+void tr::state_machine::next_state_handler::operator()(drop_state_t)
 {
 	m_current_state.reset();
 }

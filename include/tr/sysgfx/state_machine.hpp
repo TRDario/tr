@@ -47,12 +47,11 @@ namespace tr {
 
 namespace tr {
 	// Tag struct indicating that the current state should be kept.
-	struct keep_state {};
+	struct keep_state_t {};
 	// Tag struct indicating that the current state should be dropped.
-	struct drop_state {};
-
-	// Shorthand for the return type of most state functions: the pointer to the next state, keep_state, or drop_state.
-	using next_state = std::variant<keep_state, drop_state, std::unique_ptr<state>>;
+	struct drop_state_t {};
+	// Shorthand for the return type of most state functions: the pointer to the next state, keep_state(), or drop_state().
+	using next_state = std::variant<keep_state_t, drop_state_t, std::unique_ptr<state>>;
 
 	// The base state type.
 	struct state {
@@ -67,6 +66,10 @@ namespace tr {
 		virtual void draw();
 	};
 
+	// Returns a sentinel indicating that the current state should be kept.
+	consteval next_state keep_state();
+	// Returns a sentinel indicating that the current state should be dropped.
+	consteval next_state drop_state();
 	// Convenience function for constructing a next state.
 	template <std::derived_from<state> T, typename... Args>
 		requires(std::constructible_from<T, Args...>)
@@ -116,9 +119,9 @@ namespace tr {
 			std::unique_ptr<state>& m_current_state;
 
 			// Keeps the current state.
-			void operator()(keep_state);
+			void operator()(keep_state_t);
 			// Drops the current state.
-			void operator()(drop_state);
+			void operator()(drop_state_t);
 			// Assigns a new state.
 			void operator()(std::unique_ptr<state>&& next);
 		};

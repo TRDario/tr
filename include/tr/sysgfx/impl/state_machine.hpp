@@ -9,6 +9,16 @@
 
 ////////////////////////////////////////////////////////////////// STATE //////////////////////////////////////////////////////////////////
 
+consteval tr::next_state tr::keep_state()
+{
+	return keep_state_t{};
+}
+
+consteval tr::next_state tr::drop_state()
+{
+	return drop_state_t{};
+}
+
 template <std::derived_from<tr::state> T, typename... Args>
 	requires(std::constructible_from<T, Args...>)
 tr::next_state tr::make_next_state(Args&&... args)
