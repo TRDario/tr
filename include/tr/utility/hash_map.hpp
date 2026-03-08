@@ -49,3 +49,5 @@ namespace tr {
 	template <typename Key, typename Value, typename Hash, typename Pred, typename Keylike>
 	opt_ref<const Value> try_get(const std::unordered_map<Key, Value, Hash, Pred>& map, Keylike&& keylike);
 } // namespace tr
+
+#include "impl/hash_map.hpp" // IWYU pragma: export
