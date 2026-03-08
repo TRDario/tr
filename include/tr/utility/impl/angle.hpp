@@ -57,14 +57,19 @@ template <tr::arithmetic Number> inline tr::angle tr::atan2(glm::tvec2<Number> p
 
 //
 
-template <std::floating_point Ratio> constexpr tr::angle tr::lerp(tr::angle x, tr::angle y, Ratio a)
+constexpr tr::angle tr::abs(tr::angle th)
 {
-	const tr::angle principal_x{eucmod(x, 1_turns)};
-	tr::angle principal_y{eucmod(y, 1_turns)};
-	if (principal_y - principal_x >= 0.5_turns) {
-		principal_y -= 1_turns;
+	return th >= tr::angle{} ? th : -th;
+}
+
+template <std::floating_point Ratio> constexpr tr::angle tr::lerp(angle x, angle y, Ratio a)
+{
+	x = eucmod(x, 1_turns);
+	y = eucmod(y, 1_turns);
+	if (abs(y - x) >= 0.5_turns) {
+		(x > y ? x : y) -= 1_turns;
 	}
-	return principal_x + (principal_y - principal_x) * a;
+	return x + (y - x) * a;
 }
 
 //
