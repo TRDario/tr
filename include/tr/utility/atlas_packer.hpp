@@ -55,12 +55,12 @@ namespace tr {
 		usize entries() const;
 
 		// Gets a rect associated with a certain key.
-		rect2<u16> operator[](const auto& key) const;
+		template <typename Keylike> rect2<u16> operator[](Keylike&& key) const;
 
 		// Clears the packer.
 		void clear();
 		// Tries to insert a rectangle.
-		template <typename T> std::optional<glm::u16vec2> try_insert(T&& key, glm::u16vec2 size, glm::u16vec2 texture_size);
+		template <typename Keylike> std::optional<glm::u16vec2> try_insert(Keylike&& key, glm::u16vec2 size, glm::u16vec2 texture_size);
 
 	  private:
 		// The atlas packer.

@@ -20,9 +20,16 @@ template <typename Key, typename Hash, typename Pred> tr::usize tr::atlas_rects<
 	return m_rects.size();
 }
 
-template <typename Key, typename Hash, typename Pred> tr::rect2<tr::u16> tr::atlas_rects<Key, Hash, Pred>::operator[](const auto& key) const
+template <typename Key, typename Hash, typename Pred>
+template <typename Keylike>
+tr::rect2<tr::u16> tr::atlas_rects<Key, Hash, Pred>::operator[](Keylike&& key) const
 {
-	TR_ASSERT(contains(key), "Tried to get a rect at a nonexistant key from an atlas packer.");
+	if constexpr (valid_format_string_for<"{}", Keylike>) {
+		TR_ASSERT(contains(key), "Tried to get a rect at nonexistant key '{}' from an atlas packer.", key);
+	}
+	else {
+		TR_ASSERT(contains(key), "Tried to get a rect at a nonexistant key (type: '{}') from an atlas packer.", type_name<Key>());
+	}
 
 	return m_rects.find(key)->second;
 }
@@ -34,14 +41,15 @@ template <typename Key, typename Hash, typename Pred> void tr::atlas_rects<Key, 
 }
 
 template <typename Key, typename Hash, typename Pred>
-template <typename T>
-std::optional<glm::u16vec2> tr::atlas_rects<Key, Hash, Pred>::try_insert(T&& key, glm::u16vec2 size, glm::u16vec2 texture_size)
+template <typename Keylike>
+std::optional<glm::u16vec2> tr::atlas_rects<Key, Hash, Pred>::try_insert(Keylike&& key, glm::u16vec2 size, glm::u16vec2 texture_size)
 {
-	TR_ASSERT(!contains(key), "Tried to insert a rect with the same key as an existing rect into an atlas packer.");
+	TR_ASSERT(!contains(key), "Tried to insert a rect with the same key (type: '{}') as an existing rect into an atlas packer.",
+			  type_name<Key>());
 
 	std::optional<glm::u16vec2> packing_result{m_packer.try_insert(size, texture_size)};
 	if (packing_result.has_value()) {
-		m_rects.emplace(std::forward<T>(key), rect2<u16>{*packing_result, size});
+		m_rects.emplace(std::forward<Keylike>(key), rect2<u16>{*packing_result, size});
 	}
 	return packing_result;
 }
