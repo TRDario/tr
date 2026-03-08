@@ -64,10 +64,10 @@ constexpr tr::angle tr::abs(tr::angle th)
 
 template <std::floating_point Ratio> constexpr tr::angle tr::lerp(angle x, angle y, Ratio a)
 {
-	x = eucmod(x, 1_turns);
-	y = eucmod(y, 1_turns);
-	if (abs(y - x) >= 0.5_turns) {
-		(x > y ? x : y) -= 1_turns;
+	x = eucmod(x, 1_tr);
+	y = eucmod(y, 1_tr);
+	if (abs(y - x) >= 0.5_tr) {
+		(x > y ? x : y) -= 1_tr;
 	}
 	return x + (y - x) * a;
 }
@@ -94,12 +94,12 @@ consteval tr::angle tr::literals::angle_literals::operator""_rad(unsigned long l
 	return rads(float(rad));
 }
 
-consteval tr::angle tr::literals::angle_literals::operator""_turns(long double tr)
+consteval tr::angle tr::literals::angle_literals::operator""_tr(long double tr)
 {
 	return turns(float(tr));
 }
 
-consteval tr::angle tr::literals::angle_literals::operator""_turns(unsigned long long tr)
+consteval tr::angle tr::literals::angle_literals::operator""_tr(unsigned long long tr)
 {
 	return turns(float(tr));
 }

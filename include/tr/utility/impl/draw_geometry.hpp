@@ -19,9 +19,9 @@ inline tr::usize tr::smooth_polygon_vertices(float r)
 inline tr::usize tr::smooth_arc_vertices(float r, angle sizeth)
 {
 	TR_ASSERT(r > 0, "Tried to pass a negative radius to smooth_arc_vertices.");
-	TR_ASSERT(sizeth >= 0_turns && sizeth <= 1_turns, "Tried to pass an arc size of more than one turn to smooth_arc_vertices.");
+	TR_ASSERT(sizeth >= 0_tr && sizeth <= 1_tr, "Tried to pass an arc size of more than one turn to smooth_arc_vertices.");
 
-	return std::max(usize(7 * std::pow(r, 1 / 2.4f) / (sizeth / 1_turns)), 3_uz);
+	return std::max(usize(7 * std::pow(r, 1 / 2.4f) / (sizeth / 1_tr)), 3_uz);
 }
 
 constexpr tr::usize tr::line_strip_indices(u16 vertices)
@@ -265,7 +265,7 @@ template <tr::sized_output_range<glm::vec2> Range> void tr::fill_arc_vertices(Ra
 template <std::output_iterator<glm::vec2> Iterator>
 Iterator tr::fill_regular_polygon_vertices(Iterator out, usize vertices, circle circle, angle rotation)
 {
-	return fill_arc_vertices(out, vertices, circle, rotation, 1_turns);
+	return fill_arc_vertices(out, vertices, circle, rotation, 1_tr);
 }
 
 template <tr::sized_output_range<glm::vec2> Range> void tr::fill_regular_polygon_vertices(Range&& out, circle circle, angle rotation)
@@ -275,7 +275,7 @@ template <tr::sized_output_range<glm::vec2> Range> void tr::fill_regular_polygon
 
 template <std::output_iterator<glm::vec2> Iterator> Iterator tr::fill_circle_vertices(Iterator out, usize vertices, circle circle)
 {
-	return fill_arc_vertices(out, vertices, circle, 0_turns, 1_turns);
+	return fill_arc_vertices(out, vertices, circle, 0_tr, 1_tr);
 }
 
 template <tr::sized_output_range<glm::vec2> Range> void tr::fill_circle_vertices(Range&& out, circle circle)

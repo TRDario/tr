@@ -129,9 +129,9 @@ namespace tr {
 			// Radian literal.
 			consteval angle operator""_rad(unsigned long long rad);
 			// Turns literal.
-			consteval angle operator""_turns(long double tr);
+			consteval angle operator""_tr(long double tr);
 			// Turns literal.
-			consteval angle operator""_turns(unsigned long long tr);
+			consteval angle operator""_tr(unsigned long long tr);
 		} // namespace angle_literals
 	} // namespace literals
 } // namespace tr
