@@ -56,7 +56,7 @@ tr::audio::command::argument tr::audio::command::value()
 	const std::chrono::steady_clock::time_point now{std::chrono::steady_clock::now()};
 	m_elapsed = std::min(m_elapsed + now - m_last_update, m_length);
 	m_last_update = now;
-	const float t{duration_cast<fsecs>(m_elapsed) / m_length};
+	const float t{ratio(m_elapsed, m_length)};
 
 	argument value;
 	switch (m_type) {
