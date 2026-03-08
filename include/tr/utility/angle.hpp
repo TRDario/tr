@@ -109,6 +109,11 @@ namespace tr {
 	template <arithmetic Number> inline angle atan(Number tan);
 	// Computes the principal value of the arc tangent y/x.
 	template <arithmetic Number> inline angle atan2(Number y, Number x);
+	// Computes the principal value of the arc tangent p.y/p.x.
+	template <arithmetic Number> inline angle atan2(glm::tvec2<Number> p);
+
+	// Linearly interpolates between two angles.
+	template <std::floating_point Ratio> constexpr tr::angle lerp(tr::angle x, tr::angle y, Ratio a);
 
 	inline namespace literals {
 		// Angle literals.

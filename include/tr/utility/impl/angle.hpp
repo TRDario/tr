@@ -6,6 +6,7 @@
 
 #pragma once
 #include "../angle.hpp"
+#include "../math.hpp"
 
 //////////////////////////////////////////////////////// CONSTRUCTORS AND LITERALS ////////////////////////////////////////////////////////
 
@@ -48,6 +49,25 @@ template <tr::arithmetic Number> inline tr::angle tr::atan2(Number y, Number x)
 {
 	return rads(std::atan2(y, x));
 }
+
+template <tr::arithmetic Number> inline tr::angle tr::atan2(glm::tvec2<Number> p)
+{
+	return tr::atan2(p.y, p.x);
+}
+
+//
+
+template <std::floating_point Ratio> constexpr tr::angle tr::lerp(tr::angle x, tr::angle y, Ratio a)
+{
+	const tr::angle principal_x{eucmod(x, 1_turns)};
+	tr::angle principal_y{eucmod(y, 1_turns)};
+	if (principal_y - principal_x >= 0.5_turns) {
+		principal_y -= 1_turns;
+	}
+	return principal_x + (principal_y - principal_x) * a;
+}
+
+//
 
 consteval tr::angle tr::literals::angle_literals::operator""_deg(long double deg)
 {
