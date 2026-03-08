@@ -18,7 +18,7 @@
 #include "utility/exception.hpp"        // IWYU pragma: export
 #include "utility/geometry.hpp"         // IWYU pragma: export
 #include "utility/handle.hpp"           // IWYU pragma: export
-#include "utility/hashmap.hpp"          // IWYU pragma: export
+#include "utility/hash_map.hpp"         // IWYU pragma: export
 #include "utility/integer.hpp"          // IWYU pragma: export
 #include "utility/iostream.hpp"         // IWYU pragma: export
 #include "utility/localization_map.hpp" // IWYU pragma: export

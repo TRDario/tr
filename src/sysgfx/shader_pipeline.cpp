@@ -6,6 +6,7 @@
 
 #include "../../include/tr/sysgfx/shader_pipeline.hpp"
 #include "../../include/tr/sysgfx/gl_call.hpp"
+#include "../../include/tr/utility/hash_map.hpp"
 #include "tr/sysgfx/shader.hpp"
 
 ///////////////////////////////////////////////////////////// SHADER PIPELINE /////////////////////////////////////////////////////////////
@@ -29,11 +30,11 @@ tr::gfx::shader_pipeline::shader_pipeline(const vertex_shader& vshader, const fr
 				  "Mismatched shader inputs/outputs (vertex shader '{}' has output '{}' at location {} that was not found in fragment "
 				  "shader '{}''s inputs).",
 				  vshader.label(), info, location, fshader.label());
-		const glsl_variable& frag_info{fshader.m_inputs.at(location)};
+		const glsl_variable& frag_info{get(fshader.m_inputs, location)};
 		TR_ASSERT(frag_info.type == info.type && frag_info.array_size == info.array_size,
 				  "Mismatched shader inputs/outputs (vertex shader '{}' has output '{}' at location {}, but the input '{}' at the same "
 				  "location in fragment shader '{}' is not compatible with it).",
-				  vshader.label(), info, location, fshader.m_inputs.at(location), fshader.label());
+				  vshader.label(), info, location, get(fshader.m_inputs, location), fshader.label());
 	}
 #endif
 

@@ -2,7 +2,7 @@
 //                                                                                                                                       //
 // Provides atlas textures.                                                                                                              //
 //                                                                                                                                       //
-// A hashmap of bitmaps can be stitched together into a single atlased bitmap using tr::build_bitmap_atlas:                              //
+// A hash map of bitmaps can be stitched together into a single atlased bitmap using tr::build_bitmap_atlas:                             //
 //     - tr::string_hash_map<tr::bitmap> bitmaps{{"a", tr::load_bitmap_file("a.bmp")}, {"b", tr::load_bitmap_file("b.bmp")}}             //
 //       tr::bitmap_atlas atlas{tr::build_bitmap_atlas(bitmaps)}                                                                         //
 //       -> stitches all bitmaps in 'bitmaps' into a single bitmap contained in atlas.bitmap, with information on where the constituents //

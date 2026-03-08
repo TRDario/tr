@@ -169,8 +169,9 @@ std::vector<std::string> tr::localization_map::load(const std::filesystem::path&
 		while (parser.read_line(file)) {
 			std::optional<parser::parse_result> result{parser.parse_line()};
 			if (result.has_value()) {
-				if (m_map.contains(result->key)) {
-					m_map.find(result->key)->second = std::move(result->value);
+				const opt_ref<std::string> value{try_get(m_map, result->key)};
+				if (value.has_ref()) {
+					*value = std::move(result->value);
 				}
 				else {
 					m_map.emplace(result->key, std::move(result->value));
@@ -194,6 +195,6 @@ bool tr::localization_map::contains(std::string_view key) const
 
 std::string_view tr::localization_map::operator[](std::string_view key) const
 {
-	const string_hash_map<std::string>::const_iterator it{m_map.find(key)};
-	return it != m_map.end() ? it->second : key;
+	const opt_ref<const std::string> value{try_get(m_map, key)};
+	return value.has_ref() ? *value : key;
 }

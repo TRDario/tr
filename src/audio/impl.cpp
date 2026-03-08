@@ -7,6 +7,7 @@
 #include "../../include/tr/audio/impl.hpp"
 #include "../../include/tr/audio/al_call.hpp"
 #include "../../include/tr/audio/source.hpp"
+#include "../../include/tr/utility/hash_map.hpp"
 #include "../../include/tr/utility/ranges.hpp"
 #include <AL/alext.h>
 #include <chrono>
@@ -229,7 +230,7 @@ tr::audio::buffer::id tr::audio::manager::allocate_buffer()
 
 void tr::audio::manager::mark_buffer_as_cullable(buffer::id id)
 {
-	m_buffers.find(id)->second = true;
+	get(m_buffers, id) = true;
 }
 
 //

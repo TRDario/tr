@@ -9,6 +9,7 @@
 #include "../../include/tr/sysgfx/shader_pipeline.hpp"
 #include "../../include/tr/sysgfx/texture.hpp"
 #include "../../include/tr/utility/draw_geometry.hpp"
+#include "../../include/tr/utility/hash_map.hpp"
 
 // Untextured UV sentinel.
 constexpr glm::vec2 untextured_uv{-100, -100};
@@ -68,11 +69,10 @@ void tr::gfx::basic_renderer::set_default_layer_blend_mode(int layer, const blen
 
 tr::gfx::simple_color_mesh_ref tr::gfx::basic_renderer::new_color_fan(int layer, usize vertices)
 {
-	std::unordered_map<int, layer_defaults>::iterator defaults_it{m_layer_defaults.find(layer)};
-	if (defaults_it != m_layer_defaults.end()) {
-		const layer_defaults& defaults{defaults_it->second};
-		const glm::mat4& transform{defaults.transform.has_value() ? *defaults.transform : m_default_transform};
-		return new_color_fan(layer, vertices, transform, defaults.blend_mode);
+	const opt_ref<const layer_defaults> defaults{try_get(m_layer_defaults, layer)};
+	if (defaults.has_ref()) {
+		const glm::mat4& transform{defaults->transform.has_value() ? *defaults->transform : m_default_transform};
+		return new_color_fan(layer, vertices, transform, defaults->blend_mode);
 	}
 	else {
 		return new_color_fan(layer, vertices, m_default_transform, alpha_blending);
@@ -106,11 +106,10 @@ tr::gfx::simple_color_mesh_ref tr::gfx::basic_renderer::new_color_fan(int layer,
 
 tr::gfx::simple_color_mesh_ref tr::gfx::basic_renderer::new_color_outline(int layer, usize vertices)
 {
-	std::unordered_map<int, layer_defaults>::iterator defaults_it{m_layer_defaults.find(layer)};
-	if (defaults_it != m_layer_defaults.end()) {
-		const layer_defaults& defaults{defaults_it->second};
-		const glm::mat4& transform{defaults.transform.has_value() ? *defaults.transform : m_default_transform};
-		return new_color_outline(layer, vertices, transform, defaults.blend_mode);
+	const opt_ref<const layer_defaults> defaults{try_get(m_layer_defaults, layer)};
+	if (defaults.has_ref()) {
+		const glm::mat4& transform{defaults->transform.has_value() ? *defaults->transform : m_default_transform};
+		return new_color_outline(layer, vertices, transform, defaults->blend_mode);
 	}
 	else {
 		return new_color_outline(layer, vertices, m_default_transform, alpha_blending);
@@ -145,11 +144,10 @@ tr::gfx::simple_color_mesh_ref tr::gfx::basic_renderer::new_color_outline(int la
 
 tr::gfx::color_mesh_ref tr::gfx::basic_renderer::new_color_mesh(int layer, usize vertices, usize indices)
 {
-	std::unordered_map<int, layer_defaults>::iterator defaults_it{m_layer_defaults.find(layer)};
-	if (defaults_it != m_layer_defaults.end()) {
-		const layer_defaults& defaults{defaults_it->second};
-		const glm::mat4& transform{defaults.transform.has_value() ? *defaults.transform : m_default_transform};
-		return new_color_mesh(layer, vertices, indices, transform, defaults.blend_mode);
+	const opt_ref<const layer_defaults> defaults{try_get(m_layer_defaults, layer)};
+	if (defaults.has_ref()) {
+		const glm::mat4& transform{defaults->transform.has_value() ? *defaults->transform : m_default_transform};
+		return new_color_mesh(layer, vertices, indices, transform, defaults->blend_mode);
 	}
 	else {
 		return new_color_mesh(layer, vertices, indices, m_default_transform, alpha_blending);
@@ -181,11 +179,10 @@ tr::gfx::color_mesh_ref tr::gfx::basic_renderer::new_color_mesh(int layer, usize
 
 tr::gfx::simple_textured_mesh_ref tr::gfx::basic_renderer::new_textured_fan(int layer, usize vertices)
 {
-	std::unordered_map<int, layer_defaults>::iterator defaults_it{m_layer_defaults.find(layer)};
-	if (defaults_it != m_layer_defaults.end()) {
-		const layer_defaults& defaults{defaults_it->second};
-		const glm::mat4& transform{defaults.transform.has_value() ? *defaults.transform : m_default_transform};
-		return new_textured_fan(layer, vertices, defaults.texture, transform, defaults.blend_mode);
+	const opt_ref<const layer_defaults> defaults{try_get(m_layer_defaults, layer)};
+	if (defaults.has_ref()) {
+		const glm::mat4& transform{defaults->transform.has_value() ? *defaults->transform : m_default_transform};
+		return new_textured_fan(layer, vertices, defaults->texture, transform, defaults->blend_mode);
 	}
 	else {
 		return new_textured_fan(layer, vertices, std::nullopt, m_default_transform, alpha_blending);
@@ -194,11 +191,10 @@ tr::gfx::simple_textured_mesh_ref tr::gfx::basic_renderer::new_textured_fan(int 
 
 tr::gfx::simple_textured_mesh_ref tr::gfx::basic_renderer::new_textured_fan(int layer, usize vertices, texture_ref texture_ref)
 {
-	std::unordered_map<int, layer_defaults>::iterator defaults_it{m_layer_defaults.find(layer)};
-	if (defaults_it != m_layer_defaults.end()) {
-		const layer_defaults& defaults{defaults_it->second};
-		const glm::mat4& transform{defaults.transform.has_value() ? *defaults.transform : m_default_transform};
-		return new_textured_fan(layer, vertices, std::move(texture_ref), transform, defaults.blend_mode);
+	const opt_ref<const layer_defaults> defaults{try_get(m_layer_defaults, layer)};
+	if (defaults.has_ref()) {
+		const glm::mat4& transform{defaults->transform.has_value() ? *defaults->transform : m_default_transform};
+		return new_textured_fan(layer, vertices, std::move(texture_ref), transform, defaults->blend_mode);
 	}
 	else {
 		return new_textured_fan(layer, vertices, std::move(texture_ref), m_default_transform, alpha_blending);
@@ -232,11 +228,10 @@ tr::gfx::simple_textured_mesh_ref tr::gfx::basic_renderer::new_textured_fan(int 
 
 tr::gfx::textured_mesh_ref tr::gfx::basic_renderer::new_textured_mesh(int layer, usize vertices, usize indices)
 {
-	const std::unordered_map<int, layer_defaults>::iterator defaults_it{m_layer_defaults.find(layer)};
-	if (defaults_it != m_layer_defaults.end()) {
-		const layer_defaults& defaults{defaults_it->second};
-		const glm::mat4& transform{defaults.transform.has_value() ? *defaults.transform : m_default_transform};
-		return new_textured_mesh(layer, vertices, indices, defaults.texture, transform, defaults.blend_mode);
+	const opt_ref<const layer_defaults> defaults{try_get(m_layer_defaults, layer)};
+	if (defaults.has_ref()) {
+		const glm::mat4& transform{defaults->transform.has_value() ? *defaults->transform : m_default_transform};
+		return new_textured_mesh(layer, vertices, indices, defaults->texture, transform, defaults->blend_mode);
 	}
 	else {
 		return new_textured_mesh(layer, vertices, indices, std::nullopt, m_default_transform, alpha_blending);
@@ -245,11 +240,10 @@ tr::gfx::textured_mesh_ref tr::gfx::basic_renderer::new_textured_mesh(int layer,
 
 tr::gfx::textured_mesh_ref tr::gfx::basic_renderer::new_textured_mesh(int layer, usize vertices, usize indices, texture_ref texture_ref)
 {
-	std::unordered_map<int, layer_defaults>::iterator defaults_it{m_layer_defaults.find(layer)};
-	if (defaults_it != m_layer_defaults.end()) {
-		const layer_defaults& defaults{defaults_it->second};
-		const glm::mat4& transform{defaults.transform.has_value() ? *defaults.transform : m_default_transform};
-		return new_textured_mesh(layer, vertices, indices, std::move(texture_ref), transform, defaults.blend_mode);
+	const opt_ref<const layer_defaults> defaults{try_get(m_layer_defaults, layer)};
+	if (defaults.has_ref()) {
+		const glm::mat4& transform{defaults->transform.has_value() ? *defaults->transform : m_default_transform};
+		return new_textured_mesh(layer, vertices, indices, std::move(texture_ref), transform, defaults->blend_mode);
 	}
 	else {
 		return new_textured_mesh(layer, vertices, indices, std::move(texture_ref), m_default_transform, alpha_blending);
@@ -282,11 +276,10 @@ tr::gfx::textured_mesh_ref tr::gfx::basic_renderer::new_textured_mesh(int layer,
 
 tr::gfx::simple_color_mesh_ref tr::gfx::basic_renderer::new_lines(int layer, usize lines)
 {
-	std::unordered_map<int, layer_defaults>::iterator defaults_it{m_layer_defaults.find(layer)};
-	if (defaults_it != m_layer_defaults.end()) {
-		const layer_defaults& defaults{defaults_it->second};
-		const glm::mat4& transform{defaults.transform.has_value() ? *defaults.transform : m_default_transform};
-		return new_lines(layer, lines, transform, defaults.blend_mode);
+	const opt_ref<const layer_defaults> defaults{try_get(m_layer_defaults, layer)};
+	if (defaults.has_ref()) {
+		const glm::mat4& transform{defaults->transform.has_value() ? *defaults->transform : m_default_transform};
+		return new_lines(layer, lines, transform, defaults->blend_mode);
 	}
 	else {
 		return new_lines(layer, lines, m_default_transform, alpha_blending);
@@ -320,11 +313,10 @@ tr::gfx::simple_color_mesh_ref tr::gfx::basic_renderer::new_lines(int layer, usi
 
 tr::gfx::simple_color_mesh_ref tr::gfx::basic_renderer::new_line_strip(int layer, usize vertices)
 {
-	std::unordered_map<int, layer_defaults>::iterator defaults_it{m_layer_defaults.find(layer)};
-	if (defaults_it != m_layer_defaults.end()) {
-		const layer_defaults& defaults{defaults_it->second};
-		const glm::mat4& transform{defaults.transform.has_value() ? *defaults.transform : m_default_transform};
-		return new_line_strip(layer, vertices, transform, defaults.blend_mode);
+	const opt_ref<const layer_defaults> defaults{try_get(m_layer_defaults, layer)};
+	if (defaults.has_ref()) {
+		const glm::mat4& transform{defaults->transform.has_value() ? *defaults->transform : m_default_transform};
+		return new_line_strip(layer, vertices, transform, defaults->blend_mode);
 	}
 	else {
 		return new_line_strip(layer, vertices, m_default_transform, alpha_blending);
@@ -358,11 +350,10 @@ tr::gfx::simple_color_mesh_ref tr::gfx::basic_renderer::new_line_strip(int layer
 
 tr::gfx::simple_color_mesh_ref tr::gfx::basic_renderer::new_line_loop(int layer, usize vertices)
 {
-	std::unordered_map<int, layer_defaults>::iterator defaults_it{m_layer_defaults.find(layer)};
-	if (defaults_it != m_layer_defaults.end()) {
-		const layer_defaults& defaults{defaults_it->second};
-		const glm::mat4& transform{defaults.transform.has_value() ? *defaults.transform : m_default_transform};
-		return new_line_loop(layer, vertices, transform, defaults.blend_mode);
+	const opt_ref<const layer_defaults> defaults{try_get(m_layer_defaults, layer)};
+	if (defaults.has_ref()) {
+		const glm::mat4& transform{defaults->transform.has_value() ? *defaults->transform : m_default_transform};
+		return new_line_loop(layer, vertices, transform, defaults->blend_mode);
 	}
 	else {
 		return new_line_loop(layer, vertices, m_default_transform, alpha_blending);
@@ -396,11 +387,10 @@ tr::gfx::simple_color_mesh_ref tr::gfx::basic_renderer::new_line_loop(int layer,
 
 tr::gfx::color_mesh_ref tr::gfx::basic_renderer::new_line_mesh(int layer, usize vertices, usize indices)
 {
-	std::unordered_map<int, layer_defaults>::iterator defaults_it{m_layer_defaults.find(layer)};
-	if (defaults_it != m_layer_defaults.end()) {
-		const layer_defaults& defaults{defaults_it->second};
-		const glm::mat4& transform{defaults.transform.has_value() ? *defaults.transform : m_default_transform};
-		return new_line_mesh(layer, vertices, indices, transform, defaults.blend_mode);
+	const opt_ref<const layer_defaults> defaults{try_get(m_layer_defaults, layer)};
+	if (defaults.has_ref()) {
+		const glm::mat4& transform{defaults->transform.has_value() ? *defaults->transform : m_default_transform};
+		return new_line_mesh(layer, vertices, indices, transform, defaults->blend_mode);
 	}
 	else {
 		return new_line_mesh(layer, vertices, indices, m_default_transform, alpha_blending);

@@ -31,7 +31,7 @@ tr::bitmap_atlas<Key, Hash, Pred> tr::build_bitmap_atlas(const std::unordered_ma
 	}
 	tr::bitmap bitmap{size};
 	for (const Key& k : std::views::keys(entries)) {
-		bitmap.blit(rects[k].tl, entries.at(k));
+		bitmap.blit(rects[k].tl, get(entries, k));
 	}
 	return {std::move(bitmap), std::move(rects)};
 }

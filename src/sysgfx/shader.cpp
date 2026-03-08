@@ -11,6 +11,7 @@
 #include "../../include/tr/sysgfx/shader_buffer.hpp"
 #include "../../include/tr/sysgfx/texture.hpp"
 #include "../../include/tr/sysgfx/uniform_buffer.hpp"
+#include "../../include/tr/utility/hash_map.hpp"
 #include "../../include/tr/utility/iostream.hpp"
 
 //////////////////////////////////////////////////////////// SHADER LOAD ERROR ////////////////////////////////////////////////////////////
@@ -138,19 +139,19 @@ void tr::gfx::shader_base::find_outputs()
 // Asserts that a shader uniform exists and is of the correct type.
 #define TR_ASSERT_SHADER_UNIFORM(target_type)                                                                                              \
 	do {                                                                                                                                   \
-		const auto uniform_it{m_uniforms.find(index)};                                                                                     \
-		TR_ASSERT(uniform_it != m_uniforms.end(), "Tried to set uniform with invalid index '{}' in shader '{}'.", index, label());         \
-		TR_ASSERT(uniform_it->second.type == as_glsl_type<target_type> && uniform_it->second.array_size == 1,                              \
-				  "Tried to set uniform with signature '{}' in shader '{}' with a value of type '{}'.", uniform_it->second, label(),       \
-				  label(), as_glsl_type<target_type>);                                                                                     \
+		const opt_ref<glsl_variable> uniform{try_get(m_uniforms, index)};                                                                  \
+		TR_ASSERT(uniform.has_ref(), "Tried to set uniform with invalid index '{}' in shader '{}'.", index, label());                      \
+		TR_ASSERT(uniform->type == as_glsl_type<target_type> && uniform->array_size == 1,                                                  \
+				  "Tried to set uniform with signature '{}' in shader '{}' with a value of type '{}'.", *uniform, label(),                 \
+				  as_glsl_type<target_type>);                                                                                              \
 	} while (0)
 // Asserts that a shader array uniform exists and is of the correct type.
 #define TR_ASSERT_SHADER_ARRAY_UNIFORM(target_type)                                                                                        \
 	do {                                                                                                                                   \
-		const auto uniform_it{m_uniforms.find(index)};                                                                                     \
-		TR_ASSERT(uniform_it != m_uniforms.end(), "Tried to set uniform with invalid index '{}' in shader '{}'.", index, label());         \
-		TR_ASSERT(uniform_it->second.type == as_glsl_type<target_type> && uniform_it->second.array_size == int(value.size()),              \
-				  "Tried to set uniform with signature '{}' in shader '{}' with a value of type '{}[{}]'.", uniform_it->second, label(),   \
+		const opt_ref<glsl_variable> uniform{try_get(m_uniforms, index)};                                                                  \
+		TR_ASSERT(uniform.has_ref(), "Tried to set uniform with invalid index '{}' in shader '{}'.", index, label());                      \
+		TR_ASSERT(uniform->type == as_glsl_type<target_type> && uniform->array_size == int(value.size()),                                  \
+				  "Tried to set uniform with signature '{}' in shader '{}' with a value of type '{}[{}]'.", *uniform, label(),             \
 				  as_glsl_type<target_type>, value.size());                                                                                \
 	} while (0)
 
