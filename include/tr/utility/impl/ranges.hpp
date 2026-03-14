@@ -82,6 +82,20 @@ template <tr::standard_layout Element, tr::usize Size> auto tr::as_objects(std::
 
 //
 
+template <std::ranges::range SearchedRange, std::ranges::forward_range BlacklistRange>
+	requires(std::equality_comparable_with<std::ranges::range_value_t<SearchedRange>, std::ranges::range_value_t<BlacklistRange>>)
+constexpr std::ranges::borrowed_iterator_t<SearchedRange> tr::find_first_not_of(SearchedRange&& searched, BlacklistRange&& blacklist)
+{
+	for (auto value_it = std::ranges::begin(searched); value_it != std::ranges::end(searched); ++value_it) {
+		if (std::ranges::find(blacklist, *value_it) == std::ranges::end(blacklist)) {
+			return value_it;
+		}
+	}
+	return std::ranges::end(searched);
+}
+
+//
+
 template <std::ranges::range Range, typename T, std::invocable<T, std::ranges::range_value_t<Range>> BinaryOp>
 T tr::fold_left(Range&& range, T initial_value, BinaryOp&& pred)
 {

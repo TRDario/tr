@@ -15,6 +15,13 @@
 // NOTE: using tr::as_bytes on a range object will literally get the bytes of the object, which works for in-place allocated containers, //
 // but not with something like std::vector. Prefer to use tr::range_bytes over ranges, even where the former works.                      //
 //                                                                                                                                       //
+// tr::find_first_not_of finds the first element in a range that isn't included in another range:                                        //
+//     - tr::find_first_not_of("abcdefg", "abc") -> iterator to 'd'                                                                      //
+//                                                                                                                                       //
+// tr::fold_left performs a left fold on the elements of a range. tr::sum is provided for the common case of summing up elements:        //
+//     - tr::fold_left(std::array{1, 2, 3, 4}, 0, std::plus{}) -> 10                                                                     //
+//     - tr::sum(std::array{1, 2, 3, 4}, 0) -> equivalent to the above                                                                   //
+//                                                                                                                                       //
 // View adaptors for projecting a class member, as well as dereferencing the objects of a range are provided:                            //
 //     - std::vector<tr::rgba8> colors; for (char red : tr::project(colors, &tr::rgba8::r)) {} -> iterates over the red channels         //
 //     - std::vector<tr::rgba8> colors; for (char red : colors | tr::project(&tr::rgba8::r)) {} -> iterates over the red channels        //
@@ -46,6 +53,11 @@ namespace tr {
 	template <standard_layout Element, usize Size> auto as_mut_objects(std::span<std::byte, Size> bytes);
 	// Reinterprets a span of immutable bytes as a span of const objects.
 	template <standard_layout Element, usize Size> auto as_objects(std::span<const std::byte, Size> bytes);
+
+	// Returns an iterator to the first element in 'searched' that doesn't match one of the elements in 'blacklist'.
+	template <std::ranges::range SearchedRange, std::ranges::forward_range BlacklistRange>
+		requires(std::equality_comparable_with<std::ranges::range_value_t<SearchedRange>, std::ranges::range_value_t<BlacklistRange>>)
+	constexpr std::ranges::borrowed_iterator_t<SearchedRange> find_first_not_of(SearchedRange&& searched, BlacklistRange&& blacklist);
 
 	// Left-folds the elements of a range.
 	template <std::ranges::range Range, typename T, std::invocable<T, std::ranges::range_value_t<Range>> BinaryOp>
