@@ -15,8 +15,10 @@
 // NOTE: using tr::as_bytes on a range object will literally get the bytes of the object, which works for in-place allocated containers, //
 // but not with something like std::vector. Prefer to use tr::range_bytes over ranges, even where the former works.                      //
 //                                                                                                                                       //
-// tr::find_first_not_of finds the first element in a range that isn't included in another range, and tr::find_last_not_of likewise      //
-// returns the last element in a range that isn't included in another range:                                                             //
+// tr::find_last_of finds the last element in a range that is included in another range,                                                 //
+// tr::find_first_not_of finds the first element in a range that isn't included in another range,                                        //
+// and tr::find_last_not_of finds the last element in a range that isn't included in another range:                                      //
+//     - tr::find_last_of("abcdefg", "abc") -> iterator to 'c'                                                                           //
 //     - tr::find_first_not_of("abcdefg", "abc") -> iterator to 'd'                                                                      //
 //     - tr::find_last_not_of("abcdefg", "efg") -> iterator to 'd'                                                                       //
 //                                                                                                                                       //
@@ -56,6 +58,10 @@ namespace tr {
 	// Reinterprets a span of immutable bytes as a span of const objects.
 	template <standard_layout Element, usize Size> auto as_objects(std::span<const std::byte, Size> bytes);
 
+	// Returns an iterator to the last element in 'searched' that matches one of the elements in 'blacklist'.
+	template <std::ranges::range SearchedRange, std::ranges::forward_range WhitelistRange>
+		requires(std::equality_comparable_with<std::ranges::range_value_t<SearchedRange>, std::ranges::range_value_t<WhitelistRange>>)
+	constexpr std::ranges::borrowed_iterator_t<SearchedRange> find_last_of(SearchedRange&& searched, WhitelistRange&& whitelist);
 	// Returns an iterator to the first element in 'searched' that doesn't match one of the elements in 'blacklist'.
 	template <std::ranges::range SearchedRange, std::ranges::forward_range BlacklistRange>
 		requires(std::equality_comparable_with<std::ranges::range_value_t<SearchedRange>, std::ranges::range_value_t<BlacklistRange>>)

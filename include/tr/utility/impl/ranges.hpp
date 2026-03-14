@@ -82,6 +82,18 @@ template <tr::standard_layout Element, tr::usize Size> auto tr::as_objects(std::
 
 //
 
+template <std::ranges::range SearchedRange, std::ranges::forward_range WhitelistRange>
+	requires(std::equality_comparable_with<std::ranges::range_value_t<SearchedRange>, std::ranges::range_value_t<WhitelistRange>>)
+constexpr std::ranges::borrowed_iterator_t<SearchedRange> tr::find_last_of(SearchedRange&& searched, WhitelistRange&& whitelist)
+{
+	for (auto value_it = std::ranges::rbegin(searched); value_it != std::ranges::rend(searched); ++value_it) {
+		if (std::ranges::find(whitelist, *value_it) != std::ranges::end(whitelist)) {
+			return std::ranges::prev(value_it.base());
+		}
+	}
+	return std::ranges::end(searched);
+}
+
 template <std::ranges::range SearchedRange, std::ranges::forward_range BlacklistRange>
 	requires(std::equality_comparable_with<std::ranges::range_value_t<SearchedRange>, std::ranges::range_value_t<BlacklistRange>>)
 constexpr std::ranges::borrowed_iterator_t<SearchedRange> tr::find_first_not_of(SearchedRange&& searched, BlacklistRange&& blacklist)
