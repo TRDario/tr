@@ -10,12 +10,12 @@
 
 ////////////////////////////////////////////////////////////// STANDARD PATHS /////////////////////////////////////////////////////////////
 
-std::filesystem::path tr::sys::executable_dir()
+std::filesystem::path tr::sys::executable_directory()
 {
 	return SDL_GetBasePath();
 }
 
-std::filesystem::path tr::sys::user_dir()
+std::filesystem::path tr::sys::user_directory()
 {
 	std::unique_ptr<char[], decltype([](void* p) { SDL_free(p); })> cpath{SDL_GetPrefPath(main::metadata.developer, main::metadata.name)};
 	if (cpath == nullptr) {
