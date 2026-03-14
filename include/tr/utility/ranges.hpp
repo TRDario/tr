@@ -15,8 +15,10 @@
 // NOTE: using tr::as_bytes on a range object will literally get the bytes of the object, which works for in-place allocated containers, //
 // but not with something like std::vector. Prefer to use tr::range_bytes over ranges, even where the former works.                      //
 //                                                                                                                                       //
-// tr::find_first_not_of finds the first element in a range that isn't included in another range:                                        //
+// tr::find_first_not_of finds the first element in a range that isn't included in another range, and tr::find_last_not_of likewise      //
+// returns the last element in a range that isn't included in another range:                                                             //
 //     - tr::find_first_not_of("abcdefg", "abc") -> iterator to 'd'                                                                      //
+//     - tr::find_last_not_of("abcdefg", "efg") -> iterator to 'd'                                                                       //
 //                                                                                                                                       //
 // tr::fold_left performs a left fold on the elements of a range. tr::sum is provided for the common case of summing up elements:        //
 //     - tr::fold_left(std::array{1, 2, 3, 4}, 0, std::plus{}) -> 10                                                                     //
@@ -58,6 +60,10 @@ namespace tr {
 	template <std::ranges::range SearchedRange, std::ranges::forward_range BlacklistRange>
 		requires(std::equality_comparable_with<std::ranges::range_value_t<SearchedRange>, std::ranges::range_value_t<BlacklistRange>>)
 	constexpr std::ranges::borrowed_iterator_t<SearchedRange> find_first_not_of(SearchedRange&& searched, BlacklistRange&& blacklist);
+	// Returns an iterator to the last element in 'searched' that doesn't match one of the elements in 'blacklist'.
+	template <std::ranges::bidirectional_range SearchedRange, std::ranges::forward_range BlacklistRange>
+		requires(std::equality_comparable_with<std::ranges::range_value_t<SearchedRange>, std::ranges::range_value_t<BlacklistRange>>)
+	constexpr std::ranges::borrowed_iterator_t<SearchedRange> find_last_not_of(SearchedRange&& searched, BlacklistRange&& blacklist);
 
 	// Left-folds the elements of a range.
 	template <std::ranges::range Range, typename T, std::invocable<T, std::ranges::range_value_t<Range>> BinaryOp>

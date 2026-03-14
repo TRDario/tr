@@ -94,6 +94,18 @@ constexpr std::ranges::borrowed_iterator_t<SearchedRange> tr::find_first_not_of(
 	return std::ranges::end(searched);
 }
 
+template <std::ranges::bidirectional_range SearchedRange, std::ranges::forward_range BlacklistRange>
+	requires(std::equality_comparable_with<std::ranges::range_value_t<SearchedRange>, std::ranges::range_value_t<BlacklistRange>>)
+constexpr std::ranges::borrowed_iterator_t<SearchedRange> tr::find_last_not_of(SearchedRange&& searched, BlacklistRange&& blacklist)
+{
+	for (auto value_it = std::ranges::rbegin(searched); value_it != std::ranges::rend(searched); ++value_it) {
+		if (std::ranges::find(blacklist, *value_it) == std::ranges::end(blacklist)) {
+			return std::ranges::prev(value_it.base());
+		}
+	}
+	return std::ranges::end(searched);
+}
+
 //
 
 template <std::ranges::range Range, typename T, std::invocable<T, std::ranges::range_value_t<Range>> BinaryOp>
