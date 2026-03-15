@@ -31,6 +31,16 @@ template <tr::arithmetic T> constexpr T tr::abs(T v)
 	return v >= 0 ? v : -v;
 }
 
+template <tr::arithmetic T> constexpr T tr::sgn(T v)
+{
+	if constexpr (std::unsigned_integral<T>) {
+		return v > T(0) ? T(1) : T(0);
+	}
+	else {
+		return v > T(0) ? T(1) : v < T(0) ? T(-1) : T(0);
+	}
+}
+
 template <typename T1, typename T2> constexpr auto tr::mod(T1 v, T2 mod)
 {
 	if constexpr ((std::floating_point<T1> || std::floating_point<T2>) && arithmetic<T1> && arithmetic<T2>) {

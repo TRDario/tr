@@ -10,6 +10,11 @@
 // tr::abs is a constexpr alternative to std::abs:                                                                                       //
 //     - tr::abs(-4) -> 4                                                                                                                //
 //                                                                                                                                       //
+// tr::sgn is a sign operation:                                                                                                          //
+//     - tr::sgn(5.0f) -> 1.0f                                                                                                           //
+//     - tr::sgn(0U) -> 0U                                                                                                               //
+//     - tr::sgn(-4) -> -1                                                                                                               //
+//                                                                                                                                       //
 // tr::mod is a generic modulo operation (defaults to the % operator, but has custom overloads for floating-point numbers):              //
 //     - tr::mod(9.5f, 5) -> 4.5f                                                                                                        //
 //                                                                                                                                       //
@@ -40,6 +45,8 @@ namespace tr {
 
 	// Constexpr abs function.
 	template <arithmetic T> constexpr T abs(T v);
+	// Sign operation.
+	template <arithmetic T> constexpr T sgn(T v);
 	// Generic modulo operation.
 	template <typename T1, typename T2> constexpr auto mod(T1 v, T2 mod);
 	// Euclidian modulo operation.
