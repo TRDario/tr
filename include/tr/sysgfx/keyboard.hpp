@@ -216,19 +216,19 @@ namespace tr {
 } // namespace tr
 
 // Scancode hasher.
-template <> struct std::hash<tr::sys::scancode> {
+template <> struct boost::hash<tr::sys::scancode> {
 	std::size_t operator()(tr::sys::scancode code) const;
 };
 // Keycode hasher.
-template <> struct std::hash<tr::sys::keycode> {
+template <> struct boost::hash<tr::sys::keycode> {
 	std::size_t operator()(tr::sys::keycode code) const;
 };
 // Scan chord hasher.
-template <> struct std::hash<tr::sys::scan_chord> {
+template <> struct boost::hash<tr::sys::scan_chord> {
 	std::size_t operator()(tr::sys::scan_chord chord) const;
 };
 // Key chord hasher.
-template <> struct std::hash<tr::sys::key_chord> {
+template <> struct boost::hash<tr::sys::key_chord> {
 	std::size_t operator()(tr::sys::key_chord chord) const;
 };
 

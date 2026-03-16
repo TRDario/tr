@@ -44,20 +44,20 @@
 
 namespace tr {
 	// Basic bitmap atlas structure.
-	template <typename Key, typename Hash = std::hash<Key>, typename Pred = std::equal_to<>> struct bitmap_atlas {
+	template <typename Key, typename Hash = boost::hash<Key>, typename Pred = std::equal_to<>> struct bitmap_atlas {
 		// The atlas bitmap.
 		tr::bitmap bitmap;
 		// The atlas entries.
 		atlas_rects<Key, Hash, Pred> rects;
 	};
 	// Builds a bitmap atlas from individual bitmaps.
-	template <typename Key, typename Hash = std::hash<Key>, typename Pred = std::equal_to<>>
-	bitmap_atlas<Key, Hash, Pred> build_bitmap_atlas(const std::unordered_map<Key, tr::bitmap, Hash, Pred>& entries);
+	template <typename Key, typename Hash = boost::hash<Key>, typename Pred = std::equal_to<>>
+	bitmap_atlas<Key, Hash, Pred> build_bitmap_atlas(const boost::unordered_flat_map<Key, tr::bitmap, Hash, Pred>& entries);
 } // namespace tr
 
 namespace tr::gfx {
 	// Dynamically-allocated texture atlas.
-	template <typename Key, typename Hash = std::hash<Key>, typename Pred = std::equal_to<>> class dyn_atlas {
+	template <typename Key, typename Hash = boost::hash<Key>, typename Pred = std::equal_to<>> class dyn_atlas {
 	  public:
 		// Creates an empty atlas.
 		dyn_atlas() = default;

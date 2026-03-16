@@ -146,14 +146,23 @@ namespace tr {
 	template <binary_constructible Key, binary_constructible V, typename... Other> struct binary_reader<std::map<Key, V, Other...>> {
 		void operator()(std::istream& is, std::map<Key, V, Other...>& out) const;
 	};
-	// Unordered set binary reader.
-	template <binary_constructible Key, typename... Other> struct binary_reader<std::unordered_set<Key, Other...>> {
-		void operator()(std::istream& is, std::unordered_set<Key, Other...>& out) const;
+	// Unordered flat set binary reader.
+	template <binary_constructible Key, typename... Other> struct binary_reader<boost::unordered_flat_set<Key, Other...>> {
+		void operator()(std::istream& is, boost::unordered_flat_set<Key, Other...>& out) const;
 	};
-	// Hashmap binary reader.
+	// Unordered node set binary reader.
+	template <binary_constructible Key, typename... Other> struct binary_reader<boost::unordered_node_set<Key, Other...>> {
+		void operator()(std::istream& is, boost::unordered_node_set<Key, Other...>& out) const;
+	};
+	// Unordered flat map binary reader.
 	template <binary_constructible Key, binary_constructible V, typename... Other>
-	struct binary_reader<std::unordered_map<Key, V, Other...>> {
-		void operator()(std::istream& is, std::unordered_map<Key, V, Other...>& out) const;
+	struct binary_reader<boost::unordered_flat_map<Key, V, Other...>> {
+		void operator()(std::istream& is, boost::unordered_flat_map<Key, V, Other...>& out) const;
+	};
+	// Unordered node map binary reader.
+	template <binary_constructible Key, binary_constructible V, typename... Other>
+	struct binary_reader<boost::unordered_node_map<Key, V, Other...>> {
+		void operator()(std::istream& is, boost::unordered_node_map<Key, V, Other...>& out) const;
 	};
 
 	// Arithmetic binary writers.
@@ -212,14 +221,23 @@ namespace tr {
 	template <binary_writable Key, binary_writable Value, typename... Other> struct binary_writer<std::map<Key, Value, Other...>> {
 		void operator()(std::ostream& os, const std::map<Key, Value, Other...>& in) const;
 	};
-	// Unordered set binary writer.
-	template <binary_writable Key, typename... Other> struct binary_writer<std::unordered_set<Key, Other...>> {
-		void operator()(std::ostream& os, const std::unordered_set<Key, Other...>& in) const;
+	// Unordered flat set binary writer.
+	template <binary_writable Key, typename... Other> struct binary_writer<boost::unordered_flat_set<Key, Other...>> {
+		void operator()(std::ostream& os, const boost::unordered_flat_set<Key, Other...>& in) const;
 	};
-	// Hashmap binary writer.
+	// Unordered node set binary writer.
+	template <binary_writable Key, typename... Other> struct binary_writer<boost::unordered_node_set<Key, Other...>> {
+		void operator()(std::ostream& os, const boost::unordered_node_set<Key, Other...>& in) const;
+	};
+	// Unordered flat map writer.
 	template <binary_writable Key, binary_writable Value, typename... Other>
-	struct binary_writer<std::unordered_map<Key, Value, Other...>> {
-		void operator()(std::ostream& os, const std::unordered_map<Key, Value, Other...>& in) const;
+	struct binary_writer<boost::unordered_flat_map<Key, Value, Other...>> {
+		void operator()(std::ostream& os, const boost::unordered_flat_map<Key, Value, Other...>& in) const;
+	};
+	// Unordered node map writer.
+	template <binary_writable Key, binary_writable Value, typename... Other>
+	struct binary_writer<boost::unordered_node_map<Key, Value, Other...>> {
+		void operator()(std::ostream& os, const boost::unordered_node_map<Key, Value, Other...>& in) const;
 	};
 } // namespace tr
 

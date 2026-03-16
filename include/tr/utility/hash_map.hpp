@@ -22,7 +22,7 @@
 
 namespace tr {
 	// Transparent string hasher.
-	struct string_hash : std::hash<std::string_view> {
+	struct string_hash : boost::hash<std::string_view> {
 		using is_transparent = std::true_type;
 	};
 	// Transparent string equality comparator.
@@ -30,24 +30,41 @@ namespace tr {
 		using is_transparent = std::true_type;
 	};
 
-	// Typedef for a string-key hash map.
-	template <typename Value> using string_hash_map = std::unordered_map<std::string, Value, string_hash, string_eq>;
-	// Typedef for a static string-key hash map.
+	// Typedef for a string-key flat map.
+	template <typename Value> using string_flat_map = boost::unordered_flat_map<std::string, Value, string_hash, string_eq>;
+	// Typedef for a string-key node map.
+	template <typename Value> using string_node_map = boost::unordered_node_map<std::string, Value, string_hash, string_eq>;
+	// Typedef for a static string-key flat map.
 	template <usize KeyCapacity, typename Value>
-	using static_string_hash_map = std::unordered_map<static_string<KeyCapacity>, Value, string_hash, string_eq>;
+	using static_string_flat_map = boost::unordered_flat_map<static_string<KeyCapacity>, Value, string_hash, string_eq>;
+	// Typedef for a static string-key node map.
+	template <usize KeyCapacity, typename Value>
+	using static_string_node_map = boost::unordered_node_map<static_string<KeyCapacity>, Value, string_hash, string_eq>;
 
-	// Gets a value from a hash map.
+	// Gets a value from a flat map.
 	template <typename Key, typename Value, typename Hash, typename Pred, typename Keylike>
-	Value& get(std::unordered_map<Key, Value, Hash, Pred>& map, Keylike&& keylike);
-	// Gets a value from a hash map.
+	Value& get(boost::unordered_flat_map<Key, Value, Hash, Pred>& map, Keylike&& keylike);
+	// Gets a value from a node map.
 	template <typename Key, typename Value, typename Hash, typename Pred, typename Keylike>
-	const Value& get(const std::unordered_map<Key, Value, Hash, Pred>& map, Keylike&& keylike);
-	// Tries to get a value from a hash map.
+	Value& get(boost::unordered_node_map<Key, Value, Hash, Pred>& map, Keylike&& keylike);
+	// Gets a value from a flat map.
 	template <typename Key, typename Value, typename Hash, typename Pred, typename Keylike>
-	opt_ref<Value> try_get(std::unordered_map<Key, Value, Hash, Pred>& map, Keylike&& keylike);
-	// Tries to get a value from a hash map.
+	const Value& get(const boost::unordered_flat_map<Key, Value, Hash, Pred>& map, Keylike&& keylike);
+	// Gets a value from a node map.
 	template <typename Key, typename Value, typename Hash, typename Pred, typename Keylike>
-	opt_ref<const Value> try_get(const std::unordered_map<Key, Value, Hash, Pred>& map, Keylike&& keylike);
+	const Value& get(const boost::unordered_node_map<Key, Value, Hash, Pred>& map, Keylike&& keylike);
+	// Tries to get a value from a flat map.
+	template <typename Key, typename Value, typename Hash, typename Pred, typename Keylike>
+	opt_ref<Value> try_get(boost::unordered_flat_map<Key, Value, Hash, Pred>& map, Keylike&& keylike);
+	// Tries to get a value from a node map.
+	template <typename Key, typename Value, typename Hash, typename Pred, typename Keylike>
+	opt_ref<Value> try_get(boost::unordered_node_map<Key, Value, Hash, Pred>& map, Keylike&& keylike);
+	// Tries to get a value from a flat map.
+	template <typename Key, typename Value, typename Hash, typename Pred, typename Keylike>
+	opt_ref<const Value> try_get(const boost::unordered_flat_map<Key, Value, Hash, Pred>& map, Keylike&& keylike);
+	// Tries to get a value from a mode map.
+	template <typename Key, typename Value, typename Hash, typename Pred, typename Keylike>
+	opt_ref<const Value> try_get(const boost::unordered_node_map<Key, Value, Hash, Pred>& map, Keylike&& keylike);
 } // namespace tr
 
 #include "impl/hash_map.hpp" // IWYU pragma: export

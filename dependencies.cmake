@@ -42,6 +42,14 @@ else()
 	add_library(lz4::lz4 ALIAS lz4_static)
 endif()
 
+FetchContent_Declare(
+	boost_unordered
+	GIT_REPOSITORY https://github.com/MikePopoloski/boost_unordered
+	GIT_TAG v1.88.0
+	GIT_SHALLOW ON
+)
+FetchContent_MakeAvailable(boost_unordered)
+
 check_include_file_cxx(format TR_HAS_STD_FORMAT)
 if(NOT TR_HAS_STD_FORMAT)
 	if(TR_USE_SYSTEM_LIBRARIES)

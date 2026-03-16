@@ -154,22 +154,22 @@ void tr::sys::set_clipboard_text(cstring_view text)
 
 ////////////////////////////////////////////////////////////////// HASHES /////////////////////////////////////////////////////////////////
 
-std::size_t std::hash<tr::sys::scancode>::operator()(tr::sys::scancode code) const
+std::size_t boost::hash<tr::sys::scancode>::operator()(tr::sys::scancode code) const
 {
 	return std::size_t(code);
 }
 
-std::size_t std::hash<tr::sys::keycode>::operator()(tr::sys::keycode code) const
+std::size_t boost::hash<tr::sys::keycode>::operator()(tr::sys::keycode code) const
 {
 	return std::size_t(code);
 }
 
-std::size_t std::hash<tr::sys::scan_chord>::operator()(tr::sys::scan_chord chord) const
+std::size_t boost::hash<tr::sys::scan_chord>::operator()(tr::sys::scan_chord chord) const
 {
 	return (std::size_t(chord.scan) << 32) | std::size_t(chord.mods);
 }
 
-std::size_t std::hash<tr::sys::key_chord>::operator()(tr::sys::key_chord chord) const
+std::size_t boost::hash<tr::sys::key_chord>::operator()(tr::sys::key_chord chord) const
 {
 	return (std::size_t(chord.key) << 32) | std::size_t(chord.mods);
 }

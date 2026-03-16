@@ -47,7 +47,7 @@ namespace tr {
 	};
 
 	// Atlas packer combined with a list of rects.
-	template <typename Key, typename Hash = std::hash<Key>, typename Pred = std::equal_to<>> class atlas_rects {
+	template <typename Key, typename Hash = boost::hash<Key>, typename Pred = std::equal_to<>> class atlas_rects {
 	  public:
 		// Gets whether the atlas contains a key.
 		bool contains(const auto& key) const;
@@ -66,7 +66,7 @@ namespace tr {
 		// The atlas packer.
 		atlas_packer m_packer;
 		// The atlas rects.
-		std::unordered_map<Key, rect2<u16>, Hash, Pred> m_rects;
+		boost::unordered_flat_map<Key, rect2<u16>, Hash, Pred> m_rects;
 	};
 } // namespace tr
 

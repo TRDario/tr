@@ -201,7 +201,7 @@ namespace tr::gfx {
 		// Global default transform.
 		glm::mat4 m_default_transform{1.0f};
 		// Layer defaults.
-		std::unordered_map<int, layer_defaults> m_layer_defaults;
+		boost::unordered_flat_map<int, layer_defaults> m_layer_defaults;
 		// The list of meshes to draw.
 		std::vector<mesh> m_meshes;
 		// The pipeline and shaders used by the renderer.

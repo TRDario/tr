@@ -125,7 +125,20 @@ void tr::binary_reader<std::map<Key, Value, Other...>>::operator()(std::istream&
 }
 
 template <tr::binary_constructible Key, typename... Other>
-void tr::binary_reader<std::unordered_set<Key, Other...>>::operator()(std::istream& is, std::unordered_set<Key, Other...>& out) const
+void tr::binary_reader<boost::unordered_flat_set<Key, Other...>>::operator()(std::istream& is,
+																			 boost::unordered_flat_set<Key, Other...>& out) const
+{
+	const u32 size{read_binary<u32>(is)};
+	out.clear();
+	out.reserve(size);
+	for (u32 i = 0; i < size; ++i) {
+		out.insert(read_binary<Key>(is));
+	}
+}
+
+template <tr::binary_constructible Key, typename... Other>
+void tr::binary_reader<boost::unordered_node_set<Key, Other...>>::operator()(std::istream& is,
+																			 boost::unordered_node_set<Key, Other...>& out) const
 {
 	const u32 size{read_binary<u32>(is)};
 	out.clear();
@@ -136,8 +149,8 @@ void tr::binary_reader<std::unordered_set<Key, Other...>>::operator()(std::istre
 }
 
 template <tr::binary_constructible Key, tr::binary_constructible Value, typename... Other>
-void tr::binary_reader<std::unordered_map<Key, Value, Other...>>::operator()(std::istream& is,
-																			 std::unordered_map<Key, Value, Other...>& out) const
+void tr::binary_reader<boost::unordered_flat_map<Key, Value, Other...>>::operator()(
+	std::istream& is, boost::unordered_flat_map<Key, Value, Other...>& out) const
 {
 	const u32 size{read_binary<u32>(is)};
 	out.clear();
@@ -211,7 +224,18 @@ void tr::binary_writer<std::map<Key, Value, Other...>>::operator()(std::ostream&
 }
 
 template <tr::binary_writable Key, typename... Other>
-void tr::binary_writer<std::unordered_set<Key, Other...>>::operator()(std::ostream& os, const std::unordered_set<Key, Other...>& in) const
+void tr::binary_writer<boost::unordered_flat_set<Key, Other...>>::operator()(std::ostream& os,
+																			 const boost::unordered_flat_set<Key, Other...>& in) const
+{
+	write_binary(os, u32(in.size()));
+	for (const auto& key : in) {
+		write_binary(os, key);
+	}
+}
+
+template <tr::binary_writable Key, typename... Other>
+void tr::binary_writer<boost::unordered_node_set<Key, Other...>>::operator()(std::ostream& os,
+																			 const boost::unordered_node_set<Key, Other...>& in) const
 {
 	write_binary(os, u32(in.size()));
 	for (const auto& key : in) {
@@ -220,8 +244,18 @@ void tr::binary_writer<std::unordered_set<Key, Other...>>::operator()(std::ostre
 }
 
 template <tr::binary_writable Key, tr::binary_writable Value, typename... Other>
-void tr::binary_writer<std::unordered_map<Key, Value, Other...>>::operator()(std::ostream& os,
-																			 const std::unordered_map<Key, Value, Other...>& in) const
+void tr::binary_writer<boost::unordered_flat_map<Key, Value, Other...>>::operator()(
+	std::ostream& os, const boost::unordered_flat_map<Key, Value, Other...>& in) const
+{
+	write_binary(os, u32(in.size()));
+	for (const auto& [key, value] : in) {
+		write_binary(os, key, value);
+	}
+}
+
+template <tr::binary_writable Key, tr::binary_writable Value, typename... Other>
+void tr::binary_writer<boost::unordered_node_map<Key, Value, Other...>>::operator()(
+	std::ostream& os, const boost::unordered_node_map<Key, Value, Other...>& in) const
 {
 	write_binary(os, u32(in.size()));
 	for (const auto& [key, value] : in) {

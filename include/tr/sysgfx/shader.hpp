@@ -190,7 +190,7 @@ namespace tr::gfx {
 		// Handle to the OpenGL program.
 		handle<unsigned int, 0, deleter> m_program;
 		// Texture units allocated to this shader.
-		std::unordered_map<int, texture_unit> m_texture_units;
+		boost::unordered_flat_map<int, texture_unit> m_texture_units;
 
 		// Constructs a shader.
 		shader_base(cstring_view source, unsigned int type);
@@ -200,11 +200,11 @@ namespace tr::gfx {
 
 #ifdef TR_ENABLE_GL_CHECKS
 		// List of non-block uniforms obtained by introspection.
-		std::unordered_map<unsigned int, glsl_variable> m_uniforms;
+		boost::unordered_flat_map<unsigned int, glsl_variable> m_uniforms;
 		// List of input variables obtained by introspection.
-		std::unordered_map<unsigned int, glsl_variable> m_inputs;
+		boost::unordered_flat_map<unsigned int, glsl_variable> m_inputs;
 		// List of output variables obtained by introspection.
-		std::unordered_map<unsigned int, glsl_variable> m_outputs;
+		boost::unordered_flat_map<unsigned int, glsl_variable> m_outputs;
 
 		// Finds the uniforms of the shader using introspection.
 		void find_uniforms();

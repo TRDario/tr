@@ -10,10 +10,10 @@
 
 ////////////////////////////////////////////////////////////////// HANDLE /////////////////////////////////////////////////////////////////
 
-template <std::regular Base, Base Empty, tr::handle_deleter<Base> Deleter> struct std::hash<tr::handle<Base, Empty, Deleter>> {
+template <std::regular Base, Base Empty, tr::handle_deleter<Base> Deleter> struct boost::hash<tr::handle<Base, Empty, Deleter>> {
 	constexpr auto operator()(const tr::handle<Base, Empty, Deleter>& handle) const
 	{
-		return std::hash<Base>{}(handle.get(tr::no_empty_handle_check));
+		return boost::hash<Base>{}(handle.get(tr::no_empty_handle_check));
 	}
 };
 

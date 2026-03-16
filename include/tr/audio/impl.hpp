@@ -331,7 +331,7 @@ namespace tr::audio {
 		// A list of active audio commands.
 		std::vector<command> m_commands;
 		// Map holding the handles to extant audio buffer and whether they're cullable.
-		std::unordered_map<owning_buffer, bool, owning_buffer::hasher, std::equal_to<>> m_buffers;
+		boost::unordered_flat_map<owning_buffer, bool, owning_buffer::hasher, std::equal_to<>> m_buffers;
 		// The maximum allowed number of audio sources.
 		usize m_max_sources;
 		// A list of active audio sources.

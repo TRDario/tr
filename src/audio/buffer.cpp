@@ -32,7 +32,7 @@ void tr::audio::owning_buffer::deleter::operator()(id id) const
 
 tr::usize tr::audio::owning_buffer::hasher::operator()(id v) const
 {
-	return std::hash<id>{}(v);
+	return boost::hash<id>{}(v);
 }
 
 ////////////////////////////////////////////////////////// BUFFERED STREAM BUFFER /////////////////////////////////////////////////////////

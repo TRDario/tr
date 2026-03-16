@@ -88,6 +88,6 @@ namespace tr {
 template <> struct TR_FMT::formatter<tr::cstring_view> : TR_FMT::formatter<const char*> {};
 
 // C-string hasher.
-template <> struct std::hash<tr::cstring_view> : std::hash<std::string_view> {};
+template <> struct boost::hash<tr::cstring_view> : boost::hash<std::string_view> {};
 
 #include "impl/cstring_view.hpp"

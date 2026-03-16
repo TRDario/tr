@@ -10,7 +10,7 @@
 /////////////////////////////////////////////////////////////// BITMAP ATLAS //////////////////////////////////////////////////////////////
 
 template <typename Key, typename Hash, typename Pred>
-tr::bitmap_atlas<Key, Hash, Pred> tr::build_bitmap_atlas(const std::unordered_map<Key, tr::bitmap, Hash, Pred>& entries)
+tr::bitmap_atlas<Key, Hash, Pred> tr::build_bitmap_atlas(const boost::unordered_flat_map<Key, tr::bitmap, Hash, Pred>& entries)
 {
 	glm::ivec2 size{};
 	atlas_rects<Key, Hash, Pred> rects;
