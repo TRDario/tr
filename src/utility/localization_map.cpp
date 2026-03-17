@@ -146,12 +146,12 @@ std::vector<std::string> tr::localization_map::parser::errors()
 
 ///////////////////////////////////////////////////////////// LOCALIZATION MAP ////////////////////////////////////////////////////////////
 
-tr::localization_map::localization_map(const string_hash_map<std::string>& map)
+tr::localization_map::localization_map(const string_flat_map<std::string>& map)
 	: m_map{map}
 {
 }
 
-tr::localization_map::localization_map(string_hash_map<std::string>&& map)
+tr::localization_map::localization_map(string_flat_map<std::string>&& map)
 	: m_map{std::move(map)}
 {
 }

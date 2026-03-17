@@ -65,9 +65,9 @@ namespace tr {
 		// Constructs an empty localization map.
 		localization_map() = default;
 		// Copies a localization map.
-		localization_map(const string_hash_map<std::string>& map);
+		localization_map(const string_flat_map<std::string>& map);
 		// Moves a localization map.
-		localization_map(string_hash_map<std::string>&& map);
+		localization_map(string_flat_map<std::string>&& map);
 
 		// Clears the localization map.
 		void clear();
@@ -124,6 +124,6 @@ namespace tr {
 		};
 
 		// The base string map.
-		string_hash_map<std::string> m_map;
+		string_flat_map<std::string> m_map;
 	};
 } // namespace tr

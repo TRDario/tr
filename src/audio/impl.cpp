@@ -262,7 +262,7 @@ void tr::audio::manager::thread_fn(std::stop_token stoken)
 		try {
 			std::lock_guard lock{m_mutex};
 
-			std::erase_if(m_buffers, [this](auto& v) {
+			boost::unordered::erase_if(m_buffers, [this](auto& v) {
 				auto& [buffer, cullable]{v};
 				return cullable && std::ranges::none_of(m_sources, [&](auto& s) { return s->buffer() == buffer; });
 			});
