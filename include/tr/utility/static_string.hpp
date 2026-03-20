@@ -98,19 +98,19 @@ namespace tr {
 		// Appends a substring to the string.
 		constexpr static_string& operator+=(std::string_view str);
 		// Inserts a character into the string.
-		constexpr void insert(const_iterator where, char chr);
+		constexpr iterator insert(const_iterator where, char chr);
 		// Inserts a range into the string.
 		template <std::input_iterator Iterator>
 			requires(std::same_as<typename std::iterator_traits<Iterator>::value_type, char>)
-		constexpr void insert(const_iterator where, Iterator first, Iterator last);
+		constexpr iterator insert(const_iterator where, Iterator first, Iterator last);
 		// Inserts a substring into the string.
-		constexpr void insert(const_iterator where, std::string_view str);
+		constexpr iterator insert(const_iterator where, std::string_view str);
 		// Erases a character from the end of the string.
 		constexpr void pop_back();
 		// Erases a character from the string.
-		constexpr void erase(const_iterator where);
+		constexpr iterator erase(const_iterator where);
 		// Erases a portion of the string.
-		constexpr void erase(const_iterator start, const_iterator end);
+		constexpr iterator erase(const_iterator start, const_iterator end);
 		// Resizes the string, filling it with a character if necessary.
 		constexpr void resize(size_type size, char chr = '\0');
 

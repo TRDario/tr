@@ -70,15 +70,27 @@ template <tr::utf8::string String> constexpr String::iterator tr::utf8::insert(S
 		return str.insert(where, cp);
 	}
 	else if (cp < 0x800) {
-		const std::array<char, 2> chars{char(cp >> 6), char(cp & 0x3F)};
+		const std::array<char, 2> chars{
+			char(cp >> 6 | 0xC0),
+			char((cp & 0x3F) | 0x80),
+		};
 		return str.insert(where, chars.begin(), chars.end());
 	}
 	else if (cp < 0x10000) {
-		const std::array<char, 3> chars{char(cp >> 12), char((cp >> 6) & 0x3F), char(cp & 0x3F)};
+		const std::array<char, 3> chars{
+			char(cp >> 12 | 0xE0),
+			char(((cp >> 6) & 0x3F) | 0x80),
+			char((cp & 0x3F) | 0x80),
+		};
 		return str.insert(where, chars.begin(), chars.end());
 	}
 	else {
-		const std::array<char, 4> chars{char(cp >> 18), char((cp >> 12) & 0x3F), char((cp >> 6) & 0x3F), char(cp & 0x3F)};
+		const std::array<char, 4> chars{
+			char(cp >> 18 | 0xF0),
+			char(((cp >> 12) & 0x3F) | 0x80),
+			char(((cp >> 6) & 0x3F) | 0x80),
+			char((cp & 0x3F) | 0x80),
+		};
 		return str.insert(where, chars.begin(), chars.end());
 	}
 }

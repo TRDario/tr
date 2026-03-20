@@ -238,40 +238,48 @@ template <tr::usize Capacity> constexpr tr::static_string<Capacity>& tr::static_
 	return *this;
 }
 
-template <tr::usize Capacity> constexpr void tr::static_string<Capacity>::insert(const_iterator where, char chr)
+template <tr::usize Capacity>
+constexpr tr::static_string<Capacity>::iterator tr::static_string<Capacity>::insert(const_iterator where, char chr)
 {
 	TR_ASSERT(m_size < Capacity, "Tried to insert into a static string that is already at its capacity of {}.", Capacity);
 	TR_ASSERT(where >= begin() && where <= end(), "Tried to pass an invalid iterator to static_string::insert.");
 
-	std::copy_backward(begin() + (where - begin()), end(), end() + 1);
-	*(begin() + (where - begin())) = chr;
+	const iterator location{begin() + (where - begin())};
+	std::copy_backward(location, end(), end() + 1);
+	*location = chr;
 	++m_size;
+	return location;
 }
 
 template <tr::usize Capacity>
 template <std::input_iterator Iterator>
 	requires(std::same_as<typename std::iterator_traits<Iterator>::value_type, char>)
-constexpr void tr::static_string<Capacity>::insert(const_iterator where, Iterator first, Iterator last)
+constexpr tr::static_string<Capacity>::iterator tr::static_string<Capacity>::insert(const_iterator where, Iterator first, Iterator last)
 {
-	const auto size{std::distance(first, last)};
+	const usize size{usize(std::distance(first, last))};
 
 	TR_ASSERT(m_size + size <= Capacity, "Tried to do an insert into a static string that would put it past its capacity of {}.", Capacity);
 	TR_ASSERT(where >= begin() && where <= end(), "Tried to pass an invalid iterator to static_string::insert.");
 
-	std::copy_backward(begin() + (where - begin()), end(), end() + size);
-	std::copy(first, last, begin() + (where - begin()));
+	const iterator mut_where{begin() + (where - begin())};
+	std::copy_backward(mut_where, end(), end() + size);
+	std::copy(first, last, mut_where);
 	m_size = size_type(m_size + size);
+	return mut_where;
 }
 
-template <tr::usize Capacity> constexpr void tr::static_string<Capacity>::insert(const_iterator where, std::string_view str)
+template <tr::usize Capacity>
+constexpr tr::static_string<Capacity>::iterator tr::static_string<Capacity>::insert(const_iterator where, std::string_view str)
 {
 	TR_ASSERT(m_size + str.size() <= Capacity, "Tried to do an insert into a static string that would put it past its capacity of {}.",
 			  Capacity);
 	TR_ASSERT(where >= begin() && where <= end(), "Tried to pass an invalid iterator to static_string::insert.");
 
-	std::copy_backward(begin() + (where - begin()), end(), end() + str.size());
-	std::ranges::copy(str, begin() + (where - begin()));
+	const iterator mut_where{begin() + (where - begin())};
+	std::copy_backward(begin() + mut_where, end(), end() + str.size());
+	std::ranges::copy(str, mut_where);
 	m_size = size_type(m_size + str.size());
+	return mut_where;
 }
 
 template <tr::usize Capacity> constexpr void tr::static_string<Capacity>::pop_back()
@@ -281,21 +289,26 @@ template <tr::usize Capacity> constexpr void tr::static_string<Capacity>::pop_ba
 	}
 }
 
-template <tr::usize Capacity> constexpr void tr::static_string<Capacity>::erase(const_iterator where)
+template <tr::usize Capacity> constexpr tr::static_string<Capacity>::iterator tr::static_string<Capacity>::erase(const_iterator where)
 {
 	TR_ASSERT(where >= begin() && where < end(), "Tried to pass an invalid iterator to static_string::erase.");
 
-	std::copy(begin() + (where - begin()) + 1, end(), begin() + (where - begin()));
+	const iterator mut_where{begin() + (where - begin())};
+	std::copy(mut_where + 1, end(), mut_where);
 	--m_size;
+	return mut_where;
 }
 
-template <tr::usize Capacity> constexpr void tr::static_string<Capacity>::erase(const_iterator start, const_iterator end)
+template <tr::usize Capacity>
+constexpr tr::static_string<Capacity>::iterator tr::static_string<Capacity>::erase(const_iterator start, const_iterator end)
 {
 	TR_ASSERT(start >= begin() && start < this->end(), "Tried to pass an invalid start iterator to static_string::erase.");
 	TR_ASSERT(end >= begin() && end <= this->end(), "Tried to pass an invalid end iterator to static_string::erase.");
 
-	std::copy(begin() + (start - begin()) + (end - start), this->end(), begin() + (start - begin()));
+	const iterator mut_start{begin() + (start - begin())};
+	std::copy(mut_start + (end - start), this->end(), mut_start);
 	m_size = size_type(m_size - (end - start));
+	return mut_start;
 }
 
 template <tr::usize Capacity> constexpr void tr::static_string<Capacity>::resize(size_type size, char chr)
