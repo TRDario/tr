@@ -152,5 +152,7 @@ endif()
 ################################################################## TESTS ##################################################################
 
 if(TR_BUILD_TESTS)
+	message("-- tr: Building tests")
+	include(CTest)
 	add_subdirectory(test)
 endif()
