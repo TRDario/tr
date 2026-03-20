@@ -6,6 +6,7 @@
 
 #include "../../include/tr/sysgfx/gpu_benchmark.hpp"
 #include "../../include/tr/sysgfx/gl_call.hpp"
+#include "../../include/tr/utility/ranges.hpp"
 
 ////////////////////////////////////////////////////////////// GPU BENCHMARK //////////////////////////////////////////////////////////////
 

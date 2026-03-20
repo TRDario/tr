@@ -646,10 +646,12 @@ consteval tr::rgba8 tr::literals::color_literals::operator""_rgba8(const char* s
 {
 	constexpr auto is_digit{[](char chr) { return chr >= '0' && chr <= '9'; }};
 	constexpr auto is_uppercase_hex{[](char chr) { return chr >= 'A' && chr <= 'F'; }};
-	constexpr auto is_lowercase_hex{[](char chr) { return chr >= 'a' && chr <= 'f'; }};
-	constexpr auto is_hex_digit{[=](char chr) { return is_digit(chr) || is_uppercase_hex(chr) || is_lowercase_hex(chr); }};
 	constexpr auto to_num{[=](char chr) { return u8(is_digit(chr) ? chr - '0' : chr - (is_uppercase_hex(chr) ? 'A' : 'a') + 0xA); }};
 
+#ifdef TR_ENABLE_ASSERTS
+	constexpr auto is_lowercase_hex{[](char chr) { return chr >= 'a' && chr <= 'f'; }};
+	constexpr auto is_hex_digit{[=](char chr) { return is_digit(chr) || is_uppercase_hex(chr) || is_lowercase_hex(chr); }};
+#endif
 	TR_ASSERT(length == 7 || length == 9, "Invalid RGBA literal string length {} (must be 7 or 9).", length);
 	TR_ASSERT(std::ranges::all_of(std::string_view{str + 1, length - 1}, is_hex_digit), "Invalid color literal hex string '{}'.", str);
 

@@ -156,8 +156,8 @@ void tr::gfx::shader_base::find_outputs()
 	} while (0)
 
 #else
-#define TR_SHADER_ASSERT_UNIFORM void(0)
-#define TR_SHADER_ASSERT_ARRAY_UNIFORM void(0)
+#define TR_ASSERT_SHADER_UNIFORM(target_type) void(0)
+#define TR_ASSERT_SHADER_ARRAY_UNIFORM(target_type) void(0)
 #endif
 
 void tr::gfx::shader_base::deleter::operator()(unsigned int id) const
@@ -167,9 +167,7 @@ void tr::gfx::shader_base::deleter::operator()(unsigned int id) const
 
 void tr::gfx::shader_base::set_uniform(int index, bool value)
 {
-#ifdef TR_ENABLE_GL_CHECKS
-
-#endif
+	TR_ASSERT_SHADER_UNIFORM(bool);
 	TR_GL_CALL(glProgramUniform1i, m_program.get(), index, value);
 }
 

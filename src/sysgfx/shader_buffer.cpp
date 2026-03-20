@@ -6,6 +6,7 @@
 
 #include "../../include/tr/sysgfx/shader_buffer.hpp"
 #include "../../include/tr/sysgfx/gl_call.hpp"
+#include "../../include/tr/utility/exception.hpp"
 
 /////////////////////////////////////////////////////////// BASIC SHADER BUFFER ///////////////////////////////////////////////////////////
 

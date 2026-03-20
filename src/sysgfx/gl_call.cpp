@@ -8,6 +8,7 @@
 
 //////////////////////////////////////////////////////////////// VALIDATION ///////////////////////////////////////////////////////////////
 
+#ifdef TR_ENABLE_ASSERTS
 void tr::gfx::validate_gl_call(const char* file, int line, const char* function)
 {
 	const GLenum error{glGetError()};
@@ -33,3 +34,4 @@ void tr::gfx::validate_gl_call(const char* file, int line, const char* function)
 		std::abort();
 	}
 }
+#endif
