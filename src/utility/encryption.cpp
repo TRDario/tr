@@ -37,26 +37,6 @@ std::string_view tr::decryption_error::details() const
 	return {};
 }
 
-tr::encryption_error::encryption_error(std::string_view description)
-	: m_description{description}
-{
-}
-
-std::string_view tr::encryption_error::name() const
-{
-	return "Encryption error";
-}
-
-std::string_view tr::encryption_error::description() const
-{
-	return m_description;
-}
-
-std::string_view tr::encryption_error::details() const
-{
-	return {};
-}
-
 ////////////////////////////////////////////////////////// ENCRYPTION/DECRYPTION //////////////////////////////////////////////////////////
 
 void tr::encrypt_to(std::vector<std::byte>& out, std::span<const std::byte> raw)

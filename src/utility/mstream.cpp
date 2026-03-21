@@ -11,6 +11,7 @@
 tr::memorybuf::memorybuf(std::span<char> buffer)
 	: m_buffer{buffer}
 {
+	setp(buffer.data(), buffer.data() + buffer.size());
 	setg(buffer.data(), buffer.data(), buffer.data() + buffer.size());
 }
 
@@ -24,23 +25,31 @@ tr::memorybuf::memorybuf(std::span<std::byte> buffer)
 {
 }
 
-tr::memorybuf::pos_type tr::memorybuf::seekoff(off_type offset, std::ios_base::seekdir dir, std::ios_base::openmode)
+tr::memorybuf::pos_type tr::memorybuf::seekoff(off_type offset, std::ios_base::seekdir dir, std::ios_base::openmode which)
 {
-	switch (dir) {
-	case std::ios_base::cur:
-		gbump(offset);
-		break;
-	case std::ios_base::end:
-		setg(m_buffer.data(), m_buffer.data() + m_buffer.size() + offset, m_buffer.data() + m_buffer.size());
-		break;
-	case std::ios_base::beg:
-		setg(m_buffer.data(), m_buffer.data() + offset, m_buffer.data() + m_buffer.size());
-		break;
-	default:
-		break;
+	pos_type result{pos_type(-1)};
+	off_type ioffset{offset};
+	off_type ooffset{offset};
+	if (dir == std::ios_base::cur) {
+		ioffset += gptr() - eback();
+		ooffset += pptr() - pbase();
+	}
+	else if (dir == std::ios_base::end) {
+		ioffset += m_buffer.size();
+		ooffset = ioffset;
 	}
 
-	return gptr() - eback();
+	if (which & std::ios_base::in && ioffset >= 0 && ioffset <= off_type(m_buffer.size())) {
+		setg(eback(), eback() + ioffset, egptr());
+		result = pos_type(ioffset);
+	}
+	if (which & std::ios_base::out && ooffset >= 0 && ooffset <= off_type(m_buffer.size())) {
+		setp(pbase(), epptr());
+		pbump(ooffset);
+		result = pos_type(ooffset);
+	}
+
+	return result;
 }
 
 tr::memorybuf::pos_type tr::memorybuf::seekpos(std::streampos pos, std::ios_base::openmode mode)
