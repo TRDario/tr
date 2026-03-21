@@ -9,7 +9,7 @@
 using namespace tr::integer_aliases;
 using tr::norm_cast;
 
-int main()
+int norm_cast(int, char**)
 {
 	// Generate a bunch of numbers, round-trip through every kind of conversion, calculate the error and take the largest.
 	tr::rng rng;

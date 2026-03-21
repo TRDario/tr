@@ -6,7 +6,7 @@
 
 #include <tr/utility.hpp>
 
-int main()
+int utf8(int, char**)
 {
 	constexpr tr::static_string<10> characters{"ač東😳"};
 	constexpr std::array<tr::codepoint, 4> codepoints{0x61, 0x10D, 0x6771, 0x1F633};
@@ -15,7 +15,7 @@ int main()
 	// Test UTF-8 -> codepoint conversion.
 	for (int i = 0; i < 4; ++i) {
 		if (tr::utf8::to_cp(characters.begin() + offsets[i]) != codepoints[i]) {
-			tr::println_error("UTF-8 -> codepoint conversion failed.");
+			tr::println_error("tr::utf8::to_cp(it) did not return the expected result.");
 			return EXIT_FAILURE;
 		}
 	}
