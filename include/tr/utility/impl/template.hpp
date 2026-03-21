@@ -29,6 +29,11 @@ template <tr::usize Size> template <typename... Args> consteval tr::string_liter
 	return std::string_view{*this};
 }
 
+template <tr::usize Size> consteval tr::usize tr::string_literal<Size>::size() const
+{
+	return Size - 1;
+}
+
 //////////////////////////////////////////////////////////////// TYPE NAME ////////////////////////////////////////////////////////////////
 
 template <typename T> consteval std::string_view tr::type_name()
