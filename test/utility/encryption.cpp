@@ -15,9 +15,9 @@ int encryption(int, char**)
 	}
 
 	try {
-		const std::vector<std::byte> encrypted{tr::encrypt(data)};
+		std::vector<std::byte> encrypted{tr::encrypt(data)};
 		const std::vector<std::byte> decrypted{tr::decrypt(std::move(encrypted))};
-		if (tr::as_object<std::array<double, 1024>>(tr::range_bytes(decrypted)) != data) {
+		if (tr::as_object<std::array<double, 1024>>(decrypted) != data) {
 			tr::println_error("Encryption did not round-trip correctly.");
 			return EXIT_FAILURE;
 		}
