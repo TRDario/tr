@@ -30,10 +30,10 @@ namespace tr {
 
 	// Concept denoting a const-qualified type.
 	template <typename T>
-	concept const_qualified = std::is_const_v<T>;
+	concept const_qualified = std::is_const_v<std::remove_reference_t<T>>;
 	// Concept denoting a volatile-qualified type.
 	template <typename T>
-	concept volatile_qualified = std::is_volatile_v<T>;
+	concept volatile_qualified = std::is_volatile_v<std::remove_reference_t<T>>;
 	// Concept denoting a cv-unqualified type.
 	template <typename T>
 	concept cv_unqualified = !const_qualified<T> && !volatile_qualified<T>;
@@ -44,15 +44,34 @@ namespace tr {
 	// Concept denoting a standard layout type.
 	template <typename T>
 	concept standard_layout = std::is_standard_layout_v<T>;
-	// Concept denoting a contiguous range.
-	template <typename T>
-	concept standard_layout_range = std::ranges::contiguous_range<T> && standard_layout<std::ranges::range_value_t<T>>;
+	// Concept denoting a contiguous range of standard layout objects.
+	template <typename Range>
+	concept standard_layout_range = std::ranges::contiguous_range<Range> && standard_layout<std::ranges::range_value_t<Range>>;
+	// Concept denoting a borrowed contiguous range of standard layout objects.
+	template <typename Range>
+	concept borrowed_standard_layout_range = standard_layout_range<Range> && std::ranges::borrowed_range<Range>;
+	// Concept denoting a borrowed mutable contiguous range of standard layout objects.
+	template <typename Range>
+	concept borrowed_mutable_standard_layout_range =
+		borrowed_standard_layout_range<Range> && !const_qualified<std::ranges::range_reference_t<Range>>;
 	// Concept denoting a sized output range.
 	template <typename Range, typename Element>
 	concept sized_output_range = std::ranges::sized_range<Range> && std::output_iterator<std::ranges::iterator_t<Range>, Element>;
-	// Concept denoting a typed contiguous range.
+	// Concept denoting an immutable contiguous range whose elements are of a certain type.
 	template <typename Range, typename Element>
-	concept typed_contiguous_range = std::ranges::contiguous_range<Range> && std::same_as<Element, std::ranges::range_value_t<Range>>;
+	concept typed_contiguous_const_range =
+		std::ranges::contiguous_range<Range> &&
+		std::same_as<const Element, std::add_const_t<std::remove_reference_t<std::ranges::range_reference_t<Range>>>>;
+	// Concept denoting a borrowed immutable contiguous range whose elements are of a certain type.
+	template <typename Range, typename Element>
+	concept borrowed_typed_contiguous_const_range = typed_contiguous_const_range<Range, Element> && std::ranges::borrowed_range<Range>;
+	// Concept denoting a mutable contiguous range whose elements are of a certain type.
+	template <typename Range, typename Element>
+	concept typed_contiguous_mutable_range =
+		std::ranges::contiguous_range<Range> && std::same_as<Element, std::remove_reference_t<std::ranges::range_reference_t<Range>>>;
+	// Concept denoting a borrowed mutable contiguous range whose elements are of a certain type.
+	template <typename Range, typename Element>
+	concept borrowed_typed_contiguous_mutable_range = typed_contiguous_mutable_range<Range, Element> && std::ranges::borrowed_range<Range>;
 
 	// Concept denoting a specialization of a template with type parameters.
 	template <typename T, template <typename...> typename Z>

@@ -31,7 +31,7 @@ template <typename Header, typename ArrayElement> void tr::gfx::shader_buffer<He
 }
 
 template <typename Header, typename ArrayElement>
-template <tr::typed_contiguous_range<ArrayElement> R>
+template <tr::typed_contiguous_const_range<ArrayElement> R>
 void tr::gfx::shader_buffer<Header, ArrayElement>::set_array(R&& data)
 {
 	basic_shader_buffer::set_array(range_bytes(data));
@@ -72,7 +72,9 @@ template <typename Element> tr::usize tr::gfx::shader_array<Element>::capacity()
 	return basic_shader_buffer::array_capacity() / sizeof(Element);
 }
 
-template <typename Element> template <tr::typed_contiguous_range<Element> Range> void tr::gfx::shader_array<Element>::set(Range&& data)
+template <typename Element>
+template <tr::typed_contiguous_const_range<Element> Range>
+void tr::gfx::shader_array<Element>::set(Range&& data)
 {
 	basic_shader_buffer::set_array(range_bytes(data));
 }

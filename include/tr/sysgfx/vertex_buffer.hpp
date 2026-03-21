@@ -69,7 +69,7 @@ namespace tr::gfx {
 	template <standard_layout T> class static_vertex_buffer : public basic_static_vertex_buffer {
 	  public:
 		// Creates a static vertex buffer.
-		template <typed_contiguous_range<T> R> static_vertex_buffer(R&& range);
+		template <typed_contiguous_const_range<T> R> static_vertex_buffer(R&& range);
 	};
 
 	// Dynamic vertex buffer class.
@@ -133,9 +133,9 @@ namespace tr::gfx {
 		// Clears the buffer and guarantees a certain capacity for it.
 		void reserve(usize capacity);
 		// Sets the contents of the buffer, potentially reallocating it.
-		template <typed_contiguous_range<T> R> void set(R&& data);
+		template <typed_contiguous_const_range<T> R> void set(R&& data);
 		// Sets a region of the buffer.
-		template <typed_contiguous_range<T> R> void set_region(usize offset, R&& data);
+		template <typed_contiguous_const_range<T> R> void set_region(usize offset, R&& data);
 
 	  private:
 		using basic_dyn_vertex_buffer::capacity;

@@ -41,22 +41,22 @@
 
 namespace tr {
 	// Gets a view of a contiguous range as a span of immutable bytes.
-	template <standard_layout_range Range> auto range_bytes(const Range& range);
+	template <borrowed_standard_layout_range Range> auto range_bytes(Range&& range);
 	// Gets a view of an object as a span of immutable bytes.
 	template <standard_layout Object> std::span<const std::byte, sizeof(Object)> as_bytes(const Object& object);
 	// Gets a view of a contiguous range as a span of mutable bytes.
-	template <standard_layout_range Range> auto range_mut_bytes(Range& range);
+	template <borrowed_mutable_standard_layout_range Range> auto range_mut_bytes(Range&& range);
 	// Gets a view of an object as a span of mutable bytes.
 	template <standard_layout Object> std::span<std::byte, sizeof(Object)> as_mut_bytes(Object& object);
 
-	// Reinterprets a span of mutable bytes as an object and returns a reference to it.
-	template <standard_layout Object, usize Size> Object& as_mut_object(std::span<std::byte, Size> bytes);
-	// Reinterprets a span of immutable bytes as a const object and returns a reference to it.
-	template <standard_layout Object, usize Size> const Object& as_object(std::span<const std::byte, Size> bytes);
-	// Reinterprets a span of mutable bytes as a span of objects.
-	template <standard_layout Element, usize Size> auto as_mut_objects(std::span<std::byte, Size> bytes);
-	// Reinterprets a span of immutable bytes as a span of const objects.
-	template <standard_layout Element, usize Size> auto as_objects(std::span<const std::byte, Size> bytes);
+	// Reinterprets a range of mutable bytes as an object and returns a reference to it.
+	template <standard_layout Object, borrowed_typed_contiguous_mutable_range<std::byte> Range> Object& as_mut_object(Range&& bytes);
+	// Reinterprets a range of immutable bytes as an object and returns a reference to it.
+	template <standard_layout Object, borrowed_typed_contiguous_const_range<std::byte> Range> const Object& as_object(Range&& bytes);
+	// Reinterprets a range of mutable bytes as a span of objects.
+	template <standard_layout Element, borrowed_typed_contiguous_mutable_range<std::byte> Range> auto as_mut_objects(Range&& bytes);
+	// Reinterprets a range of immutable bytes as a span of objects.
+	template <standard_layout Element, borrowed_typed_contiguous_const_range<std::byte> Range> auto as_objects(Range&& bytes);
 
 	// Returns an iterator to the last element in 'searched' that matches one of the elements in 'blacklist'.
 	template <std::ranges::range SearchedRange, std::ranges::forward_range WhitelistRange>

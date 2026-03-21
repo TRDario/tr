@@ -119,7 +119,7 @@ namespace tr::gfx {
 		// Sets the data of the header.
 		void set_header(const Header& header);
 		// Sets the data of the dynamic array.
-		template <typed_contiguous_range<ArrayElement> R> void set_array(R&& data);
+		template <typed_contiguous_const_range<ArrayElement> R> void set_array(R&& data);
 		// Resizes the dynamic array.
 		void resize_array(usize size);
 
@@ -152,7 +152,7 @@ namespace tr::gfx {
 		usize capacity() const;
 
 		// Sets the data of the array.
-		template <typed_contiguous_range<Element> R> void set(R&& data);
+		template <typed_contiguous_const_range<Element> R> void set(R&& data);
 		// Resizes the array.
 		void resize(usize size);
 
