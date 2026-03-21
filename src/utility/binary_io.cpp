@@ -1,9 +1,27 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Implements the non-constexpr parts of binary_io.hpp.                                                                                  //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #include "../../include/tr/utility/binary_io.hpp"
+
+////////////////////////////////////////////////////////////// BINARY READING /////////////////////////////////////////////////////////////
 
 void tr::binary_reader<std::string>::operator()(std::istream& is, std::string& out) const
 {
 	out.resize(read_binary<u32>(is));
 	is.read(out.data(), out.size());
+}
+
+bool tr::read_binary_magic(std::istream& is, std::string_view magic)
+{
+	for (char chr : magic) {
+		if (is.get() != chr) {
+			return false;
+		}
+	}
+	return true;
 }
 
 std::vector<std::byte> tr::flush_binary(std::istream& is)
@@ -12,6 +30,13 @@ std::vector<std::byte> tr::flush_binary(std::istream& is)
 	flush_binary(is, std::back_inserter(out));
 	out.shrink_to_fit();
 	return out;
+}
+
+////////////////////////////////////////////////////////////// BINARY WRITING /////////////////////////////////////////////////////////////
+
+void tr::binary_writer<const char*>::operator()(std::ostream& os, const char* in) const
+{
+	write_binary(os, std::string_view{in});
 }
 
 void tr::binary_writer<std::string_view>::operator()(std::ostream& os, const std::string_view& in) const
@@ -25,7 +50,7 @@ void tr::binary_writer<std::string>::operator()(std::ostream& os, const std::str
 	write_binary(os, std::string_view{in});
 }
 
-void tr::binary_writer<std::span<const std::byte>>::operator()(std::ostream& os, const std::span<const std::byte>& in) const
+void tr::write_binary_magic(std::ostream& os, std::string_view magic)
 {
-	os.write((const char*)in.data(), in.size());
+	os.write(magic.data(), magic.size());
 }

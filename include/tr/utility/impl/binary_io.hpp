@@ -40,12 +40,6 @@ template <tr::binary_constructible Out> Out tr::read_binary(std::istream& is)
 	return out;
 }
 
-template <tr::string_literal Literal> bool tr::read_binary_magic(std::istream& is)
-{
-	const std::array<char, sizeof(Literal)> buffer{read_binary<std::array<char, sizeof(Literal)>>(is)};
-	return std::string_view{buffer.data(), sizeof(Literal)} == Literal;
-}
-
 template <tr::binary_flushable_iterator Iterator> void tr::flush_binary(std::istream& is, Iterator out)
 {
 	while (is.peek() != EOF) {
@@ -162,16 +156,25 @@ void tr::binary_reader<boost::unordered_flat_map<Key, Value, Other...>>::operato
 	}
 }
 
+template <tr::binary_constructible Key, tr::binary_constructible Value, typename... Other>
+void tr::binary_reader<boost::unordered_node_map<Key, Value, Other...>>::operator()(
+	std::istream& is, boost::unordered_node_map<Key, Value, Other...>& out) const
+{
+	const u32 size{read_binary<u32>(is)};
+	out.clear();
+	out.reserve(size);
+	for (u32 i = 0; i < size; ++i) {
+		Key key{read_binary<Key>(is)};
+		Value value{read_binary<Value>(is)};
+		out.emplace(std::move(key), std::move(value));
+	}
+}
+
 ////////////////////////////////////////////////////// BINARY WRITER SPECIALIZATIONS //////////////////////////////////////////////////////
 
 template <tr::standard_layout In> void tr::raw_binary_writer<In>::operator()(std::ostream& os, const In& in)
 {
 	os.write((const char*)std::addressof(in), sizeof(In));
-}
-
-template <tr::usize Size> void tr::binary_writer<char[Size]>::operator()(std::ostream& os, const char (&in)[Size]) const
-{
-	os.write(in, Size - 1);
 }
 
 template <tr::binary_writable Element, tr::usize Size>
@@ -191,6 +194,17 @@ template <tr::binary_writable First, tr::binary_writable Second>
 void tr::binary_writer<std::pair<First, Second>>::operator()(std::ostream& os, const std::pair<First, Second> in) const
 {
 	write_binary(os, in.first, in.second);
+}
+
+template <tr::usize Size> void tr::binary_writer<char[Size]>::operator()(std::ostream& os, const char (&in)[Size]) const
+{
+	write_binary(os, std::string_view{in});
+}
+
+template <tr::binary_writable Element, tr::usize Size>
+void tr::binary_writer<Element[Size]>::operator()(std::ostream& os, const Element (&in)[Size]) const
+{
+	write_binary(os, std::span{in});
 }
 
 template <tr::binary_writable Element, tr::usize Size>

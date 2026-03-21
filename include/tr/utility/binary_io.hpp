@@ -8,7 +8,7 @@
 //     - int x; tr::read_binary(is, x) -> reads an integer value from 'is' into x                                                        //
 //     - int x; char y; tr::read_binary(is, x, y) -> reads an integer to 'x' and a character into 'y' from 'is'                          //
 //     - tr::read_binary<int>(is) -> reads an integer value from 'is'                                                                    //
-//     - tr::read_binary_magic<"tr">(is) -> reads 2 bytes from 'is' and returns true if they match 'tr', and false otherwise             //
+//     - tr::read_binary_magic(is, "tr") -> reads 2 bytes from 'is' and returns true if they match 'tr', and false otherwise             //
 //                                                                                                                                       //
 // It is sometimes necessary to extract all remaining data out of a stream, which can be done with tr::flush_binary, outputting either   //
 // to an existing vector, or to a new one which is then returned:                                                                        //
@@ -89,7 +89,7 @@ namespace tr {
 	// Reads binary data from a stream.
 	template <binary_constructible Out> Out read_binary(std::istream& is);
 	// Checks for magic bytes from a stream.
-	template <string_literal Literal> bool read_binary_magic(std::istream& is);
+	bool read_binary_magic(std::istream& is, std::string_view magic);
 
 	// Flushes the rest of the stream into an output iterator.
 	template <tr::binary_flushable_iterator Iterator> void flush_binary(std::istream& is, Iterator out);
@@ -102,6 +102,8 @@ namespace tr {
 	template <binary_writable... Ins>
 		requires(sizeof...(Ins) >= 2)
 	void write_binary(std::ostream& os, const Ins&... ins);
+	// Writes magic bytes to a stream.
+	void write_binary_magic(std::ostream& os, std::string_view magic);
 } // namespace tr
 
 ///////////////////////////////////////////////////////////// SPECIALIZATIONS /////////////////////////////////////////////////////////////
@@ -179,16 +181,6 @@ namespace tr {
 	// Matrix binary writers.
 	template <int Columns, int Rows, typename Element>
 	struct binary_writer<glm::mat<Columns, Rows, Element>> : raw_binary_writer<glm::mat<Columns, Rows, Element>> {};
-	// String literal binary writer.
-	template <usize Size> struct binary_writer<char[Size]> {
-		void operator()(std::ostream& os, const char (&in)[Size]) const;
-	};
-	// Unformatted span binary writer.
-	template <> struct binary_writer<std::span<const std::byte>> {
-		void operator()(std::ostream& os, const std::span<const std::byte>& in) const;
-	};
-	// Unformatted span binary writer.
-	template <> struct binary_writer<std::span<std::byte>> : binary_writer<std::span<const std::byte>> {};
 	// Span binary writer.
 	template <binary_writable Element, usize Size> struct binary_writer<std::span<Element, Size>> {
 		void operator()(std::ostream& os, const std::span<Element, Size>& in) const;
@@ -197,6 +189,14 @@ namespace tr {
 	template <binary_writable First, binary_writable Second> struct binary_writer<std::pair<First, Second>> {
 		void operator()(std::ostream& os, const std::pair<First, Second> in) const;
 	};
+	// C String binary writer.
+	template <> struct binary_writer<const char*> {
+		void operator()(std::ostream& os, const char* in) const;
+	};
+	// C String binary writer.
+	template <usize Size> struct binary_writer<char[Size]> {
+		void operator()(std::ostream& os, const char (&in)[Size]) const;
+	};
 	// String view binary writer.
 	template <> struct binary_writer<std::string_view> {
 		void operator()(std::ostream& os, const std::string_view& in) const;
@@ -204,6 +204,10 @@ namespace tr {
 	// String binary writer.
 	template <> struct binary_writer<std::string> {
 		void operator()(std::ostream& os, const std::string& in) const;
+	};
+	// Raw array binary writer.
+	template <binary_writable Element, usize Size> struct binary_writer<Element[Size]> {
+		void operator()(std::ostream& os, const Element (&in)[Size]) const;
 	};
 	// Array binary writer.
 	template <binary_writable Element, usize Size> struct binary_writer<std::array<Element, Size>> {
