@@ -29,9 +29,26 @@ template <tr::usize Size> template <typename... Args> consteval tr::string_liter
 	return std::string_view{*this};
 }
 
-template <tr::usize Size> consteval tr::usize tr::string_literal<Size>::size() const
+template <tr::usize Size> consteval tr::usize tr::string_literal<Size>::size()
 {
 	return Size - 1;
+}
+
+template <typename First, typename Second, typename... Rest>
+consteval auto tr::concatenate_string_literals(First&& first, Second&& second, Rest&&... rest)
+{
+	if constexpr (sizeof...(Rest) == 0) {
+		const tr::string_literal left{first};
+		const tr::string_literal right{second};
+		tr::string_literal<decltype(left)::size() + decltype(right)::size() + 1> concatenated{{}};
+		std::ranges::copy(left.data, std::ranges::begin(concatenated.data));
+		std::ranges::copy(right.data, std::ranges::begin(concatenated.data) + left.size());
+		return concatenated;
+	}
+	else {
+		return concatenate_string_literals(concatenate_string_literals(std::forward<First>(first), std::forward<Second>(second)),
+										   std::forward<Rest>(rest)...);
+	}
 }
 
 //////////////////////////////////////////////////////////////// TYPE NAME ////////////////////////////////////////////////////////////////

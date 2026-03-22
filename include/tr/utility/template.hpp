@@ -70,8 +70,11 @@ namespace tr {
 		template <typename... Args> consteval operator TR_FORMAT_STRING<Args...>() const;
 
 		// Gets the length of the literal.
-		consteval usize size() const;
+		consteval static usize size();
 	};
+	// Concatenates string literals.
+	template <typename First, typename Second, typename... Rest>
+	consteval auto concatenate_string_literals(First&& first, Second&& second, Rest&&... rest);
 
 	// Human-readable type name.
 	template <typename T> consteval std::string_view type_name();
