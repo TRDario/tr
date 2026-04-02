@@ -161,7 +161,7 @@ constexpr tr::utf8::const_it& tr::utf8::const_it::operator--()
 
 constexpr tr::utf8::const_it tr::utf8::const_it::operator--(int)
 {
-	auto prev{*this};
+	const_it prev{*this};
 	--(*this);
 	return prev;
 }

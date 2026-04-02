@@ -281,7 +281,7 @@ void tr::audio::owning_source::play()
 	if (m_stream.has_value()) {
 		if (state() == state::initial || state() == state::stopped) {
 			TR_AL_CALL(alSourcei, m_id, AL_BUFFER, 0);
-			for (auto& buffer : m_stream->buffers) {
+			for (buffered_stream::buffer& buffer : m_stream->buffers) {
 				buffer.refill_from(*m_stream->stream);
 				TR_AL_CALL(alSourceQueueBuffers, m_id, 1, (const ALuint*)&buffer);
 				if (m_stream->stream->tell() == m_stream->stream->length()) {
@@ -341,7 +341,7 @@ tr::fsecs tr::audio::owning_source::offset() const
 			return fsecs{m_stream->stream->tell() / float(m_stream->stream->sample_rate())};
 		}
 
-		auto& buffer{*std::ranges::find(m_stream->buffers, this->buffer())};
+		const buffered_stream::buffer& buffer{*std::ranges::find(m_stream->buffers, this->buffer())};
 		return fsecs{buffer.start_offset / float(m_stream->stream->sample_rate()) + offset};
 	}
 	else {

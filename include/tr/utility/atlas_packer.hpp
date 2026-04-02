@@ -50,7 +50,7 @@ namespace tr {
 	template <typename Key, typename Hash = boost::hash<Key>, typename Pred = std::equal_to<>> class atlas_rects {
 	  public:
 		// Gets whether the atlas contains a key.
-		bool contains(const auto& key) const;
+		template <typename Keylike> bool contains(Keylike&& key) const;
 		// Gets the number of entries in the atlas.
 		usize entries() const;
 

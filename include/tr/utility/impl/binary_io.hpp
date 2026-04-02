@@ -223,7 +223,7 @@ template <tr::binary_writable Key, typename... Other>
 void tr::binary_writer<std::set<Key, Other...>>::operator()(std::ostream& os, const std::set<Key, Other...>& in) const
 {
 	write_binary(os, u32(in.size()));
-	for (const auto& key : in) {
+	for (const Key& key : in) {
 		write_binary(os, key);
 	}
 }
@@ -242,7 +242,7 @@ void tr::binary_writer<boost::unordered_flat_set<Key, Other...>>::operator()(std
 																			 const boost::unordered_flat_set<Key, Other...>& in) const
 {
 	write_binary(os, u32(in.size()));
-	for (const auto& key : in) {
+	for (const Key& key : in) {
 		write_binary(os, key);
 	}
 }
@@ -252,7 +252,7 @@ void tr::binary_writer<boost::unordered_node_set<Key, Other...>>::operator()(std
 																			 const boost::unordered_node_set<Key, Other...>& in) const
 {
 	write_binary(os, u32(in.size()));
-	for (const auto& key : in) {
+	for (const Key& key : in) {
 		write_binary(os, key);
 	}
 }
