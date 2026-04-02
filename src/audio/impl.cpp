@@ -245,7 +245,7 @@ std::shared_ptr<tr::audio::owning_source> tr::audio::manager::allocate_source(in
 			return nullptr;
 		}
 		else {
-			m_sources.erase(erasable_it);
+			unstable_erase(m_sources, erasable_it);
 		}
 	}
 

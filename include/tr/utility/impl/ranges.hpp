@@ -158,3 +158,11 @@ template <std::ranges::range Range> constexpr auto tr::project(Range&& range, au
 {
 	return std::views::transform(std::forward<Range&&>(range), [=](auto&& val) -> auto&& { return val.*ptr; });
 }
+
+//
+
+template <tr::move_assignable Element> void tr::unstable_erase(std::vector<Element>& vec, typename std::vector<Element>::iterator where)
+{
+	*where = std::move(vec.back());
+	vec.pop_back();
+}

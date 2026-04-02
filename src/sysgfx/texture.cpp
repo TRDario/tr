@@ -367,14 +367,14 @@ tr::gfx::texture_ref::texture_ref(texture_ref&& r) noexcept
 tr::gfx::texture_ref::~texture_ref()
 {
 	if (!empty()) {
-		m_ref->m_refs.erase(std::ranges::find(m_ref->m_refs, *this));
+		unstable_erase(m_ref->m_refs, std::ranges::find(m_ref->m_refs, *this));
 	}
 }
 
 tr::gfx::texture_ref& tr::gfx::texture_ref::operator=(const texture& tex)
 {
 	if (!empty()) {
-		m_ref->m_refs.erase(std::ranges::find(m_ref->m_refs, *this));
+		unstable_erase(m_ref->m_refs, std::ranges::find(m_ref->m_refs, *this));
 	}
 	m_ref = tex;
 	tex.m_refs.emplace_back(*this);
@@ -384,7 +384,7 @@ tr::gfx::texture_ref& tr::gfx::texture_ref::operator=(const texture& tex)
 tr::gfx::texture_ref& tr::gfx::texture_ref::operator=(const texture_ref& r)
 {
 	if (!empty()) {
-		m_ref->m_refs.erase(std::ranges::find(m_ref->m_refs, *this));
+		unstable_erase(m_ref->m_refs, std::ranges::find(m_ref->m_refs, *this));
 	}
 	m_ref = r.m_ref;
 	if (!empty()) {
@@ -396,7 +396,7 @@ tr::gfx::texture_ref& tr::gfx::texture_ref::operator=(const texture_ref& r)
 tr::gfx::texture_ref& tr::gfx::texture_ref::operator=(texture_ref&& r) noexcept
 {
 	if (!empty()) {
-		m_ref->m_refs.erase(std::ranges::find(m_ref->m_refs, *this));
+		unstable_erase(m_ref->m_refs, std::ranges::find(m_ref->m_refs, *this));
 	}
 	m_ref = std::exchange(r.m_ref, std::nullopt);
 	if (!empty()) {

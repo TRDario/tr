@@ -41,6 +41,9 @@ namespace tr {
 	template <typename T>
 	concept cv_unqualified_object = object<T> && cv_unqualified<T>;
 
+	// Concept denoting a move-assignable type.
+	template <typename T>
+	concept move_assignable = std::is_move_assignable_v<T>;
 	// Concept denoting a standard layout type.
 	template <typename T>
 	concept standard_layout = std::is_standard_layout_v<T>;

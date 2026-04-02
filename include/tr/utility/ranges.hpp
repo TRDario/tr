@@ -32,6 +32,9 @@
 //     - std::vector<std::unique_ptr<int>> ptrs; for (int value : tr::deref(ptrs)) -> iterates over the dereferenced pointers            //
 //     - std::vector<std::unique_ptr<int>> ptrs; for (int value : ptrs | tr::deref) -> iterates over the dereferenced pointers           //
 //                                                                                                                                       //
+// tr::unstable_erase implements the 'move-and-swap' idiom for standard vectors for O(1) erasure at the cost of not being stable:        //
+//     - std::vector<int> vec{1, 2, 3, 4}; tr::unstable_erase(vec, vec.begin() + 1) -> {1, 4, 3}                                         //
+//                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
@@ -83,6 +86,9 @@ namespace tr {
 	template <std::ranges::range Range> constexpr auto project(Range&& range, auto std::ranges::range_value_t<Range>::* ptr);
 	// Dereferencing range view.
 	inline constexpr auto deref{std::views::transform([](auto& v) -> decltype(auto) { return *v; })};
+
+	// O(1) unstable vector erase function (achieved by swapping the final element into the position of the erased and then popping back).
+	template <move_assignable Element> void unstable_erase(std::vector<Element>& vec, typename std::vector<Element>::iterator where);
 } // namespace tr
 
 #include "impl/ranges.hpp" // IWYU pragma: export
