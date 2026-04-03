@@ -44,20 +44,21 @@
 
 namespace tr {
 	// Basic bitmap atlas structure.
-	template <typename Key, typename Hash = boost::hash<Key>, typename Pred = std::equal_to<>> struct bitmap_atlas {
+	template <typename Key, typename Extra = void, hasher<Key> Hash = boost::hash<Key>, equality_predicate<Key> Pred = std::equal_to<Key>>
+	struct bitmap_atlas {
 		// The atlas bitmap.
 		tr::bitmap bitmap;
 		// The atlas entries.
-		atlas_rects<Key, Hash, Pred> rects;
+		atlas_rects<Key, Extra, Hash, Pred> rects;
 	};
 	// Builds a bitmap atlas from individual bitmaps.
-	template <typename Key, typename Hash = boost::hash<Key>, typename Pred = std::equal_to<>>
-	bitmap_atlas<Key, Hash, Pred> build_bitmap_atlas(const boost::unordered_flat_map<Key, tr::bitmap, Hash, Pred>& entries);
+	template <typename Key, hasher<Key> Hash = boost::hash<Key>, equality_predicate<Key> Pred = std::equal_to<Key>>
+	bitmap_atlas<Key, void, Hash, Pred> build_bitmap_atlas(const boost::unordered_flat_map<Key, tr::bitmap, Hash, Pred>& entries);
 } // namespace tr
 
 namespace tr::gfx {
 	// Dynamically-allocated texture atlas.
-	template <typename Key, typename Hash = boost::hash<Key>, typename Pred = std::equal_to<>> class dyn_atlas {
+	template <typename Key, hasher<Key> Hash = boost::hash<Key>, equality_predicate<Key> Pred = std::equal_to<Key>> class dyn_atlas {
 	  public:
 		// Creates an empty atlas.
 		dyn_atlas() = default;
@@ -77,20 +78,20 @@ namespace tr::gfx {
 		// Gets the size of the atlas texture.
 		glm::ivec2 size() const;
 		// Gets whether the atlas contains an entry.
-		bool contains(const auto& key) const;
+		template <hash_keylike<Key, Hash, Pred> Keylike> bool contains(Keylike&& key) const;
 		// Gets the number of entries in the atlas.
 		usize entries() const;
 
 		// Returns the rect associated with an entry.
-		frect2 operator[](const auto& key) const;
+		template <hash_keylike<Key, Hash, Pred> Keylike> frect2 operator[](Keylike&& key) const;
 		// Returns the unnormalized rect associated with an entry.
-		irect2 unnormalized(const auto& key) const;
+		template <hash_keylike<Key, Hash, Pred> Keylike> irect2 unnormalized(Keylike&& key) const;
 
 		// Reserves a certain amount of space in the bitmap.
 		void reserve(glm::ivec2 capacity);
 
 		// Adds an entry to the atlas.
-		void add(auto&& key, const sub_bitmap& bitmap);
+		void add(Key&& key, const sub_bitmap& bitmap);
 
 		// Removes all entries from the atlas.
 		void clear();
@@ -106,7 +107,7 @@ namespace tr::gfx {
 		// The atlas texture.
 		texture m_tex;
 		// The atlas entries.
-		atlas_rects<Key, Hash, Pred> m_rects;
+		atlas_rects<Key, void, Hash, Pred> m_rects;
 	};
 } // namespace tr::gfx
 

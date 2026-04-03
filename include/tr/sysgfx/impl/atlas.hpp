@@ -9,11 +9,11 @@
 
 /////////////////////////////////////////////////////////////// BITMAP ATLAS //////////////////////////////////////////////////////////////
 
-template <typename Key, typename Hash, typename Pred>
-tr::bitmap_atlas<Key, Hash, Pred> tr::build_bitmap_atlas(const boost::unordered_flat_map<Key, tr::bitmap, Hash, Pred>& entries)
+template <typename Key, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
+tr::bitmap_atlas<Key, void, Hash, Pred> tr::build_bitmap_atlas(const boost::unordered_flat_map<Key, tr::bitmap, Hash, Pred>& entries)
 {
 	glm::ivec2 size{};
-	atlas_rects<Key, Hash, Pred> rects;
+	atlas_rects<Key, void, Hash, Pred> rects;
 	for (auto& [key, entry] : entries) {
 		std::optional<glm::u16vec2> packing_result{rects.try_insert(std::move(key), entry.size(), size)};
 		if (!packing_result.has_value()) {
@@ -38,65 +38,75 @@ tr::bitmap_atlas<Key, Hash, Pred> tr::build_bitmap_atlas(const boost::unordered_
 
 ////////////////////////////////////////////////////////////// DYNAMIC ATLAS //////////////////////////////////////////////////////////////
 
-template <typename Key, typename Hash, typename Pred>
+template <typename Key, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
 tr::gfx::dyn_atlas<Key, Hash, Pred>::dyn_atlas(glm::ivec2 size)
 	: m_tex{size, tr::gfx::mipmaps::enabled}
 {
 }
 
-template <typename Key, typename Hash, typename Pred>
+template <typename Key, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
 tr::gfx::dyn_atlas<Key, Hash, Pred>::dyn_atlas(bitmap_atlas<Key, Hash, Pred>&& source)
 	: m_tex{source.bitmap, tr::gfx::mipmaps::enabled}, m_rects{std::move(source.rects)}
 {
 }
 
-template <typename Key, typename Hash, typename Pred> tr::gfx::dyn_atlas<Key, Hash, Pred>::operator const tr::gfx::texture&() const
+template <typename Key, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
+tr::gfx::dyn_atlas<Key, Hash, Pred>::operator const tr::gfx::texture&() const
 {
 	return m_tex;
 }
 
-template <typename Key, typename Hash, typename Pred> tr::gfx::dyn_atlas<Key, Hash, Pred>::operator tr::gfx::texture_ref() const
+template <typename Key, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
+tr::gfx::dyn_atlas<Key, Hash, Pred>::operator tr::gfx::texture_ref() const
 {
 	return m_tex;
 }
 
-template <typename Key, typename Hash, typename Pred>
+template <typename Key, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
 void tr::gfx::dyn_atlas<Key, Hash, Pred>::set_filtering(min_filter min_filter, mag_filter mag_filter)
 {
 	m_tex.set_filtering(min_filter, mag_filter);
 }
 
-template <typename Key, typename Hash, typename Pred> glm::ivec2 tr::gfx::dyn_atlas<Key, Hash, Pred>::size() const
+template <typename Key, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred> glm::ivec2 tr::gfx::dyn_atlas<Key, Hash, Pred>::size() const
 {
 	return m_tex.size();
 }
 
-template <typename Key, typename Hash, typename Pred> bool tr::gfx::dyn_atlas<Key, Hash, Pred>::contains(const auto& key) const
+template <typename Key, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
+template <tr::hash_keylike<Key, Hash, Pred> Keylike>
+bool tr::gfx::dyn_atlas<Key, Hash, Pred>::contains(Keylike&& key) const
 {
-	return m_rects.contains(key);
+	return m_rects.contains(std::forward<Keylike>(key));
 }
 
-template <typename Key, typename Hash, typename Pred> tr::usize tr::gfx::dyn_atlas<Key, Hash, Pred>::entries() const
+template <typename Key, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
+tr::usize tr::gfx::dyn_atlas<Key, Hash, Pred>::entries() const
 {
 	return m_rects.entries();
 }
 
-template <typename Key, typename Hash, typename Pred> tr::frect2 tr::gfx::dyn_atlas<Key, Hash, Pred>::operator[](const auto& key) const
+template <typename Key, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
+template <tr::hash_keylike<Key, Hash, Pred> Keylike>
+tr::frect2 tr::gfx::dyn_atlas<Key, Hash, Pred>::operator[](Keylike&& key) const
 {
-	frect2 rect{unnormalized(key)};
+	frect2 rect{unnormalized(std::forward<Keylike>(key))};
 	rect.tl /= m_tex.size();
 	rect.size /= m_tex.size();
 	return rect;
 }
 
-template <typename Key, typename Hash, typename Pred> tr::irect2 tr::gfx::dyn_atlas<Key, Hash, Pred>::unnormalized(const auto& key) const
+template <typename Key, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
+template <tr::hash_keylike<Key, Hash, Pred> Keylike>
+tr::irect2 tr::gfx::dyn_atlas<Key, Hash, Pred>::unnormalized(Keylike&& key) const
 {
 	TR_ASSERT(contains(key), "Tried to get nonexistent dynamic atlas entry.");
 
-	return m_rects[key];
+	return m_rects[std::forward<Keylike>(key)];
 }
 
-template <typename Key, typename Hash, typename Pred> void tr::gfx::dyn_atlas<Key, Hash, Pred>::reserve(glm::ivec2 capacity)
+template <typename Key, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
+void tr::gfx::dyn_atlas<Key, Hash, Pred>::reserve(glm::ivec2 capacity)
 {
 	if (capacity.x < size().x && capacity.y < size().y) {
 		return;
@@ -112,7 +122,8 @@ template <typename Key, typename Hash, typename Pred> void tr::gfx::dyn_atlas<Ke
 	}
 }
 
-template <typename Key, typename Hash, typename Pred> void tr::gfx::dyn_atlas<Key, Hash, Pred>::add(auto&& key, const sub_bitmap& bitmap)
+template <typename Key, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
+void tr::gfx::dyn_atlas<Key, Hash, Pred>::add(Key&& key, const sub_bitmap& bitmap)
 {
 	std::optional<glm::u16vec2> packing_result{m_rects.try_insert(std::move(key), bitmap.size(), size())};
 	if (!packing_result.has_value()) {
@@ -133,7 +144,7 @@ template <typename Key, typename Hash, typename Pred> void tr::gfx::dyn_atlas<Ke
 	m_tex.set_region(*packing_result, bitmap);
 }
 
-template <typename Key, typename Hash, typename Pred> void tr::gfx::dyn_atlas<Key, Hash, Pred>::clear()
+template <typename Key, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred> void tr::gfx::dyn_atlas<Key, Hash, Pred>::clear()
 {
 	if (size() != glm::ivec2{0}) {
 		m_tex.clear({});
@@ -142,12 +153,14 @@ template <typename Key, typename Hash, typename Pred> void tr::gfx::dyn_atlas<Ke
 }
 
 #ifdef TR_ENABLE_ASSERTS
-template <typename Key, typename Hash, typename Pred> std::string tr::gfx::dyn_atlas<Key, Hash, Pred>::label() const
+template <typename Key, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
+std::string tr::gfx::dyn_atlas<Key, Hash, Pred>::label() const
 {
 	return m_tex.label();
 }
 
-template <typename Key, typename Hash, typename Pred> void tr::gfx::dyn_atlas<Key, Hash, Pred>::set_label(std::string_view label)
+template <typename Key, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
+void tr::gfx::dyn_atlas<Key, Hash, Pred>::set_label(std::string_view label)
 {
 	m_tex.set_label(label);
 }
