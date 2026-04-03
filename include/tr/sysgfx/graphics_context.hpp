@@ -121,7 +121,7 @@ namespace tr::gfx {
 
 #ifdef TR_ENABLE_ASSERTS
 	// The graphics context log.
-	inline logger log{"gl"};
+	inline logger log{make_logger<console_logger>("gl")};
 
 // Sets an object's label.
 #define TR_SET_LABEL(object, label) (object).set_label(label)
