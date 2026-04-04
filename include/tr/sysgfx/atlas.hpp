@@ -65,7 +65,7 @@ namespace tr::gfx {
 		// Creates an empty atlas with an initial size.
 		dyn_atlas(glm::ivec2 size);
 		// Uploads a bitmap atlas.
-		dyn_atlas(bitmap_atlas<Key, Hash, Pred>&& source);
+		dyn_atlas(bitmap_atlas<Key, void, Hash, Pred>&& source);
 
 		// Gets the atlas texture.
 		operator const texture&() const;

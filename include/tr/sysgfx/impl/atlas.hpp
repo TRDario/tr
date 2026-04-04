@@ -45,7 +45,7 @@ tr::gfx::dyn_atlas<Key, Hash, Pred>::dyn_atlas(glm::ivec2 size)
 }
 
 template <typename Key, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
-tr::gfx::dyn_atlas<Key, Hash, Pred>::dyn_atlas(bitmap_atlas<Key, Hash, Pred>&& source)
+tr::gfx::dyn_atlas<Key, Hash, Pred>::dyn_atlas(bitmap_atlas<Key, void, Hash, Pred>&& source)
 	: m_tex{source.bitmap, tr::gfx::mipmaps::enabled}, m_rects{std::move(source.rects)}
 {
 }
