@@ -195,7 +195,8 @@ void tr::gfx::context::set_render_target(const render_target& target)
 			TR_GL_CALL(glBindFramebuffer, GL_DRAW_FRAMEBUFFER, target.m_fbo);
 		}
 		TR_GL_CALL(glViewport, target.m_viewport.tl.x, target.m_viewport.tl.y, target.m_viewport.size.x, target.m_viewport.size.y);
-		TR_GL_CALL(glScissor, target.m_viewport.tl.x, target.m_viewport.tl.y, target.m_viewport.size.x, target.m_viewport.size.y);
+		TR_GL_CALL(glScissor, target.m_scissor_box.tl.x, target.m_scissor_box.tl.y, target.m_scissor_box.size.x,
+				   target.m_scissor_box.size.y);
 		m_render_target = target;
 	}
 }

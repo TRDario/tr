@@ -139,6 +139,8 @@ namespace tr {
 
 		// Determines whether a point is contained inside the rect.
 		template <typename ElementR> constexpr bool contains(glm::vec<Dimensions, ElementR> point) const;
+		// Determines whether another rect is contained entirely inside the rect.
+		template <typename ElementR> constexpr bool contains(const rect<Dimensions, ElementR>& rect) const;
 	};
 	// 2D rectangle.
 	template <typename Element> using rect2 = rect<2, Element>;

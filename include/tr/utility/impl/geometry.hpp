@@ -71,6 +71,13 @@ constexpr bool tr::rect<Dimensions, Element>::contains(glm::vec<Dimensions, Elem
 	return true;
 }
 
+template <int Dimensions, typename Element>
+template <typename ElementR>
+constexpr bool tr::rect<Dimensions, Element>::contains(const rect<Dimensions, ElementR>& rect) const
+{
+	return contains(rect.tl) && contains(rect.tl + rect.size);
+}
+
 template <typename ElementL, typename ElementR> constexpr bool tr::intersecting(const rect2<ElementL>& r1, const rect2<ElementR>& r2)
 {
 	return r1.contains(r2.tl) || r1.contains(r2.tl + r2.size) || r2.contains(r1.tl + glm::tvec2<ElementL>{r1.size.x, 0}) ||

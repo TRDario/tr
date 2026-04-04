@@ -2,12 +2,10 @@
 //                                                                                                                                       //
 // Provides functions to manipulate the window backbuffer.                                                                               //
 //                                                                                                                                       //
-// The backbuffer can be accessed after opening the window. Its size can be queried, and render targets corresponding to it or a region  //
-// within it can be obtained:                                                                                                            //
+// The backbuffer can be accessed after opening the window. Its size can be queried, and render targets corresponding to it can be       //
+// obtained:                                                                                                                             //
 //     - tr::gfx::backbuffer_size() -> the size of the backbuffer in pixels, may not match the reported window size                      //
-//     - tr::gfx::backbuffer_render_target() -> a render target spanning the entire backbuffer                                           //
-//     - tr::gfx::backbuffer_region_render_target({{100, 100}, {100, 100}})                                                              //
-//       -> a render target spanning from (100, 100) to (200, 200) in the backbuffer                                                     //
+//     - tr::gfx::backbuffer_render_target() -> a render target spanning the backbuffer                                                  //
 //                                                                                                                                       //
 // The only direct way of manipulating the backbuffer's contents is by clearing it or a region of it. This can be done just for the      //
 // color component, or all 3 of the backbuffer components:                                                                               //
@@ -42,8 +40,6 @@ namespace tr::gfx {
 
 	// Gets a render target spanning the entire backbuffer.
 	render_target backbuffer_render_target();
-	// Gets a render target spanning a region of the backbuffer.
-	render_target backbuffer_region_render_target(const irect2& rect);
 
 	// Clears the backbuffer's color.
 	void clear_backbuffer(const tr::rgbaf& color = {0, 0, 0, 0});
