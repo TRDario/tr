@@ -23,6 +23,9 @@ namespace tr::gfx {
 		// Gets the size of the rendering target.
 		const glm::ivec2& size() const;
 
+		// Creates a new render target spanning a region of the existing one.
+		render_target subtarget(irect2 viewport) const;
+
 	  private:
 		// The OpenGL ID of the render target's FBO.
 		unsigned int m_fbo;

@@ -87,9 +87,10 @@ glm::ivec2 tr::sub_bitmap::size() const
 
 tr::sub_bitmap tr::sub_bitmap::sub(const irect2& rect)
 {
-	TR_ASSERT(rect.contains(rect.tl + rect.size),
+	TR_ASSERT(m_rect.contains(rect.tl + rect.size),
 			  "Tried to create out-of-bounds sub-bitmap from ({}, {}) to ({}, {}) in a sub-bitmap of size {}x{}.", rect.tl.x, rect.tl.y,
-			  rect.tl.x + rect.size.x, rect.tl.y + rect.size.y, rect.size.x, rect.size.y);
+			  rect.tl.x + rect.size.x, rect.tl.y + rect.size.y, m_rect.size.x, m_rect.size.y);
+
 	return {m_ptr, {rect.tl + rect.tl, rect.size}};
 }
 
