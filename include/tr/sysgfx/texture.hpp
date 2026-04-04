@@ -44,8 +44,6 @@
 //     - tr::gfx::render_texture rtex{{256, 256}} -> creates a 256x256 texture that can be rendered to                                   //
 //     - tr::gfx::set_render_target(rtex) -> 'rtex' is set as the target of rendering commands                                           //
 //     - tr::gfx::set_render_target(rtex.render_target()) -> equivalent to the above                                                     //
-//     - tr::gfx::set_render_target(rtex.region_render_target({{128, 128}, {128, 128}}))                                                 //
-//       -> the bottom-right quadrant of 'rtex' is set as the render target                                                              //
 //                                                                                                                                       //
 // The label of a texture can be set with TR_SET_LABEL(tex, label):                                                                      //
 //     - TR_SET_LABEL(tex, "Example texture") -> 'tex' is now labelled "Example texture"                                                 //
@@ -123,7 +121,7 @@ namespace tr::gfx {
 		// Gets whether the texture is empty.
 		bool empty() const;
 		// Gets the size of the texture.
-		const glm::ivec2& size() const;
+		glm::ivec2 size() const;
 
 		// Reallocates the texture and releases the previously held storage as a new texture.
 		texture reallocate(glm::ivec2 size, mipmaps mipmaps = mipmaps::disabled, pixel_format format = pixel_format::rgba32);
@@ -194,6 +192,8 @@ namespace tr::gfx {
 
 		// Checks whether the reference is empty.
 		bool empty() const;
+		// Gets the size of the referenced texture.
+		glm::ivec2 size() const;
 
 	  private:
 		// A reference to a texture.
@@ -224,12 +224,10 @@ namespace tr::gfx {
 		// Reallocates the texture and releases the previously held storage as a new texture.
 		texture reallocate(glm::ivec2 size, mipmaps mipmaps = mipmaps::disabled, pixel_format format = pixel_format::rgba32);
 
-		// Gets a render target spanning the entire texture.
+		// Gets a render target spanning the texture.
 		operator render_target() const;
-		// Gets a render target spanning the entire texture.
+		// Gets a render target spanning the texture.
 		render_target render_target() const;
-		// Gets a render target spanning a region of the texture.
-		gfx::render_target region_render_target(const irect2& rect) const;
 
 	  private:
 		struct fbo_deleter {

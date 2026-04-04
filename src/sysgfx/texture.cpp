@@ -249,7 +249,7 @@ bool tr::gfx::texture::empty() const
 	return m_handle == 0;
 }
 
-const glm::ivec2& tr::gfx::texture::size() const
+glm::ivec2 tr::gfx::texture::size() const
 {
 	return m_size;
 }
@@ -410,6 +410,13 @@ bool tr::gfx::texture_ref::empty() const
 	return !m_ref.has_ref();
 }
 
+glm::ivec2 tr::gfx::texture_ref::size() const
+{
+	TR_ASSERT(!empty(), "Tried to get size of empty texture reference.");
+
+	return m_ref->size();
+}
+
 ///////////////////////////////////////////////////////////// RENDER TEXTURE //////////////////////////////////////////////////////////////
 
 tr::gfx::render_texture::render_texture(glm::ivec2 size, mipmaps mipmaps, pixel_format format)
@@ -460,16 +467,5 @@ tr::gfx::render_target tr::gfx::render_texture::render_target() const
 {
 	TR_ASSERT(!empty(), "Tried to create a render target for an empty texture.");
 
-	return gfx::render_target{m_fbo.get(), {{}, m_size}};
-}
-
-tr::gfx::render_target tr::gfx::render_texture::region_render_target(const irect2& rect) const
-{
-	TR_ASSERT(!empty(), "Tried to create a region render target for an empty texture.");
-	TR_ASSERT(irect2{m_size}.contains(rect.tl + rect.size),
-			  "Tried to create render target for out-of-bounds region from ({}, {}) to ({}, {}) in a texture with size "
-			  "%dx%d.",
-			  rect.tl.x, rect.tl.y, rect.tl.x + rect.size.x, rect.tl.y + rect.size.y, m_size.x, m_size.y);
-
-	return gfx::render_target{m_fbo.get(), rect};
+	return gfx::render_target{m_fbo.get(), {{}, m_size}, {{}, m_size}};
 }
