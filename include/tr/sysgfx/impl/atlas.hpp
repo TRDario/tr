@@ -107,6 +107,16 @@ tr::irect2 tr::gfx::dyn_atlas<Key, Extra, Hash, Pred>::unnormalized(Keylike&& ke
 }
 
 template <typename Key, typename Extra, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
+template <tr::hash_keylike<Key, Hash, Pred> Keylike>
+	requires(!std::same_as<Extra, void>)
+const tr::expanded_atlas_rect<Extra>& tr::gfx::dyn_atlas<Key, Extra, Hash, Pred>::unnormalized_with_extra(Keylike&& key) const
+{
+	TR_ASSERT(contains(key), "Tried to get nonexistent dynamic atlas entry.");
+
+	return m_rects.get_with_extra(std::forward<Keylike>(key));
+}
+
+template <typename Key, typename Extra, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
 void tr::gfx::dyn_atlas<Key, Extra, Hash, Pred>::reserve(glm::ivec2 capacity)
 {
 	if (capacity.x < size().x && capacity.y < size().y) {
