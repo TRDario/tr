@@ -123,7 +123,7 @@ void tr::gfx::dyn_atlas<Key, Hash, Pred>::reserve(glm::ivec2 capacity)
 }
 
 template <typename Key, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
-void tr::gfx::dyn_atlas<Key, Hash, Pred>::add(Key&& key, const sub_bitmap& bitmap)
+void tr::gfx::dyn_atlas<Key, Hash, Pred>::add(Key key, const sub_bitmap& bitmap)
 {
 	std::optional<glm::u16vec2> packing_result{m_rects.try_insert(std::move(key), bitmap.size(), size())};
 	if (!packing_result.has_value()) {

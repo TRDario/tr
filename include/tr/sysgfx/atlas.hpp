@@ -91,7 +91,7 @@ namespace tr::gfx {
 		void reserve(glm::ivec2 capacity);
 
 		// Adds an entry to the atlas.
-		void add(Key&& key, const sub_bitmap& bitmap);
+		void add(Key key, const sub_bitmap& bitmap);
 
 		// Removes all entries from the atlas.
 		void clear();
