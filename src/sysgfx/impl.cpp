@@ -190,13 +190,24 @@ bool tr::gfx::context::is_fbo_of_render_target(unsigned int fbo)
 
 void tr::gfx::context::set_render_target(const render_target& target)
 {
-	if (m_render_target != target) {
-		if (!is_fbo_of_render_target(target.m_fbo)) {
-			TR_GL_CALL(glBindFramebuffer, GL_DRAW_FRAMEBUFFER, target.m_fbo);
-		}
-		TR_GL_CALL(glViewport, target.m_viewport.tl.x, target.m_viewport.tl.y, target.m_viewport.size.x, target.m_viewport.size.y);
-		TR_GL_CALL(glScissor, target.m_scissor_box.tl.x, target.m_scissor_box.tl.y, target.m_scissor_box.size.x,
-				   target.m_scissor_box.size.y);
+	bool changed_render_target{false};
+
+	if (!m_render_target.has_value() || m_render_target->m_fbo == target.m_fbo) {
+		TR_GL_CALL(glBindFramebuffer, GL_DRAW_FRAMEBUFFER, target.m_fbo);
+		changed_render_target = true;
+	}
+	if (!m_render_target.has_value() || m_render_target->m_viewport != target.m_viewport) {
+		const int bottom{target.m_fbo_size.y - target.m_viewport.tl.y - target.m_viewport.size.y};
+		TR_GL_CALL(glViewport, target.m_viewport.tl.x, bottom, target.m_viewport.size.x, target.m_viewport.size.y);
+		changed_render_target = true;
+	}
+	if (!m_render_target.has_value() || m_render_target->m_scissor_box != target.m_scissor_box) {
+		const int bottom{target.m_fbo_size.y - target.m_scissor_box.tl.y - target.m_scissor_box.size.y};
+		TR_GL_CALL(glScissor, target.m_scissor_box.tl.x, bottom, target.m_scissor_box.size.x, target.m_scissor_box.size.y);
+		changed_render_target = true;
+	}
+
+	if (changed_render_target) {
 		m_render_target = target;
 	}
 }

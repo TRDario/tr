@@ -26,8 +26,6 @@ namespace tr::gfx {
 	// Abstraction over a rendering target.
 	class render_target {
 	  public:
-		friend bool operator==(const render_target& l, const render_target& r) = default;
-
 		// Gets the size of the rendering target.
 		const glm::ivec2& size() const;
 
@@ -41,12 +39,17 @@ namespace tr::gfx {
 	  private:
 		// The OpenGL ID of the render target's FBO.
 		unsigned int m_fbo;
+		// Size of the render target's FBO.
+		glm::ivec2 m_fbo_size;
 		// The viewport of the render target.
 		irect2 m_viewport;
 		// The scissor box of the render target.
 		irect2 m_scissor_box;
 
-		render_target(unsigned int fbo, const irect2& viewport, const irect2& scissor_box);
+		// Creates a render target spanning an entire FBO.
+		render_target(unsigned int fbo, glm::ivec2 fbo_size);
+		// Creates a render target spanning a region of an FBO.
+		render_target(unsigned int fbo, glm::ivec2 fbo_size, const irect2& viewport, const irect2& scissor_box);
 
 		friend render_target backbuffer_render_target();
 		friend class render_texture;

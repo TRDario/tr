@@ -23,8 +23,7 @@ glm::ivec2 tr::gfx::backbuffer_size()
 
 tr::gfx::render_target tr::gfx::backbuffer_render_target()
 {
-	const glm::ivec2 size{backbuffer_size()};
-	return render_target{0, {{}, size}, {{}, size}};
+	return render_target{0, backbuffer_size()};
 }
 
 void tr::gfx::clear_backbuffer(const tr::rgbaf& color)

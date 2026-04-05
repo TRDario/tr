@@ -8,8 +8,13 @@
 
 ////////////////////////////////////////////////////////////// RENDER TARGET //////////////////////////////////////////////////////////////
 
-tr::gfx::render_target::render_target(unsigned int fbo, const irect2& viewport, const irect2& scissor_box)
-	: m_fbo{fbo}, m_viewport{viewport}, m_scissor_box{scissor_box}
+tr::gfx::render_target::render_target(unsigned int fbo, glm::ivec2 fbo_size)
+	: m_fbo{fbo}, m_viewport{{}, fbo_size}, m_scissor_box{{}, fbo_size}
+{
+}
+
+tr::gfx::render_target::render_target(unsigned int fbo, glm::ivec2 fbo_size, const irect2& viewport, const irect2& scissor_box)
+	: m_fbo{fbo}, m_fbo_size{fbo_size}, m_viewport{viewport}, m_scissor_box{scissor_box}
 {
 }
 
@@ -26,7 +31,7 @@ tr::gfx::render_target tr::gfx::render_target::cropped(const irect2& viewport) c
 			  "Tried to create out-of-bounds sub-target from ({}, {}) to ({}, {}) of a render target of size {}x{}.", viewport.tl.x,
 			  viewport.tl.y, viewport.tl.x + viewport.size.x, viewport.tl.y + viewport.size.y, m_viewport.size.x, m_viewport.size.y);
 
-	return {m_fbo, absolute_viewport, absolute_viewport};
+	return {m_fbo, m_fbo_size, absolute_viewport, absolute_viewport};
 }
 
 tr::gfx::render_target tr::gfx::render_target::scissored(const irect2& scissor_box) const
@@ -38,7 +43,7 @@ tr::gfx::render_target tr::gfx::render_target::scissored(const irect2& scissor_b
 			  scissor_box.tl.y, scissor_box.tl.x + scissor_box.size.x, scissor_box.tl.y + scissor_box.size.y, m_viewport.size.x,
 			  m_viewport.size.y);
 
-	return {m_fbo, m_viewport, absolute_scissor_box};
+	return {m_fbo, m_fbo_size, m_viewport, absolute_scissor_box};
 }
 
 tr::gfx::render_target tr::gfx::render_target::subtarget(const irect2& viewport, const irect2& scissor_box) const
@@ -54,5 +59,5 @@ tr::gfx::render_target tr::gfx::render_target::subtarget(const irect2& viewport,
 			  scissor_box.tl.y, scissor_box.tl.x + scissor_box.size.x, scissor_box.tl.y + scissor_box.size.y, viewport.size.x,
 			  viewport.size.y);
 
-	return {m_fbo, absolute_viewport, absolute_scissor_box};
+	return {m_fbo, m_fbo_size, absolute_viewport, absolute_scissor_box};
 }

@@ -467,5 +467,5 @@ tr::gfx::render_target tr::gfx::render_texture::render_target() const
 {
 	TR_ASSERT(!empty(), "Tried to create a render target for an empty texture.");
 
-	return gfx::render_target{m_fbo.get(), {{}, m_size}, {{}, m_size}};
+	return gfx::render_target{m_fbo.get(), m_size};
 }
