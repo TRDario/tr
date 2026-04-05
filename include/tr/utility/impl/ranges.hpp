@@ -163,6 +163,9 @@ template <std::ranges::range Range> constexpr auto tr::project(Range&& range, au
 
 template <tr::move_assignable Element> void tr::unstable_erase(std::vector<Element>& vec, typename std::vector<Element>::iterator where)
 {
-	*where = std::move(vec.back());
+	const typename std::vector<Element>::iterator back{std::prev(vec.end())};
+	if (where != back) {
+		*where = std::move(*back);
+	}
 	vec.pop_back();
 }
