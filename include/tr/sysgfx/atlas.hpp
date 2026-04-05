@@ -20,15 +20,16 @@
 // .set_filtering(), as in a regular texture.                                                                                            //
 //                                                                                                                                       //
 // Entries in the atlas can be checked for and accessed: using operator[] gets the normalized uv of the entry, while .unnormalized()     //
-// gets the unnormalized region in the atlas. The total number of entries in the atlas can be obtained with .entries(), while the        //
-// size of the atlas texture in pixels can be obtained with .size(). An entry is added into the atlas with .add(), and the atlas can be  //
-// cleared with the .clear() method:                                                                                                     //
+// gets the unnormalized region in the atlas. If the atlas stores extra data, that can be gotten with .unnormalized_with_extra().        //
+// The total number of entries in the atlas can be obtained with .entries(), while the size of the atlas texture in pixels can be        //
+// obtained with .size(). An entry is added into the atlas with .add(), and the atlas can be cleared with the .clear() method:           //
 //     - atlas.size() -> {512, 512}                                                                                                      //
 //     - atlas.add("C", tr::load_bitmap_file("c.bmp")) -> adds "C" to the atlas                                                          //
 //     - atlas.entries() -> 1                                                                                                            //
 //     - atlas.contains("C") -> true                                                                                                     //
 //     - atlas["C"] -> gets the normalized UV rect of "C"                                                                                //
 //     - atlas.unnormalized("C") -> gets the unnormalized UV rect of "C"                                                                 //
+//     - atlas.unnormalized_with_extra("C") -> gets the unnormalized UV rect and extra data of "C"                                       //
 //     - atlas.clear() -> atlas is now empty again, but retains the reserved space                                                       //
 //                                                                                                                                       //
 // The label of an atlas can be set with TR_SET_LABEL(atlas, label):                                                                     //
@@ -58,14 +59,15 @@ namespace tr {
 
 namespace tr::gfx {
 	// Dynamically-allocated texture atlas.
-	template <typename Key, hasher<Key> Hash = boost::hash<Key>, equality_predicate<Key> Pred = std::equal_to<Key>> class dyn_atlas {
+	template <typename Key, typename Extra = void, hasher<Key> Hash = boost::hash<Key>, equality_predicate<Key> Pred = std::equal_to<Key>>
+	class dyn_atlas {
 	  public:
 		// Creates an empty atlas.
 		dyn_atlas() = default;
 		// Creates an empty atlas with an initial size.
 		dyn_atlas(glm::ivec2 size);
 		// Uploads a bitmap atlas.
-		dyn_atlas(bitmap_atlas<Key, void, Hash, Pred>&& source);
+		dyn_atlas(bitmap_atlas<Key, Extra, Hash, Pred>&& source);
 
 		// Gets the atlas texture.
 		operator const texture&() const;
@@ -86,12 +88,21 @@ namespace tr::gfx {
 		template <hash_keylike<Key, Hash, Pred> Keylike> frect2 operator[](Keylike&& key) const;
 		// Returns the unnormalized rect associated with an entry.
 		template <hash_keylike<Key, Hash, Pred> Keylike> irect2 unnormalized(Keylike&& key) const;
+		// Returns the unnormalized rect associated with an entry along with its associated extra data.
+		template <hash_keylike<Key, Hash, Pred> Keylike>
+			requires(!std::same_as<Extra, void>)
+		const expanded_atlas_rect<Extra>& unnormalized_with_extra(Keylike&& key) const;
 
 		// Reserves a certain amount of space in the bitmap.
 		void reserve(glm::ivec2 capacity);
 
 		// Adds an entry to the atlas.
-		void add(Key key, const sub_bitmap& bitmap);
+		void add(Key key, const sub_bitmap& bitmap)
+			requires(std::same_as<Extra, void>);
+		// Adds an entry to the atlas.
+		template <typename... Args>
+			requires(std::constructible_from<Extra, Args...>)
+		void add(Key key, const sub_bitmap& bitmap, Args&&... args);
 
 		// Removes all entries from the atlas.
 		void clear();
@@ -107,7 +118,7 @@ namespace tr::gfx {
 		// The atlas texture.
 		texture m_tex;
 		// The atlas entries.
-		atlas_rects<Key, void, Hash, Pred> m_rects;
+		atlas_rects<Key, Extra, Hash, Pred> m_rects;
 	};
 } // namespace tr::gfx
 
