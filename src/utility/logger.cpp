@@ -109,6 +109,13 @@ bool tr::logger::active() const
 
 //
 
+void tr::logger::clear_backend()
+{
+	m_backend.reset();
+}
+
+//
+
 void tr::logger::log(severity severity, std::string_view str)
 {
 	m_backend->log(tr::localtime(std::time(nullptr)), severity, str);

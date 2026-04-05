@@ -28,6 +28,10 @@
 //     - tr::logger{}.active() -> false                                                                                                  //
 //     - tr::make_logger<tr::console_logger>("test").active() -> true                                                                    //
 //                                                                                                                                       //
+// A logger's backend may be reset with .clear_backend(), or reset with .replace_backend_with<Backend>():                                //
+//     - tr::log.clear_backend() -> clears the tr logger's backend, disabling it                                                         //
+//     - tr::log.replace_backend_with<tr::console_and_file_logger>("tr", "logs/tr.log") -> replaces the tr logger's backend              //
+//                                                                                                                                       //
 // Logging a formatted message is done with the .log() method, or the TR_LOG(logger, ...) macro that checks if the log is active before  //
 // evaluating the arguments. Writing a multiline message should be done line-by-line and by passing all but the first line to the        //
 // .log_continue() method, or the TR_LOG_CONTINUE(logger, ...) macro. Most formatting is done as if by std::format, but exceptions are   //
@@ -72,7 +76,7 @@ namespace tr {
 		virtual void log_continue(std::string_view string) = 0;
 	};
 	// Console logger backend.
-	class console_logger : public logger_backend {
+	class console_logger : virtual public logger_backend {
 	  public:
 		// Creates a console logger.
 		console_logger(std::string&& name);
@@ -92,7 +96,7 @@ namespace tr {
 		std::string m_name;
 	};
 	// File logger backend.
-	class file_logger : public logger_backend {
+	class file_logger : virtual public logger_backend {
 	  public:
 		// Creates a file logger.
 		file_logger(std::filesystem::path&& path);
@@ -128,6 +132,13 @@ namespace tr {
 
 		// Gets whether the logger is active.
 		bool active() const;
+
+		// Clears the logger's backend.
+		void clear_backend();
+		// Replaces the logger's backend.
+		template <std::derived_from<logger_backend> Backend, typename... Args>
+			requires(std::constructible_from<Backend, Args...>)
+		void replace_backend_with(Args&&... args);
 
 		// Logs a message.
 		void log(severity severity, std::string_view str);
