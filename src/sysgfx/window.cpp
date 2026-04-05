@@ -16,6 +16,7 @@
 void tr::sys::open_window(cstring_view title, glm::ivec2 size, glm::ivec2 min_size, const gfx::properties& gfx_properties)
 {
 	TR_ASSERT(!g_window.is_open(), "Tried to reopen window without closing it first.");
+	TR_ASSERT(!(size == maximized && min_size == not_resizable), "Tried to create maximized window that isn't resizable.");
 
 	SDL_WindowFlags flags{SDL_WINDOW_HIDDEN | SDL_WINDOW_OPENGL | SDL_WINDOW_HIGH_PIXEL_DENSITY};
 	if (size == maximized) {
