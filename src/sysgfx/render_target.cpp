@@ -9,7 +9,7 @@
 ////////////////////////////////////////////////////////////// RENDER TARGET //////////////////////////////////////////////////////////////
 
 tr::gfx::render_target::render_target(unsigned int fbo, glm::ivec2 fbo_size)
-	: m_fbo{fbo}, m_viewport{{}, fbo_size}, m_scissor_box{{}, fbo_size}
+	: m_fbo{fbo}, m_fbo_size{fbo_size}, m_viewport{{}, fbo_size}, m_scissor_box{{}, fbo_size}
 {
 }
 
