@@ -22,7 +22,10 @@ tr::console_logger::console_logger(std::string&& name)
 
 tr::console_logger::~console_logger()
 {
-	unstable_erase(g_registered_console_loggers, std::ranges::find(g_registered_console_loggers, m_name));
+	const auto registration_it{std::ranges::find(g_registered_console_loggers, m_name)};
+	if (registration_it != g_registered_console_loggers.end()) {
+		unstable_erase(g_registered_console_loggers, registration_it);
+	}
 }
 
 //
