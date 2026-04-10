@@ -19,6 +19,9 @@
 // TR_STRINGIFY(x) expands into the string representation of x:                                                                          //
 //     - TR_STRINGIFY(a < 9) -> "a < 9"                                                                                                  //
 //                                                                                                                                       //
+// TR_JOIN(x, y) joins the string representations of x and y:                                                                            //
+//     - TR_JOIN(test_, __LINE__) -> test_23                                                                                             //
+//                                                                                                                                       //
 // TR_MACRO_COMMA_GUARD(...) is used to circumvent macros taking expressions with macros as multiple arguments:                          //
 //     - MY_MACRO(std::array<int, 4>) -> arguments are 'std::array<int', '4>'                                                            //
 //     - MY_MACRO(TR_MACRO_COMMA_GUARD(std::array<int, 4>)) -> argument is 'std::array<int, 4>'                                          //
@@ -91,6 +94,9 @@
 
 #define TR_IMPL_STRINGIFY(x) #x
 #define TR_STRINGIFY(x) TR_IMPL_STRINGIFY(x)
+
+#define TR_IMPL_JOIN(x, y) x##y
+#define TR_JOIN(x, y) TR_IMPL_JOIN(x, y)
 
 #define TR_MACRO_COMMA_GUARD(...) __VA_ARGS__
 
