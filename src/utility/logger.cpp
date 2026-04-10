@@ -12,19 +12,26 @@
 
 ////////////////////////////////////////////////////////////// CONSOLE LOGGER /////////////////////////////////////////////////////////////
 
+// Must be a function because of the static object initialization fiasco.
+static std::vector<std::string>& registered_console_loggers()
+{
+	static std::vector<std::string> registered_console_loggers;
+	return registered_console_loggers;
+}
+
 tr::console_logger::console_logger(std::string&& name)
 	: m_name{std::move(name)}
 {
-	TR_ASSERT(std::ranges::find(g_registered_console_loggers, m_name) == g_registered_console_loggers.end(),
+	TR_ASSERT(std::ranges::find(registered_console_loggers(), m_name) == registered_console_loggers().end(),
 			  "Tried to register duplicate console logger '{}'", m_name);
-	g_registered_console_loggers.emplace_back(m_name);
+	registered_console_loggers().emplace_back(m_name);
 }
 
 tr::console_logger::~console_logger()
 {
-	const auto registration_it{std::ranges::find(g_registered_console_loggers, m_name)};
-	if (registration_it != g_registered_console_loggers.end()) {
-		unstable_erase(g_registered_console_loggers, registration_it);
+	const auto registration_it{std::ranges::find(registered_console_loggers(), m_name)};
+	if (registration_it != registered_console_loggers().end()) {
+		unstable_erase(registered_console_loggers(), registration_it);
 	}
 }
 
@@ -38,13 +45,13 @@ static tr::usize string_size(const std::string& str)
 
 void tr::console_logger::log(const std::tm& time, severity severity, std::string_view string)
 {
-	const usize padding{std::ranges::max_element(g_registered_console_loggers, std::less{}, string_size)->size() - m_name.size()};
+	const usize padding{std::ranges::max_element(registered_console_loggers(), std::less{}, string_size)->size() - m_name.size()};
 	println("[{:02}:{:02}:{:02}] [{}]{:{}} [{}] {}", time.tm_hour, time.tm_min, time.tm_sec, m_name, "", padding, char(severity), string);
 }
 
 void tr::console_logger::log_continue(std::string_view string)
 {
-	const usize padding{std::ranges::max_element(g_registered_console_loggers, std::less{}, string_size)->size() + 14};
+	const usize padding{std::ranges::max_element(registered_console_loggers(), std::less{}, string_size)->size() + 14};
 	println("{:{}}--- {}", "", padding, string);
 }
 

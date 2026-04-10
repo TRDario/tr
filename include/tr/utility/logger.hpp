@@ -89,9 +89,6 @@ namespace tr {
 		void log_continue(std::string_view string) override;
 
 	  private:
-		// List of registered console logger names.
-		inline static std::vector<std::string> g_registered_console_loggers{};
-
 		// Name of the logger.
 		std::string m_name;
 	};
