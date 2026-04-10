@@ -141,8 +141,13 @@ bool tr::sys::clipboard_empty()
 
 std::string tr::sys::clipboard_text()
 {
-	std::unique_ptr<char, decltype(&SDL_free)> ptr{SDL_GetClipboardText(), SDL_free};
-	return std::string{ptr != nullptr ? ptr.get() : std::string{}};
+	char* const raw{SDL_GetClipboardText()};
+	std::string result;
+	if (raw != nullptr) {
+		result = raw;
+		SDL_free(raw);
+	}
+	return result;
 }
 
 void tr::sys::set_clipboard_text(cstring_view text)

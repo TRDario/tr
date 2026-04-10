@@ -26,10 +26,10 @@ namespace tr {
 	};
 
 	// Defers a statement to be executed at scope end.
-#define TR_DEFER(x)                                                                                                                        \
+#define TR_DEFER(...)                                                                                                                      \
 	[[maybe_unused]] const ::tr::defer TR_JOIN(defer_, __LINE__)                                                                           \
 	{                                                                                                                                      \
-		[&] { x; }                                                                                                                         \
+		[&] { __VA_ARGS__; }                                                                                                               \
 	}
 } // namespace tr
 

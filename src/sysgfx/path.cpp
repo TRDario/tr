@@ -17,10 +17,11 @@ std::filesystem::path tr::sys::executable_directory()
 
 std::filesystem::path tr::sys::user_directory()
 {
-	std::unique_ptr<char[], decltype([](void* p) { SDL_free(p); })> cpath{SDL_GetPrefPath(main::metadata.developer, main::metadata.name)};
+	char* cpath{SDL_GetPrefPath(main::metadata.developer, main::metadata.name)};
 	if (cpath == nullptr) {
 		throw init_error{"Failed to get user directory path."};
 	}
-	std::filesystem::path userdir{cpath.get()};
+	std::filesystem::path userdir{cpath};
+	SDL_free(cpath);
 	return userdir;
 }

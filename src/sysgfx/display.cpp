@@ -6,6 +6,7 @@
 
 #include "../../include/tr/sysgfx/display.hpp"
 #include "../../include/tr/sysgfx/impl.hpp"
+#include "../../include/tr/utility/defer.hpp"
 #include <SDL3/SDL.h>
 
 ///////////////////////////////////////////////////////////////// DISPLAY /////////////////////////////////////////////////////////////////
@@ -18,8 +19,6 @@ glm::ivec2 tr::sys::display_size()
 
 tr::u8 tr::sys::max_msaa()
 {
-	using wrapped_window = std::unique_ptr<SDL_Window, decltype([](SDL_Window* w) { SDL_DestroyWindow(w); })>;
-	using wrapped_context = std::unique_ptr<SDL_GLContextState, decltype([](SDL_GLContext c) { SDL_GL_DestroyContext(c); })>;
 	constexpr u8 unknown{255};
 
 	static u8 max{unknown};
@@ -31,16 +30,18 @@ tr::u8 tr::sys::max_msaa()
 			SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 			SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
 			SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, max);
-			wrapped_window window{SDL_CreateWindow("", 500, 500, SDL_WINDOW_HIDDEN | SDL_WINDOW_OPENGL)};
+			SDL_Window* window{SDL_CreateWindow("", 500, 500, SDL_WINDOW_HIDDEN | SDL_WINDOW_OPENGL)};
 			if (window == nullptr) {
 				max /= 2;
 				continue;
 			}
-			wrapped_context context{SDL_GL_CreateContext(window.get())};
+			TR_DEFER(SDL_DestroyWindow(window));
+			SDL_GLContext context{SDL_GL_CreateContext(window)};
 			if (context == nullptr) {
 				max /= 2;
 				continue;
 			}
+			TR_DEFER(SDL_GL_DestroyContext(context));
 
 			int real_samples;
 			SDL_GL_GetAttribute(SDL_GL_MULTISAMPLESAMPLES, &real_samples);
