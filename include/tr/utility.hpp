@@ -13,6 +13,7 @@
 #include "utility/color.hpp"            // IWYU pragma: export
 #include "utility/concepts.hpp"         // IWYU pragma: export
 #include "utility/cstring_view.hpp"     // IWYU pragma: export
+#include "utility/defer.hpp"            // IWYU pragma: export
 #include "utility/draw_geometry.hpp"    // IWYU pragma: export
 #include "utility/encryption.hpp"       // IWYU pragma: export
 #include "utility/exception.hpp"        // IWYU pragma: export
