@@ -20,7 +20,7 @@
 // to be contiguous, bitmap.size().x * tr::pixel_bytes(bitmap.pixel_format()) != bitmap.pitch() (the actual length of a row in bytes) in //
 // some cases:                                                                                                                           //
 //     - bitmap[{50, 50}] = "FFFFFF"_rgba8 -> sets the pixel at (50, 50) to white                                                        //
-//     - for (tr::pixel_ref p : bitmap) { p = tr::rgb8{p} * 0.75f } -> reduces the brightness of every pixel by 25%                      //
+//     - for (auto p : bitmap) { p = tr::rgb8{p} * 0.75f } -> reduces the brightness of every pixel by 25%                               //
 //     - &*(bitmap.begin() + 50) == bitmap.data() + bitmap.pitch() -> true                                                               //
 //                                                                                                                                       //
 // A bitmap or a region of another bitmap may be blitted onto a bitmap with the .blit() method, and the bitmap may be cleared to a       //
@@ -145,7 +145,7 @@ namespace tr {
 	// View over a rectangular region of a bitmap.
 	class sub_bitmap {
 	  public:
-		class pixel_ref;
+		class reference;
 		class iterator;
 
 		// Constructs a sub-bitmap.
@@ -160,7 +160,7 @@ namespace tr {
 		sub_bitmap sub(const irect2& rect);
 
 		// Gets immutable access to a pixel of the bitmap.
-		pixel_ref operator[](glm::ivec2 pos) const;
+		reference operator[](glm::ivec2 pos) const;
 
 		// Gets an immutable iterator to the beginning of the sub-bitmap.
 		iterator begin() const;
@@ -192,7 +192,7 @@ namespace tr {
 	class bitmap_view {
 	  public:
 		// Immutable pixel reference.
-		using pixel_ref = sub_bitmap::pixel_ref;
+		using reference = sub_bitmap::reference;
 		// Immutable iterator.
 		using iterator = sub_bitmap::iterator;
 
@@ -207,7 +207,7 @@ namespace tr {
 		glm::ivec2 size() const;
 
 		// Gets immutable access to a pixel of the bitmap.
-		pixel_ref operator[](glm::ivec2 pos) const;
+		reference operator[](glm::ivec2 pos) const;
 
 		// Gets an immutable iterator to the beginning of the bitmap.
 		iterator begin() const;
@@ -252,13 +252,10 @@ namespace tr {
 	// Class containing owned bitmap data.
 	class bitmap {
 	  public:
-		class pixel_ref;
-		class mut_it;
-
-		// Immutable pixel reference.
-		using pixel_cref = tr::sub_bitmap::pixel_ref;
-		// Immutable iterator.
-		using const_it = tr::sub_bitmap::iterator;
+		class reference;
+		using const_reference = tr::sub_bitmap::reference;
+		class iterator;
+		using const_iterator = tr::sub_bitmap::iterator;
 
 		// Creates a blank bitmap.
 		bitmap(glm::ivec2 size, pixel_format format = pixel_format::rgba32);
@@ -276,22 +273,22 @@ namespace tr {
 		glm::ivec2 size() const;
 
 		// Gets mutable access to a pixel of the bitmap.
-		pixel_ref operator[](glm::ivec2 pos);
+		reference operator[](glm::ivec2 pos);
 		// Gets immutable access to a pixel of the bitmap.
-		pixel_cref operator[](glm::ivec2 pos) const;
+		const_reference operator[](glm::ivec2 pos) const;
 
 		// Gets a mutable iterator to the beginning of the bitmap.
-		mut_it begin();
+		iterator begin();
 		// Gets an immutable iterator to the beginning of the bitmap.
-		const_it begin() const;
+		const_iterator begin() const;
 		// Gets an immutable iterator to the beginning of the bitmap.
-		const_it cbegin() const;
+		const_iterator cbegin() const;
 		// Gets a mutable iterator to one past the end of the bitmap.
-		mut_it end();
+		iterator end();
 		// Gets an immutable iterator to one past the end of the bitmap.
-		const_it end() const;
+		const_iterator end() const;
 		// Gets an immutable iterator to one past the end of the bitmap.
-		const_it cend() const;
+		const_iterator cend() const;
 
 		// Blits a sub-bitmap to the bitmap.
 		void blit(glm::ivec2 tl, const sub_bitmap& source);
@@ -326,7 +323,7 @@ namespace tr {
 
 		friend class sub_bitmap;
 		friend class sub_bitmap::iterator;
-		friend class mut_it;
+		friend class iterator;
 		friend class sys::cursor;
 		friend class sys::ttfont;
 		friend void sys::set_window_icon(const bitmap& bitmap);

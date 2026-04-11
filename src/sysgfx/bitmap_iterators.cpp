@@ -39,12 +39,12 @@ static tr::rgba8 pixel_color(const std::byte* data, tr::pixel_format format)
 
 //////////////////////////////////////////////////////// CONST/SUB-BITMAP ITERATOR ////////////////////////////////////////////////////////
 
-tr::sub_bitmap::pixel_ref::pixel_ref(const std::byte* ptr, pixel_format format)
+tr::sub_bitmap::reference::reference(const std::byte* ptr, pixel_format format)
 	: m_ptr{ptr}, m_format{format}
 {
 }
 
-tr::sub_bitmap::pixel_ref::operator tr::rgba8() const
+tr::sub_bitmap::reference::operator tr::rgba8() const
 {
 	return pixel_color(m_ptr, m_format);
 }
@@ -211,17 +211,17 @@ glm::ivec2 tr::sub_bitmap::iterator::pos() const
 
 ///////////////////////////////////////////////////////////// BITMAP ITERATOR /////////////////////////////////////////////////////////////
 
-tr::bitmap::pixel_ref::pixel_ref(std::byte* ptr, pixel_format format)
+tr::bitmap::reference::reference(std::byte* ptr, pixel_format format)
 	: m_ptr{ptr}, m_format{format}
 {
 }
 
-tr::bitmap::pixel_ref::operator tr::rgba8() const
+tr::bitmap::reference::operator tr::rgba8() const
 {
 	return pixel_color(m_ptr, m_format);
 }
 
-tr::bitmap::pixel_ref& tr::bitmap::pixel_ref::operator=(rgba8 color)
+tr::bitmap::reference& tr::bitmap::reference::operator=(rgba8 color)
 {
 	const SDL_PixelFormatDetails* format_details{SDL_GetPixelFormatDetails(SDL_PixelFormat(m_format))};
 	const u32 formatted{SDL_MapRGBA(format_details, nullptr, color.r, color.g, color.b, color.a)};
@@ -245,14 +245,14 @@ tr::bitmap::pixel_ref& tr::bitmap::pixel_ref::operator=(rgba8 color)
 	return *this;
 }
 
-tr::bitmap::mut_it::mut_it(bitmap& bitmap, glm::ivec2 pos)
+tr::bitmap::iterator::iterator(bitmap& bitmap, glm::ivec2 pos)
 	: m_pixel{bitmap.data() + bitmap.pitch() * pos.y + pixel_bytes(bitmap.format()) * pos.x, bitmap.format()}
 	, m_bitmap{bitmap}
 	, m_bitmap_pos{pos}
 {
 }
 
-std::partial_ordering tr::bitmap::mut_it::operator<=>(const tr::bitmap::mut_it& r) const
+std::partial_ordering tr::bitmap::iterator::operator<=>(const tr::bitmap::iterator& r) const
 {
 	if (m_pixel.m_ptr != nullptr && r.m_pixel.m_ptr != nullptr) {
 		return m_pixel.m_ptr <=> r.m_pixel.m_ptr;
@@ -265,12 +265,12 @@ std::partial_ordering tr::bitmap::mut_it::operator<=>(const tr::bitmap::mut_it& 
 	}
 }
 
-bool tr::bitmap::mut_it::operator==(const mut_it& r) const
+bool tr::bitmap::iterator::operator==(const iterator& r) const
 {
 	return *this <=> r == std::strong_ordering::equal;
 }
 
-tr::bitmap::mut_it::value_type tr::bitmap::mut_it::operator*() const
+tr::bitmap::iterator::value_type tr::bitmap::iterator::operator*() const
 {
 	TR_ASSERT(m_pixel.m_ptr != nullptr && irect2{m_bitmap->size()}.contains(m_bitmap_pos),
 			  "Tried to dereference an invalid bitmap iterator.");
@@ -278,34 +278,34 @@ tr::bitmap::mut_it::value_type tr::bitmap::mut_it::operator*() const
 	return m_pixel;
 }
 
-tr::bitmap::mut_it::value_type tr::bitmap::mut_it::operator[](int diff) const
+tr::bitmap::iterator::value_type tr::bitmap::iterator::operator[](int diff) const
 {
 	return *(*this + diff);
 }
 
-tr::bitmap::mut_it::value_type tr::bitmap::mut_it::operator[](glm::ivec2 diff) const
+tr::bitmap::iterator::value_type tr::bitmap::iterator::operator[](glm::ivec2 diff) const
 {
 	return *(*this + diff);
 }
 
-tr::bitmap::mut_it::pointer tr::bitmap::mut_it::operator->() const
+tr::bitmap::iterator::pointer tr::bitmap::iterator::operator->() const
 {
 	return &m_pixel;
 }
 
-tr::bitmap::mut_it& tr::bitmap::mut_it::operator++()
+tr::bitmap::iterator& tr::bitmap::iterator::operator++()
 {
 	return *this += 1;
 }
 
-tr::bitmap::mut_it tr::bitmap::mut_it::operator++(int)
+tr::bitmap::iterator tr::bitmap::iterator::operator++(int)
 {
-	mut_it copy{*this};
+	iterator copy{*this};
 	++*this;
 	return copy;
 }
 
-tr::bitmap::mut_it& tr::bitmap::mut_it::operator+=(int diff)
+tr::bitmap::iterator& tr::bitmap::iterator::operator+=(int diff)
 {
 	TR_ASSERT(m_pixel.m_ptr != nullptr, "Tried to add to default-constructed bitmap iterator.");
 
@@ -325,89 +325,89 @@ tr::bitmap::mut_it& tr::bitmap::mut_it::operator+=(int diff)
 	return *this;
 }
 
-tr::bitmap::mut_it& tr::bitmap::mut_it::operator+=(glm::ivec2 diff)
+tr::bitmap::iterator& tr::bitmap::iterator::operator+=(glm::ivec2 diff)
 {
 	return *this += (diff.y * m_bitmap->size().x + diff.x);
 }
 
-tr::bitmap::mut_it tr::operator+(const tr::bitmap::mut_it& it, int diff)
+tr::bitmap::iterator tr::operator+(const tr::bitmap::iterator& it, int diff)
 {
-	tr::bitmap::mut_it copy{it};
+	tr::bitmap::iterator copy{it};
 	copy += diff;
 	return copy;
 }
 
-tr::bitmap::mut_it tr::operator+(int diff, const tr::bitmap::mut_it& it)
+tr::bitmap::iterator tr::operator+(int diff, const tr::bitmap::iterator& it)
 {
 	return it + diff;
 }
 
-tr::bitmap::mut_it tr::operator+(const tr::bitmap::mut_it& it, glm::ivec2 diff)
+tr::bitmap::iterator tr::operator+(const tr::bitmap::iterator& it, glm::ivec2 diff)
 {
-	tr::bitmap::mut_it copy{it};
+	tr::bitmap::iterator copy{it};
 	copy += diff;
 	return copy;
 }
 
-tr::bitmap::mut_it tr::operator+(glm::ivec2 diff, const tr::bitmap::mut_it& it)
+tr::bitmap::iterator tr::operator+(glm::ivec2 diff, const tr::bitmap::iterator& it)
 {
 	return it + diff;
 }
 
-tr::bitmap::mut_it& tr::bitmap::mut_it::operator--()
+tr::bitmap::iterator& tr::bitmap::iterator::operator--()
 {
 	return *this -= 1;
 }
 
-tr::bitmap::mut_it tr::bitmap::mut_it::operator--(int)
+tr::bitmap::iterator tr::bitmap::iterator::operator--(int)
 {
-	mut_it copy{*this};
+	iterator copy{*this};
 	--*this;
 	return copy;
 }
 
-tr::bitmap::mut_it& tr::bitmap::mut_it::operator-=(int diff)
+tr::bitmap::iterator& tr::bitmap::iterator::operator-=(int diff)
 {
 	return *this += -diff;
 }
 
-tr::bitmap::mut_it& tr::bitmap::mut_it::operator-=(glm::ivec2 diff)
+tr::bitmap::iterator& tr::bitmap::iterator::operator-=(glm::ivec2 diff)
 {
 	return *this += -diff;
 }
 
-tr::bitmap::mut_it tr::operator-(const tr::bitmap::mut_it& it, int diff)
+tr::bitmap::iterator tr::operator-(const tr::bitmap::iterator& it, int diff)
 {
-	tr::bitmap::mut_it copy{it};
+	tr::bitmap::iterator copy{it};
 	copy -= diff;
 	return copy;
 }
 
-tr::bitmap::mut_it tr::operator-(int diff, const tr::bitmap::mut_it& it)
+tr::bitmap::iterator tr::operator-(int diff, const tr::bitmap::iterator& it)
 {
 	return it - diff;
 }
 
-tr::bitmap::mut_it tr::operator-(const tr::bitmap::mut_it& it, glm::ivec2 diff)
+tr::bitmap::iterator tr::operator-(const tr::bitmap::iterator& it, glm::ivec2 diff)
 {
-	tr::bitmap::mut_it copy{it};
+	tr::bitmap::iterator copy{it};
 	copy -= diff;
 	return copy;
 }
 
-tr::bitmap::mut_it tr::operator-(glm::ivec2 diff, const tr::bitmap::mut_it& it)
+tr::bitmap::iterator tr::operator-(glm::ivec2 diff, const tr::bitmap::iterator& it)
 {
 	return it - diff;
 }
 
-int tr::operator-(const tr::bitmap::mut_it& l, const tr::bitmap::mut_it& r)
+int tr::operator-(const tr::bitmap::iterator& l, const tr::bitmap::iterator& r)
 {
 	TR_ASSERT(l.m_bitmap == r.m_bitmap, "Tried to subtract iterators to different bitmaps.");
 
 	return (l.m_bitmap_pos.y * l.m_bitmap->size().x + l.m_bitmap_pos.x) - (r.m_bitmap_pos.y * r.m_bitmap->size().x + r.m_bitmap_pos.x);
 }
 
-glm::ivec2 tr::bitmap::mut_it::pos() const
+glm::ivec2 tr::bitmap::iterator::pos() const
 {
 	return m_bitmap_pos;
 }

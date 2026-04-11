@@ -20,7 +20,7 @@
 
 namespace tr {
 	// Read-only reference to a bitmap pixel.
-	class sub_bitmap::pixel_ref {
+	class sub_bitmap::reference {
 	  public:
 		// Gets the pixel's color value.
 		operator rgba8() const;
@@ -32,9 +32,9 @@ namespace tr {
 		pixel_format m_format;
 
 		// Undefined, required to default-construct iterators.
-		pixel_ref() = default;
+		reference() = default;
 		// Wraps a pointer to the pixel data.
-		pixel_ref(const std::byte* ptr, pixel_format format);
+		reference(const std::byte* ptr, pixel_format format);
 
 		friend class sub_bitmap;
 		friend class iterator;
@@ -43,7 +43,7 @@ namespace tr {
 	// Immutable bitmap pixel iterator.
 	class sub_bitmap::iterator {
 	  public:
-		using value_type = pixel_ref;
+		using value_type = reference;
 		using pointer = const value_type*;
 		using difference_type = int;
 
@@ -105,7 +105,7 @@ namespace tr {
 
 	  private:
 		// Reference to a pixel, needed for the pointer dereference.
-		pixel_ref m_pixel;
+		reference m_pixel;
 		// The size of the pointed-to bitmap.
 		glm::ivec2 m_bitmap_size;
 		// The pitch of the pointed-to-bitmap.
@@ -115,12 +115,12 @@ namespace tr {
 	};
 
 	// Mutable reference to a bitmap pixel.
-	class bitmap::pixel_ref {
+	class bitmap::reference {
 	  public:
 		// Gets the pixel's color value.
 		operator rgba8() const;
 		// Sets the pixel's color value.
-		pixel_ref& operator=(rgba8 color);
+		reference& operator=(rgba8 color);
 
 	  private:
 		// A pointer to the pixel data.
@@ -129,27 +129,27 @@ namespace tr {
 		pixel_format m_format;
 
 		// Undefined, required to default-construct iterators.
-		pixel_ref() = default;
+		reference() = default;
 		// Wraps a pointer to the pixel data.
-		pixel_ref(std::byte* ptr, pixel_format format);
+		reference(std::byte* ptr, pixel_format format);
 
-		friend class mut_it;
+		friend class iterator;
 	};
 
 	// Mutable pixel iterator.
-	class bitmap::mut_it {
+	class bitmap::iterator {
 	  public:
-		using value_type = pixel_ref;
+		using value_type = reference;
 		using pointer = const value_type*;
 		using difference_type = int;
 
 		// Default-constructs an iterator.
-		mut_it() = default;
+		iterator() = default;
 		// Constructs an iterator to a bitmap pixel.
-		mut_it(bitmap& bitmap, glm::ivec2 pos);
+		iterator(bitmap& bitmap, glm::ivec2 pos);
 
-		std::partial_ordering operator<=>(const mut_it&) const;
-		bool operator==(const mut_it&) const;
+		std::partial_ordering operator<=>(const iterator&) const;
+		bool operator==(const iterator&) const;
 
 		// Dereferences the iterator.
 		value_type operator*() const;
@@ -161,47 +161,47 @@ namespace tr {
 		pointer operator->() const;
 
 		// Increments the iterator.
-		mut_it& operator++();
+		iterator& operator++();
 		// Post-increments the iterator.
-		mut_it operator++(int);
+		iterator operator++(int);
 		// Advances the iterator.
-		mut_it& operator+=(difference_type diff);
+		iterator& operator+=(difference_type diff);
 		// Advances the iterator.
-		mut_it& operator+=(glm::ivec2 diff);
+		iterator& operator+=(glm::ivec2 diff);
 		// Adds to an iterator.
-		friend mut_it operator+(const mut_it& it, difference_type diff);
+		friend iterator operator+(const iterator& it, difference_type diff);
 		// Adds to an iterator.
-		friend mut_it operator+(difference_type diff, const mut_it& it);
+		friend iterator operator+(difference_type diff, const iterator& it);
 		// Adds to an iterator.
-		friend mut_it operator+(const mut_it& it, glm::ivec2 diff);
+		friend iterator operator+(const iterator& it, glm::ivec2 diff);
 		// Adds to an iterator.
-		friend mut_it operator+(glm::ivec2 diff, const mut_it& it);
+		friend iterator operator+(glm::ivec2 diff, const iterator& it);
 
 		// Decrements the iterator.
-		mut_it& operator--();
+		iterator& operator--();
 		// Post-decrements the iterator.
-		mut_it operator--(int);
+		iterator operator--(int);
 		// Moves the iterator back.
-		mut_it& operator-=(difference_type diff);
+		iterator& operator-=(difference_type diff);
 		// Moves the iterator back.
-		mut_it& operator-=(glm::ivec2 diff);
+		iterator& operator-=(glm::ivec2 diff);
 		// Subtracts from an iterator.
-		friend mut_it operator-(const mut_it& it, difference_type diff);
+		friend iterator operator-(const iterator& it, difference_type diff);
 		// Subtracts from an iterator.
-		friend mut_it operator-(difference_type diff, const mut_it& it);
+		friend iterator operator-(difference_type diff, const iterator& it);
 		// Subtracts from an iterator.
-		friend mut_it operator-(const mut_it& it, glm::ivec2 diff);
+		friend iterator operator-(const iterator& it, glm::ivec2 diff);
 		// Subtracts from an iterator.
-		friend mut_it operator-(glm::ivec2 diff, const mut_it& it);
+		friend iterator operator-(glm::ivec2 diff, const iterator& it);
 		// Gets the distance between two iterators.
-		friend difference_type operator-(const mut_it& l, const mut_it& r);
+		friend difference_type operator-(const iterator& l, const iterator& r);
 
 		// Gets the 2D position of the iterator within the bitmap.
 		glm::ivec2 pos() const;
 
 	  private:
 		// Reference to a pixel, needed for the pointer dereference.
-		pixel_ref m_pixel;
+		reference m_pixel;
 		// The pointed-to-bitmap.
 		opt_ref<bitmap> m_bitmap;
 		// The position of the iterator within the bitmap.

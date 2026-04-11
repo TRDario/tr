@@ -94,7 +94,7 @@ tr::sub_bitmap tr::sub_bitmap::sub(const irect2& rect)
 	return {m_ptr, {rect.tl + rect.tl, rect.size}};
 }
 
-tr::sub_bitmap::pixel_ref tr::sub_bitmap::operator[](glm::ivec2 pos) const
+tr::sub_bitmap::reference tr::sub_bitmap::operator[](glm::ivec2 pos) const
 {
 	return *(begin() + pos);
 }
@@ -162,7 +162,7 @@ glm::ivec2 tr::bitmap_view::size() const
 	return {m_ptr->w, m_ptr->h};
 }
 
-tr::bitmap_view::pixel_ref tr::bitmap_view::operator[](glm::ivec2 pos) const
+tr::bitmap_view::reference tr::bitmap_view::operator[](glm::ivec2 pos) const
 {
 	return *(begin() + pos);
 }
@@ -272,50 +272,50 @@ glm::ivec2 tr::bitmap::size() const
 	return {m_ptr->w, m_ptr->h};
 }
 
-tr::bitmap::pixel_ref tr::bitmap::operator[](glm::ivec2 pos)
+tr::bitmap::reference tr::bitmap::operator[](glm::ivec2 pos)
 {
 	return *(begin() + pos);
 }
 
-tr::bitmap::pixel_cref tr::bitmap::operator[](glm::ivec2 pos) const
+tr::bitmap::const_reference tr::bitmap::operator[](glm::ivec2 pos) const
 {
 	return *(begin() + pos);
 }
 
-tr::bitmap::mut_it tr::bitmap::begin()
+tr::bitmap::iterator tr::bitmap::begin()
 {
 	TR_ASSERT(m_ptr != nullptr, "Tried to get an iterator to the beginning of a moved-from bitmap.");
 
 	return {*this, {}};
 }
 
-tr::bitmap::const_it tr::bitmap::begin() const
+tr::bitmap::const_iterator tr::bitmap::begin() const
 {
 	return cbegin();
 }
 
-tr::bitmap::const_it tr::bitmap::cbegin() const
+tr::bitmap::const_iterator tr::bitmap::cbegin() const
 {
 	TR_ASSERT(m_ptr != nullptr, "Tried to get an iterator to the beginning of a moved-from bitmap.");
 
 	return sub_bitmap{*this}.begin();
 }
 
-tr::bitmap::mut_it tr::bitmap::end()
+tr::bitmap::iterator tr::bitmap::end()
 {
 	TR_ASSERT(m_ptr != nullptr, "Tried to get an iterator to the end of a moved-from bitmap.");
 
 	return {*this, {0, size().y}};
 }
 
-tr::bitmap::const_it tr::bitmap::end() const
+tr::bitmap::const_iterator tr::bitmap::end() const
 {
 	TR_ASSERT(m_ptr != nullptr, "Tried to get an iterator to the end of a moved-from bitmap.");
 
 	return cend();
 }
 
-tr::bitmap::const_it tr::bitmap::cend() const
+tr::bitmap::const_iterator tr::bitmap::cend() const
 {
 	TR_ASSERT(m_ptr != nullptr, "Tried to get an iterator to the end of a moved-from bitmap.");
 
