@@ -184,9 +184,19 @@ constexpr auto tr::utf8::operator<=>(const indexed_iterator& l, const indexed_it
 	return l.m_ptr <=> r.m_ptr;
 }
 
+constexpr auto tr::utf8::operator<=>(const indexed_iterator& l, const iterator& r)
+{
+	return l.m_ptr <=> r.base();
+}
+
 constexpr bool tr::utf8::operator==(const indexed_iterator& l, const indexed_iterator& r)
 {
 	return l.m_ptr == r.m_ptr;
+}
+
+constexpr bool tr::utf8::operator==(const indexed_iterator& l, const iterator& r)
+{
+	return l.m_ptr == r.base();
 }
 
 constexpr tr::codepoint tr::utf8::indexed_iterator::operator*() const

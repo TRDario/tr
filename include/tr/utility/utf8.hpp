@@ -117,7 +117,9 @@ namespace tr::utf8 {
 		constexpr indexed_iterator(const char* ptr, ssize index);
 
 		constexpr friend auto operator<=>(const indexed_iterator& l, const indexed_iterator& r);
+		constexpr friend auto operator<=>(const indexed_iterator& l, const iterator& r);
 		constexpr friend bool operator==(const indexed_iterator& l, const indexed_iterator& r);
+		constexpr friend bool operator==(const indexed_iterator& l, const iterator& r);
 
 		constexpr codepoint operator*() const;
 
