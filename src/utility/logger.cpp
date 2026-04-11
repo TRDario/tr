@@ -22,17 +22,14 @@ static std::vector<std::string>& registered_console_loggers()
 tr::console_logger::console_logger(std::string&& name)
 	: m_name{std::move(name)}
 {
-	TR_ASSERT(std::ranges::find(registered_console_loggers(), m_name) == registered_console_loggers().end(),
-			  "Tried to register duplicate console logger '{}'", m_name);
+	TR_ASSERT(!contains(registered_console_loggers(), m_name), "Tried to register duplicate console logger '{}'", m_name);
+
 	registered_console_loggers().emplace_back(m_name);
 }
 
 tr::console_logger::~console_logger()
 {
-	const auto registration_it{std::ranges::find(registered_console_loggers(), m_name)};
-	if (registration_it != registered_console_loggers().end()) {
-		unstable_erase(registered_console_loggers(), registration_it);
-	}
+	unstable_erase(registered_console_loggers(), std::ranges::find(registered_console_loggers(), m_name));
 }
 
 //

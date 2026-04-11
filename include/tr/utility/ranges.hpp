@@ -15,6 +15,9 @@
 // NOTE: using tr::as_bytes on a range object will literally get the bytes of the object, which works for in-place allocated containers, //
 // but not with something like std::vector. Prefer to use tr::range_bytes over ranges, even where the former works.                      //
 //                                                                                                                                       //
+// tr::contains determines whether an element is contained within a range:                                                               //
+//     - tr::contains(" \n\t", ' ') -> true                                                                                              //
+//                                                                                                                                       //
 // tr::find_last_of finds the last element in a range that is included in another range,                                                 //
 // tr::find_first_not_of finds the first element in a range that isn't included in another range,                                        //
 // and tr::find_last_not_of finds the last element in a range that isn't included in another range:                                      //
@@ -60,6 +63,11 @@ namespace tr {
 	template <standard_layout Element, borrowed_typed_contiguous_mutable_range<std::byte> Range> auto as_mut_objects(Range&& bytes);
 	// Reinterprets a range of immutable bytes as a span of objects.
 	template <standard_layout Element, borrowed_typed_contiguous_const_range<std::byte> Range> auto as_objects(Range&& bytes);
+
+	// Gets whether a range contains a value.
+	template <std::ranges::range Range, typename T>
+		requires(std::indirect_binary_predicate<std::ranges::equal_to, std::ranges::iterator_t<Range>, const T*>)
+	constexpr bool contains(Range&& range, const T& value);
 
 	// Returns an iterator to the last element in 'searched' that matches one of the elements in 'blacklist'.
 	template <std::ranges::range SearchedRange, std::ranges::forward_range WhitelistRange>

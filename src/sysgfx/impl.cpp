@@ -223,8 +223,7 @@ void tr::gfx::context::clear_render_target()
 
 unsigned int tr::gfx::context::allocate_texture_unit()
 {
-	TR_ASSERT(std::ranges::find(m_texture_units, std::optional<texture_ref>{}) != m_texture_units.end(),
-			  "Ran out of texture units for shaders.");
+	TR_ASSERT(contains(m_texture_units, std::optional<texture_ref>{}), "Ran out of texture units for shaders.");
 
 	auto free_unit_it{std::ranges::find(m_texture_units, std::optional<texture_ref>{})};
 	*free_unit_it = texture_ref{};

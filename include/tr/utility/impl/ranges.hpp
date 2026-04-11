@@ -98,12 +98,21 @@ template <tr::standard_layout Element, tr::borrowed_typed_contiguous_const_range
 
 //
 
+template <std::ranges::range Range, typename T>
+	requires(std::indirect_binary_predicate<std::ranges::equal_to, std::ranges::iterator_t<Range>, const T*>)
+constexpr bool tr::contains(Range&& range, const T& value)
+{
+	return std::ranges::find(range, value) != std::ranges::end(range);
+}
+
+//
+
 template <std::ranges::range SearchedRange, std::ranges::forward_range WhitelistRange>
 	requires(std::equality_comparable_with<std::ranges::range_value_t<SearchedRange>, std::ranges::range_value_t<WhitelistRange>>)
 constexpr std::ranges::borrowed_iterator_t<SearchedRange> tr::find_last_of(SearchedRange&& searched, WhitelistRange&& whitelist)
 {
 	for (auto value_it = std::ranges::rbegin(searched); value_it != std::ranges::rend(searched); ++value_it) {
-		if (std::ranges::find(whitelist, *value_it) != std::ranges::end(whitelist)) {
+		if (contains(whitelist, *value_it)) {
 			return std::ranges::prev(value_it.base());
 		}
 	}
@@ -115,7 +124,7 @@ template <std::ranges::range SearchedRange, std::ranges::forward_range Blacklist
 constexpr std::ranges::borrowed_iterator_t<SearchedRange> tr::find_first_not_of(SearchedRange&& searched, BlacklistRange&& blacklist)
 {
 	for (auto value_it = std::ranges::begin(searched); value_it != std::ranges::end(searched); ++value_it) {
-		if (std::ranges::find(blacklist, *value_it) == std::ranges::end(blacklist)) {
+		if (!contains(blacklist, *value_it)) {
 			return value_it;
 		}
 	}
@@ -127,7 +136,7 @@ template <std::ranges::bidirectional_range SearchedRange, std::ranges::forward_r
 constexpr std::ranges::borrowed_iterator_t<SearchedRange> tr::find_last_not_of(SearchedRange&& searched, BlacklistRange&& blacklist)
 {
 	for (auto value_it = std::ranges::rbegin(searched); value_it != std::ranges::rend(searched); ++value_it) {
-		if (std::ranges::find(blacklist, *value_it) == std::ranges::end(blacklist)) {
+		if (!contains(blacklist, *value_it)) {
 			return std::ranges::prev(value_it.base());
 		}
 	}
