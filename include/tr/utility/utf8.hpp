@@ -23,9 +23,10 @@
 //     - tr::utf8::erase(str, it, 3) -> str is now ABCCFFGH                                                                              //
 //     - tr::utf8::pop_back(str) -> str is now ABCCFFG                                                                                   //
 //                                                                                                                                       //
-// tr::utf8::const_it provides a bidirectional iterator interface over UTF-8 strings, allowing the appearance of a codepoint range,      //
-// while tr::utf8::const_reverse_it is the equivalent reverse iterator.                                                                  //
-// Iterators of these types can be gotten through tr::utf8::begin, tr::utf8::rbegin, tr::utf8::end, and tr::utf8::rend, while            //
+// tr::utf8::iterator provides a bidirectional iterator interface over UTF-8 strings, allowing the appearance of a codepoint range,      //
+// while tr::utf8::reverse_iterator is the equivalent reverse iterator. Indexed versions of these iterators exist as                     //
+// tr::utf8::indexed_iterator and tr::utf8::reverse_indexed_iterator. Iterators of these types can be gotten through tr::utf8::begin,    //
+// tr::utf8::ibegin, tr::utf8::rbegin, tr::utf8::ribegin, tr::utf8::end, tr::utf8::iend, tr::utf8::rend, and tr::utf8::riend, while      //
 // tr::utf8::range creates a codepoint view over a string, equivalent to std::ranges::subrange{tr::utf8::begin(str), tr::utf8::end(str)}://
 //     Let str = ABCCDDDEFFGH be a UTF-8 string; a, b, c, ... are Unicode characters while A, B, CC, ... are their UTF-8 representations.//
 //     - *tr::utf8::begin(str) -> 'a'                                                                                                    //
@@ -77,24 +78,24 @@ namespace tr::utf8 {
 	// Pops back a character from a UTF-8 encoded string.
 	template <string String> constexpr void pop_back(String& str);
 
-	// Unicode codepoint const iterator for UTF-8 string views.
-	class const_it {
+	// Unicode codepoint iterator for UTF-8 string views.
+	class iterator {
 	  public:
 		using value_type = codepoint;
 		using difference_type = ssize;
 
-		constexpr const_it() = default;
-		constexpr const_it(const char* ptr);
+		constexpr iterator() = default;
+		constexpr iterator(const char* ptr);
 
-		constexpr friend auto operator<=>(const const_it&, const const_it&) = default;
-		constexpr friend bool operator==(const const_it&, const const_it&) = default;
+		constexpr friend auto operator<=>(const iterator&, const iterator&) = default;
+		constexpr friend bool operator==(const iterator&, const iterator&) = default;
 
 		constexpr codepoint operator*() const;
 
-		constexpr const_it& operator++();
-		constexpr const_it operator++(int);
-		constexpr const_it& operator--();
-		constexpr const_it operator--(int);
+		constexpr iterator& operator++();
+		constexpr iterator operator++(int);
+		constexpr iterator& operator--();
+		constexpr iterator operator--(int);
 
 		// Gets a const char pointer to the beginning of the iterator's UTF-8 character.
 		constexpr const char* base() const;
@@ -104,20 +105,61 @@ namespace tr::utf8 {
 		const char* m_ptr{nullptr};
 	};
 	// Unicode codepoint const reverse iterator for UTF-8 string views.
-	using const_reverse_it = std::reverse_iterator<const_it>;
+	using reverse_iterator = std::reverse_iterator<iterator>;
+
+	// Indexed Unicode codepoint iterator for UTF-8 string views.
+	class indexed_iterator {
+	  public:
+		using value_type = codepoint;
+		using difference_type = ssize;
+
+		constexpr indexed_iterator() = default;
+		constexpr indexed_iterator(const char* ptr, ssize index);
+
+		constexpr friend auto operator<=>(const indexed_iterator& l, const indexed_iterator& r);
+		constexpr friend bool operator==(const indexed_iterator& l, const indexed_iterator& r);
+
+		constexpr codepoint operator*() const;
+
+		constexpr indexed_iterator& operator++();
+		constexpr indexed_iterator operator++(int);
+		constexpr indexed_iterator& operator--();
+		constexpr indexed_iterator operator--(int);
+
+		// Gets a const char pointer to the beginning of the iterator's UTF-8 character.
+		constexpr const char* base() const;
+		// The index of the iterator.
+		constexpr ssize index() const;
+
+	  private:
+		// Pointer to a valid UTF-8 char sequence.
+		const char* m_ptr{nullptr};
+		// The index of the iterator.
+		ssize m_index{0};
+	};
+	// Unicode codepoint const reverse iterator for UTF-8 string views.
+	using reverse_indexed_iterator = std::reverse_iterator<indexed_iterator>;
 
 	//
 
 	// Creates a beginning codepoint iterator for a UTF-8 string view.
-	constexpr const_it begin(std::string_view str);
-	// Creates an ending codepoint iterator for a UTF-8 UTF-8 string view.
-	constexpr const_it end(std::string_view str);
+	constexpr iterator begin(std::string_view str);
+	// Creates an indexed beginning codepoint iterator for a UTF-8 string view.
+	constexpr indexed_iterator ibegin(std::string_view str);
+	// Creates an ending codepoint iterator for a UTF-8 string view.
+	constexpr iterator end(std::string_view str);
+	// Creates an indexed ending codepoint iterator for a UTF-8 string view.
+	constexpr indexed_iterator iend(std::string_view str);
+	// Creates an indexed reversed beginning codepoint iterator for a UTF-8 string view.
+	constexpr reverse_iterator rbegin(std::string_view str);
 	// Creates a reversed beginning codepoint iterator for a UTF-8 string view.
-	constexpr const_reverse_it rbegin(std::string_view str);
-	// Creates an reserved ending codepoint iterator for a UTF-8 UTF-8 string view.
-	constexpr const_reverse_it rend(std::string_view str);
+	constexpr reverse_indexed_iterator ribegin(std::string_view str);
+	// Creates an indexed reversed ending codepoint iterator for a UTF-8 string view.
+	constexpr reverse_iterator rend(std::string_view str);
+	// Creates a reversed ending codepoint iterator for a UTF-8 string view.
+	constexpr reverse_indexed_iterator riend(std::string_view str);
 	// Creates a codepoint iterator range pair for a UTF-8 string view.
-	constexpr std::ranges::subrange<const_it> range(std::string_view str);
+	constexpr std::ranges::subrange<iterator> range(std::string_view str);
 	// Counts the number of unicode characters in a UTF-8 string view.
 	constexpr usize length(std::string_view str);
 } // namespace tr::utf8

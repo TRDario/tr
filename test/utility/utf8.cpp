@@ -106,8 +106,14 @@ int utf8(int, char**)
 		range_codepoints.emplace_back(cp);
 	}
 	if (!std::ranges::equal(range_codepoints, codepoints)) {
-		tr::println_error("tr::utf8::const_it did not behave correctly.");
+		tr::println_error("tr::utf8::iterator did not behave correctly.");
 		return EXIT_FAILURE;
+	}
+	for (tr::utf8::indexed_iterator it = tr::utf8::ibegin(characters); it != tr::utf8::iend(characters); ++it) {
+		if (std::ranges::distance(tr::utf8::ibegin(characters), it) != it.index()) {
+			tr::println_error("tr::utf8::indexed_iterator did not behave correctly.");
+			return EXIT_FAILURE;
+		}
 	}
 
 	// Test length check.
