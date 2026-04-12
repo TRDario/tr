@@ -18,7 +18,7 @@ constexpr tr::halign tr::to_halign(align align)
 
 constexpr tr::valign tr::to_valign(align align)
 {
-	return valign(int(align) / 3);
+	return valign(int(align) - int(align) % 3);
 }
 
 constexpr tr::align tr::operator|(const valign& valign, const halign& halign)
