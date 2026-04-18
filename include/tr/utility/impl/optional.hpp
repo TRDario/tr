@@ -37,28 +37,28 @@ constexpr std::optional<std::invoke_result_t<Fn, const In>> tr::transform(const 
 
 template <typename In, std::invocable<In> Fn>
 	requires(tr::specialization_of<std::invoke_result_t<Fn, In&>, std::optional>)
-constexpr std::invoke_result_t<Fn, In&> and_then(std::optional<In>& opt, Fn&& fn)
+constexpr std::invoke_result_t<Fn, In&> tr::and_then(std::optional<In>& opt, Fn&& fn)
 {
 	return opt.has_value() ? std::invoke(std::forward<Fn>(fn), *opt) : std::nullopt;
 }
 
 template <typename In, std::invocable<In> Fn>
 	requires(tr::specialization_of<std::invoke_result_t<Fn, const In&>, std::optional>)
-constexpr std::invoke_result_t<Fn, const In&> and_then(const std::optional<In>& opt, Fn&& fn)
+constexpr std::invoke_result_t<Fn, const In&> tr::and_then(const std::optional<In>& opt, Fn&& fn)
 {
 	return opt.has_value() ? std::invoke(std::forward<Fn>(fn), *opt) : std::nullopt;
 }
 
 template <typename In, std::invocable<In> Fn>
 	requires(tr::specialization_of<std::invoke_result_t<Fn, In>, std::optional>)
-constexpr std::invoke_result_t<Fn, In> and_then(std::optional<In>&& opt, Fn&& fn)
+constexpr std::invoke_result_t<Fn, In> tr::and_then(std::optional<In>&& opt, Fn&& fn)
 {
 	return opt.has_value() ? std::invoke(std::forward<Fn>(fn), std::move(*opt)) : std::nullopt;
 }
 
 template <typename In, std::invocable<In> Fn>
 	requires(tr::specialization_of<std::invoke_result_t<Fn, const In>, std::optional>)
-constexpr std::invoke_result_t<Fn, const In> and_then(const std::optional<In>&& opt, Fn&& fn)
+constexpr std::invoke_result_t<Fn, const In> tr::and_then(const std::optional<In>&& opt, Fn&& fn)
 {
 	return opt.has_value() ? std::invoke(std::forward<Fn>(fn), std::move(*opt)) : std::nullopt;
 }
