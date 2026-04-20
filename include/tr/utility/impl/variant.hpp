@@ -99,27 +99,33 @@ namespace tr {
 	template <typename State, typename... Functions> stateful_match(State&&, Functions...) -> stateful_match<State, Functions...>;
 } // namespace tr
 
+template <typename... Functions>
+constexpr tr::match<Functions...>::match(Functions... fns)
+	: invoke_wrapper<Functions>{std::move(fns)}...
+{
+}
+
 template <tr::cvref_specialization_of<std::variant> Variant, tr::cvref_specialization_of<tr::match> Match>
-decltype(auto) tr::operator|(Variant&& v, Match&& m)
+constexpr decltype(auto) tr::operator|(Variant&& v, Match&& m)
 {
 	return std::visit(std::forward<Match>(m), std::forward<Variant>(v));
 }
 
 template <typename State, typename... Functions>
-tr::stateful_match<State, Functions...>::stateful_match(State&& state, Functions... fns)
+constexpr tr::stateful_match<State, Functions...>::stateful_match(State&& state, Functions... fns)
 	: tr::match<Functions...>{std::move(fns)...}, m_state{std::forward<State>(state)}
 {
 }
 
 template <typename State, typename... Functions>
 template <typename... Args>
-decltype(auto) tr::stateful_match<State, Functions...>::operator()(Args&&... args)
+constexpr decltype(auto) tr::stateful_match<State, Functions...>::operator()(Args&&... args)
 {
 	return match<Functions...>::operator()(std::forward<State>(m_state), std::forward<Args>(args)...);
 }
 
 template <tr::cvref_specialization_of<std::variant> Variant, tr::cvref_specialization_of<tr::stateful_match> Match>
-decltype(auto) tr::operator|(Variant&& v, Match&& m)
+constexpr decltype(auto) tr::operator|(Variant&& v, Match&& m)
 {
 	return std::visit(std::forward<Match>(m), std::forward<Variant>(v));
 }

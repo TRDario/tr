@@ -143,3 +143,80 @@ template <typename Return, typename Class, typename... Args>
 struct tr::function_traits<Return (Class::*)(Args...) && noexcept> : function_traits<Return (Class::*)(Args...)> {};
 template <typename Return, typename Class, typename... Args>
 struct tr::function_traits<Return (Class::*)(Args...) const && noexcept> : function_traits<Return (Class::*)(Args...)> {};
+
+template <typename Function> struct tr::invoke_wrapper : Function {
+	using Function::operator();
+};
+template <typename Return, typename... Args> struct tr::invoke_wrapper<Return(Args...)> {
+	Return (*ptr)(Args...);
+
+	constexpr Return operator()(Args... args) const
+	{
+		return ptr(std::forward<Args>(args)...);
+	}
+};
+template <typename Class, typename Return, typename... Args> struct tr::invoke_wrapper<Return (Class::*)(Args...)> {
+	Return (Class::*ptr)(Args...);
+
+	constexpr Return operator()(Class& object, Args... args) const
+	{
+		return (object.*ptr)(std::forward<Args>(args)...);
+	}
+};
+template <typename Class, typename Return, typename... Args> struct tr::invoke_wrapper<Return (Class::*)(Args...) const> {
+	Return (Class::*ptr)(Args...) const;
+
+	constexpr Return operator()(const Class& object, Args... args) const
+	{
+		return (object.*ptr)(std::forward<Args>(args)...);
+	}
+};
+template <typename Class, typename Return, typename... Args> struct tr::invoke_wrapper<Return (Class::*)(Args...) &> {
+	Return (Class::*ptr)(Args...) &;
+
+	constexpr Return operator()(Class& object, Args... args) const
+	{
+		return (object.*ptr)(std::forward<Args>(args)...);
+	}
+};
+template <typename Class, typename Return, typename... Args> struct tr::invoke_wrapper<Return (Class::*)(Args...) const&> {
+	Return (Class::*ptr)(Args...) const&;
+
+	constexpr Return operator()(const Class& object, Args... args) const
+	{
+		return (object.*ptr)(std::forward<Args>(args)...);
+	}
+};
+template <typename Class, typename Return, typename... Args> struct tr::invoke_wrapper<Return (Class::*)(Args...) &&> {
+	Return (Class::*ptr)(Args...) &&;
+
+	constexpr Return operator()(Class&& object, Args... args) const
+	{
+		return (object.*ptr)(std::forward<Args>(args)...);
+	}
+};
+template <typename Class, typename Return, typename... Args> struct tr::invoke_wrapper<Return (Class::*)(Args...) const&&> {
+	Return (Class::*ptr)(Args...) const&&;
+
+	constexpr Return operator()(const Class&& object, Args... args) const
+	{
+		return (object.*ptr)(std::forward<Args>(args)...);
+	}
+};
+template <typename Return, typename... Args> struct tr::invoke_wrapper<Return (*)(Args...)> : invoke_wrapper<Return(Args...)> {};
+template <typename Return, typename... Args> struct tr::invoke_wrapper<Return (&)(Args...)> : invoke_wrapper<Return(Args...)> {};
+template <typename Return, typename... Args> struct tr::invoke_wrapper<Return(Args...) noexcept> : invoke_wrapper<Return(Args...)> {};
+template <typename Return, typename... Args> struct tr::invoke_wrapper<Return (*)(Args...) noexcept> : invoke_wrapper<Return(Args...)> {};
+template <typename Return, typename... Args> struct tr::invoke_wrapper<Return (&)(Args...) noexcept> : invoke_wrapper<Return(Args...)> {};
+template <typename Class, typename Return, typename... Args>
+struct tr::invoke_wrapper<Return (Class::*)(Args...) noexcept> : invoke_wrapper<Return (Class::*)(Args...)> {};
+template <typename Class, typename Return, typename... Args>
+struct tr::invoke_wrapper<Return (Class::*)(Args...) const noexcept> : invoke_wrapper<Return (Class::*)(Args...) const> {};
+template <typename Class, typename Return, typename... Args>
+struct tr::invoke_wrapper<Return (Class::*)(Args...) & noexcept> : invoke_wrapper<Return (Class::*)(Args...) &> {};
+template <typename Class, typename Return, typename... Args>
+struct tr::invoke_wrapper<Return (Class::*)(Args...) const & noexcept> : invoke_wrapper<Return (Class::*)(Args...) const&> {};
+template <typename Class, typename Return, typename... Args>
+struct tr::invoke_wrapper<Return (Class::*)(Args...) && noexcept> : invoke_wrapper<Return (Class::*)(Args...) &&> {};
+template <typename Class, typename Return, typename... Args>
+struct tr::invoke_wrapper<Return (Class::*)(Args...) const && noexcept> : invoke_wrapper<Return (Class::*)(Args...) const&&> {};

@@ -107,21 +107,24 @@ namespace tr {
 	template <typename Alternative, typename... Alternatives> const Alternative&& get(const std::variant<Alternatives...>&& v);
 
 	// Match statement helper class.
-	template <typename... Functions> struct match : Functions... {
-		using Functions::operator()...;
+	template <typename... Functions> struct match : invoke_wrapper<Functions>... {
+		// Constructs a match statement.
+		constexpr match(Functions... fns);
+
+		using invoke_wrapper<Functions>::operator()...;
 	};
 	// Match statement.
 	template <cvref_specialization_of<std::variant> Variant, cvref_specialization_of<match> Match>
-	decltype(auto) operator|(Variant&& v, Match&& m);
+	constexpr decltype(auto) operator|(Variant&& v, Match&& m);
 
 	// Stateful match statement helper class.
 	template <typename State, typename... Functions> class stateful_match : match<Functions...> {
 	  public:
 		// Constructs a stateful match statement.
-		stateful_match(State&& state, Functions... fns);
+		constexpr stateful_match(State&& state, Functions... fns);
 
 		// Calls one of the underlying callables.
-		template <typename... Args> decltype(auto) operator()(Args&&... args);
+		template <typename... Args> constexpr decltype(auto) operator()(Args&&... args);
 
 	  private:
 		// The match state.
@@ -129,7 +132,7 @@ namespace tr {
 	};
 	// Stateful match statement.
 	template <cvref_specialization_of<std::variant> Variant, cvref_specialization_of<stateful_match> Match>
-	decltype(auto) operator|(Variant&& v, Match&& m);
+	constexpr decltype(auto) operator|(Variant&& v, Match&& m);
 
 	// Used in a match statement to mark all other cases as ignorable.
 	constexpr auto ignore_other_cases{[](auto&&...) {}};
