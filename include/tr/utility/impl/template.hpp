@@ -105,6 +105,11 @@ struct tr::is_specialization_of_tv<Template<T, S, Args...>, Template> : std::tru
 
 ///////////////////////////////////////////////////////////// FUNCTION TRAITS /////////////////////////////////////////////////////////////
 
+template <typename Functor> struct tr::function_traits {
+	using return_type = function_traits<decltype(&Functor::operator())>::return_type;
+	using args_tuple = function_traits<decltype(&Functor::operator())>::args_tuple;
+	template <usize N> using nth_arg_type = std::tuple_element_t<N, args_tuple>;
+};
 template <typename Return, typename... Args> struct tr::function_traits<Return(Args...)> {
 	using return_type = Return;
 	using args_tuple = std::tuple<Args...>;
