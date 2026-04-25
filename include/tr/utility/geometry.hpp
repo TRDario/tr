@@ -16,6 +16,7 @@
 //     - tr::frect2 rect{{100, 100}, {100, 100}} -> {.tl{100, 100}, .size{100, 100}}                                                     //
 //     - tr::frect2{{100, 100}, {100, 100}}.contains({150, 150}) -> true                                                                 //
 //     - tr::intersecting(tr::frect2{{100, 100}, {100, 100}}, tr::frect2{{50, 125}, {400, 50}}) -> true                                  //
+//     - tr::intersection(tr::frect2{{100, 100}, {100, 100}}, tr::frect2{{50, 125}, {400, 50}}) -> tr::frec2{{100, 125}, {100, 50}}      //
 //                                                                                                                                       //
 // A 2D triangle structure is provided. Triangles are binary readable and writable, and can be queried for their winding order and       //
 // whether a point is contained within them:                                                                                             //
@@ -162,6 +163,8 @@ namespace tr {
 	struct binary_writer<rect<Dimensions, Element>> : raw_binary_writer<rect<Dimensions, Element>> {};
 	// Determines if two rects intersect.
 	template <typename ElementL, typename ElementR> constexpr bool intersecting(const rect2<ElementL>& r1, const rect2<ElementR>& r2);
+	// Computes the intersection of two rects.
+	template <typename Element> constexpr std::optional<rect2<Element>> intersection(rect2<Element> l, rect2<Element> r);
 
 	// 2D triangle.
 	struct triangle {

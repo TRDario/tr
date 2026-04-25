@@ -84,6 +84,32 @@ template <typename ElementL, typename ElementR> constexpr bool tr::intersecting(
 		   r2.contains(r1.tl + glm::tvec2<ElementL>{0, r1.size.y});
 }
 
+template <typename Element> constexpr std::optional<tr::rect2<Element>> tr::intersection(rect2<Element> l, rect2<Element> r)
+{
+	if constexpr (!std::unsigned_integral<Element>) {
+		if (l.size.x < 0) {
+			l.tl.x += l.size.x;
+			l.size.x = -l.size.x;
+		}
+		if (l.size.y < 0) {
+			l.tl.y += l.size.y;
+			l.size.y = -l.size.y;
+		}
+		if (r.size.x < 0) {
+			r.tl.x += r.size.x;
+			r.size.x = -r.size.x;
+		}
+		if (r.size.y < 0) {
+			r.tl.y += r.size.y;
+			r.size.y = -r.size.y;
+		}
+	}
+
+	const glm::tvec2<Element> tl{glm::max(l.tl, r.tl)};
+	const glm::tvec2<Element> br{glm::min(l.tl + l.size, r.tl + r.size)};
+	return (br.x > tl.x && br.y > tl.y) ? std::optional<tr::rect2<Element>>{tl, br - tl} : std::nullopt;
+}
+
 ///////////////////////////////////////////////////////////// VECTOR FUNCTIONS ////////////////////////////////////////////////////////////
 
 template <int Dimensions, typename Element> constexpr Element tr::length2(glm::vec<Dimensions, Element> v)
