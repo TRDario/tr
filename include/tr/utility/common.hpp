@@ -43,10 +43,12 @@
 #include <numbers>                                // IWYU pragma: export
 #include <numeric>                                // IWYU pragma: export
 #include <optional>                               // IWYU pragma: export
+#include <queue>                                  // IWYU pragma: export
 #include <ranges>                                 // IWYU pragma: export
 #include <set>                                    // IWYU pragma: export
 #include <source_location>                        // IWYU pragma: export
 #include <span>                                   // IWYU pragma: export
+#include <stack>                                  // IWYU pragma: export
 #include <stdexcept>                              // IWYU pragma: export
 #include <string>                                 // IWYU pragma: export
 #include <string_view>                            // IWYU pragma: export
