@@ -11,9 +11,7 @@
 
 tr::gfx::buffer::buffer()
 {
-	GLuint id;
-	TR_GL_CALL(glCreateBuffers, 1, &id);
-	m_handle.reset(id);
+	TR_GL_CALL(glCreateBuffers, 1, out_handle(m_handle));
 }
 
 void tr::gfx::buffer::deleter::operator()(unsigned int id) const
@@ -39,11 +37,11 @@ void tr::gfx::buffer::reallocate()
 #ifdef TR_ENABLE_ASSERTS
 std::string tr::gfx::buffer::label() const
 {
-	GLsizei length;
-	TR_GL_CALL(glGetObjectLabel, GL_BUFFER, id(), 0, &length, nullptr);
-	if (length > 0) {
-		std::string label_string(length, '\0');
-		TR_GL_CALL(glGetObjectLabel, GL_BUFFER, id(), length + 1, nullptr, label_string.data());
+	GLsizei label_length;
+	TR_GL_CALL(glGetObjectLabel, GL_BUFFER, id(), 0, &label_length, nullptr);
+	if (label_length > 0) {
+		std::string label_string(label_length, '\0');
+		TR_GL_CALL(glGetObjectLabel, GL_BUFFER, id(), label_length + 1, nullptr, label_string.data());
 		return label_string;
 	}
 	else {

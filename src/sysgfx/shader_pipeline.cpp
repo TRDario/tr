@@ -13,9 +13,7 @@
 
 tr::gfx::shader_pipeline::shader_pipeline()
 {
-	GLuint ppo;
-	TR_GL_CALL(glCreateProgramPipelines, 1, &ppo);
-	m_ppo.reset(ppo);
+	TR_GL_CALL(glCreateProgramPipelines, 1, out_handle(m_ppo));
 }
 
 tr::gfx::shader_pipeline::shader_pipeline(const vertex_shader& vshader, const fragment_shader& fshader)
@@ -55,11 +53,11 @@ void tr::gfx::shader_pipeline::set_label(std::string_view label)
 
 std::string tr::gfx::shader_pipeline::label() const
 {
-	GLsizei length;
-	TR_GL_CALL(glGetObjectLabel, GL_PROGRAM_PIPELINE, m_ppo.get(), 0, &length, nullptr);
-	if (length > 0) {
-		std::string label_string(length, '\0');
-		TR_GL_CALL(glGetObjectLabel, GL_PROGRAM_PIPELINE, m_ppo.get(), length + 1, nullptr, label_string.data());
+	GLsizei label_length;
+	TR_GL_CALL(glGetObjectLabel, GL_PROGRAM_PIPELINE, m_ppo.get(), 0, &label_length, nullptr);
+	if (label_length > 0) {
+		std::string label_string(label_length, '\0');
+		TR_GL_CALL(glGetObjectLabel, GL_PROGRAM_PIPELINE, m_ppo.get(), label_length + 1, nullptr, label_string.data());
 		return label_string;
 	}
 	else {

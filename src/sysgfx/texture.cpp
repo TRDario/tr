@@ -318,11 +318,11 @@ void tr::gfx::texture::set_region(glm::ivec2 tl, const sub_bitmap& bitmap)
 #ifdef TR_ENABLE_ASSERTS
 std::string tr::gfx::texture::label() const
 {
-	GLsizei length;
-	TR_GL_CALL(glGetObjectLabel, GL_TEXTURE, m_handle, 0, &length, nullptr);
-	if (length > 0) {
-		std::string label_string(length, '\0');
-		TR_GL_CALL(glGetObjectLabel, GL_TEXTURE, m_handle, length + 1, nullptr, label_string.data());
+	GLsizei label_length;
+	TR_GL_CALL(glGetObjectLabel, GL_TEXTURE, m_handle, 0, &label_length, nullptr);
+	if (label_length > 0) {
+		std::string label_string(label_length, '\0');
+		TR_GL_CALL(glGetObjectLabel, GL_TEXTURE, m_handle, label_length + 1, nullptr, label_string.data());
 		return label_string;
 	}
 	else {
@@ -420,10 +420,8 @@ glm::ivec2 tr::gfx::texture_ref::size() const
 tr::gfx::render_texture::render_texture(glm::ivec2 size, mipmaps mipmaps, pixel_format format)
 	: texture{size, mipmaps, format}
 {
-	unsigned int temp;
-	TR_GL_CALL(glCreateFramebuffers, 1, &temp);
-	TR_GL_CALL(glNamedFramebufferTexture, temp, GL_COLOR_ATTACHMENT0, m_handle, 0);
-	m_fbo.reset(temp);
+	TR_GL_CALL(glCreateFramebuffers, 1, out_handle(m_fbo));
+	TR_GL_CALL(glNamedFramebufferTexture, m_fbo.get(), GL_COLOR_ATTACHMENT0, m_handle, 0);
 }
 
 tr::gfx::render_texture::render_texture(const sub_bitmap& bitmap, mipmaps mipmaps, std::optional<pixel_format> format)
@@ -448,9 +446,7 @@ tr::gfx::texture tr::gfx::render_texture::reallocate(glm::ivec2 size, mipmaps mi
 {
 	texture old_data{texture::reallocate(size, mipmaps, format)};
 	if (!m_fbo.has_value()) {
-		unsigned int temp;
-		TR_GL_CALL(glCreateFramebuffers, 1, &temp);
-		m_fbo.reset(temp);
+		TR_GL_CALL(glCreateFramebuffers, 1, out_handle(m_fbo));
 	}
 	TR_GL_CALL(glNamedFramebufferTexture, m_fbo.get(), GL_COLOR_ATTACHMENT0, m_handle, 0);
 	return old_data;

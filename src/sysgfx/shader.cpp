@@ -57,16 +57,16 @@ void tr::gfx::shader_base::texture_unit::set(texture_ref texture)
 ////////////////////////////////////////////////////////////////// SHADER /////////////////////////////////////////////////////////////////
 
 tr::gfx::shader_base::shader_base(cstring_view source, unsigned int type)
+	: m_program{TR_RET_GL_CALL(glCreateShaderProgramv, type, 1, (const char**)&source)}
 {
-	m_program.reset(TR_RET_GL_CALL(glCreateShaderProgramv, type, 1, (const char**)&source));
 	int linked;
 	TR_GL_CALL(glGetProgramiv, m_program.get(), GL_LINK_STATUS, &linked);
 	if (!linked) {
-		int buffer_size;
-		TR_GL_CALL(glGetProgramiv, m_program.get(), GL_INFO_LOG_LENGTH, &buffer_size);
-		std::string buffer(buffer_size, '\0');
-		TR_GL_CALL(glGetProgramInfoLog, m_program.get(), buffer_size, nullptr, buffer.data());
-		throw shader_load_error{"(Embedded)", TR_FMT::format("Failed to compile/link a shader\n{}", buffer)};
+		int info_log_buffer_size;
+		TR_GL_CALL(glGetProgramiv, m_program.get(), GL_INFO_LOG_LENGTH, &info_log_buffer_size);
+		std::string info_log_buffer(info_log_buffer_size, '\0');
+		TR_GL_CALL(glGetProgramInfoLog, m_program.get(), info_log_buffer_size, nullptr, info_log_buffer.data());
+		throw shader_load_error{"(Embedded)", TR_FMT::format("Failed to compile/link a shader\n{}", info_log_buffer)};
 	}
 
 #ifdef TR_ENABLE_GL_CHECKS
@@ -96,9 +96,9 @@ void tr::gfx::shader_base::find_uniforms()
 			continue;
 		}
 
-		std::string buffer(name_length, '\0');
-		glGetProgramResourceName(m_program.get(), GL_UNIFORM, i, buffer.size(), NULL, buffer.data());
-		m_uniforms.insert({(unsigned int)(location), {std::move(buffer), glsl_type(var_type), array_size}});
+		std::string uniform_name_buffer(name_length, '\0');
+		glGetProgramResourceName(m_program.get(), GL_UNIFORM, i, uniform_name_buffer.size(), NULL, uniform_name_buffer.data());
+		m_uniforms.insert({(unsigned int)(location), {std::move(uniform_name_buffer), glsl_type(var_type), array_size}});
 	}
 }
 
@@ -112,9 +112,9 @@ void tr::gfx::shader_base::find_inputs()
 		glGetProgramResourceiv(m_program.get(), GL_PROGRAM_INPUT, i, input_output_properties.size(), input_output_properties.data(),
 							   input_output_properties.size(), NULL, values.data());
 
-		std::string buffer(name_length, '\0');
-		glGetProgramResourceName(m_program.get(), GL_PROGRAM_INPUT, i, buffer.size(), NULL, buffer.data());
-		m_inputs.insert({(unsigned int)(location), {std::move(buffer), glsl_type(var_type), array_size}});
+		std::string input_name_buffer(name_length, '\0');
+		glGetProgramResourceName(m_program.get(), GL_PROGRAM_INPUT, i, input_name_buffer.size(), NULL, input_name_buffer.data());
+		m_inputs.insert({(unsigned int)(location), {std::move(input_name_buffer), glsl_type(var_type), array_size}});
 	}
 }
 
@@ -128,10 +128,10 @@ void tr::gfx::shader_base::find_outputs()
 		glGetProgramResourceiv(m_program.get(), GL_PROGRAM_OUTPUT, i, input_output_properties.size(), input_output_properties.data(),
 							   input_output_properties.size(), NULL, values.data());
 
-		std::string buffer(name_length, '\0');
-		glGetProgramResourceName(m_program.get(), GL_PROGRAM_OUTPUT, i, buffer.size(), NULL, buffer.data());
-		if (!buffer.starts_with("gl_")) {
-			m_outputs.insert({(unsigned int)(location), {std::move(buffer), glsl_type(var_type), array_size}});
+		std::string output_name_buffer(name_length, '\0');
+		glGetProgramResourceName(m_program.get(), GL_PROGRAM_OUTPUT, i, output_name_buffer.size(), NULL, output_name_buffer.data());
+		if (!output_name_buffer.starts_with("gl_")) {
+			m_outputs.insert({(unsigned int)(location), {std::move(output_name_buffer), glsl_type(var_type), array_size}});
 		}
 	}
 }
@@ -457,11 +457,11 @@ void tr::gfx::shader_base::set_label(std::string_view label)
 
 std::string tr::gfx::shader_base::label() const
 {
-	GLsizei length;
-	TR_GL_CALL(glGetObjectLabel, GL_PROGRAM, m_program.get(), 0, &length, nullptr);
-	if (length > 0) {
-		std::string label_string(length, '\0');
-		TR_GL_CALL(glGetObjectLabel, GL_PROGRAM, m_program.get(), length + 1, nullptr, label_string.data());
+	GLsizei label_length;
+	TR_GL_CALL(glGetObjectLabel, GL_PROGRAM, m_program.get(), 0, &label_length, nullptr);
+	if (label_length > 0) {
+		std::string label_string(label_length, '\0');
+		TR_GL_CALL(glGetObjectLabel, GL_PROGRAM, m_program.get(), label_length + 1, nullptr, label_string.data());
 		return label_string;
 	}
 	else {

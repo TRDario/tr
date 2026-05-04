@@ -171,3 +171,40 @@ constexpr void tr::handle<Base, Empty, Deleter>::swap(handle& other)
 {
 	std::swap(m_base, other.m_base);
 }
+
+//////////////////////////////////////////////////////////////// OUT HANDLE ///////////////////////////////////////////////////////////////
+
+template <std::regular Base, Base Empty, tr::handle_deleter<Base> Deleter, bool SkipEmptyHandleCheck>
+tr::out_handle_t<Base, Empty, Deleter, SkipEmptyHandleCheck>::out_handle_t(handle<Base, Empty, Deleter>& handle)
+	: m_handle{handle}
+{
+}
+
+template <std::regular Base, Base Empty, tr::handle_deleter<Base> Deleter, bool SkipEmptyHandleCheck>
+tr::out_handle_t<Base, Empty, Deleter, SkipEmptyHandleCheck>::~out_handle_t<Base, Empty, Deleter, SkipEmptyHandleCheck>()
+{
+	if constexpr (SkipEmptyHandleCheck) {
+		m_handle.reset(m_temporary, no_empty_handle_check);
+	}
+	else {
+		m_handle.reset(m_temporary);
+	}
+}
+
+template <std::regular Base, Base Empty, tr::handle_deleter<Base> Deleter, bool SkipEmptyHandleCheck>
+tr::out_handle_t<Base, Empty, Deleter, SkipEmptyHandleCheck>::operator Base*()
+{
+	return &m_temporary;
+}
+
+template <std::regular Base, Base Empty, tr::handle_deleter<Base> Deleter>
+tr::out_handle_t<Base, Empty, Deleter, false> tr::out_handle(handle<Base, Empty, Deleter>& handle)
+{
+	return handle;
+}
+
+template <std::regular Base, Base Empty, tr::handle_deleter<Base> Deleter>
+tr::out_handle_t<Base, Empty, Deleter, true> tr::out_handle(handle<Base, Empty, Deleter>& handle, no_empty_handle_check_t)
+{
+	return handle;
+}

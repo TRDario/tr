@@ -29,6 +29,8 @@
 //                                                                                                                                       //
 // Non-trivial destructors are supported: they can be passed in the constructor, or gotten with .get_deleter().                          //
 //                                                                                                                                       //
+// Semantics analogous to std::out_ptr are supported via tr::out_handle.                                                                 //
+//                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
@@ -117,6 +119,30 @@ namespace tr {
 		// The wrapped value.
 		Base m_base;
 	};
+
+	// Wrapper type returned by out_handle.
+	template <std::regular Base, Base Empty, handle_deleter<Base> Deleter, bool SkipEmptyHandleCheck> class out_handle_t {
+	  public:
+		// Wraps a handle.
+		out_handle_t(handle<Base, Empty, Deleter>& handle);
+		// Sets the handle.
+		~out_handle_t();
+
+		// Gets a pointer that can be used by a function writing a base value.
+		operator Base*();
+
+	  private:
+		// The handle being modified.
+		handle<Base, Empty, Deleter>& m_handle;
+		// Temporary that is written to before the handle is set to it.
+		Base m_temporary{Empty};
+	};
+	// Wraps a handle for use in functions that output using a pointer, akin to std::out_ptr.
+	template <std::regular Base, Base Empty, handle_deleter<Base> Deleter>
+	out_handle_t<Base, Empty, Deleter, false> out_handle(handle<Base, Empty, Deleter>& handle);
+	// Wraps a handle for use in functions that output using a pointer, akin to std::out_ptr.
+	template <std::regular Base, Base Empty, handle_deleter<Base> Deleter>
+	out_handle_t<Base, Empty, Deleter, true> out_handle(handle<Base, Empty, Deleter>& handle, no_empty_handle_check_t);
 } // namespace tr
 
 #include "impl/handle.hpp" // IWYU pragma: export

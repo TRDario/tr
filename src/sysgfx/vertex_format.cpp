@@ -15,9 +15,7 @@ tr::gfx::vertex_format::vertex_format(std::span<const vertex_binding> bindings)
 	: m_bindings{bindings}
 #endif
 {
-	GLuint vao;
-	TR_GL_CALL(glCreateVertexArrays, 1, &vao);
-	m_vao.reset(vao);
+	TR_GL_CALL(glCreateVertexArrays, 1, out_handle(m_vao));
 	GLuint attr_id{0};
 	for (int binding_id = 0; binding_id < int(bindings.size()); ++binding_id) {
 		const vertex_binding& binding{bindings.begin()[binding_id]};
@@ -65,11 +63,11 @@ void tr::gfx::vertex_format::set_label(std::string_view label)
 
 std::string tr::gfx::vertex_format::label() const
 {
-	GLsizei length;
-	TR_GL_CALL(glGetObjectLabel, GL_VERTEX_ARRAY, m_vao.get(), 0, &length, nullptr);
-	if (length > 0) {
-		std::string label_string(length, '\0');
-		TR_GL_CALL(glGetObjectLabel, GL_VERTEX_ARRAY, m_vao.get(), length + 1, nullptr, label_string.data());
+	GLsizei label_length;
+	TR_GL_CALL(glGetObjectLabel, GL_VERTEX_ARRAY, m_vao.get(), 0, &label_length, nullptr);
+	if (label_length > 0) {
+		std::string label_string(label_length, '\0');
+		TR_GL_CALL(glGetObjectLabel, GL_VERTEX_ARRAY, m_vao.get(), label_length + 1, nullptr, label_string.data());
 		return label_string;
 	}
 	else {
