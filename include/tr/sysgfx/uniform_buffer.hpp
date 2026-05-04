@@ -23,13 +23,14 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
+#include "buffer.hpp"
 #include "buffer_map.hpp"
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
 namespace tr::gfx {
 	// Shader uniform buffer.
-	class basic_uniform_buffer {
+	class basic_uniform_buffer : private buffer {
 	  public:
 		// Allocates an uninitialized uniform buffer.
 		basic_uniform_buffer(usize size);
@@ -47,19 +48,13 @@ namespace tr::gfx {
 		basic_buffer_map map();
 
 #ifdef TR_ENABLE_ASSERTS
-		// Sets the debug label of the uniform buffer.
-		void set_label(std::string_view label);
 		// Gets the debug label of the uniform buffer.
-		std::string label() const;
+		using buffer::label;
+		// Sets the debug label of the uniform buffer.
+		using buffer::set_label;
 #endif
 
 	  private:
-		struct deleter {
-			void operator()(unsigned int id) const;
-		};
-
-		// Handle to the OpenGL buffer.
-		handle<unsigned int, 0, deleter> m_ubo;
 		// The size of the buffer.
 		usize m_size;
 

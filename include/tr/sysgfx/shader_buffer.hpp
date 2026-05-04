@@ -42,13 +42,14 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
+#include "buffer.hpp"
 #include "buffer_map.hpp"
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
 namespace tr::gfx {
 	// GPU buffer accessable to a shader.
-	class basic_shader_buffer {
+	class basic_shader_buffer : private buffer {
 	  public:
 		// Allocates an uninitialized shader buffer.
 		basic_shader_buffer(usize header_size, usize capacity, map_type map_type = map_type::write_only);
@@ -77,19 +78,13 @@ namespace tr::gfx {
 		basic_buffer_map map();
 
 #ifdef TR_ENABLE_ASSERTS
-		// Sets the debug label of the shader buffer.
-		void set_label(std::string_view label);
 		// Gets the debug label of the shader buffer.
-		std::string label() const;
+		using buffer::label;
+		// Sets the debug label of the shader buffer.
+		using buffer::set_label;
 #endif
 
 	  private:
-		struct deleter {
-			void operator()(unsigned int id) const;
-		};
-
-		// Handle to the OpenGL buffer.
-		handle<unsigned int, 0, deleter> m_sbo;
 		// The map type of the buffer.
 		map_type m_map_type;
 		// The size of the header.

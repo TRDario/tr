@@ -34,31 +34,25 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "../utility/handle.hpp"
+#include "buffer.hpp"
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
 namespace tr::gfx {
 	// Static vertex buffer class for holding immutable vertex data.
-	class basic_static_vertex_buffer {
+	class basic_static_vertex_buffer : private buffer {
 	  public:
 		// Uploads vertex data into a static vertex buffer.
 		basic_static_vertex_buffer(std::span<const std::byte> data);
 
 #ifdef TR_ENABLE_ASSERTS
-		// Sets the debug label of the vertex buffer.
-		void set_label(std::string_view label);
 		// Gets the debug label of the vertex buffer.
-		std::string label() const;
+		using buffer::label;
+		// Sets the debug label of the vertex buffer.
+		using buffer::set_label;
 #endif
 
 	  private:
-		struct deleter {
-			void operator()(unsigned int id) const;
-		};
-
-		// Handle to the OpenGL buffer.
-		handle<unsigned int, 0, deleter> m_vbo;
 		// The size of the vertex buffer.
 		ssize m_size;
 
@@ -73,10 +67,10 @@ namespace tr::gfx {
 	};
 
 	// Dynamic vertex buffer class.
-	class basic_dyn_vertex_buffer {
+	class basic_dyn_vertex_buffer : private buffer {
 	  public:
 		// Creates a dynamic vertex buffer.
-		basic_dyn_vertex_buffer();
+		basic_dyn_vertex_buffer() = default;
 
 		// Gets whether the vertex buffer is empty.
 		bool empty() const;
@@ -97,23 +91,17 @@ namespace tr::gfx {
 		void set_region(usize offset, std::span<const std::byte> data);
 
 #ifdef TR_ENABLE_ASSERTS
-		// Sets the debug label of the vertex buffer.
-		void set_label(std::string_view label);
 		// Gets the debug label of the vertex buffer.
-		std::string label() const;
+		using buffer::label;
+		// Sets the debug label of the vertex buffer.
+		using buffer::set_label;
 #endif
 
 	  private:
-		struct deleter {
-			void operator()(unsigned int id) const;
-		};
-
-		// Handle to the OpenGL buffer.
-		handle<unsigned int, 0, deleter> m_vbo;
 		// The used size of the buffer.
-		usize m_size;
+		usize m_size{0};
 		// The capacity of the buffer.
-		usize m_capacity;
+		usize m_capacity{0};
 
 		friend void set_vertex_buffer(const basic_dyn_vertex_buffer& buffer, int slot, ssize offset, usize stride);
 	};

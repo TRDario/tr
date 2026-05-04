@@ -6,63 +6,19 @@
 
 #include "../../include/tr/sysgfx/vertex_buffer.hpp"
 #include "../../include/tr/sysgfx/gl_call.hpp"
-#include "../../include/tr/sysgfx/impl.hpp"
 
 /////////////////////////////////////////////////////// BASIC STATIC VERTEX BUFFER ////////////////////////////////////////////////////////
 
 tr::gfx::basic_static_vertex_buffer::basic_static_vertex_buffer(std::span<const std::byte> data)
 	: m_size{std::ssize(data)}
 {
-	GLuint vbo;
-	TR_GL_CALL(glCreateBuffers, 1, &vbo);
-	m_vbo.reset(vbo);
-
-	TR_GL_CALL(glNamedBufferStorage, m_vbo.get(), m_size, data.data(), 0);
+	TR_GL_CALL(glNamedBufferStorage, id(), m_size, data.data(), 0);
 	if (glGetError() == GL_OUT_OF_MEMORY) {
 		throw out_of_memory{"vertex buffer allocation"};
 	}
 }
 
-void tr::gfx::basic_static_vertex_buffer::deleter::operator()(unsigned int id) const
-{
-	TR_GL_CALL(glDeleteBuffers, 1, &id);
-}
-
-#ifdef TR_ENABLE_ASSERTS
-void tr::gfx::basic_static_vertex_buffer::set_label(std::string_view label)
-{
-	TR_GL_CALL(glObjectLabel, GL_BUFFER, m_vbo.get(), GLsizei(label.size()), label.data());
-}
-
-std::string tr::gfx::basic_static_vertex_buffer::label() const
-{
-	GLsizei length;
-	TR_GL_CALL(glGetObjectLabel, GL_BUFFER, m_vbo.get(), 0, &length, nullptr);
-	if (length > 0) {
-		std::string str(length, '\0');
-		TR_GL_CALL(glGetObjectLabel, GL_BUFFER, m_vbo.get(), length + 1, nullptr, str.data());
-		return str;
-	}
-	else {
-		return "<unnamed>";
-	}
-}
-#endif
-
 /////////////////////////////////////////////////////// BASIC DYNAMIC VERTEX BUFFER ///////////////////////////////////////////////////////
-
-tr::gfx::basic_dyn_vertex_buffer::basic_dyn_vertex_buffer()
-	: m_size{0}, m_capacity{0}
-{
-	GLuint vbo;
-	TR_GL_CALL(glCreateBuffers, 1, &vbo);
-	m_vbo.reset(vbo);
-}
-
-void tr::gfx::basic_dyn_vertex_buffer::deleter::operator()(unsigned int id) const
-{
-	TR_GL_CALL(glDeleteBuffers, 1, &id);
-}
 
 bool tr::gfx::basic_dyn_vertex_buffer::empty() const
 {
@@ -95,12 +51,8 @@ void tr::gfx::basic_dyn_vertex_buffer::reserve(usize capacity)
 	if (capacity > m_capacity) {
 		capacity = std::bit_ceil(capacity);
 
-		GLuint vbo;
-		TR_GL_CALL(glCreateBuffers, 1, &vbo);
-		TR_MOVE_LABEL(GL_BUFFER, m_vbo.get(), vbo);
-		m_vbo.reset(vbo);
-
-		TR_GL_CALL(glNamedBufferStorage, m_vbo.get(), GLsizeiptr(capacity), nullptr, GL_DYNAMIC_STORAGE_BIT);
+		reallocate();
+		TR_GL_CALL(glNamedBufferStorage, id(), GLsizeiptr(capacity), nullptr, GL_DYNAMIC_STORAGE_BIT);
 		if (glGetError() == GL_OUT_OF_MEMORY) {
 #ifdef TR_ENABLE_ASSERTS
 			throw out_of_memory{"allocation of vertex buffer '{}'", label()};
@@ -111,7 +63,7 @@ void tr::gfx::basic_dyn_vertex_buffer::reserve(usize capacity)
 		m_capacity = capacity;
 	}
 	else {
-		TR_GL_CALL(glInvalidateBufferData, m_vbo.get());
+		TR_GL_CALL(glInvalidateBufferData, id());
 	}
 	m_size = 0;
 }
@@ -127,28 +79,5 @@ void tr::gfx::basic_dyn_vertex_buffer::set_region(usize offset, std::span<const 
 	TR_ASSERT(offset + data.size() <= m_size, "Tried to set out-of-bounds region [{}, {}) in vertex buffer '{}' of size {}.", offset,
 			  offset + data.size(), label(), m_size);
 
-	TR_GL_CALL(glNamedBufferSubData, m_vbo.get(), GLintptr(offset), GLsizeiptr(data.size()), data.data());
+	TR_GL_CALL(glNamedBufferSubData, id(), GLintptr(offset), GLsizeiptr(data.size()), data.data());
 }
-
-#ifdef TR_ENABLE_ASSERTS
-void tr::gfx::basic_dyn_vertex_buffer::set_label(std::string_view label)
-{
-	TR_ASSERT(label.size() <= 64, "Tried to set an overlong vertex buffer label of {} characters (max is 64).", label.size());
-
-	TR_GL_CALL(glObjectLabel, GL_BUFFER, m_vbo.get(), GLsizei(label.size()), label.data());
-}
-
-std::string tr::gfx::basic_dyn_vertex_buffer::label() const
-{
-	GLsizei length;
-	TR_GL_CALL(glGetObjectLabel, GL_BUFFER, m_vbo.get(), 0, &length, nullptr);
-	if (length > 0) {
-		std::string str(length, '\0');
-		TR_GL_CALL(glGetObjectLabel, GL_BUFFER, m_vbo.get(), length + 1, nullptr, str.data());
-		return str;
-	}
-	else {
-		return "<unnamed>";
-	}
-}
-#endif

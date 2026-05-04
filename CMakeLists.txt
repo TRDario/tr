@@ -92,6 +92,7 @@ if(TR_BUILD_SYSGFX)
 		src/sysgfx/basic_renderer_staggered_draw_manager.cpp
 		src/sysgfx/bitmap_iterators.cpp
 		src/sysgfx/bitmap.cpp
+		src/sysgfx/buffer.cpp
 		src/sysgfx/buffer_map.cpp
 		src/sysgfx/circle_renderer.cpp
 		src/sysgfx/circle_renderer_staggered_draw_manager.cpp
