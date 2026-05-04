@@ -321,9 +321,9 @@ std::string tr::gfx::texture::label() const
 	GLsizei length;
 	TR_GL_CALL(glGetObjectLabel, GL_TEXTURE, m_handle, 0, &length, nullptr);
 	if (length > 0) {
-		std::string str(length, '\0');
-		TR_GL_CALL(glGetObjectLabel, GL_TEXTURE, m_handle, length + 1, nullptr, str.data());
-		return str;
+		std::string label_string(length, '\0');
+		TR_GL_CALL(glGetObjectLabel, GL_TEXTURE, m_handle, length + 1, nullptr, label_string.data());
+		return label_string;
 	}
 	else {
 		return "<unnamed>";
@@ -332,8 +332,6 @@ std::string tr::gfx::texture::label() const
 
 void tr::gfx::texture::set_label(std::string_view label)
 {
-	TR_ASSERT(label.size() <= 64, "Tried to set an overlong texture label of {} characters (max is 64).", label.size());
-
 	if (!empty()) {
 		TR_GL_CALL(glObjectLabel, GL_TEXTURE, m_handle, GLsizei(label.size()), label.data());
 	}

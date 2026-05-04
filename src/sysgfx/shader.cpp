@@ -39,8 +39,8 @@ std::string_view tr::gfx::shader_load_error::details() const
 /////////////////////////////////////////////////////////////// TEXTURE UNIT //////////////////////////////////////////////////////////////
 
 tr::gfx::shader_base::texture_unit::texture_unit(unsigned int program, int index)
+	: m_id{sys::g_window.gfx_context().allocate_texture_unit()}
 {
-	m_id.reset(sys::g_window.gfx_context().allocate_texture_unit());
 	TR_GL_CALL(glProgramUniform1i, program, index, m_id.get());
 }
 
@@ -461,9 +461,9 @@ std::string tr::gfx::shader_base::label() const
 	GLsizei length;
 	TR_GL_CALL(glGetObjectLabel, GL_PROGRAM, m_program.get(), 0, &length, nullptr);
 	if (length > 0) {
-		std::string str(length, '\0');
-		TR_GL_CALL(glGetObjectLabel, GL_PROGRAM, m_program.get(), length + 1, nullptr, str.data());
-		return str;
+		std::string label_string(length, '\0');
+		TR_GL_CALL(glGetObjectLabel, GL_PROGRAM, m_program.get(), length + 1, nullptr, label_string.data());
+		return label_string;
 	}
 	else {
 		return "<unnamed>";

@@ -58,9 +58,9 @@ std::string tr::gfx::shader_pipeline::label() const
 	GLsizei length;
 	TR_GL_CALL(glGetObjectLabel, GL_PROGRAM_PIPELINE, m_ppo.get(), 0, &length, nullptr);
 	if (length > 0) {
-		std::string str(length, '\0');
-		TR_GL_CALL(glGetObjectLabel, GL_PROGRAM_PIPELINE, m_ppo.get(), length + 1, nullptr, str.data());
-		return str;
+		std::string label_string(length, '\0');
+		TR_GL_CALL(glGetObjectLabel, GL_PROGRAM_PIPELINE, m_ppo.get(), length + 1, nullptr, label_string.data());
+		return label_string;
 	}
 	else {
 		return "<unnamed>";

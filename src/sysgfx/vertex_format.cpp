@@ -68,9 +68,9 @@ std::string tr::gfx::vertex_format::label() const
 	GLsizei length;
 	TR_GL_CALL(glGetObjectLabel, GL_VERTEX_ARRAY, m_vao.get(), 0, &length, nullptr);
 	if (length > 0) {
-		std::string str(length, '\0');
-		TR_GL_CALL(glGetObjectLabel, GL_VERTEX_ARRAY, m_vao.get(), length + 1, nullptr, str.data());
-		return str;
+		std::string label_string(length, '\0');
+		TR_GL_CALL(glGetObjectLabel, GL_VERTEX_ARRAY, m_vao.get(), length + 1, nullptr, label_string.data());
+		return label_string;
 	}
 	else {
 		return "<unnamed>";
