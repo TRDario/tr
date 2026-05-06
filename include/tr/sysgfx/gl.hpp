@@ -1450,7 +1450,7 @@ namespace tr::gfx {
 #define glEndQuery(target) TR_CALL_OPENGL_FUNCTION(glEndQuery, target)
 #define glGenQueries(n, ids) TR_CALL_OPENGL_FUNCTION(glGenQueries, n, ids)
 #define glGenerateTextureMipmap(texture) TR_CALL_OPENGL_FUNCTION(glGenerateTextureMipmap, texture)
-#define glGetError() TR_CALL_OPENGL_FUNCTION_WITH_RETURN(glGetError)
+#define glGetError() tr::sys::g_window.gfx_context().gl_functions().glGetError()
 #define glGetNamedBufferParameteriv(buffer, pname, params) TR_CALL_OPENGL_FUNCTION(glGetNamedBufferParameteriv, buffer, pname, params)
 #define glGetObjectLabel(identifier, name, bufSize, length, label) TR_CALL_OPENGL_FUNCTION(glGetObjectLabel, identifier, name, bufSize, length, label)
 #define glGetProgramInfoLog(program, maxLength, length, infoLog) TR_CALL_OPENGL_FUNCTION(glGetProgramInfoLog, program, maxLength, length, infoLog)
