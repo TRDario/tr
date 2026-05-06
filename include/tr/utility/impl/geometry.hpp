@@ -107,7 +107,7 @@ template <typename Element> constexpr std::optional<tr::rect2<Element>> tr::inte
 
 	const glm::tvec2<Element> tl{glm::max(l.tl, r.tl)};
 	const glm::tvec2<Element> br{glm::min(l.tl + l.size, r.tl + r.size)};
-	return (br.x > tl.x && br.y > tl.y) ? std::optional<tr::rect2<Element>>{tl, br - tl} : std::nullopt;
+	return (br.x > tl.x && br.y > tl.y) ? std::make_optional<tr::rect2<Element>>(tl, br - tl) : std::nullopt;
 }
 
 ///////////////////////////////////////////////////////////// VECTOR FUNCTIONS ////////////////////////////////////////////////////////////
