@@ -5,14 +5,14 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include "../../include/tr/sysgfx/index_buffer.hpp"
-#include "../../include/tr/sysgfx/gl_call.hpp"
+#include "../../include/tr/sysgfx/impl.hpp"
 
 /////////////////////////////////////////////////////////// STATIC INDEX BUFFER ///////////////////////////////////////////////////////////
 
 tr::gfx::static_index_buffer::static_index_buffer(std::span<const u16> data)
 	: m_size{std::ssize(data)}
 {
-	TR_GL_CALL(glNamedBufferStorage, id(), GLsizeiptr(m_size * sizeof(u16)), data.data(), 0);
+	glNamedBufferStorage(id(), GLsizeiptr(m_size * sizeof(u16)), data.data(), 0);
 	if (glGetError() == GL_OUT_OF_MEMORY) {
 		throw out_of_memory{"index buffer allocation"};
 	}
@@ -54,7 +54,7 @@ void tr::gfx::dyn_index_buffer::reserve(usize capacity)
 		capacity = std::bit_ceil(capacity);
 
 		reallocate();
-		TR_GL_CALL(glNamedBufferStorage, id(), GLsizeiptr(capacity * sizeof(u16)), nullptr, GL_DYNAMIC_STORAGE_BIT);
+		glNamedBufferStorage(id(), GLsizeiptr(capacity * sizeof(u16)), nullptr, GL_DYNAMIC_STORAGE_BIT);
 		if (glGetError() == GL_OUT_OF_MEMORY) {
 #ifdef TR_ENABLE_ASSERTS
 			throw out_of_memory{"allocation of index buffer '{}'", label()};
@@ -65,7 +65,7 @@ void tr::gfx::dyn_index_buffer::reserve(usize capacity)
 		m_capacity = capacity;
 	}
 	else {
-		TR_GL_CALL(glInvalidateBufferData, id());
+		glInvalidateBufferData(id());
 	}
 	m_size = 0;
 }
@@ -75,7 +75,7 @@ void tr::gfx::dyn_index_buffer::set_region(usize offset, std::span<const u16> da
 	TR_ASSERT(offset + data.size() <= m_size, "Tried to set out-of-bounds region [{}, {}) in index buffer '{}' of size {}.", offset,
 			  offset + data.size(), label(), m_size);
 
-	TR_GL_CALL(glNamedBufferSubData, id(), GLintptr(offset * sizeof(u16)), GLsizeiptr(data.size() * sizeof(u16)), data.data());
+	glNamedBufferSubData(id(), GLintptr(offset * sizeof(u16)), GLsizeiptr(data.size() * sizeof(u16)), data.data());
 }
 
 void tr::gfx::dyn_index_buffer::set(std::span<const u16> data)

@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include "../../include/tr/sysgfx/buffer_map.hpp"
-#include "../../include/tr/sysgfx/gl_call.hpp"
+#include "../../include/tr/sysgfx/impl.hpp"
 
 ///////////////////////////////////////////////////////////// BASIC BUFFER MAP ////////////////////////////////////////////////////////////
 
@@ -21,5 +21,5 @@ tr::gfx::basic_buffer_map::operator std::span<std::byte>() const
 
 void tr::gfx::basic_buffer_map::deleter::operator()(unsigned int id) const
 {
-	TR_GL_CALL(glUnmapNamedBuffer, id);
+	glUnmapNamedBuffer(id);
 }

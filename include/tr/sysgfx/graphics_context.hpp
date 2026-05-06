@@ -91,8 +91,6 @@ namespace tr::gfx {
 	void set_render_target(const render_target& target);
 	// Sets the active shader pipeline.
 	void set_shader_pipeline(const shader_pipeline& pipeline);
-	// Sets the number of vertices per tessellation patch.
-	void set_tessellation_patch_size(int vertices);
 	// Sets the active blending mode.
 	void set_blend_mode(const blend_mode& blend_mode);
 	// Sets the active vertex format.

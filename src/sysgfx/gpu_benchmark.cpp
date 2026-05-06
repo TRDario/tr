@@ -5,39 +5,36 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include "../../include/tr/sysgfx/gpu_benchmark.hpp"
-#include "../../include/tr/sysgfx/gl_call.hpp"
+#include "../../include/tr/sysgfx/impl.hpp"
 #include "../../include/tr/utility/ranges.hpp"
 
 ////////////////////////////////////////////////////////////// GPU BENCHMARK //////////////////////////////////////////////////////////////
 
 tr::gfx::gpu_benchmark::gpu_benchmark()
 {
-	GLuint temp;
-	TR_GL_CALL(glGenQueries, 1, &temp);
-	m_qo.reset(temp);
+	glGenQueries(1, out_handle(m_qo));
 }
 
 void tr::gfx::gpu_benchmark::deleter::operator()(unsigned int id) const
 {
-	TR_GL_CALL(glDeleteQueries, 1, &id);
+	glDeleteQueries(1, &id);
 }
 
 //
-
 void tr::gfx::gpu_benchmark::start()
 {
-	TR_GL_CALL(glBeginQuery, GL_TIME_ELAPSED, m_qo.get());
+	glBeginQuery(GL_TIME_ELAPSED, m_qo.get());
 }
 
 void tr::gfx::gpu_benchmark::stop()
 {
-	TR_GL_CALL(glEndQuery, GL_TIME_ELAPSED);
+	glEndQuery(GL_TIME_ELAPSED);
 }
 
 void tr::gfx::gpu_benchmark::fetch()
 {
 	i64 result;
-	TR_GL_CALL(glGetQueryObjecti64v, m_qo.get(), GL_QUERY_RESULT, &result);
+	glGetQueryObjecti64v(m_qo.get(), GL_QUERY_RESULT, &result);
 	if (m_durations.size() == 256) {
 		m_durations.pop_front();
 	}

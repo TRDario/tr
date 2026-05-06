@@ -17,6 +17,7 @@
 
 #pragma once
 #include "../utility/cstring_view.hpp"
+#include "gl_functions.hpp"
 #include "graphics_context.hpp"
 #include "render_target.hpp"
 #include "texture.hpp"
@@ -40,6 +41,8 @@ namespace tr::gfx {
 
 		// Gets the base SDL OpenGL context pointer.
 		SDL_GLContextState* ptr();
+		// Gets the table of OpenGL function pointers.
+		const gl_functions& gl_functions();
 		// Gets the 2D vertex format.
 		vertex_format& vertex2_format();
 
@@ -76,6 +79,8 @@ namespace tr::gfx {
 
 		// Pointer to the SDL OpenGL context.
 		std::unique_ptr<SDL_GLContextState, deleter> m_ptr;
+		// OpenGL function pointers.
+		std::optional<gfx::gl_functions> m_gl_functions;
 		// 2D vertex format.
 		std::optional<vertex_format> m_vertex2_format;
 		// ID of the current active renderer.
@@ -150,3 +155,5 @@ namespace tr::sys {
 		TR_LOG(::tr::log, ::tr::severity::error, __VA_ARGS__);                                                                             \
 		TR_LOG_CONTINUE(::tr::log, "{}", SDL_GetError());                                                                                  \
 	} while (0)
+
+#include "gl.hpp" // IWYU pragma: export

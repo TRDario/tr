@@ -5,14 +5,14 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include "../../include/tr/sysgfx/vertex_buffer.hpp"
-#include "../../include/tr/sysgfx/gl_call.hpp"
+#include "../../include/tr/sysgfx/impl.hpp"
 
 /////////////////////////////////////////////////////// BASIC STATIC VERTEX BUFFER ////////////////////////////////////////////////////////
 
 tr::gfx::basic_static_vertex_buffer::basic_static_vertex_buffer(std::span<const std::byte> data)
 	: m_size{std::ssize(data)}
 {
-	TR_GL_CALL(glNamedBufferStorage, id(), m_size, data.data(), 0);
+	glNamedBufferStorage(id(), m_size, data.data(), 0);
 	if (glGetError() == GL_OUT_OF_MEMORY) {
 		throw out_of_memory{"vertex buffer allocation"};
 	}
@@ -52,7 +52,7 @@ void tr::gfx::basic_dyn_vertex_buffer::reserve(usize capacity)
 		capacity = std::bit_ceil(capacity);
 
 		reallocate();
-		TR_GL_CALL(glNamedBufferStorage, id(), GLsizeiptr(capacity), nullptr, GL_DYNAMIC_STORAGE_BIT);
+		glNamedBufferStorage(id(), GLsizeiptr(capacity), nullptr, GL_DYNAMIC_STORAGE_BIT);
 		if (glGetError() == GL_OUT_OF_MEMORY) {
 #ifdef TR_ENABLE_ASSERTS
 			throw out_of_memory{"allocation of vertex buffer '{}'", label()};
@@ -63,7 +63,7 @@ void tr::gfx::basic_dyn_vertex_buffer::reserve(usize capacity)
 		m_capacity = capacity;
 	}
 	else {
-		TR_GL_CALL(glInvalidateBufferData, id());
+		glInvalidateBufferData(id());
 	}
 	m_size = 0;
 }
@@ -79,5 +79,5 @@ void tr::gfx::basic_dyn_vertex_buffer::set_region(usize offset, std::span<const 
 	TR_ASSERT(offset + data.size() <= m_size, "Tried to set out-of-bounds region [{}, {}) in vertex buffer '{}' of size {}.", offset,
 			  offset + data.size(), label(), m_size);
 
-	TR_GL_CALL(glNamedBufferSubData, id(), GLintptr(offset), GLsizeiptr(data.size()), data.data());
+	glNamedBufferSubData(id(), GLintptr(offset), GLsizeiptr(data.size()), data.data());
 }

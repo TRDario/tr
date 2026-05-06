@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include "../../include/tr/sysgfx/shader_pipeline.hpp"
-#include "../../include/tr/sysgfx/gl_call.hpp"
+#include "../../include/tr/sysgfx/impl.hpp"
 #include "../../include/tr/utility/hash_map.hpp"
 #include "tr/sysgfx/shader.hpp"
 
@@ -13,7 +13,7 @@
 
 tr::gfx::shader_pipeline::shader_pipeline()
 {
-	TR_GL_CALL(glCreateProgramPipelines, 1, out_handle(m_ppo));
+	glCreateProgramPipelines(1, out_handle(m_ppo));
 }
 
 tr::gfx::shader_pipeline::shader_pipeline(const vertex_shader& vshader, const fragment_shader& fshader)
@@ -36,28 +36,28 @@ tr::gfx::shader_pipeline::shader_pipeline(const vertex_shader& vshader, const fr
 	}
 #endif
 
-	TR_GL_CALL(glUseProgramStages, m_ppo.get(), GL_VERTEX_SHADER_BIT, vshader.m_program.get());
-	TR_GL_CALL(glUseProgramStages, m_ppo.get(), GL_FRAGMENT_SHADER_BIT, fshader.m_program.get());
+	glUseProgramStages(m_ppo.get(), GL_VERTEX_SHADER_BIT, vshader.m_program.get());
+	glUseProgramStages(m_ppo.get(), GL_FRAGMENT_SHADER_BIT, fshader.m_program.get());
 }
 
 void tr::gfx::shader_pipeline::deleter::operator()(unsigned int id) const
 {
-	TR_GL_CALL(glDeleteProgramPipelines, 1, &id);
+	glDeleteProgramPipelines(1, &id);
 }
 
 #ifdef TR_ENABLE_ASSERTS
 void tr::gfx::shader_pipeline::set_label(std::string_view label)
 {
-	TR_GL_CALL(glObjectLabel, GL_PROGRAM_PIPELINE, m_ppo.get(), GLsizei(label.size()), label.data());
+	glObjectLabel(GL_PROGRAM_PIPELINE, m_ppo.get(), GLsizei(label.size()), label.data());
 }
 
 std::string tr::gfx::shader_pipeline::label() const
 {
 	GLsizei label_length;
-	TR_GL_CALL(glGetObjectLabel, GL_PROGRAM_PIPELINE, m_ppo.get(), 0, &label_length, nullptr);
+	glGetObjectLabel(GL_PROGRAM_PIPELINE, m_ppo.get(), 0, &label_length, nullptr);
 	if (label_length > 0) {
 		std::string label_string(label_length, '\0');
-		TR_GL_CALL(glGetObjectLabel, GL_PROGRAM_PIPELINE, m_ppo.get(), label_length + 1, nullptr, label_string.data());
+		glGetObjectLabel(GL_PROGRAM_PIPELINE, m_ppo.get(), label_length + 1, nullptr, label_string.data());
 		return label_string;
 	}
 	else {

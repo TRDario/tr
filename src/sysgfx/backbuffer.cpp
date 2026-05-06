@@ -5,7 +5,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include "../../include/tr/sysgfx/backbuffer.hpp"
-#include "../../include/tr/sysgfx/gl_call.hpp"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/impl.hpp"
 #include <SDL3/SDL.h>
@@ -29,33 +28,33 @@ tr::gfx::render_target tr::gfx::backbuffer_render_target()
 void tr::gfx::clear_backbuffer(const tr::rgbaf& color)
 {
 	set_render_target(backbuffer_render_target());
-	TR_GL_CALL(glClearColor, color.r, color.g, color.b, color.a);
-	TR_GL_CALL(glClear, GL_COLOR_BUFFER_BIT);
+	glClearColor(color.r, color.g, color.b, color.a);
+	glClear(GL_COLOR_BUFFER_BIT);
 }
 
 void tr::gfx::clear_backbuffer(const tr::rgbaf& color, double depth, int stencil)
 {
 	set_render_target(backbuffer_render_target());
-	TR_GL_CALL(glClearColor, color.r, color.g, color.b, color.a);
-	TR_GL_CALL(glClearDepth, depth);
-	TR_GL_CALL(glClearStencil, stencil);
-	TR_GL_CALL(glClear, GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+	glClearColor(color.r, color.g, color.b, color.a);
+	glClearDepth(depth);
+	glClearStencil(stencil);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 }
 
 void tr::gfx::clear_backbuffer_region(const tr::irect2& rect, const tr::rgbaf& color)
 {
 	set_render_target(backbuffer_render_target().cropped(rect));
-	TR_GL_CALL(glClearColor, color.r, color.g, color.b, color.a);
-	TR_GL_CALL(glClear, GL_COLOR_BUFFER_BIT);
+	glClearColor(color.r, color.g, color.b, color.a);
+	glClear(GL_COLOR_BUFFER_BIT);
 }
 
 void tr::gfx::clear_backbuffer_region(const tr::irect2& rect, const tr::rgbaf& color, double depth, int stencil)
 {
 	set_render_target(backbuffer_render_target().cropped(rect));
-	TR_GL_CALL(glClearColor, color.r, color.g, color.b, color.a);
-	TR_GL_CALL(glClearDepth, depth);
-	TR_GL_CALL(glClearStencil, stencil);
-	TR_GL_CALL(glClear, GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+	glClearColor(color.r, color.g, color.b, color.a);
+	glClearDepth(depth);
+	glClearStencil(stencil);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 }
 
 void tr::gfx::flip_backbuffer()

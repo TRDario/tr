@@ -85,8 +85,6 @@ if(TR_BUILD_SYSGFX)
 	tr_generate_embeddable_string(resources/debug_renderer.frag resources/generated/debug_renderer_frag.hpp debug_renderer_frag)
 	tr_generate_embeddable_binary(resources/debug_font.bmp resources/generated/debug_renderer_font.hpp debug_renderer_font)
 	target_sources(tr PRIVATE
-		src/sysgfx/gl_call.cpp
-		src/sysgfx/glad.cpp
 		src/sysgfx/backbuffer.cpp
 		src/sysgfx/basic_renderer.cpp
 		src/sysgfx/basic_renderer_staggered_draw_manager.cpp
@@ -101,6 +99,8 @@ if(TR_BUILD_SYSGFX)
 		src/sysgfx/dialog.cpp
 		src/sysgfx/display.cpp
 		src/sysgfx/event.cpp
+		src/sysgfx/gl_functions.cpp
+		src/sysgfx/gl.cpp
 		src/sysgfx/graphics_context.cpp
 		src/sysgfx/impl.cpp
 		src/sysgfx/gpu_benchmark.cpp
