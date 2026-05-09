@@ -6,31 +6,46 @@
 
 #pragma once
 #include "../optional.hpp"
+#include "../reference.hpp"
 
 ///////////////////////////////////////////////////////////////// OPTIONAL ////////////////////////////////////////////////////////////////
 
+template <typename T> struct tr::add_optional {
+	using type = std::optional<T>;
+};
+template <typename T> struct tr::add_optional<T&> {
+	using type = opt_ref<T>;
+};
+template <typename T> struct tr::add_optional<T&&> {
+	using type = std::optional<T>;
+};
+
+//
+
 template <typename In, std::invocable<In&> Fn>
-constexpr std::optional<std::invoke_result_t<Fn, In&>> tr::transform(std::optional<In>& opt, Fn&& fn)
+constexpr tr::add_optional_t<std::invoke_result_t<Fn, In&>> tr::transform(std::optional<In>& opt, Fn&& fn)
 {
-	return opt.has_value() ? std::optional{std::invoke(std::forward<Fn>(fn), *opt)} : std::nullopt;
+	return opt.has_value() ? add_optional_t<std::invoke_result_t<Fn, In&>>{std::invoke(std::forward<Fn>(fn), *opt)} : std::nullopt;
 }
 
 template <typename In, std::invocable<const In&> Fn>
-constexpr std::optional<std::invoke_result_t<Fn, const In&>> tr::transform(const std::optional<In>& opt, Fn&& fn)
+constexpr tr::add_optional_t<std::invoke_result_t<Fn, const In&>> tr::transform(const std::optional<In>& opt, Fn&& fn)
 {
-	return opt.has_value() ? std::optional{std::invoke(std::forward<Fn>(fn), *opt)} : std::nullopt;
+	return opt.has_value() ? add_optional_t<std::invoke_result_t<Fn, const In&>>{std::invoke(std::forward<Fn>(fn), *opt)} : std::nullopt;
 }
 
 template <typename In, std::invocable<In> Fn>
-constexpr std::optional<std::invoke_result_t<Fn, In>> tr::transform(std::optional<In>&& opt, Fn&& fn)
+constexpr tr::add_optional_t<std::invoke_result_t<Fn, In>> tr::transform(std::optional<In>&& opt, Fn&& fn)
 {
-	return opt.has_value() ? std::optional{std::invoke(std::forward<Fn>(fn), std::move(*opt))} : std::nullopt;
+	return opt.has_value() ? add_optional_t<std::invoke_result_t<Fn, In>>{std::invoke(std::forward<Fn>(fn), std::move(*opt))}
+						   : std::nullopt;
 }
 
 template <typename In, std::invocable<const In> Fn>
-constexpr std::optional<std::invoke_result_t<Fn, const In>> tr::transform(const std::optional<In>&& opt, Fn&& fn)
+constexpr tr::add_optional_t<std::invoke_result_t<Fn, const In>> tr::transform(const std::optional<In>&& opt, Fn&& fn)
 {
-	return opt.has_value() ? std::optional{std::invoke(std::forward<Fn>(fn), std::move(*opt))} : std::nullopt;
+	return opt.has_value() ? add_optional_t<std::invoke_result_t<Fn, const In>>{std::invoke(std::forward<Fn>(fn), std::move(*opt))}
+						   : std::nullopt;
 }
 
 //

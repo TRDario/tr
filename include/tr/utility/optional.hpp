@@ -10,18 +10,23 @@
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
 namespace tr {
+	// Wraps a type with an optional layer and stores it in ::type.
+	template <typename T> struct add_optional;
+	// Wraps a type with an optional layer.
+	template <typename T> using add_optional_t = add_optional<T>::type;
+
 	// Equivalent to C++23 std::optional.transform().
 	template <typename In, std::invocable<In&> Fn>
-	constexpr std::optional<std::invoke_result_t<Fn, In&>> transform(std::optional<In>& opt, Fn&& fn);
+	constexpr add_optional_t<std::invoke_result_t<Fn, In&>> transform(std::optional<In>& opt, Fn&& fn);
 	// Equivalent to C++23 std::optional.transform().
 	template <typename In, std::invocable<const In&> Fn>
-	constexpr std::optional<std::invoke_result_t<Fn, const In&>> transform(const std::optional<In>& opt, Fn&& fn);
+	constexpr add_optional_t<std::invoke_result_t<Fn, const In&>> transform(const std::optional<In>& opt, Fn&& fn);
 	// Equivalent to C++23 std::optional.transform().
 	template <typename In, std::invocable<In> Fn>
-	constexpr std::optional<std::invoke_result_t<Fn, In>> transform(std::optional<In>&& opt, Fn&& fn);
+	constexpr add_optional_t<std::invoke_result_t<Fn, In>> transform(std::optional<In>&& opt, Fn&& fn);
 	// Equivalent to C++23 std::optional.transform().
 	template <typename In, std::invocable<const In> Fn>
-	constexpr std::optional<std::invoke_result_t<Fn, const In>> transform(const std::optional<In>&& opt, Fn&& fn);
+	constexpr add_optional_t<std::invoke_result_t<Fn, const In>> transform(const std::optional<In>&& opt, Fn&& fn);
 
 	// Equivalent to C++23 std::optional.and_then().
 	template <typename In, std::invocable<In&> Fn>
