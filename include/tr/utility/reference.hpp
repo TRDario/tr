@@ -32,6 +32,9 @@
 //     - int x{0}; int y{0}; tr::opt_ref xr{x}; tr::opt_ref yr{y}; xr == yr -> false                                                     //
 //     - tr::opt_ref o1; tr::opt_ref o2; o1 == o2 -> true                                                                                //
 //                                                                                                                                       //
+// tr::dynamic_ref_cast may be used to use dynamic_cast with references (base or provided here) in the same way as with pointers:        //
+//     - tr::ref<base> ref; tr::dynamic_ref_cast<derived>(ref) -> tr::opt_ref<derived>                                                   //
+//                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
@@ -51,6 +54,10 @@ namespace tr {
 		constexpr operator T&() const;
 		// Const-qualifies the reference.
 		constexpr operator ref<const T>() const;
+		// Converts the reference to a base class reference.
+		template <typename U>
+			requires(std::convertible_to<T&, U&>)
+		constexpr operator ref<U>() const;
 
 		// Returns whether two references point to the same object.
 		constexpr friend bool operator==(const ref&, const ref&) = default;
@@ -83,6 +90,10 @@ namespace tr {
 
 		// Const-qualifies the optional reference.
 		constexpr operator opt_ref<const T>() const;
+		// Converts the reference to a base class reference.
+		template <typename U>
+			requires(std::convertible_to<T&, U&>)
+		constexpr operator opt_ref<U>() const;
 
 		// Returns whether two optional references point to the same object (or both are empty).
 		constexpr friend bool operator==(const opt_ref&, const opt_ref&) = default;
@@ -108,6 +119,19 @@ namespace tr {
 	};
 	// Converts a pointer into an optional reference.
 	template <typename T> opt_ref<T> make_opt_ref(T* ptr);
+
+	// Performs a dynamic_cast on a reference that returns an optional reference.
+	template <typename To, typename From>
+		requires(std::derived_from<To, From>)
+	tr::opt_ref<To> dynamic_ref_cast(From& ref);
+	// Performs a dynamic_cast on a reference that returns an optional reference.
+	template <typename To, typename From>
+		requires(std::derived_from<To, From>)
+	tr::opt_ref<To> dynamic_ref_cast(ref<From>& ref);
+	// Performs a dynamic_cast on a reference that returns an optional reference.
+	template <typename To, typename From>
+		requires(std::derived_from<To, From>)
+	tr::opt_ref<To> dynamic_ref_cast(opt_ref<From>& ref);
 } // namespace tr
 
 #include "impl/reference.hpp" // IWYU pragma: export

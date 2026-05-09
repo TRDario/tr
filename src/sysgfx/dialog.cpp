@@ -6,6 +6,7 @@
 
 #include "../../include/tr/sysgfx/dialog.hpp"
 #include "../../include/tr/sysgfx/main.hpp"
+#include "../../include/tr/utility/reference.hpp"
 #include <SDL3/SDL.h>
 
 using namespace std::chrono_literals;
@@ -55,15 +56,15 @@ tr::sys::message_box_button tr::sys::show_message_box(message_box_type type, mes
 
 void tr::sys::show_fatal_error_message_box(const std::exception& exception)
 {
-	if (dynamic_cast<const std::bad_alloc*>(&exception) || dynamic_cast<const out_of_memory*>(&exception)) {
+	if (dynamic_ref_cast<const std::bad_alloc>(exception).has_ref() || dynamic_ref_cast<const out_of_memory>(exception).has_ref()) {
 		g_emergency_buffer.reset();
 	}
 
 	const std::string title{TR_FMT::format("{} - Fatal Error", main::metadata.name)};
 
-	const tr::exception* tr_exception{dynamic_cast<const tr::exception*>(&exception)};
+	tr::opt_ref<const tr::exception> tr_exception{dynamic_ref_cast<const tr::exception>(exception)};
 	std::string message;
-	if (tr_exception) {
+	if (tr_exception.has_ref()) {
 		message = TR_FMT::format("A fatal error has occurred ({}).", tr_exception->name());
 		const std::string_view description{tr_exception->description()};
 		if (!description.empty()) {
