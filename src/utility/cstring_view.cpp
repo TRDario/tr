@@ -59,7 +59,7 @@ bool tr::operator==(cstring_view l, const char* r)
 
 //
 
-inline std::ostream& tr::operator<<(std::ostream& os, const cstring_view& str)
+std::ostream& tr::operator<<(std::ostream& os, const cstring_view& str)
 {
 	return os << (const char*)str;
 }

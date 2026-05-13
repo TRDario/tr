@@ -56,6 +56,23 @@ constexpr bool tr::subset_castable_to(const InVariant& v)
 	return subset_castable_to_helper<OutVariant, InVariant>{}(v);
 }
 
+template <typename OutVariant, typename InVariant>
+	requires(tr::superset_of<OutVariant, std::remove_cvref_t<InVariant>>)
+constexpr OutVariant tr::superset_cast(InVariant&& v)
+{
+	return std::visit([](auto&& v) { return OutVariant{std::forward<decltype(v)>(v)}; }, v);
+}
+
+template <typename OutVariant, typename InVariant>
+	requires(tr::subset_of<OutVariant, std::remove_cvref_t<InVariant>>)
+constexpr OutVariant tr::subset_cast(InVariant&& v)
+{
+	return v | tr::match{
+				   []<in_variant<OutVariant> T>(T&& v) { return OutVariant{std::forward<T>(v)}; },
+				   [](auto&&) -> OutVariant { TR_UNREACHABLE; },
+			   };
+}
+
 ///////////////////////////////////////////////////////////////// INDICES /////////////////////////////////////////////////////////////////
 
 template <typename... Alternatives> struct tr::variant_indices<std::variant<Alternatives...>> {
