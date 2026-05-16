@@ -38,7 +38,7 @@
 //     - std::variant<int, char, float> v{5.0f}; tr::get<float>(v) -> 5.0f                                                               //
 //     - std::variant<int, std::string> v{"example"}; tr::get<std::string>(std::move(v)) -> rvalue reference to std::string{"example"}   //
 //                                                                                                                                       //
-// Wrappers over std::get_if that take and return references are provided through tr::get_if:                                            //
+// Wrappers over std::get_if that take and return optionals are provided through tr::get_if:                                             //
 //     - std::variant<int, char, float> v{5.0f}; tr::get_if<float>(v) -> 5.0f                                                            //
 //     - std::variant<int, char, float> v{5.0f}; tr::get_if<char>(v) -> std::nullopt                                                     //
 //                                                                                                                                       //
@@ -113,13 +113,12 @@ namespace tr {
 
 	// Wrapper over std::get_if.
 	template <typename Alternative, typename... Alternatives> opt_ref<Alternative> get_if(std::variant<Alternatives...>& v);
-	// Cannot get a reference to a temporary.
-	template <typename Alternative, typename... Alternatives> opt_ref<Alternative> get_if(std::variant<Alternatives...>&& v) = delete;
+	// Gets a value if the variant contains it.
+	template <typename Alternative, typename... Alternatives> std::optional<Alternative> get_if(std::variant<Alternatives...>&& v);
 	// Wrapper over std::get_if.
 	template <typename Alternative, typename... Alternatives> opt_ref<const Alternative> get_if(const std::variant<Alternatives...>& v);
-	// Cannot get a reference to a temporary.
-	template <typename Alternative, typename... Alternatives>
-	opt_ref<const Alternative> get_if(const std::variant<Alternatives...>&& v) = delete;
+	// Gets a value if the variant contains it.
+	template <typename Alternative, typename... Alternatives> std::optional<Alternative> get_if(const std::variant<Alternatives...>&& v);
 
 	// Match statement helper class.
 	template <typename... Functions> struct match : invoke_wrapper<Functions>... {

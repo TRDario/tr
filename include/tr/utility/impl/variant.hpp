@@ -116,9 +116,21 @@ template <typename Alternative, typename... Alternatives> tr::opt_ref<Alternativ
 	return make_opt_ref(std::get_if(&v));
 }
 
+template <typename Alternative, typename... Alternatives> std::optional<Alternative> tr::get_if(std::variant<Alternatives...>&& v)
+{
+	const tr::opt_ref<Alternative> ref{get_if<Alternative>(v)};
+	return ref.has_ref() ? std::make_optional<Alternative>(std::move(*ref)) : std::nullopt;
+}
+
 template <typename Alternative, typename... Alternatives> tr::opt_ref<const Alternative> tr::get_if(const std::variant<Alternatives...>& v)
 {
 	return make_opt_ref(std::get_if(&v));
+}
+
+template <typename Alternative, typename... Alternatives> std::optional<Alternative> tr::get_if(const std::variant<Alternatives...>&& v)
+{
+	const tr::opt_ref<const Alternative> ref{get_if<Alternative>(v)};
+	return ref.has_ref() ? std::make_optional<Alternative>(std::move(*ref)) : std::nullopt;
 }
 
 ////////////////////////////////////////////////////////////////// MATCH //////////////////////////////////////////////////////////////////
