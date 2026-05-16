@@ -38,6 +38,10 @@
 //     - std::variant<int, char, float> v{5.0f}; tr::get<float>(v) -> 5.0f                                                               //
 //     - std::variant<int, std::string> v{"example"}; tr::get<std::string>(std::move(v)) -> rvalue reference to std::string{"example"}   //
 //                                                                                                                                       //
+// Wrappers over std::get_if that take and return references are provided through tr::get_if:                                            //
+//     - std::variant<int, char, float> v{5.0f}; tr::get_if<float>(v) -> 5.0f                                                            //
+//     - std::variant<int, char, float> v{5.0f}; tr::get_if<char>(v) -> std::nullopt                                                     //
+//                                                                                                                                       //
 // Stateless and stateful match classes are provided to support pseudo-match statement syntax. Lambdas passed to the stateful match must //
 // take the state (by value or lvalue reference) as the first parameter. tr::ignore_other_cases or tr::default_result may be used for    //
 // default handling of cases that aren't important:                                                                                      //
@@ -109,8 +113,13 @@ namespace tr {
 
 	// Wrapper over std::get_if.
 	template <typename Alternative, typename... Alternatives> opt_ref<Alternative> get_if(std::variant<Alternatives...>& v);
+	// Cannot get a reference to a temporary.
+	template <typename Alternative, typename... Alternatives> opt_ref<Alternative> get_if(std::variant<Alternatives...>&& v) = delete;
 	// Wrapper over std::get_if.
 	template <typename Alternative, typename... Alternatives> opt_ref<const Alternative> get_if(const std::variant<Alternatives...>& v);
+	// Cannot get a reference to a temporary.
+	template <typename Alternative, typename... Alternatives>
+	opt_ref<const Alternative> get_if(const std::variant<Alternatives...>&& v) = delete;
 
 	// Match statement helper class.
 	template <typename... Functions> struct match : invoke_wrapper<Functions>... {
