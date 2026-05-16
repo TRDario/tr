@@ -59,6 +59,7 @@
 
 #pragma once
 #include "concepts.hpp"
+#include "reference.hpp"
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
@@ -105,6 +106,11 @@ namespace tr {
 	template <typename Alternative, typename... Alternatives> const Alternative& get(const std::variant<Alternatives...>& v);
 	// Unchecked variant getter.
 	template <typename Alternative, typename... Alternatives> const Alternative&& get(const std::variant<Alternatives...>&& v);
+
+	// Wrapper over std::get_if.
+	template <typename Alternative, typename... Alternatives> opt_ref<Alternative> get_if(std::variant<Alternatives...>& v);
+	// Wrapper over std::get_if.
+	template <typename Alternative, typename... Alternatives> opt_ref<const Alternative> get_if(const std::variant<Alternatives...>& v);
 
 	// Match statement helper class.
 	template <typename... Functions> struct match : invoke_wrapper<Functions>... {

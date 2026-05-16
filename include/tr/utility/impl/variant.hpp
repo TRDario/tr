@@ -109,6 +109,18 @@ template <typename Alternative, typename... Alternatives> const Alternative&& tr
 	return std::move(*std::get_if<Alternative>(&v));
 }
 
+//
+
+template <typename Alternative, typename... Alternatives> tr::opt_ref<Alternative> tr::get_if(std::variant<Alternatives...>& v)
+{
+	return make_opt_ref(std::get_if(&v));
+}
+
+template <typename Alternative, typename... Alternatives> tr::opt_ref<const Alternative> tr::get_if(const std::variant<Alternatives...>& v)
+{
+	return make_opt_ref(std::get_if(&v));
+}
+
 ////////////////////////////////////////////////////////////////// MATCH //////////////////////////////////////////////////////////////////
 
 namespace tr {
