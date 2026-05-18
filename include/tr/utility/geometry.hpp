@@ -151,11 +151,17 @@ namespace tr {
 		constexpr edges(Element left, Element top, Element right);
 		// Constructs a set of edges width left = right.
 		constexpr edges(Element left, Element top, Element right, Element bottom);
+
+		template <typename ElementR> constexpr bool operator==(const edges<ElementR>&) const;
 	};
 	// Shorthard for int edges.
 	using iedges = edges<int>;
 	// Shorthand for float edges.
 	using fedges = edges<float>;
+	// Edges binary reader.
+	template <typename Element> struct binary_reader<edges<Element>> : raw_binary_reader<edges<Element>> {};
+	// Edges binary writer.
+	template <typename Element> struct binary_writer<edges<Element>> : raw_binary_writer<edges<Element>> {};
 
 	// Rectangle object.
 	template <int Dimensions, typename Element> struct rect {

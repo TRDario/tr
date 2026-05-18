@@ -57,6 +57,11 @@ constexpr tr::edges<Element>::edges(Element top, Element right, Element bottom, 
 {
 }
 
+template <typename Element> template <typename ElementR> constexpr bool tr::edges<Element>::operator==(const edges<ElementR>& r) const
+{
+	return left == r.left && top == r.top && right == r.right && bottom == r.bottom;
+}
+
 /////////////////////////////////////////////////////////////////// RECT //////////////////////////////////////////////////////////////////
 
 template <int Dimensions, typename Element>
