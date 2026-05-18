@@ -9,12 +9,22 @@
 //                                                                                                                                       //
 // A winding order enumerator is provided (with values cw and ccw).                                                                      //
 //                                                                                                                                       //
+// A set of 2D edges is provided as tr::edges<T> (a few shorthands are also provided in the form tr::Tedges). Edges are binary readable  //
+// and writable. Edges are constructed like in CSS, but in the order (left, top, right, bottom):                                         //
+//     - tr::fedges{} -> {.left = 0, .top = 0, .right = 0, .bottom = 0}                                                                  //
+//     - tr::fedges{50} -> {.left = 50, .top = 50, .right = 50, .bottom = 50}                                                            //
+//     - tr::fedges{50, 100} -> {.left = 50, .top = 100, .right = 50, .bottom = 100}                                                     //
+//     - tr::fedges{50, 100, 150} -> {.left = 50, .top = 100, .right = 150, .bottom = 100}                                               //
+//     - tr::fedges{50, 100, 150, 200} -> {.left = 50, .top = 100, .right = 150, .bottom = 200}                                          //
+//                                                                                                                                       //
 // An N-dimensional axis-aligned rectangle structure is provided as tr::rect<S, T> (a few shorthands are also provided in the form       //
-// tr::TrectX). Rects are binary readable and writable and can be checked for intersections and whether a point is contained within them://
+// tr::TrectX). Rects are binary readable and writable and can be checked for intersections, whether a point is contained within them,   //
+// and for their edges:                                                                                                                  //
 //     - tr::frect2 rect{} -> {.tl{0, 0}, .size{0, 0}}                                                                                   //
 //     - tr::frect2 rect{glm::vec2{500, 500}} -> {.tl{0, 0}, .size{500, 500}}                                                            //
 //     - tr::frect2 rect{{100, 100}, {100, 100}} -> {.tl{100, 100}, .size{100, 100}}                                                     //
 //     - tr::frect2{{100, 100}, {100, 100}}.contains({150, 150}) -> true                                                                 //
+//     - tr::frect2{{100, 100}, {100, 100}}.edges() -> {.left = 100, .top = 100, .right = 200, .bottom = 200}                            //
 //     - tr::intersecting(tr::frect2{{100, 100}, {100, 100}}, tr::frect2{{50, 125}, {400, 50}}) -> true                                  //
 //     - tr::intersection(tr::frect2{{100, 100}, {100, 100}}, tr::frect2{{50, 125}, {400, 50}}) -> tr::frec2{{100, 125}, {100, 50}}      //
 //                                                                                                                                       //
@@ -120,6 +130,33 @@ namespace tr {
 		ccw // Counter-clockwise winding order.
 	};
 
+	// 2D edges.
+	template <typename Element> struct edges {
+		// Left edge value.
+		Element left{0};
+		// Top edge value.
+		Element top{0};
+		// Right edge value.
+		Element right{0};
+		// Bottom edge value.
+		Element bottom{0};
+
+		// Constructs a set of edges with value 0.
+		constexpr edges() = default;
+		// Constructs a set of edges with the same value.
+		constexpr edges(Element left);
+		// Constructs a set of edges with top = bottom, left = right.
+		constexpr edges(Element left, Element top);
+		// Constructs a set of edges width left = right.
+		constexpr edges(Element left, Element top, Element right);
+		// Constructs a set of edges width left = right.
+		constexpr edges(Element left, Element top, Element right, Element bottom);
+	};
+	// Shorthard for int edges.
+	using iedges = edges<int>;
+	// Shorthand for float edges.
+	using fedges = edges<float>;
+
 	// Rectangle object.
 	template <int Dimensions, typename Element> struct rect {
 		// The offset of the top-left corner of the rect.
@@ -142,6 +179,10 @@ namespace tr {
 		template <typename ElementR> constexpr bool contains(glm::vec<Dimensions, ElementR> point) const;
 		// Determines whether another rect is contained entirely inside the rect.
 		template <typename ElementR> constexpr bool contains(const rect<Dimensions, ElementR>& rect) const;
+
+		// Gets the edges of the rect.
+		constexpr edges<Element> edges() const
+			requires(Dimensions == 2);
 	};
 	// 2D rectangle.
 	template <typename Element> using rect2 = rect<2, Element>;

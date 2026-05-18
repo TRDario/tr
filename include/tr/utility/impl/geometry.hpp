@@ -31,6 +31,32 @@ constexpr tr::align tr::operator|(const halign& halign, const valign& valign)
 	return align(int(halign) + int(valign));
 }
 
+////////////////////////////////////////////////////////////////// EDGES //////////////////////////////////////////////////////////////////
+
+template <typename Element>
+constexpr tr::edges<Element>::edges(Element left)
+	: top{left}, right{left}, bottom{left}, left{left}
+{
+}
+
+template <typename Element>
+constexpr tr::edges<Element>::edges(Element left, Element top)
+	: left{left}, top{top}, right{left}, bottom{top}
+{
+}
+
+template <typename Element>
+constexpr tr::edges<Element>::edges(Element left, Element top, Element right)
+	: left{left}, top{top}, right{right}, bottom{top}
+{
+}
+
+template <typename Element>
+constexpr tr::edges<Element>::edges(Element top, Element right, Element bottom, Element left)
+	: left{left}, top{top}, right{right}, bottom{bottom}
+{
+}
+
 /////////////////////////////////////////////////////////////////// RECT //////////////////////////////////////////////////////////////////
 
 template <int Dimensions, typename Element>
@@ -76,6 +102,13 @@ template <typename ElementR>
 constexpr bool tr::rect<Dimensions, Element>::contains(const rect<Dimensions, ElementR>& rect) const
 {
 	return contains(rect.tl) && contains(rect.tl + rect.size);
+}
+
+template <int Dimensions, typename Element>
+constexpr tr::edges<Element> tr::rect<Dimensions, Element>::edges() const
+	requires(Dimensions == 2)
+{
+	return {tl.x, tl.y, tl.x + size.x, tl.y + size.y};
 }
 
 template <typename ElementL, typename ElementR> constexpr bool tr::intersecting(const rect2<ElementL>& r1, const rect2<ElementR>& r2)
