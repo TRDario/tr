@@ -132,14 +132,14 @@ tr::opt_ref<To> tr::dynamic_ref_cast(From& ref)
 
 template <typename To, typename From>
 	requires(std::derived_from<To, From>)
-tr::opt_ref<To> tr::dynamic_ref_cast(ref<From>& ref)
+tr::opt_ref<To> tr::dynamic_ref_cast(ref<From> ref)
 {
 	return make_opt_ref(dynamic_cast<To*>(ref.as_ptr()));
 }
 
 template <typename To, typename From>
 	requires(std::derived_from<To, From>)
-tr::opt_ref<To> tr::dynamic_ref_cast(opt_ref<From>& ref)
+tr::opt_ref<To> tr::dynamic_ref_cast(opt_ref<From> ref)
 {
 	return make_opt_ref(dynamic_cast<To*>(ref.as_ptr()));
 }

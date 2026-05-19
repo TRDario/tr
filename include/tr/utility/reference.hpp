@@ -127,11 +127,11 @@ namespace tr {
 	// Performs a dynamic_cast on a reference that returns an optional reference.
 	template <typename To, typename From>
 		requires(std::derived_from<To, From>)
-	tr::opt_ref<To> dynamic_ref_cast(ref<From>& ref);
+	tr::opt_ref<To> dynamic_ref_cast(ref<From> ref);
 	// Performs a dynamic_cast on a reference that returns an optional reference.
 	template <typename To, typename From>
 		requires(std::derived_from<To, From>)
-	tr::opt_ref<To> dynamic_ref_cast(opt_ref<From>& ref);
+	tr::opt_ref<To> dynamic_ref_cast(opt_ref<From> ref);
 } // namespace tr
 
 #include "impl/reference.hpp" // IWYU pragma: export
