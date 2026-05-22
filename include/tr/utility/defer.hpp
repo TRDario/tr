@@ -15,10 +15,10 @@ namespace tr {
 	// RAII deferred function call.
 	template <std::invocable Fn> class defer {
 	  public:
-		// Consturcts a deferred function call.
-		defer(Fn&& fn);
+		// Constructs a deferred function call.
+		constexpr defer(Fn&& fn);
 		// Calls the deferred function.
-		~defer();
+		constexpr ~defer();
 
 	  private:
 		// The deferred function.

@@ -115,23 +115,23 @@ namespace tr {
 		// Wraps a pointer.
 		constexpr explicit opt_ref(T* ptr);
 
-		template <typename U> friend opt_ref<U> make_opt_ref(U* ptr);
+		template <typename U> friend constexpr opt_ref<U> make_opt_ref(U* ptr);
 	};
 	// Converts a pointer into an optional reference.
-	template <typename T> opt_ref<T> make_opt_ref(T* ptr);
+	template <typename T> constexpr opt_ref<T> make_opt_ref(T* ptr);
 
 	// Performs a dynamic_cast on a reference that returns an optional reference.
 	template <typename To, typename From>
 		requires(std::derived_from<To, From>)
-	tr::opt_ref<To> dynamic_ref_cast(From& ref);
+	constexpr tr::opt_ref<To> dynamic_ref_cast(From& ref);
 	// Performs a dynamic_cast on a reference that returns an optional reference.
 	template <typename To, typename From>
 		requires(std::derived_from<To, From>)
-	tr::opt_ref<To> dynamic_ref_cast(ref<From> ref);
+	constexpr tr::opt_ref<To> dynamic_ref_cast(ref<From> ref);
 	// Performs a dynamic_cast on a reference that returns an optional reference.
 	template <typename To, typename From>
 		requires(std::derived_from<To, From>)
-	tr::opt_ref<To> dynamic_ref_cast(opt_ref<From> ref);
+	constexpr tr::opt_ref<To> dynamic_ref_cast(opt_ref<From> ref);
 } // namespace tr
 
 #include "impl/reference.hpp" // IWYU pragma: export

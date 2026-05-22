@@ -10,12 +10,12 @@
 ////////////////////////////////////////////////////////////////// DEFER //////////////////////////////////////////////////////////////////
 
 template <std::invocable Fn>
-tr::defer<Fn>::defer(Fn&& fn)
+constexpr tr::defer<Fn>::defer(Fn&& fn)
 	: m_fn{std::move(fn)}
 {
 }
 
-template <std::invocable Fn> tr::defer<Fn>::~defer<Fn>()
+template <std::invocable Fn> constexpr tr::defer<Fn>::~defer<Fn>()
 {
 	m_fn();
 }
