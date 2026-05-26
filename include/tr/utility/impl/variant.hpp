@@ -141,8 +141,8 @@ namespace tr {
 } // namespace tr
 
 template <typename... Functions>
-constexpr tr::match<Functions...>::match(Functions... fns)
-	: invoke_wrapper<Functions>{std::move(fns)}...
+constexpr tr::match<Functions...>::match(Functions&&... fns)
+	: tr::wrapped_invocable_t<Functions>{wrap_invocable(std::forward<Functions>(fns))}...
 {
 }
 
@@ -153,8 +153,8 @@ constexpr decltype(auto) tr::operator|(Variant&& v, Match&& m)
 }
 
 template <typename State, typename... Functions>
-constexpr tr::stateful_match<State, Functions...>::stateful_match(State&& state, Functions... fns)
-	: tr::match<Functions...>{std::move(fns)...}, m_state{std::forward<State>(state)}
+constexpr tr::stateful_match<State, Functions...>::stateful_match(State&& state, Functions&&... fns)
+	: tr::match<Functions...>{std::forward<Functions>(fns)...}, m_state{std::forward<State>(state)}
 {
 }
 

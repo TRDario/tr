@@ -149,79 +149,105 @@ struct tr::function_traits<Return (Class::*)(Args...) && noexcept> : function_tr
 template <typename Return, typename Class, typename... Args>
 struct tr::function_traits<Return (Class::*)(Args...) const && noexcept> : function_traits<Return (Class::*)(Args...)> {};
 
-template <typename Function> struct tr::invoke_wrapper : Function {
-	using Function::operator();
+template <typename Function> struct tr::wrapped_invocable {
+	using type = std::remove_cvref_t<Function>;
 };
-template <typename Return, typename... Args> struct tr::invoke_wrapper<Return(Args...)> {
-	Return (*ptr)(Args...);
+template <typename Return, typename... Args> struct tr::wrapped_invocable<Return(Args...)> {
+	struct type {
+		Return (*ptr)(Args...);
 
-	constexpr Return operator()(Args... args) const
-	{
-		return ptr(std::forward<Args>(args)...);
-	}
+		constexpr Return operator()(Args... args) const
+		{
+			return ptr(std::forward<Args>(args)...);
+		}
+	};
 };
-template <typename Class, typename Return, typename... Args> struct tr::invoke_wrapper<Return (Class::*)(Args...)> {
-	Return (Class::*ptr)(Args...);
+template <typename Class, typename Return, typename... Args> struct tr::wrapped_invocable<Return (Class::*)(Args...)> {
+	struct type {
+		Return (Class::*ptr)(Args...);
 
-	constexpr Return operator()(Class& object, Args... args) const
-	{
-		return (object.*ptr)(std::forward<Args>(args)...);
-	}
+		constexpr Return operator()(Class& object, Args... args) const
+		{
+			return (object.*ptr)(std::forward<Args>(args)...);
+		}
+	};
 };
-template <typename Class, typename Return, typename... Args> struct tr::invoke_wrapper<Return (Class::*)(Args...) const> {
-	Return (Class::*ptr)(Args...) const;
+template <typename Class, typename Return, typename... Args> struct tr::wrapped_invocable<Return (Class::*)(Args...) const> {
+	struct type {
+		Return (Class::*ptr)(Args...) const;
 
-	constexpr Return operator()(const Class& object, Args... args) const
-	{
-		return (object.*ptr)(std::forward<Args>(args)...);
-	}
+		constexpr Return operator()(const Class& object, Args... args) const
+		{
+			return (object.*ptr)(std::forward<Args>(args)...);
+		}
+	};
 };
-template <typename Class, typename Return, typename... Args> struct tr::invoke_wrapper<Return (Class::*)(Args...) &> {
-	Return (Class::*ptr)(Args...) &;
+template <typename Class, typename Return, typename... Args> struct tr::wrapped_invocable<Return (Class::*)(Args...) &> {
+	struct type {
+		Return (Class::*ptr)(Args...) &;
 
-	constexpr Return operator()(Class& object, Args... args) const
-	{
-		return (object.*ptr)(std::forward<Args>(args)...);
-	}
+		constexpr Return operator()(Class& object, Args... args) const
+		{
+			return (object.*ptr)(std::forward<Args>(args)...);
+		}
+	};
 };
-template <typename Class, typename Return, typename... Args> struct tr::invoke_wrapper<Return (Class::*)(Args...) const&> {
-	Return (Class::*ptr)(Args...) const&;
+template <typename Class, typename Return, typename... Args> struct tr::wrapped_invocable<Return (Class::*)(Args...) const&> {
+	struct type {
+		Return (Class::*ptr)(Args...) const&;
 
-	constexpr Return operator()(const Class& object, Args... args) const
-	{
-		return (object.*ptr)(std::forward<Args>(args)...);
-	}
+		constexpr Return operator()(const Class& object, Args... args) const
+		{
+			return (object.*ptr)(std::forward<Args>(args)...);
+		}
+	};
 };
-template <typename Class, typename Return, typename... Args> struct tr::invoke_wrapper<Return (Class::*)(Args...) &&> {
-	Return (Class::*ptr)(Args...) &&;
+template <typename Class, typename Return, typename... Args> struct tr::wrapped_invocable<Return (Class::*)(Args...) &&> {
+	struct type {
+		Return (Class::*ptr)(Args...) &&;
 
-	constexpr Return operator()(Class&& object, Args... args) const
-	{
-		return (object.*ptr)(std::forward<Args>(args)...);
-	}
+		constexpr Return operator()(Class&& object, Args... args) const
+		{
+			return (object.*ptr)(std::forward<Args>(args)...);
+		}
+	};
 };
-template <typename Class, typename Return, typename... Args> struct tr::invoke_wrapper<Return (Class::*)(Args...) const&&> {
-	Return (Class::*ptr)(Args...) const&&;
+template <typename Class, typename Return, typename... Args> struct tr::wrapped_invocable<Return (Class::*)(Args...) const&&> {
+	struct type {
+		Return (Class::*ptr)(Args...) const&&;
 
-	constexpr Return operator()(const Class&& object, Args... args) const
-	{
-		return (object.*ptr)(std::forward<Args>(args)...);
-	}
+		constexpr Return operator()(const Class&& object, Args... args) const
+		{
+			return (object.*ptr)(std::forward<Args>(args)...);
+		}
+	};
 };
-template <typename Return, typename... Args> struct tr::invoke_wrapper<Return (*)(Args...)> : invoke_wrapper<Return(Args...)> {};
-template <typename Return, typename... Args> struct tr::invoke_wrapper<Return (&)(Args...)> : invoke_wrapper<Return(Args...)> {};
-template <typename Return, typename... Args> struct tr::invoke_wrapper<Return(Args...) noexcept> : invoke_wrapper<Return(Args...)> {};
-template <typename Return, typename... Args> struct tr::invoke_wrapper<Return (*)(Args...) noexcept> : invoke_wrapper<Return(Args...)> {};
-template <typename Return, typename... Args> struct tr::invoke_wrapper<Return (&)(Args...) noexcept> : invoke_wrapper<Return(Args...)> {};
+template <typename Return, typename... Args> struct tr::wrapped_invocable<Return (*)(Args...)> : wrapped_invocable<Return(Args...)> {};
+template <typename Return, typename... Args> struct tr::wrapped_invocable<Return (&)(Args...)> : wrapped_invocable<Return(Args...)> {};
+template <typename Return, typename... Args> struct tr::wrapped_invocable<Return(Args...) noexcept> : wrapped_invocable<Return(Args...)> {};
+template <typename Return, typename... Args>
+struct tr::wrapped_invocable<Return (*)(Args...) noexcept> : wrapped_invocable<Return(Args...)> {};
+template <typename Return, typename... Args>
+struct tr::wrapped_invocable<Return (&)(Args...) noexcept> : wrapped_invocable<Return(Args...)> {};
 template <typename Class, typename Return, typename... Args>
-struct tr::invoke_wrapper<Return (Class::*)(Args...) noexcept> : invoke_wrapper<Return (Class::*)(Args...)> {};
+struct tr::wrapped_invocable<Return (Class::*)(Args...) noexcept> : wrapped_invocable<Return (Class::*)(Args...)> {};
 template <typename Class, typename Return, typename... Args>
-struct tr::invoke_wrapper<Return (Class::*)(Args...) const noexcept> : invoke_wrapper<Return (Class::*)(Args...) const> {};
+struct tr::wrapped_invocable<Return (Class::*)(Args...) const noexcept> : wrapped_invocable<Return (Class::*)(Args...) const> {};
 template <typename Class, typename Return, typename... Args>
-struct tr::invoke_wrapper<Return (Class::*)(Args...) & noexcept> : invoke_wrapper<Return (Class::*)(Args...) &> {};
+struct tr::wrapped_invocable<Return (Class::*)(Args...) & noexcept> : wrapped_invocable<Return (Class::*)(Args...) &> {};
 template <typename Class, typename Return, typename... Args>
-struct tr::invoke_wrapper<Return (Class::*)(Args...) const & noexcept> : invoke_wrapper<Return (Class::*)(Args...) const&> {};
+struct tr::wrapped_invocable<Return (Class::*)(Args...) const & noexcept> : wrapped_invocable<Return (Class::*)(Args...) const&> {};
 template <typename Class, typename Return, typename... Args>
-struct tr::invoke_wrapper<Return (Class::*)(Args...) && noexcept> : invoke_wrapper<Return (Class::*)(Args...) &&> {};
+struct tr::wrapped_invocable<Return (Class::*)(Args...) && noexcept> : wrapped_invocable<Return (Class::*)(Args...) &&> {};
 template <typename Class, typename Return, typename... Args>
-struct tr::invoke_wrapper<Return (Class::*)(Args...) const && noexcept> : invoke_wrapper<Return (Class::*)(Args...) const&&> {};
+struct tr::wrapped_invocable<Return (Class::*)(Args...) const && noexcept> : wrapped_invocable<Return (Class::*)(Args...) const&&> {};
+
+template <typename Function> decltype(auto) constexpr tr::wrap_invocable(Function&& fn)
+{
+	if constexpr (std::same_as<std::remove_cvref_t<Function>, wrapped_invocable_t<Function>>) {
+		return std::forward<Function>(fn);
+	}
+	else {
+		return wrapped_invocable_t<Function>{fn};
+	}
+}

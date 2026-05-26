@@ -121,11 +121,11 @@ namespace tr {
 	template <typename Alternative, typename... Alternatives> std::optional<Alternative> get_if(const std::variant<Alternatives...>&& v);
 
 	// Match statement helper class.
-	template <typename... Functions> struct match : invoke_wrapper<Functions>... {
+	template <typename... Functions> struct match : wrapped_invocable_t<Functions>... {
 		// Constructs a match statement.
-		constexpr match(Functions... fns);
+		constexpr match(Functions&&... fns);
 
-		using invoke_wrapper<Functions>::operator()...;
+		using wrapped_invocable_t<Functions>::operator()...;
 	};
 	// Match statement.
 	template <cvref_specialization_of<std::variant> Variant, cvref_specialization_of<match> Match>
@@ -135,7 +135,7 @@ namespace tr {
 	template <typename State, typename... Functions> class stateful_match : match<Functions...> {
 	  public:
 		// Constructs a stateful match statement.
-		constexpr stateful_match(State&& state, Functions... fns);
+		constexpr stateful_match(State&& state, Functions&&... fns);
 
 		// Calls one of the underlying callables.
 		template <typename... Args> constexpr decltype(auto) operator()(Args&&... args);

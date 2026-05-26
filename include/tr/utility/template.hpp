@@ -40,7 +40,7 @@
 //     - tr::args_tuple_t<int(int, float)> -> std::tuple<int, float>                                                                     //
 //     - tr::nth_arg_t<1, int(int, float)> -> float                                                                                      //
 //                                                                                                                                       //
-// tr::invoke_wrapper wraps invocable objects to provide a uniform interface.                                                            //
+// tr::wrapped_invocable_t and tr::wrap_invocable wrap invocable objects to provide a uniform interface. //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -106,8 +106,12 @@ namespace tr {
 	// Gets the type of the N-th argument to a function.
 	template <usize N, typename Function> using nth_arg_type_t = function_traits<Function>::template nth_arg_type<N>;
 
-	// Wraps invocables.
-	template <typename Function> struct invoke_wrapper;
+	// Wraps an invocable to use a uniform syntax and stores it in ::type.
+	template <typename Function> struct wrapped_invocable;
+	// Wraps an invocable to use a uniform syntax.
+	template <typename Function> using wrapped_invocable_t = wrapped_invocable<Function>::type;
+	// Wraps an invocable to use a uniform syntax.
+	template <typename Function> constexpr decltype(auto) wrap_invocable(Function&& fn);
 } // namespace tr
 
 #include "impl/template.hpp" // IWYU pragma: export
