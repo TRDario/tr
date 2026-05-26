@@ -136,8 +136,8 @@ template <typename Alternative, typename... Alternatives> std::optional<Alternat
 ////////////////////////////////////////////////////////////////// MATCH //////////////////////////////////////////////////////////////////
 
 namespace tr {
-	template <typename... Functions> match(Functions...) -> match<Functions...>;
-	template <typename State, typename... Functions> stateful_match(State&&, Functions...) -> stateful_match<State, Functions...>;
+	template <typename... Functions> match(Functions&&...) -> match<Functions...>;
+	template <typename State, typename... Functions> stateful_match(State&&, Functions&&...) -> stateful_match<State, Functions...>;
 } // namespace tr
 
 template <typename... Functions>
