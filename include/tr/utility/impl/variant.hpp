@@ -175,5 +175,5 @@ constexpr decltype(auto) tr::operator|(Variant&& v, Match&& m)
 
 template <typename Value> constexpr auto tr::default_result(Value&& value)
 {
-	return [v = std::move(value)](auto&&...) { return std::move(v); };
+	return [v = std::move(value)](auto&&...) mutable -> Value { return std::move(v); };
 }
