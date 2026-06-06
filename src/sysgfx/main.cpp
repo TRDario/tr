@@ -86,6 +86,8 @@ extern "C"
 			TR_LOG_CONTINUE(tr::log, "{}", SDL_GetError());
 			return SDL_APP_FAILURE;
 		};
+		atexit(SDL_Quit);
+		atexit(TTF_Quit);
 		TR_LOG(tr::log, tr::severity::INFO, "Initialized SDL3.");
 		TR_LOG_CONTINUE(tr::log, "Platform: {}", SDL_GetPlatform());
 		TR_LOG_CONTINUE(tr::log, "CPU cores: {}", SDL_GetNumLogicalCPUCores());
@@ -140,7 +142,5 @@ extern "C"
 		tr::sys::g_cursor_reset_timer.reset();
 #endif
 		tr::sys::g_tick_timer.reset();
-		TTF_Quit();
-		SDL_Quit();
 	}
 }
