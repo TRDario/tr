@@ -34,11 +34,6 @@ constexpr tr::ref<T>::operator ref<U>() const
 	return tr::ref<U>{(U&)(T&)*this};
 }
 
-template <typename T> constexpr bool tr::operator==(const T& l, const ref<T>& r)
-{
-	return ref{l} == r;
-}
-
 template <typename T> constexpr bool tr::operator==(const ref<T>& l, const T& r)
 {
 	return l == ref{r};
@@ -90,6 +85,11 @@ template <typename U>
 constexpr tr::opt_ref<T>::operator opt_ref<U>() const
 {
 	return make_opt_ref((U*)as_ptr());
+}
+
+template <typename T> constexpr bool tr::operator==(opt_ref<T> l, const std::type_identity_t<T>& r)
+{
+	return l.as_ptr() == &r;
 }
 
 template <typename T> constexpr bool tr::opt_ref<T>::has_ref() const

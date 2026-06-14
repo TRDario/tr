@@ -1,3 +1,9 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Tests utility/binary_io.hpp.                                                                                                          //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #include <gtest/gtest.h>
 #include <tr/utility/binary_io.hpp>
 #include <tr/utility/rng.hpp>
@@ -6,7 +12,7 @@
 	do {                                                                                                                                   \
 		const auto value{expr};                                                                                                            \
 		tr::write_binary(ios, value);                                                                                                      \
-		ASSERT_EQ(tr::read_binary<decltype(expr)>(ios), value);                                                                            \
+		EXPECT_EQ(tr::read_binary<decltype(expr)>(ios), value);                                                                            \
 	} while (0)
 
 TEST(binary_io_test, magic)
@@ -14,7 +20,7 @@ TEST(binary_io_test, magic)
 	std::stringstream ios;
 
 	tr::write_binary_magic(ios, "tr");
-	ASSERT_TRUE(tr::read_binary_magic(ios, "tr"));
+	EXPECT_TRUE(tr::read_binary_magic(ios, "tr"));
 }
 
 TEST(binary_io_test, primitives)
@@ -47,10 +53,10 @@ TEST(binary_io_test, strings)
 	std::string_view strview{"test3"};
 	std::string str{"test4"};
 	tr::write_binary(ios, cstr1, cstr2, strview, str);
-	ASSERT_EQ(tr::read_binary<std::string>(ios), cstr1);
-	ASSERT_EQ(tr::read_binary<std::string>(ios), cstr2);
-	ASSERT_EQ(tr::read_binary<std::string>(ios), strview);
-	ASSERT_EQ(tr::read_binary<std::string>(ios), str);
+	EXPECT_EQ(tr::read_binary<std::string>(ios), cstr1);
+	EXPECT_EQ(tr::read_binary<std::string>(ios), cstr2);
+	EXPECT_EQ(tr::read_binary<std::string>(ios), strview);
+	EXPECT_EQ(tr::read_binary<std::string>(ios), str);
 }
 
 TEST(binary_io_test, containers)

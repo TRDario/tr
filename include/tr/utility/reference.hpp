@@ -59,8 +59,8 @@ namespace tr {
 			requires(std::convertible_to<T&, U&>)
 		constexpr operator ref<U>() const;
 
-		// Returns whether two references point to the same object.
-		constexpr friend bool operator==(const ref&, const ref&) = default;
+		// Compares whether two references point to the same object.
+		constexpr friend bool operator==(ref, ref) = default;
 
 		// Converts the reference into a pointer to the referenced object.
 		constexpr T* as_ptr() const;
@@ -73,7 +73,7 @@ namespace tr {
 		// Pointer to the referenced object.
 		T* m_base;
 	};
-	template <typename T> constexpr bool operator==(const T& l, const ref<T>& r);
+	// Compares whether two references point to the same object.
 	template <typename T> constexpr bool operator==(const ref<T>& l, const T& r);
 
 	// Wrapper over a pointer representing optional reference semantics.
@@ -95,8 +95,8 @@ namespace tr {
 			requires(std::convertible_to<T&, U&>)
 		constexpr operator opt_ref<U>() const;
 
-		// Returns whether two optional references point to the same object (or both are empty).
-		constexpr friend bool operator==(const opt_ref&, const opt_ref&) = default;
+		// Compares whether two references point to the same object (or both are empty).
+		constexpr friend bool operator==(opt_ref, opt_ref) = default;
 
 		// Returns whether the optional reference holds a reference to an object.
 		constexpr bool has_ref() const;
@@ -119,6 +119,9 @@ namespace tr {
 	};
 	// Converts a pointer into an optional reference.
 	template <typename T> constexpr opt_ref<T> make_opt_ref(T* ptr);
+
+	// Returns whether two optional references point to the same object (or both are empty).
+	template <typename T> constexpr bool operator==(opt_ref<T> l, const std::type_identity_t<T>& r);
 
 	// Performs a dynamic_cast on a reference that returns an optional reference.
 	template <typename To, typename From>

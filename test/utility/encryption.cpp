@@ -19,5 +19,5 @@ TEST(encryption_test, round_trip)
 	std::vector<std::byte> encrypted{tr::encrypt(data)};
 	const std::vector<std::byte> decrypted{tr::decrypt(std::move(encrypted))};
 	const std::array<double, 1024>& decrypted_object{tr::as_object<std::array<double, 1024>>(decrypted)};
-	ASSERT_EQ(decrypted_object, data);
+	EXPECT_EQ(decrypted_object, data);
 }

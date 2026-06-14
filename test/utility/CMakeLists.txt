@@ -9,6 +9,7 @@ add_executable(
 	mstream.cpp
 	norm_cast.cpp
 	optional.cpp
+	reference.cpp
 	stopwatch.cpp
 	utf8.cpp
 	zstring_view.cpp
