@@ -7,70 +7,35 @@
 #include "../../include/tr/utility/localization_map.hpp"
 #include "../../include/tr/utility/iostream.hpp"
 
-///////////////////////////////////////////////////////// LOCALIZATION LOAD ERROR /////////////////////////////////////////////////////////
-
-tr::localization_load_error::localization_load_error(std::string&& description)
-	: m_description{description}
-{
-}
-
-std::string_view tr::localization_load_error::name() const
-{
-	return "Unrecoverable localization loading error";
-}
-
-std::string_view tr::localization_load_error::description() const
-{
-	return m_description;
-}
-
-std::string_view tr::localization_load_error::details() const
-{
-	return {};
-}
-
 ///////////////////////////////////////////////////////// LOCALIZATION MAP PARSER /////////////////////////////////////////////////////////
 
-std::string::iterator tr::localization_map::parser::skip_whitespace(std::string::iterator it)
+// Trims whitespace from the line.
+static std::string_view trim_whitespace(std::string_view line)
 {
-	return std::find_if_not(it, m_buffer.end(), [](char c) { return std::isspace(c); });
+	return {std::ranges::find_if_not(line, [](char c) { return std::isspace(c); }), line.end()};
 }
 
-bool tr::localization_map::parser::read_line(std::istream& is)
+std::string_view tr::localization_map::parser::parse_key(std::string_view line, std::string_view& out)
 {
-	if (reached_eof(is)) {
-		return false;
-	}
-
-	++m_line;
-	std::getline(is, m_buffer);
-	m_cur = skip_whitespace(m_buffer.begin());
-	return true;
-}
-
-bool tr::localization_map::parser::parse_key(std::string_view& out)
-{
-	std::string::iterator end{std::find_if(m_cur, m_buffer.end(), [](char c) { return !std::isalnum(c) && c != '_'; })};
-	if (m_cur == end) {
+	std::string_view::iterator end{std::ranges::find_if(line, [](char c) { return !std::isalnum(c) && c != '_'; })};
+	if (line.begin() == end) {
 		m_errors.emplace_back(TR_FMT::format("line {}: Expected a key.", m_line));
-		return false;
+		return {};
 	}
-	out = {m_cur, end};
-	m_cur = skip_whitespace(end);
-	return true;
+	out = {line.begin(), end};
+	return trim_whitespace({end, line.end()});
 }
 
-bool tr::localization_map::parser::parse_delimiter()
+std::string_view tr::localization_map::parser::parse_delimiter(std::string_view line)
 {
-	if (m_cur == m_buffer.end() || *m_cur != '=') {
+	if (line[0] != '=') {
 		m_errors.emplace_back(TR_FMT::format("line {}: Expected '=' after key.", m_line));
-		return false;
+		return {};
 	}
-	m_cur = skip_whitespace(m_cur + 1);
-	return true;
+	return trim_whitespace(line.substr(1));
 }
 
-bool tr::localization_map::parser::process_escape_sequences(std::string& out, std::string_view raw)
+bool tr::localization_map::parser::process_escape_sequences(std::string_view raw, std::string& out)
 {
 	out.reserve(raw.size());
 	for (std::string_view::iterator chr_it = raw.begin(); chr_it != raw.end(); ++chr_it) {
@@ -102,38 +67,54 @@ bool tr::localization_map::parser::process_escape_sequences(std::string& out, st
 	return true;
 }
 
-bool tr::localization_map::parser::parse_value(std::string& out)
+bool tr::localization_map::parser::parse_value(std::string_view line, std::string& out)
 {
-	if (m_cur == m_buffer.end() || *m_cur++ != '"') {
+	if (line[0] != '"') {
 		m_errors.emplace_back(TR_FMT::format("line {}: Expected quoted string after '<key> = '.", m_line));
 		return false;
 	}
 
-	std::string::iterator end{m_cur};
-	while ((end = std::find(end + 1, m_buffer.end(), '"')) != m_buffer.end()) {
-		if (*std::prev(end) != '\\') {
+	std::string_view::iterator begin{line.begin() + 1};
+	std::string_view::iterator end{line.begin()};
+	while ((end = std::find(end + 1, line.end(), '"')) != line.end()) {
+		int leading_backslashes{0};
+		for (std::string_view::iterator it = std::prev(end); *it == '\\' && it != begin; ++leading_backslashes, --it) {}
+		if (leading_backslashes % 2 == 0) {
 			break;
 		}
 	}
 
-	if (end == m_buffer.end()) {
+	if (end == line.end()) {
 		m_errors.emplace_back(TR_FMT::format("line {}: Unterminated quoted string.", m_line));
 		return false;
 	}
 
-	m_cur = skip_whitespace(end + 1);
-	if (m_cur != m_buffer.end() && *m_cur != '#') {
+	line = trim_whitespace({end + 1, line.end()});
+	if (!line.empty() && line[0] != '#') {
 		m_errors.emplace_back(TR_FMT::format("line {}: Expected comment or newline after quoted string.", m_line));
 		return false;
 	}
 
-	return process_escape_sequences(out, {m_cur, end});
+	return process_escape_sequences({begin, end}, out);
 }
 
-std::optional<tr::localization_map::parser::parse_result> tr::localization_map::parser::parse_line()
+std::optional<tr::localization_map::parser::parse_result> tr::localization_map::parser::parse_line(std::string_view line)
 {
+	++m_line;
 	parse_result parsed_line;
-	if (m_cur == m_buffer.end() || *m_cur == '#' || !parse_key(parsed_line.key) || !parse_delimiter() || !parse_value(parsed_line.value)) {
+	line = trim_whitespace(line);
+	if (line.empty() || line[0] == '#') {
+		return std::nullopt;
+	}
+	line = parse_key(line, parsed_line.key);
+	if (line.empty()) {
+		return std::nullopt;
+	}
+	line = parse_delimiter(line);
+	if (line.empty()) {
+		return std::nullopt;
+	}
+	if (!parse_value(line, parsed_line.value)) {
 		return std::nullopt;
 	}
 	return std::move(parsed_line);
@@ -156,37 +137,43 @@ tr::localization_map::localization_map(string_flat_map<std::string>&& map)
 {
 }
 
+//
+
 void tr::localization_map::clear()
 {
 	m_map.clear();
 }
 
-std::vector<std::string> tr::localization_map::load(const std::filesystem::path& path)
+std::vector<std::string> tr::localization_map::load_script(std::string_view script)
 {
-	try {
-		parser parser;
-		std::ifstream file{open_file_r(path)};
-		while (parser.read_line(file)) {
-			std::optional<parser::parse_result> result{parser.parse_line()};
-			if (result.has_value()) {
-				const opt_ref<std::string> value{try_get(m_map, result->key)};
-				if (value.has_ref()) {
-					*value = std::move(result->value);
-				}
-				else {
-					m_map.emplace(result->key, std::move(result->value));
-				}
+	parser parser;
+	while (!script.empty()) {
+		const std::string_view::iterator line_end{std::ranges::find(script, '\n')};
+
+		std::optional<parser::parse_result> result{parser.parse_line({script.begin(), line_end})};
+		if (result.has_value()) {
+			const opt_ref<std::string> value{try_get(m_map, result->key)};
+			if (value.has_ref()) {
+				*value = std::move(result->value);
+			}
+			else {
+				m_map.emplace(result->key, std::move(result->value));
 			}
 		}
-		return parser.errors();
+
+		script = line_end == script.end() ? std::string_view{} : std::string_view{line_end + 1, script.end()};
 	}
-	catch (file_open_error& err) {
-		throw localization_load_error{TR_FMT::format("{}: {}", err.name(), err.description())};
-	}
-	catch (file_not_found& err) {
-		throw localization_load_error{TR_FMT::format("{}: {}", err.name(), err.description())};
-	}
+	return parser.errors();
 }
+
+std::vector<std::string> tr::localization_map::load_script_file(const std::filesystem::path& path)
+{
+	std::ostringstream ss;
+	ss << tr::open_file_r(path).rdbuf();
+	return load_script(ss.view());
+}
+
+//
 
 bool tr::localization_map::contains(std::string_view key) const
 {

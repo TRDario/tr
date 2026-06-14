@@ -4,6 +4,7 @@ add_executable(
 	utility_test
 	binary_io.cpp
 	encryption.cpp
+	localization_map.cpp
 	math.cpp
 	mstream.cpp
 	norm_cast.cpp

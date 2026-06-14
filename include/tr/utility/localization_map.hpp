@@ -8,13 +8,15 @@
 //     - tr::localization_map loc -> empty localization map                                                                              //
 //     - tr::localization_map loc{{"key", "value"}, {"key2", "value2"}} -> localization map with values for keys "key" and "key2"        //
 //                                                                                                                                       //
-// The primary benefit of the class, however, is being able to load key-value pairs from a custom localization text file using the       //
-// .load() method. The parser silently handles lines with syntax errors; a vector of error messages is returned by .load() if you wish   //
-// to display them to the user. Loading multiple files is allowed: any duplicate keys are silently overwritten; this is not an error.    //
-// Besides loading files, clearing the map is the only other allowed operation:                                                          //
-//     - loc.load("loc.txt") -> {"line 5: Unterminated quoted string."}; map now contains key-value pairs from loc.txt                   //
-//     - loc.load("loc2.txt") -> map now contains key-value pairs from loc.txt AND loc2.txt                                              //
+// The primary benefit of the class, however, is being able to load key-value pairs from a custom localization script using the          //
+// .load_script() and .load_script_file() methods. The parser silently handles lines with syntax errors; a vector of error messages is   //
+// returned by .load_script() and .load_script_file() if you wish to display them to the user. Loading multiple files is allowed: any    //
+// duplicate keys are silently overwritten; this is not an error. Besides loading files, clearing the map is the only other allowed      //
+// operation:                                                                                                                            //
+//     - loc.load_script_file("loc.txt") -> {"line 5: Unterminated quoted string."}; map now contains key-value pairs from loc.txt       //
+//     - loc.load_script_file("loc2.txt") -> map now contains key-value pairs from loc.txt AND loc2.txt                                  //
 //     - loc.clear() -> map is now empty again                                                                                           //
+//     - loc.load_script("a="b"\nb="c"") -> map now contains the pairs {"a", "b"} and {"b", "c"}                                         //
 //                                                                                                                                       //
 // The localization file consists of lines in the format: [<KEY> = "<VALUE>"] [#COMMENT]                                                 //
 // Empty lines and lines consisting entirely of comments are ignored, as is any whitespace between the tokens.                           //
@@ -35,30 +37,11 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "exception.hpp"
 #include "hash_map.hpp"
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
 namespace tr {
-	// Error thrown when localization loading fails.
-	class localization_load_error : public exception {
-	  public:
-		// Constructs an exception.
-		localization_load_error(std::string&& description);
-
-		// Gets the name of the error.
-		std::string_view name() const override;
-		// Gets the description of the error.
-		std::string_view description() const override;
-		// Gets further details about the error.
-		std::string_view details() const override;
-
-	  private:
-		// The description of the error.
-		std::string m_description;
-	};
-
 	// Localization map class with support for reading custom localization files.
 	class localization_map {
 	  public:
@@ -71,9 +54,11 @@ namespace tr {
 
 		// Clears the localization map.
 		void clear();
-		// Loads a localization file, returning any non-fatal errors.
-		// May throw: tr::localization_load_error.
-		std::vector<std::string> load(const std::filesystem::path& path);
+		// Loads a localization script, returning any non-fatal errors.
+		std::vector<std::string> load_script(std::string_view script);
+		// Loads a localization script file, returning any non-fatal errors.
+		// May throw: file_not_found, file_open_error.
+		std::vector<std::string> load_script_file(const std::filesystem::path& path);
 
 		// Gets whether a key has a corresponding localization string in the map.
 		bool contains(std::string_view key) const;
@@ -81,8 +66,7 @@ namespace tr {
 		std::string_view operator[](std::string_view key) const;
 
 	  private:
-		// Localization file parser.
-		struct parser {
+		class parser {
 		  public:
 			// Result of a parse operation.
 			struct parse_result {
@@ -92,10 +76,8 @@ namespace tr {
 				std::string value;
 			};
 
-			// Tries to read a line from a stream. Returns false on EOF.
-			bool read_line(std::istream& is);
-			// Tries to parse a previously read line.
-			std::optional<parse_result> parse_line();
+			// Tries to parse a line of script.
+			std::optional<parse_result> parse_line(std::string_view line);
 
 			// Returns the list of errors generated during parsing.
 			std::vector<std::string> errors();
@@ -105,22 +87,15 @@ namespace tr {
 			std::vector<std::string> m_errors;
 			// The current line number.
 			int m_line{0};
-			// Buffer containing the last read line.
-			std::string m_buffer;
-			// Current cursor position within the buffer.
-			std::string::iterator m_cur;
 
-			// Returns an iterator to the first character at or after 'it' that isn't whitespace.
-			std::string::iterator skip_whitespace(std::string::iterator it);
-
-			// Tries to parse a key and write it to out. Returns false on error.
-			bool parse_key(std::string_view& out);
-			// Tries to parse an '=' delimiter. Returns false on error.
-			bool parse_delimiter();
+			// Tries to parse a key and write it to out. Returns the remaining line or an empty string view on error.
+			std::string_view parse_key(std::string_view line, std::string_view& out);
+			// Tries to parse an '=' delimiter. Returns the remaining line or an empty string view on error.
+			std::string_view parse_delimiter(std::string_view line);
 			// Tries to parse a value and write it to out. Returns false on error.
-			bool parse_value(std::string& out);
+			bool parse_value(std::string_view line, std::string& out);
 			// Tries to process escape sequences in a raw value string and write the final value to out. Returns false on error.
-			bool process_escape_sequences(std::string& out, std::string_view raw);
+			bool process_escape_sequences(std::string_view raw, std::string& out);
 		};
 
 		// The base string map.
