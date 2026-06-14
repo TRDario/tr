@@ -47,7 +47,8 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "../utility/cstring_view.hpp"
+#include "../utility/macro.hpp"
+#include "../utility/zstring_view.hpp"
 
 namespace tr {
 	struct key_down_event;
@@ -81,9 +82,9 @@ namespace tr {
 	// Converts a string to a scancode.
 	constexpr scancode to_scancode(std::string_view str);
 	// Converts a string to a keycode.
-	constexpr keycode to_keycode(cstring_view str);
+	constexpr keycode to_keycode(zstring_view str);
 	// Gets the name of a scancode.
-	constexpr cstring_view name(scancode scan);
+	constexpr zstring_view name(scancode scan);
 	// Gets the name of a keycode.
 	std::string name(keycode scan);
 
@@ -122,7 +123,7 @@ namespace tr {
 		// Constructs a key chord from components.
 		constexpr key_chord(keymod mods, keycode key);
 		// Converts a string to a key chord. An invalid string results in a chord with keycode::unknown.
-		constexpr explicit key_chord(cstring_view cstr);
+		constexpr explicit key_chord(zstring_view cstr);
 
 		constexpr bool operator==(const key_chord&) const = default;
 
@@ -206,7 +207,7 @@ namespace tr {
 	// Gets the clipboard text.
 	std::string clipboard_text();
 	// Sets the clipboard text.
-	void set_clipboard_text(cstring_view text);
+	void set_clipboard_text(zstring_view text);
 } // namespace tr
 
 namespace tr {

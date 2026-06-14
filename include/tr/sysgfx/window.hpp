@@ -51,8 +51,8 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "../utility/cstring_view.hpp"
 #include "../utility/exception.hpp"
+#include "../utility/zstring_view.hpp"
 #ifdef _WIN32
 #include "../utility/timer.hpp"
 #endif
@@ -122,9 +122,9 @@ namespace tr {
 		window_view(window& window);
 
 		// Gets the title of the window.
-		cstring_view title() const;
+		zstring_view title() const;
 		// Sets the title of the window.
-		void set_title(cstring_view title) const;
+		void set_title(zstring_view title) const;
 
 		// Sets the icon of the window.
 		void set_icon(const bitmap& bitmap) const;
@@ -178,12 +178,12 @@ namespace tr {
 	  public:
 		// Opens a window.
 		// May throw: window_open_error.
-		window(cstring_view title, window_parameters parameters = {});
+		window(zstring_view title, window_parameters parameters = {});
 
 		// Gets the title of the window.
-		cstring_view title() const;
+		zstring_view title() const;
 		// Sets the title of the window.
-		void set_title(cstring_view title);
+		void set_title(zstring_view title);
 
 		// Sets the icon of the window.
 		void set_icon(const bitmap& bitmap);

@@ -1,15 +1,21 @@
-set(
-	TR_UTILITY_TEST_SOURCES
+enable_testing()
+
+add_executable(
+	utility_test
 	binary_io.cpp
 	encryption.cpp
+	math.cpp
 	mstream.cpp
 	norm_cast.cpp
+	stopwatch.cpp
 	utf8.cpp
+	zstring_view.cpp
 )
-create_test_sourcelist(TR_UTILITY_TESTS tests.cpp ${TR_UTILITY_TEST_SOURCES})
-add_executable(tr-utility-tests ${TR_UTILITY_TESTS})
-tr_target_template(tr-utility-tests)
-foreach(TEST ${TR_UTILITY_TEST_SOURCES})
-	get_filename_component(TEST_NAME ${TEST} NAME_WE)
-	add_test(NAME ${TEST_NAME} COMMAND tr-utility-tests ${TEST_NAME})
-endforeach()
+target_link_libraries(
+	utility_test
+	tr::utility
+	GTest::gtest_main
+)
+
+include(GoogleTest)
+gtest_discover_tests(utility_test)

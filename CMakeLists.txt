@@ -44,19 +44,23 @@ include(defines.cmake)
 include(generate_embeddable.cmake)
 include(target_template.cmake)
 
+#################################################################### TR ###################################################################
+
+add_library(tr INTERFACE)
+add_library(tr::tr ALIAS tr)
+
 ################################################################# UTILITY #################################################################
 
-add_library(tr STATIC)
-add_library(tr::tr ALIAS tr)
-tr_target_template(tr)
+add_library(tr_utility STATIC)
+add_library(tr::utility ALIAS tr_utility)
+tr_target_template(tr_utility)
 
-target_include_directories(tr PUBLIC include)
-target_sources(tr PRIVATE
+target_include_directories(tr_utility PUBLIC include)
+target_sources(tr_utility PRIVATE
 	src/utility/atlas_packer.cpp
 	src/utility/benchmark.cpp
 	src/utility/binary_io.cpp
 	src/utility/chrono.cpp
-	src/utility/cstring_view.cpp
 	src/utility/encryption.cpp
 	src/utility/exception.cpp
 	src/utility/geometry.cpp
@@ -68,14 +72,19 @@ target_sources(tr PRIVATE
 	src/utility/stopwatch.cpp
 	src/utility/timer.cpp
 )
-target_link_libraries(tr glm::glm lz4::lz4 boost_unordered)
+target_link_libraries(tr_utility PUBLIC glm::glm lz4::lz4 boost_unordered)
 if(NOT TR_HAS_STD_FORMAT)
-	target_link_libraries(tr fmt::fmt)
+	target_link_libraries(tr::utility fmt::fmt)
 endif()
+target_link_libraries(tr INTERFACE tr::utility)
 
 ################################################################## SYSGFX #################################################################
 
 if(TR_BUILD_SYSGFX)
+	add_library(tr_sysgfx STATIC)
+	add_library(tr::sysgfx ALIAS tr_sysgfx)
+	tr_target_template(tr_sysgfx)
+
 	message("-- tr: Building system and graphics module")
 	tr_generate_embeddable_string(resources/basic_renderer.vert resources/generated/basic_renderer_vert.hpp basic_renderer_vert)
 	tr_generate_embeddable_string(resources/basic_renderer.frag resources/generated/basic_renderer_frag.hpp basic_renderer_frag)
@@ -84,7 +93,7 @@ if(TR_BUILD_SYSGFX)
 	tr_generate_embeddable_string(resources/debug_renderer.vert resources/generated/debug_renderer_vert.hpp debug_renderer_vert)
 	tr_generate_embeddable_string(resources/debug_renderer.frag resources/generated/debug_renderer_frag.hpp debug_renderer_frag)
 	tr_generate_embeddable_binary(resources/debug_font.bmp resources/generated/debug_renderer_font.hpp debug_renderer_font)
-	target_sources(tr PRIVATE
+	target_sources(tr_sysgfx PRIVATE
 		src/sysgfx/basic_renderer.cpp
 		src/sysgfx/basic_renderer_staggered_draw_manager.cpp
 		src/sysgfx/bitmap_iterators.cpp
@@ -116,15 +125,20 @@ if(TR_BUILD_SYSGFX)
 		src/sysgfx/ttfont.cpp
 		src/sysgfx/window.cpp
 	)
-	target_compile_definitions(tr PUBLIC TR_HAS_SYSGFX)
-	target_link_libraries(tr SDL3::SDL3 SDL3_ttf::SDL3_ttf SDL3_image::SDL3_image)
+	target_compile_definitions(tr_sysgfx PUBLIC TR_HAS_SYSGFX)
+	target_link_libraries(tr_sysgfx PUBLIC tr_utility SDL3::SDL3 SDL3_ttf::SDL3_ttf SDL3_image::SDL3_image)
+	target_link_libraries(tr INTERFACE tr::sysgfx)
 endif()
 
 ################################################################## AUDIO ##################################################################
 
 if(TR_BUILD_AUDIO)
+	add_library(tr_audio STATIC)
+	add_library(tr::audio ALIAS tr_audio)
+	tr_target_template(tr_audio)
+
 	message("-- tr: Building audio module")
-	target_sources(tr PRIVATE
+	target_sources(tr_audio PRIVATE
 		src/audio/al_call.cpp
 		src/audio/buffer.cpp
 		src/audio/impl.cpp
@@ -132,23 +146,28 @@ if(TR_BUILD_AUDIO)
 		src/audio/source.cpp
 		src/audio/stream.cpp
 	)
-	target_compile_definitions(tr PUBLIC AL_LIBTYPE_STATIC TR_HAS_AUDIO)
-	target_link_libraries(tr OpenAL::OpenAL vorbis vorbisenc vorbisfile)
+	target_compile_definitions(tr_audio PUBLIC AL_LIBTYPE_STATIC TR_HAS_AUDIO)
+	target_link_libraries(tr_audio PUBLIC tr::utility OpenAL::OpenAL vorbis vorbisenc vorbisfile)
+	target_link_libraries(tr INTERFACE tr::audio)
 endif()
 
 ################################################################## IMGUI ##################################################################
 
 if(TR_BUILD_IMGUI)
+	add_library(tr_imgui STATIC)
+	add_library(tr::imgui ALIAS tr_imgui)
+	tr_target_template(tr_imgui)
+
 	message("-- tr: Building Dear ImGui module")
-	target_sources(tr PRIVATE src/imgui.cpp)
-	target_compile_definitions(tr PUBLIC AL_LIBTYPE_STATIC TR_HAS_IMGUI)
-	target_link_libraries(tr imgui)
+	target_sources(tr_imgui PRIVATE src/imgui.cpp)
+	target_compile_definitions(tr_imgui PUBLIC AL_LIBTYPE_STATIC TR_HAS_IMGUI)
+	target_link_libraries(tr_imgui imgui)
+	target_link_libraries(tr INTERFACE tr::imgui)
 endif()
 
 ################################################################## TESTS ##################################################################
 
 if(TR_BUILD_TESTS)
 	message("-- tr: Building tests")
-	include(CTest)
 	add_subdirectory(test)
 endif()

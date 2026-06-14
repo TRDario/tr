@@ -19,9 +19,9 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "../utility/cstring_view.hpp"
 #include "../utility/exception.hpp"
 #include "../utility/handle.hpp"
+#include "../utility/zstring_view.hpp"
 
 #ifdef TR_ENABLE_GL_CHECKS
 #include "gl_checks.hpp"
@@ -204,7 +204,7 @@ namespace tr {
 		boost::unordered_flat_map<int, texture_unit> m_texture_units;
 
 		// Constructs a shader.
-		shader_base(graphics_context& context, cstring_view source, unsigned int type);
+		shader_base(graphics_context& context, zstring_view source, unsigned int type);
 
 		friend class shader_pipeline;
 		friend class ping_pong_buffer;
@@ -231,7 +231,7 @@ namespace tr {
 	  public:
 		// Creates a vertex shader from source code.
 		// May throw: shader_load_error.
-		explicit vertex_shader(graphics_context& context, cstring_view source);
+		explicit vertex_shader(graphics_context& context, zstring_view source);
 	};
 	// Loads a vertex shader from file.
 	// May throw: shader_load_error.
@@ -242,7 +242,7 @@ namespace tr {
 	  public:
 		// Creates a fragment shader from source code.
 		// May throw: shader_load_error.
-		explicit fragment_shader(graphics_context& context, cstring_view source);
+		explicit fragment_shader(graphics_context& context, zstring_view source);
 	};
 	// Loads a fragment shader from file.
 	// May throw: shader_load_error.

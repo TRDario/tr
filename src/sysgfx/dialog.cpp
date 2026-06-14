@@ -28,23 +28,23 @@ static constexpr std::array<SDL_MessageBoxButtonData, 3> yes_no_cancel_buttons{{
 // Buffer allocated to be freed in case of an out-of-memory error.
 static std::unique_ptr<char[]> g_emergency_buffer{new char[16384]};
 
-tr::message_box_button tr::show_message_box(message_box_type type, message_box_layout buttons, cstring_view title, cstring_view message)
+tr::message_box_button tr::show_message_box(message_box_type type, message_box_layout buttons, zstring_view title, zstring_view message)
 {
 	const SDL_MessageBoxFlags flags{SDL_MessageBoxFlags(type)};
 
 	switch (buttons) {
 	case message_box_layout::ok:
-		SDL_ShowSimpleMessageBox(flags, title, message, nullptr);
+		SDL_ShowSimpleMessageBox(flags, title.c_str(), message.c_str(), nullptr);
 		return message_box_button::ok;
 	case message_box_layout::yes_no: {
 		int selected{int(message_box_button::no)};
-		SDL_MessageBoxData data{flags, nullptr, title, message, 2, yes_no_buttons.data(), nullptr};
+		SDL_MessageBoxData data{flags, nullptr, title.c_str(), message.c_str(), 2, yes_no_buttons.data(), nullptr};
 		SDL_ShowMessageBox(&data, &selected);
 		return message_box_button(selected);
 	}
 	case message_box_layout::yes_no_cancel: {
 		int selected{int(message_box_button::cancel)};
-		SDL_MessageBoxData data{flags, nullptr, title, message, 3, yes_no_cancel_buttons.data(), nullptr};
+		SDL_MessageBoxData data{flags, nullptr, title.c_str(), message.c_str(), 3, yes_no_cancel_buttons.data(), nullptr};
 		SDL_ShowMessageBox(&data, &selected);
 		return message_box_button(selected);
 	}
@@ -112,11 +112,11 @@ static void file_dialog_callback(void* userdata, const char* const* files, int)
 
 // Base open file dialog function.
 static std::vector<std::filesystem::path> show_open_file_dialog_base(std::span<const tr::dialog_filter> filters,
-																	 tr::cstring_view default_path, bool allow_multiple)
+																	 tr::zstring_view default_path, bool allow_multiple)
 {
 	file_dialog_context ctx{};
 	SDL_ShowOpenFileDialog(file_dialog_callback, &ctx, nullptr, (const SDL_DialogFileFilter*)filters.data(), int(filters.size()),
-						   default_path, allow_multiple);
+						   default_path.c_str(), allow_multiple);
 	while (!ctx.done) {
 		SDL_PumpEvents();
 		std::this_thread::sleep_for(10ms);
@@ -125,10 +125,10 @@ static std::vector<std::filesystem::path> show_open_file_dialog_base(std::span<c
 }
 
 // Base open folder dialog function.
-static std::vector<std::filesystem::path> show_open_folder_dialog_base(tr::cstring_view default_path, bool allow_multiple)
+static std::vector<std::filesystem::path> show_open_folder_dialog_base(tr::zstring_view default_path, bool allow_multiple)
 {
 	file_dialog_context ctx{};
-	SDL_ShowOpenFolderDialog(file_dialog_callback, &ctx, nullptr, default_path, allow_multiple);
+	SDL_ShowOpenFolderDialog(file_dialog_callback, &ctx, nullptr, default_path.c_str(), allow_multiple);
 	while (!ctx.done) {
 		SDL_PumpEvents();
 		std::this_thread::sleep_for(10ms);
@@ -136,33 +136,33 @@ static std::vector<std::filesystem::path> show_open_folder_dialog_base(tr::cstri
 	return std::move(ctx.paths);
 }
 
-std::filesystem::path tr::show_open_file_dialog(std::span<const dialog_filter> filters, cstring_view default_path)
+std::filesystem::path tr::show_open_file_dialog(std::span<const dialog_filter> filters, zstring_view default_path)
 {
 	std::vector<std::filesystem::path> vec{show_open_file_dialog_base(filters, default_path, false)};
 	return vec.empty() ? std::filesystem::path{} : std::move(vec.front());
 }
 
-std::vector<std::filesystem::path> tr::show_open_files_dialog(std::span<const dialog_filter> filters, cstring_view default_path)
+std::vector<std::filesystem::path> tr::show_open_files_dialog(std::span<const dialog_filter> filters, zstring_view default_path)
 {
 	return show_open_file_dialog_base(filters, default_path, true);
 }
 
-std::filesystem::path tr::show_open_folder_dialog(cstring_view default_path)
+std::filesystem::path tr::show_open_folder_dialog(zstring_view default_path)
 {
 	std::vector<std::filesystem::path> vec{show_open_folder_dialog_base(default_path, false)};
 	return vec.empty() ? std::filesystem::path{} : std::move(vec.front());
 }
 
-std::vector<std::filesystem::path> tr::show_open_folders_dialog(cstring_view default_path)
+std::vector<std::filesystem::path> tr::show_open_folders_dialog(zstring_view default_path)
 {
 	return show_open_folder_dialog_base(default_path, true);
 }
 
-std::filesystem::path tr::show_save_file_dialog(std::span<const dialog_filter> filters, cstring_view default_path)
+std::filesystem::path tr::show_save_file_dialog(std::span<const dialog_filter> filters, zstring_view default_path)
 {
 	file_dialog_context ctx{};
 	SDL_ShowSaveFileDialog(file_dialog_callback, &ctx, nullptr, (const SDL_DialogFileFilter*)filters.data(), int(filters.size()),
-						   default_path);
+						   default_path.c_str());
 	while (!ctx.done) {
 		SDL_PumpEvents();
 		std::this_thread::sleep_for(10ms);

@@ -12,7 +12,6 @@
 #include "utility/chrono.hpp"           // IWYU pragma: export
 #include "utility/color.hpp"            // IWYU pragma: export
 #include "utility/concepts.hpp"         // IWYU pragma: export
-#include "utility/cstring_view.hpp"     // IWYU pragma: export
 #include "utility/defer.hpp"            // IWYU pragma: export
 #include "utility/draw_geometry.hpp"    // IWYU pragma: export
 #include "utility/encryption.hpp"       // IWYU pragma: export
@@ -40,3 +39,4 @@
 #include "utility/timer.hpp"            // IWYU pragma: export
 #include "utility/utf8.hpp"             // IWYU pragma: export
 #include "utility/variant.hpp"          // IWYU pragma: export
+#include "utility/zstring_view.hpp"     // IWYU pragma: export

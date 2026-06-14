@@ -35,14 +35,14 @@ std::string_view tr::window_open_error::details() const
 
 //
 
-tr::cstring_view tr::window_view::title() const
+tr::zstring_view tr::window_view::title() const
 {
 	return SDL_GetWindowTitle(m_ptr);
 }
 
-void tr::window_view::set_title(cstring_view title) const
+void tr::window_view::set_title(zstring_view title) const
 {
-	if (!SDL_SetWindowTitle(m_ptr, title)) {
+	if (!SDL_SetWindowTitle(m_ptr, title.c_str())) {
 		TR_LOG_SDL_ERROR("Failed to set window title to '{}'.", title);
 	};
 }
@@ -184,7 +184,7 @@ void tr::window_view::flip_backbuffer() const
 
 ////////////////////////////////////////////////////////////////// WINDOW /////////////////////////////////////////////////////////////////
 
-tr::window::window(cstring_view title, window_parameters parameters)
+tr::window::window(zstring_view title, window_parameters parameters)
 {
 #ifdef TR_ENABLE_ASSERTS
 	constexpr int context_flags{SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG | SDL_GL_CONTEXT_DEBUG_FLAG};
@@ -219,7 +219,7 @@ tr::window::window(cstring_view title, window_parameters parameters)
 	SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, parameters.multisamples);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, true);
 
-	m_ptr.reset(SDL_CreateWindow(title, parameters.size.x, parameters.size.y, window_flags));
+	m_ptr.reset(SDL_CreateWindow(title.c_str(), parameters.size.x, parameters.size.y, window_flags));
 	if (m_ptr == nullptr) {
 		throw window_open_error{};
 	}
@@ -235,14 +235,14 @@ void tr::window::deleter::operator()(SDL_Window* window) const
 
 //
 
-tr::cstring_view tr::window::title() const
+tr::zstring_view tr::window::title() const
 {
 	return SDL_GetWindowTitle(m_ptr.get());
 }
 
-void tr::window::set_title(cstring_view title)
+void tr::window::set_title(zstring_view title)
 {
-	if (!SDL_SetWindowTitle(m_ptr.get(), title)) {
+	if (!SDL_SetWindowTitle(m_ptr.get(), title.c_str())) {
 		TR_LOG_SDL_ERROR("Failed to set window title to '{}'.", title);
 	};
 }

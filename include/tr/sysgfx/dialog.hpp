@@ -39,7 +39,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "../utility/cstring_view.hpp"
+#include "../utility/zstring_view.hpp"
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
@@ -65,7 +65,7 @@ namespace tr {
 	};
 
 	// Shows a message box.
-	message_box_button show_message_box(message_box_type type, message_box_layout layout, cstring_view title, cstring_view message);
+	message_box_button show_message_box(message_box_type type, message_box_layout layout, zstring_view title, zstring_view message);
 	// Shows an "Fatal exception" message box.
 	// In case of an out-of-memory error, it frees an emergency buffer to allow for clean-up and logging.
 	void show_fatal_error_message_box(const std::exception& exception);
@@ -73,21 +73,21 @@ namespace tr {
 	// File dialog filter.
 	struct dialog_filter {
 		// The display name of the filter.
-		cstring_view name;
+		zstring_view name;
 		// The filter pattern.
-		cstring_view pattern;
+		zstring_view pattern;
 	};
 
 	// Shows an "Open File" dialog.
-	std::filesystem::path show_open_file_dialog(std::span<const dialog_filter> filters = {}, cstring_view default_path = {});
+	std::filesystem::path show_open_file_dialog(std::span<const dialog_filter> filters = {}, zstring_view default_path = {});
 	// Shows an "Open File" dialog with the ability to choose multiple files.
-	std::vector<std::filesystem::path> show_open_files_dialog(std::span<const dialog_filter> filters = {}, cstring_view default_path = {});
+	std::vector<std::filesystem::path> show_open_files_dialog(std::span<const dialog_filter> filters = {}, zstring_view default_path = {});
 
 	// Shows an "Open Folder" dialog.
-	std::filesystem::path show_open_folder_dialog(cstring_view default_path = {});
+	std::filesystem::path show_open_folder_dialog(zstring_view default_path = {});
 	// Shows an "Open Folder" dialog with the ability to choose multiple folders.
-	std::vector<std::filesystem::path> show_open_folders_dialog(cstring_view default_path = {});
+	std::vector<std::filesystem::path> show_open_folders_dialog(zstring_view default_path = {});
 
 	// Shows a "Save File" dialog.
-	std::filesystem::path show_save_file_dialog(std::span<const dialog_filter> filters = {}, cstring_view default_path = {});
+	std::filesystem::path show_save_file_dialog(std::span<const dialog_filter> filters = {}, zstring_view default_path = {});
 } // namespace tr

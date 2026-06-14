@@ -16,9 +16,9 @@ std::string tr::name(keycode key)
 	return SDL_GetKeyName(SDL_Keycode(key));
 }
 
-tr::keycode tr::to_keycode_fallback(cstring_view str)
+tr::keycode tr::to_keycode_fallback(zstring_view str)
 {
-	return keycode(SDL_GetKeyFromName(str));
+	return keycode(SDL_GetKeyFromName(str.c_str()));
 }
 
 ////////////////////////////////////////////////////////////////// CHORDS /////////////////////////////////////////////////////////////////
@@ -150,9 +150,9 @@ std::string tr::clipboard_text()
 	return result;
 }
 
-void tr::set_clipboard_text(cstring_view text)
+void tr::set_clipboard_text(zstring_view text)
 {
-	if (!SDL_SetClipboardText(text)) {
+	if (!SDL_SetClipboardText(text.c_str())) {
 		TR_LOG_SDL_ERROR("Failed to set clipboard text.");
 	}
 }

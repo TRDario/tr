@@ -11,7 +11,7 @@
 
 namespace tr {
 	// Copied from SDL with modifications.
-	constexpr std::array<cstring_view, 291> scancode_name_table{{
+	constexpr std::array<zstring_view, 291> scancode_name_table{{
 		{},
 		{},
 		{},
@@ -306,7 +306,7 @@ namespace tr {
 	}};
 
 	// Fallback for Unicode characters.
-	keycode to_keycode_fallback(cstring_view str);
+	keycode to_keycode_fallback(zstring_view str);
 } // namespace tr
 
 constexpr tr::scancode tr::to_scancode(std::string_view str)
@@ -319,15 +319,13 @@ constexpr tr::scancode tr::to_scancode(std::string_view str)
 	return tr::scancode::unknown;
 }
 
-constexpr tr::keycode tr::to_keycode(cstring_view cstr)
+constexpr tr::keycode tr::to_keycode(zstring_view str)
 {
-	if (cstr.empty()) {
+	if (str.empty()) {
 		return keycode::unknown;
 	}
 
-	const std::string_view str{cstr};
-
-	if (str.size() == 1 && u8(str[0]) < 0x80) {
+	if (u8(str[0]) < 0x80) {
 		if (str[0] >= 'A' && str[0] <= 'Z') {
 			return keycode{str[0] - 'A' + 'a'};
 		}
@@ -354,10 +352,10 @@ constexpr tr::keycode tr::to_keycode(cstring_view cstr)
 		return keycode{int(scan) | (1 << 30)};
 	}
 
-	return to_keycode_fallback(cstr);
+	return to_keycode_fallback(str);
 }
 
-constexpr tr::cstring_view tr::name(scancode scan)
+constexpr tr::zstring_view tr::name(scancode scan)
 {
 	return scancode_name_table[int(scan)];
 }
@@ -430,16 +428,15 @@ constexpr tr::key_chord::key_chord(keymod mods, keycode key)
 {
 }
 
-constexpr tr::key_chord::key_chord(cstring_view cstr)
+constexpr tr::key_chord::key_chord(zstring_view str)
 {
-	const std::string_view str{cstr};
-	const auto first_delimiter_pos{str.find('+')};
-	if (first_delimiter_pos == str.npos) {
-		key = to_keycode(cstr);
+	const zstring_view::iterator first_delimiter_pos{std::ranges::find(str, '+')};
+	if (first_delimiter_pos == str.end()) {
+		key = to_keycode(str);
 		return;
 	}
 
-	std::string_view substr{str.begin(), str.begin() + str.find('+')};
+	std::string_view substr{str.begin(), first_delimiter_pos};
 	while (substr.end() != str.end()) {
 		if (substr == "Shift") {
 			mods |= keymod::shift;
@@ -454,9 +451,7 @@ constexpr tr::key_chord::key_chord(cstring_view cstr)
 			mods = keymod::unknown;
 			return;
 		}
-
-		const usize next_start{str.find('+', substr.end() - str.begin() + 1)};
-		substr = {substr.end() + 1, next_start == str.npos ? str.end() : str.begin() + next_start};
+		substr = {first_delimiter_pos + 1, std::ranges::find(first_delimiter_pos + 1, str.end(), '+')};
 	}
 	key = to_keycode(substr.data());
 }

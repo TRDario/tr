@@ -4,9 +4,11 @@
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#include <tr/utility.hpp>
+#include <gtest/gtest.h>
+#include <tr/utility/encryption.hpp>
+#include <tr/utility/rng.hpp>
 
-int encryption(int, char**)
+TEST(encryption_test, round_trip)
 {
 	tr::rng rng;
 	std::array<double, 1024> data;
@@ -14,18 +16,8 @@ int encryption(int, char**)
 		value = rng.generate<double>();
 	}
 
-	try {
-		std::vector<std::byte> encrypted{tr::encrypt(data)};
-		const std::vector<std::byte> decrypted{tr::decrypt(std::move(encrypted))};
-		if (tr::as_object<std::array<double, 1024>>(decrypted) != data) {
-			tr::println_error("Encryption did not round-trip correctly.");
-			return EXIT_FAILURE;
-		}
-	}
-	catch (tr::decryption_error& err) {
-		tr::println_error("Decryption error: {}", err.description());
-		return EXIT_FAILURE;
-	}
-
-	return EXIT_SUCCESS;
+	std::vector<std::byte> encrypted{tr::encrypt(data)};
+	const std::vector<std::byte> decrypted{tr::decrypt(std::move(encrypted))};
+	const std::array<double, 1024>& decrypted_object{tr::as_object<std::array<double, 1024>>(decrypted)};
+	ASSERT_EQ(decrypted_object, data);
 }

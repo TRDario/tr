@@ -4,12 +4,14 @@
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#include <tr/utility.hpp>
+#include <gtest/gtest.h>
+#include <tr/utility/norm_cast.hpp>
+#include <tr/utility/rng.hpp>
 
-using namespace tr::integer_aliases;
+using namespace tr::aliases;
 using tr::norm_cast;
 
-int norm_cast(int, char**)
+TEST(norm_cast_test, round_trip)
 {
 	// Generate a bunch of numbers, round-trip through every kind of conversion, calculate the error and take the largest.
 	tr::rng rng;
@@ -21,12 +23,5 @@ int norm_cast(int, char**)
 	}
 
 	// Check if maximum error is outside the tolerated range.
-	if (max_error > 1.0f / 255.0f + 1e-6f) {
-		tr::println_error("Maximum deviation: {} (outside margin of error).", max_error);
-		return EXIT_FAILURE;
-	}
-	else {
-		tr::println("Maximum deviation: {} (within margin of error).", max_error);
-		return EXIT_SUCCESS;
-	}
+	ASSERT_FALSE(max_error > 1.0f / 255.0f + 1e-6f) << "Maximum deviation: " << max_error << " (outside margin of error).";
 }

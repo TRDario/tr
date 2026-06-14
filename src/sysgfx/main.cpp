@@ -55,12 +55,12 @@ extern "C"
 {
 	SDL_AppResult SDL_AppInit(void**, int argc, char** argv)
 	{
-		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_NAME_STRING, app::metadata.name);
-		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_VERSION_STRING, app::metadata.version);
-		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_IDENTIFIER_STRING, app::metadata.identifier);
-		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_CREATOR_STRING, app::metadata.developer);
-		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_COPYRIGHT_STRING, app::metadata.copyright);
-		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_URL_STRING, app::metadata.url);
+		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_NAME_STRING, app::metadata.name.c_str());
+		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_VERSION_STRING, app::metadata.version.c_str());
+		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_IDENTIFIER_STRING, app::metadata.identifier.c_str());
+		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_CREATOR_STRING, app::metadata.developer.c_str());
+		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_COPYRIGHT_STRING, app::metadata.copyright.c_str());
+		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_URL_STRING, app::metadata.url.c_str());
 		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_TYPE_STRING, app::metadata.type == tr::app_type::game ? "game" : "application");
 		if (!app::metadata.name.empty()) {
 			if (!app::metadata.version.empty()) {
@@ -72,7 +72,7 @@ extern "C"
 		}
 
 		try {
-			tr::signal parse_result{app::parse_command_line({(tr::cstring_view*)argv, std::size_t(argc)})};
+			tr::signal parse_result{app::parse_command_line({(tr::zstring_view*)argv, std::size_t(argc)})};
 			if (parse_result != tr::signal::proceed) {
 				return SDL_AppResult(parse_result);
 			}

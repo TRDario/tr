@@ -6,7 +6,7 @@
 // app have to be defined, as well as app::metadata, a struct containing basic application metadata:                                     //
 //     - app::metadata{.name = "Example", .version = "v0", .developer = "Me"}                                                            //
 //       -> example metadata struct definition                                                                                           //
-//     - app::parse_command_line(std::span<cstring_view> args)                                                                           //
+//     - app::parse_command_line(std::span<zstring_view> args)                                                                           //
 //       -> called before any system initialization, meant for parsing command-line arguments and other preinitialization                //
 //     - app::initialize()                                                                                                               //
 //       -> called after system initialization, meant to initialize the application state and open the window                            //
@@ -68,17 +68,17 @@ namespace tr {
 	// Application metadata.
 	struct app_metadata {
 		// The name of the application.
-		cstring_view name{};
+		zstring_view name{};
 		// The version of the application.
-		cstring_view version{};
+		zstring_view version{};
 		// The identifier of the application.
-		cstring_view identifier{};
+		zstring_view identifier{};
 		// The developer of the application.
-		cstring_view developer{};
+		zstring_view developer{};
 		// A short copyright notice.
-		cstring_view copyright{};
+		zstring_view copyright{};
 		// A URL relevant to the application.
-		cstring_view url{};
+		zstring_view url{};
 		// The type of the application.
 		app_type type{app_type::application};
 	};
@@ -95,7 +95,7 @@ namespace app {
 	extern const tr::app_metadata metadata;
 
 	// Called once at the beginning of execution, but before the initialization of any systems.
-	tr::signal parse_command_line(std::span<tr::cstring_view> args);
+	tr::signal parse_command_line(std::span<tr::zstring_view> args);
 	// Called once at the beginning of execution after the parsing of the command line arguments.
 	tr::signal initialize();
 	// Called whenever an event needs to be handled. Not guaranteed to be called on the main thread.

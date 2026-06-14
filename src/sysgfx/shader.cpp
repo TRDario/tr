@@ -57,7 +57,7 @@ void tr::shader_base::texture_unit::set(texture_ref texture)
 
 ////////////////////////////////////////////////////////////////// SHADER /////////////////////////////////////////////////////////////////
 
-tr::shader_base::shader_base(graphics_context& context, cstring_view source, unsigned int type)
+tr::shader_base::shader_base(graphics_context& context, zstring_view source, unsigned int type)
 	: m_program{context.make_current_and_return_functions().create_shader_program_v(type, 1, (const char**)&source), {context}}
 {
 	const graphics_context::functions& gl{context.make_current_and_return_functions()};
@@ -623,7 +623,7 @@ std::string tr::shader_base::label() const
 
 ////////////////////////////////////////////////////////////// SHADER CLASSES /////////////////////////////////////////////////////////////
 
-tr::vertex_shader::vertex_shader(graphics_context& context, cstring_view source)
+tr::vertex_shader::vertex_shader(graphics_context& context, zstring_view source)
 	: shader_base{context, source, GL_VERTEX_SHADER}
 {
 }
@@ -647,7 +647,7 @@ tr::vertex_shader tr::load_vertex_shader(graphics_context& context, const std::f
 	}
 }
 
-tr::fragment_shader::fragment_shader(graphics_context& context, cstring_view source)
+tr::fragment_shader::fragment_shader(graphics_context& context, zstring_view source)
 	: shader_base{context, source, GL_FRAGMENT_SHADER}
 {
 }
