@@ -9,7 +9,7 @@
 
 /////////////////////////////////////////////////////////// SCANCODE AND KEYCODE //////////////////////////////////////////////////////////
 
-namespace tr::sys {
+namespace tr {
 	// Copied from SDL with modifications.
 	constexpr std::array<cstring_view, 291> scancode_name_table{{
 		{},
@@ -307,19 +307,19 @@ namespace tr::sys {
 
 	// Fallback for Unicode characters.
 	keycode to_keycode_fallback(cstring_view str);
-} // namespace tr::sys
+} // namespace tr
 
-constexpr tr::sys::scancode tr::sys::to_scancode(std::string_view str)
+constexpr tr::scancode tr::to_scancode(std::string_view str)
 {
 	for (usize i = 0; i < scancode_name_table.size(); ++i) {
 		if (!scancode_name_table[i].empty() && scancode_name_table[i] == str) {
 			return scancode(i);
 		}
 	}
-	return tr::sys::scancode::unknown;
+	return tr::scancode::unknown;
 }
 
-constexpr tr::sys::keycode tr::sys::to_keycode(cstring_view cstr)
+constexpr tr::keycode tr::to_keycode(cstring_view cstr)
 {
 	if (cstr.empty()) {
 		return keycode::unknown;
@@ -357,24 +357,24 @@ constexpr tr::sys::keycode tr::sys::to_keycode(cstring_view cstr)
 	return to_keycode_fallback(cstr);
 }
 
-constexpr tr::cstring_view tr::sys::name(scancode scan)
+constexpr tr::cstring_view tr::name(scancode scan)
 {
 	return scancode_name_table[int(scan)];
 }
 
 ////////////////////////////////////////////////////////////////// CHORDS /////////////////////////////////////////////////////////////////
 
-constexpr tr::sys::scan_chord::scan_chord(scancode scan)
+constexpr tr::scan_chord::scan_chord(scancode scan)
 	: scan{scan}
 {
 }
 
-constexpr tr::sys::scan_chord::scan_chord(keymod mods, scancode scan)
+constexpr tr::scan_chord::scan_chord(keymod mods, scancode scan)
 	: mods{mods}, scan{scan}
 {
 }
 
-constexpr tr::sys::scan_chord::scan_chord(std::string_view str)
+constexpr tr::scan_chord::scan_chord(std::string_view str)
 {
 	const auto first_delimiter_pos{str.find('+')};
 	if (first_delimiter_pos == str.npos) {
@@ -404,7 +404,7 @@ constexpr tr::sys::scan_chord::scan_chord(std::string_view str)
 	scan = to_scancode(substr);
 }
 
-constexpr std::string tr::sys::scan_chord::name() const
+constexpr std::string tr::scan_chord::name() const
 {
 	std::string str;
 	if (mods & keymod::ctrl) {
@@ -416,21 +416,21 @@ constexpr std::string tr::sys::scan_chord::name() const
 	if (mods & keymod::shift) {
 		str.append("Shift+");
 	}
-	str.append(sys::name(scan));
+	str.append(tr::name(scan));
 	return str;
 }
 
-constexpr tr::sys::key_chord::key_chord(keycode key)
+constexpr tr::key_chord::key_chord(keycode key)
 	: key{key}
 {
 }
 
-constexpr tr::sys::key_chord::key_chord(keymod mods, keycode key)
+constexpr tr::key_chord::key_chord(keymod mods, keycode key)
 	: mods{mods}, key{key}
 {
 }
 
-constexpr tr::sys::key_chord::key_chord(cstring_view cstr)
+constexpr tr::key_chord::key_chord(cstring_view cstr)
 {
 	const std::string_view str{cstr};
 	const auto first_delimiter_pos{str.find('+')};
@@ -463,7 +463,7 @@ constexpr tr::sys::key_chord::key_chord(cstring_view cstr)
 
 ///////////////////////////////////////////////////////////////// LITERALS ////////////////////////////////////////////////////////////////
 
-consteval tr::sys::scancode tr::sys::keyboard_literals::operator""_s(const char* cstr, usize size)
+consteval tr::scancode tr::keyboard_literals::operator""_s(const char* cstr, usize size)
 {
 	scancode result{to_scancode({cstr, size})};
 	if (result == scancode::unknown) {
@@ -472,9 +472,9 @@ consteval tr::sys::scancode tr::sys::keyboard_literals::operator""_s(const char*
 	return result;
 }
 
-consteval tr::sys::scan_chord tr::sys::keyboard_literals::operator""_sc(const char* cstr, usize size)
+consteval tr::scan_chord tr::keyboard_literals::operator""_sc(const char* cstr, usize size)
 {
-	tr::sys::scan_chord chord{{cstr, size}};
+	tr::scan_chord chord{{cstr, size}};
 	if (chord.scan == scancode::unknown) {
 		throw std::invalid_argument{"Invalid scancode name."};
 	}
@@ -486,16 +486,16 @@ consteval tr::sys::scan_chord tr::sys::keyboard_literals::operator""_sc(const ch
 
 //
 
-consteval tr::sys::keycode tr::sys::keyboard_literals::operator""_k(const char* cstr, usize)
+consteval tr::keycode tr::keyboard_literals::operator""_k(const char* cstr, usize)
 {
 	keycode result{to_keycode(cstr)};
 	TR_ASSERT(result != keycode::unknown, "Invalid keycode name.");
 	return result;
 }
 
-consteval tr::sys::key_chord tr::sys::keyboard_literals::operator""_kc(const char* cstr, usize)
+consteval tr::key_chord tr::keyboard_literals::operator""_kc(const char* cstr, usize)
 {
-	tr::sys::key_chord chord{cstr};
+	tr::key_chord chord{cstr};
 	if (chord.key == keycode::unknown) {
 		throw std::invalid_argument{"Invalid keycode name."};
 	}
@@ -507,28 +507,25 @@ consteval tr::sys::key_chord tr::sys::keyboard_literals::operator""_kc(const cha
 
 //////////////////////////////////////////////////////////////// FORMATTERS ///////////////////////////////////////////////////////////////
 
-template <typename FormatContext>
-constexpr auto TR_FMT::formatter<tr::sys::scancode>::format(tr::sys::scancode scan, FormatContext& ctx) const
+template <typename FormatContext> constexpr auto TR_FMT::formatter<tr::scancode>::format(tr::scancode scan, FormatContext& ctx) const
 {
 	ctx.advance_to(TR_FMT::formatter<const char*>::format(name(scan), ctx));
 	return ctx.out();
 }
 
-template <typename FormatContext>
-constexpr auto TR_FMT::formatter<tr::sys::scan_chord>::format(tr::sys::scan_chord chord, FormatContext& ctx) const
+template <typename FormatContext> constexpr auto TR_FMT::formatter<tr::scan_chord>::format(tr::scan_chord chord, FormatContext& ctx) const
 {
 	ctx.advance_to(TR_FMT::formatter<std::string>::format(chord.name(), ctx));
 	return ctx.out();
 }
 
-template <typename FormatContext> constexpr auto TR_FMT::formatter<tr::sys::keycode>::format(tr::sys::keycode key, FormatContext& ctx) const
+template <typename FormatContext> constexpr auto TR_FMT::formatter<tr::keycode>::format(tr::keycode key, FormatContext& ctx) const
 {
 	ctx.advance_to(TR_FMT::formatter<std::string>::format(name(key), ctx));
 	return ctx.out();
 }
 
-template <typename FormatContext>
-constexpr auto TR_FMT::formatter<tr::sys::key_chord>::format(tr::sys::key_chord chord, FormatContext& ctx) const
+template <typename FormatContext> constexpr auto TR_FMT::formatter<tr::key_chord>::format(tr::key_chord chord, FormatContext& ctx) const
 {
 	ctx.advance_to(TR_FMT::formatter<std::string>::format(chord.name(), ctx));
 	return ctx.out();

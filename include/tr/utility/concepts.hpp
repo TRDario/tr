@@ -41,6 +41,13 @@ namespace tr {
 	template <typename T>
 	concept cv_unqualified_object = object<T> && cv_unqualified<T>;
 
+	// Concept denoting a non-constant lvalue reference.
+	template <typename T>
+	concept non_const_lvalue_reference = lvalue_reference<T> && !const_qualified<T>;
+	// Concept denoting a constant lvalue reference.
+	template <typename T>
+	concept const_lvalue_reference = lvalue_reference<T> && const_qualified<T>;
+
 	// Concept denoting a move-assignable type.
 	template <typename T>
 	concept move_assignable = std::is_move_assignable_v<T>;

@@ -11,11 +11,11 @@
 //       -> [18:22:45] [my_log] [I] test                                                                                                 //
 //                                                                                                                                       //
 // tr::file_logger logs to a file. The log file is truncated on construction, and logging appends to the file:                           //
-//     - tr::logger log{tr::make_logger<tr::file_logger>(tr::sys::user_directory() / "log" / "log.txt")};                                //
+//     - tr::logger log{tr::make_logger<tr::file_logger>(tr::user_directory() / "log" / "log.txt")};                                     //
 //       -> creates a logger that logs to <USER DIRECTORY>/log/log.txt                                                                   //
 //                                                                                                                                       //
 // tr::console_and_file_logger combines the functionalities of tr::console_logger and tr::file_logger:                                   //
-//     - tr::logger log{tr::make_logger<tr::console_and_file_logger>("my_log", tr::sys::user_directory() / "log" / "log.txt")};          //
+//     - tr::logger log{tr::make_logger<tr::console_and_file_logger>("my_log", tr::user_directory() / "log" / "log.txt")};               //
 //       -> creates a logger that logs to <USER DIRECTORY>/log/log.txt AND to the console under the name "my_log"                        //
 //                                                                                                                                       //
 // A logger may be default-constructed (in which case it will be inactive), constructed with a backend unique pointer, or constructed    //

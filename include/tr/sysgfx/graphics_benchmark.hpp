@@ -1,28 +1,28 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                                                       //
-// Provides a GPU benchmark class.                                                                                                       //
+// Provides a graphics benchmark class.                                                                                                  //
 //                                                                                                                                       //
-// The GPU benchmark mostly has the same usage pattern as the regular benchmark, with .start() and .stop() methods delineating the       //
+// The graphics benchmark mostly has the same usage pattern as the regular benchmark, with .start() and .stop() methods delineating the  //
 // benchmarked region of code, however it has an additional .fetch() method that much be called to make the measurement accessable to    //
 // the CPU and add it to the measurement deque. Other than that, the benchmark can be cleared much like tr::benchmark:                   //
-//     - tr::gfx::gpu_benchmark gpu_benchmark{} -> creates an empty benchmark                                                            //
-//     - gpu_benchmark.start();                                                                                                          //
+//     - tr::graphics_benchmark benchmark{context} -> creates an empty benchmark                                                         //
+//     - benchmark.start();                                                                                                              //
 //       draw_things();                                                                                                                  //
-//       gpu_benchmark.stop();                                                                                                           //
+//       benchmark.stop();                                                                                                               //
 //       ...                                                                                                                             //
-//       tr::gfx::flip_backbuffer();                                                                                                     //
-//       gpu_benchmark.fetch();                                                                                                          //
+//       window.flip_backbuffer();                                                                                                       //
+//       benchmark.fetch();                                                                                                              //
 //       -> measures the GPU time of draw_things                                                                                         //
-//     - gpu_benchmark.clear() -> clears the benchmark measurement deque                                                                 //
+//     - benchmark.clear() -> clears the benchmark measurement deque                                                                     //
 //                                                                                                                                       //
 // Again, must like the regular benchmark, the latest, fastest, average, and slowest time can be obtained using the appropriate method,  //
-// though the GPU benchmark doesn't have an equivalent to tr::benchmark::fps. The measurement deque also doesn't contain starting time   //
-// points, unlike the regular benchmark:                                                                                                 //
-//     - gpu_benchmark.latest() -> gets the latest measurement                                                                           //
-//     - gpu_benchmark.min() -> gets the shortest measurement time                                                                       //
-//     - gpu_benchmark.avg() -> gets the average of recent measurement times                                                             //
-//     - gpu_benchmark.max() -> gets the longest measurement time                                                                        //
-//     - gpu_benchmark.measurements() -> gets the deque holding recent measurement times                                                 //
+// though the graphics benchmark doesn't have an equivalent to tr::benchmark::fps. The measurement deque also doesn't contain starting   //
+// time points, unlike the regular benchmark:                                                                                            //
+//     - benchmark.latest() -> gets the latest measurement                                                                               //
+//     - benchmark.min() -> gets the shortest measurement time                                                                           //
+//     - benchmark.avg() -> gets the average of recent measurement times                                                                 //
+//     - benchmark.max() -> gets the longest measurement time                                                                            //
+//     - benchmark.measurements() -> gets the deque holding recent measurement times                                                     //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -30,14 +30,21 @@
 #include "../utility/chrono.hpp"
 #include "../utility/handle.hpp"
 
+namespace tr {
+	class graphics_context;
+}
+
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
-namespace tr::gfx {
-	// GPU benchmark.
-	class gpu_benchmark {
+namespace tr {
+	// Graphics benchmark.
+	class graphics_benchmark {
 	  public:
-		// Constructs an empty GPU benchmark.
-		gpu_benchmark();
+		// Constructs an empty graphics benchmark.
+		graphics_benchmark(graphics_context& context);
+
+		// Gets a reference to the graphics context the benchmark is on.
+		graphics_context& context() const;
 
 		// Starts a new measurement.
 		void start();
@@ -61,6 +68,9 @@ namespace tr::gfx {
 
 	  private:
 		struct deleter {
+			// Reference to the graphics context the benchmark is on.
+			graphics_context& context;
+
 			void operator()(unsigned int id) const;
 		};
 
@@ -69,4 +79,4 @@ namespace tr::gfx {
 		// The measurement deque.
 		std::deque<duration> m_durations;
 	};
-} // namespace tr::gfx
+} // namespace tr

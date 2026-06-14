@@ -55,11 +55,12 @@
 #include "../utility/reference.hpp"
 #include "bitmap.hpp"
 
-namespace tr::gfx {
+namespace tr {
+	class graphics_context;
 	class texture;
 	class texture_ref;
 	class render_target;
-} // namespace tr::gfx
+} // namespace tr
 
 #ifdef TR_HAS_IMGUI
 using ImTextureID = unsigned long long;
@@ -70,7 +71,7 @@ namespace tr::ImGui {
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
-namespace tr::gfx {
+namespace tr {
 	// Whether mipmapping should be enabled or disabled on a texture.
 	enum class mipmaps : bool {
 		disabled, // Mipmapping disabled.
@@ -105,11 +106,13 @@ namespace tr::gfx {
 	class texture {
 	  public:
 		// Creates an empty texture.
-		texture();
+		texture(graphics_context& context);
 		// Allocates an uninitialized texture.
-		texture(glm::ivec2 size, mipmaps mipmaps = mipmaps::disabled, pixel_format format = pixel_format::rgba32);
+		texture(graphics_context& context, glm::ivec2 size, mipmaps mipmaps = mipmaps::disabled,
+				pixel_format format = pixel_format::rgba32);
 		// Constructs a texture with data uploaded from a bitmap.
-		texture(const sub_bitmap& bitmap, mipmaps mipmaps = mipmaps::disabled, std::optional<pixel_format> format = std::nullopt);
+		texture(graphics_context& context, const sub_bitmap& bitmap, mipmaps mipmaps = mipmaps::disabled,
+				std::optional<pixel_format> format = std::nullopt);
 		// Moves a texture, updating all references pointing to it.
 		texture(texture&& r) noexcept;
 		// Destroys the texture, emptying all references pointing to it.
@@ -117,6 +120,9 @@ namespace tr::gfx {
 
 		// Moves a texture, updating all references pointing to it.
 		texture& operator=(texture&& r) noexcept;
+
+		// Gets a reference to the graphics context the texture is on.
+		graphics_context& context() const;
 
 		// Gets whether the texture is empty.
 		bool empty() const;
@@ -150,6 +156,8 @@ namespace tr::gfx {
 #endif
 
 	  protected:
+		// Reference to the graphics context the texture is on.
+		graphics_context& m_context;
 		// Handle to the OpenGL texture.
 		unsigned int m_handle;
 		// The cached size of the texture.
@@ -158,11 +166,11 @@ namespace tr::gfx {
 		mutable std::vector<ref<texture_ref>> m_refs;
 
 		// Creates a released texture.
-		texture(unsigned int handle, glm::ivec2 size);
+		texture(graphics_context& context, unsigned int handle, glm::ivec2 size);
 
 		friend class texture_ref;
 		friend class shader_base;
-		friend class context;
+		friend class graphics_context;
 
 #ifdef TR_HAS_IMGUI
 		friend ImTextureID ImGui::GetTextureID(const gfx::texture& texture);
@@ -201,25 +209,27 @@ namespace tr::gfx {
 
 		friend class texture;
 		friend class shader_base;
-		friend class context;
+		friend class graphics_context;
 	};
 
 	// 2D texture that can be rendered to.
 	class render_texture : public texture {
 	  public:
 		// Creates an empty texture.
-		render_texture() = default;
+		render_texture(graphics_context& context);
 		// Allocates an uninitialized texture.
-		render_texture(glm::ivec2 size, mipmaps mipmaps = mipmaps::disabled, pixel_format format = pixel_format::rgba32);
+		render_texture(graphics_context& context, glm::ivec2 size, mipmaps mipmaps = mipmaps::disabled,
+					   pixel_format format = pixel_format::rgba32);
 		// Constructs a texture with data uploaded from a bitmap.
-		render_texture(const sub_bitmap& bitmap, mipmaps mipmaps = mipmaps::disabled, std::optional<pixel_format> format = std::nullopt);
+		render_texture(graphics_context& context, const sub_bitmap& bitmap, mipmaps mipmaps = mipmaps::disabled,
+					   std::optional<pixel_format> format = std::nullopt);
 		// Moves a texture, updating all references pointing to it.
-		render_texture(render_texture&&) noexcept = default;
+		render_texture(render_texture&&) noexcept;
 		// Destroys the texture, emptying all references pointing to it.
 		~render_texture();
 
 		// Moves a texture, updating all references pointing to it.
-		render_texture& operator=(render_texture&& r) noexcept = default;
+		render_texture& operator=(render_texture&& r) noexcept;
 
 		// Reallocates the texture and releases the previously held storage as a new texture.
 		texture reallocate(glm::ivec2 size, mipmaps mipmaps = mipmaps::disabled, pixel_format format = pixel_format::rgba32);
@@ -230,14 +240,10 @@ namespace tr::gfx {
 		render_target render_target() const;
 
 	  private:
-		struct fbo_deleter {
-			void operator()(unsigned int id) const;
-		};
-
 		// Handle to an OpenGL FBO.
-		handle<unsigned int, 0, fbo_deleter> m_fbo;
+		unsigned int m_fbo;
 
 		// Hide the base reallocation function since we provide our own.
 		using texture::reallocate;
 	};
-} // namespace tr::gfx
+} // namespace tr

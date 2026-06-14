@@ -47,9 +47,13 @@
 #pragma once
 #include "../utility/handle.hpp"
 
+namespace tr {
+	class graphics_context;
+}
+
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
-namespace tr::gfx {
+namespace tr {
 	// A variable type that can be passed as a vertex attribute.
 	enum class vertex_attribute_type : u16 {
 		unknown,
@@ -105,7 +109,10 @@ namespace tr::gfx {
 	class vertex_format {
 	  public:
 		// Creates a new vertex format.
-		vertex_format(std::span<const vertex_binding> bindings);
+		vertex_format(graphics_context& context, std::span<const vertex_binding> bindings);
+
+		// Gets a reference to the graphics context the vertex format is on.
+		graphics_context& context() const;
 
 #ifdef TR_ENABLE_ASSERTS
 		// Sets the debug label of the vertex format.
@@ -115,7 +122,12 @@ namespace tr::gfx {
 #endif
 
 	  private:
+		// VAO deleter class.
 		struct deleter {
+			// Reference to the graphics context the VAO is on.
+			graphics_context& context;
+
+			// Deletes the VAO.
 			void operator()(unsigned int id) const;
 		};
 
@@ -126,19 +138,15 @@ namespace tr::gfx {
 		std::span<const vertex_binding> m_bindings;
 #endif
 
-		friend void set_vertex_format(const vertex_format& format);
+		friend class graphics_context;
 	};
-
-	// Gets the vertex format for a common 2D vertex type (separated position, uv, tint).
-	vertex_format& vertex2_format();
-} // namespace tr::gfx
+} // namespace tr
 
 // Vertex attribute formatter.
-template <>
-struct TR_FMT::formatter<tr::gfx::vertex_attribute> : private TR_FMT::formatter<const char*>, private TR_FMT::formatter<tr::u8> {
+template <> struct TR_FMT::formatter<tr::vertex_attribute> : private TR_FMT::formatter<const char*>, private TR_FMT::formatter<tr::u8> {
 	using TR_FMT::formatter<const char*>::parse;
 	// Formats a vertex attribute.
-	template <typename FormatContext> constexpr auto format(tr::gfx::vertex_attribute v, FormatContext& ctx) const;
+	template <typename FormatContext> constexpr auto format(tr::vertex_attribute v, FormatContext& ctx) const;
 };
 
 #include "impl/vertex_format.hpp" // IWYU pragma: export

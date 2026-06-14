@@ -21,8 +21,13 @@ constexpr glm::vec2 untextured_uv{-100, -100};
 // Vertex shader source code.
 #include "../../resources/generated/basic_renderer_vert.hpp"
 
-tr::gfx::basic_renderer::basic_renderer()
-	: m_id{allocate_renderer_id()}, m_pipeline{vertex_shader{basic_renderer_vert}, fragment_shader{basic_renderer_frag}}
+tr::basic_renderer::basic_renderer(graphics_context& context)
+	: m_id{context.allocate_renderer_id()}
+	, m_pipeline{context, vertex_shader{context, basic_renderer_vert}, fragment_shader{context, basic_renderer_frag}}
+	, m_vbuffer_positions{context}
+	, m_vbuffer_uvs{context}
+	, m_vbuffer_tints{context}
+	, m_ibuffer{context}
 {
 	TR_SET_LABEL(m_pipeline, "(tr) Basic Renderer Pipeline");
 	TR_SET_LABEL(m_pipeline.vertex_shader(), "(tr) Basic Renderer Vertex Shader");
@@ -37,28 +42,28 @@ tr::gfx::basic_renderer::basic_renderer()
 
 //
 
-void tr::gfx::basic_renderer::set_default_transform(const glm::mat4& mat)
+void tr::basic_renderer::set_default_transform(const glm::mat4& mat)
 {
 	TR_ASSERT(!m_locked, "Tried to set default transform of locked basic renderer.");
 
 	m_default_transform = mat;
 }
 
-void tr::gfx::basic_renderer::set_default_layer_texture(int layer, texture_ref texture)
+void tr::basic_renderer::set_default_layer_texture(int layer, texture_ref texture)
 {
 	TR_ASSERT(!m_locked, "Tried to set default layer texture of locked basic renderer.");
 
 	m_layer_defaults[layer].texture = std::move(texture);
 }
 
-void tr::gfx::basic_renderer::set_default_layer_transform(int layer, const glm::mat4& mat)
+void tr::basic_renderer::set_default_layer_transform(int layer, const glm::mat4& mat)
 {
 	TR_ASSERT(!m_locked, "Tried to set default layer transform of locked basic renderer.");
 
 	m_layer_defaults[layer].transform = mat;
 }
 
-void tr::gfx::basic_renderer::set_default_layer_blend_mode(int layer, const blend_mode& blend_mode)
+void tr::basic_renderer::set_default_layer_blend_mode(int layer, const blend_mode& blend_mode)
 {
 	TR_ASSERT(!m_locked, "Tried to set default layer blending mode of locked basic renderer.");
 
@@ -67,7 +72,7 @@ void tr::gfx::basic_renderer::set_default_layer_blend_mode(int layer, const blen
 
 //
 
-tr::gfx::simple_color_mesh_ref tr::gfx::basic_renderer::new_color_fan(int layer, usize vertices)
+tr::simple_color_mesh_ref tr::basic_renderer::new_color_fan(int layer, usize vertices)
 {
 	const opt_ref<const layer_defaults> defaults{try_get(m_layer_defaults, layer)};
 	if (defaults.has_ref()) {
@@ -79,8 +84,7 @@ tr::gfx::simple_color_mesh_ref tr::gfx::basic_renderer::new_color_fan(int layer,
 	}
 }
 
-tr::gfx::simple_color_mesh_ref tr::gfx::basic_renderer::new_color_fan(int layer, usize vertices, const glm::mat4& mat,
-																	  const blend_mode& blend_mode)
+tr::simple_color_mesh_ref tr::basic_renderer::new_color_fan(int layer, usize vertices, const glm::mat4& mat, const blend_mode& blend_mode)
 {
 	TR_ASSERT(!m_locked, "Tried to allocate a new color fan on a locked basic renderer.");
 
@@ -104,7 +108,7 @@ tr::gfx::simple_color_mesh_ref tr::gfx::basic_renderer::new_color_fan(int layer,
 	return {positions, colors};
 }
 
-tr::gfx::simple_color_mesh_ref tr::gfx::basic_renderer::new_color_outline(int layer, usize vertices)
+tr::simple_color_mesh_ref tr::basic_renderer::new_color_outline(int layer, usize vertices)
 {
 	const opt_ref<const layer_defaults> defaults{try_get(m_layer_defaults, layer)};
 	if (defaults.has_ref()) {
@@ -116,8 +120,8 @@ tr::gfx::simple_color_mesh_ref tr::gfx::basic_renderer::new_color_outline(int la
 	}
 }
 
-tr::gfx::simple_color_mesh_ref tr::gfx::basic_renderer::new_color_outline(int layer, usize polygon_vertices, const glm::mat4& mat,
-																		  const blend_mode& blend_mode)
+tr::simple_color_mesh_ref tr::basic_renderer::new_color_outline(int layer, usize polygon_vertices, const glm::mat4& mat,
+																const blend_mode& blend_mode)
 {
 	TR_ASSERT(!m_locked, "Tried to allocate a new color outline on a locked basic renderer.");
 
@@ -142,7 +146,7 @@ tr::gfx::simple_color_mesh_ref tr::gfx::basic_renderer::new_color_outline(int la
 	return {positions, colors};
 }
 
-tr::gfx::color_mesh_ref tr::gfx::basic_renderer::new_color_mesh(int layer, usize vertices, usize indices)
+tr::color_mesh_ref tr::basic_renderer::new_color_mesh(int layer, usize vertices, usize indices)
 {
 	const opt_ref<const layer_defaults> defaults{try_get(m_layer_defaults, layer)};
 	if (defaults.has_ref()) {
@@ -154,8 +158,8 @@ tr::gfx::color_mesh_ref tr::gfx::basic_renderer::new_color_mesh(int layer, usize
 	}
 }
 
-tr::gfx::color_mesh_ref tr::gfx::basic_renderer::new_color_mesh(int layer, usize vertices, usize indices, const glm::mat4& mat,
-																const blend_mode& blend_mode)
+tr::color_mesh_ref tr::basic_renderer::new_color_mesh(int layer, usize vertices, usize indices, const glm::mat4& mat,
+													  const blend_mode& blend_mode)
 {
 	TR_ASSERT(!m_locked, "Tried to allocate a new color mesh on a locked basic renderer.");
 
@@ -177,7 +181,7 @@ tr::gfx::color_mesh_ref tr::gfx::basic_renderer::new_color_mesh(int layer, usize
 	return {positions, colors, index_range, base_index};
 }
 
-tr::gfx::simple_textured_mesh_ref tr::gfx::basic_renderer::new_textured_fan(int layer, usize vertices)
+tr::simple_textured_mesh_ref tr::basic_renderer::new_textured_fan(int layer, usize vertices)
 {
 	const opt_ref<const layer_defaults> defaults{try_get(m_layer_defaults, layer)};
 	if (defaults.has_ref()) {
@@ -189,7 +193,7 @@ tr::gfx::simple_textured_mesh_ref tr::gfx::basic_renderer::new_textured_fan(int 
 	}
 }
 
-tr::gfx::simple_textured_mesh_ref tr::gfx::basic_renderer::new_textured_fan(int layer, usize vertices, texture_ref texture_ref)
+tr::simple_textured_mesh_ref tr::basic_renderer::new_textured_fan(int layer, usize vertices, texture_ref texture_ref)
 {
 	const opt_ref<const layer_defaults> defaults{try_get(m_layer_defaults, layer)};
 	if (defaults.has_ref()) {
@@ -201,8 +205,8 @@ tr::gfx::simple_textured_mesh_ref tr::gfx::basic_renderer::new_textured_fan(int 
 	}
 }
 
-tr::gfx::simple_textured_mesh_ref tr::gfx::basic_renderer::new_textured_fan(int layer, usize vertices, texture_ref texture_ref,
-																			const glm::mat4& mat, const blend_mode& blend_mode)
+tr::simple_textured_mesh_ref tr::basic_renderer::new_textured_fan(int layer, usize vertices, texture_ref texture_ref, const glm::mat4& mat,
+																  const blend_mode& blend_mode)
 {
 	TR_ASSERT(!m_locked, "Tried to allocate a new textured fan on a locked basic renderer.");
 	TR_ASSERT(!texture_ref.empty(), "Cannot pass std::nullopt as texture for textured fan.");
@@ -226,7 +230,7 @@ tr::gfx::simple_textured_mesh_ref tr::gfx::basic_renderer::new_textured_fan(int 
 	return {positions, uvs, tints};
 }
 
-tr::gfx::textured_mesh_ref tr::gfx::basic_renderer::new_textured_mesh(int layer, usize vertices, usize indices)
+tr::textured_mesh_ref tr::basic_renderer::new_textured_mesh(int layer, usize vertices, usize indices)
 {
 	const opt_ref<const layer_defaults> defaults{try_get(m_layer_defaults, layer)};
 	if (defaults.has_ref()) {
@@ -238,7 +242,7 @@ tr::gfx::textured_mesh_ref tr::gfx::basic_renderer::new_textured_mesh(int layer,
 	}
 }
 
-tr::gfx::textured_mesh_ref tr::gfx::basic_renderer::new_textured_mesh(int layer, usize vertices, usize indices, texture_ref texture_ref)
+tr::textured_mesh_ref tr::basic_renderer::new_textured_mesh(int layer, usize vertices, usize indices, texture_ref texture_ref)
 {
 	const opt_ref<const layer_defaults> defaults{try_get(m_layer_defaults, layer)};
 	if (defaults.has_ref()) {
@@ -250,8 +254,8 @@ tr::gfx::textured_mesh_ref tr::gfx::basic_renderer::new_textured_mesh(int layer,
 	}
 }
 
-tr::gfx::textured_mesh_ref tr::gfx::basic_renderer::new_textured_mesh(int layer, usize vertices, usize indices, texture_ref texture_ref,
-																	  const glm::mat4& mat, const blend_mode& blend_mode)
+tr::textured_mesh_ref tr::basic_renderer::new_textured_mesh(int layer, usize vertices, usize indices, texture_ref texture_ref,
+															const glm::mat4& mat, const blend_mode& blend_mode)
 {
 	TR_ASSERT(!m_locked, "Tried to allocate a new textured mesh on a locked basic renderer.");
 	TR_ASSERT(!texture_ref.empty(), "Cannot pass std::nullopt as texture for textured mesh.");
@@ -274,7 +278,7 @@ tr::gfx::textured_mesh_ref tr::gfx::basic_renderer::new_textured_mesh(int layer,
 
 //
 
-tr::gfx::simple_color_mesh_ref tr::gfx::basic_renderer::new_lines(int layer, usize lines)
+tr::simple_color_mesh_ref tr::basic_renderer::new_lines(int layer, usize lines)
 {
 	const opt_ref<const layer_defaults> defaults{try_get(m_layer_defaults, layer)};
 	if (defaults.has_ref()) {
@@ -286,8 +290,7 @@ tr::gfx::simple_color_mesh_ref tr::gfx::basic_renderer::new_lines(int layer, usi
 	}
 }
 
-tr::gfx::simple_color_mesh_ref tr::gfx::basic_renderer::new_lines(int layer, usize lines, const glm::mat4& mat,
-																  const blend_mode& blend_mode)
+tr::simple_color_mesh_ref tr::basic_renderer::new_lines(int layer, usize lines, const glm::mat4& mat, const blend_mode& blend_mode)
 {
 	TR_ASSERT(!m_locked, "Tried to allocate a new lines on a locked basic renderer.");
 
@@ -311,7 +314,7 @@ tr::gfx::simple_color_mesh_ref tr::gfx::basic_renderer::new_lines(int layer, usi
 	return {positions, colors};
 }
 
-tr::gfx::simple_color_mesh_ref tr::gfx::basic_renderer::new_line_strip(int layer, usize vertices)
+tr::simple_color_mesh_ref tr::basic_renderer::new_line_strip(int layer, usize vertices)
 {
 	const opt_ref<const layer_defaults> defaults{try_get(m_layer_defaults, layer)};
 	if (defaults.has_ref()) {
@@ -323,8 +326,7 @@ tr::gfx::simple_color_mesh_ref tr::gfx::basic_renderer::new_line_strip(int layer
 	}
 }
 
-tr::gfx::simple_color_mesh_ref tr::gfx::basic_renderer::new_line_strip(int layer, usize vertices, const glm::mat4& mat,
-																	   const blend_mode& blend_mode)
+tr::simple_color_mesh_ref tr::basic_renderer::new_line_strip(int layer, usize vertices, const glm::mat4& mat, const blend_mode& blend_mode)
 {
 	TR_ASSERT(!m_locked, "Tried to allocate a new line strip on a locked basic renderer.");
 
@@ -348,7 +350,7 @@ tr::gfx::simple_color_mesh_ref tr::gfx::basic_renderer::new_line_strip(int layer
 	return {positions, colors};
 }
 
-tr::gfx::simple_color_mesh_ref tr::gfx::basic_renderer::new_line_loop(int layer, usize vertices)
+tr::simple_color_mesh_ref tr::basic_renderer::new_line_loop(int layer, usize vertices)
 {
 	const opt_ref<const layer_defaults> defaults{try_get(m_layer_defaults, layer)};
 	if (defaults.has_ref()) {
@@ -360,8 +362,7 @@ tr::gfx::simple_color_mesh_ref tr::gfx::basic_renderer::new_line_loop(int layer,
 	}
 }
 
-tr::gfx::simple_color_mesh_ref tr::gfx::basic_renderer::new_line_loop(int layer, usize vertices, const glm::mat4& mat,
-																	  const blend_mode& blend_mode)
+tr::simple_color_mesh_ref tr::basic_renderer::new_line_loop(int layer, usize vertices, const glm::mat4& mat, const blend_mode& blend_mode)
 {
 	TR_ASSERT(!m_locked, "Tried to allocate a new line loop on a locked basic renderer.");
 
@@ -385,7 +386,7 @@ tr::gfx::simple_color_mesh_ref tr::gfx::basic_renderer::new_line_loop(int layer,
 	return {positions, colors};
 }
 
-tr::gfx::color_mesh_ref tr::gfx::basic_renderer::new_line_mesh(int layer, usize vertices, usize indices)
+tr::color_mesh_ref tr::basic_renderer::new_line_mesh(int layer, usize vertices, usize indices)
 {
 	const opt_ref<const layer_defaults> defaults{try_get(m_layer_defaults, layer)};
 	if (defaults.has_ref()) {
@@ -397,8 +398,8 @@ tr::gfx::color_mesh_ref tr::gfx::basic_renderer::new_line_mesh(int layer, usize 
 	}
 }
 
-tr::gfx::color_mesh_ref tr::gfx::basic_renderer::new_line_mesh(int layer, usize vertices, usize indices, const glm::mat4& mat,
-															   const blend_mode& blend_mode)
+tr::color_mesh_ref tr::basic_renderer::new_line_mesh(int layer, usize vertices, usize indices, const glm::mat4& mat,
+													 const blend_mode& blend_mode)
 {
 	TR_ASSERT(!m_locked, "Tried to allocate a new line mesh on a locked basic renderer.");
 
@@ -422,37 +423,37 @@ tr::gfx::color_mesh_ref tr::gfx::basic_renderer::new_line_mesh(int layer, usize 
 
 //
 
-tr::gfx::basic_renderer::staggered_draw_manager tr::gfx::basic_renderer::prepare_staggered_draw_range(int min_layer, int max_layer)
+tr::basic_renderer::staggered_draw_manager tr::basic_renderer::prepare_staggered_draw_range(int min_layer, int max_layer)
 {
 	return staggered_draw_manager{*this,
 								  {std::ranges::lower_bound(m_meshes, min_layer, std::less{}, &mesh::layer),
 								   std::ranges::upper_bound(m_meshes, max_layer, std::less{}, &mesh::layer)}};
 }
 
-tr::gfx::basic_renderer::staggered_draw_manager tr::gfx::basic_renderer::prepare_staggered_draw()
+tr::basic_renderer::staggered_draw_manager tr::basic_renderer::prepare_staggered_draw()
 {
 	return staggered_draw_manager{*this, m_meshes};
 }
 
-void tr::gfx::basic_renderer::draw_layer(int layer, const render_target& target)
+void tr::basic_renderer::draw_layer(int layer, const render_target& target)
 {
 	staggered_draw_manager{*this, std::ranges::equal_range(m_meshes, layer, std::less{}, &mesh::layer)}.draw(target);
 }
 
-void tr::gfx::basic_renderer::draw_layer_range(int min_layer, int max_layer, const render_target& target)
+void tr::basic_renderer::draw_layer_range(int min_layer, int max_layer, const render_target& target)
 {
 	prepare_staggered_draw_range(min_layer, max_layer).draw(target);
 }
 
-void tr::gfx::basic_renderer::draw(const render_target& target)
+void tr::basic_renderer::draw(const render_target& target)
 {
 	prepare_staggered_draw().draw(target);
 }
 
 //
 
-tr::gfx::basic_renderer::mesh& tr::gfx::basic_renderer::find_mesh(int layer, primitive type, texture_ref texture_ref, const glm::mat4& mat,
-																  const blend_mode& blend_mode, usize space_needed)
+tr::basic_renderer::mesh& tr::basic_renderer::find_mesh(int layer, primitive type, texture_ref texture_ref, const glm::mat4& mat,
+														const blend_mode& blend_mode, usize space_needed)
 {
 	auto range{std::ranges::equal_range(m_meshes, layer, std::less{}, &mesh::layer)};
 	std::vector<mesh>::iterator mesh_it;

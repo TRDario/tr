@@ -22,7 +22,7 @@
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
-namespace tr::gfx {
+namespace tr {
 	// Abstraction over a rendering target.
 	class render_target {
 	  public:
@@ -53,6 +53,6 @@ namespace tr::gfx {
 
 		friend render_target backbuffer_render_target();
 		friend class render_texture;
-		friend class context;
+		friend class graphics_context;
 	};
-} // namespace tr::gfx
+} // namespace tr

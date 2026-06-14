@@ -30,40 +30,46 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "buffer.hpp"
+#include "graphics_buffer.hpp"
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
-namespace tr::gfx {
+namespace tr {
 	// Concept defining a contiguous range that can be passed to index buffer functions.
 	template <typename Range>
 	concept index_range = typed_contiguous_const_range<Range, u16>;
 
 	// Static index buffer class for holding immutable index data.
-	class static_index_buffer : private buffer {
+	class static_index_buffer : private graphics_buffer {
 	  public:
 		// Uploads index data into a static index buffer.
-		static_index_buffer(std::span<const u16> data);
+		static_index_buffer(graphics_context& context, std::span<const u16> data);
+
+		// Gets a reference to the graphics context the buffer is on.
+		using graphics_buffer::context;
 
 #ifdef TR_ENABLE_ASSERTS
 		// Gets the debug label of the index buffer.
-		using buffer::label;
+		using graphics_buffer::label;
 		// Sets the debug label of the index buffer.
-		using buffer::set_label;
+		using graphics_buffer::set_label;
 #endif
 
 	  private:
 		// The size of the buffer.
 		ssize m_size;
 
-		friend void set_index_buffer(const static_index_buffer& buffer);
+		friend class graphics_context;
 	};
 
 	// Dynamic index buffer class.
-	class dyn_index_buffer : private buffer {
+	class dyn_index_buffer : private graphics_buffer {
 	  public:
 		// Creates a dynamic index buffer.
-		dyn_index_buffer() = default;
+		using graphics_buffer::graphics_buffer;
+
+		// Gets a reference to the graphics context the buffer is on.
+		using graphics_buffer::context;
 
 		// Gets whether the index buffer is empty.
 		bool empty() const;
@@ -85,9 +91,9 @@ namespace tr::gfx {
 
 #ifdef TR_ENABLE_ASSERTS
 		// Gets the debug label of the index buffer.
-		using buffer::label;
+		using graphics_buffer::label;
 		// Sets the debug label of the index buffer.
-		using buffer::set_label;
+		using graphics_buffer::set_label;
 #endif
 
 	  private:
@@ -96,6 +102,6 @@ namespace tr::gfx {
 		// The capacity of the buffer.
 		usize m_capacity{0};
 
-		friend void set_index_buffer(const dyn_index_buffer& buffer);
+		friend class graphics_context;
 	};
-} // namespace tr::gfx
+} // namespace tr

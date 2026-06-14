@@ -5,8 +5,8 @@
 // Some functions in the library are built on C library functions that expect NUL-terminated string pointers. Exposing this requirement  //
 // by requiring the user to pass a const char* directly is an option, but is ugly when dealing with std::string because .c_str() has to  //
 // be manually called. tr::cstring_view essentially serves as a thin layer to provide a neater interface for cases like these:           //
-//     - WITHOUT: tr::sys::set_window_title(std::format("Example {}", counter).c_str())                                                  //
-//     - WITH: tr::sys::set_window_title(std::format("Example {}", counter))                                                             //
+//     - WITHOUT: tr::set_window_title(std::format("Example {}", counter).c_str())                                                       //
+//     - WITH: tr::set_window_title(std::format("Example {}", counter))                                                                  //
 //                                                                                                                                       //
 // A default-constructed C-string view, or one constructed with a nullptr, is considered "empty" and cannot be used for most other       //
 // provided functionality (comparison, conversion to std::string, writing). A C-string can be checked for this with the .empty() method: //

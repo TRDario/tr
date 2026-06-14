@@ -52,25 +52,23 @@
 
 #pragma once
 #include "../utility/cstring_view.hpp"
+#include "../utility/exception.hpp"
+#ifdef _WIN32
+#include "../utility/timer.hpp"
+#endif
 
 namespace tr {
 	class bitmap;
 	class bitmap_view;
+	enum class mouse_mode : bool;
+	class window;
 } // namespace tr
+
+struct SDL_Window;
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
-namespace tr::gfx {
-	// Graphics context properties.
-	struct properties {
-		// Enables the use of depth and stencil buffers.
-		bool enable_depth_stencil = false;
-		// The number of samples used around a pixel for multisampled anti-aliasing.
-		u8 multisamples = 0;
-	};
-} // namespace tr::gfx
-
-namespace tr::sys {
+namespace tr {
 	// Marks a window as maximized.
 	constexpr glm::ivec2 maximized{};
 	// Marks a window as not resizable.
@@ -83,52 +81,168 @@ namespace tr::sys {
 		enabled        // Vsync is enabled.
 	};
 
-	// Opens a windowed window.
-	// May throw: init_error.
-	void open_window(cstring_view title, glm::ivec2 size = maximized, glm::ivec2 min_size = not_resizable,
-					 const gfx::properties& gfx_properties = {});
-	// Opens a fullscreen window.
-	// May throw: init_error.
-	void open_fullscreen_window(cstring_view title, glm::ivec2 min_size = not_resizable, const gfx::properties& gfx_properties = {});
-	// Closes the window.
-	void close_window();
+	// Window constructor parameters.
+	struct window_parameters {
+		// Whether the window should be fullscreen.
+		bool fullscreen{false};
+		// Size of the window.
+		glm::ivec2 size{maximized};
+		// Minimum size of the window when resizing (or not_resizable).
+		glm::ivec2 min_size{not_resizable};
+		// Enables the use of depth and stencil buffers.
+		bool enable_depth_stencil{false};
+		// The number of samples used around a pixel for multisampled anti-aliasing.
+		u8 multisamples{0};
+	};
 
-	// Gets the title of the window.
-	cstring_view window_title();
-	// Sets the title of the window.
-	void set_window_title(cstring_view title);
+	// Window opening error.
+	class window_open_error : public exception {
+	  public:
+		// Constructs a window opening error.
+		window_open_error();
 
-	// Sets the icon of the window.
-	void set_window_icon(const bitmap& bitmap);
-	// Sets the icon of the window.
-	void set_window_icon(const bitmap_view& view);
+		// Gets the name of the error.
+		std::string_view name() const override;
+		// Gets the description of the error.
+		std::string_view description() const override;
+		// Gets further details about the error.
+		std::string_view details() const override;
 
-	// Gets the size of the window.
-	glm::ivec2 window_size();
-	// Gets the window's pixel density factor.
-	float window_pixel_density();
-	// Sets the size of the window.
-	void set_window_size(glm::ivec2 size);
+	  private:
+		// Description of the error.
+		std::string m_description;
+	};
 
-	// Gets whether the window is fullscreen or not.
-	bool window_fullscreen();
-	// Sets whether the window is fullscreen or not.
-	void set_window_fullscreen(bool fullscreen);
+	// Non-owning window view.
+	class window_view {
+	  public:
+		// Creates a window view.
+		window_view(SDL_Window* window);
+		// Creates a window view.
+		window_view(window& window);
 
-	// Unhides the window.
-	void show_window();
-	// Hides the window.
-	void hide_window();
+		// Gets the title of the window.
+		cstring_view title() const;
+		// Sets the title of the window.
+		void set_title(cstring_view title) const;
 
-	// Gets whether the window is maximized.
-	bool window_maximized();
-	// Gets whether the window is minimized.
-	bool window_minimized();
-	// Gets whether the window has input focus.
-	bool window_has_focus();
-	// Raises the window to have input focus.
-	void raise_window();
+		// Sets the icon of the window.
+		void set_icon(const bitmap& bitmap) const;
+		// Sets the icon of the window.
+		void set_icon(const bitmap_view& view) const;
 
-	// Sets the window's V-sync mode.
-	void set_window_vsync(vsync vsync);
-} // namespace tr::sys
+		// Gets the size of the window.
+		glm::ivec2 size() const;
+		// Gets the window's pixel density factor.
+		float pixel_density() const;
+		// Sets the size of the window.
+		void set_size(glm::ivec2 size) const;
+
+		// Gets whether the window is fullscreen or not.
+		bool fullscreen() const;
+		// Sets whether the window is fullscreen or not.
+		void set_fullscreen(bool fullscreen) const;
+
+		// Unhides the window.
+		void show() const;
+		// Hides the window.
+		void hide() const;
+
+		// Gets whether the window is maximized.
+		bool maximized() const;
+		// Gets whether the window is minimized.
+		bool minimized() const;
+		// Gets whether the window has input focus.
+		bool has_focus() const;
+		// Raises the window to have input focus.
+		void raise() const;
+
+		// Sets the window's V-sync mode.
+		void set_vsync(vsync vsync) const;
+
+		// Enables the sending of text input events in the window.
+		void enable_text_input() const;
+		// Disables the sending of text input events in the window.
+		void disable_text_input() const;
+
+		// Swaps the window's front- and backbuffer.
+		void flip_backbuffer() const;
+
+	  private:
+		// Pointer to the SDL window.
+		SDL_Window* m_ptr;
+	};
+
+	// Window object.
+	class window {
+	  public:
+		// Opens a window.
+		// May throw: window_open_error.
+		window(cstring_view title, window_parameters parameters = {});
+
+		// Gets the title of the window.
+		cstring_view title() const;
+		// Sets the title of the window.
+		void set_title(cstring_view title);
+
+		// Sets the icon of the window.
+		void set_icon(const bitmap& bitmap);
+		// Sets the icon of the window.
+		void set_icon(const bitmap_view& view);
+
+		// Gets the size of the window.
+		glm::ivec2 size() const;
+		// Gets the window's pixel density factor.
+		float pixel_density() const;
+		// Sets the size of the window.
+		void set_size(glm::ivec2 size);
+
+		// Gets whether the window is fullscreen or not.
+		bool fullscreen() const;
+		// Sets whether the window is fullscreen or not.
+		void set_fullscreen(bool fullscreen);
+
+		// Unhides the window.
+		void show();
+		// Hides the window.
+		void hide();
+
+		// Gets whether the window is maximized.
+		bool maximized() const;
+		// Gets whether the window is minimized.
+		bool minimized() const;
+		// Gets whether the window has input focus.
+		bool has_focus() const;
+		// Raises the window to have input focus.
+		void raise();
+
+		// Sets the window's V-sync mode.
+		void set_vsync(vsync vsync);
+
+		// Enables the sending of text input events in the window.
+		void enable_text_input();
+		// Disables the sending of text input events in the window.
+		void disable_text_input();
+
+		// Sets the mouse mode in the window.
+		void set_mouse_mode(mouse_mode mode);
+
+		// Swaps the window's front- and backbuffer.
+		void flip_backbuffer();
+
+	  private:
+		// SDL window deleter.
+		struct deleter {
+			void operator()(SDL_Window* ptr) const;
+		};
+
+		// Pointer to the SDL window.
+		std::unique_ptr<SDL_Window, deleter> m_ptr;
+#ifdef _WIN32
+		// Cursor graphic reset timer needed as a workaround for an SDL bug.
+		std::optional<timer> m_cursor_reset_timer;
+#endif
+
+		friend class graphics_context;
+	};
+} // namespace tr

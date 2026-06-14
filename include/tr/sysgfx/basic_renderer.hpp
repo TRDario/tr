@@ -37,7 +37,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "backbuffer.hpp"
 #include "blending.hpp"
 #include "graphics_context.hpp"
 #include "index_buffer.hpp"
@@ -47,7 +46,7 @@
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
-namespace tr::gfx {
+namespace tr {
 	// Simple basic renderer color mesh allocation reference.
 	struct simple_color_mesh_ref {
 		// Mesh position data.
@@ -97,7 +96,10 @@ namespace tr::gfx {
 		class staggered_draw_manager;
 
 		// Creates a basic renderer.
-		basic_renderer();
+		basic_renderer(graphics_context& context);
+
+		// Gets a reference to the graphics context the renderer is on.
+		graphics_context& context() const;
 
 		// Sets the default transformation matrix used by primitives on any layer without its own default transform.
 		void set_default_transform(const glm::mat4& mat);
@@ -158,11 +160,11 @@ namespace tr::gfx {
 		// Prepares a staggered draw manager. The renderer is "locked" and can't be interacted with while this manager exists.
 		staggered_draw_manager prepare_staggered_draw();
 		// Draws a layer to a rendering target.
-		void draw_layer(int layer, const render_target& target = backbuffer_render_target());
+		void draw_layer(int layer, const render_target& target);
 		// Draws all layers in a priority range to a rendering target.
-		void draw_layer_range(int min_layer, int max_layer, const render_target& target = backbuffer_render_target());
+		void draw_layer_range(int min_layer, int max_layer, const render_target& target);
 		// Draws all added primitives to a rendering target.
-		void draw(const render_target& target = backbuffer_render_target());
+		void draw(const render_target& target);
 
 	  private:
 		// Default layer information.
@@ -264,13 +266,14 @@ namespace tr::gfx {
 		staggered_draw_manager(basic_renderer& renderer, std::ranges::subrange<std::vector<mesh>::iterator> range);
 
 		// Sets up the graphical context for drawing.
-		void setup_context();
+		void setup_context(graphics_context& context);
 		// Sets up the graphical context for a specific draw call.
-		void setup_draw_call_state(texture_ref texture, const glm::mat4& transform, const blend_mode& blend_mode);
+		void setup_draw_call_state(graphics_context& context, texture_ref texture, const glm::mat4& transform,
+								   const blend_mode& blend_mode);
 
 		// Cleans up the drawing data and unlocks the parent renderer.
 		void clean_up();
 
 		friend class basic_renderer;
 	};
-} // namespace tr::gfx
+} // namespace tr

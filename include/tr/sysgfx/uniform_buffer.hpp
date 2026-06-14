@@ -23,17 +23,20 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "buffer.hpp"
-#include "buffer_map.hpp"
+#include "graphics_buffer.hpp"
+#include "graphics_buffer_map.hpp"
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
-namespace tr::gfx {
+namespace tr {
 	// Shader uniform buffer.
-	class basic_uniform_buffer : private buffer {
+	class basic_uniform_buffer : private graphics_buffer {
 	  public:
 		// Allocates an uninitialized uniform buffer.
-		basic_uniform_buffer(usize size);
+		basic_uniform_buffer(graphics_context& context, usize size);
+
+		// Gets a reference to the graphics context the buffer is on.
+		using graphics_buffer::context;
 
 		// Gets the size of the buffer.
 		usize size() const;
@@ -45,13 +48,13 @@ namespace tr::gfx {
 		bool mapped() const;
 		// Maps the buffer.
 		// This map is write-only!
-		basic_buffer_map map();
+		basic_graphics_buffer_map map();
 
 #ifdef TR_ENABLE_ASSERTS
 		// Gets the debug label of the uniform buffer.
-		using buffer::label;
+		using graphics_buffer::label;
 		// Sets the debug label of the uniform buffer.
-		using buffer::set_label;
+		using graphics_buffer::set_label;
 #endif
 
 	  private:
@@ -62,23 +65,30 @@ namespace tr::gfx {
 	};
 
 	// Typed shader uniform buffer.
-	template <typename Object> class uniform_buffer : public basic_uniform_buffer {
+	template <typename Object> class uniform_buffer : private basic_uniform_buffer {
 	  public:
 		// Allocates an uninitialized uniform buffer.
-		uniform_buffer();
+		uniform_buffer(graphics_context& context);
+
+		// Gets a reference to the graphics context the buffer is on.
+		using basic_uniform_buffer::context;
 
 		// Sets the contents of the buffer.
 		void set(const Object& data);
 
+		// Gets whether the buffer is mapped.
+		using basic_uniform_buffer::mapped;
 		// Maps the buffer.
 		// This map is write-only!
-		buffer_object_map<Object> map();
+		graphics_buffer_object_map<Object> map();
 
-	  private:
-		using basic_uniform_buffer::map;
-		using basic_uniform_buffer::set;
-		using basic_uniform_buffer::size;
+#ifdef TR_ENABLE_ASSERTS
+		// Gets the debug label of the uniform buffer.
+		using basic_uniform_buffer::label;
+		// Sets the debug label of the uniform buffer.
+		using basic_uniform_buffer::set_label;
+#endif
 	};
-} // namespace tr::gfx
+} // namespace tr
 
 #include "impl/uniform_buffer.hpp" // IWYU pragma: export

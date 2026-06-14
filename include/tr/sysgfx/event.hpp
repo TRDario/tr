@@ -2,33 +2,33 @@
 //                                                                                                                                       //
 // Provides event types and related functionality.                                                                                       //
 //                                                                                                                                       //
-// Events are handled in the handle_event(tr::sys::event& event) main function. tr::event is an opaque sum type that can be converted    //
+// Events are handled in the handle_event(tr::event& event) main function. tr::event is an opaque sum type that can be converted         //
 // into one of its possible subtypes. This can be done using using a match statement, a visitor using the .visit() method, or by using   //
 // the .is<T>() and .as<T>() methods to check for and convert to a specific type:                                                        //
 //     - event | tr::match {                                                                                                             //
-//           [] (tr::sys::key_down_event evt) { tr::println("Pressed {}", evt.span); },                                                  //
-//           [] (tr::sys::key_up_event evt) { tr::println("Released {}", evt.span); },                                                   //
+//           [] (tr::key_down_event evt) { tr::println("Pressed {}", evt.span); },                                                       //
+//           [] (tr::key_up_event evt) { tr::println("Released {}", evt.span); },                                                        //
 //           tr::ignore_other_cases                                                                                                      //
 //       }                                                                                                                               //
 //     - event.visit(tr::match {                                                                                                         //
-//           [] (tr::sys::key_down_event evt) { tr::println("Pressed {}", evt.span); },                                                  //
-//           [] (tr::sys::key_up_event evt) { tr::println("Released {}", evt.span); },                                                   //
+//           [] (tr::key_down_event evt) { tr::println("Pressed {}", evt.span); },                                                       //
+//           [] (tr::key_up_event evt) { tr::println("Released {}", evt.span); },                                                        //
 //           tr::ignore_other_cases                                                                                                      //
 //       })                                                                                                                              //
-//     - if (event.is<tr::sys::key_down_event>()) {                                                                                      //
-//           tr::println("Pressed {}", event.as<tr::sys::key_down_event>().span);                                                        //
+//     - if (event.is<tr::key_down_event>()) {                                                                                           //
+//           tr::println("Pressed {}", event.as<tr::key_down_event>().span);                                                             //
 //       }                                                                                                                               //
-//       else if (event.is<tr::sys::key_up_event>()) {                                                                                   //
-//           tr::println("Released {}", event.as<tr::sys::key_up_event>().span);                                                         //
+//       else if (event.is<tr::key_up_event>()) {                                                                                        //
+//           tr::println("Released {}", event.as<tr::key_up_event>().span);                                                              //
 //       }                                                                                                                               //
 //                                                                                                                                       //
 // Key-down events are convertible into both chord types:                                                                                //
-//     - tr::sys::key_down_event{event} == "Ctrl+K"_sc -> returns whether Ctrl+K is pressed                                              //
-//     - tr::sys::key_down_event{event} == "Ctrl+Ć"_kc -> returns whether Ctrl+Ć is pressed                                              //
+//     - tr::key_down_event{event} == "Ctrl+K"_sc -> returns whether Ctrl+K is pressed                                                   //
+//     - tr::key_down_event{event} == "Ctrl+Ć"_kc -> returns whether Ctrl+Ć is pressed                                                   //
 //                                                                                                                                       //
 // Text inputs are disabled by default and must be enabled and disabled manually:                                                        //
-//     - tr::sys::enable_text_input_events() -> tr::sys::text_input_event can now be sent                                                //
-//     - tr::sys::disable_text_input_events() -> tr::sys::text_input_event will no longer be sent                                        //
+//     - tr::enable_text_input_events() -> tr::text_input_event can now be sent                                                          //
+//     - tr::disable_text_input_events() -> tr::text_input_event will no longer be sent                                                  //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -36,16 +36,19 @@
 #include "../utility/variant.hpp"
 #include "keyboard.hpp"
 #include "mouse.hpp"
+#include "window.hpp"
 
-namespace tr::sys {
+namespace tr {
 	class event;
 }
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
-namespace tr::sys {
+namespace tr {
 	// Event emitted when a key is pressed.
 	struct key_down_event {
+		// View to the window associated with the event.
+		window_view window;
 		// Whether the event is a repeat.
 		bool repeat;
 		// The physical keycode of the pressed key.
@@ -65,6 +68,8 @@ namespace tr::sys {
 	};
 	// Event emitted when a key is release.
 	struct key_up_event {
+		// View to the window associated with the event.
+		window_view window;
 		// The physical keycode of the released key.
 		scancode scan;
 		// The virtual keycode of the released key.
@@ -77,6 +82,8 @@ namespace tr::sys {
 	};
 	// Event emitted when text is inputted.
 	struct text_input_event {
+		// View to the window associated with the event.
+		window_view window;
 		// A view over the inputted text string.
 		std::string_view text;
 
@@ -86,6 +93,8 @@ namespace tr::sys {
 
 	// Event emitted when the mouse is moved.
 	struct mouse_motion_event {
+		// View to the window associated with the event.
+		window_view window;
 		// A mask of the held mouse buttons.
 		mouse_button buttons;
 		// The position of the mouse.
@@ -98,6 +107,8 @@ namespace tr::sys {
 	};
 	// Event emitted when a mouse button is pressed.
 	struct mouse_down_event {
+		// View to the window associated with the event.
+		window_view window;
 		// The pressed mouse button.
 		mouse_button button;
 		// The number of consecutive clicks.
@@ -110,6 +121,8 @@ namespace tr::sys {
 	};
 	// Event emitted when a mouse button is released.
 	struct mouse_up_event {
+		// View to the window associated with the event.
+		window_view window;
 		// The released mouse button.
 		mouse_button button;
 		// The position of the mouse.
@@ -120,6 +133,8 @@ namespace tr::sys {
 	};
 	// Event emitted when the mouse wheel is moved.
 	struct mouse_wheel_event {
+		// View to the window associated with the event.
+		window_view window;
 		// The change in wheel value.
 		glm::vec2 delta;
 		// The position of the mouse.
@@ -130,11 +145,25 @@ namespace tr::sys {
 	};
 
 	// Event emitted when a window is shown.
-	struct window_show_event {};
+	struct window_show_event {
+		// View to the window associated with the event.
+		window_view window;
+
+		// Converts a generic event into a window showing event.
+		explicit window_show_event(const event& event);
+	};
 	// Event emitted when a window is hidden.
-	struct window_hide_event {};
+	struct window_hide_event {
+		// View to the window associated with the event.
+		window_view window;
+
+		// Converts a generic event into a window hiding event.
+		explicit window_hide_event(const event& event);
+	};
 	// Event emitted when the window backbuffer changes size.
 	struct backbuffer_resize_event {
+		// View to the window associated with the event.
+		window_view window;
 		// The new size of the backbuffer.
 		glm::ivec2 size;
 
@@ -142,13 +171,37 @@ namespace tr::sys {
 		explicit backbuffer_resize_event(const event& event);
 	};
 	// Event emitted when the mouse enters a window.
-	struct window_mouse_enter_event {};
+	struct window_mouse_enter_event {
+		// View to the window associated with the event.
+		window_view window;
+
+		// Converts a generic event into a window mouse entering event.
+		explicit window_mouse_enter_event(const event& event);
+	};
 	// Event emitted when the mouse leaves a window.
-	struct window_mouse_leave_event {};
+	struct window_mouse_leave_event {
+		// View to the window associated with the event.
+		window_view window;
+
+		// Converts a generic event into a window mouse leaving event.
+		explicit window_mouse_leave_event(const event& event);
+	};
 	// Event emitted when a window gains focus.
-	struct window_gain_focus_event {};
+	struct window_gain_focus_event {
+		// View to the window associated with the event.
+		window_view window;
+
+		// Converts a generic event into a window focus gaining event.
+		explicit window_gain_focus_event(const event& event);
+	};
 	// Event emitted when a window loses focus.
-	struct window_lose_focus_event {};
+	struct window_lose_focus_event {
+		// View to the window associated with the event.
+		window_view window;
+
+		// Converts a generic event into a window focus losing event.
+		explicit window_lose_focus_event(const event& event);
+	};
 
 	// Event emitted for unrecognized event types.
 	struct unknown_event {};
@@ -216,11 +269,6 @@ namespace tr::sys {
 		// Gets the event subtype.
 		u32 type() const;
 	};
-
-	// Enables sending text input events.
-	void enable_text_input_events();
-	// Disables sending text input events.
-	void disable_text_input_events();
-} // namespace tr::sys
+} // namespace tr
 
 #include "impl/event.hpp" // IWYU pragma: export

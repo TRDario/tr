@@ -36,7 +36,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include "../utility/reference.hpp"
-#include "backbuffer.hpp"
 #include "blending.hpp"
 #include "graphics_context.hpp"
 #include "render_target.hpp"
@@ -44,14 +43,17 @@
 
 ///////////////////////////////////////////////////////////// CIRCLE RENDERER /////////////////////////////////////////////////////////////
 
-namespace tr::gfx {
+namespace tr {
 	// Efficient circle renderer.
 	class circle_renderer {
 	  public:
 		class staggered_draw_manager;
 
 		// Initializes the circle renderer.
-		circle_renderer(float render_scale = 1.0f);
+		circle_renderer(graphics_context& context, float render_scale = 1.0f);
+
+		// Gets a reference to the graphics context the renderer is on.
+		graphics_context& context() const;
 
 		// Sets the render scale hint for the renderer.
 		void set_render_scale(float render_scale);
@@ -75,11 +77,11 @@ namespace tr::gfx {
 		// Prepares a staggered draw manager. The renderer is "locked" and can't be interacted with while this manager exists.
 		staggered_draw_manager prepare_staggered_draw();
 		// Draws a layer to a rendering target.
-		void draw_layer(int layer, const render_target& target = backbuffer_render_target());
+		void draw_layer(int layer, const render_target& target);
 		// Draws all layers in a priority range to a rendering target.
-		void draw_layer_range(int min_layer, int max_layer, const render_target& target = backbuffer_render_target());
+		void draw_layer_range(int min_layer, int max_layer, const render_target& target);
 		// Draws all added circles to a rendering target.
-		void draw(const render_target& target = backbuffer_render_target());
+		void draw(const render_target& target);
 
 	  private:
 		// Circle information.
@@ -96,7 +98,7 @@ namespace tr::gfx {
 			rgba8 outline_color;
 
 			// Provided for tr::gfx::as_vertex_attribute_list.
-			static constexpr auto as_vertex_attribute_list{gfx::as_vertex_attribute_list<glm::vec2, float, float, rgba8, rgba8>};
+			static constexpr auto as_vertex_attribute_list{tr::as_vertex_attribute_list<glm::vec2, float, float, rgba8, rgba8>};
 		};
 		// Layer information.
 		struct layer {
@@ -159,13 +161,13 @@ namespace tr::gfx {
 		staggered_draw_manager(circle_renderer& renderer, std::ranges::subrange<std::map<int, layer>::iterator> range);
 
 		// Sets up the graphical context for drawing.
-		void setup_context();
+		void setup_context(graphics_context& context);
 		// Sets up the graphical context for a specific draw call.
-		void setup_draw_call_state(const glm::mat4& transform, const blend_mode& blend_mode);
+		void setup_draw_call_state(graphics_context& context, const glm::mat4& transform, const blend_mode& blend_mode);
 
 		// Cleans up the drawing data and unlocks the parent renderer.
 		void clean_up();
 
 		friend class circle_renderer;
 	};
-} // namespace tr::gfx
+} // namespace tr

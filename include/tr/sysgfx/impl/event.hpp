@@ -9,7 +9,7 @@
 
 ////////////////////////////////////////////////////////////////// EVENT //////////////////////////////////////////////////////////////////
 
-template <tr::sys::event_type T> bool tr::sys::event::is() const
+template <tr::event_type T> bool tr::event::is() const
 {
 	if constexpr (std::same_as<T, quit_event>) {
 		return type() == 0x100;
@@ -58,7 +58,7 @@ template <tr::sys::event_type T> bool tr::sys::event::is() const
 	}
 }
 
-template <tr::sys::event_type T> T tr::sys::event::as() const
+template <tr::event_type T> T tr::event::as() const
 {
 	TR_ASSERT(is<T>(), "Tried to convert event to a sub-type it is not.");
 
@@ -66,25 +66,25 @@ template <tr::sys::event_type T> T tr::sys::event::as() const
 		return quit_event{};
 	}
 	else if constexpr (std::same_as<T, window_show_event>) {
-		return window_show_event{};
+		return window_show_event{*this};
 	}
 	else if constexpr (std::same_as<T, window_hide_event>) {
-		return window_hide_event{};
+		return window_hide_event{*this};
 	}
 	else if constexpr (std::same_as<T, backbuffer_resize_event>) {
 		return backbuffer_resize_event{*this};
 	}
 	else if constexpr (std::same_as<T, window_mouse_enter_event>) {
-		return window_mouse_enter_event{};
+		return window_mouse_enter_event{*this};
 	}
 	else if constexpr (std::same_as<T, window_mouse_leave_event>) {
-		return window_mouse_leave_event{};
+		return window_mouse_leave_event{*this};
 	}
 	else if constexpr (std::same_as<T, window_gain_focus_event>) {
-		return window_gain_focus_event{};
+		return window_gain_focus_event{*this};
 	}
 	else if constexpr (std::same_as<T, window_lose_focus_event>) {
-		return window_lose_focus_event{};
+		return window_lose_focus_event{*this};
 	}
 	else if constexpr (std::same_as<T, key_down_event>) {
 		return key_down_event{*this};
@@ -109,25 +109,25 @@ template <tr::sys::event_type T> T tr::sys::event::as() const
 	}
 }
 
-template <tr::sys::event_visitor Visitor> auto tr::sys::event::visit(Visitor&& visitor) const
+template <tr::event_visitor Visitor> auto tr::event::visit(Visitor&& visitor) const
 {
 	switch (type()) {
 	case 0x100:
 		return visitor(quit_event{});
 	case 0x202:
-		return visitor(window_show_event{});
+		return visitor(window_show_event{*this});
 	case 0x203:
-		return visitor(window_hide_event{});
+		return visitor(window_hide_event{*this});
 	case 0x207:
 		return visitor(backbuffer_resize_event{*this});
 	case 0x20C:
-		return visitor(window_mouse_enter_event{});
+		return visitor(window_mouse_enter_event{*this});
 	case 0x20D:
-		return visitor(window_mouse_leave_event{});
+		return visitor(window_mouse_leave_event{*this});
 	case 0x20E:
-		return visitor(window_gain_focus_event{});
+		return visitor(window_gain_focus_event{*this});
 	case 0x20F:
-		return visitor(window_lose_focus_event{});
+		return visitor(window_lose_focus_event{*this});
 	case 0x300:
 		return visitor(key_down_event{*this});
 	case 0x301:
@@ -148,15 +148,15 @@ template <tr::sys::event_visitor Visitor> auto tr::sys::event::visit(Visitor&& v
 }
 
 template <typename... Fs>
-	requires(tr::sys::event_visitor<tr::match<Fs...>>)
-decltype(auto) tr::sys::event::operator|(match<Fs...>&& match) const
+	requires(tr::event_visitor<tr::match<Fs...>>)
+decltype(auto) tr::event::operator|(match<Fs...>&& match) const
 {
 	return visit(std::move(match));
 }
 
 template <typename State, typename... Fs>
-	requires(tr::sys::event_visitor<tr::stateful_match<State, Fs...>>)
-decltype(auto) tr::sys::event::operator|(stateful_match<State, Fs...>&& match) const
+	requires(tr::event_visitor<tr::stateful_match<State, Fs...>>)
+decltype(auto) tr::event::operator|(stateful_match<State, Fs...>&& match) const
 {
 	return visit(std::move(match));
 }

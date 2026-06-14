@@ -8,13 +8,13 @@
 //       -> stitches all bitmaps in 'bitmaps' into a single bitmap contained in atlas.bitmap, with information on where the constituents //
 //          are located in atlas.rects                                                                                                   //
 //                                                                                                                                       //
-// tr::gfx::dyn_atlas abstracts over a tr::gfx::texture to provide an atlas interface, automatically handling insertion, removal,        //
-// resizing, and so on of the underlying texture. A dynamic atlas can be created empty, with an initial reserved size, or using a        //
-// pre-assembled bitmap atlas as a source. The .reserve() method can also be called at any time to reserve texture space:                //
-//     - tr::gfx::dyn_atlas{} -> creates an empty atlas                                                                                  //
-//     - tr::gfx::dyn_atlas{{512, 512}} -> creates an empty atlas with a pre-allocated 512x512 texture                                   //
-//     - tr::gfx::dyn_atlas atlas{}; atlas.reserve({512, 512}) -> equivalent to the above                                                //
-//     - tr::gfx::dyn_atlas{bitmaps} -> uploads the 'bitmaps' atlas into a texture and takes its rect information                        //
+// tr::dyn_atlas abstracts over a tr::texture to provide an atlas interface, automatically handling insertion, removal, resizing, and so //
+// on of the underlying texture. A dynamic atlas can be created empty, with an initial reserved size, or using a pre-assembled bitmap    //
+// atlas as a source. The .reserve() method can also be called at any time to reserve texture space:                                     //
+//     - tr::dyn_atlas{} -> creates an empty atlas                                                                                       //
+//     - tr::dyn_atlas{{512, 512}} -> creates an empty atlas with a pre-allocated 512x512 texture                                        //
+//     - tr::dyn_atlas atlas{}; atlas.reserve({512, 512}) -> equivalent to the above                                                     //
+//     - tr::dyn_atlas{bitmaps} -> uploads the 'bitmaps' atlas into a texture and takes its rect information                             //
 //                                                                                                                                       //
 // The underlying bitmap can be accessed with an implicit conversion, but only in a read-only manner. Filtering can be set with          //
 // .set_filtering(), as in a regular texture.                                                                                            //
@@ -55,24 +55,25 @@ namespace tr {
 	// Builds a bitmap atlas from individual bitmaps.
 	template <typename Key, hasher<Key> Hash = boost::hash<Key>, equality_predicate<Key> Pred = std::equal_to<Key>>
 	bitmap_atlas<Key, void, Hash, Pred> build_bitmap_atlas(const boost::unordered_flat_map<Key, tr::bitmap, Hash, Pred>& entries);
-} // namespace tr
 
-namespace tr::gfx {
 	// Dynamically-allocated texture atlas.
 	template <typename Key, typename Extra = void, hasher<Key> Hash = boost::hash<Key>, equality_predicate<Key> Pred = std::equal_to<Key>>
 	class dyn_atlas {
 	  public:
 		// Creates an empty atlas.
-		dyn_atlas() = default;
+		dyn_atlas(graphics_context& context);
 		// Creates an empty atlas with an initial size.
-		dyn_atlas(glm::ivec2 size);
+		dyn_atlas(graphics_context& context, glm::ivec2 size);
 		// Uploads a bitmap atlas.
-		dyn_atlas(bitmap_atlas<Key, Extra, Hash, Pred>&& source);
+		dyn_atlas(graphics_context& context, bitmap_atlas<Key, Extra, Hash, Pred>&& source);
 
 		// Gets the atlas texture.
 		operator const texture&() const;
 		// Gets a reference to the atlas texture.
 		operator texture_ref() const;
+
+		// Gets a reference to the graphics context the atlas is on.
+		graphics_context& context() const;
 
 		// Sets the filters used by the atlas texture sampler.
 		void set_filtering(min_filter min_filter, mag_filter mag_filter);
@@ -120,6 +121,6 @@ namespace tr::gfx {
 		// The atlas entries.
 		atlas_rects<Key, Extra, Hash, Pred> m_rects;
 	};
-} // namespace tr::gfx
+} // namespace tr
 
 #include "impl/atlas.hpp" // IWYU pragma: export

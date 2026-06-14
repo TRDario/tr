@@ -10,17 +10,17 @@
 ////////////////////////////////////////////////////////////// UNIFORM BUFFER /////////////////////////////////////////////////////////////
 
 template <typename T>
-tr::gfx::uniform_buffer<T>::uniform_buffer()
-	: basic_uniform_buffer{sizeof(T)}
+tr::uniform_buffer<T>::uniform_buffer(graphics_context& context)
+	: basic_uniform_buffer{context, sizeof(T)}
 {
 }
 
-template <typename T> void tr::gfx::uniform_buffer<T>::set(const T& data)
+template <typename T> void tr::uniform_buffer<T>::set(const T& data)
 {
 	basic_uniform_buffer::set(as_bytes(data));
 }
 
-template <typename T> tr::gfx::buffer_object_map<T> tr::gfx::uniform_buffer<T>::map()
+template <typename T> tr::graphics_buffer_object_map<T> tr::uniform_buffer<T>::map()
 {
 	return basic_uniform_buffer::map();
 }

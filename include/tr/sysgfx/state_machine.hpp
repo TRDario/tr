@@ -3,9 +3,9 @@
 // Provides a state machine class and related functionality.                                                                             //
 //                                                                                                                                       //
 // The state machine works with the polymorphic tr::state. States inherited from tr::state may overload the                              //
-// .handle_event(const tr::sys::event& event) method used to handle incoming events, the .update() method used to update the state, and  //
-// the .draw() method used to draw the state. .handle_event() and .update() return tr::next_state, which is a sum type containing either //
-// a state, tr::keep_state, or tr::drop_state.                                                                                           //
+// .handle_event(const tr::event& event) method used to handle incoming events, the .update() method used to update the state, and the   //
+// .draw() method used to draw the state. .handle_event() and .update() return tr::next_state, which is a sum type containing either a   //
+// state, tr::keep_state, or tr::drop_state.                                                                                             ..
 // A tr::next_state can be constructed with tr::make_next_state:                                                                         //
 //     - struct my_state : tr::state { next_state update(tr::duration) override { return tr::make_next_state<my_other_state>(); } };     //
 //       -> provides an update function that returns the next state                                                                      //
@@ -37,9 +37,7 @@
 #include "../utility/benchmark.hpp"
 
 namespace tr {
-	namespace sys {
-		class event;
-	}
+	class event;
 	struct state;
 } // namespace tr
 
@@ -59,9 +57,9 @@ namespace tr {
 		virtual ~state() noexcept = default;
 
 		// Handles an event.
-		virtual next_state handle_event(const tr::sys::event& event);
+		virtual next_state handle_event(const event& event);
 		// Updates the state.
-		virtual next_state update(tr::duration delta);
+		virtual next_state update(duration delta);
 		// Draws the state.
 		virtual void draw();
 	};
@@ -86,9 +84,9 @@ namespace tr {
 		// Gets access to the current state.
 		template <std::derived_from<state> T> const T& get() const;
 		// Gets the update benchmark.
-		const tr::benchmark& update_benchmark() const;
+		const benchmark& update_benchmark() const;
 		// Gets the draw benchmark.
-		const tr::benchmark& draw_benchmark() const;
+		const benchmark& draw_benchmark() const;
 
 		// Clears the state machine.
 		void clear();
@@ -100,7 +98,7 @@ namespace tr {
 		template <std::derived_from<state> T> T& get();
 
 		// Handles an event.
-		void handle_event(const tr::sys::event& event);
+		void handle_event(const event& event);
 		// Updates the state.
 		template <typename Rep, typename Period> void update(std::chrono::duration<Rep, Period> delta);
 		// Draws the state.
@@ -114,17 +112,12 @@ namespace tr {
 		// Benchmark measuring the drawing times.
 		benchmark m_draw_benchmark;
 
-		// Visitor that handles tr::next_state returns.
-		struct next_state_handler {
-			std::unique_ptr<state>& m_current_state;
-
-			// Keeps the current state.
-			void operator()(keep_state_t);
-			// Drops the current state.
-			void operator()(drop_state_t);
-			// Assigns a new state.
-			void operator()(std::unique_ptr<state>&& next);
-		};
+		// Keeps the current state.
+		void keep_state(keep_state_t);
+		// Drops the current state.
+		void drop_state(drop_state_t);
+		// Assigns a new current state.
+		void assign_state(std::unique_ptr<state>&& next);
 	};
 } // namespace tr
 

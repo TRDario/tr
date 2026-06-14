@@ -5,12 +5,13 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include "../../include/tr/sysgfx/texture.hpp"
-#include "../../include/tr/sysgfx/impl.hpp"
+#include "../../include/tr/sysgfx/gl_defines.hpp"
+#include "../../include/tr/sysgfx/graphics_context.hpp"
 
 ///////////////////////////////////////////////////////////// HELPER FUNCTIONS ////////////////////////////////////////////////////////////
 
 // Converts a pixel format to an OpenGL texture format.
-static GLenum gl_tex_format(tr::pixel_format format)
+static unsigned int gl_tex_format(tr::pixel_format format)
 {
 	switch (format) {
 	case tr::pixel_format::r8:
@@ -54,7 +55,7 @@ static GLenum gl_tex_format(tr::pixel_format format)
 }
 
 // Converts a pixel format to an OpenGL format.
-static GLenum gl_format(tr::pixel_format format)
+static unsigned int gl_format(tr::pixel_format format)
 {
 	switch (format) {
 	case tr::pixel_format::r8:
@@ -94,7 +95,7 @@ static GLenum gl_format(tr::pixel_format format)
 }
 
 // Converts a pixel format to an OpenGL type.
-static GLenum gl_type(tr::pixel_format format)
+static unsigned int gl_type(tr::pixel_format format)
 {
 	switch (format) {
 	case tr::pixel_format::r8:
@@ -139,48 +140,54 @@ static GLenum gl_type(tr::pixel_format format)
 
 ///////////////////////////////////////////////////////////////// TEXTURE /////////////////////////////////////////////////////////////////
 
-tr::gfx::texture::texture()
-	: m_size{0, 0}
+tr::texture::texture(graphics_context& context)
+	: m_context{context}, m_size{0, 0}
 {
-	glCreateTextures(GL_TEXTURE_2D, 1, &m_handle);
+	const graphics_context::functions& gl{m_context.make_current_and_return_functions()};
+
+	gl.create_textures(GL_TEXTURE_2D, 1, &m_handle);
 }
 
-tr::gfx::texture::texture(unsigned int handle, glm::ivec2 size)
-	: m_handle{handle}, m_size{size}
+tr::texture::texture(graphics_context& context, unsigned int handle, glm::ivec2 size)
+	: m_context{context}, m_handle{handle}, m_size{size}
 {
 }
 
-tr::gfx::texture::texture(glm::ivec2 size, mipmaps mipmaps, pixel_format format)
-	: texture{}
+tr::texture::texture(graphics_context& context, glm::ivec2 size, mipmaps mipmaps, pixel_format format)
+	: texture{context}
 {
 	reallocate(size, mipmaps, format);
 }
 
-tr::gfx::texture::texture(const sub_bitmap& bitmap, mipmaps mipmaps, std::optional<pixel_format> format)
-	: texture{bitmap.size(), mipmaps, format.value_or(bitmap.format())}
+tr::texture::texture(graphics_context& context, const sub_bitmap& bitmap, mipmaps mipmaps, std::optional<pixel_format> format)
+	: texture{context, bitmap.size(), mipmaps, format.value_or(bitmap.format())}
 {
 	set_region({}, bitmap);
 }
 
-tr::gfx::texture::texture(texture&& r) noexcept
-	: m_handle{std::exchange(r.m_handle, 0)}, m_size{r.m_size}, m_refs{std::move(r.m_refs)}
+tr::texture::texture(texture&& r) noexcept
+	: m_context{r.m_context}, m_handle{std::exchange(r.m_handle, 0)}, m_size{r.m_size}, m_refs{std::move(r.m_refs)}
 {
 	for (texture_ref& ref : m_refs) {
 		ref.m_ref = *this;
 	}
 }
 
-tr::gfx::texture::~texture()
+tr::texture::~texture()
 {
-	glDeleteTextures(1, &m_handle);
+	const graphics_context::functions& gl{m_context.make_current_and_return_functions()};
+
+	gl.delete_textures(1, &m_handle);
 	for (texture_ref& ref : m_refs) {
 		ref.m_ref = std::nullopt;
 	}
 }
 
-tr::gfx::texture& tr::gfx::texture::operator=(texture&& r) noexcept
+tr::texture& tr::texture::operator=(texture&& r) noexcept
 {
-	glDeleteTextures(1, &m_handle);
+	const graphics_context::functions& gl{m_context.make_current_and_return_functions()};
+
+	gl.delete_textures(1, &m_handle);
 	for (texture_ref& ref : m_refs) {
 		ref.m_ref = std::nullopt;
 	}
@@ -191,115 +198,131 @@ tr::gfx::texture& tr::gfx::texture::operator=(texture&& r) noexcept
 	return *this;
 }
 
-tr::gfx::texture tr::gfx::texture::reallocate(glm::ivec2 size, mipmaps mipmaps, pixel_format format)
+tr::texture tr::texture::reallocate(glm::ivec2 size, mipmaps mipmaps, pixel_format format)
 {
 	TR_ASSERT(size.x > 0 && size.y > 0, "Tried to allocate a texture with an invalid size of {}x{}", size.x, size.y);
 
-	GLuint old_handle{m_handle};
+	const graphics_context::functions& gl{m_context.make_current_and_return_functions()};
+
+	unsigned int old_handle{m_handle};
 	glm::ivec2 old_size{m_size};
 
 	if (m_size != glm::ivec2{0, 0}) {
-		GLuint new_handle;
-		glCreateTextures(GL_TEXTURE_2D, 1, &new_handle);
+		unsigned int new_handle;
+		gl.create_textures(GL_TEXTURE_2D, 1, &new_handle);
 
-		GLint min_filter;
-		glGetTextureParameteriv(m_handle, GL_TEXTURE_MIN_FILTER, &min_filter);
-		glTextureParameteri(new_handle, GL_TEXTURE_MIN_FILTER, min_filter);
+		int min_filter;
+		gl.get_texture_parameter_iv(m_handle, GL_TEXTURE_MIN_FILTER, &min_filter);
+		gl.texture_parameter_i(new_handle, GL_TEXTURE_MIN_FILTER, min_filter);
 
-		GLint mag_filter;
-		glGetTextureParameteriv(m_handle, GL_TEXTURE_MAG_FILTER, &mag_filter);
-		glTextureParameteri(new_handle, GL_TEXTURE_MAG_FILTER, mag_filter);
+		int mag_filter;
+		gl.get_texture_parameter_iv(m_handle, GL_TEXTURE_MAG_FILTER, &mag_filter);
+		gl.texture_parameter_i(new_handle, GL_TEXTURE_MAG_FILTER, mag_filter);
 
-		GLint wrap;
-		glGetTextureParameteriv(m_handle, GL_TEXTURE_WRAP_S, &wrap);
-		glTextureParameteri(new_handle, GL_TEXTURE_WRAP_S, wrap);
-		glTextureParameteri(new_handle, GL_TEXTURE_WRAP_T, wrap);
-		glTextureParameteri(new_handle, GL_TEXTURE_WRAP_R, wrap);
+		int wrap;
+		gl.get_texture_parameter_iv(m_handle, GL_TEXTURE_WRAP_S, &wrap);
+		gl.texture_parameter_i(new_handle, GL_TEXTURE_WRAP_S, wrap);
+		gl.texture_parameter_i(new_handle, GL_TEXTURE_WRAP_T, wrap);
+		gl.texture_parameter_i(new_handle, GL_TEXTURE_WRAP_R, wrap);
 
 		rgbaf border_color;
-		glGetTextureParameterfv(m_handle, GL_TEXTURE_BORDER_COLOR, &border_color.r);
-		glTextureParameterfv(new_handle, GL_TEXTURE_BORDER_COLOR, &border_color.r);
+		gl.get_texture_parameter_fv(m_handle, GL_TEXTURE_BORDER_COLOR, &border_color.r);
+		gl.texture_parameter_fv(new_handle, GL_TEXTURE_BORDER_COLOR, &border_color.r);
 
-		TR_MOVE_LABEL(GL_TEXTURE, m_handle, new_handle);
+#ifdef TR_ENABLE_ASSERTS
+		m_context.move_label(GL_TEXTURE, m_handle, new_handle);
+#endif
 		m_handle = new_handle;
 	}
 	else if (m_handle == 0) {
-		glCreateTextures(GL_TEXTURE_2D, 1, &m_handle);
+		gl.create_textures(GL_TEXTURE_2D, 1, &m_handle);
 	}
 	else {
 		old_handle = 0;
 		old_size = {};
 	}
 
-	const GLsizei levels{mipmaps == mipmaps::enabled ? floor_cast<GLsizei>(std::log2(std::max(size.x, size.y)) + 1) : 1};
-	glTextureStorage2D(m_handle, levels, gl_tex_format(format), size.x, size.y);
-	if (glGetError() == GL_OUT_OF_MEMORY) {
+	const int levels{mipmaps == mipmaps::enabled ? floor_cast<int>(std::log2(std::max(size.x, size.y)) + 1) : 1};
+	gl.texture_storage_2d(m_handle, levels, gl_tex_format(format), size.x, size.y);
+	if (gl.get_error() == GL_OUT_OF_MEMORY) {
 		throw out_of_memory{"texture allocation"};
 	}
 	m_size = size;
 
-	sys::g_window.gfx_context().rebind_texture_units(*this);
+	m_context.rebind_texture_units(*this);
 
-	return texture{old_handle, old_size};
+	return texture{m_context, old_handle, old_size};
 }
 
-bool tr::gfx::texture::empty() const
+bool tr::texture::empty() const
 {
 	return m_handle == 0;
 }
 
-glm::ivec2 tr::gfx::texture::size() const
+glm::ivec2 tr::texture::size() const
 {
 	return m_size;
 }
 
-void tr::gfx::texture::set_filtering(min_filter min_filter, mag_filter mag_filter)
+void tr::texture::set_filtering(min_filter min_filter, mag_filter mag_filter)
 {
 	TR_ASSERT(!empty(), "Tried to set filter on an empty texture.");
 
-	glTextureParameteri(m_handle, GL_TEXTURE_MIN_FILTER, GLint(min_filter));
-	glTextureParameteri(m_handle, GL_TEXTURE_MAG_FILTER, GLint(mag_filter));
+	const graphics_context::functions& gl{m_context.make_current_and_return_functions()};
+
+	gl.texture_parameter_i(m_handle, GL_TEXTURE_MIN_FILTER, int(min_filter));
+	gl.texture_parameter_i(m_handle, GL_TEXTURE_MAG_FILTER, int(mag_filter));
 }
 
-void tr::gfx::texture::set_wrap(wrap wrap)
+void tr::texture::set_wrap(wrap wrap)
 {
 	TR_ASSERT(!empty(), "Tried to set wrap on an empty texture.");
 
-	glTextureParameteri(m_handle, GL_TEXTURE_WRAP_S, GLint(wrap));
-	glTextureParameteri(m_handle, GL_TEXTURE_WRAP_T, GLint(wrap));
-	glTextureParameteri(m_handle, GL_TEXTURE_WRAP_R, GLint(wrap));
+	const graphics_context::functions& gl{m_context.make_current_and_return_functions()};
+
+	gl.texture_parameter_i(m_handle, GL_TEXTURE_WRAP_S, int(wrap));
+	gl.texture_parameter_i(m_handle, GL_TEXTURE_WRAP_T, int(wrap));
+	gl.texture_parameter_i(m_handle, GL_TEXTURE_WRAP_R, int(wrap));
 }
 
-void tr::gfx::texture::set_border_color(rgbaf color)
+void tr::texture::set_border_color(rgbaf color)
 {
 	TR_ASSERT(!empty(), "Tried to set border color on an empty texture.");
 
-	glTextureParameterfv(m_handle, GL_TEXTURE_BORDER_COLOR, &color.r);
+	const graphics_context::functions& gl{m_context.make_current_and_return_functions()};
+
+	gl.texture_parameter_fv(m_handle, GL_TEXTURE_BORDER_COLOR, &color.r);
 }
 
-void tr::gfx::texture::clear(const rgbaf& color)
+void tr::texture::clear(const rgbaf& color)
 {
 	TR_ASSERT(!empty(), "Tried to clear an empty texture.");
 
-	glClearTexImage(m_handle, 0, GL_RGBA, GL_FLOAT, &color);
+	const graphics_context::functions& gl{m_context.make_current_and_return_functions()};
+
+	gl.clear_tex_image(m_handle, 0, GL_RGBA, GL_FLOAT, &color);
 }
 
-void tr::gfx::texture::clear_region(const irect2& rect, const rgbaf& color)
+void tr::texture::clear_region(const irect2& rect, const rgbaf& color)
 {
 	TR_ASSERT(!empty(), "Tried to clear a region of an empty texture.");
 
-	glClearTexSubImage(m_handle, 0, rect.tl.x, rect.tl.y, 0, rect.size.x, rect.size.y, 1, GL_RGBA, GL_FLOAT, &color);
+	const graphics_context::functions& gl{m_context.make_current_and_return_functions()};
+
+	gl.clear_tex_sub_image(m_handle, 0, rect.tl.x, rect.tl.y, 0, rect.size.x, rect.size.y, 1, GL_RGBA, GL_FLOAT, &color);
 }
 
-void tr::gfx::texture::copy_region(glm::ivec2 tl, const texture& src, const irect2& rect)
+void tr::texture::copy_region(glm::ivec2 tl, const texture& src, const irect2& rect)
 {
 	TR_ASSERT(!empty(), "Tried to copy to an empty texture.");
 
-	glCopyImageSubData(src.m_handle, GL_TEXTURE_2D, 0, rect.tl.x, rect.tl.y, 0, m_handle, GL_TEXTURE_2D, 0, tl.x, tl.y, 0, rect.size.x,
-					   rect.size.y, 1);
+	const graphics_context::functions& gl{m_context.make_current_and_return_functions()};
+
+	gl.copy_image_sub_data(src.m_handle, GL_TEXTURE_2D, 0, rect.tl.x, rect.tl.y, 0, m_handle, GL_TEXTURE_2D, 0, tl.x, tl.y, 0, rect.size.x,
+						   rect.size.y, 1);
 }
 
-void tr::gfx::texture::set_region(glm::ivec2 tl, const sub_bitmap& bitmap)
+void tr::texture::set_region(glm::ivec2 tl, const sub_bitmap& bitmap)
 {
 	TR_ASSERT(!empty(), "Tried to set a region of an empty texture.");
 
@@ -307,21 +330,25 @@ void tr::gfx::texture::set_region(glm::ivec2 tl, const sub_bitmap& bitmap)
 			  "Tried to set out-of-bounds region from ({}, {}) to ({}, {}) in a texture with size {}x{}.", tl.x, tl.y,
 			  tl.x + bitmap.size().x, tl.y + bitmap.size().y, m_size.x, m_size.y);
 
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-	glPixelStorei(GL_UNPACK_ROW_LENGTH, bitmap.pitch() / pixel_bytes(bitmap.format()));
-	glTextureSubImage2D(m_handle, 0, tl.x, tl.y, bitmap.size().x, bitmap.size().y, gl_format(bitmap.format()), gl_type(bitmap.format()),
-						bitmap.data());
-	glGenerateTextureMipmap(m_handle);
+	const graphics_context::functions& gl{m_context.make_current_and_return_functions()};
+
+	gl.pixel_store_i(GL_UNPACK_ALIGNMENT, 1);
+	gl.pixel_store_i(GL_UNPACK_ROW_LENGTH, bitmap.pitch() / pixel_bytes(bitmap.format()));
+	gl.texture_sub_image_2d(m_handle, 0, tl.x, tl.y, bitmap.size().x, bitmap.size().y, gl_format(bitmap.format()), gl_type(bitmap.format()),
+							bitmap.data());
+	gl.generate_texture_mipmap(m_handle);
 }
 
 #ifdef TR_ENABLE_ASSERTS
-std::string tr::gfx::texture::label() const
+std::string tr::texture::label() const
 {
-	GLsizei label_length;
-	glGetObjectLabel(GL_TEXTURE, m_handle, 0, &label_length, nullptr);
+	const graphics_context::functions& gl{m_context.make_current_and_return_functions()};
+
+	int label_length;
+	gl.get_object_label(GL_TEXTURE, m_handle, 0, &label_length, nullptr);
 	if (label_length > 0) {
 		std::string label_string(label_length, '\0');
-		glGetObjectLabel(GL_TEXTURE, m_handle, label_length + 1, nullptr, label_string.data());
+		gl.get_object_label(GL_TEXTURE, m_handle, label_length + 1, nullptr, label_string.data());
 		return label_string;
 	}
 	else {
@@ -329,23 +356,25 @@ std::string tr::gfx::texture::label() const
 	}
 }
 
-void tr::gfx::texture::set_label(std::string_view label)
+void tr::texture::set_label(std::string_view label)
 {
+	const graphics_context::functions& gl{m_context.make_current_and_return_functions()};
+
 	if (!empty()) {
-		glObjectLabel(GL_TEXTURE, m_handle, GLsizei(label.size()), label.data());
+		gl.object_label(GL_TEXTURE, m_handle, label.size(), label.data());
 	}
 }
 #endif
 
 /////////////////////////////////////////////////////////////// TEXTURE REF ///////////////////////////////////////////////////////////////
 
-tr::gfx::texture_ref::texture_ref(const texture& tex)
+tr::texture_ref::texture_ref(const texture& tex)
 	: m_ref{tex}
 {
 	tex.m_refs.emplace_back(*this);
 }
 
-tr::gfx::texture_ref::texture_ref(const texture_ref& r)
+tr::texture_ref::texture_ref(const texture_ref& r)
 	: m_ref{r.m_ref}
 {
 	if (!empty()) {
@@ -353,7 +382,7 @@ tr::gfx::texture_ref::texture_ref(const texture_ref& r)
 	}
 }
 
-tr::gfx::texture_ref::texture_ref(texture_ref&& r) noexcept
+tr::texture_ref::texture_ref(texture_ref&& r) noexcept
 	: m_ref{std::exchange(r.m_ref, std::nullopt)}
 {
 	if (!empty()) {
@@ -361,14 +390,14 @@ tr::gfx::texture_ref::texture_ref(texture_ref&& r) noexcept
 	}
 }
 
-tr::gfx::texture_ref::~texture_ref()
+tr::texture_ref::~texture_ref()
 {
 	if (!empty()) {
 		unstable_erase(m_ref->m_refs, std::ranges::find(m_ref->m_refs, *this));
 	}
 }
 
-tr::gfx::texture_ref& tr::gfx::texture_ref::operator=(const texture& tex)
+tr::texture_ref& tr::texture_ref::operator=(const texture& tex)
 {
 	if (!empty()) {
 		unstable_erase(m_ref->m_refs, std::ranges::find(m_ref->m_refs, *this));
@@ -378,7 +407,7 @@ tr::gfx::texture_ref& tr::gfx::texture_ref::operator=(const texture& tex)
 	return *this;
 }
 
-tr::gfx::texture_ref& tr::gfx::texture_ref::operator=(const texture_ref& r)
+tr::texture_ref& tr::texture_ref::operator=(const texture_ref& r)
 {
 	if (!empty()) {
 		unstable_erase(m_ref->m_refs, std::ranges::find(m_ref->m_refs, *this));
@@ -390,7 +419,7 @@ tr::gfx::texture_ref& tr::gfx::texture_ref::operator=(const texture_ref& r)
 	return *this;
 }
 
-tr::gfx::texture_ref& tr::gfx::texture_ref::operator=(texture_ref&& r) noexcept
+tr::texture_ref& tr::texture_ref::operator=(texture_ref&& r) noexcept
 {
 	if (!empty()) {
 		unstable_erase(m_ref->m_refs, std::ranges::find(m_ref->m_refs, *this));
@@ -402,12 +431,12 @@ tr::gfx::texture_ref& tr::gfx::texture_ref::operator=(texture_ref&& r) noexcept
 	return *this;
 }
 
-bool tr::gfx::texture_ref::empty() const
+bool tr::texture_ref::empty() const
 {
 	return !m_ref.has_ref();
 }
 
-glm::ivec2 tr::gfx::texture_ref::size() const
+glm::ivec2 tr::texture_ref::size() const
 {
 	TR_ASSERT(!empty(), "Tried to get size of empty texture reference.");
 
@@ -416,49 +445,69 @@ glm::ivec2 tr::gfx::texture_ref::size() const
 
 ///////////////////////////////////////////////////////////// RENDER TEXTURE //////////////////////////////////////////////////////////////
 
-tr::gfx::render_texture::render_texture(glm::ivec2 size, mipmaps mipmaps, pixel_format format)
-	: texture{size, mipmaps, format}
+tr::render_texture::render_texture(graphics_context& context)
+	: texture{context}
 {
-	glCreateFramebuffers(1, out_handle(m_fbo));
-	glNamedFramebufferTexture(m_fbo.get(), GL_COLOR_ATTACHMENT0, m_handle, 0);
 }
 
-tr::gfx::render_texture::render_texture(const sub_bitmap& bitmap, mipmaps mipmaps, std::optional<pixel_format> format)
-	: render_texture{bitmap.size(), mipmaps, format.value_or(bitmap.format())}
+tr::render_texture::render_texture(graphics_context& context, glm::ivec2 size, mipmaps mipmaps, pixel_format format)
+	: texture{context, size, mipmaps, format}
+{
+	const graphics_context::functions& gl{m_context.make_current_and_return_functions()};
+
+	gl.create_framebuffers(1, &m_fbo);
+	gl.named_framebuffer_texture(m_fbo, GL_COLOR_ATTACHMENT0, m_handle, 0);
+}
+
+tr::render_texture::render_texture(graphics_context& context, const sub_bitmap& bitmap, mipmaps mipmaps, std::optional<pixel_format> format)
+	: render_texture{context, bitmap.size(), mipmaps, format.value_or(bitmap.format())}
 {
 	set_region({}, bitmap);
 }
 
-tr::gfx::render_texture::~render_texture()
+tr::render_texture::render_texture(render_texture&& r) noexcept
+	: texture{std::move(r)}, m_fbo{r.m_fbo}
 {
-	if (!empty() && sys::g_window.gfx_context().is_fbo_of_render_target(m_fbo.get())) {
-		sys::g_window.gfx_context().clear_render_target();
+	r.m_fbo = 0;
+}
+
+tr::render_texture::~render_texture()
+{
+	const graphics_context::functions& gl{m_context.make_current_and_return_functions()};
+
+	if (!empty() && m_context.is_fbo_of_render_target(m_fbo)) {
+		m_context.clear_render_target();
 	}
+	gl.delete_framebuffers(1, &m_fbo);
 }
 
-void tr::gfx::render_texture::fbo_deleter::operator()(unsigned int id) const
+tr::render_texture& tr::render_texture::operator=(render_texture&& r) noexcept
 {
-	glDeleteFramebuffers(1, &id);
+	*(texture*)this = std::move(r);
+	m_fbo = std::exchange(r.m_fbo, 0);
+	return *this;
 }
 
-tr::gfx::texture tr::gfx::render_texture::reallocate(glm::ivec2 size, mipmaps mipmaps, pixel_format format)
+tr::texture tr::render_texture::reallocate(glm::ivec2 size, mipmaps mipmaps, pixel_format format)
 {
+	const graphics_context::functions& gl{m_context.make_current_and_return_functions()};
+
 	texture old_data{texture::reallocate(size, mipmaps, format)};
-	if (!m_fbo.has_value()) {
-		glCreateFramebuffers(1, out_handle(m_fbo));
+	if (m_fbo == 0) {
+		gl.create_framebuffers(1, &m_fbo);
 	}
-	glNamedFramebufferTexture(m_fbo.get(), GL_COLOR_ATTACHMENT0, m_handle, 0);
+	gl.named_framebuffer_texture(m_fbo, GL_COLOR_ATTACHMENT0, m_handle, 0);
 	return old_data;
 }
 
-tr::gfx::render_texture::operator tr::gfx::render_target() const
+tr::render_texture::operator tr::render_target() const
 {
 	return render_target();
 }
 
-tr::gfx::render_target tr::gfx::render_texture::render_target() const
+tr::render_target tr::render_texture::render_target() const
 {
 	TR_ASSERT(!empty(), "Tried to create a render target for an empty texture.");
 
-	return gfx::render_target{m_fbo.get(), m_size};
+	return tr::render_target{m_fbo, m_size};
 }

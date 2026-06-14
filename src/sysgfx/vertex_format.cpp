@@ -5,29 +5,33 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include "../../include/tr/sysgfx/vertex_format.hpp"
-#include "../../include/tr/sysgfx/impl.hpp"
+#include "../../include/tr/sysgfx/gl_defines.hpp"
+#include "../../include/tr/sysgfx/graphics_context.hpp"
 
 ////////////////////////////////////////////////////////////// VERTEX FORMAT //////////////////////////////////////////////////////////////
 
-tr::gfx::vertex_format::vertex_format(std::span<const vertex_binding> bindings)
+tr::vertex_format::vertex_format(graphics_context& context, std::span<const vertex_binding> bindings)
 #ifdef TR_ENABLE_GL_CHECKS
-	: m_bindings{bindings}
+	: m_vao{{context}}, m_bindings{bindings}
 #endif
 {
-	glCreateVertexArrays(1, out_handle(m_vao));
-	GLuint attr_id{0};
+	const graphics_context::functions& gl{m_vao.get_deleter().context.make_current_and_return_functions()};
+
+	gl.create_vertex_arrays(1, out_handle(m_vao));
+	unsigned int attr_id{0};
 	for (int binding_id = 0; binding_id < int(bindings.size()); ++binding_id) {
 		const vertex_binding& binding{bindings.begin()[binding_id]};
 
-		glVertexArrayBindingDivisor(m_vao.get(), binding_id, binding.divisor);
-		GLuint offset{0};
+		gl.vertex_array_binding_divisor(m_vao.get(), binding_id, binding.divisor);
+		unsigned int offset{0};
 		for (const vertex_attribute& attribute : binding.attrs) {
 			TR_ASSERT(attribute.type != vertex_attribute_type::unknown, "Tried to construct vertex format with invalid attribute '{}'.",
 					  attribute);
 
-			glVertexArrayAttribFormat(m_vao.get(), attr_id, attribute.elements, GLenum(attribute.type), attribute.normalized, offset);
-			glEnableVertexArrayAttrib(m_vao.get(), attr_id);
-			glVertexArrayAttribBinding(m_vao.get(), attr_id++, binding_id);
+			gl.vertex_array_attrib_format(m_vao.get(), attr_id, attribute.elements, (unsigned int)(attribute.type), attribute.normalized,
+										  offset);
+			gl.enable_vertex_array_attrib(m_vao.get(), attr_id);
+			gl.vertex_array_attrib_binding(m_vao.get(), attr_id++, binding_id);
 
 			switch (attribute.type) {
 			case vertex_attribute_type::i8:
@@ -50,24 +54,39 @@ tr::gfx::vertex_format::vertex_format(std::span<const vertex_binding> bindings)
 	}
 }
 
-void tr::gfx::vertex_format::deleter::operator()(unsigned int id) const
+void tr::vertex_format::deleter::operator()(unsigned int id) const
 {
-	glDeleteVertexArrays(1, &id);
+	const graphics_context::functions& gl{context.make_current_and_return_functions()};
+
+	gl.delete_vertex_arrays(1, &id);
 }
+
+//
+
+tr::graphics_context& tr::vertex_format::context() const
+{
+	return m_vao.get_deleter().context;
+}
+
+//
 
 #ifdef TR_ENABLE_ASSERTS
-void tr::gfx::vertex_format::set_label(std::string_view label)
+void tr::vertex_format::set_label(std::string_view label)
 {
-	glObjectLabel(GL_VERTEX_ARRAY, m_vao.get(), GLsizei(label.size()), label.data());
+	const graphics_context::functions& gl{context().make_current_and_return_functions()};
+
+	gl.object_label(GL_VERTEX_ARRAY, m_vao.get(), label.size(), label.data());
 }
 
-std::string tr::gfx::vertex_format::label() const
+std::string tr::vertex_format::label() const
 {
-	GLsizei label_length;
-	glGetObjectLabel(GL_VERTEX_ARRAY, m_vao.get(), 0, &label_length, nullptr);
+	const graphics_context::functions& gl{context().make_current_and_return_functions()};
+
+	int label_length;
+	gl.get_object_label(GL_VERTEX_ARRAY, m_vao.get(), 0, &label_length, nullptr);
 	if (label_length > 0) {
 		std::string label_string(label_length, '\0');
-		glGetObjectLabel(GL_VERTEX_ARRAY, m_vao.get(), label_length + 1, nullptr, label_string.data());
+		gl.get_object_label(GL_VERTEX_ARRAY, m_vao.get(), label_length + 1, nullptr, label_string.data());
 		return label_string;
 	}
 	else {
@@ -75,8 +94,3 @@ std::string tr::gfx::vertex_format::label() const
 	}
 }
 #endif
-
-tr::gfx::vertex_format& tr::gfx::vertex2_format()
-{
-	return sys::g_window.gfx_context().vertex2_format();
-}

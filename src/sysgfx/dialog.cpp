@@ -28,8 +28,7 @@ static constexpr std::array<SDL_MessageBoxButtonData, 3> yes_no_cancel_buttons{{
 // Buffer allocated to be freed in case of an out-of-memory error.
 static std::unique_ptr<char[]> g_emergency_buffer{new char[16384]};
 
-tr::sys::message_box_button tr::sys::show_message_box(message_box_type type, message_box_layout buttons, cstring_view title,
-													  cstring_view message)
+tr::message_box_button tr::show_message_box(message_box_type type, message_box_layout buttons, cstring_view title, cstring_view message)
 {
 	const SDL_MessageBoxFlags flags{SDL_MessageBoxFlags(type)};
 
@@ -54,13 +53,13 @@ tr::sys::message_box_button tr::sys::show_message_box(message_box_type type, mes
 	}
 }
 
-void tr::sys::show_fatal_error_message_box(const std::exception& exception)
+void tr::show_fatal_error_message_box(const std::exception& exception)
 {
 	if (dynamic_ref_cast<const std::bad_alloc>(exception).has_ref() || dynamic_ref_cast<const out_of_memory>(exception).has_ref()) {
 		g_emergency_buffer.reset();
 	}
 
-	const std::string title{TR_FMT::format("{} - Fatal Error", main::metadata.name)};
+	const std::string title{TR_FMT::format("{} - Fatal Error", app::metadata.name)};
 
 	tr::opt_ref<const tr::exception> tr_exception{dynamic_ref_cast<const tr::exception>(exception)};
 	std::string message;
@@ -112,7 +111,7 @@ static void file_dialog_callback(void* userdata, const char* const* files, int)
 }
 
 // Base open file dialog function.
-static std::vector<std::filesystem::path> show_open_file_dialog_base(std::span<const tr::sys::dialog_filter> filters,
+static std::vector<std::filesystem::path> show_open_file_dialog_base(std::span<const tr::dialog_filter> filters,
 																	 tr::cstring_view default_path, bool allow_multiple)
 {
 	file_dialog_context ctx{};
@@ -137,29 +136,29 @@ static std::vector<std::filesystem::path> show_open_folder_dialog_base(tr::cstri
 	return std::move(ctx.paths);
 }
 
-std::filesystem::path tr::sys::show_open_file_dialog(std::span<const dialog_filter> filters, cstring_view default_path)
+std::filesystem::path tr::show_open_file_dialog(std::span<const dialog_filter> filters, cstring_view default_path)
 {
 	std::vector<std::filesystem::path> vec{show_open_file_dialog_base(filters, default_path, false)};
 	return vec.empty() ? std::filesystem::path{} : std::move(vec.front());
 }
 
-std::vector<std::filesystem::path> tr::sys::show_open_files_dialog(std::span<const dialog_filter> filters, cstring_view default_path)
+std::vector<std::filesystem::path> tr::show_open_files_dialog(std::span<const dialog_filter> filters, cstring_view default_path)
 {
 	return show_open_file_dialog_base(filters, default_path, true);
 }
 
-std::filesystem::path tr::sys::show_open_folder_dialog(cstring_view default_path)
+std::filesystem::path tr::show_open_folder_dialog(cstring_view default_path)
 {
 	std::vector<std::filesystem::path> vec{show_open_folder_dialog_base(default_path, false)};
 	return vec.empty() ? std::filesystem::path{} : std::move(vec.front());
 }
 
-std::vector<std::filesystem::path> tr::sys::show_open_folders_dialog(cstring_view default_path)
+std::vector<std::filesystem::path> tr::show_open_folders_dialog(cstring_view default_path)
 {
 	return show_open_folder_dialog_base(default_path, true);
 }
 
-std::filesystem::path tr::sys::show_save_file_dialog(std::span<const dialog_filter> filters, cstring_view default_path)
+std::filesystem::path tr::show_save_file_dialog(std::span<const dialog_filter> filters, cstring_view default_path)
 {
 	file_dialog_context ctx{};
 	SDL_ShowSaveFileDialog(file_dialog_callback, &ctx, nullptr, (const SDL_DialogFileFilter*)filters.data(), int(filters.size()),

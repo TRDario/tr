@@ -7,7 +7,6 @@
 #define SDL_MAIN_USE_CALLBACKS 1
 #include "../../include/tr/sysgfx/main.hpp"
 #include "../../include/tr/sysgfx/dialog.hpp"
-#include "../../include/tr/sysgfx/impl.hpp"
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
 #include <SDL3_ttf/SDL_ttf.h>
@@ -23,29 +22,29 @@
 
 //////////////////////////////////////////////////////////////// INIT ERROR ///////////////////////////////////////////////////////////////
 
-tr::sys::init_error::init_error(std::string_view description)
+tr::init_error::init_error(std::string_view description)
 	: m_description{description}
 {
 }
 
-std::string_view tr::sys::init_error::name() const
+std::string_view tr::init_error::name() const
 {
 	return "System initialization error";
 }
 
-std::string_view tr::sys::init_error::description() const
+std::string_view tr::init_error::description() const
 {
 	return m_description;
 }
 
-std::string_view tr::sys::init_error::details() const
+std::string_view tr::init_error::details() const
 {
 	return SDL_GetError();
 }
 
 ///////////////////////////////////////////////////////////// FREQUENCY SETTER ////////////////////////////////////////////////////////////
 
-void tr::sys::set_update_frequency(float frequency)
+void tr::set_update_frequency(float frequency)
 {
 	SDL_SetHint(SDL_HINT_MAIN_CALLBACK_RATE, frequency == uncapped_update_frequency ? "0" : std::to_string(frequency).c_str());
 }
@@ -56,31 +55,30 @@ extern "C"
 {
 	SDL_AppResult SDL_AppInit(void**, int argc, char** argv)
 	{
-		using tr::sys::main::metadata;
-		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_NAME_STRING, metadata.name);
-		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_VERSION_STRING, metadata.version);
-		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_IDENTIFIER_STRING, metadata.identifier);
-		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_CREATOR_STRING, metadata.developer);
-		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_COPYRIGHT_STRING, metadata.copyright);
-		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_URL_STRING, metadata.url);
-		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_TYPE_STRING, metadata.type == tr::sys::app_type::game ? "game" : "application");
-		if (!metadata.name.empty()) {
-			if (!metadata.version.empty()) {
-				TR_LOG(tr::log, tr::severity::info, "Launching {} {}.", metadata.name, metadata.version);
+		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_NAME_STRING, app::metadata.name);
+		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_VERSION_STRING, app::metadata.version);
+		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_IDENTIFIER_STRING, app::metadata.identifier);
+		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_CREATOR_STRING, app::metadata.developer);
+		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_COPYRIGHT_STRING, app::metadata.copyright);
+		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_URL_STRING, app::metadata.url);
+		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_TYPE_STRING, app::metadata.type == tr::app_type::game ? "game" : "application");
+		if (!app::metadata.name.empty()) {
+			if (!app::metadata.version.empty()) {
+				TR_LOG(tr::log, tr::severity::info, "Launching {} {}.", app::metadata.name, app::metadata.version);
 			}
 			else {
-				TR_LOG(tr::log, tr::severity::info, "Launching {}.", metadata.name);
+				TR_LOG(tr::log, tr::severity::info, "Launching {}.", app::metadata.name);
 			}
 		}
 
 		try {
-			tr::sys::signal parse_result{tr::sys::main::parse_command_line({(tr::cstring_view*)argv, std::size_t(argc)})};
-			if (parse_result != tr::sys::signal::proceed) {
+			tr::signal parse_result{app::parse_command_line({(tr::cstring_view*)argv, std::size_t(argc)})};
+			if (parse_result != tr::signal::proceed) {
 				return SDL_AppResult(parse_result);
 			}
 		}
 		catch (std::exception& err) {
-			tr::sys::show_fatal_error_message_box(err);
+			tr::show_fatal_error_message_box(err);
 			return SDL_APP_FAILURE;
 		}
 
@@ -104,10 +102,10 @@ extern "C"
 #endif
 
 		try {
-			return SDL_AppResult(tr::sys::main::initialize());
+			return SDL_AppResult(app::initialize());
 		}
 		catch (std::exception& err) {
-			tr::sys::show_fatal_error_message_box(err);
+			tr::show_fatal_error_message_box(err);
 			return SDL_APP_FAILURE;
 		}
 	}
@@ -115,10 +113,10 @@ extern "C"
 	SDL_AppResult SDL_AppEvent(void*, SDL_Event* event)
 	{
 		try {
-			return SDL_AppResult(tr::sys::main::handle_event((tr::sys::event&)*event));
+			return SDL_AppResult(app::handle_event((tr::event&)*event));
 		}
 		catch (std::exception& err) {
-			tr::sys::show_fatal_error_message_box(err);
+			tr::show_fatal_error_message_box(err);
 			return SDL_APP_FAILURE;
 		}
 	}
@@ -130,10 +128,10 @@ extern "C"
 			const std::chrono::steady_clock::time_point now{std::chrono::steady_clock::now()};
 			const tr::duration delta{now - prev};
 			prev = now;
-			return SDL_AppResult(tr::sys::main::update(delta));
+			return SDL_AppResult(app::update(delta));
 		}
 		catch (std::exception& err) {
-			tr::sys::show_fatal_error_message_box(err);
+			tr::show_fatal_error_message_box(err);
 			return SDL_APP_FAILURE;
 		}
 	}
@@ -141,11 +139,10 @@ extern "C"
 	void SDL_AppQuit(void*, SDL_AppResult)
 	{
 		try {
-			tr::sys::main::shut_down();
-			TR_ASSERT(!tr::sys::g_window.is_open(), "Did not close window during main::shut_down.");
+			app::shut_down();
 		}
 		catch (std::exception& err) {
-			tr::sys::show_fatal_error_message_box(err);
+			tr::show_fatal_error_message_box(err);
 		}
 
 #ifdef TR_HAS_AUDIO

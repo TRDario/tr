@@ -3,14 +3,14 @@
 // Provides a mouse cursor class and related functionality.                                                                              //
 //                                                                                                                                       //
 // A cursor can be created with a stock system graphic, or a bitmap:                                                                     //
-//     - tr::sys::cursor{} -> default system cursor                                                                                      //
-//     - tr::sys::cursor{tr::sys::sys_cursor::hand} -> pointing hand system cursor                                                       //
-//     - tr::sys::cursor{bmp, {5, 5}} -> cursor with the graphics of bmp, the actual position of the cursor is at pixel (5, 5) of bmp    //
+//     - tr::cursor{} -> default system cursor                                                                                           //
+//     - tr::cursor{tr::sys_cursor::hand} -> pointing hand system cursor                                                                 //
+//     - tr::cursor{bmp, {5, 5}} -> cursor with the graphics of bmp, the actual position of the cursor is at pixel (5, 5) of bmp         //
 //                                                                                                                                       //
 // The cursor can be shown or hidden, and its graphic can be changed:                                                                    //
-//     - tr::sys::show_cursor() -> shows the cursor                                                                                      //
-//     - tr::sys::hide_cursor() -> hides the cursor                                                                                      //
-//     - tr::sys::cursor hand{tr::sys::sys_cursor::hand}; tr::sys::set_cursor(hand) -> sets the cursor to the pointing hand              //
+//     - tr::show_cursor() -> shows the cursor                                                                                           //
+//     - tr::hide_cursor() -> hides the cursor                                                                                           //
+//     - tr::cursor hand{tr::sys_cursor::hand}; tr::set_cursor(hand) -> sets the cursor to the pointing hand                             //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -24,7 +24,7 @@ namespace tr {
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
-namespace tr::sys {
+namespace tr {
 	// System mouse cursor icons.
 	enum class sys_cursor {
 		arrow,      // Default arrow cursor.
@@ -73,4 +73,4 @@ namespace tr::sys {
 	void hide_cursor();
 	// Sets the mouse cursor.
 	void set_cursor(const cursor& cursor);
-} // namespace tr::sys
+} // namespace tr

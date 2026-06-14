@@ -7,33 +7,20 @@
 #pragma once
 #include "../graphics_context.hpp"
 
-//////////////////////////////////////////////////////////// SET VERTEX BUFFER ////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////// IMPLEMENTATION /////////////////////////////////////////////////////////////
 
-#ifdef TR_ENABLE_GL_CHECKS
-namespace tr::gfx {
-	// Sets an active vertex buffer.
-	void set_vertex_buffer_checked(const basic_static_vertex_buffer& buffer, int slot, ssize offset, usize stride,
-								   std::span<const vertex_attribute> attributes);
-	// Sets an active vertex buffer.
-	void set_vertex_buffer_checked(const basic_dyn_vertex_buffer& buffer, int slot, ssize offset, usize stride,
-								   std::span<const vertex_attribute> attributes);
-} // namespace tr::gfx
-#endif
-
-template <tr::standard_layout T> void tr::gfx::set_vertex_buffer(const static_vertex_buffer<T>& buffer, int slot, ssize offset)
+template <tr::standard_layout T> void tr::graphics_context::set_vertex_buffer(const static_vertex_buffer<T>& buffer, int slot, ssize offset)
 {
 #ifdef TR_ENABLE_GL_CHECKS
-	set_vertex_buffer_checked(buffer, slot, offset * sizeof(T), sizeof(T), as_vertex_attribute_list<T>);
-#else
-	set_vertex_buffer(buffer, slot, offset * sizeof(T), sizeof(T));
+	check_vertex_buffer(buffer.label(), slot, as_vertex_attribute_list<T>);
 #endif
+	set_vertex_buffer(buffer, slot, offset * sizeof(T), sizeof(T));
 }
 
-template <tr::standard_layout T> void tr::gfx::set_vertex_buffer(const dyn_vertex_buffer<T>& buffer, int slot, ssize offset)
+template <tr::standard_layout T> void tr::graphics_context::set_vertex_buffer(const dyn_vertex_buffer<T>& buffer, int slot, ssize offset)
 {
 #ifdef TR_ENABLE_GL_CHECKS
-	set_vertex_buffer_checked(buffer, slot, offset * sizeof(T), sizeof(T), as_vertex_attribute_list<T>);
-#else
-	set_vertex_buffer(buffer, slot, offset * sizeof(T), sizeof(T));
+	check_vertex_buffer(buffer.label(), slot, as_vertex_attribute_list<T>);
 #endif
+	set_vertex_buffer(buffer, slot, offset * sizeof(T), sizeof(T));
 }

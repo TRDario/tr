@@ -41,6 +41,6 @@ void tr::ImGui::NewFrame()
 
 void tr::ImGui::Draw()
 {
-	std::ignore = sys::g_window.gfx_context().should_setup_context(gfx::renderer_id::imgui_renderer);
+	(void)sys::g_window.gfx_context().should_setup_context(renderer_id::imgui_renderer);
 	ImGui_ImplOpenGL3_RenderDrawData(::ImGui::GetDrawData());
 }

@@ -42,17 +42,20 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "buffer.hpp"
-#include "buffer_map.hpp"
+#include "graphics_buffer.hpp"
+#include "graphics_buffer_map.hpp"
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
-namespace tr::gfx {
+namespace tr {
 	// GPU buffer accessable to a shader.
-	class basic_shader_buffer : private buffer {
+	class basic_shader_buffer : private graphics_buffer {
 	  public:
 		// Allocates an uninitialized shader buffer.
-		basic_shader_buffer(usize header_size, usize capacity, map_type map_type = map_type::write_only);
+		basic_shader_buffer(graphics_context& context, usize header_size, usize capacity, map_type map_type = map_type::write_only);
+
+		// Gets a reference to the graphics context the buffer is on.
+		using graphics_buffer::context;
 
 		// Gets the size of the fixed header block.
 		usize header_size() const;
@@ -71,17 +74,17 @@ namespace tr::gfx {
 		// Gets whether the buffer is mapped.
 		bool mapped() const;
 		// Maps the fixed header.
-		basic_buffer_map map_header();
+		basic_graphics_buffer_map map_header();
 		// Maps the dynamic array.
-		basic_buffer_map map_array();
+		basic_graphics_buffer_map map_array();
 		// Maps the entire buffer.
-		basic_buffer_map map();
+		basic_graphics_buffer_map map();
 
 #ifdef TR_ENABLE_ASSERTS
 		// Gets the debug label of the shader buffer.
-		using buffer::label;
+		using graphics_buffer::label;
 		// Sets the debug label of the shader buffer.
-		using buffer::set_label;
+		using graphics_buffer::set_label;
 #endif
 
 	  private:
@@ -95,16 +98,19 @@ namespace tr::gfx {
 		usize m_array_capacity;
 
 		// Maps a range of the buffer.
-		basic_buffer_map map_range(usize offset, usize size);
+		basic_graphics_buffer_map map_range(usize offset, usize size);
 
 		friend class shader_base;
 	};
 
 	// Shader buffer with a typed header and array.
-	template <typename Header, typename ArrayElement> class shader_buffer : public basic_shader_buffer {
+	template <typename Header, typename ArrayElement> class shader_buffer : private basic_shader_buffer {
 	  public:
 		// Allocates an uninitialized shader buffer.
-		shader_buffer(usize capacity, map_type map_type = map_type::write_only);
+		shader_buffer(graphics_context& context, usize capacity, map_type map_type = map_type::write_only);
+
+		// Gets a reference to the graphics context the buffer is on.
+		using basic_shader_buffer::context;
 
 		// Gets the size of the dynamic array.
 		usize array_size() const;
@@ -118,28 +124,22 @@ namespace tr::gfx {
 		// Resizes the dynamic array.
 		void resize_array(usize size);
 
+		// Gets whether the buffer is mapped.
+		using basic_shader_buffer::mapped;
 		// Maps the fixed header.
-		buffer_object_map<Header> map_header();
+		graphics_buffer_object_map<Header> map_header();
 		// Maps the dynamic array.
-		buffer_span_map<ArrayElement> map_array();
-
-	  private:
-		using basic_shader_buffer::array_capacity;
-		using basic_shader_buffer::array_size;
-		using basic_shader_buffer::header_size;
-		using basic_shader_buffer::map;
-		using basic_shader_buffer::map_array;
-		using basic_shader_buffer::map_header;
-		using basic_shader_buffer::resize_array;
-		using basic_shader_buffer::set_array;
-		using basic_shader_buffer::set_header;
+		graphics_buffer_span_map<ArrayElement> map_array();
 	};
 
 	// Specialized shader buffer with no header before the array.
-	template <typename Element> class shader_array : public basic_shader_buffer {
+	template <typename Element> class shader_array : private basic_shader_buffer {
 	  public:
 		// Allocates an uninitialized shader array.
-		shader_array(usize capacity, map_type map_type = map_type::write_only);
+		shader_array(graphics_context& context, usize capacity, map_type map_type = map_type::write_only);
+
+		// Gets a reference to the graphics context the buffer is on.
+		using basic_shader_buffer::context;
 
 		// Gets the size of the array.
 		usize size() const;
@@ -151,20 +151,11 @@ namespace tr::gfx {
 		// Resizes the array.
 		void resize(usize size);
 
+		// Gets whether the buffer is mapped.
+		using basic_shader_buffer::mapped;
 		// Maps the array.
-		buffer_span_map<Element> map();
-
-	  private:
-		using basic_shader_buffer::array_capacity;
-		using basic_shader_buffer::array_size;
-		using basic_shader_buffer::header_size;
-		using basic_shader_buffer::map;
-		using basic_shader_buffer::map_array;
-		using basic_shader_buffer::map_header;
-		using basic_shader_buffer::resize_array;
-		using basic_shader_buffer::set_array;
-		using basic_shader_buffer::set_header;
+		graphics_buffer_span_map<Element> map();
 	};
-} // namespace tr::gfx
+} // namespace tr
 
 #include "impl/shader_buffer.hpp" // IWYU pragma: export

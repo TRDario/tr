@@ -3,28 +3,28 @@
 // Provides functionality related to the main loop of the program.                                                                       //
 //                                                                                                                                       //
 // Unlike a standard C++ program, programs using tr do not have to define main(). Instead, a number of functions in the namespace        //
-// tr::sys::main have to be defined, as well as tr::sys::main::metadata, a struct containing basic application metadata:                 //
-//     - tr::sys::main::metadata{.name = "Example", .version = "v0", .developer = "Me"}                                                  //
+// app have to be defined, as well as app::metadata, a struct containing basic application metadata:                                     //
+//     - app::metadata{.name = "Example", .version = "v0", .developer = "Me"}                                                            //
 //       -> example metadata struct definition                                                                                           //
-//     - tr::sys::main::parse_command_line(std::span<cstring_view> args)                                                                 //
+//     - app::parse_command_line(std::span<cstring_view> args)                                                                           //
 //       -> called before any system initialization, meant for parsing command-line arguments and other preinitialization                //
-//     - tr::sys::main::initialize()                                                                                                     //
+//     - app::initialize()                                                                                                               //
 //       -> called after system initialization, meant to initialize the application state and open the window                            //
-//     - tr::sys::main::handle_event(const event& event)                                                                                 //
+//     - app::handle_event(const event& event)                                                                                           //
 //       -> called when an event is recieved, meant to handle the event                                                                  //
-//     - tr::sys::main::update(duration delta)                                                                                           //
+//     - app::update(duration delta)                                                                                                     //
 //       -> called at the rate defined in set_update_frequency (uncapped by default), meant for updating and drawing the application     //
-//     - tr::sys::main::shut_down()                                                                                                      //
+//     - app::shut_down()                                                                                                                //
 //       -> called after an exit signal is returned by one of the other main functions, meant to clean up the application state          //
 //                                                                                                                                       //
-// Most functions in tr::sys::main, with the exception of shut_down, return a signal. If tr::sys::signal::proceed is returned, execution //
-// will continue as normal. If tr::sys::signal::exit or tr::sys::signal::abort is returned, further execution is stopped and shut_down   //
+// Most functions in app, with the exception of shut_down, return a signal. If tr::signal::proceed is returned, execution                //
+// will continue as normal. If tr::signal::exit or tr::signal::abort is returned, further execution is stopped and shut_down             //
 // is called to clean up the application state.                                                                                          //
 //                                                                                                                                       //
-// The rate at which tr::sys::main::update() is called can be set with set_update_frequency, and can be reset to the default behavior    //
-// by setting it to tr::sys::uncapped_update_frequency:                                                                                  //
-//     - tr::sys::set_update_frequency(60) -> tr::sys::main::update() will be called 60 times a second                                   //
-//     - tr::sys::set_update_frequency(tr::sys::uncapped_update_frequency) -> tr::sys::main::update() will be called as often as possible//
+// The rate at which app::update() is called can be set with set_update_frequency, and can be reset to the default behavior              //
+// by setting it to tr::uncapped_update_frequency:                                                                                       //
+//     - tr::set_update_frequency(60) -> app::update() will be called 60 times a second                                                 //
+//     - tr::set_update_frequency(tr::uncapped_update_frequency) -> app::update() will be called as often as possible                    //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -33,7 +33,7 @@
 #include "../utility/exception.hpp"
 #include "event.hpp"
 
-namespace tr::sys {
+namespace tr {
 	// Error thrown when system initialization fails.
 	class init_error : public tr::exception {
 	  public:
@@ -87,21 +87,21 @@ namespace tr::sys {
 	inline constexpr float uncapped_update_frequency{0};
 	// Sets the frequency at which update() is called (by default uncapped).
 	void set_update_frequency(float frequency);
+} // namespace tr
 
-	// User-defined functions and data (mandatory). Uncaught exceptions will display a dialog box and quit the application.
-	namespace main {
-		// Application metadata.
-		extern const app_metadata metadata;
+// User-defined functions and data (mandatory). Uncaught exceptions will display a dialog box and quit the application.
+namespace app {
+	// Application metadata.
+	extern const tr::app_metadata metadata;
 
-		// Called once at the beginning of execution, but before the initialization of any systems.
-		signal parse_command_line(std::span<cstring_view> args);
-		// Called once at the beginning of execution after the parsing of the command line arguments.
-		signal initialize();
-		// Called whenever an event needs to be handled. Not guaranteed to be called on the main thread.
-		signal handle_event(const event& event);
-		// Primary update function.
-		signal update(duration delta);
-		// Called once at the end of execution.
-		void shut_down();
-	} // namespace main
-} // namespace tr::sys
+	// Called once at the beginning of execution, but before the initialization of any systems.
+	tr::signal parse_command_line(std::span<tr::cstring_view> args);
+	// Called once at the beginning of execution after the parsing of the command line arguments.
+	tr::signal initialize();
+	// Called whenever an event needs to be handled. Not guaranteed to be called on the main thread.
+	tr::signal handle_event(const tr::event& event);
+	// Primary update function.
+	tr::signal update(tr::duration delta);
+	// Called once at the end of execution.
+	void shut_down();
+} // namespace app

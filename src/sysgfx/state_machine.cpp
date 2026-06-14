@@ -8,7 +8,7 @@
 
 ////////////////////////////////////////////////////////////////// STATE //////////////////////////////////////////////////////////////////
 
-tr::next_state tr::state::handle_event(const sys::event&)
+tr::next_state tr::state::handle_event(const event&)
 {
 	return keep_state();
 }
@@ -19,20 +19,6 @@ tr::next_state tr::state::update(duration)
 }
 
 void tr::state::draw() {}
-
-//////////////////////////////////////////////////////////// NEXT STATE HANDLER ///////////////////////////////////////////////////////////
-
-void tr::state_machine::next_state_handler::operator()(keep_state_t) {}
-
-void tr::state_machine::next_state_handler::operator()(drop_state_t)
-{
-	m_current_state.reset();
-}
-
-void tr::state_machine::next_state_handler::operator()(std::unique_ptr<state>&& next)
-{
-	m_current_state = std::move(next);
-}
 
 ////////////////////////////////////////////////////////////// STATE MACHINE //////////////////////////////////////////////////////////////
 
@@ -56,10 +42,15 @@ void tr::state_machine::clear()
 	m_current_state.reset();
 }
 
-void tr::state_machine::handle_event(const sys::event& event)
+void tr::state_machine::handle_event(const event& event)
 {
 	if (m_current_state != nullptr) {
-		std::visit(next_state_handler{m_current_state}, m_current_state->handle_event(event));
+		m_current_state->handle_event(event) | stateful_match{
+												   *this,
+												   &state_machine::keep_state,
+												   &state_machine::drop_state,
+												   &state_machine::assign_state,
+											   };
 	}
 }
 
@@ -70,4 +61,18 @@ void tr::state_machine::draw()
 		m_current_state->draw();
 		m_draw_benchmark.stop();
 	}
+}
+
+//
+
+void tr::state_machine::keep_state(keep_state_t) {}
+
+void tr::state_machine::drop_state(drop_state_t)
+{
+	m_current_state.reset();
+}
+
+void tr::state_machine::assign_state(std::unique_ptr<state>&& next)
+{
+	m_current_state = std::move(next);
 }

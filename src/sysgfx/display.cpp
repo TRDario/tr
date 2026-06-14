@@ -5,19 +5,18 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include "../../include/tr/sysgfx/display.hpp"
-#include "../../include/tr/sysgfx/impl.hpp"
 #include "../../include/tr/utility/defer.hpp"
 #include <SDL3/SDL.h>
 
 ///////////////////////////////////////////////////////////////// DISPLAY /////////////////////////////////////////////////////////////////
 
-glm::ivec2 tr::sys::display_size()
+glm::ivec2 tr::display_size()
 {
 	const SDL_DisplayMode& mode{*SDL_GetDesktopDisplayMode(SDL_GetPrimaryDisplay())};
 	return {mode.w, mode.h};
 }
 
-tr::u8 tr::sys::max_msaa()
+tr::u8 tr::max_msaa()
 {
 	constexpr u8 unknown{255};
 
@@ -53,15 +52,11 @@ tr::u8 tr::sys::max_msaa()
 				break;
 			}
 		}
-
-		if (g_window.is_open()) {
-			SDL_GL_MakeCurrent(g_window.ptr(), g_window.gfx_context().ptr());
-		}
 	}
 	return max;
 }
 
-float tr::sys::refresh_rate()
+float tr::refresh_rate()
 {
 	return SDL_GetDesktopDisplayMode(SDL_GetPrimaryDisplay())->refresh_rate;
 }

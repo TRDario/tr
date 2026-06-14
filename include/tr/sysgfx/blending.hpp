@@ -4,12 +4,12 @@
 //                                                                                                                                       //
 // tr always uses separated rgb and alpha blending modes, so blending modes consist of two sets of (function, multiplier, function).     //
 //     - blend_mode alpha_blending{                                                                                                      //
-//           tr::sys::blend_multiplier::src_alpha,                                                                                       //
-//           tr::sys::blend_fn::add,                                                                                                     //
-//           tr::sys::blend_multiplier::one_minus_src_alpha,                                                                             //
-//           tr::sys::blend_multiplier::one,                                                                                             //
-//           tr::sys::blend_fn::add,                                                                                                     //
-//           tr::sys::blend_multiplier::one_minus_src_alpha                                                                              //
+//           tr::blend_multiplier::src_alpha,                                                                                            //
+//           tr::blend_fn::add,                                                                                                          //
+//           tr::blend_multiplier::one_minus_src_alpha,                                                                                  //
+//           tr::blend_multiplier::one,                                                                                                  //
+//           tr::blend_fn::add,                                                                                                          //
+//           tr::blend_multiplier::one_minus_src_alpha                                                                                   //
 //       }                                                                                                                               //
 //                                                                                                                                       //
 // Alpha blending, premultiplied alpha blending, maximum blending and reverse alpha blending are provided as constants.                  //
@@ -20,7 +20,7 @@
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
-namespace tr::gfx {
+namespace tr {
 	// Blending functions.
 	enum class blend_fn {
 		add = 0x8006,      // The source and destination colors are added together.
@@ -74,4 +74,4 @@ namespace tr::gfx {
 	// Applied after MAX_BLENDING to achieve normal alpha blending.
 	inline constexpr blend_mode reverse_alpha_blending{blend_multiplier::one_minus_dst_alpha, blend_fn::add, blend_multiplier::dst_alpha,
 													   blend_multiplier::one_minus_dst_alpha, blend_fn::max, blend_multiplier::dst_alpha};
-} // namespace tr::gfx
+} // namespace tr

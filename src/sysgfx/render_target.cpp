@@ -8,34 +8,34 @@
 
 ////////////////////////////////////////////////////////////// RENDER TARGET //////////////////////////////////////////////////////////////
 
-tr::gfx::render_target::render_target(unsigned int fbo, glm::ivec2 fbo_size)
+tr::render_target::render_target(unsigned int fbo, glm::ivec2 fbo_size)
 	: m_fbo{fbo}, m_fbo_size{fbo_size}, m_viewport{{}, fbo_size}, m_scissor_box{{}, fbo_size}
 {
 }
 
-tr::gfx::render_target::render_target(unsigned int fbo, glm::ivec2 fbo_size, const irect2& viewport, const irect2& scissor_box)
+tr::render_target::render_target(unsigned int fbo, glm::ivec2 fbo_size, const irect2& viewport, const irect2& scissor_box)
 	: m_fbo{fbo}, m_fbo_size{fbo_size}, m_viewport{viewport}, m_scissor_box{scissor_box}
 {
 }
 
-const glm::ivec2& tr::gfx::render_target::size() const
+const glm::ivec2& tr::render_target::size() const
 {
 	return m_viewport.size;
 }
 
-tr::gfx::render_target tr::gfx::render_target::cropped(const irect2& viewport) const
+tr::render_target tr::render_target::cropped(const irect2& viewport) const
 {
 	const irect2 absolute_viewport{m_viewport.tl + viewport.tl, viewport.size};
 	return {m_fbo, m_fbo_size, absolute_viewport, absolute_viewport};
 }
 
-tr::gfx::render_target tr::gfx::render_target::scissored(const irect2& scissor_box) const
+tr::render_target tr::render_target::scissored(const irect2& scissor_box) const
 {
 	const irect2 absolute_scissor_box{m_viewport.tl + scissor_box.tl, scissor_box.size};
 	return {m_fbo, m_fbo_size, m_viewport, absolute_scissor_box};
 }
 
-tr::gfx::render_target tr::gfx::render_target::subtarget(const irect2& viewport, const irect2& scissor_box) const
+tr::render_target tr::render_target::subtarget(const irect2& viewport, const irect2& scissor_box) const
 {
 	const irect2 absolute_viewport{m_viewport.tl + viewport.tl, viewport.size};
 	const irect2 absolute_scissor_box{absolute_viewport.tl + scissor_box.tl, scissor_box.size};

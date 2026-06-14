@@ -5,19 +5,23 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include "../../include/tr/sysgfx/shader_pipeline.hpp"
-#include "../../include/tr/sysgfx/impl.hpp"
+#include "../../include/tr/sysgfx/gl_defines.hpp"
+#include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/utility/hash_map.hpp"
 #include "tr/sysgfx/shader.hpp"
 
 ///////////////////////////////////////////////////////////// SHADER PIPELINE /////////////////////////////////////////////////////////////
 
-tr::gfx::shader_pipeline::shader_pipeline()
+tr::shader_pipeline::shader_pipeline(graphics_context& context)
+	: m_ppo{{context}}
 {
-	glCreateProgramPipelines(1, out_handle(m_ppo));
+	const graphics_context::functions& gl{context.make_current_and_return_functions()};
+
+	gl.create_program_pipelines(1, out_handle(m_ppo));
 }
 
-tr::gfx::shader_pipeline::shader_pipeline(const vertex_shader& vshader, const fragment_shader& fshader)
-	: shader_pipeline{}
+tr::shader_pipeline::shader_pipeline(graphics_context& context, const vertex_shader& vshader, const fragment_shader& fshader)
+	: shader_pipeline{context}
 {
 #ifdef TR_ENABLE_GL_CHECKS
 	TR_ASSERT(vshader.m_outputs.size() == fshader.m_inputs.size(),
@@ -36,28 +40,45 @@ tr::gfx::shader_pipeline::shader_pipeline(const vertex_shader& vshader, const fr
 	}
 #endif
 
-	glUseProgramStages(m_ppo.get(), GL_VERTEX_SHADER_BIT, vshader.m_program.get());
-	glUseProgramStages(m_ppo.get(), GL_FRAGMENT_SHADER_BIT, fshader.m_program.get());
+	const graphics_context::functions& gl{context.make_current_and_return_functions()};
+
+	gl.use_program_stages(m_ppo.get(), GL_VERTEX_SHADER_BIT, vshader.m_program.get());
+	gl.use_program_stages(m_ppo.get(), GL_FRAGMENT_SHADER_BIT, fshader.m_program.get());
 }
 
-void tr::gfx::shader_pipeline::deleter::operator()(unsigned int id) const
+void tr::shader_pipeline::deleter::operator()(unsigned int id) const
 {
-	glDeleteProgramPipelines(1, &id);
+	const graphics_context::functions& gl{context.make_current_and_return_functions()};
+
+	gl.delete_program_pipelines(1, &id);
 }
+
+//
+
+tr::graphics_context& tr::shader_pipeline::context() const
+{
+	return m_ppo.get_deleter().context;
+}
+
+//
 
 #ifdef TR_ENABLE_ASSERTS
-void tr::gfx::shader_pipeline::set_label(std::string_view label)
+void tr::shader_pipeline::set_label(std::string_view label)
 {
-	glObjectLabel(GL_PROGRAM_PIPELINE, m_ppo.get(), GLsizei(label.size()), label.data());
+	const graphics_context::functions& gl{context().make_current_and_return_functions()};
+
+	gl.object_label(GL_PROGRAM_PIPELINE, m_ppo.get(), label.size(), label.data());
 }
 
-std::string tr::gfx::shader_pipeline::label() const
+std::string tr::shader_pipeline::label() const
 {
-	GLsizei label_length;
-	glGetObjectLabel(GL_PROGRAM_PIPELINE, m_ppo.get(), 0, &label_length, nullptr);
+	const graphics_context::functions& gl{context().make_current_and_return_functions()};
+
+	int label_length;
+	gl.get_object_label(GL_PROGRAM_PIPELINE, m_ppo.get(), 0, &label_length, nullptr);
 	if (label_length > 0) {
 		std::string label_string(label_length, '\0');
-		glGetObjectLabel(GL_PROGRAM_PIPELINE, m_ppo.get(), label_length + 1, nullptr, label_string.data());
+		gl.get_object_label(GL_PROGRAM_PIPELINE, m_ppo.get(), label_length + 1, nullptr, label_string.data());
 		return label_string;
 	}
 	else {
@@ -68,43 +89,48 @@ std::string tr::gfx::shader_pipeline::label() const
 
 ////////////////////////////////////////////////////////// OWNING SHADER PIPELINE /////////////////////////////////////////////////////////
 
-tr::gfx::owning_shader_pipeline::owning_shader_pipeline(gfx::vertex_shader&& vshader, gfx::fragment_shader&& fshader)
-	: m_vshader{std::move(vshader)}, m_fshader{std::move(fshader)}, m_base{m_vshader, m_fshader}
+tr::owning_shader_pipeline::owning_shader_pipeline(graphics_context& context, tr::vertex_shader&& vshader, tr::fragment_shader&& fshader)
+	: m_vshader{std::move(vshader)}, m_fshader{std::move(fshader)}, m_base{context, m_vshader, m_fshader}
 {
 }
 
-tr::gfx::owning_shader_pipeline::operator const tr::gfx::shader_pipeline&() const
+tr::owning_shader_pipeline::operator const tr::shader_pipeline&() const
 {
 	return m_base;
 }
 
-tr::gfx::vertex_shader& tr::gfx::owning_shader_pipeline::vertex_shader()
+tr::graphics_context& tr::owning_shader_pipeline::context() const
+{
+	return m_base.context();
+}
+
+tr::vertex_shader& tr::owning_shader_pipeline::vertex_shader()
 {
 	return m_vshader;
 }
 
-const tr::gfx::vertex_shader& tr::gfx::owning_shader_pipeline::vertex_shader() const
+const tr::vertex_shader& tr::owning_shader_pipeline::vertex_shader() const
 {
 	return m_vshader;
 }
 
-tr::gfx::fragment_shader& tr::gfx::owning_shader_pipeline::fragment_shader()
+tr::fragment_shader& tr::owning_shader_pipeline::fragment_shader()
 {
 	return m_fshader;
 }
 
-const tr::gfx::fragment_shader& tr::gfx::owning_shader_pipeline::fragment_shader() const
+const tr::fragment_shader& tr::owning_shader_pipeline::fragment_shader() const
 {
 	return m_fshader;
 }
 
 #ifdef TR_ENABLE_ASSERTS
-void tr::gfx::owning_shader_pipeline::set_label(std::string_view label)
+void tr::owning_shader_pipeline::set_label(std::string_view label)
 {
 	m_base.set_label(label);
 }
 
-std::string tr::gfx::owning_shader_pipeline::label() const
+std::string tr::owning_shader_pipeline::label() const
 {
 	return m_base.label();
 }

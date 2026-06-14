@@ -41,13 +41,13 @@
 #include "vertex_buffer.hpp"
 #include "vertex_format.hpp"
 
-namespace tr::gfx {
+namespace tr {
 	enum class renderer_id : u32;
 }
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
-namespace tr::gfx {
+namespace tr {
 	// Defines a benchmark interface compatible with debug_renderer.
 	template <typename T>
 	concept debug_writable_benchmark = requires(const T& benchmark) {
@@ -72,7 +72,10 @@ namespace tr::gfx {
 		static constexpr style default_style{{255, 255, 255, 255}, {0, 0, 0, 255}, {}};
 
 		// Creates a debug text renderer.
-		debug_renderer(float scale = 1.0f, u8 column_limit = 255);
+		debug_renderer(graphics_context& context, float scale = 1.0f, u8 column_limit = 255);
+
+		// Gets a reference to the graphics context the renderer is on.
+		graphics_context& context() const;
 
 		// Sets the text's drawing scale.
 		void set_scale(float scale);
@@ -117,8 +120,8 @@ namespace tr::gfx {
 			// The color of the background.
 			rgba8 bg_color;
 
-			// Provided for tr::gfx::as_vertex_attribute_list.
-			static constexpr auto as_vertex_attribute_list{gfx::as_vertex_attribute_list<glm::u8vec2, u8, u8, rgba8, rgba8>};
+			// Provided for tr::as_vertex_attribute_list.
+			static constexpr auto as_vertex_attribute_list{tr::as_vertex_attribute_list<glm::u8vec2, u8, u8, rgba8, rgba8>};
 		};
 
 		// Class that the debug renderer delegates writing of glyph information to.
@@ -201,6 +204,6 @@ namespace tr::gfx {
 		// Writes benchmark data to the right side of the screen.
 		void write_benchmark(duration min, duration avg, duration max, std::string_view name, duration limit);
 	};
-}; // namespace tr::gfx
+}; // namespace tr
 
 #include "impl/debug_renderer.hpp" // IWYU pragma: export

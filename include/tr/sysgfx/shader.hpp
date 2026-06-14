@@ -25,17 +25,19 @@
 
 #ifdef TR_ENABLE_GL_CHECKS
 #include "gl_checks.hpp"
+#include "graphics_context.hpp"
 #endif
 
-namespace tr::gfx {
+namespace tr {
 	class basic_shader_buffer;
 	class basic_uniform_buffer;
+	class graphics_context;
 	class texture_ref;
-} // namespace tr::gfx
+} // namespace tr
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
-namespace tr::gfx {
+namespace tr {
 	// Error thrown when shader loading fails.
 	class shader_load_error : public exception {
 	  public:
@@ -59,6 +61,9 @@ namespace tr::gfx {
 	// Base GPU shader program class.
 	class shader_base {
 	  public:
+		// Gets a reference to the graphics context the shader is on.
+		graphics_context& context() const;
+
 		// Sets a boolean uniform.
 		void set_uniform(int index, bool value);
 
@@ -170,13 +175,16 @@ namespace tr::gfx {
 		class texture_unit {
 		  public:
 			// Allocates a texture unit and binds it to a uniform in a shader.
-			texture_unit(unsigned int program, int index);
+			texture_unit(graphics_context& context, unsigned int program, int index);
 
 			// Sets the texture unit.
 			void set(texture_ref texture);
 
 		  private:
 			struct deleter {
+				// Reference to the graphics context the shader is on.
+				graphics_context& context;
+
 				void operator()(unsigned int unit) const;
 			};
 
@@ -184,6 +192,9 @@ namespace tr::gfx {
 			handle<unsigned int, UINT_MAX, deleter> m_id;
 		};
 		struct deleter {
+			// Reference to the graphics context the shader is on.
+			graphics_context& context;
+
 			void operator()(unsigned int id) const;
 		};
 
@@ -193,7 +204,7 @@ namespace tr::gfx {
 		boost::unordered_flat_map<int, texture_unit> m_texture_units;
 
 		// Constructs a shader.
-		shader_base(cstring_view source, unsigned int type);
+		shader_base(graphics_context& context, cstring_view source, unsigned int type);
 
 		friend class shader_pipeline;
 		friend class ping_pong_buffer;
@@ -207,11 +218,11 @@ namespace tr::gfx {
 		boost::unordered_flat_map<unsigned int, glsl_variable> m_outputs;
 
 		// Finds the uniforms of the shader using introspection.
-		void find_uniforms();
+		void find_uniforms(const graphics_context::functions& gl);
 		// Finds the input variables of the shader using introspection.
-		void find_inputs();
+		void find_inputs(const graphics_context::functions& gl);
 		// Finds the output variables of the shader using introspection.
-		void find_outputs();
+		void find_outputs(const graphics_context::functions& gl);
 #endif
 	};
 
@@ -220,20 +231,20 @@ namespace tr::gfx {
 	  public:
 		// Creates a vertex shader from source code.
 		// May throw: shader_load_error.
-		explicit vertex_shader(cstring_view source);
+		explicit vertex_shader(graphics_context& context, cstring_view source);
 	};
 	// Loads a vertex shader from file.
 	// May throw: shader_load_error.
-	vertex_shader load_vertex_shader(const std::filesystem::path& path);
+	vertex_shader load_vertex_shader(graphics_context& context, const std::filesystem::path& path);
 
 	// GPU fragment shader program.
 	class fragment_shader : public shader_base {
 	  public:
 		// Creates a fragment shader from source code.
 		// May throw: shader_load_error.
-		explicit fragment_shader(cstring_view source);
+		explicit fragment_shader(graphics_context& context, cstring_view source);
 	};
 	// Loads a fragment shader from file.
 	// May throw: shader_load_error.
-	fragment_shader load_fragment_shader(const std::filesystem::path& path);
-} // namespace tr::gfx
+	fragment_shader load_fragment_shader(graphics_context& context, const std::filesystem::path& path);
+} // namespace tr

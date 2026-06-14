@@ -25,6 +25,27 @@ constexpr tr::handle<Base, Empty, Deleter>::handle()
 }
 
 template <std::regular Base, Base Empty, tr::handle_deleter<Base> Deleter>
+constexpr tr::handle<Base, Empty, Deleter>::handle(Deleter& deleter)
+	requires(non_const_lvalue_reference<Deleter>)
+	: Deleter{deleter}, m_base{Empty}
+{
+}
+
+template <std::regular Base, Base Empty, tr::handle_deleter<Base> Deleter>
+constexpr tr::handle<Base, Empty, Deleter>::handle(const Deleter& deleter)
+	requires(std::copy_constructible<Deleter> && !non_const_lvalue_reference<Deleter>)
+	: Deleter{deleter}, m_base{Empty}
+{
+}
+
+template <std::regular Base, Base Empty, tr::handle_deleter<Base> Deleter>
+constexpr tr::handle<Base, Empty, Deleter>::handle(Deleter&& deleter)
+	requires(std::move_constructible<Deleter> && !lvalue_reference<Deleter>)
+	: Deleter{std::move(deleter)}, m_base{Empty}
+{
+}
+
+template <std::regular Base, Base Empty, tr::handle_deleter<Base> Deleter>
 constexpr tr::handle<Base, Empty, Deleter>::handle(Base value)
 	requires(default_constructible_handle_deleter<Deleter>)
 	: m_base{value}
@@ -34,7 +55,7 @@ constexpr tr::handle<Base, Empty, Deleter>::handle(Base value)
 
 template <std::regular Base, Base Empty, tr::handle_deleter<Base> Deleter>
 constexpr tr::handle<Base, Empty, Deleter>::handle(Base value, Deleter& deleter)
-	requires(std::copy_constructible<Deleter>)
+	requires(non_const_lvalue_reference<Deleter>)
 	: Deleter{deleter}, m_base{value}
 {
 	TR_ASSERT(value != Empty, "Cannot construct a handle from a value set aside as the empty value.");
@@ -42,7 +63,7 @@ constexpr tr::handle<Base, Empty, Deleter>::handle(Base value, Deleter& deleter)
 
 template <std::regular Base, Base Empty, tr::handle_deleter<Base> Deleter>
 constexpr tr::handle<Base, Empty, Deleter>::handle(Base value, const Deleter& deleter)
-	requires(std::copy_constructible<Deleter> && !(lvalue_reference<Deleter> && !const_qualified<Deleter>))
+	requires(std::copy_constructible<Deleter> && !non_const_lvalue_reference<Deleter>)
 	: Deleter{deleter}, m_base{value}
 {
 	TR_ASSERT(value != Empty, "Cannot construct a handle from a value set aside as the empty value.");
@@ -65,14 +86,14 @@ constexpr tr::handle<Base, Empty, Deleter>::handle(Base value, no_empty_handle_c
 
 template <std::regular Base, Base Empty, tr::handle_deleter<Base> Deleter>
 constexpr tr::handle<Base, Empty, Deleter>::handle(Base value, Deleter& deleter, no_empty_handle_check_t)
-	requires(std::copy_constructible<Deleter>)
+	requires(non_const_lvalue_reference<Deleter>)
 	: Deleter{deleter}, m_base{value}
 {
 }
 
 template <std::regular Base, Base Empty, tr::handle_deleter<Base> Deleter>
 constexpr tr::handle<Base, Empty, Deleter>::handle(Base value, const Deleter& deleter, no_empty_handle_check_t)
-	requires(std::copy_constructible<Deleter> && !(lvalue_reference<Deleter> && !const_qualified<Deleter>))
+	requires(std::copy_constructible<Deleter> && !non_const_lvalue_reference<Deleter>)
 	: Deleter{deleter}, m_base{value}
 {
 }
@@ -84,10 +105,9 @@ constexpr tr::handle<Base, Empty, Deleter>::handle(Base value, Deleter&& deleter
 {
 }
 
-template <std::regular Base, Base Empty, tr::handle_deleter<Base> D>
-template <tr::handle_deleter<Base> DeleterR>
-constexpr tr::handle<Base, Empty, D>::handle(handle<Base, Empty, DeleterR>&& move) noexcept
-	: m_base{std::exchange(move.m_base, Empty)}
+template <std::regular Base, Base Empty, tr::handle_deleter<Base> Deleter>
+constexpr tr::handle<Base, Empty, Deleter>::handle(handle<Base, Empty, Deleter>&& move) noexcept
+	: Deleter{std::move(move)}, m_base{std::exchange(move.m_base, Empty)}
 {
 }
 
@@ -102,7 +122,7 @@ constexpr tr::handle<Base, Empty, Deleter>::~handle<Base, Empty, Deleter>()
 template <std::regular Base, Base Empty, tr::handle_deleter<Base> Deleter>
 constexpr tr::handle<Base, Empty, Deleter>& tr::handle<Base, Empty, Deleter>::operator=(handle&& r) noexcept
 {
-	std::ignore = handle{std::move(*this)};
+	(void)handle{std::move(*this)};
 	std::swap(m_base, r.m_base);
 	return *this;
 }
@@ -139,7 +159,7 @@ constexpr Deleter& tr::handle<Base, Empty, Deleter>::get_deleter()
 }
 
 template <std::regular Base, Base Empty, tr::handle_deleter<Base> Deleter>
-constexpr Deleter& tr::handle<Base, Empty, Deleter>::get_deleter() const
+constexpr const Deleter& tr::handle<Base, Empty, Deleter>::get_deleter() const
 {
 	return *this;
 }
@@ -151,19 +171,24 @@ template <std::regular Base, Base Empty, tr::handle_deleter<Base> Deleter> const
 
 template <std::regular Base, Base Empty, tr::handle_deleter<Base> Deleter> constexpr void tr::handle<Base, Empty, Deleter>::reset()
 {
-	std::ignore = std::exchange(*this, handle{});
+	Deleter::operator()(m_base);
+	m_base = Empty;
 }
 
 template <std::regular Base, Base Empty, tr::handle_deleter<Base> Deleter>
 constexpr void tr::handle<Base, Empty, Deleter>::reset(Base value)
 {
-	std::ignore = std::exchange(*this, handle{value});
+	TR_ASSERT(value != Empty, "Cannot reset a handle to a value set aside as the empty value.");
+
+	Deleter::operator()(m_base);
+	m_base = value;
 }
 
 template <std::regular Base, Base Empty, tr::handle_deleter<Base> Deleter>
 constexpr void tr::handle<Base, Empty, Deleter>::reset(Base value, no_empty_handle_check_t)
 {
-	std::ignore = std::exchange(*this, handle{value, no_empty_handle_check});
+	Deleter::operator()(m_base);
+	m_base = value;
 }
 
 template <std::regular Base, Base Empty, tr::handle_deleter<Base> Deleter>

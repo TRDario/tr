@@ -2,15 +2,15 @@
 //                                                                                                                                       //
 // Provides an interface for triggering native OS dialog boxes.                                                                          //
 //                                                                                                                                       //
-// Message boxes can be shown with tr::sys::show_message_box. There are three classes of message box (error, warning, info), as well as  //
-// three button layouts (ok, yes/no, yes/no/cancel). The function blocks until a button is pressed, at which point the value of the      //
-// pressed button is returned. tr::sys::show_fatal_error_message_box shows a "Fatal exception" message box given an exception:           //
-//     - tr::sys::show_message_box(tr::sys::message_box_type::error, tr::sys::message_box_layout::ok, "Foo", "Bar")                      //
+// Message boxes can be shown with tr::show_message_box. There are three classes of message box (error, warning, info), as well as three //
+// button layouts (ok, yes/no, yes/no/cancel). The function blocks until a button is pressed, at which point the value of the pressed    //
+// button is returned. tr::show_fatal_error_message_box shows a "Fatal exception" message box given an exception:                        //
+//     - tr::show_message_box(tr::message_box_type::error, tr::message_box_layout::ok, "Foo", "Bar")                                     //
 //       -> displays an error message box with an "OK" button with the title "Foo" and message "Bar", returns message_box_button::OK     //
-//     - tr::sys::show_message_box(tr::sys::message_box_type::info, tr::sys::message_box_layout::yes_no_cancel, "Foo", "Save?")          //
+//     - tr::show_message_box(tr::message_box_type::info, tr::message_box_layout::yes_no_cancel, "Foo", "Save?")                         //
 //       -> displays an info message box with the buttons "Yes", "No", and "Cancel" with the title "Foo" and message "Save?",            //
 //          may return message_box_button::yes, message_box_button::no, or message_box_button::cancel                                    //
-//     - tr::sys::show_fatal_error_message_box(tr::custom_exception{"Example error", "Reason goes here.", "Details go here."})           //
+//     - tr::show_fatal_error_message_box(tr::custom_exception{"Example error", "Reason goes here.", "Details go here."})                //
 //       -> displays an error message box with an "Ok" button with the title "[APP NAME] - Fatal Error" and message:                     //
 //            A fatal error has occurred (Example error).                                                                                //
 //            Reason goes here.                                                                                                          //
@@ -20,19 +20,19 @@
 // File dialogs (for selecting one or multiple files, or a folder) can be shown with their respective functions. All of the functions    //
 // take a span of dialog filters (name-pattern pair as such: {"Image files", "png;jpg;bmp"}, {"Text files", "txt"}, {"All files", "*"})  //
 // and an optional default path, and return the path(s) of the selected file(s)/folder(s), or an empty path/list if nothing was selected://
-//     - tr::sys::show_open_file_dialog(filters)                                                                                         //
+//     - tr::show_open_file_dialog(filters)                                                                                              //
 //       -> shows a dialog that allows selecting one file with the passed filters, returns a path to the selected file or an empty path  //
 //          if nothing was selected                                                                                                      //
-//     - tr::sys::show_open_file_dialog(filters, "~/Example")                                                                            //
+//     - tr::show_open_file_dialog(filters, "~/Example")                                                                                 //
 //       -> shows a dialog that allows selecting one file with the passed filters, starting from the "~/Example" folder,                 //
 //          returns a path to the selected file or an empty path if nothing was selected                                                 //
-//     - tr::sys::show_open_files_dialog(filters)                                                                                        //
+//     - tr::show_open_files_dialog(filters)                                                                                             //
 //       -> shows a dialog that allows selecting one or multiple files with the passed filters, returns a list of paths to the selected  //
 //          files (list may be empty)                                                                                                    //
-//     - tr::sys::show_open_folder_dialog(filters)                                                                                       //
+//     - tr::show_open_folder_dialog(filters)                                                                                            //
 //       -> shows a dialog that allows selecting one folder with the passed filters, returns a path to the selected folder or an empty   //
 //          path if nothing was selected                                                                                                 //
-//     - tr::sys::show_open_folders_dialog(filters)                                                                                      //
+//     - tr::show_open_folders_dialog(filters)                                                                                           //
 //       -> shows a dialog that allows selecting one or multiple folders with the passed filters, returns a list of paths to the selected//
 //          folders (list may be empty)                                                                                                  //
 //                                                                                                                                       //
@@ -43,7 +43,7 @@
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
-namespace tr::sys {
+namespace tr {
 	// Message box type.
 	enum class message_box_type {
 		error = 16,   // Error message box.
@@ -90,4 +90,4 @@ namespace tr::sys {
 
 	// Shows a "Save File" dialog.
 	std::filesystem::path show_save_file_dialog(std::span<const dialog_filter> filters = {}, cstring_view default_path = {});
-} // namespace tr::sys
+} // namespace tr

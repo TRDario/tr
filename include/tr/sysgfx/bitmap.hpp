@@ -38,8 +38,8 @@
 //       -> creates a 256x256 view over embedded raw bitmap data with a pitch of 800 bytes                                               //
 //                                                                                                                                       //
 // Sub-bitmaps are views over a region of a bitmap, bitmap view, or another sub-bitmap. They share most of their interface with bitmaps, //
-// but cannot be saved to file or passed to certain tr::sys functions. Like bitmap views, they are read-only. Bitmaps and bitmap views   //
-// can be implicitly converted to sub-bitmaps, and any of the three source types can create sub-bitmaps with the .sub() method:          //
+// but cannot be saved to file or passed to certain functions. Like bitmap views, they are read-only. Bitmaps and bitmap views can be    //
+// implicitly converted to sub-bitmaps, and any of the three source types can create sub-bitmaps with the .sub() method:                 //
 //     - tr::sub_bitmap{bitmap}                                                                                                          //
 //       -> creates a sub-bitmap over an entire bitmap                                                                                   //
 //     - tr::sub_bitmap{bitmap, {{128, 128}, {128, 128}}}                                                                                //
@@ -58,13 +58,6 @@ struct SDL_Surface;
 namespace tr {
 	class bitmap;
 	class bitmap_view;
-	namespace sys {
-		class cursor;
-		class ttfont;
-
-		void set_window_icon(const bitmap& bitmap);
-		void set_window_icon(const bitmap_view& view);
-	}; // namespace sys
 } // namespace tr
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
@@ -245,8 +238,9 @@ namespace tr {
 
 		friend class bitmap;
 		friend class sub_bitmap;
-		friend class sys::cursor;
-		friend void sys::set_window_icon(const bitmap_view& view);
+		friend class cursor;
+		friend class window;
+		friend class window_view;
 	};
 
 	// Class containing owned bitmap data.
@@ -324,9 +318,10 @@ namespace tr {
 		friend class sub_bitmap;
 		friend class sub_bitmap::iterator;
 		friend class iterator;
-		friend class sys::cursor;
-		friend class sys::ttfont;
-		friend void sys::set_window_icon(const bitmap& bitmap);
+		friend class cursor;
+		friend class ttfont;
+		friend class window;
+		friend class window_view;
 
 		friend bitmap load_embedded_bitmap(std::span<const std::byte> data);
 		friend bitmap load_bitmap_file(const std::filesystem::path& path);

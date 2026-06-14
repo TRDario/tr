@@ -7,14 +7,18 @@
 #pragma once
 #include "../utility/handle.hpp"
 
+namespace tr {
+	class graphics_context;
+}
+
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
-namespace tr::gfx {
+namespace tr {
 	// Wrapper around a generic OpenGL buffer object.
-	class buffer {
+	class graphics_buffer {
 	  public:
 		// Constructs a buffer.
-		buffer();
+		graphics_buffer(graphics_context& context);
 
 		// Gets the buffer's ID.
 		unsigned int id() const;
@@ -28,13 +32,19 @@ namespace tr::gfx {
 		void set_label(std::string_view label);
 #endif
 
+		// Gets a reference to the graphics context the buffer is on.
+		graphics_context& context() const;
+
 	  private:
 		// Handle deleter.
 		struct deleter {
+			// Reference to the context the buffer is on.
+			graphics_context& context;
+
 			void operator()(unsigned int id) const;
 		};
 
 		// Handle to the OpenGL buffer.
 		handle<unsigned int, 0, deleter> m_handle;
 	};
-} // namespace tr::gfx
+} // namespace tr

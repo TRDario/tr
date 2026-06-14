@@ -34,43 +34,49 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "buffer.hpp"
+#include "graphics_buffer.hpp"
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
-namespace tr::gfx {
+namespace tr {
 	// Static vertex buffer class for holding immutable vertex data.
-	class basic_static_vertex_buffer : private buffer {
+	class basic_static_vertex_buffer : private graphics_buffer {
 	  public:
 		// Uploads vertex data into a static vertex buffer.
-		basic_static_vertex_buffer(std::span<const std::byte> data);
+		basic_static_vertex_buffer(graphics_context& context, std::span<const std::byte> data);
+
+		// Gets a reference to the graphics context the buffer is on.
+		using graphics_buffer::context;
 
 #ifdef TR_ENABLE_ASSERTS
 		// Gets the debug label of the vertex buffer.
-		using buffer::label;
+		using graphics_buffer::label;
 		// Sets the debug label of the vertex buffer.
-		using buffer::set_label;
+		using graphics_buffer::set_label;
 #endif
 
 	  private:
 		// The size of the vertex buffer.
 		ssize m_size;
 
-		friend void set_vertex_buffer(const basic_static_vertex_buffer& buffer, int slot, ssize offset, usize stride);
+		friend class graphics_context;
 	};
 
 	// Typed static vertex buffer class for holding immutable vertex data of a single type.
 	template <standard_layout T> class static_vertex_buffer : public basic_static_vertex_buffer {
 	  public:
 		// Creates a static vertex buffer.
-		template <typed_contiguous_const_range<T> R> static_vertex_buffer(R&& range);
+		template <typed_contiguous_const_range<T> R> static_vertex_buffer(graphics_context& context, R&& range);
 	};
 
 	// Dynamic vertex buffer class.
-	class basic_dyn_vertex_buffer : private buffer {
+	class basic_dyn_vertex_buffer : private graphics_buffer {
 	  public:
-		// Creates a dynamic vertex buffer.
-		basic_dyn_vertex_buffer() = default;
+		// Creates an empty dynamic vertex buffer.
+		using graphics_buffer::graphics_buffer;
+
+		// Gets a reference to the graphics context the buffer is on.
+		using graphics_buffer::context;
 
 		// Gets whether the vertex buffer is empty.
 		bool empty() const;
@@ -92,9 +98,9 @@ namespace tr::gfx {
 
 #ifdef TR_ENABLE_ASSERTS
 		// Gets the debug label of the vertex buffer.
-		using buffer::label;
+		using graphics_buffer::label;
 		// Sets the debug label of the vertex buffer.
-		using buffer::set_label;
+		using graphics_buffer::set_label;
 #endif
 
 	  private:
@@ -103,19 +109,26 @@ namespace tr::gfx {
 		// The capacity of the buffer.
 		usize m_capacity{0};
 
-		friend void set_vertex_buffer(const basic_dyn_vertex_buffer& buffer, int slot, ssize offset, usize stride);
+		friend class graphics_context;
 	};
 
 	// Typed dynamic vertex buffer class.
-	template <standard_layout T> class dyn_vertex_buffer : public basic_dyn_vertex_buffer {
+	template <standard_layout T> class dyn_vertex_buffer : private basic_dyn_vertex_buffer {
 	  public:
 		using basic_dyn_vertex_buffer::basic_dyn_vertex_buffer;
 
+		// Gets a reference to the graphics context the buffer is on.
+		using basic_dyn_vertex_buffer::context;
+
+		// Gets whether the vertex buffer is empty.
+		using basic_dyn_vertex_buffer::empty;
 		// Gets the size of the vertex buffer contents.
 		usize size() const;
 		// Gets the capacity of the vertex buffer.
 		usize capacity() const;
 
+		// Sets the size of the vertex buffer to 0.
+		using basic_dyn_vertex_buffer::clear;
 		// Clears the buffer and resizes it, potentially reallocating it.
 		void resize(usize size);
 		// Clears the buffer and guarantees a certain capacity for it.
@@ -125,13 +138,13 @@ namespace tr::gfx {
 		// Sets a region of the buffer.
 		template <typed_contiguous_const_range<T> R> void set_region(usize offset, R&& data);
 
-	  private:
-		using basic_dyn_vertex_buffer::capacity;
-		using basic_dyn_vertex_buffer::reserve;
-		using basic_dyn_vertex_buffer::resize;
-		using basic_dyn_vertex_buffer::set_region;
-		using basic_dyn_vertex_buffer::size;
+#ifdef TR_ENABLE_ASSERTS
+		// Gets the debug label of the vertex buffer.
+		using basic_dyn_vertex_buffer::label;
+		// Sets the debug label of the vertex buffer.
+		using basic_dyn_vertex_buffer::set_label;
+#endif
 	};
-} // namespace tr::gfx
+} // namespace tr
 
 #include "impl/vertex_buffer.hpp" // IWYU pragma: export

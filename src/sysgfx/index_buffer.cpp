@@ -5,57 +5,62 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include "../../include/tr/sysgfx/index_buffer.hpp"
-#include "../../include/tr/sysgfx/impl.hpp"
+#include "../../include/tr/sysgfx/gl_defines.hpp"
+#include "../../include/tr/sysgfx/graphics_context.hpp"
 
 /////////////////////////////////////////////////////////// STATIC INDEX BUFFER ///////////////////////////////////////////////////////////
 
-tr::gfx::static_index_buffer::static_index_buffer(std::span<const u16> data)
-	: m_size{std::ssize(data)}
+tr::static_index_buffer::static_index_buffer(graphics_context& context, std::span<const u16> data)
+	: graphics_buffer{context}, m_size{std::ssize(data)}
 {
-	glNamedBufferStorage(id(), GLsizeiptr(m_size * sizeof(u16)), data.data(), 0);
-	if (glGetError() == GL_OUT_OF_MEMORY) {
+	const graphics_context::functions& gl{context.make_current_and_return_functions()};
+
+	gl.named_buffer_storage(id(), m_size * sizeof(u16), data.data(), 0);
+	if (gl.get_error() == GL_OUT_OF_MEMORY) {
 		throw out_of_memory{"index buffer allocation"};
 	}
 }
 
 ////////////////////////////////////////////////////////// DYNAMIC INDEX BUFFER ///////////////////////////////////////////////////////////
 
-bool tr::gfx::dyn_index_buffer::empty() const
+bool tr::dyn_index_buffer::empty() const
 {
 	return m_size == 0;
 }
 
-tr::usize tr::gfx::dyn_index_buffer::size() const
+tr::usize tr::dyn_index_buffer::size() const
 {
 	return m_size;
 }
 
-tr::usize tr::gfx::dyn_index_buffer::capacity() const
+tr::usize tr::dyn_index_buffer::capacity() const
 {
 	return m_capacity;
 }
 
 //
 
-void tr::gfx::dyn_index_buffer::clear()
+void tr::dyn_index_buffer::clear()
 {
 	m_size = 0;
 }
 
-void tr::gfx::dyn_index_buffer::resize(usize size)
+void tr::dyn_index_buffer::resize(usize size)
 {
 	reserve(size);
 	m_size = size;
 }
 
-void tr::gfx::dyn_index_buffer::reserve(usize capacity)
+void tr::dyn_index_buffer::reserve(usize capacity)
 {
+	const graphics_context::functions& gl{context().make_current_and_return_functions()};
+
 	if (capacity > m_capacity) {
 		capacity = std::bit_ceil(capacity);
 
 		reallocate();
-		glNamedBufferStorage(id(), GLsizeiptr(capacity * sizeof(u16)), nullptr, GL_DYNAMIC_STORAGE_BIT);
-		if (glGetError() == GL_OUT_OF_MEMORY) {
+		gl.named_buffer_storage(id(), capacity * sizeof(u16), nullptr, GL_DYNAMIC_STORAGE_BIT);
+		if (gl.get_error() == GL_OUT_OF_MEMORY) {
 #ifdef TR_ENABLE_ASSERTS
 			throw out_of_memory{"allocation of index buffer '{}'", label()};
 #else
@@ -65,20 +70,22 @@ void tr::gfx::dyn_index_buffer::reserve(usize capacity)
 		m_capacity = capacity;
 	}
 	else {
-		glInvalidateBufferData(id());
+		gl.invalidate_buffer_data(id());
 	}
 	m_size = 0;
 }
 
-void tr::gfx::dyn_index_buffer::set_region(usize offset, std::span<const u16> data)
+void tr::dyn_index_buffer::set_region(usize offset, std::span<const u16> data)
 {
 	TR_ASSERT(offset + data.size() <= m_size, "Tried to set out-of-bounds region [{}, {}) in index buffer '{}' of size {}.", offset,
 			  offset + data.size(), label(), m_size);
 
-	glNamedBufferSubData(id(), GLintptr(offset * sizeof(u16)), GLsizeiptr(data.size() * sizeof(u16)), data.data());
+	const graphics_context::functions& gl{context().make_current_and_return_functions()};
+
+	gl.named_buffer_sub_data(id(), offset * sizeof(u16), data.size() * sizeof(u16), data.data());
 }
 
-void tr::gfx::dyn_index_buffer::set(std::span<const u16> data)
+void tr::dyn_index_buffer::set(std::span<const u16> data)
 {
 	resize(data.size());
 	set_region(0, data);
