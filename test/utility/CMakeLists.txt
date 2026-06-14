@@ -7,6 +7,7 @@ add_executable(
 	math.cpp
 	mstream.cpp
 	norm_cast.cpp
+	optional.cpp
 	stopwatch.cpp
 	utf8.cpp
 	zstring_view.cpp
