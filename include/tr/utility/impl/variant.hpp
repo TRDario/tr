@@ -76,7 +76,8 @@ constexpr OutVariant tr::subset_cast(InVariant&& v)
 ///////////////////////////////////////////////////////////////// INDICES /////////////////////////////////////////////////////////////////
 
 template <typename... Alternatives> struct tr::variant_indices<std::variant<Alternatives...>> {
-	template <typename Alternative> static constexpr std::size_t get{std::variant<tag<Alternatives>...>{tag<Alternative>{}}.index()};
+	template <typename Alternative>
+	static constexpr std::size_t get{std::variant<std::type_identity<Alternatives>...>{std::type_identity<Alternative>{}}.index()};
 };
 
 /////////////////////////////////////////////////////////////////// GET ///////////////////////////////////////////////////////////////////

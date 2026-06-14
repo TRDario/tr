@@ -7,10 +7,6 @@
 //     - template <typename... Ts> struct example { static_assert(unspecialized<Ts...>); }                                               //
 //       -> causes a compilation error for example<Ts...>                                                                                //
 //                                                                                                                                       //
-// tr::tag<T> wraps any type to produce a constexpr-constructible tag:                                                                   //
-//     - std::variant<tag<Ts>...>{tag<T>{}}.index()                                                                                      //
-//       -> Any of 'Ts' could not be constexpr or default-constructible, wrapping them bypasses that and always allows getting the index //
-//                                                                                                                                       //
 // tr::string_literal is used to pass string literals as template parameters. It can be converted to a char pointer, a string view, or a //
 // format string:                                                                                                                        //
 //     - template <string_literal String> class example {}; example<"string"> value{};                                                   //
@@ -52,9 +48,6 @@
 namespace tr {
 	// Circumvents static_assert(false) not being a valid expression on older compilers, meant for unspecialized templates.
 	template <typename...> inline constexpr bool unspecialized{false};
-
-	// Tag class.
-	template <typename> struct tag {};
 
 	// Template for string literals passed as template arguments.
 	template <usize Size> struct string_literal {
