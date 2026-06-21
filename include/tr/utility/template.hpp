@@ -75,7 +75,7 @@ namespace tr {
 	template <typename T> consteval std::string_view type_name();
 
 	// Gets the type needed to store an integer constant and stores it in ::type.
-	template <usize S, typename = void> struct size_type;
+	template <usize S> struct size_type;
 	// Gets the type needed to store an integer constant.
 	template <usize S> using size_type_t = size_type<S>::type;
 

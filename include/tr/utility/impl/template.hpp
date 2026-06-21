@@ -72,16 +72,27 @@ template <typename T> consteval std::string_view tr::type_name()
 
 //////////////////////////////////////////////////////////////// SIZE TYPE ////////////////////////////////////////////////////////////////
 
-template <tr::usize S> struct tr::size_type<S, std::enable_if_t<(S > UINT32_MAX)>> {
+template <tr::usize S>
+	requires(S > UINT32_MAX)
+struct tr::size_type<S> {
 	using type = u64;
 };
-template <tr::usize S> struct tr::size_type<S, std::enable_if_t<(S > UINT16_MAX && S <= UINT32_MAX)>> {
+
+template <tr::usize S>
+	requires(S > UINT16_MAX && S <= UINT32_MAX)
+struct tr::size_type<S> {
 	using type = u32;
 };
-template <tr::usize S> struct tr::size_type<S, std::enable_if_t<(S > UINT8_MAX && S <= UINT16_MAX)>> {
+
+template <tr::usize S>
+	requires(S > UINT8_MAX && S <= UINT16_MAX)
+struct tr::size_type<S> {
 	using type = u16;
 };
-template <tr::usize S> struct tr::size_type<S, std::enable_if_t<(S <= UINT8_MAX)>> {
+
+template <tr::usize S>
+	requires(S <= UINT8_MAX)
+struct tr::size_type<S> {
 	using type = u8;
 };
 
