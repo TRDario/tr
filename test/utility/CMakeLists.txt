@@ -1,5 +1,3 @@
-enable_testing()
-
 add_executable(
 	utility_test
 	binary_io.cpp

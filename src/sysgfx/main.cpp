@@ -16,10 +16,6 @@
 #pragma comment(linker, "/subsystem:windows /ENTRY:mainCRTStartup")
 #endif
 
-#ifdef TR_HAS_AUDIO
-#include "../../include/tr/audio/impl.hpp"
-#endif
-
 //////////////////////////////////////////////////////////////// INIT ERROR ///////////////////////////////////////////////////////////////
 
 tr::init_error::init_error(std::string_view description)
@@ -94,13 +90,6 @@ extern "C"
 			TR_LOG_CONTINUE(tr::log, "RAM: {}mb", SDL_GetSystemRAM());
 		}
 
-#ifdef TR_HAS_AUDIO
-		if (!tr::audio::g_manager.initialize()) {
-			TR_LOG(tr::log, tr::severity::fatal, "Failed to initialize audio system.");
-			return SDL_APP_FAILURE;
-		}
-#endif
-
 		try {
 			return SDL_AppResult(app::initialize());
 		}
@@ -144,10 +133,6 @@ extern "C"
 		catch (std::exception& err) {
 			tr::show_fatal_error_message_box(err);
 		}
-
-#ifdef TR_HAS_AUDIO
-		tr::audio::g_manager.shut_down();
-#endif
 
 		TTF_Quit();
 		SDL_Quit();

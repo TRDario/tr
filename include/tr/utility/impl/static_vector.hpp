@@ -38,7 +38,7 @@ template <typename Element, tr::usize Capacity>
 template <std::input_iterator Iterator>
 	requires(std::same_as<typename std::iterator_traits<Iterator>::value_type, Element>)
 tr::static_vector<Element, Capacity>::static_vector(Iterator first, Iterator last)
-	: m_size{std::distance(first, last)}
+	: m_size{size_type(std::distance(first, last))}
 {
 	TR_ASSERT(m_size <= Capacity, "Tried to create a static vector of size {} but with a max capacity of only {}.", m_size, Capacity);
 

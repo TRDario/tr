@@ -64,10 +64,10 @@ constexpr tr::angle tr::abs(tr::angle th)
 
 template <std::floating_point Ratio> constexpr tr::angle tr::lerp(angle x, angle y, Ratio a)
 {
-	x = eucmod(x, 1_tr);
-	y = eucmod(y, 1_tr);
-	if (abs(y - x) >= 0.5_tr) {
-		(x > y ? x : y) -= 1_tr;
+	x = eucmod(x, turns(1.0f));
+	y = eucmod(y, turns(1.0f));
+	if (abs(y - x) >= turns(0.5f)) {
+		(x > y ? x : y) -= turns(1.0f);
 	}
 	return x + (y - x) * a;
 }
@@ -206,7 +206,7 @@ inline float tr::angle::tan() const
 
 template <typename ParseContext> constexpr auto TR_FMT::formatter<tr::angle>::parse(ParseContext& ctx)
 {
-	auto ctx_it = ctx.begin();
+	auto ctx_it{ctx.begin()};
 	if (ctx_it == ctx.end() || (*ctx_it != 'r' && *ctx_it != 'd' && *ctx_it != 't')) {
 		throw TR_FMT::format_error{"One of {r, d, t} must start an angle formatting specification."};
 	}

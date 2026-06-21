@@ -2,9 +2,9 @@
 //                                                                                                                                       //
 // Provides an audio stream interface and a function to load an audio stream from file.                                                  //
 //                                                                                                                                       //
-// tr::audio::stream provides an interface for a 16-bit mono or stereo audio stream. Currently, the only way to get an audio stream is   //
-// to open a file using tr::audio::open_file, which creates an audio stream using data from an .ogg file.                                //
-//     - std::unique_ptr<tr::audio::stream> stream{tr::audio::open_file("audio.ogg")}                                                    //
+// tr::audio_stream provides an interface for a 16-bit mono or stereo audio stream. Currently, the only way to get an audio stream is    //
+// to open a file using tr::open_audio_file, which creates an audio stream using data from an .ogg file.                                 //
+//     - std::unique_ptr<tr::audio_stream> stream{tr::open_audio_file("audio.ogg")}                                                      //
 // Ogg files may have embedded loop point metadata which is automatically detected and set by the opening function:                      //
 //   LOOPSTART=[SAMPLE] sets the starting loop point and enables looping.                                                                //
 //   LOOPEND=[SAMPLE] sets the ending loop point and enables looping.                                                                    //
@@ -33,12 +33,12 @@
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
-namespace tr::audio {
+namespace tr {
 	// Error thrown when opening an audio file failed.
-	class file_open_error : public exception {
+	class audio_file_open_error final : public exception {
 	  public:
 		// Constructs an exception.
-		file_open_error(std::string&& description);
+		audio_file_open_error(std::string&& description);
 
 		// Gets the name of the error.
 		std::string_view name() const override;
@@ -53,10 +53,12 @@ namespace tr::audio {
 	};
 
 	// Audio stream interface.
-	class stream {
+	class audio_stream {
 	  public:
-		stream();
-		virtual ~stream() = default;
+		// Initializes an audio stream.
+		audio_stream();
+		// Audio stream destructor.
+		virtual ~audio_stream() = default;
 
 		// Gets the length of the stream in samples.
 		virtual usize length() const = 0;
@@ -69,8 +71,6 @@ namespace tr::audio {
 		virtual usize tell() const = 0;
 		// Seeks to an offset relative to the beginning.
 		virtual void seek(usize where) = 0;
-		// Reads samples to a destination buffer.
-		virtual void raw_read(std::span<i16> buffer) = 0;
 		// Reads from the stream and returns the span of the buffer that was written to.
 		std::span<i16> read(std::span<i16> buffer);
 
@@ -93,6 +93,9 @@ namespace tr::audio {
 		// Sentinel representing an unknown ending loop point.
 		static constexpr usize unknown_loop_point{std::numeric_limits<usize>::max()};
 
+		// Reads samples to a destination buffer.
+		virtual void raw_read(std::span<i16> buffer) = 0;
+
 	  private:
 		// Whether the stream is looping.
 		bool m_looping;
@@ -101,7 +104,8 @@ namespace tr::audio {
 		// The loop ending sample offset.
 		mutable usize m_loop_end;
 	};
+
 	// Opens an audio stream.
-	// May throw: file_open_error.
-	std::unique_ptr<stream> open_file(const std::filesystem::path& path);
-} // namespace tr::audio
+	// May throw: audio_file_open_error.
+	std::unique_ptr<audio_stream> open_audio_file(const std::filesystem::path& path);
+} // namespace tr

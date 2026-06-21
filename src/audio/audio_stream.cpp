@@ -1,44 +1,44 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                                                       //
-// Implements stream.hpp.                                                                                                                //
+// Implements audio_stream.hpp.                                                                                                          //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-#include "../../include/tr/audio/stream.hpp"
+#include "../../include/tr/audio/audio_stream.hpp"
 #include "../../include/tr/utility/iostream.hpp"
 #include <vorbis/vorbisfile.h>
 
 ////////////////////////////////////////////////////////// AUDIO FILE OPEN ERROR //////////////////////////////////////////////////////////
 
-tr::audio::file_open_error::file_open_error(std::string&& description)
+tr::audio_file_open_error::audio_file_open_error(std::string&& description)
 	: m_description{std::move(description)}
 {
 }
 
-std::string_view tr::audio::file_open_error::name() const
+std::string_view tr::audio_file_open_error::name() const
 {
 	return "Audio file opening error";
 }
 
-std::string_view tr::audio::file_open_error::description() const
+std::string_view tr::audio_file_open_error::description() const
 {
 	return m_description;
 }
 
-std::string_view tr::audio::file_open_error::details() const
+std::string_view tr::audio_file_open_error::details() const
 {
 	return {};
 }
 
 //////////////////////////////////////////////////////////// OGG AUDIO STREAM /////////////////////////////////////////////////////////////
 
-namespace {
+namespace tr {
 	// Ogg audio file backend.
-	class ogg_stream : public tr::audio::stream {
+	class ogg_audio_stream final : public tr::audio_stream {
 	  public:
 		// Loads an Ogg stream from file.
-		ogg_stream(const std::filesystem::path& path);
-		~ogg_stream();
+		ogg_audio_stream(const std::filesystem::path& path);
+		~ogg_audio_stream();
 
 		tr::usize length() const override;
 		int channels() const override;
@@ -46,15 +46,16 @@ namespace {
 
 		tr::usize tell() const override;
 		void seek(tr::usize where) override;
-		void raw_read(std::span<tr::i16> buffer) override;
 
 	  private:
 		// A handle to the Ogg file.
 		mutable OggVorbis_File m_file{};
-	};
-} // namespace
 
-ogg_stream::ogg_stream(const std::filesystem::path& path)
+		void raw_read(std::span<tr::i16> buffer) override;
+	};
+} // namespace tr
+
+tr::ogg_audio_stream::ogg_audio_stream(const std::filesystem::path& path)
 {
 	const int result{ov_fopen(TR_PATH_CSTR(path), &m_file)};
 	if (result != 0) {
@@ -97,37 +98,37 @@ ogg_stream::ogg_stream(const std::filesystem::path& path)
 	}
 }
 
-ogg_stream::~ogg_stream()
+tr::ogg_audio_stream::~ogg_audio_stream()
 {
 	ov_clear(&m_file);
 }
 
-tr::usize ogg_stream::length() const
+tr::usize tr::ogg_audio_stream::length() const
 {
 	return tr::usize(ov_pcm_total(&m_file, -1));
 }
 
-int ogg_stream::channels() const
+int tr::ogg_audio_stream::channels() const
 {
 	return ov_info(&m_file, -1)->channels;
 }
 
-int ogg_stream::sample_rate() const
+int tr::ogg_audio_stream::sample_rate() const
 {
 	return int(ov_info(&m_file, -1)->rate);
 }
 
-tr::usize ogg_stream::tell() const
+tr::usize tr::ogg_audio_stream::tell() const
 {
 	return tr::usize(ov_pcm_tell(&m_file));
 }
 
-void ogg_stream::seek(tr::usize where)
+void tr::ogg_audio_stream::seek(tr::usize where)
 {
 	ov_pcm_seek(&m_file, ogg_int64_t(where));
 }
 
-void ogg_stream::raw_read(std::span<tr::i16> buffer)
+void tr::ogg_audio_stream::raw_read(std::span<tr::i16> buffer)
 {
 	char* raw_dest{(char*)buffer.data()};
 	int bytes_left{int(buffer.size_bytes())};
@@ -144,12 +145,12 @@ void ogg_stream::raw_read(std::span<tr::i16> buffer)
 
 ////////////////////////////////////////////////////////////// AUDIO STREAM ///////////////////////////////////////////////////////////////
 
-tr::audio::stream::stream()
+tr::audio_stream::audio_stream()
 	: m_looping{false}, m_loop_start{0}, m_loop_end{unknown_loop_point}
 {
 }
 
-std::span<tr::i16> tr::audio::stream::read(std::span<i16> buffer)
+std::span<tr::i16> tr::audio_stream::read(std::span<i16> buffer)
 {
 	if (m_looping) {
 		std::span<i16> remaining_buffer{buffer};
@@ -173,12 +174,12 @@ std::span<tr::i16> tr::audio::stream::read(std::span<i16> buffer)
 	}
 }
 
-bool tr::audio::stream::looping() const
+bool tr::audio_stream::looping() const
 {
 	return m_looping;
 }
 
-void tr::audio::stream::set_looping(bool looping)
+void tr::audio_stream::set_looping(bool looping)
 {
 	m_looping = looping;
 	if (looping && tell() >= loop_end()) {
@@ -186,17 +187,17 @@ void tr::audio::stream::set_looping(bool looping)
 	}
 }
 
-tr::usize tr::audio::stream::loop_start() const
+tr::usize tr::audio_stream::loop_start() const
 {
 	return m_loop_start;
 }
 
-void tr::audio::stream::set_loop_start(usize loop_start)
+void tr::audio_stream::set_loop_start(usize loop_start)
 {
 	m_loop_start = std::clamp(loop_start, 0_uz, loop_end() - 1);
 }
 
-tr::usize tr::audio::stream::loop_end() const
+tr::usize tr::audio_stream::loop_end() const
 {
 	if (m_loop_end == unknown_loop_point) {
 		m_loop_end = length();
@@ -204,7 +205,7 @@ tr::usize tr::audio::stream::loop_end() const
 	return m_loop_end;
 }
 
-void tr::audio::stream::set_loop_end(usize loop_end)
+void tr::audio_stream::set_loop_end(usize loop_end)
 {
 	m_loop_end = std::clamp(loop_end, loop_start() + 1, length());
 	if (looping() && tell() >= m_loop_end) {
@@ -212,7 +213,7 @@ void tr::audio::stream::set_loop_end(usize loop_end)
 	}
 }
 
-std::unique_ptr<tr::audio::stream> tr::audio::open_file(const std::filesystem::path& path)
+std::unique_ptr<tr::audio_stream> tr::open_audio_file(const std::filesystem::path& path)
 {
 	if (!std::filesystem::exists(path)) {
 		throw file_open_error{TR_FMT::format("File not found: '{}'", path.string())};
@@ -220,7 +221,7 @@ std::unique_ptr<tr::audio::stream> tr::audio::open_file(const std::filesystem::p
 
 	const std::string extension{path.extension().string()};
 	if (extension == ".ogg") {
-		return std::make_unique<ogg_stream>(path);
+		return std::make_unique<ogg_audio_stream>(path);
 	}
 	else {
 		throw file_open_error{TR_FMT::format("Unsupported audio file extension '{}'", extension)};
