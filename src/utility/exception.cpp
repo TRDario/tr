@@ -38,7 +38,9 @@ std::string_view tr::out_of_memory::details() const
 }
 
 tr::custom_exception::custom_exception(std::string&& name, std::string&& description, std::string&& details)
-	: m_name{std::move(name)}, m_description{std::move(description)}, m_details{std::move(details)}
+	: m_name{std::move(name)}
+	, m_description{std::move(description)}
+	, m_details{std::move(details)}
 {
 }
 

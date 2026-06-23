@@ -35,25 +35,37 @@ constexpr tr::align tr::operator|(const halign& halign, const valign& valign)
 
 template <typename Element>
 constexpr tr::edges<Element>::edges(Element left)
-	: top{left}, right{left}, bottom{left}, left{left}
+	: top{left}
+	, right{left}
+	, bottom{left}
+	, left{left}
 {
 }
 
 template <typename Element>
 constexpr tr::edges<Element>::edges(Element left, Element top)
-	: left{left}, top{top}, right{left}, bottom{top}
+	: left{left}
+	, top{top}
+	, right{left}
+	, bottom{top}
 {
 }
 
 template <typename Element>
 constexpr tr::edges<Element>::edges(Element left, Element top, Element right)
-	: left{left}, top{top}, right{right}, bottom{top}
+	: left{left}
+	, top{top}
+	, right{right}
+	, bottom{top}
 {
 }
 
 template <typename Element>
 constexpr tr::edges<Element>::edges(Element top, Element right, Element bottom, Element left)
-	: left{left}, top{top}, right{right}, bottom{bottom}
+	: left{left}
+	, top{top}
+	, right{right}
+	, bottom{bottom}
 {
 }
 
@@ -66,20 +78,23 @@ template <typename Element> template <typename ElementR> constexpr bool tr::edge
 
 template <int Dimensions, typename Element>
 constexpr tr::rect<Dimensions, Element>::rect(glm::vec<Dimensions, Element> tl, glm::vec<Dimensions, Element> size)
-	: tl{tl}, size{size}
+	: tl{tl}
+	, size{size}
 {
 }
 
 template <int Dimensions, typename Element>
 constexpr tr::rect<Dimensions, Element>::rect(glm::vec<Dimensions, Element> size)
-	: tl{}, size{size}
+	: tl{}
+	, size{size}
 {
 }
 
 template <int Dimensions, typename Element>
 template <typename ElementR>
 constexpr tr::rect<Dimensions, Element>::rect(const rect<Dimensions, ElementR>& rect)
-	: tl{rect.tl}, size{rect.size}
+	: tl{rect.tl}
+	, size{rect.size}
 {
 }
 

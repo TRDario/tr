@@ -155,7 +155,8 @@ constexpr decltype(auto) tr::operator|(Variant&& v, Match&& m)
 
 template <typename State, typename... Functions>
 constexpr tr::stateful_match<State, Functions...>::stateful_match(State&& state, Functions&&... fns)
-	: tr::match<Functions...>{std::forward<Functions>(fns)...}, m_state{std::forward<State>(state)}
+	: tr::match<Functions...>{std::forward<Functions>(fns)...}
+	, m_state{std::forward<State>(state)}
 {
 }
 

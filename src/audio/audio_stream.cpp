@@ -146,7 +146,9 @@ void tr::ogg_audio_stream::raw_read(std::span<tr::i16> buffer)
 ////////////////////////////////////////////////////////////// AUDIO STREAM ///////////////////////////////////////////////////////////////
 
 tr::audio_stream::audio_stream()
-	: m_looping{false}, m_loop_start{0}, m_loop_end{unknown_loop_point}
+	: m_looping{false}
+	, m_loop_start{0}
+	, m_loop_end{unknown_loop_point}
 {
 }
 

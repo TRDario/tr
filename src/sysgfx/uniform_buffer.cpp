@@ -12,7 +12,8 @@
 ////////////////////////////////////////////////////////// BASIC UNIFORM BUFFER ///////////////////////////////////////////////////////////
 
 tr::basic_uniform_buffer::basic_uniform_buffer(graphics_context& context, usize size)
-	: graphics_buffer{context}, m_size{size}
+	: graphics_buffer{context}
+	, m_size{size}
 {
 	const graphics_context::functions& gl{context.make_current_and_return_functions()};
 

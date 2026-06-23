@@ -80,7 +80,8 @@ void tr::file_logger::log_continue(std::string_view string)
 ///////////////////////////////////////////////////////// CONSOLE AND FILE LOGGER /////////////////////////////////////////////////////////
 
 tr::console_and_file_logger::console_and_file_logger(std::string&& name, std::filesystem::path&& path)
-	: console_logger{std::move(name)}, file_logger{std::move(path)}
+	: console_logger{std::move(name)}
+	, file_logger{std::move(path)}
 {
 }
 

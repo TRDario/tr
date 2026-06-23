@@ -62,8 +62,8 @@ namespace tr {
 	concept borrowed_standard_layout_range = standard_layout_range<Range> && std::ranges::borrowed_range<Range>;
 	// Concept denoting a borrowed mutable contiguous range of standard layout objects.
 	template <typename Range>
-	concept borrowed_mutable_standard_layout_range =
-		borrowed_standard_layout_range<Range> && !const_qualified<std::ranges::range_reference_t<Range>>;
+	concept borrowed_mutable_standard_layout_range = borrowed_standard_layout_range<Range> &&
+													 !const_qualified<std::ranges::range_reference_t<Range>>;
 	// Concept denoting a sized output range.
 	template <typename Range, typename Element>
 	concept sized_output_range = std::ranges::sized_range<Range> && std::output_iterator<std::ranges::iterator_t<Range>, Element>;
@@ -77,8 +77,8 @@ namespace tr {
 	concept borrowed_typed_contiguous_const_range = typed_contiguous_const_range<Range, Element> && std::ranges::borrowed_range<Range>;
 	// Concept denoting a mutable contiguous range whose elements are of a certain type.
 	template <typename Range, typename Element>
-	concept typed_contiguous_mutable_range =
-		std::ranges::contiguous_range<Range> && std::same_as<Element, std::remove_reference_t<std::ranges::range_reference_t<Range>>>;
+	concept typed_contiguous_mutable_range = std::ranges::contiguous_range<Range> &&
+											 std::same_as<Element, std::remove_reference_t<std::ranges::range_reference_t<Range>>>;
 	// Concept denoting a borrowed mutable contiguous range whose elements are of a certain type.
 	template <typename Range, typename Element>
 	concept borrowed_typed_contiguous_mutable_range = typed_contiguous_mutable_range<Range, Element> && std::ranges::borrowed_range<Range>;
@@ -124,8 +124,8 @@ namespace tr {
 	concept formattable = formattable_with<std::remove_reference_t<T>, TR_FMT::basic_format_context<CharT*, CharT>>;
 	// Concept checking whether a format string is valid for a set of types.
 	template <string_literal Fmt, typename... Args>
-	concept valid_format_string_for =
-		(formattable<Args, char> && ...) && requires { typename std::integral_constant<int, (std::format_string<Args...>(Fmt.data), 1)>; };
+	concept valid_format_string_for = (formattable<Args, char> && ...) &&
+									  requires { typename std::integral_constant<int, (std::format_string<Args...>(Fmt.data), 1)>; };
 
 	// Concept denoting a hasher for a specific type.
 	template <typename T, typename Hashed>

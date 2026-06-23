@@ -10,7 +10,8 @@
 ///////////////////////////////////////////////////////////// BASIC BUFFER MAP ////////////////////////////////////////////////////////////
 
 tr::basic_graphics_buffer_map::basic_graphics_buffer_map(graphics_context& context, unsigned int buffer, std::span<std::byte> span)
-	: m_bo{buffer, {context}}, m_span{span}
+	: m_bo{buffer, {context}}
+	, m_span{span}
 {
 }
 

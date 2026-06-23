@@ -12,7 +12,8 @@
 ////////////////////////////////////////////////////////////////// ERRORS /////////////////////////////////////////////////////////////////
 
 tr::ttfont_load_error::ttfont_load_error(std::string_view path, std::string&& details)
-	: m_description{TR_FMT::format("Failed to load bitmap from '{}'", path)}, m_details{std::move(details)}
+	: m_description{TR_FMT::format("Failed to load bitmap from '{}'", path)}
+	, m_details{std::move(details)}
 {
 }
 

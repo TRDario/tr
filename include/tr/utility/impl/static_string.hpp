@@ -20,7 +20,8 @@ constexpr tr::static_string<Capacity>::static_string(size_type size, char chr)
 template <tr::usize Capacity>
 template <tr::usize Size>
 constexpr tr::static_string<Capacity>::static_string(const char (&literal)[Size])
-	: m_buffer{}, m_size{size_type(Size - 1)}
+	: m_buffer{}
+	, m_size{size_type(Size - 1)}
 {
 	static_assert(Size - 1 <= Capacity, "Tried to initialize a static string with a string literal that would be too long.");
 	std::copy(literal, literal + Size - 1, m_buffer.begin());
@@ -28,7 +29,8 @@ constexpr tr::static_string<Capacity>::static_string(const char (&literal)[Size]
 
 template <tr::usize Capacity>
 constexpr tr::static_string<Capacity>::static_string(std::string_view str)
-	: m_buffer{}, m_size{size_type(str.size())}
+	: m_buffer{}
+	, m_size{size_type(str.size())}
 {
 	TR_ASSERT(str.size() <= Capacity, "Tried to copy a string of size {} into a static string of capacity {}.", str.size(), Capacity);
 	std::ranges::copy(str, m_buffer.begin());

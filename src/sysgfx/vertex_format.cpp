@@ -12,7 +12,8 @@
 
 tr::vertex_format::vertex_format(graphics_context& context, std::span<const vertex_binding> bindings)
 #ifdef TR_ENABLE_GL_CHECKS
-	: m_vao{{context}}, m_bindings{bindings}
+	: m_vao{{context}}
+	, m_bindings{bindings}
 #endif
 {
 	const graphics_context::functions& gl{m_vao.get_deleter().context.make_current_and_return_functions()};

@@ -13,7 +13,9 @@ using namespace std::chrono_literals;
 class audio_buffer_test : public testing::Test {
   protected:
 	audio_buffer_test()
-		: device{}, context{device}, buffer{tr::create_audio_buffer(context)}
+		: device{}
+		, context{device}
+		, buffer{tr::create_audio_buffer(context)}
 	{
 	}
 

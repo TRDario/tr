@@ -174,7 +174,8 @@ constexpr const char* tr::utf8::iterator::base() const
 ///////////////////////////////////////////////////////////// INDEXED ITERATOR ////////////////////////////////////////////////////////////
 
 constexpr tr::utf8::indexed_iterator::indexed_iterator(const char* ptr, ssize index)
-	: m_ptr{ptr}, m_index{index}
+	: m_ptr{ptr}
+	, m_index{index}
 {
 	TR_ASSERT(ptr != nullptr, "Tried to create UTF-8 iterator to nullptr.");
 }

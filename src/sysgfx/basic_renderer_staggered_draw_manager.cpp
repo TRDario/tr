@@ -10,7 +10,8 @@
 
 tr::basic_renderer::staggered_draw_manager::staggered_draw_manager(basic_renderer& renderer,
 																   std::ranges::subrange<std::vector<mesh>::iterator> range)
-	: m_renderer{renderer}, m_range{range}
+	: m_renderer{renderer}
+	, m_range{range}
 {
 #ifdef TR_ENABLE_ASSERTS
 	TR_ASSERT(!m_renderer->m_locked, "Tried to create multiple simultaneous basic renderer staggered draw managers.");
@@ -40,7 +41,9 @@ tr::basic_renderer::staggered_draw_manager::staggered_draw_manager(basic_rendere
 }
 
 tr::basic_renderer::staggered_draw_manager::staggered_draw_manager(staggered_draw_manager&& r) noexcept
-	: m_renderer{std::exchange(r.m_renderer, std::nullopt)}, m_range{r.m_range}, m_data{std::move(r.m_data)}
+	: m_renderer{std::exchange(r.m_renderer, std::nullopt)}
+	, m_range{r.m_range}
+	, m_data{std::move(r.m_data)}
 {
 }
 

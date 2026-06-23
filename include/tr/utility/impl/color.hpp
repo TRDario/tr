@@ -12,22 +12,30 @@
 /////////////////////////////////////////////////////////////////// RGB8 //////////////////////////////////////////////////////////////////
 
 constexpr tr::rgb8::rgb8(u8 r, u8 g, u8 b)
-	: r{r}, g{g}, b{b}
+	: r{r}
+	, g{g}
+	, b{b}
 {
 }
 
 constexpr tr::rgb8::rgb8(const rgbf& rgb)
-	: r{norm_cast<u8>(rgb.r)}, g{norm_cast<u8>(rgb.g)}, b{norm_cast<u8>(rgb.b)}
+	: r{norm_cast<u8>(rgb.r)}
+	, g{norm_cast<u8>(rgb.g)}
+	, b{norm_cast<u8>(rgb.b)}
 {
 }
 
 constexpr tr::rgb8::rgb8(const rgba8& rgba)
-	: r{rgba.r}, g{rgba.g}, b{rgba.b}
+	: r{rgba.r}
+	, g{rgba.g}
+	, b{rgba.b}
 {
 }
 
 constexpr tr::rgb8::rgb8(const rgbaf& rgba)
-	: r{norm_cast<u8>(rgba.r)}, g{norm_cast<u8>(rgba.g)}, b{norm_cast<u8>(rgba.b)}
+	: r{norm_cast<u8>(rgba.r)}
+	, g{norm_cast<u8>(rgba.g)}
+	, b{norm_cast<u8>(rgba.b)}
 {
 }
 
@@ -144,22 +152,30 @@ template <tr::arithmetic Scalar> constexpr tr::rgb8 tr::operator/(const rgb8& l,
 /////////////////////////////////////////////////////////////////// RGBF //////////////////////////////////////////////////////////////////
 
 constexpr tr::rgbf::rgbf(float r, float g, float b)
-	: r{r}, g{g}, b{b}
+	: r{r}
+	, g{g}
+	, b{b}
 {
 }
 
 constexpr tr::rgbf::rgbf(const rgb8& rgb)
-	: r{norm_cast<float>(rgb.r)}, g{norm_cast<float>(rgb.g)}, b{norm_cast<float>(rgb.b)}
+	: r{norm_cast<float>(rgb.r)}
+	, g{norm_cast<float>(rgb.g)}
+	, b{norm_cast<float>(rgb.b)}
 {
 }
 
 constexpr tr::rgbf::rgbf(const rgba8& rgba)
-	: r{norm_cast<float>(rgba.r)}, g{norm_cast<float>(rgba.g)}, b{norm_cast<float>(rgba.b)}
+	: r{norm_cast<float>(rgba.r)}
+	, g{norm_cast<float>(rgba.g)}
+	, b{norm_cast<float>(rgba.b)}
 {
 }
 
 constexpr tr::rgbf::rgbf(const rgbaf& rgba)
-	: r{rgba.r}, g{rgba.g}, b{rgba.b}
+	: r{rgba.r}
+	, g{rgba.g}
+	, b{rgba.b}
 {
 }
 
@@ -310,22 +326,34 @@ template <tr::arithmetic Scalar> constexpr tr::rgbf tr::operator/(const rgbf& l,
 ////////////////////////////////////////////////////////////////// RGBA8 //////////////////////////////////////////////////////////////////
 
 constexpr tr::rgba8::rgba8(u8 r, u8 g, u8 b, u8 a)
-	: r{r}, g{g}, b{b}, a{a}
+	: r{r}
+	, g{g}
+	, b{b}
+	, a{a}
 {
 }
 
 constexpr tr::rgba8::rgba8(const rgb8& rgb, u8 a)
-	: r{rgb.r}, g{rgb.g}, b{rgb.b}, a{a}
+	: r{rgb.r}
+	, g{rgb.g}
+	, b{rgb.b}
+	, a{a}
 {
 }
 
 constexpr tr::rgba8::rgba8(const rgbf& rgb, u8 a)
-	: r{norm_cast<u8>(rgb.r)}, g{norm_cast<u8>(rgb.g)}, b{norm_cast<u8>(rgb.b)}, a{a}
+	: r{norm_cast<u8>(rgb.r)}
+	, g{norm_cast<u8>(rgb.g)}
+	, b{norm_cast<u8>(rgb.b)}
+	, a{a}
 {
 }
 
 constexpr tr::rgba8::rgba8(const rgbaf& rgba)
-	: r{norm_cast<u8>(rgba.r)}, g{norm_cast<u8>(rgba.g)}, b{norm_cast<u8>(rgba.b)}, a{norm_cast<u8>(rgba.a)}
+	: r{norm_cast<u8>(rgba.r)}
+	, g{norm_cast<u8>(rgba.g)}
+	, b{norm_cast<u8>(rgba.b)}
+	, a{norm_cast<u8>(rgba.a)}
 {
 }
 
@@ -449,22 +477,34 @@ template <tr::arithmetic Scalar> constexpr tr::rgba8 tr::operator/(const rgba8& 
 ////////////////////////////////////////////////////////////////// RGBAF //////////////////////////////////////////////////////////////////
 
 constexpr tr::rgbaf::rgbaf(float r, float g, float b, float a)
-	: r{r}, g{g}, b{b}, a{a}
+	: r{r}
+	, g{g}
+	, b{b}
+	, a{a}
 {
 }
 
 constexpr tr::rgbaf::rgbaf(const rgb8& rgb, float a)
-	: r{norm_cast<float>(rgb.r)}, g{norm_cast<float>(rgb.g)}, b{norm_cast<float>(rgb.b)}, a{a}
+	: r{norm_cast<float>(rgb.r)}
+	, g{norm_cast<float>(rgb.g)}
+	, b{norm_cast<float>(rgb.b)}
+	, a{a}
 {
 }
 
 constexpr tr::rgbaf::rgbaf(const rgbf& rgb, float a)
-	: r{rgb.r}, g{rgb.g}, b{rgb.b}, a{a}
+	: r{rgb.r}
+	, g{rgb.g}
+	, b{rgb.b}
+	, a{a}
 {
 }
 
 constexpr tr::rgbaf::rgbaf(const rgba8& rgba)
-	: r{norm_cast<float>(rgba.r)}, g{norm_cast<float>(rgba.g)}, b{norm_cast<float>(rgba.b)}, a{norm_cast<float>(rgba.a)}
+	: r{norm_cast<float>(rgba.r)}
+	, g{norm_cast<float>(rgba.g)}
+	, b{norm_cast<float>(rgba.b)}
+	, a{norm_cast<float>(rgba.a)}
 {
 }
 
@@ -588,7 +628,9 @@ template <tr::arithmetic Scalar> constexpr tr::rgbaf tr::operator/(const rgbaf& 
 /////////////////////////////////////////////////////////////////// HSV ///////////////////////////////////////////////////////////////////
 
 constexpr tr::hsv::hsv(float h, float s, float v)
-	: h{h}, s{s}, v{v}
+	: h{h}
+	, s{s}
+	, v{v}
 {
 }
 

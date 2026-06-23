@@ -52,7 +52,8 @@ tr::dyn_atlas<Key, Extra, Hash, Pred>::dyn_atlas(graphics_context& context, glm:
 
 template <typename Key, typename Extra, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
 tr::dyn_atlas<Key, Extra, Hash, Pred>::dyn_atlas(graphics_context& context, bitmap_atlas<Key, Extra, Hash, Pred>&& source)
-	: m_tex{context, source.bitmap, tr::mipmaps::enabled}, m_rects{std::move(source.rects)}
+	: m_tex{context, source.bitmap, tr::mipmaps::enabled}
+	, m_rects{std::move(source.rects)}
 {
 }
 

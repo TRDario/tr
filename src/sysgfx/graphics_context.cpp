@@ -171,7 +171,8 @@ static SDL_GLContext create_context(SDL_Window* window)
 }
 
 tr::graphics_context::graphics_context(tr::window& window)
-	: m_window{window.m_ptr.get()}, m_ptr{create_context(m_window)}
+	: m_window{window.m_ptr.get()}
+	, m_ptr{create_context(m_window)}
 {
 #ifdef TR_ENABLE_ASSERTS
 	TR_LOG(log, severity::info, "Created an OpenGL context.");

@@ -9,12 +9,18 @@
 ////////////////////////////////////////////////////////////// RENDER TARGET //////////////////////////////////////////////////////////////
 
 tr::render_target::render_target(unsigned int fbo, glm::ivec2 fbo_size)
-	: m_fbo{fbo}, m_fbo_size{fbo_size}, m_viewport{{}, fbo_size}, m_scissor_box{{}, fbo_size}
+	: m_fbo{fbo}
+	, m_fbo_size{fbo_size}
+	, m_viewport{{}, fbo_size}
+	, m_scissor_box{{}, fbo_size}
 {
 }
 
 tr::render_target::render_target(unsigned int fbo, glm::ivec2 fbo_size, const irect2& viewport, const irect2& scissor_box)
-	: m_fbo{fbo}, m_fbo_size{fbo_size}, m_viewport{viewport}, m_scissor_box{scissor_box}
+	: m_fbo{fbo}
+	, m_fbo_size{fbo_size}
+	, m_viewport{viewport}
+	, m_scissor_box{scissor_box}
 {
 }
 

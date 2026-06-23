@@ -60,46 +60,55 @@ tr::memorybuf::pos_type tr::memorybuf::seekpos(std::streampos pos, std::ios_base
 ////////////////////////////////////////////////////////////// MEMORY STREAMS /////////////////////////////////////////////////////////////
 
 tr::imstream::imstream(std::span<const char> buffer)
-	: memorybuf{{(char*)buffer.data(), buffer.size()}}, std::istream{this}
+	: memorybuf{{(char*)buffer.data(), buffer.size()}}
+	, std::istream{this}
 {
 }
 
 tr::imstream::imstream(std::span<const unsigned char> buffer)
-	: memorybuf{{(unsigned char*)buffer.data(), buffer.size()}}, std::istream{this}
+	: memorybuf{{(unsigned char*)buffer.data(), buffer.size()}}
+	, std::istream{this}
 {
 }
 
 tr::imstream::imstream(std::span<const std::byte> buffer)
-	: memorybuf{{(std::byte*)buffer.data(), buffer.size()}}, std::istream{this}
+	: memorybuf{{(std::byte*)buffer.data(), buffer.size()}}
+	, std::istream{this}
 {
 }
 
 tr::omstream::omstream(std::span<char> buffer)
-	: memorybuf{buffer}, std::ostream{this}
+	: memorybuf{buffer}
+	, std::ostream{this}
 {
 }
 
 tr::omstream::omstream(std::span<unsigned char> buffer)
-	: memorybuf{buffer}, std::ostream{this}
+	: memorybuf{buffer}
+	, std::ostream{this}
 {
 }
 
 tr::omstream::omstream(std::span<std::byte> buffer)
-	: memorybuf{buffer}, std::ostream{this}
+	: memorybuf{buffer}
+	, std::ostream{this}
 {
 }
 
 tr::mstream::mstream(std::span<char> buffer)
-	: memorybuf{buffer}, std::iostream{this}
+	: memorybuf{buffer}
+	, std::iostream{this}
 {
 }
 
 tr::mstream::mstream(std::span<unsigned char> buffer)
-	: memorybuf{buffer}, std::iostream{this}
+	: memorybuf{buffer}
+	, std::iostream{this}
 {
 }
 
 tr::mstream::mstream(std::span<std::byte> buffer)
-	: memorybuf{buffer}, std::iostream{this}
+	: memorybuf{buffer}
+	, std::iostream{this}
 {
 }

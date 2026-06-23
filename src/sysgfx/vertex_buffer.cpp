@@ -12,7 +12,8 @@
 /////////////////////////////////////////////////////// BASIC STATIC VERTEX BUFFER ////////////////////////////////////////////////////////
 
 tr::basic_static_vertex_buffer::basic_static_vertex_buffer(graphics_context& context, std::span<const std::byte> data)
-	: graphics_buffer{context}, m_size{std::ssize(data)}
+	: graphics_buffer{context}
+	, m_size{std::ssize(data)}
 {
 	const graphics_context::functions& gl{context.make_current_and_return_functions()};
 

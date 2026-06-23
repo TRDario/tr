@@ -141,7 +141,8 @@ static unsigned int gl_type(tr::pixel_format format)
 ///////////////////////////////////////////////////////////////// TEXTURE /////////////////////////////////////////////////////////////////
 
 tr::texture::texture(graphics_context& context)
-	: m_context{context}, m_size{0, 0}
+	: m_context{context}
+	, m_size{0, 0}
 {
 	const graphics_context::functions& gl{m_context.make_current_and_return_functions()};
 
@@ -149,7 +150,9 @@ tr::texture::texture(graphics_context& context)
 }
 
 tr::texture::texture(graphics_context& context, unsigned int handle, glm::ivec2 size)
-	: m_context{context}, m_handle{handle}, m_size{size}
+	: m_context{context}
+	, m_handle{handle}
+	, m_size{size}
 {
 }
 
@@ -166,7 +169,10 @@ tr::texture::texture(graphics_context& context, const sub_bitmap& bitmap, mipmap
 }
 
 tr::texture::texture(texture&& r) noexcept
-	: m_context{r.m_context}, m_handle{std::exchange(r.m_handle, 0)}, m_size{r.m_size}, m_refs{std::move(r.m_refs)}
+	: m_context{r.m_context}
+	, m_handle{std::exchange(r.m_handle, 0)}
+	, m_size{r.m_size}
+	, m_refs{std::move(r.m_refs)}
 {
 	for (texture_ref& ref : m_refs) {
 		ref.m_ref = *this;
@@ -466,7 +472,8 @@ tr::render_texture::render_texture(graphics_context& context, const sub_bitmap& 
 }
 
 tr::render_texture::render_texture(render_texture&& r) noexcept
-	: texture{std::move(r)}, m_fbo{r.m_fbo}
+	: texture{std::move(r)}
+	, m_fbo{r.m_fbo}
 {
 	r.m_fbo = 0;
 }

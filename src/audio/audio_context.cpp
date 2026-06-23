@@ -88,7 +88,8 @@ tr::audio_context::al_functions::al_functions(ALCdevice* device)
 constexpr std::array<ALCint, 3> audio_context_attributes{ALC_HRTF_SOFT, ALC_FALSE, 0};
 
 tr::audio_context::audio_context(audio_device& device)
-	: m_ptr{alcCreateContext(device.m_ptr.get(), audio_context_attributes.data())}, m_alapi{device.m_ptr.get()}
+	: m_ptr{alcCreateContext(device.m_ptr.get(), audio_context_attributes.data())}
+	, m_alapi{device.m_ptr.get()}
 {
 	if (m_ptr == nullptr) {
 		throw audio_context_init_error{device.m_ptr.get()};

@@ -4,12 +4,13 @@
 //                                                                                                                                       //
 // Using this module requires the option TR_BUILD_AUDIO to be turned on in CMake. TR_BUILD_AUDIO, in turn, depends on TR_BUILD_SYSGFX.   //
 //                                                                                                                                       //
-// Nothing from this module is allowed to be called in main::parse_command_line.                                                         //
-//                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "audio/buffer.hpp"   // IWYU pragma: export
-#include "audio/listener.hpp" // IWYU pragma: export
-#include "audio/source.hpp"   // IWYU pragma: export
-#include "audio/stream.hpp"   // IWYU pragma: export
+#include "audio/audio_buffer.hpp"           // IWYU pragma: export
+#include "audio/audio_class.hpp"            // IWYU pragma: export
+#include "audio/audio_context.hpp"          // IWYU pragma: export
+#include "audio/audio_device.hpp"           // IWYU pragma: export
+#include "audio/audio_device_list_view.hpp" // IWYU pragma: export
+#include "audio/audio_source.hpp"           // IWYU pragma: export
+#include "audio/audio_stream.hpp"           // IWYU pragma: export

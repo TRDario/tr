@@ -2,7 +2,8 @@
 
 tr::circle_renderer::staggered_draw_manager::staggered_draw_manager(circle_renderer& renderer,
 																	std::ranges::subrange<std::map<int, layer>::iterator> range)
-	: m_renderer{renderer}, m_range{range}
+	: m_renderer{renderer}
+	, m_range{range}
 {
 	TR_ASSERT(!m_renderer->m_locked, "Tried to create multiple simultaneous circle renderer staggered draw managers.");
 
@@ -18,7 +19,8 @@ tr::circle_renderer::staggered_draw_manager::staggered_draw_manager(circle_rende
 }
 
 tr::circle_renderer::staggered_draw_manager::staggered_draw_manager(staggered_draw_manager&& r) noexcept
-	: m_renderer{std::exchange(r.m_renderer, std::nullopt)}, m_range{r.m_range}
+	: m_renderer{std::exchange(r.m_renderer, std::nullopt)}
+	, m_range{r.m_range}
 {
 }
 

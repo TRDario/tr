@@ -54,8 +54,8 @@ namespace tr {
 	concept binary_readable = requires(std::istream& is, T& out) { tr::binary_reader<std::remove_volatile_t<T>>{}(is, out); };
 	// Concept that denotes a type passable to the variadic read_binary: a span or a reference to a binary readable.
 	template <typename T>
-	concept span_or_ref_to_binary_readable =
-		(lvalue_reference<T> && binary_readable<std::remove_reference_t<T>>) || specialization_of_tv<std::remove_cvref_t<T>, std::span>;
+	concept span_or_ref_to_binary_readable = (lvalue_reference<T> && binary_readable<std::remove_reference_t<T>>) ||
+											 specialization_of_tv<std::remove_cvref_t<T>, std::span>;
 	// Concept that denotes a type able to be constructed with read_binary.
 	template <typename T>
 	concept binary_constructible = binary_readable<T> && std::default_initializable<T>;

@@ -11,7 +11,11 @@
 /////////////////////////////////////////////////////////// BASIC SHADER BUFFER ///////////////////////////////////////////////////////////
 
 tr::basic_shader_buffer::basic_shader_buffer(graphics_context& context, usize header_size, usize capacity, map_type map_type)
-	: graphics_buffer{context}, m_map_type{map_type}, m_header_size{header_size}, m_array_size{0}, m_array_capacity{capacity}
+	: graphics_buffer{context}
+	, m_map_type{map_type}
+	, m_header_size{header_size}
+	, m_array_size{0}
+	, m_array_capacity{capacity}
 {
 	const graphics_context::functions& gl{context.make_current_and_return_functions()};
 

@@ -12,7 +12,8 @@
 class audio_context_test : public testing::Test {
   protected:
 	audio_context_test()
-		: device{}, context{device}
+		: device{}
+		, context{device}
 	{
 	}
 

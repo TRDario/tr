@@ -11,7 +11,8 @@
 /////////////////////////////////////////////////////////// STATIC INDEX BUFFER ///////////////////////////////////////////////////////////
 
 tr::static_index_buffer::static_index_buffer(graphics_context& context, std::span<const u16> data)
-	: graphics_buffer{context}, m_size{std::ssize(data)}
+	: graphics_buffer{context}
+	, m_size{std::ssize(data)}
 {
 	const graphics_context::functions& gl{context.make_current_and_return_functions()};
 

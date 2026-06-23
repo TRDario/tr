@@ -40,7 +40,8 @@ static tr::rgba8 pixel_color(const std::byte* data, tr::pixel_format format)
 //////////////////////////////////////////////////////// CONST/SUB-BITMAP ITERATOR ////////////////////////////////////////////////////////
 
 tr::sub_bitmap::reference::reference(const std::byte* ptr, pixel_format format)
-	: m_ptr{ptr}, m_format{format}
+	: m_ptr{ptr}
+	, m_format{format}
 {
 }
 
@@ -212,7 +213,8 @@ glm::ivec2 tr::sub_bitmap::iterator::pos() const
 ///////////////////////////////////////////////////////////// BITMAP ITERATOR /////////////////////////////////////////////////////////////
 
 tr::bitmap::reference::reference(std::byte* ptr, pixel_format format)
-	: m_ptr{ptr}, m_format{format}
+	: m_ptr{ptr}
+	, m_format{format}
 {
 }
 

@@ -368,7 +368,8 @@ constexpr tr::scan_chord::scan_chord(scancode scan)
 }
 
 constexpr tr::scan_chord::scan_chord(keymod mods, scancode scan)
-	: mods{mods}, scan{scan}
+	: mods{mods}
+	, scan{scan}
 {
 }
 
@@ -424,7 +425,8 @@ constexpr tr::key_chord::key_chord(keycode key)
 }
 
 constexpr tr::key_chord::key_chord(keymod mods, keycode key)
-	: mods{mods}, key{key}
+	: mods{mods}
+	, key{key}
 {
 }
 

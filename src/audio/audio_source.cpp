@@ -38,7 +38,8 @@ void tr::audio_source::buffered_stream::buffer::refill_from(audio_stream& source
 ///////////////////////////////////////////////////////////// BUFFERED STREAM /////////////////////////////////////////////////////////////
 
 tr::audio_source::buffered_stream::buffered_stream(audio_context& context, std::unique_ptr<audio_stream>&& stream)
-	: m_stream{std::move(stream)}, m_buffers{context, context, context, context}
+	: m_stream{std::move(stream)}
+	, m_buffers{context, context, context, context}
 {
 }
 
@@ -125,7 +126,10 @@ tr::static_vector<unsigned int, 4> tr::audio_source::buffered_stream::try_refill
 /////////////////////////////////////////////////////////////// AUDIO SOURCE //////////////////////////////////////////////////////////////
 
 tr::audio_source::audio_source(audio_context& context, int priority)
-	: m_handle{{context}}, m_priority{priority}, m_class_mask{}, m_gain{1.0f}
+	: m_handle{{context}}
+	, m_priority{priority}
+	, m_class_mask{}
+	, m_gain{1.0f}
 {
 	context.m_alapi.generate_sources(context.m_ptr.get(), 1, out_handle(m_handle));
 }
