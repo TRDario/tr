@@ -15,6 +15,7 @@
 #include "utility/defer.hpp"            // IWYU pragma: export
 #include "utility/draw_geometry.hpp"    // IWYU pragma: export
 #include "utility/encryption.hpp"       // IWYU pragma: export
+#include "utility/enum.hpp"             // IWYU pragma: export
 #include "utility/exception.hpp"        // IWYU pragma: export
 #include "utility/geometry.hpp"         // IWYU pragma: export
 #include "utility/handle.hpp"           // IWYU pragma: export

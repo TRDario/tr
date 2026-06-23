@@ -11,29 +11,30 @@
 
 template <tr::utf8::base_iterator Iterator> constexpr tr::codepoint tr::utf8::to_cp(Iterator it)
 {
-	if (u8(*it) < 0x80) {
-		return u8(*it);
+	if (static_cast<u8>(*it) < 0x80) {
+		return static_cast<u8>(*it);
 	}
-	else if (u8(*it) < 0xE0) {
-		return ((u8(it[0]) & 0x1F) << 6) | (u8(it[1]) & 0x3F);
+	else if (static_cast<u8>(*it) < 0xE0) {
+		return ((static_cast<u8>(it[0]) & 0x1F) << 6) | (static_cast<u8>(it[1]) & 0x3F);
 	}
-	else if (u8(*it) < 0xF0) {
-		return ((u8(it[0]) & 0xF) << 12) | ((u8(it[1]) & 0x3F) << 6) | (u8(it[2]) & 0x3F);
+	else if (static_cast<u8>(*it) < 0xF0) {
+		return ((static_cast<u8>(it[0]) & 0xF) << 12) | ((static_cast<u8>(it[1]) & 0x3F) << 6) | (static_cast<u8>(it[2]) & 0x3F);
 	}
 	else {
-		return ((u8(it[0]) & 0x7) << 18) | ((u8(it[1]) & 0x3F) << 12) | ((u8(it[2]) & 0x3F) << 6) | (u8(it[3]) & 0x3F);
+		return ((static_cast<u8>(it[0]) & 0x7) << 18) | ((static_cast<u8>(it[1]) & 0x3F) << 12) | ((static_cast<u8>(it[2]) & 0x3F) << 6) |
+			   (static_cast<u8>(it[3]) & 0x3F);
 	}
 }
 
 template <tr::utf8::base_iterator Iterator> constexpr Iterator tr::utf8::next(Iterator it)
 {
-	if (u8(*it) < 0x80) {
+	if (static_cast<u8>(*it) < 0x80) {
 		it += 1;
 	}
-	else if (u8(*it) < 0xE0) {
+	else if (static_cast<u8>(*it) < 0xE0) {
 		it += 2;
 	}
-	else if (u8(*it) < 0xF0) {
+	else if (static_cast<u8>(*it) < 0xF0) {
 		it += 3;
 	}
 	else {
@@ -71,25 +72,25 @@ template <tr::utf8::string String> constexpr String::iterator tr::utf8::insert(S
 	}
 	else if (cp < 0x800) {
 		const std::array<char, 2> chars{
-			char(cp >> 6 | 0xC0),
-			char((cp & 0x3F) | 0x80),
+			static_cast<char>(cp >> 6 | 0xC0),
+			static_cast<char>((cp & 0x3F) | 0x80),
 		};
 		return str.insert(where, chars.begin(), chars.end());
 	}
 	else if (cp < 0x10000) {
 		const std::array<char, 3> chars{
-			char(cp >> 12 | 0xE0),
-			char(((cp >> 6) & 0x3F) | 0x80),
-			char((cp & 0x3F) | 0x80),
+			static_cast<char>(cp >> 12 | 0xE0),
+			static_cast<char>(((cp >> 6) & 0x3F) | 0x80),
+			static_cast<char>((cp & 0x3F) | 0x80),
 		};
 		return str.insert(where, chars.begin(), chars.end());
 	}
 	else {
 		const std::array<char, 4> chars{
-			char(cp >> 18 | 0xF0),
-			char(((cp >> 12) & 0x3F) | 0x80),
-			char(((cp >> 6) & 0x3F) | 0x80),
-			char((cp & 0x3F) | 0x80),
+			static_cast<char>(cp >> 18 | 0xF0),
+			static_cast<char>(((cp >> 12) & 0x3F) | 0x80),
+			static_cast<char>(((cp >> 6) & 0x3F) | 0x80),
+			static_cast<char>((cp & 0x3F) | 0x80),
 		};
 		return str.insert(where, chars.begin(), chars.end());
 	}
@@ -97,13 +98,13 @@ template <tr::utf8::string String> constexpr String::iterator tr::utf8::insert(S
 
 template <tr::utf8::string String> constexpr String::iterator tr::utf8::erase(String& str, String::iterator where)
 {
-	if (u8(*where) < 0x80) {
+	if (static_cast<u8>(*where) < 0x80) {
 		return str.erase(where);
 	}
-	else if (u8(*where) < 0xE0) {
+	else if (static_cast<u8>(*where) < 0xE0) {
 		return str.erase(where, where + 2);
 	}
-	else if (u8(*where) < 0xF0) {
+	else if (static_cast<u8>(*where) < 0xF0) {
 		return str.erase(where, where + 3);
 	}
 	else {

@@ -31,7 +31,7 @@ template <typename U>
 	requires(std::convertible_to<T&, U&>)
 constexpr tr::ref<T>::operator ref<U>() const
 {
-	return tr::ref<U>{(U&)(T&)*this};
+	return static_cast<U&>(**this);
 }
 
 template <typename T> constexpr bool tr::operator==(const ref<T>& l, const T& r)
@@ -84,7 +84,7 @@ template <typename U>
 	requires(std::convertible_to<T&, U&>)
 constexpr tr::opt_ref<T>::operator opt_ref<U>() const
 {
-	return make_opt_ref((U*)as_ptr());
+	return make_opt_ref(static_cast<U*>(as_ptr()));
 }
 
 template <typename T> constexpr bool tr::operator==(opt_ref<T> l, const std::type_identity_t<T>& r)

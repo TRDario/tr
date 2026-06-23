@@ -45,34 +45,34 @@ void tr::benchmark::clear()
 
 tr::duration tr::benchmark::latest() const
 {
-	return !m_measurements.empty() ? m_measurements.back().duration : duration{0};
+	return !m_measurements.empty() ? m_measurements.back().duration : duration::zero();
 }
 
 tr::duration tr::benchmark::min() const
 {
 	const auto durations{project(m_measurements, &measurement::duration)};
-	return !m_measurements.empty() ? *std::ranges::min_element(durations) : duration{0};
+	return !m_measurements.empty() ? *std::ranges::min_element(durations) : duration::zero();
 }
 
 tr::duration tr::benchmark::max() const
 {
 	const auto durations{project(m_measurements, &measurement::duration)};
-	return !m_measurements.empty() ? *std::ranges::max_element(durations) : duration{0};
+	return !m_measurements.empty() ? *std::ranges::max_element(durations) : duration::zero();
 }
 
 tr::duration tr::benchmark::avg() const
 {
 	if (m_measurements.empty()) {
-		return duration{0};
+		return duration::zero();
 	}
 	else {
-		return sum(project(m_measurements, &measurement::duration), duration{0}) / m_measurements.size();
+		return sum(project(m_measurements, &measurement::duration), duration::zero()) / m_measurements.size();
 	}
 }
 
 double tr::benchmark::fps() const
 {
-	return !m_measurements.empty() ? m_measurements.size() / (max_measurement_age / 1.0s) : 0;
+	return !m_measurements.empty() ? m_measurements.size() / (max_measurement_age / 1.0s) : 0.0;
 }
 
 const std::deque<tr::benchmark::measurement>& tr::benchmark::measurements() const

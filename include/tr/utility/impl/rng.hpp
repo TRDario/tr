@@ -17,7 +17,7 @@ template <std::integral Integer> Integer tr::rng::generate()
 		return advance() >> 63;
 	}
 	else {
-		return Integer(advance() >> ((sizeof(advance()) - sizeof(Integer)) * 4));
+		return static_cast<Integer>(advance() >> ((sizeof(advance()) - sizeof(Integer)) * 4));
 	}
 }
 
@@ -37,7 +37,7 @@ template <std::integral Integer> Integer tr::rng::generate(Integer min, Integer 
 
 template <std::floating_point FloatingPoint> FloatingPoint tr::rng::generate()
 {
-	return FloatingPoint(advance()) / FloatingPoint(UINT64_MAX);
+	return FloatingPoint(advance()) / FloatingPoint{UINT64_MAX};
 }
 
 template <std::floating_point FloatingPoint> FloatingPoint tr::rng::generate(FloatingPoint max)

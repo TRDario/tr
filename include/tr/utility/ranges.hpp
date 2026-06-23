@@ -2,6 +2,10 @@
 //                                                                                                                                       //
 // Provides miscellaneous range functionality.                                                                                           //
 //                                                                                                                                       //
+// tr::reinterpret_span reinterprets a span of one type as a span of another:                                                            //
+//     - std::span<int, 40> a; reinterpret_cast<double>(a) -> std::span<double, 20>                                                      //
+//     - std::span<int> a; reinterpret_cast<float>(a) -> std::span<float>                                                                //
+//                                                                                                                                       //
 // Objects and ranges can be converted to spans of bytes, and conversely, byte spans can be converted to an object or spans of objects:  //
 //     - glm::mat4 transform; -> tr::as_bytes(transform) -> std::span<const std::byte, 64> over 'transform'                              //
 //     - glm::mat4 transform; -> tr::as_mut_bytes(transform) -> std::span<std::byte, 64> over 'transform'                                //
@@ -46,6 +50,9 @@
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
 namespace tr {
+	// Reinterprets a span of one type to a span of another.
+	template <standard_layout To, standard_layout From, usize Extent> std::span<To> reinterpret_span(std::span<From, Extent> from);
+
 	// Gets a view of a contiguous range as a span of immutable bytes.
 	template <borrowed_standard_layout_range Range> auto range_bytes(Range&& range);
 	// Gets a view of an object as a span of immutable bytes.

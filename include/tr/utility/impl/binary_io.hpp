@@ -17,7 +17,7 @@ template <tr::binary_readable Out> void tr::read_binary(std::istream& is, Out& o
 template <tr::binary_readable Out, tr::usize Size> void tr::read_binary(std::istream& is, std::span<Out, Size> out)
 {
 	if constexpr (requires { requires std::same_as<typename binary_reader<Out>::raw_reader, std::true_type>; }) {
-		is.read((char*)out.data(), out.size_bytes());
+		is.read(reinterpret_cast<char*>(out.data()), out.size_bytes());
 	}
 	else {
 		for (Out& v : out) {
@@ -44,16 +44,16 @@ template <tr::binary_flushable_iterator Iterator> void tr::flush_binary(std::ist
 {
 	while (is.peek() != EOF) {
 		if constexpr (std::output_iterator<Iterator, char>) {
-			*out++ = char(is.get());
+			*out++ = static_cast<char>(is.get());
 		}
 		else if constexpr (std::output_iterator<Iterator, signed char>) {
-			*out++ = (signed char)(is.get());
+			*out++ = static_cast<signed char>(is.get());
 		}
 		else if constexpr (std::output_iterator<Iterator, unsigned char>) {
-			*out++ = (unsigned char)(is.get());
+			*out++ = static_cast<unsigned char>(is.get());
 		}
 		else {
-			*out++ = std::byte(is.get());
+			*out++ = static_cast<std::byte>(is.get());
 		}
 	}
 }
@@ -74,7 +74,7 @@ void tr::write_binary(std::ostream& os, const Ins&... ins)
 
 template <tr::standard_layout Out> void tr::raw_binary_reader<Out>::operator()(std::istream& is, Out& out) const
 {
-	is.read((char*)std::addressof(out), sizeof(Out));
+	is.read(reinterpret_cast<char*>(std::addressof(out)), sizeof(Out));
 }
 
 template <tr::binary_readable Element, tr::usize Size>
@@ -174,14 +174,14 @@ void tr::binary_reader<boost::unordered_node_map<Key, Value, Other...>>::operato
 
 template <tr::standard_layout In> void tr::raw_binary_writer<In>::operator()(std::ostream& os, const In& in)
 {
-	os.write((const char*)std::addressof(in), sizeof(In));
+	os.write(reinterpret_cast<const char*>(std::addressof(in)), sizeof(In));
 }
 
 template <tr::binary_writable Element, tr::usize Size>
 void tr::binary_writer<std::span<Element, Size>>::operator()(std::ostream& os, const std::span<Element, Size>& in) const
 {
 	if constexpr (requires { requires std::same_as<typename binary_writer<std::remove_const_t<Element>>::raw_writer, std::true_type>; }) {
-		os.write((const char*)in.data(), in.size_bytes());
+		os.write(reinterpret_cast<const char*>(in.data()), in.size_bytes());
 	}
 	else {
 		for (const Element& element : in) {
@@ -216,13 +216,13 @@ void tr::binary_writer<std::array<Element, Size>>::operator()(std::ostream& os, 
 template <tr::binary_writable Element>
 void tr::binary_writer<std::vector<Element>>::operator()(std::ostream& os, const std::vector<Element>& in) const
 {
-	write_binary(os, u32(in.size()), std::span{in});
+	write_binary(os, static_cast<u32>(in.size()), std::span{in});
 }
 
 template <tr::binary_writable Key, typename... Other>
 void tr::binary_writer<std::set<Key, Other...>>::operator()(std::ostream& os, const std::set<Key, Other...>& in) const
 {
-	write_binary(os, u32(in.size()));
+	write_binary(os, static_cast<u32>(in.size()));
 	for (const Key& key : in) {
 		write_binary(os, key);
 	}
@@ -231,7 +231,7 @@ void tr::binary_writer<std::set<Key, Other...>>::operator()(std::ostream& os, co
 template <tr::binary_writable Key, tr::binary_writable Value, typename... Other>
 void tr::binary_writer<std::map<Key, Value, Other...>>::operator()(std::ostream& os, const std::map<Key, Value, Other...>& in) const
 {
-	write_binary(os, u32(in.size()));
+	write_binary(os, static_cast<u32>(in.size()));
 	for (const auto& [key, value] : in) {
 		write_binary(os, key, value);
 	}
@@ -241,7 +241,7 @@ template <tr::binary_writable Key, typename... Other>
 void tr::binary_writer<boost::unordered_flat_set<Key, Other...>>::operator()(std::ostream& os,
 																			 const boost::unordered_flat_set<Key, Other...>& in) const
 {
-	write_binary(os, u32(in.size()));
+	write_binary(os, static_cast<u32>(in.size()));
 	for (const Key& key : in) {
 		write_binary(os, key);
 	}
@@ -251,7 +251,7 @@ template <tr::binary_writable Key, typename... Other>
 void tr::binary_writer<boost::unordered_node_set<Key, Other...>>::operator()(std::ostream& os,
 																			 const boost::unordered_node_set<Key, Other...>& in) const
 {
-	write_binary(os, u32(in.size()));
+	write_binary(os, static_cast<u32>(in.size()));
 	for (const Key& key : in) {
 		write_binary(os, key);
 	}
@@ -261,7 +261,7 @@ template <tr::binary_writable Key, tr::binary_writable Value, typename... Other>
 void tr::binary_writer<boost::unordered_flat_map<Key, Value, Other...>>::operator()(
 	std::ostream& os, const boost::unordered_flat_map<Key, Value, Other...>& in) const
 {
-	write_binary(os, u32(in.size()));
+	write_binary(os, static_cast<u32>(in.size()));
 	for (const auto& [key, value] : in) {
 		write_binary(os, key, value);
 	}
@@ -271,7 +271,7 @@ template <tr::binary_writable Key, tr::binary_writable Value, typename... Other>
 void tr::binary_writer<boost::unordered_node_map<Key, Value, Other...>>::operator()(
 	std::ostream& os, const boost::unordered_node_map<Key, Value, Other...>& in) const
 {
-	write_binary(os, u32(in.size()));
+	write_binary(os, static_cast<u32>(in.size()));
 	for (const auto& [key, value] : in) {
 		write_binary(os, key, value);
 	}

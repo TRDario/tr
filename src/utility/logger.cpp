@@ -43,7 +43,8 @@ static tr::usize string_size(const std::string& str)
 void tr::console_logger::log(const std::tm& time, severity severity, std::string_view string)
 {
 	const usize padding{std::ranges::max_element(registered_console_loggers(), std::less{}, string_size)->size() - m_name.size()};
-	println("[{:02}:{:02}:{:02}] [{}]{:{}} [{}] {}", time.tm_hour, time.tm_min, time.tm_sec, m_name, "", padding, char(severity), string);
+	println("[{:02}:{:02}:{:02}] [{}]{:{}} [{}] {}", time.tm_hour, time.tm_min, time.tm_sec, m_name, "", padding,
+			static_cast<char>(severity), string);
 }
 
 void tr::console_logger::log_continue(std::string_view string)

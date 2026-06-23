@@ -28,6 +28,8 @@ std::string_view tr::file_not_found::details() const
 	return {};
 }
 
+//
+
 tr::file_open_error::file_open_error(std::string_view path)
 	: m_path{TR_FMT::format("'{}'", path)}
 {

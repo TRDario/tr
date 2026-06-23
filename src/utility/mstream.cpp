@@ -16,18 +16,18 @@ tr::memorybuf::memorybuf(std::span<char> buffer)
 }
 
 tr::memorybuf::memorybuf(std::span<unsigned char> buffer)
-	: memorybuf{{(char*)buffer.data(), buffer.size()}}
+	: memorybuf{{reinterpret_cast<char*>(buffer.data()), buffer.size()}}
 {
 }
 
 tr::memorybuf::memorybuf(std::span<std::byte> buffer)
-	: memorybuf{{(char*)buffer.data(), buffer.size()}}
+	: memorybuf{{reinterpret_cast<char*>(buffer.data()), buffer.size()}}
 {
 }
 
 tr::memorybuf::pos_type tr::memorybuf::seekoff(off_type offset, std::ios_base::seekdir dir, std::ios_base::openmode which)
 {
-	pos_type result{pos_type(-1)};
+	pos_type result{pos_type{-1}};
 	off_type ioffset{offset};
 	off_type ooffset{offset};
 	if (dir == std::ios_base::cur) {
@@ -39,14 +39,14 @@ tr::memorybuf::pos_type tr::memorybuf::seekoff(off_type offset, std::ios_base::s
 		ooffset = ioffset;
 	}
 
-	if (which & std::ios_base::in && ioffset >= 0 && ioffset <= off_type(m_buffer.size())) {
+	if (which & std::ios_base::in && ioffset >= 0 && ioffset <= static_cast<off_type>(m_buffer.size())) {
 		setg(eback(), eback() + ioffset, egptr());
-		result = pos_type(ioffset);
+		result = ioffset;
 	}
-	if (which & std::ios_base::out && ooffset >= 0 && ooffset <= off_type(m_buffer.size())) {
+	if (which & std::ios_base::out && ooffset >= 0 && ooffset <= static_cast<off_type>(m_buffer.size())) {
 		setp(pbase(), epptr());
 		pbump(ooffset);
-		result = pos_type(ooffset);
+		result = ooffset;
 	}
 
 	return result;
@@ -60,19 +60,19 @@ tr::memorybuf::pos_type tr::memorybuf::seekpos(std::streampos pos, std::ios_base
 ////////////////////////////////////////////////////////////// MEMORY STREAMS /////////////////////////////////////////////////////////////
 
 tr::imstream::imstream(std::span<const char> buffer)
-	: memorybuf{{(char*)buffer.data(), buffer.size()}}
+	: memorybuf{{const_cast<char*>(buffer.data()), buffer.size()}}
 	, std::istream{this}
 {
 }
 
 tr::imstream::imstream(std::span<const unsigned char> buffer)
-	: memorybuf{{(unsigned char*)buffer.data(), buffer.size()}}
+	: memorybuf{{const_cast<unsigned char*>(buffer.data()), buffer.size()}}
 	, std::istream{this}
 {
 }
 
 tr::imstream::imstream(std::span<const std::byte> buffer)
-	: memorybuf{{(std::byte*)buffer.data(), buffer.size()}}
+	: memorybuf{{const_cast<std::byte*>(buffer.data()), buffer.size()}}
 	, std::istream{this}
 {
 }

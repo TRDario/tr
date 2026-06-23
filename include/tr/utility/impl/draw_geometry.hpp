@@ -21,7 +21,7 @@ inline tr::usize tr::smooth_arc_vertices(float r, angle sizeth)
 	TR_ASSERT(r > 0, "Tried to pass a negative radius to smooth_arc_vertices.");
 	TR_ASSERT(sizeth >= 0_tr && sizeth <= 1_tr, "Tried to pass an arc size of more than one turn to smooth_arc_vertices.");
 
-	return std::max(usize(7 * std::pow(r, 1 / 2.4f) / (sizeth / 1_tr)), 3_uz);
+	return std::max(static_cast<usize>(7 * std::pow(r, 1 / 2.4f) / (sizeth / 1_tr)), 3_uz);
 }
 
 constexpr tr::usize tr::line_strip_indices(u16 vertices)
@@ -113,8 +113,8 @@ constexpr Iterator tr::fill_simple_polygon_indices(Iterator out, std::span<const
 	std::iota(indices.begin(), indices.end(), 0_u16);
 	while (indices.size() >= 3) {
 		for (usize i = 0; i < indices.size(); ++i) {
-			const u16 left{u16(i == 0 ? indices.size() - 1 : i - 1)};
-			const u16 right{u16(i == indices.size() - 1 ? 0 : i + 1)};
+			const u16 left{static_cast<u16>(i == 0 ? indices.size() - 1 : i - 1)};
+			const u16 right{static_cast<u16>(i == indices.size() - 1 ? 0 : i + 1)};
 
 			if (indices.size() > 3) {
 				const triangle tri{vertices[indices[left]], vertices[indices[i]], vertices[indices[right]]};

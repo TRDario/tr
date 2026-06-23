@@ -11,17 +11,17 @@
 
 template <std::integral To, std::floating_point From> constexpr To tr::round_cast(From from)
 {
-	return To(std::round(from));
+	return static_cast<To>(std::round(from));
 }
 
 template <std::integral To, std::floating_point From> constexpr To tr::floor_cast(From from)
 {
-	return To(std::floor(from));
+	return static_cast<To>(std::floor(from));
 }
 
 template <std::integral To, std::floating_point From> constexpr To tr::ceil_cast(From from)
 {
-	return To(std::ceil(from));
+	return static_cast<To>(std::ceil(from));
 }
 
 ////////////////////////////////////////////////////////////// MISCELLANEOUS //////////////////////////////////////////////////////////////
@@ -34,17 +34,17 @@ template <tr::arithmetic T> constexpr T tr::abs(T v)
 template <tr::arithmetic T> constexpr T tr::sgn(T v)
 {
 	if constexpr (std::unsigned_integral<T>) {
-		return v > T(0) ? T(1) : T(0);
+		return v > T{0} ? T{1} : T{0};
 	}
 	else {
-		return v > T(0) ? T(1) : v < T(0) ? T(-1) : T(0);
+		return v > T{0} ? T{1} : v < T{0} ? T{-1} : T{0};
 	}
 }
 
 template <typename T1, typename T2> constexpr auto tr::mod(T1 v, T2 mod)
 {
 	if constexpr ((std::floating_point<T1> || std::floating_point<T2>) && arithmetic<T1> && arithmetic<T2>) {
-		return std::common_type_t<T1, T2>(v) - i64(v / mod) * mod;
+		return static_cast<std::common_type_t<T1, T2>>(v) - static_cast<i64>(v / mod) * mod;
 	}
 	else {
 		return v % mod;

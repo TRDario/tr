@@ -5,6 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
+#include "../enum.hpp"
 #include "../geometry.hpp"
 #include "../macro.hpp"
 #include "../math.hpp"
@@ -13,22 +14,22 @@
 
 constexpr tr::halign tr::to_halign(align align)
 {
-	return halign(int(align) % 3);
+	return static_cast<halign>(to_underlying(align) % 3);
 }
 
 constexpr tr::valign tr::to_valign(align align)
 {
-	return valign(int(align) - int(align) % 3);
+	return static_cast<valign>(to_underlying(align) - to_underlying(align) % 3);
 }
 
 constexpr tr::align tr::operator|(const valign& valign, const halign& halign)
 {
-	return align(int(halign) + int(valign));
+	return static_cast<align>(to_underlying(halign) + to_underlying(valign));
 }
 
 constexpr tr::align tr::operator|(const halign& halign, const valign& valign)
 {
-	return align(int(halign) + int(valign));
+	return static_cast<align>(to_underlying(halign) + to_underlying(valign));
 }
 
 ////////////////////////////////////////////////////////////////// EDGES //////////////////////////////////////////////////////////////////
@@ -203,7 +204,7 @@ template <typename Element> constexpr glm::tvec2<Element> tr::tl(glm::tvec2<Elem
 	case align::cl:
 		return {pos.x, pos.y - size.y / 2};
 	case align::cc:
-		return pos - size / Element(2);
+		return pos - size / Element{2};
 	case align::cr:
 		return {pos.x - size.x, pos.y - size.y / 2};
 	case align::bl:
@@ -222,7 +223,7 @@ constexpr glm::vec<Dimensions, float> tr::inverse(const glm::vec<Dimensions, Ele
 {
 	glm::vec<Dimensions, float> result;
 	for (int i = 0; i < Dimensions; ++i) {
-		result[i] = float(1.0f / vec[i]);
+		result[i] = static_cast<float>(1.0f / vec[i]);
 	}
 	return result;
 }

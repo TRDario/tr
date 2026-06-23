@@ -688,7 +688,7 @@ consteval tr::rgba8 tr::literals::color_literals::operator""_rgba8(const char* s
 {
 	constexpr auto is_digit{[](char chr) { return chr >= '0' && chr <= '9'; }};
 	constexpr auto is_uppercase_hex{[](char chr) { return chr >= 'A' && chr <= 'F'; }};
-	constexpr auto to_num{[=](char chr) { return u8(is_digit(chr) ? chr - '0' : chr - (is_uppercase_hex(chr) ? 'A' : 'a') + 0xA); }};
+	constexpr auto to_num{[=](char chr) -> u8 { return is_digit(chr) ? chr - '0' : chr - (is_uppercase_hex(chr) ? 'A' : 'a') + 0xA; }};
 
 #ifdef TR_ENABLE_ASSERTS
 	constexpr auto is_lowercase_hex{[](char chr) { return chr >= 'a' && chr <= 'f'; }};
@@ -698,10 +698,10 @@ consteval tr::rgba8 tr::literals::color_literals::operator""_rgba8(const char* s
 	TR_ASSERT(std::ranges::all_of(std::string_view{str + 1, length - 1}, is_hex_digit), "Invalid color literal hex string '{}'.", str);
 
 	return {
-		u8((to_num(str[1]) << 4) | to_num(str[2])),
-		u8((to_num(str[3]) << 4) | to_num(str[4])),
-		u8((to_num(str[5]) << 4) | to_num(str[6])),
-		u8(length == 9 ? (to_num(str[7]) << 4) | to_num(str[8]) : 255),
+		static_cast<u8>((to_num(str[1]) << 4) | to_num(str[2])),
+		static_cast<u8>((to_num(str[3]) << 4) | to_num(str[4])),
+		static_cast<u8>((to_num(str[5]) << 4) | to_num(str[6])),
+		static_cast<u8>(length == 9 ? (to_num(str[7]) << 4) | to_num(str[8]) : 255),
 	};
 }
 

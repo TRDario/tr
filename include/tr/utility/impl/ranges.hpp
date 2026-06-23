@@ -10,6 +10,23 @@
 
 ////////////////////////////////////////////////////////////////// RANGES /////////////////////////////////////////////////////////////////
 
+// Reinterprets a span of one type to a span of another.
+template <tr::standard_layout To, tr::standard_layout From, tr::usize Extent>
+std::span<To> tr::reinterpret_span(std::span<From, Extent> from)
+{
+	if constexpr (Extent != std::dynamic_extent) {
+		static_assert(Extent * sizeof(From) % sizeof(To) == 0, "Cannot reinterpret span due to size_bytes() % sizeof(T) != 0.");
+		return std::span<To, Extent * sizeof(From) / sizeof(To)>{reinterpret_cast<To*>(from.data())};
+	}
+	else {
+		TR_ASSERT(from.size_bytes() % sizeof(To) == 0, "Cannot reinterpret span as '{}' due to size_bytes ({}) % sizeof({}) ({}) != 0.",
+				  type_name<To>(), from.size_bytes(), type_name<To>(), sizeof(To));
+		return std::span<To>{reinterpret_cast<To*>(from.data()), from.size_bytes() / sizeof(To)};
+	}
+}
+
+//
+
 template <tr::borrowed_standard_layout_range Range> auto tr::range_bytes(Range&& range)
 {
 	return std::as_bytes(std::span{range});
@@ -44,7 +61,7 @@ template <tr::standard_layout Object, tr::borrowed_typed_contiguous_mutable_rang
 				  type_name<Object>(), span.size(), sizeof(Object));
 	}
 
-	return *(Object*)span.data();
+	return *reinterpret_cast<Object*>(span.data());
 }
 
 template <tr::standard_layout Object, tr::borrowed_typed_contiguous_const_range<std::byte> Range> const Object& tr::as_object(Range&& bytes)
@@ -59,7 +76,7 @@ template <tr::standard_layout Object, tr::borrowed_typed_contiguous_const_range<
 				  type_name<Object>(), span.size(), type_name<Object>(), sizeof(Object));
 	}
 
-	return *(const Object*)span.data();
+	return *reinterpret_cast<const Object*>(span.data());
 }
 
 template <tr::standard_layout Element, tr::borrowed_typed_contiguous_mutable_range<std::byte> Range> auto tr::as_mut_objects(Range&& bytes)
@@ -69,13 +86,13 @@ template <tr::standard_layout Element, tr::borrowed_typed_contiguous_mutable_ran
 	if constexpr (decltype(span)::extent != std::dynamic_extent) {
 		static_assert(decltype(span)::extent % sizeof(Element) == 0,
 					  "Cannot reinterpret byte range as an object span due to size / sizeof(T) not being an integer.");
-		return std::span<Element, decltype(span)::extent / sizeof(Element)>{(Element*)span.data()};
+		return std::span<Element, decltype(span)::extent / sizeof(Element)>{reinterpret_cast<Element*>(span.data())};
 	}
 	else {
 		TR_ASSERT(span.size() % sizeof(Element) == 0,
 				  "Cannot reinterpret byte range as a span of '{}' due to size ({}) / sizeof({}) ({}) not being an integer.",
 				  type_name<Element>(), span.size(), type_name<Element>(), sizeof(Element));
-		return std::span{(Element*)span.data(), span.size() / sizeof(Element)};
+		return std::span{reinterpret_cast<Element*>(span.data()), span.size() / sizeof(Element)};
 	}
 }
 
@@ -86,13 +103,13 @@ template <tr::standard_layout Element, tr::borrowed_typed_contiguous_const_range
 	if constexpr (decltype(span)::extent != std::dynamic_extent) {
 		static_assert(decltype(span)::extent % sizeof(Element) == 0,
 					  "Cannot reinterpret byte range as an object span due to size / sizeof(T) not being an integer.");
-		return std::span<Element, decltype(span)::extent / sizeof(Element)>{(Element*)span.data()};
+		return std::span<Element, decltype(span)::extent / sizeof(Element)>{reinterpret_cast<Element*>(span.data())};
 	}
 	else {
 		TR_ASSERT(span.size() % sizeof(Element) == 0,
 				  "Cannot reinterpret byte range as a span of '{}' due to size ({}) / sizeof({}) ({}) not being an integer.",
 				  type_name<Element>(), span.size(), type_name<Element>(), sizeof(Element));
-		return std::span{(Element*)span.data(), span.size() / sizeof(Element)};
+		return std::span{reinterpret_cast<Element*>(span.data()), span.size() / sizeof(Element)};
 	}
 }
 

@@ -11,7 +11,7 @@
 
 consteval tr::duration tr::operator""_hz(unsigned long long hz)
 {
-	return duration{isecs{1}} / (long long)hz;
+	return duration{isecs{1}} / static_cast<long long>(hz);
 }
 
 consteval tr::duration tr::operator""_hz(long double hz)

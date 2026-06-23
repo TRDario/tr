@@ -17,17 +17,17 @@ constexpr tr::angle::angle(float rads)
 
 template <tr::arithmetic Number> constexpr tr::angle tr::rads(Number th)
 {
-	return angle{float(th)};
+	return angle{static_cast<float>(th)};
 }
 
 template <tr::arithmetic Number> constexpr tr::angle tr::degs(Number th)
 {
-	return rads(std::numbers::pi_v<float> / 180 * float(th));
+	return rads(std::numbers::pi_v<float> / 180 * static_cast<float>(th));
 }
 
 template <tr::arithmetic Number> constexpr tr::angle tr::turns(Number th)
 {
-	return rads(std::numbers::pi_v<float> * 2 * float(th));
+	return rads(std::numbers::pi_v<float> * 2 * static_cast<float>(th));
 }
 
 template <tr::arithmetic Number> inline tr::angle tr::asin(Number sin)
@@ -76,32 +76,32 @@ template <std::floating_point Ratio> constexpr tr::angle tr::lerp(angle x, angle
 
 consteval tr::angle tr::literals::angle_literals::operator""_deg(long double deg)
 {
-	return degs(float(deg));
+	return degs(deg);
 }
 
 consteval tr::angle tr::literals::angle_literals::operator""_deg(unsigned long long deg)
 {
-	return degs(float(deg));
+	return degs(deg);
 }
 
 consteval tr::angle tr::literals::angle_literals::operator""_rad(long double rad)
 {
-	return rads(float(rad));
+	return rads(rad);
 }
 
 consteval tr::angle tr::literals::angle_literals::operator""_rad(unsigned long long rad)
 {
-	return rads(float(rad));
+	return rads(rad);
 }
 
 consteval tr::angle tr::literals::angle_literals::operator""_tr(long double tr)
 {
-	return turns(float(tr));
+	return turns(tr);
 }
 
 consteval tr::angle tr::literals::angle_literals::operator""_tr(unsigned long long tr)
 {
-	return turns(float(tr));
+	return turns(tr);
 }
 
 //////////////////////////////////////////////////////////////// OPERATORS ////////////////////////////////////////////////////////////////

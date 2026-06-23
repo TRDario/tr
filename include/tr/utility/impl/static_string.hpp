@@ -21,7 +21,7 @@ template <tr::usize Capacity>
 template <tr::usize Size>
 constexpr tr::static_string<Capacity>::static_string(const char (&literal)[Size])
 	: m_buffer{}
-	, m_size{size_type(Size - 1)}
+	, m_size{static_cast<size_type>(Size - 1)}
 {
 	static_assert(Size - 1 <= Capacity, "Tried to initialize a static string with a string literal that would be too long.");
 	std::copy(literal, literal + Size - 1, m_buffer.begin());
@@ -30,7 +30,7 @@ constexpr tr::static_string<Capacity>::static_string(const char (&literal)[Size]
 template <tr::usize Capacity>
 constexpr tr::static_string<Capacity>::static_string(std::string_view str)
 	: m_buffer{}
-	, m_size{size_type(str.size())}
+	, m_size{static_cast<size_type>(str.size())}
 {
 	TR_ASSERT(str.size() <= Capacity, "Tried to copy a string of size {} into a static string of capacity {}.", str.size(), Capacity);
 	std::ranges::copy(str, m_buffer.begin());
@@ -222,7 +222,7 @@ template <std::input_iterator Iterator>
 constexpr void tr::static_string<Capacity>::append(Iterator begin, Iterator end)
 {
 	std::copy(begin, end, this->end());
-	m_size = size_type(m_size + std::distance(begin, end));
+	m_size = m_size + std::distance(begin, end);
 }
 
 template <tr::usize Capacity> constexpr void tr::static_string<Capacity>::append(std::string_view str)
@@ -231,7 +231,7 @@ template <tr::usize Capacity> constexpr void tr::static_string<Capacity>::append
 			  Capacity);
 
 	std::ranges::copy(str, end());
-	m_size = size_type(m_size + str.size());
+	m_size = m_size + str.size();
 }
 
 template <tr::usize Capacity> constexpr tr::static_string<Capacity>& tr::static_string<Capacity>::operator+=(std::string_view str)
@@ -266,7 +266,7 @@ constexpr tr::static_string<Capacity>::iterator tr::static_string<Capacity>::ins
 	const iterator mut_where{begin() + (where - begin())};
 	std::copy_backward(mut_where, end(), end() + size);
 	std::copy(first, last, mut_where);
-	m_size = size_type(m_size + size);
+	m_size = m_size + size;
 	return mut_where;
 }
 
@@ -280,7 +280,7 @@ constexpr tr::static_string<Capacity>::iterator tr::static_string<Capacity>::ins
 	const iterator mut_where{begin() + (where - begin())};
 	std::copy_backward(begin() + mut_where, end(), end() + str.size());
 	std::ranges::copy(str, mut_where);
-	m_size = size_type(m_size + str.size());
+	m_size = m_size + str.size();
 	return mut_where;
 }
 
@@ -309,7 +309,7 @@ constexpr tr::static_string<Capacity>::iterator tr::static_string<Capacity>::era
 
 	const iterator mut_start{begin() + (start - begin())};
 	std::copy(mut_start + (end - start), this->end(), mut_start);
-	m_size = size_type(m_size - (end - start));
+	m_size = m_size - (end - start);
 	return mut_start;
 }
 

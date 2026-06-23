@@ -41,7 +41,7 @@ void tr::binary_writer<const char*>::operator()(std::ostream& os, const char* in
 
 void tr::binary_writer<std::string_view>::operator()(std::ostream& os, const std::string_view& in) const
 {
-	write_binary(os, u32(in.size()));
+	write_binary(os, static_cast<u32>(in.size()));
 	os.write(in.data(), in.size());
 }
 
