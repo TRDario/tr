@@ -24,14 +24,14 @@ template <std::derived_from<tr::state> T, typename... Args>
 	requires(std::constructible_from<T, Args...>)
 tr::next_state tr::make_next_state(Args&&... args)
 {
-	return (std::unique_ptr<state>)std::make_unique<T>(std::forward<Args>(args)...);
+	return static_cast<std::unique_ptr<state>>(std::make_unique<T>(std::forward<Args>(args)...));
 }
 
 ////////////////////////////////////////////////////////////// STATE MACHINE //////////////////////////////////////////////////////////////
 
 template <std::derived_from<tr::state> T> const T& tr::state_machine::get() const
 {
-	return (const T&)*m_current_state;
+	return static_cast<const T&>(*m_current_state);
 }
 
 template <std::derived_from<tr::state> T, typename... Args>
@@ -43,7 +43,7 @@ void tr::state_machine::emplace(Args&&... args)
 
 template <std::derived_from<tr::state> T> T& tr::state_machine::get()
 {
-	return (T&)*m_current_state;
+	return static_cast<T&>(*m_current_state);
 }
 
 template <typename R, typename P> void tr::state_machine::update(std::chrono::duration<R, P> delta)

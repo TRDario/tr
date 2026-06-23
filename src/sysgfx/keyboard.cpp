@@ -13,7 +13,7 @@
 
 std::string tr::name(keycode key)
 {
-	return SDL_GetKeyName(SDL_Keycode(key));
+	return SDL_GetKeyName(to_underlying(key));
 }
 
 tr::keycode tr::to_keycode_fallback(zstring_view str)
@@ -43,7 +43,7 @@ std::string tr::key_chord::name() const
 
 constexpr int tr::scan_state::to_index(scancode key)
 {
-	int index{int(key) - 4};
+	int index{to_underlying(key) - 4};
 	if (index >= 102) {
 		index -= 122;
 	}
@@ -57,7 +57,7 @@ bool tr::scan_state::held(scancode key) const
 		return false;
 	}
 	const std::byte& byte{buffer[index / 8]};
-	return bool(byte & std::byte(1 << (index % 8)));
+	return static_cast<bool>(byte & static_cast<std::byte>(1 << (index % 8)));
 }
 
 void tr::scan_state::handle_event(const event& event)
@@ -87,7 +87,7 @@ void tr::scan_state::force_down(scancode key)
 		return;
 	}
 	std::byte& byte{buffer[index / 8]};
-	byte |= std::byte(1 << (index % 8));
+	byte |= static_cast<std::byte>(1 << (index % 8));
 }
 
 void tr::scan_state::force_up(scancode key)
@@ -97,7 +97,7 @@ void tr::scan_state::force_up(scancode key)
 		return;
 	}
 	std::byte& byte{buffer[index / 8]};
-	byte &= ~std::byte(1 << (index % 8));
+	byte &= ~static_cast<std::byte>(1 << (index % 8));
 }
 
 bool tr::keyboard_state::held(keymod kmods) const
@@ -161,22 +161,22 @@ void tr::set_clipboard_text(zstring_view text)
 
 std::size_t boost::hash<tr::scancode>::operator()(tr::scancode code) const
 {
-	return std::size_t(code);
+	return static_cast<std::size_t>(code);
 }
 
 std::size_t boost::hash<tr::keycode>::operator()(tr::keycode code) const
 {
-	return std::size_t(code);
+	return static_cast<std::size_t>(code);
 }
 
 std::size_t boost::hash<tr::scan_chord>::operator()(tr::scan_chord chord) const
 {
-	return (std::size_t(chord.scan) << 32) | std::size_t(chord.mods);
+	return (static_cast<std::size_t>(chord.scan) << 32) | static_cast<std::size_t>(chord.mods);
 }
 
 std::size_t boost::hash<tr::key_chord>::operator()(tr::key_chord chord) const
 {
-	return (std::size_t(chord.key) << 32) | std::size_t(chord.mods);
+	return (static_cast<std::size_t>(chord.key) << 32) | static_cast<std::size_t>(chord.mods);
 }
 
 //////////////////////////////////////////////////////////////// BINARY IO ////////////////////////////////////////////////////////////////

@@ -9,6 +9,8 @@
 #include <SDL3/SDL.h>
 #include <SDL3_image/SDL_image.h>
 
+using u24 = tr::u8[3];
+
 /////////////////////////////////////////////////////////////// PIXEL COLOR ///////////////////////////////////////////////////////////////
 
 // Extracts an RGBA8 color value from a pixel.
@@ -17,23 +19,23 @@ static tr::rgba8 pixel_color(const std::byte* data, tr::pixel_format format)
 	tr::u32 value{};
 	switch (pixel_bytes(format)) {
 	case 1:
-		value = *(const tr::u8*)data;
+		value = *reinterpret_cast<const tr::u8*>(data);
 		break;
 	case 2:
-		value = *(const tr::u16*)data;
+		value = *reinterpret_cast<const tr::u16*>(data);
 		break;
 	case 3: {
-		const tr::u8(&arr)[3]{*(const tr::u8(*)[3])data};
+		const u24& arr{*reinterpret_cast<const u24*>(data)};
 		value = arr[0] << 16 | arr[1] << 8 | arr[2];
 		break;
 	}
 	case 4:
-		value = *(const tr::u32*)data;
+		value = *reinterpret_cast<const tr::u32*>(data);
 		break;
 	}
 
 	tr::rgba8 color;
-	SDL_GetRGBA(value, SDL_GetPixelFormatDetails(SDL_PixelFormat(format)), nullptr, &color.r, &color.g, &color.b, &color.a);
+	SDL_GetRGBA(value, SDL_GetPixelFormatDetails(static_cast<SDL_PixelFormat>(format)), nullptr, &color.r, &color.g, &color.b, &color.a);
 	return color;
 }
 
@@ -225,24 +227,24 @@ tr::bitmap::reference::operator tr::rgba8() const
 
 tr::bitmap::reference& tr::bitmap::reference::operator=(rgba8 color)
 {
-	const SDL_PixelFormatDetails* format_details{SDL_GetPixelFormatDetails(SDL_PixelFormat(m_format))};
+	const SDL_PixelFormatDetails* format_details{SDL_GetPixelFormatDetails(static_cast<SDL_PixelFormat>(m_format))};
 	const u32 formatted{SDL_MapRGBA(format_details, nullptr, color.r, color.g, color.b, color.a)};
 	switch (pixel_bytes(m_format)) {
 	case 1:
-		*(u8*)m_ptr = u8(formatted);
+		*reinterpret_cast<u8*>(m_ptr) = formatted;
 		break;
 	case 2:
-		*(u16*)m_ptr = u16(formatted);
+		*reinterpret_cast<u16*>(m_ptr) = formatted;
 		break;
 	case 3: {
-		u8(&arr)[3]{*(u8(*)[3])m_ptr};
-		arr[0] = u8(formatted >> 16);
-		arr[1] = u8(formatted >> 8);
-		arr[2] = u8(formatted);
+		u24& arr{*reinterpret_cast<u24*>(m_ptr)};
+		arr[0] = formatted >> 16;
+		arr[1] = formatted >> 8;
+		arr[2] = formatted;
 		break;
 	}
 	case 4:
-		*(u32*)m_ptr = formatted;
+		*reinterpret_cast<u32*>(m_ptr) = formatted;
 	}
 	return *this;
 }

@@ -59,7 +59,8 @@ void tr::shader_base::texture_unit::set(texture_ref texture)
 ////////////////////////////////////////////////////////////////// SHADER /////////////////////////////////////////////////////////////////
 
 tr::shader_base::shader_base(graphics_context& context, zstring_view source, unsigned int type)
-	: m_program{context.make_current_and_return_functions().create_shader_program_v(type, 1, (const char**)&source), {context}}
+	: m_program{context.make_current_and_return_functions().create_shader_program_v(type, 1, reinterpret_cast<const char**>(&source)),
+				{context}}
 {
 	const graphics_context::functions& gl{context.make_current_and_return_functions()};
 
@@ -102,7 +103,10 @@ void tr::shader_base::find_uniforms(const graphics_context::functions& gl)
 
 		std::string uniform_name_buffer(name_length, '\0');
 		gl.get_program_resource_name(m_program.get(), GL_UNIFORM, i, uniform_name_buffer.size(), NULL, uniform_name_buffer.data());
-		m_uniforms.insert({(unsigned int)(location), {std::move(uniform_name_buffer), glsl_type(var_type), array_size}});
+		m_uniforms.insert({
+			static_cast<unsigned int>(location),
+			{std::move(uniform_name_buffer), static_cast<glsl_type>(var_type), array_size},
+		});
 	}
 }
 
@@ -118,7 +122,10 @@ void tr::shader_base::find_inputs(const graphics_context::functions& gl)
 
 		std::string input_name_buffer(name_length, '\0');
 		gl.get_program_resource_name(m_program.get(), GL_PROGRAM_INPUT, i, input_name_buffer.size(), NULL, input_name_buffer.data());
-		m_inputs.insert({(unsigned int)(location), {std::move(input_name_buffer), glsl_type(var_type), array_size}});
+		m_inputs.insert({
+			static_cast<unsigned int>(location),
+			{std::move(input_name_buffer), static_cast<glsl_type>(var_type), array_size},
+		});
 	}
 }
 
@@ -135,7 +142,10 @@ void tr::shader_base::find_outputs(const graphics_context::functions& gl)
 		std::string output_name_buffer(name_length, '\0');
 		gl.get_program_resource_name(m_program.get(), GL_PROGRAM_OUTPUT, i, output_name_buffer.size(), NULL, output_name_buffer.data());
 		if (!output_name_buffer.starts_with("gl_")) {
-			m_outputs.insert({(unsigned int)(location), {std::move(output_name_buffer), glsl_type(var_type), array_size}});
+			m_outputs.insert({
+				static_cast<unsigned int>(location),
+				{std::move(output_name_buffer), static_cast<glsl_type>(var_type), array_size},
+			});
 		}
 	}
 }

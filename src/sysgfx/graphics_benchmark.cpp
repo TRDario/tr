@@ -70,26 +70,26 @@ void tr::graphics_benchmark::clear()
 
 tr::duration tr::graphics_benchmark::latest() const
 {
-	return !m_durations.empty() ? m_durations.back() : duration{0};
+	return !m_durations.empty() ? m_durations.back() : duration::zero();
 }
 
 tr::duration tr::graphics_benchmark::min() const
 {
-	return !m_durations.empty() ? *std::ranges::min_element(m_durations) : duration{0};
+	return !m_durations.empty() ? *std::ranges::min_element(m_durations) : duration::zero();
 }
 
 tr::duration tr::graphics_benchmark::max() const
 {
-	return !m_durations.empty() ? *std::ranges::max_element(m_durations) : duration{0};
+	return !m_durations.empty() ? *std::ranges::max_element(m_durations) : duration::zero();
 }
 
 tr::duration tr::graphics_benchmark::avg() const
 {
 	if (m_durations.empty()) {
-		return duration{0};
+		return duration::zero();
 	}
 	else {
-		return sum(m_durations, duration{0}) / m_durations.size();
+		return sum(m_durations, duration::zero()) / m_durations.size();
 	}
 }
 

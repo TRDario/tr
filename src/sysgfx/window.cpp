@@ -163,7 +163,7 @@ void tr::window_view::disable_text_input() const
 
 void tr::window_view::set_vsync(vsync vsync) const
 {
-	if (!SDL_GL_SetSwapInterval(int(vsync))) {
+	if (!SDL_GL_SetSwapInterval(to_underlying(vsync))) {
 		if (vsync == vsync::adaptive) {
 			TR_LOG(log, tr::severity::warning, "Failed to set window V-sync to adaptive, falling back to regular.");
 			TR_LOG_CONTINUE(log, "{}", SDL_GetError());
@@ -215,7 +215,7 @@ tr::window::window(zstring_view title, window_parameters parameters)
 	SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8);
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, parameters.enable_depth_stencil ? 24 : 0);
 	SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, parameters.enable_depth_stencil ? 8 : 0);
-	SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, bool(parameters.multisamples));
+	SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, parameters.multisamples != 0);
 	SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, parameters.multisamples);
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, true);
 
@@ -379,7 +379,7 @@ void tr::window::set_vsync(vsync vsync)
 
 void tr::window::set_mouse_mode(mouse_mode mode)
 {
-	if (!SDL_SetWindowRelativeMouseMode(m_ptr.get(), bool(mode))) {
+	if (!SDL_SetWindowRelativeMouseMode(m_ptr.get(), to_underlying(mode))) {
 		TR_LOG_SDL_ERROR("Failed to set mouse mode.");
 	}
 

@@ -100,7 +100,7 @@ void tr::ttfont::resize(float size)
 
 void tr::ttfont::set_style(ttf_style style)
 {
-	TTF_SetFontStyle(m_ptr.get(), TTF_FontStyleFlags(style));
+	TTF_SetFontStyle(m_ptr.get(), to_underlying(style));
 }
 
 void tr::ttfont::set_outline(int outline)
@@ -154,7 +154,7 @@ glm::ivec2 tr::ttfont::text_size(std::string_view text, int max_w) const
 static tr::bitmap fix_alpha_artifacts(tr::bitmap&& bitmap, tr::u8 max_alpha)
 {
 	// We know the bitmap is ARGB_8888.
-	tr::u8* row_it{(tr::u8*)bitmap.data()};
+	tr::u8* row_it{reinterpret_cast<tr::u8*>(bitmap.data())};
 	for (int y = 0; y < bitmap.size().y; ++y) {
 		for (int x = 0; x < bitmap.size().x; ++x) {
 			row_it[x * 4 + 3] = std::min(row_it[x * 4 + 3], max_alpha);
@@ -172,7 +172,7 @@ tr::bitmap tr::ttfont::render(u32 glyph, rgba8 color) const
 
 tr::bitmap tr::ttfont::render(std::string_view text, int max_w, halign align, rgba8 color) const
 {
-	TTF_SetFontWrapAlignment(m_ptr.get(), TTF_HorizontalAlignment(align));
+	TTF_SetFontWrapAlignment(m_ptr.get(), static_cast<TTF_HorizontalAlignment>(align));
 	SDL_Surface* const ptr{TTF_RenderText_Blended_Wrapped(m_ptr.get(), text.data(), text.size(), std::bit_cast<SDL_Color>(color), max_w)};
 	return ptr != nullptr ? fix_alpha_artifacts(bitmap{ptr}, color.a) : throw ttfont_render_error{SDL_GetError()};
 }
@@ -218,7 +218,7 @@ std::vector<std::string_view> tr::break_overlong_lines(std::vector<std::string_v
 			continue;
 		}
 
-		const tr::ttf_measure_result measure{font.measure_text(*line_it, int(max_w))};
+		const tr::ttf_measure_result measure{font.measure_text(*line_it, max_w)};
 		if (measure.text != std::string_view{*line_it}) {
 			usize last_ws{std::string_view{line_it->begin(), line_it->begin() + measure.text.size() + 1}.find_last_of(" \t")};
 			if (last_ws != std::string_view::npos) {

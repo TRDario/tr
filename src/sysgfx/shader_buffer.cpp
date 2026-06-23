@@ -19,7 +19,7 @@ tr::basic_shader_buffer::basic_shader_buffer(graphics_context& context, usize he
 {
 	const graphics_context::functions& gl{context.make_current_and_return_functions()};
 
-	gl.named_buffer_storage(id(), header_size + capacity, nullptr, (unsigned int)(map_type) | GL_DYNAMIC_STORAGE_BIT);
+	gl.named_buffer_storage(id(), header_size + capacity, nullptr, to_underlying(map_type) | GL_DYNAMIC_STORAGE_BIT);
 	if (gl.get_error() == GL_OUT_OF_MEMORY) {
 		throw out_of_memory{"shader buffer allocation"};
 	}
@@ -91,7 +91,7 @@ tr::basic_graphics_buffer_map tr::basic_shader_buffer::map_range(usize offset, u
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	std::byte* const map_pointer{(std::byte*)gl.map_named_buffer_range(id(), offset, size, (unsigned int)(m_map_type))};
+	std::byte* const map_pointer{static_cast<std::byte*>(gl.map_named_buffer_range(id(), offset, size, to_underlying(m_map_type)))};
 	if (gl.get_error() == GL_OUT_OF_MEMORY) {
 #ifdef TR_ENABLE_ASSERTS
 		throw out_of_memory{"mapping of shader buffer '{}'", label()};

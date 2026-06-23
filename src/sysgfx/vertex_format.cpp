@@ -20,7 +20,7 @@ tr::vertex_format::vertex_format(graphics_context& context, std::span<const vert
 
 	gl.create_vertex_arrays(1, out_handle(m_vao));
 	unsigned int attr_id{0};
-	for (int binding_id = 0; binding_id < int(bindings.size()); ++binding_id) {
+	for (int binding_id = 0; binding_id < static_cast<int>(bindings.size()); ++binding_id) {
 		const vertex_binding& binding{bindings.begin()[binding_id]};
 
 		gl.vertex_array_binding_divisor(m_vao.get(), binding_id, binding.divisor);
@@ -29,7 +29,7 @@ tr::vertex_format::vertex_format(graphics_context& context, std::span<const vert
 			TR_ASSERT(attribute.type != vertex_attribute_type::unknown, "Tried to construct vertex format with invalid attribute '{}'.",
 					  attribute);
 
-			gl.vertex_array_attrib_format(m_vao.get(), attr_id, attribute.elements, (unsigned int)(attribute.type), attribute.normalized,
+			gl.vertex_array_attrib_format(m_vao.get(), attr_id, attribute.elements, to_underlying(attribute.type), attribute.normalized,
 										  offset);
 			gl.enable_vertex_array_attrib(m_vao.get(), attr_id);
 			gl.vertex_array_attrib_binding(m_vao.get(), attr_id++, binding_id);

@@ -68,9 +68,9 @@ extern "C"
 		}
 
 		try {
-			tr::signal parse_result{app::parse_command_line({(tr::zstring_view*)argv, std::size_t(argc)})};
+			tr::signal parse_result{app::parse_command_line({reinterpret_cast<tr::zstring_view*>(argv), static_cast<std::size_t>(argc)})};
 			if (parse_result != tr::signal::proceed) {
-				return SDL_AppResult(parse_result);
+				return static_cast<SDL_AppResult>(parse_result);
 			}
 		}
 		catch (std::exception& err) {
@@ -91,7 +91,7 @@ extern "C"
 		}
 
 		try {
-			return SDL_AppResult(app::initialize());
+			return static_cast<SDL_AppResult>(app::initialize());
 		}
 		catch (std::exception& err) {
 			tr::show_fatal_error_message_box(err);
@@ -102,7 +102,7 @@ extern "C"
 	SDL_AppResult SDL_AppEvent(void*, SDL_Event* event)
 	{
 		try {
-			return SDL_AppResult(app::handle_event((tr::event&)*event));
+			return static_cast<SDL_AppResult>(app::handle_event(reinterpret_cast<tr::event&>(*event)));
 		}
 		catch (std::exception& err) {
 			tr::show_fatal_error_message_box(err);
@@ -117,7 +117,7 @@ extern "C"
 			const std::chrono::steady_clock::time_point now{std::chrono::steady_clock::now()};
 			const tr::duration delta{now - prev};
 			prev = now;
-			return SDL_AppResult(app::update(delta));
+			return static_cast<SDL_AppResult>(app::update(delta));
 		}
 		catch (std::exception& err) {
 			tr::show_fatal_error_message_box(err);
@@ -135,6 +135,5 @@ extern "C"
 		}
 
 		TTF_Quit();
-		SDL_Quit();
 	}
 }

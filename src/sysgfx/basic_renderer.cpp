@@ -103,7 +103,7 @@ tr::simple_color_mesh_ref tr::basic_renderer::new_color_fan(int layer, usize ver
 	const std::ranges::subrange index_range{mesh.indices.end() - indices, mesh.indices.end()};
 
 	std::ranges::fill(uvs, untextured_uv);
-	fill_convex_polygon_indices(index_range.begin(), u16(vertices), base_index);
+	fill_convex_polygon_indices(index_range.begin(), vertices, base_index);
 
 	return {positions, colors};
 }
@@ -141,7 +141,7 @@ tr::simple_color_mesh_ref tr::basic_renderer::new_color_outline(int layer, usize
 	const std::ranges::subrange index_range{mesh.indices.end() - indices, mesh.indices.end()};
 
 	std::ranges::fill(uvs, untextured_uv);
-	fill_convex_polygon_outline_indices(index_range.begin(), u16(polygon_vertices), base_index);
+	fill_convex_polygon_outline_indices(index_range.begin(), polygon_vertices, base_index);
 
 	return {positions, colors};
 }
@@ -164,7 +164,7 @@ tr::color_mesh_ref tr::basic_renderer::new_color_mesh(int layer, usize vertices,
 	TR_ASSERT(!m_locked, "Tried to allocate a new color mesh on a locked basic renderer.");
 
 	mesh& mesh{find_mesh(layer, primitive::tris, std::nullopt, mat, blend_mode, vertices)};
-	const u16 base_index{u16(mesh.positions.size())};
+	const u16 base_index{static_cast<u16>(mesh.positions.size())};
 
 	mesh.positions.resize(mesh.positions.size() + vertices);
 	mesh.uvs.resize(mesh.uvs.size() + vertices);
@@ -212,7 +212,7 @@ tr::simple_textured_mesh_ref tr::basic_renderer::new_textured_fan(int layer, usi
 	TR_ASSERT(!texture_ref.empty(), "Cannot pass std::nullopt as texture for textured fan.");
 
 	mesh& mesh{find_mesh(layer, primitive::tris, std::move(texture_ref), mat, blend_mode, vertices)};
-	const u16 base_index{u16(mesh.positions.size())};
+	const u16 base_index{static_cast<u16>(mesh.positions.size())};
 	const usize indices{polygon_indices(vertices)};
 
 	mesh.positions.resize(mesh.positions.size() + vertices);
@@ -225,7 +225,7 @@ tr::simple_textured_mesh_ref tr::basic_renderer::new_textured_fan(int layer, usi
 	const std::ranges::subrange tints{mesh.tints.end() - vertices, mesh.tints.end()};
 	const std::ranges::subrange index_range{mesh.indices.end() - indices, mesh.indices.end()};
 
-	fill_convex_polygon_indices(index_range.begin(), u16(vertices), base_index);
+	fill_convex_polygon_indices(index_range.begin(), vertices, base_index);
 
 	return {positions, uvs, tints};
 }
@@ -261,7 +261,7 @@ tr::textured_mesh_ref tr::basic_renderer::new_textured_mesh(int layer, usize ver
 	TR_ASSERT(!texture_ref.empty(), "Cannot pass std::nullopt as texture for textured mesh.");
 
 	mesh& mesh{find_mesh(layer, primitive::tris, std::move(texture_ref), mat, blend_mode, vertices)};
-	const u16 base_index{u16(mesh.positions.size())};
+	const u16 base_index{static_cast<u16>(mesh.positions.size())};
 
 	mesh.positions.resize(mesh.positions.size() + vertices);
 	mesh.uvs.resize(mesh.uvs.size() + vertices);
@@ -296,7 +296,7 @@ tr::simple_color_mesh_ref tr::basic_renderer::new_lines(int layer, usize lines, 
 
 	const usize vertices{lines * 2};
 	mesh& mesh{find_mesh(layer, primitive::lines, std::nullopt, mat, blend_mode, vertices)};
-	const u16 base_index{u16(mesh.positions.size())};
+	const u16 base_index{static_cast<u16>(mesh.positions.size())};
 
 	mesh.positions.resize(mesh.positions.size() + vertices);
 	mesh.uvs.resize(mesh.uvs.size() + vertices);
@@ -331,7 +331,7 @@ tr::simple_color_mesh_ref tr::basic_renderer::new_line_strip(int layer, usize ve
 	TR_ASSERT(!m_locked, "Tried to allocate a new line strip on a locked basic renderer.");
 
 	mesh& mesh{find_mesh(layer, primitive::lines, std::nullopt, mat, blend_mode, vertices)};
-	const u16 base_index{u16(mesh.positions.size())};
+	const u16 base_index{static_cast<u16>(mesh.positions.size())};
 	const usize indices{line_strip_indices(vertices)};
 
 	mesh.positions.resize(mesh.positions.size() + vertices);
@@ -367,7 +367,7 @@ tr::simple_color_mesh_ref tr::basic_renderer::new_line_loop(int layer, usize ver
 	TR_ASSERT(!m_locked, "Tried to allocate a new line loop on a locked basic renderer.");
 
 	mesh& mesh{find_mesh(layer, primitive::lines, std::nullopt, mat, blend_mode, vertices)};
-	const u16 base_index{u16(mesh.positions.size())};
+	const u16 base_index{static_cast<u16>(mesh.positions.size())};
 	const usize indices{line_loop_indices(vertices)};
 
 	mesh.positions.resize(mesh.positions.size() + vertices);
@@ -404,7 +404,7 @@ tr::color_mesh_ref tr::basic_renderer::new_line_mesh(int layer, usize vertices, 
 	TR_ASSERT(!m_locked, "Tried to allocate a new line mesh on a locked basic renderer.");
 
 	mesh& mesh{find_mesh(layer, primitive::lines, std::nullopt, mat, blend_mode, vertices)};
-	const u16 base_index{u16(mesh.positions.size())};
+	const u16 base_index{static_cast<u16>(mesh.positions.size())};
 
 	mesh.positions.resize(mesh.positions.size() + vertices);
 	mesh.uvs.resize(mesh.uvs.size() + vertices);

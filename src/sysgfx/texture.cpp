@@ -276,8 +276,8 @@ void tr::texture::set_filtering(min_filter min_filter, mag_filter mag_filter)
 
 	const graphics_context::functions& gl{m_context.make_current_and_return_functions()};
 
-	gl.texture_parameter_i(m_handle, GL_TEXTURE_MIN_FILTER, int(min_filter));
-	gl.texture_parameter_i(m_handle, GL_TEXTURE_MAG_FILTER, int(mag_filter));
+	gl.texture_parameter_i(m_handle, GL_TEXTURE_MIN_FILTER, to_underlying(min_filter));
+	gl.texture_parameter_i(m_handle, GL_TEXTURE_MAG_FILTER, to_underlying(mag_filter));
 }
 
 void tr::texture::set_wrap(wrap wrap)
@@ -286,9 +286,9 @@ void tr::texture::set_wrap(wrap wrap)
 
 	const graphics_context::functions& gl{m_context.make_current_and_return_functions()};
 
-	gl.texture_parameter_i(m_handle, GL_TEXTURE_WRAP_S, int(wrap));
-	gl.texture_parameter_i(m_handle, GL_TEXTURE_WRAP_T, int(wrap));
-	gl.texture_parameter_i(m_handle, GL_TEXTURE_WRAP_R, int(wrap));
+	gl.texture_parameter_i(m_handle, GL_TEXTURE_WRAP_S, to_underlying(wrap));
+	gl.texture_parameter_i(m_handle, GL_TEXTURE_WRAP_T, to_underlying(wrap));
+	gl.texture_parameter_i(m_handle, GL_TEXTURE_WRAP_R, to_underlying(wrap));
 }
 
 void tr::texture::set_border_color(rgbaf color)

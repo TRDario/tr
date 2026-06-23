@@ -25,25 +25,25 @@ static std::string format_duration(std::string_view prefix, tr::duration duratio
 {
 	if (duration <= 1us) {
 		const double count{duration_cast<tr::dnsecs>(duration).count()};
-		const int precision{6 - std::clamp(int(std::log10(count)), 0, 5)};
+		const int precision{6 - std::clamp(static_cast<int>(std::log10(count)), 0, 5)};
 		const std::string format{TR_FMT::format("{}{{:#08.{}f}}ns", prefix, precision)};
 		return TR_FMT::vformat(format, TR_FMT::make_format_args(count));
 	}
 	else if (duration <= 1ms) {
 		const double count{duration_cast<tr::dusecs>(duration).count()};
-		const int precision{6 - std::clamp(int(std::log10(count)), 0, 5)};
+		const int precision{6 - std::clamp(static_cast<int>(std::log10(count)), 0, 5)};
 		const std::string format{TR_FMT::format("{}{{:#08.{}f}}us", prefix, precision)};
 		return TR_FMT::vformat(format, TR_FMT::make_format_args(count));
 	}
 	else if (duration <= 1s) {
 		const double count{duration_cast<tr::dmsecs>(duration).count()};
-		const int precision{6 - std::clamp(int(std::log10(count)), 0, 5)};
+		const int precision{6 - std::clamp(static_cast<int>(std::log10(count)), 0, 5)};
 		const std::string format{TR_FMT::format("{}{{:#08.{}f}}ms", prefix, precision)};
 		return TR_FMT::vformat(format, TR_FMT::make_format_args(count));
 	}
 	else {
 		const double count{duration_cast<tr::dsecs>(duration).count()};
-		const int precision{6 - std::clamp(int(std::log10(count)), 0, 5)};
+		const int precision{6 - std::clamp(static_cast<int>(std::log10(count)), 0, 5)};
 		const std::string format{TR_FMT::format("{}{{:#08.{}f}}s", prefix, precision)};
 		return TR_FMT::vformat(format, TR_FMT::make_format_args(count));
 	}
@@ -140,7 +140,7 @@ void tr::debug_renderer::draw()
 			context().set_vertex_buffer(m_mesh, 0, 0);
 			context().set_vertex_buffer(m_glyph_buffer, 1, 0);
 		}
-		context().draw_instances(primitive::tri_fan, 0, 4, int(m_glyphs.size()));
+		context().draw_instances(primitive::tri_fan, 0, 4, m_glyphs.size());
 
 		m_glyphs.clear();
 	}
@@ -170,7 +170,7 @@ tr::debug_renderer::writer::writer(const style& style, std::vector<glyph>& glyph
 void tr::debug_renderer::writer::right_align_current_line_up_to(usize line_end)
 {
 	for (usize i = m_current_line_start; i < line_end; ++i) {
-		m_glyphs[i].pos.x = u8(line_end - i);
+		m_glyphs[i].pos.x = line_end - i;
 	}
 }
 
@@ -265,7 +265,8 @@ void tr::debug_renderer::writer::handle_control_sequence(std::string_view::itera
 {
 	switch (*control_it) {
 	case 'b':
-		if (std::next(control_it) != end && std::isdigit(*++control_it) && u8(*control_it - '0') < m_style.extra_colors.size()) {
+		if (std::next(control_it) != end && std::isdigit(*++control_it) &&
+			static_cast<u8>(*control_it - '0') < m_style.extra_colors.size()) {
 			m_background_color = m_style.extra_colors[*control_it - '0'];
 		}
 		break;
@@ -273,7 +274,8 @@ void tr::debug_renderer::writer::handle_control_sequence(std::string_view::itera
 		m_background_color = m_style.background_color;
 		break;
 	case 'c':
-		if (std::next(control_it) != end && std::isdigit(*++control_it) && u8(*control_it - '0') < m_style.extra_colors.size()) {
+		if (std::next(control_it) != end && std::isdigit(*++control_it) &&
+			static_cast<u8>(*control_it - '0') < m_style.extra_colors.size()) {
 			m_text_color = m_style.extra_colors[*control_it - '0'];
 		}
 		break;

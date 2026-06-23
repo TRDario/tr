@@ -101,7 +101,7 @@ namespace {
 // The file dialog callback function.
 static void file_dialog_callback(void* userdata, const char* const* files, int)
 {
-	file_dialog_context& context{*(file_dialog_context*)userdata};
+	file_dialog_context& context{*static_cast<file_dialog_context*>(userdata)};
 	if (files != nullptr) {
 		while (*files != nullptr) {
 			context.paths.emplace_back(*files++);
@@ -115,8 +115,8 @@ static std::vector<std::filesystem::path> show_open_file_dialog_base(std::span<c
 																	 tr::zstring_view default_path, bool allow_multiple)
 {
 	file_dialog_context ctx{};
-	SDL_ShowOpenFileDialog(file_dialog_callback, &ctx, nullptr, (const SDL_DialogFileFilter*)filters.data(), int(filters.size()),
-						   default_path.c_str(), allow_multiple);
+	SDL_ShowOpenFileDialog(file_dialog_callback, &ctx, nullptr, reinterpret_cast<const SDL_DialogFileFilter*>(filters.data()),
+						   filters.size(), default_path.c_str(), allow_multiple);
 	while (!ctx.done) {
 		SDL_PumpEvents();
 		std::this_thread::sleep_for(10ms);
@@ -161,8 +161,8 @@ std::vector<std::filesystem::path> tr::show_open_folders_dialog(zstring_view def
 std::filesystem::path tr::show_save_file_dialog(std::span<const dialog_filter> filters, zstring_view default_path)
 {
 	file_dialog_context ctx{};
-	SDL_ShowSaveFileDialog(file_dialog_callback, &ctx, nullptr, (const SDL_DialogFileFilter*)filters.data(), int(filters.size()),
-						   default_path.c_str());
+	SDL_ShowSaveFileDialog(file_dialog_callback, &ctx, nullptr, reinterpret_cast<const SDL_DialogFileFilter*>(filters.data()),
+						   filters.size(), default_path.c_str());
 	while (!ctx.done) {
 		SDL_PumpEvents();
 		std::this_thread::sleep_for(10ms);

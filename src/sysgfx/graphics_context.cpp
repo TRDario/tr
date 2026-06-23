@@ -37,7 +37,7 @@ struct loaded_gl_function_proxy {
 	template <typename Return, typename... Args> using function_pointer = Return (*)(Args...);
 	template <typename Return, typename... Args> operator function_pointer<Return, Args...>()
 	{
-		return function_pointer<Return, Args...>(ptr);
+		return reinterpret_cast<function_pointer<Return, Args...>>(ptr);
 	}
 };
 
@@ -176,9 +176,9 @@ tr::graphics_context::graphics_context(tr::window& window)
 {
 #ifdef TR_ENABLE_ASSERTS
 	TR_LOG(log, severity::info, "Created an OpenGL context.");
-	TR_LOG_CONTINUE(log, "Vendor: {}", (const char*)m_functions.get_string(GL_VENDOR));
-	TR_LOG_CONTINUE(log, "Renderer: {}", (const char*)m_functions.get_string(GL_RENDERER));
-	TR_LOG_CONTINUE(log, "Version: {}", (const char*)m_functions.get_string(GL_VERSION));
+	TR_LOG_CONTINUE(log, "Vendor: {}", reinterpret_cast<const char*>(m_functions.get_string(GL_VENDOR)));
+	TR_LOG_CONTINUE(log, "Renderer: {}", reinterpret_cast<const char*>(m_functions.get_string(GL_RENDERER)));
+	TR_LOG_CONTINUE(log, "Version: {}", reinterpret_cast<const char*>(m_functions.get_string(GL_VERSION)));
 #endif
 	m_functions.enable(GL_BLEND);
 	m_functions.enable(GL_SCISSOR_TEST);
@@ -225,7 +225,7 @@ const tr::vertex_format& tr::graphics_context::vertex2_format()
 tr::renderer_id tr::graphics_context::allocate_renderer_id()
 {
 	const renderer_id id{m_next_renderer_id};
-	m_next_renderer_id = renderer_id{(unsigned int)(m_next_renderer_id) + 1};
+	m_next_renderer_id = renderer_id{to_underlying(m_next_renderer_id) + 1};
 	return id;
 }
 
@@ -310,9 +310,8 @@ void tr::graphics_context::set_blend_mode(const blend_mode& bm)
 {
 	const functions& gl{make_current_and_return_functions()};
 
-	gl.blend_equation_separate((unsigned int)(bm.rgb_fn), (unsigned int)(bm.alpha_fn));
-	gl.blend_func_separate((unsigned int)(bm.rgb_src), (unsigned int)(bm.rgb_dst), (unsigned int)(bm.alpha_src),
-						   (unsigned int)(bm.alpha_dst));
+	gl.blend_equation_separate(to_underlying(bm.rgb_fn), to_underlying(bm.alpha_fn));
+	gl.blend_func_separate(to_underlying(bm.rgb_src), to_underlying(bm.rgb_dst), to_underlying(bm.alpha_src), to_underlying(bm.alpha_dst));
 }
 
 void tr::graphics_context::set_vertex_format(const vertex_format& format)
@@ -403,28 +402,29 @@ void tr::graphics_context::draw(primitive type, usize offset, usize vertices)
 {
 	const functions& gl{make_current_and_return_functions()};
 
-	gl.draw_arrays((unsigned int)(type), offset, vertices);
+	gl.draw_arrays(to_underlying(type), offset, vertices);
 }
 
 void tr::graphics_context::draw_instances(primitive type, usize offset, usize vertices, int instances)
 {
 	const functions& gl{make_current_and_return_functions()};
 
-	gl.draw_arrays_instanced((unsigned int)(type), offset, vertices, instances);
+	gl.draw_arrays_instanced(to_underlying(type), offset, vertices, instances);
 }
 
 void tr::graphics_context::draw_indexed(primitive type, usize offset, usize indices)
 {
 	const functions& gl{make_current_and_return_functions()};
 
-	gl.draw_elements((unsigned int)(type), indices, GL_UNSIGNED_SHORT, (const void*)(offset * sizeof(u16)));
+	gl.draw_elements(to_underlying(type), indices, GL_UNSIGNED_SHORT, reinterpret_cast<const void*>(offset * sizeof(u16)));
 }
 
 void tr::graphics_context::draw_indexed_instances(primitive type, usize offset, usize indices, int instances)
 {
 	const functions& gl{make_current_and_return_functions()};
 
-	gl.draw_elements_instanced((unsigned int)(type), indices, GL_UNSIGNED_SHORT, (const void*)(offset * sizeof(u16)), instances);
+	gl.draw_elements_instanced(to_underlying(type), indices, GL_UNSIGNED_SHORT, reinterpret_cast<const void*>(offset * sizeof(u16)),
+							   instances);
 }
 
 //

@@ -5,6 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
+#include "../../utility/enum.hpp"
 #include "../keyboard.hpp"
 
 /////////////////////////////////////////////////////////// SCANCODE AND KEYCODE //////////////////////////////////////////////////////////
@@ -313,7 +314,7 @@ constexpr tr::scancode tr::to_scancode(std::string_view str)
 {
 	for (usize i = 0; i < scancode_name_table.size(); ++i) {
 		if (!scancode_name_table[i].empty() && scancode_name_table[i] == str) {
-			return scancode(i);
+			return static_cast<scancode>(i);
 		}
 	}
 	return tr::scancode::unknown;
@@ -325,7 +326,7 @@ constexpr tr::keycode tr::to_keycode(zstring_view str)
 		return keycode::unknown;
 	}
 
-	if (u8(str[0]) < 0x80) {
+	if (static_cast<u8>(str[0]) < 0x80) {
 		if (str[0] >= 'A' && str[0] <= 'Z') {
 			return keycode{str[0] - 'A' + 'a'};
 		}
@@ -348,8 +349,8 @@ constexpr tr::keycode tr::to_keycode(zstring_view str)
 	}
 
 	const scancode scan{to_scancode(str)};
-	if (int(scan) >= 57) {
-		return keycode{int(scan) | (1 << 30)};
+	if (to_underlying(scan) >= 57) {
+		return keycode{to_underlying(scan) | (1 << 30)};
 	}
 
 	return to_keycode_fallback(str);
@@ -357,7 +358,7 @@ constexpr tr::keycode tr::to_keycode(zstring_view str)
 
 constexpr tr::zstring_view tr::name(scancode scan)
 {
-	return scancode_name_table[int(scan)];
+	return scancode_name_table[to_underlying(scan)];
 }
 
 ////////////////////////////////////////////////////////////////// CHORDS /////////////////////////////////////////////////////////////////
