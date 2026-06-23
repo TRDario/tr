@@ -47,14 +47,14 @@ tr::audio_source::buffered_stream::buffered_stream(audio_context& context, std::
 
 tr::fsecs tr::audio_source::buffered_stream::length() const
 {
-	return fsecs{float(m_stream->length()) / m_stream->sample_rate()};
+	return fsecs{static_cast<float>(m_stream->length()) / m_stream->sample_rate()};
 }
 
 //
 
 tr::fsecs tr::audio_source::buffered_stream::tell() const
 {
-	return fsecs{float(m_stream->tell()) / m_stream->sample_rate()};
+	return fsecs{static_cast<float>(m_stream->tell()) / m_stream->sample_rate()};
 }
 
 void tr::audio_source::buffered_stream::seek(fsecs where)
@@ -71,12 +71,12 @@ bool tr::audio_source::buffered_stream::looping() const
 
 tr::fsecs tr::audio_source::buffered_stream::loop_start() const
 {
-	return fsecs{float(m_stream->loop_start()) / m_stream->sample_rate()};
+	return fsecs{static_cast<float>(m_stream->loop_start()) / m_stream->sample_rate()};
 }
 
 tr::fsecs tr::audio_source::buffered_stream::loop_end() const
 {
-	return fsecs{float(m_stream->loop_end()) / m_stream->sample_rate()};
+	return fsecs{static_cast<float>(m_stream->loop_end()) / m_stream->sample_rate()};
 }
 
 void tr::audio_source::buffered_stream::set_looping(bool looping)
@@ -87,12 +87,12 @@ void tr::audio_source::buffered_stream::set_looping(bool looping)
 void tr::audio_source::buffered_stream::set_loop_points(fsecs start_point, fsecs end_point)
 {
 	if (start_point >= loop_end()) {
-		m_stream->set_loop_end(int(end_point.count() * m_stream->sample_rate()));
-		m_stream->set_loop_start(int(start_point.count() * m_stream->sample_rate()));
+		m_stream->set_loop_end(end_point.count() * m_stream->sample_rate());
+		m_stream->set_loop_start(start_point.count() * m_stream->sample_rate());
 	}
 	else {
-		m_stream->set_loop_start(int(start_point.count() * m_stream->sample_rate()));
-		m_stream->set_loop_end(int(end_point.count() * m_stream->sample_rate()));
+		m_stream->set_loop_start(start_point.count() * m_stream->sample_rate());
+		m_stream->set_loop_end(end_point.count() * m_stream->sample_rate());
 	}
 }
 
@@ -101,7 +101,7 @@ void tr::audio_source::buffered_stream::set_loop_points(fsecs start_point, fsecs
 tr::fsecs tr::audio_source::buffered_stream::buffer_start_offset(unsigned int id) const
 {
 	const usize raw_offset{std::ranges::find(m_buffers, id, [](const buffer& buffer) { return buffer.m_handle.get(); })->start_offset()};
-	return fsecs{float(raw_offset) / m_stream->sample_rate()};
+	return fsecs{static_cast<float>(raw_offset) / m_stream->sample_rate()};
 }
 
 //
@@ -471,13 +471,13 @@ enum tr::audio_source::origin tr::audio_source::origin() const
 	ALint origin;
 	audio_context& ctx{context()};
 	ctx.m_alapi.get_source_property_i(ctx.m_ptr.get(), m_handle.get(), AL_SOURCE_RELATIVE, &origin);
-	return (enum origin)(origin);
+	return static_cast<enum origin>(origin);
 }
 
 void tr::audio_source::set_origin(enum origin type)
 {
 	audio_context& ctx{context()};
-	ctx.m_alapi.set_source_property_i(ctx.m_ptr.get(), m_handle.get(), AL_SOURCE_RELATIVE, ALint(type));
+	ctx.m_alapi.set_source_property_i(ctx.m_ptr.get(), m_handle.get(), AL_SOURCE_RELATIVE, static_cast<ALint>(type));
 }
 
 //
@@ -557,7 +557,7 @@ tr::fsecs tr::audio_source::length() const
 		},
 		[](const std::shared_ptr<audio_buffer>& buffer) {
 			const int sample_rate{buffer->sample_rate()};
-			return sample_rate == 0 ? fsecs::zero() : fsecs{double(buffer->size()) / sample_rate};
+			return sample_rate == 0 ? fsecs::zero() : fsecs{static_cast<float>(buffer->size()) / sample_rate};
 		},
 		[](std::monostate) {
 			return fsecs::zero();

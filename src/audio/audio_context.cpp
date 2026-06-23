@@ -45,7 +45,7 @@ struct loaded_al_function_proxy {
 	template <typename Return, typename... Args> using function_pointer = Return (*)(Args...);
 	template <typename Return, typename... Args> operator function_pointer<Return, Args...>()
 	{
-		return function_pointer<Return, Args...>(ptr);
+		return reinterpret_cast<function_pointer<Return, Args...>>(ptr);
 	}
 };
 
@@ -97,7 +97,7 @@ tr::audio_context::audio_context(audio_device& device)
 
 	int al_max_sources;
 	alcGetIntegerv(device.m_ptr.get(), ALC_MONO_SOURCES, 1, &al_max_sources);
-	m_max_sources = usize(al_max_sources);
+	m_max_sources = al_max_sources;
 
 	m_class_gains.fill(1.0f);
 

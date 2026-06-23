@@ -97,6 +97,8 @@ namespace tr {
 		// Returns a pointer to the first character in the string.
 		constexpr const_pointer c_str() const;
 
+		// Gets the length of the string as if by strlen.
+		constexpr usize length() const;
 		// Gets whether the string view is empty.
 		constexpr bool empty() const;
 

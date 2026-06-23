@@ -105,7 +105,7 @@ tr::ogg_audio_stream::~ogg_audio_stream()
 
 tr::usize tr::ogg_audio_stream::length() const
 {
-	return tr::usize(ov_pcm_total(&m_file, -1));
+	return ov_pcm_total(&m_file, -1);
 }
 
 int tr::ogg_audio_stream::channels() const
@@ -115,26 +115,26 @@ int tr::ogg_audio_stream::channels() const
 
 int tr::ogg_audio_stream::sample_rate() const
 {
-	return int(ov_info(&m_file, -1)->rate);
+	return ov_info(&m_file, -1)->rate;
 }
 
 tr::usize tr::ogg_audio_stream::tell() const
 {
-	return tr::usize(ov_pcm_tell(&m_file));
+	return ov_pcm_tell(&m_file);
 }
 
 void tr::ogg_audio_stream::seek(tr::usize where)
 {
-	ov_pcm_seek(&m_file, ogg_int64_t(where));
+	ov_pcm_seek(&m_file, where);
 }
 
 void tr::ogg_audio_stream::raw_read(std::span<tr::i16> buffer)
 {
-	char* raw_dest{(char*)buffer.data()};
-	int bytes_left{int(buffer.size_bytes())};
+	char* raw_dest{reinterpret_cast<char*>(buffer.data())};
+	int bytes_left{static_cast<int>(buffer.size_bytes())};
 	int cur_section;
 	while (bytes_left > 0) {
-		const int read_bytes{int(ov_read(&m_file, raw_dest, bytes_left, 0, 2, 1, &cur_section))};
+		const long read_bytes{ov_read(&m_file, raw_dest, bytes_left, 0, 2, 1, &cur_section)};
 		if (read_bytes <= 0) {
 			return;
 		}

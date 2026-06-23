@@ -68,7 +68,7 @@ tr::usize tr::audio_buffer::size() const
 tr::fsecs tr::audio_buffer::length() const
 {
 	const int sample_rate{this->sample_rate()};
-	return sample_rate == 0 ? fsecs::zero() : fsecs{double(size()) / sample_rate / channels()};
+	return sample_rate == 0 ? fsecs::zero() : fsecs{static_cast<double>(size()) / sample_rate / channels()};
 }
 
 int tr::audio_buffer::sample_rate() const
@@ -92,8 +92,8 @@ int tr::audio_buffer::channels() const
 void tr::audio_buffer::set(std::span<const i16> data, audio_format format, int frequency)
 {
 	audio_context& ctx{context()};
-	const ALsizei size{ALsizei(data.size_bytes()) - ALsizei(data.size_bytes()) % 4};
-	ctx.m_alapi.set_buffer_data(ctx.m_ptr.get(), m_handle.get(), ALenum(format), data.data(), size, frequency);
+	const ALsizei data_size{static_cast<ALsizei>(data.size_bytes() - data.size_bytes() % 4)};
+	ctx.m_alapi.set_buffer_data(ctx.m_ptr.get(), m_handle.get(), static_cast<ALenum>(format), data.data(), data_size, frequency);
 	if (ctx.m_alapi.get_error(ctx.m_ptr.get()) == AL_OUT_OF_MEMORY) {
 		throw out_of_memory{"audio buffer allocation"};
 	}
@@ -105,19 +105,21 @@ std::pair<tr::fsecs, tr::fsecs> tr::audio_buffer::loop_points() const
 {
 	const int sample_rate{this->sample_rate()};
 	const int channels{this->channels()};
-	std::array<ALint, 2> raw_loop_points{};
-	audio_context& ctx{context()};
-	ctx.m_alapi.get_buffer_property_iv(ctx.m_ptr.get(), m_handle.get(), AL_LOOP_POINTS_SOFT, raw_loop_points.data());
+	const float samples_per_second{static_cast<float>(sample_rate * channels)};
 
-	return {fsecs{float(raw_loop_points[0]) / sample_rate / channels}, fsecs{float(raw_loop_points[1]) / sample_rate / channels}};
+	std::array<ALint, 2> loop_point_offsets{};
+	audio_context& ctx{context()};
+	ctx.m_alapi.get_buffer_property_iv(ctx.m_ptr.get(), m_handle.get(), AL_LOOP_POINTS_SOFT, loop_point_offsets.data());
+
+	return {fsecs{loop_point_offsets[0] / samples_per_second}, fsecs{loop_point_offsets[1] / samples_per_second}};
 }
 
 void tr::audio_buffer::set_loop_points(fsecs start_point, fsecs end_point)
 {
 	const int sample_rate{this->sample_rate()};
 	const int channels{this->channels()};
-	const std::array<ALint, 2> loop_points{ALint(start_point.count() * sample_rate * channels),
-										   ALint(end_point.count() * sample_rate * channels)};
+	const std::array<ALint, 2> loop_points{static_cast<ALint>(start_point.count() * sample_rate * channels),
+										   static_cast<ALint>(end_point.count() * sample_rate * channels)};
 	audio_context& ctx{context()};
 	ctx.m_alapi.set_buffer_property_iv(ctx.m_ptr.get(), m_handle.get(), AL_LOOP_POINTS_SOFT, loop_points.data());
 }

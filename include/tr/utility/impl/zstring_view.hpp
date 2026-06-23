@@ -118,6 +118,11 @@ constexpr tr::basic_zstring_view<CharT, Traits>::const_pointer tr::basic_zstring
 
 //
 
+template <typename CharT, typename Traits> constexpr tr::usize tr::basic_zstring_view<CharT, Traits>::length() const
+{
+	return std::string_view{*this}.length();
+}
+
 template <typename CharT, typename Traits> constexpr bool tr::basic_zstring_view<CharT, Traits>::empty() const
 {
 	return m_ptr == nullptr || *m_ptr == CharT{0};

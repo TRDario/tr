@@ -44,7 +44,7 @@ tr::audio_device_list_view_iterator::const_pointer tr::audio_device_list_view_it
 tr::audio_device_list_view_iterator& tr::audio_device_list_view_iterator::operator++()
 {
 	TR_ASSERT(!m_view.empty(), "Tried to increment audio device list end iterator.");
-	m_view.remove_prefix(std::string_view{m_view}.size() + 1);
+	m_view.remove_prefix(m_view.length() + 1);
 	return *this;
 }
 
@@ -66,5 +66,5 @@ bool tr::operator==(audio_device_list_view_iterator it, audio_device_list_view_e
 
 tr::audio_device_list_view tr::available_audio_devices()
 {
-	return {tr::zstring_view{alcGetString(nullptr, ALC_DEVICE_SPECIFIER)}, {}};
+	return {audio_device_list_view_iterator{alcGetString(nullptr, ALC_DEVICE_SPECIFIER)}, audio_device_list_view_end_sentinel{}};
 }
