@@ -5,7 +5,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "../../utility/variant.hpp"
 #include "../state_machine.hpp"
 
 ////////////////////////////////////////////////////////////////// STATE //////////////////////////////////////////////////////////////////
@@ -52,11 +51,6 @@ template <typename R, typename P> void tr::state_machine::update(std::chrono::du
 		m_update_benchmark.start();
 		next_state next{m_current_state->update(std::chrono::duration_cast<duration>(delta))};
 		m_update_benchmark.stop();
-		std::move(next) | stateful_match{
-							  *this,
-							  &state_machine::keep_state,
-							  &state_machine::drop_state,
-							  &state_machine::assign_state,
-						  };
+		std::visit([this](auto&& next_state) { handle_next_state(std::move(next_state)); }, std::move(next));
 	}
 }

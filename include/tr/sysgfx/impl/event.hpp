@@ -146,17 +146,3 @@ template <tr::event_visitor Visitor> auto tr::event::visit(Visitor&& visitor) co
 		return visitor(unknown_event{});
 	}
 }
-
-template <typename... Fs>
-	requires(tr::event_visitor<tr::match<Fs...>>)
-decltype(auto) tr::event::operator|(match<Fs...>&& match) const
-{
-	return visit(std::move(match));
-}
-
-template <typename State, typename... Fs>
-	requires(tr::event_visitor<tr::stateful_match<State, Fs...>>)
-decltype(auto) tr::event::operator|(stateful_match<State, Fs...>&& match) const
-{
-	return visit(std::move(match));
-}

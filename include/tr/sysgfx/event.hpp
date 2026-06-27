@@ -3,18 +3,8 @@
 // Provides event types and related functionality.                                                                                       //
 //                                                                                                                                       //
 // Events are handled in the handle_event(tr::event& event) main function. tr::event is an opaque sum type that can be converted         //
-// into one of its possible subtypes. This can be done using using a match statement, a visitor using the .visit() method, or by using   //
-// the .is<T>() and .as<T>() methods to check for and convert to a specific type:                                                        //
-//     - event | tr::match {                                                                                                             //
-//           [] (tr::key_down_event evt) { tr::println("Pressed {}", evt.span); },                                                       //
-//           [] (tr::key_up_event evt) { tr::println("Released {}", evt.span); },                                                        //
-//           tr::ignore_other_cases                                                                                                      //
-//       }                                                                                                                               //
-//     - event.visit(tr::match {                                                                                                         //
-//           [] (tr::key_down_event evt) { tr::println("Pressed {}", evt.span); },                                                       //
-//           [] (tr::key_up_event evt) { tr::println("Released {}", evt.span); },                                                        //
-//           tr::ignore_other_cases                                                                                                      //
-//       })                                                                                                                              //
+// into one of its possible subtypes. This can be done using using a visitor using the .visit() method, or by using the .is<T>() and     //
+// .as<T>() methods to check for and convert to a specific type:                                                                         //
 //     - if (event.is<tr::key_down_event>()) {                                                                                           //
 //           tr::println("Pressed {}", event.as<tr::key_down_event>().span);                                                             //
 //       }                                                                                                                               //
@@ -33,7 +23,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "../utility/variant.hpp"
 #include "keyboard.hpp"
 #include "mouse.hpp"
 #include "window.hpp"
@@ -251,14 +240,6 @@ namespace tr {
 
 		// Visits the event.
 		template <event_visitor Visitor> auto visit(Visitor&& visitor) const;
-		// Visits the event with a match helper.
-		template <typename... Functions>
-			requires(event_visitor<match<Functions...>>)
-		decltype(auto) operator|(match<Functions...>&& match) const;
-		// Visits the event with a stateful match helper.
-		template <typename State, typename... Functions>
-			requires(event_visitor<stateful_match<State, Functions...>>)
-		decltype(auto) operator|(stateful_match<State, Functions...>&& match) const;
 
 	  private:
 		// Storage for SDL_Event.

@@ -10,6 +10,7 @@ add_executable(
 	reference.cpp
 	stopwatch.cpp
 	utf8.cpp
+	variant.cpp
 	zstring_view.cpp
 )
 target_link_libraries(

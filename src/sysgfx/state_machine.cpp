@@ -45,12 +45,7 @@ void tr::state_machine::clear()
 void tr::state_machine::handle_event(const event& event)
 {
 	if (m_current_state != nullptr) {
-		m_current_state->handle_event(event) | stateful_match{
-												   *this,
-												   &state_machine::keep_state,
-												   &state_machine::drop_state,
-												   &state_machine::assign_state,
-											   };
+		std::visit([this](auto&& next_state) { handle_next_state(std::move(next_state)); }, m_current_state->handle_event(event));
 	}
 }
 
@@ -65,14 +60,14 @@ void tr::state_machine::draw()
 
 //
 
-void tr::state_machine::keep_state(keep_state_t) {}
+void tr::state_machine::handle_next_state(keep_state_t) {}
 
-void tr::state_machine::drop_state(drop_state_t)
+void tr::state_machine::handle_next_state(drop_state_t)
 {
 	m_current_state.reset();
 }
 
-void tr::state_machine::assign_state(std::unique_ptr<state>&& next)
+void tr::state_machine::handle_next_state(std::unique_ptr<state>&& next)
 {
 	m_current_state = std::move(next);
 }

@@ -19,13 +19,21 @@
 
 namespace tr {
 	// Wrapper over std::get_if.
-	template <typename Alternative, typename... Alternatives> opt_ref<Alternative> get_if(std::variant<Alternatives...>& v);
+	template <typename Alternative, typename... Alternatives>
+		requires(one_of<Alternative, Alternatives...>)
+	constexpr opt_ref<Alternative> get_if(std::variant<Alternatives...>& v);
 	// Gets a value if the variant contains it.
-	template <typename Alternative, typename... Alternatives> std::optional<Alternative> get_if(std::variant<Alternatives...>&& v);
+	template <typename Alternative, typename... Alternatives>
+		requires(one_of<Alternative, Alternatives...>)
+	constexpr std::optional<Alternative> get_if(std::variant<Alternatives...>&& v);
 	// Wrapper over std::get_if.
-	template <typename Alternative, typename... Alternatives> opt_ref<const Alternative> get_if(const std::variant<Alternatives...>& v);
+	template <typename Alternative, typename... Alternatives>
+		requires(one_of<Alternative, Alternatives...>)
+	constexpr opt_ref<const Alternative> get_if(const std::variant<Alternatives...>& v);
 	// Gets a value if the variant contains it.
-	template <typename Alternative, typename... Alternatives> std::optional<Alternative> get_if(const std::variant<Alternatives...>&& v);
+	template <typename Alternative, typename... Alternatives>
+		requires(one_of<Alternative, Alternatives...>)
+	constexpr std::optional<const Alternative> get_if(const std::variant<Alternatives...>&& v);
 
 	// Executes a function if the variant holds a specific type.
 	template <typename Alternative, typename... Alternatives, std::invocable<Alternative&> Fn>

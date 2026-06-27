@@ -113,11 +113,11 @@ namespace tr {
 		benchmark m_draw_benchmark;
 
 		// Keeps the current state.
-		void keep_state(keep_state_t);
+		void handle_next_state(keep_state_t);
 		// Drops the current state.
-		void drop_state(drop_state_t);
+		void handle_next_state(drop_state_t);
 		// Assigns a new current state.
-		void assign_state(std::unique_ptr<state>&& next);
+		void handle_next_state(std::unique_ptr<state>&& next);
 	};
 } // namespace tr
 
