@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                                                       //
-// Provides GPU texture classes.                                                                                                         //
+// Provides a GPU texture class and related types.                                                                                       //
 //                                                                                                                                       //
 // Textures are collections of pixel data representing 2D images stored on the GPU and available for use in rendering. Textures can be   //
 // default-constructed (in which case they will be empty), constructed uninitialized, or initialized with bitmap data that will be       //
@@ -32,19 +32,6 @@
 //     - tex.copy_region({256, 256}, tex2, {{256, 256}, {256, 256}}) -> copies a region of 'tex2' to 'tex' beginning at (256, 256)       //
 //     - tex.set_region({128, 128}, tr::load_bitmap_file("data.bmp")) -> sets a region of 'tex' beginning at (128, 128) with bitmap data //
 //                                                                                                                                       //
-// Smart references for textures are provided: they represent references to logical textures (As opposed to just a pointer) and will     //
-// continue to reference the correct texture even after moves or swaps. Additionally, they will automatically get emptied when the       //
-// referenced texture is destroyed (this can be checked with the .empty() method):                                                       //
-//     - tr::gfx::texture tex1, tex2;                                                                                                    //
-//       tr::gfx::texture_ref ref{tex1}                                                                                                  //
-//       std::swap(tex1, tex2)                                                                                                           //
-//       -> ref now points to tex2                                                                                                       //
-//                                                                                                                                       //
-// tr::gfx::render_texture objects are extensions over the regular textures with the ability to be drawn to as render targets:           //
-//     - tr::gfx::render_texture rtex{{256, 256}} -> creates a 256x256 texture that can be rendered to                                   //
-//     - tr::gfx::set_render_target(rtex) -> 'rtex' is set as the target of rendering commands                                           //
-//     - tr::gfx::set_render_target(rtex.render_target()) -> equivalent to the above                                                     //
-//                                                                                                                                       //
 // The label of a texture can be set with TR_SET_LABEL(tex, label):                                                                      //
 //     - TR_SET_LABEL(tex, "Example texture") -> 'tex' is now labelled "Example texture"                                                 //
 //                                                                                                                                       //
@@ -64,7 +51,7 @@ namespace tr {
 #ifdef TR_HAS_IMGUI
 using ImTextureID = unsigned long long;
 namespace tr::ImGui {
-	ImTextureID GetTextureID(const gfx::texture& texture);
+	ImTextureID GetTextureID(const texture& texture);
 }
 #endif
 
@@ -162,7 +149,7 @@ namespace tr {
 		// The cached size of the texture.
 		glm::ivec2 m_size;
 		// List of active references to this texture.
-		mutable std::vector<ref<texture_ref>> m_refs;
+		mutable std::vector<ref<texture_ref>> m_references;
 
 		// Creates a released texture.
 		texture(graphics_context& context, unsigned int handle, glm::ivec2 size);
@@ -172,77 +159,7 @@ namespace tr {
 		friend class graphics_context;
 
 #ifdef TR_HAS_IMGUI
-		friend ImTextureID ImGui::GetTextureID(const gfx::texture& texture);
+		friend ImTextureID ImGui::GetTextureID(const texture& texture);
 #endif
-	};
-
-	// Smart texture reference (updated on texture moves and updates, emptied on deletion).
-	class texture_ref {
-	  public:
-		// Creates an empty reference.
-		constexpr texture_ref() = default;
-		// Creates an empty reference.
-		constexpr texture_ref(std::nullopt_t) {};
-		// Creates a non-empty reference.
-		texture_ref(const texture& tex);
-		texture_ref(texture&& tex) = delete;
-		texture_ref(const texture_ref& r);
-		texture_ref(texture_ref&& r) noexcept;
-		~texture_ref();
-
-		texture_ref& operator=(const texture& tex);
-		texture_ref& operator=(texture&& tex) = delete;
-		texture_ref& operator=(const texture_ref& r);
-		texture_ref& operator=(texture_ref&& r) noexcept;
-
-		friend bool operator==(const texture_ref& l, const texture_ref& r) = default;
-
-		// Checks whether the reference is empty.
-		bool empty() const;
-		// Gets the size of the referenced texture.
-		glm::ivec2 size() const;
-
-	  private:
-		// A reference to a texture.
-		opt_ref<const texture> m_ref{};
-
-		friend class texture;
-		friend class shader_base;
-		friend class graphics_context;
-	};
-
-	// 2D texture that can be rendered to.
-	class render_texture : public texture {
-	  public:
-		// Creates an empty texture.
-		render_texture(graphics_context& context);
-		// Allocates an uninitialized texture.
-		render_texture(graphics_context& context, glm::ivec2 size, mipmaps mipmaps = mipmaps::disabled,
-					   pixel_format format = pixel_format::rgba32);
-		// Constructs a texture with data uploaded from a bitmap.
-		render_texture(graphics_context& context, const sub_bitmap& bitmap, mipmaps mipmaps = mipmaps::disabled,
-					   std::optional<pixel_format> format = std::nullopt);
-		// Moves a texture, updating all references pointing to it.
-		render_texture(render_texture&&) noexcept;
-		// Destroys the texture, emptying all references pointing to it.
-		~render_texture();
-
-		// Moves a texture, updating all references pointing to it.
-		render_texture& operator=(render_texture&& r) noexcept;
-
-		// Reallocates the texture and releases the previously held storage as a new texture.
-		texture reallocate(glm::ivec2 size, mipmaps mipmaps = mipmaps::disabled, pixel_format format = pixel_format::rgba32);
-
-		// Gets a render target spanning the texture.
-		operator render_target() const;
-		// Gets a render target spanning the texture.
-		render_target render_target() const;
-
-	  private:
-		// Handle to an OpenGL FBO.
-		unsigned int m_fbo;
-
-		// Hide the base reallocation function since we provide our own.
-		using texture::reallocate;
 	};
 } // namespace tr

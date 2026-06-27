@@ -23,14 +23,14 @@ void tr::ImGui::Shutdown()
 	ImGui_ImplSDL3_Shutdown();
 }
 
-ImTextureID tr::ImGui::GetTextureID(const gfx::texture& texture)
+ImTextureID tr::ImGui::GetTextureID(const texture& texture)
 {
 	return texture.m_handle;
 }
 
-void tr::ImGui::ProcessEvent(const sys::event& event)
+void tr::ImGui::ProcessEvent(const event& event)
 {
-	ImGui_ImplSDL3_ProcessEvent((const SDL_Event*)&event);
+	ImGui_ImplSDL3_ProcessEvent(reinterpret_cast<const SDL_Event*>(&event));
 }
 
 void tr::ImGui::NewFrame()

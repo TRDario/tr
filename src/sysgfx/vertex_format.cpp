@@ -76,7 +76,7 @@ void tr::vertex_format::set_label(std::string_view label)
 {
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.object_label(GL_VERTEX_ARRAY, m_vao.get(), label.size(), label.data());
+	gl.set_object_label(GL_VERTEX_ARRAY, m_vao.get(), label.size(), label.data());
 }
 
 std::string tr::vertex_format::label() const

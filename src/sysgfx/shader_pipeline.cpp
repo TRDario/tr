@@ -67,7 +67,7 @@ void tr::shader_pipeline::set_label(std::string_view label)
 {
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.object_label(GL_PROGRAM_PIPELINE, m_ppo.get(), label.size(), label.data());
+	gl.set_object_label(GL_PROGRAM_PIPELINE, m_ppo.get(), label.size(), label.data());
 }
 
 std::string tr::shader_pipeline::label() const

@@ -1,6 +1,7 @@
 #pragma once
+#include "../utility/exception.hpp"
 #include "render_target.hpp"
-#include "texture.hpp"
+#include "texture_ref.hpp"
 #include "vertex_buffer.hpp"
 #include "vertex_format.hpp"
 
@@ -151,9 +152,9 @@ namespace tr {
 			void (*clear_color)(float red, float green, float blue, float alpha);
 			void (*clear_depth)(double depth);
 			void (*clear_stencil)(int s);
-			void (*clear_tex_image)(unsigned int texture, int level, unsigned int format, unsigned int type, const void* data);
-			void (*clear_tex_sub_image)(unsigned int texture, int level, int xoffset, int yoffset, int zoffset, int width, int height,
-										int depth, unsigned int format, unsigned int type, const void* data);
+			void (*clear_texture_image)(unsigned int texture, int level, unsigned int format, unsigned int type, const void* data);
+			void (*clear_texture_sub_image)(unsigned int texture, int level, int xoffset, int yoffset, int zoffset, int width, int height,
+											int depth, unsigned int format, unsigned int type, const void* data);
 			void (*copy_image_sub_data)(unsigned int srcName, unsigned int srcTarget, int srcLevel, int srcX, int srcY, int srcZ,
 										unsigned int dstName, unsigned int dstTarget, int dstLevel, int dstX, int dstY, int dstZ,
 										int srcWidth, int srcHeight, int srcDepth);
@@ -201,9 +202,9 @@ namespace tr {
 			void* (*map_named_buffer_range)(unsigned int buffer, std::intptr_t offset, std::intptr_t length, unsigned int access);
 			void (*named_buffer_storage)(unsigned int buffer, std::intptr_t size, const void* data, unsigned int flags);
 			void (*named_buffer_sub_data)(unsigned int buffer, std::intptr_t offset, std::intptr_t size, const void* data);
-			void (*named_framebuffer_texture)(unsigned int framebuffer, unsigned int attachment, unsigned int texture, int level);
-			void (*object_label)(unsigned int identifier, unsigned int name, int length, const char* label);
-			void (*pixel_store_i)(unsigned int pname, int param);
+			void (*set_framebuffer_texture)(unsigned int framebuffer, unsigned int attachment, unsigned int texture, int level);
+			void (*set_object_label)(unsigned int identifier, unsigned int name, int length, const char* label);
+			void (*set_pixel_store_i)(unsigned int pname, int param);
 			void (*polygon_mode)(unsigned int face, unsigned int mode);
 			void (*program_uniform_1f)(unsigned int program, int location, float v0);
 			void (*program_uniform_1fv)(unsigned int program, int location, int count, const float* value);
@@ -240,11 +241,11 @@ namespace tr {
 			void (*program_uniform_matrix_4x2fv)(unsigned int program, int location, int count, bool transpose, const float* value);
 			void (*program_uniform_matrix_4x3fv)(unsigned int program, int location, int count, bool transpose, const float* value);
 			void (*scissor)(int x, int y, int width, int height);
-			void (*texture_parameter_fv)(unsigned int texture, unsigned int pname, const float* params);
-			void (*texture_parameter_i)(unsigned int texture, unsigned int pname, int param);
-			void (*texture_storage_2d)(unsigned int texture, int levels, unsigned int internalformat, int width, int height);
-			void (*texture_sub_image_2d)(unsigned int texture, int level, int xoffset, int yoffset, int width, int height,
-										 unsigned int format, unsigned int type, const void* pixels);
+			void (*set_texture_parameter_fv)(unsigned int texture, unsigned int pname, const float* params);
+			void (*set_texture_parameter_i)(unsigned int texture, unsigned int pname, int param);
+			void (*allocate_2d_texture_storage)(unsigned int texture, int levels, unsigned int internalformat, int width, int height);
+			void (*set_2d_texture_sub_image)(unsigned int texture, int level, int xoffset, int yoffset, int width, int height,
+											 unsigned int format, unsigned int type, const void* pixels);
 			bool (*unmap_named_buffer)(unsigned int buffer);
 			void (*use_program_stages)(unsigned int pipeline, unsigned int stages, unsigned int program);
 			void (*vertex_array_attrib_binding)(unsigned int vaobj, unsigned int attribindex, unsigned int bindingindex);

@@ -37,10 +37,10 @@ namespace tr {
 		void Shutdown();
 
 		// Gets the Dear ImGui texture ID for a tr texture.
-		ImTextureID GetTextureID(const gfx::texture& texture);
+		ImTextureID GetTextureID(const texture& texture);
 
 		// Processes an event for Dear ImGui.
-		void ProcessEvent(const sys::event& event);
+		void ProcessEvent(const event& event);
 
 		// Prepares the Dear ImGui backends needed for work with tr for a new frame.
 		void NewFrame();

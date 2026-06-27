@@ -1,8 +1,15 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Implements graphics_context.hpp.                                                                                                      //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/blending.hpp"
 #include "../../include/tr/sysgfx/gl_defines.hpp"
 #include "../../include/tr/sysgfx/index_buffer.hpp"
 #include "../../include/tr/sysgfx/shader_pipeline.hpp"
+#include "../../include/tr/sysgfx/texture.hpp"
 #include "../../include/tr/sysgfx/window.hpp"
 #include <SDL3/SDL.h>
 
@@ -63,8 +70,8 @@ tr::graphics_context::functions::functions()
 	, clear_color{gl_function_address("glClearColor")}
 	, clear_depth{gl_function_address("glClearDepth")}
 	, clear_stencil{gl_function_address("glClearStencil")}
-	, clear_tex_image{gl_function_address("glClearTexImage")}
-	, clear_tex_sub_image{gl_function_address("glClearTexSubImage")}
+	, clear_texture_image{gl_function_address("glClearTexImage")}
+	, clear_texture_sub_image{gl_function_address("glClearTexSubImage")}
 	, copy_image_sub_data{gl_function_address("glCopyImageSubData")}
 	, create_buffers{gl_function_address("glCreateBuffers")}
 	, create_framebuffers{gl_function_address("glCreateFramebuffers")}
@@ -107,9 +114,9 @@ tr::graphics_context::functions::functions()
 	, map_named_buffer_range{gl_function_address("glMapNamedBufferRange")}
 	, named_buffer_storage{gl_function_address("glNamedBufferStorage")}
 	, named_buffer_sub_data{gl_function_address("glNamedBufferSubData")}
-	, named_framebuffer_texture{gl_function_address("glNamedFramebufferTexture")}
-	, object_label{gl_function_address("glObjectLabel")}
-	, pixel_store_i{gl_function_address("glPixelStorei")}
+	, set_framebuffer_texture{gl_function_address("glNamedFramebufferTexture")}
+	, set_object_label{gl_function_address("glObjectLabel")}
+	, set_pixel_store_i{gl_function_address("glPixelStorei")}
 	, polygon_mode{gl_function_address("glPolygonMode")}
 	, program_uniform_1f{gl_function_address("glProgramUniform1f")}
 	, program_uniform_1fv{gl_function_address("glProgramUniform1fv")}
@@ -145,10 +152,10 @@ tr::graphics_context::functions::functions()
 	, program_uniform_matrix_4x2fv{gl_function_address("glProgramUniformMatrix4x2fv")}
 	, program_uniform_matrix_4x3fv{gl_function_address("glProgramUniformMatrix4x3fv")}
 	, scissor{gl_function_address("glScissor")}
-	, texture_parameter_fv{gl_function_address("glTextureParameterfv")}
-	, texture_parameter_i{gl_function_address("glTextureParameteri")}
-	, texture_storage_2d{gl_function_address("glTextureStorage2D")}
-	, texture_sub_image_2d{gl_function_address("glTextureSubImage2D")}
+	, set_texture_parameter_fv{gl_function_address("glTextureParameterfv")}
+	, set_texture_parameter_i{gl_function_address("glTextureParameteri")}
+	, allocate_2d_texture_storage{gl_function_address("glTextureStorage2D")}
+	, set_2d_texture_sub_image{gl_function_address("glTextureSubImage2D")}
 	, unmap_named_buffer{gl_function_address("glUnmapNamedBuffer")}
 	, use_program_stages{gl_function_address("glUseProgramStages")}
 	, vertex_array_attrib_binding{gl_function_address("glVertexArrayAttribBinding")}
@@ -558,11 +565,10 @@ void tr::graphics_context::clear_render_target()
 
 unsigned int tr::graphics_context::allocate_texture_unit()
 {
-	constexpr std::optional<texture_ref> free_texture_unit{};
+	const auto free_unit_it{std::ranges::find_if(m_texture_units, [](const std::optional<texture_ref>& v) { return !v.has_value(); })};
 
-	TR_ASSERT(contains(m_texture_units, free_texture_unit), "Ran out of texture units for shaders.");
+	TR_ASSERT(free_unit_it != m_texture_units.end(), "Ran out of texture units for shaders.");
 
-	auto free_unit_it{std::ranges::find(m_texture_units, free_texture_unit)};
 	free_unit_it->emplace();
 	return std::distance(m_texture_units.begin(), free_unit_it);
 }
@@ -574,8 +580,8 @@ void tr::graphics_context::set_texture_unit(unsigned int unit, texture_ref textu
 	const functions& gl{make_current_and_return_functions()};
 
 	if (!texture.empty()) {
-		if (m_texture_units[unit] != texture && texture.m_ref->m_handle != 0) {
-			gl.bind_textures(unit, 1, &texture.m_ref->m_handle);
+		if (m_texture_units[unit] != texture && texture->m_handle != 0) {
+			gl.bind_textures(unit, 1, &texture->m_handle);
 		}
 	}
 	m_texture_units[unit] = std::move(texture);
@@ -635,8 +641,8 @@ void tr::graphics_context::move_label(unsigned int type, unsigned int old_id, un
 	if (label_length > 0) {
 		std::string label(label_length, '\0');
 		gl.get_object_label(type, old_id, label_length, &label_length, label.data());
-		gl.object_label(type, new_id, label.size(), label.data());
-		gl.object_label(type, old_id, 0, nullptr);
+		gl.set_object_label(type, new_id, label.size(), label.data());
+		gl.set_object_label(type, old_id, 0, nullptr);
 	}
 }
 #endif

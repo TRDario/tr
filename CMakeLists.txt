@@ -114,11 +114,13 @@ if(TR_BUILD_SYSGFX)
 		src/sysgfx/main.cpp
 		src/sysgfx/path.cpp
 		src/sysgfx/render_target.cpp
+		src/sysgfx/render_texture.cpp
 		src/sysgfx/shader_buffer.cpp
 		src/sysgfx/shader_pipeline.cpp
 		src/sysgfx/shader.cpp
 		src/sysgfx/state_machine.cpp
 		src/sysgfx/texture.cpp
+		src/sysgfx/texture_ref.cpp
 		src/sysgfx/uniform_buffer.cpp
 		src/sysgfx/vertex_buffer.cpp
 		src/sysgfx/vertex_format.cpp
