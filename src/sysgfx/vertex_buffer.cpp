@@ -17,7 +17,7 @@ tr::basic_static_vertex_buffer::basic_static_vertex_buffer(graphics_context& con
 {
 	const graphics_context::functions& gl{context.make_current_and_return_functions()};
 
-	gl.named_buffer_storage(id(), m_size, data.data(), 0);
+	gl.allocate_buffer_storage(id(), m_size, data.data(), 0);
 	if (gl.get_error() == GL_OUT_OF_MEMORY) {
 		throw out_of_memory{"vertex buffer allocation"};
 	}
@@ -59,7 +59,7 @@ void tr::basic_dyn_vertex_buffer::reserve(usize capacity)
 		capacity = std::bit_ceil(capacity);
 
 		reallocate();
-		gl.named_buffer_storage(id(), capacity, nullptr, GL_DYNAMIC_STORAGE_BIT);
+		gl.allocate_buffer_storage(id(), capacity, nullptr, GL_DYNAMIC_STORAGE_BIT);
 		if (gl.get_error() == GL_OUT_OF_MEMORY) {
 #ifdef TR_ENABLE_ASSERTS
 			throw out_of_memory{"allocation of vertex buffer '{}'", label()};
@@ -88,5 +88,5 @@ void tr::basic_dyn_vertex_buffer::set_region(usize offset, std::span<const std::
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.named_buffer_sub_data(id(), offset, data.size(), data.data());
+	gl.set_buffer_sub_data(id(), offset, data.size(), data.data());
 }

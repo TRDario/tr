@@ -23,16 +23,16 @@ tr::vertex_format::vertex_format(graphics_context& context, std::span<const vert
 	for (int binding_id = 0; binding_id < static_cast<int>(bindings.size()); ++binding_id) {
 		const vertex_binding& binding{bindings.begin()[binding_id]};
 
-		gl.vertex_array_binding_divisor(m_vao.get(), binding_id, binding.divisor);
+		gl.set_vertex_array_binding_divisor(m_vao.get(), binding_id, binding.divisor);
 		unsigned int offset{0};
 		for (const vertex_attribute& attribute : binding.attrs) {
 			TR_ASSERT(attribute.type != vertex_attribute_type::unknown, "Tried to construct vertex format with invalid attribute '{}'.",
 					  attribute);
 
-			gl.vertex_array_attrib_format(m_vao.get(), attr_id, attribute.elements, to_underlying(attribute.type), attribute.normalized,
-										  offset);
-			gl.enable_vertex_array_attrib(m_vao.get(), attr_id);
-			gl.vertex_array_attrib_binding(m_vao.get(), attr_id++, binding_id);
+			gl.set_vertex_array_attribute_format(m_vao.get(), attr_id, attribute.elements, to_underlying(attribute.type),
+												 attribute.normalized, offset);
+			gl.enable_vertex_array_attribute(m_vao.get(), attr_id);
+			gl.set_vertex_array_attribute_binding(m_vao.get(), attr_id++, binding_id);
 
 			switch (attribute.type) {
 			case vertex_attribute_type::i8:

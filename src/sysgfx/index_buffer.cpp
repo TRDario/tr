@@ -16,7 +16,7 @@ tr::static_index_buffer::static_index_buffer(graphics_context& context, std::spa
 {
 	const graphics_context::functions& gl{context.make_current_and_return_functions()};
 
-	gl.named_buffer_storage(id(), m_size * sizeof(u16), data.data(), 0);
+	gl.allocate_buffer_storage(id(), m_size * sizeof(u16), data.data(), 0);
 	if (gl.get_error() == GL_OUT_OF_MEMORY) {
 		throw out_of_memory{"index buffer allocation"};
 	}
@@ -60,7 +60,7 @@ void tr::dyn_index_buffer::reserve(usize capacity)
 		capacity = std::bit_ceil(capacity);
 
 		reallocate();
-		gl.named_buffer_storage(id(), capacity * sizeof(u16), nullptr, GL_DYNAMIC_STORAGE_BIT);
+		gl.allocate_buffer_storage(id(), capacity * sizeof(u16), nullptr, GL_DYNAMIC_STORAGE_BIT);
 		if (gl.get_error() == GL_OUT_OF_MEMORY) {
 #ifdef TR_ENABLE_ASSERTS
 			throw out_of_memory{"allocation of index buffer '{}'", label()};
@@ -83,7 +83,7 @@ void tr::dyn_index_buffer::set_region(usize offset, std::span<const u16> data)
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.named_buffer_sub_data(id(), offset * sizeof(u16), data.size() * sizeof(u16), data.data());
+	gl.set_buffer_sub_data(id(), offset * sizeof(u16), data.size() * sizeof(u16), data.data());
 }
 
 void tr::dyn_index_buffer::set(std::span<const u16> data)

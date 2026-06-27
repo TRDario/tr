@@ -136,6 +136,8 @@ namespace tr {
 			using debug_callback = void (*)(unsigned int source, unsigned int type, unsigned int id, unsigned int severity, int length,
 											const char* message, const void* userParam);
 
+			void (*allocate_2d_texture_storage)(unsigned int texture, int levels, unsigned int internalformat, int width, int height);
+			void (*allocate_buffer_storage)(unsigned int buffer, std::intptr_t size, const void* data, unsigned int flags);
 			void (*begin_query)(unsigned int target, unsigned int id);
 			void (*bind_buffer)(unsigned int target, unsigned int buffer);
 			void (*bind_buffer_base)(unsigned int target, unsigned int index, unsigned int buffer);
@@ -146,12 +148,7 @@ namespace tr {
 			void (*bind_textures)(unsigned int first, int count, const unsigned int* textures);
 			void (*bind_vertex_array)(unsigned int array);
 			void (*bind_vertex_buffer)(unsigned int bindingindex, unsigned int buffer, std::intptr_t offset, int stride);
-			void (*blend_equation_separate)(unsigned int modeRGB, unsigned int modeAlpha);
-			void (*blend_func_separate)(unsigned int srcRGB, unsigned int dstRGB, unsigned int srcAlpha, unsigned int dstAlpha);
 			void (*clear)(unsigned int mask);
-			void (*clear_color)(float red, float green, float blue, float alpha);
-			void (*clear_depth)(double depth);
-			void (*clear_stencil)(int s);
 			void (*clear_texture_image)(unsigned int texture, int level, unsigned int format, unsigned int type, const void* data);
 			void (*clear_texture_sub_image)(unsigned int texture, int level, int xoffset, int yoffset, int zoffset, int width, int height,
 											int depth, unsigned int format, unsigned int type, const void* data);
@@ -164,9 +161,6 @@ namespace tr {
 			unsigned int (*create_shader_program_v)(unsigned int type, int count, const char** strings);
 			void (*create_textures)(unsigned int target, int n, unsigned int* textures);
 			void (*create_vertex_arrays)(int n, unsigned int* arrays);
-			void (*debug_message_callback)(debug_callback callback, const void* userParam);
-			void (*debug_message_control)(unsigned int source, unsigned int type, unsigned int severity, int count, const unsigned int* ids,
-										  bool enabled);
 			void (*delete_buffers)(int n, const unsigned int* buffers);
 			void (*delete_framebuffers)(int n, const unsigned int* framebuffers);
 			void (*delete_program)(unsigned int program);
@@ -180,12 +174,12 @@ namespace tr {
 			void (*draw_elements)(unsigned int mode, int count, unsigned int type, const void* indices);
 			void (*draw_elements_instanced)(unsigned int mode, int count, unsigned int type, const void* indices, int instancecount);
 			void (*enable)(unsigned int cap);
-			void (*enable_vertex_array_attrib)(unsigned int vaobj, unsigned int index);
+			void (*enable_vertex_array_attribute)(unsigned int vaobj, unsigned int index);
 			void (*end_query)(unsigned int target);
-			void (*gen_queries)(int n, unsigned int* ids);
+			void (*generate_queries)(int n, unsigned int* ids);
 			void (*generate_texture_mipmap)(unsigned int texture);
 			unsigned int (*get_error)();
-			void (*get_named_buffer_parameter_iv)(unsigned int buffer, unsigned int pname, int* params);
+			void (*get_buffer_parameter_iv)(unsigned int buffer, unsigned int pname, int* params);
 			void (*get_object_label)(unsigned int identifier, unsigned int name, int bufSize, int* length, char* label);
 			void (*get_program_info_log)(unsigned int program, int maxLength, int* length, char* infoLog);
 			void (*get_program_interface_iv)(unsigned int program, unsigned int programInterface, unsigned int pname, int* params);
@@ -199,60 +193,66 @@ namespace tr {
 			void (*get_texture_parameter_fv)(unsigned int texture, unsigned int pname, float* params);
 			void (*get_texture_parameter_iv)(unsigned int texture, unsigned int pname, int* params);
 			void (*invalidate_buffer_data)(unsigned int buffer);
-			void* (*map_named_buffer_range)(unsigned int buffer, std::intptr_t offset, std::intptr_t length, unsigned int access);
-			void (*named_buffer_storage)(unsigned int buffer, std::intptr_t size, const void* data, unsigned int flags);
-			void (*named_buffer_sub_data)(unsigned int buffer, std::intptr_t offset, std::intptr_t size, const void* data);
+			void* (*map_buffer_range)(unsigned int buffer, std::intptr_t offset, std::intptr_t length, unsigned int access);
+			void (*set_2d_texture_sub_image)(unsigned int texture, int level, int xoffset, int yoffset, int width, int height,
+											 unsigned int format, unsigned int type, const void* pixels);
+			void (*set_buffer_sub_data)(unsigned int buffer, std::intptr_t offset, std::intptr_t size, const void* data);
+			void (*set_clear_color)(float red, float green, float blue, float alpha);
+			void (*set_clear_depth)(double depth);
+			void (*set_clear_stencil)(int s);
+			void (*set_debug_message_callback)(debug_callback callback, const void* userParam);
+			void (*set_debug_message_control)(unsigned int source, unsigned int type, unsigned int severity, int count,
+											  const unsigned int* ids, bool enabled);
 			void (*set_framebuffer_texture)(unsigned int framebuffer, unsigned int attachment, unsigned int texture, int level);
 			void (*set_object_label)(unsigned int identifier, unsigned int name, int length, const char* label);
 			void (*set_pixel_store_i)(unsigned int pname, int param);
-			void (*polygon_mode)(unsigned int face, unsigned int mode);
-			void (*program_uniform_1f)(unsigned int program, int location, float v0);
-			void (*program_uniform_1fv)(unsigned int program, int location, int count, const float* value);
-			void (*program_uniform_2f)(unsigned int program, int location, float v0, float v1);
-			void (*program_uniform_2fv)(unsigned int program, int location, int count, const float* value);
-			void (*program_uniform_3f)(unsigned int program, int location, float v0, float v1, float v2);
-			void (*program_uniform_3fv)(unsigned int program, int location, int count, const float* value);
-			void (*program_uniform_4f)(unsigned int program, int location, float v0, float v1, float v2, float v3);
-			void (*program_uniform_4fv)(unsigned int program, int location, int count, const float* value);
-			void (*program_uniform_1i)(unsigned int program, int location, int v0);
-			void (*program_uniform_1iv)(unsigned int program, int location, int count, const int* value);
-			void (*program_uniform_2i)(unsigned int program, int location, int v0, int v1);
-			void (*program_uniform_2iv)(unsigned int program, int location, int count, const int* value);
-			void (*program_uniform_3i)(unsigned int program, int location, int v0, int v1, int v2);
-			void (*program_uniform_3iv)(unsigned int program, int location, int count, const int* value);
-			void (*program_uniform_4i)(unsigned int program, int location, int v0, int v1, int v2, int v3);
-			void (*program_uniform_4iv)(unsigned int program, int location, int count, const int* value);
-			void (*program_uniform_1ui)(unsigned int program, int location, unsigned int v0);
-			void (*program_uniform_1uiv)(unsigned int program, int location, int count, const unsigned int* value);
-			void (*program_uniform_2ui)(unsigned int program, int location, unsigned int v0, unsigned int v1);
-			void (*program_uniform_2uiv)(unsigned int program, int location, int count, const unsigned int* value);
-			void (*program_uniform_3ui)(unsigned int program, int location, unsigned int v0, unsigned int v1, unsigned int v2);
-			void (*program_uniform_3uiv)(unsigned int program, int location, int count, const unsigned int* value);
-			void (*program_uniform_4ui)(unsigned int program, int location, unsigned int v0, unsigned int v1, unsigned int v2,
-										unsigned int v3);
-			void (*program_uniform_4uiv)(unsigned int program, int location, int count, const unsigned int* value);
-			void (*program_uniform_matrix_2fv)(unsigned int program, int location, int count, bool transpose, const float* value);
-			void (*program_uniform_matrix_3fv)(unsigned int program, int location, int count, bool transpose, const float* value);
-			void (*program_uniform_matrix_4fv)(unsigned int program, int location, int count, bool transpose, const float* value);
-			void (*program_uniform_matrix_2x3fv)(unsigned int program, int location, int count, bool transpose, const float* value);
-			void (*program_uniform_matrix_2x4fv)(unsigned int program, int location, int count, bool transpose, const float* value);
-			void (*program_uniform_matrix_3x2fv)(unsigned int program, int location, int count, bool transpose, const float* value);
-			void (*program_uniform_matrix_3x4fv)(unsigned int program, int location, int count, bool transpose, const float* value);
-			void (*program_uniform_matrix_4x2fv)(unsigned int program, int location, int count, bool transpose, const float* value);
-			void (*program_uniform_matrix_4x3fv)(unsigned int program, int location, int count, bool transpose, const float* value);
-			void (*scissor)(int x, int y, int width, int height);
+			void (*set_polygon_mode)(unsigned int face, unsigned int mode);
+			void (*set_program_uniform_1f)(unsigned int program, int location, float v0);
+			void (*set_program_uniform_1fv)(unsigned int program, int location, int count, const float* value);
+			void (*set_program_uniform_2f)(unsigned int program, int location, float v0, float v1);
+			void (*set_program_uniform_2fv)(unsigned int program, int location, int count, const float* value);
+			void (*set_program_uniform_3f)(unsigned int program, int location, float v0, float v1, float v2);
+			void (*set_program_uniform_3fv)(unsigned int program, int location, int count, const float* value);
+			void (*set_program_uniform_4f)(unsigned int program, int location, float v0, float v1, float v2, float v3);
+			void (*set_program_uniform_4fv)(unsigned int program, int location, int count, const float* value);
+			void (*set_program_uniform_1i)(unsigned int program, int location, int v0);
+			void (*set_program_uniform_1iv)(unsigned int program, int location, int count, const int* value);
+			void (*set_program_uniform_2i)(unsigned int program, int location, int v0, int v1);
+			void (*set_program_uniform_2iv)(unsigned int program, int location, int count, const int* value);
+			void (*set_program_uniform_3i)(unsigned int program, int location, int v0, int v1, int v2);
+			void (*set_program_uniform_3iv)(unsigned int program, int location, int count, const int* value);
+			void (*set_program_uniform_4i)(unsigned int program, int location, int v0, int v1, int v2, int v3);
+			void (*set_program_uniform_4iv)(unsigned int program, int location, int count, const int* value);
+			void (*set_program_uniform_1ui)(unsigned int program, int location, unsigned int v0);
+			void (*set_program_uniform_1uiv)(unsigned int program, int location, int count, const unsigned int* value);
+			void (*set_program_uniform_2ui)(unsigned int program, int location, unsigned int v0, unsigned int v1);
+			void (*set_program_uniform_2uiv)(unsigned int program, int location, int count, const unsigned int* value);
+			void (*set_program_uniform_3ui)(unsigned int program, int location, unsigned int v0, unsigned int v1, unsigned int v2);
+			void (*set_program_uniform_3uiv)(unsigned int program, int location, int count, const unsigned int* value);
+			void (*set_program_uniform_4ui)(unsigned int program, int location, unsigned int v0, unsigned int v1, unsigned int v2,
+											unsigned int v3);
+			void (*set_program_uniform_4uiv)(unsigned int program, int location, int count, const unsigned int* value);
+			void (*set_program_uniform_matrix2fv)(unsigned int program, int location, int count, bool transpose, const float* value);
+			void (*set_program_uniform_matrix3fv)(unsigned int program, int location, int count, bool transpose, const float* value);
+			void (*set_program_uniform_matrix4fv)(unsigned int program, int location, int count, bool transpose, const float* value);
+			void (*set_program_uniform_matrix2x3fv)(unsigned int program, int location, int count, bool transpose, const float* value);
+			void (*set_program_uniform_matrix2x4fv)(unsigned int program, int location, int count, bool transpose, const float* value);
+			void (*set_program_uniform_matrix3x2fv)(unsigned int program, int location, int count, bool transpose, const float* value);
+			void (*set_program_uniform_matrix3x4fv)(unsigned int program, int location, int count, bool transpose, const float* value);
+			void (*set_program_uniform_matrix4x2fv)(unsigned int program, int location, int count, bool transpose, const float* value);
+			void (*set_program_uniform_matrix4x3fv)(unsigned int program, int location, int count, bool transpose, const float* value);
+			void (*set_scissor)(int x, int y, int width, int height);
+			void (*set_separate_blend_equations)(unsigned int modeRGB, unsigned int modeAlpha);
+			void (*set_separate_blend_function)(unsigned int srcRGB, unsigned int dstRGB, unsigned int srcAlpha, unsigned int dstAlpha);
 			void (*set_texture_parameter_fv)(unsigned int texture, unsigned int pname, const float* params);
 			void (*set_texture_parameter_i)(unsigned int texture, unsigned int pname, int param);
-			void (*allocate_2d_texture_storage)(unsigned int texture, int levels, unsigned int internalformat, int width, int height);
-			void (*set_2d_texture_sub_image)(unsigned int texture, int level, int xoffset, int yoffset, int width, int height,
-											 unsigned int format, unsigned int type, const void* pixels);
-			bool (*unmap_named_buffer)(unsigned int buffer);
+			void (*set_vertex_array_attribute_binding)(unsigned int vaobj, unsigned int attribindex, unsigned int bindingindex);
+			void (*set_vertex_array_attribute_format)(unsigned int vaobj, unsigned int attribindex, int size, unsigned int type,
+													  bool normalized, unsigned int relativeoffset);
+			void (*set_vertex_array_binding_divisor)(unsigned int vaobj, unsigned int bindingindex, unsigned int divisor);
+			void (*set_viewport)(int x, int y, int width, int height);
+			bool (*unmap_buffer)(unsigned int buffer);
 			void (*use_program_stages)(unsigned int pipeline, unsigned int stages, unsigned int program);
-			void (*vertex_array_attrib_binding)(unsigned int vaobj, unsigned int attribindex, unsigned int bindingindex);
-			void (*vertex_array_attrib_format)(unsigned int vaobj, unsigned int attribindex, int size, unsigned int type, bool normalized,
-											   unsigned int relativeoffset);
-			void (*vertex_array_binding_divisor)(unsigned int vaobj, unsigned int bindingindex, unsigned int divisor);
-			void (*viewport)(int x, int y, int width, int height);
 
 			// Loads OpenGL function pointers.
 			functions();

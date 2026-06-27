@@ -43,7 +43,7 @@ tr::shader_base::texture_unit::texture_unit(graphics_context& context, unsigned 
 {
 	const graphics_context::functions& gl{context.make_current_and_return_functions()};
 
-	gl.program_uniform_1i(program, index, m_id.get());
+	gl.set_program_uniform_1i(program, index, m_id.get());
 }
 
 void tr::shader_base::texture_unit::deleter::operator()(unsigned int unit) const
@@ -196,7 +196,7 @@ void tr::shader_base::set_uniform(int index, bool value)
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.program_uniform_1i(m_program.get(), index, value);
+	gl.set_program_uniform_1i(m_program.get(), index, value);
 }
 
 void tr::shader_base::set_uniform(int index, int value)
@@ -205,7 +205,7 @@ void tr::shader_base::set_uniform(int index, int value)
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.program_uniform_1i(m_program.get(), index, value);
+	gl.set_program_uniform_1i(m_program.get(), index, value);
 }
 
 void tr::shader_base::set_uniform(int index, std::span<const int> value)
@@ -214,7 +214,7 @@ void tr::shader_base::set_uniform(int index, std::span<const int> value)
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.program_uniform_1iv(m_program.get(), index, value.size(), value.data());
+	gl.set_program_uniform_1iv(m_program.get(), index, value.size(), value.data());
 }
 
 void tr::shader_base::set_uniform(int index, glm::ivec2 value)
@@ -223,7 +223,7 @@ void tr::shader_base::set_uniform(int index, glm::ivec2 value)
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.program_uniform_2i(m_program.get(), index, value.x, value.y);
+	gl.set_program_uniform_2i(m_program.get(), index, value.x, value.y);
 }
 
 void tr::shader_base::set_uniform(int index, std::span<const glm::ivec2> value)
@@ -232,7 +232,7 @@ void tr::shader_base::set_uniform(int index, std::span<const glm::ivec2> value)
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.program_uniform_2iv(m_program.get(), index, value.size(), value_ptr(value[0]));
+	gl.set_program_uniform_2iv(m_program.get(), index, value.size(), value_ptr(value[0]));
 }
 
 void tr::shader_base::set_uniform(int index, glm::ivec3 value)
@@ -241,7 +241,7 @@ void tr::shader_base::set_uniform(int index, glm::ivec3 value)
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.program_uniform_3i(m_program.get(), index, value.x, value.y, value.z);
+	gl.set_program_uniform_3i(m_program.get(), index, value.x, value.y, value.z);
 }
 
 void tr::shader_base::set_uniform(int index, std::span<const glm::ivec3> value)
@@ -250,7 +250,7 @@ void tr::shader_base::set_uniform(int index, std::span<const glm::ivec3> value)
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.program_uniform_3iv(m_program.get(), index, value.size(), value_ptr(value[0]));
+	gl.set_program_uniform_3iv(m_program.get(), index, value.size(), value_ptr(value[0]));
 }
 
 void tr::shader_base::set_uniform(int index, glm::ivec4 value)
@@ -259,7 +259,7 @@ void tr::shader_base::set_uniform(int index, glm::ivec4 value)
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.program_uniform_4i(m_program.get(), index, value.x, value.y, value.z, value.w);
+	gl.set_program_uniform_4i(m_program.get(), index, value.x, value.y, value.z, value.w);
 }
 
 void tr::shader_base::set_uniform(int index, std::span<const glm::ivec4> value)
@@ -268,7 +268,7 @@ void tr::shader_base::set_uniform(int index, std::span<const glm::ivec4> value)
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.program_uniform_4iv(m_program.get(), index, value.size(), value_ptr(value[0]));
+	gl.set_program_uniform_4iv(m_program.get(), index, value.size(), value_ptr(value[0]));
 }
 
 void tr::shader_base::set_uniform(int index, unsigned int value)
@@ -277,7 +277,7 @@ void tr::shader_base::set_uniform(int index, unsigned int value)
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.program_uniform_1ui(m_program.get(), index, value);
+	gl.set_program_uniform_1ui(m_program.get(), index, value);
 }
 
 void tr::shader_base::set_uniform(int index, std::span<const unsigned int> value)
@@ -286,7 +286,7 @@ void tr::shader_base::set_uniform(int index, std::span<const unsigned int> value
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.program_uniform_1uiv(m_program.get(), index, value.size(), value.data());
+	gl.set_program_uniform_1uiv(m_program.get(), index, value.size(), value.data());
 }
 
 void tr::shader_base::set_uniform(int index, glm::uvec2 value)
@@ -295,7 +295,7 @@ void tr::shader_base::set_uniform(int index, glm::uvec2 value)
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.program_uniform_2ui(m_program.get(), index, value.x, value.y);
+	gl.set_program_uniform_2ui(m_program.get(), index, value.x, value.y);
 }
 
 void tr::shader_base::set_uniform(int index, std::span<const glm::uvec2> value)
@@ -304,7 +304,7 @@ void tr::shader_base::set_uniform(int index, std::span<const glm::uvec2> value)
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.program_uniform_2uiv(m_program.get(), index, value.size(), value_ptr(value[0]));
+	gl.set_program_uniform_2uiv(m_program.get(), index, value.size(), value_ptr(value[0]));
 }
 
 void tr::shader_base::set_uniform(int index, glm::uvec3 value)
@@ -313,7 +313,7 @@ void tr::shader_base::set_uniform(int index, glm::uvec3 value)
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.program_uniform_3ui(m_program.get(), index, value.x, value.y, value.z);
+	gl.set_program_uniform_3ui(m_program.get(), index, value.x, value.y, value.z);
 }
 
 void tr::shader_base::set_uniform(int index, std::span<const glm::uvec3> value)
@@ -322,7 +322,7 @@ void tr::shader_base::set_uniform(int index, std::span<const glm::uvec3> value)
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.program_uniform_3uiv(m_program.get(), index, value.size(), value_ptr(value[0]));
+	gl.set_program_uniform_3uiv(m_program.get(), index, value.size(), value_ptr(value[0]));
 }
 
 void tr::shader_base::set_uniform(int index, glm::uvec4 value)
@@ -331,7 +331,7 @@ void tr::shader_base::set_uniform(int index, glm::uvec4 value)
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.program_uniform_4ui(m_program.get(), index, value.x, value.y, value.z, value.w);
+	gl.set_program_uniform_4ui(m_program.get(), index, value.x, value.y, value.z, value.w);
 }
 
 void tr::shader_base::set_uniform(int index, std::span<const glm::uvec4> value)
@@ -340,7 +340,7 @@ void tr::shader_base::set_uniform(int index, std::span<const glm::uvec4> value)
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.program_uniform_4uiv(m_program.get(), index, value.size(), value_ptr(value[0]));
+	gl.set_program_uniform_4uiv(m_program.get(), index, value.size(), value_ptr(value[0]));
 }
 
 void tr::shader_base::set_uniform(int index, float value)
@@ -349,7 +349,7 @@ void tr::shader_base::set_uniform(int index, float value)
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.program_uniform_1f(m_program.get(), index, value);
+	gl.set_program_uniform_1f(m_program.get(), index, value);
 }
 
 void tr::shader_base::set_uniform(int index, std::span<const float> value)
@@ -358,7 +358,7 @@ void tr::shader_base::set_uniform(int index, std::span<const float> value)
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.program_uniform_1fv(m_program.get(), index, value.size(), value.data());
+	gl.set_program_uniform_1fv(m_program.get(), index, value.size(), value.data());
 }
 
 void tr::shader_base::set_uniform(int index, glm::vec2 value)
@@ -367,7 +367,7 @@ void tr::shader_base::set_uniform(int index, glm::vec2 value)
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.program_uniform_2f(m_program.get(), index, value.x, value.y);
+	gl.set_program_uniform_2f(m_program.get(), index, value.x, value.y);
 }
 
 void tr::shader_base::set_uniform(int index, std::span<const glm::vec2> value)
@@ -376,7 +376,7 @@ void tr::shader_base::set_uniform(int index, std::span<const glm::vec2> value)
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.program_uniform_2fv(m_program.get(), index, value.size(), value_ptr(value[0]));
+	gl.set_program_uniform_2fv(m_program.get(), index, value.size(), value_ptr(value[0]));
 }
 
 void tr::shader_base::set_uniform(int index, glm::vec3 value)
@@ -385,7 +385,7 @@ void tr::shader_base::set_uniform(int index, glm::vec3 value)
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.program_uniform_3f(m_program.get(), index, value.x, value.y, value.z);
+	gl.set_program_uniform_3f(m_program.get(), index, value.x, value.y, value.z);
 }
 
 void tr::shader_base::set_uniform(int index, std::span<const glm::vec3> value)
@@ -394,7 +394,7 @@ void tr::shader_base::set_uniform(int index, std::span<const glm::vec3> value)
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.program_uniform_3fv(m_program.get(), index, value.size(), value_ptr(value[0]));
+	gl.set_program_uniform_3fv(m_program.get(), index, value.size(), value_ptr(value[0]));
 }
 
 void tr::shader_base::set_uniform(int index, glm::vec4 value)
@@ -403,7 +403,7 @@ void tr::shader_base::set_uniform(int index, glm::vec4 value)
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.program_uniform_4f(m_program.get(), index, value.x, value.y, value.z, value.w);
+	gl.set_program_uniform_4f(m_program.get(), index, value.x, value.y, value.z, value.w);
 }
 
 void tr::shader_base::set_uniform(int index, std::span<const glm::vec4> value)
@@ -412,7 +412,7 @@ void tr::shader_base::set_uniform(int index, std::span<const glm::vec4> value)
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.program_uniform_4fv(m_program.get(), index, value.size(), value_ptr(value[0]));
+	gl.set_program_uniform_4fv(m_program.get(), index, value.size(), value_ptr(value[0]));
 }
 
 void tr::shader_base::set_uniform(int index, const glm::mat2& value)
@@ -421,7 +421,7 @@ void tr::shader_base::set_uniform(int index, const glm::mat2& value)
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.program_uniform_matrix_2fv(m_program.get(), index, 1, false, value_ptr(value));
+	gl.set_program_uniform_matrix2fv(m_program.get(), index, 1, false, value_ptr(value));
 }
 
 void tr::shader_base::set_uniform(int index, std::span<const glm::mat2> value)
@@ -430,7 +430,7 @@ void tr::shader_base::set_uniform(int index, std::span<const glm::mat2> value)
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.program_uniform_matrix_2fv(m_program.get(), index, value.size(), false, value_ptr(value[0]));
+	gl.set_program_uniform_matrix2fv(m_program.get(), index, value.size(), false, value_ptr(value[0]));
 }
 
 void tr::shader_base::set_uniform(int index, const glm::mat3& value)
@@ -439,7 +439,7 @@ void tr::shader_base::set_uniform(int index, const glm::mat3& value)
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.program_uniform_matrix_3fv(m_program.get(), index, 1, false, value_ptr(value));
+	gl.set_program_uniform_matrix3fv(m_program.get(), index, 1, false, value_ptr(value));
 }
 
 void tr::shader_base::set_uniform(int index, std::span<const glm::mat3> value)
@@ -448,7 +448,7 @@ void tr::shader_base::set_uniform(int index, std::span<const glm::mat3> value)
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.program_uniform_matrix_3fv(m_program.get(), index, value.size(), false, value_ptr(value[0]));
+	gl.set_program_uniform_matrix3fv(m_program.get(), index, value.size(), false, value_ptr(value[0]));
 }
 
 void tr::shader_base::set_uniform(int index, const glm::mat4& value)
@@ -457,7 +457,7 @@ void tr::shader_base::set_uniform(int index, const glm::mat4& value)
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.program_uniform_matrix_4fv(m_program.get(), index, 1, false, value_ptr(value));
+	gl.set_program_uniform_matrix4fv(m_program.get(), index, 1, false, value_ptr(value));
 }
 
 void tr::shader_base::set_uniform(int index, std::span<const glm::mat4> value)
@@ -466,7 +466,7 @@ void tr::shader_base::set_uniform(int index, std::span<const glm::mat4> value)
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.program_uniform_matrix_4fv(m_program.get(), index, value.size(), false, value_ptr(value[0]));
+	gl.set_program_uniform_matrix4fv(m_program.get(), index, value.size(), false, value_ptr(value[0]));
 }
 
 void tr::shader_base::set_uniform(int index, const glm::mat2x3& value)
@@ -475,7 +475,7 @@ void tr::shader_base::set_uniform(int index, const glm::mat2x3& value)
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.program_uniform_matrix_2x3fv(m_program.get(), index, 1, false, value_ptr(value));
+	gl.set_program_uniform_matrix2x3fv(m_program.get(), index, 1, false, value_ptr(value));
 }
 
 void tr::shader_base::set_uniform(int index, std::span<const glm::mat2x3> value)
@@ -484,7 +484,7 @@ void tr::shader_base::set_uniform(int index, std::span<const glm::mat2x3> value)
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.program_uniform_matrix_2x3fv(m_program.get(), index, value.size(), false, value_ptr(value[0]));
+	gl.set_program_uniform_matrix2x3fv(m_program.get(), index, value.size(), false, value_ptr(value[0]));
 }
 
 void tr::shader_base::set_uniform(int index, const glm::mat2x4& value)
@@ -493,7 +493,7 @@ void tr::shader_base::set_uniform(int index, const glm::mat2x4& value)
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.program_uniform_matrix_2x4fv(m_program.get(), index, 1, false, value_ptr(value));
+	gl.set_program_uniform_matrix2x4fv(m_program.get(), index, 1, false, value_ptr(value));
 }
 
 void tr::shader_base::set_uniform(int index, std::span<const glm::mat2x4> value)
@@ -502,7 +502,7 @@ void tr::shader_base::set_uniform(int index, std::span<const glm::mat2x4> value)
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.program_uniform_matrix_2x4fv(m_program.get(), index, value.size(), false, value_ptr(value[0]));
+	gl.set_program_uniform_matrix2x4fv(m_program.get(), index, value.size(), false, value_ptr(value[0]));
 }
 
 void tr::shader_base::set_uniform(int index, const glm::mat3x2& value)
@@ -511,7 +511,7 @@ void tr::shader_base::set_uniform(int index, const glm::mat3x2& value)
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.program_uniform_matrix_3x2fv(m_program.get(), index, 1, false, value_ptr(value));
+	gl.set_program_uniform_matrix3x2fv(m_program.get(), index, 1, false, value_ptr(value));
 }
 
 void tr::shader_base::set_uniform(int index, std::span<const glm::mat3x2> value)
@@ -520,7 +520,7 @@ void tr::shader_base::set_uniform(int index, std::span<const glm::mat3x2> value)
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.program_uniform_matrix_3x2fv(m_program.get(), index, value.size(), false, value_ptr(value[0]));
+	gl.set_program_uniform_matrix3x2fv(m_program.get(), index, value.size(), false, value_ptr(value[0]));
 }
 
 void tr::shader_base::set_uniform(int index, const glm::mat3x4& value)
@@ -529,7 +529,7 @@ void tr::shader_base::set_uniform(int index, const glm::mat3x4& value)
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.program_uniform_matrix_3x4fv(m_program.get(), index, 1, false, value_ptr(value));
+	gl.set_program_uniform_matrix3x4fv(m_program.get(), index, 1, false, value_ptr(value));
 }
 
 void tr::shader_base::set_uniform(int index, std::span<const glm::mat3x4> value)
@@ -538,7 +538,7 @@ void tr::shader_base::set_uniform(int index, std::span<const glm::mat3x4> value)
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.program_uniform_matrix_3x4fv(m_program.get(), index, value.size(), false, value_ptr(value[0]));
+	gl.set_program_uniform_matrix3x4fv(m_program.get(), index, value.size(), false, value_ptr(value[0]));
 }
 
 void tr::shader_base::set_uniform(int index, const glm::mat4x2& value)
@@ -547,7 +547,7 @@ void tr::shader_base::set_uniform(int index, const glm::mat4x2& value)
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.program_uniform_matrix_4x2fv(m_program.get(), index, 1, false, value_ptr(value));
+	gl.set_program_uniform_matrix4x2fv(m_program.get(), index, 1, false, value_ptr(value));
 }
 
 void tr::shader_base::set_uniform(int index, std::span<const glm::mat4x2> value)
@@ -556,7 +556,7 @@ void tr::shader_base::set_uniform(int index, std::span<const glm::mat4x2> value)
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.program_uniform_matrix_4x2fv(m_program.get(), index, value.size(), false, value_ptr(value[0]));
+	gl.set_program_uniform_matrix4x2fv(m_program.get(), index, value.size(), false, value_ptr(value[0]));
 }
 
 void tr::shader_base::set_uniform(int index, const glm::mat4x3& value)
@@ -565,7 +565,7 @@ void tr::shader_base::set_uniform(int index, const glm::mat4x3& value)
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.program_uniform_matrix_4x3fv(m_program.get(), index, 1, false, value_ptr(value));
+	gl.set_program_uniform_matrix4x3fv(m_program.get(), index, 1, false, value_ptr(value));
 }
 
 void tr::shader_base::set_uniform(int index, std::span<const glm::mat4x3> value)
@@ -574,7 +574,7 @@ void tr::shader_base::set_uniform(int index, std::span<const glm::mat4x3> value)
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.program_uniform_matrix_4x3fv(m_program.get(), index, value.size(), false, value_ptr(value[0]));
+	gl.set_program_uniform_matrix4x3fv(m_program.get(), index, value.size(), false, value_ptr(value[0]));
 }
 
 void tr::shader_base::set_uniform(int index, texture_ref texture)

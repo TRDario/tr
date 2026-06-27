@@ -17,7 +17,7 @@ tr::basic_uniform_buffer::basic_uniform_buffer(graphics_context& context, usize 
 {
 	const graphics_context::functions& gl{context.make_current_and_return_functions()};
 
-	gl.named_buffer_storage(id(), size, nullptr, GL_DYNAMIC_STORAGE_BIT | GL_MAP_WRITE_BIT);
+	gl.allocate_buffer_storage(id(), size, nullptr, GL_DYNAMIC_STORAGE_BIT | GL_MAP_WRITE_BIT);
 	if (gl.get_error() == GL_OUT_OF_MEMORY) {
 		throw out_of_memory{"uniform buffer allocation"};
 	}
@@ -35,7 +35,7 @@ void tr::basic_uniform_buffer::set(std::span<const std::byte> data)
 
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
-	gl.named_buffer_sub_data(id(), 0, data.size(), data.data());
+	gl.set_buffer_sub_data(id(), 0, data.size(), data.data());
 }
 
 bool tr::basic_uniform_buffer::mapped() const
@@ -43,7 +43,7 @@ bool tr::basic_uniform_buffer::mapped() const
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
 	int mapped;
-	gl.get_named_buffer_parameter_iv(id(), GL_BUFFER_MAPPED, &mapped);
+	gl.get_buffer_parameter_iv(id(), GL_BUFFER_MAPPED, &mapped);
 	return mapped;
 }
 
@@ -54,7 +54,7 @@ tr::basic_graphics_buffer_map tr::basic_uniform_buffer::map()
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
 
 	const unsigned int flags{GL_DYNAMIC_STORAGE_BIT | GL_MAP_WRITE_BIT};
-	std::byte* const map_pointer{static_cast<std::byte*>(gl.map_named_buffer_range(id(), 0, m_size, flags))};
+	std::byte* const map_pointer{static_cast<std::byte*>(gl.map_buffer_range(id(), 0, m_size, flags))};
 	if (gl.get_error() == GL_OUT_OF_MEMORY) {
 #ifdef TR_ENABLE_ASSERTS
 		throw out_of_memory{"mapping of uniform buffer '{}'", label()};

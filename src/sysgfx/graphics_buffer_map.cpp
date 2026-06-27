@@ -24,5 +24,5 @@ void tr::basic_graphics_buffer_map::deleter::operator()(unsigned int id) const
 {
 	const graphics_context::functions& gl{context.make_current_and_return_functions()};
 
-	gl.unmap_named_buffer(id);
+	gl.unmap_buffer(id);
 }

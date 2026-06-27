@@ -55,7 +55,9 @@ static loaded_gl_function_proxy gl_function_address(const char* name)
 }
 
 tr::graphics_context::functions::functions()
-	: begin_query{gl_function_address("glBeginQuery")}
+	: allocate_2d_texture_storage{gl_function_address("glTextureStorage2D")}
+	, allocate_buffer_storage{gl_function_address("glNamedBufferStorage")}
+	, begin_query{gl_function_address("glBeginQuery")}
 	, bind_buffer{gl_function_address("glBindBuffer")}
 	, bind_buffer_base{gl_function_address("glBindBufferBase")}
 	, bind_buffer_range{gl_function_address("glBindBufferRange")}
@@ -64,12 +66,7 @@ tr::graphics_context::functions::functions()
 	, bind_textures{gl_function_address("glBindTextures")}
 	, bind_vertex_array{gl_function_address("glBindVertexArray")}
 	, bind_vertex_buffer{gl_function_address("glBindVertexBuffer")}
-	, blend_equation_separate{gl_function_address("glBlendEquationSeparate")}
-	, blend_func_separate{gl_function_address("glBlendFuncSeparate")}
 	, clear{gl_function_address("glClear")}
-	, clear_color{gl_function_address("glClearColor")}
-	, clear_depth{gl_function_address("glClearDepth")}
-	, clear_stencil{gl_function_address("glClearStencil")}
 	, clear_texture_image{gl_function_address("glClearTexImage")}
 	, clear_texture_sub_image{gl_function_address("glClearTexSubImage")}
 	, copy_image_sub_data{gl_function_address("glCopyImageSubData")}
@@ -79,8 +76,6 @@ tr::graphics_context::functions::functions()
 	, create_shader_program_v{gl_function_address("glCreateShaderProgramv")}
 	, create_textures{gl_function_address("glCreateTextures")}
 	, create_vertex_arrays{gl_function_address("glCreateVertexArrays")}
-	, debug_message_callback{gl_function_address("glDebugMessageCallback")}
-	, debug_message_control{gl_function_address("glDebugMessageControl")}
 	, delete_buffers{gl_function_address("glDeleteBuffers")}
 	, delete_framebuffers{gl_function_address("glDeleteFramebuffers")}
 	, delete_program{gl_function_address("glDeleteProgram")}
@@ -94,12 +89,12 @@ tr::graphics_context::functions::functions()
 	, draw_elements{gl_function_address("glDrawElements")}
 	, draw_elements_instanced{gl_function_address("glDrawElementsInstanced")}
 	, enable{gl_function_address("glEnable")}
-	, enable_vertex_array_attrib{gl_function_address("glEnableVertexArrayAttrib")}
+	, enable_vertex_array_attribute{gl_function_address("glEnableVertexArrayAttrib")}
 	, end_query{gl_function_address("glEndQuery")}
-	, gen_queries{gl_function_address("glGenQueries")}
+	, generate_queries{gl_function_address("glGenQueries")}
 	, generate_texture_mipmap{gl_function_address("glGenerateTextureMipmap")}
 	, get_error{gl_function_address("glGetError")}
-	, get_named_buffer_parameter_iv{gl_function_address("glGetNamedBufferParameteriv")}
+	, get_buffer_parameter_iv{gl_function_address("glGetNamedBufferParameteriv")}
 	, get_object_label{gl_function_address("glGetObjectLabel")}
 	, get_program_info_log{gl_function_address("glGetProgramInfoLog")}
 	, get_program_interface_iv{gl_function_address("glGetProgramInterfaceiv")}
@@ -111,57 +106,62 @@ tr::graphics_context::functions::functions()
 	, get_texture_parameter_fv{gl_function_address("glGetTextureParameterfv")}
 	, get_texture_parameter_iv{gl_function_address("glGetTextureParameteriv")}
 	, invalidate_buffer_data{gl_function_address("glInvalidateBufferData")}
-	, map_named_buffer_range{gl_function_address("glMapNamedBufferRange")}
-	, named_buffer_storage{gl_function_address("glNamedBufferStorage")}
-	, named_buffer_sub_data{gl_function_address("glNamedBufferSubData")}
+	, map_buffer_range{gl_function_address("glMapNamedBufferRange")}
+	, set_2d_texture_sub_image{gl_function_address("glTextureSubImage2D")}
+	, set_buffer_sub_data{gl_function_address("glNamedBufferSubData")}
+	, set_clear_color{gl_function_address("glClearColor")}
+	, set_clear_depth{gl_function_address("glClearDepth")}
+	, set_clear_stencil{gl_function_address("glClearStencil")}
+	, set_debug_message_callback{gl_function_address("glDebugMessageCallback")}
+	, set_debug_message_control{gl_function_address("glDebugMessageControl")}
 	, set_framebuffer_texture{gl_function_address("glNamedFramebufferTexture")}
 	, set_object_label{gl_function_address("glObjectLabel")}
 	, set_pixel_store_i{gl_function_address("glPixelStorei")}
-	, polygon_mode{gl_function_address("glPolygonMode")}
-	, program_uniform_1f{gl_function_address("glProgramUniform1f")}
-	, program_uniform_1fv{gl_function_address("glProgramUniform1fv")}
-	, program_uniform_2f{gl_function_address("glProgramUniform2f")}
-	, program_uniform_2fv{gl_function_address("glProgramUniform2fv")}
-	, program_uniform_3f{gl_function_address("glProgramUniform3f")}
-	, program_uniform_3fv{gl_function_address("glProgramUniform3fv")}
-	, program_uniform_4f{gl_function_address("glProgramUniform4f")}
-	, program_uniform_4fv{gl_function_address("glProgramUniform4fv")}
-	, program_uniform_1i{gl_function_address("glProgramUniform1i")}
-	, program_uniform_1iv{gl_function_address("glProgramUniform1iv")}
-	, program_uniform_2i{gl_function_address("glProgramUniform2i")}
-	, program_uniform_2iv{gl_function_address("glProgramUniform2iv")}
-	, program_uniform_3i{gl_function_address("glProgramUniform3i")}
-	, program_uniform_3iv{gl_function_address("glProgramUniform3iv")}
-	, program_uniform_4i{gl_function_address("glProgramUniform4i")}
-	, program_uniform_4iv{gl_function_address("glProgramUniform4iv")}
-	, program_uniform_1ui{gl_function_address("glProgramUniform1ui")}
-	, program_uniform_1uiv{gl_function_address("glProgramUniform1uiv")}
-	, program_uniform_2ui{gl_function_address("glProgramUniform2ui")}
-	, program_uniform_2uiv{gl_function_address("glProgramUniform2uiv")}
-	, program_uniform_3ui{gl_function_address("glProgramUniform3ui")}
-	, program_uniform_3uiv{gl_function_address("glProgramUniform3uiv")}
-	, program_uniform_4ui{gl_function_address("glProgramUniform4ui")}
-	, program_uniform_4uiv{gl_function_address("glProgramUniform4uiv")}
-	, program_uniform_matrix_2fv{gl_function_address("glProgramUniformMatrix2fv")}
-	, program_uniform_matrix_3fv{gl_function_address("glProgramUniformMatrix3fv")}
-	, program_uniform_matrix_4fv{gl_function_address("glProgramUniformMatrix4fv")}
-	, program_uniform_matrix_2x3fv{gl_function_address("glProgramUniformMatrix2x3fv")}
-	, program_uniform_matrix_2x4fv{gl_function_address("glProgramUniformMatrix2x4fv")}
-	, program_uniform_matrix_3x2fv{gl_function_address("glProgramUniformMatrix3x2fv")}
-	, program_uniform_matrix_3x4fv{gl_function_address("glProgramUniformMatrix3x4fv")}
-	, program_uniform_matrix_4x2fv{gl_function_address("glProgramUniformMatrix4x2fv")}
-	, program_uniform_matrix_4x3fv{gl_function_address("glProgramUniformMatrix4x3fv")}
-	, scissor{gl_function_address("glScissor")}
+	, set_polygon_mode{gl_function_address("glPolygonMode")}
+	, set_program_uniform_1f{gl_function_address("glProgramUniform1f")}
+	, set_program_uniform_1fv{gl_function_address("glProgramUniform1fv")}
+	, set_program_uniform_2f{gl_function_address("glProgramUniform2f")}
+	, set_program_uniform_2fv{gl_function_address("glProgramUniform2fv")}
+	, set_program_uniform_3f{gl_function_address("glProgramUniform3f")}
+	, set_program_uniform_3fv{gl_function_address("glProgramUniform3fv")}
+	, set_program_uniform_4f{gl_function_address("glProgramUniform4f")}
+	, set_program_uniform_4fv{gl_function_address("glProgramUniform4fv")}
+	, set_program_uniform_1i{gl_function_address("glProgramUniform1i")}
+	, set_program_uniform_1iv{gl_function_address("glProgramUniform1iv")}
+	, set_program_uniform_2i{gl_function_address("glProgramUniform2i")}
+	, set_program_uniform_2iv{gl_function_address("glProgramUniform2iv")}
+	, set_program_uniform_3i{gl_function_address("glProgramUniform3i")}
+	, set_program_uniform_3iv{gl_function_address("glProgramUniform3iv")}
+	, set_program_uniform_4i{gl_function_address("glProgramUniform4i")}
+	, set_program_uniform_4iv{gl_function_address("glProgramUniform4iv")}
+	, set_program_uniform_1ui{gl_function_address("glProgramUniform1ui")}
+	, set_program_uniform_1uiv{gl_function_address("glProgramUniform1uiv")}
+	, set_program_uniform_2ui{gl_function_address("glProgramUniform2ui")}
+	, set_program_uniform_2uiv{gl_function_address("glProgramUniform2uiv")}
+	, set_program_uniform_3ui{gl_function_address("glProgramUniform3ui")}
+	, set_program_uniform_3uiv{gl_function_address("glProgramUniform3uiv")}
+	, set_program_uniform_4ui{gl_function_address("glProgramUniform4ui")}
+	, set_program_uniform_4uiv{gl_function_address("glProgramUniform4uiv")}
+	, set_program_uniform_matrix2fv{gl_function_address("glProgramUniformMatrix2fv")}
+	, set_program_uniform_matrix3fv{gl_function_address("glProgramUniformMatrix3fv")}
+	, set_program_uniform_matrix4fv{gl_function_address("glProgramUniformMatrix4fv")}
+	, set_program_uniform_matrix2x3fv{gl_function_address("glProgramUniformMatrix2x3fv")}
+	, set_program_uniform_matrix2x4fv{gl_function_address("glProgramUniformMatrix2x4fv")}
+	, set_program_uniform_matrix3x2fv{gl_function_address("glProgramUniformMatrix3x2fv")}
+	, set_program_uniform_matrix3x4fv{gl_function_address("glProgramUniformMatrix3x4fv")}
+	, set_program_uniform_matrix4x2fv{gl_function_address("glProgramUniformMatrix4x2fv")}
+	, set_program_uniform_matrix4x3fv{gl_function_address("glProgramUniformMatrix4x3fv")}
+	, set_scissor{gl_function_address("glScissor")}
+	, set_separate_blend_equations{gl_function_address("glBlendEquationSeparate")}
+	, set_separate_blend_function{gl_function_address("glBlendFuncSeparate")}
 	, set_texture_parameter_fv{gl_function_address("glTextureParameterfv")}
 	, set_texture_parameter_i{gl_function_address("glTextureParameteri")}
-	, allocate_2d_texture_storage{gl_function_address("glTextureStorage2D")}
-	, set_2d_texture_sub_image{gl_function_address("glTextureSubImage2D")}
-	, unmap_named_buffer{gl_function_address("glUnmapNamedBuffer")}
+	, set_vertex_array_attribute_binding{gl_function_address("glVertexArrayAttribBinding")}
+	, set_vertex_array_attribute_format{gl_function_address("glVertexArrayAttribFormat")}
+	, set_vertex_array_binding_divisor{gl_function_address("glVertexArrayBindingDivisor")}
+	, set_viewport{gl_function_address("glViewport")}
+	, unmap_buffer{gl_function_address("glUnmapNamedBuffer")}
 	, use_program_stages{gl_function_address("glUseProgramStages")}
-	, vertex_array_attrib_binding{gl_function_address("glVertexArrayAttribBinding")}
-	, vertex_array_attrib_format{gl_function_address("glVertexArrayAttribFormat")}
-	, vertex_array_binding_divisor{gl_function_address("glVertexArrayBindingDivisor")}
-	, viewport{gl_function_address("glViewport")}
 {
 }
 
@@ -249,7 +249,7 @@ void tr::graphics_context::set_wireframe_mode(bool arg)
 {
 	const functions& gl{make_current_and_return_functions()};
 
-	gl.polygon_mode(GL_FRONT_AND_BACK, arg ? GL_LINE : GL_FILL);
+	gl.set_polygon_mode(GL_FRONT_AND_BACK, arg ? GL_LINE : GL_FILL);
 }
 
 void tr::graphics_context::set_face_culling(bool arg)
@@ -291,13 +291,13 @@ void tr::graphics_context::set_render_target(const render_target& target)
 	if (!m_render_target.has_value() || m_render_target->m_fbo_size != target.m_fbo_size ||
 		m_render_target->m_viewport != target.m_viewport) {
 		const int bottom{target.m_fbo_size.y - target.m_viewport.tl.y - target.m_viewport.size.y};
-		gl.viewport(target.m_viewport.tl.x, bottom, target.m_viewport.size.x, target.m_viewport.size.y);
+		gl.set_viewport(target.m_viewport.tl.x, bottom, target.m_viewport.size.x, target.m_viewport.size.y);
 		changed_render_target = true;
 	}
 	if (!m_render_target.has_value() || m_render_target->m_fbo_size != target.m_fbo_size ||
 		m_render_target->m_scissor_box != target.m_scissor_box) {
 		const int bottom{target.m_fbo_size.y - target.m_scissor_box.tl.y - target.m_scissor_box.size.y};
-		gl.scissor(target.m_scissor_box.tl.x, bottom, target.m_scissor_box.size.x, target.m_scissor_box.size.y);
+		gl.set_scissor(target.m_scissor_box.tl.x, bottom, target.m_scissor_box.size.x, target.m_scissor_box.size.y);
 		changed_render_target = true;
 	}
 
@@ -317,8 +317,9 @@ void tr::graphics_context::set_blend_mode(const blend_mode& bm)
 {
 	const functions& gl{make_current_and_return_functions()};
 
-	gl.blend_equation_separate(to_underlying(bm.rgb_fn), to_underlying(bm.alpha_fn));
-	gl.blend_func_separate(to_underlying(bm.rgb_src), to_underlying(bm.rgb_dst), to_underlying(bm.alpha_src), to_underlying(bm.alpha_dst));
+	gl.set_separate_blend_equations(to_underlying(bm.rgb_fn), to_underlying(bm.alpha_fn));
+	gl.set_separate_blend_function(to_underlying(bm.rgb_src), to_underlying(bm.rgb_dst), to_underlying(bm.alpha_src),
+								   to_underlying(bm.alpha_dst));
 }
 
 void tr::graphics_context::set_vertex_format(const vertex_format& format)
@@ -368,7 +369,7 @@ void tr::graphics_context::clear_backbuffer(const tr::rgbaf& color)
 	const functions& gl{make_current_and_return_functions()};
 
 	set_render_target(backbuffer());
-	gl.clear_color(color.r, color.g, color.b, color.a);
+	gl.set_clear_color(color.r, color.g, color.b, color.a);
 	gl.clear(GL_COLOR_BUFFER_BIT);
 }
 
@@ -377,9 +378,9 @@ void tr::graphics_context::clear_backbuffer(const tr::rgbaf& color, double depth
 	const functions& gl{make_current_and_return_functions()};
 
 	set_render_target(backbuffer());
-	gl.clear_color(color.r, color.g, color.b, color.a);
-	gl.clear_depth(depth);
-	gl.clear_stencil(stencil);
+	gl.set_clear_color(color.r, color.g, color.b, color.a);
+	gl.set_clear_depth(depth);
+	gl.set_clear_stencil(stencil);
 	gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 }
 
@@ -388,7 +389,7 @@ void tr::graphics_context::clear_backbuffer_region(const tr::irect2& rect, const
 	const functions& gl{make_current_and_return_functions()};
 
 	set_render_target(backbuffer().cropped(rect));
-	gl.clear_color(color.r, color.g, color.b, color.a);
+	gl.set_clear_color(color.r, color.g, color.b, color.a);
 	gl.clear(GL_COLOR_BUFFER_BIT);
 }
 
@@ -397,9 +398,9 @@ void tr::graphics_context::clear_backbuffer_region(const tr::irect2& rect, const
 	const functions& gl{make_current_and_return_functions()};
 
 	set_render_target(backbuffer().cropped(rect));
-	gl.clear_color(color.r, color.g, color.b, color.a);
-	gl.clear_depth(depth);
-	gl.clear_stencil(stencil);
+	gl.set_clear_color(color.r, color.g, color.b, color.a);
+	gl.set_clear_depth(depth);
+	gl.set_clear_stencil(stencil);
 	gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 }
 
@@ -533,9 +534,9 @@ void tr::graphics_context::setup_debugging()
 {
 	m_functions.enable(GL_DEBUG_OUTPUT);
 	m_functions.enable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
-	m_functions.debug_message_callback(gl_debug_cb, nullptr);
-	m_functions.debug_message_control(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, NULL, GL_TRUE);
-	m_functions.debug_message_control(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_NOTIFICATION, 0, NULL, GL_FALSE);
+	m_functions.set_debug_message_callback(gl_debug_cb, nullptr);
+	m_functions.set_debug_message_control(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, NULL, GL_TRUE);
+	m_functions.set_debug_message_control(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_NOTIFICATION, 0, NULL, GL_FALSE);
 }
 
 #endif

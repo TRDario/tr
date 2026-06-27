@@ -16,7 +16,7 @@ tr::graphics_benchmark::graphics_benchmark(graphics_context& context)
 {
 	const graphics_context::functions& gl{context.make_current_and_return_functions()};
 
-	gl.gen_queries(1, out_handle(m_qo));
+	gl.generate_queries(1, out_handle(m_qo));
 }
 
 void tr::graphics_benchmark::deleter::operator()(unsigned int id) const
