@@ -510,16 +510,15 @@ void tr::audio_source::play(const std::lock_guard<std::mutex>&)
 {
 	audio_context& ctx{context()};
 
-	const tr::opt_ref<buffered_stream> stream{tr::get_if<buffered_stream>(m_data_source)};
-	if (stream.has_ref()) {
+	if_is<buffered_stream>(m_data_source, [&ctx, this](buffered_stream& stream) {
 		if (state() == state::initial || state() == state::stopped) {
 			detach_buffer();
-			const static_vector<unsigned int, 4> filled_buffers{stream->try_refill_all()};
+			const static_vector<unsigned int, 4> filled_buffers{stream.try_refill_all()};
 			if (!filled_buffers.empty()) {
 				ctx.m_alapi.source_queue_buffers(ctx.m_ptr.get(), m_handle.get(), filled_buffers.size(), filled_buffers.data());
 			}
 		}
-	}
+	});
 
 	ctx.m_alapi.source_play(ctx.m_ptr.get(), m_handle.get());
 }
@@ -539,11 +538,7 @@ void tr::audio_source::stop(const std::lock_guard<std::mutex>&)
 {
 	audio_context& ctx{context()};
 	ctx.m_alapi.source_stop(ctx.m_ptr.get(), m_handle.get());
-
-	const tr::opt_ref<buffered_stream> stream{tr::get_if<buffered_stream>(m_data_source)};
-	if (stream.has_ref()) {
-		stream->seek(stream->loop_start());
-	}
+	if_is<buffered_stream>(m_data_source, [](buffered_stream& stream) { stream.seek(stream.loop_start()); });
 }
 
 //
@@ -551,42 +546,45 @@ void tr::audio_source::stop(const std::lock_guard<std::mutex>&)
 tr::fsecs tr::audio_source::length() const
 {
 	// clang-format off
-	return m_data_source | tr::match{
-		[](const buffered_stream& stream) {
-			return stream.length();
-		},
-		[](const std::shared_ptr<audio_buffer>& buffer) {
-			const int sample_rate{buffer->sample_rate()};
-			return sample_rate == 0 ? fsecs::zero() : fsecs{static_cast<float>(buffer->size()) / sample_rate};
-		},
-		[](std::monostate) {
+	return std::visit([]<typename T>(const T& data_source) {
+		if constexpr (std::same_as<T, buffered_stream>) {
+			return data_source.length();
+		}
+		else if constexpr (std::same_as<T, std::shared_ptr<audio_buffer>>) {
+			const int sample_rate{data_source->sample_rate()};
+			return sample_rate == 0 ? fsecs::zero() : fsecs{static_cast<float>(data_source->size()) / sample_rate};
+		}
+		else {
 			return fsecs::zero();
 		}
-	};
+	}, m_data_source);
 	// clang-format on
 }
 
 tr::fsecs tr::audio_source::offset() const
 {
-	audio_context& ctx{context()};
+	// clang-format off
+	return std::visit([this]<typename T>(const T& data_source) {
+		audio_context& ctx{context()};
 
-	float offset;
-	ctx.m_alapi.get_source_property_f(ctx.m_ptr.get(), m_handle.get(), AL_SEC_OFFSET, &offset);
+		float offset;
+		ctx.m_alapi.get_source_property_f(ctx.m_ptr.get(), m_handle.get(), AL_SEC_OFFSET, &offset);
 
-	const tr::opt_ref<const buffered_stream> stream{tr::get_if<buffered_stream>(m_data_source)};
-	if (stream.has_ref()) {
-		const auto cur_state{this->state()};
-		if (cur_state == state::initial || cur_state == state::stopped) {
-			return stream->tell();
+		if constexpr (std::same_as<T, buffered_stream>) {
+			const auto cur_state{state()};
+			if (cur_state == state::initial || cur_state == state::stopped) {
+				return data_source.tell();
+			}
+
+			int current_buffer_id;
+			ctx.m_alapi.get_source_property_i(ctx.m_ptr.get(), m_handle.get(), AL_BUFFER, &current_buffer_id);
+			return data_source.buffer_start_offset(current_buffer_id) + fsecs{offset};
 		}
-
-		int current_buffer_id;
-		ctx.m_alapi.get_source_property_i(ctx.m_ptr.get(), m_handle.get(), AL_BUFFER, &current_buffer_id);
-		return stream->buffer_start_offset(current_buffer_id) + fsecs{offset};
-	}
-	else {
-		return fsecs{offset};
-	}
+		else {
+			return fsecs{offset};
+		}
+	}, m_data_source);
+	// clang-format on
 }
 
 void tr::audio_source::set_offset(fsecs offset)
@@ -596,63 +594,85 @@ void tr::audio_source::set_offset(fsecs offset)
 
 void tr::audio_source::set_offset(const std::lock_guard<std::mutex>& lock, fsecs offset)
 {
-	audio_context& ctx{context()};
+	// clang-format off
+	std::visit([&lock, offset, this]<typename T>(T& data_source) {
+		audio_context& ctx{context()};
 
-	const tr::opt_ref<buffered_stream> stream{tr::get_if<buffered_stream>(m_data_source)};
-	if (stream.has_ref()) {
-		const auto prev_state{state()};
-		stream->seek(offset);
-		ctx.m_alapi.source_stop(ctx.m_ptr.get(), m_handle.get());
-		switch (prev_state) {
-		case state::playing:
-			play(lock);
-			break;
-		case state::paused:
-			play(lock);
-			pause();
-			break;
-		case state::initial:
-		case state::stopped:
-			break;
+		if constexpr (std::same_as<T, buffered_stream>) {
+			const auto prev_state{state()};
+			data_source.seek(offset);
+			ctx.m_alapi.source_stop(ctx.m_ptr.get(), m_handle.get());
+			switch (prev_state) {
+			case state::playing:
+				play(lock);
+				break;
+			case state::paused:
+				play(lock);
+				pause();
+				break;
+			case state::initial:
+			case state::stopped:
+				break;
+			}
 		}
-	}
-	else {
-		ctx.m_alapi.set_source_property_f(ctx.m_ptr.get(), m_handle.get(), AL_SEC_OFFSET, offset.count());
-	}
+		else {
+			ctx.m_alapi.set_source_property_f(ctx.m_ptr.get(), m_handle.get(), AL_SEC_OFFSET, offset.count());
+		}
+	}, m_data_source);
+	// clang-format on
 }
 
 //
 
 bool tr::audio_source::looping() const
 {
-	const tr::opt_ref<const buffered_stream> stream{tr::get_if<buffered_stream>(m_data_source)};
-	if (stream.has_ref()) {
-		return stream->looping();
-	}
-	else {
-		audio_context& ctx{context()};
-		ALint looping;
-		ctx.m_alapi.get_source_property_i(ctx.m_ptr.get(), m_handle.get(), AL_LOOPING, &looping);
-		return looping;
-	}
+	// clang-format off
+	return std::visit([this]<typename T>(const T& data_source) -> bool {
+		if constexpr (std::same_as<T, buffered_stream>) {
+			return data_source.looping();
+		}
+		else {
+			audio_context& ctx{context()};
+			ALint looping;
+			ctx.m_alapi.get_source_property_i(ctx.m_ptr.get(), m_handle.get(), AL_LOOPING, &looping);
+			return looping;
+		}
+	}, m_data_source);
+	// clang-format on
 }
 
 tr::fsecs tr::audio_source::loop_start() const
 {
-	return m_data_source | tr::match{
-							   [](const buffered_stream& stream) { return stream.loop_start(); },
-							   [](const std::shared_ptr<audio_buffer>& buffer) { return buffer->loop_points().first; },
-							   [](std::monostate) { return fsecs::zero(); },
-						   };
+	// clang-format off
+	return std::visit([]<typename T>(const T& data_source) {
+		if constexpr (std::same_as<T, buffered_stream>) {
+			return data_source.loop_start();
+		}
+		else if constexpr (std::same_as<T, std::shared_ptr<audio_buffer>>) {
+			return data_source->loop_points().first;
+		}
+		else {
+			return fsecs::zero();
+		}
+	}, m_data_source);
+	// clang-format on
 }
 
 tr::fsecs tr::audio_source::loop_end() const
 {
-	return m_data_source | tr::match{
-							   [](const buffered_stream& stream) { return stream.loop_end(); },
-							   [](const std::shared_ptr<audio_buffer>& buffer) { return buffer->loop_points().second; },
-							   [](std::monostate) { return fsecs::zero(); },
-						   };
+	// clang-format off
+	return std::visit([]<typename T>(const T& data_source) {
+		if constexpr (std::same_as<T, buffered_stream>) {
+			return data_source.loop_end();
+		}
+		else if constexpr (std::same_as<T, std::shared_ptr<audio_buffer>>) {
+			return data_source->loop_points().second;
+		}
+		else {
+			return fsecs::zero();
+		}
+	}, m_data_source);
+	// clang-format on
 }
 
 void tr::audio_source::set_looping(bool value)
@@ -662,14 +682,17 @@ void tr::audio_source::set_looping(bool value)
 
 void tr::audio_source::set_looping(const std::lock_guard<std::mutex>&, bool value)
 {
-	const tr::opt_ref<buffered_stream> stream{tr::get_if<buffered_stream>(m_data_source)};
-	if (stream.has_ref()) {
-		stream->set_looping(value);
-	}
-	else {
-		audio_context& ctx{context()};
-		ctx.m_alapi.set_source_property_i(ctx.m_ptr.get(), m_handle.get(), AL_LOOPING, value);
-	}
+	// clang-format off
+	std::visit([value, this]<typename T>(T& data_source) {
+		if constexpr (std::same_as<T, buffered_stream>) {
+			data_source.set_looping(value);
+		}
+		else {
+			audio_context& ctx{context()};
+			ctx.m_alapi.set_source_property_i(ctx.m_ptr.get(), m_handle.get(), AL_LOOPING, value);
+		}
+	}, m_data_source);
+	// clang-format on
 }
 
 void tr::audio_source::set_loop_points(fsecs start_point, fsecs end_point)
@@ -688,24 +711,18 @@ void tr::audio_source::set_loop_points(const std::lock_guard<std::mutex>&, fsecs
 	TR_ASSERT(start_point < end_point, "Tried to set audio source loop end before start (start: {}s, end: {}s).", start_point.count(),
 			  end_point.count());
 
-	struct visitor {
-		audio_source& source;
-		fsecs start_point;
-		fsecs end_point;
-
-		void operator()(buffered_stream& stream) const
-		{
-			stream.set_loop_points(start_point, end_point);
+	// clang-format off
+	std::visit([start_point, end_point, this]<typename T>(T& data_source) {
+		if constexpr (std::same_as<T, buffered_stream>) {
+			data_source.set_loop_points(start_point, end_point);
 		}
-		void operator()(std::shared_ptr<audio_buffer>& buffer) const
-		{
-			source.detach_buffer();
-			buffer->set_loop_points(start_point, end_point);
-			source.attach_buffer(*buffer);
+		else if constexpr (std::same_as<T, std::shared_ptr<audio_buffer>>) {
+			detach_buffer();
+			data_source->set_loop_points(start_point, end_point);
+			attach_buffer(*data_source);
 		}
-		void operator()(std::monostate) const {}
-	};
-	std::visit(visitor{*this, start_point, end_point}, m_data_source);
+	}, m_data_source);
+	// clang-format on
 }
 
 //
@@ -726,8 +743,7 @@ void tr::audio_source::detach_buffer()
 
 void tr::audio_source::refill_if_needed()
 {
-	tr::opt_ref<buffered_stream> bstream{get_if<buffered_stream>(m_data_source)};
-	if (bstream.has_ref()) {
+	if_is<buffered_stream>(m_data_source, [this](buffered_stream& stream) {
 		audio_context& ctx{context()};
 
 		ALint nbuffers;
@@ -738,9 +754,9 @@ void tr::audio_source::refill_if_needed()
 
 		static_vector<unsigned int, 4> buffers(nbuffers);
 		ctx.m_alapi.source_unqueue_buffers(ctx.m_ptr.get(), m_handle.get(), nbuffers, buffers.data());
-		const static_vector<unsigned int, 4> filled_buffers{bstream->try_refill(buffers)};
+		const static_vector<unsigned int, 4> filled_buffers{stream.try_refill(buffers)};
 		if (!filled_buffers.empty()) {
 			ctx.m_alapi.source_queue_buffers(ctx.m_ptr.get(), m_handle.get(), filled_buffers.size(), filled_buffers.data());
 		}
-	}
+	});
 }

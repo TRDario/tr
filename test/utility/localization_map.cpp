@@ -28,7 +28,7 @@ TEST(localization_map_test, script)
 	EXPECT_TRUE(map.contains("escaped"));
 	EXPECT_EQ(map["escaped"], "\\This is\n\"escaped\"!\\");
 
-	// Check is missing a key produces an error.
+	// Check if missing a key produces an error.
 	map.clear();
 	EXPECT_TRUE(map.load_script("\"Blah\"").size() == 1);
 
