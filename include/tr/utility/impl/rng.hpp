@@ -25,19 +25,19 @@ template <std::integral Integer> Integer tr::rng::generate(Integer max)
 {
 	TR_ASSERT(max > 0, "RNG range maximum must be greater than 0 (Currently: {}).", max);
 
-	return Integer(generate<std::make_unsigned_t<Integer>>() % max);
+	return static_cast<Integer>(generate<std::make_unsigned_t<Integer>>() % max);
 }
 
 template <std::integral Integer> Integer tr::rng::generate(Integer min, Integer max)
 {
 	TR_ASSERT(min < max, "RNG range minimum must be less than the maximum (Currenly: {} !< {})", min, max);
 
-	return Integer(generate<std::make_unsigned_t<Integer>>() % (max - min) + min);
+	return static_cast<Integer>(generate<std::make_unsigned_t<Integer>>() % (max - min) + min);
 }
 
 template <std::floating_point FloatingPoint> FloatingPoint tr::rng::generate()
 {
-	return FloatingPoint(advance()) / FloatingPoint{UINT64_MAX};
+	return static_cast<FloatingPoint>(advance()) / static_cast<FloatingPoint>(UINT64_MAX);
 }
 
 template <std::floating_point FloatingPoint> FloatingPoint tr::rng::generate(FloatingPoint max)
