@@ -62,11 +62,7 @@ void tr::dyn_index_buffer::reserve(usize capacity)
 		reallocate();
 		gl.allocate_buffer_storage(id(), capacity * sizeof(u16), nullptr, GL_DYNAMIC_STORAGE_BIT);
 		if (gl.get_error() == GL_OUT_OF_MEMORY) {
-#ifdef TR_ENABLE_ASSERTS
 			throw out_of_memory{"allocation of index buffer '{}'", label()};
-#else
-			throw out_of_memory{"index buffer allocation"};
-#endif
 		}
 		m_capacity = capacity;
 	}

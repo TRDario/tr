@@ -93,11 +93,7 @@ tr::basic_graphics_buffer_map tr::basic_shader_buffer::map_range(usize offset, u
 
 	std::byte* const map_pointer{static_cast<std::byte*>(gl.map_buffer_range(id(), offset, size, to_underlying(m_map_type)))};
 	if (gl.get_error() == GL_OUT_OF_MEMORY) {
-#ifdef TR_ENABLE_ASSERTS
 		throw out_of_memory{"mapping of shader buffer '{}'", label()};
-#else
-		throw out_of_memory{"shader buffer mapping"};
-#endif
 	}
 	return basic_graphics_buffer_map{context(), id(), std::span{map_pointer, size}};
 }

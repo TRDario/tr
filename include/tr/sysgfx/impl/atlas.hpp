@@ -6,6 +6,7 @@
 
 #pragma once
 #include "../atlas.hpp"
+#include "../texture_ref.hpp"
 
 /////////////////////////////////////////////////////////////// BITMAP ATLAS //////////////////////////////////////////////////////////////
 
@@ -202,7 +203,8 @@ void tr::dyn_atlas<Key, Extra, Hash, Pred>::clear()
 	}
 }
 
-#ifdef TR_ENABLE_ASSERTS
+//
+
 template <typename Key, typename Extra, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
 std::string tr::dyn_atlas<Key, Extra, Hash, Pred>::label() const
 {
@@ -214,4 +216,3 @@ void tr::dyn_atlas<Key, Extra, Hash, Pred>::set_label(std::string_view label)
 {
 	m_tex.set_label(label);
 }
-#endif

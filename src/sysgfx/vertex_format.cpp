@@ -71,7 +71,6 @@ tr::graphics_context& tr::vertex_format::context() const
 
 //
 
-#ifdef TR_ENABLE_ASSERTS
 void tr::vertex_format::set_label(std::string_view label)
 {
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
@@ -94,4 +93,3 @@ std::string tr::vertex_format::label() const
 		return "<unnamed>";
 	}
 }
-#endif

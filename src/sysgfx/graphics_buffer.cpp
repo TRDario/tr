@@ -42,14 +42,11 @@ unsigned int tr::graphics_buffer::id() const
 void tr::graphics_buffer::reallocate()
 {
 	const graphics_buffer old_buffer{std::exchange(*this, graphics_buffer{context()})};
-#ifdef TR_ENABLE_ASSERTS
 	context().move_label(GL_BUFFER, old_buffer.id(), id());
-#endif
 }
 
 //
 
-#ifdef TR_ENABLE_ASSERTS
 std::string tr::graphics_buffer::label() const
 {
 	const graphics_context::functions& gl{m_handle.get_deleter().context.make_current_and_return_functions()};
@@ -72,4 +69,3 @@ void tr::graphics_buffer::set_label(std::string_view label)
 
 	gl.set_object_label(GL_BUFFER, id(), label.size(), label.data());
 }
-#endif

@@ -32,8 +32,8 @@
 //     - atlas.unnormalized_with_extra("C") -> gets the unnormalized UV rect and extra data of "C"                                       //
 //     - atlas.clear() -> atlas is now empty again, but retains the reserved space                                                       //
 //                                                                                                                                       //
-// The label of an atlas can be set with TR_SET_LABEL(atlas, label):                                                                     //
-//     - TR_SET_LABEL(atlas, "Example atlas") -> 'atlas' is now labelled "Example atlas"                                                 //
+// The label of an atlas can be set with .set_label():                                                                                   //
+//     - atlas.set_label("Example atlas") -> 'atlas' is now labelled "Example atlas"                                                     //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -108,12 +108,10 @@ namespace tr {
 		// Removes all entries from the atlas.
 		void clear();
 
-#ifdef TR_ENABLE_ASSERTS
 		// Gets the debug label of the atlas.
 		std::string label() const;
 		// Sets the debug label of the atlas.
 		void set_label(std::string_view label);
-#endif
 
 	  private:
 		// The atlas texture.

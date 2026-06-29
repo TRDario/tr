@@ -56,11 +56,7 @@ tr::basic_graphics_buffer_map tr::basic_uniform_buffer::map()
 	const unsigned int flags{GL_DYNAMIC_STORAGE_BIT | GL_MAP_WRITE_BIT};
 	std::byte* const map_pointer{static_cast<std::byte*>(gl.map_buffer_range(id(), 0, m_size, flags))};
 	if (gl.get_error() == GL_OUT_OF_MEMORY) {
-#ifdef TR_ENABLE_ASSERTS
 		throw out_of_memory{"mapping of uniform buffer '{}'", label()};
-#else
-		throw out_of_memory{"uniform buffer mapping"};
-#endif
 	}
 	return basic_graphics_buffer_map{context(), id(), std::span{map_pointer, m_size}};
 }

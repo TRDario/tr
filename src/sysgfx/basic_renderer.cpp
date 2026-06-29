@@ -29,13 +29,13 @@ tr::basic_renderer::basic_renderer(graphics_context& context)
 	, m_vbuffer_tints{context}
 	, m_ibuffer{context}
 {
-	TR_SET_LABEL(m_pipeline, "(tr) Basic Renderer Pipeline");
-	TR_SET_LABEL(m_pipeline.vertex_shader(), "(tr) Basic Renderer Vertex Shader");
-	TR_SET_LABEL(m_pipeline.fragment_shader(), "(tr) Basic Renderer Fragment Shader");
-	TR_SET_LABEL(m_vbuffer_positions, "(tr) Basic Renderer Vertex Position Buffer");
-	TR_SET_LABEL(m_vbuffer_uvs, "(tr) Basic Renderer Vertex UV Buffer");
-	TR_SET_LABEL(m_vbuffer_tints, "(tr) Basic Renderer Vertex Tint Buffer");
-	TR_SET_LABEL(m_ibuffer, "(tr) Basic Renderer Index Buffer");
+	m_pipeline.set_label("(tr) Basic Renderer Pipeline");
+	m_pipeline.vertex_shader().set_label("(tr) Basic Renderer Vertex Shader");
+	m_pipeline.fragment_shader().set_label("(tr) Basic Renderer Fragment Shader");
+	m_vbuffer_positions.set_label("(tr) Basic Renderer Vertex Position Buffer");
+	m_vbuffer_uvs.set_label("(tr) Basic Renderer Vertex UV Buffer");
+	m_vbuffer_tints.set_label("(tr) Basic Renderer Vertex Tint Buffer");
+	m_ibuffer.set_label("(tr) Basic Renderer Index Buffer");
 
 	m_pipeline.vertex_shader().set_uniform(0, glm::mat4{1.0f});
 }

@@ -20,12 +20,12 @@ tr::circle_renderer::circle_renderer(graphics_context& context, float render_sca
 	, m_shader_circles{context}
 	, m_quad_vertices{context, std::array<glm::u8vec2, 4>{{{0, 0}, {0, 1}, {1, 1}, {1, 0}}}}
 {
-	TR_SET_LABEL(m_pipeline, "(tr) Circle Renderer Pipeline");
-	TR_SET_LABEL(m_pipeline.vertex_shader(), "(tr) Circle Renderer Vertex Shader");
-	TR_SET_LABEL(m_pipeline.fragment_shader(), "(tr) Circle Renderer Fragment Shader");
-	TR_SET_LABEL(m_vertex_format, "(tr) Circle Renderer Vertex Format");
-	TR_SET_LABEL(m_shader_circles, "(tr) Circle Renderer Circle Buffer");
-	TR_SET_LABEL(m_quad_vertices, "(tr) Circle Renderer Quad Buffer");
+	m_pipeline.set_label("(tr) Circle Renderer Pipeline");
+	m_pipeline.vertex_shader().set_label("(tr) Circle Renderer Vertex Shader");
+	m_pipeline.fragment_shader().set_label("(tr) Circle Renderer Fragment Shader");
+	m_vertex_format.set_label("(tr) Circle Renderer Vertex Format");
+	m_shader_circles.set_label("(tr) Circle Renderer Circle Buffer");
+	m_quad_vertices.set_label("(tr) Circle Renderer Quad Buffer");
 
 	set_render_scale(render_scale);
 }

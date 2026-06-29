@@ -17,8 +17,8 @@
 //     - tr::gfx::buffer_object_map map{unibuf.map()}; (*map)[10] = 5.0f -> maps the buffer and sets a portion of it                     //
 //     - unibuf.mapped() -> true                                                                                                         //
 //                                                                                                                                       //
-// The label of a uniform buffer can be set with TR_SET_LABEL(unibuf, label):                                                            //
-//     - TR_SET_LABEL(unibuf, "Example buffer") -> 'unibuf' is now labelled "Example buffer"                                             //
+// The label of a uniform buffer can be set with .set_label():                                                                           //
+//     - unibuf.set_label("Example buffer") -> 'unibuf' is now labelled "Example buffer"                                                 //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -50,12 +50,10 @@ namespace tr {
 		// This map is write-only!
 		basic_graphics_buffer_map map();
 
-#ifdef TR_ENABLE_ASSERTS
 		// Gets the debug label of the uniform buffer.
 		using graphics_buffer::label;
 		// Sets the debug label of the uniform buffer.
 		using graphics_buffer::set_label;
-#endif
 
 	  private:
 		// The size of the buffer.
@@ -82,12 +80,10 @@ namespace tr {
 		// This map is write-only!
 		graphics_buffer_object_map<Object> map();
 
-#ifdef TR_ENABLE_ASSERTS
 		// Gets the debug label of the uniform buffer.
 		using basic_uniform_buffer::label;
 		// Sets the debug label of the uniform buffer.
 		using basic_uniform_buffer::set_label;
-#endif
 	};
 } // namespace tr
 

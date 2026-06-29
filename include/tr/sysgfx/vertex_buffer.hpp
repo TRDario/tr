@@ -28,8 +28,8 @@
 //     - std::array<glm::vec2, 100> data2; buffer.set_region(400, data2) -> a copy of data2 is now in buffer[400-499]                    //
 //     - buffer.clear() -> buffer now has size 0, capacity 512                                                                           //
 //                                                                                                                                       //
-// The label of a vertex buffer can be set with TR_SET_LABEL(vbuf, label):                                                               //
-//     - TR_SET_LABEL(vbuf, "Example buffer") -> 'vbuf' is now labelled "Example buffer"                                                 //
+// The label of a vertex buffer can be set with .set_label():                                                                            //
+//     - vbuf.set_label("Example buffer") -> 'vbuf' is now labelled "Example buffer"                                                     //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -48,12 +48,10 @@ namespace tr {
 		// Gets a reference to the graphics context the buffer is on.
 		using graphics_buffer::context;
 
-#ifdef TR_ENABLE_ASSERTS
 		// Gets the debug label of the vertex buffer.
 		using graphics_buffer::label;
 		// Sets the debug label of the vertex buffer.
 		using graphics_buffer::set_label;
-#endif
 
 	  private:
 		// The size of the vertex buffer.
@@ -63,10 +61,18 @@ namespace tr {
 	};
 
 	// Typed static vertex buffer class for holding immutable vertex data of a single type.
-	template <standard_layout T> class static_vertex_buffer : public basic_static_vertex_buffer {
+	template <standard_layout T> class static_vertex_buffer : private basic_static_vertex_buffer {
 	  public:
 		// Creates a static vertex buffer.
 		template <typed_contiguous_const_range<T> R> static_vertex_buffer(graphics_context& context, R&& range);
+
+		// Gets a reference to the graphics context the buffer is on.
+		using basic_static_vertex_buffer::context;
+
+		// Gets the debug label of the vertex buffer.
+		using basic_static_vertex_buffer::label;
+		// Sets the debug label of the vertex buffer.
+		using basic_static_vertex_buffer::set_label;
 	};
 
 	// Dynamic vertex buffer class.
@@ -96,12 +102,10 @@ namespace tr {
 		// Sets a region of the buffer.
 		void set_region(usize offset, std::span<const std::byte> data);
 
-#ifdef TR_ENABLE_ASSERTS
 		// Gets the debug label of the vertex buffer.
 		using graphics_buffer::label;
 		// Sets the debug label of the vertex buffer.
 		using graphics_buffer::set_label;
-#endif
 
 	  private:
 		// The used size of the buffer.
@@ -138,12 +142,10 @@ namespace tr {
 		// Sets a region of the buffer.
 		template <typed_contiguous_const_range<T> R> void set_region(usize offset, R&& data);
 
-#ifdef TR_ENABLE_ASSERTS
 		// Gets the debug label of the vertex buffer.
 		using basic_dyn_vertex_buffer::label;
 		// Sets the debug label of the vertex buffer.
 		using basic_dyn_vertex_buffer::set_label;
-#endif
 	};
 } // namespace tr
 

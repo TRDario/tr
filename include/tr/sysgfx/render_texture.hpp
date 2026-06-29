@@ -73,12 +73,10 @@ namespace tr {
 		// Sets a region of the texture.
 		using texture::set_region;
 
-#ifdef TR_ENABLE_ASSERTS
 		// Gets the debug label of the texture.
 		using texture::label;
 		// Sets the debug label of the texture.
 		using texture::set_label;
-#endif
 
 	  private:
 		// Handle to an OpenGL FBO.

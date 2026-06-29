@@ -62,7 +62,6 @@ tr::graphics_context& tr::shader_pipeline::context() const
 
 //
 
-#ifdef TR_ENABLE_ASSERTS
 void tr::shader_pipeline::set_label(std::string_view label)
 {
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
@@ -85,7 +84,6 @@ std::string tr::shader_pipeline::label() const
 		return "<unnamed>";
 	}
 }
-#endif
 
 ////////////////////////////////////////////////////////// OWNING SHADER PIPELINE /////////////////////////////////////////////////////////
 
@@ -96,15 +94,21 @@ tr::owning_shader_pipeline::owning_shader_pipeline(graphics_context& context, tr
 {
 }
 
+//
+
 tr::owning_shader_pipeline::operator const tr::shader_pipeline&() const
 {
 	return m_base;
 }
 
+//
+
 tr::graphics_context& tr::owning_shader_pipeline::context() const
 {
 	return m_base.context();
 }
+
+//
 
 tr::vertex_shader& tr::owning_shader_pipeline::vertex_shader()
 {
@@ -126,7 +130,8 @@ const tr::fragment_shader& tr::owning_shader_pipeline::fragment_shader() const
 	return m_fshader;
 }
 
-#ifdef TR_ENABLE_ASSERTS
+//
+
 void tr::owning_shader_pipeline::set_label(std::string_view label)
 {
 	m_base.set_label(label);
@@ -136,4 +141,3 @@ std::string tr::owning_shader_pipeline::label() const
 {
 	return m_base.label();
 }
-#endif

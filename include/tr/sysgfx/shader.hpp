@@ -13,8 +13,8 @@
 // Setting shader uniforms of any GLSL type except doubles is supported:                                                                 //
 //     - shader.set_uniform(0, glm::vec2{100, 100}) -> sets the vec2 uniform at location 0                                               //
 //                                                                                                                                       //
-// The label of a shader can be set with TR_SET_LABEL(shader, label):                                                                    //
-//     - TR_SET_LABEL(shader, "Example shader") -> 'shader' is now labelled "Example shader"                                             //
+// The label of a shader can be set with .set_label():                                                                                   //
+//     - shader.set_label("Example shader") -> 'shader' is now labelled "Example shader"                                                 //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -163,12 +163,10 @@ namespace tr {
 		// Sets a uniform storage buffer.
 		void set_uniform_buffer(unsigned int index, const basic_uniform_buffer& buffer);
 
-#ifdef TR_ENABLE_ASSERTS
 		// Sets the debug label of the shader.
 		void set_label(std::string_view label);
 		// Gets the debug label of the shader.
 		std::string label() const;
-#endif
 
 	  protected:
 		// OpenGL texture unit.

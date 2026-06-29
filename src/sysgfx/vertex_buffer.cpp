@@ -61,11 +61,7 @@ void tr::basic_dyn_vertex_buffer::reserve(usize capacity)
 		reallocate();
 		gl.allocate_buffer_storage(id(), capacity, nullptr, GL_DYNAMIC_STORAGE_BIT);
 		if (gl.get_error() == GL_OUT_OF_MEMORY) {
-#ifdef TR_ENABLE_ASSERTS
 			throw out_of_memory{"allocation of vertex buffer '{}'", label()};
-#else
-			throw out_of_memory{"vertex buffer allocation"};
-#endif
 		}
 		m_capacity = capacity;
 	}

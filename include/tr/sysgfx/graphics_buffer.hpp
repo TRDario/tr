@@ -25,12 +25,10 @@ namespace tr {
 		// Reallocates the buffer while preserving its label (if applicable).
 		void reallocate();
 
-#ifdef TR_ENABLE_ASSERTS
 		// Gets the buffer's label.
 		std::string label() const;
 		// Sets the buffer's label.
 		void set_label(std::string_view label);
-#endif
 
 		// Gets a reference to the graphics context the buffer is on.
 		graphics_context& context() const;

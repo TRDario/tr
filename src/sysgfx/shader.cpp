@@ -607,7 +607,8 @@ void tr::shader_base::set_uniform_buffer(unsigned int index, const basic_uniform
 	gl.bind_buffer_base(GL_UNIFORM_BUFFER, index, buffer.id());
 }
 
-#ifdef TR_ENABLE_ASSERTS
+//
+
 void tr::shader_base::set_label(std::string_view label)
 {
 	const graphics_context::functions& gl{context().make_current_and_return_functions()};
@@ -630,7 +631,6 @@ std::string tr::shader_base::label() const
 		return "<unnamed>";
 	}
 }
-#endif
 
 ////////////////////////////////////////////////////////////// SHADER CLASSES /////////////////////////////////////////////////////////////
 
@@ -644,7 +644,7 @@ tr::vertex_shader tr::load_vertex_shader(graphics_context& context, const std::f
 	try {
 		std::ifstream file{open_file_r(path)};
 		vertex_shader shader{context, std::string{std::istreambuf_iterator<char>{file}, std::istreambuf_iterator<char>{}}};
-		TR_SET_LABEL(shader, path.filename().string());
+		shader.set_label(path.filename().string());
 		return shader;
 	}
 	catch (shader_load_error& err) {
@@ -668,7 +668,7 @@ tr::fragment_shader tr::load_fragment_shader(graphics_context& context, const st
 	try {
 		std::ifstream file{open_file_r(path)};
 		fragment_shader shader{context, std::string{std::istreambuf_iterator<char>{file}, std::istreambuf_iterator<char>{}}};
-		TR_SET_LABEL(shader, path.filename().string());
+		shader.set_label(path.filename().string());
 		return shader;
 	}
 	catch (shader_load_error& err) {

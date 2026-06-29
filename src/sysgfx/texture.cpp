@@ -190,6 +190,8 @@ tr::texture::~texture()
 	}
 }
 
+//
+
 tr::texture& tr::texture::operator=(texture&& r) noexcept
 {
 	const graphics_context::functions& gl{m_context.make_current_and_return_functions()};
@@ -204,6 +206,8 @@ tr::texture& tr::texture::operator=(texture&& r) noexcept
 	m_references = std::move(r.m_references);
 	return *this;
 }
+
+//
 
 tr::texture tr::texture::reallocate(glm::ivec2 size, mipmaps mipmaps, pixel_format format)
 {
@@ -236,9 +240,7 @@ tr::texture tr::texture::reallocate(glm::ivec2 size, mipmaps mipmaps, pixel_form
 		gl.get_texture_parameter_fv(m_handle, GL_TEXTURE_BORDER_COLOR, &border_color.r);
 		gl.set_texture_parameter_fv(new_handle, GL_TEXTURE_BORDER_COLOR, &border_color.r);
 
-#ifdef TR_ENABLE_ASSERTS
 		m_context.move_label(GL_TEXTURE, m_handle, new_handle);
-#endif
 		m_handle = new_handle;
 	}
 	else if (m_handle == 0) {
@@ -261,6 +263,8 @@ tr::texture tr::texture::reallocate(glm::ivec2 size, mipmaps mipmaps, pixel_form
 	return texture{m_context, old_handle, old_size};
 }
 
+//
+
 bool tr::texture::empty() const
 {
 	return m_handle == 0;
@@ -270,6 +274,8 @@ glm::ivec2 tr::texture::size() const
 {
 	return m_size;
 }
+
+//
 
 void tr::texture::set_filtering(min_filter min_filter, mag_filter mag_filter)
 {
@@ -300,6 +306,8 @@ void tr::texture::set_border_color(rgbaf color)
 
 	gl.set_texture_parameter_fv(m_handle, GL_TEXTURE_BORDER_COLOR, &color.r);
 }
+
+//
 
 void tr::texture::clear(const rgbaf& color)
 {
@@ -346,7 +354,8 @@ void tr::texture::set_region(glm::ivec2 tl, const sub_bitmap& bitmap)
 	gl.generate_texture_mipmap(m_handle);
 }
 
-#ifdef TR_ENABLE_ASSERTS
+//
+
 std::string tr::texture::label() const
 {
 	const graphics_context::functions& gl{m_context.make_current_and_return_functions()};
@@ -371,4 +380,3 @@ void tr::texture::set_label(std::string_view label)
 		gl.set_object_label(GL_TEXTURE, m_handle, label.size(), label.data());
 	}
 }
-#endif

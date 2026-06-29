@@ -24,8 +24,8 @@
 //     - std::array<u16, 100> data2; buffer.set_region(400, data2) -> a copy of data2 is now in buffer[400-499]                          //
 //     - buffer.clear() -> buffer now has size 0, capacity 512                                                                           //
 //                                                                                                                                       //
-// The label of a index buffer can be set with TR_SET_LABEL(ibuf, label):                                                                //
-//     - TR_SET_LABEL(ibuf, "Example buffer") -> 'ibuf' is now labelled "Example buffer"                                                 //
+// The label of a index buffer can be set with .set_label():                                                                             //
+//     - ibuf.set_label("Example buffer") -> 'ibuf' is now labelled "Example buffer"                                                     //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -48,12 +48,10 @@ namespace tr {
 		// Gets a reference to the graphics context the buffer is on.
 		using graphics_buffer::context;
 
-#ifdef TR_ENABLE_ASSERTS
 		// Gets the debug label of the index buffer.
 		using graphics_buffer::label;
 		// Sets the debug label of the index buffer.
 		using graphics_buffer::set_label;
-#endif
 
 	  private:
 		// The size of the buffer.
@@ -89,12 +87,10 @@ namespace tr {
 		// Sets a region of the buffer.
 		void set_region(usize offset, std::span<const u16> data);
 
-#ifdef TR_ENABLE_ASSERTS
 		// Gets the debug label of the index buffer.
 		using graphics_buffer::label;
 		// Sets the debug label of the index buffer.
 		using graphics_buffer::set_label;
-#endif
 
 	  private:
 		// The used size of the buffer.

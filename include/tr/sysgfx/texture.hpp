@@ -32,8 +32,8 @@
 //     - tex.copy_region({256, 256}, tex2, {{256, 256}, {256, 256}}) -> copies a region of 'tex2' to 'tex' beginning at (256, 256)       //
 //     - tex.set_region({128, 128}, tr::load_bitmap_file("data.bmp")) -> sets a region of 'tex' beginning at (128, 128) with bitmap data //
 //                                                                                                                                       //
-// The label of a texture can be set with TR_SET_LABEL(tex, label):                                                                      //
-//     - TR_SET_LABEL(tex, "Example texture") -> 'tex' is now labelled "Example texture"                                                 //
+// The label of a texture can be set with .set_label():                                                                                  //
+//     - tex.set_label("Example texture") -> 'tex' is now labelled "Example texture"                                                     //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -134,12 +134,10 @@ namespace tr {
 		// Sets a region of the texture.
 		void set_region(glm::ivec2 tl, const sub_bitmap& bitmap);
 
-#ifdef TR_ENABLE_ASSERTS
 		// Gets the debug label of the texture.
 		std::string label() const;
 		// Sets the debug label of the texture.
 		void set_label(std::string_view label);
-#endif
 
 	  protected:
 		// Reference to the graphics context the texture is on.

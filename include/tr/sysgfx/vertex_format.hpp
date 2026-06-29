@@ -33,10 +33,10 @@
 //       -> equivalent to {.divisor = 1, .attrs = tr::gfx::as_vertex_attribute_list<tr::rgba8>}                                          //
 //                                                                                                                                       //
 // A vertex format is constructed with a span of vertex bindings: this span must stay valid for the entire lifetime of the format.       //
-// The label of a vertex format can be set with TR_SET_LABEL(format, label):                                                             //
+// The label of a vertex format can be set with .set_label():                                                                            //
 //     - constexpr std::array format_bindings{tr::gfx::make_vertex_binding<glm::vec2>(), tr::gfx::make_vertex_binding<my_struct>}        //
 //       -> defines two vertex bindings, one taking glm::vec2 data, and the other my_struct data                                         //
-//     - tr::gfx::vertex_format format{format_bindings}; TR_SET_LABEL(format, "Example format")                                          //
+//     - tr::gfx::vertex_format format{format_bindings}; format.set_label("Example format")                                              //
 //       -> creates a vertex format with the defined bindings with the label "Example format"                                            //
 //                                                                                                                                       //
 // tr::gfx::vertex2_format() is provided as a built-in vertex format that is always available: separated vec2 position, vec2 uv, and     //
@@ -114,12 +114,10 @@ namespace tr {
 		// Gets a reference to the graphics context the vertex format is on.
 		graphics_context& context() const;
 
-#ifdef TR_ENABLE_ASSERTS
 		// Sets the debug label of the vertex format.
 		void set_label(std::string_view label);
 		// Gets the debug label of the vertex format.
 		std::string label() const;
-#endif
 
 	  private:
 		// VAO deleter class.

@@ -14,8 +14,8 @@
 //       -> creates vertex and fragment shaders and then stores them in the pipeline                                                     //
 //     - pipeline.vertex_shader().set_uniform(0, 5.0f) -> sets uniform 0 of the vertex shader of the pipeline                            //
 //                                                                                                                                       //
-// The label of a shader pipeline can be set with TR_SET_LABEL(pipeline, label):                                                         //
-//     - TR_SET_LABEL(pipeline, "Example pipeline") -> 'pipeline' is now labelled "Example pipeline"                                     //
+// The label of a shader pipeline can be set with .set_label():                                                                          //
+//     - pipeline.set_label("Example pipeline") -> 'pipeline' is now labelled "Example pipeline"                                         //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -34,12 +34,10 @@ namespace tr {
 		// Gets a reference to the graphics context the pipeline is on.
 		graphics_context& context() const;
 
-#ifdef TR_ENABLE_ASSERTS
 		// Sets the debug label of the pipeline.
 		void set_label(std::string_view label);
 		// Gets the debug label of the pipeline.
 		std::string label() const;
-#endif
 
 	  private:
 		struct deleter {
@@ -79,12 +77,10 @@ namespace tr {
 		// Gets the fragment shader.
 		const tr::fragment_shader& fragment_shader() const;
 
-#ifdef TR_ENABLE_ASSERTS
 		// Sets the debug label of the pipeline.
 		void set_label(std::string_view label);
 		// Gets the debug label of the pipeline.
 		std::string label() const;
-#endif
 
 	  private:
 		// The vertex shader.

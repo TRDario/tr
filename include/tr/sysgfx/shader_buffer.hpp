@@ -36,8 +36,8 @@
 //     - tr::gfx::shader_array<float> buf{64}; buf.resize(32) -> resizes the array buffer to 32 elements                                 //
 //     - tr::gfx::shader_array<float> buf{64}; buf.set(some_array) -> resizes and sets the array buffer                                  //
 //                                                                                                                                       //
-// The label of a shader buffer can be set with TR_SET_LABEL(sbuf, label):                                                               //
-//     - TR_SET_LABEL(sbuf, "Example buffer") -> 'sbuf' is now labelled "Example buffer"                                                 //
+// The label of a shader buffer can be set with .set_label():                                                                            //
+//     - sbuf.set_label("Example buffer") -> 'sbuf' is now labelled "Example buffer"                                                     //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -80,12 +80,10 @@ namespace tr {
 		// Maps the entire buffer.
 		basic_graphics_buffer_map map();
 
-#ifdef TR_ENABLE_ASSERTS
 		// Gets the debug label of the shader buffer.
 		using graphics_buffer::label;
 		// Sets the debug label of the shader buffer.
 		using graphics_buffer::set_label;
-#endif
 
 	  private:
 		// The map type of the buffer.
@@ -130,6 +128,11 @@ namespace tr {
 		graphics_buffer_object_map<Header> map_header();
 		// Maps the dynamic array.
 		graphics_buffer_span_map<ArrayElement> map_array();
+
+		// Gets the debug label of the shader buffer.
+		using basic_shader_buffer::label;
+		// Sets the debug label of the shader buffer.
+		using basic_shader_buffer::set_label;
 	};
 
 	// Specialized shader buffer with no header before the array.
@@ -155,6 +158,11 @@ namespace tr {
 		using basic_shader_buffer::mapped;
 		// Maps the array.
 		graphics_buffer_span_map<Element> map();
+
+		// Gets the debug label of the shader array.
+		using basic_shader_buffer::label;
+		// Sets the debug label of the shader array.
+		using basic_shader_buffer::set_label;
 	};
 } // namespace tr
 
