@@ -1,5 +1,7 @@
 #pragma once
 #include "../utility/exception.hpp"
+#include "../utility/logger.hpp"
+#include "../utility/zstring_view.hpp"
 #include "render_target.hpp"
 #include "texture_ref.hpp"
 #include "vertex_buffer.hpp"
@@ -58,6 +60,16 @@ namespace tr {
 	// Window graphics context.
 	class graphics_context {
 	  public:
+		// Info returned by info().
+		struct info {
+			// Context vendor name.
+			zstring_view vendor;
+			// Context renderer name.
+			zstring_view renderer;
+			// Context OpenGL version.
+			zstring_view gl_version;
+		};
+
 		// Creates a graphics context on a window.
 		// May throw: graphics_context_init_error.
 		graphics_context(window& window);
@@ -66,6 +78,12 @@ namespace tr {
 
 		// Graphics contexts are not movable.
 		graphics_context& operator=(graphics_context&&) = delete;
+
+		// Logger used by the context.
+		logger logger;
+
+		// Gets info about the context.
+		info info() const;
 
 		// Gets a view to the window the context is on.
 		window_view window() const;
@@ -180,6 +198,7 @@ namespace tr {
 			void (*generate_texture_mipmap)(unsigned int texture);
 			unsigned int (*get_error)();
 			void (*get_buffer_parameter_iv)(unsigned int buffer, unsigned int pname, int* params);
+			void (*get_integer_v)(unsigned int pname, int* data);
 			void (*get_object_label)(unsigned int identifier, unsigned int name, int bufSize, int* length, char* label);
 			void (*get_program_info_log)(unsigned int program, int maxLength, int* length, char* infoLog);
 			void (*get_program_interface_iv)(unsigned int program, unsigned int programInterface, unsigned int pname, int* params);
@@ -263,7 +282,7 @@ namespace tr {
 		// Pointer to the SDL OpenGL context.
 		std::unique_ptr<SDL_GLContextState, deleter> m_ptr;
 		// OpenGL function pointers.
-		functions m_functions;
+		functions m_glapi;
 		// Next available renderer id.
 		renderer_id m_next_renderer_id{2};
 		// ID of the current active renderer.
@@ -281,13 +300,8 @@ namespace tr {
 		std::string m_vertex_format_label;
 #endif
 
-#ifdef TR_ENABLE_ASSERTS
-		// Sets up OpenGL debugging.
-		void setup_debugging();
-#endif
-
 		// Sets the context as current and returns the OpenGL API.
-		const functions& make_current_and_return_functions();
+		const functions& make_current_and_return_functions() const;
 
 		// Checks the render target's FBO ID.
 		bool is_fbo_of_render_target(unsigned int fbo);
@@ -308,10 +322,8 @@ namespace tr {
 		void check_vertex_buffer(std::string label, int slot, std::span<const vertex_attribute> attrs);
 #endif
 
-#ifdef TR_ENABLE_ASSERTS
 		// Moves a label from one object to another.
 		void move_label(unsigned int type, unsigned int old_id, unsigned int new_id);
-#endif
 
 		friend class basic_dyn_vertex_buffer;
 		friend class basic_graphics_buffer_map;
@@ -328,11 +340,4 @@ namespace tr {
 		friend class texture;
 		friend class vertex_format;
 	};
-
-#ifdef TR_ENABLE_ASSERTS
-	// Sets an object's label.
-#define TR_SET_LABEL(object, label) (object).set_label(label)
-#else
-#define TR_SET_LABEL(object, label) void(0)
-#endif
 } // namespace tr

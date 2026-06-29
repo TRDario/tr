@@ -89,9 +89,11 @@ namespace tr {
 		glm::ivec2 size{maximized};
 		// Minimum size of the window when resizing (or not_resizable).
 		glm::ivec2 min_size{not_resizable};
-		// Enables the use of depth and stencil buffers.
+		// Whether graphics contexts associated with the window should be debug contexts.
+		bool debug_graphics_context{TR_ENABLE_ASSERTS};
+		// Enables the use of depth and stencil buffers on graphics contexts associated with the window.
 		bool enable_depth_stencil{false};
-		// The number of samples used around a pixel for multisampled anti-aliasing.
+		// The number of samples used around a pixel for multisampled anti-aliasing on graphics contexts associated with the window.
 		u8 multisamples{0};
 	};
 

@@ -95,6 +95,7 @@ tr::graphics_context::functions::functions()
 	, generate_texture_mipmap{gl_function_address("glGenerateTextureMipmap")}
 	, get_error{gl_function_address("glGetError")}
 	, get_buffer_parameter_iv{gl_function_address("glGetNamedBufferParameteriv")}
+	, get_integer_v{gl_function_address("glGetIntegerv")}
 	, get_object_label{gl_function_address("glGetObjectLabel")}
 	, get_program_info_log{gl_function_address("glGetProgramInfoLog")}
 	, get_program_interface_iv{gl_function_address("glGetProgramInterfaceiv")}
@@ -165,6 +166,100 @@ tr::graphics_context::functions::functions()
 {
 }
 
+//////////////////////////////////////////////////////// GRAPHICS CONTEXT DEBUGGING ///////////////////////////////////////////////////////
+
+// Gets a readable string for an OpenGL debug log message type.
+static std::string_view gl_type(unsigned int value)
+{
+	switch (value) {
+	case GL_DEBUG_TYPE_ERROR:
+		return "Error";
+	case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR:
+		return "Deprecated Behavior";
+	case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:
+		return "Undefined Behavior";
+	case GL_DEBUG_TYPE_PORTABILITY:
+		return "Portability Concern";
+	case GL_DEBUG_TYPE_PERFORMANCE:
+		return "Performance Concern";
+	case GL_DEBUG_TYPE_MARKER:
+		return "Marker";
+	case GL_DEBUG_TYPE_PUSH_GROUP:
+		return "Group Push";
+	case GL_DEBUG_TYPE_POP_GROUP:
+		return "Group Pop";
+	case GL_DEBUG_TYPE_OTHER:
+		return "Other";
+	default:
+		return "Unknown";
+	}
+}
+
+// Gets a readable string for an OpenGL debug log severity.
+static std::string_view gl_severity(unsigned int value)
+{
+	switch (value) {
+	case GL_DEBUG_SEVERITY_NOTIFICATION:
+		return "Info";
+	case GL_DEBUG_SEVERITY_LOW:
+		return "Low";
+	case GL_DEBUG_SEVERITY_MEDIUM:
+		return "Mid";
+	case GL_DEBUG_SEVERITY_HIGH:
+		return "High";
+	default:
+		return "Unknown";
+	}
+}
+
+// Converts OpenGL debug severity to tr severity.
+static tr::severity tr_severity(unsigned int value)
+{
+	switch (value) {
+	case GL_DEBUG_SEVERITY_NOTIFICATION:
+		return tr::severity::info;
+	case GL_DEBUG_SEVERITY_LOW:
+		return tr::severity::info;
+	case GL_DEBUG_SEVERITY_MEDIUM:
+		return tr::severity::warning;
+	case GL_DEBUG_SEVERITY_HIGH:
+		return tr::severity::error;
+	default:
+		return tr::severity::info;
+	}
+}
+
+// Gets a readable string for an OpenGL debug log source.
+static std::string_view gl_source(unsigned int value)
+{
+	switch (value) {
+	case GL_DEBUG_SOURCE_API:
+		return "API";
+	case GL_DEBUG_SOURCE_WINDOW_SYSTEM:
+		return "Window System";
+	case GL_DEBUG_SOURCE_SHADER_COMPILER:
+		return "Shader Compiler";
+	case GL_DEBUG_SOURCE_THIRD_PARTY:
+		return "Third Party";
+	case GL_DEBUG_SOURCE_APPLICATION:
+		return "Application";
+	case GL_DEBUG_SOURCE_OTHER:
+		return "Other";
+	default:
+		return "Unknown";
+	}
+}
+
+// OpenGL debug log callback.
+static void gl_debug_cb(unsigned int source, unsigned int type, unsigned int, unsigned int severity, int length, const char* message,
+						const void* user_param)
+{
+	tr::logger& logger{*const_cast<tr::logger*>(static_cast<const tr::logger*>(user_param))};
+
+	const std::string_view msg{message, tr::usize(length)};
+	TR_LOG(logger, tr_severity(severity), "[{}] | [{}] | [{}] | {}", gl_severity(severity), gl_type(type), gl_source(source), msg);
+}
+
 ///////////////////////////////////////////////////////////// GRAPHICS CONTEXT ////////////////////////////////////////////////////////////
 
 // Creates an SDL OpenGL context.
@@ -181,23 +276,38 @@ tr::graphics_context::graphics_context(tr::window& window)
 	: m_window{window.m_ptr.get()}
 	, m_ptr{create_context(m_window)}
 {
-#ifdef TR_ENABLE_ASSERTS
-	TR_LOG(log, severity::info, "Created an OpenGL context.");
-	TR_LOG_CONTINUE(log, "Vendor: {}", reinterpret_cast<const char*>(m_functions.get_string(GL_VENDOR)));
-	TR_LOG_CONTINUE(log, "Renderer: {}", reinterpret_cast<const char*>(m_functions.get_string(GL_RENDERER)));
-	TR_LOG_CONTINUE(log, "Version: {}", reinterpret_cast<const char*>(m_functions.get_string(GL_VERSION)));
-#endif
-	m_functions.enable(GL_BLEND);
-	m_functions.enable(GL_SCISSOR_TEST);
+	m_glapi.enable(GL_BLEND);
+	m_glapi.enable(GL_SCISSOR_TEST);
 
-#ifdef TR_ENABLE_ASSERTS
-	setup_debugging();
-#endif
+	int context_flags;
+	m_glapi.get_integer_v(GL_CONTEXT_FLAGS, &context_flags);
+	if (context_flags & GL_CONTEXT_FLAG_DEBUG_BIT) {
+		m_glapi.enable(GL_DEBUG_OUTPUT);
+		m_glapi.enable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+		m_glapi.set_debug_message_callback(gl_debug_cb, &logger);
+		m_glapi.set_debug_message_control(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, NULL, GL_TRUE);
+		m_glapi.set_debug_message_control(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_NOTIFICATION, 0, NULL, GL_FALSE);
+
+		static int logger_id{0};
+		logger.replace_backend_with<console_logger>(TR_FMT::format("gfx{}", logger_id++));
+	}
 }
 
 void tr::graphics_context::deleter::operator()(SDL_GLContextState* context) const
 {
 	SDL_GL_DestroyContext(context);
+}
+
+//
+
+struct tr::graphics_context::info tr::graphics_context::info() const
+{
+	const functions& gl{make_current_and_return_functions()};
+	return {
+		reinterpret_cast<const char*>(gl.get_string(GL_VENDOR)),
+		reinterpret_cast<const char*>(gl.get_string(GL_RENDERER)),
+		reinterpret_cast<const char*>(gl.get_string(GL_VERSION)),
+	};
 }
 
 //
@@ -222,7 +332,7 @@ const tr::vertex_format& tr::graphics_context::vertex2_format()
 
 	if (!m_vertex2_format.has_value()) {
 		m_vertex2_format.emplace(*this, bindings);
-		TR_SET_LABEL(*m_vertex2_format, "(tr) 2D Vertex Format");
+		m_vertex2_format->set_label("(tr) 2D Vertex Format");
 	}
 	return *m_vertex2_format;
 }
@@ -437,117 +547,11 @@ void tr::graphics_context::draw_indexed_instances(primitive type, usize offset, 
 
 //
 
-#ifdef TR_ENABLE_ASSERTS
-
-// Gets a readable string for an OpenGL debug log source.
-static std::string_view gl_source(unsigned int value)
-{
-	switch (value) {
-	case GL_DEBUG_SOURCE_API:
-		return "API";
-	case GL_DEBUG_SOURCE_WINDOW_SYSTEM:
-		return "Window System";
-	case GL_DEBUG_SOURCE_SHADER_COMPILER:
-		return "Shader Compiler";
-	case GL_DEBUG_SOURCE_THIRD_PARTY:
-		return "Third Party";
-	case GL_DEBUG_SOURCE_APPLICATION:
-		return "Application";
-	case GL_DEBUG_SOURCE_OTHER:
-		return "Other";
-	default:
-		return "Unknown";
-	}
-}
-
-// Gets a readable string for an OpenGL debug log message type.
-static std::string_view gl_type(unsigned int value)
-{
-	switch (value) {
-	case GL_DEBUG_TYPE_ERROR:
-		return "Error";
-	case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR:
-		return "Deprecated Behavior";
-	case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:
-		return "Undefined Behavior";
-	case GL_DEBUG_TYPE_PORTABILITY:
-		return "Portability Concern";
-	case GL_DEBUG_TYPE_PERFORMANCE:
-		return "Performance Concern";
-	case GL_DEBUG_TYPE_MARKER:
-		return "Marker";
-	case GL_DEBUG_TYPE_PUSH_GROUP:
-		return "Group Push";
-	case GL_DEBUG_TYPE_POP_GROUP:
-		return "Group Pop";
-	case GL_DEBUG_TYPE_OTHER:
-		return "Other";
-	default:
-		return "Unknown";
-	}
-}
-
-// Gets a readable string for an OpenGL debug log severity.
-static std::string_view gl_severity(unsigned int value)
-{
-	switch (value) {
-	case GL_DEBUG_SEVERITY_NOTIFICATION:
-		return "Info";
-	case GL_DEBUG_SEVERITY_LOW:
-		return "Low";
-	case GL_DEBUG_SEVERITY_MEDIUM:
-		return "Mid";
-	case GL_DEBUG_SEVERITY_HIGH:
-		return "High";
-	default:
-		return "Unknown";
-	}
-}
-
-// Converts OpenGL debug severity to tr severity.
-static tr::severity tr_severity(unsigned int value)
-{
-	switch (value) {
-	case GL_DEBUG_SEVERITY_NOTIFICATION:
-		return tr::severity::info;
-	case GL_DEBUG_SEVERITY_LOW:
-		return tr::severity::info;
-	case GL_DEBUG_SEVERITY_MEDIUM:
-		return tr::severity::warning;
-	case GL_DEBUG_SEVERITY_HIGH:
-		return tr::severity::error;
-	default:
-		return tr::severity::info;
-	}
-}
-
-// OpenGL debug log callback.
-static void gl_debug_cb(unsigned int source, unsigned int type, unsigned int, unsigned int severity, int length, const char* message,
-						const void*)
-{
-	const std::string_view msg{message, tr::usize(length)};
-	TR_LOG(tr::log, tr_severity(severity), "OpenGL: [{}] | [{}] | [{}] | {}", gl_severity(severity), gl_type(type), gl_source(source), msg);
-}
-
-// Sets up OpenGL debugging.
-void tr::graphics_context::setup_debugging()
-{
-	m_functions.enable(GL_DEBUG_OUTPUT);
-	m_functions.enable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
-	m_functions.set_debug_message_callback(gl_debug_cb, nullptr);
-	m_functions.set_debug_message_control(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, NULL, GL_TRUE);
-	m_functions.set_debug_message_control(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_NOTIFICATION, 0, NULL, GL_FALSE);
-}
-
-#endif
-
-//
-
-const tr::graphics_context::functions& tr::graphics_context::make_current_and_return_functions()
+const tr::graphics_context::functions& tr::graphics_context::make_current_and_return_functions() const
 {
 	SDL_GL_MakeCurrent(m_window, m_ptr.get());
 
-	return m_functions;
+	return m_glapi;
 }
 
 //
@@ -632,7 +636,6 @@ void tr::graphics_context::check_vertex_buffer(std::string label, int slot, std:
 
 //
 
-#ifdef TR_ENABLE_ASSERTS
 void tr::graphics_context::move_label(unsigned int type, unsigned int old_id, unsigned int new_id)
 {
 	const functions& gl{make_current_and_return_functions()};
@@ -646,4 +649,3 @@ void tr::graphics_context::move_label(unsigned int type, unsigned int old_id, un
 		gl.set_object_label(type, old_id, 0, nullptr);
 	}
 }
-#endif

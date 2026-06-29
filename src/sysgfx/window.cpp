@@ -165,8 +165,8 @@ void tr::window_view::set_vsync(vsync vsync) const
 {
 	if (!SDL_GL_SetSwapInterval(to_underlying(vsync))) {
 		if (vsync == vsync::adaptive) {
-			TR_LOG(log, tr::severity::warning, "Failed to set window V-sync to adaptive, falling back to regular.");
-			TR_LOG_CONTINUE(log, "{}", SDL_GetError());
+			TR_LOG(error_logger, tr::severity::warning, "Failed to set window V-sync to adaptive, falling back to regular.");
+			TR_LOG_CONTINUE(error_logger, "{}", SDL_GetError());
 			set_vsync(vsync::enabled);
 		}
 		else {
@@ -186,12 +186,6 @@ void tr::window_view::flip_backbuffer() const
 
 tr::window::window(zstring_view title, window_parameters parameters)
 {
-#ifdef TR_ENABLE_ASSERTS
-	constexpr int context_flags{SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG | SDL_GL_CONTEXT_DEBUG_FLAG};
-#else
-	constexpr int context_flags{SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG};
-#endif
-
 	SDL_WindowFlags window_flags{SDL_WINDOW_HIDDEN | SDL_WINDOW_OPENGL | SDL_WINDOW_HIGH_PIXEL_DENSITY};
 	if (parameters.fullscreen) {
 		window_flags |= SDL_WINDOW_FULLSCREEN;
@@ -207,7 +201,8 @@ tr::window::window(zstring_view title, window_parameters parameters)
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 5);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, context_flags);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS,
+						SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG | (parameters.debug_graphics_context * SDL_GL_CONTEXT_DEBUG_FLAG));
 	SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, true);
 	SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
 	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
@@ -365,8 +360,8 @@ void tr::window::set_vsync(vsync vsync)
 {
 	if (!SDL_GL_SetSwapInterval(int(vsync))) {
 		if (vsync == vsync::adaptive) {
-			TR_LOG(log, tr::severity::warning, "Failed to set window V-sync to adaptive, falling back to regular.");
-			TR_LOG_CONTINUE(log, "{}", SDL_GetError());
+			TR_LOG(error_logger, tr::severity::warning, "Failed to set window V-sync to adaptive, falling back to regular.");
+			TR_LOG_CONTINUE(error_logger, "{}", SDL_GetError());
 			set_vsync(vsync::enabled);
 		}
 		else {

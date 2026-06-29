@@ -160,7 +160,7 @@ namespace tr {
 	logger make_logger(Args&&... args);
 
 	// tr's default logger, can be redirected.
-	inline logger log{make_logger<console_logger>("tr")};
+	inline logger error_logger{make_logger<console_logger>("tr")};
 } // namespace tr
 
 // Logging macro to avoid instantiating arguments to the logging function when not needed.

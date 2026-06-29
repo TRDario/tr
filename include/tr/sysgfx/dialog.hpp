@@ -4,18 +4,12 @@
 //                                                                                                                                       //
 // Message boxes can be shown with tr::show_message_box. There are three classes of message box (error, warning, info), as well as three //
 // button layouts (ok, yes/no, yes/no/cancel). The function blocks until a button is pressed, at which point the value of the pressed    //
-// button is returned. tr::show_fatal_error_message_box shows a "Fatal exception" message box given an exception:                        //
+// button is returned:                                                                                                                   //
 //     - tr::show_message_box(tr::message_box_type::error, tr::message_box_layout::ok, "Foo", "Bar")                                     //
 //       -> displays an error message box with an "OK" button with the title "Foo" and message "Bar", returns message_box_button::OK     //
 //     - tr::show_message_box(tr::message_box_type::info, tr::message_box_layout::yes_no_cancel, "Foo", "Save?")                         //
 //       -> displays an info message box with the buttons "Yes", "No", and "Cancel" with the title "Foo" and message "Save?",            //
 //          may return message_box_button::yes, message_box_button::no, or message_box_button::cancel                                    //
-//     - tr::show_fatal_error_message_box(tr::custom_exception{"Example error", "Reason goes here.", "Details go here."})                //
-//       -> displays an error message box with an "Ok" button with the title "[APP NAME] - Fatal Error" and message:                     //
-//            A fatal error has occurred (Example error).                                                                                //
-//            Reason goes here.                                                                                                          //
-//            Details go here.                                                                                                           //
-//            Press OK to exit the application.                                                                                          //
 //                                                                                                                                       //
 // File dialogs (for selecting one or multiple files, or a folder) can be shown with their respective functions. All of the functions    //
 // take a span of dialog filters (name-pattern pair as such: {"Image files", "png;jpg;bmp"}, {"Text files", "txt"}, {"All files", "*"})  //
@@ -45,7 +39,7 @@
 
 namespace tr {
 	// Message box type.
-	enum class message_box_type {
+	enum class message_box_type : unsigned int {
 		error = 16,   // Error message box.
 		warning = 32, // Warning message box.
 		info = 64     // Information message box.
@@ -66,9 +60,6 @@ namespace tr {
 
 	// Shows a message box.
 	message_box_button show_message_box(message_box_type type, message_box_layout layout, zstring_view title, zstring_view message);
-	// Shows an "Fatal exception" message box.
-	// In case of an out-of-memory error, it frees an emergency buffer to allow for clean-up and logging.
-	void show_fatal_error_message_box(const std::exception& exception);
 
 	// File dialog filter.
 	struct dialog_filter {

@@ -5,8 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include "../../include/tr/sysgfx/dialog.hpp"
-#include "../../include/tr/sysgfx/main.hpp"
-#include "../../include/tr/utility/reference.hpp"
+#include "../../include/tr/utility/enum.hpp"
 #include <SDL3/SDL.h>
 
 using namespace std::chrono_literals;
@@ -25,25 +24,22 @@ static constexpr std::array<SDL_MessageBoxButtonData, 3> yes_no_cancel_buttons{{
 	{.flags = SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT, .buttonID = 2, .text = "Cancel"},
 }};
 
-// Buffer allocated to be freed in case of an out-of-memory error.
-static std::unique_ptr<char[]> g_emergency_buffer{new char[16384]};
-
 tr::message_box_button tr::show_message_box(message_box_type type, message_box_layout buttons, zstring_view title, zstring_view message)
 {
-	const SDL_MessageBoxFlags flags{SDL_MessageBoxFlags(type)};
+	const SDL_MessageBoxFlags flags{to_underlying(type)};
 
 	switch (buttons) {
 	case message_box_layout::ok:
 		SDL_ShowSimpleMessageBox(flags, title.c_str(), message.c_str(), nullptr);
 		return message_box_button::ok;
 	case message_box_layout::yes_no: {
-		int selected{int(message_box_button::no)};
+		int selected{to_underlying(message_box_button::no)};
 		SDL_MessageBoxData data{flags, nullptr, title.c_str(), message.c_str(), 2, yes_no_buttons.data(), nullptr};
 		SDL_ShowMessageBox(&data, &selected);
 		return message_box_button(selected);
 	}
 	case message_box_layout::yes_no_cancel: {
-		int selected{int(message_box_button::cancel)};
+		int selected{to_underlying(message_box_button::cancel)};
 		SDL_MessageBoxData data{flags, nullptr, title.c_str(), message.c_str(), 3, yes_no_cancel_buttons.data(), nullptr};
 		SDL_ShowMessageBox(&data, &selected);
 		return message_box_button(selected);
@@ -51,39 +47,6 @@ tr::message_box_button tr::show_message_box(message_box_type type, message_box_l
 	default:
 		return message_box_button::ok;
 	}
-}
-
-void tr::show_fatal_error_message_box(const std::exception& exception)
-{
-	if (dynamic_ref_cast<const std::bad_alloc>(exception).has_ref() || dynamic_ref_cast<const out_of_memory>(exception).has_ref()) {
-		g_emergency_buffer.reset();
-	}
-
-	const std::string title{TR_FMT::format("{} - Fatal Error", app::metadata.name)};
-
-	tr::opt_ref<const tr::exception> tr_exception{dynamic_ref_cast<const tr::exception>(exception)};
-	std::string message;
-	if (tr_exception.has_ref()) {
-		message = TR_FMT::format("A fatal error has occurred ({}).", tr_exception->name());
-		const std::string_view description{tr_exception->description()};
-		if (!description.empty()) {
-			message.push_back('\n');
-			message.append(description);
-		}
-		const std::string_view details{tr_exception->details()};
-		if (!details.empty()) {
-			message.push_back('\n');
-			message.append(details);
-		}
-		TR_LOG(log, tr::severity::fatal, *tr_exception);
-	}
-	else {
-		message = TR_FMT::format("A fatal error has occurred ({}).", exception.what());
-		TR_LOG(log, tr::severity::fatal, exception);
-	}
-	message.append("\nPress OK to exit the application.");
-
-	show_message_box(message_box_type::error, message_box_layout::ok, title, message);
 }
 
 /////////////////////////////////////////////////////////// FILE/FOLDER DIALOGS ///////////////////////////////////////////////////////////

@@ -7,6 +7,8 @@
 #define SDL_MAIN_USE_CALLBACKS 1
 #include "../../include/tr/sysgfx/main.hpp"
 #include "../../include/tr/sysgfx/dialog.hpp"
+#include "../../include/tr/utility/logger.hpp"
+#include "../../include/tr/utility/reference.hpp"
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
 #include <SDL3_ttf/SDL_ttf.h>
@@ -15,6 +17,47 @@
 #if defined _MSC_VER and not defined TR_ENABLE_ASSERTS
 #pragma comment(linker, "/subsystem:windows /ENTRY:mainCRTStartup")
 #endif
+
+///////////////////////////////////////////////////////////// INTERNAL HELPERS ////////////////////////////////////////////////////////////
+
+// Buffer allocated to be freed in case of an out-of-memory error.
+static std::unique_ptr<char[]> g_emergency_buffer{new char[16384]};
+
+// Shows an "Fatal exception" message box.
+// In case of an out-of-memory error, it frees an emergency buffer to allow for clean-up and logging.
+static void show_fatal_error_message_box(const std::exception& exception)
+{
+	if (tr::dynamic_ref_cast<const std::bad_alloc>(exception).has_ref() ||
+		tr::dynamic_ref_cast<const tr::out_of_memory>(exception).has_ref()) {
+		g_emergency_buffer.reset();
+	}
+
+	const std::string title{TR_FMT::format("{} - Fatal Error", app::metadata.name)};
+
+	tr::opt_ref<const tr::exception> tr_exception{tr::dynamic_ref_cast<const tr::exception>(exception)};
+	std::string message;
+	if (tr_exception.has_ref()) {
+		message = TR_FMT::format("A fatal error has occurred ({}).", tr_exception->name());
+		const std::string_view description{tr_exception->description()};
+		if (!description.empty()) {
+			message.push_back('\n');
+			message.append(description);
+		}
+		const std::string_view details{tr_exception->details()};
+		if (!details.empty()) {
+			message.push_back('\n');
+			message.append(details);
+		}
+		TR_LOG(tr::error_logger, tr::severity::fatal, *tr_exception);
+	}
+	else {
+		message = TR_FMT::format("A fatal error has occurred ({}).", exception.what());
+		TR_LOG(tr::error_logger, tr::severity::fatal, exception);
+	}
+	message.append("\nPress OK to exit the application.");
+
+	tr::show_message_box(tr::message_box_type::error, tr::message_box_layout::ok, title, message);
+}
 
 //////////////////////////////////////////////////////////////// INIT ERROR ///////////////////////////////////////////////////////////////
 
@@ -60,10 +103,10 @@ extern "C"
 		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_TYPE_STRING, app::metadata.type == tr::app_type::game ? "game" : "application");
 		if (!app::metadata.name.empty()) {
 			if (!app::metadata.version.empty()) {
-				TR_LOG(tr::log, tr::severity::info, "Launching {} {}.", app::metadata.name, app::metadata.version);
+				TR_LOG(tr::error_logger, tr::severity::info, "Launching {} {}.", app::metadata.name, app::metadata.version);
 			}
 			else {
-				TR_LOG(tr::log, tr::severity::info, "Launching {}.", app::metadata.name);
+				TR_LOG(tr::error_logger, tr::severity::info, "Launching {}.", app::metadata.name);
 			}
 		}
 
@@ -74,27 +117,27 @@ extern "C"
 			}
 		}
 		catch (std::exception& err) {
-			tr::show_fatal_error_message_box(err);
+			show_fatal_error_message_box(err);
 			return SDL_APP_FAILURE;
 		}
 
 		if (!SDL_Init(SDL_INIT_VIDEO) || !TTF_Init()) {
-			TR_LOG(tr::log, tr::severity::fatal, "Failed to initialize SDL3.");
-			TR_LOG_CONTINUE(tr::log, "{}", SDL_GetError());
+			TR_LOG(tr::error_logger, tr::severity::fatal, "Failed to initialize SDL3.");
+			TR_LOG_CONTINUE(tr::error_logger, "{}", SDL_GetError());
 			return SDL_APP_FAILURE;
 		}
 		else {
-			TR_LOG(tr::log, tr::severity::info, "Initialized SDL3.");
-			TR_LOG_CONTINUE(tr::log, "Platform: {}", SDL_GetPlatform());
-			TR_LOG_CONTINUE(tr::log, "CPU cores: {}", SDL_GetNumLogicalCPUCores());
-			TR_LOG_CONTINUE(tr::log, "RAM: {}mb", SDL_GetSystemRAM());
+			TR_LOG(tr::error_logger, tr::severity::info, "Initialized SDL3.");
+			TR_LOG_CONTINUE(tr::error_logger, "Platform: {}", SDL_GetPlatform());
+			TR_LOG_CONTINUE(tr::error_logger, "CPU cores: {}", SDL_GetNumLogicalCPUCores());
+			TR_LOG_CONTINUE(tr::error_logger, "RAM: {}mb", SDL_GetSystemRAM());
 		}
 
 		try {
 			return static_cast<SDL_AppResult>(app::initialize());
 		}
 		catch (std::exception& err) {
-			tr::show_fatal_error_message_box(err);
+			show_fatal_error_message_box(err);
 			return SDL_APP_FAILURE;
 		}
 	}
@@ -105,7 +148,7 @@ extern "C"
 			return static_cast<SDL_AppResult>(app::handle_event(reinterpret_cast<tr::event&>(*event)));
 		}
 		catch (std::exception& err) {
-			tr::show_fatal_error_message_box(err);
+			show_fatal_error_message_box(err);
 			return SDL_APP_FAILURE;
 		}
 	}
@@ -120,7 +163,7 @@ extern "C"
 			return static_cast<SDL_AppResult>(app::update(delta));
 		}
 		catch (std::exception& err) {
-			tr::show_fatal_error_message_box(err);
+			show_fatal_error_message_box(err);
 			return SDL_APP_FAILURE;
 		}
 	}
@@ -131,7 +174,7 @@ extern "C"
 			app::shut_down();
 		}
 		catch (std::exception& err) {
-			tr::show_fatal_error_message_box(err);
+			show_fatal_error_message_box(err);
 		}
 
 		TTF_Quit();

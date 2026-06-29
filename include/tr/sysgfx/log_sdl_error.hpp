@@ -18,6 +18,6 @@
 // Logs a formatted SDL error to tr::log.
 #define TR_LOG_SDL_ERROR(...)                                                                                                              \
 	do {                                                                                                                                   \
-		TR_LOG(::tr::log, ::tr::severity::error, __VA_ARGS__);                                                                             \
-		TR_LOG_CONTINUE(::tr::log, "{}", SDL_GetError());                                                                                  \
+		TR_LOG(::tr::error_logger, ::tr::severity::error, __VA_ARGS__);                                                                    \
+		TR_LOG_CONTINUE(::tr::error_logger, "{}", SDL_GetError());                                                                         \
 	} while (0)
