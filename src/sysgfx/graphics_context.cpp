@@ -257,7 +257,9 @@ static void gl_debug_cb(unsigned int source, unsigned int type, unsigned int, un
 	tr::logger& logger{*const_cast<tr::logger*>(static_cast<const tr::logger*>(user_param))};
 
 	const std::string_view msg{message, tr::usize(length)};
-	TR_LOG(logger, tr_severity(severity), "[{}] | [{}] | [{}] | {}", gl_severity(severity), gl_type(type), gl_source(source), msg);
+	if (logger.active()) {
+		logger.log(tr_severity(severity), "[{}] | [{}] | [{}] | {}", gl_severity(severity), gl_type(type), gl_source(source), msg);
+	}
 }
 
 ///////////////////////////////////////////////////////////// GRAPHICS CONTEXT ////////////////////////////////////////////////////////////

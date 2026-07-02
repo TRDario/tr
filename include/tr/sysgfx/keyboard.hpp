@@ -47,6 +47,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
+#include "../utility/exception.hpp"
 #include "../utility/macro.hpp"
 #include "../utility/zstring_view.hpp"
 
@@ -202,11 +203,30 @@ namespace tr {
 		consteval key_chord operator""_kc(const char* str, usize size);
 	} // namespace keyboard_literals
 
+	// Clipboard setting error.
+	class set_clipboard_error : public exception {
+	  public:
+		// Constructs a clipboard setting error.
+		set_clipboard_error();
+
+		// Gets the name of the error.
+		std::string_view name() const override;
+		// Gets the description of the error.
+		std::string_view description() const override;
+		// Gets further details about the error.
+		std::string_view details() const override;
+
+	  private:
+		// Description of the error.
+		std::string_view m_description;
+	};
+
 	// Gets whether the clipboard is empty.
 	bool clipboard_empty();
 	// Gets the clipboard text.
 	std::string clipboard_text();
 	// Sets the clipboard text.
+	// May throw: set_clipboard_error.
 	void set_clipboard_text(zstring_view text);
 } // namespace tr
 

@@ -159,7 +159,7 @@ namespace tr {
 		requires(std::constructible_from<Backend, Args...>)
 	logger make_logger(Args&&... args);
 
-	// tr's default logger, can be redirected.
+	// tr's default error logger, may be redirected.
 	inline logger error_logger{make_logger<console_logger>("tr")};
 } // namespace tr
 

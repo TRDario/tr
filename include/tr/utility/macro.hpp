@@ -70,7 +70,7 @@
 #ifdef TR_ENABLE_ASSERTS
 #define TR_IMPL_UNREACHABLE(file, line)                                                                                                    \
 	do {                                                                                                                                   \
-		TR_LOG(::tr::error_logger, ::tr::severity::fatal, "Unreachable code section reached at " file ":" TR_STRINGIFY(line) ".");         \
+		::tr::error_logger.log(::tr::severity::fatal, "Unreachable code section reached at " file ":" TR_STRINGIFY(line) ".");             \
 		std::abort();                                                                                                                      \
 	} while (0)
 #define TR_UNREACHABLE TR_IMPL_UNREACHABLE(TR_FILENAME, __LINE__)
@@ -110,8 +110,10 @@
 #define TR_IMPL_ASSERT(condition, file, line, fmt, ...)                                                                                    \
 	do {                                                                                                                                   \
 		if (!(condition)) {                                                                                                                \
-			TR_LOG(::tr::error_logger, ::tr::severity::fatal, "Assertion failed at " file ":" TR_STRINGIFY(line) ":");                     \
-			TR_LOG_CONTINUE(::tr::error_logger, fmt __VA_OPT__(, ) __VA_ARGS__);                                                           \
+			if (::tr::error_logger.active()) {                                                                                             \
+				::tr::error_logger.log(::tr::severity::fatal, "Assertion failed at " file ":" TR_STRINGIFY(line) ":");                     \
+				::tr::error_logger.log_continue(fmt __VA_OPT__(, ) __VA_ARGS__);                                                           \
+			}                                                                                                                              \
 			std::abort();                                                                                                                  \
 		}                                                                                                                                  \
 	} while (0)

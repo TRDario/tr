@@ -6,7 +6,6 @@
 
 #include "../../include/tr/sysgfx/keyboard.hpp"
 #include "../../include/tr/sysgfx/event.hpp"
-#include "../../include/tr/sysgfx/log_sdl_error.hpp"
 #include <SDL3/SDL.h>
 
 /////////////////////////////////////////////////////////// SCANCODE AND KEYCODE //////////////////////////////////////////////////////////
@@ -132,6 +131,28 @@ void tr::keyboard_state::handle_event(const key_up_event& event)
 	mods = event.mods;
 }
 
+/////////////////////////////////////////////////////////// SET CLIPBOARD ERROR ///////////////////////////////////////////////////////////
+
+tr::set_clipboard_error::set_clipboard_error()
+	: m_description{SDL_GetError()}
+{
+}
+
+std::string_view tr::set_clipboard_error::name() const
+{
+	return "Clipboard setting error";
+}
+
+std::string_view tr::set_clipboard_error::description() const
+{
+	return m_description;
+}
+
+std::string_view tr::set_clipboard_error::details() const
+{
+	return {};
+}
+
 //////////////////////////////////////////////////////////////// CLIPBOARD ////////////////////////////////////////////////////////////////
 
 bool tr::clipboard_empty()
@@ -153,7 +174,7 @@ std::string tr::clipboard_text()
 void tr::set_clipboard_text(zstring_view text)
 {
 	if (!SDL_SetClipboardText(text.c_str())) {
-		TR_LOG_SDL_ERROR("Failed to set clipboard text.");
+		throw set_clipboard_error{};
 	}
 }
 

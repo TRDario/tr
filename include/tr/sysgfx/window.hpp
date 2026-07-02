@@ -115,6 +115,29 @@ namespace tr {
 		std::string m_description;
 	};
 
+	// Window error.
+	class window_error : public exception {
+	  public:
+		// Constructs a window error.
+		template <typename... Args> window_error(TR_FORMAT_STRING<Args...> description_fmt, Args&&... args);
+
+		// Gets the name of the error.
+		std::string_view name() const override;
+		// Gets the description of the error.
+		std::string_view description() const override;
+		// Gets further details about the error.
+		std::string_view details() const override;
+
+	  private:
+		// Description of the error.
+		std::string m_description;
+		// Details of the error.
+		std::string_view m_details;
+
+		// Constructs a window error.
+		window_error(std::string&& description);
+	};
+
 	// Non-owning window view.
 	class window_view {
 	  public:
@@ -126,28 +149,37 @@ namespace tr {
 		// Gets the title of the window.
 		zstring_view title() const;
 		// Sets the title of the window.
+		// May throw: window_error.
 		void set_title(zstring_view title) const;
 
 		// Sets the icon of the window.
+		// May throw: window_error.
 		void set_icon(const bitmap& bitmap) const;
 		// Sets the icon of the window.
+		// May throw: window_error.
 		void set_icon(const bitmap_view& view) const;
 
 		// Gets the size of the window.
+		// May throw: window_error.
 		glm::ivec2 size() const;
 		// Gets the window's pixel density factor.
+		// May throw: window_error.
 		float pixel_density() const;
 		// Sets the size of the window.
+		// May throw: window_error.
 		void set_size(glm::ivec2 size) const;
 
 		// Gets whether the window is fullscreen or not.
 		bool fullscreen() const;
 		// Sets whether the window is fullscreen or not.
+		// May throw: window_error.
 		void set_fullscreen(bool fullscreen) const;
 
 		// Unhides the window.
+		// May throw: window_error.
 		void show() const;
 		// Hides the window.
+		// May throw: window_error.
 		void hide() const;
 
 		// Gets whether the window is maximized.
@@ -157,9 +189,11 @@ namespace tr {
 		// Gets whether the window has input focus.
 		bool has_focus() const;
 		// Raises the window to have input focus.
+		// May throw: window_error.
 		void raise() const;
 
 		// Sets the window's V-sync mode.
+		// May throw: window_error.
 		void set_vsync(vsync vsync) const;
 
 		// Enables the sending of text input events in the window.
@@ -185,28 +219,37 @@ namespace tr {
 		// Gets the title of the window.
 		zstring_view title() const;
 		// Sets the title of the window.
+		// May throw: window_error.
 		void set_title(zstring_view title);
 
 		// Sets the icon of the window.
+		// May throw: window_error.
 		void set_icon(const bitmap& bitmap);
 		// Sets the icon of the window.
+		// May throw: window_error.
 		void set_icon(const bitmap_view& view);
 
 		// Gets the size of the window.
+		// May throw: window_error.
 		glm::ivec2 size() const;
 		// Gets the window's pixel density factor.
+		// May throw: window_error.
 		float pixel_density() const;
 		// Sets the size of the window.
+		// May throw: window_error.
 		void set_size(glm::ivec2 size);
 
 		// Gets whether the window is fullscreen or not.
 		bool fullscreen() const;
 		// Sets whether the window is fullscreen or not.
+		// May throw: window_error.
 		void set_fullscreen(bool fullscreen);
 
 		// Unhides the window.
+		// May throw: window_error.
 		void show();
 		// Hides the window.
+		// May throw: window_error.
 		void hide();
 
 		// Gets whether the window is maximized.
@@ -216,9 +259,11 @@ namespace tr {
 		// Gets whether the window has input focus.
 		bool has_focus() const;
 		// Raises the window to have input focus.
+		// May throw: window_error.
 		void raise();
 
 		// Sets the window's V-sync mode.
+		// May throw: window_error.
 		void set_vsync(vsync vsync);
 
 		// Enables the sending of text input events in the window.
@@ -227,6 +272,7 @@ namespace tr {
 		void disable_text_input();
 
 		// Sets the mouse mode in the window.
+		// May throw: window_error.
 		void set_mouse_mode(mouse_mode mode);
 
 		// Swaps the window's front- and backbuffer.
@@ -248,3 +294,5 @@ namespace tr {
 		friend class graphics_context;
 	};
 } // namespace tr
+
+#include "impl/window.hpp" // IWYU pragma: export

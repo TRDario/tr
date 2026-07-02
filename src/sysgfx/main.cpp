@@ -8,6 +8,7 @@
 #include "../../include/tr/sysgfx/main.hpp"
 #include "../../include/tr/sysgfx/dialog.hpp"
 #include "../../include/tr/utility/logger.hpp"
+#include "../../include/tr/utility/print.hpp"
 #include "../../include/tr/utility/reference.hpp"
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
@@ -48,11 +49,11 @@ static void show_fatal_error_message_box(const std::exception& exception)
 			message.push_back('\n');
 			message.append(details);
 		}
-		TR_LOG(tr::error_logger, tr::severity::fatal, *tr_exception);
+		tr::error_logger.log(tr::severity::fatal, *tr_exception);
 	}
 	else {
 		message = TR_FMT::format("A fatal error has occurred ({}).", exception.what());
-		TR_LOG(tr::error_logger, tr::severity::fatal, exception);
+		tr::error_logger.log(tr::severity::fatal, exception);
 	}
 	message.append("\nPress OK to exit the application.");
 
@@ -103,10 +104,10 @@ extern "C"
 		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_TYPE_STRING, app::metadata.type == tr::app_type::game ? "game" : "application");
 		if (!app::metadata.name.empty()) {
 			if (!app::metadata.version.empty()) {
-				TR_LOG(tr::error_logger, tr::severity::info, "Launching {} {}.", app::metadata.name, app::metadata.version);
+				tr::println("Launching {} {}.", app::metadata.name, app::metadata.version);
 			}
 			else {
-				TR_LOG(tr::error_logger, tr::severity::info, "Launching {}.", app::metadata.name);
+				tr::println("Launching {}.", app::metadata.name);
 			}
 		}
 
@@ -122,15 +123,18 @@ extern "C"
 		}
 
 		if (!SDL_Init(SDL_INIT_VIDEO) || !TTF_Init()) {
-			TR_LOG(tr::error_logger, tr::severity::fatal, "Failed to initialize SDL3.");
-			TR_LOG_CONTINUE(tr::error_logger, "{}", SDL_GetError());
+			if (tr::error_logger.active()) {
+				tr::error_logger.log(tr::severity::fatal, "Failed to initialize SDL3.");
+				tr::error_logger.log_continue(SDL_GetError());
+			}
+
+			const std::string title{TR_FMT::format("{} - Fatal Error", app::metadata.name)};
+			const std::string message{
+				TR_FMT::format("A fatal error has occured (Failed to initialize SDL3).\n{}\nPress OK to exit the application.",
+							   SDL_GetError()),
+			};
+			tr::show_message_box(tr::message_box_type::error, tr::message_box_layout::ok, title, message);
 			return SDL_APP_FAILURE;
-		}
-		else {
-			TR_LOG(tr::error_logger, tr::severity::info, "Initialized SDL3.");
-			TR_LOG_CONTINUE(tr::error_logger, "Platform: {}", SDL_GetPlatform());
-			TR_LOG_CONTINUE(tr::error_logger, "CPU cores: {}", SDL_GetNumLogicalCPUCores());
-			TR_LOG_CONTINUE(tr::error_logger, "RAM: {}mb", SDL_GetSystemRAM());
 		}
 
 		try {

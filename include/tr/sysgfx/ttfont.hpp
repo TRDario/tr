@@ -91,8 +91,29 @@ namespace tr {
 		std::string_view details() const override;
 
 	  private:
-		// The details of the error.
+		// The description of the error.
 		std::string_view m_description;
+	};
+	// Error thrown when font manipulation fails.
+	class ttfont_error : public exception {
+	  public:
+		// Constructs a window error.
+		ttfont_error(std::string&& description);
+		// Constructs a font error.
+		template <typename... Args> ttfont_error(TR_FORMAT_STRING<Args...> description_fmt, Args&&... args);
+
+		// Gets the name of the error.
+		std::string_view name() const override;
+		// Gets the description of the error.
+		std::string_view description() const override;
+		// Gets further details about the error.
+		std::string_view details() const override;
+
+	  private:
+		// The description of the error.
+		std::string m_description;
+		// The details of the error.
+		std::string_view m_details;
 	};
 
 	// Font style types. May be ORed together.

@@ -6,7 +6,6 @@
 
 #include "../../include/tr/sysgfx/window.hpp"
 #include "../../include/tr/sysgfx/bitmap.hpp"
-#include "../../include/tr/sysgfx/log_sdl_error.hpp"
 #include <SDL3/SDL.h>
 
 /////////////////////////////////////////////////////////// WINDOW OPENING ERROR //////////////////////////////////////////////////////////
@@ -31,6 +30,29 @@ std::string_view tr::window_open_error::details() const
 	return {};
 }
 
+/////////////////////////////////////////////////////////////// WINDOW ERROR //////////////////////////////////////////////////////////////
+
+tr::window_error::window_error(std::string&& description)
+	: m_description{description}
+	, m_details{SDL_GetError()}
+{
+}
+
+std::string_view tr::window_error::name() const
+{
+	return "Window error";
+}
+
+std::string_view tr::window_error::description() const
+{
+	return m_description;
+}
+
+std::string_view tr::window_error::details() const
+{
+	return m_details;
+}
+
 /////////////////////////////////////////////////////////////// WINDOW VIEW ///////////////////////////////////////////////////////////////
 
 //
@@ -40,11 +62,11 @@ tr::zstring_view tr::window_view::title() const
 	return SDL_GetWindowTitle(m_ptr);
 }
 
-void tr::window_view::set_title(zstring_view title) const
+void tr::window_view::set_title(zstring_view new_title) const
 {
-	if (!SDL_SetWindowTitle(m_ptr, title.c_str())) {
-		TR_LOG_SDL_ERROR("Failed to set window title to '{}'.", title);
-	};
+	if (!SDL_SetWindowTitle(m_ptr, new_title.c_str())) {
+		throw window_error{"Failed to rename window from '{}' to '{}'", title(), new_title};
+	}
 }
 
 //
@@ -52,14 +74,14 @@ void tr::window_view::set_title(zstring_view title) const
 void tr::window_view::set_icon(const bitmap& bitmap) const
 {
 	if (!SDL_SetWindowIcon(m_ptr, bitmap.m_ptr.get())) {
-		TR_LOG_SDL_ERROR("Failed to set window icon.");
+		throw window_error{"Failed to set icon of window '{}'", title()};
 	}
 }
 
 void tr::window_view::set_icon(const bitmap_view& view) const
 {
 	if (!SDL_SetWindowIcon(m_ptr, view.m_ptr.get())) {
-		TR_LOG_SDL_ERROR("Failed to set window icon.");
+		throw window_error{"Failed to set icon of window '{}'", title()};
 	}
 }
 
@@ -68,20 +90,13 @@ void tr::window_view::set_icon(const bitmap_view& view) const
 glm::ivec2 tr::window_view::size() const
 {
 	glm::ivec2 size{};
-	if (!SDL_GetWindowSizeInPixels(m_ptr, &size.x, &size.y)) {
-		TR_LOG_SDL_ERROR("Failed to get window size.");
-	}
-	return size;
+	return SDL_GetWindowSizeInPixels(m_ptr, &size.x, &size.y) ? size : throw window_error{"Failed to get size of window '{}'", title()};
 }
 
 float tr::window_view::pixel_density() const
 {
 	const float density{SDL_GetWindowPixelDensity(m_ptr)};
-	if (density == 0.0f) {
-		TR_LOG_SDL_ERROR("Failed to get window pixel density.");
-		return 1.0f;
-	}
-	return density;
+	return density != 0.0f ? density : throw window_error{"Failed to get pixel density of window '{}'", title()};
 }
 
 void tr::window_view::set_size(glm::ivec2 size) const
@@ -89,7 +104,7 @@ void tr::window_view::set_size(glm::ivec2 size) const
 	const glm::ivec2 real_size{glm::vec2{size} / pixel_density()};
 	if (!SDL_SetWindowSize(m_ptr, real_size.x, real_size.y) ||
 		!SDL_SetWindowPosition(m_ptr, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED)) {
-		TR_LOG_SDL_ERROR("Failed to set window size.");
+		throw window_error{"Failed to set size of window '{}'", title()};
 	}
 }
 
@@ -103,7 +118,7 @@ bool tr::window_view::fullscreen() const
 void tr::window_view::set_fullscreen(bool fullscreen) const
 {
 	if (!SDL_SetWindowFullscreen(m_ptr, fullscreen)) {
-		TR_LOG_SDL_ERROR("Failed to set window {} fullscreen.", fullscreen ? "to" : "from");
+		throw window_error{"Failed to set window '{}' {} fullscreen", title(), fullscreen ? "to" : "from"};
 	}
 }
 
@@ -112,14 +127,14 @@ void tr::window_view::set_fullscreen(bool fullscreen) const
 void tr::window_view::show() const
 {
 	if (!SDL_ShowWindow(m_ptr)) {
-		TR_LOG_SDL_ERROR("Failed to show window.");
+		throw window_error{"Failed to show window '{}'.", title()};
 	}
 }
 
 void tr::window_view::hide() const
 {
 	if (!SDL_ShowWindow(m_ptr)) {
-		TR_LOG_SDL_ERROR("Failed to hide window.");
+		throw window_error{"Failed to hide window '{}'.", title()};
 	}
 }
 
@@ -143,7 +158,7 @@ bool tr::window_view::has_focus() const
 void tr::window_view::raise() const
 {
 	if (!SDL_RaiseWindow(m_ptr)) {
-		TR_LOG_SDL_ERROR("Failed to raise window.");
+		throw window_error{"Failed to raise window '{}'.", title()};
 	}
 }
 
@@ -165,12 +180,10 @@ void tr::window_view::set_vsync(vsync vsync) const
 {
 	if (!SDL_GL_SetSwapInterval(to_underlying(vsync))) {
 		if (vsync == vsync::adaptive) {
-			TR_LOG(error_logger, tr::severity::warning, "Failed to set window V-sync to adaptive, falling back to regular.");
-			TR_LOG_CONTINUE(error_logger, "{}", SDL_GetError());
 			set_vsync(vsync::enabled);
 		}
 		else {
-			TR_LOG_SDL_ERROR("Failed to set V-sync.");
+			throw window_error{"Failed to set V-sync for window '{}'.", title()};
 		}
 	}
 }
@@ -237,25 +250,19 @@ tr::zstring_view tr::window::title() const
 
 void tr::window::set_title(zstring_view title)
 {
-	if (!SDL_SetWindowTitle(m_ptr.get(), title.c_str())) {
-		TR_LOG_SDL_ERROR("Failed to set window title to '{}'.", title);
-	};
+	window_view{*this}.set_title(title);
 }
 
 //
 
 void tr::window::set_icon(const bitmap& bitmap)
 {
-	if (!SDL_SetWindowIcon(m_ptr.get(), bitmap.m_ptr.get())) {
-		TR_LOG_SDL_ERROR("Failed to set window icon.");
-	}
+	window_view{*this}.set_icon(bitmap);
 }
 
 void tr::window::set_icon(const bitmap_view& view)
 {
-	if (!SDL_SetWindowIcon(m_ptr.get(), view.m_ptr.get())) {
-		TR_LOG_SDL_ERROR("Failed to set window icon.");
-	}
+	window_view{*this}.set_icon(view);
 }
 
 //
@@ -263,29 +270,19 @@ void tr::window::set_icon(const bitmap_view& view)
 glm::ivec2 tr::window::size() const
 {
 	glm::ivec2 size{};
-	if (!SDL_GetWindowSizeInPixels(m_ptr.get(), &size.x, &size.y)) {
-		TR_LOG_SDL_ERROR("Failed to get window size.");
-	}
-	return size;
+	return SDL_GetWindowSizeInPixels(m_ptr.get(), &size.x, &size.y) ? size
+																	: throw window_error{"Failed to get size of window '{}'", title()};
 }
 
 float tr::window::pixel_density() const
 {
 	const float density{SDL_GetWindowPixelDensity(m_ptr.get())};
-	if (density == 0.0f) {
-		TR_LOG_SDL_ERROR("Failed to get window pixel density.");
-		return 1.0f;
-	}
-	return density;
+	return density != 0.0f ? density : throw window_error{"Failed to get pixel density of window '{}'", title()};
 }
 
 void tr::window::set_size(glm::ivec2 size)
 {
-	const glm::ivec2 real_size{glm::vec2{size} / pixel_density()};
-	if (!SDL_SetWindowSize(m_ptr.get(), real_size.x, real_size.y) ||
-		!SDL_SetWindowPosition(m_ptr.get(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED)) {
-		TR_LOG_SDL_ERROR("Failed to set window size.");
-	}
+	window_view{*this}.set_size(size);
 }
 
 //
@@ -297,25 +294,19 @@ bool tr::window::fullscreen() const
 
 void tr::window::set_fullscreen(bool fullscreen)
 {
-	if (!SDL_SetWindowFullscreen(m_ptr.get(), fullscreen)) {
-		TR_LOG_SDL_ERROR("Failed to set window {} fullscreen.", fullscreen ? "to" : "from");
-	}
+	window_view{*this}.set_fullscreen(fullscreen);
 }
 
 //
 
 void tr::window::show()
 {
-	if (!SDL_ShowWindow(m_ptr.get())) {
-		TR_LOG_SDL_ERROR("Failed to show window.");
-	}
+	window_view{*this}.show();
 }
 
 void tr::window::hide()
 {
-	if (!SDL_ShowWindow(m_ptr.get())) {
-		TR_LOG_SDL_ERROR("Failed to hide window.");
-	}
+	window_view{*this}.hide();
 }
 
 //
@@ -337,9 +328,7 @@ bool tr::window::has_focus() const
 
 void tr::window::raise()
 {
-	if (!SDL_RaiseWindow(m_ptr.get())) {
-		TR_LOG_SDL_ERROR("Failed to raise window.");
-	}
+	window_view{*this}.raise();
 }
 
 //
@@ -358,16 +347,7 @@ void tr::window::disable_text_input()
 
 void tr::window::set_vsync(vsync vsync)
 {
-	if (!SDL_GL_SetSwapInterval(int(vsync))) {
-		if (vsync == vsync::adaptive) {
-			TR_LOG(error_logger, tr::severity::warning, "Failed to set window V-sync to adaptive, falling back to regular.");
-			TR_LOG_CONTINUE(error_logger, "{}", SDL_GetError());
-			set_vsync(vsync::enabled);
-		}
-		else {
-			TR_LOG_SDL_ERROR("Failed to set V-sync.");
-		}
-	}
+	window_view{*this}.set_vsync(vsync);
 }
 
 //
@@ -375,7 +355,7 @@ void tr::window::set_vsync(vsync vsync)
 void tr::window::set_mouse_mode(mouse_mode mode)
 {
 	if (!SDL_SetWindowRelativeMouseMode(m_ptr.get(), to_underlying(mode))) {
-		TR_LOG_SDL_ERROR("Failed to set mouse mode.");
+		throw window_error("Failed to set mouse mode on window '{}'.", title());
 	}
 
 	// Workaround for an SDL bug where the cursor does not properly disappear sometimes in relative mode on Windows.

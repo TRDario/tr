@@ -6,7 +6,6 @@
 
 #include "../../include/tr/sysgfx/ttfont.hpp"
 #include "../../include/tr/sysgfx/bitmap.hpp"
-#include "../../include/tr/sysgfx/log_sdl_error.hpp"
 #include <SDL3_ttf/SDL_ttf.h>
 
 ////////////////////////////////////////////////////////////////// ERRORS /////////////////////////////////////////////////////////////////
@@ -32,6 +31,8 @@ std::string_view tr::ttfont_load_error::details() const
 	return m_details;
 }
 
+//
+
 tr::ttfont_render_error::ttfont_render_error(std::string_view description)
 	: m_description{description}
 {
@@ -50,6 +51,29 @@ std::string_view tr::ttfont_render_error::description() const
 std::string_view tr::ttfont_render_error::details() const
 {
 	return {};
+}
+
+//
+
+tr::ttfont_error::ttfont_error(std::string&& description)
+	: m_description{std::move(description)}
+	, m_details{SDL_GetError()}
+{
+}
+
+std::string_view tr::ttfont_error::name() const
+{
+	return "TrueType font error";
+}
+
+std::string_view tr::ttfont_error::description() const
+{
+	return m_description;
+}
+
+std::string_view tr::ttfont_error::details() const
+{
+	return m_details;
 }
 
 /////////////////////////////////////////////////////////// MISC. FONT FUNCTIONS //////////////////////////////////////////////////////////
@@ -94,7 +118,7 @@ void tr::ttfont::resize(float size)
 	TR_ASSERT(size > 0, "Requested invalid font size {}.", size);
 
 	if (!TTF_SetFontSize(m_ptr.get(), size)) {
-		TR_LOG_SDL_ERROR("Failed to resize font to size {:.0f}.", size);
+		throw ttfont_error{"Failed to resize font to size {:.0f}.", size};
 	}
 }
 
@@ -106,7 +130,7 @@ void tr::ttfont::set_style(ttf_style style)
 void tr::ttfont::set_outline(int outline)
 {
 	if (!TTF_SetFontOutline(m_ptr.get(), outline)) {
-		TR_LOG_SDL_ERROR("Failed to set font outline to {}.", outline);
+		throw ttfont_error{"Failed to set font outline to {}.", outline};
 	}
 }
 
@@ -114,7 +138,7 @@ tr::glyph_metrics tr::ttfont::metrics(u32 glyph)
 {
 	glyph_metrics metrics{};
 	if (!TTF_GetGlyphMetrics(m_ptr.get(), glyph, &metrics.min.x, &metrics.max.x, &metrics.min.y, &metrics.max.y, &metrics.advance)) {
-		TR_LOG_SDL_ERROR("Failed to get glyph metrics.");
+		throw ttfont_error{"Failed to get glyph metrics."};
 	}
 	return metrics;
 }
@@ -123,7 +147,7 @@ int tr::ttfont::kerning(u32 prev_glyph, u32 next_glyph)
 {
 	int kerning{};
 	if (!TTF_GetGlyphKerning(m_ptr.get(), prev_glyph, next_glyph, &kerning)) {
-		TR_LOG_SDL_ERROR("Failed to get glyph kerning.");
+		throw ttfont_error{"Failed to get glyph kerning."};
 	}
 	return kerning;
 }
@@ -133,7 +157,7 @@ tr::ttf_measure_result tr::ttfont::measure_text(std::string_view text, int max_w
 	ttf_measure_result result{};
 	usize length{};
 	if (!TTF_MeasureString(m_ptr.get(), text.data(), text.size(), max_w, &result.size, &length)) {
-		TR_LOG_SDL_ERROR("Failed to measure text.");
+		throw ttfont_error{"Failed to measure text '{}'.", text};
 	}
 	result.text = {text.begin(), text.begin() + length};
 	return result;
@@ -143,7 +167,7 @@ glm::ivec2 tr::ttfont::text_size(std::string_view text, int max_w) const
 {
 	glm::ivec2 size{};
 	if (!TTF_GetStringSizeWrapped(m_ptr.get(), text.data(), text.size(), max_w, &size.x, &size.y)) {
-		TR_LOG_SDL_ERROR("Failed to get text size.");
+		throw ttfont_error{"Failed to get size of text '{}'.", text};
 	}
 	return size;
 }

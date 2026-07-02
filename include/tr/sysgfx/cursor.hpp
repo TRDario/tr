@@ -15,6 +15,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
+#include "../utility/exception.hpp"
 
 struct SDL_Cursor;
 namespace tr {
@@ -39,6 +40,26 @@ namespace tr {
 		size_all,   // Resizing (all directions) cursor.
 		no,         // Forbidden action cursor.
 		hand        // Pointing hand cursor.
+	};
+
+	// Cursor error.
+	class cursor_error : public exception {
+	  public:
+		// Constructs a cursor error.
+		cursor_error(std::string_view description);
+
+		// Gets the name of the error.
+		std::string_view name() const override;
+		// Gets the description of the error.
+		std::string_view description() const override;
+		// Gets further details about the error.
+		std::string_view details() const override;
+
+	  private:
+		// Description of the error.
+		std::string m_description;
+		// Details of the error.
+		std::string_view m_details;
 	};
 
 	// Mouse cursor graphic.
@@ -68,9 +89,12 @@ namespace tr {
 	};
 
 	// Shows the cursor.
+	// May throw: cursor_error.
 	void show_cursor();
 	// Hides the cursor.
+	// May throw: cursor_error.
 	void hide_cursor();
 	// Sets the mouse cursor.
+	// May throw: cursor_error.
 	void set_cursor(const cursor& cursor);
 } // namespace tr

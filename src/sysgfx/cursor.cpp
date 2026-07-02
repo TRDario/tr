@@ -6,8 +6,30 @@
 
 #include "../../include/tr/sysgfx/cursor.hpp"
 #include "../../include/tr/sysgfx/bitmap.hpp"
-#include "../../include/tr/sysgfx/log_sdl_error.hpp"
 #include <SDL3/SDL.h>
+
+/////////////////////////////////////////////////////////////// CURSOR ERROR //////////////////////////////////////////////////////////////
+
+tr::cursor_error::cursor_error(std::string_view description)
+	: m_description{description}
+	, m_details{SDL_GetError()}
+{
+}
+
+std::string_view tr::cursor_error::name() const
+{
+	return "Cursor error";
+}
+
+std::string_view tr::cursor_error::description() const
+{
+	return m_description;
+}
+
+std::string_view tr::cursor_error::details() const
+{
+	return m_details;
+}
 
 ////////////////////////////////////////////////////////////////// CURSOR /////////////////////////////////////////////////////////////////
 
@@ -49,20 +71,20 @@ void tr::cursor::deleter::operator()(SDL_Cursor* ptr) const
 void tr::show_cursor()
 {
 	if (!SDL_ShowCursor()) {
-		TR_LOG_SDL_ERROR("Failed to show mouse cursor.");
+		throw cursor_error("Failed to show mouse cursor.");
 	}
 }
 
 void tr::hide_cursor()
 {
 	if (!SDL_HideCursor()) {
-		TR_LOG_SDL_ERROR("Failed to hide mouse cursor.");
+		throw cursor_error("Failed to hide mouse cursor.");
 	}
 }
 
 void tr::set_cursor(const cursor& cursor)
 {
 	if (!SDL_SetCursor(cursor.m_ptr.get())) {
-		TR_LOG_SDL_ERROR("Failed to set mouse cursor.");
+		throw cursor_error("Failed to set mouse cursor.");
 	}
 }
