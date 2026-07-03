@@ -16,6 +16,7 @@
 
 #pragma once
 #include "chrono.hpp"
+#include "concepts.hpp"
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
@@ -29,29 +30,18 @@ namespace tr {
 		// Constructs an inactive timer.
 		timer() = default;
 		// Constructs an active timer.
-		template <typename R, typename P, typename C> timer(const std::chrono::duration<R, P>& interval, C&& cb);
-		// Moves a timer.
-		timer(timer&& r) noexcept = default;
-		// Stops the timer.
-		~timer();
-
-		// Moves a timer.
-		timer& operator=(timer&& r) noexcept;
+		template <arithmetic Rep, specialization_of_v<std::ratio> Period, std::convertible_to<std::function<void()>> Callback>
+		timer(const std::chrono::duration<Rep, Period>& interval, Callback&& cb);
 
 		// Reports whether the timer is active.
 		bool active() const;
 
 	  private:
-		// Dynamically allocated so the thread isn't interrupted when moving.
-		std::unique_ptr<bool> m_active;
 		// The timer thread.
-		std::thread m_thread;
+		std::jthread m_thread;
 
 		// Loop thread used by timer threads.
-		static void timer_loop(bool& active, duration interval, callback cb);
-
-		// Clears the timer state.
-		void clear();
+		static void timer_loop(std::stop_token stoken, duration interval, callback cb);
 	};
 } // namespace tr
 

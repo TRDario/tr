@@ -12,6 +12,7 @@ add_executable(
 	ranges.cpp
 	reference.cpp
 	stopwatch.cpp
+	timer.cpp
 	utf8.cpp
 	variant.cpp
 	zstring_view.cpp

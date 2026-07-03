@@ -15,37 +15,28 @@ using namespace std::chrono_literals;
 
 ////////////////////////////////////////////////////////////////// TIMER //////////////////////////////////////////////////////////////////
 
-tr::timer::~timer()
-{
-	clear();
-}
-
-tr::timer& tr::timer::operator=(timer&& r) noexcept
-{
-	clear();
-	m_active = std::move(r.m_active);
-	m_thread = std::move(r.m_thread);
-	return *this;
-}
-
 bool tr::timer::active() const
 {
-	return m_active != nullptr;
+	return m_thread.joinable();
 }
 
-void tr::timer::timer_loop(bool& active, duration interval, callback cb)
+//
+
+void tr::timer::timer_loop(std::stop_token stoken, duration interval, callback cb)
 {
+	using clock = std::chrono::steady_clock;
+
 	if (interval == 0s) {
 		return;
 	}
 
 	try {
-		std::chrono::steady_clock::time_point prev{std::chrono::steady_clock::now()};
+		clock::time_point prev{clock::now()};
 		duration total_error{};
 
 		std::this_thread::sleep_for(interval);
-		while (active) {
-			const std::chrono::steady_clock::time_point now{std::chrono::steady_clock::now()};
+		while (!stoken.stop_requested()) {
+			const clock::time_point now{clock::now()};
 
 			const duration last_interval{now - prev};
 			total_error += last_interval - interval;
@@ -67,18 +58,5 @@ void tr::timer::timer_loop(bool& active, duration interval, callback cb)
 		}
 	}
 	catch (...) {
-		// Exit gracefully if an exception occurs.
-		active = false;
-		return;
-	}
-}
-
-void tr::timer::clear()
-{
-	if (m_active != nullptr) {
-		*m_active = false;
-		if (m_thread.joinable()) {
-			m_thread.join();
-		}
 	}
 }
