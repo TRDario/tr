@@ -3,6 +3,7 @@ add_executable(
 	atlas_packer.cpp
 	binary_io.cpp
 	encryption.cpp
+	hash_map.cpp
 	localization_map.cpp
 	math.cpp
 	mstream.cpp

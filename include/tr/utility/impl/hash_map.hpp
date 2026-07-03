@@ -69,6 +69,8 @@ const Value& tr::get(const boost::unordered_node_map<Key, Value, Hash, Pred>& ma
 	return it->second;
 }
 
+//
+
 template <typename Key, typename Value, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred, tr::hash_keylike<Key, Hash, Pred> Keylike>
 tr::opt_ref<Value> tr::try_get(boost::unordered_flat_map<Key, Value, Hash, Pred>& map, Keylike&& keylike)
 {
