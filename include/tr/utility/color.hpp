@@ -43,6 +43,7 @@ namespace tr {
 		// The blue color channel.
 		u8 b;
 
+		// Default-constructs a color.
 		constexpr rgb8() = default;
 		// Creates a color from its components.
 		constexpr rgb8(u8 r, u8 g, u8 b);
@@ -55,36 +56,38 @@ namespace tr {
 		// Converts an HSV color to an RGB one.
 		constexpr rgb8(const hsv& hsv);
 
+		// Compares two colors for equality.
 		friend constexpr bool operator==(const rgb8&, const rgb8&) = default;
 
 		// Adds a scalar to the color.
 		template <arithmetic Scalar> constexpr rgb8& operator+=(Scalar addend);
-		// Adds two colors.
-		constexpr rgb8& operator+=(const rgb8& addend);
 		// Adds a scalar to the color.
 		template <arithmetic Scalar> friend constexpr rgb8 operator+(const rgb8& l, Scalar addend);
-		// Adds two colors.
-		friend constexpr rgb8 operator+(const rgb8& l, const rgb8& r);
 		// Subtracts a scalar from the color.
 		template <arithmetic Scalar> constexpr rgb8& operator-=(Scalar subtrahend);
-		// Subtracts two colors.
-		constexpr rgb8& operator-=(const rgb8& subtrahend);
 		// Subtracts a scalar from the color.
 		template <arithmetic Scalar> friend constexpr rgb8 operator-(const rgb8& l, Scalar subtrahend);
-		// Subtracts two colors.
-		friend constexpr rgb8 operator-(const rgb8& l, const rgb8& r);
 		// Multiplies the color by a scalar.
 		template <arithmetic Scalar> constexpr rgb8& operator*=(Scalar multiplier);
-		// Multiplies two colors.
-		constexpr rgb8& operator*=(const rgb8& multiplier);
 		// Multiplies the color by a scalar.
 		template <arithmetic Scalar> friend constexpr rgb8 operator*(const rgb8& l, Scalar multiplier);
-		// Multiplies two colors.
-		friend constexpr rgb8 operator*(const rgb8& l, const rgb8& r);
 		// Divides the color by a scalar.
 		template <arithmetic Scalar> constexpr rgb8& operator/=(Scalar divisor);
 		// Divides the color by a scalar.
 		template <arithmetic Scalar> friend constexpr rgb8 operator/(const rgb8& l, Scalar divisor);
+
+		// Adds two colors.
+		constexpr rgb8& operator+=(const rgb8& addend);
+		// Adds two colors.
+		friend constexpr rgb8 operator+(const rgb8& l, const rgb8& r);
+		// Subtracts two colors.
+		constexpr rgb8& operator-=(const rgb8& subtrahend);
+		// Subtracts two colors.
+		friend constexpr rgb8 operator-(const rgb8& l, const rgb8& r);
+		// Multiplies two colors.
+		constexpr rgb8& operator*=(const rgb8& multiplier);
+		// Multiplies two colors.
+		friend constexpr rgb8 operator*(const rgb8& l, const rgb8& r);
 	};
 
 	// Floating-point RGB color.
@@ -96,6 +99,7 @@ namespace tr {
 		// The blue color channel.
 		float b;
 
+		// Default-constructs a color.
 		constexpr rgbf() = default;
 		// Creates a color from its components.
 		constexpr rgbf(float r, float g, float b);
@@ -108,36 +112,38 @@ namespace tr {
 		// Converts an HSV color to an RGB one.
 		constexpr rgbf(const hsv& hsv);
 
+		// Compares two colors for equality.
 		friend constexpr bool operator==(const rgbf&, const rgbf&) = default;
 
 		// Adds a scalar to the color.
 		template <arithmetic Scalar> constexpr rgbf& operator+=(Scalar addend);
-		// Adds two colors.
-		constexpr rgbf& operator+=(const rgbf& addend);
 		// Adds a scalar to the color.
 		template <arithmetic Scalar> friend constexpr rgbf operator+(const rgbf& l, Scalar addend);
-		// Adds two colors.
-		friend constexpr rgbf operator+(const rgbf& l, const rgbf& r);
 		// Subtracts a scalar from the color.
 		template <arithmetic Scalar> constexpr rgbf& operator-=(Scalar subtrahend);
-		// Subtracts two colors.
-		constexpr rgbf& operator-=(const rgbf& subtrahend);
 		// Subtracts a scalar from the color.
 		template <arithmetic Scalar> friend constexpr rgbf operator-(const rgbf& l, Scalar subtrahend);
-		// Subtracts two colors.
-		friend constexpr rgbf operator-(const rgbf& l, const rgbf& r);
 		// Multiplies the color by a scalar.
 		template <arithmetic Scalar> constexpr rgbf& operator*=(Scalar multiplier);
-		// Multiplies two colors.
-		constexpr rgbf& operator*=(const rgbf& multiplier);
 		// Multiplies the color by a scalar.
 		template <arithmetic Scalar> friend constexpr rgbf operator*(const rgbf& l, Scalar multiplier);
-		// Multiplies two colors.
-		friend constexpr rgbf operator*(const rgbf& l, const rgbf& r);
 		// Divides the color by a scalar.
 		template <arithmetic Scalar> constexpr rgbf& operator/=(Scalar divisor);
 		// Divides the color by a scalar.
 		template <arithmetic Scalar> friend constexpr rgbf operator/(const rgbf& l, Scalar divisor);
+
+		// Adds two colors.
+		constexpr rgbf& operator+=(const rgbf& addend);
+		// Adds two colors.
+		friend constexpr rgbf operator+(const rgbf& l, const rgbf& r);
+		// Subtracts two colors.
+		constexpr rgbf& operator-=(const rgbf& subtrahend);
+		// Subtracts two colors.
+		friend constexpr rgbf operator-(const rgbf& l, const rgbf& r);
+		// Multiplies two colors.
+		constexpr rgbf& operator*=(const rgbf& multiplier);
+		// Multiplies two colors.
+		friend constexpr rgbf operator*(const rgbf& l, const rgbf& r);
 	};
 
 	// 8-bit RGBA color.
@@ -151,6 +157,7 @@ namespace tr {
 		// The alpha channel.
 		u8 a;
 
+		// Default-constructs a color.
 		constexpr rgba8() = default;
 		// Creates a color from its components.
 		constexpr rgba8(u8 r, u8 g, u8 b, u8 a);
@@ -163,36 +170,38 @@ namespace tr {
 		// Converts an HSV color to an RGBA one.
 		constexpr rgba8(const hsv& hsv, u8 a = 255);
 
+		// Compares two colors for equality.
 		friend constexpr bool operator==(const rgba8&, const rgba8&) = default;
 
 		// Adds a scalar to the color.
 		template <arithmetic Scalar> constexpr rgba8& operator+=(Scalar addend);
-		// Adds two colors.
-		constexpr rgba8& operator+=(const rgba8& addend);
 		// Adds a scalar to the color.
 		template <arithmetic Scalar> friend constexpr rgba8 operator+(const rgba8& l, Scalar addend);
-		// Adds two colors.
-		friend constexpr rgba8 operator+(const rgba8& l, const rgba8& r);
 		// Subtracts a scalar from the color.
 		template <arithmetic Scalar> constexpr rgba8& operator-=(Scalar subtrahend);
-		// Subtracts two colors.
-		constexpr rgba8& operator-=(const rgba8& subtrahend);
 		// Subtracts a scalar from the color.
 		template <arithmetic Scalar> friend constexpr rgba8 operator-(const rgba8& l, Scalar subtrahend);
-		// Subtracts two colors.
-		friend constexpr rgba8 operator-(const rgba8& l, const rgba8& r);
 		// Multiplies the color by a scalar.
 		template <arithmetic Scalar> constexpr rgba8& operator*=(Scalar multiplier);
-		// Multiplies two colors.
-		constexpr rgba8& operator*=(const rgba8& multiplier);
 		// Multiplies the color by a scalar.
 		template <arithmetic Scalar> friend constexpr rgba8 operator*(const rgba8& l, Scalar multiplier);
-		// Multiplies two colors.
-		friend constexpr rgba8 operator*(const rgba8& l, const rgba8& r);
 		// Divides the color by a scalar.
 		template <arithmetic Scalar> constexpr rgba8& operator/=(Scalar divisor);
 		// Divides the color by a scalar.
 		template <arithmetic Scalar> friend constexpr rgba8 operator/(const rgba8& l, Scalar divisor);
+
+		// Adds two colors.
+		constexpr rgba8& operator+=(const rgba8& addend);
+		// Adds two colors.
+		friend constexpr rgba8 operator+(const rgba8& l, const rgba8& r);
+		// Subtracts two colors.
+		constexpr rgba8& operator-=(const rgba8& subtrahend);
+		// Subtracts two colors.
+		friend constexpr rgba8 operator-(const rgba8& l, const rgba8& r);
+		// Multiplies two colors.
+		constexpr rgba8& operator*=(const rgba8& multiplier);
+		// Multiplies two colors.
+		friend constexpr rgba8 operator*(const rgba8& l, const rgba8& r);
 	};
 
 	// Floating-point RGBA color.
@@ -206,6 +215,7 @@ namespace tr {
 		// The alpha channel.
 		float a;
 
+		// Default-constructs a color.
 		constexpr rgbaf() = default;
 		// Creates a color from its components.
 		constexpr rgbaf(float r, float g, float b, float a);
@@ -218,36 +228,38 @@ namespace tr {
 		// Converts an HSV color to an RGBA one.
 		constexpr rgbaf(const hsv& hsv, float a = 1.0f);
 
+		// Compares two colors for equality.
 		friend constexpr bool operator==(const rgbaf&, const rgbaf&) = default;
 
 		// Adds a scalar to the color.
 		template <arithmetic Scalar> constexpr rgbaf& operator+=(Scalar addend);
-		// Adds two colors.
-		constexpr rgbaf& operator+=(const rgbaf& addend);
 		// Adds a scalar to the color.
 		template <arithmetic Scalar> friend constexpr rgbaf operator+(const rgbaf& l, Scalar addend);
-		// Adds two colors.
-		friend constexpr rgbaf operator+(const rgbaf& l, const rgbaf& r);
 		// Subtracts a scalar from the color.
 		template <arithmetic Scalar> constexpr rgbaf& operator-=(Scalar subtrahend);
-		// Subtracts two colors.
-		constexpr rgbaf& operator-=(const rgbaf& subtrahend);
 		// Subtracts a scalar from the color.
 		template <arithmetic Scalar> friend constexpr rgbaf operator-(const rgbaf& l, Scalar subtrahend);
-		// Subtracts two colors.
-		friend constexpr rgbaf operator-(const rgbaf& l, const rgbaf& r);
 		// Multiplies the color by a scalar.
 		template <arithmetic Scalar> constexpr rgbaf& operator*=(Scalar multiplier);
-		// Multiplies two colors.
-		constexpr rgbaf& operator*=(const rgbaf& multiplier);
 		// Multiplies the color by a scalar.
 		template <arithmetic Scalar> friend constexpr rgbaf operator*(const rgbaf& l, Scalar multiplier);
-		// Multiplies two colors.
-		friend constexpr rgbaf operator*(const rgbaf& l, const rgbaf& r);
 		// Divides the color by a scalar.
 		template <arithmetic Scalar> constexpr rgbaf& operator/=(Scalar divisor);
 		// Divides the color by a scalar.
 		template <arithmetic Scalar> friend constexpr rgbaf operator/(const rgbaf& l, Scalar divisor);
+
+		// Adds two colors.
+		constexpr rgbaf& operator+=(const rgbaf& addend);
+		// Adds two colors.
+		friend constexpr rgbaf operator+(const rgbaf& l, const rgbaf& r);
+		// Subtracts two colors.
+		constexpr rgbaf& operator-=(const rgbaf& subtrahend);
+		// Subtracts two colors.
+		friend constexpr rgbaf operator-(const rgbaf& l, const rgbaf& r);
+		// Multiplies two colors.
+		constexpr rgbaf& operator*=(const rgbaf& multiplier);
+		// Multiplies two colors.
+		friend constexpr rgbaf operator*(const rgbaf& l, const rgbaf& r);
 	};
 
 	// Floating-point HSV color.
@@ -259,6 +271,7 @@ namespace tr {
 		// The value channel.
 		float v;
 
+		// Default-constructs a color.
 		constexpr hsv() = default;
 		// Creates a color from its components.
 		constexpr hsv(float h, float s, float v);
@@ -270,6 +283,9 @@ namespace tr {
 		constexpr hsv(const rgba8& rgba);
 		// Converts an RGBA color into an HSV one.
 		constexpr hsv(const rgbaf& rgba);
+
+		// Compares two colors for equality.
+		friend constexpr bool operator==(const hsv&, const hsv&) = default;
 	};
 
 	inline namespace literals {

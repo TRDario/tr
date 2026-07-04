@@ -2,6 +2,7 @@ add_executable(
 	utility_test
 	atlas_packer.cpp
 	binary_io.cpp
+	color.cpp
 	defer.cpp
 	encryption.cpp
 	hash_map.cpp
