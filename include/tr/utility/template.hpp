@@ -93,7 +93,7 @@ namespace tr {
 	// Gets the return type of a function.
 	template <typename Function> using return_type_t = function_traits<Function>::return_type;
 	// Gets the class of a method type.
-	template <typename Function> using class_type_t = function_traits<Function>::return_type;
+	template <typename Function> using class_type_t = function_traits<Function>::class_type;
 	// Gets the arguments of a function as a tuple.
 	template <typename Function> using args_tuple_t = function_traits<Function>::args_tuple;
 	// Gets the type of the N-th argument to a function.
