@@ -14,6 +14,7 @@ add_executable(
 	ranges.cpp
 	print.cpp
 	reference.cpp
+	rng.cpp
 	stopwatch.cpp
 	template.cpp
 	timer.cpp

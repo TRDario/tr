@@ -39,7 +39,7 @@ tr::u64 tr::rng::advance()
 
 int tr::rng::generate_sign()
 {
-	return generate(2) * 2 - 1;
+	return generate<bool>() * 2 - 1;
 }
 
 tr::angle tr::rng::generate(angle max)
