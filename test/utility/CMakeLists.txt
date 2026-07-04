@@ -2,6 +2,7 @@ add_executable(
 	utility_test
 	atlas_packer.cpp
 	binary_io.cpp
+	defer.cpp
 	encryption.cpp
 	hash_map.cpp
 	localization_map.cpp
@@ -10,6 +11,7 @@ add_executable(
 	norm_cast.cpp
 	optional.cpp
 	ranges.cpp
+	print.cpp
 	reference.cpp
 	stopwatch.cpp
 	template.cpp
