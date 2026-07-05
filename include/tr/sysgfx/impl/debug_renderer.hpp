@@ -29,8 +29,8 @@ template <typename... Args> void tr::debug_renderer::write_right_format(const st
 	write_right(std::format(fmt, std::forward<Args>(args)...), style);
 }
 
-template <tr::debug_writable_benchmark Benchmark, class R, class P>
-void tr::debug_renderer::write_benchmark(const Benchmark& benchmark, std::string_view name, std::chrono::duration<R, P> limit)
+template <tr::debug_writable_benchmark Benchmark, typename Rep, typename Period>
+void tr::debug_renderer::write_benchmark(const Benchmark& benchmark, std::string_view name, std::chrono::duration<Rep, Period> limit)
 {
 	write_benchmark(std::chrono::duration_cast<duration>(benchmark.min()), std::chrono::duration_cast<duration>(benchmark.avg()),
 					std::chrono::duration_cast<duration>(benchmark.max()), name, std::chrono::duration_cast<duration>(limit));

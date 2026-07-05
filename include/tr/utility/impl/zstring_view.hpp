@@ -152,7 +152,7 @@ constexpr tr::zstring_view tr::operator""_zsv(const char* str, std::size_t) noex
 
 //
 
-template <class CharT, class Traits>
+template <typename CharT, typename Traits>
 std::basic_ostream<CharT, Traits>& tr::operator<<(std::basic_ostream<CharT, Traits>& os, basic_zstring_view<CharT, Traits> v)
 {
 	return os << v.c_str();

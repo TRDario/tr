@@ -45,7 +45,7 @@ template <std::derived_from<tr::state> T> T& tr::state_machine::get()
 	return static_cast<T&>(*m_current_state);
 }
 
-template <typename R, typename P> void tr::state_machine::update(std::chrono::duration<R, P> delta)
+template <typename Rep, typename Period> void tr::state_machine::update(std::chrono::duration<Rep, Period> delta)
 {
 	if (m_current_state != nullptr) {
 		m_update_benchmark.start();
