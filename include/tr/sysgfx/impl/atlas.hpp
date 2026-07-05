@@ -39,99 +39,96 @@ tr::bitmap_atlas<Key, void, Hash, Pred> tr::build_bitmap_atlas(const boost::unor
 
 ////////////////////////////////////////////////////////////// DYNAMIC ATLAS //////////////////////////////////////////////////////////////
 
-template <typename Key, typename Extra, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
-tr::dyn_atlas<Key, Extra, Hash, Pred>::dyn_atlas(graphics_context& context)
+template <typename Key, tr::atlas_rects_value_type Value, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
+tr::dyn_atlas<Key, Value, Hash, Pred>::dyn_atlas(graphics_context& context)
 	: m_tex{context}
 {
 }
 
-template <typename Key, typename Extra, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
-tr::dyn_atlas<Key, Extra, Hash, Pred>::dyn_atlas(graphics_context& context, glm::ivec2 size)
+template <typename Key, tr::atlas_rects_value_type Value, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
+tr::dyn_atlas<Key, Value, Hash, Pred>::dyn_atlas(graphics_context& context, glm::ivec2 size)
 	: m_tex{context, size, tr::mipmaps::enabled}
 {
 }
 
-template <typename Key, typename Extra, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
-tr::dyn_atlas<Key, Extra, Hash, Pred>::dyn_atlas(graphics_context& context, bitmap_atlas<Key, Extra, Hash, Pred>&& source)
+template <typename Key, tr::atlas_rects_value_type Value, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
+tr::dyn_atlas<Key, Value, Hash, Pred>::dyn_atlas(graphics_context& context, bitmap_atlas<Key, Value, Hash, Pred>&& source)
 	: m_tex{context, source.bitmap, tr::mipmaps::enabled}
 	, m_rects{std::move(source.rects)}
 {
 }
 
-template <typename Key, typename Extra, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
-tr::dyn_atlas<Key, Extra, Hash, Pred>::operator const tr::texture&() const
+template <typename Key, tr::atlas_rects_value_type Value, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
+tr::dyn_atlas<Key, Value, Hash, Pred>::operator const tr::texture&() const
 {
 	return m_tex;
 }
 
-template <typename Key, typename Extra, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
-tr::dyn_atlas<Key, Extra, Hash, Pred>::operator tr::texture_ref() const
+template <typename Key, tr::atlas_rects_value_type Value, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
+tr::dyn_atlas<Key, Value, Hash, Pred>::operator tr::texture_ref() const
 {
 	return m_tex;
 }
 
-template <typename Key, typename Extra, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
-tr::graphics_context& tr::dyn_atlas<Key, Extra, Hash, Pred>::context() const
+template <typename Key, tr::atlas_rects_value_type Value, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
+tr::graphics_context& tr::dyn_atlas<Key, Value, Hash, Pred>::context() const
 {
 	return m_tex.context();
 }
 
-template <typename Key, typename Extra, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
-void tr::dyn_atlas<Key, Extra, Hash, Pred>::set_filtering(min_filter min_filter, mag_filter mag_filter)
+template <typename Key, tr::atlas_rects_value_type Value, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
+void tr::dyn_atlas<Key, Value, Hash, Pred>::set_filtering(min_filter min_filter, mag_filter mag_filter)
 {
 	m_tex.set_filtering(min_filter, mag_filter);
 }
 
-template <typename Key, typename Extra, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
-glm::ivec2 tr::dyn_atlas<Key, Extra, Hash, Pred>::size() const
+template <typename Key, tr::atlas_rects_value_type Value, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
+glm::ivec2 tr::dyn_atlas<Key, Value, Hash, Pred>::size() const
 {
 	return m_tex.size();
 }
 
-template <typename Key, typename Extra, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
+template <typename Key, tr::atlas_rects_value_type Value, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
 template <tr::hash_keylike<Key, Hash, Pred> Keylike>
-bool tr::dyn_atlas<Key, Extra, Hash, Pred>::contains(Keylike&& key) const
+bool tr::dyn_atlas<Key, Value, Hash, Pred>::contains(Keylike&& key) const
 {
 	return m_rects.contains(std::forward<Keylike>(key));
 }
 
-template <typename Key, typename Extra, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
-tr::usize tr::dyn_atlas<Key, Extra, Hash, Pred>::entries() const
+template <typename Key, tr::atlas_rects_value_type Value, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
+tr::usize tr::dyn_atlas<Key, Value, Hash, Pred>::entries() const
 {
 	return m_rects.entries();
 }
 
-template <typename Key, typename Extra, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
+template <typename Key, tr::atlas_rects_value_type Value, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
 template <tr::hash_keylike<Key, Hash, Pred> Keylike>
-tr::frect2 tr::dyn_atlas<Key, Extra, Hash, Pred>::operator[](Keylike&& key) const
+tr::frect2 tr::dyn_atlas<Key, Value, Hash, Pred>::operator[](Keylike&& key) const
 {
-	frect2 rect{unnormalized(std::forward<Keylike>(key))};
+	frect2 rect;
+	if constexpr (std::same_as<Value, rect2<u16>>) {
+		rect = m_rects[std::forward<Keylike>(key)];
+	}
+	else {
+		rect = m_rects[std::forward<Keylike>(key)].rect;
+	}
+
 	rect.tl /= m_tex.size();
 	rect.size /= m_tex.size();
 	return rect;
 }
 
-template <typename Key, typename Extra, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
+template <typename Key, tr::atlas_rects_value_type Value, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
 template <tr::hash_keylike<Key, Hash, Pred> Keylike>
-tr::irect2 tr::dyn_atlas<Key, Extra, Hash, Pred>::unnormalized(Keylike&& key) const
+const Value& tr::dyn_atlas<Key, Value, Hash, Pred>::raw(Keylike&& key) const
 {
 	TR_ASSERT(contains(key), "Tried to get nonexistent dynamic atlas entry.");
 
 	return m_rects[std::forward<Keylike>(key)];
 }
 
-template <typename Key, typename Extra, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
-template <tr::hash_keylike<Key, Hash, Pred> Keylike>
-	requires(!std::same_as<Extra, void>)
-const tr::expanded_atlas_rect<Extra>& tr::dyn_atlas<Key, Extra, Hash, Pred>::unnormalized_with_extra(Keylike&& key) const
-{
-	TR_ASSERT(contains(key), "Tried to get nonexistent dynamic atlas entry.");
-
-	return m_rects.get_with_extra(std::forward<Keylike>(key));
-}
-
-template <typename Key, typename Extra, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
-void tr::dyn_atlas<Key, Extra, Hash, Pred>::reserve(glm::ivec2 capacity)
+template <typename Key, tr::atlas_rects_value_type Value, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
+void tr::dyn_atlas<Key, Value, Hash, Pred>::reserve(glm::ivec2 capacity)
 {
 	if (capacity.x < size().x && capacity.y < size().y) {
 		return;
@@ -147,33 +144,10 @@ void tr::dyn_atlas<Key, Extra, Hash, Pred>::reserve(glm::ivec2 capacity)
 	}
 }
 
-template <typename Key, typename Extra, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
-void tr::dyn_atlas<Key, Extra, Hash, Pred>::add(Key key, const sub_bitmap& bitmap)
-	requires(std::same_as<Extra, void>)
-{
-	std::optional<glm::u16vec2> packing_result{m_rects.try_insert(std::move(key), bitmap.size(), size())};
-	if (!packing_result.has_value()) {
-		glm::u16vec2 new_size;
-		if (m_tex.size() == glm::ivec2{}) {
-			const glm::uvec2 usize{bitmap.size()};
-			new_size = {std::bit_ceil(usize.x + 1), std::bit_ceil(usize.y + 1)};
-			packing_result = m_rects.try_insert(std::move(key), usize, new_size);
-		}
-		else {
-			new_size = size();
-			do {
-				new_size.y < new_size.x ? new_size.y *= 2 : new_size.x *= 2;
-			} while (!(packing_result = m_rects.try_insert(std::move(key), bitmap.size(), new_size)).has_value());
-		}
-		reserve(new_size);
-	}
-	m_tex.set_region(*packing_result, bitmap);
-}
-
-template <typename Key, typename Extra, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
+template <typename Key, tr::atlas_rects_value_type Value, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
 template <typename... Args>
-	requires(std::constructible_from<Extra, Args...>)
-void tr::dyn_atlas<Key, Extra, Hash, Pred>::add(Key key, const sub_bitmap& bitmap, Args&&... args)
+	requires(std::constructible_from<Value, tr::rect2<tr::u16>, Args...>)
+void tr::dyn_atlas<Key, Value, Hash, Pred>::add(Key key, const sub_bitmap& bitmap, Args&&... args)
 {
 	std::optional<glm::u16vec2> tl{m_rects.try_insert(std::move(key), bitmap.size(), size(), std::forward<Args>(args)...)};
 	if (!tl.has_value()) {
@@ -194,8 +168,8 @@ void tr::dyn_atlas<Key, Extra, Hash, Pred>::add(Key key, const sub_bitmap& bitma
 	m_tex.set_region(*tl, bitmap);
 }
 
-template <typename Key, typename Extra, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
-void tr::dyn_atlas<Key, Extra, Hash, Pred>::clear()
+template <typename Key, tr::atlas_rects_value_type Value, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
+void tr::dyn_atlas<Key, Value, Hash, Pred>::clear()
 {
 	if (size() != glm::ivec2{0}) {
 		m_tex.clear({});
@@ -205,14 +179,14 @@ void tr::dyn_atlas<Key, Extra, Hash, Pred>::clear()
 
 //
 
-template <typename Key, typename Extra, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
-std::string tr::dyn_atlas<Key, Extra, Hash, Pred>::label() const
+template <typename Key, tr::atlas_rects_value_type Value, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
+std::string tr::dyn_atlas<Key, Value, Hash, Pred>::label() const
 {
 	return m_tex.label();
 }
 
-template <typename Key, typename Extra, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
-void tr::dyn_atlas<Key, Extra, Hash, Pred>::set_label(std::string_view label)
+template <typename Key, tr::atlas_rects_value_type Value, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
+void tr::dyn_atlas<Key, Value, Hash, Pred>::set_label(std::string_view label)
 {
 	m_tex.set_label(label);
 }

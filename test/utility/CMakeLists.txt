@@ -1,5 +1,6 @@
 add_executable(
 	utility_test
+	atlas_packer.cpp
 	binary_io.cpp
 	encryption.cpp
 	localization_map.cpp

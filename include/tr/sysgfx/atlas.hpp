@@ -32,8 +32,8 @@
 //     - atlas.unnormalized_with_extra("C") -> gets the unnormalized UV rect and extra data of "C"                                       //
 //     - atlas.clear() -> atlas is now empty again, but retains the reserved space                                                       //
 //                                                                                                                                       //
-// The label of an atlas can be set with .set_label():                                                                                   //
-//     - atlas.set_label("Example atlas") -> 'atlas' is now labelled "Example atlas"                                                     //
+// The label of an atlas can be set with .set_label() and gotten with .label():                                                          //
+//     - atlas.set_label("Example atlas"); atlas.label() -> "Example atlas"                                                              //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -45,19 +45,21 @@
 
 namespace tr {
 	// Basic bitmap atlas structure.
-	template <typename Key, typename Extra = void, hasher<Key> Hash = boost::hash<Key>, equality_predicate<Key> Pred = std::equal_to<Key>>
+	template <typename Key, atlas_rects_value_type Value, hasher<Key> Hash = boost::hash<Key>,
+			  equality_predicate<Key> Pred = std::equal_to<Key>>
 	struct bitmap_atlas {
 		// The atlas bitmap.
 		tr::bitmap bitmap;
 		// The atlas entries.
-		atlas_rects<Key, Extra, Hash, Pred> rects;
+		atlas_rects<Key, Value, Hash, Pred> rects;
 	};
 	// Builds a bitmap atlas from individual bitmaps.
 	template <typename Key, hasher<Key> Hash = boost::hash<Key>, equality_predicate<Key> Pred = std::equal_to<Key>>
 	bitmap_atlas<Key, void, Hash, Pred> build_bitmap_atlas(const boost::unordered_flat_map<Key, tr::bitmap, Hash, Pred>& entries);
 
 	// Dynamically-allocated texture atlas.
-	template <typename Key, typename Extra = void, hasher<Key> Hash = boost::hash<Key>, equality_predicate<Key> Pred = std::equal_to<Key>>
+	template <typename Key, atlas_rects_value_type Value, hasher<Key> Hash = boost::hash<Key>,
+			  equality_predicate<Key> Pred = std::equal_to<Key>>
 	class dyn_atlas {
 	  public:
 		// Creates an empty atlas.
@@ -65,7 +67,7 @@ namespace tr {
 		// Creates an empty atlas with an initial size.
 		dyn_atlas(graphics_context& context, glm::ivec2 size);
 		// Uploads a bitmap atlas.
-		dyn_atlas(graphics_context& context, bitmap_atlas<Key, Extra, Hash, Pred>&& source);
+		dyn_atlas(graphics_context& context, bitmap_atlas<Key, Value, Hash, Pred>&& source);
 
 		// Gets the atlas texture.
 		operator const texture&() const;
@@ -87,22 +89,15 @@ namespace tr {
 
 		// Returns the rect associated with an entry.
 		template <hash_keylike<Key, Hash, Pred> Keylike> frect2 operator[](Keylike&& key) const;
-		// Returns the unnormalized rect associated with an entry.
-		template <hash_keylike<Key, Hash, Pred> Keylike> irect2 unnormalized(Keylike&& key) const;
-		// Returns the unnormalized rect associated with an entry along with its associated extra data.
-		template <hash_keylike<Key, Hash, Pred> Keylike>
-			requires(!std::same_as<Extra, void>)
-		const expanded_atlas_rect<Extra>& unnormalized_with_extra(Keylike&& key) const;
+		// Returns the raw value associated with an entry.
+		template <hash_keylike<Key, Hash, Pred> Keylike> const Value& raw(Keylike&& key) const;
 
 		// Reserves a certain amount of space in the bitmap.
 		void reserve(glm::ivec2 capacity);
 
 		// Adds an entry to the atlas.
-		void add(Key key, const sub_bitmap& bitmap)
-			requires(std::same_as<Extra, void>);
-		// Adds an entry to the atlas.
 		template <typename... Args>
-			requires(std::constructible_from<Extra, Args...>)
+			requires(std::constructible_from<Value, rect2<u16>, Args...>)
 		void add(Key key, const sub_bitmap& bitmap, Args&&... args);
 
 		// Removes all entries from the atlas.
@@ -117,7 +112,7 @@ namespace tr {
 		// The atlas texture.
 		texture m_tex;
 		// The atlas entries.
-		atlas_rects<Key, Extra, Hash, Pred> m_rects;
+		atlas_rects<Key, Value, Hash, Pred> m_rects;
 	};
 } // namespace tr
 
