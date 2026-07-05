@@ -50,13 +50,13 @@ tr::duration tr::benchmark::latest() const
 
 tr::duration tr::benchmark::min() const
 {
-	const auto durations{project(m_measurements, &measurement::duration)};
+	const auto durations{std::views::transform(m_measurements, &measurement::duration)};
 	return !m_measurements.empty() ? *std::ranges::min_element(durations) : duration::zero();
 }
 
 tr::duration tr::benchmark::max() const
 {
-	const auto durations{project(m_measurements, &measurement::duration)};
+	const auto durations{std::views::transform(m_measurements, &measurement::duration)};
 	return !m_measurements.empty() ? *std::ranges::max_element(durations) : duration::zero();
 }
 
@@ -66,7 +66,7 @@ tr::duration tr::benchmark::avg() const
 		return duration::zero();
 	}
 	else {
-		return sum(project(m_measurements, &measurement::duration), duration::zero()) / m_measurements.size();
+		return sum(std::views::transform(m_measurements, &measurement::duration), duration::zero()) / m_measurements.size();
 	}
 }
 

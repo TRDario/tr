@@ -11,12 +11,11 @@
 ////////////////////////////////////////////////////////////////// RANGES /////////////////////////////////////////////////////////////////
 
 // Reinterprets a span of one type to a span of another.
-template <tr::standard_layout To, tr::standard_layout From, tr::usize Extent>
-std::span<To> tr::reinterpret_span(std::span<From, Extent> from)
+template <tr::standard_layout To, tr::standard_layout From, tr::usize Extent> auto tr::reinterpret_span(std::span<From, Extent> from)
 {
 	if constexpr (Extent != std::dynamic_extent) {
 		static_assert(Extent * sizeof(From) % sizeof(To) == 0, "Cannot reinterpret span due to size_bytes() % sizeof(T) != 0.");
-		return std::span<To, Extent * sizeof(From) / sizeof(To)>{reinterpret_cast<To*>(from.data())};
+		return std::span<To, Extent * sizeof(From) / sizeof(To)>{reinterpret_cast<To*>(from.data()), Extent * sizeof(From) / sizeof(To)};
 	}
 	else {
 		TR_ASSERT(from.size_bytes() % sizeof(To) == 0, "Cannot reinterpret span as '{}' due to size_bytes ({}) % sizeof({}) ({}) != 0.",
@@ -171,18 +170,6 @@ T tr::fold_left(Range&& range, T initial_value, BinaryOp&& pred)
 template <std::ranges::range Range, typename T> T tr::sum(Range&& range, T initial_value)
 {
 	return std::accumulate(std::ranges::begin(range), std::ranges::end(range), initial_value);
-}
-
-//
-
-template <typename Range> constexpr auto tr::project(auto Range::* ptr)
-{
-	return std::views::transform([=](auto&& val) -> auto&& { return val.*ptr; });
-}
-
-template <std::ranges::range Range> constexpr auto tr::project(Range&& range, auto std::ranges::range_value_t<Range>::* ptr)
-{
-	return std::views::transform(std::forward<Range&&>(range), [=](auto&& val) -> auto&& { return val.*ptr; });
 }
 
 //

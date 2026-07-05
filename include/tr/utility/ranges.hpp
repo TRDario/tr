@@ -33,10 +33,7 @@
 //     - tr::fold_left(std::array{1, 2, 3, 4}, 0, std::plus{}) -> 10                                                                     //
 //     - tr::sum(std::array{1, 2, 3, 4}, 0) -> equivalent to the above                                                                   //
 //                                                                                                                                       //
-// View adaptors for projecting a class member, as well as dereferencing the objects of a range are provided:                            //
-//     - std::vector<tr::rgba8> colors; for (char red : tr::project(colors, &tr::rgba8::r)) {} -> iterates over the red channels         //
-//     - std::vector<tr::rgba8> colors; for (char red : colors | tr::project(&tr::rgba8::r)) {} -> iterates over the red channels        //
-//     - std::vector<std::unique_ptr<int>> ptrs; for (int value : tr::deref(ptrs)) -> iterates over the dereferenced pointers            //
+// A view adaptor for dereferencing the objects of a range is provided:                                                                  //
 //     - std::vector<std::unique_ptr<int>> ptrs; for (int value : ptrs | tr::deref) -> iterates over the dereferenced pointers           //
 //                                                                                                                                       //
 // tr::unstable_erase implements the 'move-and-swap' idiom for standard vectors for O(1) erasure at the cost of not being stable:        //
@@ -51,7 +48,7 @@
 
 namespace tr {
 	// Reinterprets a span of one type to a span of another.
-	template <standard_layout To, standard_layout From, usize Extent> std::span<To> reinterpret_span(std::span<From, Extent> from);
+	template <standard_layout To, standard_layout From, usize Extent> auto reinterpret_span(std::span<From, Extent> from);
 
 	// Gets a view of a contiguous range as a span of immutable bytes.
 	template <borrowed_standard_layout_range Range> auto range_bytes(Range&& range);
@@ -95,10 +92,6 @@ namespace tr {
 	// Sums the elements of a range.
 	template <std::ranges::range Range, typename T> T sum(Range&& range, T initial_value);
 
-	// Creates an adaptor for a transformed view over a range as a range of one of its members.
-	template <typename Range> constexpr auto project(auto Range::* ptr);
-	// Creates a transformed view over a range as a range of one of its members.
-	template <std::ranges::range Range> constexpr auto project(Range&& range, auto std::ranges::range_value_t<Range>::* ptr);
 	// Dereferencing range view.
 	inline constexpr auto deref{std::views::transform([](auto& v) -> decltype(auto) { return *v; })};
 
