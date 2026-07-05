@@ -14,8 +14,8 @@
 //       -> creates vertex and fragment shaders and then stores them in the pipeline                                                     //
 //     - pipeline.vertex_shader().set_uniform(0, 5.0f) -> sets uniform 0 of the vertex shader of the pipeline                            //
 //                                                                                                                                       //
-// The label of a shader pipeline can be set with .set_label():                                                                          //
-//     - pipeline.set_label("Example pipeline") -> 'pipeline' is now labelled "Example pipeline"                                         //
+// The label of a shader pipeline can be set with .set_label() and gotten with .label():                                                 //
+//     - pipeline.set_label("Example pipeline"); pipeline.label() -> "Example pipeline"                                                  //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -40,10 +40,12 @@ namespace tr {
 		std::string label() const;
 
 	  private:
+		// Shader pipeline deleter.
 		struct deleter {
 			// Reference to the graphics context the pipeline is on.
 			graphics_context& context;
 
+			// Deletes the shader pipeline.
 			void operator()(unsigned int id) const;
 		};
 
@@ -71,11 +73,11 @@ namespace tr {
 		// Gets the vertex shader.
 		vertex_shader& vertex_shader();
 		// Gets the vertex shader.
-		const tr::vertex_shader& vertex_shader() const;
+		const class vertex_shader& vertex_shader() const;
 		// Gets the fragment shader.
 		fragment_shader& fragment_shader();
 		// Gets the fragment shader.
-		const tr::fragment_shader& fragment_shader() const;
+		const class fragment_shader& fragment_shader() const;
 
 		// Sets the debug label of the pipeline.
 		void set_label(std::string_view label);
@@ -84,9 +86,9 @@ namespace tr {
 
 	  private:
 		// The vertex shader.
-		tr::vertex_shader m_vshader;
+		class vertex_shader m_vshader;
 		// The fragment shader.
-		tr::fragment_shader m_fshader;
+		class fragment_shader m_fshader;
 		// The base shader pipeline.
 		shader_pipeline m_base;
 	};

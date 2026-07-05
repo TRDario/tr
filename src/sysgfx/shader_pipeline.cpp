@@ -87,7 +87,8 @@ std::string tr::shader_pipeline::label() const
 
 ////////////////////////////////////////////////////////// OWNING SHADER PIPELINE /////////////////////////////////////////////////////////
 
-tr::owning_shader_pipeline::owning_shader_pipeline(graphics_context& context, tr::vertex_shader&& vshader, tr::fragment_shader&& fshader)
+tr::owning_shader_pipeline::owning_shader_pipeline(graphics_context& context, class vertex_shader&& vshader,
+												   class fragment_shader&& fshader)
 	: m_vshader{std::move(vshader)}
 	, m_fshader{std::move(fshader)}
 	, m_base{context, m_vshader, m_fshader}
