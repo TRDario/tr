@@ -5,16 +5,17 @@
 // Shaders are an abstraction over OpenGL separate program objects.                                                                      //
 //                                                                                                                                       //
 // Shaders can be constructed directly from GLSL source code, or loaded from a file:                                                     //
-//     - tr::gfx::vertex_shader{src} -> constructs a vertex shader from an embedded source code string                                   //
-//     - tr::gfx::load_vertex_shader("source.vert") -> loads a vertex shader from a source file                                          //
-//     - tr::gfx::fragment_shader{src} -> constructs a fragment shader from an embedded source code string                               //
-//     - tr::gfx::load_fragment_shader("source.frag") -> loads a fragment shader from a source file                                      //
+//     - tr::vertex_shader{context, src} -> constructs a vertex shader from an embedded source code string                               //
+//     - tr::load_vertex_shader(context, "source.vert") -> loads a vertex shader from a source file                                      //
+//     - tr::fragment_shader{context, src} -> constructs a fragment shader from an embedded source code string                           //
+//     - tr::load_fragment_shader(context, "source.frag") -> loads a fragment shader from a source file                                  //
+// Leaving shaders alive after their context is erroneous.                                                                               //
 //                                                                                                                                       //
 // Setting shader uniforms of any GLSL type except doubles is supported:                                                                 //
 //     - shader.set_uniform(0, glm::vec2{100, 100}) -> sets the vec2 uniform at location 0                                               //
 //                                                                                                                                       //
-// The label of a shader can be set with .set_label():                                                                                   //
-//     - shader.set_label("Example shader") -> 'shader' is now labelled "Example shader"                                                 //
+// The label of a shader can be set with .set_label() and gotten with .label():                                                          //
+//     - shader.set_label("Example shader"); shader.label() -> "Example shader"                                                          //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -169,6 +170,14 @@ namespace tr {
 		std::string label() const;
 
 	  protected:
+		// Shader program deleter.
+		struct deleter {
+			// Reference to the graphics context the shader is on.
+			graphics_context& context;
+
+			// Deletes the shader program.
+			void operator()(unsigned int id) const;
+		};
 		// OpenGL texture unit.
 		class texture_unit {
 		  public:
@@ -179,21 +188,17 @@ namespace tr {
 			void set(texture_ref texture);
 
 		  private:
+			// Texture unit freer.
 			struct deleter {
 				// Reference to the graphics context the shader is on.
 				graphics_context& context;
 
+				// Frees the texture unit.
 				void operator()(unsigned int unit) const;
 			};
 
 			// The ID of the texture unit.
 			handle<unsigned int, UINT_MAX, deleter> m_id;
-		};
-		struct deleter {
-			// Reference to the graphics context the shader is on.
-			graphics_context& context;
-
-			void operator()(unsigned int id) const;
 		};
 
 		// Handle to the OpenGL program.
@@ -205,7 +210,6 @@ namespace tr {
 		shader_base(graphics_context& context, zstring_view source, unsigned int type);
 
 		friend class shader_pipeline;
-		friend class ping_pong_buffer;
 
 #ifdef TR_ENABLE_GL_CHECKS
 		// List of non-block uniforms obtained by introspection.
