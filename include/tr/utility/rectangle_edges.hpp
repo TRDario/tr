@@ -13,7 +13,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "binary_io.hpp"
+#include "default_binary_io.hpp"
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
@@ -48,9 +48,7 @@ namespace tr {
 	using frectangle_edges = rectangle_edges<float>;
 } // namespace tr
 
-// Edges binary reader.
-template <typename Element> struct tr::binary_reader<tr::rectangle_edges<Element>> : tr::raw_binary_reader<tr::rectangle_edges<Element>> {};
-// Edges binary writer.
-template <typename Element> struct tr::binary_writer<tr::rectangle_edges<Element>> : tr::raw_binary_writer<tr::rectangle_edges<Element>> {};
+// Enables default binary IO for rectangle edges.
+template <typename Element> inline constexpr bool tr::enable_default_binary_io<tr::rectangle_edges<Element>>{true};
 
 #include "impl/rectangle_edges.hpp" // IWYU pragma: export

@@ -14,7 +14,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "binary_io.hpp"
+#include "default_binary_io.hpp"
 #include "polygon.hpp"
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
@@ -36,7 +36,5 @@ namespace tr {
 	};
 } // namespace tr
 
-// Triangle binary reader.
-template <> struct tr::binary_reader<tr::triangle> : tr::raw_binary_reader<tr::triangle> {};
-// Triangle binary writer.
-template <> struct tr::binary_writer<tr::triangle> : tr::raw_binary_writer<tr::triangle> {};
+// Enables default binary IO for triangles.
+template <> inline constexpr bool tr::enable_default_binary_io<tr::triangle>{true};

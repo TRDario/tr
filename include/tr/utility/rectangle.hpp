@@ -65,9 +65,7 @@ namespace tr {
 	template <typename Element> constexpr std::optional<rectangle<Element>> intersection(rectangle<Element> l, rectangle<Element> r);
 } // namespace tr
 
-// Rectangle binary readers.
-template <typename Element> struct tr::binary_reader<tr::rectangle<Element>> : tr::raw_binary_reader<tr::rectangle<Element>> {};
-// Rectangle binary writers.
-template <typename Element> struct tr::binary_writer<tr::rectangle<Element>> : tr::raw_binary_writer<tr::rectangle<Element>> {};
+// Enables default binary IO for rectangles.
+template <typename Element> inline constexpr bool tr::enable_default_binary_io<tr::rectangle<Element>>{true};
 
 #include "impl/rectangle.hpp" // IWYU pragma: export

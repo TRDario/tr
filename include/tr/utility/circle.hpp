@@ -14,7 +14,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "binary_io.hpp"
+#include "default_binary_io.hpp"
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
@@ -34,7 +34,5 @@ namespace tr {
 	bool intersecting(const circle& c1, const circle& c2);
 } // namespace tr
 
-// Circle binary reader.
-template <> struct tr::binary_reader<tr::circle> : tr::raw_binary_reader<tr::circle> {};
-// Circle binary writer.
-template <> struct tr::binary_writer<tr::circle> : tr::raw_binary_writer<tr::circle> {};
+// Enables default binary IO for circles.
+template <> inline constexpr bool tr::enable_default_binary_io<tr::circle>{true};

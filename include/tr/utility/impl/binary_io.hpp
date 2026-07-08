@@ -72,9 +72,11 @@ void tr::write_binary(std::ostream& os, const Ins&... ins)
 
 ////////////////////////////////////////////////////// BINARY READER SPECIALIZATIONS //////////////////////////////////////////////////////
 
-template <tr::standard_layout Out> void tr::raw_binary_reader<Out>::operator()(std::istream& is, Out& out) const
+template <tr::cv_unqualified_object Defaulted>
+	requires(tr::enable_default_binary_io<Defaulted>)
+void tr::binary_reader<Defaulted>::operator()(std::istream& is, Defaulted& out) const
 {
-	is.read(reinterpret_cast<char*>(std::addressof(out)), sizeof(Out));
+	is.read(reinterpret_cast<char*>(std::addressof(out)), sizeof(Defaulted));
 }
 
 template <tr::binary_readable Element, tr::usize Size>
@@ -172,9 +174,11 @@ void tr::binary_reader<boost::unordered_node_map<Key, Value, Other...>>::operato
 
 ////////////////////////////////////////////////////// BINARY WRITER SPECIALIZATIONS //////////////////////////////////////////////////////
 
-template <tr::standard_layout In> void tr::raw_binary_writer<In>::operator()(std::ostream& os, const In& in)
+template <tr::cv_unqualified_object Defaulted>
+	requires(tr::enable_default_binary_io<Defaulted>)
+void tr::binary_writer<Defaulted>::operator()(std::ostream& os, const Defaulted& in)
 {
-	os.write(reinterpret_cast<const char*>(std::addressof(in)), sizeof(In));
+	os.write(reinterpret_cast<const char*>(std::addressof(in)), sizeof(Defaulted));
 }
 
 template <tr::binary_writable Element, tr::usize Size>

@@ -20,13 +20,10 @@
 //                                                                                                                                       //
 // To enable binary reading and/or writing for a custom type, the structs tr::binary_reader and tr::binary_writer respectively must be   //
 // specialized, tr::binary_reader with operator()(std::istream&, T&) and tr::binary_writer with operator()(std::ostream&, const T&).     //
-// Most primitives and standard library containers, as well as some tr types have specialized readers and writers. tr::raw_binary_reader //
-// and tr::raw_binary_writer are provided as convenience and can be inherited from for the simplest case (read/write the bytes of an     //
-// object directly):                                                                                                                     //
-//     - template <> struct tr::binary_reader<my_int> : tr::raw_binary_reader<my_int> {};                                                //
-//       -> enables binary reading of class my_int, reader directly writes to the bytes of a my_int object                               //
-//     - template <> struct tr::binary_writer<my_int> : tr::raw_binary_writer<my_int> {};                                                //
-//       -> enables binary writing of class my_int, writer directly reads from the bytes of a my_int object                              //
+// Most primitives and standard library containers, as well as some tr types have specialized readers and writers.                       //
+// tr::enable_default_binary_io may be specialized to true for the simplest case (read/write the bytes of an object directly):           //
+//     - template <> inline constexpr bool tr::enable_default_binary_io<my_int>{true};                                                   //
+//       -> enables binary reading and writing of class my_int, writer directly reads from the bytes of a my_int object                  //
 //     - template <> struct tr::binary_reader<my_int> {                                                                                  //
 //           void operator()(std::istream& is, my_int& out) { read_binary(is, out.m_base); }                                             //
 //       }                                                                                                                               //
@@ -40,6 +37,7 @@
 
 #pragma once
 #include "concepts.hpp"
+#include "default_binary_io.hpp"
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
@@ -66,17 +64,6 @@ namespace tr {
 	// Concept that denotes a type able to be read with a stream write_binary.
 	template <typename T>
 	concept binary_writable = requires(std::ostream& os, const T& in) { tr::binary_writer<std::remove_cv_t<T>>{}(os, in); };
-
-	// Raw binary reader template: directly reads bytes into the object.
-	template <standard_layout Out> struct raw_binary_reader {
-		using raw_reader = std::true_type;
-		void operator()(std::istream& is, Out& out) const;
-	};
-	// Raw binary writer template: directly writes bytes from the object.
-	template <standard_layout In> struct raw_binary_writer {
-		using raw_writer = std::true_type;
-		void operator()(std::ostream& os, const In& in);
-	};
 
 	// Reads binary data from a stream.
 	template <binary_readable Out> void read_binary(std::istream& is, Out& out);
@@ -109,21 +96,27 @@ namespace tr {
 ///////////////////////////////////////////////////////////// SPECIALIZATIONS /////////////////////////////////////////////////////////////
 
 namespace tr {
-	// Arithmetic binary readers.
+	// Enables default binary IO for arithmetic types.
 	template <arithmetic Arithmetic>
 		requires(cv_unqualified_object<Arithmetic>)
-	struct binary_reader<Arithmetic> : raw_binary_reader<Arithmetic> {};
-	// Enumerator binary readers.
+	inline constexpr bool enable_default_binary_io<Arithmetic>{true};
+	// Enables default binary IO for enumerators.
 	template <enumerator Enumerator>
 		requires(cv_unqualified_object<Enumerator>)
-	struct binary_reader<Enumerator> : raw_binary_reader<Enumerator> {};
-	// Vector binary readers.
-	template <int Dimensions, typename Element>
-	struct binary_reader<glm::vec<Dimensions, Element>> : raw_binary_reader<glm::vec<Dimensions, Element>> {};
-	// Matrix binary readers.
+	inline constexpr bool enable_default_binary_io<Enumerator>{true};
+	// Enables default binary IO for vectors.
+	template <int Dimensions, typename Element> inline constexpr bool enable_default_binary_io<glm::vec<Dimensions, Element>>{true};
+	// Enables default binary IO for matrices.
 	template <int Columns, int Rows, typename Element>
-	struct binary_reader<glm::mat<Columns, Rows, Element>> : raw_binary_reader<glm::mat<Columns, Rows, Element>> {};
+	inline constexpr bool enable_default_binary_io<glm::mat<Columns, Rows, Element>>{true};
 
+	// Default binary reader.
+	template <cv_unqualified_object Defaulted>
+		requires(enable_default_binary_io<Defaulted>)
+	struct binary_reader<Defaulted> {
+		using default_reader = std::true_type;
+		void operator()(std::istream& is, Defaulted& out) const;
+	};
 	// Array binary reader.
 	template <binary_readable Element, usize Size> struct binary_reader<std::array<Element, Size>> {
 		void operator()(std::istream& is, std::array<Element, Size>& out) const;
@@ -167,20 +160,13 @@ namespace tr {
 		void operator()(std::istream& is, boost::unordered_node_map<Key, V, Other...>& out) const;
 	};
 
-	// Arithmetic binary writers.
-	template <arithmetic Arithmetic>
-		requires(cv_unqualified_object<Arithmetic>)
-	struct binary_writer<Arithmetic> : raw_binary_writer<Arithmetic> {};
-	// Enumerator binary writers.
-	template <enumerator Enumerator>
-		requires(cv_unqualified_object<Enumerator>)
-	struct binary_writer<Enumerator> : raw_binary_writer<Enumerator> {};
-	// Vector binary writers.
-	template <int Dimensions, typename Element>
-	struct binary_writer<glm::vec<Dimensions, Element>> : raw_binary_writer<glm::vec<Dimensions, Element>> {};
-	// Matrix binary writers.
-	template <int Columns, int Rows, typename Element>
-	struct binary_writer<glm::mat<Columns, Rows, Element>> : raw_binary_writer<glm::mat<Columns, Rows, Element>> {};
+	// Default binary writer.
+	template <cv_unqualified_object Defaulted>
+		requires(enable_default_binary_io<Defaulted>)
+	struct binary_writer<Defaulted> {
+		using raw_writer = std::true_type;
+		void operator()(std::ostream& os, const Defaulted& in);
+	};
 	// Span binary writer.
 	template <binary_writable Element, usize Size> struct binary_writer<std::span<Element, Size>> {
 		void operator()(std::ostream& os, const std::span<Element, Size>& in) const;

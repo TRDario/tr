@@ -274,10 +274,8 @@ template <> struct TR_FMT::formatter<tr::key_chord> : public TR_FMT::formatter<s
 	template <typename FormatContext> constexpr auto format(tr::key_chord chord, FormatContext& ctx) const;
 };
 
-// Scancode binary reader.
-template <> struct tr::binary_reader<tr::scancode> : tr::raw_binary_reader<tr::scancode> {};
-// Scancode binary writer.
-template <> struct tr::binary_writer<tr::scancode> : tr::raw_binary_writer<tr::scancode> {};
+// Enables default binary IO for scancodes.
+template <> inline constexpr bool tr::enable_default_binary_io<tr::scancode>{true};
 
 // Scan chord binary reader.
 template <> struct tr::binary_reader<tr::scan_chord> {
@@ -288,10 +286,8 @@ template <> struct tr::binary_writer<tr::scan_chord> {
 	void operator()(std::ostream& os, const tr::scan_chord& in) const;
 };
 
-// Keycode bianry reader.
-template <> struct tr::binary_reader<tr::keycode> : tr::raw_binary_reader<tr::keycode> {};
-// Keycode binary writer.
-template <> struct tr::binary_writer<tr::keycode> : tr::raw_binary_writer<tr::keycode> {};
+// Enables default binary IO for keycodes.
+template <> inline constexpr bool tr::enable_default_binary_io<tr::keycode>{true};
 
 // Key chord binary reader.
 template <> struct tr::binary_reader<tr::key_chord> {

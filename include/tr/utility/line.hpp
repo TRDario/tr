@@ -27,7 +27,7 @@
 
 #pragma once
 #include "angle.hpp"
-#include "binary_io.hpp"
+#include "default_binary_io.hpp"
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
@@ -66,7 +66,5 @@ namespace tr {
 
 } // namespace tr
 
-// Circle binary reader.
-template <> struct tr::binary_reader<tr::line_segment> : tr::raw_binary_reader<tr::line_segment> {};
-// Circle binary writer.
-template <> struct tr::binary_writer<tr::line_segment> : tr::raw_binary_writer<tr::line_segment> {};
+// Enables default binary IO for line segments.
+template <> inline constexpr bool tr::enable_default_binary_io<tr::line_segment>{true};
