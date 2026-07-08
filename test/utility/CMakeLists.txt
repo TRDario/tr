@@ -2,22 +2,26 @@ add_executable(
 	utility_test
 	atlas_packer.cpp
 	binary_io.cpp
+	circle.cpp
 	color.cpp
 	defer.cpp
 	encryption.cpp
 	hash_map.cpp
 	localization_map.cpp
 	math.cpp
+	matrix.cpp
 	mstream.cpp
 	norm_cast.cpp
 	optional.cpp
 	ranges.cpp
+	rectangle_edges.cpp
 	print.cpp
 	reference.cpp
 	rng.cpp
 	stopwatch.cpp
 	template.cpp
 	timer.cpp
+	triangle.cpp
 	utf8.cpp
 	variant.cpp
 	zstring_view.cpp

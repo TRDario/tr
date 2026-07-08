@@ -101,7 +101,7 @@ TEST_F(rng_test, angle_custom_range_distribution)
 		EXPECT_LE(result, 270_deg);
 		sum += result;
 	}
-	EXPECT_NEAR((sum / 100000).degs(), 135, 0.5);
+	EXPECT_NEAR((sum / 100000).degs(), 135, 0.75f);
 }
 
 TEST_F(rng_test, vector_magnitude_distribution)

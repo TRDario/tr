@@ -37,7 +37,7 @@ constexpr tr::rectangle_edges<Element>::rectangle_edges(Element left, Element to
 }
 
 template <typename Element>
-constexpr tr::rectangle_edges<Element>::rectangle_edges(Element top, Element right, Element bottom, Element left)
+constexpr tr::rectangle_edges<Element>::rectangle_edges(Element left, Element top, Element right, Element bottom)
 	: left{left}
 	, top{top}
 	, right{right}
