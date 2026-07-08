@@ -18,7 +18,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "../utility/geometry.hpp"
+#include "../utility/rectangle.hpp"
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
@@ -30,11 +30,11 @@ namespace tr {
 		const glm::ivec2& size() const;
 
 		// Creates a new render target with a cropped viewport and full scissor box.
-		render_target cropped(const irect2& viewport) const;
+		render_target cropped(const rectangle<int>& viewport) const;
 		// Creates a new render target with the same viewport and a different scissor box.
-		render_target scissored(const irect2& scissor_box) const;
+		render_target scissored(const rectangle<int>& scissor_box) const;
 		// Equivalent to cropped(viewport).scissored(scissor_box).
-		render_target subtarget(const irect2& viewport, const irect2& scissor_box) const;
+		render_target subtarget(const rectangle<int>& viewport, const rectangle<int>& scissor_box) const;
 
 	  private:
 		// The OpenGL ID of the render target's FBO.
@@ -42,14 +42,14 @@ namespace tr {
 		// Size of the render target's FBO.
 		glm::ivec2 m_fbo_size;
 		// The viewport of the render target.
-		irect2 m_viewport;
+		rectangle<int> m_viewport;
 		// The scissor box of the render target.
-		irect2 m_scissor_box;
+		rectangle<int> m_scissor_box;
 
 		// Creates a render target spanning an entire FBO.
 		render_target(unsigned int fbo, glm::ivec2 fbo_size);
 		// Creates a render target spanning a region of an FBO.
-		render_target(unsigned int fbo, glm::ivec2 fbo_size, const irect2& viewport, const irect2& scissor_box);
+		render_target(unsigned int fbo, glm::ivec2 fbo_size, const rectangle<int>& viewport, const rectangle<int>& scissor_box);
 
 		friend render_target backbuffer_render_target();
 		friend class render_texture;

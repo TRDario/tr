@@ -52,7 +52,7 @@
 #pragma once
 #include "../utility/color.hpp"
 #include "../utility/exception.hpp"
-#include "../utility/geometry.hpp"
+#include "../utility/rectangle.hpp"
 
 struct SDL_Surface;
 namespace tr {
@@ -142,15 +142,15 @@ namespace tr {
 		class iterator;
 
 		// Constructs a sub-bitmap.
-		sub_bitmap(const bitmap& bitmap, const irect2& rect);
+		sub_bitmap(const bitmap& bitmap, const rectangle<int>& region);
 		// Constructs a sub-bitmap.
-		sub_bitmap(const bitmap_view& view, const irect2& rect);
+		sub_bitmap(const bitmap_view& view, const rectangle<int>& region);
 
 		// Gets the size of the sub-bitmap.
 		glm::ivec2 size() const;
 
 		// Creates a sub-bitmap of the sub-bitmap.
-		sub_bitmap sub(const irect2& rect);
+		sub_bitmap sub(const rectangle<int>& region);
 
 		// Gets immutable access to a pixel of the bitmap.
 		reference operator[](glm::ivec2 pos) const;
@@ -175,8 +175,8 @@ namespace tr {
 	  private:
 		// Pointer to the bitmap.
 		SDL_Surface* m_ptr;
-		// The rect of the sub-bitmap within the bitmap.
-		irect2 m_rect;
+		// The region of the sub-bitmap within the bitmap.
+		rectangle<int> m_region;
 
 		friend class bitmap;
 	};
@@ -214,7 +214,7 @@ namespace tr {
 		// Creates a sub-bitmap spanning the entire bitmap view.
 		operator sub_bitmap() const;
 		// Creates a sub-bitmap of the bitmap.
-		sub_bitmap sub(const irect2& rect) const;
+		sub_bitmap sub(const rectangle<int>& region) const;
 
 		// Gets the raw data of the bitmap.
 		const std::byte* data() const;
@@ -287,12 +287,12 @@ namespace tr {
 		// Blits a sub-bitmap to the bitmap.
 		void blit(glm::ivec2 tl, const sub_bitmap& source);
 		// Fills a region of the bitmap with a solid color.
-		void fill(const irect2& rect, rgba8 color);
+		void fill(const rectangle<int>& region, rgba8 color);
 
 		// Creates a sub-bitmap spanning the entire bitmap.
 		operator sub_bitmap() const;
 		// Creates a sub-bitmap of the bitmap.
-		sub_bitmap sub(const irect2& rect) const;
+		sub_bitmap sub(const rectangle<int>& region) const;
 
 		// Gets the raw data of the bitmap.
 		std::byte* data();

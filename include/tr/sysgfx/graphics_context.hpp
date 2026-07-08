@@ -130,9 +130,9 @@ namespace tr {
 		// Clears the backbuffer.
 		void clear_backbuffer(const rgbaf& color, double depth, int stencil);
 		// Clears a backbuffer region's color.
-		void clear_backbuffer_region(const irect2& rect, const rgbaf& color = {0, 0, 0, 0});
+		void clear_backbuffer_region(const rectangle<int>& region, const rgbaf& color = {0, 0, 0, 0});
 		// Clears a backbuffer region.
-		void clear_backbuffer_region(const irect2& rect, const rgbaf& color, double depth, int stencil);
+		void clear_backbuffer_region(const rectangle<int>& region, const rgbaf& color, double depth, int stencil);
 
 		// Draws a mesh from a vertex buffer.
 		void draw(primitive type, usize offset, usize vertices);

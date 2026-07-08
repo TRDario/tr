@@ -6,11 +6,16 @@
 // default transformation matrix (falls back to the global default if not provided), blending mode (falls back to alpha blending if not  //
 // provided) and texture that can be set. The global default transformation matrix can also be set. Individual primitives are allowed    //
 // to use different parameters from the layer defaults:                                                                                  //
-//     - tr::gfx::basic_renderer basic -> creates an empty renderer                                                                      //
-//     - basic.set_default_transform(tr::ortho(tr::frect2{{1000, 1000}})) -> sets the global transformation matrix                       //
-//     - basic.set_default_layer_texture(1, tex) -> sets the default texture used by primitives on layer 1                               //
-//     - basic.set_default_layer_transform(1, tr::ortho(tr::frect2{{500, 500}})) -> sets the default transformation matrix for layer 1   //
-//     - basic.set_default_layer_blend_mode(1, tr::gfx::premultiplied_alpha_blending) -> sets the default blending mode for layer 1      //
+//     - tr::gfx::basic_renderer basic                                                                                                   //
+//       -> creates an empty renderer                                                                                                    //
+//     - basic.set_default_transform(tr::ortho(tr::rectangle<float>{{1000, 1000}}))                                                      //
+//       -> sets the global transformation matrix                                                                                        //
+//     - basic.set_default_layer_texture(1, tex)                                                                                         //
+//       -> sets the default texture used by primitives on layer 1                                                                       //
+//     - basic.set_default_layer_transform(1, tr::ortho(tr::rectangle<float>{{500, 500}}))                                               //
+//       -> sets the default transformation matrix for layer 1                                                                           //
+//     - basic.set_default_layer_blend_mode(1, tr::gfx::premultiplied_alpha_blending)                                                    //
+//       -> sets the default blending mode for layer 1                                                                                   //
 //                                                                                                                                       //
 // Primitives to be drawn by the basic renderer are allocated through the provided methods. Said methods return a reference to the mesh  //
 // that must be filled in by the user. This includes the positions, colors, UVs (if textured), and indices (for custom meshes).          //

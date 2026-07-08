@@ -80,7 +80,8 @@ bool tr::sub_bitmap::iterator::operator==(const iterator& r) const
 
 tr::sub_bitmap::iterator::value_type tr::sub_bitmap::iterator::operator*() const
 {
-	TR_ASSERT(m_pixel.m_ptr != nullptr && irect2{m_bitmap_size}.contains(m_bitmap_pos), "Tried to dereference an invalid bitmap iterator.");
+	TR_ASSERT(m_pixel.m_ptr != nullptr && rectangle<int>{m_bitmap_size}.contains(m_bitmap_pos),
+			  "Tried to dereference an invalid bitmap iterator.");
 	return m_pixel;
 }
 
@@ -276,7 +277,7 @@ bool tr::bitmap::iterator::operator==(const iterator& r) const
 
 tr::bitmap::iterator::value_type tr::bitmap::iterator::operator*() const
 {
-	TR_ASSERT(m_pixel.m_ptr != nullptr && irect2{m_bitmap->size()}.contains(m_bitmap_pos),
+	TR_ASSERT(m_pixel.m_ptr != nullptr && rectangle<int>{m_bitmap->size()}.contains(m_bitmap_pos),
 			  "Tried to dereference an invalid bitmap iterator.");
 
 	return m_pixel;

@@ -62,26 +62,25 @@ void tr::circle_renderer::set_layer_blend_mode(int layer, const blend_mode& blen
 
 //
 
-void tr::circle_renderer::add_circle(int layer, const tr::circle& circle, rgba8 color)
+void tr::circle_renderer::add_circle(int layer, tr::circle circle, rgba8 color)
 {
 	TR_ASSERT(!m_locked, "Tried to add a circle to a locked circle renderer.");
 
-	m_layers[layer].circles.emplace_back(circle.c, circle.r, 0, color, rgba8{color.r, color.b, color.b, 0});
+	m_layers[layer].circles.emplace_back(circle.center, circle.radius, 0, color, rgba8{color.r, color.b, color.b, 0});
 }
 
-void tr::circle_renderer::add_circle_outline(int layer, const tr::circle& circle, float outline_thickness, rgba8 color)
+void tr::circle_renderer::add_circle_outline(int layer, tr::circle circle, float outline_thickness, rgba8 color)
 {
 	TR_ASSERT(!m_locked, "Tried to add a circle outline to a locked circle renderer.");
 
-	m_layers[layer].circles.emplace_back(circle.c, circle.r, outline_thickness, rgba8{color.r, color.b, color.b, 0}, color);
+	m_layers[layer].circles.emplace_back(circle.center, circle.radius, outline_thickness, rgba8{color.r, color.b, color.b, 0}, color);
 }
 
-void tr::circle_renderer::add_outlined_circle(int layer, const tr::circle& circle, float outline_thickness, rgba8 fill_color,
-											  rgba8 outline_color)
+void tr::circle_renderer::add_outlined_circle(int layer, tr::circle circle, float outline_thickness, rgba8 fill_color, rgba8 outline_color)
 {
 	TR_ASSERT(!m_locked, "Tried to add an outlined circle to a locked circle renderer.");
 
-	m_layers[layer].circles.emplace_back(circle.c, circle.r, outline_thickness, fill_color, outline_color);
+	m_layers[layer].circles.emplace_back(circle.center, circle.radius, outline_thickness, fill_color, outline_color);
 }
 
 //

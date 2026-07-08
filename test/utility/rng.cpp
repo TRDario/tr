@@ -118,11 +118,11 @@ TEST_F(rng_test, vector_magnitude_distribution)
 
 TEST_F(rng_test, vector_rect_distribution)
 {
-	const tr::frect2 rect{{-100, -100}, {200, 200}};
+	const tr::rectangle<float> region{{-100, -100}, {200, 200}};
 	glm::vec2 sum{};
 	for (int i = 0; i < 10000000; ++i) {
-		const glm::vec2 result{rng.generate<glm::vec2>(rect)};
-		EXPECT_TRUE(rect.contains(result));
+		const glm::vec2 result{rng.generate<glm::vec2>(region)};
+		EXPECT_TRUE(region.contains(result));
 		sum += result;
 	}
 	sum /= 10000000;

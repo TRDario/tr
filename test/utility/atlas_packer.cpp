@@ -37,52 +37,52 @@ TEST(atlas_packer_test, clear)
 
 //
 
-TEST(atlas_rects_test, empty)
+TEST(atlas_entries_test, empty)
 {
-	tr::atlas_rects<int> rects;
-	EXPECT_FALSE(rects.contains(0));
-	EXPECT_EQ(rects.entries(), 0);
+	tr::atlas_entries<int> entries;
+	EXPECT_FALSE(entries.contains(0));
+	EXPECT_EQ(entries.entries(), 0);
 }
 
-TEST(atlas_rects_test, try_insert_success)
+TEST(atlas_entries_test, try_insert_success)
 {
-	struct rect_with_extra {
-		tr::rect2<tr::u16> rect;
+	struct entry_with_extra {
+		tr::rectangle<tr::u16> uv;
 		float extra;
 	};
 
-	tr::atlas_rects<int> rects;
-	tr::atlas_rects<int, rect_with_extra> rects_with_extra;
+	tr::atlas_entries<int> entries;
+	tr::atlas_entries<int, entry_with_extra> entries_with_extra;
 
 	const glm::u16vec2 size{127, 127};
-	EXPECT_TRUE(rects.try_insert(0, size, {256, 256}).has_value());
-	EXPECT_TRUE(rects.contains(0));
-	EXPECT_EQ(rects.entries(), 1);
-	EXPECT_EQ(rects[0].size, size);
+	EXPECT_TRUE(entries.try_insert(0, size, {256, 256}).has_value());
+	EXPECT_TRUE(entries.contains(0));
+	EXPECT_EQ(entries.entries(), 1);
+	EXPECT_EQ(entries[0].size, size);
 
-	EXPECT_TRUE(rects_with_extra.try_insert(0, size, {256, 256}, 10).has_value());
-	EXPECT_TRUE(rects_with_extra.contains(0));
-	EXPECT_EQ(rects_with_extra.entries(), 1);
-	EXPECT_EQ(rects_with_extra[0].rect.size, size);
-	EXPECT_EQ(rects_with_extra[0].extra, 10);
+	EXPECT_TRUE(entries_with_extra.try_insert(0, size, {256, 256}, 10).has_value());
+	EXPECT_TRUE(entries_with_extra.contains(0));
+	EXPECT_EQ(entries_with_extra.entries(), 1);
+	EXPECT_EQ(entries_with_extra[0].uv.size, size);
+	EXPECT_EQ(entries_with_extra[0].extra, 10);
 }
 
-TEST(atlas_rects_test, try_insert_failure)
+TEST(atlas_entries_test, try_insert_failure)
 {
-	tr::atlas_rects<int> rects;
-	EXPECT_FALSE(rects.try_insert(0, {512, 512}, {256, 256}).has_value());
-	EXPECT_FALSE(rects.contains(0));
-	EXPECT_EQ(rects.entries(), 0);
+	tr::atlas_entries<int> entries;
+	EXPECT_FALSE(entries.try_insert(0, {512, 512}, {256, 256}).has_value());
+	EXPECT_FALSE(entries.contains(0));
+	EXPECT_EQ(entries.entries(), 0);
 }
 
-TEST(atlas_rects_test, clear)
+TEST(atlas_entries_test, clear)
 {
-	tr::atlas_rects<int> rects;
-	EXPECT_TRUE(rects.try_insert(0, {255, 255}, {256, 256}).has_value());
-	rects.clear();
-	EXPECT_FALSE(rects.contains(0));
-	EXPECT_EQ(rects.entries(), 0);
-	EXPECT_TRUE(rects.try_insert(1, {255, 255}, {256, 256}).has_value());
-	EXPECT_TRUE(rects.contains(1));
-	EXPECT_EQ(rects.entries(), 1);
+	tr::atlas_entries<int> entries;
+	EXPECT_TRUE(entries.try_insert(0, {255, 255}, {256, 256}).has_value());
+	entries.clear();
+	EXPECT_FALSE(entries.contains(0));
+	EXPECT_EQ(entries.entries(), 0);
+	EXPECT_TRUE(entries.try_insert(1, {255, 255}, {256, 256}).has_value());
+	EXPECT_TRUE(entries.contains(1));
+	EXPECT_EQ(entries.entries(), 1);
 }

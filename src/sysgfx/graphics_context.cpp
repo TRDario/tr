@@ -11,6 +11,7 @@
 #include "../../include/tr/sysgfx/shader_pipeline.hpp"
 #include "../../include/tr/sysgfx/texture.hpp"
 #include "../../include/tr/sysgfx/window.hpp"
+#include "../../include/tr/utility/enum.hpp"
 #include <SDL3/SDL.h>
 
 ////////////////////////////////////////////////////// GRAPHICS CONTEXT OPENING ERROR /////////////////////////////////////////////////////
@@ -256,7 +257,7 @@ static void gl_debug_cb(unsigned int source, unsigned int type, unsigned int, un
 {
 	tr::logger& logger{*const_cast<tr::logger*>(static_cast<const tr::logger*>(user_param))};
 
-	const std::string_view msg{message, tr::usize(length)};
+	const std::string_view msg{message, static_cast<tr::usize>(length)};
 	if (logger.active()) {
 		logger.log(tr_severity(severity), "[{}] | [{}] | [{}] | {}", gl_severity(severity), gl_type(type), gl_source(source), msg);
 	}
@@ -496,20 +497,20 @@ void tr::graphics_context::clear_backbuffer(const tr::rgbaf& color, double depth
 	gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 }
 
-void tr::graphics_context::clear_backbuffer_region(const tr::irect2& rect, const tr::rgbaf& color)
+void tr::graphics_context::clear_backbuffer_region(const rectangle<int>& region, const tr::rgbaf& color)
 {
 	const functions& gl{make_current_and_return_functions()};
 
-	set_render_target(backbuffer().cropped(rect));
+	set_render_target(backbuffer().cropped(region));
 	gl.set_clear_color(color.r, color.g, color.b, color.a);
 	gl.clear(GL_COLOR_BUFFER_BIT);
 }
 
-void tr::graphics_context::clear_backbuffer_region(const tr::irect2& rect, const tr::rgbaf& color, double depth, int stencil)
+void tr::graphics_context::clear_backbuffer_region(const rectangle<int>& region, const tr::rgbaf& color, double depth, int stencil)
 {
 	const functions& gl{make_current_and_return_functions()};
 
-	set_render_target(backbuffer().cropped(rect));
+	set_render_target(backbuffer().cropped(region));
 	gl.set_clear_color(color.r, color.g, color.b, color.a);
 	gl.set_clear_depth(depth);
 	gl.set_clear_stencil(stencil);

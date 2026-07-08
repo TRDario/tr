@@ -7,6 +7,7 @@
 #include "../../include/tr/sysgfx/vertex_format.hpp"
 #include "../../include/tr/sysgfx/gl_defines.hpp"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
+#include "../../include/tr/utility/enum.hpp"
 
 ////////////////////////////////////////////////////////////// VERTEX FORMAT //////////////////////////////////////////////////////////////
 

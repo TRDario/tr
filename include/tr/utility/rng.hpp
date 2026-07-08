@@ -20,7 +20,7 @@
 //     - rng.generate(-1.5f, 1.5f) -> [-1.5f, 1.5f)                                                                                      //
 //                                                                                                                                       //
 // There are special overloads of generate for glm::vec2: one taking a magnitude and returning a vector of that magnitude, and another   //
-// taking a rect and returning a point in that rect:                                                                                     //
+// taking a rectangle and returning a point in that rectangle:                                                                           //
 //     - rng.generate<glm::vec2>(1.0f) -> a random unit vector                                                                           //
 //     - rng.generate<glm::vec2>({{2, 2}, {1, 3}}) -> {[2.0f, 3.0f), [2.0f, 5.0f)}                                                       //
 //                                                                                                                                       //
@@ -30,7 +30,8 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "geometry.hpp"
+#include "angle.hpp"
+#include "rectangle.hpp"
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
@@ -68,7 +69,7 @@ namespace tr {
 		// Generates a random vector with a certain magnitude.
 		template <std::same_as<glm::vec2>> glm::vec2 generate(float magnitude);
 		// Generates a random point within a rectangular region.
-		template <std::same_as<glm::vec2>> glm::vec2 generate(const tr::frect2& rect);
+		template <std::same_as<glm::vec2>> glm::vec2 generate(const tr::rectangle<float>& region);
 
 		// Generates a random sign (-1 or 1).
 		int generate_sign();

@@ -7,6 +7,7 @@
 #include "../../include/tr/sysgfx/shader_buffer.hpp"
 #include "../../include/tr/sysgfx/gl_defines.hpp"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
+#include "../../include/tr/utility/enum.hpp"
 
 /////////////////////////////////////////////////////////// BASIC SHADER BUFFER ///////////////////////////////////////////////////////////
 

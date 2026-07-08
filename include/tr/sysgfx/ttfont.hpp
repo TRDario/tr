@@ -46,9 +46,9 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
+#include "../utility/alignment.hpp"
 #include "../utility/color.hpp"
 #include "../utility/exception.hpp"
-#include "../utility/geometry.hpp"
 
 struct TTF_Font;
 namespace tr {

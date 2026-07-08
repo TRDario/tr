@@ -8,6 +8,7 @@
 #include "../../include/tr/sysgfx/gl_defines.hpp"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/texture_ref.hpp"
+#include "../../include/tr/utility/enum.hpp"
 
 ///////////////////////////////////////////////////////////// HELPER FUNCTIONS ////////////////////////////////////////////////////////////
 
@@ -318,30 +319,30 @@ void tr::texture::clear(const rgbaf& color)
 	gl.clear_texture_image(m_handle, 0, GL_RGBA, GL_FLOAT, &color);
 }
 
-void tr::texture::clear_region(const irect2& rect, const rgbaf& color)
+void tr::texture::clear_region(const rectangle<int>& region, const rgbaf& color)
 {
 	TR_ASSERT(!empty(), "Tried to clear a region of an empty texture.");
 
 	const graphics_context::functions& gl{m_context.make_current_and_return_functions()};
 
-	gl.clear_texture_sub_image(m_handle, 0, rect.tl.x, rect.tl.y, 0, rect.size.x, rect.size.y, 1, GL_RGBA, GL_FLOAT, &color);
+	gl.clear_texture_sub_image(m_handle, 0, region.tl.x, region.tl.y, 0, region.size.x, region.size.y, 1, GL_RGBA, GL_FLOAT, &color);
 }
 
-void tr::texture::copy_region(glm::ivec2 tl, const texture& src, const irect2& rect)
+void tr::texture::copy_region(glm::ivec2 tl, const texture& src, const rectangle<int>& region)
 {
 	TR_ASSERT(!empty(), "Tried to copy to an empty texture.");
 
 	const graphics_context::functions& gl{m_context.make_current_and_return_functions()};
 
-	gl.copy_image_sub_data(src.m_handle, GL_TEXTURE_2D, 0, rect.tl.x, rect.tl.y, 0, m_handle, GL_TEXTURE_2D, 0, tl.x, tl.y, 0, rect.size.x,
-						   rect.size.y, 1);
+	gl.copy_image_sub_data(src.m_handle, GL_TEXTURE_2D, 0, region.tl.x, region.tl.y, 0, m_handle, GL_TEXTURE_2D, 0, tl.x, tl.y, 0,
+						   region.size.x, region.size.y, 1);
 }
 
 void tr::texture::set_region(glm::ivec2 tl, const sub_bitmap& bitmap)
 {
 	TR_ASSERT(!empty(), "Tried to set a region of an empty texture.");
 
-	TR_ASSERT(irect2{size()}.contains(tl + bitmap.size()),
+	TR_ASSERT(rectangle<int>{size()}.contains(tl + bitmap.size()),
 			  "Tried to set out-of-bounds region from ({}, {}) to ({}, {}) in a texture with size {}x{}.", tl.x, tl.y,
 			  tl.x + bitmap.size().x, tl.y + bitmap.size().y, m_size.x, m_size.y);
 

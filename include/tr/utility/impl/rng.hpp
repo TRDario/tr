@@ -66,7 +66,7 @@ template <std::same_as<glm::vec2>> glm::vec2 tr::rng::generate(float magnitude)
 	return {magnitude * cos, magnitude * sin};
 }
 
-template <std::same_as<glm::vec2>> glm::vec2 tr::rng::generate(const tr::frect2& rect)
+template <std::same_as<glm::vec2>> glm::vec2 tr::rng::generate(const tr::rectangle<float>& region)
 {
-	return {generate(rect.tl.x, rect.tl.x + rect.size.x), generate(rect.tl.y, rect.tl.y + rect.size.y)};
+	return {generate(region.tl.x, region.tl.x + region.size.x), generate(region.tl.y, region.tl.y + region.size.y)};
 }

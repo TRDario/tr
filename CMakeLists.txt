@@ -61,16 +61,21 @@ target_sources(tr_utility PRIVATE
 	src/utility/benchmark.cpp
 	src/utility/binary_io.cpp
 	src/utility/chrono.cpp
+	src/utility/circle.cpp
 	src/utility/encryption.cpp
 	src/utility/exception.cpp
-	src/utility/geometry.cpp
 	src/utility/iostream.cpp
+	src/utility/line.cpp
 	src/utility/localization_map.cpp
 	src/utility/logger.cpp
+	src/utility/matrix.cpp
 	src/utility/mstream.cpp
+	src/utility/polygon.cpp
 	src/utility/rng.cpp
 	src/utility/stopwatch.cpp
 	src/utility/timer.cpp
+	src/utility/triangle.cpp
+	src/utility/vector.cpp
 )
 target_link_libraries(tr_utility PUBLIC glm::glm lz4::lz4 boost_unordered)
 if(NOT TR_HAS_STD_FORMAT)

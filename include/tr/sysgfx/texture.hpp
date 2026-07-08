@@ -28,7 +28,7 @@
 //                                                                                                                                       //
 // Textures or their regions can be cleared to a color, copied from another texture, or set from a bitmap:                               //
 //     - tex.clear("FFFFFF"_rgba8) -> clears 'tex' to white                                                                              //
-//     - tex.clear_region({{100, 100}, {100, 100}}, "0000FF"_rgba8) -> clears the rect between (100, 100) and (200, 200) in 'tex' to blue//
+//     - tex.clear_region({{100, 100}, {100, 100}}, "0000FF"_rgba8) -> clears the region between (100, 100) and (200, 200) to blue       //
 //     - tex.copy_region({256, 256}, tex2, {{256, 256}, {256, 256}}) -> copies a region of 'tex2' to 'tex' beginning at (256, 256)       //
 //     - tex.set_region({128, 128}, tr::load_bitmap_file("data.bmp")) -> sets a region of 'tex' beginning at (128, 128) with bitmap data //
 //                                                                                                                                       //
@@ -128,9 +128,9 @@ namespace tr {
 		// Clears the texture.
 		void clear(const rgbaf& color);
 		// Clears a region of the texture.
-		void clear_region(const irect2& rect, const rgbaf& color);
+		void clear_region(const rectangle<int>& region, const rgbaf& color);
 		// Copies a region from another texture.
-		void copy_region(glm::ivec2 tl, const texture& src, const irect2& rect);
+		void copy_region(glm::ivec2 tl, const texture& src, const rectangle<int>& region);
 		// Sets a region of the texture.
 		void set_region(glm::ivec2 tl, const sub_bitmap& bitmap);
 

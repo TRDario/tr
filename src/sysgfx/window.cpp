@@ -6,6 +6,7 @@
 
 #include "../../include/tr/sysgfx/window.hpp"
 #include "../../include/tr/sysgfx/bitmap.hpp"
+#include "../../include/tr/utility/enum.hpp"
 #include <SDL3/SDL.h>
 
 /////////////////////////////////////////////////////////// WINDOW OPENING ERROR //////////////////////////////////////////////////////////

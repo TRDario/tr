@@ -15,8 +15,8 @@
 // The circle renderer is a layer-based renderer, compatible with the utilities provided in layered_drawing.hpp. Each layer has its own  //
 // transformation matrix (falls back to the global default if not provided) and blending mode (falls back to alpha blending if not       //
 // provided) that can be set. The global default transformation matrix can also be set:                                                  //
-//     - circle.set_default_transform(tr::ortho(tr::frect2{{1000, 1000}})) -> sets the global transformation matrix                      //
-//     - circle.set_layer_transform(1, tr::ortho(tr::frect2{{500, 500}})) -> sets the transformation matrix for layer 1                  //
+//     - circle.set_default_transform(tr::ortho(tr::rectangle<float>{{1000, 1000}})) -> sets the global transformation matrix            //
+//     - circle.set_layer_transform(1, tr::ortho(tr::rectangle<float>{{500, 500}})) -> sets the transformation matrix for layer 1        //
 //     - circle.set_layer_blend_mode(1, tr::gfx::premultiplied_alpha_blending) -> sets the blending mode for layer 1                     //
 //                                                                                                                                       //
 // Circles are appended to the drawing list of the circle renderer one-by-one. Each circle can be filled, outlined, or both:             //
@@ -35,6 +35,7 @@
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+#include "../utility/circle.hpp"
 #include "../utility/reference.hpp"
 #include "blending.hpp"
 #include "graphics_context.hpp"
@@ -65,11 +66,11 @@ namespace tr {
 		void set_layer_blend_mode(int layer, const blend_mode& blend_mode);
 
 		// Adds a filled circle to the renderer.
-		void add_circle(int layer, const circle& circle, rgba8 color);
+		void add_circle(int layer, circle circle, rgba8 color);
 		// Adds a circle outline to the renderer.
-		void add_circle_outline(int layer, const circle& circle, float outline_thickness, rgba8 color);
+		void add_circle_outline(int layer, circle circle, float outline_thickness, rgba8 color);
 		// Adds an outlined circle to the renderer.
-		void add_outlined_circle(int layer, const circle& circle, float outline_thickness, rgba8 fill_color, rgba8 outline_color);
+		void add_outlined_circle(int layer, circle circle, float outline_thickness, rgba8 fill_color, rgba8 outline_color);
 
 		// Prepares a staggered draw manager for all layers in a priority range. The renderer is "locked" and can't be interacted with while
 		// this manager exists.

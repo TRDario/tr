@@ -6,7 +6,7 @@
 //     - tr::string_flat_map<tr::bitmap> bitmaps{{"a", tr::load_bitmap_file("a.bmp")}, {"b", tr::load_bitmap_file("b.bmp")}}             //
 //       tr::bitmap_atlas atlas{tr::build_bitmap_atlas(bitmaps)}                                                                         //
 //       -> stitches all bitmaps in 'bitmaps' into a single bitmap contained in atlas.bitmap, with information on where the constituents //
-//          are located in atlas.rects                                                                                                   //
+//          are located in atlas.rectangles                                                                                              //
 //                                                                                                                                       //
 // tr::dyn_atlas abstracts over a tr::texture to provide an atlas interface, automatically handling insertion, removal, resizing, and so //
 // on of the underlying texture. A dynamic atlas can be created empty, with an initial reserved size, or using a pre-assembled bitmap    //
@@ -14,22 +14,21 @@
 //     - tr::dyn_atlas{} -> creates an empty atlas                                                                                       //
 //     - tr::dyn_atlas{{512, 512}} -> creates an empty atlas with a pre-allocated 512x512 texture                                        //
 //     - tr::dyn_atlas atlas{}; atlas.reserve({512, 512}) -> equivalent to the above                                                     //
-//     - tr::dyn_atlas{bitmaps} -> uploads the 'bitmaps' atlas into a texture and takes its rect information                             //
+//     - tr::dyn_atlas{bitmaps} -> uploads the 'bitmaps' atlas into a texture and takes its rectangle information                        //
 //                                                                                                                                       //
 // The underlying bitmap can be accessed with an implicit conversion, but only in a read-only manner. Filtering can be set with          //
 // .set_filtering(), as in a regular texture.                                                                                            //
 //                                                                                                                                       //
-// Entries in the atlas can be checked for and accessed: using operator[] gets the normalized uv of the entry, while .unnormalized()     //
-// gets the unnormalized region in the atlas. If the atlas stores extra data, that can be gotten with .unnormalized_with_extra().        //
-// The total number of entries in the atlas can be obtained with .entries(), while the size of the atlas texture in pixels can be        //
-// obtained with .size(). An entry is added into the atlas with .add(), and the atlas can be cleared with the .clear() method:           //
+// Entries in the atlas can be checked for and accessed: using operator[] gets the normalized uv of the entry, while .raw() gets the raw //
+// data associated with the entry. The total number of entries in the atlas can be obtained with .entries(), while the size of the atlas //
+// texture in pixels can be obtained with .size(). An entry is added into the atlas with .add(), and the atlas can be cleared with       //
+// the .clear() method:                                                                                                                  //
 //     - atlas.size() -> {512, 512}                                                                                                      //
 //     - atlas.add("C", tr::load_bitmap_file("c.bmp")) -> adds "C" to the atlas                                                          //
 //     - atlas.entries() -> 1                                                                                                            //
 //     - atlas.contains("C") -> true                                                                                                     //
-//     - atlas["C"] -> gets the normalized UV rect of "C"                                                                                //
-//     - atlas.unnormalized("C") -> gets the unnormalized UV rect of "C"                                                                 //
-//     - atlas.unnormalized_with_extra("C") -> gets the unnormalized UV rect and extra data of "C"                                       //
+//     - atlas["C"] -> gets the normalized UV rectangle of "C"                                                                           //
+//     - atlas.raw("C") -> gets the raw value data of "C"                                                                                //
 //     - atlas.clear() -> atlas is now empty again, but retains the reserved space                                                       //
 //                                                                                                                                       //
 // The label of an atlas can be set with .set_label() and gotten with .label():                                                          //
@@ -45,20 +44,20 @@
 
 namespace tr {
 	// Basic bitmap atlas structure.
-	template <typename Key, atlas_rects_value_type Value, hasher<Key> Hash = boost::hash<Key>,
+	template <typename Key, atlas_entries_value_type Value, hasher<Key> Hash = boost::hash<Key>,
 			  equality_predicate<Key> Pred = std::equal_to<Key>>
 	struct bitmap_atlas {
 		// The atlas bitmap.
 		tr::bitmap bitmap;
 		// The atlas entries.
-		atlas_rects<Key, Value, Hash, Pred> rects;
+		atlas_entries<Key, Value, Hash, Pred> rectangles;
 	};
 	// Builds a bitmap atlas from individual bitmaps.
 	template <typename Key, hasher<Key> Hash = boost::hash<Key>, equality_predicate<Key> Pred = std::equal_to<Key>>
 	bitmap_atlas<Key, void, Hash, Pred> build_bitmap_atlas(const boost::unordered_flat_map<Key, tr::bitmap, Hash, Pred>& entries);
 
 	// Dynamically-allocated texture atlas.
-	template <typename Key, atlas_rects_value_type Value, hasher<Key> Hash = boost::hash<Key>,
+	template <typename Key, atlas_entries_value_type Value, hasher<Key> Hash = boost::hash<Key>,
 			  equality_predicate<Key> Pred = std::equal_to<Key>>
 	class dyn_atlas {
 	  public:
@@ -87,8 +86,8 @@ namespace tr {
 		// Gets the number of entries in the atlas.
 		usize entries() const;
 
-		// Returns the rect associated with an entry.
-		template <hash_keylike<Key, Hash, Pred> Keylike> frect2 operator[](Keylike&& key) const;
+		// Returns the rectangle associated with an entry.
+		template <hash_keylike<Key, Hash, Pred> Keylike> rectangle<float> operator[](Keylike&& key) const;
 		// Returns the raw value associated with an entry.
 		template <hash_keylike<Key, Hash, Pred> Keylike> const Value& raw(Keylike&& key) const;
 
@@ -97,7 +96,7 @@ namespace tr {
 
 		// Adds an entry to the atlas.
 		template <typename... Args>
-			requires(std::constructible_from<Value, rect2<u16>, Args...>)
+			requires(std::constructible_from<Value, rectangle<u16>, Args...>)
 		void add(Key key, const sub_bitmap& bitmap, Args&&... args);
 
 		// Removes all entries from the atlas.
@@ -112,7 +111,7 @@ namespace tr {
 		// The atlas texture.
 		texture m_tex;
 		// The atlas entries.
-		atlas_rects<Key, Value, Hash, Pred> m_rects;
+		atlas_entries<Key, Value, Hash, Pred> m_entries;
 	};
 } // namespace tr
 

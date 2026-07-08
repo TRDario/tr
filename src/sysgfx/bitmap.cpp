@@ -6,6 +6,7 @@
 
 #include "../../include/tr/sysgfx/bitmap.hpp"
 #include "../../include/tr/sysgfx/bitmap_iterators.hpp"
+#include "../../include/tr/utility/enum.hpp"
 #include <SDL3/SDL.h>
 #include <SDL3_image/SDL_image.h>
 
@@ -72,30 +73,30 @@ std::string_view tr::bitmap_save_error::details() const
 
 //////////////////////////////////////////////////////////////// SUB-BITMAP ///////////////////////////////////////////////////////////////
 
-tr::sub_bitmap::sub_bitmap(const bitmap& bitmap, const irect2& rect)
+tr::sub_bitmap::sub_bitmap(const bitmap& bitmap, const rectangle<int>& region)
 	: m_ptr{bitmap.m_ptr.get()}
-	, m_rect{rect}
+	, m_region{region}
 {
 }
 
-tr::sub_bitmap::sub_bitmap(const bitmap_view& bitmap, const irect2& rect)
+tr::sub_bitmap::sub_bitmap(const bitmap_view& bitmap, const rectangle<int>& region)
 	: m_ptr{bitmap.m_ptr.get()}
-	, m_rect{rect}
+	, m_region{region}
 {
 }
 
 glm::ivec2 tr::sub_bitmap::size() const
 {
-	return m_rect.size;
+	return m_region.size;
 }
 
-tr::sub_bitmap tr::sub_bitmap::sub(const irect2& rect)
+tr::sub_bitmap tr::sub_bitmap::sub(const rectangle<int>& region)
 {
-	TR_ASSERT(m_rect.contains(rect.tl + rect.size),
-			  "Tried to create out-of-bounds sub-bitmap from ({}, {}) to ({}, {}) in a sub-bitmap of size {}x{}.", rect.tl.x, rect.tl.y,
-			  rect.tl.x + rect.size.x, rect.tl.y + rect.size.y, m_rect.size.x, m_rect.size.y);
+	TR_ASSERT(m_region.contains(region.tl + region.size),
+			  "Tried to create out-of-bounds sub-bitmap from ({}, {}) to ({}, {}) in a sub-bitmap of size {}x{}.", region.tl.x, region.tl.y,
+			  region.tl.x + region.size.x, region.tl.y + region.size.y, m_region.size.x, m_region.size.y);
 
-	return {m_ptr, {rect.tl + rect.tl, rect.size}};
+	return {m_ptr, {region.tl + region.tl, region.size}};
 }
 
 tr::sub_bitmap::reference tr::sub_bitmap::operator[](glm::ivec2 pos) const
@@ -125,7 +126,7 @@ tr::sub_bitmap::iterator tr::sub_bitmap::cend() const
 
 const std::byte* tr::sub_bitmap::data() const
 {
-	return static_cast<const std::byte*>(m_ptr->pixels) + pitch() * m_rect.tl.y + pixel_bytes(format()) * m_rect.tl.x;
+	return static_cast<const std::byte*>(m_ptr->pixels) + pitch() * m_region.tl.y + pixel_bytes(format()) * m_region.tl.x;
 }
 
 tr::pixel_format tr::sub_bitmap::format() const
@@ -200,9 +201,9 @@ tr::bitmap_view::operator tr::sub_bitmap() const
 	return sub({{}, size()});
 }
 
-tr::sub_bitmap tr::bitmap_view::sub(const irect2& rect) const
+tr::sub_bitmap tr::bitmap_view::sub(const rectangle<int>& region) const
 {
-	return sub_bitmap{*this, rect};
+	return sub_bitmap{*this, region};
 }
 
 const std::byte* tr::bitmap_view::data() const
@@ -329,22 +330,22 @@ tr::bitmap::const_iterator tr::bitmap::cend() const
 void tr::bitmap::blit(glm::ivec2 tl, const sub_bitmap& source)
 {
 	TR_ASSERT(m_ptr != nullptr, "Tried to blit to a moved-from bitmap.");
-	TR_ASSERT(irect2{size()}.contains(tl + source.size()),
+	TR_ASSERT(rectangle<int>{size()}.contains(tl + source.size()),
 			  "Tried to blit to out-of-bounds region from ({}, {}) to ({}, {}) in a bitmap of size {}x{}.", tl.x, tl.y,
 			  tl.x + source.size().x, tl.y + source.size().y, size().x, size().y);
 
-	const SDL_Rect sdl_src{source.m_rect.tl.x, source.m_rect.tl.y, source.size().x, source.size().y};
+	const SDL_Rect sdl_src{source.m_region.tl.x, source.m_region.tl.y, source.size().x, source.size().y};
 	const SDL_Rect sdl_dest{tl.x, tl.y, source.size().x, source.size().y};
 	SDL_BlitSurface(source.m_ptr, &sdl_src, m_ptr.get(), &sdl_dest);
 }
 
-void tr::bitmap::fill(const irect2& rect, rgba8 color)
+void tr::bitmap::fill(const rectangle<int>& region, rgba8 color)
 {
-	TR_ASSERT(irect2{size()}.contains(rect.tl + rect.size),
-			  "Tried to fill out-of-bounds region from ({}, {}) to ({}, {}) in a bitmap of size {}x{}.", rect.tl.x, rect.tl.y,
-			  rect.tl.x + rect.size.x, rect.tl.y + rect.size.y, size().x, size().y);
+	TR_ASSERT(rectangle<int>{size()}.contains(region.tl + region.size),
+			  "Tried to fill out-of-bounds region from ({}, {}) to ({}, {}) in a bitmap of size {}x{}.", region.tl.x, region.tl.y,
+			  region.tl.x + region.size.x, region.tl.y + region.size.y, size().x, size().y);
 
-	const SDL_Rect sdl_rect{rect.tl.x, rect.tl.y, rect.size.x, rect.size.y};
+	const SDL_Rect sdl_rect{region.tl.x, region.tl.y, region.size.x, region.size.y};
 	const SDL_PixelFormatDetails* sdl_details{SDL_GetPixelFormatDetails(m_ptr->format)};
 	const SDL_Palette* sdl_palette{SDL_GetSurfacePalette(m_ptr.get())};
 	const u32 sdl_color{SDL_MapRGBA(sdl_details, sdl_palette, color.r, color.g, color.b, color.a)};
@@ -356,9 +357,9 @@ tr::bitmap::operator tr::sub_bitmap() const
 	return sub({{}, size()});
 }
 
-tr::sub_bitmap tr::bitmap::sub(const irect2& rect) const
+tr::sub_bitmap tr::bitmap::sub(const rectangle<int>& region) const
 {
-	return sub_bitmap{*this, rect};
+	return sub_bitmap{*this, region};
 }
 
 std::byte* tr::bitmap::data()
