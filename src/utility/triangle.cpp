@@ -11,7 +11,7 @@
 
 tr::winding_order tr::triangle::winding_order() const
 {
-	return cross(b - a, c - a) >= 0 ? winding_order::ccw : winding_order::cw;
+	return cross(b - a, c - a) <= 0 ? winding_order::ccw : winding_order::cw;
 }
 
 bool tr::triangle::contains(glm::vec2 p) const
