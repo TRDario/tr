@@ -62,7 +62,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "concepts.hpp"
+#include "enum.hpp"
 #include "logger.hpp"
 
 ////////////////////////////////////////////////////////////// IMPLEMENTATION /////////////////////////////////////////////////////////////
@@ -159,19 +159,19 @@ namespace tr {
 #define TR_DEFINE_ENUM_BITMASK_OPERATORS(type)                                                                                             \
 	constexpr tr::enum_wrapper<type> operator&(type l, type r)                                                                             \
 	{                                                                                                                                      \
-		return tr::enum_wrapper{type(std::underlying_type_t<type>(l) & std::underlying_type_t<type>(r))};                                  \
+		return tr::enum_wrapper{static_cast<type>(tr::to_underlying(l) & tr::to_underlying(r))};                                           \
 	}                                                                                                                                      \
 	constexpr tr::enum_wrapper<type> operator|(type l, type r)                                                                             \
 	{                                                                                                                                      \
-		return tr::enum_wrapper{type(std::underlying_type_t<type>(l) | std::underlying_type_t<type>(r))};                                  \
+		return tr::enum_wrapper{static_cast<type>(tr::to_underlying(l) | tr::to_underlying(r))};                                           \
 	}                                                                                                                                      \
 	constexpr tr::enum_wrapper<type> operator^(type l, type r)                                                                             \
 	{                                                                                                                                      \
-		return tr::enum_wrapper{type(std::underlying_type_t<type>(l) ^ std::underlying_type_t<type>(r))};                                  \
+		return tr::enum_wrapper{static_cast<type>(tr::to_underlying(l) ^ tr::to_underlying(r))};                                           \
 	}                                                                                                                                      \
 	constexpr tr::enum_wrapper<type> operator~(type l)                                                                                     \
 	{                                                                                                                                      \
-		return tr::enum_wrapper{type(~std::underlying_type_t<type>(l))};                                                                   \
+		return tr::enum_wrapper{static_cast<type>(~tr::to_underlying(l))};                                                                 \
 	}                                                                                                                                      \
 	constexpr type& operator&=(type& l, type r)                                                                                            \
 	{                                                                                                                                      \
@@ -189,19 +189,19 @@ namespace tr {
 #define TR_DEFINE_PRIVATE_ENUM_BITMASK_OPERATORS(type)                                                                                     \
 	friend constexpr tr::enum_wrapper<type> operator&(type l, type r)                                                                      \
 	{                                                                                                                                      \
-		return tr::enum_wrapper{type(std::underlying_type_t<type>(l) & std::underlying_type_t<type>(r))};                                  \
+		return tr::enum_wrapper{static_cast<type>(tr::to_underlying(l) & tr::to_underlying(r))};                                           \
 	}                                                                                                                                      \
 	friend constexpr tr::enum_wrapper<type> operator|(type l, type r)                                                                      \
 	{                                                                                                                                      \
-		return tr::enum_wrapper{type(std::underlying_type_t<type>(l) | std::underlying_type_t<type>(r))};                                  \
+		return tr::enum_wrapper{static_cast<type>(tr::to_underlying(l) | tr::to_underlying(r))};                                           \
 	}                                                                                                                                      \
 	friend constexpr tr::enum_wrapper<type> operator^(type l, type r)                                                                      \
 	{                                                                                                                                      \
-		return tr::enum_wrapper{type(std::underlying_type_t<type>(l) ^ std::underlying_type_t<type>(r))};                                  \
+		return tr::enum_wrapper{static_cast<type>(tr::to_underlying(l) ^ tr::to_underlying(r))};                                           \
 	}                                                                                                                                      \
 	friend constexpr tr::enum_wrapper<type> operator~(type l)                                                                              \
 	{                                                                                                                                      \
-		return tr::enum_wrapper{type(~std::underlying_type_t<type>(l))};                                                                   \
+		return tr::enum_wrapper{static_cast<type>(~tr::to_underlying(l))};                                                                 \
 	}                                                                                                                                      \
 	friend constexpr type& operator&=(type& l, type r)                                                                                     \
 	{                                                                                                                                      \
