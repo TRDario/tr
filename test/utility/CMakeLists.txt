@@ -8,6 +8,7 @@ add_executable(
 	encryption.cpp
 	hash_map.cpp
 	localization_map.cpp
+	logger.cpp
 	math.cpp
 	matrix.cpp
 	mstream.cpp

@@ -32,17 +32,16 @@
 //     - tr::log.clear_backend() -> clears the tr logger's backend, disabling it                                                         //
 //     - tr::log.replace_backend_with<tr::console_and_file_logger>("tr", "logs/tr.log") -> replaces the tr logger's backend              //
 //                                                                                                                                       //
-// Logging a formatted message is done with the .log() method, or the TR_LOG(logger, ...) macro that checks if the log is active before  //
-// evaluating the arguments. Writing a multiline message should be done line-by-line and by passing all but the first line to the        //
-// .log_continue() method, or the TR_LOG_CONTINUE(logger, ...) macro. Most formatting is done as if by std::format, but exceptions are   //
-// special and can be passed without a format string, they are formatted automatically. Messages have one of 4 severity levels           //
-// (info, warning, error, fatal):                                                                                                        //
-//     - TR_LOG(log, tr::severity::info, "Example {}", "message")                                                                        //
+// Logging a formatted message is done with the .log() method. Writing a multiline message should be done line-by-line and by passing    //
+// all but the first line to the .log_continue() method. Most formatting is done as if by std::format, but exceptions are special and    //
+// can be passed without a format string, they are formatted automatically.                                                              //
+// Messages have one of 4 severity levels (info, warning, error, fatal):                                                                 //
+//     - log.log(tr::severity::info, "Example {}", "message")                                                                            //
 //       -> [14:44:56] [log] [I] Example message                                                                                         //
-//     - TR_LOG(log, tr::severity::warning, "Multiline example:"); TR_LOG_CONTINUE(log, "Blah blah blah")                                //
+//     - log.log(tr::severity::warning, "Multiline example:"); log.log_continue(log, "Blah blah blah")                                   //
 //       -> [14:49:05] [log] [W] Multiline example:                                                                                      //
 //                           --- Blah blah blah                                                                                          //
-//     - TR_LOG(log, tr::severity::error, tr::out_of_memory{"bitmap allocation"})                                                        //
+//     - log.log(tr::severity::error, tr::out_of_memory{"bitmap allocation"})                                                            //
 //       -> [14:51:02] [log] [E] Exception raised: Out of memory.                                                                        //
 //                           --- Error occurred during bitmap allocation.                                                                //
 //                                                                                                                                       //
@@ -52,6 +51,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
+#include "common.hpp"
 
 ////////////////////////////////////////////////////////////////// LOGGER /////////////////////////////////////////////////////////////////
 
@@ -129,6 +129,10 @@ namespace tr {
 
 		// Gets whether the logger is active.
 		bool active() const;
+		// Gets the backend of the logger.
+		const logger_backend& backend() const;
+		// Gets the backend of the logger.
+		logger_backend& backend();
 
 		// Clears the logger's backend.
 		void clear_backend();
@@ -162,21 +166,5 @@ namespace tr {
 	// tr's default error logger, may be redirected.
 	inline logger error_logger{make_logger<console_logger>("tr")};
 } // namespace tr
-
-// Logging macro to avoid instantiating arguments to the logging function when not needed.
-#define TR_LOG(logger, ...)                                                                                                                \
-	do {                                                                                                                                   \
-		if (logger.active()) {                                                                                                             \
-			logger.log(__VA_ARGS__);                                                                                                       \
-		}                                                                                                                                  \
-	} while (0)
-
-// Logging macro to avoid instantiating arguments to the logging function when not needed.
-#define TR_LOG_CONTINUE(logger, ...)                                                                                                       \
-	do {                                                                                                                                   \
-		if (logger.active()) {                                                                                                             \
-			logger.log_continue(__VA_ARGS__);                                                                                              \
-		}                                                                                                                                  \
-	} while (0)
 
 #include "impl/logger.hpp" // IWYU pragma: export

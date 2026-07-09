@@ -116,6 +116,16 @@ bool tr::logger::active() const
 	return m_backend != nullptr;
 }
 
+const tr::logger_backend& tr::logger::backend() const
+{
+	return *m_backend;
+}
+
+tr::logger_backend& tr::logger::backend()
+{
+	return *m_backend;
+}
+
 //
 
 void tr::logger::clear_backend()
