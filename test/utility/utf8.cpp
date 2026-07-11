@@ -15,23 +15,23 @@ constexpr std::array<tr::usize, 5> offsets{0, 1, 3, 6, 10};
 TEST(utf8_test, utf8_to_cp)
 {
 	for (int i = 0; i < 4; ++i) {
-		ASSERT_EQ(tr::utf8::to_cp(characters.begin() + offsets[i]), codepoints[i]);
+		EXPECT_EQ(tr::utf8::to_cp(characters.begin() + offsets[i]), codepoints[i]);
 	}
 }
 
 TEST(utf8_test, forward_iteration)
 {
 	for (auto [it, i] = std::pair{characters.begin(), 0}; i <= 4; it = tr::utf8::next(it), ++i) {
-		ASSERT_EQ(tr::usize(std::distance(characters.begin(), it)), offsets[i]);
-		ASSERT_EQ(tr::utf8::next(characters.begin(), i), it);
+		EXPECT_EQ(tr::usize(std::distance(characters.begin(), it)), offsets[i]);
+		EXPECT_EQ(tr::utf8::next(characters.begin(), i), it);
 	}
 }
 
 TEST(utf8_test, backward_iteration)
 {
 	for (auto [it, i] = std::pair{characters.end(), 4}; i >= 0; it = tr::utf8::prev(it), --i) {
-		ASSERT_EQ(tr::usize(std::distance(characters.begin(), it)), offsets[i]);
-		ASSERT_EQ(tr::utf8::prev(characters.end(), 4 - i), it);
+		EXPECT_EQ(tr::usize(std::distance(characters.begin(), it)), offsets[i]);
+		EXPECT_EQ(tr::utf8::prev(characters.end(), 4 - i), it);
 	}
 }
 
@@ -41,33 +41,33 @@ TEST(utf8_test, insertion)
 	for (tr::codepoint cp : codepoints) {
 		tr::utf8::insert(insert, insert.begin(), cp);
 	}
-	ASSERT_EQ(insert, "😳東ča");
+	EXPECT_EQ(insert, "😳東ča");
 }
 
 TEST(utf8_test, deletion)
 {
 	tr::static_string<10> erase{"😳東ča"};
 	tr::utf8::erase(erase, erase.begin());
-	ASSERT_EQ(erase, "東ča");
+	EXPECT_EQ(erase, "東ča");
 	tr::utf8::erase(erase, erase.begin());
-	ASSERT_EQ(erase, "ča");
+	EXPECT_EQ(erase, "ča");
 	tr::utf8::erase(erase, erase.begin());
-	ASSERT_EQ(erase, "a");
+	EXPECT_EQ(erase, "a");
 	tr::utf8::erase(erase, erase.begin());
-	ASSERT_TRUE(erase.empty());
+	EXPECT_TRUE(erase.empty());
 }
 
 TEST(utf8_test, pop_back)
 {
 	tr::static_string<10> pop_back{"😳東ča"};
 	tr::utf8::pop_back(pop_back);
-	ASSERT_EQ(pop_back, "😳東č");
+	EXPECT_EQ(pop_back, "😳東č");
 	tr::utf8::pop_back(pop_back);
-	ASSERT_EQ(pop_back, "😳東");
+	EXPECT_EQ(pop_back, "😳東");
 	tr::utf8::pop_back(pop_back);
-	ASSERT_EQ(pop_back, "😳");
+	EXPECT_EQ(pop_back, "😳");
 	tr::utf8::pop_back(pop_back);
-	ASSERT_TRUE(pop_back.empty());
+	EXPECT_TRUE(pop_back.empty());
 }
 
 TEST(utf8_test, iterator)
@@ -77,13 +77,13 @@ TEST(utf8_test, iterator)
 		range_codepoints.emplace_back(cp);
 	}
 
-	ASSERT_TRUE(std::ranges::equal(range_codepoints, codepoints));
+	EXPECT_TRUE(std::ranges::equal(range_codepoints, codepoints));
 	for (tr::utf8::indexed_iterator it = tr::utf8::ibegin(characters); it != tr::utf8::iend(characters); ++it) {
-		ASSERT_EQ(std::ranges::distance(tr::utf8::ibegin(characters), it), it.index());
+		EXPECT_EQ(std::ranges::distance(tr::utf8::ibegin(characters), it), it.index());
 	}
 }
 
 TEST(utf8_test, length)
 {
-	ASSERT_EQ(tr::utf8::length(characters), 4);
+	EXPECT_EQ(tr::utf8::length(characters), 4);
 }

@@ -71,26 +71,26 @@ TEST(rectangle_test, intersection)
 	EXPECT_TRUE(tr::intersecting(a, b));
 	const std::optional<tr::rectangle<float>> ab{tr::intersection(a, b)};
 	const std::optional<tr::rectangle<float>> ba{tr::intersection(b, a)};
-	ASSERT_EQ(ab, ba);
-	ASSERT_TRUE(ab.has_value());
-	ASSERT_EQ(ab->tl.x, 180);
-	ASSERT_EQ(ab->tl.y, 175);
-	ASSERT_EQ(ab->size.x, 50);
-	ASSERT_EQ(ab->size.y, 25);
+	EXPECT_EQ(ab, ba);
+	EXPECT_TRUE(ab.has_value());
+	EXPECT_EQ(ab->tl.x, 180);
+	EXPECT_EQ(ab->tl.y, 175);
+	EXPECT_EQ(ab->size.x, 50);
+	EXPECT_EQ(ab->size.y, 25);
 
 	EXPECT_FALSE(tr::intersecting(a, c));
 	const std::optional<tr::rectangle<float>> ac{tr::intersection(a, c)};
 	const std::optional<tr::rectangle<float>> ca{tr::intersection(c, a)};
-	ASSERT_EQ(ac, ca);
-	ASSERT_FALSE(ac.has_value());
+	EXPECT_EQ(ac, ca);
+	EXPECT_FALSE(ac.has_value());
 
 	EXPECT_TRUE(tr::intersecting(b, c));
 	const std::optional<tr::rectangle<float>> bc{tr::intersection(b, c)};
 	const std::optional<tr::rectangle<float>> cb{tr::intersection(c, b)};
-	ASSERT_EQ(bc, cb);
-	ASSERT_TRUE(bc.has_value());
-	ASSERT_EQ(bc->tl.x, 180);
-	ASSERT_EQ(bc->tl.y, 205);
-	ASSERT_EQ(bc->size.x, 50);
-	ASSERT_EQ(bc->size.y, 20);
+	EXPECT_EQ(bc, cb);
+	EXPECT_TRUE(bc.has_value());
+	EXPECT_EQ(bc->tl.x, 180);
+	EXPECT_EQ(bc->tl.y, 205);
+	EXPECT_EQ(bc->size.x, 50);
+	EXPECT_EQ(bc->size.y, 20);
 }

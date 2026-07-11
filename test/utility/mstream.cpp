@@ -23,7 +23,7 @@ TEST(mstream_test, omstream)
 	os.seekp(512 * sizeof(double));
 	os.write((const char*)out_source.data(), sizeof(out_source));
 
-	ASSERT_TRUE(std::ranges::equal(std::views::drop(out_dest, 512), out_source));
+	EXPECT_TRUE(std::ranges::equal(std::views::drop(out_dest, 512), out_source));
 }
 
 TEST(mstream_test, imstream)
@@ -40,7 +40,7 @@ TEST(mstream_test, imstream)
 	is.seekg(512 * sizeof(double));
 	is.read((char*)in_dest.data(), sizeof(in_dest));
 
-	ASSERT_TRUE(std::ranges::equal(std::views::drop(in_source, 512), in_dest));
+	EXPECT_TRUE(std::ranges::equal(std::views::drop(in_source, 512), in_dest));
 }
 
 TEST(mstream_test, mstream)
@@ -59,5 +59,5 @@ TEST(mstream_test, mstream)
 	std::array<double, 1024> dest;
 	ios.read((char*)dest.data(), sizeof(dest));
 
-	ASSERT_EQ(source, dest);
+	EXPECT_EQ(source, dest);
 }

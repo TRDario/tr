@@ -11,12 +11,12 @@ TEST(print_test, print_to)
 {
 	std::ostringstream os;
 	tr::print_to(os, "PI = {:.2f}", std::numbers::pi);
-	ASSERT_EQ(os.str(), "PI = 3.14");
+	EXPECT_EQ(os.str(), "PI = 3.14");
 }
 
 TEST(print_test, println_to)
 {
 	std::ostringstream os;
 	tr::println_to(os, "PI = {:.2f}", std::numbers::pi);
-	ASSERT_EQ(os.str(), "PI = 3.14\n");
+	EXPECT_EQ(os.str(), "PI = 3.14\n");
 }

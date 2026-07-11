@@ -23,5 +23,5 @@ TEST(norm_cast_test, round_trip)
 	}
 
 	// Check if maximum error is outside the tolerated range.
-	ASSERT_FALSE(max_error > 1.0f / 255.0f + 1e-6f) << "Maximum deviation: " << max_error << " (outside margin of error).";
+	EXPECT_FALSE(max_error > 1.0f / 255.0f + 1e-6f) << "Maximum deviation: " << max_error << " (outside margin of error).";
 }
