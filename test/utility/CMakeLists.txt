@@ -6,6 +6,7 @@ add_executable(
 	color.cpp
 	defer.cpp
 	encryption.cpp
+	enum.cpp
 	hash_map.cpp
 	localization_map.cpp
 	logger.cpp
