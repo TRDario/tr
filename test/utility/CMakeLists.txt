@@ -7,6 +7,7 @@ add_executable(
 	defer.cpp
 	encryption.cpp
 	enum.cpp
+	handle.cpp
 	hash_map.cpp
 	localization_map.cpp
 	logger.cpp
