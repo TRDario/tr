@@ -37,7 +37,7 @@ template <typename Element>
 template <typename ElementR>
 constexpr bool tr::rectangle<Element>::operator==(const rectangle<ElementR>& r) const
 {
-	return tl == r.tl && size == r.size;
+	return tl.x == r.tl.x && tl.y == r.tl.y && size.x == r.size.x && size.y == r.size.y;
 }
 
 //

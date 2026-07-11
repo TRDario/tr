@@ -47,7 +47,7 @@ namespace tr {
 		template <typename ElementR> constexpr rectangle(const rectangle<ElementR>& rectangle);
 
 		// Compares two rectangles for equality.
-		template <typename ElementR> constexpr bool operator==(const rectangle<ElementR>&) const;
+		template <typename ElementR> constexpr bool operator==(const rectangle<ElementR>& r) const;
 
 		// Determines whether a point is contained inside the rectangle.
 		template <typename ElementR = Element> constexpr bool contains(glm::tvec2<ElementR> point) const;

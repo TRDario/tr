@@ -16,6 +16,7 @@ add_executable(
 	optional.cpp
 	ranges.cpp
 	rectangle_edges.cpp
+	rectangle.cpp
 	print.cpp
 	reference.cpp
 	rng.cpp
