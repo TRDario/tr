@@ -13,36 +13,30 @@
 template <typename Element, tr::usize Capacity>
 tr::static_vector<Element, Capacity>::static_vector(size_type size)
 	requires(std::default_initializable<Element>)
-	: m_size{static_cast<size_type>(size)}
+	: m_size{size}
 {
 	TR_ASSERT(size <= Capacity, "Tried to create a static vector of size {} but with a max capacity of only {}.", size, Capacity);
 
-	for (usize i = 0; i < m_size; ++i) {
-		new (m_buffer + sizeof(Element) * i) Element{};
-	}
+	std::uninitialized_default_construct(begin(), end());
 }
 
 template <typename Element, tr::usize Capacity>
 tr::static_vector<Element, Capacity>::static_vector(size_type size, const Element& v)
 	requires(std::copy_constructible<Element>)
-	: m_size{static_cast<size_type>(size)}
+	: m_size{size}
 {
 	TR_ASSERT(size <= Capacity, "Tried to create a static vector of size {} but with a max capacity of only {}.", size, Capacity);
 
-	for (usize i = 0; i < m_size; ++i) {
-		new (m_buffer + sizeof(Element) * i) Element{v};
-	}
+	std::uninitialized_fill(begin(), end(), v);
 }
 
 template <typename Element, tr::usize Capacity>
 template <std::input_iterator Iterator>
 	requires(std::same_as<typename std::iterator_traits<Iterator>::value_type, Element>)
 tr::static_vector<Element, Capacity>::static_vector(Iterator first, Iterator last)
-	: m_size{static_cast<size_type>(std::distance(first, last))}
+	: m_size{0}
 {
-	TR_ASSERT(m_size <= Capacity, "Tried to create a static vector of size {} but with a max capacity of only {}.", m_size, Capacity);
-
-	std::move(first, last, begin());
+	append(first, last);
 }
 
 template <typename Element, tr::usize Capacity>
@@ -77,9 +71,7 @@ tr::static_vector<Element, Capacity>::static_vector(static_vector&& r) noexcept(
 
 template <typename Element, tr::usize Capacity> tr::static_vector<Element, Capacity>::~static_vector<Element, Capacity>()
 {
-	for (usize i = 0; i < m_size; ++i) {
-		reinterpret_cast<Element*>(m_buffer + i)->~Element();
-	}
+	std::destroy(begin(), end());
 }
 
 //
@@ -239,9 +231,7 @@ constexpr tr::static_vector<Element, Capacity>::size_type tr::static_vector<Elem
 
 template <typename Element, tr::usize Capacity> void tr::static_vector<Element, Capacity>::clear()
 {
-	for (usize i = 0; i < m_size; ++i) {
-		at(i).~Element();
-	}
+	std::destroy(begin(), end());
 	m_size = 0;
 }
 
@@ -262,21 +252,31 @@ tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capaci
 template <typename Element, tr::usize Capacity>
 template <std::input_iterator Iterator>
 	requires(std::same_as<typename std::iterator_traits<Iterator>::value_type, Element>)
-tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capacity>::insert(const_iterator where, Iterator first,
+tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capacity>::insert(const_iterator cwhere, Iterator first,
 																							Iterator last)
 {
-	const auto range_size{std::distance(first, last)};
+	const auto inserted_elements{std::distance(first, last)};
 
-	TR_ASSERT(m_size + range_size <= Capacity, "Tried to do an insert into a static vector that would put it past its capacity of {}.",
-			  Capacity);
-	TR_ASSERT(where >= begin() && where <= end(), "Tried to pass an invalid iterator to static_vector::insert.");
+	TR_ASSERT(static_cast<usize>(m_size + inserted_elements) <= Capacity,
+			  "Tried to do an insert into a static vector that would put it past its capacity of {}.", Capacity);
+	TR_ASSERT(cwhere >= begin() && cwhere <= end(), "Tried to pass an invalid iterator to static_vector::insert.");
 
-	const iterator mut_where{begin() + (where - begin())};
-
-	std::move_backward(mut_where, end(), end() + range_size);
-	std::move(first, last, mut_where);
-	m_size = m_size + range_size;
-	return mut_where;
+	const iterator where{begin() + std::distance(cbegin(), cwhere)};
+	const difference_type affected_elements{std::distance(where, end())};
+	if (affected_elements > 0) {
+		if (inserted_elements < affected_elements) {
+			std::uninitialized_move(end() - inserted_elements, end(), end());
+			std::move_backward(where, end() - inserted_elements, end());
+			std::destroy_n(where, inserted_elements);
+		}
+		else {
+			std::uninitialized_move(where, end(), where + inserted_elements);
+			std::destroy(where, end());
+		}
+	}
+	std::uninitialized_copy(first, last, where);
+	m_size += inserted_elements;
+	return where;
 }
 
 template <typename Element, tr::usize Capacity>
@@ -298,46 +298,47 @@ tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capaci
 template <typename Element, tr::usize Capacity>
 template <typename... Args>
 	requires(std::constructible_from<Element, Args...>)
-tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capacity>::emplace(const_iterator where, Args&&... args)
+tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capacity>::emplace(const_iterator cwhere, Args&&... args)
 {
 	TR_ASSERT(m_size < Capacity, "Tried to insert into a static vector that is already at its capacity of {}.", Capacity);
-	TR_ASSERT(where >= begin() && where <= end(), "Tried to pass an invalid iterator to static_vector::insert.");
+	TR_ASSERT(cwhere >= begin() && cwhere <= end(), "Tried to pass an invalid iterator to static_vector::insert.");
 
-	const iterator mut_where{begin() + (where - begin())};
-
-	std::move_backward(mut_where, end(), end() + 1);
-	new (mut_where) Element{std::forward<Args>(args)...};
-	++m_size;
-	return mut_where;
-}
-
-template <typename Element, tr::usize Capacity>
-tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capacity>::erase(const_iterator where)
-{
-	TR_ASSERT(where >= begin() && where < end(), "Tried to pass an invalid iterator to static_vector::erase.");
-
-	const iterator mut_where{begin() + (where - begin())};
-
-	mut_where->~Element();
-	std::move(mut_where + 1, end(), mut_where);
-	--m_size;
-	return mut_where;
-}
-
-template <typename Element, tr::usize Capacity>
-tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capacity>::erase(const_iterator first, const_iterator last)
-{
-	TR_ASSERT(first >= begin() && first < end(), "Tried to pass an invalid start iterator to static_vector::erase.");
-	TR_ASSERT(last >= begin() && last <= end(), "Tried to pass an invalid end iterator to static_vector::erase.");
-
-	const iterator mut_first{begin() + (first - begin())};
-
-	for (iterator it = mut_first; it != last; ++it) {
-		it->~Element();
+	const iterator where{begin() + std::distance(cbegin(), cwhere)};
+	if (where != end()) {
+		new (end()) Element{std::move(back())};
+		std::move_backward(where, end() - 1, end());
+		where->~Element();
 	}
-	std::move(mut_first + (first - last), end(), mut_first);
-	m_size = m_size - (first - last);
-	return mut_first;
+	new (where) Element{std::forward<Args>(args)...};
+	++m_size;
+	return where;
+}
+
+template <typename Element, tr::usize Capacity>
+tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capacity>::erase(const_iterator cwhere)
+{
+	TR_ASSERT(cwhere >= begin() && cwhere < end(), "Tried to pass an invalid iterator to static_vector::erase.");
+
+	const iterator where{begin() + (cwhere - begin())};
+	std::move(where + 1, end(), where);
+	where->~Element();
+	--m_size;
+	return where;
+}
+
+template <typename Element, tr::usize Capacity>
+tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capacity>::erase(const_iterator cfirst, const_iterator clast)
+{
+	TR_ASSERT(cfirst >= begin() && cfirst < end(), "Tried to pass an invalid start iterator to static_vector::erase.");
+	TR_ASSERT(clast >= begin() && clast <= end(), "Tried to pass an invalid end iterator to static_vector::erase.");
+
+	const iterator first{begin() + (cfirst - begin())};
+	const iterator last{begin() + (clast - begin())};
+	const difference_type erased_elements{std::distance(first, last)};
+	std::move(last, end(), first);
+	std::destroy(end() - erased_elements, end());
+	m_size -= erased_elements;
+	return first;
 }
 
 template <typename Element, tr::usize Capacity>
@@ -359,8 +360,7 @@ template <typename... Args>
 	requires(std::constructible_from<Element, Args...>)
 tr::static_vector<Element, Capacity>::reference tr::static_vector<Element, Capacity>::emplace_back(Args&&... args)
 {
-	new (data() + m_size++) Element{std::forward<Args>(args)...};
-	return back();
+	return *emplace(end(), std::forward<Args>(args)...);
 }
 
 template <typename Element, tr::usize Capacity>
@@ -388,7 +388,7 @@ tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capaci
 
 template <typename Element, tr::usize Capacity> void tr::static_vector<Element, Capacity>::pop_back()
 {
-	back()->~Element();
+	back().~Element();
 	--m_size;
 }
 
@@ -396,34 +396,28 @@ template <typename Element, tr::usize Capacity>
 void tr::static_vector<Element, Capacity>::resize(size_type size)
 	requires(std::default_initializable<Element>)
 {
-	if (size < m_size) {
-		for (size_type i = size; i != m_size; ++i) {
-			at(i).~Element();
-		}
-	}
-	else if (size > m_size) {
-		for (size_type i = m_size; i != size; ++i) {
-			new (data() + i) Element{};
-		}
-	}
+	const iterator old_end{end()};
 	m_size = size;
+	if (end() < old_end) {
+		std::destroy(end(), old_end);
+	}
+	else if (end() > old_end) {
+		std::uninitialized_default_construct(old_end, end());
+	}
 }
 
 template <typename Element, tr::usize Capacity>
 void tr::static_vector<Element, Capacity>::resize(size_type size, const Element& v)
 	requires(std::copy_constructible<Element>)
 {
-	if (size < m_size) {
-		for (size_type i = size; i != m_size; ++i) {
-			at(i).~Element();
-		}
-	}
-	else if (size > m_size) {
-		for (size_type i = m_size; i != size; ++i) {
-			new (data() + i) Element{v};
-		}
-	}
+	const iterator old_end{end()};
 	m_size = size;
+	if (end() < old_end) {
+		std::destroy(end(), old_end);
+	}
+	else if (end() > old_end) {
+		std::uninitialized_fill(old_end, end(), v);
+	}
 }
 
 //////////////////////////////////////////////////////////////// BINARY IO ////////////////////////////////////////////////////////////////

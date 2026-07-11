@@ -18,7 +18,7 @@ namespace tr {
 	template <typename Element, usize Capacity> class static_vector {
 	  public:
 		using size_type = size_type_t<Capacity>;
-		using difference_type = std::make_signed_t<size_type>;
+		using difference_type = std::ptrdiff_t;
 		using value_type = Element;
 		using reference = Element&;
 		using const_reference = const Element&;

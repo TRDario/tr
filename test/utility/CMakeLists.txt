@@ -19,6 +19,7 @@ add_executable(
 	print.cpp
 	reference.cpp
 	rng.cpp
+	static_vector.cpp
 	stopwatch.cpp
 	template.cpp
 	timer.cpp
