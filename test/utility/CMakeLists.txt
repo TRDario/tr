@@ -1,6 +1,7 @@
 add_executable(
 	utility_test
 	atlas_packer.cpp
+	benchmark.cpp
 	binary_io.cpp
 	circle.cpp
 	color.cpp
