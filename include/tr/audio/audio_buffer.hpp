@@ -24,6 +24,7 @@
 #pragma once
 #include "../utility/chrono.hpp"
 #include "../utility/handle.hpp"
+#include "../utility/integer.hpp"
 
 namespace tr {
 	class audio_context;

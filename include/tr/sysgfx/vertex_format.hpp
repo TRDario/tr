@@ -46,6 +46,8 @@
 
 #pragma once
 #include "../utility/handle.hpp"
+#include "../utility/integer.hpp"
+#include "../utility/macro.hpp"
 
 namespace tr {
 	class graphics_context;

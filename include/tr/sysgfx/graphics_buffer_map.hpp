@@ -31,6 +31,7 @@
 
 #pragma once
 #include "../utility/handle.hpp"
+#include "../utility/integer.hpp"
 
 namespace tr {
 	class graphics_context;
