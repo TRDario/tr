@@ -29,7 +29,6 @@
 #include "utility/macro.hpp"            // IWYU pragma: export
 #include "utility/math.hpp"             // IWYU pragma: export
 #include "utility/matrix.hpp"           // IWYU pragma: export
-#include "utility/mirror_repeat.hpp"    // IWYU pragma: export
 #include "utility/mstream.hpp"          // IWYU pragma: export
 #include "utility/norm_cast.hpp"        // IWYU pragma: export
 #include "utility/optional.hpp"         // IWYU pragma: export
