@@ -11,10 +11,10 @@
 // tr::dyn_atlas abstracts over a tr::texture to provide an atlas interface, automatically handling insertion, removal, resizing, and so //
 // on of the underlying texture. A dynamic atlas can be created empty, with an initial reserved size, or using a pre-assembled bitmap    //
 // atlas as a source. The .reserve() method can also be called at any time to reserve texture space:                                     //
-//     - tr::dyn_atlas{} -> creates an empty atlas                                                                                       //
-//     - tr::dyn_atlas{{512, 512}} -> creates an empty atlas with a pre-allocated 512x512 texture                                        //
-//     - tr::dyn_atlas atlas{}; atlas.reserve({512, 512}) -> equivalent to the above                                                     //
-//     - tr::dyn_atlas{bitmaps} -> uploads the 'bitmaps' atlas into a texture and takes its rectangle information                        //
+//     - tr::dyn_atlas{context} -> creates an empty atlas                                                                                //
+//     - tr::dyn_atlas{context, {512, 512}} -> creates an empty atlas with a pre-allocated 512x512 texture                               //
+//     - tr::dyn_atlas atlas{context}; atlas.reserve({512, 512}) -> equivalent to the above                                              //
+//     - tr::dyn_atlas{context, bitmaps} -> uploads the 'bitmaps' atlas into a texture and takes its rectangle information               //
 //                                                                                                                                       //
 // The underlying bitmap can be accessed with an implicit conversion, but only in a read-only manner. Filtering can be set with          //
 // .set_filtering(), as in a regular texture.                                                                                            //

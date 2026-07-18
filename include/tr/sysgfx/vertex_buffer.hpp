@@ -12,7 +12,7 @@
 //     - tr::dyn_vertex_buffer<Element> -> typed dynamic vertex buffer                                                                   //
 //                                                                                                                                       //
 // Static vertex buffers are constructed with a span of data that will be copied into the buffer:                                        //
-//     - tr::static_vertex_buffer<glm::vec2> buffer{data} -> copies 'data' into the buffer                                               //
+//     - tr::static_vertex_buffer<glm::vec2> buffer{context, data} -> copies 'data' into the buffer                                      //
 //                                                                                                                                       //
 // Dynamic vertex buffers are constructed empty. Whether a buffer is empty can be checked with the .empty() method. Much like            //
 // std::vector, dynamic vertex buffers distinguish between buffer size and capacity, both of which can be queried with the respective    //
@@ -21,7 +21,7 @@
 // with .resize() or set to a copy of a span with .set(), which automatically sets its size to match that of the copied buffer.          //
 // The .set_region() method can be used to set a region of the buffer; this function never affects the size or capacity of the buffer.   //
 // The buffer can be cleared with the .clear() method, but like with std::vector, the allocated capacity is retained:                    //
-//     - tr::dyn_vertex_buffer<glm::vec2> buffer; buffer.empty() -> true                                                                 //
+//     - tr::dyn_vertex_buffer<glm::vec2> buffer{context}; buffer.empty() -> true                                                        //
 //     - buffer.reserve(100); buffer.resize(50) -> buffer now has size 50, capacity 128                                                  //
 //     - buffer.size(); buffer.capacity() -> 50, 128                                                                                     //
 //     - std::array<glm::vec2, 500> data; buffer.set(data) -> buffer now stores a copy of 'data', has size 500, capacity 512             //

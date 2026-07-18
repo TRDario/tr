@@ -11,7 +11,7 @@
 // To update the data in the buffer, either the .set() method to directly set data, or .map() to map the buffer (write-only!) to memory  //
 // and writing to said map are possible. Note that when the buffer is mapped, no other action may be performed on it; the map status of  //
 // a buffer can be checked with the .mapped() method:                                                                                    //
-//     - tr::uniform_buffer<std::array<float, 32>> unibuf{} -> allocates a buffer for a 32-float array                                   //
+//     - tr::uniform_buffer<std::array<float, 32>> unibuf{context} -> allocates a buffer for a 32-float array                            //
 //     - unibuf.size() -> 32                                                                                                             //
 //     - unibuf.set(data) -> directly sets the data of the buffer                                                                        //
 //     - tr::buffer_object_map map{unibuf.map()}; (*map)[10] = 5.0f -> maps the buffer and sets a portion of it                          //
