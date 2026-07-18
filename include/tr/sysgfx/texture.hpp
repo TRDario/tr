@@ -5,25 +5,25 @@
 // Textures are collections of pixel data representing 2D images stored on the GPU and available for use in rendering. Textures can be   //
 // default-constructed (in which case they will be empty), constructed uninitialized, or initialized with bitmap data that will be       //
 // copied into the texture:                                                                                                              //
-//     - tr::gfx::texture tex{}                                                                                                          //
+//     - tr::texture tex{}                                                                                                               //
 //       -> creates an empty texture                                                                                                     //
-//     - tr::gfx::texture tex{{512, 512}, tr::gfx::mipmaps::enabled, tr::pixel_format::rgb24}                                            //
+//     - tr::texture tex{{512, 512}, tr::mipmaps::enabled, tr::pixel_format::rgb24}                                                      //
 //       -> creates an uninitialized 512x512 mipmapped RGB24 texture                                                                     //
-//     - tr::gfx::texture tex{bmp}                                                                                                       //
+//     - tr::texture tex{bmp}                                                                                                            //
 //       -> creates a texture by copying the data from 'bmp' and using the same format                                                   //
-//     - tr::gfx::texture tex{bmp, tr::gfx::mipmaps::disabled, tr::pixel_format::rgb24}                                                  //
+//     - tr::texture tex{bmp, tr::mipmaps::disabled, tr::pixel_format::rgb24}                                                            //
 //       -> creates a texture by copying the data from 'bmp' converted to RGB24                                                          //
 //                                                                                                                                       //
 // Textures may be reallocated using the .reallocate() method. When reallocating, the previous storage is released as a new texture:     //
 //     - tex.reallocate({1024, 1024}) -> reallocates tex as an uninitialized 1024x1024 texture, and releases its old data                //
 //                                                                                                                                       //
 // Textures may be queried for whether they're empty or their size:                                                                      //
-//     - tr::gfx::texture tex{}; tex.empty() -> true                                                                                     //
-//     - tr::gfx::texture tex{{512, 512}}; tex.size() -> {512, 512}                                                                      //
+//     - tr::texture tex{}; tex.empty() -> true                                                                                          //
+//     - tr::texture tex{{512, 512}}; tex.size() -> {512, 512}                                                                           //
 //                                                                                                                                       //
 // The filtering, wrapping, and border color attribtes of textures may be set:                                                           //
-//     - tex.set_filtering(tr::gfx::min_filter::linear, tr::gfx::mag_filter::linear) -> 'tex' uses linear filtering                      //
-//     - tex.set_wrap(tr::gfx::wrap::border_clamp) -> the border color is used for out-of-bounds UVs of 'tex'                            //
+//     - tex.set_filtering(tr::min_filter::linear, tr::mag_filter::linear) -> 'tex' uses linear filtering                                //
+//     - tex.set_wrap(tr::wrap::border_clamp) -> the border color is used for out-of-bounds UVs of 'tex'                                 //
 //     - tex.set_border_color("FF0000"_rgba8) -> the border color of 'tex' is set to red                                                 //
 //                                                                                                                                       //
 // Textures or their regions can be cleared to a color, copied from another texture, or set from a bitmap:                               //
@@ -32,8 +32,8 @@
 //     - tex.copy_region({256, 256}, tex2, {{256, 256}, {256, 256}}) -> copies a region of 'tex2' to 'tex' beginning at (256, 256)       //
 //     - tex.set_region({128, 128}, tr::load_bitmap_file("data.bmp")) -> sets a region of 'tex' beginning at (128, 128) with bitmap data //
 //                                                                                                                                       //
-// The label of a texture can be set with .set_label():                                                                                  //
-//     - tex.set_label("Example texture") -> 'tex' is now labelled "Example texture"                                                     //
+// The label of a texture can be set with .set_label() and gotten with .label():                                                         //
+//     - tex.set_label("Example texture"); tex.label() -> "Example texture"                                                              //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

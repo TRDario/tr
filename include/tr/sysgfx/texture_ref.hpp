@@ -5,8 +5,8 @@
 // tr::texture_ref represents a reference to logical textures (As opposed to just a pointer) and will continue to reference the correct  //
 // texture even after moves or swaps. Additionally, it will automatically get emptied when the referenced texture is destroyed (this can //
 // be checked with the .empty() method)                                                                                                  //
-//     - tr::gfx::texture tex1, tex2;                                                                                                    //
-//       tr::gfx::texture_ref ref{tex1}                                                                                                  //
+//     - tr::texture tex1, tex2;                                                                                                         //
+//       tr::texture_ref ref{tex1}                                                                                                       //
 //       std::swap(tex1, tex2)                                                                                                           //
 //       -> ref now points to tex2                                                                                                       //
 //                                                                                                                                       //
