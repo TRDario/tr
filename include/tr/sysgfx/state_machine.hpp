@@ -69,8 +69,8 @@ namespace tr {
 	// Returns a sentinel indicating that the current state should be dropped.
 	consteval next_state drop_state();
 	// Convenience function for constructing a next state.
-	template <std::derived_from<state> T, typename... Args>
-		requires(std::constructible_from<T, Args...>)
+	template <std::derived_from<state> State, typename... Args>
+		requires(std::constructible_from<State, Args...>)
 	next_state make_next_state(Args&&... args);
 
 	// State machine manager class.
@@ -82,7 +82,7 @@ namespace tr {
 		// Checks whether the state machine is in an empty states.
 		bool empty() const;
 		// Gets access to the current state.
-		template <std::derived_from<state> T> const T& get() const;
+		template <std::derived_from<state> State> const State& get() const;
 		// Gets the update benchmark.
 		const benchmark& update_benchmark() const;
 		// Gets the draw benchmark.
@@ -91,11 +91,11 @@ namespace tr {
 		// Clears the state machine.
 		void clear();
 		// Emplaces a state.
-		template <std::derived_from<state> T, typename... Args>
-			requires(std::constructible_from<T, Args...>)
+		template <std::derived_from<state> State, typename... Args>
+			requires(std::constructible_from<State, Args...>)
 		void emplace(Args&&... args);
 		// Gets access to the current state.
-		template <std::derived_from<state> T> T& get();
+		template <std::derived_from<state> State> State& get();
 
 		// Handles an event.
 		void handle_event(const event& event);

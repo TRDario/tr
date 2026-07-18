@@ -19,30 +19,30 @@ consteval tr::next_state tr::drop_state()
 	return drop_state_t{};
 }
 
-template <std::derived_from<tr::state> T, typename... Args>
-	requires(std::constructible_from<T, Args...>)
+template <std::derived_from<tr::state> State, typename... Args>
+	requires(std::constructible_from<State, Args...>)
 tr::next_state tr::make_next_state(Args&&... args)
 {
-	return static_cast<std::unique_ptr<state>>(std::make_unique<T>(std::forward<Args>(args)...));
+	return static_cast<std::unique_ptr<state>>(std::make_unique<State>(std::forward<Args>(args)...));
 }
 
 ////////////////////////////////////////////////////////////// STATE MACHINE //////////////////////////////////////////////////////////////
 
-template <std::derived_from<tr::state> T> const T& tr::state_machine::get() const
+template <std::derived_from<tr::state> State> const State& tr::state_machine::get() const
 {
-	return static_cast<const T&>(*m_current_state);
+	return static_cast<const State&>(*m_current_state);
 }
 
-template <std::derived_from<tr::state> T, typename... Args>
-	requires(std::constructible_from<T, Args...>)
+template <std::derived_from<tr::state> State, typename... Args>
+	requires(std::constructible_from<State, Args...>)
 void tr::state_machine::emplace(Args&&... args)
 {
-	m_current_state = std::make_unique<T>(std::forward<Args>(args)...);
+	m_current_state = std::make_unique<State>(std::forward<Args>(args)...);
 }
 
-template <std::derived_from<tr::state> T> T& tr::state_machine::get()
+template <std::derived_from<tr::state> State> State& tr::state_machine::get()
 {
-	return static_cast<T&>(*m_current_state);
+	return static_cast<State&>(*m_current_state);
 }
 
 template <typename Rep, typename Period> void tr::state_machine::update(std::chrono::duration<Rep, Period> delta)
