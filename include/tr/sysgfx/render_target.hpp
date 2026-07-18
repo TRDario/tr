@@ -3,17 +3,17 @@
 // Provides a rendering target class.                                                                                                    //
 //                                                                                                                                       //
 // A render target is nothing more than an opaque reference to a texture that can be drawn to, or the backbuffer. It can thus not be     //
-// constructed directly, but is gotten from the likes of tr::gfx::backbuffer_render_target or render_texture::operator render_target.    //
+// constructed directly, but is gotten from the likes of tr::graphics_context::backbuffer() or render_texture::operator render_target.   //
 // The only action that can be performed using it, besides passing it to tr::gfx::set_render_target, is getting its size in pixels:      //
-//     - tr::gfx::backbuffer_render_target().size() -> the size of the backbuffer, equivalent to tr::gfx::backbuffer_size()              //
+//     - context.backbuffer().size() -> the size of the backbuffer                                                                       //
 //                                                                                                                                       //
 // Render targets can be cropped, scissored, or both:                                                                                    //
-//     - tr::gfx::backbuffer_render_target().cropped({{100, 100}, {100, 100}})                                                           //
+//     - context.backbuffer().cropped({{100, 100}, {100, 100}})                                                                          //
 //       -> creates a render target spanning from (100, 100) to (200, 200) in the backbuffer                                             //
-//     - tr::gfx::backbuffer_render_target().scissored({{100, 100}, {100, 100}})                                                         //
+//     - context.backbuffer().scissored({{100, 100}, {100, 100}})                                                                        //
 //       -> creates a render target spanning the backbuffer, but with only the region from (100, 100) to (200, 200) as writable          //
-//     - tr::gfx::backbuffer_render_target().subtarget({{}, {500, 500}}, {{100, 100}, {100, 100}})                                       //
-//       -> equivalent to tr::gfx::backbuffer_render_target().cropped({{}, {500, 500}}).scissored({{100, 100}, {100, 100}})              //
+//     - context.backbuffer().subtarget({{}, {500, 500}}, {{100, 100}, {100, 100}})                                                      //
+//       -> equivalent to context.backbuffer().cropped({{}, {500, 500}}).scissored({{100, 100}, {100, 100}})                             //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
