@@ -87,10 +87,10 @@ namespace tr {
 	constexpr std::ranges::borrowed_iterator_t<SearchedRange> find_last_not_of(SearchedRange&& searched, BlacklistRange&& blacklist);
 
 	// Left-folds the elements of a range.
-	template <std::ranges::range Range, typename T, std::invocable<T, std::ranges::range_value_t<Range>> BinaryOp>
-	T fold_left(Range&& range, T initial_value, BinaryOp&& pred);
+	template <std::ranges::range Range, typename Value, std::invocable<Value, std::ranges::range_value_t<Range>> BinaryOp>
+	Value fold_left(Range&& range, Value initial_value, BinaryOp&& pred);
 	// Sums the elements of a range.
-	template <std::ranges::range Range, typename T> T sum(Range&& range, T initial_value);
+	template <std::ranges::range Range, typename Value> Value sum(Range&& range, Value initial_value);
 
 	// Dereferencing range view.
 	inline constexpr auto deref{std::views::transform([](auto& v) -> decltype(auto) { return *v; })};
