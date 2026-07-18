@@ -4,21 +4,21 @@
 //                                                                                                                                       //
 // Uniform buffers are an abstraction over OpenGL UBOs.                                                                                  //
 //                                                                                                                                       //
-// The uniform buffer comes in two variants: the untyped tr::gfx::basic_uniform_buffer, which works with bytes and byte buffers, and the //
-// typed tr::gfx::uniform_buffer<T>, which acts as a typed container.                                                                    //
+// The uniform buffer comes in two variants: the untyped tr::basic_uniform_buffer, which works with bytes and byte buffers, and the      //
+// typed tr::uniform_buffer<Element>, which acts as a typed container.                                                                   //
 //                                                                                                                                       //
 // Uniform buffers are allocated once at construction and cannot be resized. The size of the data may be queried with the .size() method.//
 // To update the data in the buffer, either the .set() method to directly set data, or .map() to map the buffer (write-only!) to memory  //
 // and writing to said map are possible. Note that when the buffer is mapped, no other action may be performed on it; the map status of  //
 // a buffer can be checked with the .mapped() method:                                                                                    //
-//     - tr::gfx::uniform_buffer<std::array<float, 32>> unibuf{} -> allocates a buffer for a 32-float array                              //
+//     - tr::uniform_buffer<std::array<float, 32>> unibuf{} -> allocates a buffer for a 32-float array                                   //
 //     - unibuf.size() -> 32                                                                                                             //
 //     - unibuf.set(data) -> directly sets the data of the buffer                                                                        //
-//     - tr::gfx::buffer_object_map map{unibuf.map()}; (*map)[10] = 5.0f -> maps the buffer and sets a portion of it                     //
+//     - tr::buffer_object_map map{unibuf.map()}; (*map)[10] = 5.0f -> maps the buffer and sets a portion of it                          //
 //     - unibuf.mapped() -> true                                                                                                         //
 //                                                                                                                                       //
-// The label of a uniform buffer can be set with .set_label():                                                                           //
-//     - unibuf.set_label("Example buffer") -> 'unibuf' is now labelled "Example buffer"                                                 //
+// The label of a uniform buffer can be set with .set_label() and gotten with .label():                                                  //
+//     - unibuf.set_label("Example buffer"); unibuf.label() -> "Example buffer"                                                          //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
