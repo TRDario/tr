@@ -220,11 +220,11 @@ namespace tr {
 		boost::unordered_flat_map<unsigned int, glsl_variable> m_outputs;
 
 		// Finds the uniforms of the shader using introspection.
-		void find_uniforms(const graphics_context::functions& gl);
+		void find_uniforms(const graphics_context::glapi& gl);
 		// Finds the input variables of the shader using introspection.
-		void find_inputs(const graphics_context::functions& gl);
+		void find_inputs(const graphics_context::glapi& gl);
 		// Finds the output variables of the shader using introspection.
-		void find_outputs(const graphics_context::functions& gl);
+		void find_outputs(const graphics_context::glapi& gl);
 #endif
 	};
 

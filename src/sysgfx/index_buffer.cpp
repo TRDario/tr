@@ -14,7 +14,7 @@ tr::static_index_buffer::static_index_buffer(graphics_context& context, std::spa
 	: graphics_buffer{context}
 	, m_size{std::ssize(data)}
 {
-	const graphics_context::functions& gl{context.make_current_and_return_functions()};
+	const graphics_context::glapi& gl{context.make_current_and_return_glapi()};
 
 	gl.allocate_buffer_storage(id(), m_size * sizeof(u16), data.data(), 0);
 	if (gl.get_error() == GL_OUT_OF_MEMORY) {
@@ -54,7 +54,7 @@ void tr::dyn_index_buffer::resize(usize size)
 
 void tr::dyn_index_buffer::reserve(usize capacity)
 {
-	const graphics_context::functions& gl{context().make_current_and_return_functions()};
+	const graphics_context::glapi& gl{context().make_current_and_return_glapi()};
 
 	if (capacity > m_capacity) {
 		capacity = std::bit_ceil(capacity);
@@ -77,7 +77,7 @@ void tr::dyn_index_buffer::set_region(usize offset, std::span<const u16> data)
 	TR_ASSERT(offset + data.size() <= m_size, "Tried to set out-of-bounds region [{}, {}) in index buffer '{}' of size {}.", offset,
 			  offset + data.size(), label(), m_size);
 
-	const graphics_context::functions& gl{context().make_current_and_return_functions()};
+	const graphics_context::glapi& gl{context().make_current_and_return_glapi()};
 
 	gl.set_buffer_sub_data(id(), offset * sizeof(u16), data.size() * sizeof(u16), data.data());
 }

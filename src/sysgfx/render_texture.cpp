@@ -12,7 +12,7 @@ tr::render_texture::render_texture(graphics_context& context)
 tr::render_texture::render_texture(graphics_context& context, glm::ivec2 size, mipmaps mipmaps, pixel_format format)
 	: texture{context, size, mipmaps, format}
 {
-	const graphics_context::functions& gl{m_context.make_current_and_return_functions()};
+	const graphics_context::glapi& gl{m_context.make_current_and_return_glapi()};
 
 	gl.create_framebuffers(1, &m_fbo);
 	gl.set_framebuffer_texture(m_fbo, GL_COLOR_ATTACHMENT0, m_handle, 0);
@@ -33,7 +33,7 @@ tr::render_texture::render_texture(render_texture&& r) noexcept
 
 tr::render_texture::~render_texture()
 {
-	const graphics_context::functions& gl{m_context.make_current_and_return_functions()};
+	const graphics_context::glapi& gl{m_context.make_current_and_return_glapi()};
 
 	if (!empty() && m_context.is_fbo_of_render_target(m_fbo)) {
 		m_context.clear_render_target();
@@ -75,7 +75,7 @@ tr::render_target tr::render_texture::render_target() const
 
 tr::texture tr::render_texture::reallocate(glm::ivec2 size, mipmaps mipmaps, pixel_format format)
 {
-	const graphics_context::functions& gl{m_context.make_current_and_return_functions()};
+	const graphics_context::glapi& gl{m_context.make_current_and_return_glapi()};
 
 	texture old_data{texture::reallocate(size, mipmaps, format)};
 	if (m_fbo == 0) {

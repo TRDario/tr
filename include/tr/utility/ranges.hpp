@@ -70,7 +70,7 @@ namespace tr {
 
 	// Gets whether a range contains a value.
 	template <std::ranges::range Range, typename Value, typename Proj = std::identity>
-		requires std::indirect_binary_predicate<std::ranges::equal_to, std::projected<Range, Proj>, const Value*>
+		requires std::indirect_binary_predicate<std::ranges::equal_to, std::projected<std::ranges::iterator_t<Range>, Proj>, const Value*>
 	constexpr bool contains(Range&& range, const Value& value, Proj proj = {});
 
 	// Returns an iterator to the last element in 'searched' that matches one of the elements in 'blacklist'.

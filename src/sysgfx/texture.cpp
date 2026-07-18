@@ -146,7 +146,7 @@ tr::texture::texture(graphics_context& context)
 	: m_context{context}
 	, m_size{0, 0}
 {
-	const graphics_context::functions& gl{m_context.make_current_and_return_functions()};
+	const graphics_context::glapi& gl{m_context.make_current_and_return_glapi()};
 
 	gl.create_textures(GL_TEXTURE_2D, 1, &m_handle);
 }
@@ -183,7 +183,7 @@ tr::texture::texture(texture&& r) noexcept
 
 tr::texture::~texture()
 {
-	const graphics_context::functions& gl{m_context.make_current_and_return_functions()};
+	const graphics_context::glapi& gl{m_context.make_current_and_return_glapi()};
 
 	gl.delete_textures(1, &m_handle);
 	for (texture_ref& ref : m_references) {
@@ -195,7 +195,7 @@ tr::texture::~texture()
 
 tr::texture& tr::texture::operator=(texture&& r) noexcept
 {
-	const graphics_context::functions& gl{m_context.make_current_and_return_functions()};
+	const graphics_context::glapi& gl{m_context.make_current_and_return_glapi()};
 
 	gl.delete_textures(1, &m_handle);
 	for (texture_ref& ref : m_references) {
@@ -214,7 +214,7 @@ tr::texture tr::texture::reallocate(glm::ivec2 size, mipmaps mipmaps, pixel_form
 {
 	TR_ASSERT(size.x > 0 && size.y > 0, "Tried to allocate a texture with an invalid size of {}x{}", size.x, size.y);
 
-	const graphics_context::functions& gl{m_context.make_current_and_return_functions()};
+	const graphics_context::glapi& gl{m_context.make_current_and_return_glapi()};
 
 	unsigned int old_handle{m_handle};
 	glm::ivec2 old_size{m_size};
@@ -282,7 +282,7 @@ void tr::texture::set_filtering(min_filter min_filter, mag_filter mag_filter)
 {
 	TR_ASSERT(!empty(), "Tried to set filter on an empty texture.");
 
-	const graphics_context::functions& gl{m_context.make_current_and_return_functions()};
+	const graphics_context::glapi& gl{m_context.make_current_and_return_glapi()};
 
 	gl.set_texture_parameter_i(m_handle, GL_TEXTURE_MIN_FILTER, to_underlying(min_filter));
 	gl.set_texture_parameter_i(m_handle, GL_TEXTURE_MAG_FILTER, to_underlying(mag_filter));
@@ -292,7 +292,7 @@ void tr::texture::set_wrap(wrap wrap)
 {
 	TR_ASSERT(!empty(), "Tried to set wrap on an empty texture.");
 
-	const graphics_context::functions& gl{m_context.make_current_and_return_functions()};
+	const graphics_context::glapi& gl{m_context.make_current_and_return_glapi()};
 
 	gl.set_texture_parameter_i(m_handle, GL_TEXTURE_WRAP_S, to_underlying(wrap));
 	gl.set_texture_parameter_i(m_handle, GL_TEXTURE_WRAP_T, to_underlying(wrap));
@@ -303,7 +303,7 @@ void tr::texture::set_border_color(rgbaf color)
 {
 	TR_ASSERT(!empty(), "Tried to set border color on an empty texture.");
 
-	const graphics_context::functions& gl{m_context.make_current_and_return_functions()};
+	const graphics_context::glapi& gl{m_context.make_current_and_return_glapi()};
 
 	gl.set_texture_parameter_fv(m_handle, GL_TEXTURE_BORDER_COLOR, &color.r);
 }
@@ -314,7 +314,7 @@ void tr::texture::clear(const rgbaf& color)
 {
 	TR_ASSERT(!empty(), "Tried to clear an empty texture.");
 
-	const graphics_context::functions& gl{m_context.make_current_and_return_functions()};
+	const graphics_context::glapi& gl{m_context.make_current_and_return_glapi()};
 
 	gl.clear_texture_image(m_handle, 0, GL_RGBA, GL_FLOAT, &color);
 }
@@ -323,7 +323,7 @@ void tr::texture::clear_region(const rectangle<int>& region, const rgbaf& color)
 {
 	TR_ASSERT(!empty(), "Tried to clear a region of an empty texture.");
 
-	const graphics_context::functions& gl{m_context.make_current_and_return_functions()};
+	const graphics_context::glapi& gl{m_context.make_current_and_return_glapi()};
 
 	gl.clear_texture_sub_image(m_handle, 0, region.tl.x, region.tl.y, 0, region.size.x, region.size.y, 1, GL_RGBA, GL_FLOAT, &color);
 }
@@ -332,7 +332,7 @@ void tr::texture::copy_region(glm::ivec2 tl, const texture& src, const rectangle
 {
 	TR_ASSERT(!empty(), "Tried to copy to an empty texture.");
 
-	const graphics_context::functions& gl{m_context.make_current_and_return_functions()};
+	const graphics_context::glapi& gl{m_context.make_current_and_return_glapi()};
 
 	gl.copy_image_sub_data(src.m_handle, GL_TEXTURE_2D, 0, region.tl.x, region.tl.y, 0, m_handle, GL_TEXTURE_2D, 0, tl.x, tl.y, 0,
 						   region.size.x, region.size.y, 1);
@@ -346,7 +346,7 @@ void tr::texture::set_region(glm::ivec2 tl, const sub_bitmap& bitmap)
 			  "Tried to set out-of-bounds region from ({}, {}) to ({}, {}) in a texture with size {}x{}.", tl.x, tl.y,
 			  tl.x + bitmap.size().x, tl.y + bitmap.size().y, m_size.x, m_size.y);
 
-	const graphics_context::functions& gl{m_context.make_current_and_return_functions()};
+	const graphics_context::glapi& gl{m_context.make_current_and_return_glapi()};
 
 	gl.set_pixel_store_i(GL_UNPACK_ALIGNMENT, 1);
 	gl.set_pixel_store_i(GL_UNPACK_ROW_LENGTH, bitmap.pitch() / pixel_bytes(bitmap.format()));
@@ -359,7 +359,7 @@ void tr::texture::set_region(glm::ivec2 tl, const sub_bitmap& bitmap)
 
 std::string tr::texture::label() const
 {
-	const graphics_context::functions& gl{m_context.make_current_and_return_functions()};
+	const graphics_context::glapi& gl{m_context.make_current_and_return_glapi()};
 
 	int label_length;
 	gl.get_object_label(GL_TEXTURE, m_handle, 0, &label_length, nullptr);
@@ -375,7 +375,7 @@ std::string tr::texture::label() const
 
 void tr::texture::set_label(std::string_view label)
 {
-	const graphics_context::functions& gl{m_context.make_current_and_return_functions()};
+	const graphics_context::glapi& gl{m_context.make_current_and_return_glapi()};
 
 	if (!empty()) {
 		gl.set_object_label(GL_TEXTURE, m_handle, label.size(), label.data());

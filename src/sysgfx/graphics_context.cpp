@@ -55,7 +55,7 @@ static loaded_gl_function_proxy gl_function_address(const char* name)
 	return {SDL_GL_GetProcAddress(name)};
 }
 
-tr::graphics_context::functions::functions()
+tr::graphics_context::glapi::glapi()
 	: allocate_2d_texture_storage{gl_function_address("glTextureStorage2D")}
 	, allocate_buffer_storage{gl_function_address("glNamedBufferStorage")}
 	, begin_query{gl_function_address("glBeginQuery")}
@@ -305,7 +305,7 @@ void tr::graphics_context::deleter::operator()(SDL_GLContextState* context) cons
 
 struct tr::graphics_context::info tr::graphics_context::info() const
 {
-	const functions& gl{make_current_and_return_functions()};
+	const glapi& gl{make_current_and_return_glapi()};
 	return {
 		reinterpret_cast<const char*>(gl.get_string(GL_VENDOR)),
 		reinterpret_cast<const char*>(gl.get_string(GL_RENDERER)),
@@ -360,14 +360,14 @@ bool tr::graphics_context::should_setup_renderer(renderer_id id)
 
 void tr::graphics_context::set_wireframe_mode(bool arg)
 {
-	const functions& gl{make_current_and_return_functions()};
+	const glapi& gl{make_current_and_return_glapi()};
 
 	gl.set_polygon_mode(GL_FRONT_AND_BACK, arg ? GL_LINE : GL_FILL);
 }
 
 void tr::graphics_context::set_face_culling(bool arg)
 {
-	const functions& gl{make_current_and_return_functions()};
+	const glapi& gl{make_current_and_return_glapi()};
 
 	if (arg) {
 		gl.enable(GL_CULL_FACE);
@@ -379,7 +379,7 @@ void tr::graphics_context::set_face_culling(bool arg)
 
 void tr::graphics_context::set_depth_test(bool arg)
 {
-	const functions& gl{make_current_and_return_functions()};
+	const glapi& gl{make_current_and_return_glapi()};
 
 	if (arg) {
 		gl.enable(GL_DEPTH_TEST);
@@ -393,7 +393,7 @@ void tr::graphics_context::set_depth_test(bool arg)
 
 void tr::graphics_context::set_render_target(const render_target& target)
 {
-	const functions& gl{make_current_and_return_functions()};
+	const glapi& gl{make_current_and_return_glapi()};
 
 	bool changed_render_target{false};
 
@@ -421,14 +421,14 @@ void tr::graphics_context::set_render_target(const render_target& target)
 
 void tr::graphics_context::set_shader_pipeline(const shader_pipeline& pipeline)
 {
-	const functions& gl{make_current_and_return_functions()};
+	const glapi& gl{make_current_and_return_glapi()};
 
 	gl.bind_program_pipeline(pipeline.m_ppo.get());
 }
 
 void tr::graphics_context::set_blend_mode(const blend_mode& bm)
 {
-	const functions& gl{make_current_and_return_functions()};
+	const glapi& gl{make_current_and_return_glapi()};
 
 	gl.set_separate_blend_equations(to_underlying(bm.rgb_fn), to_underlying(bm.alpha_fn));
 	gl.set_separate_blend_function(to_underlying(bm.rgb_src), to_underlying(bm.rgb_dst), to_underlying(bm.alpha_src),
@@ -437,7 +437,7 @@ void tr::graphics_context::set_blend_mode(const blend_mode& bm)
 
 void tr::graphics_context::set_vertex_format(const vertex_format& format)
 {
-	const functions& gl{make_current_and_return_functions()};
+	const glapi& gl{make_current_and_return_glapi()};
 
 #ifdef TR_ENABLE_GL_CHECKS
 	m_vertex_format_bindings = format.m_bindings;
@@ -449,28 +449,28 @@ void tr::graphics_context::set_vertex_format(const vertex_format& format)
 
 void tr::graphics_context::set_vertex_buffer(const basic_static_vertex_buffer& buffer, int slot, ssize offset, usize stride)
 {
-	const functions& gl{make_current_and_return_functions()};
+	const glapi& gl{make_current_and_return_glapi()};
 
 	gl.bind_vertex_buffer(slot, buffer.id(), offset, stride);
 }
 
 void tr::graphics_context::set_vertex_buffer(const basic_dyn_vertex_buffer& buffer, int slot, ssize offset, usize stride)
 {
-	const functions& gl{make_current_and_return_functions()};
+	const glapi& gl{make_current_and_return_glapi()};
 
 	gl.bind_vertex_buffer(slot, buffer.id(), offset, stride);
 }
 
 void tr::graphics_context::set_index_buffer(const static_index_buffer& buffer)
 {
-	const functions& gl{make_current_and_return_functions()};
+	const glapi& gl{make_current_and_return_glapi()};
 
 	gl.bind_buffer(GL_ELEMENT_ARRAY_BUFFER, buffer.id());
 }
 
 void tr::graphics_context::set_index_buffer(const dyn_index_buffer& buffer)
 {
-	const functions& gl{make_current_and_return_functions()};
+	const glapi& gl{make_current_and_return_glapi()};
 
 	gl.bind_buffer(GL_ELEMENT_ARRAY_BUFFER, buffer.id());
 }
@@ -479,7 +479,7 @@ void tr::graphics_context::set_index_buffer(const dyn_index_buffer& buffer)
 
 void tr::graphics_context::clear_backbuffer(const tr::rgbaf& color)
 {
-	const functions& gl{make_current_and_return_functions()};
+	const glapi& gl{make_current_and_return_glapi()};
 
 	set_render_target(backbuffer());
 	gl.set_clear_color(color.r, color.g, color.b, color.a);
@@ -488,7 +488,7 @@ void tr::graphics_context::clear_backbuffer(const tr::rgbaf& color)
 
 void tr::graphics_context::clear_backbuffer(const tr::rgbaf& color, double depth, int stencil)
 {
-	const functions& gl{make_current_and_return_functions()};
+	const glapi& gl{make_current_and_return_glapi()};
 
 	set_render_target(backbuffer());
 	gl.set_clear_color(color.r, color.g, color.b, color.a);
@@ -499,7 +499,7 @@ void tr::graphics_context::clear_backbuffer(const tr::rgbaf& color, double depth
 
 void tr::graphics_context::clear_backbuffer_region(const rectangle<int>& region, const tr::rgbaf& color)
 {
-	const functions& gl{make_current_and_return_functions()};
+	const glapi& gl{make_current_and_return_glapi()};
 
 	set_render_target(backbuffer().cropped(region));
 	gl.set_clear_color(color.r, color.g, color.b, color.a);
@@ -508,7 +508,7 @@ void tr::graphics_context::clear_backbuffer_region(const rectangle<int>& region,
 
 void tr::graphics_context::clear_backbuffer_region(const rectangle<int>& region, const tr::rgbaf& color, double depth, int stencil)
 {
-	const functions& gl{make_current_and_return_functions()};
+	const glapi& gl{make_current_and_return_glapi()};
 
 	set_render_target(backbuffer().cropped(region));
 	gl.set_clear_color(color.r, color.g, color.b, color.a);
@@ -521,28 +521,28 @@ void tr::graphics_context::clear_backbuffer_region(const rectangle<int>& region,
 
 void tr::graphics_context::draw(primitive type, usize offset, usize vertices)
 {
-	const functions& gl{make_current_and_return_functions()};
+	const glapi& gl{make_current_and_return_glapi()};
 
 	gl.draw_arrays(to_underlying(type), offset, vertices);
 }
 
 void tr::graphics_context::draw_instances(primitive type, usize offset, usize vertices, int instances)
 {
-	const functions& gl{make_current_and_return_functions()};
+	const glapi& gl{make_current_and_return_glapi()};
 
 	gl.draw_arrays_instanced(to_underlying(type), offset, vertices, instances);
 }
 
 void tr::graphics_context::draw_indexed(primitive type, usize offset, usize indices)
 {
-	const functions& gl{make_current_and_return_functions()};
+	const glapi& gl{make_current_and_return_glapi()};
 
 	gl.draw_elements(to_underlying(type), indices, GL_UNSIGNED_SHORT, reinterpret_cast<const void*>(offset * sizeof(u16)));
 }
 
 void tr::graphics_context::draw_indexed_instances(primitive type, usize offset, usize indices, int instances)
 {
-	const functions& gl{make_current_and_return_functions()};
+	const glapi& gl{make_current_and_return_glapi()};
 
 	gl.draw_elements_instanced(to_underlying(type), indices, GL_UNSIGNED_SHORT, reinterpret_cast<const void*>(offset * sizeof(u16)),
 							   instances);
@@ -550,7 +550,7 @@ void tr::graphics_context::draw_indexed_instances(primitive type, usize offset, 
 
 //
 
-const tr::graphics_context::functions& tr::graphics_context::make_current_and_return_functions() const
+const tr::graphics_context::glapi& tr::graphics_context::make_current_and_return_glapi() const
 {
 	SDL_GL_MakeCurrent(m_window, m_ptr.get());
 
@@ -585,7 +585,7 @@ void tr::graphics_context::set_texture_unit(unsigned int unit, texture_ref textu
 {
 	TR_ASSERT(m_texture_units[unit].has_value(), "Tried to set unallocated texture unit {}.", unit);
 
-	const functions& gl{make_current_and_return_functions()};
+	const glapi& gl{make_current_and_return_glapi()};
 
 	if (!texture.empty()) {
 		if (m_texture_units[unit] != texture && texture->m_handle != 0) {
@@ -604,7 +604,7 @@ void tr::graphics_context::free_texture_unit(unsigned int unit)
 
 void tr::graphics_context::rebind_texture_units(const texture& texture)
 {
-	const functions& gl{make_current_and_return_functions()};
+	const glapi& gl{make_current_and_return_glapi()};
 
 	for (int i = 0; i < 80; ++i) {
 		if (m_texture_units[i] == texture) {
@@ -641,7 +641,7 @@ void tr::graphics_context::check_vertex_buffer(std::string label, int slot, std:
 
 void tr::graphics_context::move_label(unsigned int type, unsigned int old_id, unsigned int new_id)
 {
-	const functions& gl{make_current_and_return_functions()};
+	const glapi& gl{make_current_and_return_glapi()};
 
 	int label_length;
 	gl.get_object_label(type, old_id, 0, &label_length, nullptr);

@@ -115,7 +115,7 @@ template <tr::standard_layout Element, tr::borrowed_typed_contiguous_const_range
 //
 
 template <std::ranges::range Range, typename Value, typename Proj>
-	requires std::indirect_binary_predicate<std::ranges::equal_to, std::projected<Range, Proj>, const Value*>
+	requires std::indirect_binary_predicate<std::ranges::equal_to, std::projected<std::ranges::iterator_t<Range>, Proj>, const Value*>
 constexpr bool tr::contains(Range&& range, const Value& value, Proj proj)
 {
 	return std::ranges::find(range, value, std::move(proj)) != std::ranges::end(range);

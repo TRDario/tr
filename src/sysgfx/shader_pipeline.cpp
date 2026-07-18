@@ -15,7 +15,7 @@
 tr::shader_pipeline::shader_pipeline(graphics_context& context)
 	: m_ppo{{context}}
 {
-	const graphics_context::functions& gl{context.make_current_and_return_functions()};
+	const graphics_context::glapi& gl{context.make_current_and_return_glapi()};
 
 	gl.create_program_pipelines(1, out_handle(m_ppo));
 }
@@ -40,7 +40,7 @@ tr::shader_pipeline::shader_pipeline(graphics_context& context, const vertex_sha
 	}
 #endif
 
-	const graphics_context::functions& gl{context.make_current_and_return_functions()};
+	const graphics_context::glapi& gl{context.make_current_and_return_glapi()};
 
 	gl.use_program_stages(m_ppo.get(), GL_VERTEX_SHADER_BIT, vshader.m_program.get());
 	gl.use_program_stages(m_ppo.get(), GL_FRAGMENT_SHADER_BIT, fshader.m_program.get());
@@ -48,7 +48,7 @@ tr::shader_pipeline::shader_pipeline(graphics_context& context, const vertex_sha
 
 void tr::shader_pipeline::deleter::operator()(unsigned int id) const
 {
-	const graphics_context::functions& gl{context.make_current_and_return_functions()};
+	const graphics_context::glapi& gl{context.make_current_and_return_glapi()};
 
 	gl.delete_program_pipelines(1, &id);
 }
@@ -64,14 +64,14 @@ tr::graphics_context& tr::shader_pipeline::context() const
 
 void tr::shader_pipeline::set_label(std::string_view label)
 {
-	const graphics_context::functions& gl{context().make_current_and_return_functions()};
+	const graphics_context::glapi& gl{context().make_current_and_return_glapi()};
 
 	gl.set_object_label(GL_PROGRAM_PIPELINE, m_ppo.get(), label.size(), label.data());
 }
 
 std::string tr::shader_pipeline::label() const
 {
-	const graphics_context::functions& gl{context().make_current_and_return_functions()};
+	const graphics_context::glapi& gl{context().make_current_and_return_glapi()};
 
 	int label_length;
 	gl.get_object_label(GL_PROGRAM_PIPELINE, m_ppo.get(), 0, &label_length, nullptr);

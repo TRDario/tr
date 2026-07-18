@@ -150,7 +150,7 @@ namespace tr {
 		};
 
 		// Structure holding OpenGL function pointers.
-		struct functions {
+		struct glapi {
 			using debug_callback = void (*)(unsigned int source, unsigned int type, unsigned int id, unsigned int severity, int length,
 											const char* message, const void* userParam);
 
@@ -274,7 +274,7 @@ namespace tr {
 			void (*use_program_stages)(unsigned int pipeline, unsigned int stages, unsigned int program);
 
 			// Loads OpenGL function pointers.
-			functions();
+			glapi();
 		};
 
 		// Pointer to the window the context was created on.
@@ -282,7 +282,7 @@ namespace tr {
 		// Pointer to the SDL OpenGL context.
 		std::unique_ptr<SDL_GLContextState, deleter> m_ptr;
 		// OpenGL function pointers.
-		functions m_glapi;
+		glapi m_glapi;
 		// Next available renderer id.
 		renderer_id m_next_renderer_id{2};
 		// ID of the current active renderer.
@@ -301,7 +301,7 @@ namespace tr {
 #endif
 
 		// Sets the context as current and returns the OpenGL API.
-		const functions& make_current_and_return_functions() const;
+		const glapi& make_current_and_return_glapi() const;
 
 		// Checks the render target's FBO ID.
 		bool is_fbo_of_render_target(unsigned int fbo);

@@ -14,14 +14,14 @@
 tr::graphics_benchmark::graphics_benchmark(graphics_context& context)
 	: m_qo{{context}}
 {
-	const graphics_context::functions& gl{context.make_current_and_return_functions()};
+	const graphics_context::glapi& gl{context.make_current_and_return_glapi()};
 
 	gl.generate_queries(1, out_handle(m_qo));
 }
 
 void tr::graphics_benchmark::deleter::operator()(unsigned int id) const
 {
-	const graphics_context::functions& gl{context.make_current_and_return_functions()};
+	const graphics_context::glapi& gl{context.make_current_and_return_glapi()};
 
 	gl.delete_queries(1, &id);
 }
@@ -37,21 +37,21 @@ tr::graphics_context& tr::graphics_benchmark::context() const
 
 void tr::graphics_benchmark::start()
 {
-	const graphics_context::functions& gl{context().make_current_and_return_functions()};
+	const graphics_context::glapi& gl{context().make_current_and_return_glapi()};
 
 	gl.begin_query(GL_TIME_ELAPSED, m_qo.get());
 }
 
 void tr::graphics_benchmark::stop()
 {
-	const graphics_context::functions& gl{context().make_current_and_return_functions()};
+	const graphics_context::glapi& gl{context().make_current_and_return_glapi()};
 
 	gl.end_query(GL_TIME_ELAPSED);
 }
 
 void tr::graphics_benchmark::fetch()
 {
-	const graphics_context::functions& gl{context().make_current_and_return_functions()};
+	const graphics_context::glapi& gl{context().make_current_and_return_glapi()};
 
 	i64 result;
 	gl.get_query_object_i64v(m_qo.get(), GL_QUERY_RESULT, &result);
