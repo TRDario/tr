@@ -69,9 +69,9 @@ namespace tr {
 	template <standard_layout Element, borrowed_typed_contiguous_const_range<std::byte> Range> auto as_objects(Range&& bytes);
 
 	// Gets whether a range contains a value.
-	template <std::ranges::range Range, typename T>
-		requires(std::indirect_binary_predicate<std::ranges::equal_to, std::ranges::iterator_t<Range>, const T*>)
-	constexpr bool contains(Range&& range, const T& value);
+	template <std::ranges::range Range, typename Value, typename Proj = std::identity>
+		requires std::indirect_binary_predicate<std::ranges::equal_to, std::projected<Range, Proj>, const Value*>
+	constexpr bool contains(Range&& range, const Value& value, Proj proj = {});
 
 	// Returns an iterator to the last element in 'searched' that matches one of the elements in 'blacklist'.
 	template <std::ranges::range SearchedRange, std::ranges::forward_range WhitelistRange>
