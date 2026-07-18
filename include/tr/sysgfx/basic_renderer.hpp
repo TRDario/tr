@@ -6,7 +6,7 @@
 // default transformation matrix (falls back to the global default if not provided), blending mode (falls back to alpha blending if not  //
 // provided) and texture that can be set. The global default transformation matrix can also be set. Individual primitives are allowed    //
 // to use different parameters from the layer defaults:                                                                                  //
-//     - tr::gfx::basic_renderer basic                                                                                                   //
+//     - tr::basic_renderer basic{context}                                                                                               //
 //       -> creates an empty renderer                                                                                                    //
 //     - basic.set_default_transform(tr::ortho(tr::rectangle<float>{{1000, 1000}}))                                                      //
 //       -> sets the global transformation matrix                                                                                        //
@@ -14,7 +14,7 @@
 //       -> sets the default texture used by primitives on layer 1                                                                       //
 //     - basic.set_default_layer_transform(1, tr::ortho(tr::rectangle<float>{{500, 500}}))                                               //
 //       -> sets the default transformation matrix for layer 1                                                                           //
-//     - basic.set_default_layer_blend_mode(1, tr::gfx::premultiplied_alpha_blending)                                                    //
+//     - basic.set_default_layer_blend_mode(1, tr::premultiplied_alpha_blending)                                                         //
 //       -> sets the default blending mode for layer 1                                                                                   //
 //                                                                                                                                       //
 // Primitives to be drawn by the basic renderer are allocated through the provided methods. Said methods return a reference to the mesh  //
@@ -23,11 +23,11 @@
 // The primitives that can be drawn by the basic renderer include fans, polygon outlines, custom triangle meshes, lines, line strips,    //
 // line loops, and custom line meshes. Triangle meshes may be textured. Primitives use the layer default parameters by default, but      //
 // custom ones may also be provided:                                                                                                     //
-//     - tr::gfx::simple_color_mesh_ref mesh{basic.new_color_fan(0, 4)}                                                                  //
+//     - tr::simple_color_mesh_ref mesh{basic.new_color_fan(0, 4)}                                                                       //
 //       tr::fill_rectangle_vertices(mesh.positions, {{0, 0}, {200, 200}})                                                               //
 //       std::ranges::fill(mesh.colors, "FF0000"_rgba8)                                                                                  //
 //       -> adds a colored rectangle to the renderer on layer 0                                                                          //
-//     - tr::gfx::simple_textured_mesh_ref mesh{basic.new_textured_fan(1, tex, mat, blend_mode)}                                         //
+//     - tr::simple_textured_mesh_ref mesh{basic.new_textured_fan(1, tex, mat, blend_mode)}                                              //
 //       tr::fill_rectangle_vertices(mesh.positions, {{0, 0}, {200, 200}})                                                               //
 //       tr::fill_rectangle_vertices(mesh.uvs, {{0, 0}, {0.5f, 0.5f}})                                                                   //
 //       std::ranges::fill(mesh.colors, "FFFFFF"_rgba8)                                                                                  //

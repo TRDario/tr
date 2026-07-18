@@ -5,11 +5,11 @@
 // The circle renderer is constructed with an initial render scale (by default 1.0f). The render scale is used to determine the ratio    //
 // between logical pixels and physical pixels on the render target. The render scale can be modified with the .set_render_scale() method //
 // at any point afterwards:                                                                                                              //
-//     - tr::gfx::circle_renderer{}                                                                                                      //
+//     - tr::circle_renderer{context}                                                                                                    //
 //       -> creates a circle render with render scale 1.0f: a circle with radius 5.0f will have a real radius of 5px                     //
-//     - tr::gfx::circle_renderer{2.0f}                                                                                                  //
+//     - tr::circle_renderer{context, 2.0f}                                                                                              //
 //       -> creates a circle render with render scale 2.0f: a circle with radius 5.0f will have a real radius of 10px                    //
-//     - tr::gfx::circle_renderer circle{}; circle.set_render_scale(2.0f)                                                                //
+//     - tr::circle_renderer circle{context}; circle.set_render_scale(2.0f)                                                              //
 //       -> equivalent to the above                                                                                                      //
 //                                                                                                                                       //
 // The circle renderer is a layer-based renderer, compatible with the utilities provided in layered_drawing.hpp. Each layer has its own  //
@@ -17,7 +17,7 @@
 // provided) that can be set. The global default transformation matrix can also be set:                                                  //
 //     - circle.set_default_transform(tr::ortho(tr::rectangle<float>{{1000, 1000}})) -> sets the global transformation matrix            //
 //     - circle.set_layer_transform(1, tr::ortho(tr::rectangle<float>{{500, 500}})) -> sets the transformation matrix for layer 1        //
-//     - circle.set_layer_blend_mode(1, tr::gfx::premultiplied_alpha_blending) -> sets the blending mode for layer 1                     //
+//     - circle.set_layer_blend_mode(1, tr::premultiplied_alpha_blending) -> sets the blending mode for layer 1                          //
 //                                                                                                                                       //
 // Circles are appended to the drawing list of the circle renderer one-by-one. Each circle can be filled, outlined, or both:             //
 //     - circle.add_circle(0, {{500, 500}, 10}, "FFFFFF"_rgba8)                                                                          //
@@ -98,7 +98,7 @@ namespace tr {
 			// The color of the outline of the circle.
 			rgba8 outline_color;
 
-			// Provided for tr::gfx::as_vertex_attribute_list.
+			// Provided for tr::as_vertex_attribute_list.
 			static constexpr auto as_vertex_attribute_list{tr::as_vertex_attribute_list<glm::vec2, float, float, rgba8, rgba8>};
 		};
 		// Layer information.
