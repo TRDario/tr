@@ -3,8 +3,9 @@
 // Provides a rendering target class.                                                                                                    //
 //                                                                                                                                       //
 // A render target is nothing more than an opaque reference to a texture that can be drawn to, or the backbuffer. It can thus not be     //
-// constructed directly, but is gotten from the likes of tr::graphics_context::backbuffer() or render_texture::operator render_target.   //
-// The only action that can be performed using it, besides passing it to tr::gfx::set_render_target, is getting its size in pixels:      //
+// constructed directly, but is gotten from the likes of tr::graphics_context::backbuffer or render_texture::operator render_target.     //
+// The only action that can be performed using it, besides passing it to tr::graphics_context::set_render_target, is getting its size in //
+// pixels:                                                                                                                               //
 //     - context.backbuffer().size() -> the size of the backbuffer                                                                       //
 //                                                                                                                                       //
 // Render targets can be cropped, scissored, or both:                                                                                    //

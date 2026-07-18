@@ -5,42 +5,43 @@
 // Vertex formats are an abstraction over OpenGL VAOs.                                                                                   //
 //                                                                                                                                       //
 // Vertex formats are composed of a list of vertex bindings (points to which vertex buffers are bound), which in turn are composed of a  //
-// divisor for instanced attributes (or tr::gfx::not_instanced) and a list of vertex attributes. tr::gfx::as_vertex_attribute<T> is used //
-// to map C++ types to vertex attributes; it is defined for primitives and vectors, as well as tr colors, and may be specialized for     //
-// custom types:                                                                                                                         //
-//     - tr::gfx::as_vertex_attribute<tr::rgba8> -> gets a vertex attribute corresponding to tr::rgba8                                   //
-//     - template <> inline constexpr tr::gfx::vertex_attribute as_vertex_attribute<my_vec4>{tr::gfx::as_vertex_attribute<glm::vec4>}    //
+// divisor for instanced attributes (or tr::not_instanced) and a list of vertex attributes. tr::as_vertex_attribute<T> is used to map    //
+// C++ types to vertex attributes; it is defined for primitives and vectors, as well as tr colors, and may be specialized for custom     //
+// types:                                                                                                                                //
+//     - tr::as_vertex_attribute<tr::rgba8>                                                                                              //
+//       -> gets a vertex attribute corresponding to tr::rgba8                                                                           //
+//     - template <> inline constexpr tr::vertex_attribute as_vertex_attribute<my_vec4>{tr::as_vertex_attribute<glm::vec4>}              //
 //       -> defines my_vec4 as an alias for glm::vec4 in terms of vertex attributes                                                      //
 //                                                                                                                                       //
-// tr::gfx::as_vertex_attribute_list is defined as a standard form of obtaining lists of attributes for vertex bindings. A type must     //
-// define this in order to be eligible for use in vertex buffers. It is defined for lists of types that can be converted to vertex       //
-// attributes (in which case they are combined into a list), as well as types that  declare T::as_vertex_attribute_list as a public      //
-// static array of vertex attributes, and may be specialized for custom types:                                                           //
-//     - tr::gfx::as_vertex_attribute_list<tr::u8, tr::u8, float> -> list containing the vertex attributes for u8, u8, and float         //
+// tr::as_vertex_attribute_list is defined as a standard form of obtaining lists of attributes for vertex bindings. A type must define   //
+// this in order to be eligible for use in vertex buffers. It is defined for lists of types that can be converted to vertex attributes   //
+// (in which case they are combined into a list), as well as types that  declare T::as_vertex_attribute_list as a public static array of //
+// vertex attributes, and may be specialized for custom types:                                                                           //
+//     - tr::as_vertex_attribute_list<tr::u8, tr::u8, float> -> list containing the vertex attributes for u8, u8, and float              //
 //     - struct my_struct {                                                                                                              //
 //           glm::vec2 pos;                                                                                                              //
 //           float opacity;                                                                                                              //
 //                                                                                                                                       //
-//           static constexpr auto as_vertex_attribute_list{tr::gfx::as_vertex_attribute_list<glm::vec2, float>};                        //
+//           static constexpr auto as_vertex_attribute_list{tr::as_vertex_attribute_list<glm::vec2, float>};                             //
 //       };                                                                                                                              //
-//       tr::gfx::as_vertex_attribute<my_struct> -> takes the list from my_struct::as_vertex_attribute_list                              //
+//       tr::as_vertex_attribute<my_struct> -> takes the list from my_struct::as_vertex_attribute_list                                   //
 //                                                                                                                                       //
-// As a convenience, tr::gfx::make_vertex_binding<T> is provided to avoid having to directly use tr::gfx::as_vertex_attribute list to    //
-// construct vertex bindings:                                                                                                            //
-//     - tr::gfx::make_vertex_binding<glm::vec2>()                                                                                       //
-//       -> equivalent to {.divisor = tr::gfx::not_instanced, .attrs = tr::gfx::as_vertex_attribute_list<glm::vec2>}                     //
-//     - tr::gfx::make_vertex_binding<tr::rgba8>(1)                                                                                      //
-//       -> equivalent to {.divisor = 1, .attrs = tr::gfx::as_vertex_attribute_list<tr::rgba8>}                                          //
+// As a convenience, tr::make_vertex_binding<T> is provided to avoid having to directly use tr::as_vertex_attribute list to construct    //
+// vertex bindings:                                                                                                                      //
+//     - tr::make_vertex_binding<glm::vec2>()                                                                                            //
+//       -> equivalent to {.divisor = tr::not_instanced, .attrs = tr::as_vertex_attribute_list<glm::vec2>}                               //
+//     - tr::make_vertex_binding<tr::rgba8>(1)                                                                                           //
+//       -> equivalent to {.divisor = 1, .attrs = tr::as_vertex_attribute_list<tr::rgba8>}                                               //
 //                                                                                                                                       //
 // A vertex format is constructed with a span of vertex bindings: this span must stay valid for the entire lifetime of the format.       //
-// The label of a vertex format can be set with .set_label():                                                                            //
-//     - constexpr std::array format_bindings{tr::gfx::make_vertex_binding<glm::vec2>(), tr::gfx::make_vertex_binding<my_struct>}        //
+// The label of a vertex format can be set with .set_label() and gotten with .label():                                                   //
+//     - constexpr std::array format_bindings{tr::make_vertex_binding<glm::vec2>(), tr::make_vertex_binding<my_struct>}                  //
 //       -> defines two vertex bindings, one taking glm::vec2 data, and the other my_struct data                                         //
-//     - tr::gfx::vertex_format format{format_bindings}; format.set_label("Example format")                                              //
+//     - tr::vertex_format format{format_bindings}; format.set_label("Example format")                                                   //
 //       -> creates a vertex format with the defined bindings with the label "Example format"                                            //
 //                                                                                                                                       //
-// tr::gfx::vertex2_format() is provided as a built-in vertex format that is always available: separated vec2 position, vec2 uv, and     //
-// rgba8 color bindings.                                                                                                                 //
+// tr::graphics_context::vertex2_format is provided as a built-in vertex format that is always available: separated vec2 position,       //
+// vec2 uv, and rgba8 color bindings.                                                                                                    //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -104,7 +105,7 @@ namespace tr {
 		// The attributes of the binding. This span is expected to last for the entire duration of the vertex format's lifetime.
 		std::span<const vertex_attribute> attrs;
 	};
-	// Constructs a vertex binding using tr::gfx::as_vertex_attribute_list<T>.
+	// Constructs a vertex binding using tr::as_vertex_attribute_list<T>.
 	template <typename T> constexpr vertex_binding make_vertex_binding(u32 divisor = not_instanced);
 
 	// GPU vertex format.

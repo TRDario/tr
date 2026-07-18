@@ -12,8 +12,8 @@
 // tr::basic_graphics_buffer_map is primarily an implementation detail, wrapping a map and being able to return it as a span of bytes,   //
 // but otherwise not further abstracting it. The buffer is unmapped once the map goes out of scope.                                      //
 //                                                                                                                                       //
-// tr::gfx::graphics_buffer_object_map represents the map as a reference to an object in the buffer (the header of a shader buffer,      //
-// for example). A reference to the object can be taken, its members can be accessed, or it can be assigned:                             //
+// tr::graphics_buffer_object_map represents the map as a reference to an object in the buffer (the header of a shader buffer, for       //
+// example). A reference to the object can be taken, its members can be accessed, or it can be assigned:                                 //
 //     - tr::graphics_buffer_object_map<tr::rgba8> map{uniform_buffer.map()}                                                             //
 //     - tr::rgba8 copy{map} -> using tr::rgba8&                                                                                         //
 //     - tr::u8 red{map->r} -> gets the red component of the mapped color                                                                //
