@@ -22,7 +22,7 @@
 ###########################################################################################################################################
 
 cmake_minimum_required(VERSION 3.23.0 FATAL_ERROR)
-project(tr LANGUAGES CXX VERSION 2.0.0)
+project(tr LANGUAGES C CXX VERSION 2.0.0)
 
 ################################################################# OPTIONS #################################################################
 
@@ -91,13 +91,13 @@ if(TR_BUILD_SYSGFX)
 	tr_target_template(tr_sysgfx)
 
 	message("-- tr: Building system and graphics module")
-	tr_generate_embeddable_string(resources/basic_renderer.vert resources/generated/basic_renderer_vert.hpp basic_renderer_vert)
-	tr_generate_embeddable_string(resources/basic_renderer.frag resources/generated/basic_renderer_frag.hpp basic_renderer_frag)
-	tr_generate_embeddable_string(resources/circle_renderer.vert resources/generated/circle_renderer_vert.hpp circle_renderer_vert)
-	tr_generate_embeddable_string(resources/circle_renderer.frag resources/generated/circle_renderer_frag.hpp circle_renderer_frag)
-	tr_generate_embeddable_string(resources/debug_renderer.vert resources/generated/debug_renderer_vert.hpp debug_renderer_vert)
-	tr_generate_embeddable_string(resources/debug_renderer.frag resources/generated/debug_renderer_frag.hpp debug_renderer_frag)
-	tr_generate_embeddable_binary(resources/debug_font.bmp resources/generated/debug_renderer_font.hpp debug_renderer_font)
+	tr_generate_embeddable_string(tr_sysgfx resources/basic_renderer.vert generated/basic_renderer_vert.hpp basic_renderer_vert)
+	tr_generate_embeddable_string(tr_sysgfx resources/basic_renderer.frag generated/basic_renderer_frag.hpp basic_renderer_frag)
+	tr_generate_embeddable_string(tr_sysgfx resources/circle_renderer.vert generated/circle_renderer_vert.hpp circle_renderer_vert)
+	tr_generate_embeddable_string(tr_sysgfx resources/circle_renderer.frag generated/circle_renderer_frag.hpp circle_renderer_frag)
+	tr_generate_embeddable_string(tr_sysgfx resources/debug_renderer.vert generated/debug_renderer_vert.hpp debug_renderer_vert)
+	tr_generate_embeddable_string(tr_sysgfx resources/debug_renderer.frag generated/debug_renderer_frag.hpp debug_renderer_frag)
+	tr_generate_embeddable_binary(tr_sysgfx resources/debug_font.bmp generated/debug_renderer_font.hpp debug_renderer_font)
 	target_sources(tr_sysgfx PRIVATE
 		src/sysgfx/basic_renderer.cpp
 		src/sysgfx/basic_renderer_drawer.cpp

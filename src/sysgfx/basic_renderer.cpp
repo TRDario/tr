@@ -18,10 +18,10 @@ constexpr glm::vec2 untextured_uv{-100, -100};
 
 namespace tr {
 	namespace {
-		// Fragment shader source code.
-#include "../../resources/generated/basic_renderer_frag.hpp"
 // Vertex shader source code.
-#include "../../resources/generated/basic_renderer_vert.hpp"
+#include <generated/basic_renderer_vert.hpp>
+// Fragment shader source code.
+#include <generated/basic_renderer_frag.hpp>
 	} // namespace
 } // namespace tr
 

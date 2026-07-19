@@ -16,9 +16,12 @@ using namespace std::chrono_literals;
 
 namespace tr {
 	namespace {
-#include "../../resources/generated/debug_renderer_font.hpp"
-#include "../../resources/generated/debug_renderer_frag.hpp"
-#include "../../resources/generated/debug_renderer_vert.hpp"
+// Font bitmap.
+#include <generated/debug_renderer_font.hpp>
+// Vertex shader source code.
+#include <generated/debug_renderer_vert.hpp>
+// Fragment shader source code.
+#include <generated/debug_renderer_frag.hpp>
 
 		// Formats a duration into a string.
 		std::string format_duration(std::string_view prefix, duration duration)

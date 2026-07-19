@@ -9,8 +9,10 @@
 ///////////////////////////////////////////////////////////// CIRCLE RENDERER /////////////////////////////////////////////////////////////
 
 namespace {
-#include "../../resources/generated/circle_renderer_frag.hpp"
-#include "../../resources/generated/circle_renderer_vert.hpp"
+// Vertex shader source code.
+#include <generated/circle_renderer_vert.hpp>
+// Fragment shader source code.
+#include <generated/circle_renderer_frag.hpp>
 } // namespace
 
 tr::circle_renderer::circle_renderer(graphics_context& context, float render_scale)
