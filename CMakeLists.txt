@@ -100,11 +100,11 @@ if(TR_BUILD_SYSGFX)
 	tr_generate_embeddable_binary(resources/debug_font.bmp resources/generated/debug_renderer_font.hpp debug_renderer_font)
 	target_sources(tr_sysgfx PRIVATE
 		src/sysgfx/basic_renderer.cpp
-		src/sysgfx/basic_renderer_staggered_draw_manager.cpp
+		src/sysgfx/basic_renderer_drawer.cpp
 		src/sysgfx/bitmap_iterators.cpp
 		src/sysgfx/bitmap.cpp
 		src/sysgfx/circle_renderer.cpp
-		src/sysgfx/circle_renderer_staggered_draw_manager.cpp
+		src/sysgfx/circle_renderer_drawer.cpp
 		src/sysgfx/cursor.cpp
 		src/sysgfx/debug_renderer.cpp
 		src/sysgfx/dialog.cpp
