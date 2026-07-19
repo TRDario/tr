@@ -423,31 +423,21 @@ tr::color_mesh_ref tr::basic_renderer::new_line_mesh(int layer, usize vertices, 
 
 //
 
-tr::basic_renderer::staggered_draw_manager tr::basic_renderer::prepare_staggered_draw_range(int min_layer, int max_layer)
+tr::basic_renderer::drawer tr::basic_renderer::create_drawer(int min_layer, int max_layer)
 {
-	return staggered_draw_manager{*this,
-								  {std::ranges::lower_bound(m_meshes, min_layer, std::less{}, &mesh::layer),
-								   std::ranges::upper_bound(m_meshes, max_layer, std::less{}, &mesh::layer)}};
+	return drawer{*this,
+				  {std::ranges::lower_bound(m_meshes, min_layer, std::less{}, &mesh::layer),
+				   std::ranges::upper_bound(m_meshes, max_layer, std::less{}, &mesh::layer)}};
 }
 
-tr::basic_renderer::staggered_draw_manager tr::basic_renderer::prepare_staggered_draw()
+tr::basic_renderer::drawer tr::basic_renderer::create_drawer()
 {
-	return staggered_draw_manager{*this, m_meshes};
-}
-
-void tr::basic_renderer::draw_layer(int layer, const render_target& target)
-{
-	staggered_draw_manager{*this, std::ranges::equal_range(m_meshes, layer, std::less{}, &mesh::layer)}.draw(target);
-}
-
-void tr::basic_renderer::draw_layer_range(int min_layer, int max_layer, const render_target& target)
-{
-	prepare_staggered_draw_range(min_layer, max_layer).draw(target);
+	return drawer{*this, m_meshes};
 }
 
 void tr::basic_renderer::draw(const render_target& target)
 {
-	prepare_staggered_draw().draw(target);
+	create_drawer().draw(target);
 }
 
 //

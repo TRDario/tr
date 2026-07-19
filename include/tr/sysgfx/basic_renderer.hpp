@@ -33,10 +33,8 @@
 //       std::ranges::fill(mesh.colors, "FFFFFF"_rgba8)                                                                                  //
 //       -> adds a textured rectangle to the renderer on layer 1 using a custom texture, transformation matrix, and blending mode        //
 //                                                                                                                                       //
-// Added primitives are not drawn until a call to one of the drawing functions. Aside from supporting the functions in                   //
-// layered_drawing.hpp, the basic renderer can be drawn alone. Drawn primitives are erased from the renderer:                            //
-//     - basic.draw_layer(0, target) -> draws layer 0 to the target                                                                      //
-//     - basic.draw_layer_range(0, 10, target) -> draws layers 0-10 to the target                                                        //
+// Added primitives are not drawn until a call to a drawing functions. Aside from supporting tr::layered_multidrawer, the basic renderer //
+// can be drawn alone. Drawn primitives are erased from the renderer:                                                                    //
 //     - basic.draw(target) -> draws all layers to the target                                                                            //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -97,8 +95,8 @@ namespace tr {
 	class basic_renderer {
 	  private:
 	  public:
-		// Manager class to which the basic renderer delegates handling a staggered drawing process.
-		class staggered_draw_manager;
+		// Drawer class to which the basic renderer delegates the calling of draw commands.
+		class drawer;
 
 		// Creates a basic renderer.
 		basic_renderer(graphics_context& context);
@@ -159,15 +157,10 @@ namespace tr {
 		// Allocates a new color line mesh.
 		color_mesh_ref new_line_mesh(int layer, usize vertices, usize indices, const glm::mat4& mat, const blend_mode& blend_mode);
 
-		// Prepares a staggered draw manager for all layers in a priority range. The renderer is "locked" and can't be interacted with while
-		// this manager exists.
-		staggered_draw_manager prepare_staggered_draw_range(int min_layer, int max_layer);
-		// Prepares a staggered draw manager. The renderer is "locked" and can't be interacted with while this manager exists.
-		staggered_draw_manager prepare_staggered_draw();
-		// Draws a layer to a rendering target.
-		void draw_layer(int layer, const render_target& target);
-		// Draws all layers in a priority range to a rendering target.
-		void draw_layer_range(int min_layer, int max_layer, const render_target& target);
+		// Creates a drawer for all layers in a range. The renderer is "locked" and can't be interacted with while the drawer exists.
+		drawer create_drawer(int min_layer, int max_layer);
+		// Creates a drawer for all layers in the renderer. The renderer is "locked" and can't be interacted with while the drawer exists.
+		drawer create_drawer();
 		// Draws all added primitives to a rendering target.
 		void draw(const render_target& target);
 
@@ -226,7 +219,7 @@ namespace tr {
 		// Last used blending mode.
 		blend_mode m_last_blend_mode{alpha_blending};
 #ifdef TR_ENABLE_ASSERTS
-		// Flag that is set to true when a staggered draw is ongoing.
+		// Flag that is set to true when a drawer for this renderer exists.
 		bool m_locked{false};
 #endif
 
@@ -235,16 +228,21 @@ namespace tr {
 						usize space_needed);
 	};
 
-	// Manager class to which the basic renderer delegates handling a staggered drawing process.
-	class basic_renderer::staggered_draw_manager {
+	// Drawer class to which the basic renderer delegates the calling of draw commands.
+	class basic_renderer::drawer {
 	  public:
-		// Moves a staggered draw manager.
-		staggered_draw_manager(staggered_draw_manager&& r) noexcept;
+		// Moves a drawer.
+		drawer(drawer&& r) noexcept;
 		// Cleans up the drawing data and unlocks the parent renderer.
-		~staggered_draw_manager();
+		~drawer();
 
-		// Moves a staggered draw manager.
-		staggered_draw_manager& operator=(staggered_draw_manager&& r) noexcept;
+		// Moves a drawer.
+		drawer& operator=(drawer&& r) noexcept;
+
+		// Gets the minimum available layer for drawing.
+		int min_layer() const;
+		// Gets the maximum available layer for drawing.
+		int max_layer() const;
 
 		// Draws a single layer.
 		void draw_layer(int layer, const render_target& target);
@@ -267,8 +265,8 @@ namespace tr {
 		// The drawing data.
 		std::vector<mesh_draw_info> m_data;
 
-		// Creates a staggered draw manager.
-		staggered_draw_manager(basic_renderer& renderer, std::ranges::subrange<std::vector<mesh>::iterator> range);
+		// Creates a drawer.
+		drawer(basic_renderer& renderer, std::ranges::subrange<std::vector<mesh>::iterator> range);
 
 		// Sets up the graphical context for drawing.
 		void setup_context(graphics_context& context);

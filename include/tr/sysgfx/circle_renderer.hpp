@@ -27,10 +27,8 @@
 //     - circle.add_outlined_circle(0, {{100, 250}, 15}, 4, "0000FF"_rgba8, "00FF00"_rgba8)                                              //
 //       -> adds a blue circle of radius 15 centered at (100, 250)  with a green outline of thickness 4 to layer 0                       //
 //                                                                                                                                       //
-// Added circles are not drawn until a call to one of the drawing functions. Aside from supporting the functions in layered_drawing.hpp, //
-// the circle renderer can be drawn alone. Drawn circles are erased from the renderer:                                                   //
-//     - circle.draw_layer(0, target) -> draws layer 0 to the target                                                                     //
-//     - circle.draw_layer_range(0, 10, target) -> draws layers 0-10 to the target                                                       //
+// Added circles are not drawn until a call to one of the drawing functions. Aside from supporting tr::layered_multidrawer, the circle   //
+// renderer can be drawn alone. Drawn circles are erased from the renderer:                                                              //
 //     - circle.draw(target) -> draws all layers to the target                                                                           //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -48,7 +46,8 @@ namespace tr {
 	// Efficient circle renderer.
 	class circle_renderer {
 	  public:
-		class staggered_draw_manager;
+		// Drawer class to which the circle renderer delegates the calling of draw commands.
+		class drawer;
 
 		// Initializes the circle renderer.
 		circle_renderer(graphics_context& context, float render_scale = 1.0f);
@@ -72,15 +71,10 @@ namespace tr {
 		// Adds an outlined circle to the renderer.
 		void add_outlined_circle(int layer, circle circle, float outline_thickness, rgba8 fill_color, rgba8 outline_color);
 
-		// Prepares a staggered draw manager for all layers in a priority range. The renderer is "locked" and can't be interacted with while
-		// this manager exists.
-		staggered_draw_manager prepare_staggered_draw_range(int min_layer, int max_layer);
-		// Prepares a staggered draw manager. The renderer is "locked" and can't be interacted with while this manager exists.
-		staggered_draw_manager prepare_staggered_draw();
-		// Draws a layer to a rendering target.
-		void draw_layer(int layer, const render_target& target);
-		// Draws all layers in a priority range to a rendering target.
-		void draw_layer_range(int min_layer, int max_layer, const render_target& target);
+		// Creates a drawer for all layers in a range. The renderer is "locked" and can't be interacted with while the drawer exists.
+		drawer create_drawer(int min_layer, int max_layer);
+		// Creates a drawer for all layers in the renderer. The renderer is "locked" and can't be interacted with while the drawer exists.
+		drawer create_drawer();
 		// Draws all added circles to a rendering target.
 		void draw(const render_target& target);
 
@@ -138,14 +132,21 @@ namespace tr {
 #endif
 	};
 
-	// Manager class to which the circle renderer delegates handling a staggered drawing process.
-	class circle_renderer::staggered_draw_manager {
+	// Drawer class to which the circle renderer delegates the calling of draw commands.
+	class circle_renderer::drawer {
 	  public:
-		staggered_draw_manager(staggered_draw_manager&& r) noexcept;
+		// Moves a drawer.
+		drawer(drawer&& r) noexcept;
 		// Cleans up the drawing data and unlocks the parent renderer.
-		~staggered_draw_manager();
+		~drawer();
 
-		staggered_draw_manager& operator=(staggered_draw_manager&& r) noexcept;
+		// Moves a drawer.
+		drawer& operator=(drawer&& r) noexcept;
+
+		// Gets the minimum available layer for drawing.
+		int min_layer() const;
+		// Gets the maximum available layer for drawing.
+		int max_layer() const;
 
 		// Draws a single layer.
 		void draw_layer(int layer, const render_target& target);
@@ -158,8 +159,8 @@ namespace tr {
 		// The range of circles to draw.
 		std::ranges::subrange<std::map<int, layer>::iterator> m_range;
 
-		// Creates a staggered draw manager.
-		staggered_draw_manager(circle_renderer& renderer, std::ranges::subrange<std::map<int, layer>::iterator> range);
+		// Creates a drawer.
+		drawer(circle_renderer& renderer, std::ranges::subrange<std::map<int, layer>::iterator> range);
 
 		// Sets up the graphical context for drawing.
 		void setup_context(graphics_context& context);

@@ -1,11 +1,18 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Implements the drawer from circle_renderer.hpp.                                                                                       //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #include "../../include/tr/sysgfx/circle_renderer.hpp"
 
-tr::circle_renderer::staggered_draw_manager::staggered_draw_manager(circle_renderer& renderer,
-																	std::ranges::subrange<std::map<int, layer>::iterator> range)
+////////////////////////////////////////////////////////////////// DRAWER /////////////////////////////////////////////////////////////////
+
+tr::circle_renderer::drawer::drawer(circle_renderer& renderer, std::ranges::subrange<std::map<int, layer>::iterator> range)
 	: m_renderer{renderer}
 	, m_range{range}
 {
-	TR_ASSERT(!m_renderer->m_locked, "Tried to create multiple simultaneous circle renderer staggered draw managers.");
+	TR_ASSERT(!m_renderer->m_locked, "Tried to create multiple simultaneous circle renderer drawers.");
 
 #ifdef TR_ENABLE_ASSERTS
 	m_renderer->m_locked = true;
@@ -18,18 +25,18 @@ tr::circle_renderer::staggered_draw_manager::staggered_draw_manager(circle_rende
 	m_renderer->m_shader_circles.set(circles);
 }
 
-tr::circle_renderer::staggered_draw_manager::staggered_draw_manager(staggered_draw_manager&& r) noexcept
+tr::circle_renderer::drawer::drawer(drawer&& r) noexcept
 	: m_renderer{std::exchange(r.m_renderer, std::nullopt)}
 	, m_range{r.m_range}
 {
 }
 
-tr::circle_renderer::staggered_draw_manager::~staggered_draw_manager()
+tr::circle_renderer::drawer::~drawer()
 {
 	clean_up();
 }
 
-tr::circle_renderer::staggered_draw_manager& tr::circle_renderer::staggered_draw_manager::operator=(staggered_draw_manager&& r) noexcept
+tr::circle_renderer::drawer& tr::circle_renderer::drawer::operator=(drawer&& r) noexcept
 {
 	clean_up();
 	m_renderer = std::exchange(r.m_renderer, std::nullopt);
@@ -39,9 +46,21 @@ tr::circle_renderer::staggered_draw_manager& tr::circle_renderer::staggered_draw
 
 //
 
-void tr::circle_renderer::staggered_draw_manager::draw_layer(int layer, const render_target& target)
+int tr::circle_renderer::drawer::min_layer() const
 {
-	TR_ASSERT(m_renderer.has_ref(), "Tried to draw a layer from a moved-from circle renderer staggered draw manager.");
+	return !m_range.empty() ? m_range.front().first : INT_MAX;
+}
+
+int tr::circle_renderer::drawer::max_layer() const
+{
+	return !m_range.empty() ? m_range.back().first : INT_MIN;
+}
+
+//
+
+void tr::circle_renderer::drawer::draw_layer(int layer, const render_target& target)
+{
+	TR_ASSERT(m_renderer.has_ref(), "Tried to draw a layer from a moved-from circle renderer drawer.");
 
 	const auto layer_it{m_renderer->m_layers.find(layer)};
 	if (layer_it == m_renderer->m_layers.end()) {
@@ -59,9 +78,9 @@ void tr::circle_renderer::staggered_draw_manager::draw_layer(int layer, const re
 	context.draw_instances(primitive::tri_fan, 0, 4, info.circles.size());
 }
 
-void tr::circle_renderer::staggered_draw_manager::draw(const render_target& target)
+void tr::circle_renderer::drawer::draw(const render_target& target)
 {
-	TR_ASSERT(m_renderer.has_ref(), "Tried to draw from a moved-from circle renderer staggered draw manager.");
+	TR_ASSERT(m_renderer.has_ref(), "Tried to draw from a moved-from circle renderer drawer.");
 
 	if (m_range.empty()) {
 		return;
@@ -83,7 +102,7 @@ void tr::circle_renderer::staggered_draw_manager::draw(const render_target& targ
 
 //
 
-void tr::circle_renderer::staggered_draw_manager::setup_context(graphics_context& context)
+void tr::circle_renderer::drawer::setup_context(graphics_context& context)
 {
 	if (context.should_setup_renderer(m_renderer->m_id)) {
 		context.set_face_culling(false);
@@ -95,8 +114,7 @@ void tr::circle_renderer::staggered_draw_manager::setup_context(graphics_context
 	}
 }
 
-void tr::circle_renderer::staggered_draw_manager::setup_draw_call_state(graphics_context& context, const glm::mat4& transform,
-																		const blend_mode& blend_mode)
+void tr::circle_renderer::drawer::setup_draw_call_state(graphics_context& context, const glm::mat4& transform, const blend_mode& blend_mode)
 {
 	if (m_renderer->m_last_transform != transform) {
 		m_renderer->m_last_transform = transform;
@@ -111,7 +129,7 @@ void tr::circle_renderer::staggered_draw_manager::setup_draw_call_state(graphics
 
 //
 
-void tr::circle_renderer::staggered_draw_manager::clean_up()
+void tr::circle_renderer::drawer::clean_up()
 {
 	if (m_renderer.has_ref()) {
 		m_renderer->m_layers.erase(m_range.begin(), m_range.end());

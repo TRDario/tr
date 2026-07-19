@@ -1,20 +1,19 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                                                       //
-// Implements the staggered draw manager from basic_renderer.hpp.                                                                        //
+// Implements the drawer from basic_renderer.hpp.                                                                                        //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include "../../include/tr/sysgfx/basic_renderer.hpp"
 
-////////////////////////////////////////////////////////// STAGGERED DRAW MANAGER /////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////// DRAWER /////////////////////////////////////////////////////////////////
 
-tr::basic_renderer::staggered_draw_manager::staggered_draw_manager(basic_renderer& renderer,
-																   std::ranges::subrange<std::vector<mesh>::iterator> range)
+tr::basic_renderer::drawer::drawer(basic_renderer& renderer, std::ranges::subrange<std::vector<mesh>::iterator> range)
 	: m_renderer{renderer}
 	, m_range{range}
 {
 #ifdef TR_ENABLE_ASSERTS
-	TR_ASSERT(!m_renderer->m_locked, "Tried to create multiple simultaneous basic renderer staggered draw managers.");
+	TR_ASSERT(!m_renderer->m_locked, "Tried to create multiple simultaneous basic renderer drawers.");
 	m_renderer->m_locked = true;
 #endif
 
@@ -40,19 +39,19 @@ tr::basic_renderer::staggered_draw_manager::staggered_draw_manager(basic_rendere
 	m_renderer->context().set_index_buffer(m_renderer->m_ibuffer);
 }
 
-tr::basic_renderer::staggered_draw_manager::staggered_draw_manager(staggered_draw_manager&& r) noexcept
+tr::basic_renderer::drawer::drawer(drawer&& r) noexcept
 	: m_renderer{std::exchange(r.m_renderer, std::nullopt)}
 	, m_range{r.m_range}
 	, m_data{std::move(r.m_data)}
 {
 }
 
-tr::basic_renderer::staggered_draw_manager::~staggered_draw_manager()
+tr::basic_renderer::drawer::~drawer()
 {
 	clean_up();
 }
 
-tr::basic_renderer::staggered_draw_manager& tr::basic_renderer::staggered_draw_manager::operator=(staggered_draw_manager&& r) noexcept
+tr::basic_renderer::drawer& tr::basic_renderer::drawer::operator=(drawer&& r) noexcept
 {
 	clean_up();
 	m_renderer = std::exchange(r.m_renderer, std::nullopt);
@@ -63,9 +62,21 @@ tr::basic_renderer::staggered_draw_manager& tr::basic_renderer::staggered_draw_m
 
 //
 
-void tr::basic_renderer::staggered_draw_manager::draw_layer(int layer, const render_target& target)
+int tr::basic_renderer::drawer::min_layer() const
 {
-	TR_ASSERT(m_renderer.has_ref(), "Tried to draw a layer from a moved-from basic renderer staggered draw manager.");
+	return !m_range.empty() ? m_range.front().layer : INT_MAX;
+}
+
+int tr::basic_renderer::drawer::max_layer() const
+{
+	return !m_range.empty() ? m_range.back().layer : INT_MIN;
+}
+
+//
+
+void tr::basic_renderer::drawer::draw_layer(int layer, const render_target& target)
+{
+	TR_ASSERT(m_renderer.has_ref(), "Tried to draw a layer from a moved-from basic renderer drawer.");
 
 	const auto range{std::ranges::equal_range(m_range, layer, std::less{}, &mesh::layer)};
 	if (range.empty()) {
@@ -91,9 +102,9 @@ void tr::basic_renderer::staggered_draw_manager::draw_layer(int layer, const ren
 	}
 }
 
-void tr::basic_renderer::staggered_draw_manager::draw(const render_target& target)
+void tr::basic_renderer::drawer::draw(const render_target& target)
 {
-	TR_ASSERT(m_renderer.has_ref(), "Tried to draw from a moved-from basic renderer staggered draw manager.");
+	TR_ASSERT(m_renderer.has_ref(), "Tried to draw from a moved-from basic renderer drawer.");
 
 	if (m_range.empty()) {
 		return;
@@ -120,7 +131,7 @@ void tr::basic_renderer::staggered_draw_manager::draw(const render_target& targe
 
 //
 
-void tr::basic_renderer::staggered_draw_manager::setup_context(graphics_context& context)
+void tr::basic_renderer::drawer::setup_context(graphics_context& context)
 {
 	if (context.should_setup_renderer(m_renderer->m_id)) {
 		context.set_face_culling(false);
@@ -132,8 +143,8 @@ void tr::basic_renderer::staggered_draw_manager::setup_context(graphics_context&
 	}
 }
 
-void tr::basic_renderer::staggered_draw_manager::setup_draw_call_state(graphics_context& context, texture_ref texture_ref,
-																	   const glm::mat4& transform, const blend_mode& blend_mode)
+void tr::basic_renderer::drawer::setup_draw_call_state(graphics_context& context, texture_ref texture_ref, const glm::mat4& transform,
+													   const blend_mode& blend_mode)
 {
 	m_renderer->m_pipeline.fragment_shader().set_uniform(1, std::move(texture_ref));
 
@@ -150,7 +161,7 @@ void tr::basic_renderer::staggered_draw_manager::setup_draw_call_state(graphics_
 
 //
 
-void tr::basic_renderer::staggered_draw_manager::clean_up()
+void tr::basic_renderer::drawer::clean_up()
 {
 	if (m_renderer.has_ref()) {
 		m_renderer->m_meshes.erase(m_range.begin(), m_range.end());

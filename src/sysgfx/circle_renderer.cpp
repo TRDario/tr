@@ -85,27 +85,17 @@ void tr::circle_renderer::add_outlined_circle(int layer, tr::circle circle, floa
 
 //
 
-tr::circle_renderer::staggered_draw_manager tr::circle_renderer::prepare_staggered_draw_range(int min_layer, int max_layer)
+tr::circle_renderer::drawer tr::circle_renderer::create_drawer(int min_layer, int max_layer)
 {
-	return staggered_draw_manager{*this, {m_layers.lower_bound(min_layer), m_layers.upper_bound(max_layer)}};
+	return drawer{*this, {m_layers.lower_bound(min_layer), m_layers.upper_bound(max_layer)}};
 }
 
-tr::circle_renderer::staggered_draw_manager tr::circle_renderer::prepare_staggered_draw()
+tr::circle_renderer::drawer tr::circle_renderer::create_drawer()
 {
-	return staggered_draw_manager{*this, m_layers};
-}
-
-void tr::circle_renderer::draw_layer(int layer, const render_target& target)
-{
-	staggered_draw_manager{*this, {m_layers.lower_bound(layer), m_layers.upper_bound(layer)}}.draw(target);
-}
-
-void tr::circle_renderer::draw_layer_range(int min_layer, int max_layer, const render_target& target)
-{
-	prepare_staggered_draw_range(min_layer, max_layer).draw(target);
+	return drawer{*this, m_layers};
 }
 
 void tr::circle_renderer::draw(const render_target& target)
 {
-	prepare_staggered_draw().draw(target);
+	create_drawer().draw(target);
 }
