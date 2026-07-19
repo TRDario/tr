@@ -31,7 +31,7 @@
 #include "sysgfx/graphics_context.hpp"    // IWYU pragma: export
 #include "sysgfx/index_buffer.hpp"        // IWYU pragma: export
 #include "sysgfx/keyboard.hpp"            // IWYU pragma: export
-#include "sysgfx/layered_drawing.hpp"     // IWYU pragma: export
+#include "sysgfx/layered_multidrawer.hpp" // IWYU pragma: export
 #include "sysgfx/main.hpp"                // IWYU pragma: export
 #include "sysgfx/mouse.hpp"               // IWYU pragma: export
 #include "sysgfx/path.hpp"                // IWYU pragma: export
