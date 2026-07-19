@@ -1,52 +1,54 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                                                       //
-// Provides functionality related to the window.                                                                                         //
+// Provides window classes and related datatypes.                                                                                        //
 //                                                                                                                                       //
-// tr is designed with the notion that only one window may be open at once, thus treats it as global state. All functionality from the   //
-// tr::gfx namespace is inherently tied to the lifetime of the window it was created on; it cannot persist if the window is closed, even //
-// if reopened later.                                                                                                                    //
+// Windows are constructed using a parameter struct which defines the initial size and mode, as well as graphical parameters:            //
+//     - tr::window window{"My App", {.size{500, 500}, .multisamples{tr::max_msaa()}}} -> Creates a 500x500 window with maximum MSAA     //
+//     - tr::window window{"My App", {.min_size{640, 480}}} -> Creates a maximized window that can be resized down to 640x480            //
+//     - tr::window window{"My App", {.fullscreen{true}}} -> Creates a borderless fullscreen window                                      //
 //                                                                                                                                       //
-// A window can be opened as windowed or fullscreen. When opening as windowed, the size of the window is passed, or tr::sys::maximized   //
-// to set the window as maximized. If the window should be resizable, a minimum allowed size is to be passed, otherwise pass             //
-// tr::sys::not_resizable to mark the window as non-resizable. Properties of the graphics context are also passed to the window opening  //
-// function. A window is closed with tr::sys::close_window:                                                                              //
-//     - tr::sys::open_window("My App")                                                                                                  //
-//       -> opens a maximized, non-resizable window titled "My App"                                                                      //
-//     - tr::sys::open_window("My App", {960, 720}, {640, 480}, {.multisamples = 8})                                                     //
-//       -> opens a 960x720 window titled "My App", resizable down to 640x480, with x8 MSAA                                              //
-//     - tr::sys::open_fullscreen_window("My App", tr::sys::not_resizable, {.enable_depth_stencil = true})                               //
-//       -> opens a fullscreen, non-resizable window titled "My App" with enabled depth and stencil buffers                              //
-//     - tr::sys::close_window() -> closes the window                                                                                    //
+// It's important to note that windows start out as hidden and must be set to be shown afterwards. Hiding and showing a window can be    //
+// done at any time:                                                                                                                     //
+//     - window.show() -> the window is shown                                                                                            //
+//     - window.hide() -> the window is hidden again                                                                                     //
 //                                                                                                                                       //
-// It's important to note that the window starts out as hidden and must be set to be shown afterwards. Hiding and showing the window can //
-// be done at any time:                                                                                                                  //
-//     - tr::sys::open_window("My App")                                                                                                  //
-//       ... (setup system, load things)                                                                                                 //
-//       tr::sys::show_window() -> the window is now shown                                                                               //
+// A window's title can be gotten and reset:                                                                                             //
+//     - window.title() -> "My App"                                                                                                      //
+//     - window.set_title("My Game") -> window title is updated to "My Game"                                                             //
 //                                                                                                                                       //
-// The window title can be gotten and reset:                                                                                             //
-//     - tr::sys::window_title() -> "My App"                                                                                             //
-//     - tr::sys::set_window_title("My Game") -> window title is updated to "My Game"                                                    //
+// A window's icon can be set:                                                                                                           //
+//     - window.set_icon(bitmap) -> sets the window icon to the contents of the bitmap                                                   //
 //                                                                                                                                       //
-// The window icon can be set:                                                                                                           //
-//     - tr::sys::set_window_icon(bitmap) -> sets the window icon to the contents of the bitmap                                          //
+// A window's size and pixel density (ratio between logical and actual pixels), as well as whether the window is fullscreen are gettable,//
+// and the size and fullscreen flag can be set:                                                                                          //
+//     - window.fullscreen() -> true                                                                                                     //
+//     - window.set_fullscreen(false)                                                                                                    //
+//       window.set_size({960, 720})                                                                                                     //
+//       window.size() -> {960, 720}                                                                                                     //
+//     - window.pixel_density() -> may be greater than 1 if the user has a different UI scaling factor, for example                      //
 //                                                                                                                                       //
-// The window's size and pixel density (ratio between logical and actual pixels), as well as whether the window is fullscreen are        //
-// gettable, and the size and fullscreen flag can be set:                                                                                //
-//     - tr::sys::window_fullscreen() -> true                                                                                            //
-//     - tr::sys::set_window_fullscreen(false)                                                                                           //
-//       tr::sys::set_window_size({960, 720})                                                                                            //
-//       tr::sys::window_size() -> {960, 720}                                                                                            //
-//     - tr::sys::window_pixel_density() -> may be greater than 1 if the user has a different UI scaling factor, for example             //
+// Whether a window is maximized, minimized, and if it has focus can be gotten, and the window can be raised to get window focus:        //
+//     - window.maximized() -> true if the window is maximized, false otherwise                                                          //
+//     - window.minimized() -> true if the window is minimized, false otherwise                                                          //
+//     - window.has_focus() -> true if the window has input focus, false otherwise                                                       //
+//     - window.raise() -> tries to raise the window                                                                                     //
 //                                                                                                                                       //
-// Whether the window is maximized, minimized, and if it has focus can be gotten, and the window can be raised to get window focus:      //
-//     - tr::sys::window_maximized() -> true if the window is maximized, false otherwise                                                 //
-//     - tr::sys::window_minimized() -> true if the window is minimized, false otherwise                                                 //
-//     - tr::sys::window_has_focus() -> true if the window has input focus, false otherwise                                              //
-//     - tr::sys::raise_window() -> tries to raise the window                                                                            //
+// A window's V-sync mode can be set. If adaptive V-sync is not available, the system will try to fallback to regular V-sync:            //
+//     - window.set_vsync(tr::vsync::adaptive) -> tries to enable adaptive V-sync                                                        //
 //                                                                                                                                       //
-// The window's V-sync mode can be set. If adaptive V-sync is not available, the system will try to fallback to regular V-sync:          //
-//     - tr::sys::set_window_vsync(tr::vsync::adaptive) -> tries to enable adaptive V-sync                                               //
+// The sending of text inputs may be enabled and disabled per window:                                                                    //
+//     - window.enable_text_input() -> tr::text_input_event can now be sent                                                              //
+//     - window.disable_text_input() -> tr::text_input_event will no longer be sent                                                      //
+//                                                                                                                                       //
+// The mouse mode on a window may be changed between absolute and relative:                                                              //
+//     - window.set_mouse_mode(tr::mouse_mode::absolute) -> absolute mouse controls: normal operation                                    //
+//     - window.set_mouse_mode(tr::mouse_mode::relative) -> relative mouse controls: cursor is hidden and only reports deltas            //
+//                                                                                                                                       //
+// To display a frame after it is drawn, a window's backbuffer must be flipped:                                                          //
+//     - window.flip_backbuffer() -> swaps the front- and backbuffer                                                                     //
+//                                                                                                                                       //
+// tr::window_view is a lightweight, non-owning view to a window.                                                                        //
+// All of the same methods may be invoked on it as they would be on a window.                                                            //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
