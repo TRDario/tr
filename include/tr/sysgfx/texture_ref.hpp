@@ -72,5 +72,8 @@ namespace tr {
 		void rebind(const texture& texture);
 
 		friend class texture;
+#ifdef TR_HAS_IMGUI
+		friend ImTextureID ImGui::GetTextureID(const texture_ref& texture);
+#endif
 	};
 } // namespace tr

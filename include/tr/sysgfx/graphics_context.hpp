@@ -80,6 +80,12 @@ namespace tr {
 	class static_index_buffer;
 	class window_view;
 } // namespace tr
+#ifdef TR_HAS_IMGUI
+namespace tr::ImGui {
+	void Init(graphics_context& context);
+	void Draw(graphics_context& context);
+} // namespace tr::ImGui
+#endif
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
@@ -402,5 +408,9 @@ namespace tr {
 		friend class static_index_buffer;
 		friend class texture;
 		friend class vertex_format;
+#ifdef TR_HAS_IMGUI
+		friend void ImGui::Init(graphics_context& context);
+		friend void ImGui::Draw(graphics_context& context);
+#endif
 	};
 } // namespace tr

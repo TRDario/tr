@@ -32,10 +32,12 @@ namespace tr {
 	// Namespace containing functionality for integrating Dear ImGui with tr.
 	namespace ImGui {
 		// Initializes the Dear ImGui backends needed for work with tr.
-		void Init();
+		void Init(graphics_context& context);
 		// Shuts the Dear ImGui backends needed for work with tr down.
 		void Shutdown();
 
+		// Gets the Dear ImGui texture ID for a tr texture reference.
+		ImTextureID GetTextureID(const texture_ref& texture);
 		// Gets the Dear ImGui texture ID for a tr texture.
 		ImTextureID GetTextureID(const texture& texture);
 
@@ -45,6 +47,6 @@ namespace tr {
 		// Prepares the Dear ImGui backends needed for work with tr for a new frame.
 		void NewFrame();
 		// Draws a Dear ImGui frame.
-		void Draw();
+		void Draw(graphics_context& context);
 	} // namespace ImGui
 } // namespace tr
