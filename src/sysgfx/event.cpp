@@ -11,21 +11,25 @@ using namespace std::chrono_literals;
 
 /////////////////////////////////////////////////////////////// EVENT TYPES ///////////////////////////////////////////////////////////////
 
-// Converts SDL keymods to tr keymods.
-static constexpr tr::keymod convert_keymods(SDL_Keymod mods)
-{
-	if (mods & SDL_KMOD_SHIFT) {
-		mods |= SDL_KMOD_SHIFT;
-	}
-	if (mods & SDL_KMOD_CTRL) {
-		mods |= SDL_KMOD_CTRL;
-	}
-	if (mods & SDL_KMOD_ALT) {
-		mods |= SDL_KMOD_ALT;
-	}
-	mods &= (SDL_KMOD_SHIFT | SDL_KMOD_CTRL | SDL_KMOD_ALT);
-	return static_cast<tr::keymod>(mods);
-}
+namespace tr {
+	namespace {
+		// Converts SDL keymods to tr keymods.
+		constexpr keymod convert_keymods(SDL_Keymod mods)
+		{
+			if (mods & SDL_KMOD_SHIFT) {
+				mods |= SDL_KMOD_SHIFT;
+			}
+			if (mods & SDL_KMOD_CTRL) {
+				mods |= SDL_KMOD_CTRL;
+			}
+			if (mods & SDL_KMOD_ALT) {
+				mods |= SDL_KMOD_ALT;
+			}
+			mods &= (SDL_KMOD_SHIFT | SDL_KMOD_CTRL | SDL_KMOD_ALT);
+			return static_cast<keymod>(mods);
+		}
+	} // namespace
+} // namespace tr
 
 //
 

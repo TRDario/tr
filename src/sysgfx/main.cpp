@@ -21,44 +21,47 @@
 
 ///////////////////////////////////////////////////////////// INTERNAL HELPERS ////////////////////////////////////////////////////////////
 
-// Buffer allocated to be freed in case of an out-of-memory error.
-static std::unique_ptr<char[]> g_emergency_buffer{new char[16384]};
+namespace tr {
+	namespace {
+		// Buffer allocated to be freed in case of an out-of-memory error.
+		std::unique_ptr<char[]> g_emergency_buffer{new char[16384]};
 
-// Shows an "Fatal exception" message box.
-// In case of an out-of-memory error, it frees an emergency buffer to allow for clean-up and logging.
-static void show_fatal_error_message_box(const std::exception& exception)
-{
-	if (tr::dynamic_ref_cast<const std::bad_alloc>(exception).has_ref() ||
-		tr::dynamic_ref_cast<const tr::out_of_memory>(exception).has_ref()) {
-		g_emergency_buffer.reset();
-	}
+		// Shows an "Fatal exception" message box.
+		// In case of an out-of-memory error, it frees an emergency buffer to allow for clean-up and logging.
+		void show_fatal_error_message_box(const std::exception& error)
+		{
+			if (dynamic_ref_cast<const std::bad_alloc>(error).has_ref() || dynamic_ref_cast<const out_of_memory>(error).has_ref()) {
+				g_emergency_buffer.reset();
+			}
 
-	const std::string title{TR_FMT::format("{} - Fatal Error", app::metadata.name)};
+			const std::string title{TR_FMT::format("{} - Fatal Error", app::metadata.name)};
 
-	tr::opt_ref<const tr::exception> tr_exception{tr::dynamic_ref_cast<const tr::exception>(exception)};
-	std::string message;
-	if (tr_exception.has_ref()) {
-		message = TR_FMT::format("A fatal error has occurred ({}).", tr_exception->name());
-		const std::string_view description{tr_exception->description()};
-		if (!description.empty()) {
-			message.push_back('\n');
-			message.append(description);
+			opt_ref<const exception> tr_exception{dynamic_ref_cast<const exception>(error)};
+			std::string message;
+			if (tr_exception.has_ref()) {
+				message = TR_FMT::format("A fatal error has occurred ({}).", tr_exception->name());
+				const std::string_view description{tr_exception->description()};
+				if (!description.empty()) {
+					message.push_back('\n');
+					message.append(description);
+				}
+				const std::string_view details{tr_exception->details()};
+				if (!details.empty()) {
+					message.push_back('\n');
+					message.append(details);
+				}
+				error_logger.log(severity::fatal, *tr_exception);
+			}
+			else {
+				message = TR_FMT::format("A fatal error has occurred ({}).", error.what());
+				error_logger.log(severity::fatal, error);
+			}
+			message.append("\nPress OK to exit the application.");
+
+			show_message_box(message_box_type::error, message_box_layout::ok, title, message);
 		}
-		const std::string_view details{tr_exception->details()};
-		if (!details.empty()) {
-			message.push_back('\n');
-			message.append(details);
-		}
-		tr::error_logger.log(tr::severity::fatal, *tr_exception);
-	}
-	else {
-		message = TR_FMT::format("A fatal error has occurred ({}).", exception.what());
-		tr::error_logger.log(tr::severity::fatal, exception);
-	}
-	message.append("\nPress OK to exit the application.");
-
-	tr::show_message_box(tr::message_box_type::error, tr::message_box_layout::ok, title, message);
-}
+	} // namespace
+} // namespace tr
 
 //////////////////////////////////////////////////////////////// INIT ERROR ///////////////////////////////////////////////////////////////
 
@@ -118,7 +121,7 @@ extern "C"
 			}
 		}
 		catch (std::exception& err) {
-			show_fatal_error_message_box(err);
+			tr::show_fatal_error_message_box(err);
 			return SDL_APP_FAILURE;
 		}
 
@@ -141,7 +144,7 @@ extern "C"
 			return static_cast<SDL_AppResult>(app::initialize());
 		}
 		catch (std::exception& err) {
-			show_fatal_error_message_box(err);
+			tr::show_fatal_error_message_box(err);
 			return SDL_APP_FAILURE;
 		}
 	}
@@ -152,7 +155,7 @@ extern "C"
 			return static_cast<SDL_AppResult>(app::handle_event(reinterpret_cast<tr::event&>(*event)));
 		}
 		catch (std::exception& err) {
-			show_fatal_error_message_box(err);
+			tr::show_fatal_error_message_box(err);
 			return SDL_APP_FAILURE;
 		}
 	}
@@ -167,7 +170,7 @@ extern "C"
 			return static_cast<SDL_AppResult>(app::update(delta));
 		}
 		catch (std::exception& err) {
-			show_fatal_error_message_box(err);
+			tr::show_fatal_error_message_box(err);
 			return SDL_APP_FAILURE;
 		}
 	}
@@ -178,7 +181,7 @@ extern "C"
 			app::shut_down();
 		}
 		catch (std::exception& err) {
-			show_fatal_error_message_box(err);
+			tr::show_fatal_error_message_box(err);
 		}
 
 		TTF_Quit();

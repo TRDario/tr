@@ -9,35 +9,40 @@
 #include <SDL3/SDL.h>
 #include <SDL3_image/SDL_image.h>
 
-using u24 = tr::u8[3];
-
 /////////////////////////////////////////////////////////////// PIXEL COLOR ///////////////////////////////////////////////////////////////
 
-// Extracts an RGBA8 color value from a pixel.
-static tr::rgba8 pixel_color(const std::byte* data, tr::pixel_format format)
-{
-	tr::u32 value{};
-	switch (pixel_bytes(format)) {
-	case 1:
-		value = *reinterpret_cast<const tr::u8*>(data);
-		break;
-	case 2:
-		value = *reinterpret_cast<const tr::u16*>(data);
-		break;
-	case 3: {
-		const u24& arr{*reinterpret_cast<const u24*>(data)};
-		value = arr[0] << 16 | arr[1] << 8 | arr[2];
-		break;
-	}
-	case 4:
-		value = *reinterpret_cast<const tr::u32*>(data);
-		break;
-	}
+namespace tr {
+	namespace {
+		using u24 = tr::u8[3];
 
-	tr::rgba8 color;
-	SDL_GetRGBA(value, SDL_GetPixelFormatDetails(static_cast<SDL_PixelFormat>(format)), nullptr, &color.r, &color.g, &color.b, &color.a);
-	return color;
-}
+		// Extracts an RGBA8 color value from a pixel.
+		rgba8 pixel_color(const std::byte* data, pixel_format format)
+		{
+			u32 value{};
+			switch (pixel_bytes(format)) {
+			case 1:
+				value = *reinterpret_cast<const u8*>(data);
+				break;
+			case 2:
+				value = *reinterpret_cast<const u16*>(data);
+				break;
+			case 3: {
+				const u24& arr{*reinterpret_cast<const u24*>(data)};
+				value = arr[0] << 16 | arr[1] << 8 | arr[2];
+				break;
+			}
+			case 4:
+				value = *reinterpret_cast<const u32*>(data);
+				break;
+			}
+
+			rgba8 color;
+			SDL_GetRGBA(value, SDL_GetPixelFormatDetails(static_cast<SDL_PixelFormat>(format)), nullptr, &color.r, &color.g, &color.b,
+						&color.a);
+			return color;
+		}
+	} // namespace
+} // namespace tr
 
 //////////////////////////////////////////////////////// CONST/SUB-BITMAP ITERATOR ////////////////////////////////////////////////////////
 

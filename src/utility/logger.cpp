@@ -12,12 +12,16 @@
 
 ////////////////////////////////////////////////////////////// CONSOLE LOGGER /////////////////////////////////////////////////////////////
 
-// Must be a function because of the static object initialization fiasco.
-static std::vector<std::string>& registered_console_loggers()
-{
-	static std::vector<std::string> registered_console_loggers;
-	return registered_console_loggers;
-}
+namespace tr {
+	namespace {
+		// Must be a function because of the static object initialization fiasco.
+		std::vector<std::string>& registered_console_loggers()
+		{
+			static std::vector<std::string> registered_console_loggers;
+			return registered_console_loggers;
+		}
+	} // namespace
+} // namespace tr
 
 tr::console_logger::console_logger(std::string&& name)
 	: m_name{std::move(name)}
@@ -34,11 +38,15 @@ tr::console_logger::~console_logger()
 
 //
 
-// String size projection.
-static tr::usize string_size(const std::string& str)
-{
-	return str.size();
-}
+namespace tr {
+	namespace {
+		// String size projection.
+		usize string_size(const std::string& str)
+		{
+			return str.size();
+		}
+	} // namespace
+} // namespace tr
 
 void tr::console_logger::log(const std::tm& time, severity severity, std::string_view string)
 {

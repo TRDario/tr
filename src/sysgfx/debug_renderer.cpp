@@ -14,40 +14,42 @@ using namespace std::chrono_literals;
 
 ////////////////////////////////////////////////////////////// DEBUG RENDERER /////////////////////////////////////////////////////////////
 
-namespace {
+namespace tr {
+	namespace {
 #include "../../resources/generated/debug_renderer_font.hpp"
 #include "../../resources/generated/debug_renderer_frag.hpp"
 #include "../../resources/generated/debug_renderer_vert.hpp"
-} // namespace
 
-// Formats a duration into a string.
-static std::string format_duration(std::string_view prefix, tr::duration duration)
-{
-	if (duration <= 1us) {
-		const double count{duration_cast<tr::dnsecs>(duration).count()};
-		const int precision{6 - std::clamp(static_cast<int>(std::log10(count)), 0, 5)};
-		const std::string format{TR_FMT::format("{}{{:#08.{}f}}ns", prefix, precision)};
-		return TR_FMT::vformat(format, TR_FMT::make_format_args(count));
-	}
-	else if (duration <= 1ms) {
-		const double count{duration_cast<tr::dusecs>(duration).count()};
-		const int precision{6 - std::clamp(static_cast<int>(std::log10(count)), 0, 5)};
-		const std::string format{TR_FMT::format("{}{{:#08.{}f}}us", prefix, precision)};
-		return TR_FMT::vformat(format, TR_FMT::make_format_args(count));
-	}
-	else if (duration <= 1s) {
-		const double count{duration_cast<tr::dmsecs>(duration).count()};
-		const int precision{6 - std::clamp(static_cast<int>(std::log10(count)), 0, 5)};
-		const std::string format{TR_FMT::format("{}{{:#08.{}f}}ms", prefix, precision)};
-		return TR_FMT::vformat(format, TR_FMT::make_format_args(count));
-	}
-	else {
-		const double count{duration_cast<tr::dsecs>(duration).count()};
-		const int precision{6 - std::clamp(static_cast<int>(std::log10(count)), 0, 5)};
-		const std::string format{TR_FMT::format("{}{{:#08.{}f}}s", prefix, precision)};
-		return TR_FMT::vformat(format, TR_FMT::make_format_args(count));
-	}
-}
+		// Formats a duration into a string.
+		std::string format_duration(std::string_view prefix, duration duration)
+		{
+			if (duration <= 1us) {
+				const double count{duration_cast<dnsecs>(duration).count()};
+				const int precision{6 - std::clamp(static_cast<int>(std::log10(count)), 0, 5)};
+				const std::string format{TR_FMT::format("{}{{:#08.{}f}}ns", prefix, precision)};
+				return TR_FMT::vformat(format, TR_FMT::make_format_args(count));
+			}
+			else if (duration <= 1ms) {
+				const double count{duration_cast<dusecs>(duration).count()};
+				const int precision{6 - std::clamp(static_cast<int>(std::log10(count)), 0, 5)};
+				const std::string format{TR_FMT::format("{}{{:#08.{}f}}us", prefix, precision)};
+				return TR_FMT::vformat(format, TR_FMT::make_format_args(count));
+			}
+			else if (duration <= 1s) {
+				const double count{duration_cast<dmsecs>(duration).count()};
+				const int precision{6 - std::clamp(static_cast<int>(std::log10(count)), 0, 5)};
+				const std::string format{TR_FMT::format("{}{{:#08.{}f}}ms", prefix, precision)};
+				return TR_FMT::vformat(format, TR_FMT::make_format_args(count));
+			}
+			else {
+				const double count{duration_cast<dsecs>(duration).count()};
+				const int precision{6 - std::clamp(static_cast<int>(std::log10(count)), 0, 5)};
+				const std::string format{TR_FMT::format("{}{{:#08.{}f}}s", prefix, precision)};
+				return TR_FMT::vformat(format, TR_FMT::make_format_args(count));
+			}
+		}
+	} // namespace
+} // namespace tr
 
 tr::debug_renderer::debug_renderer(graphics_context& context, float scale, u8 column_limit)
 	: m_pipeline{context, vertex_shader{context, debug_renderer_vert}, fragment_shader{context, debug_renderer_frag}}

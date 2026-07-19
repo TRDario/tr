@@ -33,26 +33,28 @@ std::string_view tr::audio_file_open_error::details() const
 //////////////////////////////////////////////////////////// OGG AUDIO STREAM /////////////////////////////////////////////////////////////
 
 namespace tr {
-	// Ogg audio file backend.
-	class ogg_audio_stream final : public tr::audio_stream {
-	  public:
-		// Loads an Ogg stream from file.
-		ogg_audio_stream(const std::filesystem::path& path);
-		~ogg_audio_stream();
+	namespace {
+		// Ogg audio file backend.
+		class ogg_audio_stream final : public audio_stream {
+		  public:
+			// Loads an Ogg stream from file.
+			ogg_audio_stream(const std::filesystem::path& path);
+			~ogg_audio_stream();
 
-		tr::usize length() const override;
-		int channels() const override;
-		int sample_rate() const override;
+			usize length() const override;
+			int channels() const override;
+			int sample_rate() const override;
 
-		tr::usize tell() const override;
-		void seek(tr::usize where) override;
+			usize tell() const override;
+			void seek(usize where) override;
 
-	  private:
-		// A handle to the Ogg file.
-		mutable OggVorbis_File m_file{};
+		  private:
+			// A handle to the Ogg file.
+			mutable OggVorbis_File m_file{};
 
-		void raw_read(std::span<tr::i16> buffer) override;
-	};
+			void raw_read(std::span<i16> buffer) override;
+		};
+	} // namespace
 } // namespace tr
 
 tr::ogg_audio_stream::ogg_audio_stream(const std::filesystem::path& path)

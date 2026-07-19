@@ -37,11 +37,13 @@ void tr::audio_context::command<First, Rest...>::reset_moved_source_reference(au
 
 //
 
-template <typename... Ts, tr::usize... Is>
-static std::tuple<Ts...> lerp_tuple(const std::tuple<Ts...>& begin, const std::tuple<Ts...>& end, float ratio, std::index_sequence<Is...>)
-{
-	return {tr::lerp(std::get<Is>(begin), std::get<Is>(end), ratio)...};
-}
+namespace tr {
+	template <typename... Ts, usize... Is>
+	std::tuple<Ts...> lerp_tuple(const std::tuple<Ts...>& begin, const std::tuple<Ts...>& end, float ratio, std::index_sequence<Is...>)
+	{
+		return {tr::lerp(std::get<Is>(begin), std::get<Is>(end), ratio)...};
+	}
+} // namespace tr
 
 template <typename First, typename... Rest>
 tr::audio_context::command<First, Rest...>::status tr::audio_context::command<First, Rest...>::execute()

@@ -82,10 +82,14 @@ tr::shader_base::shader_base(graphics_context& context, zstring_view source, uns
 }
 
 #ifdef TR_ENABLE_GL_CHECKS
-// Properties queried for uniforms.
-static constexpr std::array<unsigned int, 5> uniform_properties{GL_BLOCK_INDEX, GL_TYPE, GL_ARRAY_SIZE, GL_NAME_LENGTH, GL_LOCATION};
-// Properties queried for inputs and outputs.
-static constexpr std::array<unsigned int, 4> input_output_properties{GL_TYPE, GL_ARRAY_SIZE, GL_NAME_LENGTH, GL_LOCATION};
+namespace tr {
+	namespace {
+		// Properties queried for uniforms.
+		constexpr std::array<unsigned int, 5> uniform_properties{GL_BLOCK_INDEX, GL_TYPE, GL_ARRAY_SIZE, GL_NAME_LENGTH, GL_LOCATION};
+		// Properties queried for inputs and outputs.
+		constexpr std::array<unsigned int, 4> input_output_properties{GL_TYPE, GL_ARRAY_SIZE, GL_NAME_LENGTH, GL_LOCATION};
+	} // namespace
+} // namespace tr
 
 void tr::shader_base::find_uniforms(const graphics_context::glapi& gl)
 {

@@ -38,22 +38,26 @@ std::string_view tr::audio_context_init_error::details() const
 
 ///////////////////////////////////////////////////////////// OPENAL FUNCTIONS ////////////////////////////////////////////////////////////
 
-// Wrapper around a void pointer that automatically casts it to a function pointer type.
-struct loaded_al_function_proxy {
-	void* ptr;
+namespace tr {
+	namespace {
+		// Wrapper around a void pointer that automatically casts it to a function pointer type.
+		struct loaded_al_function_proxy {
+			void* ptr;
 
-	template <typename Return, typename... Args> using function_pointer = Return (*)(Args...);
-	template <typename Return, typename... Args> operator function_pointer<Return, Args...>()
-	{
-		return reinterpret_cast<function_pointer<Return, Args...>>(ptr);
-	}
-};
+			template <typename Return, typename... Args> using function_pointer = Return (*)(Args...);
+			template <typename Return, typename... Args> operator function_pointer<Return, Args...>()
+			{
+				return reinterpret_cast<function_pointer<Return, Args...>>(ptr);
+			}
+		};
 
-// Wraps SDL_GL_GetProcAddress to return an OpenAL function proxy.
-static loaded_al_function_proxy al_function_address(ALCdevice* device, const char* name)
-{
-	return {alcGetProcAddress(device, name)};
-}
+		// Wraps SDL_GL_GetProcAddress to return an OpenAL function proxy.
+		loaded_al_function_proxy al_function_address(ALCdevice* device, const char* name)
+		{
+			return {alcGetProcAddress(device, name)};
+		}
+	} // namespace
+} // namespace tr
 
 tr::audio_context::al_functions::al_functions(ALCdevice* device)
 	: delete_buffers{al_function_address(device, "alDeleteBuffersDirect")}

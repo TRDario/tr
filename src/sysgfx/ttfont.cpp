@@ -174,19 +174,23 @@ glm::ivec2 tr::ttfont::text_size(std::string_view text, int max_w) const
 
 //////////////////////////////////////////////////////////////// RENDERING ////////////////////////////////////////////////////////////////
 
-// Fixes alpha artifacts in transparent text.
-static tr::bitmap fix_alpha_artifacts(tr::bitmap&& bitmap, tr::u8 max_alpha)
-{
-	// We know the bitmap is ARGB_8888.
-	tr::u8* row_it{reinterpret_cast<tr::u8*>(bitmap.data())};
-	for (int y = 0; y < bitmap.size().y; ++y) {
-		for (int x = 0; x < bitmap.size().x; ++x) {
-			row_it[x * 4 + 3] = std::min(row_it[x * 4 + 3], max_alpha);
+namespace tr {
+	namespace {
+		// Fixes alpha artifacts in transparent text.
+		bitmap fix_alpha_artifacts(bitmap&& bitmap, u8 max_alpha)
+		{
+			// We know the bitmap is ARGB_8888.
+			u8* row_it{reinterpret_cast<u8*>(bitmap.data())};
+			for (int y = 0; y < bitmap.size().y; ++y) {
+				for (int x = 0; x < bitmap.size().x; ++x) {
+					row_it[x * 4 + 3] = std::min(row_it[x * 4 + 3], max_alpha);
+				}
+				row_it += bitmap.pitch();
+			}
+			return std::move(bitmap);
 		}
-		row_it += bitmap.pitch();
-	}
-	return std::move(bitmap);
-}
+	} // namespace
+} // namespace tr
 
 tr::bitmap tr::ttfont::render(u32 glyph, rgba8 color) const
 {

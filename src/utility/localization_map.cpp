@@ -9,11 +9,15 @@
 
 ///////////////////////////////////////////////////////// LOCALIZATION MAP PARSER /////////////////////////////////////////////////////////
 
-// Trims whitespace from the line.
-static std::string_view trim_whitespace(std::string_view line)
-{
-	return {std::ranges::find_if_not(line, [](char c) { return std::isspace(c); }), line.end()};
-}
+namespace tr {
+	namespace {
+		// Trims whitespace from the line.
+		std::string_view trim_whitespace(std::string_view line)
+		{
+			return {std::ranges::find_if_not(line, [](char c) { return std::isspace(c); }), line.end()};
+		}
+	} // namespace
+} // namespace tr
 
 std::string_view tr::localization_map::parser::parse_key(std::string_view line, std::string_view& out)
 {

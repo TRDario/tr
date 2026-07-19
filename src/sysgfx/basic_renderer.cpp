@@ -16,10 +16,14 @@ constexpr glm::vec2 untextured_uv{-100, -100};
 
 ////////////////////////////////////////////////////////////// BASIC RENDERER /////////////////////////////////////////////////////////////
 
-// Fragment shader source code.
+namespace tr {
+	namespace {
+		// Fragment shader source code.
 #include "../../resources/generated/basic_renderer_frag.hpp"
 // Vertex shader source code.
 #include "../../resources/generated/basic_renderer_vert.hpp"
+	} // namespace
+} // namespace tr
 
 tr::basic_renderer::basic_renderer(graphics_context& context)
 	: m_id{context.allocate_renderer_id()}

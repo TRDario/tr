@@ -12,15 +12,19 @@
 
 ////////////////////////////////////////////////////////////// MISCELLANEOUS //////////////////////////////////////////////////////////////
 
-// Base bitmap saving function.
-static void save_bitmap(SDL_Surface* bitmap, const std::filesystem::path& path)
-{
-	TR_ASSERT(bitmap != nullptr, "Tried to save a moved-from bitmap.");
+namespace tr {
+	namespace {
+		// Base bitmap saving function.
+		void save_bitmap(SDL_Surface* bitmap, const std::filesystem::path& path)
+		{
+			TR_ASSERT(bitmap != nullptr, "Tried to save a moved-from bitmap.");
 
-	if (!IMG_SavePNG(bitmap, TR_PATH_CSTR(path))) {
-		throw tr::bitmap_save_error{path.string(), SDL_GetError()};
-	}
-}
+			if (!IMG_SavePNG(bitmap, TR_PATH_CSTR(path))) {
+				throw bitmap_save_error{path.string(), SDL_GetError()};
+			}
+		}
+	} // namespace
+} // namespace tr
 
 int tr::pixel_bytes(pixel_format format)
 {
