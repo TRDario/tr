@@ -1,3 +1,67 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Provides a window graphics context class and related datatypes.                                                                       //
+//                                                                                                                                       //
+// Graphics contexts are associated with a window and their properties depend on the graphics properties set during window construction. //
+// A view to the window the graphics context belongs to can be gotten at any time afterwards:                                            //
+//     - tr::graphics_context context{window} -> creates a graphics context tied to 'window'                                             //
+//     - context.window() -> view to 'window'                                                                                            //
+// Leaving any objects created on a graphics context alive after their context is erroneous, as is leaving a context alive after the     //
+// window it was created on.                                                                                                             //
+//                                                                                                                                       //
+// Info about a graphics context can be gotten with .info() Info contains strings relating to the vendor, version and name of the        //
+// underlying OpenGL renderer. In addition, a logger is created with each graphics context.                                              //
+//                                                                                                                                       //
+// References to a commonly used 2D vertex type may be gotten using .vertex2_format():                                                   //
+//     - context.vertex2_format() -> binding 0 holds vec2 positions, binding 1 holds vec2 uvs, binding 2 holds rgb8 tints                //
+//                                                                                                                                       //
+// To allow for renderers to avoid having to set up graphical context on every draw call, graphics contexts provide an 'active renderer' //
+// flag, which renderers should check for and set with .should_setup_renderer(id), and only set the context up if that returns true.     //
+// All built-in renderers expect you to set this flag before meddling with the context, so don't forget to do that.                      //
+// Allocating renderer IDs is done with .allocate_renderer_id():                                                                         //
+//     - tr::renderer_id my_renderer_id{context.allocate_renderer_id()} -> allocates a new renderer ID                                   //
+//     - if (context.should_setup_renderer(my_renderer_id)) { /* DO STUFF */ } -> graphical context setup                                //
+//                                                                                                                                       //
+// A few features of the rendering pipeline can be enabled or disabled:                                                                  //
+//     - context.set_wireframe_mode(true) -> enables wireframe mode, onyl the edges of triangles are drawn                               //
+//     - context.set_face_culling(true) -> enables culling of faces facing away from the camera                                          //
+//     - context.set_depth_test(true) -> enables depth testing                                                                           //
+//                                                                                                                                       //
+// A number of components of the rendering pipeline can be set:                                                                          //
+//     - context.set_render_target(target) -> sets the target to draw to                                                                 //
+//     - context.set_shader_pipeline(pipeline) -> sets the shader pipeline that will be used during drawing                              //
+//     - context.set_tessellation_patch_size(4) -> sets the number of vertices in a tessellation patch                                   //
+//     - context.set_blend_mode(mode) -> sets the blending mode                                                                          //
+//     - context.set_vertex_format(format) -> sets the expected format of vertex data                                                    //
+//     - context.set_vertex_buffer(buffer, 0, 100) -> sets a buffer vertex data is pulled from, starting at offset 100, in slot 0        //
+//     - context.set_index_buffer(buffer) -> sets the buffer index data is pulled from                                                   //
+//                                                                                                                                       //
+// After setting up the graphical context, one of the four drawing functions may be called:                                              //
+//     - context.draw(tr::primitive::tri_fan, 0, 4)                                                                                      //
+//       -> draws a triangle fan from the set vertex buffer                                                                              //
+//     - context.draw_indexed(tr::primitive::tris, 10, 15)                                                                               //
+//       -> draws 5 triangles using data from the set vertex and index buffers, starting from index 10 in the index buffer               //
+//     - context.draw_instances(tr::primitive::line_loop, 0, 10, 10)                                                                     //
+//       -> draws 10 instances of a line loop from the set vertex buffer                                                                 //
+//     - context.draw_indexed_instances(tr::primitive::line_strip, 0, 10, 10)                                                            //
+//       -> draws 10 instances of a line strip using data from the set vertex and index buffers                                          //
+//                                                                                                                                       //
+// Each context holds a backbuffer, and a render target corresponding to it can be gotten with .backbuffer().                            //
+// The only direct way of manipulating the backbuffer's contents is by clearing it or a region of it.                                    //
+// This can be done for just the color component, or all 3 of the backbuffer components:                                                 //
+//     - context.backbuffer() -> gets the backbuffer render target                                                                       //
+//     - context.clear_backbuffer() -> clears the backbuffer to transparency                                                             //
+//     - context.clear_backbuffer({255, 255, 255, 255}) -> clears the backbuffer to white                                                //
+//     - context.clear_backbuffer({255, 255, 255, 255}, 1.0f, 0) -> clears the backbuffer to white, depth 1.0f, and stencil 0            //
+//     - context.clear_backbuffer_region({{100, 100}, {100, 100}})                                                                       //
+//       -> clears the backbuffer region from (100, 100) to (200, 200) to transparency                                                   //
+//     - context.clear_backbuffer_region({{100, 100}, {100, 100}}, {255, 0, 0, 255})                                                     //
+//       -> clears the backbuffer region from (100, 100) to (200, 200) to red                                                            //
+//     - context.clear_backbuffer_region({{100, 100}, {100, 100}}, {255, 0, 0, 255}, 1.0f, 0)                                            //
+//       -> clears the backbuffer region from (100, 100) to (200, 200) to red, depth 1.0f, and stencil 0                                 //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #pragma once
 #include "../utility/exception.hpp"
 #include "../utility/logger.hpp"
@@ -14,7 +78,6 @@ namespace tr {
 	class dyn_index_buffer;
 	class shader_pipeline;
 	class static_index_buffer;
-	class window;
 	class window_view;
 } // namespace tr
 
@@ -72,7 +135,7 @@ namespace tr {
 
 		// Creates a graphics context on a window.
 		// May throw: graphics_context_init_error.
-		graphics_context(window& window);
+		graphics_context(window_view window);
 		// Graphics contexts are not movable.
 		graphics_context(graphics_context&&) = delete;
 

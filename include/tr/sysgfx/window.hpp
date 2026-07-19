@@ -207,6 +207,8 @@ namespace tr {
 	  private:
 		// Pointer to the SDL window.
 		SDL_Window* m_ptr;
+
+		friend class graphics_context;
 	};
 
 	// Window object.
@@ -290,8 +292,6 @@ namespace tr {
 		// Cursor graphic reset timer needed as a workaround for an SDL bug.
 		std::optional<timer> m_cursor_reset_timer;
 #endif
-
-		friend class graphics_context;
 	};
 } // namespace tr
 

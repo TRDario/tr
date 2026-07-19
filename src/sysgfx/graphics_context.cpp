@@ -275,8 +275,8 @@ static SDL_GLContext create_context(SDL_Window* window)
 	return context;
 }
 
-tr::graphics_context::graphics_context(tr::window& window)
-	: m_window{window.m_ptr.get()}
+tr::graphics_context::graphics_context(window_view window)
+	: m_window{window.m_ptr}
 	, m_ptr{create_context(m_window)}
 {
 	m_glapi.enable(GL_BLEND);
