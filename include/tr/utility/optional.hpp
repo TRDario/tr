@@ -55,4 +55,4 @@ namespace tr {
 	constexpr std::optional<Element> or_else(std::optional<Element>&& opt, Fn&& fn);
 } // namespace tr
 
-#include "impl/optional.hpp"
+#include "impl/optional.hpp" // IWYU pragma: export

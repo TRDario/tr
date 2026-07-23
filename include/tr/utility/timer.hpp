@@ -45,4 +45,4 @@ namespace tr {
 	};
 } // namespace tr
 
-#include "impl/timer.hpp"
+#include "impl/timer.hpp" // IWYU pragma: export

@@ -159,4 +159,4 @@ struct boost::hash<tr::basic_zstring_view<CharT, Traits>> : boost::hash<std::bas
 template <typename CharT, typename Traits>
 struct tr::binary_writer<tr::basic_zstring_view<CharT, Traits>> : binary_writer<std::basic_string_view<CharT, Traits>> {};
 
-#include "impl/zstring_view.hpp"
+#include "impl/zstring_view.hpp" // IWYU pragma: export

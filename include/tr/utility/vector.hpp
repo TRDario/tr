@@ -36,4 +36,4 @@ namespace tr {
 	constexpr std::common_type_t<ElementL, ElementR> cross(glm::tvec2<ElementL> a, glm::tvec2<ElementR> b);
 } // namespace tr
 
-#include "impl/vector.hpp"
+#include "impl/vector.hpp" // IWYU pragma: export

@@ -87,4 +87,4 @@ namespace tr {
 	std::tm localtime(std::time_t time);
 } // namespace tr
 
-#include "impl/chrono.hpp"
+#include "impl/chrono.hpp" // IWYU pragma: export

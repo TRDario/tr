@@ -26,4 +26,4 @@ namespace tr {
 	template <std::integral To, std::integral From> constexpr To norm_cast(From from);
 } // namespace tr
 
-#include "impl/norm_cast.hpp"
+#include "impl/norm_cast.hpp" // IWYU pragma: export
