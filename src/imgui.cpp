@@ -5,7 +5,10 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include "../include/tr/imgui.hpp"
-#include "../include/tr/sysgfx/impl.hpp"
+#include "../include/tr/sysgfx/graphics_context.hpp"
+#include "../include/tr/sysgfx/texture.hpp"
+#include "../include/tr/sysgfx/texture_ref.hpp"
+#include "../include/tr/sysgfx/window.hpp"
 #include <backends/imgui_impl_opengl3.h>
 #include <backends/imgui_impl_sdl3.h>
 
