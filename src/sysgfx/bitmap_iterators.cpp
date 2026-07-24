@@ -65,12 +65,12 @@ tr::sub_bitmap::iterator::iterator(const sub_bitmap& bitmap, glm::ivec2 pos)
 {
 }
 
-std::partial_ordering tr::sub_bitmap::iterator::operator<=>(const iterator& r) const
+std::partial_ordering tr::sub_bitmap::iterator::operator<=>(const iterator& rhs) const
 {
-	if (m_pixel.m_ptr != nullptr && r.m_pixel.m_ptr != nullptr) {
-		return m_pixel.m_ptr <=> r.m_pixel.m_ptr;
+	if (m_pixel.m_ptr != nullptr && rhs.m_pixel.m_ptr != nullptr) {
+		return m_pixel.m_ptr <=> rhs.m_pixel.m_ptr;
 	}
-	else if (m_pixel.m_ptr == nullptr && r.m_pixel.m_ptr == nullptr) {
+	else if (m_pixel.m_ptr == nullptr && rhs.m_pixel.m_ptr == nullptr) {
 		return std::partial_ordering::equivalent;
 	}
 	else {
@@ -78,9 +78,9 @@ std::partial_ordering tr::sub_bitmap::iterator::operator<=>(const iterator& r) c
 	}
 }
 
-bool tr::sub_bitmap::iterator::operator==(const iterator& r) const
+bool tr::sub_bitmap::iterator::operator==(const iterator& rhs) const
 {
-	return *this <=> r == std::strong_ordering::equal;
+	return *this <=> rhs == std::strong_ordering::equal;
 }
 
 tr::sub_bitmap::iterator::value_type tr::sub_bitmap::iterator::operator*() const
@@ -88,16 +88,6 @@ tr::sub_bitmap::iterator::value_type tr::sub_bitmap::iterator::operator*() const
 	TR_ASSERT(m_pixel.m_ptr != nullptr && rectangle<int>{m_bitmap_size}.contains(m_bitmap_pos),
 			  "Tried to dereference an invalid bitmap iterator.");
 	return m_pixel;
-}
-
-tr::sub_bitmap::iterator::value_type tr::sub_bitmap::iterator::operator[](int diff) const
-{
-	return *(*this + diff);
-}
-
-tr::sub_bitmap::iterator::value_type tr::sub_bitmap::iterator::operator[](glm::ivec2 diff) const
-{
-	return *(*this + diff);
 }
 
 tr::sub_bitmap::iterator::pointer tr::sub_bitmap::iterator::operator->() const
@@ -108,13 +98,6 @@ tr::sub_bitmap::iterator::pointer tr::sub_bitmap::iterator::operator->() const
 tr::sub_bitmap::iterator& tr::sub_bitmap::iterator::operator++()
 {
 	return *this += 1;
-}
-
-tr::sub_bitmap::iterator tr::sub_bitmap::iterator::operator++(int)
-{
-	iterator copy{*this};
-	++*this;
-	return copy;
 }
 
 tr::sub_bitmap::iterator& tr::sub_bitmap::iterator::operator+=(int diff)
@@ -138,79 +121,15 @@ tr::sub_bitmap::iterator& tr::sub_bitmap::iterator::operator+=(glm::ivec2 diff)
 	return *this += (diff.y * m_bitmap_size.x + diff.x);
 }
 
-tr::sub_bitmap::iterator tr::operator+(const tr::sub_bitmap::iterator& it, int diff)
-{
-	tr::sub_bitmap::iterator copy{it};
-	copy += diff;
-	return copy;
-}
-
-tr::sub_bitmap::iterator tr::operator+(int diff, const tr::sub_bitmap::iterator& it)
-{
-	return it + diff;
-}
-
-tr::sub_bitmap::iterator tr::operator+(const tr::sub_bitmap::iterator& it, glm::ivec2 diff)
-{
-	tr::sub_bitmap::iterator copy{it};
-	copy += diff;
-	return copy;
-}
-
-tr::sub_bitmap::iterator tr::operator+(glm::ivec2 diff, const tr::sub_bitmap::iterator& it)
-{
-	return it + diff;
-}
-
 tr::sub_bitmap::iterator& tr::sub_bitmap::iterator::operator--()
 {
 	return *this -= 1;
 }
 
-tr::sub_bitmap::iterator tr::sub_bitmap::iterator::operator--(int)
+int tr::operator-(const tr::sub_bitmap::iterator& lhs, const tr::sub_bitmap::iterator& rhs)
 {
-	iterator copy{*this};
-	--*this;
-	return copy;
-}
-
-tr::sub_bitmap::iterator& tr::sub_bitmap::iterator::operator-=(int diff)
-{
-	return *this += -diff;
-}
-
-tr::sub_bitmap::iterator& tr::sub_bitmap::iterator::operator-=(glm::ivec2 diff)
-{
-	return *this += -diff;
-}
-
-tr::sub_bitmap::iterator tr::operator-(const tr::sub_bitmap::iterator& it, int diff)
-{
-	tr::sub_bitmap::iterator copy{it};
-	copy -= diff;
-	return copy;
-}
-
-tr::sub_bitmap::iterator tr::operator-(int diff, const tr::sub_bitmap::iterator& it)
-{
-	return it - diff;
-}
-
-tr::sub_bitmap::iterator tr::operator-(const tr::sub_bitmap::iterator& it, glm::ivec2 diff)
-{
-	tr::sub_bitmap::iterator copy{it};
-	copy -= diff;
-	return copy;
-}
-
-tr::sub_bitmap::iterator tr::operator-(glm::ivec2 diff, const tr::sub_bitmap::iterator& it)
-{
-	return it - diff;
-}
-
-int tr::operator-(const tr::sub_bitmap::iterator& l, const tr::sub_bitmap::iterator& r)
-{
-	return (l.m_bitmap_pos.y * l.m_bitmap_size.x + l.m_bitmap_pos.x) - (r.m_bitmap_pos.y * r.m_bitmap_size.x + r.m_bitmap_pos.x);
+	return (lhs.m_bitmap_pos.y * lhs.m_bitmap_size.x + lhs.m_bitmap_pos.x) -
+		   (rhs.m_bitmap_pos.y * rhs.m_bitmap_size.x + rhs.m_bitmap_pos.x);
 }
 
 glm::ivec2 tr::sub_bitmap::iterator::pos() const
@@ -262,12 +181,12 @@ tr::bitmap::iterator::iterator(bitmap& bitmap, glm::ivec2 pos)
 {
 }
 
-std::partial_ordering tr::bitmap::iterator::operator<=>(const tr::bitmap::iterator& r) const
+std::partial_ordering tr::bitmap::iterator::operator<=>(const tr::bitmap::iterator& rhs) const
 {
-	if (m_pixel.m_ptr != nullptr && r.m_pixel.m_ptr != nullptr) {
-		return m_pixel.m_ptr <=> r.m_pixel.m_ptr;
+	if (m_pixel.m_ptr != nullptr && rhs.m_pixel.m_ptr != nullptr) {
+		return m_pixel.m_ptr <=> rhs.m_pixel.m_ptr;
 	}
-	else if (m_pixel.m_ptr == nullptr && r.m_pixel.m_ptr == nullptr) {
+	else if (m_pixel.m_ptr == nullptr && rhs.m_pixel.m_ptr == nullptr) {
 		return std::partial_ordering::equivalent;
 	}
 	else {
@@ -275,9 +194,9 @@ std::partial_ordering tr::bitmap::iterator::operator<=>(const tr::bitmap::iterat
 	}
 }
 
-bool tr::bitmap::iterator::operator==(const iterator& r) const
+bool tr::bitmap::iterator::operator==(const iterator& rhs) const
 {
-	return *this <=> r == std::strong_ordering::equal;
+	return *this <=> rhs == std::strong_ordering::equal;
 }
 
 tr::bitmap::iterator::value_type tr::bitmap::iterator::operator*() const
@@ -288,16 +207,6 @@ tr::bitmap::iterator::value_type tr::bitmap::iterator::operator*() const
 	return m_pixel;
 }
 
-tr::bitmap::iterator::value_type tr::bitmap::iterator::operator[](int diff) const
-{
-	return *(*this + diff);
-}
-
-tr::bitmap::iterator::value_type tr::bitmap::iterator::operator[](glm::ivec2 diff) const
-{
-	return *(*this + diff);
-}
-
 tr::bitmap::iterator::pointer tr::bitmap::iterator::operator->() const
 {
 	return &m_pixel;
@@ -306,13 +215,6 @@ tr::bitmap::iterator::pointer tr::bitmap::iterator::operator->() const
 tr::bitmap::iterator& tr::bitmap::iterator::operator++()
 {
 	return *this += 1;
-}
-
-tr::bitmap::iterator tr::bitmap::iterator::operator++(int)
-{
-	iterator copy{*this};
-	++*this;
-	return copy;
 }
 
 tr::bitmap::iterator& tr::bitmap::iterator::operator+=(int diff)
@@ -340,81 +242,17 @@ tr::bitmap::iterator& tr::bitmap::iterator::operator+=(glm::ivec2 diff)
 	return *this += (diff.y * m_bitmap->size().x + diff.x);
 }
 
-tr::bitmap::iterator tr::operator+(const tr::bitmap::iterator& it, int diff)
-{
-	tr::bitmap::iterator copy{it};
-	copy += diff;
-	return copy;
-}
-
-tr::bitmap::iterator tr::operator+(int diff, const tr::bitmap::iterator& it)
-{
-	return it + diff;
-}
-
-tr::bitmap::iterator tr::operator+(const tr::bitmap::iterator& it, glm::ivec2 diff)
-{
-	tr::bitmap::iterator copy{it};
-	copy += diff;
-	return copy;
-}
-
-tr::bitmap::iterator tr::operator+(glm::ivec2 diff, const tr::bitmap::iterator& it)
-{
-	return it + diff;
-}
-
 tr::bitmap::iterator& tr::bitmap::iterator::operator--()
 {
 	return *this -= 1;
 }
 
-tr::bitmap::iterator tr::bitmap::iterator::operator--(int)
+int tr::operator-(const tr::bitmap::iterator& lhs, const tr::bitmap::iterator& rhs)
 {
-	iterator copy{*this};
-	--*this;
-	return copy;
-}
+	TR_ASSERT(lhs.m_bitmap == rhs.m_bitmap, "Tried to subtract iterators to different bitmaps.");
 
-tr::bitmap::iterator& tr::bitmap::iterator::operator-=(int diff)
-{
-	return *this += -diff;
-}
-
-tr::bitmap::iterator& tr::bitmap::iterator::operator-=(glm::ivec2 diff)
-{
-	return *this += -diff;
-}
-
-tr::bitmap::iterator tr::operator-(const tr::bitmap::iterator& it, int diff)
-{
-	tr::bitmap::iterator copy{it};
-	copy -= diff;
-	return copy;
-}
-
-tr::bitmap::iterator tr::operator-(int diff, const tr::bitmap::iterator& it)
-{
-	return it - diff;
-}
-
-tr::bitmap::iterator tr::operator-(const tr::bitmap::iterator& it, glm::ivec2 diff)
-{
-	tr::bitmap::iterator copy{it};
-	copy -= diff;
-	return copy;
-}
-
-tr::bitmap::iterator tr::operator-(glm::ivec2 diff, const tr::bitmap::iterator& it)
-{
-	return it - diff;
-}
-
-int tr::operator-(const tr::bitmap::iterator& l, const tr::bitmap::iterator& r)
-{
-	TR_ASSERT(l.m_bitmap == r.m_bitmap, "Tried to subtract iterators to different bitmaps.");
-
-	return (l.m_bitmap_pos.y * l.m_bitmap->size().x + l.m_bitmap_pos.x) - (r.m_bitmap_pos.y * r.m_bitmap->size().x + r.m_bitmap_pos.x);
+	return (lhs.m_bitmap_pos.y * lhs.m_bitmap->size().x + lhs.m_bitmap_pos.x) -
+		   (rhs.m_bitmap_pos.y * rhs.m_bitmap->size().x + rhs.m_bitmap_pos.x);
 }
 
 glm::ivec2 tr::bitmap::iterator::pos() const

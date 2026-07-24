@@ -15,8 +15,11 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
+#include "../utility/iterator.hpp"
 #include "../utility/reference.hpp"
 #include "bitmap.hpp"
+
+//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
 namespace tr {
 	// Read-only reference to a bitmap pixel.
@@ -41,7 +44,7 @@ namespace tr {
 	};
 
 	// Immutable bitmap pixel iterator.
-	class sub_bitmap::iterator {
+	class sub_bitmap::iterator : public iterator_interface<iterator, glm::ivec2> {
 	  public:
 		using value_type = reference;
 		using pointer = const value_type*;
@@ -52,53 +55,27 @@ namespace tr {
 		// Constructs an iterator to a bitmap pixel.
 		iterator(const sub_bitmap& bitmap, glm::ivec2 pos);
 
+		// Compares iterators.
 		std::partial_ordering operator<=>(const iterator&) const;
+		// Compares iterators for equality.
 		bool operator==(const iterator&) const;
 
 		// Dereferences the iterator.
 		value_type operator*() const;
-		// Dereferences the iterator with a subscript.
-		value_type operator[](difference_type diff) const;
-		// Dereferences the iterator with a subscript.
-		value_type operator[](glm::ivec2 diff) const;
 		// Dereferences the iterator through a pointer.
 		pointer operator->() const;
 
 		// Increments the iterator.
 		iterator& operator++();
-		// Post-increments the iterator.
-		iterator operator++(int);
 		// Advances the iterator.
 		iterator& operator+=(difference_type diff);
 		// Advances an iterator.
 		iterator& operator+=(glm::ivec2 diff);
-		// Adds to an iterator.
-		friend iterator operator+(const iterator& it, difference_type diff);
-		// Adds to an iterator.
-		friend iterator operator+(difference_type diff, const iterator& it);
-		// Adds to an iterator.
-		friend iterator operator+(const iterator& it, glm::ivec2 diff);
-		// Adds to an iterator.
-		friend iterator operator+(glm::ivec2 diff, const iterator& it);
 
 		// Decrements the iterator.
 		iterator& operator--();
-		// Post-decrements the iterator.
-		iterator operator--(int);
-		// Moves the iterator back.
-		iterator& operator-=(difference_type diff);
-		// Moves the iterator back.
-		iterator& operator-=(glm::ivec2 diff);
-		// Subtracts from an iterator.
-		friend iterator operator-(const iterator& it, difference_type diff);
-		// Subtracts from an iterator.
-		friend iterator operator-(difference_type diff, const iterator& it);
-		// Subtracts from an iterator.
-		friend iterator operator-(const iterator& it, glm::ivec2 diff);
-		// Subtracts from an iterator.
-		friend iterator operator-(glm::ivec2 diff, const iterator& it);
 		// Gets the distance between two iterators.
-		friend difference_type operator-(const iterator& l, const iterator& r);
+		friend difference_type operator-(const iterator& lhs, const iterator& rhs);
 
 		// Gets the 2D position of the iterator within the bitmap.
 		glm::ivec2 pos() const;
@@ -137,9 +114,11 @@ namespace tr {
 	};
 
 	// Mutable pixel iterator.
-	class bitmap::iterator {
+	class bitmap::iterator : public iterator_interface<iterator, glm::ivec2> {
 	  public:
 		using value_type = reference;
+		using reference = reference;
+		using const_reference = const reference;
 		using pointer = const value_type*;
 		using difference_type = int;
 
@@ -148,53 +127,27 @@ namespace tr {
 		// Constructs an iterator to a bitmap pixel.
 		iterator(bitmap& bitmap, glm::ivec2 pos);
 
+		// Compares iterators.
 		std::partial_ordering operator<=>(const iterator&) const;
+		// Compares iterators for equality.
 		bool operator==(const iterator&) const;
 
 		// Dereferences the iterator.
 		value_type operator*() const;
-		// Dereferences the iterator with a subscript.
-		value_type operator[](difference_type diff) const;
-		// Dereferences the iterator with a subscript.
-		value_type operator[](glm::ivec2 diff) const;
 		// Dereferences the iterator through a pointer.
 		pointer operator->() const;
 
 		// Increments the iterator.
 		iterator& operator++();
-		// Post-increments the iterator.
-		iterator operator++(int);
 		// Advances the iterator.
 		iterator& operator+=(difference_type diff);
 		// Advances the iterator.
 		iterator& operator+=(glm::ivec2 diff);
-		// Adds to an iterator.
-		friend iterator operator+(const iterator& it, difference_type diff);
-		// Adds to an iterator.
-		friend iterator operator+(difference_type diff, const iterator& it);
-		// Adds to an iterator.
-		friend iterator operator+(const iterator& it, glm::ivec2 diff);
-		// Adds to an iterator.
-		friend iterator operator+(glm::ivec2 diff, const iterator& it);
 
 		// Decrements the iterator.
 		iterator& operator--();
-		// Post-decrements the iterator.
-		iterator operator--(int);
-		// Moves the iterator back.
-		iterator& operator-=(difference_type diff);
-		// Moves the iterator back.
-		iterator& operator-=(glm::ivec2 diff);
-		// Subtracts from an iterator.
-		friend iterator operator-(const iterator& it, difference_type diff);
-		// Subtracts from an iterator.
-		friend iterator operator-(difference_type diff, const iterator& it);
-		// Subtracts from an iterator.
-		friend iterator operator-(const iterator& it, glm::ivec2 diff);
-		// Subtracts from an iterator.
-		friend iterator operator-(glm::ivec2 diff, const iterator& it);
 		// Gets the distance between two iterators.
-		friend difference_type operator-(const iterator& l, const iterator& r);
+		friend difference_type operator-(const iterator& lhs, const iterator& rhs);
 
 		// Gets the 2D position of the iterator within the bitmap.
 		glm::ivec2 pos() const;

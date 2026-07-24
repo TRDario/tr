@@ -23,6 +23,7 @@
 #include "utility/hash_map.hpp"         // IWYU pragma: export
 #include "utility/integer.hpp"          // IWYU pragma: export
 #include "utility/iostream.hpp"         // IWYU pragma: export
+#include "utility/iterator.hpp"         // IWYU pragma: export
 #include "utility/line.hpp"             // IWYU pragma: export
 #include "utility/localization_map.hpp" // IWYU pragma: export
 #include "utility/logger.hpp"           // IWYU pragma: export

@@ -42,6 +42,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
+#include "iterator.hpp"
 #include "static_string.hpp"
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
@@ -79,7 +80,7 @@ namespace tr::utf8 {
 	template <string String> constexpr void pop_back(String& str);
 
 	// Unicode codepoint iterator for UTF-8 string views.
-	class iterator {
+	class iterator : public iterator_interface<iterator> {
 	  public:
 		using value_type = codepoint;
 		using difference_type = ssize;
@@ -93,9 +94,7 @@ namespace tr::utf8 {
 		constexpr codepoint operator*() const;
 
 		constexpr iterator& operator++();
-		constexpr iterator operator++(int);
 		constexpr iterator& operator--();
-		constexpr iterator operator--(int);
 
 		// Gets a const char pointer to the beginning of the iterator's UTF-8 character.
 		constexpr const char* base() const;
@@ -108,7 +107,7 @@ namespace tr::utf8 {
 	using reverse_iterator = std::reverse_iterator<iterator>;
 
 	// Indexed Unicode codepoint iterator for UTF-8 string views.
-	class indexed_iterator {
+	class indexed_iterator : public iterator_interface<indexed_iterator> {
 	  public:
 		using value_type = codepoint;
 		using difference_type = ssize;
@@ -124,9 +123,7 @@ namespace tr::utf8 {
 		constexpr codepoint operator*() const;
 
 		constexpr indexed_iterator& operator++();
-		constexpr indexed_iterator operator++(int);
 		constexpr indexed_iterator& operator--();
-		constexpr indexed_iterator operator--(int);
 
 		// Gets a const char pointer to the beginning of the iterator's UTF-8 character.
 		constexpr const char* base() const;
