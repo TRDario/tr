@@ -58,6 +58,13 @@ std::string_view tr::window_error::details() const
 
 //
 
+tr::window_view::window_view(SDL_Window* ptr)
+	: m_ptr{ptr}
+{
+}
+
+//
+
 tr::zstring_view tr::window_view::title() const
 {
 	return SDL_GetWindowTitle(m_ptr);
@@ -240,6 +247,13 @@ tr::window::window(zstring_view title, window_parameters parameters)
 void tr::window::deleter::operator()(SDL_Window* window) const
 {
 	SDL_DestroyWindow(window);
+}
+
+//
+
+tr::window::operator window_view()
+{
+	return window_view{m_ptr.get()};
 }
 
 //

@@ -143,10 +143,8 @@ namespace tr {
 	// Non-owning window view.
 	class window_view {
 	  public:
-		// Creates a window view.
+		// Creates a window view (implementation detail).
 		window_view(SDL_Window* window);
-		// Creates a window view.
-		window_view(window& window);
 
 		// Gets the title of the window.
 		zstring_view title() const;
@@ -219,6 +217,9 @@ namespace tr {
 		// Opens a window.
 		// May throw: window_open_error.
 		window(zstring_view title, window_parameters parameters = {});
+
+		// Creates a view to the window.
+		operator window_view();
 
 		// Gets the title of the window.
 		zstring_view title() const;
