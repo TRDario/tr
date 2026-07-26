@@ -16,14 +16,14 @@
 //////////////////////////////////////////////////////////// SHADER LOAD ERROR ////////////////////////////////////////////////////////////
 
 tr::shader_load_error::shader_load_error(std::string_view path, std::string&& details)
-	: m_description{TR_FMT::format("Failed to load bitmap from '{}'", path)}
+	: m_description{TR_FMT::format("Failed to load shader from '{}'", path)}
 	, m_details{std::move(details)}
 {
 }
 
 std::string_view tr::shader_load_error::name() const
 {
-	return "Bitmap loading error";
+	return "Shader loading error";
 }
 
 std::string_view tr::shader_load_error::description() const

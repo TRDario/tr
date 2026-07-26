@@ -304,7 +304,7 @@ tr::graphics_context::graphics_context(window_view window)
 		m_glapi.set_debug_message_control(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_NOTIFICATION, 0, NULL, GL_FALSE);
 
 		static int logger_id{0};
-		logger.replace_backend_with<console_logger>(TR_FMT::format("gfx{}", logger_id++));
+		logger.replace_backend_with<console_logger>(TR_FMT::format("gfx-{}", logger_id++));
 	}
 }
 
