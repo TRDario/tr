@@ -414,3 +414,5 @@ namespace tr {
 #endif
 	};
 } // namespace tr
+
+#include "impl/graphics_context.hpp" // IWYU pragma: export
