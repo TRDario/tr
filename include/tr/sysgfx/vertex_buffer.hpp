@@ -74,6 +74,8 @@ namespace tr {
 		using basic_static_vertex_buffer::label;
 		// Sets the debug label of the vertex buffer.
 		using basic_static_vertex_buffer::set_label;
+
+		friend class graphics_context;
 	};
 
 	// Dynamic vertex buffer class.
@@ -147,6 +149,8 @@ namespace tr {
 		using basic_dyn_vertex_buffer::label;
 		// Sets the debug label of the vertex buffer.
 		using basic_dyn_vertex_buffer::set_label;
+
+		friend class graphics_context;
 	};
 } // namespace tr
 
