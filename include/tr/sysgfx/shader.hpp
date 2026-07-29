@@ -33,7 +33,7 @@ namespace tr {
 	class basic_shader_buffer;
 	class basic_uniform_buffer;
 	class graphics_context;
-	class texture_ref;
+	class texture_view;
 } // namespace tr
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
@@ -157,7 +157,7 @@ namespace tr {
 		void set_uniform(int index, std::span<const glm::mat4x3> value);
 
 		// Sets a texture sampler uniform.
-		void set_uniform(int index, texture_ref texture);
+		void set_uniform(int index, texture_view texture);
 
 		// Sets a shader storage buffer.
 		void set_storage_buffer(unsigned int index, basic_shader_buffer& buffer);
@@ -178,33 +178,11 @@ namespace tr {
 			// Deletes the shader program.
 			void operator()(unsigned int id) const;
 		};
-		// OpenGL texture unit.
-		class texture_unit {
-		  public:
-			// Allocates a texture unit and binds it to a uniform in a shader.
-			texture_unit(graphics_context& context, unsigned int program, int index);
-
-			// Sets the texture unit.
-			void set(texture_ref texture);
-
-		  private:
-			// Texture unit freer.
-			struct deleter {
-				// Reference to the graphics context the shader is on.
-				graphics_context& context;
-
-				// Frees the texture unit.
-				void operator()(unsigned int unit) const;
-			};
-
-			// The ID of the texture unit.
-			handle<unsigned int, UINT_MAX, deleter> m_id;
-		};
 
 		// Handle to the OpenGL program.
 		handle<unsigned int, 0, deleter> m_program;
 		// Texture units allocated to this shader.
-		boost::unordered_flat_map<int, texture_unit> m_texture_units;
+		boost::unordered_flat_map<int, graphics_context::texture_unit> m_texture_units;
 
 		// Constructs a shader.
 		shader_base(graphics_context& context, zstring_view source, unsigned int type);

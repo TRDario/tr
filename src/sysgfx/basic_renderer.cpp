@@ -53,7 +53,7 @@ void tr::basic_renderer::set_default_transform(const glm::mat4& mat)
 	m_default_transform = mat;
 }
 
-void tr::basic_renderer::set_default_layer_texture(int layer, texture_ref texture)
+void tr::basic_renderer::set_default_layer_texture(int layer, texture_view texture)
 {
 	TR_ASSERT(!m_locked, "Tried to set default layer texture of locked basic renderer.");
 
@@ -92,7 +92,7 @@ tr::simple_color_mesh_ref tr::basic_renderer::new_color_fan(int layer, usize ver
 {
 	TR_ASSERT(!m_locked, "Tried to allocate a new color fan on a locked basic renderer.");
 
-	mesh& mesh{find_mesh(layer, primitive::tris, std::nullopt, mat, blend_mode, vertices)};
+	mesh& mesh{find_mesh(layer, primitive::tris, no_texture, mat, blend_mode, vertices)};
 	const u16 base_index{u16(mesh.positions.size())};
 	const usize indices{polygon_indices(vertices)};
 
@@ -130,7 +130,7 @@ tr::simple_color_mesh_ref tr::basic_renderer::new_color_outline(int layer, usize
 	TR_ASSERT(!m_locked, "Tried to allocate a new color outline on a locked basic renderer.");
 
 	const usize vertices{polygon_vertices * 2};
-	mesh& mesh{find_mesh(layer, primitive::tris, std::nullopt, mat, blend_mode, vertices)};
+	mesh& mesh{find_mesh(layer, primitive::tris, no_texture, mat, blend_mode, vertices)};
 	const u16 base_index{u16(mesh.positions.size())};
 	const usize indices{polygon_outline_indices(polygon_vertices)};
 
@@ -167,7 +167,7 @@ tr::color_mesh_ref tr::basic_renderer::new_color_mesh(int layer, usize vertices,
 {
 	TR_ASSERT(!m_locked, "Tried to allocate a new color mesh on a locked basic renderer.");
 
-	mesh& mesh{find_mesh(layer, primitive::tris, std::nullopt, mat, blend_mode, vertices)};
+	mesh& mesh{find_mesh(layer, primitive::tris, no_texture, mat, blend_mode, vertices)};
 	const u16 base_index{static_cast<u16>(mesh.positions.size())};
 
 	mesh.positions.resize(mesh.positions.size() + vertices);
@@ -193,29 +193,29 @@ tr::simple_textured_mesh_ref tr::basic_renderer::new_textured_fan(int layer, usi
 		return new_textured_fan(layer, vertices, defaults->texture, transform, defaults->blend_mode);
 	}
 	else {
-		return new_textured_fan(layer, vertices, std::nullopt, m_default_transform, alpha_blending);
+		return new_textured_fan(layer, vertices, no_texture, m_default_transform, alpha_blending);
 	}
 }
 
-tr::simple_textured_mesh_ref tr::basic_renderer::new_textured_fan(int layer, usize vertices, texture_ref texture_ref)
+tr::simple_textured_mesh_ref tr::basic_renderer::new_textured_fan(int layer, usize vertices, texture_view texture)
 {
 	const opt_ref<const layer_defaults> defaults{try_get(m_layer_defaults, layer)};
 	if (defaults.has_ref()) {
 		const glm::mat4& transform{defaults->transform.has_value() ? *defaults->transform : m_default_transform};
-		return new_textured_fan(layer, vertices, std::move(texture_ref), transform, defaults->blend_mode);
+		return new_textured_fan(layer, vertices, texture, transform, defaults->blend_mode);
 	}
 	else {
-		return new_textured_fan(layer, vertices, std::move(texture_ref), m_default_transform, alpha_blending);
+		return new_textured_fan(layer, vertices, texture, m_default_transform, alpha_blending);
 	}
 }
 
-tr::simple_textured_mesh_ref tr::basic_renderer::new_textured_fan(int layer, usize vertices, texture_ref texture_ref, const glm::mat4& mat,
+tr::simple_textured_mesh_ref tr::basic_renderer::new_textured_fan(int layer, usize vertices, texture_view texture, const glm::mat4& mat,
 																  const blend_mode& blend_mode)
 {
 	TR_ASSERT(!m_locked, "Tried to allocate a new textured fan on a locked basic renderer.");
-	TR_ASSERT(!texture_ref.empty(), "Cannot pass std::nullopt as texture for textured fan.");
+	TR_ASSERT(!texture.empty(), "Cannot pass no_texture as texture for textured fan.");
 
-	mesh& mesh{find_mesh(layer, primitive::tris, std::move(texture_ref), mat, blend_mode, vertices)};
+	mesh& mesh{find_mesh(layer, primitive::tris, texture, mat, blend_mode, vertices)};
 	const u16 base_index{static_cast<u16>(mesh.positions.size())};
 	const usize indices{polygon_indices(vertices)};
 
@@ -242,29 +242,29 @@ tr::textured_mesh_ref tr::basic_renderer::new_textured_mesh(int layer, usize ver
 		return new_textured_mesh(layer, vertices, indices, defaults->texture, transform, defaults->blend_mode);
 	}
 	else {
-		return new_textured_mesh(layer, vertices, indices, std::nullopt, m_default_transform, alpha_blending);
+		return new_textured_mesh(layer, vertices, indices, no_texture, m_default_transform, alpha_blending);
 	}
 }
 
-tr::textured_mesh_ref tr::basic_renderer::new_textured_mesh(int layer, usize vertices, usize indices, texture_ref texture_ref)
+tr::textured_mesh_ref tr::basic_renderer::new_textured_mesh(int layer, usize vertices, usize indices, texture_view texture)
 {
 	const opt_ref<const layer_defaults> defaults{try_get(m_layer_defaults, layer)};
 	if (defaults.has_ref()) {
 		const glm::mat4& transform{defaults->transform.has_value() ? *defaults->transform : m_default_transform};
-		return new_textured_mesh(layer, vertices, indices, std::move(texture_ref), transform, defaults->blend_mode);
+		return new_textured_mesh(layer, vertices, indices, texture, transform, defaults->blend_mode);
 	}
 	else {
-		return new_textured_mesh(layer, vertices, indices, std::move(texture_ref), m_default_transform, alpha_blending);
+		return new_textured_mesh(layer, vertices, indices, texture, m_default_transform, alpha_blending);
 	}
 }
 
-tr::textured_mesh_ref tr::basic_renderer::new_textured_mesh(int layer, usize vertices, usize indices, texture_ref texture_ref,
+tr::textured_mesh_ref tr::basic_renderer::new_textured_mesh(int layer, usize vertices, usize indices, texture_view texture,
 															const glm::mat4& mat, const blend_mode& blend_mode)
 {
 	TR_ASSERT(!m_locked, "Tried to allocate a new textured mesh on a locked basic renderer.");
-	TR_ASSERT(!texture_ref.empty(), "Cannot pass std::nullopt as texture for textured mesh.");
+	TR_ASSERT(!texture.empty(), "Cannot pass no_texture as texture for textured mesh.");
 
-	mesh& mesh{find_mesh(layer, primitive::tris, std::move(texture_ref), mat, blend_mode, vertices)};
+	mesh& mesh{find_mesh(layer, primitive::tris, texture, mat, blend_mode, vertices)};
 	const u16 base_index{static_cast<u16>(mesh.positions.size())};
 
 	mesh.positions.resize(mesh.positions.size() + vertices);
@@ -299,7 +299,7 @@ tr::simple_color_mesh_ref tr::basic_renderer::new_lines(int layer, usize lines, 
 	TR_ASSERT(!m_locked, "Tried to allocate a new lines on a locked basic renderer.");
 
 	const usize vertices{lines * 2};
-	mesh& mesh{find_mesh(layer, primitive::lines, std::nullopt, mat, blend_mode, vertices)};
+	mesh& mesh{find_mesh(layer, primitive::lines, no_texture, mat, blend_mode, vertices)};
 	const u16 base_index{static_cast<u16>(mesh.positions.size())};
 
 	mesh.positions.resize(mesh.positions.size() + vertices);
@@ -334,7 +334,7 @@ tr::simple_color_mesh_ref tr::basic_renderer::new_line_strip(int layer, usize ve
 {
 	TR_ASSERT(!m_locked, "Tried to allocate a new line strip on a locked basic renderer.");
 
-	mesh& mesh{find_mesh(layer, primitive::lines, std::nullopt, mat, blend_mode, vertices)};
+	mesh& mesh{find_mesh(layer, primitive::lines, no_texture, mat, blend_mode, vertices)};
 	const u16 base_index{static_cast<u16>(mesh.positions.size())};
 	const usize indices{line_strip_indices(vertices)};
 
@@ -370,7 +370,7 @@ tr::simple_color_mesh_ref tr::basic_renderer::new_line_loop(int layer, usize ver
 {
 	TR_ASSERT(!m_locked, "Tried to allocate a new line loop on a locked basic renderer.");
 
-	mesh& mesh{find_mesh(layer, primitive::lines, std::nullopt, mat, blend_mode, vertices)};
+	mesh& mesh{find_mesh(layer, primitive::lines, no_texture, mat, blend_mode, vertices)};
 	const u16 base_index{static_cast<u16>(mesh.positions.size())};
 	const usize indices{line_loop_indices(vertices)};
 
@@ -407,7 +407,7 @@ tr::color_mesh_ref tr::basic_renderer::new_line_mesh(int layer, usize vertices, 
 {
 	TR_ASSERT(!m_locked, "Tried to allocate a new line mesh on a locked basic renderer.");
 
-	mesh& mesh{find_mesh(layer, primitive::lines, std::nullopt, mat, blend_mode, vertices)};
+	mesh& mesh{find_mesh(layer, primitive::lines, no_texture, mat, blend_mode, vertices)};
 	const u16 base_index{static_cast<u16>(mesh.positions.size())};
 
 	mesh.positions.resize(mesh.positions.size() + vertices);
@@ -446,12 +446,12 @@ void tr::basic_renderer::draw(const render_target& target)
 
 //
 
-tr::basic_renderer::mesh& tr::basic_renderer::find_mesh(int layer, primitive type, texture_ref texture_ref, const glm::mat4& mat,
+tr::basic_renderer::mesh& tr::basic_renderer::find_mesh(int layer, primitive type, texture_view texture, const glm::mat4& mat,
 														const blend_mode& blend_mode, usize space_needed)
 {
 	auto range{std::ranges::equal_range(m_meshes, layer, std::less{}, &mesh::layer)};
 	std::vector<mesh>::iterator mesh_it;
-	if (texture_ref.empty()) {
+	if (texture.empty()) {
 		auto find_suitable{[&](const mesh& mesh) {
 			return mesh.type == type && mesh.mat == mat && mesh.blend_mode == blend_mode &&
 				   mesh.positions.size() + space_needed <= UINT16_MAX;
@@ -460,17 +460,17 @@ tr::basic_renderer::mesh& tr::basic_renderer::find_mesh(int layer, primitive typ
 	}
 	else {
 		auto find_suitable{[&](const mesh& mesh) {
-			return mesh.type == type && (mesh.texture.empty() || mesh.texture == texture_ref) && mesh.mat == mat &&
+			return mesh.type == type && (mesh.texture.empty() || mesh.texture == texture) && mesh.mat == mat &&
 				   mesh.blend_mode == blend_mode && mesh.positions.size() + space_needed <= UINT16_MAX;
 		}};
 		mesh_it = std::ranges::find_if(range, find_suitable);
 		if (mesh_it != range.end() && mesh_it->texture.empty()) {
-			mesh_it->texture = std::move(texture_ref);
+			mesh_it->texture = texture;
 		}
 	}
 
 	if (mesh_it == range.end()) {
-		mesh_it = m_meshes.emplace(range.end(), layer, type, std::move(texture_ref), mat, blend_mode);
+		mesh_it = m_meshes.emplace(range.end(), layer, type, texture, mat, blend_mode);
 	}
 	return *mesh_it;
 }

@@ -71,7 +71,8 @@ namespace tr {
 		// Gets the atlas texture.
 		operator const texture&() const;
 		// Gets a reference to the atlas texture.
-		operator texture_ref() const;
+		// This view may be invalidated by adding entries to the atlas or reserving.
+		operator texture_view() const;
 
 		// Gets a reference to the graphics context the atlas is on.
 		graphics_context& context() const;

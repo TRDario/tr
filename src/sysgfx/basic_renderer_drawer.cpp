@@ -143,10 +143,10 @@ void tr::basic_renderer::drawer::setup_context(graphics_context& context)
 	}
 }
 
-void tr::basic_renderer::drawer::setup_draw_call_state(graphics_context& context, texture_ref texture_ref, const glm::mat4& transform,
+void tr::basic_renderer::drawer::setup_draw_call_state(graphics_context& context, texture_view texture, const glm::mat4& transform,
 													   const blend_mode& blend_mode)
 {
-	m_renderer->m_pipeline.fragment_shader().set_uniform(1, std::move(texture_ref));
+	m_renderer->m_pipeline.fragment_shader().set_uniform(1, texture);
 
 	if (m_renderer->m_last_transform != transform) {
 		m_renderer->m_last_transform = transform;

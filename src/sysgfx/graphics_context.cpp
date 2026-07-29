@@ -10,6 +10,7 @@
 #include "../../include/tr/sysgfx/index_buffer.hpp"
 #include "../../include/tr/sysgfx/shader_pipeline.hpp"
 #include "../../include/tr/sysgfx/texture.hpp"
+#include "../../include/tr/sysgfx/texture_view.hpp"
 #include "../../include/tr/sysgfx/window.hpp"
 #include "../../include/tr/utility/enum.hpp"
 #include <SDL3/SDL.h>
@@ -271,6 +272,41 @@ namespace tr {
 	} // namespace
 } // namespace tr
 
+/////////////////////////////////////////////////////////////// TEXTURE UNIT //////////////////////////////////////////////////////////////
+
+tr::graphics_context::texture_unit::texture_unit(graphics_context& context)
+	: m_handle{{context}}
+{
+	for (unsigned int free_index{0}; free_index < context.m_allocated_texture_units.size(); ++free_index) {
+		if (!context.m_allocated_texture_units[free_index]) {
+			context.m_allocated_texture_units[free_index] = true;
+			m_handle.reset(free_index);
+			return;
+		}
+	}
+	TR_UNREACHABLE;
+}
+
+void tr::graphics_context::texture_unit::deleter::operator()(unsigned int id) const
+{
+	context.m_allocated_texture_units[id] = false;
+}
+
+//
+
+unsigned int tr::graphics_context::texture_unit::id() const
+{
+	return m_handle.get();
+}
+
+//
+
+void tr::graphics_context::texture_unit::set(texture_view texture)
+{
+	const glapi& gl{m_handle.get_deleter().context.make_current_and_return_glapi()};
+	gl.bind_textures(m_handle.get(), 1, &texture.m_id);
+}
+
 ///////////////////////////////////////////////////////////// GRAPHICS CONTEXT ////////////////////////////////////////////////////////////
 
 namespace tr {
@@ -409,19 +445,19 @@ void tr::graphics_context::set_render_target(const render_target& target)
 
 	bool changed_render_target{false};
 
-	if (!m_render_target.has_value() || m_render_target->m_fbo != target.m_fbo) {
-		gl.bind_framebuffer(GL_DRAW_FRAMEBUFFER, target.m_fbo);
+	if (!m_render_target.has_value() || m_render_target->m_framebuffer != target.m_framebuffer) {
+		gl.bind_framebuffer(GL_DRAW_FRAMEBUFFER, target.m_framebuffer);
 		changed_render_target = true;
 	}
-	if (!m_render_target.has_value() || m_render_target->m_fbo_size != target.m_fbo_size ||
+	if (!m_render_target.has_value() || m_render_target->m_framebuffer_size != target.m_framebuffer_size ||
 		m_render_target->m_viewport != target.m_viewport) {
-		const int bottom{target.m_fbo_size.y - target.m_viewport.tl.y - target.m_viewport.size.y};
+		const int bottom{target.m_framebuffer_size.y - target.m_viewport.tl.y - target.m_viewport.size.y};
 		gl.set_viewport(target.m_viewport.tl.x, bottom, target.m_viewport.size.x, target.m_viewport.size.y);
 		changed_render_target = true;
 	}
-	if (!m_render_target.has_value() || m_render_target->m_fbo_size != target.m_fbo_size ||
+	if (!m_render_target.has_value() || m_render_target->m_framebuffer_size != target.m_framebuffer_size ||
 		m_render_target->m_scissor_box != target.m_scissor_box) {
-		const int bottom{target.m_fbo_size.y - target.m_scissor_box.tl.y - target.m_scissor_box.size.y};
+		const int bottom{target.m_framebuffer_size.y - target.m_scissor_box.tl.y - target.m_scissor_box.size.y};
 		gl.set_scissor(target.m_scissor_box.tl.x, bottom, target.m_scissor_box.size.x, target.m_scissor_box.size.y);
 		changed_render_target = true;
 	}
@@ -573,56 +609,12 @@ const tr::graphics_context::glapi& tr::graphics_context::make_current_and_return
 
 bool tr::graphics_context::is_fbo_of_render_target(unsigned int fbo)
 {
-	return m_render_target.has_value() && m_render_target->m_fbo == fbo;
+	return m_render_target.has_value() && m_render_target->m_framebuffer == fbo;
 }
 
 void tr::graphics_context::clear_render_target()
 {
 	m_render_target.reset();
-}
-
-//
-
-unsigned int tr::graphics_context::allocate_texture_unit()
-{
-	const auto free_unit_it{std::ranges::find_if(m_texture_units, [](const std::optional<texture_ref>& v) { return !v.has_value(); })};
-
-	TR_ASSERT(free_unit_it != m_texture_units.end(), "Ran out of texture units for shaders.");
-
-	free_unit_it->emplace();
-	return std::distance(m_texture_units.begin(), free_unit_it);
-}
-
-void tr::graphics_context::set_texture_unit(unsigned int unit, texture_ref texture)
-{
-	TR_ASSERT(m_texture_units[unit].has_value(), "Tried to set unallocated texture unit {}.", unit);
-
-	const glapi& gl{make_current_and_return_glapi()};
-
-	if (!texture.empty()) {
-		if (m_texture_units[unit] != texture && texture->m_handle != 0) {
-			gl.bind_textures(unit, 1, &texture->m_handle);
-		}
-	}
-	m_texture_units[unit] = std::move(texture);
-}
-
-void tr::graphics_context::free_texture_unit(unsigned int unit)
-{
-	TR_ASSERT(m_texture_units[unit].has_value(), "Tried to free unallocated texture unit {}.", unit);
-
-	m_texture_units[unit] = std::nullopt;
-}
-
-void tr::graphics_context::rebind_texture_units(const texture& texture)
-{
-	const glapi& gl{make_current_and_return_glapi()};
-
-	for (int i = 0; i < 80; ++i) {
-		if (m_texture_units[i] == texture) {
-			gl.bind_textures(i, 1, &texture.m_handle);
-		}
-	}
 }
 
 //

@@ -9,6 +9,7 @@
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/shader_buffer.hpp"
 #include "../../include/tr/sysgfx/texture.hpp"
+#include "../../include/tr/sysgfx/texture_view.hpp"
 #include "../../include/tr/sysgfx/uniform_buffer.hpp"
 #include "../../include/tr/utility/hash_map.hpp"
 #include "../../include/tr/utility/iostream.hpp"
@@ -34,26 +35,6 @@ std::string_view tr::shader_load_error::description() const
 std::string_view tr::shader_load_error::details() const
 {
 	return m_details;
-}
-
-/////////////////////////////////////////////////////////////// TEXTURE UNIT //////////////////////////////////////////////////////////////
-
-tr::shader_base::texture_unit::texture_unit(graphics_context& context, unsigned int program, int index)
-	: m_id{context.allocate_texture_unit(), {context}}
-{
-	const graphics_context::glapi& gl{context.make_current_and_return_glapi()};
-
-	gl.set_program_uniform_1i(program, index, m_id.get());
-}
-
-void tr::shader_base::texture_unit::deleter::operator()(unsigned int unit) const
-{
-	context.free_texture_unit(unit);
-}
-
-void tr::shader_base::texture_unit::set(texture_ref texture)
-{
-	m_id.get_deleter().context.set_texture_unit(m_id.get(), std::move(texture));
 }
 
 ////////////////////////////////////////////////////////////////// SHADER /////////////////////////////////////////////////////////////////
@@ -581,7 +562,7 @@ void tr::shader_base::set_uniform(int index, std::span<const glm::mat4x3> value)
 	gl.set_program_uniform_matrix4x3fv(m_program.get(), index, value.size(), false, value_ptr(value[0]));
 }
 
-void tr::shader_base::set_uniform(int index, texture_ref texture)
+void tr::shader_base::set_uniform(int index, texture_view texture)
 {
 #ifdef TR_ENABLE_GL_CHECKS
 	const auto uniform_it{m_uniforms.find(index)};
@@ -592,9 +573,12 @@ void tr::shader_base::set_uniform(int index, texture_ref texture)
 
 	auto unit_it{m_texture_units.find(index)};
 	if (unit_it == m_texture_units.end()) {
-		unit_it = m_texture_units.insert({index, texture_unit{context(), m_program.get(), index}}).first;
+		const graphics_context::glapi& gl{context().make_current_and_return_glapi()};
+
+		unit_it = m_texture_units.insert({index, graphics_context::texture_unit{context()}}).first;
+		gl.set_program_uniform_1i(m_program.get(), index, unit_it->second.id());
 	}
-	unit_it->second.set(std::move(texture));
+	unit_it->second.set(texture);
 }
 
 void tr::shader_base::set_storage_buffer(unsigned int index, basic_shader_buffer& buffer)

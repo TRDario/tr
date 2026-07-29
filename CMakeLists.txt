@@ -110,6 +110,7 @@ if(TR_BUILD_SYSGFX)
 		src/sysgfx/dialog.cpp
 		src/sysgfx/display.cpp
 		src/sysgfx/event.cpp
+		src/sysgfx/framebuffer.cpp
 		src/sysgfx/graphics_benchmark.cpp
 		src/sysgfx/graphics_buffer.cpp
 		src/sysgfx/graphics_buffer_map.cpp
@@ -125,7 +126,7 @@ if(TR_BUILD_SYSGFX)
 		src/sysgfx/shader.cpp
 		src/sysgfx/state_machine.cpp
 		src/sysgfx/texture.cpp
-		src/sysgfx/texture_ref.cpp
+		src/sysgfx/texture_view.cpp
 		src/sysgfx/uniform_buffer.cpp
 		src/sysgfx/vertex_buffer.cpp
 		src/sysgfx/vertex_format.cpp

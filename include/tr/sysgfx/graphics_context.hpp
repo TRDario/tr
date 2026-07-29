@@ -67,7 +67,6 @@
 #include "../utility/logger.hpp"
 #include "../utility/zstring_view.hpp"
 #include "render_target.hpp"
-#include "texture_ref.hpp"
 #include "vertex_buffer.hpp"
 #include "vertex_format.hpp"
 
@@ -78,6 +77,7 @@ namespace tr {
 	class dyn_index_buffer;
 	class shader_pipeline;
 	class static_index_buffer;
+	class texture_view;
 	class window_view;
 } // namespace tr
 #ifdef TR_HAS_IMGUI
@@ -346,6 +346,32 @@ namespace tr {
 			glapi();
 		};
 
+		// A location a texture can bind to.
+		class texture_unit {
+		  public:
+			// Allocates a texture unit on a graphics context.
+			texture_unit(graphics_context& context);
+
+			// Gets the ID of the texture unit.
+			unsigned int id() const;
+
+			// Sets the texture unit.
+			void set(texture_view texture);
+
+		  private:
+			// Texture unit freer.
+			struct deleter {
+				// Reference to the graphics context the texture unit is on.
+				graphics_context& context;
+
+				// Frees the texture unit.
+				void operator()(unsigned int unit) const;
+			};
+
+			// Handle to the texture unit.
+			handle<unsigned int, UINT_MAX, deleter> m_handle;
+		};
+
 		// Pointer to the window the context was created on.
 		SDL_Window* m_window;
 		// Pointer to the SDL OpenGL context.
@@ -358,8 +384,8 @@ namespace tr {
 		renderer_id m_active_renderer{renderer_id::no_renderer};
 		// The current render target.
 		std::optional<render_target> m_render_target;
-		// Tracks which texture units are allocated and what the textures bound to them are.
-		std::array<std::optional<texture_ref>, 80> m_texture_units{};
+		// Tracks which texture units are allocated.
+		std::bitset<80> m_allocated_texture_units{};
 		// Commonly used 2D vertex format.
 		std::optional<tr::vertex_format> m_vertex2_format;
 #ifdef TR_ENABLE_GL_CHECKS
@@ -377,15 +403,6 @@ namespace tr {
 		// Clears the render target.
 		void clear_render_target();
 
-		// Allocates a texture unit.
-		unsigned int allocate_texture_unit();
-		// Sets the texture bound to a texture unit.
-		void set_texture_unit(unsigned int unit, texture_ref texture);
-		// Frees a texture unit.
-		void free_texture_unit(unsigned int id);
-		// Rebinds texture units bound to a texture that got reallocated.
-		void rebind_texture_units(const texture& texture);
-
 #ifdef TR_ENABLE_GL_CHECKS
 		// Checks if a vertex buffer's type's attribute match those of the current vertex format.
 		void check_vertex_buffer(std::string label, int slot, std::span<const vertex_attribute> attrs);
@@ -400,9 +417,9 @@ namespace tr {
 		friend class basic_static_vertex_buffer;
 		friend class basic_uniform_buffer;
 		friend class dyn_index_buffer;
+		friend class framebuffer;
 		friend class graphics_benchmark;
 		friend class graphics_buffer;
-		friend class render_texture;
 		friend class shader_base;
 		friend class shader_pipeline;
 		friend class static_index_buffer;

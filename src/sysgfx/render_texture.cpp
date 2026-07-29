@@ -1,60 +1,45 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                                                                                                       //
+// Implements render_texture.hpp.                                                                                                        //
+//                                                                                                                                       //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 #include "../../include/tr/sysgfx/render_texture.hpp"
-#include "../../include/tr/sysgfx/gl_defines.hpp"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
+#include "../../include/tr/sysgfx/texture_view.hpp"
 
 ///////////////////////////////////////////////////////////// RENDER TEXTURE //////////////////////////////////////////////////////////////
 
 tr::render_texture::render_texture(graphics_context& context)
-	: texture{context}
+	: m_texture{context}
+	, m_framebuffer{context}
 {
 }
 
 tr::render_texture::render_texture(graphics_context& context, glm::ivec2 size, mipmaps mipmaps, pixel_format format)
-	: texture{context, size, mipmaps, format}
+	: m_texture{context, size, mipmaps, format}
+	, m_framebuffer{context}
 {
-	const graphics_context::glapi& gl{m_context.make_current_and_return_glapi()};
-
-	gl.create_framebuffers(1, &m_fbo);
-	gl.set_framebuffer_texture(m_fbo, GL_COLOR_ATTACHMENT0, m_handle, 0);
+	m_framebuffer.attach(framebuffer::attachment::color0, m_texture);
 }
 
-tr::render_texture::render_texture(graphics_context& context, const sub_bitmap& bitmap, mipmaps mipmaps, std::optional<pixel_format> format)
-	: render_texture{context, bitmap.size(), mipmaps, format.value_or(bitmap.format())}
+tr::render_texture::render_texture(graphics_context& context, sub_bitmap bitmap, mipmaps mipmaps, std::optional<pixel_format> format)
+	: m_texture{context, bitmap, mipmaps, format}
+	, m_framebuffer{context}
 {
-	set_region({}, bitmap);
-}
-
-tr::render_texture::render_texture(render_texture&& r) noexcept
-	: texture{std::move(r)}
-	, m_fbo{r.m_fbo}
-{
-	r.m_fbo = 0;
-}
-
-tr::render_texture::~render_texture()
-{
-	const graphics_context::glapi& gl{m_context.make_current_and_return_glapi()};
-
-	if (!empty() && m_context.is_fbo_of_render_target(m_fbo)) {
-		m_context.clear_render_target();
-	}
-	gl.delete_framebuffers(1, &m_fbo);
+	m_framebuffer.attach(framebuffer::attachment::color0, m_texture);
 }
 
 //
 
-tr::render_texture& tr::render_texture::operator=(render_texture&& r) noexcept
+tr::render_texture::operator texture_view() const
 {
-	static_cast<texture&>(*this) = std::move(r);
-	m_fbo = std::exchange(r.m_fbo, 0);
-	return *this;
+	return m_texture.view();
 }
 
-//
-
-tr::render_texture::operator texture_ref() const
+tr::texture_view tr::render_texture::view() const
 {
-	return static_cast<const texture&>(*this);
+	return m_texture.view();
 }
 
 //
@@ -66,21 +51,86 @@ tr::render_texture::operator tr::render_target() const
 
 tr::render_target tr::render_texture::render_target() const
 {
-	TR_ASSERT(!empty(), "Tried to create a render target for an empty texture.");
+	TR_ASSERT(complete(), "Tried to create a render target for an incomplete texture.");
 
-	return tr::render_target{m_fbo, m_size};
+	return m_framebuffer.render_target(size());
 }
 
 //
 
-tr::texture tr::render_texture::reallocate(glm::ivec2 size, mipmaps mipmaps, pixel_format format)
+tr::graphics_context& tr::render_texture::context() const
 {
-	const graphics_context::glapi& gl{m_context.make_current_and_return_glapi()};
+	return m_texture.context();
+}
 
-	texture old_data{texture::reallocate(size, mipmaps, format)};
-	if (m_fbo == 0) {
-		gl.create_framebuffers(1, &m_fbo);
-	}
-	gl.set_framebuffer_texture(m_fbo, GL_COLOR_ATTACHMENT0, m_handle, 0);
-	return old_data;
+//
+
+bool tr::render_texture::complete() const
+{
+	return m_texture.complete();
+}
+
+glm::ivec2 tr::render_texture::size() const
+{
+	return m_texture.size();
+}
+
+//
+
+tr::texture tr::render_texture::allocate(glm::ivec2 size, mipmaps mipmaps, pixel_format format)
+{
+	tr::texture old_texture{m_texture.allocate(size, mipmaps, format)};
+	m_framebuffer.attach(framebuffer::attachment::color0, m_texture);
+	return old_texture;
+}
+
+//
+
+void tr::render_texture::set_filtering(min_filter min_filter, mag_filter mag_filter)
+{
+	m_texture.set_filtering(min_filter, mag_filter);
+}
+
+void tr::render_texture::set_wrap(wrap wrap)
+{
+	m_texture.set_wrap(wrap);
+}
+
+void tr::render_texture::set_border_color(rgbaf color)
+{
+	m_texture.set_border_color(color);
+}
+
+//
+
+void tr::render_texture::clear(rgbaf color)
+{
+	m_texture.clear(color);
+}
+
+void tr::render_texture::clear_region(rectangle<int> region, rgbaf color)
+{
+	m_texture.clear_region(region, color);
+}
+
+void tr::render_texture::copy_region(glm::ivec2 tl, texture_view src, rectangle<int> region)
+{
+	m_texture.copy_region(tl, src, region);
+}
+
+void tr::render_texture::set_region(glm::ivec2 tl, sub_bitmap bitmap)
+{
+	m_texture.set_region(tl, bitmap);
+}
+
+//
+
+std::string tr::render_texture::label() const
+{
+	return m_texture.label();
+}
+
+void tr::render_texture::set_label(std::string_view label)
+{
+	m_texture.set_label(label);
 }

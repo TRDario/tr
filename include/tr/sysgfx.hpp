@@ -40,7 +40,7 @@
 #include "sysgfx/shader_pipeline.hpp"     // IWYU pragma: export
 #include "sysgfx/state_machine.hpp"       // IWYU pragma: export
 #include "sysgfx/texture.hpp"             // IWYU pragma: export
-#include "sysgfx/texture_ref.hpp"         // IWYU pragma: export
+#include "sysgfx/texture_view.hpp"        // IWYU pragma: export
 #include "sysgfx/ttfont.hpp"              // IWYU pragma: export
 #include "sysgfx/uniform_buffer.hpp"      // IWYU pragma: export
 #include "sysgfx/vertex_buffer.hpp"       // IWYU pragma: export

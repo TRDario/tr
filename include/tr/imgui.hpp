@@ -29,7 +29,7 @@ namespace tr {
 	class event;
 	class graphics_context;
 	class texture;
-	class texture_ref;
+	class texture_view;
 } // namespace tr
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
@@ -42,10 +42,8 @@ namespace tr {
 		// Shuts the Dear ImGui backends needed for work with tr down.
 		void Shutdown();
 
-		// Gets the Dear ImGui texture ID for a tr texture reference.
-		ImTextureID GetTextureID(const texture_ref& texture);
-		// Gets the Dear ImGui texture ID for a tr texture.
-		ImTextureID GetTextureID(const texture& texture);
+		// Gets the Dear ImGui texture ID for a tr texture view.
+		ImTextureID GetTextureID(texture_view texture);
 
 		// Processes an event for Dear ImGui.
 		void ProcessEvent(const event& event);

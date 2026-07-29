@@ -40,12 +40,13 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
+#include "../utility/reference.hpp"
 #include "blending.hpp"
 #include "graphics_context.hpp"
 #include "index_buffer.hpp"
 #include "render_target.hpp"
 #include "shader_pipeline.hpp"
-#include "texture.hpp"
+#include "texture_view.hpp"
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
@@ -107,7 +108,7 @@ namespace tr {
 		// Sets the default transformation matrix used by primitives on any layer without its own default transform.
 		void set_default_transform(const glm::mat4& mat);
 		// Sets the default texture used by textured primitives on a layer.
-		void set_default_layer_texture(int layer, texture_ref texture);
+		void set_default_layer_texture(int layer, texture_view texture);
 		// Sets the default transformation matrix used by primitives on a layer.
 		void set_default_layer_transform(int layer, const glm::mat4& mat);
 		// Sets the default blending mode used by primitives on a layer.
@@ -128,16 +129,16 @@ namespace tr {
 		// Allocates a new textured fan.
 		simple_textured_mesh_ref new_textured_fan(int layer, usize vertices);
 		// Allocates a new textured fan.usize
-		simple_textured_mesh_ref new_textured_fan(int layer, usize vertices, texture_ref texture);
+		simple_textured_mesh_ref new_textured_fan(int layer, usize vertices, texture_view texture);
 		// Allocates a new textured fan.usize
-		simple_textured_mesh_ref new_textured_fan(int layer, usize vertices, texture_ref texture, const glm::mat4& mat,
+		simple_textured_mesh_ref new_textured_fan(int layer, usize vertices, texture_view texture, const glm::mat4& mat,
 												  const blend_mode& blend_mode);
 		// Allocates a new textured mesh.
 		textured_mesh_ref new_textured_mesh(int layer, usize vertices, usize indices);
 		// Allocates a new textured mesh.
-		textured_mesh_ref new_textured_mesh(int layer, usize vertices, usize indices, texture_ref texture);
+		textured_mesh_ref new_textured_mesh(int layer, usize vertices, usize indices, texture_view texture);
 		// Allocates a new textured mesh.
-		textured_mesh_ref new_textured_mesh(int layer, usize vertices, usize indices, texture_ref texture, const glm::mat4& mat,
+		textured_mesh_ref new_textured_mesh(int layer, usize vertices, usize indices, texture_view texture, const glm::mat4& mat,
 											const blend_mode& blend_mode);
 
 		// Allocates a number of new color lines.
@@ -168,7 +169,7 @@ namespace tr {
 		// Default layer information.
 		struct layer_defaults {
 			// Texture used by textured primitives in a layer.
-			texture_ref texture;
+			texture_view texture;
 			// Transformation matrix used by primitives a layer.
 			std::optional<glm::mat4> transform;
 			// Blending mode used by primitives a layer.
@@ -181,7 +182,7 @@ namespace tr {
 			// The mesh type.
 			primitive type;
 			// The texture used by the mesh.
-			texture_ref texture;
+			texture_view texture;
 			// The transformation matrix used by the mesh.
 			glm::mat4 mat;
 			// The blending mode used by the mesh.
@@ -224,7 +225,7 @@ namespace tr {
 #endif
 
 		// Finds an appropriate mesh.
-		mesh& find_mesh(int layer, primitive type, texture_ref texture, const glm::mat4& mat, const blend_mode& blend_mode,
+		mesh& find_mesh(int layer, primitive type, texture_view texture, const glm::mat4& mat, const blend_mode& blend_mode,
 						usize space_needed);
 	};
 
@@ -271,7 +272,7 @@ namespace tr {
 		// Sets up the graphical context for drawing.
 		void setup_context(graphics_context& context);
 		// Sets up the graphical context for a specific draw call.
-		void setup_draw_call_state(graphics_context& context, texture_ref texture, const glm::mat4& transform,
+		void setup_draw_call_state(graphics_context& context, texture_view texture, const glm::mat4& transform,
 								   const blend_mode& blend_mode);
 
 		// Cleans up the drawing data and unlocks the parent renderer.

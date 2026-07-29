@@ -6,7 +6,7 @@
 
 #pragma once
 #include "../atlas.hpp"
-#include "../texture_ref.hpp"
+#include "../texture_view.hpp"
 
 /////////////////////////////////////////////////////////////// BITMAP ATLAS //////////////////////////////////////////////////////////////
 
@@ -65,7 +65,7 @@ tr::dyn_atlas<Key, Value, Hash, Pred>::operator const tr::texture&() const
 }
 
 template <typename Key, tr::atlas_entries_value_type Value, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
-tr::dyn_atlas<Key, Value, Hash, Pred>::operator tr::texture_ref() const
+tr::dyn_atlas<Key, Value, Hash, Pred>::operator tr::texture_view() const
 {
 	return m_tex;
 }
@@ -134,11 +134,11 @@ void tr::dyn_atlas<Key, Value, Hash, Pred>::reserve(glm::ivec2 capacity)
 		return;
 	}
 	else if (m_tex.size() == glm::ivec2{}) {
-		m_tex.reallocate(capacity);
+		m_tex.allocate(capacity);
 		m_tex.clear({});
 	}
 	else {
-		const texture old_tex{m_tex.reallocate(capacity)};
+		const texture old_tex{m_tex.allocate(capacity)};
 		m_tex.clear({});
 		m_tex.copy_region({}, old_tex, {{}, old_tex.size()});
 	}

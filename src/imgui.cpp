@@ -6,8 +6,7 @@
 
 #include "../include/tr/imgui.hpp"
 #include "../include/tr/sysgfx/graphics_context.hpp"
-#include "../include/tr/sysgfx/texture.hpp"
-#include "../include/tr/sysgfx/texture_ref.hpp"
+#include "../include/tr/sysgfx/texture_view.hpp"
 #include "../include/tr/sysgfx/window.hpp"
 #include <backends/imgui_impl_opengl3.h>
 #include <backends/imgui_impl_sdl3.h>
@@ -30,14 +29,9 @@ void tr::ImGui::Shutdown()
 
 //
 
-ImTextureID tr::ImGui::GetTextureID(const texture_ref& texture)
+ImTextureID tr::ImGui::GetTextureID(texture_view texture)
 {
-	return GetTextureID(texture.m_ref);
-}
-
-ImTextureID tr::ImGui::GetTextureID(const texture& texture)
-{
-	return texture.m_handle;
+	return GetTextureID(texture.m_id);
 }
 
 //

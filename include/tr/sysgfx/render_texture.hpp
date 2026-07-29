@@ -10,76 +10,70 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
+#include "framebuffer.hpp"
 #include "texture.hpp"
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
 namespace tr {
-	// 2D texture living on the GPU with the ability to be rendered to.
-	class render_texture : private texture {
+	// 2D GPU texture with the ability to be rendered to.
+	class render_texture {
 	  public:
-		// Creates an empty texture.
+		// Creates an incomplete texture.
 		render_texture(graphics_context& context);
 		// Allocates an uninitialized texture.
 		render_texture(graphics_context& context, glm::ivec2 size, mipmaps mipmaps = mipmaps::disabled,
 					   pixel_format format = pixel_format::rgba32);
 		// Constructs a texture with data uploaded from a bitmap.
-		render_texture(graphics_context& context, const sub_bitmap& bitmap, mipmaps mipmaps = mipmaps::disabled,
+		render_texture(graphics_context& context, sub_bitmap bitmap, mipmaps mipmaps = mipmaps::disabled,
 					   std::optional<pixel_format> format = std::nullopt);
-		// Render textures are not copyable.
-		render_texture(const render_texture&) = delete;
-		// Moves a texture, updating all references pointing to it.
-		render_texture(render_texture&&) noexcept;
-		// Destroys the texture, emptying all references pointing to it.
-		~render_texture();
 
-		// Render textures are not copyable.
-		render_texture& operator=(const render_texture&) = delete;
-		// Moves a texture, updating all references pointing to it.
-		render_texture& operator=(render_texture&& r) noexcept;
-
-		// Gets a reference to the graphics context the texture is on.
-		using texture::context;
-
-		// Gets a reference to the texture.
-		operator texture_ref() const;
+		// Gets a view to the texture.
+		operator texture_view() const;
+		// Gets a view to the texture.
+		texture_view view() const;
 
 		// Gets a render target spanning the texture.
 		operator render_target() const;
 		// Gets a render target spanning the texture.
 		render_target render_target() const;
 
-		// Gets whether the texture is empty.
-		using texture::empty;
-		// Gets the size of the texture.
-		using texture::size;
+		// Gets a reference to the graphics context the texture is on.
+		graphics_context& context() const;
 
-		// Reallocates the texture and releases the previously held storage as a new texture.
-		texture reallocate(glm::ivec2 size, mipmaps mipmaps = mipmaps::disabled, pixel_format format = pixel_format::rgba32);
+		// Gets whether the texture is complete.
+		bool complete() const;
+		// Gets the size of the texture.
+		glm::ivec2 size() const;
+
+		// Allocates the texture and releases the previously held storage as a new texture.
+		texture allocate(glm::ivec2 size, mipmaps mipmaps = mipmaps::disabled, pixel_format format = pixel_format::rgba32);
 
 		// Sets the filters used by the texture sampler.
-		using texture::set_filtering;
+		void set_filtering(min_filter min_filter, mag_filter mag_filter);
 		// Sets the wrapping used for by the texture sampler.
-		using texture::set_wrap;
+		void set_wrap(wrap wrap);
 		// Sets the border color of the texture sampler (used when wrap::BORDER_CLAMP is in use).
-		using texture::set_border_color;
+		void set_border_color(rgbaf color);
 
 		// Clears the texture.
-		using texture::clear;
+		void clear(rgbaf color);
 		// Clears a region of the texture.
-		using texture::clear_region;
+		void clear_region(rectangle<int> region, rgbaf color);
 		// Copies a region from another texture.
-		using texture::copy_region;
+		void copy_region(glm::ivec2 tl, texture_view src, rectangle<int> region);
 		// Sets a region of the texture.
-		using texture::set_region;
+		void set_region(glm::ivec2 tl, sub_bitmap bitmap);
 
 		// Gets the debug label of the texture.
-		using texture::label;
+		std::string label() const;
 		// Sets the debug label of the texture.
-		using texture::set_label;
+		void set_label(std::string_view label);
 
 	  private:
-		// Handle to an OpenGL FBO.
-		unsigned int m_fbo;
+		// Base texture.
+		texture m_texture;
+		// Framebuffer used by the texture.
+		framebuffer m_framebuffer;
 	};
 } // namespace tr

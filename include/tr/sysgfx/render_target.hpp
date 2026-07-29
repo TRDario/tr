@@ -3,7 +3,7 @@
 // Provides a rendering target class.                                                                                                    //
 //                                                                                                                                       //
 // A render target is nothing more than an opaque reference to a texture that can be drawn to, or the backbuffer. It can thus not be     //
-// constructed directly, but is gotten from the likes of tr::graphics_context::backbuffer or render_texture::operator render_target.     //
+// constructed directly, but is gotten from the likes of tr::graphics_context::backbuffer or framebuffer::render_target.                 //
 // The only action that can be performed using it, besides passing it to tr::graphics_context::set_render_target, is getting its size in //
 // pixels:                                                                                                                               //
 //     - context.backbuffer().size() -> the size of the backbuffer                                                                       //
@@ -39,21 +39,21 @@ namespace tr {
 
 	  private:
 		// The OpenGL ID of the render target's FBO.
-		unsigned int m_fbo;
+		unsigned int m_framebuffer;
 		// Size of the render target's FBO.
-		glm::ivec2 m_fbo_size;
+		glm::ivec2 m_framebuffer_size;
 		// The viewport of the render target.
 		rectangle<int> m_viewport;
 		// The scissor box of the render target.
 		rectangle<int> m_scissor_box;
 
 		// Creates a render target spanning an entire FBO.
-		render_target(unsigned int fbo, glm::ivec2 fbo_size);
+		render_target(unsigned int framebuffer, glm::ivec2 framebuffer_size);
 		// Creates a render target spanning a region of an FBO.
-		render_target(unsigned int fbo, glm::ivec2 fbo_size, const rectangle<int>& viewport, const rectangle<int>& scissor_box);
+		render_target(unsigned int framebuffer, glm::ivec2 framebuffer_size, const rectangle<int>& viewport,
+					  const rectangle<int>& scissor_box);
 
-		friend render_target backbuffer_render_target();
-		friend class render_texture;
+		friend class framebuffer;
 		friend class graphics_context;
 	};
 } // namespace tr

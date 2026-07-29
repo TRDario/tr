@@ -1,9 +1,9 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                                                       //
-// Provides a GPU texture class and related types.                                                                                       //
+// Provides a GPU texture container class and related types.                                                                             //
 //                                                                                                                                       //
 // Textures are collections of pixel data representing 2D images stored on the GPU and available for use in rendering. Textures can be   //
-// default-constructed (in which case they will be empty), constructed uninitialized, or initialized with bitmap data that will be       //
+// default-constructed (in which case they will be incomplete), constructed uninitialized, or initialized with bitmap data that will be  //
 // copied into the texture:                                                                                                              //
 //     - tr::texture tex{}                                                                                                               //
 //       -> creates an empty texture                                                                                                     //
@@ -13,12 +13,17 @@
 //       -> creates a texture by copying the data from 'bmp' and using the same format                                                   //
 //     - tr::texture tex{bmp, tr::mipmaps::disabled, tr::pixel_format::rgb24}                                                            //
 //       -> creates a texture by copying the data from 'bmp' converted to RGB24                                                          //
+// Moved-from textures are left in an incomplete, but valid state.                                                                       //
 //                                                                                                                                       //
-// Textures may be reallocated using the .reallocate() method. When reallocating, the previous storage is released as a new texture:     //
-//     - tex.reallocate({1024, 1024}) -> reallocates tex as an uninitialized 1024x1024 texture, and releases its old data                //
+// Empty textures may be allocated using the .allocate() method:                                                                         //
+//     - tex.allocate({1024, 1024}) -> allocates tex as an uninitialized 1024x1024 texture                                               //
 //                                                                                                                                       //
-// Textures may be queried for whether they're empty or their size:                                                                      //
-//     - tr::texture tex{}; tex.empty() -> true                                                                                          //
+// A view to a texture may be gotten through the conversion operator or .view(). It's important to point out that views point to a       //
+// specific allocated texture, rather than a texture container object, so be careful when binding to shaders or framebuffers:            //
+//     - tex.view() -> view to the texture contained in 'tex'                                                                            //
+//                                                                                                                                       //
+// Textures may be queried for whether they are complete or for their size:                                                              //
+//     - tr::texture tex{}; tex.cmplete() -> false                                                                                       //
 //     - tr::texture tex{{512, 512}}; tex.size() -> {512, 512}                                                                           //
 //                                                                                                                                       //
 // The filtering, wrapping, and border color attribtes of textures may be set:                                                           //
@@ -38,22 +43,13 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "../utility/reference.hpp"
+#include "../utility/handle.hpp"
 #include "bitmap.hpp"
 
 namespace tr {
 	class graphics_context;
-	class texture;
-	class texture_ref;
-	class render_target;
+	class texture_view;
 } // namespace tr
-
-#ifdef TR_HAS_IMGUI
-using ImTextureID = unsigned long long;
-namespace tr::ImGui {
-	ImTextureID GetTextureID(const texture& texture);
-}
-#endif
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
@@ -88,35 +84,33 @@ namespace tr {
 		linear = 0x2601   // The average of the four texture elements that are closest to the specified texture coordinates is used.
 	};
 
-	// 2D texture living on the GPU.
+	// 2D GPU texture container.
 	class texture {
 	  public:
-		// Creates an empty texture.
+		// Creates an incomplete texture.
 		texture(graphics_context& context);
 		// Allocates an uninitialized texture.
 		texture(graphics_context& context, glm::ivec2 size, mipmaps mipmaps = mipmaps::disabled,
 				pixel_format format = pixel_format::rgba32);
 		// Constructs a texture with data uploaded from a bitmap.
-		texture(graphics_context& context, const sub_bitmap& bitmap, mipmaps mipmaps = mipmaps::disabled,
+		texture(graphics_context& context, sub_bitmap bitmap, mipmaps mipmaps = mipmaps::disabled,
 				std::optional<pixel_format> format = std::nullopt);
-		// Moves a texture, updating all references pointing to it.
-		texture(texture&& r) noexcept;
-		// Destroys the texture, emptying all references pointing to it.
-		~texture();
 
-		// Moves a texture, updating all references pointing to it.
-		texture& operator=(texture&& r) noexcept;
+		// Gets a view to the texture.
+		operator texture_view() const;
+		// Gets a view to the texture.
+		texture_view view() const;
 
 		// Gets a reference to the graphics context the texture is on.
 		graphics_context& context() const;
 
-		// Gets whether the texture is empty.
-		bool empty() const;
+		// Gets whether the texture is complete.
+		bool complete() const;
 		// Gets the size of the texture.
 		glm::ivec2 size() const;
 
-		// Reallocates the texture and releases the previously held storage as a new texture.
-		texture reallocate(glm::ivec2 size, mipmaps mipmaps = mipmaps::disabled, pixel_format format = pixel_format::rgba32);
+		// Allocates the texture and releases the previously held storage as a new texture.
+		texture allocate(glm::ivec2 size, mipmaps mipmaps = mipmaps::disabled, pixel_format format = pixel_format::rgba32);
 
 		// Sets the filters used by the texture sampler.
 		void set_filtering(min_filter min_filter, mag_filter mag_filter);
@@ -126,38 +120,38 @@ namespace tr {
 		void set_border_color(rgbaf color);
 
 		// Clears the texture.
-		void clear(const rgbaf& color);
+		void clear(rgbaf color);
 		// Clears a region of the texture.
-		void clear_region(const rectangle<int>& region, const rgbaf& color);
+		void clear_region(rectangle<int> region, rgbaf color);
 		// Copies a region from another texture.
-		void copy_region(glm::ivec2 tl, const texture& src, const rectangle<int>& region);
+		void copy_region(glm::ivec2 tl, texture_view src, rectangle<int> region);
 		// Sets a region of the texture.
-		void set_region(glm::ivec2 tl, const sub_bitmap& bitmap);
+		void set_region(glm::ivec2 tl, sub_bitmap bitmap);
 
 		// Gets the debug label of the texture.
 		std::string label() const;
 		// Sets the debug label of the texture.
 		void set_label(std::string_view label);
 
-	  protected:
-		// Reference to the graphics context the texture is on.
-		graphics_context& m_context;
+	  private:
+		// Texture deleter.
+		struct deleter {
+			// Reference to the graphics context the texture is on.
+			graphics_context& context;
+
+			// Deletes a texture.
+			void operator()(unsigned int texture) const;
+		};
+
 		// Handle to the OpenGL texture.
-		unsigned int m_handle;
+		mutable handle<unsigned int, 0, deleter> m_handle;
 		// The cached size of the texture.
 		glm::ivec2 m_size;
-		// List of active references to this texture.
-		mutable std::vector<ref<texture_ref>> m_references;
 
 		// Creates a released texture.
 		texture(graphics_context& context, unsigned int handle, glm::ivec2 size);
 
-		friend class texture_ref;
-		friend class shader_base;
-		friend class graphics_context;
-
-#ifdef TR_HAS_IMGUI
-		friend ImTextureID ImGui::GetTextureID(const texture& texture);
-#endif
+		// Creates a texture handle.
+		void create_handle() const;
 	};
 } // namespace tr
