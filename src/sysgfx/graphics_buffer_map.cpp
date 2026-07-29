@@ -22,7 +22,7 @@ tr::basic_graphics_buffer_map::operator std::span<std::byte>() const
 
 void tr::basic_graphics_buffer_map::deleter::operator()(unsigned int id) const
 {
-	const graphics_context::glapi& gl{context.make_current_and_return_glapi()};
+	const gl_api& gl{context.make_current_and_return_gl_api()};
 
 	gl.unmap_buffer(id);
 }

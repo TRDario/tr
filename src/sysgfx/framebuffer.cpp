@@ -14,7 +14,7 @@
 
 void tr::framebuffer::create_handle()
 {
-	const graphics_context::glapi& gl{context().make_current_and_return_glapi()};
+	const gl_api& gl{context().make_current_and_return_gl_api()};
 	gl.create_framebuffers(1, out_handle(m_handle));
 }
 
@@ -42,12 +42,12 @@ tr::render_target tr::framebuffer::render_target(glm::ivec2 size) const
 
 void tr::framebuffer::attach(attachment attachment, texture_view texture)
 {
-	const graphics_context::glapi& gl{context().make_current_and_return_glapi()};
+	const gl_api& gl{context().make_current_and_return_gl_api()};
 	gl.set_framebuffer_texture(m_handle.get(), to_underlying(attachment), texture.m_id, 0);
 }
 
 void tr::framebuffer::detach(attachment attachment)
 {
-	const graphics_context::glapi& gl{context().make_current_and_return_glapi()};
+	const gl_api& gl{context().make_current_and_return_gl_api()};
 	gl.set_framebuffer_texture(m_handle.get(), to_underlying(attachment), 0, 0);
 }

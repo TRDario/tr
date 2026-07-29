@@ -42,8 +42,8 @@ namespace tr {
 		texture_view(unsigned int id);
 
 		friend class framebuffer;
-		friend class graphics_context;
 		friend class texture;
+		friend class texture_unit;
 #ifdef TR_HAS_IMGUI
 		friend ImTextureID ImGui::GetTextureID(texture_view texture);
 #endif

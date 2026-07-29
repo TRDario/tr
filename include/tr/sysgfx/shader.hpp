@@ -21,17 +21,17 @@
 
 #pragma once
 #include "../utility/exception.hpp"
-#include "../utility/handle.hpp"
 #include "../utility/zstring_view.hpp"
+#include "texture_unit.hpp"
 
 #ifdef TR_ENABLE_GL_CHECKS
 #include "gl_checks.hpp"
-#include "graphics_context.hpp"
 #endif
 
 namespace tr {
 	class basic_shader_buffer;
 	class basic_uniform_buffer;
+	struct gl_api;
 	class graphics_context;
 	class texture_view;
 } // namespace tr
@@ -182,7 +182,7 @@ namespace tr {
 		// Handle to the OpenGL program.
 		handle<unsigned int, 0, deleter> m_program;
 		// Texture units allocated to this shader.
-		boost::unordered_flat_map<int, graphics_context::texture_unit> m_texture_units;
+		boost::unordered_flat_map<int, texture_unit> m_texture_units;
 
 		// Constructs a shader.
 		shader_base(graphics_context& context, zstring_view source, unsigned int type);
@@ -198,11 +198,11 @@ namespace tr {
 		boost::unordered_flat_map<unsigned int, glsl_variable> m_outputs;
 
 		// Finds the uniforms of the shader using introspection.
-		void find_uniforms(const graphics_context::glapi& gl);
+		void find_uniforms(const gl_api& gl);
 		// Finds the input variables of the shader using introspection.
-		void find_inputs(const graphics_context::glapi& gl);
+		void find_inputs(const gl_api& gl);
 		// Finds the output variables of the shader using introspection.
-		void find_outputs(const graphics_context::glapi& gl);
+		void find_outputs(const gl_api& gl);
 #endif
 	};
 

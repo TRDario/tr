@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                                                       //
-// Implements buffer.hpp.                                                                                                                //
+// Implements graphics_buffer.hpp.                                                                                                       //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -13,14 +13,14 @@
 tr::graphics_buffer::graphics_buffer(graphics_context& context)
 	: m_handle{{context}}
 {
-	const graphics_context::glapi& gl{m_handle.get_deleter().context.make_current_and_return_glapi()};
+	const gl_api& gl{m_handle.get_deleter().context.make_current_and_return_gl_api()};
 
 	gl.create_buffers(1, out_handle(m_handle));
 }
 
 void tr::graphics_buffer::deleter::operator()(unsigned int id) const
 {
-	const graphics_context::glapi& gl{context.make_current_and_return_glapi()};
+	const gl_api& gl{context.make_current_and_return_gl_api()};
 
 	gl.delete_buffers(1, &id);
 }
@@ -49,7 +49,7 @@ void tr::graphics_buffer::reallocate()
 
 std::string tr::graphics_buffer::label() const
 {
-	const graphics_context::glapi& gl{m_handle.get_deleter().context.make_current_and_return_glapi()};
+	const gl_api& gl{m_handle.get_deleter().context.make_current_and_return_gl_api()};
 
 	int label_length;
 	gl.get_object_label(GL_BUFFER, id(), 0, &label_length, nullptr);
@@ -65,7 +65,7 @@ std::string tr::graphics_buffer::label() const
 
 void tr::graphics_buffer::set_label(std::string_view label)
 {
-	const graphics_context::glapi& gl{m_handle.get_deleter().context.make_current_and_return_glapi()};
+	const gl_api& gl{m_handle.get_deleter().context.make_current_and_return_gl_api()};
 
 	gl.set_object_label(GL_BUFFER, id(), label.size(), label.data());
 }
