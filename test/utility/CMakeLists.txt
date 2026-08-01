@@ -17,7 +17,6 @@ add_executable(
 	matrix.cpp
 	mstream.cpp
 	norm_cast.cpp
-	optional.cpp
 	ranges.cpp
 	rectangle_edges.cpp
 	rectangle.cpp
