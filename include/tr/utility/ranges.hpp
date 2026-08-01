@@ -29,8 +29,7 @@
 //     - tr::find_first_not_of("abcdefg", "abc") -> iterator to 'd'                                                                      //
 //     - tr::find_last_not_of("abcdefg", "efg") -> iterator to 'd'                                                                       //
 //                                                                                                                                       //
-// tr::fold_left performs a left fold on the elements of a range. tr::sum is provided for the common case of summing up elements:        //
-//     - tr::fold_left(std::array{1, 2, 3, 4}, 0, std::plus{}) -> 10                                                                     //
+// tr::sum is provided as a range-based equivalent to std::accumulate:                                   //
 //     - tr::sum(std::array{1, 2, 3, 4}, 0) -> equivalent to the above                                                                   //
 //                                                                                                                                       //
 // A view adaptor for dereferencing the objects of a range is provided:                                                                  //
@@ -86,9 +85,6 @@ namespace tr {
 		requires(std::equality_comparable_with<std::ranges::range_value_t<SearchedRange>, std::ranges::range_value_t<BlacklistRange>>)
 	constexpr std::ranges::borrowed_iterator_t<SearchedRange> find_last_not_of(SearchedRange&& searched, BlacklistRange&& blacklist);
 
-	// Left-folds the elements of a range.
-	template <std::ranges::range Range, typename Value, std::invocable<Value, std::ranges::range_value_t<Range>> BinaryOp>
-	Value fold_left(Range&& range, Value initial_value, BinaryOp&& pred);
 	// Sums the elements of a range.
 	template <std::ranges::range Range, typename Value> Value sum(Range&& range, Value initial_value);
 

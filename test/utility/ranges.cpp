@@ -65,13 +65,11 @@ TEST(ranges_test, find)
 	EXPECT_EQ(last_not_of_it, vs.begin() + 12);
 }
 
-TEST(ranges_test, left_fold)
+TEST(ranges_test, sum)
 {
 	constexpr std::array<int, 5> vs{1, 2, 3, 4, 5};
 	const int sum{tr::sum(vs, 0)};
-	const int product{tr::fold_left(vs, 1, [](int product, int v) { return product * v; })};
 	EXPECT_EQ(sum, 15);
-	EXPECT_EQ(product, 120);
 }
 
 TEST(ranges_test, deref)

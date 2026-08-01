@@ -161,12 +161,6 @@ constexpr std::ranges::borrowed_iterator_t<SearchedRange> tr::find_last_not_of(S
 
 //
 
-template <std::ranges::range Range, typename Value, std::invocable<Value, std::ranges::range_value_t<Range>> BinaryOp>
-Value tr::fold_left(Range&& range, Value initial_value, BinaryOp&& pred)
-{
-	return std::accumulate(std::ranges::begin(range), std::ranges::end(range), initial_value, std::forward<BinaryOp>(pred));
-}
-
 template <std::ranges::range Range, typename Value> Value tr::sum(Range&& range, Value initial_value)
 {
 	return std::accumulate(std::ranges::begin(range), std::ranges::end(range), initial_value);
