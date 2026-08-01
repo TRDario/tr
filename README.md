@@ -1,6 +1,6 @@
 # tr
 
-C++20 game development framework based on SDL3, OpenGL 4.5, and OpenAL.
+C++23 game development framework based on SDL3, OpenGL 4.5, and OpenAL.
 
 As of now primarily geared towards 2D games and tools, but is in theory usable for 3D as well.
 
@@ -13,7 +13,7 @@ As of now primarily geared towards 2D games and tools, but is in theory usable f
 
 ## Build Instructions
 
-Requires a C++20-compatible compiler and standard library (though a fallback for std::format exists), as well as CMake 3.23 to build.
+Requires a C++23-compatible compiler and standard library, as well as CMake 3.23 to build.
 
 Tested on and guaranteed to build with Clang(-cl) on Linux and Windows. Probably works with MSVC and GCC too, but I haven't tested them.
 

@@ -2,7 +2,7 @@
 ##                                                                                                                                       ##
 ## Provides a utility for setting a target's properties in a standard manner.                                                            ##
 ##                                                                                                                                       ##
-## The target will be set to use C++20.                                                                                                  ##
+## The target will be set to use C++23.                                                                                                  ##
 ## The target will have a 'd' suffix in debug builds, for example 'foobar' -> foobard.exe.                                               ##
 ## The target will have a number of compiler flags set, mostly enabling warnings, but with some floating point optimizations enabled.    ##
 ## On Linux, the libstdc++ debug mode will be used in the debug configuration.                                                           ##
@@ -17,7 +17,7 @@
 # Sets a target's properties.
 function(tr_target_template TARGET)
 	set_target_properties (${TARGET} PROPERTIES DEBUG_POSTFIX "d")
-	target_compile_features(${TARGET} PUBLIC cxx_std_20)
+	target_compile_features(${TARGET} PUBLIC cxx_std_23)
 
 	if(TR_HAS_CLANG OR TR_HAS_GCC)
 		target_compile_options(${TARGET} PRIVATE
