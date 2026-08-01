@@ -25,7 +25,7 @@ namespace tr {
 tr::console_logger::console_logger(std::string&& name)
 	: m_name{std::move(name)}
 {
-	TR_ASSERT(!contains(registered_console_loggers(), m_name), "Tried to register duplicate console logger '{}'", m_name);
+	TR_ASSERT(!std::ranges::contains(registered_console_loggers(), m_name), "Tried to register duplicate console logger '{}'", m_name);
 
 	registered_console_loggers().emplace_back(m_name);
 }

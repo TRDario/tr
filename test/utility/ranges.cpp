@@ -42,13 +42,6 @@ TEST(ranges_test, range_bytes_round_trip)
 	EXPECT_EQ(vs[0], 10);
 }
 
-TEST(ranges_test, contains)
-{
-	const std::vector<int> vs{1, 2, 3, 4, 5};
-	EXPECT_TRUE(tr::contains(vs, 1));
-	EXPECT_FALSE(tr::contains(vs, 6));
-}
-
 TEST(ranges_test, find)
 {
 	const std::vector<int> vs{1, 1, 1, 1, 1, 2, 3, 4, 5, 1, 2, 3, 2, 4, 5, 4, 5, 4, 5};
@@ -88,9 +81,9 @@ TEST(ranges_test, unstable_erase)
 {
 	std::vector<int> vs{1, 2, 3, 4, 5};
 	tr::unstable_erase(vs, std::ranges::find(vs, 3));
-	EXPECT_TRUE(tr::contains(vs, 1));
-	EXPECT_TRUE(tr::contains(vs, 2));
-	EXPECT_FALSE(tr::contains(vs, 3));
-	EXPECT_TRUE(tr::contains(vs, 4));
-	EXPECT_TRUE(tr::contains(vs, 5));
+	EXPECT_TRUE(std::ranges::contains(vs, 1));
+	EXPECT_TRUE(std::ranges::contains(vs, 2));
+	EXPECT_FALSE(std::ranges::contains(vs, 3));
+	EXPECT_TRUE(std::ranges::contains(vs, 4));
+	EXPECT_TRUE(std::ranges::contains(vs, 5));
 }
