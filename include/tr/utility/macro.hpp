@@ -64,7 +64,7 @@
 #define TR_UNREACHABLE TR_IMPL_UNREACHABLE(TR_FILENAME, __LINE__)
 #elif defined(__GNUC__) || defined(__clang__)
 #define TR_UNREACHABLE __builtin_unreachable()
-#elif defined(_MSC_VER)
+#elifdef(_MSC_VER)
 #define TR_UNREACHABLE __assume(false)
 #else
 #define TR_UNREACHABLE void(0)
@@ -72,9 +72,9 @@
 
 #ifdef __clang__
 #define TR_ASSUME(condition) __builtin_assume(condition)
-#elif defined(_MSC_VER)
+#elifdef(_MSC_VER)
 #define TR_ASSUME(condition) __assume(condition)
-#elif defined(__GNUC__)
+#elifdef(__GNUC__)
 #define TR_ASSUME(condition) ((condition) ? (void(0)) : (__builtin_unreachable()))
 #else
 #define TR_ASSUME(condition) void(0)
