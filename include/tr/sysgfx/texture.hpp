@@ -5,26 +5,26 @@
 // Textures are collections of pixel data representing 2D images stored on the GPU and available for use in rendering. Textures can be   //
 // default-constructed (in which case they will be incomplete), constructed uninitialized, or initialized with bitmap data that will be  //
 // copied into the texture:                                                                                                              //
-//     - tr::texture tex{}                                                                                                               //
-//       -> creates an empty texture                                                                                                     //
-//     - tr::texture tex{{512, 512}, tr::mipmaps::enabled, tr::pixel_format::rgb24}                                                      //
+//     - tr::texture tex{context}                                                                                                        //
+//       -> creates an incomplete texture                                                                                                //
+//     - tr::texture tex{context, {512, 512}, tr::mipmaps::enabled, tr::pixel_format::rgb24}                                             //
 //       -> creates an uninitialized 512x512 mipmapped RGB24 texture                                                                     //
-//     - tr::texture tex{bmp}                                                                                                            //
+//     - tr::texture tex{context, bmp}                                                                                                   //
 //       -> creates a texture by copying the data from 'bmp' and using the same format                                                   //
-//     - tr::texture tex{bmp, tr::mipmaps::disabled, tr::pixel_format::rgb24}                                                            //
+//     - tr::texture tex{context, bmp, tr::mipmaps::disabled, tr::pixel_format::rgb24}                                                   //
 //       -> creates a texture by copying the data from 'bmp' converted to RGB24                                                          //
 // Moved-from textures are left in an incomplete, but valid state.                                                                       //
 //                                                                                                                                       //
-// Empty textures may be allocated using the .allocate() method:                                                                         //
-//     - tex.allocate({1024, 1024}) -> allocates tex as an uninitialized 1024x1024 texture                                               //
+// Textures may be (re)allocated using the .allocate() method, which returns the old texture data as a new object:                       //
+//     - tex.allocate({1024, 1024}) -> allocates tex as an uninitialized 1024x1024 texture and returns the previous data                 //
 //                                                                                                                                       //
 // A view to a texture may be gotten through the conversion operator or .view(). It's important to point out that views point to a       //
 // specific allocated texture, rather than a texture container object, so be careful when binding to shaders or framebuffers:            //
 //     - tex.view() -> view to the texture contained in 'tex'                                                                            //
 //                                                                                                                                       //
 // Textures may be queried for whether they are complete or for their size:                                                              //
-//     - tr::texture tex{}; tex.cmplete() -> false                                                                                       //
-//     - tr::texture tex{{512, 512}}; tex.size() -> {512, 512}                                                                           //
+//     - tr::texture tex{context}; tex.complete() -> false                                                                               //
+//     - tr::texture tex{context, {512, 512}}; tex.size() -> {512, 512}                                                                  //
 //                                                                                                                                       //
 // The filtering, wrapping, and border color attribtes of textures may be set:                                                           //
 //     - tex.set_filtering(tr::min_filter::linear, tr::mag_filter::linear) -> 'tex' uses linear filtering                                //

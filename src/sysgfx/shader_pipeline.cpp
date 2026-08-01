@@ -12,16 +12,32 @@
 
 ///////////////////////////////////////////////////////////// SHADER PIPELINE /////////////////////////////////////////////////////////////
 
-tr::shader_pipeline::shader_pipeline(graphics_context& context)
+tr::shader_pipeline::shader_pipeline(graphics_context& context, const vertex_shader& vshader, const fragment_shader& fshader)
 	: m_ppo{{context}}
 {
 	const gl_api& gl{context.make_current_and_return_gl_api()};
 
 	gl.create_program_pipelines(1, out_handle(m_ppo));
+	set_shaders(vshader, fshader);
 }
 
-tr::shader_pipeline::shader_pipeline(graphics_context& context, const vertex_shader& vshader, const fragment_shader& fshader)
-	: shader_pipeline{context}
+void tr::shader_pipeline::deleter::operator()(unsigned int id) const
+{
+	const gl_api& gl{context.make_current_and_return_gl_api()};
+
+	gl.delete_program_pipelines(1, &id);
+}
+
+//
+
+tr::graphics_context& tr::shader_pipeline::context() const
+{
+	return m_ppo.get_deleter().context;
+}
+
+//
+
+void tr::shader_pipeline::set_shaders(const vertex_shader& vshader, const fragment_shader& fshader)
 {
 #ifdef TR_ENABLE_GL_CHECKS
 	TR_ASSERT(vshader.m_outputs.size() == fshader.m_inputs.size(),
@@ -40,24 +56,10 @@ tr::shader_pipeline::shader_pipeline(graphics_context& context, const vertex_sha
 	}
 #endif
 
-	const gl_api& gl{context.make_current_and_return_gl_api()};
+	const gl_api& gl{context().make_current_and_return_gl_api()};
 
 	gl.use_program_stages(m_ppo.get(), GL_VERTEX_SHADER_BIT, vshader.m_program.get());
 	gl.use_program_stages(m_ppo.get(), GL_FRAGMENT_SHADER_BIT, fshader.m_program.get());
-}
-
-void tr::shader_pipeline::deleter::operator()(unsigned int id) const
-{
-	const gl_api& gl{context.make_current_and_return_gl_api()};
-
-	gl.delete_program_pipelines(1, &id);
-}
-
-//
-
-tr::graphics_context& tr::shader_pipeline::context() const
-{
-	return m_ppo.get_deleter().context;
 }
 
 //

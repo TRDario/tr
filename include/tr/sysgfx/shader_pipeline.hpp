@@ -8,6 +8,9 @@
 // take ownership of the shaders passed to it:                                                                                           //
 //     - tr::shader_pipeline{context, vshader, fshader} -> creates a pipeline with vertex and fragment shader stages                     //
 //                                                                                                                                       //
+// Pipeline shaders can be reset using .set_shaders():                                                                                   //
+//     - pipeline.set_shaders(vshader2, fshader2) -> pipeline now has vshader2, fshader2 stages                                          //
+//                                                                                                                                       //
 // tr::owning_shader_pipeline is an object that *does* own the shader stages within it. After construction, these shaders can be         //
 // accessed from the pipeline:                                                                                                           //
 //     - tr::owning_shader_pipeline pipeline{context, tr::vertex_shader{context, vshader_src}, tr::fragment_shader{context, fshader_src}}//
@@ -34,6 +37,9 @@ namespace tr {
 		// Gets a reference to the graphics context the pipeline is on.
 		graphics_context& context() const;
 
+		// Resets the shaders of the pipeline.
+		void set_shaders(const vertex_shader& vshader, const fragment_shader& fshader);
+
 		// Sets the debug label of the pipeline.
 		void set_label(std::string_view label);
 		// Gets the debug label of the pipeline.
@@ -51,9 +57,6 @@ namespace tr {
 
 		// Handle to the OpenGL shader pipeline.
 		handle<unsigned int, 0, deleter> m_ppo;
-
-		// Creates a shader pipeline.
-		shader_pipeline(graphics_context& context);
 
 		friend class graphics_context;
 	};

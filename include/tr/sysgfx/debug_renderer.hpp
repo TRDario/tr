@@ -188,7 +188,7 @@ namespace tr {
 		texture m_font;
 		// The vertex buffer holding a glyph mesh.
 		static_vertex_buffer<glm::u8vec2> m_mesh;
-		// The vertex buffer holding the glyph information
+		// The vertex buffer holding the glyph information.
 		dyn_vertex_buffer<glyph> m_glyph_buffer;
 		// List of glyphs to draw.
 		std::vector<glyph> m_glyphs;

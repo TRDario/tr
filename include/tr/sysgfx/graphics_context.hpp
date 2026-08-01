@@ -159,7 +159,7 @@ namespace tr {
 		// Gets a render target spanning the entire backbuffer.
 		render_target backbuffer() const;
 		// Gets a commonly used 2D vertex format.
-		const tr::vertex_format& vertex2_format();
+		const vertex_format& vertex2_format();
 
 		// Allocates a fresh renderer ID.
 		renderer_id allocate_renderer_id();
@@ -233,7 +233,7 @@ namespace tr {
 		// Tracks which texture units are allocated.
 		std::bitset<80> m_allocated_texture_units{};
 		// Commonly used 2D vertex format.
-		std::optional<tr::vertex_format> m_vertex2_format;
+		std::optional<vertex_format> m_vertex2_format;
 #ifdef TR_ENABLE_GL_CHECKS
 		// Bindings of the last bound vertex format.
 		std::span<const vertex_binding> m_vertex_format_bindings;
