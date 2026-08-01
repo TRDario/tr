@@ -96,12 +96,12 @@ namespace tr {
 		// Gets the position of the listener.
 		glm::vec3 listener_position() const;
 		// Sets the position of the listener.
-		void set_listener_position(const glm::vec3& position);
+		void set_listener_position(glm::vec3 position);
 
 		// Gets the velocity of the listener.
 		glm::vec3 listener_velocity() const;
 		// Sets the velocity of the listener.
-		void set_listener_velocity(const glm::vec3& velocity);
+		void set_listener_velocity(glm::vec3 velocity);
 
 		// Gets the orientation of the listener.
 		orientation listener_orientation() const;
@@ -148,12 +148,9 @@ namespace tr {
 
 		// Audio command template.
 		template <typename First, typename... Rest> class command {
-		  private:
-			template <typename T> using add_cref_if_large_t = std::conditional_t<(sizeof(T) > 8), const T&, T>;
-
 		  public:
 			// Method signature used by the command.
-			using method_type = void (audio_source::*)(add_cref_if_large_t<First>, add_cref_if_large_t<Rest>...);
+			using method_type = void (audio_source::*)(First, Rest...);
 			// command<float>::value_type = float, command<float, float>::value_type = std::tuple<float, float>.
 			using value_type = std::conditional_t<sizeof...(Rest), std::tuple<First, Rest...>, First>;
 

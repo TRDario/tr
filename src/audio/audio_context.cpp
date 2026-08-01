@@ -159,7 +159,7 @@ glm::vec3 tr::audio_context::listener_position() const
 	return position;
 }
 
-void tr::audio_context::set_listener_position(const glm::vec3& position)
+void tr::audio_context::set_listener_position(glm::vec3 position)
 {
 	m_alapi.set_listener_property_fv(m_ptr.get(), AL_POSITION, glm::value_ptr(position));
 }
@@ -173,7 +173,7 @@ glm::vec3 tr::audio_context::listener_velocity() const
 	return velocity;
 }
 
-void tr::audio_context::set_listener_velocity(const glm::vec3& velocity)
+void tr::audio_context::set_listener_velocity(glm::vec3 velocity)
 {
 	m_alapi.set_listener_property_fv(m_ptr.get(), AL_VELOCITY, glm::value_ptr(velocity));
 }

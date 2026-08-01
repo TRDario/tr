@@ -53,7 +53,7 @@ namespace tr {
 		// Default-constructs an iterator.
 		iterator() = default;
 		// Constructs an iterator to a bitmap pixel.
-		iterator(const sub_bitmap& bitmap, glm::ivec2 pos);
+		iterator(sub_bitmap bitmap, glm::ivec2 pos);
 
 		// Compares iterators.
 		std::partial_ordering operator<=>(const iterator&) const;

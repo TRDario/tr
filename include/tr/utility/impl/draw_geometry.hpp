@@ -141,8 +141,7 @@ constexpr Iterator tr::fill_simple_polygon_indices(Iterator out, std::span<const
 
 ///////////////////////////////////////////////////////////////// VERTICES ////////////////////////////////////////////////////////////////
 
-template <std::output_iterator<glm::vec2> Iterator>
-constexpr Iterator tr::fill_rectangle_vertices(Iterator out, const rectangle<float>& rectangle)
+template <std::output_iterator<glm::vec2> Iterator> constexpr Iterator tr::fill_rectangle_vertices(Iterator out, rectangle<float> rectangle)
 {
 	*out++ = rectangle.tl;
 	*out++ = glm::vec2{rectangle.tl.x, rectangle.tl.y + rectangle.size.y};
@@ -151,8 +150,7 @@ constexpr Iterator tr::fill_rectangle_vertices(Iterator out, const rectangle<flo
 	return out;
 }
 
-template <tr::sized_output_range<glm::vec2> Range>
-constexpr void tr::fill_rectangle_vertices(Range&& out, const rectangle<float>& rectangle)
+template <tr::sized_output_range<glm::vec2> Range> constexpr void tr::fill_rectangle_vertices(Range&& out, rectangle<float> rectangle)
 {
 	TR_ASSERT(std::size(out) == 4, "Tried to fill a range of size {} with rectangle vertices", std::size(out));
 
@@ -160,7 +158,7 @@ constexpr void tr::fill_rectangle_vertices(Range&& out, const rectangle<float>& 
 }
 
 template <std::output_iterator<glm::vec2> Iterator>
-constexpr Iterator tr::fill_rectangle_vertices(Iterator out, const rectangle<float>& rectangle, const glm::mat4& mat)
+constexpr Iterator tr::fill_rectangle_vertices(Iterator out, rectangle<float> rectangle, const glm::mat4& mat)
 {
 	*out++ = mat * rectangle.tl;
 	*out++ = mat * glm::vec2{rectangle.tl.x, rectangle.tl.y + rectangle.size.y};
@@ -170,7 +168,7 @@ constexpr Iterator tr::fill_rectangle_vertices(Iterator out, const rectangle<flo
 }
 
 template <tr::sized_output_range<glm::vec2> Range>
-constexpr void tr::fill_rectangle_vertices(Range&& out, const rectangle<float>& rectangle, const glm::mat4& mat)
+constexpr void tr::fill_rectangle_vertices(Range&& out, rectangle<float> rectangle, const glm::mat4& mat)
 {
 	TR_ASSERT(std::size(out) == 4, "Tried to fill a range of size {} with rectangle vertices", std::size(out));
 
@@ -199,14 +197,14 @@ void tr::fill_rectangle_vertices(Range&& out, glm::vec2 pos, glm::vec2 anchor, g
 //
 
 template <std::output_iterator<glm::vec2> Iterator>
-constexpr Iterator tr::fill_rectangle_outline_vertices(Iterator out, const rectangle<float>& rectangle, float thickness)
+constexpr Iterator tr::fill_rectangle_outline_vertices(Iterator out, rectangle<float> rectangle, float thickness)
 {
 	out = fill_rectangle_vertices(out, {rectangle.tl - thickness / 2, rectangle.size + thickness});
 	return fill_rectangle_vertices(out, {rectangle.tl + thickness / 2, rectangle.size - thickness});
 }
 
 template <tr::sized_output_range<glm::vec2> Range>
-constexpr void tr::fill_rectangle_outline_vertices(Range&& out, const rectangle<float>& rectangle, float thickness)
+constexpr void tr::fill_rectangle_outline_vertices(Range&& out, rectangle<float> rectangle, float thickness)
 {
 	TR_ASSERT(std::size(out) == 8, "Tried to fill a range of size {} with rectangle outline vertices", std::size(out));
 
@@ -214,15 +212,14 @@ constexpr void tr::fill_rectangle_outline_vertices(Range&& out, const rectangle<
 }
 
 template <std::output_iterator<glm::vec2> Iterator>
-constexpr Iterator tr::fill_rectangle_outline_vertices(Iterator out, const rectangle<float>& rectangle, float thickness,
-													   const glm::mat4& mat)
+constexpr Iterator tr::fill_rectangle_outline_vertices(Iterator out, rectangle<float> rectangle, float thickness, const glm::mat4& mat)
 {
 	out = fill_rectangle_vertices(out, {rectangle.tl - thickness / 2, rectangle.size + thickness}, mat);
 	return fill_rectangle_vertices(out, {rectangle.tl + thickness / 2, rectangle.size - thickness}, mat);
 }
 
 template <tr::sized_output_range<glm::vec2> Range>
-constexpr void tr::fill_rectangle_outline_vertices(Range&& out, const rectangle<float>& rectangle, float thickness, const glm::mat4& mat)
+constexpr void tr::fill_rectangle_outline_vertices(Range&& out, rectangle<float> rectangle, float thickness, const glm::mat4& mat)
 {
 	TR_ASSERT(std::size(out) == 8, "Tried to fill a range of size {} with rectangle outline vertices", std::size(out));
 

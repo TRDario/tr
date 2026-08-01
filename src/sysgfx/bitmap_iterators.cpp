@@ -57,7 +57,7 @@ tr::sub_bitmap::reference::operator tr::rgba8() const
 	return pixel_color(m_ptr, m_format);
 }
 
-tr::sub_bitmap::iterator::iterator(const sub_bitmap& bitmap, glm::ivec2 pos)
+tr::sub_bitmap::iterator::iterator(sub_bitmap bitmap, glm::ivec2 pos)
 	: m_pixel{bitmap.data() + bitmap.pitch() * pos.y + pixel_bytes(bitmap.format()) * pos.x, bitmap.format()}
 	, m_bitmap_size{bitmap.size()}
 	, m_bitmap_pitch{bitmap.pitch()}

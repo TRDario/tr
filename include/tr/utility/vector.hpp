@@ -30,7 +30,7 @@ namespace tr {
 	template <int Dimensions, typename ElementL, typename ElementR>
 	constexpr std::common_type_t<ElementL, ElementR> distance2(glm::vec<Dimensions, ElementL> a, glm::vec<Dimensions, ElementR> b);
 	// Gets the inverse of a vector.
-	template <int Dimensions, arithmetic Element> constexpr glm::vec<Dimensions, float> inverse(const glm::vec<Dimensions, Element>& vec);
+	template <int Dimensions, arithmetic Element> constexpr glm::vec<Dimensions, float> inverse(glm::vec<Dimensions, Element> vec);
 	// Calculates the 2D cross product of two vectors.
 	template <typename ElementL, typename ElementR>
 	constexpr std::common_type_t<ElementL, ElementR> cross(glm::tvec2<ElementL> a, glm::tvec2<ElementR> b);

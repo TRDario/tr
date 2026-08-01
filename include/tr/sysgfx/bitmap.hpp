@@ -142,15 +142,15 @@ namespace tr {
 		class iterator;
 
 		// Constructs a sub-bitmap.
-		sub_bitmap(const bitmap& bitmap, const rectangle<int>& region);
+		sub_bitmap(const bitmap& bitmap, rectangle<int> region);
 		// Constructs a sub-bitmap.
-		sub_bitmap(const bitmap_view& view, const rectangle<int>& region);
+		sub_bitmap(const bitmap_view& view, rectangle<int> region);
 
 		// Gets the size of the sub-bitmap.
 		glm::ivec2 size() const;
 
 		// Creates a sub-bitmap of the sub-bitmap.
-		sub_bitmap sub(const rectangle<int>& region);
+		sub_bitmap sub(rectangle<int> region);
 
 		// Gets immutable access to a pixel of the bitmap.
 		reference operator[](int x, int y) const;
@@ -194,7 +194,7 @@ namespace tr {
 		// Creates a bitmap view over contiguous pixel data.
 		bitmap_view(std::span<const std::byte> raw_data, glm::ivec2 size, pixel_format format);
 		// Creates a bitmap view over a range of pixel data.
-		template <std::ranges::contiguous_range T> bitmap_view(T&& range, glm::ivec2 size, pixel_format format);
+		template <std::ranges::contiguous_range Range> bitmap_view(Range&& range, glm::ivec2 size, pixel_format format);
 		// Creates a bitmap view over pixel data.
 		bitmap_view(const std::byte* raw_data_start, int pitch, glm::ivec2 size, pixel_format format);
 
@@ -218,7 +218,7 @@ namespace tr {
 		// Creates a sub-bitmap spanning the entire bitmap view.
 		operator sub_bitmap() const;
 		// Creates a sub-bitmap of the bitmap.
-		sub_bitmap sub(const rectangle<int>& region) const;
+		sub_bitmap sub(rectangle<int> region) const;
 
 		// Gets the raw data of the bitmap.
 		const std::byte* data() const;
@@ -262,7 +262,7 @@ namespace tr {
 		// Clones a bitmap view.
 		explicit bitmap(const bitmap_view& view, pixel_format format = pixel_format::rgba32);
 		// Clones a sub-bitmap.
-		explicit bitmap(const sub_bitmap& source, pixel_format format = pixel_format::rgba32);
+		explicit bitmap(sub_bitmap source, pixel_format format = pixel_format::rgba32);
 		bitmap(bitmap&& bitmap) noexcept = default;
 
 		bitmap& operator=(bitmap&& r) noexcept = default;
@@ -293,14 +293,14 @@ namespace tr {
 		const_iterator cend() const;
 
 		// Blits a sub-bitmap to the bitmap.
-		void blit(glm::ivec2 tl, const sub_bitmap& source);
+		void blit(glm::ivec2 tl, sub_bitmap source);
 		// Fills a region of the bitmap with a solid color.
-		void fill(const rectangle<int>& region, rgba8 color);
+		void fill(rectangle<int> region, rgba8 color);
 
 		// Creates a sub-bitmap spanning the entire bitmap.
 		operator sub_bitmap() const;
 		// Creates a sub-bitmap of the bitmap.
-		sub_bitmap sub(const rectangle<int>& region) const;
+		sub_bitmap sub(rectangle<int> region) const;
 
 		// Gets the raw data of the bitmap.
 		std::byte* data();

@@ -178,23 +178,23 @@ namespace tr {
 		// Gets the position of the source.
 		glm::vec3 position() const;
 		// Sets the position of the source.
-		void set_position(const glm::vec3& position);
+		void set_position(glm::vec3 position);
 		// Sets the position of the source over time.
-		void set_position(const glm::vec3& position, fsecs time);
+		void set_position(glm::vec3 position, fsecs time);
 
 		// Gets the velocity of the source.
 		glm::vec3 velocity() const;
 		// Sets the velocity of the source.
-		void set_velocity(const glm::vec3& velocity);
+		void set_velocity(glm::vec3 velocity);
 		// Sets the velocity of the source over time.
-		void set_velocity(const glm::vec3& velocity, fsecs time);
+		void set_velocity(glm::vec3 velocity, fsecs time);
 
 		// Gets the direction of the source cone.
 		glm::vec3 direction() const;
 		// Sets the direction of the source cone.
-		void set_direction(const glm::vec3& direction);
+		void set_direction(glm::vec3 direction);
 		// Sets the direction of the source cone over time.
-		void set_direction(const glm::vec3& direction, fsecs time);
+		void set_direction(glm::vec3 direction, fsecs time);
 
 		// Gets the origin of the source's position.
 		origin origin() const;

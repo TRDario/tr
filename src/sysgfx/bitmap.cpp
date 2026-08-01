@@ -76,13 +76,13 @@ std::string_view tr::bitmap_save_error::details() const
 
 //////////////////////////////////////////////////////////////// SUB-BITMAP ///////////////////////////////////////////////////////////////
 
-tr::sub_bitmap::sub_bitmap(const bitmap& bitmap, const rectangle<int>& region)
+tr::sub_bitmap::sub_bitmap(const bitmap& bitmap, rectangle<int> region)
 	: m_ptr{bitmap.m_ptr.get()}
 	, m_region{region}
 {
 }
 
-tr::sub_bitmap::sub_bitmap(const bitmap_view& bitmap, const rectangle<int>& region)
+tr::sub_bitmap::sub_bitmap(const bitmap_view& bitmap, rectangle<int> region)
 	: m_ptr{bitmap.m_ptr.get()}
 	, m_region{region}
 {
@@ -93,7 +93,7 @@ glm::ivec2 tr::sub_bitmap::size() const
 	return m_region.size;
 }
 
-tr::sub_bitmap tr::sub_bitmap::sub(const rectangle<int>& region)
+tr::sub_bitmap tr::sub_bitmap::sub(rectangle<int> region)
 {
 	TR_ASSERT(m_region.contains(region.tl + region.size),
 			  "Tried to create out-of-bounds sub-bitmap from ({}, {}) to ({}, {}) in a sub-bitmap of size {}x{}.", region.tl.x, region.tl.y,
@@ -214,7 +214,7 @@ tr::bitmap_view::operator tr::sub_bitmap() const
 	return sub({{}, size()});
 }
 
-tr::sub_bitmap tr::bitmap_view::sub(const rectangle<int>& region) const
+tr::sub_bitmap tr::bitmap_view::sub(rectangle<int> region) const
 {
 	return sub_bitmap{*this, region};
 }
@@ -279,7 +279,7 @@ tr::bitmap::bitmap(const bitmap_view& view, pixel_format format)
 {
 }
 
-tr::bitmap::bitmap(const sub_bitmap& source, pixel_format format)
+tr::bitmap::bitmap(sub_bitmap source, pixel_format format)
 	: bitmap{source.size(), format}
 {
 	blit({}, source);
@@ -350,7 +350,7 @@ tr::bitmap::const_iterator tr::bitmap::cend() const
 	return sub_bitmap(*this).end();
 }
 
-void tr::bitmap::blit(glm::ivec2 tl, const sub_bitmap& source)
+void tr::bitmap::blit(glm::ivec2 tl, sub_bitmap source)
 {
 	TR_ASSERT(m_ptr != nullptr, "Tried to blit to a moved-from bitmap.");
 	TR_ASSERT(rectangle<int>{size()}.contains(tl + source.size()),
@@ -362,7 +362,7 @@ void tr::bitmap::blit(glm::ivec2 tl, const sub_bitmap& source)
 	SDL_BlitSurface(source.m_ptr, &sdl_src, m_ptr.get(), &sdl_dest);
 }
 
-void tr::bitmap::fill(const rectangle<int>& region, rgba8 color)
+void tr::bitmap::fill(rectangle<int> region, rgba8 color)
 {
 	TR_ASSERT(rectangle<int>{size()}.contains(region.tl + region.size),
 			  "Tried to fill out-of-bounds region from ({}, {}) to ({}, {}) in a bitmap of size {}x{}.", region.tl.x, region.tl.y,
@@ -380,7 +380,7 @@ tr::bitmap::operator tr::sub_bitmap() const
 	return sub({{}, size()});
 }
 
-tr::sub_bitmap tr::bitmap::sub(const rectangle<int>& region) const
+tr::sub_bitmap tr::bitmap::sub(rectangle<int> region) const
 {
 	return sub_bitmap{*this, region};
 }

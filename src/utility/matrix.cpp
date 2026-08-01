@@ -8,7 +8,7 @@
 
 ///////////////////////////////////////////////////////////////// MATRICES ////////////////////////////////////////////////////////////////
 
-glm::mat4 tr::ortho(const rectangle<float>& region)
+glm::mat4 tr::ortho(rectangle<float> region)
 {
 	return glm::ortho(region.tl.x, region.tl.x + region.size.x, region.tl.y + region.size.y, region.tl.y);
 }
@@ -35,22 +35,22 @@ glm::mat4 tr::rotate_around(const glm::mat4& matrix, glm::vec3 center, angle rot
 
 //
 
-glm::vec2 tr::matrix_operators::operator*(const glm::vec2& v, const glm::mat4& m)
+glm::vec2 tr::matrix_operators::operator*(glm::vec2 v, const glm::mat4& m)
 {
 	return glm::vec4{v, 0, 1} * m;
 }
 
-glm::vec3 tr::matrix_operators::operator*(const glm::vec3& v, const glm::mat4& m)
+glm::vec3 tr::matrix_operators::operator*(glm::vec3 v, const glm::mat4& m)
 {
 	return glm::vec4{v, 1} * m;
 }
 
-glm::vec2 tr::matrix_operators::operator*(const glm::mat4& m, const glm::vec2& v)
+glm::vec2 tr::matrix_operators::operator*(const glm::mat4& m, glm::vec2 v)
 {
 	return m * glm::vec4{v, 0, 1};
 }
 
-glm::vec3 tr::matrix_operators::operator*(const glm::mat4& m, const glm::vec3& v)
+glm::vec3 tr::matrix_operators::operator*(const glm::mat4& m, glm::vec3 v)
 {
 	return m * glm::vec4{v, 1};
 }

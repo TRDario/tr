@@ -98,7 +98,7 @@ namespace tr {
 		// Adds an entry to the atlas.
 		template <typename... Args>
 			requires(std::constructible_from<Value, rectangle<u16>, Args...>)
-		void add(Key key, const sub_bitmap& bitmap, Args&&... args);
+		void add(Key key, sub_bitmap bitmap, Args&&... args);
 
 		// Removes all entries from the atlas.
 		void clear();

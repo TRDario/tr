@@ -355,7 +355,7 @@ void tr::graphics_context::set_index_buffer(const dyn_index_buffer& buffer)
 
 //
 
-void tr::graphics_context::clear_backbuffer(const tr::rgbaf& color)
+void tr::graphics_context::clear_backbuffer(tr::rgbaf color)
 {
 	const gl_api& gl{make_current_and_return_gl_api()};
 
@@ -364,7 +364,7 @@ void tr::graphics_context::clear_backbuffer(const tr::rgbaf& color)
 	gl.clear(GL_COLOR_BUFFER_BIT);
 }
 
-void tr::graphics_context::clear_backbuffer(const tr::rgbaf& color, double depth, int stencil)
+void tr::graphics_context::clear_backbuffer(tr::rgbaf color, double depth, int stencil)
 {
 	const gl_api& gl{make_current_and_return_gl_api()};
 
@@ -375,7 +375,7 @@ void tr::graphics_context::clear_backbuffer(const tr::rgbaf& color, double depth
 	gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 }
 
-void tr::graphics_context::clear_backbuffer_region(const rectangle<int>& region, const tr::rgbaf& color)
+void tr::graphics_context::clear_backbuffer_region(rectangle<int> region, tr::rgbaf color)
 {
 	const gl_api& gl{make_current_and_return_gl_api()};
 
@@ -384,7 +384,7 @@ void tr::graphics_context::clear_backbuffer_region(const rectangle<int>& region,
 	gl.clear(GL_COLOR_BUFFER_BIT);
 }
 
-void tr::graphics_context::clear_backbuffer_region(const rectangle<int>& region, const tr::rgbaf& color, double depth, int stencil)
+void tr::graphics_context::clear_backbuffer_region(rectangle<int> region, tr::rgbaf color, double depth, int stencil)
 {
 	const gl_api& gl{make_current_and_return_gl_api()};
 

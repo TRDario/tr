@@ -28,14 +28,14 @@ namespace tr {
 	class render_target {
 	  public:
 		// Gets the size of the rendering target.
-		const glm::ivec2& size() const;
+		glm::ivec2 size() const;
 
 		// Creates a new render target with a cropped viewport and full scissor box.
-		render_target cropped(const rectangle<int>& viewport) const;
+		render_target cropped(rectangle<int> viewport) const;
 		// Creates a new render target with the same viewport and a different scissor box.
-		render_target scissored(const rectangle<int>& scissor_box) const;
+		render_target scissored(rectangle<int> scissor_box) const;
 		// Equivalent to cropped(viewport).scissored(scissor_box).
-		render_target subtarget(const rectangle<int>& viewport, const rectangle<int>& scissor_box) const;
+		render_target subtarget(rectangle<int> viewport, rectangle<int> scissor_box) const;
 
 	  private:
 		// The OpenGL ID of the render target's FBO.
@@ -50,8 +50,7 @@ namespace tr {
 		// Creates a render target spanning an entire FBO.
 		render_target(unsigned int framebuffer, glm::ivec2 framebuffer_size);
 		// Creates a render target spanning a region of an FBO.
-		render_target(unsigned int framebuffer, glm::ivec2 framebuffer_size, const rectangle<int>& viewport,
-					  const rectangle<int>& scissor_box);
+		render_target(unsigned int framebuffer, glm::ivec2 framebuffer_size, rectangle<int> viewport, rectangle<int> scissor_box);
 
 		friend class framebuffer;
 		friend class graphics_context;

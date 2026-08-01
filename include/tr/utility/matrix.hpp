@@ -34,7 +34,7 @@ namespace tr {
 	inline constexpr glm::vec3 z_axis{0.0f, 0.0f, 1.0f};
 
 	// Produces an orthographic transform for a rectangular region.
-	glm::mat4 ortho(const rectangle<float>& region);
+	glm::mat4 ortho(rectangle<float> region);
 	// Applies a 2D scaling around a point to a matrix.
 	glm::mat4 scale_around(const glm::mat4& matrix, glm::vec2 center, glm::vec2 scale);
 	// Applies a 3D scaling around a point to a matrix.
@@ -48,13 +48,13 @@ namespace tr {
 		// Matrix multiplication operators.
 		inline namespace matrix_operators {
 			// Performs matrix multiplication on a 2D vector.
-			glm::vec2 operator*(const glm::vec2& v, const glm::mat4& m);
+			glm::vec2 operator*(glm::vec2 v, const glm::mat4& m);
 			// Performs matrix multiplication on a 3D vector.
-			glm::vec3 operator*(const glm::vec3& v, const glm::mat4& m);
+			glm::vec3 operator*(glm::vec3 v, const glm::mat4& m);
 			// Performs matrix multiplication on a 2D vector.
-			glm::vec2 operator*(const glm::mat4& m, const glm::vec2& v);
+			glm::vec2 operator*(const glm::mat4& m, glm::vec2 v);
 			// Performs matrix multiplication on a 3D vector.
-			glm::vec3 operator*(const glm::mat4& m, const glm::vec3& v);
+			glm::vec3 operator*(const glm::mat4& m, glm::vec3 v);
 		} // namespace matrix_operators
 	} // namespace literals
 } // namespace tr

@@ -36,8 +36,7 @@ constexpr std::common_type_t<ElementL, ElementR> tr::distance2(glm::vec<Dimensio
 				   glm::vec<Dimensions, std::common_type_t<ElementL, ElementR>>{a});
 }
 
-template <int Dimensions, tr::arithmetic Element>
-constexpr glm::vec<Dimensions, float> tr::inverse(const glm::vec<Dimensions, Element>& vec)
+template <int Dimensions, tr::arithmetic Element> constexpr glm::vec<Dimensions, float> tr::inverse(glm::vec<Dimensions, Element> vec)
 {
 	glm::vec<Dimensions, float> result;
 	for (int i = 0; i < Dimensions; ++i) {

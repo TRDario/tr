@@ -411,13 +411,13 @@ glm::vec3 tr::audio_source::position() const
 	return pos;
 }
 
-void tr::audio_source::set_position(const glm::vec3& pos)
+void tr::audio_source::set_position(glm::vec3 pos)
 {
 	audio_context& ctx{context()};
 	ctx.m_alapi.set_source_property_fv(ctx.m_ptr.get(), m_handle.get(), AL_POSITION, value_ptr(pos));
 }
 
-void tr::audio_source::set_position(const glm::vec3& end_position, fsecs time)
+void tr::audio_source::set_position(glm::vec3 end_position, fsecs time)
 {
 	context().create_command(*this, &audio_source::set_position, position(), end_position, time);
 }
@@ -432,13 +432,13 @@ glm::vec3 tr::audio_source::velocity() const
 	return vel;
 }
 
-void tr::audio_source::set_velocity(const glm::vec3& vel)
+void tr::audio_source::set_velocity(glm::vec3 vel)
 {
 	audio_context& ctx{context()};
 	ctx.m_alapi.set_source_property_fv(ctx.m_ptr.get(), m_handle.get(), AL_VELOCITY, value_ptr(vel));
 }
 
-void tr::audio_source::set_velocity(const glm::vec3& end_velocity, fsecs time)
+void tr::audio_source::set_velocity(glm::vec3 end_velocity, fsecs time)
 {
 	context().create_command(*this, &audio_source::set_velocity, velocity(), end_velocity, time);
 }
@@ -453,13 +453,13 @@ glm::vec3 tr::audio_source::direction() const
 	return dir;
 }
 
-void tr::audio_source::set_direction(const glm::vec3& dir)
+void tr::audio_source::set_direction(glm::vec3 dir)
 {
 	audio_context& ctx{context()};
 	ctx.m_alapi.set_source_property_fv(ctx.m_ptr.get(), m_handle.get(), AL_DIRECTION, value_ptr(dir));
 }
 
-void tr::audio_source::set_direction(const glm::vec3& end_direction, fsecs time)
+void tr::audio_source::set_direction(glm::vec3 end_direction, fsecs time)
 {
 	context().create_command(*this, &audio_source::set_direction, direction(), end_direction, time);
 }

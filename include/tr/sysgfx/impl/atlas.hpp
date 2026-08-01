@@ -147,7 +147,7 @@ void tr::dyn_atlas<Key, Value, Hash, Pred>::reserve(glm::ivec2 capacity)
 template <typename Key, tr::atlas_entries_value_type Value, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
 template <typename... Args>
 	requires(std::constructible_from<Value, tr::rectangle<tr::u16>, Args...>)
-void tr::dyn_atlas<Key, Value, Hash, Pred>::add(Key key, const sub_bitmap& bitmap, Args&&... args)
+void tr::dyn_atlas<Key, Value, Hash, Pred>::add(Key key, sub_bitmap bitmap, Args&&... args)
 {
 	std::optional<glm::u16vec2> tl{m_entries.try_insert(std::move(key), bitmap.size(), size(), std::forward<Args>(args)...)};
 	if (!tl.has_value()) {

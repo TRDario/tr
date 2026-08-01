@@ -10,8 +10,8 @@
 
 /////////////////////////////////////////////////////////////// BITMAP VIEW ///////////////////////////////////////////////////////////////
 
-template <std::ranges::contiguous_range T>
-tr::bitmap_view::bitmap_view(T&& range, glm::ivec2 size, pixel_format format)
+template <std::ranges::contiguous_range Range>
+tr::bitmap_view::bitmap_view(Range&& range, glm::ivec2 size, pixel_format format)
 	: bitmap_view{std::span<const std::byte>{range_bytes(range)}, size, format}
 {
 }

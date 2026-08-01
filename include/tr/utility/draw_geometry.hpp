@@ -98,16 +98,16 @@ namespace tr {
 	// Outputs rectangle vertices to an output iterator.
 	// out needs to have space for 4 vertices.
 	template <std::output_iterator<glm::vec2> Iterator>
-	constexpr Iterator fill_rectangle_vertices(Iterator out, const rectangle<float>& rectangle);
+	constexpr Iterator fill_rectangle_vertices(Iterator out, rectangle<float> rectangle);
 	// Outputs rectangle vertices to a range of 4 vertices.
-	template <sized_output_range<glm::vec2> Range> constexpr void fill_rectangle_vertices(Range&& out, const rectangle<float>& rectangle);
+	template <sized_output_range<glm::vec2> Range> constexpr void fill_rectangle_vertices(Range&& out, rectangle<float> rectangle);
 	// Outputs transformed rectangle vertices to an output iterator.
 	// out needs to have space for 4 vertices.
 	template <std::output_iterator<glm::vec2> Iterator>
-	constexpr Iterator fill_rectangle_vertices(Iterator out, const rectangle<float>& rectangle, const glm::mat4& mat);
+	constexpr Iterator fill_rectangle_vertices(Iterator out, rectangle<float> rectangle, const glm::mat4& mat);
 	// Outputs transformed rectangle vertices to a range of 4 vertices.
 	template <sized_output_range<glm::vec2> Range>
-	constexpr void fill_rectangle_vertices(Range&& out, const rectangle<float>& rectangle, const glm::mat4& mat);
+	constexpr void fill_rectangle_vertices(Range&& out, rectangle<float> rectangle, const glm::mat4& mat);
 	// Outputs rotated rectangle vertices to an output iterator.
 	// out needs to have space for 4 vertices.
 	template <std::output_iterator<glm::vec2> Iterator>
@@ -119,18 +119,17 @@ namespace tr {
 	// Outputs rectangle outline vertices to an output iterator.
 	// out needs to have space for 8 vertices.
 	template <std::output_iterator<glm::vec2> Iterator>
-	constexpr Iterator fill_rectangle_outline_vertices(Iterator out, const rectangle<float>& rectangle, float thickness);
+	constexpr Iterator fill_rectangle_outline_vertices(Iterator out, rectangle<float> rectangle, float thickness);
 	// Outputs rectangle outline vertices to a range of 8 vertices.
 	template <sized_output_range<glm::vec2> Range>
-	constexpr void fill_rectangle_outline_vertices(Range&& out, const rectangle<float>& rectangle, float thickness);
+	constexpr void fill_rectangle_outline_vertices(Range&& out, rectangle<float> rectangle, float thickness);
 	// Outputs transformed rectangle outline vertices to an output iterator.
 	// out needs to have space for 8 vertices.
 	template <std::output_iterator<glm::vec2> Iterator>
-	constexpr Iterator fill_rectangle_outline_vertices(Iterator out, const rectangle<float>& rectangle, float thickness,
-													   const glm::mat4& mat);
+	constexpr Iterator fill_rectangle_outline_vertices(Iterator out, rectangle<float> rectangle, float thickness, const glm::mat4& mat);
 	// Outputs transformed rectangle outline vertices to a range of 8 vertices.
 	template <sized_output_range<glm::vec2> Range>
-	constexpr void fill_rectangle_outline_vertices(Range&& out, const rectangle<float>& rectangle, float thickness, const glm::mat4& mat);
+	constexpr void fill_rectangle_outline_vertices(Range&& out, rectangle<float> rectangle, float thickness, const glm::mat4& mat);
 	// Outputs rotated rectangle outline vertices to an output iterator.
 	// out needs to have space for 8 vertices.
 	template <std::output_iterator<glm::vec2> Iterator>
