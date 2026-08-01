@@ -198,7 +198,7 @@ tr::usize tr::audio_stream::loop_start() const
 
 void tr::audio_stream::set_loop_start(usize loop_start)
 {
-	m_loop_start = std::clamp(loop_start, 0_uz, loop_end() - 1);
+	m_loop_start = std::clamp(loop_start, 0uz, loop_end() - 1);
 }
 
 tr::usize tr::audio_stream::loop_end() const

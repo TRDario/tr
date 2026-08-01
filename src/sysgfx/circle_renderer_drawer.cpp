@@ -69,7 +69,7 @@ void tr::circle_renderer::drawer::draw_layer(int layer, const render_target& tar
 
 	graphics_context& context{m_renderer->context()};
 	const circle_renderer::layer& info{layer_it->second};
-	const ssize offset{std::accumulate(m_range.begin(), layer_it, 0_z, [](ssize s, auto& p) { return s + p.second.circles.size(); })};
+	const ssize offset{std::accumulate(m_range.begin(), layer_it, 0z, [](ssize s, auto& p) { return s + p.second.circles.size(); })};
 
 	setup_context(context);
 	context.set_render_target(target);

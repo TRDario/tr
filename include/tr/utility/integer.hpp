@@ -5,8 +5,8 @@
 // Integer aliases are in the format iX/uX (for signed and unsigned respectively) alongside ssize/usize, and are in the namespace        //
 // tr::integer_aliases, as well as tr::aliases.                                                                                          //
 //                                                                                                                                       //
-// Integer literals are in the format _iX/_uX (for signed and unsigned respectively) alongside _z/_uz, and are in the namespace          //
-// tr::integer_literals, as well as tr::literals.                                                                                        //
+// Integer literals are in the format _iX/_uX (for signed and unsigned respectively) and are in the namespace tr::integer_literals,      //
+// as well as tr::literals.                                                                                                              //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -38,13 +38,11 @@ namespace tr {
 			consteval u16 operator""_u16(unsigned long long v);
 			consteval u32 operator""_u32(unsigned long long v);
 			consteval u64 operator""_u64(unsigned long long v);
-			consteval usize operator""_uz(unsigned long long v);
 
 			consteval i8 operator""_i8(unsigned long long v);
 			consteval i16 operator""_i16(unsigned long long v);
 			consteval i32 operator""_i32(unsigned long long v);
 			consteval i64 operator""_i64(unsigned long long v);
-			consteval ssize operator""_z(unsigned long long v);
 		} // namespace integer_literals
 	} // namespace literals
 } // namespace tr

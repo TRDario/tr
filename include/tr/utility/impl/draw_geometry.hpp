@@ -17,7 +17,7 @@ inline tr::usize tr::smooth_polygon_vertices(float r)
 {
 	TR_ASSERT(r > 0, "Tried to pass a negative radius to smooth_polygon_vertices.");
 
-	return std::max(usize(7 * std::pow(r, 1 / 2.4f)), 3_uz);
+	return std::max(usize(7 * std::pow(r, 1 / 2.4f)), 3uz);
 }
 
 inline tr::usize tr::smooth_arc_vertices(float r, angle sizeth)
@@ -25,7 +25,7 @@ inline tr::usize tr::smooth_arc_vertices(float r, angle sizeth)
 	TR_ASSERT(r > 0, "Tried to pass a negative radius to smooth_arc_vertices.");
 	TR_ASSERT(sizeth >= 0_tr && sizeth <= 1_tr, "Tried to pass an arc size of more than one turn to smooth_arc_vertices.");
 
-	return std::max(static_cast<usize>(7 * std::pow(r, 1 / 2.4f) / (sizeth / 1_tr)), 3_uz);
+	return std::max(static_cast<usize>(7 * std::pow(r, 1 / 2.4f) / (sizeth / 1_tr)), 3uz);
 }
 
 constexpr tr::usize tr::line_strip_indices(u16 vertices)
@@ -123,7 +123,7 @@ constexpr Iterator tr::fill_simple_polygon_indices(Iterator out, std::span<const
 			if (indices.size() > 3) {
 				const triangle tri{vertices[indices[left]], vertices[indices[i]], vertices[indices[right]]};
 				const auto is_in_tri{[&](usize j) { return j != left && j != i && j != right && tri.contains(vertices[indices[j]]); }};
-				if (tri.winding_order() != winding_order || std::ranges::any_of(std::views::iota(0_uz, indices.size()), is_in_tri)) {
+				if (tri.winding_order() != winding_order || std::ranges::any_of(std::views::iota(0uz, indices.size()), is_in_tri)) {
 					continue;
 				}
 			}

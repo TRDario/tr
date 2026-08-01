@@ -17,8 +17,8 @@ tr::basic_renderer::drawer::drawer(basic_renderer& renderer, std::ranges::subran
 	m_renderer->m_locked = true;
 #endif
 
-	const usize vertices{fold_left(range, 0_uz, [](usize s, const mesh& m) { return s + m.positions.size(); })};
-	const usize indices{fold_left(range, 0_uz, [](usize s, const mesh& m) { return s + m.indices.size(); })};
+	const usize vertices{fold_left(range, 0uz, [](usize s, const mesh& m) { return s + m.positions.size(); })};
+	const usize indices{fold_left(range, 0uz, [](usize s, const mesh& m) { return s + m.indices.size(); })};
 
 	m_renderer->m_vbuffer_positions.resize(vertices);
 	m_renderer->m_vbuffer_uvs.resize(vertices);
