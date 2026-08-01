@@ -20,18 +20,18 @@
 
 namespace tr {
 	// Prints to a stream.
-	template <typename... Args> void print_to(std::ostream& out, TR_FORMAT_STRING<Args...> fmt, Args&&... args);
+	template <typename... Args> void print_to(std::ostream& out, std::format_string<Args...> fmt, Args&&... args);
 	// Prints to the standard output.
-	template <typename... Args> void print(TR_FORMAT_STRING<Args...> fmt, Args&&... args);
+	template <typename... Args> void print(std::format_string<Args...> fmt, Args&&... args);
 	// Prints to the standard error output.
-	template <typename... Args> void print_error(TR_FORMAT_STRING<Args...> fmt, Args&&... args);
+	template <typename... Args> void print_error(std::format_string<Args...> fmt, Args&&... args);
 
 	// Prints a line to a stream.
-	template <typename... Args> void println_to(std::ostream& out, TR_FORMAT_STRING<Args...> fmt, Args&&... args);
+	template <typename... Args> void println_to(std::ostream& out, std::format_string<Args...> fmt, Args&&... args);
 	// Prints a line to the standard output.
-	template <typename... Args> void println(TR_FORMAT_STRING<Args...> fmt, Args&&... args);
+	template <typename... Args> void println(std::format_string<Args...> fmt, Args&&... args);
 	// Prints a line to the standard error output.
-	template <typename... Args> void println_error(TR_FORMAT_STRING<Args...> fmt, Args&&... args);
+	template <typename... Args> void println_error(std::format_string<Args...> fmt, Args&&... args);
 } // namespace tr
 
 #include "impl/print.hpp" // IWYU pragma: export

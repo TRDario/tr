@@ -101,7 +101,7 @@ namespace tr {
 		// Constructs a window error.
 		ttfont_error(std::string&& description);
 		// Constructs a font error.
-		template <typename... Args> ttfont_error(TR_FORMAT_STRING<Args...> description_fmt, Args&&... args);
+		template <typename... Args> ttfont_error(std::format_string<Args...> description_fmt, Args&&... args);
 
 		// Gets the name of the error.
 		std::string_view name() const override;

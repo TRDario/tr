@@ -121,7 +121,7 @@ namespace tr {
 	class window_error : public exception {
 	  public:
 		// Constructs a window error.
-		template <typename... Args> window_error(TR_FORMAT_STRING<Args...> description_fmt, Args&&... args);
+		template <typename... Args> window_error(std::format_string<Args...> description_fmt, Args&&... args);
 
 		// Gets the name of the error.
 		std::string_view name() const override;

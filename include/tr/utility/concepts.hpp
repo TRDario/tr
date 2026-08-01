@@ -115,13 +115,13 @@ namespace tr {
 	// Concept checking whether a type is formattable.
 	template <typename T, typename Context, typename Formatter = typename Context::template formatter_type<std::remove_const_t<T>>>
 	concept formattable_with = std::semiregular<Formatter> && requires(Formatter& f, Formatter const& cf, T&& t, Context fc,
-																	   TR_FMT::basic_format_parse_context<typename Context::char_type> pc) {
+																	   std::basic_format_parse_context<typename Context::char_type> pc) {
 		{ f.parse(pc) } -> std::same_as<typename decltype(pc)::iterator>;
 		{ cf.format(t, fc) } -> std::same_as<typename Context::iterator>;
 	};
 	// Concept checking whether a type is formattable.
 	template <typename T, typename CharT = char>
-	concept formattable = formattable_with<std::remove_reference_t<T>, TR_FMT::basic_format_context<CharT*, CharT>>;
+	concept formattable = formattable_with<std::remove_reference_t<T>, std::basic_format_context<CharT*, CharT>>;
 	// Concept checking whether a format string is valid for a set of types.
 	template <string_literal Fmt, typename... Args>
 	concept valid_format_string_for = (formattable<Args, char> && ...) &&

@@ -141,6 +141,6 @@ namespace tr {
 } // namespace tr
 
 // Formatter for static strings.
-template <tr::usize Capacity> struct TR_FMT::formatter<tr::static_string<Capacity>> : TR_FMT::formatter<std::string_view> {};
+template <tr::usize Capacity> struct std::formatter<tr::static_string<Capacity>> : std::formatter<std::string_view> {};
 
 #include "impl/static_string.hpp" // IWYU pragma: export

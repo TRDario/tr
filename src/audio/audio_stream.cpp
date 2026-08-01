@@ -63,15 +63,15 @@ tr::ogg_audio_stream::ogg_audio_stream(const std::filesystem::path& path)
 	if (result != 0) {
 		switch (result) {
 		case OV_EREAD:
-			throw tr::file_open_error{TR_FMT::format("Failed to read .ogg file from '{}'.", path.string())};
+			throw tr::file_open_error{std::format("Failed to read .ogg file from '{}'.", path.string())};
 		case OV_ENOTVORBIS:
-			throw tr::file_open_error{TR_FMT::format("Invalid .ogg Vorbis file '{}'.", path.string())};
+			throw tr::file_open_error{std::format("Invalid .ogg Vorbis file '{}'.", path.string())};
 		case OV_EVERSION:
-			throw tr::file_open_error{TR_FMT::format(".ogg Vorbis version mismatch in '{}'.", path.string())};
+			throw tr::file_open_error{std::format(".ogg Vorbis version mismatch in '{}'.", path.string())};
 		case OV_EBADHEADER:
-			throw tr::file_open_error{TR_FMT::format("Invalid .ogg Vorbis header in '{}'.", path.string())};
+			throw tr::file_open_error{std::format("Invalid .ogg Vorbis header in '{}'.", path.string())};
 		case OV_EFAULT:
-			throw tr::file_open_error{TR_FMT::format("An internal error in Vorbis occurred while loading '{}'.", path.string())};
+			throw tr::file_open_error{std::format("An internal error in Vorbis occurred while loading '{}'.", path.string())};
 		}
 	}
 
@@ -220,7 +220,7 @@ void tr::audio_stream::set_loop_end(usize loop_end)
 std::unique_ptr<tr::audio_stream> tr::open_audio_file(const std::filesystem::path& path)
 {
 	if (!std::filesystem::exists(path)) {
-		throw file_open_error{TR_FMT::format("File not found: '{}'", path.string())};
+		throw file_open_error{std::format("File not found: '{}'", path.string())};
 	}
 
 	const std::string extension{path.extension().string()};
@@ -228,6 +228,6 @@ std::unique_ptr<tr::audio_stream> tr::open_audio_file(const std::filesystem::pat
 		return std::make_unique<ogg_audio_stream>(path);
 	}
 	else {
-		throw file_open_error{TR_FMT::format("Unsupported audio file extension '{}'", extension)};
+		throw file_open_error{std::format("Unsupported audio file extension '{}'", extension)};
 	}
 }

@@ -41,7 +41,7 @@ namespace tr {
 	// Custom out-of-memory exception.
 	struct out_of_memory : public exception {
 		// Constructs an out-of-memory exception (arguments are formatted in-place).
-		template <typename... Args> out_of_memory(TR_FORMAT_STRING<Args...> fmt, Args&&... args);
+		template <typename... Args> out_of_memory(std::format_string<Args...> fmt, Args&&... args);
 
 		// Gets the name of the error.
 		std::string_view name() const override;

@@ -136,7 +136,7 @@ namespace tr {
 	} // namespace literals
 } // namespace tr
 
-namespace TR_FMT {
+namespace std {
 	// Angle formatter.
 	template <> class formatter<tr::angle> : public formatter<float>, public formatter<const char*> {
 	  public:
@@ -156,6 +156,6 @@ namespace TR_FMT {
 		// The unit to use for the formatted angle.
 		unit m_unit;
 	};
-} // namespace TR_FMT
+} // namespace std
 
 #include "impl/angle.hpp" // IWYU pragma: export

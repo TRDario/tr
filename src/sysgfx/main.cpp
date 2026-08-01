@@ -34,12 +34,12 @@ namespace tr {
 				g_emergency_buffer.reset();
 			}
 
-			const std::string title{TR_FMT::format("{} - Fatal Error", app::metadata.name)};
+			const std::string title{std::format("{} - Fatal Error", app::metadata.name)};
 
 			opt_ref<const exception> tr_exception{dynamic_ref_cast<const exception>(error)};
 			std::string message;
 			if (tr_exception.has_ref()) {
-				message = TR_FMT::format("A fatal error has occurred ({}).", tr_exception->name());
+				message = std::format("A fatal error has occurred ({}).", tr_exception->name());
 				const std::string_view description{tr_exception->description()};
 				if (!description.empty()) {
 					message.push_back('\n');
@@ -53,7 +53,7 @@ namespace tr {
 				error_logger.log(severity::fatal, *tr_exception);
 			}
 			else {
-				message = TR_FMT::format("A fatal error has occurred ({}).", error.what());
+				message = std::format("A fatal error has occurred ({}).", error.what());
 				error_logger.log(severity::fatal, error);
 			}
 			message.append("\nPress OK to exit the application.");
@@ -131,10 +131,10 @@ extern "C"
 				tr::error_logger.log_continue(SDL_GetError());
 			}
 
-			const std::string title{TR_FMT::format("{} - Fatal Error", app::metadata.name)};
+			const std::string title{std::format("{} - Fatal Error", app::metadata.name)};
 			const std::string message{
-				TR_FMT::format("A fatal error has occured (Failed to initialize SDL3).\n{}\nPress OK to exit the application.",
-							   SDL_GetError()),
+				std::format("A fatal error has occured (Failed to initialize SDL3).\n{}\nPress OK to exit the application.",
+							SDL_GetError()),
 			};
 			tr::show_message_box(tr::message_box_type::error, tr::message_box_layout::ok, title, message);
 			return SDL_APP_FAILURE;

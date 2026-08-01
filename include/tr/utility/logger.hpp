@@ -146,13 +146,13 @@ namespace tr {
 		// Logs an exception.
 		void log(severity severity, const std::exception& err);
 		// Logs a message.
-		template <typename... Args> void log(severity severity, TR_FORMAT_STRING<Args...> fmt, Args&&... args);
+		template <typename... Args> void log(severity severity, std::format_string<Args...> fmt, Args&&... args);
 		// Logs a message continuing from a previous line.
 		void log_continue(std::string_view str);
 		// Logs an exception continuing from a previous line.
 		void log_continue(const std::exception& err);
 		// Logs a message continuing from a previous line.
-		template <typename... Args> void log_continue(TR_FORMAT_STRING<Args...> fmt, Args&&... args);
+		template <typename... Args> void log_continue(std::format_string<Args...> fmt, Args&&... args);
 
 	  private:
 		// Owning pointer to the logger backend.

@@ -10,8 +10,8 @@
 /////////////////////////////////////////////////////////////// TTFONT ERROR //////////////////////////////////////////////////////////////
 
 template <typename... Args>
-tr::ttfont_error::ttfont_error(TR_FORMAT_STRING<Args...> description_fmt, Args&&... args)
-	: ttfont_error{TR_FMT::format(description_fmt, std::forward<Args>(args)...)}
+tr::ttfont_error::ttfont_error(std::format_string<Args...> description_fmt, Args&&... args)
+	: ttfont_error{std::format(description_fmt, std::forward<Args>(args)...)}
 {
 }
 

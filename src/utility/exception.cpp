@@ -14,9 +14,9 @@ const char* tr::exception::what() const noexcept
 {
 	g_what_buffer.clear();
 
-	TR_FMT::format_to_n(std::back_inserter(g_what_buffer), g_what_buffer.max_size() - 1, "{}: {}", name(), description());
+	std::format_to_n(std::back_inserter(g_what_buffer), g_what_buffer.max_size() - 1, "{}: {}", name(), description());
 	if (!details().empty()) {
-		TR_FMT::format_to_n(std::back_inserter(g_what_buffer), g_what_buffer.max_size() - 1 - g_what_buffer.size(), " ({})", details());
+		std::format_to_n(std::back_inserter(g_what_buffer), g_what_buffer.max_size() - 1 - g_what_buffer.size(), " ({})", details());
 	}
 	g_what_buffer.append('\0');
 	return g_what_buffer.data();

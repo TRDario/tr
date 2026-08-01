@@ -62,7 +62,7 @@ namespace tr {
 		// Converts the literal to a string view.
 		consteval operator std::string_view() const;
 		// Converts the literal to a format string.
-		template <typename... Args> consteval operator TR_FORMAT_STRING<Args...>() const;
+		template <typename... Args> consteval operator std::format_string<Args...>() const;
 
 		// Gets the length of the literal.
 		consteval static usize size();

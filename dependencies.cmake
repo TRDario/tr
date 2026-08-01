@@ -4,8 +4,6 @@
 ##                                                                                                                                       ##
 ## If TR_USE_SYSTEM_LIBRARIES evaluates to true, dependencies are taken from the user's system; otherwise download and build them.       ##
 ##                                                                                                                                       ##
-## If TR_HAS_STD_FORMAT ends up not evaluating to true, fmtlib is fetched as a fallback.                                                 ##
-##                                                                                                                                       ##
 ###########################################################################################################################################
 
 include(FetchContent)
@@ -49,20 +47,6 @@ FetchContent_Declare(
 	GIT_SHALLOW ON
 )
 FetchContent_MakeAvailable(boost_unordered)
-
-check_include_file_cxx(format TR_HAS_STD_FORMAT)
-if(NOT TR_HAS_STD_FORMAT)
-	if(TR_USE_SYSTEM_LIBRARIES)
-		find_package(fmt REQUIRED)
-	else()
-		FetchContent_Declare(
-			fmt
-			URL https://github.com/fmtlib/fmt/releases/download/12.1.0/fmt-12.1.0.zip
-			DOWNLOAD_EXTRACT_TIMESTAMP true
-		)
-		FetchContent_MakeAvailable(fmt)
-	endif()
-endif()
 
 ################################################################## SYSGFX #################################################################
 

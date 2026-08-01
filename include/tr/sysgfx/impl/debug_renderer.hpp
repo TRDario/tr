@@ -9,24 +9,24 @@
 
 ///////////////////////////////////////////////////////////// DEBUG RENDERER //////////////////////////////////////////////////////////////
 
-template <typename... Args> void tr::debug_renderer::write_left_format(TR_FORMAT_STRING<Args...> fmt, Args&&... args)
+template <typename... Args> void tr::debug_renderer::write_left_format(std::format_string<Args...> fmt, Args&&... args)
 {
-	write_left(TR_FMT::format(fmt, std::forward<Args>(args)...), default_style);
+	write_left(std::format(fmt, std::forward<Args>(args)...), default_style);
 }
 
-template <typename... Args> void tr::debug_renderer::write_left_format(const style& style, TR_FORMAT_STRING<Args...> fmt, Args&&... args)
+template <typename... Args> void tr::debug_renderer::write_left_format(const style& style, std::format_string<Args...> fmt, Args&&... args)
 {
-	write_left(TR_FMT::format(fmt, std::forward<Args>(args)...), style);
+	write_left(std::format(fmt, std::forward<Args>(args)...), style);
 }
 
-template <typename... Args> void tr::debug_renderer::write_right_format(TR_FORMAT_STRING<Args...> fmt, Args&&... args)
+template <typename... Args> void tr::debug_renderer::write_right_format(std::format_string<Args...> fmt, Args&&... args)
 {
-	write_left(TR_FMT::format(fmt, std::forward<Args>(args)...), default_style);
+	write_left(std::format(fmt, std::forward<Args>(args)...), default_style);
 }
 
-template <typename... Args> void tr::debug_renderer::write_right_format(const style& style, TR_FORMAT_STRING<Args...> fmt, Args&&... args)
+template <typename... Args> void tr::debug_renderer::write_right_format(const style& style, std::format_string<Args...> fmt, Args&&... args)
 {
-	write_right(TR_FMT::format(fmt, std::forward<Args>(args)...), style);
+	write_right(std::format(fmt, std::forward<Args>(args)...), style);
 }
 
 template <tr::debug_writable_benchmark Benchmark, typename Rep, typename Period>

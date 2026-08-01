@@ -6,7 +6,6 @@
 ## The target will have a 'd' suffix in debug builds, for example 'foobar' -> foobard.exe.                                               ##
 ## The target will have a number of compiler flags set, mostly enabling warnings, but with some floating point optimizations enabled.    ##
 ## On Linux, the libstdc++ debug mode will be used in the debug configuration.                                                           ##
-## If std::format is detected, TR_HAS_STD_FORMAT is defined.                                                                             ##
 ## In the RelWithDebInfo and Debug configurations, TR_ENABLE_ASSERTS is defined.                                                         ##
 ## In the Debug configuration, TR_ENABLE_GL_CHECKS is defined.                                                                           ##
 ## The target will be linked with tr::tr.                                                                                                ##
@@ -58,9 +57,6 @@ function(tr_target_template TARGET)
 	
 	if(LINUX)
 		target_compile_definitions(${TARGET} PUBLIC $<$<CONFIG:Debug>:_GLIBCXX_DEBUG _GLIBCXX_DEBUG_PEDANTIC>)
-	endif()
-	if(TR_HAS_STD_FORMAT)
-		target_compile_definitions(${TARGET} PUBLIC TR_HAS_STD_FORMAT)
 	endif()
 	target_compile_definitions(${TARGET} PUBLIC
 		$<$<CONFIG:Debug>:TR_ENABLE_GL_CHECKS>

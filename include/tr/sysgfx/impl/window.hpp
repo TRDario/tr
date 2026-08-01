@@ -10,7 +10,7 @@
 /////////////////////////////////////////////////////////////// WINDOW ERROR //////////////////////////////////////////////////////////////
 
 template <typename... Args>
-tr::window_error::window_error(TR_FORMAT_STRING<Args...> description_fmt, Args&&... args)
-	: window_error{TR_FMT::format(description_fmt, std::forward<Args>(args)...)}
+tr::window_error::window_error(std::format_string<Args...> description_fmt, Args&&... args)
+	: window_error{std::format(description_fmt, std::forward<Args>(args)...)}
 {
 }

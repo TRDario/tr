@@ -72,40 +72,40 @@ template <typename T> constexpr tr::vertex_binding tr::make_vertex_binding(u32 d
 //////////////////////////////////////////////////////////////// FORMATTER ////////////////////////////////////////////////////////////////
 
 template <typename FormatContext>
-constexpr auto TR_FMT::formatter<tr::vertex_attribute>::format(tr::vertex_attribute v, FormatContext& ctx) const
+constexpr auto std::formatter<tr::vertex_attribute>::format(tr::vertex_attribute v, FormatContext& ctx) const
 {
 	switch (v.type) {
 	case tr::vertex_attribute_type::i8:
-		ctx.advance_to(TR_FMT::formatter<const char*>::format("i8", ctx));
+		ctx.advance_to(std::formatter<const char*>::format("i8", ctx));
 		break;
 	case tr::vertex_attribute_type::u8:
-		ctx.advance_to(TR_FMT::formatter<const char*>::format("u8", ctx));
+		ctx.advance_to(std::formatter<const char*>::format("u8", ctx));
 		break;
 	case tr::vertex_attribute_type::i16:
-		ctx.advance_to(TR_FMT::formatter<const char*>::format("i16", ctx));
+		ctx.advance_to(std::formatter<const char*>::format("i16", ctx));
 		break;
 	case tr::vertex_attribute_type::u16:
-		ctx.advance_to(TR_FMT::formatter<const char*>::format("u16", ctx));
+		ctx.advance_to(std::formatter<const char*>::format("u16", ctx));
 		break;
 	case tr::vertex_attribute_type::i32:
-		ctx.advance_to(TR_FMT::formatter<const char*>::format("i32", ctx));
+		ctx.advance_to(std::formatter<const char*>::format("i32", ctx));
 		break;
 	case tr::vertex_attribute_type::u32:
-		ctx.advance_to(TR_FMT::formatter<const char*>::format("u32", ctx));
+		ctx.advance_to(std::formatter<const char*>::format("u32", ctx));
 		break;
 	case tr::vertex_attribute_type::f32:
 		if (v.elements == 1) {
-			ctx.advance_to(TR_FMT::formatter<const char*>::format("float", ctx));
+			ctx.advance_to(std::formatter<const char*>::format("float", ctx));
 		}
 		break;
 	default:
-		ctx.advance_to(TR_FMT::formatter<const char*>::format("<unknown>", ctx));
+		ctx.advance_to(std::formatter<const char*>::format("<unknown>", ctx));
 		return ctx.out();
 	}
 
 	if (v.elements != 1) {
-		ctx.advance_to(TR_FMT::formatter<const char*>::format("vec", ctx));
-		ctx.advance_to(TR_FMT::formatter<tr::u8>::format(v.elements, ctx));
+		ctx.advance_to(std::formatter<const char*>::format("vec", ctx));
+		ctx.advance_to(std::formatter<tr::u8>::format(v.elements, ctx));
 	}
 
 	return ctx.out();

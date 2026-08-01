@@ -59,17 +59,17 @@ namespace tr {
 }; // namespace tr
 
 // GLSL type formatter.
-template <> struct TR_FMT::formatter<tr::glsl_type> : protected TR_FMT::formatter<const char*> {
+template <> struct std::formatter<tr::glsl_type> : protected std::formatter<const char*> {
 	// Parses the formatting context.
-	using TR_FMT::formatter<const char*>::parse;
+	using std::formatter<const char*>::parse;
 	// Formats a GLSL type value.
 	template <typename FormatContext> constexpr auto format(tr::glsl_type t, FormatContext& ctx) const;
 };
 
 // GLSL variable information formatter.
-template <> struct TR_FMT::formatter<tr::glsl_variable> : private TR_FMT::formatter<tr::glsl_type>, private TR_FMT::formatter<int> {
+template <> struct std::formatter<tr::glsl_variable> : private std::formatter<tr::glsl_type>, private std::formatter<int> {
 	// Parses the formatting context.
-	using TR_FMT::formatter<const char*>::parse;
+	using std::formatter<const char*>::parse;
 	// Formats GLSL variable information.
 	template <typename FormatContext> constexpr auto format(const tr::glsl_variable& v, FormatContext& ctx) const;
 };

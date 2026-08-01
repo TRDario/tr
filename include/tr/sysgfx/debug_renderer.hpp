@@ -85,15 +85,15 @@ namespace tr {
 		// Writes a line of formatted text to the left side of the screen.
 		void write_left(std::string_view text, const style& style = default_style);
 		// Writes a line of text formatted as if by std::format to the left side of the screen in the default style.
-		template <typename... Args> void write_left_format(TR_FORMAT_STRING<Args...> fmt, Args&&... args);
+		template <typename... Args> void write_left_format(std::format_string<Args...> fmt, Args&&... args);
 		// Writes a line of text formatted as if by std::format to the left side of the screen.
-		template <typename... Args> void write_left_format(const style& style, TR_FORMAT_STRING<Args...> fmt, Args&&... args);
+		template <typename... Args> void write_left_format(const style& style, std::format_string<Args...> fmt, Args&&... args);
 		// Writes a line of formatted text to the right side of the screen.
 		void write_right(std::string_view text, const style& style = default_style);
 		// Writes a line of text formatted as if by std::format to the right side of the screen in the default style.
-		template <typename... Args> void write_right_format(TR_FORMAT_STRING<Args...> fmt, Args&&... args);
+		template <typename... Args> void write_right_format(std::format_string<Args...> fmt, Args&&... args);
 		// Writes a line of text formatted as if by std::format to the right side of the screen.
-		template <typename... Args> void write_right_format(const style& style, TR_FORMAT_STRING<Args...> fmt, Args&&... args);
+		template <typename... Args> void write_right_format(const style& style, std::format_string<Args...> fmt, Args&&... args);
 		// Writes benchmark data to the right side of the screen.
 		template <debug_writable_benchmark Benchmark, typename Rep, typename Period>
 		void write_benchmark(const Benchmark& benchmark, std::string_view name, std::chrono::duration<Rep, Period> limit);

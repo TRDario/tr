@@ -204,11 +204,11 @@ inline float tr::angle::tan() const
 
 //////////////////////////////////////////////////////////////// FORMATTING ///////////////////////////////////////////////////////////////
 
-template <typename ParseContext> constexpr auto TR_FMT::formatter<tr::angle>::parse(ParseContext& ctx)
+template <typename ParseContext> constexpr auto std::formatter<tr::angle>::parse(ParseContext& ctx)
 {
 	auto ctx_it{ctx.begin()};
 	if (ctx_it == ctx.end() || (*ctx_it != 'r' && *ctx_it != 'd' && *ctx_it != 't')) {
-		throw TR_FMT::format_error{"One of {r, d, t} must start an angle formatting specification."};
+		throw std::format_error{"One of {r, d, t} must start an angle formatting specification."};
 	}
 
 	switch (*ctx_it) {
@@ -227,7 +227,7 @@ template <typename ParseContext> constexpr auto TR_FMT::formatter<tr::angle>::pa
 	return formatter<float>::parse(ctx);
 }
 
-template <typename FormatContext> constexpr auto TR_FMT::formatter<tr::angle>::format(const tr::angle& p, FormatContext& ctx) const
+template <typename FormatContext> constexpr auto std::formatter<tr::angle>::format(const tr::angle& p, FormatContext& ctx) const
 {
 	switch (m_unit) {
 	case unit::radians:

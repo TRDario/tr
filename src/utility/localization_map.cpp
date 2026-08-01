@@ -23,7 +23,7 @@ std::string_view tr::localization_map::parser::parse_key(std::string_view line, 
 {
 	std::string_view::iterator end{std::ranges::find_if(line, [](char c) { return !std::isalnum(c) && c != '_'; })};
 	if (line.begin() == end) {
-		m_errors.emplace_back(TR_FMT::format("line {}: Expected a key.", m_line));
+		m_errors.emplace_back(std::format("line {}: Expected a key.", m_line));
 		return {};
 	}
 	out = {line.begin(), end};
@@ -33,7 +33,7 @@ std::string_view tr::localization_map::parser::parse_key(std::string_view line, 
 std::string_view tr::localization_map::parser::parse_delimiter(std::string_view line)
 {
 	if (line[0] != '=') {
-		m_errors.emplace_back(TR_FMT::format("line {}: Expected '=' after key.", m_line));
+		m_errors.emplace_back(std::format("line {}: Expected '=' after key.", m_line));
 		return {};
 	}
 	return trim_whitespace(line.substr(1));
@@ -45,7 +45,7 @@ bool tr::localization_map::parser::process_escape_sequences(std::string_view raw
 	for (std::string_view::iterator chr_it = raw.begin(); chr_it != raw.end(); ++chr_it) {
 		if (*chr_it == '\\') {
 			if (++chr_it == raw.end()) {
-				m_errors.emplace_back(TR_FMT::format("line {}: Unterminated escape sequence in value string.", m_line));
+				m_errors.emplace_back(std::format("line {}: Unterminated escape sequence in value string.", m_line));
 				return false;
 			}
 
@@ -59,7 +59,7 @@ bool tr::localization_map::parser::process_escape_sequences(std::string_view raw
 				out.push_back('"');
 			}
 			else {
-				m_errors.emplace_back(TR_FMT::format("line {}: Unknown escape sequence \\{} in value string.", m_line, *chr_it));
+				m_errors.emplace_back(std::format("line {}: Unknown escape sequence \\{} in value string.", m_line, *chr_it));
 				return false;
 			}
 		}
@@ -74,7 +74,7 @@ bool tr::localization_map::parser::process_escape_sequences(std::string_view raw
 bool tr::localization_map::parser::parse_value(std::string_view line, std::string& out)
 {
 	if (line[0] != '"') {
-		m_errors.emplace_back(TR_FMT::format("line {}: Expected quoted string after '<key> = '.", m_line));
+		m_errors.emplace_back(std::format("line {}: Expected quoted string after '<key> = '.", m_line));
 		return false;
 	}
 
@@ -89,13 +89,13 @@ bool tr::localization_map::parser::parse_value(std::string_view line, std::strin
 	}
 
 	if (end == line.end()) {
-		m_errors.emplace_back(TR_FMT::format("line {}: Unterminated quoted string.", m_line));
+		m_errors.emplace_back(std::format("line {}: Unterminated quoted string.", m_line));
 		return false;
 	}
 
 	line = trim_whitespace({end + 1, line.end()});
 	if (!line.empty() && line[0] != '#') {
-		m_errors.emplace_back(TR_FMT::format("line {}: Expected comment or newline after quoted string.", m_line));
+		m_errors.emplace_back(std::format("line {}: Expected comment or newline after quoted string.", m_line));
 		return false;
 	}
 

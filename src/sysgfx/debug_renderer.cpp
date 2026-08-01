@@ -31,26 +31,26 @@ namespace tr {
 			if (duration <= 1us) {
 				const double count{duration_cast<dnsecs>(duration).count()};
 				const int precision{6 - std::clamp(static_cast<int>(std::log10(count)), 0, 5)};
-				const std::string format{TR_FMT::format("{}{{:#08.{}f}}ns", prefix, precision)};
-				return TR_FMT::vformat(format, TR_FMT::make_format_args(count));
+				const std::string format{std::format("{}{{:#08.{}f}}ns", prefix, precision)};
+				return std::vformat(format, std::make_format_args(count));
 			}
 			else if (duration <= 1ms) {
 				const double count{duration_cast<dusecs>(duration).count()};
 				const int precision{6 - std::clamp(static_cast<int>(std::log10(count)), 0, 5)};
-				const std::string format{TR_FMT::format("{}{{:#08.{}f}}us", prefix, precision)};
-				return TR_FMT::vformat(format, TR_FMT::make_format_args(count));
+				const std::string format{std::format("{}{{:#08.{}f}}us", prefix, precision)};
+				return std::vformat(format, std::make_format_args(count));
 			}
 			else if (duration <= 1s) {
 				const double count{duration_cast<dmsecs>(duration).count()};
 				const int precision{6 - std::clamp(static_cast<int>(std::log10(count)), 0, 5)};
-				const std::string format{TR_FMT::format("{}{{:#08.{}f}}ms", prefix, precision)};
-				return TR_FMT::vformat(format, TR_FMT::make_format_args(count));
+				const std::string format{std::format("{}{{:#08.{}f}}ms", prefix, precision)};
+				return std::vformat(format, std::make_format_args(count));
 			}
 			else {
 				const double count{duration_cast<dsecs>(duration).count()};
 				const int precision{6 - std::clamp(static_cast<int>(std::log10(count)), 0, 5)};
-				const std::string format{TR_FMT::format("{}{{:#08.{}f}}s", prefix, precision)};
-				return TR_FMT::vformat(format, TR_FMT::make_format_args(count));
+				const std::string format{std::format("{}{{:#08.{}f}}s", prefix, precision)};
+				return std::vformat(format, std::make_format_args(count));
 			}
 		}
 	} // namespace
@@ -114,7 +114,7 @@ void tr::debug_renderer::write_benchmark(duration min, duration avg, duration ma
 	constexpr style alt_style{.text_color{255, 0, 0, 255}};
 
 	if (!name.empty()) {
-		write_right(TR_FMT::format("{:<15}", name));
+		write_right(std::format("{:<15}", name));
 	}
 	write_right(format_duration("MIN: ", min), min < limit ? default_style : alt_style);
 	write_right(format_duration("AVG: ", avg), avg < limit ? default_style : alt_style);

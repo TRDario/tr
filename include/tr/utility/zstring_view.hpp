@@ -149,7 +149,7 @@ inline constexpr bool std::ranges::enable_borrowed_range<tr::basic_zstring_view<
 
 // Formatter for null-terminated string views.
 template <typename CharT, typename Traits>
-struct TR_FMT::formatter<tr::basic_zstring_view<CharT, Traits>> : TR_FMT::formatter<std::basic_string_view<CharT, Traits>> {};
+struct std::formatter<tr::basic_zstring_view<CharT, Traits>> : std::formatter<std::basic_string_view<CharT, Traits>> {};
 
 // Null-terminated string view hasher.
 template <typename CharT, typename Traits>

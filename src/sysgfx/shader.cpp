@@ -17,7 +17,7 @@
 //////////////////////////////////////////////////////////// SHADER LOAD ERROR ////////////////////////////////////////////////////////////
 
 tr::shader_load_error::shader_load_error(std::string_view path, std::string&& details)
-	: m_description{TR_FMT::format("Failed to load shader from '{}'", path)}
+	: m_description{std::format("Failed to load shader from '{}'", path)}
 	, m_details{std::move(details)}
 {
 }
@@ -52,7 +52,7 @@ tr::shader_base::shader_base(graphics_context& context, zstring_view source, uns
 		gl.get_program_iv(m_program.get(), GL_INFO_LOG_LENGTH, &info_log_buffer_size);
 		std::string info_log_buffer(info_log_buffer_size, '\0');
 		gl.get_program_info_log(m_program.get(), info_log_buffer_size, nullptr, info_log_buffer.data());
-		throw shader_load_error{"(Embedded)", TR_FMT::format("Failed to compile/link a shader\n{}", info_log_buffer)};
+		throw shader_load_error{"(Embedded)", std::format("Failed to compile/link a shader\n{}", info_log_buffer)};
 	}
 
 #ifdef TR_ENABLE_GL_CHECKS

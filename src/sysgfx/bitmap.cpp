@@ -33,7 +33,7 @@ int tr::pixel_bytes(pixel_format format)
 ////////////////////////////////////////////////////////////// BITMAP ERRORS //////////////////////////////////////////////////////////////
 
 tr::bitmap_load_error::bitmap_load_error(std::string_view path, std::string&& details)
-	: m_description{TR_FMT::format("Failed to load bitmap from '{}'", path)}
+	: m_description{std::format("Failed to load bitmap from '{}'", path)}
 	, m_details{std::move(details)}
 {
 }
@@ -54,7 +54,7 @@ std::string_view tr::bitmap_load_error::details() const
 }
 
 tr::bitmap_save_error::bitmap_save_error(std::string_view path, std::string&& details)
-	: m_description{TR_FMT::format("Failed to save bitmap to '{}'", path)}
+	: m_description{std::format("Failed to save bitmap to '{}'", path)}
 	, m_details{std::move(details)}
 {
 }

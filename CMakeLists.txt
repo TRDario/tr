@@ -78,9 +78,6 @@ target_sources(tr_utility PRIVATE
 	src/utility/vector.cpp
 )
 target_link_libraries(tr_utility PUBLIC glm::glm lz4::lz4 boost_unordered)
-if(NOT TR_HAS_STD_FORMAT)
-	target_link_libraries(tr::utility fmt::fmt)
-endif()
 target_link_libraries(tr INTERFACE tr::utility)
 
 ################################################################## SYSGFX #################################################################

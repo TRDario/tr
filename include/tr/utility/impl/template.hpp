@@ -24,7 +24,7 @@ template <tr::usize Size> consteval tr::string_literal<Size>::operator std::stri
 	return data;
 }
 
-template <tr::usize Size> template <typename... Args> consteval tr::string_literal<Size>::operator TR_FORMAT_STRING<Args...>() const
+template <tr::usize Size> template <typename... Args> consteval tr::string_literal<Size>::operator std::format_string<Args...>() const
 {
 	return std::string_view{*this};
 }

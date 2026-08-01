@@ -2,11 +2,6 @@
 //                                                                                                                                       //
 // Provides commonly included headers.                                                                                                   //
 //                                                                                                                                       //
-// In addition, the macros TR_FMT and TR_FMT_STRING are included to facilitate being able to use fmtlib in case of std::format not being //
-// implemented in the standard library.                                                                                                  //
-//     - TR_FMT::format("example") -> resolves to either std::format or fmt::format                                                      //
-//     - TR_FORMAT_STRING -> resolves to either std::format_string or fmt::fstring                                                       //
-//                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
@@ -29,6 +24,7 @@
 #include <deque>                                  // IWYU pragma: export
 #include <exception>                              // IWYU pragma: export
 #include <filesystem>                             // IWYU pragma: export
+#include <format>                                 // IWYU pragma: export
 #include <forward_list>                           // IWYU pragma: export
 #include <fstream>                                // IWYU pragma: export
 #include <functional>                             // IWYU pragma: export
@@ -58,15 +54,3 @@
 #include <utility>                                // IWYU pragma: export
 #include <variant>                                // IWYU pragma: export
 #include <vector>                                 // IWYU pragma: export
-
-#ifdef TR_HAS_STD_FORMAT
-#include <format> // IWYU pragma: export
-#define TR_FMT std
-#define TR_FORMAT_STRING std::format_string
-#else
-#include <fmt/base.h>   // IWYU pragma: export
-#include <fmt/chrono.h> // IWYU pragma: export
-#include <fmt/format.h> // IWYU pragma: export
-#define TR_FMT fmt
-#define TR_FORMAT_STRING fmt::fstring
-#endif

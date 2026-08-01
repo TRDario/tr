@@ -504,26 +504,26 @@ consteval tr::key_chord tr::keyboard_literals::operator""_kc(const char* cstr, u
 
 //////////////////////////////////////////////////////////////// FORMATTERS ///////////////////////////////////////////////////////////////
 
-template <typename FormatContext> constexpr auto TR_FMT::formatter<tr::scancode>::format(tr::scancode scan, FormatContext& ctx) const
+template <typename FormatContext> constexpr auto std::formatter<tr::scancode>::format(tr::scancode scan, FormatContext& ctx) const
 {
-	ctx.advance_to(TR_FMT::formatter<const char*>::format(name(scan), ctx));
+	ctx.advance_to(std::formatter<const char*>::format(name(scan), ctx));
 	return ctx.out();
 }
 
-template <typename FormatContext> constexpr auto TR_FMT::formatter<tr::scan_chord>::format(tr::scan_chord chord, FormatContext& ctx) const
+template <typename FormatContext> constexpr auto std::formatter<tr::scan_chord>::format(tr::scan_chord chord, FormatContext& ctx) const
 {
-	ctx.advance_to(TR_FMT::formatter<std::string>::format(chord.name(), ctx));
+	ctx.advance_to(std::formatter<std::string>::format(chord.name(), ctx));
 	return ctx.out();
 }
 
-template <typename FormatContext> constexpr auto TR_FMT::formatter<tr::keycode>::format(tr::keycode key, FormatContext& ctx) const
+template <typename FormatContext> constexpr auto std::formatter<tr::keycode>::format(tr::keycode key, FormatContext& ctx) const
 {
-	ctx.advance_to(TR_FMT::formatter<std::string>::format(name(key), ctx));
+	ctx.advance_to(std::formatter<std::string>::format(name(key), ctx));
 	return ctx.out();
 }
 
-template <typename FormatContext> constexpr auto TR_FMT::formatter<tr::key_chord>::format(tr::key_chord chord, FormatContext& ctx) const
+template <typename FormatContext> constexpr auto std::formatter<tr::key_chord>::format(tr::key_chord chord, FormatContext& ctx) const
 {
-	ctx.advance_to(TR_FMT::formatter<std::string>::format(chord.name(), ctx));
+	ctx.advance_to(std::formatter<std::string>::format(chord.name(), ctx));
 	return ctx.out();
 }

@@ -28,12 +28,12 @@ void tr::logger::replace_backend_with(Args&&... args)
 
 //
 
-template <typename... Args> void tr::logger::log(severity severity, TR_FORMAT_STRING<Args...> fmt, Args&&... args)
+template <typename... Args> void tr::logger::log(severity severity, std::format_string<Args...> fmt, Args&&... args)
 {
 	log(severity, std::format(fmt, std::forward<Args>(args)...));
 }
 
-template <typename... Args> void tr::logger::log_continue(TR_FORMAT_STRING<Args...> fmt, Args&&... args)
+template <typename... Args> void tr::logger::log_continue(std::format_string<Args...> fmt, Args&&... args)
 {
 	log_continue(std::format(fmt, std::forward<Args>(args)...));
 }

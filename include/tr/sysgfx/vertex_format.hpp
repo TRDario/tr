@@ -144,8 +144,8 @@ namespace tr {
 } // namespace tr
 
 // Vertex attribute formatter.
-template <> struct TR_FMT::formatter<tr::vertex_attribute> : private TR_FMT::formatter<const char*>, private TR_FMT::formatter<tr::u8> {
-	using TR_FMT::formatter<const char*>::parse;
+template <> struct std::formatter<tr::vertex_attribute> : private std::formatter<const char*>, private std::formatter<tr::u8> {
+	using std::formatter<const char*>::parse;
 	// Formats a vertex attribute.
 	template <typename FormatContext> constexpr auto format(tr::vertex_attribute v, FormatContext& ctx) const;
 };

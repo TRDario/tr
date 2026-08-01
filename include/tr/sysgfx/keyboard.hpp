@@ -254,22 +254,22 @@ template <> struct boost::hash<tr::key_chord> {
 };
 
 // Scancode formatter.
-template <> struct TR_FMT::formatter<tr::scancode> : public TR_FMT::formatter<const char*> {
+template <> struct std::formatter<tr::scancode> : public std::formatter<const char*> {
 	// Formats a scancode.
 	template <typename FormatContext> constexpr auto format(tr::scancode scan, FormatContext& ctx) const;
 };
 // Scan chord formatter.
-template <> struct TR_FMT::formatter<tr::scan_chord> : public TR_FMT::formatter<std::string> {
+template <> struct std::formatter<tr::scan_chord> : public std::formatter<std::string> {
 	// Formats a scan chord.
 	template <typename FormatContext> constexpr auto format(tr::scan_chord chord, FormatContext& ctx) const;
 };
 // Keycode formatter.
-template <> struct TR_FMT::formatter<tr::keycode> : public TR_FMT::formatter<std::string> {
+template <> struct std::formatter<tr::keycode> : public std::formatter<std::string> {
 	// Formats a keycode.
 	template <typename FormatContext> constexpr auto format(tr::keycode key, FormatContext& ctx) const;
 };
 // Key chord formatter.
-template <> struct TR_FMT::formatter<tr::key_chord> : public TR_FMT::formatter<std::string> {
+template <> struct std::formatter<tr::key_chord> : public std::formatter<std::string> {
 	// Formats a key chord.
 	template <typename FormatContext> constexpr auto format(tr::key_chord chord, FormatContext& ctx) const;
 };

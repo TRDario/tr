@@ -71,5 +71,5 @@ TEST(zstring_view_test, ostream)
 
 TEST(zstring_view_test, format)
 {
-	EXPECT_EQ(TR_FMT::format("{}", "test"_zsv), "test");
+	EXPECT_EQ(std::format("{}", "test"_zsv), "test");
 }

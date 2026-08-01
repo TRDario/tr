@@ -37,7 +37,7 @@ template <> inline constexpr tr::glsl_type tr::as_glsl_type<glm::mat4x3>{glsl_ty
 
 //////////////////////////////////////////////////////////////// FORMATTERS ///////////////////////////////////////////////////////////////
 
-template <typename FormatContext> constexpr auto TR_FMT::formatter<tr::glsl_type>::format(tr::glsl_type t, FormatContext& ctx) const
+template <typename FormatContext> constexpr auto std::formatter<tr::glsl_type>::format(tr::glsl_type t, FormatContext& ctx) const
 {
 	const char* str;
 	switch (t) {
@@ -123,20 +123,20 @@ template <typename FormatContext> constexpr auto TR_FMT::formatter<tr::glsl_type
 		str = "<unknown>";
 		break;
 	};
-	ctx.advance_to(TR_FMT::formatter<const char*>::format(str, ctx));
+	ctx.advance_to(std::formatter<const char*>::format(str, ctx));
 	return ctx.out();
 }
 
 template <typename FormatContext>
-constexpr auto TR_FMT::formatter<tr::glsl_variable>::format(const tr::glsl_variable& v, FormatContext& ctx) const
+constexpr auto std::formatter<tr::glsl_variable>::format(const tr::glsl_variable& v, FormatContext& ctx) const
 {
-	ctx.advance_to(TR_FMT::formatter<tr::glsl_type>::format(v.type, ctx));
+	ctx.advance_to(std::formatter<tr::glsl_type>::format(v.type, ctx));
 	if (v.array_size > 1) {
 		++*ctx.out() = '[';
-		ctx.advance_to(TR_FMT::formatter<int>::format(v.array_size, ctx));
+		ctx.advance_to(std::formatter<int>::format(v.array_size, ctx));
 		++*ctx.out() = ']';
 	}
 	++*ctx.out() = ' ';
-	ctx.advance_to(TR_FMT::formatter<const char*>::format(v.name.c_str(), ctx));
+	ctx.advance_to(std::formatter<const char*>::format(v.name.c_str(), ctx));
 	return ctx.out();
 }
