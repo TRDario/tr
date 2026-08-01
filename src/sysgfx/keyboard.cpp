@@ -12,7 +12,7 @@
 
 std::string tr::name(keycode key)
 {
-	return SDL_GetKeyName(to_underlying(key));
+	return SDL_GetKeyName(std::to_underlying(key));
 }
 
 tr::keycode tr::to_keycode_fallback(zstring_view str)
@@ -42,7 +42,7 @@ std::string tr::key_chord::name() const
 
 constexpr int tr::scan_state::to_index(scancode key)
 {
-	int index{to_underlying(key) - 4};
+	int index{std::to_underlying(key) - 4};
 	if (index >= 102) {
 		index -= 122;
 	}

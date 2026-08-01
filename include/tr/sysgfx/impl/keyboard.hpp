@@ -5,7 +5,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "../../utility/enum.hpp"
 #include "../keyboard.hpp"
 
 /////////////////////////////////////////////////////////// SCANCODE AND KEYCODE //////////////////////////////////////////////////////////
@@ -349,8 +348,8 @@ constexpr tr::keycode tr::to_keycode(zstring_view str)
 	}
 
 	const scancode scan{to_scancode(str)};
-	if (to_underlying(scan) >= 57) {
-		return keycode{to_underlying(scan) | (1 << 30)};
+	if (std::to_underlying(scan) >= 57) {
+		return keycode{std::to_underlying(scan) | (1 << 30)};
 	}
 
 	return to_keycode_fallback(str);
@@ -358,7 +357,7 @@ constexpr tr::keycode tr::to_keycode(zstring_view str)
 
 constexpr tr::zstring_view tr::name(scancode scan)
 {
-	return scancode_name_table[to_underlying(scan)];
+	return scancode_name_table[std::to_underlying(scan)];
 }
 
 ////////////////////////////////////////////////////////////////// CHORDS /////////////////////////////////////////////////////////////////

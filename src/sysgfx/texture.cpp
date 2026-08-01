@@ -8,7 +8,6 @@
 #include "../../include/tr/sysgfx/gl_defines.hpp"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/texture_view.hpp"
-#include "../../include/tr/utility/enum.hpp"
 
 ///////////////////////////////////////////////////////////// HELPER FUNCTIONS ////////////////////////////////////////////////////////////
 
@@ -284,8 +283,8 @@ void tr::texture::set_filtering(min_filter min_filter, mag_filter mag_filter)
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
 
-	gl.set_texture_parameter_i(m_handle.get(), GL_TEXTURE_MIN_FILTER, to_underlying(min_filter));
-	gl.set_texture_parameter_i(m_handle.get(), GL_TEXTURE_MAG_FILTER, to_underlying(mag_filter));
+	gl.set_texture_parameter_i(m_handle.get(), GL_TEXTURE_MIN_FILTER, std::to_underlying(min_filter));
+	gl.set_texture_parameter_i(m_handle.get(), GL_TEXTURE_MAG_FILTER, std::to_underlying(mag_filter));
 }
 
 void tr::texture::set_wrap(wrap wrap)
@@ -296,9 +295,9 @@ void tr::texture::set_wrap(wrap wrap)
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
 
-	gl.set_texture_parameter_i(m_handle.get(), GL_TEXTURE_WRAP_S, to_underlying(wrap));
-	gl.set_texture_parameter_i(m_handle.get(), GL_TEXTURE_WRAP_T, to_underlying(wrap));
-	gl.set_texture_parameter_i(m_handle.get(), GL_TEXTURE_WRAP_R, to_underlying(wrap));
+	gl.set_texture_parameter_i(m_handle.get(), GL_TEXTURE_WRAP_S, std::to_underlying(wrap));
+	gl.set_texture_parameter_i(m_handle.get(), GL_TEXTURE_WRAP_T, std::to_underlying(wrap));
+	gl.set_texture_parameter_i(m_handle.get(), GL_TEXTURE_WRAP_R, std::to_underlying(wrap));
 }
 
 void tr::texture::set_border_color(rgbaf color)

@@ -7,7 +7,6 @@
 #include "../../include/tr/sysgfx/vertex_format.hpp"
 #include "../../include/tr/sysgfx/gl_defines.hpp"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
-#include "../../include/tr/utility/enum.hpp"
 
 ////////////////////////////////////////////////////////////// VERTEX FORMAT //////////////////////////////////////////////////////////////
 
@@ -30,7 +29,7 @@ tr::vertex_format::vertex_format(graphics_context& context, std::span<const vert
 			TR_ASSERT(attribute.type != vertex_attribute_type::unknown, "Tried to construct vertex format with invalid attribute '{}'.",
 					  attribute);
 
-			gl.set_vertex_array_attribute_format(m_vao.get(), attr_id, attribute.elements, to_underlying(attribute.type),
+			gl.set_vertex_array_attribute_format(m_vao.get(), attr_id, attribute.elements, std::to_underlying(attribute.type),
 												 attribute.normalized, offset);
 			gl.enable_vertex_array_attribute(m_vao.get(), attr_id);
 			gl.set_vertex_array_attribute_binding(m_vao.get(), attr_id++, binding_id);

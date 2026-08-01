@@ -5,7 +5,6 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include "../../include/tr/sysgfx/dialog.hpp"
-#include "../../include/tr/utility/enum.hpp"
 #include <SDL3/SDL.h>
 
 using namespace std::chrono_literals;
@@ -30,20 +29,20 @@ namespace tr {
 
 tr::message_box_button tr::show_message_box(message_box_type type, message_box_layout buttons, zstring_view title, zstring_view message)
 {
-	const SDL_MessageBoxFlags flags{to_underlying(type)};
+	const SDL_MessageBoxFlags flags{std::to_underlying(type)};
 
 	switch (buttons) {
 	case message_box_layout::ok:
 		SDL_ShowSimpleMessageBox(flags, title.c_str(), message.c_str(), nullptr);
 		return message_box_button::ok;
 	case message_box_layout::yes_no: {
-		int selected{to_underlying(message_box_button::no)};
+		int selected{std::to_underlying(message_box_button::no)};
 		SDL_MessageBoxData data{flags, nullptr, title.c_str(), message.c_str(), 2, yes_no_buttons.data(), nullptr};
 		SDL_ShowMessageBox(&data, &selected);
 		return message_box_button(selected);
 	}
 	case message_box_layout::yes_no_cancel: {
-		int selected{to_underlying(message_box_button::cancel)};
+		int selected{std::to_underlying(message_box_button::cancel)};
 		SDL_MessageBoxData data{flags, nullptr, title.c_str(), message.c_str(), 3, yes_no_cancel_buttons.data(), nullptr};
 		SDL_ShowMessageBox(&data, &selected);
 		return message_box_button(selected);

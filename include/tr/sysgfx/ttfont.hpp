@@ -48,6 +48,7 @@
 #pragma once
 #include "../utility/alignment.hpp"
 #include "../utility/color.hpp"
+#include "../utility/enum.hpp"
 #include "../utility/exception.hpp"
 
 struct TTF_Font;

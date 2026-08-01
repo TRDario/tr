@@ -12,22 +12,22 @@
 
 constexpr tr::halign tr::to_halign(align align)
 {
-	return static_cast<halign>(to_underlying(align) % 3);
+	return static_cast<halign>(std::to_underlying(align) % 3);
 }
 
 constexpr tr::valign tr::to_valign(align align)
 {
-	return static_cast<valign>(to_underlying(align) - to_underlying(align) % 3);
+	return static_cast<valign>(std::to_underlying(align) - std::to_underlying(align) % 3);
 }
 
 constexpr tr::align tr::operator|(const valign& valign, const halign& halign)
 {
-	return static_cast<align>(to_underlying(halign) + to_underlying(valign));
+	return static_cast<align>(std::to_underlying(halign) + std::to_underlying(valign));
 }
 
 constexpr tr::align tr::operator|(const halign& halign, const valign& valign)
 {
-	return static_cast<align>(to_underlying(halign) + to_underlying(valign));
+	return static_cast<align>(std::to_underlying(halign) + std::to_underlying(valign));
 }
 
 //

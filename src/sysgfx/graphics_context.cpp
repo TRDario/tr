@@ -11,7 +11,6 @@
 #include "../../include/tr/sysgfx/shader_pipeline.hpp"
 #include "../../include/tr/sysgfx/texture.hpp"
 #include "../../include/tr/sysgfx/window.hpp"
-#include "../../include/tr/utility/enum.hpp"
 #include <SDL3/SDL.h>
 
 ////////////////////////////////////////////////////// GRAPHICS CONTEXT OPENING ERROR /////////////////////////////////////////////////////
@@ -224,7 +223,7 @@ const tr::vertex_format& tr::graphics_context::vertex2_format()
 tr::renderer_id tr::graphics_context::allocate_renderer_id()
 {
 	const renderer_id id{m_next_renderer_id};
-	m_next_renderer_id = renderer_id{to_underlying(m_next_renderer_id) + 1};
+	m_next_renderer_id = renderer_id{std::to_underlying(m_next_renderer_id) + 1};
 	return id;
 }
 
@@ -309,9 +308,9 @@ void tr::graphics_context::set_blend_mode(const blend_mode& bm)
 {
 	const gl_api& gl{make_current_and_return_gl_api()};
 
-	gl.set_separate_blend_equations(to_underlying(bm.rgb_fn), to_underlying(bm.alpha_fn));
-	gl.set_separate_blend_function(to_underlying(bm.rgb_src), to_underlying(bm.rgb_dst), to_underlying(bm.alpha_src),
-								   to_underlying(bm.alpha_dst));
+	gl.set_separate_blend_equations(std::to_underlying(bm.rgb_fn), std::to_underlying(bm.alpha_fn));
+	gl.set_separate_blend_function(std::to_underlying(bm.rgb_src), std::to_underlying(bm.rgb_dst), std::to_underlying(bm.alpha_src),
+								   std::to_underlying(bm.alpha_dst));
 }
 
 void tr::graphics_context::set_vertex_format(const vertex_format& format)
@@ -402,28 +401,28 @@ void tr::graphics_context::draw(primitive type, usize offset, usize vertices)
 {
 	const gl_api& gl{make_current_and_return_gl_api()};
 
-	gl.draw_arrays(to_underlying(type), offset, vertices);
+	gl.draw_arrays(std::to_underlying(type), offset, vertices);
 }
 
 void tr::graphics_context::draw_instances(primitive type, usize offset, usize vertices, int instances)
 {
 	const gl_api& gl{make_current_and_return_gl_api()};
 
-	gl.draw_arrays_instanced(to_underlying(type), offset, vertices, instances);
+	gl.draw_arrays_instanced(std::to_underlying(type), offset, vertices, instances);
 }
 
 void tr::graphics_context::draw_indexed(primitive type, usize offset, usize indices)
 {
 	const gl_api& gl{make_current_and_return_gl_api()};
 
-	gl.draw_elements(to_underlying(type), indices, GL_UNSIGNED_SHORT, reinterpret_cast<const void*>(offset * sizeof(u16)));
+	gl.draw_elements(std::to_underlying(type), indices, GL_UNSIGNED_SHORT, reinterpret_cast<const void*>(offset * sizeof(u16)));
 }
 
 void tr::graphics_context::draw_indexed_instances(primitive type, usize offset, usize indices, int instances)
 {
 	const gl_api& gl{make_current_and_return_gl_api()};
 
-	gl.draw_elements_instanced(to_underlying(type), indices, GL_UNSIGNED_SHORT, reinterpret_cast<const void*>(offset * sizeof(u16)),
+	gl.draw_elements_instanced(std::to_underlying(type), indices, GL_UNSIGNED_SHORT, reinterpret_cast<const void*>(offset * sizeof(u16)),
 							   instances);
 }
 

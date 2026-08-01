@@ -6,7 +6,6 @@
 
 #include "../../include/tr/sysgfx/window.hpp"
 #include "../../include/tr/sysgfx/bitmap.hpp"
-#include "../../include/tr/utility/enum.hpp"
 #include <SDL3/SDL.h>
 
 /////////////////////////////////////////////////////////// WINDOW OPENING ERROR //////////////////////////////////////////////////////////
@@ -186,7 +185,7 @@ void tr::window_view::disable_text_input() const
 
 void tr::window_view::set_vsync(vsync vsync) const
 {
-	if (!SDL_GL_SetSwapInterval(to_underlying(vsync))) {
+	if (!SDL_GL_SetSwapInterval(std::to_underlying(vsync))) {
 		if (vsync == vsync::adaptive) {
 			set_vsync(vsync::enabled);
 		}
@@ -369,7 +368,7 @@ void tr::window::set_vsync(vsync vsync)
 
 void tr::window::set_mouse_mode(mouse_mode mode)
 {
-	if (!SDL_SetWindowRelativeMouseMode(m_ptr.get(), to_underlying(mode))) {
+	if (!SDL_SetWindowRelativeMouseMode(m_ptr.get(), std::to_underlying(mode))) {
 		throw window_error("Failed to set mouse mode on window '{}'.", title());
 	}
 

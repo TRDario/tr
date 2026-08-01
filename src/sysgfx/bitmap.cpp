@@ -6,7 +6,6 @@
 
 #include "../../include/tr/sysgfx/bitmap.hpp"
 #include "../../include/tr/sysgfx/bitmap_iterators.hpp"
-#include "../../include/tr/utility/enum.hpp"
 #include <SDL3/SDL.h>
 #include <SDL3_image/SDL_image.h>
 
@@ -28,7 +27,7 @@ namespace tr {
 
 int tr::pixel_bytes(pixel_format format)
 {
-	return SDL_BYTESPERPIXEL(to_underlying(format));
+	return SDL_BYTESPERPIXEL(std::to_underlying(format));
 }
 
 ////////////////////////////////////////////////////////////// BITMAP ERRORS //////////////////////////////////////////////////////////////

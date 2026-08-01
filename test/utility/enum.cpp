@@ -17,8 +17,6 @@ enum class test_enum : tr::u8 {
 };
 TR_DEFINE_ENUM_BITMASK_OPERATORS(test_enum);
 
-static_assert(test_enum::ac == test_enum{tr::to_underlying(test_enum::ac)});
-
 static_assert((test_enum::ac & test_enum::a) == test_enum::a);
 static_assert((test_enum::ac & test_enum::c) == test_enum::c);
 static_assert((test_enum::a | test_enum::c) == test_enum::ac);

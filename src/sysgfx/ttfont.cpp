@@ -124,7 +124,7 @@ void tr::ttfont::resize(float size)
 
 void tr::ttfont::set_style(ttf_style style)
 {
-	TTF_SetFontStyle(m_ptr.get(), to_underlying(style));
+	TTF_SetFontStyle(m_ptr.get(), std::to_underlying(style));
 }
 
 void tr::ttfont::set_outline(int outline)

@@ -13,7 +13,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "enum.hpp"
+#include "integer.hpp"
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
@@ -32,15 +32,15 @@ namespace tr {
 	};
 	// 2D alignment.
 	enum class align : u8 {
-		tl = to_underlying(valign::top) + to_underlying(halign::left),      // Top-left alignment.
-		tc = to_underlying(valign::top) + to_underlying(halign::center),    // Top-center alignment.
-		tr = to_underlying(valign::top) + to_underlying(halign::right),     // Top-right alignment.
-		cl = to_underlying(valign::center) + to_underlying(halign::left),   // Center-left alignment.
-		cc = to_underlying(valign::center) + to_underlying(halign::center), // Center alignment.
-		cr = to_underlying(valign::center) + to_underlying(halign::right),  // Center-right alignment.
-		bl = to_underlying(valign::bottom) + to_underlying(halign::left),   // Bottom-left alignment.
-		bc = to_underlying(valign::bottom) + to_underlying(halign::center), // Bottom-center alignment.
-		br = to_underlying(valign::bottom) + to_underlying(halign::right)   // Bottom-right alignment.
+		tl = std::to_underlying(valign::top) + std::to_underlying(halign::left),      // Top-left alignment.
+		tc = std::to_underlying(valign::top) + std::to_underlying(halign::center),    // Top-center alignment.
+		tr = std::to_underlying(valign::top) + std::to_underlying(halign::right),     // Top-right alignment.
+		cl = std::to_underlying(valign::center) + std::to_underlying(halign::left),   // Center-left alignment.
+		cc = std::to_underlying(valign::center) + std::to_underlying(halign::center), // Center alignment.
+		cr = std::to_underlying(valign::center) + std::to_underlying(halign::right),  // Center-right alignment.
+		bl = std::to_underlying(valign::bottom) + std::to_underlying(halign::left),   // Bottom-left alignment.
+		bc = std::to_underlying(valign::bottom) + std::to_underlying(halign::center), // Bottom-center alignment.
+		br = std::to_underlying(valign::bottom) + std::to_underlying(halign::right)   // Bottom-right alignment.
 	};
 	// Converts a 2D alignment to a horizontal alignment.
 	constexpr halign to_halign(align align);

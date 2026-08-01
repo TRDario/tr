@@ -33,10 +33,3 @@ template <tr::enumerator Enum> constexpr Enum tr::enum_wrapper<Enum>::unwrap() c
 {
 	return m_value;
 }
-
-////////////////////////////////////////////////////////////// TO UNDERLYING //////////////////////////////////////////////////////////////
-
-template <tr::enumerator Enum> constexpr std::underlying_type_t<Enum> tr::to_underlying(Enum enumerator)
-{
-	return static_cast<std::underlying_type_t<Enum>>(enumerator);
-}
