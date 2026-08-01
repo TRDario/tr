@@ -153,6 +153,8 @@ namespace tr {
 		sub_bitmap sub(const rectangle<int>& region);
 
 		// Gets immutable access to a pixel of the bitmap.
+		reference operator[](int x, int y) const;
+		// Gets immutable access to a pixel of the bitmap.
 		reference operator[](glm::ivec2 pos) const;
 
 		// Gets an immutable iterator to the beginning of the sub-bitmap.
@@ -199,6 +201,8 @@ namespace tr {
 		// Gets the size of the bitmap.
 		glm::ivec2 size() const;
 
+		// Gets immutable access to a pixel of the bitmap.
+		reference operator[](int x, int y) const;
 		// Gets immutable access to a pixel of the bitmap.
 		reference operator[](glm::ivec2 pos) const;
 
@@ -267,7 +271,11 @@ namespace tr {
 		glm::ivec2 size() const;
 
 		// Gets mutable access to a pixel of the bitmap.
+		reference operator[](int x, int y);
+		// Gets mutable access to a pixel of the bitmap.
 		reference operator[](glm::ivec2 pos);
+		// Gets immutable access to a pixel of the bitmap.
+		const_reference operator[](int x, int y) const;
 		// Gets immutable access to a pixel of the bitmap.
 		const_reference operator[](glm::ivec2 pos) const;
 

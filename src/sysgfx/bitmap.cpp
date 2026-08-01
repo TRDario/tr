@@ -102,6 +102,11 @@ tr::sub_bitmap tr::sub_bitmap::sub(const rectangle<int>& region)
 	return {m_ptr, {region.tl + region.tl, region.size}};
 }
 
+tr::sub_bitmap::reference tr::sub_bitmap::operator[](int x, int y) const
+{
+	return *(begin() + glm::ivec2{x, y});
+}
+
 tr::sub_bitmap::reference tr::sub_bitmap::operator[](glm::ivec2 pos) const
 {
 	return *(begin() + pos);
@@ -168,6 +173,11 @@ void tr::bitmap_view::deleter::operator()(SDL_Surface* ptr) const
 glm::ivec2 tr::bitmap_view::size() const
 {
 	return {m_ptr->w, m_ptr->h};
+}
+
+tr::bitmap_view::reference tr::bitmap_view::operator[](int x, int y) const
+{
+	return *(begin() + glm::ivec2{x, y});
 }
 
 tr::bitmap_view::reference tr::bitmap_view::operator[](glm::ivec2 pos) const
@@ -280,9 +290,19 @@ glm::ivec2 tr::bitmap::size() const
 	return {m_ptr->w, m_ptr->h};
 }
 
+tr::bitmap::reference tr::bitmap::operator[](int x, int y)
+{
+	return *(begin() + glm::ivec2{x, y});
+}
+
 tr::bitmap::reference tr::bitmap::operator[](glm::ivec2 pos)
 {
 	return *(begin() + pos);
+}
+
+tr::bitmap::const_reference tr::bitmap::operator[](int x, int y) const
+{
+	return *(begin() + glm::ivec2{x, y});
 }
 
 tr::bitmap::const_reference tr::bitmap::operator[](glm::ivec2 pos) const
