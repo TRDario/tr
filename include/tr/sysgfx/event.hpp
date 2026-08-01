@@ -6,10 +6,10 @@
 // into one of its possible subtypes. This can be done using using a visitor using the .visit() method, or by using the .is<T>() and     //
 // .as<T>() methods to check for and convert to a specific type:                                                                         //
 //     - if (event.is<tr::key_down_event>()) {                                                                                           //
-//           tr::println("Pressed {}", event.as<tr::key_down_event>().span);                                                             //
+//           std::println("Pressed {}", event.as<tr::key_down_event>().span);                                                            //
 //       }                                                                                                                               //
 //       else if (event.is<tr::key_up_event>()) {                                                                                        //
-//           tr::println("Released {}", event.as<tr::key_up_event>().span);                                                              //
+//           std::println("Released {}", event.as<tr::key_up_event>().span);                                                             //
 //       }                                                                                                                               //
 //                                                                                                                                       //
 // Key-down events are convertible into both chord types:                                                                                //

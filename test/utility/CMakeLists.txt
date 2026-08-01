@@ -20,7 +20,6 @@ add_executable(
 	ranges.cpp
 	rectangle_edges.cpp
 	rectangle.cpp
-	print.cpp
 	reference.cpp
 	rng.cpp
 	static_vector.cpp

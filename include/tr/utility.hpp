@@ -33,7 +33,6 @@
 #include "utility/mstream.hpp"          // IWYU pragma: export
 #include "utility/norm_cast.hpp"        // IWYU pragma: export
 #include "utility/polygon.hpp"          // IWYU pragma: export
-#include "utility/print.hpp"            // IWYU pragma: export
 #include "utility/ranges.hpp"           // IWYU pragma: export
 #include "utility/rectangle.hpp"        // IWYU pragma: export
 #include "utility/rectangle_edges.hpp"  // IWYU pragma: export

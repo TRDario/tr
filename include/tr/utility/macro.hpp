@@ -58,6 +58,7 @@
 		::tr::error_logger.log(::tr::severity::fatal, "Unreachable code section reached at " file ":" TR_STRINGIFY(line) ".");             \
 		std::abort();                                                                                                                      \
 	} while (0)
+#define TR_UNREACHABLE TR_IMPL_UNREACHABLE(TR_FILENAME, __LINE__)
 #else
 #define TR_UNREACHABLE std::unreachable()
 #endif

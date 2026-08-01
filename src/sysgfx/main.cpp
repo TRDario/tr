@@ -8,7 +8,6 @@
 #include "../../include/tr/sysgfx/main.hpp"
 #include "../../include/tr/sysgfx/dialog.hpp"
 #include "../../include/tr/utility/logger.hpp"
-#include "../../include/tr/utility/print.hpp"
 #include "../../include/tr/utility/reference.hpp"
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
@@ -107,10 +106,10 @@ extern "C"
 		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_TYPE_STRING, app::metadata.type == tr::app_type::game ? "game" : "application");
 		if (!app::metadata.name.empty()) {
 			if (!app::metadata.version.empty()) {
-				tr::println("Launching {} {}.", app::metadata.name, app::metadata.version);
+				std::println("Launching {} {}.", app::metadata.name, app::metadata.version);
 			}
 			else {
-				tr::println("Launching {}.", app::metadata.name);
+				std::println("Launching {}.", app::metadata.name);
 			}
 		}
 

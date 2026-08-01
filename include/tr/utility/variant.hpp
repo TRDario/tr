@@ -7,8 +7,8 @@
 //     - std::variant<int, char, float> v{5.0f}; tr::get_if<char>(v) -> std::nullopt                                                     //
 //                                                                                                                                       //
 // Functions that call a function if a variant contains a specific type are provided through tr::if_is:                                  //
-//     - std::variant<int, char, float> v{5.0f}; tr::if_is<int>(v, [](int v) { tr::println("{}", v); }) -> doesn't output anything       //
-//     - std::variant<int, char, float> v{5.0f}; tr::if_is<float>(v, [](float v) { tr::println("{}", v); }) -> "5.0"                     //
+//     - std::variant<int, char, float> v{5.0f}; tr::if_is<int>(v, [](int v) { std::println("{}", v); }) -> doesn't output anything      //
+//     - std::variant<int, char, float> v{5.0f}; tr::if_is<float>(v, [](float v) { std::println("{}", v); }) -> "5.0"                    //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

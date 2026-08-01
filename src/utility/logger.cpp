@@ -7,7 +7,6 @@
 #include "../../include/tr/utility/logger.hpp"
 #include "../../include/tr/utility/chrono.hpp"
 #include "../../include/tr/utility/iostream.hpp"
-#include "../../include/tr/utility/print.hpp"
 #include "../../include/tr/utility/ranges.hpp"
 
 ////////////////////////////////////////////////////////////// CONSOLE LOGGER /////////////////////////////////////////////////////////////
@@ -51,14 +50,14 @@ namespace tr {
 void tr::console_logger::log(const std::tm& time, severity severity, std::string_view string)
 {
 	const usize padding{std::ranges::max_element(registered_console_loggers(), std::less{}, string_size)->size() - m_name.size()};
-	println("[{:02}:{:02}:{:02}] [{}]{:{}} [{}] {}", time.tm_hour, time.tm_min, time.tm_sec, m_name, "", padding,
-			static_cast<char>(severity), string);
+	std::println("[{:02}:{:02}:{:02}] [{}]{:{}} [{}] {}", time.tm_hour, time.tm_min, time.tm_sec, m_name, "", padding,
+				 static_cast<char>(severity), string);
 }
 
 void tr::console_logger::log_continue(std::string_view string)
 {
 	const usize padding{std::ranges::max_element(registered_console_loggers(), std::less{}, string_size)->size() + 14};
-	println("{:{}}--- {}", "", padding, string);
+	std::println("{:{}}--- {}", "", padding, string);
 }
 
 /////////////////////////////////////////////////////////////// FILE LOGGER ///////////////////////////////////////////////////////////////
@@ -77,13 +76,13 @@ tr::file_logger::file_logger(std::filesystem::path&& path)
 void tr::file_logger::log(const std::tm& time, severity severity, std::string_view string)
 {
 	std::ofstream file{m_path, std::ios::app};
-	println_to(file, "[{:02}:{:02}:{:02}] [{}] {}", time.tm_hour, time.tm_min, time.tm_sec, char(severity), string);
+	std::println(file, "[{:02}:{:02}:{:02}] [{}] {}", time.tm_hour, time.tm_min, time.tm_sec, char(severity), string);
 }
 
 void tr::file_logger::log_continue(std::string_view string)
 {
 	std::ofstream file{m_path, std::ios::app};
-	println_to(file, "           --- {}", string);
+	std::println(file, "           --- {}", string);
 }
 
 ///////////////////////////////////////////////////////// CONSOLE AND FILE LOGGER /////////////////////////////////////////////////////////

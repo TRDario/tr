@@ -39,6 +39,7 @@
 #include <numbers>                                // IWYU pragma: export
 #include <numeric>                                // IWYU pragma: export
 #include <optional>                               // IWYU pragma: export
+#include <print>                                  // IWYU pragma: export
 #include <queue>                                  // IWYU pragma: export
 #include <ranges>                                 // IWYU pragma: export
 #include <set>                                    // IWYU pragma: export
