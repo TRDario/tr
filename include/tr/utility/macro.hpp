@@ -13,9 +13,6 @@
 //       }                                                                                                                               //
 //       -> Cases besides 1 and 2 are marked as unreachable                                                                              //
 //                                                                                                                                       //
-// TR_ASSUME(condition) hints to the compiler that the condition is assumed and can be optimized for:                                    //
-//     - TR_ASSUME(ptr != nullptr) -> Assume that the pointer is not null.                                                               //
-//                                                                                                                                       //
 // TR_STRINGIFY(x) expands into the string representation of x:                                                                          //
 //     - TR_STRINGIFY(a < 9) -> "a < 9"                                                                                                  //
 //                                                                                                                                       //
@@ -61,23 +58,8 @@
 		::tr::error_logger.log(::tr::severity::fatal, "Unreachable code section reached at " file ":" TR_STRINGIFY(line) ".");             \
 		std::abort();                                                                                                                      \
 	} while (0)
-#define TR_UNREACHABLE TR_IMPL_UNREACHABLE(TR_FILENAME, __LINE__)
-#elif defined(__GNUC__) || defined(__clang__)
-#define TR_UNREACHABLE __builtin_unreachable()
-#elifdef(_MSC_VER)
-#define TR_UNREACHABLE __assume(false)
 #else
-#define TR_UNREACHABLE void(0)
-#endif
-
-#ifdef __clang__
-#define TR_ASSUME(condition) __builtin_assume(condition)
-#elifdef(_MSC_VER)
-#define TR_ASSUME(condition) __assume(condition)
-#elifdef(__GNUC__)
-#define TR_ASSUME(condition) ((condition) ? (void(0)) : (__builtin_unreachable()))
-#else
-#define TR_ASSUME(condition) void(0)
+#define TR_UNREACHABLE std::unreachable()
 #endif
 
 #define TR_IMPL_STRINGIFY(x) #x
@@ -117,4 +99,4 @@
 #endif
 
 #define TR_UNSPECIALIZED_VARIABLE_TEMPLATE(template_arg, return_type, message)                                                             \
-	[]() -> return_type { static_assert(unspecialized<template_arg>, message); }()
+	[] -> return_type { static_assert(unspecialized<template_arg>, message); }()
