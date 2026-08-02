@@ -19,6 +19,7 @@
 #include "utility/encryption.hpp"       // IWYU pragma: export
 #include "utility/enum.hpp"             // IWYU pragma: export
 #include "utility/exception.hpp"        // IWYU pragma: export
+#include "utility/function_traits.hpp"  // IWYU pragma: export
 #include "utility/handle.hpp"           // IWYU pragma: export
 #include "utility/hash_map.hpp"         // IWYU pragma: export
 #include "utility/integer.hpp"          // IWYU pragma: export

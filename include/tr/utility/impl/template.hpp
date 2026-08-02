@@ -114,53 +114,11 @@ template <typename T, template <typename, auto, typename...> typename Template> 
 template <typename T, auto S, typename... Args, template <typename, auto, typename...> typename Template>
 struct tr::is_specialization_of_tv<Template<T, S, Args...>, Template> : std::true_type {};
 
-///////////////////////////////////////////////////////////// FUNCTION TRAITS /////////////////////////////////////////////////////////////
+//
 
-template <typename Functor> struct tr::function_traits {
-	using return_type = function_traits<decltype(&Functor::operator())>::return_type;
-	using args_tuple = function_traits<decltype(&Functor::operator())>::args_tuple;
-	template <usize N> using nth_arg_type = std::tuple_element_t<N, args_tuple>;
-};
-template <typename Return, typename... Args> struct tr::function_traits<Return(Args...)> {
-	using return_type = Return;
-	using args_tuple = std::tuple<Args...>;
-	template <usize N> using nth_arg_type = std::tuple_element_t<N, args_tuple>;
-};
-template <typename Return, typename Class, typename... Args> struct tr::function_traits<Return (Class::*)(Args...)> {
-	using return_type = Return;
-	using class_type = Class;
-	using args_tuple = std::tuple<Args...>;
-	template <usize N> using nth_arg_type = std::tuple_element_t<N, args_tuple>;
-};
-template <typename Return, typename... Args> struct tr::function_traits<Return (*)(Args...)> : function_traits<Return(Args...)> {};
-template <typename Return, typename... Args> struct tr::function_traits<Return (&)(Args...)> : function_traits<Return(Args...)> {};
-template <typename Return, typename... Args> struct tr::function_traits<Return(Args...) noexcept> : function_traits<Return(Args...)> {};
-template <typename Return, typename... Args> struct tr::function_traits<Return (*)(Args...) noexcept> : function_traits<Return(Args...)> {};
-template <typename Return, typename... Args> struct tr::function_traits<Return (&)(Args...) noexcept> : function_traits<Return(Args...)> {};
-template <typename Return, typename Class, typename... Args>
-struct tr::function_traits<Return (Class::*)(Args...) const> : function_traits<Return (Class::*)(Args...)> {};
-template <typename Return, typename Class, typename... Args>
-struct tr::function_traits<Return (Class::*)(Args...) &> : function_traits<Return (Class::*)(Args...)> {};
-template <typename Return, typename Class, typename... Args>
-struct tr::function_traits<Return (Class::*)(Args...) const&> : function_traits<Return (Class::*)(Args...)> {};
-template <typename Return, typename Class, typename... Args>
-struct tr::function_traits<Return (Class::*)(Args...) &&> : function_traits<Return (Class::*)(Args...)> {};
-template <typename Return, typename Class, typename... Args>
-struct tr::function_traits<Return (Class::*)(Args...) const&&> : function_traits<Return (Class::*)(Args...)> {};
-template <typename Return, typename Class, typename... Args>
-struct tr::function_traits<Return (Class::*)(Args...) noexcept> : function_traits<Return (Class::*)(Args...)> {};
-template <typename Return, typename Class, typename... Args>
-struct tr::function_traits<Return (Class::*)(Args...) const noexcept> : function_traits<Return (Class::*)(Args...)> {};
-template <typename Return, typename Class, typename... Args>
-struct tr::function_traits<Return (Class::*)(Args...) & noexcept> : function_traits<Return (Class::*)(Args...)> {};
-template <typename Return, typename Class, typename... Args>
-struct tr::function_traits<Return (Class::*)(Args...) const & noexcept> : function_traits<Return (Class::*)(Args...)> {};
-template <typename Return, typename Class, typename... Args>
-struct tr::function_traits<Return (Class::*)(Args...) && noexcept> : function_traits<Return (Class::*)(Args...)> {};
-template <typename Return, typename Class, typename... Args>
-struct tr::function_traits<Return (Class::*)(Args...) const && noexcept> : function_traits<Return (Class::*)(Args...)> {};
-
-template <typename Function> struct tr::wrapped_invocable {
+template <typename Function>
+struct tr::wrapped_invocable
+{
 	using type = std::remove_cvref_t<Function>;
 };
 template <typename Return, typename... Args> struct tr::wrapped_invocable<Return(Args...)> {

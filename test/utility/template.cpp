@@ -4,6 +4,7 @@
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+#include <tr/utility/function_traits.hpp>
 #include <tr/utility/template.hpp>
 
 static_assert(tr::concatenate_string_literals("test", "tost", "tist") == std::string_view{"testtosttist"});
@@ -16,7 +17,10 @@ static_assert(std::same_as<tr::size_type_t<1000>, tr::u16>);
 static_assert(std::same_as<tr::size_type_t<100000>, tr::u32>);
 static_assert(std::same_as<tr::size_type_t<10000000000>, tr::u64>);
 
-template <int A, typename B> struct vt_template {};
+template <int A, typename B>
+struct vt_template
+{
+};
 static_assert(!tr::is_specialization_of<std::string, std::vector>::value);
 static_assert(tr::is_specialization_of<std::vector<int>, std::vector>::value);
 static_assert(!tr::is_specialization_of_v<std::string, std::ratio>::value);
@@ -26,7 +30,8 @@ static_assert(tr::is_specialization_of_vt<vt_template<10, int>, vt_template>::va
 static_assert(!tr::is_specialization_of_tv<std::string, std::array>::value);
 static_assert(tr::is_specialization_of_tv<std::array<int, 10>, std::array>::value);
 
-struct method_examples {
+struct method_examples
+{
 	constexpr int test0(float, float)
 	{
 		return true;
@@ -38,6 +43,7 @@ struct method_examples {
 	int test4() &&;
 	int test5() const&&;
 };
+
 static_assert(std::same_as<tr::return_type_t<int(float, int)>, int>);
 static_assert(std::same_as<tr::return_type_t<int (*)(float, int)>, int>);
 static_assert(std::same_as<tr::return_type_t<int (&)(float, int)>, int>);
