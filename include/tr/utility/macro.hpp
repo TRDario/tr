@@ -42,7 +42,7 @@
 // TR_UNSPECIALIZED_VARIABLE_TEMPLATE(template_arg, return_type, message) is used when declaring variable templates to disable the       //
 // default specialization with an error:                                                                                                 //
 //     - template <typename T> constexpr int my_const{TR_UNSPECIALIZED_VARIABLE_TEMPLATE(T, int, "Nope!")}                               //
-//     - my_const<int> -> static assertion failed to requirement 'unspecialized<int>': Nope!                                             //
+//     - my_const<int> -> static assertion failed: Nope!                                                                                 //
 //                                                                                                                                       //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -99,5 +99,4 @@
 #define TR_PATH_CSTR(path) (path).c_str()
 #endif
 
-#define TR_UNSPECIALIZED_VARIABLE_TEMPLATE(template_arg, return_type, message)                                                             \
-	[] -> return_type { static_assert(unspecialized<template_arg>, message); }()
+#define TR_UNSPECIALIZED_VARIABLE_TEMPLATE(template_arg, return_type, message) [] -> return_type { static_assert(false, message); }()
