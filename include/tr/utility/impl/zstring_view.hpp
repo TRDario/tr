@@ -1,13 +1,20 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements zstring_view.hpp.                                                                                                          //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements zstring_view.hpp.
 
 #pragma once
 #include "../zstring_view.hpp"
 
 //////////////////////////////////////////////////// BASIC NULL-TERMINATED STRING VIEW ////////////////////////////////////////////////////
+
+//
+
+template <typename CharT, typename Traits>
+constexpr bool tr::basic_zstring_view<CharT, Traits>::iterator::operator==(end_sentinel) const
+{
+	return *this == iterator{} || Traits::eq(**this, CharT{});
+}
+
+//
 
 template <typename CharT, typename Traits>
 constexpr tr::basic_zstring_view<CharT, Traits>::basic_zstring_view(const CharT* ptr)
@@ -24,38 +31,10 @@ constexpr tr::basic_zstring_view<CharT, Traits>::basic_zstring_view(const std::b
 
 //
 
-template <typename CharT> constexpr bool tr::operator==(const CharT* l, zstring_view_end_sentinel)
-{
-	return l == nullptr || *l == CharT{0};
-}
-
-template <typename CharT, typename Traits>
-constexpr bool tr::operator==(basic_zstring_view<CharT, Traits> l, std::type_identity_t<basic_zstring_view<CharT, Traits>> r)
-{
-	return std::ranges::equal(l, r);
-}
-
-template <typename CharT, typename Traits>
-constexpr std::strong_ordering tr::operator<=>(basic_zstring_view<CharT, Traits> l,
-											   std::type_identity_t<basic_zstring_view<CharT, Traits>> r)
-{
-	typename basic_zstring_view<CharT, Traits>::const_iterator l_it{l.begin()};
-	typename basic_zstring_view<CharT, Traits>::const_iterator r_it{r.begin()};
-	while (l_it != l.end() && r_it != r.end()) {
-		const std::strong_ordering cmp{*l_it++ <=> *r_it++};
-		if (cmp != std::strong_ordering::equal) {
-			return cmp;
-		}
-	}
-	return l_it != l.end() ? std::strong_ordering::greater : r_it != r.end() ? std::strong_ordering::less : std::strong_ordering::equal;
-}
-
-//
-
 template <typename CharT, typename Traits>
 constexpr tr::basic_zstring_view<CharT, Traits>::operator std::basic_string_view<CharT, Traits>() const
 {
-	return m_ptr;
+	return !empty() ? m_ptr : std::string_view{};
 }
 
 //
@@ -63,13 +42,13 @@ constexpr tr::basic_zstring_view<CharT, Traits>::operator std::basic_string_view
 template <typename CharT, typename Traits>
 constexpr tr::basic_zstring_view<CharT, Traits>::iterator tr::basic_zstring_view<CharT, Traits>::begin() const
 {
-	return m_ptr;
+	return iterator{m_ptr};
 }
 
 template <typename CharT, typename Traits>
 constexpr tr::basic_zstring_view<CharT, Traits>::const_iterator tr::basic_zstring_view<CharT, Traits>::cbegin() const
 {
-	return m_ptr;
+	return const_iterator{m_ptr};
 }
 
 template <typename CharT, typename Traits>
@@ -118,19 +97,22 @@ constexpr tr::basic_zstring_view<CharT, Traits>::const_pointer tr::basic_zstring
 
 //
 
-template <typename CharT, typename Traits> constexpr tr::usize tr::basic_zstring_view<CharT, Traits>::length() const
+template <typename CharT, typename Traits>
+constexpr tr::usize tr::basic_zstring_view<CharT, Traits>::length() const
 {
 	return std::string_view{*this}.length();
 }
 
-template <typename CharT, typename Traits> constexpr bool tr::basic_zstring_view<CharT, Traits>::empty() const
+template <typename CharT, typename Traits>
+constexpr bool tr::basic_zstring_view<CharT, Traits>::empty() const
 {
-	return m_ptr == nullptr || *m_ptr == CharT{0};
+	return m_ptr == nullptr || Traits::eq(*m_ptr, CharT{});
 }
 
 //
 
-template <typename CharT, typename Traits> constexpr void tr::basic_zstring_view<CharT, Traits>::remove_prefix(size_type n)
+template <typename CharT, typename Traits>
+constexpr void tr::basic_zstring_view<CharT, Traits>::remove_prefix(size_type n)
 {
 	m_ptr += n;
 }
@@ -153,15 +135,50 @@ constexpr tr::zstring_view tr::operator""_zsv(const char* str, std::size_t) noex
 //
 
 template <typename CharT, typename Traits>
-std::basic_ostream<CharT, Traits>& tr::operator<<(std::basic_ostream<CharT, Traits>& os, basic_zstring_view<CharT, Traits> v)
+constexpr std::strong_ordering tr::basic_zstring_view<CharT, Traits>::operator<=>(this basic_zstring_view lhs,
+																				  std::type_identity_t<basic_zstring_view> rhs)
 {
-	return os << v.c_str();
+	typename basic_zstring_view<CharT, Traits>::const_iterator lhs_it{lhs.begin()};
+	typename basic_zstring_view<CharT, Traits>::const_iterator rhs_it{rhs.begin()};
+	while (lhs_it != lhs.end() && rhs_it != rhs.end()) {
+		const bool equal{Traits::eq(*lhs_it, *rhs_it)};
+		if (!equal) {
+			const bool lt{Traits::lt(*lhs_it, *rhs_it)};
+			return lt ? std::strong_ordering::less : std::strong_ordering::greater;
+		}
+		++lhs_it, ++rhs_it;
+	}
+	return lhs_it != lhs.end()   ? std::strong_ordering::greater
+		   : rhs_it != rhs.end() ? std::strong_ordering::less
+								 : std::strong_ordering::equal;
+}
+
+template <typename CharT, typename Traits>
+constexpr bool tr::basic_zstring_view<CharT, Traits>::operator==(this basic_zstring_view lhs, std::type_identity_t<basic_zstring_view> rhs)
+{
+	typename basic_zstring_view<CharT, Traits>::const_iterator lhs_it{lhs.begin()};
+	typename basic_zstring_view<CharT, Traits>::const_iterator rhs_it{rhs.begin()};
+	while (lhs_it != lhs.end() && rhs_it != rhs.end()) {
+		const bool equal{Traits::eq(*lhs_it++, *rhs_it++)};
+		if (!equal) {
+			return false;
+		}
+	}
+	return lhs_it == lhs.end() && rhs_it == rhs.end();
 }
 
 //
 
 template <typename CharT, typename Traits>
-std::filesystem::path tr::operator/(const std::filesystem::path& l, basic_zstring_view<CharT, Traits> r)
+std::basic_ostream<CharT, Traits>& tr::operator<<(std::basic_ostream<CharT, Traits>& os, basic_zstring_view<CharT, Traits> zstr)
 {
-	return l / std::filesystem::path{r.c_str()};
+	return os << zstr.c_str();
+}
+
+//
+
+template <typename CharT, typename Traits>
+std::filesystem::path tr::operator/(const std::filesystem::path& lhs, basic_zstring_view<CharT, Traits> rhs)
+{
+	return lhs / std::filesystem::path{rhs.c_str()};
 }
