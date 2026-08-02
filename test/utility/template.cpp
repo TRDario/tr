@@ -5,6 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include <tr/utility/function_traits.hpp>
+#include <tr/utility/specialization_of.hpp>
 #include <tr/utility/template.hpp>
 
 static_assert(tr::concatenate_string_literals("test", "tost", "tist") == std::string_view{"testtosttist"});

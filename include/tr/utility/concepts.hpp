@@ -83,32 +83,10 @@ namespace tr {
 	template <typename Range, typename Element>
 	concept borrowed_typed_contiguous_mutable_range = typed_contiguous_mutable_range<Range, Element> && std::ranges::borrowed_range<Range>;
 
-	// Concept denoting a specialization of a template with type parameters.
-	template <typename T, template <typename...> typename Z>
-	concept specialization_of = is_specialization_of<T, Z>::value;
-	// Concept denoting a specialization of a template with value parameters.
-	template <typename T, template <auto...> typename Z>
-	concept specialization_of_v = is_specialization_of_v<T, Z>::value;
-	// Concept denoting a specialization of a template with a leading value parameter.
-	template <typename T, template <auto, typename...> typename Z>
-	concept specialization_of_vt = is_specialization_of_vt<T, Z>::value;
-	// Concept denoting a specialization of a template with a leading type and value parameter.
-	template <typename T, template <typename, auto, typename...> typename Z>
-	concept specialization_of_tv = is_specialization_of_tv<T, Z>::value;
-	// Concept denoting a (potentially cv-qualified or reference to a) specialization of a template with type parameters.
-	template <typename T, template <typename...> typename Z>
-	concept cvref_specialization_of = specialization_of<std::remove_cvref_t<T>, Z>;
-	// Concept denoting a (potentially cv-qualified or reference to a) specialization of a template with value parameters.
-	template <typename T, template <auto...> typename Z>
-	concept cvref_specialization_of_v = specialization_of_v<std::remove_cvref_t<T>, Z>;
-	// Concept denoting a (potentially cv-qualified or reference to a) specialization of a template with a leading value parameter.
-	template <typename T, template <auto, typename...> typename Z>
-	concept cvref_specialization_of_vt = specialization_of_vt<std::remove_cvref_t<T>, Z>;
-	// Concept denoting a (potentially cv-qualified or reference to a) specialization of a template with a leading type and value parameter.
-	template <typename T, template <typename, auto, typename...> typename Z>
-	concept cvref_specialization_of_tv = specialization_of_tv<std::remove_cvref_t<T>, Z>;
+	//
 
-	// Concept checking if a type is in a list.
+	/// Type contained within a list of types.
+	/// @tparam Ts List of accepted types.
 	template <typename T, typename... Ts>
 	concept one_of = (std::same_as<T, Ts> || ...);
 

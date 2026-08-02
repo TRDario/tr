@@ -96,24 +96,6 @@ struct tr::size_type<S> {
 	using type = u8;
 };
 
-/////////////////////////////////////////////////////////// IS SPECIALIZATION OF //////////////////////////////////////////////////////////
-
-template <typename T, template <typename...> typename Template> struct tr::is_specialization_of : std::false_type {};
-template <typename... Args, template <typename...> typename Template>
-struct tr::is_specialization_of<Template<Args...>, Template> : std::true_type {};
-
-template <typename T, template <auto...> typename Template> struct tr::is_specialization_of_v : std::false_type {};
-template <auto... Values, template <auto...> typename Template>
-struct tr::is_specialization_of_v<Template<Values...>, Template> : std::true_type {};
-
-template <typename T, template <auto, typename...> typename Template> struct tr::is_specialization_of_vt : std::false_type {};
-template <auto S, typename... Args, template <auto, typename...> typename Template>
-struct tr::is_specialization_of_vt<Template<S, Args...>, Template> : std::true_type {};
-
-template <typename T, template <typename, auto, typename...> typename Template> struct tr::is_specialization_of_tv : std::false_type {};
-template <typename T, auto S, typename... Args, template <typename, auto, typename...> typename Template>
-struct tr::is_specialization_of_tv<Template<T, S, Args...>, Template> : std::true_type {};
-
 //
 
 template <typename Function>
