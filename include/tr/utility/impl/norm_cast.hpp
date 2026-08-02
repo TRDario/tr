@@ -1,30 +1,30 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements norm_cast.hpp.                                                                                                             //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements norm_cast.hpp.
 
 #pragma once
 #include "../macro.hpp"
 #include "../norm_cast.hpp"
 
-//////////////////////////////////////////////////////////////// NORM CAST ////////////////////////////////////////////////////////////////
+//
 
-template <std::floating_point To, std::floating_point From> constexpr To tr::norm_cast(From from)
+template <std::floating_point To, std::floating_point From>
+constexpr To tr::norm_cast(From from)
 {
 	TR_ASSERT(from >= 0 && from <= 1, "Cannot perform a normalizing cast on value {} outside the range [0, 1].", from);
 
 	return static_cast<To>(from);
 }
 
-template <std::floating_point To, std::integral From> constexpr To tr::norm_cast(From from)
+template <std::floating_point To, std::integral From>
+constexpr To tr::norm_cast(From from)
 {
 	using UFrom = std::make_unsigned_t<From>;
 
 	return static_cast<To>(static_cast<double>(norm_cast<UFrom>(from)) / static_cast<double>(std::numeric_limits<UFrom>::max()));
 }
 
-template <std::integral To, std::floating_point From> constexpr To tr::norm_cast(From from)
+template <std::integral To, std::floating_point From>
+constexpr To tr::norm_cast(From from)
 {
 	TR_ASSERT(from >= 0 && from <= 1, "Cannot perform a normalizing cast on value {} outside the range [0, 1].", from);
 
@@ -41,7 +41,8 @@ template <std::integral To, std::floating_point From> constexpr To tr::norm_cast
 	}
 }
 
-template <std::integral To, std::integral From> constexpr To tr::norm_cast(From from)
+template <std::integral To, std::integral From>
+constexpr To tr::norm_cast(From from)
 {
 	using UFrom = std::make_unsigned_t<From>;
 	using UTo = std::make_unsigned_t<To>;
