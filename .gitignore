@@ -1,4 +1,5 @@
 .cache
 .vs
 build
+doxygen/output
 resources/generated
