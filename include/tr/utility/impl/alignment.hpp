@@ -1,14 +1,11 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements alignment.hpp.                                                                                                             //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements alignment.hpp.
 
 #pragma once
 #include "../alignment.hpp"
 #include "../macro.hpp"
 
-////////////////////////////////////////////////////////////// IMPLEMENTATION /////////////////////////////////////////////////////////////
+//
 
 constexpr tr::halign tr::to_halign(align align)
 {
@@ -32,7 +29,8 @@ constexpr tr::align tr::operator|(const halign& halign, const valign& valign)
 
 //
 
-template <typename Element> constexpr glm::tvec2<Element> tr::tl(glm::tvec2<Element> pos, glm::tvec2<Element> size, tr::align pos_anchor)
+template <typename Element>
+constexpr glm::tvec2<Element> tr::tl(glm::tvec2<Element> pos, glm::tvec2<Element> size, tr::align pos_anchor)
 {
 	switch (pos_anchor) {
 	case align::tl:

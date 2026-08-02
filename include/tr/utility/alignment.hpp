@@ -1,58 +1,92 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Provides alignment-related datatypes and functions.                                                                                   //
-//                                                                                                                                       //
-// Horizontal, vertical, and 2D alignment enumerators are provided. 2D alignments can be composed from and decomposed into components:   //
-//     - tr::align align{tr::valign::top | tr::halign::left} -> tr::align::tl                                                            //
-//     - tr::to_halign(tr::align::cr) -> tr::halign::right                                                                               //
-//     - tr::to_valign(tr::align::cr) -> tr::valign::center                                                                              //
-//                                                                                                                                       //
-// tl::tl finds the top-left corner of an axis-aligned rectangle described with a center, size, and alignment:                           //
-//     - tr::tl({500, 500}, {200, 200}, tr::align::cc) -> {400, 400} (top-left corner of a rectangle described with anchor+size+align)   //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Provides alignment-related datatypes and functions.
 
 #pragma once
 #include "integer.hpp"
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
-namespace tr {
-	// Horizontal alignment.
-	enum class halign : u8 {
-		left,   // Left horizontal alignment.
-		center, // Center horizontal alignment.
-		right   // Right horizontal alignment.
+namespace tr
+{
+	/// Horizontal alignment.
+	enum class halign : u8
+	{
+		/// Left horizontal alignment.
+		left = 0,
+		/// Center horizontal alignment.
+		center = 1,
+		/// Right horizontal alignment.
+		right = 2
 	};
-	// Vertical alignment.
-	enum class valign : u8 {
-		top,        // Top vertical alignment.
-		center = 3, // Center vertical alignment.
-		bottom = 6  // Bottom vertical alignment.
+
+	/// Vertical alignment.
+	enum class valign : u8
+	{
+		/// Top vertical alignment.
+		top = 0,
+		/// Center vertical alignment.
+		center = 3,
+		/// Bottom vertical alignment.
+		bottom = 6
 	};
-	// 2D alignment.
-	enum class align : u8 {
-		tl = std::to_underlying(valign::top) + std::to_underlying(halign::left),      // Top-left alignment.
-		tc = std::to_underlying(valign::top) + std::to_underlying(halign::center),    // Top-center alignment.
-		tr = std::to_underlying(valign::top) + std::to_underlying(halign::right),     // Top-right alignment.
-		cl = std::to_underlying(valign::center) + std::to_underlying(halign::left),   // Center-left alignment.
-		cc = std::to_underlying(valign::center) + std::to_underlying(halign::center), // Center alignment.
-		cr = std::to_underlying(valign::center) + std::to_underlying(halign::right),  // Center-right alignment.
-		bl = std::to_underlying(valign::bottom) + std::to_underlying(halign::left),   // Bottom-left alignment.
-		bc = std::to_underlying(valign::bottom) + std::to_underlying(halign::center), // Bottom-center alignment.
-		br = std::to_underlying(valign::bottom) + std::to_underlying(halign::right)   // Bottom-right alignment.
+
+	/// 2D alignment.
+	enum class align : u8
+	{
+		/// Top-left alignment.
+		tl = std::to_underlying(valign::top) + std::to_underlying(halign::left),
+		/// Top-center alignment.
+		tc = std::to_underlying(valign::top) + std::to_underlying(halign::center),
+		/// Top-right alignment.
+		tr = std::to_underlying(valign::top) + std::to_underlying(halign::right),
+		/// Center-left alignment.
+		cl = std::to_underlying(valign::center) + std::to_underlying(halign::left),
+		/// Center alignment.
+		cc = std::to_underlying(valign::center) + std::to_underlying(halign::center),
+		/// Center-right alignment.
+		cr = std::to_underlying(valign::center) + std::to_underlying(halign::right),
+		/// Bottom-left alignment.
+		bl = std::to_underlying(valign::bottom) + std::to_underlying(halign::left),
+		/// Bottom-center alignment.
+		bc = std::to_underlying(valign::bottom) + std::to_underlying(halign::center),
+		/// Bottom-right alignment.
+		br = std::to_underlying(valign::bottom) + std::to_underlying(halign::right)
 	};
-	// Converts a 2D alignment to a horizontal alignment.
+
+	//
+
+	/// Gets the horizontal component of a 2D alignment.
+	/// @param align 2D alignment.
+	/// @return Horizontal component of the alignment.
 	constexpr halign to_halign(align align);
-	// Converts a 2D alignment to a vertical alignment.
+
+	/// Gets the vertical component of a 2D alignment.
+	/// @param align 2D alignment.
+	/// @return Vertical component of the alignment.
 	constexpr valign to_valign(align align);
-	// Combines a horizontal and vertical alignment into a 2D alignment.
+
+	/// Combines horizontal and vertical alignment into a 2D alignment.
+	/// @param valign Vertical component of the alignment.
+	/// @param halign Horizontal component of the alignment.
+	/// @return Combined 2D alignment.
 	constexpr align operator|(const valign& valign, const halign& halign);
-	// Combines a horizontal and vertical alignment into a 2D alignment.
+
+	/// Combines horizontal and vertical alignment into a 2D alignment.
+	/// @param halign Horizontal component of the alignment.
+	/// @param valign Vertical component of the alignment.
+	/// @return Combined 2D alignment.
 	constexpr align operator|(const halign& halign, const valign& valign);
 
-	// Computes the top-left corner of a rectangle given a position, size, and anchor point.
-	template <typename Element> constexpr glm::tvec2<Element> tl(glm::tvec2<Element> pos, glm::tvec2<Element> size, align pos_anchor);
+	//
+
+	/// Computes the top-left corner of a rectangle given a position, size, and anchor point.
+	/// @tparam Element Type of the vector elements.
+	/// @param pos Position of the rectangle.
+	/// @param size Size of the rectangle.
+	/// @param pos_anchor What `pos` represents within the rectangle.
+	/// @return Top-left corner of the rectangle.
+	template <typename Element>
+	constexpr glm::tvec2<Element> tl(glm::tvec2<Element> pos, glm::tvec2<Element> size, align pos_anchor);
 } // namespace tr
 
 #include "impl/alignment.hpp" // IWYU pragma: export
