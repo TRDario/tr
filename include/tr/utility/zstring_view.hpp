@@ -59,7 +59,8 @@ namespace tr
 		/// Constant iterator type used by the string.
 		using const_iterator = iterator;
 
-		//
+		/// @name Constructors
+		/// @{
 
 		/// Constructs an empty string view.
 		constexpr basic_zstring_view() = default;
@@ -82,7 +83,9 @@ namespace tr
 		/// @param rhs String view to move.
 		constexpr basic_zstring_view(basic_zstring_view&& rhs) noexcept = default;
 
-		//
+		/// @}
+		/// @name Assignment operators
+		/// @{
 
 		/// Trivially copies a string view.
 		/// @param rhs String view to copy.
@@ -94,13 +97,17 @@ namespace tr
 		/// @return Reference to `*this`.
 		constexpr basic_zstring_view& operator=(basic_zstring_view&& rhs) noexcept = default;
 
-		//
+		/// @}
+		/// @name Conversion operators
+		/// @{
 
 		/// Converts the view into a standard string view.
 		/// @return Standard string view equivalent to `*this`.
 		constexpr operator std::basic_string_view<CharT, Traits>() const;
 
-		//
+		/// @}
+		/// @name Comparison operators
+		/// @{
 
 		/// Compares NUL-terminated string views.
 		/// @param rhs Second string view.
@@ -112,7 +119,9 @@ namespace tr
 		/// @return Whether the string views are equal.
 		constexpr bool operator==(this basic_zstring_view lhs, std::type_identity_t<basic_zstring_view> rhs);
 
-		//
+		/// @}
+		/// @name Iterators
+		/// @{
 
 		/// Gets an iterator to the beginning of the string.
 		/// @return Iterator to the beginning of the string.
@@ -130,7 +139,9 @@ namespace tr
 		/// @return Iterator sentinel to the end of the string.
 		constexpr end_sentinel cend() const;
 
-		//
+		/// @}
+		/// @name Access
+		/// @{
 
 		/// Accesses a specific character.
 		/// @param index Index of the character within the string.
@@ -154,7 +165,9 @@ namespace tr
 		/// @return Pointer to the first character in the string.
 		constexpr const_pointer c_str() const;
 
-		//
+		/// @}
+		/// @name Length
+		/// @{
 
 		/// Gets the length of the string as if by strlen.
 		/// @return Length of the string.
@@ -164,18 +177,20 @@ namespace tr
 		/// @return `true` if the view points to `nullptr` or an empty string, `false` otherwise.
 		constexpr bool empty() const;
 
-		//
-
-		/// Moves the start of the view forward.
-		/// @param n Number of characters to move the start of the view forward by.
-		constexpr void remove_prefix(size_type n);
-
-		//
+		/// @}
+		/// @name Sub-strings
+		/// @{
 
 		/// Creates a sub-string view.
 		/// @param pos Starting position of the sub-string within the string.
 		/// @return Sub-string starting at `pos`.
 		constexpr basic_zstring_view substr(size_type pos = 0) const;
+
+		/// Moves the start of the view forward.
+		/// @param n Number of characters to move the start of the view forward by.
+		constexpr void remove_prefix(size_type n);
+
+		/// @}
 
 	  private:
 		/// Pointer to a NUL-terminated string.
@@ -220,7 +235,8 @@ namespace tr
 	std::filesystem::path operator/(const std::filesystem::path& lhs, basic_zstring_view<CharT, Traits> rhs);
 } // namespace tr
 
-//
+/// @name Specializations
+/// @{
 
 /// Designates basic_zstring_view as a view.
 /// @tparam CharT Character type used by the string.
@@ -259,5 +275,7 @@ template <typename CharT, typename Traits>
 struct tr::binary_writer<tr::basic_zstring_view<CharT, Traits>> : binary_writer<std::basic_string_view<CharT, Traits>>
 {
 };
+
+/// @}
 
 #include "impl/zstring_view.hpp" // IWYU pragma: export
