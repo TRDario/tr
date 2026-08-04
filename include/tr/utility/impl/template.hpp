@@ -9,27 +9,33 @@
 
 ////////////////////////////////////////////////////////////// STRING LITERAL /////////////////////////////////////////////////////////////
 
-template <tr::usize Size> consteval tr::string_literal<Size>::string_literal(const char (&str)[Size])
+template <tr::usize Size>
+consteval tr::string_literal<Size>::string_literal(const char (&str)[Size])
 {
 	std::ranges::copy(str, data);
 }
 
-template <tr::usize Size> consteval tr::string_literal<Size>::operator const char*() const
+template <tr::usize Size>
+consteval tr::string_literal<Size>::operator const char*() const
 {
 	return data;
 }
 
-template <tr::usize Size> consteval tr::string_literal<Size>::operator std::string_view() const
+template <tr::usize Size>
+consteval tr::string_literal<Size>::operator std::string_view() const
 {
 	return data;
 }
 
-template <tr::usize Size> template <typename... Args> consteval tr::string_literal<Size>::operator std::format_string<Args...>() const
+template <tr::usize Size>
+template <typename... Args>
+consteval tr::string_literal<Size>::operator std::format_string<Args...>() const
 {
 	return std::string_view{*this};
 }
 
-template <tr::usize Size> consteval tr::usize tr::string_literal<Size>::size()
+template <tr::usize Size>
+consteval tr::usize tr::string_literal<Size>::size()
 {
 	return Size - 1;
 }
@@ -53,7 +59,8 @@ consteval auto tr::concatenate_string_literals(First&& first, Second&& second, R
 
 //////////////////////////////////////////////////////////////// TYPE NAME ////////////////////////////////////////////////////////////////
 
-template <typename T> consteval std::string_view tr::type_name()
+template <typename T>
+consteval std::string_view tr::type_name()
 {
 #ifdef __clang__
 	constexpr std::string_view function_name{std::source_location::current().function_name()};
@@ -74,131 +81,28 @@ template <typename T> consteval std::string_view tr::type_name()
 
 template <tr::usize S>
 	requires(S > UINT32_MAX)
-struct tr::size_type<S> {
+struct tr::size_type<S>
+{
 	using type = u64;
 };
 
 template <tr::usize S>
 	requires(S > UINT16_MAX && S <= UINT32_MAX)
-struct tr::size_type<S> {
+struct tr::size_type<S>
+{
 	using type = u32;
 };
 
 template <tr::usize S>
 	requires(S > UINT8_MAX && S <= UINT16_MAX)
-struct tr::size_type<S> {
+struct tr::size_type<S>
+{
 	using type = u16;
 };
 
 template <tr::usize S>
 	requires(S <= UINT8_MAX)
-struct tr::size_type<S> {
+struct tr::size_type<S>
+{
 	using type = u8;
 };
-
-//
-
-template <typename Function>
-struct tr::wrapped_invocable
-{
-	using type = std::remove_cvref_t<Function>;
-};
-template <typename Return, typename... Args> struct tr::wrapped_invocable<Return(Args...)> {
-	struct type {
-		Return (*ptr)(Args...);
-
-		constexpr Return operator()(Args... args) const
-		{
-			return ptr(std::forward<Args>(args)...);
-		}
-	};
-};
-template <typename Class, typename Return, typename... Args> struct tr::wrapped_invocable<Return (Class::*)(Args...)> {
-	struct type {
-		Return (Class::*ptr)(Args...);
-
-		constexpr Return operator()(Class& object, Args... args) const
-		{
-			return (object.*ptr)(std::forward<Args>(args)...);
-		}
-	};
-};
-template <typename Class, typename Return, typename... Args> struct tr::wrapped_invocable<Return (Class::*)(Args...) const> {
-	struct type {
-		Return (Class::*ptr)(Args...) const;
-
-		constexpr Return operator()(const Class& object, Args... args) const
-		{
-			return (object.*ptr)(std::forward<Args>(args)...);
-		}
-	};
-};
-template <typename Class, typename Return, typename... Args> struct tr::wrapped_invocable<Return (Class::*)(Args...) &> {
-	struct type {
-		Return (Class::*ptr)(Args...) &;
-
-		constexpr Return operator()(Class& object, Args... args) const
-		{
-			return (object.*ptr)(std::forward<Args>(args)...);
-		}
-	};
-};
-template <typename Class, typename Return, typename... Args> struct tr::wrapped_invocable<Return (Class::*)(Args...) const&> {
-	struct type {
-		Return (Class::*ptr)(Args...) const&;
-
-		constexpr Return operator()(const Class& object, Args... args) const
-		{
-			return (object.*ptr)(std::forward<Args>(args)...);
-		}
-	};
-};
-template <typename Class, typename Return, typename... Args> struct tr::wrapped_invocable<Return (Class::*)(Args...) &&> {
-	struct type {
-		Return (Class::*ptr)(Args...) &&;
-
-		constexpr Return operator()(Class&& object, Args... args) const
-		{
-			return (object.*ptr)(std::forward<Args>(args)...);
-		}
-	};
-};
-template <typename Class, typename Return, typename... Args> struct tr::wrapped_invocable<Return (Class::*)(Args...) const&&> {
-	struct type {
-		Return (Class::*ptr)(Args...) const&&;
-
-		constexpr Return operator()(const Class&& object, Args... args) const
-		{
-			return (object.*ptr)(std::forward<Args>(args)...);
-		}
-	};
-};
-template <typename Return, typename... Args> struct tr::wrapped_invocable<Return (*)(Args...)> : wrapped_invocable<Return(Args...)> {};
-template <typename Return, typename... Args> struct tr::wrapped_invocable<Return (&)(Args...)> : wrapped_invocable<Return(Args...)> {};
-template <typename Return, typename... Args> struct tr::wrapped_invocable<Return(Args...) noexcept> : wrapped_invocable<Return(Args...)> {};
-template <typename Return, typename... Args>
-struct tr::wrapped_invocable<Return (*)(Args...) noexcept> : wrapped_invocable<Return(Args...)> {};
-template <typename Return, typename... Args>
-struct tr::wrapped_invocable<Return (&)(Args...) noexcept> : wrapped_invocable<Return(Args...)> {};
-template <typename Class, typename Return, typename... Args>
-struct tr::wrapped_invocable<Return (Class::*)(Args...) noexcept> : wrapped_invocable<Return (Class::*)(Args...)> {};
-template <typename Class, typename Return, typename... Args>
-struct tr::wrapped_invocable<Return (Class::*)(Args...) const noexcept> : wrapped_invocable<Return (Class::*)(Args...) const> {};
-template <typename Class, typename Return, typename... Args>
-struct tr::wrapped_invocable<Return (Class::*)(Args...) & noexcept> : wrapped_invocable<Return (Class::*)(Args...) &> {};
-template <typename Class, typename Return, typename... Args>
-struct tr::wrapped_invocable<Return (Class::*)(Args...) const & noexcept> : wrapped_invocable<Return (Class::*)(Args...) const&> {};
-template <typename Class, typename Return, typename... Args>
-struct tr::wrapped_invocable<Return (Class::*)(Args...) && noexcept> : wrapped_invocable<Return (Class::*)(Args...) &&> {};
-template <typename Class, typename Return, typename... Args>
-struct tr::wrapped_invocable<Return (Class::*)(Args...) const && noexcept> : wrapped_invocable<Return (Class::*)(Args...) const&&> {};
-
-template <typename Function> decltype(auto) constexpr tr::wrap_invocable(Function&& fn)
-{
-	if constexpr (std::same_as<std::remove_cvref_t<Function>, wrapped_invocable_t<Function>>) {
-		return std::forward<Function>(fn);
-	}
-	else {
-		return wrapped_invocable_t<Function>{fn};
-	}
-}

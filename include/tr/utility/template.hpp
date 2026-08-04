@@ -76,25 +76,6 @@ namespace tr
 	/// @tparam S Maximum value that needs to be stored.
 	template <usize S>
 	using size_type_t = size_type<S>::type;
-
-	//
-
-	/// Stores a type that wraps any invocable into a function object with an `operator()` in `::type`.
-	/// @tparam Function Built-in function or a function object.
-	template <typename Function>
-	struct wrapped_invocable;
-
-	/// Defines a type that wraps any invocable into a function object with an `operator()`.
-	/// @tparam Function Built-in function or a function object.
-	template <typename Function>
-	using wrapped_invocable_t = wrapped_invocable<Function>::type;
-
-	/// Wraps functions to use a uniform calling convention (`operator()`).
-	/// @tparam Function Built-in function or a function object.
-	/// @param fn Function to wrap.
-	/// @return Wrapped function object.
-	template <typename Function>
-	constexpr decltype(auto) wrap_invocable(Function&& fn);
 } // namespace tr
 
 #include "impl/template.hpp" // IWYU pragma: export
