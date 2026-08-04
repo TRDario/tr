@@ -35,15 +35,6 @@ TEST(math_test, ceil_cast)
 	EXPECT_EQ(tr::ceil_cast<int>(5.00), 5);
 }
 
-TEST(math_test, abs)
-{
-	tr::rng rng;
-	for (int i = 0; i < 1000; ++i) {
-		float value{rng.generate(-100.0f, 100.0f)};
-		EXPECT_EQ(tr::abs(value), std::abs(value));
-	}
-}
-
 TEST(math_test, sgn)
 {
 	EXPECT_EQ(tr::sgn(-INFINITY), -1);

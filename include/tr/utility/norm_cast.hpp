@@ -7,6 +7,9 @@
 
 namespace tr
 {
+	/// @name Casts
+	/// @{
+
 	/// Converts a floating point number in the range [0-1] to another floating point number in the range [0-1].
 	/// @tparam To A floating-point type.
 	/// @tparam From A floating-point type.
@@ -38,6 +41,8 @@ namespace tr
 	/// @return A value mapped such that 0 is the minimum, and 1 the maximum value storable by the integer.
 	template <std::integral To, std::integral From>
 	constexpr To norm_cast(From from);
+
+	/// @}
 } // namespace tr
 
 #include "impl/norm_cast.hpp" // IWYU pragma: export
