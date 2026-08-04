@@ -1,15 +1,14 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements utf8.hpp.                                                                                                                  //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements utf8.hpp.
 
 #pragma once
+#include "../macro.hpp"
 #include "../utf8.hpp"
 
-///////////////////////////////////////////////////// BASIC TRAVERSAL AND MANIPULATION ////////////////////////////////////////////////////
+//
 
-template <tr::utf8::base_iterator Iterator> constexpr tr::codepoint tr::utf8::to_cp(Iterator it)
+template <tr::utf8::input_iterator Iterator>
+constexpr tr::codepoint tr::utf8::to_cp(Iterator it)
 {
 	if (static_cast<u8>(*it) < 0x80) {
 		return static_cast<u8>(*it);
@@ -26,7 +25,8 @@ template <tr::utf8::base_iterator Iterator> constexpr tr::codepoint tr::utf8::to
 	}
 }
 
-template <tr::utf8::base_iterator Iterator> constexpr Iterator tr::utf8::next(Iterator it)
+template <tr::utf8::input_iterator Iterator>
+constexpr Iterator tr::utf8::next(Iterator it)
 {
 	if (static_cast<u8>(*it) < 0x80) {
 		it += 1;
@@ -43,7 +43,8 @@ template <tr::utf8::base_iterator Iterator> constexpr Iterator tr::utf8::next(It
 	return it;
 }
 
-template <tr::utf8::base_iterator Iterator> constexpr Iterator tr::utf8::next(Iterator it, usize n)
+template <tr::utf8::input_iterator Iterator>
+constexpr Iterator tr::utf8::next(Iterator it, usize n)
 {
 	for (usize i = 0; i < n; ++i) {
 		it = tr::utf8::next(it);
@@ -51,13 +52,15 @@ template <tr::utf8::base_iterator Iterator> constexpr Iterator tr::utf8::next(It
 	return it;
 }
 
-template <tr::utf8::base_iterator Iterator> constexpr Iterator tr::utf8::prev(Iterator it)
+template <tr::utf8::input_iterator Iterator>
+constexpr Iterator tr::utf8::prev(Iterator it)
 {
 	while ((*--it & 0xC0) == 0x80) {}
 	return it;
 }
 
-template <tr::utf8::base_iterator Iterator> constexpr Iterator tr::utf8::prev(Iterator it, usize n)
+template <tr::utf8::input_iterator Iterator>
+constexpr Iterator tr::utf8::prev(Iterator it, usize n)
 {
 	for (usize i = 0; i < n; ++i) {
 		it = tr::utf8::prev(it);
@@ -65,7 +68,8 @@ template <tr::utf8::base_iterator Iterator> constexpr Iterator tr::utf8::prev(It
 	return it;
 }
 
-template <tr::utf8::string String> constexpr String::iterator tr::utf8::insert(String& str, String::iterator where, codepoint cp)
+template <tr::utf8::output_string String>
+constexpr String::iterator tr::utf8::insert(String& str, String::iterator where, codepoint cp)
 {
 	if (cp < 0x80) {
 		return str.insert(where, cp);
@@ -96,7 +100,8 @@ template <tr::utf8::string String> constexpr String::iterator tr::utf8::insert(S
 	}
 }
 
-template <tr::utf8::string String> constexpr String::iterator tr::utf8::erase(String& str, String::iterator where)
+template <tr::utf8::output_string String>
+constexpr String::iterator tr::utf8::erase(String& str, String::iterator where)
 {
 	if (static_cast<u8>(*where) < 0x80) {
 		return str.erase(where);
@@ -112,7 +117,8 @@ template <tr::utf8::string String> constexpr String::iterator tr::utf8::erase(St
 	}
 }
 
-template <tr::utf8::string String> constexpr void tr::utf8::pop_back(String& str)
+template <tr::utf8::output_string String>
+constexpr void tr::utf8::pop_back(String& str)
 {
 	if (!str.empty()) {
 		while (!str.empty() && (str.back() & 0xC0) == 0x80) {
@@ -122,7 +128,7 @@ template <tr::utf8::string String> constexpr void tr::utf8::pop_back(String& str
 	}
 }
 
-///////////////////////////////////////////////////////////////// ITERATOR ////////////////////////////////////////////////////////////////
+//
 
 constexpr tr::utf8::iterator::iterator(const char* ptr)
 	: m_ptr{ptr}
@@ -158,7 +164,7 @@ constexpr const char* tr::utf8::iterator::base() const
 	return m_ptr;
 }
 
-///////////////////////////////////////////////////////////// INDEXED ITERATOR ////////////////////////////////////////////////////////////
+//
 
 constexpr tr::utf8::indexed_iterator::indexed_iterator(const char* ptr, ssize index)
 	: m_ptr{ptr}
@@ -167,24 +173,19 @@ constexpr tr::utf8::indexed_iterator::indexed_iterator(const char* ptr, ssize in
 	TR_ASSERT(ptr != nullptr, "Tried to create UTF-8 iterator to nullptr.");
 }
 
-constexpr auto tr::utf8::operator<=>(const indexed_iterator& l, const indexed_iterator& r)
+constexpr tr::utf8::indexed_iterator::operator iterator() const
+{
+	return m_ptr;
+}
+
+constexpr auto tr::utf8::operator<=>(indexed_iterator l, indexed_iterator r)
 {
 	return l.m_ptr <=> r.m_ptr;
 }
 
-constexpr auto tr::utf8::operator<=>(const indexed_iterator& l, const iterator& r)
-{
-	return l.m_ptr <=> r.base();
-}
-
-constexpr bool tr::utf8::operator==(const indexed_iterator& l, const indexed_iterator& r)
+constexpr bool tr::utf8::operator==(indexed_iterator l, indexed_iterator r)
 {
 	return l.m_ptr == r.m_ptr;
-}
-
-constexpr bool tr::utf8::operator==(const indexed_iterator& l, const iterator& r)
-{
-	return l.m_ptr == r.base();
 }
 
 constexpr tr::codepoint tr::utf8::indexed_iterator::operator*() const
@@ -224,7 +225,7 @@ constexpr tr::ssize tr::utf8::indexed_iterator::index() const
 	return m_index;
 }
 
-///////////////////////////////////////////////////////////// CODEPOINT VIEWS /////////////////////////////////////////////////////////////
+//
 
 constexpr tr::utf8::iterator tr::utf8::begin(std::string_view str)
 {
