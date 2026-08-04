@@ -1,31 +1,32 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Provides a defer mechanism using RAII.                                                                                                //
-//                                                                                                                                       //
-// A deferred function can be constructed using tr::defer, or through the TR_DEFER macro if you wish to avoid boilerplate:               //
-//     - tr::defer _{[&]{ std::fclose(file); }} -> defers a file close to the end of the scope                                           //
-//     - TR_DEFER(std::fclose(file)) -> equivalent to the above                                                                          //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Provides a defer mechanism.
 
 #pragma once
 #include "macro.hpp"
 
-namespace tr {
-	// RAII deferred function call.
-	template <std::invocable Fn> class defer {
+namespace tr
+{
+	/// RAII deferred function call.
+	/// @tparam Fn Deferred function type.
+	template <std::invocable Fn>
+	class defer
+	{
 	  public:
-		// Constructs a deferred function call.
+		/// Constructs a deferred function call.
+		/// @param fn Function to defer.
 		constexpr defer(Fn&& fn);
-		// Calls the deferred function.
+
+		/// Calls the deferred function.
 		constexpr ~defer();
 
 	  private:
-		// The deferred function.
+		/// The deferred function.
 		Fn m_fn;
 	};
 
-	// Defers a statement to be executed at scope end.
+	/// Defers a statement to be executed at scope end.
+	/// @param ... Statement to defer to scope end.
+	/// @hideinitializer
 #define TR_DEFER(...)                                                                                                                      \
 	[[maybe_unused]] const ::tr::defer TR_JOIN(defer_, __LINE__)                                                                           \
 	{                                                                                                                                      \

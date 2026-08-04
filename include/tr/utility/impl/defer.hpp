@@ -1,13 +1,10 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements defer.hpp.                                                                                                                 //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements defer.hpp.
 
 #pragma once
 #include "../defer.hpp"
 
-////////////////////////////////////////////////////////////////// DEFER //////////////////////////////////////////////////////////////////
+//
 
 template <std::invocable Fn>
 constexpr tr::defer<Fn>::defer(Fn&& fn)
@@ -15,7 +12,8 @@ constexpr tr::defer<Fn>::defer(Fn&& fn)
 {
 }
 
-template <std::invocable Fn> constexpr tr::defer<Fn>::~defer<Fn>()
+template <std::invocable Fn>
+constexpr tr::defer<Fn>::~defer<Fn>()
 {
 	m_fn();
 }
