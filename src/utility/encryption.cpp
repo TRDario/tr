@@ -1,8 +1,5 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements the non-templated parts of encryption.hpp.                                                                                 //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements the non-templated parts of encryption.hpp.
 
 #include "../../include/tr/utility/encryption.hpp"
 #include "../../include/tr/utility/binary_io.hpp"
@@ -10,12 +7,16 @@
 #include "../../include/tr/utility/rng.hpp"
 #include <lz4.h>
 
-namespace {
-	// Size of an encrypted chunk header.
-	constexpr tr::usize header_size{7};
-} // namespace
+namespace tr
+{
+	namespace
+	{
+		/// Size of an encrypted chunk header.
+		constexpr tr::usize header_size{7};
+	} // namespace
+} // namespace tr
 
-////////////////////////////////////////////////////////////////// ERRORS /////////////////////////////////////////////////////////////////
+//
 
 tr::decryption_error::decryption_error(std::string_view description)
 	: m_description{description}
@@ -37,7 +38,7 @@ std::string_view tr::decryption_error::details() const
 	return {};
 }
 
-////////////////////////////////////////////////////////// ENCRYPTION/DECRYPTION //////////////////////////////////////////////////////////
+//
 
 void tr::encrypt_to(std::vector<std::byte>& out, std::span<const std::byte> raw)
 {
@@ -64,6 +65,8 @@ std::vector<std::byte> tr::encrypt(std::span<const std::byte> raw)
 	encrypt_to(out, raw);
 	return out;
 }
+
+//
 
 void tr::decrypt_to(std::vector<std::byte>& out, std::vector<std::byte> encrypted)
 {

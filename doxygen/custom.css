@@ -22,7 +22,8 @@ html.dark-mode {
 }
 
 table.tparams td.paramname+td::before,
-table.params td.paramname+td::before {
+table.params td.paramname+td::before,
+table.exception td.paramname+td::before {
 	content: "– ";
 }
 
