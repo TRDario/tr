@@ -53,12 +53,8 @@ namespace tr
 	};
 
 	/// Concatenates two or more string literals into a new string literal.
-	/// @tparam First Raw string literal or a `tr::string_literal` specialization.
-	/// @tparam Second Raw string literal or a `tr::string_literal` specialization.
-	/// @tparam Rest List of string literals and `tr::string_literal` specializations.
-	/// @param first First string to concatenate.
-	/// @param second Second string to concatenate.
-	/// @param rest Additional strings to concatenate.
+	/// @tparam First, Second, Rest Raw string literals and/or `tr::string_literal` specializations.
+	/// @param first, second, rest Strings to concatenate.
 	/// @return New string literal stored in a `tr::string_literal` object.
 	template <typename First, typename Second, typename... Rest>
 	consteval auto concatenate_string_literals(First&& first, Second&& second, Rest&&... rest);

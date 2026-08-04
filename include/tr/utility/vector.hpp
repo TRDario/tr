@@ -8,6 +8,9 @@
 
 namespace tr
 {
+	/// @name Vector operations
+	/// @{
+
 	/// Creates a normalized vector from an angle value.
 	/// @param th Angle defining the direction the vector will be pointing in.
 	/// @return Normalized vector pointing in the direction defined by `th`.
@@ -51,11 +54,12 @@ namespace tr
 	/// @tparam Dimensions Number of dimensions of the vectors.
 	/// @tparam ElementL Type of the left vector elements.
 	/// @tparam ElementR Type of the right vector elements.
-	/// @param a First vector.
-	/// @param b Second vector.
+	/// @param a, b Vector values.
 	/// @return `a×b`.
 	template <arithmetic ElementL, arithmetic ElementR>
 	constexpr std::common_type_t<ElementL, ElementR> cross(glm::tvec2<ElementL> a, glm::tvec2<ElementR> b);
+
+	/// @}
 } // namespace tr
 
 #include "impl/vector.hpp" // IWYU pragma: export

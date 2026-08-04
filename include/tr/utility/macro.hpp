@@ -45,8 +45,7 @@
 /// @endcond
 
 /// Joins `x` and `y`.
-/// @param x First expression to join.
-/// @param y Second expression to join.
+/// @param x, y Expressions to join.
 /// @hideinitializer
 #define TR_JOIN(x, y) TR_IMPL_JOIN(x, y)
 

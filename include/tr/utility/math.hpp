@@ -68,8 +68,7 @@ namespace tr
 	/// Linearly interpolates between two values.
 	/// @tparam T Value type.
 	/// @tparam Ratio Ratio type.
-	/// @param x First sample value.
-	/// @param y Second sample value.
+	/// @param x, y Sample values.
 	/// @param a Interpolation factor.
 	/// @return `a + t * (b − a)`.
 	template <typename T, std::floating_point Ratio>

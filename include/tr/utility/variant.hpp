@@ -9,6 +9,9 @@
 
 namespace tr
 {
+	/// @name Variant operations
+	/// @{
+
 	/// Wraps over `std::get_if`.
 	/// @tparam Alternative Alternative to access.
 	/// @tparam Alternatives List of alternatives in the variant.
@@ -82,6 +85,8 @@ namespace tr
 	/// @param fn Invocable to invoke.
 	template <typename Alternative, typename... Alternatives, std::invocable<const Alternative> Fn>
 	constexpr void if_is(const std::variant<Alternatives...>&& v, Fn&& fn);
+
+	/// @}
 } // namespace tr
 
 #include "impl/variant.hpp" // IWYU pragma: export

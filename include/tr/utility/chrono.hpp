@@ -111,8 +111,7 @@ namespace tr
 	/// @tparam Rep2 Representation type of the second duration.
 	/// @tparam Period1 Period of the first duration.
 	/// @tparam Period2 Period of the second duration.
-	/// @param a First duration.
-	/// @param b Second duration.
+	/// @param a, b Durations to get the ratio between.
 	/// @return `a/b`.
 	template <typename Rep1, typename Rep2, typename Period1, typename Period2>
 	constexpr float ratio(std::chrono::duration<Rep1, Period1> a, std::chrono::duration<Rep2, Period2> b);

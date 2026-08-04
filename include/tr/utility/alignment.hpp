@@ -53,7 +53,8 @@ namespace tr
 		br = std::to_underlying(valign::bottom) + std::to_underlying(halign::right)
 	};
 
-	//
+	/// @name Alignment
+	/// @{
 
 	/// Gets the horizontal component of a 2D alignment.
 	/// @param align 2D alignment.
@@ -87,6 +88,8 @@ namespace tr
 	/// @return Top-left corner of the rectangle.
 	template <typename Element>
 	constexpr glm::tvec2<Element> tl(glm::tvec2<Element> pos, glm::tvec2<Element> size, align pos_anchor);
+
+	/// @}
 } // namespace tr
 
 #include "impl/alignment.hpp" // IWYU pragma: export

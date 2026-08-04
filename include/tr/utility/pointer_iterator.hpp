@@ -42,14 +42,12 @@ namespace tr
 		//
 
 		/// Compares two iterators.
-		/// @param lhs First iterator.
-		/// @param rhs Second iterator.
+		/// @param lhs, rhs Compared iterators.
 		/// @return Ordering of the iterators.
 		friend constexpr std::strong_ordering operator<=>(pointer_iterator lhs, pointer_iterator rhs) = default;
 
 		/// Compares two iterators for equality.
-		/// @param lhs First iterator.
-		/// @param rhs Second iterator.
+		/// @param lhs, rhs Compared iterators.
 		/// @return Whether the iterators are equal.
 		friend constexpr bool operator==(pointer_iterator lhs, pointer_iterator rhs) = default;
 
@@ -131,8 +129,7 @@ namespace tr
 		/// Gets the difference between two iterators.
 		/// @tparam Iterator_ Derived iterator type.
 		/// @tparam Pointer_ Raw pointer type.
-		/// @param lhs First iterator.
-		/// @param rhs Second iterator.
+		/// @param lhs, rhs Iterators to get the difference between.
 		/// @return Distance between `lhs` and `rhs`.
 		template <typename Iterator_, tr::pointer Pointer_>
 		friend constexpr pointer_iterator<Iterator_, Pointer_>::difference_type operator-(pointer_iterator<Iterator_, Pointer_> lhs,

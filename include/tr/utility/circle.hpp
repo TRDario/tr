@@ -29,8 +29,7 @@ namespace tr
 	/// @{
 
 	/// Determines if two circles intersect.
-	/// @param c1 First circle.
-	/// @param c2 Second circle.
+	/// @param c1, c2 Circles to check for intersection.
 	/// @return `true` if the circles intersect, `false` otherwise.
 	bool intersecting(const circle& c1, const circle& c2);
 
