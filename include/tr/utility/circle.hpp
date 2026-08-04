@@ -1,38 +1,42 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Provides a circle datatype and related functions.                                                                                     //
-//                                                                                                                                       //
-// Circles are defined by a center and radius:                                                                                           //
-//     - tr::circle circle{{500, 500}, 100} -> circle with radius 100 centered at (500, 500)                                             //
-//                                                                                                                                       //
-// Circles can be checked for containing a point:                                                                                        //
-//     - circle.contains({450, 550}) -> true                                                                                             //
-//     - circle.contains({-450, -550}) -> false                                                                                          //
-//                                                                                                                                       //
-// Circles are binary readable and writable.                                                                                             //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Provides a circle datatype and related functions.
 
 #pragma once
 #include "default_binary_io.hpp"
 
-//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
+//
 
-namespace tr {
-	// 2D circle.
-	struct circle {
-		// The offset of the center of the circle.
+namespace tr
+{
+	/// Circle datatype.
+	struct circle
+	{
+		/// Offset of the center of the circle.
 		glm::vec2 center;
-		// The radius of the circle.
+
+		/// Radius of the circle.
 		float radius;
 
-		// Determines whether a point is contained inside the circle.
+		//
+
+		/// Determines whether a point is contained inside the circle.
+		/// @param point Point to check.
+		/// @return `true` if `point` is inside the circle, `false` otherwise.
 		bool contains(glm::vec2 point) const;
 	};
 
-	// Determines if two circles intersect.
+	/// @name Intersection
+	/// @{
+
+	/// Determines if two circles intersect.
+	/// @param c1 First circle.
+	/// @param c2 Second circle.
+	/// @return `true` if the circles intersect, `false` otherwise.
 	bool intersecting(const circle& c1, const circle& c2);
+
+	/// @}
 } // namespace tr
 
-// Enables default binary IO for circles.
-template <> inline constexpr bool tr::enable_default_binary_io<tr::circle>{true};
+/// Enables default binary IO for circles.
+template <>
+inline constexpr bool tr::enable_default_binary_io<tr::circle>{true};
