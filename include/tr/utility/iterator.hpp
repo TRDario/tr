@@ -31,11 +31,13 @@ namespace tr
 		constexpr const Iterator& base() const;
 
 	  public:
-		/// @private (no-op)
+		/// @cond __hidden
+		/// (no-op)
 		friend constexpr auto operator<=>(const iterator_interface& lhs, const iterator_interface& rhs) = default;
 
-		/// @private (no-op)
+		/// (no-op)
 		friend constexpr bool operator==(const iterator_interface& lhs, const iterator_interface& rhs) = default;
+		/// @endcond
 
 		//
 
