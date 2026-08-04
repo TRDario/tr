@@ -1,51 +1,85 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Provides miscellaneous variant-related functionality.                                                                                 //
-//                                                                                                                                       //
-// Wrappers over std::get_if that take and return optionals are provided through tr::get_if:                                             //
-//     - std::variant<int, char, float> v{5.0f}; tr::get_if<float>(v) -> 5.0f                                                            //
-//     - std::variant<int, char, float> v{5.0f}; tr::get_if<char>(v) -> std::nullopt                                                     //
-//                                                                                                                                       //
-// Functions that call a function if a variant contains a specific type are provided through tr::if_is:                                  //
-//     - std::variant<int, char, float> v{5.0f}; tr::if_is<int>(v, [](int v) { std::println("{}", v); }) -> doesn't output anything      //
-//     - std::variant<int, char, float> v{5.0f}; tr::if_is<float>(v, [](float v) { std::println("{}", v); }) -> "5.0"                    //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Provides variant utilities.
 
 #pragma once
 #include "concepts.hpp"
 #include "reference.hpp"
 
-//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
+//
 
-namespace tr {
-	// Wrapper over std::get_if.
+namespace tr
+{
+	/// Wraps over `std::get_if`.
+	/// @tparam Alternative Alternative to access.
+	/// @tparam Alternatives List of alternatives in the variant.
+	/// @param v Variant to access an alternative of.
+	/// @return Optional reference to the requested alternative.
 	template <typename Alternative, typename... Alternatives>
 		requires(one_of<Alternative, Alternatives...>)
 	constexpr opt_ref<Alternative> get_if(std::variant<Alternatives...>& v);
-	// Gets a value if the variant contains it.
+
+	/// Wraps over `std::get_if`.
+	/// @tparam Alternative Alternative to access.
+	/// @tparam Alternatives List of alternatives in the variant.
+	/// @param v Variant to access an alternative of.
+	/// @return Moved value of the requested alternative.
 	template <typename Alternative, typename... Alternatives>
 		requires(one_of<Alternative, Alternatives...>)
 	constexpr std::optional<Alternative> get_if(std::variant<Alternatives...>&& v);
-	// Wrapper over std::get_if.
+
+	/// Wraps over `std::get_if`.
+	/// @tparam Alternative Alternative to access.
+	/// @tparam Alternatives List of alternatives in the variant.
+	/// @param v Variant to access an alternative of.
+	/// @return Optional reference to the requested alternative.
 	template <typename Alternative, typename... Alternatives>
 		requires(one_of<Alternative, Alternatives...>)
 	constexpr opt_ref<const Alternative> get_if(const std::variant<Alternatives...>& v);
-	// Gets a value if the variant contains it.
+
+	/// Wraps over `std::get_if`.
+	/// @tparam Alternative Alternative to access.
+	/// @tparam Alternatives List of alternatives in the variant.
+	/// @param v Variant to access an alternative of.
+	/// @return Moved value of the requested alternative.
 	template <typename Alternative, typename... Alternatives>
 		requires(one_of<Alternative, Alternatives...>)
 	constexpr std::optional<const Alternative> get_if(const std::variant<Alternatives...>&& v);
 
-	// Executes a function if the variant holds a specific type.
+	//
+
+	/// Invokes a function if the variant holds a specific alternative.
+	/// @tparam Alternative Desired alternative.
+	/// @tparam Alternatives List of alternatives in the variant.
+	/// @tparam Fn Invocable that accepts a reference to the alternative.
+	/// @param v Variant to act upon.
+	/// @param fn Invocable to invoke.
 	template <typename Alternative, typename... Alternatives, std::invocable<Alternative&> Fn>
 	constexpr void if_is(std::variant<Alternatives...>& v, Fn&& fn);
-	// Executes a function if the variant holds a specific type.
+
+	/// Invokes a function if the variant holds a specific alternative.
+	/// @tparam Alternative Desired alternative.
+	/// @tparam Alternatives List of alternatives in the variant.
+	/// @tparam Fn Invocable that accepts the value of the alternative.
+	/// @param v Variant to act upon.
+	/// @param fn Invocable to invoke.
 	template <typename Alternative, typename... Alternatives, std::invocable<Alternative> Fn>
 	constexpr void if_is(std::variant<Alternatives...>&& v, Fn&& fn);
-	// Executes a function if the variant holds a specific type.
+
+	/// Invokes a function if the variant holds a specific alternative.
+	/// @tparam Alternative Desired alternative.
+	/// @tparam Alternatives List of alternatives in the variant.
+	/// @tparam Fn Invocable that accepts a reference to the alternative.
+	/// @param v Variant to act upon.
+	/// @param fn Invocable to invoke.
 	template <typename Alternative, typename... Alternatives, std::invocable<const Alternative&> Fn>
 	constexpr void if_is(const std::variant<Alternatives...>& v, Fn&& fn);
-	// Executes a function if the variant holds a specific type.
+
+	/// Invokes a function if the variant holds a specific alternative.
+	/// @tparam Alternative Desired alternative.
+	/// @tparam Alternatives List of alternatives in the variant.
+	/// @tparam Fn Invocable that accepts the value of the alternative.
+	/// @param v Variant to act upon.
+	/// @param fn Invocable to invoke.
 	template <typename Alternative, typename... Alternatives, std::invocable<const Alternative> Fn>
 	constexpr void if_is(const std::variant<Alternatives...>&& v, Fn&& fn);
 } // namespace tr

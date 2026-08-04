@@ -1,13 +1,10 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements variant.hpp.                                                                                                               //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements variant.hpp.
 
 #pragma once
 #include "../variant.hpp"
 
-////////////////////////////////////////////////////////////////// GET IF /////////////////////////////////////////////////////////////////
+//
 
 template <typename Alternative, typename... Alternatives>
 	requires(tr::one_of<Alternative, Alternatives...>)
@@ -39,7 +36,7 @@ constexpr std::optional<const Alternative> tr::get_if(const std::variant<Alterna
 	return ptr != nullptr ? std::make_optional<const Alternative>(std::move(*ptr)) : std::nullopt;
 }
 
-////////////////////////////////////////////////////////////////// IF IS //////////////////////////////////////////////////////////////////
+//
 
 template <typename Alternative, typename... Alternatives, std::invocable<Alternative&> Fn>
 constexpr void tr::if_is(std::variant<Alternatives...>& v, Fn&& fn)
