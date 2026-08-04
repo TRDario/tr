@@ -87,6 +87,9 @@ namespace tr
 		/// Additional chrono literals.
 		inline namespace chrono_literals
 		{
+			/// @name Literals
+			/// @{
+
 			/// Creates a duration from a frequency in hertz.
 			/// @param hz Frequency in hertz.
 			/// @return Duration `1s / hz`.
@@ -96,6 +99,8 @@ namespace tr
 			/// @param hz Frequency in hertz.
 			/// @return Duration `1s / hz`.
 			consteval duration operator""_hz(long double hz);
+
+			/// @}
 		} // namespace chrono_literals
 	} // namespace literals
 
