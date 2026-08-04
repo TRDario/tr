@@ -1,12 +1,9 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements mstream.hpp.                                                                                                               //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements mstream.hpp.
 
 #include "../../include/tr/utility/mstream.hpp"
 
-////////////////////////////////////////////////////////////// MEMORY BUFFER //////////////////////////////////////////////////////////////
+//
 
 tr::memorybuf::memorybuf(std::span<char> buffer)
 	: m_buffer{buffer}
@@ -57,7 +54,7 @@ tr::memorybuf::pos_type tr::memorybuf::seekpos(std::streampos pos, std::ios_base
 	return seekoff(pos, std::ios_base::beg, mode);
 }
 
-////////////////////////////////////////////////////////////// MEMORY STREAMS /////////////////////////////////////////////////////////////
+//
 
 tr::imstream::imstream(std::span<const char> buffer)
 	: memorybuf{{const_cast<char*>(buffer.data()), buffer.size()}}
@@ -77,6 +74,8 @@ tr::imstream::imstream(std::span<const std::byte> buffer)
 {
 }
 
+//
+
 tr::omstream::omstream(std::span<char> buffer)
 	: memorybuf{buffer}
 	, std::ostream{this}
@@ -94,6 +93,8 @@ tr::omstream::omstream(std::span<std::byte> buffer)
 	, std::ostream{this}
 {
 }
+
+//
 
 tr::mstream::mstream(std::span<char> buffer)
 	: memorybuf{buffer}
