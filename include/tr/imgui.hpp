@@ -1,56 +1,62 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Provides functionality for integrating tr with Dear ImGui.                                                                            //
-//                                                                                                                                       //
-// Using this module requires the option TR_BUILD_IMGUI to be turned on in CMake. TR_BUILD_IMGUI, in turn, depends on TR_BUILD_SYSGFX.   //
-//                                                                                                                                       //
-// Nothing from this module is allowed to be called before a window is opened.                                                           //
-//                                                                                                                                       //
-// tr::ImGui::Init should be called after ImGui::CreateContext.                                                                          //
-//                                                                                                                                       //
-// tr::ImGui::ProcessEvent should preferably be called on every main::handle_event call.                                                 //
-//                                                                                                                                       //
-// tr::ImGui::NewFrame should be called before ImGui::NewFrame.                                                                          //
-//                                                                                                                                       //
-// Use tr::ImGui::GetTextureID to get a Dear ImGui-compatible ID for a tr texture.                                                       //
-//     - ImGui::Image(tr::ImGui::GetTextureID(texture), std::bit_cast<ImVec2>(texture.size()))                                           //
-//                                                                                                                                       //
-// tr::ImGui::Draw should be called after ImGui::Render.                                                                                 //
-//                                                                                                                                       //
-// tr::ImGui::Shutdown should be called before ImGui::DestroyContext.                                                                    //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Provides functionality for integrating tr with Dear ImGui.
+/// @details
+/// Using this module requires the option TR_BUILD_IMGUI to be turned on in CMake. TR_BUILD_IMGUI, in turn, depends on TR_BUILD_SYSGFX.
 
 #pragma once
 #include <imgui.h>                 // IWYU pragma: export
 #include <misc/cpp/imgui_stdlib.h> // IWYU pragma: export
 
-namespace tr {
+namespace tr
+{
 	class event;
 	class graphics_context;
 	class texture;
 	class texture_view;
 } // namespace tr
 
-//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
+//
 
-namespace tr {
-	// Namespace containing functionality for integrating Dear ImGui with tr.
-	namespace ImGui {
-		// Initializes the Dear ImGui backends needed for work with tr.
+namespace tr
+{
+	/// Namespace containing functionality for integrating Dear ImGui with tr.
+	namespace ImGui
+	{
+		/// @name Management
+		/// @{
+
+		/// Initializes the Dear ImGui backends needed to work with tr.
+		/// @note This function should be called once after `::ImGui::CreateContext`.
+		/// @param context Graphics context the ImGUI backend will be associated with.
 		void Init(graphics_context& context);
-		// Shuts the Dear ImGui backends needed for work with tr down.
-		void Shutdown();
 
-		// Gets the Dear ImGui texture ID for a tr texture view.
-		ImTextureID GetTextureID(texture_view texture);
-
-		// Processes an event for Dear ImGui.
+		/// Processes an event for Dear ImGui.
+		/// @note This function should preferably be called on every `tr_app::handle_event` call.
+		/// @param event Event to process.
 		void ProcessEvent(const event& event);
 
-		// Prepares the Dear ImGui backends needed for work with tr for a new frame.
+		/// Shuts the Dear ImGui backends needed to work with tr down.
+		/// @note This function should be called once before `::ImGui::DestroyContext`.
+		void Shutdown();
+
+		/// @}
+		/// @name Drawing
+		/// @{
+
+		/// Gets the Dear ImGui texture ID for a tr texture view.
+		/// @param texture Texture to get the ImGui ID of.
+		/// @return ID associated with the texture that may be passed to ImGui functions.
+		ImTextureID GetTextureID(texture_view texture);
+
+		/// Prepares the Dear ImGui backends needed to work with tr for a new frame.
+		/// @note This function should be called after `::ImGui::NewFrame`.
 		void NewFrame();
-		// Draws a Dear ImGui frame.
+
+		/// Draws a Dear ImGui frame.
+		/// @note This function should be called after `::ImGui::Render`.
+		/// @param context Graphics context to draw the frame on.
 		void Draw(graphics_context& context);
+
+		/// @}
 	} // namespace ImGui
 } // namespace tr

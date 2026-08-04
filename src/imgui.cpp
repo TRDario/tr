@@ -1,8 +1,5 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements imgui.hpp.                                                                                                                 //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements imgui.hpp.
 
 #include "../include/tr/imgui.hpp"
 #include "../include/tr/sysgfx/graphics_context.hpp"
@@ -13,12 +10,17 @@
 
 struct SDL_Event;
 
-////////////////////////////////////////////////////////////////// IMGUI //////////////////////////////////////////////////////////////////
+//
 
 void tr::ImGui::Init(graphics_context& context)
 {
 	ImGui_ImplSDL3_InitForOpenGL(context.window().m_ptr, context.m_ptr.get());
 	ImGui_ImplOpenGL3_Init("#version 150");
+}
+
+void tr::ImGui::ProcessEvent(const event& event)
+{
+	ImGui_ImplSDL3_ProcessEvent(reinterpret_cast<const SDL_Event*>(&event));
 }
 
 void tr::ImGui::Shutdown()
@@ -33,15 +35,6 @@ ImTextureID tr::ImGui::GetTextureID(texture_view texture)
 {
 	return GetTextureID(texture.m_id);
 }
-
-//
-
-void tr::ImGui::ProcessEvent(const event& event)
-{
-	ImGui_ImplSDL3_ProcessEvent(reinterpret_cast<const SDL_Event*>(&event));
-}
-
-//
 
 void tr::ImGui::NewFrame()
 {

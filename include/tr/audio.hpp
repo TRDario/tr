@@ -1,10 +1,9 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Provides an audio API based on OpenAL.                                                                                                //
-//                                                                                                                                       //
-// Using this module requires the option TR_BUILD_AUDIO to be turned on in CMake. TR_BUILD_AUDIO, in turn, depends on TR_BUILD_SYSGFX.   //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Includes all headers from the audio module.
+/// @details
+/// The audio module provides an audio API based on OpenAL.
+///
+/// Using this module requires the option TR_BUILD_AUDIO to be turned on in CMake. TR_BUILD_AUDIO, in turn, depends on TR_BUILD_SYSGFX.
 
 #pragma once
 #include "audio/audio_buffer.hpp"           // IWYU pragma: export

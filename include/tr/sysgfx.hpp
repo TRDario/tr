@@ -1,15 +1,14 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Provides a system and graphics API based on SDL3 and OpenGL.                                                                          //
-//                                                                                                                                       //
-// Using this module requires the option TR_BUILD_SYSGFX to be turned on in CMake.                                                       //
-//                                                                                                                                       //
-// When using this module, the standard main entry point is replaced with several custom functions that must be defined, see main.hpp.   //
-//                                                                                                                                       //
-// Most classes and functions in this module cannot be used in main::parse_command_line. Exceptions to this include the classes and      //
-// functions in dialog.hpp, main.hpp, path.hpp, and state_machine.hpp.                                                                   //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Includes all headers from the system and graphics module.
+/// @details
+/// The system and graphics module provides a system and graphics API based on SDL3 and OpenGL.
+///
+/// Using this module requires the option TR_BUILD_SYSGFX to be turned on in CMake.
+///
+/// When using this module, the standard main entry point is replaced with several custom functions that must be defined, see main.hpp.
+///
+/// Most classes and functions in this module cannot be used in main::parse_command_line. Exceptions to this include the classes and
+/// functions in dialog.hpp, main.hpp, path.hpp, and state_machine.hpp.
 
 #pragma once
 #include "sysgfx/atlas.hpp"               // IWYU pragma: export

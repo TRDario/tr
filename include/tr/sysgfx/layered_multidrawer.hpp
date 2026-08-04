@@ -28,11 +28,13 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
+#include "../utility/function_traits.hpp"
 #include "render_target.hpp"
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
-namespace tr {
+namespace tr
+{
 	// Concept denoting a drawer of a layered renderer.
 	template <typename T>
 	concept layered_renderer_drawer = requires(T drawer, const render_target& target) {
@@ -53,10 +55,13 @@ namespace tr {
 	concept layered_renderer_or_drawer = layered_renderer<T> || layered_renderer_drawer<T>;
 
 	// Interface for drawing multiple layered renderers in order.
-	template <layered_renderer_drawer... Drawers> class layered_multidrawer {
+	template <layered_renderer_drawer... Drawers>
+	class layered_multidrawer
+	{
 	  public:
 		// Creates a multidrawer out of a list of renderers and drawers.
-		template <layered_renderer_or_drawer... DrawersAndRenderers> layered_multidrawer(DrawersAndRenderers&&... drawers_and_renderers);
+		template <layered_renderer_or_drawer... DrawersAndRenderers>
+		layered_multidrawer(DrawersAndRenderers&&... drawers_and_renderers);
 		// Creates a multidrawer out of a list of renderers and drawers given an explicit layer range for renderers.
 		template <layered_renderer_or_drawer... DrawersAndRenderers>
 		layered_multidrawer(int min_layer, int max_layer, DrawersAndRenderers&&... drawers_and_renderers);

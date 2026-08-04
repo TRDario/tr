@@ -1,8 +1,7 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Provides miscellaneous utilities.                                                                                                     //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Includes all headers from the utility module.
+/// @details
+/// The utility module provides mostly helper functionality supplemental to the other modules.
 
 #pragma once
 #include "utility/alignment.hpp"         // IWYU pragma: export
