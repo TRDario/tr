@@ -44,9 +44,10 @@
 #include "utility/static_string.hpp"     // IWYU pragma: export
 #include "utility/static_vector.hpp"     // IWYU pragma: export
 #include "utility/stopwatch.hpp"         // IWYU pragma: export
-#include "utility/template.hpp"          // IWYU pragma: export
+#include "utility/string_literal.hpp"    // IWYU pragma: export
 #include "utility/timer.hpp"             // IWYU pragma: export
 #include "utility/triangle.hpp"          // IWYU pragma: export
+#include "utility/type_name.hpp"         // IWYU pragma: export
 #include "utility/utf8.hpp"              // IWYU pragma: export
 #include "utility/variant.hpp"           // IWYU pragma: export
 #include "utility/vector.hpp"            // IWYU pragma: export

@@ -1,5 +1,5 @@
 /// @file
-/// @brief Provides function trait metafunctions.
+/// @brief Provides function trait metafunctionality.
 
 #pragma once
 #include "integer.hpp"

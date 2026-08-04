@@ -15,42 +15,50 @@ constexpr tr::angle::angle(float rads)
 {
 }
 
-template <tr::arithmetic Number> constexpr tr::angle tr::rads(Number th)
+template <tr::arithmetic Number>
+constexpr tr::angle tr::rads(Number th)
 {
 	return angle{static_cast<float>(th)};
 }
 
-template <tr::arithmetic Number> constexpr tr::angle tr::degs(Number th)
+template <tr::arithmetic Number>
+constexpr tr::angle tr::degs(Number th)
 {
 	return rads(std::numbers::pi_v<float> / 180 * static_cast<float>(th));
 }
 
-template <tr::arithmetic Number> constexpr tr::angle tr::turns(Number th)
+template <tr::arithmetic Number>
+constexpr tr::angle tr::turns(Number th)
 {
 	return rads(std::numbers::pi_v<float> * 2 * static_cast<float>(th));
 }
 
-template <tr::arithmetic Number> inline tr::angle tr::asin(Number sin)
+template <tr::arithmetic Number>
+inline tr::angle tr::asin(Number sin)
 {
 	return rads(std::asin(sin));
 }
 
-template <tr::arithmetic Number> inline tr::angle tr::acos(Number cos)
+template <tr::arithmetic Number>
+inline tr::angle tr::acos(Number cos)
 {
 	return rads(std::acos(cos));
 }
 
-template <tr::arithmetic Number> inline tr::angle tr::atan(Number tan)
+template <tr::arithmetic Number>
+inline tr::angle tr::atan(Number tan)
 {
 	return rads(std::atan(tan));
 }
 
-template <tr::arithmetic Number> inline tr::angle tr::atan2(Number y, Number x)
+template <tr::arithmetic Number>
+inline tr::angle tr::atan2(Number y, Number x)
 {
 	return rads(std::atan2(y, x));
 }
 
-template <tr::arithmetic Number> inline tr::angle tr::atan2(glm::tvec2<Number> p)
+template <tr::arithmetic Number>
+inline tr::angle tr::atan2(glm::tvec2<Number> p)
 {
 	return tr::atan2(p.y, p.x);
 }
@@ -62,7 +70,8 @@ constexpr tr::angle tr::abs(tr::angle th)
 	return th >= tr::angle{} ? th : -th;
 }
 
-template <std::floating_point Ratio> constexpr tr::angle tr::lerp(angle x, angle y, Ratio a)
+template <std::floating_point Ratio>
+constexpr tr::angle tr::lerp(angle x, angle y, Ratio a)
 {
 	x = eucmod(x, turns(1.0f));
 	y = eucmod(y, turns(1.0f));
@@ -118,13 +127,15 @@ constexpr tr::angle& tr::angle::operator-=(const angle& r)
 	return *this;
 }
 
-template <tr::arithmetic Factor> constexpr tr::angle& tr::angle::operator*=(const Factor& r)
+template <tr::arithmetic Factor>
+constexpr tr::angle& tr::angle::operator*=(const Factor& r)
 {
 	m_rads *= r;
 	return *this;
 }
 
-template <tr::arithmetic Factor> constexpr tr::angle& tr::angle::operator/=(const Factor& r)
+template <tr::arithmetic Factor>
+constexpr tr::angle& tr::angle::operator/=(const Factor& r)
 {
 	m_rads /= r;
 	return *this;
@@ -145,17 +156,20 @@ constexpr tr::angle tr::operator-(const angle& l)
 	return angle{-l.m_rads};
 }
 
-template <tr::arithmetic Factor> constexpr tr::angle tr::operator*(const angle& l, const Factor& r)
+template <tr::arithmetic Factor>
+constexpr tr::angle tr::operator*(const angle& l, const Factor& r)
 {
 	return angle{l.m_rads * r};
 }
 
-template <tr::arithmetic Factor> constexpr tr::angle tr::operator*(const Factor& l, const angle& r)
+template <tr::arithmetic Factor>
+constexpr tr::angle tr::operator*(const Factor& l, const angle& r)
 {
 	return r + l;
 }
 
-template <tr::arithmetic Factor> constexpr tr::angle tr::operator/(const angle& l, const Factor& r)
+template <tr::arithmetic Factor>
+constexpr tr::angle tr::operator/(const angle& l, const Factor& r)
 {
 	return angle{l.m_rads / r};
 }
@@ -204,7 +218,8 @@ inline float tr::angle::tan() const
 
 //////////////////////////////////////////////////////////////// FORMATTING ///////////////////////////////////////////////////////////////
 
-template <typename ParseContext> constexpr auto std::formatter<tr::angle>::parse(ParseContext& ctx)
+template <typename ParseContext>
+constexpr auto std::formatter<tr::angle>::parse(ParseContext& ctx)
 {
 	auto ctx_it{ctx.begin()};
 	if (ctx_it == ctx.end() || (*ctx_it != 'r' && *ctx_it != 'd' && *ctx_it != 't')) {
@@ -227,7 +242,8 @@ template <typename ParseContext> constexpr auto std::formatter<tr::angle>::parse
 	return formatter<float>::parse(ctx);
 }
 
-template <typename FormatContext> constexpr auto std::formatter<tr::angle>::format(const tr::angle& p, FormatContext& ctx) const
+template <typename FormatContext>
+constexpr auto std::formatter<tr::angle>::format(const tr::angle& p, FormatContext& ctx) const
 {
 	switch (m_unit) {
 	case unit::radians:

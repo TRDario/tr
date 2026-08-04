@@ -1,5 +1,5 @@
 /// @file
-/// @brief Provides integer aliases and fixed-width integer literals.
+/// @brief Provides integer utilities.
 
 #pragma once
 #include "common.hpp"
@@ -44,6 +44,8 @@ namespace tr
 			using ssize = std::ptrdiff_t;
 		} // namespace integer_aliases
 	} // namespace aliases
+
+	//
 
 	inline namespace literals
 	{
@@ -91,6 +93,20 @@ namespace tr
 			consteval i64 operator""_i64(unsigned long long v);
 		} // namespace integer_literals
 	} // namespace literals
+
+	//
+
+	//
+
+	/// Stores the type that can store an integer in the range [0, `S`] in `::type`.
+	/// @tparam S Maximum value that needs to be stored.
+	template <usize S>
+	struct size_type;
+
+	/// Integer type that can store an integer in the range [0, `S`].
+	/// @tparam S Maximum value that needs to be stored.
+	template <usize S>
+	using size_type_t = size_type<S>::type;
 } // namespace tr
 
 #include "impl/integer.hpp" // IWYU pragma: export

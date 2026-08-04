@@ -45,3 +45,48 @@ consteval tr::i64 tr::literals::integer_literals::operator""_i64(unsigned long l
 {
 	return static_cast<i64>(v);
 }
+
+//
+
+namespace tr
+{
+	/// Specialization of `tr::size_type` for integers (S > UINT32_MAX).
+	/// @tparam S Maximum value that needs to be stored.
+	template <usize S>
+		requires(S > UINT32_MAX)
+	struct size_type<S>
+	{
+		/// Integer type that can store an integer in the range [0, `S`].
+		using type = u64;
+	};
+
+	/// Specialization of `tr::size_type` for integers (UINT16_MAX < S <= UINT32_MAX).
+	/// @tparam S Maximum value that needs to be stored.
+	template <usize S>
+		requires(S > UINT16_MAX && S <= UINT32_MAX)
+	struct size_type<S>
+	{
+		/// Integer type that can store an integer in the range [0, `S`].
+		using type = u32;
+	};
+
+	/// Specialization of `tr::size_type` for integers (UINT8_MAX < S <= UINT16_MAX).
+	/// @tparam S Maximum value that needs to be stored.
+	template <usize S>
+		requires(S > UINT8_MAX && S <= UINT16_MAX)
+	struct size_type<S>
+	{
+		/// Integer type that can store an integer in the range [0, `S`].
+		using type = u16;
+	};
+
+	/// Specialization of `tr::size_type` for integers (S < UINT8_MAX).
+	/// @tparam S Maximum value that needs to be stored.
+	template <usize S>
+		requires(S <= UINT8_MAX)
+	struct size_type<S>
+	{
+		/// Integer type that can store an integer in the range [0, `S`].
+		using type = u8;
+	};
+} // namespace tr

@@ -22,11 +22,13 @@ add_executable(
 	rectangle.cpp
 	reference.cpp
 	rng.cpp
+	specialization_of.cpp
 	static_vector.cpp
 	stopwatch.cpp
-	template.cpp
+	string_literal.cpp
 	timer.cpp
 	triangle.cpp
+	type_name.cpp
 	utf8.cpp
 	variant.cpp
 	zstring_view.cpp

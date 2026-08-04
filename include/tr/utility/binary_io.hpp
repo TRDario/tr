@@ -38,14 +38,18 @@
 #pragma once
 #include "concepts.hpp"
 #include "default_binary_io.hpp"
+#include "specialization_of.hpp"
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
-namespace tr {
+namespace tr
+{
 	// Interface for custom readers for use in read_binary.
-	template <cv_unqualified_object Out> struct binary_reader;
+	template <cv_unqualified_object Out>
+	struct binary_reader;
 	// Interface for custom writers for use in write_binary.
-	template <cv_unqualified_object In> struct binary_writer;
+	template <cv_unqualified_object In>
+	struct binary_writer;
 
 	// Concept that denotes a type able to be read with read_binary.
 	template <typename T>
@@ -66,25 +70,30 @@ namespace tr {
 	concept binary_writable = requires(std::ostream& os, const T& in) { tr::binary_writer<std::remove_cv_t<T>>{}(os, in); };
 
 	// Reads binary data from a stream.
-	template <binary_readable Out> void read_binary(std::istream& is, Out& out);
+	template <binary_readable Out>
+	void read_binary(std::istream& is, Out& out);
 	// Reads binary data from a stream.
-	template <binary_readable Out, usize Size> void read_binary(std::istream& is, std::span<Out, Size> out);
+	template <binary_readable Out, usize Size>
+	void read_binary(std::istream& is, std::span<Out, Size> out);
 	// Reads binary data from a stream.
 	template <span_or_ref_to_binary_readable... Outs>
 		requires(sizeof...(Outs) >= 2)
 	void read_binary(std::istream& is, Outs&&... outs);
 	// Reads binary data from a stream.
-	template <binary_constructible Out> Out read_binary(std::istream& is);
+	template <binary_constructible Out>
+	Out read_binary(std::istream& is);
 	// Checks for magic bytes from a stream.
 	bool read_binary_magic(std::istream& is, std::string_view magic);
 
 	// Flushes the rest of the stream into an output iterator.
-	template <tr::binary_flushable_iterator Iterator> void flush_binary(std::istream& is, Iterator out);
+	template <tr::binary_flushable_iterator Iterator>
+	void flush_binary(std::istream& is, Iterator out);
 	// Flushes the rest of the stream into a vector of bytes.
 	std::vector<std::byte> flush_binary(std::istream& is);
 
 	// Writes binary data to a stream.
-	template <binary_writable In> void write_binary(std::ostream& os, const In& in);
+	template <binary_writable In>
+	void write_binary(std::ostream& os, const In& in);
 	// Writes binary data to a stream.
 	template <binary_writable... Ins>
 		requires(sizeof...(Ins) >= 2)
@@ -95,7 +104,8 @@ namespace tr {
 
 ///////////////////////////////////////////////////////////// SPECIALIZATIONS /////////////////////////////////////////////////////////////
 
-namespace tr {
+namespace tr
+{
 	// Enables default binary IO for arithmetic types.
 	template <arithmetic Arithmetic>
 		requires(cv_unqualified_object<Arithmetic>)
@@ -105,7 +115,8 @@ namespace tr {
 		requires(cv_unqualified_object<Enumerator>)
 	inline constexpr bool enable_default_binary_io<Enumerator>{true};
 	// Enables default binary IO for vectors.
-	template <int Dimensions, typename Element> inline constexpr bool enable_default_binary_io<glm::vec<Dimensions, Element>>{true};
+	template <int Dimensions, typename Element>
+	inline constexpr bool enable_default_binary_io<glm::vec<Dimensions, Element>>{true};
 	// Enables default binary IO for matrices.
 	template <int Columns, int Rows, typename Element>
 	inline constexpr bool enable_default_binary_io<glm::mat<Columns, Rows, Element>>{true};
@@ -113,120 +124,168 @@ namespace tr {
 	// Default binary reader.
 	template <cv_unqualified_object Defaulted>
 		requires(enable_default_binary_io<Defaulted>)
-	struct binary_reader<Defaulted> {
+	struct binary_reader<Defaulted>
+	{
 		using default_reader = std::true_type;
 		void operator()(std::istream& is, Defaulted& out) const;
 	};
 	// Array binary reader.
-	template <binary_readable Element, usize Size> struct binary_reader<std::array<Element, Size>> {
+	template <binary_readable Element, usize Size>
+	struct binary_reader<std::array<Element, Size>>
+	{
 		void operator()(std::istream& is, std::array<Element, Size>& out) const;
 	};
 	// Pair binary reader.
-	template <binary_readable First, binary_readable Second> struct binary_reader<std::pair<First, Second>> {
+	template <binary_readable First, binary_readable Second>
+	struct binary_reader<std::pair<First, Second>>
+	{
 		void operator()(std::istream& is, std::pair<First, Second>& out) const;
 	};
 	// String binary reader.
-	template <> struct binary_reader<std::string> {
+	template <>
+	struct binary_reader<std::string>
+	{
 		void operator()(std::istream& is, std::string& out) const;
 	};
 	// Vector binary reader.
-	template <binary_constructible Element> struct binary_reader<std::vector<Element>> {
+	template <binary_constructible Element>
+	struct binary_reader<std::vector<Element>>
+	{
 		void operator()(std::istream& is, std::vector<Element>& out) const;
 	};
 	// Set binary reader.
-	template <binary_constructible Key, typename... Other> struct binary_reader<std::set<Key, Other...>> {
+	template <binary_constructible Key, typename... Other>
+	struct binary_reader<std::set<Key, Other...>>
+	{
 		void operator()(std::istream& is, std::set<Key, Other...>& out) const;
 	};
 	// Map binary reader.
-	template <binary_constructible Key, binary_constructible V, typename... Other> struct binary_reader<std::map<Key, V, Other...>> {
+	template <binary_constructible Key, binary_constructible V, typename... Other>
+	struct binary_reader<std::map<Key, V, Other...>>
+	{
 		void operator()(std::istream& is, std::map<Key, V, Other...>& out) const;
 	};
 	// Unordered flat set binary reader.
-	template <binary_constructible Key, typename... Other> struct binary_reader<boost::unordered_flat_set<Key, Other...>> {
+	template <binary_constructible Key, typename... Other>
+	struct binary_reader<boost::unordered_flat_set<Key, Other...>>
+	{
 		void operator()(std::istream& is, boost::unordered_flat_set<Key, Other...>& out) const;
 	};
 	// Unordered node set binary reader.
-	template <binary_constructible Key, typename... Other> struct binary_reader<boost::unordered_node_set<Key, Other...>> {
+	template <binary_constructible Key, typename... Other>
+	struct binary_reader<boost::unordered_node_set<Key, Other...>>
+	{
 		void operator()(std::istream& is, boost::unordered_node_set<Key, Other...>& out) const;
 	};
 	// Unordered flat map binary reader.
 	template <binary_constructible Key, binary_constructible V, typename... Other>
-	struct binary_reader<boost::unordered_flat_map<Key, V, Other...>> {
+	struct binary_reader<boost::unordered_flat_map<Key, V, Other...>>
+	{
 		void operator()(std::istream& is, boost::unordered_flat_map<Key, V, Other...>& out) const;
 	};
 	// Unordered node map binary reader.
 	template <binary_constructible Key, binary_constructible V, typename... Other>
-	struct binary_reader<boost::unordered_node_map<Key, V, Other...>> {
+	struct binary_reader<boost::unordered_node_map<Key, V, Other...>>
+	{
 		void operator()(std::istream& is, boost::unordered_node_map<Key, V, Other...>& out) const;
 	};
 
 	// Default binary writer.
 	template <cv_unqualified_object Defaulted>
 		requires(enable_default_binary_io<Defaulted>)
-	struct binary_writer<Defaulted> {
+	struct binary_writer<Defaulted>
+	{
 		using raw_writer = std::true_type;
 		void operator()(std::ostream& os, const Defaulted& in);
 	};
 	// Span binary writer.
-	template <binary_writable Element, usize Size> struct binary_writer<std::span<Element, Size>> {
+	template <binary_writable Element, usize Size>
+	struct binary_writer<std::span<Element, Size>>
+	{
 		void operator()(std::ostream& os, const std::span<Element, Size>& in) const;
 	};
 	// Pair binary writer.
-	template <binary_writable First, binary_writable Second> struct binary_writer<std::pair<First, Second>> {
+	template <binary_writable First, binary_writable Second>
+	struct binary_writer<std::pair<First, Second>>
+	{
 		void operator()(std::ostream& os, const std::pair<First, Second> in) const;
 	};
 	// C String binary writer.
-	template <> struct binary_writer<const char*> {
+	template <>
+	struct binary_writer<const char*>
+	{
 		void operator()(std::ostream& os, const char* in) const;
 	};
 	// C String binary writer.
-	template <usize Size> struct binary_writer<char[Size]> {
+	template <usize Size>
+	struct binary_writer<char[Size]>
+	{
 		void operator()(std::ostream& os, const char (&in)[Size]) const;
 	};
 	// String view binary writer.
-	template <> struct binary_writer<std::string_view> {
+	template <>
+	struct binary_writer<std::string_view>
+	{
 		void operator()(std::ostream& os, const std::string_view& in) const;
 	};
 	// String binary writer.
-	template <> struct binary_writer<std::string> {
+	template <>
+	struct binary_writer<std::string>
+	{
 		void operator()(std::ostream& os, const std::string& in) const;
 	};
 	// Raw array binary writer.
-	template <binary_writable Element, usize Size> struct binary_writer<Element[Size]> {
+	template <binary_writable Element, usize Size>
+	struct binary_writer<Element[Size]>
+	{
 		void operator()(std::ostream& os, const Element (&in)[Size]) const;
 	};
 	// Array binary writer.
-	template <binary_writable Element, usize Size> struct binary_writer<std::array<Element, Size>> {
+	template <binary_writable Element, usize Size>
+	struct binary_writer<std::array<Element, Size>>
+	{
 		void operator()(std::ostream& os, const std::array<Element, Size>& in) const;
 	};
 	// Vector binary writer.
-	template <binary_writable Element> struct binary_writer<std::vector<Element>> {
+	template <binary_writable Element>
+	struct binary_writer<std::vector<Element>>
+	{
 		void operator()(std::ostream& os, const std::vector<Element>& in) const;
 	};
 	// Set binary writer.
-	template <binary_writable Key, typename... Other> struct binary_writer<std::set<Key, Other...>> {
+	template <binary_writable Key, typename... Other>
+	struct binary_writer<std::set<Key, Other...>>
+	{
 		void operator()(std::ostream& os, const std::set<Key, Other...>& in) const;
 	};
 	// Map binary writer.
-	template <binary_writable Key, binary_writable Value, typename... Other> struct binary_writer<std::map<Key, Value, Other...>> {
+	template <binary_writable Key, binary_writable Value, typename... Other>
+	struct binary_writer<std::map<Key, Value, Other...>>
+	{
 		void operator()(std::ostream& os, const std::map<Key, Value, Other...>& in) const;
 	};
 	// Unordered flat set binary writer.
-	template <binary_writable Key, typename... Other> struct binary_writer<boost::unordered_flat_set<Key, Other...>> {
+	template <binary_writable Key, typename... Other>
+	struct binary_writer<boost::unordered_flat_set<Key, Other...>>
+	{
 		void operator()(std::ostream& os, const boost::unordered_flat_set<Key, Other...>& in) const;
 	};
 	// Unordered node set binary writer.
-	template <binary_writable Key, typename... Other> struct binary_writer<boost::unordered_node_set<Key, Other...>> {
+	template <binary_writable Key, typename... Other>
+	struct binary_writer<boost::unordered_node_set<Key, Other...>>
+	{
 		void operator()(std::ostream& os, const boost::unordered_node_set<Key, Other...>& in) const;
 	};
 	// Unordered flat map writer.
 	template <binary_writable Key, binary_writable Value, typename... Other>
-	struct binary_writer<boost::unordered_flat_map<Key, Value, Other...>> {
+	struct binary_writer<boost::unordered_flat_map<Key, Value, Other...>>
+	{
 		void operator()(std::ostream& os, const boost::unordered_flat_map<Key, Value, Other...>& in) const;
 	};
 	// Unordered node map writer.
 	template <binary_writable Key, binary_writable Value, typename... Other>
-	struct binary_writer<boost::unordered_node_map<Key, Value, Other...>> {
+	struct binary_writer<boost::unordered_node_map<Key, Value, Other...>>
+	{
 		void operator()(std::ostream& os, const boost::unordered_node_map<Key, Value, Other...>& in) const;
 	};
 } // namespace tr

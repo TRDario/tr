@@ -7,11 +7,12 @@
 #pragma once
 #include "../macro.hpp"
 #include "../ranges.hpp"
+#include "../type_name.hpp"
 
 ////////////////////////////////////////////////////////////////// RANGES /////////////////////////////////////////////////////////////////
 
-// Reinterprets a span of one type to a span of another.
-template <tr::standard_layout To, tr::standard_layout From, tr::usize Extent> auto tr::reinterpret_span(std::span<From, Extent> from)
+template <tr::standard_layout To, tr::standard_layout From, tr::usize Extent>
+auto tr::reinterpret_span(std::span<From, Extent> from)
 {
 	if constexpr (Extent != std::dynamic_extent) {
 		static_assert(Extent * sizeof(From) % sizeof(To) == 0, "Cannot reinterpret span due to size_bytes() % sizeof(T) != 0.");
@@ -26,29 +27,34 @@ template <tr::standard_layout To, tr::standard_layout From, tr::usize Extent> au
 
 //
 
-template <tr::borrowed_standard_layout_range Range> auto tr::range_bytes(Range&& range)
+template <tr::borrowed_standard_layout_range Range>
+auto tr::range_bytes(Range&& range)
 {
 	return std::as_bytes(std::span{range});
 }
 
-template <tr::borrowed_mutable_standard_layout_range Range> auto tr::range_mut_bytes(Range&& range)
+template <tr::borrowed_mutable_standard_layout_range Range>
+auto tr::range_mut_bytes(Range&& range)
 {
 	return std::as_writable_bytes(std::span{range});
 }
 
-template <tr::standard_layout Object> std::span<const std::byte, sizeof(Object)> tr::as_bytes(const Object& object)
+template <tr::standard_layout Object>
+std::span<const std::byte, sizeof(Object)> tr::as_bytes(const Object& object)
 {
 	return std::as_bytes(std::span<const Object, 1>{std::addressof(object), 1});
 }
 
-template <tr::standard_layout Object> std::span<std::byte, sizeof(Object)> tr::as_mut_bytes(Object& object)
+template <tr::standard_layout Object>
+std::span<std::byte, sizeof(Object)> tr::as_mut_bytes(Object& object)
 {
 	return std::as_writable_bytes(std::span<Object, 1>{std::addressof(object), 1});
 }
 
 //
 
-template <tr::standard_layout Object, tr::borrowed_typed_contiguous_mutable_range<std::byte> Range> Object& tr::as_mut_object(Range&& bytes)
+template <tr::standard_layout Object, tr::borrowed_typed_contiguous_mutable_range<std::byte> Range>
+Object& tr::as_mut_object(Range&& bytes)
 {
 	const auto span{tr::range_mut_bytes(bytes)};
 
@@ -63,7 +69,8 @@ template <tr::standard_layout Object, tr::borrowed_typed_contiguous_mutable_rang
 	return *reinterpret_cast<Object*>(span.data());
 }
 
-template <tr::standard_layout Object, tr::borrowed_typed_contiguous_const_range<std::byte> Range> const Object& tr::as_object(Range&& bytes)
+template <tr::standard_layout Object, tr::borrowed_typed_contiguous_const_range<std::byte> Range>
+const Object& tr::as_object(Range&& bytes)
 {
 	const auto span{tr::range_bytes(bytes)};
 
@@ -78,7 +85,8 @@ template <tr::standard_layout Object, tr::borrowed_typed_contiguous_const_range<
 	return *reinterpret_cast<const Object*>(span.data());
 }
 
-template <tr::standard_layout Element, tr::borrowed_typed_contiguous_mutable_range<std::byte> Range> auto tr::as_mut_objects(Range&& bytes)
+template <tr::standard_layout Element, tr::borrowed_typed_contiguous_mutable_range<std::byte> Range>
+auto tr::as_mut_objects(Range&& bytes)
 {
 	const auto span{tr::range_mut_bytes(bytes)};
 
@@ -95,7 +103,8 @@ template <tr::standard_layout Element, tr::borrowed_typed_contiguous_mutable_ran
 	}
 }
 
-template <tr::standard_layout Element, tr::borrowed_typed_contiguous_const_range<std::byte> Range> auto tr::as_objects(Range&& bytes)
+template <tr::standard_layout Element, tr::borrowed_typed_contiguous_const_range<std::byte> Range>
+auto tr::as_objects(Range&& bytes)
 {
 	const auto span{tr::range_bytes(bytes)};
 
@@ -152,14 +161,16 @@ constexpr std::ranges::borrowed_iterator_t<SearchedRange> tr::find_last_not_of(S
 
 //
 
-template <std::ranges::range Range, typename Value> Value tr::sum(Range&& range, Value initial_value)
+template <std::ranges::range Range, typename Value>
+Value tr::sum(Range&& range, Value initial_value)
 {
 	return std::accumulate(std::ranges::begin(range), std::ranges::end(range), initial_value);
 }
 
 //
 
-template <tr::move_assignable Element> void tr::unstable_erase(std::vector<Element>& vec, typename std::vector<Element>::iterator where)
+template <tr::move_assignable Element>
+void tr::unstable_erase(std::vector<Element>& vec, typename std::vector<Element>::iterator where)
 {
 	const typename std::vector<Element>::iterator back{std::prev(vec.end())};
 	if (where != back) {

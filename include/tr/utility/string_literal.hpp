@@ -1,5 +1,5 @@
 /// @file
-/// @brief Provides miscellaneous template utilities.
+/// @brief Provides a string literal type passable as a non-type template parameter.
 
 #pragma once
 #include "integer.hpp"
@@ -13,16 +13,16 @@ namespace tr
 	template <usize Size>
 	struct string_literal
 	{
-		/// Backing character array of the string.
-		char data[Size];
-
-		//
+		/// @name Constructors
+		/// @{
 
 		/// Constructs a template string literal from a real string literal.
 		/// @param[in] str Source string literal to copy.
 		consteval string_literal(const char (&str)[Size]);
 
-		//
+		/// @}
+		/// @name Conversion operators
+		/// @{
 
 		/// Gets a C-string pointing to the string literal.
 		/// @return C-string pointing to the string literal.
@@ -34,15 +34,22 @@ namespace tr
 
 		/// Gets a format string view to the string literal.
 		/// @tparam Args List of arguments to the formatting function.
-		/// @return A format string view to the string literal.
+		/// @return Format string view to the string literal.
 		template <typename... Args>
 		consteval operator std::format_string<Args...>() const;
 
-		//
+		/// @}
+		/// @name Data
+		/// @{
+
+		/// Backing character array of the string.
+		char data[Size];
 
 		/// Gets the length of the literal.
 		/// @return Length of the string literal.
 		consteval static usize size();
+
+		/// @}
 	};
 
 	/// Concatenates two or more string literals into a new string literal.
@@ -52,30 +59,9 @@ namespace tr
 	/// @param first First string to concatenate.
 	/// @param second Second string to concatenate.
 	/// @param rest Additional strings to concatenate.
-	/// @return A new string literal stored in a `tr::string_literal` object.
+	/// @return New string literal stored in a `tr::string_literal` object.
 	template <typename First, typename Second, typename... Rest>
 	consteval auto concatenate_string_literals(First&& first, Second&& second, Rest&&... rest);
-
-	//
-
-	/// Gets a human-readable name string for a type.
-	/// @note May not return the exact same string on all compilers.
-	/// @tparam T Type to get the name of.
-	/// @return String view to the name of the type.
-	template <typename T>
-	consteval std::string_view type_name();
-
-	//
-
-	/// Stores the type that can store an integer in the range [0, `S`] in `::type`.
-	/// @tparam S Maximum value that needs to be stored.
-	template <usize S>
-	struct size_type;
-
-	/// Defines an integer type that can store an integer in the range [0, `S`].
-	/// @tparam S Maximum value that needs to be stored.
-	template <usize S>
-	using size_type_t = size_type<S>::type;
 } // namespace tr
 
-#include "impl/template.hpp" // IWYU pragma: export
+#include "impl/string_literal.hpp" // IWYU pragma: export

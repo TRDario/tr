@@ -9,7 +9,8 @@
 
 /////////////////////////////////////////////////////////// SCANCODE AND KEYCODE //////////////////////////////////////////////////////////
 
-namespace tr {
+namespace tr
+{
 	// Copied from SDL with modifications.
 	constexpr std::array<zstring_view, 291> scancode_name_table{{
 		{},
@@ -439,7 +440,7 @@ constexpr tr::key_chord::key_chord(zstring_view str)
 	}
 
 	std::string_view substr{str.begin(), first_delimiter_pos};
-	while (substr.end() != str.end()) {
+	while (*substr.end() != '\0') {
 		if (substr == "Shift") {
 			mods |= keymod::shift;
 		}
@@ -504,25 +505,29 @@ consteval tr::key_chord tr::keyboard_literals::operator""_kc(const char* cstr, u
 
 //////////////////////////////////////////////////////////////// FORMATTERS ///////////////////////////////////////////////////////////////
 
-template <typename FormatContext> constexpr auto std::formatter<tr::scancode>::format(tr::scancode scan, FormatContext& ctx) const
+template <typename FormatContext>
+constexpr auto std::formatter<tr::scancode>::format(tr::scancode scan, FormatContext& ctx) const
 {
 	ctx.advance_to(std::formatter<const char*>::format(name(scan), ctx));
 	return ctx.out();
 }
 
-template <typename FormatContext> constexpr auto std::formatter<tr::scan_chord>::format(tr::scan_chord chord, FormatContext& ctx) const
+template <typename FormatContext>
+constexpr auto std::formatter<tr::scan_chord>::format(tr::scan_chord chord, FormatContext& ctx) const
 {
 	ctx.advance_to(std::formatter<std::string>::format(chord.name(), ctx));
 	return ctx.out();
 }
 
-template <typename FormatContext> constexpr auto std::formatter<tr::keycode>::format(tr::keycode key, FormatContext& ctx) const
+template <typename FormatContext>
+constexpr auto std::formatter<tr::keycode>::format(tr::keycode key, FormatContext& ctx) const
 {
 	ctx.advance_to(std::formatter<std::string>::format(name(key), ctx));
 	return ctx.out();
 }
 
-template <typename FormatContext> constexpr auto std::formatter<tr::key_chord>::format(tr::key_chord chord, FormatContext& ctx) const
+template <typename FormatContext>
+constexpr auto std::formatter<tr::key_chord>::format(tr::key_chord chord, FormatContext& ctx) const
 {
 	ctx.advance_to(std::formatter<std::string>::format(chord.name(), ctx));
 	return ctx.out();
