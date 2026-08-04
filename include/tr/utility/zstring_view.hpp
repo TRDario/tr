@@ -225,7 +225,7 @@ namespace tr
 	/// @tparam CharT Character type used by the string.
 	/// @tparam Traits Character traits used by the string.
 	/// @param os Output stream.
-	/// @param view String view to output.
+	/// @param zstr String view to output.
 	template <typename CharT, typename Traits>
 	std::basic_ostream<CharT, Traits>& operator<<(std::basic_ostream<CharT, Traits>& os, basic_zstring_view<CharT, Traits> zstr);
 

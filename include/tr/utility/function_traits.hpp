@@ -29,7 +29,7 @@ namespace tr
 	using args_tuple_t = function_traits<Function>::args_tuple;
 
 	/// Type of the Nth argument to the function or functor.
-	/// @tparan N Index of the parameter to get the type of.
+	/// @tparam N Index of the parameter to get the type of.
 	/// @tparam Function Function or functor type with an unambiguous `operator()` definition.
 	template <usize N, typename Function>
 	using nth_arg_type_t = function_traits<Function>::template nth_arg_type<N>;

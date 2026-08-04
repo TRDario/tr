@@ -28,14 +28,14 @@ namespace tr
 	/// Applies a 2D scaling around a point to a matrix.
 	/// @param matrix Base matrix to apply the transformation to.
 	/// @param center Point to scale around.
-	/// @param scaling Scaling multipliers.
+	/// @param scale Scaling multipliers.
 	/// @return Result of the transformation applied upon `matrix`.
 	glm::mat4 scale_around(const glm::mat4& matrix, glm::vec2 center, glm::vec2 scale);
 
 	/// Applies a 3D scaling around a point to a matrix.
 	/// @param matrix Base matrix to apply the transformation to.
 	/// @param center Point to scale around.
-	/// @param scaling Scaling multipliers.
+	/// @param scale Scaling multipliers.
 	/// @return Result of the transformation applied upon `matrix`.
 	glm::mat4 scale_around(const glm::mat4& matrix, glm::vec3 center, glm::vec3 scale);
 
