@@ -200,22 +200,26 @@ namespace tr
 	/// NUL-terminated 8-bit character string view.
 	using zstring_view = basic_zstring_view<char>;
 
-	//
-
 	inline namespace literals
 	{
 		/// Provides NUL-terminated string view literals.
 		inline namespace zstring_view_literals
 		{
+			/// @name Literals
+			/// @{
+
 			/// Constructs a null-terminated string view literal.
 			/// @param str Base C-string literal.
 			/// @param len Length of the string literal.
 			/// @return String view literal wrapped in `tr::zstring_view`.
 			constexpr zstring_view operator""_zsv(const char* str, std::size_t len) noexcept;
+
+			/// @}
 		} // namespace zstring_view_literals
 	} // namespace literals
 
-	//
+	/// @name Overloaded operators
+	/// @{
 
 	/// Output stream formatter for NUL-terminated string views.
 	/// @tparam CharT Character type used by the string.
@@ -233,10 +237,9 @@ namespace tr
 	/// @return Concatenated path.
 	template <typename CharT, typename Traits>
 	std::filesystem::path operator/(const std::filesystem::path& lhs, basic_zstring_view<CharT, Traits> rhs);
-} // namespace tr
 
-/// @name Specializations
-/// @{
+	/// @}
+} // namespace tr
 
 /// Designates basic_zstring_view as a view.
 /// @tparam CharT Character type used by the string.
@@ -275,7 +278,5 @@ template <typename CharT, typename Traits>
 struct tr::binary_writer<tr::basic_zstring_view<CharT, Traits>> : binary_writer<std::basic_string_view<CharT, Traits>>
 {
 };
-
-/// @}
 
 #include "impl/zstring_view.hpp" // IWYU pragma: export
