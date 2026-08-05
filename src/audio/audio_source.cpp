@@ -1,8 +1,5 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements audio_source.hpp.                                                                                                          //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements audio_source.hpp.
 
 #include "../../include/tr/audio/audio_source.hpp"
 #include "../../include/tr/audio/audio_context.hpp"
@@ -12,7 +9,7 @@
 #include <AL/al.h>
 #include <AL/alext.h>
 
-////////////////////////////////////////////////////////// BUFFERED STREAM BUFFER /////////////////////////////////////////////////////////
+//
 
 tr::audio_source::buffered_stream::buffer::buffer(audio_context& context)
 	: audio_buffer{context}
@@ -35,7 +32,7 @@ void tr::audio_source::buffered_stream::buffer::refill_from(audio_stream& source
 	set(used_data, source.channels() == 2 ? audio_format::stereo16 : audio_format::mono16, source.sample_rate());
 }
 
-///////////////////////////////////////////////////////////// BUFFERED STREAM /////////////////////////////////////////////////////////////
+//
 
 tr::audio_source::buffered_stream::buffered_stream(audio_context& context, std::unique_ptr<audio_stream>&& stream)
 	: m_stream{std::move(stream)}
@@ -123,7 +120,7 @@ tr::static_vector<unsigned int, 4> tr::audio_source::buffered_stream::try_refill
 	return buffers;
 }
 
-/////////////////////////////////////////////////////////////// AUDIO SOURCE //////////////////////////////////////////////////////////////
+//
 
 tr::audio_source::audio_source(audio_context& context, int priority)
 	: m_handle{{context}}
