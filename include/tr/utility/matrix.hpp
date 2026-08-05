@@ -9,6 +9,9 @@
 
 namespace tr
 {
+	/// @name 3D axes
+	/// @{
+
 	/// Normalized X-axis vector.
 	inline constexpr glm::vec3 x_axis{1.0f, 0.0f, 0.0f};
 
@@ -18,7 +21,9 @@ namespace tr
 	/// Normalized Z-axis vector.
 	inline constexpr glm::vec3 z_axis{0.0f, 0.0f, 1.0f};
 
-	//
+	/// @}
+	/// @name Matrix operations
+	/// @{
 
 	/// Produces an orthographic transform for a rectangular region.
 	/// @param region Region to create an orthographic transform for.
@@ -54,7 +59,7 @@ namespace tr
 	/// @return Result of the transformation applied upon `matrix`.
 	glm::mat4 rotate_around(const glm::mat4& matrix, glm::vec3 center, angle rotation, glm::vec3 axis);
 
-	//
+	/// @}
 
 	inline namespace literals
 	{
