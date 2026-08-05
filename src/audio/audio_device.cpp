@@ -1,14 +1,11 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements audio_device.hpp.                                                                                                          //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements audio_device.hpp.
 
 #include "../../include/tr/audio/audio_device.hpp"
 #include "../../include/tr/utility/macro.hpp"
 #include <AL/alc.h>
 
-///////////////////////////////////////////////////////// AUDIO DEVICE OPEN ERROR /////////////////////////////////////////////////////////
+//
 
 std::string_view tr::audio_device_open_error::name() const
 {
@@ -25,7 +22,7 @@ std::string_view tr::audio_device_open_error::details() const
 	return {};
 }
 
-/////////////////////////////////////////////////////////////// AUDIO DEVICE //////////////////////////////////////////////////////////////
+//
 
 tr::audio_device::audio_device(zstring_view name)
 	: m_ptr{alcOpenDevice(name.c_str())}
@@ -35,7 +32,7 @@ tr::audio_device::audio_device(zstring_view name)
 	}
 }
 
-void tr::audio_device::deleter::operator()(ALCdevice* device) const
+void tr::audio_device::deleter::operator()(ALCdevice* device)
 {
 	const ALCboolean success{alcCloseDevice(device)};
 	TR_ASSERT(success, "Tried to close audio device '{}' which still has active contexts.", alcGetString(device, ALC_DEVICE_SPECIFIER));
