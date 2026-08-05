@@ -1,14 +1,11 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements audio_device_list_view.hpp.                                                                                                //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements audio_device_list_view.hpp.
 
 #include "../../include/tr/audio/audio_device_list_view.hpp"
 #include "../../include/tr/utility/macro.hpp"
 #include <AL/alc.h>
 
-//////////////////////////////////////////////////////// AUDIO DEVICE LIST ITERATOR ///////////////////////////////////////////////////////
+//
 
 tr::audio_device_list_view_iterator::audio_device_list_view_iterator(tr::zstring_view view)
 	: m_view{view}
@@ -55,14 +52,14 @@ tr::audio_device_list_view_iterator tr::audio_device_list_view_iterator::operato
 	return copy;
 }
 
-////////////////////////////////////////////////////// AUDIO DEVICE LIST END SENTINEL /////////////////////////////////////////////////////
+//
 
 bool tr::operator==(audio_device_list_view_iterator it, audio_device_list_view_end_sentinel)
 {
 	return it->empty();
 }
 
-///////////////////////////////////////////////////////// AVAILABLE AUDIO DEVICES /////////////////////////////////////////////////////////
+//
 
 tr::audio_device_list_view tr::available_audio_devices()
 {
