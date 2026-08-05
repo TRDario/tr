@@ -605,7 +605,7 @@ HIDE_UNDOC_CLASSES     = YES
 # documentation.
 # The default value is: NO.
 
-HIDE_FRIEND_COMPOUNDS  = NO
+HIDE_FRIEND_COMPOUNDS  = YES
 
 # If the HIDE_IN_BODY_DOCS tag is set to YES, Doxygen will hide any
 # documentation blocks found inside the body of a function. If set to NO, these
@@ -1074,6 +1074,8 @@ RECURSIVE              = YES
 EXCLUDE                = ../include/tr/utility/impl \
                          ../include/tr/sysgfx/impl \
                          ../include/tr/audio/impl \
+                         ../include/tr/audio/al_api.hpp \
+                         ../include/tr/audio/audio_command.hpp \
                          ../include/tr/sysgfx/gl_api.hpp \
                          ../include/tr/sysgfx/gl_checks.hpp \
                          ../include/tr/sysgfx/gl_defines.hpp
