@@ -199,12 +199,12 @@ namespace tr::utf8
 		/// Compares iterators.
 		/// @param lhs, rhs Iterators to compare.
 		/// @return Ordering of the iterators.
-		constexpr friend auto operator<=>(indexed_iterator l, indexed_iterator r);
+		constexpr friend auto operator<=>(indexed_iterator lhs, indexed_iterator rhs);
 
 		/// Compares iterators for equality.
 		/// @param lhs, rhs Iterators to compare.
 		/// @return Whether the iterators are equal.
-		constexpr friend bool operator==(indexed_iterator l, indexed_iterator r);
+		constexpr friend bool operator==(indexed_iterator lhs, indexed_iterator rhs);
 
 		/// @name Other operators
 		/// @{

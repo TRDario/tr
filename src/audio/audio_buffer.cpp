@@ -1,8 +1,5 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements audio_buffer.hpp.                                                                                                          //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements audio_buffer.hpp.
 
 #include "../../include/tr/audio/audio_buffer.hpp"
 #include "../../include/tr/audio/audio_context.hpp"
@@ -11,7 +8,7 @@
 #include <AL/al.h>
 #include <AL/alext.h>
 
-/////////////////////////////////////////////////////////////// AUDIO BUFFER //////////////////////////////////////////////////////////////
+//
 
 tr::audio_buffer::audio_buffer(audio_context& context)
 	: m_handle{{context}}

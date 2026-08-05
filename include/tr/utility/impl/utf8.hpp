@@ -178,14 +178,14 @@ constexpr tr::utf8::indexed_iterator::operator iterator() const
 	return m_ptr;
 }
 
-constexpr auto tr::utf8::operator<=>(indexed_iterator l, indexed_iterator r)
+constexpr auto tr::utf8::operator<=>(indexed_iterator lhs, indexed_iterator rhs)
 {
-	return l.m_ptr <=> r.m_ptr;
+	return lhs.m_ptr <=> rhs.m_ptr;
 }
 
-constexpr bool tr::utf8::operator==(indexed_iterator l, indexed_iterator r)
+constexpr bool tr::utf8::operator==(indexed_iterator lhs, indexed_iterator rhs)
 {
-	return l.m_ptr == r.m_ptr;
+	return lhs.m_ptr == rhs.m_ptr;
 }
 
 constexpr tr::codepoint tr::utf8::indexed_iterator::operator*() const
