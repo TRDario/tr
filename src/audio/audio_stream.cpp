@@ -1,14 +1,11 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements audio_stream.hpp.                                                                                                          //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements audio_stream.hpp.
 
 #include "../../include/tr/audio/audio_stream.hpp"
 #include "../../include/tr/utility/iostream.hpp"
 #include <vorbis/vorbisfile.h>
 
-////////////////////////////////////////////////////////// AUDIO FILE OPEN ERROR //////////////////////////////////////////////////////////
+//
 
 tr::audio_file_open_error::audio_file_open_error(std::string&& description)
 	: m_description{std::move(description)}
@@ -30,32 +27,58 @@ std::string_view tr::audio_file_open_error::details() const
 	return {};
 }
 
-//////////////////////////////////////////////////////////// OGG AUDIO STREAM /////////////////////////////////////////////////////////////
+//
 
-namespace tr {
-	namespace {
-		// Ogg audio file backend.
-		class ogg_audio_stream final : public audio_stream {
+namespace tr
+{
+	namespace
+	{
+		/// Ogg audio file backend.
+		class ogg_audio_stream final : public audio_stream
+		{
 		  public:
-			// Loads an Ogg stream from file.
+			/// @name Constructors
+			/// @{
+
+			/// Loads an Ogg stream from file.
+			/// @param path Path to the Ogg file.
 			ogg_audio_stream(const std::filesystem::path& path);
+
+			/// Closes the Ogg stream.
 			~ogg_audio_stream();
 
+			/// @}
+			/// @name Information
+			/// @{
+
 			usize length() const override;
+
 			int channels() const override;
+
 			int sample_rate() const override;
 
+			/// @}
+			/// @name IO
+			/// @{
+
 			usize tell() const override;
+
 			void seek(usize where) override;
 
+			/// @}
+
 		  private:
-			// A handle to the Ogg file.
+			/// A handle to the Ogg file.
 			mutable OggVorbis_File m_file{};
+
+			//
 
 			void raw_read(std::span<i16> buffer) override;
 		};
 	} // namespace
 } // namespace tr
+
+//
 
 tr::ogg_audio_stream::ogg_audio_stream(const std::filesystem::path& path)
 {
@@ -145,7 +168,7 @@ void tr::ogg_audio_stream::raw_read(std::span<tr::i16> buffer)
 	}
 }
 
-////////////////////////////////////////////////////////////// AUDIO STREAM ///////////////////////////////////////////////////////////////
+//
 
 tr::audio_stream::audio_stream()
 	: m_looping{false}
