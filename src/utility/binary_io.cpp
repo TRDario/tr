@@ -1,14 +1,11 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements the non-constexpr parts of binary_io.hpp.                                                                                  //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements the non-templated parts of binary_io.hpp.
 
 #include "../../include/tr/utility/binary_io.hpp"
 
-////////////////////////////////////////////////////////////// BINARY READING /////////////////////////////////////////////////////////////
+//
 
-void tr::binary_reader<std::string>::operator()(std::istream& is, std::string& out) const
+void tr::binary_reader<std::string>::operator()(std::istream& is, std::string& out)
 {
 	out.resize(read_binary<u32>(is));
 	is.read(out.data(), out.size());
@@ -32,20 +29,20 @@ std::vector<std::byte> tr::flush_binary(std::istream& is)
 	return out;
 }
 
-////////////////////////////////////////////////////////////// BINARY WRITING /////////////////////////////////////////////////////////////
+//
 
-void tr::binary_writer<const char*>::operator()(std::ostream& os, const char* in) const
+void tr::binary_writer<const char*>::operator()(std::ostream& os, const char* in)
 {
 	write_binary(os, std::string_view{in});
 }
 
-void tr::binary_writer<std::string_view>::operator()(std::ostream& os, const std::string_view& in) const
+void tr::binary_writer<std::string_view>::operator()(std::ostream& os, const std::string_view& in)
 {
 	write_binary(os, static_cast<u32>(in.size()));
 	os.write(in.data(), in.size());
 }
 
-void tr::binary_writer<std::string>::operator()(std::ostream& os, const std::string& in) const
+void tr::binary_writer<std::string>::operator()(std::ostream& os, const std::string& in)
 {
 	write_binary(os, std::string_view{in});
 }
