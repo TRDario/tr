@@ -1,133 +1,210 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Provides an RAII handle class.                                                                                                        //
-//                                                                                                                                       //
-// Handles take ownership over a resource managed by a simple handle (like an integer) and automatically clean them up with the          //
-// appropriate deleter. One value of the underlying type is reserved for an 'empty' value that won't be cleaned up and is used as the    //
-// default. Construction and setting will consider setting the handle to the empty value an error by default, as will getters when       //
-// getting from an empty handle, but this can be suppressed by using tr::no_empty_handle_check as an extra parameter:                    //
-//     - tr::handle<int, 0, deleter> -> 0 indicates an empty handle, deleter::operator() is used to clean up the handle                  //
-//     - tr::handle<int, 0, deleter>{} -> empty handle                                                                                   //
-//     - tr::handle<int, 0, deleter>{0} -> ERROR!                                                                                        //
-//     - tr::handle<int, 0, deleter>{0, tr::no_empty_handle_check} -> empty handle                                                       //
-//     - tr::handle<int, 0, deleter>{5} -> non-empty handle                                                                              //
-//                                                                                                                                       //
-// Whether a handle has a value can be checked with operator bool or the .has_value() method, while the value can be gotten with .get(): //
-//     - tr::handle<int, 0, deleter>{}.has_value() -> false                                                                              //
-//     - tr::handle<int, 0, deleter>{}.get() -> ERROR!                                                                                   //
-//     - tr::handle<int, 0, deleter>{}.get(tr::no_empty_handle_check) -> 0                                                               //
-//     - tr::handle<int, 0, deleter>{5}.has_value() -> true                                                                              //
-//     - tr::handle<int, 0, deleter>{5}.get() -> 5                                                                                       //
-//                                                                                                                                       //
-// The value of the handle can be released, reset, or swapped:                                                                           //
-//     - tr::handle<int, 0, deleter> handle{5}; handle.release() -> 5, handle is now empty                                               //
-//     - tr::handle<int, 0, deleter> handle{5}; handle.reset() -> deleter called, handle is now empty                                    //
-//     - tr::handle<int, 0, deleter> handle{5}; handle.reset(4) -> deleter called, handle now holds 4                                    //
-//     - tr::handle<int, 0, deleter> handle{5}; handle.reset(0) -> ERROR!                                                                //
-//     - tr::handle<int, 0, deleter> handle{5}; handle.reset(0, tr::no_empty_handle_check) -> deleter called, handle is now empty        //
-//     - handle.swap(handle2) -> 'handle' and 'handle2' now hold eachother's value                                                       //
-//                                                                                                                                       //
-// Non-trivial destructors are supported: they can be passed in the constructor, or gotten with .get_deleter().                          //
-//                                                                                                                                       //
-// Semantics analogous to std::out_ptr are supported via tr::out_handle.                                                                 //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Provides an RAII handle class and related utilities.
 
 #pragma once
 #include "common.hpp"
 
-//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
+//
 
-namespace tr {
-	// Concept that denotes a valid handle deleter type for a handle of base type H.
+namespace tr
+{
+	// Valid handle deleter type for a handle to `Base`.
 	template <typename T, typename Base>
 	concept handle_deleter = std::invocable<T, Base> && (std::move_constructible<T> || std::copy_constructible<T>);
-	// Concept that denotes a default constructible handle deleter.
+
+	// Default constructible handle deleter.
 	template <typename T>
 	concept default_constructible_handle_deleter = std::default_initializable<T> && !std::is_pointer_v<T>;
 
-	// Tag struct used in some handle functions to suppress empty value checking.
-	struct no_empty_handle_check_t {};
-	// Tag value used in some handle functions to suppress empty value checking.
-	constexpr no_empty_handle_check_t no_empty_handle_check{};
+	//
 
-	// RAII wrapper over non-pointer handles.
-	template <std::regular Base, Base Empty, handle_deleter<Base> Deleter> class handle : private Deleter {
+	/// Tag struct used in some handle functions to suppress empty value checking.
+	struct maybe_empty_t
+	{
+	};
+
+	/// Tag value used in some handle functions to suppress empty value checking.
+	constexpr maybe_empty_t maybe_empty{};
+
+	//
+
+	/// RAII wrapper over non-pointer handles.
+	/// @tparam Base Wrapped type.
+	/// @tparam Empty Empty handle sentinel value.
+	/// @tparam Deleter Deleter invoked when destroying a handled value.
+	template <std::regular Base, Base Empty, handle_deleter<Base> Deleter>
+	class handle : private Deleter
+	{
 	  public:
-		// Default-constructs an empty handle.
+		/// @name Constructors
+		/// @{
+
+		/// Default-constructs an empty handle.
 		constexpr handle()
 			requires(default_constructible_handle_deleter<Deleter>);
-		// Constructs a handle from a base type value.
+
+		/// Constructs a handle from a base type value.
+		/// @param value Value to hold.
 		constexpr explicit handle(Base value)
 			requires(default_constructible_handle_deleter<Deleter>);
-		// Constructs a handle from a base type value without checking for the invalid E case.
-		constexpr explicit handle(Base value, no_empty_handle_check_t)
+
+		/// Constructs a handle from a base type value without checking for the invalid case.
+		/// @param value Value to hold.
+		constexpr explicit handle(Base value, maybe_empty_t)
 			requires(default_constructible_handle_deleter<Deleter>);
-		// Default-constructs an empty handle.
+
+		/// Default-constructs an empty handle.
+		/// @param deleter Deleter instance.
 		constexpr handle(Deleter&& deleter);
-		// Constructs a handle from a base type value and a deleter.
+
+		/// Constructs a handle from a base type value and a deleter.
+		/// @warning If `value` is equal to `Empty`, an assertion will be triggered!
+		/// @param value Value to hold.
+		/// @param deleter Deleter instance.
 		constexpr explicit handle(Base value, Deleter&& deleter);
-		// Constructs a handle from a base type value and a deleter without checking for the invalid E case.
-		constexpr explicit handle(Base value, Deleter&& deleter, no_empty_handle_check_t);
-		// Constructs a handle by moving from another handle.
-		constexpr handle(handle&& move) noexcept;
-		// Destroys the handle.
+
+		/// Constructs a handle from a base type value and a deleter without checking for the invalid case.
+		/// @param value Value to hold.
+		/// @param deleter Deleter instance.
+		constexpr explicit handle(Base value, Deleter&& deleter, maybe_empty_t);
+
+		/// Constructs a handle by moving from another handle.
+		/// @param rhs Handle to move.
+		constexpr handle(handle&& rhs) noexcept;
+
+		/// Destroys the handle.
 		constexpr ~handle();
 
-		// Move-assigns the handle.
-		constexpr handle& operator=(handle&& r) noexcept;
+		/// @}
+		/// @name Assignment operators
+		/// @{
 
-		// Checks if the handle contains a value.
+		/// Move-assigns the handle.
+		/// @param rhs Handle to move.
+		/// @return Reference to `*this`.
+		constexpr handle& operator=(handle&& rhs) noexcept;
+
+		/// @}
+		/// @name State
+		/// @{
+
+		/// Checks if the handle contains a value.
+		/// @return `true` if the handle contains a value, `false` otherwise.
 		constexpr bool has_value() const;
-		// Checks if the handle contains a value.
+
+		/// Checks if the handle contains a value.
+		/// @return `true` if the handle contains a value, `false` otherwise.
 		constexpr explicit operator bool() const;
 
-		// Gets the handle's base type value.
+		/// @}
+		/// @name Getters
+		/// @{
+
+		/// Gets the handle's base type value.
+		/// @warning If no value is contained, an assertion will be triggered!
+		/// @return Reference to the contained value.
 		constexpr const Base& get() const;
-		// Gets the handle's base type value.
-		constexpr const Base& get(no_empty_handle_check_t) const;
-		// Gets the handle's deleter.
+
+		/// Gets the handle's base type value without checking for the invalid case.
+		/// @return Reference to the contained value.
+		constexpr const Base& get(maybe_empty_t) const;
+
+		/// Gets the handle's deleter.
+		/// @return Reference to the handle's deleter.
 		constexpr Deleter& get_deleter();
-		// Gets the handle's deleter.
+
+		/// Gets the handle's deleter.
+		/// @return Reference to the handle's deleter.
 		constexpr const Deleter& get_deleter() const;
 
-		// Releases ownership over the handle, if any.
+		/// @}
+		/// @name Resetting
+		/// @{
+
+		/// Releases ownership over the handle, if any.
+		/// @return Previously contained value.
 		constexpr Base release();
-		// Resets the handle to an empty state.
+
+		/// Resets the handle to an empty state.
 		constexpr void reset();
-		// Resets the handle to a non-empty state.
+
+		/// Resets the handle to a non-empty state.
+		/// @warning If `value` is equal to `Empty`, an assertion will be triggered!
+		/// @param value New value to hold.
 		constexpr void reset(Base value);
-		// Resets the handle to a new state.
-		constexpr void reset(Base value, no_empty_handle_check_t);
+
+		/// Resets the handle to a new state without checking for the invalid case.
+		/// @param value New value to hold.
+		constexpr void reset(Base value, maybe_empty_t);
+
+		/// @}
 
 	  private:
-		// The wrapped value.
+		/// Wrapped base value.
 		Base m_base;
 	};
 
-	// Wrapper type returned by out_handle.
-	template <std::regular Base, Base Empty, handle_deleter<Base> Deleter, bool SkipEmptyHandleCheck> class out_handle_t {
+	//
+
+	/// Wrapper type returned by out_handle.
+	/// @tparam Base Handle base type.
+	/// @tparam Empty Empty handle sentinel value.
+	/// @tparam Deleter Handle deleter type.
+	/// @tparam SkipEmptyHandleCheck Whether to skip the empty handle check when constructing the wrapper.
+	template <std::regular Base, Base Empty, handle_deleter<Base> Deleter, bool SkipEmptyHandleCheck>
+	class out_handle_t
+	{
 	  public:
-		// Wraps a handle.
+		/// @name Constructors
+		/// @{
+
+		/// Wraps an output handle.
+		/// @param handle Handle to wrap.
 		out_handle_t(handle<Base, Empty, Deleter>& handle);
-		// Sets the handle.
+
+		/// Sets the handle.
 		~out_handle_t();
 
-		// Gets a pointer that can be used by a function writing a base value.
+		/// @}
+		/// @name Conversion operators
+		/// @{
+
+		/// Gets a pointer that can be used by a function writing a base value.
+		/// @return Pointer that can be used by a function writing a base value.
 		operator Base*();
 
+		/// @}
+
 	  private:
-		// The handle being modified.
+		/// Handle being modified.
 		handle<Base, Empty, Deleter>& m_handle;
-		// Temporary that is written to before the handle is set to it.
+
+		/// Temporary that is written to before the handle is set to it.
 		Base m_temporary{Empty};
 	};
-	// Wraps a handle for use in functions that output using a pointer, akin to std::out_ptr.
+
+	/// @name Output handle
+	/// @{
+
+	/// Wraps a handle for use in functions that output using a pointer, akin to std::out_ptr.
+	/// @tparam Base Handle base type.
+	/// @tparam Empty Empty handle sentinel value.
+	/// @tparam Deleter Handle deleter type.
+	/// @param handle Handle to wrap.
+	/// @return Wrapped output handle.
 	template <std::regular Base, Base Empty, handle_deleter<Base> Deleter>
 	out_handle_t<Base, Empty, Deleter, false> out_handle(handle<Base, Empty, Deleter>& handle);
-	// Wraps a handle for use in functions that output using a pointer, akin to std::out_ptr.
+
+	/// Wraps a handle for use in functions that output using a pointer, akin to std::out_ptr.
+	/// @tparam Base Handle base type.
+	/// @tparam Empty Empty handle sentinel value.
+	/// @tparam Deleter Handle deleter type.
+	/// @param handle Handle to wrap.
+	/// @return Wrapped output handle.
 	template <std::regular Base, Base Empty, handle_deleter<Base> Deleter>
-	out_handle_t<Base, Empty, Deleter, true> out_handle(handle<Base, Empty, Deleter>& handle, no_empty_handle_check_t);
+	out_handle_t<Base, Empty, Deleter, true> out_handle(handle<Base, Empty, Deleter>& handle, maybe_empty_t);
+
+	/// @}
 } // namespace tr
 
 #include "impl/handle.hpp" // IWYU pragma: export

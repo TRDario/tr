@@ -8,7 +8,8 @@
 #include <tr/utility/handle.hpp>
 
 // Default-constructible, stateless deleter that keeps track of deletions.
-struct stateless_deleter {
+struct stateless_deleter
+{
 	inline static int deleted_count{0};
 	inline static int last_deleted_value{0};
 
@@ -21,7 +22,8 @@ struct stateless_deleter {
 using stateless_deleter_handle = tr::handle<int, 0, stateless_deleter>;
 
 // Non-default-constructible deleter with an integer tag.
-struct tagged_deleter {
+struct tagged_deleter
+{
 	int id;
 
 	tagged_deleter(int id)
@@ -34,7 +36,8 @@ struct tagged_deleter {
 using tagged_deleter_handle = tr::handle<int, 0, tagged_deleter>;
 
 // Handle text fixture.
-class handle_test : public testing::Test {
+class handle_test : public testing::Test
+{
   protected:
 	void SetUp() override
 	{
@@ -58,7 +61,7 @@ TEST_F(handle_test, default_constructor)
 	const stateless_deleter_handle empty;
 	EXPECT_FALSE(empty);
 	EXPECT_FALSE(empty.has_value());
-	EXPECT_EQ(empty.get(tr::no_empty_handle_check), 0);
+	EXPECT_EQ(empty.get(tr::maybe_empty), 0);
 }
 
 TEST_F(handle_test, default_constructor_with_deleter)
@@ -66,7 +69,7 @@ TEST_F(handle_test, default_constructor_with_deleter)
 	const tagged_deleter_handle empty{tagged_deleter{1}};
 	EXPECT_FALSE(empty);
 	EXPECT_FALSE(empty.has_value());
-	EXPECT_EQ(empty.get(tr::no_empty_handle_check), 0);
+	EXPECT_EQ(empty.get(tr::maybe_empty), 0);
 	EXPECT_EQ(empty.get_deleter().id, 1);
 }
 
@@ -89,18 +92,18 @@ TEST_F(handle_test, value_constructor_with_deleter)
 
 TEST_F(handle_test, empty_value_constructor)
 {
-	const stateless_deleter_handle empty{0, tr::no_empty_handle_check};
+	const stateless_deleter_handle empty{0, tr::maybe_empty};
 	EXPECT_FALSE(empty);
 	EXPECT_FALSE(empty.has_value());
-	EXPECT_EQ(empty.get(tr::no_empty_handle_check), 0);
+	EXPECT_EQ(empty.get(tr::maybe_empty), 0);
 }
 
 TEST_F(handle_test, empty_value_constructor_with_deleter)
 {
-	const tagged_deleter_handle empty{0, tagged_deleter{1}, tr::no_empty_handle_check};
+	const tagged_deleter_handle empty{0, tagged_deleter{1}, tr::maybe_empty};
 	EXPECT_FALSE(empty);
 	EXPECT_FALSE(empty.has_value());
-	EXPECT_EQ(empty.get(tr::no_empty_handle_check), 0);
+	EXPECT_EQ(empty.get(tr::maybe_empty), 0);
 	EXPECT_EQ(empty.get_deleter().id, 1);
 }
 
@@ -166,7 +169,7 @@ TEST_F(handle_test, reset)
 	EXPECT_EQ(handle.get(), 7);
 	EXPECT_EQ(stateless_deleter::deleted_count, 2);
 
-	handle.reset(0, tr::no_empty_handle_check);
+	handle.reset(0, tr::maybe_empty);
 	EXPECT_FALSE(handle.has_value());
 	EXPECT_EQ(stateless_deleter::deleted_count, 3);
 }
@@ -184,7 +187,7 @@ TEST_F(handle_test, out_handle)
 	EXPECT_TRUE(handle.has_value());
 	EXPECT_EQ(handle.get(), 10);
 
-	set_c_handle(tr::out_handle(handle, tr::no_empty_handle_check), 0);
+	set_c_handle(tr::out_handle(handle, tr::maybe_empty), 0);
 	EXPECT_FALSE(handle.has_value());
 	EXPECT_EQ(stateless_deleter::deleted_count, 1);
 	EXPECT_EQ(stateless_deleter::last_deleted_value, 10);

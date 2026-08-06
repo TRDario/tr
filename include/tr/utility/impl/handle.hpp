@@ -1,21 +1,22 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements handle.hpp.                                                                                                                //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements handle.hpp.
 
 #pragma once
 #include "../handle.hpp"
 #include "../macro.hpp"
 
-////////////////////////////////////////////////////////////////// HANDLE /////////////////////////////////////////////////////////////////
+//
 
-template <std::regular Base, Base Empty, tr::handle_deleter<Base> Deleter> struct boost::hash<tr::handle<Base, Empty, Deleter>> {
+template <std::regular Base, Base Empty, tr::handle_deleter<Base> Deleter>
+struct boost::hash<tr::handle<Base, Empty, Deleter>>
+{
 	constexpr auto operator()(const tr::handle<Base, Empty, Deleter>& handle) const
 	{
-		return boost::hash<Base>{}(handle.get(tr::no_empty_handle_check));
+		return boost::hash<Base>{}(handle.get(tr::maybe_empty));
 	}
 };
+
+//
 
 template <std::regular Base, Base Empty, tr::handle_deleter<Base> Deleter>
 constexpr tr::handle<Base, Empty, Deleter>::handle()
@@ -33,7 +34,7 @@ constexpr tr::handle<Base, Empty, Deleter>::handle(Base value)
 }
 
 template <std::regular Base, Base Empty, tr::handle_deleter<Base> Deleter>
-constexpr tr::handle<Base, Empty, Deleter>::handle(Base value, no_empty_handle_check_t)
+constexpr tr::handle<Base, Empty, Deleter>::handle(Base value, maybe_empty_t)
 	requires(default_constructible_handle_deleter<Deleter>)
 	: m_base{value}
 {
@@ -55,7 +56,7 @@ constexpr tr::handle<Base, Empty, Deleter>::handle(Base value, Deleter&& deleter
 }
 
 template <std::regular Base, Base Empty, tr::handle_deleter<Base> Deleter>
-constexpr tr::handle<Base, Empty, Deleter>::handle(Base value, Deleter&& deleter, no_empty_handle_check_t)
+constexpr tr::handle<Base, Empty, Deleter>::handle(Base value, Deleter&& deleter, maybe_empty_t)
 	: Deleter{std::forward<Deleter>(deleter)}
 	, m_base{value}
 {
@@ -90,7 +91,8 @@ constexpr bool tr::handle<Base, Empty, Deleter>::has_value() const
 	return m_base != Empty;
 }
 
-template <std::regular Base, Base Empty, tr::handle_deleter<Base> Deleter> constexpr tr::handle<Base, Empty, Deleter>::operator bool() const
+template <std::regular Base, Base Empty, tr::handle_deleter<Base> Deleter>
+constexpr tr::handle<Base, Empty, Deleter>::operator bool() const
 {
 	return has_value();
 }
@@ -104,7 +106,7 @@ constexpr const Base& tr::handle<Base, Empty, Deleter>::get() const
 }
 
 template <std::regular Base, Base Empty, tr::handle_deleter<Base> Deleter>
-constexpr const Base& tr::handle<Base, Empty, Deleter>::get(no_empty_handle_check_t) const
+constexpr const Base& tr::handle<Base, Empty, Deleter>::get(maybe_empty_t) const
 {
 	return m_base;
 }
@@ -121,12 +123,14 @@ constexpr const Deleter& tr::handle<Base, Empty, Deleter>::get_deleter() const
 	return *this;
 }
 
-template <std::regular Base, Base Empty, tr::handle_deleter<Base> Deleter> constexpr Base tr::handle<Base, Empty, Deleter>::release()
+template <std::regular Base, Base Empty, tr::handle_deleter<Base> Deleter>
+constexpr Base tr::handle<Base, Empty, Deleter>::release()
 {
 	return std::exchange(m_base, Empty);
 }
 
-template <std::regular Base, Base Empty, tr::handle_deleter<Base> Deleter> constexpr void tr::handle<Base, Empty, Deleter>::reset()
+template <std::regular Base, Base Empty, tr::handle_deleter<Base> Deleter>
+constexpr void tr::handle<Base, Empty, Deleter>::reset()
 {
 	if (has_value()) {
 		Deleter::operator()(m_base);
@@ -146,7 +150,7 @@ constexpr void tr::handle<Base, Empty, Deleter>::reset(Base value)
 }
 
 template <std::regular Base, Base Empty, tr::handle_deleter<Base> Deleter>
-constexpr void tr::handle<Base, Empty, Deleter>::reset(Base value, no_empty_handle_check_t)
+constexpr void tr::handle<Base, Empty, Deleter>::reset(Base value, maybe_empty_t)
 {
 	if (has_value()) {
 		Deleter::operator()(m_base);
@@ -154,7 +158,7 @@ constexpr void tr::handle<Base, Empty, Deleter>::reset(Base value, no_empty_hand
 	m_base = value;
 }
 
-//////////////////////////////////////////////////////////////// OUT HANDLE ///////////////////////////////////////////////////////////////
+//
 
 template <std::regular Base, Base Empty, tr::handle_deleter<Base> Deleter, bool SkipEmptyHandleCheck>
 tr::out_handle_t<Base, Empty, Deleter, SkipEmptyHandleCheck>::out_handle_t(handle<Base, Empty, Deleter>& handle)
@@ -166,7 +170,7 @@ template <std::regular Base, Base Empty, tr::handle_deleter<Base> Deleter, bool 
 tr::out_handle_t<Base, Empty, Deleter, SkipEmptyHandleCheck>::~out_handle_t<Base, Empty, Deleter, SkipEmptyHandleCheck>()
 {
 	if constexpr (SkipEmptyHandleCheck) {
-		m_handle.reset(m_temporary, no_empty_handle_check);
+		m_handle.reset(m_temporary, maybe_empty);
 	}
 	else {
 		m_handle.reset(m_temporary);
@@ -186,7 +190,7 @@ tr::out_handle_t<Base, Empty, Deleter, false> tr::out_handle(handle<Base, Empty,
 }
 
 template <std::regular Base, Base Empty, tr::handle_deleter<Base> Deleter>
-tr::out_handle_t<Base, Empty, Deleter, true> tr::out_handle(handle<Base, Empty, Deleter>& handle, no_empty_handle_check_t)
+tr::out_handle_t<Base, Empty, Deleter, true> tr::out_handle(handle<Base, Empty, Deleter>& handle, maybe_empty_t)
 {
 	return handle;
 }
