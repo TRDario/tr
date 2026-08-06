@@ -1,14 +1,11 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements hash_map.hpp.                                                                                                              //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements hash_map.hpp.
 
 #pragma once
 #include "../hash_map.hpp"
 #include "../type_name.hpp"
 
-///////////////////////////////////////////////////////////////// GETTERS /////////////////////////////////////////////////////////////////
+//
 
 template <typename Key, typename Value, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred, tr::hash_keylike<Key, Hash, Pred> Keylike>
 Value& tr::get(boost::unordered_flat_map<Key, Value, Hash, Pred>& map, Keylike&& keylike)
@@ -76,26 +73,26 @@ template <typename Key, typename Value, tr::hasher<Key> Hash, tr::equality_predi
 tr::opt_ref<Value> tr::try_get(boost::unordered_flat_map<Key, Value, Hash, Pred>& map, Keylike&& keylike)
 {
 	const typename boost::unordered_flat_map<Key, Value, Hash, Pred>::iterator it{map.find(std::forward<Keylike>(keylike))};
-	return it != map.end() ? tr::opt_ref<Value>{it->second} : std::nullopt;
+	return it != map.end() ? opt_ref<Value>{it->second} : std::nullopt;
 }
 
 template <typename Key, typename Value, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred, tr::hash_keylike<Key, Hash, Pred> Keylike>
 tr::opt_ref<Value> tr::try_get(boost::unordered_node_map<Key, Value, Hash, Pred>& map, Keylike&& keylike)
 {
 	const typename boost::unordered_node_map<Key, Value, Hash, Pred>::iterator it{map.find(std::forward<Keylike>(keylike))};
-	return it != map.end() ? tr::opt_ref<Value>{it->second} : std::nullopt;
+	return it != map.end() ? opt_ref<Value>{it->second} : std::nullopt;
 }
 
 template <typename Key, typename Value, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred, tr::hash_keylike<Key, Hash, Pred> Keylike>
 tr::opt_ref<const Value> tr::try_get(const boost::unordered_flat_map<Key, Value, Hash, Pred>& map, Keylike&& keylike)
 {
 	const typename boost::unordered_flat_map<Key, Value, Hash, Pred>::const_iterator it{map.find(std::forward<Keylike>(keylike))};
-	return it != map.end() ? tr::opt_ref<const Value>{it->second} : std::nullopt;
+	return it != map.end() ? opt_ref<const Value>{it->second} : std::nullopt;
 }
 
 template <typename Key, typename Value, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred, tr::hash_keylike<Key, Hash, Pred> Keylike>
 tr::opt_ref<const Value> tr::try_get(const boost::unordered_node_map<Key, Value, Hash, Pred>& map, Keylike&& keylike)
 {
 	const typename boost::unordered_node_map<Key, Value, Hash, Pred>::const_iterator it{map.find(std::forward<Keylike>(keylike))};
-	return it != map.end() ? tr::opt_ref<const Value>{it->second} : std::nullopt;
+	return it != map.end() ? opt_ref<const Value>{it->second} : std::nullopt;
 }

@@ -1,71 +1,158 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Provides miscellaneous hash map functionality.                                                                                        //
-//                                                                                                                                       //
-// tr::string_hash and tr::string_eq are provided as transparent alternatives for string hashing and comparison.                         //
-// The aliases tr::string_flat/node_map and tr::static_string_flat/node_map use these types to allow searching with std::string_view or  //
-// const char* instead of having to allocate an std::string:                                                                             //
-//     - tr::string_flat_map<int> test; test.find("key")->second = 10 -> Doesn't allocate a std::string like it usually would.           //
-//                                                                                                                                       //
-// Values can be gotten from hash maps using heterogenous key lookup using tr::get. tr::try_get may be used to get optional references   //
-// in cases where a missing key is an expected scenario:                                                                                 //
-//     - tr::string_flat_map<int> test{{"a", 1}}; tr::get(test, "a") -> 1                                                                //
-//     - tr::string_node_map<int> test{{"a", 1}}; tr::try_get(test, "b") -> std::nullopt                                                 //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Provides miscellaneous hash map functionality.
 
 #pragma once
 #include "reference.hpp"
 #include "static_string.hpp"
 
-//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
+//
 
-namespace tr {
-	// Transparent string hasher.
-	struct string_hash : boost::hash<std::string_view> {
+namespace tr
+{
+	/// Transparent string hasher.
+	struct string_hash : boost::hash<std::string_view>
+	{
+		/// Marks the hasher as transparent.
 		using is_transparent = std::true_type;
 	};
-	// Transparent string equality comparator.
-	struct string_eq : std::equal_to<std::string_view> {
+
+	/// Transparent string equality comparator.
+	struct string_eq : std::equal_to<std::string_view>
+	{
+		/// Marks the hasher as transparent.
 		using is_transparent = std::true_type;
 	};
 
-	// Typedef for a string-key flat map.
-	template <typename Value> using string_flat_map = boost::unordered_flat_map<std::string, Value, string_hash, string_eq>;
-	// Typedef for a string-key node map.
-	template <typename Value> using string_node_map = boost::unordered_node_map<std::string, Value, string_hash, string_eq>;
-	// Typedef for a static string-key flat map.
+	//
+
+	/// String-key flat map.
+	/// @tparam Value Map value type.
+	template <typename Value>
+	using string_flat_map = boost::unordered_flat_map<std::string, Value, string_hash, string_eq>;
+
+	/// String-key node map.
+	/// @tparam Value Map value type.
+	template <typename Value>
+	using string_node_map = boost::unordered_node_map<std::string, Value, string_hash, string_eq>;
+
+	/// Static string-key flat map.
+	/// @tparam KeyCapacity String capacity of keys.
+	/// @tparam Value Map value type.
 	template <usize KeyCapacity, typename Value>
 	using static_string_flat_map = boost::unordered_flat_map<static_string<KeyCapacity>, Value, string_hash, string_eq>;
-	// Typedef for a static string-key node map.
+
+	/// Static string-key node map.
+	/// @tparam KeyCapacity String capacity of keys.
+	/// @tparam Value Map value type.
 	template <usize KeyCapacity, typename Value>
 	using static_string_node_map = boost::unordered_node_map<static_string<KeyCapacity>, Value, string_hash, string_eq>;
 
-	// Gets a value from a flat map.
+	/// @name Hash maps
+	/// @{
+
+	/// Gets a value from a flat map.
+	/// @tparam Key Map key type.
+	/// @tparam Value Map value type.
+	/// @tparam Hash Map hasher type.
+	/// @tparam Pred Map equality predicate type.
+	/// @tparam Keylike Type compatible with the map for lookup.
+	/// @param map Map to get the value from.
+	/// @param keylike Keylike value to look for.
+	/// @warning `keylike` must exist in the map.
+	/// @return Reference to the value under `keylike`.
 	template <typename Key, typename Value, hasher<Key> Hash, equality_predicate<Key> Pred, hash_keylike<Key, Hash, Pred> Keylike>
 	Value& get(boost::unordered_flat_map<Key, Value, Hash, Pred>& map, Keylike&& keylike);
-	// Gets a value from a node map.
+
+	/// Gets a value from a node map.
+	/// @tparam Key Map key type.
+	/// @tparam Value Map value type.
+	/// @tparam Hash Map hasher type.
+	/// @tparam Pred Map equality predicate type.
+	/// @tparam Keylike Type compatible with the map for lookup.
+	/// @param map Map to get the value from.
+	/// @param keylike Keylike value to look for.
+	/// @warning `keylike` must exist in the map.
+	/// @return Reference to the value under `keylike`.
 	template <typename Key, typename Value, hasher<Key> Hash, equality_predicate<Key> Pred, hash_keylike<Key, Hash, Pred> Keylike>
 	Value& get(boost::unordered_node_map<Key, Value, Hash, Pred>& map, Keylike&& keylike);
-	// Gets a value from a flat map.
+
+	/// Gets a value from a flat map.
+	/// @tparam Key Map key type.
+	/// @tparam Value Map value type.
+	/// @tparam Hash Map hasher type.
+	/// @tparam Pred Map equality predicate type.
+	/// @tparam Keylike Type compatible with the hash map for lookup.
+	/// @param map Map to get the value from.
+	/// @param keylike Keylike value to look for.
+	/// @warning `keylike` must exist in the map.
+	/// @return Reference to the value under `keylike`.
 	template <typename Key, typename Value, hasher<Key> Hash, equality_predicate<Key> Pred, hash_keylike<Key, Hash, Pred> Keylike>
 	const Value& get(const boost::unordered_flat_map<Key, Value, Hash, Pred>& map, Keylike&& keylike);
-	// Gets a value from a node map.
+
+	/// Gets a value from a node map.
+	/// @tparam Key Map key type.
+	/// @tparam Value Map value type.
+	/// @tparam Hash Map hasher type.
+	/// @tparam Pred Map equality predicate type.
+	/// @tparam Keylike Type compatible with the hash map for lookup.
+	/// @param map Map to get the value from.
+	/// @param keylike Keylike value to look for.
+	/// @warning `keylike` must exist in the map.
+	/// @return Reference to the value under `keylike`.
 	template <typename Key, typename Value, hasher<Key> Hash, equality_predicate<Key> Pred, hash_keylike<Key, Hash, Pred> Keylike>
 	const Value& get(const boost::unordered_node_map<Key, Value, Hash, Pred>& map, Keylike&& keylike);
 
-	// Tries to get a value from a flat map.
+	//
+
+	/// Tries to get a value from a flat map.
+	/// @tparam Key Map key type.
+	/// @tparam Value Map value type.
+	/// @tparam Hash Map hasher type.
+	/// @tparam Pred Map equality predicate type.
+	/// @tparam Keylike Type compatible with the hash map for lookup.
+	/// @param map Map to get the value from.
+	/// @param keylike Keylike value to look for.
+	/// @return Reference to the value under `keylike`, or an empty optional reference if not found.
 	template <typename Key, typename Value, hasher<Key> Hash, equality_predicate<Key> Pred, hash_keylike<Key, Hash, Pred> Keylike>
 	opt_ref<Value> try_get(boost::unordered_flat_map<Key, Value, Hash, Pred>& map, Keylike&& keylike);
-	// Tries to get a value from a node map.
+
+	/// Tries to get a value from a node map.
+	/// @tparam Key Map key type.
+	/// @tparam Value Map value type.
+	/// @tparam Hash Map hasher type.
+	/// @tparam Pred Map equality predicate type.
+	/// @tparam Keylike Type compatible with the hash map for lookup.
+	/// @param map Map to get the value from.
+	/// @param keylike Keylike value to look for.
+	/// @return Reference to the value under `keylike`, or an empty optional reference if not found.
 	template <typename Key, typename Value, hasher<Key> Hash, equality_predicate<Key> Pred, hash_keylike<Key, Hash, Pred> Keylike>
 	opt_ref<Value> try_get(boost::unordered_node_map<Key, Value, Hash, Pred>& map, Keylike&& keylike);
-	// Tries to get a value from a flat map.
+
+	/// Tries to get a value from a flat map.
+	/// @tparam Key Map key type.
+	/// @tparam Value Map value type.
+	/// @tparam Hash Map hasher type.
+	/// @tparam Pred Map equality predicate type.
+	/// @tparam Keylike Type compatible with the hash map for lookup.
+	/// @param map Map to get the value from.
+	/// @param keylike Keylike value to look for.
+	/// @return Reference to the value under `keylike`, or an empty optional reference if not found.
 	template <typename Key, typename Value, hasher<Key> Hash, equality_predicate<Key> Pred, hash_keylike<Key, Hash, Pred> Keylike>
 	opt_ref<const Value> try_get(const boost::unordered_flat_map<Key, Value, Hash, Pred>& map, Keylike&& keylike);
-	// Tries to get a value from a mode map.
+
+	/// Tries to get a value from a node map.
+	/// @tparam Key Map key type.
+	/// @tparam Value Map value type.
+	/// @tparam Hash Map hasher type.
+	/// @tparam Pred Map equality predicate type.
+	/// @tparam Keylike Type compatible with the hash map for lookup.
+	/// @param map Map to get the value from.
+	/// @param keylike Keylike value to look for.
+	/// @return Reference to the value under `keylike`, or an empty optional reference if not found.
 	template <typename Key, typename Value, hasher<Key> Hash, equality_predicate<Key> Pred, hash_keylike<Key, Hash, Pred> Keylike>
 	opt_ref<const Value> try_get(const boost::unordered_node_map<Key, Value, Hash, Pred>& map, Keylike&& keylike);
+
+	/// @}
 } // namespace tr
 
 #include "impl/hash_map.hpp" // IWYU pragma: export
