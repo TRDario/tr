@@ -1,24 +1,27 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Provides display querying functions.                                                                                                  //
-//                                                                                                                                       //
-// The display size, maximum supported level of MSAA, and the refresh rate of the display are all queryable:                             //
-//     - tr::display_size() -> {1920, 1080}                                                                                              //
-//     - tr::max_msaa() -> 8                                                                                                             //
-//     - tr::refresh_rate() -> 60.0f                                                                                                     //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Provides display querying functions.
 
 #pragma once
 #include "../utility/integer.hpp"
 
-//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
+//
 
-namespace tr {
-	// Gets the size of the display.
+namespace tr
+{
+	/// @name Display
+	/// @{
+
+	/// Gets the size of the display.
+	/// @return Size of the display in pixels.
 	glm::ivec2 display_size();
-	// Gets the maximum supported MSAA factor.
+
+	/// Gets the maximum supported MSAA factor.
+	/// @return Maximum supposed MSAA factor.
 	u8 max_msaa();
-	// Gets the refresh rate of the display.
+
+	/// Gets the refresh rate of the display.
+	/// @return Refresh rate of the display.
 	float refresh_rate();
+
+	/// @}
 } // namespace tr
