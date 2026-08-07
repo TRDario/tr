@@ -1,49 +1,86 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements layered_multidrawer.hpp.                                                                                                   //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements layered_multidrawer.hpp.
 
 #pragma once
 #include "../layered_multidrawer.hpp"
 
-///////////////////////////////////////////////////////////// LAYERED DRAWING /////////////////////////////////////////////////////////////
+//
 
-namespace tr {
-	// When passed a renderer stores its drawer type in ::type, otherwise stores T in ::type.
-	template <layered_renderer_or_drawer T> struct add_drawer {
+namespace tr
+{
+	/// Specialization of `add_drawer` for drawers.
+	/// @tparam T Drawer type.
+	template <layered_renderer_or_drawer T>
+	struct add_drawer
+	{
+		/// A drawer's drawer is itself (duh).
 		using type = T;
 	};
-	template <layered_renderer Renderer> struct add_drawer<Renderer> {
+
+	/// Specialization of `add_drawer` for renderers.
+	/// @tparam T Type to get the drawer of.
+	template <layered_renderer Renderer>
+	struct add_drawer<Renderer>
+	{
+		/// Drawer type associated with `T`.
 		using type = decltype([](Renderer renderer) { return renderer.create_drawer(); });
 	};
-	// When passed a renderer stores gets its drawer type, otherwise is equal to T.
-	template <layered_renderer_or_drawer T> using add_drawer_t = add_drawer<T>::type;
 
-	// Gets the drawer of a renderer.
-	template <layered_renderer Renderer> add_drawer_t<Renderer> get_drawer(Renderer&& renderer)
+	/// When passed a renderer stores gets its drawer type, otherwise is equal to T.
+	/// @tparam Drawer or layered renderer.
+	template <layered_renderer_or_drawer T>
+	using add_drawer_t = add_drawer<T>::type;
+
+	//
+
+	/// Gets the drawer of a renderer.
+	/// @tparam Renderer Layered renderer type.
+	/// @param renderer Renderer to get the drawer of.
+	/// @return Drawer associated with the renderer.
+	template <layered_renderer Renderer>
+	add_drawer_t<Renderer> get_drawer(Renderer&& renderer)
 	{
 		return renderer.create_drawer();
 	}
-	// Gets the drawer of a renderer given an explicit range of layers.
-	template <layered_renderer Renderer> add_drawer_t<Renderer> get_drawer(Renderer&& renderer, int min_layer, int max_layer)
+
+	/// Gets the drawer of a renderer given an explicit range of layers.
+	/// @tparam Renderer Layered renderer type.
+	/// @param renderer Renderer to get the drawer of.
+	/// @param min_layer Lower bound of drawn layers.
+	/// @param max_layer Upper bound of drawn layers.
+	/// @return Drawer associated with the renderer.
+	template <layered_renderer Renderer>
+	add_drawer_t<Renderer> get_drawer(Renderer&& renderer, int min_layer, int max_layer)
 	{
 		return renderer.create_drawer(min_layer, max_layer);
 	}
-	// Forwards a drawer.
-	template <layered_renderer_drawer Drawer> Drawer&& get_drawer(Drawer&& drawer)
+
+	/// Forwards a drawer.
+	/// @tparam Drawer Layered renderer drawer type.
+	/// @param drawer Drawer to forward.
+	/// @return Forwarded drawer.
+	template <layered_renderer_drawer Drawer>
+	Drawer&& get_drawer(Drawer&& drawer)
 	{
 		return std::forward(drawer);
 	}
-	// Forwards a drawer.
-	template <layered_renderer_drawer Drawer> Drawer&& get_drawer(Drawer&& drawer, int, int)
+
+	/// Forwards a drawer.
+	/// @tparam Drawer Layered renderer drawer type.
+	/// @param drawer Drawer to forward.
+	/// @return Forwarded drawer.
+	template <layered_renderer_drawer Drawer>
+	Drawer&& get_drawer(Drawer&& drawer, int, int)
 	{
 		return std::forward(drawer);
 	}
+
+	//
 
 	// Multidrawer deduction guide.
 	template <layered_renderer_or_drawer... DrawersAndRenderers>
 	layered_multidrawer(DrawersAndRenderers&&...) -> layered_multidrawer<add_drawer_t<DrawersAndRenderers>...>;
+
 	// Multidrawer deduction guide.
 	template <layered_renderer_or_drawer... DrawersAndRenderers>
 	layered_multidrawer(int, int, DrawersAndRenderers&&...) -> layered_multidrawer<add_drawer_t<DrawersAndRenderers>...>;
@@ -81,19 +118,22 @@ void tr::layered_multidrawer<Drawers...>::draw_layer_range(int min_layer, int ma
 	}
 }
 
-template <tr::layered_renderer_drawer... Drawers> void tr::layered_multidrawer<Drawers...>::draw(const render_target& target)
+template <tr::layered_renderer_drawer... Drawers>
+void tr::layered_multidrawer<Drawers...>::draw(const render_target& target)
 {
 	draw_layer_range(min_layer(), max_layer(), target);
 }
 
 //
 
-template <tr::layered_renderer_drawer... Drawers> int tr::layered_multidrawer<Drawers...>::min_layer() const
+template <tr::layered_renderer_drawer... Drawers>
+int tr::layered_multidrawer<Drawers...>::min_layer() const
 {
 	return std::apply([](const Drawers&... drawers) { return std::min({drawers.min_layer()...}); });
 }
 
-template <tr::layered_renderer_drawer... Drawers> int tr::layered_multidrawer<Drawers...>::max_layer() const
+template <tr::layered_renderer_drawer... Drawers>
+int tr::layered_multidrawer<Drawers...>::max_layer() const
 {
 	return std::apply([](const Drawers&... drawers) { return std::min({drawers.max_layer()...}); });
 }
