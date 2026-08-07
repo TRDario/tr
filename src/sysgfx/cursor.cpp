@@ -1,14 +1,11 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements cursor.hpp.                                                                                                                //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements cursor.hpp.
 
 #include "../../include/tr/sysgfx/cursor.hpp"
 #include "../../include/tr/sysgfx/bitmap.hpp"
 #include <SDL3/SDL.h>
 
-/////////////////////////////////////////////////////////////// CURSOR ERROR //////////////////////////////////////////////////////////////
+//
 
 tr::cursor_error::cursor_error(std::string_view description)
 	: m_description{description}
@@ -31,7 +28,7 @@ std::string_view tr::cursor_error::details() const
 	return m_details;
 }
 
-////////////////////////////////////////////////////////////////// CURSOR /////////////////////////////////////////////////////////////////
+//
 
 tr::cursor::cursor(SDL_Cursor* ptr)
 {
@@ -66,7 +63,7 @@ void tr::cursor::deleter::operator()(SDL_Cursor* ptr) const
 	SDL_DestroyCursor(ptr);
 }
 
-/////////////////////////////////////////////////////////////// CURSOR STATE //////////////////////////////////////////////////////////////
+//
 
 void tr::show_cursor()
 {
