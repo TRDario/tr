@@ -1,14 +1,11 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements graphics_buffer.hpp.                                                                                                       //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements graphics_buffer.hpp.
 
 #include "../../include/tr/sysgfx/graphics_buffer.hpp"
 #include "../../include/tr/sysgfx/gl_defines.hpp"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 
-////////////////////////////////////////////////////////////////// BUFFER /////////////////////////////////////////////////////////////////
+//
 
 tr::graphics_buffer::graphics_buffer(graphics_context& context)
 	: m_handle{{context}}
