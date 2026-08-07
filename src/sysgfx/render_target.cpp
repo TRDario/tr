@@ -1,12 +1,9 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements render_target.hpp.                                                                                                         //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements render_target.hpp.
 
 #include "../../include/tr/sysgfx/render_target.hpp"
 
-////////////////////////////////////////////////////////////// RENDER TARGET //////////////////////////////////////////////////////////////
+//
 
 tr::render_target::render_target(unsigned int framebuffer, glm::ivec2 framebuffer_size)
 	: m_framebuffer{framebuffer}
@@ -24,10 +21,14 @@ tr::render_target::render_target(unsigned int framebuffer, glm::ivec2 framebuffe
 {
 }
 
+//
+
 glm::ivec2 tr::render_target::size() const
 {
 	return m_viewport.size;
 }
+
+//
 
 tr::render_target tr::render_target::cropped(rectangle<int> viewport) const
 {

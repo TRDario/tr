@@ -1,58 +1,79 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Provides a rendering target class.                                                                                                    //
-//                                                                                                                                       //
-// A render target is nothing more than an opaque reference to a texture that can be drawn to, or the backbuffer. It can thus not be     //
-// constructed directly, but is gotten from the likes of tr::graphics_context::backbuffer or framebuffer::render_target.                 //
-// The only action that can be performed using it, besides passing it to tr::graphics_context::set_render_target, is getting its size in //
-// pixels:                                                                                                                               //
-//     - context.backbuffer().size() -> the size of the backbuffer                                                                       //
-//                                                                                                                                       //
-// Render targets can be cropped, scissored, or both:                                                                                    //
-//     - context.backbuffer().cropped({{100, 100}, {100, 100}})                                                                          //
-//       -> creates a render target spanning from (100, 100) to (200, 200) in the backbuffer                                             //
-//     - context.backbuffer().scissored({{100, 100}, {100, 100}})                                                                        //
-//       -> creates a render target spanning the backbuffer, but with only the region from (100, 100) to (200, 200) as writable          //
-//     - context.backbuffer().subtarget({{}, {500, 500}}, {{100, 100}, {100, 100}})                                                      //
-//       -> equivalent to context.backbuffer().cropped({{}, {500, 500}}).scissored({{100, 100}, {100, 100}})                             //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Provides a rendering target class.
 
 #pragma once
 #include "../utility/rectangle.hpp"
 
-//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
+//
 
-namespace tr {
-	// Abstraction over a rendering target.
-	class render_target {
+namespace tr
+{
+	/// Opaque reference to a texture or framebuffer that can be drawn to.
+	class render_target
+	{
 	  public:
-		// Gets the size of the rendering target.
+		/// @name Size
+		/// @{
+
+		/// Gets the size of the render target.
+		/// @return Size of the render target.
 		glm::ivec2 size() const;
 
-		// Creates a new render target with a cropped viewport and full scissor box.
+		/// @}
+		/// @name Subtargets
+		/// @{
+
+		/// Creates a new render target with a cropped viewport and full scissor box.
+		/// @param viewport Viewport of the render target.
+		/// @return New subtarget.
 		render_target cropped(rectangle<int> viewport) const;
-		// Creates a new render target with the same viewport and a different scissor box.
+
+		/// Creates a new render target with the same viewport and a different scissor box.
+		/// @param scissor_box Scissor box of the render target.
+		/// @return New subtarget.
 		render_target scissored(rectangle<int> scissor_box) const;
-		// Equivalent to cropped(viewport).scissored(scissor_box).
+
+		/// Equivalent to `cropped(viewport).scissored(scissor_box)`.
+		/// @param viewport Viewport of the render target.
+		/// @param scissor_box Scissor box of the render target.
+		/// @return New subtarget.
 		render_target subtarget(rectangle<int> viewport, rectangle<int> scissor_box) const;
 
+		/// @}
+
 	  private:
-		// The OpenGL ID of the render target's FBO.
+		/// OpenGL ID of the render target's FBO.
 		unsigned int m_framebuffer;
-		// Size of the render target's FBO.
+
+		/// Size of the render target's FBO.
 		glm::ivec2 m_framebuffer_size;
-		// The viewport of the render target.
+
+		/// Viewport of the render target.
 		rectangle<int> m_viewport;
-		// The scissor box of the render target.
+
+		/// Scissor box of the render target.
 		rectangle<int> m_scissor_box;
 
-		// Creates a render target spanning an entire FBO.
+		//
+
+		/// Creates a render target spanning an entire FBO.
+		/// @param framebuffer OpenGL framebuffer ID.
+		/// @param framebuffer_size Size of the framebuffer.
 		render_target(unsigned int framebuffer, glm::ivec2 framebuffer_size);
-		// Creates a render target spanning a region of an FBO.
+
+		/// Creates a render target spanning a region of an FBO.
+		/// @param framebuffer OpenGL framebuffer ID.
+		/// @param framebuffer_size Size of the framebuffer.
+		/// @param viewport Viewport of the render target.
+		/// @param scissor_box Scissor box of the render target.
 		render_target(unsigned int framebuffer, glm::ivec2 framebuffer_size, rectangle<int> viewport, rectangle<int> scissor_box);
 
+		//
+
+		// Uses the private constructor.
 		friend class framebuffer;
+
+		// Uses the private constructor and members.
 		friend class graphics_context;
 	};
 } // namespace tr
