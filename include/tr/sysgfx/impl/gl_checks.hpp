@@ -1,43 +1,90 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements gl_checks.hpp.                                                                                                             //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements gl_checks.hpp.
 
 #pragma once
 #include "../gl_checks.hpp"
 
-////////////////////////////////////////////////////// AS GLSL TYPE SPECIALIZATIONS ///////////////////////////////////////////////////////
+//
 
-template <> inline constexpr tr::glsl_type tr::as_glsl_type<bool>{glsl_type::bool_};
-template <> inline constexpr tr::glsl_type tr::as_glsl_type<glm::bvec2>{glsl_type::bvec2};
-template <> inline constexpr tr::glsl_type tr::as_glsl_type<glm::bvec3>{glsl_type::bvec3};
-template <> inline constexpr tr::glsl_type tr::as_glsl_type<glm::bvec4>{glsl_type::bvec4};
-template <> inline constexpr tr::glsl_type tr::as_glsl_type<int>{glsl_type::int_};
-template <> inline constexpr tr::glsl_type tr::as_glsl_type<glm::ivec2>{glsl_type::ivec2};
-template <> inline constexpr tr::glsl_type tr::as_glsl_type<glm::ivec3>{glsl_type::ivec3};
-template <> inline constexpr tr::glsl_type tr::as_glsl_type<glm::ivec4>{glsl_type::ivec4};
-template <> inline constexpr tr::glsl_type tr::as_glsl_type<unsigned int>{glsl_type::uint};
-template <> inline constexpr tr::glsl_type tr::as_glsl_type<glm::uvec2>{glsl_type::uvec2};
-template <> inline constexpr tr::glsl_type tr::as_glsl_type<glm::uvec3>{glsl_type::uvec3};
-template <> inline constexpr tr::glsl_type tr::as_glsl_type<glm::uvec4>{glsl_type::uvec4};
-template <> inline constexpr tr::glsl_type tr::as_glsl_type<float>{glsl_type::float_};
-template <> inline constexpr tr::glsl_type tr::as_glsl_type<glm::vec2>{glsl_type::vec2};
-template <> inline constexpr tr::glsl_type tr::as_glsl_type<glm::vec3>{glsl_type::vec3};
-template <> inline constexpr tr::glsl_type tr::as_glsl_type<glm::vec4>{glsl_type::vec4};
-template <> inline constexpr tr::glsl_type tr::as_glsl_type<glm::mat2>{glsl_type::mat2};
-template <> inline constexpr tr::glsl_type tr::as_glsl_type<glm::mat3>{glsl_type::mat3};
-template <> inline constexpr tr::glsl_type tr::as_glsl_type<glm::mat4>{glsl_type::mat4};
-template <> inline constexpr tr::glsl_type tr::as_glsl_type<glm::mat2x3>{glsl_type::mat2x3};
-template <> inline constexpr tr::glsl_type tr::as_glsl_type<glm::mat2x4>{glsl_type::mat2x4};
-template <> inline constexpr tr::glsl_type tr::as_glsl_type<glm::mat3x2>{glsl_type::mat3x2};
-template <> inline constexpr tr::glsl_type tr::as_glsl_type<glm::mat3x4>{glsl_type::mat3x4};
-template <> inline constexpr tr::glsl_type tr::as_glsl_type<glm::mat4x2>{glsl_type::mat4x2};
-template <> inline constexpr tr::glsl_type tr::as_glsl_type<glm::mat4x3>{glsl_type::mat4x3};
+template <>
+inline constexpr tr::glsl_type tr::as_glsl_type<bool>{glsl_type::bool_};
 
-//////////////////////////////////////////////////////////////// FORMATTERS ///////////////////////////////////////////////////////////////
+template <>
+inline constexpr tr::glsl_type tr::as_glsl_type<glm::bvec2>{glsl_type::bvec2};
 
-template <typename FormatContext> constexpr auto std::formatter<tr::glsl_type>::format(tr::glsl_type t, FormatContext& ctx) const
+template <>
+inline constexpr tr::glsl_type tr::as_glsl_type<glm::bvec3>{glsl_type::bvec3};
+
+template <>
+inline constexpr tr::glsl_type tr::as_glsl_type<glm::bvec4>{glsl_type::bvec4};
+
+template <>
+inline constexpr tr::glsl_type tr::as_glsl_type<int>{glsl_type::int_};
+
+template <>
+inline constexpr tr::glsl_type tr::as_glsl_type<glm::ivec2>{glsl_type::ivec2};
+
+template <>
+inline constexpr tr::glsl_type tr::as_glsl_type<glm::ivec3>{glsl_type::ivec3};
+
+template <>
+inline constexpr tr::glsl_type tr::as_glsl_type<glm::ivec4>{glsl_type::ivec4};
+
+template <>
+inline constexpr tr::glsl_type tr::as_glsl_type<unsigned int>{glsl_type::uint};
+
+template <>
+inline constexpr tr::glsl_type tr::as_glsl_type<glm::uvec2>{glsl_type::uvec2};
+
+template <>
+inline constexpr tr::glsl_type tr::as_glsl_type<glm::uvec3>{glsl_type::uvec3};
+
+template <>
+inline constexpr tr::glsl_type tr::as_glsl_type<glm::uvec4>{glsl_type::uvec4};
+
+template <>
+inline constexpr tr::glsl_type tr::as_glsl_type<float>{glsl_type::float_};
+
+template <>
+inline constexpr tr::glsl_type tr::as_glsl_type<glm::vec2>{glsl_type::vec2};
+
+template <>
+inline constexpr tr::glsl_type tr::as_glsl_type<glm::vec3>{glsl_type::vec3};
+
+template <>
+inline constexpr tr::glsl_type tr::as_glsl_type<glm::vec4>{glsl_type::vec4};
+
+template <>
+inline constexpr tr::glsl_type tr::as_glsl_type<glm::mat2>{glsl_type::mat2};
+
+template <>
+inline constexpr tr::glsl_type tr::as_glsl_type<glm::mat3>{glsl_type::mat3};
+
+template <>
+inline constexpr tr::glsl_type tr::as_glsl_type<glm::mat4>{glsl_type::mat4};
+
+template <>
+inline constexpr tr::glsl_type tr::as_glsl_type<glm::mat2x3>{glsl_type::mat2x3};
+
+template <>
+inline constexpr tr::glsl_type tr::as_glsl_type<glm::mat2x4>{glsl_type::mat2x4};
+
+template <>
+inline constexpr tr::glsl_type tr::as_glsl_type<glm::mat3x2>{glsl_type::mat3x2};
+
+template <>
+inline constexpr tr::glsl_type tr::as_glsl_type<glm::mat3x4>{glsl_type::mat3x4};
+
+template <>
+inline constexpr tr::glsl_type tr::as_glsl_type<glm::mat4x2>{glsl_type::mat4x2};
+
+template <>
+inline constexpr tr::glsl_type tr::as_glsl_type<glm::mat4x3>{glsl_type::mat4x3};
+
+//
+
+template <typename FormatContext>
+constexpr auto std::formatter<tr::glsl_type>::format(tr::glsl_type t, FormatContext& ctx) const
 {
 	const char* str;
 	switch (t) {

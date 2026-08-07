@@ -1,20 +1,15 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Provides datatypes used for additional OpenGL checks.                                                                                 //
-//                                                                                                                                       //
-// tr::glsl_type is an enumerator of GLSL variable types, while tr::glsl_variable is a structure containing information about a GLSL     //
-// variable. C++ types can be mapped to values of tr::glsl_type using tr::as_glsl_type:                                                  //
-//     - tr::as_glsl_type<glm::mat4> -> tr::glsl_type::mat4                                                                              //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Provides datatypes used for additional OpenGL checks.
 
 #pragma once
 
-//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
+//
 
-namespace tr {
-	// GLSL variable types.
-	enum class glsl_type {
+namespace tr
+{
+	/// GLSL variable types.
+	enum class glsl_type
+	{
 		undefined,
 		bool_ = 0x8B56,
 		bvec2,
@@ -44,34 +39,47 @@ namespace tr {
 		sampler2D = 0x8B5E
 	};
 
-	// GLSL variable information.
-	struct glsl_variable {
-		// The name of the variable.
+	/// GLSL variable information.
+	struct glsl_variable
+	{
+		// Name of the variable.
 		std::string name;
-		// The type of the variable.
+
+		// Type of the variable.
 		glsl_type type;
-		// The array size of the variable, or 1 if not an array.
+
+		// Array size of the variable, or 1 if not an array.
 		int array_size;
 	};
 
-	// Maps a C++ type to a glsl_type enum value.
-	template <typename T> inline constexpr glsl_type as_glsl_type{glsl_type::undefined};
+	/// Maps a C++ type to a glsl_type enum value.
+	/// @tparam T C++ type to get the matching glsl_type value of.
+	template <typename T>
+	inline constexpr glsl_type as_glsl_type{glsl_type::undefined};
 }; // namespace tr
 
-// GLSL type formatter.
-template <> struct std::formatter<tr::glsl_type> : protected std::formatter<const char*> {
-	// Parses the formatting context.
+/// GLSL type formatter.
+template <>
+struct std::formatter<tr::glsl_type> : protected std::formatter<const char*>
+{
+	/// Parses the formatting context.
 	using std::formatter<const char*>::parse;
-	// Formats a GLSL type value.
-	template <typename FormatContext> constexpr auto format(tr::glsl_type t, FormatContext& ctx) const;
+
+	/// Formats a GLSL type value.
+	template <typename FormatContext>
+	constexpr auto format(tr::glsl_type t, FormatContext& ctx) const;
 };
 
-// GLSL variable information formatter.
-template <> struct std::formatter<tr::glsl_variable> : private std::formatter<tr::glsl_type>, private std::formatter<int> {
-	// Parses the formatting context.
+/// GLSL variable information formatter.
+template <>
+struct std::formatter<tr::glsl_variable> : private std::formatter<tr::glsl_type>, private std::formatter<int>
+{
+	/// Parses the formatting context.
 	using std::formatter<const char*>::parse;
-	// Formats GLSL variable information.
-	template <typename FormatContext> constexpr auto format(const tr::glsl_variable& v, FormatContext& ctx) const;
+
+	/// Formats GLSL variable information.
+	template <typename FormatContext>
+	constexpr auto format(const tr::glsl_variable& v, FormatContext& ctx) const;
 };
 
 #include "impl/gl_checks.hpp" // IWYU pragma: export

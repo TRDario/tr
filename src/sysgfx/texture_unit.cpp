@@ -1,14 +1,11 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements texture_unit.hpp.                                                                                                          //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements texture_unit.hpp.
 
 #include "../../include/tr/sysgfx/texture_unit.hpp"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/texture_view.hpp"
 
-/////////////////////////////////////////////////////////////// TEXTURE UNIT //////////////////////////////////////////////////////////////
+//
 
 tr::texture_unit::texture_unit(graphics_context& context)
 	: m_handle{{context}}
