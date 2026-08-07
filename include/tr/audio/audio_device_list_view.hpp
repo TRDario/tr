@@ -88,7 +88,7 @@ namespace tr
 	/// View holding available audio device names.
 	using audio_device_list_view = std::ranges::subrange<audio_device_list_view_iterator, audio_device_list_view_end_sentinel>;
 
-	/// @name Information
+	/// @name Audio devices
 	/// @{
 
 	/// Gets a view to the list of available audio devices.
