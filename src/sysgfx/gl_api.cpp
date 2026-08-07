@@ -1,31 +1,42 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements gl_api.hpp.                                                                                                                //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements gl_api.hpp.
 
 #include "../../include/tr/sysgfx/gl_api.hpp"
 #include <SDL3/SDL.h>
 
-////////////////////////////////////////////////////////////////// GL API /////////////////////////////////////////////////////////////////
+//
 
-namespace tr {
-	namespace {
-		// Hack needed to overload loaded_gl_function_proxy conversion operator.
-		template <typename Return, typename... Args> using function_pointer = Return (*)(Args...);
+namespace tr
+{
+	namespace
+	{
+		/// Hack needed to overload loaded_gl_function_proxy conversion operator.
+		/// @tparam Return Function return type.
+		/// @tparam Args Function argument types.
+		template <typename Return, typename... Args>
+		using function_pointer = Return (*)(Args...);
 
-		// Wrapper around an SDL_FunctionPointer that automatically casts it to another function pointer type.
-		struct loaded_gl_function_proxy {
+		/// Wrapper around an SDL_FunctionPointer that automatically casts it to another function pointer type.
+		struct loaded_gl_function_proxy
+		{
+			/// Base pointer type.
 			SDL_FunctionPointer ptr;
 
-			// Converts to any function pointer.
-			template <typename Return, typename... Args> operator function_pointer<Return, Args...>()
+			//
+
+			/// Converts to any function pointer.
+			/// @tparam Return Function return type.
+			/// @tparam Args Function argument types.
+			template <typename Return, typename... Args>
+			operator function_pointer<Return, Args...>()
 			{
 				return reinterpret_cast<function_pointer<Return, Args...>>(ptr);
 			}
 		};
 
-		// Wraps SDL_GL_GetProcAddress to return an OpenGL function proxy.
+		/// Wraps SDL_GL_GetProcAddress to return an OpenGL function proxy.
+		/// @param name Function name.
+		/// @return OpenGL function proxy.
 		loaded_gl_function_proxy gl_function_address(const char* name)
 		{
 			return {SDL_GL_GetProcAddress(name)};

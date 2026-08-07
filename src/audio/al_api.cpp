@@ -24,6 +24,8 @@ namespace tr
 			/// Base pointer type.
 			void* ptr;
 
+			//
+
 			/// Conversion operator.
 			/// @tparam Return Function return type.
 			/// @tparam Args Function argument types.
@@ -37,6 +39,9 @@ namespace tr
 		//
 
 		/// Wraps alcGetProcAddress to return an OpenAL function proxy.
+		/// @param device Device to get the function address from.
+		/// @param name Function name.
+		/// @return OpenAL function proxy.
 		loaded_al_function_proxy al_function_address(ALCdevice* device, const char* name)
 		{
 			return {alcGetProcAddress(device, name)};
