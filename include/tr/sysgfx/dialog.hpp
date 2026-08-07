@@ -78,12 +78,12 @@ namespace tr
 	/// @return Path to the selected folder (or an empty path if not selected).
 	std::filesystem::path show_open_folder_dialog(zstring_view default_path = {});
 
-	// Shows an "Open Folder" dialog with the ability to choose multiple folders.
+	/// Shows an "Open Folder" dialog with the ability to choose multiple folders.
 	/// @param default_path Default path to start the dialog at.
 	/// @return List of paths to the selected folders.
 	std::vector<std::filesystem::path> show_open_folders_dialog(zstring_view default_path = {});
 
-	// Shows a "Save File" dialog.
+	/// Shows a "Save File" dialog.
 	/// @param filters List of applicable file filters.
 	/// @param default_path Default path to start the dialog at.
 	/// @return Path to the selected file (or an empty path if not selected).
