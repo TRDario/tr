@@ -18,6 +18,7 @@ namespace tr
 	class graphics_buffer
 	{
 	  public:
+		/// @cond __hidden
 		/// @name Constructors
 		/// @{
 
@@ -45,6 +46,7 @@ namespace tr
 		void reallocate();
 
 		/// @}
+		/// @endcond
 		/// @name Label
 		/// @{
 
