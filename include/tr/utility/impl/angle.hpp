@@ -1,14 +1,11 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements angle.hpp.                                                                                                                 //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements angle.hpp.
 
 #pragma once
 #include "../angle.hpp"
 #include "../math.hpp"
 
-//////////////////////////////////////////////////////// CONSTRUCTORS AND LITERALS ////////////////////////////////////////////////////////
+//
 
 constexpr tr::angle::angle(float rads)
 	: m_rads{rads}
@@ -113,78 +110,78 @@ consteval tr::angle tr::literals::angle_literals::operator""_tr(unsigned long lo
 	return turns(tr);
 }
 
-//////////////////////////////////////////////////////////////// OPERATORS ////////////////////////////////////////////////////////////////
+//
 
-constexpr tr::angle& tr::angle::operator+=(const angle& r)
+constexpr tr::angle& tr::angle::operator+=(angle r)
 {
 	m_rads += r.m_rads;
 	return *this;
 }
 
-constexpr tr::angle& tr::angle::operator-=(const angle& r)
+constexpr tr::angle& tr::angle::operator-=(angle r)
 {
 	m_rads -= r.m_rads;
 	return *this;
 }
 
 template <tr::arithmetic Factor>
-constexpr tr::angle& tr::angle::operator*=(const Factor& r)
+constexpr tr::angle& tr::angle::operator*=(Factor r)
 {
 	m_rads *= r;
 	return *this;
 }
 
 template <tr::arithmetic Factor>
-constexpr tr::angle& tr::angle::operator/=(const Factor& r)
+constexpr tr::angle& tr::angle::operator/=(Factor r)
 {
 	m_rads /= r;
 	return *this;
 }
 
-constexpr tr::angle tr::operator+(const angle& l, const angle& r)
+constexpr tr::angle tr::operator+(angle l, angle r)
 {
 	return angle{l.m_rads + r.m_rads};
 }
 
-constexpr tr::angle tr::operator-(const angle& l, const angle& r)
+constexpr tr::angle tr::operator-(angle l, angle r)
 {
 	return angle{l.m_rads - r.m_rads};
 }
 
-constexpr tr::angle tr::operator-(const angle& l)
+constexpr tr::angle tr::operator-(angle l)
 {
 	return angle{-l.m_rads};
 }
 
 template <tr::arithmetic Factor>
-constexpr tr::angle tr::operator*(const angle& l, const Factor& r)
+constexpr tr::angle tr::operator*(angle l, Factor r)
 {
 	return angle{l.m_rads * r};
 }
 
 template <tr::arithmetic Factor>
-constexpr tr::angle tr::operator*(const Factor& l, const angle& r)
+constexpr tr::angle tr::operator*(Factor l, angle r)
 {
 	return r + l;
 }
 
 template <tr::arithmetic Factor>
-constexpr tr::angle tr::operator/(const angle& l, const Factor& r)
+constexpr tr::angle tr::operator/(angle l, Factor r)
 {
 	return angle{l.m_rads / r};
 }
 
-constexpr float tr::operator/(const angle& l, const angle& r)
+constexpr float tr::operator/(angle l, angle r)
 {
 	return l.m_rads / r.m_rads;
 }
 
-constexpr tr::angle tr::operator%(const angle& l, const angle& r)
+constexpr tr::angle tr::operator%(angle l, angle r)
 {
 	return angle{std::fmod(l.m_rads, r.m_rads)};
 }
 
-///////////////////////////////////////////////////// UNIT AND TRIGONOMETRIC FUNCTIONS ////////////////////////////////////////////////////
+//
 
 constexpr float tr::angle::rads() const
 {
@@ -216,48 +213,76 @@ inline float tr::angle::tan() const
 	return std::tan(m_rads);
 }
 
-//////////////////////////////////////////////////////////////// FORMATTING ///////////////////////////////////////////////////////////////
+//
 
-template <typename ParseContext>
-constexpr auto std::formatter<tr::angle>::parse(ParseContext& ctx)
+namespace std
 {
-	auto ctx_it{ctx.begin()};
-	if (ctx_it == ctx.end() || (*ctx_it != 'r' && *ctx_it != 'd' && *ctx_it != 't')) {
-		throw std::format_error{"One of {r, d, t} must start an angle formatting specification."};
-	}
+	/// Angle formatter.
+	template <>
+	class formatter<tr::angle> : public formatter<float>, public formatter<const char*>
+	{
+	  public:
+		/// Parses the format specification.
+		template <typename ParseContext>
+		constexpr auto parse(ParseContext& ctx)
+		{
+			auto ctx_it{ctx.begin()};
+			if (ctx_it == ctx.end() || (*ctx_it != 'r' && *ctx_it != 'd' && *ctx_it != 't')) {
+				throw std::format_error{"One of {r, d, t} must start an angle formatting specification."};
+			}
 
-	switch (*ctx_it) {
-	case 'r':
-		m_unit = unit::radians;
-		break;
-	case 'd':
-		m_unit = unit::degrees;
-		break;
-	case 't':
-		m_unit = unit::turns;
-		break;
-	}
+			switch (*ctx_it) {
+			case 'r':
+				m_unit = unit::radians;
+				break;
+			case 'd':
+				m_unit = unit::degrees;
+				break;
+			case 't':
+				m_unit = unit::turns;
+				break;
+			}
 
-	ctx.advance_to(ctx_it + 1);
-	return formatter<float>::parse(ctx);
-}
+			ctx.advance_to(ctx_it + 1);
+			return formatter<float>::parse(ctx);
+		}
 
-template <typename FormatContext>
-constexpr auto std::formatter<tr::angle>::format(const tr::angle& p, FormatContext& ctx) const
-{
-	switch (m_unit) {
-	case unit::radians:
-		ctx.advance_to(formatter<float>::format(p.rads(), ctx));
-		ctx.advance_to(formatter<const char*>::format("rad", ctx));
-		break;
-	case unit::degrees:
-		ctx.advance_to(formatter<float>::format(p.degs(), ctx));
-		ctx.advance_to(formatter<const char*>::format("deg", ctx));
-		break;
-	case unit::turns:
-		ctx.advance_to(formatter<float>::format(p.turns(), ctx));
-		ctx.advance_to(formatter<const char*>::format("tr", ctx));
-		break;
-	}
-	return ctx.out();
-}
+		/// Formats an angle.
+		template <typename FormatContext>
+		constexpr auto format(const tr::angle& p, FormatContext& ctx) const
+		{
+			switch (m_unit) {
+			case unit::radians:
+				ctx.advance_to(formatter<float>::format(p.rads(), ctx));
+				ctx.advance_to(formatter<const char*>::format("rad", ctx));
+				break;
+			case unit::degrees:
+				ctx.advance_to(formatter<float>::format(p.degs(), ctx));
+				ctx.advance_to(formatter<const char*>::format("deg", ctx));
+				break;
+			case unit::turns:
+				ctx.advance_to(formatter<float>::format(p.turns(), ctx));
+				ctx.advance_to(formatter<const char*>::format("tr", ctx));
+				break;
+			}
+			return ctx.out();
+		}
+
+	  private:
+		/// Units the formatted angle can be displayed in.
+		enum class unit
+		{
+			/// Display the angle in radians.
+			radians,
+			/// Display the angle in degrees.
+			degrees,
+			/// Display the angle in turns.
+			turns
+		};
+
+		//
+
+		/// The unit to use for the formatted angle.
+		unit m_unit;
+	};
+} // namespace std
