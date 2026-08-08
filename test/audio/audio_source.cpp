@@ -1,8 +1,5 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Tests audio/audio_source.hpp.                                                                                                         //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Tests audio/audio_source.hpp.
 
 #include <gtest/gtest.h>
 #include <tr/audio/audio_context.hpp>
@@ -13,10 +10,15 @@
 using namespace std::chrono_literals;
 using namespace tr::angle_literals;
 
+//
+
 constexpr std::array<tr::i16, 44100> buffer_data{};
 
-// Mock audio stream used in audio source testing.
-struct mock_audio_stream : public tr::audio_stream {
+//
+
+/// Mock audio stream used in audio source testing.
+struct mock_audio_stream : public tr::audio_stream
+{
 	tr::usize length() const override
 	{
 		return 441000;
@@ -45,7 +47,10 @@ struct mock_audio_stream : public tr::audio_stream {
 	}
 
   private:
+	/// Current position within the stream.
 	tr::usize m_position{0};
+
+	//
 
 	void raw_read(std::span<tr::i16> buffer) override
 	{
@@ -54,9 +59,30 @@ struct mock_audio_stream : public tr::audio_stream {
 	}
 };
 
-// Audio source test fixture.
-class audio_source_test : public testing::Test {
+//
+
+/// Test fixture used to test audio sources.
+class audio_source_test : public testing::Test
+{
   protected:
+	/// Device the source's context is created on.
+	tr::audio_device device;
+
+	/// Context the source is created on.
+	tr::audio_context context;
+
+	/// Audio buffer used in the source testing.
+	std::shared_ptr<tr::audio_buffer> buffer;
+
+	/// Audio stream used in the source testing.
+	std::unique_ptr<tr::audio_stream> stream;
+
+	/// Audio source being tested.
+	std::shared_ptr<tr::audio_source> source;
+
+	//
+
+	/// Constructs the fixture.
 	audio_source_test()
 		: device{}
 		, context{device}
@@ -65,18 +91,9 @@ class audio_source_test : public testing::Test {
 		, source{tr::create_audio_source(context, 0)}
 	{
 	}
-
-	// Device the source's context is created on.
-	tr::audio_device device;
-	// Context the source is created on.
-	tr::audio_context context;
-	// Audio buffer used in the source testing.
-	std::shared_ptr<tr::audio_buffer> buffer;
-	// Audio stream used in the source testing.
-	std::unique_ptr<tr::audio_stream> stream;
-	// Audio source being tested.
-	std::shared_ptr<tr::audio_source> source;
 };
+
+//
 
 TEST_F(audio_source_test, context)
 {

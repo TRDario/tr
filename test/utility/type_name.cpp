@@ -6,4 +6,5 @@
 //
 
 static_assert(tr::type_name<int>() == "int");
+
 static_assert(tr::type_name<const float>() == "const float");

@@ -1,11 +1,10 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Tests utility/atlas_packer.hpp.                                                                                                       //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Tests utility/atlas_packer.hpp.
 
 #include <gtest/gtest.h>
 #include <tr/utility/atlas_packer.hpp>
+
+//
 
 TEST(atlas_packer_test, try_insert_success)
 {
@@ -46,7 +45,8 @@ TEST(atlas_entries_test, empty)
 
 TEST(atlas_entries_test, try_insert_success)
 {
-	struct entry_with_extra {
+	struct entry_with_extra
+	{
 		tr::rectangle<tr::u16> uv;
 		float extra;
 	};

@@ -1,41 +1,57 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Tests utility/handle.hpp.                                                                                                             //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Tests utility/handle.hpp.
 
 #include <gtest/gtest.h>
 #include <tr/utility/handle.hpp>
 
-// Default-constructible, stateless deleter that keeps track of deletions.
+/// Default-constructible, stateless deleter that keeps track of deletions.
 struct stateless_deleter
 {
+	/// Number of tracked deletions.
 	inline static int deleted_count{0};
+
+	/// Last deleted value.
 	inline static int last_deleted_value{0};
 
+	//
+
+	/// Mock deletion.
 	void operator()(int value) const
 	{
 		++deleted_count;
 		last_deleted_value = value;
 	}
 };
-using stateless_deleter_handle = tr::handle<int, 0, stateless_deleter>;
 
-// Non-default-constructible deleter with an integer tag.
+/// Non-default-constructible deleter with an integer tag.
 struct tagged_deleter
 {
+	/// Deleter tag.
 	int id;
 
+	//
+
+	/// Constructs a deleter.
 	tagged_deleter(int id)
 		: id{id}
 	{
 	}
 
+	//
+
+	/// Mock deletion.
 	void operator()(int value) const {}
 };
+
+/// Handle using a stateless deleter.
+using stateless_deleter_handle = tr::handle<int, 0, stateless_deleter>;
+
+/// Handle using a tagged deleter.
 using tagged_deleter_handle = tr::handle<int, 0, tagged_deleter>;
 
-// Handle text fixture.
+//
+
+/// Handle text fixture.
 class handle_test : public testing::Test
 {
   protected:
@@ -45,16 +61,31 @@ class handle_test : public testing::Test
 	}
 };
 
+/// Mock C function taking a handled value by pointer.
+static void set_c_handle(int* handle, int value)
+{
+	*handle = value;
+}
+
+//
+
 static_assert(tr::handle_deleter<stateless_deleter, int>);
+
 static_assert(tr::handle_deleter<tagged_deleter, int>);
+
 static_assert(tr::handle_deleter<decltype([](int) {}), int>);
+
 static_assert(tr::handle_deleter<void (*)(int), int>);
 
 static_assert(tr::default_constructible_handle_deleter<stateless_deleter>);
+
 static_assert(!tr::default_constructible_handle_deleter<tagged_deleter>);
+
 static_assert(!tr::default_constructible_handle_deleter<void (*)(int)>);
 
 static_assert(sizeof(tr::handle<int, 0, stateless_deleter>) == sizeof(int));
+
+//
 
 TEST_F(handle_test, default_constructor)
 {
@@ -172,11 +203,6 @@ TEST_F(handle_test, reset)
 	handle.reset(0, tr::maybe_empty);
 	EXPECT_FALSE(handle.has_value());
 	EXPECT_EQ(stateless_deleter::deleted_count, 3);
-}
-
-static void set_c_handle(int* handle, int value)
-{
-	*handle = value;
 }
 
 TEST_F(handle_test, out_handle)

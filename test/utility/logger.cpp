@@ -1,12 +1,11 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Tests utility/logger.hpp.                                                                                                             //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Tests utility/logger.hpp.
 
 #include <gtest/gtest.h>
 #include <tr/utility/logger.hpp>
 #include <tr/utility/reference.hpp>
+
+//
 
 TEST(logger_test, backend)
 {
@@ -27,7 +26,8 @@ TEST(logger_test, backend)
 
 TEST(logger_test, log)
 {
-	struct logger_backend_mock : public tr::logger_backend {
+	struct logger_backend_mock : public tr::logger_backend
+	{
 		void log(const std::tm&, tr::severity, std::string_view string) override
 		{
 			EXPECT_EQ(string, "This is an integer: 420");

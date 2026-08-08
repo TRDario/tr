@@ -1,14 +1,13 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Tests utility/matrix.hpp.                                                                                                             //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Tests utility/matrix.hpp.
 
 #include <gtest/gtest.h>
 #include <tr/utility/matrix.hpp>
 
 using namespace tr::angle_literals;
 using namespace tr::matrix_operators;
+
+//
 
 TEST(matrix_test, operators)
 {

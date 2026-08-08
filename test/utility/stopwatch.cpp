@@ -1,13 +1,14 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Tests utility/stopwatch.hpp.                                                                                                          //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Tests utility/stopwatch.hpp.
 
 #include <gtest/gtest.h>
 #include <tr/utility/stopwatch.hpp>
 
+//
+
 constexpr std::chrono::milliseconds interval{100};
+
+//
 
 TEST(stopwatch_test, elapsed)
 {

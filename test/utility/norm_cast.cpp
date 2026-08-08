@@ -1,8 +1,5 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Tests utility/norm_cast.hpp.                                                                                                          //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Tests utility/norm_cast.hpp.
 
 #include <gtest/gtest.h>
 #include <tr/utility/norm_cast.hpp>
@@ -10,6 +7,8 @@
 
 using namespace tr::aliases;
 using tr::norm_cast;
+
+//
 
 TEST(norm_cast_test, round_trip)
 {

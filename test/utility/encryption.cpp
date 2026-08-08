@@ -1,12 +1,11 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Tests utility/encryption.hpp.                                                                                                         //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Tests utility/encryption.hpp.
 
 #include <gtest/gtest.h>
 #include <tr/utility/encryption.hpp>
 #include <tr/utility/rng.hpp>
+
+//
 
 TEST(encryption_test, round_trip)
 {

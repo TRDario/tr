@@ -1,13 +1,12 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Tests utility/benchmark.hpp.                                                                                                          //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Tests utility/benchmark.hpp.
 
 #include <gtest/gtest.h>
 #include <tr/utility/benchmark.hpp>
 
 using namespace std::chrono_literals;
+
+//
 
 TEST(benchmark_test, single_measurement)
 {

@@ -1,27 +1,33 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Tests audio/audio_context.hpp.                                                                                                        //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Tests audio/audio_context.hpp.
 
 #include <gtest/gtest.h>
 #include <tr/audio/audio_context.hpp>
 #include <tr/audio/audio_device.hpp>
 
-// Audio context test fixture.
-class audio_context_test : public testing::Test {
+//
+
+/// Fixture used to test audio contexts.
+class audio_context_test : public testing::Test
+{
   protected:
+	/// Device the context is created on.
+	tr::audio_device device;
+
+	/// Audio context being tested.
+	tr::audio_context context;
+
+	//
+
+	/// Constructs the fixture.
 	audio_context_test()
 		: device{}
 		, context{device}
 	{
 	}
-
-	// Device the context is created on.
-	tr::audio_device device;
-	// Audio context being tested.
-	tr::audio_context context;
 };
+
+//
 
 TEST_F(audio_context_test, master_gain)
 {

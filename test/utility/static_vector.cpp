@@ -1,24 +1,29 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Tests utility/static_vector.hpp.                                                                                                      //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Tests utility/static_vector.hpp.
 
 #include <gtest/gtest.h>
 #include <tr/utility/static_vector.hpp>
 
-// Tracked integer value.
-struct tracked_int {
-	// Number of constructed tracked integers.
+//
+
+/// Tracked integer value.
+struct tracked_int
+{
+	/// Number of constructed tracked integers.
 	inline static int constructed{0};
-	// Number of copied tracked integers.
+
+	/// Number of copied tracked integers.
 	inline static int copy_constructed{0};
-	// Number of move-constructed tracked integers.
+
+	/// Number of move-constructed tracked integers.
 	inline static int move_constructed{0};
-	// Number of destroyed tracked integers.
+
+	/// Number of destroyed tracked integers.
 	inline static int destroyed{0};
 
-	// Resets the tracked counts.
+	//
+
+	/// Resets the tracked counts.
 	static void reset_counts()
 	{
 		constructed = 0;
@@ -27,46 +32,61 @@ struct tracked_int {
 		destroyed = 0;
 	}
 
-	// Base integer.
+	//
+
+	/// Base integer.
 	int value;
 
-	// Constructs a tracked integer.
+	//
+
+	/// Constructs a tracked integer.
 	tracked_int(int value = 0)
 		: value{value}
 	{
 		++constructed;
 	}
-	// Copied a tracked integer.
+
+	/// Copied a tracked integer.
 	tracked_int(const tracked_int& copy)
 		: value{copy.value}
 	{
 		++copy_constructed;
 	}
-	// Moves a tracked integer.
+
+	/// Moves a tracked integer.
 	tracked_int(tracked_int&& move)
 		: value{move.value}
 	{
 		++move_constructed;
 	}
-	// Destroys a tracked integer.
+
+	/// Destroys a tracked integer.
 	~tracked_int()
 	{
 		++destroyed;
 	}
 
-	// Copies a tracked integer.
+	//
+
+	/// Copies a tracked integer.
 	tracked_int& operator=(const tracked_int& copy) = default;
-	// Moves a tracked integer
+
+	/// Moves a tracked integer
 	tracked_int& operator=(tracked_int&& move) = default;
 
-	// Equality comparison.
+	//
+
+	/// Equality comparison.
 	friend bool operator==(const tracked_int& l, const tracked_int& r) = default;
-	// Equality comparison.
+
+	/// Equality comparison.
 	friend bool operator==(const tracked_int& l, int r)
 	{
 		return l.value == r;
 	}
 };
+
+//
 
 TEST(static_vector_test, default_construction)
 {

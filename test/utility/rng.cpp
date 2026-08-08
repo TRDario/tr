@@ -1,18 +1,20 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Tests utility/rng.hpp.                                                                                                                //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Tests utility/rng.hpp.
 
 #include <gtest/gtest.h>
 #include <tr/utility/rng.hpp>
 
-// RNG test fixture.
-class rng_test : public testing::Test {
+//
+
+/// RNG test fixture.
+class rng_test : public testing::Test
+{
   protected:
-	// The RNG being tested.
+	/// RNG being tested.
 	tr::rng rng;
 };
+
+//
 
 TEST_F(rng_test, advance)
 {

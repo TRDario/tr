@@ -1,11 +1,10 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Tests utility/rectangle_edges.hpp.                                                                                                    //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Tests utility/rectangle_edges.hpp.
 
 #include <gtest/gtest.h>
 #include <tr/utility/rectangle_edges.hpp>
+
+//
 
 TEST(rectangle_edges_test, construction)
 {

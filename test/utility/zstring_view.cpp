@@ -1,14 +1,13 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Tests utility/zstring_view.hpp.                                                                                                       //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Tests utility/zstring_view.hpp.
 
 #include <gtest/gtest.h>
 #include <tr/utility/zstring_view.hpp>
 
 using namespace std::literals;
 using namespace tr::literals;
+
+//
 
 TEST(zstring_view_test, construction)
 {

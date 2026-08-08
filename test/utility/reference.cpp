@@ -1,16 +1,21 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Tests utility/reference.hpp.                                                                                                          //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Tests utility/reference.hpp.
 
 #include <gtest/gtest.h>
 #include <tr/utility/reference.hpp>
 
-struct base {
+//
+
+struct base
+{
 	virtual ~base() = default;
 };
-struct derived : base {};
+
+struct derived : base
+{
+};
+
+//
 
 TEST(reference_test, ref_construction)
 {
@@ -53,7 +58,8 @@ TEST(reference_test, ref_equality)
 
 TEST(reference_test, ref_access)
 {
-	struct data_t {
+	struct data_t
+	{
 		int value;
 	};
 

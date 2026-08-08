@@ -1,8 +1,5 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Tests audio/audio_buffer.hpp.                                                                                                         //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Tests audio/audio_buffer.hpp.
 
 #include <gtest/gtest.h>
 #include <tr/audio/audio_context.hpp>
@@ -10,22 +7,33 @@
 
 using namespace std::chrono_literals;
 
-class audio_buffer_test : public testing::Test {
+//
+
+/// Fixture used to test audio buffers.
+class audio_buffer_test : public testing::Test
+{
   protected:
+	/// Device the buffer's context is created on.
+	tr::audio_device device;
+
+	/// Context the buffer is created on.
+	tr::audio_context context;
+
+	/// Audio buffer being tested.
+	std::shared_ptr<tr::audio_buffer> buffer;
+
+	//
+
+	/// Constructs the fixture.
 	audio_buffer_test()
 		: device{}
 		, context{device}
 		, buffer{tr::create_audio_buffer(context)}
 	{
 	}
-
-	// Device the buffer's context is created on.
-	tr::audio_device device;
-	// Context the buffer is created on.
-	tr::audio_context context;
-	// Audio buffer being tested.
-	std::shared_ptr<tr::audio_buffer> buffer;
 };
+
+//
 
 TEST_F(audio_buffer_test, context)
 {

@@ -1,12 +1,11 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Tests utility/binary_io.hpp.                                                                                                          //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Tests utility/binary_io.hpp.
 
 #include <gtest/gtest.h>
 #include <tr/utility/binary_io.hpp>
 #include <tr/utility/rng.hpp>
+
+//
 
 #define CHECK_ROUNDTRIP(expr)                                                                                                              \
 	do {                                                                                                                                   \
@@ -14,6 +13,8 @@
 		tr::write_binary(ios, value);                                                                                                      \
 		EXPECT_EQ(tr::read_binary<decltype(expr)>(ios), value);                                                                            \
 	} while (0)
+
+//
 
 TEST(binary_io_test, magic)
 {

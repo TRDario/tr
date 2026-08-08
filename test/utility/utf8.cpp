@@ -1,16 +1,20 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Tests utility/utf8.hpp.                                                                                                               //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Tests utility/utf8.hpp.
 
 #include <gtest/gtest.h>
+#include <tr/utility/static_string.hpp>
 #include <tr/utility/static_vector.hpp>
 #include <tr/utility/utf8.hpp>
 
+//
+
 constexpr tr::static_string<10> characters{"ač東😳"};
+
 constexpr std::array<tr::codepoint, 4> codepoints{0x61, 0x10D, 0x6771, 0x1F633};
+
 constexpr std::array<tr::usize, 5> offsets{0, 1, 3, 6, 10};
+
+//
 
 TEST(utf8_test, utf8_to_cp)
 {

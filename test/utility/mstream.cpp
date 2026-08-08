@@ -1,13 +1,12 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Tests utility/mstream.hpp.                                                                                                            //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Tests utility/mstream.hpp.
 
 #include <gtest/gtest.h>
 #include <tr/utility/mstream.hpp>
 #include <tr/utility/ranges.hpp>
 #include <tr/utility/rng.hpp>
+
+//
 
 TEST(mstream_test, omstream)
 {
