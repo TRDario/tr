@@ -8,11 +8,11 @@
 
 namespace tr
 {
-	// Valid handle deleter type for a handle to `Base`.
+	/// Valid handle deleter type for a handle to `Base`.
 	template <typename T, typename Base>
 	concept handle_deleter = std::invocable<T, Base> && (std::move_constructible<T> || std::copy_constructible<T>);
 
-	// Default constructible handle deleter.
+	/// Default constructible handle deleter.
 	template <typename T>
 	concept default_constructible_handle_deleter = std::default_initializable<T> && !std::is_pointer_v<T>;
 

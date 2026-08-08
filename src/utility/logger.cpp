@@ -1,19 +1,19 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements the non-templated parts of logger.hpp.                                                                                     //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements the non-templated parts of logger.hpp.
 
 #include "../../include/tr/utility/logger.hpp"
 #include "../../include/tr/utility/chrono.hpp"
 #include "../../include/tr/utility/iostream.hpp"
 #include "../../include/tr/utility/ranges.hpp"
 
-////////////////////////////////////////////////////////////// CONSOLE LOGGER /////////////////////////////////////////////////////////////
+//
 
-namespace tr {
-	namespace {
-		// Must be a function because of the static object initialization fiasco.
+namespace tr
+{
+	namespace
+	{
+		/// Must be a function because of the static object initialization fiasco.
+		/// @return Reference to the list of registered console loggers.
 		std::vector<std::string>& registered_console_loggers()
 		{
 			static std::vector<std::string> registered_console_loggers;
@@ -37,9 +37,13 @@ tr::console_logger::~console_logger()
 
 //
 
-namespace tr {
-	namespace {
-		// String size projection.
+namespace tr
+{
+	namespace
+	{
+		/// String size projection.
+		/// @param str String to get the size of.
+		/// @return Size of the string.
 		usize string_size(const std::string& str)
 		{
 			return str.size();
@@ -60,7 +64,7 @@ void tr::console_logger::log_continue(std::string_view string)
 	std::println("{:{}}--- {}", "", padding, string);
 }
 
-/////////////////////////////////////////////////////////////// FILE LOGGER ///////////////////////////////////////////////////////////////
+//
 
 tr::file_logger::file_logger(std::filesystem::path&& path)
 	: m_path{std::move(path)}
@@ -85,7 +89,7 @@ void tr::file_logger::log_continue(std::string_view string)
 	std::println(file, "           --- {}", string);
 }
 
-///////////////////////////////////////////////////////// CONSOLE AND FILE LOGGER /////////////////////////////////////////////////////////
+//
 
 tr::console_and_file_logger::console_and_file_logger(std::string&& name, std::filesystem::path&& path)
 	: console_logger{std::move(name)}
@@ -107,7 +111,7 @@ void tr::console_and_file_logger::log_continue(std::string_view string)
 	file_logger::log_continue(string);
 }
 
-////////////////////////////////////////////////////////////////// LOGGER /////////////////////////////////////////////////////////////////
+//
 
 tr::logger::logger() {}
 

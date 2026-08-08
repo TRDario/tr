@@ -55,115 +55,248 @@
 
 ////////////////////////////////////////////////////////////////// LOGGER /////////////////////////////////////////////////////////////////
 
-namespace tr {
-	// Log message severity levels.
-	enum class severity : char {
-		info = 'I',    // Information.
-		warning = 'W', // Warning.
-		error = 'E',   // Non-fatal error.
-		fatal = 'F'    // Fatal error.
+namespace tr
+{
+	/// Log message severity levels.
+	enum class severity : char
+	{
+		/// Information.
+		info = 'I',
+		/// Warning.
+		warning = 'W',
+		/// Non-fatal error.
+		error = 'E',
+		/// Fatal error.
+		fatal = 'F'
 	};
 
-	// Logger backend interface.
-	class logger_backend {
+	//
+
+	/// Logger backend interface.
+	class logger_backend
+	{
 	  public:
-		// Virtual destructor.
+		/// @name Constructors
+		/// @{
+
+		/// Virtual destructor.
 		virtual ~logger_backend() = default;
 
-		// Logs a message or message beginning.
+		/// @}
+		/// @name Logging
+		/// @{
+
+		/// Logs a message or message beginning.
+		/// @param time Timestamp of the message.
+		/// @param severity Severity of the message.
+		/// @param string String of the message.
 		virtual void log(const std::tm& time, severity severity, std::string_view string) = 0;
-		// Logs a message continuation.
+
+		/// Logs a message continuation.
+		/// @param string String of the message continuation.
 		virtual void log_continue(std::string_view string) = 0;
+
+		/// @}
 	};
-	// Console logger backend.
-	class console_logger : virtual public logger_backend {
+
+	/// Console logger backend.
+	class console_logger : virtual public logger_backend
+	{
 	  public:
-		// Creates a console logger.
+		/// @name Constructors
+		/// @{
+
+		/// Creates a console logger.
+		/// @param name Name of the logger.
 		console_logger(std::string&& name);
-		// Destroys the logger.
+
+		/// Destroys the logger.
 		~console_logger() override;
 
-		// Logs a message or message beginning.
+		/// @}
+		/// @name Logging
+		/// @{
+
+		/// Logs a message or message beginning.
+		/// @param time Timestamp of the message.
+		/// @param severity Severity of the message.
+		/// @param string String of the message.
 		void log(const std::tm& time, severity severity, std::string_view string) override;
-		// Logs a message continuation.
+
+		/// Logs a message continuation.
+		/// @param string String of the message continuation.
 		void log_continue(std::string_view string) override;
 
+		/// @}
+
 	  private:
-		// Name of the logger.
+		/// Name of the logger.
 		std::string m_name;
 	};
-	// File logger backend.
-	class file_logger : virtual public logger_backend {
+
+	/// File logger backend.
+	class file_logger : virtual public logger_backend
+	{
 	  public:
-		// Creates a file logger.
+		/// @name Constructors
+		/// @{
+
+		/// Creates a file logger.
+		/// @param path Path to the log file.
 		file_logger(std::filesystem::path&& path);
 
-		// Logs a message or message beginning.
+		/// @}
+		/// @name Logging
+		/// @{
+
+		/// Logs a message or message beginning.
+		/// @param time Timestamp of the message.
+		/// @param severity Severity of the message.
+		/// @param string String of the message.
 		void log(const std::tm& time, severity severity, std::string_view string) override;
-		// Logs a message continuation.
+
+		/// Logs a message continuation.
+		/// @param string String of the message continuation.
 		void log_continue(std::string_view string) override;
+
+		/// @}
 
 	  private:
-		// Path to the log file.
+		/// Path to the log file.
 		std::filesystem::path m_path;
 	};
-	// Joint console and file logger backend.
-	class console_and_file_logger : public console_logger, public file_logger {
+
+	/// Joint console and file logger backend.
+	class console_and_file_logger : public console_logger, public file_logger
+	{
 	  public:
-		// Creates a console and file logger.
+		/// @name Constructors
+		/// @{
+
+		/// Creates a console and file logger.
+		/// @param name Name of the console logger.
+		/// @param path Path to the log file.
 		console_and_file_logger(std::string&& name, std::filesystem::path&& path);
 
-		// Logs a message or message beginning.
+		/// @}
+		/// @name Logging
+		/// @{
+
+		/// Logs a message or message beginning.
+		/// @param time Timestamp of the message.
+		/// @param severity Severity of the message.
+		/// @param string String of the message.
 		void log(const std::tm& time, severity severity, std::string_view string) override;
-		// Logs a message continuation.
+
+		/// Logs a message continuation.
+		/// @param string String of the message continuation.
 		void log_continue(std::string_view string) override;
+
+		/// @}
 	};
 
-	// Flexible logger class.
-	class logger {
+	//
+
+	/// Flexible logger class.
+	class logger
+	{
 	  public:
-		// Creates an empty logger
+		/// @name Constructors
+		/// @{
+
+		/// Creates an empty logger.
 		logger();
-		// Creates a logger with a backend.
+
+		/// Creates a logger with a backend.
+		/// @param backend Logger backend to forward messages to.
 		logger(std::unique_ptr<logger_backend>&& backend);
 
-		// Gets whether the logger is active.
+		/// @}
+		/// @name Status
+		/// @{
+
+		/// Gets whether the logger is active.
+		/// @return `true` if the logger contains a backend, `false` otherwise.
 		bool active() const;
-		// Gets the backend of the logger.
+
+		/// Gets the backend of the logger.
+		/// @return Reference to the backend of the logger.
 		const logger_backend& backend() const;
-		// Gets the backend of the logger.
+
+		/// Gets the backend of the logger.
+		/// @return Reference to the backend of the logger.
 		logger_backend& backend();
 
-		// Clears the logger's backend.
+		/// @}
+		/// @name Backend manipulation
+		/// @{
+
+		/// Clears the logger's backend.
 		void clear_backend();
-		// Replaces the logger's backend.
+
+		/// Replaces the logger's backend.
+		/// @tparam Backend Backend to emplace into the logger.
+		/// @tparam Args Types of the arguments to the backend's constructor.
+		/// @param args Arguments to the backend's constructor.
 		template <std::derived_from<logger_backend> Backend, typename... Args>
 			requires(std::constructible_from<Backend, Args...>)
 		void replace_backend_with(Args&&... args);
 
-		// Logs a message.
+		/// @}
+		/// @name Logging
+		/// @{
+
+		/// Logs a message.
+		/// @param severity Severity of the message.
+		/// @param string String of the message.
 		void log(severity severity, std::string_view str);
-		// Logs an exception.
+
+		/// Logs an exception.
+		/// @param severity Severity of the message.
+		/// @param err Exception to extract a message from.
 		void log(severity severity, const std::exception& err);
-		// Logs a message.
-		template <typename... Args> void log(severity severity, std::format_string<Args...> fmt, Args&&... args);
-		// Logs a message continuing from a previous line.
+
+		/// Logs a message.
+		/// @tparam Args Formatting argument types.
+		/// @param fmt Format string.
+		/// @param args Formatting arguments.
+		template <typename... Args>
+		void log(severity severity, std::format_string<Args...> fmt, Args&&... args);
+
+		/// Logs a message continuing from a previous line.
+		/// @param string String of the message continuation.
 		void log_continue(std::string_view str);
-		// Logs an exception continuing from a previous line.
+
+		/// Logs an exception continuing from a previous line.
+		/// @param err Exception to extract a message continuation from.
 		void log_continue(const std::exception& err);
-		// Logs a message continuing from a previous line.
-		template <typename... Args> void log_continue(std::format_string<Args...> fmt, Args&&... args);
+
+		/// Logs a message continuing from a previous line.
+		/// @tparam Args Formatting argument types.
+		/// @param fmt Format string.
+		/// @param args Formatting arguments.
+		template <typename... Args>
+		void log_continue(std::format_string<Args...> fmt, Args&&... args);
+
+		/// @}
 
 	  private:
-		// Owning pointer to the logger backend.
+		/// Owning pointer to the logger backend.
 		std::unique_ptr<logger_backend> m_backend;
 	};
-	// Creates a logger wtih a specific backend created in-place.
+
+	/// Creates a logger with an initial backend created in-place.
+	/// @tparam Backend Backend to emplace into the logger.
+	/// @tparam Args Types of the arguments to the backend's constructor.
+	/// @param args Arguments to the backend's constructor.
+	/// @return Logger with an initial backend created in-place.
 	template <std::derived_from<logger_backend> Backend, typename... Args>
 		requires(std::constructible_from<Backend, Args...>)
 	logger make_logger(Args&&... args);
 
-	// tr's default error logger, may be redirected.
+	//
+
+	/// tr's default error logger, may be redirected.
 	inline logger error_logger{make_logger<console_logger>("tr")};
 } // namespace tr
 
