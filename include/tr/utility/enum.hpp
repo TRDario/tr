@@ -1,48 +1,43 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Provides enumerator utilities.                                                                                                        //
-//                                                                                                                                       //
-// TR_DEFINE_ENUM_BITMASK_OPERATORS(type) defines bitmask operators (&, |, ^, ~) for enum class types,                                   //
-// while TR_DEFINE_PRIVATE_ENUM_BITMASK_OPERATORS(type) does the same for private enums in classes:                                      //
-//     - enum class my_enum {                                                                                                            //
-//           l = 1,                                                                                                                      //
-//           r = 2,                                                                                                                      //
-//           lr = 3                                                                                                                      //
-//       };                                                                                                                              //
-//       TR_DEFINE_ENUM_BITMASK_OPERATORS(my_enum);                                                                                      //
-//     - my_enum::lr & my_enum::r -> my_enum::r                                                                                          //
-//     - my_enum::l | my_enum::r -> my_enum::lr                                                                                          //
-//     - my_enum::lr ^ my_enum::r -> my_enum::l                                                                                          //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Provides enumerator utilities.
 
 #pragma once
 #include "concepts.hpp"
 
+//
+
 namespace tr
 {
-	// Wraps an enum class to allow conversion to bool, used in TR_DEFINE_ENUM_BITMASK_OPERATORS.
+	/// Wraps an enum class to allow conversion to bool, used in `TR_DEFINE_ENUM_BITMASK_OPERATORS`.
 	template <enumerator Enum>
 	class enum_wrapper
 	{
 	  public:
-		// Wraps an enumerator value.
+		/// Wraps an enumerator value.
+		/// @param value Raw enumerator value.
 		constexpr enum_wrapper(Enum value);
 
-		// Converts the enumerator to a boolean.
+		/// Converts the enumerator to a boolean.
+		/// @return Enumerator cast to a boolean.
 		constexpr explicit operator bool() const;
 
-		// Unwraps the enumerator.
+		/// Unwraps the enumerator.
+		/// @return Raw enumerator value.
 		constexpr operator Enum() const;
-		// Unwraps the enumerator.
+
+		/// Unwraps the enumerator.
+		/// @return Raw enumerator value.
 		constexpr Enum unwrap() const;
 
 	  private:
-		// The wrapped enumerator value.
+		/// Base enumerator value.
 		Enum m_value;
 	};
 } // namespace tr
 
+/// Defines bitmask operators (&, |, ^, ~) for enum class types.
+/// @param type Enumerator class type.
+/// @hideinitializer
 #define TR_DEFINE_ENUM_BITMASK_OPERATORS(type)                                                                                             \
 	constexpr tr::enum_wrapper<type> operator&(type lhs, type rhs)                                                                         \
 	{                                                                                                                                      \
@@ -73,6 +68,9 @@ namespace tr
 		return lhs = (lhs ^ rhs);                                                                                                          \
 	}
 
+/// Defines bitmask operators (&, |, ^, ~) for private enum class types of classes.
+/// @param type Private enumerator class type.
+/// @hideinitializer
 #define TR_DEFINE_PRIVATE_ENUM_BITMASK_OPERATORS(type)                                                                                     \
 	friend constexpr tr::enum_wrapper<type> operator&(type lhs, type rhs)                                                                  \
 	{                                                                                                                                      \
