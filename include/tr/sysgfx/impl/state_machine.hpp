@@ -1,13 +1,10 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements the templated parts of state_machine.hpp.                                                                                  //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements the templated parts of state_machine.hpp.
 
 #pragma once
 #include "../state_machine.hpp"
 
-////////////////////////////////////////////////////////////////// STATE //////////////////////////////////////////////////////////////////
+//
 
 consteval tr::next_state tr::keep_state()
 {
@@ -26,9 +23,10 @@ tr::next_state tr::make_next_state(Args&&... args)
 	return static_cast<std::unique_ptr<state>>(std::make_unique<State>(std::forward<Args>(args)...));
 }
 
-////////////////////////////////////////////////////////////// STATE MACHINE //////////////////////////////////////////////////////////////
+//
 
-template <std::derived_from<tr::state> State> const State& tr::state_machine::get() const
+template <std::derived_from<tr::state> State>
+const State& tr::state_machine::get() const
 {
 	return static_cast<const State&>(*m_current_state);
 }
@@ -40,12 +38,16 @@ void tr::state_machine::emplace(Args&&... args)
 	m_current_state = std::make_unique<State>(std::forward<Args>(args)...);
 }
 
-template <std::derived_from<tr::state> State> State& tr::state_machine::get()
+template <std::derived_from<tr::state> State>
+State& tr::state_machine::get()
 {
+	TR_ASSERT(dynamic_cast<State*>(m_current_state) != nullptr, "Tried to get the current state with the wrong type.");
+
 	return static_cast<State&>(*m_current_state);
 }
 
-template <typename Rep, typename Period> void tr::state_machine::update(std::chrono::duration<Rep, Period> delta)
+template <typename Rep, typename Period>
+void tr::state_machine::update(std::chrono::duration<Rep, Period> delta)
 {
 	if (m_current_state != nullptr) {
 		m_update_benchmark.start();

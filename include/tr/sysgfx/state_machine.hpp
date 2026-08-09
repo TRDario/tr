@@ -1,122 +1,187 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Provides a state machine class and related functionality.                                                                             //
-//                                                                                                                                       //
-// The state machine works with the polymorphic tr::state. States inherited from tr::state may overload the                              //
-// .handle_event(const tr::event& event) method used to handle incoming events, the .update() method used to update the state, and the   //
-// .draw() method used to draw the state. .handle_event() and .update() return tr::next_state, which is a sum type containing either a   //
-// state, tr::keep_state, or tr::drop_state.                                                                                             ..
-// A tr::next_state can be constructed with tr::make_next_state:                                                                         //
-//     - struct my_state : tr::state { next_state update(tr::duration) override { return tr::make_next_state<my_other_state>(); } };     //
-//       -> provides an update function that returns the next state                                                                      //
-// If any of the above functions returns tr::keep_state, the state machine keeps that state.                                             //
-// If any of the above functions returns tr::drop_state, the state machine drops that state and becomes empty.                           //
-// Otherwise, the state machine replaces the current state with the returned one.                                                        //
-//                                                                                                                                       //
-// The state machine is constructed empty; a state can be emplaced into it with the .emplace<T>(args...) method, and can also be cleared //
-// with the .clear() method. Whether a state machine is empty can be queried with the .empty() method. The current state can be accessed //
-// using the .get<T>() method:                                                                                                           //
-//     - tr::state_machine state_machine -> creates an empty state machine                                                               //
-//     - state_machine.empty() -> true                                                                                                   //
-//     - state_machine.emplace<my_state>() -> state_machine now holds a state of type 'my_state'                                         //
-//     - state_machine.empty() -> false                                                                                                  //
-//     - state_machine.get<my_state>() -> gets the state                                                                                 //
-//     - state_machine.clear() -> clears the state machine, state_machine is now empty again                                             //
-//                                                                                                                                       //
-// The state machine provides the methods .handle_event(), .update(), and .draw() that call the corresponding method in the contained    //
-// state, if one is present. .update(), and .draw() are benchmarked internally, the results of which can be queried:                     //
-//     - state_machine.handle_event(event) -> calls .handle_event() on the contained state, or does nothing if empty                     //
-//     - state_machine.update(10ms) -> calls .update() on the contained state and measures the taken time, or does nothing if empty      //
-//     - state_machine.update_benchmark() -> gets access to the update benchmark                                                         //
-//     - state_machine.draw() -> calls .draw() on the contained state and measures the taken time, or does nothing if empty              //
-//     - state_machine.draw_benchmark() -> gets access to the draw benchmark                                                             //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Provides a state machine class and related functionality.
 
 #pragma once
 #include "../utility/benchmark.hpp"
 
-namespace tr {
+namespace tr
+{
 	class event;
 	struct state;
 } // namespace tr
 
-//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
+//
 
-namespace tr {
-	// Tag struct indicating that the current state should be kept.
-	struct keep_state_t {};
-	// Tag struct indicating that the current state should be dropped.
-	struct drop_state_t {};
-	// Shorthand for the return type of most state functions: the pointer to the next state, keep_state(), or drop_state().
-	using next_state = std::variant<keep_state_t, drop_state_t, std::unique_ptr<state>>;
-
-	// The base state type.
-	struct state {
-		// Virtual destructor.
-		virtual ~state() noexcept = default;
-
-		// Handles an event.
-		virtual next_state handle_event(const event& event);
-		// Updates the state.
-		virtual next_state update(duration delta);
-		// Draws the state.
-		virtual void draw();
+namespace tr
+{
+	/// Tag struct indicating that the current state should be kept.
+	struct keep_state_t
+	{
 	};
 
-	// Returns a sentinel indicating that the current state should be kept.
+	/// Tag struct indicating that the current state should be dropped.
+	struct drop_state_t
+	{
+	};
+
+	/// Shorthand for the return type of most state functions: the pointer to the next state, keep_state(), or drop_state().
+	using next_state = std::variant<keep_state_t, drop_state_t, std::unique_ptr<state>>;
+
+	/// Base state type.
+	struct state
+	{
+		/// @name Constructors
+		/// @{
+
+		/// Virtual destructor.
+		virtual ~state() noexcept = default;
+
+		/// @}
+		/// @name Interface
+		/// @{
+
+		/// Handles an event.
+		/// @param event Event to handle.
+		/// @return Pointer to the next state, or one of the tag structs.
+		virtual next_state handle_event(const event& event);
+
+		/// Updates the state.
+		/// @param delta Time since the last update.
+		/// @return Pointer to the next state, or one of the tag structs.
+		virtual next_state update(duration delta);
+
+		/// Draws the state.
+		virtual void draw();
+
+		/// @}
+	};
+
+	/// @name State machine
+	/// @{
+
+	/// Returns a sentinel indicating that the current state should be kept.
+	/// @return Sentinel indicating that the current state should be kept
 	consteval next_state keep_state();
-	// Returns a sentinel indicating that the current state should be dropped.
+
+	/// Returns a sentinel indicating that the current state should be dropped.
+	/// @return Sentinel indicating that the current state should be dropped.
 	consteval next_state drop_state();
-	// Convenience function for constructing a next state.
+
+	/// Convenience function for constructing a next state.
+	/// @tparam State State type to construct.
+	/// @tparam Args Types of the arguments passed to the state constructor.
+	/// @param args Arguments passed to the state constructor.
+	/// @return Owning pointer to the next state.
 	template <std::derived_from<state> State, typename... Args>
 		requires(std::constructible_from<State, Args...>)
 	next_state make_next_state(Args&&... args);
 
-	// State machine manager class.
-	class state_machine {
+	/// @}
+
+	/// State machine manager class.
+	/// @details
+	/// The state machine works with the polymorphic `tr::state`. States inherited from tr::state may overload the `handle_event()` method
+	/// used to handle incoming events, the `update()` method used to update the state, and the `draw()` method used to draw the state.
+	///
+	/// `handle_event()` and `update()` return `tr::next_state`, which is a sum type containing either a state, `tr::keep_state`, or
+	/// `tr::drop_state`. If `tr::keep_state` is returned, the state machine keeps the current state, and if `tr::drop_state` is returned,
+	/// the state machine drops the current state and becomes empty.
+	///
+	/// `update()` and `draw()` are benchmarked internally and their benchmarks are gettable.
+	class state_machine
+	{
 	  public:
-		// Constructs an empty state machine.
+		/// @name Constructors
+		/// @{
+
+		/// Constructs an empty state machine.
 		state_machine() = default;
 
-		// Checks whether the state machine is in an empty states.
+		/// @}
+		/// @name Status
+		/// @{
+
+		/// Checks whether the state machine is in an empty state.
+		/// @return `true` if the state machine does nto contain a state, `false` otherwise.
 		bool empty() const;
-		// Gets access to the current state.
-		template <std::derived_from<state> State> const State& get() const;
-		// Gets the update benchmark.
+
+		/// Gets access to the current state.
+		/// @tparam State Type of the current state.
+		/// @pre A state must be contained in the state machine.
+		/// @return Reference to the current state.
+		template <std::derived_from<state> State>
+		const State& get() const;
+
+		/// Gets the update benchmark.
+		/// @return Reference to the update benchmark.
 		const benchmark& update_benchmark() const;
-		// Gets the draw benchmark.
+
+		/// Gets the draw benchmark.
+		/// @return Reference to the draw benchmark.
 		const benchmark& draw_benchmark() const;
 
-		// Clears the state machine.
+		/// @}
+		/// @name State manipulation
+		/// @{
+
+		/// Clears the state machine.
 		void clear();
-		// Emplaces a state.
+
+		/// Emplaces a state.
+		/// @tparam State State type to construct.
+		/// @tparam Args Types of the arguments passed to the state constructor.
+		/// @param args Arguments passed to the state constructor.
 		template <std::derived_from<state> State, typename... Args>
 			requires(std::constructible_from<State, Args...>)
 		void emplace(Args&&... args);
-		// Gets access to the current state.
-		template <std::derived_from<state> State> State& get();
 
-		// Handles an event.
+		/// Gets access to the current state.
+		/// @tparam State Type of the current state.
+		/// @pre A state must be contained in the state machine.
+		/// @return Reference to the current state.
+		template <std::derived_from<state> State>
+		State& get();
+
+		/// @}
+		/// @name State management
+		/// @{
+
+		/// Handles an event.
+		/// @param event Event to handle.
 		void handle_event(const event& event);
-		// Updates the state.
-		template <typename Rep, typename Period> void update(std::chrono::duration<Rep, Period> delta);
-		// Draws the state.
+
+		/// Updates the current state.
+		/// @tparam Rep Duration representation type.
+		/// @tparam Period Duration period type.
+		/// @param delta Time since the last update.
+		template <typename Rep, typename Period>
+		void update(std::chrono::duration<Rep, Period> delta);
+
+		/// Draws the current state.
 		void draw();
 
+		/// @}
+
 	  private:
-		// The currently held state.
+		/// Currently held state.
 		std::unique_ptr<state> m_current_state;
-		// Benchmark measuring the update times.
+
+		/// Benchmark measuring the update times.
 		benchmark m_update_benchmark;
-		// Benchmark measuring the drawing times.
+
+		/// Benchmark measuring the drawing times.
 		benchmark m_draw_benchmark;
 
-		// Keeps the current state.
+		//
+
+		/// Keeps the current state.
 		void handle_next_state(keep_state_t);
-		// Drops the current state.
+
+		/// Drops the current state.
 		void handle_next_state(drop_state_t);
-		// Assigns a new current state.
+
+		/// Assigns a new current state.
+		/// @param next Next held state.
 		void handle_next_state(std::unique_ptr<state>&& next);
 	};
 } // namespace tr
