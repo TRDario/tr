@@ -1,10 +1,10 @@
 /// @file
-/// Provides iterator utilities.
+/// @brief Provides an interaotr interface with automatically derived operators.
 
 #pragma once
 #include "concepts.hpp"
 
-//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
+//
 
 namespace tr
 {
@@ -124,4 +124,4 @@ namespace tr
 	};
 } // namespace tr
 
-#include "impl/iterator.hpp" // IWYU pragma: export
+#include "impl/iterator_interface.hpp" // IWYU pragma: export

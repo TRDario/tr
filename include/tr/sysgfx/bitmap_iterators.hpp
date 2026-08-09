@@ -15,15 +15,17 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #pragma once
-#include "../utility/iterator.hpp"
+#include "../utility/iterator_interface.hpp"
 #include "../utility/reference.hpp"
 #include "bitmap.hpp"
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
-namespace tr {
+namespace tr
+{
 	// Read-only reference to a bitmap pixel.
-	class sub_bitmap::reference {
+	class sub_bitmap::reference
+	{
 	  public:
 		// Gets the pixel's color value.
 		operator rgba8() const;
@@ -44,7 +46,8 @@ namespace tr {
 	};
 
 	// Immutable bitmap pixel iterator.
-	class sub_bitmap::iterator : public iterator_interface<iterator, glm::ivec2> {
+	class sub_bitmap::iterator : public iterator_interface<iterator, glm::ivec2>
+	{
 	  public:
 		using value_type = reference;
 		using pointer = const value_type*;
@@ -92,7 +95,8 @@ namespace tr {
 	};
 
 	// Mutable reference to a bitmap pixel.
-	class bitmap::reference {
+	class bitmap::reference
+	{
 	  public:
 		// Gets the pixel's color value.
 		operator rgba8() const;
@@ -114,7 +118,8 @@ namespace tr {
 	};
 
 	// Mutable pixel iterator.
-	class bitmap::iterator : public iterator_interface<iterator, glm::ivec2> {
+	class bitmap::iterator : public iterator_interface<iterator, glm::ivec2>
+	{
 	  public:
 		using value_type = reference;
 		using reference = reference;

@@ -2,7 +2,7 @@
 /// @brief Provides UTF-8-handling utilities
 
 #pragma once
-#include "iterator.hpp"
+#include "iterator_interface.hpp"
 
 //
 
