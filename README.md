@@ -21,9 +21,18 @@ For available CMake options, see [CMakeLists.txt](https://github.com/TRDario/tr/
 
 ## Documentation
 
-The source code provides basic documentation for all types, functions, constants and globals in the library.
+tr is currently in the process of moving to using doxygen to document the code.
 
-An overview of provided functionality and usage examples are provided at the tops of header files.
+![Doxygen coverage progress bar](https://progress-bar.xyz/62?title=Doxygen+coverage:&width=100&scale=96&suffix=%2F96+files)
+
+For all unmigrated files, the source code provides basic documentation for all types, functions, constants and globals in the library,
+and an overview of provided functionality and usage examples are provided at the tops of header files.
+
+## Testing
+
+tr is currently in the process of being covered with unit tests.
+
+![Unit test coverage progress bar](https://progress-bar.xyz/39?title=Unit+test+coverage:&width=100&scale=91&suffix=%2F91+files)
 
 ## Licence
 

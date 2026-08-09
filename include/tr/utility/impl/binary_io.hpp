@@ -3,6 +3,7 @@
 
 #pragma once
 #include "../binary_io.hpp"
+#include "../default_binary_io.hpp"
 
 //
 
