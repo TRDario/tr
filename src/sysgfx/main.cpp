@@ -20,8 +20,10 @@
 
 ///////////////////////////////////////////////////////////// INTERNAL HELPERS ////////////////////////////////////////////////////////////
 
-namespace tr {
-	namespace {
+namespace tr
+{
+	namespace
+	{
 		// Buffer allocated to be freed in case of an out-of-memory error.
 		std::unique_ptr<char[]> g_emergency_buffer{new char[16384]};
 
@@ -33,7 +35,7 @@ namespace tr {
 				g_emergency_buffer.reset();
 			}
 
-			const std::string title{std::format("{} - Fatal Error", app::metadata.name)};
+			const std::string title{std::format("{} - Fatal Error", tr_app::metadata.name)};
 
 			opt_ref<const exception> tr_exception{dynamic_ref_cast<const exception>(error)};
 			std::string message;
@@ -97,24 +99,25 @@ extern "C"
 {
 	SDL_AppResult SDL_AppInit(void**, int argc, char** argv)
 	{
-		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_NAME_STRING, app::metadata.name.c_str());
-		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_VERSION_STRING, app::metadata.version.c_str());
-		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_IDENTIFIER_STRING, app::metadata.identifier.c_str());
-		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_CREATOR_STRING, app::metadata.developer.c_str());
-		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_COPYRIGHT_STRING, app::metadata.copyright.c_str());
-		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_URL_STRING, app::metadata.url.c_str());
-		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_TYPE_STRING, app::metadata.type == tr::app_type::game ? "game" : "application");
-		if (!app::metadata.name.empty()) {
-			if (!app::metadata.version.empty()) {
-				std::println("Launching {} {}.", app::metadata.name, app::metadata.version);
+		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_NAME_STRING, tr_app::metadata.name.c_str());
+		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_VERSION_STRING, tr_app::metadata.version.c_str());
+		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_IDENTIFIER_STRING, tr_app::metadata.identifier.c_str());
+		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_CREATOR_STRING, tr_app::metadata.developer.c_str());
+		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_COPYRIGHT_STRING, tr_app::metadata.copyright.c_str());
+		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_URL_STRING, tr_app::metadata.url.c_str());
+		SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_TYPE_STRING, tr_app::metadata.type == tr::app_type::game ? "game" : "application");
+		if (!tr_app::metadata.name.empty()) {
+			if (!tr_app::metadata.version.empty()) {
+				std::println("Launching {} {}.", tr_app::metadata.name, tr_app::metadata.version);
 			}
 			else {
-				std::println("Launching {}.", app::metadata.name);
+				std::println("Launching {}.", tr_app::metadata.name);
 			}
 		}
 
 		try {
-			tr::signal parse_result{app::parse_command_line({reinterpret_cast<tr::zstring_view*>(argv), static_cast<std::size_t>(argc)})};
+			tr::signal parse_result{
+				tr_app::parse_command_line({reinterpret_cast<tr::zstring_view*>(argv), static_cast<std::size_t>(argc)})};
 			if (parse_result != tr::signal::proceed) {
 				return static_cast<SDL_AppResult>(parse_result);
 			}
@@ -130,7 +133,7 @@ extern "C"
 				tr::error_logger.log_continue(SDL_GetError());
 			}
 
-			const std::string title{std::format("{} - Fatal Error", app::metadata.name)};
+			const std::string title{std::format("{} - Fatal Error", tr_app::metadata.name)};
 			const std::string message{
 				std::format("A fatal error has occured (Failed to initialize SDL3).\n{}\nPress OK to exit the application.",
 							SDL_GetError()),
@@ -140,7 +143,7 @@ extern "C"
 		}
 
 		try {
-			return static_cast<SDL_AppResult>(app::initialize());
+			return static_cast<SDL_AppResult>(tr_app::initialize());
 		}
 		catch (std::exception& err) {
 			tr::show_fatal_error_message_box(err);
@@ -151,7 +154,7 @@ extern "C"
 	SDL_AppResult SDL_AppEvent(void*, SDL_Event* event)
 	{
 		try {
-			return static_cast<SDL_AppResult>(app::handle_event(reinterpret_cast<tr::event&>(*event)));
+			return static_cast<SDL_AppResult>(tr_app::handle_event(reinterpret_cast<tr::event&>(*event)));
 		}
 		catch (std::exception& err) {
 			tr::show_fatal_error_message_box(err);
@@ -166,7 +169,7 @@ extern "C"
 			const std::chrono::steady_clock::time_point now{std::chrono::steady_clock::now()};
 			const tr::duration delta{now - prev};
 			prev = now;
-			return static_cast<SDL_AppResult>(app::update(delta));
+			return static_cast<SDL_AppResult>(tr_app::update(delta));
 		}
 		catch (std::exception& err) {
 			tr::show_fatal_error_message_box(err);
@@ -177,7 +180,7 @@ extern "C"
 	void SDL_AppQuit(void*, SDL_AppResult)
 	{
 		try {
-			app::shut_down();
+			tr_app::shut_down();
 		}
 		catch (std::exception& err) {
 			tr::show_fatal_error_message_box(err);
