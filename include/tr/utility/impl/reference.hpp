@@ -1,14 +1,11 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements reference.hpp.                                                                                                             //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements reference.hpp.
 
 #pragma once
 #include "../macro.hpp"
 #include "../reference.hpp"
 
-//////////////////////////////////////////////////////////// REFERENCE WRAPPER ////////////////////////////////////////////////////////////
+//
 
 template <typename T>
 constexpr tr::ref<T>::ref(T& ref)
@@ -16,12 +13,14 @@ constexpr tr::ref<T>::ref(T& ref)
 {
 }
 
-template <typename T> constexpr tr::ref<T>::operator T&() const
+template <typename T>
+constexpr tr::ref<T>::operator T&() const
 {
 	return *m_base;
 }
 
-template <typename T> constexpr tr::ref<T>::operator ref<const T>() const
+template <typename T>
+constexpr tr::ref<T>::operator ref<const T>() const
 {
 	return tr::ref<const T>{*m_base};
 }
@@ -34,27 +33,31 @@ constexpr tr::ref<T>::operator ref<U>() const
 	return static_cast<U&>(**this);
 }
 
-template <typename T> constexpr bool tr::operator==(const ref<T>& l, const T& r)
+template <typename T>
+constexpr bool tr::operator==(const ref<T>& lhs, const T& rhs)
 {
-	return l == ref{r};
+	return lhs == ref{rhs};
 }
 
-template <typename T> constexpr T* tr::ref<T>::as_ptr() const
-{
-	return m_base;
-}
-
-template <typename T> constexpr T* tr::ref<T>::operator->() const
+template <typename T>
+constexpr T* tr::ref<T>::as_ptr() const
 {
 	return m_base;
 }
 
-template <typename T> constexpr T& tr::ref<T>::operator*() const
+template <typename T>
+constexpr T* tr::ref<T>::operator->() const
+{
+	return m_base;
+}
+
+template <typename T>
+constexpr T& tr::ref<T>::operator*() const
 {
 	return *m_base;
 }
 
-//////////////////////////////////////////////////////// OPTIONAL REFERENCE WRAPPER ///////////////////////////////////////////////////////
+//
 
 template <typename T>
 constexpr tr::opt_ref<T>::opt_ref(std::nullopt_t)
@@ -74,9 +77,10 @@ constexpr tr::opt_ref<T>::opt_ref(T& ref)
 {
 }
 
-template <typename T> constexpr tr::opt_ref<T>::operator opt_ref<const T>() const
+template <typename T>
+constexpr tr::opt_ref<T>::operator opt_ref<const T>() const
 {
-	return make_opt_ref<const T>(m_base);
+	return opt_ref_from_ptr<const T>(m_base);
 }
 
 template <typename T>
@@ -84,44 +88,50 @@ template <typename U>
 	requires(std::convertible_to<T&, U&>)
 constexpr tr::opt_ref<T>::operator opt_ref<U>() const
 {
-	return make_opt_ref(static_cast<U*>(as_ptr()));
+	return opt_ref_from_ptr(static_cast<U*>(as_ptr()));
 }
 
-template <typename T> constexpr bool tr::operator==(opt_ref<T> l, const std::type_identity_t<T>& r)
+template <typename T>
+constexpr bool tr::operator==(opt_ref<T> lhs, const std::type_identity_t<T>& rhs)
 {
-	return l.as_ptr() == &r;
+	return lhs.as_ptr() == &rhs;
 }
 
-template <typename T> constexpr bool tr::opt_ref<T>::has_ref() const
+template <typename T>
+constexpr bool tr::opt_ref<T>::has_ref() const
 {
 	return m_base != nullptr;
 }
 
-template <typename T> constexpr T* tr::opt_ref<T>::as_ptr() const
+template <typename T>
+constexpr T* tr::opt_ref<T>::as_ptr() const
 {
 	return m_base;
 }
 
-template <typename T> constexpr T* tr::opt_ref<T>::operator->() const
+template <typename T>
+constexpr T* tr::opt_ref<T>::operator->() const
 {
 	TR_ASSERT(has_ref(), "Tried to dereference empty optional reference.");
 
 	return m_base;
 }
 
-template <typename T> constexpr T& tr::opt_ref<T>::operator*() const
+template <typename T>
+constexpr T& tr::opt_ref<T>::operator*() const
 {
 	TR_ASSERT(has_ref(), "Tried to dereference empty optional reference.");
 
 	return *m_base;
 }
 
-template <typename T> constexpr tr::opt_ref<T> tr::make_opt_ref(T* ptr)
+template <typename T>
+constexpr tr::opt_ref<T> tr::make_opt_ref(T* ptr)
 {
 	return opt_ref<T>{ptr};
 }
 
-/////////////////////////////////////////////////////////////// DYNAMIC CAST //////////////////////////////////////////////////////////////
+//
 
 template <typename To, typename From>
 	requires(std::derived_from<To, From>)
