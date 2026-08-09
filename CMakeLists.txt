@@ -146,6 +146,7 @@ if(TR_BUILD_AUDIO)
 
 	message("-- tr: Building audio module")
 	target_sources(tr_audio PRIVATE
+		src/audio/al_api.cpp
 		src/audio/audio_buffer.cpp
 		src/audio/audio_context.cpp
 		src/audio/audio_device_list_view.cpp

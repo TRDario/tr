@@ -80,7 +80,7 @@ constexpr tr::opt_ref<T>::opt_ref(T& ref)
 template <typename T>
 constexpr tr::opt_ref<T>::operator opt_ref<const T>() const
 {
-	return opt_ref_from_ptr<const T>(m_base);
+	return make_opt_ref<const T>(m_base);
 }
 
 template <typename T>
@@ -88,7 +88,7 @@ template <typename U>
 	requires(std::convertible_to<T&, U&>)
 constexpr tr::opt_ref<T>::operator opt_ref<U>() const
 {
-	return opt_ref_from_ptr(static_cast<U*>(as_ptr()));
+	return make_opt_ref(static_cast<U*>(as_ptr()));
 }
 
 template <typename T>
