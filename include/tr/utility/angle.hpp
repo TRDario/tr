@@ -35,7 +35,7 @@ namespace tr
 		friend constexpr bool operator==(angle lhs, angle rhs) = default;
 
 		/// @}
-		/// @name Overloaded operators
+		/// @name Arithmetic operators
 		/// @{
 
 		/// Angle addition.
