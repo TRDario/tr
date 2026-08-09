@@ -58,7 +58,7 @@ namespace tr
 		constexpr handle(Deleter&& deleter);
 
 		/// Constructs a handle from a base type value and a deleter.
-		/// @warning If `value` is equal to `Empty`, an assertion will be triggered!
+		/// @pre `value` must not be equal to `Empty`.
 		/// @param value Value to hold.
 		/// @param deleter Deleter instance.
 		constexpr explicit handle(Base value, Deleter&& deleter);
@@ -101,7 +101,7 @@ namespace tr
 		/// @{
 
 		/// Gets the handle's base type value.
-		/// @warning If no value is contained, an assertion will be triggered!
+		/// @pre The handle must contain a value.
 		/// @return Reference to the contained value.
 		constexpr const Base& get() const;
 
@@ -129,7 +129,7 @@ namespace tr
 		constexpr void reset();
 
 		/// Resets the handle to a non-empty state.
-		/// @warning If `value` is equal to `Empty`, an assertion will be triggered!
+		/// @pre `value` must not be equal to `Empty`.
 		/// @param value New value to hold.
 		constexpr void reset(Base value);
 

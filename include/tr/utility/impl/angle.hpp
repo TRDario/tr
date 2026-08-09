@@ -138,47 +138,47 @@ constexpr tr::angle& tr::angle::operator/=(Factor r)
 	return *this;
 }
 
-constexpr tr::angle tr::operator+(angle l, angle r)
+constexpr tr::angle tr::operator+(angle lhs, angle rhs)
 {
-	return angle{l.m_rads + r.m_rads};
+	return angle{lhs.m_rads + rhs.m_rads};
 }
 
-constexpr tr::angle tr::operator-(angle l, angle r)
+constexpr tr::angle tr::operator-(angle lhs, angle rhs)
 {
-	return angle{l.m_rads - r.m_rads};
+	return angle{lhs.m_rads - rhs.m_rads};
 }
 
-constexpr tr::angle tr::operator-(angle l)
+constexpr tr::angle tr::operator-(angle lhs)
 {
-	return angle{-l.m_rads};
-}
-
-template <tr::arithmetic Factor>
-constexpr tr::angle tr::operator*(angle l, Factor r)
-{
-	return angle{l.m_rads * r};
+	return angle{-lhs.m_rads};
 }
 
 template <tr::arithmetic Factor>
-constexpr tr::angle tr::operator*(Factor l, angle r)
+constexpr tr::angle tr::operator*(angle lhs, Factor rhs)
 {
-	return r + l;
+	return angle{lhs.m_rads * rhs};
 }
 
 template <tr::arithmetic Factor>
-constexpr tr::angle tr::operator/(angle l, Factor r)
+constexpr tr::angle tr::operator*(Factor lhs, angle rhs)
 {
-	return angle{l.m_rads / r};
+	return rhs + lhs;
 }
 
-constexpr float tr::operator/(angle l, angle r)
+template <tr::arithmetic Factor>
+constexpr tr::angle tr::operator/(angle lhs, Factor rhs)
 {
-	return l.m_rads / r.m_rads;
+	return angle{lhs.m_rads / rhs};
 }
 
-constexpr tr::angle tr::operator%(angle l, angle r)
+constexpr float tr::operator/(angle lhs, angle rhs)
 {
-	return angle{std::fmod(l.m_rads, r.m_rads)};
+	return lhs.m_rads / rhs.m_rads;
+}
+
+constexpr tr::angle tr::operator%(angle lhs, angle rhs)
+{
+	return angle{std::fmod(lhs.m_rads, rhs.m_rads)};
 }
 
 //

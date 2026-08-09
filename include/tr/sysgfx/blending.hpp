@@ -20,9 +20,11 @@
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
-namespace tr {
+namespace tr
+{
 	// Blending functions.
-	enum class blend_fn {
+	enum class blend_fn
+	{
 		add = 0x8006,      // The source and destination colors are added together.
 		min,               // The minimum channel values of the source and destination colors are selected.
 		max,               // The maximum channel values of the source and destination colors are selected.
@@ -31,7 +33,8 @@ namespace tr {
 	};
 
 	// Blending parameter multipliers.
-	enum class blend_multiplier {
+	enum class blend_multiplier
+	{
 		zero,                // The parameter is multiplied by 0.
 		one,                 // The parameter is multiplied by 1.
 		src_color = 0x300,   // The parameter is multiplied by the source color.
@@ -45,7 +48,8 @@ namespace tr {
 	};
 
 	// Blending mode information.
-	struct blend_mode {
+	struct blend_mode
+	{
 		// The multiplier used for the source color.
 		blend_multiplier rgb_src;
 		// The operation applied with the source and destination colors.
@@ -59,7 +63,7 @@ namespace tr {
 		// The multiplier used for the destination alpha.
 		blend_multiplier alpha_dst;
 
-		friend bool operator==(const blend_mode& l, const blend_mode& r) = default;
+		friend bool operator==(const blend_mode& lhs, const blend_mode& rhs) = default;
 	};
 
 	// Alpha blending mode.

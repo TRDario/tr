@@ -50,21 +50,21 @@ namespace tr
 	bool collinear(glm::vec2 a, glm::vec2 b, glm::vec2 c);
 
 	/// Determines if two line segments intersect.
-	/// @param l, r Line segments to check for intersection.
+	/// @param lhs, rhs Line segments to check for intersection.
 	/// @return `true` if the lines intersect, `false` otherwise.
-	bool intersecting(const line_segment& l, const line_segment& r);
+	bool intersecting(const line_segment& lhs, const line_segment& rhs);
 
 	/// Calculates the intersection point of two line segments.
-	/// @param l, r Line segments to check for intersection.
+	/// @param lhs, rhs Line segments to check for intersection.
 	/// @return Intersection point of the lines, if one exists.
-	std::optional<glm::vec2> intersection(const line_segment& l, const line_segment& r);
+	std::optional<glm::vec2> intersection(const line_segment& lhs, const line_segment& rhs);
 
 	/// Calculates the intersection point of a line with a line segment.
 	/// @param lp Point on the first line.
 	/// @param lth Angle of the first line.
 	/// @param r Line segment to check for intersection.
 	/// @return Intersection point of the lines, if one exists.
-	std::optional<glm::vec2> intersection(glm::vec2 lp, angle lth, const line_segment& r);
+	std::optional<glm::vec2> intersection(glm::vec2 lp, angle lth, const line_segment& rhs);
 
 	/// Calculates the intersection point of two lines.
 	/// @param lp Point on the first line.

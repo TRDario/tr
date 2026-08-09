@@ -14,14 +14,14 @@ tr::audio_device_list_view_iterator::audio_device_list_view_iterator(tr::zstring
 
 //
 
-std::strong_ordering tr::operator<=>(audio_device_list_view_iterator l, audio_device_list_view_iterator r)
+std::strong_ordering tr::operator<=>(audio_device_list_view_iterator lhs, audio_device_list_view_iterator rhs)
 {
-	return l->c_str() <=> r->c_str();
+	return lhs->c_str() <=> rhs->c_str();
 }
 
-bool tr::operator==(audio_device_list_view_iterator l, audio_device_list_view_iterator r)
+bool tr::operator==(audio_device_list_view_iterator lhs, audio_device_list_view_iterator rhs)
 {
-	return l->c_str() == r->c_str();
+	return lhs->c_str() == rhs->c_str();
 }
 
 //

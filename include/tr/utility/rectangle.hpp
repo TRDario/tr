@@ -29,9 +29,12 @@
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
-namespace tr {
+namespace tr
+{
 	// Rectangle object.
-	template <typename Element> struct rectangle {
+	template <typename Element>
+	struct rectangle
+	{
 		// The offset of the top-left corner of the rectangle.
 		glm::tvec2<Element> tl;
 		// The size of the rectangle.
@@ -44,15 +47,19 @@ namespace tr {
 		// Constructs a rectangle with the top-left corner at the origin.
 		constexpr rectangle(glm::tvec2<Element> size);
 		// Copy-constructs a rectangle.
-		template <typename ElementR> constexpr rectangle(const rectangle<ElementR>& rectangle);
+		template <typename ElementR>
+		constexpr rectangle(const rectangle<ElementR>& rectangle);
 
 		// Compares two rectangles for equality.
-		template <typename ElementR> constexpr bool operator==(const rectangle<ElementR>& r) const;
+		template <typename ElementR>
+		constexpr bool operator==(const rectangle<ElementR>& r) const;
 
 		// Determines whether a point is contained inside the rectangle.
-		template <typename ElementR = Element> constexpr bool contains(glm::tvec2<ElementR> point) const;
+		template <typename ElementR = Element>
+		constexpr bool contains(glm::tvec2<ElementR> point) const;
 		// Determines whether another rectangle is contained entirely inside the rectangle.
-		template <typename ElementR = Element> constexpr bool contains(const rectangle<ElementR>& rectangle) const;
+		template <typename ElementR = Element>
+		constexpr bool contains(const rectangle<ElementR>& rectangle) const;
 
 		// Gets the edges of the rectangle.
 		constexpr rectangle_edges<Element> edges() const;
@@ -60,12 +67,14 @@ namespace tr {
 
 	// Determines if two rectangles intersect.
 	template <typename ElementL, typename ElementR>
-	constexpr bool intersecting(const rectangle<ElementL>& r1, const rectangle<ElementR>& r2);
+	constexpr bool intersecting(const rectangle<ElementL>& lhs, const rectangle<ElementR>& rhs);
 	// Computes the intersection of two rectangles.
-	template <typename Element> constexpr std::optional<rectangle<Element>> intersection(rectangle<Element> l, rectangle<Element> r);
+	template <typename Element>
+	constexpr std::optional<rectangle<Element>> intersection(rectangle<Element> lhs, rectangle<Element> rhs);
 } // namespace tr
 
 // Enables default binary IO for rectangles.
-template <typename Element> inline constexpr bool tr::enable_default_binary_io<tr::rectangle<Element>>{true};
+template <typename Element>
+inline constexpr bool tr::enable_default_binary_io<tr::rectangle<Element>>{true};
 
 #include "impl/rectangle.hpp" // IWYU pragma: export

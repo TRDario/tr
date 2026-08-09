@@ -89,7 +89,7 @@ namespace tr
 		/// Gets a rectangle associated with a certain key.
 		/// @tparam Keylike Type compatible with the atlas hasher and key equality predicate.
 		/// @param key Key to look up in the atlas.
-		/// @warning `key` must be present in the atlas.
+		/// @pre `key` must be present in the atlas.
 		/// @return Constant reference to the value associated with `key`.
 		template <hash_keylike<Key, Hash, Pred> Keylike>
 		const Value& operator[](Keylike&& key) const;

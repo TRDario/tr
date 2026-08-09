@@ -42,7 +42,9 @@ constexpr bool tr::rectangle<Element>::operator==(const rectangle<ElementR>& r) 
 
 //
 
-template <typename Element> template <typename ElementR> constexpr bool tr::rectangle<Element>::contains(glm::tvec2<ElementR> point) const
+template <typename Element>
+template <typename ElementR>
+constexpr bool tr::rectangle<Element>::contains(glm::tvec2<ElementR> point) const
 {
 	for (int i = 0; i < 2; ++i) {
 		if (point[i] < tl[i] || point[i] > tl[i] + size[i]) {
@@ -61,7 +63,8 @@ constexpr bool tr::rectangle<Element>::contains(const rectangle<ElementR>& recta
 
 //
 
-template <typename Element> constexpr tr::rectangle_edges<Element> tr::rectangle<Element>::edges() const
+template <typename Element>
+constexpr tr::rectangle_edges<Element> tr::rectangle<Element>::edges() const
 {
 	return {tl.x, tl.y, tl.x + size.x, tl.y + size.y};
 }
@@ -69,34 +72,35 @@ template <typename Element> constexpr tr::rectangle_edges<Element> tr::rectangle
 //
 
 template <typename ElementL, typename ElementR>
-constexpr bool tr::intersecting(const rectangle<ElementL>& r1, const rectangle<ElementR>& r2)
+constexpr bool tr::intersecting(const rectangle<ElementL>& lhs, const rectangle<ElementR>& rhs)
 {
-	return r1.contains(r2.tl) || r1.contains(r2.tl + r2.size) || r2.contains(r1.tl + glm::tvec2<ElementL>{r1.size.x, 0}) ||
-		   r2.contains(r1.tl + glm::tvec2<ElementL>{0, r1.size.y});
+	return lhs.contains(rhs.tl) || lhs.contains(rhs.tl + rhs.size) || rhs.contains(lhs.tl + glm::tvec2<ElementL>{lhs.size.x, 0}) ||
+		   rhs.contains(lhs.tl + glm::tvec2<ElementL>{0, lhs.size.y});
 }
 
-template <typename Element> constexpr std::optional<tr::rectangle<Element>> tr::intersection(rectangle<Element> l, rectangle<Element> r)
+template <typename Element>
+constexpr std::optional<tr::rectangle<Element>> tr::intersection(rectangle<Element> lhs, rectangle<Element> rhs)
 {
 	if constexpr (!std::unsigned_integral<Element>) {
-		if (l.size.x < 0) {
-			l.tl.x += l.size.x;
-			l.size.x = -l.size.x;
+		if (lhs.size.x < 0) {
+			lhs.tl.x += lhs.size.x;
+			lhs.size.x = -lhs.size.x;
 		}
-		if (l.size.y < 0) {
-			l.tl.y += l.size.y;
-			l.size.y = -l.size.y;
+		if (lhs.size.y < 0) {
+			lhs.tl.y += lhs.size.y;
+			lhs.size.y = -lhs.size.y;
 		}
-		if (r.size.x < 0) {
-			r.tl.x += r.size.x;
-			r.size.x = -r.size.x;
+		if (rhs.size.x < 0) {
+			rhs.tl.x += rhs.size.x;
+			rhs.size.x = -rhs.size.x;
 		}
-		if (r.size.y < 0) {
-			r.tl.y += r.size.y;
-			r.size.y = -r.size.y;
+		if (rhs.size.y < 0) {
+			rhs.tl.y += rhs.size.y;
+			rhs.size.y = -rhs.size.y;
 		}
 	}
 
-	const glm::tvec2<Element> tl{glm::max(l.tl, r.tl)};
-	const glm::tvec2<Element> br{glm::min(l.tl + l.size, r.tl + r.size)};
+	const glm::tvec2<Element> tl{glm::max(lhs.tl, rhs.tl)};
+	const glm::tvec2<Element> br{glm::min(lhs.tl + lhs.size, rhs.tl + rhs.size)};
 	return (br.x > tl.x && br.y > tl.y) ? std::make_optional<rectangle<Element>>(tl, br - tl) : std::nullopt;
 }

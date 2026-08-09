@@ -58,7 +58,7 @@ namespace tr
 	/// @tparam Keylike Type compatible with the map for lookup.
 	/// @param map Map to get the value from.
 	/// @param keylike Keylike value to look for.
-	/// @warning `keylike` must exist in the map.
+	/// @pre `keylike` must exist in the map.
 	/// @return Reference to the value under `keylike`.
 	template <typename Key, typename Value, hasher<Key> Hash, equality_predicate<Key> Pred, hash_keylike<Key, Hash, Pred> Keylike>
 	Value& get(boost::unordered_flat_map<Key, Value, Hash, Pred>& map, Keylike&& keylike);
@@ -71,7 +71,7 @@ namespace tr
 	/// @tparam Keylike Type compatible with the map for lookup.
 	/// @param map Map to get the value from.
 	/// @param keylike Keylike value to look for.
-	/// @warning `keylike` must exist in the map.
+	/// @pre `keylike` must exist in the map.
 	/// @return Reference to the value under `keylike`.
 	template <typename Key, typename Value, hasher<Key> Hash, equality_predicate<Key> Pred, hash_keylike<Key, Hash, Pred> Keylike>
 	Value& get(boost::unordered_node_map<Key, Value, Hash, Pred>& map, Keylike&& keylike);
@@ -84,7 +84,7 @@ namespace tr
 	/// @tparam Keylike Type compatible with the hash map for lookup.
 	/// @param map Map to get the value from.
 	/// @param keylike Keylike value to look for.
-	/// @warning `keylike` must exist in the map.
+	/// @pre `keylike` must exist in the map.
 	/// @return Reference to the value under `keylike`.
 	template <typename Key, typename Value, hasher<Key> Hash, equality_predicate<Key> Pred, hash_keylike<Key, Hash, Pred> Keylike>
 	const Value& get(const boost::unordered_flat_map<Key, Value, Hash, Pred>& map, Keylike&& keylike);
@@ -97,7 +97,7 @@ namespace tr
 	/// @tparam Keylike Type compatible with the hash map for lookup.
 	/// @param map Map to get the value from.
 	/// @param keylike Keylike value to look for.
-	/// @warning `keylike` must exist in the map.
+	/// @pre `keylike` must exist in the map.
 	/// @return Reference to the value under `keylike`.
 	template <typename Key, typename Value, hasher<Key> Hash, equality_predicate<Key> Pred, hash_keylike<Key, Hash, Pred> Keylike>
 	const Value& get(const boost::unordered_node_map<Key, Value, Hash, Pred>& map, Keylike&& keylike);

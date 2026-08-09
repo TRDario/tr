@@ -77,12 +77,12 @@ struct tracked_int
 	//
 
 	/// Equality comparison.
-	friend bool operator==(const tracked_int& l, const tracked_int& r) = default;
+	friend bool operator==(const tracked_int& lhs, const tracked_int& rhs) = default;
 
 	/// Equality comparison.
-	friend bool operator==(const tracked_int& l, int r)
+	friend bool operator==(const tracked_int& lhs, int rhs)
 	{
-		return l.value == r;
+		return lhs.value == rhs;
 	}
 };
 

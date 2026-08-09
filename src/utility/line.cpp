@@ -34,40 +34,40 @@ bool tr::collinear(glm::vec2 a, glm::vec2 b, glm::vec2 c)
 	return std::abs((b.x - a.x) * (c.y - a.y) - (c.x - a.x) * (b.y - a.y)) < tolerance;
 }
 
-bool tr::intersecting(const line_segment& l, const line_segment& r)
+bool tr::intersecting(const line_segment& lhs, const line_segment& rhs)
 {
-	const glm::vec2 delta{r.b - r.a};
-	const glm::vec2 normal{l.b.y - l.a.y, -l.b.x + l.a.x};
+	const glm::vec2 delta{rhs.b - rhs.a};
+	const glm::vec2 normal{lhs.b.y - lhs.a.y, -lhs.b.x + lhs.a.x};
 	const float dot{glm::dot(delta, normal)};
 	if (std::abs(dot) < 1e-6f) {
 		return false;
 	}
-	const float t{glm::dot(l.a - r.a, normal) / dot};
+	const float t{glm::dot(lhs.a - rhs.a, normal) / dot};
 	if (t < 0 || t > 1) {
 		return false;
 	}
-	const glm::vec2 result{r.a + delta * t};
-	const glm::vec2 min{glm::min(l.a, l.b)};
-	const glm::vec2 max{glm::max(l.a, l.b)};
-	return result.x >= min.x && result.x <= max.x && (result.x != l.a.x || (result.y >= min.y && result.y <= max.y));
+	const glm::vec2 result{rhs.a + delta * t};
+	const glm::vec2 min{glm::min(lhs.a, lhs.b)};
+	const glm::vec2 max{glm::max(lhs.a, lhs.b)};
+	return result.x >= min.x && result.x <= max.x && (result.x != lhs.a.x || (result.y >= min.y && result.y <= max.y));
 }
 
-std::optional<glm::vec2> tr::intersection(const line_segment& l, const line_segment& r)
+std::optional<glm::vec2> tr::intersection(const line_segment& lhs, const line_segment& rhs)
 {
-	const glm::vec2 delta{r.b - r.a};
-	const glm::vec2 normal{l.b.y - l.a.y, -l.b.x + l.a.x};
+	const glm::vec2 delta{rhs.b - rhs.a};
+	const glm::vec2 normal{lhs.b.y - lhs.a.y, -lhs.b.x + lhs.a.x};
 	const float dot{glm::dot(delta, normal)};
 	if (std::abs(dot) < 1e-6f) {
 		return std::nullopt;
 	}
-	const float t{glm::dot(l.a - r.a, normal) / dot};
+	const float t{glm::dot(lhs.a - rhs.a, normal) / dot};
 	if (t < 0 || t > 1) {
 		return std::nullopt;
 	}
-	const glm::vec2 result{r.a + delta * t};
-	const glm::vec2 min{glm::min(l.a, l.b)};
-	const glm::vec2 max{glm::max(l.a, l.b)};
-	if ((result.x < min.x || result.x > max.x) || (result.x == l.a.x && (result.y < min.y || result.y > max.y))) {
+	const glm::vec2 result{rhs.a + delta * t};
+	const glm::vec2 min{glm::min(lhs.a, lhs.b)};
+	const glm::vec2 max{glm::max(lhs.a, lhs.b)};
+	if ((result.x < min.x || result.x > max.x) || (result.x == lhs.a.x && (result.y < min.y || result.y > max.y))) {
 		return std::nullopt;
 	}
 	else {
@@ -75,17 +75,17 @@ std::optional<glm::vec2> tr::intersection(const line_segment& l, const line_segm
 	}
 }
 
-std::optional<glm::vec2> tr::intersection(glm::vec2 lp, angle lth, const line_segment& r)
+std::optional<glm::vec2> tr::intersection(glm::vec2 lp, angle lth, const line_segment& rhs)
 {
-	const glm::vec2 delta{r.b - r.a};
+	const glm::vec2 delta{rhs.b - rhs.a};
 	const glm::vec2 normal{lth.sin(), -lth.cos()};
 	const float dot{glm::dot(delta, normal)};
 	if (std::abs(dot) < 1e-6f) {
 		return std::nullopt;
 	}
-	const float t{glm::dot(lp - r.a, normal) / dot};
+	const float t{glm::dot(lp - rhs.a, normal) / dot};
 	if (t >= 0 && t <= 1) {
-		return r.a + delta * t;
+		return rhs.a + delta * t;
 	}
 	else {
 		return std::nullopt;
