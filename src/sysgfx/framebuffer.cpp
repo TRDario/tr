@@ -1,15 +1,12 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements framebuffer.hpp.                                                                                                           //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements framebuffer.hpp.
 
 #include "../../include/tr/sysgfx/framebuffer.hpp"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/render_target.hpp"
 #include "../../include/tr/sysgfx/texture_view.hpp"
 
-/////////////////////////////////////////////////////////////// FRAMEBUFFER ///////////////////////////////////////////////////////////////
+//
 
 void tr::framebuffer::create_handle()
 {
@@ -21,6 +18,12 @@ tr::framebuffer::framebuffer(graphics_context& context)
 	: m_handle{{context}}
 {
 	create_handle();
+}
+
+void tr::framebuffer::deleter::operator()(unsigned int fbo) const
+{
+	const gl_api& gl{context.make_current_and_return_gl_api()};
+	gl.delete_framebuffers(1, &fbo);
 }
 
 //

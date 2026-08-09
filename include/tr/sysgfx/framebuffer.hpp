@@ -1,78 +1,110 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Provides a framebuffer class.                                                                                                         //
-//                                                                                                                                       //
-// Framebuffers are collections of buffers used to define custom destinations for rendering. One or more textures may be attached to a   //
-// framebuffer in a number of attachment points:                                                                                         //
-//     - tr::framebuffer fbo{context}; fbo.attach(tr::framebuffer::attachment::color0, tex)                                              //
-//       -> attaches 'tex' to the first color attachment in 'fbo'                                                                        //
-//     - fbo.detach(tr::framebuffer::attachment::color0)                                                                                 //
-//       -> Detaches 'tex' from the first color attachment in 'fbo'                                                                      //
-//                                                                                                                                       //
-// Render targets on a framebuffer can be gotten, but the size of the render target area must be manually supplied, as framebuffers      //
-// don't keep track of the sizes of their attachments:                                                                                   //
-//     - fbo.render_target({512, 512}) -> 512x512 render target on 'fbo'                                                                 //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Provides a framebuffer class.
 
 #pragma once
 #include "../utility/handle.hpp"
 
-namespace tr {
+namespace tr
+{
 	class graphics_context;
 	class render_target;
 	class texture_view;
 } // namespace tr
 
-//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
+//
 
-namespace tr {
-	// Collection of buffers used as a destination for rendering.
-	class framebuffer {
+namespace tr
+{
+	/// Collection of buffers used as a destination for rendering.
+	class framebuffer
+	{
 	  public:
-		// Framebuffer attachments.
-		enum class attachment {
+		/// Framebuffer attachments.
+		enum class attachment
+		{
+			/// First color attachment.
 			color0 = 36064,
+			/// Second color attachment.
 			color1,
+			/// Third color attachment.
 			color2,
+			/// Fourth color attachment.
 			color3,
+			/// Fifth color attachment.
 			color4,
+			/// Sixth color attachment.
 			color5,
+			/// Seventh color attachment.
 			color6,
+			/// Eighth color attachment.
 			color7,
+			/// Depth attachment.
 			depth = 36096,
+			/// Stencil attachment.
 			stencil = 36128,
 		};
 
-		// Creates an empty framebuffer.
+		/// @name Constructors
+		/// @{
+
+		/// Creates an empty framebuffer.
+		/// @param context Graphics context to create the framebuffer on.
 		framebuffer(graphics_context& context);
 
-		// Gets a reference to the graphics context the framebuffer is on.
+		/// @}
+		/// @name Context
+		/// @{
+
+		/// Gets a reference to the graphics context the framebuffer is on.
 		graphics_context& context() const;
 
-		// Creates a render target on the framebuffer.
-		// Since the framebuffer does not keep track of its own size, it must be provided manully.
+		/// @}
+		/// @name Render target
+		/// @{
+
+		/// Creates a render target on the framebuffer.
+		/// @details Since the framebuffer does not keep track of its own size, it must be provided manully.
+		/// @param size Size of the render target.
+		/// @return Render target on the framebuffer.
 		render_target render_target(glm::ivec2 size) const;
 
-		// Attaches a texture to the framebuffer.
+		/// @}
+		/// @name Attachments
+		/// @{
+
+		/// Attaches a texture to the framebuffer.
+		/// @param attachment Attachment to set.
+		/// @param texture Texture to attach to the framebuffer.
 		void attach(attachment attachment, texture_view texture);
-		// Detaches whatever is on the specified attachment.
+
+		/// Detaches whatever is on the specified attachment.
+		/// @param attachment Attachment to clear.
 		void detach(attachment attachment);
 
+		/// @}
+
 	  private:
-		// Framebuffer deleter.
-		struct deleter {
-			// Reference to the graphics context the framebuffer is on.
+		/// Framebuffer deleter.
+		struct deleter
+		{
+			/// Reference to the graphics context the framebuffer is on.
 			graphics_context& context;
 
-			// Deletes a framebuffer.
-			void operator()(unsigned int texture) const;
+			//
+
+			/// Deletes a framebuffer.
+			/// @param fbo OpenGL framebuffer ID.
+			void operator()(unsigned int fbo) const;
 		};
 
-		// Handle to the OpenGL framebuffer.
+		//
+
+		/// Handle to the OpenGL framebuffer.
 		handle<unsigned int, 0, deleter> m_handle;
 
-		// Creates a framebuffer handle.
+		//
+
+		/// Creates a framebuffer handle.
 		void create_handle();
 	};
 } // namespace tr
