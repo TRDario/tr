@@ -1,13 +1,17 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements rectangle_edges.hpp.                                                                                                       //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements rectangle_edges.hpp.
 
 #pragma once
+#include "../default_binary_io.hpp"
 #include "../rectangle_edges.hpp"
 
-////////////////////////////////////////////////////////////// IMPLEMENTATION /////////////////////////////////////////////////////////////
+//
+
+/// Enables default binary IO for rectangle edges.
+template <typename Element>
+inline constexpr bool tr::enable_default_binary_io<tr::rectangle_edges<Element>>{true};
+
+//
 
 template <typename Element>
 constexpr tr::rectangle_edges<Element>::rectangle_edges(Element left)
@@ -49,7 +53,7 @@ constexpr tr::rectangle_edges<Element>::rectangle_edges(Element left, Element to
 
 template <typename Element>
 template <typename ElementR>
-constexpr bool tr::rectangle_edges<Element>::operator==(const rectangle_edges<ElementR>& r) const
+constexpr bool tr::rectangle_edges<Element>::operator==(const rectangle_edges<ElementR>& rhs) const
 {
-	return left == r.left && top == r.top && right == r.right && bottom == r.bottom;
+	return left == rhs.left && top == rhs.top && right == rhs.right && bottom == rhs.bottom;
 }

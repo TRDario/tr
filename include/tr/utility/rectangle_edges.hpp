@@ -1,54 +1,76 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Provides a rectangle edges datatype.                                                                                                  //
-//                                                                                                                                       //
-// A set of 2D edges is provided as tr::rectangle_edges<T> (a few shorthands are also provided in the form tr::Trectangle_edges).        //
-// Edges are binary readable and writable. Edges are constructed like in CSS, but in the order (left, top, right, bottom):               //
-//     - tr::frectangle_edges{} -> {.left = 0, .top = 0, .right = 0, .bottom = 0}                                                        //
-//     - tr::frectangle_edges{50} -> {.left = 50, .top = 50, .right = 50, .bottom = 50}                                                  //
-//     - tr::frectangle_edges{50, 100} -> {.left = 50, .top = 100, .right = 50, .bottom = 100}                                           //
-//     - tr::frectangle_edges{50, 100, 150} -> {.left = 50, .top = 100, .right = 150, .bottom = 100}                                     //
-//     - tr::frectangle_edges{50, 100, 150, 200} -> {.left = 50, .top = 100, .right = 150, .bottom = 200}                                //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Provides a rectangle edges datatype.
 
 #pragma once
-#include "default_binary_io.hpp"
 
-//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
+//
 
-namespace tr {
-	// Set of rectangle edges.
-	template <typename Element> struct rectangle_edges {
-		// Left edge value.
+namespace tr
+{
+	/// Set of rectangle edges.
+	/// @tparam Element Edge value type.
+	template <typename Element>
+	struct rectangle_edges
+	{
+		/// Left edge value.
 		Element left{0};
-		// Top edge value.
+
+		/// Top edge value.
 		Element top{0};
-		// Right edge value.
+
+		/// Right edge value.
 		Element right{0};
-		// Bottom edge value.
+
+		/// Bottom edge value.
 		Element bottom{0};
 
-		// Constructs a set of edges with value 0.
+		/// @name Constructors
+		/// @{
+
+		/// Constructs a set of edges with value 0.
 		constexpr rectangle_edges() = default;
-		// Constructs a set of edges with the same value.
+
+		/// Constructs a set of edges with the same value.
+		/// @param left Uniform edge value.
 		constexpr rectangle_edges(Element left);
-		// Constructs a set of edges with top = bottom, left = right.
+
+		/// Constructs a set of edges with top = bottom, left = right.
+		/// @param left Left and right edge value.
+		/// @param top Top and bottom edge value.
 		constexpr rectangle_edges(Element left, Element top);
-		// Constructs a set of edges width left = right.
+
+		/// Constructs a set of edges with top = bottom.
+		/// @param left Left edge value.
+		/// @param top Top and bottom edge value.
+		/// @param right Right edge value.
 		constexpr rectangle_edges(Element left, Element top, Element right);
-		// Constructs a set of edges width left = right.
+
+		/// Constructs a set of edges.
+		/// @param left Left edge value.
+		/// @param top Top edge value.
+		/// @param right Right edge value.
+		/// @param bottom Bottom edge value.
 		constexpr rectangle_edges(Element left, Element top, Element right, Element bottom);
 
-		template <typename ElementR> constexpr bool operator==(const rectangle_edges<ElementR>&) const;
+		/// @}
+		/// @name Comparison operators
+		/// @{
+
+		/// Compares two sets of edges for equality.
+		/// @tparam ElementR Edge value type of the righthand-side edges.
+		/// @param rhs Set of edges to compare with.
+		/// @return Whether the two sets of edges are equal.
+		template <typename ElementR>
+		constexpr bool operator==(const rectangle_edges<ElementR>& rhs) const;
+
+		/// @}
 	};
-	// Shorthard for int rectangle edges.
+
+	/// Shorthard for int rectangle edges.
 	using irectangle_edges = rectangle_edges<int>;
-	// Shorthand for float rectangle edges.
+
+	/// Shorthand for float rectangle edges.
 	using frectangle_edges = rectangle_edges<float>;
 } // namespace tr
-
-// Enables default binary IO for rectangle edges.
-template <typename Element> inline constexpr bool tr::enable_default_binary_io<tr::rectangle_edges<Element>>{true};
 
 #include "impl/rectangle_edges.hpp" // IWYU pragma: export
