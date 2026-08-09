@@ -1,81 +1,125 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Provides an implementation of the Xorshiftr128+ random number generator.                                                              //
-//                                                                                                                                       //
-// tr::gen_random_seed() generates a random unsigned 64-bit integer. While it can be used as a random source in its own right,           //
-// it's intended purpose is to seed the Xorshiftr128+ RNG (done automatically in the default constructor):                               //
-//     - gen_random_seed() -> [0, 2^64-1]ULL                                                                                             //
-//                                                                                                                                       //
-// A raw random unsigned 64-bit integer value can be generated using the Xorshiftr128+ generator using advance(), which can be used as a //
-// base for further custom generation functions:                                                                                         //
-//     - rng.advance() -> [0, 2^64-1]ULL                                                                                                 //
-//                                                                                                                                       //
-// Random numeric or angle values can be generated using the generate method with one of three overloads:                                //
-// generate() generates a value in the default range ([0, MAX] for integers, [0, 1) for floating-point numbers, [0tr, 1tr) for angles).  //
-// generate(max) generates a value in the range [0, max).                                                                                //
-// generate(min, max) generates a value in the range [min, max).                                                                         //
-//     - rng.generate<i8>() -> u8([0, 255])                                                                                              //
-//     - rng.generate<float>() -> [0.0f, 1.0f)                                                                                           //
-//     - rng.generate(10) -> [0, 10)                                                                                                     //
-//     - rng.generate(-1.5f, 1.5f) -> [-1.5f, 1.5f)                                                                                      //
-//                                                                                                                                       //
-// There are special overloads of generate for glm::vec2: one taking a magnitude and returning a vector of that magnitude, and another   //
-// taking a rectangle and returning a point in that rectangle:                                                                           //
-//     - rng.generate<glm::vec2>(1.0f) -> a random unit vector                                                                           //
-//     - rng.generate<glm::vec2>({{2, 2}, {1, 3}}) -> {[2.0f, 3.0f), [2.0f, 5.0f)}                                                       //
-//                                                                                                                                       //
-// A random sign (+/-1) can be generated with generate_sign:                                                                             //
-//     - rng.generate(2, 4) * rng.generate_sign() -> one of 2, 3, -2, -3                                                                 //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Provides an implementation of the Xorshiftr128+ random number generator.
 
 #pragma once
 #include "angle.hpp"
 #include "rectangle.hpp"
 
-//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
+//
 
-namespace tr {
-	// Generates a random seed.
+namespace tr
+{
+	/// Generates a random seed.
+	/// @return Random 64-bit seed.
 	u64 generate_random_seed();
 
-	// Xorshiftr128+ random number generator.
-	class rng {
+	/// Xorshiftr128+ random number generator.
+	class rng
+	{
 	  public:
-		// Initializes RNG.
+		/// @name Constructors
+		/// @{
+
+		/// Initializes RNG.
+		/// @param seed Seed to initialize the generator with.
 		rng(u64 seed = generate_random_seed());
 
-		// Advances the RNG and returns a value.
+		/// @}
+		/// @name Raw
+		/// @{
+
+		/// Advances the RNG and returns a value.
+		/// @return New randomly-generated value.
 		u64 advance();
 
-		// Generates a random integral value.
-		template <std::integral Integer> Integer generate();
-		// Generates a random integral value in the range [0, max).
-		template <std::integral Integer> Integer generate(Integer max);
-		// Generates a random integral value in the range [min, max).
-		template <std::integral Integer> Integer generate(Integer min, Integer max);
-		// Generates a random floating point value in the range [0, 1).
-		template <std::floating_point FloatingPoint> FloatingPoint generate();
-		// Generates a random floating point value in the range [0, max).
-		template <std::floating_point FloatingPoint> FloatingPoint generate(FloatingPoint max);
-		// Generates a random floating point value in the range [min, max).
-		template <std::floating_point FloatingPoint> FloatingPoint generate(FloatingPoint min, FloatingPoint max);
-		// Generates a random angle value in the range [0tr, 1tr).
-		template <std::same_as<angle>> angle generate();
-		// Generates a random angle value in the range [0, max).
-		angle generate(angle max);
-		// Generates a random angle value in the range [min, max).
-		angle generate(angle min, angle max);
-		// Generates a random vector with a certain magnitude.
-		template <std::same_as<glm::vec2>> glm::vec2 generate(float magnitude);
-		// Generates a random point within a rectangular region.
-		template <std::same_as<glm::vec2>> glm::vec2 generate(const tr::rectangle<float>& region);
+		/// @}
+		/// @name Generation
+		/// @{
 
-		// Generates a random sign (-1 or 1).
+		/// Generates a random integral value.
+		/// @tparam Integer Integer type.
+		/// @return Random integral value.
+		template <std::integral Integer>
+		Integer generate();
+
+		/// Generates a random integral value in the range [0, `max`).
+		/// @tparam Integer Integer type.
+		/// @param max Upper bound of the random range.
+		/// @pre `max` must be greater than 0.
+		/// @return Random integral value constrained to [0, `max`).
+		template <std::integral Integer>
+		Integer generate(Integer max);
+
+		/// Generates a random integral value in the range [`min`, `max`).
+		/// @tparam Integer Integer type.
+		/// @param min Lower bound of the random range.
+		/// @param max Upper bound of the random range.
+		/// @pre `min` must be less than `max`.
+		/// @return Random integral value constrained to [`min`, `max`).
+		template <std::integral Integer>
+		Integer generate(Integer min, Integer max);
+
+		/// Generates a random floating point value in the range [0, 1).
+		/// @tparam FloatingPoint Floating-point type.
+		/// @return Random floating-point value constrained to [0, 1).
+		template <std::floating_point FloatingPoint>
+		FloatingPoint generate();
+
+		/// Generates a random floating point value in the range [0, `max`).
+		/// @tparam FloatingPoint Floating-point type.
+		/// @param max Upper bound of the random range.
+		/// @pre `max` must be greater than 0.
+		/// @return Random floating-point value constrained to [0, `max`).
+		template <std::floating_point FloatingPoint>
+		FloatingPoint generate(FloatingPoint max);
+
+		/// Generates a random floating point value in the range [`min`, `max`).
+		/// @tparam FloatingPoint Floating-point type.
+		/// @param min Lower bound of the random range.
+		/// @param max Upper bound of the random range.
+		/// @pre `min` must be less than `max`.
+		/// @return Random floating-point value constrained to [`min`, `max`).
+		template <std::floating_point FloatingPoint>
+		FloatingPoint generate(FloatingPoint min, FloatingPoint max);
+
+		/// Generates a random angle value in the range [0tr, 1tr).
+		/// @return Random angle in the range [0tr, 1tr).
+		template <std::same_as<angle>>
+		angle generate();
+
+		/// Generates a random angle value in the range [0, `max`).
+		/// @param max Upper bound of the random range.
+		/// @pre `max` must be greater than 0.
+		/// @return Random angle in the range [0, `max`).
+		angle generate(angle max);
+
+		/// Generates a random angle value in the range [`min`, `max`).
+		/// @param min Lower bound of the random range.
+		/// @param max Upper bound of the random range.
+		/// @pre `min` must be less than `max`.
+		/// @return Random angle in the range [`min`, `max`).
+		angle generate(angle min, angle max);
+
+		/// Generates a random vector with a specific magnitude.
+		/// @param magnitude Magnitude of the vector.
+		/// @return Vector with a set magnitude and random direction.
+		template <std::same_as<glm::vec2>>
+		glm::vec2 generate(float magnitude);
+
+		/// Generates a random point within a rectangular region.
+		/// @param region Region to constrain the vector to.
+		/// @return Vector to a random point within `region`.
+		template <std::same_as<glm::vec2>>
+		glm::vec2 generate(const tr::rectangle<float>& region);
+
+		/// Generates a random sign (-1 or 1).
+		/// @return `-1` or `1`.
 		int generate_sign();
 
+		/// @}
+
 	  private:
-		// The internal state of the generator.
+		/// Internal state of the generator.
 		u64 m_state[2];
 	};
 } // namespace tr
