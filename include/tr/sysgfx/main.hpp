@@ -30,6 +30,7 @@ namespace tr
 
 		/// @}
 		/// @name Information
+		/// @{
 
 		/// Gets the name of the error.
 		/// @return `"Initialization error"`.

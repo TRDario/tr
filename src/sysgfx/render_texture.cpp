@@ -1,14 +1,11 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements render_texture.hpp.                                                                                                        //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements render_texture.hpp.
 
 #include "../../include/tr/sysgfx/render_texture.hpp"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/texture_view.hpp"
 
-///////////////////////////////////////////////////////////// RENDER TEXTURE //////////////////////////////////////////////////////////////
+//
 
 tr::render_texture::render_texture(graphics_context& context)
 	: m_texture{context}

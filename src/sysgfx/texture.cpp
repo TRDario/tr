@@ -1,19 +1,20 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements texture.hpp.                                                                                                               //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements texture.hpp.
 
 #include "../../include/tr/sysgfx/texture.hpp"
 #include "../../include/tr/sysgfx/gl_defines.hpp"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/texture_view.hpp"
 
-///////////////////////////////////////////////////////////// HELPER FUNCTIONS ////////////////////////////////////////////////////////////
+//
 
-namespace tr {
-	namespace {
-		// Converts a pixel format to an OpenGL texture format.
+namespace tr
+{
+	namespace
+	{
+		/// Converts a pixel format to an OpenGL texture format.
+		/// @param format Pixel format type.
+		/// @return Equivalent OpenGL texture format.
 		unsigned int gl_tex_format(pixel_format format)
 		{
 			switch (format) {
@@ -57,7 +58,9 @@ namespace tr {
 			}
 		}
 
-		// Converts a pixel format to an OpenGL format.
+		/// Converts a pixel format to an OpenGL format.
+		/// @param format Pixel format type.
+		/// @return Equivalent OpenGL format.
 		unsigned int gl_format(pixel_format format)
 		{
 			switch (format) {
@@ -97,7 +100,9 @@ namespace tr {
 			}
 		}
 
-		// Converts a pixel format to an OpenGL type.
+		/// Converts a pixel format to an OpenGL type.
+		/// @param format Pixel format type.
+		/// @return Equivalent OpenGL type.
 		unsigned int gl_type(pixel_format format)
 		{
 			switch (format) {
@@ -143,7 +148,7 @@ namespace tr {
 	} // namespace
 } // namespace tr
 
-///////////////////////////////////////////////////////////////// TEXTURE /////////////////////////////////////////////////////////////////
+//
 
 void tr::texture::create_handle() const
 {
