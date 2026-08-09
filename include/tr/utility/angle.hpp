@@ -262,22 +262,22 @@ namespace tr
 			consteval angle operator""_deg(unsigned long long deg);
 
 			/// Constructs an angle expressed in radians.
-			/// @param deg Angle expressed in radians.
+			/// @param rad Angle expressed in radians.
 			/// @return Angle value equivalent.
 			consteval angle operator""_rad(long double rad);
 
 			/// Constructs an angle expressed in radians.
-			/// @param deg Angle expressed in radians.
+			/// @param rad Angle expressed in radians.
 			/// @return Angle value equivalent.
 			consteval angle operator""_rad(unsigned long long rad);
 
 			/// Constructs an angle expressed in turns.
-			/// @param deg Angle expressed in turns.
+			/// @param tr Angle expressed in turns.
 			/// @return Angle value equivalent.
 			consteval angle operator""_tr(long double tr);
 
 			/// Constructs an angle expressed in turns.
-			/// @param deg Angle expressed in turns.
+			/// @param tr Angle expressed in turns.
 			/// @return Angle value equivalent.
 			consteval angle operator""_tr(unsigned long long tr);
 

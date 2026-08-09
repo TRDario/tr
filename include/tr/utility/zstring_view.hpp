@@ -241,42 +241,4 @@ namespace tr
 	/// @}
 } // namespace tr
 
-/// Designates basic_zstring_view as a view.
-/// @tparam CharT Character type used by the string.
-/// @tparam Traits Character traits used by the string.
-template <typename CharT, typename Traits>
-inline constexpr bool std::ranges::enable_view<tr::basic_zstring_view<CharT, Traits>> = true;
-
-/// Designates basic_zstring_view as a borrowed range.
-/// @tparam CharT Character type used by the string.
-/// @tparam Traits Character traits used by the string.
-template <typename CharT, typename Traits>
-inline constexpr bool std::ranges::enable_borrowed_range<tr::basic_zstring_view<CharT, Traits>> = true;
-
-//
-
-/// Formatter for NUL-terminated string views.
-/// @tparam CharT Character type used by the string.
-/// @tparam Traits Character traits used by the string.
-template <typename CharT, typename Traits>
-struct std::formatter<tr::basic_zstring_view<CharT, Traits>> : std::formatter<std::basic_string_view<CharT, Traits>>
-{
-};
-
-/// NUL-terminated string view hasher.
-/// @tparam CharT Character type used by the string.
-/// @tparam Traits Character traits used by the string.
-template <typename CharT, typename Traits>
-struct boost::hash<tr::basic_zstring_view<CharT, Traits>> : boost::hash<std::basic_string_view<CharT, Traits>>
-{
-};
-
-/// NUL-terminated string view binary writer.
-/// @tparam CharT Character type used by the string.
-/// @tparam Traits Character traits used by the string.
-template <typename CharT, typename Traits>
-struct tr::binary_writer<tr::basic_zstring_view<CharT, Traits>> : binary_writer<std::basic_string_view<CharT, Traits>>
-{
-};
-
 #include "impl/zstring_view.hpp" // IWYU pragma: export

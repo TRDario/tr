@@ -249,15 +249,16 @@ namespace tr
 		/// Logs a message.
 		/// @param severity Severity of the message.
 		/// @param string String of the message.
-		void log(severity severity, std::string_view str);
+		void log(severity severity, std::string_view string);
 
 		/// Logs an exception.
 		/// @param severity Severity of the message.
-		/// @param err Exception to extract a message from.
-		void log(severity severity, const std::exception& err);
+		/// @param error Exception to extract a message from.
+		void log(severity severity, const std::exception& error);
 
 		/// Logs a message.
 		/// @tparam Args Formatting argument types.
+		/// @param severity Severity of the message.
 		/// @param fmt Format string.
 		/// @param args Formatting arguments.
 		template <typename... Args>
@@ -265,11 +266,11 @@ namespace tr
 
 		/// Logs a message continuing from a previous line.
 		/// @param string String of the message continuation.
-		void log_continue(std::string_view str);
+		void log_continue(std::string_view string);
 
 		/// Logs an exception continuing from a previous line.
-		/// @param err Exception to extract a message continuation from.
-		void log_continue(const std::exception& err);
+		/// @param error Exception to extract a message continuation from.
+		void log_continue(const std::exception& error);
 
 		/// Logs a message continuing from a previous line.
 		/// @tparam Args Formatting argument types.

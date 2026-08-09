@@ -44,9 +44,9 @@ namespace tr
 		/// String size projection.
 		/// @param str String to get the size of.
 		/// @return Size of the string.
-		usize string_size(const std::string& str)
+		usize string_size(const std::string& string)
 		{
-			return str.size();
+			return string.size();
 		}
 	} // namespace
 } // namespace tr
@@ -146,14 +146,14 @@ void tr::logger::clear_backend()
 
 //
 
-void tr::logger::log(severity severity, std::string_view str)
+void tr::logger::log(severity severity, std::string_view string)
 {
-	m_backend->log(tr::localtime(std::time(nullptr)), severity, str);
+	m_backend->log(tr::localtime(std::time(nullptr)), severity, string);
 }
 
-void tr::logger::log(severity severity, const std::exception& err)
+void tr::logger::log(severity severity, const std::exception& error)
 {
-	const exception* tr_exception{dynamic_cast<const exception*>(&err)};
+	const exception* tr_exception{dynamic_cast<const exception*>(&error)};
 	if (tr_exception != nullptr) {
 		log(severity, "Exception raised: {}.", tr_exception->name());
 		const std::string_view description{tr_exception->description()};
@@ -167,16 +167,16 @@ void tr::logger::log(severity severity, const std::exception& err)
 	}
 	else {
 		log(severity, "Exception raised:");
-		log_continue(err.what());
+		log_continue(error.what());
 	}
 }
 
-void tr::logger::log_continue(std::string_view str)
+void tr::logger::log_continue(std::string_view string)
 {
-	m_backend->log_continue(str);
+	m_backend->log_continue(string);
 }
 
-void tr::logger::log_continue(const std::exception& err)
+void tr::logger::log_continue(const std::exception& error)
 {
-	log_continue(err.what());
+	log_continue(error.what());
 }

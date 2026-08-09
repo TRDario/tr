@@ -62,7 +62,7 @@ namespace tr
 	/// Calculates the intersection point of a line with a line segment.
 	/// @param lp Point on the first line.
 	/// @param lth Angle of the first line.
-	/// @param r Line segment to check for intersection.
+	/// @param rhs Line segment to check for intersection.
 	/// @return Intersection point of the lines, if one exists.
 	std::optional<glm::vec2> intersection(glm::vec2 lp, angle lth, const line_segment& rhs);
 

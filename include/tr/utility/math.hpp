@@ -74,7 +74,7 @@ namespace tr
 	template <typename T, std::floating_point Ratio>
 	constexpr T lerp(const T& x, const T& y, Ratio a);
 
-	// Squaring operation.
+	/// Squaring operation.
 	/// @tparam T Value type.
 	/// @param v Value to square.
 	/// @return `v²`.
