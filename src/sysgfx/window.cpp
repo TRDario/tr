@@ -1,14 +1,11 @@
-﻿///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements window.hpp.                                                                                                                //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+﻿/// @file
+/// @brief Implements window.hpp.
 
 #include "../../include/tr/sysgfx/window.hpp"
 #include "../../include/tr/sysgfx/bitmap.hpp"
 #include <SDL3/SDL.h>
 
-/////////////////////////////////////////////////////////// WINDOW OPENING ERROR //////////////////////////////////////////////////////////
+//
 
 tr::window_open_error::window_open_error()
 	: m_description{SDL_GetError()}
@@ -30,7 +27,7 @@ std::string_view tr::window_open_error::details() const
 	return {};
 }
 
-/////////////////////////////////////////////////////////////// WINDOW ERROR //////////////////////////////////////////////////////////////
+//
 
 tr::window_error::window_error(std::string&& description)
 	: m_description{description}
@@ -52,8 +49,6 @@ std::string_view tr::window_error::details() const
 {
 	return m_details;
 }
-
-/////////////////////////////////////////////////////////////// WINDOW VIEW ///////////////////////////////////////////////////////////////
 
 //
 
@@ -85,9 +80,9 @@ void tr::window_view::set_icon(const bitmap& bitmap) const
 	}
 }
 
-void tr::window_view::set_icon(const bitmap_view& view) const
+void tr::window_view::set_icon(const bitmap_view& bitmap) const
 {
-	if (!SDL_SetWindowIcon(m_ptr, view.m_ptr.get())) {
+	if (!SDL_SetWindowIcon(m_ptr, bitmap.m_ptr.get())) {
 		throw window_error{"Failed to set icon of window '{}'", title()};
 	}
 }
@@ -202,6 +197,13 @@ void tr::window_view::flip_backbuffer() const
 	SDL_GL_SwapWindow(m_ptr);
 }
 
+//
+
+SDL_Window* tr::window_view::unwrap() const
+{
+	return m_ptr;
+}
+
 ////////////////////////////////////////////////////////////////// WINDOW /////////////////////////////////////////////////////////////////
 
 tr::window::window(zstring_view title, window_parameters parameters)
@@ -243,7 +245,7 @@ tr::window::window(zstring_view title, window_parameters parameters)
 	}
 }
 
-void tr::window::deleter::operator()(SDL_Window* window) const
+void tr::window::deleter::operator()(SDL_Window* window)
 {
 	SDL_DestroyWindow(window);
 }
@@ -252,6 +254,16 @@ void tr::window::deleter::operator()(SDL_Window* window) const
 
 tr::window::operator window_view()
 {
+	return view();
+}
+
+tr::window_view tr::window::view()
+{
+	return window_view{m_ptr.get()};
+}
+
+tr::window_view tr::window::view() const
+{
 	return window_view{m_ptr.get()};
 }
 
@@ -259,109 +271,106 @@ tr::window::operator window_view()
 
 tr::zstring_view tr::window::title() const
 {
-	return SDL_GetWindowTitle(m_ptr.get());
+	return view().title();
 }
 
 void tr::window::set_title(zstring_view title)
 {
-	window_view{*this}.set_title(title);
+	view().set_title(title);
 }
 
 //
 
 void tr::window::set_icon(const bitmap& bitmap)
 {
-	window_view{*this}.set_icon(bitmap);
+	view().set_icon(bitmap);
 }
 
-void tr::window::set_icon(const bitmap_view& view)
+void tr::window::set_icon(const bitmap_view& bitmap)
 {
-	window_view{*this}.set_icon(view);
+	view().set_icon(bitmap);
 }
 
 //
 
 glm::ivec2 tr::window::size() const
 {
-	glm::ivec2 size{};
-	return SDL_GetWindowSizeInPixels(m_ptr.get(), &size.x, &size.y) ? size
-																	: throw window_error{"Failed to get size of window '{}'", title()};
+	return view().size();
 }
 
 float tr::window::pixel_density() const
 {
-	const float density{SDL_GetWindowPixelDensity(m_ptr.get())};
-	return density != 0.0f ? density : throw window_error{"Failed to get pixel density of window '{}'", title()};
+	return view().pixel_density();
 }
 
 void tr::window::set_size(glm::ivec2 size)
 {
-	window_view{*this}.set_size(size);
+	view().set_size(size);
 }
 
 //
 
 bool tr::window::fullscreen() const
 {
-	return SDL_GetWindowFlags(m_ptr.get()) & SDL_WINDOW_FULLSCREEN;
+	return view().fullscreen();
 }
 
 void tr::window::set_fullscreen(bool fullscreen)
 {
-	window_view{*this}.set_fullscreen(fullscreen);
+	view().set_fullscreen(fullscreen);
 }
 
 //
 
 void tr::window::show()
 {
-	window_view{*this}.show();
+	view().show();
 }
 
 void tr::window::hide()
 {
-	window_view{*this}.hide();
+	view().hide();
 }
 
 //
 
 bool tr::window::maximized() const
 {
-	return SDL_GetWindowFlags(m_ptr.get()) & SDL_WINDOW_MAXIMIZED;
+	return view().maximized();
 }
 
 bool tr::window::minimized() const
 {
-	return SDL_GetWindowFlags(m_ptr.get()) & SDL_WINDOW_MINIMIZED;
+	return view().minimized();
 }
 
 bool tr::window::has_focus() const
 {
-	return SDL_GetWindowFlags(m_ptr.get()) & SDL_WINDOW_INPUT_FOCUS;
+	return view().has_focus();
 }
 
 void tr::window::raise()
 {
-	window_view{*this}.raise();
+	view().raise();
 }
 
 //
 
 void tr::window::enable_text_input()
 {
-	SDL_StartTextInput(m_ptr.get());
+	view().enable_text_input();
 }
 
 void tr::window::disable_text_input()
 {
-	SDL_StopTextInput(m_ptr.get());
+	view().disable_text_input();
 }
 
 //
 
 void tr::window::set_vsync(vsync vsync)
 {
-	window_view{*this}.set_vsync(vsync);
+	view().set_vsync(vsync);
 }
 
 //
@@ -404,5 +413,5 @@ void tr::window::set_mouse_mode(mouse_mode mode)
 
 void tr::window::flip_backbuffer()
 {
-	SDL_GL_SwapWindow(m_ptr.get());
+	view().flip_backbuffer();
 }

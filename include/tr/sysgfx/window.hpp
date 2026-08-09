@@ -1,56 +1,5 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Provides window classes and related datatypes.                                                                                        //
-//                                                                                                                                       //
-// Windows are constructed using a parameter struct which defines the initial size and mode, as well as graphical parameters:            //
-//     - tr::window window{"My App", {.size{500, 500}, .multisamples{tr::max_msaa()}}} -> Creates a 500x500 window with maximum MSAA     //
-//     - tr::window window{"My App", {.min_size{640, 480}}} -> Creates a maximized window that can be resized down to 640x480            //
-//     - tr::window window{"My App", {.fullscreen{true}}} -> Creates a borderless fullscreen window                                      //
-//                                                                                                                                       //
-// It's important to note that windows start out as hidden and must be set to be shown afterwards. Hiding and showing a window can be    //
-// done at any time:                                                                                                                     //
-//     - window.show() -> the window is shown                                                                                            //
-//     - window.hide() -> the window is hidden again                                                                                     //
-//                                                                                                                                       //
-// A window's title can be gotten and reset:                                                                                             //
-//     - window.title() -> "My App"                                                                                                      //
-//     - window.set_title("My Game") -> window title is updated to "My Game"                                                             //
-//                                                                                                                                       //
-// A window's icon can be set:                                                                                                           //
-//     - window.set_icon(bitmap) -> sets the window icon to the contents of the bitmap                                                   //
-//                                                                                                                                       //
-// A window's size and pixel density (ratio between logical and actual pixels), as well as whether the window is fullscreen are gettable,//
-// and the size and fullscreen flag can be set:                                                                                          //
-//     - window.fullscreen() -> true                                                                                                     //
-//     - window.set_fullscreen(false)                                                                                                    //
-//       window.set_size({960, 720})                                                                                                     //
-//       window.size() -> {960, 720}                                                                                                     //
-//     - window.pixel_density() -> may be greater than 1 if the user has a different UI scaling factor, for example                      //
-//                                                                                                                                       //
-// Whether a window is maximized, minimized, and if it has focus can be gotten, and the window can be raised to get window focus:        //
-//     - window.maximized() -> true if the window is maximized, false otherwise                                                          //
-//     - window.minimized() -> true if the window is minimized, false otherwise                                                          //
-//     - window.has_focus() -> true if the window has input focus, false otherwise                                                       //
-//     - window.raise() -> tries to raise the window                                                                                     //
-//                                                                                                                                       //
-// A window's V-sync mode can be set. If adaptive V-sync is not available, the system will try to fallback to regular V-sync:            //
-//     - window.set_vsync(tr::vsync::adaptive) -> tries to enable adaptive V-sync                                                        //
-//                                                                                                                                       //
-// The sending of text inputs may be enabled and disabled per window:                                                                    //
-//     - window.enable_text_input() -> tr::text_input_event can now be sent                                                              //
-//     - window.disable_text_input() -> tr::text_input_event will no longer be sent                                                      //
-//                                                                                                                                       //
-// The mouse mode on a window may be changed between absolute and relative:                                                              //
-//     - window.set_mouse_mode(tr::mouse_mode::absolute) -> absolute mouse controls: normal operation                                    //
-//     - window.set_mouse_mode(tr::mouse_mode::relative) -> relative mouse controls: cursor is hidden and only reports deltas            //
-//                                                                                                                                       //
-// To display a frame after it is drawn, a window's backbuffer must be flipped:                                                          //
-//     - window.flip_backbuffer() -> swaps the front- and backbuffer                                                                     //
-//                                                                                                                                       //
-// tr::window_view is a lightweight, non-owning view to a window.                                                                        //
-// All of the same methods may be invoked on it as they would be on a window.                                                            //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Provides window classes and related datatypes.
 
 #pragma once
 #include "../utility/exception.hpp"
@@ -59,7 +8,8 @@
 #include "../utility/timer.hpp"
 #endif
 
-namespace tr {
+namespace tr
+{
 	class bitmap;
 	class bitmap_view;
 	enum class mouse_mode : bool;
@@ -68,233 +18,448 @@ namespace tr {
 
 struct SDL_Window;
 
-//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
+//
 
-namespace tr {
-	// Marks a window as maximized.
+namespace tr
+{
+	/// Marks a window as maximized.
 	constexpr glm::ivec2 maximized{};
-	// Marks a window as not resizable.
+
+	/// Marks a window as not resizable.
 	constexpr glm::ivec2 not_resizable{};
 
-	// V-sync modes.
-	enum class vsync : i8 {
-		adaptive = -1, // Vsync is enabled, but late swaps happen immediately instead of waiting for the next retrace.
-		disabled,      // Vsync is disabled.
-		enabled        // Vsync is enabled.
+	//
+
+	/// V-sync modes.
+	enum class vsync : i8
+	{
+		/// Vsync is enabled, but late swaps happen immediately instead of waiting for the next retrace.
+		adaptive = -1,
+		/// Vsync is disabled.
+		disabled,
+		/// Vsync is enabled.
+		enabled
 	};
 
-	// Window constructor parameters.
-	struct window_parameters {
-		// Whether the window should be fullscreen.
+	/// Window constructor parameters.
+	struct window_parameters
+	{
+		/// Whether the window should be fullscreen.
 		bool fullscreen{false};
-		// Size of the window.
+
+		/// Size of the window.
 		glm::ivec2 size{maximized};
-		// Minimum size of the window when resizing (or not_resizable).
+
+		/// Minimum size of the window when resizing (or not_resizable).
 		glm::ivec2 min_size{not_resizable};
-		// Whether graphics contexts associated with the window should be debug contexts.
+
+		/// Whether graphics contexts associated with the window should be debug contexts.
 		bool debug_graphics_context{TR_ENABLE_ASSERTS};
-		// Enables the use of depth and stencil buffers on graphics contexts associated with the window.
+
+		/// Enables the use of depth and stencil buffers on graphics contexts associated with the window.
 		bool enable_depth_stencil{false};
-		// The number of samples used around a pixel for multisampled anti-aliasing on graphics contexts associated with the window.
+
+		/// The number of samples used around a pixel for multisampled anti-aliasing on graphics contexts associated with the window.
 		u8 multisamples{0};
 	};
 
-	// Window opening error.
-	class window_open_error : public exception {
+	/// Window opening error.
+	class window_open_error : public exception
+	{
 	  public:
-		// Constructs a window opening error.
-		window_open_error();
+		/// @name Constructors
+		/// @{
 
-		// Gets the name of the error.
+		/// Constructs a window opening error.
+		explicit window_open_error();
+
+		/// @}
+		/// @name Information
+		/// @{
+
+		/// Gets the name of the error.
+		/// @return `"Window opening error"`.
 		std::string_view name() const override;
-		// Gets the description of the error.
+
+		/// Gets the description of the error.
+		/// @return Description of the error.
 		std::string_view description() const override;
-		// Gets further details about the error.
+
+		/// Gets further details about the error.
+		/// @return Always empty.
 		std::string_view details() const override;
 
+		/// @}
+
 	  private:
-		// Description of the error.
+		/// Description of the error.
 		std::string m_description;
 	};
 
-	// Window error.
-	class window_error : public exception {
+	/// Window error.
+	class window_error : public exception
+	{
 	  public:
-		// Constructs a window error.
-		template <typename... Args> window_error(std::format_string<Args...> description_fmt, Args&&... args);
+		/// @name Constructors
+		/// @{
 
-		// Gets the name of the error.
+		/// Constructs a window error.
+		/// @tparam Args Types of the formatting arguments.
+		/// @param description_fmt Description format string.
+		/// @param args Description formatting arguments.
+		template <typename... Args>
+		explicit window_error(std::format_string<Args...> description_fmt, Args&&... args);
+
+		/// @}
+		/// @name Information
+		/// @{
+
+		/// Gets the name of the error.
+		/// @return `"Window error"`.
 		std::string_view name() const override;
-		// Gets the description of the error.
+
+		/// Gets the description of the error.
+		/// @return Description of the error.
 		std::string_view description() const override;
-		// Gets further details about the error.
+
+		/// Gets further details about the error.
+		/// @return Details of the error.
 		std::string_view details() const override;
 
+		/// @}
+
 	  private:
-		// Description of the error.
+		/// Description of the error.
 		std::string m_description;
-		// Details of the error.
+
+		/// Details of the error.
 		std::string_view m_details;
 
-		// Constructs a window error.
+		/// Constructs a window error.
+		/// @param description Description of the error.
 		window_error(std::string&& description);
 	};
 
-	// Non-owning window view.
-	class window_view {
-	  public:
-		// Creates a window view (implementation detail).
-		window_view(SDL_Window* window);
+	//
 
-		// Gets the title of the window.
+	/// Non-owning window view.
+	class window_view
+	{
+	  public:
+		/// @cond __hidden
+		/// Wraps a window view.
+		/// @param window Window pointer to wrap.
+		explicit window_view(SDL_Window* window);
+		/// @endcond
+
+		/// @name Title
+		/// @{
+
+		/// Gets the title of the window.
+		/// @return Title of the window.
 		zstring_view title() const;
-		// Sets the title of the window.
-		// May throw: window_error.
+
+		/// Sets the title of the window.
+		/// @param title New window title string.
+		/// @exception window_error If setting the window title failed.
 		void set_title(zstring_view title) const;
 
-		// Sets the icon of the window.
-		// May throw: window_error.
-		void set_icon(const bitmap& bitmap) const;
-		// Sets the icon of the window.
-		// May throw: window_error.
-		void set_icon(const bitmap_view& view) const;
+		/// @}
+		/// @name Icon
+		/// @{
 
-		// Gets the size of the window.
-		// May throw: window_error.
+		/// Sets the icon of the window.
+		/// @param bitmap Icon bitmap.
+		/// @exception window_error If setting the window icon failed.
+		void set_icon(const bitmap& bitmap) const;
+
+		/// Sets the icon of the window.
+		/// @param bitmap Icon bitmap view.
+		/// @exception window_error If setting the window icon failed.
+		void set_icon(const bitmap_view& bitmap) const;
+
+		/// @}
+		/// @name Size
+		/// @{
+
+		/// Gets the size of the window.
+		/// @exception window_error If getting the size of the window failed.
+		/// @return Size of the window in pixels.
 		glm::ivec2 size() const;
-		// Gets the window's pixel density factor.
-		// May throw: window_error.
+
+		/// Gets the window's pixel density factor.
+		/// @exception window_error If getting the pixel density of the window failed.
+		/// @return Pixel density factor of the window.
 		float pixel_density() const;
-		// Sets the size of the window.
-		// May throw: window_error.
+
+		/// Sets the size of the window.
+		/// @param size New size of the window in pixels.
+		/// @exception window_error If setting the size of the window failed.
 		void set_size(glm::ivec2 size) const;
 
-		// Gets whether the window is fullscreen or not.
+		/// @}
+		/// @name Fullscreen
+		/// @{
+
+		/// Gets whether the window is fullscreen or not.
+		/// @return Whether the window is fullscreen or not.
 		bool fullscreen() const;
-		// Sets whether the window is fullscreen or not.
-		// May throw: window_error.
+
+		/// Sets whether the window is fullscreen or not.
+		/// @param fullscreen Whether to enable fullscreen or not.
+		/// @exception window_error If setting the fullscreen mode of the window failed.
 		void set_fullscreen(bool fullscreen) const;
 
-		// Unhides the window.
-		// May throw: window_error.
+		/// @}
+		/// @name Visibility
+		/// @{
+
+		/// Unhides the window.
+		/// @exception window_error If showing the window failed.
 		void show() const;
-		// Hides the window.
-		// May throw: window_error.
+
+		/// Hides the window.
+		/// @exception window_error If hiding the window failed.
 		void hide() const;
 
-		// Gets whether the window is maximized.
+		/// @}
+		/// @name Status
+		/// @{
+
+		/// Gets whether the window is maximized.
+		/// @return `true` if the window is maximized, `false` otherwise.
 		bool maximized() const;
-		// Gets whether the window is minimized.
+
+		/// Gets whether the window is minimized.
+		/// @return `true` if the window is minimized, `false` otherwise.
 		bool minimized() const;
-		// Gets whether the window has input focus.
+
+		/// Gets whether the window has input focus.
+		/// @return `true` if the window has input focus, `false` otherwise.
 		bool has_focus() const;
-		// Raises the window to have input focus.
-		// May throw: window_error.
+
+		/// Raises the window to have input focus.
+		/// @exception window_error If raising the window failed.
 		void raise() const;
 
-		// Sets the window's V-sync mode.
-		// May throw: window_error.
+		/// @}
+		/// @name V-sync
+		/// @{
+
+		/// Sets the window's V-sync mode.
+		/// @param vsync V-sync mode to set. `vsync::adaptive` may fall back to `vsync::enabled`.
+		// @exception window_error If setting the V-sync mode failed.
 		void set_vsync(vsync vsync) const;
 
-		// Enables the sending of text input events in the window.
+		/// @}
+		/// @name Text input
+		/// @{
+
+		/// Enables the sending of text input events in the window.
 		void enable_text_input() const;
-		// Disables the sending of text input events in the window.
+
+		/// Disables the sending of text input events in the window.
 		void disable_text_input() const;
 
-		// Swaps the window's front- and backbuffer.
+		/// @}
+		/// @name Backbuffer
+		/// @{
+
+		/// Swaps the window's front- and backbuffer.
 		void flip_backbuffer() const;
 
-	  private:
-		// Pointer to the SDL window.
-		SDL_Window* m_ptr;
+		/// @}
 
-		friend class graphics_context;
+		/// @cond __hidden
+		/// Unwraps the SDL window pointer.
+		/// @return Pointer to the SDL window.
+		SDL_Window* unwrap() const;
+		/// @endcond
+
+	  private:
+		/// Pointer to an SDL window.
+		SDL_Window* m_ptr;
 	};
 
-	// Window object.
-	class window {
-	  public:
-		// Opens a window.
-		// May throw: window_open_error.
-		window(zstring_view title, window_parameters parameters = {});
+	//
 
-		// Creates a view to the window.
+	/// Window object.
+	class window
+	{
+	  public:
+		/// @name Constructors
+		/// @{
+
+		/// Opens a window.
+		/// @param title Initial window title.
+		/// @param parameters Initial window parameters.
+		/// @exception window_open_error If opening the window failed.
+		explicit window(zstring_view title, window_parameters parameters = {});
+
+		/// @}
+		/// @name View
+		/// @{
+
+		/// Creates a view to the window.
+		/// @return View to the window.
 		operator window_view();
 
-		// Gets the title of the window.
+		/// Creates a view to the window.
+		/// @return View to the window.
+		window_view view();
+
+		/// @}
+		/// @name Title
+		/// @{
+
+		/// Gets the title of the window.
+		/// @return Title of the window.
 		zstring_view title() const;
-		// Sets the title of the window.
-		// May throw: window_error.
+
+		/// Sets the title of the window.
+		/// @param title New window title string.
+		/// @exception window_error If setting the window title failed.
 		void set_title(zstring_view title);
 
-		// Sets the icon of the window.
-		// May throw: window_error.
-		void set_icon(const bitmap& bitmap);
-		// Sets the icon of the window.
-		// May throw: window_error.
-		void set_icon(const bitmap_view& view);
+		/// @}
+		/// @name Icon
+		/// @{
 
-		// Gets the size of the window.
-		// May throw: window_error.
+		/// Sets the icon of the window.
+		/// @param bitmap Icon bitmap.
+		/// @exception window_error If setting the window icon failed.
+		void set_icon(const bitmap& bitmap);
+
+		/// Sets the icon of the window.
+		/// @param bitmap Icon bitmap view.
+		/// @exception window_error If setting the window icon failed.
+		void set_icon(const bitmap_view& bitmap);
+
+		/// @}
+		/// @name Size
+		/// @{
+
+		/// Gets the size of the window.
+		/// @exception window_error If getting the size of the window failed.
+		/// @return Size of the window in pixels.
 		glm::ivec2 size() const;
-		// Gets the window's pixel density factor.
-		// May throw: window_error.
+
+		/// Gets the window's pixel density factor.
+		/// @exception window_error If getting the pixel density of the window failed.
+		/// @return Pixel density factor of the window.
 		float pixel_density() const;
-		// Sets the size of the window.
-		// May throw: window_error.
+
+		/// Sets the size of the window.
+		/// @param size New size of the window in pixels.
+		/// @exception window_error If setting the size of the window failed.
 		void set_size(glm::ivec2 size);
 
-		// Gets whether the window is fullscreen or not.
+		/// @}
+		/// @name Fullscreen
+		/// @{
+
+		/// Gets whether the window is fullscreen or not.
+		/// @return Whether the window is fullscreen or not.
 		bool fullscreen() const;
-		// Sets whether the window is fullscreen or not.
-		// May throw: window_error.
+
+		/// Sets whether the window is fullscreen or not.
+		/// @param fullscreen Whether to enable fullscreen or not.
+		/// @exception window_error If setting the fullscreen mode of the window failed.
 		void set_fullscreen(bool fullscreen);
 
-		// Unhides the window.
-		// May throw: window_error.
+		/// @}
+		/// @name Visibility
+		/// @{
+
+		/// Unhides the window.
+		/// @exception window_error If showing the window failed.
 		void show();
-		// Hides the window.
-		// May throw: window_error.
+
+		/// Hides the window.
+		/// @exception window_error If hiding the window failed.
 		void hide();
 
-		// Gets whether the window is maximized.
+		/// @}
+		/// @name Status
+		/// @{
+
+		/// Gets whether the window is maximized.
+		/// @return `true` if the window is maximized, `false` otherwise.
 		bool maximized() const;
-		// Gets whether the window is minimized.
+
+		/// Gets whether the window is minimized.
+		/// @return `true` if the window is minimized, `false` otherwise.
 		bool minimized() const;
-		// Gets whether the window has input focus.
+
+		/// Gets whether the window has input focus.
+		/// @return `true` if the window has input focus, `false` otherwise.
 		bool has_focus() const;
-		// Raises the window to have input focus.
-		// May throw: window_error.
+
+		/// Raises the window to have input focus.
+		/// @exception window_error If raising the window failed.
 		void raise();
 
-		// Sets the window's V-sync mode.
-		// May throw: window_error.
+		/// @}
+		/// @name V-sync
+		/// @{
+
+		/// Sets the window's V-sync mode.
+		/// @param vsync V-sync mode to set. `vsync::adaptive` may fall back to `vsync::enabled`.
+		// @exception window_error If setting the V-sync mode failed.
 		void set_vsync(vsync vsync);
 
-		// Enables the sending of text input events in the window.
+		/// @}
+		/// @name Text input
+		/// @{
+
+		/// Enables the sending of text input events in the window.
 		void enable_text_input();
-		// Disables the sending of text input events in the window.
+
+		/// Disables the sending of text input events in the window.
 		void disable_text_input();
 
-		// Sets the mouse mode in the window.
-		// May throw: window_error.
+		/// @}
+		/// @name Mouse mode
+		/// @{
+
+		/// Sets the mouse mode in the window.
+		/// @param mode Mouse mode to set.
+		/// @exception window_error If setting the mouse mode failed.
 		void set_mouse_mode(mouse_mode mode);
 
-		// Swaps the window's front- and backbuffer.
+		/// @}
+		/// @name Backbuffer
+		/// @{
+
+		/// Swaps the window's front- and backbuffer.
 		void flip_backbuffer();
 
+		/// @}
+
 	  private:
-		// SDL window deleter.
-		struct deleter {
-			void operator()(SDL_Window* ptr) const;
+		/// SDL window deleter.
+		struct deleter
+		{
+			/// Destroys a window.
+			/// @param ptr Pointer to an SDL window.
+			static void operator()(SDL_Window* ptr);
 		};
 
-		// Pointer to the SDL window.
+		//
+
+		/// Pointer to the SDL window.
 		std::unique_ptr<SDL_Window, deleter> m_ptr;
+
 #ifdef _WIN32
-		// Cursor graphic reset timer needed as a workaround for an SDL bug.
+		/// Cursor graphic reset timer needed as a workaround for an SDL bug.
 		std::optional<timer> m_cursor_reset_timer;
 #endif
+
+		//
+
+		/// Creates a view to the window (const-qualified).
+		/// @return View to the window.
+		window_view view() const;
 	};
 } // namespace tr
 

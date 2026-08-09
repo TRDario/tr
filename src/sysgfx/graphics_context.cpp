@@ -39,8 +39,10 @@ std::string_view tr::graphics_context_init_error::details() const
 
 //////////////////////////////////////////////////////// GRAPHICS CONTEXT DEBUGGING ///////////////////////////////////////////////////////
 
-namespace tr {
-	namespace {
+namespace tr
+{
+	namespace
+	{
 		// Gets a readable string for an OpenGL debug log message type.
 		std::string_view gl_type(unsigned int value)
 		{
@@ -139,8 +141,10 @@ namespace tr {
 
 ///////////////////////////////////////////////////////////// GRAPHICS CONTEXT ////////////////////////////////////////////////////////////
 
-namespace tr {
-	namespace {
+namespace tr
+{
+	namespace
+	{
 		// Creates an SDL OpenGL context.
 		SDL_GLContext create_context(SDL_Window* window)
 		{
@@ -154,7 +158,7 @@ namespace tr {
 } // namespace tr
 
 tr::graphics_context::graphics_context(window_view window)
-	: m_window{window.m_ptr}
+	: m_window{window.unwrap()}
 	, m_ptr{create_context(m_window)}
 {
 	m_gl_api.enable(GL_BLEND);
@@ -195,7 +199,7 @@ struct tr::graphics_context::info tr::graphics_context::info() const
 
 tr::window_view tr::graphics_context::window() const
 {
-	return m_window;
+	return window_view{m_window};
 }
 
 tr::render_target tr::graphics_context::backbuffer() const
