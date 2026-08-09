@@ -1,15 +1,12 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements the templated parts of atlas_packer.hpp.                                                                                   //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements the templated parts of atlas_packer.hpp.
 
 #pragma once
 #include "../atlas_packer.hpp"
 #include "../hash_map.hpp"
 #include "../macro.hpp"
 
-/////////////////////////////////////////////////////////////// ATLAS RECTS ///////////////////////////////////////////////////////////////
+//
 
 template <typename Key, tr::atlas_entries_value_type Value, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
 template <tr::hash_keylike<Key, Hash, Pred> Keylike>
@@ -36,7 +33,7 @@ const Value& tr::atlas_entries<Key, Value, Hash, Pred>::operator[](Keylike&& key
 				  type_name<Key>());
 	}
 
-	return tr::get(m_entries, std::forward<Keylike>(key));
+	return get(m_entries, std::forward<Keylike>(key));
 }
 
 template <typename Key, tr::atlas_entries_value_type Value, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
