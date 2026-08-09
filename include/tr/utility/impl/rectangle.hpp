@@ -1,13 +1,16 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements rectangle.hpp.                                                                                                             //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements rectangle.hpp.
 
 #pragma once
 #include "../rectangle.hpp"
 
-////////////////////////////////////////////////////////////// IMPLEMENTATION /////////////////////////////////////////////////////////////
+//
+
+/// Enables default binary IO for rectangles.
+template <typename Element>
+inline constexpr bool tr::enable_default_binary_io<tr::rectangle<Element>>{true};
+
+//
 
 template <typename Element>
 constexpr tr::rectangle<Element>::rectangle(glm::tvec2<Element> tl, glm::tvec2<Element> size)
@@ -35,9 +38,9 @@ constexpr tr::rectangle<Element>::rectangle(const rectangle<ElementR>& rectangle
 
 template <typename Element>
 template <typename ElementR>
-constexpr bool tr::rectangle<Element>::operator==(const rectangle<ElementR>& r) const
+constexpr bool tr::rectangle<Element>::operator==(const rectangle<ElementR>& rhs) const
 {
-	return tl.x == r.tl.x && tl.y == r.tl.y && size.x == r.size.x && size.y == r.size.y;
+	return tl.x == rhs.tl.x && tl.y == rhs.tl.y && size.x == rhs.size.x && size.y == rhs.size.y;
 }
 
 //
@@ -72,7 +75,7 @@ constexpr tr::rectangle_edges<Element> tr::rectangle<Element>::edges() const
 //
 
 template <typename ElementL, typename ElementR>
-constexpr bool tr::intersecting(const rectangle<ElementL>& lhs, const rectangle<ElementR>& rhs)
+constexpr bool tr::intersecting(rectangle<ElementL> lhs, rectangle<ElementR> rhs)
 {
 	return lhs.contains(rhs.tl) || lhs.contains(rhs.tl + rhs.size) || rhs.contains(lhs.tl + glm::tvec2<ElementL>{lhs.size.x, 0}) ||
 		   rhs.contains(lhs.tl + glm::tvec2<ElementL>{0, lhs.size.y});

@@ -28,6 +28,7 @@ namespace tr
 		winding_order winding_order() const;
 
 		/// Determines whether a point is contained inside the triangle.
+		/// @param point Point to check for being in the triangle.
 		/// @return `true` if `point` is within the triangle, `false` otherwise.
 		bool contains(glm::vec2 point) const;
 	};
