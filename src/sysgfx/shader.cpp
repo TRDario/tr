@@ -1,8 +1,5 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements shader.hpp.                                                                                                                //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements shader.hpp.
 
 #include "../../include/tr/sysgfx/shader.hpp"
 #include "../../include/tr/sysgfx/gl_defines.hpp"
@@ -14,7 +11,7 @@
 #include "../../include/tr/utility/hash_map.hpp"
 #include "../../include/tr/utility/iostream.hpp"
 
-//////////////////////////////////////////////////////////// SHADER LOAD ERROR ////////////////////////////////////////////////////////////
+//
 
 tr::shader_load_error::shader_load_error(std::string_view path, std::string&& details)
 	: m_description{std::format("Failed to load shader from '{}'", path)}
@@ -37,7 +34,7 @@ std::string_view tr::shader_load_error::details() const
 	return m_details;
 }
 
-////////////////////////////////////////////////////////////////// SHADER /////////////////////////////////////////////////////////////////
+//
 
 tr::shader_base::shader_base(graphics_context& context, zstring_view source, unsigned int type)
 	: m_program{context.make_current_and_return_gl_api().create_shader_program_v(type, 1, reinterpret_cast<const char**>(&source)),
@@ -63,11 +60,14 @@ tr::shader_base::shader_base(graphics_context& context, zstring_view source, uns
 }
 
 #ifdef TR_ENABLE_GL_CHECKS
-namespace tr {
-	namespace {
-		// Properties queried for uniforms.
+namespace tr
+{
+	namespace
+	{
+		/// Properties queried for uniforms.
 		constexpr std::array<unsigned int, 5> uniform_properties{GL_BLOCK_INDEX, GL_TYPE, GL_ARRAY_SIZE, GL_NAME_LENGTH, GL_LOCATION};
-		// Properties queried for inputs and outputs.
+
+		/// Properties queried for inputs and outputs.
 		constexpr std::array<unsigned int, 4> input_output_properties{GL_TYPE, GL_ARRAY_SIZE, GL_NAME_LENGTH, GL_LOCATION};
 	} // namespace
 } // namespace tr
@@ -135,7 +135,7 @@ void tr::shader_base::find_outputs(const gl_api& gl)
 	}
 }
 
-// Asserts that a shader uniform exists and is of the correct type.
+/// Asserts that a shader uniform exists and is of the correct type.
 #define TR_ASSERT_SHADER_UNIFORM(target_type)                                                                                              \
 	do {                                                                                                                                   \
 		const opt_ref<glsl_variable> uniform{try_get(m_uniforms, index)};                                                                  \
@@ -144,7 +144,8 @@ void tr::shader_base::find_outputs(const gl_api& gl)
 				  "Tried to set uniform with signature '{}' in shader '{}' with a value of type '{}'.", *uniform, label(),                 \
 				  as_glsl_type<target_type>);                                                                                              \
 	} while (0)
-// Asserts that a shader array uniform exists and is of the correct type.
+
+/// Asserts that a shader array uniform exists and is of the correct type.
 #define TR_ASSERT_SHADER_ARRAY_UNIFORM(target_type)                                                                                        \
 	do {                                                                                                                                   \
 		const opt_ref<glsl_variable> uniform{try_get(m_uniforms, index)};                                                                  \
@@ -620,7 +621,7 @@ std::string tr::shader_base::label() const
 	}
 }
 
-////////////////////////////////////////////////////////////// SHADER CLASSES /////////////////////////////////////////////////////////////
+//
 
 tr::vertex_shader::vertex_shader(graphics_context& context, zstring_view source)
 	: shader_base{context, source, GL_VERTEX_SHADER}
