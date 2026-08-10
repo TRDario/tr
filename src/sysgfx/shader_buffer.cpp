@@ -1,14 +1,11 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements the non-templated parts of shader_buffer.hpp.                                                                              //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements the non-templated parts of shader_buffer.hpp.
 
 #include "../../include/tr/sysgfx/shader_buffer.hpp"
 #include "../../include/tr/sysgfx/gl_defines.hpp"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 
-/////////////////////////////////////////////////////////// BASIC SHADER BUFFER ///////////////////////////////////////////////////////////
+//
 
 tr::basic_shader_buffer::basic_shader_buffer(graphics_context& context, usize header_size, usize capacity, map_type map_type)
 	: graphics_buffer{context}
