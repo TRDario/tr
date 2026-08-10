@@ -10,7 +10,7 @@
 #include "../../include/tr/sysgfx/index_buffer.hpp"
 #include "../../include/tr/sysgfx/shader_pipeline.hpp"
 #include "../../include/tr/sysgfx/texture.hpp"
-#include "../../include/tr/sysgfx/window.hpp"
+#include "../../include/tr/sysgfx/window_view.hpp"
 #include <SDL3/SDL.h>
 
 ////////////////////////////////////////////////////// GRAPHICS CONTEXT OPENING ERROR /////////////////////////////////////////////////////

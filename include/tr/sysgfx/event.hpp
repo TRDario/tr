@@ -25,17 +25,20 @@
 #pragma once
 #include "keyboard.hpp"
 #include "mouse.hpp"
-#include "window.hpp"
+#include "window_view.hpp"
 
-namespace tr {
+namespace tr
+{
 	class event;
 }
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
-namespace tr {
+namespace tr
+{
 	// Event emitted when a key is pressed.
-	struct key_down_event {
+	struct key_down_event
+	{
 		// View to the window associated with the event.
 		window_view window;
 		// Whether the event is a repeat.
@@ -56,7 +59,8 @@ namespace tr {
 		operator key_chord() const;
 	};
 	// Event emitted when a key is release.
-	struct key_up_event {
+	struct key_up_event
+	{
 		// View to the window associated with the event.
 		window_view window;
 		// The physical keycode of the released key.
@@ -70,7 +74,8 @@ namespace tr {
 		explicit key_up_event(const event& event);
 	};
 	// Event emitted when text is inputted.
-	struct text_input_event {
+	struct text_input_event
+	{
 		// View to the window associated with the event.
 		window_view window;
 		// A view over the inputted text string.
@@ -81,7 +86,8 @@ namespace tr {
 	};
 
 	// Event emitted when the mouse is moved.
-	struct mouse_motion_event {
+	struct mouse_motion_event
+	{
 		// View to the window associated with the event.
 		window_view window;
 		// A mask of the held mouse buttons.
@@ -95,7 +101,8 @@ namespace tr {
 		explicit mouse_motion_event(const event& event);
 	};
 	// Event emitted when a mouse button is pressed.
-	struct mouse_down_event {
+	struct mouse_down_event
+	{
 		// View to the window associated with the event.
 		window_view window;
 		// The pressed mouse button.
@@ -109,7 +116,8 @@ namespace tr {
 		explicit mouse_down_event(const event& event);
 	};
 	// Event emitted when a mouse button is released.
-	struct mouse_up_event {
+	struct mouse_up_event
+	{
 		// View to the window associated with the event.
 		window_view window;
 		// The released mouse button.
@@ -121,7 +129,8 @@ namespace tr {
 		explicit mouse_up_event(const event& event);
 	};
 	// Event emitted when the mouse wheel is moved.
-	struct mouse_wheel_event {
+	struct mouse_wheel_event
+	{
 		// View to the window associated with the event.
 		window_view window;
 		// The change in wheel value.
@@ -134,7 +143,8 @@ namespace tr {
 	};
 
 	// Event emitted when a window is shown.
-	struct window_show_event {
+	struct window_show_event
+	{
 		// View to the window associated with the event.
 		window_view window;
 
@@ -142,7 +152,8 @@ namespace tr {
 		explicit window_show_event(const event& event);
 	};
 	// Event emitted when a window is hidden.
-	struct window_hide_event {
+	struct window_hide_event
+	{
 		// View to the window associated with the event.
 		window_view window;
 
@@ -150,7 +161,8 @@ namespace tr {
 		explicit window_hide_event(const event& event);
 	};
 	// Event emitted when the window backbuffer changes size.
-	struct backbuffer_resize_event {
+	struct backbuffer_resize_event
+	{
 		// View to the window associated with the event.
 		window_view window;
 		// The new size of the backbuffer.
@@ -160,7 +172,8 @@ namespace tr {
 		explicit backbuffer_resize_event(const event& event);
 	};
 	// Event emitted when the mouse enters a window.
-	struct window_mouse_enter_event {
+	struct window_mouse_enter_event
+	{
 		// View to the window associated with the event.
 		window_view window;
 
@@ -168,7 +181,8 @@ namespace tr {
 		explicit window_mouse_enter_event(const event& event);
 	};
 	// Event emitted when the mouse leaves a window.
-	struct window_mouse_leave_event {
+	struct window_mouse_leave_event
+	{
 		// View to the window associated with the event.
 		window_view window;
 
@@ -176,7 +190,8 @@ namespace tr {
 		explicit window_mouse_leave_event(const event& event);
 	};
 	// Event emitted when a window gains focus.
-	struct window_gain_focus_event {
+	struct window_gain_focus_event
+	{
 		// View to the window associated with the event.
 		window_view window;
 
@@ -184,7 +199,8 @@ namespace tr {
 		explicit window_gain_focus_event(const event& event);
 	};
 	// Event emitted when a window loses focus.
-	struct window_lose_focus_event {
+	struct window_lose_focus_event
+	{
 		// View to the window associated with the event.
 		window_view window;
 
@@ -193,9 +209,13 @@ namespace tr {
 	};
 
 	// Event emitted for unrecognized event types.
-	struct unknown_event {};
+	struct unknown_event
+	{
+	};
 	// Event emitted when the application wants to quit.
-	struct quit_event {};
+	struct quit_event
+	{
+	};
 
 	// Concept denoting the list of valid event types.
 	template <typename T>
@@ -231,15 +251,19 @@ namespace tr {
 		};
 
 	// Unified event type.
-	class event {
+	class event
+	{
 	  public:
 		// Checks whether the event is of a certain type.
-		template <event_type T> bool is() const;
+		template <event_type T>
+		bool is() const;
 		// Converts the event into a sub-type.
-		template <event_type T> T as() const;
+		template <event_type T>
+		T as() const;
 
 		// Visits the event.
-		template <event_visitor Visitor> auto visit(Visitor&& visitor) const;
+		template <event_visitor Visitor>
+		auto visit(Visitor&& visitor) const;
 
 	  private:
 		// Storage for SDL_Event.

@@ -1,35 +1,16 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Provides shader pipeline classes.                                                                                                     //
-//                                                                                                                                       //
-// Shader pipelines are an abstraction over OpenGL program pipeline objects.                                                             //
-//                                                                                                                                       //
-// tr::shader_pipeline is an object that references a shader of each stage and combines them into a single pipeline. It does not         //
-// take ownership of the shaders passed to it:                                                                                           //
-//     - tr::shader_pipeline{context, vshader, fshader} -> creates a pipeline with vertex and fragment shader stages                     //
-//                                                                                                                                       //
-// Pipeline shaders can be reset using .set_shaders():                                                                                   //
-//     - pipeline.set_shaders(vshader2, fshader2) -> pipeline now has vshader2, fshader2 stages                                          //
-//                                                                                                                                       //
-// tr::owning_shader_pipeline is an object that *does* own the shader stages within it. After construction, these shaders can be         //
-// accessed from the pipeline:                                                                                                           //
-//     - tr::owning_shader_pipeline pipeline{context, tr::vertex_shader{context, vshader_src}, tr::fragment_shader{context, fshader_src}}//
-//       -> creates vertex and fragment shaders and then stores them in the pipeline                                                     //
-//     - pipeline.vertex_shader().set_uniform(0, 5.0f) -> sets uniform 0 of the vertex shader of the pipeline                            //
-//                                                                                                                                       //
-// The label of a shader pipeline can be set with .set_label() and gotten with .label():                                                 //
-//     - pipeline.set_label("Example pipeline"); pipeline.label() -> "Example pipeline"                                                  //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Provides shader pipeline classes.
 
 #pragma once
 #include "shader.hpp"
 
 //////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
 
-namespace tr {
+namespace tr
+{
 	// Shader program pipeline.
-	class shader_pipeline {
+	class shader_pipeline
+	{
 	  public:
 		// Creates a shader pipeline.
 		shader_pipeline(graphics_context& context, const vertex_shader& vshader, const fragment_shader& fshader);
@@ -47,7 +28,8 @@ namespace tr {
 
 	  private:
 		// Shader pipeline deleter.
-		struct deleter {
+		struct deleter
+		{
 			// Reference to the graphics context the pipeline is on.
 			graphics_context& context;
 
@@ -62,7 +44,8 @@ namespace tr {
 	};
 
 	// Shader program pipeline that owns its shaders.
-	class owning_shader_pipeline {
+	class owning_shader_pipeline
+	{
 	  public:
 		// Creates an owning shader pipeline.
 		owning_shader_pipeline(graphics_context& context, vertex_shader&& vshader, fragment_shader&& fshader);

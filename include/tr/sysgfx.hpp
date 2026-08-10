@@ -45,3 +45,4 @@
 #include "sysgfx/vertex_buffer.hpp"       // IWYU pragma: export
 #include "sysgfx/vertex_format.hpp"       // IWYU pragma: export
 #include "sysgfx/window.hpp"              // IWYU pragma: export
+#include "sysgfx/window_view.hpp"         // IWYU pragma: export

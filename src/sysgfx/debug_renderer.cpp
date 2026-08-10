@@ -7,17 +7,18 @@
 #include "../../include/tr/sysgfx/debug_renderer.hpp"
 #include "../../include/tr/sysgfx/blending.hpp"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
-#include "../../include/tr/sysgfx/render_target.hpp"
 #include "../../include/tr/sysgfx/texture.hpp"
 #include "../../include/tr/sysgfx/texture_view.hpp"
-#include "../../include/tr/sysgfx/window.hpp"
+#include "../../include/tr/sysgfx/window_view.hpp"
 
 using namespace std::chrono_literals;
 
 ////////////////////////////////////////////////////////////// DEBUG RENDERER /////////////////////////////////////////////////////////////
 
-namespace tr {
-	namespace {
+namespace tr
+{
+	namespace
+	{
 // Font bitmap.
 #include <generated/debug_renderer_font.hpp>
 // Vertex shader source code.

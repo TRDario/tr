@@ -1,20 +1,14 @@
 /// @file
-/// @brief Provides window classes and related datatypes.
+/// @brief Provides a non-owning window view class.
 
 #pragma once
 #include "../utility/exception.hpp"
 #include "../utility/zstring_view.hpp"
-#ifdef _WIN32
-#include "../utility/timer.hpp"
-#endif
 
 namespace tr
 {
 	class bitmap;
 	class bitmap_view;
-	enum class mouse_mode : bool;
-	enum class vsync : i8;
-	class window_view;
 } // namespace tr
 
 struct SDL_Window;
@@ -23,52 +17,39 @@ struct SDL_Window;
 
 namespace tr
 {
-	/// Marks a window as maximized.
-	constexpr glm::ivec2 maximized{};
-
-	/// Marks a window as not resizable.
-	constexpr glm::ivec2 not_resizable{};
+	/// V-sync modes.
+	enum class vsync : i8
+	{
+		/// Vsync is enabled, but late swaps happen immediately instead of waiting for the next retrace.
+		adaptive = -1,
+		/// Vsync is disabled.
+		disabled,
+		/// Vsync is enabled.
+		enabled
+	};
 
 	//
 
-	/// Window constructor parameters.
-	struct window_parameters
-	{
-		/// Whether the window should be fullscreen.
-		bool fullscreen{false};
-
-		/// Size of the window.
-		glm::ivec2 size{maximized};
-
-		/// Minimum size of the window when resizing (or not_resizable).
-		glm::ivec2 min_size{not_resizable};
-
-		/// Whether graphics contexts associated with the window should be debug contexts.
-		bool debug_graphics_context{TR_ENABLE_ASSERTS};
-
-		/// Enables the use of depth and stencil buffers on graphics contexts associated with the window.
-		bool enable_depth_stencil{false};
-
-		/// The number of samples used around a pixel for multisampled anti-aliasing on graphics contexts associated with the window.
-		u8 multisamples{0};
-	};
-
-	/// Window opening error.
-	class window_open_error : public exception
+	/// Window error.
+	class window_error : public exception
 	{
 	  public:
 		/// @name Constructors
 		/// @{
 
-		/// Constructs a window opening error.
-		explicit window_open_error();
+		/// Constructs a window error.
+		/// @tparam Args Types of the formatting arguments.
+		/// @param description_fmt Description format string.
+		/// @param args Description formatting arguments.
+		template <typename... Args>
+		explicit window_error(std::format_string<Args...> description_fmt, Args&&... args);
 
 		/// @}
 		/// @name Information
 		/// @{
 
 		/// Gets the name of the error.
-		/// @return `"Window opening error"`.
+		/// @return `"Window error"`.
 		std::string_view name() const override;
 
 		/// Gets the description of the error.
@@ -76,7 +57,7 @@ namespace tr
 		std::string_view description() const override;
 
 		/// Gets further details about the error.
-		/// @return Always empty.
+		/// @return Details of the error.
 		std::string_view details() const override;
 
 		/// @}
@@ -84,36 +65,27 @@ namespace tr
 	  private:
 		/// Description of the error.
 		std::string m_description;
+
+		/// Details of the error.
+		std::string_view m_details;
+
+		/// Constructs a window error.
+		/// @param description Description of the error.
+		window_error(std::string&& description);
 	};
 
 	//
 
-	/// Window object.
-	class window
+	/// Non-owning window view.
+	class window_view
 	{
 	  public:
-		/// @name Constructors
-		/// @{
+		/// @cond __hidden
+		/// Wraps a window view.
+		/// @param window Window pointer to wrap.
+		explicit window_view(SDL_Window* window);
+		/// @endcond
 
-		/// Opens a window.
-		/// @param title Initial window title.
-		/// @param parameters Initial window parameters.
-		/// @exception window_open_error If opening the window failed.
-		explicit window(zstring_view title, window_parameters parameters = {});
-
-		/// @}
-		/// @name View
-		/// @{
-
-		/// Creates a view to the window.
-		/// @return View to the window.
-		operator window_view();
-
-		/// Creates a view to the window.
-		/// @return View to the window.
-		window_view view();
-
-		/// @}
 		/// @name Title
 		/// @{
 
@@ -124,7 +96,7 @@ namespace tr
 		/// Sets the title of the window.
 		/// @param title New window title string.
 		/// @exception window_error If setting the window title failed.
-		void set_title(zstring_view title);
+		void set_title(zstring_view title) const;
 
 		/// @}
 		/// @name Icon
@@ -133,12 +105,12 @@ namespace tr
 		/// Sets the icon of the window.
 		/// @param bitmap Icon bitmap.
 		/// @exception window_error If setting the window icon failed.
-		void set_icon(const bitmap& bitmap);
+		void set_icon(const bitmap& bitmap) const;
 
 		/// Sets the icon of the window.
 		/// @param bitmap Icon bitmap view.
 		/// @exception window_error If setting the window icon failed.
-		void set_icon(const bitmap_view& bitmap);
+		void set_icon(const bitmap_view& bitmap) const;
 
 		/// @}
 		/// @name Size
@@ -157,7 +129,7 @@ namespace tr
 		/// Sets the size of the window.
 		/// @param size New size of the window in pixels.
 		/// @exception window_error If setting the size of the window failed.
-		void set_size(glm::ivec2 size);
+		void set_size(glm::ivec2 size) const;
 
 		/// @}
 		/// @name Fullscreen
@@ -170,7 +142,7 @@ namespace tr
 		/// Sets whether the window is fullscreen or not.
 		/// @param fullscreen Whether to enable fullscreen or not.
 		/// @exception window_error If setting the fullscreen mode of the window failed.
-		void set_fullscreen(bool fullscreen);
+		void set_fullscreen(bool fullscreen) const;
 
 		/// @}
 		/// @name Visibility
@@ -178,11 +150,11 @@ namespace tr
 
 		/// Unhides the window.
 		/// @exception window_error If showing the window failed.
-		void show();
+		void show() const;
 
 		/// Hides the window.
 		/// @exception window_error If hiding the window failed.
-		void hide();
+		void hide() const;
 
 		/// @}
 		/// @name Status
@@ -202,7 +174,7 @@ namespace tr
 
 		/// Raises the window to have input focus.
 		/// @exception window_error If raising the window failed.
-		void raise();
+		void raise() const;
 
 		/// @}
 		/// @name V-sync
@@ -211,59 +183,37 @@ namespace tr
 		/// Sets the window's V-sync mode.
 		/// @param vsync V-sync mode to set. `vsync::adaptive` may fall back to `vsync::enabled`.
 		// @exception window_error If setting the V-sync mode failed.
-		void set_vsync(vsync vsync);
+		void set_vsync(vsync vsync) const;
 
 		/// @}
 		/// @name Text input
 		/// @{
 
 		/// Enables the sending of text input events in the window.
-		void enable_text_input();
+		void enable_text_input() const;
 
 		/// Disables the sending of text input events in the window.
-		void disable_text_input();
-
-		/// @}
-		/// @name Mouse mode
-		/// @{
-
-		/// Sets the mouse mode in the window.
-		/// @param mode Mouse mode to set.
-		/// @exception window_error If setting the mouse mode failed.
-		void set_mouse_mode(mouse_mode mode);
+		void disable_text_input() const;
 
 		/// @}
 		/// @name Backbuffer
 		/// @{
 
 		/// Swaps the window's front- and backbuffer.
-		void flip_backbuffer();
+		void flip_backbuffer() const;
 
 		/// @}
 
+		/// @cond __hidden
+		/// Unwraps the SDL window pointer.
+		/// @return Pointer to the SDL window.
+		SDL_Window* unwrap() const;
+		/// @endcond
+
 	  private:
-		/// SDL window deleter.
-		struct deleter
-		{
-			/// Destroys a window.
-			/// @param ptr Pointer to an SDL window.
-			static void operator()(SDL_Window* ptr);
-		};
-
-		//
-
-		/// Pointer to the SDL window.
-		std::unique_ptr<SDL_Window, deleter> m_ptr;
-
-#ifdef _WIN32
-		/// Cursor graphic reset timer needed as a workaround for an SDL bug.
-		std::optional<timer> m_cursor_reset_timer;
-#endif
-
-		//
-
-		/// Creates a view to the window (const-qualified).
-		/// @return View to the window.
-		window_view view() const;
+		/// Pointer to an SDL window.
+		SDL_Window* m_ptr;
 	};
 } // namespace tr
+
+#include "impl/window_view.hpp" // IWYU pragma: export

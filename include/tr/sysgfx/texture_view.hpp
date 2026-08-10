@@ -63,7 +63,7 @@ namespace tr
 		// Accesses m_id.
 		friend class framebuffer;
 
-		// Accesses m_id.
+		// Accesses m_id and the private constructor.
 		friend class texture;
 
 		// Accesses m_id.

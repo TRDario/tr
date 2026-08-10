@@ -1,8 +1,8 @@
 /// @file
-/// @brief Implements the templated parts of window.hpp.
+/// @brief Implements the templated parts of window_view.hpp.
 
 #pragma once
-#include "../window.hpp"
+#include "../window_view.hpp"
 
 //
 
