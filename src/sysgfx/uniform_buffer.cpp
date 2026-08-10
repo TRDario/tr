@@ -1,15 +1,12 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements the non-templated parts of uniform_buffer.hpp.                                                                             //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements the non-templated parts of uniform_buffer.hpp.
 
 #include "../../include/tr/sysgfx/uniform_buffer.hpp"
 #include "../../include/tr/sysgfx/gl_defines.hpp"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/utility/exception.hpp"
 
-////////////////////////////////////////////////////////// BASIC UNIFORM BUFFER ///////////////////////////////////////////////////////////
+//
 
 tr::basic_uniform_buffer::basic_uniform_buffer(graphics_context& context, usize size)
 	: graphics_buffer{context}
