@@ -32,7 +32,7 @@ namespace tr
 
 		/// Constructs an exception.
 		/// @param path Path to the file that failed to load.
-		/// @param detail Shader loading error details.
+		/// @param details Shader loading error details.
 		shader_load_error(std::string_view path, std::string&& details);
 
 		/// @}
@@ -338,7 +338,7 @@ namespace tr
 
 		/// Sets a texture sampler uniform.
 		/// @param index Uniform location index.
-		/// @param value Uniform value.
+		/// @param texture Texture to set.
 		/// @pre The uniform at index `index` must exist and be of a matching type.
 		void set_uniform(int index, texture_view texture);
 

@@ -1,15 +1,13 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements the constexpr parts of event.hpp.                                                                                          //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements the templated parts of event.hpp.
 
 #pragma once
 #include "../event.hpp"
 
-////////////////////////////////////////////////////////////////// EVENT //////////////////////////////////////////////////////////////////
+//
 
-template <tr::event_type T> bool tr::event::is() const
+template <tr::event_type T>
+bool tr::event::is() const
 {
 	if constexpr (std::same_as<T, quit_event>) {
 		return type() == 0x100;
@@ -58,7 +56,8 @@ template <tr::event_type T> bool tr::event::is() const
 	}
 }
 
-template <tr::event_type T> T tr::event::as() const
+template <tr::event_type T>
+T tr::event::as() const
 {
 	TR_ASSERT(is<T>(), "Tried to convert event to a sub-type it is not.");
 
@@ -109,7 +108,8 @@ template <tr::event_type T> T tr::event::as() const
 	}
 }
 
-template <tr::event_visitor Visitor> auto tr::event::visit(Visitor&& visitor) const
+template <tr::event_visitor Visitor>
+auto tr::event::visit(Visitor&& visitor) const
 {
 	switch (type()) {
 	case 0x100:

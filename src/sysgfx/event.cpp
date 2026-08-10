@@ -1,19 +1,20 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements the non-constexpr parts of event.hpp.                                                                                      //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements the non-templated parts of event.hpp.
 
 #include "../../include/tr/sysgfx/event.hpp"
 #include <SDL3/SDL.h>
 
 using namespace std::chrono_literals;
 
-/////////////////////////////////////////////////////////////// EVENT TYPES ///////////////////////////////////////////////////////////////
+//
 
-namespace tr {
-	namespace {
-		// Converts SDL keymods to tr keymods.
+namespace tr
+{
+	namespace
+	{
+		/// Converts SDL keymods to tr keymods.
+		/// @param mods SDL keymods.
+		/// @return Equivalent tr keymods.
 		constexpr keymod convert_keymods(SDL_Keymod mods)
 		{
 			if (mods & SDL_KMOD_SHIFT) {

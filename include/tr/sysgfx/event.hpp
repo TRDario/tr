@@ -1,26 +1,5 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Provides event types and related functionality.                                                                                       //
-//                                                                                                                                       //
-// Events are handled in the handle_event(tr::event& event) main function. tr::event is an opaque sum type that can be converted         //
-// into one of its possible subtypes. This can be done using using a visitor using the .visit() method, or by using the .is<T>() and     //
-// .as<T>() methods to check for and convert to a specific type:                                                                         //
-//     - if (event.is<tr::key_down_event>()) {                                                                                           //
-//           std::println("Pressed {}", event.as<tr::key_down_event>().span);                                                            //
-//       }                                                                                                                               //
-//       else if (event.is<tr::key_up_event>()) {                                                                                        //
-//           std::println("Released {}", event.as<tr::key_up_event>().span);                                                             //
-//       }                                                                                                                               //
-//                                                                                                                                       //
-// Key-down events are convertible into both chord types:                                                                                //
-//     - tr::key_down_event{event} == "Ctrl+K"_sc -> returns whether Ctrl+K is pressed                                                   //
-//     - tr::key_down_event{event} == "Ctrl+Ć"_kc -> returns whether Ctrl+Ć is pressed                                                   //
-//                                                                                                                                       //
-// Text inputs are disabled by default and must be enabled and disabled manually:                                                        //
-//     - tr::enable_text_input_events() -> tr::text_input_event can now be sent                                                          //
-//     - tr::disable_text_input_events() -> tr::text_input_event will no longer be sent                                                  //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Provides event types and related utlities.
 
 #pragma once
 #include "keyboard.hpp"
@@ -32,198 +11,288 @@ namespace tr
 	class event;
 }
 
-//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
+//
 
 namespace tr
 {
-	// Event emitted when a key is pressed.
+	/// Event emitted when a key is pressed.
 	struct key_down_event
 	{
-		// View to the window associated with the event.
+		/// View to the window associated with the event.
 		window_view window;
-		// Whether the event is a repeat.
+
+		/// Whether the event is a repeat.
 		bool repeat;
-		// The physical keycode of the pressed key.
+
+		/// Physical keycode of the pressed key.
 		scancode scan;
-		// The virtual keycode of the pressed key.
+
+		/// Virtual keycode of the pressed key.
 		keycode key;
-		// A bitmask of held modifiers when the key was pressed.
+
+		/// Bitmask of held modifiers when the key was pressed.
 		keymod mods;
 
-		// Converts a generic event into a key down event.
+		/// @name Constructors
+		/// @{
+
+		/// Converts a generic event into a key down event.
+		/// @param event Event to convert.
 		explicit key_down_event(const event& event);
 
-		// Gets the pressed scan chord.
+		/// @}
+		/// @name Conversion operators
+		/// @{
+
+		/// Gets the pressed scan chord.
+		/// @return Pressed scan chord.
 		operator scan_chord() const;
-		// Gets the pressed key chord.
+
+		/// Gets the pressed key chord.
+		/// @return Pressed key chord.
 		operator key_chord() const;
+
+		/// @}
 	};
-	// Event emitted when a key is release.
+
+	/// Event emitted when a key is release.
 	struct key_up_event
 	{
-		// View to the window associated with the event.
+		/// View to the window associated with the event.
 		window_view window;
-		// The physical keycode of the released key.
+
+		/// Physical keycode of the released key.
 		scancode scan;
-		// The virtual keycode of the released key.
+
+		/// Virtual keycode of the released key.
 		keycode key;
-		// A bitmask of held modifiers when the key was released.
+
+		/// Bitmask of held modifiers when the key was released.
 		keymod mods;
 
-		// Converts a generic event into a key up event.
+		//
+
+		/// Converts a generic event into a key up event.
+		/// @param event Event to convert.
 		explicit key_up_event(const event& event);
 	};
-	// Event emitted when text is inputted.
+
+	/// Event emitted when text is inputted.
 	struct text_input_event
 	{
-		// View to the window associated with the event.
+		/// View to the window associated with the event.
 		window_view window;
-		// A view over the inputted text string.
+
+		/// View over the inputted text string.
 		std::string_view text;
 
-		// Converts a generic event into a text input event.
+		//
+
+		/// Converts a generic event into a text input event.
+		/// @param event Event to convert.
 		explicit text_input_event(const event& event);
 	};
 
-	// Event emitted when the mouse is moved.
+	//
+
+	/// Event emitted when the mouse is moved.
 	struct mouse_motion_event
 	{
-		// View to the window associated with the event.
+		/// View to the window associated with the event.
 		window_view window;
-		// A mask of the held mouse buttons.
+
+		/// Mask of the held mouse buttons.
 		mouse_button buttons;
-		// The position of the mouse.
+
+		/// Position of the mouse.
 		glm::vec2 pos;
-		// The change in mouse position since the last event of this type.
+
+		/// Change in mouse position since the last event of this type.
 		glm::vec2 delta;
 
-		// Converts a generic event into a mouse motion event.
+		//
+
+		/// Converts a generic event into a mouse motion event.
+		/// @param event Event to convert.
 		explicit mouse_motion_event(const event& event);
 	};
-	// Event emitted when a mouse button is pressed.
+
+	/// Event emitted when a mouse button is pressed.
 	struct mouse_down_event
 	{
-		// View to the window associated with the event.
+		/// View to the window associated with the event.
 		window_view window;
-		// The pressed mouse button.
+
+		/// Pressed mouse button.
 		mouse_button button;
-		// The number of consecutive clicks.
+
+		/// Number of consecutive clicks.
 		u8 clicks;
-		// The position of the mouse.
+
+		/// Position of the mouse.
 		glm::vec2 pos;
 
-		// Converts a generic event into a mouse down event.
+		//
+
+		/// Converts a generic event into a mouse down event.
+		/// @param event Event to convert.
 		explicit mouse_down_event(const event& event);
 	};
-	// Event emitted when a mouse button is released.
+
+	/// Event emitted when a mouse button is released.
 	struct mouse_up_event
 	{
-		// View to the window associated with the event.
+		/// View to the window associated with the event.
 		window_view window;
-		// The released mouse button.
+
+		/// Released mouse button.
 		mouse_button button;
-		// The position of the mouse.
+
+		/// Position of the mouse.
 		glm::vec2 pos;
 
-		// Converts a generic event into a mouse up event.
+		//
+
+		/// Converts a generic event into a mouse up event.
+		/// @param event Event to convert.
 		explicit mouse_up_event(const event& event);
 	};
-	// Event emitted when the mouse wheel is moved.
+
+	/// Event emitted when the mouse wheel is moved.
 	struct mouse_wheel_event
 	{
-		// View to the window associated with the event.
+		/// View to the window associated with the event.
 		window_view window;
-		// The change in wheel value.
+
+		/// Change in wheel value.
 		glm::vec2 delta;
-		// The position of the mouse.
+
+		/// Position of the mouse.
 		glm::vec2 mouse_pos;
 
-		// Converts a generic event into a mouse wheel event.
+		//
+
+		/// Converts a generic event into a mouse wheel event.
+		/// @param event Event to convert.
 		explicit mouse_wheel_event(const event& event);
 	};
 
-	// Event emitted when a window is shown.
+	//
+
+	/// Event emitted when a window is shown.
 	struct window_show_event
 	{
-		// View to the window associated with the event.
+		/// View to the window associated with the event.
 		window_view window;
 
-		// Converts a generic event into a window showing event.
+		//
+
+		/// Converts a generic event into a window showing event.
+		/// @param event Event to convert.
 		explicit window_show_event(const event& event);
 	};
-	// Event emitted when a window is hidden.
+
+	/// Event emitted when a window is hidden.
 	struct window_hide_event
 	{
-		// View to the window associated with the event.
+		/// View to the window associated with the event.
 		window_view window;
 
-		// Converts a generic event into a window hiding event.
+		//
+
+		/// Converts a generic event into a window hiding event.
+		/// @param event Event to convert.
 		explicit window_hide_event(const event& event);
 	};
-	// Event emitted when the window backbuffer changes size.
+
+	/// Event emitted when the window backbuffer changes size.
 	struct backbuffer_resize_event
 	{
-		// View to the window associated with the event.
+		/// View to the window associated with the event.
 		window_view window;
-		// The new size of the backbuffer.
+
+		/// New size of the backbuffer.
 		glm::ivec2 size;
 
-		// Converts a generic event into a window backbuffer resizing event.
+		//
+
+		/// Converts a generic event into a window backbuffer resizing event.
+		/// @param event Event to convert.
 		explicit backbuffer_resize_event(const event& event);
 	};
-	// Event emitted when the mouse enters a window.
+
+	/// Event emitted when the mouse enters a window.
 	struct window_mouse_enter_event
 	{
-		// View to the window associated with the event.
+		/// View to the window associated with the event.
 		window_view window;
 
-		// Converts a generic event into a window mouse entering event.
+		/// Converts a generic event into a window mouse entering event.
+		/// @param event Event to convert.
 		explicit window_mouse_enter_event(const event& event);
 	};
-	// Event emitted when the mouse leaves a window.
+
+	/// Event emitted when the mouse leaves a window.
 	struct window_mouse_leave_event
 	{
-		// View to the window associated with the event.
+		/// View to the window associated with the event.
 		window_view window;
 
-		// Converts a generic event into a window mouse leaving event.
+		//
+
+		/// Converts a generic event into a window mouse leaving event.
+		/// @param event Event to convert.
 		explicit window_mouse_leave_event(const event& event);
 	};
-	// Event emitted when a window gains focus.
+
+	/// Event emitted when a window gains focus.
 	struct window_gain_focus_event
 	{
-		// View to the window associated with the event.
+		/// View to the window associated with the event.
 		window_view window;
 
-		// Converts a generic event into a window focus gaining event.
+		//
+
+		/// Converts a generic event into a window focus gaining event.
+		/// @param event Event to convert.
 		explicit window_gain_focus_event(const event& event);
 	};
-	// Event emitted when a window loses focus.
+
+	/// Event emitted when a window loses focus.
 	struct window_lose_focus_event
 	{
-		// View to the window associated with the event.
+		/// View to the window associated with the event.
 		window_view window;
 
-		// Converts a generic event into a window focus losing event.
+		//
+
+		/// Converts a generic event into a window focus losing event.
+		/// @param event Event to convert.
 		explicit window_lose_focus_event(const event& event);
 	};
 
-	// Event emitted for unrecognized event types.
+	//
+
+	/// Event emitted for unrecognized event types.
 	struct unknown_event
 	{
 	};
-	// Event emitted when the application wants to quit.
+
+	/// Event emitted when the application wants to quit.
 	struct quit_event
 	{
 	};
 
-	// Concept denoting the list of valid event types.
+	//
+
+	/// Valid event type.
 	template <typename T>
 	concept event_type = one_of<T, quit_event, window_show_event, window_hide_event, backbuffer_resize_event, window_gain_focus_event,
 								window_lose_focus_event, window_mouse_enter_event, window_mouse_leave_event, key_down_event, key_up_event,
 								text_input_event, mouse_motion_event, mouse_down_event, mouse_up_event, mouse_wheel_event>;
 
-	// An event visitor must be callable with all event types, and all overloads must return the same type.
+	/// Valid event visitor type.
+	/// @details Event visitors must be callable with all event types, and all overloads must return the same type.
 	template <typename T>
 	concept event_visitor =
 		std::invocable<T, quit_event> && std::invocable<T, window_show_event> && std::invocable<T, window_hide_event> &&
@@ -250,28 +319,54 @@ namespace tr
 			requires std::same_as<decltype(visitor(quit_event{})), decltype(visitor(std::declval<unknown_event>()))>;
 		};
 
-	// Unified event type.
+	//
+
+	/// Unified event type.
 	class event
 	{
 	  public:
-		// Checks whether the event is of a certain type.
+		/// @name Alternatives
+		/// @{
+
+		/// Checks whether the event is of a certain type.
+		/// @tparam T Event type.
+		/// @return Whether the event holds an event of type `T`.
 		template <event_type T>
 		bool is() const;
-		// Converts the event into a sub-type.
+
+		/// Converts the event into a sub-type.
+		/// @tparam T Event type.
+		/// @pre The event must hold an event of type `T`.
+		/// @return Held event subtype.
 		template <event_type T>
 		T as() const;
 
-		// Visits the event.
+		/// @}
+		/// @name Visiting
+		/// @{
+
+		/// Visits the event.
+		/// @tparam Visitor Event visitor type.
+		/// @param visitor Event visitor.
+		/// @return Result returned by the visitor.
 		template <event_visitor Visitor>
 		auto visit(Visitor&& visitor) const;
 
+		/// @}
+
 	  private:
-		// Storage for SDL_Event.
+		/// Storage for SDL_Event.
 		alignas(8) std::byte m_buffer[128];
 
+		//
+
+		/// Private default constructor.
 		event() = default;
 
-		// Gets the event subtype.
+		//
+
+		/// Gets the event subtype.
+		/// @return SDL event subtype ID.
 		u32 type() const;
 	};
 } // namespace tr
