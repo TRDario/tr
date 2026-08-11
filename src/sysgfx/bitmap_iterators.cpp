@@ -1,21 +1,26 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements bitmap_iterators.hpp.                                                                                                      //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements bitmap_iterators.hpp.
 
 #include "../../include/tr/sysgfx/bitmap_iterators.hpp"
 #include "../../include/tr/utility/macro.hpp"
 #include <SDL3/SDL.h>
 #include <SDL3_image/SDL_image.h>
 
-/////////////////////////////////////////////////////////////// PIXEL COLOR ///////////////////////////////////////////////////////////////
+//
 
-namespace tr {
-	namespace {
+namespace tr
+{
+	namespace
+	{
+		/// 24-bit integer.
 		using u24 = tr::u8[3];
 
-		// Extracts an RGBA8 color value from a pixel.
+		//
+
+		/// Extracts an RGBA8 color value from a pixel.
+		/// @param data Pointer to the pixel data.
+		/// @param format Format of the pixel.
+		/// @return Color of the pixel.
 		rgba8 pixel_color(const std::byte* data, pixel_format format)
 		{
 			u32 value{};
@@ -44,7 +49,7 @@ namespace tr {
 	} // namespace
 } // namespace tr
 
-//////////////////////////////////////////////////////// CONST/SUB-BITMAP ITERATOR ////////////////////////////////////////////////////////
+//
 
 tr::sub_bitmap::reference::reference(const std::byte* ptr, pixel_format format)
 	: m_ptr{ptr}
@@ -137,7 +142,7 @@ glm::ivec2 tr::sub_bitmap::iterator::pos() const
 	return m_bitmap_pos;
 }
 
-///////////////////////////////////////////////////////////// BITMAP ITERATOR /////////////////////////////////////////////////////////////
+//
 
 tr::bitmap::reference::reference(std::byte* ptr, pixel_format format)
 	: m_ptr{ptr}
