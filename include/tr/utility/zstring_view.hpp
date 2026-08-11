@@ -202,7 +202,7 @@ namespace tr
 
 	inline namespace literals
 	{
-		/// Provides NUL-terminated string view literals.
+		/// Namespace containing NUL-terminated string view literals.
 		inline namespace zstring_view_literals
 		{
 			/// @name Literals

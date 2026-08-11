@@ -25,10 +25,9 @@ namespace tr
 		x2 = 0x10
 	};
 
-	/// @name Overloaded operators
-	/// @{
+	/// @cond __hidden
 	TR_DEFINE_ENUM_BITMASK_OPERATORS(mouse_button);
-	/// @}
+	/// @endcond
 
 	//
 

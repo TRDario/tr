@@ -17,6 +17,7 @@
 #include "sysgfx/bitmap_iterators.hpp"    // IWYU pragma: export
 #include "sysgfx/blending.hpp"            // IWYU pragma: export
 #include "sysgfx/circle_renderer.hpp"     // IWYU pragma: export
+#include "sysgfx/clipboard.hpp"           // IWYU pragma: export
 #include "sysgfx/cursor.hpp"              // IWYU pragma: export
 #include "sysgfx/debug_renderer.hpp"      // IWYU pragma: export
 #include "sysgfx/dialog.hpp"              // IWYU pragma: export

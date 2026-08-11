@@ -1,17 +1,175 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements the constexpr parts of keyboard.hpp.                                                                                       //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements the constexpr parts of keyboard.hpp.
 
 #pragma once
+#include "../../utility/macro.hpp"
 #include "../keyboard.hpp"
 
-/////////////////////////////////////////////////////////// SCANCODE AND KEYCODE //////////////////////////////////////////////////////////
+//
+
+/// Scancode hasher.
+template <>
+struct boost::hash<tr::scancode>
+{
+	/// Hashes a scancode.
+	/// @param code Scancode to hash.
+	/// @return Scancode hash.
+	std::size_t operator()(tr::scancode code) const;
+};
+
+/// Keycode hasher.
+template <>
+struct boost::hash<tr::keycode>
+{
+	/// Hashes a keycode.
+	/// @param code Keycode to hash.
+	/// @return Keycode hash.
+	std::size_t operator()(tr::keycode code) const;
+};
+
+/// Scan chord hasher.
+template <>
+struct boost::hash<tr::scan_chord>
+{
+	/// Hashes a scan chord.
+	/// @param chord Chord to hash.
+	/// @return Scan chord hash.
+	std::size_t operator()(tr::scan_chord chord) const;
+};
+
+/// Key chord hasher.
+template <>
+struct boost::hash<tr::key_chord>
+{
+	/// Hashes a key chord.
+	/// @param chord Chord to hash.
+	/// @return Key chord hash.
+	std::size_t operator()(tr::key_chord chord) const;
+};
+
+//
+
+/// Scancode formatter.
+template <>
+struct std::formatter<tr::scancode> : public std::formatter<const char*>
+{
+	/// Formats a scancode.
+	/// @tparam FormatContext Formatting context type.
+	/// @param scan Scancode to format.
+	/// @param ctx Formatting context.
+	template <typename FormatContext>
+	constexpr auto format(tr::scancode scan, FormatContext& ctx) const
+	{
+		ctx.advance_to(std::formatter<const char*>::format(name(scan), ctx));
+		return ctx.out();
+	}
+};
+
+// Scan chord formatter.
+template <>
+struct std::formatter<tr::scan_chord> : public std::formatter<std::string>
+{
+	/// Formats a scan chord.
+	/// @tparam FormatContext Formatting context type.
+	/// @param chord Scan chord to format.
+	/// @param ctx Formatting context.
+	template <typename FormatContext>
+	constexpr auto format(tr::scan_chord chord, FormatContext& ctx) const
+	{
+		ctx.advance_to(std::formatter<std::string>::format(chord.name(), ctx));
+		return ctx.out();
+	}
+};
+
+// Keycode formatter.
+template <>
+struct std::formatter<tr::keycode> : public std::formatter<std::string>
+{
+	/// Formats a keycode.
+	/// @tparam FormatContext Formatting context type.
+	/// @param scan Keycode to format.
+	/// @param ctx Formatting context.
+	template <typename FormatContext>
+	constexpr auto format(tr::keycode key, FormatContext& ctx) const
+	{
+		ctx.advance_to(std::formatter<std::string>::format(name(key), ctx));
+		return ctx.out();
+	}
+};
+
+// Key chord formatter.
+template <>
+struct std::formatter<tr::key_chord> : public std::formatter<std::string>
+{
+	/// Formats a key chord.
+	/// @tparam FormatContext Formatting context type.
+	/// @param scan Key chord to format.
+	/// @param ctx Formatting context.
+	template <typename FormatContext>
+	constexpr auto format(tr::key_chord chord, FormatContext& ctx) const
+	{
+		ctx.advance_to(std::formatter<std::string>::format(chord.name(), ctx));
+		return ctx.out();
+	}
+};
+
+//
+
+/// Enables default binary IO for scancodes.
+template <>
+inline constexpr bool tr::enable_default_binary_io<tr::scancode>{true};
+
+/// Enables default binary IO for keycodes.
+template <>
+inline constexpr bool tr::enable_default_binary_io<tr::keycode>{true};
+
+//
+
+/// Scan chord binary reader.
+template <>
+struct tr::binary_reader<tr::scan_chord>
+{
+	/// Reads a scan chord from a stream.
+	/// @param is Input stream.
+	/// @param out Output parameter.
+	void operator()(std::istream& is, tr::scan_chord& out) const;
+};
+
+/// Scan chord binary writer.
+template <>
+struct tr::binary_writer<tr::scan_chord>
+{
+	/// Reads a scan chord from a stream.
+	/// @param is Input stream.
+	/// @param out Output parameter.
+	void operator()(std::ostream& os, const tr::scan_chord& in) const;
+};
+
+/// Key chord binary reader.
+template <>
+struct tr::binary_reader<tr::key_chord>
+{
+	/// Reads a key chord from a stream.
+	/// @param is Input stream.
+	/// @param out Output parameter.
+	void operator()(std::istream& is, tr::key_chord& out) const;
+};
+
+/// Key chord binary writer.
+template <>
+struct tr::binary_writer<tr::key_chord>
+{
+	/// Reads a key chord from a stream.
+	/// @param is Input stream.
+	/// @param out Output parameter.
+	void operator()(std::ostream& os, const tr::key_chord& in) const;
+};
+
+//
 
 namespace tr
 {
-	// Copied from SDL with modifications.
+	/// Copied from SDL with modifications.
 	constexpr std::array<zstring_view, 291> scancode_name_table{{
 		{},
 		{},
@@ -306,9 +464,13 @@ namespace tr
 		"EndCall",
 	}};
 
-	// Fallback for Unicode characters.
+	/// `to_keycode` fallback for Unicode characters.
+	/// @param str Keycode string.
+	/// @return Keycode associated with the string, or `keycode::unknown`.
 	keycode to_keycode_fallback(zstring_view str);
 } // namespace tr
+
+//
 
 constexpr tr::scancode tr::to_scancode(std::string_view str)
 {
@@ -361,7 +523,7 @@ constexpr tr::zstring_view tr::name(scancode scan)
 	return scancode_name_table[std::to_underlying(scan)];
 }
 
-////////////////////////////////////////////////////////////////// CHORDS /////////////////////////////////////////////////////////////////
+//
 
 constexpr tr::scan_chord::scan_chord(scancode scan)
 	: scan{scan}
@@ -459,7 +621,7 @@ constexpr tr::key_chord::key_chord(zstring_view str)
 	key = to_keycode(substr.data());
 }
 
-///////////////////////////////////////////////////////////////// LITERALS ////////////////////////////////////////////////////////////////
+//
 
 consteval tr::scancode tr::keyboard_literals::operator""_s(const char* cstr, usize size)
 {
@@ -501,34 +663,4 @@ consteval tr::key_chord tr::keyboard_literals::operator""_kc(const char* cstr, u
 		throw std::invalid_argument{"Invalid keyboard modifier name."};
 	}
 	return chord;
-}
-
-//////////////////////////////////////////////////////////////// FORMATTERS ///////////////////////////////////////////////////////////////
-
-template <typename FormatContext>
-constexpr auto std::formatter<tr::scancode>::format(tr::scancode scan, FormatContext& ctx) const
-{
-	ctx.advance_to(std::formatter<const char*>::format(name(scan), ctx));
-	return ctx.out();
-}
-
-template <typename FormatContext>
-constexpr auto std::formatter<tr::scan_chord>::format(tr::scan_chord chord, FormatContext& ctx) const
-{
-	ctx.advance_to(std::formatter<std::string>::format(chord.name(), ctx));
-	return ctx.out();
-}
-
-template <typename FormatContext>
-constexpr auto std::formatter<tr::keycode>::format(tr::keycode key, FormatContext& ctx) const
-{
-	ctx.advance_to(std::formatter<std::string>::format(name(key), ctx));
-	return ctx.out();
-}
-
-template <typename FormatContext>
-constexpr auto std::formatter<tr::key_chord>::format(tr::key_chord chord, FormatContext& ctx) const
-{
-	ctx.advance_to(std::formatter<std::string>::format(chord.name(), ctx));
-	return ctx.out();
 }

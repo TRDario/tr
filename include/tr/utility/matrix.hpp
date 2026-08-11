@@ -63,7 +63,7 @@ namespace tr
 
 	inline namespace literals
 	{
-		/// Provides matrix multiplication operators.
+		/// Namespace containing matrix multiplication operators.
 		inline namespace matrix_operators
 		{
 			/// @name Literals

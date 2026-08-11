@@ -13,7 +13,7 @@ namespace tr
 
 	inline namespace aliases
 	{
-		/// Common chrono aliases.
+		/// Namespace containing common chrono aliases.
 		inline namespace chrono_aliases
 		{
 			/// Duration in seconds.
@@ -84,7 +84,7 @@ namespace tr
 
 	inline namespace literals
 	{
-		/// Additional chrono literals.
+		/// Namespace containing additional chrono literals.
 		inline namespace chrono_literals
 		{
 			/// @name Literals
@@ -104,7 +104,8 @@ namespace tr
 		} // namespace chrono_literals
 	} // namespace literals
 
-	//
+	/// @name Chrono
+	/// @{
 
 	/// Computes the ratio between two durations.
 	/// @tparam Rep1 Representation type of the first duration.
@@ -122,6 +123,8 @@ namespace tr
 	/// @param time Timestamp value.
 	/// @return Local time information.
 	std::tm localtime(std::time_t time);
+
+	/// @}
 } // namespace tr
 
 #include "impl/chrono.hpp" // IWYU pragma: export
