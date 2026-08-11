@@ -1,14 +1,20 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements static_vector.hpp.                                                                                                         //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements static_vector.hpp.
 
 #pragma once
+#include "../binary_io.hpp"
 #include "../macro.hpp"
 #include "../static_vector.hpp"
 
-////////////////////////////////////////////////////////////// STATIC VECTOR //////////////////////////////////////////////////////////////
+//
+
+template <typename Element, tr::usize Capacity>
+tr::static_vector<Element, Capacity>::iterator::operator const_iterator() const
+{
+	return const_iterator{this->base()};
+}
+
+//
 
 template <typename Element, tr::usize Capacity>
 tr::static_vector<Element, Capacity>::static_vector(size_type size)
@@ -21,13 +27,13 @@ tr::static_vector<Element, Capacity>::static_vector(size_type size)
 }
 
 template <typename Element, tr::usize Capacity>
-tr::static_vector<Element, Capacity>::static_vector(size_type size, const Element& v)
+tr::static_vector<Element, Capacity>::static_vector(size_type size, const Element& value)
 	requires(std::copy_constructible<Element>)
 	: m_size{size}
 {
 	TR_ASSERT(size <= Capacity, "Tried to create a static vector of size {} but with a max capacity of only {}.", size, Capacity);
 
-	std::uninitialized_fill(begin(), end(), v);
+	std::uninitialized_fill(begin(), end(), value);
 }
 
 template <typename Element, tr::usize Capacity>
@@ -55,21 +61,22 @@ tr::static_vector<Element, Capacity>::static_vector(std::initializer_list<Elemen
 }
 
 template <typename Element, tr::usize Capacity>
-tr::static_vector<Element, Capacity>::static_vector(const static_vector& r)
+tr::static_vector<Element, Capacity>::static_vector(const static_vector& rhs)
 	requires(std::copy_constructible<Element>)
-	: static_vector{r.begin(), r.end()}
+	: static_vector{rhs.begin(), rhs.end()}
 {
 }
 
 template <typename Element, tr::usize Capacity>
-tr::static_vector<Element, Capacity>::static_vector(static_vector&& r) noexcept(std::is_nothrow_move_constructible_v<Element>)
+tr::static_vector<Element, Capacity>::static_vector(static_vector&& rhs) noexcept(std::is_nothrow_move_constructible_v<Element>)
 	requires(std::move_constructible<Element>)
-	: static_vector{std::move_iterator{r.begin()}, std::move_iterator{r.end()}}
+	: static_vector{std::move_iterator{rhs.begin()}, std::move_iterator{rhs.end()}}
 {
-	r.clear();
+	rhs.clear();
 }
 
-template <typename Element, tr::usize Capacity> tr::static_vector<Element, Capacity>::~static_vector<Element, Capacity>()
+template <typename Element, tr::usize Capacity>
+tr::static_vector<Element, Capacity>::~static_vector<Element, Capacity>()
 {
 	std::destroy(begin(), end());
 }
@@ -114,7 +121,8 @@ tr::static_vector<Element, Capacity>::const_reference tr::static_vector<Element,
 	return at(0);
 }
 
-template <typename Element, tr::usize Capacity> tr::static_vector<Element, Capacity>::reference tr::static_vector<Element, Capacity>::back()
+template <typename Element, tr::usize Capacity>
+tr::static_vector<Element, Capacity>::reference tr::static_vector<Element, Capacity>::back()
 {
 	return at(m_size - 1);
 }
@@ -125,7 +133,8 @@ tr::static_vector<Element, Capacity>::const_reference tr::static_vector<Element,
 	return at(m_size - 1);
 }
 
-template <typename Element, tr::usize Capacity> tr::static_vector<Element, Capacity>::pointer tr::static_vector<Element, Capacity>::data()
+template <typename Element, tr::usize Capacity>
+tr::static_vector<Element, Capacity>::pointer tr::static_vector<Element, Capacity>::data()
 {
 	return reinterpret_cast<Element*>(m_buffer);
 }
@@ -138,7 +147,8 @@ tr::static_vector<Element, Capacity>::const_pointer tr::static_vector<Element, C
 
 //
 
-template <typename Element, tr::usize Capacity> tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capacity>::begin()
+template <typename Element, tr::usize Capacity>
+tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capacity>::begin()
 {
 	return data();
 }
@@ -155,7 +165,8 @@ tr::static_vector<Element, Capacity>::const_iterator tr::static_vector<Element, 
 	return data();
 }
 
-template <typename Element, tr::usize Capacity> tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capacity>::end()
+template <typename Element, tr::usize Capacity>
+tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capacity>::end()
 {
 	return begin() + m_size;
 }
@@ -210,7 +221,8 @@ tr::static_vector<Element, Capacity>::const_reverse_iterator tr::static_vector<E
 
 //
 
-template <typename Element, tr::usize Capacity> constexpr bool tr::static_vector<Element, Capacity>::empty() const
+template <typename Element, tr::usize Capacity>
+constexpr bool tr::static_vector<Element, Capacity>::empty() const
 {
 	return m_size == 0;
 }
@@ -229,24 +241,25 @@ constexpr tr::static_vector<Element, Capacity>::size_type tr::static_vector<Elem
 
 //
 
-template <typename Element, tr::usize Capacity> void tr::static_vector<Element, Capacity>::clear()
+template <typename Element, tr::usize Capacity>
+void tr::static_vector<Element, Capacity>::clear()
 {
 	std::destroy(begin(), end());
 	m_size = 0;
 }
 
 template <typename Element, tr::usize Capacity>
-tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capacity>::insert(const_iterator where, const Element& v)
+tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capacity>::insert(const_iterator where, const Element& value)
 	requires(std::copy_constructible<Element>)
 {
-	return emplace(where, v);
+	return emplace(where, value);
 }
 
 template <typename Element, tr::usize Capacity>
-tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capacity>::insert(const_iterator where, Element&& v)
+tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capacity>::insert(const_iterator where, Element&& value)
 	requires(std::move_constructible<Element>)
 {
-	return emplace(where, std::move(v));
+	return emplace(where, std::move(value));
 }
 
 template <typename Element, tr::usize Capacity>
@@ -342,17 +355,17 @@ tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capaci
 }
 
 template <typename Element, tr::usize Capacity>
-tr::static_vector<Element, Capacity>::reference tr::static_vector<Element, Capacity>::push_back(const Element& v)
+tr::static_vector<Element, Capacity>::reference tr::static_vector<Element, Capacity>::push_back(const Element& value)
 	requires(std::copy_constructible<Element>)
 {
-	return emplace_back(v);
+	return emplace_back(value);
 }
 
 template <typename Element, tr::usize Capacity>
-tr::static_vector<Element, Capacity>::reference tr::static_vector<Element, Capacity>::push_back(Element&& v)
+tr::static_vector<Element, Capacity>::reference tr::static_vector<Element, Capacity>::push_back(Element&& value)
 	requires(std::move_constructible<Element>)
 {
-	return emplace_back(std::move(v));
+	return emplace_back(std::move(value));
 }
 
 template <typename Element, tr::usize Capacity>
@@ -386,7 +399,8 @@ tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capaci
 	return append(init.begin(), init.end());
 }
 
-template <typename Element, tr::usize Capacity> void tr::static_vector<Element, Capacity>::pop_back()
+template <typename Element, tr::usize Capacity>
+void tr::static_vector<Element, Capacity>::pop_back()
 {
 	back().~Element();
 	--m_size;
@@ -407,7 +421,7 @@ void tr::static_vector<Element, Capacity>::resize(size_type size)
 }
 
 template <typename Element, tr::usize Capacity>
-void tr::static_vector<Element, Capacity>::resize(size_type size, const Element& v)
+void tr::static_vector<Element, Capacity>::resize(size_type size, const Element& value)
 	requires(std::copy_constructible<Element>)
 {
 	const iterator old_end{end()};
@@ -416,22 +430,30 @@ void tr::static_vector<Element, Capacity>::resize(size_type size, const Element&
 		std::destroy(end(), old_end);
 	}
 	else if (end() > old_end) {
-		std::uninitialized_fill(old_end, end(), v);
+		std::uninitialized_fill(old_end, end(), value);
 	}
 }
 
-//////////////////////////////////////////////////////////////// BINARY IO ////////////////////////////////////////////////////////////////
+//
 
+/// Static vector binary reader.
 template <tr::binary_constructible Element, tr::usize Capacity>
-void tr::binary_reader<tr::static_vector<Element, Capacity>>::operator()(std::istream& is, static_vector<Element, Capacity>& out) const
+struct tr::binary_reader<tr::static_vector<Element, Capacity>>
 {
-	out.resize(read_binary<typename tr::static_vector<Element, Capacity>::size_type>(is));
-	read_binary(is, std::span{out});
-}
+	void operator()(std::istream& is, static_vector<Element, Capacity>& out) const
+	{
+		out.resize(read_binary<typename static_vector<Element, Capacity>::size_type>(is));
+		read_binary(is, std::span{out});
+	}
+};
 
+/// Static vector binary writer.
 template <tr::binary_writable Element, tr::usize Capacity>
-void tr::binary_writer<tr::static_vector<Element, Capacity>>::operator()(std::ostream& os, const static_vector<Element, Capacity>& in) const
+struct tr::binary_writer<tr::static_vector<Element, Capacity>>
 {
-	write_binary(os, in.size());
-	write_binary(os, std::span{in});
-}
+	void operator()(std::ostream& os, const static_vector<Element, Capacity>& in) const
+	{
+		write_binary(os, in.size());
+		write_binary(os, std::span{in});
+	}
+};
