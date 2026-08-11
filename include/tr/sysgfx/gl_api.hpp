@@ -15,6 +15,12 @@ namespace tr
 	/// Structure holding OpenGL function pointers.
 	struct gl_api
 	{
+		/// Loads OpenGL function pointers.
+		/// @pre A graphics context must be current on the thread this constructor is called from.
+		gl_api();
+
+		//
+
 		/// Pointer to glTextureStorage2D.
 		void (*allocate_2d_texture_storage)(unsigned int texture, int levels, unsigned int internalformat, int width, int height);
 
@@ -347,14 +353,5 @@ namespace tr
 
 		/// Pointer to glUseProgramStages.
 		void (*use_program_stages)(unsigned int pipeline, unsigned int stages, unsigned int program);
-
-	  private:
-		/// Loads OpenGL function pointers.
-		gl_api();
-
-		//
-
-		// Uses the private constructor.
-		friend class graphics_context;
 	};
 } // namespace tr
