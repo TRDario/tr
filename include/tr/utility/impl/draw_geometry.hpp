@@ -1,8 +1,5 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements draw_geometry.hpp.                                                                                                         //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements draw_geometry.hpp.
 
 #pragma once
 #include "../draw_geometry.hpp"
@@ -11,7 +8,7 @@
 #include "../polygon.hpp"
 #include "../triangle.hpp"
 
-//////////////////////////////////////////////////////////// SIZE CALCULATIONS ////////////////////////////////////////////////////////////
+//
 
 inline tr::usize tr::smooth_polygon_vertices(float r)
 {
@@ -48,9 +45,10 @@ constexpr tr::usize tr::polygon_outline_indices(u16 vertices)
 	return vertices * 6;
 }
 
-///////////////////////////////////////////////////////////////// INDICES /////////////////////////////////////////////////////////////////
+//
 
-template <std::output_iterator<tr::u16> Iterator> constexpr Iterator tr::fill_line_strip_indices(Iterator out, u16 vertices, u16 base)
+template <std::output_iterator<tr::u16> Iterator>
+constexpr Iterator tr::fill_line_strip_indices(Iterator out, u16 vertices, u16 base)
 {
 	TR_ASSERT(base + vertices <= UINT16_MAX, "Index overflow detected in fill_line_strip_indices.");
 
@@ -61,7 +59,8 @@ template <std::output_iterator<tr::u16> Iterator> constexpr Iterator tr::fill_li
 	return out;
 }
 
-template <std::output_iterator<tr::u16> Iterator> constexpr Iterator tr::fill_line_loop_indices(Iterator out, u16 vertices, u16 base)
+template <std::output_iterator<tr::u16> Iterator>
+constexpr Iterator tr::fill_line_loop_indices(Iterator out, u16 vertices, u16 base)
 {
 	out = fill_line_strip_indices(out, vertices, base);
 	*out++ = base + vertices - 1;
@@ -69,7 +68,8 @@ template <std::output_iterator<tr::u16> Iterator> constexpr Iterator tr::fill_li
 	return out;
 }
 
-template <std::output_iterator<tr::u16> Iterator> constexpr Iterator tr::fill_convex_polygon_indices(Iterator out, u16 vertices, u16 base)
+template <std::output_iterator<tr::u16> Iterator>
+constexpr Iterator tr::fill_convex_polygon_indices(Iterator out, u16 vertices, u16 base)
 {
 	TR_ASSERT(vertices >= 3, "Tried to calculate indices for {}-sided polygon.", vertices);
 	TR_ASSERT(base + vertices <= UINT16_MAX, "Index overflow detected in fill_convex_polygon_indices.");
@@ -139,9 +139,10 @@ constexpr Iterator tr::fill_simple_polygon_indices(Iterator out, std::span<const
 	return out;
 }
 
-///////////////////////////////////////////////////////////////// VERTICES ////////////////////////////////////////////////////////////////
+//
 
-template <std::output_iterator<glm::vec2> Iterator> constexpr Iterator tr::fill_rectangle_vertices(Iterator out, rectangle<float> rectangle)
+template <std::output_iterator<glm::vec2> Iterator>
+constexpr Iterator tr::fill_rectangle_vertices(Iterator out, rectangle<float> rectangle)
 {
 	*out++ = rectangle.tl;
 	*out++ = glm::vec2{rectangle.tl.x, rectangle.tl.y + rectangle.size.y};
@@ -150,7 +151,8 @@ template <std::output_iterator<glm::vec2> Iterator> constexpr Iterator tr::fill_
 	return out;
 }
 
-template <tr::sized_output_range<glm::vec2> Range> constexpr void tr::fill_rectangle_vertices(Range&& out, rectangle<float> rectangle)
+template <tr::sized_output_range<glm::vec2> Range>
+constexpr void tr::fill_rectangle_vertices(Range&& out, rectangle<float> rectangle)
 {
 	TR_ASSERT(std::size(out) == 4, "Tried to fill a range of size {} with rectangle vertices", std::size(out));
 
@@ -261,7 +263,8 @@ Iterator tr::fill_arc_vertices(Iterator out, usize vertices, circle circle, angl
 	return out;
 }
 
-template <tr::sized_output_range<glm::vec2> Range> void tr::fill_arc_vertices(Range&& out, circle circle, angle start, angle size)
+template <tr::sized_output_range<glm::vec2> Range>
+void tr::fill_arc_vertices(Range&& out, circle circle, angle start, angle size)
 {
 	fill_arc_vertices(std::begin(out), std::size(out), circle, start, size);
 }
@@ -272,17 +275,20 @@ Iterator tr::fill_regular_polygon_vertices(Iterator out, usize vertices, circle 
 	return fill_arc_vertices(out, vertices, circle, rotation, 1_tr);
 }
 
-template <tr::sized_output_range<glm::vec2> Range> void tr::fill_regular_polygon_vertices(Range&& out, circle circle, angle rotation)
+template <tr::sized_output_range<glm::vec2> Range>
+void tr::fill_regular_polygon_vertices(Range&& out, circle circle, angle rotation)
 {
 	fill_regular_polygon_vertices(std::begin(out), std::size(out), circle, rotation);
 }
 
-template <std::output_iterator<glm::vec2> Iterator> Iterator tr::fill_circle_vertices(Iterator out, usize vertices, circle circle)
+template <std::output_iterator<glm::vec2> Iterator>
+Iterator tr::fill_circle_vertices(Iterator out, usize vertices, circle circle)
 {
 	return fill_arc_vertices(out, vertices, circle, 0_tr, 1_tr);
 }
 
-template <tr::sized_output_range<glm::vec2> Range> void tr::fill_circle_vertices(Range&& out, circle circle)
+template <tr::sized_output_range<glm::vec2> Range>
+void tr::fill_circle_vertices(Range&& out, circle circle)
 {
 	fill_circle_vertices(std::begin(out), std::size(out), circle);
 }
@@ -309,7 +315,8 @@ Iterator tr::fill_circle_outline_vertices(Iterator out, usize vertices, circle c
 	return fill_circle_vertices(out, vertices, {circle.center, circle.radius - thickness / 2});
 }
 
-template <tr::sized_output_range<glm::vec2> Range> void tr::fill_circle_outline_vertices(Range&& out, circle circle, float thickness)
+template <tr::sized_output_range<glm::vec2> Range>
+void tr::fill_circle_outline_vertices(Range&& out, circle circle, float thickness)
 {
 	fill_circle_outline_vertices(std::begin(out), std::size(out) / 2, circle, thickness);
 }
