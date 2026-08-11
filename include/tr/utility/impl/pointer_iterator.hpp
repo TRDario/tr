@@ -109,8 +109,16 @@ namespace tr
 
 	template <typename Iterator, tr::pointer Pointer>
 	constexpr pointer_iterator<Iterator, Pointer>::difference_type operator-(pointer_iterator<Iterator, Pointer> lhs,
-																			 pointer_iterator<Iterator, Pointer> rhs)
+																			 std::type_identity_t<pointer_iterator<Iterator, Pointer>> rhs)
 	{
 		return lhs.m_base - rhs.m_base;
 	}
 } // namespace tr
+
+//
+
+template <typename Iterator, tr::pointer Pointer>
+Pointer tr::pointer_iterator<Iterator, Pointer>::base() const
+{
+	return m_base;
+}

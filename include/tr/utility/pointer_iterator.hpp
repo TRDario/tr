@@ -132,8 +132,14 @@ namespace tr
 		/// @param lhs, rhs Iterators to get the difference between.
 		/// @return Distance between `lhs` and `rhs`.
 		template <typename Iterator_, tr::pointer Pointer_>
-		friend constexpr pointer_iterator<Iterator_, Pointer_>::difference_type operator-(pointer_iterator<Iterator_, Pointer_> lhs,
-																						  pointer_iterator<Iterator_, Pointer_> rhs);
+		friend constexpr pointer_iterator<Iterator_, Pointer_>::difference_type operator-(
+			pointer_iterator<Iterator_, Pointer_> lhs, std::type_identity_t<pointer_iterator<Iterator_, Pointer_>> rhs);
+
+		//
+
+		/// Unwraps the iterator
+		/// @return Base pointer.
+		Pointer base() const;
 
 	  private:
 		/// Base pointer.

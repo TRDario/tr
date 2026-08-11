@@ -2,7 +2,6 @@
 /// @brief Provides a NUL-terminated string view.
 
 #pragma once
-#include "binary_io.hpp"
 #include "pointer_iterator.hpp"
 
 //

@@ -2,6 +2,7 @@
 /// @brief Implements zstring_view.hpp.
 
 #pragma once
+#include "../binary_io.hpp"
 #include "../zstring_view.hpp"
 
 //
