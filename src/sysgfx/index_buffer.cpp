@@ -1,14 +1,11 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements index_buffer.hpp.                                                                                                          //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements index_buffer.hpp.
 
 #include "../../include/tr/sysgfx/index_buffer.hpp"
 #include "../../include/tr/sysgfx/gl_defines.hpp"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 
-/////////////////////////////////////////////////////////// STATIC INDEX BUFFER ///////////////////////////////////////////////////////////
+//
 
 tr::static_index_buffer::static_index_buffer(graphics_context& context, std::span<const u16> data)
 	: graphics_buffer{context}
@@ -22,7 +19,7 @@ tr::static_index_buffer::static_index_buffer(graphics_context& context, std::spa
 	}
 }
 
-////////////////////////////////////////////////////////// DYNAMIC INDEX BUFFER ///////////////////////////////////////////////////////////
+//
 
 bool tr::dyn_index_buffer::empty() const
 {

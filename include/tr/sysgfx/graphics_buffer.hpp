@@ -18,11 +18,10 @@ namespace tr
 	class graphics_buffer
 	{
 	  public:
-		/// @cond __hidden
 		/// @name Constructors
 		/// @{
 
-		/// Constructs a buffer.
+		/// Constructs an empty buffer.
 		/// @param context Graphics context to create the buffer on.
 		graphics_buffer(graphics_context& context);
 
@@ -31,10 +30,11 @@ namespace tr
 		/// @{
 
 		/// Gets a reference to the graphics context the buffer is on.
-		/// @return Reference to the context the buffer is on.
+		/// @return Reference to the graphics context the buffer is on.
 		graphics_context& context() const;
 
 		/// @}
+		/// @cond __hidden
 		/// @name ID
 		/// @{
 
