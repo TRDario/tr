@@ -1,15 +1,12 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements the non-templated parts of vertex_buffer.hpp.                                                                              //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements the non-templated parts of vertex_buffer.hpp.
 
 #include "../../include/tr/sysgfx/vertex_buffer.hpp"
 #include "../../include/tr/sysgfx/gl_defines.hpp"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/utility/exception.hpp"
 
-/////////////////////////////////////////////////////// BASIC STATIC VERTEX BUFFER ////////////////////////////////////////////////////////
+//
 
 tr::basic_static_vertex_buffer::basic_static_vertex_buffer(graphics_context& context, std::span<const std::byte> data)
 	: graphics_buffer{context}
@@ -23,7 +20,7 @@ tr::basic_static_vertex_buffer::basic_static_vertex_buffer(graphics_context& con
 	}
 }
 
-/////////////////////////////////////////////////////// BASIC DYNAMIC VERTEX BUFFER ///////////////////////////////////////////////////////
+//
 
 bool tr::basic_dyn_vertex_buffer::empty() const
 {

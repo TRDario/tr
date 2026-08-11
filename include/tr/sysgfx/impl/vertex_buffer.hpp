@@ -1,14 +1,11 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements the templated parts of vertex_buffer.hpp.                                                                                  //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements the templated parts of vertex_buffer.hpp.
 
 #pragma once
 #include "../../utility/ranges.hpp"
 #include "../vertex_buffer.hpp"
 
-/////////////////////////////////////////////////////////// STATIC VERTEX BUFFER //////////////////////////////////////////////////////////
+//
 
 template <tr::standard_layout Element>
 template <tr::typed_contiguous_const_range<Element> Range>
@@ -17,24 +14,28 @@ tr::static_vertex_buffer<Element>::static_vertex_buffer(graphics_context& contex
 {
 }
 
-////////////////////////////////////////////////////////// DYNAMIC VERTEX BUFFER //////////////////////////////////////////////////////////
+//
 
-template <tr::standard_layout Element> tr::usize tr::dyn_vertex_buffer<Element>::size() const
+template <tr::standard_layout Element>
+tr::usize tr::dyn_vertex_buffer<Element>::size() const
 {
 	return basic_dyn_vertex_buffer::size() / sizeof(Element);
 }
 
-template <tr::standard_layout Element> tr::usize tr::dyn_vertex_buffer<Element>::capacity() const
+template <tr::standard_layout Element>
+tr::usize tr::dyn_vertex_buffer<Element>::capacity() const
 {
 	return basic_dyn_vertex_buffer::capacity() / sizeof(Element);
 }
 
-template <tr::standard_layout Element> void tr::dyn_vertex_buffer<Element>::resize(usize size)
+template <tr::standard_layout Element>
+void tr::dyn_vertex_buffer<Element>::resize(usize size)
 {
 	basic_dyn_vertex_buffer::resize(size * sizeof(Element));
 }
 
-template <tr::standard_layout Element> void tr::dyn_vertex_buffer<Element>::reserve(usize size)
+template <tr::standard_layout Element>
+void tr::dyn_vertex_buffer<Element>::reserve(usize size)
 {
 	basic_dyn_vertex_buffer::reserve(size * sizeof(Element));
 }
