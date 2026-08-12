@@ -1,153 +1,179 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Provides a vertex format class and related functionality.                                                                             //
-//                                                                                                                                       //
-// Vertex formats are an abstraction over OpenGL VAOs.                                                                                   //
-//                                                                                                                                       //
-// Vertex formats are composed of a list of vertex bindings (points to which vertex buffers are bound), which in turn are composed of a  //
-// divisor for instanced attributes (or tr::not_instanced) and a list of vertex attributes. tr::as_vertex_attribute<T> is used to map    //
-// C++ types to vertex attributes; it is defined for primitives and vectors, as well as tr colors, and may be specialized for custom     //
-// types:                                                                                                                                //
-//     - tr::as_vertex_attribute<tr::rgba8>                                                                                              //
-//       -> gets a vertex attribute corresponding to tr::rgba8                                                                           //
-//     - template <> inline constexpr tr::vertex_attribute as_vertex_attribute<my_vec4>{tr::as_vertex_attribute<glm::vec4>}              //
-//       -> defines my_vec4 as an alias for glm::vec4 in terms of vertex attributes                                                      //
-//                                                                                                                                       //
-// tr::as_vertex_attribute_list is defined as a standard form of obtaining lists of attributes for vertex bindings. A type must define   //
-// this in order to be eligible for use in vertex buffers. It is defined for lists of types that can be converted to vertex attributes   //
-// (in which case they are combined into a list), as well as types that  declare T::as_vertex_attribute_list as a public static array of //
-// vertex attributes, and may be specialized for custom types:                                                                           //
-//     - tr::as_vertex_attribute_list<tr::u8, tr::u8, float> -> list containing the vertex attributes for u8, u8, and float              //
-//     - struct my_struct {                                                                                                              //
-//           glm::vec2 pos;                                                                                                              //
-//           float opacity;                                                                                                              //
-//                                                                                                                                       //
-//           static constexpr auto as_vertex_attribute_list{tr::as_vertex_attribute_list<glm::vec2, float>};                             //
-//       };                                                                                                                              //
-//       tr::as_vertex_attribute<my_struct> -> takes the list from my_struct::as_vertex_attribute_list                                   //
-//                                                                                                                                       //
-// As a convenience, tr::make_vertex_binding<T> is provided to avoid having to directly use tr::as_vertex_attribute list to construct    //
-// vertex bindings:                                                                                                                      //
-//     - tr::make_vertex_binding<glm::vec2>()                                                                                            //
-//       -> equivalent to {.divisor = tr::not_instanced, .attrs = tr::as_vertex_attribute_list<glm::vec2>}                               //
-//     - tr::make_vertex_binding<tr::rgba8>(1)                                                                                           //
-//       -> equivalent to {.divisor = 1, .attrs = tr::as_vertex_attribute_list<tr::rgba8>}                                               //
-//                                                                                                                                       //
-// A vertex format is constructed with a span of vertex bindings: this span must stay valid for the entire lifetime of the format.       //
-// The label of a vertex format can be set with .set_label() and gotten with .label():                                                   //
-//     - constexpr std::array format_bindings{tr::make_vertex_binding<glm::vec2>(), tr::make_vertex_binding<my_struct>}                  //
-//       -> defines two vertex bindings, one taking glm::vec2 data, and the other my_struct data                                         //
-//     - tr::vertex_format format{format_bindings}; format.set_label("Example format")                                                   //
-//       -> creates a vertex format with the defined bindings with the label "Example format"                                            //
-//                                                                                                                                       //
-// tr::graphics_context::vertex2_format is provided as a built-in vertex format that is always available: separated vec2 position,       //
-// vec2 uv, and rgba8 color bindings.                                                                                                    //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Provides a vertex format class and related functionality.
 
 #pragma once
 #include "../utility/handle.hpp"
 #include "../utility/integer.hpp"
 #include "../utility/macro.hpp"
 
-namespace tr {
+namespace tr
+{
 	class graphics_context;
 }
 
-//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
+//
 
-namespace tr {
-	// A variable type that can be passed as a vertex attribute.
-	enum class vertex_attribute_type : u16 {
+namespace tr
+{
+	/// Variable type that can be passed as a vertex attribute.
+	enum class vertex_attribute_type : u16
+	{
+		/// Unknown vertex attribute.
 		unknown,
+		/// Signed 8-bit integer type.
 		i8 = 0x1400,
+		/// Unsigned 8-bit integer type.
 		u8,
+		/// Signed 16-bit integer type.
 		i16,
+		/// Unsigned 16-bit integer type.
 		u16,
+		/// Signed 32-bit integer type.
 		i32,
+		/// Unsigned 32-bit integer type.
 		u32,
+		/// 32-bit floating-point type.
 		f32 = 0x1406,
 	};
-	// Information about a vertex attribute.
-	struct vertex_attribute {
-		// The base type of the attribute.
+
+	//
+
+	/// Information about a vertex attribute.
+	struct vertex_attribute
+	{
+		/// Base type of the attribute.
 		vertex_attribute_type type{vertex_attribute_type::unknown};
-		// The number of elements in the attribute.
+
+		/// Number of elements in the attribute.
 		u8 elements{0};
-		// Whether the attribute is normalized (if integral).
+
+		/// Whether the attribute is normalized (if integral).
 		bool normalized{false};
 	};
-	// Tag to signify an integral vertex attribute should be normalized.
-	template <typename T> struct normalized {};
 
-	// Maps a C++ type to a vertex attribute. Mappings for 32-bit or smaller integers (wrapped in normalized or not) and floats, glm::vecs
-	// of such, and colors are defined by default.
+	/// Tag to signify an integral vertex attribute should be normalized.
+	/// @tparam T Type to signify is normalized.
+	template <typename T>
+	struct normalized
+	{
+	};
+
+	/// Maps a C++ type to a vertex attribute.
+	/// @note Mappings for 32-bit or smaller integers (wrapped in normalized or not) and floats, vectors of such, and colors are predefined.
+	/// @tparam T Type to get the vertex attribute for.
 	template <typename T>
 	inline constexpr vertex_attribute as_vertex_attribute{
 		TR_UNSPECIALIZED_VARIABLE_TEMPLATE(T, vertex_attribute, "Type is not convertible to vertex_attribute!"),
 	};
 
-	// Maps a C++ type or a list of C++ types to a list of vertex attributes. If the list is composed entirely of types convertible to
-	// vertex attributes, they will be grouped into a list. If the type has as_vertex_attribute_list as a public static array of vertex
-	// attributes, that list will be used. Otherwise, the type must be manually specialized.
+	/// Maps a C++ type or a list of C++ types to a list of vertex attributes.
+	/// @note If the list is composed entirely of types convertible to vertex attributes, they will be grouped into a list.
+	/// @note If the type has as_vertex_attribute_list as a public static array of vertex attributes, that list will be used.
+	/// @note Otherwise, the type must be manually specialized.
+	/// @tparam Ts Types to get the vertex attribute list for.
 	template <typename... Ts>
 	inline constexpr std::array as_vertex_attribute_list{
 		TR_UNSPECIALIZED_VARIABLE_TEMPLATE(Ts..., TR_MACRO_COMMA_GUARD(std::array<vertex_attribute, 0>),
 										   "Type(s) is/are not convertible to vertex attribute list!"),
 	};
 
-	// Sentinel for a vertex binding that is not instanced (that is, the attributes are per vertex).
+	//
+
+	/// Sentinel for a vertex binding that is not instanced (that is, the attributes are per vertex).
 	constexpr u32 not_instanced{0};
-	// A vertex binding point.
-	struct vertex_binding {
-		// The divisor of the binding.
+
+	/// Vertex binding point.
+	struct vertex_binding
+	{
+		/// Divisor of the binding.
 		u32 divisor;
-		// The attributes of the binding. This span is expected to last for the entire duration of the vertex format's lifetime.
+
+		/// Attributes of the binding. This span is expected to last for the entire duration of the vertex format's lifetime.
 		std::span<const vertex_attribute> attrs;
 	};
-	// Constructs a vertex binding using tr::as_vertex_attribute_list<T>.
-	template <typename T> constexpr vertex_binding make_vertex_binding(u32 divisor = not_instanced);
 
-	// GPU vertex format.
-	class vertex_format {
+	/// Constructs a vertex binding using `tr::as_vertex_attribute_list<T>`.
+	/// @tparam T Type to get the attribute list for.
+	/// @param divisor Divisor of the binding.
+	template <typename T>
+	constexpr vertex_binding make_vertex_binding(u32 divisor = not_instanced);
+
+	//
+
+	/// GPU vertex format.
+	class vertex_format
+	{
 	  public:
-		// Creates a new vertex format.
+		/// @name Constructors
+		/// @{
+
+		/// Creates a new vertex format.
+		/// @param context Graphics context to create the format on.
+		/// @param bindings Vertex bindings of the format.
 		vertex_format(graphics_context& context, std::span<const vertex_binding> bindings);
 
-		// Gets a reference to the graphics context the vertex format is on.
+		/// @}
+		/// @name Context
+		/// @{
+
+		/// Gets a reference to the graphics context the vertex format is on.
+		/// @return Reference to the graphics context the vertex format is on.
 		graphics_context& context() const;
 
-		// Sets the debug label of the vertex format.
+		/// @}
+		/// @name Label
+		/// @{
+
+		/// Sets the debug label of the vertex format.
+		/// @param label Label of the vertex format.
 		void set_label(std::string_view label);
-		// Gets the debug label of the vertex format.
+
+		/// Gets the debug label of the vertex format.
+		/// @return Label of the vertex format.
 		std::string label() const;
 
+		/// @}
+		/// @name ID.
+		/// @{
+
+		/// Gets the unique ID of the vertex format.
+		/// @return Unique ID of the vertex format.
+		unsigned int id() const;
+
+		/// @}
+
+#ifdef TR_ENABLE_GL_CHECKS
+		/// @cond __hidden
+		/// Gets information about the vertex format's bindings.
+		/// @return Information about the vertex format's bindings.
+		std::span<const vertex_binding> bindings() const;
+		/// @endcond
+#endif
+
 	  private:
-		// VAO deleter class.
-		struct deleter {
-			// Reference to the graphics context the VAO is on.
+		/// VAO deleter class.
+		struct deleter
+		{
+			/// Reference to the graphics context the VAO is on.
 			graphics_context& context;
 
-			// Deletes the VAO.
+			//
+
+			/// Deletes the VAO.
+			/// @param id OpenGL VAO ID.
 			void operator()(unsigned int id) const;
 		};
 
-		// Handle to the OpenGL VAO.
+		//
+
+		/// Handle to the OpenGL VAO.
 		handle<unsigned int, 0, deleter> m_vao;
+
 #ifdef TR_ENABLE_GL_CHECKS
-		// Information about the vertex format's bindings.
+		/// Information about the vertex format's bindings.
 		std::span<const vertex_binding> m_bindings;
 #endif
-
-		friend class graphics_context;
 	};
 } // namespace tr
-
-// Vertex attribute formatter.
-template <> struct std::formatter<tr::vertex_attribute> : private std::formatter<const char*>, private std::formatter<tr::u8> {
-	using std::formatter<const char*>::parse;
-	// Formats a vertex attribute.
-	template <typename FormatContext> constexpr auto format(tr::vertex_attribute v, FormatContext& ctx) const;
-};
 
 #include "impl/vertex_format.hpp" // IWYU pragma: export

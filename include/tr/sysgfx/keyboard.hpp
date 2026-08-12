@@ -33,10 +33,15 @@ namespace tr
 	/// Key modifier bitmasks.
 	enum class keymod : u16
 	{
+		/// No held keyboard modifiers.
 		none = 0x0000,
+		/// Left-or-right shift key held.
 		shift = 0x0003,
+		/// Left-or-right ctrl key held.
 		ctrl = 0x00C0,
+		/// Left-or-right alt key held.
 		alt = 0x0300,
+		/// Unknown keyboard modifiers.
 		unknown = 0xFFFF
 	};
 

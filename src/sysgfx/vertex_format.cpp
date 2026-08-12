@@ -1,14 +1,11 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements the non-templated parts of vertex_format.hpp.                                                                              //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements the non-templated parts of vertex_format.hpp.
 
 #include "../../include/tr/sysgfx/vertex_format.hpp"
 #include "../../include/tr/sysgfx/gl_defines.hpp"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 
-////////////////////////////////////////////////////////////// VERTEX FORMAT //////////////////////////////////////////////////////////////
+//
 
 tr::vertex_format::vertex_format(graphics_context& context, std::span<const vertex_binding> bindings)
 #ifdef TR_ENABLE_GL_CHECKS
@@ -93,3 +90,19 @@ std::string tr::vertex_format::label() const
 		return "<unnamed>";
 	}
 }
+
+//
+
+unsigned int tr::vertex_format::id() const
+{
+	return m_vao.get();
+}
+
+//
+
+#ifdef TR_ENABLE_GL_CHECKS
+std::span<const tr::vertex_binding> tr::vertex_format::bindings() const
+{
+	return m_bindings;
+}
+#endif

@@ -329,11 +329,11 @@ void tr::graphics_context::set_vertex_format(const vertex_format& format)
 	const gl_api& gl{make_current_and_return_gl_api()};
 
 #ifdef TR_ENABLE_GL_CHECKS
-	m_vertex_format_bindings = format.m_bindings;
+	m_vertex_format_bindings = format.bindings();
 	m_vertex_format_label = format.label();
 #endif
 
-	gl.bind_vertex_array(format.m_vao.get());
+	gl.bind_vertex_array(format.id());
 }
 
 void tr::graphics_context::set_vertex_buffer(const basic_static_vertex_buffer& buffer, int slot, ssize offset, usize stride)
