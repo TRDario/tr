@@ -1,30 +1,31 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements the templated parts of debug_renderer.hpp.                                                                                 //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements the templated parts of debug_renderer.hpp.
 
 #pragma once
 #include "../debug_renderer.hpp"
 
-///////////////////////////////////////////////////////////// DEBUG RENDERER //////////////////////////////////////////////////////////////
+//
 
-template <typename... Args> void tr::debug_renderer::write_left_format(std::format_string<Args...> fmt, Args&&... args)
+template <typename... Args>
+void tr::debug_renderer::write_left_format(std::format_string<Args...> fmt, Args&&... args)
 {
 	write_left(std::format(fmt, std::forward<Args>(args)...), default_style);
 }
 
-template <typename... Args> void tr::debug_renderer::write_left_format(const style& style, std::format_string<Args...> fmt, Args&&... args)
+template <typename... Args>
+void tr::debug_renderer::write_left_format(const style& style, std::format_string<Args...> fmt, Args&&... args)
 {
 	write_left(std::format(fmt, std::forward<Args>(args)...), style);
 }
 
-template <typename... Args> void tr::debug_renderer::write_right_format(std::format_string<Args...> fmt, Args&&... args)
+template <typename... Args>
+void tr::debug_renderer::write_right_format(std::format_string<Args...> fmt, Args&&... args)
 {
 	write_left(std::format(fmt, std::forward<Args>(args)...), default_style);
 }
 
-template <typename... Args> void tr::debug_renderer::write_right_format(const style& style, std::format_string<Args...> fmt, Args&&... args)
+template <typename... Args>
+void tr::debug_renderer::write_right_format(const style& style, std::format_string<Args...> fmt, Args&&... args)
 {
 	write_right(std::format(fmt, std::forward<Args>(args)...), style);
 }

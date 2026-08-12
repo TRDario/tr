@@ -1,8 +1,5 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements the non-templated parts of debug_renderer.hpp.                                                                             //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements the non-templated parts of debug_renderer.hpp.
 
 #include "../../include/tr/sysgfx/debug_renderer.hpp"
 #include "../../include/tr/sysgfx/blending.hpp"
@@ -13,20 +10,27 @@
 
 using namespace std::chrono_literals;
 
-////////////////////////////////////////////////////////////// DEBUG RENDERER /////////////////////////////////////////////////////////////
+//
 
 namespace tr
 {
 	namespace
 	{
-// Font bitmap.
+/// Font bitmap.
 #include <generated/debug_renderer_font.hpp>
-// Vertex shader source code.
+
+/// Vertex shader source code.
 #include <generated/debug_renderer_vert.hpp>
-// Fragment shader source code.
+
+/// Fragment shader source code.
 #include <generated/debug_renderer_frag.hpp>
 
-		// Formats a duration into a string.
+		//
+
+		/// Formats a duration into a string.
+		/// @param prefix Prefix before the duration.
+		/// @param duration Duration to format.
+		/// @return Formatted string.
 		std::string format_duration(std::string_view prefix, duration duration)
 		{
 			if (duration <= 1us) {
@@ -56,6 +60,8 @@ namespace tr
 		}
 	} // namespace
 } // namespace tr
+
+//
 
 tr::debug_renderer::debug_renderer(graphics_context& context, float scale, u8 column_limit)
 	: m_pipeline{context, vertex_shader{context, debug_renderer_vert}, fragment_shader{context, debug_renderer_frag}}
@@ -157,7 +163,7 @@ void tr::debug_renderer::draw()
 	m_right_line = 0;
 }
 
-////////////////////////////////////////////////////////////////// WRITER /////////////////////////////////////////////////////////////////
+//
 
 tr::debug_renderer::writer::writer(const style& style, std::vector<glyph>& glyphs, u8& line, bool right_aligned, u8 column_limit,
 								   usize offset)

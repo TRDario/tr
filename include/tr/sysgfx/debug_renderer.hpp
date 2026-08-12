@@ -1,38 +1,5 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Provides a renderer for easy writing of debug information on the screen.                                                              //
-//                                                                                                                                       //
-// The renderer is capable of displaying ASCII text. The scale of the text, as well as the maximum length of a line of text can be set   //
-// in the constructor of the renderer, or afterwards using the appropriate methods:                                                      //
-//     - tr::debug_renderer debug{2, 128} -> equivalent to tr::debug_renderer debug; debug.set_scale(2); debug.set_column_limit(128);    //
-//                                                                                                                                       //
-// The debug renderer is written-to line-by-line until a call to the .draw() method, which clears all written text after rendering.      //
-// The renderer keeps track of the left and right sides of the screen separately. A normal string, a format string, or a benchmark that  //
-// implements the debug_writable_benchmark interface (has .min(), .avg(), and .max() that return durations) can all be written this way. //
-// Both of the string types can use a custom style (text color, background color, extra colors). A lone newline can also be written:     //
-//     - debug.write_left("Example") -> writes Example on the left side of the screen in the default style                               //
-//     - debug.write_left("Example", {.text_color{255, 0, 0, 255}}) -> writes Example on the left side of the screen in red text         //
-//     - debug.write_right_format("Total: {}", total) -> writes formatted text on the right side of the screen in the default style      //
-//     - debug.write_right_format({.background_color{64, 64, 64, 255}}, "Total: {}", total)                                              //
-//       -> writes formatted text on the right side of the screen with a gray background                                                 //
-//     - debug.write_benchmark(update_benchmark, "Update: ", 1.0s / 240)                                                                 //
-//       -> writes benchmark data with the label "Update", if any of the measurements is above 1/240s, it's marked in red                //
-//     - debug.newline_left(); debug.newline_right() -> skips a line on both of the sides of the screen                                  //
-//     - debug.draw() -> draws any text previously written to the backbuffer and resets the canvas to empty                              //
-//                                                                                                                                       //
-// Both string types may contain escape sequences which allow for some control over the writing style:                                   //
-//   '$bX' sets the background color to the color at index X of the extra colors span of the style                                       //
-//   '$B' resets the background color to the default style color                                                                         //
-//   '$cX' sets the text color to the color at index X of the extra colors span of the style                                             //
-//   '$C' resets the text color to the default style color                                                                               //
-//   '$n' begins a new line of text                                                                                                      //
-//   '$$' writes the character '$'                                                                                                       //
-// '$b' and '$c' both only look at one digit in front of them, so only 10 extra colors may ever be accessed. The renderer ignores        //
-// invalid indices.                                                                                                                      //
-//     - "Example $c0escaped$C $b1string$B"                                                                                              //
-//       -> "escaped" is colored with style.extra_colors[0], while the background behind "string" is colored with style.extra_colors[1]  //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Provides a renderer for easy writing of debug information on the screen.
 
 #pragma once
 #include "../utility/chrono.hpp"
@@ -41,14 +8,16 @@
 #include "vertex_buffer.hpp"
 #include "vertex_format.hpp"
 
-namespace tr {
+namespace tr
+{
 	enum class renderer_id : u32;
 }
 
-//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
+//
 
-namespace tr {
-	// Defines a benchmark interface compatible with debug_renderer.
+namespace tr
+{
+	/// Benchmark interface compatible with debug_renderer.
 	template <typename T>
 	concept debug_writable_benchmark = requires(const T& benchmark) {
 		std::chrono::duration_cast<duration>(benchmark.min());
@@ -56,152 +25,285 @@ namespace tr {
 		std::chrono::duration_cast<duration>(benchmark.max());
 	};
 
-	// Debug text renderer.
-	class debug_renderer {
+	//
+
+	/// Debug text renderer.
+	class debug_renderer
+	{
 	  public:
-		// Debug text style.
-		struct style {
-			// The color of the text.
+		/// Debug text style.
+		struct style
+		{
+			/// Color of the text.
 			rgba8 text_color{255, 255, 255, 255};
-			// The color of the background.
+
+			/// Color of the background.
 			rgba8 background_color{0, 0, 0, 255};
-			// Any extra colors that may be accessed using escape sequences in the debug text.
+
+			/// Any extra colors that may be accessed using escape sequences in the debug text.
 			std::span<rgba8> extra_colors{};
 		};
-		// The default text style: white text on black background.
+
+		//
+
+		/// Default text style: white text on black background.
 		static constexpr style default_style{{255, 255, 255, 255}, {0, 0, 0, 255}, {}};
 
-		// Creates a debug text renderer.
+		/// @name Constructors
+		/// @{
+
+		/// Creates a debug text renderer.
+		/// @param context Graphics context to create the renderer on.
+		/// @param scale Initial text drawing scale.
+		/// @param column_limit Initial text column limit.
 		debug_renderer(graphics_context& context, float scale = 1.0f, u8 column_limit = 255);
 
-		// Gets a reference to the graphics context the renderer is on.
+		/// @}
+		/// @name Context
+		/// @{
+
+		/// Gets a reference to the graphics context the renderer is on.
+		/// @return Reference to the graphics context the renderer is on
 		graphics_context& context() const;
 
-		// Sets the text's drawing scale.
+		/// @}
+		/// @name Properties
+		/// @{
+
+		/// Sets the text's drawing scale.
+		/// @param scale Text drawing scale.
 		void set_scale(float scale);
-		// Sets the text's column limit.
+
+		/// Sets the text's column limit.
+		/// @param columns Maximum number of text columns.
 		void set_column_limit(u8 columns);
 
-		// Writes a line of formatted text to the left side of the screen.
+		/// @}
+		/// @name Writing
+		/// @{
+
+		/// Writes a line of formatted text to the left side of the screen.
+		/// @param text Text to write.
+		/// @param style Text style.
 		void write_left(std::string_view text, const style& style = default_style);
-		// Writes a line of text formatted as if by std::format to the left side of the screen in the default style.
-		template <typename... Args> void write_left_format(std::format_string<Args...> fmt, Args&&... args);
-		// Writes a line of text formatted as if by std::format to the left side of the screen.
-		template <typename... Args> void write_left_format(const style& style, std::format_string<Args...> fmt, Args&&... args);
-		// Writes a line of formatted text to the right side of the screen.
+
+		/// Writes a line of text formatted as if by std::format to the left side of the screen in the default style.
+		/// @tparam Args Formatting argument types.
+		/// @param fmt Format string.
+		/// @param args Formatting arguments.
+		template <typename... Args>
+		void write_left_format(std::format_string<Args...> fmt, Args&&... args);
+
+		/// Writes a line of text formatted as if by std::format to the left side of the screen.
+		/// @tparam Args Formatting argument types.
+		/// @param style Text style.
+		/// @param fmt Format string.
+		/// @param args Formatting arguments.
+		template <typename... Args>
+		void write_left_format(const style& style, std::format_string<Args...> fmt, Args&&... args);
+
+		/// Writes a line of formatted text to the right side of the screen.
+		/// @param text Text to write.
+		/// @param style Text style.
 		void write_right(std::string_view text, const style& style = default_style);
-		// Writes a line of text formatted as if by std::format to the right side of the screen in the default style.
-		template <typename... Args> void write_right_format(std::format_string<Args...> fmt, Args&&... args);
-		// Writes a line of text formatted as if by std::format to the right side of the screen.
-		template <typename... Args> void write_right_format(const style& style, std::format_string<Args...> fmt, Args&&... args);
-		// Writes benchmark data to the right side of the screen.
+
+		/// Writes a line of text formatted as if by std::format to the right side of the screen in the default style.
+		/// @tparam Args Formatting argument types.
+		/// @param fmt Format string.
+		/// @param args Formatting arguments.
+		template <typename... Args>
+		void write_right_format(std::format_string<Args...> fmt, Args&&... args);
+
+		/// Writes a line of text formatted as if by std::format to the right side of the screen.
+		/// @tparam Args Formatting argument types.
+		/// @param style Text style.
+		/// @param fmt Format string.
+		/// @param args Formatting arguments.
+		template <typename... Args>
+		void write_right_format(const style& style, std::format_string<Args...> fmt, Args&&... args);
+
+		/// Writes benchmark data to the right side of the screen.
+		/// @tparam Benchmark Writable benchmark type.
+		/// @tparam Rep Duration representation type.
+		/// @tparam Period Duration period.
+		/// @param benchmark Benchmark to write.
+		/// @param name Name of the benchmark.
+		/// @param limit Maximum allowed duration before it's written in red.
 		template <debug_writable_benchmark Benchmark, typename Rep, typename Period>
 		void write_benchmark(const Benchmark& benchmark, std::string_view name, std::chrono::duration<Rep, Period> limit);
 
-		// Writes a newline on the left side of the screen.
+		/// Writes a newline on the left side of the screen.
 		void newline_left();
-		// Writes a newline on the right side of the screen.
+
+		/// Writes a newline on the right side of the screen.
 		void newline_right();
 
-		// Draws all written text to the screen and clears it.
+		/// @}
+		/// @name Drawing
+		/// @{
+
+		/// Draws all written text to the screen and clears it.
 		void draw();
 
+		/// @}
+
 	  private:
-		// Glyph information sent to the vertex shader.
-		struct glyph {
-			// Position on the glyph grid.
+		/// Glyph information sent to the vertex shader.
+		struct glyph
+		{
+			/// Position on the glyph grid.
 			glm::u8vec2 pos;
-			// Whether the glyph should be right-aligned.
+
+			/// Whether the glyph should be right-aligned.
 			bool align_right;
-			// The ASCII value of the glyph.
+
+			/// ASCII value of the glyph.
 			char chr;
-			// The color of the text.
+
+			/// Color of the text.
 			rgba8 text_color;
-			// The color of the background.
+
+			/// Color of the background.
 			rgba8 bg_color;
 
-			// Provided for tr::as_vertex_attribute_list.
+			//
+
+			/// Provided for `tr::as_vertex_attribute_list`.
 			static constexpr auto as_vertex_attribute_list{tr::as_vertex_attribute_list<glm::u8vec2, u8, u8, rgba8, rgba8>};
 		};
 
-		// Class that the debug renderer delegates writing of glyph information to.
-		class writer {
+		/// Class that the debug renderer delegates writing of glyph information to.
+		class writer
+		{
 		  public:
-			// Creates a writer.
+			/// Creates a writer.
+			/// @param style Text style.
+			/// @param glyphs Glyph vector to output to.
+			/// @param line Reference to the used line position.
+			/// @param right_aligned Whether the written text is right-aligned.
+			/// @param column_limit Column limit of the written text.
+			/// @param offset
 			writer(const style& style, std::vector<glyph>& glyphs, u8& line, bool right_aligned, u8 column_limit, usize offset);
 
-			// Writes a string of text.
+			//
+
+			/// Writes a string of text.
+			/// @param text Text to write.
 			void write(std::string_view text);
 
 		  private:
-			// The text style.
+			/// Used text style.
 			const style& m_style;
-			// The output glyph vector.
+
+			/// Output glyph vector.
 			std::vector<glyph>& m_glyphs;
-			// The current line number.
+
+			/// Current line number.
 			u8& m_line;
-			// Whether the text is right-aligned.
+
+			/// Whether the text is right-aligned.
 			bool m_right_aligned;
-			// Maximum allowed number of glyphs per line.
+
+			/// Maximum allowed number of glyphs per line.
 			u8 m_column_limit;
-			// The text color.
+
+			/// Text color.
 			rgba8 m_text_color;
-			// The background color.
+
+			/// Background color.
 			rgba8 m_background_color;
-			// The length of the current line.
+
+			/// Length of the current line.
 			u8 m_line_length;
-			// The offset to the start of the text written by this writer.
+
+			/// Offset to the start of the text written by this writer.
 			usize m_current_text_start;
-			// The offset to the start of the current line.
+
+			/// Offset to the start of the current line.
 			usize m_current_line_start;
-			// The offset to the start of the current word.
+
+			/// Offset to the start of the current word.
 			usize m_current_word_start;
 
-			// Right-aligns the characters of the current line up to the specified end.
+			//
+
+			/// Right-aligns the characters of the current line up to the specified end.
+			/// @param line_end Index to the line end.
 			void right_align_current_line_up_to(usize line_end);
-			// Trims trailing whitespace in a line.
+
+			/// Trims trailing whitespace in a line.
 			void trim_whitespace_before_current_word();
-			// Moves the current word to the next line.
+
+			/// Moves the current word to the next line.
 			void move_current_word_to_next_line();
-			// Breaks the current line before the current word.
+
+			/// Breaks the current line before the current word.
 			void break_before_current_word();
-			// Breaks the current line in the middle of the current word.
+
+			/// Breaks the current line in the middle of the current word.
 			void break_current_word();
-			// Breaks the current line.
+
+			/// Breaks the current line.
 			void break_current_line();
-			// Handles a newline.
+
+			/// Handles a newline.
 			void handle_newline();
-			// Writes a character.
+
+			/// Writes a character.
+			/// @param chr Character to write.
 			void write_character(char chr);
-			// Handles a control sequence.
+
+			/// Handles a control sequence.
+			/// @param control_it Iterator to the control sequence.
+			/// @param end Iterator to the end of the string.
 			void handle_control_sequence(std::string_view::iterator& control_it, std::string_view::iterator end);
 		};
 
-		// The bindings of the debug renderer vertex format.
+		//
+
+		/// Bindings of the debug renderer vertex format.
 		static constexpr std::array vertex_format_bindings{make_vertex_binding<glm::u8vec2>(), make_vertex_binding<glyph>(1)};
 
-		// The pipeline and shaders used by the renderer.
+		//
+
+		/// Pipeline and shaders used by the renderer.
 		owning_shader_pipeline m_pipeline;
-		// The debug vertex format.
+
+		/// Debug vertex format.
 		vertex_format m_format;
-		// The font texture.
+
+		/// Font texture.
 		texture m_font;
-		// The vertex buffer holding a glyph mesh.
+
+		/// Vertex buffer holding a glyph mesh.
 		static_vertex_buffer<glm::u8vec2> m_mesh;
-		// The vertex buffer holding the glyph information.
+
+		/// Vertex buffer holding the glyph information.
 		dyn_vertex_buffer<glyph> m_glyph_buffer;
-		// List of glyphs to draw.
+
+		/// List of glyphs to draw.
 		std::vector<glyph> m_glyphs;
-		// The ID of the renderer.
+
+		/// ID of the renderer.
 		renderer_id m_id;
-		// Maximum allowed number of glyphs per line.
+
+		/// Maximum allowed number of glyphs per line.
 		u8 m_column_limit;
-		// The current left line position.
+
+		/// Current left line position.
 		u8 m_left_line;
-		// The current right line position.
+
+		/// Current right line position.
 		u8 m_right_line;
 
-		// Writes benchmark data to the right side of the screen.
+		//
+
+		/// Writes benchmark data to the right side of the screen.
+		/// @param min Minimum duration reported by the benchmark.
+		/// @param avg Average duration reported by the benchmark.
+		/// @param max Maximum duration reported by the benchmark.
+		/// @param name Name of the benchmark.
+		/// @param limit Maximum allowed duration before it's written in red.
 		void write_benchmark(duration min, duration avg, duration max, std::string_view name, duration limit);
 	};
 }; // namespace tr
