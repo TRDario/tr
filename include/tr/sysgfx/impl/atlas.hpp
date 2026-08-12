@@ -1,17 +1,14 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements atlas.hpp.                                                                                                                 //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements atlas.hpp.
 
 #pragma once
 #include "../atlas.hpp"
 #include "../texture_view.hpp"
 
-/////////////////////////////////////////////////////////////// BITMAP ATLAS //////////////////////////////////////////////////////////////
+//
 
 template <typename Key, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
-tr::bitmap_atlas<Key, void, Hash, Pred> tr::build_bitmap_atlas(const boost::unordered_flat_map<Key, tr::bitmap, Hash, Pred>& bitmaps)
+tr::bitmap_atlas<Key, void, Hash, Pred> tr::build_bitmap_atlas(const boost::unordered_flat_map<Key, bitmap, Hash, Pred>& bitmaps)
 {
 	glm::ivec2 size{};
 	atlas_entries<Key, void, Hash, Pred> entries;
@@ -37,7 +34,7 @@ tr::bitmap_atlas<Key, void, Hash, Pred> tr::build_bitmap_atlas(const boost::unor
 	return {std::move(bitmap), std::move(entries)};
 }
 
-////////////////////////////////////////////////////////////// DYNAMIC ATLAS //////////////////////////////////////////////////////////////
+//
 
 template <typename Key, tr::atlas_entries_value_type Value, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
 tr::dyn_atlas<Key, Value, Hash, Pred>::dyn_atlas(graphics_context& context)

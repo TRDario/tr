@@ -23,7 +23,7 @@ For available CMake options, see [CMakeLists.txt](https://github.com/TRDario/tr/
 
 tr is currently in the process of moving to using doxygen to document the code.
 
-![Doxygen coverage progress bar](https://progress-bar.xyz/96?title=Doxygen+coverage:&width=100&scale=100&suffix=%2F100+files)
+![Doxygen coverage progress bar](https://progress-bar.xyz/97?title=Doxygen+coverage:&width=100&scale=100&suffix=%2F100+files)
 
 For all unmigrated files, the source code provides basic documentation for all types, functions, constants and globals in the library,
 and an overview of provided functionality and usage examples are provided at the tops of header files.

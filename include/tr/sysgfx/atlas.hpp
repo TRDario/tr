@@ -1,117 +1,178 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Provides atlas textures.                                                                                                              //
-//                                                                                                                                       //
-// A hash map of bitmaps can be stitched together into a single atlased bitmap using tr::build_bitmap_atlas:                             //
-//     - tr::string_flat_map<tr::bitmap> bitmaps{{"a", tr::load_bitmap_file("a.bmp")}, {"b", tr::load_bitmap_file("b.bmp")}}             //
-//       tr::bitmap_atlas atlas{tr::build_bitmap_atlas(bitmaps)}                                                                         //
-//       -> stitches all bitmaps in 'bitmaps' into a single bitmap contained in atlas.bitmap, with information on where the constituents //
-//          are located in atlas.rectangles                                                                                              //
-//                                                                                                                                       //
-// tr::dyn_atlas abstracts over a tr::texture to provide an atlas interface, automatically handling insertion, removal, resizing, and so //
-// on of the underlying texture. A dynamic atlas can be created empty, with an initial reserved size, or using a pre-assembled bitmap    //
-// atlas as a source. The .reserve() method can also be called at any time to reserve texture space:                                     //
-//     - tr::dyn_atlas{context} -> creates an empty atlas                                                                                //
-//     - tr::dyn_atlas{context, {512, 512}} -> creates an empty atlas with a pre-allocated 512x512 texture                               //
-//     - tr::dyn_atlas atlas{context}; atlas.reserve({512, 512}) -> equivalent to the above                                              //
-//     - tr::dyn_atlas{context, bitmaps} -> uploads the 'bitmaps' atlas into a texture and takes its rectangle information               //
-//                                                                                                                                       //
-// The underlying bitmap can be accessed with an implicit conversion, but only in a read-only manner. Filtering can be set with          //
-// .set_filtering(), as in a regular texture.                                                                                            //
-//                                                                                                                                       //
-// Entries in the atlas can be checked for and accessed: using operator[] gets the normalized uv of the entry, while .raw() gets the raw //
-// data associated with the entry. The total number of entries in the atlas can be obtained with .entries(), while the size of the atlas //
-// texture in pixels can be obtained with .size(). An entry is added into the atlas with .add(), and the atlas can be cleared with       //
-// the .clear() method:                                                                                                                  //
-//     - atlas.size() -> {512, 512}                                                                                                      //
-//     - atlas.add("C", tr::load_bitmap_file("c.bmp")) -> adds "C" to the atlas                                                          //
-//     - atlas.entries() -> 1                                                                                                            //
-//     - atlas.contains("C") -> true                                                                                                     //
-//     - atlas["C"] -> gets the normalized UV rectangle of "C"                                                                           //
-//     - atlas.raw("C") -> gets the raw value data of "C"                                                                                //
-//     - atlas.clear() -> atlas is now empty again, but retains the reserved space                                                       //
-//                                                                                                                                       //
-// The label of an atlas can be set with .set_label() and gotten with .label():                                                          //
-//     - atlas.set_label("Example atlas"); atlas.label() -> "Example atlas"                                                              //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Provides atlas textures.
 
 #pragma once
 #include "../utility/atlas_packer.hpp"
 #include "texture.hpp"
 
-//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
+//
 
-namespace tr {
-	// Basic bitmap atlas structure.
+namespace tr
+{
+	/// Basic bitmap atlas structure.
+	/// @tparam Key Atlas key type.
+	/// @tparam Value Atlas value type.
+	/// @tparam Hash Atlas key hasher.
+	/// @tparam Pred Atlas key equality predicate.
 	template <typename Key, atlas_entries_value_type Value, hasher<Key> Hash = boost::hash<Key>,
 			  equality_predicate<Key> Pred = std::equal_to<Key>>
-	struct bitmap_atlas {
-		// The atlas bitmap.
-		tr::bitmap bitmap;
-		// The atlas entries.
+	struct bitmap_atlas
+	{
+		/// Atlas bitmap.
+		bitmap bitmap;
+
+		/// Atlas entries.
 		atlas_entries<Key, Value, Hash, Pred> rectangles;
 	};
-	// Builds a bitmap atlas from individual bitmaps.
-	template <typename Key, hasher<Key> Hash = boost::hash<Key>, equality_predicate<Key> Pred = std::equal_to<Key>>
-	bitmap_atlas<Key, void, Hash, Pred> build_bitmap_atlas(const boost::unordered_flat_map<Key, tr::bitmap, Hash, Pred>& entries);
 
-	// Dynamically-allocated texture atlas.
+	/// @name Bitmap atlas
+	/// @{
+
+	/// Builds a bitmap atlas from individual bitmaps.
+	/// @tparam Key Atlas key type.
+	/// @tparam Hash Atlas key hasher.
+	/// @tparam Pred Atlas key equality predicate.
+	/// @param entries Map holding the bitmaps to stitch together.
+	/// @return Bitmap atlas built from the individual bitmaps.
+	template <typename Key, hasher<Key> Hash = boost::hash<Key>, equality_predicate<Key> Pred = std::equal_to<Key>>
+	bitmap_atlas<Key, void, Hash, Pred> build_bitmap_atlas(const boost::unordered_flat_map<Key, bitmap, Hash, Pred>& entries);
+
+	/// @}
+
+	/// Dynamically-allocated texture atlas.
+	/// @tparam Key Atlas key type.
+	/// @tparam Value Atlas value type.
+	/// @tparam Hash Atlas key hasher.
+	/// @tparam Pred Atlas key equality predicate.
 	template <typename Key, atlas_entries_value_type Value, hasher<Key> Hash = boost::hash<Key>,
 			  equality_predicate<Key> Pred = std::equal_to<Key>>
-	class dyn_atlas {
+	class dyn_atlas
+	{
 	  public:
-		// Creates an empty atlas.
+		/// @name Constructors
+		/// @{
+
+		/// Creates an empty atlas.
+		/// @param context Graphics context to create the atlas on.
 		dyn_atlas(graphics_context& context);
-		// Creates an empty atlas with an initial size.
+
+		/// Creates an empty atlas with an initial size.
+		/// @param context Graphics context to create the atlas on.
+		/// @param size Initial size of the atlas.
 		dyn_atlas(graphics_context& context, glm::ivec2 size);
-		// Uploads a bitmap atlas.
+
+		/// Uploads a bitmap atlas.
+		/// @param context Graphics context to create the atlas on.
+		/// @param source Bitmap atlas to use as a source.
 		dyn_atlas(graphics_context& context, bitmap_atlas<Key, Value, Hash, Pred>&& source);
 
-		// Gets the atlas texture.
+		/// @}
+		/// @name Conversion operators
+		/// @{
+
+		/// Gets the atlas texture.
+		/// @return Reference to the atlas texture.
 		operator const texture&() const;
-		// Gets a reference to the atlas texture.
-		// This view may be invalidated by adding entries to the atlas or reserving.
+
+		/// Gets a reference to the atlas texture.
+		/// @return View to the atlas texture.
 		operator texture_view() const;
 
-		// Gets a reference to the graphics context the atlas is on.
+		/// @}
+		/// @name Context
+		/// @{
+
+		/// Gets a reference to the graphics context the atlas is on.
+		/// @return Reference to the graphics context the atlas is on.
 		graphics_context& context() const;
 
-		// Sets the filters used by the atlas texture sampler.
+		/// @}
+		/// @name Attributes
+		/// @{
+
+		/// Sets the filters used by the atlas texture sampler.
+		/// @param min_filter Minifying filter to use.
+		/// @param mag_filter Magnifying filter to use.
 		void set_filtering(min_filter min_filter, mag_filter mag_filter);
 
-		// Gets the size of the atlas texture.
+		/// @}
+		/// @name Information
+		/// @{
+
+		/// Gets the size of the atlas texture.
+		/// @return Size of the atlas texture.
 		glm::ivec2 size() const;
-		// Gets whether the atlas contains an entry.
-		template <hash_keylike<Key, Hash, Pred> Keylike> bool contains(Keylike&& key) const;
-		// Gets the number of entries in the atlas.
+
+		/// Gets whether the atlas contains an entry.
+		/// @tparam Keylike Type compatible with the atlas hasher and key equality predicate.
+		/// @param key Key to look up in the atlas.
+		/// @return `true` if a value associated with `key` existed, `false` otherwise.
+		template <hash_keylike<Key, Hash, Pred> Keylike>
+		bool contains(Keylike&& key) const;
+
+		/// Gets the number of entries in the atlas.
+		/// @return Number of entries in the atlas.
 		usize entries() const;
 
-		// Returns the rectangle associated with an entry.
-		template <hash_keylike<Key, Hash, Pred> Keylike> rectangle<float> operator[](Keylike&& key) const;
-		// Returns the raw value associated with an entry.
-		template <hash_keylike<Key, Hash, Pred> Keylike> const Value& raw(Keylike&& key) const;
+		/// @}
+		/// @name Access
+		/// @{
 
-		// Reserves a certain amount of space in the bitmap.
+		/// Gets a rectangle associated with a certain key.
+		/// @tparam Keylike Type compatible with the atlas hasher and key equality predicate.
+		/// @param key Key to look up in the atlas.
+		/// @pre `key` must be present in the atlas.
+		/// @return Constant reference to the value associated with `key`.
+		template <hash_keylike<Key, Hash, Pred> Keylike>
+		rectangle<float> operator[](Keylike&& key) const;
+
+		/// Gets the raw value associated with a certain key.
+		/// @tparam Keylike Type compatible with the atlas hasher and key equality predicate.
+		/// @param key Key to look up in the atlas.
+		/// @pre `key` must be present in the atlas.
+		/// @return Constant reference to the raw value associated with `key`.
+		template <hash_keylike<Key, Hash, Pred> Keylike>
+		const Value& raw(Keylike&& key) const;
+
+		/// @}
+		/// @name Manipulation
+		/// @{
+
+		/// Reserves a certain amount of space in the bitmap.
+		/// @param capacity New size of the atlas bitmap.
 		void reserve(glm::ivec2 capacity);
 
-		// Adds an entry to the atlas.
+		/// Adds an entry to the atlas.
+		/// @tparam Args Extra argument types.
+		/// @param key Key to associate with the entry.
+		/// @param bitmap Bitmap to copy into the atlas.
+		/// @param args Extra arguments associated with the entry.
 		template <typename... Args>
 			requires(std::constructible_from<Value, rectangle<u16>, Args...>)
 		void add(Key key, sub_bitmap bitmap, Args&&... args);
 
-		// Removes all entries from the atlas.
+		/// Removes all entries from the atlas.
 		void clear();
 
-		// Gets the debug label of the atlas.
+		/// @}
+		/// @name Label
+		/// @{
+
+		/// Gets the debug label of the atlas.
+		/// @return Label of the atlas.
 		std::string label() const;
-		// Sets the debug label of the atlas.
+
+		/// Sets the debug label of the atlas.
+		/// @param label Label of the atlas.
 		void set_label(std::string_view label);
 
+		/// @}
+
 	  private:
-		// The atlas texture.
+		/// Atlas texture.
 		texture m_tex;
-		// The atlas entries.
+
+		/// Atlas entries.
 		atlas_entries<Key, Value, Hash, Pred> m_entries;
 	};
 } // namespace tr
