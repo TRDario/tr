@@ -1,8 +1,5 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements graphics_context.hpp.                                                                                                      //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements graphics_context.hpp.
 
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/blending.hpp"
@@ -13,7 +10,7 @@
 #include "../../include/tr/sysgfx/window_view.hpp"
 #include <SDL3/SDL.h>
 
-////////////////////////////////////////////////////// GRAPHICS CONTEXT OPENING ERROR /////////////////////////////////////////////////////
+//
 
 tr::graphics_context_init_error::graphics_context_init_error()
 	: m_description{SDL_GetError()}
@@ -35,15 +32,15 @@ std::string_view tr::graphics_context_init_error::details() const
 	return {};
 }
 
-///////////////////////////////////////////////////////////// OPENGL FUNCTIONS ////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////// GRAPHICS CONTEXT DEBUGGING ///////////////////////////////////////////////////////
+//
 
 namespace tr
 {
 	namespace
 	{
-		// Gets a readable string for an OpenGL debug log message type.
+		/// Gets a readable string for an OpenGL debug log message type.
+		/// @param value OpenGL debug type.
+		/// @return String representation of the debug type.
 		std::string_view gl_type(unsigned int value)
 		{
 			switch (value) {
@@ -70,7 +67,9 @@ namespace tr
 			}
 		}
 
-		// Gets a readable string for an OpenGL debug log severity.
+		/// Gets a readable string for an OpenGL debug log severity.
+		/// @param value OpenGL debug severity.
+		/// @return String representation of the debug severity.
 		std::string_view gl_severity(unsigned int value)
 		{
 			switch (value) {
@@ -87,7 +86,9 @@ namespace tr
 			}
 		}
 
-		// Converts OpenGL debug severity to tr severity.
+		/// Converts OpenGL debug severity to tr severity.
+		/// @param value OpenGL debug severity.
+		/// @return tr severity equivalent.
 		tr::severity tr_severity(unsigned int value)
 		{
 			switch (value) {
@@ -104,7 +105,9 @@ namespace tr
 			}
 		}
 
-		// Gets a readable string for an OpenGL debug log source.
+		/// Gets a readable string for an OpenGL debug log source.
+		/// @param value OpenGL debug source.
+		/// @return String representation of the debug source.
 		std::string_view gl_source(unsigned int value)
 		{
 			switch (value) {
@@ -125,7 +128,13 @@ namespace tr
 			}
 		}
 
-		// OpenGL debug log callback.
+		/// OpenGL debug log callback.
+		/// @param source Message source.
+		/// @param type Message type.
+		/// @param severity Message severity.
+		/// @param length Length of the debug message.
+		/// @param message Pointer to the debug message string.
+		/// @param user_param Pointer to the graphics context logger.
 		void gl_debug_cb(unsigned int source, unsigned int type, unsigned int, unsigned int severity, int length, const char* message,
 						 const void* user_param)
 		{
@@ -136,16 +145,12 @@ namespace tr
 				log.log(tr_severity(severity), "[{}] | [{}] | [{}] | {}", gl_severity(severity), gl_type(type), gl_source(source), msg);
 			}
 		}
-	} // namespace
-} // namespace tr
 
-///////////////////////////////////////////////////////////// GRAPHICS CONTEXT ////////////////////////////////////////////////////////////
+		//
 
-namespace tr
-{
-	namespace
-	{
-		// Creates an SDL OpenGL context.
+		/// Creates an SDL OpenGL context.
+		/// @param window Pointer to the SDL window.
+		/// @return SDL OpenGL context pointer.
 		SDL_GLContext create_context(SDL_Window* window)
 		{
 			SDL_GLContext context{SDL_GL_CreateContext(window)};
@@ -156,6 +161,8 @@ namespace tr
 		}
 	} // namespace
 } // namespace tr
+
+//
 
 tr::graphics_context::graphics_context(window_view window)
 	: m_window{window.unwrap()}
@@ -178,7 +185,7 @@ tr::graphics_context::graphics_context(window_view window)
 	}
 }
 
-void tr::graphics_context::deleter::operator()(SDL_GLContextState* context) const
+void tr::graphics_context::deleter::operator()(SDL_GLContextState* context)
 {
 	SDL_GL_DestroyContext(context);
 }

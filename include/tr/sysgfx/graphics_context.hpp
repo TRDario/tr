@@ -1,66 +1,5 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Provides a window graphics context class and related datatypes.                                                                       //
-//                                                                                                                                       //
-// Graphics contexts are associated with a window and their properties depend on the graphics properties set during window construction. //
-// A view to the window the graphics context belongs to can be gotten at any time afterwards:                                            //
-//     - tr::graphics_context context{window} -> creates a graphics context tied to 'window'                                             //
-//     - context.window() -> view to 'window'                                                                                            //
-// Leaving any objects created on a graphics context alive after their context is erroneous, as is leaving a context alive after the     //
-// window it was created on.                                                                                                             //
-//                                                                                                                                       //
-// Info about a graphics context can be gotten with .info() Info contains strings relating to the vendor, version and name of the        //
-// underlying OpenGL renderer. In addition, a logger is created with each graphics context.                                              //
-//                                                                                                                                       //
-// References to a commonly used 2D vertex type may be gotten using .vertex2_format():                                                   //
-//     - context.vertex2_format() -> binding 0 holds vec2 positions, binding 1 holds vec2 uvs, binding 2 holds rgb8 tints                //
-//                                                                                                                                       //
-// To allow for renderers to avoid having to set up graphical context on every draw call, graphics contexts provide an 'active renderer' //
-// flag, which renderers should check for and set with .should_setup_renderer(id), and only set the context up if that returns true.     //
-// All built-in renderers expect you to set this flag before meddling with the context, so don't forget to do that.                      //
-// Allocating renderer IDs is done with .allocate_renderer_id():                                                                         //
-//     - tr::renderer_id my_renderer_id{context.allocate_renderer_id()} -> allocates a new renderer ID                                   //
-//     - if (context.should_setup_renderer(my_renderer_id)) { /* DO STUFF */ } -> graphical context setup                                //
-//                                                                                                                                       //
-// A few features of the rendering pipeline can be enabled or disabled:                                                                  //
-//     - context.set_wireframe_mode(true) -> enables wireframe mode, onyl the edges of triangles are drawn                               //
-//     - context.set_face_culling(true) -> enables culling of faces facing away from the camera                                          //
-//     - context.set_depth_test(true) -> enables depth testing                                                                           //
-//                                                                                                                                       //
-// A number of components of the rendering pipeline can be set:                                                                          //
-//     - context.set_render_target(target) -> sets the target to draw to                                                                 //
-//     - context.set_shader_pipeline(pipeline) -> sets the shader pipeline that will be used during drawing                              //
-//     - context.set_tessellation_patch_size(4) -> sets the number of vertices in a tessellation patch                                   //
-//     - context.set_blend_mode(mode) -> sets the blending mode                                                                          //
-//     - context.set_vertex_format(format) -> sets the expected format of vertex data                                                    //
-//     - context.set_vertex_buffer(buffer, 0, 100) -> sets a buffer vertex data is pulled from, starting at offset 100, in slot 0        //
-//     - context.set_index_buffer(buffer) -> sets the buffer index data is pulled from                                                   //
-//                                                                                                                                       //
-// After setting up the graphical context, one of the four drawing functions may be called:                                              //
-//     - context.draw(tr::primitive::tri_fan, 0, 4)                                                                                      //
-//       -> draws a triangle fan from the set vertex buffer                                                                              //
-//     - context.draw_indexed(tr::primitive::tris, 10, 15)                                                                               //
-//       -> draws 5 triangles using data from the set vertex and index buffers, starting from index 10 in the index buffer               //
-//     - context.draw_instances(tr::primitive::line_loop, 0, 10, 10)                                                                     //
-//       -> draws 10 instances of a line loop from the set vertex buffer                                                                 //
-//     - context.draw_indexed_instances(tr::primitive::line_strip, 0, 10, 10)                                                            //
-//       -> draws 10 instances of a line strip using data from the set vertex and index buffers                                          //
-//                                                                                                                                       //
-// Each context holds a backbuffer, and a render target corresponding to it can be gotten with .backbuffer().                            //
-// The only direct way of manipulating the backbuffer's contents is by clearing it or a region of it.                                    //
-// This can be done for just the color component, or all 3 of the backbuffer components:                                                 //
-//     - context.backbuffer() -> gets the backbuffer render target                                                                       //
-//     - context.clear_backbuffer() -> clears the backbuffer to transparency                                                             //
-//     - context.clear_backbuffer({255, 255, 255, 255}) -> clears the backbuffer to white                                                //
-//     - context.clear_backbuffer({255, 255, 255, 255}, 1.0f, 0) -> clears the backbuffer to white, depth 1.0f, and stencil 0            //
-//     - context.clear_backbuffer_region({{100, 100}, {100, 100}})                                                                       //
-//       -> clears the backbuffer region from (100, 100) to (200, 200) to transparency                                                   //
-//     - context.clear_backbuffer_region({{100, 100}, {100, 100}}, {255, 0, 0, 255})                                                     //
-//       -> clears the backbuffer region from (100, 100) to (200, 200) to red                                                            //
-//     - context.clear_backbuffer_region({{100, 100}, {100, 100}}, {255, 0, 0, 255}, 1.0f, 0)                                            //
-//       -> clears the backbuffer region from (100, 100) to (200, 200) to red, depth 1.0f, and stencil 0                                 //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Provides a window graphics context class and related datatypes.
 
 #pragma once
 #include "../utility/exception.hpp"
@@ -73,7 +12,8 @@
 
 struct SDL_GLContextState;
 struct SDL_Window;
-namespace tr {
+namespace tr
+{
 	struct blend_mode;
 	class dyn_index_buffer;
 	class shader_pipeline;
@@ -81,200 +21,418 @@ namespace tr {
 	class window_view;
 } // namespace tr
 #ifdef TR_HAS_IMGUI
-namespace tr::ImGui {
+namespace tr::ImGui
+{
 	void Init(graphics_context& context);
-	void Draw(graphics_context& context);
 } // namespace tr::ImGui
 #endif
 
-//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
+//
 
-namespace tr {
-	// Renderer ID.
-	enum class renderer_id : u32 {
-		no_renderer,   // No particular renderer is being used.
-		imgui_renderer // tr::ImGui::Draw
+namespace tr
+{
+	/// Renderer ID.
+	enum class renderer_id : u32
+	{
+		/// No particular renderer is being used.
+		no_renderer,
+		/// `tr::ImGui::Draw`.
+		imgui_renderer
 	};
 
-	// Rendering primitives.
-	enum class primitive {
-		points,      // The vertices are drawn as individual points.
-		lines,       // The vertices are drawn in pairs as lines.
-		line_loop,   // The vertices are drawn as a continuous line loop.
-		line_strip,  // The vertices are drawn as a continuous line strip.
-		tris,        // The vertices are drawn in groups of three as triangles.
-		tri_strip,   // The vertices are drawn as a continuous triangle strip.
-		tri_fan,     // The vertices are drawn as a continuous triangle fan.
-		patches = 14 // The vertices are sent to the tessellation shaders as patches.
+	/// Rendering primitives.
+	enum class primitive
+	{
+		/// The vertices are drawn as individual points.
+		points,
+		/// The vertices are drawn in pairs as lines.
+		lines,
+		/// The vertices are drawn as a continuous line loop.
+		line_loop,
+		/// The vertices are drawn as a continuous line strip.
+		line_strip,
+		/// The vertices are drawn in groups of three as triangles.
+		tris,
+		/// The vertices are drawn as a continuous triangle strip.
+		tri_strip,
+		/// The vertices are drawn as a continuous triangle fan.
+		tri_fan,
+		/// The vertices are sent to the tessellation shaders as patches.
+		patches = 14
 	};
 
-	// Graphics context initialization error.
-	class graphics_context_init_error : public exception {
+	//
+
+	/// Graphics context initialization error.
+	class graphics_context_init_error : public exception
+	{
 	  public:
-		// Constructs a graphics context initialization error.
+		/// @name Constructors
+		/// @{
+
+		/// Constructs a graphics context initialization error.
 		graphics_context_init_error();
 
-		// Gets the name of the error.
+		/// @}
+		/// @name Information
+		/// @{
+
+		/// Gets the name of the error.
+		/// @return `"Graphics context opening error"`.
 		std::string_view name() const override;
-		// Gets the description of the error.
+
+		/// Gets the description of the error.
+		/// @return Description of the error.
 		std::string_view description() const override;
-		// Gets further details about the error.
+
+		/// Gets further details about the error.
+		/// @return Always empty.
 		std::string_view details() const override;
 
+		/// @}
+
 	  private:
-		// Description of the error.
+		/// Description of the error.
 		std::string m_description;
 	};
 
-	// Window graphics context.
-	class graphics_context {
+	//
+
+	/// Window graphics context.
+	/// @details
+	/// Graphics contexts are associated with a window and their properties depend on the graphics properties set during window
+	/// construction.
+	class graphics_context
+	{
 	  public:
-		// Info returned by info().
-		struct info {
-			// Context vendor name.
+		/// Info returned by `info()`.
+		struct info
+		{
+			/// Context vendor name.
 			zstring_view vendor;
-			// Context renderer name.
+
+			/// Context renderer name.
 			zstring_view renderer;
-			// Context OpenGL version.
+
+			/// Context OpenGL version.
 			zstring_view gl_version;
 		};
 
-		// Creates a graphics context on a window.
-		// May throw: graphics_context_init_error.
-		graphics_context(window_view window);
-		// Graphics contexts are not movable.
-		graphics_context(graphics_context&&) = delete;
+		//
 
-		// Graphics contexts are not movable.
-		graphics_context& operator=(graphics_context&&) = delete;
-
-		// Logger used by the context.
+		/// Logger used by the context.
 		logger logger;
 
-		// Gets info about the context.
+		/// @name Constructors
+		/// @{
+
+		/// Creates a graphics context on a window.
+		/// @param window Window to create the graphics context for.
+		/// @exception graphics_context_init_error If creating the graphics context failed.
+		graphics_context(window_view window);
+
+		/// Graphics contexts are not movable.
+		graphics_context(graphics_context&&) = delete;
+
+		/// @}
+		/// @name Assignment operators
+		/// @{
+
+		/// Graphics contexts are not movable.
+		graphics_context& operator=(graphics_context&&) = delete;
+
+		/// @}
+		/// @name Information
+		/// @{
+
+		/// Gets info about the context.
+		/// @return Info about the context.
 		info info() const;
 
-		// Gets a view to the window the context is on.
+		/// @}
+		/// @name Getters
+		/// @{
+
+		/// Gets a view to the window the context is on.
+		/// @return View to the window the context is on.
 		window_view window() const;
-		// Gets a render target spanning the entire backbuffer.
+
+		/// Gets a render target spanning the entire backbuffer.
+		/// @return Render target spanning the entire backbuffer.
 		render_target backbuffer() const;
-		// Gets a commonly used 2D vertex format.
+
+		/// Gets a commonly used 2D vertex format.
+		/// @return Reference to the 2D vertex format.
 		const vertex_format& vertex2_format();
 
-		// Allocates a fresh renderer ID.
+		/// @}
+		/// @name Renderers
+		/// @{
+
+		/// Allocates a fresh renderer ID.
+		/// @return Unused renderer ID.
 		renderer_id allocate_renderer_id();
-		// Checks whether the passed renderer ID is the active renderer, sets it as active and returns true if not.
+
+		/// Checks whether the passed renderer ID is the active renderer, sets it as active and returns true if not.
+		/// @param id Renderer ID to check.
+		/// @return `true` if the renderer needs to be setup, `false` otherwise.
 		bool should_setup_renderer(renderer_id id);
 
-		// Sets whether rendering should be done as a wireframe.
+		/// @}
+		/// @name Setters
+		/// @{
+
+		/// Sets whether rendering should be done as a wireframe.
+		/// @param arg Whether to use wireframe rendering.
 		void set_wireframe_mode(bool arg);
-		// Sets whether face culling should be used.
+
+		/// Sets whether face culling should be used.
+		/// @param arg Whether to use face culling.
 		void set_face_culling(bool arg);
-		// Sets whether depth testing should be used.
+
+		/// Sets whether depth testing should be used.
+		/// @param arg Whether to use depth testing.
 		void set_depth_test(bool arg);
 
-		// Sets the active render target.
+		/// Sets the active render target.
+		/// @param target Render target to set as active.
 		void set_render_target(const render_target& target);
-		// Sets the active shader pipeline.
+
+		/// Sets the active shader pipeline.
+		/// @param pipeline Pipeline to set as active.
 		void set_shader_pipeline(const shader_pipeline& pipeline);
-		// Sets the active blending mode.
+
+		/// Sets the active blending mode.
+		/// @param blend_mode Blending mode to set as active.
 		void set_blend_mode(const blend_mode& blend_mode);
-		// Sets the active vertex format.
+
+		/// Sets the active vertex format.
+		/// @param format Vertex format to set as active.
 		void set_vertex_format(const vertex_format& format);
-		// Sets an active vertex buffer.
+
+		/// Sets an active vertex buffer.
+		/// @param buffer Buffer to set as active.
+		/// @param slot Slot to set the buffer in.
+		/// @param offset Starting offset within the buffer to bind.
+		/// @param stride Stride between the elements of the vertex buffer.
 		void set_vertex_buffer(const basic_static_vertex_buffer& buffer, int slot, ssize offset, usize stride);
-		// Sets an active vertex buffer.
-		template <standard_layout T> void set_vertex_buffer(const static_vertex_buffer<T>& buffer, int slot, ssize offset);
-		// Sets an active vertex buffer.
+
+		/// Sets an active vertex buffer.
+		/// @tparam T Vertex buffer element type.
+		/// @param buffer Buffer to set as active.
+		/// @param slot Slot to set the buffer in.
+		/// @param offset Starting offset within the buffer to bind.
+		template <standard_layout T>
+		void set_vertex_buffer(const static_vertex_buffer<T>& buffer, int slot, ssize offset);
+
+		/// Sets an active vertex buffer.
+		/// @param buffer Buffer to set as active.
+		/// @param slot Slot to set the buffer in.
+		/// @param offset Starting offset within the buffer to bind.
+		/// @param stride Stride between the elements of the vertex buffer.
 		void set_vertex_buffer(const basic_dyn_vertex_buffer& buffer, int slot, ssize offset, usize stride);
-		// // Sets an active vertex buffer.
-		template <standard_layout T> void set_vertex_buffer(const dyn_vertex_buffer<T>& buffer, int slot, ssize offset);
-		// Sets the active index buffer.
+
+		/// Sets an active vertex buffer.
+		/// @tparam T Vertex buffer element type.
+		/// @param buffer Buffer to set as active.
+		/// @param slot Slot to set the buffer in.
+		/// @param offset Starting offset within the buffer to bind.
+		template <standard_layout T>
+		void set_vertex_buffer(const dyn_vertex_buffer<T>& buffer, int slot, ssize offset);
+
+		/// Sets the active index buffer.
+		/// @param buffer Buffer to set as active.
 		void set_index_buffer(const static_index_buffer& buffer);
-		// Sets the active index buffer.
+
+		/// Sets the active index buffer.
+		/// @param buffer Buffer to set as active.
 		void set_index_buffer(const dyn_index_buffer& buffer);
 
-		// Clears the backbuffer's color.
+		/// @}
+		/// @name Clearing
+		/// @{
+
+		/// Clears the backbuffer's color.
+		/// @param color Color to clear the backbuffer to.
 		void clear_backbuffer(rgbaf color = {0, 0, 0, 0});
-		// Clears the backbuffer.
+
+		/// Clears the backbuffer.
+		/// @param color Color to clear the backbuffer to.
+		/// @param depth Depth to clear the backbuffer to.
+		/// @param stencil Stencil to clear the backbuffer to.
 		void clear_backbuffer(rgbaf color, double depth, int stencil);
-		// Clears a backbuffer region's color.
+
+		/// Clears a backbuffer region's color.
+		/// @param region Region of the backbuffer to clear.
+		/// @param color Color to clear the backbuffer region to.
 		void clear_backbuffer_region(rectangle<int> region, rgbaf color = {0, 0, 0, 0});
-		// Clears a backbuffer region.
+
+		/// Clears a backbuffer region.
+		/// @param region Region of the backbuffer to clear.
+		/// @param color Color to clear the backbuffer region to.
+		/// @param depth Depth to clear the backbuffer region to.
+		/// @param stencil Stencil to clear the backbuffer region to.
 		void clear_backbuffer_region(rectangle<int> region, rgbaf color, double depth, int stencil);
 
-		// Draws a mesh from a vertex buffer.
+		/// @}
+		/// @name Drawing
+		/// @{
+
+		/// Draws a mesh from a vertex buffer.
+		/// @param type Primitive type to draw.
+		/// @param offset Starting offset within the vertex buffer.
+		/// @param vertices Number of vertices to draw.
 		void draw(primitive type, usize offset, usize vertices);
-		// Draws an instanced mesh from a vertex buffer.
+
+		/// Draws an instanced mesh from a vertex buffer.
+		/// @param type Primitive type to draw.
+		/// @param offset Starting offset within the vertex buffer.
+		/// @param vertices Number of vertices to draw.
+		/// @param instances Number of instances to draw.
 		void draw_instances(primitive type, usize offset, usize vertices, int instances);
-		// Draws an indexed mesh.
+
+		/// Draws an indexed mesh.
+		/// @param type Primitive type to draw.
+		/// @param offset Starting offset within the index buffer.
+		/// @param indices Number of indices to draw.
 		void draw_indexed(primitive type, usize offset, usize indices);
-		// Draws an instanced indexed mesh.
+
+		/// Draws an instanced indexed mesh.
+		/// @param type Primitive type to draw.
+		/// @param offset Starting offset within the index buffer.
+		/// @param indices Number of indices to draw.
+		/// @param instances Number of instances to draw.
 		void draw_indexed_instances(primitive type, usize offset, usize indices, int instances);
 
+		/// @}
+
 	  private:
-		// Context deleter.
-		struct deleter {
-			void operator()(SDL_GLContextState* context) const;
+		/// Context deleter.
+		struct deleter
+		{
+			/// Destroys a graphics context.
+			/// @param context Pointer to the SDL OpenGL context.
+			static void operator()(SDL_GLContextState* context);
 		};
 
-		// Pointer to the window the context was created on.
+		//
+
+		/// Pointer to the window the context was created on.
 		SDL_Window* m_window;
-		// Pointer to the SDL OpenGL context.
+
+		/// Pointer to the SDL OpenGL context.
 		std::unique_ptr<SDL_GLContextState, deleter> m_ptr;
-		// OpenGL function pointers.
+
+		/// OpenGL function pointers.
 		gl_api m_gl_api;
-		// Next available renderer id.
+
+		/// Next available renderer id.
 		renderer_id m_next_renderer_id{2};
-		// ID of the current active renderer.
+
+		/// ID of the current active renderer.
 		renderer_id m_active_renderer{renderer_id::no_renderer};
-		// The current render target.
+
+		/// Current render target.
 		std::optional<render_target> m_render_target;
-		// Tracks which texture units are allocated.
+
+		/// Tracks which texture units are allocated.
 		std::bitset<80> m_allocated_texture_units{};
-		// Commonly used 2D vertex format.
+
+		/// Commonly used 2D vertex format.
 		std::optional<vertex_format> m_vertex2_format;
+
 #ifdef TR_ENABLE_GL_CHECKS
-		// Bindings of the last bound vertex format.
+		/// Bindings of the last bound vertex format.
 		std::span<const vertex_binding> m_vertex_format_bindings;
-		// Label of the last bound vertex format.
+
+		/// Label of the last bound vertex format.
 		std::string m_vertex_format_label;
 #endif
 
-		// Sets the context as current and returns the OpenGL API.
+		//
+
+		/// Sets the context as current and returns the OpenGL API.
+		/// @return Refernce to the OpenGL API functions.
 		const gl_api& make_current_and_return_gl_api() const;
 
-		// Checks the render target's FBO ID.
+		//
+
+		/// Checks the render target's FBO ID.
+		/// @param fbo ID of the FBO to check.
+		/// @return `true` if the FBO is of the render target, `false` otherwise.
 		bool is_fbo_of_render_target(unsigned int fbo);
-		// Clears the render target.
+
+		/// Clears the render target.
 		void clear_render_target();
 
+		//
+
 #ifdef TR_ENABLE_GL_CHECKS
-		// Checks if a vertex buffer's type's attribute match those of the current vertex format.
+		/// Checks if a vertex buffer's type's attribute match those of the current vertex format.
+		/// @param label Label of the vertex buffer.
+		/// @param slot Slot the vertex buffer is being set to.
+		/// @param attrs Vertex attribute list of the elements of the vertex buffer.
 		void check_vertex_buffer(std::string label, int slot, std::span<const vertex_attribute> attrs);
 #endif
 
-		// Moves a label from one object to another.
+		//
+
+		/// Moves a label from one object to another.
+		/// @param type OpenGL object type.
+		/// @param old_id Old object ID.
+		/// @param new_id New object ID.
 		void move_label(unsigned int type, unsigned int old_id, unsigned int new_id);
 
+		//
+
+		// Accesses `make_current_and_return_gl_api()`.
 		friend class basic_dyn_vertex_buffer;
+
+		// Accesses `make_current_and_return_gl_api()`.
 		friend class basic_graphics_buffer_map;
+
+		// Accesses `make_current_and_return_gl_api()`.
 		friend class basic_shader_buffer;
+
+		// Accesses `make_current_and_return_gl_api()`.
 		friend class basic_static_vertex_buffer;
+
+		// Accesses `make_current_and_return_gl_api()`.
 		friend class basic_uniform_buffer;
+
+		// Accesses `make_current_and_return_gl_api()`.
 		friend class dyn_index_buffer;
+
+		// Accesses `make_current_and_return_gl_api()`.
 		friend class framebuffer;
+
+		// Accesses `make_current_and_return_gl_api()`.
 		friend class graphics_benchmark;
+
+		// Accesses `make_current_and_return_gl_api()`.
 		friend class graphics_buffer;
+
+		// Accesses `make_current_and_return_gl_api()`.
 		friend class shader_base;
+
+		// Accesses `make_current_and_return_gl_api()`.
 		friend class shader_pipeline;
+
+		// Accesses `make_current_and_return_gl_api()`.
 		friend class static_index_buffer;
+
+		// Accesses `make_current_and_return_gl_api()`.
 		friend class texture;
+
+		// Accesses `make_current_and_return_gl_api()` and `m_allocated_texture_units`.
 		friend class texture_unit;
+
+		// Accesses `make_current_and_return_gl_api()`.
 		friend class vertex_format;
+
 #ifdef TR_HAS_IMGUI
+		// Accesses m_ptr.
 		friend void ImGui::Init(graphics_context& context);
-		friend void ImGui::Draw(graphics_context& context);
 #endif
 	};
 } // namespace tr
