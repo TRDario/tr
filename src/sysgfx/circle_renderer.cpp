@@ -1,19 +1,23 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements circle_renderer.hpp.                                                                                                       //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements circle_renderer.hpp.
 
 #include "../include/tr/sysgfx/circle_renderer.hpp"
 
-///////////////////////////////////////////////////////////// CIRCLE RENDERER /////////////////////////////////////////////////////////////
+//
 
-namespace {
-// Vertex shader source code.
+namespace tr
+{
+	namespace
+	{
+/// Vertex shader source code.
 #include <generated/circle_renderer_vert.hpp>
-// Fragment shader source code.
+
+/// Fragment shader source code.
 #include <generated/circle_renderer_frag.hpp>
-} // namespace
+	} // namespace
+} // namespace tr
+
+//
 
 tr::circle_renderer::circle_renderer(graphics_context& context, float render_scale)
 	: m_id{context.allocate_renderer_id()}

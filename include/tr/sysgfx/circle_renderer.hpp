@@ -1,37 +1,5 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Provides an efficient circle renderer.                                                                                                //
-//                                                                                                                                       //
-// The circle renderer is constructed with an initial render scale (by default 1.0f). The render scale is used to determine the ratio    //
-// between logical pixels and physical pixels on the render target. The render scale can be modified with the .set_render_scale() method //
-// at any point afterwards:                                                                                                              //
-//     - tr::circle_renderer{context}                                                                                                    //
-//       -> creates a circle render with render scale 1.0f: a circle with radius 5.0f will have a real radius of 5px                     //
-//     - tr::circle_renderer{context, 2.0f}                                                                                              //
-//       -> creates a circle render with render scale 2.0f: a circle with radius 5.0f will have a real radius of 10px                    //
-//     - tr::circle_renderer circle{context}; circle.set_render_scale(2.0f)                                                              //
-//       -> equivalent to the above                                                                                                      //
-//                                                                                                                                       //
-// The circle renderer is a layer-based renderer, compatible with the utilities provided in layered_drawing.hpp. Each layer has its own  //
-// transformation matrix (falls back to the global default if not provided) and blending mode (falls back to alpha blending if not       //
-// provided) that can be set. The global default transformation matrix can also be set:                                                  //
-//     - circle.set_default_transform(tr::ortho(tr::rectangle<float>{{1000, 1000}})) -> sets the global transformation matrix            //
-//     - circle.set_layer_transform(1, tr::ortho(tr::rectangle<float>{{500, 500}})) -> sets the transformation matrix for layer 1        //
-//     - circle.set_layer_blend_mode(1, tr::premultiplied_alpha_blending) -> sets the blending mode for layer 1                          //
-//                                                                                                                                       //
-// Circles are appended to the drawing list of the circle renderer one-by-one. Each circle can be filled, outlined, or both:             //
-//     - circle.add_circle(0, {{500, 500}, 10}, "FFFFFF"_rgba8)                                                                          //
-//       -> adds a white circle of radius 10 centered at (500, 500) to layer 0                                                           //
-//     - circle.add_circle_outline(0, {{200, 200}, 20}, 5, "FF0000"_rgba8)                                                               //
-//       -> adds a red circle outline of radius 20 and thickness 5 centered at (200, 200) to layer 0                                     //
-//     - circle.add_outlined_circle(0, {{100, 250}, 15}, 4, "0000FF"_rgba8, "00FF00"_rgba8)                                              //
-//       -> adds a blue circle of radius 15 centered at (100, 250)  with a green outline of thickness 4 to layer 0                       //
-//                                                                                                                                       //
-// Added circles are not drawn until a call to one of the drawing functions. Aside from supporting tr::layered_multidrawer, the circle   //
-// renderer can be drawn alone. Drawn circles are erased from the renderer:                                                              //
-//     - circle.draw(target) -> draws all layers to the target                                                                           //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Provides an efficient circle renderer.
 
 #include "../utility/circle.hpp"
 #include "../utility/reference.hpp"
@@ -40,136 +8,264 @@
 #include "render_target.hpp"
 #include "shader_pipeline.hpp"
 
-///////////////////////////////////////////////////////////// CIRCLE RENDERER /////////////////////////////////////////////////////////////
+//
 
-namespace tr {
-	// Efficient circle renderer.
-	class circle_renderer {
+namespace tr
+{
+	/// Efficient circle renderer.
+	class circle_renderer
+	{
 	  public:
-		// Drawer class to which the circle renderer delegates the calling of draw commands.
+		/// Drawer class to which the circle renderer delegates the calling of draw commands.
 		class drawer;
 
-		// Initializes the circle renderer.
+		/// @name Constructors
+		/// @{
+
+		/// Initializes the circle renderer.
+		/// @param context Graphics context to create the renderer on.
+		/// @param render_scale Rendering scale hint for the renderer.
 		circle_renderer(graphics_context& context, float render_scale = 1.0f);
 
-		// Gets a reference to the graphics context the renderer is on.
+		/// @}
+		/// @name Context
+		/// @{
+
+		/// Gets a reference to the graphics context the renderer is on.
+		/// @return Reference to the graphics context the renderer is on.
 		graphics_context& context() const;
 
-		// Sets the render scale hint for the renderer.
+		/// @}
+		/// @name Properties
+		/// @{
+
+		/// Sets the render scale hint for the renderer.
+		/// @param render_scale Rendering scale hint for the renderer.
 		void set_render_scale(float render_scale);
-		// Sets the default transformation matrix used by circles on any layer without its own default transform.
+
+		/// Sets the default transformation matrix used by circles on any layer without its own default transform.
+		/// @param mat Transformation matrix to use as a global default.
 		void set_default_transform(const glm::mat4& mat);
-		// Sets the transformation matrix used by circles on a layer.
+
+		/// Sets the transformation matrix used by circles on a layer.
+		/// @param layer Layer to set the default for.
+		/// @param mat Transformation matrix to use as a layer default.
 		void set_layer_transform(int layer, const glm::mat4& mat);
-		// Sets the blending mode used by circles on a layer.
+
+		/// Sets the blending mode used by circles on a layer.
+		/// @param layer Layer to set the default for.
+		/// @param blend_mode Blending mode to use as a layer default.
 		void set_layer_blend_mode(int layer, const blend_mode& blend_mode);
 
-		// Adds a filled circle to the renderer.
+		/// @}
+		/// @name Adding circles
+		/// @{
+
+		/// Adds a filled circle to the renderer.
+		/// @param layer Layer to add the circle to.
+		/// @param circle Circle to add to the renderer.
+		/// @param color Color of the circle fill.
 		void add_circle(int layer, circle circle, rgba8 color);
-		// Adds a circle outline to the renderer.
+
+		/// Adds a circle outline to the renderer.
+		/// @param layer Layer to add the circle outline to.
+		/// @param circle Circle to add to the renderer.
+		/// @param outline_thickness Thickness of the circle outline.
+		/// @param color Color of the circle outline.
 		void add_circle_outline(int layer, circle circle, float outline_thickness, rgba8 color);
-		// Adds an outlined circle to the renderer.
+
+		/// Adds an outlined circle to the renderer.
+		/// @param layer Layer to add the circle to.
+		/// @param circle Circle to add to the renderer.
+		/// @param outline_thickness Thickness of the circle outline.
+		/// @param fill_color Color of the circle fill.
+		/// @param outline_color Color of the circle outline.
 		void add_outlined_circle(int layer, circle circle, float outline_thickness, rgba8 fill_color, rgba8 outline_color);
 
-		// Creates a drawer for all layers in a range. The renderer is "locked" and can't be interacted with while the drawer exists.
+		/// @}
+		/// @name Drawing
+		/// @{
+
+		/// Creates a drawer for all layers in a range.
+		/// @note The renderer is "locked" after this operation and can't be interacted with while the drawer exists.
+		/// @param min_layer
+		/// @param max_layer
+		/// @return Drawer for the layer range [`min_layer`, `max_layer`].
 		drawer create_drawer(int min_layer, int max_layer);
-		// Creates a drawer for all layers in the renderer. The renderer is "locked" and can't be interacted with while the drawer exists.
+
+		/// Creates a drawer for all layers in the renderer.
+		/// @note The renderer is "locked" after this operation and can't be interacted with while the drawer exists.
+		/// @return Drawer for all of the circles added to the renderer.
 		drawer create_drawer();
-		// Draws all added circles to a rendering target.
+
+		/// Draws all added circles to a rendering target.
+		/// @param target Rendering target.
 		void draw(const render_target& target);
 
+		/// @}
+
 	  private:
-		// Circle information.
-		struct circle {
-			// The position of the circle's center.
+		/// Circle information.
+		struct circle
+		{
+			/// Position of the circle's center.
 			glm::vec2 position;
-			// The radius of the filled region of the circle.
+
+			/// Radius of the filled region of the circle.
 			float fill_radius;
-			// The thickness of the outline of the circle.
+
+			/// Thickness of the outline of the circle.
 			float outline_thickness;
-			// The color of the filled region of the circle.
+
+			/// Color of the filled region of the circle.
 			rgba8 fill_color;
-			// The color of the outline of the circle.
+
+			/// Color of the outline of the circle.
 			rgba8 outline_color;
 
-			// Provided for tr::as_vertex_attribute_list.
+			//
+
+			/// Provided for `tr::as_vertex_attribute_list`.
 			static constexpr auto as_vertex_attribute_list{tr::as_vertex_attribute_list<glm::vec2, float, float, rgba8, rgba8>};
 		};
-		// Layer information.
-		struct layer {
-			// The transormation matrix of the layer (or empty for the global default).
+
+		/// Layer information.
+		struct layer
+		{
+			/// Transformation matrix of the layer (or empty for the global default).
 			std::optional<glm::mat4> transform;
-			// The blending mode of the layer.
+
+			/// Blending mode of the layer.
 			blend_mode blend_mode{alpha_blending};
-			// The circles to draw on this layer.
+
+			/// Circles to draw on this layer.
 			std::vector<circle> circles;
 		};
 
-		// The bindings of the circle renderer vertex format.
+		//
+
+		/// Bindings of the circle renderer vertex format.
 		static constexpr std::array vertex_format_bindings{make_vertex_binding<glm::u8vec2>(), make_vertex_binding<circle>(1)};
 
-		// The ID of the renderer.
+		//
+
+		/// The ID of the renderer.
 		renderer_id m_id;
-		// Global default transform.
+
+		/// Global default transform.
 		glm::mat4 m_default_transform{1.0f};
-		// Drawing layers.
+
+		/// Drawing layers.
 		std::map<int, layer> m_layers;
-		// The pipeline and shaders used by the renderer.
+
+		/// The pipeline and shaders used by the renderer.
 		owning_shader_pipeline m_pipeline;
-		// The circle renderer vertex format.
+
+		/// The circle renderer vertex format.
 		vertex_format m_vertex_format;
-		// The shader circle buffer.
+
+		/// The shader circle buffer.
 		dyn_vertex_buffer<circle> m_shader_circles;
-		// The vertices of the quad used to draw circles.
+
+		/// The vertices of the quad used to draw circles.
 		static_vertex_buffer<glm::u8vec2> m_quad_vertices;
-		// Last used transform.
+
+		/// Last used transform.
 		glm::mat4 m_last_transform{1.0f};
-		// Last used blending mode.
+
+		/// Last used blending mode.
 		blend_mode m_last_blend_mode{alpha_blending};
+
 #ifdef TR_ENABLE_ASSERTS
-		// Flag that is set to true when a staggered draw is ongoing.
+		/// Flag that is set to true when a staggered draw is ongoing.
 		bool m_locked{false};
 #endif
 	};
 
-	// Drawer class to which the circle renderer delegates the calling of draw commands.
-	class circle_renderer::drawer {
+	/// Drawer class to which the circle renderer delegates the calling of draw commands.
+	class circle_renderer::drawer
+	{
 	  public:
-		// Moves a drawer.
-		drawer(drawer&& r) noexcept;
-		// Cleans up the drawing data and unlocks the parent renderer.
+		/// @name Constructors
+		/// @{
+
+		/// Moves a drawer.
+		/// @param rhs Drawer to move.
+		drawer(drawer&& rhs) noexcept;
+
+		/// Cleans up the drawing data and unlocks the parent renderer.
 		~drawer();
 
-		// Moves a drawer.
-		drawer& operator=(drawer&& r) noexcept;
+		/// @}
+		/// @name Assignment operators
+		/// @{
 
-		// Gets the minimum available layer for drawing.
+		/// Moves a drawer.
+		/// @param rhs Drawer to move.
+		/// @return Reference to `*this`.
+		drawer& operator=(drawer&& rhs) noexcept;
+
+		/// @}
+		/// @name Layers
+		/// @{
+
+		/// Gets the minimum available layer for drawing.
+		/// @return Minimum available layer for drawing.
 		int min_layer() const;
-		// Gets the maximum available layer for drawing.
+
+		/// Gets the maximum available layer for drawing.
+		/// @return Maximum available layer for drawing.
 		int max_layer() const;
 
-		// Draws a single layer.
+		/// @}
+		/// @name Drawing
+		/// @{
+
+		/// Draws a single layer.
+		/// @param layer Layer to draw.
+		/// @param target Rendering target.
 		void draw_layer(int layer, const render_target& target);
-		// Draws everything.
+
+		/// Draws everything.
+		/// @param target Rendering target.
 		void draw(const render_target& target);
 
+		/// @}
+
 	  private:
-		// Reference to the parent renderer.
+		/// Reference to the parent renderer.
 		opt_ref<circle_renderer> m_renderer;
-		// The range of circles to draw.
+
+		/// Range of circles to draw.
 		std::ranges::subrange<std::map<int, layer>::iterator> m_range;
 
-		// Creates a drawer.
+		//
+
+		/// Creates a drawer.
+		/// @param renderer Reference to the parent renderer.
+		/// @param range Range of circles to draw.
 		drawer(circle_renderer& renderer, std::ranges::subrange<std::map<int, layer>::iterator> range);
 
-		// Sets up the graphical context for drawing.
+		//
+
+		/// Sets up the graphical context for drawing.
+		/// @param context Reference to the graphics context.
 		void setup_context(graphics_context& context);
-		// Sets up the graphical context for a specific draw call.
+
+		/// Sets up the graphical context for a specific draw call.
+		/// @param context Reference to the graphics context.
+		/// @param transform Transformation matrix to use.
+		/// @param blend_mode Blending mode to use.
 		void setup_draw_call_state(graphics_context& context, const glm::mat4& transform, const blend_mode& blend_mode);
 
-		// Cleans up the drawing data and unlocks the parent renderer.
+		//
+
+		/// Cleans up the drawing data and unlocks the parent renderer.
 		void clean_up();
 
+		//
+
+		// Uses the private constructor.
 		friend class circle_renderer;
 	};
 } // namespace tr

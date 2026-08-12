@@ -1,12 +1,9 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements the drawer from circle_renderer.hpp.                                                                                       //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements the drawer from circle_renderer.hpp.
 
 #include "../../include/tr/sysgfx/circle_renderer.hpp"
 
-////////////////////////////////////////////////////////////////// DRAWER /////////////////////////////////////////////////////////////////
+//
 
 tr::circle_renderer::drawer::drawer(circle_renderer& renderer, std::ranges::subrange<std::map<int, layer>::iterator> range)
 	: m_renderer{renderer}
