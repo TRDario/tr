@@ -37,8 +37,7 @@ tr::static_vector<Element, Capacity>::static_vector(size_type size, const Elemen
 }
 
 template <typename Element, tr::usize Capacity>
-template <std::input_iterator Iterator>
-	requires(std::same_as<typename std::iterator_traits<Iterator>::value_type, Element>)
+template <tr::typed_input_iterator<Element> Iterator>
 tr::static_vector<Element, Capacity>::static_vector(Iterator first, Iterator last)
 	: m_size{0}
 {
@@ -46,8 +45,7 @@ tr::static_vector<Element, Capacity>::static_vector(Iterator first, Iterator las
 }
 
 template <typename Element, tr::usize Capacity>
-template <std::ranges::input_range Range>
-	requires(std::same_as<typename std::ranges::range_value_t<Range>, Element>)
+template <tr::typed_input_range<Element> Range>
 tr::static_vector<Element, Capacity>::static_vector(Range&& range)
 	: static_vector{std::ranges::begin(range), std::ranges::end(range)}
 {
@@ -150,19 +148,19 @@ tr::static_vector<Element, Capacity>::const_pointer tr::static_vector<Element, C
 template <typename Element, tr::usize Capacity>
 tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capacity>::begin()
 {
-	return data();
+	return iterator{data()};
 }
 
 template <typename Element, tr::usize Capacity>
 tr::static_vector<Element, Capacity>::const_iterator tr::static_vector<Element, Capacity>::begin() const
 {
-	return data();
+	return const_iterator{data()};
 }
 
 template <typename Element, tr::usize Capacity>
 tr::static_vector<Element, Capacity>::const_iterator tr::static_vector<Element, Capacity>::cbegin() const
 {
-	return data();
+	return begin();
 }
 
 template <typename Element, tr::usize Capacity>
@@ -263,8 +261,7 @@ tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capaci
 }
 
 template <typename Element, tr::usize Capacity>
-template <std::input_iterator Iterator>
-	requires(std::same_as<typename std::iterator_traits<Iterator>::value_type, Element>)
+template <tr::typed_input_iterator<Element> Iterator>
 tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capacity>::insert(const_iterator cwhere, Iterator first,
 																							Iterator last)
 {
@@ -293,8 +290,7 @@ tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capaci
 }
 
 template <typename Element, tr::usize Capacity>
-template <std::ranges::input_range Range>
-	requires(std::same_as<typename std::ranges::range_value_t<Range>, Element>)
+template <tr::typed_input_range<Element> Range>
 tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capacity>::insert(const_iterator where, Range&& range)
 {
 	return insert(where, std::ranges::begin(range), std::ranges::end(range));
@@ -318,11 +314,11 @@ tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capaci
 
 	const iterator where{begin() + std::distance(cbegin(), cwhere)};
 	if (where != end()) {
-		new (end()) Element{std::move(back())};
+		new (end().base()) Element{std::move(back())};
 		std::move_backward(where, end() - 1, end());
 		where->~Element();
 	}
-	new (where) Element{std::forward<Args>(args)...};
+	new (where.base()) Element{std::forward<Args>(args)...};
 	++m_size;
 	return where;
 }
@@ -377,16 +373,14 @@ tr::static_vector<Element, Capacity>::reference tr::static_vector<Element, Capac
 }
 
 template <typename Element, tr::usize Capacity>
-template <std::input_iterator Iterator>
-	requires(std::same_as<typename std::iterator_traits<Iterator>::value_type, Element>)
+template <tr::typed_input_iterator<Element> Iterator>
 tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capacity>::append(Iterator first, Iterator last)
 {
 	return insert(end(), first, last);
 }
 
 template <typename Element, tr::usize Capacity>
-template <std::ranges::input_range Range>
-	requires(std::same_as<typename std::ranges::range_value_t<Range>, Element>)
+template <tr::typed_input_range<Element> Range>
 tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capacity>::append(Range&& range)
 {
 	return append(std::ranges::begin(range), std::ranges::end(range));

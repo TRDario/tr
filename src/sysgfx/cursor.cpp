@@ -49,12 +49,12 @@ tr::cursor::cursor(sys_cursor icon)
 }
 
 tr::cursor::cursor(const bitmap& bitmap, glm::ivec2 focus)
-	: cursor{SDL_CreateColorCursor(bitmap.m_ptr.get(), focus.x, focus.y)}
+	: cursor{SDL_CreateColorCursor(bitmap.unwrap(), focus.x, focus.y)}
 {
 }
 
 tr::cursor::cursor(const bitmap_view& view, glm::ivec2 focus)
-	: cursor{SDL_CreateColorCursor(view.m_ptr.get(), focus.x, focus.y)}
+	: cursor{SDL_CreateColorCursor(view.unwrap(), focus.x, focus.y)}
 {
 }
 

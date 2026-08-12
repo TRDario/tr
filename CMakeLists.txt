@@ -100,6 +100,7 @@ if(TR_BUILD_SYSGFX)
 		src/sysgfx/basic_renderer_drawer.cpp
 		src/sysgfx/bitmap_iterators.cpp
 		src/sysgfx/bitmap.cpp
+		src/sysgfx/bitmap_view.cpp
 		src/sysgfx/circle_renderer.cpp
 		src/sysgfx/circle_renderer_drawer.cpp
 		src/sysgfx/clipboard.cpp
@@ -124,6 +125,7 @@ if(TR_BUILD_SYSGFX)
 		src/sysgfx/shader_pipeline.cpp
 		src/sysgfx/shader.cpp
 		src/sysgfx/state_machine.cpp
+		src/sysgfx/sub_bitmap.cpp
 		src/sysgfx/texture.cpp
 		src/sysgfx/texture_unit.cpp
 		src/sysgfx/texture_view.cpp

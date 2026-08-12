@@ -70,6 +70,14 @@ namespace tr
 
 	//
 
+	/// Typed input iterator.
+	/// @tparam Element Required input type.
+	template <typename T, typename Element>
+	concept typed_input_iterator = std::input_iterator<T> &&
+								   std::same_as<std::remove_cvref_t<typename std::iterator_traits<T>::value_type>, Element>;
+
+	//
+
 	/// Contiguous range of standard layout objects.
 	template <typename T>
 	concept standard_layout_range = std::ranges::contiguous_range<T> && standard_layout<std::ranges::range_value_t<T>>;
@@ -82,6 +90,12 @@ namespace tr
 	template <typename T>
 	concept borrowed_mutable_standard_layout_range = borrowed_standard_layout_range<T> &&
 													 !const_qualified<std::ranges::range_reference_t<T>>;
+
+	/// Typed input range.
+	/// @tparam Element Required input type.
+	template <typename T, typename Element>
+	concept typed_input_range = std::ranges::input_range<T> &&
+								std::same_as<std::remove_cvref_t<typename std::ranges::range_value_t<T>>, Element>;
 
 	/// Sized output range type.
 	/// @tparam Element Required output type.

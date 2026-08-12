@@ -78,16 +78,14 @@ namespace tr
 		/// @param first Beginning iterator to the copied range.
 		/// @param last Ending iterator to the copied range.
 		/// @pre `std::ranges::distance(first, last)` must be less than or equal to `Capacity`.
-		template <std::input_iterator Iterator>
-			requires(std::same_as<typename std::iterator_traits<Iterator>::value_type, Element>)
+		template <typed_input_iterator<Element> Iterator>
 		static_vector(Iterator first, Iterator last);
 
 		/// Creates a vector from a range.
 		/// @tparam Range Element input range type.
 		/// @param range Range to copy into the vector.
 		/// @pre `std::ranges::size(range)` must be less than or equal to `Capacity`.
-		template <std::ranges::input_range Range>
-			requires(std::same_as<typename std::ranges::range_value_t<Range>, Element>)
+		template <typed_input_range<Element> Range>
 		static_vector(Range&& range);
 
 		/// Creates a vector from an initializer list.
@@ -258,8 +256,7 @@ namespace tr
 		/// @param last Ending iterator of the range to insert.
 		/// @pre `this->size() + std::distance(first, last)` must be less than or equal to `Capacity`.
 		/// @return Iterator to the position where the range was inserted.
-		template <std::input_iterator Iterator>
-			requires(std::same_as<typename std::iterator_traits<Iterator>::value_type, Element>)
+		template <typed_input_iterator<Element> Iterator>
 		iterator insert(const_iterator where, Iterator first, Iterator last);
 
 		/// Inserts a range into the string.
@@ -268,8 +265,7 @@ namespace tr
 		/// @param range Range to insert.
 		/// @pre `this->size() + std::ranges::size(range)` must be less than or equal to `Capacity`.
 		/// @return Iterator to the position where the range was inserted.
-		template <std::ranges::input_range Range>
-			requires(std::same_as<typename std::ranges::range_value_t<Range>, Element>)
+		template <typed_input_range<Element> Range>
 		iterator insert(const_iterator where, Range&& range);
 
 		/// Inserts an initializer list into the string.
@@ -330,8 +326,7 @@ namespace tr
 		/// @param last Ending iterator of the range to append.
 		/// @pre `this->size() + std::distance(first, last)` must be less than or equal to `Capacity`.
 		/// @return Iterator to the position where the first element was appended.
-		template <std::input_iterator Iterator>
-			requires(std::same_as<typename std::iterator_traits<Iterator>::value_type, Element>)
+		template <typed_input_iterator<Element> Iterator>
 		iterator append(Iterator first, Iterator last);
 
 		/// Appends a range to the vector.
@@ -339,8 +334,7 @@ namespace tr
 		/// @param range Range to append.
 		/// @pre `this->size() + std::ranges::size(range)` must be less than or equal to `Capacity`.
 		/// @return Iterator to the position where the first element was appended.
-		template <std::ranges::input_range Range>
-			requires(std::same_as<typename std::ranges::range_value_t<Range>, Element>)
+		template <typed_input_range<Element> Range>
 		iterator append(Range&& range);
 
 		/// Appends an initializer list to the vector.

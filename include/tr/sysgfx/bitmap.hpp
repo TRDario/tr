@@ -1,348 +1,383 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Provides bitmap classes and related functionality.                                                                                    //
-//                                                                                                                                       //
-// Bitmaps are collections of owned pixel data representing 2D images. Bitmaps can be constructed uninitialized (with a specified size), //
-// cloned from another bitmap or sub-bitmap, loaded from embedded data or a file (BMP/PNG/JPG/QOI), or created with a checkerboard       //
-// pattern (for missing textures, for example). Bitmaps may store their pixels in one of a number of pixel formats, which may be set     //
-// during construction and queried with the .pixel_format() method. The size of bitmaps cannot be changed after construction and can be  //
-// queried with the .size() method.                                                                                                      //
-//     - tr::bitmap bitmap{512, 512} -> creates an uninitialized rgba32 bitmap of size 512x512                                           //
-//     - bitmap.size() -> {512, 512}                                                                                                     //
-//     - tr::bitmap bitmap{another_bitmap, tr::pixel_format::rgb24} -> clones another bitmap and converts it to rgb24                    //
-//     - bitmap.pixel_format() -> tr::pixel_format::rgb24                                                                                //
-//     - tr::bitmap{tr::create_checkerboard({32, 32})} -> creates a 32x32 bitmap with a checkerboard pattern                             //
-//     - tr::bitmap{tr::load_embedded_bitmap(embedded_qoi)} -> loads an embedded QOI file                                                //
-//     - tr::bitmap{tr::load_bitmap_file("bitmap.png")} -> loads a bitmap from bitmap.png                                                //
-//                                                                                                                                       //
-// Pixels of a bitmap may be accessed via a 2D index. In addition, bitmaps may be iterated through (for the details of the iterators and //
-// pixel proxies see bitmap_iterators.hpp), or have their data directly taken via .data(). Note that the data in a bitmap isn't required //
-// to be contiguous, bitmap.size().x * tr::pixel_bytes(bitmap.pixel_format()) != bitmap.pitch() (the actual length of a row in bytes) in //
-// some cases:                                                                                                                           //
-//     - bitmap[{50, 50}] = "FFFFFF"_rgba8 -> sets the pixel at (50, 50) to white                                                        //
-//     - for (auto p : bitmap) { p = tr::rgb8{p} * 0.75f } -> reduces the brightness of every pixel by 25%                               //
-//     - &*(bitmap.begin() + 50) == bitmap.data() + bitmap.pitch() -> true                                                               //
-//                                                                                                                                       //
-// A bitmap or a region of another bitmap may be blitted onto a bitmap with the .blit() method, and the bitmap may be cleared to a       //
-// single color using the .fill() method:                                                                                                //
-//     - bitmap.blit({25, 25}, other) -> blits 'other' to bitmap with the top-left corner at (25, 25)                                    //
-//     - bitmap.fill("FF00FF"_rgba8) -> fills the bitmap with magenta                                                                    //
-//                                                                                                                                       //
-// Bitmaps may be saved to a .png file using the .save() method:                                                                         //
-//     - bitmap.save("bitmap.png") -> the contents of bitmap are saved to bitmap.png                                                     //
-//                                                                                                                                       //
-// Bitmap views share the interface of bitmaps, but do not own their data and are read-only:                                             //
-//     - tr::bitmap_view view{embedded_bitmap_data, {256, 256}, tr::pixel_format::rgba32}                                                //
-//       -> creates a 256x256 view over embedded contiguous raw bitmap data                                                              //
-//     - tr::bitmap_view view{embedded_bitmap_data, 800, {256, 256}, tr::pixel_format::rgb24}                                            //
-//       -> creates a 256x256 view over embedded raw bitmap data with a pitch of 800 bytes                                               //
-//                                                                                                                                       //
-// Sub-bitmaps are views over a region of a bitmap, bitmap view, or another sub-bitmap. They share most of their interface with bitmaps, //
-// but cannot be saved to file or passed to certain functions. Like bitmap views, they are read-only. Bitmaps and bitmap views can be    //
-// implicitly converted to sub-bitmaps, and any of the three source types can create sub-bitmaps with the .sub() method:                 //
-//     - tr::sub_bitmap{bitmap}                                                                                                          //
-//       -> creates a sub-bitmap over an entire bitmap                                                                                   //
-//     - tr::sub_bitmap{bitmap, {{128, 128}, {128, 128}}}                                                                                //
-//       -> creates a sub-bitmap over 'bitmap' with the top-left corner at (128, 128) and of size 128x128                                //
-//     - bitmap.sub({{128, 128}, {128, 128}})                                                                                            //
-//       -> equivalent to the above                                                                                                      //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Provides a bitmap class and related datatypes.
 
 #pragma once
 #include "../utility/color.hpp"
 #include "../utility/exception.hpp"
-#include "../utility/rectangle.hpp"
+#include "bitmap_view.hpp"
 
-struct SDL_Surface;
-namespace tr {
-	class bitmap;
-	class bitmap_view;
-} // namespace tr
+//
 
-//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
-
-namespace tr {
-	// Bitmap/texture pixel format.
-	enum class pixel_format {
+namespace tr
+{
+	/// Bitmap/texture pixel format.
+	enum class pixel_format
+	{
+		/// Single-channel color stored as an 8-bit integer.
 		r8 = 318769153,
+		/// Single-channel color stored as an 8-bit integer.
 		index8 = r8,
+		/// RGB color stored as an 8-bit integer.
 		rgb_p332 = 336660481,
+		/// XRGB color stored as a 16-bit integer (4-bit channels).
 		xrgb_p4444 = 353504258,
+		/// XBGR color stored as a 16-bit integer (4-bit channels).
 		xbgr_p4444 = 357698562,
+		/// XRGB color stored as a 16-bit integer (5-bit color, 1-bit alpha).
 		xrgb_p1555 = 353570562,
+		/// XBGR color stored as a 16-bit integer (5-bit color, 1-bit alpha).
 		xbgr_p1555 = 357764866,
+		/// ARGB color stored as a 16-bit integer (4-bit channels).
 		argb_p4444 = 355602434,
+		/// RGBA color stored as a 16-bit integer (4-bit channels).
 		rgba_p4444 = 356651010,
+		/// ABGR color stored as a 16-bit integer (4-bit channels).
 		abgr_p4444 = 359796738,
+		/// BGRA color stored as a 16-bit integer (4-bit channels).
 		bgra_p4444 = 360845314,
+		/// ARGB color stored as a 16-bit integer (5-bit color, 1-bit alpha).
 		argb_p1555 = 355667970,
+		/// RGBA color stored as a 16-bit integer (5-bit color, 1-bit alpha).
 		rgba_p5551 = 356782082,
+		/// ABGR color stored as a 16-bit integer (5-bit color, 1-bit alpha).
 		abgr_p1555 = 359862274,
+		/// BGRA color stored as a 16-bit integer (5-bit color, 1-bit alpha).
 		bgra_p5551 = 360976386,
+		/// RGB color stored as a 16-bit integer.
 		rgb_p565 = 353701890,
+		/// BGR color stored as a 16-bit integer.
 		bgr_p565 = 357896194,
+		/// RGB color stored as an array.
 		rgb24 = 386930691,
+		/// BGR color stored as an array.
 		bgr24 = 390076419,
+		/// BGRX color stored as a 32-bit integer.
 		bgrx32 = 370546692,
+		/// XBGR color stored as a 32-bit integer.
 		xbgr32 = 371595268,
+		/// RGBX color stored as a 32-bit integer.
 		rgbx32 = 374740996,
+		/// XRGB color stored as a 32-bit integer.
 		xrgb32 = 375789572,
+		/// BGRA color stored as a 32-bit integer.
 		bgra32 = 372645892,
+		/// ABGR color stored as a 32-bit integer.
 		abgr32 = 373694468,
+		/// RGBA color stored as a 32-bit integer.
 		rgba32 = 376840196,
+		/// ARGB color stored as a 32-bit integer.
 		argb32 = 377888772,
 	};
-	// Gets the number of bytes per pixel for a given format.
+
+	/// @name Pixel format
+	/// @{
+
+	/// Gets the number of bytes per pixel for a given format.
+	/// @param format Pixel format type.
+	/// @return Number of bytes per pixel for `format`.
 	int pixel_bytes(pixel_format format);
 
-	// Error thrown when bitmap loading fails.
-	class bitmap_load_error : public exception {
+	/// @}
+
+	/// Error thrown when bitmap loading fails.
+	class bitmap_load_error : public exception
+	{
 	  public:
-		// Constructs an exception.
+		/// @name Constructors
+		/// @{
+
+		/// Constructs an exception.
+		/// @param path Path to the bitmap file.
+		/// @param details Details of the error.
 		bitmap_load_error(std::string_view path, std::string&& details);
 
-		// Gets the name of the error.
+		/// @}
+		/// @name Information
+		/// @{
+
+		/// Gets the name of the error.
+		/// @return `"Bitmap loading error"`.
 		std::string_view name() const override;
-		// Gets the description of the error.
+
+		/// Gets the description of the error.
+		/// @return Description of the error.
 		std::string_view description() const override;
-		// Gets further details about the error.
+
+		/// Gets further details about the error.
+		/// @return Details of the error.
 		std::string_view details() const override;
 
+		/// @}
+
 	  private:
-		// The description of the error.
+		/// Description of the error.
 		std::string m_description;
-		// The details of the error.
+
+		/// Details of the error.
 		std::string m_details;
 	};
-	// Error thrown when bitmap saving fails.
-	class bitmap_save_error : public exception {
+
+	/// Error thrown when bitmap saving fails.
+	class bitmap_save_error : public exception
+	{
 	  public:
-		// Constructs an exception.
+		/// @name Constructors
+		/// @{
+
+		/// Constructs an exception.
+		/// @param path Path to the bitmap file.
+		/// @param details Details of the error.
 		bitmap_save_error(std::string_view path, std::string&& details);
 
-		// Gets the name of the error.
+		/// @}
+		/// @name Information
+		/// @{
+
+		/// Gets the name of the error.
+		/// @return `"Bitmap saving error"`.
 		std::string_view name() const override;
-		// Gets the description of the error.
+
+		/// Gets the description of the error.
+		/// @return Description of the error.
 		std::string_view description() const override;
-		// Gets further details about the error.
+
+		/// Gets further details about the error.
+		/// @return Details of the error.
 		std::string_view details() const override;
 
+		/// @}
+
 	  private:
-		// The description of the error.
+		/// Description of the error.
 		std::string m_description;
-		// The details of the error.
+
+		/// Details of the error.
 		std::string m_details;
 	};
 
-	// View over a rectangular region of a bitmap.
-	class sub_bitmap {
+	//
+
+	/// Class containing owned bitmap data.
+	class bitmap
+	{
 	  public:
+		/// Reference type used by the bitmap.
 		class reference;
+
+		/// Constant reference type used by the bitmap.
+		using const_reference = sub_bitmap::reference;
+
+		/// Iterator type used by the bitmap.
 		class iterator;
 
-		// Constructs a sub-bitmap.
-		sub_bitmap(const bitmap& bitmap, rectangle<int> region);
-		// Constructs a sub-bitmap.
-		sub_bitmap(const bitmap_view& view, rectangle<int> region);
+		/// Constant iterator type used by the bitmap.
+		using const_iterator = sub_bitmap::iterator;
 
-		// Gets the size of the sub-bitmap.
-		glm::ivec2 size() const;
+		/// @name Constructors
+		/// @{
 
-		// Creates a sub-bitmap of the sub-bitmap.
-		sub_bitmap sub(rectangle<int> region);
+		/// @cond __hidden
+		/// Wraps an SDL surface pointer.
+		/// @param ptr SDL surface pointer to wrap.
+		explicit bitmap(SDL_Surface* ptr);
+		/// @endcond
 
-		// Gets immutable access to a pixel of the bitmap.
-		reference operator[](int x, int y) const;
-		// Gets immutable access to a pixel of the bitmap.
-		reference operator[](glm::ivec2 pos) const;
+		/// Creates a blank bitmap.
+		/// @param size Size of the bitmap.
+		/// @param format Pixel format of the bitmap.
+		explicit bitmap(glm::ivec2 size, pixel_format format = pixel_format::rgba32);
 
-		// Gets an immutable iterator to the beginning of the sub-bitmap.
-		iterator begin() const;
-		// Gets an immutable iterator to the beginning of the sub-bitmap.
-		iterator cbegin() const;
-		// Gets an immutable iterator to one past the end of the sub-bitmap.
-		iterator end() const;
-		// Gets an immutable iterator to one past the end of the sub-bitmap.
-		iterator cend() const;
-
-		// Gets the raw data of the sub-bitmap.
-		const std::byte* data() const;
-
-		// Gets the format of the bitmap.
-		pixel_format format() const;
-		// Gets the pitch of the bitmap.
-		int pitch() const;
-
-	  private:
-		// Pointer to the bitmap.
-		SDL_Surface* m_ptr;
-		// The region of the sub-bitmap within the bitmap.
-		rectangle<int> m_region;
-
-		friend class bitmap;
-	};
-
-	// Non-owning view over bitmap data.
-	class bitmap_view {
-	  public:
-		// Immutable pixel reference.
-		using reference = sub_bitmap::reference;
-		// Immutable iterator.
-		using iterator = sub_bitmap::iterator;
-
-		// Creates a bitmap view over contiguous pixel data.
-		bitmap_view(std::span<const std::byte> raw_data, glm::ivec2 size, pixel_format format);
-		// Creates a bitmap view over a range of pixel data.
-		template <std::ranges::contiguous_range Range> bitmap_view(Range&& range, glm::ivec2 size, pixel_format format);
-		// Creates a bitmap view over pixel data.
-		bitmap_view(const std::byte* raw_data_start, int pitch, glm::ivec2 size, pixel_format format);
-
-		// Gets the size of the bitmap.
-		glm::ivec2 size() const;
-
-		// Gets immutable access to a pixel of the bitmap.
-		reference operator[](int x, int y) const;
-		// Gets immutable access to a pixel of the bitmap.
-		reference operator[](glm::ivec2 pos) const;
-
-		// Gets an immutable iterator to the beginning of the bitmap.
-		iterator begin() const;
-		// Gets an immutable iterator to the beginning of the bitmap.
-		iterator cbegin() const;
-		// Gets an immutable iterator to one past the end of the bitmap.
-		iterator end() const;
-		// Gets an immutable iterator to one past the end of the bitmap.
-		iterator cend() const;
-
-		// Creates a sub-bitmap spanning the entire bitmap view.
-		operator sub_bitmap() const;
-		// Creates a sub-bitmap of the bitmap.
-		sub_bitmap sub(rectangle<int> region) const;
-
-		// Gets the raw data of the bitmap.
-		const std::byte* data() const;
-
-		// Gets the format of the bitmap.
-		pixel_format format() const;
-		// Gets the pitch of the bitmap.
-		int pitch() const;
-
-		// Saves the bitmap to a .png file.
-		// May throw: bitmap_save_error.
-		void save(const std::filesystem::path& path) const;
-
-	  private:
-		struct deleter {
-			void operator()(SDL_Surface* ptr) const;
-		};
-
-		// Handle to the SDL surface.
-		std::unique_ptr<SDL_Surface, deleter> m_ptr;
-
-		friend class bitmap;
-		friend class sub_bitmap;
-		friend class cursor;
-		friend class window;
-		friend class window_view;
-	};
-
-	// Class containing owned bitmap data.
-	class bitmap {
-	  public:
-		class reference;
-		using const_reference = tr::sub_bitmap::reference;
-		class iterator;
-		using const_iterator = tr::sub_bitmap::iterator;
-
-		// Creates a blank bitmap.
-		bitmap(glm::ivec2 size, pixel_format format = pixel_format::rgba32);
-		// Clones a bitmap.
+		/// Clones a bitmap.
+		/// @param bitmap Source bitmap to copy.
+		/// @param format Pixel format of the bitmap.
 		explicit bitmap(const bitmap& bitmap, pixel_format format = pixel_format::rgba32);
-		// Clones a bitmap view.
+
+		/// Clones a bitmap view.
+		/// @param view Source bitmap view to copy.
+		/// @param format Pixel format of the bitmap.
 		explicit bitmap(const bitmap_view& view, pixel_format format = pixel_format::rgba32);
-		// Clones a sub-bitmap.
+
+		/// Clones a sub-bitmap.
+		/// @param source Source sub-bitmap to copy.
+		/// @param format Pixel format of the bitmap.
 		explicit bitmap(sub_bitmap source, pixel_format format = pixel_format::rgba32);
+
+		/// Moves a bitmap.
+		/// @param bitmap Bitmap to move.
 		bitmap(bitmap&& bitmap) noexcept = default;
 
-		bitmap& operator=(bitmap&& r) noexcept = default;
+		/// @}
+		/// @name Assignment operators
+		/// @{
 
-		// Gets the size of the bitmap.
-		glm::ivec2 size() const;
+		/// Moves a bitmap.
+		/// @param rhs Bitmap to move.
+		/// @return Reference to `*this`.
+		bitmap& operator=(bitmap&& rhs) noexcept = default;
 
-		// Gets mutable access to a pixel of the bitmap.
-		reference operator[](int x, int y);
-		// Gets mutable access to a pixel of the bitmap.
-		reference operator[](glm::ivec2 pos);
-		// Gets immutable access to a pixel of the bitmap.
-		const_reference operator[](int x, int y) const;
-		// Gets immutable access to a pixel of the bitmap.
-		const_reference operator[](glm::ivec2 pos) const;
+		/// @}
+		/// @name Sub-bitmap
+		/// @{
 
-		// Gets a mutable iterator to the beginning of the bitmap.
-		iterator begin();
-		// Gets an immutable iterator to the beginning of the bitmap.
-		const_iterator begin() const;
-		// Gets an immutable iterator to the beginning of the bitmap.
-		const_iterator cbegin() const;
-		// Gets a mutable iterator to one past the end of the bitmap.
-		iterator end();
-		// Gets an immutable iterator to one past the end of the bitmap.
-		const_iterator end() const;
-		// Gets an immutable iterator to one past the end of the bitmap.
-		const_iterator cend() const;
-
-		// Blits a sub-bitmap to the bitmap.
-		void blit(glm::ivec2 tl, sub_bitmap source);
-		// Fills a region of the bitmap with a solid color.
-		void fill(rectangle<int> region, rgba8 color);
-
-		// Creates a sub-bitmap spanning the entire bitmap.
+		/// Creates a sub-bitmap spanning the entire bitmap.
+		/// @return Sub-bitmap spanning the entire bitmap.
 		operator sub_bitmap() const;
-		// Creates a sub-bitmap of the bitmap.
+
+		/// Creates a sub-bitmap of the bitmap.
+		/// @param region Region of the bitmap to create a sub-bitmap of.
+		/// @return Sub-bitmap spanning a region of the bitmap.
 		sub_bitmap sub(rectangle<int> region) const;
 
-		// Gets the raw data of the bitmap.
-		std::byte* data();
-		// Gets the raw data of the bitmap.
-		const std::byte* data() const;
+		/// @}
+		/// @name Information
+		/// @{
 
-		// Gets the format of the bitmap.
+		/// Gets the size of the bitmap.
+		/// @return Size of the bitmap.
+		glm::ivec2 size() const;
+
+		/// Gets the format of the bitmap.
+		/// @return Format of the bitmap.
 		pixel_format format() const;
-		// Gets the pitch of the bitmap.
+
+		/// Gets the pitch of the bitmap.
+		/// @return Pitch of the bitmap.
 		int pitch() const;
 
-		// Saves the bitmap to a .png file.
-		// May throw: bitmap_save_error.
+		/// @}
+		/// @name Access
+		/// @{
+
+		/// Gets mutable access to a pixel of the bitmap.
+		/// @param x, y Position of the bitmap within the bitmap.
+		/// @return Reference to a pixel of the bitmap.
+		reference operator[](int x, int y);
+
+		/// Gets mutable access to a pixel of the bitmap.
+		/// @param pos Position of the pixel within the bitmap.
+		/// @return Reference to a pixel of the bitmap.
+		reference operator[](glm::ivec2 pos);
+
+		/// Gets immutable access to a pixel of the bitmap.
+		/// @param x, y Position of the bitmap within the bitmap.
+		/// @return Reference to a pixel of the bitmap.
+		const_reference operator[](int x, int y) const;
+
+		/// Gets immutable access to a pixel of the bitmap.
+		/// @param pos Position of the pixel within the bitmap.
+		/// @return Reference to a pixel of the bitmap.
+		const_reference operator[](glm::ivec2 pos) const;
+
+		/// Gets the raw data of the bitmap.
+		/// @return Pointer to the data of the bitmap.
+		std::byte* data();
+
+		/// Gets the raw data of the bitmap.
+		/// @return Pointer to the data of the bitmap.
+		const std::byte* data() const;
+
+		/// @}
+		/// @name Iterators
+		/// @{
+
+		/// Gets a mutable iterator to the beginning of the bitmap.
+		/// @return Iterator to the beginning of the bitmap.
+		iterator begin();
+
+		/// Gets an immutable iterator to the beginning of the bitmap.
+		/// @return Iterator to the beginning of the bitmap.
+		const_iterator begin() const;
+
+		/// Gets an immutable iterator to the beginning of the bitmap.
+		/// @return Iterator to the beginning of the bitmap.
+		const_iterator cbegin() const;
+
+		/// Gets a mutable iterator to one past the end of the bitmap.
+		/// @return Iterator to the end of the bitmap.
+		iterator end();
+
+		/// Gets an immutable iterator to one past the end of the bitmap.
+		/// @return Iterator to the end of the bitmap.
+		const_iterator end() const;
+
+		/// Gets an immutable iterator to one past the end of the bitmap.
+		/// @return Iterator to the end of the bitmap.
+		const_iterator cend() const;
+
+		/// @}
+		/// @name Manipulation
+		/// @{
+
+		/// Blits a sub-bitmap to the bitmap.
+		/// @param tl Top-left corner of the target region.
+		/// @param source Source sub-bitmap to blit.
+		void blit(glm::ivec2 tl, sub_bitmap source);
+
+		/// Fills a region of the bitmap with a solid color.
+		/// @param region Region of the bitmap to fill.
+		/// @param color Color to fill the region with.
+		void fill(rectangle<int> region, rgba8 color);
+
+		/// @}
+		/// @name Saving
+		/// @{
+
+		/// Saves the bitmap to a .png file.
+		/// @exception bitmap_save_error If saving the bitmap to file failed.
 		void save(const std::filesystem::path& path) const;
 
+		/// @}
+
+		/// @cond __hidden
+		/// Unwraps the SDL surface pointer.
+		/// @note This does not release the pointer.
+		/// @return Pointer to the SDL surface.
+		SDL_Surface* unwrap() const;
+		/// @endcond
+
 	  private:
-		// Handle to the SDL surface.
-		std::unique_ptr<SDL_Surface, bitmap_view::deleter> m_ptr;
+		/// Bitmap deleter.
+		struct deleter
+		{
+			/// Destroys a bitmap.
+			/// @param ptr Pointer to an SDL surface.
+			static void operator()(SDL_Surface* ptr);
+		};
 
-		// Wraps an SDL surface pointer.
-		bitmap(SDL_Surface* ptr);
+		//
 
-		friend class sub_bitmap;
-		friend class sub_bitmap::iterator;
-		friend class iterator;
-		friend class cursor;
-		friend class ttfont;
-		friend class window;
-		friend class window_view;
-
-		friend bitmap load_embedded_bitmap(std::span<const std::byte> data);
-		friend bitmap load_bitmap_file(const std::filesystem::path& path);
+		/// Handle to the SDL surface.
+		std::unique_ptr<SDL_Surface, deleter> m_ptr;
 	};
-	// Creates a bitmap with the missing texture checkerboard pattern.
+
+	/// @name Bitmap factories
+	/// @{
+
+	/// Creates a bitmap with the missing texture checkerboard pattern.
+	/// @param size Size of the bitmap.
+	/// @return Missing texture bitmap.
 	bitmap create_checkerboard(glm::ivec2 size);
-	// Loads an embedded bitmap file.
+
+	/// Loads an embedded bitmap file.
+	/// @param data Bitmap data.
+	/// @return Loaded bitmap.
 	bitmap load_embedded_bitmap(std::span<const std::byte> data);
-	// Loads an embedded bitmap file.
-	template <std::ranges::contiguous_range R> bitmap load_embedded_bitmap(R&& range);
-	// Loads a bitmap from file (BMP/PNG/QOI).
-	// May throw: file_not_found, bitmap_load_error.
+
+	/// Loads an embedded bitmap file.
+	/// @tparam Range Bitmap data range type.
+	/// @param range Bitmap data range.
+	/// @return Loaded bitmap.
+	template <std::ranges::contiguous_range Range>
+	bitmap load_embedded_bitmap(Range&& range);
+
+	/// Loads a bitmap from file (BMP/PNG/QOI).
+	/// @param path Path to the bitmap file.
+	/// @exception file_not_found If the bitmap was not found.
+	/// @exception bitmap_load_error If the bitmap loading failed.
+	/// @return Loaded bitmap.
 	bitmap load_bitmap_file(const std::filesystem::path& path);
+
+	/// @}
 } // namespace tr
 
 #include "impl/bitmap.hpp" // IWYU pragma: export

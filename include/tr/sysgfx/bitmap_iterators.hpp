@@ -177,7 +177,7 @@ namespace tr
 		friend class iterator;
 	};
 
-	/// Mutable pixel iterator.
+	/// Mutable bitmap pixel iterator.
 	class bitmap::iterator : public iterator_interface<iterator, glm::ivec2>
 	{
 	  public:
