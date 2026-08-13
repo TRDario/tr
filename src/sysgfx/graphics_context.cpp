@@ -250,14 +250,12 @@ bool tr::graphics_context::should_setup_renderer(renderer_id id)
 void tr::graphics_context::set_wireframe_mode(bool arg)
 {
 	const gl_api& gl{make_current_and_return_gl_api()};
-
 	gl.set_polygon_mode(GL_FRONT_AND_BACK, arg ? GL_LINE : GL_FILL);
 }
 
 void tr::graphics_context::set_face_culling(bool arg)
 {
 	const gl_api& gl{make_current_and_return_gl_api()};
-
 	if (arg) {
 		gl.enable(GL_CULL_FACE);
 	}
@@ -310,15 +308,17 @@ void tr::graphics_context::set_render_target(const render_target& target)
 
 void tr::graphics_context::set_shader_pipeline(const shader_pipeline& pipeline)
 {
-	const gl_api& gl{make_current_and_return_gl_api()};
+#ifdef TR_ENABLE_GL_CHECKS
+	TR_ASSERT(pipeline.complete(), "Tried to set incomplete shader pipeline '{}'.", pipeline.label());
+#endif
 
-	gl.bind_program_pipeline(pipeline.m_ppo.get());
+	const gl_api& gl{make_current_and_return_gl_api()};
+	gl.bind_program_pipeline(pipeline.id());
 }
 
 void tr::graphics_context::set_blend_mode(const blend_mode& bm)
 {
 	const gl_api& gl{make_current_and_return_gl_api()};
-
 	gl.set_separate_blend_equations(std::to_underlying(bm.rgb_fn), std::to_underlying(bm.alpha_fn));
 	gl.set_separate_blend_function(std::to_underlying(bm.rgb_src), std::to_underlying(bm.rgb_dst), std::to_underlying(bm.alpha_src),
 								   std::to_underlying(bm.alpha_dst));
@@ -339,28 +339,24 @@ void tr::graphics_context::set_vertex_format(const vertex_format& format)
 void tr::graphics_context::set_vertex_buffer(const basic_static_vertex_buffer& buffer, int slot, ssize offset, usize stride)
 {
 	const gl_api& gl{make_current_and_return_gl_api()};
-
 	gl.bind_vertex_buffer(slot, buffer.id(), offset, stride);
 }
 
 void tr::graphics_context::set_vertex_buffer(const basic_dyn_vertex_buffer& buffer, int slot, ssize offset, usize stride)
 {
 	const gl_api& gl{make_current_and_return_gl_api()};
-
 	gl.bind_vertex_buffer(slot, buffer.id(), offset, stride);
 }
 
 void tr::graphics_context::set_index_buffer(const static_index_buffer& buffer)
 {
 	const gl_api& gl{make_current_and_return_gl_api()};
-
 	gl.bind_buffer(GL_ELEMENT_ARRAY_BUFFER, buffer.id());
 }
 
 void tr::graphics_context::set_index_buffer(const dyn_index_buffer& buffer)
 {
 	const gl_api& gl{make_current_and_return_gl_api()};
-
 	gl.bind_buffer(GL_ELEMENT_ARRAY_BUFFER, buffer.id());
 }
 
@@ -411,28 +407,24 @@ void tr::graphics_context::clear_backbuffer_region(rectangle<int> region, tr::rg
 void tr::graphics_context::draw(primitive type, usize offset, usize vertices)
 {
 	const gl_api& gl{make_current_and_return_gl_api()};
-
 	gl.draw_arrays(std::to_underlying(type), offset, vertices);
 }
 
 void tr::graphics_context::draw_instances(primitive type, usize offset, usize vertices, int instances)
 {
 	const gl_api& gl{make_current_and_return_gl_api()};
-
 	gl.draw_arrays_instanced(std::to_underlying(type), offset, vertices, instances);
 }
 
 void tr::graphics_context::draw_indexed(primitive type, usize offset, usize indices)
 {
 	const gl_api& gl{make_current_and_return_gl_api()};
-
 	gl.draw_elements(std::to_underlying(type), indices, GL_UNSIGNED_SHORT, reinterpret_cast<const void*>(offset * sizeof(u16)));
 }
 
 void tr::graphics_context::draw_indexed_instances(primitive type, usize offset, usize indices, int instances)
 {
 	const gl_api& gl{make_current_and_return_gl_api()};
-
 	gl.draw_elements_instanced(std::to_underlying(type), indices, GL_UNSIGNED_SHORT, reinterpret_cast<const void*>(offset * sizeof(u16)),
 							   instances);
 }
@@ -442,7 +434,6 @@ void tr::graphics_context::draw_indexed_instances(primitive type, usize offset, 
 const tr::gl_api& tr::graphics_context::make_current_and_return_gl_api() const
 {
 	SDL_GL_MakeCurrent(m_window, m_ptr.get());
-
 	return m_gl_api;
 }
 

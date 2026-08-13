@@ -369,6 +369,26 @@ namespace tr
 		std::string label() const;
 
 		/// @}
+		/// @name ID
+		/// @{
+
+		/// Gets the unique ID of the shader program.
+		/// @return Unique ID of the shader program.
+		unsigned int id() const;
+
+		/// @}
+
+#ifdef TR_ENABLE_GL_CHECKS
+		/// @cond __hidden
+		/// Gets the shader's inputs.
+		/// @return Map of shader inputs.
+		const boost::unordered_flat_map<unsigned int, glsl_variable>& inputs() const;
+
+		/// Gets the shader's outputs.
+		/// @return Map of shader outputs.
+		const boost::unordered_flat_map<unsigned int, glsl_variable>& outputs() const;
+		/// @endcond
+#endif
 
 	  protected:
 		/// Shader program deleter.
@@ -424,11 +444,6 @@ namespace tr
 		/// @param gl Structure holding the OpenGL API.
 		void find_outputs(const gl_api& gl);
 #endif
-
-		//
-
-		// Accesses the raw OpenGL shader program ID.
-		friend class shader_pipeline;
 	};
 
 	//

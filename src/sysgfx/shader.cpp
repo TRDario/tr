@@ -623,6 +623,27 @@ std::string tr::shader_base::label() const
 
 //
 
+unsigned int tr::shader_base::id() const
+{
+	return m_program.get();
+}
+
+//
+
+#ifdef TR_ENABLE_GL_CHECKS
+const boost::unordered_flat_map<unsigned int, tr::glsl_variable>& tr::shader_base::inputs() const
+{
+	return m_inputs;
+}
+
+const boost::unordered_flat_map<unsigned int, tr::glsl_variable>& tr::shader_base::outputs() const
+{
+	return m_outputs;
+}
+#endif
+
+//
+
 tr::vertex_shader::vertex_shader(graphics_context& context, zstring_view source)
 	: shader_base{context, source, GL_VERTEX_SHADER}
 {

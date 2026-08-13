@@ -368,11 +368,13 @@ namespace tr
 		//
 
 #ifdef TR_ENABLE_GL_CHECKS
+		/// @cond __hidden
 		/// Checks if a vertex buffer's type's attribute match those of the current vertex format.
 		/// @param label Label of the vertex buffer.
 		/// @param slot Slot the vertex buffer is being set to.
 		/// @param attrs Vertex attribute list of the elements of the vertex buffer.
 		void check_vertex_buffer(std::string label, int slot, std::span<const vertex_attribute> attrs);
+		/// @endcond
 #endif
 
 		//
