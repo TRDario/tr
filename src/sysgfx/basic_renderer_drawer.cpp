@@ -39,10 +39,10 @@ tr::basic_renderer::drawer::drawer(basic_renderer& renderer, std::ranges::subran
 	m_renderer->context().set_index_buffer(m_renderer->m_ibuffer);
 }
 
-tr::basic_renderer::drawer::drawer(drawer&& r) noexcept
-	: m_renderer{std::exchange(r.m_renderer, std::nullopt)}
-	, m_range{r.m_range}
-	, m_data{std::move(r.m_data)}
+tr::basic_renderer::drawer::drawer(drawer&& rhs) noexcept
+	: m_renderer{std::exchange(rhs.m_renderer, std::nullopt)}
+	, m_range{rhs.m_range}
+	, m_data{std::move(rhs.m_data)}
 {
 }
 
@@ -51,12 +51,12 @@ tr::basic_renderer::drawer::~drawer()
 	clean_up();
 }
 
-tr::basic_renderer::drawer& tr::basic_renderer::drawer::operator=(drawer&& r) noexcept
+tr::basic_renderer::drawer& tr::basic_renderer::drawer::operator=(drawer&& rhs) noexcept
 {
 	clean_up();
-	m_renderer = std::exchange(r.m_renderer, std::nullopt);
-	m_range = r.m_range;
-	m_data = std::move(r.m_data);
+	m_renderer = std::exchange(rhs.m_renderer, std::nullopt);
+	m_range = rhs.m_range;
+	m_data = std::move(rhs.m_data);
 	return *this;
 }
 

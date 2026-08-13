@@ -88,8 +88,8 @@ namespace tr
 
 		/// Creates a drawer for all layers in a range.
 		/// @note The renderer is "locked" after this operation and can't be interacted with while the drawer exists.
-		/// @param min_layer
-		/// @param max_layer
+		/// @param min_layer Minimum included layer.
+		/// @param max_layer Maximum included layer.
 		/// @return Drawer for the layer range [`min_layer`, `max_layer`].
 		drawer create_drawer(int min_layer, int max_layer);
 

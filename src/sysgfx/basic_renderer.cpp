@@ -1,8 +1,5 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements the renderer from basic_renderer.hpp.                                                                                      //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements the renderer from basic_renderer.hpp.
 
 #include "../../include/tr/sysgfx/basic_renderer.hpp"
 #include "../../include/tr/sysgfx/graphics_context.hpp"
@@ -11,19 +8,26 @@
 #include "../../include/tr/utility/draw_geometry.hpp"
 #include "../../include/tr/utility/hash_map.hpp"
 
-// Untextured UV sentinel.
-constexpr glm::vec2 untextured_uv{-100, -100};
+//
 
-////////////////////////////////////////////////////////////// BASIC RENDERER /////////////////////////////////////////////////////////////
+namespace tr
+{
+	namespace
+	{
+		/// Untextured UV sentinel.
+		constexpr glm::vec2 untextured_uv{-100, -100};
 
-namespace tr {
-	namespace {
+		//
+
 // Vertex shader source code.
 #include <generated/basic_renderer_vert.hpp>
+
 // Fragment shader source code.
 #include <generated/basic_renderer_frag.hpp>
 	} // namespace
 } // namespace tr
+
+//
 
 tr::basic_renderer::basic_renderer(graphics_context& context)
 	: m_id{context.allocate_renderer_id()}
