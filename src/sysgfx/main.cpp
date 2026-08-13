@@ -1,8 +1,5 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements sysgfx/main.hpp.                                                                                                           //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements sysgfx/main.hpp.
 
 #define SDL_MAIN_USE_CALLBACKS 1
 #include "../../include/tr/sysgfx/main.hpp"
@@ -18,17 +15,20 @@
 #pragma comment(linker, "/subsystem:windows /ENTRY:mainCRTStartup")
 #endif
 
-///////////////////////////////////////////////////////////// INTERNAL HELPERS ////////////////////////////////////////////////////////////
+//
 
 namespace tr
 {
 	namespace
 	{
-		// Buffer allocated to be freed in case of an out-of-memory error.
+		/// Buffer allocated to be freed in case of an out-of-memory error.
 		std::unique_ptr<char[]> g_emergency_buffer{new char[16384]};
 
-		// Shows an "Fatal exception" message box.
-		// In case of an out-of-memory error, it frees an emergency buffer to allow for clean-up and logging.
+		//
+
+		/// Shows an "Fatal exception" message box.
+		/// @details In case of an out-of-memory error, it frees an emergency buffer to allow for clean-up and logging.
+		/// @param error Error to display.
 		void show_fatal_error_message_box(const std::exception& error)
 		{
 			if (dynamic_ref_cast<const std::bad_alloc>(error).has_ref() || dynamic_ref_cast<const out_of_memory>(error).has_ref()) {
@@ -64,7 +64,7 @@ namespace tr
 	} // namespace
 } // namespace tr
 
-//////////////////////////////////////////////////////////////// INIT ERROR ///////////////////////////////////////////////////////////////
+//
 
 tr::init_error::init_error(std::string_view description)
 	: m_description{description}
@@ -86,14 +86,14 @@ std::string_view tr::init_error::details() const
 	return SDL_GetError();
 }
 
-///////////////////////////////////////////////////////////// FREQUENCY SETTER ////////////////////////////////////////////////////////////
+//
 
 void tr::set_update_frequency(float frequency)
 {
 	SDL_SetHint(SDL_HINT_MAIN_CALLBACK_RATE, frequency == uncapped_update_frequency ? "0" : std::to_string(frequency).c_str());
 }
 
-////////////////////////////////////////////////////////////// MAIN CALLBACKS /////////////////////////////////////////////////////////////
+//
 
 extern "C"
 {
