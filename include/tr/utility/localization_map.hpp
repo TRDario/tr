@@ -1,104 +1,137 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Provides a localization map class.                                                                                                    //
-//                                                                                                                                       //
-// A localization map is a fairly thin wrapper around a string -> string map meant to serve as a map between localization keys and       //
-// localization strings. As such, it can be manually constructed from one. The only other constructor is the default one, which creates  //
-// an empty map:                                                                                                                         //
-//     - tr::localization_map loc -> empty localization map                                                                              //
-//     - tr::localization_map loc{{"key", "value"}, {"key2", "value2"}} -> localization map with values for keys "key" and "key2"        //
-//                                                                                                                                       //
-// The primary benefit of the class, however, is being able to load key-value pairs from a custom localization script using the          //
-// .load_script() and .load_script_file() methods. The parser silently handles lines with syntax errors; a vector of error messages is   //
-// returned by .load_script() and .load_script_file() if you wish to display them to the user. Loading multiple files is allowed: any    //
-// duplicate keys are silently overwritten; this is not an error. Besides loading files, clearing the map is the only other allowed      //
-// operation:                                                                                                                            //
-//     - loc.load_script_file("loc.txt") -> {"line 5: Unterminated quoted string."}; map now contains key-value pairs from loc.txt       //
-//     - loc.load_script_file("loc2.txt") -> map now contains key-value pairs from loc.txt AND loc2.txt                                  //
-//     - loc.clear() -> map is now empty again                                                                                           //
-//     - loc.load_script("a="b"\nb="c"") -> map now contains the pairs {"a", "b"} and {"b", "c"}                                         //
-//                                                                                                                                       //
-// The localization file consists of lines in the format: [<KEY> = "<VALUE>"] [#COMMENT]                                                 //
-// Empty lines and lines consisting entirely of comments are ignored, as is any whitespace between the tokens.                           //
-// KEY must consist entirely of ASCII alphanumeric characters and '_'.                                                                   //
-// VALUE can contain any Unicode characters, but a few have to be escaped: newlines with '\n', backslashes with '\\', quotes with '\"':  //
-//     - example_key = "Example Message" # This is an example line                                                                       //
-//     - example_key2 = "Value with \"escaped\" characters: /\\_/\\" # Value with "escaped" characters: /\_/\                            //
-//                                                                                                                                       //
-// The presence of a key in the map can be checked with .contains(), and a view to the value can be gotten through operator[].           //
-// If there is no corresponding value for a queried key, operator[] returns a view to the key itself, so passing temporaries to          //
-// operator[] is not recommended to avoid dangling references:                                                                           //
-//     - loc.contains("example_key") -> true                                                                                             //
-//     - loc["example_key"] -> "Example Message"                                                                                         //
-//     - loc.contains("nonexistant_key") -> false                                                                                        //
-//     - loc["nonexistant_key"] -> "nonexistant_key"                                                                                     //
-//     - loc[std::string{"dangling"}] -> DON'T DO THIS                                                                                   //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Provides a localization map class.
 
 #pragma once
 #include "hash_map.hpp"
 
-//////////////////////////////////////////////////////////////// INTERFACE ////////////////////////////////////////////////////////////////
+//
 
-namespace tr {
-	// Localization map class with support for reading custom localization files.
-	class localization_map {
+namespace tr
+{
+	/// Localization map class with support for reading custom localization files.
+	/// @details
+	/// The localization file consists of lines in the format: `[<KEY> = "<VALUE>"] [#COMMENT]`
+	///
+	/// Empty lines and lines consisting entirely of comments are ignored, as is any whitespace between the tokens.
+	///
+	/// `KEY` must consist entirely of ASCII alphanumeric characters and `_`.
+	///
+	/// `VALUE` can contain any Unicode characters, but a few have to be escaped: newlines with `\n`, backslashes with `\\`, quotes with
+	/// `\"`.
+	class localization_map
+	{
 	  public:
-		// Constructs an empty localization map.
+		/// @name Constructors
+		/// @{
+
+		/// Constructs an empty localization map.
 		localization_map() = default;
-		// Copies a localization map.
+
+		/// Copies a localization map.
+		/// @param map Localization map to copy.
 		localization_map(const string_flat_map<std::string>& map);
-		// Moves a localization map.
+
+		/// Moves a localization map.
+		/// @param map Localization map to move.
 		localization_map(string_flat_map<std::string>&& map);
 
-		// Clears the localization map.
+		/// @}
+		/// @name Manipulation
+		/// @{
+
+		/// Clears the localization map.
 		void clear();
-		// Loads a localization script, returning any non-fatal errors.
+
+		/// Loads a localization script, returning any non-fatal errors.
+		/// @param script Script string in the format defined in the class description.
+		/// @return Vector of non-fatal error message strings.
 		std::vector<std::string> load_script(std::string_view script);
-		// Loads a localization script file, returning any non-fatal errors.
-		// May throw: file_not_found, file_open_error.
+
+		/// Loads a localization script file, returning any non-fatal errors.
+		/// @param path Path to a script file in the format defined in the class description.
+		/// @exception file_not_found If the script file was not found.
+		/// @exception file_open_error If opening the script file failed.
+		/// @return Vector of non-fatal error message strings.
 		std::vector<std::string> load_script_file(const std::filesystem::path& path);
 
-		// Gets whether a key has a corresponding localization string in the map.
+		/// @}
+		/// @name Access
+		/// @{
+
+		/// Gets whether a key has a corresponding localization string in the map.
+		/// @param key Localization key to check.
+		/// @return `true` if a string is associated with `key`, `false` otherwise.
 		bool contains(std::string_view key) const;
-		// Gets a localization string associated with a key, or returns the key if one doesn't exist.
+
+		/// Gets a localization string associated with a key.
+		/// @param key Localization key to get a localization string for.
+		/// @post The string `key` is a view of must stay alive after the function returns in case it's returned.
+		/// @return Localization string associated with a key, or `key` if one doesn't exist.
 		std::string_view operator[](std::string_view key) const;
 
+		/// @}
+
 	  private:
-		class parser {
+		/// Localization script parser.
+		class parser
+		{
 		  public:
-			// Result of a parse operation.
-			struct parse_result {
-				// A localization key.
+			/// Result of a parse operation.
+			struct parse_result
+			{
+				/// Localization key.
 				std::string_view key;
-				// A localization value.
+
+				/// Localization value.
 				std::string value;
 			};
 
-			// Tries to parse a line of script.
+			//
+
+			/// Tries to parse a line of script.
 			std::optional<parse_result> parse_line(std::string_view line);
 
-			// Returns the list of errors generated during parsing.
+			//
+
+			/// Returns the list of errors generated during parsing.
 			std::vector<std::string> errors();
 
 		  private:
-			// List of errors generated during parsing.
+			/// List of errors generated during parsing.
 			std::vector<std::string> m_errors;
-			// The current line number.
+
+			/// Current line number.
 			int m_line{0};
 
-			// Tries to parse a key and write it to out. Returns the remaining line or an empty string view on error.
+			//
+
+			/// Tries to parse a key and write it to out.
+			/// @param line Localization script line.
+			/// @param out Output localization key.
+			/// @return Remaining line or an empty string view on error.
 			std::string_view parse_key(std::string_view line, std::string_view& out);
-			// Tries to parse an '=' delimiter. Returns the remaining line or an empty string view on error.
+
+			/// Tries to parse an `=` delimiter.
+			/// @param line Localization script line.
+			/// @return Remaining line or an empty string view on error.
 			std::string_view parse_delimiter(std::string_view line);
-			// Tries to parse a value and write it to out. Returns false on error.
+
+			/// Tries to parse a value and write it to `out`.
+			/// @param line Localization script line.
+			/// @param out Output localization value.
+			/// @return `true` if the parsing was successful, `false` if an error occurred.
 			bool parse_value(std::string_view line, std::string& out);
-			// Tries to process escape sequences in a raw value string and write the final value to out. Returns false on error.
+
+			/// Tries to process escape sequences in a raw value string and write the final value to `out`.
+			/// @param raw Raw localization script value string.
+			/// @param out Output localization value.
+			/// @return `true` if the parsing was successful, `false` if an error occurred.
 			bool process_escape_sequences(std::string_view raw, std::string& out);
 		};
 
-		// The base string map.
+		//
+
+		/// Base string map.
 		string_flat_map<std::string> m_map;
 	};
 } // namespace tr

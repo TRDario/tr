@@ -1,23 +1,26 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements localization_map.hpp.                                                                                                      //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements localization_map.hpp.
 
 #include "../../include/tr/utility/localization_map.hpp"
 #include "../../include/tr/utility/iostream.hpp"
 
-///////////////////////////////////////////////////////// LOCALIZATION MAP PARSER /////////////////////////////////////////////////////////
+//
 
-namespace tr {
-	namespace {
-		// Trims whitespace from the line.
+namespace tr
+{
+	namespace
+	{
+		/// Trims whitespace from the line.
+		/// @param line Line string view.
+		/// @return String view to the line with the leading whitespace removed.
 		std::string_view trim_whitespace(std::string_view line)
 		{
 			return {std::ranges::find_if_not(line, [](char c) { return std::isspace(c); }), line.end()};
 		}
 	} // namespace
 } // namespace tr
+
+//
 
 std::string_view tr::localization_map::parser::parse_key(std::string_view line, std::string_view& out)
 {
@@ -129,7 +132,7 @@ std::vector<std::string> tr::localization_map::parser::errors()
 	return std::move(m_errors);
 }
 
-///////////////////////////////////////////////////////////// LOCALIZATION MAP ////////////////////////////////////////////////////////////
+//
 
 tr::localization_map::localization_map(const string_flat_map<std::string>& map)
 	: m_map{map}
