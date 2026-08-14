@@ -1,13 +1,10 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                                                                                                       //
-// Implements the templated parts of ttfont.hpp.                                                                                         //
-//                                                                                                                                       //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// @file
+/// @brief Implements the templated parts of ttfont.hpp.
 
 #pragma once
 #include "../ttfont.hpp"
 
-/////////////////////////////////////////////////////////////// TTFONT ERROR //////////////////////////////////////////////////////////////
+//
 
 template <typename... Args>
 tr::ttfont_error::ttfont_error(std::format_string<Args...> description_fmt, Args&&... args)
@@ -15,9 +12,10 @@ tr::ttfont_error::ttfont_error(std::format_string<Args...> description_fmt, Args
 {
 }
 
-////////////////////////////////////////////////////////////////// TTFONT /////////////////////////////////////////////////////////////////
+//
 
-template <std::ranges::contiguous_range R> tr::ttfont tr::load_embedded_ttfont(R&& range, float size)
+template <std::ranges::contiguous_range Range>
+tr::ttfont tr::load_embedded_ttfont(Range&& range, float size)
 {
 	return load_embedded_ttfont(std::span<const std::byte>{range_bytes(range)}, size);
 };
