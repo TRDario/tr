@@ -5,6 +5,6 @@ var shader_8hpp =
     [ "tr::shader_base::deleter", "structtr_1_1shader__base_1_1deleter.html", "structtr_1_1shader__base_1_1deleter" ],
     [ "tr::vertex_shader", "classtr_1_1vertex__shader.html", "classtr_1_1vertex__shader" ],
     [ "tr::fragment_shader", "classtr_1_1fragment__shader.html", "classtr_1_1fragment__shader" ],
-    [ "load_vertex_shader", "shader_8hpp.html#ae157f4dcee09b871aa8495fb1784c245", null ],
-    [ "load_fragment_shader", "shader_8hpp.html#aa62d3888fce4fe93546e0629d342b81c", null ]
+    [ "tr::load_vertex_shader", "namespacetr.html#ae157f4dcee09b871aa8495fb1784c245", null ],
+    [ "tr::load_fragment_shader", "namespacetr.html#aa62d3888fce4fe93546e0629d342b81c", null ]
 ];

@@ -1,7 +1,7 @@
 var classtr_1_1bitmap =
 [
-    [ "iterator", "classtr_1_1bitmap_1_1iterator.html", "classtr_1_1bitmap_1_1iterator" ],
     [ "reference", "classtr_1_1bitmap_1_1reference.html", "classtr_1_1bitmap_1_1reference" ],
+    [ "iterator", "classtr_1_1bitmap_1_1iterator.html", "classtr_1_1bitmap_1_1iterator" ],
     [ "const_reference", "classtr_1_1bitmap.html#a7ded3772c35046736e600538a33c7860", null ],
     [ "const_iterator", "classtr_1_1bitmap.html#ade50248dce94c7902f4e586a2125407f", null ],
     [ "bitmap", "classtr_1_1bitmap.html#ae187a1b92a248f6e52a98a16cc496a7a", null ],

@@ -2,8 +2,7 @@ var hierarchy =
 [
     [ "tr::angle", "classtr_1_1angle.html", null ],
     [ "tr::app_metadata", "structtr_1_1app__metadata.html", null ],
-    [ "tr::atlas_entries< Key, Value, Hash, Pred >", "classtr_1_1atlas__entries.html", null ],
-    [ "tr::atlas_entries< Key, Value, boost::hash< Key >, std::equal_to< Key > >", "classtr_1_1atlas__entries.html", null ],
+    [ "tr::atlas_entries&lt; Key, Value, Hash, Pred &gt;", "classtr_1_1atlas__entries.html", null ],
     [ "tr::atlas_packer", "classtr_1_1atlas__packer.html", null ],
     [ "tr::audio_buffer", "classtr_1_1audio__buffer.html", null ],
     [ "tr::audio_context", "classtr_1_1audio__context.html", null ],
@@ -18,13 +17,12 @@ var hierarchy =
       [ "tr::graphics_buffer_span_map< Element >", "classtr_1_1graphics__buffer__span__map.html", null ]
     ] ],
     [ "tr::basic_renderer", "classtr_1_1basic__renderer.html", null ],
-    [ "tr::basic_zstring_view< CharT, Traits >", "classtr_1_1basic__zstring__view.html", null ],
-    [ "tr::basic_zstring_view< char >", "classtr_1_1basic__zstring__view.html", null ],
+    [ "tr::basic_zstring_view&lt; CharT, Traits &gt;", "classtr_1_1basic__zstring__view.html", null ],
     [ "tr::benchmark", "classtr_1_1benchmark.html", null ],
-    [ "tr::binary_reader< Out >", "structtr_1_1binary__reader.html", null ],
-    [ "tr::binary_writer< In >", "structtr_1_1binary__writer.html", null ],
+    [ "tr::binary_reader&lt; Out &gt;", "structtr_1_1binary__reader.html", null ],
+    [ "tr::binary_writer&lt; In &gt;", "structtr_1_1binary__writer.html", null ],
     [ "tr::bitmap", "classtr_1_1bitmap.html", null ],
-    [ "tr::bitmap_atlas< Key, Value, Hash, Pred >", "structtr_1_1bitmap__atlas.html", null ],
+    [ "tr::bitmap_atlas&lt; Key, Value, Hash, Pred &gt;", "structtr_1_1bitmap__atlas.html", null ],
     [ "tr::bitmap_view", "classtr_1_1bitmap__view.html", null ],
     [ "tr::blend_mode", "structtr_1_1blend__mode.html", null ],
     [ "tr::circle", "structtr_1_1circle.html", null ],
@@ -32,7 +30,7 @@ var hierarchy =
     [ "tr::color_mesh_ref", "structtr_1_1color__mesh__ref.html", null ],
     [ "tr::cursor", "classtr_1_1cursor.html", null ],
     [ "tr::debug_renderer", "classtr_1_1debug__renderer.html", null ],
-    [ "tr::defer< Fn >", "classtr_1_1defer.html", null ],
+    [ "tr::defer&lt; Fn &gt;", "classtr_1_1defer.html", null ],
     [ "Deleter", null, [
       [ "tr::handle< unsigned int, 0, deleter >", "classtr_1_1handle.html", null ],
       [ "tr::handle< unsigned int, 0, unmapper >", "classtr_1_1handle.html", null ],
@@ -44,9 +42,9 @@ var hierarchy =
     [ "tr::basic_renderer::drawer", "classtr_1_1basic__renderer_1_1drawer.html", null ],
     [ "tr::circle_renderer::drawer", "classtr_1_1circle__renderer_1_1drawer.html", null ],
     [ "tr::drop_state_t", "structtr_1_1drop__state__t.html", null ],
-    [ "tr::dyn_atlas< Key, Value, Hash, Pred >", "classtr_1_1dyn__atlas.html", null ],
-    [ "tr::basic_zstring_view< CharT, Traits >::end_sentinel", "structtr_1_1basic__zstring__view_1_1end__sentinel.html", null ],
-    [ "tr::enum_wrapper< Enum >", "classtr_1_1enum__wrapper.html", null ],
+    [ "tr::dyn_atlas&lt; Key, Value, Hash, Pred &gt;", "classtr_1_1dyn__atlas.html", null ],
+    [ "tr::basic_zstring_view&lt; CharT, Traits &gt;::end_sentinel", "structtr_1_1basic__zstring__view_1_1end__sentinel.html", null ],
+    [ "tr::enum_wrapper&lt; Enum &gt;", "classtr_1_1enum__wrapper.html", null ],
     [ "std::equal_to", null, [
       [ "tr::string_eq", "structtr_1_1string__eq.html", null ]
     ] ],
@@ -76,7 +74,7 @@ var hierarchy =
       ] ]
     ] ],
     [ "tr::framebuffer", "classtr_1_1framebuffer.html", null ],
-    [ "tr::function_traits< Function >", "structtr_1_1function__traits.html", null ],
+    [ "tr::function_traits&lt; Function &gt;", "structtr_1_1function__traits.html", null ],
     [ "tr::glyph_metrics", "structtr_1_1glyph__metrics.html", null ],
     [ "tr::graphics_benchmark", "classtr_1_1graphics__benchmark.html", null ],
     [ "tr::graphics_buffer", "classtr_1_1graphics__buffer.html", [
@@ -124,18 +122,18 @@ var hierarchy =
     [ "std::iostream", null, [
       [ "tr::mstream", "classtr_1_1mstream.html", null ]
     ] ],
-    [ "tr::is_specialization_of< T, Template >", "structtr_1_1is__specialization__of.html", null ],
-    [ "tr::is_specialization_of_tv< T, Template >", "structtr_1_1is__specialization__of__tv.html", null ],
-    [ "tr::is_specialization_of_v< T, Template >", "structtr_1_1is__specialization__of__v.html", null ],
-    [ "tr::is_specialization_of_vt< T, Template >", "structtr_1_1is__specialization__of__vt.html", null ],
-    [ "tr::iterator_interface< Iterator, DeducedBrackets >", "classtr_1_1iterator__interface.html", null ],
-    [ "tr::iterator_interface< indexed_iterator >", "classtr_1_1iterator__interface.html", [
+    [ "tr::is_specialization_of&lt; T, Template &gt;", "structtr_1_1is__specialization__of.html", null ],
+    [ "tr::is_specialization_of_tv&lt; T, Template &gt;", "structtr_1_1is__specialization__of__tv.html", null ],
+    [ "tr::is_specialization_of_v&lt; T, Template &gt;", "structtr_1_1is__specialization__of__v.html", null ],
+    [ "tr::is_specialization_of_vt&lt; T, Template &gt;", "structtr_1_1is__specialization__of__vt.html", null ],
+    [ "tr::iterator_interface&lt; Iterator, DeducedBrackets &gt;", "classtr_1_1iterator__interface.html", null ],
+    [ "tr::iterator_interface&lt; indexed_iterator &gt;", "classtr_1_1iterator__interface.html", [
       [ "tr::utf8::indexed_iterator", "classtr_1_1utf8_1_1indexed__iterator.html", null ]
     ] ],
-    [ "tr::iterator_interface< iterator >", "classtr_1_1iterator__interface.html", [
+    [ "tr::iterator_interface&lt; iterator &gt;", "classtr_1_1iterator__interface.html", [
       [ "tr::utf8::iterator", "classtr_1_1utf8_1_1iterator.html", null ]
     ] ],
-    [ "tr::iterator_interface< iterator, glm::ivec2 >", "classtr_1_1iterator__interface.html", [
+    [ "tr::iterator_interface&lt; iterator, glm::ivec2 &gt;", "classtr_1_1iterator__interface.html", [
       [ "tr::bitmap::iterator", "classtr_1_1bitmap_1_1iterator.html", null ],
       [ "tr::sub_bitmap::iterator", "classtr_1_1sub__bitmap_1_1iterator.html", null ]
     ] ],
@@ -143,7 +141,7 @@ var hierarchy =
     [ "tr::key_chord", "structtr_1_1key__chord.html", null ],
     [ "tr::key_down_event", "structtr_1_1key__down__event.html", null ],
     [ "tr::key_up_event", "structtr_1_1key__up__event.html", null ],
-    [ "tr::layered_multidrawer< Drawers >", "classtr_1_1layered__multidrawer.html", null ],
+    [ "tr::layered_multidrawer&lt; Drawers &gt;", "classtr_1_1layered__multidrawer.html", null ],
     [ "tr::line_segment", "structtr_1_1line__segment.html", null ],
     [ "tr::localization_map", "classtr_1_1localization__map.html", null ],
     [ "tr::logger", "classtr_1_1logger.html", null ],
@@ -162,32 +160,28 @@ var hierarchy =
     [ "tr::mouse_state", "structtr_1_1mouse__state.html", null ],
     [ "tr::mouse_up_event", "structtr_1_1mouse__up__event.html", null ],
     [ "tr::mouse_wheel_event", "structtr_1_1mouse__wheel__event.html", null ],
-    [ "tr::normalized< T >", "structtr_1_1normalized.html", null ],
-    [ "tr::opt_ref< T >", "classtr_1_1opt__ref.html", null ],
-    [ "tr::opt_ref< tr::basic_renderer >", "classtr_1_1opt__ref.html", null ],
-    [ "tr::opt_ref< tr::bitmap >", "classtr_1_1opt__ref.html", null ],
-    [ "tr::opt_ref< tr::circle_renderer >", "classtr_1_1opt__ref.html", null ],
+    [ "tr::normalized&lt; T &gt;", "structtr_1_1normalized.html", null ],
+    [ "tr::opt_ref&lt; T &gt;", "classtr_1_1opt__ref.html", null ],
     [ "tr::orientation", "structtr_1_1orientation.html", null ],
-    [ "tr::out_handle_t< Base, Empty, Deleter, SkipEmptyHandleCheck >", "classtr_1_1out__handle__t.html", null ],
+    [ "tr::out_handle_t&lt; Base, Empty, Deleter, SkipEmptyHandleCheck &gt;", "classtr_1_1out__handle__t.html", null ],
     [ "tr::owning_shader_pipeline", "classtr_1_1owning__shader__pipeline.html", null ],
     [ "tr::localization_map::parser::parse_result", "structtr_1_1localization__map_1_1parser_1_1parse__result.html", null ],
-    [ "tr::pointer_iterator< Iterator, Pointer >", "classtr_1_1pointer__iterator.html", null ],
-    [ "tr::pointer_iterator< const_iterator, const_pointer >", "classtr_1_1pointer__iterator.html", [
+    [ "tr::pointer_iterator&lt; Iterator, Pointer &gt;", "classtr_1_1pointer__iterator.html", null ],
+    [ "tr::pointer_iterator&lt; const_iterator, const_pointer &gt;", "classtr_1_1pointer__iterator.html", [
       [ "tr::static_string< Capacity >::const_iterator", "structtr_1_1static__string_1_1const__iterator.html", null ],
       [ "tr::static_vector< Element, Capacity >::const_iterator", "structtr_1_1static__vector_1_1const__iterator.html", null ]
     ] ],
-    [ "tr::pointer_iterator< iterator, const_pointer >", "classtr_1_1pointer__iterator.html", [
+    [ "tr::pointer_iterator&lt; iterator, const_pointer &gt;", "classtr_1_1pointer__iterator.html", [
       [ "tr::basic_zstring_view< CharT, Traits >::iterator", "structtr_1_1basic__zstring__view_1_1iterator.html", null ]
     ] ],
-    [ "tr::pointer_iterator< iterator, pointer >", "classtr_1_1pointer__iterator.html", [
+    [ "tr::pointer_iterator&lt; iterator, pointer &gt;", "classtr_1_1pointer__iterator.html", [
       [ "tr::static_string< Capacity >::iterator", "structtr_1_1static__string_1_1iterator.html", null ],
       [ "tr::static_vector< Element, Capacity >::iterator", "structtr_1_1static__vector_1_1iterator.html", null ]
     ] ],
     [ "tr::quit_event", "structtr_1_1quit__event.html", null ],
-    [ "tr::rectangle< Element >", "structtr_1_1rectangle.html", null ],
-    [ "tr::rectangle< int >", "structtr_1_1rectangle.html", null ],
-    [ "tr::rectangle_edges< Element >", "structtr_1_1rectangle__edges.html", null ],
-    [ "tr::ref< T >", "classtr_1_1ref.html", null ],
+    [ "tr::rectangle&lt; Element &gt;", "structtr_1_1rectangle.html", null ],
+    [ "tr::rectangle_edges&lt; Element &gt;", "structtr_1_1rectangle__edges.html", null ],
+    [ "tr::ref&lt; T &gt;", "classtr_1_1ref.html", null ],
     [ "tr::bitmap::reference", "classtr_1_1bitmap_1_1reference.html", null ],
     [ "tr::sub_bitmap::reference", "classtr_1_1sub__bitmap_1_1reference.html", null ],
     [ "tr::render_target", "classtr_1_1render__target.html", null ],
@@ -208,13 +202,11 @@ var hierarchy =
     [ "tr::shader_pipeline", "classtr_1_1shader__pipeline.html", null ],
     [ "tr::simple_color_mesh_ref", "structtr_1_1simple__color__mesh__ref.html", null ],
     [ "tr::simple_textured_mesh_ref", "structtr_1_1simple__textured__mesh__ref.html", null ],
-    [ "tr::size_type< S >", "structtr_1_1size__type.html", null ],
+    [ "tr::size_type&lt; S &gt;", "structtr_1_1size__type.html", null ],
     [ "tr::state", "structtr_1_1state.html", null ],
     [ "tr::state_machine", "classtr_1_1state__machine.html", null ],
-    [ "tr::static_string< Capacity >", "classtr_1_1static__string.html", null ],
-    [ "tr::static_string< 1024 >", "classtr_1_1static__string.html", null ],
-    [ "tr::static_string< 255 >", "classtr_1_1static__string.html", null ],
-    [ "tr::static_vector< Element, Capacity >", "classtr_1_1static__vector.html", null ],
+    [ "tr::static_string&lt; Capacity &gt;", "classtr_1_1static__string.html", null ],
+    [ "tr::static_vector&lt; Element, Capacity &gt;", "classtr_1_1static__vector.html", null ],
     [ "tr::stopwatch", "classtr_1_1stopwatch.html", null ],
     [ "std::streambuf", null, [
       [ "tr::memorybuf", "classtr_1_1memorybuf.html", [
@@ -223,7 +215,7 @@ var hierarchy =
         [ "tr::omstream", "classtr_1_1omstream.html", null ]
       ] ]
     ] ],
-    [ "tr::string_literal< Size >", "structtr_1_1string__literal.html", null ],
+    [ "tr::string_literal&lt; Size &gt;", "structtr_1_1string__literal.html", null ],
     [ "tr::debug_renderer::style", "structtr_1_1debug__renderer_1_1style.html", null ],
     [ "tr::sub_bitmap", "classtr_1_1sub__bitmap.html", null ],
     [ "tr::text_input_event", "structtr_1_1text__input__event.html", null ],

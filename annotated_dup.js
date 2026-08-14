@@ -2,8 +2,8 @@ var annotated_dup =
 [
     [ "tr", "namespacetr.html", [
       [ "utf8", "namespacetr_1_1utf8.html", [
-        [ "indexed_iterator", "classtr_1_1utf8_1_1indexed__iterator.html", "classtr_1_1utf8_1_1indexed__iterator" ],
-        [ "iterator", "classtr_1_1utf8_1_1iterator.html", "classtr_1_1utf8_1_1iterator" ]
+        [ "iterator", "classtr_1_1utf8_1_1iterator.html", "classtr_1_1utf8_1_1iterator" ],
+        [ "indexed_iterator", "classtr_1_1utf8_1_1indexed__iterator.html", "classtr_1_1utf8_1_1indexed__iterator" ]
       ] ],
       [ "angle", "classtr_1_1angle.html", "classtr_1_1angle" ],
       [ "app_metadata", "structtr_1_1app__metadata.html", "structtr_1_1app__metadata" ],

@@ -8,7 +8,7 @@ var searchData=
   ['main_2ehpp_5',['main.hpp',['../main_8hpp.html',1,'']]],
   ['make_5flogger_6',['make_logger',['../namespacetr.html#a97927c3ed93641fd4bba0b822e63d31a',1,'tr']]],
   ['make_5fnext_5fstate_7',['make_next_state',['../namespacetr.html#a452a492c819865d06186ab4acd9fa0ec',1,'tr']]],
-  ['make_5fopt_5fref_8',['make_opt_ref',['../classtr_1_1opt__ref.html#af32c86362e354c64db609c1362b874da',1,'tr::opt_ref::make_opt_ref'],['../namespacetr.html#a9e07148c946944bf198f1e289b840db5',1,'tr::make_opt_ref(T *ptr)']]],
+  ['make_5fopt_5fref_8',['make_opt_ref',['../classtr_1_1opt__ref.html#af32c86362e354c64db609c1362b874da',1,'tr::opt_ref::make_opt_ref()'],['../namespacetr.html#a9e07148c946944bf198f1e289b840db5',1,'tr::make_opt_ref(T *ptr)']]],
   ['make_5fvertex_5fbinding_9',['make_vertex_binding',['../namespacetr.html#a4aec951cd219735365ce2bb980172d0c',1,'tr']]],
   ['map_10',['map',['../classtr_1_1basic__shader__buffer.html#a86d25df8e635279ad0f4eb78b0979d5d',1,'tr::basic_shader_buffer::map()'],['../classtr_1_1shader__array.html#a70a98798fa9fa7bbcd4be9f49dc9fb83',1,'tr::shader_array::map()'],['../classtr_1_1basic__uniform__buffer.html#aaf9a6cba9f2ef26bd6ed564ebc3932df',1,'tr::basic_uniform_buffer::map()'],['../classtr_1_1uniform__buffer.html#aa601f10a9099dd0a5482eba13af82b5d',1,'tr::uniform_buffer::map()']]],
   ['map_5farray_11',['map_array',['../classtr_1_1basic__shader__buffer.html#a8b3b8b418fcbd3a85bea5dc1881f7217',1,'tr::basic_shader_buffer::map_array()'],['../classtr_1_1shader__buffer.html#a1a984c1444cfd790f12ea15817ed5753',1,'tr::shader_buffer::map_array()']]],
@@ -56,8 +56,9 @@ var searchData=
   ['mouse_5fstate_53',['mouse_state',['../structtr_1_1mouse__state.html',1,'tr']]],
   ['mouse_5fup_5fevent_54',['mouse_up_event',['../structtr_1_1mouse__up__event.html',1,'tr::mouse_up_event'],['../structtr_1_1mouse__up__event.html#a57e696d965888db013803111e1fc72de',1,'tr::mouse_up_event::mouse_up_event()']]],
   ['mouse_5fwheel_5fevent_55',['mouse_wheel_event',['../structtr_1_1mouse__wheel__event.html',1,'tr::mouse_wheel_event'],['../structtr_1_1mouse__wheel__event.html#a6307d54ac5093e1ae6fcadd3943dd872',1,'tr::mouse_wheel_event::mouse_wheel_event()']]],
-  ['msecs_56',['msecs',['../namespacetr_1_1aliases_1_1chrono__aliases.html#a10cca773e420ce7e2dd4eb33c6381683',1,'tr::msecs'],['../namespacetr_1_1aliases_1_1chrono__aliases.html#a10cca773e420ce7e2dd4eb33c6381683',1,'tr::aliases::msecs'],['../namespacetr_1_1aliases_1_1chrono__aliases.html#a10cca773e420ce7e2dd4eb33c6381683',1,'tr::aliases::chrono_aliases::msecs']]],
-  ['mstream_57',['mstream',['../classtr_1_1mstream.html',1,'tr::mstream'],['../classtr_1_1mstream.html#a6dfbc2c213cca4e7af49de97f9e3573f',1,'tr::mstream::mstream(std::span&lt; char &gt; buffer)'],['../classtr_1_1mstream.html#affc3cd7d6f3ff61b4c3c920afb99be7c',1,'tr::mstream::mstream(std::span&lt; unsigned char &gt; buffer)'],['../classtr_1_1mstream.html#a7c3c66b10e0aa22fc027e31a8765c58f',1,'tr::mstream::mstream(std::span&lt; std::byte &gt; buffer)']]],
-  ['mstream_2ehpp_58',['mstream.hpp',['../mstream_8hpp.html',1,'']]],
-  ['multisamples_59',['multisamples',['../structtr_1_1window__parameters.html#a6e506536bb3f18f22084987d062e3387',1,'tr::window_parameters']]]
+  ['move_5fassignable_56',['move_assignable',['../concepttr_1_1move__assignable.html',1,'tr']]],
+  ['msecs_57',['msecs',['../namespacetr_1_1aliases_1_1chrono__aliases.html#a10cca773e420ce7e2dd4eb33c6381683',1,'tr::msecs'],['../namespacetr_1_1aliases_1_1chrono__aliases.html#a10cca773e420ce7e2dd4eb33c6381683',1,'tr::aliases::msecs'],['../namespacetr_1_1aliases_1_1chrono__aliases.html#a10cca773e420ce7e2dd4eb33c6381683',1,'tr::aliases::chrono_aliases::msecs']]],
+  ['mstream_58',['mstream',['../classtr_1_1mstream.html',1,'tr::mstream'],['../classtr_1_1mstream.html#a6dfbc2c213cca4e7af49de97f9e3573f',1,'tr::mstream::mstream(std::span&lt; char &gt; buffer)'],['../classtr_1_1mstream.html#affc3cd7d6f3ff61b4c3c920afb99be7c',1,'tr::mstream::mstream(std::span&lt; unsigned char &gt; buffer)'],['../classtr_1_1mstream.html#a7c3c66b10e0aa22fc027e31a8765c58f',1,'tr::mstream::mstream(std::span&lt; std::byte &gt; buffer)']]],
+  ['mstream_2ehpp_59',['mstream.hpp',['../mstream_8hpp.html',1,'']]],
+  ['multisamples_60',['multisamples',['../structtr_1_1window__parameters.html#a6e506536bb3f18f22084987d062e3387',1,'tr::window_parameters']]]
 ];
