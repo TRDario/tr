@@ -1,0 +1,27 @@
+var searchData=
+[
+  ['tr_0',['tr',['../namespacetr.html',1,'']]],
+  ['tr_3a_3aaliases_1',['aliases',['../namespacetr_1_1aliases.html',1,'tr']]],
+  ['tr_3a_3aaliases_3a_3achrono_5faliases_2',['chrono_aliases',['../namespacetr_1_1aliases_1_1chrono__aliases.html',1,'tr::aliases']]],
+  ['tr_3a_3aaliases_3a_3ainteger_5faliases_3',['integer_aliases',['../namespacetr_1_1aliases_1_1integer__aliases.html',1,'tr::aliases']]],
+  ['tr_3a_3aangle_5fliterals_4',['angle_literals',['../namespacetr_1_1literals_1_1angle__literals.html',1,'tr']]],
+  ['tr_3a_3achrono_5faliases_5',['chrono_aliases',['../namespacetr_1_1aliases_1_1chrono__aliases.html',1,'tr']]],
+  ['tr_3a_3achrono_5fliterals_6',['chrono_literals',['../namespacetr_1_1literals_1_1chrono__literals.html',1,'tr']]],
+  ['tr_3a_3acolor_5fliterals_7',['color_literals',['../namespacetr_1_1literals_1_1color__literals.html',1,'tr']]],
+  ['tr_3a_3aimgui_8',['ImGui',['../namespacetr_1_1ImGui.html',1,'tr']]],
+  ['tr_3a_3ainteger_5faliases_9',['integer_aliases',['../namespacetr_1_1aliases_1_1integer__aliases.html',1,'tr']]],
+  ['tr_3a_3ainteger_5fliterals_10',['integer_literals',['../namespacetr_1_1literals_1_1integer__literals.html',1,'tr']]],
+  ['tr_3a_3akeyboard_5fliterals_11',['keyboard_literals',['../namespacetr_1_1literals_1_1keyboard__literals.html',1,'tr']]],
+  ['tr_3a_3aliterals_12',['literals',['../namespacetr_1_1literals.html',1,'tr']]],
+  ['tr_3a_3aliterals_3a_3aangle_5fliterals_13',['angle_literals',['../namespacetr_1_1literals_1_1angle__literals.html',1,'tr::literals']]],
+  ['tr_3a_3aliterals_3a_3achrono_5fliterals_14',['chrono_literals',['../namespacetr_1_1literals_1_1chrono__literals.html',1,'tr::literals']]],
+  ['tr_3a_3aliterals_3a_3acolor_5fliterals_15',['color_literals',['../namespacetr_1_1literals_1_1color__literals.html',1,'tr::literals']]],
+  ['tr_3a_3aliterals_3a_3ainteger_5fliterals_16',['integer_literals',['../namespacetr_1_1literals_1_1integer__literals.html',1,'tr::literals']]],
+  ['tr_3a_3aliterals_3a_3akeyboard_5fliterals_17',['keyboard_literals',['../namespacetr_1_1literals_1_1keyboard__literals.html',1,'tr::literals']]],
+  ['tr_3a_3aliterals_3a_3amatrix_5foperators_18',['matrix_operators',['../namespacetr_1_1literals_1_1matrix__operators.html',1,'tr::literals']]],
+  ['tr_3a_3aliterals_3a_3azstring_5fview_5fliterals_19',['zstring_view_literals',['../namespacetr_1_1literals_1_1zstring__view__literals.html',1,'tr::literals']]],
+  ['tr_3a_3amatrix_5foperators_20',['matrix_operators',['../namespacetr_1_1literals_1_1matrix__operators.html',1,'tr']]],
+  ['tr_3a_3autf8_21',['utf8',['../namespacetr_1_1utf8.html',1,'tr']]],
+  ['tr_3a_3azstring_5fview_5fliterals_22',['zstring_view_literals',['../namespacetr_1_1literals_1_1zstring__view__literals.html',1,'tr']]],
+  ['tr_5fapp_23',['tr_app',['../namespacetr__app.html',1,'']]]
+];

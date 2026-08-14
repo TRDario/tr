@@ -1,0 +1,26 @@
+var classtr_1_1window =
+[
+    [ "window", "classtr_1_1window.html#a48514485ad24e8d26248b1be9ec1063f", null ],
+    [ "operator window_view", "classtr_1_1window.html#aea6a98a62b0e7eab69d179853c38fe95", null ],
+    [ "view", "classtr_1_1window.html#ac620d4386e37949aad0d389e75b22d5b", null ],
+    [ "title", "classtr_1_1window.html#a24e3bdcb728fd1605d8de99d65e80c13", null ],
+    [ "set_title", "classtr_1_1window.html#a1acfbbccf202cf1b7c0434759cffdd37", null ],
+    [ "set_icon", "classtr_1_1window.html#a2f26d5f93cafc3e74d015bb29033f665", null ],
+    [ "set_icon", "classtr_1_1window.html#af4fbf3e5eca25a242cdde6eaa6a7d768", null ],
+    [ "size", "classtr_1_1window.html#a5dd9f95c95eddfd7d1cc764294163d2e", null ],
+    [ "pixel_density", "classtr_1_1window.html#a4751f74492987c6107988a1c9ba6f55f", null ],
+    [ "set_size", "classtr_1_1window.html#a95a4db9bb80c63c75e636a9afa462b0f", null ],
+    [ "fullscreen", "classtr_1_1window.html#acc7096836643463bd4a2a19e856d7756", null ],
+    [ "set_fullscreen", "classtr_1_1window.html#a82a3836cf483921c9c61efc5aca73db1", null ],
+    [ "show", "classtr_1_1window.html#ad92bf58a96ed6425fff98727686791d9", null ],
+    [ "hide", "classtr_1_1window.html#adbb117e2b134007e65b5b5a61f2fce02", null ],
+    [ "maximized", "classtr_1_1window.html#a3bf1c66f7b1d734b40a1bad787280ea7", null ],
+    [ "minimized", "classtr_1_1window.html#a3c455ef5b03b7d947b7525fc24f59ab6", null ],
+    [ "has_focus", "classtr_1_1window.html#a3edcb1687442d4edf609f52592bfa9db", null ],
+    [ "raise", "classtr_1_1window.html#a2792f0ad5b977af38c0a371b975e5ec7", null ],
+    [ "set_vsync", "classtr_1_1window.html#a61f98428581e2c53c059a7fe40263f12", null ],
+    [ "enable_text_input", "classtr_1_1window.html#a2ec82a6dba697a4f54a62a0d0556b175", null ],
+    [ "disable_text_input", "classtr_1_1window.html#a53579bcf8c30003a218c958d207522a1", null ],
+    [ "set_mouse_mode", "classtr_1_1window.html#a94112e505eb789b0339382825d95bd6d", null ],
+    [ "flip_backbuffer", "classtr_1_1window.html#ae149206cc69c65bde9fc2024c4502747", null ]
+];

@@ -1,0 +1,20 @@
+var searchData=
+[
+  ['cancel_0',['cancel',['../namespacetr.html#a7f28eae560c1098cb5b87baad7ff5326a10aec35353f9c4096a71c38654c3d402',1,'tr']]],
+  ['cc_1',['cc',['../namespacetr.html#ac49d62ec06251ab54db81b814219c605ae0323a9039add2978bf5b49550572c7c',1,'tr']]],
+  ['ccw_2',['ccw',['../namespacetr.html#ae9b7761d946bc2847ec7c53113b5eb9dad5e5cf0370b9d10e06756dbb1806e763',1,'tr']]],
+  ['center_3',['center',['../namespacetr.html#af9ec050fca3710298b3ca45a9307a0d5aadb115059e28d960fa8badfac5516667',1,'tr::center'],['../namespacetr.html#ad21349bd98833f80de30b17a9338f97baadb115059e28d960fa8badfac5516667',1,'tr::center']]],
+  ['cl_4',['cl',['../namespacetr.html#ac49d62ec06251ab54db81b814219c605a161747ec4dc9f55f1760195593742232',1,'tr']]],
+  ['color0_5',['color0',['../classtr_1_1framebuffer.html#a1c95ac79da562291ef7df23708286ab0a32d432a5c34169a945991d0de8b478d9',1,'tr::framebuffer']]],
+  ['color1_6',['color1',['../classtr_1_1framebuffer.html#a1c95ac79da562291ef7df23708286ab0adddce03739867ad935a78cda255ec4dd',1,'tr::framebuffer']]],
+  ['color2_7',['color2',['../classtr_1_1framebuffer.html#a1c95ac79da562291ef7df23708286ab0a2c442e61b76cc00acf08a1118eae7852',1,'tr::framebuffer']]],
+  ['color3_8',['color3',['../classtr_1_1framebuffer.html#a1c95ac79da562291ef7df23708286ab0a79139957320cd67b3fa6be3f429dafc5',1,'tr::framebuffer']]],
+  ['color4_9',['color4',['../classtr_1_1framebuffer.html#a1c95ac79da562291ef7df23708286ab0aa2fa857196bdc299240294b055f5c9ee',1,'tr::framebuffer']]],
+  ['color5_10',['color5',['../classtr_1_1framebuffer.html#a1c95ac79da562291ef7df23708286ab0acff11180f3068b0a8d6de6b21b7546bc',1,'tr::framebuffer']]],
+  ['color6_11',['color6',['../classtr_1_1framebuffer.html#a1c95ac79da562291ef7df23708286ab0ae992a0705279e07b61544ba1c89cb839',1,'tr::framebuffer']]],
+  ['color7_12',['color7',['../classtr_1_1framebuffer.html#a1c95ac79da562291ef7df23708286ab0a7c710b81639af14193cd64760c7bf6c4',1,'tr::framebuffer']]],
+  ['cr_13',['cr',['../namespacetr.html#ac49d62ec06251ab54db81b814219c605a324d8a1d3f81e730d5099a48cee0c5b6',1,'tr']]],
+  ['crosshair_14',['crosshair',['../namespacetr.html#aa7a1fb973e2b89b37e78a95d4461171faad90324c60706e26f566f84a1b1f55b0',1,'tr']]],
+  ['ctrl_15',['ctrl',['../namespacetr.html#a8efaea616aca72ed620aeec3493fff11abbf7ea1d373e03d16d1418909b05eaf6',1,'tr']]],
+  ['cw_16',['cw',['../namespacetr.html#ae9b7761d946bc2847ec7c53113b5eb9da0707ba092e91260b305c326e6a353593',1,'tr']]]
+];

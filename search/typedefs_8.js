@@ -1,0 +1,5 @@
+var searchData=
+[
+  ['pointer_0',['pointer',['../classtr_1_1audio__device__list__view__iterator.html#a63a01416d1c081d9921f4cbdf3de4320',1,'tr::audio_device_list_view_iterator::pointer'],['../classtr_1_1sub__bitmap_1_1iterator.html#af480e844b59118ebf07c101632815238',1,'tr::sub_bitmap::iterator::pointer'],['../classtr_1_1bitmap_1_1iterator.html#a475d6cabd6a1b5dcc57649e2aa3ced7e',1,'tr::bitmap::iterator::pointer'],['../classtr_1_1graphics__buffer__span__map.html#ac241966d554db1f7f307fa23c53c93eb',1,'tr::graphics_buffer_span_map::pointer'],['../classtr_1_1pointer__iterator.html#af421db3098980120634fb66f55c5412d',1,'tr::pointer_iterator::pointer'],['../classtr_1_1static__string.html#a6ea67eee1e8d7bc07b5424cdb07dec4c',1,'tr::static_string::pointer'],['../classtr_1_1static__vector.html#a7c54231272225fedbe235ae168e8ab14',1,'tr::static_vector::pointer'],['../classtr_1_1basic__zstring__view.html#ac8ad594fb6707793105378f56793e714',1,'tr::basic_zstring_view::pointer']]],
+  ['polygon_5fview_1',['polygon_view',['../namespacetr.html#a1822833999d4fd3ae28259f4e02d58a0',1,'tr']]]
+];

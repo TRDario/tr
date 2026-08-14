@@ -1,0 +1,38 @@
+html {
+	--primary-color: #c41717;
+	--primary-dark-color: #803333;
+	--primary-light-color: #e97070;
+}
+
+html.dark-mode {
+	--primary-color: #c76b6b;
+	--primary-dark-color: #e5b3b0;
+	--primary-light-color: #ac4747;
+
+	--odd-color: rgba(119, 58, 58, 0.06);
+
+	--page-foreground-color: #e7dcdc;
+	--page-secondary-foreground-color: #9b7575;
+	--page-background-color: #1F1C1C;
+	--side-nav-background: #282525;
+	--fragment-background: #302727;
+	--code-background: #342828;
+	--tablehead-background: #2f2a2a;
+	--link-color: #e78e8e;
+	--separator-color: #522f2f;
+}
+
+table.tparams td.paramname+td::before,
+table.params td.paramname+td::before,
+table.exception td.paramname+td::before {
+	content: "– ";
+}
+
+.arrow {
+	opacity: 1 !important
+}
+
+div.groupHeader {
+	box-shadow: 0px 0, 0px 0, 0px 1px var(--separator-color), 0px 1px var(--separator-color);
+	color: var(--page-foreground-color)
+}

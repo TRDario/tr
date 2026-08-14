@@ -1,0 +1,28 @@
+var structtr_1_1rgba8 =
+[
+    [ "rgba8", "structtr_1_1rgba8.html#ac0b26d6e00f70eaf60d3c709f5ffc215", null ],
+    [ "rgba8", "structtr_1_1rgba8.html#afb67b9c2789b258a43b01b93b0b986da", null ],
+    [ "rgba8", "structtr_1_1rgba8.html#a8bc0fe4994ab7a7170e9b345dfd69fd0", null ],
+    [ "rgba8", "structtr_1_1rgba8.html#ac0dad97c5b377ba6f59d51068601f5f7", null ],
+    [ "rgba8", "structtr_1_1rgba8.html#a56006f6dbdb3cdd91f30ca58a7cace32", null ],
+    [ "rgba8", "structtr_1_1rgba8.html#a564f7154871a9d31bf4909118bcc60a2", null ],
+    [ "operator+=", "structtr_1_1rgba8.html#afca1376deff48d8958904ea61dc055c9", null ],
+    [ "operator-=", "structtr_1_1rgba8.html#ae83519bccb5c32855e7d52841c0ca795", null ],
+    [ "operator*=", "structtr_1_1rgba8.html#a1bcbc364db8e20ba6d2f2c875196b4fd", null ],
+    [ "operator/=", "structtr_1_1rgba8.html#ab6ebc8cc9f33c0b90a34857c1cbca659", null ],
+    [ "operator+=", "structtr_1_1rgba8.html#a10ec44859cef5ef8ae554828b866181d", null ],
+    [ "operator-=", "structtr_1_1rgba8.html#a856e7dcc392b3b969ccd379119d8e60c", null ],
+    [ "operator*=", "structtr_1_1rgba8.html#a9f9e810671dfedf64c47480f5f2cfd84", null ],
+    [ "operator==", "structtr_1_1rgba8.html#afb4148fd5353ed2bbf0e18926fc53b2b", null ],
+    [ "operator+", "structtr_1_1rgba8.html#ad7f7b260be450f1142b546f2a7bf0495", null ],
+    [ "operator-", "structtr_1_1rgba8.html#a4ba900adb43bef8aa79fb091b4e78644", null ],
+    [ "operator*", "structtr_1_1rgba8.html#a2b775b90d7e20f0584cb70ed9bf3d0fb", null ],
+    [ "operator/", "structtr_1_1rgba8.html#a88d470a4569446659e0f1523f96efb35", null ],
+    [ "operator+", "structtr_1_1rgba8.html#ae6ec7e8f62f13066f9c2eee228d91cb5", null ],
+    [ "operator-", "structtr_1_1rgba8.html#a8f998bc3ef5c3834e8276aa76a4fc86d", null ],
+    [ "operator*", "structtr_1_1rgba8.html#a84cc1ddd72195b1510cf955cb502260c", null ],
+    [ "r", "structtr_1_1rgba8.html#a9785be95db206dc6705212519714ab03", null ],
+    [ "g", "structtr_1_1rgba8.html#a8efbb1e47f33b5435232470a7dbea1dd", null ],
+    [ "b", "structtr_1_1rgba8.html#a3dfb604eb1844fe6664e1230746a7067", null ],
+    [ "a", "structtr_1_1rgba8.html#ae9b039c4cca611017c765f0d452a31e6", null ]
+];
