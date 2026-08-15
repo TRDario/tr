@@ -91,6 +91,7 @@ var hierarchy =
       ] ],
       [ "tr::basic_static_vertex_buffer", "classtr_1_1basic__static__vertex__buffer.html", [
         [ "tr::static_vertex_buffer< glm::u8vec2 >", "classtr_1_1static__vertex__buffer.html", null ],
+        [ "tr::static_vertex_buffer< glm::vec2 >", "classtr_1_1static__vertex__buffer.html", null ],
         [ "tr::static_vertex_buffer< Element >", "classtr_1_1static__vertex__buffer.html", null ]
       ] ],
       [ "tr::basic_uniform_buffer", "classtr_1_1basic__uniform__buffer.html", [
@@ -178,6 +179,7 @@ var hierarchy =
       [ "tr::static_string< Capacity >::iterator", "structtr_1_1static__string_1_1iterator.html", null ],
       [ "tr::static_vector< Element, Capacity >::iterator", "structtr_1_1static__vector_1_1iterator.html", null ]
     ] ],
+    [ "tr::post_processing_buffer", "classtr_1_1post__processing__buffer.html", null ],
     [ "tr::quit_event", "structtr_1_1quit__event.html", null ],
     [ "tr::rectangle&lt; Element &gt;", "structtr_1_1rectangle.html", null ],
     [ "tr::rectangle_edges&lt; Element &gt;", "structtr_1_1rectangle__edges.html", null ],

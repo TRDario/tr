@@ -103,6 +103,7 @@ var annotated_dup =
       [ "out_of_memory", "structtr_1_1out__of__memory.html", "structtr_1_1out__of__memory" ],
       [ "owning_shader_pipeline", "classtr_1_1owning__shader__pipeline.html", "classtr_1_1owning__shader__pipeline" ],
       [ "pointer_iterator", "classtr_1_1pointer__iterator.html", "classtr_1_1pointer__iterator" ],
+      [ "post_processing_buffer", "classtr_1_1post__processing__buffer.html", "classtr_1_1post__processing__buffer" ],
       [ "quit_event", "structtr_1_1quit__event.html", null ],
       [ "rectangle", "structtr_1_1rectangle.html", "structtr_1_1rectangle" ],
       [ "rectangle_edges", "structtr_1_1rectangle__edges.html", "structtr_1_1rectangle__edges" ],

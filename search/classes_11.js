@@ -20,10 +20,11 @@ var searchData=
   ['static_5fvector_17',['static_vector',['../classtr_1_1static__vector.html',1,'tr']]],
   ['static_5fvertex_5fbuffer_18',['static_vertex_buffer',['../classtr_1_1static__vertex__buffer.html',1,'tr']]],
   ['static_5fvertex_5fbuffer_3c_20glm_3a_3au8vec2_20_3e_19',['static_vertex_buffer&lt; glm::u8vec2 &gt;',['../classtr_1_1static__vertex__buffer.html',1,'tr']]],
-  ['stopwatch_20',['stopwatch',['../classtr_1_1stopwatch.html',1,'tr']]],
-  ['string_5feq_21',['string_eq',['../structtr_1_1string__eq.html',1,'tr']]],
-  ['string_5fhash_22',['string_hash',['../structtr_1_1string__hash.html',1,'tr']]],
-  ['string_5fliteral_23',['string_literal',['../structtr_1_1string__literal.html',1,'tr']]],
-  ['style_24',['style',['../structtr_1_1debug__renderer_1_1style.html',1,'tr::debug_renderer']]],
-  ['sub_5fbitmap_25',['sub_bitmap',['../classtr_1_1sub__bitmap.html',1,'tr']]]
+  ['static_5fvertex_5fbuffer_3c_20glm_3a_3avec2_20_3e_20',['static_vertex_buffer&lt; glm::vec2 &gt;',['../classtr_1_1static__vertex__buffer.html',1,'tr']]],
+  ['stopwatch_21',['stopwatch',['../classtr_1_1stopwatch.html',1,'tr']]],
+  ['string_5feq_22',['string_eq',['../structtr_1_1string__eq.html',1,'tr']]],
+  ['string_5fhash_23',['string_hash',['../structtr_1_1string__hash.html',1,'tr']]],
+  ['string_5fliteral_24',['string_literal',['../structtr_1_1string__literal.html',1,'tr']]],
+  ['style_25',['style',['../structtr_1_1debug__renderer_1_1style.html',1,'tr::debug_renderer']]],
+  ['sub_5fbitmap_26',['sub_bitmap',['../classtr_1_1sub__bitmap.html',1,'tr']]]
 ];

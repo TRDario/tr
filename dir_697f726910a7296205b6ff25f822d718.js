@@ -24,6 +24,7 @@ var dir_697f726910a7296205b6ff25f822d718 =
     [ "main.hpp", "main_8hpp.html", "main_8hpp" ],
     [ "mouse.hpp", "mouse_8hpp.html", "mouse_8hpp" ],
     [ "path.hpp", "path_8hpp.html", "path_8hpp" ],
+    [ "post_processing_buffer.hpp", "post__processing__buffer_8hpp.html", "post__processing__buffer_8hpp" ],
     [ "render_target.hpp", "render__target_8hpp.html", "render__target_8hpp" ],
     [ "render_texture.hpp", "render__texture_8hpp.html", "render__texture_8hpp" ],
     [ "shader.hpp", "shader_8hpp.html", "shader_8hpp" ],
