@@ -167,16 +167,19 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aeda3e45b8829b8b1ec69040676389317" id="r_aeda3e45b8829b8b1ec69040676389317"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aeda3e45b8829b8b1ec69040676389317">set_region</a> (<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> offset, std::span&lt; const std::byte &gt; data)</td></tr>
 <tr class="memdesc:aeda3e45b8829b8b1ec69040676389317"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a region of the buffer.  <br /></td></tr>
 <tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
-<tr class="memitem:a06d9e2187dbc1834b2a6bbea8a44d0bc" id="r_a06d9e2187dbc1834b2a6bbea8a44d0bc"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a06d9e2187dbc1834b2a6bbea8a44d0bc">graphics_buffer</a> (<a class="el" href="#a907b79a67c082eb0fdc56f4fd5ec9100">graphics_context</a> &amp;context)</td></tr>
+<tr class="memitem:a06d9e2187dbc1834b2a6bbea8a44d0bc" id="r_a06d9e2187dbc1834b2a6bbea8a44d0bc"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a06d9e2187dbc1834b2a6bbea8a44d0bc">graphics_buffer</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context)</td></tr>
 <tr class="memdesc:a06d9e2187dbc1834b2a6bbea8a44d0bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an empty buffer.  <br /></td></tr>
 <tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Context</div></td></tr>
-<tr class="memitem:aa7323654826d026acc2bc31bed2ed286" id="r_aa7323654826d026acc2bc31bed2ed286"><td class="memItemLeft"><a class="el" href="#a907b79a67c082eb0fdc56f4fd5ec9100">graphics_context</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#aa7323654826d026acc2bc31bed2ed286">context</a> () const</td></tr>
+<tr class="memitem:aa7323654826d026acc2bc31bed2ed286" id="r_aa7323654826d026acc2bc31bed2ed286"><td class="memItemLeft"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#aa7323654826d026acc2bc31bed2ed286">context</a> () const</td></tr>
 <tr class="memdesc:aa7323654826d026acc2bc31bed2ed286"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a reference to the graphics context the buffer is on.  <br /></td></tr>
 <tr id="pub-methods-4" class="groupHeader"><td colspan="2"><div class="groupHeader">Label</div></td></tr>
 <tr class="memitem:ada4364c0295af892b869f2be3ed62777" id="r_ada4364c0295af892b869f2be3ed62777"><td class="memItemLeft">std::string&#160;</td><td class="memItemRight"><a class="el" href="#ada4364c0295af892b869f2be3ed62777">label</a> () const</td></tr>
 <tr class="memdesc:ada4364c0295af892b869f2be3ed62777"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the label of the buffer.  <br /></td></tr>
 <tr class="memitem:a791c5d26a17cce2fe3850cb8e1ba5697" id="r_a791c5d26a17cce2fe3850cb8e1ba5697"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a791c5d26a17cce2fe3850cb8e1ba5697">set_label</a> (std::string_view label)</td></tr>
 <tr class="memdesc:a791c5d26a17cce2fe3850cb8e1ba5697"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the label of the buffer.  <br /></td></tr>
+<tr id="pub-methods-5" class="groupHeader"><td colspan="2"><div class="groupHeader">ID</div></td></tr>
+<tr class="memitem:a1b9eef6ffb431a6b5ce3cb05af26b4f2" id="r_a1b9eef6ffb431a6b5ce3cb05af26b4f2"><td class="memItemLeft">unsigned int&#160;</td><td class="memItemRight"><a class="el" href="#a1b9eef6ffb431a6b5ce3cb05af26b4f2">id</a> () const</td></tr>
+<tr class="memdesc:a1b9eef6ffb431a6b5ce3cb05af26b4f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the unique ID of the buffer.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Dynamic vertex buffer class. </p>
@@ -381,7 +384,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="classtr_1_1graphics__buffer.html#a06d9e2187dbc1834b2a6bbea8a44d0bc">tr::graphics_buffer::graphics_buffer</a> </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="#a907b79a67c082eb0fdc56f4fd5ec9100">graphics_context</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>context</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>context</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -404,7 +407,7 @@ Public Member Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="#a907b79a67c082eb0fdc56f4fd5ec9100">graphics_context</a> &amp; <a class="el" href="classtr_1_1graphics__buffer.html#aa7323654826d026acc2bc31bed2ed286">tr::graphics_buffer::context</a> </td>
+          <td class="memname"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp; <a class="el" href="classtr_1_1graphics__buffer.html#aa7323654826d026acc2bc31bed2ed286">tr::graphics_buffer::context</a> </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -461,6 +464,28 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+<p class="reference">Referenced by <a class="el" href="classtr_1_1dyn__vertex__buffer.html#ae3e30df78def130c7ec69601656acbf9">tr::dyn_vertex_buffer&lt; Element &gt;::set_region()</a>.</p>
+
+</div>
+</div>
+<a id="a1b9eef6ffb431a6b5ce3cb05af26b4f2" name="a1b9eef6ffb431a6b5ce3cb05af26b4f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b9eef6ffb431a6b5ce3cb05af26b4f2">&#9670;&#160;</a></span>id()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int <a class="el" href="classtr_1_1graphics__buffer.html#a1b9eef6ffb431a6b5ce3cb05af26b4f2">tr::graphics_buffer::id</a> </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the unique ID of the buffer. </p>
+<dl class="section return"><dt>Returns</dt><dd>Unique ID of the buffer. </dd></dl>
 
 <p class="reference">Referenced by <a class="el" href="classtr_1_1dyn__vertex__buffer.html#ae3e30df78def130c7ec69601656acbf9">tr::dyn_vertex_buffer&lt; Element &gt;::set_region()</a>.</p>
 

@@ -34,7 +34,7 @@ var searchData=
   ['message_5fbox_5fbutton_31',['message_box_button',['../namespacetr.html#a7f28eae560c1098cb5b87baad7ff5326',1,'tr']]],
   ['message_5fbox_5flayout_32',['message_box_layout',['../namespacetr.html#a027a146e82b3de429a02c03fe2ae4bff',1,'tr']]],
   ['message_5fbox_5ftype_33',['message_box_type',['../namespacetr.html#a4d5881ba37a7337aca11853f1ae62da1',1,'tr']]],
-  ['metadata_34',['metadata',['../namespacetr__app.html#a4692b2a566bc1282cc1d802c32a35945',1,'tr_app']]],
+  ['metadata_34',['metadata',['../namespacetr__main.html#a8bf264ef15df11302c2df359d7a1096a',1,'tr_main']]],
   ['metrics_35',['metrics',['../classtr_1_1ttfont.html#a7bbe948137e7c124db60a4056752c7a2',1,'tr::ttfont']]],
   ['middle_36',['middle',['../namespacetr.html#a4edd5ed4e6341a9436a505d8203fa820a4a548addbfb239bbd12f5afe11a4b6dc',1,'tr']]],
   ['min_37',['min',['../structtr_1_1glyph__metrics.html#af2ee440245a187dbdf799b93fe0d949c',1,'tr::glyph_metrics::min'],['../classtr_1_1graphics__benchmark.html#a7e55c12d27ea6333d951720e5ebe5bec',1,'tr::graphics_benchmark::min()'],['../classtr_1_1benchmark.html#a0f615d80ae3333b550558cc3d34e461d',1,'tr::benchmark::min()'],['../namespacetr.html#aead4294434ac2897c9ce8318a8216b18ad8bd79cc131920d5de426f914d17405a',1,'tr::min']]],

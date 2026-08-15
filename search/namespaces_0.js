@@ -23,5 +23,5 @@ var searchData=
   ['tr_3a_3amatrix_5foperators_20',['matrix_operators',['../namespacetr_1_1literals_1_1matrix__operators.html',1,'tr']]],
   ['tr_3a_3autf8_21',['utf8',['../namespacetr_1_1utf8.html',1,'tr']]],
   ['tr_3a_3azstring_5fview_5fliterals_22',['zstring_view_literals',['../namespacetr_1_1literals_1_1zstring__view__literals.html',1,'tr']]],
-  ['tr_5fapp_23',['tr_app',['../namespacetr__app.html',1,'']]]
+  ['tr_5fmain_23',['tr_main',['../namespacetr__main.html',1,'']]]
 ];

@@ -48,10 +48,15 @@ var classtr_1_1shader__base =
     [ "set_uniform", "classtr_1_1shader__base.html#af7a981edec0d944922c00e687a1d8a83", null ],
     [ "set_uniform", "classtr_1_1shader__base.html#aa7b7ac6d0d1c72053b1ea51e90122533", null ],
     [ "set_storage_buffer", "classtr_1_1shader__base.html#ae78d9d6e1157ce32f68781a3b3fcf640", null ],
+    [ "set_storage_buffer", "classtr_1_1shader__base.html#aa44bc8473aa88a39b59216012458636a", null ],
+    [ "set_storage_buffer", "classtr_1_1shader__base.html#ad9c088011bb679c63b99ad30556d4dbe", null ],
     [ "set_uniform_buffer", "classtr_1_1shader__base.html#a9dd684c1c0ae6b17908a5da85dc36775", null ],
+    [ "set_uniform_buffer", "classtr_1_1shader__base.html#a0755901aeb64501fb6cf1798567574d7", null ],
     [ "set_label", "classtr_1_1shader__base.html#a03277cec831a3752c59bd5bc62a2c837", null ],
     [ "label", "classtr_1_1shader__base.html#a19c27a295530cb46f3ce74319c35c939", null ],
     [ "id", "classtr_1_1shader__base.html#ab70d8fc284329d1165ce318e1e5395cc", null ],
+    [ "set_storage_buffer", "classtr_1_1shader__base.html#ad3490346e46a23345e8a022a6bccff85", null ],
+    [ "set_uniform_buffer", "classtr_1_1shader__base.html#aacc68f7cf237e483b8455c91e667238f", null ],
     [ "m_program", "classtr_1_1shader__base.html#aa307ce4ffbc183af3450b4be368bfa0d", null ],
     [ "m_texture_units", "classtr_1_1shader__base.html#ae059e80c3a8fe1f380d15190fadf5f2c", null ]
 ];

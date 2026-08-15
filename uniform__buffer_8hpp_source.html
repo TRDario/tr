@@ -162,46 +162,46 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('uniform__buffe
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        <span class="keyword">using </span><a class="code hl_function" href="classtr_1_1graphics__buffer.html#a791c5d26a17cce2fe3850cb8e1ba5697">graphics_buffer::set_label</a>;</div>
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span></div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>      <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        <a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> m_size;</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        <span class="comment">// Accesses graphics_buffer.</span></div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno"><a class="line" href="classtr_1_1basic__uniform__buffer.html#ab4874dfe2155fb5d3e1f137932dbe03a">   69</a></span>        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code hl_friend" href="classtr_1_1basic__uniform__buffer.html#ab4874dfe2155fb5d3e1f137932dbe03a">shader_base</a>;</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    };</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        <span class="keyword">using </span><a class="code hl_function" href="classtr_1_1graphics__buffer.html#a1b9eef6ffb431a6b5ce3cb05af26b4f2">graphics_buffer::id</a>;</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span></div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>      <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        <a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> m_size;</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    };</div>
 </div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    <span class="comment">//</span></div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span></div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Object&gt;</div>
-<div class="foldopen" id="foldopen00077" data-start="{" data-end="};">
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno"><a class="line" href="classtr_1_1uniform__buffer.html">   77</a></span>    <span class="keyword">class </span><a class="code hl_function" href="classtr_1_1uniform__buffer.html#a80724469173735cdc9fca3797329a740">uniform_buffer</a> : <span class="keyword">private</span> <a class="code hl_function" href="classtr_1_1basic__uniform__buffer.html#aabcd05ef7c59e589bd32ec50a6017e1c">basic_uniform_buffer</a></div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    {</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>      <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span></div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno"><a class="line" href="classtr_1_1uniform__buffer.html#a80724469173735cdc9fca3797329a740">   85</a></span>        <a class="code hl_function" href="classtr_1_1uniform__buffer.html#a80724469173735cdc9fca3797329a740">uniform_buffer</a>(<a class="code hl_class" href="classtr_1_1graphics__context.html">graphics_context</a>&amp; <a class="code hl_function" href="classtr_1_1uniform__buffer.html#aa7323654826d026acc2bc31bed2ed286">context</a>);</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span></div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>        <span class="keyword">using </span><a class="code hl_function" href="classtr_1_1basic__uniform__buffer.html#aa7323654826d026acc2bc31bed2ed286">basic_uniform_buffer::context</a>;</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span></div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span></div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno"><a class="line" href="classtr_1_1uniform__buffer.html#a2dd1031c714fa75b9b8c9355b248dd0c">   99</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classtr_1_1uniform__buffer.html#a2dd1031c714fa75b9b8c9355b248dd0c">set</a>(<span class="keyword">const</span> Object&amp; data);</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span></div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span> </div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>        <span class="keyword">using </span><a class="code hl_function" href="classtr_1_1basic__uniform__buffer.html#a61bf2e87dce3e10b214cb870659b4b7e">basic_uniform_buffer::mapped</a>;</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span></div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno"><a class="line" href="classtr_1_1uniform__buffer.html#aa601f10a9099dd0a5482eba13af82b5d">  109</a></span>        <a class="code hl_class" href="classtr_1_1graphics__buffer__object__map.html">graphics_buffer_object_map&lt;Object&gt;</a> <a class="code hl_function" href="classtr_1_1uniform__buffer.html#aa601f10a9099dd0a5482eba13af82b5d">map</a>();</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span></div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>        <span class="keyword">using </span><a class="code hl_function" href="classtr_1_1basic__uniform__buffer.html#ada4364c0295af892b869f2be3ed62777">basic_uniform_buffer::label</a>;</div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span> </div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>        <span class="keyword">using </span><a class="code hl_function" href="classtr_1_1basic__uniform__buffer.html#a791c5d26a17cce2fe3850cb8e1ba5697">basic_uniform_buffer::set_label</a>;</div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span></div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    };</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    <span class="comment">//</span></div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span></div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Object&gt;</div>
+<div class="foldopen" id="foldopen00080" data-start="{" data-end="};">
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno"><a class="line" href="classtr_1_1uniform__buffer.html">   80</a></span>    <span class="keyword">class </span><a class="code hl_function" href="classtr_1_1uniform__buffer.html#a80724469173735cdc9fca3797329a740">uniform_buffer</a> : <span class="keyword">private</span> <a class="code hl_function" href="classtr_1_1basic__uniform__buffer.html#aabcd05ef7c59e589bd32ec50a6017e1c">basic_uniform_buffer</a></div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    {</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>      <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span></div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno"><a class="line" href="classtr_1_1uniform__buffer.html#a80724469173735cdc9fca3797329a740">   88</a></span>        <a class="code hl_function" href="classtr_1_1uniform__buffer.html#a80724469173735cdc9fca3797329a740">uniform_buffer</a>(<a class="code hl_class" href="classtr_1_1graphics__context.html">graphics_context</a>&amp; <a class="code hl_function" href="classtr_1_1uniform__buffer.html#aa7323654826d026acc2bc31bed2ed286">context</a>);</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span></div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>        <span class="keyword">using </span><a class="code hl_function" href="classtr_1_1basic__uniform__buffer.html#aa7323654826d026acc2bc31bed2ed286">basic_uniform_buffer::context</a>;</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span></div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span></div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno"><a class="line" href="classtr_1_1uniform__buffer.html#a2dd1031c714fa75b9b8c9355b248dd0c">  102</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classtr_1_1uniform__buffer.html#a2dd1031c714fa75b9b8c9355b248dd0c">set</a>(<span class="keyword">const</span> Object&amp; data);</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span></div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> </div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>        <span class="keyword">using </span><a class="code hl_function" href="classtr_1_1basic__uniform__buffer.html#a61bf2e87dce3e10b214cb870659b4b7e">basic_uniform_buffer::mapped</a>;</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span></div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno"><a class="line" href="classtr_1_1uniform__buffer.html#aa601f10a9099dd0a5482eba13af82b5d">  112</a></span>        <a class="code hl_class" href="classtr_1_1graphics__buffer__object__map.html">graphics_buffer_object_map&lt;Object&gt;</a> <a class="code hl_function" href="classtr_1_1uniform__buffer.html#aa601f10a9099dd0a5482eba13af82b5d">map</a>();</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span></div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> </div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>        <span class="keyword">using </span><a class="code hl_function" href="classtr_1_1basic__uniform__buffer.html#ada4364c0295af892b869f2be3ed62777">basic_uniform_buffer::label</a>;</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span> </div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>        <span class="keyword">using </span><a class="code hl_function" href="classtr_1_1basic__uniform__buffer.html#a791c5d26a17cce2fe3850cb8e1ba5697">basic_uniform_buffer::set_label</a>;</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span></div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>    };</div>
 </div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>} <span class="comment">// namespace tr</span></div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> </div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span><span class="preprocessor">#include &quot;impl/uniform_buffer.hpp&quot;</span> <span class="comment">// IWYU pragma: export</span></div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>} <span class="comment">// namespace tr</span></div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span> </div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span><span class="preprocessor">#include &quot;impl/uniform_buffer.hpp&quot;</span> <span class="comment">// IWYU pragma: export</span></div>
 <div class="ttc" id="aclasstr_1_1basic__graphics__buffer__map_html"><div class="ttname"><a href="classtr_1_1basic__graphics__buffer__map.html">tr::basic_graphics_buffer_map</a></div><div class="ttdoc">RAII wrapper over a buffer map.</div><div class="ttdef"><b>Definition</b> graphics_buffer_map.hpp:30</div></div>
 <div class="ttc" id="aclasstr_1_1basic__uniform__buffer_html_a280b19fef0df378efb716f8fb2fc3945"><div class="ttname"><a href="classtr_1_1basic__uniform__buffer.html#a280b19fef0df378efb716f8fb2fc3945">tr::basic_uniform_buffer::size</a></div><div class="ttdeci">usize size() const</div><div class="ttdoc">Gets the size of the buffer.</div></div>
 <div class="ttc" id="aclasstr_1_1basic__uniform__buffer_html_a61bf2e87dce3e10b214cb870659b4b7e"><div class="ttname"><a href="classtr_1_1basic__uniform__buffer.html#a61bf2e87dce3e10b214cb870659b4b7e">tr::basic_uniform_buffer::mapped</a></div><div class="ttdeci">bool mapped() const</div><div class="ttdoc">Gets whether the buffer is mapped.</div></div>
@@ -210,10 +210,10 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('uniform__buffe
 <div class="ttc" id="aclasstr_1_1basic__uniform__buffer_html_aa8dbcdcdb4480103baa5757a3c6f3c56"><div class="ttname"><a href="classtr_1_1basic__uniform__buffer.html#aa8dbcdcdb4480103baa5757a3c6f3c56">tr::basic_uniform_buffer::set</a></div><div class="ttdeci">void set(std::span&lt; const std::byte &gt; data)</div><div class="ttdoc">Sets the data of the buffer.</div></div>
 <div class="ttc" id="aclasstr_1_1basic__uniform__buffer_html_aabcd05ef7c59e589bd32ec50a6017e1c"><div class="ttname"><a href="classtr_1_1basic__uniform__buffer.html#aabcd05ef7c59e589bd32ec50a6017e1c">tr::basic_uniform_buffer::basic_uniform_buffer</a></div><div class="ttdeci">basic_uniform_buffer(graphics_context &amp;context, usize size)</div><div class="ttdoc">Allocates an uninitialized uniform buffer.</div></div>
 <div class="ttc" id="aclasstr_1_1basic__uniform__buffer_html_aaf9a6cba9f2ef26bd6ed564ebc3932df"><div class="ttname"><a href="classtr_1_1basic__uniform__buffer.html#aaf9a6cba9f2ef26bd6ed564ebc3932df">tr::basic_uniform_buffer::map</a></div><div class="ttdeci">basic_graphics_buffer_map map()</div><div class="ttdoc">Maps the buffer.</div></div>
-<div class="ttc" id="aclasstr_1_1basic__uniform__buffer_html_ab4874dfe2155fb5d3e1f137932dbe03a"><div class="ttname"><a href="classtr_1_1basic__uniform__buffer.html#ab4874dfe2155fb5d3e1f137932dbe03a">tr::basic_uniform_buffer::shader_base</a></div><div class="ttdeci">friend class shader_base</div><div class="ttdef"><b>Definition</b> uniform_buffer.hpp:69</div></div>
 <div class="ttc" id="aclasstr_1_1basic__uniform__buffer_html_ada4364c0295af892b869f2be3ed62777"><div class="ttname"><a href="classtr_1_1basic__uniform__buffer.html#ada4364c0295af892b869f2be3ed62777">tr::basic_uniform_buffer::label</a></div><div class="ttdeci">std::string label() const</div><div class="ttdoc">Gets the label of the buffer.</div></div>
 <div class="ttc" id="aclasstr_1_1graphics__buffer__object__map_html"><div class="ttname"><a href="classtr_1_1graphics__buffer__object__map.html">tr::graphics_buffer_object_map</a></div><div class="ttdoc">Mapped buffer object.</div><div class="ttdef"><b>Definition</b> graphics_buffer_map.hpp:84</div></div>
 <div class="ttc" id="aclasstr_1_1graphics__buffer_html_a06d9e2187dbc1834b2a6bbea8a44d0bc"><div class="ttname"><a href="classtr_1_1graphics__buffer.html#a06d9e2187dbc1834b2a6bbea8a44d0bc">tr::graphics_buffer::graphics_buffer</a></div><div class="ttdeci">graphics_buffer(graphics_context &amp;context)</div><div class="ttdoc">Constructs an empty buffer.</div></div>
+<div class="ttc" id="aclasstr_1_1graphics__buffer_html_a1b9eef6ffb431a6b5ce3cb05af26b4f2"><div class="ttname"><a href="classtr_1_1graphics__buffer.html#a1b9eef6ffb431a6b5ce3cb05af26b4f2">tr::graphics_buffer::id</a></div><div class="ttdeci">unsigned int id() const</div><div class="ttdoc">Gets the unique ID of the buffer.</div></div>
 <div class="ttc" id="aclasstr_1_1graphics__buffer_html_a791c5d26a17cce2fe3850cb8e1ba5697"><div class="ttname"><a href="classtr_1_1graphics__buffer.html#a791c5d26a17cce2fe3850cb8e1ba5697">tr::graphics_buffer::set_label</a></div><div class="ttdeci">void set_label(std::string_view label)</div><div class="ttdoc">Sets the label of the buffer.</div></div>
 <div class="ttc" id="aclasstr_1_1graphics__buffer_html_aa7323654826d026acc2bc31bed2ed286"><div class="ttname"><a href="classtr_1_1graphics__buffer.html#aa7323654826d026acc2bc31bed2ed286">tr::graphics_buffer::context</a></div><div class="ttdeci">graphics_context &amp; context() const</div><div class="ttdoc">Gets a reference to the graphics context the buffer is on.</div></div>
 <div class="ttc" id="aclasstr_1_1graphics__buffer_html_ada4364c0295af892b869f2be3ed62777"><div class="ttname"><a href="classtr_1_1graphics__buffer.html#ada4364c0295af892b869f2be3ed62777">tr::graphics_buffer::label</a></div><div class="ttdeci">std::string label() const</div><div class="ttdoc">Gets the label of the buffer.</div></div>

@@ -165,7 +165,12 @@ Public Member Functions</h2></td></tr>
 <tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Context</div></td></tr>
 <tr class="memitem:aa7323654826d026acc2bc31bed2ed286" id="r_aa7323654826d026acc2bc31bed2ed286"><td class="memItemLeft"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#aa7323654826d026acc2bc31bed2ed286">context</a> () const</td></tr>
 <tr class="memdesc:aa7323654826d026acc2bc31bed2ed286"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a reference to the graphics context the buffer is on.  <br /></td></tr>
-<tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Label</div></td></tr>
+<tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">ID</div></td></tr>
+<tr class="memitem:a1b9eef6ffb431a6b5ce3cb05af26b4f2" id="r_a1b9eef6ffb431a6b5ce3cb05af26b4f2"><td class="memItemLeft">unsigned int&#160;</td><td class="memItemRight"><a class="el" href="#a1b9eef6ffb431a6b5ce3cb05af26b4f2">id</a> () const</td></tr>
+<tr class="memdesc:a1b9eef6ffb431a6b5ce3cb05af26b4f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the unique ID of the buffer.  <br /></td></tr>
+<tr class="memitem:ae0beac39b259e62684eaf8c620a2529d" id="r_ae0beac39b259e62684eaf8c620a2529d"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ae0beac39b259e62684eaf8c620a2529d">reallocate</a> ()</td></tr>
+<tr class="memdesc:ae0beac39b259e62684eaf8c620a2529d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reallocates the buffer while preserving its label (if applicable).  <br /></td></tr>
+<tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Label</div></td></tr>
 <tr class="memitem:ada4364c0295af892b869f2be3ed62777" id="r_ada4364c0295af892b869f2be3ed62777"><td class="memItemLeft">std::string&#160;</td><td class="memItemRight"><a class="el" href="#ada4364c0295af892b869f2be3ed62777">label</a> () const</td></tr>
 <tr class="memdesc:ada4364c0295af892b869f2be3ed62777"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the label of the buffer.  <br /></td></tr>
 <tr class="memitem:a791c5d26a17cce2fe3850cb8e1ba5697" id="r_a791c5d26a17cce2fe3850cb8e1ba5697"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a791c5d26a17cce2fe3850cb8e1ba5697">set_label</a> (std::string_view label)</td></tr>
@@ -220,6 +225,47 @@ Public Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the graphics context the buffer is on. </dd></dl>
 
 <p class="reference">Referenced by <a class="el" href="classtr_1_1basic__shader__buffer.html#a6fdf5b32b8d77843653e3a6defec03f1">tr::basic_shader_buffer::basic_shader_buffer()</a>, <a class="el" href="classtr_1_1basic__static__vertex__buffer.html#a16447592fe5068bd188dc50644b71d24">tr::basic_static_vertex_buffer::basic_static_vertex_buffer()</a>, <a class="el" href="classtr_1_1basic__uniform__buffer.html#aabcd05ef7c59e589bd32ec50a6017e1c">tr::basic_uniform_buffer::basic_uniform_buffer()</a>, <a class="el" href="#a06d9e2187dbc1834b2a6bbea8a44d0bc">graphics_buffer()</a>, and <a class="el" href="classtr_1_1static__index__buffer.html#a42e306e2e3020655d9544a4e5c8774c6">tr::static_index_buffer::static_index_buffer()</a>.</p>
+
+</div>
+</div>
+<a id="a1b9eef6ffb431a6b5ce3cb05af26b4f2" name="a1b9eef6ffb431a6b5ce3cb05af26b4f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b9eef6ffb431a6b5ce3cb05af26b4f2">&#9670;&#160;</a></span>id()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int tr::graphics_buffer::id </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Gets the unique ID of the buffer. </p>
+<dl class="section return"><dt>Returns</dt><dd>Unique ID of the buffer. </dd></dl>
+
+<p class="reference">Referenced by <a class="el" href="classtr_1_1basic__static__vertex__buffer.html#a16447592fe5068bd188dc50644b71d24">tr::basic_static_vertex_buffer::basic_static_vertex_buffer()</a>, <a class="el" href="classtr_1_1static__index__buffer.html#a42e306e2e3020655d9544a4e5c8774c6">tr::static_index_buffer::static_index_buffer()</a>, <a class="el" href="classtr_1_1basic__shader__buffer.html#a86d25df8e635279ad0f4eb78b0979d5d">tr::basic_shader_buffer::map()</a>, <a class="el" href="classtr_1_1basic__uniform__buffer.html#aaf9a6cba9f2ef26bd6ed564ebc3932df">tr::basic_uniform_buffer::map()</a>, <a class="el" href="classtr_1_1basic__dyn__vertex__buffer.html#aeda3e45b8829b8b1ec69040676389317">tr::basic_dyn_vertex_buffer::set_region()</a>, and <a class="el" href="classtr_1_1dyn__index__buffer.html#af38c2602159ccd17cbe2737e30a45215">tr::dyn_index_buffer::set_region()</a>.</p>
+
+</div>
+</div>
+<a id="ae0beac39b259e62684eaf8c620a2529d" name="ae0beac39b259e62684eaf8c620a2529d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0beac39b259e62684eaf8c620a2529d">&#9670;&#160;</a></span>reallocate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tr::graphics_buffer::reallocate </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reallocates the buffer while preserving its label (if applicable). </p>
 
 </div>
 </div>

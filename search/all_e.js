@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['parse_5fcommand_5fline_0',['parse_command_line',['../namespacetr__app.html#a39b022af2b66b418c7f31533d5cda809',1,'tr_app']]],
+  ['parse_5fcommand_5fline_0',['parse_command_line',['../namespacetr__main.html#a0118c702603b076fbaadd0999c682449',1,'tr_main']]],
   ['parse_5fresult_1',['parse_result',['../structtr_1_1localization__map_1_1parser_1_1parse__result.html',1,'tr::localization_map::parser']]],
   ['patches_2',['patches',['../namespacetr.html#a400576423c7753c57e41f5375e765753a6b0d3600d50944ab08b6145722eaa7c2',1,'tr']]],
   ['path_2ehpp_3',['path.hpp',['../path_8hpp.html',1,'']]],

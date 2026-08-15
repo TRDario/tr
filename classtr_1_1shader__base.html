@@ -244,8 +244,17 @@ Public Member Functions</h2></td></tr>
 <tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Storage buffers</div></td></tr>
 <tr class="memitem:ae78d9d6e1157ce32f68781a3b3fcf640" id="r_ae78d9d6e1157ce32f68781a3b3fcf640"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ae78d9d6e1157ce32f68781a3b3fcf640">set_storage_buffer</a> (unsigned int index, <a class="el" href="classtr_1_1basic__shader__buffer.html">basic_shader_buffer</a> &amp;buffer)</td></tr>
 <tr class="memdesc:ae78d9d6e1157ce32f68781a3b3fcf640"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a shader storage buffer.  <br /></td></tr>
+<tr class="memitem:aa44bc8473aa88a39b59216012458636a" id="r_aa44bc8473aa88a39b59216012458636a"><td class="memTemplParams" colspan="2">template&lt;typename Header, typename ArrayElement&gt; </td></tr>
+<tr class="memitem:aa44bc8473aa88a39b59216012458636a template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aa44bc8473aa88a39b59216012458636a">set_storage_buffer</a> (unsigned int index, <a class="el" href="classtr_1_1shader__buffer.html">shader_buffer</a>&lt; Header, ArrayElement &gt; &amp;buffer)</td></tr>
+<tr class="memdesc:aa44bc8473aa88a39b59216012458636a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a shader storage buffer.  <br /></td></tr>
+<tr class="memitem:ad9c088011bb679c63b99ad30556d4dbe" id="r_ad9c088011bb679c63b99ad30556d4dbe"><td class="memTemplParams" colspan="2">template&lt;typename Element&gt; </td></tr>
+<tr class="memitem:ad9c088011bb679c63b99ad30556d4dbe template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ad9c088011bb679c63b99ad30556d4dbe">set_storage_buffer</a> (unsigned int index, <a class="el" href="classtr_1_1shader__array.html">shader_array</a>&lt; Element &gt; &amp;buffer)</td></tr>
+<tr class="memdesc:ad9c088011bb679c63b99ad30556d4dbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a shader storage buffer.  <br /></td></tr>
 <tr class="memitem:a9dd684c1c0ae6b17908a5da85dc36775" id="r_a9dd684c1c0ae6b17908a5da85dc36775"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a9dd684c1c0ae6b17908a5da85dc36775">set_uniform_buffer</a> (unsigned int index, const <a class="el" href="classtr_1_1basic__uniform__buffer.html">basic_uniform_buffer</a> &amp;buffer)</td></tr>
 <tr class="memdesc:a9dd684c1c0ae6b17908a5da85dc36775"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a uniform storage buffer.  <br /></td></tr>
+<tr class="memitem:a0755901aeb64501fb6cf1798567574d7" id="r_a0755901aeb64501fb6cf1798567574d7"><td class="memTemplParams" colspan="2">template&lt;typename Object&gt; </td></tr>
+<tr class="memitem:a0755901aeb64501fb6cf1798567574d7 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a0755901aeb64501fb6cf1798567574d7">set_uniform_buffer</a> (unsigned int index, const <a class="el" href="classtr_1_1uniform__buffer.html">uniform_buffer</a>&lt; Object &gt; &amp;buffer)</td></tr>
+<tr class="memdesc:a0755901aeb64501fb6cf1798567574d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a uniform storage buffer.  <br /></td></tr>
 <tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Label</div></td></tr>
 <tr class="memitem:a03277cec831a3752c59bd5bc62a2c837" id="r_a03277cec831a3752c59bd5bc62a2c837"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a03277cec831a3752c59bd5bc62a2c837">set_label</a> (std::string_view label)</td></tr>
 <tr class="memdesc:a03277cec831a3752c59bd5bc62a2c837"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the debug label of the shader.  <br /></td></tr>
@@ -259,6 +268,10 @@ Public Member Functions</h2></td></tr>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:ac4375fd3f560e8b746d8bdb01d59dabb" id="r_ac4375fd3f560e8b746d8bdb01d59dabb"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ac4375fd3f560e8b746d8bdb01d59dabb">shader_base</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context, <a class="el" href="namespacetr.html#af4536441b49fec056af6a2432b30afff">zstring_view</a> source, unsigned int type)</td></tr>
 <tr class="memdesc:ac4375fd3f560e8b746d8bdb01d59dabb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a shader.  <br /></td></tr>
+<tr class="memitem:ad3490346e46a23345e8a022a6bccff85" id="r_ad3490346e46a23345e8a022a6bccff85"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ad3490346e46a23345e8a022a6bccff85">set_storage_buffer</a> (unsigned int index, unsigned int buffer_id, std::intptr_t buffer_size)</td></tr>
+<tr class="memdesc:ad3490346e46a23345e8a022a6bccff85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a shader storage buffer.  <br /></td></tr>
+<tr class="memitem:aacc68f7cf237e483b8455c91e667238f" id="r_aacc68f7cf237e483b8455c91e667238f"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aacc68f7cf237e483b8455c91e667238f">set_uniform_buffer</a> (unsigned int index, unsigned int buffer_id)</td></tr>
+<tr class="memdesc:aacc68f7cf237e483b8455c91e667238f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a uniform storage buffer.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pro-attribs" class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -1702,7 +1715,7 @@ Protected Attributes</h2></td></tr>
 </div>
 </div>
 <a id="ae78d9d6e1157ce32f68781a3b3fcf640" name="ae78d9d6e1157ce32f68781a3b3fcf640"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae78d9d6e1157ce32f68781a3b3fcf640">&#9670;&#160;</a></span>set_storage_buffer()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae78d9d6e1157ce32f68781a3b3fcf640">&#9670;&#160;</a></span>set_storage_buffer() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1731,8 +1744,85 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="aa44bc8473aa88a39b59216012458636a" name="aa44bc8473aa88a39b59216012458636a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa44bc8473aa88a39b59216012458636a">&#9670;&#160;</a></span>set_storage_buffer() <span class="overload">[2/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Header, typename ArrayElement&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void tr::shader_base::set_storage_buffer </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classtr_1_1shader__buffer.html">shader_buffer</a>&lt; Header, ArrayElement &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>buffer</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets a shader storage buffer. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Header</td><td>Type of the header object stored at the front of the buffer. </td></tr>
+    <tr><td class="paramname">ArrayElement</td><td>Type of the buffer dynamic array elements. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">index</td><td>Storage buffer location index. </td></tr>
+    <tr><td class="paramname">buffer</td><td>Buffer to set. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad9c088011bb679c63b99ad30556d4dbe" name="ad9c088011bb679c63b99ad30556d4dbe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad9c088011bb679c63b99ad30556d4dbe">&#9670;&#160;</a></span>set_storage_buffer() <span class="overload">[3/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Element&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void tr::shader_base::set_storage_buffer </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classtr_1_1shader__array.html">shader_array</a>&lt; Element &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>buffer</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets a shader storage buffer. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Element</td><td>Type of the array elements. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">index</td><td>Storage buffer location index. </td></tr>
+    <tr><td class="paramname">buffer</td><td>Buffer to set. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a9dd684c1c0ae6b17908a5da85dc36775" name="a9dd684c1c0ae6b17908a5da85dc36775"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9dd684c1c0ae6b17908a5da85dc36775">&#9670;&#160;</a></span>set_uniform_buffer()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a9dd684c1c0ae6b17908a5da85dc36775">&#9670;&#160;</a></span>set_uniform_buffer() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1751,6 +1841,44 @@ Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Sets a uniform storage buffer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">index</td><td>Storage buffer location index. </td></tr>
+    <tr><td class="paramname">buffer</td><td>Buffer to set. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a0755901aeb64501fb6cf1798567574d7" name="a0755901aeb64501fb6cf1798567574d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0755901aeb64501fb6cf1798567574d7">&#9670;&#160;</a></span>set_uniform_buffer() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Object&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void tr::shader_base::set_uniform_buffer </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classtr_1_1uniform__buffer.html">uniform_buffer</a>&lt; Object &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>buffer</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets a uniform storage buffer. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Object</td><td>Objet contained in the buffer. </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Storage buffer location index. </td></tr>
@@ -1825,6 +1953,88 @@ Protected Attributes</h2></td></tr>
 
 <p>Gets the unique ID of the shader program. </p>
 <dl class="section return"><dt>Returns</dt><dd>Unique ID of the shader program. </dd></dl>
+
+</div>
+</div>
+<a id="ad3490346e46a23345e8a022a6bccff85" name="ad3490346e46a23345e8a022a6bccff85"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3490346e46a23345e8a022a6bccff85">&#9670;&#160;</a></span>set_storage_buffer() <span class="overload">[4/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tr::shader_base::set_storage_buffer </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int</td>          <td class="paramname"><span class="paramname"><em>buffer_id</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::intptr_t</td>          <td class="paramname"><span class="paramname"><em>buffer_size</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets a shader storage buffer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">index</td><td>Storage buffer location index. </td></tr>
+    <tr><td class="paramname">buffer_id</td><td>ID of the buffer to set. </td></tr>
+    <tr><td class="paramname">buffer_size</td><td>Size of the buffer. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aacc68f7cf237e483b8455c91e667238f" name="aacc68f7cf237e483b8455c91e667238f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aacc68f7cf237e483b8455c91e667238f">&#9670;&#160;</a></span>set_uniform_buffer() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tr::shader_base::set_uniform_buffer </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned int</td>          <td class="paramname"><span class="paramname"><em>buffer_id</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets a uniform storage buffer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">index</td><td>Storage buffer location index. </td></tr>
+    <tr><td class="paramname">buffer_id</td><td>ID of the buffer to set. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

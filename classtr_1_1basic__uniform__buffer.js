@@ -8,5 +8,5 @@ var classtr_1_1basic__uniform__buffer =
     [ "context", "classtr_1_1basic__uniform__buffer.html#aa7323654826d026acc2bc31bed2ed286", null ],
     [ "label", "classtr_1_1basic__uniform__buffer.html#ada4364c0295af892b869f2be3ed62777", null ],
     [ "set_label", "classtr_1_1basic__uniform__buffer.html#a791c5d26a17cce2fe3850cb8e1ba5697", null ],
-    [ "shader_base", "classtr_1_1basic__uniform__buffer.html#ab4874dfe2155fb5d3e1f137932dbe03a", null ]
+    [ "id", "classtr_1_1basic__uniform__buffer.html#a1b9eef6ffb431a6b5ce3cb05af26b4f2", null ]
 ];
