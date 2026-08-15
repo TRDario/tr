@@ -30,10 +30,40 @@ void tr::bitmap_view::deleter::operator()(SDL_Surface* ptr)
 	SDL_DestroySurface(ptr);
 }
 
+//
+
+tr::bitmap_view::operator tr::sub_bitmap() const
+{
+	return sub({{}, size()});
+}
+
+tr::sub_bitmap tr::bitmap_view::sub(rectangle<int> region) const
+{
+	return sub_bitmap{*this, region};
+}
+
+//
+
 glm::ivec2 tr::bitmap_view::size() const
 {
 	return {m_ptr->w, m_ptr->h};
 }
+
+tr::pixel_format tr::bitmap_view::format() const
+{
+	TR_ASSERT(m_ptr != nullptr, "Tried to get the format of a moved-from bitmap view.");
+
+	return static_cast<pixel_format>(m_ptr->format);
+}
+
+int tr::bitmap_view::pitch() const
+{
+	TR_ASSERT(m_ptr != nullptr, "Tried to get the pitch of a moved-from bitmap view.");
+
+	return m_ptr->pitch;
+}
+
+//
 
 tr::bitmap_view::reference tr::bitmap_view::operator[](int x, int y) const
 {
@@ -44,6 +74,15 @@ tr::bitmap_view::reference tr::bitmap_view::operator[](glm::ivec2 pos) const
 {
 	return *(begin() + pos);
 }
+
+const std::byte* tr::bitmap_view::data() const
+{
+	TR_ASSERT(m_ptr != nullptr, "Tried to get the data of a moved-from bitmap view.");
+
+	return static_cast<const std::byte*>(m_ptr->pixels);
+}
+
+//
 
 tr::bitmap_view::iterator tr::bitmap_view::begin() const
 {
@@ -69,36 +108,7 @@ tr::bitmap_view::iterator tr::bitmap_view::cend() const
 	return sub_bitmap{*this}.end();
 }
 
-tr::bitmap_view::operator tr::sub_bitmap() const
-{
-	return sub({{}, size()});
-}
-
-tr::sub_bitmap tr::bitmap_view::sub(rectangle<int> region) const
-{
-	return sub_bitmap{*this, region};
-}
-
-const std::byte* tr::bitmap_view::data() const
-{
-	TR_ASSERT(m_ptr != nullptr, "Tried to get the data of a moved-from bitmap view.");
-
-	return static_cast<const std::byte*>(m_ptr->pixels);
-}
-
-tr::pixel_format tr::bitmap_view::format() const
-{
-	TR_ASSERT(m_ptr != nullptr, "Tried to get the format of a moved-from bitmap view.");
-
-	return static_cast<pixel_format>(m_ptr->format);
-}
-
-int tr::bitmap_view::pitch() const
-{
-	TR_ASSERT(m_ptr != nullptr, "Tried to get the pitch of a moved-from bitmap view.");
-
-	return m_ptr->pitch;
-}
+//
 
 void tr::bitmap_view::save(const std::filesystem::path& path) const
 {
@@ -107,4 +117,11 @@ void tr::bitmap_view::save(const std::filesystem::path& path) const
 	if (!IMG_SavePNG(m_ptr.get(), TR_PATH_CSTR(path))) {
 		throw bitmap_save_error{path.string(), SDL_GetError()};
 	}
+}
+
+//
+
+SDL_Surface* tr::bitmap_view::unwrap() const
+{
+	return m_ptr.get();
 }
