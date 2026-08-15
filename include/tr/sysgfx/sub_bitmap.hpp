@@ -114,7 +114,7 @@ namespace tr
 
 		/// @}
 
-		/// @cond __hidden
+		/// @cond sdl_interop
 		/// Unwraps the SDL surface pointer.
 		/// @return Pointer to the SDL surface.
 		SDL_Surface* unwrap() const;

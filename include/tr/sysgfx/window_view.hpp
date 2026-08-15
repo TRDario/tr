@@ -80,7 +80,7 @@ namespace tr
 	class window_view
 	{
 	  public:
-		/// @cond __hidden
+		/// @cond sdl_interop
 		/// Wraps a window view.
 		/// @param window Window pointer to wrap.
 		explicit window_view(SDL_Window* window);
@@ -204,7 +204,7 @@ namespace tr
 
 		/// @}
 
-		/// @cond __hidden
+		/// @cond sdl_interop
 		/// Unwraps the SDL window pointer.
 		/// @return Pointer to the SDL window.
 		SDL_Window* unwrap() const;

@@ -176,7 +176,7 @@ namespace tr
 		/// @name Constructors
 		/// @{
 
-		/// @cond __hidden
+		/// @cond sdl_interop
 		/// Wraps an SDL surface pointer.
 		/// @param ptr SDL surface pointer to wrap.
 		explicit bitmap(SDL_Surface* ptr);
@@ -328,7 +328,7 @@ namespace tr
 
 		/// @}
 
-		/// @cond __hidden
+		/// @cond sdl_interop
 		/// Unwraps the SDL surface pointer.
 		/// @note This does not release the pointer.
 		/// @return Pointer to the SDL surface.

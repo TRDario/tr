@@ -125,7 +125,7 @@ namespace tr
 
 		/// @}
 
-		/// @cond __hidden
+		/// @cond sdl_interop
 		/// Unwraps the SDL surface pointer.
 		/// @note This does not release the pointer.
 		/// @return Pointer to the SDL surface.
