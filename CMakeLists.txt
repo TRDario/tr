@@ -95,6 +95,7 @@ if(TR_BUILD_SYSGFX)
 	tr_generate_embeddable_string(tr_sysgfx resources/debug_renderer.vert debug_renderer_vert.hpp debug_renderer_vert)
 	tr_generate_embeddable_string(tr_sysgfx resources/debug_renderer.frag debug_renderer_frag.hpp debug_renderer_frag)
 	tr_generate_embeddable_binary(tr_sysgfx resources/debug_font.bmp debug_renderer_font.hpp debug_renderer_font)
+	tr_generate_embeddable_string(tr_sysgfx resources/post_processing.vert post_processing_vert.hpp post_processing_vert)
 	target_sources(tr_sysgfx PRIVATE
 		src/sysgfx/basic_renderer.cpp
 		src/sysgfx/basic_renderer_drawer.cpp
@@ -119,6 +120,7 @@ if(TR_BUILD_SYSGFX)
 		src/sysgfx/keyboard.cpp
 		src/sysgfx/main.cpp
 		src/sysgfx/path.cpp
+		src/sysgfx/post_processing_buffer.cpp
 		src/sysgfx/render_target.cpp
 		src/sysgfx/render_texture.cpp
 		src/sysgfx/shader_buffer.cpp
