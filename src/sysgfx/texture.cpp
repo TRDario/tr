@@ -157,14 +157,14 @@ void tr::texture::create_handle() const
 }
 
 tr::texture::texture(graphics_context& context)
-	: m_handle{{context}}
+	: m_handle{deleter{context}}
 	, m_size{0, 0}
 {
 	create_handle();
 }
 
 tr::texture::texture(graphics_context& context, unsigned int handle, glm::ivec2 size)
-	: m_handle{handle, {context}}
+	: m_handle{handle, deleter{context}, maybe_empty}
 	, m_size{size}
 {
 }
@@ -178,7 +178,7 @@ tr::texture::texture(graphics_context& context, glm::ivec2 size, mipmaps mipmaps
 tr::texture::texture(graphics_context& context, sub_bitmap bitmap, mipmaps mipmaps, std::optional<pixel_format> format)
 	: texture{context, bitmap.size(), mipmaps, format.value_or(bitmap.format())}
 {
-	set_region({}, bitmap);
+	set_region({0, 0}, bitmap);
 }
 
 void tr::texture::deleter::operator()(unsigned int texture) const
