@@ -12,11 +12,16 @@
 
 namespace tr
 {
+	// clang-format off
 	class basic_shader_buffer;
 	class basic_uniform_buffer;
 	struct gl_api;
 	class graphics_context;
+	template <typename Element> class shader_array;
+	template <typename Header, typename ArrayElement> class shader_buffer;
 	class texture_view;
+	template <typename Object> class uniform_buffer;
+	// clang-format on
 } // namespace tr
 
 //
@@ -351,10 +356,32 @@ namespace tr
 		/// @param buffer Buffer to set.
 		void set_storage_buffer(unsigned int index, basic_shader_buffer& buffer);
 
+		/// Sets a shader storage buffer.
+		/// @tparam Header Type of the header object stored at the front of the buffer.
+		/// @tparam ArrayElement Type of the buffer dynamic array elements.
+		/// @param index Storage buffer location index.
+		/// @param buffer Buffer to set.
+		template <typename Header, typename ArrayElement>
+		void set_storage_buffer(unsigned int index, shader_buffer<Header, ArrayElement>& buffer);
+
+		/// Sets a shader storage buffer.
+		/// @tparam Element Type of the array elements.
+		/// @param index Storage buffer location index.
+		/// @param buffer Buffer to set.
+		template <typename Element>
+		void set_storage_buffer(unsigned int index, shader_array<Element>& buffer);
+
 		/// Sets a uniform storage buffer.
 		/// @param index Storage buffer location index.
 		/// @param buffer Buffer to set.
 		void set_uniform_buffer(unsigned int index, const basic_uniform_buffer& buffer);
+
+		/// Sets a uniform storage buffer.
+		/// @tparam Object Objet contained in the buffer.
+		/// @param index Storage buffer location index.
+		/// @param buffer Buffer to set.
+		template <typename Object>
+		void set_uniform_buffer(unsigned int index, const uniform_buffer<Object>& buffer);
 
 		/// @}
 		/// @name Label
@@ -444,6 +471,19 @@ namespace tr
 		/// @param gl Structure holding the OpenGL API.
 		void find_outputs(const gl_api& gl);
 #endif
+
+		//
+
+		/// Sets a shader storage buffer.
+		/// @param index Storage buffer location index.
+		/// @param buffer_id ID of the buffer to set.
+		/// @param buffer_size Size of the buffer.
+		void set_storage_buffer(unsigned int index, unsigned int buffer_id, std::intptr_t buffer_size);
+
+		/// Sets a uniform storage buffer.
+		/// @param index Storage buffer location index.
+		/// @param buffer_id ID of the buffer to set.
+		void set_uniform_buffer(unsigned int index, unsigned int buffer_id);
 	};
 
 	//

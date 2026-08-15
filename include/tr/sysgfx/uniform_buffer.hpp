@@ -60,13 +60,16 @@ namespace tr
 		using graphics_buffer::set_label;
 
 		/// @}
+		/// @name ID
+		/// @{
+
+		using graphics_buffer::id;
+
+		/// @}
 
 	  private:
 		/// Size of the buffer.
 		usize m_size;
-
-		// Accesses graphics_buffer.
-		friend class shader_base;
 	};
 
 	//

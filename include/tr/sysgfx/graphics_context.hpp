@@ -377,6 +377,13 @@ namespace tr
 		/// @endcond
 #endif
 
+		/// Sets an active vertex buffer.
+		/// @param buffer_id ID of the buffer to set as active.
+		/// @param slot Slot to set the buffer in.
+		/// @param offset Starting offset within the buffer to bind.
+		/// @param stride Stride between the elements of the vertex buffer.
+		void set_vertex_buffer(unsigned int buffer_id, int slot, ssize offset, usize stride);
+
 		//
 
 		/// Moves a label from one object to another.

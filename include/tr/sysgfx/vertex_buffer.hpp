@@ -32,13 +32,16 @@ namespace tr
 		using graphics_buffer::set_label;
 
 		/// @}
+		/// @name ID
+		/// @{
+
+		using graphics_buffer::id;
+
+		/// @}
 
 	  private:
 		/// Size of the vertex buffer in bytes.
 		ssize m_size;
-
-		// Accesses graphics_buffer.
-		friend class graphics_context;
 	};
 
 	/// Typed static vertex buffer class for holding immutable vertex data of a single type.
@@ -68,10 +71,12 @@ namespace tr
 		using basic_static_vertex_buffer::set_label;
 
 		/// @}
+		/// @name ID
+		/// @{
 
-	  private:
-		// Accesses basic_static_vertex_buffer.
-		friend class graphics_context;
+		using basic_static_vertex_buffer::id;
+
+		/// @}
 	};
 
 	//
@@ -141,15 +146,19 @@ namespace tr
 		using graphics_buffer::set_label;
 
 		/// @}
+		/// @name ID
+		/// @{
+
+		using graphics_buffer::id;
+
+		/// @}
 
 	  private:
-		// Used size of the buffer in bytes.
+		/// Used size of the buffer in bytes.
 		usize m_size{0};
-		// Capacity of the buffer in bytes.
-		usize m_capacity{0};
 
-		// Accesses graphics_buffer.
-		friend class graphics_context;
+		/// Capacity of the buffer in bytes.
+		usize m_capacity{0};
 	};
 
 	/// Typed dynamic vertex buffer class.
@@ -220,10 +229,12 @@ namespace tr
 		using basic_dyn_vertex_buffer::set_label;
 
 		/// @}
+		/// @name ID
+		/// @{
 
-	  private:
-		// Accesses basic_dyn_vertex_buffer.
-		friend class graphics_context;
+		using basic_dyn_vertex_buffer::id;
+
+		/// @}
 	};
 } // namespace tr
 

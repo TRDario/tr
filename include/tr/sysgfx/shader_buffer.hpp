@@ -95,6 +95,12 @@ namespace tr
 		using graphics_buffer::set_label;
 
 		/// @}
+		/// @name ID
+		/// @{
+
+		using graphics_buffer::id;
+
+		/// @}
 
 	  private:
 		// Map type of the buffer.
@@ -116,11 +122,6 @@ namespace tr
 		/// @param size Size of the map in bytes.
 		/// @return Buffer range map.
 		basic_graphics_buffer_map map_range(usize offset, usize size);
-
-		//
-
-		// Accesses graphics_buffer.
-		friend class shader_base;
 	};
 
 	/// Shader buffer with a typed header and array.

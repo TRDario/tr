@@ -1,5 +1,5 @@
 /// @file
-/// @brief Implements shader.hpp.
+/// @brief Implements the non-templated parts of shader.hpp.
 
 #include "../../include/tr/sysgfx/shader.hpp"
 #include "../../include/tr/sysgfx/gl_defines.hpp"
@@ -582,18 +582,26 @@ void tr::shader_base::set_uniform(int index, texture_view texture)
 	unit_it->second.set(texture);
 }
 
-void tr::shader_base::set_storage_buffer(unsigned int index, basic_shader_buffer& buffer)
+void tr::shader_base::set_storage_buffer(unsigned int index, unsigned int buffer_id, std::intptr_t buffer_size)
 {
 	const gl_api& gl{context().make_current_and_return_gl_api()};
+	gl.bind_buffer_range(GL_SHADER_STORAGE_BUFFER, index, buffer_id, 0, buffer_size);
+}
 
-	gl.bind_buffer_range(GL_SHADER_STORAGE_BUFFER, index, buffer.id(), 0, buffer.header_size() + buffer.array_size());
+void tr::shader_base::set_storage_buffer(unsigned int index, basic_shader_buffer& buffer)
+{
+	set_storage_buffer(index, buffer.id(), buffer.header_size() + buffer.array_size());
+}
+
+void tr::shader_base::set_uniform_buffer(unsigned int index, unsigned int buffer_id)
+{
+	const gl_api& gl{context().make_current_and_return_gl_api()};
+	gl.bind_buffer_base(GL_UNIFORM_BUFFER, index, buffer_id);
 }
 
 void tr::shader_base::set_uniform_buffer(unsigned int index, const basic_uniform_buffer& buffer)
 {
-	const gl_api& gl{context().make_current_and_return_gl_api()};
-
-	gl.bind_buffer_base(GL_UNIFORM_BUFFER, index, buffer.id());
+	set_uniform_buffer(index, buffer.id());
 }
 
 //

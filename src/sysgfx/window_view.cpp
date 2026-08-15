@@ -50,14 +50,14 @@ void tr::window_view::set_title(zstring_view new_title) const
 
 void tr::window_view::set_icon(const bitmap& bitmap) const
 {
-	if (!SDL_SetWindowIcon(m_ptr, bitmap.m_ptr.get())) {
+	if (!SDL_SetWindowIcon(m_ptr, bitmap.unwrap())) {
 		throw window_error{"Failed to set icon of window '{}'", title()};
 	}
 }
 
 void tr::window_view::set_icon(const bitmap_view& bitmap) const
 {
-	if (!SDL_SetWindowIcon(m_ptr, bitmap.m_ptr.get())) {
+	if (!SDL_SetWindowIcon(m_ptr, bitmap.unwrap())) {
 		throw window_error{"Failed to set icon of window '{}'", title()};
 	}
 }

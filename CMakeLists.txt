@@ -131,10 +131,11 @@ if(TR_BUILD_SYSGFX)
 		src/sysgfx/texture.cpp
 		src/sysgfx/texture_unit.cpp
 		src/sysgfx/texture_view.cpp
+		src/sysgfx/ttfont.cpp
 		src/sysgfx/uniform_buffer.cpp
 		src/sysgfx/vertex_buffer.cpp
 		src/sysgfx/vertex_format.cpp
-		src/sysgfx/ttfont.cpp
+		src/sysgfx/window_view.cpp
 		src/sysgfx/window.cpp
 	)
 	target_compile_definitions(tr_sysgfx PUBLIC TR_HAS_SYSGFX)

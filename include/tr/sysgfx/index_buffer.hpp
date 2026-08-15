@@ -42,15 +42,16 @@ namespace tr
 		using graphics_buffer::set_label;
 
 		/// @}
+		/// @name ID
+		/// @{
+
+		using graphics_buffer::id;
+
+		/// @}
 
 	  private:
 		/// Size of the buffer in elements.
 		ssize m_size;
-
-		//
-
-		// Accesses graphics_buffer.
-		friend class graphics_context;
 	};
 
 	//
@@ -120,6 +121,12 @@ namespace tr
 		using graphics_buffer::set_label;
 
 		/// @}
+		/// @name ID
+		/// @{
+
+		using graphics_buffer::id;
+
+		/// @}
 
 	  private:
 		/// Used size of the buffer in elements.
@@ -127,10 +134,5 @@ namespace tr
 
 		/// Capacity of the buffer in elements.
 		usize m_capacity{0};
-
-		//
-
-		// Accesses graphics_buffer.
-		friend class graphics_context;
 	};
 } // namespace tr

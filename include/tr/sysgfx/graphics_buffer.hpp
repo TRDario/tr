@@ -34,19 +34,17 @@ namespace tr
 		graphics_context& context() const;
 
 		/// @}
-		/// @cond __hidden
 		/// @name ID
 		/// @{
 
-		/// Gets the buffer's ID.
-		/// @return OpenGL buffer ID.
+		/// Gets the unique ID of the buffer.
+		/// @return Unique ID of the buffer.
 		unsigned int id() const;
 
 		/// Reallocates the buffer while preserving its label (if applicable).
 		void reallocate();
 
 		/// @}
-		/// @endcond
 		/// @name Label
 		/// @{
 

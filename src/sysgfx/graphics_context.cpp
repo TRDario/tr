@@ -336,16 +336,20 @@ void tr::graphics_context::set_vertex_format(const vertex_format& format)
 	gl.bind_vertex_array(format.id());
 }
 
-void tr::graphics_context::set_vertex_buffer(const basic_static_vertex_buffer& buffer, int slot, ssize offset, usize stride)
+void tr::graphics_context::set_vertex_buffer(unsigned int buffer_id, int slot, ssize offset, usize stride)
 {
 	const gl_api& gl{make_current_and_return_gl_api()};
-	gl.bind_vertex_buffer(slot, buffer.id(), offset, stride);
+	gl.bind_vertex_buffer(slot, buffer_id, offset, stride);
+}
+
+void tr::graphics_context::set_vertex_buffer(const basic_static_vertex_buffer& buffer, int slot, ssize offset, usize stride)
+{
+	set_vertex_buffer(buffer.id(), slot, offset, stride);
 }
 
 void tr::graphics_context::set_vertex_buffer(const basic_dyn_vertex_buffer& buffer, int slot, ssize offset, usize stride)
 {
-	const gl_api& gl{make_current_and_return_gl_api()};
-	gl.bind_vertex_buffer(slot, buffer.id(), offset, stride);
+	set_vertex_buffer(buffer.id(), slot, offset, stride);
 }
 
 void tr::graphics_context::set_index_buffer(const static_index_buffer& buffer)
