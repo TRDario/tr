@@ -31,7 +31,7 @@ namespace tr
 		void Init(graphics_context& context);
 
 		/// Processes an event for Dear ImGui.
-		/// @note This function should preferably be called on every `tr_app::handle_event` call.
+		/// @note This function should preferably be called on every `tr_main::handle_event` call.
 		/// @param event Event to process.
 		void ProcessEvent(const event& event);
 

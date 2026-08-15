@@ -1,8 +1,8 @@
 /// @file
 /// @brief Provides functionality related to the main loop of the program.
 /// @details
-/// Unlike a standard C++ program, programs using tr do not have to define main(). Instead, a number of functions in the namespace `tr_app`
-/// have to be defined, as well as tr_app::metadata, a struct containing basic application metadata.
+/// Unlike a standard C++ program, programs using tr do not have to define main(). Instead, a number of functions in the namespace `tr_main`
+/// have to be defined, as well as tr_main::metadata, a struct containing basic application metadata.
 ///
 /// Most functions in app, with the exception of shut_down, return a signal. If `tr::signal::proceed` is returned, execution will continue
 /// as normal. If `tr::signal::exit` or `tr::signal::abort` is returned, further execution is stopped and shut_down is called to clean up
@@ -118,7 +118,7 @@ namespace tr
 } // namespace tr
 
 /// User-defined functions and data (mandatory). Uncaught exceptions will display a dialog box and quit the application.
-namespace tr_app
+namespace tr_main
 {
 	/// Application metadata.
 	extern const tr::app_metadata metadata;
@@ -144,4 +144,4 @@ namespace tr_app
 
 	/// Called once at the end of execution.
 	void shut_down();
-} // namespace tr_app
+} // namespace tr_main
