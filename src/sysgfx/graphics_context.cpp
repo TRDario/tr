@@ -309,11 +309,11 @@ void tr::graphics_context::set_render_target(const render_target& target)
 void tr::graphics_context::set_shader_pipeline(const shader_pipeline& pipeline)
 {
 #ifdef TR_ENABLE_GL_CHECKS
-	TR_ASSERT(pipeline.complete(), "Tried to set incomplete shader pipeline '{}'.", pipeline.label());
+	pipeline.assert_settable(*this);
 #endif
 
 	const gl_api& gl{make_current_and_return_gl_api()};
-	gl.bind_program_pipeline(pipeline.id());
+	gl.bind_program_pipeline(pipeline.gid());
 }
 
 void tr::graphics_context::set_blend_mode(const blend_mode& bm)

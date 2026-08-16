@@ -112,6 +112,7 @@ if(TR_BUILD_SYSGFX)
 		src/sysgfx/event.cpp
 		src/sysgfx/framebuffer.cpp
 		src/sysgfx/gl_api.cpp
+		src/sysgfx/gl_object_registry.cpp
 		src/sysgfx/graphics_benchmark.cpp
 		src/sysgfx/graphics_buffer.cpp
 		src/sysgfx/graphics_buffer_map.cpp

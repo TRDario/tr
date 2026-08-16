@@ -36,10 +36,25 @@ std::string_view tr::shader_load_error::details() const
 
 //
 
+#ifdef TR_ENABLE_GL_CHECKS
+namespace tr
+{
+	namespace
+	{
+		/// Unique ID of the next shader object.
+		unsigned int next_shader_tid{0};
+	} // namespace
+} // namespace tr
+#endif
+
 tr::shader_base::shader_base(graphics_context& context, zstring_view source, unsigned int type)
 	: m_program{context.make_current_and_return_gl_api().create_shader_program_v(type, 1, reinterpret_cast<const char**>(&source)),
-				{context}}
+				deleter{context}}
 {
+#ifdef TR_ENABLE_GL_CHECKS
+	context.registry.register_shader((m_program.get_deleter().tid = next_shader_tid++), m_program.get());
+#endif
+
 	const gl_api& gl{context.make_current_and_return_gl_api()};
 
 	int linked;
@@ -165,6 +180,10 @@ void tr::shader_base::deleter::operator()(unsigned int id) const
 	const gl_api& gl{context.make_current_and_return_gl_api()};
 
 	gl.delete_program(id);
+
+#ifdef TR_ENABLE_GL_CHECKS
+	context.registry.unregister_shader(tid);
+#endif
 }
 
 //
@@ -181,7 +200,6 @@ void tr::shader_base::set_uniform(int index, bool value)
 	TR_ASSERT_SHADER_UNIFORM(bool);
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	gl.set_program_uniform_1i(m_program.get(), index, value);
 }
 
@@ -190,7 +208,6 @@ void tr::shader_base::set_uniform(int index, int value)
 	TR_ASSERT_SHADER_UNIFORM(int);
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	gl.set_program_uniform_1i(m_program.get(), index, value);
 }
 
@@ -199,7 +216,6 @@ void tr::shader_base::set_uniform(int index, std::span<const int> value)
 	TR_ASSERT_SHADER_ARRAY_UNIFORM(int);
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	gl.set_program_uniform_1iv(m_program.get(), index, value.size(), value.data());
 }
 
@@ -208,7 +224,6 @@ void tr::shader_base::set_uniform(int index, glm::ivec2 value)
 	TR_ASSERT_SHADER_UNIFORM(glm::ivec2);
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	gl.set_program_uniform_2i(m_program.get(), index, value.x, value.y);
 }
 
@@ -217,7 +232,6 @@ void tr::shader_base::set_uniform(int index, std::span<const glm::ivec2> value)
 	TR_ASSERT_SHADER_ARRAY_UNIFORM(glm::ivec2);
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	gl.set_program_uniform_2iv(m_program.get(), index, value.size(), value_ptr(value[0]));
 }
 
@@ -226,7 +240,6 @@ void tr::shader_base::set_uniform(int index, glm::ivec3 value)
 	TR_ASSERT_SHADER_UNIFORM(glm::ivec3);
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	gl.set_program_uniform_3i(m_program.get(), index, value.x, value.y, value.z);
 }
 
@@ -235,7 +248,6 @@ void tr::shader_base::set_uniform(int index, std::span<const glm::ivec3> value)
 	TR_ASSERT_SHADER_ARRAY_UNIFORM(glm::ivec3);
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	gl.set_program_uniform_3iv(m_program.get(), index, value.size(), value_ptr(value[0]));
 }
 
@@ -244,7 +256,6 @@ void tr::shader_base::set_uniform(int index, glm::ivec4 value)
 	TR_ASSERT_SHADER_UNIFORM(glm::ivec4);
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	gl.set_program_uniform_4i(m_program.get(), index, value.x, value.y, value.z, value.w);
 }
 
@@ -253,7 +264,6 @@ void tr::shader_base::set_uniform(int index, std::span<const glm::ivec4> value)
 	TR_ASSERT_SHADER_ARRAY_UNIFORM(glm::ivec4);
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	gl.set_program_uniform_4iv(m_program.get(), index, value.size(), value_ptr(value[0]));
 }
 
@@ -262,7 +272,6 @@ void tr::shader_base::set_uniform(int index, unsigned int value)
 	TR_ASSERT_SHADER_UNIFORM(unsigned int);
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	gl.set_program_uniform_1ui(m_program.get(), index, value);
 }
 
@@ -271,7 +280,6 @@ void tr::shader_base::set_uniform(int index, std::span<const unsigned int> value
 	TR_ASSERT_SHADER_ARRAY_UNIFORM(unsigned int);
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	gl.set_program_uniform_1uiv(m_program.get(), index, value.size(), value.data());
 }
 
@@ -280,7 +288,6 @@ void tr::shader_base::set_uniform(int index, glm::uvec2 value)
 	TR_ASSERT_SHADER_UNIFORM(glm::uvec2);
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	gl.set_program_uniform_2ui(m_program.get(), index, value.x, value.y);
 }
 
@@ -289,7 +296,6 @@ void tr::shader_base::set_uniform(int index, std::span<const glm::uvec2> value)
 	TR_ASSERT_SHADER_ARRAY_UNIFORM(glm::uvec2);
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	gl.set_program_uniform_2uiv(m_program.get(), index, value.size(), value_ptr(value[0]));
 }
 
@@ -298,7 +304,6 @@ void tr::shader_base::set_uniform(int index, glm::uvec3 value)
 	TR_ASSERT_SHADER_UNIFORM(glm::uvec3);
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	gl.set_program_uniform_3ui(m_program.get(), index, value.x, value.y, value.z);
 }
 
@@ -307,7 +312,6 @@ void tr::shader_base::set_uniform(int index, std::span<const glm::uvec3> value)
 	TR_ASSERT_SHADER_ARRAY_UNIFORM(glm::uvec3);
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	gl.set_program_uniform_3uiv(m_program.get(), index, value.size(), value_ptr(value[0]));
 }
 
@@ -316,7 +320,6 @@ void tr::shader_base::set_uniform(int index, glm::uvec4 value)
 	TR_ASSERT_SHADER_UNIFORM(glm::uvec4);
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	gl.set_program_uniform_4ui(m_program.get(), index, value.x, value.y, value.z, value.w);
 }
 
@@ -325,7 +328,6 @@ void tr::shader_base::set_uniform(int index, std::span<const glm::uvec4> value)
 	TR_ASSERT_SHADER_ARRAY_UNIFORM(glm::uvec4);
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	gl.set_program_uniform_4uiv(m_program.get(), index, value.size(), value_ptr(value[0]));
 }
 
@@ -334,7 +336,6 @@ void tr::shader_base::set_uniform(int index, float value)
 	TR_ASSERT_SHADER_UNIFORM(float);
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	gl.set_program_uniform_1f(m_program.get(), index, value);
 }
 
@@ -343,7 +344,6 @@ void tr::shader_base::set_uniform(int index, std::span<const float> value)
 	TR_ASSERT_SHADER_ARRAY_UNIFORM(float);
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	gl.set_program_uniform_1fv(m_program.get(), index, value.size(), value.data());
 }
 
@@ -352,7 +352,6 @@ void tr::shader_base::set_uniform(int index, glm::vec2 value)
 	TR_ASSERT_SHADER_UNIFORM(glm::vec2);
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	gl.set_program_uniform_2f(m_program.get(), index, value.x, value.y);
 }
 
@@ -361,7 +360,6 @@ void tr::shader_base::set_uniform(int index, std::span<const glm::vec2> value)
 	TR_ASSERT_SHADER_ARRAY_UNIFORM(glm::vec2);
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	gl.set_program_uniform_2fv(m_program.get(), index, value.size(), value_ptr(value[0]));
 }
 
@@ -370,7 +368,6 @@ void tr::shader_base::set_uniform(int index, glm::vec3 value)
 	TR_ASSERT_SHADER_UNIFORM(glm::vec3);
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	gl.set_program_uniform_3f(m_program.get(), index, value.x, value.y, value.z);
 }
 
@@ -379,7 +376,6 @@ void tr::shader_base::set_uniform(int index, std::span<const glm::vec3> value)
 	TR_ASSERT_SHADER_ARRAY_UNIFORM(glm::vec3);
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	gl.set_program_uniform_3fv(m_program.get(), index, value.size(), value_ptr(value[0]));
 }
 
@@ -388,7 +384,6 @@ void tr::shader_base::set_uniform(int index, glm::vec4 value)
 	TR_ASSERT_SHADER_UNIFORM(glm::vec4);
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	gl.set_program_uniform_4f(m_program.get(), index, value.x, value.y, value.z, value.w);
 }
 
@@ -397,7 +392,6 @@ void tr::shader_base::set_uniform(int index, std::span<const glm::vec4> value)
 	TR_ASSERT_SHADER_ARRAY_UNIFORM(glm::vec4);
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	gl.set_program_uniform_4fv(m_program.get(), index, value.size(), value_ptr(value[0]));
 }
 
@@ -406,7 +400,6 @@ void tr::shader_base::set_uniform(int index, const glm::mat2& value)
 	TR_ASSERT_SHADER_UNIFORM(glm::mat2);
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	gl.set_program_uniform_matrix2fv(m_program.get(), index, 1, false, value_ptr(value));
 }
 
@@ -415,7 +408,6 @@ void tr::shader_base::set_uniform(int index, std::span<const glm::mat2> value)
 	TR_ASSERT_SHADER_ARRAY_UNIFORM(glm::mat2);
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	gl.set_program_uniform_matrix2fv(m_program.get(), index, value.size(), false, value_ptr(value[0]));
 }
 
@@ -424,7 +416,6 @@ void tr::shader_base::set_uniform(int index, const glm::mat3& value)
 	TR_ASSERT_SHADER_UNIFORM(glm::mat3);
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	gl.set_program_uniform_matrix3fv(m_program.get(), index, 1, false, value_ptr(value));
 }
 
@@ -433,7 +424,6 @@ void tr::shader_base::set_uniform(int index, std::span<const glm::mat3> value)
 	TR_ASSERT_SHADER_ARRAY_UNIFORM(glm::mat3);
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	gl.set_program_uniform_matrix3fv(m_program.get(), index, value.size(), false, value_ptr(value[0]));
 }
 
@@ -442,7 +432,6 @@ void tr::shader_base::set_uniform(int index, const glm::mat4& value)
 	TR_ASSERT_SHADER_UNIFORM(glm::mat4);
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	gl.set_program_uniform_matrix4fv(m_program.get(), index, 1, false, value_ptr(value));
 }
 
@@ -451,7 +440,6 @@ void tr::shader_base::set_uniform(int index, std::span<const glm::mat4> value)
 	TR_ASSERT_SHADER_ARRAY_UNIFORM(glm::mat4);
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	gl.set_program_uniform_matrix4fv(m_program.get(), index, value.size(), false, value_ptr(value[0]));
 }
 
@@ -460,7 +448,6 @@ void tr::shader_base::set_uniform(int index, const glm::mat2x3& value)
 	TR_ASSERT_SHADER_UNIFORM(glm::mat2x3);
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	gl.set_program_uniform_matrix2x3fv(m_program.get(), index, 1, false, value_ptr(value));
 }
 
@@ -469,7 +456,6 @@ void tr::shader_base::set_uniform(int index, std::span<const glm::mat2x3> value)
 	TR_ASSERT_SHADER_ARRAY_UNIFORM(glm::mat2x3);
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	gl.set_program_uniform_matrix2x3fv(m_program.get(), index, value.size(), false, value_ptr(value[0]));
 }
 
@@ -478,7 +464,6 @@ void tr::shader_base::set_uniform(int index, const glm::mat2x4& value)
 	TR_ASSERT_SHADER_UNIFORM(glm::mat2x4);
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	gl.set_program_uniform_matrix2x4fv(m_program.get(), index, 1, false, value_ptr(value));
 }
 
@@ -487,7 +472,6 @@ void tr::shader_base::set_uniform(int index, std::span<const glm::mat2x4> value)
 	TR_ASSERT_SHADER_ARRAY_UNIFORM(glm::mat2x4);
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	gl.set_program_uniform_matrix2x4fv(m_program.get(), index, value.size(), false, value_ptr(value[0]));
 }
 
@@ -496,7 +480,6 @@ void tr::shader_base::set_uniform(int index, const glm::mat3x2& value)
 	TR_ASSERT_SHADER_UNIFORM(glm::mat3x2);
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	gl.set_program_uniform_matrix3x2fv(m_program.get(), index, 1, false, value_ptr(value));
 }
 
@@ -505,7 +488,6 @@ void tr::shader_base::set_uniform(int index, std::span<const glm::mat3x2> value)
 	TR_ASSERT_SHADER_ARRAY_UNIFORM(glm::mat3x2);
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	gl.set_program_uniform_matrix3x2fv(m_program.get(), index, value.size(), false, value_ptr(value[0]));
 }
 
@@ -514,7 +496,6 @@ void tr::shader_base::set_uniform(int index, const glm::mat3x4& value)
 	TR_ASSERT_SHADER_UNIFORM(glm::mat3x4);
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	gl.set_program_uniform_matrix3x4fv(m_program.get(), index, 1, false, value_ptr(value));
 }
 
@@ -523,7 +504,6 @@ void tr::shader_base::set_uniform(int index, std::span<const glm::mat3x4> value)
 	TR_ASSERT_SHADER_ARRAY_UNIFORM(glm::mat3x4);
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	gl.set_program_uniform_matrix3x4fv(m_program.get(), index, value.size(), false, value_ptr(value[0]));
 }
 
@@ -532,7 +512,6 @@ void tr::shader_base::set_uniform(int index, const glm::mat4x2& value)
 	TR_ASSERT_SHADER_UNIFORM(glm::mat4x2);
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	gl.set_program_uniform_matrix4x2fv(m_program.get(), index, 1, false, value_ptr(value));
 }
 
@@ -541,7 +520,6 @@ void tr::shader_base::set_uniform(int index, std::span<const glm::mat4x2> value)
 	TR_ASSERT_SHADER_ARRAY_UNIFORM(glm::mat4x2);
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	gl.set_program_uniform_matrix4x2fv(m_program.get(), index, value.size(), false, value_ptr(value[0]));
 }
 
@@ -550,7 +528,6 @@ void tr::shader_base::set_uniform(int index, const glm::mat4x3& value)
 	TR_ASSERT_SHADER_UNIFORM(glm::mat4x3);
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	gl.set_program_uniform_matrix4x3fv(m_program.get(), index, 1, false, value_ptr(value));
 }
 
@@ -559,7 +536,6 @@ void tr::shader_base::set_uniform(int index, std::span<const glm::mat4x3> value)
 	TR_ASSERT_SHADER_ARRAY_UNIFORM(glm::mat4x3);
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	gl.set_program_uniform_matrix4x3fv(m_program.get(), index, value.size(), false, value_ptr(value[0]));
 }
 
@@ -609,7 +585,6 @@ void tr::shader_base::set_uniform_buffer(unsigned int index, const basic_uniform
 void tr::shader_base::set_label(std::string_view label)
 {
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	gl.set_object_label(GL_PROGRAM, m_program.get(), label.size(), label.data());
 }
 
@@ -631,14 +606,22 @@ std::string tr::shader_base::label() const
 
 //
 
-unsigned int tr::shader_base::id() const
+bool tr::shader_base::valid() const
+{
+	return m_program.has_value();
+}
+
+unsigned int tr::shader_base::gid() const
 {
 	return m_program.get();
 }
 
-//
-
 #ifdef TR_ENABLE_GL_CHECKS
+unsigned int tr::shader_base::tid() const
+{
+	return m_program.get_deleter().tid;
+}
+
 const boost::unordered_flat_map<unsigned int, tr::glsl_variable>& tr::shader_base::inputs() const
 {
 	return m_inputs;

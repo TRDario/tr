@@ -396,17 +396,21 @@ namespace tr
 		std::string label() const;
 
 		/// @}
-		/// @name ID
-		/// @{
 
-		/// Gets the unique ID of the shader program.
-		/// @return Unique ID of the shader program.
-		unsigned int id() const;
+		/// @cond __hidden
+		/// Gets whether the shader is valid.
+		/// @return `true` if the shader is valid, `false` otherwise.
+		bool valid() const;
 
-		/// @}
+		/// Gets the OpenGL shader program ID.
+		/// @return OpenGL shader program ID.
+		unsigned int gid() const;
 
 #ifdef TR_ENABLE_GL_CHECKS
-		/// @cond __hidden
+		/// Gets the unique ID of the shader.
+		/// @return Unique ID of the shader.
+		unsigned int tid() const;
+
 		/// Gets the shader's inputs.
 		/// @return Map of shader inputs.
 		const boost::unordered_flat_map<unsigned int, glsl_variable>& inputs() const;
@@ -414,8 +418,8 @@ namespace tr
 		/// Gets the shader's outputs.
 		/// @return Map of shader outputs.
 		const boost::unordered_flat_map<unsigned int, glsl_variable>& outputs() const;
-		/// @endcond
 #endif
+		/// @endcond
 
 	  protected:
 		/// Shader program deleter.
@@ -423,6 +427,11 @@ namespace tr
 		{
 			/// Reference to the graphics context the shader is on.
 			graphics_context& context;
+
+#ifdef TR_ENABLE_GL_CHECKS
+			/// Unique object ID of the shader.
+			unsigned int tid{0};
+#endif
 
 			//
 

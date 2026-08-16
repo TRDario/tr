@@ -9,53 +9,28 @@
 
 //
 
-namespace tr
+#ifdef TR_ENABLE_GL_CHECKS
+
+bool tr::shader_pipeline::vertex_shader_debug_info::valid(graphics_context& context) const
 {
-	namespace
-	{
-		/// Checks shaders set to a shader pipeline for compatibility.
-		/// @param vertex_shader Optional vertex shader to check.
-		/// @param fragment_shader Optional fragment shader to check.
-		void check_shader_pipeline_shaders(opt_ref<const vertex_shader> vertex_shader, opt_ref<const fragment_shader> fragment_shader)
-		{
-			if (!(vertex_shader.has_ref() && !fragment_shader.has_ref())) {
-				return;
-			}
+	return context.registry.check_shader(tid, gid);
+}
 
-			// clang-format off
-			TR_ASSERT(
-				vertex_shader->outputs().size() == fragment_shader->inputs().size(),
-				"Mismatched shader inputs/outputs (vertex shader '{}' has {} outputs, fragment shader '{}' has {} inputs).",
-				vertex_shader->label(), vertex_shader->outputs().size(), fragment_shader->label(), fragment_shader->inputs().size()
-			);
+bool tr::shader_pipeline::fragment_shader_debug_info::valid(graphics_context& context) const
+{
+	return context.registry.check_shader(tid, gid);
+}
 
-			for (const auto& [location, info] : vertex_shader->outputs()) {
-				TR_ASSERT(
-					fragment_shader->inputs().contains(location),
-					"Mismatched shader inputs/outputs (vertex shader '{}' has output '{}' at location {} that was not found in fragment shader '{}''s inputs).",
-					vertex_shader->label(), info, location, fragment_shader->label()
-				);
-
-				const glsl_variable& frag_info{get(fragment_shader->inputs(), location)};
-				TR_ASSERT(
-					frag_info.type == info.type && frag_info.array_size == info.array_size,
-					"Mismatched shader inputs/outputs (vertex shader '{}' has output '{}' at location {}, but the input '{}' at the same location in fragment shader '{}' is not compatible with it).",
-					vertex_shader->label(), info, location, get(fragment_shader->inputs(), location), fragment_shader->label()
-				);
-			}
-			// clang-format on
-		}
-	} // namespace
-} // namespace tr
+#endif
 
 //
 
-tr::shader_pipeline::shader_pipeline(graphics_context& context, const vertex_shader& vshader, const fragment_shader& fshader)
-	: m_ppo{{context}}
+tr::shader_pipeline::shader_pipeline(graphics_context& context, const vertex_shader& vertex_shader, const fragment_shader& fragment_shader)
+	: m_ppo{deleter{context}}
 {
 	const gl_api& gl{context.make_current_and_return_gl_api()};
 	gl.create_program_pipelines(1, out_handle(m_ppo));
-	set_shaders(vshader, fshader);
+	set_shaders(vertex_shader, fragment_shader);
 }
 
 void tr::shader_pipeline::deleter::operator()(unsigned int id) const
@@ -76,31 +51,56 @@ tr::graphics_context& tr::shader_pipeline::context() const
 
 void tr::shader_pipeline::set_shaders(const vertex_shader& vertex_shader, const fragment_shader& fragment_shader)
 {
-	check_shader_pipeline_shaders(vertex_shader, fragment_shader);
-	m_vertex_shader = vertex_shader;
-	m_fragment_shader = fragment_shader;
+	TR_ASSERT(vertex_shader.valid(), "Tried to set invalid vertex shader to pipeline '{}'.", label());
+	TR_ASSERT(fragment_shader.valid(), "Tried to set invalid fragment shader to pipeline '{}'.", label());
+	TR_ASSERT(&vertex_shader.context() == &context(),
+			  "Tried to set vertex shader '{}' to pipeline '{}' despite them not being on the same graphics context.",
+			  vertex_shader.label(), label());
+	TR_ASSERT(&fragment_shader.context() == &context(),
+			  "Tried to set fragment shader '{}' to pipeline '{}' despite them not being on the same graphics context.",
+			  fragment_shader.label(), label());
+
+#ifdef TR_ENABLE_GL_CHECKS
+	m_vertex_shader_info = {vertex_shader.gid(), vertex_shader.tid(), vertex_shader.label(), vertex_shader.outputs()};
+	m_fragment_shader_info = {fragment_shader.gid(), vertex_shader.tid(), fragment_shader.label(), fragment_shader.inputs()};
+	assert_shaders_compatible();
+#endif
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-	gl.use_program_stages(m_ppo.get(), GL_VERTEX_SHADER_BIT, vertex_shader.id());
-	gl.use_program_stages(m_ppo.get(), GL_FRAGMENT_SHADER_BIT, fragment_shader.id());
+	gl.use_program_stages(m_ppo.get(), GL_VERTEX_SHADER_BIT, vertex_shader.gid());
+	gl.use_program_stages(m_ppo.get(), GL_FRAGMENT_SHADER_BIT, fragment_shader.gid());
 }
 
 void tr::shader_pipeline::set_vertex_shader(const vertex_shader& vertex_shader)
 {
-	check_shader_pipeline_shaders(vertex_shader, m_fragment_shader);
-	m_vertex_shader = vertex_shader;
+	TR_ASSERT(vertex_shader.valid(), "Tried to set invalid vertex shader to pipeline '{}'.", label());
+	TR_ASSERT(&vertex_shader.context() == &context(),
+			  "Tried to set vertex shader '{}' to pipeline '{}' despite them not being on the same graphics context.",
+			  vertex_shader.label(), label());
+
+#ifdef TR_ENABLE_GL_CHECKS
+	m_vertex_shader_info = {vertex_shader.gid(), vertex_shader.tid(), vertex_shader.label(), vertex_shader.outputs()};
+	assert_shaders_compatible();
+#endif
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-	gl.use_program_stages(m_ppo.get(), GL_VERTEX_SHADER_BIT, vertex_shader.id());
+	gl.use_program_stages(m_ppo.get(), GL_VERTEX_SHADER_BIT, vertex_shader.gid());
 }
 
 void tr::shader_pipeline::set_fragment_shader(const fragment_shader& fragment_shader)
 {
-	check_shader_pipeline_shaders(m_vertex_shader, fragment_shader);
-	m_fragment_shader = fragment_shader;
+	TR_ASSERT(fragment_shader.valid(), "Tried to set invalid fragment shader to pipeline '{}'.", label());
+	TR_ASSERT(&fragment_shader.context() == &context(),
+			  "Tried to set fragment shader '{}' to pipeline '{}' despite them not being on the same graphics context.",
+			  fragment_shader.label(), label());
+
+#ifdef TR_ENABLE_GL_CHECKS
+	m_fragment_shader_info = {fragment_shader.gid(), fragment_shader.tid(), fragment_shader.label(), fragment_shader.inputs()};
+	assert_shaders_compatible();
+#endif
 
 	const gl_api& gl{context().make_current_and_return_gl_api()};
-	gl.use_program_stages(m_ppo.get(), GL_FRAGMENT_SHADER_BIT, fragment_shader.id());
+	gl.use_program_stages(m_ppo.get(), GL_FRAGMENT_SHADER_BIT, fragment_shader.gid());
 }
 
 //
@@ -129,7 +129,7 @@ std::string tr::shader_pipeline::label() const
 
 //
 
-unsigned int tr::shader_pipeline::id() const
+unsigned int tr::shader_pipeline::gid() const
 {
 	return m_ppo.get();
 }
@@ -137,9 +137,45 @@ unsigned int tr::shader_pipeline::id() const
 //
 
 #ifdef TR_ENABLE_GL_CHECKS
-bool tr::shader_pipeline::complete() const
+void tr::shader_pipeline::assert_settable(graphics_context& context) const
 {
-	return m_vertex_shader.has_ref() && m_fragment_shader.has_ref();
+	TR_ASSERT(&context == &this->context(), "Tried to set shader pipeline '{}' to a context it is not associated with.", label());
+	TR_ASSERT(m_ppo.has_value(), "Tried to set moved-from shader pipeline to context.");
+	TR_ASSERT(m_vertex_shader_info.valid(context), "Tried to set shader pipeline '{}' with invalid set vertex shader '{}'.", label(),
+			  m_vertex_shader_info.label);
+	TR_ASSERT(m_fragment_shader_info.valid(context), "Tried to set shader pipeline '{}' with invalid set fragment shader '{}'.", label(),
+			  m_fragment_shader_info.label);
+}
+
+//
+
+void tr::shader_pipeline::assert_shaders_compatible() const
+{
+	graphics_context& context{this->context()};
+	if (!(m_vertex_shader_info.valid(context) && !m_fragment_shader_info.valid(context))) {
+		return;
+	}
+
+	TR_ASSERT(m_vertex_shader_info.outputs.size() == m_fragment_shader_info.inputs.size(),
+			  "Tried to set mismatched shaders to shader pipeline '{}':\n"
+			  "Vertex shader '{}' has {} outputs, fragment shader '{}' has {} inputs.",
+			  label(), m_vertex_shader_info.label, m_vertex_shader_info.outputs.size(), m_fragment_shader_info.label,
+			  m_fragment_shader_info.inputs.size());
+
+	for (const auto& [location, info] : m_vertex_shader_info.outputs) {
+		TR_ASSERT(m_fragment_shader_info.inputs.contains(location),
+				  "Tried to set mismatched shaders to shader pipeline '{}':\n"
+				  "Vertex shader '{}' has output '{}' at location {} that was not found in fragment shader '{}''s inputs.",
+				  label(), m_vertex_shader_info.label, info, location, m_fragment_shader_info.label);
+
+		const glsl_variable& frag_info{get(m_fragment_shader_info.inputs, location)};
+		TR_ASSERT(frag_info.type == info.type && frag_info.array_size == info.array_size,
+				  "Tried to set mismatched shaders to shader pipeline '{}':\n"
+				  "Vertex shader '{}' has output '{}' at location {}, but the input '{}' at the same location in fragment shader '{}' is "
+				  "not compatible with it.",
+				  label(), m_vertex_shader_info.label, info, location, get(m_fragment_shader_info.inputs, location),
+				  m_fragment_shader_info.label);
+	}
 }
 #endif
 
@@ -203,7 +239,7 @@ std::string tr::owning_shader_pipeline::label() const
 
 //
 
-unsigned int tr::owning_shader_pipeline::id() const
+unsigned int tr::owning_shader_pipeline::gid() const
 {
-	return m_base.id();
+	return m_base.gid();
 }

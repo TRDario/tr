@@ -9,6 +9,9 @@
 #include "render_target.hpp"
 #include "vertex_buffer.hpp"
 #include "vertex_format.hpp"
+#ifdef TR_ENABLE_GL_CHECKS
+#include "gl_object_registry.hpp"
+#endif
 
 struct SDL_GLContextState;
 struct SDL_Window;
@@ -305,6 +308,11 @@ namespace tr
 		void draw_indexed_instances(primitive type, usize offset, usize indices, int instances);
 
 		/// @}
+
+		/// @cond __hidden
+		/// Registry of objects created on this context.
+		gl_object_registry registry;
+		/// @endcond
 
 	  private:
 		/// Context deleter.

@@ -1,31 +1,52 @@
 /// @file
-/// @brief Provides shader pipeline classes.
+/// @brief Provides `tr::shader_pipeline` and `tr::owning_shader_pipeline`.
 
 #pragma once
-#include "../utility/reference.hpp"
 #include "shader.hpp"
 
 //
 
 namespace tr
 {
-	/// Shader program pipeline.
+	/// Container for a shader program pipeline.
+	/// @details
+	/// A shader pipeline is an object that references vertex and fragment shader program stages that are to be used during the rendering
+	/// process when the pipeline is set on the graphics context. These referenced shaders must be compatible: the outputs of the vertex
+	/// shader must match the inputs of the fragment shader.
+	///
+	/// Strictly speaking, instances of `shader_pipeline` are only containers for these underlying shader pipeline objects. This means, for
+	/// example, that setting a shader pipeline on a graphics context does not set the literal `shader_pipeline` object at a specific
+	/// location in memory, but rather the value it contains. If the value is moved to a different instance of `shader_pipeline`, that value
+	/// will still be set on the context. If the instance is overriden with a new value, the old value is destroyed and the graphics context
+	/// will no longer have a set shader pipeline.
+	///
+	/// `shader_pipeline` has a notion of 'completeness'. An intance of the class may be constructed without set shaders; such an
+	/// instance is considered incomplete until a valid vertex and fragment shader are set to it. Incomplete shader pipelines may not be set
+	/// to a graphics context.
+	///
+	/// Every instance of `shader_pipeline` is associated with a graphics context and cannot outlive its parent context.
+	///
+	/// Shader pipelines are movable, but not copyable. A moved-from shader pipeline is left in an unusable state until another value is
+	/// moved into it.
+	///
+	/// Shader pipelines are formattable. Example output: `[Shader pipeline "My pipeline" (ID: 5)]`
 	class shader_pipeline
 	{
 	  public:
 		/// @name Constructors
 		/// @{
 
-		/// Creates an incomplete shader pipeline.
+		/// Constructs an incomplete shader pipeline.
 		/// @param context Graphics context to create the pipeline on.
 		shader_pipeline(graphics_context& context);
 
-		/// Creates a complete shader pipeline.
+		/// Constructs a complete shader pipeline.
 		/// @param context Graphics context to create the pipeline on.
 		/// @param vertex_shader Vertex shader to initially use on the pipeline.
 		/// @param fragment_shader Fragment shader to initially use on the pipeline.
-		/// @pre `vshader` and `fshader` must be compatible shaders.
-		/// @post `vshader` and `fshader` should not be moved while in use by this pipeline.
+		/// @pre `vertex_shader` and `fragment_shader` must be compatible with each other and be on `context`.
+		/// @post The pipeline will revert to an incomplete state should either one of the current values of `vertex_shader` or
+		/// `fragment_shader` be destroyed while still set on the pipeline.
 		shader_pipeline(graphics_context& context, const vertex_shader& vertex_shader, const fragment_shader& fragment_shader);
 
 		/// @}
@@ -33,7 +54,7 @@ namespace tr
 		/// @{
 
 		/// Gets a reference to the graphics context the pipeline is on.
-		/// @return Reference to the graphics context the pipeline is on
+		/// @return Reference to the graphics context the pipeline is on.
 		graphics_context& context() const;
 
 		/// @}
@@ -43,21 +64,24 @@ namespace tr
 		/// Sets both shaders of the pipeline.
 		/// @param vertex_shader Vertex shader to use on the pipeline.
 		/// @param fragment_shader Fragment shader to use on the pipeline.
-		/// @pre `vshader` and `fshader` must be compatible shaders.
-		/// @post `vshader` and `fshader` should not be moved while in use by this pipeline.
+		/// @pre `vertex_shader` and `fragment_shader` must be compatible with each other and be on the same context as the pipeline.
+		/// @post The pipeline will revert to an incomplete state should either one of the current values of `vertex_shader` or
+		/// `fragment_shader` be destroyed while still set on the pipeline.
 		void set_shaders(const vertex_shader& vertex_shader, const fragment_shader& fragment_shader);
 
 		/// Sets a vertex shader to the pipeline.
-		/// @param shader Vertex shader to set to the pipeline.
-		/// @pre `shader` must be compatible with the currently set fragment shader.
-		/// @post `shader` should not be moved while in use by this pipeline.
-		void set_vertex_shader(const vertex_shader& shader);
+		/// @param vertex_shader Vertex shader to set to the pipeline.
+		/// @pre `vertex_shader` must be compatible with the currently set fragment shader and be on the same context as the pipeline.
+		/// @post The pipeline will revert to an incomplete state should the current value of `vertex_shader` be destroyed while still set
+		/// on the pipeline.
+		void set_vertex_shader(const vertex_shader& vertex_shader);
 
 		/// Sets a fragment shader to the pipeline.
-		/// @param shader Fragment shader to set to the pipeline.
-		/// @pre `shader` must be compatible with the currently set fragment shader.
-		/// @post `shader` should not be moved while in use by this pipeline.
-		void set_fragment_shader(const fragment_shader& shader);
+		/// @param fragment_shader Fragment shader to set to the pipeline.
+		/// @pre `fragment_shader` must be compatible with the currently set vertex shader and be on the same context as the pipeline.
+		/// @post The pipeline will revert to an incomplete state should the current value of `fragment_shader` be destroyed while still set
+		/// on the pipeline.
+		void set_fragment_shader(const fragment_shader& fragment_shader);
 
 		/// @}
 		/// @name Label
@@ -72,22 +96,17 @@ namespace tr
 		std::string label() const;
 
 		/// @}
-		/// @name ID
-		/// @{
 
-		/// Gets the unique ID of the shader pipeline.
-		/// @return Unique ID of the shader pipeline.
-		unsigned int id() const;
-
-		/// @}
+		/// @cond __hidden
+		/// Gets the OpenGL shader pipeline ID.
+		/// @return OpenGL shader pipeline ID.
+		unsigned int gid() const;
 
 #ifdef TR_ENABLE_GL_CHECKS
-		/// @cond __hidden
-		/// Gets whether the pipeline is complete.
-		/// @return `true` if the pipeline is complete (has both shaders bound to it), `false` otherwise.
-		bool complete() const;
-		/// @endcond
+		/// Asserts that the pipeline is settable.
+		void assert_settable(graphics_context& context) const;
 #endif
+		/// @endcond
 
 	  private:
 		/// Shader pipeline deleter.
@@ -103,6 +122,54 @@ namespace tr
 			void operator()(unsigned int id) const;
 		};
 
+#ifdef TR_ENABLE_GL_CHECKS
+		/// Debug information for the set vertex shader.
+		struct vertex_shader_debug_info
+		{
+			/// OpenGL shader program ID.
+			unsigned int gid;
+
+			/// tr shader object ID.
+			unsigned int tid;
+
+			/// Label of the shader.
+			std::string label{"<unset>"};
+
+			/// Outputs of the shader.
+			boost::unordered_flat_map<unsigned int, glsl_variable> outputs;
+
+			//
+
+			/// Checks whether the set vertex shader is valid.
+			/// @param context Context to check on.
+			/// @return `true` if the set vertex shader is valid, `false` otherwise.
+			bool valid(graphics_context& context) const;
+		};
+
+		/// Debug information for the set fragment shader.
+		struct fragment_shader_debug_info
+		{
+			/// OpenGL shader program ID.
+			unsigned int gid;
+
+			/// tr shader object ID.
+			unsigned int tid;
+
+			/// Label of the shader.
+			std::string label{"<unset>"};
+
+			/// Inputs of the shader.
+			boost::unordered_flat_map<unsigned int, glsl_variable> inputs;
+
+			//
+
+			/// Checks whether the set fragment shader is valid.
+			/// @param context Context to check on.
+			/// @return `true` if the set fragment shader is valid, `false` otherwise.
+			bool valid(graphics_context& context) const;
+		};
+#endif
+
 		//
 
 		/// Handle to the OpenGL shader pipeline.
@@ -110,14 +177,22 @@ namespace tr
 
 #ifdef TR_ENABLE_GL_CHECKS
 		/// Reference to the used vertex shader.
-		opt_ref<const vertex_shader> m_vertex_shader;
+		vertex_shader_debug_info m_vertex_shader_info;
 
 		/// Reference to the used fragment shader.
-		opt_ref<const fragment_shader> m_fragment_shader;
+		fragment_shader_debug_info m_fragment_shader_info;
+
+		//
+
+		/// Asserts that the set vertex and fragment shaders are compatible.
+		void assert_shaders_compatible() const;
 #endif
 	};
 
-	/// Shader program pipeline that owns its shaders.
+	/// Container for a shader program pipeline that owns its shaders.
+	/// @details
+	/// Most things brought up in the description of `shader_pipeline` apply to this class as well, though instances of
+	/// `owning_shader_pipeline` are always complete.
 	class owning_shader_pipeline
 	{
 	  public:
@@ -128,6 +203,7 @@ namespace tr
 		/// @param context Graphics context to create the pipeline on.
 		/// @param vertex_shader Vertex shader to move into the pipeline.
 		/// @param fragment_shader Fragment shader to move into the pipeline.
+		/// @pre `vertex_shader` and `fragment_shader` must be valid shaders and be on `context`.
 		owning_shader_pipeline(graphics_context& context, vertex_shader&& vertex_shader, fragment_shader&& fragment_shader);
 
 		/// @}
@@ -143,7 +219,7 @@ namespace tr
 		/// @{
 
 		/// Gets a reference to the graphics context the pipeline is on.
-		/// @return Reference to the graphics context the pipeline is on
+		/// @return Reference to the graphics context the pipeline is on.
 		graphics_context& context() const;
 
 		/// @}
@@ -178,15 +254,13 @@ namespace tr
 		/// @return Debug label of the pipeline.
 		std::string label() const;
 
-		///@}
-		/// @name ID
-		/// @{
-
-		/// Gets the unique ID of the shader pipeline.
-		/// @return Unique ID of the shader pipeline.
-		unsigned int id() const;
-
 		/// @}
+
+		/// @cond __hidden
+		/// Gets the OpenGL shader pipeline ID.
+		/// @return OpenGL shader pipeline ID.
+		unsigned int gid() const;
+		/// @endcond
 
 	  private:
 		/// Held vertex shader.
@@ -199,3 +273,5 @@ namespace tr
 		shader_pipeline m_base;
 	};
 } // namespace tr
+
+#include "impl/shader_pipeline.hpp" // IWYU pragma: export
