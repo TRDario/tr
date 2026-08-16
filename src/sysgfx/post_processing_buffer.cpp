@@ -101,6 +101,7 @@ tr::texture_view tr::post_processing_buffer::apply(fragment_shader& fragment_sha
 
 	m_framebuffer.attach(framebuffer::attachment::color0, m_textures[(m_source_index + 1) % 2]);
 	fragment_shader.set_uniform(0, m_textures[m_source_index]);
+	fragment_shader.set_uniform(1, glm::vec2{size()});
 	m_shader_pipeline.set_shaders(m_vertex_shader, fragment_shader);
 	m_source_index = (m_source_index + 1) % 2;
 
