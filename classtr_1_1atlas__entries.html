@@ -130,7 +130,18 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1atl
 
 <p>Atlas packer combined with a list of entries.  
  <a href="#details">More...</a></p>
-<table class="memberdecls">
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename Key, atlas_entries_value_type Value = rectangle&lt;u16&gt;, hasher&lt; Key &gt; Hash = boost::hash&lt;Key&gt;, equality_predicate&lt; Key &gt; Pred = std::equal_to&lt;Key&gt;&gt;<br />
+class tr::atlas_entries&lt; Key, Value, Hash, Pred &gt;</div><dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Key</td><td>Entry key type. </td></tr>
+    <tr><td class="paramname">Value</td><td>Entry value type. </td></tr>
+    <tr><td class="paramname">Hash</td><td>Entry key hasher. </td></tr>
+    <tr><td class="paramname">Pred</td><td>Entry key equality predicate. </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
@@ -154,19 +165,7 @@ requires (std::constructible_from&lt;Value, <a class="el" href="structtr_1_1rect
 <tr class="memitem:a9db8652b17e4a43aad20b2688235ad3d template"><td class="memItemLeft">std::optional&lt; glm::u16vec2 &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a9db8652b17e4a43aad20b2688235ad3d">try_insert</a> (Keylike &amp;&amp;key, glm::u16vec2 size, glm::u16vec2 texture_size, Args &amp;&amp;... extra_args)</td></tr>
 <tr class="memdesc:a9db8652b17e4a43aad20b2688235ad3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tries to insert a rectangle and returns the top-left corner of the rectangle if successful.  <br /></td></tr>
 </table>
-<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;typename Key, atlas_entries_value_type Value = rectangle&lt;u16&gt;, hasher&lt; Key &gt; Hash = boost::hash&lt;Key&gt;, equality_predicate&lt; Key &gt; Pred = std::equal_to&lt;Key&gt;&gt;<br />
-class tr::atlas_entries&lt; Key, Value, Hash, Pred &gt;</div><p>Atlas packer combined with a list of entries. </p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">Key</td><td>Entry key type. </td></tr>
-    <tr><td class="paramname">Value</td><td>Entry value type. </td></tr>
-    <tr><td class="paramname">Hash</td><td>Entry key hasher. </td></tr>
-    <tr><td class="paramname">Pred</td><td>Entry key equality predicate. </td></tr>
-  </table>
-  </dd>
-</dl>
-</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a5e34722ce56242b27fcbc0d55f6b34ab" name="a5e34722ce56242b27fcbc0d55f6b34ab"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5e34722ce56242b27fcbc0d55f6b34ab">&#9670;&#160;</a></span>atlas_entries()</h2>
 
@@ -192,8 +191,6 @@ template&lt;typename Key, atlas_entries_value_type Value = rectangle&lt;u16&gt;,
 </table>
 </div><div class="memdoc">
 
-<p>Creates an empty atlas. </p>
-
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
@@ -215,8 +212,6 @@ template&lt;hash_keylike&lt; Key, Hash, Pred &gt; Keylike&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets whether the atlas contains a key. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Keylike</td><td>Type compatible with the atlas hasher and key equality predicate. </td></tr>
@@ -249,8 +244,6 @@ template&lt;typename Key, atlas_entries_value_type Value = rectangle&lt;u16&gt;,
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets the number of entries in the atlas. </p>
 <dl class="section return"><dt>Returns</dt><dd>Number of entries in the atlas. </dd></dl>
 
 </div>
@@ -273,8 +266,6 @@ template&lt;hash_keylike&lt; Key, Hash, Pred &gt; Keylike&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets a rectangle associated with a certain key. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Keylike</td><td>Type compatible with the atlas hasher and key equality predicate. </td></tr>
@@ -308,8 +299,6 @@ template&lt;typename Key, atlas_entries_value_type Value = rectangle&lt;u16&gt;,
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Clears the packer. </p>
 
 </div>
 </div>
@@ -346,8 +335,6 @@ requires (std::constructible_from&lt;Value, <a class="el" href="structtr_1_1rect
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Tries to insert a rectangle and returns the top-left corner of the rectangle if successful. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Keylike</td><td>Type compatible with the atlas hasher and key equality predicate. </td></tr>

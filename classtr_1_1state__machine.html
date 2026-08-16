@@ -130,7 +130,11 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1sta
 
 <p>State machine manager class.  
  <a href="#details">More...</a></p>
-<table class="memberdecls">
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>The state machine works with the polymorphic <span class="tt"><a class="el" href="structtr_1_1state.html" title="Base state type.">tr::state</a></span>. States inherited from <a class="el" href="structtr_1_1state.html" title="Base state type.">tr::state</a> may overload the <span class="tt"><a class="el" href="#a61ba987167a90e050b060a1546552e42" title="Handles an event.">handle_event()</a></span> method used to handle incoming events, the <span class="tt"><a class="el" href="#acddd8cc77814645adbb116026b8aba49" title="Updates the current state.">update()</a></span> method used to update the state, and the <span class="tt"><a class="el" href="#abea7740446b8bad58c1e5d89cf255f61" title="Draws the current state.">draw()</a></span> method used to draw the state.</p>
+<p><span class="tt"><a class="el" href="#a61ba987167a90e050b060a1546552e42" title="Handles an event.">handle_event()</a></span> and <span class="tt"><a class="el" href="#acddd8cc77814645adbb116026b8aba49" title="Updates the current state.">update()</a></span> return <span class="tt"><a class="el" href="namespacetr.html#a1668c626f64a527bad23dc9d1db9a8fa" title="Shorthand for the return type of most state functions: the pointer to the next state,...">tr::next_state</a></span>, which is a sum type containing either a state, <span class="tt"><a class="el" href="namespacetr.html#a4271c930f4655e7a9a0304936a31b901" title="Returns a sentinel indicating that the current state should be kept.">tr::keep_state</a></span>, or <span class="tt"><a class="el" href="namespacetr.html#abb6fb37cdf46ef2e955659cefd4a2471" title="Returns a sentinel indicating that the current state should be dropped.">tr::drop_state</a></span>. If <span class="tt"><a class="el" href="namespacetr.html#a4271c930f4655e7a9a0304936a31b901" title="Returns a sentinel indicating that the current state should be kept.">tr::keep_state</a></span> is returned, the state machine keeps the current state, and if <span class="tt"><a class="el" href="namespacetr.html#abb6fb37cdf46ef2e955659cefd4a2471" title="Returns a sentinel indicating that the current state should be dropped.">tr::drop_state</a></span> is returned, the state machine drops the current state and becomes empty.</p>
+<p><span class="tt"><a class="el" href="#acddd8cc77814645adbb116026b8aba49" title="Updates the current state.">update()</a></span> and <span class="tt"><a class="el" href="#abea7740446b8bad58c1e5d89cf255f61" title="Draws the current state.">draw()</a></span> are benchmarked internally and their benchmarks are gettable. </p>
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
@@ -165,12 +169,7 @@ requires (std::constructible_from&lt;State, Args...&gt;)</td></tr>
 <tr class="memitem:abea7740446b8bad58c1e5d89cf255f61" id="r_abea7740446b8bad58c1e5d89cf255f61"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#abea7740446b8bad58c1e5d89cf255f61">draw</a> ()</td></tr>
 <tr class="memdesc:abea7740446b8bad58c1e5d89cf255f61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws the current state.  <br /></td></tr>
 </table>
-<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>State machine manager class. </p>
-<p>The state machine works with the polymorphic <span class="tt"><a class="el" href="structtr_1_1state.html" title="Base state type.">tr::state</a></span>. States inherited from <a class="el" href="structtr_1_1state.html" title="Base state type.">tr::state</a> may overload the <span class="tt"><a class="el" href="#a61ba987167a90e050b060a1546552e42" title="Handles an event.">handle_event()</a></span> method used to handle incoming events, the <span class="tt"><a class="el" href="#acddd8cc77814645adbb116026b8aba49" title="Updates the current state.">update()</a></span> method used to update the state, and the <span class="tt"><a class="el" href="#abea7740446b8bad58c1e5d89cf255f61" title="Draws the current state.">draw()</a></span> method used to draw the state.</p>
-<p><span class="tt"><a class="el" href="#a61ba987167a90e050b060a1546552e42" title="Handles an event.">handle_event()</a></span> and <span class="tt"><a class="el" href="#acddd8cc77814645adbb116026b8aba49" title="Updates the current state.">update()</a></span> return <span class="tt"><a class="el" href="namespacetr.html#a1668c626f64a527bad23dc9d1db9a8fa" title="Shorthand for the return type of most state functions: the pointer to the next state,...">tr::next_state</a></span>, which is a sum type containing either a state, <span class="tt"><a class="el" href="namespacetr.html#a4271c930f4655e7a9a0304936a31b901" title="Returns a sentinel indicating that the current state should be kept.">tr::keep_state</a></span>, or <span class="tt"><a class="el" href="namespacetr.html#abb6fb37cdf46ef2e955659cefd4a2471" title="Returns a sentinel indicating that the current state should be dropped.">tr::drop_state</a></span>. If <span class="tt"><a class="el" href="namespacetr.html#a4271c930f4655e7a9a0304936a31b901" title="Returns a sentinel indicating that the current state should be kept.">tr::keep_state</a></span> is returned, the state machine keeps the current state, and if <span class="tt"><a class="el" href="namespacetr.html#abb6fb37cdf46ef2e955659cefd4a2471" title="Returns a sentinel indicating that the current state should be dropped.">tr::drop_state</a></span> is returned, the state machine drops the current state and becomes empty.</p>
-<p><span class="tt"><a class="el" href="#acddd8cc77814645adbb116026b8aba49" title="Updates the current state.">update()</a></span> and <span class="tt"><a class="el" href="#abea7740446b8bad58c1e5d89cf255f61" title="Draws the current state.">draw()</a></span> are benchmarked internally and their benchmarks are gettable. </p>
-</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a60bb83b89978e66b006618447eb1c4ba" name="a60bb83b89978e66b006618447eb1c4ba"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a60bb83b89978e66b006618447eb1c4ba">&#9670;&#160;</a></span>state_machine()</h2>
 
@@ -194,8 +193,6 @@ requires (std::constructible_from&lt;State, Args...&gt;)</td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Constructs an empty state machine. </p>
-
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
@@ -213,8 +210,6 @@ requires (std::constructible_from&lt;State, Args...&gt;)</td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Checks whether the state machine is in an empty state. </p>
 <dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the state machine does nto contain a state, <span class="tt">false</span> otherwise. </dd></dl>
 
 </div>
@@ -235,8 +230,6 @@ template&lt;std::derived_from&lt; <a class="el" href="structtr_1_1state.html">st
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets access to the current state. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">State</td><td>Type of the current state. </td></tr>
@@ -262,8 +255,6 @@ template&lt;std::derived_from&lt; <a class="el" href="structtr_1_1state.html">st
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets the update benchmark. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the update benchmark. </dd></dl>
 
 </div>
@@ -282,8 +273,6 @@ template&lt;std::derived_from&lt; <a class="el" href="structtr_1_1state.html">st
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets the draw benchmark. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the draw benchmark. </dd></dl>
 
 </div>
@@ -302,8 +291,6 @@ template&lt;std::derived_from&lt; <a class="el" href="structtr_1_1state.html">st
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Clears the state machine. </p>
 
 </div>
 </div>
@@ -324,8 +311,6 @@ requires (std::constructible_from&lt;State, Args...&gt;)</div>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Emplaces a state. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">State</td><td>State type to construct. </td></tr>
@@ -358,8 +343,6 @@ template&lt;std::derived_from&lt; <a class="el" href="structtr_1_1state.html">st
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets access to the current state. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">State</td><td>Type of the current state. </td></tr>
@@ -385,8 +368,6 @@ template&lt;std::derived_from&lt; <a class="el" href="structtr_1_1state.html">st
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Handles an event. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">event</td><td>Event to handle. </td></tr>
@@ -412,8 +393,6 @@ template&lt;typename Rep, typename Period&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Updates the current state. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Rep</td><td>Duration representation type. </td></tr>
@@ -444,8 +423,6 @@ template&lt;typename Rep, typename Period&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Draws the current state. </p>
 
 </div>
 </div>

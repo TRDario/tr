@@ -130,7 +130,15 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1def
 
 <p>RAII deferred function call.  
  <a href="#details">More...</a></p>
-<table class="memberdecls">
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;std::invocable Fn&gt;<br />
+class tr::defer&lt; Fn &gt;</div><dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Fn</td><td>Deferred function type. </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:acae89bfd039d12cfab1c605df2d5ee57" id="r_acae89bfd039d12cfab1c605df2d5ee57"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#acae89bfd039d12cfab1c605df2d5ee57">defer</a> (Fn &amp;&amp;fn)</td></tr>
@@ -138,16 +146,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a7c716f579562dc4b423e02c35690cd35" id="r_a7c716f579562dc4b423e02c35690cd35"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a7c716f579562dc4b423e02c35690cd35">~defer</a> ()</td></tr>
 <tr class="memdesc:a7c716f579562dc4b423e02c35690cd35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calls the deferred function.  <br /></td></tr>
 </table>
-<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;std::invocable Fn&gt;<br />
-class tr::defer&lt; Fn &gt;</div><p>RAII deferred function call. </p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">Fn</td><td>Deferred function type. </td></tr>
-  </table>
-  </dd>
-</dl>
-</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="acae89bfd039d12cfab1c605df2d5ee57" name="acae89bfd039d12cfab1c605df2d5ee57"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#acae89bfd039d12cfab1c605df2d5ee57">&#9670;&#160;</a></span>defer()</h2>
 
@@ -172,8 +171,6 @@ template&lt;std::invocable Fn&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Constructs a deferred function call. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">fn</td><td>Function to defer. </td></tr>
@@ -207,8 +204,6 @@ template&lt;std::invocable Fn&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Calls the deferred function. </p>
 
 </div>
 </div>

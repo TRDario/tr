@@ -130,7 +130,9 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1bas
 
 <p>GPU buffer accessable to a shader.  
  <a href="#details">More...</a></p>
-<div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Inheritance diagram for tr::basic_shader_buffer:</div>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Shader buffers are divided into a fixed header block segment and a resizable array segment. </p>
+</div><div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Inheritance diagram for tr::basic_shader_buffer:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
@@ -183,10 +185,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a1b9eef6ffb431a6b5ce3cb05af26b4f2" id="r_a1b9eef6ffb431a6b5ce3cb05af26b4f2"><td class="memItemLeft">unsigned int&#160;</td><td class="memItemRight"><a class="el" href="#a1b9eef6ffb431a6b5ce3cb05af26b4f2">id</a> () const</td></tr>
 <tr class="memdesc:a1b9eef6ffb431a6b5ce3cb05af26b4f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the unique ID of the buffer.  <br /></td></tr>
 </table>
-<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>GPU buffer accessable to a shader. </p>
-<p>Shader buffers are divided into a fixed header block segment and a resizable array segment. </p>
-</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a6fdf5b32b8d77843653e3a6defec03f1" name="a6fdf5b32b8d77843653e3a6defec03f1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6fdf5b32b8d77843653e3a6defec03f1">&#9670;&#160;</a></span>basic_shader_buffer()</h2>
 
@@ -215,8 +214,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Allocates an uninitialized shader buffer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">context</td><td>Graphics context to create the buffer on. </td></tr>
@@ -244,11 +241,7 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets the size of the fixed header block. </p>
 <dl class="section return"><dt>Returns</dt><dd>Size of the fixed header block in bytes. </dd></dl>
-
-<p class="reference">Referenced by <a class="el" href="#a6fdf5b32b8d77843653e3a6defec03f1">basic_shader_buffer()</a>.</p>
 
 </div>
 </div>
@@ -266,8 +259,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets the size of the dynamic array. </p>
 <dl class="section return"><dt>Returns</dt><dd>Size of the dynamic array in bytes. </dd></dl>
 
 </div>
@@ -286,8 +277,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets the maximum capacity of the dynamic array. </p>
 <dl class="section return"><dt>Returns</dt><dd>Maximum capacity of the dynamic array in bytes. </dd></dl>
 
 </div>
@@ -306,8 +295,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets the data of the header. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">data</td><td>Data to set the header with. </td></tr>
@@ -332,8 +319,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets the data of the dynamic array. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">data</td><td>Data to set the dynamic array with. </td></tr>
@@ -358,8 +343,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Resizes the dynamic array. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">size</td><td>Size of the dynamic array in bytes. </td></tr>
@@ -384,11 +367,7 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets whether the buffer is mapped. </p>
 <dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the buffer is mapped, <span class="tt">false</span> otherwise. </dd></dl>
-
-<p class="reference">Referenced by <a class="el" href="classtr_1_1shader__array.html#a05a71d090d96bffd4b7b5e3680130bc3">tr::shader_array&lt; Element &gt;::resize()</a>, and <a class="el" href="classtr_1_1shader__buffer.html#aa35829b467317298f221eb9bad501d9e">tr::shader_buffer&lt; Header, ArrayElement &gt;::resize_array()</a>.</p>
 
 </div>
 </div>
@@ -406,8 +385,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Maps the fixed header of the buffer. </p>
 <dl class="section return"><dt>Returns</dt><dd>Map of the fixed header of the buffer. </dd></dl>
 
 </div>
@@ -426,8 +403,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Maps the dynamic array of the buffer. </p>
 <dl class="section return"><dt>Returns</dt><dd>Map of the dynamic array of the buffer. </dd></dl>
 
 </div>
@@ -446,8 +421,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Maps the entire buffer. </p>
 <dl class="section return"><dt>Returns</dt><dd>Map of the buffer. </dd></dl>
 
 </div>
@@ -466,11 +439,7 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets a reference to the graphics context the buffer is on. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the graphics context the buffer is on. </dd></dl>
-
-<p class="reference">Referenced by <a class="el" href="#a6fdf5b32b8d77843653e3a6defec03f1">basic_shader_buffer()</a>, <a class="el" href="classtr_1_1shader__array.html#a4088a8c17a636772a034eb94fb3ed2a9">tr::shader_array&lt; Element &gt;::shader_array()</a>, and <a class="el" href="classtr_1_1shader__buffer.html#a3a6a132ce6ca09b57354c9eeca1a7004">tr::shader_buffer&lt; Header, ArrayElement &gt;::shader_buffer()</a>.</p>
 
 </div>
 </div>
@@ -488,11 +457,7 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets the label of the buffer. </p>
 <dl class="section return"><dt>Returns</dt><dd>Label of the buffer, or "&lt;unnamed&gt;". </dd></dl>
-
-<p class="reference">Referenced by <a class="el" href="classtr_1_1shader__array.html#a70a98798fa9fa7bbcd4be9f49dc9fb83">tr::shader_array&lt; Element &gt;::map()</a>, and <a class="el" href="classtr_1_1shader__buffer.html#a1a984c1444cfd790f12ea15817ed5753">tr::shader_buffer&lt; Header, ArrayElement &gt;::map_array()</a>.</p>
 
 </div>
 </div>
@@ -510,16 +475,12 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets the label of the buffer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">label</td><td>Label of the buffer. </td></tr>
   </table>
   </dd>
 </dl>
-
-<p class="reference">Referenced by <a class="el" href="classtr_1_1shader__array.html#a70a98798fa9fa7bbcd4be9f49dc9fb83">tr::shader_array&lt; Element &gt;::map()</a>, and <a class="el" href="classtr_1_1shader__buffer.html#a1a984c1444cfd790f12ea15817ed5753">tr::shader_buffer&lt; Header, ArrayElement &gt;::map_array()</a>.</p>
 
 </div>
 </div>
@@ -537,8 +498,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets the unique ID of the buffer. </p>
 <dl class="section return"><dt>Returns</dt><dd>Unique ID of the buffer. </dd></dl>
 
 </div>

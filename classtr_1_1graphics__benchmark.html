@@ -130,7 +130,9 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1gra
 
 <p>Graphics benchmark.  
  <a href="#details">More...</a></p>
-<table class="memberdecls">
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>The graphics benchmark mostly has the same usage pattern as the regular benchmark, with .<a class="el" href="#aef2a7f12eae76d088c9df9750bb4d3d4" title="Starts a new measurement.">start()</a> and .<a class="el" href="#a5353be005c41f4de81461b43dc8b9c3a" title="Stops a measurement.">stop()</a> methods delineating the benchmarked region of code, however it has an additional .<a class="el" href="#a2be4d7673b23aa13ffb339e74c1ad11c" title="Fetches the latest measurement from the GPU. This blocks execution until the GPU is done.">fetch()</a> method that much be called to make the measurement accessable to the CPU and add it to the measurement deque. </p>
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
@@ -160,10 +162,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a401af95bc370941bba31c9e2e5c57544" id="r_a401af95bc370941bba31c9e2e5c57544"><td class="memItemLeft">const std::deque&lt; <a class="el" href="namespacetr.html#a0a06575d52c3090c44755b9a8174f146">duration</a> &gt; &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a401af95bc370941bba31c9e2e5c57544">measurements</a> () const</td></tr>
 <tr class="memdesc:a401af95bc370941bba31c9e2e5c57544"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the available measurements.  <br /></td></tr>
 </table>
-<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Graphics benchmark. </p>
-<p>The graphics benchmark mostly has the same usage pattern as the regular benchmark, with .<a class="el" href="#aef2a7f12eae76d088c9df9750bb4d3d4" title="Starts a new measurement.">start()</a> and .<a class="el" href="#a5353be005c41f4de81461b43dc8b9c3a" title="Stops a measurement.">stop()</a> methods delineating the benchmarked region of code, however it has an additional .<a class="el" href="#a2be4d7673b23aa13ffb339e74c1ad11c" title="Fetches the latest measurement from the GPU. This blocks execution until the GPU is done.">fetch()</a> method that much be called to make the measurement accessable to the CPU and add it to the measurement deque. </p>
-</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a0ab512b5898b662519aef4a7240c722d" name="a0ab512b5898b662519aef4a7240c722d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0ab512b5898b662519aef4a7240c722d">&#9670;&#160;</a></span>graphics_benchmark()</h2>
 
@@ -178,8 +177,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Constructs an empty graphics benchmark. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">context</td><td>Graphics context to create the benchmark on. </td></tr>
@@ -204,11 +201,7 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets a reference to the graphics context the benchmark is on. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the graphics context the benchmark is on. </dd></dl>
-
-<p class="reference">Referenced by <a class="el" href="#a0ab512b5898b662519aef4a7240c722d">graphics_benchmark()</a>, and <a class="el" href="#a401af95bc370941bba31c9e2e5c57544">measurements()</a>.</p>
 
 </div>
 </div>
@@ -227,8 +220,6 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Starts a new measurement. </p>
-
 </div>
 </div>
 <a id="a5353be005c41f4de81461b43dc8b9c3a" name="a5353be005c41f4de81461b43dc8b9c3a"></a>
@@ -245,8 +236,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Stops a measurement. </p>
 
 </div>
 </div>
@@ -265,8 +254,6 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Fetches the latest measurement from the GPU. This blocks execution until the GPU is done. </p>
-
 </div>
 </div>
 <a id="aa7092ee2015474e2de1fd91cf2f7dca2" name="aa7092ee2015474e2de1fd91cf2f7dca2"></a>
@@ -284,8 +271,6 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Clears all previous and ongoing measurements from the queue. </p>
-
 </div>
 </div>
 <a id="ace0d7e1101a145c8374639290ee2820e" name="ace0d7e1101a145c8374639290ee2820e"></a>
@@ -302,8 +287,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets the duration of the latest measurement. </p>
 <dl class="section return"><dt>Returns</dt><dd>Duration of the latest measurement. </dd></dl>
 
 </div>
@@ -322,8 +305,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets the duration of the shortest available measurement. </p>
 <dl class="section return"><dt>Returns</dt><dd>Duration of the shortest available measurement. </dd></dl>
 
 </div>
@@ -342,8 +323,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets the duration of the longest available measurement. </p>
 <dl class="section return"><dt>Returns</dt><dd>Duration of the longest available measurement. </dd></dl>
 
 </div>
@@ -362,8 +341,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets the average duration of the available measurements. </p>
 <dl class="section return"><dt>Returns</dt><dd>Average duration of the available measurements. </dd></dl>
 
 </div>
@@ -382,8 +359,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets the available measurements. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the queue of available measurements. </dd></dl>
 
 </div>

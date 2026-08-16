@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1aud
 <div class="contents">
 
 <p>Interface for a 16-bit mono or stereo audio stream.  
- <a href="#details">More...</a></p>
+</p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -176,9 +176,7 @@ Static Protected Attributes</h2></td></tr>
 <tr class="memitem:ab5945fe521d8fcded9eaa6a374d1d108" id="r_ab5945fe521d8fcded9eaa6a374d1d108"><td class="memItemLeft">static constexpr <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a>&#160;</td><td class="memItemRight"><a class="el" href="#ab5945fe521d8fcded9eaa6a374d1d108">unknown_loop_point</a> {std::numeric_limits&lt;<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a>&gt;::max()}</td></tr>
 <tr class="memdesc:ab5945fe521d8fcded9eaa6a374d1d108"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sentinel representing an unknown ending loop point.  <br /></td></tr>
 </table>
-<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Interface for a 16-bit mono or stereo audio stream. </p>
-</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a0b56f0344a4bfae094aee73c65140599" name="a0b56f0344a4bfae094aee73c65140599"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0b56f0344a4bfae094aee73c65140599">&#9670;&#160;</a></span>audio_stream()</h2>
 
@@ -193,8 +191,6 @@ Static Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Initializes an audio stream. </p>
 
 </div>
 </div>
@@ -221,8 +217,6 @@ Static Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Destroys the audio stream. </p>
-
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
@@ -248,8 +242,6 @@ Static Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Gets the length of the stream. </p>
 <dl class="section return"><dt>Returns</dt><dd>Number of samples in the stream. </dd></dl>
 
 </div>
@@ -276,8 +268,6 @@ Static Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Gets the number of channels in the stream. </p>
 <dl class="section return"><dt>Returns</dt><dd>Number of audio channels in the stream. </dd></dl>
 
 </div>
@@ -304,8 +294,6 @@ Static Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Gets the sample rate of the stream. </p>
 <dl class="section return"><dt>Returns</dt><dd>Sample rate of the stream. </dd></dl>
 
 </div>
@@ -332,8 +320,6 @@ Static Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Gets the current offset within the stream. </p>
 <dl class="section return"><dt>Returns</dt><dd>Offset sample within the stream. </dd></dl>
 
 </div>
@@ -360,8 +346,6 @@ Static Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Seeks to an offset relative to the beginning. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">where</td><td>Offset sample within the stream. </td></tr>
@@ -385,8 +369,6 @@ Static Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Reads from the stream and returns the span of the buffer that was written to. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">buffer</td><td>Buffer to read to. </td></tr>
@@ -411,11 +393,7 @@ Static Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets whether the stream is looping. </p>
 <dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the stream is looping, <span class="tt">false</span> otherwise. </dd></dl>
-
-<p class="reference">Referenced by <a class="el" href="#a63ad260440f6f3802ab71905346fef70">set_looping()</a>.</p>
 
 </div>
 </div>
@@ -433,8 +411,6 @@ Static Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets whether the stream is looping. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">looping</td><td><span class="tt">true</span> if the stream should loop, <span class="tt">false</span> otherwise. </td></tr>
@@ -458,11 +434,7 @@ Static Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets the loop start of the stream. </p>
 <dl class="section return"><dt>Returns</dt><dd>Starting loop sample of the stream. </dd></dl>
-
-<p class="reference">Referenced by <a class="el" href="#a5a2207ec8c85266e5430ec3f93e530fb">set_loop_start()</a>.</p>
 
 </div>
 </div>
@@ -480,8 +452,6 @@ Static Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets the loop start of the stream. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">loop_start</td><td>Starting loop sample of the stream. </td></tr>
@@ -505,11 +475,7 @@ Static Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets the loop end of the stream. </p>
 <dl class="section return"><dt>Returns</dt><dd>Ending loop sample of the stream. </dd></dl>
-
-<p class="reference">Referenced by <a class="el" href="#a664e8248e12b76e24f0d79b2975d138c">set_loop_end()</a>.</p>
 
 </div>
 </div>
@@ -527,8 +493,6 @@ Static Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets the loop end of the stream. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">loop_end</td><td>Ending loop sample of the stream (will be clamped to the length of the stream). </td></tr>
@@ -560,8 +524,6 @@ Static Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Reads samples to a destination buffer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">buffer</td><td>Buffer to read to. </td></tr>
@@ -591,8 +553,6 @@ Static Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Sentinel representing an unknown ending loop point. </p>
 
 </div>
 </div>

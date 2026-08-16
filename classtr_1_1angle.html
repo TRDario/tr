@@ -130,7 +130,9 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1ang
 
 <p>Abstract angle datatype.  
  <a href="#details">More...</a></p>
-<table class="memberdecls">
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><dl class="section note"><dt>Note</dt><dd>Angles are internally stored with their value in radians in 32-bit floating point form, so all caveats pertaining to precision and comparison of floating-point values applies to angles as well. </dd></dl>
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
@@ -164,10 +166,7 @@ Arithmetic operators</h2></td></tr>
 <tr class="memitem:a794761881c43e1cdf7a65de7e97ed3b0 template"><td class="memItemLeft">constexpr <a class="el" href="#aa37ab39681a4db231c698bab3a4996cd">angle</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a794761881c43e1cdf7a65de7e97ed3b0">operator/=</a> (Factor rhs)</td></tr>
 <tr class="memdesc:a794761881c43e1cdf7a65de7e97ed3b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Angle division.  <br /></td></tr>
 </table>
-<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Abstract angle datatype. </p>
-<dl class="section note"><dt>Note</dt><dd>Angles are internally stored with their value in radians in 32-bit floating point form, so all caveats pertaining to precision and comparison of floating-point values applies to angles as well. </dd></dl>
-</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aa37ab39681a4db231c698bab3a4996cd" name="aa37ab39681a4db231c698bab3a4996cd"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa37ab39681a4db231c698bab3a4996cd">&#9670;&#160;</a></span>angle()</h2>
 
@@ -190,10 +189,6 @@ Arithmetic operators</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Constructs a zero angle. </p>
-
-<p class="reference">Referenced by <a class="el" href="#a72f5774fac0b1854a1b11dfb7a409a14">operator%</a>, <a class="el" href="#a3a64f34c058ed12e50683e406326c833">operator*</a>, <a class="el" href="#aee175f3af6fbd0fc385f6902435716d3">operator*</a>, <a class="el" href="#a2ec9eeec38360e58cc2f289bb8498979">operator*=()</a>, <a class="el" href="#a6ec6582f9a1d09048704c9d23e47667e">operator+</a>, <a class="el" href="#a8587e053b4c1d450bc0666c897cc3978">operator+=()</a>, <a class="el" href="#a61a5e3aba0a76d91f560a823c512253e">operator-</a>, <a class="el" href="#a7da06fbff351830222d534ffac3f1122">operator-</a>, <a class="el" href="#ac83cb66d4e135b154f73b65d6f2b70c9">operator-=()</a>, <a class="el" href="#ab67a8e54ddcd80908ace81c50a582592">operator/</a>, <a class="el" href="#a4c1b1657fe00c3780a4c94a030c8862c">operator/</a>, <a class="el" href="#a794761881c43e1cdf7a65de7e97ed3b0">operator/=()</a>, <a class="el" href="#acaf4391e9bafc8641485382952ab4d27">operator&lt;=&gt;</a>, <a class="el" href="#a473d739ab972d082e7aaa3601435d2bb">operator==</a>, and <a class="el" href="#a146b21f6937a7c1b0ca1aaa95c63cda6">rads</a>.</p>
 
 </div>
 </div>
@@ -220,8 +215,6 @@ Arithmetic operators</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Angle addition. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">rhs</td><td>Angle to add to the current angle value. </td></tr>
@@ -254,8 +247,6 @@ Arithmetic operators</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Angle subtraction. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">rhs</td><td>Angle to subtract from the current angle value. </td></tr>
@@ -290,8 +281,6 @@ template&lt;arithmetic Factor&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Angle multiplication. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Factor</td><td>Scalar type. </td></tr>
@@ -332,8 +321,6 @@ template&lt;arithmetic Factor&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Angle division. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Factor</td><td>Scalar type. </td></tr>
@@ -372,11 +359,7 @@ template&lt;arithmetic Factor&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Converts the angle value into a numeric radian value. </p>
 <dl class="section return"><dt>Returns</dt><dd>Angle represented in radians. </dd></dl>
-
-<p class="reference">Referenced by <a class="el" href="#adc32af673da3487c97bfc555a481b5ea">tan()</a>.</p>
 
 </div>
 </div>
@@ -402,8 +385,6 @@ template&lt;arithmetic Factor&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Converts the angle value into a numeric degree value. </p>
 <dl class="section return"><dt>Returns</dt><dd>Angle represented in degrees. </dd></dl>
 
 </div>
@@ -430,8 +411,6 @@ template&lt;arithmetic Factor&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Converts the angle value into a numeric turn value. </p>
 <dl class="section return"><dt>Returns</dt><dd>Angle represented in turns. </dd></dl>
 
 </div>
@@ -458,8 +437,6 @@ template&lt;arithmetic Factor&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Computes the sine of the angle. </p>
 <dl class="section return"><dt>Returns</dt><dd>Sine of the angle. </dd></dl>
 
 </div>
@@ -486,8 +463,6 @@ template&lt;arithmetic Factor&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Computes the cosine of the angle. </p>
 <dl class="section return"><dt>Returns</dt><dd>Cosine of the angle. </dd></dl>
 
 </div>
@@ -514,8 +489,6 @@ template&lt;arithmetic Factor&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Computes the tangent of the angle. </p>
 <dl class="section return"><dt>Returns</dt><dd>Tangent of the angle. </dd></dl>
 
 </div>

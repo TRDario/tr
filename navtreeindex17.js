@@ -1,9 +1,5 @@
 var NAVTREEINDEX17 =
 {
-"structtr_1_1shader__base_1_1deleter.html":[2,0,0,115,0],
-"structtr_1_1shader__base_1_1deleter.html#a5e8d01c0ae5f1874fd3be7e9e1fce014":[0,0,0,127,0,0],
-"structtr_1_1shader__base_1_1deleter.html#a5e8d01c0ae5f1874fd3be7e9e1fce014":[2,0,0,115,0,0],
-"structtr_1_1shader__base_1_1deleter.html#a9b3e61718c4a5b63ea618a41bda6f7f0":[0,0,0,127,0,1],
 "structtr_1_1shader__base_1_1deleter.html#a9b3e61718c4a5b63ea618a41bda6f7f0":[2,0,0,115,0,1],
 "structtr_1_1simple__color__mesh__ref.html":[0,0,0,131],
 "structtr_1_1simple__color__mesh__ref.html":[2,0,0,119],

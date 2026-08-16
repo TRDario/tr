@@ -130,7 +130,9 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1gra
 
 <p>Wrapper around a generic OpenGL buffer object.  
  <a href="#details">More...</a></p>
-<div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Inheritance diagram for tr::graphics_buffer:</div>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><dl class="section note"><dt>Note</dt><dd>This class isn't meant to be directly used, it is primarily documented because some buffers inherit methods from it. </dd></dl>
+</div><div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Inheritance diagram for tr::graphics_buffer:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
@@ -176,10 +178,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a791c5d26a17cce2fe3850cb8e1ba5697" id="r_a791c5d26a17cce2fe3850cb8e1ba5697"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a791c5d26a17cce2fe3850cb8e1ba5697">set_label</a> (std::string_view label)</td></tr>
 <tr class="memdesc:a791c5d26a17cce2fe3850cb8e1ba5697"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the label of the buffer.  <br /></td></tr>
 </table>
-<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Wrapper around a generic OpenGL buffer object. </p>
-<dl class="section note"><dt>Note</dt><dd>This class isn't meant to be directly used, it is primarily documented because some buffers inherit methods from it. </dd></dl>
-</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a06d9e2187dbc1834b2a6bbea8a44d0bc" name="a06d9e2187dbc1834b2a6bbea8a44d0bc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a06d9e2187dbc1834b2a6bbea8a44d0bc">&#9670;&#160;</a></span>graphics_buffer()</h2>
 
@@ -194,8 +193,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Constructs an empty buffer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">context</td><td>Graphics context to create the buffer on. </td></tr>
@@ -220,11 +217,7 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets a reference to the graphics context the buffer is on. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the graphics context the buffer is on. </dd></dl>
-
-<p class="reference">Referenced by <a class="el" href="classtr_1_1basic__shader__buffer.html#a6fdf5b32b8d77843653e3a6defec03f1">tr::basic_shader_buffer::basic_shader_buffer()</a>, <a class="el" href="classtr_1_1basic__static__vertex__buffer.html#a16447592fe5068bd188dc50644b71d24">tr::basic_static_vertex_buffer::basic_static_vertex_buffer()</a>, <a class="el" href="classtr_1_1basic__uniform__buffer.html#aabcd05ef7c59e589bd32ec50a6017e1c">tr::basic_uniform_buffer::basic_uniform_buffer()</a>, <a class="el" href="#a06d9e2187dbc1834b2a6bbea8a44d0bc">graphics_buffer()</a>, and <a class="el" href="classtr_1_1static__index__buffer.html#a42e306e2e3020655d9544a4e5c8774c6">tr::static_index_buffer::static_index_buffer()</a>.</p>
 
 </div>
 </div>
@@ -242,11 +235,7 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets the unique ID of the buffer. </p>
 <dl class="section return"><dt>Returns</dt><dd>Unique ID of the buffer. </dd></dl>
-
-<p class="reference">Referenced by <a class="el" href="classtr_1_1basic__static__vertex__buffer.html#a16447592fe5068bd188dc50644b71d24">tr::basic_static_vertex_buffer::basic_static_vertex_buffer()</a>, <a class="el" href="classtr_1_1static__index__buffer.html#a42e306e2e3020655d9544a4e5c8774c6">tr::static_index_buffer::static_index_buffer()</a>, <a class="el" href="classtr_1_1basic__shader__buffer.html#a86d25df8e635279ad0f4eb78b0979d5d">tr::basic_shader_buffer::map()</a>, <a class="el" href="classtr_1_1basic__uniform__buffer.html#aaf9a6cba9f2ef26bd6ed564ebc3932df">tr::basic_uniform_buffer::map()</a>, <a class="el" href="classtr_1_1basic__dyn__vertex__buffer.html#aeda3e45b8829b8b1ec69040676389317">tr::basic_dyn_vertex_buffer::set_region()</a>, and <a class="el" href="classtr_1_1dyn__index__buffer.html#af38c2602159ccd17cbe2737e30a45215">tr::dyn_index_buffer::set_region()</a>.</p>
 
 </div>
 </div>
@@ -265,8 +254,6 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Reallocates the buffer while preserving its label (if applicable). </p>
-
 </div>
 </div>
 <a id="ada4364c0295af892b869f2be3ed62777" name="ada4364c0295af892b869f2be3ed62777"></a>
@@ -283,11 +270,7 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets the label of the buffer. </p>
 <dl class="section return"><dt>Returns</dt><dd>Label of the buffer, or "&lt;unnamed&gt;". </dd></dl>
-
-<p class="reference">Referenced by <a class="el" href="classtr_1_1basic__static__vertex__buffer.html#a16447592fe5068bd188dc50644b71d24">tr::basic_static_vertex_buffer::basic_static_vertex_buffer()</a>, <a class="el" href="classtr_1_1static__index__buffer.html#a42e306e2e3020655d9544a4e5c8774c6">tr::static_index_buffer::static_index_buffer()</a>, <a class="el" href="classtr_1_1basic__shader__buffer.html#a86d25df8e635279ad0f4eb78b0979d5d">tr::basic_shader_buffer::map()</a>, <a class="el" href="classtr_1_1basic__uniform__buffer.html#aaf9a6cba9f2ef26bd6ed564ebc3932df">tr::basic_uniform_buffer::map()</a>, <a class="el" href="#a791c5d26a17cce2fe3850cb8e1ba5697">set_label()</a>, <a class="el" href="classtr_1_1basic__dyn__vertex__buffer.html#aeda3e45b8829b8b1ec69040676389317">tr::basic_dyn_vertex_buffer::set_region()</a>, and <a class="el" href="classtr_1_1dyn__index__buffer.html#af38c2602159ccd17cbe2737e30a45215">tr::dyn_index_buffer::set_region()</a>.</p>
 
 </div>
 </div>
@@ -305,16 +288,12 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets the label of the buffer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">label</td><td>Label of the buffer. </td></tr>
   </table>
   </dd>
 </dl>
-
-<p class="reference">Referenced by <a class="el" href="classtr_1_1basic__static__vertex__buffer.html#a16447592fe5068bd188dc50644b71d24">tr::basic_static_vertex_buffer::basic_static_vertex_buffer()</a>, <a class="el" href="classtr_1_1static__index__buffer.html#a42e306e2e3020655d9544a4e5c8774c6">tr::static_index_buffer::static_index_buffer()</a>, <a class="el" href="classtr_1_1basic__shader__buffer.html#a86d25df8e635279ad0f4eb78b0979d5d">tr::basic_shader_buffer::map()</a>, <a class="el" href="classtr_1_1basic__uniform__buffer.html#aaf9a6cba9f2ef26bd6ed564ebc3932df">tr::basic_uniform_buffer::map()</a>, <a class="el" href="classtr_1_1basic__dyn__vertex__buffer.html#aeda3e45b8829b8b1ec69040676389317">tr::basic_dyn_vertex_buffer::set_region()</a>, and <a class="el" href="classtr_1_1dyn__index__buffer.html#af38c2602159ccd17cbe2737e30a45215">tr::dyn_index_buffer::set_region()</a>.</p>
 
 </div>
 </div>

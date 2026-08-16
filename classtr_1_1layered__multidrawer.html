@@ -130,7 +130,15 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1lay
 
 <p>Interface for drawing multiple layered renderers in proper order.  
  <a href="#details">More...</a></p>
-<table class="memberdecls">
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;layered_renderer_drawer... Drawers&gt;<br />
+class tr::layered_multidrawer&lt; Drawers &gt;</div><dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Drawers</td><td>List of renderer drawer types. </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
@@ -148,16 +156,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aecd79f5804af7ab2fe394d9554d12619" id="r_aecd79f5804af7ab2fe394d9554d12619"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aecd79f5804af7ab2fe394d9554d12619">draw</a> (const <a class="el" href="classtr_1_1render__target.html">render_target</a> &amp;target)</td></tr>
 <tr class="memdesc:aecd79f5804af7ab2fe394d9554d12619"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws all layers to a target.  <br /></td></tr>
 </table>
-<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;layered_renderer_drawer... Drawers&gt;<br />
-class tr::layered_multidrawer&lt; Drawers &gt;</div><p>Interface for drawing multiple layered renderers in proper order. </p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">Drawers</td><td>List of renderer drawer types. </td></tr>
-  </table>
-  </dd>
-</dl>
-</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="acdd72ed3aa460b549e09e1297f7ad4e1" name="acdd72ed3aa460b549e09e1297f7ad4e1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#acdd72ed3aa460b549e09e1297f7ad4e1">&#9670;&#160;</a></span>layered_multidrawer() <span class="overload">[1/2]</span></h2>
 
@@ -176,8 +175,6 @@ template&lt;layered_renderer_or_drawer... DrawersAndRenderers&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Creates a multidrawer out of a list of renderers and drawers. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">DrawersAndRenderers</td><td>Drawer and renderer types. </td></tr>
@@ -220,8 +217,6 @@ template&lt;layered_renderer_or_drawer... DrawersAndRenderers&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Creates a multidrawer out of a list of renderers and drawers given an explicit layer range for renderers. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">min_layer</td><td>Lower bound of drawn layers. </td></tr>
@@ -254,8 +249,6 @@ template&lt;layered_renderer_drawer... Drawers&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Draws a layer to a target. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">layer</td><td>Layer to draw. </td></tr>
@@ -291,8 +284,6 @@ template&lt;layered_renderer_drawer... Drawers&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Draws a range of layers to a target. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">min_layer</td><td>Lower bound of drawn layers. </td></tr>
@@ -320,8 +311,6 @@ template&lt;layered_renderer_drawer... Drawers&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Draws all layers to a target. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">target</td><td>Render target to draw to. </td></tr>

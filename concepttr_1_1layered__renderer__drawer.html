@@ -140,8 +140,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('concepttr_1_1l
 <div class="ttc" id="aclasstr_1_1render__target_html"><div class="ttname"><a href="classtr_1_1render__target.html">tr::render_target</a></div><div class="ttdoc">Opaque reference to a texture or framebuffer that can be drawn to.</div><div class="ttdef"><b>Definition</b> render_target.hpp:13</div></div>
 <div class="ttc" id="aconcepttr_1_1layered__renderer__drawer_html"><div class="ttname"><a href="concepttr_1_1layered__renderer__drawer.html">tr::layered_renderer_drawer</a></div><div class="ttdoc">Drawer of a layered renderer.</div><div class="ttdef"><b>Definition</b> layered_multidrawer.hpp:22</div></div>
 </div><!-- fragment --><a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Drawer of a layered renderer. </p>
-<p>A layered renderer drawer is an object that is capable of drawing individual graphical layers using .draw_layer(layer, target).</p>
+<div class="textblock"><p>A layered renderer drawer is an object that is capable of drawing individual graphical layers using .draw_layer(layer, target).</p>
 <p>A drawer must provide .min_layer() and .max_layer() functions for querying the minimum and maximum available layers.</p>
 <p>In case of no layers being available, it is recommended to return INT_MAX for .min_layer() and INT_MIN for .max_layer().</p>
 <p>A drawer must treat calling .draw_layer(layer, target) for an unavailable layer as a no-op. </p>

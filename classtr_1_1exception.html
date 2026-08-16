@@ -130,7 +130,9 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1exc
 
 <p>Extension of <span class="tt">std::exception</span> and base class of tr errors.  
  <a href="#details">More...</a></p>
-<div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Inheritance diagram for tr::exception:</div>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Instead of having a single "what" message, tr errors are defined with up to three message components: name, description, and details. The actual <a class="el" href="#a00892b4abc5abaeb536e960543b7254c" title="Gets a formatted error message.">what()</a> method is finalized and combines the three sections into a single message. </p>
+</div><div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Inheritance diagram for tr::exception:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
@@ -172,10 +174,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a00892b4abc5abaeb536e960543b7254c" id="r_a00892b4abc5abaeb536e960543b7254c"><td class="memItemLeft">const char *&#160;</td><td class="memItemRight"><a class="el" href="#a00892b4abc5abaeb536e960543b7254c">what</a> () const noexcept final</td></tr>
 <tr class="memdesc:a00892b4abc5abaeb536e960543b7254c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a formatted error message.  <br /></td></tr>
 </table>
-<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Extension of <span class="tt">std::exception</span> and base class of tr errors. </p>
-<p>Instead of having a single "what" message, tr errors are defined with up to three message components: name, description, and details. The actual <a class="el" href="#a00892b4abc5abaeb536e960543b7254c" title="Gets a formatted error message.">what()</a> method is finalized and combines the three sections into a single message. </p>
-</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
 <a id="a9f6eea88da50c895f034e1216fd257c5" name="a9f6eea88da50c895f034e1216fd257c5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9f6eea88da50c895f034e1216fd257c5">&#9670;&#160;</a></span>name()</h2>
 
@@ -198,8 +197,6 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Gets the name of the error. </p>
 <dl class="section return"><dt>Returns</dt><dd>Name of the error. </dd></dl>
 
 <p>Implemented in <a class="el" href="classtr_1_1audio__context__init__error.html#af43ed6219a8dca4454a173a4cc366eb2">tr::audio_context_init_error</a>, <a class="el" href="structtr_1_1audio__device__open__error.html#a3d98e12b2b34a3708b326c6d59d1aa10">tr::audio_device_open_error</a>, <a class="el" href="classtr_1_1audio__file__open__error.html#a967a65590c15cb012f9a6acb163eb34c">tr::audio_file_open_error</a>, <a class="el" href="classtr_1_1bitmap__load__error.html#ada1bbb866b26b99c4f3ddaf365db25df">tr::bitmap_load_error</a>, <a class="el" href="classtr_1_1bitmap__save__error.html#a606f38c91eb806073d9708211f3bdaf3">tr::bitmap_save_error</a>, <a class="el" href="classtr_1_1cursor__error.html#aa7297ba3bc45b3c0e729dae144b1d01e">tr::cursor_error</a>, <a class="el" href="classtr_1_1custom__exception.html#a85a30b09717708f29db6a1a12675d5fe">tr::custom_exception</a>, <a class="el" href="classtr_1_1decryption__error.html#a8986c1b97e31f2f43a759bfa5225a515">tr::decryption_error</a>, <a class="el" href="classtr_1_1file__not__found.html#a85919d8e2b1dbfdcb2b4bd8bc51faff2">tr::file_not_found</a>, <a class="el" href="classtr_1_1file__open__error.html#a41c4adb0b455573dfde14432a0e422e0">tr::file_open_error</a>, <a class="el" href="classtr_1_1graphics__context__init__error.html#af72639392ca3344075f5b1bd2fb6b7ee">tr::graphics_context_init_error</a>, <a class="el" href="classtr_1_1init__error.html#aa7e66d0da46e810bb50dec04695aff5e">tr::init_error</a>, <a class="el" href="structtr_1_1out__of__memory.html#af5ffcb2941543c25825ed654338605fe">tr::out_of_memory</a>, <a class="el" href="classtr_1_1set__clipboard__error.html#a335031431c85e9b9405f8f3c7477e8a0">tr::set_clipboard_error</a>, <a class="el" href="classtr_1_1shader__load__error.html#a7cee43ed8b266bdfb8ed280f00ac7925">tr::shader_load_error</a>, <a class="el" href="classtr_1_1ttfont__error.html#a57ba38d742e90fc949fe164aaa08daf2">tr::ttfont_error</a>, <a class="el" href="classtr_1_1ttfont__load__error.html#a1eab7557b69f36d0ace30e61cd40eff2">tr::ttfont_load_error</a>, <a class="el" href="classtr_1_1ttfont__render__error.html#a92a2b08201acbf55e0fd84fb3b25d99c">tr::ttfont_render_error</a>, <a class="el" href="classtr_1_1window__error.html#ac95a95448623d85868502bff2c083069">tr::window_error</a>, and <a class="el" href="classtr_1_1window__open__error.html#af49b43dc942d03de587061aaf36e5d25">tr::window_open_error</a>.</p>
@@ -228,8 +225,6 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Gets the description of the error. </p>
 <dl class="section return"><dt>Returns</dt><dd>String containing the error description, or empty to omit the description section from the message. </dd></dl>
 
 <p>Implemented in <a class="el" href="classtr_1_1audio__context__init__error.html#a0f207f3a95d95fbd4d4ba953b9016ed2">tr::audio_context_init_error</a>, <a class="el" href="structtr_1_1audio__device__open__error.html#a4e171b17462567a28ebcd6cf76c423bf">tr::audio_device_open_error</a>, <a class="el" href="classtr_1_1audio__file__open__error.html#abf613d080e2469b5cc707c0228601282">tr::audio_file_open_error</a>, <a class="el" href="classtr_1_1bitmap__load__error.html#a19b0eff5d13ec47c501a52ea78ce4a92">tr::bitmap_load_error</a>, <a class="el" href="classtr_1_1bitmap__save__error.html#aecf84b71b9dd825142ce4fba0b7b1188">tr::bitmap_save_error</a>, <a class="el" href="classtr_1_1cursor__error.html#a568bea8e07c3c0a627c63feb2cda34b0">tr::cursor_error</a>, <a class="el" href="classtr_1_1custom__exception.html#aede2a561c5a5ef3d6c5107e975c9174a">tr::custom_exception</a>, <a class="el" href="classtr_1_1decryption__error.html#a9219f9ccf24d894743d56bbd94067d06">tr::decryption_error</a>, <a class="el" href="classtr_1_1file__not__found.html#aa5d18ecd31f111a9bae2f115296375e9">tr::file_not_found</a>, <a class="el" href="classtr_1_1file__open__error.html#a6dd3e43811841584dc248b19c17d4b35">tr::file_open_error</a>, <a class="el" href="classtr_1_1graphics__context__init__error.html#af612e40dd2a5cd74794a24e42074f496">tr::graphics_context_init_error</a>, <a class="el" href="classtr_1_1init__error.html#a42bc2154565662f986e11e9ac4cbf830">tr::init_error</a>, <a class="el" href="structtr_1_1out__of__memory.html#aa05f50dd093cd1a02ba33e7ae41d2f59">tr::out_of_memory</a>, <a class="el" href="classtr_1_1set__clipboard__error.html#ab678e5d498b6da45aafd3416b84c449f">tr::set_clipboard_error</a>, <a class="el" href="classtr_1_1shader__load__error.html#a6cb920028bef67ef686a0ada61d61bb5">tr::shader_load_error</a>, <a class="el" href="classtr_1_1ttfont__error.html#a67aaeb6d0f58a5b5e492558bae859e10">tr::ttfont_error</a>, <a class="el" href="classtr_1_1ttfont__load__error.html#a12a93d64b6c38a9064898133a65d26ae">tr::ttfont_load_error</a>, <a class="el" href="classtr_1_1ttfont__render__error.html#a7bcd9ada696d2ea94092632fa8c55a60">tr::ttfont_render_error</a>, <a class="el" href="classtr_1_1window__error.html#a217f09c16d80e3bac6438109e046e81d">tr::window_error</a>, and <a class="el" href="classtr_1_1window__open__error.html#a36b96f39129e6d7c692bd7aa2fd27d80">tr::window_open_error</a>.</p>
@@ -258,8 +253,6 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Gets further details about the error. </p>
 <dl class="section return"><dt>Returns</dt><dd>String containing details about the error, or empty to omit the details section from the message. </dd></dl>
 
 <p>Implemented in <a class="el" href="classtr_1_1audio__context__init__error.html#ad41e369603f2a02776c69025e208bdbc">tr::audio_context_init_error</a>, <a class="el" href="structtr_1_1audio__device__open__error.html#adf4d9405f0441ee330ce5836b4e6d8f9">tr::audio_device_open_error</a>, <a class="el" href="classtr_1_1audio__file__open__error.html#a78e1c29884ad0c388a77bf35c4ef0dcb">tr::audio_file_open_error</a>, <a class="el" href="classtr_1_1bitmap__load__error.html#aafad64315fc8dd0ceac00e02a1947aa1">tr::bitmap_load_error</a>, <a class="el" href="classtr_1_1bitmap__save__error.html#a74812193b1db18f538f06778899f1818">tr::bitmap_save_error</a>, <a class="el" href="classtr_1_1cursor__error.html#adbc24a898a6101a1d43cad142e94bee0">tr::cursor_error</a>, <a class="el" href="classtr_1_1custom__exception.html#a2d8ac195ef5eda5d7b26bfe681889e94">tr::custom_exception</a>, <a class="el" href="classtr_1_1decryption__error.html#a016d30a17b186d51358fe496b2427a61">tr::decryption_error</a>, <a class="el" href="classtr_1_1file__not__found.html#ade880c1156d74ab726c7700ffe25bb56">tr::file_not_found</a>, <a class="el" href="classtr_1_1file__open__error.html#a9420c70d2cc788ed9971276a33bc4f37">tr::file_open_error</a>, <a class="el" href="classtr_1_1graphics__context__init__error.html#aa77cc460f540116bc0240fce54ec6e6d">tr::graphics_context_init_error</a>, <a class="el" href="classtr_1_1init__error.html#a5e047e3f2142e4cd3eb10e1c9005f4d0">tr::init_error</a>, <a class="el" href="structtr_1_1out__of__memory.html#a749115d4683ada07ba87b76ea9db3187">tr::out_of_memory</a>, <a class="el" href="classtr_1_1set__clipboard__error.html#a2cb7bbd7b77269bff201f9ca94e1d1ea">tr::set_clipboard_error</a>, <a class="el" href="classtr_1_1shader__load__error.html#a2358659cc667effc26986d5870537fe6">tr::shader_load_error</a>, <a class="el" href="classtr_1_1ttfont__error.html#a71eee9a216a3167befeb97d0644f9aa4">tr::ttfont_error</a>, <a class="el" href="classtr_1_1ttfont__load__error.html#a571554bad021f1722a7c86c79e75804b">tr::ttfont_load_error</a>, <a class="el" href="classtr_1_1ttfont__render__error.html#a2a1041d81dcad648a28769a889e80f16">tr::ttfont_render_error</a>, <a class="el" href="classtr_1_1window__error.html#a58a517bd20a9e2ef478b094351e106cc">tr::window_error</a>, and <a class="el" href="classtr_1_1window__open__error.html#a25c9c073d97e57f5a54e0f786e2f4cc7">tr::window_open_error</a>.</p>
@@ -288,8 +281,6 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Gets a formatted error message. </p>
 <dl class="section return"><dt>Returns</dt><dd>Error message in the format <span class="tt">"&lt;NAME&gt;: &lt;DESCRIPTION&gt; (&lt;DETAILS&gt;)"</span>. </dd></dl>
 
 </div>

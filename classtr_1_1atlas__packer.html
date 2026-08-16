@@ -130,7 +130,11 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1atl
 
 <p>Skyline rectangle packer for atlas textures.  
  <a href="#details">More...</a></p>
-<table class="memberdecls">
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><dl class="section note"><dt>Note</dt><dd>The packer does not keep track of texture information and assumes it is of constant size or growing. </dd>
+<dd>
+All entries are given a pixel of leeway in both dimensions to prevent filtering bleed. </dd></dl>
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
@@ -142,12 +146,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a3e01066c16d3ab2747da835c6cb4c9e5" id="r_a3e01066c16d3ab2747da835c6cb4c9e5"><td class="memItemLeft">std::optional&lt; glm::u16vec2 &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a3e01066c16d3ab2747da835c6cb4c9e5">try_insert</a> (glm::u16vec2 size, glm::u16vec2 texture_size)</td></tr>
 <tr class="memdesc:a3e01066c16d3ab2747da835c6cb4c9e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attempts to insert a rectangle.  <br /></td></tr>
 </table>
-<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Skyline rectangle packer for atlas textures. </p>
-<dl class="section note"><dt>Note</dt><dd>The packer does not keep track of texture information and assumes it is of constant size or growing. </dd>
-<dd>
-All entries are given a pixel of leeway in both dimensions to prevent filtering bleed. </dd></dl>
-</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a20c0efcdab640618f2aa902bc34a52c7" name="a20c0efcdab640618f2aa902bc34a52c7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a20c0efcdab640618f2aa902bc34a52c7">&#9670;&#160;</a></span>atlas_packer()</h2>
 
@@ -162,8 +161,6 @@ All entries are given a pixel of leeway in both dimensions to prevent filtering 
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Creates an empty packer. </p>
 
 </div>
 </div>
@@ -182,8 +179,6 @@ All entries are given a pixel of leeway in both dimensions to prevent filtering 
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Clears the packer. </p>
 
 </div>
 </div>
@@ -205,8 +200,6 @@ All entries are given a pixel of leeway in both dimensions to prevent filtering 
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Attempts to insert a rectangle. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">size</td><td>Size of the rectangle. </td></tr>

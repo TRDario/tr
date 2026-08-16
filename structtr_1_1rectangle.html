@@ -130,7 +130,15 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('structtr_1_1re
 
 <p>Rectangle object.  
  <a href="#details">More...</a></p>
-<table class="memberdecls">
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename Element&gt;<br />
+struct tr::rectangle&lt; Element &gt;</div><dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Element</td><td>Element type of the rectangle vectors. </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a638f36394d275ed28be3690d77bb0161" id="r_a638f36394d275ed28be3690d77bb0161"><td class="memTemplParams" colspan="2">template&lt;typename ElementR&gt; </td></tr>
@@ -162,16 +170,7 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:ad3af933e850e3ca2a7bfd2941ed746c0" id="r_ad3af933e850e3ca2a7bfd2941ed746c0"><td class="memItemLeft">glm::tvec2&lt; Element &gt;&#160;</td><td class="memItemRight"><a class="el" href="#ad3af933e850e3ca2a7bfd2941ed746c0">tl</a></td></tr>
 <tr class="memitem:a7a4f04d0affc620375ddb1679e927905" id="r_a7a4f04d0affc620375ddb1679e927905"><td class="memItemLeft">glm::tvec2&lt; Element &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a7a4f04d0affc620375ddb1679e927905">size</a></td></tr>
 </table>
-<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;typename Element&gt;<br />
-struct tr::rectangle&lt; Element &gt;</div><p>Rectangle object. </p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">Element</td><td>Element type of the rectangle vectors. </td></tr>
-  </table>
-  </dd>
-</dl>
-</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a30cebc1ccdb0431c9be4e72952c7ce65" name="a30cebc1ccdb0431c9be4e72952c7ce65"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a30cebc1ccdb0431c9be4e72952c7ce65">&#9670;&#160;</a></span>rectangle() <span class="overload">[1/4]</span></h2>
 
@@ -196,10 +195,6 @@ template&lt;typename Element&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Default-constructs a rectangle. </p>
-
-<p class="reference">Referenced by <a class="el" href="#a42b26e82b04c4f45a5f15547921537e0">rectangle()</a>, <a class="el" href="#aa880c290b9975ecd4c5e57c3f23e0b40">contains()</a>, and <a class="el" href="#a638f36394d275ed28be3690d77bb0161">operator==()</a>.</p>
 
 </div>
 </div>
@@ -231,8 +226,6 @@ template&lt;typename Element&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Constructs a rectangle from a top-left corner and size. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">tl</td><td>Offset of the top-left corner of the rectangle. </td></tr>
@@ -267,8 +260,6 @@ template&lt;typename Element&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Constructs a rectangle with the top-left corner at the origin. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">size</td><td>Size of the rectangle. </td></tr>
@@ -304,8 +295,6 @@ template&lt;typename ElementR&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Copy-constructs a rectangle. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">ElementR</td><td>Element type of the righthand-side rectangle vectors. </td></tr>
@@ -348,8 +337,6 @@ template&lt;typename ElementR&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Compares two rectangles for equality. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">ElementR</td><td>Element type of the righthand-side rectangle vectors. </td></tr>
@@ -392,8 +379,6 @@ template&lt;typename ElementR = Element&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Determines whether a point is contained within the rectangle. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">ElementR</td><td>Element type of the point. </td></tr>
@@ -436,8 +421,6 @@ template&lt;typename ElementR = Element&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Determines whether another rectangle is contained entirely within the rectangle. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">ElementR</td><td>Element type of the righthand-side rectangle vectors. </td></tr>
@@ -478,8 +461,6 @@ template&lt;typename Element&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Gets the edges of the rectangle. </p>
 <dl class="section return"><dt>Returns</dt><dd>Set of edges corresponding to the rectangle. </dd></dl>
 
 </div>
@@ -499,8 +480,6 @@ template&lt;typename Element&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="reference">Referenced by <a class="el" href="#ac1e1b5c371f8166fff7e4ff2c681e8fd">rectangle()</a>.</p>
-
 </div>
 </div>
 <a id="a7a4f04d0affc620375ddb1679e927905" name="a7a4f04d0affc620375ddb1679e927905"></a>
@@ -516,8 +495,6 @@ template&lt;typename Element&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p class="reference">Referenced by <a class="el" href="#a612fe7c7e7d1799920d466a84a4082a9">rectangle()</a>, and <a class="el" href="#ac1e1b5c371f8166fff7e4ff2c681e8fd">rectangle()</a>.</p>
 
 </div>
 </div>

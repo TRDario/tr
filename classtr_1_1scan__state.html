@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1sca
 <div class="contents">
 
 <p>Keyboard key state.  
- <a href="#details">More...</a></p>
+</p>
 <div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Inheritance diagram for tr::scan_state:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
 </div>
@@ -161,9 +161,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a3aacae5315b54820574618da2e8f04e8" id="r_a3aacae5315b54820574618da2e8f04e8"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a3aacae5315b54820574618da2e8f04e8">force_up</a> (<a class="el" href="namespacetr.html#a2486b4522ec6a5959377cec072e5f33d">scancode</a> scan)</td></tr>
 <tr class="memdesc:a3aacae5315b54820574618da2e8f04e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forces a key to the considered up.  <br /></td></tr>
 </table>
-<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Keyboard key state. </p>
-</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a780588c8b4704d032f94531e6ab8208a" name="a780588c8b4704d032f94531e6ab8208a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a780588c8b4704d032f94531e6ab8208a">&#9670;&#160;</a></span>scan_state()</h2>
 
@@ -187,8 +185,6 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Constructs an empty key state. </p>
-
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
@@ -206,8 +202,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets whether a key is held. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">scan</td><td>Scancode to check the status of. </td></tr>
@@ -215,8 +209,6 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the scancode is held, <span class="tt">false</span> otherwise. </dd></dl>
-
-<p class="reference">Referenced by <a class="el" href="classtr_1_1keyboard__state.html#a31afc80dd74ac2486b2b91720bd4fad1">tr::keyboard_state::keyboard_state()</a>.</p>
 
 </div>
 </div>
@@ -234,8 +226,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Updates the key state. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">event</td><td>Event to handle. </td></tr>
@@ -259,8 +249,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Updates the key state. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">event</td><td>Event to handle. </td></tr>
@@ -284,8 +272,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Updates the key state. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">event</td><td>Event to handle. </td></tr>
@@ -309,16 +295,12 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Forces a key to be considered held down. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">scan</td><td>Scancode to force down. </td></tr>
   </table>
   </dd>
 </dl>
-
-<p class="reference">Referenced by <a class="el" href="classtr_1_1keyboard__state.html#a5ddd27930b8d1501fcc93caefdfe9736">tr::keyboard_state::handle_event()</a>.</p>
 
 </div>
 </div>
@@ -336,16 +318,12 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Forces a key to the considered up. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">scan</td><td>Scancode to force up. </td></tr>
   </table>
   </dd>
 </dl>
-
-<p class="reference">Referenced by <a class="el" href="classtr_1_1keyboard__state.html#a5ddd27930b8d1501fcc93caefdfe9736">tr::keyboard_state::handle_event()</a>.</p>
 
 </div>
 </div>

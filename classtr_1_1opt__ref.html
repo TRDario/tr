@@ -130,7 +130,15 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1opt
 
 <p>Wrapper over a pointer representing optional reference semantics.  
  <a href="#details">More...</a></p>
-<table class="memberdecls">
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename T&gt;<br />
+class tr::opt_ref&lt; T &gt;</div><dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Type being referenced. </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
@@ -160,16 +168,7 @@ requires (std::convertible_to&lt;T&amp;, U&amp;&gt;)</td></tr>
 <tr class="memitem:a075ae26959a0d7968632bb7b7a5ecd83" id="r_a075ae26959a0d7968632bb7b7a5ecd83"><td class="memItemLeft">constexpr T &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a075ae26959a0d7968632bb7b7a5ecd83">operator*</a> () const</td></tr>
 <tr class="memdesc:a075ae26959a0d7968632bb7b7a5ecd83"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dereferences the referenced object.  <br /></td></tr>
 </table>
-<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;typename T&gt;<br />
-class tr::opt_ref&lt; T &gt;</div><p>Wrapper over a pointer representing optional reference semantics. </p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">T</td><td>Type being referenced. </td></tr>
-  </table>
-  </dd>
-</dl>
-</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a3bebaa6e67670cebd51228de60a39317" name="a3bebaa6e67670cebd51228de60a39317"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3bebaa6e67670cebd51228de60a39317">&#9670;&#160;</a></span>opt_ref() <span class="overload">[1/4]</span></h2>
 
@@ -194,10 +193,6 @@ template&lt;typename T&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Creates an empty optional reference. </p>
-
-<p class="reference">Referenced by <a class="el" href="#af32c86362e354c64db609c1362b874da">make_opt_ref</a>, <a class="el" href="#ab8a6eb077acdb9b6aeb41acc7f16f1c7">operator opt_ref&lt; U &gt;()</a>, and <a class="el" href="#a783b4208d4b2abb06ed7899a5cecd159">operator==</a>.</p>
 
 </div>
 </div>
@@ -226,8 +221,6 @@ template&lt;typename T&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Creates an empty optional reference. </p>
-
 </div>
 </div>
 <a id="afe08b3feb4b8a90c1212296eecc87f31" name="afe08b3feb4b8a90c1212296eecc87f31"></a>
@@ -254,8 +247,6 @@ template&lt;typename T&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Wraps a reference. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">ref</td><td>Reference to wrap. </td></tr>
@@ -290,8 +281,6 @@ template&lt;typename T&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Wrapping an rvalue is not permitted. </p>
-
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
@@ -319,8 +308,6 @@ template&lt;typename T&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Const-qualifies the optional reference. </p>
 <dl class="section return"><dt>Returns</dt><dd>Const-qualified version of the optional reference. </dd></dl>
 
 </div>
@@ -352,8 +339,6 @@ requires (std::convertible_to&lt;T&amp;, U&amp;&gt;)</div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Converts the reference to a base class reference. </p>
 <dl class="section return"><dt>Returns</dt><dd>Optional reference to the base class. </dd></dl>
 
 </div>
@@ -382,8 +367,6 @@ template&lt;typename T&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Returns whether the optional reference holds a reference to an object. </p>
 <dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if a reference is contained, <span class="tt">false</span> otherwise. </dd></dl>
 
 </div>
@@ -412,8 +395,6 @@ template&lt;typename T&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Converts the optional reference into a pointer to the referenced object, or nullptr. </p>
 <dl class="section return"><dt>Returns</dt><dd>Pointer equivalent to the optional reference. </dd></dl>
 
 </div>
@@ -442,8 +423,6 @@ template&lt;typename T&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Dereferences the referenced object. </p>
 <dl class="section pre"><dt>Precondition</dt><dd>The optional reference must reference an object. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>Raw pointer to the object. </dd></dl>
 
@@ -473,8 +452,6 @@ template&lt;typename T&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Dereferences the referenced object. </p>
 <dl class="section pre"><dt>Precondition</dt><dd>The optional reference must reference an object. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>Raw reference to the object. </dd></dl>
 

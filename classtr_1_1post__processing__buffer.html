@@ -128,19 +128,24 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1pos
 </div><!--header-->
 <div class="contents">
 
-<p>Double buffer used to render post-processing effects.  
+<p>Texture buffer used to render post-processing effects.  
  <a href="#details">More...</a></p>
-<table class="memberdecls">
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p><span class="tt"><a class="el" href="classtr_1_1post__processing__buffer.html" title="Texture buffer used to render post-processing effects.">post_processing_buffer</a></span> is modeled as a pair of texture buffers: the source buffer and the destination buffer. The source buffer is exposed as a rendering target that may be cleared and written to. When using <span class="tt"><a class="el" href="#ab4ef8089e4edb367e029c3056298238a" title="Applies a post-processing shader and swaps the source/destination buffers.">apply()</a></span>, the source buffer is sampled by the user-provided fragment shader and the result is written to the destination buffer, the view to which is returned by the function and may be used to draw to the screen. Afterwards, the buffers are swapped so that the post-processed buffer may be used as a post-processing source once more.</p>
+<p><span class="tt"><a class="el" href="classtr_1_1post__processing__buffer.html" title="Texture buffer used to render post-processing effects.">post_processing_buffer</a></span> has a notion of 'completeness' much like textures. An instance of the class may be constructed without an initial size or parameters to defer allocating resources until a call to <span class="tt"><a class="el" href="#aca9680bda9961223924535fa21f7f227" title="(Re-)allocates the buffer and discards any previous data.">allocate()</a></span>. Such an instance is 'incomplete' and is not suitable for most operations other than querying and allocating. Once <span class="tt"><a class="el" href="#aca9680bda9961223924535fa21f7f227" title="(Re-)allocates the buffer and discards any previous data.">allocate()</a></span> is called, or if the class is immediately constructed with a size and parameters, it is considered 'complete' and may be used normally.</p>
+<p>Every instance of <span class="tt"><a class="el" href="classtr_1_1post__processing__buffer.html" title="Texture buffer used to render post-processing effects.">post_processing_buffer</a></span> is associated with a graphics context and cannot outlive its parent context.</p>
+<p><span class="tt"><a class="el" href="classtr_1_1post__processing__buffer.html" title="Texture buffer used to render post-processing effects.">post_processing_buffer</a></span> is movable, but not copyable. </p>
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
 <tr class="memitem:aac1fe36198a98dedbc6fab7565e4be36" id="r_aac1fe36198a98dedbc6fab7565e4be36"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#aac1fe36198a98dedbc6fab7565e4be36">post_processing_buffer</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context)</td></tr>
-<tr class="memdesc:aac1fe36198a98dedbc6fab7565e4be36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an incomplete buffer.  <br /></td></tr>
+<tr class="memdesc:aac1fe36198a98dedbc6fab7565e4be36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an incomplete post-processing buffer.  <br /></td></tr>
 <tr class="memitem:a695242636770f31e179030fe2aff56ca" id="r_a695242636770f31e179030fe2aff56ca"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a695242636770f31e179030fe2aff56ca">post_processing_buffer</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context, glm::ivec2 size, mipmaps<a class="el" href="namespacetr.html#acc7c3ec65e91b3d9d879c9bca6e51ce6">mipmaps</a> mipmaps<a class="el" href="namespacetr.html#acc7c3ec65e91b3d9d879c9bca6e51ce6">mipmaps</a>=<a class="el" href="namespacetr.html#acc7c3ec65e91b3d9d879c9bca6e51ce6a075ae3d2fc31640504f814f60e5ef713">mipmaps::disabled</a>, <a class="el" href="namespacetr.html#ac1babae6e9367fc90585a8791dadc746">pixel_format</a> format=<a class="el" href="namespacetr.html#ac1babae6e9367fc90585a8791dadc746ab1500b383bccdb3946114a5d708706c4">pixel_format::rgba32</a>)</td></tr>
-<tr class="memdesc:a695242636770f31e179030fe2aff56ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates a buffer.  <br /></td></tr>
+<tr class="memdesc:a695242636770f31e179030fe2aff56ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a complete post-processing buffer.  <br /></td></tr>
 <tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Context</div></td></tr>
 <tr class="memitem:a52c1797e02d9a9155ab11fea74ab548d" id="r_a52c1797e02d9a9155ab11fea74ab548d"><td class="memItemLeft"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a52c1797e02d9a9155ab11fea74ab548d">context</a> () const</td></tr>
-<tr class="memdesc:a52c1797e02d9a9155ab11fea74ab548d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a reference to the graphics context the buffer is on.  <br /></td></tr>
+<tr class="memdesc:a52c1797e02d9a9155ab11fea74ab548d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a reference to the graphics context the post-processing buffer is on.  <br /></td></tr>
 <tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">State</div></td></tr>
 <tr class="memitem:a2ab879d74baf696426ae9b19be84d5c2" id="r_a2ab879d74baf696426ae9b19be84d5c2"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a2ab879d74baf696426ae9b19be84d5c2">complete</a> () const</td></tr>
 <tr class="memdesc:a2ab879d74baf696426ae9b19be84d5c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the buffer is complete.  <br /></td></tr>
@@ -148,19 +153,19 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a0664cbefe8f5a06f452f5699d20005c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the size of the buffer.  <br /></td></tr>
 <tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Allocation</div></td></tr>
 <tr class="memitem:aca9680bda9961223924535fa21f7f227" id="r_aca9680bda9961223924535fa21f7f227"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aca9680bda9961223924535fa21f7f227">allocate</a> (glm::ivec2 size, mipmaps<a class="el" href="namespacetr.html#acc7c3ec65e91b3d9d879c9bca6e51ce6">mipmaps</a> mipmaps<a class="el" href="namespacetr.html#acc7c3ec65e91b3d9d879c9bca6e51ce6">mipmaps</a>=<a class="el" href="namespacetr.html#acc7c3ec65e91b3d9d879c9bca6e51ce6a075ae3d2fc31640504f814f60e5ef713">mipmaps::disabled</a>, <a class="el" href="namespacetr.html#ac1babae6e9367fc90585a8791dadc746">pixel_format</a> format=<a class="el" href="namespacetr.html#ac1babae6e9367fc90585a8791dadc746ab1500b383bccdb3946114a5d708706c4">pixel_format::rgba32</a>)</td></tr>
-<tr class="memdesc:aca9680bda9961223924535fa21f7f227"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reallocates the buffer and discards the previous data.  <br /></td></tr>
+<tr class="memdesc:aca9680bda9961223924535fa21f7f227"><td class="mdescLeft">&#160;</td><td class="mdescRight">(Re-)allocates the buffer and discards any previous data.  <br /></td></tr>
 <tr id="pub-methods-4" class="groupHeader"><td colspan="2"><div class="groupHeader">Source</div></td></tr>
 <tr class="memitem:a5e328c5c57dfdd2713787f522ab40077" id="r_a5e328c5c57dfdd2713787f522ab40077"><td class="memItemLeft"><a class="el" href="classtr_1_1render__target.html">render_target</a>&#160;</td><td class="memItemRight"><a class="el" href="#a5e328c5c57dfdd2713787f522ab40077">source</a> () const</td></tr>
-<tr class="memdesc:a5e328c5c57dfdd2713787f522ab40077"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a render target spanning the buffer source.  <br /></td></tr>
+<tr class="memdesc:a5e328c5c57dfdd2713787f522ab40077"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a render target spanning the source buffer.  <br /></td></tr>
 <tr class="memitem:a0db36c69cfba9c9d4c88c37c0ac80441" id="r_a0db36c69cfba9c9d4c88c37c0ac80441"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a0db36c69cfba9c9d4c88c37c0ac80441">clear_source</a> ()</td></tr>
-<tr class="memdesc:a0db36c69cfba9c9d4c88c37c0ac80441"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the buffer source.  <br /></td></tr>
+<tr class="memdesc:a0db36c69cfba9c9d4c88c37c0ac80441"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the source buffer.  <br /></td></tr>
 <tr id="pub-methods-5" class="groupHeader"><td colspan="2"><div class="groupHeader">Applying</div></td></tr>
 <tr class="memitem:ab4ef8089e4edb367e029c3056298238a" id="r_ab4ef8089e4edb367e029c3056298238a"><td class="memItemLeft"><a class="el" href="classtr_1_1texture__view.html">texture_view</a>&#160;</td><td class="memItemRight"><a class="el" href="#ab4ef8089e4edb367e029c3056298238a">apply</a> (fragment_shader &amp;fragment_shader)</td></tr>
 <tr class="memdesc:ab4ef8089e4edb367e029c3056298238a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies a post-processing shader and swaps the source/destination buffers.  <br /></td></tr>
+<tr class="memitem:acc6f5074857c197a619ca78ab9bd9c49" id="r_acc6f5074857c197a619ca78ab9bd9c49"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#acc6f5074857c197a619ca78ab9bd9c49">draw</a> (const <a class="el" href="classtr_1_1render__target.html">render_target</a> &amp;target)</td></tr>
+<tr class="memdesc:acc6f5074857c197a619ca78ab9bd9c49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws the current source buffer to a render target.  <br /></td></tr>
 </table>
-<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Double buffer used to render post-processing effects. </p>
-</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aac1fe36198a98dedbc6fab7565e4be36" name="aac1fe36198a98dedbc6fab7565e4be36"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aac1fe36198a98dedbc6fab7565e4be36">&#9670;&#160;</a></span>post_processing_buffer() <span class="overload">[1/2]</span></h2>
 
@@ -175,11 +180,9 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Creates an incomplete buffer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">context</td><td>Graphics context to create the buffer on. </td></tr>
+    <tr><td class="paramname">context</td><td>Graphics context to create the post-processing buffer on. </td></tr>
   </table>
   </dd>
 </dl>
@@ -214,12 +217,10 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Allocates a buffer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">context</td><td>Graphics context to create the buffer on. </td></tr>
-    <tr><td class="paramname">size</td><td>Initial size of the buffer. </td></tr>
+    <tr><td class="paramname">context</td><td>Graphics context to create the post-processing buffer on. </td></tr>
+    <tr><td class="paramname">size</td><td>Initial size of the buffer textures. </td></tr>
     <tr><td class="paramname">mipmaps</td><td>Whether to generate mipmaps for the buffer textures. </td></tr>
     <tr><td class="paramname">format</td><td>Pixel format of the buffer textures. </td></tr>
   </table>
@@ -243,11 +244,7 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets a reference to the graphics context the buffer is on. </p>
-<dl class="section return"><dt>Returns</dt><dd>Reference to the graphics context the buffer is on. </dd></dl>
-
-<p class="reference">Referenced by <a class="el" href="#aac1fe36198a98dedbc6fab7565e4be36">post_processing_buffer()</a>, and <a class="el" href="#a695242636770f31e179030fe2aff56ca">post_processing_buffer()</a>.</p>
+<dl class="section return"><dt>Returns</dt><dd>Reference to the graphics context the post-processing buffer is on. </dd></dl>
 
 </div>
 </div>
@@ -265,8 +262,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets whether the buffer is complete. </p>
 <dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the buffer is complete, <span class="tt">false</span> otherwise. </dd></dl>
 
 </div>
@@ -285,11 +280,7 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets the size of the buffer. </p>
 <dl class="section return"><dt>Returns</dt><dd>Size of the buffer. </dd></dl>
-
-<p class="reference">Referenced by <a class="el" href="#a695242636770f31e179030fe2aff56ca">post_processing_buffer()</a>, and <a class="el" href="#aca9680bda9961223924535fa21f7f227">allocate()</a>.</p>
 
 </div>
 </div>
@@ -316,11 +307,9 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Reallocates the buffer and discards the previous data. </p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>If the buffer was previously constucted incomplete, this function completes it. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">size</td><td>Size of the buffer. </td></tr>
+    <tr><td class="paramname">size</td><td>Size of the buffer textures. </td></tr>
     <tr><td class="paramname">mipmaps</td><td>Whether to generate mipmaps for the buffer textures. </td></tr>
     <tr><td class="paramname">format</td><td>Pixel format of the buffer textures. </td></tr>
   </table>
@@ -343,10 +332,8 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets a render target spanning the buffer source. </p>
-<dl class="section pre"><dt>Precondition</dt><dd>The buffer must be complete. </dd></dl>
-<dl class="section return"><dt>Returns</dt><dd>Render target spanning the buffer source. </dd></dl>
+<dl class="section pre"><dt>Precondition</dt><dd>The buffer must be complete to call this function. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Render target spanning the source buffer. This rendering target stays valid until a call to <span class="tt"><a class="el" href="#aca9680bda9961223924535fa21f7f227" title="(Re-)allocates the buffer and discards any previous data.">allocate()</a></span>, <span class="tt"><a class="el" href="#ab4ef8089e4edb367e029c3056298238a" title="Applies a post-processing shader and swaps the source/destination buffers.">apply()</a></span>, or the destruction of the buffer. </dd></dl>
 
 </div>
 </div>
@@ -364,9 +351,7 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Clears the buffer source. </p>
-<dl class="section pre"><dt>Precondition</dt><dd>The buffer must be complete. </dd></dl>
+<dl class="section pre"><dt>Precondition</dt><dd>The buffer must be complete to call this function. </dd></dl>
 
 </div>
 </div>
@@ -384,16 +369,38 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Applies a post-processing shader and swaps the source/destination buffers. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">shader</td><td>Post-processing fragment shader to apply. </td></tr>
+    <tr><td class="paramname">fragment_shader</td><td>Post-processing fragment shader to apply. Post-processing fragment shaders are expected to contain a <span class="tt">sampler2D</span> uniform at location 0 and a <span class="tt">vec2</span> texture size uniform at location 1, take in a <span class="tt">vec2</span> uv input used to sample the source buffer, and output a <span class="tt">vec4</span> color. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section pre"><dt>Precondition</dt><dd>The buffer must be complete. </dd></dl>
-<dl class="section return"><dt>Returns</dt><dd>View to the output buffer. </dd></dl>
+<dl class="section pre"><dt>Precondition</dt><dd>The buffer must be complete to call this function. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>View to the output buffer. This view stays valid until a call to <span class="tt"><a class="el" href="#aca9680bda9961223924535fa21f7f227" title="(Re-)allocates the buffer and discards any previous data.">allocate()</a></span>, <span class="tt"><a class="el" href="#ab4ef8089e4edb367e029c3056298238a" title="Applies a post-processing shader and swaps the source/destination buffers.">apply()</a></span>, or the destruction of the buffer. </dd></dl>
+
+</div>
+</div>
+<a id="acc6f5074857c197a619ca78ab9bd9c49" name="acc6f5074857c197a619ca78ab9bd9c49"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc6f5074857c197a619ca78ab9bd9c49">&#9670;&#160;</a></span>draw()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tr::post_processing_buffer::draw </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classtr_1_1render__target.html">render_target</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>target</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">target</td><td>Rendering target. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section pre"><dt>Precondition</dt><dd>The buffer must be complete to call this function. </dd></dl>
 
 </div>
 </div>

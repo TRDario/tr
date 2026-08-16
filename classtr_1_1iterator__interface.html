@@ -130,20 +130,9 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1ite
 
 <p>Interface an iterator class can inherit from to automatically derive various functions from a small subset of basic operators (<span class="tt">operator++</span>, <span class="tt">operator--</span>, <span class="tt">operator+=</span>, <span class="tt">operator*</span>).  
  <a href="#details">More...</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
-Public Member Functions</h2></td></tr>
-<tr class="memitem:ace6879efc86f31350aca1ae401f7b1f9" id="r_ace6879efc86f31350aca1ae401f7b1f9"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ace6879efc86f31350aca1ae401f7b1f9">operator-&gt;</a> () const</td></tr>
-<tr class="memdesc:ace6879efc86f31350aca1ae401f7b1f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Synthesized pointer dereferencing operator.  <br /></td></tr>
-<tr class="memitem:a06d90b2f5b9f7bb4253938b82699973f" id="r_a06d90b2f5b9f7bb4253938b82699973f"><td class="memTemplParams" colspan="2">template&lt;typename Difference = DeducedBrackets&gt; <br />
-requires (requires(Iterator it) { it + diff; })</td></tr>
-<tr class="memitem:a06d90b2f5b9f7bb4253938b82699973f template"><td class="memItemLeft">constexpr decltype(auto)&#160;</td><td class="memItemRight"><a class="el" href="#a06d90b2f5b9f7bb4253938b82699973f">operator[]</a> (Difference diff) const</td></tr>
-<tr class="memdesc:a06d90b2f5b9f7bb4253938b82699973f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Synthesized subscripting operator.  <br /></td></tr>
-</table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename Iterator, typename DeducedBrackets = void&gt;<br />
-class tr::iterator_interface&lt; Iterator, DeducedBrackets &gt;</div><p>Interface an iterator class can inherit from to automatically derive various functions from a small subset of basic operators (<span class="tt">operator++</span>, <span class="tt">operator--</span>, <span class="tt">operator+=</span>, <span class="tt">operator*</span>). </p>
-<p><span class="tt">operator++(int)</span> is synthesized when <span class="tt">operator++</span> is defined.<br  />
+class tr::iterator_interface&lt; Iterator, DeducedBrackets &gt;</div><p><span class="tt">operator++(int)</span> is synthesized when <span class="tt">operator++</span> is defined.<br  />
 <span class="tt">operator--(int)</span> is synthesized when <span class="tt">operator--</span> is defined.<br  />
 <span class="tt">operator+</span>, <span class="tt">operator-</span>, and <span class="tt">operator-=</span> are synthesized when <span class="tt">operator+=</span> is defined.<br  />
 <span class="tt">operator-&gt;</span> is synthesized when <span class="tt">operator*</span> is defined and returns a reference type.<br  />
@@ -154,7 +143,17 @@ class tr::iterator_interface&lt; Iterator, DeducedBrackets &gt;</div><p>Interfac
   </table>
   </dd>
 </dl>
-</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:ace6879efc86f31350aca1ae401f7b1f9" id="r_ace6879efc86f31350aca1ae401f7b1f9"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ace6879efc86f31350aca1ae401f7b1f9">operator-&gt;</a> () const</td></tr>
+<tr class="memdesc:ace6879efc86f31350aca1ae401f7b1f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Synthesized pointer dereferencing operator.  <br /></td></tr>
+<tr class="memitem:a06d90b2f5b9f7bb4253938b82699973f" id="r_a06d90b2f5b9f7bb4253938b82699973f"><td class="memTemplParams" colspan="2">template&lt;typename Difference = DeducedBrackets&gt; <br />
+requires (requires(Iterator it) { it + diff; })</td></tr>
+<tr class="memitem:a06d90b2f5b9f7bb4253938b82699973f template"><td class="memItemLeft">constexpr decltype(auto)&#160;</td><td class="memItemRight"><a class="el" href="#a06d90b2f5b9f7bb4253938b82699973f">operator[]</a> (Difference diff) const</td></tr>
+<tr class="memdesc:a06d90b2f5b9f7bb4253938b82699973f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Synthesized subscripting operator.  <br /></td></tr>
+</table>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
 <a id="ace6879efc86f31350aca1ae401f7b1f9" name="ace6879efc86f31350aca1ae401f7b1f9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ace6879efc86f31350aca1ae401f7b1f9">&#9670;&#160;</a></span>operator-&gt;()</h2>
 
@@ -179,8 +178,6 @@ template&lt;typename Iterator, typename DeducedBrackets = void&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Synthesized pointer dereferencing operator. </p>
 <dl class="section return"><dt>Returns</dt><dd>Pointer to the dereferenced value. </dd></dl>
 
 </div>
@@ -212,8 +209,6 @@ requires (requires(Iterator it) { it + diff; })</div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Synthesized subscripting operator. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Difference</td><td>Difference type accepted by <span class="tt">operator+=</span>. </td></tr>

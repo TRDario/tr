@@ -8,6 +8,5 @@ var classtr_1_1owning__shader__pipeline =
     [ "fragment_shader", "classtr_1_1owning__shader__pipeline.html#a5f89822d099418db835196b8710a6c96", null ],
     [ "fragment_shader", "classtr_1_1owning__shader__pipeline.html#a723ba7c01a68877b283dc4d94940569d", null ],
     [ "set_label", "classtr_1_1owning__shader__pipeline.html#aaf722e0143b40d467b658aa8f06d27da", null ],
-    [ "label", "classtr_1_1owning__shader__pipeline.html#afc967500d2850f3b1da603f5b0e0e837", null ],
-    [ "id", "classtr_1_1owning__shader__pipeline.html#a478df43f40c8b62a820e748320bedc82", null ]
+    [ "label", "classtr_1_1owning__shader__pipeline.html#afc967500d2850f3b1da603f5b0e0e837", null ]
 ];

@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1sha
 <div class="contents">
 
 <p>Base GPU shader program class.  
- <a href="#details">More...</a></p>
+</p>
 <div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Inheritance diagram for tr::shader_base:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
 </div>
@@ -260,9 +260,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a03277cec831a3752c59bd5bc62a2c837"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the debug label of the shader.  <br /></td></tr>
 <tr class="memitem:a19c27a295530cb46f3ce74319c35c939" id="r_a19c27a295530cb46f3ce74319c35c939"><td class="memItemLeft">std::string&#160;</td><td class="memItemRight"><a class="el" href="#a19c27a295530cb46f3ce74319c35c939">label</a> () const</td></tr>
 <tr class="memdesc:a19c27a295530cb46f3ce74319c35c939"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the debug label of the shader.  <br /></td></tr>
-<tr id="pub-methods-4" class="groupHeader"><td colspan="2"><div class="groupHeader">ID</div></td></tr>
-<tr class="memitem:ab70d8fc284329d1165ce318e1e5395cc" id="r_ab70d8fc284329d1165ce318e1e5395cc"><td class="memItemLeft">unsigned int&#160;</td><td class="memItemRight"><a class="el" href="#ab70d8fc284329d1165ce318e1e5395cc">id</a> () const</td></tr>
-<tr class="memdesc:ab70d8fc284329d1165ce318e1e5395cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the unique ID of the shader program.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pro-methods" class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -280,9 +277,7 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:ae059e80c3a8fe1f380d15190fadf5f2c" id="r_ae059e80c3a8fe1f380d15190fadf5f2c"><td class="memItemLeft">boost::unordered_flat_map&lt; int, texture_unit &gt;&#160;</td><td class="memItemRight"><a class="el" href="#ae059e80c3a8fe1f380d15190fadf5f2c">m_texture_units</a></td></tr>
 <tr class="memdesc:ae059e80c3a8fe1f380d15190fadf5f2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Texture units allocated to this shader.  <br /></td></tr>
 </table>
-<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Base GPU shader program class. </p>
-</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ac4375fd3f560e8b746d8bdb01d59dabb" name="ac4375fd3f560e8b746d8bdb01d59dabb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac4375fd3f560e8b746d8bdb01d59dabb">&#9670;&#160;</a></span>shader_base()</h2>
 
@@ -314,8 +309,6 @@ Protected Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Constructs a shader. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">context</td><td>Graphics context to create the shader on. </td></tr>
@@ -342,11 +335,7 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets a reference to the graphics context the shader is on. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the graphics context the shader is on. </dd></dl>
-
-<p class="reference">Referenced by <a class="el" href="classtr_1_1fragment__shader.html#abf750439237c27c02086a9030cf2ddce">tr::fragment_shader::fragment_shader()</a>, <a class="el" href="#ac4375fd3f560e8b746d8bdb01d59dabb">shader_base()</a>, and <a class="el" href="classtr_1_1vertex__shader.html#a913726733d5d92108199a548f9947f4f">tr::vertex_shader::vertex_shader()</a>.</p>
 
 </div>
 </div>
@@ -368,8 +357,6 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets a boolean uniform. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Uniform location index. </td></tr>
@@ -399,8 +386,6 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets an integer uniform. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Uniform location index. </td></tr>
@@ -430,8 +415,6 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets an integer array uniform. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Uniform location index. </td></tr>
@@ -461,8 +444,6 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets an ivec2 uniform. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Uniform location index. </td></tr>
@@ -492,8 +473,6 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets an ivec2 array uniform. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Uniform location index. </td></tr>
@@ -523,8 +502,6 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets an ivec3 uniform. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Uniform location index. </td></tr>
@@ -554,8 +531,6 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets an ivec3 array uniform. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Uniform location index. </td></tr>
@@ -585,8 +560,6 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets an ivec4 uniform. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Uniform location index. </td></tr>
@@ -616,8 +589,6 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets an ivec4 array uniform. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Uniform location index. </td></tr>
@@ -647,8 +618,6 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets an unsigned integer uniform. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Uniform location index. </td></tr>
@@ -678,8 +647,6 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets an unsigned integer array uniform. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Uniform location index. </td></tr>
@@ -709,8 +676,6 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets a uvec2 uniform. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Uniform location index. </td></tr>
@@ -740,8 +705,6 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets a uvec2 array uniform. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Uniform location index. </td></tr>
@@ -771,8 +734,6 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets a uvec3 uniform. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Uniform location index. </td></tr>
@@ -802,8 +763,6 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets a uvec3 array uniform. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Uniform location index. </td></tr>
@@ -833,8 +792,6 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets a uvec4 uniform. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Uniform location index. </td></tr>
@@ -864,8 +821,6 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets a uvec4 array uniform. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Uniform location index. </td></tr>
@@ -895,8 +850,6 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets a float uniform. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Uniform location index. </td></tr>
@@ -926,8 +879,6 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets a float array uniform. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Uniform location index. </td></tr>
@@ -957,8 +908,6 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets a vec2 uniform. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Uniform location index. </td></tr>
@@ -988,8 +937,6 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets a vec2 array uniform. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Uniform location index. </td></tr>
@@ -1019,8 +966,6 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets a vec3 uniform. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Uniform location index. </td></tr>
@@ -1050,8 +995,6 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets a vec3 array uniform. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Uniform location index. </td></tr>
@@ -1081,8 +1024,6 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets a vec4 uniform. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Uniform location index. </td></tr>
@@ -1112,8 +1053,6 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets a vec4 array uniform. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Uniform location index. </td></tr>
@@ -1143,8 +1082,6 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets a mat2 uniform. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Uniform location index. </td></tr>
@@ -1174,8 +1111,6 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets a mat2 array uniform. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Uniform location index. </td></tr>
@@ -1205,8 +1140,6 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets a mat3 uniform. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Uniform location index. </td></tr>
@@ -1236,8 +1169,6 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets a mat3 array uniform. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Uniform location index. </td></tr>
@@ -1267,8 +1198,6 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets a mat4 uniform. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Uniform location index. </td></tr>
@@ -1298,8 +1227,6 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets a mat4 array uniform. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Uniform location index. </td></tr>
@@ -1329,8 +1256,6 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets a mat2x3 uniform. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Uniform location index. </td></tr>
@@ -1360,8 +1285,6 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets a mat2x3 array uniform. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Uniform location index. </td></tr>
@@ -1391,8 +1314,6 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets a mat2x4 uniform. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Uniform location index. </td></tr>
@@ -1422,8 +1343,6 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets a mat2x4 array uniform. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Uniform location index. </td></tr>
@@ -1453,8 +1372,6 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets a mat3x2 uniform. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Uniform location index. </td></tr>
@@ -1484,8 +1401,6 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets a mat3x2 array uniform. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Uniform location index. </td></tr>
@@ -1515,8 +1430,6 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets a mat3x4 uniform. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Uniform location index. </td></tr>
@@ -1546,8 +1459,6 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets a mat3x4 uniform. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Uniform location index. </td></tr>
@@ -1577,8 +1488,6 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets a mat4x2 uniform. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Uniform location index. </td></tr>
@@ -1608,8 +1517,6 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets a mat4x2 array uniform. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Uniform location index. </td></tr>
@@ -1639,8 +1546,6 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets a mat4x3 uniform. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Uniform location index. </td></tr>
@@ -1670,8 +1575,6 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets a mat4x3 array uniform. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Uniform location index. </td></tr>
@@ -1701,8 +1604,6 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets a texture sampler uniform. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Uniform location index. </td></tr>
@@ -1732,8 +1633,6 @@ Protected Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets a shader storage buffer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Storage buffer location index. </td></tr>
@@ -1764,8 +1663,6 @@ template&lt;typename Header, typename ArrayElement&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets a shader storage buffer. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Header</td><td>Type of the header object stored at the front of the buffer. </td></tr>
@@ -1803,8 +1700,6 @@ template&lt;typename Element&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets a shader storage buffer. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Element</td><td>Type of the array elements. </td></tr>
@@ -1839,8 +1734,6 @@ template&lt;typename Element&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets a uniform storage buffer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Storage buffer location index. </td></tr>
@@ -1871,8 +1764,6 @@ template&lt;typename Object&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets a uniform storage buffer. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Object</td><td>Objet contained in the buffer. </td></tr>
@@ -1903,8 +1794,6 @@ template&lt;typename Object&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets the debug label of the shader. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">label</td><td>Debug label of the shader. </td></tr>
@@ -1928,31 +1817,7 @@ template&lt;typename Object&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets the debug label of the shader. </p>
 <dl class="section return"><dt>Returns</dt><dd>Debug label of the shader. </dd></dl>
-
-<p class="reference">Referenced by <a class="el" href="#a03277cec831a3752c59bd5bc62a2c837">set_label()</a>.</p>
-
-</div>
-</div>
-<a id="ab70d8fc284329d1165ce318e1e5395cc" name="ab70d8fc284329d1165ce318e1e5395cc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab70d8fc284329d1165ce318e1e5395cc">&#9670;&#160;</a></span>id()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">unsigned int tr::shader_base::id </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Gets the unique ID of the shader program. </p>
-<dl class="section return"><dt>Returns</dt><dd>Unique ID of the shader program. </dd></dl>
 
 </div>
 </div>
@@ -1987,8 +1852,6 @@ template&lt;typename Object&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Sets a shader storage buffer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Storage buffer location index. </td></tr>
@@ -2026,8 +1889,6 @@ template&lt;typename Object&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Sets a uniform storage buffer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Storage buffer location index. </td></tr>
@@ -2059,8 +1920,6 @@ template&lt;typename Object&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Handle to the OpenGL program. </p>
-
 </div>
 </div>
 <a id="ae059e80c3a8fe1f380d15190fadf5f2c" name="ae059e80c3a8fe1f380d15190fadf5f2c"></a>
@@ -2082,8 +1941,6 @@ template&lt;typename Object&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Texture units allocated to this shader. </p>
 
 </div>
 </div>

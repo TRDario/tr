@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('macro_8hpp.htm
 <div class="contents">
 
 <p>Provides macro utilities.  
-<a href="#details">More...</a></p>
+</p>
 
 <p><a href="macro_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -152,9 +152,7 @@ Macros</h2></td></tr>
 <tr class="memitem:ad2f9fd581e4dc8f2fa82c3d4bb81d91b" id="r_ad2f9fd581e4dc8f2fa82c3d4bb81d91b"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#ad2f9fd581e4dc8f2fa82c3d4bb81d91b">TR_UNSPECIALIZED_VARIABLE_TEMPLATE</a>(template_arg,  return_type,  message)</td></tr>
 <tr class="memdesc:ad2f9fd581e4dc8f2fa82c3d4bb81d91b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the default specialization of a templated variable with an error.  <br /></td></tr>
 </table>
-<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Provides macro utilities. </p>
-</div><a name="doc-define-members" id="doc-define-members"></a><h2 id="header-doc-define-members" class="groupheader">Macro Definition Documentation</h2>
+<a name="doc-define-members" id="doc-define-members"></a><h2 id="header-doc-define-members" class="groupheader">Macro Definition Documentation</h2>
 <a id="a2ba7b799c46dfa140bb14ccb2ee4bbcc" name="a2ba7b799c46dfa140bb14ccb2ee4bbcc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2ba7b799c46dfa140bb14ccb2ee4bbcc">&#9670;&#160;</a></span>TR_UNREACHABLE</h2>
 
@@ -166,8 +164,6 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Marks a code segment as unreachable. </p>
 <p>If <span class="tt">TR_ENABLE_ASSERTS</span> is defined, it logs an error message and aborts the program. Otherwise, <span class="tt">std::unreachable()</span> is invoked. </p>
 
 </div>
@@ -186,8 +182,6 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Expands <span class="tt">x</span> into its string representation. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">x</td><td>Expression that will be stringified. </td></tr>
@@ -215,8 +209,6 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Joins <span class="tt">x</span> and <span class="tt">y</span>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">x,y</td><td>Expressions to join. </td></tr>
@@ -240,8 +232,6 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Circumvents macros taking expressions with macros as multiple arguments. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">...</td><td>An expression with commas. </td></tr>
@@ -262,8 +252,6 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Expands into a string literal of the source filename. </p>
 <dl class="section note"><dt>Note</dt><dd>May fall back to the full path if not supported by the compiler. </dd></dl>
 
 </div>
@@ -291,8 +279,6 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Custom assertion macro. </p>
 <p>If <span class="tt">TR_ENABLE_ASSERTS</span> is defined, it checks if condition is true, and if not, logs a formatted error message and aborts the program.</p>
 <p>If <span class="tt">TR_ENABLE_ASSERTS</span> is not defined, the macro does nothing.</p>
 <p>Error formatting is done through <span class="tt">std::format</span>, so <span class="tt">fmt</span> must be a valid format string and all further arguments must be formattable. </p><dl class="params"><dt>Parameters</dt><dd>
@@ -320,8 +306,6 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets a character pointer representation of a standard path. </p>
 <dl class="section note"><dt>Note</dt><dd>The resulting pointer should always be assumed to be a temporary. </dd></dl>
 
 </div>
@@ -349,8 +333,6 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Disables the default specialization of a templated variable with an error. </p>
 
 </div>
 </div>

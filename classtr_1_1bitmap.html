@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1bit
 <div class="contents">
 
 <p>Class containing owned bitmap data.  
- <a href="#details">More...</a></p>
+</p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
@@ -208,9 +208,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a64d93fb669064cc945590af87d29900d" id="r_a64d93fb669064cc945590af87d29900d"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a64d93fb669064cc945590af87d29900d">save</a> (const std::filesystem::path &amp;path) const</td></tr>
 <tr class="memdesc:a64d93fb669064cc945590af87d29900d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Saves the bitmap to a .png file.  <br /></td></tr>
 </table>
-<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Class containing owned bitmap data. </p>
-</div><a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Member Typedef Documentation</h2>
+<a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Member Typedef Documentation</h2>
 <a id="a7ded3772c35046736e600538a33c7860" name="a7ded3772c35046736e600538a33c7860"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7ded3772c35046736e600538a33c7860">&#9670;&#160;</a></span>const_reference</h2>
 
@@ -222,8 +220,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Constant reference type used by the bitmap. </p>
 
 </div>
 </div>
@@ -238,8 +234,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Constant iterator type used by the bitmap. </p>
 
 </div>
 </div>
@@ -270,8 +264,6 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Creates a blank bitmap. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">size</td><td>Size of the bitmap. </td></tr>
@@ -279,8 +271,6 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-
-<p class="reference">Referenced by <a class="el" href="#ac075055a362fc2bad33057ab89539d63">bitmap()</a>, <a class="el" href="#a0f6a3510f647f53ec81aaeb7d9a38b4f">bitmap()</a>, <a class="el" href="classtr_1_1bitmap_1_1iterator.html#ac749f97787078d7a5d86e339fac1dd13">tr::bitmap::iterator::iterator()</a>, and <a class="el" href="#a8cfd7dee311c4385a32d46e82433405a">operator=()</a>.</p>
 
 </div>
 </div>
@@ -310,8 +300,6 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Clones a bitmap. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">bitmap</td><td>Source bitmap to copy. </td></tr>
@@ -348,8 +336,6 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Clones a bitmap view. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">view</td><td>Source bitmap view to copy. </td></tr>
@@ -386,8 +372,6 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Clones a sub-bitmap. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">source</td><td>Source sub-bitmap to copy. </td></tr>
@@ -420,8 +404,6 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Moves a bitmap. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">bitmap</td><td>Bitmap to move. </td></tr>
@@ -454,8 +436,6 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Moves a bitmap. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">rhs</td><td>Bitmap to move. </td></tr>
@@ -480,8 +460,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Creates a sub-bitmap spanning the entire bitmap. </p>
 <dl class="section return"><dt>Returns</dt><dd>Sub-bitmap spanning the entire bitmap. </dd></dl>
 
 </div>
@@ -500,8 +478,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Creates a sub-bitmap of the bitmap. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">region</td><td>Region of the bitmap to create a sub-bitmap of. </td></tr>
@@ -526,11 +502,7 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets the size of the bitmap. </p>
 <dl class="section return"><dt>Returns</dt><dd>Size of the bitmap. </dd></dl>
-
-<p class="reference">Referenced by <a class="el" href="#ae187a1b92a248f6e52a98a16cc496a7a">bitmap()</a>.</p>
 
 </div>
 </div>
@@ -548,11 +520,7 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets the format of the bitmap. </p>
 <dl class="section return"><dt>Returns</dt><dd>Format of the bitmap. </dd></dl>
-
-<p class="reference">Referenced by <a class="el" href="#a0f6a3510f647f53ec81aaeb7d9a38b4f">bitmap()</a>, <a class="el" href="#ac14c2707d2f9566d4b2f5ccd4ef382eb">bitmap()</a>, <a class="el" href="#ae187a1b92a248f6e52a98a16cc496a7a">bitmap()</a>, <a class="el" href="#a9ee0598b32dd924b90d49c70645a622c">bitmap()</a>, and <a class="el" href="classtr_1_1bitmap_1_1reference.html#a73c65985f1943691fe9c86bb0bc28515">tr::bitmap::reference::operator=()</a>.</p>
 
 </div>
 </div>
@@ -570,8 +538,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets the pitch of the bitmap. </p>
 <dl class="section return"><dt>Returns</dt><dd>Pitch of the bitmap. </dd></dl>
 
 </div>
@@ -594,8 +560,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets mutable access to a pixel of the bitmap. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">x,y</td><td>Position of the bitmap within the bitmap. </td></tr>
@@ -620,8 +584,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets mutable access to a pixel of the bitmap. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">pos</td><td>Position of the pixel within the bitmap. </td></tr>
@@ -650,8 +612,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets immutable access to a pixel of the bitmap. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">x,y</td><td>Position of the bitmap within the bitmap. </td></tr>
@@ -676,8 +636,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets immutable access to a pixel of the bitmap. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">pos</td><td>Position of the pixel within the bitmap. </td></tr>
@@ -702,8 +660,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets the raw data of the bitmap. </p>
 <dl class="section return"><dt>Returns</dt><dd>Pointer to the data of the bitmap. </dd></dl>
 
 </div>
@@ -722,8 +678,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets the raw data of the bitmap. </p>
 <dl class="section return"><dt>Returns</dt><dd>Pointer to the data of the bitmap. </dd></dl>
 
 </div>
@@ -742,8 +696,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets a mutable iterator to the beginning of the bitmap. </p>
 <dl class="section return"><dt>Returns</dt><dd>Iterator to the beginning of the bitmap. </dd></dl>
 
 </div>
@@ -762,8 +714,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets an immutable iterator to the beginning of the bitmap. </p>
 <dl class="section return"><dt>Returns</dt><dd>Iterator to the beginning of the bitmap. </dd></dl>
 
 </div>
@@ -782,8 +732,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets an immutable iterator to the beginning of the bitmap. </p>
 <dl class="section return"><dt>Returns</dt><dd>Iterator to the beginning of the bitmap. </dd></dl>
 
 </div>
@@ -802,8 +750,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets a mutable iterator to one past the end of the bitmap. </p>
 <dl class="section return"><dt>Returns</dt><dd>Iterator to the end of the bitmap. </dd></dl>
 
 </div>
@@ -822,8 +768,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets an immutable iterator to one past the end of the bitmap. </p>
 <dl class="section return"><dt>Returns</dt><dd>Iterator to the end of the bitmap. </dd></dl>
 
 </div>
@@ -842,8 +786,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets an immutable iterator to one past the end of the bitmap. </p>
 <dl class="section return"><dt>Returns</dt><dd>Iterator to the end of the bitmap. </dd></dl>
 
 </div>
@@ -866,8 +808,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Blits a sub-bitmap to the bitmap. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">tl</td><td>Top-left corner of the target region. </td></tr>
@@ -896,8 +836,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Fills a region of the bitmap with a solid color. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">region</td><td>Region of the bitmap to fill. </td></tr>
@@ -922,8 +860,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Saves the bitmap to a .png file. </p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
     <tr><td class="paramname">bitmap_save_error</td><td>If saving the bitmap to file failed. </td></tr>

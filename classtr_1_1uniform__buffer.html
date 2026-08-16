@@ -130,7 +130,15 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1uni
 
 <p>Typed shader uniform buffer.  
  <a href="#details">More...</a></p>
-<div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Inheritance diagram for tr::uniform_buffer&lt; Object &gt;:</div>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename Object&gt;<br />
+class tr::uniform_buffer&lt; Object &gt;</div><dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Object</td><td>Objet contained in the buffer. </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Inheritance diagram for tr::uniform_buffer&lt; Object &gt;:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
@@ -163,16 +171,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a791c5d26a17cce2fe3850cb8e1ba5697" id="r_a791c5d26a17cce2fe3850cb8e1ba5697"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a791c5d26a17cce2fe3850cb8e1ba5697">set_label</a> (std::string_view label)</td></tr>
 <tr class="memdesc:a791c5d26a17cce2fe3850cb8e1ba5697"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the label of the buffer.  <br /></td></tr>
 </table>
-<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;typename Object&gt;<br />
-class tr::uniform_buffer&lt; Object &gt;</div><p>Typed shader uniform buffer. </p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">Object</td><td>Objet contained in the buffer. </td></tr>
-  </table>
-  </dd>
-</dl>
-</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a80724469173735cdc9fca3797329a740" name="a80724469173735cdc9fca3797329a740"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a80724469173735cdc9fca3797329a740">&#9670;&#160;</a></span>uniform_buffer()</h2>
 
@@ -189,8 +188,6 @@ template&lt;typename Object&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Allocates an uninitialized uniform buffer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">context</td><td>Graphics context to create the buffer on. </td></tr>
@@ -217,8 +214,6 @@ template&lt;typename Object&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets the contents of the buffer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">data</td><td>Object to copy into the buffer. </td></tr>
@@ -244,8 +239,6 @@ template&lt;typename Object&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Maps the buffer. </p>
 <dl class="section return"><dt>Returns</dt><dd>Write-only map of the buffer object. </dd></dl>
 
 </div>
@@ -266,11 +259,7 @@ template&lt;typename Object&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets a reference to the graphics context the buffer is on. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the graphics context the buffer is on. </dd></dl>
-
-<p class="reference">Referenced by <a class="el" href="#a80724469173735cdc9fca3797329a740">uniform_buffer()</a>, and <a class="el" href="#a791c5d26a17cce2fe3850cb8e1ba5697">set_label()</a>.</p>
 
 </div>
 </div>
@@ -290,8 +279,6 @@ template&lt;typename Object&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets whether the buffer is mapped. </p>
 <dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the buffer is mapped, <span class="tt">false</span> otherwise. </dd></dl>
 
 </div>
@@ -312,8 +299,6 @@ template&lt;typename Object&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets the label of the buffer. </p>
 <dl class="section return"><dt>Returns</dt><dd>Label of the buffer, or "&lt;unnamed&gt;". </dd></dl>
 
 </div>
@@ -334,8 +319,6 @@ template&lt;typename Object&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets the label of the buffer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">label</td><td>Label of the buffer. </td></tr>

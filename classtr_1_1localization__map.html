@@ -130,7 +130,12 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1loc
 
 <p>Localization map class with support for reading custom localization files.  
  <a href="#details">More...</a></p>
-<table class="memberdecls">
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>The localization file consists of lines in the format: <span class="tt">[&lt;KEY&gt; = "&lt;VALUE&gt;"] [#COMMENT]</span></p>
+<p>Empty lines and lines consisting entirely of comments are ignored, as is any whitespace between the tokens.</p>
+<p><span class="tt">KEY</span> must consist entirely of ASCII alphanumeric characters and <span class="tt">_</span>.</p>
+<p><span class="tt">VALUE</span> can contain any Unicode characters, but a few have to be escaped: newlines with <span class="tt">\n</span>, backslashes with <span class="tt">\\</span>, quotes with <span class="tt">\"</span>. </p>
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
@@ -153,13 +158,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a3e0ac06f05dd83229654cca049eeec16" id="r_a3e0ac06f05dd83229654cca049eeec16"><td class="memItemLeft">std::string_view&#160;</td><td class="memItemRight"><a class="el" href="#a3e0ac06f05dd83229654cca049eeec16">operator[]</a> (std::string_view key) const</td></tr>
 <tr class="memdesc:a3e0ac06f05dd83229654cca049eeec16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a localization string associated with a key.  <br /></td></tr>
 </table>
-<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Localization map class with support for reading custom localization files. </p>
-<p>The localization file consists of lines in the format: <span class="tt">[&lt;KEY&gt; = "&lt;VALUE&gt;"] [#COMMENT]</span></p>
-<p>Empty lines and lines consisting entirely of comments are ignored, as is any whitespace between the tokens.</p>
-<p><span class="tt">KEY</span> must consist entirely of ASCII alphanumeric characters and <span class="tt">_</span>.</p>
-<p><span class="tt">VALUE</span> can contain any Unicode characters, but a few have to be escaped: newlines with <span class="tt">\n</span>, backslashes with <span class="tt">\\</span>, quotes with <span class="tt">\"</span>. </p>
-</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a41e8407b7779fcb90fb8797b15b36ece" name="a41e8407b7779fcb90fb8797b15b36ece"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a41e8407b7779fcb90fb8797b15b36ece">&#9670;&#160;</a></span>localization_map() <span class="overload">[1/3]</span></h2>
 
@@ -183,8 +182,6 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Constructs an empty localization map. </p>
-
 </div>
 </div>
 <a id="abd0fdb874eedeabb16a041ed044cb712" name="abd0fdb874eedeabb16a041ed044cb712"></a>
@@ -201,8 +198,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Copies a localization map. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">map</td><td>Localization map to copy. </td></tr>
@@ -226,8 +221,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Moves a localization map. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">map</td><td>Localization map to move. </td></tr>
@@ -253,8 +246,6 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Clears the localization map. </p>
-
 </div>
 </div>
 <a id="aad19de581d7337c6facdf28ed0ac3be8" name="aad19de581d7337c6facdf28ed0ac3be8"></a>
@@ -271,8 +262,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Loads a localization script, returning any non-fatal errors. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">script</td><td>Script string in the format defined in the class description. </td></tr>
@@ -297,8 +286,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Loads a localization script file, returning any non-fatal errors. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">path</td><td>Path to a script file in the format defined in the class description. </td></tr>
@@ -330,8 +317,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets whether a key has a corresponding localization string in the map. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">key</td><td>Localization key to check. </td></tr>
@@ -356,8 +341,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets a localization string associated with a key. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">key</td><td>Localization key to get a localization string for. </td></tr>

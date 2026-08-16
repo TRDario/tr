@@ -130,7 +130,18 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1out
 
 <p>Wrapper type returned by out_handle.  
  <a href="#details">More...</a></p>
-<table class="memberdecls">
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter, bool SkipEmptyHandleCheck&gt;<br />
+class tr::out_handle_t&lt; Base, Empty, Deleter, SkipEmptyHandleCheck &gt;</div><dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Base</td><td>Handle base type. </td></tr>
+    <tr><td class="paramname">Empty</td><td>Empty handle sentinel value. </td></tr>
+    <tr><td class="paramname">Deleter</td><td>Handle deleter type. </td></tr>
+    <tr><td class="paramname">SkipEmptyHandleCheck</td><td>Whether to skip the empty handle check when constructing the wrapper. </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
@@ -142,19 +153,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ad718b324c87d4f089b69cd7d5d3f49a8" id="r_ad718b324c87d4f089b69cd7d5d3f49a8"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ad718b324c87d4f089b69cd7d5d3f49a8">operator Base *</a> ()</td></tr>
 <tr class="memdesc:ad718b324c87d4f089b69cd7d5d3f49a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a pointer that can be used by a function writing a base value.  <br /></td></tr>
 </table>
-<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter, bool SkipEmptyHandleCheck&gt;<br />
-class tr::out_handle_t&lt; Base, Empty, Deleter, SkipEmptyHandleCheck &gt;</div><p>Wrapper type returned by out_handle. </p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">Base</td><td>Handle base type. </td></tr>
-    <tr><td class="paramname">Empty</td><td>Empty handle sentinel value. </td></tr>
-    <tr><td class="paramname">Deleter</td><td>Handle deleter type. </td></tr>
-    <tr><td class="paramname">SkipEmptyHandleCheck</td><td>Whether to skip the empty handle check when constructing the wrapper. </td></tr>
-  </table>
-  </dd>
-</dl>
-</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a1aed25804042b10fd0b3ece11e444412" name="a1aed25804042b10fd0b3ece11e444412"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1aed25804042b10fd0b3ece11e444412">&#9670;&#160;</a></span>out_handle_t()</h2>
 
@@ -171,8 +170,6 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter,
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Wraps an output handle. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">handle</td><td>Handle to wrap. </td></tr>
@@ -199,8 +196,6 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter,
       </table>
 </div><div class="memdoc">
 
-<p>Sets the handle. </p>
-
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
@@ -220,8 +215,6 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter,
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets a pointer that can be used by a function writing a base value. </p>
 <dl class="section return"><dt>Returns</dt><dd>Pointer that can be used by a function writing a base value. </dd></dl>
 
 </div>

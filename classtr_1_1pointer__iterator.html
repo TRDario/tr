@@ -130,7 +130,16 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1poi
 
 <p>CRTP base class that may be inherited from to define an iterator based on a wrapped pointer.  
  <a href="#details">More...</a></p>
-<table class="memberdecls">
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c5412d">pointer</a> Pointer&gt;<br />
+class tr::pointer_iterator&lt; Iterator, Pointer &gt;</div><dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Iterator</td><td>Derived iterator type. </td></tr>
+    <tr><td class="paramname">Pointer</td><td>Raw pointer type. </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-types" class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
 <tr class="memitem:abedc7f78949eefd4f592c5c97a5537ba" id="r_abedc7f78949eefd4f592c5c97a5537ba"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#abedc7f78949eefd4f592c5c97a5537ba">difference_type</a> = std::pointer_traits&lt;Pointer&gt;::difference_type</td></tr>
@@ -171,17 +180,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a9bb774ccc637e093be9169f088a2fe1f" id="r_a9bb774ccc637e093be9169f088a2fe1f"><td class="memItemLeft">Pointer&#160;</td><td class="memItemRight"><a class="el" href="#a9bb774ccc637e093be9169f088a2fe1f">base</a> () const</td></tr>
 <tr class="memdesc:a9bb774ccc637e093be9169f088a2fe1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unwraps the iterator.  <br /></td></tr>
 </table>
-<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c5412d">pointer</a> Pointer&gt;<br />
-class tr::pointer_iterator&lt; Iterator, Pointer &gt;</div><p>CRTP base class that may be inherited from to define an iterator based on a wrapped pointer. </p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">Iterator</td><td>Derived iterator type. </td></tr>
-    <tr><td class="paramname">Pointer</td><td>Raw pointer type. </td></tr>
-  </table>
-  </dd>
-</dl>
-</div><a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Member Typedef Documentation</h2>
+<a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Member Typedef Documentation</h2>
 <a id="abedc7f78949eefd4f592c5c97a5537ba" name="abedc7f78949eefd4f592c5c97a5537ba"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#abedc7f78949eefd4f592c5c97a5537ba">&#9670;&#160;</a></span>difference_type</h2>
 
@@ -195,8 +194,6 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Difference type used by the iterator. </p>
 
 </div>
 </div>
@@ -214,8 +211,6 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
       </table>
 </div><div class="memdoc">
 
-<p>Value type used by the iterator. </p>
-
 </div>
 </div>
 <a id="af421db3098980120634fb66f55c5412d" name="af421db3098980120634fb66f55c5412d"></a>
@@ -231,8 +226,6 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Pointer type used by the iterator. </p>
 
 </div>
 </div>
@@ -250,8 +243,6 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
       </table>
 </div><div class="memdoc">
 
-<p>Reference type used by the iterator. </p>
-
 </div>
 </div>
 <a id="ae7ea9b6c1ee56caf75c87363ee04aba7" name="ae7ea9b6c1ee56caf75c87363ee04aba7"></a>
@@ -267,8 +258,6 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Iterator category the iterator belongs to. </p>
 
 </div>
 </div>
@@ -298,10 +287,6 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
 </table>
 </div><div class="memdoc">
 
-<p>Default-constructs an iterator. </p>
-
-<p class="reference">Referenced by <a class="el" href="#aca965fc121193f713a0eadcbcd4c174e">operator+</a>, <a class="el" href="#a5855e203b3885f09c7df18ba59dcab69">operator+</a>, <a class="el" href="#a72032087e63d2d5c88e17ae9b8fc8eaa">operator-</a>, <a class="el" href="#a260c19607b4a4e3c8e6aae7cc2f4842f">operator-</a>, <a class="el" href="#a2d4a0e09e0b078737d0905daa8cf3429">operator&lt;=&gt;</a>, and <a class="el" href="#aba861329aa930de3ea18dbc7c5c5dd7b">operator==</a>.</p>
-
 </div>
 </div>
 <a id="a8b83d9da4f4433546b049ee79941a18f" name="a8b83d9da4f4433546b049ee79941a18f"></a>
@@ -328,8 +313,6 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Constructs an iterator. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">base</td><td>Base pointer. </td></tr>
@@ -364,8 +347,6 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Dereferences the iterator. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the dereferenced value. </dd></dl>
 
 </div>
@@ -394,8 +375,6 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Dereferences the iterator. </p>
 <dl class="section return"><dt>Returns</dt><dd>Pointer to the dereferenced value. </dd></dl>
 
 </div>
@@ -424,8 +403,6 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Dereferences the iterator with a subscript. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">diff</td><td>Offset to the target value. </td></tr>
@@ -460,8 +437,6 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Pre-increments the iterator. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to <span class="tt">*this</span>. </dd></dl>
 
 </div>
@@ -490,8 +465,6 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Post-increments the iterator. </p>
 <dl class="section return"><dt>Returns</dt><dd>Copy of <span class="tt">*this</span> before it was incremented. </dd></dl>
 
 </div>
@@ -520,8 +493,6 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Pre-decrements the iterator. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to <span class="tt">*this</span>. </dd></dl>
 
 </div>
@@ -550,8 +521,6 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Post-decrements the iterator. </p>
 <dl class="section return"><dt>Returns</dt><dd>Copy of <span class="tt">*this</span> before it was decremented. </dd></dl>
 
 </div>
@@ -580,8 +549,6 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Advances the iterator. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">diff</td><td>Amount of steps to advance by. </td></tr>
@@ -616,8 +583,6 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Subtracts from the iterator. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">diff</td><td>Amount of steps to subtract by. </td></tr>
@@ -644,11 +609,7 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Unwraps the iterator. </p>
 <dl class="section return"><dt>Returns</dt><dd>Base pointer. </dd></dl>
-
-<p class="reference">Referenced by <a class="el" href="#a8b83d9da4f4433546b049ee79941a18f">pointer_iterator()</a>.</p>
 
 </div>
 </div>

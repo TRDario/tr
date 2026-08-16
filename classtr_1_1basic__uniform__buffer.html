@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1bas
 <div class="contents">
 
 <p>Basic shader uniform buffer.  
- <a href="#details">More...</a></p>
+</p>
 <div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Inheritance diagram for tr::basic_uniform_buffer:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
 </div>
@@ -169,9 +169,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a1b9eef6ffb431a6b5ce3cb05af26b4f2" id="r_a1b9eef6ffb431a6b5ce3cb05af26b4f2"><td class="memItemLeft">unsigned int&#160;</td><td class="memItemRight"><a class="el" href="#a1b9eef6ffb431a6b5ce3cb05af26b4f2">id</a> () const</td></tr>
 <tr class="memdesc:a1b9eef6ffb431a6b5ce3cb05af26b4f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the unique ID of the buffer.  <br /></td></tr>
 </table>
-<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Basic shader uniform buffer. </p>
-</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aabcd05ef7c59e589bd32ec50a6017e1c" name="aabcd05ef7c59e589bd32ec50a6017e1c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aabcd05ef7c59e589bd32ec50a6017e1c">&#9670;&#160;</a></span>basic_uniform_buffer()</h2>
 
@@ -190,8 +188,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Allocates an uninitialized uniform buffer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">context</td><td>Graphics context to create the buffer on. </td></tr>
@@ -217,11 +213,7 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets the size of the buffer. </p>
 <dl class="section return"><dt>Returns</dt><dd>Size of the buffer in bytes. </dd></dl>
-
-<p class="reference">Referenced by <a class="el" href="#aabcd05ef7c59e589bd32ec50a6017e1c">basic_uniform_buffer()</a>.</p>
 
 </div>
 </div>
@@ -239,8 +231,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets the data of the buffer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">data</td><td>Data to copy into the buffer. </td></tr>
@@ -264,11 +254,7 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets whether the buffer is mapped. </p>
 <dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the buffer is mapped, <span class="tt">false</span> otherwise. </dd></dl>
-
-<p class="reference">Referenced by <a class="el" href="classtr_1_1uniform__buffer.html#a2dd1031c714fa75b9b8c9355b248dd0c">tr::uniform_buffer&lt; Object &gt;::set()</a>.</p>
 
 </div>
 </div>
@@ -286,8 +272,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Maps the buffer. </p>
 <dl class="section return"><dt>Returns</dt><dd>Write-only map of the buffer. </dd></dl>
 
 </div>
@@ -306,11 +290,7 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets a reference to the graphics context the buffer is on. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the graphics context the buffer is on. </dd></dl>
-
-<p class="reference">Referenced by <a class="el" href="#aabcd05ef7c59e589bd32ec50a6017e1c">basic_uniform_buffer()</a>, and <a class="el" href="classtr_1_1uniform__buffer.html#a80724469173735cdc9fca3797329a740">tr::uniform_buffer&lt; Object &gt;::uniform_buffer()</a>.</p>
 
 </div>
 </div>
@@ -328,11 +308,7 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets the label of the buffer. </p>
 <dl class="section return"><dt>Returns</dt><dd>Label of the buffer, or "&lt;unnamed&gt;". </dd></dl>
-
-<p class="reference">Referenced by <a class="el" href="classtr_1_1uniform__buffer.html#aa601f10a9099dd0a5482eba13af82b5d">tr::uniform_buffer&lt; Object &gt;::map()</a>.</p>
 
 </div>
 </div>
@@ -350,16 +326,12 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets the label of the buffer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">label</td><td>Label of the buffer. </td></tr>
   </table>
   </dd>
 </dl>
-
-<p class="reference">Referenced by <a class="el" href="classtr_1_1uniform__buffer.html#aa601f10a9099dd0a5482eba13af82b5d">tr::uniform_buffer&lt; Object &gt;::map()</a>.</p>
 
 </div>
 </div>
@@ -377,8 +349,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets the unique ID of the buffer. </p>
 <dl class="section return"><dt>Returns</dt><dd>Unique ID of the buffer. </dd></dl>
 
 </div>

@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1dyn
 <div class="contents">
 
 <p>Dynamic index buffer class.  
- <a href="#details">More...</a></p>
+</p>
 <div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Inheritance diagram for tr::dyn_index_buffer:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
 </div>
@@ -176,9 +176,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a1b9eef6ffb431a6b5ce3cb05af26b4f2" id="r_a1b9eef6ffb431a6b5ce3cb05af26b4f2"><td class="memItemLeft">unsigned int&#160;</td><td class="memItemRight"><a class="el" href="#a1b9eef6ffb431a6b5ce3cb05af26b4f2">id</a> () const</td></tr>
 <tr class="memdesc:a1b9eef6ffb431a6b5ce3cb05af26b4f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the unique ID of the buffer.  <br /></td></tr>
 </table>
-<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Dynamic index buffer class. </p>
-</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
 <a id="acc32df5c89ac06af29315a3e1abc80b3" name="acc32df5c89ac06af29315a3e1abc80b3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#acc32df5c89ac06af29315a3e1abc80b3">&#9670;&#160;</a></span>empty()</h2>
 
@@ -193,8 +191,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets whether the index buffer is empty. </p>
 <dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the buffer is empty, <span class="tt">false</span> otherwise. </dd></dl>
 
 </div>
@@ -213,11 +209,7 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets the size of the index buffer contents. </p>
 <dl class="section return"><dt>Returns</dt><dd>Size of the index buffer in elements. </dd></dl>
-
-<p class="reference">Referenced by <a class="el" href="#adaa6986698fc783ebf7c5cb314ceeb7f">resize()</a>.</p>
 
 </div>
 </div>
@@ -235,11 +227,7 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets the capacity of the index buffer. </p>
 <dl class="section return"><dt>Returns</dt><dd>Capacity of the index buffer in elements. </dd></dl>
-
-<p class="reference">Referenced by <a class="el" href="#a96a46a6a91da14e6b2cfa4911f521b9c">reserve()</a>.</p>
 
 </div>
 </div>
@@ -258,8 +246,6 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Sets the size of the index buffer to 0. </p>
-
 </div>
 </div>
 <a id="adaa6986698fc783ebf7c5cb314ceeb7f" name="adaa6986698fc783ebf7c5cb314ceeb7f"></a>
@@ -276,8 +262,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Clears the buffer and resizes it, potentially reallocating in the process. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">size</td><td>New size of the buffer in elements. </td></tr>
@@ -301,8 +285,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Clears the buffer and guarantees a certain capacity for it. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">capacity</td><td>New capacity of the buffer in elements. </td></tr>
@@ -326,8 +308,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets the contents of the buffer, potentially reallocating in the process. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">data</td><td>Data to copy into the buffer. </td></tr>
@@ -355,8 +335,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets a region of the buffer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">offset</td><td>Starting element offset within the buffer. </td></tr>
@@ -382,8 +360,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Constructs an empty buffer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">context</td><td>Graphics context to create the buffer on. </td></tr>
@@ -407,8 +383,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets a reference to the graphics context the buffer is on. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the graphics context the buffer is on. </dd></dl>
 
 </div>
@@ -427,8 +401,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets the label of the buffer. </p>
 <dl class="section return"><dt>Returns</dt><dd>Label of the buffer, or "&lt;unnamed&gt;". </dd></dl>
 
 </div>
@@ -447,8 +419,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets the label of the buffer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">label</td><td>Label of the buffer. </td></tr>
@@ -472,8 +442,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets the unique ID of the buffer. </p>
 <dl class="section return"><dt>Returns</dt><dd>Unique ID of the buffer. </dd></dl>
 
 </div>

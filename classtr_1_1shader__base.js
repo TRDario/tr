@@ -54,7 +54,6 @@ var classtr_1_1shader__base =
     [ "set_uniform_buffer", "classtr_1_1shader__base.html#a0755901aeb64501fb6cf1798567574d7", null ],
     [ "set_label", "classtr_1_1shader__base.html#a03277cec831a3752c59bd5bc62a2c837", null ],
     [ "label", "classtr_1_1shader__base.html#a19c27a295530cb46f3ce74319c35c939", null ],
-    [ "id", "classtr_1_1shader__base.html#ab70d8fc284329d1165ce318e1e5395cc", null ],
     [ "set_storage_buffer", "classtr_1_1shader__base.html#ad3490346e46a23345e8a022a6bccff85", null ],
     [ "set_uniform_buffer", "classtr_1_1shader__base.html#aacc68f7cf237e483b8455c91e667238f", null ],
     [ "m_program", "classtr_1_1shader__base.html#aa307ce4ffbc183af3450b4be368bfa0d", null ],

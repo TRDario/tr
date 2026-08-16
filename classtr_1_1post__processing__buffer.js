@@ -8,5 +8,6 @@ var classtr_1_1post__processing__buffer =
     [ "allocate", "classtr_1_1post__processing__buffer.html#aca9680bda9961223924535fa21f7f227", null ],
     [ "source", "classtr_1_1post__processing__buffer.html#a5e328c5c57dfdd2713787f522ab40077", null ],
     [ "clear_source", "classtr_1_1post__processing__buffer.html#a0db36c69cfba9c9d4c88c37c0ac80441", null ],
-    [ "apply", "classtr_1_1post__processing__buffer.html#ab4ef8089e4edb367e029c3056298238a", null ]
+    [ "apply", "classtr_1_1post__processing__buffer.html#ab4ef8089e4edb367e029c3056298238a", null ],
+    [ "draw", "classtr_1_1post__processing__buffer.html#acc6f5074857c197a619ca78ab9bd9c49", null ]
 ];

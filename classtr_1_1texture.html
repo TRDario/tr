@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1tex
 <div class="contents">
 
 <p>2D GPU texture container.  
- <a href="#details">More...</a></p>
+</p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -178,9 +178,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2f5a8252a921eda2764922024eb0b092" id="r_a2f5a8252a921eda2764922024eb0b092"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a2f5a8252a921eda2764922024eb0b092">set_label</a> (std::string_view label)</td></tr>
 <tr class="memdesc:a2f5a8252a921eda2764922024eb0b092"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the debug label of the texture.  <br /></td></tr>
 </table>
-<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>2D GPU texture container. </p>
-</div><a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a61a25330dbf947e612617e4643bb1eab" name="a61a25330dbf947e612617e4643bb1eab"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a61a25330dbf947e612617e4643bb1eab">&#9670;&#160;</a></span>texture() <span class="overload">[1/3]</span></h2>
 
@@ -195,16 +193,12 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Creates an incomplete texture. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">context</td><td>Graphics context to create the texture on. </td></tr>
   </table>
   </dd>
 </dl>
-
-<p class="reference">Referenced by <a class="el" href="#a7dcd2d5ea57dd7419a0b68c0c3a3880d">allocate()</a>, and <a class="el" href="#a2f5a8252a921eda2764922024eb0b092">set_label()</a>.</p>
 
 </div>
 </div>
@@ -236,8 +230,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Allocates an uninitialized texture. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">context</td><td>Graphics context to create the texture on. </td></tr>
@@ -278,8 +270,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Constructs a texture with data uploaded from a bitmap. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">context</td><td>Graphics context to create the texture on. </td></tr>
@@ -307,8 +297,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets a view to the texture. </p>
 <dl class="section return"><dt>Returns</dt><dd>View to the texture. </dd></dl>
 
 </div>
@@ -327,8 +315,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets a view to the texture. </p>
 <dl class="section return"><dt>Returns</dt><dd>View to the texture. </dd></dl>
 
 </div>
@@ -347,11 +333,7 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets a reference to the graphics context the texture is on. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the graphics context the texture is on. </dd></dl>
-
-<p class="reference">Referenced by <a class="el" href="#a61a25330dbf947e612617e4643bb1eab">texture()</a>, <a class="el" href="#a5149d98c45e7f5472800d959c9ed1f01">texture()</a>, <a class="el" href="#aff5c1ec9cbee65edd8d1c32ed79c2b22">texture()</a>, and <a class="el" href="#a2f5a8252a921eda2764922024eb0b092">set_label()</a>.</p>
 
 </div>
 </div>
@@ -369,8 +351,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets whether the texture is complete. </p>
 <dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the texture is complete, <span class="tt">false</span> otherwise. </dd></dl>
 
 </div>
@@ -389,11 +369,7 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets the size of the texture. </p>
 <dl class="section return"><dt>Returns</dt><dd>Size of the texture. </dd></dl>
-
-<p class="reference">Referenced by <a class="el" href="#a5149d98c45e7f5472800d959c9ed1f01">texture()</a>, and <a class="el" href="#a7dcd2d5ea57dd7419a0b68c0c3a3880d">allocate()</a>.</p>
 
 </div>
 </div>
@@ -420,8 +396,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Allocates the texture and releases the previously held storage as a new texture. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">size</td><td>Size of the texture. </td></tr>
@@ -452,8 +426,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets the filters used by the texture sampler. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">min_filter</td><td>Minifying filter to use. </td></tr>
@@ -478,8 +450,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets the wrapping used by the texture sampler. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">wrap</td><td>Wrapping type to use. </td></tr>
@@ -503,8 +473,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets the border color of the texture sampler (used when <span class="tt">wrap::BORDER_CLAMP</span> is in use). </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">color</td><td>Border color to use. </td></tr>
@@ -528,8 +496,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Clears the texture. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">color</td><td>Color to clear the texture to. </td></tr>
@@ -557,8 +523,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Clears a region of the texture. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">region</td><td>Region of the texture to clear. </td></tr>
@@ -592,8 +556,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Copies a region from another texture. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">tl</td><td>Top-left corner of the copied region within the target texture. </td></tr>
@@ -623,8 +585,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets a region of the texture. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">tl</td><td>Top-left corner of the copied region within the target texture. </td></tr>
@@ -649,11 +609,7 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Gets the debug label of the texture. </p>
 <dl class="section return"><dt>Returns</dt><dd>Debug label of the texture. </dd></dl>
-
-<p class="reference">Referenced by <a class="el" href="#a2f5a8252a921eda2764922024eb0b092">set_label()</a>.</p>
 
 </div>
 </div>
@@ -671,8 +627,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Sets the debug label of the texture. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">label</td><td>Debug label of the texture. </td></tr>

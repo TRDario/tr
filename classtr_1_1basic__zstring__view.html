@@ -130,7 +130,16 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1bas
 
 <p>View to a NUL-terminated string.  
  <a href="#details">More...</a></p>
-<table class="memberdecls">
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt;<br />
+class tr::basic_zstring_view&lt; CharT, Traits &gt;</div><dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">CharT</td><td>Character type used by the string. </td></tr>
+    <tr><td class="paramname">Traits</td><td>Character traits used by the string. </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:end_5Fsentinel" id="r_end_5Fsentinel"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structtr_1_1basic__zstring__view_1_1end__sentinel.html">end_sentinel</a></td></tr>
@@ -217,17 +226,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a2e68c572be739ffac7c5c5b91c414a58" id="r_a2e68c572be739ffac7c5c5b91c414a58"><td class="memItemLeft">constexpr void&#160;</td><td class="memItemRight"><a class="el" href="#a2e68c572be739ffac7c5c5b91c414a58">remove_prefix</a> (<a class="el" href="#a535103f157466eaa9f9b179034bc6536">size_type</a> n)</td></tr>
 <tr class="memdesc:a2e68c572be739ffac7c5c5b91c414a58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves the start of the view forward.  <br /></td></tr>
 </table>
-<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt;<br />
-class tr::basic_zstring_view&lt; CharT, Traits &gt;</div><p>View to a NUL-terminated string. </p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">CharT</td><td>Character type used by the string. </td></tr>
-    <tr><td class="paramname">Traits</td><td>Character traits used by the string. </td></tr>
-  </table>
-  </dd>
-</dl>
-</div><a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Member Typedef Documentation</h2>
+<a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Member Typedef Documentation</h2>
 <a id="a6bcbad483e40c1dcc43381293f35a5b4" name="a6bcbad483e40c1dcc43381293f35a5b4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6bcbad483e40c1dcc43381293f35a5b4">&#9670;&#160;</a></span>traits_type</h2>
 
@@ -241,8 +240,6 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Character traits used by the string. </p>
 
 </div>
 </div>
@@ -260,8 +257,6 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
       </table>
 </div><div class="memdoc">
 
-<p>Size type used by the string. </p>
-
 </div>
 </div>
 <a id="a0285872b9ba3bc6a55ca2e4283796eab" name="a0285872b9ba3bc6a55ca2e4283796eab"></a>
@@ -277,8 +272,6 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Difference type used by the string. </p>
 
 </div>
 </div>
@@ -296,8 +289,6 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
       </table>
 </div><div class="memdoc">
 
-<p>Character type used by the string. </p>
-
 </div>
 </div>
 <a id="ac8ad594fb6707793105378f56793e714" name="ac8ad594fb6707793105378f56793e714"></a>
@@ -313,8 +304,6 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Pointer type used by the string. </p>
 
 </div>
 </div>
@@ -332,8 +321,6 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
       </table>
 </div><div class="memdoc">
 
-<p>Constant pointer type used by the string. </p>
-
 </div>
 </div>
 <a id="a140d82262ce995dbef28e030dd01f00b" name="a140d82262ce995dbef28e030dd01f00b"></a>
@@ -349,8 +336,6 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Reference type used by the string. </p>
 
 </div>
 </div>
@@ -368,8 +353,6 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
       </table>
 </div><div class="memdoc">
 
-<p>Constant reference type used by the string. </p>
-
 </div>
 </div>
 <a id="a40e3a74e5b128dabca676275aae471b4" name="a40e3a74e5b128dabca676275aae471b4"></a>
@@ -385,8 +368,6 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Constant iterator type used by the string. </p>
 
 </div>
 </div>
@@ -416,8 +397,6 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
 </table>
 </div><div class="memdoc">
 
-<p>Constructs an empty string view. </p>
-
 </div>
 </div>
 <a id="ad4ca49cb8e51f8ed8a50b42720baa5c9" name="ad4ca49cb8e51f8ed8a50b42720baa5c9"></a>
@@ -444,8 +423,6 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Constructs a string view from a NUL-terminated string pointer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">ptr</td><td>Pointer to a NUL-terminated string. </td></tr>
@@ -481,8 +458,6 @@ template&lt;typename Allocator&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Constructs a string view from a standard string. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Allocator</td><td>String allocator. </td></tr>
@@ -522,8 +497,6 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Trivially copies a string view. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">rhs</td><td>String view to copy. </td></tr>
@@ -557,8 +530,6 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Trivially moves a string view. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">rhs</td><td>String view to move. </td></tr>
@@ -593,8 +564,6 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Trivially copies a string view. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">rhs</td><td>String view to copy. </td></tr>
@@ -629,8 +598,6 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Trivially moves a string view. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">rhs</td><td>String view to move. </td></tr>
@@ -665,8 +632,6 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Converts the view into a standard string view. </p>
 <dl class="section return"><dt>Returns</dt><dd>Standard string view equivalent to <span class="tt">*this</span>. </dd></dl>
 
 </div>
@@ -699,8 +664,6 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Compares NUL-terminated string views. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">rhs</td><td>Second string view. </td></tr>
@@ -739,8 +702,6 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Compares NUL-terminated string views for equality. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">rhs</td><td>Second string view. </td></tr>
@@ -775,8 +736,6 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Gets an iterator to the beginning of the string. </p>
 <dl class="section return"><dt>Returns</dt><dd>Iterator to the beginning of the string. </dd></dl>
 
 </div>
@@ -805,8 +764,6 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Gets an iterator to the beginning of the string. </p>
 <dl class="section return"><dt>Returns</dt><dd>Iterator to the beginning of the string. </dd></dl>
 
 </div>
@@ -835,8 +792,6 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Gets an iterator sentinel to the end of the string. </p>
 <dl class="section return"><dt>Returns</dt><dd>Iterator sentinel to the end of the string. </dd></dl>
 
 </div>
@@ -865,8 +820,6 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Gets an iterator sentinel to the end of the string. </p>
 <dl class="section return"><dt>Returns</dt><dd>Iterator sentinel to the end of the string. </dd></dl>
 
 </div>
@@ -895,8 +848,6 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Accesses a specific character. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Index of the character within the string. </td></tr>
@@ -931,8 +882,6 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Accesses a specific character. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">index</td><td>Index of the character within the string. </td></tr>
@@ -967,8 +916,6 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Accesses the first character in the string. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the first character in the string. </dd></dl>
 
 </div>
@@ -997,8 +944,6 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Gets a pointer to the raw data of the string. </p>
 <dl class="section return"><dt>Returns</dt><dd>Pointer to the first character in the string. </dd></dl>
 
 </div>
@@ -1027,8 +972,6 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Gets a pointer to the raw C-string. </p>
 <dl class="section return"><dt>Returns</dt><dd>Pointer to the first character in the string. </dd></dl>
 
 </div>
@@ -1057,8 +1000,6 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Gets the length of the string as if by strlen. </p>
 <dl class="section return"><dt>Returns</dt><dd>Length of the string. </dd></dl>
 
 </div>
@@ -1087,8 +1028,6 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Gets whether the string view is empty. </p>
 <dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the view points to <span class="tt">nullptr</span> or an empty string, <span class="tt">false</span> otherwise. </dd></dl>
 
 </div>
@@ -1117,8 +1056,6 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Creates a sub-string view. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">pos</td><td>Starting position of the sub-string within the string. </td></tr>
@@ -1153,8 +1090,6 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Moves the start of the view forward. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">n</td><td>Number of characters to move the start of the view forward by. </td></tr>

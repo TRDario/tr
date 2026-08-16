@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1fra
 <div class="contents">
 
 <p>Collection of buffers used as a destination for rendering.  
- <a href="#details">More...</a></p>
+</p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-types" class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
@@ -167,9 +167,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab683fe993c7fc83e73844f16d5c10098" id="r_ab683fe993c7fc83e73844f16d5c10098"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ab683fe993c7fc83e73844f16d5c10098">detach</a> (attachment<a class="el" href="#a1c95ac79da562291ef7df23708286ab0">attachment</a> attachment<a class="el" href="#a1c95ac79da562291ef7df23708286ab0">attachment</a>)</td></tr>
 <tr class="memdesc:ab683fe993c7fc83e73844f16d5c10098"><td class="mdescLeft">&#160;</td><td class="mdescRight">Detaches whatever is on the specified attachment.  <br /></td></tr>
 </table>
-<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Collection of buffers used as a destination for rendering. </p>
-</div><a name="doc-enum-members" id="doc-enum-members"></a><h2 id="header-doc-enum-members" class="groupheader">Member Enumeration Documentation</h2>
+<a name="doc-enum-members" id="doc-enum-members"></a><h2 id="header-doc-enum-members" class="groupheader">Member Enumeration Documentation</h2>
 <a id="a1c95ac79da562291ef7df23708286ab0" name="a1c95ac79da562291ef7df23708286ab0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1c95ac79da562291ef7df23708286ab0">&#9670;&#160;</a></span>attachment</h2>
 
@@ -189,8 +187,6 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Framebuffer attachments. </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a1c95ac79da562291ef7df23708286ab0a32d432a5c34169a945991d0de8b478d9" name="a1c95ac79da562291ef7df23708286ab0a32d432a5c34169a945991d0de8b478d9"></a>color0&#160;</td><td class="fielddoc"><p>First color attachment. </p>
 </td></tr>
@@ -231,8 +227,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Creates an empty framebuffer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">context</td><td>Graphics context to create the framebuffer on. </td></tr>
@@ -258,10 +252,6 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Gets a reference to the graphics context the framebuffer is on. </p>
-
-<p class="reference">Referenced by <a class="el" href="#a37c9f016089770322c247f0852ede348">framebuffer()</a>, and <a class="el" href="#ab683fe993c7fc83e73844f16d5c10098">detach()</a>.</p>
-
 </div>
 </div>
 <a id="aa1b11be3690a052b795269c45919a79a" name="aa1b11be3690a052b795269c45919a79a"></a>
@@ -278,8 +268,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Creates a render target on the framebuffer. </p>
 <p>Since the framebuffer does not keep track of its own size, it must be provided manully. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">size</td><td>Size of the render target. </td></tr>
@@ -287,8 +275,6 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Render target on the framebuffer. </dd></dl>
-
-<p class="reference">Referenced by <a class="el" href="#aa1b11be3690a052b795269c45919a79a">render_target()</a>.</p>
 
 </div>
 </div>
@@ -310,8 +296,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Attaches a texture to the framebuffer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">attachment</td><td>Attachment to set. </td></tr>
@@ -336,8 +320,6 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-
-<p>Detaches whatever is on the specified attachment. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">attachment</td><td>Attachment to clear. </td></tr>
