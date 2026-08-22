@@ -14,8 +14,7 @@ tr::basic_shader_buffer::basic_shader_buffer(graphics_context& context, usize he
 	, m_array_size{0}
 	, m_array_capacity{capacity}
 {
-	const gl_api& gl{context.make_current_and_return_gl_api()};
-
+	const gl_api& gl{context.gl()};
 	gl.allocate_buffer_storage(id(), header_size + capacity, nullptr, std::to_underlying(map_type) | GL_DYNAMIC_STORAGE_BIT);
 	if (gl.get_error() == GL_OUT_OF_MEMORY) {
 		throw out_of_memory{"shader buffer allocation"};
@@ -44,9 +43,7 @@ void tr::basic_shader_buffer::set_header(std::span<const std::byte> data)
 	TR_ASSERT(data.size() == header_size(), "Tried to set header of shader buffer '{}' of size {} with data of size {}.", label(),
 			  header_size(), data.size());
 
-	const gl_api& gl{context().make_current_and_return_gl_api()};
-
-	gl.set_buffer_sub_data(id(), 0, data.size(), data.data());
+	context().gl().set_buffer_sub_data(id(), 0, data.size(), data.data());
 }
 
 void tr::basic_shader_buffer::set_array(std::span<const std::byte> data)
@@ -56,10 +53,8 @@ void tr::basic_shader_buffer::set_array(std::span<const std::byte> data)
 	TR_ASSERT(data.size() <= array_capacity(), "Tried to set a shader buffer array of capacity {} with data of size {}.", array_capacity(),
 			  data.size());
 
-	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	if (!data.empty()) {
-		gl.set_buffer_sub_data(id(), m_header_size, data.size(), data.data());
+		context().gl().set_buffer_sub_data(id(), m_header_size, data.size(), data.data());
 	}
 	m_array_size = data.size();
 }
@@ -75,10 +70,8 @@ void tr::basic_shader_buffer::resize_array(usize size)
 
 bool tr::basic_shader_buffer::mapped() const
 {
-	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	int mapped;
-	gl.get_buffer_parameter_iv(id(), GL_BUFFER_MAPPED, &mapped);
+	context().gl().get_buffer_parameter_iv(id(), GL_BUFFER_MAPPED, &mapped);
 	return mapped;
 }
 
@@ -86,8 +79,7 @@ tr::basic_graphics_buffer_map tr::basic_shader_buffer::map_range(usize offset, u
 {
 	TR_ASSERT(!mapped(), "Tried to map the header of already-mapped shader buffer '{}'.", label());
 
-	const gl_api& gl{context().make_current_and_return_gl_api()};
-
+	const gl_api& gl{context().gl()};
 	std::byte* const map_pointer{static_cast<std::byte*>(gl.map_buffer_range(id(), offset, size, std::to_underlying(m_map_type)))};
 	if (gl.get_error() == GL_OUT_OF_MEMORY) {
 		throw out_of_memory{"mapping of shader buffer '{}'", label()};

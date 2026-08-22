@@ -13,8 +13,7 @@ tr::vertex_format::vertex_format(graphics_context& context, std::span<const vert
 	, m_bindings{bindings}
 #endif
 {
-	const gl_api& gl{m_vao.get_deleter().context.make_current_and_return_gl_api()};
-
+	const gl_api& gl{context.gl()};
 	gl.create_vertex_arrays(1, out_handle(m_vao));
 	unsigned int attr_id{0};
 	for (int binding_id = 0; binding_id < static_cast<int>(bindings.size()); ++binding_id) {
@@ -54,9 +53,7 @@ tr::vertex_format::vertex_format(graphics_context& context, std::span<const vert
 
 void tr::vertex_format::deleter::operator()(unsigned int id) const
 {
-	const gl_api& gl{context.make_current_and_return_gl_api()};
-
-	gl.delete_vertex_arrays(1, &id);
+	context.gl().delete_vertex_arrays(1, &id);
 }
 
 //
@@ -70,15 +67,12 @@ tr::graphics_context& tr::vertex_format::context() const
 
 void tr::vertex_format::set_label(std::string_view label)
 {
-	const gl_api& gl{context().make_current_and_return_gl_api()};
-
-	gl.set_object_label(GL_VERTEX_ARRAY, m_vao.get(), label.size(), label.data());
+	context().gl().set_object_label(GL_VERTEX_ARRAY, m_vao.get(), label.size(), label.data());
 }
 
 std::string tr::vertex_format::label() const
 {
-	const gl_api& gl{context().make_current_and_return_gl_api()};
-
+	const gl_api& gl{context().gl()};
 	int label_length;
 	gl.get_object_label(GL_VERTEX_ARRAY, m_vao.get(), 0, &label_length, nullptr);
 	if (label_length > 0) {

@@ -45,7 +45,7 @@ struct std::formatter<tr::shader>
 			return std::format_to(ctx.out(), "\"{}\" (GID: {})", shader.label(), shader.gid());
 		}
 		else {
-			return std::format_to(ctx.out(), "<invalid shader at {}>", &shader);
+			return std::format_to(ctx.out(), "<invalid shader at {}>", static_cast<const void*>(&shader));
 		}
 	}
 };

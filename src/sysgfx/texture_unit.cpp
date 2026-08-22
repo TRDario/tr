@@ -8,7 +8,7 @@
 //
 
 tr::texture_unit::texture_unit(graphics_context& context)
-	: m_handle{{context}}
+	: m_handle{deleter{context}}
 {
 	for (unsigned int free_index{0}; free_index < context.m_allocated_texture_units.size(); ++free_index) {
 		if (!context.m_allocated_texture_units[free_index]) {
@@ -36,6 +36,5 @@ unsigned int tr::texture_unit::id() const
 
 void tr::texture_unit::set(texture_view texture)
 {
-	const gl_api& gl{m_handle.get_deleter().context.make_current_and_return_gl_api()};
-	gl.bind_textures(m_handle.get(), 1, &texture.m_id);
+	m_handle.get_deleter().context.gl().bind_textures(m_handle.get(), 1, &texture.m_id);
 }

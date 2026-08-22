@@ -194,7 +194,7 @@ void tr::graphics_context::deleter::operator()(SDL_GLContextState* context)
 
 struct tr::graphics_context::info tr::graphics_context::info() const
 {
-	const gl_api& gl{make_current_and_return_gl_api()};
+	const gl_api& gl{this->gl()};
 	return {
 		reinterpret_cast<const char*>(gl.get_string(GL_VENDOR)),
 		reinterpret_cast<const char*>(gl.get_string(GL_RENDERER)),
@@ -249,30 +249,26 @@ bool tr::graphics_context::should_setup_renderer(renderer_id id)
 
 void tr::graphics_context::set_wireframe_mode(bool arg)
 {
-	const gl_api& gl{make_current_and_return_gl_api()};
-	gl.set_polygon_mode(GL_FRONT_AND_BACK, arg ? GL_LINE : GL_FILL);
+	gl().set_polygon_mode(GL_FRONT_AND_BACK, arg ? GL_LINE : GL_FILL);
 }
 
 void tr::graphics_context::set_face_culling(bool arg)
 {
-	const gl_api& gl{make_current_and_return_gl_api()};
 	if (arg) {
-		gl.enable(GL_CULL_FACE);
+		gl().enable(GL_CULL_FACE);
 	}
 	else {
-		gl.disable(GL_CULL_FACE);
+		gl().disable(GL_CULL_FACE);
 	}
 }
 
 void tr::graphics_context::set_depth_test(bool arg)
 {
-	const gl_api& gl{make_current_and_return_gl_api()};
-
 	if (arg) {
-		gl.enable(GL_DEPTH_TEST);
+		gl().enable(GL_DEPTH_TEST);
 	}
 	else {
-		gl.disable(GL_DEPTH_TEST);
+		gl().disable(GL_DEPTH_TEST);
 	}
 }
 
@@ -280,8 +276,7 @@ void tr::graphics_context::set_depth_test(bool arg)
 
 void tr::graphics_context::set_render_target(const render_target& target)
 {
-	const gl_api& gl{make_current_and_return_gl_api()};
-
+	const gl_api& gl{this->gl()};
 	bool changed_render_target{false};
 
 	if (!m_render_target.has_value() || m_render_target->m_framebuffer != target.m_framebuffer) {
@@ -312,13 +307,12 @@ void tr::graphics_context::set_shader_pipeline(const shader_pipeline& pipeline)
 	pipeline.assert_settable(*this);
 #endif
 
-	const gl_api& gl{make_current_and_return_gl_api()};
-	gl.bind_program_pipeline(pipeline.gid());
+	gl().bind_program_pipeline(pipeline.gid());
 }
 
 void tr::graphics_context::set_blend_mode(const blend_mode& bm)
 {
-	const gl_api& gl{make_current_and_return_gl_api()};
+	const gl_api& gl{this->gl()};
 	gl.set_separate_blend_equations(std::to_underlying(bm.rgb_fn), std::to_underlying(bm.alpha_fn));
 	gl.set_separate_blend_function(std::to_underlying(bm.rgb_src), std::to_underlying(bm.rgb_dst), std::to_underlying(bm.alpha_src),
 								   std::to_underlying(bm.alpha_dst));
@@ -326,20 +320,17 @@ void tr::graphics_context::set_blend_mode(const blend_mode& bm)
 
 void tr::graphics_context::set_vertex_format(const vertex_format& format)
 {
-	const gl_api& gl{make_current_and_return_gl_api()};
-
 #ifdef TR_ENABLE_GL_CHECKS
 	m_vertex_format_bindings = format.bindings();
 	m_vertex_format_label = format.label();
 #endif
 
-	gl.bind_vertex_array(format.id());
+	gl().bind_vertex_array(format.id());
 }
 
 void tr::graphics_context::set_vertex_buffer(unsigned int buffer_id, int slot, ssize offset, usize stride)
 {
-	const gl_api& gl{make_current_and_return_gl_api()};
-	gl.bind_vertex_buffer(slot, buffer_id, offset, stride);
+	gl().bind_vertex_buffer(slot, buffer_id, offset, stride);
 }
 
 void tr::graphics_context::set_vertex_buffer(const basic_static_vertex_buffer& buffer, int slot, ssize offset, usize stride)
@@ -354,32 +345,30 @@ void tr::graphics_context::set_vertex_buffer(const basic_dyn_vertex_buffer& buff
 
 void tr::graphics_context::set_index_buffer(const static_index_buffer& buffer)
 {
-	const gl_api& gl{make_current_and_return_gl_api()};
-	gl.bind_buffer(GL_ELEMENT_ARRAY_BUFFER, buffer.id());
+	gl().bind_buffer(GL_ELEMENT_ARRAY_BUFFER, buffer.id());
 }
 
 void tr::graphics_context::set_index_buffer(const dyn_index_buffer& buffer)
 {
-	const gl_api& gl{make_current_and_return_gl_api()};
-	gl.bind_buffer(GL_ELEMENT_ARRAY_BUFFER, buffer.id());
+	gl().bind_buffer(GL_ELEMENT_ARRAY_BUFFER, buffer.id());
 }
 
 //
 
 void tr::graphics_context::clear_backbuffer(tr::rgbaf color)
 {
-	const gl_api& gl{make_current_and_return_gl_api()};
-
 	set_render_target(backbuffer());
+
+	const gl_api& gl{this->gl()};
 	gl.set_clear_color(color.r, color.g, color.b, color.a);
 	gl.clear(GL_COLOR_BUFFER_BIT);
 }
 
 void tr::graphics_context::clear_backbuffer(tr::rgbaf color, double depth, int stencil)
 {
-	const gl_api& gl{make_current_and_return_gl_api()};
-
 	set_render_target(backbuffer());
+
+	const gl_api& gl{this->gl()};
 	gl.set_clear_color(color.r, color.g, color.b, color.a);
 	gl.set_clear_depth(depth);
 	gl.set_clear_stencil(stencil);
@@ -388,18 +377,18 @@ void tr::graphics_context::clear_backbuffer(tr::rgbaf color, double depth, int s
 
 void tr::graphics_context::clear_backbuffer_region(rectangle<int> region, tr::rgbaf color)
 {
-	const gl_api& gl{make_current_and_return_gl_api()};
-
 	set_render_target(backbuffer().cropped(region));
+
+	const gl_api& gl{this->gl()};
 	gl.set_clear_color(color.r, color.g, color.b, color.a);
 	gl.clear(GL_COLOR_BUFFER_BIT);
 }
 
 void tr::graphics_context::clear_backbuffer_region(rectangle<int> region, tr::rgbaf color, double depth, int stencil)
 {
-	const gl_api& gl{make_current_and_return_gl_api()};
-
 	set_render_target(backbuffer().cropped(region));
+
+	const gl_api& gl{this->gl()};
 	gl.set_clear_color(color.r, color.g, color.b, color.a);
 	gl.set_clear_depth(depth);
 	gl.set_clear_stencil(stencil);
@@ -410,35 +399,45 @@ void tr::graphics_context::clear_backbuffer_region(rectangle<int> region, tr::rg
 
 void tr::graphics_context::draw(primitive type, usize offset, usize vertices)
 {
-	const gl_api& gl{make_current_and_return_gl_api()};
-	gl.draw_arrays(std::to_underlying(type), offset, vertices);
+	gl().draw_arrays(std::to_underlying(type), offset, vertices);
 }
 
 void tr::graphics_context::draw_instances(primitive type, usize offset, usize vertices, int instances)
 {
-	const gl_api& gl{make_current_and_return_gl_api()};
-	gl.draw_arrays_instanced(std::to_underlying(type), offset, vertices, instances);
+	gl().draw_arrays_instanced(std::to_underlying(type), offset, vertices, instances);
 }
 
 void tr::graphics_context::draw_indexed(primitive type, usize offset, usize indices)
 {
-	const gl_api& gl{make_current_and_return_gl_api()};
-	gl.draw_elements(std::to_underlying(type), indices, GL_UNSIGNED_SHORT, reinterpret_cast<const void*>(offset * sizeof(u16)));
+	gl().draw_elements(std::to_underlying(type), indices, GL_UNSIGNED_SHORT, reinterpret_cast<const void*>(offset * sizeof(u16)));
 }
 
 void tr::graphics_context::draw_indexed_instances(primitive type, usize offset, usize indices, int instances)
 {
-	const gl_api& gl{make_current_and_return_gl_api()};
-	gl.draw_elements_instanced(std::to_underlying(type), indices, GL_UNSIGNED_SHORT, reinterpret_cast<const void*>(offset * sizeof(u16)),
-							   instances);
+	gl().draw_elements_instanced(std::to_underlying(type), indices, GL_UNSIGNED_SHORT, reinterpret_cast<const void*>(offset * sizeof(u16)),
+								 instances);
 }
 
 //
 
-const tr::gl_api& tr::graphics_context::make_current_and_return_gl_api() const
+const tr::gl_api& tr::graphics_context::gl() const
 {
 	SDL_GL_MakeCurrent(m_window, m_ptr.get());
 	return m_gl_api;
+}
+
+void tr::graphics_context::move_label(unsigned int type, unsigned int old_id, unsigned int new_id)
+{
+	const gl_api& gl{this->gl()};
+
+	int label_length;
+	gl.get_object_label(type, old_id, 0, &label_length, nullptr);
+	if (label_length > 0) {
+		std::string label(label_length, '\0');
+		gl.get_object_label(type, old_id, label_length, &label_length, label.data());
+		gl.set_object_label(type, new_id, label.size(), label.data());
+		gl.set_object_label(type, old_id, 0, nullptr);
+	}
 }
 
 //
@@ -476,19 +475,3 @@ void tr::graphics_context::check_vertex_buffer(std::string label, int slot, std:
 	}
 }
 #endif
-
-//
-
-void tr::graphics_context::move_label(unsigned int type, unsigned int old_id, unsigned int new_id)
-{
-	const gl_api& gl{make_current_and_return_gl_api()};
-
-	int label_length;
-	gl.get_object_label(type, old_id, 0, &label_length, nullptr);
-	if (label_length > 0) {
-		std::string label(label_length, '\0');
-		gl.get_object_label(type, old_id, label_length, &label_length, label.data());
-		gl.set_object_label(type, new_id, label.size(), label.data());
-		gl.set_object_label(type, old_id, 0, nullptr);
-	}
-}

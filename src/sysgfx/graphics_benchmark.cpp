@@ -9,18 +9,14 @@
 //
 
 tr::graphics_benchmark::graphics_benchmark(graphics_context& context)
-	: m_qo{{context}}
+	: m_qo{deleter{context}}
 {
-	const gl_api& gl{context.make_current_and_return_gl_api()};
-
-	gl.generate_queries(1, out_handle(m_qo));
+	context.gl().generate_queries(1, out_handle(m_qo));
 }
 
 void tr::graphics_benchmark::deleter::operator()(unsigned int id) const
 {
-	const gl_api& gl{context.make_current_and_return_gl_api()};
-
-	gl.delete_queries(1, &id);
+	context.gl().delete_queries(1, &id);
 }
 
 //
@@ -34,24 +30,18 @@ tr::graphics_context& tr::graphics_benchmark::context() const
 
 void tr::graphics_benchmark::start()
 {
-	const gl_api& gl{context().make_current_and_return_gl_api()};
-
-	gl.begin_query(GL_TIME_ELAPSED, m_qo.get());
+	context().gl().begin_query(GL_TIME_ELAPSED, m_qo.get());
 }
 
 void tr::graphics_benchmark::stop()
 {
-	const gl_api& gl{context().make_current_and_return_gl_api()};
-
-	gl.end_query(GL_TIME_ELAPSED);
+	context().gl().end_query(GL_TIME_ELAPSED);
 }
 
 void tr::graphics_benchmark::fetch()
 {
-	const gl_api& gl{context().make_current_and_return_gl_api()};
-
 	i64 result;
-	gl.get_query_object_i64v(m_qo.get(), GL_QUERY_RESULT, &result);
+	context().gl().get_query_object_i64v(m_qo.get(), GL_QUERY_RESULT, &result);
 	if (m_durations.size() == 256) {
 		m_durations.pop_front();
 	}

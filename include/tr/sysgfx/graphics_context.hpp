@@ -318,6 +318,12 @@ namespace tr
 		/// Sets the context as current and returns the OpenGL API.
 		/// @return Refernce to the OpenGL API functions.
 		const gl_api& gl() const;
+
+		/// Moves a label from one object to another.
+		/// @param type OpenGL object type.
+		/// @param old_id Old object ID.
+		/// @param new_id New object ID.
+		void move_label(unsigned int type, unsigned int old_id, unsigned int new_id);
 		/// @endcond
 
 	  private:
@@ -391,14 +397,6 @@ namespace tr
 		/// @param offset Starting offset within the buffer to bind.
 		/// @param stride Stride between the elements of the vertex buffer.
 		void set_vertex_buffer(unsigned int buffer_id, int slot, ssize offset, usize stride);
-
-		//
-
-		/// Moves a label from one object to another.
-		/// @param type OpenGL object type.
-		/// @param old_id Old object ID.
-		/// @param new_id New object ID.
-		void move_label(unsigned int type, unsigned int old_id, unsigned int new_id);
 
 		//
 

@@ -152,8 +152,7 @@ namespace tr
 
 void tr::texture::create_handle() const
 {
-	const gl_api& gl{context().make_current_and_return_gl_api()};
-	gl.create_textures(GL_TEXTURE_2D, 1, out_handle(m_handle));
+	context().gl().create_textures(GL_TEXTURE_2D, 1, out_handle(m_handle));
 }
 
 tr::texture::texture(graphics_context& context)
@@ -183,8 +182,7 @@ tr::texture::texture(graphics_context& context, sub_bitmap bitmap, mipmaps mipma
 
 void tr::texture::deleter::operator()(unsigned int texture) const
 {
-	const gl_api& gl{context.make_current_and_return_gl_api()};
-	gl.delete_textures(1, &texture);
+	context.gl().delete_textures(1, &texture);
 }
 
 //
@@ -194,7 +192,7 @@ tr::texture tr::texture::allocate(glm::ivec2 size, mipmaps mipmaps, pixel_format
 	TR_ASSERT(size.x > 0 && size.y > 0, "Tried to allocate a texture with an invalid size of {}x{}.", size.x, size.y);
 
 	graphics_context& context{this->context()};
-	const gl_api& gl{context.make_current_and_return_gl_api()};
+	const gl_api& gl{context.gl()};
 
 	unsigned int old_handle;
 	glm::ivec2 old_size;
@@ -286,8 +284,7 @@ void tr::texture::set_filtering(min_filter min_filter, mag_filter mag_filter)
 		create_handle();
 	}
 
-	const gl_api& gl{context().make_current_and_return_gl_api()};
-
+	const gl_api& gl{context().gl()};
 	gl.set_texture_parameter_i(m_handle.get(), GL_TEXTURE_MIN_FILTER, std::to_underlying(min_filter));
 	gl.set_texture_parameter_i(m_handle.get(), GL_TEXTURE_MAG_FILTER, std::to_underlying(mag_filter));
 }
@@ -298,8 +295,7 @@ void tr::texture::set_wrap(wrap wrap)
 		create_handle();
 	}
 
-	const gl_api& gl{context().make_current_and_return_gl_api()};
-
+	const gl_api& gl{context().gl()};
 	gl.set_texture_parameter_i(m_handle.get(), GL_TEXTURE_WRAP_S, std::to_underlying(wrap));
 	gl.set_texture_parameter_i(m_handle.get(), GL_TEXTURE_WRAP_T, std::to_underlying(wrap));
 	gl.set_texture_parameter_i(m_handle.get(), GL_TEXTURE_WRAP_R, std::to_underlying(wrap));
@@ -311,9 +307,7 @@ void tr::texture::set_border_color(rgbaf color)
 		create_handle();
 	}
 
-	const gl_api& gl{context().make_current_and_return_gl_api()};
-
-	gl.set_texture_parameter_fv(m_handle.get(), GL_TEXTURE_BORDER_COLOR, &color.r);
+	context().gl().set_texture_parameter_fv(m_handle.get(), GL_TEXTURE_BORDER_COLOR, &color.r);
 }
 
 //
@@ -324,9 +318,7 @@ void tr::texture::clear(rgbaf color)
 		create_handle();
 	}
 
-	const gl_api& gl{context().make_current_and_return_gl_api()};
-
-	gl.clear_texture_image(m_handle.get(), 0, GL_RGBA, GL_FLOAT, &color);
+	context().gl().clear_texture_image(m_handle.get(), 0, GL_RGBA, GL_FLOAT, &color);
 }
 
 void tr::texture::clear_region(rectangle<int> region, rgbaf color)
@@ -335,9 +327,8 @@ void tr::texture::clear_region(rectangle<int> region, rgbaf color)
 		create_handle();
 	}
 
-	const gl_api& gl{context().make_current_and_return_gl_api()};
-
-	gl.clear_texture_sub_image(m_handle.get(), 0, region.tl.x, region.tl.y, 0, region.size.x, region.size.y, 1, GL_RGBA, GL_FLOAT, &color);
+	context().gl().clear_texture_sub_image(m_handle.get(), 0, region.tl.x, region.tl.y, 0, region.size.x, region.size.y, 1, GL_RGBA,
+										   GL_FLOAT, &color);
 }
 
 void tr::texture::copy_region(glm::ivec2 tl, texture_view src, rectangle<int> region)
@@ -346,10 +337,8 @@ void tr::texture::copy_region(glm::ivec2 tl, texture_view src, rectangle<int> re
 		create_handle();
 	}
 
-	const gl_api& gl{context().make_current_and_return_gl_api()};
-
-	gl.copy_image_sub_data(src.m_id, GL_TEXTURE_2D, 0, region.tl.x, region.tl.y, 0, m_handle.get(), GL_TEXTURE_2D, 0, tl.x, tl.y, 0,
-						   region.size.x, region.size.y, 1);
+	context().gl().copy_image_sub_data(src.m_id, GL_TEXTURE_2D, 0, region.tl.x, region.tl.y, 0, m_handle.get(), GL_TEXTURE_2D, 0, tl.x,
+									   tl.y, 0, region.size.x, region.size.y, 1);
 }
 
 void tr::texture::set_region(glm::ivec2 tl, sub_bitmap bitmap)
@@ -362,8 +351,7 @@ void tr::texture::set_region(glm::ivec2 tl, sub_bitmap bitmap)
 			  "Tried to set out-of-bounds region from ({}, {}) to ({}, {}) in a texture with size {}x{}.", tl.x, tl.y,
 			  tl.x + bitmap.size().x, tl.y + bitmap.size().y, m_size.x, m_size.y);
 
-	const gl_api& gl{context().make_current_and_return_gl_api()};
-
+	const gl_api& gl{context().gl()};
 	gl.set_pixel_store_i(GL_UNPACK_ALIGNMENT, 1);
 	gl.set_pixel_store_i(GL_UNPACK_ROW_LENGTH, bitmap.pitch() / pixel_bytes(bitmap.format()));
 	gl.set_2d_texture_sub_image(m_handle.get(), 0, tl.x, tl.y, bitmap.size().x, bitmap.size().y, gl_format(bitmap.format()),
@@ -379,8 +367,7 @@ std::string tr::texture::label() const
 		return "<unnamed>";
 	}
 
-	const gl_api& gl{context().make_current_and_return_gl_api()};
-
+	const gl_api& gl{context().gl()};
 	int label_length;
 	gl.get_object_label(GL_TEXTURE, m_handle.get(), 0, &label_length, nullptr);
 	if (label_length > 0) {
@@ -399,7 +386,5 @@ void tr::texture::set_label(std::string_view label)
 		create_handle();
 	}
 
-	const gl_api& gl{context().make_current_and_return_gl_api()};
-
-	gl.set_object_label(GL_TEXTURE, m_handle.get(), label.size(), label.data());
+	context().gl().set_object_label(GL_TEXTURE, m_handle.get(), label.size(), label.data());
 }

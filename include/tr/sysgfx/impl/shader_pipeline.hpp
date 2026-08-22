@@ -25,7 +25,7 @@ struct std::formatter<tr::shader_pipeline>
 			return std::format_to(ctx.out(), "\"{}\" (GID: {})", pipeline.label(), pipeline.gid());
 		}
 		else {
-			return std::format_to(ctx.out(), "<invalid shader pipeline at {}>", &pipeline);
+			return std::format_to(ctx.out(), "<invalid shader pipeline at {}>", static_cast<const void*>(&pipeline));
 		}
 	}
 };

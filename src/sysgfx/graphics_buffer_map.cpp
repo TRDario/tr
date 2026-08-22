@@ -7,7 +7,7 @@
 //
 
 tr::basic_graphics_buffer_map::basic_graphics_buffer_map(graphics_context& context, unsigned int buffer, std::span<std::byte> span)
-	: m_handle{buffer, {context}}
+	: m_handle{buffer, unmapper{context}}
 	, m_span{span}
 {
 }
@@ -19,7 +19,5 @@ tr::basic_graphics_buffer_map::operator std::span<std::byte>() const
 
 void tr::basic_graphics_buffer_map::unmapper::operator()(unsigned int id) const
 {
-	const gl_api& gl{context.make_current_and_return_gl_api()};
-
-	gl.unmap_buffer(id);
+	context.gl().unmap_buffer(id);
 }
