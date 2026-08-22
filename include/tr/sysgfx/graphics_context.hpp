@@ -123,6 +123,11 @@ namespace tr
 
 		//
 
+		/// @cond __hidden
+		/// Registry of objects created on this context.
+		gl_object_registry registry;
+		/// @endcond
+
 		/// Logger used by the context.
 		logger logger;
 
@@ -310,8 +315,9 @@ namespace tr
 		/// @}
 
 		/// @cond __hidden
-		/// Registry of objects created on this context.
-		gl_object_registry registry;
+		/// Sets the context as current and returns the OpenGL API.
+		/// @return Refernce to the OpenGL API functions.
+		const gl_api& gl() const;
 		/// @endcond
 
 	  private:
@@ -359,12 +365,6 @@ namespace tr
 
 		//
 
-		/// Sets the context as current and returns the OpenGL API.
-		/// @return Refernce to the OpenGL API functions.
-		const gl_api& make_current_and_return_gl_api() const;
-
-		//
-
 		/// Checks the render target's FBO ID.
 		/// @param fbo ID of the FBO to check.
 		/// @return `true` if the FBO is of the render target, `false` otherwise.
@@ -402,50 +402,8 @@ namespace tr
 
 		//
 
-		// Accesses `make_current_and_return_gl_api()`.
-		friend class basic_dyn_vertex_buffer;
-
-		// Accesses `make_current_and_return_gl_api()`.
-		friend class basic_graphics_buffer_map;
-
-		// Accesses `make_current_and_return_gl_api()`.
-		friend class basic_shader_buffer;
-
-		// Accesses `make_current_and_return_gl_api()`.
-		friend class basic_static_vertex_buffer;
-
-		// Accesses `make_current_and_return_gl_api()`.
-		friend class basic_uniform_buffer;
-
-		// Accesses `make_current_and_return_gl_api()`.
-		friend class dyn_index_buffer;
-
-		// Accesses `make_current_and_return_gl_api()`.
-		friend class framebuffer;
-
-		// Accesses `make_current_and_return_gl_api()`.
-		friend class graphics_benchmark;
-
-		// Accesses `make_current_and_return_gl_api()`.
-		friend class graphics_buffer;
-
-		// Accesses `make_current_and_return_gl_api()`.
-		friend class shader_base;
-
-		// Accesses `make_current_and_return_gl_api()`.
-		friend class shader_pipeline;
-
-		// Accesses `make_current_and_return_gl_api()`.
-		friend class static_index_buffer;
-
-		// Accesses `make_current_and_return_gl_api()`.
-		friend class texture;
-
 		// Accesses `make_current_and_return_gl_api()` and `m_allocated_texture_units`.
 		friend class texture_unit;
-
-		// Accesses `make_current_and_return_gl_api()`.
-		friend class vertex_format;
 
 #ifdef TR_HAS_IMGUI
 		// Accesses m_ptr.

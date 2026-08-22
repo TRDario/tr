@@ -31,7 +31,8 @@ namespace tr
 	/// 'invalid' state, distinct from the incomplete state. Invalid `tr::shader_pipeline` instances may not be interacted with besides
 	/// moving a new value into them and checking for validity using `valid()`.
 	///
-	/// `tr::shader_pipeline` instances may be labeled and are formattable. Example format output: `"My pipeline" (GID: 5)`.
+	/// `tr::shader_pipeline` instances may be labeled and are formattable. Example format output: `"My pipeline" (GID: 5)`. The GID is the
+	/// OpenGL ID of the shader pipeline.
 	class shader_pipeline
 	{
 	  public:

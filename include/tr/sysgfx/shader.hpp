@@ -1,5 +1,6 @@
 /// @file
-/// @brief Provides shader classes.
+/// @brief Provides `tr::vertex_shader`, `tr::fragment_shader`, and related functionality.
+/// @details For an explanation of shaders, see the description of `tr::shader`.
 
 #pragma once
 #include "../utility/exception.hpp"
@@ -68,10 +69,41 @@ namespace tr
 
 	//
 
-	/// Base GPU shader program class.
-	class shader_base
+	/// Base shader program class.
+	/// @details
+	/// Shader programs are small programs run on the GPU during a step of the graphics pipeline. tr allows the creation and use of custom
+	/// vertex and fragment shader programs written in the OpenGL shading language (GLSL).
+	///
+	/// Objects of this type may not be instantiated directly. Rather, vertex and fragment shaders are subclassed as `tr::vertex_shader` and
+	/// `tr::fragment_shader` respectively.
+	///
+	/// Strictly speaking, shader objects are only containers for the underlying shader programs. This means, for example, that setting a
+	/// shader on a shader pipeline object does not set the literal shader object at a specific location in memory, but rather the value it
+	/// contains. If the value is moved to a different shader object, that value will still be set on the pipeline. If the object is
+	/// overriden with a new value, the old value is destroyed and the pipeline reverts to an incomplete state.
+	///
+	/// Every shader object is associated with a graphics context and cannot outlive its parent context.
+	///
+	/// Shader objects are movable, but not copyable. A moved-from instance of a shader object is left in a special 'invalid' state. Invalid
+	/// shader objects may not be interacted with besides moving a new value into them and checking for validity using `valid()`.
+	///
+	/// Shader objects may be labeled and are formattable. Example format output: `"My %shader" (GID: 5)`. The GID is the OpenGL ID of the
+	/// shader program.
+	class shader
 	{
 	  public:
+		/// @name Constructors
+		/// @{
+
+		/// @cond __hidden
+		/// Constructs a shader.
+		/// @param context Graphics context to create the shader on.
+		/// @param source Shader GLSL source code.
+		/// @param type Shader type (GL_VERTEX_SHADER or GL_FRAGMENT_SHADER).
+		shader(graphics_context& context, zstring_view source, unsigned int type);
+		/// @endcond
+
+		/// @}
 		/// @name Context
 		/// @{
 
@@ -384,6 +416,14 @@ namespace tr
 		void set_uniform_buffer(unsigned int index, const uniform_buffer<Object>& buffer);
 
 		/// @}
+		/// @name State
+		/// @{
+
+		/// Gets whether the shader is in a valid state.
+		/// @return `true` if the shader is in a valid state, `false` if it is in an invalid state.
+		bool valid() const;
+
+		/// @}
 		/// @name Label
 		/// @{
 
@@ -398,10 +438,6 @@ namespace tr
 		/// @}
 
 		/// @cond __hidden
-		/// Gets whether the shader is valid.
-		/// @return `true` if the shader is valid, `false` otherwise.
-		bool valid() const;
-
 		/// Gets the OpenGL shader program ID.
 		/// @return OpenGL shader program ID.
 		unsigned int gid() const;
@@ -421,7 +457,7 @@ namespace tr
 #endif
 		/// @endcond
 
-	  protected:
+	  private:
 		/// Shader program deleter.
 		struct deleter
 		{
@@ -459,14 +495,6 @@ namespace tr
 
 		//
 
-		/// Constructs a shader.
-		/// @param context Graphics context to create the shader on.
-		/// @param source Shader source code.
-		/// @param type Shader type.
-		shader_base(graphics_context& context, zstring_view source, unsigned int type);
-
-		//
-
 #ifdef TR_ENABLE_GL_CHECKS
 		/// Finds the uniforms of the shader using introspection.
 		/// @param gl Structure holding the OpenGL API.
@@ -497,24 +525,34 @@ namespace tr
 
 	//
 
-	/// GPU vertex shader program.
-	class vertex_shader : public shader_base
+	/// Vertex shader program.
+	/// @details
+	/// A vertex shader is a shader program that transforms vertices passed to the drawing operation and outputs data passed along to the
+	/// fragment shader.
+	///
+	/// Everything brought up in the description of `tr::shader` applies to this class as well.
+	class vertex_shader : public shader
 	{
 	  public:
 		/// Creates a vertex shader from source code.
 		/// @param context Graphics context to create the vertex shader on.
-		/// @param source Vertex shader source code.
+		/// @param source Vertex shader GLSL source code.
 		/// @exception shader_load_error If loading the shader failed.
 		explicit vertex_shader(graphics_context& context, zstring_view source);
 	};
 
-	/// GPU fragment shader program.
-	class fragment_shader : public shader_base
+	/// Fragment shader program.
+	/// @details
+	/// A vertex shader is a shader program that calculates the final color of a fragment (in most cases a pixel) given data output by the
+	/// vertex shader and interpolated along a primitive.
+	///
+	/// Everything brought up in the description of `tr::shader` applies to this class as well.
+	class fragment_shader : public shader
 	{
 	  public:
 		/// Creates a fragment shader from source code.
 		/// @param context Graphics context to create the fragment shader on.
-		/// @param source Fragment shader source code.
+		/// @param source Fragment shader GLSL source code.
 		/// @exception shader_load_error If loading the shader failed.
 		explicit fragment_shader(graphics_context& context, zstring_view source);
 	};
@@ -524,14 +562,14 @@ namespace tr
 
 	/// Loads a vertex shader from file.
 	/// @param context Graphics context to create the vertex shader on.
-	/// @param path Path to the shader source code file.
+	/// @param path Path to the shader GLSL source code file.
 	/// @exception shader_load_error If loading the shader failed.
 	/// @return Loaded vertex shader.
 	vertex_shader load_vertex_shader(graphics_context& context, const std::filesystem::path& path);
 
 	/// Loads a fragment shader from file.
 	/// @param context Graphics context to create the fragment shader on.
-	/// @param path Path to the shader source code file.
+	/// @param path Path to the shader GLSL source code file.
 	/// @exception shader_load_error If loading the shader failed.
 	/// @return Loaded frament shader.
 	fragment_shader load_fragment_shader(graphics_context& context, const std::filesystem::path& path);

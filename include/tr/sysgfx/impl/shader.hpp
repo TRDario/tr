@@ -7,19 +7,57 @@
 //
 
 template <typename Header, typename ArrayElement>
-void tr::shader_base::set_storage_buffer(unsigned int index, shader_buffer<Header, ArrayElement>& buffer)
+void tr::shader::set_storage_buffer(unsigned int index, shader_buffer<Header, ArrayElement>& buffer)
 {
 	set_storage_buffer(index, buffer.id(), sizeof(Header) + sizeof(ArrayElement) * buffer.array_size());
 }
 
 template <typename Element>
-void tr::shader_base::set_storage_buffer(unsigned int index, shader_array<Element>& buffer)
+void tr::shader::set_storage_buffer(unsigned int index, shader_array<Element>& buffer)
 {
 	set_storage_buffer(index, buffer.id(), sizeof(Element) * buffer.size());
 }
 
 template <typename Object>
-void tr::shader_base::set_uniform_buffer(unsigned int index, const uniform_buffer<Object>& buffer)
+void tr::shader::set_uniform_buffer(unsigned int index, const uniform_buffer<Object>& buffer)
 {
 	set_uniform_buffer(index, buffer.id());
 }
+
+//
+
+/// Shader base formatter.
+template <>
+struct std::formatter<tr::shader>
+{
+	/// Parses the context.
+	template <typename ParseContext>
+	constexpr auto parse(ParseContext& ctx)
+	{
+		return ctx.begin();
+	}
+
+	/// Formats the shader.
+	template <typename FormatContext>
+	auto format(const tr::shader& shader, FormatContext& ctx) const
+	{
+		if (shader.valid()) {
+			return std::format_to(ctx.out(), "\"{}\" (GID: {})", shader.label(), shader.gid());
+		}
+		else {
+			return std::format_to(ctx.out(), "<invalid shader at {}>", &shader);
+		}
+	}
+};
+
+/// Vertex shader formatter.
+template <>
+struct std::formatter<tr::vertex_shader> : public std::formatter<tr::shader>
+{
+};
+
+/// Fragment shader formatter.
+template <>
+struct std::formatter<tr::fragment_shader> : public std::formatter<tr::shader>
+{
+};

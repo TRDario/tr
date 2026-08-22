@@ -28,15 +28,13 @@ bool tr::shader_pipeline::fragment_shader_debug_info::valid(graphics_context& co
 tr::shader_pipeline::shader_pipeline(graphics_context& context, const vertex_shader& vertex_shader, const fragment_shader& fragment_shader)
 	: m_ppo{deleter{context}}
 {
-	const gl_api& gl{context.make_current_and_return_gl_api()};
-	gl.create_program_pipelines(1, out_handle(m_ppo));
+	context.gl().create_program_pipelines(1, out_handle(m_ppo));
 	set_shaders(vertex_shader, fragment_shader);
 }
 
 void tr::shader_pipeline::deleter::operator()(unsigned int id) const
 {
-	const gl_api& gl{context.make_current_and_return_gl_api()};
-	gl.delete_program_pipelines(1, &id);
+	context.gl().delete_program_pipelines(1, &id);
 }
 
 //
@@ -68,7 +66,7 @@ void tr::shader_pipeline::set_shaders(const vertex_shader& vertex_shader, const 
 	assert_shaders_compatible();
 #endif
 
-	const gl_api& gl{context().make_current_and_return_gl_api()};
+	const gl_api& gl{context().gl()};
 	gl.use_program_stages(m_ppo.get(), GL_VERTEX_SHADER_BIT, vertex_shader.gid());
 	gl.use_program_stages(m_ppo.get(), GL_FRAGMENT_SHADER_BIT, fragment_shader.gid());
 }
@@ -86,8 +84,7 @@ void tr::shader_pipeline::set_vertex_shader(const vertex_shader& vertex_shader)
 	assert_shaders_compatible();
 #endif
 
-	const gl_api& gl{context().make_current_and_return_gl_api()};
-	gl.use_program_stages(m_ppo.get(), GL_VERTEX_SHADER_BIT, vertex_shader.gid());
+	context().gl().use_program_stages(m_ppo.get(), GL_VERTEX_SHADER_BIT, vertex_shader.gid());
 }
 
 void tr::shader_pipeline::set_fragment_shader(const fragment_shader& fragment_shader)
@@ -103,8 +100,7 @@ void tr::shader_pipeline::set_fragment_shader(const fragment_shader& fragment_sh
 	assert_shaders_compatible();
 #endif
 
-	const gl_api& gl{context().make_current_and_return_gl_api()};
-	gl.use_program_stages(m_ppo.get(), GL_FRAGMENT_SHADER_BIT, fragment_shader.gid());
+	context().gl().use_program_stages(m_ppo.get(), GL_FRAGMENT_SHADER_BIT, fragment_shader.gid());
 }
 
 //
@@ -113,15 +109,14 @@ void tr::shader_pipeline::set_label(std::string_view label)
 {
 	TR_ASSERT(valid(), "Tried to set the label of a shader pipeline in an invalid state");
 
-	const gl_api& gl{context().make_current_and_return_gl_api()};
-	gl.set_object_label(GL_PROGRAM_PIPELINE, m_ppo.get(), label.size(), label.data());
+	context().gl().set_object_label(GL_PROGRAM_PIPELINE, m_ppo.get(), label.size(), label.data());
 }
 
 std::string tr::shader_pipeline::label() const
 {
 	TR_ASSERT(valid(), "Tried to get the label of a shader pipeline in an invalid state");
 
-	const gl_api& gl{context().make_current_and_return_gl_api()};
+	const gl_api& gl{context().gl()};
 
 	int label_length;
 	gl.get_object_label(GL_PROGRAM_PIPELINE, m_ppo.get(), 0, &label_length, nullptr);
