@@ -36,7 +36,6 @@ tr::shader_pipeline::shader_pipeline(graphics_context& context, const vertex_sha
 void tr::shader_pipeline::deleter::operator()(unsigned int id) const
 {
 	const gl_api& gl{context.make_current_and_return_gl_api()};
-
 	gl.delete_program_pipelines(1, &id);
 }
 
@@ -44,6 +43,8 @@ void tr::shader_pipeline::deleter::operator()(unsigned int id) const
 
 tr::graphics_context& tr::shader_pipeline::context() const
 {
+	TR_ASSERT(valid(), "Tried to get context of a shader pipeline in an invalid state.");
+
 	return m_ppo.get_deleter().context;
 }
 
@@ -51,8 +52,9 @@ tr::graphics_context& tr::shader_pipeline::context() const
 
 void tr::shader_pipeline::set_shaders(const vertex_shader& vertex_shader, const fragment_shader& fragment_shader)
 {
-	TR_ASSERT(vertex_shader.valid(), "Tried to set invalid vertex shader to pipeline '{}'.", label());
-	TR_ASSERT(fragment_shader.valid(), "Tried to set invalid fragment shader to pipeline '{}'.", label());
+	TR_ASSERT(valid(), "Tried to set shaders to a shader pipeline in an invalid state");
+	TR_ASSERT(vertex_shader.valid(), "Tried to set invalid vertex shader to shader pipeline {}.", *this);
+	TR_ASSERT(fragment_shader.valid(), "Tried to set invalid fragment shader to pipeline {}.", *this);
 	TR_ASSERT(&vertex_shader.context() == &context(),
 			  "Tried to set vertex shader '{}' to pipeline '{}' despite them not being on the same graphics context.",
 			  vertex_shader.label(), label());
@@ -73,6 +75,7 @@ void tr::shader_pipeline::set_shaders(const vertex_shader& vertex_shader, const 
 
 void tr::shader_pipeline::set_vertex_shader(const vertex_shader& vertex_shader)
 {
+	TR_ASSERT(valid(), "Tried to set a vertex shader to a shader pipeline in an invalid state");
 	TR_ASSERT(vertex_shader.valid(), "Tried to set invalid vertex shader to pipeline '{}'.", label());
 	TR_ASSERT(&vertex_shader.context() == &context(),
 			  "Tried to set vertex shader '{}' to pipeline '{}' despite them not being on the same graphics context.",
@@ -89,6 +92,7 @@ void tr::shader_pipeline::set_vertex_shader(const vertex_shader& vertex_shader)
 
 void tr::shader_pipeline::set_fragment_shader(const fragment_shader& fragment_shader)
 {
+	TR_ASSERT(valid(), "Tried to set a fragment shader to a shader pipeline in an invalid state");
 	TR_ASSERT(fragment_shader.valid(), "Tried to set invalid fragment shader to pipeline '{}'.", label());
 	TR_ASSERT(&fragment_shader.context() == &context(),
 			  "Tried to set fragment shader '{}' to pipeline '{}' despite them not being on the same graphics context.",
@@ -107,12 +111,16 @@ void tr::shader_pipeline::set_fragment_shader(const fragment_shader& fragment_sh
 
 void tr::shader_pipeline::set_label(std::string_view label)
 {
+	TR_ASSERT(valid(), "Tried to set the label of a shader pipeline in an invalid state");
+
 	const gl_api& gl{context().make_current_and_return_gl_api()};
 	gl.set_object_label(GL_PROGRAM_PIPELINE, m_ppo.get(), label.size(), label.data());
 }
 
 std::string tr::shader_pipeline::label() const
 {
+	TR_ASSERT(valid(), "Tried to get the label of a shader pipeline in an invalid state");
+
 	const gl_api& gl{context().make_current_and_return_gl_api()};
 
 	int label_length;
@@ -129,6 +137,11 @@ std::string tr::shader_pipeline::label() const
 
 //
 
+bool tr::shader_pipeline::valid() const
+{
+	return m_ppo.has_value();
+}
+
 unsigned int tr::shader_pipeline::gid() const
 {
 	return m_ppo.get();
@@ -139,11 +152,11 @@ unsigned int tr::shader_pipeline::gid() const
 #ifdef TR_ENABLE_GL_CHECKS
 void tr::shader_pipeline::assert_settable(graphics_context& context) const
 {
-	TR_ASSERT(&context == &this->context(), "Tried to set shader pipeline '{}' to a context it is not associated with.", label());
-	TR_ASSERT(m_ppo.has_value(), "Tried to set moved-from shader pipeline to context.");
-	TR_ASSERT(m_vertex_shader_info.valid(context), "Tried to set shader pipeline '{}' with invalid set vertex shader '{}'.", label(),
+	TR_ASSERT(valid(), "Tried to set a shader pipeline in an invalid state to a context.");
+	TR_ASSERT(&context == &this->context(), "Tried to set shader pipeline {} to a context it is not associated with.", *this);
+	TR_ASSERT(m_vertex_shader_info.valid(context), "Tried to set shader pipeline {} with invalid set vertex shader '{}'.", *this,
 			  m_vertex_shader_info.label);
-	TR_ASSERT(m_fragment_shader_info.valid(context), "Tried to set shader pipeline '{}' with invalid set fragment shader '{}'.", label(),
+	TR_ASSERT(m_fragment_shader_info.valid(context), "Tried to set shader pipeline {} with invalid set fragment shader '{}'.", *this,
 			  m_fragment_shader_info.label);
 }
 
@@ -157,23 +170,23 @@ void tr::shader_pipeline::assert_shaders_compatible() const
 	}
 
 	TR_ASSERT(m_vertex_shader_info.outputs.size() == m_fragment_shader_info.inputs.size(),
-			  "Tried to set mismatched shaders to shader pipeline '{}':\n"
+			  "Tried to set mismatched shaders to shader pipeline {}:\n"
 			  "Vertex shader '{}' has {} outputs, fragment shader '{}' has {} inputs.",
-			  label(), m_vertex_shader_info.label, m_vertex_shader_info.outputs.size(), m_fragment_shader_info.label,
+			  *this, m_vertex_shader_info.label, m_vertex_shader_info.outputs.size(), m_fragment_shader_info.label,
 			  m_fragment_shader_info.inputs.size());
 
 	for (const auto& [location, info] : m_vertex_shader_info.outputs) {
 		TR_ASSERT(m_fragment_shader_info.inputs.contains(location),
-				  "Tried to set mismatched shaders to shader pipeline '{}':\n"
+				  "Tried to set mismatched shaders to shader pipeline {}:\n"
 				  "Vertex shader '{}' has output '{}' at location {} that was not found in fragment shader '{}''s inputs.",
-				  label(), m_vertex_shader_info.label, info, location, m_fragment_shader_info.label);
+				  *this, m_vertex_shader_info.label, info, location, m_fragment_shader_info.label);
 
 		const glsl_variable& frag_info{get(m_fragment_shader_info.inputs, location)};
 		TR_ASSERT(frag_info.type == info.type && frag_info.array_size == info.array_size,
-				  "Tried to set mismatched shaders to shader pipeline '{}':\n"
+				  "Tried to set mismatched shaders to shader pipeline {}:\n"
 				  "Vertex shader '{}' has output '{}' at location {}, but the input '{}' at the same location in fragment shader '{}' is "
 				  "not compatible with it.",
-				  label(), m_vertex_shader_info.label, info, location, get(m_fragment_shader_info.inputs, location),
+				  *this, m_vertex_shader_info.label, info, location, get(m_fragment_shader_info.inputs, location),
 				  m_fragment_shader_info.label);
 	}
 }
@@ -207,22 +220,37 @@ tr::graphics_context& tr::owning_shader_pipeline::context() const
 
 tr::vertex_shader& tr::owning_shader_pipeline::vertex_shader()
 {
+	TR_ASSERT(valid(), "Tried to get vertex shader of an owning shader pipeline in an invalid state.");
+
 	return m_vertex_shader;
 }
 
 const tr::vertex_shader& tr::owning_shader_pipeline::vertex_shader() const
 {
+	TR_ASSERT(valid(), "Tried to get vertex shader of an owning shader pipeline in an invalid state.");
+
 	return m_vertex_shader;
 }
 
 tr::fragment_shader& tr::owning_shader_pipeline::fragment_shader()
 {
+	TR_ASSERT(valid(), "Tried to get fragment shader of an owning shader pipeline in an invalid state.");
+
 	return m_fragment_shader;
 }
 
 const tr::fragment_shader& tr::owning_shader_pipeline::fragment_shader() const
 {
+	TR_ASSERT(valid(), "Tried to get fragment shader of an owning shader pipeline in an invalid state.");
+
 	return m_fragment_shader;
+}
+
+//
+
+bool tr::owning_shader_pipeline::valid() const
+{
+	return m_base.valid();
 }
 
 //

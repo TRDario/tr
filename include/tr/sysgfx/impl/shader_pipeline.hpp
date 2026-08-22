@@ -21,7 +21,12 @@ struct std::formatter<tr::shader_pipeline>
 	template <typename FormatContext>
 	auto format(const tr::shader_pipeline& pipeline, FormatContext& ctx) const
 	{
-		return std::format_to(ctx.out(), "[Shader pipeline \"{}\" (ID: {})]", pipeline.label(), pipeline.gid());
+		if (pipeline.valid()) {
+			return std::format_to(ctx.out(), "\"{}\" (GID: {})", pipeline.label(), pipeline.gid());
+		}
+		else {
+			return std::format_to(ctx.out(), "<invalid shader pipeline at {}>", &pipeline);
+		}
 	}
 };
 
