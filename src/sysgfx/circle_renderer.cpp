@@ -22,7 +22,7 @@ namespace tr
 tr::circle_renderer::circle_renderer(graphics_context& context, float render_scale)
 	: m_id{context.allocate_renderer_id()}
 	, m_pipeline{context, vertex_shader{context, circle_renderer_vert}, fragment_shader{context, circle_renderer_frag}}
-	, m_vertex_format{context, vertex_format_bindings}
+	, m_vertex_format{context, as_vertex_bindings<vertex_binding_tag<glm::u8vec2>, vertex_binding_tag<circle, 1>>}
 	, m_shader_circles{context}
 	, m_quad_vertices{context, std::array<glm::u8vec2, 4>{{{0, 0}, {0, 1}, {1, 1}, {1, 0}}}}
 {

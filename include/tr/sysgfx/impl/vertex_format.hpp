@@ -102,17 +102,11 @@ inline constexpr tr::vertex_attribute tr::as_vertex_attribute<tr::rgb8>{tr::as_v
 template <>
 inline constexpr tr::vertex_attribute tr::as_vertex_attribute<tr::rgba8>{tr::as_vertex_attribute<normalized<glm::u8vec4>>};
 
-////////////////////////////////////////////////////////// VERTEX ATTRIBUTE LIST //////////////////////////////////////////////////////////
-
-namespace tr
-{
-	/// Vertex attribute type.
-	template <typename T>
-	concept convertible_to_vertex_attribute = requires { as_vertex_attribute<T>; };
-} // namespace tr
+//
 
 /// Specialization of `as_vertex_attribute_list` for multiple vertex attribute types.
-template <tr::convertible_to_vertex_attribute... Ts>
+template <typename... Ts>
+	requires requires { (tr::as_vertex_attribute<Ts>, ...); }
 inline constexpr std::array tr::as_vertex_attribute_list<Ts...>{as_vertex_attribute<Ts>...};
 
 /// Specialization of `as_vertex_attribute_list` for types with a static `::as_vertex_attribute_list` member.
@@ -121,14 +115,6 @@ template <typename T>
 		{ T::as_vertex_attribute_list } -> tr::cvref_specialization_of_tv<std::array>;
 	})
 inline constexpr std::array tr::as_vertex_attribute_list<T>{T::as_vertex_attribute_list};
-
-//
-
-template <typename T>
-constexpr tr::vertex_binding tr::make_vertex_binding(u32 divisor)
-{
-	return {divisor, as_vertex_attribute_list<T>};
-}
 
 //
 
@@ -179,5 +165,29 @@ struct std::formatter<tr::vertex_attribute> : private std::formatter<const char*
 		}
 
 		return ctx.out();
+	}
+};
+
+/// Vertex format formatter.
+template <>
+struct std::formatter<tr::vertex_format>
+{
+	/// Parses the context.
+	template <typename ParseContext>
+	constexpr auto parse(ParseContext& ctx)
+	{
+		return ctx.begin();
+	}
+
+	/// Formats the vertex format.
+	template <typename FormatContext>
+	auto format(const tr::vertex_format& format, FormatContext& ctx) const
+	{
+		if (format.valid()) {
+			return std::format_to(ctx.out(), "\"{}\" (GID: {})", format.label(), format.gid());
+		}
+		else {
+			return std::format_to(ctx.out(), "<invalid vertex format at {}>", static_cast<const void*>(&format));
+		}
 	}
 };

@@ -320,12 +320,15 @@ void tr::graphics_context::set_blend_mode(const blend_mode& bm)
 
 void tr::graphics_context::set_vertex_format(const vertex_format& format)
 {
+	TR_ASSERT(format.valid(), "Tried to set vertex format in an invalid state to a graphics context.");
+	TR_ASSERT(&format.context() == this, "Tried to set vertex format {} to a context it is not associated with.", format);
+
 #ifdef TR_ENABLE_GL_CHECKS
 	m_vertex_format_bindings = format.bindings();
 	m_vertex_format_label = format.label();
 #endif
 
-	gl().bind_vertex_array(format.id());
+	gl().bind_vertex_array(format.gid());
 }
 
 void tr::graphics_context::set_vertex_buffer(unsigned int buffer_id, int slot, ssize offset, usize stride)

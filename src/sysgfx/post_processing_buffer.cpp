@@ -12,9 +12,6 @@ namespace tr
 /// Post processing vertex shader source code.
 #include <generated/post_processing_vert.hpp>
 
-		/// Bindings of the debug renderer vertex format.
-		constexpr std::array vertex_format_bindings{make_vertex_binding<glm::vec2>()};
-
 		/// Post processing buffer vertices.
 		constexpr std::array<glm::vec2, 4> post_processing_vertices{{{-1, -1}, {-1, 1}, {1, 1}, {1, -1}}};
 	} // namespace
@@ -27,7 +24,7 @@ tr::post_processing_buffer::post_processing_buffer(graphics_context& context)
 	, m_framebuffer{context}
 	, m_vertex_shader{context, post_processing_vert}
 	, m_shader_pipeline{context}
-	, m_vertex_format{context, vertex_format_bindings}
+	, m_vertex_format{context, as_vertex_bindings<vertex_binding_tag<glm::vec2>>}
 	, m_vertex_buffer{context, post_processing_vertices}
 {
 	m_framebuffer.attach(framebuffer::attachment::color0, m_textures[m_source_index]);
@@ -39,7 +36,7 @@ tr::post_processing_buffer::post_processing_buffer(graphics_context& context, gl
 	, m_framebuffer{context}
 	, m_vertex_shader{context, post_processing_vert}
 	, m_shader_pipeline{context}
-	, m_vertex_format{context, vertex_format_bindings}
+	, m_vertex_format{context, as_vertex_bindings<vertex_binding_tag<glm::vec2>>}
 	, m_vertex_buffer{context, post_processing_vertices}
 {
 	m_framebuffer.attach(framebuffer::attachment::color0, m_textures[m_source_index]);

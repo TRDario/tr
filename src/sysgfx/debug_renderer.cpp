@@ -65,7 +65,7 @@ namespace tr
 
 tr::debug_renderer::debug_renderer(graphics_context& context, float scale, u8 column_limit)
 	: m_pipeline{context, vertex_shader{context, debug_renderer_vert}, fragment_shader{context, debug_renderer_frag}}
-	, m_format{context, vertex_format_bindings}
+	, m_format{context, as_vertex_bindings<vertex_binding_tag<glm::u8vec2>, vertex_binding_tag<glyph, 1>>}
 	, m_font{context, load_embedded_bitmap(debug_renderer_font)}
 	, m_mesh{context, std::array<glm::u8vec2, 4>{{{0, 0}, {0, 1}, {1, 1}, {1, 0}}}}
 	, m_glyph_buffer{context}

@@ -261,11 +261,6 @@ namespace tr
 
 		//
 
-		/// Bindings of the debug renderer vertex format.
-		static constexpr std::array vertex_format_bindings{make_vertex_binding<glm::u8vec2>(), make_vertex_binding<glyph>(1)};
-
-		//
-
 		/// Pipeline and shaders used by the renderer.
 		owning_shader_pipeline m_pipeline;
 

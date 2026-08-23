@@ -9,26 +9,27 @@
 
 tr::vertex_format::vertex_format(graphics_context& context, std::span<const vertex_binding> bindings)
 #ifdef TR_ENABLE_GL_CHECKS
-	: m_vao{deleter{context}}
+	: m_handle{deleter{context}}
 	, m_bindings{bindings}
 #endif
 {
 	const gl_api& gl{context.gl()};
-	gl.create_vertex_arrays(1, out_handle(m_vao));
+	gl.create_vertex_arrays(1, out_handle(m_handle));
+
 	unsigned int attr_id{0};
 	for (int binding_id = 0; binding_id < static_cast<int>(bindings.size()); ++binding_id) {
 		const vertex_binding& binding{bindings.begin()[binding_id]};
 
-		gl.set_vertex_array_binding_divisor(m_vao.get(), binding_id, binding.divisor);
+		gl.set_vertex_array_binding_divisor(gid(), binding_id, binding.divisor);
 		unsigned int offset{0};
 		for (const vertex_attribute& attribute : binding.attrs) {
 			TR_ASSERT(attribute.type != vertex_attribute_type::unknown, "Tried to construct vertex format with invalid attribute '{}'.",
 					  attribute);
 
-			gl.set_vertex_array_attribute_format(m_vao.get(), attr_id, attribute.elements, std::to_underlying(attribute.type),
+			gl.set_vertex_array_attribute_format(gid(), attr_id, attribute.elements, std::to_underlying(attribute.type),
 												 attribute.normalized, offset);
-			gl.enable_vertex_array_attribute(m_vao.get(), attr_id);
-			gl.set_vertex_array_attribute_binding(m_vao.get(), attr_id++, binding_id);
+			gl.enable_vertex_array_attribute(gid(), attr_id);
+			gl.set_vertex_array_attribute_binding(gid(), attr_id++, binding_id);
 
 			switch (attribute.type) {
 			case vertex_attribute_type::i8:
@@ -60,24 +61,37 @@ void tr::vertex_format::deleter::operator()(unsigned int id) const
 
 tr::graphics_context& tr::vertex_format::context() const
 {
-	return m_vao.get_deleter().context;
+	TR_ASSERT(valid(), "Tried to get context of a vertex format in an invalid state.");
+
+	return m_handle.get_deleter().context;
+}
+
+//
+
+bool tr::vertex_format::valid() const
+{
+	return m_handle.has_value();
 }
 
 //
 
 void tr::vertex_format::set_label(std::string_view label)
 {
-	context().gl().set_object_label(GL_VERTEX_ARRAY, m_vao.get(), label.size(), label.data());
+	TR_ASSERT(valid(), "Tried to set the label of a vertex format in an invalid state.");
+
+	context().gl().set_object_label(GL_VERTEX_ARRAY, gid(), label.size(), label.data());
 }
 
 std::string tr::vertex_format::label() const
 {
+	TR_ASSERT(valid(), "Tried to get the label of a vertex format in an invalid state.");
+
 	const gl_api& gl{context().gl()};
 	int label_length;
-	gl.get_object_label(GL_VERTEX_ARRAY, m_vao.get(), 0, &label_length, nullptr);
+	gl.get_object_label(GL_VERTEX_ARRAY, gid(), 0, &label_length, nullptr);
 	if (label_length > 0) {
 		std::string label_string(label_length, '\0');
-		gl.get_object_label(GL_VERTEX_ARRAY, m_vao.get(), label_length + 1, nullptr, label_string.data());
+		gl.get_object_label(GL_VERTEX_ARRAY, gid(), label_length + 1, nullptr, label_string.data());
 		return label_string;
 	}
 	else {
@@ -87,12 +101,10 @@ std::string tr::vertex_format::label() const
 
 //
 
-unsigned int tr::vertex_format::id() const
+unsigned int tr::vertex_format::gid() const
 {
-	return m_vao.get();
+	return m_handle.get();
 }
-
-//
 
 #ifdef TR_ENABLE_GL_CHECKS
 std::span<const tr::vertex_binding> tr::vertex_format::bindings() const
