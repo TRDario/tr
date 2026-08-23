@@ -8,14 +8,14 @@
 //
 
 tr::graphics_buffer::graphics_buffer(graphics_context& context)
-	: m_handle{{context}}
+	: m_handle{deleter{context}}
 {
 	context.gl().create_buffers(1, out_handle(m_handle));
 }
 
 void tr::graphics_buffer::deleter::operator()(unsigned int id) const
 {
-	context.gl().delete_buffers(1, &id);
+	context->gl().delete_buffers(1, &id);
 }
 
 //

@@ -4,6 +4,7 @@
 #pragma once
 #include "../utility/handle.hpp"
 #include "../utility/integer.hpp"
+#include "../utility/reference.hpp"
 
 namespace tr
 {
@@ -43,7 +44,7 @@ namespace tr
 		struct unmapper
 		{
 			/// Reference to the context the buffer object is on.
-			graphics_context& context;
+			ref<graphics_context> context;
 
 			//
 

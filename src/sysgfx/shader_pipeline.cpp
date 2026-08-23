@@ -34,7 +34,7 @@ tr::shader_pipeline::shader_pipeline(graphics_context& context, const vertex_sha
 
 void tr::shader_pipeline::deleter::operator()(unsigned int id) const
 {
-	context.gl().delete_program_pipelines(1, &id);
+	context->gl().delete_program_pipelines(1, &id);
 }
 
 //

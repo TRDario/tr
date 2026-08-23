@@ -4,6 +4,7 @@
 
 #pragma once
 #include "../utility/exception.hpp"
+#include "../utility/reference.hpp"
 #include "../utility/zstring_view.hpp"
 #include "texture_unit.hpp"
 
@@ -462,7 +463,7 @@ namespace tr
 		struct deleter
 		{
 			/// Reference to the graphics context the shader is on.
-			graphics_context& context;
+			ref<graphics_context> context;
 
 #ifdef TR_ENABLE_GL_CHECKS
 			/// Unique object ID of the shader.

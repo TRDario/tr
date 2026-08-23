@@ -182,7 +182,7 @@ tr::texture::texture(graphics_context& context, sub_bitmap bitmap, mipmaps mipma
 
 void tr::texture::deleter::operator()(unsigned int texture) const
 {
-	context.gl().delete_textures(1, &texture);
+	context->gl().delete_textures(1, &texture);
 }
 
 //

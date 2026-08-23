@@ -9,7 +9,7 @@
 
 tr::vertex_format::vertex_format(graphics_context& context, std::span<const vertex_binding> bindings)
 #ifdef TR_ENABLE_GL_CHECKS
-	: m_vao{{context}}
+	: m_vao{deleter{context}}
 	, m_bindings{bindings}
 #endif
 {
@@ -53,7 +53,7 @@ tr::vertex_format::vertex_format(graphics_context& context, std::span<const vert
 
 void tr::vertex_format::deleter::operator()(unsigned int id) const
 {
-	context.gl().delete_vertex_arrays(1, &id);
+	context->gl().delete_vertex_arrays(1, &id);
 }
 
 //

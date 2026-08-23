@@ -61,16 +61,19 @@ namespace tr
 		/// @pre `value` must not be equal to `Empty`.
 		/// @param value Value to hold.
 		/// @param deleter Deleter instance.
-		constexpr explicit handle(Base value, Deleter&& deleter);
+		constexpr explicit handle(Base value, Deleter&& deleter)
+			requires(std::move_constructible<Deleter>);
 
 		/// Constructs a handle from a base type value and a deleter without checking for the invalid case.
 		/// @param value Value to hold.
 		/// @param deleter Deleter instance.
-		constexpr explicit handle(Base value, Deleter&& deleter, maybe_empty_t);
+		constexpr explicit handle(Base value, Deleter&& deleter, maybe_empty_t)
+			requires(std::move_constructible<Deleter>);
 
 		/// Constructs a handle by moving from another handle.
 		/// @param rhs Handle to move.
-		constexpr handle(handle&& rhs) noexcept;
+		constexpr handle(handle&& rhs) noexcept
+			requires(std::move_constructible<Deleter>);
 
 		/// Destroys the handle.
 		constexpr ~handle();
@@ -82,7 +85,8 @@ namespace tr
 		/// Move-assigns the handle.
 		/// @param rhs Handle to move.
 		/// @return Reference to `*this`.
-		constexpr handle& operator=(handle&& rhs) noexcept;
+		constexpr handle& operator=(handle&& rhs) noexcept
+			requires(std::is_move_assignable_v<Deleter>);
 
 		/// @}
 		/// @name State

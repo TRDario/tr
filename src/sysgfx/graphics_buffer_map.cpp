@@ -19,5 +19,5 @@ tr::basic_graphics_buffer_map::operator std::span<std::byte>() const
 
 void tr::basic_graphics_buffer_map::unmapper::operator()(unsigned int id) const
 {
-	context.gl().unmap_buffer(id);
+	context->gl().unmap_buffer(id);
 }

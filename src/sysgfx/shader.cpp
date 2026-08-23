@@ -178,9 +178,9 @@ void tr::shader::find_outputs(const gl_api& gl)
 
 void tr::shader::deleter::operator()(unsigned int id) const
 {
-	context.gl().delete_program(id);
+	context->gl().delete_program(id);
 #ifdef TR_ENABLE_GL_CHECKS
-	context.registry.unregister_shader(tid);
+	context->registry.unregister_shader(tid);
 #endif
 }
 

@@ -22,7 +22,7 @@ tr::texture_unit::texture_unit(graphics_context& context)
 
 void tr::texture_unit::deleter::operator()(unsigned int id) const
 {
-	context.m_allocated_texture_units[id] = false;
+	context->m_allocated_texture_units[id] = false;
 }
 
 //
@@ -36,5 +36,5 @@ unsigned int tr::texture_unit::id() const
 
 void tr::texture_unit::set(texture_view texture)
 {
-	m_handle.get_deleter().context.gl().bind_textures(m_handle.get(), 1, &texture.m_id);
+	m_handle.get_deleter().context->gl().bind_textures(m_handle.get(), 1, &texture.m_id);
 }

@@ -16,7 +16,7 @@ tr::graphics_benchmark::graphics_benchmark(graphics_context& context)
 
 void tr::graphics_benchmark::deleter::operator()(unsigned int id) const
 {
-	context.gl().delete_queries(1, &id);
+	context->gl().delete_queries(1, &id);
 }
 
 //

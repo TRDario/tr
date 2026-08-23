@@ -3,6 +3,7 @@
 
 #pragma once
 #include "../utility/handle.hpp"
+#include "../utility/reference.hpp"
 
 namespace tr
 {
@@ -40,7 +41,7 @@ namespace tr
 		struct deleter
 		{
 			/// Reference to the graphics context the texture unit is on.
-			graphics_context& context;
+			ref<graphics_context> context;
 
 			//
 

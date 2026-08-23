@@ -3,6 +3,7 @@
 /// @details For an explanation of shader pipelines, see the description of `tr::shader_pipeline`.
 
 #pragma once
+#include "../utility/reference.hpp"
 #include "shader.hpp"
 
 //
@@ -124,7 +125,7 @@ namespace tr
 		struct deleter
 		{
 			/// Reference to the graphics context the pipeline is on.
-			graphics_context& context;
+			ref<graphics_context> context;
 
 			//
 

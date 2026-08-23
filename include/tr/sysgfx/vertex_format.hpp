@@ -5,6 +5,7 @@
 #include "../utility/handle.hpp"
 #include "../utility/integer.hpp"
 #include "../utility/macro.hpp"
+#include "../utility/reference.hpp"
 
 namespace tr
 {
@@ -155,7 +156,7 @@ namespace tr
 		struct deleter
 		{
 			/// Reference to the graphics context the VAO is on.
-			graphics_context& context;
+			ref<graphics_context> context;
 
 			//
 

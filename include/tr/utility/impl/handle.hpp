@@ -49,6 +49,7 @@ constexpr tr::handle<Base, Empty, Deleter>::handle(Deleter&& deleter)
 
 template <std::regular Base, Base Empty, tr::handle_deleter<Base> Deleter>
 constexpr tr::handle<Base, Empty, Deleter>::handle(Base value, Deleter&& deleter)
+	requires(std::move_constructible<Deleter>)
 	: Deleter{std::forward<Deleter>(deleter)}
 	, m_base{value}
 {
@@ -57,6 +58,7 @@ constexpr tr::handle<Base, Empty, Deleter>::handle(Base value, Deleter&& deleter
 
 template <std::regular Base, Base Empty, tr::handle_deleter<Base> Deleter>
 constexpr tr::handle<Base, Empty, Deleter>::handle(Base value, Deleter&& deleter, maybe_empty_t)
+	requires(std::move_constructible<Deleter>)
 	: Deleter{std::forward<Deleter>(deleter)}
 	, m_base{value}
 {
@@ -64,6 +66,7 @@ constexpr tr::handle<Base, Empty, Deleter>::handle(Base value, Deleter&& deleter
 
 template <std::regular Base, Base Empty, tr::handle_deleter<Base> Deleter>
 constexpr tr::handle<Base, Empty, Deleter>::handle(handle<Base, Empty, Deleter>&& move) noexcept
+	requires(std::move_constructible<Deleter>)
 	: Deleter{std::move(move)}
 	, m_base{std::exchange(move.m_base, Empty)}
 {
@@ -79,9 +82,13 @@ constexpr tr::handle<Base, Empty, Deleter>::~handle<Base, Empty, Deleter>()
 
 template <std::regular Base, Base Empty, tr::handle_deleter<Base> Deleter>
 constexpr tr::handle<Base, Empty, Deleter>& tr::handle<Base, Empty, Deleter>::operator=(handle&& r) noexcept
+	requires(std::is_move_assignable_v<Deleter>)
 {
-	(void)handle{std::move(*this)};
-	std::swap(m_base, r.m_base);
+	if (has_value()) {
+		Deleter::operator()(m_base);
+	}
+	m_base = std::exchange(r.m_base, Empty);
+	get_deleter() = std::move(r.get_deleter());
 	return *this;
 }
 

@@ -4,6 +4,7 @@
 #pragma once
 #include "../utility/chrono.hpp"
 #include "../utility/handle.hpp"
+#include "../utility/reference.hpp"
 
 namespace tr
 {
@@ -84,7 +85,7 @@ namespace tr
 		struct deleter
 		{
 			/// Reference to the graphics context the benchmark is on.
-			graphics_context& context;
+			ref<graphics_context> context;
 
 			//
 
