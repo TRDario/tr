@@ -1,5 +1,5 @@
 /// @file
-/// @brief Provides a state machine class and related functionality.
+/// @brief Provides `tr::state`, `tr::state_machine` and related functionality.
 
 #pragma once
 #include "../utility/benchmark.hpp"
@@ -24,10 +24,11 @@ namespace tr
 	{
 	};
 
-	/// Shorthand for the return type of most state functions: the pointer to the next state, keep_state(), or drop_state().
+	/// Shorthand for the return type of most `tr::state` functions: owning pointer to the next state, `tr::keep_state()`, or
+	/// `tr::drop_state()`.
 	using next_state = std::variant<keep_state_t, drop_state_t, std::unique_ptr<state>>;
 
-	/// Base state type.
+	/// State interface used by `tr::state_machine`.
 	struct state
 	{
 		/// @name Constructors
@@ -78,16 +79,19 @@ namespace tr
 
 	/// @}
 
-	/// State machine manager class.
+	/// State machine manager.
 	/// @details
-	/// The state machine works with the polymorphic `tr::state`. States inherited from tr::state may overload the `handle_event()` method
-	/// used to handle incoming events, the `update()` method used to update the state, and the `draw()` method used to draw the state.
+	/// Instances of `tr::state_machine` work with the polymorphic `tr::state` interface. States inherited from `tr::state` may overload the
+	/// `handle_event()` method used to handle incoming events, the `update()` method used to update the state, and the `draw()` method used
+	/// to draw the state.
 	///
-	/// `handle_event()` and `update()` return `tr::next_state`, which is a sum type containing either a state, `tr::keep_state`, or
-	/// `tr::drop_state`. If `tr::keep_state` is returned, the state machine keeps the current state, and if `tr::drop_state` is returned,
-	/// the state machine drops the current state and becomes empty.
+	/// `handle_event()` and `update()` return `tr::next_state`, which is a sum type containing either a state, `tr::keep_state()`, or
+	/// `tr::drop_state()`. If `tr::keep_state()` is returned, the state machine keeps the current state, and if `tr::drop_state()` is
+	/// returned, the state machine drops the current state and becomes empty.
 	///
 	/// `update()` and `draw()` are benchmarked internally and their benchmarks are gettable.
+	///
+	/// `tr::state_machine` instances are movable, but not copyable. A moved-from instance of `tr::state_machine` reverts to being empty.
 	class state_machine
 	{
 	  public:
@@ -102,7 +106,7 @@ namespace tr
 		/// @{
 
 		/// Checks whether the state machine is in an empty state.
-		/// @return `true` if the state machine does nto contain a state, `false` otherwise.
+		/// @return `true` if the state machine does not contain a state, `false` otherwise.
 		bool empty() const;
 
 		/// Gets access to the current state.
