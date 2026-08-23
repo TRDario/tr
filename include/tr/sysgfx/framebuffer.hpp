@@ -1,8 +1,9 @@
 /// @file
-/// @brief Provides a framebuffer class.
+/// @brief Provides `tr::framebuffer`.
 
 #pragma once
 #include "../utility/handle.hpp"
+#include "../utility/reference.hpp"
 
 namespace tr
 {
@@ -15,7 +16,25 @@ namespace tr
 
 namespace tr
 {
-	/// Collection of buffers used as a destination for rendering.
+	/// Container for a framebuffer object.
+	/// @details
+	/// A framebuffer is a collection of references to buffers used as a destination for rendering. The default framebuffer is used to
+	/// render to the screen, while instances of `tr::framebuffer` may have arbitrary textures attached to them as rendering targets.
+	///
+	/// Strictly speaking, instances of `tr::framebuffer` are only containers for these underlying framebuffers. This means, for example,
+	/// that setting a render target on a graphics context does not set a render target of a literal `tr::framebuffer` object at a specific
+	/// location in memory, but rather the value it contains. If the value is moved to a different instance of `tr::framebuffer`, that value
+	/// will still be set on the context. If the instance is overriden with a new value, the old value is destroyed and the graphics context
+	/// will no longer have a set render target.
+	///
+	/// Every instance of `tr::framebuffer` is associated with a graphics context and cannot outlive its parent context.
+	///
+	/// `tr::framebuffer` instances are movable, but not copyable. A moved-from instance of `tr::framebuffer` is left in a special 'invalid'
+	/// state. Invalid `tr::framebuffer` instances may not be interacted with besides moving a new value into them and checking for validity
+	/// using `valid()`.
+	///
+	/// `tr::framebuffer` instances may be labeled and are formattable. Example format output: `"My %framebuffer" (GID: 5)`. The GID is the
+	/// OpenGL ID of the framebuffer.
 	class framebuffer
 	{
 	  public:
@@ -82,13 +101,39 @@ namespace tr
 		void detach(attachment attachment);
 
 		/// @}
+		/// @name State
+		/// @{
+
+		/// Gets whether the framebuffer is in a valid state.
+		/// @return `true` if the framebuffer is in a valid state, `false` if it is in an invalid state.
+		bool valid() const;
+
+		/// @}
+		/// @name Label
+		/// @{
+
+		/// Sets the debug label of the framebuffer.
+		/// @param label Debug label of the framebuffer.
+		void set_label(std::string_view label);
+
+		/// Gets the debug label of the framebuffer.
+		/// @return Debug label of the framebuffer.
+		std::string label() const;
+
+		/// @}
+
+		/// @cond __hidden
+		/// Gets the OpenGL framebuffer ID.
+		/// @return OpenGL framebuffer ID.
+		unsigned int gid() const;
+		/// @endcond
 
 	  private:
 		/// Framebuffer deleter.
 		struct deleter
 		{
 			/// Reference to the graphics context the framebuffer is on.
-			graphics_context& context;
+			ref<graphics_context> context;
 
 			//
 
@@ -101,10 +146,7 @@ namespace tr
 
 		/// Handle to the OpenGL framebuffer.
 		handle<unsigned int, 0, deleter> m_handle;
-
-		//
-
-		/// Creates a framebuffer handle.
-		void create_handle();
 	};
 } // namespace tr
+
+#include "impl/framebuffer.hpp" // IWYU pragma: export
