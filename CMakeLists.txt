@@ -15,8 +15,6 @@
 ## TR_USE_SYSTEM_LIBRARIES to ON, which will try to find all dependencies except Dear ImGui through find_package or pkg_check_modules.   ##
 ## This is primarily meant to allow for quicker iteration during development.                                                            ##
 ##                                                                                                                                       ##
-## If the standard library doesn't support std::format, but does support the rest of C++20, tr will try to substitute it with fmtlib.    ##
-##                                                                                                                                       ##
 ## tr uses tr_target_template for compilation specifics, check target_template.cmake for more information.                               ##
 ##                                                                                                                                       ##
 ###########################################################################################################################################
