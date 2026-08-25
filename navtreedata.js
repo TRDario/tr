@@ -66,19 +66,19 @@ var NAVTREEINDEX =
 "classtr_1_1basic__renderer.html#af1e5f2bd873dc9daca497e3befb2792d",
 "classtr_1_1bitmap_1_1iterator.html#a50472af9a64a00c7c7e6446310cb48bc",
 "classtr_1_1dyn__atlas.html#a9d0856170bac224727a2777fe92ab8c1",
-"classtr_1_1graphics__context.html#a2d3502c9c7259388747ab82c22c647ac",
-"classtr_1_1logger.html#aee35282ee541eb99d98d1d828b10073d",
-"classtr_1_1rng.html#aca6e78cb08543d20ae0f1a23fca620ad",
-"classtr_1_1state__machine.html#abea7740446b8bad58c1e5d89cf255f61",
-"classtr_1_1stopwatch.html",
-"classtr_1_1utf8_1_1iterator.html#a2b0a42d11a10e938274b5007961074a2",
-"concepttr_1_1typed__contiguous__const__range.html",
-"namespacetr.html#a1fa2cfbf349007d1be17f72b48b65430",
-"namespacetr.html#ac1babae6e9367fc90585a8791dadc746adad104b80a7d62a98af31682bfba557d",
-"namespacetr_1_1literals_1_1angle__literals.html#a7742a30203354251c97a8038d698b136",
-"structtr_1_1blend__mode.html#a31e0312eaa04584927e91fede59dfbb5",
-"structtr_1_1rectangle.html#ad3af933e850e3ca2a7bfd2941ed746c0",
-"structtr_1_1shader__base_1_1deleter.html#a9b3e61718c4a5b63ea618a41bda6f7f0"
+"classtr_1_1graphics__context.html#a01996009b683f9c813dcbd32c073495c",
+"classtr_1_1mstream.html#a7c3c66b10e0aa22fc027e31a8765c58f",
+"classtr_1_1scan__state.html#a3aacae5315b54820574618da2e8f04e8",
+"classtr_1_1static__string.html#a0fc65708a32679e247b514d19ba14732",
+"classtr_1_1sub__bitmap.html#a9554cf04ea5919f95a51642ebc6ad977",
+"classtr_1_1vertex__format.html#a9a66e7e3245f8c836ea738f3b7f9f555",
+"dir_697f726910a7296205b6ff25f822d718.html",
+"namespacetr.html#a392cb3f3b24221891c1d84875f98b585",
+"namespacetr.html#acc7c3ec65e91b3d9d879c9bca6e51ce6",
+"namespacetr_1_1literals_1_1color__literals.html",
+"structtr_1_1color__mesh__ref.html#ab8251fa93205d7dc92dd37fa070bc533",
+"structtr_1_1rgb8.html#a0eba339ff693e218faf62c7712847d0f",
+"structtr_1_1static__vector_1_1const__iterator.html"
 ];
 
 const SYNCONMSG = 'click to disable panel synchronization';

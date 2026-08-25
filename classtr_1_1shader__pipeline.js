@@ -6,6 +6,7 @@ var classtr_1_1shader__pipeline =
     [ "set_shaders", "classtr_1_1shader__pipeline.html#ac3f6d9adc7a92ce36de714da539635f8", null ],
     [ "set_vertex_shader", "classtr_1_1shader__pipeline.html#a1b600e71503b2395af2268154d307662", null ],
     [ "set_fragment_shader", "classtr_1_1shader__pipeline.html#a36da26a0757ee137a302832e923fc31b", null ],
+    [ "valid", "classtr_1_1shader__pipeline.html#a4231b57b73a8ada6f5d9abd14f334b53", null ],
     [ "set_label", "classtr_1_1shader__pipeline.html#a8ef8728fe1a8c0953a68e0c8f0ecf16a", null ],
     [ "label", "classtr_1_1shader__pipeline.html#aa02b2ac41290285c00cf10d4bcb2742f", null ]
 ];

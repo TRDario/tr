@@ -7,6 +7,7 @@ var classtr_1_1owning__shader__pipeline =
     [ "vertex_shader", "classtr_1_1owning__shader__pipeline.html#a49215c2d6fc9f63a3005ec9f2cb6aac1", null ],
     [ "fragment_shader", "classtr_1_1owning__shader__pipeline.html#a5f89822d099418db835196b8710a6c96", null ],
     [ "fragment_shader", "classtr_1_1owning__shader__pipeline.html#a723ba7c01a68877b283dc4d94940569d", null ],
+    [ "valid", "classtr_1_1owning__shader__pipeline.html#a4259df96788a6f964ef7bafa6df9fbba", null ],
     [ "set_label", "classtr_1_1owning__shader__pipeline.html#aaf722e0143b40d467b658aa8f06d27da", null ],
     [ "label", "classtr_1_1owning__shader__pipeline.html#afc967500d2850f3b1da603f5b0e0e837", null ]
 ];

@@ -130,13 +130,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('concepttr_1_1h
 
 <p>"Keylike" type compatible with a hash collection.  
 <a href="#details">More...</a></p>
-<h2 id="header-conceptdef" class="groupheader">Concept definition</h2>
-<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> Key, <span class="keyword">typename</span> Hash, <span class="keyword">typename</span> Eq&gt;</div>
-<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepttr_1_1hash__keylike.html">hash_keylike</a> = <a class="code hl_concept" href="concepttr_1_1hasher.html">hasher&lt;Hash, T&gt;</a> &amp;&amp; <a class="code hl_concept" href="concepttr_1_1equality__predicate.html">equality_predicate&lt;Eq, Key, T&gt;</a></div>
-<div class="ttc" id="aconcepttr_1_1equality__predicate_html"><div class="ttname"><a href="concepttr_1_1equality__predicate.html">tr::equality_predicate</a></div><div class="ttdoc">Equality predicate compatible with a specific type.</div><div class="ttdef"><b>Definition</b> concepts.hpp:171</div></div>
-<div class="ttc" id="aconcepttr_1_1hash__keylike_html"><div class="ttname"><a href="concepttr_1_1hash__keylike.html">tr::hash_keylike</a></div><div class="ttdoc">&quot;Keylike&quot; type compatible with a hash collection.</div><div class="ttdef"><b>Definition</b> concepts.hpp:180</div></div>
-<div class="ttc" id="aconcepttr_1_1hasher_html"><div class="ttname"><a href="concepttr_1_1hasher.html">tr::hasher</a></div><div class="ttdoc">Hasher compatible with a specific type.</div><div class="ttdef"><b>Definition</b> concepts.hpp:163</div></div>
-</div><!-- fragment --><a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Key</td><td>Primary key type of the collection. </td></tr>
@@ -145,7 +139,13 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('concepttr_1_1h
   </table>
   </dd>
 </dl>
-</div></div><!-- contents -->
+</div><h2 id="header-conceptdef" class="groupheader">Concept definition</h2>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> Key, <span class="keyword">typename</span> Hash, <span class="keyword">typename</span> Eq&gt;</div>
+<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepttr_1_1hash__keylike.html">hash_keylike</a> = <a class="code hl_concept" href="concepttr_1_1hasher.html">hasher&lt;Hash, T&gt;</a> &amp;&amp; <a class="code hl_concept" href="concepttr_1_1equality__predicate.html">equality_predicate&lt;Eq, Key, T&gt;</a></div>
+<div class="ttc" id="aconcepttr_1_1equality__predicate_html"><div class="ttname"><a href="concepttr_1_1equality__predicate.html">tr::equality_predicate</a></div><div class="ttdoc">Equality predicate compatible with a specific type.</div><div class="ttdef"><b>Definition</b> concepts.hpp:171</div></div>
+<div class="ttc" id="aconcepttr_1_1hash__keylike_html"><div class="ttname"><a href="concepttr_1_1hash__keylike.html">tr::hash_keylike</a></div><div class="ttdoc">&quot;Keylike&quot; type compatible with a hash collection.</div><div class="ttdef"><b>Definition</b> concepts.hpp:180</div></div>
+<div class="ttc" id="aconcepttr_1_1hasher_html"><div class="ttname"><a href="concepttr_1_1hasher.html">tr::hasher</a></div><div class="ttdoc">Hasher compatible with a specific type.</div><div class="ttdef"><b>Definition</b> concepts.hpp:163</div></div>
+</div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->
 <!-- start footer part -->

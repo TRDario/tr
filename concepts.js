@@ -34,7 +34,6 @@ var concepts =
       [ "handle_deleter", "concepttr_1_1handle__deleter.html", null ],
       [ "hash_keylike", "concepttr_1_1hash__keylike.html", null ],
       [ "hasher", "concepttr_1_1hasher.html", null ],
-      [ "index_range", "concepttr_1_1index__range.html", null ],
       [ "layered_renderer", "concepttr_1_1layered__renderer.html", null ],
       [ "layered_renderer_drawer", "concepttr_1_1layered__renderer__drawer.html", null ],
       [ "layered_renderer_or_drawer", "concepttr_1_1layered__renderer__or__drawer.html", null ],

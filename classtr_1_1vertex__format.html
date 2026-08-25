@@ -128,9 +128,15 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1ver
 </div><!--header-->
 <div class="contents">
 
-<p>GPU vertex format.  
-</p>
-<table class="memberdecls">
+<p>Container for a GPU vertex format.  
+ <a href="#details">More...</a></p>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Vertex formats define the layout of vertex data passed to a drawing operation. This includes the type, attributes and divisor of the data set to be held in one or more indexed vertex buffers. They can be considered the counterpart of vertex array objects in OpenGL.</p>
+<p>Strictly speaking, instances of <span class="tt"><a class="el" href="classtr_1_1vertex__format.html" title="Container for a GPU vertex format.">tr::vertex_format</a></span> are only containers for these underlying vertex format objects. This means, for example, that setting a vertex format on a graphics context does not set the literal <span class="tt"><a class="el" href="classtr_1_1vertex__format.html" title="Container for a GPU vertex format.">tr::vertex_format</a></span> object at a specific location in memory, but rather the value it contains. If the value is moved to a different instance of <span class="tt"><a class="el" href="classtr_1_1vertex__format.html" title="Container for a GPU vertex format.">tr::vertex_format</a></span>, that value will still be set on the context. If the instance is overriden with a new value, the old value is destroyed and the graphics context will no longer have a set vertex format.</p>
+<p>Every instance of <span class="tt"><a class="el" href="classtr_1_1vertex__format.html" title="Container for a GPU vertex format.">tr::vertex_format</a></span> is associated with a graphics context and cannot outlive its parent context.</p>
+<p><span class="tt"><a class="el" href="classtr_1_1vertex__format.html" title="Container for a GPU vertex format.">tr::vertex_format</a></span> instances are movable, but not copyable. A moved-from instance of <span class="tt"><a class="el" href="classtr_1_1vertex__format.html" title="Container for a GPU vertex format.">tr::vertex_format</a></span> is left in a special 'invalid' state. Invalid <span class="tt"><a class="el" href="classtr_1_1vertex__format.html" title="Container for a GPU vertex format.">tr::vertex_format</a></span> instances may not be interacted with besides moving a new value into them and checking for validity using <span class="tt"><a class="el" href="#a24f8460d420141ea7ceec665ab490860" title="Gets whether the vertex format is in a valid state.">valid()</a></span>.</p>
+<p><span class="tt"><a class="el" href="classtr_1_1vertex__format.html" title="Container for a GPU vertex format.">tr::vertex_format</a></span> instances may be labeled and are formattable. Example format output: <span class="tt">"My vertex format" (GID: 5)</span>. The GID is the OpenGL ID of the VAO. </p>
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
@@ -139,14 +145,14 @@ Public Member Functions</h2></td></tr>
 <tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Context</div></td></tr>
 <tr class="memitem:a9a66e7e3245f8c836ea738f3b7f9f555" id="r_a9a66e7e3245f8c836ea738f3b7f9f555"><td class="memItemLeft"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a9a66e7e3245f8c836ea738f3b7f9f555">context</a> () const</td></tr>
 <tr class="memdesc:a9a66e7e3245f8c836ea738f3b7f9f555"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a reference to the graphics context the vertex format is on.  <br /></td></tr>
-<tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Label</div></td></tr>
+<tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">State</div></td></tr>
+<tr class="memitem:a24f8460d420141ea7ceec665ab490860" id="r_a24f8460d420141ea7ceec665ab490860"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a24f8460d420141ea7ceec665ab490860">valid</a> () const</td></tr>
+<tr class="memdesc:a24f8460d420141ea7ceec665ab490860"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the vertex format is in a valid state.  <br /></td></tr>
+<tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Label</div></td></tr>
 <tr class="memitem:ae1def399ec94f5008d824a3315493e46" id="r_ae1def399ec94f5008d824a3315493e46"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ae1def399ec94f5008d824a3315493e46">set_label</a> (std::string_view label)</td></tr>
 <tr class="memdesc:ae1def399ec94f5008d824a3315493e46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the debug label of the vertex format.  <br /></td></tr>
 <tr class="memitem:a07cc01bd28ed9b2fa3ed529c9f0b4add" id="r_a07cc01bd28ed9b2fa3ed529c9f0b4add"><td class="memItemLeft">std::string&#160;</td><td class="memItemRight"><a class="el" href="#a07cc01bd28ed9b2fa3ed529c9f0b4add">label</a> () const</td></tr>
 <tr class="memdesc:a07cc01bd28ed9b2fa3ed529c9f0b4add"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the debug label of the vertex format.  <br /></td></tr>
-<tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">ID.</div></td></tr>
-<tr class="memitem:a39ae764b49112f5ff54191b76442946a" id="r_a39ae764b49112f5ff54191b76442946a"><td class="memItemLeft">unsigned int&#160;</td><td class="memItemRight"><a class="el" href="#a39ae764b49112f5ff54191b76442946a">id</a> () const</td></tr>
-<tr class="memdesc:a39ae764b49112f5ff54191b76442946a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the unique ID of the vertex format.  <br /></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a00008fce588af545cf9c7cf725e28da8" name="a00008fce588af545cf9c7cf725e28da8"></a>
@@ -174,6 +180,7 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section post"><dt>Postcondition</dt><dd><span class="tt">bindings</span> must stay valid for the duration of the lifetime of the vertex format. </dd></dl>
 
 </div>
 </div>
@@ -193,6 +200,24 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Reference to the graphics context the vertex format is on. </dd></dl>
+
+</div>
+</div>
+<a id="a24f8460d420141ea7ceec665ab490860" name="a24f8460d420141ea7ceec665ab490860"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24f8460d420141ea7ceec665ab490860">&#9670;&#160;</a></span>valid()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tr::vertex_format::valid </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the vertex format is in a valid state, <span class="tt">false</span> if it is in an invalid state. </dd></dl>
 
 </div>
 </div>
@@ -234,24 +259,6 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Label of the vertex format. </dd></dl>
-
-</div>
-</div>
-<a id="a39ae764b49112f5ff54191b76442946a" name="a39ae764b49112f5ff54191b76442946a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a39ae764b49112f5ff54191b76442946a">&#9670;&#160;</a></span>id()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">unsigned int tr::vertex_format::id </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>Unique ID of the vertex format. </dd></dl>
 
 </div>
 </div>

@@ -130,15 +130,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('concepttr_1_1f
 
 <p>Formattable type.  
 <a href="#details">More...</a></p>
-<h2 id="header-conceptdef" class="groupheader">Concept definition</h2>
-<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> Context, <span class="keyword">typename</span> Formatter = <span class="keyword">typename</span> Context::<span class="keyword">template</span> formatter_type&lt;std::remove_const_t&lt;T&gt;&gt;&gt;</div>
-<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepttr_1_1formattable__with.html">formattable_with</a> = std::semiregular&lt;Formatter&gt; &amp;&amp; <span class="keyword">requires</span>(Formatter&amp; f, Formatter <span class="keyword">const</span>&amp; cf, T&amp;&amp; t, Context fc,</div>
-<div class="line">                                                                       std::basic_format_parse_context&lt;typename Context::char_type&gt; pc) {</div>
-<div class="line">        { f.parse(pc) } -&gt; std::same_as&lt;<span class="keyword">typename</span> <span class="keyword">decltype</span>(pc)::iterator&gt;;</div>
-<div class="line">        { cf.format(t, fc) } -&gt; std::same_as&lt;typename Context::iterator&gt;;</div>
-<div class="line">    }</div>
-<div class="ttc" id="aconcepttr_1_1formattable__with_html"><div class="ttname"><a href="concepttr_1_1formattable__with.html">tr::formattable_with</a></div><div class="ttdoc">Formattable type.</div><div class="ttdef"><b>Definition</b> concepts.hpp:141</div></div>
-</div><!-- fragment --><a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Context</td><td>Formatting context type. </td></tr>
@@ -146,7 +138,15 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('concepttr_1_1f
   </table>
   </dd>
 </dl>
-</div></div><!-- contents -->
+</div><h2 id="header-conceptdef" class="groupheader">Concept definition</h2>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> Context, <span class="keyword">typename</span> Formatter = <span class="keyword">typename</span> Context::<span class="keyword">template</span> formatter_type&lt;std::remove_const_t&lt;T&gt;&gt;&gt;</div>
+<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepttr_1_1formattable__with.html">formattable_with</a> = std::semiregular&lt;Formatter&gt; &amp;&amp; <span class="keyword">requires</span>(Formatter&amp; f, Formatter <span class="keyword">const</span>&amp; cf, T&amp;&amp; t, Context fc,</div>
+<div class="line">                                                                       std::basic_format_parse_context&lt;typename Context::char_type&gt; pc) {</div>
+<div class="line">        { f.parse(pc) } -&gt; std::same_as&lt;<span class="keyword">typename</span> <span class="keyword">decltype</span>(pc)::iterator&gt;;</div>
+<div class="line">        { cf.format(t, fc) } -&gt; std::same_as&lt;typename Context::iterator&gt;;</div>
+<div class="line">    }</div>
+<div class="ttc" id="aconcepttr_1_1formattable__with_html"><div class="ttname"><a href="concepttr_1_1formattable__with.html">tr::formattable_with</a></div><div class="ttdoc">Formattable type.</div><div class="ttdef"><b>Definition</b> concepts.hpp:141</div></div>
+</div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->
 <!-- start footer part -->

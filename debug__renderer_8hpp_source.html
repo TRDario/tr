@@ -287,38 +287,34 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('debug__rendere
 <div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span> </div>
 <div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>        <span class="comment">//</span></div>
 <div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span></div>
-<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>        <span class="keyword">static</span> <span class="keyword">constexpr</span> std::array vertex_format_bindings{<a class="code hl_function" href="namespacetr.html#a4aec951cd219735365ce2bb980172d0c">make_vertex_binding&lt;glm::u8vec2&gt;</a>(), <a class="code hl_function" href="namespacetr.html#a4aec951cd219735365ce2bb980172d0c">make_vertex_binding&lt;glyph&gt;</a>(1)};</div>
-<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span> </div>
-<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>        <span class="comment">//</span></div>
-<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span></div>
-<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>        owning_shader_pipeline m_pipeline;</div>
-<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span></div>
-<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>        vertex_format m_format;</div>
-<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span></div>
-<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>        texture m_font;</div>
-<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span></div>
-<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>        static_vertex_buffer&lt;glm::u8vec2&gt; m_mesh;</div>
-<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span></div>
-<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>        dyn_vertex_buffer&lt;glyph&gt; m_glyph_buffer;</div>
-<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span></div>
-<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>        std::vector&lt;glyph&gt; m_glyphs;</div>
-<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span></div>
-<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>        <a class="code hl_enumeration" href="namespacetr.html#a1eb2948abd308c1bd0658317416db0a7">renderer_id</a> m_id;</div>
-<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span></div>
-<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>        <a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#a942cfbfc8bf5094139c2f52fba2b8b17">u8</a> m_column_limit;</div>
-<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span></div>
-<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>        <a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#a942cfbfc8bf5094139c2f52fba2b8b17">u8</a> m_left_line;</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>        owning_shader_pipeline m_pipeline;</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span></div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>        vertex_format m_format;</div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span></div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>        texture m_font;</div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span></div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>        static_vertex_buffer&lt;glm::u8vec2&gt; m_mesh;</div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span></div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>        dyn_vertex_buffer&lt;glyph&gt; m_glyph_buffer;</div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span></div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>        std::vector&lt;glyph&gt; m_glyphs;</div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span></div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>        <a class="code hl_enumeration" href="namespacetr.html#a1eb2948abd308c1bd0658317416db0a7">renderer_id</a> m_id;</div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span></div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>        <a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#a942cfbfc8bf5094139c2f52fba2b8b17">u8</a> m_column_limit;</div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span></div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>        <a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#a942cfbfc8bf5094139c2f52fba2b8b17">u8</a> m_left_line;</div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span></div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>        <a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#a942cfbfc8bf5094139c2f52fba2b8b17">u8</a> m_right_line;</div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span> </div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>        <span class="comment">//</span></div>
 <div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span></div>
-<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>        <a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#a942cfbfc8bf5094139c2f52fba2b8b17">u8</a> m_right_line;</div>
-<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span> </div>
-<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>        <span class="comment">//</span></div>
-<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span></div>
-<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classtr_1_1debug__renderer.html#a61eddc7863d58d0b55a964309365b036">write_benchmark</a>(<a class="code hl_typedef" href="namespacetr.html#a0a06575d52c3090c44755b9a8174f146">duration</a> <a class="code hl_enumvalue" href="namespacetr.html#aead4294434ac2897c9ce8318a8216b18ad8bd79cc131920d5de426f914d17405a">min</a>, <a class="code hl_typedef" href="namespacetr.html#a0a06575d52c3090c44755b9a8174f146">duration</a> avg, <a class="code hl_typedef" href="namespacetr.html#a0a06575d52c3090c44755b9a8174f146">duration</a> <a class="code hl_enumvalue" href="namespacetr.html#aead4294434ac2897c9ce8318a8216b18a2ffe4e77325d9a7152f7086ea7aa5114">max</a>, std::string_view <a class="code hl_function" href="namespacetr.html#a494b2ceeae652346e5ab09cdbfab5075">name</a>, <a class="code hl_typedef" href="namespacetr.html#a0a06575d52c3090c44755b9a8174f146">duration</a> limit);</div>
-<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>    };</div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classtr_1_1debug__renderer.html#a61eddc7863d58d0b55a964309365b036">write_benchmark</a>(<a class="code hl_typedef" href="namespacetr.html#a0a06575d52c3090c44755b9a8174f146">duration</a> <a class="code hl_enumvalue" href="namespacetr.html#aead4294434ac2897c9ce8318a8216b18ad8bd79cc131920d5de426f914d17405a">min</a>, <a class="code hl_typedef" href="namespacetr.html#a0a06575d52c3090c44755b9a8174f146">duration</a> avg, <a class="code hl_typedef" href="namespacetr.html#a0a06575d52c3090c44755b9a8174f146">duration</a> <a class="code hl_enumvalue" href="namespacetr.html#aead4294434ac2897c9ce8318a8216b18a2ffe4e77325d9a7152f7086ea7aa5114">max</a>, std::string_view <a class="code hl_function" href="namespacetr.html#a494b2ceeae652346e5ab09cdbfab5075">name</a>, <a class="code hl_typedef" href="namespacetr.html#a0a06575d52c3090c44755b9a8174f146">duration</a> limit);</div>
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>    };</div>
 </div>
-<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>}; <span class="comment">// namespace tr</span></div>
-<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span> </div>
-<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span><span class="preprocessor">#include &quot;impl/debug_renderer.hpp&quot;</span> <span class="comment">// IWYU pragma: export</span></div>
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>}; <span class="comment">// namespace tr</span></div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span> </div>
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span><span class="preprocessor">#include &quot;impl/debug_renderer.hpp&quot;</span> <span class="comment">// IWYU pragma: export</span></div>
 <div class="ttc" id="achrono_8hpp_html"><div class="ttname"><a href="chrono_8hpp.html">chrono.hpp</a></div><div class="ttdoc">Provides miscellaneous chrono utilities.</div></div>
 <div class="ttc" id="aclasstr_1_1benchmark_html"><div class="ttname"><a href="classtr_1_1benchmark.html">tr::benchmark</a></div><div class="ttdoc">Basic benchmarking class.</div><div class="ttdef"><b>Definition</b> benchmark.hpp:13</div></div>
 <div class="ttc" id="aclasstr_1_1benchmark_html_a0750817a8e3ed4764d7935e4e4672164"><div class="ttname"><a href="classtr_1_1benchmark.html#a0750817a8e3ed4764d7935e4e4672164">tr::benchmark::avg</a></div><div class="ttdeci">duration avg() const</div><div class="ttdoc">Gets the average duration of the available measurements.</div></div>
@@ -348,8 +344,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('debug__rendere
 <div class="ttc" id="anamespacetr_html_a0a06575d52c3090c44755b9a8174f146"><div class="ttname"><a href="namespacetr.html#a0a06575d52c3090c44755b9a8174f146">tr::duration</a></div><div class="ttdeci">std::chrono::nanoseconds duration</div><div class="ttdoc">Standard duration datatype.</div><div class="ttdef"><b>Definition</b> chrono.hpp:12</div></div>
 <div class="ttc" id="anamespacetr_html_a1eb2948abd308c1bd0658317416db0a7"><div class="ttname"><a href="namespacetr.html#a1eb2948abd308c1bd0658317416db0a7">tr::renderer_id</a></div><div class="ttdeci">renderer_id</div><div class="ttdoc">Renderer ID.</div><div class="ttdef"><b>Definition</b> graphics_context.hpp:39</div></div>
 <div class="ttc" id="anamespacetr_html_a494b2ceeae652346e5ab09cdbfab5075"><div class="ttname"><a href="namespacetr.html#a494b2ceeae652346e5ab09cdbfab5075">tr::name</a></div><div class="ttdeci">constexpr zstring_view name(scancode scan)</div><div class="ttdoc">Gets the name of a scancode.</div></div>
-<div class="ttc" id="anamespacetr_html_a4aec951cd219735365ce2bb980172d0c"><div class="ttname"><a href="namespacetr.html#a4aec951cd219735365ce2bb980172d0c">tr::make_vertex_binding</a></div><div class="ttdeci">constexpr vertex_binding make_vertex_binding(u32 divisor=not_instanced)</div><div class="ttdoc">Constructs a vertex binding using tr::as_vertex_attribute_list&lt;T&gt;.</div></div>
-<div class="ttc" id="anamespacetr_html_a5dc866e96c8a2750ad53cff726453c66"><div class="ttname"><a href="namespacetr.html#a5dc866e96c8a2750ad53cff726453c66">tr::as_vertex_attribute_list</a></div><div class="ttdeci">constexpr std::array as_vertex_attribute_list</div><div class="ttdoc">Maps a C++ type or a list of C++ types to a list of vertex attributes.</div><div class="ttdef"><b>Definition</b> vertex_format.hpp:75</div></div>
+<div class="ttc" id="anamespacetr_html_a5dc866e96c8a2750ad53cff726453c66"><div class="ttname"><a href="namespacetr.html#a5dc866e96c8a2750ad53cff726453c66">tr::as_vertex_attribute_list</a></div><div class="ttdeci">constexpr std::array as_vertex_attribute_list</div><div class="ttdoc">Maps a C++ type or a list of C++ types to a list of vertex attributes.</div><div class="ttdef"><b>Definition</b> vertex_format.hpp:87</div></div>
 <div class="ttc" id="anamespacetr_html_aead4294434ac2897c9ce8318a8216b18a2ffe4e77325d9a7152f7086ea7aa5114"><div class="ttname"><a href="namespacetr.html#aead4294434ac2897c9ce8318a8216b18a2ffe4e77325d9a7152f7086ea7aa5114">tr::blend_fn::max</a></div><div class="ttdeci">@ max</div><div class="ttdoc">The maximum channel values of the source and destination colors are selected.</div><div class="ttdef"><b>Definition</b> blending.hpp:18</div></div>
 <div class="ttc" id="anamespacetr_html_aead4294434ac2897c9ce8318a8216b18ad8bd79cc131920d5de426f914d17405a"><div class="ttname"><a href="namespacetr.html#aead4294434ac2897c9ce8318a8216b18ad8bd79cc131920d5de426f914d17405a">tr::blend_fn::min</a></div><div class="ttdeci">@ min</div><div class="ttdoc">The minimum channel values of the source and destination colors are selected.</div><div class="ttdef"><b>Definition</b> blending.hpp:16</div></div>
 <div class="ttc" id="ashader__pipeline_8hpp_html"><div class="ttname"><a href="shader__pipeline_8hpp.html">shader_pipeline.hpp</a></div><div class="ttdoc">Provides tr::shader_pipeline and tr::owning_shader_pipeline.</div></div>
@@ -360,7 +355,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('debug__rendere
 <div class="ttc" id="astructtr_1_1rgba8_html"><div class="ttname"><a href="structtr_1_1rgba8.html">tr::rgba8</a></div><div class="ttdoc">8-bit RGBA color.</div><div class="ttdef"><b>Definition</b> color.hpp:314</div></div>
 <div class="ttc" id="atexture_8hpp_html"><div class="ttname"><a href="texture_8hpp.html">texture.hpp</a></div><div class="ttdoc">Provides a GPU texture container class and related types.</div></div>
 <div class="ttc" id="avertex__buffer_8hpp_html"><div class="ttname"><a href="vertex__buffer_8hpp.html">vertex_buffer.hpp</a></div><div class="ttdoc">Provides vertex buffer classes.</div></div>
-<div class="ttc" id="avertex__format_8hpp_html"><div class="ttname"><a href="vertex__format_8hpp.html">vertex_format.hpp</a></div><div class="ttdoc">Provides a vertex format class and related functionality.</div></div>
+<div class="ttc" id="avertex__format_8hpp_html"><div class="ttname"><a href="vertex__format_8hpp.html">vertex_format.hpp</a></div><div class="ttdoc">Provides tr::vertex_format and related functionality.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

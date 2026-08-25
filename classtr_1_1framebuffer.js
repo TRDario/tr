@@ -16,5 +16,8 @@ var classtr_1_1framebuffer =
     [ "context", "classtr_1_1framebuffer.html#a20577676b39ef9f226176d9b6f4ee683", null ],
     [ "render_target", "classtr_1_1framebuffer.html#aa1b11be3690a052b795269c45919a79a", null ],
     [ "attach", "classtr_1_1framebuffer.html#a3147eb464d15e2c75e5fd45a2965a099", null ],
-    [ "detach", "classtr_1_1framebuffer.html#ab683fe993c7fc83e73844f16d5c10098", null ]
+    [ "detach", "classtr_1_1framebuffer.html#ab683fe993c7fc83e73844f16d5c10098", null ],
+    [ "valid", "classtr_1_1framebuffer.html#a8ab2c5df0ad60f6302e5bcd6f96ffda8", null ],
+    [ "set_label", "classtr_1_1framebuffer.html#aa5e6d23c96f47d0c2c48690287fbb026", null ],
+    [ "label", "classtr_1_1framebuffer.html#abe2d2e9fbea303d5f91295ae5c7314cf", null ]
 ];

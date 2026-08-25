@@ -76,7 +76,7 @@ var searchData=
   ['ttfont_5fload_5ferror_73',['ttfont_load_error',['../classtr_1_1ttfont__load__error.html',1,'tr::ttfont_load_error'],['../classtr_1_1ttfont__load__error.html#ac0114182e89caf72086af2e947925de8',1,'tr::ttfont_load_error::ttfont_load_error()']]],
   ['ttfont_5frender_5ferror_74',['ttfont_render_error',['../classtr_1_1ttfont__render__error.html',1,'tr::ttfont_render_error'],['../classtr_1_1ttfont__render__error.html#a5e9d2d66b827316fd919956498ddbc1f',1,'tr::ttfont_render_error::ttfont_render_error()']]],
   ['turns_75',['turns',['../classtr_1_1angle.html#a6ff07990334bd71ae282362d131bafed',1,'tr::angle::turns()'],['../namespacetr.html#ad80f5c195adc1dc69d5c7660199c51d5',1,'tr::turns(Number th)']]],
-  ['type_76',['type',['../structtr_1_1size__type.html',1,'tr::type&lt; S &gt;'],['../structtr_1_1app__metadata.html#afe1b8cd37996a878f1b2ba5ec5a2eec2',1,'tr::app_metadata::type'],['../structtr_1_1vertex__attribute.html#af46feac4b12a24757f9efb4cf5a0508e',1,'tr::vertex_attribute::type']]],
+  ['type_76',['type',['../structtr_1_1size__type.html',1,'tr::type&lt; S &gt;'],['../structtr_1_1vertex__binding__tag.html#a2b381667d31d89f6bba50a9be596472a',1,'tr::vertex_binding_tag::type'],['../structtr_1_1app__metadata.html#afe1b8cd37996a878f1b2ba5ec5a2eec2',1,'tr::app_metadata::type'],['../structtr_1_1vertex__attribute.html#af46feac4b12a24757f9efb4cf5a0508e',1,'tr::vertex_attribute::type']]],
   ['type_5fname_77',['type_name',['../namespacetr.html#a4b843743e9000b6235dfd1ff859ab4fd',1,'tr']]],
   ['type_5fname_2ehpp_78',['type_name.hpp',['../type__name_8hpp.html',1,'']]],
   ['typed_5fcontiguous_5fconst_5frange_79',['typed_contiguous_const_range',['../concepttr_1_1typed__contiguous__const__range.html',1,'tr']]],

@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=11" />
   <meta name="generator" content="Doxygen 1.17.0" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>tr: tr::shader_base Class Reference</title>
+  <title>tr: tr::shader Class Reference</title>
   <link href="tabs.css" rel="stylesheet" type="text/css" />
   <script type="text/javascript" src="jquery.js"></script>
   <script type="text/javascript" src="dynsections.js"></script>
@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
   </div>
 </div>
 <script type="text/javascript">
-document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1shader__base.html','','classtr_1_1shader__base-members'); });
+document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1shader.html','','classtr_1_1shader-members'); });
 </script>
 <div id="container">
 <div id="doc-content">
@@ -124,211 +124,157 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1sha
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">tr::shader_base Class Reference</div></div>
+  <div class="headertitle"><div class="title">tr::shader Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Base GPU shader program class.  
-</p>
-<div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Inheritance diagram for tr::shader_base:</div>
+<p>Base shader program class.  
+ <a href="#details">More...</a></p>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Shader programs are small programs run on the GPU during a step of the graphics pipeline. tr allows the creation and use of custom vertex and fragment shader programs written in the OpenGL shading language (GLSL).</p>
+<p>Objects of this type may not be instantiated directly. Rather, vertex and fragment shaders are subclassed as <span class="tt"><a class="el" href="classtr_1_1vertex__shader.html" title="Vertex shader program.">tr::vertex_shader</a></span> and <span class="tt"><a class="el" href="classtr_1_1fragment__shader.html" title="Fragment shader program.">tr::fragment_shader</a></span> respectively.</p>
+<p>Strictly speaking, shader objects are only containers for the underlying shader programs. This means, for example, that setting a shader on a shader pipeline object does not set the literal shader object at a specific location in memory, but rather the value it contains. If the value is moved to a different shader object, that value will still be set on the pipeline. If the object is overriden with a new value, the old value is destroyed and the pipeline reverts to an incomplete state.</p>
+<p>Every shader object is associated with a graphics context and cannot outlive its parent context.</p>
+<p>Shader objects are movable, but not copyable. A moved-from instance of a shader object is left in a special 'invalid' state. Invalid shader objects may not be interacted with besides moving a new value into them and checking for validity using <span class="tt"><a class="el" href="#af96d3d6b7aa6c30c2ccbe6e01e947209" title="Gets whether the shader is in a valid state.">valid()</a></span>.</p>
+<p>Shader objects may be labeled and are formattable. Example format output: <span class="tt">"My shader" (OpenGL ID: 5)</span>. </p>
+</div><div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Inheritance diagram for tr::shader:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
  <div class="center">
-  <img src="classtr_1_1shader__base.png" usemap="#tr_3A_3Ashader_5Fbase_map" alt=""/>
-  <map id="tr_3A_3Ashader_5Fbase_map" name="tr_3A_3Ashader_5Fbase_map">
-<area href="classtr_1_1fragment__shader.html" title="GPU fragment shader program." alt="tr::fragment_shader" shape="rect" coords="0,56,121,80"/>
-<area href="classtr_1_1vertex__shader.html" title="GPU vertex shader program." alt="tr::vertex_shader" shape="rect" coords="131,56,252,80"/>
+  <img src="classtr_1_1shader.png" usemap="#tr_3A_3Ashader_map" alt=""/>
+  <map id="tr_3A_3Ashader_map" name="tr_3A_3Ashader_map">
+<area href="classtr_1_1fragment__shader.html" title="Fragment shader program." alt="tr::fragment_shader" shape="rect" coords="0,56,121,80"/>
+<area href="classtr_1_1vertex__shader.html" title="Vertex shader program." alt="tr::vertex_shader" shape="rect" coords="131,56,252,80"/>
   </map>
 </div></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:deleter" id="r_deleter"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structtr_1_1shader__base_1_1deleter.html">deleter</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shader program deleter.  <a href="structtr_1_1shader__base_1_1deleter.html#details">More...</a><br /></td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Context</div></td></tr>
-<tr class="memitem:a64c7d2119e5c6cbfd6b6cd42600d8d72" id="r_a64c7d2119e5c6cbfd6b6cd42600d8d72"><td class="memItemLeft"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a64c7d2119e5c6cbfd6b6cd42600d8d72">context</a> () const</td></tr>
-<tr class="memdesc:a64c7d2119e5c6cbfd6b6cd42600d8d72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a reference to the graphics context the shader is on.  <br /></td></tr>
+<tr class="memitem:a263481a9b92e2ce61fc07bf96a9396c8" id="r_a263481a9b92e2ce61fc07bf96a9396c8"><td class="memItemLeft"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a263481a9b92e2ce61fc07bf96a9396c8">context</a> () const</td></tr>
+<tr class="memdesc:a263481a9b92e2ce61fc07bf96a9396c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a reference to the graphics context the shader is on.  <br /></td></tr>
 <tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Uniforms</div></td></tr>
-<tr class="memitem:a45fe50450531bc0deebda92b0b63bd45" id="r_a45fe50450531bc0deebda92b0b63bd45"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a45fe50450531bc0deebda92b0b63bd45">set_uniform</a> (int index, bool value)</td></tr>
-<tr class="memdesc:a45fe50450531bc0deebda92b0b63bd45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a boolean uniform.  <br /></td></tr>
-<tr class="memitem:ace63c94fd6f34bb89735b19774158a46" id="r_ace63c94fd6f34bb89735b19774158a46"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ace63c94fd6f34bb89735b19774158a46">set_uniform</a> (int index, int value)</td></tr>
-<tr class="memdesc:ace63c94fd6f34bb89735b19774158a46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an integer uniform.  <br /></td></tr>
-<tr class="memitem:a6c10cb5a3397a7ef06c3eed402874e77" id="r_a6c10cb5a3397a7ef06c3eed402874e77"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a6c10cb5a3397a7ef06c3eed402874e77">set_uniform</a> (int index, std::span&lt; const int &gt; value)</td></tr>
-<tr class="memdesc:a6c10cb5a3397a7ef06c3eed402874e77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an integer array uniform.  <br /></td></tr>
-<tr class="memitem:ac4163d73dced6beeffca8d8cd74a260e" id="r_ac4163d73dced6beeffca8d8cd74a260e"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ac4163d73dced6beeffca8d8cd74a260e">set_uniform</a> (int index, glm::ivec2 value)</td></tr>
-<tr class="memdesc:ac4163d73dced6beeffca8d8cd74a260e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an ivec2 uniform.  <br /></td></tr>
-<tr class="memitem:a567d06f997e2baa25677115c8337b720" id="r_a567d06f997e2baa25677115c8337b720"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a567d06f997e2baa25677115c8337b720">set_uniform</a> (int index, std::span&lt; const glm::ivec2 &gt; value)</td></tr>
-<tr class="memdesc:a567d06f997e2baa25677115c8337b720"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an ivec2 array uniform.  <br /></td></tr>
-<tr class="memitem:a16a8459b389c6ab1f0ce0c0fb6bca49a" id="r_a16a8459b389c6ab1f0ce0c0fb6bca49a"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a16a8459b389c6ab1f0ce0c0fb6bca49a">set_uniform</a> (int index, glm::ivec3 value)</td></tr>
-<tr class="memdesc:a16a8459b389c6ab1f0ce0c0fb6bca49a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an ivec3 uniform.  <br /></td></tr>
-<tr class="memitem:a6cf7d920731ca68f64cdb9cef1749e89" id="r_a6cf7d920731ca68f64cdb9cef1749e89"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a6cf7d920731ca68f64cdb9cef1749e89">set_uniform</a> (int index, std::span&lt; const glm::ivec3 &gt; value)</td></tr>
-<tr class="memdesc:a6cf7d920731ca68f64cdb9cef1749e89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an ivec3 array uniform.  <br /></td></tr>
-<tr class="memitem:add50f381849a733c0100402a6f891caa" id="r_add50f381849a733c0100402a6f891caa"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#add50f381849a733c0100402a6f891caa">set_uniform</a> (int index, glm::ivec4 value)</td></tr>
-<tr class="memdesc:add50f381849a733c0100402a6f891caa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an ivec4 uniform.  <br /></td></tr>
-<tr class="memitem:a5c281c526198105b26bbc6b34fe3be72" id="r_a5c281c526198105b26bbc6b34fe3be72"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a5c281c526198105b26bbc6b34fe3be72">set_uniform</a> (int index, std::span&lt; const glm::ivec4 &gt; value)</td></tr>
-<tr class="memdesc:a5c281c526198105b26bbc6b34fe3be72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an ivec4 array uniform.  <br /></td></tr>
-<tr class="memitem:a28d7b07401bf320e8e5da163ae5b9774" id="r_a28d7b07401bf320e8e5da163ae5b9774"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a28d7b07401bf320e8e5da163ae5b9774">set_uniform</a> (int index, unsigned int value)</td></tr>
-<tr class="memdesc:a28d7b07401bf320e8e5da163ae5b9774"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an unsigned integer uniform.  <br /></td></tr>
-<tr class="memitem:ab6b2d7e6f8bd85bb0a34cabaf9b908af" id="r_ab6b2d7e6f8bd85bb0a34cabaf9b908af"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ab6b2d7e6f8bd85bb0a34cabaf9b908af">set_uniform</a> (int index, std::span&lt; const unsigned int &gt; value)</td></tr>
-<tr class="memdesc:ab6b2d7e6f8bd85bb0a34cabaf9b908af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an unsigned integer array uniform.  <br /></td></tr>
-<tr class="memitem:a5bd5f17bcf82a360b5638c3c1a865e70" id="r_a5bd5f17bcf82a360b5638c3c1a865e70"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a5bd5f17bcf82a360b5638c3c1a865e70">set_uniform</a> (int index, glm::uvec2 value)</td></tr>
-<tr class="memdesc:a5bd5f17bcf82a360b5638c3c1a865e70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a uvec2 uniform.  <br /></td></tr>
-<tr class="memitem:a63546b37cdcbe2a8ae0072e2356c89fd" id="r_a63546b37cdcbe2a8ae0072e2356c89fd"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a63546b37cdcbe2a8ae0072e2356c89fd">set_uniform</a> (int index, std::span&lt; const glm::uvec2 &gt; value)</td></tr>
-<tr class="memdesc:a63546b37cdcbe2a8ae0072e2356c89fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a uvec2 array uniform.  <br /></td></tr>
-<tr class="memitem:a094bac93c484bb46e67eb1469a8ae69e" id="r_a094bac93c484bb46e67eb1469a8ae69e"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a094bac93c484bb46e67eb1469a8ae69e">set_uniform</a> (int index, glm::uvec3 value)</td></tr>
-<tr class="memdesc:a094bac93c484bb46e67eb1469a8ae69e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a uvec3 uniform.  <br /></td></tr>
-<tr class="memitem:adbe479b1f0342c29feb873f93e397c40" id="r_adbe479b1f0342c29feb873f93e397c40"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#adbe479b1f0342c29feb873f93e397c40">set_uniform</a> (int index, std::span&lt; const glm::uvec3 &gt; value)</td></tr>
-<tr class="memdesc:adbe479b1f0342c29feb873f93e397c40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a uvec3 array uniform.  <br /></td></tr>
-<tr class="memitem:a679054894c3e21ab5fe2f072379d6adb" id="r_a679054894c3e21ab5fe2f072379d6adb"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a679054894c3e21ab5fe2f072379d6adb">set_uniform</a> (int index, glm::uvec4 value)</td></tr>
-<tr class="memdesc:a679054894c3e21ab5fe2f072379d6adb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a uvec4 uniform.  <br /></td></tr>
-<tr class="memitem:aff345adc58b897f82a5a422cccaae006" id="r_aff345adc58b897f82a5a422cccaae006"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aff345adc58b897f82a5a422cccaae006">set_uniform</a> (int index, std::span&lt; const glm::uvec4 &gt; value)</td></tr>
-<tr class="memdesc:aff345adc58b897f82a5a422cccaae006"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a uvec4 array uniform.  <br /></td></tr>
-<tr class="memitem:abdec66422caf5ebde004b97209cdc0f6" id="r_abdec66422caf5ebde004b97209cdc0f6"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#abdec66422caf5ebde004b97209cdc0f6">set_uniform</a> (int index, float value)</td></tr>
-<tr class="memdesc:abdec66422caf5ebde004b97209cdc0f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a float uniform.  <br /></td></tr>
-<tr class="memitem:a2d2e7c174725890edb5e159c37fa2537" id="r_a2d2e7c174725890edb5e159c37fa2537"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a2d2e7c174725890edb5e159c37fa2537">set_uniform</a> (int index, std::span&lt; const float &gt; value)</td></tr>
-<tr class="memdesc:a2d2e7c174725890edb5e159c37fa2537"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a float array uniform.  <br /></td></tr>
-<tr class="memitem:ac592ac15db2adb59fe4f426287fd0b63" id="r_ac592ac15db2adb59fe4f426287fd0b63"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ac592ac15db2adb59fe4f426287fd0b63">set_uniform</a> (int index, glm::vec2 value)</td></tr>
-<tr class="memdesc:ac592ac15db2adb59fe4f426287fd0b63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a vec2 uniform.  <br /></td></tr>
-<tr class="memitem:ab34dafdfac0ff11a4d8568a137003209" id="r_ab34dafdfac0ff11a4d8568a137003209"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ab34dafdfac0ff11a4d8568a137003209">set_uniform</a> (int index, std::span&lt; const glm::vec2 &gt; value)</td></tr>
-<tr class="memdesc:ab34dafdfac0ff11a4d8568a137003209"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a vec2 array uniform.  <br /></td></tr>
-<tr class="memitem:ad124753c569142991dc6efc2b842b27b" id="r_ad124753c569142991dc6efc2b842b27b"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ad124753c569142991dc6efc2b842b27b">set_uniform</a> (int index, glm::vec3 value)</td></tr>
-<tr class="memdesc:ad124753c569142991dc6efc2b842b27b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a vec3 uniform.  <br /></td></tr>
-<tr class="memitem:ac6f8741c29c249945e8b3fff1ad12827" id="r_ac6f8741c29c249945e8b3fff1ad12827"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ac6f8741c29c249945e8b3fff1ad12827">set_uniform</a> (int index, std::span&lt; const glm::vec3 &gt; value)</td></tr>
-<tr class="memdesc:ac6f8741c29c249945e8b3fff1ad12827"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a vec3 array uniform.  <br /></td></tr>
-<tr class="memitem:a5ec7a949cbcb6e4d1667ed6df73630af" id="r_a5ec7a949cbcb6e4d1667ed6df73630af"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a5ec7a949cbcb6e4d1667ed6df73630af">set_uniform</a> (int index, glm::vec4 value)</td></tr>
-<tr class="memdesc:a5ec7a949cbcb6e4d1667ed6df73630af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a vec4 uniform.  <br /></td></tr>
-<tr class="memitem:a1a1b92257809bf0a64cdbcf6636e4e62" id="r_a1a1b92257809bf0a64cdbcf6636e4e62"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a1a1b92257809bf0a64cdbcf6636e4e62">set_uniform</a> (int index, std::span&lt; const glm::vec4 &gt; value)</td></tr>
-<tr class="memdesc:a1a1b92257809bf0a64cdbcf6636e4e62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a vec4 array uniform.  <br /></td></tr>
-<tr class="memitem:a62fc11bc638732932749b47ab2ee1c82" id="r_a62fc11bc638732932749b47ab2ee1c82"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a62fc11bc638732932749b47ab2ee1c82">set_uniform</a> (int index, const glm::mat2 &amp;value)</td></tr>
-<tr class="memdesc:a62fc11bc638732932749b47ab2ee1c82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mat2 uniform.  <br /></td></tr>
-<tr class="memitem:a64506070aea77b2cc2386c1815e3ddfe" id="r_a64506070aea77b2cc2386c1815e3ddfe"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a64506070aea77b2cc2386c1815e3ddfe">set_uniform</a> (int index, std::span&lt; const glm::mat2 &gt; value)</td></tr>
-<tr class="memdesc:a64506070aea77b2cc2386c1815e3ddfe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mat2 array uniform.  <br /></td></tr>
-<tr class="memitem:a244c8383d8ff9ff76f42bac4de70af91" id="r_a244c8383d8ff9ff76f42bac4de70af91"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a244c8383d8ff9ff76f42bac4de70af91">set_uniform</a> (int index, const glm::mat3 &amp;value)</td></tr>
-<tr class="memdesc:a244c8383d8ff9ff76f42bac4de70af91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mat3 uniform.  <br /></td></tr>
-<tr class="memitem:a03248ea820c7ab532180faebb7eadb58" id="r_a03248ea820c7ab532180faebb7eadb58"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a03248ea820c7ab532180faebb7eadb58">set_uniform</a> (int index, std::span&lt; const glm::mat3 &gt; value)</td></tr>
-<tr class="memdesc:a03248ea820c7ab532180faebb7eadb58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mat3 array uniform.  <br /></td></tr>
-<tr class="memitem:a8c95bc928f435d516ee44c78991dd206" id="r_a8c95bc928f435d516ee44c78991dd206"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a8c95bc928f435d516ee44c78991dd206">set_uniform</a> (int index, const glm::mat4 &amp;value)</td></tr>
-<tr class="memdesc:a8c95bc928f435d516ee44c78991dd206"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mat4 uniform.  <br /></td></tr>
-<tr class="memitem:a91dcf2bb962a59c765f8b5f0c58990ed" id="r_a91dcf2bb962a59c765f8b5f0c58990ed"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a91dcf2bb962a59c765f8b5f0c58990ed">set_uniform</a> (int index, std::span&lt; const glm::mat4 &gt; value)</td></tr>
-<tr class="memdesc:a91dcf2bb962a59c765f8b5f0c58990ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mat4 array uniform.  <br /></td></tr>
-<tr class="memitem:a01b26c1ead34f12e78f5622d7a0d7c2d" id="r_a01b26c1ead34f12e78f5622d7a0d7c2d"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a01b26c1ead34f12e78f5622d7a0d7c2d">set_uniform</a> (int index, const glm::mat2x3 &amp;value)</td></tr>
-<tr class="memdesc:a01b26c1ead34f12e78f5622d7a0d7c2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mat2x3 uniform.  <br /></td></tr>
-<tr class="memitem:a9911ad91ef9b0ab228356f445af4b129" id="r_a9911ad91ef9b0ab228356f445af4b129"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a9911ad91ef9b0ab228356f445af4b129">set_uniform</a> (int index, std::span&lt; const glm::mat2x3 &gt; value)</td></tr>
-<tr class="memdesc:a9911ad91ef9b0ab228356f445af4b129"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mat2x3 array uniform.  <br /></td></tr>
-<tr class="memitem:a5ed539cf0f7fce85dbeca75624713541" id="r_a5ed539cf0f7fce85dbeca75624713541"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a5ed539cf0f7fce85dbeca75624713541">set_uniform</a> (int index, const glm::mat2x4 &amp;value)</td></tr>
-<tr class="memdesc:a5ed539cf0f7fce85dbeca75624713541"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mat2x4 uniform.  <br /></td></tr>
-<tr class="memitem:a24fd382036ba573e195786d15ea27130" id="r_a24fd382036ba573e195786d15ea27130"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a24fd382036ba573e195786d15ea27130">set_uniform</a> (int index, std::span&lt; const glm::mat2x4 &gt; value)</td></tr>
-<tr class="memdesc:a24fd382036ba573e195786d15ea27130"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mat2x4 array uniform.  <br /></td></tr>
-<tr class="memitem:ab87d047ff4831c6228d8c4901cce7585" id="r_ab87d047ff4831c6228d8c4901cce7585"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ab87d047ff4831c6228d8c4901cce7585">set_uniform</a> (int index, const glm::mat3x2 &amp;value)</td></tr>
-<tr class="memdesc:ab87d047ff4831c6228d8c4901cce7585"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mat3x2 uniform.  <br /></td></tr>
-<tr class="memitem:a612c5544db6f01e9b10ac6a33b67e8db" id="r_a612c5544db6f01e9b10ac6a33b67e8db"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a612c5544db6f01e9b10ac6a33b67e8db">set_uniform</a> (int index, std::span&lt; const glm::mat3x2 &gt; value)</td></tr>
-<tr class="memdesc:a612c5544db6f01e9b10ac6a33b67e8db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mat3x2 array uniform.  <br /></td></tr>
-<tr class="memitem:a727146e346f77bae611f64d084e6aabe" id="r_a727146e346f77bae611f64d084e6aabe"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a727146e346f77bae611f64d084e6aabe">set_uniform</a> (int index, const glm::mat3x4 &amp;value)</td></tr>
-<tr class="memdesc:a727146e346f77bae611f64d084e6aabe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mat3x4 uniform.  <br /></td></tr>
-<tr class="memitem:a881a768aca860c06155f629a44b70277" id="r_a881a768aca860c06155f629a44b70277"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a881a768aca860c06155f629a44b70277">set_uniform</a> (int index, std::span&lt; const glm::mat3x4 &gt; value)</td></tr>
-<tr class="memdesc:a881a768aca860c06155f629a44b70277"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mat3x4 uniform.  <br /></td></tr>
-<tr class="memitem:ad0939ea92aff29dc05cc96fbc8cdd3d2" id="r_ad0939ea92aff29dc05cc96fbc8cdd3d2"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ad0939ea92aff29dc05cc96fbc8cdd3d2">set_uniform</a> (int index, const glm::mat4x2 &amp;value)</td></tr>
-<tr class="memdesc:ad0939ea92aff29dc05cc96fbc8cdd3d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mat4x2 uniform.  <br /></td></tr>
-<tr class="memitem:a83e612619d813a8b44524ba4ba46b60b" id="r_a83e612619d813a8b44524ba4ba46b60b"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a83e612619d813a8b44524ba4ba46b60b">set_uniform</a> (int index, std::span&lt; const glm::mat4x2 &gt; value)</td></tr>
-<tr class="memdesc:a83e612619d813a8b44524ba4ba46b60b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mat4x2 array uniform.  <br /></td></tr>
-<tr class="memitem:a5a35bcc1e39ccd52c11fc4341140de2b" id="r_a5a35bcc1e39ccd52c11fc4341140de2b"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a5a35bcc1e39ccd52c11fc4341140de2b">set_uniform</a> (int index, const glm::mat4x3 &amp;value)</td></tr>
-<tr class="memdesc:a5a35bcc1e39ccd52c11fc4341140de2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mat4x3 uniform.  <br /></td></tr>
-<tr class="memitem:af7a981edec0d944922c00e687a1d8a83" id="r_af7a981edec0d944922c00e687a1d8a83"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#af7a981edec0d944922c00e687a1d8a83">set_uniform</a> (int index, std::span&lt; const glm::mat4x3 &gt; value)</td></tr>
-<tr class="memdesc:af7a981edec0d944922c00e687a1d8a83"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mat4x3 array uniform.  <br /></td></tr>
-<tr class="memitem:aa7b7ac6d0d1c72053b1ea51e90122533" id="r_aa7b7ac6d0d1c72053b1ea51e90122533"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aa7b7ac6d0d1c72053b1ea51e90122533">set_uniform</a> (int index, <a class="el" href="classtr_1_1texture__view.html">texture_view</a> texture)</td></tr>
-<tr class="memdesc:aa7b7ac6d0d1c72053b1ea51e90122533"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a texture sampler uniform.  <br /></td></tr>
+<tr class="memitem:abc439db4dcf8cad3f35d0ca60d04fcfa" id="r_abc439db4dcf8cad3f35d0ca60d04fcfa"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#abc439db4dcf8cad3f35d0ca60d04fcfa">set_uniform</a> (int index, bool value)</td></tr>
+<tr class="memdesc:abc439db4dcf8cad3f35d0ca60d04fcfa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a boolean uniform.  <br /></td></tr>
+<tr class="memitem:ad25cc64550a297e81feeac33b5d6648a" id="r_ad25cc64550a297e81feeac33b5d6648a"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ad25cc64550a297e81feeac33b5d6648a">set_uniform</a> (int index, int value)</td></tr>
+<tr class="memdesc:ad25cc64550a297e81feeac33b5d6648a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an integer uniform.  <br /></td></tr>
+<tr class="memitem:aa60d19f92febfcbfb259ad4efe477a88" id="r_aa60d19f92febfcbfb259ad4efe477a88"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aa60d19f92febfcbfb259ad4efe477a88">set_uniform</a> (int index, std::span&lt; const int &gt; value)</td></tr>
+<tr class="memdesc:aa60d19f92febfcbfb259ad4efe477a88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an integer array uniform.  <br /></td></tr>
+<tr class="memitem:ad88cac2678466d0fc9f543b0bcfb7d85" id="r_ad88cac2678466d0fc9f543b0bcfb7d85"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ad88cac2678466d0fc9f543b0bcfb7d85">set_uniform</a> (int index, glm::ivec2 value)</td></tr>
+<tr class="memdesc:ad88cac2678466d0fc9f543b0bcfb7d85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an ivec2 uniform.  <br /></td></tr>
+<tr class="memitem:a04a4156d2f92c3d933d72ea8e5a45365" id="r_a04a4156d2f92c3d933d72ea8e5a45365"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a04a4156d2f92c3d933d72ea8e5a45365">set_uniform</a> (int index, std::span&lt; const glm::ivec2 &gt; value)</td></tr>
+<tr class="memdesc:a04a4156d2f92c3d933d72ea8e5a45365"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an ivec2 array uniform.  <br /></td></tr>
+<tr class="memitem:a16d2d64b170ea7297d6ae1468c8bc6d3" id="r_a16d2d64b170ea7297d6ae1468c8bc6d3"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a16d2d64b170ea7297d6ae1468c8bc6d3">set_uniform</a> (int index, glm::ivec3 value)</td></tr>
+<tr class="memdesc:a16d2d64b170ea7297d6ae1468c8bc6d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an ivec3 uniform.  <br /></td></tr>
+<tr class="memitem:af71d400f3116b49eb821624af3669a71" id="r_af71d400f3116b49eb821624af3669a71"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#af71d400f3116b49eb821624af3669a71">set_uniform</a> (int index, std::span&lt; const glm::ivec3 &gt; value)</td></tr>
+<tr class="memdesc:af71d400f3116b49eb821624af3669a71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an ivec3 array uniform.  <br /></td></tr>
+<tr class="memitem:ab402aca89a17c60ffbdd2f9f4c4022ad" id="r_ab402aca89a17c60ffbdd2f9f4c4022ad"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ab402aca89a17c60ffbdd2f9f4c4022ad">set_uniform</a> (int index, glm::ivec4 value)</td></tr>
+<tr class="memdesc:ab402aca89a17c60ffbdd2f9f4c4022ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an ivec4 uniform.  <br /></td></tr>
+<tr class="memitem:a511fff55dd6c51ad69052cfce37aa832" id="r_a511fff55dd6c51ad69052cfce37aa832"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a511fff55dd6c51ad69052cfce37aa832">set_uniform</a> (int index, std::span&lt; const glm::ivec4 &gt; value)</td></tr>
+<tr class="memdesc:a511fff55dd6c51ad69052cfce37aa832"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an ivec4 array uniform.  <br /></td></tr>
+<tr class="memitem:afa57082465a44ddcfde80767c6961e23" id="r_afa57082465a44ddcfde80767c6961e23"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#afa57082465a44ddcfde80767c6961e23">set_uniform</a> (int index, unsigned int value)</td></tr>
+<tr class="memdesc:afa57082465a44ddcfde80767c6961e23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an unsigned integer uniform.  <br /></td></tr>
+<tr class="memitem:a139f1c5afd605294daff61bb8763bc9e" id="r_a139f1c5afd605294daff61bb8763bc9e"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a139f1c5afd605294daff61bb8763bc9e">set_uniform</a> (int index, std::span&lt; const unsigned int &gt; value)</td></tr>
+<tr class="memdesc:a139f1c5afd605294daff61bb8763bc9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an unsigned integer array uniform.  <br /></td></tr>
+<tr class="memitem:a86df0899f3ea42c753cca9a356091c90" id="r_a86df0899f3ea42c753cca9a356091c90"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a86df0899f3ea42c753cca9a356091c90">set_uniform</a> (int index, glm::uvec2 value)</td></tr>
+<tr class="memdesc:a86df0899f3ea42c753cca9a356091c90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a uvec2 uniform.  <br /></td></tr>
+<tr class="memitem:ab02346e8feaaff9ec18f192f80674f16" id="r_ab02346e8feaaff9ec18f192f80674f16"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ab02346e8feaaff9ec18f192f80674f16">set_uniform</a> (int index, std::span&lt; const glm::uvec2 &gt; value)</td></tr>
+<tr class="memdesc:ab02346e8feaaff9ec18f192f80674f16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a uvec2 array uniform.  <br /></td></tr>
+<tr class="memitem:abdd9344795b08331d74bf4325f07ce55" id="r_abdd9344795b08331d74bf4325f07ce55"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#abdd9344795b08331d74bf4325f07ce55">set_uniform</a> (int index, glm::uvec3 value)</td></tr>
+<tr class="memdesc:abdd9344795b08331d74bf4325f07ce55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a uvec3 uniform.  <br /></td></tr>
+<tr class="memitem:a2aa45158ad650f45d1e44692f219642f" id="r_a2aa45158ad650f45d1e44692f219642f"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a2aa45158ad650f45d1e44692f219642f">set_uniform</a> (int index, std::span&lt; const glm::uvec3 &gt; value)</td></tr>
+<tr class="memdesc:a2aa45158ad650f45d1e44692f219642f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a uvec3 array uniform.  <br /></td></tr>
+<tr class="memitem:aa17f8d6f3d4e0a8a45fd3397734cde87" id="r_aa17f8d6f3d4e0a8a45fd3397734cde87"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aa17f8d6f3d4e0a8a45fd3397734cde87">set_uniform</a> (int index, glm::uvec4 value)</td></tr>
+<tr class="memdesc:aa17f8d6f3d4e0a8a45fd3397734cde87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a uvec4 uniform.  <br /></td></tr>
+<tr class="memitem:aaf0b7637e431194ae3730e16b466d35f" id="r_aaf0b7637e431194ae3730e16b466d35f"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aaf0b7637e431194ae3730e16b466d35f">set_uniform</a> (int index, std::span&lt; const glm::uvec4 &gt; value)</td></tr>
+<tr class="memdesc:aaf0b7637e431194ae3730e16b466d35f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a uvec4 array uniform.  <br /></td></tr>
+<tr class="memitem:a048955dcba7d341b9bfc44e1e00ff10e" id="r_a048955dcba7d341b9bfc44e1e00ff10e"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a048955dcba7d341b9bfc44e1e00ff10e">set_uniform</a> (int index, float value)</td></tr>
+<tr class="memdesc:a048955dcba7d341b9bfc44e1e00ff10e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a float uniform.  <br /></td></tr>
+<tr class="memitem:a3c96c7490d7fb24ae443c651c0561947" id="r_a3c96c7490d7fb24ae443c651c0561947"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a3c96c7490d7fb24ae443c651c0561947">set_uniform</a> (int index, std::span&lt; const float &gt; value)</td></tr>
+<tr class="memdesc:a3c96c7490d7fb24ae443c651c0561947"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a float array uniform.  <br /></td></tr>
+<tr class="memitem:abef11b383d131743dee61e7c4a32904e" id="r_abef11b383d131743dee61e7c4a32904e"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#abef11b383d131743dee61e7c4a32904e">set_uniform</a> (int index, glm::vec2 value)</td></tr>
+<tr class="memdesc:abef11b383d131743dee61e7c4a32904e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a vec2 uniform.  <br /></td></tr>
+<tr class="memitem:a79f37cc174f78dfabf70b79ea4879af8" id="r_a79f37cc174f78dfabf70b79ea4879af8"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a79f37cc174f78dfabf70b79ea4879af8">set_uniform</a> (int index, std::span&lt; const glm::vec2 &gt; value)</td></tr>
+<tr class="memdesc:a79f37cc174f78dfabf70b79ea4879af8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a vec2 array uniform.  <br /></td></tr>
+<tr class="memitem:a0868104625fcfff2c366724c7c309026" id="r_a0868104625fcfff2c366724c7c309026"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a0868104625fcfff2c366724c7c309026">set_uniform</a> (int index, glm::vec3 value)</td></tr>
+<tr class="memdesc:a0868104625fcfff2c366724c7c309026"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a vec3 uniform.  <br /></td></tr>
+<tr class="memitem:a083ae2ce0b5e6c2dfb2495d9b1d0517a" id="r_a083ae2ce0b5e6c2dfb2495d9b1d0517a"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a083ae2ce0b5e6c2dfb2495d9b1d0517a">set_uniform</a> (int index, std::span&lt; const glm::vec3 &gt; value)</td></tr>
+<tr class="memdesc:a083ae2ce0b5e6c2dfb2495d9b1d0517a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a vec3 array uniform.  <br /></td></tr>
+<tr class="memitem:a1dd4f7356d6f10b69ec8a991997ca6cc" id="r_a1dd4f7356d6f10b69ec8a991997ca6cc"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a1dd4f7356d6f10b69ec8a991997ca6cc">set_uniform</a> (int index, glm::vec4 value)</td></tr>
+<tr class="memdesc:a1dd4f7356d6f10b69ec8a991997ca6cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a vec4 uniform.  <br /></td></tr>
+<tr class="memitem:a866c68616642f1ab41b7a0481bc5d890" id="r_a866c68616642f1ab41b7a0481bc5d890"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a866c68616642f1ab41b7a0481bc5d890">set_uniform</a> (int index, std::span&lt; const glm::vec4 &gt; value)</td></tr>
+<tr class="memdesc:a866c68616642f1ab41b7a0481bc5d890"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a vec4 array uniform.  <br /></td></tr>
+<tr class="memitem:a5582e1a42689bed135c76167bbbe7a65" id="r_a5582e1a42689bed135c76167bbbe7a65"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a5582e1a42689bed135c76167bbbe7a65">set_uniform</a> (int index, const glm::mat2 &amp;value)</td></tr>
+<tr class="memdesc:a5582e1a42689bed135c76167bbbe7a65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mat2 uniform.  <br /></td></tr>
+<tr class="memitem:ae587dd2a0dfd851a83cee55d9b7e6b18" id="r_ae587dd2a0dfd851a83cee55d9b7e6b18"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ae587dd2a0dfd851a83cee55d9b7e6b18">set_uniform</a> (int index, std::span&lt; const glm::mat2 &gt; value)</td></tr>
+<tr class="memdesc:ae587dd2a0dfd851a83cee55d9b7e6b18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mat2 array uniform.  <br /></td></tr>
+<tr class="memitem:aca1ff95d6ce5ec22965dc80b5946d8e9" id="r_aca1ff95d6ce5ec22965dc80b5946d8e9"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aca1ff95d6ce5ec22965dc80b5946d8e9">set_uniform</a> (int index, const glm::mat3 &amp;value)</td></tr>
+<tr class="memdesc:aca1ff95d6ce5ec22965dc80b5946d8e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mat3 uniform.  <br /></td></tr>
+<tr class="memitem:a3e0d769dcaf87bdf49d3afd61682d516" id="r_a3e0d769dcaf87bdf49d3afd61682d516"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a3e0d769dcaf87bdf49d3afd61682d516">set_uniform</a> (int index, std::span&lt; const glm::mat3 &gt; value)</td></tr>
+<tr class="memdesc:a3e0d769dcaf87bdf49d3afd61682d516"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mat3 array uniform.  <br /></td></tr>
+<tr class="memitem:a04012f60198fea2029842125642910b7" id="r_a04012f60198fea2029842125642910b7"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a04012f60198fea2029842125642910b7">set_uniform</a> (int index, const glm::mat4 &amp;value)</td></tr>
+<tr class="memdesc:a04012f60198fea2029842125642910b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mat4 uniform.  <br /></td></tr>
+<tr class="memitem:a9965f59d453bc7f246ffd2994669690d" id="r_a9965f59d453bc7f246ffd2994669690d"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a9965f59d453bc7f246ffd2994669690d">set_uniform</a> (int index, std::span&lt; const glm::mat4 &gt; value)</td></tr>
+<tr class="memdesc:a9965f59d453bc7f246ffd2994669690d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mat4 array uniform.  <br /></td></tr>
+<tr class="memitem:a62c5d20e1d623937fc8e7fd95eb30579" id="r_a62c5d20e1d623937fc8e7fd95eb30579"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a62c5d20e1d623937fc8e7fd95eb30579">set_uniform</a> (int index, const glm::mat2x3 &amp;value)</td></tr>
+<tr class="memdesc:a62c5d20e1d623937fc8e7fd95eb30579"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mat2x3 uniform.  <br /></td></tr>
+<tr class="memitem:a66d6a5f529e0ce50693c12d965efada6" id="r_a66d6a5f529e0ce50693c12d965efada6"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a66d6a5f529e0ce50693c12d965efada6">set_uniform</a> (int index, std::span&lt; const glm::mat2x3 &gt; value)</td></tr>
+<tr class="memdesc:a66d6a5f529e0ce50693c12d965efada6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mat2x3 array uniform.  <br /></td></tr>
+<tr class="memitem:adf608753da32c781b9a478a255c1142d" id="r_adf608753da32c781b9a478a255c1142d"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#adf608753da32c781b9a478a255c1142d">set_uniform</a> (int index, const glm::mat2x4 &amp;value)</td></tr>
+<tr class="memdesc:adf608753da32c781b9a478a255c1142d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mat2x4 uniform.  <br /></td></tr>
+<tr class="memitem:a272417036691a10e84b9b6d7753b637c" id="r_a272417036691a10e84b9b6d7753b637c"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a272417036691a10e84b9b6d7753b637c">set_uniform</a> (int index, std::span&lt; const glm::mat2x4 &gt; value)</td></tr>
+<tr class="memdesc:a272417036691a10e84b9b6d7753b637c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mat2x4 array uniform.  <br /></td></tr>
+<tr class="memitem:a04c3da73bdacf44d33e84558e2a2e6ed" id="r_a04c3da73bdacf44d33e84558e2a2e6ed"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a04c3da73bdacf44d33e84558e2a2e6ed">set_uniform</a> (int index, const glm::mat3x2 &amp;value)</td></tr>
+<tr class="memdesc:a04c3da73bdacf44d33e84558e2a2e6ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mat3x2 uniform.  <br /></td></tr>
+<tr class="memitem:a11c20ab43bb67ec83b3b3672c56af16f" id="r_a11c20ab43bb67ec83b3b3672c56af16f"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a11c20ab43bb67ec83b3b3672c56af16f">set_uniform</a> (int index, std::span&lt; const glm::mat3x2 &gt; value)</td></tr>
+<tr class="memdesc:a11c20ab43bb67ec83b3b3672c56af16f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mat3x2 array uniform.  <br /></td></tr>
+<tr class="memitem:aeb8857372c06681bad1c603c0f08d2ec" id="r_aeb8857372c06681bad1c603c0f08d2ec"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aeb8857372c06681bad1c603c0f08d2ec">set_uniform</a> (int index, const glm::mat3x4 &amp;value)</td></tr>
+<tr class="memdesc:aeb8857372c06681bad1c603c0f08d2ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mat3x4 uniform.  <br /></td></tr>
+<tr class="memitem:af895c332195ecae19c6b0628070c3362" id="r_af895c332195ecae19c6b0628070c3362"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#af895c332195ecae19c6b0628070c3362">set_uniform</a> (int index, std::span&lt; const glm::mat3x4 &gt; value)</td></tr>
+<tr class="memdesc:af895c332195ecae19c6b0628070c3362"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mat3x4 uniform.  <br /></td></tr>
+<tr class="memitem:a74083247da07fe4fae4c5b5726f21396" id="r_a74083247da07fe4fae4c5b5726f21396"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a74083247da07fe4fae4c5b5726f21396">set_uniform</a> (int index, const glm::mat4x2 &amp;value)</td></tr>
+<tr class="memdesc:a74083247da07fe4fae4c5b5726f21396"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mat4x2 uniform.  <br /></td></tr>
+<tr class="memitem:af8a63d17192a1dac53e5ad2b744fd49a" id="r_af8a63d17192a1dac53e5ad2b744fd49a"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#af8a63d17192a1dac53e5ad2b744fd49a">set_uniform</a> (int index, std::span&lt; const glm::mat4x2 &gt; value)</td></tr>
+<tr class="memdesc:af8a63d17192a1dac53e5ad2b744fd49a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mat4x2 array uniform.  <br /></td></tr>
+<tr class="memitem:a533c5ef6114aedf205bd19b3aacdc15d" id="r_a533c5ef6114aedf205bd19b3aacdc15d"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a533c5ef6114aedf205bd19b3aacdc15d">set_uniform</a> (int index, const glm::mat4x3 &amp;value)</td></tr>
+<tr class="memdesc:a533c5ef6114aedf205bd19b3aacdc15d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mat4x3 uniform.  <br /></td></tr>
+<tr class="memitem:ab6445721b02040f061cb4ad4906529c1" id="r_ab6445721b02040f061cb4ad4906529c1"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ab6445721b02040f061cb4ad4906529c1">set_uniform</a> (int index, std::span&lt; const glm::mat4x3 &gt; value)</td></tr>
+<tr class="memdesc:ab6445721b02040f061cb4ad4906529c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mat4x3 array uniform.  <br /></td></tr>
+<tr class="memitem:aec50b6bd802404d1ae59f8f40a674eec" id="r_aec50b6bd802404d1ae59f8f40a674eec"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aec50b6bd802404d1ae59f8f40a674eec">set_uniform</a> (int index, <a class="el" href="classtr_1_1texture__view.html">texture_view</a> texture)</td></tr>
+<tr class="memdesc:aec50b6bd802404d1ae59f8f40a674eec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a texture sampler uniform.  <br /></td></tr>
 <tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Storage buffers</div></td></tr>
-<tr class="memitem:ae78d9d6e1157ce32f68781a3b3fcf640" id="r_ae78d9d6e1157ce32f68781a3b3fcf640"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ae78d9d6e1157ce32f68781a3b3fcf640">set_storage_buffer</a> (unsigned int index, <a class="el" href="classtr_1_1basic__shader__buffer.html">basic_shader_buffer</a> &amp;buffer)</td></tr>
-<tr class="memdesc:ae78d9d6e1157ce32f68781a3b3fcf640"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a shader storage buffer.  <br /></td></tr>
-<tr class="memitem:aa44bc8473aa88a39b59216012458636a" id="r_aa44bc8473aa88a39b59216012458636a"><td class="memTemplParams" colspan="2">template&lt;typename Header, typename ArrayElement&gt; </td></tr>
-<tr class="memitem:aa44bc8473aa88a39b59216012458636a template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aa44bc8473aa88a39b59216012458636a">set_storage_buffer</a> (unsigned int index, <a class="el" href="classtr_1_1shader__buffer.html">shader_buffer</a>&lt; Header, ArrayElement &gt; &amp;buffer)</td></tr>
-<tr class="memdesc:aa44bc8473aa88a39b59216012458636a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a shader storage buffer.  <br /></td></tr>
-<tr class="memitem:ad9c088011bb679c63b99ad30556d4dbe" id="r_ad9c088011bb679c63b99ad30556d4dbe"><td class="memTemplParams" colspan="2">template&lt;typename Element&gt; </td></tr>
-<tr class="memitem:ad9c088011bb679c63b99ad30556d4dbe template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ad9c088011bb679c63b99ad30556d4dbe">set_storage_buffer</a> (unsigned int index, <a class="el" href="classtr_1_1shader__array.html">shader_array</a>&lt; Element &gt; &amp;buffer)</td></tr>
-<tr class="memdesc:ad9c088011bb679c63b99ad30556d4dbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a shader storage buffer.  <br /></td></tr>
-<tr class="memitem:a9dd684c1c0ae6b17908a5da85dc36775" id="r_a9dd684c1c0ae6b17908a5da85dc36775"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a9dd684c1c0ae6b17908a5da85dc36775">set_uniform_buffer</a> (unsigned int index, const <a class="el" href="classtr_1_1basic__uniform__buffer.html">basic_uniform_buffer</a> &amp;buffer)</td></tr>
-<tr class="memdesc:a9dd684c1c0ae6b17908a5da85dc36775"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a uniform storage buffer.  <br /></td></tr>
-<tr class="memitem:a0755901aeb64501fb6cf1798567574d7" id="r_a0755901aeb64501fb6cf1798567574d7"><td class="memTemplParams" colspan="2">template&lt;typename Object&gt; </td></tr>
-<tr class="memitem:a0755901aeb64501fb6cf1798567574d7 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a0755901aeb64501fb6cf1798567574d7">set_uniform_buffer</a> (unsigned int index, const <a class="el" href="classtr_1_1uniform__buffer.html">uniform_buffer</a>&lt; Object &gt; &amp;buffer)</td></tr>
-<tr class="memdesc:a0755901aeb64501fb6cf1798567574d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a uniform storage buffer.  <br /></td></tr>
-<tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Label</div></td></tr>
-<tr class="memitem:a03277cec831a3752c59bd5bc62a2c837" id="r_a03277cec831a3752c59bd5bc62a2c837"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a03277cec831a3752c59bd5bc62a2c837">set_label</a> (std::string_view label)</td></tr>
-<tr class="memdesc:a03277cec831a3752c59bd5bc62a2c837"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the debug label of the shader.  <br /></td></tr>
-<tr class="memitem:a19c27a295530cb46f3ce74319c35c939" id="r_a19c27a295530cb46f3ce74319c35c939"><td class="memItemLeft">std::string&#160;</td><td class="memItemRight"><a class="el" href="#a19c27a295530cb46f3ce74319c35c939">label</a> () const</td></tr>
-<tr class="memdesc:a19c27a295530cb46f3ce74319c35c939"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the debug label of the shader.  <br /></td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 id="header-pro-methods" class="groupheader"><a id="pro-methods" name="pro-methods"></a>
-Protected Member Functions</h2></td></tr>
-<tr class="memitem:ac4375fd3f560e8b746d8bdb01d59dabb" id="r_ac4375fd3f560e8b746d8bdb01d59dabb"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ac4375fd3f560e8b746d8bdb01d59dabb">shader_base</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context, <a class="el" href="namespacetr.html#af4536441b49fec056af6a2432b30afff">zstring_view</a> source, unsigned int type)</td></tr>
-<tr class="memdesc:ac4375fd3f560e8b746d8bdb01d59dabb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a shader.  <br /></td></tr>
-<tr class="memitem:ad3490346e46a23345e8a022a6bccff85" id="r_ad3490346e46a23345e8a022a6bccff85"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ad3490346e46a23345e8a022a6bccff85">set_storage_buffer</a> (unsigned int index, unsigned int buffer_id, std::intptr_t buffer_size)</td></tr>
-<tr class="memdesc:ad3490346e46a23345e8a022a6bccff85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a shader storage buffer.  <br /></td></tr>
-<tr class="memitem:aacc68f7cf237e483b8455c91e667238f" id="r_aacc68f7cf237e483b8455c91e667238f"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aacc68f7cf237e483b8455c91e667238f">set_uniform_buffer</a> (unsigned int index, unsigned int buffer_id)</td></tr>
-<tr class="memdesc:aacc68f7cf237e483b8455c91e667238f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a uniform storage buffer.  <br /></td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 id="header-pro-attribs" class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
-Protected Attributes</h2></td></tr>
-<tr class="memitem:aa307ce4ffbc183af3450b4be368bfa0d" id="r_aa307ce4ffbc183af3450b4be368bfa0d"><td class="memItemLeft"><a class="el" href="classtr_1_1handle.html">handle</a>&lt; unsigned int, 0, <a class="el" href="structtr_1_1shader__base_1_1deleter.html">deleter</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#aa307ce4ffbc183af3450b4be368bfa0d">m_program</a></td></tr>
-<tr class="memdesc:aa307ce4ffbc183af3450b4be368bfa0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle to the OpenGL program.  <br /></td></tr>
-<tr class="memitem:ae059e80c3a8fe1f380d15190fadf5f2c" id="r_ae059e80c3a8fe1f380d15190fadf5f2c"><td class="memItemLeft">boost::unordered_flat_map&lt; int, texture_unit &gt;&#160;</td><td class="memItemRight"><a class="el" href="#ae059e80c3a8fe1f380d15190fadf5f2c">m_texture_units</a></td></tr>
-<tr class="memdesc:ae059e80c3a8fe1f380d15190fadf5f2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Texture units allocated to this shader.  <br /></td></tr>
+<tr class="memitem:aeefccc7267ad8591f24c67859b0de2a4" id="r_aeefccc7267ad8591f24c67859b0de2a4"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aeefccc7267ad8591f24c67859b0de2a4">set_storage_buffer</a> (unsigned int index, <a class="el" href="classtr_1_1basic__shader__buffer.html">basic_shader_buffer</a> &amp;buffer)</td></tr>
+<tr class="memdesc:aeefccc7267ad8591f24c67859b0de2a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a shader storage buffer.  <br /></td></tr>
+<tr class="memitem:a2836c9c81e00b11178662e44136eb8d4" id="r_a2836c9c81e00b11178662e44136eb8d4"><td class="memTemplParams" colspan="2">template&lt;typename Header, typename ArrayElement&gt; </td></tr>
+<tr class="memitem:a2836c9c81e00b11178662e44136eb8d4 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a2836c9c81e00b11178662e44136eb8d4">set_storage_buffer</a> (unsigned int index, <a class="el" href="classtr_1_1shader__buffer.html">shader_buffer</a>&lt; Header, ArrayElement &gt; &amp;buffer)</td></tr>
+<tr class="memdesc:a2836c9c81e00b11178662e44136eb8d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a shader storage buffer.  <br /></td></tr>
+<tr class="memitem:a7cff980153e512e22ff20b921de827d9" id="r_a7cff980153e512e22ff20b921de827d9"><td class="memTemplParams" colspan="2">template&lt;typename Element&gt; </td></tr>
+<tr class="memitem:a7cff980153e512e22ff20b921de827d9 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a7cff980153e512e22ff20b921de827d9">set_storage_buffer</a> (unsigned int index, <a class="el" href="classtr_1_1shader__array.html">shader_array</a>&lt; Element &gt; &amp;buffer)</td></tr>
+<tr class="memdesc:a7cff980153e512e22ff20b921de827d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a shader storage buffer.  <br /></td></tr>
+<tr class="memitem:a2544f2865c7d68affbae0577be632954" id="r_a2544f2865c7d68affbae0577be632954"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a2544f2865c7d68affbae0577be632954">set_uniform_buffer</a> (unsigned int index, const <a class="el" href="classtr_1_1basic__uniform__buffer.html">basic_uniform_buffer</a> &amp;buffer)</td></tr>
+<tr class="memdesc:a2544f2865c7d68affbae0577be632954"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a uniform storage buffer.  <br /></td></tr>
+<tr class="memitem:aad7b5f8ef070b52a8bb9fb55d9e30464" id="r_aad7b5f8ef070b52a8bb9fb55d9e30464"><td class="memTemplParams" colspan="2">template&lt;typename Object&gt; </td></tr>
+<tr class="memitem:aad7b5f8ef070b52a8bb9fb55d9e30464 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aad7b5f8ef070b52a8bb9fb55d9e30464">set_uniform_buffer</a> (unsigned int index, const <a class="el" href="classtr_1_1uniform__buffer.html">uniform_buffer</a>&lt; Object &gt; &amp;buffer)</td></tr>
+<tr class="memdesc:aad7b5f8ef070b52a8bb9fb55d9e30464"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a uniform storage buffer.  <br /></td></tr>
+<tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">State</div></td></tr>
+<tr class="memitem:af96d3d6b7aa6c30c2ccbe6e01e947209" id="r_af96d3d6b7aa6c30c2ccbe6e01e947209"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#af96d3d6b7aa6c30c2ccbe6e01e947209">valid</a> () const</td></tr>
+<tr class="memdesc:af96d3d6b7aa6c30c2ccbe6e01e947209"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the shader is in a valid state.  <br /></td></tr>
+<tr id="pub-methods-4" class="groupHeader"><td colspan="2"><div class="groupHeader">Label</div></td></tr>
+<tr class="memitem:a74ae0696e36100a5f2c0f5514bd6191e" id="r_a74ae0696e36100a5f2c0f5514bd6191e"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a74ae0696e36100a5f2c0f5514bd6191e">set_label</a> (std::string_view label)</td></tr>
+<tr class="memdesc:a74ae0696e36100a5f2c0f5514bd6191e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the debug label of the shader.  <br /></td></tr>
+<tr class="memitem:acccb075cdc625ed4371ef0794abc1818" id="r_acccb075cdc625ed4371ef0794abc1818"><td class="memItemLeft">std::string&#160;</td><td class="memItemRight"><a class="el" href="#acccb075cdc625ed4371ef0794abc1818">label</a> () const</td></tr>
+<tr class="memdesc:acccb075cdc625ed4371ef0794abc1818"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the debug label of the shader.  <br /></td></tr>
 </table>
-<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ac4375fd3f560e8b746d8bdb01d59dabb" name="ac4375fd3f560e8b746d8bdb01d59dabb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac4375fd3f560e8b746d8bdb01d59dabb">&#9670;&#160;</a></span>shader_base()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">tr::shader_base::shader_base </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>context</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespacetr.html#af4536441b49fec056af6a2432b30afff">zstring_view</a></td>          <td class="paramname"><span class="paramname"><em>source</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned int</td>          <td class="paramname"><span class="paramname"><em>type</em></span>&#160;)</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">context</td><td>Graphics context to create the shader on. </td></tr>
-    <tr><td class="paramname">source</td><td>Shader source code. </td></tr>
-    <tr><td class="paramname">type</td><td>Shader type. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="a64c7d2119e5c6cbfd6b6cd42600d8d72" name="a64c7d2119e5c6cbfd6b6cd42600d8d72"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a64c7d2119e5c6cbfd6b6cd42600d8d72">&#9670;&#160;</a></span>context()</h2>
+<a id="a263481a9b92e2ce61fc07bf96a9396c8" name="a263481a9b92e2ce61fc07bf96a9396c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a263481a9b92e2ce61fc07bf96a9396c8">&#9670;&#160;</a></span>context()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp; tr::shader_base::context </td>
+          <td class="memname"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp; tr::shader::context </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -339,14 +285,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a45fe50450531bc0deebda92b0b63bd45" name="a45fe50450531bc0deebda92b0b63bd45"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a45fe50450531bc0deebda92b0b63bd45">&#9670;&#160;</a></span>set_uniform() <span class="overload">[1/44]</span></h2>
+<a id="abc439db4dcf8cad3f35d0ca60d04fcfa" name="abc439db4dcf8cad3f35d0ca60d04fcfa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc439db4dcf8cad3f35d0ca60d04fcfa">&#9670;&#160;</a></span>set_uniform() <span class="overload">[1/44]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_uniform </td>
+          <td class="memname">void tr::shader::set_uniform </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -368,14 +314,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="ace63c94fd6f34bb89735b19774158a46" name="ace63c94fd6f34bb89735b19774158a46"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ace63c94fd6f34bb89735b19774158a46">&#9670;&#160;</a></span>set_uniform() <span class="overload">[2/44]</span></h2>
+<a id="ad25cc64550a297e81feeac33b5d6648a" name="ad25cc64550a297e81feeac33b5d6648a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad25cc64550a297e81feeac33b5d6648a">&#9670;&#160;</a></span>set_uniform() <span class="overload">[2/44]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_uniform </td>
+          <td class="memname">void tr::shader::set_uniform </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -397,14 +343,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a6c10cb5a3397a7ef06c3eed402874e77" name="a6c10cb5a3397a7ef06c3eed402874e77"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6c10cb5a3397a7ef06c3eed402874e77">&#9670;&#160;</a></span>set_uniform() <span class="overload">[3/44]</span></h2>
+<a id="aa60d19f92febfcbfb259ad4efe477a88" name="aa60d19f92febfcbfb259ad4efe477a88"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa60d19f92febfcbfb259ad4efe477a88">&#9670;&#160;</a></span>set_uniform() <span class="overload">[3/44]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_uniform </td>
+          <td class="memname">void tr::shader::set_uniform </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -426,14 +372,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="ac4163d73dced6beeffca8d8cd74a260e" name="ac4163d73dced6beeffca8d8cd74a260e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac4163d73dced6beeffca8d8cd74a260e">&#9670;&#160;</a></span>set_uniform() <span class="overload">[4/44]</span></h2>
+<a id="ad88cac2678466d0fc9f543b0bcfb7d85" name="ad88cac2678466d0fc9f543b0bcfb7d85"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad88cac2678466d0fc9f543b0bcfb7d85">&#9670;&#160;</a></span>set_uniform() <span class="overload">[4/44]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_uniform </td>
+          <td class="memname">void tr::shader::set_uniform </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -455,14 +401,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a567d06f997e2baa25677115c8337b720" name="a567d06f997e2baa25677115c8337b720"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a567d06f997e2baa25677115c8337b720">&#9670;&#160;</a></span>set_uniform() <span class="overload">[5/44]</span></h2>
+<a id="a04a4156d2f92c3d933d72ea8e5a45365" name="a04a4156d2f92c3d933d72ea8e5a45365"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a04a4156d2f92c3d933d72ea8e5a45365">&#9670;&#160;</a></span>set_uniform() <span class="overload">[5/44]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_uniform </td>
+          <td class="memname">void tr::shader::set_uniform </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -484,14 +430,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a16a8459b389c6ab1f0ce0c0fb6bca49a" name="a16a8459b389c6ab1f0ce0c0fb6bca49a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a16a8459b389c6ab1f0ce0c0fb6bca49a">&#9670;&#160;</a></span>set_uniform() <span class="overload">[6/44]</span></h2>
+<a id="a16d2d64b170ea7297d6ae1468c8bc6d3" name="a16d2d64b170ea7297d6ae1468c8bc6d3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16d2d64b170ea7297d6ae1468c8bc6d3">&#9670;&#160;</a></span>set_uniform() <span class="overload">[6/44]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_uniform </td>
+          <td class="memname">void tr::shader::set_uniform </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -513,14 +459,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a6cf7d920731ca68f64cdb9cef1749e89" name="a6cf7d920731ca68f64cdb9cef1749e89"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6cf7d920731ca68f64cdb9cef1749e89">&#9670;&#160;</a></span>set_uniform() <span class="overload">[7/44]</span></h2>
+<a id="af71d400f3116b49eb821624af3669a71" name="af71d400f3116b49eb821624af3669a71"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af71d400f3116b49eb821624af3669a71">&#9670;&#160;</a></span>set_uniform() <span class="overload">[7/44]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_uniform </td>
+          <td class="memname">void tr::shader::set_uniform </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -542,14 +488,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="add50f381849a733c0100402a6f891caa" name="add50f381849a733c0100402a6f891caa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#add50f381849a733c0100402a6f891caa">&#9670;&#160;</a></span>set_uniform() <span class="overload">[8/44]</span></h2>
+<a id="ab402aca89a17c60ffbdd2f9f4c4022ad" name="ab402aca89a17c60ffbdd2f9f4c4022ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab402aca89a17c60ffbdd2f9f4c4022ad">&#9670;&#160;</a></span>set_uniform() <span class="overload">[8/44]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_uniform </td>
+          <td class="memname">void tr::shader::set_uniform </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -571,14 +517,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a5c281c526198105b26bbc6b34fe3be72" name="a5c281c526198105b26bbc6b34fe3be72"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5c281c526198105b26bbc6b34fe3be72">&#9670;&#160;</a></span>set_uniform() <span class="overload">[9/44]</span></h2>
+<a id="a511fff55dd6c51ad69052cfce37aa832" name="a511fff55dd6c51ad69052cfce37aa832"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a511fff55dd6c51ad69052cfce37aa832">&#9670;&#160;</a></span>set_uniform() <span class="overload">[9/44]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_uniform </td>
+          <td class="memname">void tr::shader::set_uniform </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -600,14 +546,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a28d7b07401bf320e8e5da163ae5b9774" name="a28d7b07401bf320e8e5da163ae5b9774"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a28d7b07401bf320e8e5da163ae5b9774">&#9670;&#160;</a></span>set_uniform() <span class="overload">[10/44]</span></h2>
+<a id="afa57082465a44ddcfde80767c6961e23" name="afa57082465a44ddcfde80767c6961e23"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afa57082465a44ddcfde80767c6961e23">&#9670;&#160;</a></span>set_uniform() <span class="overload">[10/44]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_uniform </td>
+          <td class="memname">void tr::shader::set_uniform </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -629,14 +575,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="ab6b2d7e6f8bd85bb0a34cabaf9b908af" name="ab6b2d7e6f8bd85bb0a34cabaf9b908af"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab6b2d7e6f8bd85bb0a34cabaf9b908af">&#9670;&#160;</a></span>set_uniform() <span class="overload">[11/44]</span></h2>
+<a id="a139f1c5afd605294daff61bb8763bc9e" name="a139f1c5afd605294daff61bb8763bc9e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a139f1c5afd605294daff61bb8763bc9e">&#9670;&#160;</a></span>set_uniform() <span class="overload">[11/44]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_uniform </td>
+          <td class="memname">void tr::shader::set_uniform </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -658,14 +604,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a5bd5f17bcf82a360b5638c3c1a865e70" name="a5bd5f17bcf82a360b5638c3c1a865e70"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5bd5f17bcf82a360b5638c3c1a865e70">&#9670;&#160;</a></span>set_uniform() <span class="overload">[12/44]</span></h2>
+<a id="a86df0899f3ea42c753cca9a356091c90" name="a86df0899f3ea42c753cca9a356091c90"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a86df0899f3ea42c753cca9a356091c90">&#9670;&#160;</a></span>set_uniform() <span class="overload">[12/44]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_uniform </td>
+          <td class="memname">void tr::shader::set_uniform </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -687,14 +633,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a63546b37cdcbe2a8ae0072e2356c89fd" name="a63546b37cdcbe2a8ae0072e2356c89fd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a63546b37cdcbe2a8ae0072e2356c89fd">&#9670;&#160;</a></span>set_uniform() <span class="overload">[13/44]</span></h2>
+<a id="ab02346e8feaaff9ec18f192f80674f16" name="ab02346e8feaaff9ec18f192f80674f16"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab02346e8feaaff9ec18f192f80674f16">&#9670;&#160;</a></span>set_uniform() <span class="overload">[13/44]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_uniform </td>
+          <td class="memname">void tr::shader::set_uniform </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -716,14 +662,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a094bac93c484bb46e67eb1469a8ae69e" name="a094bac93c484bb46e67eb1469a8ae69e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a094bac93c484bb46e67eb1469a8ae69e">&#9670;&#160;</a></span>set_uniform() <span class="overload">[14/44]</span></h2>
+<a id="abdd9344795b08331d74bf4325f07ce55" name="abdd9344795b08331d74bf4325f07ce55"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abdd9344795b08331d74bf4325f07ce55">&#9670;&#160;</a></span>set_uniform() <span class="overload">[14/44]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_uniform </td>
+          <td class="memname">void tr::shader::set_uniform </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -745,14 +691,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="adbe479b1f0342c29feb873f93e397c40" name="adbe479b1f0342c29feb873f93e397c40"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adbe479b1f0342c29feb873f93e397c40">&#9670;&#160;</a></span>set_uniform() <span class="overload">[15/44]</span></h2>
+<a id="a2aa45158ad650f45d1e44692f219642f" name="a2aa45158ad650f45d1e44692f219642f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2aa45158ad650f45d1e44692f219642f">&#9670;&#160;</a></span>set_uniform() <span class="overload">[15/44]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_uniform </td>
+          <td class="memname">void tr::shader::set_uniform </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -774,14 +720,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a679054894c3e21ab5fe2f072379d6adb" name="a679054894c3e21ab5fe2f072379d6adb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a679054894c3e21ab5fe2f072379d6adb">&#9670;&#160;</a></span>set_uniform() <span class="overload">[16/44]</span></h2>
+<a id="aa17f8d6f3d4e0a8a45fd3397734cde87" name="aa17f8d6f3d4e0a8a45fd3397734cde87"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa17f8d6f3d4e0a8a45fd3397734cde87">&#9670;&#160;</a></span>set_uniform() <span class="overload">[16/44]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_uniform </td>
+          <td class="memname">void tr::shader::set_uniform </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -803,14 +749,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="aff345adc58b897f82a5a422cccaae006" name="aff345adc58b897f82a5a422cccaae006"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aff345adc58b897f82a5a422cccaae006">&#9670;&#160;</a></span>set_uniform() <span class="overload">[17/44]</span></h2>
+<a id="aaf0b7637e431194ae3730e16b466d35f" name="aaf0b7637e431194ae3730e16b466d35f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf0b7637e431194ae3730e16b466d35f">&#9670;&#160;</a></span>set_uniform() <span class="overload">[17/44]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_uniform </td>
+          <td class="memname">void tr::shader::set_uniform </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -832,14 +778,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="abdec66422caf5ebde004b97209cdc0f6" name="abdec66422caf5ebde004b97209cdc0f6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abdec66422caf5ebde004b97209cdc0f6">&#9670;&#160;</a></span>set_uniform() <span class="overload">[18/44]</span></h2>
+<a id="a048955dcba7d341b9bfc44e1e00ff10e" name="a048955dcba7d341b9bfc44e1e00ff10e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a048955dcba7d341b9bfc44e1e00ff10e">&#9670;&#160;</a></span>set_uniform() <span class="overload">[18/44]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_uniform </td>
+          <td class="memname">void tr::shader::set_uniform </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -861,14 +807,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a2d2e7c174725890edb5e159c37fa2537" name="a2d2e7c174725890edb5e159c37fa2537"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2d2e7c174725890edb5e159c37fa2537">&#9670;&#160;</a></span>set_uniform() <span class="overload">[19/44]</span></h2>
+<a id="a3c96c7490d7fb24ae443c651c0561947" name="a3c96c7490d7fb24ae443c651c0561947"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c96c7490d7fb24ae443c651c0561947">&#9670;&#160;</a></span>set_uniform() <span class="overload">[19/44]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_uniform </td>
+          <td class="memname">void tr::shader::set_uniform </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -890,14 +836,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="ac592ac15db2adb59fe4f426287fd0b63" name="ac592ac15db2adb59fe4f426287fd0b63"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac592ac15db2adb59fe4f426287fd0b63">&#9670;&#160;</a></span>set_uniform() <span class="overload">[20/44]</span></h2>
+<a id="abef11b383d131743dee61e7c4a32904e" name="abef11b383d131743dee61e7c4a32904e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abef11b383d131743dee61e7c4a32904e">&#9670;&#160;</a></span>set_uniform() <span class="overload">[20/44]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_uniform </td>
+          <td class="memname">void tr::shader::set_uniform </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -919,14 +865,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="ab34dafdfac0ff11a4d8568a137003209" name="ab34dafdfac0ff11a4d8568a137003209"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab34dafdfac0ff11a4d8568a137003209">&#9670;&#160;</a></span>set_uniform() <span class="overload">[21/44]</span></h2>
+<a id="a79f37cc174f78dfabf70b79ea4879af8" name="a79f37cc174f78dfabf70b79ea4879af8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a79f37cc174f78dfabf70b79ea4879af8">&#9670;&#160;</a></span>set_uniform() <span class="overload">[21/44]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_uniform </td>
+          <td class="memname">void tr::shader::set_uniform </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -948,14 +894,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="ad124753c569142991dc6efc2b842b27b" name="ad124753c569142991dc6efc2b842b27b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad124753c569142991dc6efc2b842b27b">&#9670;&#160;</a></span>set_uniform() <span class="overload">[22/44]</span></h2>
+<a id="a0868104625fcfff2c366724c7c309026" name="a0868104625fcfff2c366724c7c309026"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0868104625fcfff2c366724c7c309026">&#9670;&#160;</a></span>set_uniform() <span class="overload">[22/44]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_uniform </td>
+          <td class="memname">void tr::shader::set_uniform </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -977,14 +923,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="ac6f8741c29c249945e8b3fff1ad12827" name="ac6f8741c29c249945e8b3fff1ad12827"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac6f8741c29c249945e8b3fff1ad12827">&#9670;&#160;</a></span>set_uniform() <span class="overload">[23/44]</span></h2>
+<a id="a083ae2ce0b5e6c2dfb2495d9b1d0517a" name="a083ae2ce0b5e6c2dfb2495d9b1d0517a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a083ae2ce0b5e6c2dfb2495d9b1d0517a">&#9670;&#160;</a></span>set_uniform() <span class="overload">[23/44]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_uniform </td>
+          <td class="memname">void tr::shader::set_uniform </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -1006,14 +952,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a5ec7a949cbcb6e4d1667ed6df73630af" name="a5ec7a949cbcb6e4d1667ed6df73630af"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5ec7a949cbcb6e4d1667ed6df73630af">&#9670;&#160;</a></span>set_uniform() <span class="overload">[24/44]</span></h2>
+<a id="a1dd4f7356d6f10b69ec8a991997ca6cc" name="a1dd4f7356d6f10b69ec8a991997ca6cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1dd4f7356d6f10b69ec8a991997ca6cc">&#9670;&#160;</a></span>set_uniform() <span class="overload">[24/44]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_uniform </td>
+          <td class="memname">void tr::shader::set_uniform </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -1035,14 +981,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a1a1b92257809bf0a64cdbcf6636e4e62" name="a1a1b92257809bf0a64cdbcf6636e4e62"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1a1b92257809bf0a64cdbcf6636e4e62">&#9670;&#160;</a></span>set_uniform() <span class="overload">[25/44]</span></h2>
+<a id="a866c68616642f1ab41b7a0481bc5d890" name="a866c68616642f1ab41b7a0481bc5d890"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a866c68616642f1ab41b7a0481bc5d890">&#9670;&#160;</a></span>set_uniform() <span class="overload">[25/44]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_uniform </td>
+          <td class="memname">void tr::shader::set_uniform </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -1064,14 +1010,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a62fc11bc638732932749b47ab2ee1c82" name="a62fc11bc638732932749b47ab2ee1c82"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a62fc11bc638732932749b47ab2ee1c82">&#9670;&#160;</a></span>set_uniform() <span class="overload">[26/44]</span></h2>
+<a id="a5582e1a42689bed135c76167bbbe7a65" name="a5582e1a42689bed135c76167bbbe7a65"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5582e1a42689bed135c76167bbbe7a65">&#9670;&#160;</a></span>set_uniform() <span class="overload">[26/44]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_uniform </td>
+          <td class="memname">void tr::shader::set_uniform </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -1093,14 +1039,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a64506070aea77b2cc2386c1815e3ddfe" name="a64506070aea77b2cc2386c1815e3ddfe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a64506070aea77b2cc2386c1815e3ddfe">&#9670;&#160;</a></span>set_uniform() <span class="overload">[27/44]</span></h2>
+<a id="ae587dd2a0dfd851a83cee55d9b7e6b18" name="ae587dd2a0dfd851a83cee55d9b7e6b18"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae587dd2a0dfd851a83cee55d9b7e6b18">&#9670;&#160;</a></span>set_uniform() <span class="overload">[27/44]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_uniform </td>
+          <td class="memname">void tr::shader::set_uniform </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -1122,14 +1068,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a244c8383d8ff9ff76f42bac4de70af91" name="a244c8383d8ff9ff76f42bac4de70af91"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a244c8383d8ff9ff76f42bac4de70af91">&#9670;&#160;</a></span>set_uniform() <span class="overload">[28/44]</span></h2>
+<a id="aca1ff95d6ce5ec22965dc80b5946d8e9" name="aca1ff95d6ce5ec22965dc80b5946d8e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca1ff95d6ce5ec22965dc80b5946d8e9">&#9670;&#160;</a></span>set_uniform() <span class="overload">[28/44]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_uniform </td>
+          <td class="memname">void tr::shader::set_uniform </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -1151,14 +1097,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a03248ea820c7ab532180faebb7eadb58" name="a03248ea820c7ab532180faebb7eadb58"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a03248ea820c7ab532180faebb7eadb58">&#9670;&#160;</a></span>set_uniform() <span class="overload">[29/44]</span></h2>
+<a id="a3e0d769dcaf87bdf49d3afd61682d516" name="a3e0d769dcaf87bdf49d3afd61682d516"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e0d769dcaf87bdf49d3afd61682d516">&#9670;&#160;</a></span>set_uniform() <span class="overload">[29/44]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_uniform </td>
+          <td class="memname">void tr::shader::set_uniform </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -1180,14 +1126,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a8c95bc928f435d516ee44c78991dd206" name="a8c95bc928f435d516ee44c78991dd206"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8c95bc928f435d516ee44c78991dd206">&#9670;&#160;</a></span>set_uniform() <span class="overload">[30/44]</span></h2>
+<a id="a04012f60198fea2029842125642910b7" name="a04012f60198fea2029842125642910b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a04012f60198fea2029842125642910b7">&#9670;&#160;</a></span>set_uniform() <span class="overload">[30/44]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_uniform </td>
+          <td class="memname">void tr::shader::set_uniform </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -1209,14 +1155,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a91dcf2bb962a59c765f8b5f0c58990ed" name="a91dcf2bb962a59c765f8b5f0c58990ed"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a91dcf2bb962a59c765f8b5f0c58990ed">&#9670;&#160;</a></span>set_uniform() <span class="overload">[31/44]</span></h2>
+<a id="a9965f59d453bc7f246ffd2994669690d" name="a9965f59d453bc7f246ffd2994669690d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9965f59d453bc7f246ffd2994669690d">&#9670;&#160;</a></span>set_uniform() <span class="overload">[31/44]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_uniform </td>
+          <td class="memname">void tr::shader::set_uniform </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -1238,14 +1184,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a01b26c1ead34f12e78f5622d7a0d7c2d" name="a01b26c1ead34f12e78f5622d7a0d7c2d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a01b26c1ead34f12e78f5622d7a0d7c2d">&#9670;&#160;</a></span>set_uniform() <span class="overload">[32/44]</span></h2>
+<a id="a62c5d20e1d623937fc8e7fd95eb30579" name="a62c5d20e1d623937fc8e7fd95eb30579"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a62c5d20e1d623937fc8e7fd95eb30579">&#9670;&#160;</a></span>set_uniform() <span class="overload">[32/44]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_uniform </td>
+          <td class="memname">void tr::shader::set_uniform </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -1267,14 +1213,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a9911ad91ef9b0ab228356f445af4b129" name="a9911ad91ef9b0ab228356f445af4b129"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9911ad91ef9b0ab228356f445af4b129">&#9670;&#160;</a></span>set_uniform() <span class="overload">[33/44]</span></h2>
+<a id="a66d6a5f529e0ce50693c12d965efada6" name="a66d6a5f529e0ce50693c12d965efada6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a66d6a5f529e0ce50693c12d965efada6">&#9670;&#160;</a></span>set_uniform() <span class="overload">[33/44]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_uniform </td>
+          <td class="memname">void tr::shader::set_uniform </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -1296,14 +1242,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a5ed539cf0f7fce85dbeca75624713541" name="a5ed539cf0f7fce85dbeca75624713541"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5ed539cf0f7fce85dbeca75624713541">&#9670;&#160;</a></span>set_uniform() <span class="overload">[34/44]</span></h2>
+<a id="adf608753da32c781b9a478a255c1142d" name="adf608753da32c781b9a478a255c1142d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adf608753da32c781b9a478a255c1142d">&#9670;&#160;</a></span>set_uniform() <span class="overload">[34/44]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_uniform </td>
+          <td class="memname">void tr::shader::set_uniform </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -1325,14 +1271,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a24fd382036ba573e195786d15ea27130" name="a24fd382036ba573e195786d15ea27130"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a24fd382036ba573e195786d15ea27130">&#9670;&#160;</a></span>set_uniform() <span class="overload">[35/44]</span></h2>
+<a id="a272417036691a10e84b9b6d7753b637c" name="a272417036691a10e84b9b6d7753b637c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a272417036691a10e84b9b6d7753b637c">&#9670;&#160;</a></span>set_uniform() <span class="overload">[35/44]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_uniform </td>
+          <td class="memname">void tr::shader::set_uniform </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -1354,14 +1300,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="ab87d047ff4831c6228d8c4901cce7585" name="ab87d047ff4831c6228d8c4901cce7585"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab87d047ff4831c6228d8c4901cce7585">&#9670;&#160;</a></span>set_uniform() <span class="overload">[36/44]</span></h2>
+<a id="a04c3da73bdacf44d33e84558e2a2e6ed" name="a04c3da73bdacf44d33e84558e2a2e6ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a04c3da73bdacf44d33e84558e2a2e6ed">&#9670;&#160;</a></span>set_uniform() <span class="overload">[36/44]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_uniform </td>
+          <td class="memname">void tr::shader::set_uniform </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -1383,14 +1329,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a612c5544db6f01e9b10ac6a33b67e8db" name="a612c5544db6f01e9b10ac6a33b67e8db"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a612c5544db6f01e9b10ac6a33b67e8db">&#9670;&#160;</a></span>set_uniform() <span class="overload">[37/44]</span></h2>
+<a id="a11c20ab43bb67ec83b3b3672c56af16f" name="a11c20ab43bb67ec83b3b3672c56af16f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a11c20ab43bb67ec83b3b3672c56af16f">&#9670;&#160;</a></span>set_uniform() <span class="overload">[37/44]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_uniform </td>
+          <td class="memname">void tr::shader::set_uniform </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -1412,14 +1358,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a727146e346f77bae611f64d084e6aabe" name="a727146e346f77bae611f64d084e6aabe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a727146e346f77bae611f64d084e6aabe">&#9670;&#160;</a></span>set_uniform() <span class="overload">[38/44]</span></h2>
+<a id="aeb8857372c06681bad1c603c0f08d2ec" name="aeb8857372c06681bad1c603c0f08d2ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb8857372c06681bad1c603c0f08d2ec">&#9670;&#160;</a></span>set_uniform() <span class="overload">[38/44]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_uniform </td>
+          <td class="memname">void tr::shader::set_uniform </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -1441,14 +1387,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a881a768aca860c06155f629a44b70277" name="a881a768aca860c06155f629a44b70277"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a881a768aca860c06155f629a44b70277">&#9670;&#160;</a></span>set_uniform() <span class="overload">[39/44]</span></h2>
+<a id="af895c332195ecae19c6b0628070c3362" name="af895c332195ecae19c6b0628070c3362"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af895c332195ecae19c6b0628070c3362">&#9670;&#160;</a></span>set_uniform() <span class="overload">[39/44]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_uniform </td>
+          <td class="memname">void tr::shader::set_uniform </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -1470,14 +1416,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="ad0939ea92aff29dc05cc96fbc8cdd3d2" name="ad0939ea92aff29dc05cc96fbc8cdd3d2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad0939ea92aff29dc05cc96fbc8cdd3d2">&#9670;&#160;</a></span>set_uniform() <span class="overload">[40/44]</span></h2>
+<a id="a74083247da07fe4fae4c5b5726f21396" name="a74083247da07fe4fae4c5b5726f21396"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a74083247da07fe4fae4c5b5726f21396">&#9670;&#160;</a></span>set_uniform() <span class="overload">[40/44]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_uniform </td>
+          <td class="memname">void tr::shader::set_uniform </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -1499,14 +1445,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a83e612619d813a8b44524ba4ba46b60b" name="a83e612619d813a8b44524ba4ba46b60b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a83e612619d813a8b44524ba4ba46b60b">&#9670;&#160;</a></span>set_uniform() <span class="overload">[41/44]</span></h2>
+<a id="af8a63d17192a1dac53e5ad2b744fd49a" name="af8a63d17192a1dac53e5ad2b744fd49a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af8a63d17192a1dac53e5ad2b744fd49a">&#9670;&#160;</a></span>set_uniform() <span class="overload">[41/44]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_uniform </td>
+          <td class="memname">void tr::shader::set_uniform </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -1528,14 +1474,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a5a35bcc1e39ccd52c11fc4341140de2b" name="a5a35bcc1e39ccd52c11fc4341140de2b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5a35bcc1e39ccd52c11fc4341140de2b">&#9670;&#160;</a></span>set_uniform() <span class="overload">[42/44]</span></h2>
+<a id="a533c5ef6114aedf205bd19b3aacdc15d" name="a533c5ef6114aedf205bd19b3aacdc15d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a533c5ef6114aedf205bd19b3aacdc15d">&#9670;&#160;</a></span>set_uniform() <span class="overload">[42/44]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_uniform </td>
+          <td class="memname">void tr::shader::set_uniform </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -1557,14 +1503,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="af7a981edec0d944922c00e687a1d8a83" name="af7a981edec0d944922c00e687a1d8a83"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af7a981edec0d944922c00e687a1d8a83">&#9670;&#160;</a></span>set_uniform() <span class="overload">[43/44]</span></h2>
+<a id="ab6445721b02040f061cb4ad4906529c1" name="ab6445721b02040f061cb4ad4906529c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab6445721b02040f061cb4ad4906529c1">&#9670;&#160;</a></span>set_uniform() <span class="overload">[43/44]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_uniform </td>
+          <td class="memname">void tr::shader::set_uniform </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -1586,14 +1532,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="aa7b7ac6d0d1c72053b1ea51e90122533" name="aa7b7ac6d0d1c72053b1ea51e90122533"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa7b7ac6d0d1c72053b1ea51e90122533">&#9670;&#160;</a></span>set_uniform() <span class="overload">[44/44]</span></h2>
+<a id="aec50b6bd802404d1ae59f8f40a674eec" name="aec50b6bd802404d1ae59f8f40a674eec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aec50b6bd802404d1ae59f8f40a674eec">&#9670;&#160;</a></span>set_uniform() <span class="overload">[44/44]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_uniform </td>
+          <td class="memname">void tr::shader::set_uniform </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -1615,14 +1561,14 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="ae78d9d6e1157ce32f68781a3b3fcf640" name="ae78d9d6e1157ce32f68781a3b3fcf640"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae78d9d6e1157ce32f68781a3b3fcf640">&#9670;&#160;</a></span>set_storage_buffer() <span class="overload">[1/4]</span></h2>
+<a id="aeefccc7267ad8591f24c67859b0de2a4" name="aeefccc7267ad8591f24c67859b0de2a4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeefccc7267ad8591f24c67859b0de2a4">&#9670;&#160;</a></span>set_storage_buffer() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_storage_buffer </td>
+          <td class="memname">void tr::shader::set_storage_buffer </td>
           <td>(</td>
           <td class="paramtype">unsigned int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -1643,8 +1589,8 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="aa44bc8473aa88a39b59216012458636a" name="aa44bc8473aa88a39b59216012458636a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa44bc8473aa88a39b59216012458636a">&#9670;&#160;</a></span>set_storage_buffer() <span class="overload">[2/4]</span></h2>
+<a id="a2836c9c81e00b11178662e44136eb8d4" name="a2836c9c81e00b11178662e44136eb8d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2836c9c81e00b11178662e44136eb8d4">&#9670;&#160;</a></span>set_storage_buffer() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1652,7 +1598,7 @@ Protected Attributes</h2></td></tr>
 template&lt;typename Header, typename ArrayElement&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_storage_buffer </td>
+          <td class="memname">void tr::shader::set_storage_buffer </td>
           <td>(</td>
           <td class="paramtype">unsigned int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -1680,8 +1626,8 @@ template&lt;typename Header, typename ArrayElement&gt; </div>
 
 </div>
 </div>
-<a id="ad9c088011bb679c63b99ad30556d4dbe" name="ad9c088011bb679c63b99ad30556d4dbe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad9c088011bb679c63b99ad30556d4dbe">&#9670;&#160;</a></span>set_storage_buffer() <span class="overload">[3/4]</span></h2>
+<a id="a7cff980153e512e22ff20b921de827d9" name="a7cff980153e512e22ff20b921de827d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7cff980153e512e22ff20b921de827d9">&#9670;&#160;</a></span>set_storage_buffer() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1689,7 +1635,7 @@ template&lt;typename Header, typename ArrayElement&gt; </div>
 template&lt;typename Element&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_storage_buffer </td>
+          <td class="memname">void tr::shader::set_storage_buffer </td>
           <td>(</td>
           <td class="paramtype">unsigned int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -1716,14 +1662,14 @@ template&lt;typename Element&gt; </div>
 
 </div>
 </div>
-<a id="a9dd684c1c0ae6b17908a5da85dc36775" name="a9dd684c1c0ae6b17908a5da85dc36775"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9dd684c1c0ae6b17908a5da85dc36775">&#9670;&#160;</a></span>set_uniform_buffer() <span class="overload">[1/3]</span></h2>
+<a id="a2544f2865c7d68affbae0577be632954" name="a2544f2865c7d68affbae0577be632954"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2544f2865c7d68affbae0577be632954">&#9670;&#160;</a></span>set_uniform_buffer() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_uniform_buffer </td>
+          <td class="memname">void tr::shader::set_uniform_buffer </td>
           <td>(</td>
           <td class="paramtype">unsigned int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -1744,8 +1690,8 @@ template&lt;typename Element&gt; </div>
 
 </div>
 </div>
-<a id="a0755901aeb64501fb6cf1798567574d7" name="a0755901aeb64501fb6cf1798567574d7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0755901aeb64501fb6cf1798567574d7">&#9670;&#160;</a></span>set_uniform_buffer() <span class="overload">[2/3]</span></h2>
+<a id="aad7b5f8ef070b52a8bb9fb55d9e30464" name="aad7b5f8ef070b52a8bb9fb55d9e30464"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aad7b5f8ef070b52a8bb9fb55d9e30464">&#9670;&#160;</a></span>set_uniform_buffer() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1753,7 +1699,7 @@ template&lt;typename Element&gt; </div>
 template&lt;typename Object&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_uniform_buffer </td>
+          <td class="memname">void tr::shader::set_uniform_buffer </td>
           <td>(</td>
           <td class="paramtype">unsigned int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -1780,14 +1726,32 @@ template&lt;typename Object&gt; </div>
 
 </div>
 </div>
-<a id="a03277cec831a3752c59bd5bc62a2c837" name="a03277cec831a3752c59bd5bc62a2c837"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a03277cec831a3752c59bd5bc62a2c837">&#9670;&#160;</a></span>set_label()</h2>
+<a id="af96d3d6b7aa6c30c2ccbe6e01e947209" name="af96d3d6b7aa6c30c2ccbe6e01e947209"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af96d3d6b7aa6c30c2ccbe6e01e947209">&#9670;&#160;</a></span>valid()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader_base::set_label </td>
+          <td class="memname">bool tr::shader::valid </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the shader is in a valid state, <span class="tt">false</span> if it is in an invalid state. </dd></dl>
+
+</div>
+</div>
+<a id="a74ae0696e36100a5f2c0f5514bd6191e" name="a74ae0696e36100a5f2c0f5514bd6191e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a74ae0696e36100a5f2c0f5514bd6191e">&#9670;&#160;</a></span>set_label()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tr::shader::set_label </td>
           <td>(</td>
           <td class="paramtype">std::string_view</td>          <td class="paramname"><span class="paramname"><em>label</em></span></td><td>)</td>
           <td></td>
@@ -1803,14 +1767,14 @@ template&lt;typename Object&gt; </div>
 
 </div>
 </div>
-<a id="a19c27a295530cb46f3ce74319c35c939" name="a19c27a295530cb46f3ce74319c35c939"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a19c27a295530cb46f3ce74319c35c939">&#9670;&#160;</a></span>label()</h2>
+<a id="acccb075cdc625ed4371ef0794abc1818" name="acccb075cdc625ed4371ef0794abc1818"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acccb075cdc625ed4371ef0794abc1818">&#9670;&#160;</a></span>label()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string tr::shader_base::label </td>
+          <td class="memname">std::string tr::shader::label </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -1818,129 +1782,6 @@ template&lt;typename Object&gt; </div>
       </table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Debug label of the shader. </dd></dl>
-
-</div>
-</div>
-<a id="ad3490346e46a23345e8a022a6bccff85" name="ad3490346e46a23345e8a022a6bccff85"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad3490346e46a23345e8a022a6bccff85">&#9670;&#160;</a></span>set_storage_buffer() <span class="overload">[4/4]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void tr::shader_base::set_storage_buffer </td>
-          <td>(</td>
-          <td class="paramtype">unsigned int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned int</td>          <td class="paramname"><span class="paramname"><em>buffer_id</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::intptr_t</td>          <td class="paramname"><span class="paramname"><em>buffer_size</em></span>&#160;)</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">index</td><td>Storage buffer location index. </td></tr>
-    <tr><td class="paramname">buffer_id</td><td>ID of the buffer to set. </td></tr>
-    <tr><td class="paramname">buffer_size</td><td>Size of the buffer. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="aacc68f7cf237e483b8455c91e667238f" name="aacc68f7cf237e483b8455c91e667238f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aacc68f7cf237e483b8455c91e667238f">&#9670;&#160;</a></span>set_uniform_buffer() <span class="overload">[3/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void tr::shader_base::set_uniform_buffer </td>
-          <td>(</td>
-          <td class="paramtype">unsigned int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">unsigned int</td>          <td class="paramname"><span class="paramname"><em>buffer_id</em></span>&#160;)</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">index</td><td>Storage buffer location index. </td></tr>
-    <tr><td class="paramname">buffer_id</td><td>ID of the buffer to set. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
-<a id="aa307ce4ffbc183af3450b4be368bfa0d" name="aa307ce4ffbc183af3450b4be368bfa0d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa307ce4ffbc183af3450b4be368bfa0d">&#9670;&#160;</a></span>m_program</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classtr_1_1handle.html">handle</a>&lt;unsigned int, 0, <a class="el" href="structtr_1_1shader__base_1_1deleter.html">deleter</a>&gt; tr::shader_base::m_program</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ae059e80c3a8fe1f380d15190fadf5f2c" name="ae059e80c3a8fe1f380d15190fadf5f2c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae059e80c3a8fe1f380d15190fadf5f2c">&#9670;&#160;</a></span>m_texture_units</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">boost::unordered_flat_map&lt;int, texture_unit&gt; tr::shader_base::m_texture_units</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel protected">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
 
 </div>
 </div>
@@ -1957,7 +1798,7 @@ template&lt;typename Object&gt; </div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a href="namespacetr.html">tr</a></li><li class="navelem"><a href="classtr_1_1shader__base.html">shader_base</a></li>
+    <li class="navelem"><a href="namespacetr.html">tr</a></li><li class="navelem"><a href="classtr_1_1shader.html">shader</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.17.0 </li>
   </ul>
 </div>

@@ -130,21 +130,21 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('concepttr_1_1v
 
 <p>Format string that is valid for a set of types.  
 <a href="#details">More...</a></p>
-<h2 id="header-conceptdef" class="groupheader">Concept definition</h2>
-<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<a class="code hl_struct" href="structtr_1_1string__literal.html">string_literal</a> Fmt, <span class="keyword">typename</span>... Args&gt;</div>
-<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepttr_1_1valid__format__string__for.html">valid_format_string_for</a> = (<a class="code hl_concept" href="concepttr_1_1formattable.html">formattable&lt;Args, char&gt;</a> &amp;&amp; ...) &amp;&amp;</div>
-<div class="line">                                      <span class="keyword">requires</span> { <span class="keyword">typename</span> std::integral_constant&lt;int, (std::format_string&lt;Args...&gt;(Fmt.data), 1)&gt;; }</div>
-<div class="ttc" id="aconcepttr_1_1formattable_html"><div class="ttname"><a href="concepttr_1_1formattable.html">tr::formattable</a></div><div class="ttdoc">Formattable type.</div><div class="ttdef"><b>Definition</b> concepts.hpp:150</div></div>
-<div class="ttc" id="aconcepttr_1_1valid__format__string__for_html"><div class="ttname"><a href="concepttr_1_1valid__format__string__for.html">tr::valid_format_string_for</a></div><div class="ttdoc">Format string that is valid for a set of types.</div><div class="ttdef"><b>Definition</b> concepts.hpp:155</div></div>
-<div class="ttc" id="astructtr_1_1string__literal_html"><div class="ttname"><a href="structtr_1_1string__literal.html">tr::string_literal</a></div><div class="ttdoc">Literal object holding a character array intended to allow passing string literals as non-type templa...</div><div class="ttdef"><b>Definition</b> string_literal.hpp:15</div></div>
-</div><!-- fragment --><a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Args</td><td>List of arguments to the formatting function. </td></tr>
   </table>
   </dd>
 </dl>
-</div></div><!-- contents -->
+</div><h2 id="header-conceptdef" class="groupheader">Concept definition</h2>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<a class="code hl_struct" href="structtr_1_1string__literal.html">string_literal</a> Fmt, <span class="keyword">typename</span>... Args&gt;</div>
+<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepttr_1_1valid__format__string__for.html">valid_format_string_for</a> = (<a class="code hl_concept" href="concepttr_1_1formattable.html">formattable&lt;Args, char&gt;</a> &amp;&amp; ...) &amp;&amp;</div>
+<div class="line">                                      <span class="keyword">requires</span> { <span class="keyword">typename</span> std::integral_constant&lt;int, (std::format_string&lt;Args...&gt;(Fmt.data), 1)&gt;; }</div>
+<div class="ttc" id="aconcepttr_1_1formattable_html"><div class="ttname"><a href="concepttr_1_1formattable.html">tr::formattable</a></div><div class="ttdoc">Formattable type.</div><div class="ttdef"><b>Definition</b> concepts.hpp:150</div></div>
+<div class="ttc" id="aconcepttr_1_1valid__format__string__for_html"><div class="ttname"><a href="concepttr_1_1valid__format__string__for.html">tr::valid_format_string_for</a></div><div class="ttdoc">Format string that is valid for a set of types.</div><div class="ttdef"><b>Definition</b> concepts.hpp:155</div></div>
+<div class="ttc" id="astructtr_1_1string__literal_html"><div class="ttname"><a href="structtr_1_1string__literal.html">tr::string_literal</a></div><div class="ttdoc">Literal object holding a character array intended to allow passing string literals as non-type templa...</div><div class="ttdef"><b>Definition</b> string_literal.hpp:15</div></div>
+</div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->
 <!-- start footer part -->

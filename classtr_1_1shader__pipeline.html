@@ -132,11 +132,11 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1sha
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A shader pipeline is an object that references vertex and fragment shader program stages that are to be used during the rendering process when the pipeline is set on the graphics context. These referenced shaders must be compatible: the outputs of the vertex shader must match the inputs of the fragment shader.</p>
-<p>Strictly speaking, instances of <span class="tt"><a class="el" href="classtr_1_1shader__pipeline.html" title="Container for a shader program pipeline.">shader_pipeline</a></span> are only containers for these underlying shader pipeline objects. This means, for example, that setting a shader pipeline on a graphics context does not set the literal <span class="tt"><a class="el" href="classtr_1_1shader__pipeline.html" title="Container for a shader program pipeline.">shader_pipeline</a></span> object at a specific location in memory, but rather the value it contains. If the value is moved to a different instance of <span class="tt"><a class="el" href="classtr_1_1shader__pipeline.html" title="Container for a shader program pipeline.">shader_pipeline</a></span>, that value will still be set on the context. If the instance is overriden with a new value, the old value is destroyed and the graphics context will no longer have a set shader pipeline.</p>
-<p><span class="tt"><a class="el" href="classtr_1_1shader__pipeline.html" title="Container for a shader program pipeline.">shader_pipeline</a></span> has a notion of 'completeness'. An intance of the class may be constructed without set shaders; such an instance is considered incomplete until a valid vertex and fragment shader are set to it. Incomplete shader pipelines may not be set to a graphics context.</p>
-<p>Every instance of <span class="tt"><a class="el" href="classtr_1_1shader__pipeline.html" title="Container for a shader program pipeline.">shader_pipeline</a></span> is associated with a graphics context and cannot outlive its parent context.</p>
-<p>Shader pipelines are movable, but not copyable. A moved-from shader pipeline is left in an unusable state until another value is moved into it.</p>
-<p>Shader pipelines are formattable. Example output: <span class="tt">[Shader pipeline "My pipeline" (ID: 5)]</span> </p>
+<p>Strictly speaking, instances of <span class="tt"><a class="el" href="classtr_1_1shader__pipeline.html" title="Container for a shader program pipeline.">tr::shader_pipeline</a></span> are only containers for these underlying shader pipeline objects. This means, for example, that setting a shader pipeline on a graphics context does not set the literal <span class="tt"><a class="el" href="classtr_1_1shader__pipeline.html" title="Container for a shader program pipeline.">tr::shader_pipeline</a></span> object at a specific location in memory, but rather the value it contains. If the value is moved to a different instance of <span class="tt"><a class="el" href="classtr_1_1shader__pipeline.html" title="Container for a shader program pipeline.">tr::shader_pipeline</a></span>, that value will still be set on the context. If the instance is overriden with a new value, the old value is destroyed and the graphics context will no longer have a set shader pipeline.</p>
+<p><span class="tt"><a class="el" href="classtr_1_1shader__pipeline.html" title="Container for a shader program pipeline.">tr::shader_pipeline</a></span> has a notion of 'completeness'. An instance of the class may be constructed without set shaders; such an instance is considered incomplete until a valid vertex and fragment shader are set to it. Incomplete shader pipelines may not be set to a graphics context.</p>
+<p>Every instance of <span class="tt"><a class="el" href="classtr_1_1shader__pipeline.html" title="Container for a shader program pipeline.">tr::shader_pipeline</a></span> is associated with a graphics context and cannot outlive its parent context.</p>
+<p><span class="tt"><a class="el" href="classtr_1_1shader__pipeline.html" title="Container for a shader program pipeline.">tr::shader_pipeline</a></span> instances are movable, but not copyable. A moved-from instance of <span class="tt"><a class="el" href="classtr_1_1shader__pipeline.html" title="Container for a shader program pipeline.">tr::shader_pipeline</a></span> is left in a special 'invalid' state, distinct from the incomplete state. Invalid <span class="tt"><a class="el" href="classtr_1_1shader__pipeline.html" title="Container for a shader program pipeline.">tr::shader_pipeline</a></span> instances may not be interacted with besides moving a new value into them and checking for validity using <span class="tt"><a class="el" href="#a4231b57b73a8ada6f5d9abd14f334b53" title="Gets whether the pipeline is in a valid state.">valid()</a></span>.</p>
+<p><span class="tt"><a class="el" href="classtr_1_1shader__pipeline.html" title="Container for a shader program pipeline.">tr::shader_pipeline</a></span> instances may be labeled and are formattable. Example format output: <span class="tt">"My pipeline" (OpenGL ID: 5)</span>. </p>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -155,7 +155,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a1b600e71503b2395af2268154d307662"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a vertex shader to the pipeline.  <br /></td></tr>
 <tr class="memitem:a36da26a0757ee137a302832e923fc31b" id="r_a36da26a0757ee137a302832e923fc31b"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a36da26a0757ee137a302832e923fc31b">set_fragment_shader</a> (const fragment_shader &amp;fragment_shader)</td></tr>
 <tr class="memdesc:a36da26a0757ee137a302832e923fc31b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a fragment shader to the pipeline.  <br /></td></tr>
-<tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Label</div></td></tr>
+<tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">State</div></td></tr>
+<tr class="memitem:a4231b57b73a8ada6f5d9abd14f334b53" id="r_a4231b57b73a8ada6f5d9abd14f334b53"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a4231b57b73a8ada6f5d9abd14f334b53">valid</a> () const</td></tr>
+<tr class="memdesc:a4231b57b73a8ada6f5d9abd14f334b53"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the pipeline is in a valid state.  <br /></td></tr>
+<tr id="pub-methods-4" class="groupHeader"><td colspan="2"><div class="groupHeader">Label</div></td></tr>
 <tr class="memitem:a8ef8728fe1a8c0953a68e0c8f0ecf16a" id="r_a8ef8728fe1a8c0953a68e0c8f0ecf16a"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a8ef8728fe1a8c0953a68e0c8f0ecf16a">set_label</a> (std::string_view label)</td></tr>
 <tr class="memdesc:a8ef8728fe1a8c0953a68e0c8f0ecf16a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the debug label of the pipeline.  <br /></td></tr>
 <tr class="memitem:aa02b2ac41290285c00cf10d4bcb2742f" id="r_aa02b2ac41290285c00cf10d4bcb2742f"><td class="memItemLeft">std::string&#160;</td><td class="memItemRight"><a class="el" href="#aa02b2ac41290285c00cf10d4bcb2742f">label</a> () const</td></tr>
@@ -216,8 +219,8 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section pre"><dt>Precondition</dt><dd><span class="tt"><a class="el" href="classtr_1_1vertex__shader.html" title="GPU vertex shader program.">vertex_shader</a></span> and <span class="tt"><a class="el" href="classtr_1_1fragment__shader.html" title="GPU fragment shader program.">fragment_shader</a></span> must be compatible with each other and be on <span class="tt"><a class="el" href="#a795dfe9be4ad99a21a4fada2eec1ada8" title="Gets a reference to the graphics context the pipeline is on.">context</a></span>. </dd></dl>
-<dl class="section post"><dt>Postcondition</dt><dd>The pipeline will revert to an incomplete state should either one of the current values of <span class="tt"><a class="el" href="classtr_1_1vertex__shader.html" title="GPU vertex shader program.">vertex_shader</a></span> or <span class="tt"><a class="el" href="classtr_1_1fragment__shader.html" title="GPU fragment shader program.">fragment_shader</a></span> be destroyed while still set on the pipeline. </dd></dl>
+<dl class="section pre"><dt>Precondition</dt><dd><span class="tt">vertex_shader</span> and <span class="tt">fragment_shader</span> must be compatible with each other and be on <span class="tt">context</span>. </dd></dl>
+<dl class="section post"><dt>Postcondition</dt><dd>The pipeline will revert to an incomplete state should either one of the current values of <span class="tt">vertex_shader</span> or <span class="tt">fragment_shader</span> be destroyed while still set on the pipeline. </dd></dl>
 
 </div>
 </div>
@@ -265,8 +268,8 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section pre"><dt>Precondition</dt><dd><span class="tt"><a class="el" href="classtr_1_1vertex__shader.html" title="GPU vertex shader program.">vertex_shader</a></span> and <span class="tt"><a class="el" href="classtr_1_1fragment__shader.html" title="GPU fragment shader program.">fragment_shader</a></span> must be compatible with each other and be on the same context as the pipeline. </dd></dl>
-<dl class="section post"><dt>Postcondition</dt><dd>The pipeline will revert to an incomplete state should either one of the current values of <span class="tt"><a class="el" href="classtr_1_1vertex__shader.html" title="GPU vertex shader program.">vertex_shader</a></span> or <span class="tt"><a class="el" href="classtr_1_1fragment__shader.html" title="GPU fragment shader program.">fragment_shader</a></span> be destroyed while still set on the pipeline. </dd></dl>
+<dl class="section pre"><dt>Precondition</dt><dd><span class="tt">vertex_shader</span> and <span class="tt">fragment_shader</span> must be compatible with each other and be on the same context as the pipeline. </dd></dl>
+<dl class="section post"><dt>Postcondition</dt><dd>The pipeline will revert to an incomplete state should either one of the current values of <span class="tt">vertex_shader</span> or <span class="tt">fragment_shader</span> be destroyed while still set on the pipeline. </dd></dl>
 
 </div>
 </div>
@@ -290,8 +293,8 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section pre"><dt>Precondition</dt><dd><span class="tt"><a class="el" href="classtr_1_1vertex__shader.html" title="GPU vertex shader program.">vertex_shader</a></span> must be compatible with the currently set fragment shader and be on the same context as the pipeline. </dd></dl>
-<dl class="section post"><dt>Postcondition</dt><dd>The pipeline will revert to an incomplete state should the current value of <span class="tt"><a class="el" href="classtr_1_1vertex__shader.html" title="GPU vertex shader program.">vertex_shader</a></span> be destroyed while still set on the pipeline. </dd></dl>
+<dl class="section pre"><dt>Precondition</dt><dd><span class="tt">vertex_shader</span> must be compatible with the currently set fragment shader and be on the same context as the pipeline. </dd></dl>
+<dl class="section post"><dt>Postcondition</dt><dd>The pipeline will revert to an incomplete state should the current value of <span class="tt">vertex_shader</span> be destroyed while still set on the pipeline. </dd></dl>
 
 </div>
 </div>
@@ -315,8 +318,26 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section pre"><dt>Precondition</dt><dd><span class="tt"><a class="el" href="classtr_1_1fragment__shader.html" title="GPU fragment shader program.">fragment_shader</a></span> must be compatible with the currently set vertex shader and be on the same context as the pipeline. </dd></dl>
-<dl class="section post"><dt>Postcondition</dt><dd>The pipeline will revert to an incomplete state should the current value of <span class="tt"><a class="el" href="classtr_1_1fragment__shader.html" title="GPU fragment shader program.">fragment_shader</a></span> be destroyed while still set on the pipeline. </dd></dl>
+<dl class="section pre"><dt>Precondition</dt><dd><span class="tt">fragment_shader</span> must be compatible with the currently set vertex shader and be on the same context as the pipeline. </dd></dl>
+<dl class="section post"><dt>Postcondition</dt><dd>The pipeline will revert to an incomplete state should the current value of <span class="tt">fragment_shader</span> be destroyed while still set on the pipeline. </dd></dl>
+
+</div>
+</div>
+<a id="a4231b57b73a8ada6f5d9abd14f334b53" name="a4231b57b73a8ada6f5d9abd14f334b53"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4231b57b73a8ada6f5d9abd14f334b53">&#9670;&#160;</a></span>valid()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tr::shader_pipeline::valid </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the pipeline is in a valid state, <span class="tt">false</span> if it is in an invalid state. </dd></dl>
 
 </div>
 </div>

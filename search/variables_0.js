@@ -8,6 +8,8 @@ var searchData=
   ['alpha_5fsrc_5',['alpha_src',['../structtr_1_1blend__mode.html#a861c2a94dfcc9d9a83bb2c2b989ace55',1,'tr::blend_mode']]],
   ['as_5fvertex_5fattribute_6',['as_vertex_attribute',['../namespacetr.html#a83cdc1cff7e632dd2c9ccb9ebf82e5cd',1,'tr']]],
   ['as_5fvertex_5fattribute_5flist_7',['as_vertex_attribute_list',['../namespacetr.html#a5dc866e96c8a2750ad53cff726453c66',1,'tr']]],
-  ['attrs_8',['attrs',['../structtr_1_1vertex__binding.html#abfaf607df3577bbb4cf2cefc00933acc',1,'tr::vertex_binding']]],
-  ['audio_5fclass_5fcount_9',['audio_class_count',['../namespacetr.html#ad97d980b5fdd18b0346b4690c31963b8',1,'tr']]]
+  ['as_5fvertex_5fbinding_8',['as_vertex_binding',['../namespacetr.html#acae3dfa2d6deb05490cbbc2c436deff7',1,'tr']]],
+  ['as_5fvertex_5fbindings_9',['as_vertex_bindings',['../namespacetr.html#a914dfdd8f225efa355d832e1308cbf86',1,'tr']]],
+  ['attrs_10',['attrs',['../structtr_1_1vertex__binding.html#abfaf607df3577bbb4cf2cefc00933acc',1,'tr::vertex_binding']]],
+  ['audio_5fclass_5fcount_11',['audio_class_count',['../namespacetr.html#ad97d980b5fdd18b0346b4690c31963b8',1,'tr']]]
 ];

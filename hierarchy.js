@@ -34,10 +34,8 @@ var hierarchy =
     [ "Deleter", null, [
       [ "tr::handle< unsigned int, 0, deleter >", "classtr_1_1handle.html", null ],
       [ "tr::handle< unsigned int, 0, unmapper >", "classtr_1_1handle.html", null ],
-      [ "tr::handle< unsigned int, 0, tr::shader_base::deleter >", "classtr_1_1handle.html", null ],
       [ "tr::handle< Base, Empty, Deleter >", "classtr_1_1handle.html", null ]
     ] ],
-    [ "tr::shader_base::deleter", "structtr_1_1shader__base_1_1deleter.html", null ],
     [ "tr::dialog_filter", "structtr_1_1dialog__filter.html", null ],
     [ "tr::basic_renderer::drawer", "classtr_1_1basic__renderer_1_1drawer.html", null ],
     [ "tr::circle_renderer::drawer", "classtr_1_1circle__renderer_1_1drawer.html", null ],
@@ -197,7 +195,7 @@ var hierarchy =
     [ "tr::scan_state", "classtr_1_1scan__state.html", [
       [ "tr::keyboard_state", "classtr_1_1keyboard__state.html", null ]
     ] ],
-    [ "tr::shader_base", "classtr_1_1shader__base.html", [
+    [ "tr::shader", "classtr_1_1shader.html", [
       [ "tr::fragment_shader", "classtr_1_1fragment__shader.html", null ],
       [ "tr::vertex_shader", "classtr_1_1vertex__shader.html", null ]
     ] ],
@@ -231,6 +229,7 @@ var hierarchy =
     [ "tr::unknown_event", "structtr_1_1unknown__event.html", null ],
     [ "tr::vertex_attribute", "structtr_1_1vertex__attribute.html", null ],
     [ "tr::vertex_binding", "structtr_1_1vertex__binding.html", null ],
+    [ "tr::vertex_binding_tag&lt; T, Divisor &gt;", "structtr_1_1vertex__binding__tag.html", null ],
     [ "tr::vertex_format", "classtr_1_1vertex__format.html", null ],
     [ "tr::window", "classtr_1_1window.html", null ],
     [ "tr::window_gain_focus_event", "structtr_1_1window__gain__focus__event.html", null ],

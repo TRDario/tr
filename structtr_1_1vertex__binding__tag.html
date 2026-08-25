@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=11" />
   <meta name="generator" content="Doxygen 1.17.0" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>tr: tr::index_range Concept Reference</title>
+  <title>tr: tr::vertex_binding_tag&lt; T, Divisor &gt; Struct Template Reference</title>
   <link href="tabs.css" rel="stylesheet" type="text/css" />
   <script type="text/javascript" src="jquery.js"></script>
   <script type="text/javascript" src="dynsections.js"></script>
@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
   </div>
 </div>
 <script type="text/javascript">
-document.addEventListener('DOMContentLoaded',() => { initNavTree('concepttr_1_1index__range.html','',''); });
+document.addEventListener('DOMContentLoaded',() => { initNavTree('structtr_1_1vertex__binding__tag.html','','structtr_1_1vertex__binding__tag-members'); });
 </script>
 <div id="container">
 <div id="doc-content">
@@ -124,24 +124,88 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('concepttr_1_1i
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">tr::index_range Concept Reference</div></div>
+  <div class="headertitle"><div class="title">tr::vertex_binding_tag&lt; T, Divisor &gt; Struct Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Contiguous range that can be passed to index buffer functions.  
-</p>
-<h2 id="header-conceptdef" class="groupheader">Concept definition</h2>
-<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Range&gt;</div>
-<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepttr_1_1index__range.html">index_range</a> = <a class="code hl_concept" href="concepttr_1_1typed__contiguous__const__range.html">typed_contiguous_const_range&lt;Range, u16&gt;</a></div>
-<div class="ttc" id="aconcepttr_1_1index__range_html"><div class="ttname"><a href="concepttr_1_1index__range.html">tr::index_range</a></div><div class="ttdoc">Contiguous range that can be passed to index buffer functions.</div><div class="ttdef"><b>Definition</b> index_buffer.hpp:14</div></div>
-<div class="ttc" id="aconcepttr_1_1typed__contiguous__const__range_html"><div class="ttname"><a href="concepttr_1_1typed__contiguous__const__range.html">tr::typed_contiguous_const_range</a></div><div class="ttdoc">Immutable contiguous range whose elements are of a certain type.</div><div class="ttdef"><b>Definition</b> concepts.hpp:108</div></div>
-</div><!-- fragment --></div><!-- contents -->
+<p>Vertex binding point tag struct used in <span class="tt"><a class="el" href="namespacetr.html#a914dfdd8f225efa355d832e1308cbf86" title="Holds a span of vertex bindings as if gotten by tr::as_vertex_binding with a guaranteed static lifeti...">tr::as_vertex_bindings</a></span>.  
+ <a href="#details">More...</a></p>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename T, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a28316522024e2e46cd0a6469e745897e">u32</a> Divisor = not_instanced&gt;<br />
+struct tr::vertex_binding_tag&lt; T, Divisor &gt;</div><dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>Type to get the attribute list for. </td></tr>
+    <tr><td class="paramname">Divisor</td><td>Divisor of the binding. </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-types" class="groupheader"><a id="pub-types" name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a2b381667d31d89f6bba50a9be596472a" id="r_a2b381667d31d89f6bba50a9be596472a"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a2b381667d31d89f6bba50a9be596472a">type</a> = T</td></tr>
+<tr class="memdesc:a2b381667d31d89f6bba50a9be596472a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type to get the attribute list for.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-static-attribs" class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:a03d20773abf875cbbfbed95ab9f1026b" id="r_a03d20773abf875cbbfbed95ab9f1026b"><td class="memItemLeft">static constexpr <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a28316522024e2e46cd0a6469e745897e">u32</a>&#160;</td><td class="memItemRight"><a class="el" href="#a03d20773abf875cbbfbed95ab9f1026b">divisor</a> {Divisor}</td></tr>
+<tr class="memdesc:a03d20773abf875cbbfbed95ab9f1026b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Divisor of the binding.  <br /></td></tr>
+</table>
+<a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Member Typedef Documentation</h2>
+<a id="a2b381667d31d89f6bba50a9be596472a" name="a2b381667d31d89f6bba50a9be596472a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b381667d31d89f6bba50a9be596472a">&#9670;&#160;</a></span>type</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a28316522024e2e46cd0a6469e745897e">u32</a> Divisor = not_instanced&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="structtr_1_1vertex__binding__tag.html">tr::vertex_binding_tag</a>&lt; T, Divisor &gt;::type = T</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a id="a03d20773abf875cbbfbed95ab9f1026b" name="a03d20773abf875cbbfbed95ab9f1026b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a03d20773abf875cbbfbed95ab9f1026b">&#9670;&#160;</a></span>divisor</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a28316522024e2e46cd0a6469e745897e">u32</a> Divisor = not_instanced&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a28316522024e2e46cd0a6469e745897e">u32</a> <a class="el" href="structtr_1_1vertex__binding__tag.html">tr::vertex_binding_tag</a>&lt; T, Divisor &gt;::divisor {Divisor}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
 </div><!-- container -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a href="namespacetr.html">tr</a></li><li class="navelem"><a href="concepttr_1_1index__range.html">index_range</a></li>
+    <li class="navelem"><a href="namespacetr.html">tr</a></li><li class="navelem"><a href="structtr_1_1vertex__binding__tag.html">vertex_binding_tag</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.17.0 </li>
   </ul>
 </div>

@@ -128,9 +128,11 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('vertex__format
 </div><!--header-->
 <div class="contents">
 
-<p>Provides a vertex format class and related functionality.  
-</p>
-
+<p>Provides <span class="tt"><a class="el" href="classtr_1_1vertex__format.html" title="Container for a GPU vertex format.">tr::vertex_format</a></span> and related functionality.  
+<a href="#details">More...</a></p>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>For an explanation of vertex formats, see the description of <span class="tt"><a class="el" href="classtr_1_1vertex__format.html" title="Container for a GPU vertex format.">tr::vertex_format</a></span>. </p>
+</div>
 <p><a href="vertex__format_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
@@ -141,8 +143,10 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tag to signify an integral vertex attribute should be normalized.  <a href="structtr_1_1normalized.html#details">More...</a><br /></td></tr>
 <tr class="memitem:tr_3A_3Avertex_5Fbinding" id="r_tr_3A_3Avertex_5Fbinding"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structtr_1_1vertex__binding.html">tr::vertex_binding</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vertex binding point.  <a href="structtr_1_1vertex__binding.html#details">More...</a><br /></td></tr>
+<tr class="memitem:tr_3A_3Avertex_5Fbinding_5Ftag_3C_20T_2C_20Divisor_20_3E" id="r_tr_3A_3Avertex_5Fbinding_5Ftag_3C_20T_2C_20Divisor_20_3E"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structtr_1_1vertex__binding__tag.html">tr::vertex_binding_tag&lt; T, Divisor &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vertex binding point tag struct used in <span class="tt"><a class="el" href="namespacetr.html#a914dfdd8f225efa355d832e1308cbf86" title="Holds a span of vertex bindings as if gotten by tr::as_vertex_binding with a guaranteed static lifeti...">tr::as_vertex_bindings</a></span>.  <a href="structtr_1_1vertex__binding__tag.html#details">More...</a><br /></td></tr>
 <tr class="memitem:tr_3A_3Avertex_5Fformat" id="r_tr_3A_3Avertex_5Fformat"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classtr_1_1vertex__format.html">tr::vertex_format</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">GPU vertex format.  <a href="classtr_1_1vertex__format.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Container for a GPU vertex format.  <a href="classtr_1_1vertex__format.html#details">More...</a><br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-namespaces" class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
@@ -165,12 +169,6 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:ad8eb4f799ddd3f5874fa4b1ad5c63032"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variable type that can be passed as a vertex attribute.  <a href="namespacetr.html#ad8eb4f799ddd3f5874fa4b1ad5c63032">More...</a><br /></td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:a4aec951cd219735365ce2bb980172d0c" id="r_a4aec951cd219735365ce2bb980172d0c"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
-<tr class="memitem:a4aec951cd219735365ce2bb980172d0c template"><td class="memItemLeft">constexpr <a class="el" href="structtr_1_1vertex__binding.html">vertex_binding</a>&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#a4aec951cd219735365ce2bb980172d0c">tr::make_vertex_binding</a> (<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a28316522024e2e46cd0a6469e745897e">u32</a> divisor=<a class="el" href="namespacetr.html#a55331e68a3c1db5a44b3fd5895f91997">not_instanced</a>)</td></tr>
-<tr class="memdesc:a4aec951cd219735365ce2bb980172d0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a vertex binding using <span class="tt"><a class="el" href="namespacetr.html#a5dc866e96c8a2750ad53cff726453c66" title="Maps a C++ type or a list of C++ types to a list of vertex attributes.">tr::as_vertex_attribute_list</a>&lt;T&gt;</span>.  <br /></td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:a83cdc1cff7e632dd2c9ccb9ebf82e5cd" id="r_a83cdc1cff7e632dd2c9ccb9ebf82e5cd"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
@@ -181,6 +179,12 @@ Variables</h2></td></tr>
 <tr class="memdesc:a5dc866e96c8a2750ad53cff726453c66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maps a C++ type or a list of C++ types to a list of vertex attributes.  <br /></td></tr>
 <tr class="memitem:a55331e68a3c1db5a44b3fd5895f91997" id="r_a55331e68a3c1db5a44b3fd5895f91997"><td class="memItemLeft">constexpr <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a28316522024e2e46cd0a6469e745897e">u32</a>&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#a55331e68a3c1db5a44b3fd5895f91997">tr::not_instanced</a> {0}</td></tr>
 <tr class="memdesc:a55331e68a3c1db5a44b3fd5895f91997"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sentinel for a vertex binding that is not instanced (that is, the attributes are per vertex).  <br /></td></tr>
+<tr class="memitem:acae3dfa2d6deb05490cbbc2c436deff7" id="r_acae3dfa2d6deb05490cbbc2c436deff7"><td class="memTemplParams" colspan="2">template&lt;typename T, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a28316522024e2e46cd0a6469e745897e">u32</a> Divisor = not_instanced&gt; </td></tr>
+<tr class="memitem:acae3dfa2d6deb05490cbbc2c436deff7 template"><td class="memItemLeft">constexpr <a class="el" href="structtr_1_1vertex__binding.html">vertex_binding</a>&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#acae3dfa2d6deb05490cbbc2c436deff7">tr::as_vertex_binding</a></td></tr>
+<tr class="memdesc:acae3dfa2d6deb05490cbbc2c436deff7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maps a type (attributes obtained using <span class="tt"><a class="el" href="namespacetr.html#a5dc866e96c8a2750ad53cff726453c66" title="Maps a C++ type or a list of C++ types to a list of vertex attributes.">tr::as_vertex_attribute_list</a>&lt;T&gt;</span>) and divisor to a vertex binding at compile-time.  <br /></td></tr>
+<tr class="memitem:a914dfdd8f225efa355d832e1308cbf86" id="r_a914dfdd8f225efa355d832e1308cbf86"><td class="memTemplParams" colspan="2">template&lt;specialization_of_tv&lt; <a class="el" href="structtr_1_1vertex__binding__tag.html">vertex_binding_tag</a> &gt;... BindingTags&gt; </td></tr>
+<tr class="memitem:a914dfdd8f225efa355d832e1308cbf86 template"><td class="memItemLeft">constexpr std::span&lt; const <a class="el" href="structtr_1_1vertex__binding.html">vertex_binding</a>, sizeof...(BindingTags)&gt;&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#a914dfdd8f225efa355d832e1308cbf86">tr::as_vertex_bindings</a></td></tr>
+<tr class="memdesc:a914dfdd8f225efa355d832e1308cbf86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds a span of vertex bindings as if gotten by <span class="tt"><a class="el" href="namespacetr.html#acae3dfa2d6deb05490cbbc2c436deff7" title="Maps a type (attributes obtained using tr::as_vertex_attribute_list&lt;T&gt;) and divisor to a vertex bindi...">tr::as_vertex_binding</a></span> with a guaranteed static lifetime.  <br /></td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
