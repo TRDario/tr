@@ -100,7 +100,7 @@ namespace tr
 		/// Constructs a shader.
 		/// @param context Graphics context to create the shader on.
 		/// @param source Shader GLSL source code.
-		/// @param type Shader type (GL_VERTEX_SHADER or GL_FRAGMENT_SHADER).
+		/// @param type Shader type (`GL_VERTEX_SHADER` or `GL_FRAGMENT_SHADER`).
 		shader(graphics_context& context, zstring_view source, unsigned int type);
 
 		/// @endcond
