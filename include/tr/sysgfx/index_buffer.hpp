@@ -2,19 +2,13 @@
 /// @brief Provides index buffer classes.
 
 #pragma once
-#include "../utility/concepts.hpp"
+#include "../utility/integer.hpp"
 #include "graphics_buffer.hpp"
 
 //
 
 namespace tr
 {
-	/// Contiguous range that can be passed to index buffer functions.
-	template <typename Range>
-	concept index_range = typed_contiguous_const_range<Range, u16>;
-
-	//
-
 	/// Static index buffer class for holding immutable index data.
 	class static_index_buffer : private graphics_buffer
 	{
