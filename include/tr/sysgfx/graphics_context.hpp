@@ -123,13 +123,6 @@ namespace tr
 
 		//
 
-#ifdef TR_ENABLE_GL_CHECKS
-		/// @cond __hidden
-		/// Registry of objects created on this context.
-		graphics_object_registry registry;
-/// @endcond
-#endif
-
 		/// Logger used by the context.
 		logger logger;
 
@@ -315,8 +308,8 @@ namespace tr
 		void draw_indexed_instances(primitive type, usize offset, usize indices, int instances);
 
 		/// @}
+		/// @cond implementation_details
 
-		/// @cond __hidden
 		/// Sets the context as current and returns the OpenGL API.
 		/// @return Refernce to the OpenGL API functions.
 		const gl_api& gl() const;
@@ -326,15 +319,29 @@ namespace tr
 		/// @param old_id Old object ID.
 		/// @param new_id New object ID.
 		void move_label(unsigned int type, unsigned int old_id, unsigned int new_id);
+
+#ifdef TR_ENABLE_GL_CHECKS
+		/// Gets the graphics object registry associated with the context.
+		/// @return Reference to the graphics object registry associated with the context.
+		graphics_object_registry& registry();
+#endif
+
 		/// @endcond
 
 	  private:
 		/// Context deleter.
 		struct deleter
 		{
+#ifdef TR_ENABLE_GL_CHECKS
+			/// Registry of objects created on the context.
+			graphics_object_registry registry;
+#endif
+
+			//
+
 			/// Destroys a graphics context.
 			/// @param context Pointer to the SDL OpenGL context.
-			static void operator()(SDL_GLContextState* context);
+			void operator()(SDL_GLContextState* context) const;
 		};
 
 #ifdef TR_ENABLE_GL_CHECKS
@@ -399,13 +406,11 @@ namespace tr
 		//
 
 #ifdef TR_ENABLE_GL_CHECKS
-		/// @cond __hidden
 		/// Checks if a vertex buffer's type's attribute match those of the current vertex format.
 		/// @param label Label of the vertex buffer.
 		/// @param slot Slot the vertex buffer is being set to.
 		/// @param attrs Vertex attribute list of the elements of the vertex buffer.
 		void check_vertex_buffer(std::string label, int slot, std::span<const vertex_attribute> attrs);
-		/// @endcond
 #endif
 
 		/// Sets an active vertex buffer.

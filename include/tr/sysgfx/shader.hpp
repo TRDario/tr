@@ -95,15 +95,15 @@ namespace tr
 	  public:
 		/// @name Constructors
 		/// @{
+		/// @cond implementation_details
 
-		/// @cond __hidden
 		/// Constructs a shader.
 		/// @param context Graphics context to create the shader on.
 		/// @param source Shader GLSL source code.
 		/// @param type Shader type (GL_VERTEX_SHADER or GL_FRAGMENT_SHADER).
 		shader(graphics_context& context, zstring_view source, unsigned int type);
-		/// @endcond
 
+		/// @endcond
 		/// @}
 		/// @name Context
 		/// @{

@@ -185,8 +185,14 @@ tr::graphics_context::graphics_context(window_view window)
 	}
 }
 
-void tr::graphics_context::deleter::operator()(SDL_GLContextState* context)
+void tr::graphics_context::deleter::operator()(SDL_GLContextState* context) const
 {
+#ifdef TR_ENABLE_GL_CHECKS
+	TR_ASSERT(registry.registered_shader_count() == 0, "Tried to destroy graphics context while one or more shaders are still alive.");
+	TR_ASSERT(registry.registered_shader_pipeline_count() == 0,
+			  "Tried to destroy graphics context while one or more shader pipelines are still alive.");
+#endif
+
 	SDL_GL_DestroyContext(context);
 }
 
@@ -306,9 +312,9 @@ void tr::graphics_context::set_shader_pipeline(const shader_pipeline& pipeline)
 #ifdef TR_ENABLE_GL_CHECKS
 	TR_ASSERT(pipeline.valid(), "Tried to set a shader pipeline in an invalid state to a context.");
 	TR_ASSERT(&pipeline.context() == this, "Tried to set shader pipeline {} to a context it is not associated with.", pipeline);
-	TR_ASSERT(registry.is_shader_valid(pipeline.vertex_shader_debug_info().id),
+	TR_ASSERT(registry().is_shader_valid(pipeline.vertex_shader_debug_info().id),
 			  "Tried to set shader pipeline {} with invalid set vertex shader '{}'.", pipeline, pipeline.vertex_shader_debug_info().label);
-	TR_ASSERT(registry.is_shader_valid(pipeline.fragment_shader_debug_info().id),
+	TR_ASSERT(registry().is_shader_valid(pipeline.fragment_shader_debug_info().id),
 			  "Tried to set shader pipeline {} with invalid set fragment shader '{}'.", pipeline,
 			  pipeline.fragment_shader_debug_info().label);
 #endif
@@ -413,7 +419,7 @@ void tr::graphics_context::clear_backbuffer_region(rectangle<int> region, tr::rg
 
 void tr::graphics_context::draw(primitive type, usize offset, usize vertices)
 {
-	TR_ASSERT(registry.is_shader_pipeline_valid(m_bound_shader_pipeline_debug_info.id),
+	TR_ASSERT(registry().is_shader_pipeline_valid(m_bound_shader_pipeline_debug_info.id),
 			  "Tried to perform a drawing operation with an invalid bound shader pipeline '{}'.", m_bound_shader_pipeline_debug_info.label);
 
 	gl().draw_arrays(std::to_underlying(type), offset, vertices);
@@ -421,7 +427,7 @@ void tr::graphics_context::draw(primitive type, usize offset, usize vertices)
 
 void tr::graphics_context::draw_instances(primitive type, usize offset, usize vertices, int instances)
 {
-	TR_ASSERT(registry.is_shader_pipeline_valid(m_bound_shader_pipeline_debug_info.id),
+	TR_ASSERT(registry().is_shader_pipeline_valid(m_bound_shader_pipeline_debug_info.id),
 			  "Tried to perform a drawing operation with an invalid bound shader pipeline '{}'.", m_bound_shader_pipeline_debug_info.label);
 
 	gl().draw_arrays_instanced(std::to_underlying(type), offset, vertices, instances);
@@ -429,7 +435,7 @@ void tr::graphics_context::draw_instances(primitive type, usize offset, usize ve
 
 void tr::graphics_context::draw_indexed(primitive type, usize offset, usize indices)
 {
-	TR_ASSERT(registry.is_shader_pipeline_valid(m_bound_shader_pipeline_debug_info.id),
+	TR_ASSERT(registry().is_shader_pipeline_valid(m_bound_shader_pipeline_debug_info.id),
 			  "Tried to perform a drawing operation with an invalid bound shader pipeline '{}'.", m_bound_shader_pipeline_debug_info.label);
 
 	gl().draw_elements(std::to_underlying(type), indices, GL_UNSIGNED_SHORT, reinterpret_cast<const void*>(offset * sizeof(u16)));
@@ -437,7 +443,7 @@ void tr::graphics_context::draw_indexed(primitive type, usize offset, usize indi
 
 void tr::graphics_context::draw_indexed_instances(primitive type, usize offset, usize indices, int instances)
 {
-	TR_ASSERT(registry.is_shader_pipeline_valid(m_bound_shader_pipeline_debug_info.id),
+	TR_ASSERT(registry().is_shader_pipeline_valid(m_bound_shader_pipeline_debug_info.id),
 			  "Tried to perform a drawing operation with an invalid bound shader pipeline '{}'.", m_bound_shader_pipeline_debug_info.label);
 
 	gl().draw_elements_instanced(std::to_underlying(type), indices, GL_UNSIGNED_SHORT, reinterpret_cast<const void*>(offset * sizeof(u16)),
@@ -465,6 +471,13 @@ void tr::graphics_context::move_label(unsigned int type, unsigned int old_id, un
 		gl.set_object_label(type, old_id, 0, nullptr);
 	}
 }
+
+#ifdef TR_ENABLE_GL_CHECKS
+tr::graphics_object_registry& tr::graphics_context::registry()
+{
+	return m_ptr.get_deleter().registry;
+}
+#endif
 
 //
 
