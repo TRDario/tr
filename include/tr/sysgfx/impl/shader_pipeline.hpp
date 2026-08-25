@@ -22,7 +22,7 @@ struct std::formatter<tr::shader_pipeline>
 	auto format(const tr::shader_pipeline& pipeline, FormatContext& ctx) const
 	{
 		if (pipeline.valid()) {
-			return std::format_to(ctx.out(), "\"{}\" (GID: {})", pipeline.label(), pipeline.gid());
+			return std::format_to(ctx.out(), "\"{}\" (OpenGL ID: {})", pipeline.label(), pipeline.unwrap());
 		}
 		else {
 			return std::format_to(ctx.out(), "<invalid shader pipeline at {}>", static_cast<const void*>(&pipeline));

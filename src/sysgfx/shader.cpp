@@ -37,8 +37,7 @@ std::string_view tr::shader_load_error::details() const
 //
 
 tr::shader::shader(graphics_context& context, zstring_view source, unsigned int type)
-	: m_program{context.gl().create_shader_program_v(type, 1, reinterpret_cast<const char**>(&source)),
-				deleter{context, generate_graphics_object_id()}}
+	: m_program{context.gl().create_shader_program_v(type, 1, reinterpret_cast<const char**>(&source)), deleter{context}}
 {
 #ifdef TR_ENABLE_GL_CHECKS
 	context.registry.register_shader(id(), unwrap());
@@ -144,9 +143,9 @@ void tr::shader::find_outputs(const gl_api& gl)
 	do {                                                                                                                                   \
 		TR_ASSERT(valid(), "Tried to set  uniform on a shader in an invalid state.");                                                      \
 		const opt_ref<glsl_variable> uniform{try_get(m_uniforms, index)};                                                                  \
-		TR_ASSERT(uniform.has_ref(), "Tried to set uniform with invalid index '{}' in shader '{}'.", index, label());                      \
+		TR_ASSERT(uniform.has_ref(), "Tried to set uniform with invalid index '{}' in shader {}.", index, *this);                          \
 		TR_ASSERT(uniform->type == as_glsl_type<target_type> && uniform->array_size == 1,                                                  \
-				  "Tried to set uniform with signature '{}' in shader '{}' with a value of type '{}'.", *uniform, label(),                 \
+				  "Tried to set uniform with signature '{}' in shader {} with a value of type '{}'.", *uniform, *this,                     \
 				  as_glsl_type<target_type>);                                                                                              \
 	} while (0)
 
@@ -155,9 +154,9 @@ void tr::shader::find_outputs(const gl_api& gl)
 	do {                                                                                                                                   \
 		TR_ASSERT(valid(), "Tried to set a uniform on a shader in an invalid state.");                                                     \
 		const opt_ref<glsl_variable> uniform{try_get(m_uniforms, index)};                                                                  \
-		TR_ASSERT(uniform.has_ref(), "Tried to set uniform with invalid index '{}' in shader '{}'.", index, label());                      \
+		TR_ASSERT(uniform.has_ref(), "Tried to set uniform with invalid index '{}' in shader {}.", index, *this);                          \
 		TR_ASSERT(uniform->type == as_glsl_type<target_type> && uniform->array_size == int(value.size()),                                  \
-				  "Tried to set uniform with signature '{}' in shader '{}' with a value of type '{}[{}]'.", *uniform, label(),             \
+				  "Tried to set uniform with signature '{}' in shader {} with a value of type '{}[{}]'.", *uniform, *this,                 \
 				  as_glsl_type<target_type>, value.size());                                                                                \
 	} while (0)
 
@@ -491,9 +490,9 @@ void tr::shader::set_uniform(int index, texture_view texture)
 	TR_ASSERT(valid(), "Tried to set a uniform on a shader in an invalid state.");
 #ifdef TR_ENABLE_GL_CHECKS
 	const auto uniform_it{m_uniforms.find(index)};
-	TR_ASSERT(uniform_it != m_uniforms.end(), "Tried to set uniform with invalid index '{}' in shader '{}'.", index, label());
+	TR_ASSERT(uniform_it != m_uniforms.end(), "Tried to set uniform with invalid index '{}' in shader {}.", index, *this);
 	TR_ASSERT(uniform_it->second.type == glsl_type::sampler2D && uniform_it->second.array_size == 1,
-			  "Tried to set uniform with signature '{}' in shader '{}' with a value of type 'sampler2D'.", uniform_it->second, label());
+			  "Tried to set uniform with signature '{}' in shader {} with a value of type 'sampler2D'.", uniform_it->second, *this);
 #endif
 
 	auto unit_it{m_texture_units.find(index)};

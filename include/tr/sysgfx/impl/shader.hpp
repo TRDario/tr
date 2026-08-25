@@ -42,7 +42,7 @@ struct std::formatter<tr::shader>
 	auto format(const tr::shader& shader, FormatContext& ctx) const
 	{
 		if (shader.valid()) {
-			return std::format_to(ctx.out(), "\"{}\" (GID: {})", shader.label(), shader.gid());
+			return std::format_to(ctx.out(), "\"{}\" (OpenGL ID: {})", shader.label(), shader.unwrap());
 		}
 		else {
 			return std::format_to(ctx.out(), "<invalid shader at {}>", static_cast<const void*>(&shader));

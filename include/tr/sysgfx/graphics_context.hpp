@@ -10,7 +10,7 @@
 #include "vertex_buffer.hpp"
 #include "vertex_format.hpp"
 #ifdef TR_ENABLE_GL_CHECKS
-#include "gl_object_registry.hpp"
+#include "graphics_object_registry.hpp"
 #endif
 
 struct SDL_GLContextState;
@@ -123,10 +123,12 @@ namespace tr
 
 		//
 
+#ifdef TR_ENABLE_GL_CHECKS
 		/// @cond __hidden
 		/// Registry of objects created on this context.
-		gl_object_registry registry;
-		/// @endcond
+		graphics_object_registry registry;
+/// @endcond
+#endif
 
 		/// Logger used by the context.
 		logger logger;
@@ -335,6 +337,18 @@ namespace tr
 			static void operator()(SDL_GLContextState* context);
 		};
 
+#ifdef TR_ENABLE_GL_CHECKS
+		/// Debug information about the bound shader pipeline.
+		struct bound_shader_pipeline_debug_info
+		{
+			/// Unique graphics object ID of the shader pipeline.
+			graphics_object_id id{graphics_object_id::invalid};
+
+			/// Label of the shader pipeline.
+			std::string label{"<unbound>"};
+		};
+#endif
+
 		//
 
 		/// Pointer to the window the context was created on.
@@ -356,12 +370,15 @@ namespace tr
 		std::optional<render_target> m_render_target;
 
 		/// Tracks which texture units are allocated.
-		std::bitset<80> m_allocated_texture_units{};
+		std::bitset<80> m_allocated_texture_units;
 
 		/// Commonly used 2D vertex format.
 		std::optional<vertex_format> m_vertex2_format;
 
 #ifdef TR_ENABLE_GL_CHECKS
+		/// Debug information about the shader pipeline bound to the context.
+		bound_shader_pipeline_debug_info m_bound_shader_pipeline_debug_info;
+
 		/// Bindings of the last bound vertex format.
 		std::span<const vertex_binding> m_vertex_format_bindings;
 

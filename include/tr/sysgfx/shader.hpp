@@ -10,7 +10,7 @@
 
 #ifdef TR_ENABLE_GL_CHECKS
 #include "gl_checks.hpp"
-#include "gl_object_registry.hpp"
+#include "graphics_object_registry.hpp"
 #endif
 
 namespace tr
@@ -89,8 +89,7 @@ namespace tr
 	/// Shader objects are movable, but not copyable. A moved-from instance of a shader object is left in a special 'invalid' state. Invalid
 	/// shader objects may not be interacted with besides moving a new value into them and checking for validity using `valid()`.
 	///
-	/// Shader objects may be labeled and are formattable. Example format output: `"My %shader" (GID: 5)`. The GID is the OpenGL ID of the
-	/// shader program.
+	/// Shader objects may be labeled and are formattable. Example format output: `"My %shader" (OpenGL ID: 5)`.
 	class shader
 	{
 	  public:
@@ -440,7 +439,7 @@ namespace tr
 		/// @}
 		/// @cond gl_interop
 
-		/// Unwraps the OpenGL shader program ID.
+		/// Unwraps the OpenGL shader program.
 		/// @note This does not release the shader program.
 		/// @return OpenGL shader program ID.
 		unsigned int unwrap() const;
@@ -473,7 +472,7 @@ namespace tr
 
 #ifdef TR_ENABLE_GL_CHECKS
 			/// Unique graphics object ID of the shader.
-			graphics_object_id id{graphics_object_id::invalid};
+			graphics_object_id id{generate_graphics_object_id()};
 #endif
 
 			//
@@ -583,3 +582,5 @@ namespace tr
 
 	/// @}
 } // namespace tr
+
+#include "impl/shader.hpp" // IWYU pragma: export

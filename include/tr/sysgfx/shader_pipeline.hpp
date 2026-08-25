@@ -32,11 +32,42 @@ namespace tr
 	/// 'invalid' state, distinct from the incomplete state. Invalid `tr::shader_pipeline` instances may not be interacted with besides
 	/// moving a new value into them and checking for validity using `valid()`.
 	///
-	/// `tr::shader_pipeline` instances may be labeled and are formattable. Example format output: `"My pipeline" (GID: 5)`. The GID is the
-	/// OpenGL ID of the shader pipeline.
+	/// `tr::shader_pipeline` instances may be labeled and are formattable. Example format output: `"My pipeline" (OpenGL ID: 5)`.
 	class shader_pipeline
 	{
 	  public:
+#ifdef TR_ENABLE_GL_CHECKS
+		/// @cond implementation_details
+
+		/// Debug information about the set vertex shader.
+		struct vertex_shader_debug_info_t
+		{
+			/// Unique graphics object ID of the shader.
+			graphics_object_id id{graphics_object_id::invalid};
+
+			/// Label of the shader.
+			std::string label{"<unset>"};
+
+			/// Outputs of the shader.
+			boost::unordered_flat_map<unsigned int, glsl_variable> outputs;
+		};
+
+		/// Debug information about the set fragment shader.
+		struct fragment_shader_debug_info_t
+		{
+			/// Unique graphics object ID of the shader.
+			graphics_object_id id{graphics_object_id::invalid};
+
+			/// Label of the shader.
+			std::string label{"<unset>"};
+
+			/// Inputs of the shader.
+			boost::unordered_flat_map<unsigned int, glsl_variable> inputs;
+		};
+
+		/// @endcond
+#endif
+
 		/// @name Constructors
 		/// @{
 
@@ -108,17 +139,31 @@ namespace tr
 		std::string label() const;
 
 		/// @}
+		/// @cond gl_interop
 
-		/// @cond __hidden
-		/// Gets the OpenGL shader pipeline ID.
+		/// Unwraps the OpenGL shader pipeline.
+		/// @note This does not release the shader pipeline.
 		/// @return OpenGL shader pipeline ID.
-		unsigned int gid() const;
+		unsigned int unwrap() const;
 
-#ifdef TR_ENABLE_GL_CHECKS
-		/// Asserts that the pipeline is settable.
-		void assert_settable(graphics_context& context) const;
-#endif
 		/// @endcond
+#ifdef TR_ENABLE_GL_CHECKS
+		/// @cond implementation_details
+
+		/// Gets the unique ID of the shader pipeline.
+		/// @return Unique ID of the shader pipeline.
+		graphics_object_id id() const;
+
+		/// Gets debug information about the set vertex shader.
+		/// @return Reference to the structure containing debug information about the set vertex shader.
+		const vertex_shader_debug_info_t& vertex_shader_debug_info() const;
+
+		/// Gets debug information about the set fragment shader.
+		/// @return Reference to the structure containing debug information about the set fragment shader.
+		const fragment_shader_debug_info_t& fragment_shader_debug_info() const;
+
+		/// @endcond
+#endif
 
 	  private:
 		/// Shader pipeline deleter.
@@ -127,66 +172,29 @@ namespace tr
 			/// Reference to the graphics context the pipeline is on.
 			ref<graphics_context> context;
 
+#ifdef TR_ENABLE_GL_CHECKS
+			/// Graphics object ID of the shader pipeline.
+			graphics_object_id id{generate_graphics_object_id()};
+#endif
+
 			//
 
 			/// Deletes the shader pipeline.
-			/// @param id OpenGL shader pipeline ID.
-			void operator()(unsigned int id) const;
+			/// @param ppo OpenGL shader pipeline ID.
+			void operator()(unsigned int ppo) const;
 		};
-
-#ifdef TR_ENABLE_GL_CHECKS
-		/// Debug information for the set vertex shader.
-		struct vertex_shader_debug_info
-		{
-			/// Unique graphics object ID of the shader.
-			graphics_object_id id;
-
-			/// Label of the shader.
-			std::string label{"<unset>"};
-
-			/// Outputs of the shader.
-			boost::unordered_flat_map<unsigned int, glsl_variable> outputs;
-
-			//
-
-			/// Checks whether the set vertex shader is valid.
-			/// @param context Context to check on.
-			/// @return `true` if the set vertex shader is valid, `false` otherwise.
-			bool valid(graphics_context& context) const;
-		};
-
-		/// Debug information for the set fragment shader.
-		struct fragment_shader_debug_info
-		{
-			/// Unique graphics object ID of the shader.
-			graphics_object_id id;
-
-			/// Label of the shader.
-			std::string label{"<unset>"};
-
-			/// Inputs of the shader.
-			boost::unordered_flat_map<unsigned int, glsl_variable> inputs;
-
-			//
-
-			/// Checks whether the set fragment shader is valid.
-			/// @param context Context to check on.
-			/// @return `true` if the set fragment shader is valid, `false` otherwise.
-			bool valid(graphics_context& context) const;
-		};
-#endif
 
 		//
 
 		/// Handle to the OpenGL shader pipeline.
-		handle<unsigned int, 0, deleter> m_ppo;
+		handle<unsigned int, 0, deleter> m_handle;
 
 #ifdef TR_ENABLE_GL_CHECKS
-		/// Reference to the used vertex shader.
-		vertex_shader_debug_info m_vertex_shader_info;
+		/// Debug information about the set vertex shader.
+		vertex_shader_debug_info_t m_vertex_shader_debug_info;
 
-		/// Reference to the used fragment shader.
-		fragment_shader_debug_info m_fragment_shader_info;
+		/// Debug information about the set fragment shader.
+		fragment_shader_debug_info_t m_fragment_shader_debug_info;
 #endif
 
 		//
@@ -271,11 +279,13 @@ namespace tr
 		std::string label() const;
 
 		/// @}
+		/// @cond gl_interop
 
-		/// @cond __hidden
-		/// Gets the OpenGL shader pipeline ID.
+		/// Unwraps the OpenGL shader pipeline.
+		/// @note This does not release the shader pipeline.
 		/// @return OpenGL shader pipeline ID.
-		unsigned int gid() const;
+		unsigned int unwrap() const;
+
 		/// @endcond
 
 	  private:
@@ -286,7 +296,7 @@ namespace tr
 		class fragment_shader m_fragment_shader;
 
 		/// Base shader pipeline.
-		shader_pipeline m_base;
+		shader_pipeline m_shader_pipeline;
 	};
 } // namespace tr
 
