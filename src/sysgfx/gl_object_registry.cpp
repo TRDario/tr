@@ -6,10 +6,36 @@
 
 //
 
-bool tr::gl_object_registry::check_shader(unsigned int tid, unsigned gid) const
+tr::graphics_object_id tr::generate_graphics_object_id()
 {
-	auto it{m_shaders.find(tid)};
-	return it != m_shaders.end() && it->second == gid;
+	static std::atomic<unsigned int> id{1};
+	return graphics_object_id{id++};
+}
+
+//
+
+tr::usize tr::gl_object_registry::registered_shader_count() const
+{
+	return m_shaders.size();
+}
+
+bool tr::gl_object_registry::is_shader_valid(graphics_object_id id) const
+{
+	return m_shaders.contains(id);
+}
+
+void tr::gl_object_registry::register_shader(graphics_object_id id, unsigned int glid)
+{
+	TR_ASSERT(!m_shaders.contains(id), "Tried to register duplicate shader (ID: '{}')", std::to_underlying(id));
+
+	m_shaders.emplace(id, glid);
+}
+
+void tr::gl_object_registry::unregister_shader(graphics_object_id id)
+{
+	TR_ASSERT(m_shaders.contains(id), "Tried to unregister nonexistant shader (ID: '{}')", std::to_underlying(id));
+
+	m_shaders.erase(id);
 }
 
 void tr::gl_object_registry::register_shader(unsigned int tid, unsigned int gid)

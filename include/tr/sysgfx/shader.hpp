@@ -10,6 +10,7 @@
 
 #ifdef TR_ENABLE_GL_CHECKS
 #include "gl_checks.hpp"
+#include "gl_object_registry.hpp"
 #endif
 
 namespace tr
@@ -437,16 +438,20 @@ namespace tr
 		std::string label() const;
 
 		/// @}
+		/// @cond gl_interop
 
-		/// @cond __hidden
-		/// Gets the OpenGL shader program ID.
+		/// Unwraps the OpenGL shader program ID.
+		/// @note This does not release the shader program.
 		/// @return OpenGL shader program ID.
-		unsigned int gid() const;
+		unsigned int unwrap() const;
 
+		/// @endcond
 #ifdef TR_ENABLE_GL_CHECKS
+		/// @cond implementation_details
+
 		/// Gets the unique ID of the shader.
 		/// @return Unique ID of the shader.
-		unsigned int tid() const;
+		graphics_object_id id() const;
 
 		/// Gets the shader's inputs.
 		/// @return Map of shader inputs.
@@ -455,8 +460,9 @@ namespace tr
 		/// Gets the shader's outputs.
 		/// @return Map of shader outputs.
 		const boost::unordered_flat_map<unsigned int, glsl_variable>& outputs() const;
-#endif
+
 		/// @endcond
+#endif
 
 	  private:
 		/// Shader program deleter.
@@ -466,8 +472,8 @@ namespace tr
 			ref<graphics_context> context;
 
 #ifdef TR_ENABLE_GL_CHECKS
-			/// Unique object ID of the shader.
-			unsigned int tid{0};
+			/// Unique graphics object ID of the shader.
+			graphics_object_id id{graphics_object_id::invalid};
 #endif
 
 			//

@@ -138,11 +138,8 @@ namespace tr
 		/// Debug information for the set vertex shader.
 		struct vertex_shader_debug_info
 		{
-			/// OpenGL shader program ID.
-			unsigned int gid;
-
-			/// tr shader object ID.
-			unsigned int tid;
+			/// Unique graphics object ID of the shader.
+			graphics_object_id id;
 
 			/// Label of the shader.
 			std::string label{"<unset>"};
@@ -161,11 +158,8 @@ namespace tr
 		/// Debug information for the set fragment shader.
 		struct fragment_shader_debug_info
 		{
-			/// OpenGL shader program ID.
-			unsigned int gid;
-
-			/// tr shader object ID.
-			unsigned int tid;
+			/// Unique graphics object ID of the shader.
+			graphics_object_id id;
 
 			/// Label of the shader.
 			std::string label{"<unset>"};

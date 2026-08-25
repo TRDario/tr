@@ -13,12 +13,12 @@
 
 bool tr::shader_pipeline::vertex_shader_debug_info::valid(graphics_context& context) const
 {
-	return context.registry.check_shader(tid, gid);
+	return context.registry.is_shader_valid(id);
 }
 
 bool tr::shader_pipeline::fragment_shader_debug_info::valid(graphics_context& context) const
 {
-	return context.registry.check_shader(tid, gid);
+	return context.registry.is_shader_valid(id);
 }
 
 #endif
@@ -61,14 +61,14 @@ void tr::shader_pipeline::set_shaders(const vertex_shader& vertex_shader, const 
 			  fragment_shader.label(), label());
 
 #ifdef TR_ENABLE_GL_CHECKS
-	m_vertex_shader_info = {vertex_shader.gid(), vertex_shader.tid(), vertex_shader.label(), vertex_shader.outputs()};
-	m_fragment_shader_info = {fragment_shader.gid(), vertex_shader.tid(), fragment_shader.label(), fragment_shader.inputs()};
+	m_vertex_shader_info = {vertex_shader.id(), vertex_shader.label(), vertex_shader.outputs()};
+	m_fragment_shader_info = {vertex_shader.id(), fragment_shader.label(), fragment_shader.inputs()};
 	assert_shaders_compatible();
 #endif
 
 	const gl_api& gl{context().gl()};
-	gl.use_program_stages(m_ppo.get(), GL_VERTEX_SHADER_BIT, vertex_shader.gid());
-	gl.use_program_stages(m_ppo.get(), GL_FRAGMENT_SHADER_BIT, fragment_shader.gid());
+	gl.use_program_stages(m_ppo.get(), GL_VERTEX_SHADER_BIT, vertex_shader.unwrap());
+	gl.use_program_stages(m_ppo.get(), GL_FRAGMENT_SHADER_BIT, fragment_shader.unwrap());
 }
 
 void tr::shader_pipeline::set_vertex_shader(const vertex_shader& vertex_shader)
@@ -80,11 +80,11 @@ void tr::shader_pipeline::set_vertex_shader(const vertex_shader& vertex_shader)
 			  vertex_shader.label(), label());
 
 #ifdef TR_ENABLE_GL_CHECKS
-	m_vertex_shader_info = {vertex_shader.gid(), vertex_shader.tid(), vertex_shader.label(), vertex_shader.outputs()};
+	m_vertex_shader_info = {vertex_shader.id(), vertex_shader.label(), vertex_shader.outputs()};
 	assert_shaders_compatible();
 #endif
 
-	context().gl().use_program_stages(m_ppo.get(), GL_VERTEX_SHADER_BIT, vertex_shader.gid());
+	context().gl().use_program_stages(m_ppo.get(), GL_VERTEX_SHADER_BIT, vertex_shader.unwrap());
 }
 
 void tr::shader_pipeline::set_fragment_shader(const fragment_shader& fragment_shader)
@@ -96,11 +96,11 @@ void tr::shader_pipeline::set_fragment_shader(const fragment_shader& fragment_sh
 			  fragment_shader.label(), label());
 
 #ifdef TR_ENABLE_GL_CHECKS
-	m_fragment_shader_info = {fragment_shader.gid(), fragment_shader.tid(), fragment_shader.label(), fragment_shader.inputs()};
+	m_fragment_shader_info = {fragment_shader.id(), fragment_shader.label(), fragment_shader.inputs()};
 	assert_shaders_compatible();
 #endif
 
-	context().gl().use_program_stages(m_ppo.get(), GL_FRAGMENT_SHADER_BIT, fragment_shader.gid());
+	context().gl().use_program_stages(m_ppo.get(), GL_FRAGMENT_SHADER_BIT, fragment_shader.unwrap());
 }
 
 //
