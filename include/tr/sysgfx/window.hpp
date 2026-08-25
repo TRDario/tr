@@ -21,6 +21,18 @@ struct SDL_Window;
 
 //
 
+/// @cond implementation_details
+
+/// Default value of tr::window_parameters::debug_graphics_context.
+/// @hideinitializer
+#ifdef TR_ENABLE_ASSERTS
+#define TR_DEBUG_GRAPHICS_CONTEXT_DEFAULT true
+#else
+#define TR_DEBUG_GRAPHICS_CONTEXT_DEFAULT false
+#endif
+
+/// @endcond
+
 namespace tr
 {
 	/// Marks a window as maximized.
@@ -44,7 +56,7 @@ namespace tr
 		glm::ivec2 min_size{not_resizable};
 
 		/// Whether graphics contexts associated with the window should be debug contexts.
-		bool debug_graphics_context{TR_ENABLE_ASSERTS};
+		bool debug_graphics_context{TR_DEBUG_GRAPHICS_CONTEXT_DEFAULT};
 
 		/// Enables the use of depth and stencil buffers on graphics contexts associated with the window.
 		bool enable_depth_stencil{false};
