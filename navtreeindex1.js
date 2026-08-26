@@ -164,8 +164,6 @@ var NAVTREEINDEX1 =
 "classtr_1_1basic__dyn__vertex__buffer.html#a05a932d9ae530aeaf751737d76bcad11":[2,0,0,16,0],
 "classtr_1_1basic__dyn__vertex__buffer.html#a06d9e2187dbc1834b2a6bbea8a44d0bc":[0,0,0,28,8],
 "classtr_1_1basic__dyn__vertex__buffer.html#a06d9e2187dbc1834b2a6bbea8a44d0bc":[2,0,0,16,8],
-"classtr_1_1basic__dyn__vertex__buffer.html#a1b9eef6ffb431a6b5ce3cb05af26b4f2":[0,0,0,28,12],
-"classtr_1_1basic__dyn__vertex__buffer.html#a1b9eef6ffb431a6b5ce3cb05af26b4f2":[2,0,0,16,12],
 "classtr_1_1basic__dyn__vertex__buffer.html#a2fc1525054bd6787049f2554390a7d9e":[0,0,0,28,6],
 "classtr_1_1basic__dyn__vertex__buffer.html#a2fc1525054bd6787049f2554390a7d9e":[2,0,0,16,6],
 "classtr_1_1basic__dyn__vertex__buffer.html#a3e4471b26b00b6c5c94d2d98c354a95a":[0,0,0,28,3],
@@ -249,5 +247,7 @@ var NAVTREEINDEX1 =
 "classtr_1_1basic__renderer.html#ae84bd2a0a865724e787cddb41855bd69":[0,0,0,30,6],
 "classtr_1_1basic__renderer.html#ae84bd2a0a865724e787cddb41855bd69":[2,0,0,18,6],
 "classtr_1_1basic__renderer.html#af0d40ce82c49354f2a6cd3376948bf5f":[0,0,0,30,25],
-"classtr_1_1basic__renderer.html#af0d40ce82c49354f2a6cd3376948bf5f":[2,0,0,18,25]
+"classtr_1_1basic__renderer.html#af0d40ce82c49354f2a6cd3376948bf5f":[2,0,0,18,25],
+"classtr_1_1basic__renderer.html#af1e5f2bd873dc9daca497e3befb2792d":[0,0,0,30,13],
+"classtr_1_1basic__renderer.html#af1e5f2bd873dc9daca497e3befb2792d":[2,0,0,18,13]
 };

@@ -13,6 +13,5 @@ var classtr_1_1basic__shader__buffer =
     [ "map", "classtr_1_1basic__shader__buffer.html#a86d25df8e635279ad0f4eb78b0979d5d", null ],
     [ "context", "classtr_1_1basic__shader__buffer.html#aa7323654826d026acc2bc31bed2ed286", null ],
     [ "label", "classtr_1_1basic__shader__buffer.html#ada4364c0295af892b869f2be3ed62777", null ],
-    [ "set_label", "classtr_1_1basic__shader__buffer.html#a791c5d26a17cce2fe3850cb8e1ba5697", null ],
-    [ "id", "classtr_1_1basic__shader__buffer.html#a1b9eef6ffb431a6b5ce3cb05af26b4f2", null ]
+    [ "set_label", "classtr_1_1basic__shader__buffer.html#a791c5d26a17cce2fe3850cb8e1ba5697", null ]
 ];

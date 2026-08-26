@@ -133,17 +133,127 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1ren
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Size</div></td></tr>
+<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
+<tr class="memitem:a20ba4e0f6f8fa84e6d771196621f5925" id="r_a20ba4e0f6f8fa84e6d771196621f5925"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a20ba4e0f6f8fa84e6d771196621f5925">render_target</a> (const <a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context)</td></tr>
+<tr class="memdesc:a20ba4e0f6f8fa84e6d771196621f5925"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a backbuffer render target.  <br /></td></tr>
+<tr class="memitem:a02ce1d6e773c618060892714091f62fa" id="r_a02ce1d6e773c618060892714091f62fa"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a02ce1d6e773c618060892714091f62fa">render_target</a> (const framebuffer &amp;framebuffer, glm::ivec2 framebuffer_size)</td></tr>
+<tr class="memdesc:a02ce1d6e773c618060892714091f62fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a render target on a framebuffer.  <br /></td></tr>
+<tr class="memitem:a91d92c4c5799a68784256a7419446062" id="r_a91d92c4c5799a68784256a7419446062"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a91d92c4c5799a68784256a7419446062">render_target</a> (const framebuffer &amp;framebuffer, glm::ivec2 framebuffer_size, <a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; int &gt; viewport, <a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; int &gt; scissor_box)</td></tr>
+<tr class="memdesc:a91d92c4c5799a68784256a7419446062"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a render target on a framebuffer.  <br /></td></tr>
+<tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Properties</div></td></tr>
 <tr class="memitem:a395d60aeee37997b22e32546a93f9df5" id="r_a395d60aeee37997b22e32546a93f9df5"><td class="memItemLeft">glm::ivec2&#160;</td><td class="memItemRight"><a class="el" href="#a395d60aeee37997b22e32546a93f9df5">size</a> () const</td></tr>
 <tr class="memdesc:a395d60aeee37997b22e32546a93f9df5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the size of the render target.  <br /></td></tr>
-<tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Subtargets</div></td></tr>
-<tr class="memitem:abc430437580a1577faadf5cf75a63beb" id="r_abc430437580a1577faadf5cf75a63beb"><td class="memItemLeft">render_target&#160;</td><td class="memItemRight"><a class="el" href="#abc430437580a1577faadf5cf75a63beb">cropped</a> (<a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; int &gt; viewport) const</td></tr>
+<tr class="memitem:a1e67378c7da82d4c95def2358c0310ee" id="r_a1e67378c7da82d4c95def2358c0310ee"><td class="memItemLeft"><a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; int &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a1e67378c7da82d4c95def2358c0310ee">viewport</a> () const</td></tr>
+<tr class="memdesc:a1e67378c7da82d4c95def2358c0310ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the viewport of the render target within the target framebuffer.  <br /></td></tr>
+<tr class="memitem:a3c14757b98cd83f2c57e21bdb433b590" id="r_a3c14757b98cd83f2c57e21bdb433b590"><td class="memItemLeft"><a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; int &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a3c14757b98cd83f2c57e21bdb433b590">scissor_box</a> () const</td></tr>
+<tr class="memdesc:a3c14757b98cd83f2c57e21bdb433b590"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the scissor box of the render target within the target framebuffer.  <br /></td></tr>
+<tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Subtargets</div></td></tr>
+<tr class="memitem:abc430437580a1577faadf5cf75a63beb" id="r_abc430437580a1577faadf5cf75a63beb"><td class="memItemLeft"><a class="el" href="#a20ba4e0f6f8fa84e6d771196621f5925">render_target</a>&#160;</td><td class="memItemRight"><a class="el" href="#abc430437580a1577faadf5cf75a63beb">cropped</a> (<a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; int &gt; viewport) const</td></tr>
 <tr class="memdesc:abc430437580a1577faadf5cf75a63beb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new render target with a cropped viewport and full scissor box.  <br /></td></tr>
-<tr class="memitem:a0a4a80dbffd71374319a055b7716605e" id="r_a0a4a80dbffd71374319a055b7716605e"><td class="memItemLeft">render_target&#160;</td><td class="memItemRight"><a class="el" href="#a0a4a80dbffd71374319a055b7716605e">scissored</a> (<a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; int &gt; scissor_box) const</td></tr>
+<tr class="memitem:a0a4a80dbffd71374319a055b7716605e" id="r_a0a4a80dbffd71374319a055b7716605e"><td class="memItemLeft"><a class="el" href="#a20ba4e0f6f8fa84e6d771196621f5925">render_target</a>&#160;</td><td class="memItemRight"><a class="el" href="#a0a4a80dbffd71374319a055b7716605e">scissored</a> (<a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; int &gt; scissor_box) const</td></tr>
 <tr class="memdesc:a0a4a80dbffd71374319a055b7716605e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new render target with the same viewport and a different scissor box.  <br /></td></tr>
-<tr class="memitem:a82182c0550137709afb2fc24e180f391" id="r_a82182c0550137709afb2fc24e180f391"><td class="memItemLeft">render_target&#160;</td><td class="memItemRight"><a class="el" href="#a82182c0550137709afb2fc24e180f391">subtarget</a> (<a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; int &gt; viewport, <a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; int &gt; scissor_box) const</td></tr>
-<tr class="memdesc:a82182c0550137709afb2fc24e180f391"><td class="mdescLeft">&#160;</td><td class="mdescRight">Equivalent to <span class="tt">cropped(viewport).scissored(scissor_box)</span>.  <br /></td></tr>
 </table>
+<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a20ba4e0f6f8fa84e6d771196621f5925" name="a20ba4e0f6f8fa84e6d771196621f5925"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a20ba4e0f6f8fa84e6d771196621f5925">&#9670;&#160;</a></span>render_target() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tr::render_target::render_target </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>context</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel explicit">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section note"><dt>Note</dt><dd>This is equivalent to calling <span class="tt">context.backbuffer()</span>. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">context</td><td>Graphics context whose backbuffer to create the render target for. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a02ce1d6e773c618060892714091f62fa" name="a02ce1d6e773c618060892714091f62fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02ce1d6e773c618060892714091f62fa">&#9670;&#160;</a></span>render_target() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tr::render_target::render_target </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classtr_1_1framebuffer.html">framebuffer</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>framebuffer</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">glm::ivec2</td>          <td class="paramname"><span class="paramname"><em>framebuffer_size</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">framebuffer</td><td>Framebuffer the render target is on. </td></tr>
+    <tr><td class="paramname">framebuffer_size</td><td>Size of the framebuffer. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a91d92c4c5799a68784256a7419446062" name="a91d92c4c5799a68784256a7419446062"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91d92c4c5799a68784256a7419446062">&#9670;&#160;</a></span>render_target() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tr::render_target::render_target </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classtr_1_1framebuffer.html">framebuffer</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>framebuffer</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">glm::ivec2</td>          <td class="paramname"><span class="paramname"><em>framebuffer_size</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; int &gt;</td>          <td class="paramname"><span class="paramname"><em>viewport</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; int &gt;</td>          <td class="paramname"><span class="paramname"><em>scissor_box</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">framebuffer</td><td>Framebuffer the render target is on. </td></tr>
+    <tr><td class="paramname">framebuffer_size</td><td>Size of the framebuffer. </td></tr>
+    <tr><td class="paramname">viewport</td><td>Viewport of the framebuffer. </td></tr>
+    <tr><td class="paramname">scissor_box</td><td>Scissor box of the framebuffer. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
 <a id="a395d60aeee37997b22e32546a93f9df5" name="a395d60aeee37997b22e32546a93f9df5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a395d60aeee37997b22e32546a93f9df5">&#9670;&#160;</a></span>size()</h2>
@@ -163,6 +273,42 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a1e67378c7da82d4c95def2358c0310ee" name="a1e67378c7da82d4c95def2358c0310ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e67378c7da82d4c95def2358c0310ee">&#9670;&#160;</a></span>viewport()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; int &gt; tr::render_target::viewport </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>Viewport rectangle of the render target within the target framebuffer. </dd></dl>
+
+</div>
+</div>
+<a id="a3c14757b98cd83f2c57e21bdb433b590" name="a3c14757b98cd83f2c57e21bdb433b590"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c14757b98cd83f2c57e21bdb433b590">&#9670;&#160;</a></span>scissor_box()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; int &gt; tr::render_target::scissor_box </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>Scissor box rectangle of the render target within the target framebuffer. </dd></dl>
+
+</div>
+</div>
 <a id="abc430437580a1577faadf5cf75a63beb" name="abc430437580a1577faadf5cf75a63beb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#abc430437580a1577faadf5cf75a63beb">&#9670;&#160;</a></span>cropped()</h2>
 
@@ -170,7 +316,7 @@ Public Member Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">render_target tr::render_target::cropped </td>
+          <td class="memname"><a class="el" href="#a20ba4e0f6f8fa84e6d771196621f5925">render_target</a> tr::render_target::cropped </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; int &gt;</td>          <td class="paramname"><span class="paramname"><em>viewport</em></span></td><td>)</td>
           <td> const</td>
@@ -194,7 +340,7 @@ Public Member Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">render_target tr::render_target::scissored </td>
+          <td class="memname"><a class="el" href="#a20ba4e0f6f8fa84e6d771196621f5925">render_target</a> tr::render_target::scissored </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; int &gt;</td>          <td class="paramname"><span class="paramname"><em>scissor_box</em></span></td><td>)</td>
           <td> const</td>
@@ -203,35 +349,6 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">scissor_box</td><td>Scissor box of the render target. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>New subtarget. </dd></dl>
-
-</div>
-</div>
-<a id="a82182c0550137709afb2fc24e180f391" name="a82182c0550137709afb2fc24e180f391"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a82182c0550137709afb2fc24e180f391">&#9670;&#160;</a></span>subtarget()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">render_target tr::render_target::subtarget </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; int &gt;</td>          <td class="paramname"><span class="paramname"><em>viewport</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; int &gt;</td>          <td class="paramname"><span class="paramname"><em>scissor_box</em></span>&#160;) const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">viewport</td><td>Viewport of the render target. </td></tr>
     <tr><td class="paramname">scissor_box</td><td>Scissor box of the render target. </td></tr>
   </table>
   </dd>

@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('shader_8hpp_so
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &quot;<a class="code" href="zstring__view_8hpp.html">../utility/zstring_view.hpp</a>&quot;</span></div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &quot;texture_unit.hpp&quot;</span></div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#ifdef TR_ENABLE_GL_CHECKS</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#ifdef TR_ENABLE_CHECKED_GRAPHICS</span></div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;gl_checks.hpp&quot;</span></div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &quot;graphics_object_registry.hpp&quot;</span></div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#endif</span></div>
@@ -306,7 +306,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('shader_8hpp_so
 <div class="line"><a id="l00441" name="l00441"></a><span class="lineno">  441</span></div>
 <div class="line"><a id="l00445" name="l00445"></a><span class="lineno">  445</span>        <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> unwrap() <span class="keyword">const</span>;</div>
 <div class="line"><a id="l00446" name="l00446"></a><span class="lineno">  446</span></div>
-<div class="line"><a id="l00448" name="l00448"></a><span class="lineno">  448</span><span class="preprocessor">#ifdef TR_ENABLE_GL_CHECKS</span></div>
+<div class="line"><a id="l00448" name="l00448"></a><span class="lineno">  448</span><span class="preprocessor">#ifdef TR_ENABLE_CHECKED_GRAPHICS</span></div>
 <div class="line"><a id="l00450" name="l00450"></a><span class="lineno">  450</span></div>
 <div class="line"><a id="l00453" name="l00453"></a><span class="lineno">  453</span>        graphics_object_id id() <span class="keyword">const</span>;</div>
 <div class="line"><a id="l00454" name="l00454"></a><span class="lineno">  454</span></div>
@@ -321,8 +321,8 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('shader_8hpp_so
 <div class="line"><a id="l00469" name="l00469"></a><span class="lineno">  469</span>        {</div>
 <div class="line"><a id="l00471" name="l00471"></a><span class="lineno">  471</span>            <a class="code hl_class" href="classtr_1_1ref.html">ref&lt;graphics_context&gt;</a> <a class="code hl_function" href="classtr_1_1shader.html#a263481a9b92e2ce61fc07bf96a9396c8">context</a>;</div>
 <div class="line"><a id="l00472" name="l00472"></a><span class="lineno">  472</span> </div>
-<div class="line"><a id="l00473" name="l00473"></a><span class="lineno">  473</span><span class="preprocessor">#ifdef TR_ENABLE_GL_CHECKS</span></div>
-<div class="line"><a id="l00475" name="l00475"></a><span class="lineno">  475</span>            graphics_object_id <span class="keywordtype">id</span>{generate_graphics_object_id()};</div>
+<div class="line"><a id="l00473" name="l00473"></a><span class="lineno">  473</span><span class="preprocessor">#ifdef TR_ENABLE_CHECKED_GRAPHICS</span></div>
+<div class="line"><a id="l00475" name="l00475"></a><span class="lineno">  475</span>            graphics_object_id_handle <span class="keywordtype">id</span>{};</div>
 <div class="line"><a id="l00476" name="l00476"></a><span class="lineno">  476</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00477" name="l00477"></a><span class="lineno">  477</span> </div>
 <div class="line"><a id="l00478" name="l00478"></a><span class="lineno">  478</span>            <span class="comment">//</span></div>
@@ -334,7 +334,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('shader_8hpp_so
 <div class="line"><a id="l00487" name="l00487"></a><span class="lineno">  487</span></div>
 <div class="line"><a id="l00489" name="l00489"></a><span class="lineno">  489</span>        boost::unordered_flat_map&lt;int, texture_unit&gt; m_texture_units;</div>
 <div class="line"><a id="l00490" name="l00490"></a><span class="lineno">  490</span> </div>
-<div class="line"><a id="l00491" name="l00491"></a><span class="lineno">  491</span><span class="preprocessor">#ifdef TR_ENABLE_GL_CHECKS</span></div>
+<div class="line"><a id="l00491" name="l00491"></a><span class="lineno">  491</span><span class="preprocessor">#ifdef TR_ENABLE_CHECKED_GRAPHICS</span></div>
 <div class="line"><a id="l00493" name="l00493"></a><span class="lineno">  493</span>        boost::unordered_flat_map&lt;unsigned int, glsl_variable&gt; m_uniforms;</div>
 <div class="line"><a id="l00494" name="l00494"></a><span class="lineno">  494</span></div>
 <div class="line"><a id="l00496" name="l00496"></a><span class="lineno">  496</span>        boost::unordered_flat_map&lt;unsigned int, glsl_variable&gt; m_inputs;</div>
@@ -344,7 +344,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('shader_8hpp_so
 <div class="line"><a id="l00501" name="l00501"></a><span class="lineno">  501</span> </div>
 <div class="line"><a id="l00502" name="l00502"></a><span class="lineno">  502</span>        <span class="comment">//</span></div>
 <div class="line"><a id="l00503" name="l00503"></a><span class="lineno">  503</span> </div>
-<div class="line"><a id="l00504" name="l00504"></a><span class="lineno">  504</span><span class="preprocessor">#ifdef TR_ENABLE_GL_CHECKS</span></div>
+<div class="line"><a id="l00504" name="l00504"></a><span class="lineno">  504</span><span class="preprocessor">#ifdef TR_ENABLE_CHECKED_GRAPHICS</span></div>
 <div class="line"><a id="l00507" name="l00507"></a><span class="lineno">  507</span>        <span class="keywordtype">void</span> find_uniforms(<span class="keyword">const</span> gl_api&amp; gl);</div>
 <div class="line"><a id="l00508" name="l00508"></a><span class="lineno">  508</span></div>
 <div class="line"><a id="l00511" name="l00511"></a><span class="lineno">  511</span>        <span class="keywordtype">void</span> find_inputs(<span class="keyword">const</span> gl_api&amp; gl);</div>
@@ -393,8 +393,8 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('shader_8hpp_so
 <div class="ttc" id="aclasstr_1_1fragment__shader_html_abf750439237c27c02086a9030cf2ddce"><div class="ttname"><a href="classtr_1_1fragment__shader.html#abf750439237c27c02086a9030cf2ddce">tr::fragment_shader::fragment_shader</a></div><div class="ttdeci">fragment_shader(graphics_context &amp;context, zstring_view source)</div><div class="ttdoc">Creates a fragment shader from source code.</div></div>
 <div class="ttc" id="aclasstr_1_1graphics__context_html"><div class="ttname"><a href="classtr_1_1graphics__context.html">tr::graphics_context</a></div><div class="ttdoc">Window graphics context.</div><div class="ttdef"><b>Definition</b> graphics_context.hpp:109</div></div>
 <div class="ttc" id="aclasstr_1_1ref_html"><div class="ttname"><a href="classtr_1_1ref.html">tr::ref</a></div><div class="ttdoc">Alternative reference wrapper.</div><div class="ttdef"><b>Definition</b> reference.hpp:14</div></div>
-<div class="ttc" id="aclasstr_1_1shader__array_html"><div class="ttname"><a href="classtr_1_1shader__array.html">tr::shader_array</a></div><div class="ttdoc">Specialized shader buffer with no header before the array.</div><div class="ttdef"><b>Definition</b> shader_buffer.hpp:209</div></div>
-<div class="ttc" id="aclasstr_1_1shader__buffer_html"><div class="ttname"><a href="classtr_1_1shader__buffer.html">tr::shader_buffer</a></div><div class="ttdoc">Shader buffer with a typed header and array.</div><div class="ttdef"><b>Definition</b> shader_buffer.hpp:132</div></div>
+<div class="ttc" id="aclasstr_1_1shader__array_html"><div class="ttname"><a href="classtr_1_1shader__array.html">tr::shader_array</a></div><div class="ttdoc">Specialized shader buffer with no header before the array.</div><div class="ttdef"><b>Definition</b> shader_buffer.hpp:219</div></div>
+<div class="ttc" id="aclasstr_1_1shader__buffer_html"><div class="ttname"><a href="classtr_1_1shader__buffer.html">tr::shader_buffer</a></div><div class="ttdoc">Shader buffer with a typed header and array.</div><div class="ttdef"><b>Definition</b> shader_buffer.hpp:134</div></div>
 <div class="ttc" id="aclasstr_1_1shader__load__error_html_a2358659cc667effc26986d5870537fe6"><div class="ttname"><a href="classtr_1_1shader__load__error.html#a2358659cc667effc26986d5870537fe6">tr::shader_load_error::details</a></div><div class="ttdeci">std::string_view details() const override</div><div class="ttdoc">Gets further details about the error.</div></div>
 <div class="ttc" id="aclasstr_1_1shader__load__error_html_a4c94fa49eba63eec528cc1887f538d07"><div class="ttname"><a href="classtr_1_1shader__load__error.html#a4c94fa49eba63eec528cc1887f538d07">tr::shader_load_error::shader_load_error</a></div><div class="ttdeci">shader_load_error(std::string_view path, std::string &amp;&amp;details)</div><div class="ttdoc">Constructs an exception.</div></div>
 <div class="ttc" id="aclasstr_1_1shader__load__error_html_a6cb920028bef67ef686a0ada61d61bb5"><div class="ttname"><a href="classtr_1_1shader__load__error.html#a6cb920028bef67ef686a0ada61d61bb5">tr::shader_load_error::description</a></div><div class="ttdeci">std::string_view description() const override</div><div class="ttdoc">Gets the description of the error.</div></div>
@@ -455,7 +455,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('shader_8hpp_so
 <div class="ttc" id="aclasstr_1_1shader_html_afa57082465a44ddcfde80767c6961e23"><div class="ttname"><a href="classtr_1_1shader.html#afa57082465a44ddcfde80767c6961e23">tr::shader::set_uniform</a></div><div class="ttdeci">void set_uniform(int index, unsigned int value)</div><div class="ttdoc">Sets an unsigned integer uniform.</div></div>
 <div class="ttc" id="aclasstr_1_1texture__view_html"><div class="ttname"><a href="classtr_1_1texture__view.html">tr::texture_view</a></div><div class="ttdoc">Opaque optional view to a GPU texture.</div><div class="ttdef"><b>Definition</b> texture_view.hpp:24</div></div>
 <div class="ttc" id="aclasstr_1_1texture_html"><div class="ttname"><a href="classtr_1_1texture.html">tr::texture</a></div><div class="ttdoc">2D GPU texture container.</div><div class="ttdef"><b>Definition</b> texture.hpp:71</div></div>
-<div class="ttc" id="aclasstr_1_1uniform__buffer_html"><div class="ttname"><a href="classtr_1_1uniform__buffer.html">tr::uniform_buffer</a></div><div class="ttdoc">Typed shader uniform buffer.</div><div class="ttdef"><b>Definition</b> uniform_buffer.hpp:81</div></div>
+<div class="ttc" id="aclasstr_1_1uniform__buffer_html"><div class="ttname"><a href="classtr_1_1uniform__buffer.html">tr::uniform_buffer</a></div><div class="ttdoc">Typed shader uniform buffer.</div><div class="ttdef"><b>Definition</b> uniform_buffer.hpp:83</div></div>
 <div class="ttc" id="aclasstr_1_1vertex__shader_html"><div class="ttname"><a href="classtr_1_1vertex__shader.html">tr::vertex_shader</a></div><div class="ttdoc">Vertex shader program.</div><div class="ttdef"><b>Definition</b> shader.hpp:541</div></div>
 <div class="ttc" id="aclasstr_1_1vertex__shader_html_a913726733d5d92108199a548f9947f4f"><div class="ttname"><a href="classtr_1_1vertex__shader.html#a913726733d5d92108199a548f9947f4f">tr::vertex_shader::vertex_shader</a></div><div class="ttdeci">vertex_shader(graphics_context &amp;context, zstring_view source)</div><div class="ttdoc">Creates a vertex shader from source code.</div></div>
 <div class="ttc" id="aexception_8hpp_html"><div class="ttname"><a href="exception_8hpp.html">exception.hpp</a></div><div class="ttdoc">Provides base exception types.</div></div>

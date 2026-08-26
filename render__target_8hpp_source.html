@@ -131,59 +131,85 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('render__target
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;<a class="code" href="rectangle_8hpp.html">../utility/rectangle.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment">//</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacetr.html">tr</a></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>{</div>
-<div class="foldopen" id="foldopen00012" data-start="{" data-end="};">
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="classtr_1_1render__target.html">   12</a></span>    <span class="keyword">class </span>render_target</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    {</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>      <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span></div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="classtr_1_1render__target.html#a395d60aeee37997b22e32546a93f9df5">   20</a></span>        glm::ivec2 <a class="code hl_function" href="classtr_1_1render__target.html#a395d60aeee37997b22e32546a93f9df5">size</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span></div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="classtr_1_1render__target.html#abc430437580a1577faadf5cf75a63beb">   29</a></span>        render_target <a class="code hl_function" href="classtr_1_1render__target.html#abc430437580a1577faadf5cf75a63beb">cropped</a>(<a class="code hl_struct" href="structtr_1_1rectangle.html">rectangle&lt;int&gt;</a> viewport) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;<a class="code" href="reference_8hpp.html">../utility/reference.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacetr.html">tr</a></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>{</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>    <span class="keyword">class </span><a class="code hl_class" href="classtr_1_1framebuffer.html">framebuffer</a>;</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    <span class="keyword">class </span><a class="code hl_class" href="classtr_1_1graphics__context.html">graphics_context</a>;</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    <span class="keyword">enum class</span> graphics_object_id : <span class="keywordtype">unsigned</span> int;</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>} <span class="comment">// namespace tr</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="comment">//</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacetr.html">tr</a></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>{</div>
+<div class="foldopen" id="foldopen00020" data-start="{" data-end="};">
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="classtr_1_1render__target.html">   20</a></span>    <span class="keyword">class </span><a class="code hl_function" href="classtr_1_1render__target.html#a20ba4e0f6f8fa84e6d771196621f5925">render_target</a></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    {</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>      <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        <span class="keyword">struct </span>framebuffer_info_t</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        {</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>            <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> fbo;</div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span></div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="classtr_1_1render__target.html#a0a4a80dbffd71374319a055b7716605e">   34</a></span>        render_target <a class="code hl_function" href="classtr_1_1render__target.html#a0a4a80dbffd71374319a055b7716605e">scissored</a>(<a class="code hl_struct" href="structtr_1_1rectangle.html">rectangle&lt;int&gt;</a> scissor_box) <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span></div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="classtr_1_1render__target.html#a82182c0550137709afb2fc24e180f391">   40</a></span>        render_target <a class="code hl_function" href="classtr_1_1render__target.html#a82182c0550137709afb2fc24e180f391">subtarget</a>(<a class="code hl_struct" href="structtr_1_1rectangle.html">rectangle&lt;int&gt;</a> viewport, <a class="code hl_struct" href="structtr_1_1rectangle.html">rectangle&lt;int&gt;</a> scissor_box) <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span></div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>      <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> m_framebuffer;</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span></div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        glm::ivec2 m_framebuffer_size;</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span></div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        <a class="code hl_struct" href="structtr_1_1rectangle.html">rectangle&lt;int&gt;</a> m_viewport;</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span></div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        <a class="code hl_struct" href="structtr_1_1rectangle.html">rectangle&lt;int&gt;</a> m_scissor_box;</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        <span class="comment">//</span></div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span></div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        render_target(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code hl_friend" href="classtr_1_1render__target.html#a3614600ee1add60ebfd0b722e996aa43">framebuffer</a>, glm::ivec2 framebuffer_size);</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span></div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        render_target(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code hl_friend" href="classtr_1_1render__target.html#a3614600ee1add60ebfd0b722e996aa43">framebuffer</a>, glm::ivec2 framebuffer_size, <a class="code hl_struct" href="structtr_1_1rectangle.html">rectangle&lt;int&gt;</a> viewport, <a class="code hl_struct" href="structtr_1_1rectangle.html">rectangle&lt;int&gt;</a> scissor_box);</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        <span class="comment">//</span></div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> </div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        <span class="comment">// Uses the private constructor.</span></div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno"><a class="line" href="classtr_1_1render__target.html#a3614600ee1add60ebfd0b722e996aa43">   74</a></span>        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code hl_friend" href="classtr_1_1render__target.html#a3614600ee1add60ebfd0b722e996aa43">framebuffer</a>;</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        <span class="comment">// Uses the private constructor and members.</span></div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno"><a class="line" href="classtr_1_1render__target.html#a907b79a67c082eb0fdc56f4fd5ec9100">   77</a></span>        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code hl_friend" href="classtr_1_1render__target.html#a907b79a67c082eb0fdc56f4fd5ec9100">graphics_context</a>;</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    };</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>            glm::ivec2 <a class="code hl_function" href="classtr_1_1render__target.html#a395d60aeee37997b22e32546a93f9df5">size</a>;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="preprocessor">#ifdef TR_ENABLE_CHECKED_GRAPHICS</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>            <a class="code hl_class" href="classtr_1_1ref.html">ref&lt;const graphics_context&gt;</a> context;</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>            graphics_object_id id;</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>            std::string label;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        };</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span></div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="classtr_1_1render__target.html#a20ba4e0f6f8fa84e6d771196621f5925">   53</a></span>        <span class="keyword">explicit</span> <a class="code hl_function" href="classtr_1_1render__target.html#a20ba4e0f6f8fa84e6d771196621f5925">render_target</a>(<span class="keyword">const</span> <a class="code hl_class" href="classtr_1_1graphics__context.html">graphics_context</a>&amp; context);</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span></div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno"><a class="line" href="classtr_1_1render__target.html#a02ce1d6e773c618060892714091f62fa">   58</a></span>        <a class="code hl_function" href="classtr_1_1render__target.html#a02ce1d6e773c618060892714091f62fa">render_target</a>(<span class="keyword">const</span> <a class="code hl_class" href="classtr_1_1framebuffer.html">framebuffer</a>&amp; <a class="code hl_class" href="classtr_1_1framebuffer.html">framebuffer</a>, glm::ivec2 framebuffer_size);</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span></div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno"><a class="line" href="classtr_1_1render__target.html#a91d92c4c5799a68784256a7419446062">   65</a></span>        <a class="code hl_function" href="classtr_1_1render__target.html#a91d92c4c5799a68784256a7419446062">render_target</a>(<span class="keyword">const</span> <a class="code hl_class" href="classtr_1_1framebuffer.html">framebuffer</a>&amp; <a class="code hl_class" href="classtr_1_1framebuffer.html">framebuffer</a>, glm::ivec2 framebuffer_size, <a class="code hl_struct" href="structtr_1_1rectangle.html">rectangle&lt;int&gt;</a> <a class="code hl_function" href="classtr_1_1render__target.html#a1e67378c7da82d4c95def2358c0310ee">viewport</a>, <a class="code hl_struct" href="structtr_1_1rectangle.html">rectangle&lt;int&gt;</a> <a class="code hl_function" href="classtr_1_1render__target.html#a3c14757b98cd83f2c57e21bdb433b590">scissor_box</a>);</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span></div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span></div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno"><a class="line" href="classtr_1_1render__target.html#a395d60aeee37997b22e32546a93f9df5">   73</a></span>        glm::ivec2 <a class="code hl_function" href="classtr_1_1render__target.html#a395d60aeee37997b22e32546a93f9df5">size</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span></div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno"><a class="line" href="classtr_1_1render__target.html#a1e67378c7da82d4c95def2358c0310ee">   77</a></span>        <a class="code hl_struct" href="structtr_1_1rectangle.html">rectangle&lt;int&gt;</a> <a class="code hl_function" href="classtr_1_1render__target.html#a1e67378c7da82d4c95def2358c0310ee">viewport</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span></div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno"><a class="line" href="classtr_1_1render__target.html#a3c14757b98cd83f2c57e21bdb433b590">   81</a></span>        <a class="code hl_struct" href="structtr_1_1rectangle.html">rectangle&lt;int&gt;</a> <a class="code hl_function" href="classtr_1_1render__target.html#a3c14757b98cd83f2c57e21bdb433b590">scissor_box</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span></div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span></div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno"><a class="line" href="classtr_1_1render__target.html#abc430437580a1577faadf5cf75a63beb">   90</a></span>        <a class="code hl_function" href="classtr_1_1render__target.html#a20ba4e0f6f8fa84e6d771196621f5925">render_target</a> <a class="code hl_function" href="classtr_1_1render__target.html#abc430437580a1577faadf5cf75a63beb">cropped</a>(<a class="code hl_struct" href="structtr_1_1rectangle.html">rectangle&lt;int&gt;</a> <a class="code hl_function" href="classtr_1_1render__target.html#a1e67378c7da82d4c95def2358c0310ee">viewport</a>) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span></div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno"><a class="line" href="classtr_1_1render__target.html#a0a4a80dbffd71374319a055b7716605e">   95</a></span>        <a class="code hl_function" href="classtr_1_1render__target.html#a20ba4e0f6f8fa84e6d771196621f5925">render_target</a> <a class="code hl_function" href="classtr_1_1render__target.html#a0a4a80dbffd71374319a055b7716605e">scissored</a>(<a class="code hl_struct" href="structtr_1_1rectangle.html">rectangle&lt;int&gt;</a> <a class="code hl_function" href="classtr_1_1render__target.html#a3c14757b98cd83f2c57e21bdb433b590">scissor_box</a>) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span></div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span></div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>        <span class="keyword">const</span> framebuffer_info_t&amp; framebuffer_info() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span></div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span> </div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>      <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>        framebuffer_info_t m_framebuffer_info;</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span></div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>        <a class="code hl_struct" href="structtr_1_1rectangle.html">rectangle&lt;int&gt;</a> m_viewport;</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span></div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>        <a class="code hl_struct" href="structtr_1_1rectangle.html">rectangle&lt;int&gt;</a> m_scissor_box;</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    };</div>
 </div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>} <span class="comment">// namespace tr</span></div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>} <span class="comment">// namespace tr</span></div>
+<div class="ttc" id="aclasstr_1_1framebuffer_html"><div class="ttname"><a href="classtr_1_1framebuffer.html">tr::framebuffer</a></div><div class="ttdoc">Container for a framebuffer object.</div><div class="ttdef"><b>Definition</b> framebuffer.hpp:41</div></div>
+<div class="ttc" id="aclasstr_1_1graphics__context_html"><div class="ttname"><a href="classtr_1_1graphics__context.html">tr::graphics_context</a></div><div class="ttdoc">Window graphics context.</div><div class="ttdef"><b>Definition</b> graphics_context.hpp:109</div></div>
+<div class="ttc" id="aclasstr_1_1ref_html"><div class="ttname"><a href="classtr_1_1ref.html">tr::ref</a></div><div class="ttdoc">Alternative reference wrapper.</div><div class="ttdef"><b>Definition</b> reference.hpp:14</div></div>
+<div class="ttc" id="aclasstr_1_1render__target_html_a02ce1d6e773c618060892714091f62fa"><div class="ttname"><a href="classtr_1_1render__target.html#a02ce1d6e773c618060892714091f62fa">tr::render_target::render_target</a></div><div class="ttdeci">render_target(const framebuffer &amp;framebuffer, glm::ivec2 framebuffer_size)</div><div class="ttdoc">Creates a render target on a framebuffer.</div></div>
 <div class="ttc" id="aclasstr_1_1render__target_html_a0a4a80dbffd71374319a055b7716605e"><div class="ttname"><a href="classtr_1_1render__target.html#a0a4a80dbffd71374319a055b7716605e">tr::render_target::scissored</a></div><div class="ttdeci">render_target scissored(rectangle&lt; int &gt; scissor_box) const</div><div class="ttdoc">Creates a new render target with the same viewport and a different scissor box.</div></div>
-<div class="ttc" id="aclasstr_1_1render__target_html_a3614600ee1add60ebfd0b722e996aa43"><div class="ttname"><a href="classtr_1_1render__target.html#a3614600ee1add60ebfd0b722e996aa43">tr::render_target::framebuffer</a></div><div class="ttdeci">friend class framebuffer</div><div class="ttdef"><b>Definition</b> render_target.hpp:74</div></div>
+<div class="ttc" id="aclasstr_1_1render__target_html_a1e67378c7da82d4c95def2358c0310ee"><div class="ttname"><a href="classtr_1_1render__target.html#a1e67378c7da82d4c95def2358c0310ee">tr::render_target::viewport</a></div><div class="ttdeci">rectangle&lt; int &gt; viewport() const</div><div class="ttdoc">Gets the viewport of the render target within the target framebuffer.</div></div>
+<div class="ttc" id="aclasstr_1_1render__target_html_a20ba4e0f6f8fa84e6d771196621f5925"><div class="ttname"><a href="classtr_1_1render__target.html#a20ba4e0f6f8fa84e6d771196621f5925">tr::render_target::render_target</a></div><div class="ttdeci">render_target(const graphics_context &amp;context)</div><div class="ttdoc">Constructs a backbuffer render target.</div></div>
 <div class="ttc" id="aclasstr_1_1render__target_html_a395d60aeee37997b22e32546a93f9df5"><div class="ttname"><a href="classtr_1_1render__target.html#a395d60aeee37997b22e32546a93f9df5">tr::render_target::size</a></div><div class="ttdeci">glm::ivec2 size() const</div><div class="ttdoc">Gets the size of the render target.</div></div>
-<div class="ttc" id="aclasstr_1_1render__target_html_a82182c0550137709afb2fc24e180f391"><div class="ttname"><a href="classtr_1_1render__target.html#a82182c0550137709afb2fc24e180f391">tr::render_target::subtarget</a></div><div class="ttdeci">render_target subtarget(rectangle&lt; int &gt; viewport, rectangle&lt; int &gt; scissor_box) const</div><div class="ttdoc">Equivalent to cropped(viewport).scissored(scissor_box).</div></div>
-<div class="ttc" id="aclasstr_1_1render__target_html_a907b79a67c082eb0fdc56f4fd5ec9100"><div class="ttname"><a href="classtr_1_1render__target.html#a907b79a67c082eb0fdc56f4fd5ec9100">tr::render_target::graphics_context</a></div><div class="ttdeci">friend class graphics_context</div><div class="ttdef"><b>Definition</b> render_target.hpp:77</div></div>
+<div class="ttc" id="aclasstr_1_1render__target_html_a3c14757b98cd83f2c57e21bdb433b590"><div class="ttname"><a href="classtr_1_1render__target.html#a3c14757b98cd83f2c57e21bdb433b590">tr::render_target::scissor_box</a></div><div class="ttdeci">rectangle&lt; int &gt; scissor_box() const</div><div class="ttdoc">Gets the scissor box of the render target within the target framebuffer.</div></div>
+<div class="ttc" id="aclasstr_1_1render__target_html_a91d92c4c5799a68784256a7419446062"><div class="ttname"><a href="classtr_1_1render__target.html#a91d92c4c5799a68784256a7419446062">tr::render_target::render_target</a></div><div class="ttdeci">render_target(const framebuffer &amp;framebuffer, glm::ivec2 framebuffer_size, rectangle&lt; int &gt; viewport, rectangle&lt; int &gt; scissor_box)</div><div class="ttdoc">Creates a render target on a framebuffer.</div></div>
 <div class="ttc" id="aclasstr_1_1render__target_html_abc430437580a1577faadf5cf75a63beb"><div class="ttname"><a href="classtr_1_1render__target.html#abc430437580a1577faadf5cf75a63beb">tr::render_target::cropped</a></div><div class="ttdeci">render_target cropped(rectangle&lt; int &gt; viewport) const</div><div class="ttdoc">Creates a new render target with a cropped viewport and full scissor box.</div></div>
 <div class="ttc" id="anamespacetr_html"><div class="ttname"><a href="namespacetr.html">tr</a></div><div class="ttdoc">Namespace containing all tr functionality.</div><div class="ttdef"><b>Definition</b> audio_buffer.hpp:10</div></div>
 <div class="ttc" id="arectangle_8hpp_html"><div class="ttname"><a href="rectangle_8hpp.html">rectangle.hpp</a></div><div class="ttdoc">Provides an axis-aligned rectangle datatype and related functions.</div></div>
+<div class="ttc" id="areference_8hpp_html"><div class="ttname"><a href="reference_8hpp.html">reference.hpp</a></div><div class="ttdoc">Provides reference wrappers.</div></div>
 <div class="ttc" id="astructtr_1_1rectangle_html"><div class="ttname"><a href="structtr_1_1rectangle.html">tr::rectangle</a></div><div class="ttdoc">Rectangle object.</div><div class="ttdef"><b>Definition</b> rectangle.hpp:15</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

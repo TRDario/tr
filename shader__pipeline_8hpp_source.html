@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('shader__pipeli
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="classtr_1_1shader__pipeline.html">   36</a></span>    <span class="keyword">class </span><a class="code hl_function" href="classtr_1_1shader__pipeline.html#a119ff44cad4161ca43780f7a9de26a1d">shader_pipeline</a></div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    {</div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>      <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="preprocessor">#ifdef TR_ENABLE_GL_CHECKS</span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="preprocessor">#ifdef TR_ENABLE_CHECKED_GRAPHICS</span></div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span></div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        <span class="keyword">struct </span>vertex_shader_debug_info_t</div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        {</div>
@@ -189,7 +189,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('shader__pipeli
 <div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span></div>
 <div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>        <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> unwrap() <span class="keyword">const</span>;</div>
 <div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span></div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span><span class="preprocessor">#ifdef TR_ENABLE_GL_CHECKS</span></div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span><span class="preprocessor">#ifdef TR_ENABLE_CHECKED_GRAPHICS</span></div>
 <div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span></div>
 <div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>        graphics_object_id id() <span class="keyword">const</span>;</div>
 <div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span></div>
@@ -204,8 +204,8 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('shader__pipeli
 <div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>        {</div>
 <div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>            <a class="code hl_class" href="classtr_1_1ref.html">ref&lt;graphics_context&gt;</a> <a class="code hl_function" href="classtr_1_1shader__pipeline.html#a795dfe9be4ad99a21a4fada2eec1ada8">context</a>;</div>
 <div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span> </div>
-<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span><span class="preprocessor">#ifdef TR_ENABLE_GL_CHECKS</span></div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>            graphics_object_id <span class="keywordtype">id</span>{generate_graphics_object_id()};</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span><span class="preprocessor">#ifdef TR_ENABLE_CHECKED_GRAPHICS</span></div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>            graphics_object_id_handle <span class="keywordtype">id</span>{};</div>
 <div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span> </div>
 <div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>            <span class="comment">//</span></div>
@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('shader__pipeli
 <div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span></div>
 <div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>        handle&lt;unsigned int, 0, deleter&gt; m_handle;</div>
 <div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span> </div>
-<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span><span class="preprocessor">#ifdef TR_ENABLE_GL_CHECKS</span></div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span><span class="preprocessor">#ifdef TR_ENABLE_CHECKED_GRAPHICS</span></div>
 <div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>        vertex_shader_debug_info_t m_vertex_shader_debug_info;</div>
 <div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span></div>
 <div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>        fragment_shader_debug_info_t m_fragment_shader_debug_info;</div>
@@ -225,7 +225,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('shader__pipeli
 <div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span> </div>
 <div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>        <span class="comment">//</span></div>
 <div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span> </div>
-<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span><span class="preprocessor">#ifdef TR_ENABLE_GL_CHECKS</span></div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span><span class="preprocessor">#ifdef TR_ENABLE_CHECKED_GRAPHICS</span></div>
 <div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>        <span class="keywordtype">void</span> assert_shaders_compatible() <span class="keyword">const</span>;</div>
 <div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>    };</div>

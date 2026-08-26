@@ -10,6 +10,5 @@ var classtr_1_1dyn__vertex__buffer =
     [ "empty", "classtr_1_1dyn__vertex__buffer.html#a05a932d9ae530aeaf751737d76bcad11", null ],
     [ "clear", "classtr_1_1dyn__vertex__buffer.html#a3e4471b26b00b6c5c94d2d98c354a95a", null ],
     [ "label", "classtr_1_1dyn__vertex__buffer.html#ada4364c0295af892b869f2be3ed62777", null ],
-    [ "set_label", "classtr_1_1dyn__vertex__buffer.html#a791c5d26a17cce2fe3850cb8e1ba5697", null ],
-    [ "id", "classtr_1_1dyn__vertex__buffer.html#a1b9eef6ffb431a6b5ce3cb05af26b4f2", null ]
+    [ "set_label", "classtr_1_1dyn__vertex__buffer.html#a791c5d26a17cce2fe3850cb8e1ba5697", null ]
 ];

@@ -128,10 +128,13 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1gra
 </div><!--header-->
 <div class="contents">
 
-<p>Wrapper around a generic OpenGL buffer object.  
+<p>Base class for buffers living on a graphics context.  
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><dl class="section note"><dt>Note</dt><dd>This class isn't meant to be directly used, it is primarily documented because some buffers inherit methods from it. </dd></dl>
+<div class="textblock"><dl class="section note"><dt>Note</dt><dd><span class="tt"><a class="el" href="classtr_1_1graphics__buffer.html" title="Base class for buffers living on a graphics context.">tr::graphics_buffer</a></span> isn't intended to be directly instanced, it is merely documented because some buffers inherit methods from it.</dd></dl>
+<p>Every instance of <span class="tt"><a class="el" href="classtr_1_1graphics__buffer.html" title="Base class for buffers living on a graphics context.">tr::graphics_buffer</a></span> is associated with a graphics context and cannot outlive its parent context.</p>
+<p><span class="tt"><a class="el" href="classtr_1_1graphics__buffer.html" title="Base class for buffers living on a graphics context.">tr::graphics_buffer</a></span> instances are movable, but not copyable. A moved-from instance of <span class="tt"><a class="el" href="classtr_1_1graphics__buffer.html" title="Base class for buffers living on a graphics context.">tr::graphics_buffer</a></span> is left in a special 'invalid' state. Invalid <span class="tt"><a class="el" href="classtr_1_1graphics__buffer.html" title="Base class for buffers living on a graphics context.">tr::graphics_buffer</a></span> instances may not be interacted with besides moving a new value into them and checking for validity using <span class="tt"><a class="el" href="#a645762c5d78538a69025a259dce68834" title="Gets whether the buffer is in a valid state.">valid()</a></span>.</p>
+<p><span class="tt"><a class="el" href="classtr_1_1graphics__buffer.html" title="Base class for buffers living on a graphics context.">tr::graphics_buffer</a></span> instances may be labeled and are formattable. Example format output: <span class="tt">"My buffer" (OpenGL ID: 5)</span>. </p>
 </div><div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Inheritance diagram for tr::graphics_buffer:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
 </div>
@@ -167,11 +170,9 @@ Public Member Functions</h2></td></tr>
 <tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Context</div></td></tr>
 <tr class="memitem:aa7323654826d026acc2bc31bed2ed286" id="r_aa7323654826d026acc2bc31bed2ed286"><td class="memItemLeft"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#aa7323654826d026acc2bc31bed2ed286">context</a> () const</td></tr>
 <tr class="memdesc:aa7323654826d026acc2bc31bed2ed286"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a reference to the graphics context the buffer is on.  <br /></td></tr>
-<tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">ID</div></td></tr>
-<tr class="memitem:a1b9eef6ffb431a6b5ce3cb05af26b4f2" id="r_a1b9eef6ffb431a6b5ce3cb05af26b4f2"><td class="memItemLeft">unsigned int&#160;</td><td class="memItemRight"><a class="el" href="#a1b9eef6ffb431a6b5ce3cb05af26b4f2">id</a> () const</td></tr>
-<tr class="memdesc:a1b9eef6ffb431a6b5ce3cb05af26b4f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the unique ID of the buffer.  <br /></td></tr>
-<tr class="memitem:ae0beac39b259e62684eaf8c620a2529d" id="r_ae0beac39b259e62684eaf8c620a2529d"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ae0beac39b259e62684eaf8c620a2529d">reallocate</a> ()</td></tr>
-<tr class="memdesc:ae0beac39b259e62684eaf8c620a2529d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reallocates the buffer while preserving its label (if applicable).  <br /></td></tr>
+<tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">State</div></td></tr>
+<tr class="memitem:a645762c5d78538a69025a259dce68834" id="r_a645762c5d78538a69025a259dce68834"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a645762c5d78538a69025a259dce68834">valid</a> () const</td></tr>
+<tr class="memdesc:a645762c5d78538a69025a259dce68834"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the buffer is in a valid state.  <br /></td></tr>
 <tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Label</div></td></tr>
 <tr class="memitem:ada4364c0295af892b869f2be3ed62777" id="r_ada4364c0295af892b869f2be3ed62777"><td class="memItemLeft">std::string&#160;</td><td class="memItemRight"><a class="el" href="#ada4364c0295af892b869f2be3ed62777">label</a> () const</td></tr>
 <tr class="memdesc:ada4364c0295af892b869f2be3ed62777"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the label of the buffer.  <br /></td></tr>
@@ -221,38 +222,21 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a1b9eef6ffb431a6b5ce3cb05af26b4f2" name="a1b9eef6ffb431a6b5ce3cb05af26b4f2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1b9eef6ffb431a6b5ce3cb05af26b4f2">&#9670;&#160;</a></span>id()</h2>
+<a id="a645762c5d78538a69025a259dce68834" name="a645762c5d78538a69025a259dce68834"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a645762c5d78538a69025a259dce68834">&#9670;&#160;</a></span>valid()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">unsigned int tr::graphics_buffer::id </td>
+          <td class="memname">bool tr::graphics_buffer::valid </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>Unique ID of the buffer. </dd></dl>
-
-</div>
-</div>
-<a id="ae0beac39b259e62684eaf8c620a2529d" name="ae0beac39b259e62684eaf8c620a2529d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae0beac39b259e62684eaf8c620a2529d">&#9670;&#160;</a></span>reallocate()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void tr::graphics_buffer::reallocate </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the buffer is in a valid state, <span class="tt">false</span> if it is in an invalid state. </dd></dl>
 
 </div>
 </div>
