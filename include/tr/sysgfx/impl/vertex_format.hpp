@@ -184,7 +184,7 @@ struct std::formatter<tr::vertex_format>
 	auto format(const tr::vertex_format& format, FormatContext& ctx) const
 	{
 		if (format.valid()) {
-			return std::format_to(ctx.out(), "\"{}\" (GID: {})", format.label(), format.gid());
+			return std::format_to(ctx.out(), "\"{}\" (OpenGL ID: {})", format.label(), format.unwrap());
 		}
 		else {
 			return std::format_to(ctx.out(), "<invalid vertex format at {}>", static_cast<const void*>(&format));

@@ -191,6 +191,8 @@ void tr::graphics_context::deleter::operator()(SDL_GLContextState* context) cons
 	TR_ASSERT(registry.registered_shader_count() == 0, "Tried to destroy graphics context while one or more shaders are still alive.");
 	TR_ASSERT(registry.registered_shader_pipeline_count() == 0,
 			  "Tried to destroy graphics context while one or more shader pipelines are still alive.");
+	TR_ASSERT(registry.registered_vertex_format_count() == 0,
+			  "Tried to destroy graphics context while one or more vertex formats are still alive.");
 #endif
 
 	SDL_GL_DestroyContext(context);
@@ -341,11 +343,12 @@ void tr::graphics_context::set_vertex_format(const vertex_format& format)
 	TR_ASSERT(&format.context() == this, "Tried to set vertex format {} to a context it is not associated with.", format);
 
 #ifdef TR_ENABLE_GL_CHECKS
-	m_vertex_format_bindings = format.bindings();
-	m_vertex_format_label = format.label();
+	m_bound_vertex_format_debug_info.id = format.id();
+	m_bound_vertex_format_debug_info.label = format.label();
+	m_bound_vertex_format_debug_info.bindings = format.bindings();
 #endif
 
-	gl().bind_vertex_array(format.gid());
+	gl().bind_vertex_array(format.unwrap());
 }
 
 void tr::graphics_context::set_vertex_buffer(unsigned int buffer_id, int slot, ssize offset, usize stride)
@@ -421,6 +424,8 @@ void tr::graphics_context::draw(primitive type, usize offset, usize vertices)
 {
 	TR_ASSERT(registry().is_shader_pipeline_valid(m_bound_shader_pipeline_debug_info.id),
 			  "Tried to perform a drawing operation with an invalid bound shader pipeline '{}'.", m_bound_shader_pipeline_debug_info.label);
+	TR_ASSERT(registry().is_vertex_format_valid(m_bound_vertex_format_debug_info.id),
+			  "Tried to perform a drawing operation with an invalid bound vertex format '{}'.", m_bound_vertex_format_debug_info.label);
 
 	gl().draw_arrays(std::to_underlying(type), offset, vertices);
 }
@@ -429,6 +434,8 @@ void tr::graphics_context::draw_instances(primitive type, usize offset, usize ve
 {
 	TR_ASSERT(registry().is_shader_pipeline_valid(m_bound_shader_pipeline_debug_info.id),
 			  "Tried to perform a drawing operation with an invalid bound shader pipeline '{}'.", m_bound_shader_pipeline_debug_info.label);
+	TR_ASSERT(registry().is_vertex_format_valid(m_bound_vertex_format_debug_info.id),
+			  "Tried to perform a drawing operation with an invalid bound vertex format '{}'.", m_bound_vertex_format_debug_info.label);
 
 	gl().draw_arrays_instanced(std::to_underlying(type), offset, vertices, instances);
 }
@@ -437,6 +444,8 @@ void tr::graphics_context::draw_indexed(primitive type, usize offset, usize indi
 {
 	TR_ASSERT(registry().is_shader_pipeline_valid(m_bound_shader_pipeline_debug_info.id),
 			  "Tried to perform a drawing operation with an invalid bound shader pipeline '{}'.", m_bound_shader_pipeline_debug_info.label);
+	TR_ASSERT(registry().is_vertex_format_valid(m_bound_vertex_format_debug_info.id),
+			  "Tried to perform a drawing operation with an invalid bound vertex format '{}'.", m_bound_vertex_format_debug_info.label);
 
 	gl().draw_elements(std::to_underlying(type), indices, GL_UNSIGNED_SHORT, reinterpret_cast<const void*>(offset * sizeof(u16)));
 }
@@ -445,6 +454,8 @@ void tr::graphics_context::draw_indexed_instances(primitive type, usize offset, 
 {
 	TR_ASSERT(registry().is_shader_pipeline_valid(m_bound_shader_pipeline_debug_info.id),
 			  "Tried to perform a drawing operation with an invalid bound shader pipeline '{}'.", m_bound_shader_pipeline_debug_info.label);
+	TR_ASSERT(registry().is_vertex_format_valid(m_bound_vertex_format_debug_info.id),
+			  "Tried to perform a drawing operation with an invalid bound vertex format '{}'.", m_bound_vertex_format_debug_info.label);
 
 	gl().draw_elements_instanced(std::to_underlying(type), indices, GL_UNSIGNED_SHORT, reinterpret_cast<const void*>(offset * sizeof(u16)),
 								 instances);
@@ -496,21 +507,21 @@ void tr::graphics_context::clear_render_target()
 #ifdef TR_ENABLE_GL_CHECKS
 void tr::graphics_context::check_vertex_buffer(std::string label, int slot, std::span<const vertex_attribute> attrs)
 {
-	TR_ASSERT(usize(slot) < m_vertex_format_bindings.size(),
-			  "Tried to bind vertex buffer '{}' to invalid slot {} (max in vertex format '{}': {}).", label, slot, m_vertex_format_label,
-			  m_vertex_format_bindings.size());
+	TR_ASSERT(usize(slot) < m_bound_vertex_format_debug_info.bindings.size(),
+			  "Tried to bind vertex buffer '{}' to invalid slot {} (max in vertex format '{}': {}).", label, slot,
+			  m_bound_vertex_format_debug_info.label, m_bound_vertex_format_debug_info.bindings.size());
 
-	const std::span<const vertex_attribute> ref{m_vertex_format_bindings.begin()[slot].attrs};
+	const std::span<const vertex_attribute> ref{m_bound_vertex_format_debug_info.bindings.begin()[slot].attrs};
 	TR_ASSERT(attrs.size() == ref.size(),
 			  "Tried to bind vertex buffer '{}' of a different type from the one in vertex format '{}' (has {} attributes instead of {}).",
-			  label, m_vertex_format_label, attrs.size(), ref.size());
+			  label, m_bound_vertex_format_debug_info.label, attrs.size(), ref.size());
 	for (usize i = 0; i < attrs.size(); ++i) {
-		const vertex_attribute& l{attrs.begin()[i]};
-		const vertex_attribute& r{ref.begin()[i]};
-		TR_ASSERT(l.type == r.type && l.elements == r.elements,
+		const vertex_attribute& lhs{attrs.begin()[i]};
+		const vertex_attribute& rhs{ref.begin()[i]};
+		TR_ASSERT(lhs.type == rhs.type && lhs.elements == rhs.elements,
 				  "Tried to bind vertex buffer '{}' of a type different from than the one in vertex format '{}' (expected '{}' in "
 				  "attribute {}, got '{}').",
-				  label, m_vertex_format_label, r, i, l);
+				  label, m_bound_vertex_format_debug_info.label, rhs, i, lhs);
 	}
 }
 #endif

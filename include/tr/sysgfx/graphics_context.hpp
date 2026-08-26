@@ -354,6 +354,19 @@ namespace tr
 			/// Label of the shader pipeline.
 			std::string label{"<unbound>"};
 		};
+
+		/// Debug information about the bound vertex format.
+		struct bound_vertex_format_debug_info
+		{
+			/// Unique graphics object ID of the vertex format.
+			graphics_object_id id{graphics_object_id::invalid};
+
+			/// Label of the vertex format.
+			std::string label{"<unbound>"};
+
+			/// Bindings of the vertex format.
+			std::span<const vertex_binding> bindings;
+		};
 #endif
 
 		//
@@ -386,11 +399,8 @@ namespace tr
 		/// Debug information about the shader pipeline bound to the context.
 		bound_shader_pipeline_debug_info m_bound_shader_pipeline_debug_info;
 
-		/// Bindings of the last bound vertex format.
-		std::span<const vertex_binding> m_vertex_format_bindings;
-
-		/// Label of the last bound vertex format.
-		std::string m_vertex_format_label;
+		/// Debug information about the vertex format bound to the context.
+		bound_vertex_format_debug_info m_bound_vertex_format_debug_info;
 #endif
 
 		//

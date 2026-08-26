@@ -51,7 +51,7 @@ namespace tr
 		usize registered_shader_pipeline_count() const;
 
 		/// Checks if a shader pipeline ID is valid.
-		/// @param tid Graphics object ID of the shader pipeline.
+		/// @param id Graphics object ID of the shader pipeline.
 		/// @return `true` if the shader pipeline ID is valid, `false` otherwise.
 		bool is_shader_pipeline_valid(graphics_object_id id) const;
 
@@ -64,11 +64,34 @@ namespace tr
 		/// @param id Graphics object ID of the shader pipeline.
 		void unregister_shader_pipeline(graphics_object_id id);
 
+		//
+
+		/// Gets the number of registered vertex formats.
+		/// @return Number of registered vertex formats.
+		usize registered_vertex_format_count() const;
+
+		/// Checks if a vertex format ID is valid.
+		/// @param id Graphics object ID of the vertex format.
+		/// @return `true` if the vertex format ID is valid, `false` otherwise.
+		bool is_vertex_format_valid(graphics_object_id id) const;
+
+		/// Registers a vertex format.
+		/// @param id Graphics object ID of the vertex format.
+		/// @param glid OpenGL vertex format ID.
+		void register_vertex_format(graphics_object_id id, unsigned int glid);
+
+		/// Unregisters a vertex format.
+		/// @param id Graphics object ID of the vertex format.
+		void unregister_vertex_format(graphics_object_id id);
+
 	  private:
 		/// Shader id -> glid map.
 		boost::unordered_flat_map<graphics_object_id, unsigned int> m_shaders;
 
 		/// Shader pipeline id -> glid map.
 		boost::unordered_flat_map<graphics_object_id, unsigned int> m_shader_pipelines;
+
+		/// Vertex format id -> glid map.
+		boost::unordered_flat_map<graphics_object_id, unsigned int> m_vertex_formats;
 	};
 } // namespace tr

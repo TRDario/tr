@@ -9,6 +9,10 @@
 #include "../utility/reference.hpp"
 #include "../utility/specialization_of.hpp"
 
+#ifdef TR_ENABLE_GL_CHECKS
+#include "graphics_object_registry.hpp"
+#endif
+
 namespace tr
 {
 	class graphics_context;
@@ -126,7 +130,8 @@ namespace tr
 		static constexpr u32 divisor{Divisor};
 	};
 
-	/// @cond __hidden
+	/// @cond implementation_details
+
 	/// Holds a list of vertex bindings as if gotten by `tr::as_vertex_binding`.
 	/// @tparam BindingTags List of vertex binding tags.
 	/// @hideinitializer
@@ -134,6 +139,7 @@ namespace tr
 	inline constexpr std::array<vertex_binding, sizeof...(BindingTags)> as_vertex_bindings_array{
 		as_vertex_binding<typename BindingTags::type, BindingTags::divisor>...,
 	};
+
 	/// @endcond
 
 	/// Holds a span of vertex bindings as if gotten by `tr::as_vertex_binding` with a guaranteed static lifetime.
@@ -161,8 +167,7 @@ namespace tr
 	/// 'invalid' state. Invalid `tr::vertex_format` instances may not be interacted with besides moving a new value into them and checking
 	/// for validity using `valid()`.
 	///
-	/// `tr::vertex_format` instances may be labeled and are formattable. Example format output: `"My vertex format" (GID: 5)`. The GID is
-	/// the OpenGL ID of the VAO.
+	/// `tr::vertex_format` instances may be labeled and are formattable. Example format output: `"My vertex format" (OpenGL ID: 5)`.
 	class vertex_format
 	{
 	  public:
@@ -204,18 +209,27 @@ namespace tr
 		std::string label() const;
 
 		/// @}
+		/// @cond gl_interop
 
-		/// @cond __hidden
-		/// Gets the OpenGL vertex array ID.
-		/// @return OpenGL vertex array ID.
-		unsigned int gid() const;
+		/// Unwraps the OpenGL vertex array object.
+		/// @note This does not release the vertex array object.
+		/// @return OpenGL vertex array object ID.
+		unsigned int unwrap() const;
 
+		/// @endcond
 #ifdef TR_ENABLE_GL_CHECKS
+		/// @cond implementation_details
+
+		/// Gets the unique ID of the vertex format.
+		/// @return Unique ID of the vertex format.
+		graphics_object_id id() const;
+
 		/// Gets information about the vertex format's bindings.
 		/// @return Information about the vertex format's bindings.
 		std::span<const vertex_binding> bindings() const;
-#endif
+
 		/// @endcond
+#endif
 
 	  private:
 		/// VAO deleter class.
@@ -223,6 +237,11 @@ namespace tr
 		{
 			/// Reference to the graphics context the VAO is on.
 			ref<graphics_context> context;
+
+#ifdef TR_ENABLE_GL_CHECKS
+			/// Graphics object ID of the vertex format.
+			graphics_object_id id{generate_graphics_object_id()};
+#endif
 
 			//
 

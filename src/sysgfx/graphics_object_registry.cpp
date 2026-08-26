@@ -63,3 +63,29 @@ void tr::graphics_object_registry::unregister_shader_pipeline(graphics_object_id
 
 	m_shader_pipelines.erase(id);
 }
+
+//
+
+tr::usize tr::graphics_object_registry::registered_vertex_format_count() const
+{
+	return m_vertex_formats.size();
+}
+
+bool tr::graphics_object_registry::is_vertex_format_valid(graphics_object_id id) const
+{
+	return m_vertex_formats.contains(id);
+}
+
+void tr::graphics_object_registry::register_vertex_format(graphics_object_id id, unsigned int glid)
+{
+	TR_ASSERT(!m_vertex_formats.contains(id), "Tried to register duplicate vertex format (ID: '{}')", std::to_underlying(id));
+
+	m_vertex_formats.emplace(id, glid);
+}
+
+void tr::graphics_object_registry::unregister_vertex_format(graphics_object_id id)
+{
+	TR_ASSERT(m_vertex_formats.contains(id), "Tried to unregister nonexistant vertex format (ID: '{}')", std::to_underlying(id));
+
+	m_vertex_formats.erase(id);
+}

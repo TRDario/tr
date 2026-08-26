@@ -15,21 +15,24 @@ tr::vertex_format::vertex_format(graphics_context& context, std::span<const vert
 {
 	const gl_api& gl{context.gl()};
 	gl.create_vertex_arrays(1, out_handle(m_handle));
+#ifdef TR_ENABLE_GL_CHECKS
+	context.registry().register_vertex_format(id(), unwrap());
+#endif
 
 	unsigned int attr_id{0};
 	for (int binding_id = 0; binding_id < static_cast<int>(bindings.size()); ++binding_id) {
 		const vertex_binding& binding{bindings.begin()[binding_id]};
 
-		gl.set_vertex_array_binding_divisor(gid(), binding_id, binding.divisor);
+		gl.set_vertex_array_binding_divisor(unwrap(), binding_id, binding.divisor);
 		unsigned int offset{0};
 		for (const vertex_attribute& attribute : binding.attrs) {
 			TR_ASSERT(attribute.type != vertex_attribute_type::unknown, "Tried to construct vertex format with invalid attribute '{}'.",
 					  attribute);
 
-			gl.set_vertex_array_attribute_format(gid(), attr_id, attribute.elements, std::to_underlying(attribute.type),
+			gl.set_vertex_array_attribute_format(unwrap(), attr_id, attribute.elements, std::to_underlying(attribute.type),
 												 attribute.normalized, offset);
-			gl.enable_vertex_array_attribute(gid(), attr_id);
-			gl.set_vertex_array_attribute_binding(gid(), attr_id++, binding_id);
+			gl.enable_vertex_array_attribute(unwrap(), attr_id);
+			gl.set_vertex_array_attribute_binding(unwrap(), attr_id++, binding_id);
 
 			switch (attribute.type) {
 			case vertex_attribute_type::i8:
@@ -52,9 +55,12 @@ tr::vertex_format::vertex_format(graphics_context& context, std::span<const vert
 	}
 }
 
-void tr::vertex_format::deleter::operator()(unsigned int id) const
+void tr::vertex_format::deleter::operator()(unsigned int vao) const
 {
-	context->gl().delete_vertex_arrays(1, &id);
+	context->gl().delete_vertex_arrays(1, &vao);
+#ifdef TR_ENABLE_GL_CHECKS
+	context->registry().unregister_vertex_format(id);
+#endif
 }
 
 //
@@ -79,7 +85,7 @@ void tr::vertex_format::set_label(std::string_view label)
 {
 	TR_ASSERT(valid(), "Tried to set the label of a vertex format in an invalid state.");
 
-	context().gl().set_object_label(GL_VERTEX_ARRAY, gid(), label.size(), label.data());
+	context().gl().set_object_label(GL_VERTEX_ARRAY, unwrap(), label.size(), label.data());
 }
 
 std::string tr::vertex_format::label() const
@@ -88,10 +94,10 @@ std::string tr::vertex_format::label() const
 
 	const gl_api& gl{context().gl()};
 	int label_length;
-	gl.get_object_label(GL_VERTEX_ARRAY, gid(), 0, &label_length, nullptr);
+	gl.get_object_label(GL_VERTEX_ARRAY, unwrap(), 0, &label_length, nullptr);
 	if (label_length > 0) {
 		std::string label_string(label_length, '\0');
-		gl.get_object_label(GL_VERTEX_ARRAY, gid(), label_length + 1, nullptr, label_string.data());
+		gl.get_object_label(GL_VERTEX_ARRAY, unwrap(), label_length + 1, nullptr, label_string.data());
 		return label_string;
 	}
 	else {
@@ -101,12 +107,17 @@ std::string tr::vertex_format::label() const
 
 //
 
-unsigned int tr::vertex_format::gid() const
+unsigned int tr::vertex_format::unwrap() const
 {
 	return m_handle.get();
 }
 
 #ifdef TR_ENABLE_GL_CHECKS
+tr::graphics_object_id tr::vertex_format::id() const
+{
+	return m_handle.get_deleter().id;
+}
+
 std::span<const tr::vertex_binding> tr::vertex_format::bindings() const
 {
 	return m_bindings;
