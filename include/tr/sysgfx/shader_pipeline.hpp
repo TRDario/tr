@@ -150,8 +150,8 @@ namespace tr
 #ifdef TR_ENABLE_GL_CHECKS
 		/// @cond implementation_details
 
-		/// Gets the unique ID of the shader pipeline.
-		/// @return Unique ID of the shader pipeline.
+		/// Gets the unique graphics object ID of the shader pipeline.
+		/// @return Unique graphics object ID of the shader pipeline.
 		graphics_object_id id() const;
 
 		/// Gets debug information about the set vertex shader.
@@ -173,8 +173,8 @@ namespace tr
 			ref<graphics_context> context;
 
 #ifdef TR_ENABLE_GL_CHECKS
-			/// Graphics object ID of the shader pipeline.
-			graphics_object_id id{generate_graphics_object_id()};
+			/// Handle to the unique graphics object ID of the pipeline.
+			graphics_object_id_handle id{};
 #endif
 
 			//

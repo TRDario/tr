@@ -314,17 +314,19 @@ namespace tr
 		/// @return Refernce to the OpenGL API functions.
 		const gl_api& gl() const;
 
-		/// Moves a label from one object to another.
-		/// @param type OpenGL object type.
-		/// @param old_id Old object ID.
-		/// @param new_id New object ID.
-		void move_label(unsigned int type, unsigned int old_id, unsigned int new_id);
-
 #ifdef TR_ENABLE_GL_CHECKS
 		/// Gets the graphics object registry associated with the context.
 		/// @return Reference to the graphics object registry associated with the context.
 		graphics_object_registry& registry();
 #endif
+
+		//
+
+		/// Moves a label from one object to another.
+		/// @param type OpenGL object type.
+		/// @param old_id Old object ID.
+		/// @param new_id New object ID.
+		void move_label(unsigned int type, unsigned int old_id, unsigned int new_id);
 
 		/// @endcond
 

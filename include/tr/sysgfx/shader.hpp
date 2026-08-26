@@ -448,8 +448,8 @@ namespace tr
 #ifdef TR_ENABLE_GL_CHECKS
 		/// @cond implementation_details
 
-		/// Gets the unique ID of the shader.
-		/// @return Unique ID of the shader.
+		/// Gets the unique graphics object ID of the shader.
+		/// @return Unique graphics object ID of the shader.
 		graphics_object_id id() const;
 
 		/// Gets the shader's inputs.
@@ -471,8 +471,8 @@ namespace tr
 			ref<graphics_context> context;
 
 #ifdef TR_ENABLE_GL_CHECKS
-			/// Unique graphics object ID of the shader.
-			graphics_object_id id{generate_graphics_object_id()};
+			/// Handle to the unique graphics object ID of the shader.
+			graphics_object_id_handle id{};
 #endif
 
 			//

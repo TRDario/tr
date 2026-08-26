@@ -469,6 +469,15 @@ const tr::gl_api& tr::graphics_context::gl() const
 	return m_gl_api;
 }
 
+#ifdef TR_ENABLE_GL_CHECKS
+tr::graphics_object_registry& tr::graphics_context::registry()
+{
+	return m_ptr.get_deleter().registry;
+}
+#endif
+
+//
+
 void tr::graphics_context::move_label(unsigned int type, unsigned int old_id, unsigned int new_id)
 {
 	const gl_api& gl{this->gl()};
@@ -482,13 +491,6 @@ void tr::graphics_context::move_label(unsigned int type, unsigned int old_id, un
 		gl.set_object_label(type, old_id, 0, nullptr);
 	}
 }
-
-#ifdef TR_ENABLE_GL_CHECKS
-tr::graphics_object_registry& tr::graphics_context::registry()
-{
-	return m_ptr.get_deleter().registry;
-}
-#endif
 
 //
 

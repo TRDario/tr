@@ -15,10 +15,42 @@ namespace tr
 		invalid
 	};
 
-	/// Generates a unique graphics object ID.
-	/// @details This function is guaranteed to be thread-safe.
-	/// @return New unique graphics object ID.
-	graphics_object_id generate_graphics_object_id();
+	/// Owning handle to a unique graphics object ID.
+	class graphics_object_id_handle
+	{
+	  public:
+		/// @name Constructors
+		/// @{
+
+		/// Constructs a new graphics object ID handle.
+		graphics_object_id_handle();
+
+		/// Moves a graphics object ID handle.
+		/// @param rhs Handle to move.
+		graphics_object_id_handle(graphics_object_id_handle&& rhs);
+
+		/// @}
+		/// @name Assignment operators
+		/// @{
+
+		/// Moves a graphics object ID handle.
+		/// @param rhs Handle to move.
+		graphics_object_id_handle& operator=(graphics_object_id_handle&& rhs);
+
+		/// @}
+		/// @name Constructors
+		/// @{
+
+		/// Gets the base graphics object ID.
+		/// @return Base ID.
+		operator graphics_object_id() const;
+
+		/// @}
+
+	  private:
+		/// Base ID.
+		graphics_object_id m_id;
+	};
 
 	//
 

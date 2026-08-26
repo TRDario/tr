@@ -220,8 +220,8 @@ namespace tr
 #ifdef TR_ENABLE_GL_CHECKS
 		/// @cond implementation_details
 
-		/// Gets the unique ID of the vertex format.
-		/// @return Unique ID of the vertex format.
+		/// Gets the unique graphics object ID of the vertex format.
+		/// @return Unique graphics object ID of the vertex format.
 		graphics_object_id id() const;
 
 		/// Gets information about the vertex format's bindings.
@@ -239,8 +239,8 @@ namespace tr
 			ref<graphics_context> context;
 
 #ifdef TR_ENABLE_GL_CHECKS
-			/// Graphics object ID of the vertex format.
-			graphics_object_id id{generate_graphics_object_id()};
+			/// Handle to the unique graphics object ID of the vertex format.
+			graphics_object_id_handle id{};
 #endif
 
 			//
