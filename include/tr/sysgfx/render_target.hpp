@@ -31,7 +31,7 @@ namespace tr
 			/// Size of the framebuffer.
 			glm::ivec2 size;
 
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 			/// Reference to the context the render target is on.
 			ref<const graphics_context> context;
 

@@ -9,7 +9,7 @@
 #include "../utility/reference.hpp"
 #include "../utility/specialization_of.hpp"
 
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 #include "graphics_object_registry.hpp"
 #endif
 
@@ -217,7 +217,7 @@ namespace tr
 		unsigned int unwrap() const;
 
 		/// @endcond
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 		/// @cond implementation_details
 
 		/// Gets the unique graphics object ID of the vertex format.
@@ -238,7 +238,7 @@ namespace tr
 			/// Reference to the graphics context the VAO is on.
 			ref<graphics_context> context;
 
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 			/// Handle to the unique graphics object ID of the vertex format.
 			graphics_object_id_handle id{};
 #endif
@@ -255,7 +255,7 @@ namespace tr
 		/// Handle to the OpenGL VAO.
 		handle<unsigned int, 0, deleter> m_handle;
 
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 		/// Information about the vertex format's bindings.
 		std::span<const vertex_binding> m_bindings;
 #endif

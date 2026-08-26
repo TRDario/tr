@@ -8,7 +8,7 @@
 #include "../utility/zstring_view.hpp"
 #include "texture_unit.hpp"
 
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 #include "gl_checks.hpp"
 #include "graphics_object_registry.hpp"
 #endif
@@ -445,7 +445,7 @@ namespace tr
 		unsigned int unwrap() const;
 
 		/// @endcond
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 		/// @cond implementation_details
 
 		/// Gets the unique graphics object ID of the shader.
@@ -470,7 +470,7 @@ namespace tr
 			/// Reference to the graphics context the shader is on.
 			ref<graphics_context> context;
 
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 			/// Handle to the unique graphics object ID of the shader.
 			graphics_object_id_handle id{};
 #endif
@@ -488,7 +488,7 @@ namespace tr
 		/// Texture units allocated to this shader.
 		boost::unordered_flat_map<int, texture_unit> m_texture_units;
 
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 		/// List of non-block uniforms obtained by introspection.
 		boost::unordered_flat_map<unsigned int, glsl_variable> m_uniforms;
 
@@ -501,7 +501,7 @@ namespace tr
 
 		//
 
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 		/// Finds the uniforms of the shader using introspection.
 		/// @param gl Structure holding the OpenGL API.
 		void find_uniforms(const gl_api& gl);

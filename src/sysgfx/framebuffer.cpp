@@ -12,14 +12,14 @@ tr::framebuffer::framebuffer(graphics_context& context)
 	: m_handle{deleter{context}}
 {
 	context.gl().create_framebuffers(1, out_handle(m_handle));
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 	context.registry().framebuffers.emplace(id());
 #endif
 }
 
 void tr::framebuffer::deleter::operator()(unsigned int fbo) const
 {
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 	context->registry().framebuffers.erase(id);
 #endif
 	context->gl().delete_framebuffers(1, &fbo);
@@ -91,7 +91,7 @@ unsigned int tr::framebuffer::unwrap() const
 	return m_handle.get();
 }
 
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 tr::graphics_object_id tr::framebuffer::id() const
 {
 	return m_handle.get_deleter().id;

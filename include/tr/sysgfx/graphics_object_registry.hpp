@@ -54,7 +54,7 @@ namespace tr
 
 	//
 
-	/// Graphics object registry used to track the validity of graphics objects when `TR_ENABLE_GL_CHECKS` is enabled.
+	/// Graphics object registry used to track the validity of graphics objects when `TR_ENABLE_CHECKED_GRAPHICS` is enabled.
 	struct graphics_object_registry
 	{
 		/// Set of valid active framebuffer IDs.

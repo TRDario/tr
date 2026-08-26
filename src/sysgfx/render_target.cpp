@@ -9,7 +9,7 @@
 //
 
 tr::render_target::render_target(const graphics_context& context)
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 	: m_framebuffer_info{0, context.window().size(), context, graphics_object_id::invalid, "<backbuffer>"}
 #else
 	: m_framebuffer_info{0, context.window().size()}
@@ -26,7 +26,7 @@ tr::render_target::render_target(const framebuffer& framebuffer, glm::ivec2 fram
 
 tr::render_target::render_target(const framebuffer& framebuffer, glm::ivec2 framebuffer_size, rectangle<int> viewport,
 								 rectangle<int> scissor_box)
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 	: m_framebuffer_info{framebuffer.unwrap(), framebuffer_size, framebuffer.context(), framebuffer.id(), framebuffer.label()}
 #else
 	: m_framebuffer_info{framebuffer.unwrap(), framebuffer_size}

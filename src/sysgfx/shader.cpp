@@ -39,7 +39,7 @@ std::string_view tr::shader_load_error::details() const
 tr::shader::shader(graphics_context& context, zstring_view source, unsigned int type)
 	: m_program{context.gl().create_shader_program_v(type, 1, reinterpret_cast<const char**>(&source)), deleter{context}}
 {
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 	context.registry().shaders.emplace(id());
 #endif
 
@@ -55,14 +55,14 @@ tr::shader::shader(graphics_context& context, zstring_view source, unsigned int 
 		throw shader_load_error{"(Embedded)", std::format("Failed to compile/link a shader\n{}", info_log_buffer)};
 	}
 
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 	find_uniforms(gl);
 	find_inputs(gl);
 	find_outputs(gl);
 #endif
 }
 
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 namespace tr
 {
 	namespace
@@ -167,7 +167,7 @@ void tr::shader::find_outputs(const gl_api& gl)
 
 void tr::shader::deleter::operator()(unsigned int program) const
 {
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 	context->registry().shaders.erase(id);
 #endif
 	context->gl().delete_program(program);
@@ -488,7 +488,7 @@ void tr::shader::set_uniform(int index, std::span<const glm::mat4x3> value)
 void tr::shader::set_uniform(int index, texture_view texture)
 {
 	TR_ASSERT(valid(), "Tried to set a uniform on a shader in an invalid state.");
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 	const auto uniform_it{m_uniforms.find(index)};
 	TR_ASSERT(uniform_it != m_uniforms.end(), "Tried to set uniform with invalid index '{}' in shader {}.", index, *this);
 	TR_ASSERT(uniform_it->second.type == glsl_type::sampler2D && uniform_it->second.array_size == 1,
@@ -568,7 +568,7 @@ unsigned int tr::shader::unwrap() const
 	return m_program.get();
 }
 
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 tr::graphics_object_id tr::shader::id() const
 {
 	return m_program.get_deleter().id;

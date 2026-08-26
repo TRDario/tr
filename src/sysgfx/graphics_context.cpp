@@ -187,7 +187,7 @@ tr::graphics_context::graphics_context(window_view window)
 
 void tr::graphics_context::deleter::operator()(SDL_GLContextState* context) const
 {
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 	TR_ASSERT(registry.framebuffers.empty(), "Tried to destroy a graphics context while one or more framebuffers were still alive on it.");
 	TR_ASSERT(registry.shaders.empty(), "Tried to destroy a graphics context while one or more shaders were still alive on it.");
 	TR_ASSERT(registry.shader_pipelines.empty(),
@@ -288,7 +288,7 @@ void tr::graphics_context::set_render_target(const render_target& target)
 {
 	const render_target::framebuffer_info_t& framebuffer_info{target.framebuffer_info()};
 
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 	TR_ASSERT(framebuffer_info.context.as_ptr() == this, "Tried to set render target to a context it is not associated with.");
 	TR_ASSERT(registry().framebuffers.contains(framebuffer_info.id),
 			  "Tried to set render target on a framebuffer in an invalid state to a context.");
@@ -302,7 +302,7 @@ void tr::graphics_context::set_render_target(const render_target& target)
 	gl.set_viewport(viewport.tl.x, bottom, viewport.size.x, viewport.size.y);
 	gl.set_scissor(scissor_box.tl.x, bottom, scissor_box.size.x, scissor_box.size.y);
 
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 	m_set_framebuffer_debug_info.id = framebuffer_info.id;
 	m_set_framebuffer_debug_info.label = framebuffer_info.label;
 #endif
@@ -312,7 +312,7 @@ void tr::graphics_context::set_shader_pipeline(const shader_pipeline& pipeline)
 {
 	TR_ASSERT(pipeline.valid(), "Tried to set a shader pipeline in an invalid state to a context.");
 	TR_ASSERT(&pipeline.context() == this, "Tried to set shader pipeline {} to a context it is not associated with.", pipeline);
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 	TR_ASSERT(registry().shaders.contains(pipeline.vertex_shader_debug_info().id),
 			  "Tried to set shader pipeline {} with invalid set vertex shader '{}'.", pipeline, pipeline.vertex_shader_debug_info().label);
 	TR_ASSERT(registry().shaders.contains(pipeline.fragment_shader_debug_info().id),
@@ -322,7 +322,7 @@ void tr::graphics_context::set_shader_pipeline(const shader_pipeline& pipeline)
 
 	gl().bind_program_pipeline(pipeline.unwrap());
 
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 	m_set_shader_pipeline_debug_info.id = pipeline.id();
 	m_set_shader_pipeline_debug_info.label = pipeline.label();
 #endif
@@ -341,7 +341,7 @@ void tr::graphics_context::set_vertex_format(const vertex_format& format)
 	TR_ASSERT(format.valid(), "Tried to set vertex format in an invalid state to a graphics context.");
 	TR_ASSERT(&format.context() == this, "Tried to set vertex format {} to a context it is not associated with.", format);
 
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 	m_set_vertex_format_debug_info.id = format.id();
 	m_set_vertex_format_debug_info.label = format.label();
 	m_set_vertex_format_debug_info.bindings = format.bindings();
@@ -421,7 +421,7 @@ void tr::graphics_context::clear_backbuffer_region(rectangle<int> region, tr::rg
 
 void tr::graphics_context::draw(primitive type, usize offset, usize vertices)
 {
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 	graphics_object_registry& registry{this->registry()};
 	TR_ASSERT(m_set_framebuffer_debug_info.id == graphics_object_id::invalid ||
 				  registry.framebuffers.contains(m_set_framebuffer_debug_info.id),
@@ -438,7 +438,7 @@ void tr::graphics_context::draw(primitive type, usize offset, usize vertices)
 
 void tr::graphics_context::draw_instances(primitive type, usize offset, usize vertices, int instances)
 {
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 	graphics_object_registry& registry{this->registry()};
 	TR_ASSERT(m_set_framebuffer_debug_info.id == graphics_object_id::invalid ||
 				  registry.framebuffers.contains(m_set_framebuffer_debug_info.id),
@@ -455,7 +455,7 @@ void tr::graphics_context::draw_instances(primitive type, usize offset, usize ve
 
 void tr::graphics_context::draw_indexed(primitive type, usize offset, usize indices)
 {
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 	graphics_object_registry& registry{this->registry()};
 	TR_ASSERT(m_set_framebuffer_debug_info.id == graphics_object_id::invalid ||
 				  registry.framebuffers.contains(m_set_framebuffer_debug_info.id),
@@ -472,7 +472,7 @@ void tr::graphics_context::draw_indexed(primitive type, usize offset, usize indi
 
 void tr::graphics_context::draw_indexed_instances(primitive type, usize offset, usize indices, int instances)
 {
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 	graphics_object_registry& registry{this->registry()};
 	TR_ASSERT(m_set_framebuffer_debug_info.id == graphics_object_id::invalid ||
 				  registry.framebuffers.contains(m_set_framebuffer_debug_info.id),
@@ -496,7 +496,7 @@ const tr::gl_api& tr::graphics_context::gl() const
 	return m_gl_api;
 }
 
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 tr::graphics_object_registry& tr::graphics_context::registry()
 {
 	return m_ptr.get_deleter().registry;
@@ -521,7 +521,7 @@ void tr::graphics_context::move_label(unsigned int type, unsigned int old_id, un
 
 //
 
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 void tr::graphics_context::check_vertex_buffer(std::string label, int slot, std::span<const vertex_attribute> attrs)
 {
 	TR_ASSERT(usize(slot) < m_set_vertex_format_debug_info.bindings.size(),

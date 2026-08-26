@@ -5,7 +5,7 @@
 #include "../utility/handle.hpp"
 #include "../utility/reference.hpp"
 
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 #include "graphics_object_registry.hpp"
 #endif
 
@@ -121,7 +121,7 @@ namespace tr
 		unsigned int unwrap() const;
 
 		/// @endcond
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 		/// @cond implementation_details
 
 		/// Gets the unique graphics object ID of the framebuffer.
@@ -138,7 +138,7 @@ namespace tr
 			/// Reference to the graphics context the framebuffer is on.
 			ref<graphics_context> context;
 
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 			/// Handle to the unique graphics object ID of the framebuffer.
 			graphics_object_id_handle id{};
 #endif

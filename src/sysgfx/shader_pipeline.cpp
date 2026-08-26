@@ -13,7 +13,7 @@ tr::shader_pipeline::shader_pipeline(graphics_context& context, const vertex_sha
 	: m_handle{deleter{context}}
 {
 	context.gl().create_program_pipelines(1, out_handle(m_handle));
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 	context.registry().shader_pipelines.emplace(id());
 #endif
 	set_shaders(vertex_shader, fragment_shader);
@@ -21,7 +21,7 @@ tr::shader_pipeline::shader_pipeline(graphics_context& context, const vertex_sha
 
 void tr::shader_pipeline::deleter::operator()(unsigned int ppo) const
 {
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 	context->registry().shader_pipelines.erase(id);
 #endif
 	context->gl().delete_program_pipelines(1, &ppo);
@@ -50,7 +50,7 @@ void tr::shader_pipeline::set_shaders(const vertex_shader& vertex_shader, const 
 			  "Tried to set fragment shader '{}' to pipeline '{}' despite them not being on the same graphics context.",
 			  fragment_shader.label(), label());
 
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 	m_vertex_shader_debug_info.id = vertex_shader.id();
 	m_vertex_shader_debug_info.label = vertex_shader.label();
 	m_vertex_shader_debug_info.outputs = vertex_shader.outputs();
@@ -73,7 +73,7 @@ void tr::shader_pipeline::set_vertex_shader(const vertex_shader& vertex_shader)
 			  "Tried to set vertex shader '{}' to pipeline '{}' despite them not being on the same graphics context.",
 			  vertex_shader.label(), label());
 
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 	m_vertex_shader_debug_info.id = vertex_shader.id();
 	m_vertex_shader_debug_info.label = vertex_shader.label();
 	m_vertex_shader_debug_info.outputs = vertex_shader.outputs();
@@ -91,7 +91,7 @@ void tr::shader_pipeline::set_fragment_shader(const fragment_shader& fragment_sh
 			  "Tried to set fragment shader '{}' to pipeline '{}' despite them not being on the same graphics context.",
 			  fragment_shader.label(), label());
 
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 	m_fragment_shader_debug_info.id = fragment_shader.id();
 	m_fragment_shader_debug_info.label = fragment_shader.label();
 	m_fragment_shader_debug_info.inputs = fragment_shader.outputs();
@@ -142,7 +142,7 @@ unsigned int tr::shader_pipeline::unwrap() const
 	return m_handle.get();
 }
 
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 tr::graphics_object_id tr::shader_pipeline::id() const
 {
 	return m_handle.get_deleter().id;

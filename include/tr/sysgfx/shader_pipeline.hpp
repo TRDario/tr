@@ -36,7 +36,7 @@ namespace tr
 	class shader_pipeline
 	{
 	  public:
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 		/// @cond implementation_details
 
 		/// Debug information about the set vertex shader.
@@ -147,7 +147,7 @@ namespace tr
 		unsigned int unwrap() const;
 
 		/// @endcond
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 		/// @cond implementation_details
 
 		/// Gets the unique graphics object ID of the shader pipeline.
@@ -172,7 +172,7 @@ namespace tr
 			/// Reference to the graphics context the pipeline is on.
 			ref<graphics_context> context;
 
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 			/// Handle to the unique graphics object ID of the pipeline.
 			graphics_object_id_handle id{};
 #endif
@@ -189,7 +189,7 @@ namespace tr
 		/// Handle to the OpenGL shader pipeline.
 		handle<unsigned int, 0, deleter> m_handle;
 
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 		/// Debug information about the set vertex shader.
 		vertex_shader_debug_info_t m_vertex_shader_debug_info;
 
@@ -199,7 +199,7 @@ namespace tr
 
 		//
 
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 		/// Asserts that the set vertex and fragment shaders are compatible.
 		void assert_shaders_compatible() const;
 #endif

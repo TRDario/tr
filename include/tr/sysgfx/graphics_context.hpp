@@ -9,7 +9,7 @@
 #include "render_target.hpp"
 #include "vertex_buffer.hpp"
 #include "vertex_format.hpp"
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 #include "graphics_object_registry.hpp"
 #endif
 
@@ -314,7 +314,7 @@ namespace tr
 		/// @return Refernce to the OpenGL API functions.
 		const gl_api& gl() const;
 
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 		/// Gets the graphics object registry associated with the context.
 		/// @return Reference to the graphics object registry associated with the context.
 		graphics_object_registry& registry();
@@ -334,7 +334,7 @@ namespace tr
 		/// Context deleter.
 		struct deleter
 		{
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 			/// Registry of objects created on the context.
 			graphics_object_registry registry;
 #endif
@@ -346,7 +346,7 @@ namespace tr
 			void operator()(SDL_GLContextState* context) const;
 		};
 
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 		/// Debug information about the set framebuffer.
 		struct set_framebuffer_debug_info
 		{
@@ -404,7 +404,7 @@ namespace tr
 		/// Commonly used 2D vertex format.
 		std::optional<vertex_format> m_vertex2_format;
 
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 		/// Debug information about the framebuffer set to the context.
 		set_framebuffer_debug_info m_set_framebuffer_debug_info;
 
@@ -417,7 +417,7 @@ namespace tr
 
 		//
 
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 		/// Checks if a vertex buffer's type's attribute match those of the current vertex format.
 		/// @param label Label of the vertex buffer.
 		/// @param slot Slot the vertex buffer is being set to.

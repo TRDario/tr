@@ -5,7 +5,7 @@
 #include "../utility/handle.hpp"
 #include "../utility/reference.hpp"
 
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 #include "graphics_object_registry.hpp"
 #endif
 
@@ -30,9 +30,6 @@ namespace tr
 	/// checking for validity using `valid()`.
 	///
 	/// `tr::graphics_buffer` instances may be labeled and are formattable. Example format output: `"My buffer" (OpenGL ID: 5)`.
-
-	/// @note `tr::graphics_buffer` isn't intended to be directly instanced, it is primarily documented because some buffers inherit methods
-	/// from it.
 	class graphics_buffer
 	{
 	  public:
@@ -90,7 +87,7 @@ namespace tr
 		/// Reallocates the buffer while preserving its label (if applicable).
 		void reallocate();
 
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 		/// Gets the unique graphics object ID of the buffer.
 		/// @return Unique graphics object ID of the buffer.
 		graphics_object_id id() const;
@@ -106,7 +103,7 @@ namespace tr
 			/// Reference to the context the buffer is on.
 			ref<graphics_context> context;
 
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 			/// Handle to the unique graphics object ID of the buffer.
 			graphics_object_id_handle id{};
 #endif

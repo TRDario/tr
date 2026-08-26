@@ -11,14 +11,14 @@ tr::graphics_buffer::graphics_buffer(graphics_context& context)
 	: m_handle{deleter{context}}
 {
 	context.gl().create_buffers(1, out_handle(m_handle));
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 	context.registry().buffers.emplace(id());
 #endif
 }
 
 void tr::graphics_buffer::deleter::operator()(unsigned int bo) const
 {
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 	context->registry().buffers.erase(id);
 #endif
 	context->gl().delete_buffers(1, &bo);
@@ -76,7 +76,7 @@ void tr::graphics_buffer::reallocate()
 	context().move_label(GL_BUFFER, old_buffer.unwrap(), unwrap());
 }
 
-#ifdef TR_ENABLE_GL_CHECKS
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 tr::graphics_object_id tr::graphics_buffer::id() const
 {
 	return m_handle.get_deleter().id;

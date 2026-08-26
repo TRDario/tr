@@ -7,7 +7,7 @@
 ## The target will have a number of compiler flags set, mostly enabling warnings, but with some floating point optimizations enabled.    ##
 ## On Linux, the libstdc++ debug mode will be used in the debug configuration.                                                           ##
 ## In the RelWithDebInfo and Debug configurations, TR_ENABLE_ASSERTS is defined.                                                         ##
-## In the Debug configuration, TR_ENABLE_GL_CHECKS is defined.                                                                           ##
+## In the Debug configuration, TR_ENABLE_CHECKED_GRAPHICS is defined.                                                                    ##
 ## The target will be linked with tr::tr.                                                                                                ##
 ## The target will precompile <tr/utility/common.hpp>                                                                                    ##
 ##                                                                                                                                       ##
@@ -59,7 +59,7 @@ function(tr_target_template TARGET)
 		target_compile_definitions(${TARGET} PUBLIC $<$<CONFIG:Debug>:_GLIBCXX_DEBUG _GLIBCXX_DEBUG_PEDANTIC>)
 	endif()
 	target_compile_definitions(${TARGET} PUBLIC
-		$<$<CONFIG:Debug>:TR_ENABLE_GL_CHECKS>
+		$<$<CONFIG:Debug>:TR_ENABLE_CHECKED_GRAPHICS>
 		$<$<CONFIG:Debug>:TR_ENABLE_ASSERTS>$<$<CONFIG:RelWithDebInfo>:TR_ENABLE_ASSERTS>
 	)
 
