@@ -60,12 +60,14 @@ namespace tr
 		using graphics_buffer::set_label;
 
 		/// @}
-		/// @name ID
+		/// @cond gl_interop
+		/// @name OpenGL interop
 		/// @{
 
-		using graphics_buffer::id;
+		using graphics_buffer::unwrap;
 
 		/// @}
+		/// @endcond
 
 	  private:
 		/// Size of the buffer.
@@ -120,6 +122,14 @@ namespace tr
 		using basic_uniform_buffer::set_label;
 
 		/// @}
+		/// @cond gl_interop
+		/// @name OpenGL interop
+		/// @{
+
+		using basic_uniform_buffer::unwrap;
+
+		/// @}
+		/// @endcond
 	};
 } // namespace tr
 

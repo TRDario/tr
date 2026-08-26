@@ -32,12 +32,14 @@ namespace tr
 		using graphics_buffer::set_label;
 
 		/// @}
-		/// @name ID
+		/// @cond gl_interop
+		/// @name OpenGL interop
 		/// @{
 
-		using graphics_buffer::id;
+		using graphics_buffer::unwrap;
 
 		/// @}
+		/// @endcond
 
 	  private:
 		/// Size of the vertex buffer in bytes.
@@ -71,12 +73,14 @@ namespace tr
 		using basic_static_vertex_buffer::set_label;
 
 		/// @}
-		/// @name ID
+		/// @cond gl_interop
+		/// @name OpenGL interop
 		/// @{
 
-		using basic_static_vertex_buffer::id;
+		using basic_static_vertex_buffer::unwrap;
 
 		/// @}
+		/// @endcond
 	};
 
 	//
@@ -146,12 +150,14 @@ namespace tr
 		using graphics_buffer::set_label;
 
 		/// @}
-		/// @name ID
+		/// @cond gl_interop
+		/// @name OpenGL interop
 		/// @{
 
-		using graphics_buffer::id;
+		using graphics_buffer::unwrap;
 
 		/// @}
+		/// @endcond
 
 	  private:
 		/// Used size of the buffer in bytes.
@@ -229,12 +235,14 @@ namespace tr
 		using basic_dyn_vertex_buffer::set_label;
 
 		/// @}
-		/// @name ID
+		/// @cond gl_interop
+		/// @name OpenGL interop
 		/// @{
 
-		using basic_dyn_vertex_buffer::id;
+		using basic_dyn_vertex_buffer::unwrap;
 
 		/// @}
+		/// @endcond
 	};
 } // namespace tr
 

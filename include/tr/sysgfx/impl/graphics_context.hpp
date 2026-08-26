@@ -12,7 +12,7 @@ void tr::graphics_context::set_vertex_buffer(const static_vertex_buffer<T>& buff
 #ifdef TR_ENABLE_GL_CHECKS
 	check_vertex_buffer(buffer.label(), slot, as_vertex_attribute_list<T>);
 #endif
-	set_vertex_buffer(buffer.id(), slot, offset * sizeof(T), sizeof(T));
+	set_vertex_buffer(buffer.unwrap(), slot, offset * sizeof(T), sizeof(T));
 }
 
 template <tr::standard_layout T>
@@ -21,5 +21,5 @@ void tr::graphics_context::set_vertex_buffer(const dyn_vertex_buffer<T>& buffer,
 #ifdef TR_ENABLE_GL_CHECKS
 	check_vertex_buffer(buffer.label(), slot, as_vertex_attribute_list<T>);
 #endif
-	set_vertex_buffer(buffer.id(), slot, offset * sizeof(T), sizeof(T));
+	set_vertex_buffer(buffer.unwrap(), slot, offset * sizeof(T), sizeof(T));
 }

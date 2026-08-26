@@ -68,5 +68,8 @@ namespace tr
 
 		/// Set of valid active vertex format IDs.
 		boost::unordered_flat_set<graphics_object_id> vertex_formats;
+
+		/// Set of valid active buffer IDs.
+		boost::unordered_flat_set<graphics_object_id> buffers;
 	};
 } // namespace tr

@@ -36,12 +36,14 @@ namespace tr
 		using graphics_buffer::set_label;
 
 		/// @}
-		/// @name ID
+		/// @cond gl_interop
+		/// @name OpenGL interop
 		/// @{
 
-		using graphics_buffer::id;
+		using graphics_buffer::unwrap;
 
 		/// @}
+		/// @endcond
 
 	  private:
 		/// Size of the buffer in elements.
@@ -115,12 +117,14 @@ namespace tr
 		using graphics_buffer::set_label;
 
 		/// @}
-		/// @name ID
+		/// @cond gl_interop
+		/// @name OpenGL interop
 		/// @{
 
-		using graphics_buffer::id;
+		using graphics_buffer::unwrap;
 
 		/// @}
+		/// @endcond
 
 	  private:
 		/// Used size of the buffer in elements.

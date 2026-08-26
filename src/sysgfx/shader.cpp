@@ -512,7 +512,7 @@ void tr::shader::set_storage_buffer(unsigned int index, unsigned int buffer_id, 
 
 void tr::shader::set_storage_buffer(unsigned int index, basic_shader_buffer& buffer)
 {
-	set_storage_buffer(index, buffer.id(), buffer.header_size() + buffer.array_size());
+	set_storage_buffer(index, buffer.unwrap(), buffer.header_size() + buffer.array_size());
 }
 
 void tr::shader::set_uniform_buffer(unsigned int index, unsigned int buffer_id)
@@ -524,7 +524,7 @@ void tr::shader::set_uniform_buffer(unsigned int index, unsigned int buffer_id)
 
 void tr::shader::set_uniform_buffer(unsigned int index, const basic_uniform_buffer& buffer)
 {
-	set_uniform_buffer(index, buffer.id());
+	set_uniform_buffer(index, buffer.unwrap());
 }
 
 //

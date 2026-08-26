@@ -194,6 +194,7 @@ void tr::graphics_context::deleter::operator()(SDL_GLContextState* context) cons
 			  "Tried to destroy a graphics context while one or more shader pipelines were still alive on it.");
 	TR_ASSERT(registry.vertex_formats.empty(),
 			  "Tried to destroy a graphics context while one or more vertex formats were still alive on it.");
+	TR_ASSERT(registry.buffers.empty(), "Tried to destroy a graphics context while one or more buffers were still alive on it.");
 #endif
 
 	SDL_GL_DestroyContext(context);
@@ -356,22 +357,22 @@ void tr::graphics_context::set_vertex_buffer(unsigned int buffer_id, int slot, s
 
 void tr::graphics_context::set_vertex_buffer(const basic_static_vertex_buffer& buffer, int slot, ssize offset, usize stride)
 {
-	set_vertex_buffer(buffer.id(), slot, offset, stride);
+	set_vertex_buffer(buffer.unwrap(), slot, offset, stride);
 }
 
 void tr::graphics_context::set_vertex_buffer(const basic_dyn_vertex_buffer& buffer, int slot, ssize offset, usize stride)
 {
-	set_vertex_buffer(buffer.id(), slot, offset, stride);
+	set_vertex_buffer(buffer.unwrap(), slot, offset, stride);
 }
 
 void tr::graphics_context::set_index_buffer(const static_index_buffer& buffer)
 {
-	gl().bind_buffer(GL_ELEMENT_ARRAY_BUFFER, buffer.id());
+	gl().bind_buffer(GL_ELEMENT_ARRAY_BUFFER, buffer.unwrap());
 }
 
 void tr::graphics_context::set_index_buffer(const dyn_index_buffer& buffer)
 {
-	gl().bind_buffer(GL_ELEMENT_ARRAY_BUFFER, buffer.id());
+	gl().bind_buffer(GL_ELEMENT_ARRAY_BUFFER, buffer.unwrap());
 }
 
 //

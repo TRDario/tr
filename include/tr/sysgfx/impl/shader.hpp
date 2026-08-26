@@ -9,19 +9,19 @@
 template <typename Header, typename ArrayElement>
 void tr::shader::set_storage_buffer(unsigned int index, shader_buffer<Header, ArrayElement>& buffer)
 {
-	set_storage_buffer(index, buffer.id(), sizeof(Header) + sizeof(ArrayElement) * buffer.array_size());
+	set_storage_buffer(index, buffer.unwrap(), sizeof(Header) + sizeof(ArrayElement) * buffer.array_size());
 }
 
 template <typename Element>
 void tr::shader::set_storage_buffer(unsigned int index, shader_array<Element>& buffer)
 {
-	set_storage_buffer(index, buffer.id(), sizeof(Element) * buffer.size());
+	set_storage_buffer(index, buffer.unwrap(), sizeof(Element) * buffer.size());
 }
 
 template <typename Object>
 void tr::shader::set_uniform_buffer(unsigned int index, const uniform_buffer<Object>& buffer)
 {
-	set_uniform_buffer(index, buffer.id());
+	set_uniform_buffer(index, buffer.unwrap());
 }
 
 //
