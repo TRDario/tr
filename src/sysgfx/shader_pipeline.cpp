@@ -13,19 +13,18 @@ tr::shader_pipeline::shader_pipeline(graphics_context& context, const vertex_sha
 	: m_handle{deleter{context}}
 {
 	context.gl().create_program_pipelines(1, out_handle(m_handle));
-	set_shaders(vertex_shader, fragment_shader);
-
 #ifdef TR_ENABLE_GL_CHECKS
-	context.registry().register_shader_pipeline(id(), unwrap());
+	context.registry().shader_pipelines.emplace(id());
 #endif
+	set_shaders(vertex_shader, fragment_shader);
 }
 
 void tr::shader_pipeline::deleter::operator()(unsigned int ppo) const
 {
-	context->gl().delete_program_pipelines(1, &ppo);
 #ifdef TR_ENABLE_GL_CHECKS
-	context->registry().unregister_shader_pipeline(id);
+	context->registry().shader_pipelines.erase(id);
 #endif
+	context->gl().delete_program_pipelines(1, &ppo);
 }
 
 //
@@ -163,9 +162,8 @@ const tr::shader_pipeline::fragment_shader_debug_info_t& tr::shader_pipeline::fr
 
 void tr::shader_pipeline::assert_shaders_compatible() const
 {
-	graphics_context& context{this->context()};
-	if (!(context.registry().is_shader_valid(m_vertex_shader_debug_info.id) &&
-		  context.registry().is_shader_valid(m_fragment_shader_debug_info.id))) {
+	const graphics_object_registry& registry{context().registry()};
+	if (!(registry.shaders.contains(m_vertex_shader_debug_info.id) && registry.shaders.contains(m_fragment_shader_debug_info.id))) {
 		return;
 	}
 

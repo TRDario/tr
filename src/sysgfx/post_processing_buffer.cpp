@@ -78,7 +78,7 @@ tr::render_target tr::post_processing_buffer::source() const
 {
 	TR_ASSERT(complete(), "Tried to get source of incomplete post-processing buffer");
 
-	return m_framebuffer.render_target(size());
+	return render_target{m_framebuffer, size()};
 }
 
 void tr::post_processing_buffer::clear_source()
@@ -102,7 +102,7 @@ tr::texture_view tr::post_processing_buffer::apply(fragment_shader& fragment_sha
 	m_shader_pipeline.set_shaders(m_vertex_shader, fragment_shader);
 	m_source_index = (m_source_index + 1) % 2;
 
-	context.set_render_target(m_framebuffer.render_target(size()));
+	context.set_render_target(render_target{m_framebuffer, size()});
 	if (context.should_setup_renderer(m_renderer_id)) {
 		context.set_shader_pipeline(m_shader_pipeline);
 		context.set_vertex_format(m_vertex_format);

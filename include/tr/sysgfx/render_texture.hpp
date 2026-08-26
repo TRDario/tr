@@ -5,6 +5,11 @@
 #include "framebuffer.hpp"
 #include "texture.hpp"
 
+namespace tr
+{
+	class render_target;
+}
+
 //
 
 namespace tr

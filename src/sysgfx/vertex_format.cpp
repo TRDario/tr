@@ -16,7 +16,7 @@ tr::vertex_format::vertex_format(graphics_context& context, std::span<const vert
 	const gl_api& gl{context.gl()};
 	gl.create_vertex_arrays(1, out_handle(m_handle));
 #ifdef TR_ENABLE_GL_CHECKS
-	context.registry().register_vertex_format(id(), unwrap());
+	context.registry().vertex_formats.emplace(id());
 #endif
 
 	unsigned int attr_id{0};
@@ -57,10 +57,10 @@ tr::vertex_format::vertex_format(graphics_context& context, std::span<const vert
 
 void tr::vertex_format::deleter::operator()(unsigned int vao) const
 {
-	context->gl().delete_vertex_arrays(1, &vao);
 #ifdef TR_ENABLE_GL_CHECKS
-	context->registry().unregister_vertex_format(id);
+	context->registry().vertex_formats.erase(id);
 #endif
+	context->gl().delete_vertex_arrays(1, &vao);
 }
 
 //

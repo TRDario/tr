@@ -5,10 +5,13 @@
 #include "../utility/handle.hpp"
 #include "../utility/reference.hpp"
 
+#ifdef TR_ENABLE_GL_CHECKS
+#include "graphics_object_registry.hpp"
+#endif
+
 namespace tr
 {
 	class graphics_context;
-	class render_target;
 	class texture_view;
 } // namespace tr
 
@@ -33,8 +36,7 @@ namespace tr
 	/// state. Invalid `tr::framebuffer` instances may not be interacted with besides moving a new value into them and checking for validity
 	/// using `valid()`.
 	///
-	/// `tr::framebuffer` instances may be labeled and are formattable. Example format output: `"My %framebuffer" (GID: 5)`. The GID is the
-	/// OpenGL ID of the framebuffer.
+	/// `tr::framebuffer` instances may be labeled and are formattable. Example format output: `"My %framebuffer" (OpenGL ID: 5)`.
 	class framebuffer
 	{
 	  public:
@@ -78,16 +80,6 @@ namespace tr
 		graphics_context& context() const;
 
 		/// @}
-		/// @name Render target
-		/// @{
-
-		/// Creates a render target on the framebuffer.
-		/// @details Since the framebuffer does not keep track of its own size, it must be provided manully.
-		/// @param size Size of the render target.
-		/// @return Render target on the framebuffer.
-		render_target render_target(glm::ivec2 size) const;
-
-		/// @}
 		/// @name Attachments
 		/// @{
 
@@ -121,12 +113,23 @@ namespace tr
 		std::string label() const;
 
 		/// @}
+		/// @cond gl_interop
 
-		/// @cond __hidden
-		/// Gets the OpenGL framebuffer ID.
+		/// Unwraps the OpenGL framebuffer.
+		/// @note This does not release the framebuffer.
 		/// @return OpenGL framebuffer ID.
-		unsigned int gid() const;
+		unsigned int unwrap() const;
+
 		/// @endcond
+#ifdef TR_ENABLE_GL_CHECKS
+		/// @cond implementation_details
+
+		/// Gets the unique graphics object ID of the framebuffer.
+		/// @return Unique graphics object ID of the framebuffer.
+		graphics_object_id id() const;
+
+		/// @endcond
+#endif
 
 	  private:
 		/// Framebuffer deleter.
@@ -134,6 +137,11 @@ namespace tr
 		{
 			/// Reference to the graphics context the framebuffer is on.
 			ref<graphics_context> context;
+
+#ifdef TR_ENABLE_GL_CHECKS
+			/// Handle to the unique graphics object ID of the framebuffer.
+			graphics_object_id_handle id{};
+#endif
 
 			//
 

@@ -50,7 +50,7 @@ tr::render_target tr::render_texture::render_target() const
 {
 	TR_ASSERT(complete(), "Tried to create a render target for an incomplete texture.");
 
-	return m_framebuffer.render_target(size());
+	return tr::render_target{m_framebuffer, size()};
 }
 
 //

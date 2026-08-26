@@ -40,7 +40,7 @@ tr::shader::shader(graphics_context& context, zstring_view source, unsigned int 
 	: m_program{context.gl().create_shader_program_v(type, 1, reinterpret_cast<const char**>(&source)), deleter{context}}
 {
 #ifdef TR_ENABLE_GL_CHECKS
-	context.registry().register_shader(id(), unwrap());
+	context.registry().shaders.emplace(id());
 #endif
 
 	const gl_api& gl{context.gl()};
@@ -167,10 +167,10 @@ void tr::shader::find_outputs(const gl_api& gl)
 
 void tr::shader::deleter::operator()(unsigned int program) const
 {
-	context->gl().delete_program(program);
 #ifdef TR_ENABLE_GL_CHECKS
-	context->registry().unregister_shader(id);
+	context->registry().shaders.erase(id);
 #endif
+	context->gl().delete_program(program);
 }
 
 //

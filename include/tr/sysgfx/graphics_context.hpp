@@ -347,8 +347,18 @@ namespace tr
 		};
 
 #ifdef TR_ENABLE_GL_CHECKS
-		/// Debug information about the bound shader pipeline.
-		struct bound_shader_pipeline_debug_info
+		/// Debug information about the set framebuffer.
+		struct set_framebuffer_debug_info
+		{
+			/// Unique graphics object ID of the framebuffer.
+			graphics_object_id id{graphics_object_id::invalid};
+
+			/// Label of the framebuffer.
+			std::string label{"<backbuffer>"};
+		};
+
+		/// Debug information about the set shader pipeline.
+		struct set_shader_pipeline_debug_info
 		{
 			/// Unique graphics object ID of the shader pipeline.
 			graphics_object_id id{graphics_object_id::invalid};
@@ -357,8 +367,8 @@ namespace tr
 			std::string label{"<unbound>"};
 		};
 
-		/// Debug information about the bound vertex format.
-		struct bound_vertex_format_debug_info
+		/// Debug information about the set vertex format.
+		struct set_vertex_format_debug_info
 		{
 			/// Unique graphics object ID of the vertex format.
 			graphics_object_id id{graphics_object_id::invalid};
@@ -388,9 +398,6 @@ namespace tr
 		/// ID of the current active renderer.
 		renderer_id m_active_renderer{renderer_id::no_renderer};
 
-		/// Current render target.
-		std::optional<render_target> m_render_target;
-
 		/// Tracks which texture units are allocated.
 		std::bitset<80> m_allocated_texture_units;
 
@@ -398,22 +405,15 @@ namespace tr
 		std::optional<vertex_format> m_vertex2_format;
 
 #ifdef TR_ENABLE_GL_CHECKS
-		/// Debug information about the shader pipeline bound to the context.
-		bound_shader_pipeline_debug_info m_bound_shader_pipeline_debug_info;
+		/// Debug information about the framebuffer set to the context.
+		set_framebuffer_debug_info m_set_framebuffer_debug_info;
 
-		/// Debug information about the vertex format bound to the context.
-		bound_vertex_format_debug_info m_bound_vertex_format_debug_info;
+		/// Debug information about the shader pipeline set to the context.
+		set_shader_pipeline_debug_info m_set_shader_pipeline_debug_info;
+
+		/// Debug information about the vertex format set to the context.
+		set_vertex_format_debug_info m_set_vertex_format_debug_info;
 #endif
-
-		//
-
-		/// Checks the render target's FBO ID.
-		/// @param fbo ID of the FBO to check.
-		/// @return `true` if the FBO is of the render target, `false` otherwise.
-		bool is_fbo_of_render_target(unsigned int fbo);
-
-		/// Clears the render target.
-		void clear_render_target();
 
 		//
 
@@ -434,7 +434,7 @@ namespace tr
 
 		//
 
-		// Accesses `make_current_and_return_gl_api()` and `m_allocated_texture_units`.
+		// Accesses `m_allocated_texture_units`.
 		friend class texture_unit;
 
 #ifdef TR_HAS_IMGUI
