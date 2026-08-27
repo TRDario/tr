@@ -129,13 +129,18 @@ namespace tr
 
 	//
 
-	/// O(1) unstable vector erase function.
+	/// Vector-like container that `tr::unstable_erase` may be used on.
+	template <typename T>
+	concept unstable_erasable = std::ranges::contiguous_range<T> && std::movable<std::ranges::range_value_t<T>> &&
+								requires(T& v) { v.pop_back(); };
+
+	/// O(1) unstable vector-like container erase function.
 	/// @details O(1) erasure is achieved by swapping the final element into the position of the erased and then popping back.
-	/// @tparam Element Vector element type.
-	/// @param vec Vector to erase from.
-	/// @param where Element in the vector to erase.
-	template <move_assignable Element>
-	void unstable_erase(std::vector<Element>& vec, typename std::vector<Element>::iterator where);
+	/// @tparam Container Vector-like container type.
+	/// @param container Container to erase from.
+	/// @param where Element in the container to erase.
+	template <unstable_erasable Container>
+	void unstable_erase(Container& container, typename Container::iterator where);
 
 	/// @}
 

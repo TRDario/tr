@@ -166,12 +166,12 @@ Value tr::sum(Range&& range, Value initial_value)
 
 //
 
-template <tr::move_assignable Element>
-void tr::unstable_erase(std::vector<Element>& vec, typename std::vector<Element>::iterator where)
+template <tr::unstable_erasable Container>
+void tr::unstable_erase(Container& container, typename Container::iterator where)
 {
-	const typename std::vector<Element>::iterator back{std::prev(vec.end())};
-	if (where != back) {
-		*where = std::move(*back);
+	const typename Container::iterator back_it{std::prev(container.end())};
+	if (where != back_it) {
+		*where = std::move(*back_it);
 	}
-	vec.pop_back();
+	container.pop_back();
 }
