@@ -163,10 +163,12 @@ var menudata={children:[
 {text:"v",url:"functions_vars.html#index_v"},
 {text:"w",url:"functions_vars.html#index_w"}]},
 {text:"Typedefs",url:"functions_type.html",children:[
+{text:"a",url:"functions_type.html#index_a"},
 {text:"c",url:"functions_type.html#index_c"},
 {text:"d",url:"functions_type.html#index_d"},
 {text:"e",url:"functions_type.html#index_e"},
 {text:"i",url:"functions_type.html#index_i"},
+{text:"n",url:"functions_type.html#index_n"},
 {text:"p",url:"functions_type.html#index_p"},
 {text:"r",url:"functions_type.html#index_r"},
 {text:"s",url:"functions_type.html#index_s"},

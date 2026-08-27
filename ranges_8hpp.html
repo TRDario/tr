@@ -138,6 +138,11 @@ Namespaces</h2></td></tr>
 <tr class="memitem:tr" id="r_tr"><td class="memItemLeft">namespace &#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html">tr</a></td></tr>
 <tr class="memdesc:namespacetr"><td class="mdescLeft">&#160;</td><td class="mdescRight">Namespace containing all tr functionality. <br /></td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-concepts" class="groupheader"><a id="concepts" name="concepts"></a>
+Concepts</h2></td></tr>
+<tr class="memitem:tr_3A_3Aunstable_5Ferasable" id="r_tr_3A_3Aunstable_5Ferasable"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concepttr_1_1unstable__erasable.html">tr::unstable_erasable</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vector-like container that <span class="tt"><a class="el" href="namespacetr.html#ac5b33d830728b978ef3c208ac64e9164" title="O(1) unstable vector-like container erase function.">tr::unstable_erase</a></span> may be used on. <br /></td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr id="func-members-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Ranges</div></td></tr>
@@ -183,9 +188,9 @@ requires (std::equality_comparable_with&lt;std::ranges::range_value_t&lt;Searche
 <tr class="memitem:a0023a621d14e63c379e246dcefc8996b" id="r_a0023a621d14e63c379e246dcefc8996b"><td class="memTemplParams" colspan="2">template&lt;std::ranges::range Range, typename Value&gt; </td></tr>
 <tr class="memitem:a0023a621d14e63c379e246dcefc8996b template"><td class="memItemLeft">Value&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#a0023a621d14e63c379e246dcefc8996b">tr::sum</a> (Range &amp;&amp;range, Value initial_value)</td></tr>
 <tr class="memdesc:a0023a621d14e63c379e246dcefc8996b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sums the elements of a range.  <br /></td></tr>
-<tr class="memitem:aa629f8b365be165db61000c872013f8c" id="r_aa629f8b365be165db61000c872013f8c"><td class="memTemplParams" colspan="2">template&lt;move_assignable Element&gt; </td></tr>
-<tr class="memitem:aa629f8b365be165db61000c872013f8c template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#aa629f8b365be165db61000c872013f8c">tr::unstable_erase</a> (std::vector&lt; Element &gt; &amp;vec, typename std::vector&lt; Element &gt;::iterator where)</td></tr>
-<tr class="memdesc:aa629f8b365be165db61000c872013f8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">O(1) unstable vector erase function.  <br /></td></tr>
+<tr class="memitem:ac5b33d830728b978ef3c208ac64e9164" id="r_ac5b33d830728b978ef3c208ac64e9164"><td class="memTemplParams" colspan="2">template&lt;unstable_erasable Container&gt; </td></tr>
+<tr class="memitem:ac5b33d830728b978ef3c208ac64e9164 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#ac5b33d830728b978ef3c208ac64e9164">tr::unstable_erase</a> (Container &amp;container, typename Container::iterator where)</td></tr>
+<tr class="memdesc:ac5b33d830728b978ef3c208ac64e9164"><td class="mdescLeft">&#160;</td><td class="mdescRight">O(1) unstable vector-like container erase function.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>

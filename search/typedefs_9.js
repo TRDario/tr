@@ -1,7 +1,8 @@
 var searchData=
 [
   ['reference_0',['reference',['../classtr_1_1audio__device__list__view__iterator.html#aa06010f080d546337bd7e7f3e3398a81',1,'tr::audio_device_list_view_iterator::reference'],['../classtr_1_1bitmap_1_1iterator.html#a19bab0b069d94fccbbf10361a63a6e45',1,'tr::bitmap::iterator::reference'],['../classtr_1_1bitmap__view.html#afdff2cc294b09075dddf03b762f12cf4',1,'tr::bitmap_view::reference'],['../classtr_1_1graphics__buffer__span__map.html#a0de74f9c307da7bbb29425af226b0e2c',1,'tr::graphics_buffer_span_map::reference'],['../classtr_1_1pointer__iterator.html#a3cdb18e417791febeb42b9e212091d9e',1,'tr::pointer_iterator::reference'],['../classtr_1_1static__string.html#a5ce85fc3a0e53731e5e03cd6fa6df7ba',1,'tr::static_string::reference'],['../classtr_1_1static__vector.html#a71cab4a59b6ab2992e08241b6670adc2',1,'tr::static_vector::reference'],['../classtr_1_1basic__zstring__view.html#a140d82262ce995dbef28e030dd01f00b',1,'tr::basic_zstring_view::reference']]],
-  ['return_5ftype_5ft_1',['return_type_t',['../namespacetr.html#a05c33bf893fc41c7d1065516daa796a8',1,'tr']]],
-  ['reverse_5findexed_5fiterator_2',['reverse_indexed_iterator',['../namespacetr_1_1utf8.html#abfe34f57f9c5716c28093cb5830dc56b',1,'tr::utf8']]],
-  ['reverse_5fiterator_3',['reverse_iterator',['../classtr_1_1static__vector.html#afd8f3e99b315b6defc922fc262ab4623',1,'tr::static_vector::reverse_iterator'],['../namespacetr_1_1utf8.html#aaa0b2ccfe620e11f8febeec0d159ee89',1,'tr::utf8::reverse_iterator']]]
+  ['return_5ftype_1',['return_type',['../structtr_1_1function__traits.html#aac158e4801b186594caf77c58d8604d6',1,'tr::function_traits']]],
+  ['return_5ftype_5ft_2',['return_type_t',['../namespacetr.html#a05c33bf893fc41c7d1065516daa796a8',1,'tr']]],
+  ['reverse_5findexed_5fiterator_3',['reverse_indexed_iterator',['../namespacetr_1_1utf8.html#abfe34f57f9c5716c28093cb5830dc56b',1,'tr::utf8']]],
+  ['reverse_5fiterator_4',['reverse_iterator',['../classtr_1_1static__vector.html#afd8f3e99b315b6defc922fc262ab4623',1,'tr::static_vector::reverse_iterator'],['../namespacetr_1_1utf8.html#aaa0b2ccfe620e11f8febeec0d159ee89',1,'tr::utf8::reverse_iterator']]]
 ];

@@ -60,7 +60,7 @@ var annotated_dup =
       [ "file_open_error", "classtr_1_1file__open__error.html", "classtr_1_1file__open__error" ],
       [ "fragment_shader", "classtr_1_1fragment__shader.html", "classtr_1_1fragment__shader" ],
       [ "framebuffer", "classtr_1_1framebuffer.html", "classtr_1_1framebuffer" ],
-      [ "function_traits", "structtr_1_1function__traits.html", null ],
+      [ "function_traits", "structtr_1_1function__traits.html", "structtr_1_1function__traits" ],
       [ "glyph_metrics", "structtr_1_1glyph__metrics.html", "structtr_1_1glyph__metrics" ],
       [ "graphics_benchmark", "classtr_1_1graphics__benchmark.html", "classtr_1_1graphics__benchmark" ],
       [ "graphics_buffer", "classtr_1_1graphics__buffer.html", "classtr_1_1graphics__buffer" ],

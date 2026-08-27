@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
   </div>
 </div>
 <script type="text/javascript">
-document.addEventListener('DOMContentLoaded',() => { initNavTree('structtr_1_1function__traits.html','',''); });
+document.addEventListener('DOMContentLoaded',() => { initNavTree('structtr_1_1function__traits.html','','structtr_1_1function__traits-members'); });
 </script>
 <div id="container">
 <div id="doc-content">
@@ -138,7 +138,93 @@ struct tr::function_traits&lt; Function &gt;</div><dl class="tparams"><dt>Templa
   </table>
   </dd>
 </dl>
-</div></div><!-- contents -->
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-types" class="groupheader"><a id="pub-types" name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:aac158e4801b186594caf77c58d8604d6" id="r_aac158e4801b186594caf77c58d8604d6"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#aac158e4801b186594caf77c58d8604d6">return_type</a></td></tr>
+<tr class="memdesc:aac158e4801b186594caf77c58d8604d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type returned by the function.  <br /></td></tr>
+<tr class="memitem:a878dc194a8b0c5398debe4c1925942f4" id="r_a878dc194a8b0c5398debe4c1925942f4"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a878dc194a8b0c5398debe4c1925942f4">class_type</a></td></tr>
+<tr class="memdesc:a878dc194a8b0c5398debe4c1925942f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class the function belongs to (only applicable for pointers to member functions).  <br /></td></tr>
+<tr class="memitem:a774916bf2ca4bf973e095d7f798e6ff3" id="r_a774916bf2ca4bf973e095d7f798e6ff3"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a774916bf2ca4bf973e095d7f798e6ff3">args_tuple</a></td></tr>
+<tr class="memdesc:a774916bf2ca4bf973e095d7f798e6ff3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tuple of types of the arguments to the function.  <br /></td></tr>
+<tr class="memitem:ae71cf103bcef5f01cedd0c0e72dbd977" id="r_ae71cf103bcef5f01cedd0c0e72dbd977"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> N&gt; </td></tr>
+<tr class="memitem:ae71cf103bcef5f01cedd0c0e72dbd977 template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#ae71cf103bcef5f01cedd0c0e72dbd977">nth_arg_type</a> = std::tuple_element_t&lt;N, <a class="el" href="#a774916bf2ca4bf973e095d7f798e6ff3">args_tuple</a>&gt;</td></tr>
+<tr class="memdesc:ae71cf103bcef5f01cedd0c0e72dbd977"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type of the Nth argument to the function.  <br /></td></tr>
+</table>
+<a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Member Typedef Documentation</h2>
+<a id="aac158e4801b186594caf77c58d8604d6" name="aac158e4801b186594caf77c58d8604d6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aac158e4801b186594caf77c58d8604d6">&#9670;&#160;</a></span>return_type</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Function&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="structtr_1_1function__traits.html">tr::function_traits</a>&lt; Function &gt;::return_type</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a878dc194a8b0c5398debe4c1925942f4" name="a878dc194a8b0c5398debe4c1925942f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a878dc194a8b0c5398debe4c1925942f4">&#9670;&#160;</a></span>class_type</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Function&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="structtr_1_1function__traits.html">tr::function_traits</a>&lt; Function &gt;::class_type</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a774916bf2ca4bf973e095d7f798e6ff3" name="a774916bf2ca4bf973e095d7f798e6ff3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a774916bf2ca4bf973e095d7f798e6ff3">&#9670;&#160;</a></span>args_tuple</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Function&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="structtr_1_1function__traits.html">tr::function_traits</a>&lt; Function &gt;::args_tuple</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae71cf103bcef5f01cedd0c0e72dbd977" name="ae71cf103bcef5f01cedd0c0e72dbd977"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae71cf103bcef5f01cedd0c0e72dbd977">&#9670;&#160;</a></span>nth_arg_type</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Function&gt; </div>
+<div class="memtemplate">
+template&lt;<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> N&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="structtr_1_1function__traits.html">tr::function_traits</a>&lt; Function &gt;::nth_arg_type = std::tuple_element_t&lt;N, <a class="el" href="#a774916bf2ca4bf973e095d7f798e6ff3">args_tuple</a>&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">N</td><td>Index of the parameter to get the type of. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <div id="page-nav" class="page-nav-panel">
 <div id="page-nav-resize-handle"></div>

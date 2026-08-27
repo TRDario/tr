@@ -129,8 +129,18 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1sta
 <div class="contents">
 
 <p>Inplace-allocated, fixed-capacity vector.  
-</p>
-<table class="memberdecls">
+ <a href="#details">More...</a></p>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt;<br />
+class tr::static_vector&lt; Element, Capacity &gt;</div><p><span class="tt"><a class="el" href="classtr_1_1static__vector.html" title="Inplace-allocated, fixed-capacity vector.">tr::static_vector</a></span> mirrors the interace of a standard vector, but its elements are stored inplace within the object.</p>
+<p>Instances of <span class="tt"><a class="el" href="classtr_1_1static__vector.html" title="Inplace-allocated, fixed-capacity vector.">tr::static_vector</a></span> are copyable if <span class="tt">Element</span> is copyable and movable if <span class="tt">Element</span> is movable. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Element</td><td>Type of the elements of the vector. </td></tr>
+    <tr><td class="paramname">Capacity</td><td>Maximum capacity of the vector. </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:const_5Fiterator" id="r_const_5Fiterator"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structtr_1_1static__vector_1_1const__iterator.html">const_iterator</a></td></tr>

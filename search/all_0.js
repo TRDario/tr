@@ -38,7 +38,7 @@ var searchData=
   ['argb32_35',['argb32',['../namespacetr.html#ac1babae6e9367fc90585a8791dadc746ae57a429bc01664112d277cc6d93d3ad6',1,'tr']]],
   ['argb_5fp1555_36',['argb_p1555',['../namespacetr.html#ac1babae6e9367fc90585a8791dadc746aeb9334a47d2852e2aad0535246adf326',1,'tr']]],
   ['argb_5fp4444_37',['argb_p4444',['../namespacetr.html#ac1babae6e9367fc90585a8791dadc746a1f7122530bee42e01e627286b144182e',1,'tr']]],
-  ['args_5ftuple_38',['args_tuple',['../structtr_1_1function__traits.html',1,'tr']]],
+  ['args_5ftuple_38',['args_tuple',['../structtr_1_1function__traits.html',1,'tr::args_tuple&lt; Function &gt;'],['../structtr_1_1function__traits.html#a774916bf2ca4bf973e095d7f798e6ff3',1,'tr::function_traits::args_tuple']]],
   ['args_5ftuple_5ft_39',['args_tuple_t',['../namespacetr.html#a51eb9c20b52168555fe0a0ecd6c3a3ec',1,'tr']]],
   ['arithmetic_40',['arithmetic',['../concepttr_1_1arithmetic.html',1,'tr']]],
   ['array_5fcapacity_41',['array_capacity',['../classtr_1_1basic__shader__buffer.html#a22d248f551a35a0521281c74542b13ad',1,'tr::basic_shader_buffer::array_capacity()'],['../classtr_1_1shader__buffer.html#a7da35d68129e9bd377aa99787d3a8b04',1,'tr::shader_buffer::array_capacity()']]],

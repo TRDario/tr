@@ -30,5 +30,6 @@ var searchData=
   ['not_5finstanced_27',['not_instanced',['../namespacetr.html#a55331e68a3c1db5a44b3fd5895f91997',1,'tr']]],
   ['not_5fresizable_28',['not_resizable',['../namespacetr.html#a8b63263802d5c4d07cce1afa3f4c620e',1,'tr']]],
   ['nsecs_29',['nsecs',['../namespacetr_1_1aliases_1_1chrono__aliases.html#afe24d78ac5137aa0cc0f5e66dd1d5336',1,'tr::nsecs'],['../namespacetr_1_1aliases_1_1chrono__aliases.html#afe24d78ac5137aa0cc0f5e66dd1d5336',1,'tr::aliases::nsecs'],['../namespacetr_1_1aliases_1_1chrono__aliases.html#afe24d78ac5137aa0cc0f5e66dd1d5336',1,'tr::aliases::chrono_aliases::nsecs']]],
-  ['nth_5farg_5ftype_5ft_30',['nth_arg_type_t',['../namespacetr.html#ac3a5d18759e9196689e0128ea8745c3d',1,'tr']]]
+  ['nth_5farg_5ftype_30',['nth_arg_type',['../structtr_1_1function__traits.html#ae71cf103bcef5f01cedd0c0e72dbd977',1,'tr::function_traits']]],
+  ['nth_5farg_5ftype_5ft_31',['nth_arg_type_t',['../namespacetr.html#ac3a5d18759e9196689e0128ea8745c3d',1,'tr']]]
 ];

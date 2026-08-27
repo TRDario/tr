@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=11" />
   <meta name="generator" content="Doxygen 1.17.0" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>tr: string_literal.hpp File Reference</title>
+  <title>tr: tr::unstable_erasable Concept Reference</title>
   <link href="tabs.css" rel="stylesheet" type="text/css" />
   <script type="text/javascript" src="jquery.js"></script>
   <script type="text/javascript" src="dynsections.js"></script>
@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
   </div>
 </div>
 <script type="text/javascript">
-document.addEventListener('DOMContentLoaded',() => { initNavTree('string__literal_8hpp.html','',''); });
+document.addEventListener('DOMContentLoaded',() => { initNavTree('concepttr_1_1unstable__erasable.html','',''); });
 </script>
 <div id="container">
 <div id="doc-content">
@@ -124,45 +124,24 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('string__litera
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">string_literal.hpp File Reference</div></div>
+  <div class="headertitle"><div class="title">tr::unstable_erasable Concept Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Provides <span class="tt"><a class="el" href="structtr_1_1string__literal.html" title="Literal object holding a character array intended to allow passing string literals as non-type templa...">tr::string_literal</a></span>.  
+<p>Vector-like container that <span class="tt"><a class="el" href="namespacetr.html#ac5b33d830728b978ef3c208ac64e9164" title="O(1) unstable vector-like container erase function.">tr::unstable_erase</a></span> may be used on.  
 </p>
-
-<p><a href="string__literal_8hpp_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:tr_3A_3Astring_5Fliteral_3C_20Size_20_3E" id="r_tr_3A_3Astring_5Fliteral_3C_20Size_20_3E"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structtr_1_1string__literal.html">tr::string_literal&lt; Size &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Literal object holding a character array intended to allow passing string literals as non-type template parameters.  <a href="structtr_1_1string__literal.html#details">More...</a><br /></td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 id="header-namespaces" class="groupheader"><a id="namespaces" name="namespaces"></a>
-Namespaces</h2></td></tr>
-<tr class="memitem:tr" id="r_tr"><td class="memItemLeft">namespace &#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html">tr</a></td></tr>
-<tr class="memdesc:namespacetr"><td class="mdescLeft">&#160;</td><td class="mdescRight">Namespace containing all tr functionality. <br /></td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:a7d5250a247d16fcae0b2d8051240710f" id="r_a7d5250a247d16fcae0b2d8051240710f"><td class="memTemplParams" colspan="2">template&lt;typename First, typename Second, typename... Rest&gt; </td></tr>
-<tr class="memitem:a7d5250a247d16fcae0b2d8051240710f template"><td class="memItemLeft">consteval auto&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#a7d5250a247d16fcae0b2d8051240710f">tr::concatenate_string_literals</a> (First &amp;&amp;first, Second &amp;&amp;second, Rest &amp;&amp;... rest)</td></tr>
-<tr class="memdesc:a7d5250a247d16fcae0b2d8051240710f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Concatenates two or more string literals into a new string literal.  <br /></td></tr>
-</table>
-</div><!-- contents -->
+<h2 id="header-conceptdef" class="groupheader">Concept definition</h2>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepttr_1_1unstable__erasable.html">unstable_erasable</a> = std::ranges::contiguous_range&lt;T&gt; &amp;&amp; std::movable&lt;std::ranges::range_value_t&lt;T&gt;&gt; &amp;&amp;</div>
+<div class="line">                                <span class="keyword">requires</span>(T&amp; v) { v.pop_back(); }</div>
+<div class="ttc" id="aconcepttr_1_1unstable__erasable_html"><div class="ttname"><a href="concepttr_1_1unstable__erasable.html">tr::unstable_erasable</a></div><div class="ttdoc">Vector-like container that tr::unstable_erase may be used on.</div><div class="ttdef"><b>Definition</b> ranges.hpp:134</div></div>
+</div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div id="page-nav" class="page-nav-panel">
-<div id="page-nav-resize-handle"></div>
-<div id="page-nav-tree">
-<div id="page-nav-contents">
-</div><!-- page-nav-contents -->
-</div><!-- page-nav-tree -->
-</div><!-- page-nav -->
 </div><!-- container -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a href="dir_48c35ed6b28060506e9df53e28b74a05.html">tr</a></li><li class="navelem"><a href="dir_49e87bacfc1bb4f26f06b7a1989b192a.html">utility</a></li><li class="navelem"><a href="string__literal_8hpp.html">string_literal.hpp</a></li>
+    <li class="navelem"><a href="namespacetr.html">tr</a></li><li class="navelem"><a href="concepttr_1_1unstable__erasable.html">unstable_erasable</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.17.0 </li>
   </ul>
 </div>

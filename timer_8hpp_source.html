@@ -138,35 +138,35 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('timer_8hpp_sou
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacetr.html">tr</a></div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>{</div>
-<div class="foldopen" id="foldopen00015" data-start="{" data-end="};">
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="classtr_1_1timer.html">   15</a></span>    <span class="keyword">class </span><a class="code hl_function" href="classtr_1_1timer.html#a5a8e14f3699fbc4809decb2c692419da">timer</a></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    {</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>      <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="classtr_1_1timer.html#a3847fda5d05097fca660f911e8786183">   19</a></span>        <span class="keyword">using </span><a class="code hl_typedef" href="classtr_1_1timer.html#a3847fda5d05097fca660f911e8786183">callback</a> = std::function&lt;void()&gt;;</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span></div>
+<div class="foldopen" id="foldopen00018" data-start="{" data-end="};">
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="classtr_1_1timer.html">   18</a></span>    <span class="keyword">class </span><a class="code hl_function" href="classtr_1_1timer.html#a5a8e14f3699fbc4809decb2c692419da">timer</a></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    {</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>      <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="classtr_1_1timer.html#a3847fda5d05097fca660f911e8786183">   22</a></span>        <span class="keyword">using </span><a class="code hl_typedef" href="classtr_1_1timer.html#a3847fda5d05097fca660f911e8786183">callback</a> = std::function&lt;void()&gt;;</div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="classtr_1_1timer.html#a5a8e14f3699fbc4809decb2c692419da">   25</a></span>        <a class="code hl_function" href="classtr_1_1timer.html#a5a8e14f3699fbc4809decb2c692419da">timer</a>() = <span class="keywordflow">default</span>;</div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span></div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>        <span class="keyword">template</span> &lt;arithmetic Rep, specialization_of_v&lt;std::ratio&gt; Period, std::convertible_to&lt;std::function&lt;<span class="keywordtype">void</span>()&gt;&gt; Callback&gt;</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="classtr_1_1timer.html#a40b989267ac82cb64ed1f84ca0c42f9c">   35</a></span>        <a class="code hl_function" href="classtr_1_1timer.html#a40b989267ac82cb64ed1f84ca0c42f9c">timer</a>(<span class="keyword">const</span> std::chrono::duration&lt;Rep, Period&gt;&amp; interval, Callback&amp;&amp; cb);</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span></div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span></div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="classtr_1_1timer.html#adc8c964376bff850f1a57cbd4d2647b8">   43</a></span>        <span class="keywordtype">bool</span> <a class="code hl_function" href="classtr_1_1timer.html#adc8c964376bff850f1a57cbd4d2647b8">active</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span></div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>      <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        std::jthread m_thread;</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        <span class="comment">//</span></div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span></div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        <span class="keyword">static</span> <span class="keywordtype">void</span> timer_loop(std::stop_token stoken, <a class="code hl_typedef" href="namespacetr.html#a0a06575d52c3090c44755b9a8174f146">duration</a> interval, <a class="code hl_typedef" href="classtr_1_1timer.html#a3847fda5d05097fca660f911e8786183">callback</a> cb);</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    };</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="classtr_1_1timer.html#a5a8e14f3699fbc4809decb2c692419da">   28</a></span>        <a class="code hl_function" href="classtr_1_1timer.html#a5a8e14f3699fbc4809decb2c692419da">timer</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        <span class="keyword">template</span> &lt;arithmetic Rep, specialization_of_v&lt;std::ratio&gt; Period, std::convertible_to&lt;std::function&lt;<span class="keywordtype">void</span>()&gt;&gt; Callback&gt;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="classtr_1_1timer.html#a40b989267ac82cb64ed1f84ca0c42f9c">   38</a></span>        <a class="code hl_function" href="classtr_1_1timer.html#a40b989267ac82cb64ed1f84ca0c42f9c">timer</a>(<span class="keyword">const</span> std::chrono::duration&lt;Rep, Period&gt;&amp; interval, Callback&amp;&amp; cb);</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span></div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="classtr_1_1timer.html#adc8c964376bff850f1a57cbd4d2647b8">   46</a></span>        <span class="keywordtype">bool</span> <a class="code hl_function" href="classtr_1_1timer.html#adc8c964376bff850f1a57cbd4d2647b8">active</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>      <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        std::jthread m_thread;</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        <span class="comment">//</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span></div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        <span class="keyword">static</span> <span class="keywordtype">void</span> timer_loop(std::stop_token stoken, <a class="code hl_typedef" href="namespacetr.html#a0a06575d52c3090c44755b9a8174f146">duration</a> interval, <a class="code hl_typedef" href="classtr_1_1timer.html#a3847fda5d05097fca660f911e8786183">callback</a> cb);</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    };</div>
 </div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>} <span class="comment">// namespace tr</span></div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span><span class="preprocessor">#include &quot;impl/timer.hpp&quot;</span> <span class="comment">// IWYU pragma: export</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>} <span class="comment">// namespace tr</span></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="preprocessor">#include &quot;impl/timer.hpp&quot;</span> <span class="comment">// IWYU pragma: export</span></div>
 <div class="ttc" id="achrono_8hpp_html"><div class="ttname"><a href="chrono_8hpp.html">chrono.hpp</a></div><div class="ttdoc">Provides miscellaneous chrono utilities.</div></div>
-<div class="ttc" id="aclasstr_1_1timer_html_a3847fda5d05097fca660f911e8786183"><div class="ttname"><a href="classtr_1_1timer.html#a3847fda5d05097fca660f911e8786183">tr::timer::callback</a></div><div class="ttdeci">std::function&lt; void()&gt; callback</div><div class="ttdoc">Callback function signature expected by the timer.</div><div class="ttdef"><b>Definition</b> timer.hpp:19</div></div>
+<div class="ttc" id="aclasstr_1_1timer_html_a3847fda5d05097fca660f911e8786183"><div class="ttname"><a href="classtr_1_1timer.html#a3847fda5d05097fca660f911e8786183">tr::timer::callback</a></div><div class="ttdeci">std::function&lt; void()&gt; callback</div><div class="ttdoc">Callback function signature expected by the timer.</div><div class="ttdef"><b>Definition</b> timer.hpp:22</div></div>
 <div class="ttc" id="aclasstr_1_1timer_html_a40b989267ac82cb64ed1f84ca0c42f9c"><div class="ttname"><a href="classtr_1_1timer.html#a40b989267ac82cb64ed1f84ca0c42f9c">tr::timer::timer</a></div><div class="ttdeci">timer(const std::chrono::duration&lt; Rep, Period &gt; &amp;interval, Callback &amp;&amp;cb)</div><div class="ttdoc">Constructs an active timer.</div></div>
 <div class="ttc" id="aclasstr_1_1timer_html_a5a8e14f3699fbc4809decb2c692419da"><div class="ttname"><a href="classtr_1_1timer.html#a5a8e14f3699fbc4809decb2c692419da">tr::timer::timer</a></div><div class="ttdeci">timer()=default</div><div class="ttdoc">Constructs an inactive timer.</div></div>
 <div class="ttc" id="aclasstr_1_1timer_html_adc8c964376bff850f1a57cbd4d2647b8"><div class="ttname"><a href="classtr_1_1timer.html#adc8c964376bff850f1a57cbd4d2647b8">tr::timer::active</a></div><div class="ttdeci">bool active() const</div><div class="ttdoc">Reports whether the timer is active.</div></div>

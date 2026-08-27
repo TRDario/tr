@@ -1,5 +1,6 @@
 var ranges_8hpp =
 [
+    [ "tr::unstable_erasable", "concepttr_1_1unstable__erasable.html", null ],
     [ "tr::reinterpret_span", "namespacetr.html#a20877a35d782e3877c927d58147f2395", null ],
     [ "tr::range_bytes", "namespacetr.html#ab57b366a0114f202bc86789a30ac830d", null ],
     [ "tr::as_bytes", "namespacetr.html#a6e8febf07cf8eef854653c742da0b2fc", null ],
@@ -13,6 +14,6 @@ var ranges_8hpp =
     [ "tr::find_first_not_of", "namespacetr.html#a204126819cb078497de1ccb4d4535ccd", null ],
     [ "tr::find_last_not_of", "namespacetr.html#ad3c7f30c6cabfef8585244a3e9068fce", null ],
     [ "tr::sum", "namespacetr.html#a0023a621d14e63c379e246dcefc8996b", null ],
-    [ "tr::unstable_erase", "namespacetr.html#aa629f8b365be165db61000c872013f8c", null ],
+    [ "tr::unstable_erase", "namespacetr.html#ac5b33d830728b978ef3c208ac64e9164", null ],
     [ "tr::deref", "namespacetr.html#aa0d78302d0ac420d68fdfc191a15d2ea", null ]
 ];

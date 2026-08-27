@@ -1,5 +1,6 @@
 var function__traits_8hpp =
 [
+    [ "tr::function_traits&lt; Function &gt;", "structtr_1_1function__traits.html", "structtr_1_1function__traits" ],
     [ "tr::return_type_t", "namespacetr.html#a05c33bf893fc41c7d1065516daa796a8", null ],
     [ "tr::class_type_t", "namespacetr.html#a7186cddabb55517b08d5e2cfd66f65d7", null ],
     [ "tr::args_tuple_t", "namespacetr.html#a51eb9c20b52168555fe0a0ecd6c3a3ec", null ],

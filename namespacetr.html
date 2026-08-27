@@ -436,7 +436,7 @@ Classes</h2></td></tr>
 <tr class="memitem:timer" id="r_timer"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classtr_1_1timer.html">timer</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Periodic timer class running a callback at a fixed interval.  <a href="classtr_1_1timer.html#details">More...</a><br /></td></tr>
 <tr class="memitem:triangle" id="r_triangle"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structtr_1_1triangle.html">triangle</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">2D triangle datatype.  <a href="structtr_1_1triangle.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">2D triangle structure.  <a href="structtr_1_1triangle.html#details">More...</a><br /></td></tr>
 <tr class="memitem:ttf_5Fmeasure_5Fresult" id="r_ttf_5Fmeasure_5Fresult"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structtr_1_1ttf__measure__result.html">ttf_measure_result</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">TTF font string measurement result.  <a href="structtr_1_1ttf__measure__result.html#details">More...</a><br /></td></tr>
 <tr class="memitem:ttfont" id="r_ttfont"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classtr_1_1ttfont.html">ttfont</a></td></tr>
@@ -597,6 +597,8 @@ Concepts</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Typed input iterator. <br /></td></tr>
 <tr class="memitem:typed_5Finput_5Frange" id="r_typed_5Finput_5Frange"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concepttr_1_1typed__input__range.html">typed_input_range</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Typed input range. <br /></td></tr>
+<tr class="memitem:unstable_5Ferasable" id="r_unstable_5Ferasable"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concepttr_1_1unstable__erasable.html">unstable_erasable</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Vector-like container that <span class="tt"><a class="el" href="#ac5b33d830728b978ef3c208ac64e9164" title="O(1) unstable vector-like container erase function.">tr::unstable_erase</a></span> may be used on. <br /></td></tr>
 <tr class="memitem:valid_5Fformat_5Fstring_5Ffor" id="r_valid_5Fformat_5Fstring_5Ffor"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concepttr_1_1valid__format__string__for.html">valid_format_string_for</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Format string that is valid for a set of types. <br /></td></tr>
 <tr class="memitem:volatile_5Fqualified" id="r_volatile_5Fqualified"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concepttr_1_1volatile__qualified.html">volatile_qualified</a></td></tr>
@@ -699,10 +701,6 @@ Typedefs</h2></td></tr>
 <tr class="memdesc:a50ef1ba0159e2b7b615e16108d2652d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Integer type that can store an integer in the range [0, <span class="tt">S</span>].  <br /></td></tr>
 <tr class="memitem:a1822833999d4fd3ae28259f4e02d58a0" id="r_a1822833999d4fd3ae28259f4e02d58a0"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a1822833999d4fd3ae28259f4e02d58a0">polygon_view</a> = std::span&lt;const glm::vec2&gt;</td></tr>
 <tr class="memdesc:a1822833999d4fd3ae28259f4e02d58a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alias for a view to a polygon's vertices.  <br /></td></tr>
-<tr class="memitem:a2da60714a6d9454e9d5f1c8217d2ccea" id="r_a2da60714a6d9454e9d5f1c8217d2ccea"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a2da60714a6d9454e9d5f1c8217d2ccea">irectangle_edges</a> = <a class="el" href="structtr_1_1rectangle__edges.html">rectangle_edges</a>&lt;int&gt;</td></tr>
-<tr class="memdesc:a2da60714a6d9454e9d5f1c8217d2ccea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shorthard for int rectangle edges.  <br /></td></tr>
-<tr class="memitem:af67eb4c48e09a72042d149e4bd9799e9" id="r_af67eb4c48e09a72042d149e4bd9799e9"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#af67eb4c48e09a72042d149e4bd9799e9">frectangle_edges</a> = <a class="el" href="structtr_1_1rectangle__edges.html">rectangle_edges</a>&lt;float&gt;</td></tr>
-<tr class="memdesc:af67eb4c48e09a72042d149e4bd9799e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shorthand for float rectangle edges.  <br /></td></tr>
 <tr class="memitem:aeffe1b14b7778ab5180bec7c14f372b9" id="r_aeffe1b14b7778ab5180bec7c14f372b9"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#aeffe1b14b7778ab5180bec7c14f372b9">codepoint</a> = <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a28316522024e2e46cd0a6469e745897e">u32</a></td></tr>
 <tr class="memdesc:aeffe1b14b7778ab5180bec7c14f372b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Datatype used for Unicode codepoints.  <br /></td></tr>
 <tr class="memitem:af4536441b49fec056af6a2432b30afff" id="r_af4536441b49fec056af6a2432b30afff"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#af4536441b49fec056af6a2432b30afff">zstring_view</a> = <a class="el" href="classtr_1_1basic__zstring__view.html">basic_zstring_view</a>&lt;char&gt;</td></tr>
@@ -1471,9 +1469,9 @@ requires (std::equality_comparable_with&lt;std::ranges::range_value_t&lt;Searche
 <tr class="memitem:a0023a621d14e63c379e246dcefc8996b" id="r_a0023a621d14e63c379e246dcefc8996b"><td class="memTemplParams" colspan="2">template&lt;std::ranges::range Range, typename Value&gt; </td></tr>
 <tr class="memitem:a0023a621d14e63c379e246dcefc8996b template"><td class="memItemLeft">Value&#160;</td><td class="memItemRight"><a class="el" href="#a0023a621d14e63c379e246dcefc8996b">sum</a> (Range &amp;&amp;range, Value initial_value)</td></tr>
 <tr class="memdesc:a0023a621d14e63c379e246dcefc8996b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sums the elements of a range.  <br /></td></tr>
-<tr class="memitem:aa629f8b365be165db61000c872013f8c" id="r_aa629f8b365be165db61000c872013f8c"><td class="memTemplParams" colspan="2">template&lt;move_assignable Element&gt; </td></tr>
-<tr class="memitem:aa629f8b365be165db61000c872013f8c template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aa629f8b365be165db61000c872013f8c">unstable_erase</a> (std::vector&lt; Element &gt; &amp;vec, typename std::vector&lt; Element &gt;::iterator where)</td></tr>
-<tr class="memdesc:aa629f8b365be165db61000c872013f8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">O(1) unstable vector erase function.  <br /></td></tr>
+<tr class="memitem:ac5b33d830728b978ef3c208ac64e9164" id="r_ac5b33d830728b978ef3c208ac64e9164"><td class="memTemplParams" colspan="2">template&lt;unstable_erasable Container&gt; </td></tr>
+<tr class="memitem:ac5b33d830728b978ef3c208ac64e9164 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ac5b33d830728b978ef3c208ac64e9164">unstable_erase</a> (Container &amp;container, typename Container::iterator where)</td></tr>
+<tr class="memdesc:ac5b33d830728b978ef3c208ac64e9164"><td class="mdescLeft">&#160;</td><td class="mdescRight">O(1) unstable vector-like container erase function.  <br /></td></tr>
 <tr id="func-members-31" class="groupHeader"><td colspan="2"><div class="groupHeader">Overloaded operators</div></td></tr>
 <tr class="memitem:aee2c65baa9d84bbce9e4dad126d9e57c" id="r_aee2c65baa9d84bbce9e4dad126d9e57c"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
 <tr class="memitem:aee2c65baa9d84bbce9e4dad126d9e57c template"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="#aee2c65baa9d84bbce9e4dad126d9e57c">operator==</a> (<a class="el" href="classtr_1_1opt__ref.html">opt_ref</a>&lt; T &gt; lhs, const std::type_identity_t&lt; T &gt; &amp;rhs)</td></tr>
@@ -1868,34 +1866,6 @@ template&lt;<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="#a1822833999d4fd3ae28259f4e02d58a0">tr::polygon_view</a> = std::span&lt;const glm::vec2&gt;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a2da60714a6d9454e9d5f1c8217d2ccea" name="a2da60714a6d9454e9d5f1c8217d2ccea"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2da60714a6d9454e9d5f1c8217d2ccea">&#9670;&#160;</a></span>irectangle_edges</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">using <a class="el" href="#a2da60714a6d9454e9d5f1c8217d2ccea">tr::irectangle_edges</a> = <a class="el" href="structtr_1_1rectangle__edges.html">rectangle_edges</a>&lt;int&gt;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="af67eb4c48e09a72042d149e4bd9799e9" name="af67eb4c48e09a72042d149e4bd9799e9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af67eb4c48e09a72042d149e4bd9799e9">&#9670;&#160;</a></span>frectangle_edges</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">using <a class="el" href="#af67eb4c48e09a72042d149e4bd9799e9">tr::frectangle_edges</a> = <a class="el" href="structtr_1_1rectangle__edges.html">rectangle_edges</a>&lt;float&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -9026,36 +8996,36 @@ template&lt;std::ranges::range Range, typename Value&gt; </div>
 
 </div>
 </div>
-<a id="aa629f8b365be165db61000c872013f8c" name="aa629f8b365be165db61000c872013f8c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa629f8b365be165db61000c872013f8c">&#9670;&#160;</a></span>unstable_erase()</h2>
+<a id="ac5b33d830728b978ef3c208ac64e9164" name="ac5b33d830728b978ef3c208ac64e9164"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac5b33d830728b978ef3c208ac64e9164">&#9670;&#160;</a></span>unstable_erase()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;move_assignable Element&gt; </div>
+template&lt;unstable_erasable Container&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">void tr::unstable_erase </td>
           <td>(</td>
-          <td class="paramtype">std::vector&lt; Element &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>vec</em></span>, </td>
+          <td class="paramtype">Container &amp;</td>          <td class="paramname"><span class="paramname"><em>container</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">typename std::vector&lt; Element &gt;::iterator</td>          <td class="paramname"><span class="paramname"><em>where</em></span>&#160;)</td>
+          <td class="paramtype">typename Container::iterator</td>          <td class="paramname"><span class="paramname"><em>where</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>O(1) erasure is achieved by swapping the final element into the position of the erased and then popping back. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">Element</td><td>Vector element type. </td></tr>
+    <tr><td class="paramname">Container</td><td>Vector-like container type. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">vec</td><td>Vector to erase from. </td></tr>
-    <tr><td class="paramname">where</td><td>Element in the vector to erase. </td></tr>
+    <tr><td class="paramname">container</td><td>Container to erase from. </td></tr>
+    <tr><td class="paramname">where</td><td>Element in the container to erase. </td></tr>
   </table>
   </dd>
 </dl>
