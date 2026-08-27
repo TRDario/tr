@@ -26,9 +26,10 @@ void tr::shader::set_uniform_buffer(unsigned int index, const uniform_buffer<Obj
 
 //
 
-/// Shader base formatter.
-template <>
-struct std::formatter<tr::shader>
+/// Shader formatter.
+template <typename Shader>
+	requires tr::one_of<Shader, tr::shader, tr::vertex_shader, tr::fragment_shader>
+struct std::formatter<Shader>
 {
 	/// Parses the context.
 	template <typename ParseContext>
@@ -39,7 +40,7 @@ struct std::formatter<tr::shader>
 
 	/// Formats the shader.
 	template <typename FormatContext>
-	auto format(const tr::shader& shader, FormatContext& ctx) const
+	auto format(const Shader& shader, FormatContext& ctx) const
 	{
 		if (shader.valid()) {
 			return std::format_to(ctx.out(), "\"{}\" (OpenGL ID: {})", shader.label(), shader.unwrap());
@@ -48,16 +49,4 @@ struct std::formatter<tr::shader>
 			return std::format_to(ctx.out(), "<invalid shader at {}>", static_cast<const void*>(&shader));
 		}
 	}
-};
-
-/// Vertex shader formatter.
-template <>
-struct std::formatter<tr::vertex_shader> : public std::formatter<tr::shader>
-{
-};
-
-/// Fragment shader formatter.
-template <>
-struct std::formatter<tr::fragment_shader> : public std::formatter<tr::shader>
-{
 };

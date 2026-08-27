@@ -3,6 +3,7 @@
 
 #pragma once
 #include "../../utility/ranges.hpp"
+#include "../../utility/specialization_of.hpp"
 #include "../vertex_buffer.hpp"
 
 //
@@ -53,3 +54,32 @@ void tr::dyn_vertex_buffer<Element>::set_region(usize offset, Range&& data)
 {
 	basic_dyn_vertex_buffer::set_region(offset * sizeof(Element), range_bytes(data));
 }
+
+//
+
+/// Vertex buffer formatter.
+/// @tparam VertexBuffer Vertex buffer type.
+template <typename VertexBuffer>
+	requires std::same_as<VertexBuffer, tr::basic_static_vertex_buffer> || std::same_as<VertexBuffer, tr::basic_dyn_vertex_buffer> ||
+			 tr::specialization_of<VertexBuffer, tr::static_vertex_buffer> || tr::specialization_of<VertexBuffer, tr::dyn_vertex_buffer>
+struct std::formatter<VertexBuffer>
+{
+	/// Parses the context.
+	template <typename ParseContext>
+	constexpr auto parse(ParseContext& ctx)
+	{
+		return ctx.begin();
+	}
+
+	/// Formats the vertex buffer.
+	template <typename FormatContext>
+	auto format(const VertexBuffer& buffer, FormatContext& ctx) const
+	{
+		if (buffer.valid()) {
+			return std::format_to(ctx.out(), "\"{}\" (OpenGL ID: {})", buffer.label(), buffer.unwrap());
+		}
+		else {
+			return std::format_to(ctx.out(), "<invalid vertex buffer at {}>", static_cast<const void*>(&buffer));
+		}
+	}
+};

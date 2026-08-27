@@ -13,15 +13,25 @@ namespace tr
 	class basic_static_vertex_buffer : private graphics_buffer
 	{
 	  public:
+		/// @name Constructors
+		/// @{
+
 		/// Uploads vertex data into a static vertex buffer.
 		/// @param context Graphics context to create the buffer on.
 		/// @param data Data to upload to the buffer.
 		basic_static_vertex_buffer(graphics_context& context, std::span<const std::byte> data);
 
+		/// @}
 		/// @name Context
 		/// @{
 
 		using graphics_buffer::context;
+
+		/// @}
+		/// @name State
+		/// @{
+
+		using graphics_buffer::valid;
 
 		/// @}
 		/// @name Label
@@ -40,6 +50,16 @@ namespace tr
 
 		/// @}
 		/// @endcond
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
+		/// @cond implementation_details
+		/// @name Implementation details
+		/// @{
+
+		using graphics_buffer::id;
+
+		/// @}
+		/// @endcond
+#endif
 
 	  private:
 		/// Size of the vertex buffer in bytes.
@@ -52,6 +72,9 @@ namespace tr
 	class static_vertex_buffer : private basic_static_vertex_buffer
 	{
 	  public:
+		/// @name Constructors
+		/// @{
+
 		/// Uploads vertex data into a static vertex buffer.
 		/// @tparam Range Vertex buffer data range.
 		/// @param context Graphics context to create the buffer on.
@@ -59,10 +82,17 @@ namespace tr
 		template <typed_contiguous_const_range<Element> Range>
 		static_vertex_buffer(graphics_context& context, Range&& range);
 
+		/// @}
 		/// @name Context
 		/// @{
 
 		using basic_static_vertex_buffer::context;
+
+		/// @}
+		/// @name State
+		/// @{
+
+		using basic_static_vertex_buffer::valid;
 
 		/// @}
 		/// @name Label
@@ -81,6 +111,16 @@ namespace tr
 
 		/// @}
 		/// @endcond
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
+		/// @cond implementation_details
+		/// @name Implementation details
+		/// @{
+
+		using basic_static_vertex_buffer::id;
+
+		/// @}
+		/// @endcond
+#endif
 	};
 
 	//
@@ -99,6 +139,12 @@ namespace tr
 		/// @{
 
 		using graphics_buffer::context;
+
+		/// @}
+		/// @name State
+		/// @{
+
+		using graphics_buffer::valid;
 
 		/// @}
 		/// @name Size
@@ -158,6 +204,16 @@ namespace tr
 
 		/// @}
 		/// @endcond
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
+		/// @cond implementation_details
+		/// @name Implementation details
+		/// @{
+
+		using graphics_buffer::id;
+
+		/// @}
+		/// @endcond
+#endif
 
 	  private:
 		/// Used size of the buffer in bytes.
@@ -183,6 +239,12 @@ namespace tr
 		/// @{
 
 		using basic_dyn_vertex_buffer::context;
+
+		/// @}
+		/// @name State
+		/// @{
+
+		using basic_dyn_vertex_buffer::valid;
 
 		/// @}
 		/// @name Size
@@ -243,6 +305,16 @@ namespace tr
 
 		/// @}
 		/// @endcond
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
+		/// @cond implementation_details
+		/// @name Implementation details
+		/// @{
+
+		using basic_dyn_vertex_buffer::id;
+
+		/// @}
+		/// @endcond
+#endif
 	};
 } // namespace tr
 

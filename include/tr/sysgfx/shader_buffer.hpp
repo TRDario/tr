@@ -32,6 +32,12 @@ namespace tr
 		using graphics_buffer::context;
 
 		/// @}
+		/// @name State
+		/// @{
+
+		using graphics_buffer::valid;
+
+		/// @}
 		/// @name Size
 		/// @{
 
@@ -103,6 +109,16 @@ namespace tr
 
 		/// @}
 		/// @endcond
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
+		/// @cond implementation_details
+		/// @name Implementation details
+		/// @{
+
+		using graphics_buffer::id;
+
+		/// @}
+		/// @endcond
+#endif
 
 	  private:
 		// Map type of the buffer.
@@ -147,6 +163,12 @@ namespace tr
 		/// @{
 
 		using basic_shader_buffer::context;
+
+		/// @}
+		/// @name State
+		/// @{
+
+		using basic_shader_buffer::valid;
 
 		/// @}
 		/// @name Size
@@ -210,6 +232,16 @@ namespace tr
 
 		/// @}
 		/// @endcond
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
+		/// @cond implementation_details
+		/// @name Implementation details
+		/// @{
+
+		using basic_shader_buffer::id;
+
+		/// @}
+		/// @endcond
+#endif
 	};
 
 	/// Specialized shader buffer with no header before the array.
@@ -232,6 +264,12 @@ namespace tr
 		/// @{
 
 		using basic_shader_buffer::context;
+
+		/// @}
+		/// @name State
+		/// @{
+
+		using basic_shader_buffer::valid;
 
 		/// @}
 		/// @name Size
@@ -287,6 +325,16 @@ namespace tr
 
 		/// @}
 		/// @endcond
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
+		/// @cond implementation_details
+		/// @name Implementation details
+		/// @{
+
+		using basic_shader_buffer::id;
+
+		/// @}
+		/// @endcond
+#endif
 	};
 } // namespace tr
 

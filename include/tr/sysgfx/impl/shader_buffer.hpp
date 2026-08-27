@@ -2,6 +2,7 @@
 /// @brief Implements the templated parts of shader_buffer.hpp.
 
 #pragma once
+#include "../../utility/specialization_of.hpp"
 #include "../shader_buffer.hpp"
 
 //
@@ -93,3 +94,32 @@ tr::graphics_buffer_span_map<Element> tr::shader_array<Element>::map()
 {
 	return basic_shader_buffer::map_array();
 }
+
+//
+
+/// Shader buffer formatter.
+/// @tparam ShaderBuffer Shader buffer type.
+template <typename ShaderBuffer>
+	requires std::same_as<ShaderBuffer, tr::basic_shader_buffer> || tr::specialization_of<ShaderBuffer, tr::shader_buffer> ||
+			 tr::specialization_of<ShaderBuffer, tr::shader_array>
+struct std::formatter<ShaderBuffer>
+{
+	/// Parses the context.
+	template <typename ParseContext>
+	constexpr auto parse(ParseContext& ctx)
+	{
+		return ctx.begin();
+	}
+
+	/// Formats the shader buffer.
+	template <typename FormatContext>
+	auto format(const ShaderBuffer& buffer, FormatContext& ctx) const
+	{
+		if (buffer.valid()) {
+			return std::format_to(ctx.out(), "\"{}\" (OpenGL ID: {})", buffer.label(), buffer.unwrap());
+		}
+		else {
+			return std::format_to(ctx.out(), "<invalid shader buffer at {}>", static_cast<const void*>(&buffer));
+		}
+	}
+};

@@ -24,6 +24,12 @@ namespace tr
 		using graphics_buffer::context;
 
 		/// @}
+		/// @name State
+		/// @{
+
+		using graphics_buffer::valid;
+
+		/// @}
 		/// @name Size
 		/// @{
 
@@ -68,6 +74,16 @@ namespace tr
 
 		/// @}
 		/// @endcond
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
+		/// @cond implementation_details
+		/// @name Implementation details
+		/// @{
+
+		using graphics_buffer::id;
+
+		/// @}
+		/// @endcond
+#endif
 
 	  private:
 		/// Size of the buffer.
@@ -94,6 +110,12 @@ namespace tr
 		/// @{
 
 		using basic_uniform_buffer::context;
+
+		/// @}
+		/// @name State
+		/// @{
+
+		using basic_uniform_buffer::valid;
 
 		/// @}
 		/// @name Setting
@@ -130,6 +152,16 @@ namespace tr
 
 		/// @}
 		/// @endcond
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
+		/// @cond implementation_details
+		/// @name Implementation details
+		/// @{
+
+		using basic_uniform_buffer::id;
+
+		/// @}
+		/// @endcond
+#endif
 	};
 } // namespace tr
 

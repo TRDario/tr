@@ -28,6 +28,12 @@ namespace tr
 		using graphics_buffer::context;
 
 		/// @}
+		/// @name State
+		/// @{
+
+		using graphics_buffer::valid;
+
+		/// @}
 		/// @name Label
 		/// @{
 
@@ -44,6 +50,16 @@ namespace tr
 
 		/// @}
 		/// @endcond
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
+		/// @cond implementation_details
+		/// @name Implementation details
+		/// @{
+
+		using graphics_buffer::id;
+
+		/// @}
+		/// @endcond
+#endif
 
 	  private:
 		/// Size of the buffer in elements.
@@ -109,6 +125,12 @@ namespace tr
 		void set_region(usize offset, std::span<const u16> data);
 
 		/// @}
+		/// @name State
+		/// @{
+
+		using graphics_buffer::valid;
+
+		/// @}
 		/// @name Label
 		/// @{
 
@@ -125,6 +147,16 @@ namespace tr
 
 		/// @}
 		/// @endcond
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
+		/// @cond implementation_details
+		/// @name Implementation details
+		/// @{
+
+		using graphics_buffer::id;
+
+		/// @}
+		/// @endcond
+#endif
 
 	  private:
 		/// Used size of the buffer in elements.
@@ -134,3 +166,5 @@ namespace tr
 		usize m_capacity{0};
 	};
 } // namespace tr
+
+#include "impl/index_buffer.hpp" // IWYU pragma: export
