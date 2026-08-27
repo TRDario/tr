@@ -1,5 +1,5 @@
 /// @file
-/// @brief Provides a flexible logger class.
+/// @brief Provides `tr::logger` and related utilities.
 
 #pragma once
 #include "common.hpp"

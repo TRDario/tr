@@ -1,5 +1,5 @@
 /// @file
-/// @brief Provides reference wrappers.
+/// @brief Provides `tr::ref`, `tr::opt_ref`, and related functions.
 
 #pragma once
 

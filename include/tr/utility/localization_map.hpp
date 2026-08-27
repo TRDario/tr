@@ -1,5 +1,5 @@
 /// @file
-/// @brief Provides a localization map class.
+/// @brief Provides `tr::localization_map`.
 
 #pragma once
 #include "hash_map.hpp"

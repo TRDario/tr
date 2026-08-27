@@ -1,5 +1,5 @@
 /// @file
-/// @brief Provides an RAII handle class and related utilities.
+/// @brief Provides `tr::handle` and related utilities.
 
 #pragma once
 #include "common.hpp"

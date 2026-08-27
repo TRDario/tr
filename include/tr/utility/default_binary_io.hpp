@@ -1,5 +1,5 @@
 /// @file
-/// @brief Defines the tr::enable_default_binary_io customization point.
+/// @brief Defines the `tr::enable_default_binary_io` customization point.
 
 #pragma once
 #include "concepts.hpp"

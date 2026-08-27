@@ -1,5 +1,5 @@
 /// @file
-/// @brief Provides an inplace-allocated, fixed capacity vector class.
+/// @brief Provides `tr::static_vector`.
 
 #pragma once
 #include "pointer_iterator.hpp"
@@ -9,6 +9,12 @@
 namespace tr
 {
 	/// Inplace-allocated, fixed-capacity vector.
+	/// @details
+	/// `tr::static_vector` mirrors the interace of a standard vector, but its elements are stored inplace within the object.
+	///
+	/// Instances of `tr::static_vector` are copyable if `Element` is copyable and movable if `Element` is movable.
+	/// @tparam Element Type of the elements of the vector.
+	/// @tparam Capacity Maximum capacity of the vector.
 	template <typename Element, usize Capacity>
 	class static_vector
 	{

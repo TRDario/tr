@@ -1,5 +1,5 @@
 /// @file
-/// @brief Provides a periodic callback timer class.
+/// @brief Provides `tr::timer`.
 
 #pragma once
 #include "chrono.hpp"
@@ -11,6 +11,9 @@
 namespace tr
 {
 	/// Periodic timer class running a callback at a fixed interval.
+	/// @details
+	/// Timers are movable, but not copyable. A moved-from timer reverts to an inactive state.
+	///
 	/// @note The accuracy of the timer on Windows may be limited to ~10ms if the sysgfx module is not available.
 	class timer
 	{

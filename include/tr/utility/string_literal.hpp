@@ -1,5 +1,5 @@
 /// @file
-/// @brief Provides a string literal type passable as a non-type template parameter.
+/// @brief Provides `tr::string_literal`.
 
 #pragma once
 #include "integer.hpp"

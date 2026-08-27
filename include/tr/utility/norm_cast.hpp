@@ -1,5 +1,5 @@
 /// @file
-/// @brief Provides normalized value casting.
+/// @brief Provides `tr::norm_cast()`.
 
 #pragma once
 

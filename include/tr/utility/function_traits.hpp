@@ -15,6 +15,23 @@ namespace tr
 	{
 		static_assert(false, "Tried to use tr::function_traits with a type that is not a function or a functor type with an unambiguous "
 							 "`operator()` definition.");
+
+		/// Type returned by the function.
+		/// @hideinitializer
+		using return_type = void;
+
+		/// Class the function belongs to (only applicable for pointers to member functions).
+		/// @hideinitializer
+		using class_type = void;
+
+		/// Tuple of types of the arguments to the function.
+		/// @hideinitializer
+		using args_tuple = void;
+
+		/// Type of the Nth argument to the function.
+		/// @tparam N Index of the parameter to get the type of.
+		template <usize N>
+		using nth_arg_type = std::tuple_element_t<N, args_tuple>;
 	};
 
 	/// Return type of a function or functor.

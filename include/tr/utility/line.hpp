@@ -1,5 +1,5 @@
 /// @file
-/// @brief Provides a line segment datatype and line-related functions.
+/// @brief Provides `tr::line_segment` and line-related functions.
 
 #pragma once
 #include "angle.hpp"

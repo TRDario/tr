@@ -1,5 +1,5 @@
 /// @file
-/// @brief Provides an abstract angle datatype, as well as related functions and literals.
+/// @brief Provides `tr::angle`, as well as related functions and literals.
 
 #pragma once
 #include "concepts.hpp"

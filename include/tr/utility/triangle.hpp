@@ -1,5 +1,5 @@
 /// @file
-/// @brief Provides a triangle datatype.
+/// @brief Provides `tr::triangle`.
 
 #pragma once
 #include "default_binary_io.hpp"
@@ -9,7 +9,7 @@
 
 namespace tr
 {
-	/// 2D triangle datatype.
+	/// 2D triangle structure.
 	struct triangle
 	{
 		/// First point of the triangle.

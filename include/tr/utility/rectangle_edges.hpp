@@ -1,5 +1,5 @@
 /// @file
-/// @brief Provides a rectangle edges datatype.
+/// @brief Provides `tr::rectangle_edges`.
 
 #pragma once
 
@@ -65,12 +65,6 @@ namespace tr
 
 		/// @}
 	};
-
-	/// Shorthard for int rectangle edges.
-	using irectangle_edges = rectangle_edges<int>;
-
-	/// Shorthand for float rectangle edges.
-	using frectangle_edges = rectangle_edges<float>;
 } // namespace tr
 
 #include "impl/rectangle_edges.hpp" // IWYU pragma: export

@@ -1,5 +1,5 @@
 /// @file
-/// @brief Provides an implementation of the Xorshiftr128+ random number generator.
+/// @brief Provides `tr::rng`.
 
 #pragma once
 #include "angle.hpp"

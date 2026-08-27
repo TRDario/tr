@@ -1,5 +1,5 @@
 /// @file
-/// @brief Provides a NUL-terminated string view.
+/// @brief Provides `tr::basic_zstring_view` and related functions.
 
 #pragma once
 #include "pointer_iterator.hpp"

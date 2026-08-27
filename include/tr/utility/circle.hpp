@@ -1,5 +1,5 @@
 /// @file
-/// @brief Provides a circle datatype and related functions.
+/// @brief Provides `tr::circle` and related functions.
 
 #pragma once
 #include "default_binary_io.hpp"

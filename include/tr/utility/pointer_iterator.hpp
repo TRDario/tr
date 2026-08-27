@@ -1,5 +1,5 @@
 /// @file
-/// @brief Provides an iterator wrapper around a pointer that ensures the iterator is unique to a class.
+/// @brief Provides `tr::pointer_iterator`.
 
 #pragma once
 #include "concepts.hpp"
@@ -9,6 +9,7 @@
 namespace tr
 {
 	/// CRTP base class that may be inherited from to define an iterator based on a wrapped pointer.
+	/// @details This may be used to ensure that an iterator is unique to a class.
 	/// @tparam Iterator Derived iterator type.
 	/// @tparam Pointer Raw pointer type.
 	template <typename Iterator, pointer Pointer>

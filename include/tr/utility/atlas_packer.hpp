@@ -1,5 +1,5 @@
 /// @file
-/// @brief Provides utilities for packing textures into an atlas.
+/// @brief Provides `tr::atlas_packer` and `tr::atlas_entries`.
 
 #pragma once
 #include "rectangle.hpp"

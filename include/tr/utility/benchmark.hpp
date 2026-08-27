@@ -1,5 +1,5 @@
 /// @file
-/// @brief Provides a basic benchmark class.
+/// @brief Provides `tr::benchmark`.
 
 #pragma once
 #include "chrono.hpp"

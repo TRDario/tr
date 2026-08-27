@@ -1,5 +1,5 @@
 /// @file
-/// @brief Provides an inplace-allocated, fixed capacity string class.
+/// @brief Provides `tr::static_string`.
 
 #pragma once
 #include "pointer_iterator.hpp"
@@ -9,6 +9,9 @@
 namespace tr
 {
 	/// Inplace-allocated fixed-capacity string.
+	/// @details
+	/// `tr::static_string` mirrors the interface of a standard string, but its characters are stored inplace within the object.
+	/// Additionally, unlike a standard string, it is not guaranteed to be NUL-terminated.
 	/// @tparam Capacity Maximum capacity of the string.
 	template <usize Capacity>
 	class static_string

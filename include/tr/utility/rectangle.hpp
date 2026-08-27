@@ -1,5 +1,5 @@
 /// @file
-/// @brief Provides an axis-aligned rectangle datatype and related functions.
+/// @brief Provides `tr::rectangle` and related functions.
 
 #pragma once
 #include "rectangle_edges.hpp"

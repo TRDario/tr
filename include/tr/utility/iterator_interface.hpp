@@ -1,5 +1,5 @@
 /// @file
-/// @brief Provides an interaotr interface with automatically derived operators.
+/// @brief Provides `tr::iterator_interface`.
 
 #pragma once
 #include "concepts.hpp"
@@ -32,14 +32,14 @@ namespace tr
 
 	  public:
 		/// @cond __hidden
+
 		/// (no-op)
 		friend constexpr auto operator<=>(const iterator_interface& lhs, const iterator_interface& rhs) = default;
 
 		/// (no-op)
 		friend constexpr bool operator==(const iterator_interface& lhs, const iterator_interface& rhs) = default;
-		/// @endcond
 
-		//
+		/// @endcond
 
 		/// Synthesized post-incrementation operator.
 		/// @tparam Iterator_ Iterator type to implement the interface for.

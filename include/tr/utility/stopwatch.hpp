@@ -1,5 +1,5 @@
 /// @file
-/// @brief Provides a basic stopwatch class.
+/// @brief Provides `tr::stopwatch`.
 
 #pragma once
 #include "chrono.hpp"
