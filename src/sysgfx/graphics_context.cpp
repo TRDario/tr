@@ -365,16 +365,6 @@ void tr::graphics_context::set_vertex_buffer(const basic_dyn_vertex_buffer& buff
 	set_vertex_buffer(buffer.unwrap(), slot, offset, stride);
 }
 
-void tr::graphics_context::set_index_buffer(const static_index_buffer& buffer)
-{
-	gl().bind_buffer(GL_ELEMENT_ARRAY_BUFFER, buffer.unwrap());
-}
-
-void tr::graphics_context::set_index_buffer(const dyn_index_buffer& buffer)
-{
-	gl().bind_buffer(GL_ELEMENT_ARRAY_BUFFER, buffer.unwrap());
-}
-
 //
 
 void tr::graphics_context::clear_backbuffer(tr::rgbaf color)

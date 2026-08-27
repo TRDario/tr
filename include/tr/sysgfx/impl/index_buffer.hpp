@@ -2,15 +2,13 @@
 /// @brief Implements the templated parts of index_buffer.hpp.
 
 #pragma once
-#include "../../utility/concepts.hpp"
 #include "../index_buffer.hpp"
 
 //
 
 /// Index buffer formatter.
 /// @tparam IndexBuffer Index buffer type.
-template <typename IndexBuffer>
-	requires tr::one_of<IndexBuffer, tr::static_index_buffer, tr::dyn_index_buffer>
+template <tr::any_index_buffer IndexBuffer>
 struct std::formatter<IndexBuffer>
 {
 	/// Parses the context.

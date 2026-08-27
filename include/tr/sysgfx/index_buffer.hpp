@@ -2,7 +2,7 @@
 /// @brief Provides index buffer classes.
 
 #pragma once
-#include "../utility/integer.hpp"
+#include "../utility/concepts.hpp"
 #include "graphics_buffer.hpp"
 
 //
@@ -165,6 +165,10 @@ namespace tr
 		/// Capacity of the buffer in elements.
 		usize m_capacity{0};
 	};
+
+	/// Index buffer type.
+	template <typename T>
+	concept any_index_buffer = one_of<T, static_index_buffer, dyn_index_buffer>;
 } // namespace tr
 
 #include "impl/index_buffer.hpp" // IWYU pragma: export

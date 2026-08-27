@@ -6,6 +6,7 @@
 #include "../utility/logger.hpp"
 #include "../utility/zstring_view.hpp"
 #include "gl_api.hpp"
+#include "index_buffer.hpp"
 #include "render_target.hpp"
 #include "vertex_buffer.hpp"
 #include "vertex_format.hpp"
@@ -18,9 +19,7 @@ struct SDL_Window;
 namespace tr
 {
 	struct blend_mode;
-	class dyn_index_buffer;
 	class shader_pipeline;
-	class static_index_buffer;
 	class window_view;
 } // namespace tr
 #ifdef TR_HAS_IMGUI
@@ -244,12 +243,10 @@ namespace tr
 		void set_vertex_buffer(const dyn_vertex_buffer<T>& buffer, int slot, ssize offset);
 
 		/// Sets the active index buffer.
+		/// @tparam IndexBuffer Index buffer type.
 		/// @param buffer Buffer to set as active.
-		void set_index_buffer(const static_index_buffer& buffer);
-
-		/// Sets the active index buffer.
-		/// @param buffer Buffer to set as active.
-		void set_index_buffer(const dyn_index_buffer& buffer);
+		template <any_index_buffer IndexBuffer>
+		void set_index_buffer(const IndexBuffer& buffer);
 
 		/// @}
 		/// @name Clearing
@@ -347,24 +344,14 @@ namespace tr
 		};
 
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-		/// Debug information about the set framebuffer.
-		struct set_framebuffer_debug_info
+		/// Debug information about an object set on the context.
+		struct set_object_debug_info
 		{
-			/// Unique graphics object ID of the framebuffer.
+			/// Unique graphics object ID of the object.
 			graphics_object_id id{graphics_object_id::invalid};
 
-			/// Label of the framebuffer.
-			std::string label{"<backbuffer>"};
-		};
-
-		/// Debug information about the set shader pipeline.
-		struct set_shader_pipeline_debug_info
-		{
-			/// Unique graphics object ID of the shader pipeline.
-			graphics_object_id id{graphics_object_id::invalid};
-
-			/// Label of the shader pipeline.
-			std::string label{"<unbound>"};
+			/// Label of the object.
+			std::string label{"<unset>"};
 		};
 
 		/// Debug information about the set vertex format.
@@ -406,13 +393,16 @@ namespace tr
 
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 		/// Debug information about the framebuffer set to the context.
-		set_framebuffer_debug_info m_set_framebuffer_debug_info;
+		set_object_debug_info m_set_framebuffer_debug_info{.label{"<backbuffer>"}};
 
 		/// Debug information about the shader pipeline set to the context.
-		set_shader_pipeline_debug_info m_set_shader_pipeline_debug_info;
+		set_object_debug_info m_set_shader_pipeline_debug_info;
 
 		/// Debug information about the vertex format set to the context.
 		set_vertex_format_debug_info m_set_vertex_format_debug_info;
+
+		/// Debug information about the index buffer set to the context.
+		set_object_debug_info m_set_index_buffer_debug_info;
 #endif
 
 		//
