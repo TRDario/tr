@@ -42,8 +42,8 @@ void tr::graphics_context::set_index_buffer(const IndexBuffer& buffer)
 {
 	TR_ASSERT(buffer.valid(), "Tried to set an index buffer in an invalid state to a graphics context.");
 
-	constexpr unsigned int GL_ELEMENT_ARRAY_BUFFER{0x8893};
-	gl().bind_buffer(GL_ELEMENT_ARRAY_BUFFER, buffer.unwrap());
+	constexpr unsigned int ELEMENT_ARRAY_BUFFER{0x8893};
+	gl().bind_buffer(ELEMENT_ARRAY_BUFFER, buffer.unwrap());
 
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 	m_set_index_buffer_debug_info.id = buffer.id();

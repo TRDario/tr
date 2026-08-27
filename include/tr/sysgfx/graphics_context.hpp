@@ -416,6 +416,13 @@ namespace tr
 
 		//
 
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
+		/// Asserts the validity of objects set to the graphics context.
+		void assert_valid_drawing_state();
+#endif
+
+		//
+
 		// Accesses `m_allocated_texture_units`.
 		friend class texture_unit;
 

@@ -397,15 +397,7 @@ void tr::graphics_context::clear_backbuffer_region(rectangle<int> region, tr::rg
 void tr::graphics_context::draw(primitive type, usize offset, usize vertices)
 {
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-	graphics_object_registry& registry{this->registry()};
-	TR_ASSERT(m_set_framebuffer_debug_info.id == graphics_object_id::invalid ||
-				  registry.framebuffers.contains(m_set_framebuffer_debug_info.id),
-			  "Tried to perform a drawing operation with an invalid set render target on framebuffer '{}'.",
-			  m_set_framebuffer_debug_info.label);
-	TR_ASSERT(registry.shader_pipelines.contains(m_set_shader_pipeline_debug_info.id),
-			  "Tried to perform a drawing operation with an invalid set shader pipeline '{}'.", m_set_shader_pipeline_debug_info.label);
-	TR_ASSERT(registry.vertex_formats.contains(m_set_vertex_format_debug_info.id),
-			  "Tried to perform a drawing operation with an invalid set vertex format '{}'.", m_set_vertex_format_debug_info.label);
+	assert_valid_drawing_state();
 #endif
 
 	gl().draw_arrays(std::to_underlying(type), offset, vertices);
@@ -414,15 +406,7 @@ void tr::graphics_context::draw(primitive type, usize offset, usize vertices)
 void tr::graphics_context::draw_instances(primitive type, usize offset, usize vertices, int instances)
 {
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-	graphics_object_registry& registry{this->registry()};
-	TR_ASSERT(m_set_framebuffer_debug_info.id == graphics_object_id::invalid ||
-				  registry.framebuffers.contains(m_set_framebuffer_debug_info.id),
-			  "Tried to perform a drawing operation with an invalid set render target on framebuffer '{}'.",
-			  m_set_framebuffer_debug_info.label);
-	TR_ASSERT(registry.shader_pipelines.contains(m_set_shader_pipeline_debug_info.id),
-			  "Tried to perform a drawing operation with an invalid set shader pipeline '{}'.", m_set_shader_pipeline_debug_info.label);
-	TR_ASSERT(registry.vertex_formats.contains(m_set_vertex_format_debug_info.id),
-			  "Tried to perform a drawing operation with an invalid set vertex format '{}'.", m_set_vertex_format_debug_info.label);
+	assert_valid_drawing_state();
 #endif
 
 	gl().draw_arrays_instanced(std::to_underlying(type), offset, vertices, instances);
@@ -431,15 +415,7 @@ void tr::graphics_context::draw_instances(primitive type, usize offset, usize ve
 void tr::graphics_context::draw_indexed(primitive type, usize offset, usize indices)
 {
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-	graphics_object_registry& registry{this->registry()};
-	TR_ASSERT(m_set_framebuffer_debug_info.id == graphics_object_id::invalid ||
-				  registry.framebuffers.contains(m_set_framebuffer_debug_info.id),
-			  "Tried to perform a drawing operation with an invalid set render target on framebuffer '{}'.",
-			  m_set_framebuffer_debug_info.label);
-	TR_ASSERT(registry.shader_pipelines.contains(m_set_shader_pipeline_debug_info.id),
-			  "Tried to perform a drawing operation with an invalid set shader pipeline '{}'.", m_set_shader_pipeline_debug_info.label);
-	TR_ASSERT(registry.vertex_formats.contains(m_set_vertex_format_debug_info.id),
-			  "Tried to perform a drawing operation with an invalid set vertex format '{}'.", m_set_vertex_format_debug_info.label);
+	assert_valid_drawing_state();
 #endif
 
 	gl().draw_elements(std::to_underlying(type), indices, GL_UNSIGNED_SHORT, reinterpret_cast<const void*>(offset * sizeof(u16)));
@@ -448,15 +424,7 @@ void tr::graphics_context::draw_indexed(primitive type, usize offset, usize indi
 void tr::graphics_context::draw_indexed_instances(primitive type, usize offset, usize indices, int instances)
 {
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-	graphics_object_registry& registry{this->registry()};
-	TR_ASSERT(m_set_framebuffer_debug_info.id == graphics_object_id::invalid ||
-				  registry.framebuffers.contains(m_set_framebuffer_debug_info.id),
-			  "Tried to perform a drawing operation with an invalid set render target on framebuffer '{}'.",
-			  m_set_framebuffer_debug_info.label);
-	TR_ASSERT(registry.shader_pipelines.contains(m_set_shader_pipeline_debug_info.id),
-			  "Tried to perform a drawing operation with an invalid set shader pipeline '{}'.", m_set_shader_pipeline_debug_info.label);
-	TR_ASSERT(registry.vertex_formats.contains(m_set_vertex_format_debug_info.id),
-			  "Tried to perform a drawing operation with an invalid set vertex format '{}'.", m_set_vertex_format_debug_info.label);
+	assert_valid_drawing_state();
 #endif
 
 	gl().draw_elements_instanced(std::to_underlying(type), indices, GL_UNSIGNED_SHORT, reinterpret_cast<const void*>(offset * sizeof(u16)),
@@ -497,7 +465,7 @@ void tr::graphics_context::move_label(unsigned int type, unsigned int old_id, un
 //
 
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-void tr::graphics_context::check_vertex_buffer(std::string label, int slot, std::span<const vertex_attribute> attrs)
+void tr::graphics_context::check_typed_vertex_buffer(std::string label, int slot, std::span<const vertex_attribute> attrs)
 {
 	TR_ASSERT(usize(slot) < m_set_vertex_format_debug_info.bindings.size(),
 			  "Tried to set vertex buffer '{}' to invalid slot {} (max in vertex format '{}': {}).", label, slot,
@@ -515,5 +483,27 @@ void tr::graphics_context::check_vertex_buffer(std::string label, int slot, std:
 				  "attribute {}, got '{}').",
 				  label, m_set_vertex_format_debug_info.label, rhs, i, lhs);
 	}
+}
+#endif
+
+//
+
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
+void tr::graphics_context::assert_valid_drawing_state()
+{
+	graphics_object_registry& registry{this->registry()};
+
+	TR_ASSERT(m_set_framebuffer_debug_info.id == graphics_object_id::invalid ||
+				  registry.framebuffers.contains(m_set_framebuffer_debug_info.id),
+			  "Tried to perform a drawing operation with an invalid set render target on framebuffer '{}'.",
+			  m_set_framebuffer_debug_info.label);
+	TR_ASSERT(registry.shader_pipelines.contains(m_set_shader_pipeline_debug_info.id),
+			  "Tried to perform a drawing operation with an invalid set shader pipeline '{}'.", m_set_shader_pipeline_debug_info.label);
+	TR_ASSERT(registry.vertex_formats.contains(m_set_vertex_format_debug_info.id),
+			  "Tried to perform a drawing operation with an invalid set vertex format '{}'.", m_set_vertex_format_debug_info.label);
+	TR_ASSERT(registry.buffers.contains(m_set_vertex_buffer_debug_info.id),
+			  "Tried to perform a drawing operation with an invalid set vertex buffer '{}'.", m_set_vertex_buffer_debug_info.label);
+	TR_ASSERT(registry.buffers.contains(m_set_index_buffer_debug_info.id),
+			  "Tried to perform a drawing operation with an invalid set index buffer '{}'.", m_set_index_buffer_debug_info.label);
 }
 #endif
