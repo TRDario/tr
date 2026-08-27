@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=11" />
   <meta name="generator" content="Doxygen 1.17.0" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>tr: index_buffer.hpp File Reference</title>
+  <title>tr: tr::any_typed_vertex_buffer Concept Reference</title>
   <link href="tabs.css" rel="stylesheet" type="text/css" />
   <script type="text/javascript" src="jquery.js"></script>
   <script type="text/javascript" src="dynsections.js"></script>
@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
   </div>
 </div>
 <script type="text/javascript">
-document.addEventListener('DOMContentLoaded',() => { initNavTree('index__buffer_8hpp.html','',''); });
+document.addEventListener('DOMContentLoaded',() => { initNavTree('concepttr_1_1any__typed__vertex__buffer.html','',''); });
 </script>
 <div id="container">
 <div id="doc-content">
@@ -124,46 +124,24 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('index__buffer_
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">index_buffer.hpp File Reference</div></div>
+  <div class="headertitle"><div class="title">tr::any_typed_vertex_buffer Concept Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Provides index buffer classes.  
+<p>Typed vertex buffer type.  
 </p>
-
-<p><a href="index__buffer_8hpp_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:tr_3A_3Astatic_5Findex_5Fbuffer" id="r_tr_3A_3Astatic_5Findex_5Fbuffer"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classtr_1_1static__index__buffer.html">tr::static_index_buffer</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Static index buffer class for holding immutable index data.  <a href="classtr_1_1static__index__buffer.html#details">More...</a><br /></td></tr>
-<tr class="memitem:tr_3A_3Adyn_5Findex_5Fbuffer" id="r_tr_3A_3Adyn_5Findex_5Fbuffer"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classtr_1_1dyn__index__buffer.html">tr::dyn_index_buffer</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dynamic index buffer class.  <a href="classtr_1_1dyn__index__buffer.html#details">More...</a><br /></td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 id="header-namespaces" class="groupheader"><a id="namespaces" name="namespaces"></a>
-Namespaces</h2></td></tr>
-<tr class="memitem:tr" id="r_tr"><td class="memItemLeft">namespace &#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html">tr</a></td></tr>
-<tr class="memdesc:namespacetr"><td class="mdescLeft">&#160;</td><td class="mdescRight">Namespace containing all tr functionality. <br /></td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 id="header-concepts" class="groupheader"><a id="concepts" name="concepts"></a>
-Concepts</h2></td></tr>
-<tr class="memitem:tr_3A_3Aany_5Findex_5Fbuffer" id="r_tr_3A_3Aany_5Findex_5Fbuffer"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concepttr_1_1any__index__buffer.html">tr::any_index_buffer</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Index buffer type. <br /></td></tr>
-</table>
-</div><!-- contents -->
+<h2 id="header-conceptdef" class="groupheader">Concept definition</h2>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepttr_1_1any__typed__vertex__buffer.html">any_typed_vertex_buffer</a> = <a class="code hl_concept" href="concepttr_1_1specialization__of.html">specialization_of&lt;T, static_vertex_buffer&gt;</a> || <a class="code hl_concept" href="concepttr_1_1specialization__of.html">specialization_of&lt;T, dyn_vertex_buffer&gt;</a></div>
+<div class="ttc" id="aconcepttr_1_1any__typed__vertex__buffer_html"><div class="ttname"><a href="concepttr_1_1any__typed__vertex__buffer.html">tr::any_typed_vertex_buffer</a></div><div class="ttdoc">Typed vertex buffer type.</div><div class="ttdef"><b>Definition</b> vertex_buffer.hpp:335</div></div>
+<div class="ttc" id="aconcepttr_1_1specialization__of_html"><div class="ttname"><a href="concepttr_1_1specialization__of.html">tr::specialization_of</a></div><div class="ttdoc">Specialization of a template with type parameters.</div><div class="ttdef"><b>Definition</b> specialization_of.hpp:39</div></div>
+</div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div id="page-nav" class="page-nav-panel">
-<div id="page-nav-resize-handle"></div>
-<div id="page-nav-tree">
-<div id="page-nav-contents">
-</div><!-- page-nav-contents -->
-</div><!-- page-nav-tree -->
-</div><!-- page-nav -->
 </div><!-- container -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a href="dir_48c35ed6b28060506e9df53e28b74a05.html">tr</a></li><li class="navelem"><a href="dir_697f726910a7296205b6ff25f822d718.html">sysgfx</a></li><li class="navelem"><a href="index__buffer_8hpp.html">index_buffer.hpp</a></li>
+    <li class="navelem"><a href="namespacetr.html">tr</a></li><li class="navelem"><a href="concepttr_1_1any__typed__vertex__buffer.html">any_typed_vertex_buffer</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.17.0 </li>
   </ul>
 </div>

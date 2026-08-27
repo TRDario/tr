@@ -7,6 +7,7 @@ var classtr_1_1shader__array =
     [ "resize", "classtr_1_1shader__array.html#a05a71d090d96bffd4b7b5e3680130bc3", null ],
     [ "map", "classtr_1_1shader__array.html#a70a98798fa9fa7bbcd4be9f49dc9fb83", null ],
     [ "context", "classtr_1_1shader__array.html#aa7323654826d026acc2bc31bed2ed286", null ],
+    [ "valid", "classtr_1_1shader__array.html#a645762c5d78538a69025a259dce68834", null ],
     [ "mapped", "classtr_1_1shader__array.html#a7c0cbf7311c8fa0ee00e9e7d8c6e24e9", null ],
     [ "label", "classtr_1_1shader__array.html#ada4364c0295af892b869f2be3ed62777", null ],
     [ "set_label", "classtr_1_1shader__array.html#a791c5d26a17cce2fe3850cb8e1ba5697", null ]

@@ -9,6 +9,7 @@ var classtr_1_1shader__buffer =
     [ "map_header", "classtr_1_1shader__buffer.html#a235f8b0fba8bd8f3042b3b14f487b82a", null ],
     [ "map_array", "classtr_1_1shader__buffer.html#a1a984c1444cfd790f12ea15817ed5753", null ],
     [ "context", "classtr_1_1shader__buffer.html#aa7323654826d026acc2bc31bed2ed286", null ],
+    [ "valid", "classtr_1_1shader__buffer.html#a645762c5d78538a69025a259dce68834", null ],
     [ "mapped", "classtr_1_1shader__buffer.html#a7c0cbf7311c8fa0ee00e9e7d8c6e24e9", null ],
     [ "label", "classtr_1_1shader__buffer.html#ada4364c0295af892b869f2be3ed62777", null ],
     [ "set_label", "classtr_1_1shader__buffer.html#a791c5d26a17cce2fe3850cb8e1ba5697", null ]

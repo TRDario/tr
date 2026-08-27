@@ -10,6 +10,7 @@ var classtr_1_1basic__dyn__vertex__buffer =
     [ "set_region", "classtr_1_1basic__dyn__vertex__buffer.html#aeda3e45b8829b8b1ec69040676389317", null ],
     [ "graphics_buffer", "classtr_1_1basic__dyn__vertex__buffer.html#a06d9e2187dbc1834b2a6bbea8a44d0bc", null ],
     [ "context", "classtr_1_1basic__dyn__vertex__buffer.html#aa7323654826d026acc2bc31bed2ed286", null ],
+    [ "valid", "classtr_1_1basic__dyn__vertex__buffer.html#a645762c5d78538a69025a259dce68834", null ],
     [ "label", "classtr_1_1basic__dyn__vertex__buffer.html#ada4364c0295af892b869f2be3ed62777", null ],
     [ "set_label", "classtr_1_1basic__dyn__vertex__buffer.html#a791c5d26a17cce2fe3850cb8e1ba5697", null ]
 ];

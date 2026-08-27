@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('index__buffer_
 <a href="index__buffer_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#pragma once</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;<a class="code" href="integer_8hpp.html">../utility/integer.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;<a class="code" href="concepts_8hpp.html">../utility/concepts.hpp</a>&quot;</span></div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;<a class="code" href="graphics__buffer_8hpp.html">graphics_buffer.hpp</a>&quot;</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment">//</span></div>
@@ -148,66 +148,87 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('index__buffer_
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        <span class="keyword">using </span><a class="code hl_function" href="classtr_1_1graphics__buffer.html#aa7323654826d026acc2bc31bed2ed286">graphics_buffer::context</a>;</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span></div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>        <span class="keyword">using </span><a class="code hl_function" href="classtr_1_1graphics__buffer.html#ada4364c0295af892b869f2be3ed62777">graphics_buffer::label</a>;</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        <span class="keyword">using </span><a class="code hl_function" href="classtr_1_1graphics__buffer.html#a791c5d26a17cce2fe3850cb8e1ba5697">graphics_buffer::set_label</a>;</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span></div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        <span class="keyword">using </span>graphics_buffer::unwrap;</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span></div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>      <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        <a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#a0cfca98bbeed1e31ae9ef0344fb39389">ssize</a> m_size;</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    };</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>        <span class="keyword">using </span><a class="code hl_function" href="classtr_1_1graphics__buffer.html#a645762c5d78538a69025a259dce68834">graphics_buffer::valid</a>;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        <span class="keyword">using </span><a class="code hl_function" href="classtr_1_1graphics__buffer.html#ada4364c0295af892b869f2be3ed62777">graphics_buffer::label</a>;</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        <span class="keyword">using </span><a class="code hl_function" href="classtr_1_1graphics__buffer.html#a791c5d26a17cce2fe3850cb8e1ba5697">graphics_buffer::set_label</a>;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        <span class="keyword">using </span>graphics_buffer::unwrap;</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span></div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="preprocessor">#ifdef TR_ENABLE_CHECKED_GRAPHICS</span></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        <span class="keyword">using </span>graphics_buffer::id;</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>      <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        <a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#a0cfca98bbeed1e31ae9ef0344fb39389">ssize</a> m_size;</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    };</div>
 </div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    <span class="comment">//</span></div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span></div>
-<div class="foldopen" id="foldopen00056" data-start="{" data-end="};">
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="classtr_1_1dyn__index__buffer.html">   56</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classtr_1_1dyn__index__buffer.html">dyn_index_buffer</a> : <span class="keyword">private</span> <a class="code hl_function" href="classtr_1_1dyn__index__buffer.html#a06d9e2187dbc1834b2a6bbea8a44d0bc">graphics_buffer</a></div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    {</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>      <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        <span class="keyword">using </span><a class="code hl_function" href="classtr_1_1graphics__buffer.html#a06d9e2187dbc1834b2a6bbea8a44d0bc">graphics_buffer::graphics_buffer</a>;</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span></div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        <span class="keyword">using </span><a class="code hl_function" href="classtr_1_1graphics__buffer.html#aa7323654826d026acc2bc31bed2ed286">graphics_buffer::context</a>;</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span></div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span></div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno"><a class="line" href="classtr_1_1dyn__index__buffer.html#acc32df5c89ac06af29315a3e1abc80b3">   76</a></span>        <span class="keywordtype">bool</span> <a class="code hl_function" href="classtr_1_1dyn__index__buffer.html#acc32df5c89ac06af29315a3e1abc80b3">empty</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span></div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno"><a class="line" href="classtr_1_1dyn__index__buffer.html#a176750e60b3cfa69ee29d35007604f25">   80</a></span>        <a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> <a class="code hl_function" href="classtr_1_1dyn__index__buffer.html#a176750e60b3cfa69ee29d35007604f25">size</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span></div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno"><a class="line" href="classtr_1_1dyn__index__buffer.html#a375e9224ed201a552f1e78cd0c67820f">   84</a></span>        <a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> <a class="code hl_function" href="classtr_1_1dyn__index__buffer.html#a375e9224ed201a552f1e78cd0c67820f">capacity</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    <span class="comment">//</span></div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span></div>
+<div class="foldopen" id="foldopen00072" data-start="{" data-end="};">
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno"><a class="line" href="classtr_1_1dyn__index__buffer.html">   72</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classtr_1_1dyn__index__buffer.html">dyn_index_buffer</a> : <span class="keyword">private</span> <a class="code hl_function" href="classtr_1_1dyn__index__buffer.html#a06d9e2187dbc1834b2a6bbea8a44d0bc">graphics_buffer</a></div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    {</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>      <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        <span class="keyword">using </span><a class="code hl_function" href="classtr_1_1graphics__buffer.html#a06d9e2187dbc1834b2a6bbea8a44d0bc">graphics_buffer::graphics_buffer</a>;</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span></div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        <span class="keyword">using </span><a class="code hl_function" href="classtr_1_1graphics__buffer.html#aa7323654826d026acc2bc31bed2ed286">graphics_buffer::context</a>;</div>
 <div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span></div>
 <div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span></div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno"><a class="line" href="classtr_1_1dyn__index__buffer.html#a5ebdac15bc12abaa9c65162784aeb38c">   91</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classtr_1_1dyn__index__buffer.html#a5ebdac15bc12abaa9c65162784aeb38c">clear</a>();</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span></div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno"><a class="line" href="classtr_1_1dyn__index__buffer.html#adaa6986698fc783ebf7c5cb314ceeb7f">   95</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classtr_1_1dyn__index__buffer.html#adaa6986698fc783ebf7c5cb314ceeb7f">resize</a>(<a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> <a class="code hl_function" href="classtr_1_1dyn__index__buffer.html#a176750e60b3cfa69ee29d35007604f25">size</a>);</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span></div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno"><a class="line" href="classtr_1_1dyn__index__buffer.html#a96a46a6a91da14e6b2cfa4911f521b9c">   99</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classtr_1_1dyn__index__buffer.html#a96a46a6a91da14e6b2cfa4911f521b9c">reserve</a>(<a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> <a class="code hl_function" href="classtr_1_1dyn__index__buffer.html#a375e9224ed201a552f1e78cd0c67820f">capacity</a>);</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span></div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno"><a class="line" href="classtr_1_1dyn__index__buffer.html#a6051d91a6d874115dce0526c941379de">  103</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classtr_1_1dyn__index__buffer.html#a6051d91a6d874115dce0526c941379de">set</a>(std::span&lt;const u16&gt; data);</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span></div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno"><a class="line" href="classtr_1_1dyn__index__buffer.html#af38c2602159ccd17cbe2737e30a45215">  109</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classtr_1_1dyn__index__buffer.html#af38c2602159ccd17cbe2737e30a45215">set_region</a>(<a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> offset, std::span&lt;const u16&gt; data);</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span></div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>        <span class="keyword">using </span><a class="code hl_function" href="classtr_1_1graphics__buffer.html#ada4364c0295af892b869f2be3ed62777">graphics_buffer::label</a>;</div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span> </div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>        <span class="keyword">using </span><a class="code hl_function" href="classtr_1_1graphics__buffer.html#a791c5d26a17cce2fe3850cb8e1ba5697">graphics_buffer::set_label</a>;</div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span></div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span> </div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>        <span class="keyword">using </span>graphics_buffer::unwrap;</div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span></div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span> </div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>      <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>        <a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> m_size{0};</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno"><a class="line" href="classtr_1_1dyn__index__buffer.html#acc32df5c89ac06af29315a3e1abc80b3">   92</a></span>        <span class="keywordtype">bool</span> <a class="code hl_function" href="classtr_1_1dyn__index__buffer.html#acc32df5c89ac06af29315a3e1abc80b3">empty</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span></div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno"><a class="line" href="classtr_1_1dyn__index__buffer.html#a176750e60b3cfa69ee29d35007604f25">   96</a></span>        <a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> <a class="code hl_function" href="classtr_1_1dyn__index__buffer.html#a176750e60b3cfa69ee29d35007604f25">size</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span></div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno"><a class="line" href="classtr_1_1dyn__index__buffer.html#a375e9224ed201a552f1e78cd0c67820f">  100</a></span>        <a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> <a class="code hl_function" href="classtr_1_1dyn__index__buffer.html#a375e9224ed201a552f1e78cd0c67820f">capacity</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span></div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span></div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno"><a class="line" href="classtr_1_1dyn__index__buffer.html#a5ebdac15bc12abaa9c65162784aeb38c">  107</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classtr_1_1dyn__index__buffer.html#a5ebdac15bc12abaa9c65162784aeb38c">clear</a>();</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span></div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno"><a class="line" href="classtr_1_1dyn__index__buffer.html#adaa6986698fc783ebf7c5cb314ceeb7f">  111</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classtr_1_1dyn__index__buffer.html#adaa6986698fc783ebf7c5cb314ceeb7f">resize</a>(<a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> <a class="code hl_function" href="classtr_1_1dyn__index__buffer.html#a176750e60b3cfa69ee29d35007604f25">size</a>);</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span></div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno"><a class="line" href="classtr_1_1dyn__index__buffer.html#a96a46a6a91da14e6b2cfa4911f521b9c">  115</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classtr_1_1dyn__index__buffer.html#a96a46a6a91da14e6b2cfa4911f521b9c">reserve</a>(<a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> <a class="code hl_function" href="classtr_1_1dyn__index__buffer.html#a375e9224ed201a552f1e78cd0c67820f">capacity</a>);</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span></div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno"><a class="line" href="classtr_1_1dyn__index__buffer.html#a6051d91a6d874115dce0526c941379de">  119</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classtr_1_1dyn__index__buffer.html#a6051d91a6d874115dce0526c941379de">set</a>(std::span&lt;const u16&gt; data);</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span></div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno"><a class="line" href="classtr_1_1dyn__index__buffer.html#af38c2602159ccd17cbe2737e30a45215">  125</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classtr_1_1dyn__index__buffer.html#af38c2602159ccd17cbe2737e30a45215">set_region</a>(<a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> offset, std::span&lt;const u16&gt; data);</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span></div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span> </div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>        <span class="keyword">using </span><a class="code hl_function" href="classtr_1_1graphics__buffer.html#a645762c5d78538a69025a259dce68834">graphics_buffer::valid</a>;</div>
 <div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span></div>
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>        <a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> m_capacity{0};</div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>    };</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span> </div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>        <span class="keyword">using </span><a class="code hl_function" href="classtr_1_1graphics__buffer.html#ada4364c0295af892b869f2be3ed62777">graphics_buffer::label</a>;</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span> </div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>        <span class="keyword">using </span><a class="code hl_function" href="classtr_1_1graphics__buffer.html#a791c5d26a17cce2fe3850cb8e1ba5697">graphics_buffer::set_label</a>;</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span></div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span> </div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>        <span class="keyword">using </span>graphics_buffer::unwrap;</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span></div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span><span class="preprocessor">#ifdef TR_ENABLE_CHECKED_GRAPHICS</span></div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span> </div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>        <span class="keyword">using </span>graphics_buffer::id;</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span></div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span> </div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>      <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>        <a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> m_size{0};</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span></div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>        <a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> m_capacity{0};</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>    };</div>
 </div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>} <span class="comment">// namespace tr</span></div>
-<div class="ttc" id="aclasstr_1_1dyn__index__buffer_html"><div class="ttname"><a href="classtr_1_1dyn__index__buffer.html">tr::dyn_index_buffer</a></div><div class="ttdoc">Dynamic index buffer class.</div><div class="ttdef"><b>Definition</b> index_buffer.hpp:57</div></div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span></div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno"><a class="line" href="concepttr_1_1any__index__buffer.html">  171</a></span>    <span class="keyword">concept </span><a class="code hl_concept" href="concepttr_1_1any__index__buffer.html">any_index_buffer</a> = <a class="code hl_concept" href="concepttr_1_1one__of.html">one_of&lt;T, static_index_buffer, dyn_index_buffer&gt;</a>;</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>} <span class="comment">// namespace tr</span></div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span> </div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span><span class="preprocessor">#include &quot;impl/index_buffer.hpp&quot;</span> <span class="comment">// IWYU pragma: export</span></div>
+<div class="ttc" id="aclasstr_1_1dyn__index__buffer_html"><div class="ttname"><a href="classtr_1_1dyn__index__buffer.html">tr::dyn_index_buffer</a></div><div class="ttdoc">Dynamic index buffer class.</div><div class="ttdef"><b>Definition</b> index_buffer.hpp:73</div></div>
 <div class="ttc" id="aclasstr_1_1dyn__index__buffer_html_a06d9e2187dbc1834b2a6bbea8a44d0bc"><div class="ttname"><a href="classtr_1_1dyn__index__buffer.html#a06d9e2187dbc1834b2a6bbea8a44d0bc">tr::dyn_index_buffer::graphics_buffer</a></div><div class="ttdeci">graphics_buffer(graphics_context &amp;context)</div><div class="ttdoc">Constructs an empty buffer.</div></div>
 <div class="ttc" id="aclasstr_1_1dyn__index__buffer_html_a176750e60b3cfa69ee29d35007604f25"><div class="ttname"><a href="classtr_1_1dyn__index__buffer.html#a176750e60b3cfa69ee29d35007604f25">tr::dyn_index_buffer::size</a></div><div class="ttdeci">usize size() const</div><div class="ttdoc">Gets the size of the index buffer contents.</div></div>
 <div class="ttc" id="aclasstr_1_1dyn__index__buffer_html_a375e9224ed201a552f1e78cd0c67820f"><div class="ttname"><a href="classtr_1_1dyn__index__buffer.html#a375e9224ed201a552f1e78cd0c67820f">tr::dyn_index_buffer::capacity</a></div><div class="ttdeci">usize capacity() const</div><div class="ttdoc">Gets the capacity of the index buffer.</div></div>
@@ -218,14 +239,17 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('index__buffer_
 <div class="ttc" id="aclasstr_1_1dyn__index__buffer_html_adaa6986698fc783ebf7c5cb314ceeb7f"><div class="ttname"><a href="classtr_1_1dyn__index__buffer.html#adaa6986698fc783ebf7c5cb314ceeb7f">tr::dyn_index_buffer::resize</a></div><div class="ttdeci">void resize(usize size)</div><div class="ttdoc">Clears the buffer and resizes it, potentially reallocating in the process.</div></div>
 <div class="ttc" id="aclasstr_1_1dyn__index__buffer_html_af38c2602159ccd17cbe2737e30a45215"><div class="ttname"><a href="classtr_1_1dyn__index__buffer.html#af38c2602159ccd17cbe2737e30a45215">tr::dyn_index_buffer::set_region</a></div><div class="ttdeci">void set_region(usize offset, std::span&lt; const u16 &gt; data)</div><div class="ttdoc">Sets a region of the buffer.</div></div>
 <div class="ttc" id="aclasstr_1_1graphics__buffer_html_a06d9e2187dbc1834b2a6bbea8a44d0bc"><div class="ttname"><a href="classtr_1_1graphics__buffer.html#a06d9e2187dbc1834b2a6bbea8a44d0bc">tr::graphics_buffer::graphics_buffer</a></div><div class="ttdeci">graphics_buffer(graphics_context &amp;context)</div><div class="ttdoc">Constructs an empty buffer.</div></div>
+<div class="ttc" id="aclasstr_1_1graphics__buffer_html_a645762c5d78538a69025a259dce68834"><div class="ttname"><a href="classtr_1_1graphics__buffer.html#a645762c5d78538a69025a259dce68834">tr::graphics_buffer::valid</a></div><div class="ttdeci">bool valid() const</div><div class="ttdoc">Gets whether the buffer is in a valid state.</div></div>
 <div class="ttc" id="aclasstr_1_1graphics__buffer_html_a791c5d26a17cce2fe3850cb8e1ba5697"><div class="ttname"><a href="classtr_1_1graphics__buffer.html#a791c5d26a17cce2fe3850cb8e1ba5697">tr::graphics_buffer::set_label</a></div><div class="ttdeci">void set_label(std::string_view label)</div><div class="ttdoc">Sets the label of the buffer.</div></div>
 <div class="ttc" id="aclasstr_1_1graphics__buffer_html_aa7323654826d026acc2bc31bed2ed286"><div class="ttname"><a href="classtr_1_1graphics__buffer.html#aa7323654826d026acc2bc31bed2ed286">tr::graphics_buffer::context</a></div><div class="ttdeci">graphics_context &amp; context() const</div><div class="ttdoc">Gets a reference to the graphics context the buffer is on.</div></div>
 <div class="ttc" id="aclasstr_1_1graphics__buffer_html_ada4364c0295af892b869f2be3ed62777"><div class="ttname"><a href="classtr_1_1graphics__buffer.html#ada4364c0295af892b869f2be3ed62777">tr::graphics_buffer::label</a></div><div class="ttdeci">std::string label() const</div><div class="ttdoc">Gets the label of the buffer.</div></div>
-<div class="ttc" id="aclasstr_1_1graphics__context_html"><div class="ttname"><a href="classtr_1_1graphics__context.html">tr::graphics_context</a></div><div class="ttdoc">Window graphics context.</div><div class="ttdef"><b>Definition</b> graphics_context.hpp:109</div></div>
+<div class="ttc" id="aclasstr_1_1graphics__context_html"><div class="ttname"><a href="classtr_1_1graphics__context.html">tr::graphics_context</a></div><div class="ttdoc">Window graphics context.</div><div class="ttdef"><b>Definition</b> graphics_context.hpp:108</div></div>
 <div class="ttc" id="aclasstr_1_1static__index__buffer_html_a42e306e2e3020655d9544a4e5c8774c6"><div class="ttname"><a href="classtr_1_1static__index__buffer.html#a42e306e2e3020655d9544a4e5c8774c6">tr::static_index_buffer::static_index_buffer</a></div><div class="ttdeci">static_index_buffer(graphics_context &amp;context, std::span&lt; const u16 &gt; data)</div><div class="ttdoc">Uploads index data into a static index buffer.</div></div>
 <div class="ttc" id="aclasstr_1_1static__index__buffer_html_aa7323654826d026acc2bc31bed2ed286"><div class="ttname"><a href="classtr_1_1static__index__buffer.html#aa7323654826d026acc2bc31bed2ed286">tr::static_index_buffer::context</a></div><div class="ttdeci">graphics_context &amp; context() const</div><div class="ttdoc">Gets a reference to the graphics context the buffer is on.</div></div>
+<div class="ttc" id="aconcepts_8hpp_html"><div class="ttname"><a href="concepts_8hpp.html">concepts.hpp</a></div><div class="ttdoc">Provides concepts.</div></div>
+<div class="ttc" id="aconcepttr_1_1any__index__buffer_html"><div class="ttname"><a href="concepttr_1_1any__index__buffer.html">tr::any_index_buffer</a></div><div class="ttdoc">Index buffer type.</div><div class="ttdef"><b>Definition</b> index_buffer.hpp:171</div></div>
+<div class="ttc" id="aconcepttr_1_1one__of_html"><div class="ttname"><a href="concepttr_1_1one__of.html">tr::one_of</a></div><div class="ttdoc">Type contained within a list of types.</div><div class="ttdef"><b>Definition</b> concepts.hpp:133</div></div>
 <div class="ttc" id="agraphics__buffer_8hpp_html"><div class="ttname"><a href="graphics__buffer_8hpp.html">graphics_buffer.hpp</a></div><div class="ttdoc">Provides tr::graphics_buffer.</div></div>
-<div class="ttc" id="ainteger_8hpp_html"><div class="ttname"><a href="integer_8hpp.html">integer.hpp</a></div><div class="ttdoc">Provides integer utilities.</div></div>
 <div class="ttc" id="anamespacetr_1_1aliases_1_1integer__aliases_html_a0cfca98bbeed1e31ae9ef0344fb39389"><div class="ttname"><a href="namespacetr_1_1aliases_1_1integer__aliases.html#a0cfca98bbeed1e31ae9ef0344fb39389">tr::aliases::integer_aliases::ssize</a></div><div class="ttdeci">std::ptrdiff_t ssize</div><div class="ttdoc">Signed size integer.</div><div class="ttdef"><b>Definition</b> integer.hpp:44</div></div>
 <div class="ttc" id="anamespacetr_1_1aliases_1_1integer__aliases_html_a401704cad707ec504dfeae361641bb9b"><div class="ttname"><a href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">tr::aliases::integer_aliases::usize</a></div><div class="ttdeci">std::size_t usize</div><div class="ttdoc">Unsigned size integer.</div><div class="ttdef"><b>Definition</b> integer.hpp:29</div></div>
 <div class="ttc" id="anamespacetr_html"><div class="ttname"><a href="namespacetr.html">tr</a></div><div class="ttdoc">Namespace containing all tr functionality.</div><div class="ttdef"><b>Definition</b> audio_buffer.hpp:10</div></div>
