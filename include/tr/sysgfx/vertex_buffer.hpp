@@ -3,6 +3,7 @@
 
 #pragma once
 #include "../utility/concepts.hpp"
+#include "../utility/specialization_of.hpp"
 #include "graphics_buffer.hpp"
 
 //
@@ -72,6 +73,9 @@ namespace tr
 	class static_vertex_buffer : private basic_static_vertex_buffer
 	{
 	  public:
+		/// Value type used by the buffer.
+		using value_type = Element;
+
 		/// @name Constructors
 		/// @{
 
@@ -229,6 +233,9 @@ namespace tr
 	class dyn_vertex_buffer : private basic_dyn_vertex_buffer
 	{
 	  public:
+		/// Value type used by the buffer.
+		using value_type = Element;
+
 		/// @name Constructors
 		/// @{
 
@@ -316,6 +323,20 @@ namespace tr
 		/// @endcond
 #endif
 	};
+
+	//
+
+	/// Untyped vertex buffer type.
+	template <typename T>
+	concept any_untyped_vertex_buffer = one_of<T, basic_static_vertex_buffer, basic_dyn_vertex_buffer>;
+
+	/// Typed vertex buffer type.
+	template <typename T>
+	concept any_typed_vertex_buffer = specialization_of<T, static_vertex_buffer> || specialization_of<T, dyn_vertex_buffer>;
+
+	/// Vertex buffer type.
+	template <typename T>
+	concept any_vertex_buffer = any_untyped_vertex_buffer<T> || any_typed_vertex_buffer<T>;
 } // namespace tr
 
 #include "impl/vertex_buffer.hpp" // IWYU pragma: export

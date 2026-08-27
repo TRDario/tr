@@ -213,34 +213,21 @@ namespace tr
 		void set_vertex_format(const vertex_format& format);
 
 		/// Sets an active vertex buffer.
+		/// @tparam UntypedVertexBuffer Untyped vertex buffer type.
 		/// @param buffer Buffer to set as active.
 		/// @param slot Slot to set the buffer in.
 		/// @param offset Starting offset within the buffer to bind.
 		/// @param stride Stride between the elements of the vertex buffer.
-		void set_vertex_buffer(const basic_static_vertex_buffer& buffer, int slot, ssize offset, usize stride);
+		template <any_untyped_vertex_buffer UntypedVertexBuffer>
+		void set_vertex_buffer(const UntypedVertexBuffer& buffer, int slot, ssize offset, usize stride);
 
 		/// Sets an active vertex buffer.
-		/// @tparam T Vertex buffer element type.
+		/// @tparam TypedVertexBuffer Typed vertex buffer type.
 		/// @param buffer Buffer to set as active.
 		/// @param slot Slot to set the buffer in.
 		/// @param offset Starting offset within the buffer to bind.
-		template <standard_layout T>
-		void set_vertex_buffer(const static_vertex_buffer<T>& buffer, int slot, ssize offset);
-
-		/// Sets an active vertex buffer.
-		/// @param buffer Buffer to set as active.
-		/// @param slot Slot to set the buffer in.
-		/// @param offset Starting offset within the buffer to bind.
-		/// @param stride Stride between the elements of the vertex buffer.
-		void set_vertex_buffer(const basic_dyn_vertex_buffer& buffer, int slot, ssize offset, usize stride);
-
-		/// Sets an active vertex buffer.
-		/// @tparam T Vertex buffer element type.
-		/// @param buffer Buffer to set as active.
-		/// @param slot Slot to set the buffer in.
-		/// @param offset Starting offset within the buffer to bind.
-		template <standard_layout T>
-		void set_vertex_buffer(const dyn_vertex_buffer<T>& buffer, int slot, ssize offset);
+		template <any_typed_vertex_buffer TypedVertexBuffer>
+		void set_vertex_buffer(const TypedVertexBuffer& buffer, int slot, ssize offset);
 
 		/// Sets the active index buffer.
 		/// @tparam IndexBuffer Index buffer type.
@@ -401,6 +388,9 @@ namespace tr
 		/// Debug information about the vertex format set to the context.
 		set_vertex_format_debug_info m_set_vertex_format_debug_info;
 
+		/// Debug information about the vertex buffer set to the context.
+		set_object_debug_info m_set_vertex_buffer_debug_info;
+
 		/// Debug information about the index buffer set to the context.
 		set_object_debug_info m_set_index_buffer_debug_info;
 #endif
@@ -412,15 +402,17 @@ namespace tr
 		/// @param label Label of the vertex buffer.
 		/// @param slot Slot the vertex buffer is being set to.
 		/// @param attrs Vertex attribute list of the elements of the vertex buffer.
-		void check_vertex_buffer(std::string label, int slot, std::span<const vertex_attribute> attrs);
+		void check_typed_vertex_buffer(std::string label, int slot, std::span<const vertex_attribute> attrs);
 #endif
 
 		/// Sets an active vertex buffer.
-		/// @param buffer_id ID of the buffer to set as active.
+		/// @tparam VertexBuffer Vertex buffer type.
+		/// @param buffer Buffer to set as active.
 		/// @param slot Slot to set the buffer in.
-		/// @param offset Starting offset within the buffer to bind.
+		/// @param offset Starting offset within the buffer in bytes to bind.
 		/// @param stride Stride between the elements of the vertex buffer.
-		void set_vertex_buffer(unsigned int buffer_id, int slot, ssize offset, usize stride);
+		template <any_vertex_buffer VertexBuffer>
+		void set_vertex_buffer_base(const VertexBuffer& buffer, int slot, ssize offset, usize stride);
 
 		//
 

@@ -350,21 +350,6 @@ void tr::graphics_context::set_vertex_format(const vertex_format& format)
 	gl().bind_vertex_array(format.unwrap());
 }
 
-void tr::graphics_context::set_vertex_buffer(unsigned int buffer_id, int slot, ssize offset, usize stride)
-{
-	gl().bind_vertex_buffer(slot, buffer_id, offset, stride);
-}
-
-void tr::graphics_context::set_vertex_buffer(const basic_static_vertex_buffer& buffer, int slot, ssize offset, usize stride)
-{
-	set_vertex_buffer(buffer.unwrap(), slot, offset, stride);
-}
-
-void tr::graphics_context::set_vertex_buffer(const basic_dyn_vertex_buffer& buffer, int slot, ssize offset, usize stride)
-{
-	set_vertex_buffer(buffer.unwrap(), slot, offset, stride);
-}
-
 //
 
 void tr::graphics_context::clear_backbuffer(tr::rgbaf color)
