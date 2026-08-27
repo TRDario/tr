@@ -11,7 +11,11 @@ namespace tr
 	/// Stores properties of function types in `::return_type`, `::class_type`, `::args_tuple`, and `::nth_arg_type<N>`.
 	/// @tparam Function Function or functor type with an unambiguous `operator()` definition.
 	template <typename Function>
-	struct function_traits;
+	struct function_traits
+	{
+		static_assert(false, "Tried to use tr::function_traits with a type that is not a function or a functor type with an unambiguous "
+							 "`operator()` definition.");
+	};
 
 	/// Return type of a function or functor.
 	/// @tparam Function Function or functor type with an unambiguous `operator()` definition.

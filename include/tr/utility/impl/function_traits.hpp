@@ -11,7 +11,8 @@ namespace tr
 	/// Specialization of `tr::function_traits` for functors.
 	/// @tparam Functor Functor type with an unambiguous `operator()`.
 	template <typename Functor>
-	struct function_traits
+		requires requires(Functor fn) { &Functor::operator(); }
+	struct function_traits<Functor>
 	{
 		/// Type returned by the functor.
 		using return_type = function_traits<decltype(&Functor::operator())>::return_type;
