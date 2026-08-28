@@ -58,6 +58,7 @@ var searchData=
   ['br_55',['br',['../namespacetr.html#ac49d62ec06251ab54db81b814219c605adc634e2072827fe0b5be9a2063390544',1,'tr']]],
   ['break_5foverlong_5flines_56',['break_overlong_lines',['../namespacetr.html#a541d4f26e223083bde0b6c35b475ea55',1,'tr']]],
   ['build_5fbitmap_5fatlas_57',['build_bitmap_atlas',['../namespacetr.html#a72bbe35368214b53278039d2985a876c',1,'tr']]],
-  ['button_58',['button',['../structtr_1_1mouse__down__event.html#aa6deae06d10404cfc22911d7c55f6a54',1,'tr::mouse_down_event::button'],['../structtr_1_1mouse__up__event.html#adddef1253846bbdc24f404d0a6fef253',1,'tr::mouse_up_event::button']]],
-  ['buttons_59',['buttons',['../structtr_1_1mouse__motion__event.html#a0f2b8bd4ff788abba47247308f99ad8f',1,'tr::mouse_motion_event']]]
+  ['building_58',['Configuration and Building',['../md_pages_2configuration__and__building.html',1,'']]],
+  ['button_59',['button',['../structtr_1_1mouse__down__event.html#aa6deae06d10404cfc22911d7c55f6a54',1,'tr::mouse_down_event::button'],['../structtr_1_1mouse__up__event.html#adddef1253846bbdc24f404d0a6fef253',1,'tr::mouse_up_event::button']]],
+  ['buttons_60',['buttons',['../structtr_1_1mouse__motion__event.html#a0f2b8bd4ff788abba47247308f99ad8f',1,'tr::mouse_motion_event']]]
 ];

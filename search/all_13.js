@@ -24,6 +24,7 @@ var searchData=
   ['user_5fdirectory_21',['user_directory',['../namespacetr.html#a9cd73fd577159e94afeceae9d8c8fb61',1,'tr']]],
   ['usize_22',['usize',['../namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b',1,'tr::usize'],['../namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b',1,'tr::aliases::usize'],['../namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b',1,'tr::aliases::integer_aliases::usize']]],
   ['utf8_2ehpp_23',['utf8.hpp',['../utf8_8hpp.html',1,'']]],
-  ['utility_2ehpp_24',['utility.hpp',['../utility_8hpp.html',1,'']]],
-  ['uvs_25',['uvs',['../structtr_1_1simple__textured__mesh__ref.html#a0da9a780750466f93f41016822a9471b',1,'tr::simple_textured_mesh_ref::uvs'],['../structtr_1_1textured__mesh__ref.html#a796a400e38959b10af7cc696b9c214cd',1,'tr::textured_mesh_ref::uvs']]]
+  ['utility_20module_24',['Utility module',['../md_pages_2configuration__and__building.html#autotoc_md3',1,'']]],
+  ['utility_2ehpp_25',['utility.hpp',['../utility_8hpp.html',1,'']]],
+  ['uvs_26',['uvs',['../structtr_1_1simple__textured__mesh__ref.html#a0da9a780750466f93f41016822a9471b',1,'tr::simple_textured_mesh_ref::uvs'],['../structtr_1_1textured__mesh__ref.html#a796a400e38959b10af7cc696b9c214cd',1,'tr::textured_mesh_ref::uvs']]]
 ];

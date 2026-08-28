@@ -167,5 +167,6 @@ var searchData=
   ['subtract_164',['subtract',['../namespacetr.html#aead4294434ac2897c9ce8318a8216b18a97f415c180230ce76bafa74bc058ef5f',1,'tr']]],
   ['sum_165',['sum',['../namespacetr.html#a0023a621d14e63c379e246dcefc8996b',1,'tr']]],
   ['sys_5fcursor_166',['sys_cursor',['../namespacetr.html#aa7a1fb973e2b89b37e78a95d4461171f',1,'tr']]],
-  ['sysgfx_2ehpp_167',['sysgfx.hpp',['../sysgfx_8hpp.html',1,'']]]
+  ['sysgfx_2ehpp_167',['sysgfx.hpp',['../sysgfx_8hpp.html',1,'']]],
+  ['system_20and_20graphics_20module_168',['System and graphics module',['../md_pages_2configuration__and__building.html#autotoc_md5',1,'']]]
 ];

@@ -25,6 +25,16 @@
 var NAVTREE =
 [
   [ "tr", "index.html", [
+    [ "Configuration and Building", "md_pages_2configuration__and__building.html", [
+      [ "Tooling", "md_pages_2configuration__and__building.html#autotoc_md1", null ],
+      [ "Modules", "md_pages_2configuration__and__building.html#autotoc_md2", [
+        [ "Utility module", "md_pages_2configuration__and__building.html#autotoc_md3", null ],
+        [ "Audio module", "md_pages_2configuration__and__building.html#autotoc_md4", null ],
+        [ "System and graphics module", "md_pages_2configuration__and__building.html#autotoc_md5", null ],
+        [ "ImGui integration module", "md_pages_2configuration__and__building.html#autotoc_md6", null ]
+      ] ],
+      [ "Compile definitions", "md_pages_2configuration__and__building.html#autotoc_md7", null ]
+    ] ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
@@ -73,12 +83,12 @@ var NAVTREEINDEX =
 "classtr_1_1sub__bitmap.html#a577bb2e5c5efef7a77f04bc81648c2a9",
 "classtr_1_1vertex__format.html#a07cc01bd28ed9b2fa3ed529c9f0b4add",
 "concepttr_1_1volatile__qualified.html",
-"namespacetr.html#a28b063bbda74084a48b104d089479462",
-"namespacetr.html#ac49d62ec06251ab54db81b814219c605a5c4fefda27cfe84c3999be13e6b8608a",
-"namespacetr_1_1literals_1_1angle__literals.html#ab08bb250ff7d83aee74d895e2c245497",
-"structtr_1_1circle.html#a06bf8bade25a5a0e4c3827535726f9eb",
-"structtr_1_1rectangle__edges.html#a6376176b60f21cc18b937762b4d8770f",
-"structtr_1_1simple__textured__mesh__ref.html#ad5a4c1986de3e705ef0efeb1f6f802ee"
+"namespacetr.html#a229258cb3e5eee67de597c604b594494",
+"namespacetr.html#ac299d23e2b9359bbad910f65cbcc4dc7",
+"namespacetr_1_1literals_1_1angle__literals.html#a7e9866049c5b59a545c75f4620a1442a",
+"structtr_1_1blend__mode.html#a6e4619a6dcd0df0265f4e5cb0ccd1770",
+"structtr_1_1rectangle.html#ac1e1b5c371f8166fff7e4ff2c681e8fd",
+"structtr_1_1simple__color__mesh__ref.html#a9dce5aa02c09878c4ccf97fd01c8d953"
 ];
 
 const SYNCONMSG = 'click to disable panel synchronization';
