@@ -37,10 +37,10 @@ endif()
 
 ################################################################# INCLUDES ################################################################
 
-include(dependencies.cmake)
-include(defines.cmake)
-include(generate_embeddable.cmake)
-include(target_template.cmake)
+include(cmake/dependencies.cmake)
+include(cmake/defines.cmake)
+include(cmake/generate_embeddable.cmake)
+include(cmake/target_template.cmake)
 
 #################################################################### TR ###################################################################
 
