@@ -159,7 +159,7 @@ Functions</h1>
 </ul>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md15"></a>
 <span class="tt">tr_git_hash_setup()</span></h2>
-<p>Generates a header which defines the <span class="tt">GIT_HASH</span> macro as a string holding the hash of the current git commit. This header can be included with <span class="tt">#include &lt;git_hash.hpp&gt;</span> from within the project that called this function.</p>
+<p>Generates a header which defines the <span class="tt">GIT_HASH</span> macro as a string holding the hash of the current git commit. This header can be included with <span class="tt">#include &lt;git_hash.hpp&gt;</span> from within the project that called this function by linking <span class="tt">git_hash</span> to any target using it.</p>
 <h2 class="doxsection"><a class="anchor" id="autotoc_md16"></a>
 <span class="tt">tr_target_template(TARGET)</span></h2>
 <p>Configures a CMake C++ target with tr-friendly settings. The command takes care of several compile options, compile definitions, and linking to tr.</p>
