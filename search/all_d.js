@@ -92,6 +92,7 @@ var searchData=
   ['out_5fhandle_5ft_89',['out_handle_t',['../classtr_1_1out__handle__t.html',1,'tr::out_handle_t&lt; Base, Empty, Deleter, SkipEmptyHandleCheck &gt;'],['../classtr_1_1out__handle__t.html#a1aed25804042b10fd0b3ece11e444412',1,'tr::out_handle_t::out_handle_t()']]],
   ['out_5fof_5fmemory_90',['out_of_memory',['../structtr_1_1out__of__memory.html',1,'tr::out_of_memory'],['../structtr_1_1out__of__memory.html#a29a30c22e0591aab2c9a4993bb0d0bf5',1,'tr::out_of_memory::out_of_memory()']]],
   ['outer_5fcone_5fwidth_91',['outer_cone_width',['../classtr_1_1audio__source.html#a89510fdc7a9d576922a2ada1d75bf9a1',1,'tr::audio_source']]],
-  ['output_5fstring_92',['output_string',['../concepttr_1_1utf8_1_1output__string.html',1,'tr::utf8']]],
-  ['owning_5fshader_5fpipeline_93',['owning_shader_pipeline',['../classtr_1_1owning__shader__pipeline.html',1,'tr::owning_shader_pipeline'],['../classtr_1_1owning__shader__pipeline.html#ad5b7c879226b0987f3109e0af9545767',1,'tr::owning_shader_pipeline::owning_shader_pipeline()']]]
+  ['output_5ffile_20variable_5fname_92',['OUTPUT_FILE VARIABLE_NAME',['../md_pages_2cmake.html#autotoc_md14',1,'&lt;span class=&quot;tt&quot;&gt;tr_generate_embeddable_binary(TARGET, INPUT_FILE, OUTPUT_FILE, VARIABLE_NAME)&lt;/span&gt;'],['../md_pages_2cmake.html#autotoc_md13',1,'&lt;span class=&quot;tt&quot;&gt;tr_generate_embeddable_string(TARGET, INPUT_FILE, OUTPUT_FILE, VARIABLE_NAME)&lt;/span&gt;']]],
+  ['output_5fstring_93',['output_string',['../concepttr_1_1utf8_1_1output__string.html',1,'tr::utf8']]],
+  ['owning_5fshader_5fpipeline_94',['owning_shader_pipeline',['../classtr_1_1owning__shader__pipeline.html',1,'tr::owning_shader_pipeline'],['../classtr_1_1owning__shader__pipeline.html#ad5b7c879226b0987f3109e0af9545767',1,'tr::owning_shader_pipeline::owning_shader_pipeline()']]]
 ];

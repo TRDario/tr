@@ -13,7 +13,7 @@ var searchData=
   ['gettextureid_10',['GetTextureID',['../namespacetr_1_1ImGui.html#a1e2137167421e29d9a595f248872dae7',1,'tr::ImGui']]],
   ['gl_5fversion_11',['gl_version',['../structtr_1_1graphics__context_1_1info.html#ae59398457475ee729bd19a9afff81461',1,'tr::graphics_context::info']]],
   ['glyph_5fmetrics_12',['glyph_metrics',['../structtr_1_1glyph__metrics.html',1,'tr']]],
-  ['graphics_20module_13',['System and graphics module',['../md_pages_2configuration__and__building.html#autotoc_md5',1,'']]],
+  ['graphics_20module_13',['System and graphics module',['../md_pages_2building.html#autotoc_md5',1,'']]],
   ['graphics_5fbenchmark_14',['graphics_benchmark',['../classtr_1_1graphics__benchmark.html',1,'tr::graphics_benchmark'],['../classtr_1_1graphics__benchmark.html#a0ab512b5898b662519aef4a7240c722d',1,'tr::graphics_benchmark::graphics_benchmark()']]],
   ['graphics_5fbenchmark_2ehpp_15',['graphics_benchmark.hpp',['../graphics__benchmark_8hpp.html',1,'']]],
   ['graphics_5fbuffer_16',['graphics_buffer',['../classtr_1_1graphics__buffer.html',1,'tr::graphics_buffer'],['../classtr_1_1graphics__buffer.html#a06d9e2187dbc1834b2a6bbea8a44d0bc',1,'tr::graphics_buffer::graphics_buffer()'],['../classtr_1_1dyn__index__buffer.html#a06d9e2187dbc1834b2a6bbea8a44d0bc',1,'tr::dyn_index_buffer::graphics_buffer()'],['../classtr_1_1basic__dyn__vertex__buffer.html#a06d9e2187dbc1834b2a6bbea8a44d0bc',1,'tr::basic_dyn_vertex_buffer::graphics_buffer()']]],

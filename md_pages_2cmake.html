@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=11" />
   <meta name="generator" content="Doxygen 1.17.0" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>tr: Related Pages</title>
+  <title>tr: CMake Library</title>
   <link href="tabs.css" rel="stylesheet" type="text/css" />
   <script type="text/javascript" src="jquery.js"></script>
   <script type="text/javascript" src="dynsections.js"></script>
@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
   </div>
 </div>
 <script type="text/javascript">
-document.addEventListener('DOMContentLoaded',() => { initNavTree('pages.html','',''); });
+document.addEventListener('DOMContentLoaded',() => { initNavTree('md_pages_2cmake.html','',''); });
 </script>
 <div id="container">
 <div id="doc-content">
@@ -123,18 +123,59 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('pages.html',''
 </div>
 </div>
 
-<div class="header">
-  <div class="headertitle"><div class="title">Related Pages</div></div>
+<div><div class="header">
+  <div class="headertitle"><div class="title">CMake Library </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock">Here is a list of all related documentation pages:</div><div class="directory">
-<table class="directory">
-<tr id="row_0_" class="even"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="md_pages_2building.html" target="_self">Configuration and Building</a></td><td class="desc"></td></tr>
-<tr id="row_1_" class="odd"><td class="entry"><span style="width:16px;display:inline-block;">&#160;</span><a class="el" href="md_pages_2cmake.html" target="_self">CMake Library</a></td><td class="desc"></td></tr>
-</table>
-</div><!-- directory -->
-</div><!-- contents -->
+<div class="textblock"><p><a class="anchor" id="autotoc_md8"></a></p>
+<p>tr provides several definitions and functions you may use in your project:</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md9"></a>
+Definitions</h1>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md10"></a>
+<span class="tt">TR_HAS_GCC</span>, <span class="tt">TR_HAS_CLANG</span>, <span class="tt">TR_HAS_CLANG_CL</span>, <span class="tt">TR_HAS_MSVC</span></h2>
+<p>Strict compiler detection definitions (only one of these will ever be defined).</p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md11"></a>
+<span class="tt">TR_DO_NOTHING</span></h2>
+<p>Defines a command that does nothing when invoked. This is useful in generator expressions when running a command isn't always necessary.</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md12"></a>
+Functions</h1>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md13"></a>
+<span class="tt">tr_generate_embeddable_string(TARGET, INPUT_FILE, OUTPUT_FILE, VARIABLE_NAME)</span></h2>
+<p>Processes text from <span class="tt">INPUT_FILE</span> into an embeddable string named <span class="tt">VARIABLE_NAME</span> and generates a C++ header holding it at <span class="tt">OUTPUT_FILE</span>.</p>
+<p>Parameters:</p><ul>
+<li><span class="tt">TARGET</span> - CMake target that depends on the generated header.</li>
+<li><span class="tt">INPUT_FILE</span> - Input text file path relative to <span class="tt">${CMAKE_CURRENT_SOURCE_DIR}</span>.</li>
+<li><span class="tt">OUTPUT_FILE</span> - Output header file path relative to <span class="tt">${CMAKE_CURRENT_BINARY_DIR}/include/generated</span>.</li>
+<li><span class="tt">VARIABLE_NAME</span> - Name of the string constant within the header.</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md14"></a>
+<span class="tt">tr_generate_embeddable_binary(TARGET, INPUT_FILE, OUTPUT_FILE, VARIABLE_NAME)</span></h2>
+<p>Processes binary data from <span class="tt">INPUT_FILE</span> into an embeddable data array named <span class="tt">VARIABLE_NAME</span> and generates a C++ header holding it at <span class="tt">OUTPUT_FILE</span>.</p>
+<p>Parameters:</p><ul>
+<li><span class="tt">TARGET</span> - CMake target that depends on the generated header.</li>
+<li><span class="tt">INPUT_FILE</span> - Input binary file path relative to <span class="tt">${CMAKE_CURRENT_SOURCE_DIR}</span>.</li>
+<li><span class="tt">OUTPUT_FILE</span> - Output header file path relative to <span class="tt">${CMAKE_CURRENT_BINARY_DIR}/include/generated</span>.</li>
+<li><span class="tt">VARIABLE_NAME</span> - Name of the data array constant within the header.</li>
+</ul>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md15"></a>
+<span class="tt">tr_git_hash_setup()</span></h2>
+<p>Generates a header which defines the <span class="tt">GIT_HASH</span> macro as a string holding the hash of the current git commit. This header can be included with <span class="tt">#include &lt;git_hash.hpp&gt;</span> from within the project that called this function.</p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md16"></a>
+<span class="tt">tr_target_template(TARGET)</span></h2>
+<p>Configures a CMake C++ target with tr-friendly settings. The command takes care of several compile options, compile definitions, and linking to tr.</p>
+<p>Parameters:</p><ul>
+<li><span class="tt">TARGET</span> - CMake target to apply the tr template on. </li>
+</ul>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
 </div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
 </div><!-- container -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
