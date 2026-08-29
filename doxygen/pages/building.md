@@ -10,6 +10,7 @@ set `TR_USE_SYSTEM_LIBRARIES` to `ON` during CMake configuration.
 
 It is recommended to use `tr_target_template(YOUR_TARGET)` in your CMakeLists.txt file to automatically configure a target with tr-friendly
 settings. The command takes care of several compile options, compile definitions, and linking to tr.
+See [the page on CMake](cmake.md) for more information on available definitions and functions.
 
 @note
 The library has been tested on and guaranteed to build with Clang(-cl) on Linux and Windows.
