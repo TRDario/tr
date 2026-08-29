@@ -174,7 +174,7 @@ if(TR_BUILD_IMGUI)
 	message("-- tr: Building Dear ImGui module")
 	target_sources(tr_imgui PRIVATE src/imgui.cpp)
 	target_compile_definitions(tr_imgui PUBLIC AL_LIBTYPE_STATIC TR_HAS_IMGUI)
-	target_link_libraries(tr_imgui imgui)
+	target_link_libraries(tr_imgui PUBLIC imgui)
 	target_link_libraries(tr INTERFACE tr::imgui)
 endif()
 

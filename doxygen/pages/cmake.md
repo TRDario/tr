@@ -26,7 +26,8 @@ Parameters:
 
 ### `tr_generate_embeddable_binary(TARGET, INPUT_FILE, OUTPUT_FILE, VARIABLE_NAME)`
 
-Processes binary data from `INPUT_FILE` into an embeddable data array named `VARIABLE_NAME` and generates a C++ header holding it at `OUTPUT_FILE`.
+Processes binary data from `INPUT_FILE` into an embeddable data array named `VARIABLE_NAME` and generates a C++ header holding it
+at `OUTPUT_FILE`.
 
 Parameters:
  - `TARGET` - CMake target that depends on the generated header.
@@ -37,11 +38,13 @@ Parameters:
 ### `tr_git_hash_setup()`
 
 Generates a header which defines the `GIT_HASH` macro as a string holding the hash of the current git commit.
-This header can be included with `#include <git_hash.hpp>` from within the project that called this function.
+This header can be included with `#include <git_hash.hpp>` from within the project that called this function by linking `git_hash` to any
+target using it.
 
 ### `tr_target_template(TARGET)`
 
-Configures a CMake C++ target with tr-friendly settings. The command takes care of several compile options, compile definitions, and linking to tr.
+Configures a CMake C++ target with tr-friendly settings. The command takes care of several compile options, compile definitions,
+and linking to tr.
 
 Parameters:
  - `TARGET` - CMake target to apply the tr template on.
