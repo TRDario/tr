@@ -13,7 +13,7 @@
 
 void tr::ImGui::Init(graphics_context& context)
 {
-	ImGui_ImplSDL3_InitForOpenGL(context.window().m_ptr, context.m_ptr.get());
+	ImGui_ImplSDL3_InitForOpenGL(context.window().unwrap(), context.unwrap());
 	ImGui_ImplOpenGL3_Init("#version 150");
 }
 

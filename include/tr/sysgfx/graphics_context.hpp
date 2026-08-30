@@ -22,12 +22,6 @@ namespace tr
 	class shader_pipeline;
 	class window_view;
 } // namespace tr
-#ifdef TR_HAS_IMGUI
-namespace tr::ImGui
-{
-	void Init(graphics_context& context);
-} // namespace tr::ImGui
-#endif
 
 //
 
@@ -292,7 +286,20 @@ namespace tr
 		void draw_indexed_instances(primitive type, usize offset, usize indices, int instances);
 
 		/// @}
+		/// @cond sdl_interop
+		/// @name SDL interoperability
+		/// @{
+
+		/// Unwraps the SDL OpenGL context pointer.
+		/// @note This does not release the pointer.
+		/// @return Pointer to the SDL OpenGL context.
+		SDL_GLContextState* unwrap() const;
+
+		/// @}
+		/// @endcond
 		/// @cond implementation_details
+		/// @name Implementation details
+		/// @{
 
 		/// Sets the context as current and returns the OpenGL API.
 		/// @return Refernce to the OpenGL API functions.
@@ -312,6 +319,7 @@ namespace tr
 		/// @param new_id New object ID.
 		void move_label(unsigned int type, unsigned int old_id, unsigned int new_id);
 
+		/// @}
 		/// @endcond
 
 	  private:
@@ -425,11 +433,6 @@ namespace tr
 
 		// Accesses `m_allocated_texture_units`.
 		friend class texture_unit;
-
-#ifdef TR_HAS_IMGUI
-		// Accesses m_ptr.
-		friend void ImGui::Init(graphics_context& context);
-#endif
 	};
 } // namespace tr
 

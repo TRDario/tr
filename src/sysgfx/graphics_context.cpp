@@ -4,7 +4,6 @@
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/sysgfx/blending.hpp"
 #include "../../include/tr/sysgfx/gl_defines.hpp"
-#include "../../include/tr/sysgfx/index_buffer.hpp"
 #include "../../include/tr/sysgfx/shader_pipeline.hpp"
 #include "../../include/tr/sysgfx/texture.hpp"
 #include "../../include/tr/sysgfx/window_view.hpp"
@@ -429,6 +428,13 @@ void tr::graphics_context::draw_indexed_instances(primitive type, usize offset, 
 
 	gl().draw_elements_instanced(std::to_underlying(type), indices, GL_UNSIGNED_SHORT, reinterpret_cast<const void*>(offset * sizeof(u16)),
 								 instances);
+}
+
+//
+
+SDL_GLContextState* tr::graphics_context::unwrap() const
+{
+	return m_ptr.get();
 }
 
 //
