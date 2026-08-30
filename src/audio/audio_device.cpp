@@ -34,8 +34,12 @@ tr::audio_device::audio_device(zstring_view name)
 
 void tr::audio_device::deleter::operator()(ALCdevice* device)
 {
-	const ALCboolean success{alcCloseDevice(device)};
-	TR_ASSERT(success, "Tried to close audio device '{}' which still has active contexts.", alcGetString(device, ALC_DEVICE_SPECIFIER));
+#ifdef TR_ENABLE_ASSERTS
+	TR_ASSERT(alcCloseDevice(device), "Tried to close audio device '{}' which still has active contexts.",
+			  alcGetString(device, ALC_DEVICE_SPECIFIER));
+#else
+	alcCloseDevice(device);
+#endif
 }
 
 //
