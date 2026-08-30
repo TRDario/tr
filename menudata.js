@@ -180,8 +180,7 @@ var menudata={children:[
 {text:"c",url:"functions_rela.html#index_c"},
 {text:"m",url:"functions_rela.html#index_m"},
 {text:"o",url:"functions_rela.html#index_o"},
-{text:"r",url:"functions_rela.html#index_r"},
-{text:"s",url:"functions_rela.html#index_s"}]}]}]},
+{text:"r",url:"functions_rela.html#index_r"}]}]}]},
 {text:"Files",url:"files.html",children:[
 {text:"File List",url:"files.html"},
 {text:"File Members",url:"globals.html",children:[

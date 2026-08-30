@@ -33,18 +33,19 @@ var NAVTREE =
         [ "System and graphics module", "md_pages_2building.html#autotoc_md5", null ],
         [ "ImGui integration module", "md_pages_2building.html#autotoc_md6", null ]
       ] ],
-      [ "Compile definitions", "md_pages_2building.html#autotoc_md7", null ]
+      [ "Compile definitions", "md_pages_2building.html#autotoc_md7", null ],
+      [ "Documentation", "md_pages_2building.html#autotoc_md8", null ]
     ] ],
     [ "CMake Library", "md_pages_2cmake.html", [
-      [ "Definitions", "md_pages_2cmake.html#autotoc_md9", [
-        [ "<span class=\"tt\">TR_HAS_GCC</span>, <span class=\"tt\">TR_HAS_CLANG</span>, <span class=\"tt\">TR_HAS_CLANG_CL</span>, <span class=\"tt\">TR_HAS_MSVC</span>", "md_pages_2cmake.html#autotoc_md10", null ],
-        [ "<span class=\"tt\">TR_DO_NOTHING</span>", "md_pages_2cmake.html#autotoc_md11", null ]
+      [ "Definitions", "md_pages_2cmake.html#autotoc_md10", [
+        [ "<span class=\"tt\">TR_HAS_GCC</span>, <span class=\"tt\">TR_HAS_CLANG</span>, <span class=\"tt\">TR_HAS_CLANG_CL</span>, <span class=\"tt\">TR_HAS_MSVC</span>", "md_pages_2cmake.html#autotoc_md11", null ],
+        [ "<span class=\"tt\">TR_DO_NOTHING</span>", "md_pages_2cmake.html#autotoc_md12", null ]
       ] ],
-      [ "Functions", "md_pages_2cmake.html#autotoc_md12", [
-        [ "<span class=\"tt\">tr_generate_embeddable_string(TARGET, INPUT_FILE, OUTPUT_FILE, VARIABLE_NAME)</span>", "md_pages_2cmake.html#autotoc_md13", null ],
-        [ "<span class=\"tt\">tr_generate_embeddable_binary(TARGET, INPUT_FILE, OUTPUT_FILE, VARIABLE_NAME)</span>", "md_pages_2cmake.html#autotoc_md14", null ],
-        [ "<span class=\"tt\">tr_git_hash_setup()</span>", "md_pages_2cmake.html#autotoc_md15", null ],
-        [ "<span class=\"tt\">tr_target_template(TARGET)</span>", "md_pages_2cmake.html#autotoc_md16", null ]
+      [ "Functions", "md_pages_2cmake.html#autotoc_md13", [
+        [ "<span class=\"tt\">tr_generate_embeddable_string(TARGET, INPUT_FILE, OUTPUT_FILE, VARIABLE_NAME)</span>", "md_pages_2cmake.html#autotoc_md14", null ],
+        [ "<span class=\"tt\">tr_generate_embeddable_binary(TARGET, INPUT_FILE, OUTPUT_FILE, VARIABLE_NAME)</span>", "md_pages_2cmake.html#autotoc_md15", null ],
+        [ "<span class=\"tt\">tr_git_hash_setup()</span>", "md_pages_2cmake.html#autotoc_md16", null ],
+        [ "<span class=\"tt\">tr_target_template(TARGET)</span>", "md_pages_2cmake.html#autotoc_md17", null ]
       ] ]
     ] ],
     [ "Namespaces", "namespaces.html", [
@@ -87,20 +88,20 @@ var NAVTREEINDEX =
 "classtr_1_1audio__source.html#a0ec6886d84dc19803f8d65b016637988",
 "classtr_1_1basic__renderer.html#af1e5f2bd873dc9daca497e3befb2792d",
 "classtr_1_1bitmap_1_1iterator.html#a50472af9a64a00c7c7e6446310cb48bc",
-"classtr_1_1dyn__atlas.html#a9d0856170bac224727a2777fe92ab8c1",
-"classtr_1_1graphics__context.html#a1ce11401c3ebd6cd8c81f666977d8f92",
-"classtr_1_1omstream.html#a6e735c4a9efbb63833dbb29320a9232d",
-"classtr_1_1scan__state.html#a51814f0a2cb7fe5c0c3d66c0427310fc",
-"classtr_1_1static__string.html#a0fc65708a32679e247b514d19ba14732",
-"classtr_1_1sub__bitmap.html#a577bb2e5c5efef7a77f04bc81648c2a9",
-"classtr_1_1vertex__format.html#a07cc01bd28ed9b2fa3ed529c9f0b4add",
-"concepttr_1_1volatile__qualified.html",
-"namespacetr.html#a1eb2948abd308c1bd0658317416db0a7",
-"namespacetr.html#ac1babae6e9367fc90585a8791dadc746ac9946b3369ebaae1a59012afee8fa73a",
-"namespacetr_1_1literals_1_1angle__literals.html#a47e5023a5af2ba15ec678c8845272974",
-"structtr_1_1blend__mode.html#a23a2d97d67a4194e63822b48bb7b45a0",
-"structtr_1_1rectangle.html#a7a4f04d0affc620375ddb1679e927905",
-"structtr_1_1scan__chord.html#ad6b52c02aee903a6139bc8d90ca0cd22"
+"classtr_1_1dyn__atlas.html#aa0d274dce1125b3694cfc44e50a27ee0",
+"classtr_1_1graphics__context.html#a23c270da8a15a9ea782723c70eff0404",
+"classtr_1_1omstream.html#a7bba20d589b17f5f1e2b79f7c54f4a23",
+"classtr_1_1scan__state.html#a780588c8b4704d032f94531e6ab8208a",
+"classtr_1_1static__string.html#a1a31552e8841f226daa06333a2e09453",
+"classtr_1_1sub__bitmap.html#a9554cf04ea5919f95a51642ebc6ad977",
+"classtr_1_1vertex__format.html#ae1def399ec94f5008d824a3315493e46",
+"default__binary__io_8hpp_source.html",
+"namespacetr.html#a203498dcc8f03e3e43ea61fb15244092",
+"namespacetr.html#ac1babae6e9367fc90585a8791dadc746ae57a429bc01664112d277cc6d93d3ad6",
+"namespacetr_1_1literals_1_1angle__literals.html#a7742a30203354251c97a8038d698b136",
+"structtr_1_1blend__mode.html#a3b1ef1c349470c62756ec1723530bb85",
+"structtr_1_1rectangle.html#aa880c290b9975ecd4c5e57c3f23e0b40",
+"structtr_1_1scan__chord.html#afd58fd76556a80dadb8543359cdf3db2"
 ];
 
 const SYNCONMSG = 'click to disable panel synchronization';

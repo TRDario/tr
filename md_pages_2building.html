@@ -161,7 +161,16 @@ ImGui integration module</h2>
 Compile definitions</h1>
 <p>tr allows defining several compile macro definitions to control the behavior of the library.</p>
 <p>Defining <span class="tt">TR_ENABLE_ASSERTS</span> enables assertions and precondition checks in the library. When using <span class="tt">tr_target_template</span>, it is defined by default in builds with debug info (Debug and RelWithDebInfo).</p>
-<p>Defining <span class="tt">TR_ENABLE_CHECKED_GRAPHICS</span> enables extensive validity checking of graphical primitives and operations. When using <span class="tt">tr_target_template</span>, it is defined by default in debug builds (but not RelWithDebInfo). </p>
+<p>Defining <span class="tt">TR_ENABLE_CHECKED_GRAPHICS</span> enables extensive validity checking of graphical primitives and operations. When using <span class="tt">tr_target_template</span>, it is defined by default in debug builds (but not RelWithDebInfo).</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md8"></a>
+Documentation</h1>
+<p>tr uses Doxygen to generate documentation. You may generate a local copy through <span class="tt">doxygen/Doxyfile</span>.</p>
+<p>By default, only the minimal public interface is exposed in the documentation, which does not include certain interoperability escape hatches and potentially volatile implementation details.</p>
+<p>To expose additional documentation, you may add any of these to <span class="tt">ENABLED_SECTIONS</span> in the doxyfile:</p><ul>
+<li><span class="tt">sdl_interop</span> - Enables SDL interoperability documentation</li>
+<li><span class="tt">gl_interop</span> - Enables OpenGL interoperability documentation</li>
+<li><span class="tt">implementation_details</span> - Enables documentation of implementation details (it is not recommended to rely on these) </li>
+</ul>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

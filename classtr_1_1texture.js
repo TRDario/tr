@@ -6,6 +6,7 @@ var classtr_1_1texture =
     [ "operator texture_view", "classtr_1_1texture.html#a00e48d9cb4b1a4af7248798578c35ef3", null ],
     [ "view", "classtr_1_1texture.html#a0cec630f8c5fd5709c27be15e1e3e36c", null ],
     [ "context", "classtr_1_1texture.html#aef665514309c6f29fba1067170e95a75", null ],
+    [ "valid", "classtr_1_1texture.html#a515aad139174479d1b97276074bff2c1", null ],
     [ "complete", "classtr_1_1texture.html#a782c7c5f434a7317190accc3e59ed5fe", null ],
     [ "size", "classtr_1_1texture.html#a665eb7cbf7cf6d8be7630b0c737329fe", null ],
     [ "allocate", "classtr_1_1texture.html#a7dcd2d5ea57dd7419a0b68c0c3a3880d", null ],

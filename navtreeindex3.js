@@ -150,8 +150,6 @@ var NAVTREEINDEX3 =
 "classtr_1_1cursor.html":[4,0,0,37],
 "classtr_1_1cursor.html#a25cf5fb6cc9a163f519d7a4be7357df9":[2,0,0,49,1],
 "classtr_1_1cursor.html#a25cf5fb6cc9a163f519d7a4be7357df9":[4,0,0,37,1],
-"classtr_1_1cursor.html#a4f7c0d21727f6e0be80d1d26a4fa4db9":[2,0,0,49,4],
-"classtr_1_1cursor.html#a4f7c0d21727f6e0be80d1d26a4fa4db9":[4,0,0,37,4],
 "classtr_1_1cursor.html#abbfcb881b5f02df06b729290034da7df":[2,0,0,49,2],
 "classtr_1_1cursor.html#abbfcb881b5f02df06b729290034da7df":[4,0,0,37,2],
 "classtr_1_1cursor.html#ada141e060df0936744423b64623c6319":[2,0,0,49,3],
@@ -249,5 +247,7 @@ var NAVTREEINDEX3 =
 "classtr_1_1dyn__atlas.html#a808a394e438521f4acb42c6981980025":[2,0,0,57,2],
 "classtr_1_1dyn__atlas.html#a808a394e438521f4acb42c6981980025":[4,0,0,45,2],
 "classtr_1_1dyn__atlas.html#a878c449d6d190525a330793f74b22658":[2,0,0,57,14],
-"classtr_1_1dyn__atlas.html#a878c449d6d190525a330793f74b22658":[4,0,0,45,14]
+"classtr_1_1dyn__atlas.html#a878c449d6d190525a330793f74b22658":[4,0,0,45,14],
+"classtr_1_1dyn__atlas.html#a9d0856170bac224727a2777fe92ab8c1":[2,0,0,57,10],
+"classtr_1_1dyn__atlas.html#a9d0856170bac224727a2777fe92ab8c1":[4,0,0,45,10]
 };

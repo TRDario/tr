@@ -127,19 +127,19 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('md_pages_2cmak
   <div class="headertitle"><div class="title">CMake Library </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md8"></a></p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md9"></a></p>
 <p>tr provides several definitions and functions you may use in your project:</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md9"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md10"></a>
 Definitions</h1>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md10"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md11"></a>
 <span class="tt">TR_HAS_GCC</span>, <span class="tt">TR_HAS_CLANG</span>, <span class="tt">TR_HAS_CLANG_CL</span>, <span class="tt">TR_HAS_MSVC</span></h2>
 <p>Strict compiler detection definitions (only one of these will ever be defined).</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md11"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md12"></a>
 <span class="tt">TR_DO_NOTHING</span></h2>
 <p>Defines a command that does nothing when invoked. This is useful in generator expressions when running a command isn't always necessary.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md12"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md13"></a>
 Functions</h1>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md13"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md14"></a>
 <span class="tt">tr_generate_embeddable_string(TARGET, INPUT_FILE, OUTPUT_FILE, VARIABLE_NAME)</span></h2>
 <p>Processes text from <span class="tt">INPUT_FILE</span> into an embeddable string named <span class="tt">VARIABLE_NAME</span> and generates a C++ header holding it at <span class="tt">OUTPUT_FILE</span>.</p>
 <p>Parameters:</p><ul>
@@ -148,7 +148,7 @@ Functions</h1>
 <li><span class="tt">OUTPUT_FILE</span> - Output header file path relative to <span class="tt">${CMAKE_CURRENT_BINARY_DIR}/include/generated</span>.</li>
 <li><span class="tt">VARIABLE_NAME</span> - Name of the string constant within the header.</li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md14"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md15"></a>
 <span class="tt">tr_generate_embeddable_binary(TARGET, INPUT_FILE, OUTPUT_FILE, VARIABLE_NAME)</span></h2>
 <p>Processes binary data from <span class="tt">INPUT_FILE</span> into an embeddable data array named <span class="tt">VARIABLE_NAME</span> and generates a C++ header holding it at <span class="tt">OUTPUT_FILE</span>.</p>
 <p>Parameters:</p><ul>
@@ -157,10 +157,10 @@ Functions</h1>
 <li><span class="tt">OUTPUT_FILE</span> - Output header file path relative to <span class="tt">${CMAKE_CURRENT_BINARY_DIR}/include/generated</span>.</li>
 <li><span class="tt">VARIABLE_NAME</span> - Name of the data array constant within the header.</li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md15"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md16"></a>
 <span class="tt">tr_git_hash_setup()</span></h2>
 <p>Generates a header which defines the <span class="tt">GIT_HASH</span> macro as a string holding the hash of the current git commit. This header can be included with <span class="tt">#include &lt;git_hash.hpp&gt;</span> from within the project that called this function by linking <span class="tt">git_hash</span> to any target using it.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md16"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md17"></a>
 <span class="tt">tr_target_template(TARGET)</span></h2>
 <p>Configures a CMake C++ target with tr-friendly settings. The command takes care of several compile options, compile definitions, and linking to tr.</p>
 <p>Parameters:</p><ul>

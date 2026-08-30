@@ -1,10 +1,5 @@
 var NAVTREEINDEX17 =
 {
-"structtr_1_1scan__chord.html#ad6b52c02aee903a6139bc8d90ca0cd22":[2,0,0,123,0],
-"structtr_1_1scan__chord.html#ad6b52c02aee903a6139bc8d90ca0cd22":[4,0,0,111,0],
-"structtr_1_1scan__chord.html#af8e9e2e6850b0ea311118b9668f80533":[2,0,0,123,2],
-"structtr_1_1scan__chord.html#af8e9e2e6850b0ea311118b9668f80533":[4,0,0,111,2],
-"structtr_1_1scan__chord.html#afd58fd76556a80dadb8543359cdf3db2":[2,0,0,123,6],
 "structtr_1_1scan__chord.html#afd58fd76556a80dadb8543359cdf3db2":[4,0,0,111,6],
 "structtr_1_1simple__color__mesh__ref.html":[2,0,0,131],
 "structtr_1_1simple__color__mesh__ref.html":[4,0,0,119],

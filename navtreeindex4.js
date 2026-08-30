@@ -1,7 +1,5 @@
 var NAVTREEINDEX4 =
 {
-"classtr_1_1dyn__atlas.html#a9d0856170bac224727a2777fe92ab8c1":[2,0,0,57,10],
-"classtr_1_1dyn__atlas.html#a9d0856170bac224727a2777fe92ab8c1":[4,0,0,45,10],
 "classtr_1_1dyn__atlas.html#aa0d274dce1125b3694cfc44e50a27ee0":[2,0,0,57,12],
 "classtr_1_1dyn__atlas.html#aa0d274dce1125b3694cfc44e50a27ee0":[4,0,0,45,12],
 "classtr_1_1dyn__atlas.html#ab426907f9dce2e9af8dd3d36d8f294ae":[2,0,0,57,3],
@@ -249,5 +247,7 @@ var NAVTREEINDEX4 =
 "classtr_1_1graphics__context.html":[2,0,0,74],
 "classtr_1_1graphics__context.html":[4,0,0,62],
 "classtr_1_1graphics__context.html#a01996009b683f9c813dcbd32c073495c":[2,0,0,74,22],
-"classtr_1_1graphics__context.html#a01996009b683f9c813dcbd32c073495c":[4,0,0,62,22]
+"classtr_1_1graphics__context.html#a01996009b683f9c813dcbd32c073495c":[4,0,0,62,22],
+"classtr_1_1graphics__context.html#a1ce11401c3ebd6cd8c81f666977d8f92":[2,0,0,74,12],
+"classtr_1_1graphics__context.html#a1ce11401c3ebd6cd8c81f666977d8f92":[4,0,0,62,12]
 };
