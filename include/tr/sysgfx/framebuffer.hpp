@@ -114,20 +114,25 @@ namespace tr
 
 		/// @}
 		/// @cond gl_interop
+		/// @name OpenGL interoperability
+		/// @{
 
 		/// Unwraps the OpenGL framebuffer.
 		/// @note This does not release the framebuffer.
 		/// @return OpenGL framebuffer ID.
 		unsigned int unwrap() const;
 
+		/// @}
 		/// @endcond
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 		/// @cond implementation_details
+		/// @name Implementation details
 
 		/// Gets the unique graphics object ID of the framebuffer.
 		/// @return Unique graphics object ID of the framebuffer.
 		graphics_object_id id() const;
 
+		/// @}
 		/// @endcond
 #endif
 

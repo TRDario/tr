@@ -44,7 +44,7 @@ namespace tr
 
 		/// @}
 		/// @cond gl_interop
-		/// @name OpenGL interop
+		/// @name OpenGL interoperability
 		/// @{
 
 		/// Unwraps the OpenGL texture ID.

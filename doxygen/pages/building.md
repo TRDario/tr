@@ -72,3 +72,15 @@ When using `tr_target_template`, it is defined by default in builds with debug i
 
 Defining `TR_ENABLE_CHECKED_GRAPHICS` enables extensive validity checking of graphical primitives and operations.
 When using `tr_target_template`, it is defined by default in debug builds (but not RelWithDebInfo).
+
+## Documentation
+
+tr uses Doxygen to generate documentation. You may generate a local copy through `doxygen/Doxyfile`.
+
+By default, only the minimal public interface is exposed in the documentation, which does not include certain interoperability escape
+hatches and potentially volatile implementation details.
+
+To expose additional documentation, you may add any of these to `ENABLED_SECTIONS` in the doxyfile:
+ - `sdl_interop` - Enables SDL interoperability documentation
+ - `gl_interop` - Enables OpenGL interoperability documentation
+ - `implementation_details` - Enables documentation of implementation details (it is not recommended to rely on these)

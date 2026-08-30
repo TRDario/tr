@@ -8,7 +8,7 @@
 
 //
 
-/// @cond __hidden
+/// @cond implementation_details
 #ifdef TR_ENABLE_ASSERTS
 #define TR_IMPL_UNREACHABLE(file, line)                                                                                                    \
 	do {                                                                                                                                   \
@@ -29,7 +29,7 @@
 
 //
 
-/// @cond __hidden
+/// @cond implementation_details
 #define TR_IMPL_STRINGIFY(x) #x
 /// @endcond
 
@@ -40,7 +40,7 @@
 
 //
 
-/// @cond __hidden
+/// @cond implementation_details
 #define TR_IMPL_JOIN(x, y) x##y
 /// @endcond
 
@@ -65,7 +65,7 @@
 #define TR_FILENAME __FILE__
 #endif
 
-/// @cond __hidden
+/// @cond implementation_details
 #ifdef TR_ENABLE_ASSERTS
 #define TR_IMPL_ASSERT(condition, file, line, fmt, ...)                                                                                    \
 	do {                                                                                                                                   \

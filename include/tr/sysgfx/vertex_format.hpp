@@ -210,15 +210,20 @@ namespace tr
 
 		/// @}
 		/// @cond gl_interop
+		/// @name OpenGL interoperability
+		/// @{
 
 		/// Unwraps the OpenGL vertex array object.
 		/// @note This does not release the vertex array object.
 		/// @return OpenGL vertex array object ID.
 		unsigned int unwrap() const;
 
+		/// @}
 		/// @endcond
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 		/// @cond implementation_details
+		/// @name Implementation details
+		/// @{
 
 		/// Gets the unique graphics object ID of the vertex format.
 		/// @return Unique graphics object ID of the vertex format.
@@ -228,6 +233,7 @@ namespace tr
 		/// @return Information about the vertex format's bindings.
 		std::span<const vertex_binding> bindings() const;
 
+		/// @}
 		/// @endcond
 #endif
 

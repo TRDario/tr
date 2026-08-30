@@ -25,7 +25,7 @@ namespace tr
 		x2 = 0x10
 	};
 
-	/// @cond __hidden
+	/// @cond implementation_details
 	TR_DEFINE_ENUM_BITMASK_OPERATORS(mouse_button);
 	/// @endcond
 

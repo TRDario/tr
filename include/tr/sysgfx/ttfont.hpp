@@ -150,7 +150,7 @@ namespace tr
 		strikethrough = 8
 	};
 
-	/// @cond __hidden
+	/// @cond implementation_details
 	TR_DEFINE_ENUM_BITMASK_OPERATORS(ttf_style);
 	/// @endcond
 

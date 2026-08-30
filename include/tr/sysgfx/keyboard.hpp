@@ -45,7 +45,7 @@ namespace tr
 		unknown = 0xFFFF
 	};
 
-	/// @cond __hidden
+	/// @cond implementation_details
 	TR_DEFINE_ENUM_BITMASK_OPERATORS(keymod);
 	/// @endcond
 

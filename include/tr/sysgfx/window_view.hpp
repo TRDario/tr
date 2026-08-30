@@ -81,9 +81,14 @@ namespace tr
 	{
 	  public:
 		/// @cond sdl_interop
+		/// @name Constructors
+		/// @{
+
 		/// Wraps a window view.
 		/// @param window Window pointer to wrap.
 		explicit window_view(SDL_Window* window);
+
+		/// @}
 		/// @endcond
 
 		/// @name Title
@@ -205,9 +210,14 @@ namespace tr
 		/// @}
 
 		/// @cond sdl_interop
+		/// @name SDL interoperability
+		/// @{
+
 		/// Unwraps the SDL window pointer.
 		/// @return Pointer to the SDL window.
 		SDL_Window* unwrap() const;
+
+		/// @}
 		/// @endcond
 
 	  private:

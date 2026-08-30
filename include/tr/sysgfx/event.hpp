@@ -355,7 +355,7 @@ namespace tr
 
 		/// @}
 		/// @cond sdl_interop
-		/// @name SDL interop
+		/// @name SDL interoperability
 		/// @{
 
 		/// Unwraps the SDL event.

@@ -31,7 +31,7 @@ namespace tr
 		constexpr const Iterator& base() const;
 
 	  public:
-		/// @cond __hidden
+		/// @cond implementation_details
 
 		/// (no-op)
 		friend constexpr auto operator<=>(const iterator_interface& lhs, const iterator_interface& rhs) = default;

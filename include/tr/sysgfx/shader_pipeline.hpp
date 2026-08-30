@@ -140,15 +140,20 @@ namespace tr
 
 		/// @}
 		/// @cond gl_interop
+		/// @name OpenGL interoperability
+		/// @{
 
 		/// Unwraps the OpenGL shader pipeline.
 		/// @note This does not release the shader pipeline.
 		/// @return OpenGL shader pipeline ID.
 		unsigned int unwrap() const;
 
+		/// @}
 		/// @endcond
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 		/// @cond implementation_details
+		/// @name Implementation details
+		/// @{
 
 		/// Gets the unique graphics object ID of the shader pipeline.
 		/// @return Unique graphics object ID of the shader pipeline.
@@ -162,6 +167,7 @@ namespace tr
 		/// @return Reference to the structure containing debug information about the set fragment shader.
 		const fragment_shader_debug_info_t& fragment_shader_debug_info() const;
 
+		/// @}
 		/// @endcond
 #endif
 
@@ -280,12 +286,15 @@ namespace tr
 
 		/// @}
 		/// @cond gl_interop
+		/// @name OpenGL interoperability
+		/// @{
 
 		/// Unwraps the OpenGL shader pipeline.
 		/// @note This does not release the shader pipeline.
 		/// @return OpenGL shader pipeline ID.
 		unsigned int unwrap() const;
 
+		/// @}
 		/// @endcond
 
 	  private:

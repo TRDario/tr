@@ -124,12 +124,16 @@ namespace tr
 		void save(const std::filesystem::path& path) const;
 
 		/// @}
-
 		/// @cond sdl_interop
+		/// @name SDL interoperability
+		/// @{
+
 		/// Unwraps the SDL surface pointer.
 		/// @note This does not release the pointer.
 		/// @return Pointer to the SDL surface.
 		SDL_Surface* unwrap() const;
+
+		/// @}
 		/// @endcond
 
 	  private:

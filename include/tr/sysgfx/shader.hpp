@@ -438,15 +438,19 @@ namespace tr
 
 		/// @}
 		/// @cond gl_interop
+		/// @name OpenGL interoperability
 
 		/// Unwraps the OpenGL shader program.
 		/// @note This does not release the shader program.
 		/// @return OpenGL shader program ID.
 		unsigned int unwrap() const;
 
+		/// @}
 		/// @endcond
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 		/// @cond implementation_details
+		/// @name Implementation details
+		/// @{
 
 		/// Gets the unique graphics object ID of the shader.
 		/// @return Unique graphics object ID of the shader.
@@ -460,6 +464,7 @@ namespace tr
 		/// @return Map of shader outputs.
 		const boost::unordered_flat_map<unsigned int, glsl_variable>& outputs() const;
 
+		/// @}
 		/// @endcond
 #endif
 

@@ -115,9 +115,14 @@ namespace tr
 		/// @}
 
 		/// @cond sdl_interop
+		/// @name SDL interoperability
+		/// @{
+
 		/// Unwraps the SDL surface pointer.
 		/// @return Pointer to the SDL surface.
 		SDL_Surface* unwrap() const;
+
+		/// @}
 		/// @endcond
 
 	  private:
