@@ -91,6 +91,14 @@ namespace tr
 		/// Creates a default mouse cursor.
 		cursor();
 
+		/// @cond sdl_interop
+
+		/// Wraps an SDL_Cursor pointer.
+		/// @param ptr Pointer to wrap.
+		explicit cursor(SDL_Cursor* ptr);
+
+		/// @endcond
+
 		/// Creates a system cursor.
 		/// @param icon Icon to use.
 		cursor(sys_cursor icon);
@@ -106,6 +114,17 @@ namespace tr
 		cursor(const bitmap_view& view, glm::ivec2 focus);
 
 		/// @}
+		/// @cond sdl_interop
+		/// @name SDL interoperability
+		/// @{
+
+		/// Unwraps the SDL cursor pointer.
+		/// @note This does not release the pointer.
+		/// @return Pointer to the SDL cursor.
+		SDL_Cursor* unwrap() const;
+
+		/// @}
+		/// @endcond
 
 	  private:
 		/// Cursor deleter.
@@ -113,24 +132,13 @@ namespace tr
 		{
 			/// Deletes a cursor.
 			/// @param ptr Pointer to the cursor.
-			void operator()(SDL_Cursor* ptr) const;
+			static void operator()(SDL_Cursor* ptr);
 		};
 
 		//
 
 		/// Handle to the SDL cursor.
 		std::unique_ptr<SDL_Cursor, deleter> m_ptr;
-
-		//
-
-		/// Wraps an SDL_Cursor pointer.
-		/// @param ptr Pointer to wrap.
-		cursor(SDL_Cursor* ptr);
-
-		//
-
-		// Uses the private cursor.
-		friend void set_cursor(const cursor& cursor);
 	};
 
 	/// @name Cursor

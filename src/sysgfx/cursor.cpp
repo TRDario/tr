@@ -30,17 +30,17 @@ std::string_view tr::cursor_error::details() const
 
 //
 
+tr::cursor::cursor()
+	: cursor{SDL_GetDefaultCursor()}
+{
+}
+
 tr::cursor::cursor(SDL_Cursor* ptr)
 {
 	if (ptr == nullptr) {
 		throw out_of_memory{"cursor allocation"};
 	}
 	m_ptr.reset(ptr);
-}
-
-tr::cursor::cursor()
-	: cursor{SDL_GetDefaultCursor()}
-{
 }
 
 tr::cursor::cursor(sys_cursor icon)
@@ -58,7 +58,7 @@ tr::cursor::cursor(const bitmap_view& view, glm::ivec2 focus)
 {
 }
 
-void tr::cursor::deleter::operator()(SDL_Cursor* ptr) const
+void tr::cursor::deleter::operator()(SDL_Cursor* ptr)
 {
 	SDL_DestroyCursor(ptr);
 }
@@ -81,7 +81,7 @@ void tr::hide_cursor()
 
 void tr::set_cursor(const cursor& cursor)
 {
-	if (!SDL_SetCursor(cursor.m_ptr.get())) {
+	if (!SDL_SetCursor(cursor.unwrap())) {
 		throw cursor_error("Failed to set mouse cursor.");
 	}
 }
