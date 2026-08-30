@@ -150,16 +150,11 @@ namespace tr
 
 //
 
-void tr::texture::create_handle() const
-{
-	context().gl().create_textures(GL_TEXTURE_2D, 1, out_handle(m_handle));
-}
-
 tr::texture::texture(graphics_context& context)
 	: m_handle{deleter{context}}
 	, m_size{0, 0}
 {
-	create_handle();
+	context.gl().create_textures(GL_TEXTURE_2D, 1, out_handle(m_handle));
 }
 
 tr::texture::texture(graphics_context& context, unsigned int handle, glm::ivec2 size)
@@ -251,9 +246,8 @@ tr::texture::operator texture_view() const
 
 tr::texture_view tr::texture::view() const
 {
-	if (!m_handle.has_value()) {
-		create_handle();
-	}
+	TR_ASSERT(valid(), "Tried to create a view over a texture in an invalid state.");
+
 	return texture_view{m_handle.get()};
 }
 
@@ -261,18 +255,29 @@ tr::texture_view tr::texture::view() const
 
 tr::graphics_context& tr::texture::context() const
 {
+	TR_ASSERT(valid(), "Tried to get context of a texture in an invalid state.");
+
 	return m_handle.get_deleter().context;
 }
 
 //
 
+bool tr::texture::valid() const
+{
+	return m_handle.has_value();
+}
+
 bool tr::texture::complete() const
 {
+	TR_ASSERT(valid(), "Tried to check completeness of a texture in an invalid state.");
+
 	return m_size.x > 0;
 }
 
 glm::ivec2 tr::texture::size() const
 {
+	TR_ASSERT(valid(), "Tried to get the size of a texture in an invalid state.");
+
 	return m_size;
 }
 
@@ -280,9 +285,7 @@ glm::ivec2 tr::texture::size() const
 
 void tr::texture::set_filtering(min_filter min_filter, mag_filter mag_filter)
 {
-	if (!m_handle.has_value()) {
-		create_handle();
-	}
+	TR_ASSERT(valid(), "Tried to set filtering of a texture in an invalid state.");
 
 	const gl_api& gl{context().gl()};
 	gl.set_texture_parameter_i(m_handle.get(), GL_TEXTURE_MIN_FILTER, std::to_underlying(min_filter));
@@ -291,9 +294,8 @@ void tr::texture::set_filtering(min_filter min_filter, mag_filter mag_filter)
 
 void tr::texture::set_wrap(wrap wrap)
 {
-	if (!m_handle.has_value()) {
-		create_handle();
-	}
+
+	TR_ASSERT(valid(), "Tried to set wrapping of a texture in an invalid state.");
 
 	const gl_api& gl{context().gl()};
 	gl.set_texture_parameter_i(m_handle.get(), GL_TEXTURE_WRAP_S, std::to_underlying(wrap));
@@ -303,9 +305,7 @@ void tr::texture::set_wrap(wrap wrap)
 
 void tr::texture::set_border_color(rgbaf color)
 {
-	if (!m_handle.has_value()) {
-		create_handle();
-	}
+	TR_ASSERT(valid(), "Tried to set border color of a texture in an invalid state.");
 
 	context().gl().set_texture_parameter_fv(m_handle.get(), GL_TEXTURE_BORDER_COLOR, &color.r);
 }
@@ -314,18 +314,14 @@ void tr::texture::set_border_color(rgbaf color)
 
 void tr::texture::clear(rgbaf color)
 {
-	if (!m_handle.has_value()) {
-		create_handle();
-	}
+	TR_ASSERT(valid(), "Tried to clear a texture in an invalid state.");
 
 	context().gl().clear_texture_image(m_handle.get(), 0, GL_RGBA, GL_FLOAT, &color);
 }
 
 void tr::texture::clear_region(rectangle<int> region, rgbaf color)
 {
-	if (!m_handle.has_value()) {
-		create_handle();
-	}
+	TR_ASSERT(valid(), "Tried to clear a region of a texture in an invalid state.");
 
 	context().gl().clear_texture_sub_image(m_handle.get(), 0, region.tl.x, region.tl.y, 0, region.size.x, region.size.y, 1, GL_RGBA,
 										   GL_FLOAT, &color);
@@ -333,9 +329,8 @@ void tr::texture::clear_region(rectangle<int> region, rgbaf color)
 
 void tr::texture::copy_region(glm::ivec2 tl, texture_view src, rectangle<int> region)
 {
-	if (!m_handle.has_value()) {
-		create_handle();
-	}
+	TR_ASSERT(valid(), "Tried to copy to a region of a texture in an invalid state.");
+	TR_ASSERT(!src.empty(), "Tried to copy a region from an empty texture view.");
 
 	context().gl().copy_image_sub_data(src.unwrap(), GL_TEXTURE_2D, 0, region.tl.x, region.tl.y, 0, m_handle.get(), GL_TEXTURE_2D, 0, tl.x,
 									   tl.y, 0, region.size.x, region.size.y, 1);
@@ -343,10 +338,7 @@ void tr::texture::copy_region(glm::ivec2 tl, texture_view src, rectangle<int> re
 
 void tr::texture::set_region(glm::ivec2 tl, sub_bitmap bitmap)
 {
-	if (!m_handle.has_value()) {
-		create_handle();
-	}
-
+	TR_ASSERT(valid(), "Tried to set a region of a texture in an invalid state.");
 	TR_ASSERT(rectangle<int>{size()}.contains(tl + bitmap.size()),
 			  "Tried to set out-of-bounds region from ({}, {}) to ({}, {}) in a texture with size {}x{}.", tl.x, tl.y,
 			  tl.x + bitmap.size().x, tl.y + bitmap.size().y, m_size.x, m_size.y);
@@ -363,9 +355,7 @@ void tr::texture::set_region(glm::ivec2 tl, sub_bitmap bitmap)
 
 std::string tr::texture::label() const
 {
-	if (!m_handle.has_value()) {
-		return "<unnamed>";
-	}
+	TR_ASSERT(valid(), "Tried to get the label of a texture in an invalid state.");
 
 	const gl_api& gl{context().gl()};
 	int label_length;
@@ -382,9 +372,14 @@ std::string tr::texture::label() const
 
 void tr::texture::set_label(std::string_view label)
 {
-	if (!m_handle.has_value()) {
-		create_handle();
-	}
+	TR_ASSERT(valid(), "Tried to set the label of a texture in an invalid state.");
 
 	context().gl().set_object_label(GL_TEXTURE, m_handle.get(), label.size(), label.data());
+}
+
+//
+
+unsigned int tr::texture::unwrap() const
+{
+	return m_handle.get();
 }

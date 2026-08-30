@@ -117,6 +117,10 @@ namespace tr
 		/// @name State
 		/// @{
 
+		/// Gets whether the texture is in a valid state.
+		/// @return `true` if the texture is in a valid state, `false` if it is in an invalid state.
+		bool valid() const;
+
 		/// Gets whether the texture is complete.
 		/// @return `true` if the texture is complete, `false` otherwise.
 		bool complete() const;
@@ -190,6 +194,17 @@ namespace tr
 		void set_label(std::string_view label);
 
 		/// @}
+		/// @cond gl_interop
+		/// @name OpenGL interoperability
+		/// @{
+
+		/// Unwraps the OpenGL texture.
+		/// @note This does not release the texture.
+		/// @return OpenGL texture ID.
+		unsigned int unwrap() const;
+
+		/// @}
+		/// @endcond
 
 	  private:
 		/// Texture deleter.
@@ -222,8 +237,5 @@ namespace tr
 		texture(graphics_context& context, unsigned int handle, glm::ivec2 size);
 
 		//
-
-		/// Creates a texture handle.
-		void create_handle() const;
 	};
 } // namespace tr

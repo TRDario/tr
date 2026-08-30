@@ -47,7 +47,7 @@ namespace tr
 		/// @name OpenGL interoperability
 		/// @{
 
-		/// Unwraps the OpenGL texture ID.
+		/// Unwraps the OpenGL texture.
 		/// @note This does not release the texture.
 		/// @return OpenGL texture ID.
 		unsigned int unwrap() const;
