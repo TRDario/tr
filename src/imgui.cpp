@@ -33,7 +33,7 @@ void tr::ImGui::Shutdown()
 
 ImTextureID tr::ImGui::GetTextureID(texture_view texture)
 {
-	return GetTextureID(texture.m_id);
+	return texture.unwrap();
 }
 
 void tr::ImGui::NewFrame()

@@ -3,18 +3,6 @@
 
 #pragma once
 
-#ifdef TR_HAS_IMGUI
-using ImTextureID = unsigned long long;
-namespace tr
-{
-	class texture_view;
-	namespace ImGui
-	{
-		ImTextureID GetTextureID(texture_view texture);
-	}
-} // namespace tr
-#endif
-
 //
 
 namespace tr
@@ -28,6 +16,14 @@ namespace tr
 
 		/// Creates an empty texture view.
 		constexpr texture_view() = default;
+
+		/// @cond gl_interop
+
+		/// Wraps an OpenGL texture ID.
+		/// @param id OpenGL texture ID.
+		explicit texture_view(unsigned int id);
+
+		/// @endcond
 
 		/// @}
 		/// @name Comparison operators
@@ -47,32 +43,21 @@ namespace tr
 		bool empty() const;
 
 		/// @}
+		/// @cond gl_interop
+		/// @name OpenGL interop
+		/// @{
+
+		/// Unwraps the OpenGL texture ID.
+		/// @note This does not release the texture.
+		/// @return OpenGL texture ID.
+		unsigned int unwrap() const;
+
+		/// @}
+		/// @endcond
 
 	  private:
 		/// OpenGL texture ID.
 		unsigned int m_id{0};
-
-		//
-
-		/// Creates a texture view.
-		/// @param id OpenGL texture ID.
-		texture_view(unsigned int id);
-
-		//
-
-		// Accesses m_id.
-		friend class framebuffer;
-
-		// Accesses m_id and the private constructor.
-		friend class texture;
-
-		// Accesses m_id.
-		friend class texture_unit;
-
-		// Accesses m_id.
-#ifdef TR_HAS_IMGUI
-		friend ImTextureID ImGui::GetTextureID(texture_view texture);
-#endif
 	};
 
 	/// Empty texture view constant.

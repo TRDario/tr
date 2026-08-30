@@ -36,5 +36,6 @@ unsigned int tr::texture_unit::id() const
 
 void tr::texture_unit::set(texture_view texture)
 {
-	m_handle.get_deleter().context->gl().bind_textures(m_handle.get(), 1, &texture.m_id);
+	const unsigned int texture_id{texture.unwrap()};
+	m_handle.get_deleter().context->gl().bind_textures(m_handle.get(), 1, &texture_id);
 }

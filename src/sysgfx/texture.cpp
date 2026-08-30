@@ -254,7 +254,7 @@ tr::texture_view tr::texture::view() const
 	if (!m_handle.has_value()) {
 		create_handle();
 	}
-	return m_handle.get();
+	return texture_view{m_handle.get()};
 }
 
 //
@@ -337,7 +337,7 @@ void tr::texture::copy_region(glm::ivec2 tl, texture_view src, rectangle<int> re
 		create_handle();
 	}
 
-	context().gl().copy_image_sub_data(src.m_id, GL_TEXTURE_2D, 0, region.tl.x, region.tl.y, 0, m_handle.get(), GL_TEXTURE_2D, 0, tl.x,
+	context().gl().copy_image_sub_data(src.unwrap(), GL_TEXTURE_2D, 0, region.tl.x, region.tl.y, 0, m_handle.get(), GL_TEXTURE_2D, 0, tl.x,
 									   tl.y, 0, region.size.x, region.size.y, 1);
 }
 

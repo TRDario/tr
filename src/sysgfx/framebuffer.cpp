@@ -40,7 +40,7 @@ void tr::framebuffer::attach(attachment attachment, texture_view texture)
 {
 	TR_ASSERT(valid(), "Tried to attach to a framebuffer in an invalid state.");
 
-	context().gl().set_framebuffer_texture(unwrap(), std::to_underlying(attachment), texture.m_id, 0);
+	context().gl().set_framebuffer_texture(unwrap(), std::to_underlying(attachment), texture.unwrap(), 0);
 }
 
 void tr::framebuffer::detach(attachment attachment)

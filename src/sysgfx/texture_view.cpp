@@ -16,3 +16,8 @@ bool tr::texture_view::empty() const
 {
 	return m_id == 0;
 }
+
+unsigned int tr::texture_view::unwrap() const
+{
+	return m_id;
+}
