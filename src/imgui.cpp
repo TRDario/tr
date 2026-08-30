@@ -2,13 +2,12 @@
 /// @brief Implements imgui.hpp.
 
 #include "../include/tr/imgui.hpp"
+#include "../include/tr/sysgfx/event.hpp"
 #include "../include/tr/sysgfx/graphics_context.hpp"
 #include "../include/tr/sysgfx/texture_view.hpp"
 #include "../include/tr/sysgfx/window_view.hpp"
 #include <backends/imgui_impl_opengl3.h>
 #include <backends/imgui_impl_sdl3.h>
-
-struct SDL_Event;
 
 //
 
@@ -20,7 +19,7 @@ void tr::ImGui::Init(graphics_context& context)
 
 void tr::ImGui::ProcessEvent(const event& event)
 {
-	ImGui_ImplSDL3_ProcessEvent(reinterpret_cast<const SDL_Event*>(&event));
+	ImGui_ImplSDL3_ProcessEvent(&event.unwrap());
 }
 
 void tr::ImGui::Shutdown()

@@ -35,9 +35,9 @@ namespace tr
 //
 
 tr::key_down_event::key_down_event(const event& event)
-	: window{SDL_GetWindowFromID(reinterpret_cast<const SDL_Event&>(event).key.windowID)}
+	: window{SDL_GetWindowFromID(event.unwrap().key.windowID)}
 {
-	const SDL_KeyboardEvent& sdl{reinterpret_cast<const SDL_Event&>(event).key};
+	const SDL_KeyboardEvent& sdl{event.unwrap().key};
 	repeat = sdl.repeat;
 	scan = static_cast<scancode>(sdl.scancode);
 	key = static_cast<keycode>(sdl.key);
@@ -57,9 +57,9 @@ tr::key_down_event::operator key_chord() const
 //
 
 tr::key_up_event::key_up_event(const event& event)
-	: window{SDL_GetWindowFromID(reinterpret_cast<const SDL_Event&>(event).key.windowID)}
+	: window{SDL_GetWindowFromID(event.unwrap().key.windowID)}
 {
-	const SDL_KeyboardEvent& sdl{reinterpret_cast<const SDL_Event&>(event).key};
+	const SDL_KeyboardEvent& sdl{event.unwrap().key};
 	scan = static_cast<scancode>(sdl.scancode);
 	key = static_cast<keycode>(sdl.key);
 	mods = convert_keymods(sdl.mod);
@@ -68,18 +68,18 @@ tr::key_up_event::key_up_event(const event& event)
 //
 
 tr::text_input_event::text_input_event(const event& event)
-	: window{SDL_GetWindowFromID(reinterpret_cast<const SDL_Event&>(event).text.windowID)}
+	: window{SDL_GetWindowFromID(event.unwrap().text.windowID)}
 {
-	const SDL_TextInputEvent& sdl{reinterpret_cast<const SDL_Event&>(event).text};
+	const SDL_TextInputEvent& sdl{event.unwrap().text};
 	text = sdl.text;
 }
 
 //
 
 tr::mouse_motion_event::mouse_motion_event(const event& event)
-	: window{SDL_GetWindowFromID(reinterpret_cast<const SDL_Event&>(event).motion.windowID)}
+	: window{SDL_GetWindowFromID(event.unwrap().motion.windowID)}
 {
-	const SDL_MouseMotionEvent& sdl{reinterpret_cast<const SDL_Event&>(event).motion};
+	const SDL_MouseMotionEvent& sdl{event.unwrap().motion};
 	const glm::vec2 pixel_density{window.pixel_density()};
 
 	buttons = static_cast<mouse_button>(sdl.state);
@@ -90,9 +90,9 @@ tr::mouse_motion_event::mouse_motion_event(const event& event)
 //
 
 tr::mouse_down_event::mouse_down_event(const event& event)
-	: window{SDL_GetWindowFromID(reinterpret_cast<const SDL_Event&>(event).button.windowID)}
+	: window{SDL_GetWindowFromID(event.unwrap().button.windowID)}
 {
-	const SDL_MouseButtonEvent& sdl{reinterpret_cast<const SDL_Event&>(event).button};
+	const SDL_MouseButtonEvent& sdl{event.unwrap().button};
 	button = static_cast<mouse_button>(1 << (sdl.button - 1));
 	clicks = sdl.clicks;
 	pos = glm::vec2{sdl.x, sdl.y} * window.pixel_density();
@@ -101,9 +101,9 @@ tr::mouse_down_event::mouse_down_event(const event& event)
 //
 
 tr::mouse_up_event::mouse_up_event(const event& event)
-	: window{SDL_GetWindowFromID(reinterpret_cast<const SDL_Event&>(event).button.windowID)}
+	: window{SDL_GetWindowFromID(event.unwrap().button.windowID)}
 {
-	const SDL_MouseButtonEvent& sdl{reinterpret_cast<const SDL_Event&>(event).button};
+	const SDL_MouseButtonEvent& sdl{event.unwrap().button};
 	button = static_cast<mouse_button>(1 << (sdl.button - 1));
 	pos = glm::vec2{sdl.x, sdl.y} * window.pixel_density();
 }
@@ -111,9 +111,9 @@ tr::mouse_up_event::mouse_up_event(const event& event)
 //
 
 tr::mouse_wheel_event::mouse_wheel_event(const event& event)
-	: window{SDL_GetWindowFromID(reinterpret_cast<const SDL_Event&>(event).wheel.windowID)}
+	: window{SDL_GetWindowFromID(event.unwrap().wheel.windowID)}
 {
-	const SDL_MouseWheelEvent& sdl{reinterpret_cast<const SDL_Event&>(event).wheel};
+	const SDL_MouseWheelEvent& sdl{event.unwrap().wheel};
 	delta = {sdl.x, sdl.y};
 	mouse_pos = glm::vec2{sdl.mouse_x, sdl.mouse_y} * window.pixel_density();
 }
@@ -121,51 +121,51 @@ tr::mouse_wheel_event::mouse_wheel_event(const event& event)
 //
 
 tr::window_show_event::window_show_event(const event& event)
-	: window{SDL_GetWindowFromID(reinterpret_cast<const SDL_Event&>(event).window.windowID)}
+	: window{SDL_GetWindowFromID(event.unwrap().window.windowID)}
 {
 }
 
 //
 
 tr::window_hide_event::window_hide_event(const event& event)
-	: window{SDL_GetWindowFromID(reinterpret_cast<const SDL_Event&>(event).window.windowID)}
+	: window{SDL_GetWindowFromID(event.unwrap().window.windowID)}
 {
 }
 
 //
 
 tr::backbuffer_resize_event::backbuffer_resize_event(const event& event)
-	: window{SDL_GetWindowFromID(reinterpret_cast<const SDL_Event&>(event).window.windowID)}
+	: window{SDL_GetWindowFromID(event.unwrap().window.windowID)}
 {
-	const SDL_WindowEvent& sdl{reinterpret_cast<const SDL_Event&>(event).window};
+	const SDL_WindowEvent& sdl{event.unwrap().window};
 	size = {sdl.data1, sdl.data2};
 }
 
 //
 
 tr::window_mouse_enter_event::window_mouse_enter_event(const event& event)
-	: window{SDL_GetWindowFromID(reinterpret_cast<const SDL_Event&>(event).window.windowID)}
+	: window{SDL_GetWindowFromID(event.unwrap().window.windowID)}
 {
 }
 
 //
 
 tr::window_mouse_leave_event::window_mouse_leave_event(const event& event)
-	: window{SDL_GetWindowFromID(reinterpret_cast<const SDL_Event&>(event).window.windowID)}
+	: window{SDL_GetWindowFromID(event.unwrap().window.windowID)}
 {
 }
 
 //
 
 tr::window_gain_focus_event::window_gain_focus_event(const event& event)
-	: window{SDL_GetWindowFromID(reinterpret_cast<const SDL_Event&>(event).window.windowID)}
+	: window{SDL_GetWindowFromID(event.unwrap().window.windowID)}
 {
 }
 
 //
 
 tr::window_lose_focus_event::window_lose_focus_event(const event& event)
-	: window{SDL_GetWindowFromID(reinterpret_cast<const SDL_Event&>(event).window.windowID)}
+	: window{SDL_GetWindowFromID(event.unwrap().window.windowID)}
 {
 }
 
@@ -173,5 +173,12 @@ tr::window_lose_focus_event::window_lose_focus_event(const event& event)
 
 tr::u32 tr::event::type() const
 {
-	return reinterpret_cast<const SDL_Event*>(m_buffer)->type;
+	return unwrap().type;
+}
+
+//
+
+const SDL_Event& tr::event::unwrap() const
+{
+	return *reinterpret_cast<const SDL_Event*>(m_buffer);
 }

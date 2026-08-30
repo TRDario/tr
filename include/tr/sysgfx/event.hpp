@@ -6,6 +6,7 @@
 #include "mouse.hpp"
 #include "window_view.hpp"
 
+union SDL_Event;
 namespace tr
 {
 	class event;
@@ -353,6 +354,16 @@ namespace tr
 		auto visit(Visitor&& visitor) const;
 
 		/// @}
+		/// @cond sdl_interop
+		/// @name SDL interop
+		/// @{
+
+		/// Unwraps the SDL event.
+		/// @return Reference to the unwrapped SDL event.
+		const SDL_Event& unwrap() const;
+
+		/// @}
+		/// @endcond
 
 	  private:
 		/// Storage for SDL_Event.
