@@ -738,9 +738,9 @@ consteval tr::rgba8 tr::literals::color_literals::operator""_rgba8(const char* s
 #ifdef TR_ENABLE_ASSERTS
 	constexpr auto is_lowercase_hex{[](char chr) { return chr >= 'a' && chr <= 'f'; }};
 	constexpr auto is_hex_digit{[=](char chr) { return is_digit(chr) || is_uppercase_hex(chr) || is_lowercase_hex(chr); }};
-#endif
 	TR_ASSERT(length == 7 || length == 9, "Invalid RGBA literal string length {} (must be 7 or 9).", length);
 	TR_ASSERT(std::ranges::all_of(std::string_view{str + 1, length - 1}, is_hex_digit), "Invalid color literal hex string '{}'.", str);
+#endif
 
 	return {
 		static_cast<u8>((to_number(str[1]) << 4) | to_number(str[2])),
