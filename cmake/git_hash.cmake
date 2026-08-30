@@ -52,7 +52,7 @@ function(tr_git_hash_setup)
     add_custom_target(always_check_git COMMAND ${CMAKE_COMMAND}
         -DRUN_CHECK_GIT_HASH=1
         -DGIT_HASH_CACHE=${GIT_HASH_CACHE}
-        -P ${tr_SOURCE_DIR}/git_hash.cmake
+        -P ${tr_SOURCE_DIR}/cmake/git_hash.cmake
         BYPRODUCTS ${CMAKE_BINARY_DIR}/git_hash/git_hash.hpp
         COMMENT "Checking git hash for changes"
     )
