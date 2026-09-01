@@ -23,7 +23,7 @@ namespace tr
 	struct add_drawer<Renderer>
 	{
 		/// Drawer type associated with `T`.
-		using type = decltype([](Renderer renderer) { return renderer.create_drawer(); });
+		using type = decltype(std::declval<Renderer>().create_drawer());
 	};
 
 	/// When passed a renderer stores gets its drawer type, otherwise is equal to T.
