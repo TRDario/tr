@@ -9,13 +9,18 @@
 
 //
 
-tr::shader_pipeline::shader_pipeline(graphics_context& context, const vertex_shader& vertex_shader, const fragment_shader& fragment_shader)
+tr::shader_pipeline::shader_pipeline(graphics_context& context)
 	: m_handle{deleter{context}}
 {
 	context.gl().create_program_pipelines(1, out_handle(m_handle));
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 	context.registry().shader_pipelines.emplace(id());
 #endif
+}
+
+tr::shader_pipeline::shader_pipeline(graphics_context& context, const vertex_shader& vertex_shader, const fragment_shader& fragment_shader)
+	: shader_pipeline{context}
+{
 	set_shaders(vertex_shader, fragment_shader);
 }
 

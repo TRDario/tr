@@ -50,6 +50,13 @@ tr::basic_renderer::basic_renderer(graphics_context& context)
 
 //
 
+tr::graphics_context& tr::basic_renderer::context() const
+{
+	return m_pipeline.context();
+}
+
+//
+
 void tr::basic_renderer::set_default_transform(const glm::mat4& mat)
 {
 	TR_ASSERT(!m_locked, "Tried to set default transform of locked basic renderer.");
