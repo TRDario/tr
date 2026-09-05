@@ -1,5 +1,7 @@
 var NAVTREEINDEX10 =
 {
+"classtr_1_1vertex__format.html#a9a66e7e3245f8c836ea738f3b7f9f555":[2,0,0,161,1],
+"classtr_1_1vertex__format.html#a9a66e7e3245f8c836ea738f3b7f9f555":[4,0,0,149,1],
 "classtr_1_1vertex__format.html#ae1def399ec94f5008d824a3315493e46":[2,0,0,161,3],
 "classtr_1_1vertex__format.html#ae1def399ec94f5008d824a3315493e46":[4,0,0,149,3],
 "classtr_1_1vertex__shader.html":[2,0,0,162],
@@ -247,7 +249,5 @@ var NAVTREEINDEX10 =
 "concepttr_1_1volatile__qualified.html":[3,0,59],
 "cursor_8hpp.html":[5,0,0,0,1,8],
 "cursor_8hpp_source.html":[5,0,0,0,1,8],
-"debug__renderer_8hpp.html":[5,0,0,0,1,9],
-"debug__renderer_8hpp_source.html":[5,0,0,0,1,9],
-"default__binary__io_8hpp.html":[5,0,0,0,2,10]
+"debug__renderer_8hpp.html":[5,0,0,0,1,9]
 };

@@ -36,7 +36,7 @@ var searchData=
   ['app_5ftype_33',['app_type',['../namespacetr.html#a4903dcf469d9560f65afa2808b3d175d',1,'tr']]],
   ['append_34',['append',['../classtr_1_1static__string.html#ae0fe03c85dd9d162f4598029b1f872d6',1,'tr::static_string::append(char chr)'],['../classtr_1_1static__string.html#a214202f28214053a949910b548425840',1,'tr::static_string::append(Iterator begin, Iterator end)'],['../classtr_1_1static__string.html#afbfd8cc36b00e6107be80c3ec4870b1d',1,'tr::static_string::append(std::string_view str)'],['../classtr_1_1static__vector.html#afcc4ccee397f48763be7b485ff0e6231',1,'tr::static_vector::append(Iterator first, Iterator last)'],['../classtr_1_1static__vector.html#a0d4ef4075c070bfaed3495963a067c8e',1,'tr::static_vector::append(Range &amp;&amp;range)'],['../classtr_1_1static__vector.html#a88359ad449196c468fa98a6d4cf3a33c',1,'tr::static_vector::append(std::initializer_list&lt; Element &gt; init)']]],
   ['application_35',['application',['../namespacetr.html#a4903dcf469d9560f65afa2808b3d175da3676d55f84497cbeadfc614c1b1b62fc',1,'tr']]],
-  ['apply_36',['apply',['../classtr_1_1post__processing__buffer.html#ab4ef8089e4edb367e029c3056298238a',1,'tr::post_processing_buffer']]],
+  ['apply_36',['apply',['../classtr_1_1post__processing__buffer.html#a15260297c2ff666d5f293b9e7cd9c8ba',1,'tr::post_processing_buffer']]],
   ['argb32_37',['argb32',['../namespacetr.html#ac1babae6e9367fc90585a8791dadc746ae57a429bc01664112d277cc6d93d3ad6',1,'tr']]],
   ['argb_5fp1555_38',['argb_p1555',['../namespacetr.html#ac1babae6e9367fc90585a8791dadc746aeb9334a47d2852e2aad0535246adf326',1,'tr']]],
   ['argb_5fp4444_39',['argb_p4444',['../namespacetr.html#ac1babae6e9367fc90585a8791dadc746a1f7122530bee42e01e627286b144182e',1,'tr']]],

@@ -1,5 +1,7 @@
 var NAVTREEINDEX14 =
 {
+"namespacetr_1_1literals_1_1angle__literals.html#a7742a30203354251c97a8038d698b136":[2,0,0,1,3],
+"namespacetr_1_1literals_1_1angle__literals.html#a7742a30203354251c97a8038d698b136":[2,0,0,373],
 "namespacetr_1_1literals_1_1angle__literals.html#a7742a30203354251c97a8038d698b136":[2,0,0,9,0,3],
 "namespacetr_1_1literals_1_1angle__literals.html#a7742a30203354251c97a8038d698b136":[2,0,0,9,14],
 "namespacetr_1_1literals_1_1angle__literals.html#a7e9866049c5b59a545c75f4620a1442a":[2,0,0,1,0],
@@ -247,7 +249,5 @@ var NAVTREEINDEX14 =
 "structtr_1_1blend__mode.html":[4,0,0,31],
 "structtr_1_1blend__mode.html#a23a2d97d67a4194e63822b48bb7b45a0":[2,0,0,43,1],
 "structtr_1_1blend__mode.html#a23a2d97d67a4194e63822b48bb7b45a0":[4,0,0,31,1],
-"structtr_1_1blend__mode.html#a31e0312eaa04584927e91fede59dfbb5":[2,0,0,43,3],
-"structtr_1_1blend__mode.html#a31e0312eaa04584927e91fede59dfbb5":[4,0,0,31,3],
-"structtr_1_1blend__mode.html#a3b1ef1c349470c62756ec1723530bb85":[2,0,0,43,2]
+"structtr_1_1blend__mode.html#a31e0312eaa04584927e91fede59dfbb5":[2,0,0,43,3]
 };
