@@ -6,9 +6,11 @@ var classtr_1_1post__processing__buffer =
     [ "complete", "classtr_1_1post__processing__buffer.html#a2ab879d74baf696426ae9b19be84d5c2", null ],
     [ "size", "classtr_1_1post__processing__buffer.html#a0664cbefe8f5a06f452f5699d20005c9", null ],
     [ "allocate", "classtr_1_1post__processing__buffer.html#aca9680bda9961223924535fa21f7f227", null ],
-    [ "source_target", "classtr_1_1post__processing__buffer.html#a7cc8aa9dc5a08145b7a95487133a0557", null ],
-    [ "source_texture", "classtr_1_1post__processing__buffer.html#ae2c804d1b086c40dc5c67a5d8b3481a2", null ],
-    [ "clear_source", "classtr_1_1post__processing__buffer.html#a0db36c69cfba9c9d4c88c37c0ac80441", null ],
+    [ "operator render_target", "classtr_1_1post__processing__buffer.html#a792a28dd7e0a3ddd56271d167a58b032", null ],
+    [ "target", "classtr_1_1post__processing__buffer.html#ad55a56a6a71408029f35603343daf69d", null ],
+    [ "operator texture_view", "classtr_1_1post__processing__buffer.html#afbd82658a52c399c5c6fbde463ad233b", null ],
+    [ "texture", "classtr_1_1post__processing__buffer.html#a096aa5b85b5f09cef465be5f2b51892a", null ],
+    [ "clear", "classtr_1_1post__processing__buffer.html#a6b23b2fa21dd75c1d72f09dc2bbf21c0", null ],
     [ "apply", "classtr_1_1post__processing__buffer.html#a15260297c2ff666d5f293b9e7cd9c8ba", null ],
     [ "draw", "classtr_1_1post__processing__buffer.html#acc6f5074857c197a619ca78ab9bd9c49", null ]
 ];

@@ -1,5 +1,9 @@
 var NAVTREEINDEX10 =
 {
+"classtr_1_1vertex__format.html#a07cc01bd28ed9b2fa3ed529c9f0b4add":[2,0,0,161,4],
+"classtr_1_1vertex__format.html#a07cc01bd28ed9b2fa3ed529c9f0b4add":[4,0,0,149,4],
+"classtr_1_1vertex__format.html#a24f8460d420141ea7ceec665ab490860":[2,0,0,161,2],
+"classtr_1_1vertex__format.html#a24f8460d420141ea7ceec665ab490860":[4,0,0,149,2],
 "classtr_1_1vertex__format.html#a9a66e7e3245f8c836ea738f3b7f9f555":[2,0,0,161,1],
 "classtr_1_1vertex__format.html#a9a66e7e3245f8c836ea738f3b7f9f555":[4,0,0,149,1],
 "classtr_1_1vertex__format.html#ae1def399ec94f5008d824a3315493e46":[2,0,0,161,3],
@@ -245,9 +249,5 @@ var NAVTREEINDEX10 =
 "concepttr_1_1utf8_1_1output__string.html":[3,0,0,1],
 "concepttr_1_1valid__format__string__for.html":[2,0,0,231],
 "concepttr_1_1valid__format__string__for.html":[3,0,58],
-"concepttr_1_1volatile__qualified.html":[2,0,0,232],
-"concepttr_1_1volatile__qualified.html":[3,0,59],
-"cursor_8hpp.html":[5,0,0,0,1,8],
-"cursor_8hpp_source.html":[5,0,0,0,1,8],
-"debug__renderer_8hpp.html":[5,0,0,0,1,9]
+"concepttr_1_1volatile__qualified.html":[2,0,0,232]
 };

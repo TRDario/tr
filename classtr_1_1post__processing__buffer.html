@@ -154,14 +154,19 @@ Public Member Functions</h2></td></tr>
 <tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Allocation</div></td></tr>
 <tr class="memitem:aca9680bda9961223924535fa21f7f227" id="r_aca9680bda9961223924535fa21f7f227"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aca9680bda9961223924535fa21f7f227">allocate</a> (glm::ivec2 size, mipmaps<a class="el" href="namespacetr.html#acc7c3ec65e91b3d9d879c9bca6e51ce6">mipmaps</a> mipmaps<a class="el" href="namespacetr.html#acc7c3ec65e91b3d9d879c9bca6e51ce6">mipmaps</a>=<a class="el" href="namespacetr.html#acc7c3ec65e91b3d9d879c9bca6e51ce6a075ae3d2fc31640504f814f60e5ef713">mipmaps::disabled</a>, <a class="el" href="namespacetr.html#ac1babae6e9367fc90585a8791dadc746">pixel_format</a> format=<a class="el" href="namespacetr.html#ac1babae6e9367fc90585a8791dadc746ab1500b383bccdb3946114a5d708706c4">pixel_format::rgba32</a>)</td></tr>
 <tr class="memdesc:aca9680bda9961223924535fa21f7f227"><td class="mdescLeft">&#160;</td><td class="mdescRight">(Re-)allocates the buffer and discards any previous data.  <br /></td></tr>
-<tr id="pub-methods-4" class="groupHeader"><td colspan="2"><div class="groupHeader">Source</div></td></tr>
-<tr class="memitem:a7cc8aa9dc5a08145b7a95487133a0557" id="r_a7cc8aa9dc5a08145b7a95487133a0557"><td class="memItemLeft"><a class="el" href="classtr_1_1render__target.html">render_target</a>&#160;</td><td class="memItemRight"><a class="el" href="#a7cc8aa9dc5a08145b7a95487133a0557">source_target</a> () const</td></tr>
-<tr class="memdesc:a7cc8aa9dc5a08145b7a95487133a0557"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a render target spanning the source buffer.  <br /></td></tr>
-<tr class="memitem:ae2c804d1b086c40dc5c67a5d8b3481a2" id="r_ae2c804d1b086c40dc5c67a5d8b3481a2"><td class="memItemLeft"><a class="el" href="classtr_1_1texture__view.html">texture_view</a>&#160;</td><td class="memItemRight"><a class="el" href="#ae2c804d1b086c40dc5c67a5d8b3481a2">source_texture</a> () const</td></tr>
-<tr class="memdesc:ae2c804d1b086c40dc5c67a5d8b3481a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a view to the source buffer's texture.  <br /></td></tr>
-<tr class="memitem:a0db36c69cfba9c9d4c88c37c0ac80441" id="r_a0db36c69cfba9c9d4c88c37c0ac80441"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a0db36c69cfba9c9d4c88c37c0ac80441">clear_source</a> ()</td></tr>
-<tr class="memdesc:a0db36c69cfba9c9d4c88c37c0ac80441"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the source buffer.  <br /></td></tr>
-<tr id="pub-methods-5" class="groupHeader"><td colspan="2"><div class="groupHeader">Applying</div></td></tr>
+<tr id="pub-methods-4" class="groupHeader"><td colspan="2"><div class="groupHeader">Render target</div></td></tr>
+<tr class="memitem:a792a28dd7e0a3ddd56271d167a58b032" id="r_a792a28dd7e0a3ddd56271d167a58b032"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a792a28dd7e0a3ddd56271d167a58b032">operator render_target</a> () const</td></tr>
+<tr class="memdesc:a792a28dd7e0a3ddd56271d167a58b032"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a render target spanning the source buffer.  <br /></td></tr>
+<tr class="memitem:ad55a56a6a71408029f35603343daf69d" id="r_ad55a56a6a71408029f35603343daf69d"><td class="memItemLeft"><a class="el" href="classtr_1_1render__target.html">render_target</a>&#160;</td><td class="memItemRight"><a class="el" href="#ad55a56a6a71408029f35603343daf69d">target</a> () const</td></tr>
+<tr class="memdesc:ad55a56a6a71408029f35603343daf69d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a render target spanning the source buffer.  <br /></td></tr>
+<tr id="pub-methods-5" class="groupHeader"><td colspan="2"><div class="groupHeader">Texture</div></td></tr>
+<tr class="memitem:afbd82658a52c399c5c6fbde463ad233b" id="r_afbd82658a52c399c5c6fbde463ad233b"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#afbd82658a52c399c5c6fbde463ad233b">operator texture_view</a> () const</td></tr>
+<tr class="memdesc:afbd82658a52c399c5c6fbde463ad233b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a view to the source buffer's texture.  <br /></td></tr>
+<tr class="memitem:a096aa5b85b5f09cef465be5f2b51892a" id="r_a096aa5b85b5f09cef465be5f2b51892a"><td class="memItemLeft"><a class="el" href="classtr_1_1texture__view.html">texture_view</a>&#160;</td><td class="memItemRight"><a class="el" href="#a096aa5b85b5f09cef465be5f2b51892a">texture</a> () const</td></tr>
+<tr class="memdesc:a096aa5b85b5f09cef465be5f2b51892a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a view to the source buffer's texture.  <br /></td></tr>
+<tr id="pub-methods-6" class="groupHeader"><td colspan="2"><div class="groupHeader">Applying</div></td></tr>
+<tr class="memitem:a6b23b2fa21dd75c1d72f09dc2bbf21c0" id="r_a6b23b2fa21dd75c1d72f09dc2bbf21c0"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a6b23b2fa21dd75c1d72f09dc2bbf21c0">clear</a> ()</td></tr>
+<tr class="memdesc:a6b23b2fa21dd75c1d72f09dc2bbf21c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the source buffer.  <br /></td></tr>
 <tr class="memitem:a15260297c2ff666d5f293b9e7cd9c8ba" id="r_a15260297c2ff666d5f293b9e7cd9c8ba"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a15260297c2ff666d5f293b9e7cd9c8ba">apply</a> (fragment_shader &amp;fragment_shader)</td></tr>
 <tr class="memdesc:a15260297c2ff666d5f293b9e7cd9c8ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies a post-processing shader and swaps the source/destination buffers.  <br /></td></tr>
 <tr class="memitem:acc6f5074857c197a619ca78ab9bd9c49" id="r_acc6f5074857c197a619ca78ab9bd9c49"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#acc6f5074857c197a619ca78ab9bd9c49">draw</a> (const <a class="el" href="classtr_1_1render__target.html">render_target</a> &amp;target)</td></tr>
@@ -320,33 +325,50 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a7cc8aa9dc5a08145b7a95487133a0557" name="a7cc8aa9dc5a08145b7a95487133a0557"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7cc8aa9dc5a08145b7a95487133a0557">&#9670;&#160;</a></span>source_target()</h2>
+<a id="a792a28dd7e0a3ddd56271d167a58b032" name="a792a28dd7e0a3ddd56271d167a58b032"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a792a28dd7e0a3ddd56271d167a58b032">&#9670;&#160;</a></span>operator render_target()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classtr_1_1render__target.html">render_target</a> tr::post_processing_buffer::source_target </td>
+          <td class="memname">tr::post_processing_buffer::operator <a class="el" href="classtr_1_1render__target.html">render_target</a> </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>This rendering target stays valid until a call to <span class="tt"><a class="el" href="#aca9680bda9961223924535fa21f7f227" title="(Re-)allocates the buffer and discards any previous data.">allocate()</a></span>, <span class="tt"><a class="el" href="#a15260297c2ff666d5f293b9e7cd9c8ba" title="Applies a post-processing shader and swaps the source/destination buffers.">apply()</a></span>, or the destruction of the buffer. </p><dl class="section pre"><dt>Precondition</dt><dd>The buffer must be complete to call this function. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>Render target spanning the source buffer. </dd></dl>
 
 </div>
 </div>
-<a id="ae2c804d1b086c40dc5c67a5d8b3481a2" name="ae2c804d1b086c40dc5c67a5d8b3481a2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae2c804d1b086c40dc5c67a5d8b3481a2">&#9670;&#160;</a></span>source_texture()</h2>
+<a id="ad55a56a6a71408029f35603343daf69d" name="ad55a56a6a71408029f35603343daf69d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad55a56a6a71408029f35603343daf69d">&#9670;&#160;</a></span>target()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classtr_1_1texture__view.html">texture_view</a> tr::post_processing_buffer::source_texture </td>
+          <td class="memname"><a class="el" href="classtr_1_1render__target.html">render_target</a> tr::post_processing_buffer::target </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>Render target spanning the source buffer. </dd></dl>
+
+</div>
+</div>
+<a id="afbd82658a52c399c5c6fbde463ad233b" name="afbd82658a52c399c5c6fbde463ad233b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afbd82658a52c399c5c6fbde463ad233b">&#9670;&#160;</a></span>operator texture_view()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tr::post_processing_buffer::operator <a class="el" href="classtr_1_1texture__view.html">texture_view</a> </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -358,14 +380,33 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a0db36c69cfba9c9d4c88c37c0ac80441" name="a0db36c69cfba9c9d4c88c37c0ac80441"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0db36c69cfba9c9d4c88c37c0ac80441">&#9670;&#160;</a></span>clear_source()</h2>
+<a id="a096aa5b85b5f09cef465be5f2b51892a" name="a096aa5b85b5f09cef465be5f2b51892a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a096aa5b85b5f09cef465be5f2b51892a">&#9670;&#160;</a></span>texture()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::post_processing_buffer::clear_source </td>
+          <td class="memname"><a class="el" href="classtr_1_1texture__view.html">texture_view</a> tr::post_processing_buffer::texture </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This texture view stays valid until a call to <span class="tt"><a class="el" href="#aca9680bda9961223924535fa21f7f227" title="(Re-)allocates the buffer and discards any previous data.">allocate()</a></span>, <span class="tt"><a class="el" href="#a15260297c2ff666d5f293b9e7cd9c8ba" title="Applies a post-processing shader and swaps the source/destination buffers.">apply()</a></span>, or the destruction of the buffer. </p><dl class="section pre"><dt>Precondition</dt><dd>The buffer must be complete to call this function. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>View to the source buffer's texture. </dd></dl>
+
+</div>
+</div>
+<a id="a6b23b2fa21dd75c1d72f09dc2bbf21c0" name="a6b23b2fa21dd75c1d72f09dc2bbf21c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b23b2fa21dd75c1d72f09dc2bbf21c0">&#9670;&#160;</a></span>clear()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tr::post_processing_buffer::clear </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>

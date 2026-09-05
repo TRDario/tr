@@ -1,5 +1,9 @@
 var NAVTREEINDEX14 =
 {
+"namespacetr_1_1literals_1_1angle__literals.html#a47e5023a5af2ba15ec678c8845272974":[2,0,0,1,2],
+"namespacetr_1_1literals_1_1angle__literals.html#a47e5023a5af2ba15ec678c8845272974":[2,0,0,372],
+"namespacetr_1_1literals_1_1angle__literals.html#a47e5023a5af2ba15ec678c8845272974":[2,0,0,9,0,2],
+"namespacetr_1_1literals_1_1angle__literals.html#a47e5023a5af2ba15ec678c8845272974":[2,0,0,9,13],
 "namespacetr_1_1literals_1_1angle__literals.html#a7742a30203354251c97a8038d698b136":[2,0,0,1,3],
 "namespacetr_1_1literals_1_1angle__literals.html#a7742a30203354251c97a8038d698b136":[2,0,0,373],
 "namespacetr_1_1literals_1_1angle__literals.html#a7742a30203354251c97a8038d698b136":[2,0,0,9,0,3],
@@ -245,9 +249,5 @@ var NAVTREEINDEX14 =
 "structtr_1_1bitmap__atlas.html#a8323773ec5e437b5a4f65fefcd544d7f":[4,0,0,27,0],
 "structtr_1_1bitmap__atlas.html#abe917ae429948b7cc2c8abd57ccfff5d":[2,0,0,39,1],
 "structtr_1_1bitmap__atlas.html#abe917ae429948b7cc2c8abd57ccfff5d":[4,0,0,27,1],
-"structtr_1_1blend__mode.html":[2,0,0,43],
-"structtr_1_1blend__mode.html":[4,0,0,31],
-"structtr_1_1blend__mode.html#a23a2d97d67a4194e63822b48bb7b45a0":[2,0,0,43,1],
-"structtr_1_1blend__mode.html#a23a2d97d67a4194e63822b48bb7b45a0":[4,0,0,31,1],
-"structtr_1_1blend__mode.html#a31e0312eaa04584927e91fede59dfbb5":[2,0,0,43,3]
+"structtr_1_1blend__mode.html":[2,0,0,43]
 };
