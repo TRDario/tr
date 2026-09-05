@@ -63,7 +63,7 @@ namespace tr
 
 		/// Gets a render target spanning the texture.
 		/// @return Render target spanning the texture.
-		render_target render_target() const;
+		render_target target() const;
 
 		/// @}
 		/// @name Context

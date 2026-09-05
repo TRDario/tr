@@ -43,14 +43,14 @@ tr::texture_view tr::render_texture::view() const
 
 tr::render_texture::operator tr::render_target() const
 {
-	return render_target();
+	return target();
 }
 
-tr::render_target tr::render_texture::render_target() const
+tr::render_target tr::render_texture::target() const
 {
 	TR_ASSERT(complete(), "Tried to create a render target for an incomplete texture.");
 
-	return tr::render_target{m_framebuffer, size()};
+	return render_target{m_framebuffer, size()};
 }
 
 //

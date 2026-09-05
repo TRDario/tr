@@ -79,28 +79,40 @@ namespace tr
 		void allocate(glm::ivec2 size, mipmaps mipmaps = mipmaps::disabled, pixel_format format = pixel_format::rgba32);
 
 		/// @}
-		/// @name Source
+		/// @name Render target
 		/// @{
 
 		/// Gets a render target spanning the source buffer.
-		/// @details This rendering target stays valid until a call to `allocate()`, `apply()`, or the destruction of the buffer.
-		/// @pre The buffer must be complete to call this function.
 		/// @return Render target spanning the source buffer.
-		render_target source_target() const;
+		operator render_target() const;
+
+		/// Gets a render target spanning the source buffer.
+		/// @return Render target spanning the source buffer.
+		render_target target() const;
+
+		/// @}
+		/// @name Texture
+		/// @{
 
 		/// Gets a view to the source buffer's texture.
 		/// @details This texture view stays valid until a call to `allocate()`, `apply()`, or the destruction of the buffer.
 		/// @pre The buffer must be complete to call this function.
 		/// @return View to the source buffer's texture.
-		texture_view source_texture() const;
+		operator texture_view() const;
 
-		/// Clears the source buffer.
+		/// Gets a view to the source buffer's texture.
+		/// @details This texture view stays valid until a call to `allocate()`, `apply()`, or the destruction of the buffer.
 		/// @pre The buffer must be complete to call this function.
-		void clear_source();
+		/// @return View to the source buffer's texture.
+		texture_view texture() const;
 
 		/// @}
 		/// @name Applying
 		/// @{
+
+		/// Clears the source buffer.
+		/// @pre The buffer must be complete to call this function.
+		void clear();
 
 		/// Applies a post-processing shader and swaps the source/destination buffers.
 		/// @details This view stays valid until a call to `allocate()`, `apply()`, or the destruction of the buffer.
@@ -119,7 +131,7 @@ namespace tr
 
 	  private:
 		/// Textures of the buffer.
-		std::array<texture, 2> m_textures;
+		std::array<tr::texture, 2> m_textures;
 
 		/// Framebuffer of the buffer.
 		framebuffer m_framebuffer;

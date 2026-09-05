@@ -20,7 +20,7 @@ namespace tr
 //
 
 tr::post_processing_buffer::post_processing_buffer(graphics_context& context)
-	: m_textures{texture{context}, texture{context}}
+	: m_textures{tr::texture{context}, tr::texture{context}}
 	, m_framebuffer{context}
 	, m_vertex_shader{context, post_processing_vert}
 	, m_shader_pipeline{context}
@@ -32,7 +32,7 @@ tr::post_processing_buffer::post_processing_buffer(graphics_context& context)
 }
 
 tr::post_processing_buffer::post_processing_buffer(graphics_context& context, glm::ivec2 size, mipmaps mipmaps, pixel_format format)
-	: m_textures{texture{context, size, mipmaps, format}, texture{context, size, mipmaps, format}}
+	: m_textures{tr::texture{context, size, mipmaps, format}, tr::texture{context, size, mipmaps, format}}
 	, m_framebuffer{context}
 	, m_vertex_shader{context, post_processing_vert}
 	, m_shader_pipeline{context}
@@ -66,7 +66,7 @@ glm::ivec2 tr::post_processing_buffer::size() const
 
 void tr::post_processing_buffer::allocate(glm::ivec2 size, mipmaps mipmaps, pixel_format format)
 {
-	for (texture& texture : m_textures) {
+	for (tr::texture& texture : m_textures) {
 		texture.allocate(size, mipmaps, format);
 	}
 	m_framebuffer.attach(framebuffer::attachment::color0, m_textures[m_source_index]);
@@ -74,28 +74,40 @@ void tr::post_processing_buffer::allocate(glm::ivec2 size, mipmaps mipmaps, pixe
 
 //
 
-tr::render_target tr::post_processing_buffer::source_target() const
+tr::post_processing_buffer::operator render_target() const
 {
-	TR_ASSERT(complete(), "Tried to get source of incomplete post-processing buffer");
+	return target();
+}
+
+tr::render_target tr::post_processing_buffer::target() const
+{
+	TR_ASSERT(complete(), "Tried to get render target of incomplete post-processing buffer");
 
 	return render_target{m_framebuffer, size()};
 }
 
-tr::texture_view tr::post_processing_buffer::source_texture() const
+//
+
+tr::post_processing_buffer::operator texture_view() const
 {
-	TR_ASSERT(complete(), "Tried to get source of incomplete post-processing buffer");
+	return texture();
+}
+
+tr::texture_view tr::post_processing_buffer::texture() const
+{
+	TR_ASSERT(complete(), "Tried to get texture of incomplete post-processing buffer");
 
 	return m_textures[m_source_index];
 }
 
-void tr::post_processing_buffer::clear_source()
+//
+
+void tr::post_processing_buffer::clear()
 {
-	TR_ASSERT(complete(), "Tried to clear source of incomplete post-processing buffer");
+	TR_ASSERT(complete(), "Tried to clear incomplete post-processing buffer");
 
 	m_textures[m_source_index].clear({});
 }
-
-//
 
 void tr::post_processing_buffer::apply(fragment_shader& fragment_shader)
 {
