@@ -74,11 +74,18 @@ void tr::post_processing_buffer::allocate(glm::ivec2 size, mipmaps mipmaps, pixe
 
 //
 
-tr::render_target tr::post_processing_buffer::source() const
+tr::render_target tr::post_processing_buffer::source_target() const
 {
 	TR_ASSERT(complete(), "Tried to get source of incomplete post-processing buffer");
 
 	return render_target{m_framebuffer, size()};
+}
+
+tr::texture_view tr::post_processing_buffer::source_texture() const
+{
+	TR_ASSERT(complete(), "Tried to get source of incomplete post-processing buffer");
+
+	return m_textures[m_source_index];
 }
 
 void tr::post_processing_buffer::clear_source()
@@ -90,7 +97,7 @@ void tr::post_processing_buffer::clear_source()
 
 //
 
-tr::texture_view tr::post_processing_buffer::apply(fragment_shader& fragment_shader)
+void tr::post_processing_buffer::apply(fragment_shader& fragment_shader)
 {
 	TR_ASSERT(complete(), "Tried to apply shader on an incomplete post-processing buffer");
 
@@ -109,6 +116,4 @@ tr::texture_view tr::post_processing_buffer::apply(fragment_shader& fragment_sha
 		context.set_vertex_buffer(m_vertex_buffer, 0, 0);
 	}
 	context.draw(primitive::tri_fan, 0, 4);
-
-	return m_textures[m_source_index];
 }

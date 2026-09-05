@@ -83,10 +83,16 @@ namespace tr
 		/// @{
 
 		/// Gets a render target spanning the source buffer.
+		/// @details This rendering target stays valid until a call to `allocate()`, `apply()`, or the destruction of the buffer.
 		/// @pre The buffer must be complete to call this function.
 		/// @return Render target spanning the source buffer.
-		/// This rendering target stays valid until a call to `allocate()`, `apply()`, or the destruction of the buffer.
-		render_target source() const;
+		render_target source_target() const;
+
+		/// Gets a view to the source buffer's texture.
+		/// @details This texture view stays valid until a call to `allocate()`, `apply()`, or the destruction of the buffer.
+		/// @pre The buffer must be complete to call this function.
+		/// @return View to the source buffer's texture.
+		texture_view source_texture() const;
 
 		/// Clears the source buffer.
 		/// @pre The buffer must be complete to call this function.
@@ -97,13 +103,12 @@ namespace tr
 		/// @{
 
 		/// Applies a post-processing shader and swaps the source/destination buffers.
+		/// @details This view stays valid until a call to `allocate()`, `apply()`, or the destruction of the buffer.
 		/// @param fragment_shader Post-processing fragment shader to apply.
 		/// Post-processing fragment shaders are expected to contain a `sampler2D` uniform at location 0 and a `vec2` texture size uniform
 		/// at location 1, take in a `vec2` uv input used to sample the source buffer, and output a `vec4` color.
 		/// @pre The buffer must be complete to call this function.
-		/// @return View to the output buffer.
-		/// This view stays valid until a call to `allocate()`, `apply()`, or the destruction of the buffer.
-		texture_view apply(fragment_shader& fragment_shader);
+		void apply(fragment_shader& fragment_shader);
 
 		/// Draws the current source buffer to a render target.
 		/// @param target Rendering target.
