@@ -35,12 +35,12 @@
 #include "sysgfx/path.hpp"                   // IWYU pragma: export
 #include "sysgfx/post_processing_buffer.hpp" // IWYU pragma: export
 #include "sysgfx/render_target.hpp"          // IWYU pragma: export
-#include "sysgfx/render_texture.hpp"         // IWYU pragma: export
 #include "sysgfx/shader.hpp"                 // IWYU pragma: export
 #include "sysgfx/shader_buffer.hpp"          // IWYU pragma: export
 #include "sysgfx/shader_pipeline.hpp"        // IWYU pragma: export
 #include "sysgfx/state_machine.hpp"          // IWYU pragma: export
 #include "sysgfx/texture.hpp"                // IWYU pragma: export
+#include "sysgfx/texture_target.hpp"         // IWYU pragma: export
 #include "sysgfx/texture_view.hpp"           // IWYU pragma: export
 #include "sysgfx/ttfont.hpp"                 // IWYU pragma: export
 #include "sysgfx/uniform_buffer.hpp"         // IWYU pragma: export

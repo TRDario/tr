@@ -1,5 +1,5 @@
 /// @file
-/// @brief Provides a texture class with the ability to be rendered to.
+/// @brief Provides a texture rendering target.
 
 #pragma once
 #include "framebuffer.hpp"
@@ -14,82 +14,74 @@ namespace tr
 
 namespace tr
 {
-	/// 2D GPU texture with the ability to be rendered to.
-	class render_texture
+	/// 2D texture rendering target.
+	class texture_target
 	{
 	  public:
 		/// @name Constructors
 		/// @{
 
-		/// Creates an incomplete texture.
-		/// @param context Graphics context to create the texture on.
-		render_texture(graphics_context& context);
+		/// Creates an incomplete texture target.
+		/// @param context Graphics context to create the texture target on.
+		explicit texture_target(graphics_context& context);
 
-		/// Allocates an uninitialized texture.
-		/// @param context Graphics context to create the texture on.
+		/// Allocates an uninitialized texture target.
+		/// @param context Graphics context to create the texture target on.
 		/// @param size Size of the texture.
 		/// @param mipmaps Whether to generate mipmaps for the texture.
 		/// @param format Pixel format of the texture.
-		render_texture(graphics_context& context, glm::ivec2 size, mipmaps mipmaps = mipmaps::disabled,
+		texture_target(graphics_context& context, glm::ivec2 size, mipmaps mipmaps = mipmaps::disabled,
 					   pixel_format format = pixel_format::rgba32);
 
-		/// Constructs a texture with data uploaded from a bitmap.
-		/// @param context Graphics context to create the texture on.
+		/// Constructs a texture target with data uploaded from a bitmap.
+		/// @param context Graphics context to create the texture target on.
 		/// @param bitmap Bitmap data to copy to the texture.
 		/// @param mipmaps Whether to generate mipmaps for the texture.
 		/// @param format Pixel format of the texture.
-		render_texture(graphics_context& context, sub_bitmap bitmap, mipmaps mipmaps = mipmaps::disabled,
+		texture_target(graphics_context& context, sub_bitmap bitmap, mipmaps mipmaps = mipmaps::disabled,
 					   std::optional<pixel_format> format = std::nullopt);
 
 		/// @}
-		/// @name Views
+		/// @name Conversion operators
 		/// @{
 
-		/// Gets a view to the texture.
-		/// @return View to the texture.
+		/// Creates a view to the texture target texture.
+		/// @return View to the texture target texture.
 		operator texture_view() const;
 
-		/// Gets a view to the texture.
-		/// @return View to the texture.
-		texture_view view() const;
-
-		/// @}
-		/// @name Render target
-		/// @{
-
-		/// Gets a render target spanning the texture.
-		/// @return Render target spanning the texture.
-		operator render_target() const;
-
-		/// Gets a render target spanning the texture.
-		/// @return Render target spanning the texture.
-		render_target target() const;
+		/// Creates a reference to the texture render target.
+		/// @return Reference to the texture render target.
+		operator render_target();
 
 		/// @}
 		/// @name Context
 		/// @{
 
-		/// Gets a reference to the graphics context the texture is on.
-		/// @return Reference to the graphics context the texture is on.
+		/// Gets a reference to the graphics context the texture target is on.
+		/// @return Reference to the graphics context the texture target is on.
 		graphics_context& context() const;
 
 		/// @}
 		/// @name State
 		/// @{
 
-		/// Gets whether the texture is complete.
-		/// @return `true` if the texture is complete, `false` otherwise.
+		/// Gets whether the texture target is in a valid state.
+		/// @return `true` if the texture target is in a valid state, `false` if it is in an invalid state.
+		bool valid() const;
+
+		/// Gets whether the texture target is complete.
+		/// @return `true` if the texture target is complete, `false` otherwise.
 		bool complete() const;
 
-		/// Gets the size of the texture.
-		/// @return Size of the texture.
+		/// Gets the size of the texture target.
+		/// @return Size of the texture target.
 		glm::ivec2 size() const;
 
 		/// @}
 		/// @name Allocation
 		/// @{
 
-		/// Allocates the texture and releases the previously held storage as a new texture.
+		/// Allocates a texture and releases the previously held storage as a new texture.
 		/// @param size Size of the texture.
 		/// @param mipmaps Whether to generate mipmaps for the texture.
 		/// @param format Pixel format of the texture.
@@ -117,11 +109,11 @@ namespace tr
 		/// @name Clearing & setting
 		/// @{
 
-		/// Clears the texture.
+		/// Clears the texture target.
 		/// @param color Color to clear the texture to.
 		void clear(rgbaf color);
 
-		/// Clears a region of the texture.
+		/// Clears a region of the texture target.
 		/// @param region Region of the texture to clear.
 		/// @param color Color to clear the texture region to.
 		void clear_region(rectangle<int> region, rgbaf color);
@@ -132,7 +124,7 @@ namespace tr
 		/// @param region Region from the texture to copy.
 		void copy_region(glm::ivec2 tl, texture_view src, rectangle<int> region);
 
-		/// Sets a region of the texture.
+		/// Sets a region of the texture target.
 		/// @param tl Top-left corner of the copied region within the target texture.
 		/// @param bitmap Bitmap data to copy to the texture.
 		void set_region(glm::ivec2 tl, sub_bitmap bitmap);
@@ -141,12 +133,12 @@ namespace tr
 		/// @name Label
 		/// @{
 
-		/// Gets the debug label of the texture.
-		/// @return Debug label of the texture.
+		/// Gets the debug label of the texture target.
+		/// @return Debug label of the texture target.
 		std::string label() const;
 
-		/// Sets the debug label of the texture.
-		/// @param label Debug label of the texture.
+		/// Sets the debug label of the texture target.
+		/// @param label Debug label of the texture target.
 		void set_label(std::string_view label);
 
 		/// @}

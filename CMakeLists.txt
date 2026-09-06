@@ -122,13 +122,13 @@ if(TR_BUILD_SYSGFX)
 		src/sysgfx/path.cpp
 		src/sysgfx/post_processing_buffer.cpp
 		src/sysgfx/render_target.cpp
-		src/sysgfx/render_texture.cpp
 		src/sysgfx/shader_buffer.cpp
 		src/sysgfx/shader_pipeline.cpp
 		src/sysgfx/shader.cpp
 		src/sysgfx/state_machine.cpp
 		src/sysgfx/sub_bitmap.cpp
 		src/sysgfx/texture.cpp
+		src/sysgfx/texture_target.cpp
 		src/sysgfx/texture_unit.cpp
 		src/sysgfx/texture_view.cpp
 		src/sysgfx/ttfont.cpp
