@@ -56,7 +56,7 @@ namespace tr
 		/// @param context Graphics context to create the renderer on.
 		/// @param scale Initial text drawing scale.
 		/// @param column_limit Initial text column limit.
-		debug_renderer(graphics_context& context, float scale = 1.0f, u8 column_limit = 255);
+		explicit debug_renderer(graphics_context& context, float scale = 1.0f, u8 column_limit = 255);
 
 		/// @}
 		/// @name Context

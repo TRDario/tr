@@ -38,7 +38,7 @@ namespace tr
 
 		/// Constructs an empty buffer.
 		/// @param context Graphics context to create the buffer on.
-		graphics_buffer(graphics_context& context);
+		explicit graphics_buffer(graphics_context& context);
 
 		/// @}
 		/// @name Context

@@ -37,7 +37,7 @@ namespace tr
 
 		/// Constructs an incomplete post-processing buffer.
 		/// @param context Graphics context to create the post-processing buffer on.
-		post_processing_buffer(graphics_context& context);
+		explicit post_processing_buffer(graphics_context& context);
 
 		/// Constructs a complete post-processing buffer.
 		/// @param context Graphics context to create the post-processing buffer on.

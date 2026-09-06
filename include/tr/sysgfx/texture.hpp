@@ -75,7 +75,7 @@ namespace tr
 
 		/// Creates an incomplete texture.
 		/// @param context Graphics context to create the texture on.
-		texture(graphics_context& context);
+		explicit texture(graphics_context& context);
 
 		/// Allocates an uninitialized texture.
 		/// @param context Graphics context to create the texture on.

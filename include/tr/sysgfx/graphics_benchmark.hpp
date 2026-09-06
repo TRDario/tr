@@ -28,7 +28,7 @@ namespace tr
 
 		/// Constructs an empty graphics benchmark.
 		/// @param context Graphics context to create the benchmark on.
-		graphics_benchmark(graphics_context& context);
+		explicit graphics_benchmark(graphics_context& context);
 
 		/// @}
 		/// @name Context

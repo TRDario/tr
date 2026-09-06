@@ -22,7 +22,7 @@ namespace tr
 
 		/// Allocates a texture unit on a graphics context.
 		/// @param context Context the texture unit belongs to.
-		texture_unit(graphics_context& context);
+		explicit texture_unit(graphics_context& context);
 
 		/// @}
 

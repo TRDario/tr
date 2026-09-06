@@ -73,7 +73,7 @@ namespace tr
 
 		/// Constructs an incomplete shader pipeline.
 		/// @param context Graphics context to create the pipeline on.
-		shader_pipeline(graphics_context& context);
+		explicit shader_pipeline(graphics_context& context);
 
 		/// Constructs a complete shader pipeline.
 		/// @param context Graphics context to create the pipeline on.

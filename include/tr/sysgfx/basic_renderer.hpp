@@ -87,7 +87,7 @@ namespace tr
 
 		/// Creates a basic renderer.
 		/// @param context Graphics context to create the renderer on.
-		basic_renderer(graphics_context& context);
+		explicit basic_renderer(graphics_context& context);
 
 		/// @}
 		/// @name Context

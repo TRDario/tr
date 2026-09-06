@@ -25,7 +25,7 @@ namespace tr
 		/// Initializes the circle renderer.
 		/// @param context Graphics context to create the renderer on.
 		/// @param render_scale Rendering scale hint for the renderer.
-		circle_renderer(graphics_context& context, float render_scale = 1.0f);
+		explicit circle_renderer(graphics_context& context, float render_scale = 1.0f);
 
 		/// @}
 		/// @name Context

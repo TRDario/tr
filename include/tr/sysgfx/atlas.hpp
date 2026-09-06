@@ -54,7 +54,7 @@ namespace tr
 
 		/// Creates an empty atlas.
 		/// @param context Graphics context to create the atlas on.
-		dyn_atlas(graphics_context& context);
+		explicit dyn_atlas(graphics_context& context);
 
 		/// Creates an empty atlas with an initial size.
 		/// @param context Graphics context to create the atlas on.

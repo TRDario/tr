@@ -70,7 +70,7 @@ namespace tr
 
 		/// Creates an empty framebuffer.
 		/// @param context Graphics context to create the framebuffer on.
-		framebuffer(graphics_context& context);
+		explicit framebuffer(graphics_context& context);
 
 		/// @}
 		/// @name Context
