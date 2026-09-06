@@ -1,5 +1,7 @@
 var NAVTREEINDEX11 =
 {
+"concepttr_1_1valid__format__string__for.html":[3,0,58],
+"concepttr_1_1volatile__qualified.html":[2,0,0,232],
 "concepttr_1_1volatile__qualified.html":[3,0,59],
 "cursor_8hpp.html":[5,0,0,0,1,8],
 "cursor_8hpp_source.html":[5,0,0,0,1,8],
@@ -247,7 +249,5 @@ var NAVTREEINDEX11 =
 "namespacetr.html#a177767a0e9be56e2cdbf7cd8e1cb36b2":[2,0,0,535],
 "namespacetr.html#a1822833999d4fd3ae28259f4e02d58a0":[2,0,0,273],
 "namespacetr.html#a19f738e135eba68b366cb13b0a337f00":[2,0,0,437],
-"namespacetr.html#a1b6cc024e8dbb3444b2970063ce8d35b":[2,0,0,407],
-"namespacetr.html#a1c2aeb6950c41dd07f40fb173442030b":[2,0,0,333],
-"namespacetr.html#a1dd5d0d7db29b72d5e6685258f63850e":[2,0,0,377]
+"namespacetr.html#a1b6cc024e8dbb3444b2970063ce8d35b":[2,0,0,407]
 };

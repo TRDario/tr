@@ -156,8 +156,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a5d60cff2916a4d208073f6f82b88df39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a view to the window the context is on.  <br /></td></tr>
 <tr class="memitem:a2887b02bea730ebb25c4e7533e80e923" id="r_a2887b02bea730ebb25c4e7533e80e923"><td class="memItemLeft"><a class="el" href="classtr_1_1render__target.html">render_target</a>&#160;</td><td class="memItemRight"><a class="el" href="#a2887b02bea730ebb25c4e7533e80e923">backbuffer</a> () const</td></tr>
 <tr class="memdesc:a2887b02bea730ebb25c4e7533e80e923"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a render target spanning the entire backbuffer.  <br /></td></tr>
-<tr class="memitem:ac1b508f4717cae6253c90747a35c1e65" id="r_ac1b508f4717cae6253c90747a35c1e65"><td class="memItemLeft">const <a class="el" href="classtr_1_1vertex__format.html">vertex_format</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ac1b508f4717cae6253c90747a35c1e65">vertex2_format</a> ()</td></tr>
-<tr class="memdesc:ac1b508f4717cae6253c90747a35c1e65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a commonly used 2D vertex format.  <br /></td></tr>
+<tr class="memitem:a9d64aaf7eb07860032de878d8fc506be" id="r_a9d64aaf7eb07860032de878d8fc506be"><td class="memItemLeft">const <a class="el" href="classtr_1_1vertex__format.html">vertex_format</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a9d64aaf7eb07860032de878d8fc506be">vec2_vertex_format</a> ()</td></tr>
+<tr class="memdesc:a9d64aaf7eb07860032de878d8fc506be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a reference to a vertex format describing an array of vec2.  <br /></td></tr>
+<tr class="memitem:aafbbd64cf0e30d3838f1a9cd65976a2f" id="r_aafbbd64cf0e30d3838f1a9cd65976a2f"><td class="memItemLeft">const <a class="el" href="classtr_1_1vertex__format.html">vertex_format</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#aafbbd64cf0e30d3838f1a9cd65976a2f">basic_2d_vertex_format</a> ()</td></tr>
+<tr class="memdesc:aafbbd64cf0e30d3838f1a9cd65976a2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a reference to a vertex format descibing arrays of vec2 (position), vec2 (uv) and <a class="el" href="structtr_1_1rgba8.html" title="8-bit RGBA color.">rgba8</a> (color).  <br /></td></tr>
 <tr id="pub-methods-4" class="groupHeader"><td colspan="2"><div class="groupHeader">Renderers</div></td></tr>
 <tr class="memitem:ab95972b7dbd48b20f54ea12eb1389b00" id="r_ab95972b7dbd48b20f54ea12eb1389b00"><td class="memItemLeft"><a class="el" href="namespacetr.html#a1eb2948abd308c1bd0658317416db0a7">renderer_id</a>&#160;</td><td class="memItemRight"><a class="el" href="#ab95972b7dbd48b20f54ea12eb1389b00">allocate_renderer_id</a> ()</td></tr>
 <tr class="memdesc:ab95972b7dbd48b20f54ea12eb1389b00"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates a fresh renderer ID.  <br /></td></tr>
@@ -346,14 +348,32 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="ac1b508f4717cae6253c90747a35c1e65" name="ac1b508f4717cae6253c90747a35c1e65"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac1b508f4717cae6253c90747a35c1e65">&#9670;&#160;</a></span>vertex2_format()</h2>
+<a id="a9d64aaf7eb07860032de878d8fc506be" name="a9d64aaf7eb07860032de878d8fc506be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d64aaf7eb07860032de878d8fc506be">&#9670;&#160;</a></span>vec2_vertex_format()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="classtr_1_1vertex__format.html">vertex_format</a> &amp; tr::graphics_context::vertex2_format </td>
+          <td class="memname">const <a class="el" href="classtr_1_1vertex__format.html">vertex_format</a> &amp; tr::graphics_context::vec2_vertex_format </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>Reference to the vec2 vertex format. </dd></dl>
+
+</div>
+</div>
+<a id="aafbbd64cf0e30d3838f1a9cd65976a2f" name="aafbbd64cf0e30d3838f1a9cd65976a2f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aafbbd64cf0e30d3838f1a9cd65976a2f">&#9670;&#160;</a></span>basic_2d_vertex_format()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="classtr_1_1vertex__format.html">vertex_format</a> &amp; tr::graphics_context::basic_2d_vertex_format </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
