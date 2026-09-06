@@ -137,7 +137,10 @@ namespace tr
 		framebuffer m_framebuffer;
 
 		/// Post-processing passthrough vertex shader.
-		vertex_shader m_vertex_shader;
+		vertex_shader m_passthrough_vertex_shader;
+
+		/// Fragment shader used when drawing the post-processing buffer.
+		fragment_shader m_draw_fragment_shader;
 
 		/// Post-processing shader pipeline.
 		shader_pipeline m_shader_pipeline;

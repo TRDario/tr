@@ -9,8 +9,10 @@ namespace tr
 {
 	namespace
 	{
-/// Post processing vertex shader source code.
+/// Post-processing vertex shader source code.
 #include <generated/post_processing_vert.hpp>
+/// Post-processing drawing fragment shader source code.
+#include <generated/post_processing_frag.hpp>
 
 		/// Post processing buffer vertices.
 		constexpr std::array<glm::vec2, 4> post_processing_vertices{{{-1, -1}, {-1, 1}, {1, 1}, {1, -1}}};
@@ -22,25 +24,25 @@ namespace tr
 tr::post_processing_buffer::post_processing_buffer(graphics_context& context)
 	: m_textures{tr::texture{context}, tr::texture{context}}
 	, m_framebuffer{context}
-	, m_vertex_shader{context, post_processing_vert}
+	, m_passthrough_vertex_shader{context, post_processing_vert}
+	, m_draw_fragment_shader{context, post_processing_frag}
 	, m_shader_pipeline{context}
-	, m_vertex_format{context, as_vertex_bindings<vertex_binding_tag<glm::vec2>>}
 	, m_vertex_buffer{context, post_processing_vertices}
 {
 	m_framebuffer.attach(framebuffer::attachment::color0, m_textures[m_source_index]);
-	m_shader_pipeline.set_vertex_shader(m_vertex_shader);
+	m_shader_pipeline.set_vertex_shader(m_passthrough_vertex_shader);
 }
 
 tr::post_processing_buffer::post_processing_buffer(graphics_context& context, glm::ivec2 size, mipmaps mipmaps, pixel_format format)
 	: m_textures{tr::texture{context, size, mipmaps, format}, tr::texture{context, size, mipmaps, format}}
 	, m_framebuffer{context}
-	, m_vertex_shader{context, post_processing_vert}
+	, m_passthrough_vertex_shader{context, post_processing_vert}
+	, m_draw_fragment_shader{context, post_processing_frag}
 	, m_shader_pipeline{context}
-	, m_vertex_format{context, as_vertex_bindings<vertex_binding_tag<glm::vec2>>}
 	, m_vertex_buffer{context, post_processing_vertices}
 {
 	m_framebuffer.attach(framebuffer::attachment::color0, m_textures[m_source_index]);
-	m_shader_pipeline.set_vertex_shader(m_vertex_shader);
+	m_shader_pipeline.set_vertex_shader(m_passthrough_vertex_shader);
 }
 
 //
@@ -118,13 +120,31 @@ void tr::post_processing_buffer::apply(fragment_shader& fragment_shader)
 	m_framebuffer.attach(framebuffer::attachment::color0, m_textures[(m_source_index + 1) % 2]);
 	fragment_shader.set_uniform(0, m_textures[m_source_index]);
 	fragment_shader.set_uniform(1, glm::vec2{size()});
-	m_shader_pipeline.set_shaders(m_vertex_shader, fragment_shader);
+	m_shader_pipeline.set_fragment_shader(fragment_shader);
 	m_source_index = (m_source_index + 1) % 2;
 
 	context.set_render_target(render_target{m_framebuffer, size()});
 	if (context.should_setup_renderer(m_renderer_id)) {
 		context.set_shader_pipeline(m_shader_pipeline);
-		context.set_vertex_format(m_vertex_format);
+		context.set_vertex_format(context.vec2_vertex_format());
+		context.set_vertex_buffer(m_vertex_buffer, 0, 0);
+	}
+	context.draw(primitive::tri_fan, 0, 4);
+}
+
+void tr::post_processing_buffer::draw(const render_target& target)
+{
+	TR_ASSERT(complete(), "Tried to draw an incomplete post-processing buffer");
+
+	graphics_context& context{this->context()};
+
+	m_draw_fragment_shader.set_uniform(0, m_textures[m_source_index]);
+	m_shader_pipeline.set_fragment_shader(m_draw_fragment_shader);
+
+	context.set_render_target(target);
+	if (context.should_setup_renderer(m_renderer_id)) {
+		context.set_shader_pipeline(m_shader_pipeline);
+		context.set_vertex_format(context.vec2_vertex_format());
 		context.set_vertex_buffer(m_vertex_buffer, 0, 0);
 	}
 	context.draw(primitive::tri_fan, 0, 4);

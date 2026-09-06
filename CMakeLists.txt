@@ -94,6 +94,7 @@ if(TR_BUILD_SYSGFX)
 	tr_generate_embeddable_string(tr_sysgfx resources/debug_renderer.frag debug_renderer_frag.hpp debug_renderer_frag)
 	tr_generate_embeddable_binary(tr_sysgfx resources/debug_font.bmp debug_renderer_font.hpp debug_renderer_font)
 	tr_generate_embeddable_string(tr_sysgfx resources/post_processing.vert post_processing_vert.hpp post_processing_vert)
+	tr_generate_embeddable_string(tr_sysgfx resources/post_processing.frag post_processing_frag.hpp post_processing_frag)
 	target_sources(tr_sysgfx PRIVATE
 		src/sysgfx/basic_renderer.cpp
 		src/sysgfx/basic_renderer_drawer.cpp
