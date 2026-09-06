@@ -138,7 +138,7 @@ void tr::basic_renderer::drawer::setup_context(graphics_context& context)
 		context.set_depth_test(false);
 		context.set_shader_pipeline(m_renderer->m_pipeline);
 		context.set_blend_mode(m_renderer->m_last_blend_mode);
-		context.set_vertex_format(context.vertex2_format());
+		context.set_vertex_format(context.basic_2d_vertex_format());
 		context.set_index_buffer(m_renderer->m_ibuffer);
 	}
 }

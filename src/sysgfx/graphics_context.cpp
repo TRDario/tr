@@ -223,19 +223,23 @@ tr::render_target tr::graphics_context::backbuffer() const
 	return render_target{*this};
 }
 
-const tr::vertex_format& tr::graphics_context::vertex2_format()
+const tr::vertex_format& tr::graphics_context::vec2_vertex_format()
 {
-	static constexpr std::array<vertex_binding, 3> bindings{{
-		{not_instanced, as_vertex_attribute_list<glm::vec2>},
-		{not_instanced, as_vertex_attribute_list<glm::vec2>},
-		{not_instanced, as_vertex_attribute_list<rgba8>},
-	}};
-
-	if (!m_vertex2_format.has_value()) {
-		m_vertex2_format.emplace(*this, bindings);
-		m_vertex2_format->set_label("(tr) 2D Vertex Format");
+	if (!m_vec2_vertex_format.has_value()) {
+		m_vec2_vertex_format.emplace(*this, as_vertex_bindings<vertex_binding_tag<glm::vec2>>);
+		m_vec2_vertex_format->set_label("(tr) glm::vec2 Vertex Format");
 	}
-	return *m_vertex2_format;
+	return *m_vec2_vertex_format;
+}
+
+const tr::vertex_format& tr::graphics_context::basic_2d_vertex_format()
+{
+	if (!m_basic_2d_vertex_format.has_value()) {
+		m_basic_2d_vertex_format
+			.emplace(*this, as_vertex_bindings<vertex_binding_tag<glm::vec2>, vertex_binding_tag<glm::vec2>, vertex_binding_tag<rgba8>>);
+		m_basic_2d_vertex_format->set_label("(tr) Basic 2D Vertex Format");
+	}
+	return *m_basic_2d_vertex_format;
 }
 
 //

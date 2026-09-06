@@ -142,9 +142,6 @@ namespace tr
 		/// Post-processing shader pipeline.
 		shader_pipeline m_shader_pipeline;
 
-		/// Post-processing vertex format.
-		vertex_format m_vertex_format;
-
 		/// Vertex buffer holding a rectangle mesh ((-1, -1) to (1, 1)).
 		static_vertex_buffer<glm::vec2> m_vertex_buffer;
 

@@ -157,9 +157,13 @@ namespace tr
 		/// @return Render target spanning the entire backbuffer.
 		render_target backbuffer() const;
 
-		/// Gets a commonly used 2D vertex format.
+		/// Gets a reference to a vertex format describing an array of vec2.
+		/// @return Reference to the vec2 vertex format.
+		const vertex_format& vec2_vertex_format();
+
+		/// Gets a reference to a vertex format descibing arrays of vec2 (position), vec2 (uv) and rgba8 (color).
 		/// @return Reference to the 2D vertex format.
-		const vertex_format& vertex2_format();
+		const vertex_format& basic_2d_vertex_format();
 
 		/// @}
 		/// @name Renderers
@@ -383,8 +387,11 @@ namespace tr
 		/// Tracks which texture units are allocated.
 		std::bitset<80> m_allocated_texture_units;
 
-		/// Commonly used 2D vertex format.
-		std::optional<vertex_format> m_vertex2_format;
+		/// Vertex format description an array of vec2.
+		std::optional<vertex_format> m_vec2_vertex_format;
+
+		/// Vertex format descibing arrays of vec2 (position), vec2 (uv) and rgba8 (color).
+		std::optional<vertex_format> m_basic_2d_vertex_format;
 
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 		/// Debug information about the framebuffer set to the context.
