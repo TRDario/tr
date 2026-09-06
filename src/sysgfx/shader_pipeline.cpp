@@ -61,7 +61,7 @@ void tr::shader_pipeline::set_shaders(const vertex_shader& vertex_shader, const 
 	m_vertex_shader_debug_info.outputs = vertex_shader.outputs();
 	m_fragment_shader_debug_info.id = fragment_shader.id();
 	m_fragment_shader_debug_info.label = fragment_shader.label();
-	m_fragment_shader_debug_info.inputs = fragment_shader.outputs();
+	m_fragment_shader_debug_info.inputs = fragment_shader.inputs();
 	assert_shaders_compatible();
 #endif
 
@@ -99,7 +99,7 @@ void tr::shader_pipeline::set_fragment_shader(const fragment_shader& fragment_sh
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 	m_fragment_shader_debug_info.id = fragment_shader.id();
 	m_fragment_shader_debug_info.label = fragment_shader.label();
-	m_fragment_shader_debug_info.inputs = fragment_shader.outputs();
+	m_fragment_shader_debug_info.inputs = fragment_shader.inputs();
 	assert_shaders_compatible();
 #endif
 
