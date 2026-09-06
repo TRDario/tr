@@ -425,8 +425,15 @@ namespace tr
 		//
 
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
+		/// Whether to check the set index buffer.
+		enum class check_index_buffer : bool
+		{
+			no,
+			yes
+		};
+
 		/// Asserts the validity of objects set to the graphics context.
-		void assert_valid_drawing_state();
+		void assert_valid_drawing_state(check_index_buffer check_index_buffer);
 #endif
 
 		//
