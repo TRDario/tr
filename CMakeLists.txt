@@ -120,6 +120,7 @@ if(TR_BUILD_SYSGFX)
 		src/sysgfx/keyboard.cpp
 		src/sysgfx/main.cpp
 		src/sysgfx/path.cpp
+		src/sysgfx/ping_pong_target.cpp
 		src/sysgfx/post_processing_buffer.cpp
 		src/sysgfx/render_target.cpp
 		src/sysgfx/shader_buffer.cpp
