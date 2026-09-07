@@ -17,7 +17,7 @@ var searchData=
   ['advance_14',['advance',['../structtr_1_1glyph__metrics.html#ae8a12ef7c99768dc2ffb6578424f28e6',1,'tr::glyph_metrics::advance'],['../classtr_1_1rng.html#a9e33554c5fd7ceb223ea4ad0d90ac233',1,'tr::rng::advance()']]],
   ['align_15',['align',['../namespacetr.html#ac49d62ec06251ab54db81b814219c605',1,'tr']]],
   ['alignment_2ehpp_16',['alignment.hpp',['../alignment_8hpp.html',1,'']]],
-  ['allocate_17',['allocate',['../classtr_1_1post__processing__buffer.html#aca9680bda9961223924535fa21f7f227',1,'tr::post_processing_buffer::allocate()'],['../classtr_1_1render__texture.html#aa7496124dfbafbcc76a69824deff6e47',1,'tr::render_texture::allocate()'],['../classtr_1_1texture.html#a7dcd2d5ea57dd7419a0b68c0c3a3880d',1,'tr::texture::allocate()']]],
+  ['allocate_17',['allocate',['../classtr_1_1post__processing__buffer.html#aca9680bda9961223924535fa21f7f227',1,'tr::post_processing_buffer::allocate()'],['../classtr_1_1texture.html#a7dcd2d5ea57dd7419a0b68c0c3a3880d',1,'tr::texture::allocate()'],['../classtr_1_1texture__target.html#af32e9d88266ff60a4be6491bcc958e03',1,'tr::texture_target::allocate()']]],
   ['allocate_5frenderer_5fid_18',['allocate_renderer_id',['../classtr_1_1graphics__context.html#ab95972b7dbd48b20f54ea12eb1389b00',1,'tr::graphics_context']]],
   ['alpha_5fblending_19',['alpha_blending',['../namespacetr.html#a0bbbc8cfc51a0842c925f417813b9250',1,'tr']]],
   ['alpha_5fdst_20',['alpha_dst',['../structtr_1_1blend__mode.html#a556ce62292dcdf0f30845595d99db9e2',1,'tr::blend_mode']]],

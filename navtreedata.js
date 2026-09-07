@@ -91,17 +91,17 @@ var NAVTREEINDEX =
 "classtr_1_1dyn__atlas.html#aa0d274dce1125b3694cfc44e50a27ee0",
 "classtr_1_1graphics__context.html#a23c270da8a15a9ea782723c70eff0404",
 "classtr_1_1omstream.html#a6e735c4a9efbb63833dbb29320a9232d",
-"classtr_1_1scan__state.html#a1d290c5c5270d3b5dcb618fb741620c4",
-"classtr_1_1static__string.html#a0505a26ed6cc510731efe3ae5525e800",
-"classtr_1_1sub__bitmap.html#a3e873a489d49c460340add9f59e4dd2d",
-"classtr_1_1vertex__format.html#a00008fce588af545cf9c7cf725e28da8",
-"concepttr_1_1valid__format__string__for.html",
-"namespacetr.html#a1c2aeb6950c41dd07f40fb173442030b",
-"namespacetr.html#ac1babae6e9367fc90585a8791dadc746abc071608a83eb5c19d8c894baa8baed3",
-"namespacetr_1_1literals_1_1angle__literals.html#a0fd24fea2dcbc59eb096b81fb747e675",
-"structtr_1_1bitmap__atlas.html#abe917ae429948b7cc2c8abd57ccfff5d",
-"structtr_1_1rectangle.html#a612fe7c7e7d1799920d466a84a4082a9",
-"structtr_1_1scan__chord.html#a490cb7e797bd574cbcce8011425395dc"
+"classtr_1_1shader.html#a1dd4f7356d6f10b69ec8a991997ca6cc",
+"classtr_1_1static__string.html#a6a997bcf31509999cff41e3b00597218",
+"classtr_1_1sub__bitmap_1_1iterator.html#adea9e531abda110ba9d3b453c9d9e03a",
+"classtr_1_1vertex__format.html#a07cc01bd28ed9b2fa3ed529c9f0b4add",
+"concepttr_1_1volatile__qualified.html",
+"namespacetr.html#a1ea67ac4cd166f033972b19f49e81323",
+"namespacetr.html#ac1babae6e9367fc90585a8791dadc746ac87d0f704bc006892960956b017dbdc0",
+"namespacetr_1_1literals_1_1angle__literals.html#a47e5023a5af2ba15ec678c8845272974",
+"structtr_1_1blend__mode.html#a23a2d97d67a4194e63822b48bb7b45a0",
+"structtr_1_1rectangle.html#a7a4f04d0affc620375ddb1679e927905",
+"structtr_1_1scan__chord.html#ad6b52c02aee903a6139bc8d90ca0cd22"
 ];
 
 const SYNCONMSG = 'click to disable panel synchronization';
