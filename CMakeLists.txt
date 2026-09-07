@@ -86,26 +86,12 @@ if(TR_BUILD_SYSGFX)
 	tr_target_template(tr_sysgfx)
 
 	message("-- tr: Building system and graphics module")
-	tr_generate_embeddable_string(tr_sysgfx resources/basic_renderer.vert basic_renderer_vert.hpp basic_renderer_vert)
-	tr_generate_embeddable_string(tr_sysgfx resources/basic_renderer.frag basic_renderer_frag.hpp basic_renderer_frag)
-	tr_generate_embeddable_string(tr_sysgfx resources/circle_renderer.vert circle_renderer_vert.hpp circle_renderer_vert)
-	tr_generate_embeddable_string(tr_sysgfx resources/circle_renderer.frag circle_renderer_frag.hpp circle_renderer_frag)
-	tr_generate_embeddable_string(tr_sysgfx resources/debug_renderer.vert debug_renderer_vert.hpp debug_renderer_vert)
-	tr_generate_embeddable_string(tr_sysgfx resources/debug_renderer.frag debug_renderer_frag.hpp debug_renderer_frag)
-	tr_generate_embeddable_binary(tr_sysgfx resources/debug_font.bmp debug_renderer_font.hpp debug_renderer_font)
-	tr_generate_embeddable_string(tr_sysgfx resources/post_processing.vert post_processing_vert.hpp post_processing_vert)
-	tr_generate_embeddable_string(tr_sysgfx resources/post_processing.frag post_processing_frag.hpp post_processing_frag)
 	target_sources(tr_sysgfx PRIVATE
-		src/sysgfx/basic_renderer.cpp
-		src/sysgfx/basic_renderer_drawer.cpp
 		src/sysgfx/bitmap_iterators.cpp
 		src/sysgfx/bitmap.cpp
 		src/sysgfx/bitmap_view.cpp
-		src/sysgfx/circle_renderer.cpp
-		src/sysgfx/circle_renderer_drawer.cpp
 		src/sysgfx/clipboard.cpp
 		src/sysgfx/cursor.cpp
-		src/sysgfx/debug_renderer.cpp
 		src/sysgfx/dialog.cpp
 		src/sysgfx/display.cpp
 		src/sysgfx/event.cpp
@@ -121,7 +107,6 @@ if(TR_BUILD_SYSGFX)
 		src/sysgfx/main.cpp
 		src/sysgfx/path.cpp
 		src/sysgfx/ping_pong_target.cpp
-		src/sysgfx/post_processing_buffer.cpp
 		src/sysgfx/render_target.cpp
 		src/sysgfx/shader_buffer.cpp
 		src/sysgfx/shader_pipeline.cpp
