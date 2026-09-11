@@ -11,14 +11,14 @@
 
 //
 
-tr::audio_source::buffered_stream::buffer::buffer(audio_context& context)
+tr::audio_source::buffered_stream::buffer::buffer(audio_context& context) noexcept
 	: audio_buffer{context}
 {
 }
 
 //
 
-tr::usize tr::audio_source::buffered_stream::buffer::start_offset() const
+tr::usize tr::audio_source::buffered_stream::buffer::start_offset() const noexcept
 {
 	return m_start_offset;
 }
@@ -34,9 +34,9 @@ void tr::audio_source::buffered_stream::buffer::refill_from(audio_stream& source
 
 //
 
-tr::audio_source::buffered_stream::buffered_stream(audio_context& context, std::unique_ptr<audio_stream>&& stream)
+tr::audio_source::buffered_stream::buffered_stream(audio_context& context, std::unique_ptr<audio_stream>&& stream) noexcept
 	: m_stream{std::move(stream)}
-	, m_buffers{context, context, context, context}
+	, m_buffers{buffer{context}, buffer{context}, buffer{context}, buffer{context}}
 {
 }
 
@@ -105,7 +105,7 @@ tr::fsecs tr::audio_source::buffered_stream::buffer_start_offset(unsigned int id
 
 tr::static_vector<unsigned int, 4> tr::audio_source::buffered_stream::try_refill_all()
 {
-	return try_refill(m_buffers | std::views::transform([](buffer& b) { return b.m_handle.get(); }));
+	return try_refill(static_vector<unsigned int, 4>{m_buffers | std::views::transform([](buffer& b) { return b.m_handle.get(); })});
 }
 
 tr::static_vector<unsigned int, 4> tr::audio_source::buffered_stream::try_refill(static_vector<unsigned int, 4> buffers)
@@ -131,7 +131,7 @@ tr::audio_source::audio_source(audio_context& context, int priority)
 	context.m_al_api.generate_sources(context.m_ptr.get(), 1, out_handle(m_handle));
 }
 
-void tr::audio_source::deleter::operator()(unsigned int id) const
+void tr::audio_source::deleter::operator()(unsigned int id) const noexcept
 {
 	context.m_al_api.delete_sources(context.m_ptr.get(), 1, &id);
 }
@@ -155,7 +155,7 @@ std::shared_ptr<tr::audio_source> tr::create_audio_source(audio_context& context
 
 //
 
-tr::audio_context& tr::audio_source::context() const
+tr::audio_context& tr::audio_source::context() const noexcept
 {
 	return m_handle.get_deleter().context;
 }
@@ -205,17 +205,17 @@ void tr::audio_source::clear(const std::lock_guard<std::mutex>& lock)
 
 //
 
-int tr::audio_source::priority() const
+int tr::audio_source::priority() const noexcept
 {
 	return m_priority;
 }
 
-const tr::audio_class_mask& tr::audio_source::class_mask() const
+const tr::audio_class_mask& tr::audio_source::class_mask() const noexcept
 {
 	return m_class_mask;
 }
 
-void tr::audio_source::set_class_mask(const audio_class_mask& mask)
+void tr::audio_source::set_class_mask(const audio_class_mask& mask) noexcept
 {
 	m_class_mask = mask;
 	set_gain(m_gain);
@@ -223,7 +223,7 @@ void tr::audio_source::set_class_mask(const audio_class_mask& mask)
 
 //
 
-float tr::audio_source::pitch() const
+float tr::audio_source::pitch() const noexcept
 {
 	float pitch;
 	audio_context& ctx{context()};
@@ -231,7 +231,7 @@ float tr::audio_source::pitch() const
 	return pitch;
 }
 
-void tr::audio_source::set_pitch(float pitch)
+void tr::audio_source::set_pitch(float pitch) noexcept
 {
 	TR_ASSERT(pitch > 0.0f, "Tried to set audio source pitch to invalid value '{}'.", pitch);
 
@@ -246,12 +246,12 @@ void tr::audio_source::set_pitch(float end_pitch, fsecs time)
 
 //
 
-float tr::audio_source::gain() const
+float tr::audio_source::gain() const noexcept
 {
 	return m_gain;
 }
 
-void tr::audio_source::set_gain(float gain)
+void tr::audio_source::set_gain(float gain) noexcept
 {
 	TR_ASSERT(gain >= 0.0f, "Tried to set audio source gain to invalid value '{}'.", gain);
 
@@ -273,7 +273,7 @@ void tr::audio_source::set_gain(float end_gain, fsecs time)
 
 //
 
-float tr::audio_source::max_distance() const
+float tr::audio_source::max_distance() const noexcept
 {
 	float distance;
 	audio_context& ctx{context()};
@@ -281,7 +281,7 @@ float tr::audio_source::max_distance() const
 	return distance;
 }
 
-void tr::audio_source::set_max_distance(float distance)
+void tr::audio_source::set_max_distance(float distance) noexcept
 {
 	TR_ASSERT(distance >= 0.0f, "Tried to set audio source max distance to invalid value '{}'.", distance);
 
@@ -296,7 +296,7 @@ void tr::audio_source::set_max_distance(float end_distance, fsecs time)
 
 //
 
-float tr::audio_source::rolloff_factor() const
+float tr::audio_source::rolloff_factor() const noexcept
 {
 	float rolloff;
 	audio_context& ctx{context()};
@@ -304,7 +304,7 @@ float tr::audio_source::rolloff_factor() const
 	return rolloff;
 }
 
-void tr::audio_source::set_rolloff_factor(float rolloff)
+void tr::audio_source::set_rolloff_factor(float rolloff) noexcept
 {
 	TR_ASSERT(rolloff >= 0.0f, "Tried to set audio source rolloff factor to invalid value '{}'.", rolloff);
 
@@ -319,7 +319,7 @@ void tr::audio_source::set_rolloff_factor(float end_rolloff, fsecs time)
 
 //
 
-float tr::audio_source::reference_distance() const
+float tr::audio_source::reference_distance() const noexcept
 {
 	float ref_dist;
 	audio_context& ctx{context()};
@@ -327,7 +327,7 @@ float tr::audio_source::reference_distance() const
 	return ref_dist;
 }
 
-void tr::audio_source::set_reference_distance(float distance)
+void tr::audio_source::set_reference_distance(float distance) noexcept
 {
 	TR_ASSERT(distance >= 0.0f, "Tried to set audio source reference distance to invalid value '{}'.", distance);
 
@@ -342,7 +342,7 @@ void tr::audio_source::set_reference_distance(float end_distance, fsecs time)
 
 //
 
-float tr::audio_source::gain_outside_cone() const
+float tr::audio_source::gain_outside_cone() const noexcept
 {
 	float out_gain;
 	audio_context& ctx{context()};
@@ -350,7 +350,7 @@ float tr::audio_source::gain_outside_cone() const
 	return out_gain;
 }
 
-void tr::audio_source::set_gain_outside_cone(float gain)
+void tr::audio_source::set_gain_outside_cone(float gain) noexcept
 {
 	TR_ASSERT(gain >= 0.0f, "Tried to set audio source gain outside cone to invalid value '{}'.", gain);
 
@@ -365,7 +365,7 @@ void tr::audio_source::set_gain_outside_cone(float end_gain, fsecs time)
 
 //
 
-tr::angle tr::audio_source::inner_cone_width() const
+tr::angle tr::audio_source::inner_cone_width() const noexcept
 {
 	float width;
 	audio_context& ctx{context()};
@@ -373,7 +373,7 @@ tr::angle tr::audio_source::inner_cone_width() const
 	return degs(width);
 }
 
-tr::angle tr::audio_source::outer_cone_width() const
+tr::angle tr::audio_source::outer_cone_width() const noexcept
 {
 	float width;
 	audio_context& ctx{context()};
@@ -381,7 +381,7 @@ tr::angle tr::audio_source::outer_cone_width() const
 	return degs(width);
 }
 
-void tr::audio_source::set_cone_widths(angle inner, angle outer)
+void tr::audio_source::set_cone_widths(angle inner, angle outer) noexcept
 {
 	TR_ASSERT(inner >= 0_deg && inner < 360_deg, "Tried to set audio source inner cone width to invalid value '{:d}'.", inner);
 	TR_ASSERT(outer >= 0_deg && outer < 360_deg, "Tried to set audio source outer cone width to invalid value '{:d}'.", outer);
@@ -400,7 +400,7 @@ void tr::audio_source::set_cone_widths(angle inner, angle outer, fsecs time)
 
 //
 
-glm::vec3 tr::audio_source::position() const
+glm::vec3 tr::audio_source::position() const noexcept
 {
 	glm::vec3 pos;
 	audio_context& ctx{context()};
@@ -408,7 +408,7 @@ glm::vec3 tr::audio_source::position() const
 	return pos;
 }
 
-void tr::audio_source::set_position(glm::vec3 pos)
+void tr::audio_source::set_position(glm::vec3 pos) noexcept
 {
 	audio_context& ctx{context()};
 	ctx.m_al_api.set_source_property_fv(ctx.m_ptr.get(), m_handle.get(), AL_POSITION, value_ptr(pos));
@@ -421,7 +421,7 @@ void tr::audio_source::set_position(glm::vec3 end_position, fsecs time)
 
 //
 
-glm::vec3 tr::audio_source::velocity() const
+glm::vec3 tr::audio_source::velocity() const noexcept
 {
 	glm::vec3 vel;
 	audio_context& ctx{context()};
@@ -429,7 +429,7 @@ glm::vec3 tr::audio_source::velocity() const
 	return vel;
 }
 
-void tr::audio_source::set_velocity(glm::vec3 vel)
+void tr::audio_source::set_velocity(glm::vec3 vel) noexcept
 {
 	audio_context& ctx{context()};
 	ctx.m_al_api.set_source_property_fv(ctx.m_ptr.get(), m_handle.get(), AL_VELOCITY, value_ptr(vel));
@@ -442,7 +442,7 @@ void tr::audio_source::set_velocity(glm::vec3 end_velocity, fsecs time)
 
 //
 
-glm::vec3 tr::audio_source::direction() const
+glm::vec3 tr::audio_source::direction() const noexcept
 {
 	glm::vec3 dir;
 	audio_context& ctx{context()};
@@ -450,7 +450,7 @@ glm::vec3 tr::audio_source::direction() const
 	return dir;
 }
 
-void tr::audio_source::set_direction(glm::vec3 dir)
+void tr::audio_source::set_direction(glm::vec3 dir) noexcept
 {
 	audio_context& ctx{context()};
 	ctx.m_al_api.set_source_property_fv(ctx.m_ptr.get(), m_handle.get(), AL_DIRECTION, value_ptr(dir));
@@ -463,7 +463,7 @@ void tr::audio_source::set_direction(glm::vec3 end_direction, fsecs time)
 
 //
 
-enum tr::audio_source::origin tr::audio_source::origin() const
+enum tr::audio_source::origin tr::audio_source::origin() const noexcept
 {
 	ALint origin;
 	audio_context& ctx{context()};
@@ -471,7 +471,7 @@ enum tr::audio_source::origin tr::audio_source::origin() const
 	return static_cast<enum origin>(origin);
 }
 
-void tr::audio_source::set_origin(enum origin type)
+void tr::audio_source::set_origin(enum origin type) noexcept
 {
 	audio_context& ctx{context()};
 	ctx.m_al_api.set_source_property_i(ctx.m_ptr.get(), m_handle.get(), AL_SOURCE_RELATIVE, static_cast<ALint>(type));
@@ -479,7 +479,7 @@ void tr::audio_source::set_origin(enum origin type)
 
 //
 
-enum tr::audio_source::state tr::audio_source::state() const
+enum tr::audio_source::state tr::audio_source::state() const noexcept
 {
 	ALint state;
 	audio_context& ctx{context()};
@@ -520,7 +520,7 @@ void tr::audio_source::play(const std::lock_guard<std::mutex>&)
 	ctx.m_al_api.source_play(ctx.m_ptr.get(), m_handle.get());
 }
 
-void tr::audio_source::pause()
+void tr::audio_source::pause() noexcept
 {
 	audio_context& ctx{context()};
 	ctx.m_al_api.source_pause(ctx.m_ptr.get(), m_handle.get());
@@ -724,13 +724,13 @@ void tr::audio_source::set_loop_points(const std::lock_guard<std::mutex>&, fsecs
 
 //
 
-void tr::audio_source::attach_buffer(audio_buffer& buffer)
+void tr::audio_source::attach_buffer(audio_buffer& buffer) noexcept
 {
 	audio_context& ctx{context()};
 	ctx.m_al_api.set_source_property_i(ctx.m_ptr.get(), m_handle.get(), AL_BUFFER, buffer.m_handle.get());
 }
 
-void tr::audio_source::detach_buffer()
+void tr::audio_source::detach_buffer() noexcept
 {
 	audio_context& ctx{context()};
 	ctx.m_al_api.set_source_property_i(ctx.m_ptr.get(), m_handle.get(), AL_BUFFER, 0);

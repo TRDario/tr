@@ -34,7 +34,7 @@ namespace tr
 
 		/// Compares orientations for equality.
 		/// @return Whether the orientations are identical.
-		friend bool operator==(const orientation&, const orientation&) = default;
+		[[nodiscard]] friend bool operator==(const orientation&, const orientation&) noexcept = default;
 	};
 
 	//
@@ -48,7 +48,7 @@ namespace tr
 
 		/// Creates an audio context initialization error.
 		/// @param device Pointer to the audio device the error occured on.
-		audio_context_init_error(ALCdevice* device);
+		[[nodiscard]] audio_context_init_error(ALCdevice* device) noexcept;
 
 		/// @}
 		/// @name Information
@@ -56,15 +56,15 @@ namespace tr
 
 		/// Gets the name of the error.
 		/// @return `"Audio context initialization error"`.
-		std::string_view name() const override;
+		[[nodiscard]] std::string_view name() const noexcept override;
 
 		/// Gets the description of the error.
 		/// @return Description of the error.
-		std::string_view description() const override;
+		[[nodiscard]] std::string_view description() const noexcept override;
 
 		/// Gets further details about the error.
 		/// @return Always false.
-		std::string_view details() const override;
+		[[nodiscard]] std::string_view details() const noexcept override;
 
 		/// @}
 
@@ -85,7 +85,7 @@ namespace tr
 		/// Creates an audio context on an audio device.
 		/// @param device Reference to the device to create the context on.
 		/// @exception audio_context_init_error If creating the audio context failed.
-		audio_context(audio_device& device);
+		[[nodiscard]] audio_context(audio_device& device);
 
 		/// Audio contexts are not copyable.
 		audio_context(const audio_context&) = delete;
@@ -109,11 +109,11 @@ namespace tr
 
 		/// Gets the master gain.
 		/// @return Master gain factor.
-		float master_gain() const;
+		[[nodiscard]] float master_gain() const noexcept;
 
 		/// Sets the master gain.
 		/// @param gain Master gain factor.
-		void set_master_gain(float gain);
+		void set_master_gain(float gain) noexcept;
 
 		/// @}
 		/// @name Class gain
@@ -124,12 +124,12 @@ namespace tr
 		/// Gets an audio class's gain modifier.
 		/// @param id Class ID to get the gain modifier of.
 		/// @return Gain modifier of class `id`.
-		float class_gain(audio_class_id id) const;
+		[[nodiscard]] float class_gain(audio_class_id id) const noexcept;
 
 		/// Sets an audio class's gain modifier.
 		/// @param id Class ID to set the gain modifier of.
 		/// @param gain Gain modifier.
-		void set_class_gain(audio_class_id id, float gain);
+		void set_class_gain(audio_class_id id, float gain) noexcept;
 
 		/// @}
 		/// @name Listener position
@@ -137,11 +137,11 @@ namespace tr
 
 		/// Gets the position of the listener.
 		/// @return Position of the listener.
-		glm::vec3 listener_position() const;
+		[[nodiscard]] glm::vec3 listener_position() const noexcept;
 
 		/// Sets the position of the listener.
 		/// @param position Position of the listener.
-		void set_listener_position(glm::vec3 position);
+		void set_listener_position(glm::vec3 position) noexcept;
 
 		/// @}
 		/// @name Listener velocity
@@ -149,11 +149,11 @@ namespace tr
 
 		/// Gets the velocity of the listener.
 		/// @return Velocity vector of the listener.
-		glm::vec3 listener_velocity() const;
+		[[nodiscard]] glm::vec3 listener_velocity() const noexcept;
 
 		/// Sets the velocity of the listener.
 		/// @param velocity Velocity vector of the listener.
-		void set_listener_velocity(glm::vec3 velocity);
+		void set_listener_velocity(glm::vec3 velocity) noexcept;
 
 		/// @}
 		/// @name Listener orientation
@@ -161,11 +161,11 @@ namespace tr
 
 		/// Gets the orientation of the listener.
 		/// @return Orientation of the listener.
-		orientation listener_orientation() const;
+		[[nodiscard]] orientation listener_orientation() const noexcept;
 
 		/// Sets the orientation of the listener.
 		/// @param orientation Orientation of the listener.
-		void set_listener_orientation(orientation orientation);
+		void set_listener_orientation(orientation orientation) noexcept;
 
 		/// @}
 
@@ -175,7 +175,7 @@ namespace tr
 		{
 			/// Destroys the audio context.
 			/// @param context OpenAL context.
-			static void operator()(ALCcontext* context);
+			static void operator()(ALCcontext* context) noexcept;
 		};
 
 		//
@@ -211,7 +211,7 @@ namespace tr
 
 		/// Function used by the audio context thread.
 		/// @param stoken Thread stop token.
-		void thread_loop(std::stop_token stoken);
+		void thread_loop(std::stop_token stoken) noexcept;
 
 		//
 

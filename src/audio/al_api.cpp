@@ -10,11 +10,11 @@ namespace tr
 {
 	namespace
 	{
-		// Hack needed to overload loaded_gl_function_proxy conversion operator.
+		// Hack needed to overload loaded_al_function_proxy conversion operator.
 		/// @tparam Return Function return type.
 		/// @tparam Args Function argument types.
 		template <typename Return, typename... Args>
-		using function_pointer = Return (*)(Args...);
+		using function_pointer = Return (*)(Args...) noexcept;
 
 		//
 
@@ -30,7 +30,7 @@ namespace tr
 			/// @tparam Return Function return type.
 			/// @tparam Args Function argument types.
 			template <typename Return, typename... Args>
-			operator function_pointer<Return, Args...>()
+			[[nodiscard]] operator function_pointer<Return, Args...>() noexcept
 			{
 				return reinterpret_cast<function_pointer<Return, Args...>>(ptr);
 			}
@@ -42,14 +42,14 @@ namespace tr
 		/// @param device Device to get the function address from.
 		/// @param name Function name.
 		/// @return OpenAL function proxy.
-		loaded_al_function_proxy al_function_address(ALCdevice* device, const char* name)
+		[[nodiscard]] loaded_al_function_proxy al_function_address(ALCdevice* device, const char* name) noexcept
 		{
 			return {alcGetProcAddress(device, name)};
 		}
 	} // namespace
 } // namespace tr
 
-tr::al_api::al_api(ALCdevice* device)
+tr::al_api::al_api(ALCdevice* device) noexcept
 	: delete_buffers{al_function_address(device, "alDeleteBuffersDirect")}
 	, delete_sources{al_function_address(device, "alDeleteSourcesDirect")}
 	, generate_buffers{al_function_address(device, "alGenBuffersDirect")}

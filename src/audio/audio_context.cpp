@@ -11,31 +11,38 @@
 
 //
 
-tr::audio_context_init_error::audio_context_init_error(ALCdevice* device)
+tr::audio_context_init_error::audio_context_init_error(ALCdevice* device) noexcept
 	: m_description{alcGetString(device, alcGetError(device))}
 {
 }
 
 //
 
-std::string_view tr::audio_context_init_error::name() const
+std::string_view tr::audio_context_init_error::name() const noexcept
 {
 	return "Audio context initialization error";
 }
 
-std::string_view tr::audio_context_init_error::description() const
+std::string_view tr::audio_context_init_error::description() const noexcept
 {
 	return m_description;
 }
 
-std::string_view tr::audio_context_init_error::details() const
+std::string_view tr::audio_context_init_error::details() const noexcept
 {
 	return {};
 }
 
 //
 
-constexpr std::array<ALCint, 3> audio_context_attributes{ALC_HRTF_SOFT, ALC_FALSE, 0};
+namespace tr
+{
+	namespace
+	{
+		/// Attributes of audio contexts.
+		constexpr std::array<ALCint, 3> audio_context_attributes{ALC_HRTF_SOFT, ALC_FALSE, 0};
+	} // namespace
+} // namespace tr
 
 tr::audio_context::audio_context(audio_device& device)
 	: m_ptr{alcCreateContext(device.m_ptr.get(), audio_context_attributes.data())}
@@ -58,21 +65,21 @@ tr::audio_context::audio_context(audio_device& device)
 	}
 }
 
-void tr::audio_context::deleter::operator()(ALCcontext* context)
+void tr::audio_context::deleter::operator()(ALCcontext* context) noexcept
 {
 	alcDestroyContext(context);
 }
 
 //
 
-float tr::audio_context::master_gain() const
+float tr::audio_context::master_gain() const noexcept
 {
 	float gain;
 	m_al_api.get_listener_property_f(m_ptr.get(), AL_GAIN, &gain);
 	return gain;
 }
 
-void tr::audio_context::set_master_gain(float gain)
+void tr::audio_context::set_master_gain(float gain) noexcept
 {
 	TR_ASSERT(gain >= 0.0f, "Tried to set master gain to {}, while minimum allowed is 0.", gain);
 
@@ -81,12 +88,12 @@ void tr::audio_context::set_master_gain(float gain)
 
 //
 
-float tr::audio_context::class_gain(audio_class_id id) const
+float tr::audio_context::class_gain(audio_class_id id) const noexcept
 {
 	return m_class_gains[id];
 }
 
-void tr::audio_context::set_class_gain(audio_class_id id, float gain)
+void tr::audio_context::set_class_gain(audio_class_id id, float gain) noexcept
 {
 	m_class_gains[id] = gain;
 	for (audio_source& source : deref(m_sources)) {
@@ -98,49 +105,49 @@ void tr::audio_context::set_class_gain(audio_class_id id, float gain)
 
 //
 
-glm::vec3 tr::audio_context::listener_position() const
+glm::vec3 tr::audio_context::listener_position() const noexcept
 {
 	glm::vec3 position;
 	m_al_api.get_listener_property_fv(m_ptr.get(), AL_POSITION, glm::value_ptr(position));
 	return position;
 }
 
-void tr::audio_context::set_listener_position(glm::vec3 position)
+void tr::audio_context::set_listener_position(glm::vec3 position) noexcept
 {
 	m_al_api.set_listener_property_fv(m_ptr.get(), AL_POSITION, glm::value_ptr(position));
 }
 
 //
 
-glm::vec3 tr::audio_context::listener_velocity() const
+glm::vec3 tr::audio_context::listener_velocity() const noexcept
 {
 	glm::vec3 velocity;
 	m_al_api.get_listener_property_fv(m_ptr.get(), AL_VELOCITY, glm::value_ptr(velocity));
 	return velocity;
 }
 
-void tr::audio_context::set_listener_velocity(glm::vec3 velocity)
+void tr::audio_context::set_listener_velocity(glm::vec3 velocity) noexcept
 {
 	m_al_api.set_listener_property_fv(m_ptr.get(), AL_VELOCITY, glm::value_ptr(velocity));
 }
 
 //
 
-tr::orientation tr::audio_context::listener_orientation() const
+tr::orientation tr::audio_context::listener_orientation() const noexcept
 {
 	orientation orientation;
 	m_al_api.get_listener_property_fv(m_ptr.get(), AL_ORIENTATION, &orientation.view.x);
 	return orientation;
 }
 
-void tr::audio_context::set_listener_orientation(orientation orientation)
+void tr::audio_context::set_listener_orientation(orientation orientation) noexcept
 {
 	m_al_api.set_listener_property_fv(m_ptr.get(), AL_ORIENTATION, &orientation.view.x);
 }
 
 //
 
-void tr::audio_context::thread_loop(std::stop_token stoken)
+void tr::audio_context::thread_loop(std::stop_token stoken) noexcept
 {
 	while (!stoken.stop_requested()) {
 		try {

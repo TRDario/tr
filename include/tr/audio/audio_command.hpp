@@ -22,7 +22,7 @@ namespace tr
 	{
 	  public:
 		/// Method signature used by the command.
-		using method_type = void (audio_source::*)(First, Rest...);
+		using method_type = void (audio_source::*)(First, Rest...) noexcept;
 
 		/// command<float>::value_type = float, command<float, float>::value_type = std::tuple<float, float>.
 		using value_type = std::conditional_t<sizeof...(Rest), std::tuple<First, Rest...>, First>;
@@ -32,6 +32,7 @@ namespace tr
 		{
 			/// The command is still ongoing.
 			ongoing,
+
 			/// The command is done.
 			done
 		};
@@ -45,7 +46,8 @@ namespace tr
 		/// @param begin Initial value of the property being set.
 		/// @param end Final value of the property being set.
 		/// @param length Length of the command.
-		audio_command(audio_source& source, method_type method, const value_type& begin, const value_type& end, fsecs length);
+		[[nodiscard]] audio_command(audio_source& source, method_type method, const value_type& begin, const value_type& end,
+									fsecs length) noexcept;
 
 		/// @}
 		/// @name Source
@@ -53,7 +55,7 @@ namespace tr
 
 		/// Gets the source being commanded.
 		/// @return Reference to the source being commanded.
-		audio_source& source() const;
+		[[nodiscard]] audio_source& source() const noexcept;
 
 		/// @}
 		/// @name Execution
@@ -61,7 +63,7 @@ namespace tr
 
 		/// Executes the command.
 		/// @return Status of the command after execution.
-		status execute();
+		[[nodiscard]] status execute() noexcept;
 
 		/// @}
 

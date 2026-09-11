@@ -7,17 +7,17 @@
 
 //
 
-std::string_view tr::audio_device_open_error::name() const
+std::string_view tr::audio_device_open_error::name() const noexcept
 {
 	return "Audio device opening error";
 }
 
-std::string_view tr::audio_device_open_error::description() const
+std::string_view tr::audio_device_open_error::description() const noexcept
 {
 	return {};
 }
 
-std::string_view tr::audio_device_open_error::details() const
+std::string_view tr::audio_device_open_error::details() const noexcept
 {
 	return {};
 }
@@ -28,11 +28,11 @@ tr::audio_device::audio_device(zstring_view name)
 	: m_ptr{alcOpenDevice(name.c_str())}
 {
 	if (m_ptr == nullptr) {
-		// THROW EXCEPTION
+		throw audio_device_open_error{};
 	}
 }
 
-void tr::audio_device::deleter::operator()(ALCdevice* device)
+void tr::audio_device::deleter::operator()(ALCdevice* device) noexcept
 {
 #ifdef TR_ENABLE_ASSERTS
 	TR_ASSERT(alcCloseDevice(device), "Tried to close audio device '{}' which still has active contexts.",
@@ -44,7 +44,7 @@ void tr::audio_device::deleter::operator()(ALCdevice* device)
 
 //
 
-tr::zstring_view tr::audio_device::name() const
+tr::zstring_view tr::audio_device::name() const noexcept
 {
 	return alcGetString(m_ptr.get(), ALC_DEVICE_SPECIFIER);
 }

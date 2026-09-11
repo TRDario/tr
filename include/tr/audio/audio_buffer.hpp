@@ -20,6 +20,7 @@ namespace tr
 	{
 		/// 16-bit mono audio.
 		mono16 = 0x1101,
+
 		/// 16-bit stereo audio.
 		stereo16 = 0x1103
 	};
@@ -54,23 +55,23 @@ namespace tr
 
 		/// Gets the context of the audio buffer.
 		/// @return Reference to the audio context.
-		audio_context& context() const;
+		[[nodiscard]] audio_context& context() const noexcept;
 
 		/// Gets the size of the buffer's storage.
 		/// @return Size of the buffer's storage in samples.
-		usize size() const;
+		[[nodiscard]] usize size() const noexcept;
 
 		/// Gets the length of the buffer's audio.
 		/// @return Length of the buffer's audio in seconds.
-		fsecs length() const;
+		[[nodiscard]] fsecs length() const noexcept;
 
 		/// Gets the sample rate of the buffer's audio.
 		/// @return Sample rate of the buffer's audio.
-		int sample_rate() const;
+		[[nodiscard]] int sample_rate() const noexcept;
 
 		/// Gets the number of channels in the buffer's audio.
 		/// @return Number of channels in the buffer's audio.
-		int channels() const;
+		[[nodiscard]] int channels() const noexcept;
 
 		/// @}
 		/// @name Setters
@@ -90,7 +91,7 @@ namespace tr
 
 			/// Destroys the audio buffer.
 			/// @param id OpenAL audio buffer ID.
-			void operator()(unsigned int id) const;
+			void operator()(unsigned int id) const noexcept;
 		};
 
 		//
@@ -101,18 +102,18 @@ namespace tr
 		//
 
 		// Constructs an empty audio buffer.
-		audio_buffer(audio_context& context);
+		[[nodiscard]] audio_buffer(audio_context& context);
 
 		//
 
 		/// Gets the loop points of the buffer.
 		/// @return Pair containing the start and end points of the buffer.
-		std::pair<fsecs, fsecs> loop_points() const;
+		[[nodiscard]] std::pair<fsecs, fsecs> loop_points() const noexcept;
 
 		/// Sets the loop points of the buffer.
 		/// @param start_point Starting loop point sample.
 		/// @param end_point Ending loop point sample.
-		void set_loop_points(fsecs start_point, fsecs end_point);
+		void set_loop_points(fsecs start_point, fsecs end_point) noexcept;
 
 		//
 
@@ -129,7 +130,7 @@ namespace tr
 	/// Creates a shared audio buffer pointer.
 	/// @param context Audio context to create the buffer on.
 	/// @return Shared pointer to a new audio buffer.
-	std::shared_ptr<audio_buffer> create_audio_buffer(audio_context& context);
+	[[nodiscard]] std::shared_ptr<audio_buffer> create_audio_buffer(audio_context& context);
 
 	/// Creates a shared audio buffer pointer with initial data.
 	/// @param context Audio context to create the buffer on.
@@ -137,15 +138,15 @@ namespace tr
 	/// @param format Format of the audio data.
 	/// @param frequency Frequency of the audio data.
 	/// @return Shared pointer to a new audio buffer.
-	std::shared_ptr<audio_buffer> create_audio_buffer(audio_context& context, std::span<const i16> data, audio_format format,
-													  int frequency);
+	[[nodiscard]] std::shared_ptr<audio_buffer> create_audio_buffer(audio_context& context, std::span<const i16> data, audio_format format,
+																	int frequency);
 
 	/// Loads audio data from file into a buffer.
 	/// @param context Audio context to create the buffer on.
 	/// @param path Path to the audio file. open_audio_file is used to open the files.
 	/// @exception audio_file_open_error If loading the audio file failed.
 	/// @return Shared pointer to a new audio buffer.
-	std::shared_ptr<audio_buffer> load_audio_file(audio_context& context, const std::filesystem::path& path);
+	[[nodiscard]] std::shared_ptr<audio_buffer> load_audio_file(audio_context& context, const std::filesystem::path& path);
 
 	/// @}
 } // namespace tr

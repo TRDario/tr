@@ -7,22 +7,22 @@
 
 //
 
-tr::audio_file_open_error::audio_file_open_error(std::string&& description)
+tr::audio_file_open_error::audio_file_open_error(std::string&& description) noexcept
 	: m_description{std::move(description)}
 {
 }
 
-std::string_view tr::audio_file_open_error::name() const
+std::string_view tr::audio_file_open_error::name() const noexcept
 {
 	return "Audio file opening error";
 }
 
-std::string_view tr::audio_file_open_error::description() const
+std::string_view tr::audio_file_open_error::description() const noexcept
 {
 	return m_description;
 }
 
-std::string_view tr::audio_file_open_error::details() const
+std::string_view tr::audio_file_open_error::details() const noexcept
 {
 	return {};
 }
@@ -42,10 +42,10 @@ namespace tr
 
 			/// Loads an Ogg stream from file.
 			/// @param path Path to the Ogg file.
-			ogg_audio_stream(const std::filesystem::path& path);
+			[[nodiscard]] ogg_audio_stream(const std::filesystem::path& path);
 
 			/// Closes the Ogg stream.
-			~ogg_audio_stream();
+			~ogg_audio_stream() noexcept;
 
 			/// @}
 			/// @name Information
@@ -123,7 +123,7 @@ tr::ogg_audio_stream::ogg_audio_stream(const std::filesystem::path& path)
 	}
 }
 
-tr::ogg_audio_stream::~ogg_audio_stream()
+tr::ogg_audio_stream::~ogg_audio_stream() noexcept
 {
 	ov_clear(&m_file);
 }
@@ -170,7 +170,7 @@ void tr::ogg_audio_stream::raw_read(std::span<tr::i16> buffer)
 
 //
 
-tr::audio_stream::audio_stream()
+tr::audio_stream::audio_stream() noexcept
 	: m_looping{false}
 	, m_loop_start{0}
 	, m_loop_end{unknown_loop_point}

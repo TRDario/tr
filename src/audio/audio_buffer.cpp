@@ -16,7 +16,7 @@ tr::audio_buffer::audio_buffer(audio_context& context)
 	context.m_al_api.generate_buffers(context.m_ptr.get(), 1, out_handle(m_handle));
 }
 
-void tr::audio_buffer::deleter::operator()(unsigned int id) const
+void tr::audio_buffer::deleter::operator()(unsigned int id) const noexcept
 {
 	context.m_al_api.delete_buffers(context.m_ptr.get(), 1, &id);
 }
@@ -47,14 +47,14 @@ std::shared_ptr<tr::audio_buffer> tr::load_audio_file(audio_context& context, co
 
 //
 
-tr::audio_context& tr::audio_buffer::context() const
+tr::audio_context& tr::audio_buffer::context() const noexcept
 {
 	return m_handle.get_deleter().context;
 }
 
 //
 
-tr::usize tr::audio_buffer::size() const
+tr::usize tr::audio_buffer::size() const noexcept
 {
 	ALint size;
 	audio_context& ctx{context()};
@@ -62,13 +62,13 @@ tr::usize tr::audio_buffer::size() const
 	return size / sizeof(i16);
 }
 
-tr::fsecs tr::audio_buffer::length() const
+tr::fsecs tr::audio_buffer::length() const noexcept
 {
 	const int sample_rate{this->sample_rate()};
 	return sample_rate == 0 ? fsecs::zero() : fsecs{static_cast<double>(size()) / sample_rate / channels()};
 }
 
-int tr::audio_buffer::sample_rate() const
+int tr::audio_buffer::sample_rate() const noexcept
 {
 	ALint sample_rate;
 	audio_context& ctx{context()};
@@ -76,7 +76,7 @@ int tr::audio_buffer::sample_rate() const
 	return sample_rate;
 }
 
-int tr::audio_buffer::channels() const
+int tr::audio_buffer::channels() const noexcept
 {
 	ALint channels;
 	audio_context& ctx{context()};
@@ -98,7 +98,7 @@ void tr::audio_buffer::set(std::span<const i16> data, audio_format format, int f
 
 //
 
-std::pair<tr::fsecs, tr::fsecs> tr::audio_buffer::loop_points() const
+std::pair<tr::fsecs, tr::fsecs> tr::audio_buffer::loop_points() const noexcept
 {
 	const int sample_rate{this->sample_rate()};
 	const int channels{this->channels()};
@@ -111,7 +111,7 @@ std::pair<tr::fsecs, tr::fsecs> tr::audio_buffer::loop_points() const
 	return {fsecs{loop_point_offsets[0] / samples_per_second}, fsecs{loop_point_offsets[1] / samples_per_second}};
 }
 
-void tr::audio_buffer::set_loop_points(fsecs start_point, fsecs end_point)
+void tr::audio_buffer::set_loop_points(fsecs start_point, fsecs end_point) noexcept
 {
 	const int sample_rate{this->sample_rate()};
 	const int channels{this->channels()};

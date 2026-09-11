@@ -19,15 +19,15 @@ namespace tr
 
 		/// Gets the name of the error.
 		/// @return `"Audio device opening error"`.
-		std::string_view name() const override;
+		[[nodiscard]] std::string_view name() const noexcept override;
 
 		/// Gets the description of the error.
 		/// @return Always empty.
-		std::string_view description() const override;
+		[[nodiscard]] std::string_view description() const noexcept override;
 
 		/// Gets further details about the error.
 		/// @return Always empty.
-		std::string_view details() const override;
+		[[nodiscard]] std::string_view details() const noexcept override;
 
 		/// @}
 	};
@@ -45,7 +45,7 @@ namespace tr
 		/// @details A list of valid device names can be gotten through available_audio_devices.
 		/// @param name Name of the audio device to open. An empty string view (the default) will choose the default audio device.
 		/// @exception audio_device_open_error If opening the audio device failed.
-		audio_device(zstring_view name = {});
+		[[nodiscard]] audio_device(zstring_view name = {});
 
 		/// @}
 		/// @name Information
@@ -53,7 +53,7 @@ namespace tr
 
 		/// Gets the name of the audio device.
 		/// @return Name of the audio device.
-		tr::zstring_view name() const;
+		[[nodiscard]] tr::zstring_view name() const noexcept;
 
 		/// @}
 
@@ -63,7 +63,7 @@ namespace tr
 		{
 			/// Closes the audio device.
 			/// @param device OpenAL device.
-			static void operator()(ALCdevice* device);
+			static void operator()(ALCdevice* device) noexcept;
 		};
 
 		//

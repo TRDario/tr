@@ -38,7 +38,7 @@ namespace tr
 
 		/// Constructs an iterator.
 		/// @param view NUL-terminated string view to an audio device name.
-		audio_device_list_view_iterator(zstring_view view);
+		[[nodiscard]] audio_device_list_view_iterator(zstring_view view) noexcept;
 
 		/// @}
 		/// @name Comparison operators
@@ -47,28 +47,28 @@ namespace tr
 		/// Compares two audio device list iterators.
 		/// @param lhs, rhs Iterators to compare.
 		/// @return Ordering of the iterators.
-		friend std::strong_ordering operator<=>(audio_device_list_view_iterator lhs, audio_device_list_view_iterator rhs);
+		friend std::strong_ordering operator<=>(audio_device_list_view_iterator lhs, audio_device_list_view_iterator rhs) noexcept;
 
 		/// Compares two audio device list iterators for equality.
 		/// @param lhs, rhs Iterators to compare.
 		/// @return Whether the iterators are equal.
-		friend bool operator==(audio_device_list_view_iterator lhs, audio_device_list_view_iterator rhs);
+		friend bool operator==(audio_device_list_view_iterator lhs, audio_device_list_view_iterator rhs) noexcept;
 
 		/// @}
 		/// @name Other operators
 		/// @{
 
 		/// Dereferences the iterator.
-		value_type operator*() const;
+		[[nodiscard]] value_type operator*() const noexcept;
 
 		/// Dereferences the iterator.
-		const_pointer operator->() const;
+		[[nodiscard]] const_pointer operator->() const noexcept;
 
 		/// Pre-increments the iterator.
-		audio_device_list_view_iterator& operator++();
+		audio_device_list_view_iterator& operator++() noexcept;
 
 		/// Post-increments the iterator.
-		audio_device_list_view_iterator operator++(int);
+		audio_device_list_view_iterator operator++(int) noexcept;
 
 		/// @}
 
@@ -82,7 +82,7 @@ namespace tr
 	{
 		/// Compares an audio device list iterator to an end sentinel.
 		/// @return `true` if the iterator is at the end of the range, false otherwise.
-		friend bool operator==(audio_device_list_view_iterator it, audio_device_list_view_end_sentinel);
+		friend bool operator==(audio_device_list_view_iterator it, audio_device_list_view_end_sentinel) noexcept;
 	};
 
 	/// View holding available audio device names.
@@ -93,7 +93,7 @@ namespace tr
 
 	/// Gets a view to the list of available audio devices.
 	/// @return List of valid audio device names.
-	audio_device_list_view available_audio_devices();
+	[[nodiscard]] audio_device_list_view available_audio_devices() noexcept;
 
 	/// @}
 } // namespace tr

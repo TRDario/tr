@@ -8,7 +8,7 @@
 
 template <typename First, typename... Rest>
 tr::audio_command<First, Rest...>::audio_command(audio_source& source, method_type method, const value_type& begin, const value_type& end,
-												 fsecs length)
+												 fsecs length) noexcept
 	: m_source{source}
 	, m_method{method}
 	, m_begin{begin}
@@ -22,7 +22,7 @@ tr::audio_command<First, Rest...>::audio_command(audio_source& source, method_ty
 //
 
 template <typename First, typename... Rest>
-tr::audio_source& tr::audio_command<First, Rest...>::source() const
+tr::audio_source& tr::audio_command<First, Rest...>::source() const noexcept
 {
 	return m_source;
 }
@@ -38,14 +38,15 @@ namespace tr
 	/// @param ratio Interpolation factor.
 	/// @return `begin + ratio * (end − begin)`.
 	template <typename... Ts, usize... Is>
-	std::tuple<Ts...> lerp_tuple(const std::tuple<Ts...>& begin, const std::tuple<Ts...>& end, float ratio, std::index_sequence<Is...>)
+	[[nodiscard]] std::tuple<Ts...> lerp_tuple(const std::tuple<Ts...>& begin, const std::tuple<Ts...>& end, float ratio,
+											   std::index_sequence<Is...>) noexcept
 	{
 		return {tr::lerp(std::get<Is>(begin), std::get<Is>(end), ratio)...};
 	}
 } // namespace tr
 
 template <typename First, typename... Rest>
-tr::audio_command<First, Rest...>::status tr::audio_command<First, Rest...>::execute()
+tr::audio_command<First, Rest...>::status tr::audio_command<First, Rest...>::execute() noexcept
 {
 	const std::chrono::steady_clock::time_point now{std::chrono::steady_clock::now()};
 	m_elapsed = std::min(m_elapsed + now - m_last_update, m_length);

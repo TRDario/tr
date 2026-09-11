@@ -17,7 +17,7 @@ namespace tr
 
 		/// Constructs an exception.
 		/// @param description Description of the error.
-		audio_file_open_error(std::string&& description);
+		[[nodiscard]] audio_file_open_error(std::string&& description) noexcept;
 
 		/// @}
 		/// @name Information
@@ -25,15 +25,15 @@ namespace tr
 
 		/// Gets the name of the error.
 		/// @return "Audio file opening error".
-		std::string_view name() const override;
+		[[nodiscard]] std::string_view name() const noexcept override;
 
 		/// Gets the description of the error.
 		/// @return Description of the error.
-		std::string_view description() const override;
+		[[nodiscard]] std::string_view description() const noexcept override;
 
 		/// Gets further details about the error.
 		/// @return Always empty.
-		std::string_view details() const override;
+		[[nodiscard]] std::string_view details() const noexcept override;
 
 		/// @}
 
@@ -50,10 +50,10 @@ namespace tr
 		/// @{
 
 		/// Initializes an audio stream.
-		audio_stream();
+		[[nodiscard]] audio_stream() noexcept;
 
 		/// Destroys the audio stream.
-		virtual ~audio_stream() = default;
+		virtual ~audio_stream() noexcept = default;
 
 		/// @}
 		/// @name Information
@@ -61,15 +61,15 @@ namespace tr
 
 		/// Gets the length of the stream.
 		/// @return Number of samples in the stream.
-		virtual usize length() const = 0;
+		[[nodiscard]] virtual usize length() const = 0;
 
 		/// Gets the number of channels in the stream.
 		/// @return Number of audio channels in the stream.
-		virtual int channels() const = 0;
+		[[nodiscard]] virtual int channels() const = 0;
 
 		/// Gets the sample rate of the stream.
 		/// @return Sample rate of the stream.
-		virtual int sample_rate() const = 0;
+		[[nodiscard]] virtual int sample_rate() const = 0;
 
 		/// @}
 		/// @name IO
@@ -77,7 +77,7 @@ namespace tr
 
 		/// Gets the current offset within the stream.
 		/// @return Offset sample within the stream.
-		virtual usize tell() const = 0;
+		[[nodiscard]] virtual usize tell() const = 0;
 
 		/// Seeks to an offset relative to the beginning.
 		/// @param where Offset sample within the stream.
@@ -94,7 +94,7 @@ namespace tr
 
 		/// Gets whether the stream is looping.
 		/// @return `true` if the stream is looping, `false` otherwise.
-		bool looping() const;
+		[[nodiscard]] bool looping() const;
 
 		/// Sets whether the stream is looping.
 		/// @param looping `true` if the stream should loop, `false` otherwise.
@@ -102,7 +102,7 @@ namespace tr
 
 		/// Gets the loop start of the stream.
 		/// @return Starting loop sample of the stream.
-		usize loop_start() const;
+		[[nodiscard]] usize loop_start() const;
 
 		/// Sets the loop start of the stream.
 		/// @param loop_start Starting loop sample of the stream.
@@ -110,7 +110,7 @@ namespace tr
 
 		/// Gets the loop end of the stream.
 		/// @return Ending loop sample of the stream.
-		usize loop_end() const;
+		[[nodiscard]] usize loop_end() const;
 
 		/// Sets the loop end of the stream.
 		/// @param loop_end Ending loop sample of the stream (will be clamped to the length of the stream).
@@ -151,7 +151,7 @@ namespace tr
 	/// @param path Path to the audio file.
 	/// @exception audio_file_open_error If opening the file failed.
 	/// @return Audio file stream.
-	std::unique_ptr<audio_stream> open_audio_file(const std::filesystem::path& path);
+	[[nodiscard]] std::unique_ptr<audio_stream> open_audio_file(const std::filesystem::path& path);
 
 	/// @}
 } // namespace tr
