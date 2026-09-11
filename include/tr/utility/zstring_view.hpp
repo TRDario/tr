@@ -52,7 +52,7 @@ namespace tr
 			/// Compares the iterator to an end sentinel.
 			/// @param rhs End sentinel.
 			/// @return `true` if the iterator is pointing to the end of the string, `false` otherwise.
-			constexpr bool operator==(end_sentinel rhs) const;
+			[[nodiscard]] constexpr bool operator==(end_sentinel rhs) const noexcept;
 		};
 
 		/// Constant iterator type used by the string.
@@ -62,25 +62,25 @@ namespace tr
 		/// @{
 
 		/// Constructs an empty string view.
-		constexpr basic_zstring_view() = default;
+		[[nodiscard]] constexpr basic_zstring_view() noexcept = default;
 
 		/// Constructs a string view from a NUL-terminated string pointer.
 		/// @param ptr Pointer to a NUL-terminated string.
-		constexpr basic_zstring_view(const CharT* ptr);
+		[[nodiscard]] constexpr basic_zstring_view(const CharT* ptr) noexcept;
 
 		/// Constructs a string view from a standard string.
 		/// @tparam Allocator String allocator.
 		/// @param str Standard string.
 		template <typename Allocator>
-		constexpr basic_zstring_view(const std::basic_string<CharT, Traits, Allocator>& str);
+		[[nodiscard]] constexpr basic_zstring_view(const std::basic_string<CharT, Traits, Allocator>& str) noexcept;
 
 		/// Trivially copies a string view.
 		/// @param rhs String view to copy.
-		constexpr basic_zstring_view(const basic_zstring_view& rhs) noexcept = default;
+		[[nodiscard]] constexpr basic_zstring_view(const basic_zstring_view& rhs) noexcept = default;
 
 		/// Trivially moves a string view.
 		/// @param rhs String view to move.
-		constexpr basic_zstring_view(basic_zstring_view&& rhs) noexcept = default;
+		[[nodiscard]] constexpr basic_zstring_view(basic_zstring_view&& rhs) noexcept = default;
 
 		/// @}
 		/// @name Assignment operators
@@ -102,7 +102,7 @@ namespace tr
 
 		/// Converts the view into a standard string view.
 		/// @return Standard string view equivalent to `*this`.
-		constexpr operator std::basic_string_view<CharT, Traits>() const;
+		[[nodiscard]] constexpr operator std::basic_string_view<CharT, Traits>() const noexcept;
 
 		/// @}
 		/// @name Comparison operators
@@ -111,12 +111,13 @@ namespace tr
 		/// Compares NUL-terminated string views.
 		/// @param rhs Second string view.
 		/// @return Ordering of the string views.
-		constexpr std::strong_ordering operator<=>(this basic_zstring_view lhs, std::type_identity_t<basic_zstring_view> rhs);
+		[[nodiscard]] constexpr std::strong_ordering operator<=>(this basic_zstring_view lhs,
+																 std::type_identity_t<basic_zstring_view> rhs) noexcept;
 
 		/// Compares NUL-terminated string views for equality.
 		/// @param rhs Second string view.
 		/// @return Whether the string views are equal.
-		constexpr bool operator==(this basic_zstring_view lhs, std::type_identity_t<basic_zstring_view> rhs);
+		[[nodiscard]] constexpr bool operator==(this basic_zstring_view lhs, std::type_identity_t<basic_zstring_view> rhs) noexcept;
 
 		/// @}
 		/// @name Iterators
@@ -124,19 +125,19 @@ namespace tr
 
 		/// Gets an iterator to the beginning of the string.
 		/// @return Iterator to the beginning of the string.
-		constexpr iterator begin() const;
+		[[nodiscard]] constexpr iterator begin() const noexcept;
 
 		/// Gets an iterator to the beginning of the string.
 		/// @return Iterator to the beginning of the string.
-		constexpr const_iterator cbegin() const;
+		[[nodiscard]] constexpr const_iterator cbegin() const noexcept;
 
 		/// Gets an iterator sentinel to the end of the string.
 		/// @return Iterator sentinel to the end of the string.
-		constexpr end_sentinel end() const;
+		[[nodiscard]] constexpr end_sentinel end() const noexcept;
 
 		/// Gets an iterator sentinel to the end of the string.
 		/// @return Iterator sentinel to the end of the string.
-		constexpr end_sentinel cend() const;
+		[[nodiscard]] constexpr end_sentinel cend() const noexcept;
 
 		/// @}
 		/// @name Access
@@ -145,24 +146,24 @@ namespace tr
 		/// Accesses a specific character.
 		/// @param index Index of the character within the string.
 		/// @return Reference to a character within the string.
-		constexpr const_reference operator[](size_type index) const;
+		[[nodiscard]] constexpr const_reference operator[](size_type index) const noexcept;
 
 		/// Accesses a specific character.
 		/// @param index Index of the character within the string.
 		/// @return Reference to a character within the string.
-		constexpr const_reference at(size_type index) const;
+		[[nodiscard]] constexpr const_reference at(size_type index) const noexcept;
 
 		/// Accesses the first character in the string.
 		/// @return Reference to the first character in the string.
-		constexpr const_reference front() const;
+		[[nodiscard]] constexpr const_reference front() const noexcept;
 
 		/// Gets a pointer to the raw data of the string.
 		/// @return Pointer to the first character in the string.
-		constexpr const_pointer data() const;
+		[[nodiscard]] constexpr const_pointer data() const noexcept;
 
 		/// Gets a pointer to the raw C-string.
 		/// @return Pointer to the first character in the string.
-		constexpr const_pointer c_str() const;
+		[[nodiscard]] constexpr const_pointer c_str() const noexcept;
 
 		/// @}
 		/// @name Length
@@ -170,11 +171,11 @@ namespace tr
 
 		/// Gets the length of the string as if by strlen.
 		/// @return Length of the string.
-		constexpr usize length() const;
+		[[nodiscard]] constexpr usize length() const noexcept;
 
 		/// Gets whether the string view is empty.
 		/// @return `true` if the view points to `nullptr` or an empty string, `false` otherwise.
-		constexpr bool empty() const;
+		[[nodiscard]] constexpr bool empty() const noexcept;
 
 		/// @}
 		/// @name Sub-strings
@@ -183,11 +184,11 @@ namespace tr
 		/// Creates a sub-string view.
 		/// @param pos Starting position of the sub-string within the string.
 		/// @return Sub-string starting at `pos`.
-		constexpr basic_zstring_view substr(size_type pos = 0) const;
+		[[nodiscard]] constexpr basic_zstring_view substr(size_type pos = 0) const noexcept;
 
 		/// Moves the start of the view forward.
 		/// @param n Number of characters to move the start of the view forward by.
-		constexpr void remove_prefix(size_type n);
+		constexpr void remove_prefix(size_type n) noexcept;
 
 		/// @}
 
@@ -211,7 +212,7 @@ namespace tr
 			/// @param str Base C-string literal.
 			/// @param len Length of the string literal.
 			/// @return String view literal wrapped in `tr::zstring_view`.
-			constexpr zstring_view operator""_zsv(const char* str, std::size_t len) noexcept;
+			[[nodiscard]] constexpr zstring_view operator""_zsv(const char* str, std::size_t len) noexcept;
 
 			/// @}
 		} // namespace zstring_view_literals
@@ -235,7 +236,7 @@ namespace tr
 	/// @param rhs String to concatenate onto the path.
 	/// @return Concatenated path.
 	template <typename CharT, typename Traits>
-	std::filesystem::path operator/(const std::filesystem::path& lhs, basic_zstring_view<CharT, Traits> rhs);
+	[[nodiscard]] std::filesystem::path operator/(const std::filesystem::path& lhs, basic_zstring_view<CharT, Traits> rhs);
 
 	/// @}
 } // namespace tr

@@ -9,7 +9,7 @@
 //
 
 template <tr::usize Capacity>
-constexpr tr::static_string<Capacity>::iterator::operator const_iterator() const
+constexpr tr::static_string<Capacity>::iterator::operator const_iterator() const noexcept
 {
 	return const_iterator{this->base()};
 }
@@ -17,7 +17,7 @@ constexpr tr::static_string<Capacity>::iterator::operator const_iterator() const
 //
 
 template <tr::usize Capacity>
-constexpr tr::static_string<Capacity>::static_string(size_type size, char chr)
+constexpr tr::static_string<Capacity>::static_string(size_type size, char chr) noexcept
 	: m_size{size}
 {
 	std::fill(begin(), end(), chr);
@@ -25,7 +25,7 @@ constexpr tr::static_string<Capacity>::static_string(size_type size, char chr)
 
 template <tr::usize Capacity>
 template <tr::usize Size>
-constexpr tr::static_string<Capacity>::static_string(const char (&literal)[Size])
+constexpr tr::static_string<Capacity>::static_string(const char (&literal)[Size]) noexcept
 	: m_buffer{}
 	, m_size{static_cast<size_type>(Size - 1)}
 {
@@ -34,7 +34,7 @@ constexpr tr::static_string<Capacity>::static_string(const char (&literal)[Size]
 }
 
 template <tr::usize Capacity>
-constexpr tr::static_string<Capacity>::static_string(std::string_view str)
+constexpr tr::static_string<Capacity>::static_string(std::string_view str) noexcept
 	: m_buffer{}
 	, m_size{static_cast<size_type>(str.size())}
 {
@@ -44,7 +44,7 @@ constexpr tr::static_string<Capacity>::static_string(std::string_view str)
 
 template <tr::usize Capacity>
 template <std::convertible_to<std::string_view> String>
-constexpr tr::static_string<Capacity>::static_string(String&& str)
+constexpr tr::static_string<Capacity>::static_string(String&& str) noexcept
 	: static_string{std::string_view{str}}
 {
 }
@@ -52,7 +52,7 @@ constexpr tr::static_string<Capacity>::static_string(String&& str)
 //
 
 template <tr::usize Capacity>
-constexpr tr::static_string<Capacity>::operator std::string_view() const
+constexpr tr::static_string<Capacity>::operator std::string_view() const noexcept
 {
 	return {m_buffer.data(), m_size};
 }
@@ -66,27 +66,27 @@ constexpr tr::static_string<Capacity>::operator std::string() const
 //
 
 template <tr::usize Capacity>
-constexpr std::strong_ordering tr::static_string<Capacity>::operator<=>(const static_string& rhs) const
+constexpr std::strong_ordering tr::static_string<Capacity>::operator<=>(const static_string& rhs) const noexcept
 {
 	return std::string_view{*this} <=> std::string_view{rhs};
 }
 
 template <tr::usize Capacity>
-constexpr bool tr::static_string<Capacity>::operator==(const static_string& rhs) const
+constexpr bool tr::static_string<Capacity>::operator==(const static_string& rhs) const noexcept
 {
 	return std::string_view{*this} == std::string_view{rhs};
 }
 
 template <tr::usize Capacity>
 template <std::convertible_to<std::string_view> String>
-constexpr std::strong_ordering tr::static_string<Capacity>::operator<=>(const String& rhs) const
+constexpr std::strong_ordering tr::static_string<Capacity>::operator<=>(const String& rhs) const noexcept
 {
 	return std::string_view{*this} <=> std::string_view{rhs};
 }
 
 template <tr::usize Capacity>
 template <std::convertible_to<std::string_view> String>
-constexpr bool tr::static_string<Capacity>::operator==(const String& rhs) const
+constexpr bool tr::static_string<Capacity>::operator==(const String& rhs) const noexcept
 {
 	return std::string_view{*this} == std::string_view{rhs};
 }
@@ -94,7 +94,7 @@ constexpr bool tr::static_string<Capacity>::operator==(const String& rhs) const
 //
 
 template <tr::usize Capacity>
-constexpr tr::static_string<Capacity>::reference tr::static_string<Capacity>::operator[](size_type offset)
+constexpr tr::static_string<Capacity>::reference tr::static_string<Capacity>::operator[](size_type offset) noexcept
 {
 	TR_ASSERT(offset < m_size, "Tried to get out-of-bounds element {} in static string of size {}.", offset, m_size);
 
@@ -102,7 +102,7 @@ constexpr tr::static_string<Capacity>::reference tr::static_string<Capacity>::op
 }
 
 template <tr::usize Capacity>
-constexpr tr::static_string<Capacity>::const_reference tr::static_string<Capacity>::operator[](size_type offset) const
+constexpr tr::static_string<Capacity>::const_reference tr::static_string<Capacity>::operator[](size_type offset) const noexcept
 {
 	TR_ASSERT(offset < m_size, "Tried to get out-of-bounds element {} in static string of size {}.", offset, m_size);
 
@@ -110,7 +110,7 @@ constexpr tr::static_string<Capacity>::const_reference tr::static_string<Capacit
 }
 
 template <tr::usize Capacity>
-constexpr tr::static_string<Capacity>::reference tr::static_string<Capacity>::front()
+constexpr tr::static_string<Capacity>::reference tr::static_string<Capacity>::front() noexcept
 {
 	TR_ASSERT(!empty(), "Tried to get front element of an empty static string.");
 
@@ -118,7 +118,7 @@ constexpr tr::static_string<Capacity>::reference tr::static_string<Capacity>::fr
 }
 
 template <tr::usize Capacity>
-constexpr tr::static_string<Capacity>::const_reference tr::static_string<Capacity>::front() const
+constexpr tr::static_string<Capacity>::const_reference tr::static_string<Capacity>::front() const noexcept
 {
 	TR_ASSERT(!empty(), "Tried to get front element of an empty static string.");
 
@@ -126,7 +126,7 @@ constexpr tr::static_string<Capacity>::const_reference tr::static_string<Capacit
 }
 
 template <tr::usize Capacity>
-constexpr tr::static_string<Capacity>::reference tr::static_string<Capacity>::back()
+constexpr tr::static_string<Capacity>::reference tr::static_string<Capacity>::back() noexcept
 {
 	TR_ASSERT(!empty(), "Tried to get back element of an empty static string.");
 
@@ -134,7 +134,7 @@ constexpr tr::static_string<Capacity>::reference tr::static_string<Capacity>::ba
 }
 
 template <tr::usize Capacity>
-constexpr tr::static_string<Capacity>::const_reference tr::static_string<Capacity>::back() const
+constexpr tr::static_string<Capacity>::const_reference tr::static_string<Capacity>::back() const noexcept
 {
 	TR_ASSERT(!empty(), "Tried to get back element of an empty static string.");
 
@@ -142,13 +142,13 @@ constexpr tr::static_string<Capacity>::const_reference tr::static_string<Capacit
 }
 
 template <tr::usize Capacity>
-constexpr tr::static_string<Capacity>::pointer tr::static_string<Capacity>::data()
+constexpr tr::static_string<Capacity>::pointer tr::static_string<Capacity>::data() noexcept
 {
 	return m_buffer.data();
 }
 
 template <tr::usize Capacity>
-constexpr tr::static_string<Capacity>::const_pointer tr::static_string<Capacity>::data() const
+constexpr tr::static_string<Capacity>::const_pointer tr::static_string<Capacity>::data() const noexcept
 {
 	return m_buffer.data();
 }
@@ -156,37 +156,37 @@ constexpr tr::static_string<Capacity>::const_pointer tr::static_string<Capacity>
 //
 
 template <tr::usize Capacity>
-constexpr tr::static_string<Capacity>::iterator tr::static_string<Capacity>::begin()
+constexpr tr::static_string<Capacity>::iterator tr::static_string<Capacity>::begin() noexcept
 {
 	return iterator{m_buffer.data()};
 }
 
 template <tr::usize Capacity>
-constexpr tr::static_string<Capacity>::const_iterator tr::static_string<Capacity>::begin() const
+constexpr tr::static_string<Capacity>::const_iterator tr::static_string<Capacity>::begin() const noexcept
 {
 	return const_iterator{m_buffer.data()};
 }
 
 template <tr::usize Capacity>
-constexpr tr::static_string<Capacity>::const_iterator tr::static_string<Capacity>::cbegin() const
+constexpr tr::static_string<Capacity>::const_iterator tr::static_string<Capacity>::cbegin() const noexcept
 {
 	return const_iterator{m_buffer.data()};
 }
 
 template <tr::usize Capacity>
-constexpr tr::static_string<Capacity>::iterator tr::static_string<Capacity>::end()
+constexpr tr::static_string<Capacity>::iterator tr::static_string<Capacity>::end() noexcept
 {
 	return iterator{m_buffer.data() + m_size};
 }
 
 template <tr::usize Capacity>
-constexpr tr::static_string<Capacity>::const_iterator tr::static_string<Capacity>::end() const
+constexpr tr::static_string<Capacity>::const_iterator tr::static_string<Capacity>::end() const noexcept
 {
 	return const_iterator{m_buffer.data() + m_size};
 }
 
 template <tr::usize Capacity>
-constexpr tr::static_string<Capacity>::const_iterator tr::static_string<Capacity>::cend() const
+constexpr tr::static_string<Capacity>::const_iterator tr::static_string<Capacity>::cend() const noexcept
 {
 	return const_iterator{m_buffer.data() + m_size};
 }
@@ -194,19 +194,19 @@ constexpr tr::static_string<Capacity>::const_iterator tr::static_string<Capacity
 //
 
 template <tr::usize Capacity>
-constexpr bool tr::static_string<Capacity>::empty() const
+constexpr bool tr::static_string<Capacity>::empty() const noexcept
 {
 	return m_size == 0;
 }
 
 template <tr::usize Capacity>
-constexpr tr::static_string<Capacity>::size_type tr::static_string<Capacity>::size() const
+constexpr tr::static_string<Capacity>::size_type tr::static_string<Capacity>::size() const noexcept
 {
 	return m_size;
 }
 
 template <tr::usize Capacity>
-constexpr tr::static_string<Capacity>::size_type tr::static_string<Capacity>::max_size()
+constexpr tr::static_string<Capacity>::size_type tr::static_string<Capacity>::max_size() noexcept
 {
 	return Capacity;
 }
@@ -214,26 +214,26 @@ constexpr tr::static_string<Capacity>::size_type tr::static_string<Capacity>::ma
 //
 
 template <tr::usize Capacity>
-constexpr void tr::static_string<Capacity>::clear()
+constexpr void tr::static_string<Capacity>::clear() noexcept
 {
 	m_size = 0;
 }
 
 template <tr::usize Capacity>
-constexpr void tr::static_string<Capacity>::push_back(char chr)
+constexpr void tr::static_string<Capacity>::push_back(char chr) noexcept
 {
 	TR_ASSERT(m_size < Capacity, "Tried to push back into a static string that is already at its capacity of {}.", Capacity);
 	m_buffer[m_size++] = chr;
 }
 
 template <tr::usize Capacity>
-constexpr void tr::static_string<Capacity>::append(char chr)
+constexpr void tr::static_string<Capacity>::append(char chr) noexcept
 {
 	push_back(chr);
 }
 
 template <tr::usize Capacity>
-constexpr tr::static_string<Capacity>& tr::static_string<Capacity>::operator+=(char chr)
+constexpr tr::static_string<Capacity>& tr::static_string<Capacity>::operator+=(char chr) noexcept
 {
 	push_back(chr);
 	return *this;
@@ -242,14 +242,14 @@ constexpr tr::static_string<Capacity>& tr::static_string<Capacity>::operator+=(c
 template <tr::usize Capacity>
 template <std::input_iterator Iterator>
 	requires(std::same_as<typename std::iterator_traits<Iterator>::value_type, char>)
-constexpr void tr::static_string<Capacity>::append(Iterator begin, Iterator end)
+constexpr void tr::static_string<Capacity>::append(Iterator first, Iterator last) noexcept(noexcept(std::copy(first, last, end())))
 {
-	std::copy(begin, end, this->end());
-	m_size = m_size + std::distance(begin, end);
+	std::copy(first, last, end());
+	m_size = m_size + std::distance(first, last);
 }
 
 template <tr::usize Capacity>
-constexpr void tr::static_string<Capacity>::append(std::string_view str)
+constexpr void tr::static_string<Capacity>::append(std::string_view str) noexcept
 {
 	TR_ASSERT(m_size + str.size() <= Capacity, "Tried to do an append onto a static string that would put it past its capacity of {}.",
 			  Capacity);
@@ -259,14 +259,14 @@ constexpr void tr::static_string<Capacity>::append(std::string_view str)
 }
 
 template <tr::usize Capacity>
-constexpr tr::static_string<Capacity>& tr::static_string<Capacity>::operator+=(std::string_view str)
+constexpr tr::static_string<Capacity>& tr::static_string<Capacity>::operator+=(std::string_view str) noexcept
 {
 	append(str);
 	return *this;
 }
 
 template <tr::usize Capacity>
-constexpr tr::static_string<Capacity>::iterator tr::static_string<Capacity>::insert(const_iterator where, char chr)
+constexpr tr::static_string<Capacity>::iterator tr::static_string<Capacity>::insert(const_iterator where, char chr) noexcept
 {
 	TR_ASSERT(m_size < Capacity, "Tried to insert into a static string that is already at its capacity of {}.", Capacity);
 	TR_ASSERT(where >= begin() && where <= end(), "Tried to pass an invalid iterator to static_string::insert.");
@@ -281,7 +281,9 @@ constexpr tr::static_string<Capacity>::iterator tr::static_string<Capacity>::ins
 template <tr::usize Capacity>
 template <std::input_iterator Iterator>
 	requires(std::same_as<typename std::iterator_traits<Iterator>::value_type, char>)
-constexpr tr::static_string<Capacity>::iterator tr::static_string<Capacity>::insert(const_iterator where, Iterator first, Iterator last)
+constexpr tr::static_string<Capacity>::iterator tr::static_string<Capacity>::insert(const_iterator where, Iterator first,
+																					Iterator last) noexcept(noexcept(std::copy(first, last,
+																															   where)))
 {
 	const usize size{usize(std::distance(first, last))};
 
@@ -296,7 +298,7 @@ constexpr tr::static_string<Capacity>::iterator tr::static_string<Capacity>::ins
 }
 
 template <tr::usize Capacity>
-constexpr tr::static_string<Capacity>::iterator tr::static_string<Capacity>::insert(const_iterator where, std::string_view str)
+constexpr tr::static_string<Capacity>::iterator tr::static_string<Capacity>::insert(const_iterator where, std::string_view str) noexcept
 {
 	TR_ASSERT(m_size + str.size() <= Capacity, "Tried to do an insert into a static string that would put it past its capacity of {}.",
 			  Capacity);
@@ -310,7 +312,7 @@ constexpr tr::static_string<Capacity>::iterator tr::static_string<Capacity>::ins
 }
 
 template <tr::usize Capacity>
-constexpr void tr::static_string<Capacity>::pop_back()
+constexpr void tr::static_string<Capacity>::pop_back() noexcept
 {
 	if (!empty()) {
 		--m_size;
@@ -318,7 +320,7 @@ constexpr void tr::static_string<Capacity>::pop_back()
 }
 
 template <tr::usize Capacity>
-constexpr tr::static_string<Capacity>::iterator tr::static_string<Capacity>::erase(const_iterator where)
+constexpr tr::static_string<Capacity>::iterator tr::static_string<Capacity>::erase(const_iterator where) noexcept
 {
 	TR_ASSERT(where >= begin() && where < end(), "Tried to pass an invalid iterator to static_string::erase.");
 
@@ -329,7 +331,7 @@ constexpr tr::static_string<Capacity>::iterator tr::static_string<Capacity>::era
 }
 
 template <tr::usize Capacity>
-constexpr tr::static_string<Capacity>::iterator tr::static_string<Capacity>::erase(const_iterator start, const_iterator end)
+constexpr tr::static_string<Capacity>::iterator tr::static_string<Capacity>::erase(const_iterator start, const_iterator end) noexcept
 {
 	TR_ASSERT(start >= begin() && start < this->end(), "Tried to pass an invalid start iterator to static_string::erase.");
 	TR_ASSERT(end >= begin() && end <= this->end(), "Tried to pass an invalid end iterator to static_string::erase.");
@@ -341,7 +343,7 @@ constexpr tr::static_string<Capacity>::iterator tr::static_string<Capacity>::era
 }
 
 template <tr::usize Capacity>
-constexpr void tr::static_string<Capacity>::resize(size_type size, char chr)
+constexpr void tr::static_string<Capacity>::resize(size_type size, char chr) noexcept
 {
 	TR_ASSERT(size <= Capacity, "Tried to resize a static string past its capacity of {}.", Capacity);
 

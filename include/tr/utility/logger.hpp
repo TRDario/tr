@@ -13,10 +13,13 @@ namespace tr
 	{
 		/// Information.
 		info = 'I',
+
 		/// Warning.
 		warning = 'W',
+
 		/// Non-fatal error.
 		error = 'E',
+
 		/// Fatal error.
 		fatal = 'F'
 	};
@@ -31,7 +34,7 @@ namespace tr
 		/// @{
 
 		/// Virtual destructor.
-		virtual ~logger_backend() = default;
+		virtual ~logger_backend() noexcept = default;
 
 		/// @}
 		/// @name Logging
@@ -59,10 +62,10 @@ namespace tr
 
 		/// Creates a console logger.
 		/// @param name Name of the logger.
-		console_logger(std::string&& name);
+		[[nodiscard]] console_logger(std::string&& name);
 
 		/// Destroys the logger.
-		~console_logger() override;
+		~console_logger() noexcept override;
 
 		/// @}
 		/// @name Logging
@@ -94,7 +97,7 @@ namespace tr
 
 		/// Creates a file logger.
 		/// @param path Path to the log file.
-		file_logger(std::filesystem::path&& path);
+		[[nodiscard]] file_logger(std::filesystem::path&& path);
 
 		/// @}
 		/// @name Logging
@@ -127,7 +130,7 @@ namespace tr
 		/// Creates a console and file logger.
 		/// @param name Name of the console logger.
 		/// @param path Path to the log file.
-		console_and_file_logger(std::string&& name, std::filesystem::path&& path);
+		[[nodiscard]] console_and_file_logger(std::string&& name, std::filesystem::path&& path);
 
 		/// @}
 		/// @name Logging
@@ -156,11 +159,11 @@ namespace tr
 		/// @{
 
 		/// Creates an empty logger.
-		logger();
+		[[nodiscard]] logger();
 
 		/// Creates a logger with a backend.
 		/// @param backend Logger backend to forward messages to.
-		logger(std::unique_ptr<logger_backend>&& backend);
+		[[nodiscard]] logger(std::unique_ptr<logger_backend>&& backend);
 
 		/// @}
 		/// @name Status
@@ -168,22 +171,22 @@ namespace tr
 
 		/// Gets whether the logger is active.
 		/// @return `true` if the logger contains a backend, `false` otherwise.
-		bool active() const;
+		[[nodiscard]] bool active() const noexcept;
 
 		/// Gets the backend of the logger.
 		/// @return Reference to the backend of the logger.
-		const logger_backend& backend() const;
+		[[nodiscard]] const logger_backend& backend() const noexcept;
 
 		/// Gets the backend of the logger.
 		/// @return Reference to the backend of the logger.
-		logger_backend& backend();
+		[[nodiscard]] logger_backend& backend() noexcept;
 
 		/// @}
 		/// @name Backend manipulation
 		/// @{
 
 		/// Clears the logger's backend.
-		void clear_backend();
+		void clear_backend() noexcept;
 
 		/// Replaces the logger's backend.
 		/// @tparam Backend Backend to emplace into the logger.
@@ -244,7 +247,7 @@ namespace tr
 	/// @return Logger with an initial backend created in-place.
 	template <std::derived_from<logger_backend> Backend, typename... Args>
 		requires(std::constructible_from<Backend, Args...>)
-	logger make_logger(Args&&... args);
+	[[nodiscard]] logger make_logger(Args&&... args);
 
 	//
 

@@ -6,18 +6,18 @@
 
 //
 
-tr::stopwatch::stopwatch()
+tr::stopwatch::stopwatch() noexcept
 	: m_start{std::chrono::steady_clock::now()}
 {
 }
 
-tr::duration tr::stopwatch::elapsed() const
+tr::duration tr::stopwatch::elapsed() const noexcept
 {
 	const std::chrono::steady_clock::time_point now{std::chrono::steady_clock::now()};
 	return now - m_start;
 }
 
-tr::duration tr::stopwatch::lap()
+tr::duration tr::stopwatch::lap() noexcept
 {
 	const std::chrono::steady_clock::time_point start = m_start;
 	m_start = std::chrono::steady_clock::now();

@@ -7,22 +7,22 @@
 
 //
 
-constexpr tr::halign tr::to_halign(align align)
+constexpr tr::halign tr::to_halign(align align) noexcept
 {
 	return static_cast<halign>(std::to_underlying(align) % 3);
 }
 
-constexpr tr::valign tr::to_valign(align align)
+constexpr tr::valign tr::to_valign(align align) noexcept
 {
 	return static_cast<valign>(std::to_underlying(align) - std::to_underlying(align) % 3);
 }
 
-constexpr tr::align tr::operator|(const valign& valign, const halign& halign)
+constexpr tr::align tr::operator|(const valign& valign, const halign& halign) noexcept
 {
 	return static_cast<align>(std::to_underlying(halign) + std::to_underlying(valign));
 }
 
-constexpr tr::align tr::operator|(const halign& halign, const valign& valign)
+constexpr tr::align tr::operator|(const halign& halign, const valign& valign) noexcept
 {
 	return static_cast<align>(std::to_underlying(halign) + std::to_underlying(valign));
 }
@@ -30,7 +30,7 @@ constexpr tr::align tr::operator|(const halign& halign, const valign& valign)
 //
 
 template <typename Element>
-constexpr glm::tvec2<Element> tr::tl(glm::tvec2<Element> pos, glm::tvec2<Element> size, tr::align pos_anchor)
+constexpr glm::tvec2<Element> tr::tl(glm::tvec2<Element> pos, glm::tvec2<Element> size, tr::align pos_anchor) noexcept
 {
 	switch (pos_anchor) {
 	case align::tl:

@@ -61,7 +61,7 @@ namespace tr
 	/// @pre `keylike` must exist in the map.
 	/// @return Reference to the value under `keylike`.
 	template <typename Key, typename Value, hasher<Key> Hash, equality_predicate<Key> Pred, hash_keylike<Key, Hash, Pred> Keylike>
-	Value& get(boost::unordered_flat_map<Key, Value, Hash, Pred>& map, Keylike&& keylike);
+	[[nodiscard]] Value& get(boost::unordered_flat_map<Key, Value, Hash, Pred>& map, Keylike&& keylike);
 
 	/// Gets a value from a node map.
 	/// @tparam Key Map key type.
@@ -74,7 +74,7 @@ namespace tr
 	/// @pre `keylike` must exist in the map.
 	/// @return Reference to the value under `keylike`.
 	template <typename Key, typename Value, hasher<Key> Hash, equality_predicate<Key> Pred, hash_keylike<Key, Hash, Pred> Keylike>
-	Value& get(boost::unordered_node_map<Key, Value, Hash, Pred>& map, Keylike&& keylike);
+	[[nodiscard]] Value& get(boost::unordered_node_map<Key, Value, Hash, Pred>& map, Keylike&& keylike);
 
 	/// Gets a value from a flat map.
 	/// @tparam Key Map key type.
@@ -87,7 +87,7 @@ namespace tr
 	/// @pre `keylike` must exist in the map.
 	/// @return Reference to the value under `keylike`.
 	template <typename Key, typename Value, hasher<Key> Hash, equality_predicate<Key> Pred, hash_keylike<Key, Hash, Pred> Keylike>
-	const Value& get(const boost::unordered_flat_map<Key, Value, Hash, Pred>& map, Keylike&& keylike);
+	[[nodiscard]] const Value& get(const boost::unordered_flat_map<Key, Value, Hash, Pred>& map, Keylike&& keylike);
 
 	/// Gets a value from a node map.
 	/// @tparam Key Map key type.
@@ -100,7 +100,7 @@ namespace tr
 	/// @pre `keylike` must exist in the map.
 	/// @return Reference to the value under `keylike`.
 	template <typename Key, typename Value, hasher<Key> Hash, equality_predicate<Key> Pred, hash_keylike<Key, Hash, Pred> Keylike>
-	const Value& get(const boost::unordered_node_map<Key, Value, Hash, Pred>& map, Keylike&& keylike);
+	[[nodiscard]] const Value& get(const boost::unordered_node_map<Key, Value, Hash, Pred>& map, Keylike&& keylike);
 
 	//
 
@@ -114,7 +114,7 @@ namespace tr
 	/// @param keylike Keylike value to look for.
 	/// @return Reference to the value under `keylike`, or an empty optional reference if not found.
 	template <typename Key, typename Value, hasher<Key> Hash, equality_predicate<Key> Pred, hash_keylike<Key, Hash, Pred> Keylike>
-	opt_ref<Value> try_get(boost::unordered_flat_map<Key, Value, Hash, Pred>& map, Keylike&& keylike);
+	[[nodiscard]] opt_ref<Value> try_get(boost::unordered_flat_map<Key, Value, Hash, Pred>& map, Keylike&& keylike);
 
 	/// Tries to get a value from a node map.
 	/// @tparam Key Map key type.
@@ -126,7 +126,7 @@ namespace tr
 	/// @param keylike Keylike value to look for.
 	/// @return Reference to the value under `keylike`, or an empty optional reference if not found.
 	template <typename Key, typename Value, hasher<Key> Hash, equality_predicate<Key> Pred, hash_keylike<Key, Hash, Pred> Keylike>
-	opt_ref<Value> try_get(boost::unordered_node_map<Key, Value, Hash, Pred>& map, Keylike&& keylike);
+	[[nodiscard]] opt_ref<Value> try_get(boost::unordered_node_map<Key, Value, Hash, Pred>& map, Keylike&& keylike);
 
 	/// Tries to get a value from a flat map.
 	/// @tparam Key Map key type.
@@ -138,7 +138,7 @@ namespace tr
 	/// @param keylike Keylike value to look for.
 	/// @return Reference to the value under `keylike`, or an empty optional reference if not found.
 	template <typename Key, typename Value, hasher<Key> Hash, equality_predicate<Key> Pred, hash_keylike<Key, Hash, Pred> Keylike>
-	opt_ref<const Value> try_get(const boost::unordered_flat_map<Key, Value, Hash, Pred>& map, Keylike&& keylike);
+	[[nodiscard]] opt_ref<const Value> try_get(const boost::unordered_flat_map<Key, Value, Hash, Pred>& map, Keylike&& keylike);
 
 	/// Tries to get a value from a node map.
 	/// @tparam Key Map key type.
@@ -150,7 +150,7 @@ namespace tr
 	/// @param keylike Keylike value to look for.
 	/// @return Reference to the value under `keylike`, or an empty optional reference if not found.
 	template <typename Key, typename Value, hasher<Key> Hash, equality_predicate<Key> Pred, hash_keylike<Key, Hash, Pred> Keylike>
-	opt_ref<const Value> try_get(const boost::unordered_node_map<Key, Value, Hash, Pred>& map, Keylike&& keylike);
+	[[nodiscard]] opt_ref<const Value> try_get(const boost::unordered_node_map<Key, Value, Hash, Pred>& map, Keylike&& keylike);
 
 	/// @}
 } // namespace tr

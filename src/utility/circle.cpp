@@ -7,14 +7,14 @@
 
 //
 
-bool tr::circle::contains(glm::vec2 point) const
+bool tr::circle::contains(glm::vec2 point) const noexcept
 {
 	return distance2(center, point) <= sqr(radius);
 }
 
 //
 
-bool tr::intersecting(const circle& c1, const circle& c2)
+bool tr::intersecting(const circle& c1, const circle& c2) noexcept
 {
 	return glm::distance(c1.center, c2.center) <= (c1.radius + c2.radius);
 }

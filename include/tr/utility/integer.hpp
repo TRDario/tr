@@ -55,42 +55,42 @@ namespace tr
 			/// 8-bit unsigned integer literal.
 			/// @param[in] v Integer in the range [0, UINT8_MAX].
 			/// @return An 8-bit unsigned integer.
-			consteval u8 operator""_u8(unsigned long long v);
+			[[nodiscard]] consteval u8 operator""_u8(unsigned long long v) noexcept;
 
 			/// 16-bit unsigned integer literal.
 			/// @param[in] v Integer in the range [0, UINT16_MAX].
 			/// @return A 16-bit unsigned integer.
-			consteval u16 operator""_u16(unsigned long long v);
+			[[nodiscard]] consteval u16 operator""_u16(unsigned long long v) noexcept;
 
 			/// 32-bit unsigned integer literal.
 			/// @param[in] v Integer in the range [0, UINT32_MAX].
 			/// @return A 32-bit unsigned integer.
-			consteval u32 operator""_u32(unsigned long long v);
+			[[nodiscard]] consteval u32 operator""_u32(unsigned long long v) noexcept;
 
 			/// 64-bit unsigned integer literal.
 			/// @param[in] v Integer in the range [0, UINT64_MAX].
 			/// @return A 64-bit unsigned integer.
-			consteval u64 operator""_u64(unsigned long long v);
+			[[nodiscard]] consteval u64 operator""_u64(unsigned long long v) noexcept;
 
 			/// 8-bit signed integer literal.
 			/// @param[in] v Integer in the range [0, INT8_MAX].
 			/// @return An 8-bit signed integer.
-			consteval i8 operator""_i8(unsigned long long v);
+			[[nodiscard]] consteval i8 operator""_i8(unsigned long long v) noexcept;
 
 			/// 16-bit signed integer literal.
 			/// @param[in] v Integer in the range [0, INT16_MAX].
 			/// @return A 16-bit signed integer.
-			consteval i16 operator""_i16(unsigned long long v);
+			[[nodiscard]] consteval i16 operator""_i16(unsigned long long v) noexcept;
 
 			/// 32-bit signed integer literal.
 			/// @param[in] v Integer in the range [0, INT32_MAX].
 			/// @return A 32-bit signed integer.
-			consteval i32 operator""_i32(unsigned long long v);
+			[[nodiscard]] consteval i32 operator""_i32(unsigned long long v) noexcept;
 
 			/// 64-bit signed integer literal.
 			/// @param[in] v Integer in the range [0, INT64_MAX].
 			/// @return A 64-bit signed integer.
-			consteval i64 operator""_i64(unsigned long long v);
+			[[nodiscard]] consteval i64 operator""_i64(unsigned long long v) noexcept;
 		} // namespace integer_literals
 	} // namespace literals
 

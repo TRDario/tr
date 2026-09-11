@@ -19,7 +19,7 @@ namespace tr
 	/// @return Optional reference to the requested alternative.
 	template <typename Alternative, typename... Alternatives>
 		requires(one_of<Alternative, Alternatives...>)
-	constexpr opt_ref<Alternative> get_if(std::variant<Alternatives...>& v);
+	[[nodiscard]] constexpr opt_ref<Alternative> get_if(std::variant<Alternatives...>& v) noexcept;
 
 	/// Wraps over `std::get_if`.
 	/// @tparam Alternative Alternative to access.
@@ -28,7 +28,7 @@ namespace tr
 	/// @return Moved value of the requested alternative.
 	template <typename Alternative, typename... Alternatives>
 		requires(one_of<Alternative, Alternatives...>)
-	constexpr std::optional<Alternative> get_if(std::variant<Alternatives...>&& v);
+	[[nodiscard]] constexpr std::optional<Alternative> get_if(std::variant<Alternatives...>&& v) noexcept;
 
 	/// Wraps over `std::get_if`.
 	/// @tparam Alternative Alternative to access.
@@ -37,7 +37,7 @@ namespace tr
 	/// @return Optional reference to the requested alternative.
 	template <typename Alternative, typename... Alternatives>
 		requires(one_of<Alternative, Alternatives...>)
-	constexpr opt_ref<const Alternative> get_if(const std::variant<Alternatives...>& v);
+	[[nodiscard]] constexpr opt_ref<const Alternative> get_if(const std::variant<Alternatives...>& v) noexcept;
 
 	/// Wraps over `std::get_if`.
 	/// @tparam Alternative Alternative to access.
@@ -46,7 +46,7 @@ namespace tr
 	/// @return Moved value of the requested alternative.
 	template <typename Alternative, typename... Alternatives>
 		requires(one_of<Alternative, Alternatives...>)
-	constexpr std::optional<const Alternative> get_if(const std::variant<Alternatives...>&& v);
+	[[nodiscard]] constexpr std::optional<const Alternative> get_if(const std::variant<Alternatives...>&& v) noexcept;
 
 	//
 
@@ -57,7 +57,7 @@ namespace tr
 	/// @param v Variant to act upon.
 	/// @param fn Invocable to invoke.
 	template <typename Alternative, typename... Alternatives, std::invocable<Alternative&> Fn>
-	constexpr void if_is(std::variant<Alternatives...>& v, Fn&& fn);
+	constexpr void if_is(std::variant<Alternatives...>& v, Fn&& fn) noexcept(noexcept(fn(std::declval<Alternative&>())));
 
 	/// Invokes a function if the variant holds a specific alternative.
 	/// @tparam Alternative Desired alternative.
@@ -66,7 +66,7 @@ namespace tr
 	/// @param v Variant to act upon.
 	/// @param fn Invocable to invoke.
 	template <typename Alternative, typename... Alternatives, std::invocable<Alternative> Fn>
-	constexpr void if_is(std::variant<Alternatives...>&& v, Fn&& fn);
+	constexpr void if_is(std::variant<Alternatives...>&& v, Fn&& fn) noexcept(noexcept(fn(std::declval<const Alternative&>())));
 
 	/// Invokes a function if the variant holds a specific alternative.
 	/// @tparam Alternative Desired alternative.
@@ -75,7 +75,7 @@ namespace tr
 	/// @param v Variant to act upon.
 	/// @param fn Invocable to invoke.
 	template <typename Alternative, typename... Alternatives, std::invocable<const Alternative&> Fn>
-	constexpr void if_is(const std::variant<Alternatives...>& v, Fn&& fn);
+	constexpr void if_is(const std::variant<Alternatives...>& v, Fn&& fn) noexcept(noexcept(fn(std::declval<Alternative>())));
 
 	/// Invokes a function if the variant holds a specific alternative.
 	/// @tparam Alternative Desired alternative.
@@ -84,7 +84,7 @@ namespace tr
 	/// @param v Variant to act upon.
 	/// @param fn Invocable to invoke.
 	template <typename Alternative, typename... Alternatives, std::invocable<const Alternative> Fn>
-	constexpr void if_is(const std::variant<Alternatives...>&& v, Fn&& fn);
+	constexpr void if_is(const std::variant<Alternatives...>&& v, Fn&& fn) noexcept(noexcept(fn(std::declval<const Alternative>())));
 
 	/// @}
 } // namespace tr

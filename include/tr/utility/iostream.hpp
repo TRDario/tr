@@ -17,7 +17,7 @@ namespace tr
 
 		/// Constructs an exception.
 		/// @param path Path to the file that wasn't found.
-		file_not_found(std::string_view path);
+		[[nodiscard]] file_not_found(std::string_view path);
 
 		/// @}
 		/// @name Information
@@ -25,15 +25,15 @@ namespace tr
 
 		/// Gets the name of the error.
 		/// @return `"File not found"`.
-		std::string_view name() const override;
+		[[nodiscard]] std::string_view name() const noexcept override;
 
 		/// Gets the description of the error.
 		/// @return Path to the file that wasn't found.
-		std::string_view description() const override;
+		[[nodiscard]] std::string_view description() const noexcept override;
 
 		/// Gets further details about the error.
 		/// @return Always empty.
-		std::string_view details() const override;
+		[[nodiscard]] std::string_view details() const noexcept override;
 
 		/// @}
 
@@ -51,7 +51,7 @@ namespace tr
 
 		/// Constructs an exception.
 		/// @param path Path to the file that failed to open.
-		file_open_error(std::string_view path);
+		[[nodiscard]] file_open_error(std::string_view path);
 
 		/// @}
 		/// @name Information
@@ -59,15 +59,15 @@ namespace tr
 
 		/// Gets the name of the error.
 		/// @return `"File opening error"`.
-		std::string_view name() const override;
+		[[nodiscard]] std::string_view name() const noexcept override;
 
 		/// Gets the description of the error.
 		/// @return Path to the file whose opening failed.
-		std::string_view description() const override;
+		[[nodiscard]] std::string_view description() const noexcept override;
 
 		/// Gets further details about the error.
 		/// @return Always empty.
-		std::string_view details() const override;
+		[[nodiscard]] std::string_view details() const noexcept override;
 
 		/// @}
 
@@ -83,7 +83,7 @@ namespace tr
 	/// @param openmode Stream opening mode.
 	/// @exception file_open_error If opening the file failed.
 	/// @return Output stream to the file at `path`.
-	std::ofstream open_file_w(const std::filesystem::path& path, std::ios::openmode openmode = std::ios::in);
+	[[nodiscard]] std::ofstream open_file_w(const std::filesystem::path& path, std::ios::openmode openmode = std::ios::in);
 
 	/// Opens a file for reading with extra checks.
 	/// @param path Path to the file to open.
@@ -91,12 +91,12 @@ namespace tr
 	/// @exception file_not_found If the file was not found.
 	/// @exception file_open_error If opening the file failed.
 	/// @return Input stream to the file at `path`.
-	std::ifstream open_file_r(const std::filesystem::path& path, std::ios::openmode openmode = std::ios::out);
+	[[nodiscard]] std::ifstream open_file_r(const std::filesystem::path& path, std::ios::openmode openmode = std::ios::out);
 
 	//
 
 	/// Checks whether a stream has reached end-of-file.
 	/// @param stream Stream to check for EOF.
 	/// @return `true` if the stream reached EOF, `false` otherwise.
-	bool reached_eof(std::istream& stream);
+	[[nodiscard]] bool reached_eof(std::istream& stream);
 } // namespace tr

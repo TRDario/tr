@@ -60,9 +60,17 @@ namespace tr
 
 	//
 
+	/// Type which never throws on destruction.
+	template <typename T>
+	concept nothrow_destructible = std::is_nothrow_destructible_v<T>;
+
 	/// Move-assignable type.
 	template <typename T>
 	concept move_assignable = std::is_move_assignable_v<T>;
+
+	/// Type which never throws on move.
+	template <typename T>
+	concept nothrow_movable = std::is_nothrow_move_constructible_v<T> && std::is_nothrow_move_assignable_v<T>;
 
 	/// Standard layout type.
 	template <typename T>
@@ -70,13 +78,34 @@ namespace tr
 
 	//
 
-	/// Typed input iterator.
-	/// @tparam Element Required input type.
+	/// Iterator that does not throw.
+	template <typename T>
+	concept nothrow_iterator = std::input_or_output_iterator<T> && noexcept(++std::declval<T&>()) &&
+							   noexcept(std::declval<const T&>() != std::declval<const T&>()) && noexcept(*std::declval<T&>());
+
+	/// Forward iterator to a type convertible to `Element`.
+	/// @tparam Element Type the iterator's dereferenced value must be convertible to.
 	template <typename T, typename Element>
-	concept typed_input_iterator = std::input_iterator<T> &&
-								   std::same_as<std::remove_cvref_t<typename std::iterator_traits<T>::value_type>, Element>;
+	concept forward_iterator_to_convertible_to = std::forward_iterator<T> && std::convertible_to<std::iter_reference_t<T>, Element>;
+
+	/// Forward iterator to a type convertible to `Element` that does not throw.
+	/// @tparam Element Type the iterator's dereferenced value must be convertible to.
+	template <typename T, typename Element>
+	concept nothrow_forward_iterator_to_convertible_to = forward_iterator_to_convertible_to<T, Element> && nothrow_iterator<T>;
 
 	//
+
+	/// Forward range to a type convertible to `Element`.
+	/// @tparam Element Type the range's values must be convertible to.
+	template <typename T, typename Element>
+	concept forward_range_to_convertible_to = std::ranges::forward_range<T> &&
+											  std::convertible_to<std::ranges::range_reference_t<T>, Element>;
+
+	/// Forward range to a type convertible to `Element` that does not throw.
+	/// @tparam Element Type the range's values must be convertible to.
+	template <typename T, typename Element>
+	concept nothrow_forward_range_to_convertible_to = forward_range_to_convertible_to<T, Element> &&
+													  nothrow_iterator<std::ranges::iterator_t<T>>;
 
 	/// Contiguous range of standard layout objects.
 	template <typename T>
@@ -90,12 +119,6 @@ namespace tr
 	template <typename T>
 	concept borrowed_mutable_standard_layout_range = borrowed_standard_layout_range<T> &&
 													 !const_qualified<std::ranges::range_reference_t<T>>;
-
-	/// Typed input range.
-	/// @tparam Element Required input type.
-	template <typename T, typename Element>
-	concept typed_input_range = std::ranges::input_range<T> &&
-								std::same_as<std::remove_cvref_t<typename std::ranges::range_value_t<T>>, Element>;
 
 	/// Sized output range type.
 	/// @tparam Element Required output type.

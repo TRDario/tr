@@ -34,68 +34,68 @@ namespace tr
 		//
 
 		/// Default-constructs an iterator.
-		constexpr pointer_iterator() = default;
+		[[nodiscard]] constexpr pointer_iterator() noexcept = default;
 
 		/// Constructs an iterator.
 		/// @param base Base pointer.
-		explicit constexpr pointer_iterator(Pointer base);
+		[[nodiscard]] explicit constexpr pointer_iterator(Pointer base) noexcept;
 
 		//
 
 		/// Compares two iterators.
 		/// @param lhs, rhs Compared iterators.
 		/// @return Ordering of the iterators.
-		friend constexpr std::strong_ordering operator<=>(pointer_iterator lhs, pointer_iterator rhs) = default;
+		[[nodiscard]] friend constexpr std::strong_ordering operator<=>(pointer_iterator lhs, pointer_iterator rhs) noexcept = default;
 
 		/// Compares two iterators for equality.
 		/// @param lhs, rhs Compared iterators.
 		/// @return Whether the iterators are equal.
-		friend constexpr bool operator==(pointer_iterator lhs, pointer_iterator rhs) = default;
+		[[nodiscard]] friend constexpr bool operator==(pointer_iterator lhs, pointer_iterator rhs) noexcept = default;
 
 		//
 
 		/// Dereferences the iterator.
 		/// @return Reference to the dereferenced value.
-		constexpr reference operator*() const;
+		[[nodiscard]] constexpr reference operator*() const noexcept;
 
 		/// Dereferences the iterator.
 		/// @return Pointer to the dereferenced value.
-		constexpr pointer operator->() const;
+		[[nodiscard]] constexpr pointer operator->() const noexcept;
 
 		/// Dereferences the iterator with a subscript.
 		/// @param diff Offset to the target value.
 		/// @return Reference to the dereferenced value.
-		constexpr reference operator[](difference_type diff) const;
+		[[nodiscard]] constexpr reference operator[](difference_type diff) const noexcept;
 
 		//
 
 		/// Pre-increments the iterator.
 		/// @return Reference to `*this`.
-		constexpr Iterator& operator++();
+		constexpr Iterator& operator++() noexcept;
 
 		/// Post-increments the iterator.
 		/// @return Copy of `*this` before it was incremented.
-		constexpr Iterator operator++(int);
+		constexpr Iterator operator++(int) noexcept;
 
 		/// Pre-decrements the iterator.
 		/// @return Reference to `*this`.
-		constexpr Iterator& operator--();
+		constexpr Iterator& operator--() noexcept;
 
 		/// Post-decrements the iterator.
 		/// @return Copy of `*this` before it was decremented.
-		constexpr Iterator operator--(int);
+		constexpr Iterator operator--(int) noexcept;
 
 		//
 
 		/// Advances the iterator.
 		/// @param diff Amount of steps to advance by.
 		/// @return Reference to `*this`.
-		constexpr Iterator& operator+=(difference_type diff);
+		constexpr Iterator& operator+=(difference_type diff) noexcept;
 
 		/// Subtracts from the iterator.
 		/// @param diff Amount of steps to subtract by.
 		/// @return Reference to `*this`.
-		constexpr Iterator& operator-=(difference_type diff);
+		constexpr Iterator& operator-=(difference_type diff) noexcept;
 
 		/// Adds to an iterator.
 		/// @tparam Iterator_ Derived iterator type.
@@ -105,7 +105,7 @@ namespace tr
 		/// @return Copy of `it` advanced by `diff`.
 		template <typename Iterator_, tr::pointer Pointer_>
 		friend constexpr Iterator_ operator+(const pointer_iterator<Iterator_, Pointer_>& it,
-											 pointer_iterator<Iterator_, Pointer_>::difference_type diff);
+											 pointer_iterator<Iterator_, Pointer_>::difference_type diff) noexcept;
 
 		/// Adds to an iterator.
 		/// @tparam Iterator_ Derived iterator type.
@@ -115,7 +115,7 @@ namespace tr
 		/// @return Copy of `it` advanced by `diff`.
 		template <typename Iterator_, tr::pointer Pointer_>
 		friend constexpr Iterator_ operator+(pointer_iterator<Iterator_, Pointer_>::difference_type diff,
-											 const pointer_iterator<Iterator_, Pointer_>& it);
+											 const pointer_iterator<Iterator_, Pointer_>& it) noexcept;
 
 		/// Subtracts from an iterator.
 		/// @tparam Iterator_ Derived iterator type.
@@ -125,7 +125,7 @@ namespace tr
 		/// @return Copy of `it` subtracted by `diff`.
 		template <typename Iterator_, tr::pointer Pointer_>
 		friend constexpr Iterator_ operator-(const pointer_iterator<Iterator_, Pointer_>& it,
-											 pointer_iterator<Iterator_, Pointer_>::difference_type diff);
+											 pointer_iterator<Iterator_, Pointer_>::difference_type diff) noexcept;
 
 		/// Gets the difference between two iterators.
 		/// @tparam Iterator_ Derived iterator type.
@@ -134,13 +134,13 @@ namespace tr
 		/// @return Distance between `lhs` and `rhs`.
 		template <typename Iterator_, tr::pointer Pointer_>
 		friend constexpr pointer_iterator<Iterator_, Pointer_>::difference_type operator-(
-			pointer_iterator<Iterator_, Pointer_> lhs, std::type_identity_t<pointer_iterator<Iterator_, Pointer_>> rhs);
+			pointer_iterator<Iterator_, Pointer_> lhs, std::type_identity_t<pointer_iterator<Iterator_, Pointer_>> rhs) noexcept;
 
 		//
 
 		/// Unwraps the iterator
 		/// @return Base pointer.
-		Pointer base() const;
+		[[nodiscard]] Pointer base() const noexcept;
 
 	  private:
 		/// Base pointer.

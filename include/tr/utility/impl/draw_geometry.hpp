@@ -10,14 +10,14 @@
 
 //
 
-inline tr::usize tr::smooth_polygon_vertices(float r)
+inline tr::usize tr::smooth_polygon_vertices(float r) noexcept
 {
 	TR_ASSERT(r > 0, "Tried to pass a negative radius to smooth_polygon_vertices.");
 
 	return std::max(usize(7 * std::pow(r, 1 / 2.4f)), 3uz);
 }
 
-inline tr::usize tr::smooth_arc_vertices(float r, angle sizeth)
+inline tr::usize tr::smooth_arc_vertices(float r, angle sizeth) noexcept
 {
 	TR_ASSERT(r > 0, "Tried to pass a negative radius to smooth_arc_vertices.");
 	TR_ASSERT(sizeth >= 0_tr && sizeth <= 1_tr, "Tried to pass an arc size of more than one turn to smooth_arc_vertices.");
@@ -25,22 +25,22 @@ inline tr::usize tr::smooth_arc_vertices(float r, angle sizeth)
 	return std::max(static_cast<usize>(7 * std::pow(r, 1 / 2.4f) / (sizeth / 1_tr)), 3uz);
 }
 
-constexpr tr::usize tr::line_strip_indices(u16 vertices)
+constexpr tr::usize tr::line_strip_indices(u16 vertices) noexcept
 {
 	return (vertices - 1) * 2;
 }
 
-constexpr tr::usize tr::line_loop_indices(u16 vertices)
+constexpr tr::usize tr::line_loop_indices(u16 vertices) noexcept
 {
 	return vertices * 2;
 }
 
-constexpr tr::usize tr::polygon_indices(u16 vertices)
+constexpr tr::usize tr::polygon_indices(u16 vertices) noexcept
 {
 	return (vertices - 2) * 3;
 }
 
-constexpr tr::usize tr::polygon_outline_indices(u16 vertices)
+constexpr tr::usize tr::polygon_outline_indices(u16 vertices) noexcept
 {
 	return vertices * 6;
 }

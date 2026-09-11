@@ -18,7 +18,7 @@ namespace tr
 
 		/// Wraps a reference.
 		/// @param ref Reference to wrap.
-		constexpr ref(T& ref);
+		[[nodiscard]] constexpr ref(T& ref) noexcept;
 
 		/// Wrapping an rvalue is not permitted.
 		constexpr ref(T&&) = delete;
@@ -29,18 +29,18 @@ namespace tr
 
 		/// Unwraps the reference.
 		/// @return Raw reference to the object.
-		constexpr operator T&() const;
+		[[nodiscard]] constexpr operator T&() const noexcept;
 
 		/// Const-qualifies the reference.
 		/// @return Const-qualified version of the reference.
-		constexpr operator ref<const T>() const;
+		[[nodiscard]] constexpr operator ref<const T>() const noexcept;
 
 		/// Converts the reference to a base class reference.
 		/// @tparam U Base class of `T`.
 		/// @return Reference to the base class.
 		template <typename U>
 			requires(std::convertible_to<T&, U&>)
-		constexpr operator ref<U>() const;
+		[[nodiscard]] constexpr operator ref<U>() const noexcept;
 
 		/// @}
 		/// @name Comparison operators
@@ -49,7 +49,7 @@ namespace tr
 		/// Compares whether two references point to the same object.
 		/// @param lhs, rhs References to compare.
 		/// @return Whether the references point to the same object.
-		constexpr friend bool operator==(ref lhs, ref rhs) = default;
+		[[nodiscard]] constexpr friend bool operator==(ref lhs, ref rhs) noexcept = default;
 
 		/// @}
 		/// @name Access
@@ -57,15 +57,15 @@ namespace tr
 
 		/// Converts the reference into a pointer to the referenced object.
 		/// @return Pointer equivalent to the reference.
-		constexpr T* as_ptr() const;
+		[[nodiscard]] constexpr T* as_ptr() const noexcept;
 
 		/// Dereferences the referenced object.
 		/// @return Raw pointer to the object.
-		constexpr T* operator->() const;
+		[[nodiscard]] constexpr T* operator->() const noexcept;
 
 		/// Dereferences the referenced object.
 		/// @return Raw reference to the object.
-		constexpr T& operator*() const;
+		[[nodiscard]] constexpr T& operator*() const noexcept;
 
 		/// @}
 
@@ -78,7 +78,7 @@ namespace tr
 	/// @param lhs, rhs References to compare.
 	/// @return Whether the references point to the same object.
 	template <typename T>
-	constexpr bool operator==(const ref<T>& lhs, const T& rhs);
+	[[nodiscard]] constexpr bool operator==(const ref<T>& lhs, const T& rhs) noexcept;
 
 	//
 
@@ -92,14 +92,14 @@ namespace tr
 		/// @{
 
 		/// Creates an empty optional reference.
-		constexpr opt_ref() = default;
+		[[nodiscard]] constexpr opt_ref() noexcept = default;
 
 		/// Creates an empty optional reference.
-		constexpr opt_ref(std::nullopt_t);
+		[[nodiscard]] constexpr opt_ref(std::nullopt_t) noexcept;
 
 		/// Wraps a reference.
 		/// @param ref Reference to wrap.
-		constexpr opt_ref(T& ref);
+		[[nodiscard]] constexpr opt_ref(T& ref) noexcept;
 
 		/// Wrapping an rvalue is not permitted.
 		constexpr opt_ref(T&&) = delete;
@@ -110,13 +110,13 @@ namespace tr
 
 		/// Const-qualifies the optional reference.
 		/// @return Const-qualified version of the optional reference.
-		constexpr operator opt_ref<const T>() const;
+		[[nodiscard]] constexpr operator opt_ref<const T>() const noexcept;
 
 		/// Converts the reference to a base class reference.
 		/// @return Optional reference to the base class.
 		template <typename U>
 			requires(std::convertible_to<T&, U&>)
-		constexpr operator opt_ref<U>() const;
+		[[nodiscard]] constexpr operator opt_ref<U>() const noexcept;
 
 		/// @}
 		/// @name Comparison operators
@@ -125,7 +125,7 @@ namespace tr
 		/// Compares whether two references point to the same object (or both are empty).
 		/// @param lhs, rhs References to compare.
 		/// @return Whether the references point to the same object.
-		constexpr friend bool operator==(opt_ref lhs, opt_ref rhs) = default;
+		[[nodiscard]] constexpr friend bool operator==(opt_ref lhs, opt_ref rhs) noexcept = default;
 
 		/// @}
 		/// @name Status
@@ -133,7 +133,7 @@ namespace tr
 
 		/// Returns whether the optional reference holds a reference to an object.
 		/// @return `true` if a reference is contained, `false` otherwise.
-		constexpr bool has_ref() const;
+		[[nodiscard]] constexpr bool has_ref() const noexcept;
 
 		/// @}
 		/// @name Access
@@ -141,17 +141,17 @@ namespace tr
 
 		/// Converts the optional reference into a pointer to the referenced object, or nullptr.
 		/// @return Pointer equivalent to the optional reference.
-		constexpr T* as_ptr() const;
+		[[nodiscard]] constexpr T* as_ptr() const noexcept;
 
 		/// Dereferences the referenced object.
 		/// @pre The optional reference must reference an object.
 		/// @return Raw pointer to the object.
-		constexpr T* operator->() const;
+		[[nodiscard]] constexpr T* operator->() const noexcept;
 
 		/// Dereferences the referenced object.
 		/// @pre The optional reference must reference an object.
 		/// @return Raw reference to the object.
-		constexpr T& operator*() const;
+		[[nodiscard]] constexpr T& operator*() const noexcept;
 
 		/// @}
 
@@ -163,13 +163,13 @@ namespace tr
 
 		/// Wraps a pointer.
 		/// @param ptr Pointer to wrap.
-		constexpr explicit opt_ref(T* ptr);
+		[[nodiscard]] constexpr explicit opt_ref(T* ptr) noexcept;
 
 		//
 
 		// Uses the private constructor.
 		template <typename U>
-		friend constexpr opt_ref<U> make_opt_ref(U* ptr);
+		friend constexpr opt_ref<U> make_opt_ref(U* ptr) noexcept;
 	};
 
 	/// @name Factories
@@ -180,7 +180,7 @@ namespace tr
 	/// @param ptr Pointer to wrap into an optional reference.
 	/// @return Equivalent optional reference.
 	template <typename T>
-	constexpr opt_ref<T> make_opt_ref(T* ptr);
+	[[nodiscard]] constexpr opt_ref<T> make_opt_ref(T* ptr) noexcept;
 
 	/// @}
 	/// @name Overloaded operators
@@ -191,7 +191,7 @@ namespace tr
 	/// @param lhs, rhs References to compare.
 	/// @return Whether the references point to the same object.
 	template <typename T>
-	constexpr bool operator==(opt_ref<T> lhs, const std::type_identity_t<T>& rhs);
+	[[nodiscard]] constexpr bool operator==(opt_ref<T> lhs, const std::type_identity_t<T>& rhs) noexcept;
 
 	/// @}
 	/// @name Casts
@@ -204,7 +204,7 @@ namespace tr
 	/// @return Reference casted to `To`, or `nullopt` if the cast was not successful.
 	template <typename To, typename From>
 		requires(std::derived_from<To, From>)
-	constexpr tr::opt_ref<To> dynamic_ref_cast(From& ref);
+	[[nodiscard]] constexpr tr::opt_ref<To> dynamic_ref_cast(From& ref) noexcept;
 
 	/// Performs a dynamic_cast on a reference that returns an optional reference.
 	/// @tparam To Type to cast to.
@@ -213,7 +213,7 @@ namespace tr
 	/// @return Reference casted to `To`, or `nullopt` if the cast was not successful.
 	template <typename To, typename From>
 		requires(std::derived_from<To, From>)
-	constexpr tr::opt_ref<To> dynamic_ref_cast(ref<From> ref);
+	[[nodiscard]] constexpr tr::opt_ref<To> dynamic_ref_cast(ref<From> ref) noexcept;
 
 	/// Performs a dynamic_cast on a reference that returns an optional reference.
 	/// @tparam To Type to cast to.
@@ -222,7 +222,7 @@ namespace tr
 	/// @return Reference casted to `To`, or `nullopt` if the cast was not successful or `ref` was empty.
 	template <typename To, typename From>
 		requires(std::derived_from<To, From>)
-	constexpr tr::opt_ref<To> dynamic_ref_cast(opt_ref<From> ref);
+	[[nodiscard]] constexpr tr::opt_ref<To> dynamic_ref_cast(opt_ref<From> ref) noexcept;
 
 	/// @}
 } // namespace tr

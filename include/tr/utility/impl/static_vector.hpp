@@ -8,16 +8,16 @@
 
 //
 
-template <typename Element, tr::usize Capacity>
-tr::static_vector<Element, Capacity>::iterator::operator const_iterator() const
+template <tr::nothrow_destructible Element, tr::usize Capacity>
+tr::static_vector<Element, Capacity>::iterator::operator const_iterator() const noexcept
 {
 	return const_iterator{this->base()};
 }
 
 //
 
-template <typename Element, tr::usize Capacity>
-tr::static_vector<Element, Capacity>::static_vector(size_type size)
+template <tr::nothrow_destructible Element, tr::usize Capacity>
+tr::static_vector<Element, Capacity>::static_vector(size_type size) noexcept(std::is_nothrow_default_constructible_v<Element>)
 	requires(std::default_initializable<Element>)
 	: m_size{size}
 {
@@ -26,8 +26,9 @@ tr::static_vector<Element, Capacity>::static_vector(size_type size)
 	std::uninitialized_default_construct(begin(), end());
 }
 
-template <typename Element, tr::usize Capacity>
+template <tr::nothrow_destructible Element, tr::usize Capacity>
 tr::static_vector<Element, Capacity>::static_vector(size_type size, const Element& value)
+	noexcept(std::is_nothrow_copy_constructible_v<Element>)
 	requires(std::copy_constructible<Element>)
 	: m_size{size}
 {
@@ -36,36 +37,38 @@ tr::static_vector<Element, Capacity>::static_vector(size_type size, const Elemen
 	std::uninitialized_fill(begin(), end(), value);
 }
 
-template <typename Element, tr::usize Capacity>
-template <tr::typed_input_iterator<Element> Iterator>
-tr::static_vector<Element, Capacity>::static_vector(Iterator first, Iterator last)
-	: m_size{0}
+template <tr::nothrow_destructible Element, tr::usize Capacity>
+template <tr::forward_iterator_to_convertible_to<Element> Iterator, std::sentinel_for<Iterator> Sentinel>
+tr::static_vector<Element, Capacity>::static_vector(Iterator first, Sentinel last)
+	noexcept(nothrow_forward_iterator_to_convertible_to<Iterator, Element>)
+	: m_size{static_cast<size_type>(std::ranges::distance(first, last))}
 {
-	append(first, last);
+	std::uninitialized_copy(first, last, begin());
 }
 
-template <typename Element, tr::usize Capacity>
-template <tr::typed_input_range<Element> Range>
-tr::static_vector<Element, Capacity>::static_vector(Range&& range)
+template <tr::nothrow_destructible Element, tr::usize Capacity>
+template <tr::forward_range_to_convertible_to<Element> Range>
+tr::static_vector<Element, Capacity>::static_vector(Range&& range) noexcept(nothrow_forward_range_to_convertible_to<Range, Element>)
 	: static_vector{std::ranges::begin(range), std::ranges::end(range)}
 {
 }
 
-template <typename Element, tr::usize Capacity>
+template <tr::nothrow_destructible Element, tr::usize Capacity>
 tr::static_vector<Element, Capacity>::static_vector(std::initializer_list<Element> init)
+	noexcept(std::is_nothrow_copy_constructible_v<Element>)
 	requires(std::copy_constructible<Element>)
 	: static_vector{init.begin(), init.end()}
 {
 }
 
-template <typename Element, tr::usize Capacity>
-tr::static_vector<Element, Capacity>::static_vector(const static_vector& rhs)
+template <tr::nothrow_destructible Element, tr::usize Capacity>
+tr::static_vector<Element, Capacity>::static_vector(const static_vector& rhs) noexcept(std::is_nothrow_copy_constructible_v<Element>)
 	requires(std::copy_constructible<Element>)
 	: static_vector{rhs.begin(), rhs.end()}
 {
 }
 
-template <typename Element, tr::usize Capacity>
+template <tr::nothrow_destructible Element, tr::usize Capacity>
 tr::static_vector<Element, Capacity>::static_vector(static_vector&& rhs) noexcept(std::is_nothrow_move_constructible_v<Element>)
 	requires(std::move_constructible<Element>)
 	: static_vector{std::move_iterator{rhs.begin()}, std::move_iterator{rhs.end()}}
@@ -73,197 +76,227 @@ tr::static_vector<Element, Capacity>::static_vector(static_vector&& rhs) noexcep
 	rhs.clear();
 }
 
-template <typename Element, tr::usize Capacity>
-tr::static_vector<Element, Capacity>::~static_vector<Element, Capacity>()
+template <tr::nothrow_destructible Element, tr::usize Capacity>
+tr::static_vector<Element, Capacity>::~static_vector<Element, Capacity>() noexcept
 {
 	std::destroy(begin(), end());
 }
 
 //
 
-template <typename Element, tr::usize Capacity>
-tr::static_vector<Element, Capacity>::reference tr::static_vector<Element, Capacity>::at(size_type offset)
+template <tr::nothrow_destructible Element, tr::usize Capacity>
+tr::static_vector<Element, Capacity>& tr::static_vector<Element, Capacity>::operator=(const static_vector& rhs)
+	noexcept(std::is_nothrow_copy_constructible_v<Element>)
+	requires(std::copy_constructible<Element>)
+{
+	std::destroy(begin(), end());
+	std::uninitialized_copy(rhs.begin(), rhs.end(), begin());
+	m_size = rhs.m_size;
+	return *this;
+}
+
+template <tr::nothrow_destructible Element, tr::usize Capacity>
+tr::static_vector<Element, Capacity>& tr::static_vector<Element, Capacity>::operator=(static_vector&& rhs)
+	noexcept(std::is_nothrow_move_constructible_v<Element>)
+	requires(std::move_constructible<Element>)
+{
+	std::destroy(begin(), end());
+	std::uninitialized_move(rhs.begin(), rhs.end(), begin());
+	m_size = rhs.m_size;
+	rhs.clear();
+	return *this;
+}
+
+//
+
+template <tr::nothrow_destructible Element, tr::usize Capacity>
+tr::static_vector<Element, Capacity>::reference tr::static_vector<Element, Capacity>::at(size_type offset) noexcept
 {
 	TR_ASSERT(offset < m_size, "Tried to do an out-of-bounds read at position {} of static vector with size {}.", offset, m_size);
 	return data()[offset];
 }
 
-template <typename Element, tr::usize Capacity>
-tr::static_vector<Element, Capacity>::const_reference tr::static_vector<Element, Capacity>::at(size_type offset) const
+template <tr::nothrow_destructible Element, tr::usize Capacity>
+tr::static_vector<Element, Capacity>::const_reference tr::static_vector<Element, Capacity>::at(size_type offset) const noexcept
 {
 	TR_ASSERT(offset < m_size, "Tried to do an out-of-bounds read at position {} of static vector with size {}.", offset, m_size);
 	return data()[offset];
 }
 
-template <typename Element, tr::usize Capacity>
-tr::static_vector<Element, Capacity>::reference tr::static_vector<Element, Capacity>::operator[](size_type offset)
+template <tr::nothrow_destructible Element, tr::usize Capacity>
+tr::static_vector<Element, Capacity>::reference tr::static_vector<Element, Capacity>::operator[](size_type offset) noexcept
 {
 	return at(offset);
 }
 
-template <typename Element, tr::usize Capacity>
-tr::static_vector<Element, Capacity>::const_reference tr::static_vector<Element, Capacity>::operator[](size_type offset) const
+template <tr::nothrow_destructible Element, tr::usize Capacity>
+tr::static_vector<Element, Capacity>::const_reference tr::static_vector<Element, Capacity>::operator[](size_type offset) const noexcept
 {
 	return at(offset);
 }
 
-template <typename Element, tr::usize Capacity>
-tr::static_vector<Element, Capacity>::reference tr::static_vector<Element, Capacity>::front()
+template <tr::nothrow_destructible Element, tr::usize Capacity>
+tr::static_vector<Element, Capacity>::reference tr::static_vector<Element, Capacity>::front() noexcept
 {
 	return at(0);
 }
 
-template <typename Element, tr::usize Capacity>
-tr::static_vector<Element, Capacity>::const_reference tr::static_vector<Element, Capacity>::front() const
+template <tr::nothrow_destructible Element, tr::usize Capacity>
+tr::static_vector<Element, Capacity>::const_reference tr::static_vector<Element, Capacity>::front() const noexcept
 {
 	return at(0);
 }
 
-template <typename Element, tr::usize Capacity>
-tr::static_vector<Element, Capacity>::reference tr::static_vector<Element, Capacity>::back()
+template <tr::nothrow_destructible Element, tr::usize Capacity>
+tr::static_vector<Element, Capacity>::reference tr::static_vector<Element, Capacity>::back() noexcept
 {
 	return at(m_size - 1);
 }
 
-template <typename Element, tr::usize Capacity>
-tr::static_vector<Element, Capacity>::const_reference tr::static_vector<Element, Capacity>::back() const
+template <tr::nothrow_destructible Element, tr::usize Capacity>
+tr::static_vector<Element, Capacity>::const_reference tr::static_vector<Element, Capacity>::back() const noexcept
 {
 	return at(m_size - 1);
 }
 
-template <typename Element, tr::usize Capacity>
-tr::static_vector<Element, Capacity>::pointer tr::static_vector<Element, Capacity>::data()
+template <tr::nothrow_destructible Element, tr::usize Capacity>
+tr::static_vector<Element, Capacity>::pointer tr::static_vector<Element, Capacity>::data() noexcept
 {
 	return reinterpret_cast<Element*>(m_buffer);
 }
 
-template <typename Element, tr::usize Capacity>
-tr::static_vector<Element, Capacity>::const_pointer tr::static_vector<Element, Capacity>::data() const
+template <tr::nothrow_destructible Element, tr::usize Capacity>
+tr::static_vector<Element, Capacity>::const_pointer tr::static_vector<Element, Capacity>::data() const noexcept
 {
 	return reinterpret_cast<const Element*>(m_buffer);
 }
 
 //
 
-template <typename Element, tr::usize Capacity>
-tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capacity>::begin()
+template <tr::nothrow_destructible Element, tr::usize Capacity>
+tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capacity>::begin() noexcept
 {
 	return iterator{data()};
 }
 
-template <typename Element, tr::usize Capacity>
-tr::static_vector<Element, Capacity>::const_iterator tr::static_vector<Element, Capacity>::begin() const
+template <tr::nothrow_destructible Element, tr::usize Capacity>
+tr::static_vector<Element, Capacity>::const_iterator tr::static_vector<Element, Capacity>::begin() const noexcept
 {
 	return const_iterator{data()};
 }
 
-template <typename Element, tr::usize Capacity>
-tr::static_vector<Element, Capacity>::const_iterator tr::static_vector<Element, Capacity>::cbegin() const
+template <tr::nothrow_destructible Element, tr::usize Capacity>
+tr::static_vector<Element, Capacity>::const_iterator tr::static_vector<Element, Capacity>::cbegin() const noexcept
 {
 	return begin();
 }
 
-template <typename Element, tr::usize Capacity>
-tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capacity>::end()
+template <tr::nothrow_destructible Element, tr::usize Capacity>
+tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capacity>::end() noexcept
 {
 	return begin() + m_size;
 }
 
-template <typename Element, tr::usize Capacity>
-tr::static_vector<Element, Capacity>::const_iterator tr::static_vector<Element, Capacity>::end() const
+template <tr::nothrow_destructible Element, tr::usize Capacity>
+tr::static_vector<Element, Capacity>::const_iterator tr::static_vector<Element, Capacity>::end() const noexcept
 {
 	return begin() + m_size;
 }
 
-template <typename Element, tr::usize Capacity>
-tr::static_vector<Element, Capacity>::const_iterator tr::static_vector<Element, Capacity>::cend() const
+template <tr::nothrow_destructible Element, tr::usize Capacity>
+tr::static_vector<Element, Capacity>::const_iterator tr::static_vector<Element, Capacity>::cend() const noexcept
 {
 	return begin() + m_size;
 }
 
-template <typename Element, tr::usize Capacity>
-tr::static_vector<Element, Capacity>::reverse_iterator tr::static_vector<Element, Capacity>::rbegin()
+template <tr::nothrow_destructible Element, tr::usize Capacity>
+tr::static_vector<Element, Capacity>::reverse_iterator tr::static_vector<Element, Capacity>::rbegin() noexcept
 {
 	return std::reverse_iterator{end()};
 }
 
-template <typename Element, tr::usize Capacity>
-tr::static_vector<Element, Capacity>::const_reverse_iterator tr::static_vector<Element, Capacity>::rbegin() const
+template <tr::nothrow_destructible Element, tr::usize Capacity>
+tr::static_vector<Element, Capacity>::const_reverse_iterator tr::static_vector<Element, Capacity>::rbegin() const noexcept
 {
 	return std::reverse_iterator{end()};
 }
 
-template <typename Element, tr::usize Capacity>
-tr::static_vector<Element, Capacity>::const_reverse_iterator tr::static_vector<Element, Capacity>::crbegin() const
+template <tr::nothrow_destructible Element, tr::usize Capacity>
+tr::static_vector<Element, Capacity>::const_reverse_iterator tr::static_vector<Element, Capacity>::crbegin() const noexcept
 {
 	return std::reverse_iterator{cend()};
 }
 
-template <typename Element, tr::usize Capacity>
-tr::static_vector<Element, Capacity>::reverse_iterator tr::static_vector<Element, Capacity>::rend()
+template <tr::nothrow_destructible Element, tr::usize Capacity>
+tr::static_vector<Element, Capacity>::reverse_iterator tr::static_vector<Element, Capacity>::rend() noexcept
 {
 	return std::reverse_iterator{begin()};
 }
 
-template <typename Element, tr::usize Capacity>
-tr::static_vector<Element, Capacity>::const_reverse_iterator tr::static_vector<Element, Capacity>::rend() const
+template <tr::nothrow_destructible Element, tr::usize Capacity>
+tr::static_vector<Element, Capacity>::const_reverse_iterator tr::static_vector<Element, Capacity>::rend() const noexcept
 {
 	return std::reverse_iterator{begin()};
 }
 
-template <typename Element, tr::usize Capacity>
-tr::static_vector<Element, Capacity>::const_reverse_iterator tr::static_vector<Element, Capacity>::crend() const
+template <tr::nothrow_destructible Element, tr::usize Capacity>
+tr::static_vector<Element, Capacity>::const_reverse_iterator tr::static_vector<Element, Capacity>::crend() const noexcept
 {
 	return std::reverse_iterator{cbegin()};
 }
 
 //
 
-template <typename Element, tr::usize Capacity>
-constexpr bool tr::static_vector<Element, Capacity>::empty() const
+template <tr::nothrow_destructible Element, tr::usize Capacity>
+constexpr bool tr::static_vector<Element, Capacity>::empty() const noexcept
 {
 	return m_size == 0;
 }
 
-template <typename Element, tr::usize Capacity>
-constexpr tr::static_vector<Element, Capacity>::size_type tr::static_vector<Element, Capacity>::size() const
+template <tr::nothrow_destructible Element, tr::usize Capacity>
+constexpr tr::static_vector<Element, Capacity>::size_type tr::static_vector<Element, Capacity>::size() const noexcept
 {
 	return m_size;
 }
 
-template <typename Element, tr::usize Capacity>
-constexpr tr::static_vector<Element, Capacity>::size_type tr::static_vector<Element, Capacity>::max_size()
+template <tr::nothrow_destructible Element, tr::usize Capacity>
+constexpr tr::static_vector<Element, Capacity>::size_type tr::static_vector<Element, Capacity>::max_size() noexcept
 {
 	return Capacity;
 }
 
 //
 
-template <typename Element, tr::usize Capacity>
-void tr::static_vector<Element, Capacity>::clear()
+template <tr::nothrow_destructible Element, tr::usize Capacity>
+void tr::static_vector<Element, Capacity>::clear() noexcept
 {
 	std::destroy(begin(), end());
 	m_size = 0;
 }
 
-template <typename Element, tr::usize Capacity>
+template <tr::nothrow_destructible Element, tr::usize Capacity>
+
 tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capacity>::insert(const_iterator where, const Element& value)
-	requires(std::copy_constructible<Element>)
+	noexcept(nothrow_movable<Element> && std::is_nothrow_copy_constructible_v<Element>)
+	requires(std::move_constructible<Element> && move_assignable<Element> && std::copy_constructible<Element>)
 {
 	return emplace(where, value);
 }
 
-template <typename Element, tr::usize Capacity>
+template <tr::nothrow_destructible Element, tr::usize Capacity>
 tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capacity>::insert(const_iterator where, Element&& value)
-	requires(std::move_constructible<Element>)
+	noexcept(nothrow_movable<Element>)
+	requires(std::move_constructible<Element> && move_assignable<Element>)
 {
 	return emplace(where, std::move(value));
 }
 
-template <typename Element, tr::usize Capacity>
-template <tr::typed_input_iterator<Element> Iterator>
+template <tr::nothrow_destructible Element, tr::usize Capacity>
+template <tr::forward_iterator_to_convertible_to<Element> Iterator, std::sentinel_for<Iterator> Sentinel>
+	requires(std::move_constructible<Element> && tr::move_assignable<Element>)
 tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capacity>::insert(const_iterator cwhere, Iterator first,
-																							Iterator last)
+																							Sentinel last)
+	noexcept(nothrow_movable<Element> && nothrow_forward_iterator_to_convertible_to<Iterator, Element>)
 {
 	const auto inserted_elements{std::distance(first, last)};
 
@@ -289,25 +322,29 @@ tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capaci
 	return where;
 }
 
-template <typename Element, tr::usize Capacity>
-template <tr::typed_input_range<Element> Range>
+template <tr::nothrow_destructible Element, tr::usize Capacity>
+template <tr::forward_range_to_convertible_to<Element> Range>
+	requires(std::move_constructible<Element> && tr::move_assignable<Element>)
 tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capacity>::insert(const_iterator where, Range&& range)
+	noexcept(nothrow_movable<Element> && nothrow_forward_range_to_convertible_to<Range, Element>)
 {
 	return insert(where, std::ranges::begin(range), std::ranges::end(range));
 }
 
-template <typename Element, tr::usize Capacity>
+template <tr::nothrow_destructible Element, tr::usize Capacity>
 tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capacity>::insert(const_iterator where,
 																							std::initializer_list<Element> init)
-	requires(std::copy_constructible<Element>)
+	noexcept(nothrow_movable<Element> && std::is_nothrow_copy_constructible_v<Element>)
+	requires(std::move_constructible<Element> && move_assignable<Element> && std::copy_constructible<Element>)
 {
 	return insert(where, init.begin(), init.end());
 }
 
-template <typename Element, tr::usize Capacity>
+template <tr::nothrow_destructible Element, tr::usize Capacity>
 template <typename... Args>
-	requires(std::constructible_from<Element, Args...>)
+	requires(std::move_constructible<Element> && tr::move_assignable<Element> && std::constructible_from<Element, Args...>)
 tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capacity>::emplace(const_iterator cwhere, Args&&... args)
+	noexcept(nothrow_movable<Element> && std::is_nothrow_constructible_v<Element, Args...>)
 {
 	TR_ASSERT(m_size < Capacity, "Tried to insert into a static vector that is already at its capacity of {}.", Capacity);
 	TR_ASSERT(cwhere >= begin() && cwhere <= end(), "Tried to pass an invalid iterator to static_vector::insert.");
@@ -323,20 +360,24 @@ tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capaci
 	return where;
 }
 
-template <typename Element, tr::usize Capacity>
+template <tr::nothrow_destructible Element, tr::usize Capacity>
 tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capacity>::erase(const_iterator cwhere)
+	noexcept(std::is_nothrow_move_assignable_v<Element>)
+	requires(move_assignable<Element>)
 {
 	TR_ASSERT(cwhere >= begin() && cwhere < end(), "Tried to pass an invalid iterator to static_vector::erase.");
 
 	const iterator where{begin() + (cwhere - begin())};
 	std::move(where + 1, end(), where);
-	where->~Element();
+	back().~Element();
 	--m_size;
 	return where;
 }
 
-template <typename Element, tr::usize Capacity>
+template <tr::nothrow_destructible Element, tr::usize Capacity>
 tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capacity>::erase(const_iterator cfirst, const_iterator clast)
+	noexcept(std::is_nothrow_move_assignable_v<Element>)
+	requires(move_assignable<Element>)
 {
 	TR_ASSERT(cfirst >= begin() && cfirst < end(), "Tried to pass an invalid start iterator to static_vector::erase.");
 	TR_ASSERT(clast >= begin() && clast <= end(), "Tried to pass an invalid end iterator to static_vector::erase.");
@@ -350,60 +391,68 @@ tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capaci
 	return first;
 }
 
-template <typename Element, tr::usize Capacity>
+template <tr::nothrow_destructible Element, tr::usize Capacity>
 tr::static_vector<Element, Capacity>::reference tr::static_vector<Element, Capacity>::push_back(const Element& value)
+	noexcept(std::is_nothrow_copy_constructible_v<Element>)
 	requires(std::copy_constructible<Element>)
 {
 	return emplace_back(value);
 }
 
-template <typename Element, tr::usize Capacity>
+template <tr::nothrow_destructible Element, tr::usize Capacity>
 tr::static_vector<Element, Capacity>::reference tr::static_vector<Element, Capacity>::push_back(Element&& value)
+	noexcept(std::is_nothrow_move_constructible_v<Element>)
 	requires(std::move_constructible<Element>)
 {
 	return emplace_back(std::move(value));
 }
 
-template <typename Element, tr::usize Capacity>
+template <tr::nothrow_destructible Element, tr::usize Capacity>
 template <typename... Args>
 	requires(std::constructible_from<Element, Args...>)
 tr::static_vector<Element, Capacity>::reference tr::static_vector<Element, Capacity>::emplace_back(Args&&... args)
+	noexcept(std::is_nothrow_constructible_v<Element, Args...>)
 {
 	return *emplace(end(), std::forward<Args>(args)...);
 }
 
-template <typename Element, tr::usize Capacity>
-template <tr::typed_input_iterator<Element> Iterator>
-tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capacity>::append(Iterator first, Iterator last)
+template <tr::nothrow_destructible Element, tr::usize Capacity>
+template <tr::forward_iterator_to_convertible_to<Element> Iterator, std::sentinel_for<Iterator> Sentinel>
+tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capacity>::append(Iterator first, Sentinel last)
+	noexcept(nothrow_forward_iterator_to_convertible_to<Iterator, Element>)
 {
 	return insert(end(), first, last);
 }
 
-template <typename Element, tr::usize Capacity>
-template <tr::typed_input_range<Element> Range>
+template <tr::nothrow_destructible Element, tr::usize Capacity>
+template <tr::forward_range_to_convertible_to<Element> Range>
 tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capacity>::append(Range&& range)
+	noexcept(nothrow_forward_range_to_convertible_to<Range, Element>)
 {
 	return append(std::ranges::begin(range), std::ranges::end(range));
 }
 
-template <typename Element, tr::usize Capacity>
+template <tr::nothrow_destructible Element, tr::usize Capacity>
 tr::static_vector<Element, Capacity>::iterator tr::static_vector<Element, Capacity>::append(std::initializer_list<Element> init)
+	noexcept(std::is_nothrow_copy_constructible_v<Element>)
 	requires(std::copy_constructible<Element>)
 {
 	return append(init.begin(), init.end());
 }
 
-template <typename Element, tr::usize Capacity>
-void tr::static_vector<Element, Capacity>::pop_back()
+template <tr::nothrow_destructible Element, tr::usize Capacity>
+void tr::static_vector<Element, Capacity>::pop_back() noexcept
 {
 	back().~Element();
 	--m_size;
 }
 
-template <typename Element, tr::usize Capacity>
-void tr::static_vector<Element, Capacity>::resize(size_type size)
+template <tr::nothrow_destructible Element, tr::usize Capacity>
+void tr::static_vector<Element, Capacity>::resize(size_type size) noexcept(std::is_nothrow_default_constructible_v<Element>)
 	requires(std::default_initializable<Element>)
 {
+	TR_ASSERT(size <= max_size(), "Tried to resize a static vector with capacity {} to size {}.", max_size(), size);
+
 	const iterator old_end{end()};
 	m_size = size;
 	if (end() < old_end) {
@@ -414,10 +463,13 @@ void tr::static_vector<Element, Capacity>::resize(size_type size)
 	}
 }
 
-template <typename Element, tr::usize Capacity>
+template <tr::nothrow_destructible Element, tr::usize Capacity>
 void tr::static_vector<Element, Capacity>::resize(size_type size, const Element& value)
+	noexcept(std::is_nothrow_copy_constructible_v<Element>)
 	requires(std::copy_constructible<Element>)
 {
+	TR_ASSERT(size <= max_size(), "Tried to resize a static vector with capacity {} to size {}.", max_size(), size);
+
 	const iterator old_end{end()};
 	m_size = size;
 	if (end() < old_end) {

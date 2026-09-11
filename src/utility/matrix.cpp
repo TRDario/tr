@@ -5,49 +5,49 @@
 
 //
 
-glm::mat4 tr::ortho(rectangle<float> region)
+glm::mat4 tr::ortho(rectangle<float> region) noexcept
 {
 	return glm::ortho(region.tl.x, region.tl.x + region.size.x, region.tl.y + region.size.y, region.tl.y);
 }
 
-glm::mat4 tr::scale_around(const glm::mat4& matrix, glm::vec2 center, glm::vec2 scale)
+glm::mat4 tr::scale_around(const glm::mat4& matrix, glm::vec2 center, glm::vec2 scale) noexcept
 {
 	return scale_around(matrix, glm::vec3{center, 0}, glm::vec3{scale, 1});
 }
 
-glm::mat4 tr::scale_around(const glm::mat4& matrix, glm::vec3 center, glm::vec3 scale)
+glm::mat4 tr::scale_around(const glm::mat4& matrix, glm::vec3 center, glm::vec3 scale) noexcept
 {
 	return glm::translate(glm::scale(glm::translate(matrix, center), scale), -center);
 }
 
-glm::mat4 tr::rotate_around(const glm::mat4& matrix, glm::vec2 center, angle rotation)
+glm::mat4 tr::rotate_around(const glm::mat4& matrix, glm::vec2 center, angle rotation) noexcept
 {
 	return rotate_around(matrix, {center, 0}, rotation, z_axis);
 }
 
-glm::mat4 tr::rotate_around(const glm::mat4& matrix, glm::vec3 center, angle rotation, glm::vec3 axis)
+glm::mat4 tr::rotate_around(const glm::mat4& matrix, glm::vec3 center, angle rotation, glm::vec3 axis) noexcept
 {
 	return glm::translate(glm::rotate(glm::translate(matrix, center), rotation.rads(), axis), -center);
 }
 
 //
 
-glm::vec2 tr::matrix_operators::operator*(glm::vec2 v, const glm::mat4& m)
+glm::vec2 tr::matrix_operators::operator*(glm::vec2 v, const glm::mat4& m) noexcept
 {
 	return glm::vec4{v, 0, 1} * m;
 }
 
-glm::vec3 tr::matrix_operators::operator*(glm::vec3 v, const glm::mat4& m)
+glm::vec3 tr::matrix_operators::operator*(glm::vec3 v, const glm::mat4& m) noexcept
 {
 	return glm::vec4{v, 1} * m;
 }
 
-glm::vec2 tr::matrix_operators::operator*(const glm::mat4& m, glm::vec2 v)
+glm::vec2 tr::matrix_operators::operator*(const glm::mat4& m, glm::vec2 v) noexcept
 {
 	return m * glm::vec4{v, 0, 1};
 }
 
-glm::vec3 tr::matrix_operators::operator*(const glm::mat4& m, glm::vec3 v)
+glm::vec3 tr::matrix_operators::operator*(const glm::mat4& m, glm::vec3 v) noexcept
 {
 	return m * glm::vec4{v, 1};
 }

@@ -16,7 +16,7 @@ struct stateless_deleter
 	//
 
 	/// Mock deletion.
-	void operator()(int value) const
+	void operator()(int value) const noexcept
 	{
 		++deleted_count;
 		last_deleted_value = value;
@@ -40,7 +40,7 @@ struct tagged_deleter
 	//
 
 	/// Mock deletion.
-	void operator()(int value) const {}
+	void operator()(int value) const noexcept {}
 };
 
 /// Handle using a stateless deleter.
@@ -73,9 +73,9 @@ static_assert(tr::handle_deleter<stateless_deleter, int>);
 
 static_assert(tr::handle_deleter<tagged_deleter, int>);
 
-static_assert(tr::handle_deleter<decltype([](int) {}), int>);
+static_assert(tr::handle_deleter<decltype([](int) noexcept {}), int>);
 
-static_assert(tr::handle_deleter<void (*)(int), int>);
+static_assert(tr::handle_deleter<void (*)(int) noexcept, int>);
 
 static_assert(tr::default_constructible_handle_deleter<stateless_deleter>);
 

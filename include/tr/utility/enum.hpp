@@ -15,19 +15,19 @@ namespace tr
 	  public:
 		/// Wraps an enumerator value.
 		/// @param value Raw enumerator value.
-		constexpr enum_wrapper(Enum value);
+		[[nodiscard]] constexpr enum_wrapper(Enum value) noexcept;
 
 		/// Converts the enumerator to a boolean.
 		/// @return Enumerator cast to a boolean.
-		constexpr explicit operator bool() const;
+		[[nodiscard]] constexpr explicit operator bool() const noexcept;
 
 		/// Unwraps the enumerator.
 		/// @return Raw enumerator value.
-		constexpr operator Enum() const;
+		[[nodiscard]] constexpr operator Enum() const noexcept;
 
 		/// Unwraps the enumerator.
 		/// @return Raw enumerator value.
-		constexpr Enum unwrap() const;
+		[[nodiscard]] constexpr Enum unwrap() const noexcept;
 
 	  private:
 		/// Base enumerator value.
@@ -39,31 +39,31 @@ namespace tr
 /// @param type Enumerator class type.
 /// @hideinitializer
 #define TR_DEFINE_ENUM_BITMASK_OPERATORS(type)                                                                                             \
-	constexpr tr::enum_wrapper<type> operator&(type lhs, type rhs)                                                                         \
+	[[nodiscard]] constexpr tr::enum_wrapper<type> operator&(type lhs, type rhs) noexcept                                                  \
 	{                                                                                                                                      \
 		return tr::enum_wrapper{static_cast<type>(std::to_underlying(lhs) & std::to_underlying(rhs))};                                     \
 	}                                                                                                                                      \
-	constexpr tr::enum_wrapper<type> operator|(type lhs, type rhs)                                                                         \
+	[[nodiscard]] constexpr tr::enum_wrapper<type> operator|(type lhs, type rhs) noexcept                                                  \
 	{                                                                                                                                      \
 		return tr::enum_wrapper{static_cast<type>(std::to_underlying(lhs) | std::to_underlying(rhs))};                                     \
 	}                                                                                                                                      \
-	constexpr tr::enum_wrapper<type> operator^(type lhs, type rhs)                                                                         \
+	[[nodiscard]] constexpr tr::enum_wrapper<type> operator^(type lhs, type rhs) noexcept                                                  \
 	{                                                                                                                                      \
 		return tr::enum_wrapper{static_cast<type>(std::to_underlying(lhs) ^ std::to_underlying(rhs))};                                     \
 	}                                                                                                                                      \
-	constexpr tr::enum_wrapper<type> operator~(type lhs)                                                                                   \
+	[[nodiscard]] constexpr tr::enum_wrapper<type> operator~(type lhs) noexcept                                                            \
 	{                                                                                                                                      \
 		return tr::enum_wrapper{static_cast<type>(~std::to_underlying(lhs))};                                                              \
 	}                                                                                                                                      \
-	constexpr type& operator&=(type& lhs, type rhs)                                                                                        \
+	constexpr type& operator&=(type& lhs, type rhs) noexcept                                                                               \
 	{                                                                                                                                      \
 		return lhs = (lhs & rhs);                                                                                                          \
 	}                                                                                                                                      \
-	constexpr type& operator|=(type& lhs, type rhs)                                                                                        \
+	constexpr type& operator|=(type& lhs, type rhs) noexcept                                                                               \
 	{                                                                                                                                      \
 		return lhs = (lhs | rhs);                                                                                                          \
 	}                                                                                                                                      \
-	constexpr type& operator^=(type& lhs, type rhs)                                                                                        \
+	constexpr type& operator^=(type& lhs, type rhs) noexcept                                                                               \
 	{                                                                                                                                      \
 		return lhs = (lhs ^ rhs);                                                                                                          \
 	}
@@ -72,31 +72,31 @@ namespace tr
 /// @param type Private enumerator class type.
 /// @hideinitializer
 #define TR_DEFINE_PRIVATE_ENUM_BITMASK_OPERATORS(type)                                                                                     \
-	friend constexpr tr::enum_wrapper<type> operator&(type lhs, type rhs)                                                                  \
+	[[nodiscard]] friend constexpr tr::enum_wrapper<type> operator&(type lhs, type rhs) noexcept                                           \
 	{                                                                                                                                      \
 		return tr::enum_wrapper{static_cast<type>(std::to_underlying(lhs) & std::to_underlying(rhs))};                                     \
 	}                                                                                                                                      \
-	friend constexpr tr::enum_wrapper<type> operator|(type lhs, type rhs)                                                                  \
+	[[nodiscard]] friend constexpr tr::enum_wrapper<type> operator|(type lhs, type rhs) noexcept                                           \
 	{                                                                                                                                      \
 		return tr::enum_wrapper{static_cast<type>(std::to_underlying(lhs) | std::to_underlying(rhs))};                                     \
 	}                                                                                                                                      \
-	friend constexpr tr::enum_wrapper<type> operator^(type lhs, type rhs)                                                                  \
+	[[nodiscard]] friend constexpr tr::enum_wrapper<type> operator^(type lhs, type rhs) noexcept                                           \
 	{                                                                                                                                      \
 		return tr::enum_wrapper{static_cast<type>(std::to_underlying(lhs) ^ std::to_underlying(rhs))};                                     \
 	}                                                                                                                                      \
-	friend constexpr tr::enum_wrapper<type> operator~(type lhs)                                                                            \
+	[[nodiscard]] friend constexpr tr::enum_wrapper<type> operator~(type lhs) noexcept                                                     \
 	{                                                                                                                                      \
 		return tr::enum_wrapper{static_cast<type>(~std::to_underlying(lhs))};                                                              \
 	}                                                                                                                                      \
-	friend constexpr type& operator&=(type& lhs, type rhs)                                                                                 \
+	friend constexpr type& operator&=(type& lhs, type rhs) noexcept                                                                        \
 	{                                                                                                                                      \
 		return lhs = (lhs & rhs);                                                                                                          \
 	}                                                                                                                                      \
-	friend constexpr type& operator|=(type& lhs, type rhs)                                                                                 \
+	friend constexpr type& operator|=(type& lhs, type rhs) noexcept                                                                        \
 	{                                                                                                                                      \
 		return lhs = (lhs | rhs);                                                                                                          \
 	}                                                                                                                                      \
-	friend constexpr type& operator^=(type& lhs, type rhs)                                                                                 \
+	friend constexpr type& operator^=(type& lhs, type rhs) noexcept                                                                        \
 	{                                                                                                                                      \
 		return lhs = (lhs ^ rhs);                                                                                                          \
 	}

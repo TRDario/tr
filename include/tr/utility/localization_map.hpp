@@ -25,22 +25,22 @@ namespace tr
 		/// @{
 
 		/// Constructs an empty localization map.
-		localization_map() = default;
+		[[nodiscard]] localization_map() noexcept = default;
 
 		/// Copies a localization map.
 		/// @param map Localization map to copy.
-		localization_map(const string_flat_map<std::string>& map);
+		[[nodiscard]] localization_map(const string_flat_map<std::string>& map);
 
 		/// Moves a localization map.
 		/// @param map Localization map to move.
-		localization_map(string_flat_map<std::string>&& map);
+		[[nodiscard]] localization_map(string_flat_map<std::string>&& map) noexcept;
 
 		/// @}
 		/// @name Manipulation
 		/// @{
 
 		/// Clears the localization map.
-		void clear();
+		void clear() noexcept;
 
 		/// Loads a localization script, returning any non-fatal errors.
 		/// @param script Script string in the format defined in the class description.
@@ -61,13 +61,13 @@ namespace tr
 		/// Gets whether a key has a corresponding localization string in the map.
 		/// @param key Localization key to check.
 		/// @return `true` if a string is associated with `key`, `false` otherwise.
-		bool contains(std::string_view key) const;
+		[[nodiscard]] bool contains(std::string_view key) const;
 
 		/// Gets a localization string associated with a key.
 		/// @param key Localization key to get a localization string for.
 		/// @post The string `key` is a view of must stay alive after the function returns in case it's returned.
 		/// @return Localization string associated with a key, or `key` if one doesn't exist.
-		std::string_view operator[](std::string_view key) const;
+		[[nodiscard]] std::string_view operator[](std::string_view key) const;
 
 		/// @}
 
@@ -89,12 +89,12 @@ namespace tr
 			//
 
 			/// Tries to parse a line of script.
-			std::optional<parse_result> parse_line(std::string_view line);
+			[[nodiscard]] std::optional<parse_result> parse_line(std::string_view line);
 
 			//
 
 			/// Returns the list of errors generated during parsing.
-			std::vector<std::string> errors();
+			[[nodiscard]] std::vector<std::string> errors() noexcept;
 
 		  private:
 			/// List of errors generated during parsing.
@@ -109,24 +109,24 @@ namespace tr
 			/// @param line Localization script line.
 			/// @param out Output localization key.
 			/// @return Remaining line or an empty string view on error.
-			std::string_view parse_key(std::string_view line, std::string_view& out);
+			[[nodiscard]] std::string_view parse_key(std::string_view line, std::string_view& out);
 
 			/// Tries to parse an `=` delimiter.
 			/// @param line Localization script line.
 			/// @return Remaining line or an empty string view on error.
-			std::string_view parse_delimiter(std::string_view line);
+			[[nodiscard]] std::string_view parse_delimiter(std::string_view line);
 
 			/// Tries to parse a value and write it to `out`.
 			/// @param line Localization script line.
 			/// @param out Output localization value.
 			/// @return `true` if the parsing was successful, `false` if an error occurred.
-			bool parse_value(std::string_view line, std::string& out);
+			[[nodiscard]] bool parse_value(std::string_view line, std::string& out);
 
 			/// Tries to process escape sequences in a raw value string and write the final value to `out`.
 			/// @param raw Raw localization script value string.
 			/// @param out Output localization value.
 			/// @return `true` if the parsing was successful, `false` if an error occurred.
-			bool process_escape_sequences(std::string_view raw, std::string& out);
+			[[nodiscard]] bool process_escape_sequences(std::string_view raw, std::string& out);
 		};
 
 		//

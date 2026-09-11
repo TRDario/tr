@@ -28,29 +28,29 @@ namespace tr
 		/// @{
 
 		/// Constructs a set of edges with value 0.
-		constexpr rectangle_edges() = default;
+		[[nodiscard]] constexpr rectangle_edges() noexcept = default;
 
 		/// Constructs a set of edges with the same value.
 		/// @param left Uniform edge value.
-		constexpr rectangle_edges(Element left);
+		[[nodiscard]] constexpr rectangle_edges(Element left) noexcept;
 
 		/// Constructs a set of edges with top = bottom, left = right.
 		/// @param left Left and right edge value.
 		/// @param top Top and bottom edge value.
-		constexpr rectangle_edges(Element left, Element top);
+		[[nodiscard]] constexpr rectangle_edges(Element left, Element top) noexcept;
 
 		/// Constructs a set of edges with top = bottom.
 		/// @param left Left edge value.
 		/// @param top Top and bottom edge value.
 		/// @param right Right edge value.
-		constexpr rectangle_edges(Element left, Element top, Element right);
+		[[nodiscard]] constexpr rectangle_edges(Element left, Element top, Element right) noexcept;
 
 		/// Constructs a set of edges.
 		/// @param left Left edge value.
 		/// @param top Top edge value.
 		/// @param right Right edge value.
 		/// @param bottom Bottom edge value.
-		constexpr rectangle_edges(Element left, Element top, Element right, Element bottom);
+		[[nodiscard]] constexpr rectangle_edges(Element left, Element top, Element right, Element bottom) noexcept;
 
 		/// @}
 		/// @name Comparison operators
@@ -61,7 +61,7 @@ namespace tr
 		/// @param rhs Set of edges to compare with.
 		/// @return Whether the two sets of edges are equal.
 		template <typename ElementR>
-		constexpr bool operator==(const rectangle_edges<ElementR>& rhs) const;
+		[[nodiscard]] constexpr bool operator==(const rectangle_edges<ElementR>& rhs) const noexcept;
 
 		/// @}
 	};

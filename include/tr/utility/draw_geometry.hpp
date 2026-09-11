@@ -16,35 +16,35 @@ namespace tr
 	/// Calculates the number of segments needed to draw a smooth circle with pixel radius `r`.
 	/// @param r Pixel radius of the circle.
 	/// @return Number of segments needed to draw a smooth circle.
-	inline usize smooth_polygon_vertices(float r);
+	[[nodiscard]] inline usize smooth_polygon_vertices(float r) noexcept;
 
 	/// Calculates the number of segments needed to draw a smooth arc with pixel radius `r`.
 	/// @param r Pixel radius of the arc.
 	/// @param sizeth Angle size of the arc.
 	/// @return Number of segments needed to draw a smooth arc.
-	inline usize smooth_arc_vertices(float r, angle sizeth);
+	[[nodiscard]] inline usize smooth_arc_vertices(float r, angle sizeth) noexcept;
 
 	//
 
 	/// Calculates the number of indices needed for a line strip.
 	/// @param vertices Number of vertices in the line strip.
 	/// @return Number of indices needed for a line strip.
-	constexpr usize line_strip_indices(u16 vertices);
+	[[nodiscard]] constexpr usize line_strip_indices(u16 vertices) noexcept;
 
 	/// Calculates the number of indices needed for a line loop.
 	/// @param vertices Number of vertices in the line loop.
 	/// @return Number of indices needed for a line loop.
-	constexpr usize line_loop_indices(u16 vertices);
+	[[nodiscard]] constexpr usize line_loop_indices(u16 vertices) noexcept;
 
 	/// Calculates the number of indices needed for a simple polygon mesh with no holes.
 	/// @param vertices Number of vertices in the polygon.
 	/// @return Number of indices needed for a simple polygon mesh with no holes.
-	constexpr usize polygon_indices(u16 vertices);
+	[[nodiscard]] constexpr usize polygon_indices(u16 vertices) noexcept;
 
 	/// Calculates the number of indices needed for a simple polygon mesh with no holes.
 	/// @param vertices Number of vertices in the polygon outline.
 	/// @return Number of indices needed for a simple polygon mesh with no holes.
-	constexpr usize polygon_outline_indices(u16 vertices);
+	[[nodiscard]] constexpr usize polygon_outline_indices(u16 vertices) noexcept;
 
 	//
 

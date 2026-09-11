@@ -9,7 +9,7 @@
 //
 
 template <tr::standard_layout To, tr::standard_layout From, tr::usize Extent>
-auto tr::reinterpret_span(std::span<From, Extent> from)
+auto tr::reinterpret_span(std::span<From, Extent> from) noexcept
 {
 	if constexpr (Extent != std::dynamic_extent) {
 		static_assert(Extent * sizeof(From) % sizeof(To) == 0, "Cannot reinterpret span due to size_bytes() % sizeof(T) != 0.");
@@ -25,25 +25,25 @@ auto tr::reinterpret_span(std::span<From, Extent> from)
 //
 
 template <tr::borrowed_standard_layout_range Range>
-auto tr::range_bytes(Range&& range)
+auto tr::range_bytes(Range&& range) noexcept
 {
 	return std::as_bytes(std::span{range});
 }
 
 template <tr::borrowed_mutable_standard_layout_range Range>
-auto tr::range_mut_bytes(Range&& range)
+auto tr::range_mut_bytes(Range&& range) noexcept
 {
 	return std::as_writable_bytes(std::span{range});
 }
 
 template <tr::standard_layout Object>
-std::span<const std::byte, sizeof(Object)> tr::as_bytes(const Object& object)
+std::span<const std::byte, sizeof(Object)> tr::as_bytes(const Object& object) noexcept
 {
 	return std::as_bytes(std::span<const Object, 1>{std::addressof(object), 1});
 }
 
 template <tr::standard_layout Object>
-std::span<std::byte, sizeof(Object)> tr::as_mut_bytes(Object& object)
+std::span<std::byte, sizeof(Object)> tr::as_mut_bytes(Object& object) noexcept
 {
 	return std::as_writable_bytes(std::span<Object, 1>{std::addressof(object), 1});
 }
@@ -51,7 +51,7 @@ std::span<std::byte, sizeof(Object)> tr::as_mut_bytes(Object& object)
 //
 
 template <tr::standard_layout Object, tr::borrowed_typed_contiguous_mutable_range<std::byte> Range>
-Object& tr::as_mut_object(Range&& bytes)
+Object& tr::as_mut_object(Range&& bytes) noexcept
 {
 	const auto span{tr::range_mut_bytes(bytes)};
 
@@ -67,7 +67,7 @@ Object& tr::as_mut_object(Range&& bytes)
 }
 
 template <tr::standard_layout Object, tr::borrowed_typed_contiguous_const_range<std::byte> Range>
-const Object& tr::as_object(Range&& bytes)
+const Object& tr::as_object(Range&& bytes) noexcept
 {
 	const auto span{tr::range_bytes(bytes)};
 
@@ -83,7 +83,7 @@ const Object& tr::as_object(Range&& bytes)
 }
 
 template <tr::standard_layout Element, tr::borrowed_typed_contiguous_mutable_range<std::byte> Range>
-auto tr::as_mut_objects(Range&& bytes)
+auto tr::as_mut_objects(Range&& bytes) noexcept
 {
 	const auto span{tr::range_mut_bytes(bytes)};
 
@@ -101,7 +101,7 @@ auto tr::as_mut_objects(Range&& bytes)
 }
 
 template <tr::standard_layout Element, tr::borrowed_typed_contiguous_const_range<std::byte> Range>
-auto tr::as_objects(Range&& bytes)
+auto tr::as_objects(Range&& bytes) noexcept
 {
 	const auto span{tr::range_bytes(bytes)};
 

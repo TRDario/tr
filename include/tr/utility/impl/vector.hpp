@@ -8,7 +8,7 @@
 //
 
 template <int Dimensions, tr::arithmetic Element>
-constexpr Element tr::length2(glm::vec<Dimensions, Element> v)
+constexpr Element tr::length2(glm::vec<Dimensions, Element> v) noexcept
 {
 	if constexpr (Dimensions == 1) {
 		return sqr(v.x);
@@ -28,14 +28,14 @@ constexpr Element tr::length2(glm::vec<Dimensions, Element> v)
 }
 
 template <int Dimensions, tr::arithmetic ElementL, tr::arithmetic ElementR>
-constexpr std::common_type_t<ElementL, ElementR> tr::distance2(glm::vec<Dimensions, ElementL> a, glm::vec<Dimensions, ElementR> b)
+constexpr std::common_type_t<ElementL, ElementR> tr::distance2(glm::vec<Dimensions, ElementL> a, glm::vec<Dimensions, ElementR> b) noexcept
 {
 	return length2(glm::vec<Dimensions, std::common_type_t<ElementL, ElementR>>{b} -
 				   glm::vec<Dimensions, std::common_type_t<ElementL, ElementR>>{a});
 }
 
 template <int Dimensions, tr::arithmetic Element>
-constexpr glm::vec<Dimensions, float> tr::inverse(glm::vec<Dimensions, Element> v)
+constexpr glm::vec<Dimensions, float> tr::inverse(glm::vec<Dimensions, Element> v) noexcept
 {
 	glm::vec<Dimensions, float> result;
 	for (int i = 0; i < Dimensions; ++i) {
@@ -45,7 +45,7 @@ constexpr glm::vec<Dimensions, float> tr::inverse(glm::vec<Dimensions, Element> 
 }
 
 template <tr::arithmetic ElementL, tr::arithmetic ElementR>
-constexpr std::common_type_t<ElementL, ElementR> tr::cross(glm::tvec2<ElementL> a, glm::tvec2<ElementR> b)
+constexpr std::common_type_t<ElementL, ElementR> tr::cross(glm::tvec2<ElementL> a, glm::tvec2<ElementR> b) noexcept
 {
 	return a.x * b.y - a.y * b.x;
 }

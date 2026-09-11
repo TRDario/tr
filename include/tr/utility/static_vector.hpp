@@ -15,7 +15,7 @@ namespace tr
 	/// Instances of `tr::static_vector` are copyable if `Element` is copyable and movable if `Element` is movable.
 	/// @tparam Element Type of the elements of the vector.
 	/// @tparam Capacity Maximum capacity of the vector.
-	template <typename Element, usize Capacity>
+	template <nothrow_destructible Element, usize Capacity>
 	class static_vector
 	{
 	  public:
@@ -53,7 +53,7 @@ namespace tr
 
 			/// Converts the iterator into a constant iterator.
 			/// @return Constant iterator equivalent to `*this`.
-			operator const_iterator() const;
+			[[nodiscard]] operator const_iterator() const noexcept;
 		};
 
 		/// Constant reverse iterator type used by the container.
@@ -66,51 +66,68 @@ namespace tr
 		/// @{
 
 		/// Creates an empty vector.
-		constexpr static_vector() = default;
+		[[nodiscard]] constexpr static_vector() noexcept = default;
 
 		/// Creates a vector with a certain number of default-initialized values.
 		/// @param size Initial size of the vector.
-		static_vector(size_type size)
+		[[nodiscard]] explicit static_vector(size_type size) noexcept(std::is_nothrow_default_constructible_v<Element>)
 			requires(std::default_initializable<Element>);
 
 		/// Creates a vector with a certain number of copies of a value.
 		/// @param size Initial size of the vector.
 		/// @param value Value to initialize the values of the vector to.
-		static_vector(size_type size, const Element& value)
+		[[nodiscard]] static_vector(size_type size, const Element& value) noexcept(std::is_nothrow_copy_constructible_v<Element>)
 			requires(std::copy_constructible<Element>);
 
 		/// Creates a vector from an iterator pair.
-		/// @tparam Iterator Element input iterator type.
+		/// @tparam Iterator Forward iterator type to an element convertible to `Element`.
+		/// @tparam Sentinel Sentinel for `Iterator`.
 		/// @param first Beginning iterator to the copied range.
 		/// @param last Ending iterator to the copied range.
 		/// @pre `std::ranges::distance(first, last)` must be less than or equal to `Capacity`.
-		template <typed_input_iterator<Element> Iterator>
-		static_vector(Iterator first, Iterator last);
+		template <forward_iterator_to_convertible_to<Element> Iterator, std::sentinel_for<Iterator> Sentinel>
+		[[nodiscard]] static_vector(Iterator first, Sentinel last) noexcept(nothrow_forward_iterator_to_convertible_to<Iterator, Element>);
 
 		/// Creates a vector from a range.
-		/// @tparam Range Element input range type.
+		/// @tparam Range Forward range type to elements converible to `Element`.
 		/// @param range Range to copy into the vector.
 		/// @pre `std::ranges::size(range)` must be less than or equal to `Capacity`.
-		template <typed_input_range<Element> Range>
-		static_vector(Range&& range);
+		template <forward_range_to_convertible_to<Element> Range>
+		[[nodiscard]] explicit static_vector(Range&& range) noexcept(nothrow_forward_range_to_convertible_to<Range, Element>);
 
 		/// Creates a vector from an initializer list.
 		/// @param init Initializer list of elements to copy into the vector.
-		static_vector(std::initializer_list<Element> init)
+		[[nodiscard]] static_vector(std::initializer_list<Element> init) noexcept(std::is_nothrow_copy_constructible_v<Element>)
 			requires(std::copy_constructible<Element>);
 
 		/// Copies a vector.
 		/// @param rhs Vector to copy.
-		static_vector(const static_vector& rhs)
+		[[nodiscard]] static_vector(const static_vector& rhs) noexcept(std::is_nothrow_copy_constructible_v<Element>)
 			requires(std::copy_constructible<Element>);
 
 		/// Moves a vector.
-		/// @param rhs Vector to move.
-		static_vector(static_vector&& rhs) noexcept(std::is_nothrow_move_constructible_v<Element>)
+		/// @param rhs Vector to move. The vector will be in a cleared state after this operation.
+		[[nodiscard]] static_vector(static_vector&& rhs) noexcept(std::is_nothrow_move_constructible_v<Element>)
 			requires(std::move_constructible<Element>);
 
 		/// Destroys the vector.
-		~static_vector();
+		~static_vector() noexcept;
+
+		/// @}
+		/// @name Assignment operators
+		/// @{
+
+		/// Copy-assigns a static vector.
+		/// @param rhs Vector to copy.
+		/// @return Reference to `*this`.
+		static_vector& operator=(const static_vector& rhs) noexcept(std::is_nothrow_copy_constructible_v<Element>)
+			requires(std::copy_constructible<Element>);
+
+		/// Move-assigns a static vector.
+		/// @param rhs Vector to move. The vector will be in a cleared state after this operation.
+		/// @return Reference to `*this`.
+		static_vector& operator=(static_vector&& rhs) noexcept(std::is_nothrow_move_constructible_v<Element>)
+			requires(std::move_constructible<Element>);
 
 		/// @}
 		/// @name Access
@@ -120,49 +137,49 @@ namespace tr
 		/// @param offset Index of the character within the vector.
 		/// @pre `offset` must be less than the size of the vector.
 		/// @return Reference to a value within the vector.
-		reference at(size_type offset);
+		[[nodiscard]] reference at(size_type offset) noexcept;
 
 		/// Gets a reference to a value in the vector.
 		/// @param offset Index of the character within the vector.
 		/// @pre `offset` must be less than the size of the vector.
 		/// @return Reference to a value within the vector.
-		const_reference at(size_type offset) const;
+		[[nodiscard]] const_reference at(size_type offset) const noexcept;
 
 		/// Gets a reference to a value in the vector.
 		/// @param offset Index of the character within the vector.
 		/// @pre `offset` must be less than the size of the vector.
 		/// @return Reference to a value within the vector.
-		reference operator[](size_type offset);
+		[[nodiscard]] reference operator[](size_type offset) noexcept;
 
 		/// Gets a reference to a value in the vector.
 		/// @param offset Index of the character within the vector.
 		/// @pre `offset` must be less than the size of the vector.
 		/// @return Reference to a value within the vector.
-		const_reference operator[](size_type offset) const;
+		[[nodiscard]] const_reference operator[](size_type offset) const noexcept;
 
 		/// Gets a reference to the first value in the vector.
 		/// @return Reference to the first value in the vector.
-		reference front();
+		[[nodiscard]] reference front() noexcept;
 
 		/// Gets a reference to the first value in the vector.
 		/// @return Reference to the first value in the vector.
-		const_reference front() const;
+		[[nodiscard]] const_reference front() const noexcept;
 
 		/// Gets a reference to the last value in the vector.
 		/// @return Reference to the last value in the vector.
-		reference back();
+		[[nodiscard]] reference back() noexcept;
 
 		/// Gets a reference to the last value in the vector.
 		/// @return Reference to the last value in the vector.
-		const_reference back() const;
+		[[nodiscard]] const_reference back() const noexcept;
 
 		/// Gets a pointer to the data of the vector.
 		/// @return Pointer to the data of the vector.
-		pointer data();
+		[[nodiscard]] pointer data() noexcept;
 
 		/// Gets a pointer to the data of the vector.
 		/// @return Pointer to the data of the vector.
-		const_pointer data() const;
+		[[nodiscard]] const_pointer data() const noexcept;
 
 		/// @}
 		/// @name Iterators
@@ -170,51 +187,51 @@ namespace tr
 
 		/// Gets an iterator to the beginning of the vector.
 		/// @return Iterator to the beginning of the vector.
-		iterator begin();
+		[[nodiscard]] iterator begin() noexcept;
 
 		/// Gets an iterator to the beginning of the vector.
 		/// @return Iterator to the beginning of the vector.
-		const_iterator begin() const;
+		[[nodiscard]] const_iterator begin() const noexcept;
 
 		/// Gets an iterator to the beginning of the vector.
 		/// @return Iterator to the beginning of the vector.
-		const_iterator cbegin() const;
+		[[nodiscard]] const_iterator cbegin() const noexcept;
 
 		/// Gets an iterator to the end of the vector.
 		/// @return Iterator to the end of the vector.
-		iterator end();
+		[[nodiscard]] iterator end() noexcept;
 
 		/// Gets an iterator to the end of the vector.
 		/// @return Iterator to the end of the vector.
-		const_iterator end() const;
+		[[nodiscard]] const_iterator end() const noexcept;
 
 		/// Gets an iterator to the end of the vector.
 		/// @return Iterator to the end of the vector.
-		const_iterator cend() const;
+		[[nodiscard]] const_iterator cend() const noexcept;
 
 		/// Gets an iterator to the reverse beginning of the vector.
 		/// @return Iterator to the reverse beginning of the vector.
-		reverse_iterator rbegin();
+		[[nodiscard]] reverse_iterator rbegin() noexcept;
 
 		/// Gets an iterator to the reverse beginning of the vector.
 		/// @return Iterator to the reverse beginning of the vector.
-		const_reverse_iterator rbegin() const;
+		[[nodiscard]] const_reverse_iterator rbegin() const noexcept;
 
 		/// Gets an iterator to the reverse beginning of the vector.
 		/// @return Iterator to the reverse beginning of the vector.
-		const_reverse_iterator crbegin() const;
+		[[nodiscard]] const_reverse_iterator crbegin() const noexcept;
 
 		/// Gets an iterator to the reverse end of the vector.
 		/// @return Iterator to the reverse end of the vector.
-		reverse_iterator rend();
+		[[nodiscard]] reverse_iterator rend() noexcept;
 
 		/// Gets an iterator to the reverse end of the vector.
 		/// @return Iterator to the reverse end of the vector.
-		const_reverse_iterator rend() const;
+		[[nodiscard]] const_reverse_iterator rend() const noexcept;
 
 		/// Gets an iterator to the reverse end of the vector.
 		/// @return Iterator to the reverse end of the vector.
-		const_reverse_iterator crend() const;
+		[[nodiscard]] const_reverse_iterator crend() const noexcept;
 
 		/// @}
 		/// @name Size
@@ -222,22 +239,22 @@ namespace tr
 
 		/// Gets whether the vector is empty.
 		/// @return `true` if the vector is empty, `false` otherwise.
-		constexpr bool empty() const;
+		[[nodiscard]] constexpr bool empty() const noexcept;
 
 		/// Gets the current size of the vector.
 		/// @return Size of the vector in elements.
-		constexpr size_type size() const;
+		[[nodiscard]] constexpr size_type size() const noexcept;
 
 		/// Gets the maximum capacity of the vector.
 		/// @return Maximum capacity of the vector in elements.
-		static constexpr size_type max_size();
+		[[nodiscard]] static constexpr size_type max_size() noexcept;
 
 		/// @}
 		/// @name Manipulation
 		/// @{
 
 		/// Erases all values from the vector.
-		void clear();
+		void clear() noexcept;
 
 		/// Inserts a value into the vector.
 		/// @param where Position within the vector to insert the value.
@@ -245,34 +262,40 @@ namespace tr
 		/// @pre The size of the string must be less than `Capacity`.
 		/// @return Iterator to the position where the value was inserted.
 		iterator insert(const_iterator where, const Element& value)
-			requires(std::copy_constructible<Element>);
+			noexcept(nothrow_movable<Element> && std::is_nothrow_copy_constructible_v<Element>)
+			requires(std::move_constructible<Element> && move_assignable<Element> && std::copy_constructible<Element>);
 
 		/// Inserts a value into the vector.
 		/// @param where Position within the vector to insert the value.
 		/// @param value Value to move into the vector.
 		/// @pre The size of the string must be less than `Capacity`.
 		/// @return Iterator to the position where the value was inserted.
-		iterator insert(const_iterator where, Element&& value)
-			requires(std::move_constructible<Element>);
+		iterator insert(const_iterator where, Element&& value) noexcept(nothrow_movable<Element>)
+			requires(std::move_constructible<Element> && move_assignable<Element>);
 
 		/// Inserts an iterator pair range into the string.
-		/// @tparam Iterator Element input iterator type.
+		/// @tparam Iterator Forward iterator type to an element convertible to `Element`.
+		/// @tparam Sentinel Sentinel for `Iterator`.
 		/// @param where Position within the vector to insert the range.
 		/// @param first Beginning iterator of the range to insert.
 		/// @param last Ending iterator of the range to insert.
 		/// @pre `this->size() + std::distance(first, last)` must be less than or equal to `Capacity`.
 		/// @return Iterator to the position where the range was inserted.
-		template <typed_input_iterator<Element> Iterator>
-		iterator insert(const_iterator where, Iterator first, Iterator last);
+		template <forward_iterator_to_convertible_to<Element> Iterator, std::sentinel_for<Iterator> Sentinel>
+			requires(std::move_constructible<Element> && move_assignable<Element>)
+		iterator insert(const_iterator where, Iterator first, Sentinel last)
+			noexcept(nothrow_movable<Element> && nothrow_forward_iterator_to_convertible_to<Iterator, Element>);
 
 		/// Inserts a range into the string.
-		/// @tparam Range Element input range type.
+		/// @tparam Range Forward range type to elements converible to `Element`.
 		/// @param where Position within the vector to insert the range.
 		/// @param range Range to insert.
 		/// @pre `this->size() + std::ranges::size(range)` must be less than or equal to `Capacity`.
 		/// @return Iterator to the position where the range was inserted.
-		template <typed_input_range<Element> Range>
-		iterator insert(const_iterator where, Range&& range);
+		template <forward_range_to_convertible_to<Element> Range>
+			requires(std::move_constructible<Element> && move_assignable<Element>)
+		iterator insert(const_iterator where, Range&& range)
+			noexcept(nothrow_movable<Element> && nothrow_forward_range_to_convertible_to<Range, Element>);
 
 		/// Inserts an initializer list into the string.
 		/// @param where Position within the vector to insert the list.
@@ -280,7 +303,8 @@ namespace tr
 		/// @pre `this->size() + init.size()` must be less than or equal to `Capacity`.
 		/// @return Iterator to the position where the list was inserted.
 		iterator insert(const_iterator where, std::initializer_list<Element> init)
-			requires(std::copy_constructible<Element>);
+			noexcept(nothrow_movable<Element> && std::is_nothrow_copy_constructible_v<Element>)
+			requires(std::move_constructible<Element> && move_assignable<Element> && std::copy_constructible<Element>);
 
 		/// Emplaces a value in the vector.
 		/// @tparam Args Types of the arguments to the constructor of a value.
@@ -289,32 +313,35 @@ namespace tr
 		/// @pre The size of the string must be less than `Capacity`.
 		/// @return Iterator to the position where the value was inserted.
 		template <typename... Args>
-			requires(std::constructible_from<Element, Args...>)
-		iterator emplace(const_iterator where, Args&&... args);
+			requires(std::move_constructible<Element> && move_assignable<Element> && std::constructible_from<Element, Args...>)
+		iterator emplace(const_iterator where, Args&&... args)
+			noexcept(nothrow_movable<Element> && std::is_nothrow_constructible_v<Element, Args...>);
 
 		/// Erases a value from the vector.
 		/// @param where Iterator to the value to erase.
 		/// @return Iterator to the position where the character was erased.
-		iterator erase(const_iterator where);
+		iterator erase(const_iterator where) noexcept(std::is_nothrow_move_assignable_v<Element>)
+			requires(move_assignable<Element>);
 
 		/// Erases a range of values from the vector.
 		/// @param first Iterator to the first value to erase.
 		/// @param last Iterator to one past the last value to erase.
 		/// @return Iterator to the position where the first character was erased.
-		iterator erase(const_iterator first, const_iterator last);
+		iterator erase(const_iterator first, const_iterator last) noexcept(std::is_nothrow_move_assignable_v<Element>)
+			requires(move_assignable<Element>);
 
 		/// Appends a value to the vector.
 		/// @param value Value to copy-append to the vector.
 		/// @pre The size of the string must be less than `Capacity`.
 		/// @return Reference to the appended value.
-		reference push_back(const Element& value)
+		reference push_back(const Element& value) noexcept(std::is_nothrow_copy_constructible_v<Element>)
 			requires(std::copy_constructible<Element>);
 
 		/// Appends a value to the vector.
 		/// @param value Value to move-append to the vector.
 		/// @pre The size of the string must be less than `Capacity`.
 		/// @return Reference to the appended value.
-		reference push_back(Element&& value)
+		reference push_back(Element&& value) noexcept(std::is_nothrow_move_constructible_v<Element>)
 			requires(std::move_constructible<Element>);
 
 		/// Emplaces a value at the end of the vector.
@@ -324,46 +351,47 @@ namespace tr
 		/// @return Reference to the emplaced value.
 		template <typename... Args>
 			requires(std::constructible_from<Element, Args...>)
-		reference emplace_back(Args&&... args);
+		reference emplace_back(Args&&... args) noexcept(std::is_nothrow_constructible_v<Element, Args...>);
 
 		/// Appends an iterator pair range to the vector.
-		/// @tparam Iterator Element input iterator type.
+		/// @tparam Iterator Forward iterator type to an element convertible to `Element`.
+		/// @tparam Sentinel Sentinel for `Iterator`.
 		/// @param first Beginning iterator of the range to append.
 		/// @param last Ending iterator of the range to append.
 		/// @pre `this->size() + std::distance(first, last)` must be less than or equal to `Capacity`.
 		/// @return Iterator to the position where the first element was appended.
-		template <typed_input_iterator<Element> Iterator>
-		iterator append(Iterator first, Iterator last);
+		template <forward_iterator_to_convertible_to<Element> Iterator, std::sentinel_for<Iterator> Sentinel>
+		iterator append(Iterator first, Sentinel last) noexcept(nothrow_forward_iterator_to_convertible_to<Iterator, Element>);
 
 		/// Appends a range to the vector.
-		/// @tparam Range Element input range type.
+		/// @tparam Range Forward range type to elements converible to `Element`.
 		/// @param range Range to append.
 		/// @pre `this->size() + std::ranges::size(range)` must be less than or equal to `Capacity`.
 		/// @return Iterator to the position where the first element was appended.
-		template <typed_input_range<Element> Range>
-		iterator append(Range&& range);
+		template <forward_range_to_convertible_to<Element> Range>
+		iterator append(Range&& range) noexcept(nothrow_forward_range_to_convertible_to<Range, Element>);
 
 		/// Appends an initializer list to the vector.
 		/// @param init Initializer list to append.
 		/// @pre `this->size() + init.size()` must be less than or equal to `Capacity`.
 		/// @return Iterator to the position where the first element was appended.
-		iterator append(std::initializer_list<Element> init)
+		iterator append(std::initializer_list<Element> init) noexcept(std::is_nothrow_copy_constructible_v<Element>)
 			requires(std::copy_constructible<Element>);
 
 		/// Erases a value from the end of the vector.
-		void pop_back();
+		void pop_back() noexcept;
 
 		/// Resizes the vector, default-constructing values if necessary.
 		/// @param size New size of the vector.
 		/// @pre `size` must be less than or equal to `Capacity`.
-		void resize(size_type size)
+		void resize(size_type size) noexcept(std::is_nothrow_default_constructible_v<Element>)
 			requires(std::default_initializable<Element>);
 
 		/// Resizes the vector, copy-constructing values if necessary.
 		/// @param size New size of the vector.
 		/// @param value Value to fill the vector with.
 		/// @pre `size` must be less than or equal to `Capacity`.
-		void resize(size_type size, const Element& value)
+		void resize(size_type size, const Element& value) noexcept(std::is_nothrow_copy_constructible_v<Element>)
 			requires(std::copy_constructible<Element>);
 
 		/// @}

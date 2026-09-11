@@ -13,7 +13,7 @@ namespace tr
 		/// Trims whitespace from the line.
 		/// @param line Line string view.
 		/// @return String view to the line with the leading whitespace removed.
-		std::string_view trim_whitespace(std::string_view line)
+		[[nodiscard]] std::string_view trim_whitespace(std::string_view line) noexcept
 		{
 			return {std::ranges::find_if_not(line, [](char c) { return std::isspace(c); }), line.end()};
 		}
@@ -127,7 +127,7 @@ std::optional<tr::localization_map::parser::parse_result> tr::localization_map::
 	return std::move(parsed_line);
 }
 
-std::vector<std::string> tr::localization_map::parser::errors()
+std::vector<std::string> tr::localization_map::parser::errors() noexcept
 {
 	return std::move(m_errors);
 }
@@ -139,14 +139,14 @@ tr::localization_map::localization_map(const string_flat_map<std::string>& map)
 {
 }
 
-tr::localization_map::localization_map(string_flat_map<std::string>&& map)
+tr::localization_map::localization_map(string_flat_map<std::string>&& map) noexcept
 	: m_map{std::move(map)}
 {
 }
 
 //
 
-void tr::localization_map::clear()
+void tr::localization_map::clear() noexcept
 {
 	m_map.clear();
 }

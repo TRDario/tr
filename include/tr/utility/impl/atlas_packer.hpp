@@ -16,7 +16,7 @@ bool tr::atlas_entries<Key, Value, Hash, Pred>::contains(Keylike&& key) const
 }
 
 template <typename Key, tr::atlas_entries_value_type Value, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
-tr::usize tr::atlas_entries<Key, Value, Hash, Pred>::entries() const
+tr::usize tr::atlas_entries<Key, Value, Hash, Pred>::entries() const noexcept
 {
 	return m_entries.size();
 }

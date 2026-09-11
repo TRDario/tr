@@ -13,14 +13,14 @@ inline constexpr bool tr::enable_default_binary_io<tr::rectangle<Element>>{true}
 //
 
 template <typename Element>
-constexpr tr::rectangle<Element>::rectangle(glm::tvec2<Element> tl, glm::tvec2<Element> size)
+constexpr tr::rectangle<Element>::rectangle(glm::tvec2<Element> tl, glm::tvec2<Element> size) noexcept
 	: tl{tl}
 	, size{size}
 {
 }
 
 template <typename Element>
-constexpr tr::rectangle<Element>::rectangle(glm::tvec2<Element> size)
+constexpr tr::rectangle<Element>::rectangle(glm::tvec2<Element> size) noexcept
 	: tl{}
 	, size{size}
 {
@@ -28,7 +28,7 @@ constexpr tr::rectangle<Element>::rectangle(glm::tvec2<Element> size)
 
 template <typename Element>
 template <typename ElementR>
-constexpr tr::rectangle<Element>::rectangle(const rectangle<ElementR>& rectangle)
+constexpr tr::rectangle<Element>::rectangle(const rectangle<ElementR>& rectangle) noexcept
 	: tl{rectangle.tl}
 	, size{rectangle.size}
 {
@@ -38,7 +38,7 @@ constexpr tr::rectangle<Element>::rectangle(const rectangle<ElementR>& rectangle
 
 template <typename Element>
 template <typename ElementR>
-constexpr bool tr::rectangle<Element>::operator==(const rectangle<ElementR>& rhs) const
+constexpr bool tr::rectangle<Element>::operator==(const rectangle<ElementR>& rhs) const noexcept
 {
 	return tl.x == rhs.tl.x && tl.y == rhs.tl.y && size.x == rhs.size.x && size.y == rhs.size.y;
 }
@@ -47,7 +47,7 @@ constexpr bool tr::rectangle<Element>::operator==(const rectangle<ElementR>& rhs
 
 template <typename Element>
 template <typename ElementR>
-constexpr bool tr::rectangle<Element>::contains(glm::tvec2<ElementR> point) const
+constexpr bool tr::rectangle<Element>::contains(glm::tvec2<ElementR> point) const noexcept
 {
 	for (int i = 0; i < 2; ++i) {
 		if (point[i] < tl[i] || point[i] > tl[i] + size[i]) {
@@ -59,7 +59,7 @@ constexpr bool tr::rectangle<Element>::contains(glm::tvec2<ElementR> point) cons
 
 template <typename Element>
 template <typename ElementR>
-constexpr bool tr::rectangle<Element>::contains(const rectangle<ElementR>& rectangle) const
+constexpr bool tr::rectangle<Element>::contains(const rectangle<ElementR>& rectangle) const noexcept
 {
 	return contains(rectangle.tl) && contains(rectangle.tl + rectangle.size);
 }
@@ -67,7 +67,7 @@ constexpr bool tr::rectangle<Element>::contains(const rectangle<ElementR>& recta
 //
 
 template <typename Element>
-constexpr tr::rectangle_edges<Element> tr::rectangle<Element>::edges() const
+constexpr tr::rectangle_edges<Element> tr::rectangle<Element>::edges() const noexcept
 {
 	return {tl.x, tl.y, tl.x + size.x, tl.y + size.y};
 }
@@ -75,14 +75,14 @@ constexpr tr::rectangle_edges<Element> tr::rectangle<Element>::edges() const
 //
 
 template <typename ElementL, typename ElementR>
-constexpr bool tr::intersecting(rectangle<ElementL> lhs, rectangle<ElementR> rhs)
+constexpr bool tr::intersecting(rectangle<ElementL> lhs, rectangle<ElementR> rhs) noexcept
 {
 	return lhs.contains(rhs.tl) || lhs.contains(rhs.tl + rhs.size) || rhs.contains(lhs.tl + glm::tvec2<ElementL>{lhs.size.x, 0}) ||
 		   rhs.contains(lhs.tl + glm::tvec2<ElementL>{0, lhs.size.y});
 }
 
 template <typename Element>
-constexpr std::optional<tr::rectangle<Element>> tr::intersection(rectangle<Element> lhs, rectangle<Element> rhs)
+constexpr std::optional<tr::rectangle<Element>> tr::intersection(rectangle<Element> lhs, rectangle<Element> rhs) noexcept
 {
 	if constexpr (!std::unsigned_integral<Element>) {
 		if (lhs.size.x < 0) {

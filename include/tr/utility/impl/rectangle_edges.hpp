@@ -14,7 +14,7 @@ inline constexpr bool tr::enable_default_binary_io<tr::rectangle_edges<Element>>
 //
 
 template <typename Element>
-constexpr tr::rectangle_edges<Element>::rectangle_edges(Element left)
+constexpr tr::rectangle_edges<Element>::rectangle_edges(Element left) noexcept
 	: top{left}
 	, right{left}
 	, bottom{left}
@@ -23,7 +23,7 @@ constexpr tr::rectangle_edges<Element>::rectangle_edges(Element left)
 }
 
 template <typename Element>
-constexpr tr::rectangle_edges<Element>::rectangle_edges(Element left, Element top)
+constexpr tr::rectangle_edges<Element>::rectangle_edges(Element left, Element top) noexcept
 	: left{left}
 	, top{top}
 	, right{left}
@@ -32,7 +32,7 @@ constexpr tr::rectangle_edges<Element>::rectangle_edges(Element left, Element to
 }
 
 template <typename Element>
-constexpr tr::rectangle_edges<Element>::rectangle_edges(Element left, Element top, Element right)
+constexpr tr::rectangle_edges<Element>::rectangle_edges(Element left, Element top, Element right) noexcept
 	: left{left}
 	, top{top}
 	, right{right}
@@ -41,7 +41,7 @@ constexpr tr::rectangle_edges<Element>::rectangle_edges(Element left, Element to
 }
 
 template <typename Element>
-constexpr tr::rectangle_edges<Element>::rectangle_edges(Element left, Element top, Element right, Element bottom)
+constexpr tr::rectangle_edges<Element>::rectangle_edges(Element left, Element top, Element right, Element bottom) noexcept
 	: left{left}
 	, top{top}
 	, right{right}
@@ -53,7 +53,7 @@ constexpr tr::rectangle_edges<Element>::rectangle_edges(Element left, Element to
 
 template <typename Element>
 template <typename ElementR>
-constexpr bool tr::rectangle_edges<Element>::operator==(const rectangle_edges<ElementR>& rhs) const
+constexpr bool tr::rectangle_edges<Element>::operator==(const rectangle_edges<ElementR>& rhs) const noexcept
 {
 	return left == rhs.left && top == rhs.top && right == rhs.right && bottom == rhs.bottom;
 }

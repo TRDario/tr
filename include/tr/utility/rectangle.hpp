@@ -23,22 +23,22 @@ namespace tr
 		/// @{
 
 		/// Default-constructs a rectangle.
-		constexpr rectangle() = default;
+		[[nodiscard]] constexpr rectangle() noexcept = default;
 
 		/// Constructs a rectangle from a top-left corner and size.
 		/// @param tl Offset of the top-left corner of the rectangle.
 		/// @param size Size of the rectangle.
-		constexpr rectangle(glm::tvec2<Element> tl, glm::tvec2<Element> size);
+		[[nodiscard]] constexpr rectangle(glm::tvec2<Element> tl, glm::tvec2<Element> size) noexcept;
 
 		/// Constructs a rectangle with the top-left corner at the origin.
 		/// @param size Size of the rectangle.
-		constexpr rectangle(glm::tvec2<Element> size);
+		[[nodiscard]] constexpr rectangle(glm::tvec2<Element> size) noexcept;
 
 		/// Copy-constructs a rectangle.
 		/// @tparam ElementR Element type of the righthand-side rectangle vectors.
 		/// @param rectangle Rectangle to copy.
 		template <typename ElementR>
-		constexpr rectangle(const rectangle<ElementR>& rectangle);
+		[[nodiscard]] constexpr rectangle(const rectangle<ElementR>& rectangle) noexcept;
 
 		/// @}
 
@@ -47,7 +47,7 @@ namespace tr
 		/// @param rhs Rectangle to compare with.
 		/// @return Whether the rectangles are equal.
 		template <typename ElementR>
-		constexpr bool operator==(const rectangle<ElementR>& rhs) const;
+		[[nodiscard]] constexpr bool operator==(const rectangle<ElementR>& rhs) const noexcept;
 
 		/// @name Contains
 		/// @{
@@ -57,14 +57,14 @@ namespace tr
 		/// @param point Point to check for being in the rectangle.
 		/// @return `true` if `point` is within the rectangle, `false` otherwise.
 		template <typename ElementR = Element>
-		constexpr bool contains(glm::tvec2<ElementR> point) const;
+		[[nodiscard]] constexpr bool contains(glm::tvec2<ElementR> point) const noexcept;
 
 		/// Determines whether another rectangle is contained entirely within the rectangle.
 		/// @tparam ElementR Element type of the righthand-side rectangle vectors.
 		/// @param rectangle Rectangle to check for being contained entirely within the rectangle.
 		/// @return `true` if `rectangle` is contained entirely within the rectangle, `false` otherwise.
 		template <typename ElementR = Element>
-		constexpr bool contains(const rectangle<ElementR>& rectangle) const;
+		[[nodiscard]] constexpr bool contains(const rectangle<ElementR>& rectangle) const noexcept;
 
 		/// @}
 		/// @name Edges
@@ -72,7 +72,7 @@ namespace tr
 
 		/// Gets the edges of the rectangle.
 		/// @return Set of edges corresponding to the rectangle.
-		constexpr rectangle_edges<Element> edges() const;
+		[[nodiscard]] constexpr rectangle_edges<Element> edges() const noexcept;
 
 		/// @}
 	};
@@ -85,14 +85,14 @@ namespace tr
 	/// @param lhs, rhs Rectangles to check for an intersection.
 	/// @return `true` if the rectangles intersect, `false` otherwise.
 	template <typename ElementL, typename ElementR>
-	constexpr bool intersecting(rectangle<ElementL> lhs, rectangle<ElementR> rhs);
+	[[nodiscard]] constexpr bool intersecting(rectangle<ElementL> lhs, rectangle<ElementR> rhs) noexcept;
 
 	/// Computes the intersection of two rectangles.
 	/// @tparam Element Element type of the rectangle vectors.
 	/// @param lhs, rhs Rectangles to get the intersection of.
 	/// @return Intersection rectangle, if one exists.
 	template <typename Element>
-	constexpr std::optional<rectangle<Element>> intersection(rectangle<Element> lhs, rectangle<Element> rhs);
+	[[nodiscard]] constexpr std::optional<rectangle<Element>> intersection(rectangle<Element> lhs, rectangle<Element> rhs) noexcept;
 
 	/// @}
 } // namespace tr

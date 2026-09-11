@@ -17,15 +17,15 @@ namespace tr
 
 		/// Constructs a memory buffer from a buffer.
 		/// @param buffer Buffer to construct the memory buffer over.
-		explicit memorybuf(std::span<char> buffer);
+		[[nodiscard]] explicit memorybuf(std::span<char> buffer);
 
 		/// Constructs a memory buffer from a buffer.
 		/// @param buffer Buffer to construct the memory buffer over.
-		explicit memorybuf(std::span<unsigned char> buffer);
+		[[nodiscard]] explicit memorybuf(std::span<unsigned char> buffer);
 
 		/// Constructs a memory buffer from a buffer.
 		/// @param buffer Buffer to construct the memory buffer over.
-		explicit memorybuf(std::span<std::byte> buffer);
+		[[nodiscard]] explicit memorybuf(std::span<std::byte> buffer);
 
 		/// @}
 
@@ -49,15 +49,15 @@ namespace tr
 
 		/// Constructs an imstream from a buffer.
 		/// @param buffer Buffer to construct the imstream over.
-		explicit imstream(std::span<const char> buffer);
+		[[nodiscard]] explicit imstream(std::span<const char> buffer);
 
 		/// Constructs an imstream from a buffer.
 		/// @param buffer Buffer to construct the imstream over.
-		explicit imstream(std::span<const unsigned char> buffer);
+		[[nodiscard]] explicit imstream(std::span<const unsigned char> buffer);
 
 		/// Constructs an imstream from a buffer.
 		/// @param buffer Buffer to construct the imstream over.
-		explicit imstream(std::span<const std::byte> buffer);
+		[[nodiscard]] explicit imstream(std::span<const std::byte> buffer);
 
 		/// @}
 	};
@@ -71,15 +71,15 @@ namespace tr
 
 		/// Constructs an omstream from a buffer.
 		/// @param buffer Buffer to construct the omstream over.
-		explicit omstream(std::span<char> buffer);
+		[[nodiscard]] explicit omstream(std::span<char> buffer);
 
 		/// Constructs an omstream from a buffer.
 		/// @param buffer Buffer to construct the omstream over.
-		explicit omstream(std::span<unsigned char> buffer);
+		[[nodiscard]] explicit omstream(std::span<unsigned char> buffer);
 
 		/// Constructs an omstream from a buffer.
 		/// @param buffer Buffer to construct the omstream over.
-		explicit omstream(std::span<std::byte> buffer);
+		[[nodiscard]] explicit omstream(std::span<std::byte> buffer);
 
 		/// @}
 	};
@@ -93,15 +93,15 @@ namespace tr
 
 		/// Constructs an mstream from a buffer.
 		/// @param buffer Buffer to construct the mstream over.
-		explicit mstream(std::span<char> buffer);
+		[[nodiscard]] explicit mstream(std::span<char> buffer);
 
 		/// Constructs an mstream from a buffer.
 		/// @param buffer Buffer to construct the mstream over.
-		explicit mstream(std::span<unsigned char> buffer);
+		[[nodiscard]] explicit mstream(std::span<unsigned char> buffer);
 
 		/// Constructs an mstream from a buffer.
 		/// @param buffer Buffer to construct the mstream over.
-		explicit mstream(std::span<std::byte> buffer);
+		[[nodiscard]] explicit mstream(std::span<std::byte> buffer);
 
 		/// @}
 	};

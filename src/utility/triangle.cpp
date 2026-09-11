@@ -6,12 +6,12 @@
 
 //
 
-tr::winding_order tr::triangle::winding_order() const
+tr::winding_order tr::triangle::winding_order() const noexcept
 {
 	return cross(b - a, c - a) <= 0 ? winding_order::ccw : winding_order::cw;
 }
 
-bool tr::triangle::contains(glm::vec2 p) const
+bool tr::triangle::contains(glm::vec2 p) const noexcept
 {
 	const float s{cross(a - c, p - c)};
 	const float t{cross(b - a, p - a)};

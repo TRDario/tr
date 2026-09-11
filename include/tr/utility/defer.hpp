@@ -9,15 +9,16 @@ namespace tr
 	/// RAII deferred function call.
 	/// @tparam Fn Deferred function type.
 	template <std::invocable Fn>
+		requires(std::is_nothrow_invocable_v<Fn>)
 	class defer
 	{
 	  public:
 		/// Constructs a deferred function call.
 		/// @param fn Function to defer.
-		constexpr defer(Fn&& fn);
+		constexpr defer(Fn&& fn) noexcept(std::is_nothrow_move_constructible_v<Fn>);
 
 		/// Calls the deferred function.
-		constexpr ~defer();
+		constexpr ~defer() noexcept;
 
 	  private:
 		/// The deferred function.
@@ -30,7 +31,7 @@ namespace tr
 #define TR_DEFER(...)                                                                                                                      \
 	[[maybe_unused]] const ::tr::defer TR_JOIN(defer_, __LINE__)                                                                           \
 	{                                                                                                                                      \
-		[&] { __VA_ARGS__; }                                                                                                               \
+		[&]() noexcept { __VA_ARGS__; }                                                                                                    \
 	}
 } // namespace tr
 

@@ -6,12 +6,12 @@
 
 //
 
-consteval tr::duration tr::operator""_hz(unsigned long long hz)
+consteval tr::duration tr::operator""_hz(unsigned long long hz) noexcept
 {
 	return duration{isecs{1}} / static_cast<long long>(hz);
 }
 
-consteval tr::duration tr::operator""_hz(long double hz)
+consteval tr::duration tr::operator""_hz(long double hz) noexcept
 {
 	return std::chrono::duration_cast<duration>(duration{isecs{1}} / hz);
 }
@@ -19,7 +19,7 @@ consteval tr::duration tr::operator""_hz(long double hz)
 //
 
 template <typename Rep1, typename Rep2, typename Period1, typename Period2>
-constexpr float tr::ratio(std::chrono::duration<Rep1, Period1> a, std::chrono::duration<Rep2, Period2> b)
+constexpr float tr::ratio(std::chrono::duration<Rep1, Period1> a, std::chrono::duration<Rep2, Period2> b) noexcept
 {
 	return float(dnsecs{a} / dnsecs{b});
 }

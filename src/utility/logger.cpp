@@ -14,7 +14,7 @@ namespace tr
 	{
 		/// Must be a function because of the static object initialization fiasco.
 		/// @return Reference to the list of registered console loggers.
-		std::vector<std::string>& registered_console_loggers()
+		[[nodiscard]] std::vector<std::string>& registered_console_loggers() noexcept
 		{
 			static std::vector<std::string> registered_console_loggers;
 			return registered_console_loggers;
@@ -30,7 +30,7 @@ tr::console_logger::console_logger(std::string&& name)
 	registered_console_loggers().emplace_back(m_name);
 }
 
-tr::console_logger::~console_logger()
+tr::console_logger::~console_logger() noexcept
 {
 	unstable_erase(registered_console_loggers(), std::ranges::find(registered_console_loggers(), m_name));
 }
@@ -44,7 +44,7 @@ namespace tr
 		/// String size projection.
 		/// @param str String to get the size of.
 		/// @return Size of the string.
-		usize string_size(const std::string& string)
+		[[nodiscard]] usize string_size(const std::string& string) noexcept
 		{
 			return string.size();
 		}
@@ -70,7 +70,7 @@ tr::file_logger::file_logger(std::filesystem::path&& path)
 	: m_path{std::move(path)}
 {
 	try {
-		open_file_w(m_path, std::ios::trunc);
+		(void)open_file_w(m_path, std::ios::trunc);
 	}
 	catch (...) {
 		return;
@@ -122,24 +122,24 @@ tr::logger::logger(std::unique_ptr<logger_backend>&& backend)
 
 //
 
-bool tr::logger::active() const
+bool tr::logger::active() const noexcept
 {
 	return m_backend != nullptr;
 }
 
-const tr::logger_backend& tr::logger::backend() const
+const tr::logger_backend& tr::logger::backend() const noexcept
 {
 	return *m_backend;
 }
 
-tr::logger_backend& tr::logger::backend()
+tr::logger_backend& tr::logger::backend() noexcept
 {
 	return *m_backend;
 }
 
 //
 
-void tr::logger::clear_backend()
+void tr::logger::clear_backend() noexcept
 {
 	m_backend.reset();
 }

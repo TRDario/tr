@@ -26,20 +26,20 @@ namespace tr
 		/// @{
 
 		/// Constructs an empty benchmark.
-		benchmark() = default;
+		[[nodiscard]] benchmark() noexcept = default;
 
 		/// @}
 		/// @name Controls
 		/// @{
 
 		/// Starts a new measurement.
-		void start();
+		void start() noexcept;
 
 		/// Stops a measurement.
 		void stop();
 
 		/// Clears all previous and ongoing measurements from the queue.
-		void clear();
+		void clear() noexcept;
 
 		/// @}
 		/// @name Results
@@ -47,27 +47,27 @@ namespace tr
 
 		/// Gets the duration of the latest measurement.
 		/// @return Duration of the latest measurement.
-		duration latest() const;
+		[[nodiscard]] duration latest() const noexcept;
 
 		/// Gets the duration of the shortest available measurement.
 		/// @return Duration of the shortest available measurement.
-		duration min() const;
+		[[nodiscard]] duration min() const noexcept;
 
 		/// Gets the duration of the longest available measurement.
 		/// @return Duration of the longest available measurement.
-		duration max() const;
+		[[nodiscard]] duration max() const noexcept;
 
 		/// Gets the average duration of the available measurements.
 		/// @return Average duration of the available measurements.
-		duration avg() const;
+		[[nodiscard]] duration avg() const noexcept;
 
 		/// Gets the average number of measurements per second.
 		/// @return Average number of measurements per second.
-		double fps() const;
+		[[nodiscard]] double fps() const noexcept;
 
 		/// Gets the available measurements.
 		/// @return Reference to the queue of available measurements.
-		const std::deque<measurement>& measurements() const;
+		[[nodiscard]] const std::deque<measurement>& measurements() const noexcept;
 
 	  private:
 		/// Sentinel starting point for a measurement that hasn't been started.

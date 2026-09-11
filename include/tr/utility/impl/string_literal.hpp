@@ -7,7 +7,7 @@
 //
 
 template <tr::usize Size>
-consteval tr::string_literal<Size>::string_literal(const char (&str)[Size])
+consteval tr::string_literal<Size>::string_literal(const char (&str)[Size]) noexcept
 {
 	std::ranges::copy(str, data);
 }
@@ -15,20 +15,20 @@ consteval tr::string_literal<Size>::string_literal(const char (&str)[Size])
 //
 
 template <tr::usize Size>
-consteval tr::string_literal<Size>::operator const char*() const
+consteval tr::string_literal<Size>::operator const char*() const noexcept
 {
 	return data;
 }
 
 template <tr::usize Size>
-consteval tr::string_literal<Size>::operator std::string_view() const
+consteval tr::string_literal<Size>::operator std::string_view() const noexcept
 {
 	return data;
 }
 
 template <tr::usize Size>
 template <typename... Args>
-consteval tr::string_literal<Size>::operator std::format_string<Args...>() const
+consteval tr::string_literal<Size>::operator std::format_string<Args...>() const noexcept
 {
 	return std::string_view{*this};
 }
@@ -36,7 +36,7 @@ consteval tr::string_literal<Size>::operator std::format_string<Args...>() const
 //
 
 template <tr::usize Size>
-consteval tr::usize tr::string_literal<Size>::size()
+consteval tr::usize tr::string_literal<Size>::size() noexcept
 {
 	return Size - 1;
 }
@@ -44,7 +44,7 @@ consteval tr::usize tr::string_literal<Size>::size()
 //
 
 template <typename First, typename Second, typename... Rest>
-consteval auto tr::concatenate_string_literals(First&& first, Second&& second, Rest&&... rest)
+consteval auto tr::concatenate_string_literals(First&& first, Second&& second, Rest&&... rest) noexcept
 {
 	if constexpr (sizeof...(Rest) == 0) {
 		const tr::string_literal left{first};

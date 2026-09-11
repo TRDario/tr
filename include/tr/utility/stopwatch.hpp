@@ -16,7 +16,7 @@ namespace tr
 		/// @{
 
 		/// Constructs and starts the stopwatch.
-		stopwatch();
+		[[nodiscard]] stopwatch() noexcept;
 
 		/// @}
 		/// @name Access
@@ -24,11 +24,11 @@ namespace tr
 
 		/// Gets the elapsed time since the stopwatch was started.
 		/// @return Elapsed time since the stopwatch was started.
-		duration elapsed() const;
+		[[nodiscard]] duration elapsed() const noexcept;
 
 		/// Restarts the stopwatch and gets the elapsed time since it was started.
 		/// @return Elapsed time of the previous lap.
-		duration lap();
+		[[nodiscard]] duration lap() noexcept;
 
 		/// @}
 

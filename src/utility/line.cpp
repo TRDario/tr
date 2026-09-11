@@ -6,19 +6,19 @@
 
 //
 
-float tr::line_segment::length() const
+float tr::line_segment::length() const noexcept
 {
 	return glm::distance(a, b);
 }
 
-float tr::line_segment::length2() const
+float tr::line_segment::length2() const noexcept
 {
 	return distance2(a, b);
 }
 
 //
 
-glm::vec2 tr::line_segment::closest_point(glm::vec2 p) const
+glm::vec2 tr::line_segment::closest_point(glm::vec2 p) const noexcept
 {
 	const glm::vec2 pdelta{p - a};
 	const glm::vec2 delta{b - a};
@@ -28,13 +28,13 @@ glm::vec2 tr::line_segment::closest_point(glm::vec2 p) const
 
 //
 
-bool tr::collinear(glm::vec2 a, glm::vec2 b, glm::vec2 c)
+bool tr::collinear(glm::vec2 a, glm::vec2 b, glm::vec2 c) noexcept
 {
 	const float tolerance{std::abs(std::max({a.x, a.y, b.x, b.y, c.x, c.y})) * 1e-6f};
 	return std::abs((b.x - a.x) * (c.y - a.y) - (c.x - a.x) * (b.y - a.y)) < tolerance;
 }
 
-bool tr::intersecting(const line_segment& lhs, const line_segment& rhs)
+bool tr::intersecting(const line_segment& lhs, const line_segment& rhs) noexcept
 {
 	const glm::vec2 delta{rhs.b - rhs.a};
 	const glm::vec2 normal{lhs.b.y - lhs.a.y, -lhs.b.x + lhs.a.x};
@@ -52,7 +52,7 @@ bool tr::intersecting(const line_segment& lhs, const line_segment& rhs)
 	return result.x >= min.x && result.x <= max.x && (result.x != lhs.a.x || (result.y >= min.y && result.y <= max.y));
 }
 
-std::optional<glm::vec2> tr::intersection(const line_segment& lhs, const line_segment& rhs)
+std::optional<glm::vec2> tr::intersection(const line_segment& lhs, const line_segment& rhs) noexcept
 {
 	const glm::vec2 delta{rhs.b - rhs.a};
 	const glm::vec2 normal{lhs.b.y - lhs.a.y, -lhs.b.x + lhs.a.x};
@@ -75,7 +75,7 @@ std::optional<glm::vec2> tr::intersection(const line_segment& lhs, const line_se
 	}
 }
 
-std::optional<glm::vec2> tr::intersection(glm::vec2 lp, angle lth, const line_segment& rhs)
+std::optional<glm::vec2> tr::intersection(glm::vec2 lp, angle lth, const line_segment& rhs) noexcept
 {
 	const glm::vec2 delta{rhs.b - rhs.a};
 	const glm::vec2 normal{lth.sin(), -lth.cos()};
@@ -92,7 +92,7 @@ std::optional<glm::vec2> tr::intersection(glm::vec2 lp, angle lth, const line_se
 	}
 }
 
-std::optional<glm::vec2> tr::intersection(glm::vec2 lp, angle lth, glm::vec2 rp, angle rth)
+std::optional<glm::vec2> tr::intersection(glm::vec2 lp, angle lth, glm::vec2 rp, angle rth) noexcept
 {
 	const glm::vec2 delta{rth.cos(), rth.sin()};
 	const glm::vec2 normal{lth.sin(), -lth.cos()};
@@ -104,7 +104,7 @@ std::optional<glm::vec2> tr::intersection(glm::vec2 lp, angle lth, glm::vec2 rp,
 	return rp + delta * t;
 }
 
-std::optional<glm::vec2> tr::intersection(glm::vec2 lp, angle lth, glm::vec2 ra, glm::vec2 rb)
+std::optional<glm::vec2> tr::intersection(glm::vec2 lp, angle lth, glm::vec2 ra, glm::vec2 rb) noexcept
 {
 	const glm::vec2 delta{rb - ra};
 	const glm::vec2 normal{lth.sin(), -lth.cos()};
@@ -116,7 +116,7 @@ std::optional<glm::vec2> tr::intersection(glm::vec2 lp, angle lth, glm::vec2 ra,
 	return ra + delta * t;
 }
 
-std::optional<glm::vec2> tr::insersection(glm::vec2 la, glm::vec2 lb, glm::vec2 ra, glm::vec2 rb)
+std::optional<glm::vec2> tr::insersection(glm::vec2 la, glm::vec2 lb, glm::vec2 ra, glm::vec2 rb) noexcept
 {
 	const glm::vec2 delta{rb - ra};
 	const glm::vec2 normal{lb.y - la.y, -lb.x + la.x};

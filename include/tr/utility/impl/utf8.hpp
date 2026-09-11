@@ -8,43 +8,48 @@
 //
 
 template <tr::utf8::input_iterator Iterator>
-constexpr tr::codepoint tr::utf8::to_cp(Iterator it)
+constexpr tr::codepoint tr::utf8::to_cp(Iterator it) noexcept(noexcept(*++it))
 {
-	if (static_cast<u8>(*it) < 0x80) {
-		return static_cast<u8>(*it);
+	const u8 leading_byte{static_cast<u8>(*it++)};
+	if (leading_byte < 0x80) {
+		return leading_byte;
 	}
-	else if (static_cast<u8>(*it) < 0xE0) {
-		return ((static_cast<u8>(it[0]) & 0x1F) << 6) | (static_cast<u8>(it[1]) & 0x3F);
+	else if (leading_byte < 0xE0) {
+		const u8 second_byte{static_cast<u8>(static_cast<u8>(*it) & 0x3F)};
+		return ((leading_byte & 0x1F) << 6) | (second_byte & 0x3F);
 	}
-	else if (static_cast<u8>(*it) < 0xF0) {
-		return ((static_cast<u8>(it[0]) & 0xF) << 12) | ((static_cast<u8>(it[1]) & 0x3F) << 6) | (static_cast<u8>(it[2]) & 0x3F);
+	else if (leading_byte < 0xF0) {
+		const u8 second_byte{static_cast<u8>(static_cast<u8>(*it++) & 0x3F)};
+		const u8 third_byte{static_cast<u8>(static_cast<u8>(*it) & 0x3F)};
+		return ((leading_byte & 0xF) << 12) | ((second_byte & 0x3F) << 6) | (third_byte & 0x3F);
 	}
 	else {
-		return ((static_cast<u8>(it[0]) & 0x7) << 18) | ((static_cast<u8>(it[1]) & 0x3F) << 12) | ((static_cast<u8>(it[2]) & 0x3F) << 6) |
-			   (static_cast<u8>(it[3]) & 0x3F);
+		const u8 second_byte{static_cast<u8>(static_cast<u8>(*it++) & 0x3F)};
+		const u8 third_byte{static_cast<u8>(static_cast<u8>(*it++) & 0x3F)};
+		const u8 fourth_byte{static_cast<u8>(static_cast<u8>(*it) & 0x3F)};
+		return ((leading_byte & 0x7) << 18) | ((second_byte & 0x3F) << 12) | ((third_byte & 0x3F) << 6) | (fourth_byte & 0x3F);
 	}
 }
 
 template <tr::utf8::input_iterator Iterator>
-constexpr Iterator tr::utf8::next(Iterator it)
+constexpr Iterator tr::utf8::next(Iterator it) noexcept(noexcept(*++it))
 {
 	if (static_cast<u8>(*it) < 0x80) {
-		it += 1;
+		return ++it;
 	}
 	else if (static_cast<u8>(*it) < 0xE0) {
-		it += 2;
+		return std::ranges::next(it, 2);
 	}
 	else if (static_cast<u8>(*it) < 0xF0) {
-		it += 3;
+		return std::ranges::next(it, 3);
 	}
 	else {
-		it += 4;
+		return std::ranges::next(it, 4);
 	}
-	return it;
 }
 
 template <tr::utf8::input_iterator Iterator>
-constexpr Iterator tr::utf8::next(Iterator it, usize n)
+constexpr Iterator tr::utf8::next(Iterator it, usize n) noexcept(noexcept(*++it))
 {
 	for (usize i = 0; i < n; ++i) {
 		it = tr::utf8::next(it);
@@ -52,15 +57,15 @@ constexpr Iterator tr::utf8::next(Iterator it, usize n)
 	return it;
 }
 
-template <tr::utf8::input_iterator Iterator>
-constexpr Iterator tr::utf8::prev(Iterator it)
+template <tr::utf8::bidirectional_iterator Iterator>
+constexpr Iterator tr::utf8::prev(Iterator it) noexcept(noexcept(*--it))
 {
 	while ((*--it & 0xC0) == 0x80) {}
 	return it;
 }
 
-template <tr::utf8::input_iterator Iterator>
-constexpr Iterator tr::utf8::prev(Iterator it, usize n)
+template <tr::utf8::bidirectional_iterator Iterator>
+constexpr Iterator tr::utf8::prev(Iterator it, usize n) noexcept(noexcept(*--it))
 {
 	for (usize i = 0; i < n; ++i) {
 		it = tr::utf8::prev(it);
@@ -130,20 +135,20 @@ constexpr void tr::utf8::pop_back(String& str)
 
 //
 
-constexpr tr::utf8::iterator::iterator(const char* ptr)
+constexpr tr::utf8::iterator::iterator(const char* ptr) noexcept
 	: m_ptr{ptr}
 {
 	TR_ASSERT(ptr != nullptr, "Tried to create UTF-8 iterator to nullptr.");
 }
 
-constexpr tr::codepoint tr::utf8::iterator::operator*() const
+constexpr tr::codepoint tr::utf8::iterator::operator*() const noexcept
 {
 	TR_ASSERT(m_ptr != nullptr, "Tried to dereference default-constructed UTF-8 iterator.");
 
 	return to_cp(m_ptr);
 }
 
-constexpr tr::utf8::iterator& tr::utf8::iterator::operator++()
+constexpr tr::utf8::iterator& tr::utf8::iterator::operator++() noexcept
 {
 	TR_ASSERT(m_ptr != nullptr, "Tried to increment default-constructed UTF-8 iterator.");
 
@@ -151,7 +156,7 @@ constexpr tr::utf8::iterator& tr::utf8::iterator::operator++()
 	return *this;
 }
 
-constexpr tr::utf8::iterator& tr::utf8::iterator::operator--()
+constexpr tr::utf8::iterator& tr::utf8::iterator::operator--() noexcept
 {
 	TR_ASSERT(m_ptr != nullptr, "Tried to decrement default-constructed UTF-8 iterator.");
 
@@ -159,43 +164,43 @@ constexpr tr::utf8::iterator& tr::utf8::iterator::operator--()
 	return *this;
 }
 
-constexpr const char* tr::utf8::iterator::base() const
+constexpr const char* tr::utf8::iterator::base() const noexcept
 {
 	return m_ptr;
 }
 
 //
 
-constexpr tr::utf8::indexed_iterator::indexed_iterator(const char* ptr, ssize index)
+constexpr tr::utf8::indexed_iterator::indexed_iterator(const char* ptr, ssize index) noexcept
 	: m_ptr{ptr}
 	, m_index{index}
 {
 	TR_ASSERT(ptr != nullptr, "Tried to create UTF-8 iterator to nullptr.");
 }
 
-constexpr tr::utf8::indexed_iterator::operator iterator() const
+constexpr tr::utf8::indexed_iterator::operator iterator() const noexcept
 {
 	return m_ptr;
 }
 
-constexpr auto tr::utf8::operator<=>(indexed_iterator lhs, indexed_iterator rhs)
+[[nodiscard]] constexpr auto tr::utf8::operator<=>(indexed_iterator lhs, indexed_iterator rhs) noexcept
 {
 	return lhs.m_ptr <=> rhs.m_ptr;
 }
 
-constexpr bool tr::utf8::operator==(indexed_iterator lhs, indexed_iterator rhs)
+[[nodiscard]] constexpr bool tr::utf8::operator==(indexed_iterator lhs, indexed_iterator rhs) noexcept
 {
 	return lhs.m_ptr == rhs.m_ptr;
 }
 
-constexpr tr::codepoint tr::utf8::indexed_iterator::operator*() const
+constexpr tr::codepoint tr::utf8::indexed_iterator::operator*() const noexcept
 {
 	TR_ASSERT(m_ptr != nullptr, "Tried to dereference default-constructed UTF-8 iterator.");
 
 	return to_cp(m_ptr);
 }
 
-constexpr tr::utf8::indexed_iterator& tr::utf8::indexed_iterator::operator++()
+constexpr tr::utf8::indexed_iterator& tr::utf8::indexed_iterator::operator++() noexcept
 {
 	TR_ASSERT(m_ptr != nullptr, "Tried to increment default-constructed UTF-8 iterator.");
 
@@ -205,7 +210,7 @@ constexpr tr::utf8::indexed_iterator& tr::utf8::indexed_iterator::operator++()
 	return *this;
 }
 
-constexpr tr::utf8::indexed_iterator& tr::utf8::indexed_iterator::operator--()
+constexpr tr::utf8::indexed_iterator& tr::utf8::indexed_iterator::operator--() noexcept
 {
 	TR_ASSERT(m_ptr != nullptr, "Tried to decrement default-constructed UTF-8 iterator.");
 
@@ -215,19 +220,19 @@ constexpr tr::utf8::indexed_iterator& tr::utf8::indexed_iterator::operator--()
 	return *this;
 }
 
-constexpr const char* tr::utf8::indexed_iterator::base() const
+constexpr const char* tr::utf8::indexed_iterator::base() const noexcept
 {
 	return m_ptr;
 }
 
-constexpr tr::ssize tr::utf8::indexed_iterator::index() const
+constexpr tr::ssize tr::utf8::indexed_iterator::index() const noexcept
 {
 	return m_index;
 }
 
 //
 
-constexpr tr::utf8::iterator tr::utf8::begin(std::string_view str)
+constexpr tr::utf8::iterator tr::utf8::begin(std::string_view str) noexcept
 {
 	if (str.empty()) {
 		return {};
@@ -235,7 +240,7 @@ constexpr tr::utf8::iterator tr::utf8::begin(std::string_view str)
 	return str.data();
 }
 
-constexpr tr::utf8::indexed_iterator tr::utf8::ibegin(std::string_view str)
+constexpr tr::utf8::indexed_iterator tr::utf8::ibegin(std::string_view str) noexcept
 {
 	if (str.empty()) {
 		return {};
@@ -243,7 +248,7 @@ constexpr tr::utf8::indexed_iterator tr::utf8::ibegin(std::string_view str)
 	return {str.data(), 0};
 }
 
-constexpr tr::utf8::iterator tr::utf8::end(std::string_view str)
+constexpr tr::utf8::iterator tr::utf8::end(std::string_view str) noexcept
 {
 	if (str.empty()) {
 		return {};
@@ -251,7 +256,7 @@ constexpr tr::utf8::iterator tr::utf8::end(std::string_view str)
 	return str.data() + str.size();
 }
 
-constexpr tr::utf8::indexed_iterator tr::utf8::iend(std::string_view str)
+constexpr tr::utf8::indexed_iterator tr::utf8::iend(std::string_view str) noexcept
 {
 	if (str.empty()) {
 		return {};
@@ -259,7 +264,7 @@ constexpr tr::utf8::indexed_iterator tr::utf8::iend(std::string_view str)
 	return {str.data() + str.size(), ssize(str.size())};
 }
 
-constexpr tr::utf8::reverse_iterator tr::utf8::rbegin(std::string_view str)
+constexpr tr::utf8::reverse_iterator tr::utf8::rbegin(std::string_view str) noexcept
 {
 	if (str.empty()) {
 		return {};
@@ -267,7 +272,7 @@ constexpr tr::utf8::reverse_iterator tr::utf8::rbegin(std::string_view str)
 	return reverse_iterator{tr::utf8::end(str)};
 }
 
-constexpr tr::utf8::reverse_indexed_iterator tr::utf8::ribegin(std::string_view str)
+constexpr tr::utf8::reverse_indexed_iterator tr::utf8::ribegin(std::string_view str) noexcept
 {
 	if (str.empty()) {
 		return {};
@@ -275,7 +280,7 @@ constexpr tr::utf8::reverse_indexed_iterator tr::utf8::ribegin(std::string_view 
 	return reverse_indexed_iterator{tr::utf8::iend(str)};
 }
 
-constexpr tr::utf8::reverse_iterator tr::utf8::rend(std::string_view str)
+constexpr tr::utf8::reverse_iterator tr::utf8::rend(std::string_view str) noexcept
 {
 	if (str.empty()) {
 		return {};
@@ -283,7 +288,7 @@ constexpr tr::utf8::reverse_iterator tr::utf8::rend(std::string_view str)
 	return reverse_iterator{tr::utf8::begin(str)};
 }
 
-constexpr tr::utf8::reverse_indexed_iterator tr::utf8::riend(std::string_view str)
+constexpr tr::utf8::reverse_indexed_iterator tr::utf8::riend(std::string_view str) noexcept
 {
 	if (str.empty()) {
 		return {};
@@ -291,12 +296,12 @@ constexpr tr::utf8::reverse_indexed_iterator tr::utf8::riend(std::string_view st
 	return reverse_indexed_iterator{tr::utf8::ibegin(str)};
 }
 
-constexpr std::ranges::subrange<tr::utf8::iterator> tr::utf8::range(std::string_view str)
+constexpr std::ranges::subrange<tr::utf8::iterator> tr::utf8::range(std::string_view str) noexcept
 {
 	return {utf8::begin(str), utf8::end(str)};
 }
 
-constexpr tr::usize tr::utf8::length(std::string_view str)
+constexpr tr::usize tr::utf8::length(std::string_view str) noexcept
 {
 	return std::distance(utf8::begin(str), utf8::end(str));
 }

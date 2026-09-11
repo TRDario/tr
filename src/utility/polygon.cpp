@@ -7,7 +7,7 @@
 
 //
 
-tr::winding_order tr::polygon_winding_order(polygon_view vertices)
+tr::winding_order tr::polygon_winding_order(polygon_view vertices) noexcept
 {
 	usize min_y_index{0};
 	for (usize i = 1; i < vertices.size(); ++i) {
@@ -22,7 +22,7 @@ tr::winding_order tr::polygon_winding_order(polygon_view vertices)
 	return triangle{a, b, c}.winding_order();
 }
 
-bool tr::simple_polygon(polygon_view vertices)
+bool tr::simple_polygon(polygon_view vertices) noexcept
 {
 	for (usize i = 0; i < vertices.size(); ++i) {
 		const usize ni{(i + 1) % vertices.size()};
@@ -38,7 +38,7 @@ bool tr::simple_polygon(polygon_view vertices)
 	return true;
 }
 
-bool tr::point_in_polygon(glm::vec2 p, polygon_view vertices)
+bool tr::point_in_polygon(glm::vec2 p, polygon_view vertices) noexcept
 {
 	usize hits{0};
 	for (usize i = 0; i < vertices.size(); ++i) {
@@ -49,7 +49,7 @@ bool tr::point_in_polygon(glm::vec2 p, polygon_view vertices)
 	return hits % 2 == 1;
 }
 
-bool tr::intersecting(polygon_view a, polygon_view b)
+bool tr::intersecting(polygon_view a, polygon_view b) noexcept
 {
 	if (std::ranges::any_of(a, [&](glm::vec2 p) { return point_in_polygon(p, b); })) {
 		return true;

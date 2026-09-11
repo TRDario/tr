@@ -7,19 +7,19 @@
 //
 
 template <std::integral To, std::floating_point From>
-constexpr To tr::round_cast(From from)
+constexpr To tr::round_cast(From from) noexcept
 {
 	return static_cast<To>(std::round(from));
 }
 
 template <std::integral To, std::floating_point From>
-constexpr To tr::floor_cast(From from)
+constexpr To tr::floor_cast(From from) noexcept
 {
 	return static_cast<To>(std::floor(from));
 }
 
 template <std::integral To, std::floating_point From>
-constexpr To tr::ceil_cast(From from)
+constexpr To tr::ceil_cast(From from) noexcept
 {
 	return static_cast<To>(std::ceil(from));
 }
@@ -27,7 +27,7 @@ constexpr To tr::ceil_cast(From from)
 //
 
 template <tr::arithmetic T>
-constexpr T tr::sgn(T v)
+constexpr T tr::sgn(T v) noexcept
 {
 	if constexpr (std::unsigned_integral<T>) {
 		return v > T{0} ? T{1} : T{0};
@@ -56,13 +56,13 @@ constexpr auto tr::eucmod(T1 v, T2 mod)
 }
 
 template <typename T, std::floating_point Ratio>
-constexpr T tr::lerp(const T& x, const T& y, Ratio a)
+constexpr T tr::lerp(const T& x, const T& y, Ratio a) noexcept(noexcept(x * (1 - a) + y * a))
 {
 	return x * (1 - a) + y * a;
 }
 
 template <typename T>
-constexpr auto tr::sqr(const T& v)
+constexpr auto tr::sqr(const T& v) noexcept(noexcept(v * v))
 {
 	return v * v;
 }

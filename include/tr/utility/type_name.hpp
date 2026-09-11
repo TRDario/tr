@@ -13,7 +13,7 @@ namespace tr
 	/// @tparam T Type to get the name of.
 	/// @return String view to the name of the type.
 	template <typename T>
-	consteval std::string_view type_name();
+	[[nodiscard]] consteval std::string_view type_name() noexcept;
 
 } // namespace tr
 

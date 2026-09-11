@@ -7,7 +7,7 @@
 //
 
 template <typename T>
-consteval std::string_view tr::type_name()
+consteval std::string_view tr::type_name() noexcept
 {
 #ifdef __clang__
 	constexpr std::string_view function_name{std::source_location::current().function_name()};

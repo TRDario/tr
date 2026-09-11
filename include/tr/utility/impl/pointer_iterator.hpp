@@ -7,7 +7,7 @@
 //
 
 template <typename Iterator, tr::pointer Pointer>
-constexpr tr::pointer_iterator<Iterator, Pointer>::pointer_iterator(Pointer base)
+constexpr tr::pointer_iterator<Iterator, Pointer>::pointer_iterator(Pointer base) noexcept
 	: m_base{base}
 {
 }
@@ -15,19 +15,20 @@ constexpr tr::pointer_iterator<Iterator, Pointer>::pointer_iterator(Pointer base
 //
 
 template <typename Iterator, tr::pointer Pointer>
-constexpr tr::pointer_iterator<Iterator, Pointer>::reference tr::pointer_iterator<Iterator, Pointer>::operator*() const
+constexpr tr::pointer_iterator<Iterator, Pointer>::reference tr::pointer_iterator<Iterator, Pointer>::operator*() const noexcept
 {
 	return *m_base;
 }
 
 template <typename Iterator, tr::pointer Pointer>
-constexpr tr::pointer_iterator<Iterator, Pointer>::pointer tr::pointer_iterator<Iterator, Pointer>::operator->() const
+constexpr tr::pointer_iterator<Iterator, Pointer>::pointer tr::pointer_iterator<Iterator, Pointer>::operator->() const noexcept
 {
 	return m_base;
 }
 
 template <typename Iterator, tr::pointer Pointer>
-constexpr tr::pointer_iterator<Iterator, Pointer>::reference tr::pointer_iterator<Iterator, Pointer>::operator[](difference_type diff) const
+constexpr tr::pointer_iterator<Iterator, Pointer>::reference tr::pointer_iterator<Iterator, Pointer>::operator[](
+	difference_type diff) const noexcept
 {
 	return m_base[diff];
 }
@@ -35,14 +36,14 @@ constexpr tr::pointer_iterator<Iterator, Pointer>::reference tr::pointer_iterato
 //
 
 template <typename Iterator, tr::pointer Pointer>
-constexpr Iterator& tr::pointer_iterator<Iterator, Pointer>::operator++()
+constexpr Iterator& tr::pointer_iterator<Iterator, Pointer>::operator++() noexcept
 {
 	++m_base;
 	return static_cast<Iterator&>(*this);
 }
 
 template <typename Iterator, tr::pointer Pointer>
-constexpr Iterator tr::pointer_iterator<Iterator, Pointer>::operator++(int)
+constexpr Iterator tr::pointer_iterator<Iterator, Pointer>::operator++(int) noexcept
 {
 	const Iterator copy{static_cast<Iterator&>(*this)};
 	++m_base;
@@ -50,14 +51,14 @@ constexpr Iterator tr::pointer_iterator<Iterator, Pointer>::operator++(int)
 }
 
 template <typename Iterator, tr::pointer Pointer>
-constexpr Iterator& tr::pointer_iterator<Iterator, Pointer>::operator--()
+constexpr Iterator& tr::pointer_iterator<Iterator, Pointer>::operator--() noexcept
 {
 	--m_base;
 	return static_cast<Iterator&>(*this);
 }
 
 template <typename Iterator, tr::pointer Pointer>
-constexpr Iterator tr::pointer_iterator<Iterator, Pointer>::operator--(int)
+constexpr Iterator tr::pointer_iterator<Iterator, Pointer>::operator--(int) noexcept
 {
 	const Iterator copy{static_cast<Iterator&>(*this)};
 	--m_base;
@@ -67,14 +68,14 @@ constexpr Iterator tr::pointer_iterator<Iterator, Pointer>::operator--(int)
 //
 
 template <typename Iterator, tr::pointer Pointer>
-constexpr Iterator& tr::pointer_iterator<Iterator, Pointer>::operator+=(difference_type diff)
+constexpr Iterator& tr::pointer_iterator<Iterator, Pointer>::operator+=(difference_type diff) noexcept
 {
 	m_base += diff;
 	return static_cast<Iterator&>(*this);
 }
 
 template <typename Iterator, tr::pointer Pointer>
-constexpr Iterator& tr::pointer_iterator<Iterator, Pointer>::operator-=(difference_type diff)
+constexpr Iterator& tr::pointer_iterator<Iterator, Pointer>::operator-=(difference_type diff) noexcept
 {
 	m_base -= diff;
 	return static_cast<Iterator&>(*this);
@@ -83,8 +84,8 @@ constexpr Iterator& tr::pointer_iterator<Iterator, Pointer>::operator-=(differen
 namespace tr
 {
 	template <typename Iterator, tr::pointer Pointer>
-	constexpr Iterator operator+(const pointer_iterator<Iterator, Pointer>& it,
-								 typename pointer_iterator<Iterator, Pointer>::difference_type diff)
+	[[nodiscard]] constexpr Iterator operator+(const pointer_iterator<Iterator, Pointer>& it,
+											   typename pointer_iterator<Iterator, Pointer>::difference_type diff) noexcept
 	{
 		Iterator copy{static_cast<const Iterator&>(it)};
 		copy += diff;
@@ -92,15 +93,15 @@ namespace tr
 	}
 
 	template <typename Iterator, tr::pointer Pointer>
-	constexpr Iterator operator+(typename pointer_iterator<Iterator, Pointer>::difference_type diff,
-								 const pointer_iterator<Iterator, Pointer>& it)
+	[[nodiscard]] constexpr Iterator operator+(typename pointer_iterator<Iterator, Pointer>::difference_type diff,
+											   const pointer_iterator<Iterator, Pointer>& it) noexcept
 	{
 		return it + diff;
 	}
 
 	template <typename Iterator, tr::pointer Pointer>
-	constexpr Iterator operator-(const pointer_iterator<Iterator, Pointer>& it,
-								 typename pointer_iterator<Iterator, Pointer>::difference_type diff)
+	[[nodiscard]] constexpr Iterator operator-(const pointer_iterator<Iterator, Pointer>& it,
+											   typename pointer_iterator<Iterator, Pointer>::difference_type diff) noexcept
 	{
 		Iterator copy{static_cast<const Iterator&>(it)};
 		copy -= diff;
@@ -108,8 +109,8 @@ namespace tr
 	}
 
 	template <typename Iterator, tr::pointer Pointer>
-	constexpr pointer_iterator<Iterator, Pointer>::difference_type operator-(pointer_iterator<Iterator, Pointer> lhs,
-																			 std::type_identity_t<pointer_iterator<Iterator, Pointer>> rhs)
+	[[nodiscard]] constexpr pointer_iterator<Iterator, Pointer>::difference_type operator-(
+		pointer_iterator<Iterator, Pointer> lhs, std::type_identity_t<pointer_iterator<Iterator, Pointer>> rhs) noexcept
 	{
 		return lhs.m_base - rhs.m_base;
 	}
@@ -118,7 +119,7 @@ namespace tr
 //
 
 template <typename Iterator, tr::pointer Pointer>
-Pointer tr::pointer_iterator<Iterator, Pointer>::base() const
+Pointer tr::pointer_iterator<Iterator, Pointer>::base() const noexcept
 {
 	return m_base;
 }

@@ -20,7 +20,7 @@ namespace tr
 
 		/// Constructs an exception.
 		/// @param description Decryption error description.
-		decryption_error(std::string_view description);
+		[[nodiscard]] decryption_error(std::string_view description) noexcept;
 
 		/// @}
 		/// @name Information
@@ -28,15 +28,15 @@ namespace tr
 
 		/// Gets the name of the error.
 		/// @return "Decryption error".
-		std::string_view name() const override;
+		[[nodiscard]] std::string_view name() const noexcept override;
 
 		/// Gets the description of the error.
 		/// @return Description of the decryption error.
-		std::string_view description() const override;
+		[[nodiscard]] std::string_view description() const noexcept override;
 
 		/// Gets further details about the error.
 		/// @return Always empty.
-		std::string_view details() const override;
+		[[nodiscard]] std::string_view details() const noexcept override;
 
 		/// @}
 
@@ -63,13 +63,13 @@ namespace tr
 	/// Encrypts data.
 	/// @param raw Raw source data.
 	/// @return Vector containing encrypted data.
-	std::vector<std::byte> encrypt(std::span<const std::byte> raw);
+	[[nodiscard]] std::vector<std::byte> encrypt(std::span<const std::byte> raw);
 
 	/// Encrypts data.
 	/// @param range Raw source range.
 	/// @return Vector containing encrypted data.
 	template <std::ranges::contiguous_range Range>
-	std::vector<std::byte> encrypt(Range&& range);
+	[[nodiscard]] std::vector<std::byte> encrypt(Range&& range);
 
 	/// @}
 	/// @name Decryption
@@ -85,7 +85,7 @@ namespace tr
 	/// @param encrypted Encrypted data.
 	/// @exception decryption_error If decryption failed.
 	/// @return Vector containing decrypted data.
-	std::vector<std::byte> decrypt(std::vector<std::byte> encrypted);
+	[[nodiscard]] std::vector<std::byte> decrypt(std::vector<std::byte> encrypted);
 
 	/// @}
 } // namespace tr

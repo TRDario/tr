@@ -33,29 +33,29 @@ namespace tr
 		/// @{
 
 		/// Default-constructs an RGB color.
-		constexpr rgb8() = default;
+		[[nodiscard]] constexpr rgb8() noexcept = default;
 
 		/// Creates a color from its components.
 		/// @param r Red color channel.
 		/// @param g Green color channel.
 		/// @param b Blue color channel.
-		constexpr rgb8(u8 r, u8 g, u8 b);
+		[[nodiscard]] constexpr rgb8(u8 r, u8 g, u8 b) noexcept;
 
 		/// Converts a float RGB color into an 8-bit one.
 		/// @param rgb Color to convert to RGB.
-		constexpr rgb8(rgbf rgb);
+		[[nodiscard]] constexpr rgb8(rgbf rgb) noexcept;
 
 		/// Removes the alpha component from an RGBA color.
 		/// @param rgba Color to convert to RGB.
-		constexpr rgb8(rgba8 rgba);
+		[[nodiscard]] constexpr rgb8(rgba8 rgba) noexcept;
 
 		/// Removes the alpha component from an RGBA color and converts it to 8-bit.
 		/// @param rgba Color to convert to RGB.
-		constexpr rgb8(rgbaf rgba);
+		[[nodiscard]] constexpr rgb8(rgbaf rgba) noexcept;
 
 		/// Converts an HSV color to an RGB one.
 		/// @param hsv Color to convert to RGB.
-		constexpr rgb8(hsv hsv);
+		[[nodiscard]] constexpr rgb8(hsv hsv) noexcept;
 
 		/// @}
 		/// @name Comparison operators
@@ -64,7 +64,7 @@ namespace tr
 		/// Compares two colors for equality.
 		/// @param lhs, rhs Colors to compare.
 		/// @return Whether the two colors are equal.
-		friend constexpr bool operator==(rgb8 lhs, rgb8 rhs) = default;
+		[[nodiscard]] friend constexpr bool operator==(rgb8 lhs, rgb8 rhs) noexcept = default;
 
 		/// @}
 		/// @name Arithmetic operators
@@ -75,7 +75,7 @@ namespace tr
 		/// @param addend Scalar to add to the color.
 		/// @return Reference to `*this`.
 		template <arithmetic Scalar>
-		constexpr rgb8& operator+=(Scalar addend);
+		constexpr rgb8& operator+=(Scalar addend) noexcept;
 
 		/// Adds a scalar to a color.
 		/// @tparam Scalar Scalar type.
@@ -83,14 +83,14 @@ namespace tr
 		/// @param addend Scalar to add to the color.
 		/// @return Color with the scalar added memberwise to the color.
 		template <arithmetic Scalar>
-		friend constexpr rgb8 operator+(rgb8 lhs, Scalar addend);
+		friend constexpr rgb8 operator+(rgb8 lhs, Scalar addend) noexcept;
 
 		/// Subtracts a scalar from the color.
 		/// @tparam Scalar Scalar type.
 		/// @param subtrahend Scalar to subtract from the color.
 		/// @return Reference to `*this`.
 		template <arithmetic Scalar>
-		constexpr rgb8& operator-=(Scalar subtrahend);
+		constexpr rgb8& operator-=(Scalar subtrahend) noexcept;
 
 		/// Subtracts a scalar from a color.
 		/// @tparam Scalar Scalar type.
@@ -98,14 +98,14 @@ namespace tr
 		/// @param subtrahend Scalar to subtract from the color.
 		/// @return Color with the scalar subtracted memberwise from the color.
 		template <arithmetic Scalar>
-		friend constexpr rgb8 operator-(rgb8 lhs, Scalar subtrahend);
+		friend constexpr rgb8 operator-(rgb8 lhs, Scalar subtrahend) noexcept;
 
 		/// Multiplies the color by a scalar.
 		/// @tparam Scalar Scalar type.
 		/// @param multiplier Scalar to multiply the color with.
 		/// @return Reference to `*this`.
 		template <arithmetic Scalar>
-		constexpr rgb8& operator*=(Scalar multiplier);
+		constexpr rgb8& operator*=(Scalar multiplier) noexcept;
 
 		/// Multiplies a color by a scalar.
 		/// @tparam Scalar Scalar type.
@@ -113,14 +113,14 @@ namespace tr
 		/// @param multiplier Scalar to multiply the color with.
 		/// @return Color multiplied memberwise with the scalar.
 		template <arithmetic Scalar>
-		friend constexpr rgb8 operator*(rgb8 lhs, Scalar multiplier);
+		friend constexpr rgb8 operator*(rgb8 lhs, Scalar multiplier) noexcept;
 
 		/// Divides the color by a scalar.
 		/// @tparam Scalar Scalar type.
 		/// @param divisor Scalar to divide the color by.
 		/// @return Reference to `*this`.
 		template <arithmetic Scalar>
-		constexpr rgb8& operator/=(Scalar divisor);
+		constexpr rgb8& operator/=(Scalar divisor) noexcept;
 
 		/// Divides a color by a scalar.
 		/// @tparam Scalar Scalar type.
@@ -128,37 +128,37 @@ namespace tr
 		/// @param divisor Scalar to divide the color by.
 		/// @return Color divided memberwise by the scalar.
 		template <arithmetic Scalar>
-		friend constexpr rgb8 operator/(rgb8 lhs, Scalar divisor);
+		friend constexpr rgb8 operator/(rgb8 lhs, Scalar divisor) noexcept;
 
 		/// Adds another color to the color.
 		/// @param addend Color to add.
 		/// @return Reference to `*this`.
-		constexpr rgb8& operator+=(rgb8 addend);
+		constexpr rgb8& operator+=(rgb8 addend) noexcept;
 
 		/// Adds two colors.
 		/// @param lhs, rhs Colors to add.
 		/// @return Memberwise sum of the colors.
-		friend constexpr rgb8 operator+(rgb8 lhs, rgb8 rhs);
+		friend constexpr rgb8 operator+(rgb8 lhs, rgb8 rhs) noexcept;
 
 		/// Subtracts another color from the color.
 		/// @param subtrahend Color to subtract.
 		/// @return Reference to `*this`.
-		constexpr rgb8& operator-=(rgb8 subtrahend);
+		constexpr rgb8& operator-=(rgb8 subtrahend) noexcept;
 
 		/// Subtracts two colors.
 		/// @param lhs, rhs Colors to subtract.
 		/// @return Memberwise difference of the colors.
-		friend constexpr rgb8 operator-(rgb8 lhs, rgb8 rhs);
+		friend constexpr rgb8 operator-(rgb8 lhs, rgb8 rhs) noexcept;
 
 		/// Multiplies the color with another color.
 		/// @param multiplier Color to multiply with.
 		/// @return Reference to `*this`.
-		constexpr rgb8& operator*=(rgb8 multiplier);
+		constexpr rgb8& operator*=(rgb8 multiplier) noexcept;
 
 		/// Multiplies two colors.
 		/// @param lhs, rhs Colors to multiply.
 		/// @return Memberwise multiplication of the colors.
-		friend constexpr rgb8 operator*(rgb8 lhs, rgb8 rhs);
+		friend constexpr rgb8 operator*(rgb8 lhs, rgb8 rhs) noexcept;
 
 		/// @}
 	};
@@ -179,29 +179,29 @@ namespace tr
 		/// @{
 
 		/// Default-constructs an RGB color.
-		constexpr rgbf() = default;
+		[[nodiscard]] constexpr rgbf() noexcept = default;
 
 		/// Creates a color from its components.
 		/// @param r Red color channel.
 		/// @param g Green color channel.
 		/// @param b Blue color channel.
-		constexpr rgbf(float r, float g, float b);
+		[[nodiscard]] constexpr rgbf(float r, float g, float b) noexcept;
 
 		/// Converts an 8-bit RGB color into a float one.
 		/// @param rgb Color to convert to RGB.
-		constexpr rgbf(rgb8 rgb);
+		[[nodiscard]] constexpr rgbf(rgb8 rgb) noexcept;
 
 		/// Removes the alpha component from an RGBA color and converts it to float.
 		/// @param rgba Color to convert to RGB.
-		constexpr rgbf(rgba8 rgba);
+		[[nodiscard]] constexpr rgbf(rgba8 rgba) noexcept;
 
 		/// Removes the alpha component from an RGBA color.
 		/// @param rgba Color to convert to RGB.
-		constexpr rgbf(rgbaf rgba);
+		[[nodiscard]] constexpr rgbf(rgbaf rgba) noexcept;
 
 		/// Converts an HSV color to an RGB one.
 		/// @param hsv Color to convert to RGB.
-		constexpr rgbf(hsv hsv);
+		[[nodiscard]] constexpr rgbf(hsv hsv) noexcept;
 
 		/// @}
 		/// @name Comparison operators
@@ -210,7 +210,7 @@ namespace tr
 		/// Compares two colors for equality.
 		/// @param lhs, rhs Colors to compare.
 		/// @return Whether the two colors are equal.
-		friend constexpr bool operator==(rgbf lhs, rgbf rhs) = default;
+		[[nodiscard]] friend constexpr bool operator==(rgbf lhs, rgbf rhs) noexcept = default;
 
 		/// @}
 		/// @name Arithmetic operators
@@ -221,7 +221,7 @@ namespace tr
 		/// @param addend Scalar to add to the color.
 		/// @return Reference to `*this`.
 		template <arithmetic Scalar>
-		constexpr rgbf& operator+=(Scalar addend);
+		constexpr rgbf& operator+=(Scalar addend) noexcept;
 
 		/// Adds a scalar to a color.
 		/// @tparam Scalar Scalar type.
@@ -229,14 +229,14 @@ namespace tr
 		/// @param addend Scalar to add to the color.
 		/// @return Color with the scalar added memberwise to the color.
 		template <arithmetic Scalar>
-		friend constexpr rgbf operator+(rgbf lhs, Scalar addend);
+		friend constexpr rgbf operator+(rgbf lhs, Scalar addend) noexcept;
 
 		/// Subtracts a scalar from the color.
 		/// @tparam Scalar Scalar type.
 		/// @param subtrahend Scalar to subtract from the color.
 		/// @return Reference to `*this`.
 		template <arithmetic Scalar>
-		constexpr rgbf& operator-=(Scalar subtrahend);
+		constexpr rgbf& operator-=(Scalar subtrahend) noexcept;
 
 		/// Subtracts a scalar from a color.
 		/// @tparam Scalar Scalar type.
@@ -244,14 +244,14 @@ namespace tr
 		/// @param subtrahend Scalar to subtract from the color.
 		/// @return Color with the scalar subtracted memberwise from the color.
 		template <arithmetic Scalar>
-		friend constexpr rgbf operator-(rgbf lhs, Scalar subtrahend);
+		friend constexpr rgbf operator-(rgbf lhs, Scalar subtrahend) noexcept;
 
 		/// Multiplies the color by a scalar.
 		/// @tparam Scalar Scalar type.
 		/// @param multiplier Scalar to multiply the color with.
 		/// @return Reference to `*this`.
 		template <arithmetic Scalar>
-		constexpr rgbf& operator*=(Scalar multiplier);
+		constexpr rgbf& operator*=(Scalar multiplier) noexcept;
 
 		/// Multiplies a color by a scalar.
 		/// @tparam Scalar Scalar type.
@@ -259,14 +259,14 @@ namespace tr
 		/// @param multiplier Scalar to multiply the color with.
 		/// @return Color multiplied memberwise with the scalar.
 		template <arithmetic Scalar>
-		friend constexpr rgbf operator*(rgbf lhs, Scalar multiplier);
+		friend constexpr rgbf operator*(rgbf lhs, Scalar multiplier) noexcept;
 
 		/// Divides the color by a scalar.
 		/// @tparam Scalar Scalar type.
 		/// @param divisor Scalar to divide the color by.
 		/// @return Reference to `*this`.
 		template <arithmetic Scalar>
-		constexpr rgbf& operator/=(Scalar divisor);
+		constexpr rgbf& operator/=(Scalar divisor) noexcept;
 
 		/// Divides a color by a scalar.
 		/// @tparam Scalar Scalar type.
@@ -274,37 +274,37 @@ namespace tr
 		/// @param divisor Scalar to divide the color by.
 		/// @return Color divided memberwise by the scalar.
 		template <arithmetic Scalar>
-		friend constexpr rgbf operator/(rgbf lhs, Scalar divisor);
+		friend constexpr rgbf operator/(rgbf lhs, Scalar divisor) noexcept;
 
 		/// Adds another color to the color.
 		/// @param addend Color to add.
 		/// @return Reference to `*this`.
-		constexpr rgbf& operator+=(rgbf addend);
+		constexpr rgbf& operator+=(rgbf addend) noexcept;
 
 		/// Adds two colors.
 		/// @param lhs, rhs Colors to add.
 		/// @return Memberwise sum of the colors.
-		friend constexpr rgbf operator+(rgbf lhs, rgbf rhs);
+		friend constexpr rgbf operator+(rgbf lhs, rgbf rhs) noexcept;
 
 		/// Subtracts another color from the color.
 		/// @param subtrahend Color to subtract.
 		/// @return Reference to `*this`.
-		constexpr rgbf& operator-=(rgbf subtrahend);
+		constexpr rgbf& operator-=(rgbf subtrahend) noexcept;
 
 		/// Subtracts two colors.
 		/// @param lhs, rhs Colors to subtract.
 		/// @return Memberwise difference of the colors.
-		friend constexpr rgbf operator-(rgbf lhs, rgbf rhs);
+		friend constexpr rgbf operator-(rgbf lhs, rgbf rhs) noexcept;
 
 		/// Multiplies the color with another color.
 		/// @param multiplier Color to multiply with.
 		/// @return Reference to `*this`.
-		constexpr rgbf& operator*=(rgbf multiplier);
+		constexpr rgbf& operator*=(rgbf multiplier) noexcept;
 
 		/// Multiplies two colors.
 		/// @param lhs, rhs Colors to multiply.
 		/// @return Memberwise multiplication of the colors.
-		friend constexpr rgbf operator*(rgbf lhs, rgbf rhs);
+		friend constexpr rgbf operator*(rgbf lhs, rgbf rhs) noexcept;
 
 		/// @}
 	};
@@ -328,33 +328,33 @@ namespace tr
 		/// @{
 
 		/// Default-constructs an RGBA color.
-		constexpr rgba8() = default;
+		[[nodiscard]] constexpr rgba8() noexcept = default;
 
 		/// Creates a color from its components.
 		/// @param r Red color channel.
 		/// @param g Green color channel.
 		/// @param b Blue color channel.
 		/// @param a Alpha channel.
-		constexpr rgba8(u8 r, u8 g, u8 b, u8 a);
+		[[nodiscard]] constexpr rgba8(u8 r, u8 g, u8 b, u8 a) noexcept;
 
 		/// Adds an alpha component to an RGB color.
 		/// @param rgb Color to convert to RGBA.
 		/// @param a Alpha channel.
-		constexpr rgba8(rgb8 rgb, u8 a = 255);
+		[[nodiscard]] constexpr rgba8(rgb8 rgb, u8 a = 255) noexcept;
 
 		/// Converts a float RGB color into an 8-bit one and adds an alpha component.
 		/// @param rgb Color to convert to RGBA.
 		/// @param a Alpha channel.
-		constexpr rgba8(rgbf rgb, u8 a = 255);
+		[[nodiscard]] constexpr rgba8(rgbf rgb, u8 a = 255) noexcept;
 
 		/// Converts a float RGBA color into an 8-bit one.
 		/// @param rgba Color to convert to RGBA.
-		constexpr rgba8(rgbaf rgba);
+		[[nodiscard]] constexpr rgba8(rgbaf rgba) noexcept;
 
 		/// Converts an HSV color to an RGBA one.
 		/// @param hsv Color to convert to RGBA.
 		/// @param a Alpha channel.
-		constexpr rgba8(hsv hsv, u8 a = 255);
+		[[nodiscard]] constexpr rgba8(hsv hsv, u8 a = 255) noexcept;
 
 		/// @}
 		/// @name Comparison operators
@@ -363,7 +363,7 @@ namespace tr
 		/// Compares two colors for equality.
 		/// @param lhs, rhs Colors to compare.
 		/// @return Whether the two colors are equal.
-		friend constexpr bool operator==(rgba8 lhs, rgba8 rhs) = default;
+		[[nodiscard]] friend constexpr bool operator==(rgba8 lhs, rgba8 rhs) noexcept = default;
 
 		/// @}
 		/// @name Arithmetic operators
@@ -374,7 +374,7 @@ namespace tr
 		/// @param addend Scalar to add to the color.
 		/// @return Reference to `*this`.
 		template <arithmetic Scalar>
-		constexpr rgba8& operator+=(Scalar addend);
+		constexpr rgba8& operator+=(Scalar addend) noexcept;
 
 		/// Adds a scalar to a color.
 		/// @tparam Scalar Scalar type.
@@ -382,14 +382,14 @@ namespace tr
 		/// @param addend Scalar to add to the color.
 		/// @return Color with the scalar added memberwise to the color.
 		template <arithmetic Scalar>
-		friend constexpr rgba8 operator+(rgba8 lhs, Scalar addend);
+		friend constexpr rgba8 operator+(rgba8 lhs, Scalar addend) noexcept;
 
 		/// Subtracts a scalar from the color.
 		/// @tparam Scalar Scalar type.
 		/// @param subtrahend Scalar to subtract from the color.
 		/// @return Reference to `*this`.
 		template <arithmetic Scalar>
-		constexpr rgba8& operator-=(Scalar subtrahend);
+		constexpr rgba8& operator-=(Scalar subtrahend) noexcept;
 
 		/// Subtracts a scalar from a color.
 		/// @tparam Scalar Scalar type.
@@ -397,14 +397,14 @@ namespace tr
 		/// @param subtrahend Scalar to subtract from the color.
 		/// @return Color with the scalar subtracted memberwise from the color.
 		template <arithmetic Scalar>
-		friend constexpr rgba8 operator-(rgba8 lhs, Scalar subtrahend);
+		friend constexpr rgba8 operator-(rgba8 lhs, Scalar subtrahend) noexcept;
 
 		/// Multiplies the color by a scalar.
 		/// @tparam Scalar Scalar type.
 		/// @param multiplier Scalar to multiply the color with.
 		/// @return Reference to `*this`.
 		template <arithmetic Scalar>
-		constexpr rgba8& operator*=(Scalar multiplier);
+		constexpr rgba8& operator*=(Scalar multiplier) noexcept;
 
 		/// Multiplies a color by a scalar.
 		/// @tparam Scalar Scalar type.
@@ -412,14 +412,14 @@ namespace tr
 		/// @param multiplier Scalar to multiply the color with.
 		/// @return Color multiplied memberwise with the scalar.
 		template <arithmetic Scalar>
-		friend constexpr rgba8 operator*(rgba8 lhs, Scalar multiplier);
+		friend constexpr rgba8 operator*(rgba8 lhs, Scalar multiplier) noexcept;
 
 		/// Divides the color by a scalar.
 		/// @tparam Scalar Scalar type.
 		/// @param divisor Scalar to divide the color by.
 		/// @return Reference to `*this`.
 		template <arithmetic Scalar>
-		constexpr rgba8& operator/=(Scalar divisor);
+		constexpr rgba8& operator/=(Scalar divisor) noexcept;
 
 		/// Divides a color by a scalar.
 		/// @tparam Scalar Scalar type.
@@ -427,37 +427,37 @@ namespace tr
 		/// @param divisor Scalar to divide the color by.
 		/// @return Color divided memberwise by the scalar.
 		template <arithmetic Scalar>
-		friend constexpr rgba8 operator/(rgba8 lhs, Scalar divisor);
+		friend constexpr rgba8 operator/(rgba8 lhs, Scalar divisor) noexcept;
 
 		/// Adds another color to the color.
 		/// @param addend Color to add.
 		/// @return Reference to `*this`.
-		constexpr rgba8& operator+=(rgba8 addend);
+		constexpr rgba8& operator+=(rgba8 addend) noexcept;
 
 		/// Adds two colors.
 		/// @param lhs, rhs Colors to add.
 		/// @return Memberwise sum of the colors.
-		friend constexpr rgba8 operator+(rgba8 lhs, rgba8 rhs);
+		friend constexpr rgba8 operator+(rgba8 lhs, rgba8 rhs) noexcept;
 
 		/// Subtracts another color from the color.
 		/// @param subtrahend Color to subtract.
 		/// @return Reference to `*this`.
-		constexpr rgba8& operator-=(rgba8 subtrahend);
+		constexpr rgba8& operator-=(rgba8 subtrahend) noexcept;
 
 		/// Subtracts two colors.
 		/// @param lhs, rhs Colors to subtract.
 		/// @return Memberwise difference of the colors.
-		friend constexpr rgba8 operator-(rgba8 lhs, rgba8 rhs);
+		friend constexpr rgba8 operator-(rgba8 lhs, rgba8 rhs) noexcept;
 
 		/// Multiplies the color with another color.
 		/// @param multiplier Color to multiply with.
 		/// @return Reference to `*this`.
-		constexpr rgba8& operator*=(rgba8 multiplier);
+		constexpr rgba8& operator*=(rgba8 multiplier) noexcept;
 
 		/// Multiplies two colors.
 		/// @param lhs, rhs Colors to multiply.
 		/// @return Memberwise multiplication of the colors.
-		friend constexpr rgba8 operator*(rgba8 lhs, rgba8 rhs);
+		friend constexpr rgba8 operator*(rgba8 lhs, rgba8 rhs) noexcept;
 
 		/// @}
 	};
@@ -481,33 +481,33 @@ namespace tr
 		/// @{
 
 		/// Default-constructs an RGBA color.
-		constexpr rgbaf() = default;
+		[[nodiscard]] constexpr rgbaf() noexcept = default;
 
 		/// Creates a color from its components.
 		/// @param r Red color channel.
 		/// @param g Green color channel.
 		/// @param b Blue color channel.
 		/// @param a Alpha channel.
-		constexpr rgbaf(float r, float g, float b, float a);
+		[[nodiscard]] constexpr rgbaf(float r, float g, float b, float a) noexcept;
 
 		/// Converts an 8-bit RGB color into a float one and adds an alpha component.
 		/// @param rgb Color to convert to RGBA.
 		/// @param a Alpha channel.
-		constexpr rgbaf(rgb8 rgb, float a = 1.0f);
+		[[nodiscard]] constexpr rgbaf(rgb8 rgb, float a = 1.0f) noexcept;
 
 		/// Adds an alpha component to an RGB color.
 		/// @param rgb Color to convert to RGBA.
 		/// @param a Alpha channel.
-		constexpr rgbaf(rgbf rgb, float a = 1.0f);
+		[[nodiscard]] constexpr rgbaf(rgbf rgb, float a = 1.0f) noexcept;
 
 		/// Converts a float RGBA color to float.
 		/// @param rgba Color to convert to RGBA.
-		constexpr rgbaf(rgba8 rgba);
+		[[nodiscard]] constexpr rgbaf(rgba8 rgba) noexcept;
 
 		/// Converts an HSV color to an RGBA one.
 		/// @param hsv Color to convert to RGBA.
 		/// @param a Alpha channel.
-		constexpr rgbaf(hsv hsv, float a = 1.0f);
+		[[nodiscard]] constexpr rgbaf(hsv hsv, float a = 1.0f) noexcept;
 
 		/// @}
 		/// @name Comparison operators
@@ -516,7 +516,7 @@ namespace tr
 		/// Compares two colors for equality.
 		/// @param lhs, rhs Colors to compare.
 		/// @return Whether the two colors are equal.
-		friend constexpr bool operator==(rgbaf lhs, rgbaf rhs) = default;
+		[[nodiscard]] friend constexpr bool operator==(rgbaf lhs, rgbaf rhs) noexcept = default;
 
 		/// @}
 		/// @name Arithmetic operators
@@ -527,7 +527,7 @@ namespace tr
 		/// @param addend Scalar to add to the color.
 		/// @return Reference to `*this`.
 		template <arithmetic Scalar>
-		constexpr rgbaf& operator+=(Scalar addend);
+		constexpr rgbaf& operator+=(Scalar addend) noexcept;
 
 		/// Adds a scalar to a color.
 		/// @tparam Scalar Scalar type.
@@ -535,14 +535,14 @@ namespace tr
 		/// @param addend Scalar to add to the color.
 		/// @return Color with the scalar added memberwise to the color.
 		template <arithmetic Scalar>
-		friend constexpr rgbaf operator+(rgbaf lhs, Scalar addend);
+		friend constexpr rgbaf operator+(rgbaf lhs, Scalar addend) noexcept;
 
 		/// Subtracts a scalar from the color.
 		/// @tparam Scalar Scalar type.
 		/// @param subtrahend Scalar to subtract from the color.
 		/// @return Reference to `*this`.
 		template <arithmetic Scalar>
-		constexpr rgbaf& operator-=(Scalar subtrahend);
+		constexpr rgbaf& operator-=(Scalar subtrahend) noexcept;
 
 		/// Subtracts a scalar from a color.
 		/// @tparam Scalar Scalar type.
@@ -550,14 +550,14 @@ namespace tr
 		/// @param subtrahend Scalar to subtract from the color.
 		/// @return Color with the scalar subtracted memberwise from the color.
 		template <arithmetic Scalar>
-		friend constexpr rgbaf operator-(rgbaf lhs, Scalar subtrahend);
+		friend constexpr rgbaf operator-(rgbaf lhs, Scalar subtrahend) noexcept;
 
 		/// Multiplies the color by a scalar.
 		/// @tparam Scalar Scalar type.
 		/// @param multiplier Scalar to multiply the color with.
 		/// @return Reference to `*this`.
 		template <arithmetic Scalar>
-		constexpr rgbaf& operator*=(Scalar multiplier);
+		constexpr rgbaf& operator*=(Scalar multiplier) noexcept;
 
 		/// Multiplies a color by a scalar.
 		/// @tparam Scalar Scalar type.
@@ -565,14 +565,14 @@ namespace tr
 		/// @param multiplier Scalar to multiply the color with.
 		/// @return Color multiplied memberwise with the scalar.
 		template <arithmetic Scalar>
-		friend constexpr rgbaf operator*(rgbaf lhs, Scalar multiplier);
+		friend constexpr rgbaf operator*(rgbaf lhs, Scalar multiplier) noexcept;
 
 		/// Divides the color by a scalar.
 		/// @tparam Scalar Scalar type.
 		/// @param divisor Scalar to divide the color by.
 		/// @return Reference to `*this`.
 		template <arithmetic Scalar>
-		constexpr rgbaf& operator/=(Scalar divisor);
+		constexpr rgbaf& operator/=(Scalar divisor) noexcept;
 
 		/// Divides a color by a scalar.
 		/// @tparam Scalar Scalar type.
@@ -580,37 +580,37 @@ namespace tr
 		/// @param divisor Scalar to divide the color by.
 		/// @return Color divided memberwise by the scalar.
 		template <arithmetic Scalar>
-		friend constexpr rgbaf operator/(rgbaf lhs, Scalar divisor);
+		friend constexpr rgbaf operator/(rgbaf lhs, Scalar divisor) noexcept;
 
 		/// Adds another color to the color.
 		/// @param addend Color to add.
 		/// @return Reference to `*this`.
-		constexpr rgbaf& operator+=(rgbaf addend);
+		constexpr rgbaf& operator+=(rgbaf addend) noexcept;
 
 		/// Adds two colors.
 		/// @param lhs, rhs Colors to add.
 		/// @return Memberwise sum of the colors.
-		friend constexpr rgbaf operator+(rgbaf lhs, rgbaf rhs);
+		friend constexpr rgbaf operator+(rgbaf lhs, rgbaf rhs) noexcept;
 
 		/// Subtracts another color from the color.
 		/// @param subtrahend Color to subtract.
 		/// @return Reference to `*this`.
-		constexpr rgbaf& operator-=(rgbaf subtrahend);
+		constexpr rgbaf& operator-=(rgbaf subtrahend) noexcept;
 
 		/// Subtracts two colors.
 		/// @param lhs, rhs Colors to subtract.
 		/// @return Memberwise difference of the colors.
-		friend constexpr rgbaf operator-(rgbaf lhs, rgbaf rhs);
+		friend constexpr rgbaf operator-(rgbaf lhs, rgbaf rhs) noexcept;
 
 		/// Multiplies the color with another color.
 		/// @param multiplier Color to multiply with.
 		/// @return Reference to `*this`.
-		constexpr rgbaf& operator*=(rgbaf multiplier);
+		constexpr rgbaf& operator*=(rgbaf multiplier) noexcept;
 
 		/// Multiplies two colors.
 		/// @param lhs, rhs Colors to multiply.
 		/// @return Memberwise multiplication of the colors.
-		friend constexpr rgbaf operator*(rgbaf lhs, rgbaf rhs);
+		friend constexpr rgbaf operator*(rgbaf lhs, rgbaf rhs) noexcept;
 
 		/// @}
 	};
@@ -631,29 +631,29 @@ namespace tr
 		/// @{
 
 		/// Default-constructs a HSV color.
-		constexpr hsv() = default;
+		[[nodiscard]] constexpr hsv() noexcept = default;
 
 		/// Creates a color from its components.
 		/// @param h Hue channel.
 		/// @param s Saturation channel.
 		/// @param v Value channel.
-		constexpr hsv(float h, float s, float v);
+		[[nodiscard]] constexpr hsv(float h, float s, float v) noexcept;
 
 		/// Converts an RGB color into an HSV one.
 		/// @param rgb Color to convert to HSV.
-		constexpr hsv(rgb8 rgb);
+		[[nodiscard]] constexpr hsv(rgb8 rgb) noexcept;
 
 		/// Converts an RGB color into an HSV one.
 		/// @param rgb Color to convert to HSV.
-		constexpr hsv(rgbf rgb);
+		[[nodiscard]] constexpr hsv(rgbf rgb) noexcept;
 
 		/// Converts an RGBA color into an HSV one.
 		/// @param rgba Color to convert to HSV.
-		constexpr hsv(rgba8 rgba);
+		[[nodiscard]] constexpr hsv(rgba8 rgba) noexcept;
 
 		/// Converts an RGBA color into an HSV one.
 		/// @param rgba Color to convert to HSV.
-		constexpr hsv(rgbaf rgba);
+		[[nodiscard]] constexpr hsv(rgbaf rgba) noexcept;
 
 		/// @}
 		/// @name Comparison operators
@@ -662,7 +662,7 @@ namespace tr
 		/// Compares two colors for equality.
 		/// @param lhs, rhs Colors to compare.
 		/// @return Whether the two colors are equal.
-		friend constexpr bool operator==(hsv lhs, hsv rhs) = default;
+		[[nodiscard]] friend constexpr bool operator==(hsv lhs, hsv rhs) noexcept = default;
 
 		/// @}
 	};
@@ -679,25 +679,25 @@ namespace tr
 			/// @param str Color hex string.
 			/// @param length Length of the hex string.
 			/// @return Corresponding 8-bit RGB color.
-			consteval rgb8 operator""_rgb8(const char* str, usize length);
+			[[nodiscard]] consteval rgb8 operator""_rgb8(const char* str, usize length) noexcept;
 
 			/// Floating-point RGB hex color literal.
 			/// @param str Color hex string.
 			/// @param length Length of the hex string.
 			/// @return Corresponding floating-point RGB color.
-			consteval rgbf operator""_rgbf(const char* str, usize length);
+			[[nodiscard]] consteval rgbf operator""_rgbf(const char* str, usize length) noexcept;
 
 			/// 8-bit RGBA hex color literal.
 			/// @param str Color hex string (may or may not contain alpha information).
 			/// @param length Length of the hex string.
 			/// @return Corresponding 8-bit RGBA color.
-			consteval rgba8 operator""_rgba8(const char* str, usize length);
+			[[nodiscard]] consteval rgba8 operator""_rgba8(const char* str, usize length) noexcept;
 
 			/// Floating-point RGBA hex color literal.
 			/// @param str Color hex string (may or may not contain alpha information).
 			/// @param length Length of the hex string.
 			/// @return Corresponding floating-point RGBA color.
-			consteval rgbaf operator""_rgbaf(const char* str, usize length);
+			[[nodiscard]] consteval rgbaf operator""_rgbaf(const char* str, usize length) noexcept;
 
 			/// @}
 		} // namespace color_literals

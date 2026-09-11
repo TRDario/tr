@@ -25,12 +25,12 @@ namespace tr
 
 		/// Determines the winding order of the triangle.
 		/// @return Winding order of the triangle.
-		winding_order winding_order() const;
+		[[nodiscard]] winding_order winding_order() const noexcept;
 
 		/// Determines whether a point is contained inside the triangle.
 		/// @param point Point to check for being in the triangle.
 		/// @return `true` if `point` is within the triangle, `false` otherwise.
-		bool contains(glm::vec2 point) const;
+		[[nodiscard]] bool contains(glm::vec2 point) const noexcept;
 	};
 } // namespace tr
 

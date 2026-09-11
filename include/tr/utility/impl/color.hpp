@@ -8,35 +8,35 @@
 
 //
 
-constexpr tr::rgb8::rgb8(u8 r, u8 g, u8 b)
+constexpr tr::rgb8::rgb8(u8 r, u8 g, u8 b) noexcept
 	: r{r}
 	, g{g}
 	, b{b}
 {
 }
 
-constexpr tr::rgb8::rgb8(rgbf rgb)
+constexpr tr::rgb8::rgb8(rgbf rgb) noexcept
 	: r{norm_cast<u8>(rgb.r)}
 	, g{norm_cast<u8>(rgb.g)}
 	, b{norm_cast<u8>(rgb.b)}
 {
 }
 
-constexpr tr::rgb8::rgb8(rgba8 rgba)
+constexpr tr::rgb8::rgb8(rgba8 rgba) noexcept
 	: r{rgba.r}
 	, g{rgba.g}
 	, b{rgba.b}
 {
 }
 
-constexpr tr::rgb8::rgb8(rgbaf rgba)
+constexpr tr::rgb8::rgb8(rgbaf rgba) noexcept
 	: r{norm_cast<u8>(rgba.r)}
 	, g{norm_cast<u8>(rgba.g)}
 	, b{norm_cast<u8>(rgba.b)}
 {
 }
 
-constexpr tr::rgb8::rgb8(hsv hsv)
+constexpr tr::rgb8::rgb8(hsv hsv) noexcept
 	: rgb8{rgbf{hsv}}
 {
 }
@@ -44,7 +44,7 @@ constexpr tr::rgb8::rgb8(hsv hsv)
 //
 
 template <tr::arithmetic Scalar>
-constexpr tr::rgb8& tr::rgb8::operator+=(Scalar addend)
+constexpr tr::rgb8& tr::rgb8::operator+=(Scalar addend) noexcept
 {
 	r += addend;
 	g += addend;
@@ -53,7 +53,7 @@ constexpr tr::rgb8& tr::rgb8::operator+=(Scalar addend)
 }
 
 template <tr::arithmetic Scalar>
-constexpr tr::rgb8 tr::operator+(rgb8 lhs, Scalar addend)
+[[nodiscard]] constexpr tr::rgb8 tr::operator+(rgb8 lhs, Scalar addend) noexcept
 {
 	rgb8 temp{lhs};
 	temp += addend;
@@ -61,7 +61,7 @@ constexpr tr::rgb8 tr::operator+(rgb8 lhs, Scalar addend)
 }
 
 template <tr::arithmetic Scalar>
-constexpr tr::rgb8& tr::rgb8::operator-=(Scalar subtrahend)
+constexpr tr::rgb8& tr::rgb8::operator-=(Scalar subtrahend) noexcept
 {
 	r -= subtrahend;
 	g -= subtrahend;
@@ -70,7 +70,7 @@ constexpr tr::rgb8& tr::rgb8::operator-=(Scalar subtrahend)
 }
 
 template <tr::arithmetic Scalar>
-constexpr tr::rgb8 tr::operator-(rgb8 lhs, Scalar subtrahend)
+[[nodiscard]] constexpr tr::rgb8 tr::operator-(rgb8 lhs, Scalar subtrahend) noexcept
 {
 	rgb8 temp{lhs};
 	temp -= subtrahend;
@@ -78,7 +78,7 @@ constexpr tr::rgb8 tr::operator-(rgb8 lhs, Scalar subtrahend)
 }
 
 template <tr::arithmetic Scalar>
-constexpr tr::rgb8& tr::rgb8::operator*=(Scalar multiplier)
+constexpr tr::rgb8& tr::rgb8::operator*=(Scalar multiplier) noexcept
 {
 	r *= multiplier;
 	g *= multiplier;
@@ -87,7 +87,7 @@ constexpr tr::rgb8& tr::rgb8::operator*=(Scalar multiplier)
 }
 
 template <tr::arithmetic Scalar>
-constexpr tr::rgb8 tr::operator*(rgb8 lhs, Scalar multiplier)
+[[nodiscard]] constexpr tr::rgb8 tr::operator*(rgb8 lhs, Scalar multiplier) noexcept
 {
 	rgb8 temp{lhs};
 	temp *= multiplier;
@@ -95,7 +95,7 @@ constexpr tr::rgb8 tr::operator*(rgb8 lhs, Scalar multiplier)
 }
 
 template <tr::arithmetic Scalar>
-constexpr tr::rgb8& tr::rgb8::operator/=(Scalar divisor)
+constexpr tr::rgb8& tr::rgb8::operator/=(Scalar divisor) noexcept
 {
 	r /= divisor;
 	g /= divisor;
@@ -104,7 +104,7 @@ constexpr tr::rgb8& tr::rgb8::operator/=(Scalar divisor)
 }
 
 template <tr::arithmetic Scalar>
-constexpr tr::rgb8 tr::operator/(rgb8 lhs, Scalar divisor)
+[[nodiscard]] constexpr tr::rgb8 tr::operator/(rgb8 lhs, Scalar divisor) noexcept
 {
 	rgb8 temp{lhs};
 	temp /= divisor;
@@ -113,7 +113,7 @@ constexpr tr::rgb8 tr::operator/(rgb8 lhs, Scalar divisor)
 
 //
 
-constexpr tr::rgb8& tr::rgb8::operator+=(rgb8 addend)
+constexpr tr::rgb8& tr::rgb8::operator+=(rgb8 addend) noexcept
 {
 	r += addend.r;
 	g += addend.g;
@@ -121,14 +121,14 @@ constexpr tr::rgb8& tr::rgb8::operator+=(rgb8 addend)
 	return *this;
 }
 
-constexpr tr::rgb8 tr::operator+(rgb8 lhs, rgb8 rhs)
+[[nodiscard]] constexpr tr::rgb8 tr::operator+(rgb8 lhs, rgb8 rhs) noexcept
 {
 	rgb8 temp{lhs};
 	temp += rhs;
 	return temp;
 }
 
-constexpr tr::rgb8& tr::rgb8::operator-=(rgb8 subtrahend)
+constexpr tr::rgb8& tr::rgb8::operator-=(rgb8 subtrahend) noexcept
 {
 	r -= subtrahend.r;
 	g -= subtrahend.g;
@@ -136,14 +136,14 @@ constexpr tr::rgb8& tr::rgb8::operator-=(rgb8 subtrahend)
 	return *this;
 }
 
-constexpr tr::rgb8 tr::operator-(rgb8 lhs, rgb8 rhs)
+[[nodiscard]] constexpr tr::rgb8 tr::operator-(rgb8 lhs, rgb8 rhs) noexcept
 {
 	rgb8 temp{lhs};
 	temp -= rhs;
 	return temp;
 }
 
-constexpr tr::rgb8& tr::rgb8::operator*=(rgb8 multiplier)
+constexpr tr::rgb8& tr::rgb8::operator*=(rgb8 multiplier) noexcept
 {
 	r = r * multiplier.r / 255;
 	g = g * multiplier.g / 255;
@@ -151,7 +151,7 @@ constexpr tr::rgb8& tr::rgb8::operator*=(rgb8 multiplier)
 	return *this;
 }
 
-constexpr tr::rgb8 tr::operator*(rgb8 lhs, rgb8 rhs)
+[[nodiscard]] constexpr tr::rgb8 tr::operator*(rgb8 lhs, rgb8 rhs) noexcept
 {
 	rgb8 temp{lhs};
 	temp *= rhs;
@@ -160,35 +160,35 @@ constexpr tr::rgb8 tr::operator*(rgb8 lhs, rgb8 rhs)
 
 //
 
-constexpr tr::rgbf::rgbf(float r, float g, float b)
+constexpr tr::rgbf::rgbf(float r, float g, float b) noexcept
 	: r{r}
 	, g{g}
 	, b{b}
 {
 }
 
-constexpr tr::rgbf::rgbf(rgb8 rgb)
+constexpr tr::rgbf::rgbf(rgb8 rgb) noexcept
 	: r{norm_cast<float>(rgb.r)}
 	, g{norm_cast<float>(rgb.g)}
 	, b{norm_cast<float>(rgb.b)}
 {
 }
 
-constexpr tr::rgbf::rgbf(rgba8 rgba)
+constexpr tr::rgbf::rgbf(rgba8 rgba) noexcept
 	: r{norm_cast<float>(rgba.r)}
 	, g{norm_cast<float>(rgba.g)}
 	, b{norm_cast<float>(rgba.b)}
 {
 }
 
-constexpr tr::rgbf::rgbf(rgbaf rgba)
+constexpr tr::rgbf::rgbf(rgbaf rgba) noexcept
 	: r{rgba.r}
 	, g{rgba.g}
 	, b{rgba.b}
 {
 }
 
-constexpr tr::rgbf::rgbf(hsv hsv)
+constexpr tr::rgbf::rgbf(hsv hsv) noexcept
 {
 	const float h{eucmod(hsv.h, 360)};
 	const float c{hsv.v * hsv.s};
@@ -230,7 +230,7 @@ constexpr tr::rgbf::rgbf(hsv hsv)
 //
 
 template <tr::arithmetic Scalar>
-constexpr tr::rgbf& tr::rgbf::operator+=(Scalar addend)
+constexpr tr::rgbf& tr::rgbf::operator+=(Scalar addend) noexcept
 {
 	r += addend;
 	g += addend;
@@ -239,7 +239,7 @@ constexpr tr::rgbf& tr::rgbf::operator+=(Scalar addend)
 }
 
 template <tr::arithmetic Scalar>
-constexpr tr::rgbf tr::operator+(rgbf lhs, Scalar addend)
+[[nodiscard]] constexpr tr::rgbf tr::operator+(rgbf lhs, Scalar addend) noexcept
 {
 	rgbf temp{lhs};
 	temp += addend;
@@ -247,7 +247,7 @@ constexpr tr::rgbf tr::operator+(rgbf lhs, Scalar addend)
 }
 
 template <tr::arithmetic Scalar>
-constexpr tr::rgbf& tr::rgbf::operator-=(Scalar subtrahend)
+constexpr tr::rgbf& tr::rgbf::operator-=(Scalar subtrahend) noexcept
 {
 	r -= subtrahend;
 	g -= subtrahend;
@@ -256,7 +256,7 @@ constexpr tr::rgbf& tr::rgbf::operator-=(Scalar subtrahend)
 }
 
 template <tr::arithmetic Scalar>
-constexpr tr::rgbf tr::operator-(rgbf lhs, Scalar subtrahend)
+[[nodiscard]] constexpr tr::rgbf tr::operator-(rgbf lhs, Scalar subtrahend) noexcept
 {
 	rgbf temp{lhs};
 	temp -= subtrahend;
@@ -264,7 +264,7 @@ constexpr tr::rgbf tr::operator-(rgbf lhs, Scalar subtrahend)
 }
 
 template <tr::arithmetic Scalar>
-constexpr tr::rgbf& tr::rgbf::operator*=(Scalar multiplier)
+constexpr tr::rgbf& tr::rgbf::operator*=(Scalar multiplier) noexcept
 {
 	r *= multiplier;
 	g *= multiplier;
@@ -273,7 +273,7 @@ constexpr tr::rgbf& tr::rgbf::operator*=(Scalar multiplier)
 }
 
 template <tr::arithmetic Scalar>
-constexpr tr::rgbf tr::operator*(rgbf lhs, Scalar multiplier)
+[[nodiscard]] constexpr tr::rgbf tr::operator*(rgbf lhs, Scalar multiplier) noexcept
 {
 	rgbf temp{lhs};
 	temp *= multiplier;
@@ -281,7 +281,7 @@ constexpr tr::rgbf tr::operator*(rgbf lhs, Scalar multiplier)
 }
 
 template <tr::arithmetic Scalar>
-constexpr tr::rgbf& tr::rgbf::operator/=(Scalar divisor)
+constexpr tr::rgbf& tr::rgbf::operator/=(Scalar divisor) noexcept
 {
 	r /= divisor;
 	g /= divisor;
@@ -290,7 +290,7 @@ constexpr tr::rgbf& tr::rgbf::operator/=(Scalar divisor)
 }
 
 template <tr::arithmetic Scalar>
-constexpr tr::rgbf tr::operator/(rgbf lhs, Scalar divisor)
+[[nodiscard]] constexpr tr::rgbf tr::operator/(rgbf lhs, Scalar divisor) noexcept
 {
 	rgbf temp{lhs};
 	temp /= divisor;
@@ -299,7 +299,7 @@ constexpr tr::rgbf tr::operator/(rgbf lhs, Scalar divisor)
 
 //
 
-constexpr tr::rgbf& tr::rgbf::operator+=(rgbf addend)
+constexpr tr::rgbf& tr::rgbf::operator+=(rgbf addend) noexcept
 {
 	r += addend.r;
 	g += addend.g;
@@ -307,14 +307,14 @@ constexpr tr::rgbf& tr::rgbf::operator+=(rgbf addend)
 	return *this;
 }
 
-constexpr tr::rgbf tr::operator+(rgbf lhs, rgbf rhs)
+[[nodiscard]] constexpr tr::rgbf tr::operator+(rgbf lhs, rgbf rhs) noexcept
 {
 	rgbf temp{lhs};
 	temp += rhs;
 	return temp;
 }
 
-constexpr tr::rgbf& tr::rgbf::operator-=(rgbf subtrahend)
+constexpr tr::rgbf& tr::rgbf::operator-=(rgbf subtrahend) noexcept
 {
 	r -= subtrahend.r;
 	g -= subtrahend.g;
@@ -322,14 +322,14 @@ constexpr tr::rgbf& tr::rgbf::operator-=(rgbf subtrahend)
 	return *this;
 }
 
-constexpr tr::rgbf tr::operator-(rgbf lhs, rgbf rhs)
+[[nodiscard]] constexpr tr::rgbf tr::operator-(rgbf lhs, rgbf rhs) noexcept
 {
 	rgbf temp{lhs};
 	temp -= rhs;
 	return temp;
 }
 
-constexpr tr::rgbf& tr::rgbf::operator*=(rgbf multiplier)
+constexpr tr::rgbf& tr::rgbf::operator*=(rgbf multiplier) noexcept
 {
 	r *= multiplier.r;
 	g *= multiplier.g;
@@ -337,7 +337,7 @@ constexpr tr::rgbf& tr::rgbf::operator*=(rgbf multiplier)
 	return *this;
 }
 
-constexpr tr::rgbf tr::operator*(rgbf lhs, rgbf rhs)
+[[nodiscard]] constexpr tr::rgbf tr::operator*(rgbf lhs, rgbf rhs) noexcept
 {
 	rgbf temp{lhs};
 	temp *= rhs;
@@ -346,7 +346,7 @@ constexpr tr::rgbf tr::operator*(rgbf lhs, rgbf rhs)
 
 //
 
-constexpr tr::rgba8::rgba8(u8 r, u8 g, u8 b, u8 a)
+constexpr tr::rgba8::rgba8(u8 r, u8 g, u8 b, u8 a) noexcept
 	: r{r}
 	, g{g}
 	, b{b}
@@ -354,7 +354,7 @@ constexpr tr::rgba8::rgba8(u8 r, u8 g, u8 b, u8 a)
 {
 }
 
-constexpr tr::rgba8::rgba8(rgb8 rgb, u8 a)
+constexpr tr::rgba8::rgba8(rgb8 rgb, u8 a) noexcept
 	: r{rgb.r}
 	, g{rgb.g}
 	, b{rgb.b}
@@ -362,7 +362,7 @@ constexpr tr::rgba8::rgba8(rgb8 rgb, u8 a)
 {
 }
 
-constexpr tr::rgba8::rgba8(rgbf rgb, u8 a)
+constexpr tr::rgba8::rgba8(rgbf rgb, u8 a) noexcept
 	: r{norm_cast<u8>(rgb.r)}
 	, g{norm_cast<u8>(rgb.g)}
 	, b{norm_cast<u8>(rgb.b)}
@@ -370,7 +370,7 @@ constexpr tr::rgba8::rgba8(rgbf rgb, u8 a)
 {
 }
 
-constexpr tr::rgba8::rgba8(rgbaf rgba)
+constexpr tr::rgba8::rgba8(rgbaf rgba) noexcept
 	: r{norm_cast<u8>(rgba.r)}
 	, g{norm_cast<u8>(rgba.g)}
 	, b{norm_cast<u8>(rgba.b)}
@@ -378,7 +378,7 @@ constexpr tr::rgba8::rgba8(rgbaf rgba)
 {
 }
 
-constexpr tr::rgba8::rgba8(hsv hsv, u8 a)
+constexpr tr::rgba8::rgba8(hsv hsv, u8 a) noexcept
 	: rgba8{rgbf{hsv}, a}
 {
 }
@@ -386,7 +386,7 @@ constexpr tr::rgba8::rgba8(hsv hsv, u8 a)
 //
 
 template <tr::arithmetic Scalar>
-constexpr tr::rgba8& tr::rgba8::operator+=(Scalar addend)
+constexpr tr::rgba8& tr::rgba8::operator+=(Scalar addend) noexcept
 {
 	r += addend;
 	g += addend;
@@ -396,7 +396,7 @@ constexpr tr::rgba8& tr::rgba8::operator+=(Scalar addend)
 }
 
 template <tr::arithmetic Scalar>
-constexpr tr::rgba8 tr::operator+(rgba8 lhs, Scalar addend)
+[[nodiscard]] constexpr tr::rgba8 tr::operator+(rgba8 lhs, Scalar addend) noexcept
 {
 	rgba8 temp{lhs};
 	temp += addend;
@@ -404,7 +404,7 @@ constexpr tr::rgba8 tr::operator+(rgba8 lhs, Scalar addend)
 }
 
 template <tr::arithmetic Scalar>
-constexpr tr::rgba8& tr::rgba8::operator-=(Scalar subtrahend)
+constexpr tr::rgba8& tr::rgba8::operator-=(Scalar subtrahend) noexcept
 {
 	r -= subtrahend;
 	g -= subtrahend;
@@ -414,7 +414,7 @@ constexpr tr::rgba8& tr::rgba8::operator-=(Scalar subtrahend)
 }
 
 template <tr::arithmetic Scalar>
-constexpr tr::rgba8 tr::operator-(rgba8 lhs, Scalar subtrahend)
+[[nodiscard]] constexpr tr::rgba8 tr::operator-(rgba8 lhs, Scalar subtrahend) noexcept
 {
 	rgba8 temp{lhs};
 	temp -= subtrahend;
@@ -422,7 +422,7 @@ constexpr tr::rgba8 tr::operator-(rgba8 lhs, Scalar subtrahend)
 }
 
 template <tr::arithmetic Scalar>
-constexpr tr::rgba8& tr::rgba8::operator*=(Scalar multiplier)
+constexpr tr::rgba8& tr::rgba8::operator*=(Scalar multiplier) noexcept
 {
 	r *= multiplier;
 	g *= multiplier;
@@ -432,7 +432,7 @@ constexpr tr::rgba8& tr::rgba8::operator*=(Scalar multiplier)
 }
 
 template <tr::arithmetic Scalar>
-constexpr tr::rgba8 tr::operator*(rgba8 lhs, Scalar multiplier)
+[[nodiscard]] constexpr tr::rgba8 tr::operator*(rgba8 lhs, Scalar multiplier) noexcept
 {
 	rgba8 temp{lhs};
 	temp *= multiplier;
@@ -440,7 +440,7 @@ constexpr tr::rgba8 tr::operator*(rgba8 lhs, Scalar multiplier)
 }
 
 template <tr::arithmetic Scalar>
-constexpr tr::rgba8& tr::rgba8::operator/=(Scalar divisor)
+constexpr tr::rgba8& tr::rgba8::operator/=(Scalar divisor) noexcept
 {
 	r /= divisor;
 	g /= divisor;
@@ -450,7 +450,7 @@ constexpr tr::rgba8& tr::rgba8::operator/=(Scalar divisor)
 }
 
 template <tr::arithmetic Scalar>
-constexpr tr::rgba8 tr::operator/(rgba8 lhs, Scalar divisor)
+[[nodiscard]] constexpr tr::rgba8 tr::operator/(rgba8 lhs, Scalar divisor) noexcept
 {
 	rgba8 temp{lhs};
 	temp /= divisor;
@@ -459,7 +459,7 @@ constexpr tr::rgba8 tr::operator/(rgba8 lhs, Scalar divisor)
 
 //
 
-constexpr tr::rgba8& tr::rgba8::operator+=(rgba8 addend)
+constexpr tr::rgba8& tr::rgba8::operator+=(rgba8 addend) noexcept
 {
 	r += addend.r;
 	g += addend.g;
@@ -468,14 +468,14 @@ constexpr tr::rgba8& tr::rgba8::operator+=(rgba8 addend)
 	return *this;
 }
 
-constexpr tr::rgba8 tr::operator+(rgba8 lhs, rgba8 rhs)
+[[nodiscard]] constexpr tr::rgba8 tr::operator+(rgba8 lhs, rgba8 rhs) noexcept
 {
 	rgba8 temp{lhs};
 	temp += rhs;
 	return temp;
 }
 
-constexpr tr::rgba8& tr::rgba8::operator-=(rgba8 subtrahend)
+constexpr tr::rgba8& tr::rgba8::operator-=(rgba8 subtrahend) noexcept
 {
 	r -= subtrahend.r;
 	g -= subtrahend.g;
@@ -484,14 +484,14 @@ constexpr tr::rgba8& tr::rgba8::operator-=(rgba8 subtrahend)
 	return *this;
 }
 
-constexpr tr::rgba8 tr::operator-(rgba8 lhs, rgba8 rhs)
+[[nodiscard]] constexpr tr::rgba8 tr::operator-(rgba8 lhs, rgba8 rhs) noexcept
 {
 	rgba8 temp{lhs};
 	temp -= rhs;
 	return temp;
 }
 
-constexpr tr::rgba8& tr::rgba8::operator*=(rgba8 multiplier)
+constexpr tr::rgba8& tr::rgba8::operator*=(rgba8 multiplier) noexcept
 {
 	r = r * multiplier.r / 255;
 	g = g * multiplier.g / 255;
@@ -500,7 +500,7 @@ constexpr tr::rgba8& tr::rgba8::operator*=(rgba8 multiplier)
 	return *this;
 }
 
-constexpr tr::rgba8 tr::operator*(rgba8 lhs, rgba8 rhs)
+[[nodiscard]] constexpr tr::rgba8 tr::operator*(rgba8 lhs, rgba8 rhs) noexcept
 {
 	rgba8 temp{lhs};
 	temp *= rhs;
@@ -509,7 +509,7 @@ constexpr tr::rgba8 tr::operator*(rgba8 lhs, rgba8 rhs)
 
 //
 
-constexpr tr::rgbaf::rgbaf(float r, float g, float b, float a)
+constexpr tr::rgbaf::rgbaf(float r, float g, float b, float a) noexcept
 	: r{r}
 	, g{g}
 	, b{b}
@@ -517,7 +517,7 @@ constexpr tr::rgbaf::rgbaf(float r, float g, float b, float a)
 {
 }
 
-constexpr tr::rgbaf::rgbaf(rgb8 rgb, float a)
+constexpr tr::rgbaf::rgbaf(rgb8 rgb, float a) noexcept
 	: r{norm_cast<float>(rgb.r)}
 	, g{norm_cast<float>(rgb.g)}
 	, b{norm_cast<float>(rgb.b)}
@@ -525,7 +525,7 @@ constexpr tr::rgbaf::rgbaf(rgb8 rgb, float a)
 {
 }
 
-constexpr tr::rgbaf::rgbaf(rgbf rgb, float a)
+constexpr tr::rgbaf::rgbaf(rgbf rgb, float a) noexcept
 	: r{rgb.r}
 	, g{rgb.g}
 	, b{rgb.b}
@@ -533,7 +533,7 @@ constexpr tr::rgbaf::rgbaf(rgbf rgb, float a)
 {
 }
 
-constexpr tr::rgbaf::rgbaf(rgba8 rgba)
+constexpr tr::rgbaf::rgbaf(rgba8 rgba) noexcept
 	: r{norm_cast<float>(rgba.r)}
 	, g{norm_cast<float>(rgba.g)}
 	, b{norm_cast<float>(rgba.b)}
@@ -541,7 +541,7 @@ constexpr tr::rgbaf::rgbaf(rgba8 rgba)
 {
 }
 
-constexpr tr::rgbaf::rgbaf(hsv hsv, float a)
+constexpr tr::rgbaf::rgbaf(hsv hsv, float a) noexcept
 	: rgbaf{rgbf{hsv}, a}
 {
 }
@@ -549,7 +549,7 @@ constexpr tr::rgbaf::rgbaf(hsv hsv, float a)
 //
 
 template <tr::arithmetic Scalar>
-constexpr tr::rgbaf& tr::rgbaf::operator+=(Scalar addend)
+constexpr tr::rgbaf& tr::rgbaf::operator+=(Scalar addend) noexcept
 {
 	r += addend;
 	g += addend;
@@ -559,7 +559,7 @@ constexpr tr::rgbaf& tr::rgbaf::operator+=(Scalar addend)
 }
 
 template <tr::arithmetic Scalar>
-constexpr tr::rgbaf tr::operator+(rgbaf lhs, Scalar addend)
+[[nodiscard]] constexpr tr::rgbaf tr::operator+(rgbaf lhs, Scalar addend) noexcept
 {
 	rgbaf temp{lhs};
 	temp += addend;
@@ -567,7 +567,7 @@ constexpr tr::rgbaf tr::operator+(rgbaf lhs, Scalar addend)
 }
 
 template <tr::arithmetic Scalar>
-constexpr tr::rgbaf& tr::rgbaf::operator-=(Scalar subtrahend)
+constexpr tr::rgbaf& tr::rgbaf::operator-=(Scalar subtrahend) noexcept
 {
 	r -= subtrahend;
 	g -= subtrahend;
@@ -577,7 +577,7 @@ constexpr tr::rgbaf& tr::rgbaf::operator-=(Scalar subtrahend)
 }
 
 template <tr::arithmetic Scalar>
-constexpr tr::rgbaf tr::operator-(rgbaf lhs, Scalar subtrahend)
+[[nodiscard]] constexpr tr::rgbaf tr::operator-(rgbaf lhs, Scalar subtrahend) noexcept
 {
 	rgbaf temp{lhs};
 	temp -= subtrahend;
@@ -585,7 +585,7 @@ constexpr tr::rgbaf tr::operator-(rgbaf lhs, Scalar subtrahend)
 }
 
 template <tr::arithmetic Scalar>
-constexpr tr::rgbaf& tr::rgbaf::operator*=(Scalar multiplier)
+constexpr tr::rgbaf& tr::rgbaf::operator*=(Scalar multiplier) noexcept
 {
 	r *= multiplier;
 	g *= multiplier;
@@ -595,7 +595,7 @@ constexpr tr::rgbaf& tr::rgbaf::operator*=(Scalar multiplier)
 }
 
 template <tr::arithmetic Scalar>
-constexpr tr::rgbaf tr::operator*(rgbaf lhs, Scalar multiplier)
+[[nodiscard]] constexpr tr::rgbaf tr::operator*(rgbaf lhs, Scalar multiplier) noexcept
 {
 	rgbaf temp{lhs};
 	temp *= multiplier;
@@ -603,7 +603,7 @@ constexpr tr::rgbaf tr::operator*(rgbaf lhs, Scalar multiplier)
 }
 
 template <tr::arithmetic Scalar>
-constexpr tr::rgbaf& tr::rgbaf::operator/=(Scalar divisor)
+constexpr tr::rgbaf& tr::rgbaf::operator/=(Scalar divisor) noexcept
 {
 	r /= divisor;
 	g /= divisor;
@@ -613,7 +613,7 @@ constexpr tr::rgbaf& tr::rgbaf::operator/=(Scalar divisor)
 }
 
 template <tr::arithmetic Scalar>
-constexpr tr::rgbaf tr::operator/(rgbaf lhs, Scalar divisor)
+[[nodiscard]] constexpr tr::rgbaf tr::operator/(rgbaf lhs, Scalar divisor) noexcept
 {
 	rgbaf temp{lhs};
 	temp /= divisor;
@@ -622,7 +622,7 @@ constexpr tr::rgbaf tr::operator/(rgbaf lhs, Scalar divisor)
 
 //
 
-constexpr tr::rgbaf& tr::rgbaf::operator+=(rgbaf addend)
+constexpr tr::rgbaf& tr::rgbaf::operator+=(rgbaf addend) noexcept
 {
 	r += addend.r;
 	g += addend.g;
@@ -631,14 +631,14 @@ constexpr tr::rgbaf& tr::rgbaf::operator+=(rgbaf addend)
 	return *this;
 }
 
-constexpr tr::rgbaf tr::operator+(rgbaf lhs, rgbaf rhs)
+[[nodiscard]] constexpr tr::rgbaf tr::operator+(rgbaf lhs, rgbaf rhs) noexcept
 {
 	rgbaf temp{lhs};
 	temp += rhs;
 	return temp;
 }
 
-constexpr tr::rgbaf& tr::rgbaf::operator-=(rgbaf subtrahend)
+constexpr tr::rgbaf& tr::rgbaf::operator-=(rgbaf subtrahend) noexcept
 {
 	r -= subtrahend.r;
 	g -= subtrahend.g;
@@ -647,14 +647,14 @@ constexpr tr::rgbaf& tr::rgbaf::operator-=(rgbaf subtrahend)
 	return *this;
 }
 
-constexpr tr::rgbaf tr::operator-(rgbaf lhs, rgbaf rhs)
+[[nodiscard]] constexpr tr::rgbaf tr::operator-(rgbaf lhs, rgbaf rhs) noexcept
 {
 	rgbaf temp{lhs};
 	temp -= rhs;
 	return temp;
 }
 
-constexpr tr::rgbaf& tr::rgbaf::operator*=(rgbaf multiplier)
+constexpr tr::rgbaf& tr::rgbaf::operator*=(rgbaf multiplier) noexcept
 {
 	r *= multiplier.r;
 	g *= multiplier.g;
@@ -663,7 +663,7 @@ constexpr tr::rgbaf& tr::rgbaf::operator*=(rgbaf multiplier)
 	return *this;
 }
 
-constexpr tr::rgbaf tr::operator*(rgbaf lhs, rgbaf rhs)
+[[nodiscard]] constexpr tr::rgbaf tr::operator*(rgbaf lhs, rgbaf rhs) noexcept
 {
 	rgbaf temp{lhs};
 	temp *= rhs;
@@ -672,19 +672,19 @@ constexpr tr::rgbaf tr::operator*(rgbaf lhs, rgbaf rhs)
 
 //
 
-constexpr tr::hsv::hsv(float h, float s, float v)
+constexpr tr::hsv::hsv(float h, float s, float v) noexcept
 	: h{h}
 	, s{s}
 	, v{v}
 {
 }
 
-constexpr tr::hsv::hsv(rgb8 rgb)
+constexpr tr::hsv::hsv(rgb8 rgb) noexcept
 	: hsv{rgbf{rgb}}
 {
 }
 
-constexpr tr::hsv::hsv(rgbf rgb)
+constexpr tr::hsv::hsv(rgbf rgb) noexcept
 {
 	v = std::max({rgb.r, rgb.g, rgb.b});
 	const float delta{v - std::min({rgb.r, rgb.g, rgb.b})};
@@ -705,31 +705,31 @@ constexpr tr::hsv::hsv(rgbf rgb)
 	s = v != 0 ? delta / v : 0;
 }
 
-constexpr tr::hsv::hsv(rgba8 rgba)
+constexpr tr::hsv::hsv(rgba8 rgba) noexcept
 	: hsv{rgbf{rgba}}
 {
 }
 
-constexpr tr::hsv::hsv(rgbaf rgba)
+constexpr tr::hsv::hsv(rgbaf rgba) noexcept
 	: hsv{rgbf{rgba}}
 {
 }
 
 //
 
-consteval tr::rgb8 tr::literals::color_literals::operator""_rgb8(const char* str, usize length)
+consteval tr::rgb8 tr::literals::color_literals::operator""_rgb8(const char* str, usize length) noexcept
 {
 	TR_ASSERT(length == 7, "Invalid RGB literal string length {} (must be 7).", length);
 
 	return operator""_rgba8(str, length);
 }
 
-consteval tr::rgbf tr::literals::color_literals::operator""_rgbf(const char* str, usize length)
+consteval tr::rgbf tr::literals::color_literals::operator""_rgbf(const char* str, usize length) noexcept
 {
 	return operator""_rgb8(str, length);
 }
 
-consteval tr::rgba8 tr::literals::color_literals::operator""_rgba8(const char* str, usize length)
+consteval tr::rgba8 tr::literals::color_literals::operator""_rgba8(const char* str, usize length) noexcept
 {
 	constexpr auto is_digit{[](char chr) { return chr >= '0' && chr <= '9'; }};
 	constexpr auto is_uppercase_hex{[](char chr) { return chr >= 'A' && chr <= 'F'; }};
@@ -750,7 +750,7 @@ consteval tr::rgba8 tr::literals::color_literals::operator""_rgba8(const char* s
 	};
 }
 
-consteval tr::rgbaf tr::literals::color_literals::operator""_rgbaf(const char* str, usize length)
+consteval tr::rgbaf tr::literals::color_literals::operator""_rgbaf(const char* str, usize length) noexcept
 {
 	return operator""_rgba8(str, length);
 }

@@ -5,7 +5,7 @@
 
 //
 
-std::tm tr::localtime(std::time_t time)
+std::tm tr::localtime(std::time_t time) noexcept
 {
 #ifdef _MSC_VER
 	return *std::localtime(&time);

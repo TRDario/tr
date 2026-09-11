@@ -18,22 +18,22 @@ namespace tr
 
 //
 
-tr::decryption_error::decryption_error(std::string_view description)
+tr::decryption_error::decryption_error(std::string_view description) noexcept
 	: m_description{description}
 {
 }
 
-std::string_view tr::decryption_error::name() const
+std::string_view tr::decryption_error::name() const noexcept
 {
 	return "Decryption error";
 }
 
-std::string_view tr::decryption_error::description() const
+std::string_view tr::decryption_error::description() const noexcept
 {
 	return m_description;
 }
 
-std::string_view tr::decryption_error::details() const
+std::string_view tr::decryption_error::details() const noexcept
 {
 	return {};
 }

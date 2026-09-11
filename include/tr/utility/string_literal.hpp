@@ -18,7 +18,7 @@ namespace tr
 
 		/// Constructs a template string literal from a real string literal.
 		/// @param[in] str Source string literal to copy.
-		consteval string_literal(const char (&str)[Size]);
+		[[nodiscard]] consteval string_literal(const char (&str)[Size]) noexcept;
 
 		/// @}
 		/// @name Conversion operators
@@ -26,17 +26,17 @@ namespace tr
 
 		/// Gets a C-string pointing to the string literal.
 		/// @return C-string pointing to the string literal.
-		consteval operator const char*() const;
+		[[nodiscard]] consteval operator const char*() const noexcept;
 
 		/// Gets a string view to the string literal.
 		/// @return String view to the string literal.
-		consteval operator std::string_view() const;
+		[[nodiscard]] consteval operator std::string_view() const noexcept;
 
 		/// Gets a format string view to the string literal.
 		/// @tparam Args List of arguments to the formatting function.
 		/// @return Format string view to the string literal.
 		template <typename... Args>
-		consteval operator std::format_string<Args...>() const;
+		[[nodiscard]] consteval operator std::format_string<Args...>() const noexcept;
 
 		/// @}
 		/// @name Data
@@ -47,7 +47,7 @@ namespace tr
 
 		/// Gets the length of the literal.
 		/// @return Length of the string literal.
-		consteval static usize size();
+		[[nodiscard]] consteval static usize size() noexcept;
 
 		/// @}
 	};
@@ -57,7 +57,7 @@ namespace tr
 	/// @param first, second, rest Strings to concatenate.
 	/// @return New string literal stored in a `tr::string_literal` object.
 	template <typename First, typename Second, typename... Rest>
-	consteval auto concatenate_string_literals(First&& first, Second&& second, Rest&&... rest);
+	[[nodiscard]] consteval auto concatenate_string_literals(First&& first, Second&& second, Rest&&... rest) noexcept;
 } // namespace tr
 
 #include "impl/string_literal.hpp" // IWYU pragma: export

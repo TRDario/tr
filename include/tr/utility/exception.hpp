@@ -20,19 +20,19 @@ namespace tr
 
 		/// Gets the name of the error.
 		/// @return Name of the error.
-		virtual std::string_view name() const = 0;
+		[[nodiscard]] virtual std::string_view name() const noexcept = 0;
 
 		/// Gets the description of the error.
 		/// @return String containing the error description, or empty to omit the description section from the message.
-		virtual std::string_view description() const = 0;
+		[[nodiscard]] virtual std::string_view description() const noexcept = 0;
 
 		/// Gets further details about the error.
 		/// @return String containing details about the error, or empty to omit the details section from the message.
-		virtual std::string_view details() const = 0;
+		[[nodiscard]] virtual std::string_view details() const noexcept = 0;
 
 		/// Gets a formatted error message.
 		/// @return Error message in the format `"<NAME>: <DESCRIPTION> (<DETAILS>)"`.
-		const char* what() const noexcept final;
+		[[nodiscard]] const char* what() const noexcept final;
 
 		/// @}
 
@@ -52,7 +52,7 @@ namespace tr
 		/// @param fmt Error message format string.
 		/// @param args Formatting arguments.
 		template <typename... Args>
-		out_of_memory(std::format_string<Args...> fmt, Args&&... args);
+		[[nodiscard]] out_of_memory(std::format_string<Args...> fmt, Args&&... args) noexcept;
 
 		/// @}
 		/// @name Information
@@ -60,15 +60,15 @@ namespace tr
 
 		/// Gets the name of the error.
 		/// @return `Out of memory`.
-		std::string_view name() const override;
+		[[nodiscard]] std::string_view name() const noexcept override;
 
 		/// Gets the description of the error.
 		/// @return Description of the out-of-memory error.
-		std::string_view description() const override;
+		[[nodiscard]] std::string_view description() const noexcept override;
 
 		/// Gets further details about the error.
 		/// @return Always empty.
-		std::string_view details() const override;
+		[[nodiscard]] std::string_view details() const noexcept override;
 
 		/// @}
 
@@ -88,7 +88,7 @@ namespace tr
 		/// @param name Name of the error.
 		/// @param description Description of the error.
 		/// @param details Details of the error.
-		custom_exception(std::string&& name, std::string&& description, std::string&& details);
+		[[nodiscard]] custom_exception(std::string&& name, std::string&& description, std::string&& details) noexcept;
 
 		/// @}
 		/// @name Information
@@ -96,24 +96,26 @@ namespace tr
 
 		/// Gets the name of the error.
 		/// @return Name of the error.
-		std::string_view name() const override;
+		[[nodiscard]] std::string_view name() const noexcept override;
 
 		/// Gets the description of the error.
 		/// @return Description of the error.
-		std::string_view description() const override;
+		[[nodiscard]] std::string_view description() const noexcept override;
 
 		/// Gets further details about the error.
 		/// @return Further details about the error.
-		std::string_view details() const override;
+		[[nodiscard]] std::string_view details() const noexcept override;
 
 		/// @}
 
 	  private:
-		// The name of the error.
+		/// Name of the error.
 		std::string m_name;
-		// The description of the error.
+
+		/// Description of the error.
 		std::string m_description;
-		// Further details about the error.
+
+		/// Further details about the error.
 		std::string m_details;
 	};
 } // namespace tr

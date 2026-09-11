@@ -93,12 +93,12 @@ namespace tr
 			/// Creates a duration from a frequency in hertz.
 			/// @param hz Frequency in hertz.
 			/// @return Duration `1s / hz`.
-			consteval duration operator""_hz(unsigned long long hz);
+			[[nodiscard]] consteval duration operator""_hz(unsigned long long hz) noexcept;
 
 			/// Creates a duration from a frequency in hertz.
 			/// @param hz Frequency in hertz.
 			/// @return Duration `1s / hz`.
-			consteval duration operator""_hz(long double hz);
+			[[nodiscard]] consteval duration operator""_hz(long double hz) noexcept;
 
 			/// @}
 		} // namespace chrono_literals
@@ -115,14 +115,14 @@ namespace tr
 	/// @param a, b Durations to get the ratio between.
 	/// @return `a/b`.
 	template <typename Rep1, typename Rep2, typename Period1, typename Period2>
-	constexpr float ratio(std::chrono::duration<Rep1, Period1> a, std::chrono::duration<Rep2, Period2> b);
+	[[nodiscard]] constexpr float ratio(std::chrono::duration<Rep1, Period1> a, std::chrono::duration<Rep2, Period2> b) noexcept;
 
 	//
 
 	/// Cross-platform, thread-safe localtime.
 	/// @param time Timestamp value.
 	/// @return Local time information.
-	std::tm localtime(std::time_t time);
+	[[nodiscard]] std::tm localtime(std::time_t time) noexcept;
 
 	/// @}
 } // namespace tr

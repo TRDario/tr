@@ -24,20 +24,20 @@ namespace tr
 	  private:
 		/// Gets a reference to the base iterator.
 		/// @return Reference to the base iterator.
-		constexpr Iterator& base();
+		[[nodiscard]] constexpr Iterator& base() noexcept;
 
 		/// Gets a reference to the base iterator.
 		/// @return Reference to the base iterator.
-		constexpr const Iterator& base() const;
+		[[nodiscard]] constexpr const Iterator& base() const noexcept;
 
 	  public:
 		/// @cond implementation_details
 
 		/// (no-op)
-		friend constexpr auto operator<=>(const iterator_interface& lhs, const iterator_interface& rhs) = default;
+		friend constexpr auto operator<=>(const iterator_interface& lhs, const iterator_interface& rhs) noexcept = default;
 
 		/// (no-op)
-		friend constexpr bool operator==(const iterator_interface& lhs, const iterator_interface& rhs) = default;
+		friend constexpr bool operator==(const iterator_interface& lhs, const iterator_interface& rhs) noexcept = default;
 
 		/// @endcond
 
@@ -47,7 +47,7 @@ namespace tr
 		/// @param it Iterator to increment.
 		/// @return Copy of `it` before it was incremented.
 		template <typename Iterator_, typename DeducedBrackets_>
-		friend constexpr Iterator_ operator++(iterator_interface<Iterator_, DeducedBrackets_>& it, int)
+		friend constexpr Iterator_ operator++(iterator_interface<Iterator_, DeducedBrackets_>& it, int) noexcept(noexcept(++it.base()))
 			requires(requires { ++it.base(); });
 
 		/// Synthesized post-decrementation operator.
@@ -56,7 +56,7 @@ namespace tr
 		/// @param it Iterator to decrement.
 		/// @return Copy of `it` before it was decremented.
 		template <typename Iterator_, typename DeducedBrackets_>
-		friend constexpr Iterator_ operator--(iterator_interface<Iterator_, DeducedBrackets_>& it, int)
+		friend constexpr Iterator_ operator--(iterator_interface<Iterator_, DeducedBrackets_>& it, int) noexcept(noexcept(--it.base()))
 			requires(requires { --it.base(); });
 
 		//
@@ -69,7 +69,8 @@ namespace tr
 		/// @param diff Amount of steps to subtract by.
 		/// @return Reference to `it`.
 		template <typename Iterator_, typename DeducedBrackets_, typename Difference>
-		friend constexpr Iterator_& operator-=(iterator_interface<Iterator_, DeducedBrackets_>& it, Difference diff)
+		friend constexpr Iterator_& operator-=(iterator_interface<Iterator_, DeducedBrackets_>& it,
+											   Difference diff) noexcept(noexcept(it.base() += -diff))
 			requires(requires { it.base() += -diff; });
 
 		/// Synthesized addition operator.
@@ -80,7 +81,8 @@ namespace tr
 		/// @param diff Amount of steps to advance by.
 		/// @return Copy of `it` advanced by `diff`.
 		template <typename Iterator_, typename DeducedBrackets_, typename Difference>
-		friend constexpr Iterator_ operator+(const iterator_interface<Iterator_, DeducedBrackets_>& it, Difference diff)
+		friend constexpr Iterator_ operator+(const iterator_interface<Iterator_, DeducedBrackets_>& it,
+											 Difference diff) noexcept(noexcept(std::declval<Iterator_>() += diff))
 			requires(requires(Iterator_ i) { i += diff; });
 
 		/// Synthesized addition operator.
@@ -91,7 +93,8 @@ namespace tr
 		/// @param it Iterator to add to.
 		/// @return Copy of `it` advanced by `diff`.
 		template <typename Iterator_, typename DeducedBrackets_, typename Difference>
-		friend constexpr Iterator_ operator+(Difference diff, const iterator_interface& it)
+		friend constexpr Iterator_ operator+(Difference diff,
+											 const iterator_interface& it) noexcept(noexcept(std::declval<Iterator_>() += diff))
 			requires(requires(Iterator_ i) { i += diff; });
 
 		/// Synthesized subtraction operator.
@@ -102,14 +105,15 @@ namespace tr
 		/// @param diff Amount of steps to subtract by.
 		/// @return Copy of `it` subtracted by `diff`.
 		template <typename Iterator_, typename DeducedBrackets_, typename Difference>
-		friend constexpr Iterator_ operator-(const iterator_interface& it, Difference diff)
+		friend constexpr Iterator_ operator-(const iterator_interface& it,
+											 Difference diff) noexcept(noexcept(std::declval<Iterator_>() -= diff))
 			requires(requires(Iterator_ i) { i -= diff; });
 
 		//
 
 		/// Synthesized pointer dereferencing operator.
 		/// @return Pointer to the dereferenced value.
-		constexpr auto operator->() const
+		[[nodiscard]] constexpr auto operator->() const noexcept(noexcept(*base()))
 			requires(requires {
 				{ *base() } -> lvalue_reference;
 			});
@@ -119,8 +123,8 @@ namespace tr
 		/// @param diff Amount of steps to advance by.
 		/// @return `*(*this + diff)`.
 		template <typename Difference = DeducedBrackets>
-		constexpr decltype(auto) operator[](Difference diff) const
-			requires(requires(Iterator it) { it + diff; });
+		[[nodiscard]] constexpr decltype(auto) operator[](Difference diff) const noexcept(noexcept(*(base() + diff)))
+			requires(requires { *(base() + diff); });
 	};
 } // namespace tr
 

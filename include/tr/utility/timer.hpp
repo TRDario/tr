@@ -25,7 +25,7 @@ namespace tr
 		/// @{
 
 		/// Constructs an inactive timer.
-		timer() = default;
+		[[nodiscard]] timer() = default;
 
 		/// Constructs an active timer.
 		/// @warning If the callback throws an exception, the timer will silently go inactive.
@@ -35,7 +35,7 @@ namespace tr
 		/// @param interval Interval at which the callback is called.
 		/// @param cb Callback object.
 		template <arithmetic Rep, specialization_of_v<std::ratio> Period, std::convertible_to<std::function<void()>> Callback>
-		timer(const std::chrono::duration<Rep, Period>& interval, Callback&& cb);
+		[[nodiscard]] timer(const std::chrono::duration<Rep, Period>& interval, Callback&& cb);
 
 		/// @}
 		/// @name Status
@@ -43,7 +43,7 @@ namespace tr
 
 		/// Reports whether the timer is active.
 		/// @return `true` if the timer is active, `false` otherwise.
-		bool active() const;
+		[[nodiscard]] bool active() const;
 
 		/// @}
 
@@ -57,7 +57,7 @@ namespace tr
 		/// @param stoken Thread stop token.
 		/// @param interval Timer interval.
 		/// @param cb Callback object.
-		static void timer_loop(std::stop_token stoken, duration interval, callback cb);
+		static void timer_loop(std::stop_token stoken, duration interval, callback cb) noexcept;
 	};
 } // namespace tr
 

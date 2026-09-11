@@ -19,39 +19,39 @@ const char* tr::exception::what() const noexcept
 	return g_what_buffer.data();
 }
 
-std::string_view tr::out_of_memory::name() const
+std::string_view tr::out_of_memory::name() const noexcept
 {
 	return "Out of memory";
 }
 
-std::string_view tr::out_of_memory::description() const
+std::string_view tr::out_of_memory::description() const noexcept
 {
 	return m_description;
 }
 
-std::string_view tr::out_of_memory::details() const
+std::string_view tr::out_of_memory::details() const noexcept
 {
 	return {};
 }
 
-tr::custom_exception::custom_exception(std::string&& name, std::string&& description, std::string&& details)
+tr::custom_exception::custom_exception(std::string&& name, std::string&& description, std::string&& details) noexcept
 	: m_name{std::move(name)}
 	, m_description{std::move(description)}
 	, m_details{std::move(details)}
 {
 }
 
-std::string_view tr::custom_exception::name() const
+std::string_view tr::custom_exception::name() const noexcept
 {
 	return m_name;
 }
 
-std::string_view tr::custom_exception::description() const
+std::string_view tr::custom_exception::description() const noexcept
 {
 	return m_description;
 }
 
-std::string_view tr::custom_exception::details() const
+std::string_view tr::custom_exception::details() const noexcept
 {
 	return m_details;
 }

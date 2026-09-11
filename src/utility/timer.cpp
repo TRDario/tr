@@ -19,7 +19,7 @@ bool tr::timer::active() const
 
 //
 
-void tr::timer::timer_loop(std::stop_token stoken, duration interval, callback cb)
+void tr::timer::timer_loop(std::stop_token stoken, duration interval, callback cb) noexcept
 {
 	using clock = std::chrono::steady_clock;
 

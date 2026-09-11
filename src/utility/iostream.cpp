@@ -10,17 +10,17 @@ tr::file_not_found::file_not_found(std::string_view path)
 {
 }
 
-std::string_view tr::file_not_found::name() const
+std::string_view tr::file_not_found::name() const noexcept
 {
 	return "File not found";
 }
 
-std::string_view tr::file_not_found::description() const
+std::string_view tr::file_not_found::description() const noexcept
 {
 	return m_path;
 }
 
-std::string_view tr::file_not_found::details() const
+std::string_view tr::file_not_found::details() const noexcept
 {
 	return {};
 }
@@ -32,19 +32,19 @@ tr::file_open_error::file_open_error(std::string_view path)
 {
 }
 
-std::string_view tr::file_open_error::name() const
+std::string_view tr::file_open_error::name() const noexcept
 {
 	return "File opening error";
 }
 
-std::string_view tr::file_open_error::description() const
+std::string_view tr::file_open_error::description() const noexcept
 {
 	static std::string buffer;
 	buffer = std::format("'{}'", m_path);
 	return buffer;
 }
 
-std::string_view tr::file_open_error::details() const
+std::string_view tr::file_open_error::details() const noexcept
 {
 	return {};
 }

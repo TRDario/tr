@@ -28,28 +28,28 @@ namespace tr
 	/// Produces an orthographic transform for a rectangular region.
 	/// @param region Region to create an orthographic transform for.
 	/// @return Orthographic transform mapping to `region`.
-	glm::mat4 ortho(rectangle<float> region);
+	[[nodiscard]] glm::mat4 ortho(rectangle<float> region) noexcept;
 
 	/// Applies a 2D scaling around a point to a matrix.
 	/// @param matrix Base matrix to apply the transformation to.
 	/// @param center Point to scale around.
 	/// @param scale Scaling multipliers.
 	/// @return Result of the transformation applied upon `matrix`.
-	glm::mat4 scale_around(const glm::mat4& matrix, glm::vec2 center, glm::vec2 scale);
+	[[nodiscard]] glm::mat4 scale_around(const glm::mat4& matrix, glm::vec2 center, glm::vec2 scale) noexcept;
 
 	/// Applies a 3D scaling around a point to a matrix.
 	/// @param matrix Base matrix to apply the transformation to.
 	/// @param center Point to scale around.
 	/// @param scale Scaling multipliers.
 	/// @return Result of the transformation applied upon `matrix`.
-	glm::mat4 scale_around(const glm::mat4& matrix, glm::vec3 center, glm::vec3 scale);
+	[[nodiscard]] glm::mat4 scale_around(const glm::mat4& matrix, glm::vec3 center, glm::vec3 scale) noexcept;
 
 	/// Applies a 2D rotation around a point to a matrix.
 	/// @param matrix Base matrix to apply the transformation to.
 	/// @param center Point to rotate around.
 	/// @param rotation Angle of rotation.
 	/// @return Result of the transformation applied upon `matrix`.
-	glm::mat4 rotate_around(const glm::mat4& matrix, glm::vec2 center, angle rotation);
+	[[nodiscard]] glm::mat4 rotate_around(const glm::mat4& matrix, glm::vec2 center, angle rotation) noexcept;
 
 	/// Applies a 3D rotation around a point to a matrix.
 	/// @param matrix Base matrix to apply the transformation to.
@@ -57,7 +57,7 @@ namespace tr
 	/// @param rotation Angle of rotation.
 	/// @param axis Axis of rotation.
 	/// @return Result of the transformation applied upon `matrix`.
-	glm::mat4 rotate_around(const glm::mat4& matrix, glm::vec3 center, angle rotation, glm::vec3 axis);
+	[[nodiscard]] glm::mat4 rotate_around(const glm::mat4& matrix, glm::vec3 center, angle rotation, glm::vec3 axis) noexcept;
 
 	/// @}
 
@@ -73,25 +73,25 @@ namespace tr
 			/// @param v Vector to multiply with.
 			/// @param m Matrix to multiply with.
 			/// @return Result of the matrix multiplication.
-			glm::vec2 operator*(glm::vec2 v, const glm::mat4& m);
+			[[nodiscard]] glm::vec2 operator*(glm::vec2 v, const glm::mat4& m) noexcept;
 
 			/// Performs matrix multiplication on a 3D vector.
 			/// @param v Vector to multiply with.
 			/// @param m Matrix to multiply with.
 			/// @return Result of the matrix multiplication.
-			glm::vec3 operator*(glm::vec3 v, const glm::mat4& m);
+			[[nodiscard]] glm::vec3 operator*(glm::vec3 v, const glm::mat4& m) noexcept;
 
 			/// Performs matrix multiplication on a 2D vector.
 			/// @param m Matrix to multiply with.
 			/// @param v Vector to multiply with.
 			/// @return Result of the matrix multiplication.
-			glm::vec2 operator*(const glm::mat4& m, glm::vec2 v);
+			[[nodiscard]] glm::vec2 operator*(const glm::mat4& m, glm::vec2 v) noexcept;
 
 			/// Performs matrix multiplication on a 3D vector.
 			/// @param m Matrix to multiply with.
 			/// @param v Vector to multiply with.
 			/// @return Result of the matrix multiplication.
-			glm::vec3 operator*(const glm::mat4& m, glm::vec3 v);
+			[[nodiscard]] glm::vec3 operator*(const glm::mat4& m, glm::vec3 v) noexcept;
 
 			/// @}
 		} // namespace matrix_operators

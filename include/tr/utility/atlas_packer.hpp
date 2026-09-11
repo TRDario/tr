@@ -27,7 +27,7 @@ namespace tr
 		/// @{
 
 		/// Creates an empty packer.
-		atlas_packer();
+		[[nodiscard]] atlas_packer();
 
 		/// @}
 		/// @name Manipulation
@@ -40,7 +40,7 @@ namespace tr
 		/// @param size Size of the rectangle.
 		/// @param texture_size Size of the texture to insert the rectangle into.
 		/// @return Position of the top-left corner of the rectangle, if found.
-		std::optional<glm::u16vec2> try_insert(glm::u16vec2 size, glm::u16vec2 texture_size);
+		[[nodiscard]] std::optional<glm::u16vec2> try_insert(glm::u16vec2 size, glm::u16vec2 texture_size);
 
 		/// @}
 
@@ -65,7 +65,7 @@ namespace tr
 		/// @{
 
 		/// Creates an empty atlas.
-		atlas_entries() = default;
+		[[nodiscard]] atlas_entries() = default;
 
 		/// @}
 		/// @name Status
@@ -76,11 +76,11 @@ namespace tr
 		/// @param key Key to look up in the atlas.
 		/// @return `true` if a value associated with `key` existed, `false` otherwise.
 		template <hash_keylike<Key, Hash, Pred> Keylike>
-		bool contains(Keylike&& key) const;
+		[[nodiscard]] bool contains(Keylike&& key) const;
 
 		/// Gets the number of entries in the atlas.
 		/// @return Number of entries in the atlas.
-		usize entries() const;
+		[[nodiscard]] usize entries() const noexcept;
 
 		/// @}
 		/// @name Access
@@ -92,7 +92,7 @@ namespace tr
 		/// @pre `key` must be present in the atlas.
 		/// @return Constant reference to the value associated with `key`.
 		template <hash_keylike<Key, Hash, Pred> Keylike>
-		const Value& operator[](Keylike&& key) const;
+		[[nodiscard]] const Value& operator[](Keylike&& key) const;
 
 		/// @}
 		/// @name Manipulation

@@ -18,7 +18,7 @@ namespace tr
 	/// @param from Span to reinterpret.
 	/// @return Span reinterpreted as a span of another type.
 	template <standard_layout To, standard_layout From, usize Extent>
-	auto reinterpret_span(std::span<From, Extent> from);
+	[[nodiscard]] auto reinterpret_span(std::span<From, Extent> from) noexcept;
 
 	//
 
@@ -27,28 +27,28 @@ namespace tr
 	/// @param range Contiguous range to reinterpret as bytes.
 	/// @return `range` reinterpreted as a range of bytes.
 	template <borrowed_standard_layout_range Range>
-	auto range_bytes(Range&& range);
+	[[nodiscard]] auto range_bytes(Range&& range) noexcept;
 
 	/// Gets a view of an object as a span of immutable bytes.
 	/// @tparam Standard layout object type.
 	/// @param object Object to reinterpret as bytes.
 	/// @return `object` reinterpreted as a range of bytes.
 	template <standard_layout Object>
-	std::span<const std::byte, sizeof(Object)> as_bytes(const Object& object);
+	[[nodiscard]] std::span<const std::byte, sizeof(Object)> as_bytes(const Object& object) noexcept;
 
 	/// Gets a view of a contiguous range as a span of mutable bytes.
 	/// @tparam Range Contiguous range of standard layout elements.
 	/// @param range Contiguous range to reinterpret as bytes.
 	/// @return `range` reinterpreted as a range of mutable bytes.
 	template <borrowed_mutable_standard_layout_range Range>
-	auto range_mut_bytes(Range&& range);
+	[[nodiscard]] auto range_mut_bytes(Range&& range) noexcept;
 
 	/// Gets a view of an object as a span of mutable bytes.
 	/// @tparam Standard layout object type.
 	/// @param object Object to reinterpret as bytes.
 	/// @return `object` reinterpreted as a range of mutable bytes.
 	template <standard_layout Object>
-	std::span<std::byte, sizeof(Object)> as_mut_bytes(Object& object);
+	[[nodiscard]] std::span<std::byte, sizeof(Object)> as_mut_bytes(Object& object) noexcept;
 
 	//
 
@@ -58,7 +58,7 @@ namespace tr
 	/// @param bytes Range to reinterpret.
 	/// @return Reference to the reinterpreted object.
 	template <standard_layout Object, borrowed_typed_contiguous_mutable_range<std::byte> Range>
-	Object& as_mut_object(Range&& bytes);
+	[[nodiscard]] Object& as_mut_object(Range&& bytes) noexcept;
 
 	/// Reinterprets a range of immutable bytes as an object and returns a reference to it.
 	/// @tparam Object Object type to reinterpret the byte range as.
@@ -66,7 +66,7 @@ namespace tr
 	/// @param bytes Range to reinterpret.
 	/// @return Reference to the reinterpreted object.
 	template <standard_layout Object, borrowed_typed_contiguous_const_range<std::byte> Range>
-	const Object& as_object(Range&& bytes);
+	[[nodiscard]] const Object& as_object(Range&& bytes) noexcept;
 
 	/// Reinterprets a range of mutable bytes as a span of objects.
 	/// @tparam Element Element type to reinterpret the byte range as.
@@ -74,7 +74,7 @@ namespace tr
 	/// @param bytes Range to reinterpret.
 	/// @return Span of `Element`.
 	template <standard_layout Element, borrowed_typed_contiguous_mutable_range<std::byte> Range>
-	auto as_mut_objects(Range&& bytes);
+	[[nodiscard]] auto as_mut_objects(Range&& bytes) noexcept;
 
 	/// Reinterprets a range of immutable bytes as a span of objects.
 	/// @tparam Element Element type to reinterpret the byte range as.
@@ -82,7 +82,7 @@ namespace tr
 	/// @param bytes Range to reinterpret.
 	/// @return Span of `const Element`.
 	template <standard_layout Element, borrowed_typed_contiguous_const_range<std::byte> Range>
-	auto as_objects(Range&& bytes);
+	[[nodiscard]] auto as_objects(Range&& bytes) noexcept;
 
 	//
 
@@ -94,7 +94,8 @@ namespace tr
 	/// @return Iterator to the first element in `searched` that matches one in `whitelist`.
 	template <std::ranges::range SearchedRange, std::ranges::forward_range WhitelistRange>
 		requires(std::equality_comparable_with<std::ranges::range_value_t<SearchedRange>, std::ranges::range_value_t<WhitelistRange>>)
-	constexpr std::ranges::borrowed_iterator_t<SearchedRange> find_last_of(SearchedRange&& searched, WhitelistRange&& whitelist);
+	[[nodiscard]] constexpr std::ranges::borrowed_iterator_t<SearchedRange> find_last_of(SearchedRange&& searched,
+																						 WhitelistRange&& whitelist);
 
 	/// Returns an iterator to the first element in `searched` that doesn't match one of the elements in `blacklist`.
 	/// @tparam SearchedRange Type of the searched range.
@@ -104,7 +105,8 @@ namespace tr
 	/// @return Iterator to the first element in `searched` that doesn't match one of the elements in `blacklist`.
 	template <std::ranges::range SearchedRange, std::ranges::forward_range BlacklistRange>
 		requires(std::equality_comparable_with<std::ranges::range_value_t<SearchedRange>, std::ranges::range_value_t<BlacklistRange>>)
-	constexpr std::ranges::borrowed_iterator_t<SearchedRange> find_first_not_of(SearchedRange&& searched, BlacklistRange&& blacklist);
+	[[nodiscard]] constexpr std::ranges::borrowed_iterator_t<SearchedRange> find_first_not_of(SearchedRange&& searched,
+																							  BlacklistRange&& blacklist);
 
 	/// Returns an iterator to the last element in `searched` that doesn't match one of the elements in `blacklist`.
 	/// @tparam SearchedRange Type of the searched range.
@@ -114,7 +116,8 @@ namespace tr
 	/// @return Iterator to the last element in `searched` that doesn't match one of the elements in `blacklist`.
 	template <std::ranges::bidirectional_range SearchedRange, std::ranges::forward_range BlacklistRange>
 		requires(std::equality_comparable_with<std::ranges::range_value_t<SearchedRange>, std::ranges::range_value_t<BlacklistRange>>)
-	constexpr std::ranges::borrowed_iterator_t<SearchedRange> find_last_not_of(SearchedRange&& searched, BlacklistRange&& blacklist);
+	[[nodiscard]] constexpr std::ranges::borrowed_iterator_t<SearchedRange> find_last_not_of(SearchedRange&& searched,
+																							 BlacklistRange&& blacklist);
 
 	//
 
@@ -125,7 +128,7 @@ namespace tr
 	/// @param initial_value Initial value to sum with.
 	/// @return Sum of the range.
 	template <std::ranges::range Range, typename Value>
-	Value sum(Range&& range, Value initial_value);
+	[[nodiscard]] Value sum(Range&& range, Value initial_value);
 
 	//
 

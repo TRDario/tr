@@ -9,7 +9,7 @@ using namespace std::chrono_literals;
 
 //
 
-void tr::benchmark::start()
+void tr::benchmark::start() noexcept
 {
 	TR_ASSERT(m_start == not_started, "Tried to start a benchmark measurement before stopping the previous one.");
 
@@ -34,30 +34,30 @@ void tr::benchmark::stop()
 	}
 }
 
-void tr::benchmark::clear()
+void tr::benchmark::clear() noexcept
 {
 	m_start = not_started;
 	m_measurements.clear();
 }
 
-tr::duration tr::benchmark::latest() const
+tr::duration tr::benchmark::latest() const noexcept
 {
 	return !m_measurements.empty() ? m_measurements.back().duration : duration::zero();
 }
 
-tr::duration tr::benchmark::min() const
+tr::duration tr::benchmark::min() const noexcept
 {
 	const auto durations{std::views::transform(m_measurements, &measurement::duration)};
 	return !m_measurements.empty() ? *std::ranges::min_element(durations) : duration::zero();
 }
 
-tr::duration tr::benchmark::max() const
+tr::duration tr::benchmark::max() const noexcept
 {
 	const auto durations{std::views::transform(m_measurements, &measurement::duration)};
 	return !m_measurements.empty() ? *std::ranges::max_element(durations) : duration::zero();
 }
 
-tr::duration tr::benchmark::avg() const
+tr::duration tr::benchmark::avg() const noexcept
 {
 	if (m_measurements.empty()) {
 		return duration::zero();
@@ -67,12 +67,12 @@ tr::duration tr::benchmark::avg() const
 	}
 }
 
-double tr::benchmark::fps() const
+double tr::benchmark::fps() const noexcept
 {
 	return !m_measurements.empty() ? m_measurements.size() / (max_measurement_age / 1.0s) : 0.0;
 }
 
-const std::deque<tr::benchmark::measurement>& tr::benchmark::measurements() const
+const std::deque<tr::benchmark::measurement>& tr::benchmark::measurements() const noexcept
 {
 	return m_measurements;
 }

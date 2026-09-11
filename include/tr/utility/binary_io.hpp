@@ -90,13 +90,13 @@ namespace tr
 	/// @param is Input stream.
 	/// @return Read variable.
 	template <binary_constructible Out>
-	Out read_binary(std::istream& is);
+	[[nodiscard]] Out read_binary(std::istream& is);
 
 	/// Checks for magic bytes from a stream.
 	/// @param is Input stream.
 	/// @param magic Magic bytes to match.
 	/// @return `true` if the magic bytes were matched, `false` otherwise.
-	bool read_binary_magic(std::istream& is, std::string_view magic);
+	[[nodiscard]] bool read_binary_magic(std::istream& is, std::string_view magic);
 
 	//
 
@@ -110,7 +110,7 @@ namespace tr
 	/// Flushes the rest of the stream into a vector of bytes.
 	/// @param is Input stream.
 	/// @return Vector containing the remaining contents of the stream.
-	std::vector<std::byte> flush_binary(std::istream& is);
+	[[nodiscard]] std::vector<std::byte> flush_binary(std::istream& is);
 
 	//
 
