@@ -33,7 +33,6 @@
 #include "sysgfx/shader.hpp"              // IWYU pragma: export
 #include "sysgfx/shader_buffer.hpp"       // IWYU pragma: export
 #include "sysgfx/shader_pipeline.hpp"     // IWYU pragma: export
-#include "sysgfx/state_machine.hpp"       // IWYU pragma: export
 #include "sysgfx/texture.hpp"             // IWYU pragma: export
 #include "sysgfx/texture_target.hpp"      // IWYU pragma: export
 #include "sysgfx/texture_view.hpp"        // IWYU pragma: export
