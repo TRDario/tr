@@ -14,7 +14,7 @@ namespace tr
 		/// @tparam Return Function return type.
 		/// @tparam Args Function argument types.
 		template <typename Return, typename... Args>
-		using function_pointer = Return (*)(Args...);
+		using function_pointer = Return (*)(Args...) noexcept;
 
 		/// Wrapper around an SDL_FunctionPointer that automatically casts it to another function pointer type.
 		struct loaded_gl_function_proxy
@@ -28,7 +28,7 @@ namespace tr
 			/// @tparam Return Function return type.
 			/// @tparam Args Function argument types.
 			template <typename Return, typename... Args>
-			operator function_pointer<Return, Args...>()
+			[[nodiscard]] operator function_pointer<Return, Args...>() noexcept
 			{
 				return reinterpret_cast<function_pointer<Return, Args...>>(ptr);
 			}
@@ -37,14 +37,14 @@ namespace tr
 		/// Wraps SDL_GL_GetProcAddress to return an OpenGL function proxy.
 		/// @param name Function name.
 		/// @return OpenGL function proxy.
-		loaded_gl_function_proxy gl_function_address(const char* name)
+		[[nodiscard]] loaded_gl_function_proxy gl_function_address(const char* name) noexcept
 		{
 			return {SDL_GL_GetProcAddress(name)};
 		}
 	} // namespace
 } // namespace tr
 
-tr::gl_api::gl_api()
+tr::gl_api::gl_api() noexcept
 	: allocate_2d_texture_storage{gl_function_address("glTextureStorage2D")}
 	, allocate_buffer_storage{gl_function_address("glNamedBufferStorage")}
 	, begin_query{gl_function_address("glBeginQuery")}

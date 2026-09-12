@@ -35,12 +35,16 @@ namespace tr
 	{
 		/// No held keyboard modifiers.
 		none = 0x0000,
+
 		/// Left-or-right shift key held.
 		shift = 0x0003,
+
 		/// Left-or-right ctrl key held.
 		ctrl = 0x00C0,
+
 		/// Left-or-right alt key held.
 		alt = 0x0300,
+
 		/// Unknown keyboard modifiers.
 		unknown = 0xFFFF
 	};
@@ -55,22 +59,22 @@ namespace tr
 	/// Converts a string to a scancode.
 	/// @param str Scancode string.
 	/// @return Scancode associated with the string, or `scancode::unknown`.
-	constexpr scancode to_scancode(std::string_view str);
+	[[nodiscard]] constexpr scancode to_scancode(std::string_view str) noexcept;
 
 	/// Converts a string to a keycode.
 	/// @param str Keycode string.
 	/// @return Keycode associated with the string, or `keycode::unknown`.
-	constexpr keycode to_keycode(zstring_view str);
+	[[nodiscard]] constexpr keycode to_keycode(zstring_view str) noexcept;
 
 	/// Gets the name of a scancode.
 	/// @param scan Scancode to get the name of.
 	/// @return String associated with the scancode.
-	constexpr zstring_view name(scancode scan);
+	[[nodiscard]] constexpr zstring_view name(scancode scan) noexcept;
 
 	/// Gets the name of a keycode.
 	/// @param key Keycode to get the name of.
 	/// @return String associated with the keycode.
-	std::string name(keycode key);
+	[[nodiscard]] std::string name(keycode key);
 
 	/// @}
 
@@ -87,20 +91,20 @@ namespace tr
 		/// @{
 
 		/// Default-constructs a scan chord.
-		constexpr scan_chord() = default;
+		[[nodiscard]] constexpr scan_chord() noexcept = default;
 
 		/// Constructs a scan chord without modifiers.
 		/// @param scan Chord scancode.
-		constexpr scan_chord(scancode scan);
+		[[nodiscard]] constexpr scan_chord(scancode scan) noexcept;
 
 		/// Constructs a scan chord from components.
 		/// @param mods Chord modifiers.
 		/// @param scan Chord scancode.
-		constexpr scan_chord(keymod mods, scancode scan);
+		[[nodiscard]] constexpr scan_chord(keymod mods, scancode scan) noexcept;
 
 		/// Converts a string to a scan chord. An invalid string results in a chord with `scancode::unknown`.
 		/// @param str Chord string.
-		constexpr explicit scan_chord(std::string_view str);
+		[[nodiscard]] constexpr explicit scan_chord(std::string_view str) noexcept;
 
 		/// @}
 		/// @name Comparison operators
@@ -109,7 +113,7 @@ namespace tr
 		/// Compares two chords for equality.
 		/// @param lhs, rhs Chords to compare.
 		/// @return Whether the chords are equal.
-		friend constexpr bool operator==(scan_chord lhs, scan_chord rhs) = default;
+		[[nodiscard]] friend constexpr bool operator==(scan_chord lhs, scan_chord rhs) noexcept = default;
 
 		/// @}
 		/// @name Name
@@ -117,7 +121,7 @@ namespace tr
 
 		/// Gets the name of the scan chord.
 		/// @return Chord string.
-		constexpr std::string name() const;
+		[[nodiscard]] constexpr std::string name() const;
 
 		/// @}
 	};
@@ -135,20 +139,20 @@ namespace tr
 		/// @{
 
 		/// Default-constructs a key chord.
-		constexpr key_chord() = default;
+		[[nodiscard]] constexpr key_chord() noexcept = default;
 
 		/// Constructs a key chord without modifiers.
 		/// @param key Chord keycode.
-		constexpr key_chord(keycode key);
+		[[nodiscard]] constexpr key_chord(keycode key) noexcept;
 
 		/// Constructs a key chord from components.
 		/// @param mods Chord modifiers.
 		/// @param key Chord keycode.
-		constexpr key_chord(keymod mods, keycode key);
+		[[nodiscard]] constexpr key_chord(keymod mods, keycode key) noexcept;
 
 		/// Converts a string to a key chord. An invalid string results in a chord with `keycode::unknown`.
 		/// @param cstr Chord string.
-		constexpr explicit key_chord(zstring_view cstr);
+		[[nodiscard]] constexpr explicit key_chord(zstring_view cstr) noexcept;
 
 		/// @}
 		/// @name Comparison operators
@@ -157,7 +161,7 @@ namespace tr
 		/// Compares two chords for equality.
 		/// @param lhs, rhs Chords to compare.
 		/// @return Whether the chords are equal.
-		friend constexpr bool operator==(key_chord lhs, key_chord rhs) = default;
+		[[nodiscard]] friend constexpr bool operator==(key_chord lhs, key_chord rhs) noexcept = default;
 
 		/// @}
 		/// @name Name
@@ -165,7 +169,7 @@ namespace tr
 
 		/// Gets the name of the key chord.
 		/// @return Chord string.
-		std::string name() const;
+		[[nodiscard]] std::string name() const;
 
 		/// @}
 	};
@@ -180,7 +184,7 @@ namespace tr
 		/// @{
 
 		/// Constructs an empty key state.
-		scan_state() = default;
+		[[nodiscard]] scan_state() noexcept = default;
 
 		/// @}
 		/// @name Queries
@@ -189,7 +193,7 @@ namespace tr
 		/// Gets whether a key is held.
 		/// @param scan Scancode to check the status of.
 		/// @return `true` if the scancode is held, `false` otherwise.
-		bool held(scancode scan) const;
+		[[nodiscard]] bool held(scancode scan) const noexcept;
 
 		/// @}
 		/// @name Events
@@ -197,23 +201,23 @@ namespace tr
 
 		/// Updates the key state.
 		/// @param event Event to handle.
-		void handle_event(const event& event);
+		void handle_event(const event& event) noexcept;
 
 		/// Updates the key state.
 		/// @param event Event to handle.
-		void handle_event(const key_down_event& event);
+		void handle_event(const key_down_event& event) noexcept;
 
 		/// Updates the key state.
 		/// @param event Event to handle.
-		void handle_event(const key_up_event& event);
+		void handle_event(const key_up_event& event) noexcept;
 
 		/// Forces a key to be considered held down.
 		/// @param scan Scancode to force down.
-		void force_down(scancode scan);
+		void force_down(scancode scan) noexcept;
 
 		/// Forces a key to the considered up.
 		/// @param scan Scancode to force up.
-		void force_up(scancode scan);
+		void force_up(scancode scan) noexcept;
 
 		/// @}
 
@@ -233,7 +237,7 @@ namespace tr
 		/// @{
 
 		/// Constructs an empty keyboard state.
-		keyboard_state() = default;
+		[[nodiscard]] keyboard_state() noexcept = default;
 
 		/// @}
 		/// @name Queries
@@ -244,12 +248,12 @@ namespace tr
 		/// Gets whether one or more modifiers is held.
 		/// @param mods Bitmask of modifiers to check the status of.
 		/// @return `true` if all of the modifiers are held, `false` otherwise.
-		bool held(keymod mods) const;
+		[[nodiscard]] bool held(keymod mods) const noexcept;
 
 		/// Gets whether a chord is held.
 		/// @param chord Chord to check the status of.
 		/// @return `true` if the chord is held, `false` otherwise.
-		bool held(scan_chord chord) const;
+		[[nodiscard]] bool held(scan_chord chord) const noexcept;
 
 		/// @}
 		/// @name Events
@@ -257,15 +261,15 @@ namespace tr
 
 		/// Updates the key state.
 		/// @param event Event to handle.
-		void handle_event(const event& event);
+		void handle_event(const event& event) noexcept;
 
 		/// Updates the key state.
 		/// @param event Event to handle.
-		void handle_event(const key_down_event& event);
+		void handle_event(const key_down_event& event) noexcept;
 
 		/// Updates the key state.
 		/// @param event Event to handle.
-		void handle_event(const key_up_event& event);
+		void handle_event(const key_up_event& event) noexcept;
 
 		using scan_state::force_down;
 
@@ -288,27 +292,27 @@ namespace tr
 			/// @param str Scancode string.
 			/// @param size Scancode string length.
 			/// @return Matching scancode.
-			consteval scancode operator""_s(const char* str, usize size);
+			[[nodiscard]] consteval scancode operator""_s(const char* str, usize size) noexcept;
 
 			/// Creates a scancode chord matching a string.
 			/// @param str Chord string.
 			/// @param size Chord string length.
 			/// @return Matching scan chord.
-			consteval scan_chord operator""_sc(const char* str, usize size);
+			[[nodiscard]] consteval scan_chord operator""_sc(const char* str, usize size) noexcept;
 
 			/// Creates a keycode matching a string.
 			/// @note Keycodes corresponding to unicode characters cannot be currently created using this.
 			/// @param str Keycode string.
 			/// @param size Keycode string length.
 			/// @return Matching keycode.
-			consteval keycode operator""_k(const char* str, usize size);
+			[[nodiscard]] consteval keycode operator""_k(const char* str, usize size) noexcept;
 
 			/// Creates a keycode chord matching a string.
 			/// @note Keycodes corresponding to unicode characters cannot be currently created using this.
 			/// @param str Chord string.
 			/// @param size Chord string length.
 			/// @return Matching key chord.
-			consteval key_chord operator""_kc(const char* str, usize size);
+			[[nodiscard]] consteval key_chord operator""_kc(const char* str, usize size) noexcept;
 
 			/// @}
 		} // namespace keyboard_literals

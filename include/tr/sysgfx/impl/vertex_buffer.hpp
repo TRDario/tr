@@ -18,13 +18,13 @@ tr::static_vertex_buffer<Element>::static_vertex_buffer(graphics_context& contex
 //
 
 template <tr::standard_layout Element>
-tr::usize tr::dyn_vertex_buffer<Element>::size() const
+tr::usize tr::dyn_vertex_buffer<Element>::size() const noexcept
 {
 	return basic_dyn_vertex_buffer::size() / sizeof(Element);
 }
 
 template <tr::standard_layout Element>
-tr::usize tr::dyn_vertex_buffer<Element>::capacity() const
+tr::usize tr::dyn_vertex_buffer<Element>::capacity() const noexcept
 {
 	return basic_dyn_vertex_buffer::capacity() / sizeof(Element);
 }
@@ -50,7 +50,7 @@ void tr::dyn_vertex_buffer<Element>::set(Range&& data)
 
 template <tr::standard_layout Element>
 template <tr::typed_contiguous_const_range<Element> Range>
-void tr::dyn_vertex_buffer<Element>::set_region(usize offset, Range&& data)
+void tr::dyn_vertex_buffer<Element>::set_region(usize offset, Range&& data) noexcept
 {
 	basic_dyn_vertex_buffer::set_region(offset * sizeof(Element), range_bytes(data));
 }

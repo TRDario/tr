@@ -38,7 +38,7 @@ namespace tr
 
 		/// Constructs an empty buffer.
 		/// @param context Graphics context to create the buffer on.
-		explicit graphics_buffer(graphics_context& context);
+		[[nodiscard]] explicit graphics_buffer(graphics_context& context) noexcept;
 
 		/// @}
 		/// @name Context
@@ -46,7 +46,7 @@ namespace tr
 
 		/// Gets a reference to the graphics context the buffer is on.
 		/// @return Reference to the graphics context the buffer is on.
-		graphics_context& context() const;
+		[[nodiscard]] graphics_context& context() const noexcept;
 
 		/// @}
 		/// @name State
@@ -54,7 +54,7 @@ namespace tr
 
 		/// Gets whether the buffer is in a valid state.
 		/// @return `true` if the buffer is in a valid state, `false` if it is in an invalid state.
-		bool valid() const;
+		[[nodiscard]] bool valid() const noexcept;
 
 		/// @}
 		/// @name Label
@@ -62,11 +62,11 @@ namespace tr
 
 		/// Gets the label of the buffer.
 		/// @return Label of the buffer, or "<unnamed>".
-		std::string label() const;
+		[[nodiscard]] std::string label() const;
 
 		/// Sets the label of the buffer.
 		/// @param label Label of the buffer.
-		void set_label(std::string_view label);
+		void set_label(std::string_view label) noexcept;
 
 		/// @}
 		/// @cond gl_interop
@@ -76,7 +76,7 @@ namespace tr
 		/// Unwraps the OpenGL buffer object.
 		/// @note This does not release the buffer object.
 		/// @return OpenGL buffer object ID.
-		unsigned int unwrap() const;
+		[[nodiscard]] unsigned int unwrap() const noexcept;
 
 		/// @}
 		/// @endcond
@@ -90,7 +90,7 @@ namespace tr
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 		/// Gets the unique graphics object ID of the buffer.
 		/// @return Unique graphics object ID of the buffer.
-		graphics_object_id id() const;
+		[[nodiscard]] graphics_object_id id() const noexcept;
 #endif
 
 		/// @}
@@ -112,7 +112,7 @@ namespace tr
 
 			/// Deletes a buffer.
 			/// @param id OpenGL buffer ID.
-			void operator()(unsigned int bo) const;
+			void operator()(unsigned int bo) const noexcept;
 		};
 
 		//

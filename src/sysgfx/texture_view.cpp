@@ -5,19 +5,19 @@
 
 //
 
-tr::texture_view::texture_view(unsigned int id)
+tr::texture_view::texture_view(unsigned int id) noexcept
 	: m_id{id}
 {
 }
 
 //
 
-bool tr::texture_view::empty() const
+bool tr::texture_view::empty() const noexcept
 {
 	return m_id == 0;
 }
 
-unsigned int tr::texture_view::unwrap() const
+unsigned int tr::texture_view::unwrap() const noexcept
 {
 	return m_id;
 }

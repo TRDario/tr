@@ -15,13 +15,13 @@ namespace tr
 		/// @{
 
 		/// Creates an empty texture view.
-		constexpr texture_view() = default;
+		[[nodiscard]] constexpr texture_view() noexcept = default;
 
 		/// @cond gl_interop
 
 		/// Wraps an OpenGL texture ID.
 		/// @param id OpenGL texture ID.
-		explicit texture_view(unsigned int id);
+		[[nodiscard]] explicit texture_view(unsigned int id) noexcept;
 
 		/// @endcond
 
@@ -32,7 +32,7 @@ namespace tr
 		/// Compares whether two texture views point to the same texture.
 		/// @param lhs, rhs Texture views to compare.
 		/// @return Whether two texture views point to the same texture.
-		friend bool operator==(texture_view lhs, texture_view rhs) = default;
+		[[nodiscard]] friend bool operator==(texture_view lhs, texture_view rhs) noexcept = default;
 
 		/// @}
 		/// @name State
@@ -40,7 +40,7 @@ namespace tr
 
 		/// Gets whether the view is empty.
 		/// @return `true` if the view is empty, `false` otherwise.
-		bool empty() const;
+		[[nodiscard]] bool empty() const noexcept;
 
 		/// @}
 		/// @cond gl_interop
@@ -50,7 +50,7 @@ namespace tr
 		/// Unwraps the OpenGL texture.
 		/// @note This does not release the texture.
 		/// @return OpenGL texture ID.
-		unsigned int unwrap() const;
+		[[nodiscard]] unsigned int unwrap() const noexcept;
 
 		/// @}
 		/// @endcond

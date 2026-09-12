@@ -8,7 +8,7 @@
 
 //
 
-int tr::pixel_bytes(pixel_format format)
+int tr::pixel_bytes(pixel_format format) noexcept
 {
 	return SDL_BYTESPERPIXEL(std::to_underlying(format));
 }
@@ -21,17 +21,17 @@ tr::bitmap_load_error::bitmap_load_error(std::string_view path, std::string&& de
 {
 }
 
-std::string_view tr::bitmap_load_error::name() const
+std::string_view tr::bitmap_load_error::name() const noexcept
 {
 	return "Bitmap loading error";
 }
 
-std::string_view tr::bitmap_load_error::description() const
+std::string_view tr::bitmap_load_error::description() const noexcept
 {
 	return m_description;
 }
 
-std::string_view tr::bitmap_load_error::details() const
+std::string_view tr::bitmap_load_error::details() const noexcept
 {
 	return m_details;
 }
@@ -44,17 +44,17 @@ tr::bitmap_save_error::bitmap_save_error(std::string_view path, std::string&& de
 {
 }
 
-std::string_view tr::bitmap_save_error::name() const
+std::string_view tr::bitmap_save_error::name() const noexcept
 {
 	return "Bitmap saving error";
 }
 
-std::string_view tr::bitmap_save_error::description() const
+std::string_view tr::bitmap_save_error::description() const noexcept
 {
 	return m_description;
 }
 
-std::string_view tr::bitmap_save_error::details() const
+std::string_view tr::bitmap_save_error::details() const noexcept
 {
 	return m_details;
 }
@@ -99,38 +99,38 @@ tr::bitmap::bitmap(sub_bitmap source, pixel_format format)
 	blit({}, source);
 }
 
-void tr::bitmap::deleter::operator()(SDL_Surface* ptr)
+void tr::bitmap::deleter::operator()(SDL_Surface* ptr) noexcept
 {
 	SDL_DestroySurface(ptr);
 }
 
 //
 
-tr::bitmap::operator tr::sub_bitmap() const
+tr::bitmap::operator tr::sub_bitmap() const noexcept
 {
 	return sub({{}, size()});
 }
 
-tr::sub_bitmap tr::bitmap::sub(rectangle<int> region) const
+tr::sub_bitmap tr::bitmap::sub(rectangle<int> region) const noexcept
 {
 	return sub_bitmap{*this, region};
 }
 
 //
 
-glm::ivec2 tr::bitmap::size() const
+glm::ivec2 tr::bitmap::size() const noexcept
 {
 	return {m_ptr->w, m_ptr->h};
 }
 
-tr::pixel_format tr::bitmap::format() const
+tr::pixel_format tr::bitmap::format() const noexcept
 {
 	TR_ASSERT(m_ptr != nullptr, "Tried to get the format of a moved-from bitmap.");
 
 	return static_cast<pixel_format>(m_ptr->format);
 }
 
-int tr::bitmap::pitch() const
+int tr::bitmap::pitch() const noexcept
 {
 	TR_ASSERT(m_ptr != nullptr, "Tried to get the pitch of a moved-from bitmap.");
 
@@ -139,34 +139,34 @@ int tr::bitmap::pitch() const
 
 //
 
-tr::bitmap::reference tr::bitmap::operator[](int x, int y)
+tr::bitmap::reference tr::bitmap::operator[](int x, int y) noexcept
 {
 	return *(begin() + glm::ivec2{x, y});
 }
 
-tr::bitmap::reference tr::bitmap::operator[](glm::ivec2 pos)
+tr::bitmap::reference tr::bitmap::operator[](glm::ivec2 pos) noexcept
 {
 	return *(begin() + pos);
 }
 
-tr::bitmap::const_reference tr::bitmap::operator[](int x, int y) const
+tr::bitmap::const_reference tr::bitmap::operator[](int x, int y) const noexcept
 {
 	return *(begin() + glm::ivec2{x, y});
 }
 
-tr::bitmap::const_reference tr::bitmap::operator[](glm::ivec2 pos) const
+tr::bitmap::const_reference tr::bitmap::operator[](glm::ivec2 pos) const noexcept
 {
 	return *(begin() + pos);
 }
 
-std::byte* tr::bitmap::data()
+std::byte* tr::bitmap::data() noexcept
 {
 	TR_ASSERT(m_ptr != nullptr, "Tried to get the data of a moved-from bitmap.");
 
 	return static_cast<std::byte*>(m_ptr->pixels);
 }
 
-const std::byte* tr::bitmap::data() const
+const std::byte* tr::bitmap::data() const noexcept
 {
 	TR_ASSERT(m_ptr != nullptr, "Tried to get the data of a moved-from bitmap.");
 
@@ -175,40 +175,40 @@ const std::byte* tr::bitmap::data() const
 
 //
 
-tr::bitmap::iterator tr::bitmap::begin()
+tr::bitmap::iterator tr::bitmap::begin() noexcept
 {
 	TR_ASSERT(m_ptr != nullptr, "Tried to get an iterator to the beginning of a moved-from bitmap.");
 
 	return {*this, {}};
 }
 
-tr::bitmap::const_iterator tr::bitmap::begin() const
+tr::bitmap::const_iterator tr::bitmap::begin() const noexcept
 {
 	return cbegin();
 }
 
-tr::bitmap::const_iterator tr::bitmap::cbegin() const
+tr::bitmap::const_iterator tr::bitmap::cbegin() const noexcept
 {
 	TR_ASSERT(m_ptr != nullptr, "Tried to get an iterator to the beginning of a moved-from bitmap.");
 
 	return sub_bitmap{*this}.begin();
 }
 
-tr::bitmap::iterator tr::bitmap::end()
+tr::bitmap::iterator tr::bitmap::end() noexcept
 {
 	TR_ASSERT(m_ptr != nullptr, "Tried to get an iterator to the end of a moved-from bitmap.");
 
 	return {*this, {0, size().y}};
 }
 
-tr::bitmap::const_iterator tr::bitmap::end() const
+tr::bitmap::const_iterator tr::bitmap::end() const noexcept
 {
 	TR_ASSERT(m_ptr != nullptr, "Tried to get an iterator to the end of a moved-from bitmap.");
 
 	return cend();
 }
 
-tr::bitmap::const_iterator tr::bitmap::cend() const
+tr::bitmap::const_iterator tr::bitmap::cend() const noexcept
 {
 	TR_ASSERT(m_ptr != nullptr, "Tried to get an iterator to the end of a moved-from bitmap.");
 
@@ -217,7 +217,7 @@ tr::bitmap::const_iterator tr::bitmap::cend() const
 
 //
 
-void tr::bitmap::blit(glm::ivec2 tl, sub_bitmap source)
+void tr::bitmap::blit(glm::ivec2 tl, sub_bitmap source) noexcept
 {
 	TR_ASSERT(m_ptr != nullptr, "Tried to blit to a moved-from bitmap.");
 	TR_ASSERT(rectangle<int>{size()}.contains(tl + source.size()),
@@ -230,7 +230,7 @@ void tr::bitmap::blit(glm::ivec2 tl, sub_bitmap source)
 	SDL_BlitSurface(source.unwrap(), &sdl_source, m_ptr.get(), &sdl_destination);
 }
 
-void tr::bitmap::fill(rectangle<int> region, rgba8 color)
+void tr::bitmap::fill(rectangle<int> region, rgba8 color) noexcept
 {
 	TR_ASSERT(rectangle<int>{size()}.contains(region.tl + region.size),
 			  "Tried to fill out-of-bounds region from ({}, {}) to ({}, {}) in a bitmap of size {}x{}.", region.tl.x, region.tl.y,
@@ -256,7 +256,7 @@ void tr::bitmap::save(const std::filesystem::path& path) const
 
 //
 
-SDL_Surface* tr::bitmap::unwrap() const
+SDL_Surface* tr::bitmap::unwrap() const noexcept
 {
 	return m_ptr.get();
 }

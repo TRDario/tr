@@ -7,7 +7,7 @@
 //
 
 template <tr::event_type T>
-bool tr::event::is() const
+bool tr::event::is() const noexcept
 {
 	if constexpr (std::same_as<T, quit_event>) {
 		return type() == 0x100;
@@ -57,7 +57,7 @@ bool tr::event::is() const
 }
 
 template <tr::event_type T>
-T tr::event::as() const
+T tr::event::as() const noexcept
 {
 	TR_ASSERT(is<T>(), "Tried to convert event to a sub-type it is not.");
 
@@ -109,7 +109,7 @@ T tr::event::as() const
 }
 
 template <tr::event_visitor Visitor>
-auto tr::event::visit(Visitor&& visitor) const
+auto tr::event::visit(Visitor&& visitor) const noexcept(nothrow_event_visitor<Visitor>)
 {
 	switch (type()) {
 	case 0x100:

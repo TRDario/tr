@@ -23,11 +23,11 @@ namespace tr
 		/// @{
 
 		/// Constructs a new graphics object ID handle.
-		graphics_object_id_handle();
+		[[nodiscard]] graphics_object_id_handle() noexcept;
 
 		/// Moves a graphics object ID handle.
 		/// @param rhs Handle to move.
-		graphics_object_id_handle(graphics_object_id_handle&& rhs);
+		[[nodiscard]] graphics_object_id_handle(graphics_object_id_handle&& rhs) noexcept;
 
 		/// @}
 		/// @name Assignment operators
@@ -35,7 +35,7 @@ namespace tr
 
 		/// Moves a graphics object ID handle.
 		/// @param rhs Handle to move.
-		graphics_object_id_handle& operator=(graphics_object_id_handle&& rhs);
+		graphics_object_id_handle& operator=(graphics_object_id_handle&& rhs) noexcept;
 
 		/// @}
 		/// @name Constructors
@@ -43,7 +43,7 @@ namespace tr
 
 		/// Gets the base graphics object ID.
 		/// @return Base ID.
-		operator graphics_object_id() const;
+		[[nodiscard]] operator graphics_object_id() const noexcept;
 
 		/// @}
 

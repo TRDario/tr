@@ -37,7 +37,7 @@ tr::bitmap_atlas<Key, void, Hash, Pred> tr::build_bitmap_atlas(const boost::unor
 //
 
 template <typename Key, tr::atlas_entries_value_type Value, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
-tr::dyn_atlas<Key, Value, Hash, Pred>::dyn_atlas(graphics_context& context)
+tr::dyn_atlas<Key, Value, Hash, Pred>::dyn_atlas(graphics_context& context) noexcept
 	: m_tex{context}
 {
 }
@@ -56,31 +56,31 @@ tr::dyn_atlas<Key, Value, Hash, Pred>::dyn_atlas(graphics_context& context, bitm
 }
 
 template <typename Key, tr::atlas_entries_value_type Value, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
-tr::dyn_atlas<Key, Value, Hash, Pred>::operator const tr::texture&() const
+tr::dyn_atlas<Key, Value, Hash, Pred>::operator const tr::texture&() const noexcept
 {
 	return m_tex;
 }
 
 template <typename Key, tr::atlas_entries_value_type Value, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
-tr::dyn_atlas<Key, Value, Hash, Pred>::operator tr::texture_view() const
+tr::dyn_atlas<Key, Value, Hash, Pred>::operator tr::texture_view() const noexcept
 {
 	return m_tex;
 }
 
 template <typename Key, tr::atlas_entries_value_type Value, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
-tr::graphics_context& tr::dyn_atlas<Key, Value, Hash, Pred>::context() const
+tr::graphics_context& tr::dyn_atlas<Key, Value, Hash, Pred>::context() const noexcept
 {
 	return m_tex.context();
 }
 
 template <typename Key, tr::atlas_entries_value_type Value, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
-void tr::dyn_atlas<Key, Value, Hash, Pred>::set_filtering(min_filter min_filter, mag_filter mag_filter)
+void tr::dyn_atlas<Key, Value, Hash, Pred>::set_filtering(min_filter min_filter, mag_filter mag_filter) noexcept
 {
 	m_tex.set_filtering(min_filter, mag_filter);
 }
 
 template <typename Key, tr::atlas_entries_value_type Value, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
-glm::ivec2 tr::dyn_atlas<Key, Value, Hash, Pred>::size() const
+glm::ivec2 tr::dyn_atlas<Key, Value, Hash, Pred>::size() const noexcept
 {
 	return m_tex.size();
 }
@@ -93,7 +93,7 @@ bool tr::dyn_atlas<Key, Value, Hash, Pred>::contains(Keylike&& key) const
 }
 
 template <typename Key, tr::atlas_entries_value_type Value, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
-tr::usize tr::dyn_atlas<Key, Value, Hash, Pred>::entries() const
+tr::usize tr::dyn_atlas<Key, Value, Hash, Pred>::entries() const noexcept
 {
 	return m_entries.entries();
 }
@@ -183,7 +183,7 @@ std::string tr::dyn_atlas<Key, Value, Hash, Pred>::label() const
 }
 
 template <typename Key, tr::atlas_entries_value_type Value, tr::hasher<Key> Hash, tr::equality_predicate<Key> Pred>
-void tr::dyn_atlas<Key, Value, Hash, Pred>::set_label(std::string_view label)
+void tr::dyn_atlas<Key, Value, Hash, Pred>::set_label(std::string_view label) noexcept
 {
 	m_tex.set_label(label);
 }

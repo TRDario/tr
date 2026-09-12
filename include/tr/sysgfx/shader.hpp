@@ -41,7 +41,7 @@ namespace tr
 		/// Constructs an exception.
 		/// @param path Path to the file that failed to load.
 		/// @param details Shader loading error details.
-		shader_load_error(std::string_view path, std::string&& details);
+		[[nodiscard]] shader_load_error(std::string_view path, std::string&& details);
 
 		/// @}
 		/// @name Information
@@ -49,15 +49,15 @@ namespace tr
 
 		/// Gets the name of the error.
 		/// @return `"Shader loading error"`.
-		std::string_view name() const override;
+		[[nodiscard]] std::string_view name() const noexcept override;
 
 		/// Gets the description of the error.
 		/// @return Description of the error.
-		std::string_view description() const override;
+		[[nodiscard]] std::string_view description() const noexcept override;
 
 		/// Gets further details about the error.
 		/// @return Details of the error.
-		std::string_view details() const override;
+		[[nodiscard]] std::string_view details() const noexcept override;
 
 		/// @}
 
@@ -101,7 +101,8 @@ namespace tr
 		/// @param context Graphics context to create the shader on.
 		/// @param source Shader GLSL source code.
 		/// @param type Shader type (`GL_VERTEX_SHADER` or `GL_FRAGMENT_SHADER`).
-		shader(graphics_context& context, zstring_view source, unsigned int type);
+		/// @exception shader_load_error If loading the shader failed.
+		[[nodiscard]] shader(graphics_context& context, zstring_view source, unsigned int type);
 
 		/// @endcond
 		/// @}
@@ -110,7 +111,7 @@ namespace tr
 
 		/// Gets a reference to the graphics context the shader is on.
 		/// @return Reference to the graphics context the shader is on.
-		graphics_context& context() const;
+		[[nodiscard]] graphics_context& context() const noexcept;
 
 		/// @}
 		/// @name Uniforms
@@ -120,259 +121,259 @@ namespace tr
 		/// @param index Uniform location index.
 		/// @param value Uniform value.
 		/// @pre The uniform at index `index` must exist and be of a matching type.
-		void set_uniform(int index, bool value);
+		void set_uniform(int index, bool value) noexcept;
 
 		/// Sets an integer uniform.
 		/// @param index Uniform location index.
 		/// @param value Uniform value.
 		/// @pre The uniform at index `index` must exist and be of a matching type.
-		void set_uniform(int index, int value);
+		void set_uniform(int index, int value) noexcept;
 
 		/// Sets an integer array uniform.
 		/// @param index Uniform location index.
 		/// @param value Uniform value.
 		/// @pre The uniform at index `index` must exist and be of a matching type.
-		void set_uniform(int index, std::span<const int> value);
+		void set_uniform(int index, std::span<const int> value) noexcept;
 
 		/// Sets an ivec2 uniform.
 		/// @param index Uniform location index.
 		/// @param value Uniform value.
 		/// @pre The uniform at index `index` must exist and be of a matching type.
-		void set_uniform(int index, glm::ivec2 value);
+		void set_uniform(int index, glm::ivec2 value) noexcept;
 
 		/// Sets an ivec2 array uniform.
 		/// @param index Uniform location index.
 		/// @param value Uniform value.
 		/// @pre The uniform at index `index` must exist and be of a matching type.
-		void set_uniform(int index, std::span<const glm::ivec2> value);
+		void set_uniform(int index, std::span<const glm::ivec2> value) noexcept;
 
 		/// Sets an ivec3 uniform.
 		/// @param index Uniform location index.
 		/// @param value Uniform value.
 		/// @pre The uniform at index `index` must exist and be of a matching type.
-		void set_uniform(int index, glm::ivec3 value);
+		void set_uniform(int index, glm::ivec3 value) noexcept;
 
 		/// Sets an ivec3 array uniform.
 		/// @param index Uniform location index.
 		/// @param value Uniform value.
 		/// @pre The uniform at index `index` must exist and be of a matching type.
-		void set_uniform(int index, std::span<const glm::ivec3> value);
+		void set_uniform(int index, std::span<const glm::ivec3> value) noexcept;
 
 		/// Sets an ivec4 uniform.
 		/// @param index Uniform location index.
 		/// @param value Uniform value.
 		/// @pre The uniform at index `index` must exist and be of a matching type.
-		void set_uniform(int index, glm::ivec4 value);
+		void set_uniform(int index, glm::ivec4 value) noexcept;
 
 		/// Sets an ivec4 array uniform.
 		/// @param index Uniform location index.
 		/// @param value Uniform value.
 		/// @pre The uniform at index `index` must exist and be of a matching type.
-		void set_uniform(int index, std::span<const glm::ivec4> value);
+		void set_uniform(int index, std::span<const glm::ivec4> value) noexcept;
 
 		/// Sets an unsigned integer uniform.
 		/// @param index Uniform location index.
 		/// @param value Uniform value.
 		/// @pre The uniform at index `index` must exist and be of a matching type.
-		void set_uniform(int index, unsigned int value);
+		void set_uniform(int index, unsigned int value) noexcept;
 
 		/// Sets an unsigned integer array uniform.
 		/// @param index Uniform location index.
 		/// @param value Uniform value.
 		/// @pre The uniform at index `index` must exist and be of a matching type.
-		void set_uniform(int index, std::span<const unsigned int> value);
+		void set_uniform(int index, std::span<const unsigned int> value) noexcept;
 
 		/// Sets a uvec2 uniform.
 		/// @param index Uniform location index.
 		/// @param value Uniform value.
 		/// @pre The uniform at index `index` must exist and be of a matching type.
-		void set_uniform(int index, glm::uvec2 value);
+		void set_uniform(int index, glm::uvec2 value) noexcept;
 
 		/// Sets a uvec2 array uniform.
 		/// @param index Uniform location index.
 		/// @param value Uniform value.
 		/// @pre The uniform at index `index` must exist and be of a matching type.
-		void set_uniform(int index, std::span<const glm::uvec2> value);
+		void set_uniform(int index, std::span<const glm::uvec2> value) noexcept;
 
 		/// Sets a uvec3 uniform.
 		/// @param index Uniform location index.
 		/// @param value Uniform value.
 		/// @pre The uniform at index `index` must exist and be of a matching type.
-		void set_uniform(int index, glm::uvec3 value);
+		void set_uniform(int index, glm::uvec3 value) noexcept;
 
 		/// Sets a uvec3 array uniform.
 		/// @param index Uniform location index.
 		/// @param value Uniform value.
 		/// @pre The uniform at index `index` must exist and be of a matching type.
-		void set_uniform(int index, std::span<const glm::uvec3> value);
+		void set_uniform(int index, std::span<const glm::uvec3> value) noexcept;
 
 		/// Sets a uvec4 uniform.
 		/// @param index Uniform location index.
 		/// @param value Uniform value.
 		/// @pre The uniform at index `index` must exist and be of a matching type.
-		void set_uniform(int index, glm::uvec4 value);
+		void set_uniform(int index, glm::uvec4 value) noexcept;
 
 		/// Sets a uvec4 array uniform.
 		/// @param index Uniform location index.
 		/// @param value Uniform value.
 		/// @pre The uniform at index `index` must exist and be of a matching type.
-		void set_uniform(int index, std::span<const glm::uvec4> value);
+		void set_uniform(int index, std::span<const glm::uvec4> value) noexcept;
 
 		/// Sets a float uniform.
 		/// @param index Uniform location index.
 		/// @param value Uniform value.
 		/// @pre The uniform at index `index` must exist and be of a matching type.
-		void set_uniform(int index, float value);
+		void set_uniform(int index, float value) noexcept;
 
 		/// Sets a float array uniform.
 		/// @param index Uniform location index.
 		/// @param value Uniform value.
 		/// @pre The uniform at index `index` must exist and be of a matching type.
-		void set_uniform(int index, std::span<const float> value);
+		void set_uniform(int index, std::span<const float> value) noexcept;
 
 		/// Sets a vec2 uniform.
 		/// @param index Uniform location index.
 		/// @param value Uniform value.
 		/// @pre The uniform at index `index` must exist and be of a matching type.
-		void set_uniform(int index, glm::vec2 value);
+		void set_uniform(int index, glm::vec2 value) noexcept;
 
 		/// Sets a vec2 array uniform.
 		/// @param index Uniform location index.
 		/// @param value Uniform value.
 		/// @pre The uniform at index `index` must exist and be of a matching type.
-		void set_uniform(int index, std::span<const glm::vec2> value);
+		void set_uniform(int index, std::span<const glm::vec2> value) noexcept;
 
 		/// Sets a vec3 uniform.
 		/// @param index Uniform location index.
 		/// @param value Uniform value.
 		/// @pre The uniform at index `index` must exist and be of a matching type.
-		void set_uniform(int index, glm::vec3 value);
+		void set_uniform(int index, glm::vec3 value) noexcept;
 
 		/// Sets a vec3 array uniform.
 		/// @param index Uniform location index.
 		/// @param value Uniform value.
 		/// @pre The uniform at index `index` must exist and be of a matching type.
-		void set_uniform(int index, std::span<const glm::vec3> value);
+		void set_uniform(int index, std::span<const glm::vec3> value) noexcept;
 
 		/// Sets a vec4 uniform.
 		/// @param index Uniform location index.
 		/// @param value Uniform value.
 		/// @pre The uniform at index `index` must exist and be of a matching type.
-		void set_uniform(int index, glm::vec4 value);
+		void set_uniform(int index, glm::vec4 value) noexcept;
 
 		/// Sets a vec4 array uniform.
 		/// @param index Uniform location index.
 		/// @param value Uniform value.
 		/// @pre The uniform at index `index` must exist and be of a matching type.
-		void set_uniform(int index, std::span<const glm::vec4> value);
+		void set_uniform(int index, std::span<const glm::vec4> value) noexcept;
 
 		/// Sets a mat2 uniform.
 		/// @param index Uniform location index.
 		/// @param value Uniform value.
 		/// @pre The uniform at index `index` must exist and be of a matching type.
-		void set_uniform(int index, const glm::mat2& value);
+		void set_uniform(int index, const glm::mat2& value) noexcept;
 
 		/// Sets a mat2 array uniform.
 		/// @param index Uniform location index.
 		/// @param value Uniform value.
 		/// @pre The uniform at index `index` must exist and be of a matching type.
-		void set_uniform(int index, std::span<const glm::mat2> value);
+		void set_uniform(int index, std::span<const glm::mat2> value) noexcept;
 
 		/// Sets a mat3 uniform.
 		/// @param index Uniform location index.
 		/// @param value Uniform value.
 		/// @pre The uniform at index `index` must exist and be of a matching type.
-		void set_uniform(int index, const glm::mat3& value);
+		void set_uniform(int index, const glm::mat3& value) noexcept;
 
 		/// Sets a mat3 array uniform.
 		/// @param index Uniform location index.
 		/// @param value Uniform value.
 		/// @pre The uniform at index `index` must exist and be of a matching type.
-		void set_uniform(int index, std::span<const glm::mat3> value);
+		void set_uniform(int index, std::span<const glm::mat3> value) noexcept;
 
 		/// Sets a mat4 uniform.
 		/// @param index Uniform location index.
 		/// @param value Uniform value.
 		/// @pre The uniform at index `index` must exist and be of a matching type.
-		void set_uniform(int index, const glm::mat4& value);
+		void set_uniform(int index, const glm::mat4& value) noexcept;
 
 		/// Sets a mat4 array uniform.
 		/// @param index Uniform location index.
 		/// @param value Uniform value.
 		/// @pre The uniform at index `index` must exist and be of a matching type.
-		void set_uniform(int index, std::span<const glm::mat4> value);
+		void set_uniform(int index, std::span<const glm::mat4> value) noexcept;
 
 		/// Sets a mat2x3 uniform.
 		/// @param index Uniform location index.
 		/// @param value Uniform value.
 		/// @pre The uniform at index `index` must exist and be of a matching type.
-		void set_uniform(int index, const glm::mat2x3& value);
+		void set_uniform(int index, const glm::mat2x3& value) noexcept;
 
 		/// Sets a mat2x3 array uniform.
 		/// @param index Uniform location index.
 		/// @param value Uniform value.
 		/// @pre The uniform at index `index` must exist and be of a matching type.
-		void set_uniform(int index, std::span<const glm::mat2x3> value);
+		void set_uniform(int index, std::span<const glm::mat2x3> value) noexcept;
 
 		/// Sets a mat2x4 uniform.
 		/// @param index Uniform location index.
 		/// @param value Uniform value.
 		/// @pre The uniform at index `index` must exist and be of a matching type.
-		void set_uniform(int index, const glm::mat2x4& value);
+		void set_uniform(int index, const glm::mat2x4& value) noexcept;
 
 		/// Sets a mat2x4 array uniform.
 		/// @param index Uniform location index.
 		/// @param value Uniform value.
 		/// @pre The uniform at index `index` must exist and be of a matching type.
-		void set_uniform(int index, std::span<const glm::mat2x4> value);
+		void set_uniform(int index, std::span<const glm::mat2x4> value) noexcept;
 
 		/// Sets a mat3x2 uniform.
 		/// @param index Uniform location index.
 		/// @param value Uniform value.
 		/// @pre The uniform at index `index` must exist and be of a matching type.
-		void set_uniform(int index, const glm::mat3x2& value);
+		void set_uniform(int index, const glm::mat3x2& value) noexcept;
 
 		/// Sets a mat3x2 array uniform.
 		/// @param index Uniform location index.
 		/// @param value Uniform value.
 		/// @pre The uniform at index `index` must exist and be of a matching type.
-		void set_uniform(int index, std::span<const glm::mat3x2> value);
+		void set_uniform(int index, std::span<const glm::mat3x2> value) noexcept;
 
 		/// Sets a mat3x4 uniform.
 		/// @param index Uniform location index.
 		/// @param value Uniform value.
 		/// @pre The uniform at index `index` must exist and be of a matching type.
-		void set_uniform(int index, const glm::mat3x4& value);
+		void set_uniform(int index, const glm::mat3x4& value) noexcept;
 
 		/// Sets a mat3x4 uniform.
 		/// @param index Uniform location index.
 		/// @param value Uniform value.
 		/// @pre The uniform at index `index` must exist and be of a matching type.
-		void set_uniform(int index, std::span<const glm::mat3x4> value);
+		void set_uniform(int index, std::span<const glm::mat3x4> value) noexcept;
 
 		/// Sets a mat4x2 uniform.
 		/// @param index Uniform location index.
 		/// @param value Uniform value.
 		/// @pre The uniform at index `index` must exist and be of a matching type.
-		void set_uniform(int index, const glm::mat4x2& value);
+		void set_uniform(int index, const glm::mat4x2& value) noexcept;
 
 		/// Sets a mat4x2 array uniform.
 		/// @param index Uniform location index.
 		/// @param value Uniform value.
 		/// @pre The uniform at index `index` must exist and be of a matching type.
-		void set_uniform(int index, std::span<const glm::mat4x2> value);
+		void set_uniform(int index, std::span<const glm::mat4x2> value) noexcept;
 
 		/// Sets a mat4x3 uniform.
 		/// @param index Uniform location index.
 		/// @param value Uniform value.
 		/// @pre The uniform at index `index` must exist and be of a matching type.
-		void set_uniform(int index, const glm::mat4x3& value);
+		void set_uniform(int index, const glm::mat4x3& value) noexcept;
 
 		/// Sets a mat4x3 array uniform.
 		/// @param index Uniform location index.
 		/// @param value Uniform value.
 		/// @pre The uniform at index `index` must exist and be of a matching type.
-		void set_uniform(int index, std::span<const glm::mat4x3> value);
+		void set_uniform(int index, std::span<const glm::mat4x3> value) noexcept;
 
 		/// Sets a texture sampler uniform.
 		/// @param index Uniform location index.
@@ -387,7 +388,7 @@ namespace tr
 		/// Sets a shader storage buffer.
 		/// @param index Storage buffer location index.
 		/// @param buffer Buffer to set.
-		void set_storage_buffer(unsigned int index, basic_shader_buffer& buffer);
+		void set_storage_buffer(unsigned int index, basic_shader_buffer& buffer) noexcept;
 
 		/// Sets a shader storage buffer.
 		/// @tparam Header Type of the header object stored at the front of the buffer.
@@ -395,26 +396,26 @@ namespace tr
 		/// @param index Storage buffer location index.
 		/// @param buffer Buffer to set.
 		template <typename Header, typename ArrayElement>
-		void set_storage_buffer(unsigned int index, shader_buffer<Header, ArrayElement>& buffer);
+		void set_storage_buffer(unsigned int index, shader_buffer<Header, ArrayElement>& buffer) noexcept;
 
 		/// Sets a shader storage buffer.
 		/// @tparam Element Type of the array elements.
 		/// @param index Storage buffer location index.
 		/// @param buffer Buffer to set.
 		template <typename Element>
-		void set_storage_buffer(unsigned int index, shader_array<Element>& buffer);
+		void set_storage_buffer(unsigned int index, shader_array<Element>& buffer) noexcept;
 
 		/// Sets a uniform storage buffer.
 		/// @param index Storage buffer location index.
 		/// @param buffer Buffer to set.
-		void set_uniform_buffer(unsigned int index, const basic_uniform_buffer& buffer);
+		void set_uniform_buffer(unsigned int index, const basic_uniform_buffer& buffer) noexcept;
 
 		/// Sets a uniform storage buffer.
 		/// @tparam Object Objet contained in the buffer.
 		/// @param index Storage buffer location index.
 		/// @param buffer Buffer to set.
 		template <typename Object>
-		void set_uniform_buffer(unsigned int index, const uniform_buffer<Object>& buffer);
+		void set_uniform_buffer(unsigned int index, const uniform_buffer<Object>& buffer) noexcept;
 
 		/// @}
 		/// @name State
@@ -422,7 +423,7 @@ namespace tr
 
 		/// Gets whether the shader is in a valid state.
 		/// @return `true` if the shader is in a valid state, `false` if it is in an invalid state.
-		bool valid() const;
+		[[nodiscard]] bool valid() const noexcept;
 
 		/// @}
 		/// @name Label
@@ -430,11 +431,11 @@ namespace tr
 
 		/// Sets the debug label of the shader.
 		/// @param label Debug label of the shader.
-		void set_label(std::string_view label);
+		void set_label(std::string_view label) noexcept;
 
 		/// Gets the debug label of the shader.
 		/// @return Debug label of the shader.
-		std::string label() const;
+		[[nodiscard]] std::string label() const;
 
 		/// @}
 		/// @cond gl_interop
@@ -443,7 +444,7 @@ namespace tr
 		/// Unwraps the OpenGL shader program.
 		/// @note This does not release the shader program.
 		/// @return OpenGL shader program ID.
-		unsigned int unwrap() const;
+		[[nodiscard]] unsigned int unwrap() const noexcept;
 
 		/// @}
 		/// @endcond
@@ -454,15 +455,15 @@ namespace tr
 
 		/// Gets the unique graphics object ID of the shader.
 		/// @return Unique graphics object ID of the shader.
-		graphics_object_id id() const;
+		[[nodiscard]] graphics_object_id id() const noexcept;
 
 		/// Gets the shader's inputs.
 		/// @return Map of shader inputs.
-		const boost::unordered_flat_map<unsigned int, glsl_variable>& inputs() const;
+		[[nodiscard]] const boost::unordered_flat_map<unsigned int, glsl_variable>& inputs() const noexcept;
 
 		/// Gets the shader's outputs.
 		/// @return Map of shader outputs.
-		const boost::unordered_flat_map<unsigned int, glsl_variable>& outputs() const;
+		[[nodiscard]] const boost::unordered_flat_map<unsigned int, glsl_variable>& outputs() const noexcept;
 
 		/// @}
 		/// @endcond
@@ -484,7 +485,7 @@ namespace tr
 
 			/// Deletes the shader program.
 			/// @param id OpenGL shader program ID.
-			void operator()(unsigned int id) const;
+			void operator()(unsigned int id) const noexcept;
 		};
 
 		/// Handle to the OpenGL program.
@@ -526,12 +527,12 @@ namespace tr
 		/// @param index Storage buffer location index.
 		/// @param buffer_id ID of the buffer to set.
 		/// @param buffer_size Size of the buffer.
-		void set_storage_buffer(unsigned int index, unsigned int buffer_id, std::intptr_t buffer_size);
+		void set_storage_buffer(unsigned int index, unsigned int buffer_id, std::intptr_t buffer_size) noexcept;
 
 		/// Sets a uniform storage buffer.
 		/// @param index Storage buffer location index.
 		/// @param buffer_id ID of the buffer to set.
-		void set_uniform_buffer(unsigned int index, unsigned int buffer_id);
+		void set_uniform_buffer(unsigned int index, unsigned int buffer_id) noexcept;
 	};
 
 	//
@@ -549,7 +550,7 @@ namespace tr
 		/// @param context Graphics context to create the vertex shader on.
 		/// @param source Vertex shader GLSL source code.
 		/// @exception shader_load_error If loading the shader failed.
-		explicit vertex_shader(graphics_context& context, zstring_view source);
+		[[nodiscard]] vertex_shader(graphics_context& context, zstring_view source);
 	};
 
 	/// Fragment shader program.
@@ -565,7 +566,7 @@ namespace tr
 		/// @param context Graphics context to create the fragment shader on.
 		/// @param source Fragment shader GLSL source code.
 		/// @exception shader_load_error If loading the shader failed.
-		explicit fragment_shader(graphics_context& context, zstring_view source);
+		[[nodiscard]] fragment_shader(graphics_context& context, zstring_view source);
 	};
 
 	/// @name Shaders
@@ -576,14 +577,14 @@ namespace tr
 	/// @param path Path to the shader GLSL source code file.
 	/// @exception shader_load_error If loading the shader failed.
 	/// @return Loaded vertex shader.
-	vertex_shader load_vertex_shader(graphics_context& context, const std::filesystem::path& path);
+	[[nodiscard]] vertex_shader load_vertex_shader(graphics_context& context, const std::filesystem::path& path);
 
 	/// Loads a fragment shader from file.
 	/// @param context Graphics context to create the fragment shader on.
 	/// @param path Path to the shader GLSL source code file.
 	/// @exception shader_load_error If loading the shader failed.
 	/// @return Loaded frament shader.
-	fragment_shader load_fragment_shader(graphics_context& context, const std::filesystem::path& path);
+	[[nodiscard]] fragment_shader load_fragment_shader(graphics_context& context, const std::filesystem::path& path);
 
 	/// @}
 } // namespace tr

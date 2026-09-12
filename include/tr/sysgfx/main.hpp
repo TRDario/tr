@@ -26,7 +26,7 @@ namespace tr
 
 		/// Constructs an exception.
 		/// @param description Description of the error.
-		init_error(std::string_view description);
+		[[nodiscard]] init_error(std::string_view description);
 
 		/// @}
 		/// @name Information
@@ -34,15 +34,15 @@ namespace tr
 
 		/// Gets the name of the error.
 		/// @return `"Initialization error"`.
-		std::string_view name() const override;
+		[[nodiscard]] std::string_view name() const noexcept override;
 
 		/// Gets the description of the error.
 		/// @return Description of the error.
-		std::string_view description() const override;
+		[[nodiscard]] std::string_view description() const noexcept override;
 
 		/// Gets further details about the error.
 		/// @return Always empty.
-		std::string_view details() const override;
+		[[nodiscard]] std::string_view details() const noexcept override;
 
 		/// @}
 
@@ -62,8 +62,10 @@ namespace tr
 	{
 		/// Continue execution.
 		proceed,
+
 		/// Regular exit.
 		exit,
+
 		/// Abnormal exit.
 		abort
 	};
@@ -73,6 +75,7 @@ namespace tr
 	{
 		/// The application is a game.
 		game,
+
 		/// The application type is unspecified.
 		application
 	};
@@ -112,7 +115,7 @@ namespace tr
 
 	/// Sets the frequency at which update() is called (by default uncapped).
 	/// @param frequency Frequency at which update() should be called, or uncapped_update_frequency.
-	void set_update_frequency(float frequency);
+	void set_update_frequency(float frequency) noexcept;
 
 	/// @}
 } // namespace tr

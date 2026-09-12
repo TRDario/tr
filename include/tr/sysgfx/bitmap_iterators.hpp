@@ -16,7 +16,7 @@ namespace tr
 	  public:
 		/// Gets the pixel's color value.
 		/// @return Color of the pixel.
-		operator rgba8() const;
+		[[nodiscard]] operator rgba8() const noexcept;
 
 	  private:
 		/// Pointer to the pixel data.
@@ -28,12 +28,12 @@ namespace tr
 		//
 
 		/// Undefined, required to default-construct iterators.
-		reference() = default;
+		[[nodiscard]] reference() noexcept = default;
 
 		/// Wraps a pointer to the pixel data.
 		/// @param ptr Pointer to the pixel data.
 		/// @param pixel_format Format of the pixel.
-		reference(const std::byte* ptr, pixel_format format);
+		[[nodiscard]] reference(const std::byte* ptr, pixel_format format) noexcept;
 
 		//
 
@@ -61,12 +61,12 @@ namespace tr
 		/// @{
 
 		/// Default-constructs an iterator.
-		iterator() = default;
+		[[nodiscard]] iterator() noexcept = default;
 
 		/// Constructs an iterator to a bitmap pixel.
 		/// @param bitmap Pointed-to bitmap.
 		/// @param pos Position of the iterator within the bitmap.
-		iterator(sub_bitmap bitmap, glm::ivec2 pos);
+		[[nodiscard]] iterator(sub_bitmap bitmap, glm::ivec2 pos) noexcept;
 
 		/// @}
 		/// @name Comparison operators
@@ -75,12 +75,12 @@ namespace tr
 		/// Compares iterators.
 		/// @param rhs Iterator to compare with.
 		/// @return Ordering of the iterators.
-		std::partial_ordering operator<=>(const iterator& rhs) const;
+		[[nodiscard]] std::partial_ordering operator<=>(const iterator& rhs) const noexcept;
 
 		/// Compares iterators for equality.
 		/// @param rhs Iterator to compare with.
 		/// @return Whether the iterators are equal.
-		bool operator==(const iterator& rhs) const;
+		[[nodiscard]] bool operator==(const iterator& rhs) const noexcept;
 
 		/// @}
 		/// @name Other operators
@@ -88,34 +88,34 @@ namespace tr
 
 		/// Dereferences the iterator.
 		/// @return Pixel reference.
-		value_type operator*() const;
+		[[nodiscard]] value_type operator*() const noexcept;
 
 		/// Dereferences the iterator through a pointer.
 		/// @return Pointer to a pixel reference.
-		pointer operator->() const;
+		[[nodiscard]] pointer operator->() const noexcept;
 
 		/// Increments the iterator.
 		/// @return Reference to `*this`.
-		iterator& operator++();
+		iterator& operator++() noexcept;
 
 		/// Advances the iterator.
 		/// @param diff Amount to advance the iterator by.
 		/// @return Reference to `*this`.
-		iterator& operator+=(difference_type diff);
+		iterator& operator+=(difference_type diff) noexcept;
 
 		/// Advances an iterator.
 		/// @param diff Amount to advance the iterator by.
 		/// @return Reference to `*this`.
-		iterator& operator+=(glm::ivec2 diff);
+		iterator& operator+=(glm::ivec2 diff) noexcept;
 
 		/// Decrements the iterator.
 		/// @return Reference to `*this`.
-		iterator& operator--();
+		iterator& operator--() noexcept;
 
 		/// Gets the difference between two iterators.
 		/// @param lhs, rhs Iterators to get the difference of.
 		/// @return Distance between `lhs` and `rhs`.
-		friend difference_type operator-(const iterator& lhs, const iterator& rhs);
+		friend difference_type operator-(const iterator& lhs, const iterator& rhs) noexcept;
 
 		/// @}
 		/// @name Position
@@ -123,7 +123,7 @@ namespace tr
 
 		/// Gets the 2D position of the iterator within the bitmap.
 		/// @return Psosition of the iterator within the bitmap.
-		glm::ivec2 pos() const;
+		[[nodiscard]] glm::ivec2 pos() const noexcept;
 
 		/// @}
 
@@ -147,12 +147,12 @@ namespace tr
 	  public:
 		/// Gets the pixel's color value.
 		/// @return Color of the pixel.
-		operator rgba8() const;
+		[[nodiscard]] operator rgba8() const noexcept;
 
 		/// Sets the pixel's color value.
 		/// @param color Color to set.
 		/// @return Reference to the pixel.
-		reference& operator=(rgba8 color);
+		reference& operator=(rgba8 color) noexcept;
 
 	  private:
 		/// Pointer to the pixel data.
@@ -164,12 +164,12 @@ namespace tr
 		//
 
 		/// Undefined, required to default-construct iterators.
-		reference() = default;
+		[[nodiscard]] reference() noexcept = default;
 
 		/// Wraps a pointer to the pixel data.
 		/// @param ptr Pointer to the pixel data.
 		/// @param format Format of the pixel.
-		reference(std::byte* ptr, pixel_format format);
+		[[nodiscard]] reference(std::byte* ptr, pixel_format format) noexcept;
 
 		//
 
@@ -200,12 +200,12 @@ namespace tr
 		/// @{
 
 		/// Default-constructs an iterator.
-		iterator() = default;
+		[[nodiscard]] iterator() noexcept = default;
 
 		/// Constructs an iterator to a bitmap pixel.
 		/// @param bitmap Pointed-to bitmap.
 		/// @param pos Position of the iterator within the bitmap.
-		iterator(bitmap& bitmap, glm::ivec2 pos);
+		[[nodiscard]] iterator(bitmap& bitmap, glm::ivec2 pos) noexcept;
 
 		/// @}
 		/// @name Comparison operators
@@ -214,12 +214,12 @@ namespace tr
 		/// Compares iterators.
 		/// @param rhs Iterator to compare with.
 		/// @return Ordering of the iterators.
-		std::partial_ordering operator<=>(const iterator& rhs) const;
+		[[nodiscard]] std::partial_ordering operator<=>(const iterator& rhs) const noexcept;
 
 		/// Compares iterators for equality.
 		/// @param rhs Iterator to compare with.
 		/// @return Whether the iterators are equal.
-		bool operator==(const iterator& rhs) const;
+		[[nodiscard]] bool operator==(const iterator& rhs) const noexcept;
 
 		/// @}
 		/// @name Other operators
@@ -227,34 +227,34 @@ namespace tr
 
 		/// Dereferences the iterator.
 		/// @return Pixel reference.
-		value_type operator*() const;
+		[[nodiscard]] value_type operator*() const noexcept;
 
 		/// Dereferences the iterator through a pointer.
 		/// @return Pointer to a pixel reference.
-		pointer operator->() const;
+		[[nodiscard]] pointer operator->() const noexcept;
 
 		/// Increments the iterator.
 		/// @return Reference to `*this`.
-		iterator& operator++();
+		iterator& operator++() noexcept;
 
 		/// Advances the iterator.
 		/// @param diff Amount to advance the iterator by.
 		/// @return Reference to `*this`.
-		iterator& operator+=(difference_type diff);
+		iterator& operator+=(difference_type diff) noexcept;
 
 		/// Advances an iterator.
 		/// @param diff Amount to advance the iterator by.
 		/// @return Reference to `*this`.
-		iterator& operator+=(glm::ivec2 diff);
+		iterator& operator+=(glm::ivec2 diff) noexcept;
 
 		/// Decrements the iterator.
 		/// @return Reference to `*this`.
-		iterator& operator--();
+		iterator& operator--() noexcept;
 
 		/// Gets the difference between two iterators.
 		/// @param lhs, rhs Iterators to get the difference of.
 		/// @return Distance between `lhs` and `rhs`.
-		friend difference_type operator-(const iterator& lhs, const iterator& rhs);
+		friend difference_type operator-(const iterator& lhs, const iterator& rhs) noexcept;
 
 		/// @}
 		/// @name Position
@@ -262,7 +262,7 @@ namespace tr
 
 		/// Gets the 2D position of the iterator within the bitmap.
 		/// @return Psosition of the iterator within the bitmap.
-		glm::ivec2 pos() const;
+		[[nodiscard]] glm::ivec2 pos() const noexcept;
 
 		/// @}
 

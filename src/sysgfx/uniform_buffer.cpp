@@ -19,12 +19,12 @@ tr::basic_uniform_buffer::basic_uniform_buffer(graphics_context& context, usize 
 	}
 }
 
-tr::usize tr::basic_uniform_buffer::size() const
+tr::usize tr::basic_uniform_buffer::size() const noexcept
 {
 	return m_size;
 }
 
-void tr::basic_uniform_buffer::set(std::span<const std::byte> data)
+void tr::basic_uniform_buffer::set(std::span<const std::byte> data) noexcept
 {
 	TR_ASSERT(!mapped(), "Tried to set the header of mapped uniform buffer '{}'.", label());
 	TR_ASSERT(data.size() == size(), "Tried to set uniform buffer '{}' of size {} with data of size {}.", label(), size(), data.size());
@@ -32,7 +32,7 @@ void tr::basic_uniform_buffer::set(std::span<const std::byte> data)
 	context().gl().set_buffer_sub_data(unwrap(), 0, data.size(), data.data());
 }
 
-bool tr::basic_uniform_buffer::mapped() const
+bool tr::basic_uniform_buffer::mapped() const noexcept
 {
 	int mapped;
 	context().gl().get_buffer_parameter_iv(unwrap(), GL_BUFFER_MAPPED, &mapped);

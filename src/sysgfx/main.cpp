@@ -71,24 +71,24 @@ tr::init_error::init_error(std::string_view description)
 {
 }
 
-std::string_view tr::init_error::name() const
+std::string_view tr::init_error::name() const noexcept
 {
 	return "System initialization error";
 }
 
-std::string_view tr::init_error::description() const
+std::string_view tr::init_error::description() const noexcept
 {
 	return m_description;
 }
 
-std::string_view tr::init_error::details() const
+std::string_view tr::init_error::details() const noexcept
 {
 	return SDL_GetError();
 }
 
 //
 
-void tr::set_update_frequency(float frequency)
+void tr::set_update_frequency(float frequency) noexcept
 {
 	SDL_SetHint(SDL_HINT_MAIN_CALLBACK_RATE, frequency == uncapped_update_frequency ? "0" : std::to_string(frequency).c_str());
 }

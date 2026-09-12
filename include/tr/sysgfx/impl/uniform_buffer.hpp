@@ -14,7 +14,7 @@ tr::uniform_buffer<Object>::uniform_buffer(graphics_context& context)
 }
 
 template <typename Object>
-void tr::uniform_buffer<Object>::set(const Object& data)
+void tr::uniform_buffer<Object>::set(const Object& data) noexcept
 {
 	basic_uniform_buffer::set(as_bytes(data));
 }

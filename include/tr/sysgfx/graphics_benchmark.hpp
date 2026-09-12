@@ -28,7 +28,7 @@ namespace tr
 
 		/// Constructs an empty graphics benchmark.
 		/// @param context Graphics context to create the benchmark on.
-		explicit graphics_benchmark(graphics_context& context);
+		[[nodiscard]] explicit graphics_benchmark(graphics_context& context) noexcept;
 
 		/// @}
 		/// @name Context
@@ -36,23 +36,23 @@ namespace tr
 
 		/// Gets a reference to the graphics context the benchmark is on.
 		/// @return Reference to the graphics context the benchmark is on.
-		graphics_context& context() const;
+		[[nodiscard]] graphics_context& context() const noexcept;
 
 		/// @}
 		/// @name Controls
 		/// @{
 
 		/// Starts a new measurement.
-		void start();
+		void start() noexcept;
 
 		/// Stops a measurement.
-		void stop();
+		void stop() noexcept;
 
 		/// Fetches the latest measurement from the GPU. This blocks execution until the GPU is done.
 		void fetch();
 
 		/// Clears all previous and ongoing measurements from the queue.
-		void clear();
+		void clear() noexcept;
 
 		/// @}
 		/// @name Results
@@ -60,23 +60,23 @@ namespace tr
 
 		/// Gets the duration of the latest measurement.
 		/// @return Duration of the latest measurement.
-		duration latest() const;
+		[[nodiscard]] duration latest() const noexcept;
 
 		/// Gets the duration of the shortest available measurement.
 		/// @return Duration of the shortest available measurement.
-		duration min() const;
+		[[nodiscard]] duration min() const noexcept;
 
 		/// Gets the duration of the longest available measurement.
 		/// @return Duration of the longest available measurement.
-		duration max() const;
+		[[nodiscard]] duration max() const noexcept;
 
 		/// Gets the average duration of the available measurements.
 		/// @return Average duration of the available measurements.
-		duration avg() const;
+		[[nodiscard]] duration avg() const noexcept;
 
 		/// Gets the available measurements.
 		/// @return Reference to the queue of available measurements.
-		const std::deque<duration>& measurements() const;
+		[[nodiscard]] const std::deque<duration>& measurements() const noexcept;
 
 		/// @}
 
@@ -91,7 +91,7 @@ namespace tr
 
 			/// Destroys a benchmark.
 			/// @param id OpenGL query object ID.
-			void operator()(unsigned int id) const;
+			void operator()(unsigned int id) const noexcept;
 		};
 
 		//

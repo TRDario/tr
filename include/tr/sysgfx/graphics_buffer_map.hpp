@@ -20,8 +20,10 @@ namespace tr
 	{
 		/// Buffer maps are read-only.
 		read_only = 1,
+
 		/// Buffer maps are write-only.
 		write_only = 2,
+
 		/// Buffer maps are readable and writable.
 		read_write = 3
 	};
@@ -30,12 +32,16 @@ namespace tr
 	class basic_graphics_buffer_map
 	{
 	  public:
-		/// @name Conversion operators
+		/// @name Span conversion
 		/// @{
 
 		/// Casts the map into a regular span.
 		/// @return Span of bytes covering the buffer map.
-		operator std::span<std::byte>() const;
+		[[nodiscard]] operator std::span<std::byte>() const noexcept;
+
+		/// Casts the map into a regular span.
+		/// @return Span of bytes covering the buffer map.
+		[[nodiscard]] std::span<std::byte> span() const noexcept;
 
 		/// @}
 
@@ -50,7 +56,7 @@ namespace tr
 
 			/// Unmaps a buffer.
 			/// @param id OpenGL buffer ID.
-			void operator()(unsigned int id) const;
+			void operator()(unsigned int id) const noexcept;
 		};
 
 		//
@@ -67,7 +73,7 @@ namespace tr
 		/// @param context Reference to the graphics context the buffer is on.
 		/// @param buffer ID of the mapped buffer.
 		/// @param span Span of the buffer map.
-		basic_graphics_buffer_map(graphics_context& context, unsigned int buffer, std::span<std::byte> span);
+		[[nodiscard]] basic_graphics_buffer_map(graphics_context& context, unsigned int buffer, std::span<std::byte> span) noexcept;
 
 		//
 
@@ -89,29 +95,33 @@ namespace tr
 
 		/// Gets a reference to the object.
 		/// @return Reference to the contained object.
-		operator Object&() const;
+		[[nodiscard]] operator Object&() const noexcept;
 
 		/// Gets a reference to the object.
 		/// @return Reference to the contained object.
-		Object& operator*() const;
+		[[nodiscard]] Object& get() const noexcept;
+
+		/// Gets a reference to the object.
+		/// @return Reference to the contained object.
+		[[nodiscard]] Object& operator*() const noexcept;
 
 		/// Pointer access to the mapped object.
 		/// @return Pointer to the contained object.
-		Object* operator->() const;
+		[[nodiscard]] Object* operator->() const noexcept;
 
 		/// Assigns the object.
 		/// @tparam T Type assignable to `Object`.
 		/// @param rhs Value to assign to the contained object.
 		/// @return Reference to the contained object.
 		template <std::assignable_from<Object> T>
-		Object& operator=(T&& rhs) const;
+		[[nodiscard]] Object& operator=(T&& rhs) const noexcept(std::is_nothrow_assignable_v<Object, T>);
 
 		/// @}
 
 	  private:
 		/// Wraps over a basic buffer map.
 		/// @param map Base buffer map.
-		graphics_buffer_object_map(basic_graphics_buffer_map&& map);
+		[[nodiscard]] graphics_buffer_object_map(basic_graphics_buffer_map&& map) noexcept;
 
 		//
 
@@ -158,35 +168,35 @@ namespace tr
 
 		/// Casts the map into a regular span.
 		/// @return Base span of the map.
-		operator std::span<Element>() const;
+		[[nodiscard]] operator std::span<Element>() const noexcept;
 
 		/// Indexes into the map.
 		/// @param index Index of the element within the map to access.
 		/// @return Reference to an element of the map.
-		reference operator[](usize index) const;
+		[[nodiscard]] reference operator[](usize index) const noexcept;
 
 		/// Gets a pointer to the data of the map.
 		/// @return Pointer to the data of the map.
-		pointer data() const;
+		[[nodiscard]] pointer data() const noexcept;
 
 		/// Gets the size of the map.
 		/// @return Number of elements in the map.
-		size_type size() const;
+		[[nodiscard]] size_type size() const noexcept;
 
 		/// Gets an iterator to the beginning of the map.
 		/// @return Iterator to the beginning of the map.
-		iterator begin() const;
+		[[nodiscard]] iterator begin() const noexcept;
 
 		/// Gets an iterator to the end of the map.
 		/// @return Iterator to the end of the map.
-		iterator end() const;
+		[[nodiscard]] iterator end() const noexcept;
 
 		/// @}
 
 	  private:
 		/// Wraps over a basic buffer map.
 		/// @param map Base buffer map.
-		graphics_buffer_span_map(basic_graphics_buffer_map&& map);
+		[[nodiscard]] graphics_buffer_span_map(basic_graphics_buffer_map&& map) noexcept;
 
 		//
 

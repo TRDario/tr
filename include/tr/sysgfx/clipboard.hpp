@@ -17,7 +17,7 @@ namespace tr
 		/// @{
 
 		/// Constructs a clipboard setting error.
-		set_clipboard_error();
+		[[nodiscard]] set_clipboard_error() noexcept;
 
 		/// @}
 		/// @name Information
@@ -25,15 +25,15 @@ namespace tr
 
 		/// Gets the name of the error.
 		/// @return `"Clipboard setting error"`.
-		std::string_view name() const override;
+		[[nodiscard]] std::string_view name() const noexcept override;
 
 		/// Gets the description of the error.
 		/// @return Description of the error.
-		std::string_view description() const override;
+		[[nodiscard]] std::string_view description() const noexcept override;
 
 		/// Gets further details about the error.
 		/// @return Always empty.
-		std::string_view details() const override;
+		[[nodiscard]] std::string_view details() const noexcept override;
 
 		/// @}
 
@@ -47,11 +47,11 @@ namespace tr
 
 	/// Gets whether the clipboard is empty.
 	/// @return `true` if the clipboard is empty, `false` otherwise.
-	bool clipboard_empty();
+	[[nodiscard]] bool clipboard_empty() noexcept;
 
 	/// Gets the clipboard text.
 	/// @return Clipboard text string, may be empty.
-	std::string clipboard_text();
+	[[nodiscard]] std::string clipboard_text();
 
 	/// Sets the clipboard text.
 	/// @param text Text to set the clipboard to.

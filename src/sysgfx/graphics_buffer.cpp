@@ -7,7 +7,7 @@
 
 //
 
-tr::graphics_buffer::graphics_buffer(graphics_context& context)
+tr::graphics_buffer::graphics_buffer(graphics_context& context) noexcept
 	: m_handle{deleter{context}}
 {
 	context.gl().create_buffers(1, out_handle(m_handle));
@@ -16,7 +16,7 @@ tr::graphics_buffer::graphics_buffer(graphics_context& context)
 #endif
 }
 
-void tr::graphics_buffer::deleter::operator()(unsigned int bo) const
+void tr::graphics_buffer::deleter::operator()(unsigned int bo) const noexcept
 {
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 	context->registry().buffers.erase(id);
@@ -26,14 +26,14 @@ void tr::graphics_buffer::deleter::operator()(unsigned int bo) const
 
 //
 
-tr::graphics_context& tr::graphics_buffer::context() const
+tr::graphics_context& tr::graphics_buffer::context() const noexcept
 {
 	return m_handle.get_deleter().context;
 }
 
 //
 
-bool tr::graphics_buffer::valid() const
+bool tr::graphics_buffer::valid() const noexcept
 {
 	return m_handle.has_value();
 }
@@ -56,14 +56,14 @@ std::string tr::graphics_buffer::label() const
 	}
 }
 
-void tr::graphics_buffer::set_label(std::string_view label)
+void tr::graphics_buffer::set_label(std::string_view label) noexcept
 {
 	context().gl().set_object_label(GL_BUFFER, unwrap(), label.size(), label.data());
 }
 
 //
 
-unsigned int tr::graphics_buffer::unwrap() const
+unsigned int tr::graphics_buffer::unwrap() const noexcept
 {
 	return m_handle.get();
 }
@@ -77,7 +77,7 @@ void tr::graphics_buffer::reallocate()
 }
 
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-tr::graphics_object_id tr::graphics_buffer::id() const
+tr::graphics_object_id tr::graphics_buffer::id() const noexcept
 {
 	return m_handle.get_deleter().id;
 }

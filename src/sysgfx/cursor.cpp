@@ -7,23 +7,23 @@
 
 //
 
-tr::cursor_error::cursor_error(std::string_view description)
+tr::cursor_error::cursor_error(std::string_view description) noexcept
 	: m_description{description}
 	, m_details{SDL_GetError()}
 {
 }
 
-std::string_view tr::cursor_error::name() const
+std::string_view tr::cursor_error::name() const noexcept
 {
 	return "Cursor error";
 }
 
-std::string_view tr::cursor_error::description() const
+std::string_view tr::cursor_error::description() const noexcept
 {
 	return m_description;
 }
 
-std::string_view tr::cursor_error::details() const
+std::string_view tr::cursor_error::details() const noexcept
 {
 	return m_details;
 }
@@ -58,7 +58,7 @@ tr::cursor::cursor(const bitmap_view& view, glm::ivec2 focus)
 {
 }
 
-void tr::cursor::deleter::operator()(SDL_Cursor* ptr)
+void tr::cursor::deleter::operator()(SDL_Cursor* ptr) noexcept
 {
 	SDL_DestroyCursor(ptr);
 }

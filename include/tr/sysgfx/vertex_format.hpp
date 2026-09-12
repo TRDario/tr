@@ -178,7 +178,7 @@ namespace tr
 		/// @param context Graphics context to create the format on.
 		/// @param bindings Vertex bindings of the format.
 		/// @post `bindings` must stay valid for the duration of the lifetime of the vertex format.
-		vertex_format(graphics_context& context, std::span<const vertex_binding> bindings);
+		[[nodiscard]] vertex_format(graphics_context& context, std::span<const vertex_binding> bindings) noexcept;
 
 		/// @}
 		/// @name Context
@@ -186,7 +186,7 @@ namespace tr
 
 		/// Gets a reference to the graphics context the vertex format is on.
 		/// @return Reference to the graphics context the vertex format is on.
-		graphics_context& context() const;
+		[[nodiscard]] graphics_context& context() const noexcept;
 
 		/// @}
 		/// @name State
@@ -194,7 +194,7 @@ namespace tr
 
 		/// Gets whether the vertex format is in a valid state.
 		/// @return `true` if the vertex format is in a valid state, `false` if it is in an invalid state.
-		bool valid() const;
+		[[nodiscard]] bool valid() const noexcept;
 
 		/// @}
 		/// @name Label
@@ -202,11 +202,11 @@ namespace tr
 
 		/// Sets the debug label of the vertex format.
 		/// @param label Label of the vertex format.
-		void set_label(std::string_view label);
+		void set_label(std::string_view label) noexcept;
 
 		/// Gets the debug label of the vertex format.
 		/// @return Label of the vertex format.
-		std::string label() const;
+		[[nodiscard]] std::string label() const;
 
 		/// @}
 		/// @cond gl_interop
@@ -216,7 +216,7 @@ namespace tr
 		/// Unwraps the OpenGL vertex array object.
 		/// @note This does not release the vertex array object.
 		/// @return OpenGL vertex array object ID.
-		unsigned int unwrap() const;
+		[[nodiscard]] unsigned int unwrap() const noexcept;
 
 		/// @}
 		/// @endcond
@@ -227,11 +227,11 @@ namespace tr
 
 		/// Gets the unique graphics object ID of the vertex format.
 		/// @return Unique graphics object ID of the vertex format.
-		graphics_object_id id() const;
+		[[nodiscard]] graphics_object_id id() const noexcept;
 
 		/// Gets information about the vertex format's bindings.
 		/// @return Information about the vertex format's bindings.
-		std::span<const vertex_binding> bindings() const;
+		[[nodiscard]] std::span<const vertex_binding> bindings() const noexcept;
 
 		/// @}
 		/// @endcond
@@ -253,7 +253,7 @@ namespace tr
 
 			/// Deletes the VAO.
 			/// @param id OpenGL VAO ID.
-			void operator()(unsigned int id) const;
+			void operator()(unsigned int id) const noexcept;
 		};
 
 		//

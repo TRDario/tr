@@ -30,7 +30,7 @@ void tr::ImGui::Shutdown()
 
 //
 
-ImTextureID tr::ImGui::GetTextureID(texture_view texture)
+ImTextureID tr::ImGui::GetTextureID(texture_view texture) noexcept
 {
 	return texture.unwrap();
 }

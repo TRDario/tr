@@ -45,22 +45,31 @@ namespace tr
 		{
 			/// First color attachment.
 			color0 = 36064,
+
 			/// Second color attachment.
 			color1,
+
 			/// Third color attachment.
 			color2,
+
 			/// Fourth color attachment.
 			color3,
+
 			/// Fifth color attachment.
 			color4,
+
 			/// Sixth color attachment.
 			color5,
+
 			/// Seventh color attachment.
 			color6,
+
 			/// Eighth color attachment.
 			color7,
+
 			/// Depth attachment.
 			depth = 36096,
+
 			/// Stencil attachment.
 			stencil = 36128,
 		};
@@ -70,14 +79,14 @@ namespace tr
 
 		/// Creates an empty framebuffer.
 		/// @param context Graphics context to create the framebuffer on.
-		explicit framebuffer(graphics_context& context);
+		[[nodiscard]] explicit framebuffer(graphics_context& context) noexcept;
 
 		/// @}
 		/// @name Context
 		/// @{
 
 		/// Gets a reference to the graphics context the framebuffer is on.
-		graphics_context& context() const;
+		[[nodiscard]] graphics_context& context() const noexcept;
 
 		/// @}
 		/// @name Attachments
@@ -86,11 +95,11 @@ namespace tr
 		/// Attaches a texture to the framebuffer.
 		/// @param attachment Attachment to set.
 		/// @param texture Texture to attach to the framebuffer.
-		void attach(attachment attachment, texture_view texture);
+		void attach(attachment attachment, texture_view texture) noexcept;
 
 		/// Detaches whatever is on the specified attachment.
 		/// @param attachment Attachment to clear.
-		void detach(attachment attachment);
+		void detach(attachment attachment) noexcept;
 
 		/// @}
 		/// @name State
@@ -98,7 +107,7 @@ namespace tr
 
 		/// Gets whether the framebuffer is in a valid state.
 		/// @return `true` if the framebuffer is in a valid state, `false` if it is in an invalid state.
-		bool valid() const;
+		[[nodiscard]] bool valid() const noexcept;
 
 		/// @}
 		/// @name Label
@@ -106,11 +115,11 @@ namespace tr
 
 		/// Sets the debug label of the framebuffer.
 		/// @param label Debug label of the framebuffer.
-		void set_label(std::string_view label);
+		void set_label(std::string_view label) noexcept;
 
 		/// Gets the debug label of the framebuffer.
 		/// @return Debug label of the framebuffer.
-		std::string label() const;
+		[[nodiscard]] std::string label() const;
 
 		/// @}
 		/// @cond gl_interop
@@ -120,7 +129,7 @@ namespace tr
 		/// Unwraps the OpenGL framebuffer.
 		/// @note This does not release the framebuffer.
 		/// @return OpenGL framebuffer ID.
-		unsigned int unwrap() const;
+		[[nodiscard]] unsigned int unwrap() const noexcept;
 
 		/// @}
 		/// @endcond
@@ -130,7 +139,7 @@ namespace tr
 
 		/// Gets the unique graphics object ID of the framebuffer.
 		/// @return Unique graphics object ID of the framebuffer.
-		graphics_object_id id() const;
+		[[nodiscard]] graphics_object_id id() const noexcept;
 
 		/// @}
 		/// @endcond
@@ -152,7 +161,7 @@ namespace tr
 
 			/// Deletes a framebuffer.
 			/// @param fbo OpenGL framebuffer ID.
-			void operator()(unsigned int fbo) const;
+			void operator()(unsigned int fbo) const noexcept;
 		};
 
 		//

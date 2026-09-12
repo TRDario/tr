@@ -17,7 +17,7 @@ namespace tr
 		/// Converts a scancode into a key state index.
 		/// @param key Scancode.
 		/// @return Index of the scancode within the keyboard state buffer.
-		static constexpr int to_key_state_index(scancode key)
+		[[nodiscard]] constexpr int to_key_state_index(scancode key) noexcept
 		{
 			int index{std::to_underlying(key) - 4};
 			if (index >= 102) {
@@ -35,7 +35,7 @@ std::string tr::name(keycode key)
 	return SDL_GetKeyName(std::to_underlying(key));
 }
 
-tr::keycode tr::to_keycode_fallback(zstring_view str)
+tr::keycode tr::to_keycode_fallback(zstring_view str) noexcept
 {
 	return keycode(SDL_GetKeyFromName(str.c_str()));
 }
@@ -60,7 +60,7 @@ std::string tr::key_chord::name() const
 
 //
 
-bool tr::scan_state::held(scancode key) const
+bool tr::scan_state::held(scancode key) const noexcept
 {
 	const int index{to_key_state_index(key)};
 	if (index == invalid_key_state_index) {
@@ -70,7 +70,7 @@ bool tr::scan_state::held(scancode key) const
 	return static_cast<bool>(byte & static_cast<std::byte>(1 << (index % 8)));
 }
 
-void tr::scan_state::handle_event(const event& event)
+void tr::scan_state::handle_event(const event& event) noexcept
 {
 	if (event.is<key_down_event>()) {
 		handle_event(event.as<key_down_event>());
@@ -80,17 +80,17 @@ void tr::scan_state::handle_event(const event& event)
 	}
 }
 
-void tr::scan_state::handle_event(const key_down_event& event)
+void tr::scan_state::handle_event(const key_down_event& event) noexcept
 {
 	force_down(event.scan);
 }
 
-void tr::scan_state::handle_event(const key_up_event& event)
+void tr::scan_state::handle_event(const key_up_event& event) noexcept
 {
 	force_up(event.scan);
 }
 
-void tr::scan_state::force_down(scancode key)
+void tr::scan_state::force_down(scancode key) noexcept
 {
 	const int index{to_key_state_index(key)};
 	if (index == invalid_key_state_index) {
@@ -100,7 +100,7 @@ void tr::scan_state::force_down(scancode key)
 	byte |= static_cast<std::byte>(1 << (index % 8));
 }
 
-void tr::scan_state::force_up(scancode key)
+void tr::scan_state::force_up(scancode key) noexcept
 {
 	const int index{to_key_state_index(key)};
 	if (index == invalid_key_state_index) {
@@ -110,17 +110,17 @@ void tr::scan_state::force_up(scancode key)
 	byte &= ~static_cast<std::byte>(1 << (index % 8));
 }
 
-bool tr::keyboard_state::held(keymod kmods) const
+bool tr::keyboard_state::held(keymod kmods) const noexcept
 {
 	return (mods & kmods) == kmods;
 }
 
-bool tr::keyboard_state::held(scan_chord chord) const
+bool tr::keyboard_state::held(scan_chord chord) const noexcept
 {
 	return held(chord.mods) && held(chord.scan);
 }
 
-void tr::keyboard_state::handle_event(const event& event)
+void tr::keyboard_state::handle_event(const event& event) noexcept
 {
 	if (event.is<key_down_event>()) {
 		handle_event(event.as<key_down_event>());
@@ -130,13 +130,13 @@ void tr::keyboard_state::handle_event(const event& event)
 	}
 }
 
-void tr::keyboard_state::handle_event(const key_down_event& event)
+void tr::keyboard_state::handle_event(const key_down_event& event) noexcept
 {
 	scan_state::handle_event(event);
 	mods = event.mods;
 }
 
-void tr::keyboard_state::handle_event(const key_up_event& event)
+void tr::keyboard_state::handle_event(const key_up_event& event) noexcept
 {
 	scan_state::handle_event(event);
 	mods = event.mods;
@@ -144,22 +144,22 @@ void tr::keyboard_state::handle_event(const key_up_event& event)
 
 //
 
-std::size_t boost::hash<tr::scancode>::operator()(tr::scancode code) const
+std::size_t boost::hash<tr::scancode>::operator()(tr::scancode code) const noexcept
 {
 	return static_cast<std::size_t>(code);
 }
 
-std::size_t boost::hash<tr::keycode>::operator()(tr::keycode code) const
+std::size_t boost::hash<tr::keycode>::operator()(tr::keycode code) const noexcept
 {
 	return static_cast<std::size_t>(code);
 }
 
-std::size_t boost::hash<tr::scan_chord>::operator()(tr::scan_chord chord) const
+std::size_t boost::hash<tr::scan_chord>::operator()(tr::scan_chord chord) const noexcept
 {
 	return (static_cast<std::size_t>(chord.scan) << 32) | static_cast<std::size_t>(chord.mods);
 }
 
-std::size_t boost::hash<tr::key_chord>::operator()(tr::key_chord chord) const
+std::size_t boost::hash<tr::key_chord>::operator()(tr::key_chord chord) const noexcept
 {
 	return (static_cast<std::size_t>(chord.key) << 32) | static_cast<std::size_t>(chord.mods);
 }

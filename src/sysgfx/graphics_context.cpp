@@ -16,17 +16,17 @@ tr::graphics_context_init_error::graphics_context_init_error()
 {
 }
 
-std::string_view tr::graphics_context_init_error::name() const
+std::string_view tr::graphics_context_init_error::name() const noexcept
 {
 	return "Graphics context opening error";
 }
 
-std::string_view tr::graphics_context_init_error::description() const
+std::string_view tr::graphics_context_init_error::description() const noexcept
 {
 	return m_description;
 }
 
-std::string_view tr::graphics_context_init_error::details() const
+std::string_view tr::graphics_context_init_error::details() const noexcept
 {
 	return {};
 }
@@ -40,7 +40,7 @@ namespace tr
 		/// Gets a readable string for an OpenGL debug log message type.
 		/// @param value OpenGL debug type.
 		/// @return String representation of the debug type.
-		std::string_view gl_type(unsigned int value)
+		[[nodiscard]] std::string_view gl_type(unsigned int value) noexcept
 		{
 			switch (value) {
 			case GL_DEBUG_TYPE_ERROR:
@@ -69,7 +69,7 @@ namespace tr
 		/// Gets a readable string for an OpenGL debug log severity.
 		/// @param value OpenGL debug severity.
 		/// @return String representation of the debug severity.
-		std::string_view gl_severity(unsigned int value)
+		[[nodiscard]] std::string_view gl_severity(unsigned int value) noexcept
 		{
 			switch (value) {
 			case GL_DEBUG_SEVERITY_NOTIFICATION:
@@ -88,7 +88,7 @@ namespace tr
 		/// Converts OpenGL debug severity to tr severity.
 		/// @param value OpenGL debug severity.
 		/// @return tr severity equivalent.
-		tr::severity tr_severity(unsigned int value)
+		[[nodiscard]] tr::severity tr_severity(unsigned int value) noexcept
 		{
 			switch (value) {
 			case GL_DEBUG_SEVERITY_NOTIFICATION:
@@ -107,7 +107,7 @@ namespace tr
 		/// Gets a readable string for an OpenGL debug log source.
 		/// @param value OpenGL debug source.
 		/// @return String representation of the debug source.
-		std::string_view gl_source(unsigned int value)
+		[[nodiscard]] std::string_view gl_source(unsigned int value) noexcept
 		{
 			switch (value) {
 			case GL_DEBUG_SOURCE_API:
@@ -135,13 +135,17 @@ namespace tr
 		/// @param message Pointer to the debug message string.
 		/// @param user_param Pointer to the graphics context logger.
 		void gl_debug_cb(unsigned int source, unsigned int type, unsigned int, unsigned int severity, int length, const char* message,
-						 const void* user_param)
+						 const void* user_param) noexcept
 		{
-			logger& log{*const_cast<logger*>(static_cast<const logger*>(user_param))};
+			try {
+				logger& log{*const_cast<logger*>(static_cast<const logger*>(user_param))};
 
-			const std::string_view msg{message, static_cast<usize>(length)};
-			if (log.active()) {
-				log.log(tr_severity(severity), "[{}] | [{}] | [{}] | {}", gl_severity(severity), gl_type(type), gl_source(source), msg);
+				const std::string_view msg{message, static_cast<usize>(length)};
+				if (log.active()) {
+					log.log(tr_severity(severity), "[{}] | [{}] | [{}] | {}", gl_severity(severity), gl_type(type), gl_source(source), msg);
+				}
+			}
+			catch (...) {
 			}
 		}
 
@@ -150,7 +154,7 @@ namespace tr
 		/// Creates an SDL OpenGL context.
 		/// @param window Pointer to the SDL window.
 		/// @return SDL OpenGL context pointer.
-		SDL_GLContext create_context(SDL_Window* window)
+		[[nodiscard]] SDL_GLContext create_context(SDL_Window* window)
 		{
 			SDL_GLContext context{SDL_GL_CreateContext(window)};
 			if (context == nullptr) {
@@ -184,7 +188,7 @@ tr::graphics_context::graphics_context(window_view window)
 	}
 }
 
-void tr::graphics_context::deleter::operator()(SDL_GLContextState* context) const
+void tr::graphics_context::deleter::operator()(SDL_GLContextState* context) const noexcept
 {
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 	TR_ASSERT(registry.framebuffers.empty(), "Tried to destroy a graphics context while one or more framebuffers were still alive on it.");
@@ -201,7 +205,7 @@ void tr::graphics_context::deleter::operator()(SDL_GLContextState* context) cons
 
 //
 
-struct tr::graphics_context::info tr::graphics_context::info() const
+struct tr::graphics_context::info tr::graphics_context::info() const noexcept
 {
 	const gl_api& gl{this->gl()};
 	return {
@@ -213,17 +217,17 @@ struct tr::graphics_context::info tr::graphics_context::info() const
 
 //
 
-tr::window_view tr::graphics_context::window() const
+tr::window_view tr::graphics_context::window() const noexcept
 {
 	return window_view{m_window};
 }
 
-tr::render_target tr::graphics_context::backbuffer() const
+tr::render_target tr::graphics_context::backbuffer() const noexcept
 {
 	return render_target{*this};
 }
 
-const tr::vertex_format& tr::graphics_context::vec2_vertex_format()
+const tr::vertex_format& tr::graphics_context::vec2_vertex_format() noexcept
 {
 	if (!m_vec2_vertex_format.has_value()) {
 		m_vec2_vertex_format.emplace(*this, as_vertex_bindings<vertex_binding_tag<glm::vec2>>);
@@ -232,7 +236,7 @@ const tr::vertex_format& tr::graphics_context::vec2_vertex_format()
 	return *m_vec2_vertex_format;
 }
 
-const tr::vertex_format& tr::graphics_context::basic_2d_vertex_format()
+const tr::vertex_format& tr::graphics_context::basic_2d_vertex_format() noexcept
 {
 	if (!m_basic_2d_vertex_format.has_value()) {
 		m_basic_2d_vertex_format
@@ -244,14 +248,14 @@ const tr::vertex_format& tr::graphics_context::basic_2d_vertex_format()
 
 //
 
-tr::renderer_id tr::graphics_context::allocate_renderer_id()
+tr::renderer_id tr::graphics_context::allocate_renderer_id() noexcept
 {
 	const renderer_id id{m_next_renderer_id};
 	m_next_renderer_id = renderer_id{std::to_underlying(m_next_renderer_id) + 1};
 	return id;
 }
 
-bool tr::graphics_context::should_setup_renderer(renderer_id id)
+bool tr::graphics_context::should_setup_renderer(renderer_id id) noexcept
 {
 	const bool result{m_active_renderer != id};
 	m_active_renderer = id;
@@ -260,12 +264,12 @@ bool tr::graphics_context::should_setup_renderer(renderer_id id)
 
 //
 
-void tr::graphics_context::set_wireframe_mode(bool arg)
+void tr::graphics_context::set_wireframe_mode(bool arg) noexcept
 {
 	gl().set_polygon_mode(GL_FRONT_AND_BACK, arg ? GL_LINE : GL_FILL);
 }
 
-void tr::graphics_context::set_face_culling(bool arg)
+void tr::graphics_context::set_face_culling(bool arg) noexcept
 {
 	if (arg) {
 		gl().enable(GL_CULL_FACE);
@@ -275,7 +279,7 @@ void tr::graphics_context::set_face_culling(bool arg)
 	}
 }
 
-void tr::graphics_context::set_depth_test(bool arg)
+void tr::graphics_context::set_depth_test(bool arg) noexcept
 {
 	if (arg) {
 		gl().enable(GL_DEPTH_TEST);
@@ -287,7 +291,7 @@ void tr::graphics_context::set_depth_test(bool arg)
 
 //
 
-void tr::graphics_context::set_render_target(const render_target& target)
+void tr::graphics_context::set_render_target(const render_target& target) noexcept
 {
 	const render_target::framebuffer_info_t& framebuffer_info{target.framebuffer_info()};
 
@@ -311,7 +315,7 @@ void tr::graphics_context::set_render_target(const render_target& target)
 #endif
 }
 
-void tr::graphics_context::set_shader_pipeline(const shader_pipeline& pipeline)
+void tr::graphics_context::set_shader_pipeline(const shader_pipeline& pipeline) noexcept
 {
 	TR_ASSERT(pipeline.valid(), "Tried to set a shader pipeline in an invalid state to a context.");
 	TR_ASSERT(&pipeline.context() == this, "Tried to set shader pipeline {} to a context it is not associated with.", pipeline);
@@ -331,7 +335,7 @@ void tr::graphics_context::set_shader_pipeline(const shader_pipeline& pipeline)
 #endif
 }
 
-void tr::graphics_context::set_blend_mode(const blend_mode& bm)
+void tr::graphics_context::set_blend_mode(const blend_mode& bm) noexcept
 {
 	const gl_api& gl{this->gl()};
 	gl.set_separate_blend_equations(std::to_underlying(bm.rgb_fn), std::to_underlying(bm.alpha_fn));
@@ -339,7 +343,7 @@ void tr::graphics_context::set_blend_mode(const blend_mode& bm)
 								   std::to_underlying(bm.alpha_dst));
 }
 
-void tr::graphics_context::set_vertex_format(const vertex_format& format)
+void tr::graphics_context::set_vertex_format(const vertex_format& format) noexcept
 {
 	TR_ASSERT(format.valid(), "Tried to set vertex format in an invalid state to a graphics context.");
 	TR_ASSERT(&format.context() == this, "Tried to set vertex format {} to a context it is not associated with.", format);
@@ -355,7 +359,7 @@ void tr::graphics_context::set_vertex_format(const vertex_format& format)
 
 //
 
-void tr::graphics_context::clear_backbuffer(tr::rgbaf color)
+void tr::graphics_context::clear_backbuffer(tr::rgbaf color) noexcept
 {
 	set_render_target(backbuffer());
 
@@ -364,7 +368,7 @@ void tr::graphics_context::clear_backbuffer(tr::rgbaf color)
 	gl.clear(GL_COLOR_BUFFER_BIT);
 }
 
-void tr::graphics_context::clear_backbuffer(tr::rgbaf color, double depth, int stencil)
+void tr::graphics_context::clear_backbuffer(tr::rgbaf color, double depth, int stencil) noexcept
 {
 	set_render_target(backbuffer());
 
@@ -375,7 +379,7 @@ void tr::graphics_context::clear_backbuffer(tr::rgbaf color, double depth, int s
 	gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 }
 
-void tr::graphics_context::clear_backbuffer_region(rectangle<int> region, tr::rgbaf color)
+void tr::graphics_context::clear_backbuffer_region(rectangle<int> region, tr::rgbaf color) noexcept
 {
 	set_render_target(backbuffer().cropped(region));
 
@@ -384,7 +388,7 @@ void tr::graphics_context::clear_backbuffer_region(rectangle<int> region, tr::rg
 	gl.clear(GL_COLOR_BUFFER_BIT);
 }
 
-void tr::graphics_context::clear_backbuffer_region(rectangle<int> region, tr::rgbaf color, double depth, int stencil)
+void tr::graphics_context::clear_backbuffer_region(rectangle<int> region, tr::rgbaf color, double depth, int stencil) noexcept
 {
 	set_render_target(backbuffer().cropped(region));
 
@@ -397,7 +401,7 @@ void tr::graphics_context::clear_backbuffer_region(rectangle<int> region, tr::rg
 
 //
 
-void tr::graphics_context::draw(primitive type, usize offset, usize vertices)
+void tr::graphics_context::draw(primitive type, usize offset, usize vertices) noexcept
 {
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 	assert_valid_drawing_state(check_index_buffer::no);
@@ -406,7 +410,7 @@ void tr::graphics_context::draw(primitive type, usize offset, usize vertices)
 	gl().draw_arrays(std::to_underlying(type), offset, vertices);
 }
 
-void tr::graphics_context::draw_instances(primitive type, usize offset, usize vertices, int instances)
+void tr::graphics_context::draw_instances(primitive type, usize offset, usize vertices, int instances) noexcept
 {
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 	assert_valid_drawing_state(check_index_buffer::no);
@@ -415,7 +419,7 @@ void tr::graphics_context::draw_instances(primitive type, usize offset, usize ve
 	gl().draw_arrays_instanced(std::to_underlying(type), offset, vertices, instances);
 }
 
-void tr::graphics_context::draw_indexed(primitive type, usize offset, usize indices)
+void tr::graphics_context::draw_indexed(primitive type, usize offset, usize indices) noexcept
 {
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 	assert_valid_drawing_state(check_index_buffer::yes);
@@ -424,7 +428,7 @@ void tr::graphics_context::draw_indexed(primitive type, usize offset, usize indi
 	gl().draw_elements(std::to_underlying(type), indices, GL_UNSIGNED_SHORT, reinterpret_cast<const void*>(offset * sizeof(u16)));
 }
 
-void tr::graphics_context::draw_indexed_instances(primitive type, usize offset, usize indices, int instances)
+void tr::graphics_context::draw_indexed_instances(primitive type, usize offset, usize indices, int instances) noexcept
 {
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 	assert_valid_drawing_state(check_index_buffer::yes);
@@ -436,21 +440,21 @@ void tr::graphics_context::draw_indexed_instances(primitive type, usize offset, 
 
 //
 
-SDL_GLContextState* tr::graphics_context::unwrap() const
+SDL_GLContextState* tr::graphics_context::unwrap() const noexcept
 {
 	return m_ptr.get();
 }
 
 //
 
-const tr::gl_api& tr::graphics_context::gl() const
+const tr::gl_api& tr::graphics_context::gl() const noexcept
 {
 	SDL_GL_MakeCurrent(m_window, m_ptr.get());
 	return m_gl_api;
 }
 
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-tr::graphics_object_registry& tr::graphics_context::registry()
+tr::graphics_object_registry& tr::graphics_context::registry() noexcept
 {
 	return m_ptr.get_deleter().registry;
 }
@@ -475,7 +479,7 @@ void tr::graphics_context::move_label(unsigned int type, unsigned int old_id, un
 //
 
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-void tr::graphics_context::check_typed_vertex_buffer(std::string label, int slot, std::span<const vertex_attribute> attrs)
+void tr::graphics_context::check_typed_vertex_buffer(std::string label, int slot, std::span<const vertex_attribute> attrs) noexcept
 {
 	TR_ASSERT(usize(slot) < m_set_vertex_format_debug_info.bindings.size(),
 			  "Tried to set vertex buffer '{}' to invalid slot {} (max in vertex format '{}': {}).", label, slot,
@@ -499,7 +503,7 @@ void tr::graphics_context::check_typed_vertex_buffer(std::string label, int slot
 //
 
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-void tr::graphics_context::assert_valid_drawing_state(check_index_buffer check_index_buffer)
+void tr::graphics_context::assert_valid_drawing_state(check_index_buffer check_index_buffer) noexcept
 {
 	graphics_object_registry& registry{this->registry()};
 

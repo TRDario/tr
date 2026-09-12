@@ -8,22 +8,22 @@
 
 //
 
-tr::window_open_error::window_open_error()
+tr::window_open_error::window_open_error() noexcept
 	: m_description{SDL_GetError()}
 {
 }
 
-std::string_view tr::window_open_error::name() const
+std::string_view tr::window_open_error::name() const noexcept
 {
 	return "Window opening error";
 }
 
-std::string_view tr::window_open_error::description() const
+std::string_view tr::window_open_error::description() const noexcept
 {
 	return m_description;
 }
 
-std::string_view tr::window_open_error::details() const
+std::string_view tr::window_open_error::details() const noexcept
 {
 	return {};
 }
@@ -69,31 +69,31 @@ tr::window::window(zstring_view title, window_parameters parameters)
 	}
 }
 
-void tr::window::deleter::operator()(SDL_Window* window)
+void tr::window::deleter::operator()(SDL_Window* window) noexcept
 {
 	SDL_DestroyWindow(window);
 }
 
 //
 
-tr::window::operator window_view()
+tr::window::operator window_view() noexcept
 {
 	return view();
 }
 
-tr::window_view tr::window::view()
+tr::window_view tr::window::view() noexcept
 {
 	return window_view{m_ptr.get()};
 }
 
-tr::window_view tr::window::view() const
+tr::window_view tr::window::view() const noexcept
 {
 	return window_view{m_ptr.get()};
 }
 
 //
 
-tr::zstring_view tr::window::title() const
+tr::zstring_view tr::window::title() const noexcept
 {
 	return view().title();
 }
@@ -134,7 +134,7 @@ void tr::window::set_size(glm::ivec2 size)
 
 //
 
-bool tr::window::fullscreen() const
+bool tr::window::fullscreen() const noexcept
 {
 	return view().fullscreen();
 }
@@ -158,17 +158,17 @@ void tr::window::hide()
 
 //
 
-bool tr::window::maximized() const
+bool tr::window::maximized() const noexcept
 {
 	return view().maximized();
 }
 
-bool tr::window::minimized() const
+bool tr::window::minimized() const noexcept
 {
 	return view().minimized();
 }
 
-bool tr::window::has_focus() const
+bool tr::window::has_focus() const noexcept
 {
 	return view().has_focus();
 }
@@ -180,12 +180,12 @@ void tr::window::raise()
 
 //
 
-void tr::window::enable_text_input()
+void tr::window::enable_text_input() noexcept
 {
 	view().enable_text_input();
 }
 
-void tr::window::disable_text_input()
+void tr::window::disable_text_input() noexcept
 {
 	view().disable_text_input();
 }
@@ -235,7 +235,7 @@ void tr::window::set_mouse_mode(mouse_mode mode)
 
 //
 
-void tr::window::flip_backbuffer()
+void tr::window::flip_backbuffer() noexcept
 {
 	view().flip_backbuffer();
 }

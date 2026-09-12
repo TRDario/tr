@@ -22,19 +22,19 @@ namespace tr
 
 		/// Allocates a texture unit on a graphics context.
 		/// @param context Context the texture unit belongs to.
-		explicit texture_unit(graphics_context& context);
+		[[nodiscard]] explicit texture_unit(graphics_context& context) noexcept;
 
 		/// @}
 
 		/// Gets the ID of the texture unit.
 		/// @return ID of the texture unit.
-		unsigned int id() const;
+		[[nodiscard]] unsigned int id() const noexcept;
 
 		//
 
 		/// Sets the texture unit.
 		/// @param texture Texture to set on the texture unit.
-		void set(texture_view texture);
+		void set(texture_view texture) noexcept;
 
 	  private:
 		/// Texture unit freer.
@@ -47,7 +47,7 @@ namespace tr
 
 			/// Frees the texture unit.
 			/// @param unit ID of the texture unit.
-			void operator()(unsigned int unit) const;
+			void operator()(unsigned int unit) const noexcept;
 		};
 
 		/// Handle to the texture unit.

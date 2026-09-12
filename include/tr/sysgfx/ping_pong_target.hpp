@@ -31,15 +31,15 @@ namespace tr
 
 		/// Constructs an incomplete ping-pong target.
 		/// @param context Graphics context to create the ping-pong target on.
-		explicit ping_pong_target(graphics_context& context);
+		[[nodiscard]] explicit ping_pong_target(graphics_context& context) noexcept;
 
 		/// Constructs a complete ping-pong target.
 		/// @param context Graphics context to create the ping-pong target on.
 		/// @param size Initial size of the target textures.
 		/// @param mipmaps Whether to generate mipmaps for the target textures.
 		/// @param format Pixel format of the target textures.
-		ping_pong_target(graphics_context& context, glm::ivec2 size, mipmaps mipmaps = mipmaps::disabled,
-						 pixel_format format = pixel_format::rgba32);
+		[[nodiscard]] ping_pong_target(graphics_context& context, glm::ivec2 size, mipmaps mipmaps = mipmaps::disabled,
+									   pixel_format format = pixel_format::rgba32);
 
 		/// @}
 		/// @name Context
@@ -47,7 +47,7 @@ namespace tr
 
 		/// Gets a reference to the graphics context the ping-pong target is on.
 		/// @return Reference to the graphics context the ping-pong target is on.
-		graphics_context& context() const;
+		[[nodiscard]] graphics_context& context() const noexcept;
 
 		/// @}
 		/// @name State
@@ -55,15 +55,15 @@ namespace tr
 
 		/// Gets whether the ping-pong target is in a valid state.
 		/// @return `true` if the ping-pong target is in a valid state, `false` if it is in an invalid state.
-		bool valid() const;
+		[[nodiscard]] bool valid() const noexcept;
 
 		/// Gets whether the ping-pong target is complete.
 		/// @return `true` if the ping-pong target is complete, `false` otherwise.
-		bool complete() const;
+		[[nodiscard]] bool complete() const noexcept;
 
 		/// Gets the size of the ping-pong target textures.
 		/// @return Size of the ping-pong target textures.
-		glm::ivec2 size() const;
+		[[nodiscard]] glm::ivec2 size() const noexcept;
 
 		/// @}
 		/// @name Manipulation
@@ -79,7 +79,7 @@ namespace tr
 		/// Clears the destination buffer.
 		/// @param color Color to clear the destination buffer to.
 		/// @pre The target must be complete to call this function.
-		void clear_destination(rgbaf color = rgbaf{});
+		void clear_destination(rgbaf color = rgbaf{}) noexcept;
 
 		/// @}
 		/// @name Texture attributes
@@ -88,15 +88,15 @@ namespace tr
 		/// Sets the filters used by the target texture samplers.
 		/// @param min_filter Minifying filter to use.
 		/// @param mag_filter Magnifying filter to use.
-		void set_filtering(min_filter min_filter, mag_filter mag_filter);
+		void set_filtering(min_filter min_filter, mag_filter mag_filter) noexcept;
 
 		/// Sets the wrapping used by the target texture samplers.
 		/// @param wrap Wrapping type to use.
-		void set_wrap(wrap wrap);
+		void set_wrap(wrap wrap) noexcept;
 
 		/// Sets the border color of the target texture samplers (used when `wrap::BORDER_CLAMP` is in use).
 		/// @param color Border color to use.
-		void set_border_color(rgbaf color);
+		void set_border_color(rgbaf color) noexcept;
 
 		/// @}
 		/// @name Targets
@@ -106,16 +106,16 @@ namespace tr
 		/// @details This texture view stays valid until a call to `allocate(), swap()`, or the destruction of the buffer.
 		/// @pre The target must be complete to call this function.
 		/// @return View to the source target texture.
-		texture_view source() const;
+		[[nodiscard]] texture_view source() const noexcept;
 
 		/// Gets the destination render target.
 		/// @details This render target stays valid until a call to `allocate(), swap()`, or the destruction of the buffer.
 		/// @pre The target must be complete to call this function.
 		/// @return Destination render target.
-		render_target destination();
+		[[nodiscard]] render_target destination() noexcept;
 
 		/// Swaps the source and destination targets.
-		void swap();
+		void swap() noexcept;
 
 		/// @}
 		/// @name Label
@@ -123,7 +123,7 @@ namespace tr
 
 		/// Gets the debug label of the ping-pong target.
 		/// @return Debug label of the ping-pong target.
-		std::string label() const;
+		[[nodiscard]] std::string label() const;
 
 		/// Sets the debug label of the ping-pong target.
 		/// @param label Debug label of the ping-pong target.

@@ -15,7 +15,7 @@ namespace tr
 		/// Converts SDL keymods to tr keymods.
 		/// @param mods SDL keymods.
 		/// @return Equivalent tr keymods.
-		constexpr keymod convert_keymods(SDL_Keymod mods)
+		[[nodiscard]] constexpr keymod convert_keymods(SDL_Keymod mods) noexcept
 		{
 			if (mods & SDL_KMOD_SHIFT) {
 				mods |= SDL_KMOD_SHIFT;
@@ -34,7 +34,7 @@ namespace tr
 
 //
 
-tr::key_down_event::key_down_event(const event& event)
+tr::key_down_event::key_down_event(const event& event) noexcept
 	: window{SDL_GetWindowFromID(event.unwrap().key.windowID)}
 {
 	const SDL_KeyboardEvent& sdl{event.unwrap().key};
@@ -44,19 +44,19 @@ tr::key_down_event::key_down_event(const event& event)
 	mods = convert_keymods(sdl.mod);
 }
 
-tr::key_down_event::operator scan_chord() const
+tr::key_down_event::operator scan_chord() const noexcept
 {
 	return {mods, scan};
 }
 
-tr::key_down_event::operator key_chord() const
+tr::key_down_event::operator key_chord() const noexcept
 {
 	return {mods, key};
 }
 
 //
 
-tr::key_up_event::key_up_event(const event& event)
+tr::key_up_event::key_up_event(const event& event) noexcept
 	: window{SDL_GetWindowFromID(event.unwrap().key.windowID)}
 {
 	const SDL_KeyboardEvent& sdl{event.unwrap().key};
@@ -67,7 +67,7 @@ tr::key_up_event::key_up_event(const event& event)
 
 //
 
-tr::text_input_event::text_input_event(const event& event)
+tr::text_input_event::text_input_event(const event& event) noexcept
 	: window{SDL_GetWindowFromID(event.unwrap().text.windowID)}
 {
 	const SDL_TextInputEvent& sdl{event.unwrap().text};
@@ -76,7 +76,7 @@ tr::text_input_event::text_input_event(const event& event)
 
 //
 
-tr::mouse_motion_event::mouse_motion_event(const event& event)
+tr::mouse_motion_event::mouse_motion_event(const event& event) noexcept
 	: window{SDL_GetWindowFromID(event.unwrap().motion.windowID)}
 {
 	const SDL_MouseMotionEvent& sdl{event.unwrap().motion};
@@ -89,7 +89,7 @@ tr::mouse_motion_event::mouse_motion_event(const event& event)
 
 //
 
-tr::mouse_down_event::mouse_down_event(const event& event)
+tr::mouse_down_event::mouse_down_event(const event& event) noexcept
 	: window{SDL_GetWindowFromID(event.unwrap().button.windowID)}
 {
 	const SDL_MouseButtonEvent& sdl{event.unwrap().button};
@@ -100,7 +100,7 @@ tr::mouse_down_event::mouse_down_event(const event& event)
 
 //
 
-tr::mouse_up_event::mouse_up_event(const event& event)
+tr::mouse_up_event::mouse_up_event(const event& event) noexcept
 	: window{SDL_GetWindowFromID(event.unwrap().button.windowID)}
 {
 	const SDL_MouseButtonEvent& sdl{event.unwrap().button};
@@ -110,7 +110,7 @@ tr::mouse_up_event::mouse_up_event(const event& event)
 
 //
 
-tr::mouse_wheel_event::mouse_wheel_event(const event& event)
+tr::mouse_wheel_event::mouse_wheel_event(const event& event) noexcept
 	: window{SDL_GetWindowFromID(event.unwrap().wheel.windowID)}
 {
 	const SDL_MouseWheelEvent& sdl{event.unwrap().wheel};
@@ -120,21 +120,21 @@ tr::mouse_wheel_event::mouse_wheel_event(const event& event)
 
 //
 
-tr::window_show_event::window_show_event(const event& event)
+tr::window_show_event::window_show_event(const event& event) noexcept
 	: window{SDL_GetWindowFromID(event.unwrap().window.windowID)}
 {
 }
 
 //
 
-tr::window_hide_event::window_hide_event(const event& event)
+tr::window_hide_event::window_hide_event(const event& event) noexcept
 	: window{SDL_GetWindowFromID(event.unwrap().window.windowID)}
 {
 }
 
 //
 
-tr::backbuffer_resize_event::backbuffer_resize_event(const event& event)
+tr::backbuffer_resize_event::backbuffer_resize_event(const event& event) noexcept
 	: window{SDL_GetWindowFromID(event.unwrap().window.windowID)}
 {
 	const SDL_WindowEvent& sdl{event.unwrap().window};
@@ -143,42 +143,42 @@ tr::backbuffer_resize_event::backbuffer_resize_event(const event& event)
 
 //
 
-tr::window_mouse_enter_event::window_mouse_enter_event(const event& event)
+tr::window_mouse_enter_event::window_mouse_enter_event(const event& event) noexcept
 	: window{SDL_GetWindowFromID(event.unwrap().window.windowID)}
 {
 }
 
 //
 
-tr::window_mouse_leave_event::window_mouse_leave_event(const event& event)
+tr::window_mouse_leave_event::window_mouse_leave_event(const event& event) noexcept
 	: window{SDL_GetWindowFromID(event.unwrap().window.windowID)}
 {
 }
 
 //
 
-tr::window_gain_focus_event::window_gain_focus_event(const event& event)
+tr::window_gain_focus_event::window_gain_focus_event(const event& event) noexcept
 	: window{SDL_GetWindowFromID(event.unwrap().window.windowID)}
 {
 }
 
 //
 
-tr::window_lose_focus_event::window_lose_focus_event(const event& event)
+tr::window_lose_focus_event::window_lose_focus_event(const event& event) noexcept
 	: window{SDL_GetWindowFromID(event.unwrap().window.windowID)}
 {
 }
 
 //
 
-tr::u32 tr::event::type() const
+tr::u32 tr::event::type() const noexcept
 {
 	return unwrap().type;
 }
 
 //
 
-const SDL_Event& tr::event::unwrap() const
+const SDL_Event& tr::event::unwrap() const noexcept
 {
 	return *reinterpret_cast<const SDL_Event*>(m_buffer);
 }

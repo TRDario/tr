@@ -12,12 +12,13 @@ namespace tr
 {
 	namespace
 	{
-		// File dialog callback context.
+		/// File dialog callback context.
 		struct file_dialog_context
 		{
-			// List of selected file paths.
+			/// List of selected file paths.
 			std::vector<std::filesystem::path> paths;
-			// Whether the dialog is done.
+
+			/// Whether the dialog is done.
 			bool done{false};
 		};
 
@@ -57,8 +58,8 @@ namespace tr
 		/// @param default_path Default path to start the dialog at.
 		/// @param allow_multiple Whether to allow selecting multiple files.
 		/// @return List of paths to the selected files.
-		std::vector<std::filesystem::path> show_open_file_dialog_base(std::span<const tr::dialog_filter> filters, zstring_view default_path,
-																	  bool allow_multiple)
+		[[nodiscard]] std::vector<std::filesystem::path> show_open_file_dialog_base(std::span<const tr::dialog_filter> filters,
+																					zstring_view default_path, bool allow_multiple)
 		{
 			file_dialog_context ctx{};
 			SDL_ShowOpenFileDialog(file_dialog_callback, &ctx, nullptr, reinterpret_cast<const SDL_DialogFileFilter*>(filters.data()),
@@ -74,7 +75,7 @@ namespace tr
 		/// @param default_path Default path to start the dialog at.
 		/// @param allow_multiple Whether to allow selecting multiple folders.
 		/// @return List of paths to the selected folders.
-		std::vector<std::filesystem::path> show_open_folder_dialog_base(zstring_view default_path, bool allow_multiple)
+		[[nodiscard]] std::vector<std::filesystem::path> show_open_folder_dialog_base(zstring_view default_path, bool allow_multiple)
 		{
 			file_dialog_context ctx{};
 			SDL_ShowOpenFolderDialog(file_dialog_callback, &ctx, nullptr, default_path.c_str(), allow_multiple);

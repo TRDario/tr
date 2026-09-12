@@ -33,17 +33,17 @@ namespace tr
 		/// Constructs a sub-bitmap.
 		/// @param bitmap Bitmap to create a sub-bitmap on.
 		/// @param region Sub-bitmap region.
-		sub_bitmap(const bitmap& bitmap, rectangle<int> region);
+		[[nodiscard]] sub_bitmap(const bitmap& bitmap, rectangle<int> region) noexcept;
 
 		/// Constructs a sub-bitmap.
 		/// @param view Bitmap view to create a sub-bitmap on.
 		/// @param region Sub-bitmap region.
-		sub_bitmap(const bitmap_view& view, rectangle<int> region);
+		[[nodiscard]] sub_bitmap(const bitmap_view& view, rectangle<int> region) noexcept;
 
 		/// Constructs a sub-bitmap.
 		/// @param sub Sub-bitmap to create a sub-bitmap on.
 		/// @param region Sub-bitmap region.
-		sub_bitmap(sub_bitmap sub, rectangle<int> region);
+		[[nodiscard]] sub_bitmap(sub_bitmap sub, rectangle<int> region) noexcept;
 
 		/// @}
 		/// @name Sub-bitmaps
@@ -52,7 +52,7 @@ namespace tr
 		/// Creates a sub-bitmap of the sub-bitmap.
 		/// @param region Region of the sub-bitmap to create a sub-bitmap of.
 		/// @return Sub-bitmap of the sub-bitmap.
-		sub_bitmap sub(rectangle<int> region);
+		[[nodiscard]] sub_bitmap sub(rectangle<int> region) noexcept;
 
 		/// @}
 		/// @name Information
@@ -60,19 +60,19 @@ namespace tr
 
 		/// Gets the region the sub-bitmap occupies within the parent bitmap.
 		/// @return Region the sub-bitmap occupies within the parent bitmap.
-		rectangle<int> region() const;
+		[[nodiscard]] rectangle<int> region() const noexcept;
 
 		/// Gets the size of the sub-bitmap.
 		/// @return Size of the sub-bitmap.
-		glm::ivec2 size() const;
+		[[nodiscard]] glm::ivec2 size() const noexcept;
 
 		/// Gets the format of the bitmap.
 		/// @return Format of the bitmap.
-		pixel_format format() const;
+		[[nodiscard]] pixel_format format() const noexcept;
 
 		/// Gets the pitch of the bitmap.
 		/// @return Pitch of the bitmap.
-		int pitch() const;
+		[[nodiscard]] int pitch() const noexcept;
 
 		/// @}
 		/// @name Access
@@ -81,16 +81,16 @@ namespace tr
 		/// Gets immutable access to a pixel of the bitmap.
 		/// @param x, y Position of the bitmap within the bitmap.
 		/// @return Reference to a pixel of the bitmap.
-		reference operator[](int x, int y) const;
+		[[nodiscard]] reference operator[](int x, int y) const noexcept;
 
 		/// Gets immutable access to a pixel of the bitmap.
 		/// @param pos Position of the pixel within the bitmap.
 		/// @return Reference to a pixel of the bitmap.
-		reference operator[](glm::ivec2 pos) const;
+		[[nodiscard]] reference operator[](glm::ivec2 pos) const noexcept;
 
 		/// Gets the raw data of the bitmap.
 		/// @return Pointer to the data of the bitmap.
-		const std::byte* data() const;
+		[[nodiscard]] const std::byte* data() const noexcept;
 
 		/// @}
 		/// @name Iterators
@@ -98,19 +98,19 @@ namespace tr
 
 		/// Gets an immutable iterator to the beginning of the sub-bitmap.
 		/// @return Iterator to the beginning of the sub-bitmap.
-		iterator begin() const;
+		[[nodiscard]] iterator begin() const noexcept;
 
 		/// Gets an immutable iterator to the beginning of the sub-bitmap.
 		/// @return Iterator to the beginning of the sub-bitmap.
-		iterator cbegin() const;
+		[[nodiscard]] iterator cbegin() const noexcept;
 
 		/// Gets an immutable iterator to one past the end of the sub-bitmap.
 		/// @return Iterator to the end of the sub-bitmap.
-		iterator end() const;
+		[[nodiscard]] iterator end() const noexcept;
 
 		/// Gets an immutable iterator to one past the end of the sub-bitmap.
 		/// @return Iterator to the end of the sub-bitmap.
-		iterator cend() const;
+		[[nodiscard]] iterator cend() const noexcept;
 
 		/// @}
 
@@ -120,7 +120,7 @@ namespace tr
 
 		/// Unwraps the SDL surface pointer.
 		/// @return Pointer to the SDL surface.
-		SDL_Surface* unwrap() const;
+		[[nodiscard]] SDL_Surface* unwrap() const noexcept;
 
 		/// @}
 		/// @endcond

@@ -7,7 +7,7 @@
 
 //
 
-tr::vertex_format::vertex_format(graphics_context& context, std::span<const vertex_binding> bindings)
+tr::vertex_format::vertex_format(graphics_context& context, std::span<const vertex_binding> bindings) noexcept
 	: m_handle{deleter{context}}
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 	, m_bindings{bindings}
@@ -55,7 +55,7 @@ tr::vertex_format::vertex_format(graphics_context& context, std::span<const vert
 	}
 }
 
-void tr::vertex_format::deleter::operator()(unsigned int vao) const
+void tr::vertex_format::deleter::operator()(unsigned int vao) const noexcept
 {
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 	context->registry().vertex_formats.erase(id);
@@ -65,7 +65,7 @@ void tr::vertex_format::deleter::operator()(unsigned int vao) const
 
 //
 
-tr::graphics_context& tr::vertex_format::context() const
+tr::graphics_context& tr::vertex_format::context() const noexcept
 {
 	TR_ASSERT(valid(), "Tried to get context of a vertex format in an invalid state.");
 
@@ -74,14 +74,14 @@ tr::graphics_context& tr::vertex_format::context() const
 
 //
 
-bool tr::vertex_format::valid() const
+bool tr::vertex_format::valid() const noexcept
 {
 	return m_handle.has_value();
 }
 
 //
 
-void tr::vertex_format::set_label(std::string_view label)
+void tr::vertex_format::set_label(std::string_view label) noexcept
 {
 	TR_ASSERT(valid(), "Tried to set the label of a vertex format in an invalid state.");
 
@@ -107,18 +107,18 @@ std::string tr::vertex_format::label() const
 
 //
 
-unsigned int tr::vertex_format::unwrap() const
+unsigned int tr::vertex_format::unwrap() const noexcept
 {
 	return m_handle.get();
 }
 
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-tr::graphics_object_id tr::vertex_format::id() const
+tr::graphics_object_id tr::vertex_format::id() const noexcept
 {
 	return m_handle.get_deleter().id;
 }
 
-std::span<const tr::vertex_binding> tr::vertex_format::bindings() const
+std::span<const tr::vertex_binding> tr::vertex_format::bindings() const noexcept
 {
 	return m_bindings;
 }

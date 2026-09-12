@@ -2,7 +2,6 @@
 /// @brief Implements the constexpr parts of keyboard.hpp.
 
 #pragma once
-#include "../../utility/macro.hpp"
 #include "../keyboard.hpp"
 
 //
@@ -14,7 +13,7 @@ struct boost::hash<tr::scancode>
 	/// Hashes a scancode.
 	/// @param code Scancode to hash.
 	/// @return Scancode hash.
-	std::size_t operator()(tr::scancode code) const;
+	std::size_t operator()(tr::scancode code) const noexcept;
 };
 
 /// Keycode hasher.
@@ -24,7 +23,7 @@ struct boost::hash<tr::keycode>
 	/// Hashes a keycode.
 	/// @param code Keycode to hash.
 	/// @return Keycode hash.
-	std::size_t operator()(tr::keycode code) const;
+	std::size_t operator()(tr::keycode code) const noexcept;
 };
 
 /// Scan chord hasher.
@@ -34,7 +33,7 @@ struct boost::hash<tr::scan_chord>
 	/// Hashes a scan chord.
 	/// @param chord Chord to hash.
 	/// @return Scan chord hash.
-	std::size_t operator()(tr::scan_chord chord) const;
+	std::size_t operator()(tr::scan_chord chord) const noexcept;
 };
 
 /// Key chord hasher.
@@ -44,7 +43,7 @@ struct boost::hash<tr::key_chord>
 	/// Hashes a key chord.
 	/// @param chord Chord to hash.
 	/// @return Key chord hash.
-	std::size_t operator()(tr::key_chord chord) const;
+	std::size_t operator()(tr::key_chord chord) const noexcept;
 };
 
 //
@@ -467,12 +466,12 @@ namespace tr
 	/// `to_keycode` fallback for Unicode characters.
 	/// @param str Keycode string.
 	/// @return Keycode associated with the string, or `keycode::unknown`.
-	keycode to_keycode_fallback(zstring_view str);
+	[[nodiscard]] keycode to_keycode_fallback(zstring_view str) noexcept;
 } // namespace tr
 
 //
 
-constexpr tr::scancode tr::to_scancode(std::string_view str)
+constexpr tr::scancode tr::to_scancode(std::string_view str) noexcept
 {
 	for (usize i = 0; i < scancode_name_table.size(); ++i) {
 		if (!scancode_name_table[i].empty() && scancode_name_table[i] == str) {
@@ -482,7 +481,7 @@ constexpr tr::scancode tr::to_scancode(std::string_view str)
 	return tr::scancode::unknown;
 }
 
-constexpr tr::keycode tr::to_keycode(zstring_view str)
+constexpr tr::keycode tr::to_keycode(zstring_view str) noexcept
 {
 	if (str.empty()) {
 		return keycode::unknown;
@@ -518,25 +517,25 @@ constexpr tr::keycode tr::to_keycode(zstring_view str)
 	return to_keycode_fallback(str);
 }
 
-constexpr tr::zstring_view tr::name(scancode scan)
+constexpr tr::zstring_view tr::name(scancode scan) noexcept
 {
 	return scancode_name_table[std::to_underlying(scan)];
 }
 
 //
 
-constexpr tr::scan_chord::scan_chord(scancode scan)
+constexpr tr::scan_chord::scan_chord(scancode scan) noexcept
 	: scan{scan}
 {
 }
 
-constexpr tr::scan_chord::scan_chord(keymod mods, scancode scan)
+constexpr tr::scan_chord::scan_chord(keymod mods, scancode scan) noexcept
 	: mods{mods}
 	, scan{scan}
 {
 }
 
-constexpr tr::scan_chord::scan_chord(std::string_view str)
+constexpr tr::scan_chord::scan_chord(std::string_view str) noexcept
 {
 	const auto first_delimiter_pos{str.find('+')};
 	if (first_delimiter_pos == str.npos) {
@@ -582,18 +581,18 @@ constexpr std::string tr::scan_chord::name() const
 	return str;
 }
 
-constexpr tr::key_chord::key_chord(keycode key)
+constexpr tr::key_chord::key_chord(keycode key) noexcept
 	: key{key}
 {
 }
 
-constexpr tr::key_chord::key_chord(keymod mods, keycode key)
+constexpr tr::key_chord::key_chord(keymod mods, keycode key) noexcept
 	: mods{mods}
 	, key{key}
 {
 }
 
-constexpr tr::key_chord::key_chord(zstring_view str)
+constexpr tr::key_chord::key_chord(zstring_view str) noexcept
 {
 	const zstring_view::iterator first_delimiter_pos{std::ranges::find(str, '+')};
 	if (first_delimiter_pos == str.end()) {
@@ -623,44 +622,40 @@ constexpr tr::key_chord::key_chord(zstring_view str)
 
 //
 
-consteval tr::scancode tr::keyboard_literals::operator""_s(const char* cstr, usize size)
+consteval tr::scancode tr::keyboard_literals::operator""_s(const char* cstr, usize size) noexcept
 {
 	scancode result{to_scancode({cstr, size})};
 	if (result == scancode::unknown) {
-		throw std::invalid_argument{"Invalid scancode name."};
+		std::unreachable();
 	}
 	return result;
 }
 
-consteval tr::scan_chord tr::keyboard_literals::operator""_sc(const char* cstr, usize size)
+consteval tr::scan_chord tr::keyboard_literals::operator""_sc(const char* cstr, usize size) noexcept
 {
 	tr::scan_chord chord{{cstr, size}};
-	if (chord.scan == scancode::unknown) {
-		throw std::invalid_argument{"Invalid scancode name."};
-	}
-	if (chord.mods == keymod::unknown) {
-		throw std::invalid_argument{"Invalid keyboard modifier name."};
+	if (chord.scan == scancode::unknown || chord.mods == keymod::unknown) {
+		std::unreachable();
 	}
 	return chord;
 }
 
 //
 
-consteval tr::keycode tr::keyboard_literals::operator""_k(const char* cstr, usize)
+consteval tr::keycode tr::keyboard_literals::operator""_k(const char* cstr, usize) noexcept
 {
 	keycode result{to_keycode(cstr)};
-	TR_ASSERT(result != keycode::unknown, "Invalid keycode name.");
+	if (result == keycode::unknown) {
+		std::unreachable();
+	}
 	return result;
 }
 
-consteval tr::key_chord tr::keyboard_literals::operator""_kc(const char* cstr, usize)
+consteval tr::key_chord tr::keyboard_literals::operator""_kc(const char* cstr, usize) noexcept
 {
 	tr::key_chord chord{cstr};
-	if (chord.key == keycode::unknown) {
-		throw std::invalid_argument{"Invalid keycode name."};
-	}
-	if (chord.mods == keymod::unknown) {
-		throw std::invalid_argument{"Invalid keyboard modifier name."};
+	if (chord.key == keycode::unknown || chord.mods == keymod::unknown) {
+		std::unreachable();
 	}
 	return chord;
 }

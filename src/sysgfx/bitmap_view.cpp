@@ -10,7 +10,7 @@
 //
 
 tr::bitmap_view::bitmap_view(std::span<const std::byte> raw_data, glm::ivec2 size, pixel_format format)
-	: bitmap_view(raw_data.data(), size.x * pixel_bytes(format), size, format)
+	: bitmap_view{raw_data.data(), size.x * pixel_bytes(format), size, format}
 {
 	TR_ASSERT(raw_data.size() == size.x * size.y * static_cast<usize>(pixel_bytes(format)),
 			  "Tried to create a bitmap view from data with unexpected (expected {} bytes vs. actual {} bytes).",
@@ -25,38 +25,38 @@ tr::bitmap_view::bitmap_view(const std::byte* raw_data_start, int pitch, glm::iv
 	}
 }
 
-void tr::bitmap_view::deleter::operator()(SDL_Surface* ptr)
+void tr::bitmap_view::deleter::operator()(SDL_Surface* ptr) noexcept
 {
 	SDL_DestroySurface(ptr);
 }
 
 //
 
-tr::bitmap_view::operator tr::sub_bitmap() const
+tr::bitmap_view::operator tr::sub_bitmap() const noexcept
 {
 	return sub({{}, size()});
 }
 
-tr::sub_bitmap tr::bitmap_view::sub(rectangle<int> region) const
+tr::sub_bitmap tr::bitmap_view::sub(rectangle<int> region) const noexcept
 {
 	return sub_bitmap{*this, region};
 }
 
 //
 
-glm::ivec2 tr::bitmap_view::size() const
+glm::ivec2 tr::bitmap_view::size() const noexcept
 {
 	return {m_ptr->w, m_ptr->h};
 }
 
-tr::pixel_format tr::bitmap_view::format() const
+tr::pixel_format tr::bitmap_view::format() const noexcept
 {
 	TR_ASSERT(m_ptr != nullptr, "Tried to get the format of a moved-from bitmap view.");
 
 	return static_cast<pixel_format>(m_ptr->format);
 }
 
-int tr::bitmap_view::pitch() const
+int tr::bitmap_view::pitch() const noexcept
 {
 	TR_ASSERT(m_ptr != nullptr, "Tried to get the pitch of a moved-from bitmap view.");
 
@@ -65,17 +65,17 @@ int tr::bitmap_view::pitch() const
 
 //
 
-tr::bitmap_view::reference tr::bitmap_view::operator[](int x, int y) const
+tr::bitmap_view::reference tr::bitmap_view::operator[](int x, int y) const noexcept
 {
 	return *(begin() + glm::ivec2{x, y});
 }
 
-tr::bitmap_view::reference tr::bitmap_view::operator[](glm::ivec2 pos) const
+tr::bitmap_view::reference tr::bitmap_view::operator[](glm::ivec2 pos) const noexcept
 {
 	return *(begin() + pos);
 }
 
-const std::byte* tr::bitmap_view::data() const
+const std::byte* tr::bitmap_view::data() const noexcept
 {
 	TR_ASSERT(m_ptr != nullptr, "Tried to get the data of a moved-from bitmap view.");
 
@@ -84,24 +84,24 @@ const std::byte* tr::bitmap_view::data() const
 
 //
 
-tr::bitmap_view::iterator tr::bitmap_view::begin() const
+tr::bitmap_view::iterator tr::bitmap_view::begin() const noexcept
 {
 	return cbegin();
 }
 
-tr::bitmap_view::iterator tr::bitmap_view::cbegin() const
+tr::bitmap_view::iterator tr::bitmap_view::cbegin() const noexcept
 {
 	TR_ASSERT(m_ptr != nullptr, "Tried to get an iterator to the beginning of a moved-from bitmap view.");
 
 	return sub_bitmap{*this}.begin();
 }
 
-tr::bitmap_view::iterator tr::bitmap_view::end() const
+tr::bitmap_view::iterator tr::bitmap_view::end() const noexcept
 {
 	return cend();
 }
 
-tr::bitmap_view::iterator tr::bitmap_view::cend() const
+tr::bitmap_view::iterator tr::bitmap_view::cend() const noexcept
 {
 	TR_ASSERT(m_ptr != nullptr, "Tried to get an iterator to the end of a moved-from bitmap view.");
 
@@ -121,7 +121,7 @@ void tr::bitmap_view::save(const std::filesystem::path& path) const
 
 //
 
-SDL_Surface* tr::bitmap_view::unwrap() const
+SDL_Surface* tr::bitmap_view::unwrap() const noexcept
 {
 	return m_ptr.get();
 }

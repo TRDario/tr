@@ -7,13 +7,13 @@
 
 //
 
-glm::ivec2 tr::display_size()
+glm::ivec2 tr::display_size() noexcept
 {
 	const SDL_DisplayMode& mode{*SDL_GetDesktopDisplayMode(SDL_GetPrimaryDisplay())};
 	return {mode.w, mode.h};
 }
 
-tr::u8 tr::max_msaa()
+tr::u8 tr::max_msaa() noexcept
 {
 	constexpr u8 unknown{255};
 
@@ -53,7 +53,7 @@ tr::u8 tr::max_msaa()
 	return max;
 }
 
-float tr::refresh_rate()
+float tr::refresh_rate() noexcept
 {
 	return SDL_GetDesktopDisplayMode(SDL_GetPrimaryDisplay())->refresh_rate;
 }

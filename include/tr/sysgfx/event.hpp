@@ -39,7 +39,7 @@ namespace tr
 
 		/// Converts a generic event into a key down event.
 		/// @param event Event to convert.
-		explicit key_down_event(const event& event);
+		[[nodiscard]] explicit key_down_event(const event& event) noexcept;
 
 		/// @}
 		/// @name Conversion operators
@@ -47,11 +47,11 @@ namespace tr
 
 		/// Gets the pressed scan chord.
 		/// @return Pressed scan chord.
-		operator scan_chord() const;
+		[[nodiscard]] operator scan_chord() const noexcept;
 
 		/// Gets the pressed key chord.
 		/// @return Pressed key chord.
-		operator key_chord() const;
+		[[nodiscard]] operator key_chord() const noexcept;
 
 		/// @}
 	};
@@ -75,7 +75,7 @@ namespace tr
 
 		/// Converts a generic event into a key up event.
 		/// @param event Event to convert.
-		explicit key_up_event(const event& event);
+		[[nodiscard]] explicit key_up_event(const event& event) noexcept;
 	};
 
 	/// Event emitted when text is inputted.
@@ -91,7 +91,7 @@ namespace tr
 
 		/// Converts a generic event into a text input event.
 		/// @param event Event to convert.
-		explicit text_input_event(const event& event);
+		[[nodiscard]] explicit text_input_event(const event& event) noexcept;
 	};
 
 	//
@@ -115,7 +115,7 @@ namespace tr
 
 		/// Converts a generic event into a mouse motion event.
 		/// @param event Event to convert.
-		explicit mouse_motion_event(const event& event);
+		[[nodiscard]] explicit mouse_motion_event(const event& event) noexcept;
 	};
 
 	/// Event emitted when a mouse button is pressed.
@@ -137,7 +137,7 @@ namespace tr
 
 		/// Converts a generic event into a mouse down event.
 		/// @param event Event to convert.
-		explicit mouse_down_event(const event& event);
+		[[nodiscard]] explicit mouse_down_event(const event& event) noexcept;
 	};
 
 	/// Event emitted when a mouse button is released.
@@ -156,7 +156,7 @@ namespace tr
 
 		/// Converts a generic event into a mouse up event.
 		/// @param event Event to convert.
-		explicit mouse_up_event(const event& event);
+		[[nodiscard]] explicit mouse_up_event(const event& event) noexcept;
 	};
 
 	/// Event emitted when the mouse wheel is moved.
@@ -175,7 +175,7 @@ namespace tr
 
 		/// Converts a generic event into a mouse wheel event.
 		/// @param event Event to convert.
-		explicit mouse_wheel_event(const event& event);
+		[[nodiscard]] explicit mouse_wheel_event(const event& event) noexcept;
 	};
 
 	//
@@ -190,7 +190,7 @@ namespace tr
 
 		/// Converts a generic event into a window showing event.
 		/// @param event Event to convert.
-		explicit window_show_event(const event& event);
+		[[nodiscard]] explicit window_show_event(const event& event) noexcept;
 	};
 
 	/// Event emitted when a window is hidden.
@@ -203,7 +203,7 @@ namespace tr
 
 		/// Converts a generic event into a window hiding event.
 		/// @param event Event to convert.
-		explicit window_hide_event(const event& event);
+		[[nodiscard]] explicit window_hide_event(const event& event) noexcept;
 	};
 
 	/// Event emitted when the window backbuffer changes size.
@@ -219,7 +219,7 @@ namespace tr
 
 		/// Converts a generic event into a window backbuffer resizing event.
 		/// @param event Event to convert.
-		explicit backbuffer_resize_event(const event& event);
+		[[nodiscard]] explicit backbuffer_resize_event(const event& event) noexcept;
 	};
 
 	/// Event emitted when the mouse enters a window.
@@ -230,7 +230,7 @@ namespace tr
 
 		/// Converts a generic event into a window mouse entering event.
 		/// @param event Event to convert.
-		explicit window_mouse_enter_event(const event& event);
+		[[nodiscard]] explicit window_mouse_enter_event(const event& event) noexcept;
 	};
 
 	/// Event emitted when the mouse leaves a window.
@@ -243,7 +243,7 @@ namespace tr
 
 		/// Converts a generic event into a window mouse leaving event.
 		/// @param event Event to convert.
-		explicit window_mouse_leave_event(const event& event);
+		[[nodiscard]] explicit window_mouse_leave_event(const event& event) noexcept;
 	};
 
 	/// Event emitted when a window gains focus.
@@ -256,7 +256,7 @@ namespace tr
 
 		/// Converts a generic event into a window focus gaining event.
 		/// @param event Event to convert.
-		explicit window_gain_focus_event(const event& event);
+		[[nodiscard]] explicit window_gain_focus_event(const event& event) noexcept;
 	};
 
 	/// Event emitted when a window loses focus.
@@ -269,7 +269,7 @@ namespace tr
 
 		/// Converts a generic event into a window focus losing event.
 		/// @param event Event to convert.
-		explicit window_lose_focus_event(const event& event);
+		[[nodiscard]] explicit window_lose_focus_event(const event& event) noexcept;
 	};
 
 	//
@@ -295,30 +295,47 @@ namespace tr
 	/// Valid event visitor type.
 	/// @details Event visitors must be callable with all event types, and all overloads must return the same type.
 	template <typename T>
-	concept event_visitor =
-		std::invocable<T, quit_event> && std::invocable<T, window_show_event> && std::invocable<T, window_hide_event> &&
-		std::invocable<T, backbuffer_resize_event> && std::invocable<T, window_gain_focus_event> &&
-		std::invocable<T, window_lose_focus_event> && std::invocable<T, window_mouse_enter_event> &&
-		std::invocable<T, window_mouse_leave_event> && std::invocable<T, key_down_event> && std::invocable<T, key_up_event> &&
-		std::invocable<T, text_input_event> && std::invocable<T, mouse_motion_event> && std::invocable<T, mouse_down_event> &&
-		std::invocable<T, mouse_up_event> && std::invocable<T, mouse_wheel_event> && std::invocable<T, unknown_event> &&
-		requires(T visitor) {
-			requires std::same_as<decltype(visitor(quit_event{})), decltype(visitor(std::declval<window_show_event>()))>;
-			requires std::same_as<decltype(visitor(quit_event{})), decltype(visitor(std::declval<window_hide_event>()))>;
-			requires std::same_as<decltype(visitor(quit_event{})), decltype(visitor(std::declval<backbuffer_resize_event>()))>;
-			requires std::same_as<decltype(visitor(quit_event{})), decltype(visitor(std::declval<window_gain_focus_event>()))>;
-			requires std::same_as<decltype(visitor(quit_event{})), decltype(visitor(std::declval<window_lose_focus_event>()))>;
-			requires std::same_as<decltype(visitor(quit_event{})), decltype(visitor(std::declval<window_mouse_enter_event>()))>;
-			requires std::same_as<decltype(visitor(quit_event{})), decltype(visitor(std::declval<window_mouse_leave_event>()))>;
-			requires std::same_as<decltype(visitor(quit_event{})), decltype(visitor(std::declval<key_down_event>()))>;
-			requires std::same_as<decltype(visitor(quit_event{})), decltype(visitor(std::declval<key_up_event>()))>;
-			requires std::same_as<decltype(visitor(quit_event{})), decltype(visitor(std::declval<text_input_event>()))>;
-			requires std::same_as<decltype(visitor(quit_event{})), decltype(visitor(std::declval<mouse_motion_event>()))>;
-			requires std::same_as<decltype(visitor(quit_event{})), decltype(visitor(std::declval<mouse_down_event>()))>;
-			requires std::same_as<decltype(visitor(quit_event{})), decltype(visitor(std::declval<mouse_up_event>()))>;
-			requires std::same_as<decltype(visitor(quit_event{})), decltype(visitor(std::declval<mouse_wheel_event>()))>;
-			requires std::same_as<decltype(visitor(quit_event{})), decltype(visitor(std::declval<unknown_event>()))>;
-		};
+	concept event_visitor = std::invocable<T, quit_event> && std::invocable<T, window_show_event> && std::invocable<T, window_hide_event> &&
+							std::invocable<T, backbuffer_resize_event> && std::invocable<T, window_gain_focus_event> &&
+							std::invocable<T, window_lose_focus_event> && std::invocable<T, window_mouse_enter_event> &&
+							std::invocable<T, window_mouse_leave_event> && std::invocable<T, key_down_event> &&
+							std::invocable<T, key_up_event> && std::invocable<T, text_input_event> &&
+							std::invocable<T, mouse_motion_event> && std::invocable<T, mouse_down_event> &&
+							std::invocable<T, mouse_up_event> && std::invocable<T, mouse_wheel_event> && std::invocable<T, unknown_event> &&
+							std::same_as<std::invoke_result_t<T, quit_event>, std::invoke_result_t<T, window_show_event>> &&
+							std::same_as<std::invoke_result_t<T, quit_event>, std::invoke_result_t<T, window_hide_event>> &&
+							std::same_as<std::invoke_result_t<T, quit_event>, std::invoke_result_t<T, backbuffer_resize_event>> &&
+							std::same_as<std::invoke_result_t<T, quit_event>, std::invoke_result_t<T, window_gain_focus_event>> &&
+							std::same_as<std::invoke_result_t<T, quit_event>, std::invoke_result_t<T, window_lose_focus_event>> &&
+							std::same_as<std::invoke_result_t<T, quit_event>, std::invoke_result_t<T, window_mouse_enter_event>> &&
+							std::same_as<std::invoke_result_t<T, quit_event>, std::invoke_result_t<T, window_mouse_leave_event>> &&
+							std::same_as<std::invoke_result_t<T, quit_event>, std::invoke_result_t<T, key_down_event>> &&
+							std::same_as<std::invoke_result_t<T, quit_event>, std::invoke_result_t<T, key_up_event>> &&
+							std::same_as<std::invoke_result_t<T, quit_event>, std::invoke_result_t<T, text_input_event>> &&
+							std::same_as<std::invoke_result_t<T, quit_event>, std::invoke_result_t<T, mouse_motion_event>> &&
+							std::same_as<std::invoke_result_t<T, quit_event>, std::invoke_result_t<T, mouse_down_event>> &&
+							std::same_as<std::invoke_result_t<T, quit_event>, std::invoke_result_t<T, mouse_up_event>> &&
+							std::same_as<std::invoke_result_t<T, quit_event>, std::invoke_result_t<T, mouse_wheel_event>> &&
+							std::same_as<std::invoke_result_t<T, quit_event>, std::invoke_result_t<T, unknown_event>>;
+
+	/// Valid event visitor type that doesn't throw.
+	template <typename T>
+	concept nothrow_event_visitor = event_visitor<T> && noexcept(std::declval<T>(std::declval<quit_event>())) &&
+									noexcept(std::declval<T>(std::declval<window_show_event>())) &&
+									noexcept(std::declval<T>(std::declval<window_hide_event>())) &&
+									noexcept(std::declval<T>(std::declval<backbuffer_resize_event>())) &&
+									noexcept(std::declval<T>(std::declval<window_gain_focus_event>())) &&
+									noexcept(std::declval<T>(std::declval<window_lose_focus_event>())) &&
+									noexcept(std::declval<T>(std::declval<window_mouse_enter_event>())) &&
+									noexcept(std::declval<T>(std::declval<window_mouse_leave_event>())) &&
+									noexcept(std::declval<T>(std::declval<key_down_event>())) &&
+									noexcept(std::declval<T>(std::declval<key_up_event>())) &&
+									noexcept(std::declval<T>(std::declval<text_input_event>())) &&
+									noexcept(std::declval<T>(std::declval<mouse_motion_event>())) &&
+									noexcept(std::declval<T>(std::declval<mouse_down_event>())) &&
+									noexcept(std::declval<T>(std::declval<mouse_up_event>())) &&
+									noexcept(std::declval<T>(std::declval<mouse_wheel_event>())) &&
+									noexcept(std::declval<T>(std::declval<unknown_event>()));
 
 	//
 
@@ -333,14 +350,14 @@ namespace tr
 		/// @tparam T Event type.
 		/// @return Whether the event holds an event of type `T`.
 		template <event_type T>
-		bool is() const;
+		[[nodiscard]] bool is() const noexcept;
 
 		/// Converts the event into a sub-type.
 		/// @tparam T Event type.
 		/// @pre The event must hold an event of type `T`.
 		/// @return Held event subtype.
 		template <event_type T>
-		T as() const;
+		[[nodiscard]] T as() const noexcept;
 
 		/// @}
 		/// @name Visiting
@@ -351,7 +368,7 @@ namespace tr
 		/// @param visitor Event visitor.
 		/// @return Result returned by the visitor.
 		template <event_visitor Visitor>
-		auto visit(Visitor&& visitor) const;
+		[[nodiscard]] auto visit(Visitor&& visitor) const noexcept(nothrow_event_visitor<Visitor>);
 
 		/// @}
 		/// @cond sdl_interop
@@ -360,7 +377,7 @@ namespace tr
 
 		/// Unwraps the SDL event.
 		/// @return Reference to the unwrapped SDL event.
-		const SDL_Event& unwrap() const;
+		[[nodiscard]] const SDL_Event& unwrap() const noexcept;
 
 		/// @}
 		/// @endcond
@@ -372,13 +389,13 @@ namespace tr
 		//
 
 		/// Private default constructor.
-		event() = default;
+		[[nodiscard]] event() noexcept = default;
 
 		//
 
 		/// Gets the event subtype.
 		/// @return SDL event subtype ID.
-		u32 type() const;
+		[[nodiscard]] u32 type() const noexcept;
 	};
 } // namespace tr
 

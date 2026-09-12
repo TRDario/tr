@@ -22,8 +22,10 @@ namespace tr
 	{
 		/// Vsync is enabled, but late swaps happen immediately instead of waiting for the next retrace.
 		adaptive = -1,
+
 		/// Vsync is disabled.
 		disabled,
+
 		/// Vsync is enabled.
 		enabled
 	};
@@ -42,7 +44,7 @@ namespace tr
 		/// @param description_fmt Description format string.
 		/// @param args Description formatting arguments.
 		template <typename... Args>
-		explicit window_error(std::format_string<Args...> description_fmt, Args&&... args);
+		[[nodiscard]] explicit window_error(std::format_string<Args...> description_fmt, Args&&... args) noexcept;
 
 		/// @}
 		/// @name Information
@@ -50,15 +52,15 @@ namespace tr
 
 		/// Gets the name of the error.
 		/// @return `"Window error"`.
-		std::string_view name() const override;
+		[[nodiscard]] std::string_view name() const noexcept override;
 
 		/// Gets the description of the error.
 		/// @return Description of the error.
-		std::string_view description() const override;
+		[[nodiscard]] std::string_view description() const noexcept override;
 
 		/// Gets further details about the error.
 		/// @return Details of the error.
-		std::string_view details() const override;
+		[[nodiscard]] std::string_view details() const noexcept override;
 
 		/// @}
 
@@ -71,7 +73,7 @@ namespace tr
 
 		/// Constructs a window error.
 		/// @param description Description of the error.
-		window_error(std::string&& description);
+		[[nodiscard]] window_error(std::string&& description) noexcept;
 	};
 
 	//
@@ -86,7 +88,7 @@ namespace tr
 
 		/// Wraps a window view.
 		/// @param window Window pointer to wrap.
-		explicit window_view(SDL_Window* window);
+		[[nodiscard]] explicit window_view(SDL_Window* window) noexcept;
 
 		/// @}
 		/// @endcond
@@ -96,7 +98,7 @@ namespace tr
 
 		/// Gets the title of the window.
 		/// @return Title of the window.
-		zstring_view title() const;
+		[[nodiscard]] zstring_view title() const noexcept;
 
 		/// Sets the title of the window.
 		/// @param title New window title string.
@@ -124,12 +126,12 @@ namespace tr
 		/// Gets the size of the window.
 		/// @exception window_error If getting the size of the window failed.
 		/// @return Size of the window in pixels.
-		glm::ivec2 size() const;
+		[[nodiscard]] glm::ivec2 size() const;
 
 		/// Gets the window's pixel density factor.
 		/// @exception window_error If getting the pixel density of the window failed.
 		/// @return Pixel density factor of the window.
-		float pixel_density() const;
+		[[nodiscard]] float pixel_density() const;
 
 		/// Sets the size of the window.
 		/// @param size New size of the window in pixels.
@@ -142,7 +144,7 @@ namespace tr
 
 		/// Gets whether the window is fullscreen or not.
 		/// @return Whether the window is fullscreen or not.
-		bool fullscreen() const;
+		[[nodiscard]] bool fullscreen() const noexcept;
 
 		/// Sets whether the window is fullscreen or not.
 		/// @param fullscreen Whether to enable fullscreen or not.
@@ -167,15 +169,15 @@ namespace tr
 
 		/// Gets whether the window is maximized.
 		/// @return `true` if the window is maximized, `false` otherwise.
-		bool maximized() const;
+		[[nodiscard]] bool maximized() const noexcept;
 
 		/// Gets whether the window is minimized.
 		/// @return `true` if the window is minimized, `false` otherwise.
-		bool minimized() const;
+		[[nodiscard]] bool minimized() const noexcept;
 
 		/// Gets whether the window has input focus.
 		/// @return `true` if the window has input focus, `false` otherwise.
-		bool has_focus() const;
+		[[nodiscard]] bool has_focus() const noexcept;
 
 		/// Raises the window to have input focus.
 		/// @exception window_error If raising the window failed.
@@ -187,7 +189,7 @@ namespace tr
 
 		/// Sets the window's V-sync mode.
 		/// @param vsync V-sync mode to set. `vsync::adaptive` may fall back to `vsync::enabled`.
-		// @exception window_error If setting the V-sync mode failed.
+		/// @exception window_error If setting the V-sync mode failed.
 		void set_vsync(vsync vsync) const;
 
 		/// @}
@@ -195,17 +197,17 @@ namespace tr
 		/// @{
 
 		/// Enables the sending of text input events in the window.
-		void enable_text_input() const;
+		void enable_text_input() const noexcept;
 
 		/// Disables the sending of text input events in the window.
-		void disable_text_input() const;
+		void disable_text_input() const noexcept;
 
 		/// @}
 		/// @name Backbuffer
 		/// @{
 
 		/// Swaps the window's front- and backbuffer.
-		void flip_backbuffer() const;
+		void flip_backbuffer() const noexcept;
 
 		/// @}
 
@@ -215,7 +217,7 @@ namespace tr
 
 		/// Unwraps the SDL window pointer.
 		/// @return Pointer to the SDL window.
-		SDL_Window* unwrap() const;
+		[[nodiscard]] SDL_Window* unwrap() const noexcept;
 
 		/// @}
 		/// @endcond

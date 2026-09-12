@@ -20,7 +20,7 @@ namespace tr
 		/// Uploads vertex data into a static vertex buffer.
 		/// @param context Graphics context to create the buffer on.
 		/// @param data Data to upload to the buffer.
-		basic_static_vertex_buffer(graphics_context& context, std::span<const std::byte> data);
+		[[nodiscard]] basic_static_vertex_buffer(graphics_context& context, std::span<const std::byte> data);
 
 		/// @}
 		/// @name Context
@@ -84,7 +84,7 @@ namespace tr
 		/// @param context Graphics context to create the buffer on.
 		/// @param range Data to upload to the buffer.
 		template <typed_contiguous_const_range<Element> Range>
-		static_vertex_buffer(graphics_context& context, Range&& range);
+		[[nodiscard]] static_vertex_buffer(graphics_context& context, Range&& range);
 
 		/// @}
 		/// @name Context
@@ -156,22 +156,22 @@ namespace tr
 
 		/// Gets whether the vertex buffer is empty.
 		/// @return `true` if thevertex buffer is empty, `false` otherwise.
-		bool empty() const;
+		[[nodiscard]] bool empty() const noexcept;
 
 		/// Gets the size of the vertex buffer contents.
 		/// @return Size of the vertex buffer in bytes.
-		usize size() const;
+		[[nodiscard]] usize size() const noexcept;
 
 		/// Gets the capacity of the vertex buffer.
 		/// @return Capacity of the vertex buffer in bytes.
-		usize capacity() const;
+		[[nodiscard]] usize capacity() const noexcept;
 
 		/// @}
 		/// @name Setting
 		/// @{
 
 		/// Sets the size of the vertex buffer to 0.
-		void clear();
+		void clear() noexcept;
 
 		/// Clears the buffer and resizes it, potentially resizing it.
 		/// @param size New size of the buffer in bytes.
@@ -189,7 +189,7 @@ namespace tr
 		/// @param offset Starting byte offset within the buffer.
 		/// @param data Data to copy into the buffer.
 		/// @pre `offset + data.size()` must be less than or equal to the size of the buffer.
-		void set_region(usize offset, std::span<const std::byte> data);
+		void set_region(usize offset, std::span<const std::byte> data) noexcept;
 
 		/// @}
 		/// @name Label
@@ -261,11 +261,11 @@ namespace tr
 
 		/// Gets the size of the vertex buffer contents.
 		/// @return Size of the vertex buffer in elements.
-		usize size() const;
+		[[nodiscard]] usize size() const noexcept;
 
 		/// Gets the capacity of the vertex buffer.
 		/// @return Capacity of the vertex buffer in elements.
-		usize capacity() const;
+		[[nodiscard]] usize capacity() const noexcept;
 
 		/// @}
 		/// @name Setting
@@ -293,7 +293,7 @@ namespace tr
 		/// @param data Data to copy into the buffer.
 		/// @pre `offset + data.size()` must be less than or equal to the size of the buffer.
 		template <typed_contiguous_const_range<Element> Range>
-		void set_region(usize offset, Range&& data);
+		void set_region(usize offset, Range&& data) noexcept;
 
 		/// @}
 		/// @name Label

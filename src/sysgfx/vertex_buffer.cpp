@@ -21,22 +21,22 @@ tr::basic_static_vertex_buffer::basic_static_vertex_buffer(graphics_context& con
 
 //
 
-bool tr::basic_dyn_vertex_buffer::empty() const
+bool tr::basic_dyn_vertex_buffer::empty() const noexcept
 {
 	return m_size == 0;
 }
 
-tr::usize tr::basic_dyn_vertex_buffer::size() const
+tr::usize tr::basic_dyn_vertex_buffer::size() const noexcept
 {
 	return m_size;
 }
 
-tr::usize tr::basic_dyn_vertex_buffer::capacity() const
+tr::usize tr::basic_dyn_vertex_buffer::capacity() const noexcept
 {
 	return m_capacity;
 }
 
-void tr::basic_dyn_vertex_buffer::clear()
+void tr::basic_dyn_vertex_buffer::clear() noexcept
 {
 	m_size = 0;
 }
@@ -72,7 +72,7 @@ void tr::basic_dyn_vertex_buffer::set(std::span<const std::byte> data)
 	set_region(0, data);
 }
 
-void tr::basic_dyn_vertex_buffer::set_region(usize offset, std::span<const std::byte> data)
+void tr::basic_dyn_vertex_buffer::set_region(usize offset, std::span<const std::byte> data) noexcept
 {
 	TR_ASSERT(offset + data.size() <= m_size, "Tried to set out-of-bounds region [{}, {}) in vertex buffer '{}' of size {}.", offset,
 			  offset + data.size(), label(), m_size);

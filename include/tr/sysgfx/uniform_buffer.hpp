@@ -16,7 +16,7 @@ namespace tr
 		/// Allocates an uninitialized uniform buffer.
 		/// @param context Graphics context to create the buffer on.
 		/// @param size Initial size of the buffer.
-		basic_uniform_buffer(graphics_context& context, usize size);
+		[[nodiscard]] basic_uniform_buffer(graphics_context& context, usize size);
 
 		/// @name Context
 		/// @{
@@ -35,7 +35,7 @@ namespace tr
 
 		/// Gets the size of the buffer.
 		/// @return Size of the buffer in bytes.
-		usize size() const;
+		[[nodiscard]] usize size() const noexcept;
 
 		/// @}
 		/// @name Setting
@@ -43,7 +43,7 @@ namespace tr
 
 		/// Sets the data of the buffer.
 		/// @param data Data to copy into the buffer.
-		void set(std::span<const std::byte> data);
+		void set(std::span<const std::byte> data) noexcept;
 
 		/// @}
 		/// @name Mapping
@@ -51,11 +51,11 @@ namespace tr
 
 		/// Gets whether the buffer is mapped.
 		/// @return `true` if the buffer is mapped, `false` otherwise.
-		bool mapped() const;
+		[[nodiscard]] bool mapped() const noexcept;
 
 		/// Maps the buffer.
 		/// @return Write-only map of the buffer.
-		basic_graphics_buffer_map map();
+		[[nodiscard]] basic_graphics_buffer_map map();
 
 		/// @}
 		/// @name Label
@@ -103,7 +103,7 @@ namespace tr
 
 		/// Allocates an uninitialized uniform buffer.
 		/// @param context Graphics context to create the buffer on.
-		uniform_buffer(graphics_context& context);
+		[[nodiscard]] uniform_buffer(graphics_context& context);
 
 		/// @}
 		/// @name Context
@@ -123,7 +123,7 @@ namespace tr
 
 		/// Sets the contents of the buffer.
 		/// @param data Object to copy into the buffer.
-		void set(const Object& data);
+		void set(const Object& data) noexcept;
 
 		/// @}
 		/// @name Mapping
@@ -133,7 +133,7 @@ namespace tr
 
 		/// Maps the buffer.
 		/// @return Write-only map of the buffer object.
-		graphics_buffer_object_map<Object> map();
+		[[nodiscard]] graphics_buffer_object_map<Object> map();
 
 		/// @}
 		/// @name Label

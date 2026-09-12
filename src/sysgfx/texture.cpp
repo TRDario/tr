@@ -15,7 +15,7 @@ namespace tr
 		/// Converts a pixel format to an OpenGL texture format.
 		/// @param format Pixel format type.
 		/// @return Equivalent OpenGL texture format.
-		unsigned int gl_tex_format(pixel_format format)
+		[[nodiscard]] unsigned int gl_tex_format(pixel_format format) noexcept
 		{
 			switch (format) {
 			case pixel_format::r8:
@@ -61,7 +61,7 @@ namespace tr
 		/// Converts a pixel format to an OpenGL format.
 		/// @param format Pixel format type.
 		/// @return Equivalent OpenGL format.
-		unsigned int gl_format(pixel_format format)
+		[[nodiscard]] unsigned int gl_format(pixel_format format) noexcept
 		{
 			switch (format) {
 			case pixel_format::r8:
@@ -103,7 +103,7 @@ namespace tr
 		/// Converts a pixel format to an OpenGL type.
 		/// @param format Pixel format type.
 		/// @return Equivalent OpenGL type.
-		unsigned int gl_type(pixel_format format)
+		[[nodiscard]] unsigned int gl_type(pixel_format format) noexcept
 		{
 			switch (format) {
 			case pixel_format::r8:
@@ -150,14 +150,14 @@ namespace tr
 
 //
 
-tr::texture::texture(graphics_context& context)
+tr::texture::texture(graphics_context& context) noexcept
 	: m_handle{deleter{context}}
 	, m_size{0, 0}
 {
 	context.gl().create_textures(GL_TEXTURE_2D, 1, out_handle(m_handle));
 }
 
-tr::texture::texture(graphics_context& context, unsigned int handle, glm::ivec2 size)
+tr::texture::texture(graphics_context& context, unsigned int handle, glm::ivec2 size) noexcept
 	: m_handle{handle, deleter{context}, maybe_empty}
 	, m_size{size}
 {
@@ -175,7 +175,7 @@ tr::texture::texture(graphics_context& context, sub_bitmap bitmap, mipmaps mipma
 	set_region({0, 0}, bitmap);
 }
 
-void tr::texture::deleter::operator()(unsigned int texture) const
+void tr::texture::deleter::operator()(unsigned int texture) const noexcept
 {
 	context->gl().delete_textures(1, &texture);
 }
@@ -239,12 +239,12 @@ tr::texture tr::texture::allocate(glm::ivec2 size, mipmaps mipmaps, pixel_format
 
 //
 
-tr::texture::operator texture_view() const
+tr::texture::operator texture_view() const noexcept
 {
 	return view();
 }
 
-tr::texture_view tr::texture::view() const
+tr::texture_view tr::texture::view() const noexcept
 {
 	TR_ASSERT(valid(), "Tried to create a view over a texture in an invalid state.");
 
@@ -253,7 +253,7 @@ tr::texture_view tr::texture::view() const
 
 //
 
-tr::graphics_context& tr::texture::context() const
+tr::graphics_context& tr::texture::context() const noexcept
 {
 	TR_ASSERT(valid(), "Tried to get context of a texture in an invalid state.");
 
@@ -262,19 +262,19 @@ tr::graphics_context& tr::texture::context() const
 
 //
 
-bool tr::texture::valid() const
+bool tr::texture::valid() const noexcept
 {
 	return m_handle.has_value();
 }
 
-bool tr::texture::complete() const
+bool tr::texture::complete() const noexcept
 {
 	TR_ASSERT(valid(), "Tried to check completeness of a texture in an invalid state.");
 
 	return m_size.x > 0;
 }
 
-glm::ivec2 tr::texture::size() const
+glm::ivec2 tr::texture::size() const noexcept
 {
 	TR_ASSERT(valid(), "Tried to get the size of a texture in an invalid state.");
 
@@ -283,7 +283,7 @@ glm::ivec2 tr::texture::size() const
 
 //
 
-void tr::texture::set_filtering(min_filter min_filter, mag_filter mag_filter)
+void tr::texture::set_filtering(min_filter min_filter, mag_filter mag_filter) noexcept
 {
 	TR_ASSERT(valid(), "Tried to set filtering of a texture in an invalid state.");
 
@@ -292,7 +292,7 @@ void tr::texture::set_filtering(min_filter min_filter, mag_filter mag_filter)
 	gl.set_texture_parameter_i(m_handle.get(), GL_TEXTURE_MAG_FILTER, std::to_underlying(mag_filter));
 }
 
-void tr::texture::set_wrap(wrap wrap)
+void tr::texture::set_wrap(wrap wrap) noexcept
 {
 
 	TR_ASSERT(valid(), "Tried to set wrapping of a texture in an invalid state.");
@@ -303,7 +303,7 @@ void tr::texture::set_wrap(wrap wrap)
 	gl.set_texture_parameter_i(m_handle.get(), GL_TEXTURE_WRAP_R, std::to_underlying(wrap));
 }
 
-void tr::texture::set_border_color(rgbaf color)
+void tr::texture::set_border_color(rgbaf color) noexcept
 {
 	TR_ASSERT(valid(), "Tried to set border color of a texture in an invalid state.");
 
@@ -312,14 +312,14 @@ void tr::texture::set_border_color(rgbaf color)
 
 //
 
-void tr::texture::clear(rgbaf color)
+void tr::texture::clear(rgbaf color) noexcept
 {
 	TR_ASSERT(valid(), "Tried to clear a texture in an invalid state.");
 
 	context().gl().clear_texture_image(m_handle.get(), 0, GL_RGBA, GL_FLOAT, &color);
 }
 
-void tr::texture::clear_region(rectangle<int> region, rgbaf color)
+void tr::texture::clear_region(rectangle<int> region, rgbaf color) noexcept
 {
 	TR_ASSERT(valid(), "Tried to clear a region of a texture in an invalid state.");
 
@@ -327,7 +327,7 @@ void tr::texture::clear_region(rectangle<int> region, rgbaf color)
 										   GL_FLOAT, &color);
 }
 
-void tr::texture::copy_region(glm::ivec2 tl, texture_view src, rectangle<int> region)
+void tr::texture::copy_region(glm::ivec2 tl, texture_view src, rectangle<int> region) noexcept
 {
 	TR_ASSERT(valid(), "Tried to copy to a region of a texture in an invalid state.");
 	TR_ASSERT(!src.empty(), "Tried to copy a region from an empty texture view.");
@@ -336,7 +336,7 @@ void tr::texture::copy_region(glm::ivec2 tl, texture_view src, rectangle<int> re
 									   tl.y, 0, region.size.x, region.size.y, 1);
 }
 
-void tr::texture::set_region(glm::ivec2 tl, sub_bitmap bitmap)
+void tr::texture::set_region(glm::ivec2 tl, sub_bitmap bitmap) noexcept
 {
 	TR_ASSERT(valid(), "Tried to set a region of a texture in an invalid state.");
 	TR_ASSERT(rectangle<int>{size()}.contains(tl + bitmap.size()),
@@ -370,7 +370,7 @@ std::string tr::texture::label() const
 	}
 }
 
-void tr::texture::set_label(std::string_view label)
+void tr::texture::set_label(std::string_view label) noexcept
 {
 	TR_ASSERT(valid(), "Tried to set the label of a texture in an invalid state.");
 
@@ -379,7 +379,7 @@ void tr::texture::set_label(std::string_view label)
 
 //
 
-unsigned int tr::texture::unwrap() const
+unsigned int tr::texture::unwrap() const noexcept
 {
 	return m_handle.get();
 }

@@ -20,26 +20,37 @@ namespace tr
 	{
 		/// Default arrow cursor.
 		arrow,
+
 		/// I-shaped cursor.
 		ibeam,
+
 		/// Waiting cursor.
 		wait,
+
 		/// Crosshair cursor.
 		crosshair,
+
 		/// Waiting arrow cursor.
 		wait_arrow,
+
 		/// Resizing (northwest-southeast) cursor.
 		size_nwse,
+
 		/// Resizing (northeast-southwest) cursor.
 		size_nesw,
+
 		/// Resizing (west-east) cursor.
 		size_we,
+
 		/// Resizing (north-south) cursor.
 		size_ns,
+
 		/// Resizing (all directions) cursor.
 		size_all,
+
 		/// Forbidden action cursor.
 		no,
+
 		/// Pointing hand cursor.
 		hand
 	};
@@ -53,7 +64,7 @@ namespace tr
 
 		/// Constructs a cursor error.
 		/// @param description Description of the error.
-		cursor_error(std::string_view description);
+		[[nodiscard]] cursor_error(std::string_view description) noexcept;
 
 		/// @}
 		/// @name Information
@@ -61,21 +72,21 @@ namespace tr
 
 		/// Gets the name of the error.
 		/// @return `"Cursor error"`.
-		std::string_view name() const override;
+		[[nodiscard]] std::string_view name() const noexcept override;
 
 		/// Gets the description of the error.
 		/// @return Description of the error.
-		std::string_view description() const override;
+		[[nodiscard]] std::string_view description() const noexcept override;
 
 		/// Gets further details about the error.
 		/// @return Always empty.
-		std::string_view details() const override;
+		[[nodiscard]] std::string_view details() const noexcept override;
 
 		/// @}
 
 	  private:
 		/// Description of the error.
-		std::string m_description;
+		std::string_view m_description;
 
 		/// Details of the error.
 		std::string_view m_details;
@@ -89,29 +100,29 @@ namespace tr
 		/// @{
 
 		/// Creates a default mouse cursor.
-		cursor();
+		[[nodiscard]] cursor();
 
 		/// @cond sdl_interop
 
 		/// Wraps an SDL_Cursor pointer.
 		/// @param ptr Pointer to wrap.
-		explicit cursor(SDL_Cursor* ptr);
+		[[nodiscard]] explicit cursor(SDL_Cursor* ptr);
 
 		/// @endcond
 
 		/// Creates a system cursor.
 		/// @param icon Icon to use.
-		cursor(sys_cursor icon);
+		[[nodiscard]] cursor(sys_cursor icon);
 
 		/// Creates a cursor from a bitmap.
 		/// @param bitmap Cursor bitmap. The bitmap does not have to stay alive after this.
 		/// @param focus Focus point on the bitmap.
-		cursor(const bitmap& bitmap, glm::ivec2 focus);
+		[[nodiscard]] cursor(const bitmap& bitmap, glm::ivec2 focus);
 
 		/// Creates a cursor from a bitmap view.
 		/// @param view Cursor bitmap view. The view does not have to stay alive after this.
 		/// @param focus Focus point on the bitmap.
-		cursor(const bitmap_view& view, glm::ivec2 focus);
+		[[nodiscard]] cursor(const bitmap_view& view, glm::ivec2 focus);
 
 		/// @}
 		/// @cond sdl_interop
@@ -121,7 +132,7 @@ namespace tr
 		/// Unwraps the SDL cursor pointer.
 		/// @note This does not release the pointer.
 		/// @return Pointer to the SDL cursor.
-		SDL_Cursor* unwrap() const;
+		[[nodiscard]] SDL_Cursor* unwrap() const;
 
 		/// @}
 		/// @endcond
@@ -132,7 +143,7 @@ namespace tr
 		{
 			/// Deletes a cursor.
 			/// @param ptr Pointer to the cursor.
-			static void operator()(SDL_Cursor* ptr);
+			static void operator()(SDL_Cursor* ptr) noexcept;
 		};
 
 		//

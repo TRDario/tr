@@ -13,15 +13,15 @@ namespace tr
 
 	/// Gets the size of the display.
 	/// @return Size of the display in pixels.
-	glm::ivec2 display_size();
+	[[nodiscard]] glm::ivec2 display_size() noexcept;
 
 	/// Gets the maximum supported MSAA factor.
 	/// @return Maximum supposed MSAA factor.
-	u8 max_msaa();
+	[[nodiscard]] u8 max_msaa() noexcept;
 
 	/// Gets the refresh rate of the display.
 	/// @return Refresh rate of the display.
-	float refresh_rate();
+	[[nodiscard]] float refresh_rate() noexcept;
 
 	/// @}
 } // namespace tr

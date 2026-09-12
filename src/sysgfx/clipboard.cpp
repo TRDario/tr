@@ -6,29 +6,29 @@
 
 //
 
-tr::set_clipboard_error::set_clipboard_error()
+tr::set_clipboard_error::set_clipboard_error() noexcept
 	: m_description{SDL_GetError()}
 {
 }
 
-std::string_view tr::set_clipboard_error::name() const
+std::string_view tr::set_clipboard_error::name() const noexcept
 {
 	return "Clipboard setting error";
 }
 
-std::string_view tr::set_clipboard_error::description() const
+std::string_view tr::set_clipboard_error::description() const noexcept
 {
 	return m_description;
 }
 
-std::string_view tr::set_clipboard_error::details() const
+std::string_view tr::set_clipboard_error::details() const noexcept
 {
 	return {};
 }
 
 //
 
-bool tr::clipboard_empty()
+bool tr::clipboard_empty() noexcept
 {
 	return !SDL_HasClipboardText();
 }

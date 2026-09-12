@@ -23,7 +23,8 @@ namespace tr
 		/// @param header_size Size of the fixed header block in bytes.
 		/// @param capacity Maximum capacity of the dyuamic array in bytes.
 		/// @param map_type Type of map to create when mapping the buffer.
-		basic_shader_buffer(graphics_context& context, usize header_size, usize capacity, map_type map_type = map_type::write_only);
+		[[nodiscard]] basic_shader_buffer(graphics_context& context, usize header_size, usize capacity,
+										  map_type map_type = map_type::write_only);
 
 		/// @}
 		/// @name Context
@@ -43,15 +44,15 @@ namespace tr
 
 		/// Gets the size of the fixed header block.
 		/// @return Size of the fixed header block in bytes.
-		usize header_size() const;
+		[[nodiscard]] usize header_size() const noexcept;
 
 		/// Gets the size of the dynamic array.
 		/// @return Size of the dynamic array in bytes.
-		usize array_size() const;
+		[[nodiscard]] usize array_size() const noexcept;
 
 		/// Gets the maximum capacity of the dynamic array.
 		/// @return Maximum capacity of the dynamic array in bytes.
-		usize array_capacity() const;
+		[[nodiscard]] usize array_capacity() const noexcept;
 
 		/// @}
 		/// @name Setting
@@ -60,17 +61,17 @@ namespace tr
 		/// Sets the data of the header.
 		/// @param data Data to set the header with.
 		/// @pre `data` must be of the same size as the buffer's header.
-		void set_header(std::span<const std::byte> data);
+		void set_header(std::span<const std::byte> data) noexcept;
 
 		/// Sets the data of the dynamic array.
 		/// @param data Data to set the dynamic array with.
 		/// @pre `data` must be smaller than or equal to the capacity of the buffer's dynamic array.
-		void set_array(std::span<const std::byte> data);
+		void set_array(std::span<const std::byte> data) noexcept;
 
 		/// Resizes the dynamic array.
 		/// @param size Size of the dynamic array in bytes.
 		/// @pre `size` must be less than or equal to the capacity of the buffer's dynamic array.
-		void resize_array(usize size);
+		void resize_array(usize size) noexcept;
 
 		/// @}
 		/// @name Mapping
@@ -78,19 +79,19 @@ namespace tr
 
 		/// Gets whether the buffer is mapped.
 		/// @return `true` if the buffer is mapped, `false` otherwise.
-		bool mapped() const;
+		[[nodiscard]] bool mapped() const noexcept;
 
 		/// Maps the fixed header of the buffer.
 		/// @return Map of the fixed header of the buffer.
-		basic_graphics_buffer_map map_header();
+		[[nodiscard]] basic_graphics_buffer_map map_header();
 
 		/// Maps the dynamic array of the buffer.
 		/// @return Map of the dynamic array of the buffer.
-		basic_graphics_buffer_map map_array();
+		[[nodiscard]] basic_graphics_buffer_map map_array();
 
 		/// Maps the entire buffer.
 		/// @return Map of the buffer.
-		basic_graphics_buffer_map map();
+		[[nodiscard]] basic_graphics_buffer_map map();
 
 		/// @}
 		/// @name Label
@@ -139,7 +140,7 @@ namespace tr
 		/// @param offset Starting offset of the map in bytes.
 		/// @param size Size of the map in bytes.
 		/// @return Buffer range map.
-		basic_graphics_buffer_map map_range(usize offset, usize size);
+		[[nodiscard]] basic_graphics_buffer_map map_range(usize offset, usize size);
 	};
 
 	/// Shader buffer with a typed header and array.
@@ -156,7 +157,7 @@ namespace tr
 		/// @param context Graphics context to create the buffer on.
 		/// @param capacity Maximum capacity of the buffer array in elements.
 		/// @param map_type Type of map to create when mapping the buffer.
-		shader_buffer(graphics_context& context, usize capacity, map_type map_type = map_type::write_only);
+		[[nodiscard]] shader_buffer(graphics_context& context, usize capacity, map_type map_type = map_type::write_only);
 
 		/// @}
 		/// @name Context
@@ -176,11 +177,11 @@ namespace tr
 
 		/// Gets the size of the dynamic array.
 		/// @return Size of the dynamic array in elements.
-		usize array_size() const;
+		[[nodiscard]] usize array_size() const noexcept;
 
 		/// Gets the maximum capacity of the dynamic array.
 		/// @return Maximum capacity of the dynamic array in elements.
-		usize array_capacity() const;
+		[[nodiscard]] usize array_capacity() const noexcept;
 
 		/// @}
 		/// @name Setting
@@ -188,18 +189,18 @@ namespace tr
 
 		/// Sets the data of the header.
 		/// @param header Header objet to copy into the buffer.
-		void set_header(const Header& header);
+		void set_header(const Header& header) noexcept;
 
 		/// Sets the data of the dynamic array.
 		/// @tparam Range Contiguous range of array elements.
 		/// @param data Data to set the dynamic array to.
 		template <typed_contiguous_const_range<ArrayElement> Range>
-		void set_array(Range&& data);
+		void set_array(Range&& data) noexcept;
 
 		/// Resizes the dynamic array.
 		/// @param size Size of the array in elements.
 		/// @pre `size` must be less than or equal to the capacity of the array.
-		void resize_array(usize size);
+		void resize_array(usize size) noexcept;
 
 		/// @}
 		/// @name Mapping
@@ -209,11 +210,11 @@ namespace tr
 
 		/// Maps the fixed header of the buffer.
 		/// @return Map of the fixed header of the buffer.
-		graphics_buffer_object_map<Header> map_header();
+		[[nodiscard]] graphics_buffer_object_map<Header> map_header();
 
 		/// Maps the dynamic array of the buffer.
 		/// @return Map of the dynamic array of the buffer.
-		graphics_buffer_span_map<ArrayElement> map_array();
+		[[nodiscard]] graphics_buffer_span_map<ArrayElement> map_array();
 
 		/// @}
 		/// @name Label
@@ -257,7 +258,7 @@ namespace tr
 		/// @param context Graphics context to create the array on.
 		/// @param capacity Maximum capacity of the array in elements.
 		/// @param map_type Type of map to create when mapping the array.
-		shader_array(graphics_context& context, usize capacity, map_type map_type = map_type::write_only);
+		[[nodiscard]] shader_array(graphics_context& context, usize capacity, map_type map_type = map_type::write_only);
 
 		/// @}
 		/// @name Context
@@ -277,11 +278,11 @@ namespace tr
 
 		/// Gets the size of the array.
 		/// @return Size of the array in elements.
-		usize size() const;
+		[[nodiscard]] usize size() const noexcept;
 
 		/// Gets the maximum capacity of the array.
 		/// @return Maximum capacity of the array in elements.
-		usize capacity() const;
+		[[nodiscard]] usize capacity() const noexcept;
 
 		/// @}
 		/// @name Setting
@@ -291,12 +292,12 @@ namespace tr
 		/// @tparam Range Contiguous range of elements.
 		/// @param data Data to set the array to.
 		template <typed_contiguous_const_range<Element> Range>
-		void set(Range&& data);
+		void set(Range&& data) noexcept;
 
 		/// Resizes the array.
 		/// @param size Size of the array in elements.
 		/// @pre `size` must be less than or equal to the capacity of the array.
-		void resize(usize size);
+		void resize(usize size) noexcept;
 
 		/// @}
 		/// @name Mapping
@@ -306,7 +307,7 @@ namespace tr
 
 		/// Maps the array.
 		/// @return Map of the array.
-		graphics_buffer_span_map<Element> map();
+		[[nodiscard]] graphics_buffer_span_map<Element> map();
 
 		/// @}
 		/// @name Label

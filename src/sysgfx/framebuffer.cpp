@@ -8,7 +8,7 @@
 
 //
 
-tr::framebuffer::framebuffer(graphics_context& context)
+tr::framebuffer::framebuffer(graphics_context& context) noexcept
 	: m_handle{deleter{context}}
 {
 	context.gl().create_framebuffers(1, out_handle(m_handle));
@@ -17,7 +17,7 @@ tr::framebuffer::framebuffer(graphics_context& context)
 #endif
 }
 
-void tr::framebuffer::deleter::operator()(unsigned int fbo) const
+void tr::framebuffer::deleter::operator()(unsigned int fbo) const noexcept
 {
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 	context->registry().framebuffers.erase(id);
@@ -27,7 +27,7 @@ void tr::framebuffer::deleter::operator()(unsigned int fbo) const
 
 //
 
-tr::graphics_context& tr::framebuffer::context() const
+tr::graphics_context& tr::framebuffer::context() const noexcept
 {
 	TR_ASSERT(valid(), "Tried to get context of a framebuffer in an invalid state.");
 
@@ -36,14 +36,14 @@ tr::graphics_context& tr::framebuffer::context() const
 
 //
 
-void tr::framebuffer::attach(attachment attachment, texture_view texture)
+void tr::framebuffer::attach(attachment attachment, texture_view texture) noexcept
 {
 	TR_ASSERT(valid(), "Tried to attach to a framebuffer in an invalid state.");
 
 	context().gl().set_framebuffer_texture(unwrap(), std::to_underlying(attachment), texture.unwrap(), 0);
 }
 
-void tr::framebuffer::detach(attachment attachment)
+void tr::framebuffer::detach(attachment attachment) noexcept
 {
 	TR_ASSERT(valid(), "Tried to detach from a framebuffer in an invalid state.");
 
@@ -52,14 +52,14 @@ void tr::framebuffer::detach(attachment attachment)
 
 //
 
-bool tr::framebuffer::valid() const
+bool tr::framebuffer::valid() const noexcept
 {
 	return m_handle.has_value();
 }
 
 //
 
-void tr::framebuffer::set_label(std::string_view label)
+void tr::framebuffer::set_label(std::string_view label) noexcept
 {
 	TR_ASSERT(valid(), "Tried to set the label of a framebuffer in an invalid state");
 
@@ -86,13 +86,13 @@ std::string tr::framebuffer::label() const
 
 //
 
-unsigned int tr::framebuffer::unwrap() const
+unsigned int tr::framebuffer::unwrap() const noexcept
 {
 	return m_handle.get();
 }
 
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-tr::graphics_object_id tr::framebuffer::id() const
+tr::graphics_object_id tr::framebuffer::id() const noexcept
 {
 	return m_handle.get_deleter().id;
 }

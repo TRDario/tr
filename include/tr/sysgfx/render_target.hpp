@@ -50,19 +50,20 @@ namespace tr
 		/// Constructs a backbuffer render target.
 		/// @note This is equivalent to calling `context.backbuffer()`.
 		/// @param context Graphics context whose backbuffer to create the render target for.
-		explicit render_target(const graphics_context& context);
+		[[nodiscard]] explicit render_target(const graphics_context& context) noexcept;
 
 		/// Creates a render target on a framebuffer.
 		/// @param framebuffer Framebuffer the render target is on.
 		/// @param framebuffer_size Size of the framebuffer.
-		render_target(const framebuffer& framebuffer, glm::ivec2 framebuffer_size);
+		[[nodiscard]] render_target(const framebuffer& framebuffer, glm::ivec2 framebuffer_size) noexcept;
 
 		/// Creates a render target on a framebuffer.
 		/// @param framebuffer Framebuffer the render target is on.
 		/// @param framebuffer_size Size of the framebuffer.
 		/// @param viewport Viewport of the framebuffer.
 		/// @param scissor_box Scissor box of the framebuffer.
-		render_target(const framebuffer& framebuffer, glm::ivec2 framebuffer_size, rectangle<int> viewport, rectangle<int> scissor_box);
+		[[nodiscard]] render_target(const framebuffer& framebuffer, glm::ivec2 framebuffer_size, rectangle<int> viewport,
+									rectangle<int> scissor_box) noexcept;
 
 		/// @}
 		/// @name Properties
@@ -70,15 +71,15 @@ namespace tr
 
 		/// Gets the size of the render target.
 		/// @return Size of the render target.
-		glm::ivec2 size() const;
+		[[nodiscard]] glm::ivec2 size() const noexcept;
 
 		/// Gets the viewport of the render target within the target framebuffer.
 		/// @return Viewport rectangle of the render target within the target framebuffer.
-		rectangle<int> viewport() const;
+		[[nodiscard]] rectangle<int> viewport() const noexcept;
 
 		/// Gets the scissor box of the render target within the target framebuffer.
 		/// @return Scissor box rectangle of the render target within the target framebuffer.
-		rectangle<int> scissor_box() const;
+		[[nodiscard]] rectangle<int> scissor_box() const noexcept;
 
 		/// @}
 		/// @name Subtargets
@@ -87,19 +88,19 @@ namespace tr
 		/// Creates a new render target with a cropped viewport and full scissor box.
 		/// @param viewport Viewport of the render target.
 		/// @return New subtarget.
-		render_target cropped(rectangle<int> viewport) const;
+		[[nodiscard]] render_target cropped(rectangle<int> viewport) const noexcept;
 
 		/// Creates a new render target with the same viewport and a different scissor box.
 		/// @param scissor_box Scissor box of the render target.
 		/// @return New subtarget.
-		render_target scissored(rectangle<int> scissor_box) const;
+		[[nodiscard]] render_target scissored(rectangle<int> scissor_box) const noexcept;
 
 		/// @}
 		/// @cond implementation_details
 
 		/// Gets information about the render target's framebuffer.
 		/// @return Information about the render target's framebuffer.
-		const framebuffer_info_t& framebuffer_info() const;
+		[[nodiscard]] const framebuffer_info_t& framebuffer_info() const noexcept;
 
 		/// @endcond
 

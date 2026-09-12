@@ -7,7 +7,7 @@
 //
 
 template <tr::any_vertex_buffer VertexBuffer>
-void tr::graphics_context::set_vertex_buffer_base(const VertexBuffer& buffer, int slot, ssize offset, usize stride)
+void tr::graphics_context::set_vertex_buffer_base(const VertexBuffer& buffer, int slot, ssize offset, usize stride) noexcept
 {
 	TR_ASSERT(buffer.valid(), "Tried to set a vertex buffer in an invalid state to a graphics context.");
 	TR_ASSERT(&buffer.context() == this, "Tried to set vertex buffer {} to a context it is not associated with.", buffer);
@@ -21,13 +21,13 @@ void tr::graphics_context::set_vertex_buffer_base(const VertexBuffer& buffer, in
 }
 
 template <tr::any_untyped_vertex_buffer UntypedVertexBuffer>
-void tr::graphics_context::set_vertex_buffer(const UntypedVertexBuffer& buffer, int slot, ssize offset, usize stride)
+void tr::graphics_context::set_vertex_buffer(const UntypedVertexBuffer& buffer, int slot, ssize offset, usize stride) noexcept
 {
 	set_vertex_buffer_base(buffer, slot, offset, stride);
 }
 
 template <tr::any_typed_vertex_buffer TypedVertexBuffer>
-void tr::graphics_context::set_vertex_buffer(const TypedVertexBuffer& buffer, int slot, ssize offset)
+void tr::graphics_context::set_vertex_buffer(const TypedVertexBuffer& buffer, int slot, ssize offset) noexcept
 {
 	using element_type = TypedVertexBuffer::value_type;
 
@@ -38,7 +38,7 @@ void tr::graphics_context::set_vertex_buffer(const TypedVertexBuffer& buffer, in
 }
 
 template <tr::any_index_buffer IndexBuffer>
-void tr::graphics_context::set_index_buffer(const IndexBuffer& buffer)
+void tr::graphics_context::set_index_buffer(const IndexBuffer& buffer) noexcept
 {
 	TR_ASSERT(buffer.valid(), "Tried to set an index buffer in an invalid state to a graphics context.");
 

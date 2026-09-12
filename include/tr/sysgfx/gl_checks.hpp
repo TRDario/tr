@@ -11,31 +11,57 @@ namespace tr
 	enum class glsl_type
 	{
 		undefined,
+
 		bool_ = 0x8B56,
+
 		bvec2,
+
 		bvec3,
+
 		bvec4,
+
 		int_ = 0x1404,
+
 		ivec2 = 0x8B53,
+
 		ivec3,
+
 		ivec4,
+
 		uint = 0x1405,
+
 		uvec2 = 0x8DC6,
+
 		uvec3,
+
 		uvec4,
+
 		float_ = 0x1406,
+
 		vec2 = 0x8B50,
+
 		vec3,
+
 		vec4,
+
 		mat2 = 0x8B5A,
+
 		mat3,
+
 		mat4,
+
 		mat2x3 = 0x8B65,
+
 		mat2x4,
+
 		mat3x2,
+
 		mat3x4,
+
 		mat4x2,
+
 		mat4x3,
+
 		sampler2D = 0x8B5E
 	};
 

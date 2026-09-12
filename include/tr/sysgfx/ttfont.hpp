@@ -27,7 +27,7 @@ namespace tr
 		/// Constructs an exception.
 		/// @param path Path to the file that failed to load.
 		/// @param details Details of the error.
-		ttfont_load_error(std::string_view path, std::string&& details);
+		[[nodiscard]] ttfont_load_error(std::string_view path, std::string&& details);
 
 		/// @}
 		/// @name Information
@@ -35,15 +35,15 @@ namespace tr
 
 		/// Gets the name of the error.
 		/// @return `"TrueType font loading error"`.
-		std::string_view name() const override;
+		[[nodiscard]] std::string_view name() const noexcept override;
 
 		/// Gets the description of the error.
 		/// @return Description of the error.
-		std::string_view description() const override;
+		[[nodiscard]] std::string_view description() const noexcept override;
 
 		/// Gets further details about the error.
 		/// @return Details of the error.
-		std::string_view details() const override;
+		[[nodiscard]] std::string_view details() const noexcept override;
 
 		/// @}
 
@@ -64,7 +64,7 @@ namespace tr
 
 		/// Constructs an exception.
 		/// @param description Description of the error.
-		ttfont_render_error(std::string_view description);
+		[[nodiscard]] ttfont_render_error(std::string_view description) noexcept;
 
 		/// @}
 		/// @name Information
@@ -72,15 +72,15 @@ namespace tr
 
 		/// Gets the name of the error.
 		/// @return `"TrueType font rendering error"`.
-		std::string_view name() const override;
+		[[nodiscard]] std::string_view name() const noexcept override;
 
 		/// Gets the description of the error.
 		/// @return Description of the error.
-		std::string_view description() const override;
+		[[nodiscard]] std::string_view description() const noexcept override;
 
 		/// Gets further details about the error.
 		/// @return Always empty.
-		std::string_view details() const override;
+		[[nodiscard]] std::string_view details() const noexcept override;
 
 		/// @}
 
@@ -98,14 +98,14 @@ namespace tr
 
 		/// Constructs a window error.
 		/// @param description Description of the error.
-		ttfont_error(std::string&& description);
+		[[nodiscard]] ttfont_error(std::string&& description) noexcept;
 
 		/// Constructs a font error.
 		/// @tparam Args Types of the formatting arguments.
 		/// @param description_fmt Error description format string.
 		/// @param args Formatting arguments.
 		template <typename... Args>
-		ttfont_error(std::format_string<Args...> description_fmt, Args&&... args);
+		[[nodiscard]] ttfont_error(std::format_string<Args...> description_fmt, Args&&... args);
 
 		/// @}
 		/// @name Information
@@ -113,15 +113,15 @@ namespace tr
 
 		/// Gets the name of the error.
 		/// @return `"TrueType font error"`.
-		std::string_view name() const override;
+		[[nodiscard]] std::string_view name() const noexcept override;
 
 		/// Gets the description of the error.
 		/// @return Description of the error.
-		std::string_view description() const override;
+		[[nodiscard]] std::string_view description() const noexcept override;
 
 		/// Gets further details about the error.
 		/// @return Details of the error.
-		std::string_view details() const override;
+		[[nodiscard]] std::string_view details() const noexcept override;
 
 		/// @}
 
@@ -140,12 +140,16 @@ namespace tr
 	{
 		/// Normal font.
 		normal = 0,
+
 		/// Bold font.
 		bold = 1,
+
 		/// Italic font.
 		italic = 2,
+
 		/// Underlined font.
 		underline = 4,
+
 		/// Striked font.
 		strikethrough = 8
 	};
@@ -192,7 +196,7 @@ namespace tr
 
 		/// Wraps an SDL TrueType font.
 		/// @param ptr Pointer to wrap.
-		explicit ttfont(TTF_Font* ptr);
+		[[nodiscard]] explicit ttfont(TTF_Font* ptr) noexcept;
 
 		/// @}
 		/// @endcond
@@ -201,24 +205,24 @@ namespace tr
 
 		/// Gets the ascent of the font.
 		/// @return Ascent of the font.
-		int ascent() const;
+		[[nodiscard]] int ascent() const noexcept;
 
 		/// Gets the descent of the font.
 		/// @return Descent of the font.
-		int descent() const;
+		[[nodiscard]] int descent() const noexcept;
 
 		/// Gets the height of the font.
 		/// @return Height of the font.
-		int height() const;
+		[[nodiscard]] int height() const noexcept;
 
 		/// Gets the distance between two lines.
 		/// @return Distance between two lines.
-		int line_skip() const;
+		[[nodiscard]] int line_skip() const noexcept;
 
 		/// Gets whether the font contains a glyph.
 		/// @param glyph Glyph to check for.
 		/// @return `true` if the font contains `glyph`, `false` otherwise.
-		bool contains(u32 glyph) const;
+		[[nodiscard]] bool contains(u32 glyph) const noexcept;
 
 		/// @}
 		/// @name Manipulation
@@ -230,7 +234,7 @@ namespace tr
 
 		/// Sets the font style.
 		/// @param style Style of the font.
-		void set_style(ttf_style style);
+		void set_style(ttf_style style) noexcept;
 
 		/// Sets the font outline.
 		/// @param outline Outline width of the font.
@@ -243,25 +247,25 @@ namespace tr
 		/// Gets the metrics of a glyph given the current size, style, and outline.
 		/// @param glyph Glyph to get the metrics of.
 		/// @return Metrics of `glyph`.
-		glyph_metrics metrics(u32 glyph);
+		[[nodiscard]] glyph_metrics metrics(u32 glyph);
 
 		/// Gets the kerning between two glyphs given the current size, style, and outline.
 		/// @param prev_glyph Previous glyph.
 		/// @param next_glyph Next glyph.
 		/// @return Kerning between `prev_glyph` and `next_glyph`.
-		int kerning(u32 prev_glyph, u32 next_glyph);
+		[[nodiscard]] int kerning(u32 prev_glyph, u32 next_glyph);
 
 		/// Measures the amount of text that will fit in a given width given the current size, style, and outline.
 		/// @param text Text to measure.
 		/// @param max_w Maximum width of a line of text.
 		/// @return Measurement of the drawn text.
-		ttf_measure_result measure_text(std::string_view text, int max_w = unlimited_width) const;
+		[[nodiscard]] ttf_measure_result measure_text(std::string_view text, int max_w = unlimited_width) const;
 
 		/// Gets the drawn size of a string of text given the current size, style, and outline.
 		/// @param text Text to measure.
 		/// @param max_w Maximum width of a line of text.
 		/// @return Size of the drawn text.
-		glm::ivec2 text_size(std::string_view text, int max_w = unlimited_width) const;
+		[[nodiscard]] glm::ivec2 text_size(std::string_view text, int max_w = unlimited_width) const;
 
 		/// @}
 		/// @name Rendering
@@ -271,7 +275,7 @@ namespace tr
 		/// @param glyph Glyph to render.
 		/// @param color Glyph color.
 		/// @exception ttfont_render_error If rendering the glyph bitmap failed.
-		bitmap render(u32 glyph, rgba8 color) const;
+		[[nodiscard]] bitmap render(u32 glyph, rgba8 color) const;
 
 		/// Renders a string of text.
 		/// @param text Text to render.
@@ -279,7 +283,7 @@ namespace tr
 		/// @param align Alignment of the lines of text.
 		/// @param color Text color.
 		/// @exception ttfont_render_error If rendering the string bitmap failed.
-		bitmap render(std::string_view text, int max_w, halign align, rgba8 color) const;
+		[[nodiscard]] bitmap render(std::string_view text, int max_w, halign align, rgba8 color) const;
 
 		/// @}
 		/// @cond sdl_interop
@@ -289,7 +293,7 @@ namespace tr
 		/// Unwraps the SDL font pointer.
 		/// @note This does not release the pointer.
 		/// @return Pointer to the SDL font.
-		TTF_Font* unwrap() const;
+		[[nodiscard]] TTF_Font* unwrap() const noexcept;
 
 		/// @}
 		/// @endcond
@@ -300,8 +304,10 @@ namespace tr
 		{
 			/// Closes a font.
 			/// @param ptr Pointer to the SDL TrueType font.
-			static void operator()(TTF_Font* ptr);
+			static void operator()(TTF_Font* ptr) noexcept;
 		};
+
+		//
 
 		/// Handle to the SDL TrueType font.
 		std::unique_ptr<TTF_Font, deleter> m_ptr;
@@ -315,7 +321,7 @@ namespace tr
 	/// @param size Initial font size.
 	/// @exception ttf_load_error If loading the font failed.
 	/// @return Loaded TrueType font.
-	ttfont load_embedded_ttfont(std::span<const std::byte> data, float size = 16);
+	[[nodiscard]] ttfont load_embedded_ttfont(std::span<const std::byte> data, float size = 16);
 
 	/// Loads an embedded font file.
 	/// @param range Font file data range.
@@ -323,14 +329,14 @@ namespace tr
 	/// @exception ttf_load_error If loading the font failed.
 	/// @return Loaded TrueType font.
 	template <std::ranges::contiguous_range Range>
-	ttfont load_embedded_ttfont(Range&& range, float size = 16);
+	[[nodiscard]] ttfont load_embedded_ttfont(Range&& range, float size = 16);
 
 	/// Loads a font from file.
 	/// @param path Path to the font file.
 	/// @param size Initial font size.
 	/// @exception ttf_load_error If loading the font failed.
 	/// @return Loaded TrueType font.
-	ttfont load_ttfont_file(const std::filesystem::path& path, float size = 16);
+	[[nodiscard]] ttfont load_ttfont_file(const std::filesystem::path& path, float size = 16);
 
 	/// @}
 	/// @name Text splitting
@@ -339,21 +345,21 @@ namespace tr
 	/// Splits a string view into a list of lines.
 	/// @param str String to split.
 	/// @return Vector of views to the lines of the string.
-	std::vector<std::string_view> split_into_lines(std::string_view str);
+	[[nodiscard]] std::vector<std::string_view> split_into_lines(std::string_view str);
 
 	/// Splits a vector of lines, breaking overlong lines according to the font's current size, style, and outline.
 	/// @param lines Vector of views to the lines of the string.
 	/// @param font Font according which to split.
 	/// @param max_w Maximum width of a line of text.
 	/// @return Vector of views to the split lines of the string.
-	std::vector<std::string_view> break_overlong_lines(std::vector<std::string_view>&& lines, const ttfont& font, int max_w);
+	[[nodiscard]] std::vector<std::string_view> break_overlong_lines(std::vector<std::string_view>&& lines, const ttfont& font, int max_w);
 
 	/// Splits a string view into a list of lines, breaking overlong lines according to the font's current size, style, and outline.
 	/// @param str String to split.
 	/// @param font Font according which to split.
 	/// @param max_w Maximum width of a line of text.
 	/// @return Vector of views to the split lines of the string.
-	std::vector<std::string_view> split_into_lines(std::string_view str, const ttfont& font, int max_w);
+	[[nodiscard]] std::vector<std::string_view> split_into_lines(std::string_view str, const ttfont& font, int max_w);
 
 	/// @}
 } // namespace tr

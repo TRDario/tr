@@ -13,14 +13,19 @@ namespace tr
 	{
 		/// No mouse buttons.
 		none = 0x0,
+
 		/// Left mouse button.
 		left = 0x1,
+
 		/// Middle mouse button.
 		middle = 0x2,
+
 		/// Right mouse button.
 		right = 0x4,
+
 		/// First additional mouse button.
 		x1 = 0x8,
+
 		/// Second additional mouse button.
 		x2 = 0x10
 	};
@@ -48,6 +53,7 @@ namespace tr
 	{
 		/// Absolute mouse controls: normal operation.
 		absolute,
+
 		/// Relative mouse controls: cursor is hidden, stuck to the center, and only reports deltas.
 		relative
 	};

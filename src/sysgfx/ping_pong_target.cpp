@@ -7,7 +7,7 @@
 
 //
 
-tr::ping_pong_target::ping_pong_target(graphics_context& context)
+tr::ping_pong_target::ping_pong_target(graphics_context& context) noexcept
 	: m_targets{texture_target{context}, texture_target{context}}
 	, m_source_index{0}
 {
@@ -21,7 +21,7 @@ tr::ping_pong_target::ping_pong_target(graphics_context& context, glm::ivec2 siz
 
 //
 
-tr::graphics_context& tr::ping_pong_target::context() const
+tr::graphics_context& tr::ping_pong_target::context() const noexcept
 {
 	TR_ASSERT(valid(), "Tried to get context of a ping-pong target in an invalid state.");
 
@@ -30,19 +30,19 @@ tr::graphics_context& tr::ping_pong_target::context() const
 
 //
 
-bool tr::ping_pong_target::valid() const
+bool tr::ping_pong_target::valid() const noexcept
 {
 	return m_targets[0].valid();
 }
 
-bool tr::ping_pong_target::complete() const
+bool tr::ping_pong_target::complete() const noexcept
 {
 	TR_ASSERT(valid(), "Tried to check completeness of a ping-pong target in an invalid state.");
 
 	return m_targets[0].complete();
 }
 
-glm::ivec2 tr::ping_pong_target::size() const
+glm::ivec2 tr::ping_pong_target::size() const noexcept
 {
 	TR_ASSERT(valid(), "Tried to get the size of a ping-pong target in an invalid state.");
 
@@ -60,7 +60,7 @@ void tr::ping_pong_target::allocate(glm::ivec2 size, mipmaps mipmaps, pixel_form
 	}
 }
 
-void tr::ping_pong_target::clear_destination(rgbaf color)
+void tr::ping_pong_target::clear_destination(rgbaf color) noexcept
 {
 	TR_ASSERT(valid(), "Tried to clear the destination of a ping-pong target in an invalid state.");
 	TR_ASSERT(complete(), "Tried to clear the destination of an incomplete ping-pong target.");
@@ -70,7 +70,7 @@ void tr::ping_pong_target::clear_destination(rgbaf color)
 
 //
 
-void tr::ping_pong_target::set_filtering(min_filter min_filter, mag_filter mag_filter)
+void tr::ping_pong_target::set_filtering(min_filter min_filter, mag_filter mag_filter) noexcept
 {
 	TR_ASSERT(valid(), "Tried to set filtering of a ping-pong target in an invalid state.");
 	TR_ASSERT(complete(), "Tried to set filtering of an incomplete ping-pong target.");
@@ -80,7 +80,7 @@ void tr::ping_pong_target::set_filtering(min_filter min_filter, mag_filter mag_f
 	}
 }
 
-void tr::ping_pong_target::set_wrap(wrap wrap)
+void tr::ping_pong_target::set_wrap(wrap wrap) noexcept
 {
 	TR_ASSERT(valid(), "Tried to set wrapping of a ping-pong target in an invalid state.");
 	TR_ASSERT(complete(), "Tried to set wrapping of an incomplete ping-pong target.");
@@ -90,7 +90,7 @@ void tr::ping_pong_target::set_wrap(wrap wrap)
 	}
 }
 
-void tr::ping_pong_target::set_border_color(rgbaf color)
+void tr::ping_pong_target::set_border_color(rgbaf color) noexcept
 {
 	TR_ASSERT(valid(), "Tried to set border color of a ping-pong target in an invalid state.");
 	TR_ASSERT(complete(), "Tried to set border color of an incomplete ping-pong target.");
@@ -102,7 +102,7 @@ void tr::ping_pong_target::set_border_color(rgbaf color)
 
 //
 
-tr::texture_view tr::ping_pong_target::source() const
+tr::texture_view tr::ping_pong_target::source() const noexcept
 {
 	TR_ASSERT(valid(), "Tried to get the source of a ping-pong target in an invalid state.");
 	TR_ASSERT(complete(), "Tried to get the source of an incomplete ping-pong target.");
@@ -110,7 +110,7 @@ tr::texture_view tr::ping_pong_target::source() const
 	return m_targets[m_source_index];
 }
 
-tr::render_target tr::ping_pong_target::destination()
+tr::render_target tr::ping_pong_target::destination() noexcept
 {
 	TR_ASSERT(valid(), "Tried to get the destination of a ping-pong target in an invalid state.");
 	TR_ASSERT(complete(), "Tried to get the destination of an incomplete ping-pong target.");
@@ -118,7 +118,7 @@ tr::render_target tr::ping_pong_target::destination()
 	return m_targets[1 - m_source_index];
 }
 
-void tr::ping_pong_target::swap()
+void tr::ping_pong_target::swap() noexcept
 {
 	TR_ASSERT(valid(), "Tried to swap targets of a ping-pong target in an invalid state.");
 	TR_ASSERT(complete(), "Tried to swap targets of an incomplete ping-pong target.");

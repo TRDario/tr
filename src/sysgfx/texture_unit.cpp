@@ -7,7 +7,7 @@
 
 //
 
-tr::texture_unit::texture_unit(graphics_context& context)
+tr::texture_unit::texture_unit(graphics_context& context) noexcept
 	: m_handle{deleter{context}}
 {
 	for (unsigned int free_index{0}; free_index < context.m_allocated_texture_units.size(); ++free_index) {
@@ -20,21 +20,21 @@ tr::texture_unit::texture_unit(graphics_context& context)
 	TR_ASSERT(m_handle.has_value(), "Tried to allocate more than 80 texture units simultaneously.");
 }
 
-void tr::texture_unit::deleter::operator()(unsigned int id) const
+void tr::texture_unit::deleter::operator()(unsigned int id) const noexcept
 {
 	context->m_allocated_texture_units[id] = false;
 }
 
 //
 
-unsigned int tr::texture_unit::id() const
+unsigned int tr::texture_unit::id() const noexcept
 {
 	return m_handle.get();
 }
 
 //
 
-void tr::texture_unit::set(texture_view texture)
+void tr::texture_unit::set(texture_view texture) noexcept
 {
 	const unsigned int texture_id{texture.unwrap()};
 	m_handle.get_deleter().context->gl().bind_textures(m_handle.get(), 1, &texture_id);

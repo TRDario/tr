@@ -46,7 +46,7 @@ namespace tr
 		/// Gets the Dear ImGui texture ID for a tr texture view.
 		/// @param texture Texture to get the ImGui ID of.
 		/// @return ID associated with the texture that may be passed to ImGui functions.
-		ImTextureID GetTextureID(texture_view texture);
+		ImTextureID GetTextureID(texture_view texture) noexcept;
 
 		/// Prepares the Dear ImGui backends needed to work with tr for a new frame.
 		/// @note This function should be called after `::ImGui::NewFrame`.

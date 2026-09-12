@@ -15,7 +15,7 @@ namespace tr
 		/// @param bitmap Rendered text bitmap.
 		/// @param max_alpah Maximum allowed alpha.
 		/// @return Bitmap with fixed alpha artifacts.
-		bitmap fix_alpha_artifacts(bitmap&& bitmap, u8 max_alpha)
+		[[nodiscard]] bitmap fix_alpha_artifacts(bitmap&& bitmap, u8 max_alpha) noexcept
 		{
 			// We know the bitmap is ARGB_8888.
 			u8* row_it{reinterpret_cast<u8*>(bitmap.data())};
@@ -38,101 +38,101 @@ tr::ttfont_load_error::ttfont_load_error(std::string_view path, std::string&& de
 {
 }
 
-std::string_view tr::ttfont_load_error::name() const
+std::string_view tr::ttfont_load_error::name() const noexcept
 {
 	return "TrueType font loading error";
 }
 
-std::string_view tr::ttfont_load_error::description() const
+std::string_view tr::ttfont_load_error::description() const noexcept
 {
 	return m_description;
 }
 
-std::string_view tr::ttfont_load_error::details() const
+std::string_view tr::ttfont_load_error::details() const noexcept
 {
 	return m_details;
 }
 
 //
 
-tr::ttfont_render_error::ttfont_render_error(std::string_view description)
+tr::ttfont_render_error::ttfont_render_error(std::string_view description) noexcept
 	: m_description{description}
 {
 }
 
-std::string_view tr::ttfont_render_error::name() const
+std::string_view tr::ttfont_render_error::name() const noexcept
 {
 	return "TrueType font rendering error";
 }
 
-std::string_view tr::ttfont_render_error::description() const
+std::string_view tr::ttfont_render_error::description() const noexcept
 {
 	return m_description;
 }
 
-std::string_view tr::ttfont_render_error::details() const
+std::string_view tr::ttfont_render_error::details() const noexcept
 {
 	return {};
 }
 
 //
 
-tr::ttfont_error::ttfont_error(std::string&& description)
+tr::ttfont_error::ttfont_error(std::string&& description) noexcept
 	: m_description{std::move(description)}
 	, m_details{SDL_GetError()}
 {
 }
 
-std::string_view tr::ttfont_error::name() const
+std::string_view tr::ttfont_error::name() const noexcept
 {
 	return "TrueType font error";
 }
 
-std::string_view tr::ttfont_error::description() const
+std::string_view tr::ttfont_error::description() const noexcept
 {
 	return m_description;
 }
 
-std::string_view tr::ttfont_error::details() const
+std::string_view tr::ttfont_error::details() const noexcept
 {
 	return m_details;
 }
 
 //
 
-tr::ttfont::ttfont(TTF_Font* font)
+tr::ttfont::ttfont(TTF_Font* font) noexcept
 	: m_ptr{font}
 {
 }
 
-void tr::ttfont::deleter::operator()(TTF_Font* font)
+void tr::ttfont::deleter::operator()(TTF_Font* font) noexcept
 {
 	TTF_CloseFont(font);
 }
 
 //
 
-int tr::ttfont::ascent() const
+int tr::ttfont::ascent() const noexcept
 {
 	return TTF_GetFontAscent(m_ptr.get());
 }
 
-int tr::ttfont::descent() const
+int tr::ttfont::descent() const noexcept
 {
 	return TTF_GetFontDescent(m_ptr.get());
 }
 
-int tr::ttfont::height() const
+int tr::ttfont::height() const noexcept
 {
 	return TTF_GetFontHeight(m_ptr.get());
 }
 
-int tr::ttfont::line_skip() const
+int tr::ttfont::line_skip() const noexcept
 {
 	return TTF_GetFontLineSkip(m_ptr.get());
 }
 
-bool tr::ttfont::contains(u32 glyph) const
+bool tr::ttfont::contains(u32 glyph) const noexcept
 {
 	return TTF_FontHasGlyph(m_ptr.get(), glyph);
 }
@@ -148,7 +148,7 @@ void tr::ttfont::resize(float size)
 	}
 }
 
-void tr::ttfont::set_style(ttf_style style)
+void tr::ttfont::set_style(ttf_style style) noexcept
 {
 	TTF_SetFontStyle(m_ptr.get(), std::to_underlying(style));
 }
@@ -213,6 +213,13 @@ tr::bitmap tr::ttfont::render(std::string_view text, int max_w, halign align, rg
 	TTF_SetFontWrapAlignment(m_ptr.get(), static_cast<TTF_HorizontalAlignment>(align));
 	SDL_Surface* const ptr{TTF_RenderText_Blended_Wrapped(m_ptr.get(), text.data(), text.size(), std::bit_cast<SDL_Color>(color), max_w)};
 	return ptr != nullptr ? fix_alpha_artifacts(bitmap{ptr}, color.a) : throw ttfont_render_error{SDL_GetError()};
+}
+
+//
+
+TTF_Font* tr::ttfont::unwrap() const noexcept
+{
+	return m_ptr.get();
 }
 
 //

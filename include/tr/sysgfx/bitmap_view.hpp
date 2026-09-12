@@ -32,21 +32,21 @@ namespace tr
 		/// @param raw_data Span holding the pixel data.
 		/// @param size Size of the bitmap.
 		/// @param format Format of the bitmap.
-		bitmap_view(std::span<const std::byte> raw_data, glm::ivec2 size, pixel_format format);
+		[[nodiscard]] bitmap_view(std::span<const std::byte> raw_data, glm::ivec2 size, pixel_format format);
 
 		/// Creates a bitmap view over a range of pixel data.
 		/// @param range Range holding the pixel data.
 		/// @param size Size of the bitmap.
 		/// @param format Format of the bitmap.
 		template <std::ranges::contiguous_range Range>
-		bitmap_view(Range&& range, glm::ivec2 size, pixel_format format);
+		[[nodiscard]] bitmap_view(Range&& range, glm::ivec2 size, pixel_format format);
 
 		/// Creates a bitmap view over pixel data.
 		/// @param raw_data_start Pointer to the pixel data.
 		/// @param pitch Pitch of the pixel data.
 		/// @param size Size of the bitmap.
 		/// @param format Format of the bitmap.
-		bitmap_view(const std::byte* raw_data_start, int pitch, glm::ivec2 size, pixel_format format);
+		[[nodiscard]] bitmap_view(const std::byte* raw_data_start, int pitch, glm::ivec2 size, pixel_format format);
 
 		/// @}
 		/// @name Sub-bitmaps
@@ -54,12 +54,12 @@ namespace tr
 
 		/// Creates a sub-bitmap spanning the entire bitmap view.
 		/// @return Sub-bitmap spanning the entire bitmap view.
-		operator sub_bitmap() const;
+		[[nodiscard]] operator sub_bitmap() const noexcept;
 
 		/// Creates a sub-bitmap of the bitmap view.
 		/// @param region Region of the bitmap to create a sub-bitmap of.
 		/// @return Sub-bitmap spanning a region of the bitmap view.
-		sub_bitmap sub(rectangle<int> region) const;
+		[[nodiscard]] sub_bitmap sub(rectangle<int> region) const noexcept;
 
 		/// @}
 		/// @name Information
@@ -67,15 +67,15 @@ namespace tr
 
 		/// Gets the size of the bitmap.
 		/// @return Size of the bitmap.
-		glm::ivec2 size() const;
+		[[nodiscard]] glm::ivec2 size() const noexcept;
 
 		/// Gets the format of the bitmap.
 		/// @return Format of the bitmap.
-		pixel_format format() const;
+		[[nodiscard]] pixel_format format() const noexcept;
 
 		/// Gets the pitch of the bitmap.
 		/// @return Pitch of the bitmap.
-		int pitch() const;
+		[[nodiscard]] int pitch() const noexcept;
 
 		/// @}
 		/// @name Access
@@ -84,16 +84,16 @@ namespace tr
 		/// Gets immutable access to a pixel of the bitmap.
 		/// @param x, y Position of the bitmap within the bitmap.
 		/// @return Reference to a pixel of the bitmap.
-		reference operator[](int x, int y) const;
+		[[nodiscard]] reference operator[](int x, int y) const noexcept;
 
 		/// Gets immutable access to a pixel of the bitmap.
 		/// @param pos Position of the pixel within the bitmap.
 		/// @return Reference to a pixel of the bitmap.
-		reference operator[](glm::ivec2 pos) const;
+		[[nodiscard]] reference operator[](glm::ivec2 pos) const noexcept;
 
 		/// Gets the raw data of the bitmap.
 		/// @return Pointer to the data of the bitmap.
-		const std::byte* data() const;
+		[[nodiscard]] const std::byte* data() const noexcept;
 
 		/// @}
 		/// @name Iterators
@@ -101,19 +101,19 @@ namespace tr
 
 		/// Gets an immutable iterator to the beginning of the bitmap.
 		/// @return Iterator to the beginning of the bitmap.
-		iterator begin() const;
+		[[nodiscard]] iterator begin() const noexcept;
 
 		/// Gets an immutable iterator to the beginning of the bitmap.
 		/// @return Iterator to the beginning of the bitmap.
-		iterator cbegin() const;
+		[[nodiscard]] iterator cbegin() const noexcept;
 
 		/// Gets an immutable iterator to one past the end of the bitmap.
 		/// @return Iterator to the end of the bitmap.
-		iterator end() const;
+		[[nodiscard]] iterator end() const noexcept;
 
 		/// Gets an immutable iterator to one past the end of the bitmap.
 		/// @return Iterator to the end of the bitmap.
-		iterator cend() const;
+		[[nodiscard]] iterator cend() const noexcept;
 
 		/// @}
 		/// @name Saving
@@ -131,7 +131,7 @@ namespace tr
 		/// Unwraps the SDL surface pointer.
 		/// @note This does not release the pointer.
 		/// @return Pointer to the SDL surface.
-		SDL_Surface* unwrap() const;
+		[[nodiscard]] SDL_Surface* unwrap() const noexcept;
 
 		/// @}
 		/// @endcond
@@ -142,7 +142,7 @@ namespace tr
 		{
 			/// Destroys a bitmap.
 			/// @param ptr Pointer to an SDL surface.
-			static void operator()(SDL_Surface* ptr);
+			static void operator()(SDL_Surface* ptr) noexcept;
 		};
 
 		//

@@ -14,32 +14,32 @@ tr::shader_buffer<Header, ArrayElement>::shader_buffer(graphics_context& context
 }
 
 template <typename Header, typename ArrayElement>
-tr::usize tr::shader_buffer<Header, ArrayElement>::array_size() const
+tr::usize tr::shader_buffer<Header, ArrayElement>::array_size() const noexcept
 {
 	return basic_shader_buffer::array_size() / sizeof(ArrayElement);
 }
 
 template <typename Header, typename ArrayElement>
-tr::usize tr::shader_buffer<Header, ArrayElement>::array_capacity() const
+tr::usize tr::shader_buffer<Header, ArrayElement>::array_capacity() const noexcept
 {
 	return basic_shader_buffer::array_capacity() / sizeof(ArrayElement);
 }
 
 template <typename Header, typename ArrayElement>
-void tr::shader_buffer<Header, ArrayElement>::set_header(const Header& header)
+void tr::shader_buffer<Header, ArrayElement>::set_header(const Header& header) noexcept
 {
 	basic_shader_buffer::set_header(as_bytes(header));
 }
 
 template <typename Header, typename ArrayElement>
 template <tr::typed_contiguous_const_range<ArrayElement> Range>
-void tr::shader_buffer<Header, ArrayElement>::set_array(Range&& data)
+void tr::shader_buffer<Header, ArrayElement>::set_array(Range&& data) noexcept
 {
 	basic_shader_buffer::set_array(range_bytes(data));
 }
 
 template <typename Header, typename ArrayElement>
-void tr::shader_buffer<Header, ArrayElement>::resize_array(usize size)
+void tr::shader_buffer<Header, ArrayElement>::resize_array(usize size) noexcept
 {
 	basic_shader_buffer::resize_array(size * sizeof(ArrayElement));
 }
@@ -65,26 +65,26 @@ tr::shader_array<Element>::shader_array(graphics_context& context, usize capacit
 }
 
 template <typename Element>
-tr::usize tr::shader_array<Element>::size() const
+tr::usize tr::shader_array<Element>::size() const noexcept
 {
 	return basic_shader_buffer::array_size() / sizeof(Element);
 }
 
 template <typename Element>
-tr::usize tr::shader_array<Element>::capacity() const
+tr::usize tr::shader_array<Element>::capacity() const noexcept
 {
 	return basic_shader_buffer::array_capacity() / sizeof(Element);
 }
 
 template <typename Element>
 template <tr::typed_contiguous_const_range<Element> Range>
-void tr::shader_array<Element>::set(Range&& data)
+void tr::shader_array<Element>::set(Range&& data) noexcept
 {
 	basic_shader_buffer::set_array(range_bytes(data));
 }
 
 template <typename Element>
-void tr::shader_array<Element>::resize(usize size)
+void tr::shader_array<Element>::resize(usize size) noexcept
 {
 	basic_shader_buffer::resize_array(size * sizeof(Element));
 }

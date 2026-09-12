@@ -19,7 +19,7 @@ namespace tr
 		/// Uploads index data into a static index buffer.
 		/// @param context Graphics context to create the buffer on.
 		/// @param data Data to copy into the buffer.
-		static_index_buffer(graphics_context& context, std::span<const u16> data);
+		[[nodiscard]] static_index_buffer(graphics_context& context, std::span<const u16> data);
 
 		/// @}
 		/// @name Context
@@ -89,22 +89,22 @@ namespace tr
 
 		/// Gets whether the index buffer is empty.
 		/// @return `true` if the buffer is empty, `false` otherwise.
-		bool empty() const;
+		[[nodiscard]] bool empty() const noexcept;
 
 		/// Gets the size of the index buffer contents.
 		/// @return Size of the index buffer in elements.
-		usize size() const;
+		[[nodiscard]] usize size() const noexcept;
 
 		/// Gets the capacity of the index buffer.
 		/// @return Capacity of the index buffer in elements.
-		usize capacity() const;
+		[[nodiscard]] usize capacity() const noexcept;
 
 		/// @}
 		/// @name Setting
 		/// @{
 
 		/// Sets the size of the index buffer to 0.
-		void clear();
+		void clear() noexcept;
 
 		/// Clears the buffer and resizes it, potentially reallocating in the process.
 		/// @param size New size of the buffer in elements.
@@ -122,7 +122,7 @@ namespace tr
 		/// @param offset Starting element offset within the buffer.
 		/// @param data Data to copy into the buffer.
 		/// @pre `offset + data.size()` must be less than or equal to the size of the buffer.
-		void set_region(usize offset, std::span<const u16> data);
+		void set_region(usize offset, std::span<const u16> data) noexcept;
 
 		/// @}
 		/// @name State

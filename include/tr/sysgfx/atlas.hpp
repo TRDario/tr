@@ -35,7 +35,7 @@ namespace tr
 	/// @param entries Map holding the bitmaps to stitch together.
 	/// @return Bitmap atlas built from the individual bitmaps.
 	template <typename Key, hasher<Key> Hash = boost::hash<Key>, equality_predicate<Key> Pred = std::equal_to<Key>>
-	bitmap_atlas<Key, void, Hash, Pred> build_bitmap_atlas(const boost::unordered_flat_map<Key, bitmap, Hash, Pred>& entries);
+	[[nodiscard]] bitmap_atlas<Key, void, Hash, Pred> build_bitmap_atlas(const boost::unordered_flat_map<Key, bitmap, Hash, Pred>& entries);
 
 	/// @}
 
@@ -54,17 +54,17 @@ namespace tr
 
 		/// Creates an empty atlas.
 		/// @param context Graphics context to create the atlas on.
-		explicit dyn_atlas(graphics_context& context);
+		[[nodiscard]] explicit dyn_atlas(graphics_context& context) noexcept;
 
 		/// Creates an empty atlas with an initial size.
 		/// @param context Graphics context to create the atlas on.
 		/// @param size Initial size of the atlas.
-		dyn_atlas(graphics_context& context, glm::ivec2 size);
+		[[nodiscard]] dyn_atlas(graphics_context& context, glm::ivec2 size);
 
 		/// Uploads a bitmap atlas.
 		/// @param context Graphics context to create the atlas on.
 		/// @param source Bitmap atlas to use as a source.
-		dyn_atlas(graphics_context& context, bitmap_atlas<Key, Value, Hash, Pred>&& source);
+		[[nodiscard]] dyn_atlas(graphics_context& context, bitmap_atlas<Key, Value, Hash, Pred>&& source);
 
 		/// @}
 		/// @name Conversion operators
@@ -72,11 +72,11 @@ namespace tr
 
 		/// Gets the atlas texture.
 		/// @return Reference to the atlas texture.
-		operator const texture&() const;
+		[[nodiscard]] operator const texture&() const noexcept;
 
 		/// Gets a reference to the atlas texture.
 		/// @return View to the atlas texture.
-		operator texture_view() const;
+		[[nodiscard]] operator texture_view() const noexcept;
 
 		/// @}
 		/// @name Context
@@ -84,7 +84,7 @@ namespace tr
 
 		/// Gets a reference to the graphics context the atlas is on.
 		/// @return Reference to the graphics context the atlas is on.
-		graphics_context& context() const;
+		[[nodiscard]] graphics_context& context() const noexcept;
 
 		/// @}
 		/// @name Attributes
@@ -93,7 +93,7 @@ namespace tr
 		/// Sets the filters used by the atlas texture sampler.
 		/// @param min_filter Minifying filter to use.
 		/// @param mag_filter Magnifying filter to use.
-		void set_filtering(min_filter min_filter, mag_filter mag_filter);
+		void set_filtering(min_filter min_filter, mag_filter mag_filter) noexcept;
 
 		/// @}
 		/// @name Information
@@ -101,18 +101,18 @@ namespace tr
 
 		/// Gets the size of the atlas texture.
 		/// @return Size of the atlas texture.
-		glm::ivec2 size() const;
+		[[nodiscard]] glm::ivec2 size() const noexcept;
 
 		/// Gets whether the atlas contains an entry.
 		/// @tparam Keylike Type compatible with the atlas hasher and key equality predicate.
 		/// @param key Key to look up in the atlas.
 		/// @return `true` if a value associated with `key` existed, `false` otherwise.
 		template <hash_keylike<Key, Hash, Pred> Keylike>
-		bool contains(Keylike&& key) const;
+		[[nodiscard]] bool contains(Keylike&& key) const;
 
 		/// Gets the number of entries in the atlas.
 		/// @return Number of entries in the atlas.
-		usize entries() const;
+		[[nodiscard]] usize entries() const noexcept;
 
 		/// @}
 		/// @name Access
@@ -124,7 +124,7 @@ namespace tr
 		/// @pre `key` must be present in the atlas.
 		/// @return Constant reference to the value associated with `key`.
 		template <hash_keylike<Key, Hash, Pred> Keylike>
-		rectangle<float> operator[](Keylike&& key) const;
+		[[nodiscard]] rectangle<float> operator[](Keylike&& key) const;
 
 		/// Gets the raw value associated with a certain key.
 		/// @tparam Keylike Type compatible with the atlas hasher and key equality predicate.
@@ -132,7 +132,7 @@ namespace tr
 		/// @pre `key` must be present in the atlas.
 		/// @return Constant reference to the raw value associated with `key`.
 		template <hash_keylike<Key, Hash, Pred> Keylike>
-		const Value& raw(Keylike&& key) const;
+		[[nodiscard]] const Value& raw(Keylike&& key) const;
 
 		/// @}
 		/// @name Manipulation
@@ -160,11 +160,11 @@ namespace tr
 
 		/// Gets the debug label of the atlas.
 		/// @return Label of the atlas.
-		std::string label() const;
+		[[nodiscard]] std::string label() const;
 
 		/// Sets the debug label of the atlas.
 		/// @param label Label of the atlas.
-		void set_label(std::string_view label);
+		void set_label(std::string_view label) noexcept;
 
 		/// @}
 

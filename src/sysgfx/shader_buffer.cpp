@@ -21,22 +21,22 @@ tr::basic_shader_buffer::basic_shader_buffer(graphics_context& context, usize he
 	}
 }
 
-tr::usize tr::basic_shader_buffer::header_size() const
+tr::usize tr::basic_shader_buffer::header_size() const noexcept
 {
 	return m_header_size;
 }
 
-tr::usize tr::basic_shader_buffer::array_size() const
+tr::usize tr::basic_shader_buffer::array_size() const noexcept
 {
 	return m_array_size;
 }
 
-tr::usize tr::basic_shader_buffer::array_capacity() const
+tr::usize tr::basic_shader_buffer::array_capacity() const noexcept
 {
 	return m_array_capacity;
 }
 
-void tr::basic_shader_buffer::set_header(std::span<const std::byte> data)
+void tr::basic_shader_buffer::set_header(std::span<const std::byte> data) noexcept
 {
 	TR_ASSERT(!mapped(), "Tried to set the header of mapped shader buffer '{}'.", label());
 	TR_ASSERT(header_size() != 0, "Tried to set the header for shader buffer '{}' without one.", label());
@@ -46,7 +46,7 @@ void tr::basic_shader_buffer::set_header(std::span<const std::byte> data)
 	context().gl().set_buffer_sub_data(unwrap(), 0, data.size(), data.data());
 }
 
-void tr::basic_shader_buffer::set_array(std::span<const std::byte> data)
+void tr::basic_shader_buffer::set_array(std::span<const std::byte> data) noexcept
 {
 	TR_ASSERT(!mapped(), "Tried to set the array of a mapped shader buffer.");
 	TR_ASSERT(array_capacity() != 0, "Tried to set the array for a shader buffer without one.");
@@ -59,7 +59,7 @@ void tr::basic_shader_buffer::set_array(std::span<const std::byte> data)
 	m_array_size = data.size();
 }
 
-void tr::basic_shader_buffer::resize_array(usize size)
+void tr::basic_shader_buffer::resize_array(usize size) noexcept
 {
 	TR_ASSERT(!mapped(), "Tried to resize the array of mapped shader buffer '{}'.", label());
 	TR_ASSERT(size <= array_capacity(), "Tried to resize array of shader buffer '{}' of capacity {} to size {}.", label(), array_capacity(),
@@ -68,7 +68,7 @@ void tr::basic_shader_buffer::resize_array(usize size)
 	m_array_size = size;
 }
 
-bool tr::basic_shader_buffer::mapped() const
+bool tr::basic_shader_buffer::mapped() const noexcept
 {
 	int mapped;
 	context().gl().get_buffer_parameter_iv(unwrap(), GL_BUFFER_MAPPED, &mapped);

@@ -20,24 +20,24 @@ tr::static_index_buffer::static_index_buffer(graphics_context& context, std::spa
 
 //
 
-bool tr::dyn_index_buffer::empty() const
+bool tr::dyn_index_buffer::empty() const noexcept
 {
 	return m_size == 0;
 }
 
-tr::usize tr::dyn_index_buffer::size() const
+tr::usize tr::dyn_index_buffer::size() const noexcept
 {
 	return m_size;
 }
 
-tr::usize tr::dyn_index_buffer::capacity() const
+tr::usize tr::dyn_index_buffer::capacity() const noexcept
 {
 	return m_capacity;
 }
 
 //
 
-void tr::dyn_index_buffer::clear()
+void tr::dyn_index_buffer::clear() noexcept
 {
 	m_size = 0;
 }
@@ -68,7 +68,7 @@ void tr::dyn_index_buffer::reserve(usize capacity)
 	m_size = 0;
 }
 
-void tr::dyn_index_buffer::set_region(usize offset, std::span<const u16> data)
+void tr::dyn_index_buffer::set_region(usize offset, std::span<const u16> data) noexcept
 {
 	TR_ASSERT(offset + data.size() <= m_size, "Tried to set out-of-bounds region [{}, {}) in index buffer '{}' of size {}.", offset,
 			  offset + data.size(), label(), m_size);
