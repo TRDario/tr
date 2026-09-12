@@ -1,8 +1,8 @@
 /// @file
 /// @brief Implements localization_map.hpp.
 
-#include "../../include/tr/utility/localization_map.hpp"
-#include "../../include/tr/utility/iostream.hpp"
+#include <tr/utility/iostream.hpp>
+#include <tr/utility/localization_map.hpp>
 
 //
 

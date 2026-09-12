@@ -1,9 +1,9 @@
 /// @file
 /// @brief Implements polygon.hpp.
 
-#include "../../include/tr/utility/polygon.hpp"
-#include "../../include/tr/utility/line.hpp"
-#include "../../include/tr/utility/triangle.hpp"
+#include <tr/utility/line.hpp>
+#include <tr/utility/polygon.hpp>
+#include <tr/utility/triangle.hpp>
 
 //
 

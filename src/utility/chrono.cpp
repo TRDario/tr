@@ -1,7 +1,7 @@
 /// @file
-/// @brief Implements the non-constexpr parts of chrono.hpp.
+/// @brief Implements chrono.hpp.
 
-#include "../../include/tr/utility/chrono.hpp"
+#include <tr/utility/chrono.hpp>
 
 //
 

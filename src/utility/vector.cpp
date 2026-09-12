@@ -1,7 +1,7 @@
 /// @file
-/// @brief Implements the non-constexpr, non-templated parts of vector.hpp.
+/// @brief Implements vector.hpp.
 
-#include "../../include/tr/utility/vector.hpp"
+#include <tr/utility/vector.hpp>
 
 //
 

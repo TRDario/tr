@@ -1,8 +1,8 @@
 /// @file
-/// @brief Provides `tr::handle` and related utilities.
+/// @brief Provides `tr::handle`.
 
 #pragma once
-#include "common.hpp"
+#include <tr/utility/macro.hpp>
 
 //
 
@@ -42,43 +42,75 @@ namespace tr
 
 		/// Default-constructs an empty handle.
 		[[nodiscard]] constexpr handle() noexcept(std::is_nothrow_default_constructible_v<Deleter>)
-			requires(default_constructible_handle_deleter<Deleter>);
+			requires(default_constructible_handle_deleter<Deleter>)
+			: m_base{Empty}
+		{
+		}
 
 		/// Constructs a handle from a base type value.
 		/// @param value Value to hold.
 		[[nodiscard]] constexpr explicit handle(Base value) noexcept(std::is_nothrow_default_constructible_v<Deleter>)
-			requires(default_constructible_handle_deleter<Deleter>);
+			requires(default_constructible_handle_deleter<Deleter>)
+			: m_base{value}
+		{
+			TR_ASSERT(value != Empty, "Cannot construct a handle from a value set aside as the empty value.");
+		}
 
 		/// Constructs a handle from a base type value without checking for the invalid case.
 		/// @param value Value to hold.
 		[[nodiscard]] constexpr explicit handle(Base value, maybe_empty_t) noexcept(std::is_nothrow_default_constructible_v<Deleter>)
-			requires(default_constructible_handle_deleter<Deleter>);
+			requires(default_constructible_handle_deleter<Deleter>)
+			: m_base{value}
+		{
+		}
 
 		/// Default-constructs an empty handle.
 		/// @param deleter Deleter instance.
-		[[nodiscard]] constexpr handle(Deleter&& deleter) noexcept(std::is_nothrow_move_constructible_v<Deleter>);
+		[[nodiscard]] constexpr handle(Deleter&& deleter) noexcept(std::is_nothrow_move_constructible_v<Deleter>)
+			: Deleter{std::forward<Deleter>(deleter)}
+			, m_base{Empty}
+		{
+		}
 
 		/// Constructs a handle from a base type value and a deleter.
 		/// @pre `value` must not be equal to `Empty`.
 		/// @param value Value to hold.
 		/// @param deleter Deleter instance.
 		[[nodiscard]] constexpr explicit handle(Base value, Deleter&& deleter) noexcept(std::is_nothrow_move_constructible_v<Deleter>)
-			requires(std::move_constructible<Deleter>);
+			requires(std::move_constructible<Deleter>)
+			: Deleter{std::forward<Deleter>(deleter)}
+			, m_base{value}
+		{
+			TR_ASSERT(value != Empty, "Cannot construct a handle from a value set aside as the empty value.");
+		}
 
 		/// Constructs a handle from a base type value and a deleter without checking for the invalid case.
 		/// @param value Value to hold.
 		/// @param deleter Deleter instance.
-		[[nodiscard]] constexpr explicit handle(Base value, Deleter&& deleter,
-												maybe_empty_t) noexcept(std::is_nothrow_move_constructible_v<Deleter>)
-			requires(std::move_constructible<Deleter>);
+		[[nodiscard]] constexpr explicit handle(Base value, Deleter&& deleter, maybe_empty_t)
+			noexcept(std::is_nothrow_move_constructible_v<Deleter>)
+			requires(std::move_constructible<Deleter>)
+			: Deleter{std::forward<Deleter>(deleter)}
+			, m_base{value}
+		{
+		}
 
 		/// Constructs a handle by moving from another handle.
 		/// @param rhs Handle to move.
 		[[nodiscard]] constexpr handle(handle&& rhs) noexcept(std::is_nothrow_move_constructible_v<Deleter>)
-			requires(std::move_constructible<Deleter>);
+			requires(std::move_constructible<Deleter>)
+			: Deleter{std::move(rhs)}
+			, m_base{std::exchange(rhs.m_base, Empty)}
+		{
+		}
 
 		/// Destroys the handle.
-		constexpr ~handle() noexcept;
+		constexpr ~handle() noexcept
+		{
+			if (m_base != Empty) {
+				Deleter::operator()(m_base);
+			}
+		}
 
 		/// @}
 		/// @name Assignment operators
@@ -88,7 +120,15 @@ namespace tr
 		/// @param rhs Handle to move.
 		/// @return Reference to `*this`.
 		constexpr handle& operator=(handle&& rhs) noexcept(std::is_nothrow_move_assignable_v<Deleter>)
-			requires(std::is_move_assignable_v<Deleter>);
+			requires(std::is_move_assignable_v<Deleter>)
+		{
+			if (has_value()) {
+				Deleter::operator()(m_base);
+			}
+			m_base = std::exchange(rhs.m_base, Empty);
+			get_deleter() = std::move(rhs.get_deleter());
+			return *this;
+		}
 
 		/// @}
 		/// @name State
@@ -96,11 +136,17 @@ namespace tr
 
 		/// Checks if the handle contains a value.
 		/// @return `true` if the handle contains a value, `false` otherwise.
-		[[nodiscard]] constexpr bool has_value() const noexcept;
+		[[nodiscard]] constexpr bool has_value() const noexcept
+		{
+			return m_base != Empty;
+		}
 
 		/// Checks if the handle contains a value.
 		/// @return `true` if the handle contains a value, `false` otherwise.
-		[[nodiscard]] constexpr explicit operator bool() const noexcept;
+		[[nodiscard]] constexpr explicit operator bool() const noexcept
+		{
+			return has_value();
+		}
 
 		/// @}
 		/// @name Getters
@@ -109,19 +155,33 @@ namespace tr
 		/// Gets the handle's base type value.
 		/// @pre The handle must contain a value.
 		/// @return Reference to the contained value.
-		[[nodiscard]] constexpr const Base& get() const noexcept;
+		[[nodiscard]] constexpr const Base& get() const noexcept
+		{
+			TR_ASSERT(m_base != Empty, "Cannot get the value of an empty handle.");
+
+			return m_base;
+		}
 
 		/// Gets the handle's base type value without checking for the invalid case.
 		/// @return Reference to the contained value.
-		[[nodiscard]] constexpr const Base& get(maybe_empty_t) const noexcept;
+		[[nodiscard]] constexpr const Base& get(maybe_empty_t) const noexcept
+		{
+			return m_base;
+		}
 
 		/// Gets the handle's deleter.
 		/// @return Reference to the handle's deleter.
-		[[nodiscard]] constexpr Deleter& get_deleter() noexcept;
+		[[nodiscard]] constexpr Deleter& get_deleter() noexcept
+		{
+			return *this;
+		}
 
 		/// Gets the handle's deleter.
 		/// @return Reference to the handle's deleter.
-		[[nodiscard]] constexpr const Deleter& get_deleter() const noexcept;
+		[[nodiscard]] constexpr const Deleter& get_deleter() const noexcept
+		{
+			return *this;
+		}
 
 		/// @}
 		/// @name Resetting
@@ -129,19 +189,42 @@ namespace tr
 
 		/// Releases ownership over the handle, if any.
 		/// @return Previously contained value.
-		[[nodiscard]] constexpr Base release() noexcept;
+		[[nodiscard]] constexpr Base release() noexcept
+		{
+			return std::exchange(m_base, Empty);
+		}
 
 		/// Resets the handle to an empty state.
-		constexpr void reset() noexcept;
+		constexpr void reset() noexcept
+		{
+			if (has_value()) {
+				Deleter::operator()(m_base);
+			}
+			m_base = Empty;
+		}
 
 		/// Resets the handle to a non-empty state.
 		/// @pre `value` must not be equal to `Empty`.
 		/// @param value New value to hold.
-		constexpr void reset(Base value) noexcept;
+		constexpr void reset(Base value) noexcept
+		{
+			TR_ASSERT(value != Empty, "Cannot reset a handle to a value set aside as the empty value.");
+
+			if (has_value()) {
+				Deleter::operator()(m_base);
+			}
+			m_base = value;
+		}
 
 		/// Resets the handle to a new state without checking for the invalid case.
 		/// @param value New value to hold.
-		constexpr void reset(Base value, maybe_empty_t) noexcept;
+		constexpr void reset(Base value, maybe_empty_t) noexcept
+		{
+			if (has_value()) {
+				Deleter::operator()(m_base);
+			}
+			m_base = value;
+		}
 
 		/// @}
 
@@ -149,68 +232,24 @@ namespace tr
 		/// Wrapped base value.
 		Base m_base;
 	};
-
-	//
-
-	/// Wrapper type returned by out_handle.
-	/// @tparam Base Handle base type.
-	/// @tparam Empty Empty handle sentinel value.
-	/// @tparam Deleter Handle deleter type.
-	/// @tparam SkipEmptyHandleCheck Whether to skip the empty handle check when constructing the wrapper.
-	template <std::regular Base, Base Empty, handle_deleter<Base> Deleter, bool SkipEmptyHandleCheck>
-	class out_handle_t
-	{
-	  public:
-		/// @name Constructors
-		/// @{
-
-		/// Wraps an output handle.
-		/// @param handle Handle to wrap.
-		[[nodiscard]] out_handle_t(handle<Base, Empty, Deleter>& handle) noexcept;
-
-		/// Sets the handle.
-		~out_handle_t() noexcept;
-
-		/// @}
-		/// @name Conversion operators
-		/// @{
-
-		/// Gets a pointer that can be used by a function writing a base value.
-		/// @return Pointer that can be used by a function writing a base value.
-		[[nodiscard]] operator Base*() noexcept;
-
-		/// @}
-
-	  private:
-		/// Handle being modified.
-		handle<Base, Empty, Deleter>& m_handle;
-
-		/// Temporary that is written to before the handle is set to it.
-		Base m_temporary{Empty};
-	};
-
-	/// @name Output handle
-	/// @{
-
-	/// Wraps a handle for use in functions that output using a pointer, akin to std::out_ptr.
-	/// @tparam Base Handle base type.
-	/// @tparam Empty Empty handle sentinel value.
-	/// @tparam Deleter Handle deleter type.
-	/// @param handle Handle to wrap.
-	/// @return Wrapped output handle.
-	template <std::regular Base, Base Empty, handle_deleter<Base> Deleter>
-	[[nodiscard]] out_handle_t<Base, Empty, Deleter, false> out_handle(handle<Base, Empty, Deleter>& handle) noexcept;
-
-	/// Wraps a handle for use in functions that output using a pointer, akin to std::out_ptr.
-	/// @tparam Base Handle base type.
-	/// @tparam Empty Empty handle sentinel value.
-	/// @tparam Deleter Handle deleter type.
-	/// @param handle Handle to wrap.
-	/// @return Wrapped output handle.
-	template <std::regular Base, Base Empty, handle_deleter<Base> Deleter>
-	[[nodiscard]] out_handle_t<Base, Empty, Deleter, true> out_handle(handle<Base, Empty, Deleter>& handle, maybe_empty_t) noexcept;
-
-	/// @}
 } // namespace tr
 
-#include "impl/handle.hpp" // IWYU pragma: export
+//
+
+#ifndef TR_DOXYGEN_SKIP
+/// Handle hasher.
+/// @tparam Base Wrapped type.
+/// @tparam Empty Empty handle sentinel value.
+/// @tparam Deleter Deleter invoked when destroying a handled value.
+template <std::regular Base, Base Empty, tr::handle_deleter<Base> Deleter>
+struct boost::hash<tr::handle<Base, Empty, Deleter>>
+{
+	/// Hashes a handle.
+	/// @param handle Handle to hash.
+	/// @return Hashed value.
+	constexpr auto operator()(const tr::handle<Base, Empty, Deleter>& handle) const noexcept
+	{
+		return boost::hash<Base>{}(handle.get(tr::maybe_empty));
+	}
+};
+#endif

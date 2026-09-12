@@ -3,7 +3,7 @@
 
 #pragma once
 #include "../utility/iterator_interface.hpp"
-#include "../utility/reference.hpp"
+#include "../utility/opt_ref.hpp"
 #include "bitmap.hpp"
 
 //

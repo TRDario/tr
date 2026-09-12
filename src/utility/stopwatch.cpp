@@ -1,8 +1,8 @@
 /// @file
 /// @brief Implements stopwatch.hpp.
 
-#include "../../include/tr/utility/stopwatch.hpp"
 #include <chrono>
+#include <tr/utility/stopwatch.hpp>
 
 //
 

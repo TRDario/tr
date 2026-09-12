@@ -2,7 +2,7 @@
 /// @brief Provides `tr::benchmark`.
 
 #pragma once
-#include "chrono.hpp"
+#include <tr/utility/chrono.hpp>
 
 //
 

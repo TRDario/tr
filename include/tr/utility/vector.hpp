@@ -2,7 +2,7 @@
 /// Provides geometric vector utilities.
 
 #pragma once
-#include "angle.hpp"
+#include <tr/utility/angle.hpp>
 
 //
 
@@ -30,7 +30,24 @@ namespace tr
 	/// @param v Vector to get the square length of.
 	/// @return '|v|²'.
 	template <int Dimensions, arithmetic Element>
-	[[nodiscard]] constexpr Element length2(glm::vec<Dimensions, Element> v) noexcept;
+	[[nodiscard]] constexpr Element length2(glm::vec<Dimensions, Element> v) noexcept
+	{
+		if constexpr (Dimensions == 1) {
+			return sqr(v.x);
+		}
+		else if constexpr (Dimensions == 2) {
+			return sqr(v.x) + sqr(v.y);
+		}
+		else if constexpr (Dimensions == 3) {
+			return sqr(v.x) + sqr(v.y) + sqr(v.z);
+		}
+		else if constexpr (Dimensions == 4) {
+			return sqr(v.x) + sqr(v.y) + sqr(v.z) + sqr(v.w);
+		}
+		else {
+			TR_UNREACHABLE;
+		}
+	}
 
 	/// Computes the squared distance between two points.
 	/// @tparam Dimensions Number of dimensions of the vectors.
@@ -41,7 +58,11 @@ namespace tr
 	/// @return `|b-a|²`.
 	template <int Dimensions, arithmetic ElementL, arithmetic ElementR>
 	[[nodiscard]] constexpr std::common_type_t<ElementL, ElementR> distance2(glm::vec<Dimensions, ElementL> a,
-																			 glm::vec<Dimensions, ElementR> b) noexcept;
+																			 glm::vec<Dimensions, ElementR> b) noexcept
+	{
+		return length2(glm::vec<Dimensions, std::common_type_t<ElementL, ElementR>>{b} -
+					   glm::vec<Dimensions, std::common_type_t<ElementL, ElementR>>{a});
+	}
 
 	/// Computes the inverse of a vector.
 	/// @tparam Dimensions Number of dimensions of the vector.
@@ -49,7 +70,14 @@ namespace tr
 	/// @param v Vector to get the inverse of.
 	/// @return `v⁻¹`.
 	template <int Dimensions, arithmetic Element>
-	[[nodiscard]] constexpr glm::vec<Dimensions, float> inverse(glm::vec<Dimensions, Element> v) noexcept;
+	[[nodiscard]] constexpr glm::vec<Dimensions, float> inverse(glm::vec<Dimensions, Element> v) noexcept
+	{
+		glm::vec<Dimensions, float> result;
+		for (int i = 0; i < Dimensions; ++i) {
+			result[i] = static_cast<float>(1.0f / v[i]);
+		}
+		return result;
+	}
 
 	/// Computes the 2D cross product of two vectors.
 	/// @tparam Dimensions Number of dimensions of the vectors.
@@ -58,9 +86,10 @@ namespace tr
 	/// @param a, b Vector values.
 	/// @return `a×b`.
 	template <arithmetic ElementL, arithmetic ElementR>
-	[[nodiscard]] constexpr std::common_type_t<ElementL, ElementR> cross(glm::tvec2<ElementL> a, glm::tvec2<ElementR> b) noexcept;
+	[[nodiscard]] constexpr std::common_type_t<ElementL, ElementR> cross(glm::tvec2<ElementL> a, glm::tvec2<ElementR> b) noexcept
+	{
+		return a.x * b.y - a.y * b.x;
+	}
 
 	/// @}
 } // namespace tr
-
-#include "impl/vector.hpp" // IWYU pragma: export

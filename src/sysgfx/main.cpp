@@ -5,10 +5,11 @@
 #include "../../include/tr/sysgfx/main.hpp"
 #include "../../include/tr/sysgfx/dialog.hpp"
 #include "../../include/tr/utility/logger.hpp"
-#include "../../include/tr/utility/reference.hpp"
+#include "../../include/tr/utility/opt_ref.hpp"
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
 #include <SDL3_ttf/SDL_ttf.h>
+#include <tr/utility/dynamic_ref_cast.hpp>
 #undef main
 
 #if defined _MSC_VER and not defined TR_ENABLE_ASSERTS

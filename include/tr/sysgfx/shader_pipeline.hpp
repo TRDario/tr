@@ -3,7 +3,7 @@
 /// @details For an explanation of shader pipelines, see the description of `tr::shader_pipeline`.
 
 #pragma once
-#include "../utility/reference.hpp"
+#include "../utility/ref.hpp"
 #include "shader.hpp"
 
 //

@@ -2,7 +2,7 @@
 /// @brief Provides stream utilities.
 
 #pragma once
-#include "exception.hpp"
+#include <tr/utility/exception.hpp>
 
 //
 

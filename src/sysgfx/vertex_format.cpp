@@ -1,9 +1,10 @@
 /// @file
 /// @brief Implements the non-templated parts of vertex_format.hpp.
 
-#include "../../include/tr/sysgfx/vertex_format.hpp"
-#include "../../include/tr/sysgfx/gl_defines.hpp"
-#include "../../include/tr/sysgfx/graphics_context.hpp"
+#include <tr/sysgfx/gl_defines.hpp>
+#include <tr/sysgfx/graphics_context.hpp>
+#include <tr/sysgfx/vertex_format.hpp>
+#include <tr/utility/out_handle.hpp>
 
 //
 

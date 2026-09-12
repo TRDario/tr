@@ -2,7 +2,7 @@
 /// @brief Provides a stream interface over memory buffers.
 
 #pragma once
-#include "common.hpp"
+#include <tr/utility/common.hpp>
 
 //
 

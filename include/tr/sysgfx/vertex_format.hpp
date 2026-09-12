@@ -6,7 +6,7 @@
 #include "../utility/handle.hpp"
 #include "../utility/integer.hpp"
 #include "../utility/macro.hpp"
-#include "../utility/reference.hpp"
+#include "../utility/ref.hpp"
 #include "../utility/specialization_of.hpp"
 
 #ifdef TR_ENABLE_CHECKED_GRAPHICS

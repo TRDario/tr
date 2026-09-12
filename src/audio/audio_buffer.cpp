@@ -7,6 +7,7 @@
 #include <tr/audio/audio_context.hpp>
 #include <tr/audio/audio_stream.hpp>
 #include <tr/utility/exception.hpp>
+#include <tr/utility/out_handle.hpp>
 
 //
 

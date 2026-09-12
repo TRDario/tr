@@ -1,10 +1,11 @@
 /// @file
 /// @brief Implements texture.hpp.
 
-#include "../../include/tr/sysgfx/texture.hpp"
-#include "../../include/tr/sysgfx/gl_defines.hpp"
-#include "../../include/tr/sysgfx/graphics_context.hpp"
-#include "../../include/tr/sysgfx/texture_view.hpp"
+#include <tr/sysgfx/gl_defines.hpp>
+#include <tr/sysgfx/graphics_context.hpp>
+#include <tr/sysgfx/texture.hpp>
+#include <tr/sysgfx/texture_view.hpp>
+#include <tr/utility/out_handle.hpp>
 
 //
 

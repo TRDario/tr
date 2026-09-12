@@ -61,12 +61,6 @@ class handle_test : public testing::Test
 	}
 };
 
-/// Mock C function taking a handled value by pointer.
-static void set_c_handle(int* handle, int value)
-{
-	*handle = value;
-}
-
 //
 
 static_assert(tr::handle_deleter<stateless_deleter, int>);
@@ -203,18 +197,4 @@ TEST_F(handle_test, reset)
 	handle.reset(0, tr::maybe_empty);
 	EXPECT_FALSE(handle.has_value());
 	EXPECT_EQ(stateless_deleter::deleted_count, 3);
-}
-
-TEST_F(handle_test, out_handle)
-{
-	stateless_deleter_handle handle;
-
-	set_c_handle(tr::out_handle(handle), 10);
-	EXPECT_TRUE(handle.has_value());
-	EXPECT_EQ(handle.get(), 10);
-
-	set_c_handle(tr::out_handle(handle, tr::maybe_empty), 0);
-	EXPECT_FALSE(handle.has_value());
-	EXPECT_EQ(stateless_deleter::deleted_count, 1);
-	EXPECT_EQ(stateless_deleter::last_deleted_value, 10);
 }

@@ -1,7 +1,8 @@
 /// @file
-/// @brief Implements the non-templated parts of atlas_packer.hpp.
+/// @brief Implements atlas_packer.hpp.
 
-#include "../../include/tr/utility/atlas_packer.hpp"
+#include <tr/utility/atlas_packer.hpp>
+#include <tr/utility/integer.hpp>
 
 //
 

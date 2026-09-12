@@ -2,8 +2,8 @@
 /// @brief Tests utility/logger.hpp.
 
 #include <gtest/gtest.h>
+#include <tr/utility/dynamic_ref_cast.hpp>
 #include <tr/utility/logger.hpp>
-#include <tr/utility/reference.hpp>
 
 //
 

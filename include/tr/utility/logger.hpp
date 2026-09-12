@@ -2,7 +2,7 @@
 /// @brief Provides `tr::logger` and related utilities.
 
 #pragma once
-#include "common.hpp"
+#include <tr/utility/common.hpp>
 
 //
 
@@ -194,7 +194,11 @@ namespace tr
 		/// @param args Arguments to the backend's constructor.
 		template <std::derived_from<logger_backend> Backend, typename... Args>
 			requires(std::constructible_from<Backend, Args...>)
-		void replace_backend_with(Args&&... args);
+		void replace_backend_with(Args&&... args)
+		{
+			m_backend.reset();
+			m_backend = std::make_unique<Backend>(std::forward<Args>(args)...);
+		}
 
 		/// @}
 		/// @name Logging
@@ -216,7 +220,10 @@ namespace tr
 		/// @param fmt Format string.
 		/// @param args Formatting arguments.
 		template <typename... Args>
-		void log(severity severity, std::format_string<Args...> fmt, Args&&... args);
+		void log(severity severity, std::format_string<Args...> fmt, Args&&... args)
+		{
+			log(severity, std::format(fmt, std::forward<Args>(args)...));
+		}
 
 		/// Logs a message continuing from a previous line.
 		/// @param string String of the message continuation.
@@ -231,7 +238,10 @@ namespace tr
 		/// @param fmt Format string.
 		/// @param args Formatting arguments.
 		template <typename... Args>
-		void log_continue(std::format_string<Args...> fmt, Args&&... args);
+		void log_continue(std::format_string<Args...> fmt, Args&&... args)
+		{
+			log_continue(std::format(fmt, std::forward<Args>(args)...));
+		}
 
 		/// @}
 
@@ -247,12 +257,13 @@ namespace tr
 	/// @return Logger with an initial backend created in-place.
 	template <std::derived_from<logger_backend> Backend, typename... Args>
 		requires(std::constructible_from<Backend, Args...>)
-	[[nodiscard]] logger make_logger(Args&&... args);
+	[[nodiscard]] logger make_logger(Args&&... args)
+	{
+		return logger{std::make_unique<Backend>(std::forward<Args>(args)...)};
+	}
 
 	//
 
 	/// tr's default error logger, may be redirected.
 	inline logger error_logger{make_logger<console_logger>("tr")};
 } // namespace tr
-
-#include "impl/logger.hpp" // IWYU pragma: export

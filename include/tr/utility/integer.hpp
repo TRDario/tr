@@ -2,7 +2,7 @@
 /// @brief Provides integer utilities.
 
 #pragma once
-#include "common.hpp"
+#include <tr/utility/common.hpp>
 
 //
 
@@ -55,42 +55,66 @@ namespace tr
 			/// 8-bit unsigned integer literal.
 			/// @param[in] v Integer in the range [0, UINT8_MAX].
 			/// @return An 8-bit unsigned integer.
-			[[nodiscard]] consteval u8 operator""_u8(unsigned long long v) noexcept;
+			[[nodiscard]] consteval u8 operator""_u8(unsigned long long v) noexcept
+			{
+				return static_cast<u8>(v);
+			}
 
 			/// 16-bit unsigned integer literal.
 			/// @param[in] v Integer in the range [0, UINT16_MAX].
 			/// @return A 16-bit unsigned integer.
-			[[nodiscard]] consteval u16 operator""_u16(unsigned long long v) noexcept;
+			[[nodiscard]] consteval u16 operator""_u16(unsigned long long v) noexcept
+			{
+				return static_cast<u16>(v);
+			}
 
 			/// 32-bit unsigned integer literal.
 			/// @param[in] v Integer in the range [0, UINT32_MAX].
 			/// @return A 32-bit unsigned integer.
-			[[nodiscard]] consteval u32 operator""_u32(unsigned long long v) noexcept;
+			[[nodiscard]] consteval u32 operator""_u32(unsigned long long v) noexcept
+			{
+				return static_cast<u32>(v);
+			}
 
 			/// 64-bit unsigned integer literal.
 			/// @param[in] v Integer in the range [0, UINT64_MAX].
 			/// @return A 64-bit unsigned integer.
-			[[nodiscard]] consteval u64 operator""_u64(unsigned long long v) noexcept;
+			[[nodiscard]] consteval u64 operator""_u64(unsigned long long v) noexcept
+			{
+				return static_cast<u64>(v);
+			}
 
 			/// 8-bit signed integer literal.
 			/// @param[in] v Integer in the range [0, INT8_MAX].
 			/// @return An 8-bit signed integer.
-			[[nodiscard]] consteval i8 operator""_i8(unsigned long long v) noexcept;
+			[[nodiscard]] consteval i8 operator""_i8(unsigned long long v) noexcept
+			{
+				return static_cast<i8>(v);
+			}
 
 			/// 16-bit signed integer literal.
 			/// @param[in] v Integer in the range [0, INT16_MAX].
 			/// @return A 16-bit signed integer.
-			[[nodiscard]] consteval i16 operator""_i16(unsigned long long v) noexcept;
+			[[nodiscard]] consteval i16 operator""_i16(unsigned long long v) noexcept
+			{
+				return static_cast<i16>(v);
+			}
 
 			/// 32-bit signed integer literal.
 			/// @param[in] v Integer in the range [0, INT32_MAX].
 			/// @return A 32-bit signed integer.
-			[[nodiscard]] consteval i32 operator""_i32(unsigned long long v) noexcept;
+			[[nodiscard]] consteval i32 operator""_i32(unsigned long long v) noexcept
+			{
+				return static_cast<i32>(v);
+			}
 
 			/// 64-bit signed integer literal.
 			/// @param[in] v Integer in the range [0, INT64_MAX].
 			/// @return A 64-bit signed integer.
-			[[nodiscard]] consteval i64 operator""_i64(unsigned long long v) noexcept;
+			[[nodiscard]] consteval i64 operator""_i64(unsigned long long v) noexcept
+			{
+				return static_cast<i64>(v);
+			}
 		} // namespace integer_literals
 	} // namespace literals
 
@@ -98,15 +122,18 @@ namespace tr
 
 	//
 
-	/// Stores the type that can store an integer in the range [0, `S`] in `::type`.
-	/// @tparam S Maximum value that needs to be stored.
-	template <usize S>
-	struct size_type;
+	/// Stores the type that can store an integer in the range [0, `Max`] in `::type`.
+	/// @tparam Max Maximum value that needs to be stored.
+	template <usize Max>
+	struct size_type
+	{
+		/// Integer type that can store an integer in the range [0, `Max`].
+		using type = std::conditional_t<Max <= UINT32_MAX,
+										std::conditional_t<Max <= UINT16_MAX, std::conditional_t<Max <= UINT8_MAX, u8, u16>, u32>, u64>;
+	};
 
-	/// Integer type that can store an integer in the range [0, `S`].
-	/// @tparam S Maximum value that needs to be stored.
-	template <usize S>
-	using size_type_t = size_type<S>::type;
+	/// Integer type that can store an integer in the range [0, `Max`].
+	/// @tparam Max Maximum value that needs to be stored.
+	template <usize Max>
+	using size_type_t = size_type<Max>::type;
 } // namespace tr
-
-#include "impl/integer.hpp" // IWYU pragma: export

@@ -6,6 +6,7 @@
 #include "../../include/tr/sysgfx/graphics_context.hpp"
 #include "../../include/tr/utility/hash_map.hpp"
 #include "tr/sysgfx/shader.hpp"
+#include <tr/utility/out_handle.hpp>
 
 //
 

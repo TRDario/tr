@@ -2,32 +2,47 @@
 /// @brief Provides enumerator utilities.
 
 #pragma once
-#include "concepts.hpp"
+#include <tr/utility/concepts.hpp>
 
 //
 
 namespace tr
 {
 	/// Wraps an enum class to allow conversion to bool, used in `TR_DEFINE_ENUM_BITMASK_OPERATORS`.
+	/// @tparam Enum Wrapped enumerator type.
 	template <enumerator Enum>
 	class enum_wrapper
 	{
 	  public:
 		/// Wraps an enumerator value.
 		/// @param value Raw enumerator value.
-		[[nodiscard]] constexpr enum_wrapper(Enum value) noexcept;
+		[[nodiscard]] constexpr enum_wrapper(Enum value) noexcept
+			: m_value{value}
+		{
+		}
+
+		//
 
 		/// Converts the enumerator to a boolean.
 		/// @return Enumerator cast to a boolean.
-		[[nodiscard]] constexpr explicit operator bool() const noexcept;
+		[[nodiscard]] constexpr explicit operator bool() const noexcept
+		{
+			return m_value != Enum{0};
+		}
 
 		/// Unwraps the enumerator.
 		/// @return Raw enumerator value.
-		[[nodiscard]] constexpr operator Enum() const noexcept;
+		[[nodiscard]] constexpr operator Enum() const noexcept
+		{
+			return m_value;
+		}
 
 		/// Unwraps the enumerator.
 		/// @return Raw enumerator value.
-		[[nodiscard]] constexpr Enum unwrap() const noexcept;
+		[[nodiscard]] constexpr Enum unwrap() const noexcept
+		{
+			return m_value;
+		}
 
 	  private:
 		/// Base enumerator value.
@@ -100,5 +115,3 @@ namespace tr
 	{                                                                                                                                      \
 		return lhs = (lhs ^ rhs);                                                                                                          \
 	}
-
-#include "impl/enum.hpp" // IWYU pragma: export

@@ -1,10 +1,10 @@
 /// @file
-/// @brief Implements the non-templated parts of logger.hpp.
+/// @brief Implements logger.hpp.
 
-#include "../../include/tr/utility/logger.hpp"
-#include "../../include/tr/utility/chrono.hpp"
-#include "../../include/tr/utility/iostream.hpp"
-#include "../../include/tr/utility/ranges.hpp"
+#include <tr/utility/chrono.hpp>
+#include <tr/utility/iostream.hpp>
+#include <tr/utility/logger.hpp>
+#include <tr/utility/ranges.hpp>
 
 //
 

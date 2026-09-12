@@ -1,9 +1,9 @@
 /// @file
-/// @brief Implements the non-templated parts of rng.hpp.
+/// @brief Implements rng.hpp.
 
-#include "../../include/tr/utility/rng.hpp"
 #include <ctime>
 #include <random>
+#include <tr/utility/rng.hpp>
 
 //
 

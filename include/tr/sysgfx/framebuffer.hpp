@@ -3,7 +3,7 @@
 
 #pragma once
 #include "../utility/handle.hpp"
-#include "../utility/reference.hpp"
+#include "../utility/ref.hpp"
 
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 #include "graphics_object_registry.hpp"

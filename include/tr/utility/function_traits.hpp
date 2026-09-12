@@ -2,7 +2,7 @@
 /// @brief Provides function trait metafunctionality.
 
 #pragma once
-#include "integer.hpp"
+#include <tr/utility/integer.hpp>
 
 //
 
@@ -56,4 +56,4 @@ namespace tr
 	using nth_arg_type_t = function_traits<Function>::template nth_arg_type<N>;
 } // namespace tr
 
-#include "impl/function_traits.hpp" // IWYU pragma: export
+#include "internal/function_traits.hpp" // IWYU pragma: export

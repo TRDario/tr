@@ -1,10 +1,10 @@
 /// @file
 /// @brief Implements graphics_benchmark.hpp.
 
-#include "../../include/tr/sysgfx/graphics_benchmark.hpp"
-#include "../../include/tr/sysgfx/gl_defines.hpp"
-#include "../../include/tr/sysgfx/graphics_context.hpp"
-#include "../../include/tr/utility/ranges.hpp"
+#include <tr/sysgfx/gl_defines.hpp>
+#include <tr/sysgfx/graphics_benchmark.hpp>
+#include <tr/sysgfx/graphics_context.hpp>
+#include <tr/utility/out_handle.hpp>
 
 //
 

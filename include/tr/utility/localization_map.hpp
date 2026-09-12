@@ -2,7 +2,7 @@
 /// @brief Provides `tr::localization_map`.
 
 #pragma once
-#include "hash_map.hpp"
+#include <tr/utility/hash_map.hpp>
 
 //
 

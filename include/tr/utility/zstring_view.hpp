@@ -2,7 +2,8 @@
 /// @brief Provides `tr::basic_zstring_view` and related functions.
 
 #pragma once
-#include "pointer_iterator.hpp"
+#include <tr/utility/binary_io_specializations.hpp>
+#include <tr/utility/pointer_iterator.hpp>
 
 //
 
@@ -50,9 +51,11 @@ namespace tr
 			using pointer_iterator<iterator, const_pointer>::pointer_iterator;
 
 			/// Compares the iterator to an end sentinel.
-			/// @param rhs End sentinel.
 			/// @return `true` if the iterator is pointing to the end of the string, `false` otherwise.
-			[[nodiscard]] constexpr bool operator==(end_sentinel rhs) const noexcept;
+			[[nodiscard]] constexpr bool operator==(end_sentinel) const noexcept
+			{
+				return *this == iterator{} || Traits::eq(**this, CharT{});
+			}
 		};
 
 		/// Constant iterator type used by the string.
@@ -66,13 +69,19 @@ namespace tr
 
 		/// Constructs a string view from a NUL-terminated string pointer.
 		/// @param ptr Pointer to a NUL-terminated string.
-		[[nodiscard]] constexpr basic_zstring_view(const CharT* ptr) noexcept;
+		[[nodiscard]] constexpr basic_zstring_view(const CharT* ptr) noexcept
+			: m_ptr{ptr}
+		{
+		}
 
 		/// Constructs a string view from a standard string.
 		/// @tparam Allocator String allocator.
 		/// @param str Standard string.
 		template <typename Allocator>
-		[[nodiscard]] constexpr basic_zstring_view(const std::basic_string<CharT, Traits, Allocator>& str) noexcept;
+		[[nodiscard]] constexpr basic_zstring_view(const std::basic_string<CharT, Traits, Allocator>& str) noexcept
+			: m_ptr{str.c_str()}
+		{
+		}
 
 		/// Trivially copies a string view.
 		/// @param rhs String view to copy.
@@ -102,7 +111,10 @@ namespace tr
 
 		/// Converts the view into a standard string view.
 		/// @return Standard string view equivalent to `*this`.
-		[[nodiscard]] constexpr operator std::basic_string_view<CharT, Traits>() const noexcept;
+		[[nodiscard]] constexpr operator std::basic_string_view<CharT, Traits>() const noexcept
+		{
+			return !empty() ? m_ptr : std::string_view{};
+		}
 
 		/// @}
 		/// @name Comparison operators
@@ -112,12 +124,38 @@ namespace tr
 		/// @param rhs Second string view.
 		/// @return Ordering of the string views.
 		[[nodiscard]] constexpr std::strong_ordering operator<=>(this basic_zstring_view lhs,
-																 std::type_identity_t<basic_zstring_view> rhs) noexcept;
+																 std::type_identity_t<basic_zstring_view> rhs) noexcept
+		{
+			typename basic_zstring_view<CharT, Traits>::const_iterator lhs_it{lhs.begin()};
+			typename basic_zstring_view<CharT, Traits>::const_iterator rhs_it{rhs.begin()};
+			while (lhs_it != lhs.end() && rhs_it != rhs.end()) {
+				const bool equal{Traits::eq(*lhs_it, *rhs_it)};
+				if (!equal) {
+					const bool lt{Traits::lt(*lhs_it, *rhs_it)};
+					return lt ? std::strong_ordering::less : std::strong_ordering::greater;
+				}
+				++lhs_it, ++rhs_it;
+			}
+			return lhs_it != lhs.end()   ? std::strong_ordering::greater
+				   : rhs_it != rhs.end() ? std::strong_ordering::less
+										 : std::strong_ordering::equal;
+		}
 
 		/// Compares NUL-terminated string views for equality.
 		/// @param rhs Second string view.
 		/// @return Whether the string views are equal.
-		[[nodiscard]] constexpr bool operator==(this basic_zstring_view lhs, std::type_identity_t<basic_zstring_view> rhs) noexcept;
+		[[nodiscard]] constexpr bool operator==(this basic_zstring_view lhs, std::type_identity_t<basic_zstring_view> rhs) noexcept
+		{
+			typename basic_zstring_view<CharT, Traits>::const_iterator lhs_it{lhs.begin()};
+			typename basic_zstring_view<CharT, Traits>::const_iterator rhs_it{rhs.begin()};
+			while (lhs_it != lhs.end() && rhs_it != rhs.end()) {
+				const bool equal{Traits::eq(*lhs_it++, *rhs_it++)};
+				if (!equal) {
+					return false;
+				}
+			}
+			return lhs_it == lhs.end() && rhs_it == rhs.end();
+		}
 
 		/// @}
 		/// @name Iterators
@@ -125,19 +163,31 @@ namespace tr
 
 		/// Gets an iterator to the beginning of the string.
 		/// @return Iterator to the beginning of the string.
-		[[nodiscard]] constexpr iterator begin() const noexcept;
+		[[nodiscard]] constexpr iterator begin() const noexcept
+		{
+			return iterator{m_ptr};
+		}
 
 		/// Gets an iterator to the beginning of the string.
 		/// @return Iterator to the beginning of the string.
-		[[nodiscard]] constexpr const_iterator cbegin() const noexcept;
+		[[nodiscard]] constexpr const_iterator cbegin() const noexcept
+		{
+			return const_iterator{m_ptr};
+		}
 
 		/// Gets an iterator sentinel to the end of the string.
 		/// @return Iterator sentinel to the end of the string.
-		[[nodiscard]] constexpr end_sentinel end() const noexcept;
+		[[nodiscard]] constexpr end_sentinel end() const noexcept
+		{
+			return end_sentinel{};
+		}
 
 		/// Gets an iterator sentinel to the end of the string.
 		/// @return Iterator sentinel to the end of the string.
-		[[nodiscard]] constexpr end_sentinel cend() const noexcept;
+		[[nodiscard]] constexpr end_sentinel cend() const noexcept
+		{
+			return end_sentinel{};
+		}
 
 		/// @}
 		/// @name Access
@@ -146,24 +196,39 @@ namespace tr
 		/// Accesses a specific character.
 		/// @param index Index of the character within the string.
 		/// @return Reference to a character within the string.
-		[[nodiscard]] constexpr const_reference operator[](size_type index) const noexcept;
+		[[nodiscard]] constexpr const_reference operator[](size_type index) const noexcept
+		{
+			return m_ptr[index];
+		}
 
 		/// Accesses a specific character.
 		/// @param index Index of the character within the string.
 		/// @return Reference to a character within the string.
-		[[nodiscard]] constexpr const_reference at(size_type index) const noexcept;
+		[[nodiscard]] constexpr const_reference at(size_type index) const noexcept
+		{
+			return m_ptr[index];
+		}
 
 		/// Accesses the first character in the string.
 		/// @return Reference to the first character in the string.
-		[[nodiscard]] constexpr const_reference front() const noexcept;
+		[[nodiscard]] constexpr const_reference front() const noexcept
+		{
+			return *m_ptr;
+		}
 
 		/// Gets a pointer to the raw data of the string.
 		/// @return Pointer to the first character in the string.
-		[[nodiscard]] constexpr const_pointer data() const noexcept;
+		[[nodiscard]] constexpr const_pointer data() const noexcept
+		{
+			return m_ptr;
+		}
 
 		/// Gets a pointer to the raw C-string.
 		/// @return Pointer to the first character in the string.
-		[[nodiscard]] constexpr const_pointer c_str() const noexcept;
+		[[nodiscard]] constexpr const_pointer c_str() const noexcept
+		{
+			return m_ptr;
+		}
 
 		/// @}
 		/// @name Length
@@ -171,11 +236,17 @@ namespace tr
 
 		/// Gets the length of the string as if by strlen.
 		/// @return Length of the string.
-		[[nodiscard]] constexpr usize length() const noexcept;
+		[[nodiscard]] constexpr usize length() const noexcept
+		{
+			return std::string_view{*this}.length();
+		}
 
 		/// Gets whether the string view is empty.
 		/// @return `true` if the view points to `nullptr` or an empty string, `false` otherwise.
-		[[nodiscard]] constexpr bool empty() const noexcept;
+		[[nodiscard]] constexpr bool empty() const noexcept
+		{
+			return m_ptr == nullptr || Traits::eq(*m_ptr, CharT{});
+		}
 
 		/// @}
 		/// @name Sub-strings
@@ -184,11 +255,17 @@ namespace tr
 		/// Creates a sub-string view.
 		/// @param pos Starting position of the sub-string within the string.
 		/// @return Sub-string starting at `pos`.
-		[[nodiscard]] constexpr basic_zstring_view substr(size_type pos = 0) const noexcept;
+		[[nodiscard]] constexpr basic_zstring_view substr(size_type pos = 0) const noexcept
+		{
+			return m_ptr + pos;
+		}
 
 		/// Moves the start of the view forward.
 		/// @param n Number of characters to move the start of the view forward by.
-		constexpr void remove_prefix(size_type n) noexcept;
+		constexpr void remove_prefix(size_type n) noexcept
+		{
+			m_ptr += n;
+		}
 
 		/// @}
 
@@ -210,9 +287,11 @@ namespace tr
 
 			/// Constructs a null-terminated string view literal.
 			/// @param str Base C-string literal.
-			/// @param len Length of the string literal.
 			/// @return String view literal wrapped in `tr::zstring_view`.
-			[[nodiscard]] constexpr zstring_view operator""_zsv(const char* str, std::size_t len) noexcept;
+			[[nodiscard]] constexpr zstring_view operator""_zsv(const char* str, std::size_t) noexcept
+			{
+				return str;
+			}
 
 			/// @}
 		} // namespace zstring_view_literals
@@ -227,7 +306,10 @@ namespace tr
 	/// @param os Output stream.
 	/// @param zstr String view to output.
 	template <typename CharT, typename Traits>
-	std::basic_ostream<CharT, Traits>& operator<<(std::basic_ostream<CharT, Traits>& os, basic_zstring_view<CharT, Traits> zstr);
+	std::basic_ostream<CharT, Traits>& operator<<(std::basic_ostream<CharT, Traits>& os, basic_zstring_view<CharT, Traits> zstr)
+	{
+		return os << zstr.c_str();
+	}
 
 	/// Path construction operator for NUL-terminated string views.
 	/// @tparam CharT Character type used by the string.
@@ -236,9 +318,54 @@ namespace tr
 	/// @param rhs String to concatenate onto the path.
 	/// @return Concatenated path.
 	template <typename CharT, typename Traits>
-	[[nodiscard]] std::filesystem::path operator/(const std::filesystem::path& lhs, basic_zstring_view<CharT, Traits> rhs);
+	[[nodiscard]] std::filesystem::path operator/(const std::filesystem::path& lhs, basic_zstring_view<CharT, Traits> rhs)
+	{
+		return lhs / std::filesystem::path{rhs.c_str()};
+	}
 
 	/// @}
 } // namespace tr
 
-#include "impl/zstring_view.hpp" // IWYU pragma: export
+//
+
+#ifndef TR_DOXYGEN_SKIP
+/// Designates basic_zstring_view as a view.
+/// @tparam CharT Character type used by the string.
+/// @tparam Traits Character traits used by the string.
+template <typename CharT, typename Traits>
+inline constexpr bool std::ranges::enable_view<tr::basic_zstring_view<CharT, Traits>> = true;
+
+/// Designates basic_zstring_view as a borrowed range.
+/// @tparam CharT Character type used by the string.
+/// @tparam Traits Character traits used by the string.
+template <typename CharT, typename Traits>
+inline constexpr bool std::ranges::enable_borrowed_range<tr::basic_zstring_view<CharT, Traits>> = true;
+#endif
+
+//
+
+/// Formatter for NUL-terminated string views.
+/// @tparam CharT Character type used by the string.
+/// @tparam Traits Character traits used by the string.
+template <typename CharT, typename Traits>
+struct std::formatter<tr::basic_zstring_view<CharT, Traits>> : std::formatter<std::basic_string_view<CharT, Traits>>
+{
+};
+
+#ifndef TR_DOXYGEN_SKIP
+/// NUL-terminated string view hasher.
+/// @tparam CharT Character type used by the string.
+/// @tparam Traits Character traits used by the string.
+template <typename CharT, typename Traits>
+struct boost::hash<tr::basic_zstring_view<CharT, Traits>> : boost::hash<std::basic_string_view<CharT, Traits>>
+{
+};
+#endif
+
+/// NUL-terminated string view binary writer.
+/// @tparam CharT Character type used by the string.
+/// @tparam Traits Character traits used by the string.
+template <typename CharT, typename Traits>
+struct tr::binary_writer<tr::basic_zstring_view<CharT, Traits>> : binary_writer<std::basic_string_view<CharT, Traits>>
+{
+};

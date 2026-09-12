@@ -1,9 +1,9 @@
 /// @file
 /// @brief Implements benchmark.hpp.
 
-#include "../../include/tr/utility/benchmark.hpp"
-#include "../../include/tr/utility/macro.hpp"
-#include "../../include/tr/utility/ranges.hpp"
+#include <tr/utility/benchmark.hpp>
+#include <tr/utility/macro.hpp>
+#include <tr/utility/ranges.hpp>
 
 using namespace std::chrono_literals;
 

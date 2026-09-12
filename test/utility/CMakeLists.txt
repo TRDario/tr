@@ -2,11 +2,13 @@ add_executable(
 	utility_test
 	alignment.cpp
 	atlas_packer.cpp
+	atlas_entries.cpp
 	benchmark.cpp
 	binary_io.cpp
 	circle.cpp
 	color.cpp
 	defer.cpp
+	dynamic_ref_cast.cpp
 	encryption.cpp
 	enum.cpp
 	handle.cpp
@@ -17,10 +19,12 @@ add_executable(
 	matrix.cpp
 	mstream.cpp
 	norm_cast.cpp
+	opt_ref.cpp
+	out_handle.cpp
 	ranges.cpp
 	rectangle_edges.cpp
 	rectangle.cpp
-	reference.cpp
+	ref.cpp
 	rng.cpp
 	specialization_of.cpp
 	static_vector.cpp

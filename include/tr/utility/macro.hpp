@@ -3,7 +3,7 @@
 
 #pragma once
 #ifdef TR_ENABLE_ASSERTS
-#include "logger.hpp" // IWYU pragma: keep
+#include <tr/utility/logger.hpp> // IWYU pragma: keep
 #endif
 
 //

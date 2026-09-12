@@ -4,6 +4,7 @@
 #include "../../include/tr/sysgfx/display.hpp"
 #include "../../include/tr/utility/defer.hpp"
 #include <SDL3/SDL.h>
+#include <tr/utility/defer.hpp>
 
 //
 

@@ -4,7 +4,7 @@
 #pragma once
 #include <tr/utility/angle.hpp>
 #include <tr/utility/chrono.hpp>
-#include <tr/utility/reference.hpp>
+#include <tr/utility/ref.hpp>
 
 namespace tr
 {
@@ -110,7 +110,7 @@ namespace tr::internal
 
 	  private:
 		/// Source being commanded.
-		tr::ref<audio_source> m_source;
+		ref<audio_source> m_source;
 
 		/// Method the command calls when setting the value.
 		method_type m_method;

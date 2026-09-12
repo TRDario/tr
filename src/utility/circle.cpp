@@ -1,9 +1,9 @@
 /// @file
 /// @brief Implements circle.hpp.
 
-#include "../../include/tr/utility/circle.hpp"
-#include "../../include/tr/utility/math.hpp"
-#include "../../include/tr/utility/vector.hpp"
+#include <tr/utility/circle.hpp>
+#include <tr/utility/math.hpp>
+#include <tr/utility/vector.hpp>
 
 //
 

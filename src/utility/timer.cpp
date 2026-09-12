@@ -1,7 +1,7 @@
 /// @file
-/// @brief Implements the non-templated parts of timer.hpp.
+/// @brief Implements timer.hpp.
 
-#include "../../include/tr/utility/timer.hpp"
+#include <tr/utility/timer.hpp>
 
 // Use SDL_DelayPrecise on Windows if available.
 #if defined(WIN32) && defined(TR_HAS_SYSGFX)

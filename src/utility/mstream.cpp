@@ -1,7 +1,7 @@
 /// @file
 /// @brief Implements mstream.hpp.
 
-#include "../../include/tr/utility/mstream.hpp"
+#include <tr/utility/mstream.hpp>
 
 //
 

@@ -2,7 +2,7 @@
 /// Provides concepts.
 
 #pragma once
-#include "string_literal.hpp"
+#include <tr/utility/string_literal.hpp>
 
 namespace tr
 {

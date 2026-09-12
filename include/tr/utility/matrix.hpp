@@ -2,8 +2,8 @@
 /// @brief Provides matrix-related constants, functions and literals.
 
 #pragma once
-#include "angle.hpp"
-#include "rectangle.hpp"
+#include <tr/utility/angle.hpp>
+#include <tr/utility/rectangle.hpp>
 
 //
 

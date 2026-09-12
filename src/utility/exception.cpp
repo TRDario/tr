@@ -1,7 +1,7 @@
 /// @file
-/// @brief Implements the non-templated parts of exception.hpp.
+/// @brief Implements exception.hpp.
 
-#include "../../include/tr/utility/exception.hpp"
+#include <tr/utility/exception.hpp>
 
 //
 
@@ -19,6 +19,8 @@ const char* tr::exception::what() const noexcept
 	return g_what_buffer.data();
 }
 
+//
+
 std::string_view tr::out_of_memory::name() const noexcept
 {
 	return "Out of memory";
@@ -33,6 +35,8 @@ std::string_view tr::out_of_memory::details() const noexcept
 {
 	return {};
 }
+
+//
 
 tr::custom_exception::custom_exception(std::string&& name, std::string&& description, std::string&& details) noexcept
 	: m_name{std::move(name)}

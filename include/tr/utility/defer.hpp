@@ -2,7 +2,7 @@
 /// @brief Provides a defer mechanism.
 
 #pragma once
-#include "macro.hpp"
+#include <tr/utility/macro.hpp>
 
 namespace tr
 {
@@ -15,10 +15,16 @@ namespace tr
 	  public:
 		/// Constructs a deferred function call.
 		/// @param fn Function to defer.
-		constexpr defer(Fn&& fn) noexcept(std::is_nothrow_move_constructible_v<Fn>);
+		constexpr defer(Fn&& fn) noexcept(std::is_nothrow_move_constructible_v<Fn>)
+			: m_fn{std::move(fn)}
+		{
+		}
 
 		/// Calls the deferred function.
-		constexpr ~defer() noexcept;
+		constexpr ~defer() noexcept
+		{
+			m_fn();
+		}
 
 	  private:
 		/// The deferred function.
@@ -34,5 +40,3 @@ namespace tr
 		[&]() noexcept { __VA_ARGS__; }                                                                                                    \
 	}
 } // namespace tr
-
-#include "impl/defer.hpp" // IWYU pragma: export

@@ -1,7 +1,7 @@
 /// @file
 /// @brief Implements iostream.cpp.
 
-#include "../../include/tr/utility/iostream.hpp"
+#include <tr/utility/iostream.hpp>
 
 //
 

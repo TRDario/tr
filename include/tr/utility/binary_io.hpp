@@ -2,8 +2,8 @@
 /// @brief Provides an interface for reading and writing binary data.
 
 #pragma once
-#include "concepts.hpp"
-#include "specialization_of.hpp"
+#include <tr/utility/concepts.hpp>
+#include <tr/utility/specialization_of.hpp>
 
 //
 
@@ -67,7 +67,10 @@ namespace tr
 	/// @param is Input stream.
 	/// @param out Output variable.
 	template <binary_readable Out>
-	void read_binary(std::istream& is, Out& out);
+	void read_binary(std::istream& is, Out& out)
+	{
+		binary_reader<std::remove_volatile_t<Out>>{}(is, out);
+	}
 
 	/// Reads binary data from a stream.
 	/// @tparam Out Binary-readable type.
@@ -75,7 +78,17 @@ namespace tr
 	/// @param is Input stream.
 	/// @param out Output span.
 	template <binary_readable Out, usize Size>
-	void read_binary(std::istream& is, std::span<Out, Size> out);
+	void read_binary(std::istream& is, std::span<Out, Size> out)
+	{
+		if constexpr (requires { requires std::same_as<typename binary_reader<Out>::default_reader, std::true_type>; }) {
+			is.read(reinterpret_cast<char*>(out.data()), out.size_bytes());
+		}
+		else {
+			for (Out& v : out) {
+				read_binary(is, v);
+			}
+		}
+	}
 
 	/// Reads binary data from a stream.
 	/// @tparam Outs Binary-readable types.
@@ -83,14 +96,22 @@ namespace tr
 	/// @param outs Output variables.
 	template <span_or_ref_to_binary_readable... Outs>
 		requires(sizeof...(Outs) >= 2)
-	void read_binary(std::istream& is, Outs&&... outs);
+	void read_binary(std::istream& is, Outs&&... outs)
+	{
+		(read_binary(is, outs), ...);
+	}
 
 	/// Reads binary data from a stream.
 	/// @tparam Out Binary-readable type.
 	/// @param is Input stream.
 	/// @return Read variable.
 	template <binary_constructible Out>
-	[[nodiscard]] Out read_binary(std::istream& is);
+	[[nodiscard]] Out read_binary(std::istream& is)
+	{
+		Out out;
+		read_binary(is, out);
+		return out;
+	}
 
 	/// Checks for magic bytes from a stream.
 	/// @param is Input stream.
@@ -105,7 +126,23 @@ namespace tr
 	/// @param is Input stream.
 	/// @param out Output iterator.
 	template <tr::binary_flushable_iterator Iterator>
-	void flush_binary(std::istream& is, Iterator out);
+	void flush_binary(std::istream& is, Iterator out)
+	{
+		while (is.peek() != EOF) {
+			if constexpr (std::output_iterator<Iterator, char>) {
+				*out++ = static_cast<char>(is.get());
+			}
+			else if constexpr (std::output_iterator<Iterator, signed char>) {
+				*out++ = static_cast<signed char>(is.get());
+			}
+			else if constexpr (std::output_iterator<Iterator, unsigned char>) {
+				*out++ = static_cast<unsigned char>(is.get());
+			}
+			else {
+				*out++ = static_cast<std::byte>(is.get());
+			}
+		}
+	}
 
 	/// Flushes the rest of the stream into a vector of bytes.
 	/// @param is Input stream.
@@ -119,7 +156,10 @@ namespace tr
 	/// @param os Output stream.
 	/// @param in Variable to write to the stream.
 	template <binary_writable In>
-	void write_binary(std::ostream& os, const In& in);
+	void write_binary(std::ostream& os, const In& in)
+	{
+		binary_writer<std::remove_cv_t<In>>{}(os, in);
+	}
 
 	/// Writes binary data to a stream.
 	/// @tparam Ins Binary-writable types.
@@ -127,7 +167,10 @@ namespace tr
 	/// @param ins Variables to write to the stream.
 	template <binary_writable... Ins>
 		requires(sizeof...(Ins) >= 2)
-	void write_binary(std::ostream& os, const Ins&... ins);
+	void write_binary(std::ostream& os, const Ins&... ins)
+	{
+		(write_binary(os, ins), ...);
+	}
 
 	/// Writes magic bytes to a stream.
 	/// @param os Output stream.
@@ -136,5 +179,3 @@ namespace tr
 
 	/// @}
 } // namespace tr
-
-#include "impl/binary_io.hpp" // IWYU pragma: export

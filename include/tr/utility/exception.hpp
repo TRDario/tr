@@ -2,7 +2,7 @@
 /// @brief Provides base exception types.
 
 #pragma once
-#include "static_string.hpp"
+#include <tr/utility/static_string.hpp>
 
 //
 
@@ -52,7 +52,18 @@ namespace tr
 		/// @param fmt Error message format string.
 		/// @param args Formatting arguments.
 		template <typename... Args>
-		[[nodiscard]] out_of_memory(std::format_string<Args...> fmt, Args&&... args) noexcept;
+		[[nodiscard]] out_of_memory(std::format_string<Args...> fmt, Args&&... args) noexcept
+		{
+			try {
+				auto output_it{std::back_inserter(m_description)};
+				std::format_to(output_it, "Error occurred during ");
+				std::format_to_n(output_it, m_description.max_size() - 2 - m_description.size(), fmt, std::forward<Args>(args)...);
+				std::format_to(output_it, ".");
+			}
+			catch (...) {
+				m_description.append("Failed to format error description.");
+			}
+		}
 
 		/// @}
 		/// @name Information
@@ -119,5 +130,3 @@ namespace tr
 		std::string m_details;
 	};
 } // namespace tr
-
-#include "impl/exception.hpp" // IWYU pragma: export

@@ -1,8 +1,8 @@
 /// @file
 /// @brief Implements triangle.hpp.
 
-#include "../../include/tr/utility/triangle.hpp"
-#include "../../include/tr/utility/vector.hpp"
+#include <tr/utility/triangle.hpp>
+#include <tr/utility/vector.hpp>
 
 //
 

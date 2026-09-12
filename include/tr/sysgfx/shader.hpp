@@ -4,7 +4,7 @@
 
 #pragma once
 #include "../utility/exception.hpp"
-#include "../utility/reference.hpp"
+#include "../utility/ref.hpp"
 #include "../utility/zstring_view.hpp"
 #include "texture_unit.hpp"
 

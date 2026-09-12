@@ -1072,7 +1072,7 @@ RECURSIVE              = YES
 # Note that relative paths are relative to the directory from which Doxygen is
 # run.
 
-EXCLUDE                = ../include/tr/utility/impl \
+EXCLUDE                = ../include/tr/utility/internal \
                          ../include/tr/sysgfx/impl \
                          ../include/tr/audio/internal \
                          ../include/tr/sysgfx/gl_api.hpp \
@@ -2482,7 +2482,7 @@ INCLUDE_FILE_PATTERNS  =
 # recursively expanded use the := operator instead of the = operator.
 # This tag requires that the tag ENABLE_PREPROCESSING is set to YES.
 
-PREDEFINED             =
+PREDEFINED             = TR_DOXYGEN_SKIP
 
 # If the MACRO_EXPANSION and EXPAND_ONLY_PREDEF tags are set to YES then this
 # tag can be used to specify a list of macro names that should be expanded. The

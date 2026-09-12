@@ -1,7 +1,8 @@
 /// @file
-/// @brief Implements the non-templated parts of binary_io.hpp.
+/// @brief Implements binary_io.hpp.
 
-#include "../../include/tr/utility/binary_io.hpp"
+#include <tr/utility/binary_io.hpp>
+#include <tr/utility/binary_io_specializations.hpp>
 
 //
 

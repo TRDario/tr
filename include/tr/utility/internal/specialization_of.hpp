@@ -2,7 +2,7 @@
 /// @brief Implements specialization_of.hpp.
 
 #pragma once
-#include "../specialization_of.hpp"
+#include <tr/utility/specialization_of.hpp>
 
 //
 

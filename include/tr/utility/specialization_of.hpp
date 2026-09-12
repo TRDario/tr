@@ -74,4 +74,4 @@ namespace tr
 	concept cvref_specialization_of_tv = specialization_of_tv<std::remove_cvref_t<T>, Template>;
 } // namespace tr
 
-#include "impl/specialization_of.hpp" // IWYU pragma: export
+#include "internal/specialization_of.hpp" // IWYU pragma: export

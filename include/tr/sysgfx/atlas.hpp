@@ -2,7 +2,7 @@
 /// @brief Provides atlas textures.
 
 #pragma once
-#include "../utility/atlas_packer.hpp"
+#include "../utility/atlas_entries.hpp"
 #include "texture.hpp"
 
 //

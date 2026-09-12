@@ -1,7 +1,7 @@
 /// @file
 /// @brief Implements matrix.hpp.
 
-#include "../../include/tr/utility/matrix.hpp"
+#include <tr/utility/matrix.hpp>
 
 //
 

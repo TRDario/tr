@@ -1,9 +1,10 @@
 /// @file
 /// @brief Implements graphics_buffer.hpp.
 
-#include "../../include/tr/sysgfx/graphics_buffer.hpp"
-#include "../../include/tr/sysgfx/gl_defines.hpp"
-#include "../../include/tr/sysgfx/graphics_context.hpp"
+#include <tr/sysgfx/gl_defines.hpp>
+#include <tr/sysgfx/graphics_buffer.hpp>
+#include <tr/sysgfx/graphics_context.hpp>
+#include <tr/utility/out_handle.hpp>
 
 //
 

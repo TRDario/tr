@@ -2,8 +2,8 @@
 /// @brief Provides `tr::line_segment` and line-related functions.
 
 #pragma once
-#include "angle.hpp"
-#include "default_binary_io.hpp"
+#include <tr/utility/angle.hpp>
+#include <tr/utility/default_binary_io.hpp>
 
 //
 
@@ -89,6 +89,8 @@ namespace tr
 
 	/// @}
 } // namespace tr
+
+//
 
 /// Enables default binary IO for line segments.
 template <>

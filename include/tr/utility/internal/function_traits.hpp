@@ -2,7 +2,7 @@
 /// @brief Implements function_traits.hpp.
 
 #pragma once
-#include "../function_traits.hpp"
+#include <tr/utility/function_traits.hpp>
 
 //
 

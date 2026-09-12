@@ -1,20 +1,18 @@
 /// @file
-/// @brief Implements the non-templated parts of encryption.hpp.
+/// @brief Implements encryption.hpp.
 
-#include "../../include/tr/utility/encryption.hpp"
-#include "../../include/tr/utility/binary_io.hpp"
-#include "../../include/tr/utility/mstream.hpp"
-#include "../../include/tr/utility/rng.hpp"
 #include <lz4.h>
+#include <tr/utility/binary_io.hpp>
+#include <tr/utility/binary_io_specializations.hpp>
+#include <tr/utility/encryption.hpp>
+#include <tr/utility/mstream.hpp>
+#include <tr/utility/rng.hpp>
 
-namespace tr
+namespace
 {
-	namespace
-	{
-		/// Size of an encrypted chunk header.
-		constexpr tr::usize header_size{7};
-	} // namespace
-} // namespace tr
+	/// Size of an encrypted chunk header.
+	constexpr tr::usize header_size{7};
+} // namespace
 
 //
 

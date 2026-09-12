@@ -2,6 +2,8 @@
 /// @brief Provides `tr::rectangle_edges`.
 
 #pragma once
+#include <tr/utility/default_binary_io.hpp>
+#include <tr/utility/rectangle_edges.hpp>
 
 //
 
@@ -32,25 +34,49 @@ namespace tr
 
 		/// Constructs a set of edges with the same value.
 		/// @param left Uniform edge value.
-		[[nodiscard]] constexpr rectangle_edges(Element left) noexcept;
+		[[nodiscard]] constexpr rectangle_edges(Element left) noexcept
+			: top{left}
+			, right{left}
+			, bottom{left}
+			, left{left}
+		{
+		}
 
 		/// Constructs a set of edges with top = bottom, left = right.
 		/// @param left Left and right edge value.
 		/// @param top Top and bottom edge value.
-		[[nodiscard]] constexpr rectangle_edges(Element left, Element top) noexcept;
+		[[nodiscard]] constexpr rectangle_edges(Element left, Element top) noexcept
+			: left{left}
+			, top{top}
+			, right{left}
+			, bottom{top}
+		{
+		}
 
 		/// Constructs a set of edges with top = bottom.
 		/// @param left Left edge value.
 		/// @param top Top and bottom edge value.
 		/// @param right Right edge value.
-		[[nodiscard]] constexpr rectangle_edges(Element left, Element top, Element right) noexcept;
+		[[nodiscard]] constexpr rectangle_edges(Element left, Element top, Element right) noexcept
+			: left{left}
+			, top{top}
+			, right{right}
+			, bottom{top}
+		{
+		}
 
 		/// Constructs a set of edges.
 		/// @param left Left edge value.
 		/// @param top Top edge value.
 		/// @param right Right edge value.
 		/// @param bottom Bottom edge value.
-		[[nodiscard]] constexpr rectangle_edges(Element left, Element top, Element right, Element bottom) noexcept;
+		[[nodiscard]] constexpr rectangle_edges(Element left, Element top, Element right, Element bottom) noexcept
+			: left{left}
+			, top{top}
+			, right{right}
+			, bottom{bottom}
+		{
+		}
 
 		/// @}
 		/// @name Comparison operators
@@ -61,10 +87,17 @@ namespace tr
 		/// @param rhs Set of edges to compare with.
 		/// @return Whether the two sets of edges are equal.
 		template <typename ElementR>
-		[[nodiscard]] constexpr bool operator==(const rectangle_edges<ElementR>& rhs) const noexcept;
+		[[nodiscard]] constexpr bool operator==(const rectangle_edges<ElementR>& rhs) const noexcept
+		{
+			return left == rhs.left && top == rhs.top && right == rhs.right && bottom == rhs.bottom;
+		}
 
 		/// @}
 	};
 } // namespace tr
 
-#include "impl/rectangle_edges.hpp" // IWYU pragma: export
+//
+
+/// Enables default binary IO for rectangle edges.
+template <typename Element>
+inline constexpr bool tr::enable_default_binary_io<tr::rectangle_edges<Element>>{true};

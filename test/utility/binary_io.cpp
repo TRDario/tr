@@ -3,6 +3,7 @@
 
 #include <gtest/gtest.h>
 #include <tr/utility/binary_io.hpp>
+#include <tr/utility/binary_io_specializations.hpp>
 #include <tr/utility/logger.hpp>
 #include <tr/utility/rng.hpp>
 

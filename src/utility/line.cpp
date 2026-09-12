@@ -1,8 +1,8 @@
 /// @file
 /// @brief Implements line.hpp.
 
-#include "../../include/tr/utility/line.hpp"
-#include "../../include/tr/utility/vector.hpp"
+#include <tr/utility/line.hpp>
+#include <tr/utility/vector.hpp>
 
 //
 

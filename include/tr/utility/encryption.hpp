@@ -5,7 +5,8 @@
 /// hex editing and the like.
 
 #pragma once
-#include "exception.hpp"
+#include <tr/utility/exception.hpp>
+#include <tr/utility/ranges.hpp>
 
 //
 
@@ -58,7 +59,10 @@ namespace tr
 	/// @param out Output vector.
 	/// @param range Raw source range.
 	template <std::ranges::contiguous_range Range>
-	void encrypt_to(std::vector<std::byte>& out, Range&& range);
+	void encrypt_to(std::vector<std::byte>& out, Range&& range)
+	{
+		encrypt_to(out, std::span<const std::byte>{range_bytes(range)});
+	}
 
 	/// Encrypts data.
 	/// @param raw Raw source data.
@@ -69,7 +73,10 @@ namespace tr
 	/// @param range Raw source range.
 	/// @return Vector containing encrypted data.
 	template <std::ranges::contiguous_range Range>
-	[[nodiscard]] std::vector<std::byte> encrypt(Range&& range);
+	[[nodiscard]] std::vector<std::byte> encrypt(Range&& range)
+	{
+		return encrypt(std::span<const std::byte>{range_bytes(range)});
+	}
 
 	/// @}
 	/// @name Decryption
@@ -89,5 +96,3 @@ namespace tr
 
 	/// @}
 } // namespace tr
-
-#include "impl/encryption.hpp" // IWYU pragma: export

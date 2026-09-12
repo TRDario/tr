@@ -2,7 +2,7 @@
 /// @brief Provides `tr::circle` and related functions.
 
 #pragma once
-#include "default_binary_io.hpp"
+#include <tr/utility/default_binary_io.hpp>
 
 //
 
@@ -35,6 +35,8 @@ namespace tr
 
 	/// @}
 } // namespace tr
+
+//
 
 /// Enables default binary IO for circles.
 template <>

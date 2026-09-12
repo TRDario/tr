@@ -2,8 +2,8 @@
 /// @brief Provides `tr::triangle`.
 
 #pragma once
-#include "default_binary_io.hpp"
-#include "polygon.hpp"
+#include <tr/utility/default_binary_io.hpp>
+#include <tr/utility/polygon.hpp>
 
 //
 
