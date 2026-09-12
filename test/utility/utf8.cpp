@@ -2,13 +2,13 @@
 /// @brief Tests utility/utf8.hpp.
 
 #include <gtest/gtest.h>
-#include <tr/utility/static_string.hpp>
+#include <tr/utility/inplace_string.hpp>
 #include <tr/utility/static_vector.hpp>
 #include <tr/utility/utf8.hpp>
 
 //
 
-constexpr tr::static_string<10> characters{"ač東😳"};
+constexpr tr::inplace_string<10> characters{"ač東😳"};
 
 constexpr std::array<tr::codepoint, 4> codepoints{0x61, 0x10D, 0x6771, 0x1F633};
 
@@ -41,7 +41,7 @@ TEST(utf8_test, backward_iteration)
 
 TEST(utf8_test, insertion)
 {
-	tr::static_string<10> insert;
+	tr::inplace_string<10> insert;
 	for (tr::codepoint cp : codepoints) {
 		tr::utf8::insert(insert, insert.begin(), cp);
 	}
@@ -50,7 +50,7 @@ TEST(utf8_test, insertion)
 
 TEST(utf8_test, deletion)
 {
-	tr::static_string<10> erase{"😳東ča"};
+	tr::inplace_string<10> erase{"😳東ča"};
 	tr::utf8::erase(erase, erase.begin());
 	EXPECT_EQ(erase, "東ča");
 	tr::utf8::erase(erase, erase.begin());
@@ -63,7 +63,7 @@ TEST(utf8_test, deletion)
 
 TEST(utf8_test, pop_back)
 {
-	tr::static_string<10> pop_back{"😳東ča"};
+	tr::inplace_string<10> pop_back{"😳東ča"};
 	tr::utf8::pop_back(pop_back);
 	EXPECT_EQ(pop_back, "😳東č");
 	tr::utf8::pop_back(pop_back);

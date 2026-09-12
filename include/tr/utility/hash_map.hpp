@@ -2,8 +2,8 @@
 /// @brief Provides miscellaneous hash map functionality.
 
 #pragma once
+#include <tr/utility/inplace_string.hpp>
 #include <tr/utility/opt_ref.hpp>
-#include <tr/utility/static_string.hpp>
 #include <tr/utility/type_name.hpp>
 
 //
@@ -36,17 +36,17 @@ namespace tr
 	template <typename Value>
 	using string_node_map = boost::unordered_node_map<std::string, Value, string_hash, string_eq>;
 
-	/// Static string-key flat map.
+	/// Inplace string-key flat map.
 	/// @tparam KeyCapacity String capacity of keys.
 	/// @tparam Value Map value type.
 	template <usize KeyCapacity, typename Value>
-	using static_string_flat_map = boost::unordered_flat_map<static_string<KeyCapacity>, Value, string_hash, string_eq>;
+	using inplace_string_flat_map = boost::unordered_flat_map<inplace_string<KeyCapacity>, Value, string_hash, string_eq>;
 
-	/// Static string-key node map.
+	/// Inplace string-key node map.
 	/// @tparam KeyCapacity String capacity of keys.
 	/// @tparam Value Map value type.
 	template <usize KeyCapacity, typename Value>
-	using static_string_node_map = boost::unordered_node_map<static_string<KeyCapacity>, Value, string_hash, string_eq>;
+	using inplace_string_node_map = boost::unordered_node_map<inplace_string<KeyCapacity>, Value, string_hash, string_eq>;
 
 	/// @name Hash maps
 	/// @{

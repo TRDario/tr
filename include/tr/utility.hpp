@@ -24,6 +24,7 @@
 #include <tr/utility/function_traits.hpp>           // IWYU pragma: export
 #include <tr/utility/handle.hpp>                    // IWYU pragma: export
 #include <tr/utility/hash_map.hpp>                  // IWYU pragma: export
+#include <tr/utility/inplace_string.hpp>            // IWYU pragma: export
 #include <tr/utility/integer.hpp>                   // IWYU pragma: export
 #include <tr/utility/iostream.hpp>                  // IWYU pragma: export
 #include <tr/utility/iterator_interface.hpp>        // IWYU pragma: export
@@ -46,7 +47,6 @@
 #include <tr/utility/ref.hpp>                       // IWYU pragma: export
 #include <tr/utility/rng.hpp>                       // IWYU pragma: export
 #include <tr/utility/specialization_of.hpp>         // IWYU pragma: export
-#include <tr/utility/static_string.hpp>             // IWYU pragma: export
 #include <tr/utility/static_vector.hpp>             // IWYU pragma: export
 #include <tr/utility/stopwatch.hpp>                 // IWYU pragma: export
 #include <tr/utility/string_literal.hpp>            // IWYU pragma: export

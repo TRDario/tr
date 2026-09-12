@@ -2,7 +2,7 @@
 /// @brief Provides base exception types.
 
 #pragma once
-#include <tr/utility/static_string.hpp>
+#include <tr/utility/inplace_string.hpp>
 
 //
 
@@ -38,7 +38,7 @@ namespace tr
 
 	  private:
 		/// Buffer used for exception explanation messages.
-		static thread_local static_string<1024> g_what_buffer;
+		static thread_local inplace_string<1024> g_what_buffer;
 	};
 
 	/// Out-of-memory exception.
@@ -85,7 +85,7 @@ namespace tr
 
 	  private:
 		/// Description of the error.
-		static_string<255> m_description;
+		inplace_string<255> m_description;
 	};
 
 	/// Specialization of tr::exception for one-off exceptions.

@@ -5,7 +5,7 @@
 
 //
 
-thread_local tr::static_string<1024> tr::exception::g_what_buffer{1024, '\0'};
+thread_local tr::inplace_string<1024> tr::exception::g_what_buffer{1024, '\0'};
 
 const char* tr::exception::what() const noexcept
 {
