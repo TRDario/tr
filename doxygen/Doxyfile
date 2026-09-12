@@ -1074,9 +1074,7 @@ RECURSIVE              = YES
 
 EXCLUDE                = ../include/tr/utility/impl \
                          ../include/tr/sysgfx/impl \
-                         ../include/tr/audio/impl \
-                         ../include/tr/audio/al_api.hpp \
-                         ../include/tr/audio/audio_command.hpp \
+                         ../include/tr/audio/internal \
                          ../include/tr/sysgfx/gl_api.hpp \
                          ../include/tr/sysgfx/gl_checks.hpp \
                          ../include/tr/sysgfx/gl_defines.hpp \

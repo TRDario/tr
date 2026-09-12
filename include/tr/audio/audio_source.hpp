@@ -2,14 +2,14 @@
 /// @brief Provides an audio source class.
 
 #pragma once
-#include "../utility/static_vector.hpp"
-#include "audio_buffer.hpp"
-#include "audio_class.hpp"
+#include <tr/audio/audio_buffer.hpp>
+#include <tr/audio/audio_class.hpp>
+#include <tr/audio/audio_stream.hpp>
+#include <tr/utility/static_vector.hpp>
 
 namespace tr
 {
 	class angle;
-	class audio_stream;
 } // namespace tr
 
 //
@@ -66,6 +66,16 @@ namespace tr
 
 		/// @name Constructors
 		/// @{
+
+		/// @cond implementation_details
+
+		/// Creates an empty audio source.
+		/// @warning The source must be destroyed before the audio context it is on.
+		/// @param context Audio context to create the source on.
+		/// @param priority Priority of the source.
+		[[nodiscard]] audio_source(audio_context& context, int priority);
+
+		/// @endcond
 
 		/// Audio sources are not copyable.
 		audio_source(const audio_source&) = delete;
@@ -369,6 +379,24 @@ namespace tr
 		void set_loop_points(fsecs start, fsecs end);
 
 		/// @}
+		/// @cond al_interop
+		/// @name OpenAL interoperability
+
+		/// Unwraps the OpenAL source handle.
+		/// @note This does not release the handle.
+		/// @return Pointer to the OpenAL source handle.
+		[[nodiscard]] unsigned int unwrap() const noexcept;
+
+		/// @endcond
+		/// @cond implementation_details
+		/// @name Implementation details
+		/// @{
+
+		/// Refills the audio source if it is streamed.
+		void refill_if_needed();
+
+		/// @}
+		/// @endcond
 
 	  private:
 		/// Source destroyer.
@@ -504,13 +532,6 @@ namespace tr
 
 		//
 
-		/// Creates an empty audio source.
-		/// @param context Audio context to create the source on.
-		/// @param priority Priority of the source.
-		[[nodiscard]] audio_source(audio_context& context, int priority);
-
-		//
-
 		/// Attaches an audio buffer to the source.
 		/// @param buffer Buffer to attach to the source.
 		void attach_buffer(audio_buffer& buffer) noexcept;
@@ -557,29 +578,5 @@ namespace tr
 		/// @param start Starting loop point in seconds.
 		/// @param end Ending loop point in seconds.
 		void set_loop_points(const std::lock_guard<std::mutex>& lock, fsecs start, fsecs end);
-
-		//
-
-		/// Refills the audio source if it is streamed.
-		void refill_if_needed();
-
-		//
-
-		// Accesses the raw OpenAL source ID.
-		friend class audio_context;
-
-		// Uses the private constructor.
-		friend std::shared_ptr<audio_source> create_audio_source(audio_context& context, int priority);
 	};
-
-	/// @name Factories
-	/// @{
-
-	/// Creates a shared audio source pointer.
-	/// @param context Audio context to create the audio source on.
-	/// @param priority Priority of the audio source.
-	/// @return Shared pointer to a new audio source. Result may be null if the source could not be allocated.
-	[[nodiscard]] std::shared_ptr<audio_source> create_audio_source(audio_context& context, int priority);
-
-	/// @}
 } // namespace tr

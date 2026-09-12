@@ -1,13 +1,12 @@
 /// @file
 /// @brief Implements audio_source.hpp.
 
-#include "../../include/tr/audio/audio_source.hpp"
-#include "../../include/tr/audio/audio_context.hpp"
-#include "../../include/tr/audio/audio_stream.hpp"
-#include "../../include/tr/utility/ranges.hpp"
-#include "../../include/tr/utility/variant.hpp"
 #include <AL/al.h>
 #include <AL/alext.h>
+#include <tr/audio/audio_context.hpp>
+#include <tr/audio/audio_source.hpp>
+#include <tr/audio/audio_stream.hpp>
+#include <tr/utility/variant.hpp>
 
 //
 
@@ -97,7 +96,7 @@ void tr::audio_source::buffered_stream::set_loop_points(fsecs start_point, fsecs
 
 tr::fsecs tr::audio_source::buffered_stream::buffer_start_offset(unsigned int id) const
 {
-	const usize raw_offset{std::ranges::find(m_buffers, id, [](const buffer& buffer) { return buffer.m_handle.get(); })->start_offset()};
+	const usize raw_offset{std::ranges::find(m_buffers, id, &audio_buffer::unwrap)->start_offset()};
 	return fsecs{static_cast<float>(raw_offset) / m_stream->sample_rate()};
 }
 
@@ -105,7 +104,7 @@ tr::fsecs tr::audio_source::buffered_stream::buffer_start_offset(unsigned int id
 
 tr::static_vector<unsigned int, 4> tr::audio_source::buffered_stream::try_refill_all()
 {
-	return try_refill(static_vector<unsigned int, 4>{m_buffers | std::views::transform([](buffer& b) { return b.m_handle.get(); })});
+	return try_refill(static_vector<unsigned int, 4>{m_buffers | std::views::transform([](buffer& b) { return b.unwrap(); })});
 }
 
 tr::static_vector<unsigned int, 4> tr::audio_source::buffered_stream::try_refill(static_vector<unsigned int, 4> buffers)
@@ -115,7 +114,7 @@ tr::static_vector<unsigned int, 4> tr::audio_source::buffered_stream::try_refill
 			buffers.resize(i);
 			break;
 		}
-		std::ranges::find(m_buffers, buffers[i], [](buffer& b) { return b.m_handle.get(); })->refill_from(*m_stream);
+		std::ranges::find(m_buffers, buffers[i], [](buffer& b) { return b.unwrap(); })->refill_from(*m_stream);
 	}
 	return buffers;
 }
@@ -128,29 +127,12 @@ tr::audio_source::audio_source(audio_context& context, int priority)
 	, m_class_mask{}
 	, m_gain{1.0f}
 {
-	context.m_al_api.generate_sources(context.m_ptr.get(), 1, out_handle(m_handle));
+	context.al().generate_sources(context.unwrap(), 1, out_handle(m_handle));
 }
 
 void tr::audio_source::deleter::operator()(unsigned int id) const noexcept
 {
-	context.m_al_api.delete_sources(context.m_ptr.get(), 1, &id);
-}
-
-//
-
-std::shared_ptr<tr::audio_source> tr::create_audio_source(audio_context& context, int priority)
-{
-	const std::lock_guard lock{context.m_mutex};
-	if (context.m_sources.size() == context.m_max_sources) {
-		auto erasable_it{std::ranges::find_if(context.m_sources, [&](auto& s) { return s.use_count() == 1 && s->priority() <= priority; })};
-		if (erasable_it == context.m_sources.end()) {
-			return nullptr;
-		}
-		else {
-			unstable_erase(context.m_sources, erasable_it);
-		}
-	}
-	return context.m_sources.emplace_back(new audio_source{context, priority});
+	context.al().delete_sources(context.unwrap(), 1, &id);
 }
 
 //
@@ -164,23 +146,22 @@ tr::audio_context& tr::audio_source::context() const noexcept
 
 void tr::audio_source::use(std::shared_ptr<audio_buffer> buffer)
 {
-	use(std::lock_guard{context().m_mutex}, buffer);
+	use(context().lock_mutex(), buffer);
 }
 
 void tr::audio_source::use(const std::lock_guard<std::mutex>& lock, std::shared_ptr<audio_buffer> buffer)
 {
-	audio_context& ctx{context()};
 
 	clear(lock);
 	attach_buffer(*buffer);
-	ctx.m_al_api.set_source_property_i(ctx.m_ptr.get(), m_handle.get(), AL_DIRECT_CHANNELS_SOFT, buffer->channels() == 2);
+	context().al().set_source_property_i(context().unwrap(), unwrap(), AL_DIRECT_CHANNELS_SOFT, buffer->channels() == 2);
 	m_data_source.emplace<std::shared_ptr<audio_buffer>>(std::move(buffer));
 	set_loop_points(lock, start, end);
 }
 
 void tr::audio_source::use(std::unique_ptr<audio_stream>&& stream)
 {
-	use(std::lock_guard{context().m_mutex}, std::move(stream));
+	use(context().lock_mutex(), std::move(stream));
 }
 
 void tr::audio_source::use(const std::lock_guard<std::mutex>& lock, std::unique_ptr<audio_stream>&& stream)
@@ -191,7 +172,7 @@ void tr::audio_source::use(const std::lock_guard<std::mutex>& lock, std::unique_
 
 void tr::audio_source::clear()
 {
-	clear(std::lock_guard{context().m_mutex});
+	clear(context().lock_mutex());
 }
 
 void tr::audio_source::clear(const std::lock_guard<std::mutex>& lock)
@@ -226,8 +207,7 @@ void tr::audio_source::set_class_mask(const audio_class_mask& mask) noexcept
 float tr::audio_source::pitch() const noexcept
 {
 	float pitch;
-	audio_context& ctx{context()};
-	ctx.m_al_api.get_source_property_f(ctx.m_ptr.get(), m_handle.get(), AL_PITCH, &pitch);
+	context().al().get_source_property_f(context().unwrap(), unwrap(), AL_PITCH, &pitch);
 	return pitch;
 }
 
@@ -235,8 +215,7 @@ void tr::audio_source::set_pitch(float pitch) noexcept
 {
 	TR_ASSERT(pitch > 0.0f, "Tried to set audio source pitch to invalid value '{}'.", pitch);
 
-	audio_context& ctx{context()};
-	ctx.m_al_api.set_source_property_f(ctx.m_ptr.get(), m_handle.get(), AL_PITCH, pitch);
+	context().al().set_source_property_f(context().unwrap(), unwrap(), AL_PITCH, pitch);
 }
 
 void tr::audio_source::set_pitch(float end_pitch, fsecs time)
@@ -258,12 +237,11 @@ void tr::audio_source::set_gain(float gain) noexcept
 	m_gain = gain;
 	for (usize i = 0; i < audio_class_count; ++i) {
 		if (m_class_mask[i]) {
-			gain *= context().m_class_gains[i];
+			gain *= context().class_gain(i);
 		}
 	}
 
-	audio_context& ctx{context()};
-	ctx.m_al_api.set_source_property_f(ctx.m_ptr.get(), m_handle.get(), AL_GAIN, gain);
+	context().al().set_source_property_f(context().unwrap(), unwrap(), AL_GAIN, gain);
 }
 
 void tr::audio_source::set_gain(float end_gain, fsecs time)
@@ -276,8 +254,7 @@ void tr::audio_source::set_gain(float end_gain, fsecs time)
 float tr::audio_source::max_distance() const noexcept
 {
 	float distance;
-	audio_context& ctx{context()};
-	ctx.m_al_api.get_source_property_f(ctx.m_ptr.get(), m_handle.get(), AL_MAX_DISTANCE, &distance);
+	context().al().get_source_property_f(context().unwrap(), unwrap(), AL_MAX_DISTANCE, &distance);
 	return distance;
 }
 
@@ -285,8 +262,7 @@ void tr::audio_source::set_max_distance(float distance) noexcept
 {
 	TR_ASSERT(distance >= 0.0f, "Tried to set audio source max distance to invalid value '{}'.", distance);
 
-	audio_context& ctx{context()};
-	ctx.m_al_api.set_source_property_f(ctx.m_ptr.get(), m_handle.get(), AL_MAX_DISTANCE, distance);
+	context().al().set_source_property_f(context().unwrap(), unwrap(), AL_MAX_DISTANCE, distance);
 }
 
 void tr::audio_source::set_max_distance(float end_distance, fsecs time)
@@ -299,8 +275,7 @@ void tr::audio_source::set_max_distance(float end_distance, fsecs time)
 float tr::audio_source::rolloff_factor() const noexcept
 {
 	float rolloff;
-	audio_context& ctx{context()};
-	ctx.m_al_api.get_source_property_f(ctx.m_ptr.get(), m_handle.get(), AL_ROLLOFF_FACTOR, &rolloff);
+	context().al().get_source_property_f(context().unwrap(), unwrap(), AL_ROLLOFF_FACTOR, &rolloff);
 	return rolloff;
 }
 
@@ -308,8 +283,7 @@ void tr::audio_source::set_rolloff_factor(float rolloff) noexcept
 {
 	TR_ASSERT(rolloff >= 0.0f, "Tried to set audio source rolloff factor to invalid value '{}'.", rolloff);
 
-	audio_context& ctx{context()};
-	ctx.m_al_api.set_source_property_f(ctx.m_ptr.get(), m_handle.get(), AL_ROLLOFF_FACTOR, rolloff);
+	context().al().set_source_property_f(context().unwrap(), unwrap(), AL_ROLLOFF_FACTOR, rolloff);
 }
 
 void tr::audio_source::set_rolloff_factor(float end_rolloff, fsecs time)
@@ -322,8 +296,7 @@ void tr::audio_source::set_rolloff_factor(float end_rolloff, fsecs time)
 float tr::audio_source::reference_distance() const noexcept
 {
 	float ref_dist;
-	audio_context& ctx{context()};
-	ctx.m_al_api.get_source_property_f(ctx.m_ptr.get(), m_handle.get(), AL_REFERENCE_DISTANCE, &ref_dist);
+	context().al().get_source_property_f(context().unwrap(), unwrap(), AL_REFERENCE_DISTANCE, &ref_dist);
 	return ref_dist;
 }
 
@@ -331,8 +304,7 @@ void tr::audio_source::set_reference_distance(float distance) noexcept
 {
 	TR_ASSERT(distance >= 0.0f, "Tried to set audio source reference distance to invalid value '{}'.", distance);
 
-	audio_context& ctx{context()};
-	ctx.m_al_api.set_source_property_f(ctx.m_ptr.get(), m_handle.get(), AL_REFERENCE_DISTANCE, distance);
+	context().al().set_source_property_f(context().unwrap(), unwrap(), AL_REFERENCE_DISTANCE, distance);
 }
 
 void tr::audio_source::set_reference_distance(float end_distance, fsecs time)
@@ -345,8 +317,7 @@ void tr::audio_source::set_reference_distance(float end_distance, fsecs time)
 float tr::audio_source::gain_outside_cone() const noexcept
 {
 	float out_gain;
-	audio_context& ctx{context()};
-	ctx.m_al_api.get_source_property_f(ctx.m_ptr.get(), m_handle.get(), AL_CONE_OUTER_GAIN, &out_gain);
+	context().al().get_source_property_f(context().unwrap(), unwrap(), AL_CONE_OUTER_GAIN, &out_gain);
 	return out_gain;
 }
 
@@ -354,8 +325,7 @@ void tr::audio_source::set_gain_outside_cone(float gain) noexcept
 {
 	TR_ASSERT(gain >= 0.0f, "Tried to set audio source gain outside cone to invalid value '{}'.", gain);
 
-	audio_context& ctx{context()};
-	ctx.m_al_api.set_source_property_f(ctx.m_ptr.get(), m_handle.get(), AL_CONE_OUTER_GAIN, gain);
+	context().al().set_source_property_f(context().unwrap(), unwrap(), AL_CONE_OUTER_GAIN, gain);
 }
 
 void tr::audio_source::set_gain_outside_cone(float end_gain, fsecs time)
@@ -368,16 +338,14 @@ void tr::audio_source::set_gain_outside_cone(float end_gain, fsecs time)
 tr::angle tr::audio_source::inner_cone_width() const noexcept
 {
 	float width;
-	audio_context& ctx{context()};
-	ctx.m_al_api.get_source_property_f(ctx.m_ptr.get(), m_handle.get(), AL_CONE_INNER_ANGLE, &width);
+	context().al().get_source_property_f(context().unwrap(), unwrap(), AL_CONE_INNER_ANGLE, &width);
 	return degs(width);
 }
 
 tr::angle tr::audio_source::outer_cone_width() const noexcept
 {
 	float width;
-	audio_context& ctx{context()};
-	ctx.m_al_api.get_source_property_f(ctx.m_ptr.get(), m_handle.get(), AL_CONE_OUTER_ANGLE, &width);
+	context().al().get_source_property_f(context().unwrap(), unwrap(), AL_CONE_OUTER_ANGLE, &width);
 	return degs(width);
 }
 
@@ -387,9 +355,8 @@ void tr::audio_source::set_cone_widths(angle inner, angle outer) noexcept
 	TR_ASSERT(outer >= 0_deg && outer < 360_deg, "Tried to set audio source outer cone width to invalid value '{:d}'.", outer);
 	TR_ASSERT(inner < outer, "Tried to set audio source outer cone as thinner than inner cone (inner: {:d}, outer: {:d}).", inner, outer);
 
-	audio_context& ctx{context()};
-	ctx.m_al_api.set_source_property_f(ctx.m_ptr.get(), m_handle.get(), AL_CONE_INNER_ANGLE, inner.degs());
-	ctx.m_al_api.set_source_property_f(ctx.m_ptr.get(), m_handle.get(), AL_CONE_OUTER_ANGLE, outer.degs());
+	context().al().set_source_property_f(context().unwrap(), unwrap(), AL_CONE_INNER_ANGLE, inner.degs());
+	context().al().set_source_property_f(context().unwrap(), unwrap(), AL_CONE_OUTER_ANGLE, outer.degs());
 }
 
 void tr::audio_source::set_cone_widths(angle inner, angle outer, fsecs time)
@@ -403,15 +370,13 @@ void tr::audio_source::set_cone_widths(angle inner, angle outer, fsecs time)
 glm::vec3 tr::audio_source::position() const noexcept
 {
 	glm::vec3 pos;
-	audio_context& ctx{context()};
-	ctx.m_al_api.get_source_property_fv(ctx.m_ptr.get(), m_handle.get(), AL_POSITION, value_ptr(pos));
+	context().al().get_source_property_fv(context().unwrap(), unwrap(), AL_POSITION, value_ptr(pos));
 	return pos;
 }
 
 void tr::audio_source::set_position(glm::vec3 pos) noexcept
 {
-	audio_context& ctx{context()};
-	ctx.m_al_api.set_source_property_fv(ctx.m_ptr.get(), m_handle.get(), AL_POSITION, value_ptr(pos));
+	context().al().set_source_property_fv(context().unwrap(), unwrap(), AL_POSITION, value_ptr(pos));
 }
 
 void tr::audio_source::set_position(glm::vec3 end_position, fsecs time)
@@ -424,15 +389,13 @@ void tr::audio_source::set_position(glm::vec3 end_position, fsecs time)
 glm::vec3 tr::audio_source::velocity() const noexcept
 {
 	glm::vec3 vel;
-	audio_context& ctx{context()};
-	ctx.m_al_api.get_source_property_fv(ctx.m_ptr.get(), m_handle.get(), AL_VELOCITY, value_ptr(vel));
+	context().al().get_source_property_fv(context().unwrap(), unwrap(), AL_VELOCITY, value_ptr(vel));
 	return vel;
 }
 
 void tr::audio_source::set_velocity(glm::vec3 vel) noexcept
 {
-	audio_context& ctx{context()};
-	ctx.m_al_api.set_source_property_fv(ctx.m_ptr.get(), m_handle.get(), AL_VELOCITY, value_ptr(vel));
+	context().al().set_source_property_fv(context().unwrap(), unwrap(), AL_VELOCITY, value_ptr(vel));
 }
 
 void tr::audio_source::set_velocity(glm::vec3 end_velocity, fsecs time)
@@ -445,15 +408,13 @@ void tr::audio_source::set_velocity(glm::vec3 end_velocity, fsecs time)
 glm::vec3 tr::audio_source::direction() const noexcept
 {
 	glm::vec3 dir;
-	audio_context& ctx{context()};
-	ctx.m_al_api.get_source_property_fv(ctx.m_ptr.get(), m_handle.get(), AL_DIRECTION, value_ptr(dir));
+	context().al().get_source_property_fv(context().unwrap(), unwrap(), AL_DIRECTION, value_ptr(dir));
 	return dir;
 }
 
 void tr::audio_source::set_direction(glm::vec3 dir) noexcept
 {
-	audio_context& ctx{context()};
-	ctx.m_al_api.set_source_property_fv(ctx.m_ptr.get(), m_handle.get(), AL_DIRECTION, value_ptr(dir));
+	context().al().set_source_property_fv(context().unwrap(), unwrap(), AL_DIRECTION, value_ptr(dir));
 }
 
 void tr::audio_source::set_direction(glm::vec3 end_direction, fsecs time)
@@ -466,15 +427,13 @@ void tr::audio_source::set_direction(glm::vec3 end_direction, fsecs time)
 enum tr::audio_source::origin tr::audio_source::origin() const noexcept
 {
 	ALint origin;
-	audio_context& ctx{context()};
-	ctx.m_al_api.get_source_property_i(ctx.m_ptr.get(), m_handle.get(), AL_SOURCE_RELATIVE, &origin);
+	context().al().get_source_property_i(context().unwrap(), unwrap(), AL_SOURCE_RELATIVE, &origin);
 	return static_cast<enum origin>(origin);
 }
 
 void tr::audio_source::set_origin(enum origin type) noexcept
 {
-	audio_context& ctx{context()};
-	ctx.m_al_api.set_source_property_i(ctx.m_ptr.get(), m_handle.get(), AL_SOURCE_RELATIVE, static_cast<ALint>(type));
+	context().al().set_source_property_i(context().unwrap(), unwrap(), AL_SOURCE_RELATIVE, static_cast<ALint>(type));
 }
 
 //
@@ -482,8 +441,7 @@ void tr::audio_source::set_origin(enum origin type) noexcept
 enum tr::audio_source::state tr::audio_source::state() const noexcept
 {
 	ALint state;
-	audio_context& ctx{context()};
-	ctx.m_al_api.get_source_property_i(ctx.m_ptr.get(), m_handle.get(), AL_SOURCE_STATE, &state);
+	context().al().get_source_property_i(context().unwrap(), unwrap(), AL_SOURCE_STATE, &state);
 	switch (state) {
 	case AL_INITIAL:
 		return state::initial;
@@ -500,41 +458,38 @@ enum tr::audio_source::state tr::audio_source::state() const noexcept
 
 void tr::audio_source::play()
 {
-	play(std::lock_guard{context().m_mutex});
+	play(context().lock_mutex());
 }
 
 void tr::audio_source::play(const std::lock_guard<std::mutex>&)
 {
-	audio_context& ctx{context()};
 
-	if_is<buffered_stream>(m_data_source, [&ctx, this](buffered_stream& stream) {
+	if_is<buffered_stream>(m_data_source, [this](buffered_stream& stream) {
 		if (state() == state::initial || state() == state::stopped) {
 			detach_buffer();
 			const static_vector<unsigned int, 4> filled_buffers{stream.try_refill_all()};
 			if (!filled_buffers.empty()) {
-				ctx.m_al_api.source_queue_buffers(ctx.m_ptr.get(), m_handle.get(), filled_buffers.size(), filled_buffers.data());
+				context().al().source_queue_buffers(context().unwrap(), unwrap(), filled_buffers.size(), filled_buffers.data());
 			}
 		}
 	});
 
-	ctx.m_al_api.source_play(ctx.m_ptr.get(), m_handle.get());
+	context().al().source_play(context().unwrap(), unwrap());
 }
 
 void tr::audio_source::pause() noexcept
 {
-	audio_context& ctx{context()};
-	ctx.m_al_api.source_pause(ctx.m_ptr.get(), m_handle.get());
+	context().al().source_pause(context().unwrap(), unwrap());
 }
 
 void tr::audio_source::stop()
 {
-	stop(std::lock_guard{context().m_mutex});
+	stop(context().lock_mutex());
 }
 
 void tr::audio_source::stop(const std::lock_guard<std::mutex>&)
 {
-	audio_context& ctx{context()};
-	ctx.m_al_api.source_stop(ctx.m_ptr.get(), m_handle.get());
+	context().al().source_stop(context().unwrap(), unwrap());
 	if_is<buffered_stream>(m_data_source, [](buffered_stream& stream) { stream.seek(stream.loop_start()); });
 }
 
@@ -562,10 +517,9 @@ tr::fsecs tr::audio_source::offset() const
 {
 	// clang-format off
 	return std::visit([this]<typename T>(const T& data_source) {
-		audio_context& ctx{context()};
-
+		
 		float offset;
-		ctx.m_al_api.get_source_property_f(ctx.m_ptr.get(), m_handle.get(), AL_SEC_OFFSET, &offset);
+		context().al().get_source_property_f(context().unwrap(), unwrap(), AL_SEC_OFFSET, &offset);
 
 		if constexpr (std::same_as<T, buffered_stream>) {
 			const auto cur_state{state()};
@@ -574,7 +528,7 @@ tr::fsecs tr::audio_source::offset() const
 			}
 
 			int current_buffer_id;
-			ctx.m_al_api.get_source_property_i(ctx.m_ptr.get(), m_handle.get(), AL_BUFFER, &current_buffer_id);
+			context().al().get_source_property_i(context().unwrap(), unwrap(), AL_BUFFER, &current_buffer_id);
 			return data_source.buffer_start_offset(current_buffer_id) + fsecs{offset};
 		}
 		else {
@@ -586,19 +540,18 @@ tr::fsecs tr::audio_source::offset() const
 
 void tr::audio_source::set_offset(fsecs offset)
 {
-	set_offset(std::lock_guard{context().m_mutex}, offset);
+	set_offset(context().lock_mutex(), offset);
 }
 
 void tr::audio_source::set_offset(const std::lock_guard<std::mutex>& lock, fsecs offset)
 {
 	// clang-format off
 	std::visit([&lock, offset, this]<typename T>(T& data_source) {
-		audio_context& ctx{context()};
-
+		
 		if constexpr (std::same_as<T, buffered_stream>) {
 			const auto prev_state{state()};
 			data_source.seek(offset);
-			ctx.m_al_api.source_stop(ctx.m_ptr.get(), m_handle.get());
+			context().al().source_stop(context().unwrap(), unwrap());
 			switch (prev_state) {
 			case state::playing:
 				play(lock);
@@ -613,7 +566,7 @@ void tr::audio_source::set_offset(const std::lock_guard<std::mutex>& lock, fsecs
 			}
 		}
 		else {
-			ctx.m_al_api.set_source_property_f(ctx.m_ptr.get(), m_handle.get(), AL_SEC_OFFSET, offset.count());
+			context().al().set_source_property_f(context().unwrap(), unwrap(), AL_SEC_OFFSET, offset.count());
 		}
 	}, m_data_source);
 	// clang-format on
@@ -629,9 +582,8 @@ bool tr::audio_source::looping() const
 			return data_source.looping();
 		}
 		else {
-			audio_context& ctx{context()};
 			ALint looping;
-			ctx.m_al_api.get_source_property_i(ctx.m_ptr.get(), m_handle.get(), AL_LOOPING, &looping);
+			context().al().get_source_property_i(context().unwrap(), unwrap(), AL_LOOPING, &looping);
 			return looping;
 		}
 	}, m_data_source);
@@ -674,7 +626,7 @@ tr::fsecs tr::audio_source::loop_end() const
 
 void tr::audio_source::set_looping(bool value)
 {
-	set_looping(std::lock_guard{context().m_mutex}, value);
+	set_looping(context().lock_mutex(), value);
 }
 
 void tr::audio_source::set_looping(const std::lock_guard<std::mutex>&, bool value)
@@ -685,8 +637,7 @@ void tr::audio_source::set_looping(const std::lock_guard<std::mutex>&, bool valu
 			data_source.set_looping(value);
 		}
 		else {
-			audio_context& ctx{context()};
-			ctx.m_al_api.set_source_property_i(ctx.m_ptr.get(), m_handle.get(), AL_LOOPING, value);
+			context().al().set_source_property_i(context().unwrap(), unwrap(), AL_LOOPING, value);
 		}
 	}, m_data_source);
 	// clang-format on
@@ -694,7 +645,7 @@ void tr::audio_source::set_looping(const std::lock_guard<std::mutex>&, bool valu
 
 void tr::audio_source::set_loop_points(fsecs start_point, fsecs end_point)
 {
-	set_loop_points(std::lock_guard{context().m_mutex}, start_point, end_point);
+	set_loop_points(context().lock_mutex(), start_point, end_point);
 }
 
 void tr::audio_source::set_loop_points(const std::lock_guard<std::mutex>&, fsecs start_point, fsecs end_point)
@@ -724,16 +675,21 @@ void tr::audio_source::set_loop_points(const std::lock_guard<std::mutex>&, fsecs
 
 //
 
+unsigned int tr::audio_source::unwrap() const noexcept
+{
+	return m_handle.get();
+}
+
+//
+
 void tr::audio_source::attach_buffer(audio_buffer& buffer) noexcept
 {
-	audio_context& ctx{context()};
-	ctx.m_al_api.set_source_property_i(ctx.m_ptr.get(), m_handle.get(), AL_BUFFER, buffer.m_handle.get());
+	context().al().set_source_property_i(context().unwrap(), unwrap(), AL_BUFFER, buffer.unwrap());
 }
 
 void tr::audio_source::detach_buffer() noexcept
 {
-	audio_context& ctx{context()};
-	ctx.m_al_api.set_source_property_i(ctx.m_ptr.get(), m_handle.get(), AL_BUFFER, 0);
+	context().al().set_source_property_i(context().unwrap(), unwrap(), AL_BUFFER, 0);
 }
 
 //
@@ -741,19 +697,17 @@ void tr::audio_source::detach_buffer() noexcept
 void tr::audio_source::refill_if_needed()
 {
 	if_is<buffered_stream>(m_data_source, [this](buffered_stream& stream) {
-		audio_context& ctx{context()};
-
 		ALint nbuffers;
-		ctx.m_al_api.get_source_property_i(ctx.m_ptr.get(), m_handle.get(), AL_BUFFERS_PROCESSED, &nbuffers);
+		context().al().get_source_property_i(context().unwrap(), unwrap(), AL_BUFFERS_PROCESSED, &nbuffers);
 		if (nbuffers == 0) {
 			return;
 		}
 
 		static_vector<unsigned int, 4> buffers(nbuffers);
-		ctx.m_al_api.source_unqueue_buffers(ctx.m_ptr.get(), m_handle.get(), nbuffers, buffers.data());
+		context().al().source_unqueue_buffers(context().unwrap(), unwrap(), nbuffers, buffers.data());
 		const static_vector<unsigned int, 4> filled_buffers{stream.try_refill(buffers)};
 		if (!filled_buffers.empty()) {
-			ctx.m_al_api.source_queue_buffers(ctx.m_ptr.get(), m_handle.get(), filled_buffers.size(), filled_buffers.data());
+			context().al().source_queue_buffers(context().unwrap(), unwrap(), filled_buffers.size(), filled_buffers.data());
 		}
 	});
 }

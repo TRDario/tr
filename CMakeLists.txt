@@ -137,13 +137,15 @@ if(TR_BUILD_AUDIO)
 
 	message("-- tr: Building audio module")
 	target_sources(tr_audio PRIVATE
-		src/audio/al_api.cpp
 		src/audio/audio_buffer.cpp
 		src/audio/audio_context.cpp
 		src/audio/audio_device_list_view.cpp
 		src/audio/audio_device.cpp
 		src/audio/audio_source.cpp
 		src/audio/audio_stream.cpp
+		src/audio/exception.cpp
+		src/audio/ogg_audio_stream.cpp
+		src/audio/openal.cpp
 	)
 	target_compile_definitions(tr_audio PUBLIC AL_LIBTYPE_STATIC TR_HAS_AUDIO)
 	target_link_libraries(tr_audio PUBLIC tr::utility OpenAL::OpenAL vorbis vorbisenc vorbisfile)

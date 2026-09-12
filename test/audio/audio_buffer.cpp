@@ -2,6 +2,7 @@
 /// @brief Tests audio/audio_buffer.hpp.
 
 #include <gtest/gtest.h>
+#include <tr/audio/audio_buffer.hpp>
 #include <tr/audio/audio_context.hpp>
 #include <tr/audio/audio_device.hpp>
 
@@ -28,7 +29,7 @@ class audio_buffer_test : public testing::Test
 	audio_buffer_test()
 		: device{}
 		, context{device}
-		, buffer{tr::create_audio_buffer(context)}
+		, buffer{context.create_audio_buffer()}
 	{
 	}
 };

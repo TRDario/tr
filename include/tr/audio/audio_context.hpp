@@ -2,79 +2,25 @@
 /// @brief Provides an audio context class.
 
 #pragma once
-#include "../utility/exception.hpp"
-#include "al_api.hpp"
-#include "audio_buffer.hpp"
-#include "audio_class.hpp"
-#include "audio_command.hpp"
+#include <tr/audio/audio_class.hpp>
+#include <tr/audio/internal/audio_command.hpp>
+#include <tr/audio/internal/openal.hpp>
 
 struct ALCcontext;
 struct ALCdevice;
 namespace tr
 {
+	class audio_buffer;
 	class audio_device;
 	class audio_stream;
 	class audio_source;
+	struct orientation;
 } // namespace tr
 
 //
 
 namespace tr
 {
-	/// Listener orientation.
-	struct orientation
-	{
-		/// View vector.
-		glm::vec3 view;
-
-		/// Up vector.
-		glm::vec3 up;
-
-		//
-
-		/// Compares orientations for equality.
-		/// @return Whether the orientations are identical.
-		[[nodiscard]] friend bool operator==(const orientation&, const orientation&) noexcept = default;
-	};
-
-	//
-
-	/// Error thrown when audio context creation fails.
-	class audio_context_init_error final : public tr::exception
-	{
-	  public:
-		/// @name Constructors
-		/// @{
-
-		/// Creates an audio context initialization error.
-		/// @param device Pointer to the audio device the error occured on.
-		[[nodiscard]] audio_context_init_error(ALCdevice* device) noexcept;
-
-		/// @}
-		/// @name Information
-		/// @{
-
-		/// Gets the name of the error.
-		/// @return `"Audio context initialization error"`.
-		[[nodiscard]] std::string_view name() const noexcept override;
-
-		/// Gets the description of the error.
-		/// @return Description of the error.
-		[[nodiscard]] std::string_view description() const noexcept override;
-
-		/// Gets further details about the error.
-		/// @return Always false.
-		[[nodiscard]] std::string_view details() const noexcept override;
-
-		/// @}
-
-	  private:
-		/// Error description.
-		std::string_view m_description;
-	};
-
-	//
-
 	/// Object containing all audio context state.
 	class audio_context
 	{
@@ -168,6 +114,77 @@ namespace tr
 		void set_listener_orientation(orientation orientation) noexcept;
 
 		/// @}
+		/// @name Object factories
+		/// @{
+
+		/// Creates a shared audio buffer pointer.
+		/// @return Shared pointer to a new audio buffer.
+		[[nodiscard]] std::shared_ptr<audio_buffer> create_audio_buffer();
+
+		/// Creates a shared audio source pointer.
+		/// @param priority Priority of the audio source.
+		/// @return Shared pointer to a new audio source. Result may be null if the source could not be allocated.
+		[[nodiscard]] std::shared_ptr<audio_source> create_audio_source(int priority);
+
+		/// @}
+		/// @cond al_interop
+		/// @name OpenAL interoperability
+		/// @{
+
+		/// Unwraps the OpenAL context pointer.
+		/// @note This does not release the pointer.
+		/// @return Pointer to the OpenAL context.
+		[[nodiscard]] ALCcontext* unwrap() const noexcept;
+
+		/// @}
+		/// @endcond
+		/// @cond implementation_details
+		/// @name Implementation details
+		/// @{
+
+		/// Gets a reference to the the OpenAL API.
+		/// @return Refernce to the OpenAL API functions.
+		const internal::openal& al() const noexcept;
+
+		//
+
+		/// Locks the audio context mutex.
+		/// @return Lock context mutex lock guard.
+		[[nodiscard]] std::lock_guard<std::mutex> lock_mutex();
+
+		//
+
+		/// Creates an audio command on the context.
+		/// @tparam T Argument type.
+		/// @param source Audio source to command.
+		/// @param method Method the command calls when setting the value.
+		/// @param begin Initial value of the property being set.
+		/// @param end Final value of the property being set.
+		/// @param length Length of the command.
+		template <typename T>
+		void create_command(audio_source& source, internal::audio_command<T>::method_type method, T begin, T end, fsecs length)
+		{
+			const std::lock_guard lock{m_mutex};
+			m_commands.emplace_back(std::in_place_type_t<internal::audio_command<T>>{}, source, method, begin, end, length);
+		}
+
+		/// Creates an audio command on the context.
+		/// @tparam Ts Argument types.
+		/// @param source Audio source to command.
+		/// @param method Method the command calls when setting the value.
+		/// @param begin Initial values of the property being set.
+		/// @param end Final values of the property being set.
+		/// @param length Length of the command.
+		template <typename... Ts>
+		void create_command(audio_source& source, internal::audio_command<Ts...>::method_type method, const std::tuple<Ts...>& begin,
+							const std::tuple<Ts...>& end, fsecs length)
+		{
+			const std::lock_guard lock{m_mutex};
+			m_commands.emplace_back(std::in_place_type_t<internal::audio_command<Ts...>>{}, source, method, begin, end, length);
+		}
+
+		/// @}
+		/// @endcond
 
 	  private:
 		/// Audio context destroyer.
@@ -184,7 +201,7 @@ namespace tr
 		std::unique_ptr<ALCcontext, deleter> m_ptr;
 
 		/// OpenAL API.
-		al_api m_al_api;
+		internal::openal m_al;
 
 		/// Maximum allowed number of audio sources.
 		usize m_max_sources;
@@ -199,7 +216,7 @@ namespace tr
 		std::vector<std::shared_ptr<audio_source>> m_sources;
 
 		/// List of active audio commands.
-		std::vector<generic_audio_command> m_commands;
+		std::vector<internal::generic_audio_command> m_commands;
 
 		/// Audio context thread.
 		std::jthread m_thread;
@@ -212,44 +229,5 @@ namespace tr
 		/// Function used by the audio context thread.
 		/// @param stoken Thread stop token.
 		void thread_loop(std::stop_token stoken) noexcept;
-
-		//
-
-		/// Creates an audio command on the context.
-		/// @tparam T Argument type.
-		/// @param source Audio source to command.
-		/// @param method Method the command calls when setting the value.
-		/// @param begin Initial value of the property being set.
-		/// @param end Final value of the property being set.
-		/// @param length Length of the command.
-		template <typename T>
-		void create_command(audio_source& source, audio_command<T>::method_type method, T begin, T end, fsecs length);
-
-		/// Creates an audio command on the context.
-		/// @tparam Ts Argument types.
-		/// @param source Audio source to command.
-		/// @param method Method the command calls when setting the value.
-		/// @param begin Initial values of the property being set.
-		/// @param end Final values of the property being set.
-		/// @param length Length of the command.
-		template <typename... Ts>
-		void create_command(audio_source& source, audio_command<Ts...>::method_type method, const std::tuple<Ts...>& begin,
-							const std::tuple<Ts...>& end, fsecs length);
-
-		//
-
-		// Accesses the raw OpenAL context pointer and the al_api instance.
-		friend class audio_buffer;
-
-		// Accesses the raw OpenAL context pointer, the al_api instance, and create_command.
-		friend class audio_source;
-
-		// Accesses m_buffers and m_mutex.
-		friend std::shared_ptr<audio_buffer> create_audio_buffer(audio_context& context);
-
-		// Accesses m_max_sources and m_sources.
-		friend std::shared_ptr<audio_source> create_audio_source(audio_context& context, int priority);
 	};
 } // namespace tr
-
-#include "impl/audio_context.hpp" // IWYU pragma: export

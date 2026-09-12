@@ -2,9 +2,9 @@
 /// @brief Provides an audio buffer class.
 
 #pragma once
-#include "../utility/chrono.hpp"
-#include "../utility/handle.hpp"
-#include "../utility/integer.hpp"
+#include <tr/utility/chrono.hpp>
+#include <tr/utility/handle.hpp>
+#include <tr/utility/integer.hpp>
 
 namespace tr
 {
@@ -32,6 +32,15 @@ namespace tr
 	  public:
 		/// @name Constructors
 		/// @{
+
+		/// @cond implementation_details
+
+		/// Constructs an empty audio buffer.
+		/// @warning The buffer must outlive any audio sources using it, but be destroyed before the audio context it is on.
+		/// @param context Context to create the buffer on.
+		[[nodiscard]] explicit audio_buffer(audio_context& context) noexcept;
+
+		/// @endcond
 
 		/// Audio buffers are not copyable.
 		audio_buffer(const audio_buffer&) = delete;
@@ -81,6 +90,32 @@ namespace tr
 		void set(std::span<const i16> data, audio_format format, int frequency);
 
 		/// @}
+		/// @cond al_interop
+		/// @name OpenAL interoperability
+		/// @{
+
+		/// Unwraps the OpenAL bufer handle.
+		/// @note This does not release the handle.
+		/// @return Pointer to the OpenAL bufer handle.
+		[[nodiscard]] unsigned int unwrap() const noexcept;
+
+		/// @}
+		/// @endcond
+		/// @cond implementation_details
+		/// @name Implementation details
+		/// @{
+
+		/// Gets the loop points of the buffer.
+		/// @return Pair containing the start and end points of the buffer.
+		[[nodiscard]] std::pair<fsecs, fsecs> loop_points() const noexcept;
+
+		/// Sets the loop points of the buffer.
+		/// @param start_point Starting loop point sample.
+		/// @param end_point Ending loop point sample.
+		void set_loop_points(fsecs start_point, fsecs end_point) noexcept;
+
+		/// @}
+		/// @endcond
 
 	  private:
 		/// Buffer destroyer.
@@ -98,39 +133,10 @@ namespace tr
 
 		/// Handle to the OpenAL buffer.
 		handle<unsigned int, 0, deleter> m_handle;
-
-		//
-
-		// Constructs an empty audio buffer.
-		[[nodiscard]] audio_buffer(audio_context& context);
-
-		//
-
-		/// Gets the loop points of the buffer.
-		/// @return Pair containing the start and end points of the buffer.
-		[[nodiscard]] std::pair<fsecs, fsecs> loop_points() const noexcept;
-
-		/// Sets the loop points of the buffer.
-		/// @param start_point Starting loop point sample.
-		/// @param end_point Ending loop point sample.
-		void set_loop_points(fsecs start_point, fsecs end_point) noexcept;
-
-		//
-
-		// Accesses the raw OpenAL buffer ID.
-		friend class audio_source;
-
-		// Uses the private constructor.
-		friend std::shared_ptr<audio_buffer> create_audio_buffer(audio_context& context);
 	};
 
 	/// @name Factories
 	/// @{
-
-	/// Creates a shared audio buffer pointer.
-	/// @param context Audio context to create the buffer on.
-	/// @return Shared pointer to a new audio buffer.
-	[[nodiscard]] std::shared_ptr<audio_buffer> create_audio_buffer(audio_context& context);
 
 	/// Creates a shared audio buffer pointer with initial data.
 	/// @param context Audio context to create the buffer on.

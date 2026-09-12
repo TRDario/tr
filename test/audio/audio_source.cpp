@@ -88,7 +88,7 @@ class audio_source_test : public testing::Test
 		, context{device}
 		, buffer{tr::create_audio_buffer(context, buffer_data, tr::audio_format::mono16, 44100)}
 		, stream{std::make_unique<mock_audio_stream>()}
-		, source{tr::create_audio_source(context, 0)}
+		, source{context.create_audio_source(0)}
 	{
 	}
 };

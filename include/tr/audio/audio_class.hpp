@@ -2,7 +2,7 @@
 /// @brief Provides types and definitions pertaining to audio classes.
 
 #pragma once
-#include "../utility/integer.hpp"
+#include <tr/utility/integer.hpp>
 
 //
 

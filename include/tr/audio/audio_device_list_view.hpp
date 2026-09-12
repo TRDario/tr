@@ -2,7 +2,7 @@
 /// @brief Provides an audio device list view.
 
 #pragma once
-#include "../utility/zstring_view.hpp"
+#include <tr/utility/zstring_view.hpp>
 
 //
 
@@ -41,21 +41,7 @@ namespace tr
 		[[nodiscard]] audio_device_list_view_iterator(zstring_view view) noexcept;
 
 		/// @}
-		/// @name Comparison operators
-		/// @{
-
-		/// Compares two audio device list iterators.
-		/// @param lhs, rhs Iterators to compare.
-		/// @return Ordering of the iterators.
-		friend std::strong_ordering operator<=>(audio_device_list_view_iterator lhs, audio_device_list_view_iterator rhs) noexcept;
-
-		/// Compares two audio device list iterators for equality.
-		/// @param lhs, rhs Iterators to compare.
-		/// @return Whether the iterators are equal.
-		friend bool operator==(audio_device_list_view_iterator lhs, audio_device_list_view_iterator rhs) noexcept;
-
-		/// @}
-		/// @name Other operators
+		/// @name Operators
 		/// @{
 
 		/// Dereferences the iterator.
@@ -80,10 +66,26 @@ namespace tr
 	/// Audio device list end sentinel.
 	class audio_device_list_view_end_sentinel
 	{
-		/// Compares an audio device list iterator to an end sentinel.
-		/// @return `true` if the iterator is at the end of the range, false otherwise.
-		friend bool operator==(audio_device_list_view_iterator it, audio_device_list_view_end_sentinel) noexcept;
 	};
+
+	/// @name Comparison operators
+	/// @{
+
+	/// Compares two audio device list iterators.
+	/// @param lhs, rhs Iterators to compare.
+	/// @return Ordering of the iterators.
+	[[nodiscard]] std::strong_ordering operator<=>(audio_device_list_view_iterator lhs, audio_device_list_view_iterator rhs) noexcept;
+
+	/// Compares two audio device list iterators for equality.
+	/// @param lhs, rhs Iterators to compare.
+	/// @return Whether the iterators are equal.
+	[[nodiscard]] bool operator==(audio_device_list_view_iterator lhs, audio_device_list_view_iterator rhs) noexcept;
+
+	/// Compares an audio device list iterator to an end sentinel.
+	/// @return `true` if the iterator is at the end of the range, false otherwise.
+	[[nodiscard]] bool operator==(audio_device_list_view_iterator it, audio_device_list_view_end_sentinel) noexcept;
+
+	/// @}
 
 	/// View holding available audio device names.
 	using audio_device_list_view = std::ranges::subrange<audio_device_list_view_iterator, audio_device_list_view_end_sentinel>;

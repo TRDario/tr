@@ -1,10 +1,10 @@
 /// @file
-/// @brief Provides an audio command class.
+/// @brief Provides `tr::audio_command`.
 
 #pragma once
-#include "../utility/angle.hpp"
-#include "../utility/chrono.hpp"
-#include "../utility/reference.hpp"
+#include <tr/utility/angle.hpp>
+#include <tr/utility/chrono.hpp>
+#include <tr/utility/reference.hpp>
 
 namespace tr
 {
@@ -13,8 +13,21 @@ namespace tr
 
 //
 
-namespace tr
+namespace tr::internal
 {
+	/// Linearly interpolates a set of values memberwise.
+	/// @tparam Ts Value types.
+	/// @tparam Is Value indices.
+	/// @param begin, end Sample values.
+	/// @param ratio Interpolation factor.
+	/// @return `begin + ratio * (end − begin)`.
+	template <typename... Ts, usize... Is>
+	[[nodiscard]] std::tuple<Ts...> lerp_tuple(const std::tuple<Ts...>& begin, const std::tuple<Ts...>& end, float ratio,
+											   std::index_sequence<Is...>) noexcept
+	{
+		return {tr::lerp(std::get<Is>(begin), std::get<Is>(end), ratio)...};
+	}
+
 	/// Audio command template.
 	/// @tparam First, Rest Types of the arguments to the command.
 	template <typename First, typename... Rest>
@@ -47,7 +60,16 @@ namespace tr
 		/// @param end Final value of the property being set.
 		/// @param length Length of the command.
 		[[nodiscard]] audio_command(audio_source& source, method_type method, const value_type& begin, const value_type& end,
-									fsecs length) noexcept;
+									fsecs length) noexcept
+			: m_source{source}
+			, m_method{method}
+			, m_begin{begin}
+			, m_end{end}
+			, m_length{std::chrono::duration_cast<duration>(length)}
+			, m_last_update{std::chrono::steady_clock::now()}
+			, m_elapsed{}
+		{
+		}
 
 		/// @}
 		/// @name Source
@@ -55,7 +77,10 @@ namespace tr
 
 		/// Gets the source being commanded.
 		/// @return Reference to the source being commanded.
-		[[nodiscard]] audio_source& source() const noexcept;
+		[[nodiscard]] audio_source& source() const noexcept
+		{
+			return m_source;
+		}
 
 		/// @}
 		/// @name Execution
@@ -63,7 +88,23 @@ namespace tr
 
 		/// Executes the command.
 		/// @return Status of the command after execution.
-		[[nodiscard]] status execute() noexcept;
+		[[nodiscard]] status execute() noexcept
+		{
+			const std::chrono::steady_clock::time_point now{std::chrono::steady_clock::now()};
+			m_elapsed = std::min(m_elapsed + now - m_last_update, m_length);
+			m_last_update = now;
+
+			const float t{ratio(m_elapsed, m_length)};
+			if constexpr (sizeof...(Rest) > 0) {
+				std::apply([this](First first, Rest... rest) { ((*m_source).*m_method)(first, rest...); },
+						   lerp_tuple(m_begin, m_end, t, std::index_sequence_for<First, Rest...>{}));
+			}
+			else {
+				((*m_source).*m_method)(lerp(m_begin, m_end, t));
+			}
+
+			return (m_elapsed == m_length) ? status::done : status::ongoing;
+		}
 
 		/// @}
 
@@ -92,6 +133,4 @@ namespace tr
 
 	/// Generic audio command.
 	using generic_audio_command = std::variant<audio_command<float>, audio_command<angle, angle>, audio_command<glm::vec3>>;
-} // namespace tr
-
-#include "impl/audio_command.hpp" // IWYU pragma: export
+} // namespace tr::internal

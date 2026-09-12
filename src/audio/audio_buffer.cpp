@@ -1,38 +1,32 @@
 /// @file
 /// @brief Implements audio_buffer.hpp.
 
-#include "../../include/tr/audio/audio_buffer.hpp"
-#include "../../include/tr/audio/audio_context.hpp"
-#include "../../include/tr/audio/audio_stream.hpp"
-#include "../../include/tr/utility/exception.hpp"
 #include <AL/al.h>
 #include <AL/alext.h>
+#include <tr/audio/audio_buffer.hpp>
+#include <tr/audio/audio_context.hpp>
+#include <tr/audio/audio_stream.hpp>
+#include <tr/utility/exception.hpp>
 
 //
 
-tr::audio_buffer::audio_buffer(audio_context& context)
-	: m_handle{{context}}
+tr::audio_buffer::audio_buffer(audio_context& context) noexcept
+	: m_handle{deleter{context}}
 {
-	context.m_al_api.generate_buffers(context.m_ptr.get(), 1, out_handle(m_handle));
+	context.al().generate_buffers(context.unwrap(), 1, out_handle(m_handle));
 }
 
 void tr::audio_buffer::deleter::operator()(unsigned int id) const noexcept
 {
-	context.m_al_api.delete_buffers(context.m_ptr.get(), 1, &id);
+	context.al().delete_buffers(context.unwrap(), 1, &id);
 }
 
 //
 
-std::shared_ptr<tr::audio_buffer> tr::create_audio_buffer(audio_context& context)
-{
-	const std::lock_guard lock{context.m_mutex};
-	return context.m_buffers.emplace_back(new tr::audio_buffer{context});
-}
-
 std::shared_ptr<tr::audio_buffer> tr::create_audio_buffer(audio_context& context, std::span<const i16> data, audio_format format,
 														  int frequency)
 {
-	std::shared_ptr<tr::audio_buffer> buffer{create_audio_buffer(context)};
+	std::shared_ptr<tr::audio_buffer> buffer{context.create_audio_buffer()};
 	buffer->set(data, format, frequency);
 	return buffer;
 }
@@ -57,8 +51,7 @@ tr::audio_context& tr::audio_buffer::context() const noexcept
 tr::usize tr::audio_buffer::size() const noexcept
 {
 	ALint size;
-	audio_context& ctx{context()};
-	ctx.m_al_api.get_buffer_property_i(ctx.m_ptr.get(), m_handle.get(), AL_SIZE, &size);
+	context().al().get_buffer_property_i(context().unwrap(), unwrap(), AL_SIZE, &size);
 	return size / sizeof(i16);
 }
 
@@ -71,16 +64,14 @@ tr::fsecs tr::audio_buffer::length() const noexcept
 int tr::audio_buffer::sample_rate() const noexcept
 {
 	ALint sample_rate;
-	audio_context& ctx{context()};
-	ctx.m_al_api.get_buffer_property_i(ctx.m_ptr.get(), m_handle.get(), AL_FREQUENCY, &sample_rate);
+	context().al().get_buffer_property_i(context().unwrap(), unwrap(), AL_FREQUENCY, &sample_rate);
 	return sample_rate;
 }
 
 int tr::audio_buffer::channels() const noexcept
 {
 	ALint channels;
-	audio_context& ctx{context()};
-	ctx.m_al_api.get_buffer_property_i(ctx.m_ptr.get(), m_handle.get(), AL_CHANNELS, &channels);
+	context().al().get_buffer_property_i(context().unwrap(), unwrap(), AL_CHANNELS, &channels);
 	return channels;
 }
 
@@ -88,12 +79,18 @@ int tr::audio_buffer::channels() const noexcept
 
 void tr::audio_buffer::set(std::span<const i16> data, audio_format format, int frequency)
 {
-	audio_context& ctx{context()};
 	const ALsizei data_size{static_cast<ALsizei>(data.size_bytes() - data.size_bytes() % 4)};
-	ctx.m_al_api.set_buffer_data(ctx.m_ptr.get(), m_handle.get(), static_cast<ALenum>(format), data.data(), data_size, frequency);
-	if (ctx.m_al_api.get_error(ctx.m_ptr.get()) == AL_OUT_OF_MEMORY) {
+	context().al().set_buffer_data(context().unwrap(), unwrap(), static_cast<ALenum>(format), data.data(), data_size, frequency);
+	if (context().al().get_error(context().unwrap()) == AL_OUT_OF_MEMORY) {
 		throw out_of_memory{"audio buffer allocation"};
 	}
+}
+
+//
+
+unsigned int tr::audio_buffer::unwrap() const noexcept
+{
+	return m_handle.get();
 }
 
 //
@@ -105,8 +102,7 @@ std::pair<tr::fsecs, tr::fsecs> tr::audio_buffer::loop_points() const noexcept
 	const float samples_per_second{static_cast<float>(sample_rate * channels)};
 
 	std::array<ALint, 2> loop_point_offsets{};
-	audio_context& ctx{context()};
-	ctx.m_al_api.get_buffer_property_iv(ctx.m_ptr.get(), m_handle.get(), AL_LOOP_POINTS_SOFT, loop_point_offsets.data());
+	context().al().get_buffer_property_iv(context().unwrap(), unwrap(), AL_LOOP_POINTS_SOFT, loop_point_offsets.data());
 
 	return {fsecs{loop_point_offsets[0] / samples_per_second}, fsecs{loop_point_offsets[1] / samples_per_second}};
 }
@@ -117,6 +113,5 @@ void tr::audio_buffer::set_loop_points(fsecs start_point, fsecs end_point) noexc
 	const int channels{this->channels()};
 	const std::array<ALint, 2> loop_points{static_cast<ALint>(start_point.count() * sample_rate * channels),
 										   static_cast<ALint>(end_point.count() * sample_rate * channels)};
-	audio_context& ctx{context()};
-	ctx.m_al_api.set_buffer_property_iv(ctx.m_ptr.get(), m_handle.get(), AL_LOOP_POINTS_SOFT, loop_points.data());
+	context().al().set_buffer_property_iv(context().unwrap(), unwrap(), AL_LOOP_POINTS_SOFT, loop_points.data());
 }

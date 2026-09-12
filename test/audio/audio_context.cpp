@@ -4,6 +4,7 @@
 #include <gtest/gtest.h>
 #include <tr/audio/audio_context.hpp>
 #include <tr/audio/audio_device.hpp>
+#include <tr/audio/orientation.hpp>
 
 //
 

@@ -8,10 +8,10 @@ struct ALCdevice;
 
 //
 
-namespace tr
+namespace tr::internal
 {
 	/// Structure holding OpenAL API functions.
-	struct al_api
+	struct openal
 	{
 		/// Pointer to alDeleteBuffersDirect.
 		void (*delete_buffers)(ALCcontext* context, int n, const unsigned int* buffers) noexcept;
@@ -90,6 +90,6 @@ namespace tr
 
 		/// Loads OpenAL functions.
 		/// @param device Pointer to an OpenAL device.
-		[[nodiscard]] al_api(ALCdevice* device) noexcept;
+		[[nodiscard]] openal(ALCdevice* device) noexcept;
 	};
-} // namespace tr
+} // namespace tr::internal

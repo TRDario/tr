@@ -1,27 +1,15 @@
 /// @file
 /// @brief Implements audio_device_list_view.hpp.
 
-#include "../../include/tr/audio/audio_device_list_view.hpp"
-#include "../../include/tr/utility/macro.hpp"
 #include <AL/alc.h>
+#include <tr/audio/audio_device_list_view.hpp>
+#include <tr/utility/macro.hpp>
 
 //
 
 tr::audio_device_list_view_iterator::audio_device_list_view_iterator(tr::zstring_view view) noexcept
 	: m_view{view}
 {
-}
-
-//
-
-std::strong_ordering tr::operator<=>(audio_device_list_view_iterator lhs, audio_device_list_view_iterator rhs) noexcept
-{
-	return lhs->c_str() <=> rhs->c_str();
-}
-
-bool tr::operator==(audio_device_list_view_iterator lhs, audio_device_list_view_iterator rhs) noexcept
-{
-	return lhs->c_str() == rhs->c_str();
 }
 
 //
@@ -53,6 +41,16 @@ tr::audio_device_list_view_iterator tr::audio_device_list_view_iterator::operato
 }
 
 //
+
+std::strong_ordering tr::operator<=>(audio_device_list_view_iterator lhs, audio_device_list_view_iterator rhs) noexcept
+{
+	return lhs->c_str() <=> rhs->c_str();
+}
+
+bool tr::operator==(audio_device_list_view_iterator lhs, audio_device_list_view_iterator rhs) noexcept
+{
+	return lhs->c_str() == rhs->c_str();
+}
 
 bool tr::operator==(audio_device_list_view_iterator it, audio_device_list_view_end_sentinel) noexcept
 {

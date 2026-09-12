@@ -1,172 +1,10 @@
 /// @file
 /// @brief Implements audio_stream.hpp.
 
-#include "../../include/tr/audio/audio_stream.hpp"
-#include "../../include/tr/utility/iostream.hpp"
+#include "internal/ogg_audio_stream.hpp"
+#include <tr/audio/audio_stream.hpp>
+#include <tr/audio/exception.hpp>
 #include <vorbis/vorbisfile.h>
-
-//
-
-tr::audio_file_open_error::audio_file_open_error(std::string&& description) noexcept
-	: m_description{std::move(description)}
-{
-}
-
-std::string_view tr::audio_file_open_error::name() const noexcept
-{
-	return "Audio file opening error";
-}
-
-std::string_view tr::audio_file_open_error::description() const noexcept
-{
-	return m_description;
-}
-
-std::string_view tr::audio_file_open_error::details() const noexcept
-{
-	return {};
-}
-
-//
-
-namespace tr
-{
-	namespace
-	{
-		/// Ogg audio file backend.
-		class ogg_audio_stream final : public audio_stream
-		{
-		  public:
-			/// @name Constructors
-			/// @{
-
-			/// Loads an Ogg stream from file.
-			/// @param path Path to the Ogg file.
-			[[nodiscard]] ogg_audio_stream(const std::filesystem::path& path);
-
-			/// Closes the Ogg stream.
-			~ogg_audio_stream() noexcept;
-
-			/// @}
-			/// @name Information
-			/// @{
-
-			usize length() const override;
-
-			int channels() const override;
-
-			int sample_rate() const override;
-
-			/// @}
-			/// @name IO
-			/// @{
-
-			usize tell() const override;
-
-			void seek(usize where) override;
-
-			/// @}
-
-		  private:
-			/// A handle to the Ogg file.
-			mutable OggVorbis_File m_file{};
-
-			//
-
-			void raw_read(std::span<i16> buffer) override;
-		};
-	} // namespace
-} // namespace tr
-
-//
-
-tr::ogg_audio_stream::ogg_audio_stream(const std::filesystem::path& path)
-{
-	const int result{ov_fopen(TR_PATH_CSTR(path), &m_file)};
-	if (result != 0) {
-		switch (result) {
-		case OV_EREAD:
-			throw tr::file_open_error{std::format("Failed to read .ogg file from '{}'.", path.string())};
-		case OV_ENOTVORBIS:
-			throw tr::file_open_error{std::format("Invalid .ogg Vorbis file '{}'.", path.string())};
-		case OV_EVERSION:
-			throw tr::file_open_error{std::format(".ogg Vorbis version mismatch in '{}'.", path.string())};
-		case OV_EBADHEADER:
-			throw tr::file_open_error{std::format("Invalid .ogg Vorbis header in '{}'.", path.string())};
-		case OV_EFAULT:
-			throw tr::file_open_error{std::format("An internal error in Vorbis occurred while loading '{}'.", path.string())};
-		}
-	}
-
-	const vorbis_comment& comments{*ov_comment(&m_file, -1)};
-	for (int i = 0; i < comments.comments; ++i) {
-		const std::string_view comment{comments.user_comments[i], tr::usize(comments.comment_lengths[i])};
-		if (comment.starts_with("LOOPSTART=")) {
-			tr::usize loop_start{unknown_loop_point};
-			std::from_chars(comment.data() + 10, comment.data() + comment.size(), loop_start);
-			if (loop_start != unknown_loop_point) {
-				set_looping(true);
-				set_loop_start(loop_start);
-			}
-		}
-		else if (comment.starts_with("LOOPEND=")) {
-			tr::usize loop_end{unknown_loop_point};
-			std::from_chars(comment.data() + 8, comment.data() + comment.size(), loop_end);
-			if (loop_end != unknown_loop_point) {
-				set_looping(true);
-				set_loop_end(loop_end);
-			}
-		}
-		else if (comment.starts_with("LOOP=")) {
-			set_looping(true);
-		}
-	}
-}
-
-tr::ogg_audio_stream::~ogg_audio_stream() noexcept
-{
-	ov_clear(&m_file);
-}
-
-tr::usize tr::ogg_audio_stream::length() const
-{
-	return ov_pcm_total(&m_file, -1);
-}
-
-int tr::ogg_audio_stream::channels() const
-{
-	return ov_info(&m_file, -1)->channels;
-}
-
-int tr::ogg_audio_stream::sample_rate() const
-{
-	return ov_info(&m_file, -1)->rate;
-}
-
-tr::usize tr::ogg_audio_stream::tell() const
-{
-	return ov_pcm_tell(&m_file);
-}
-
-void tr::ogg_audio_stream::seek(tr::usize where)
-{
-	ov_pcm_seek(&m_file, where);
-}
-
-void tr::ogg_audio_stream::raw_read(std::span<tr::i16> buffer)
-{
-	char* raw_dest{reinterpret_cast<char*>(buffer.data())};
-	int bytes_left{static_cast<int>(buffer.size_bytes())};
-	int cur_section;
-	while (bytes_left > 0) {
-		const long read_bytes{ov_read(&m_file, raw_dest, bytes_left, 0, 2, 1, &cur_section)};
-		if (read_bytes <= 0) {
-			return;
-		}
-		bytes_left -= read_bytes;
-		raw_dest += read_bytes;
-	}
-}
 
 //
 
@@ -176,6 +14,8 @@ tr::audio_stream::audio_stream() noexcept
 	, m_loop_end{unknown_loop_point}
 {
 }
+
+//
 
 std::span<tr::i16> tr::audio_stream::read(std::span<i16> buffer)
 {
@@ -201,6 +41,8 @@ std::span<tr::i16> tr::audio_stream::read(std::span<i16> buffer)
 	}
 }
 
+//
+
 bool tr::audio_stream::looping() const
 {
 	return m_looping;
@@ -214,6 +56,8 @@ void tr::audio_stream::set_looping(bool looping)
 	}
 }
 
+//
+
 tr::usize tr::audio_stream::loop_start() const
 {
 	return m_loop_start;
@@ -223,6 +67,8 @@ void tr::audio_stream::set_loop_start(usize loop_start)
 {
 	m_loop_start = std::clamp(loop_start, 0uz, loop_end() - 1);
 }
+
+//
 
 tr::usize tr::audio_stream::loop_end() const
 {
@@ -240,10 +86,12 @@ void tr::audio_stream::set_loop_end(usize loop_end)
 	}
 }
 
+//
+
 std::unique_ptr<tr::audio_stream> tr::open_audio_file(const std::filesystem::path& path)
 {
 	if (!std::filesystem::exists(path)) {
-		throw file_open_error{std::format("File not found: '{}'", path.string())};
+		throw audio_file_open_error{std::format("File not found: '{}'", path.string())};
 	}
 
 	const std::string extension{path.extension().string()};
@@ -251,6 +99,6 @@ std::unique_ptr<tr::audio_stream> tr::open_audio_file(const std::filesystem::pat
 		return std::make_unique<ogg_audio_stream>(path);
 	}
 	else {
-		throw file_open_error{std::format("Unsupported audio file extension '{}'", extension)};
+		throw audio_file_open_error{std::format("Unsupported audio file extension '{}'", extension)};
 	}
 }

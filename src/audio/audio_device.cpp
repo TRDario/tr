@@ -1,26 +1,10 @@
 /// @file
 /// @brief Implements audio_device.hpp.
 
-#include "../../include/tr/audio/audio_device.hpp"
-#include "../../include/tr/utility/macro.hpp"
 #include <AL/alc.h>
-
-//
-
-std::string_view tr::audio_device_open_error::name() const noexcept
-{
-	return "Audio device opening error";
-}
-
-std::string_view tr::audio_device_open_error::description() const noexcept
-{
-	return {};
-}
-
-std::string_view tr::audio_device_open_error::details() const noexcept
-{
-	return {};
-}
+#include <tr/audio/audio_device.hpp>
+#include <tr/audio/exception.hpp>
+#include <tr/utility/macro.hpp>
 
 //
 
@@ -46,5 +30,12 @@ void tr::audio_device::deleter::operator()(ALCdevice* device) noexcept
 
 tr::zstring_view tr::audio_device::name() const noexcept
 {
-	return alcGetString(m_ptr.get(), ALC_DEVICE_SPECIFIER);
+	return alcGetString(unwrap(), ALC_DEVICE_SPECIFIER);
+}
+
+//
+
+ALCdevice* tr::audio_device::unwrap() const noexcept
+{
+	return m_ptr.get();
 }

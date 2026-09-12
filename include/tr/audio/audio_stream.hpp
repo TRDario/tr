@@ -2,46 +2,12 @@
 /// @brief Provides an audio stream interface and a function to load an audio stream from file.
 
 #pragma once
-#include "../utility/exception.hpp"
+#include <tr/utility/integer.hpp>
 
 //
 
 namespace tr
 {
-	/// Error thrown when opening an audio file failed.
-	class audio_file_open_error final : public exception
-	{
-	  public:
-		/// @name Constructors
-		/// @{
-
-		/// Constructs an exception.
-		/// @param description Description of the error.
-		[[nodiscard]] audio_file_open_error(std::string&& description) noexcept;
-
-		/// @}
-		/// @name Information
-		/// @{
-
-		/// Gets the name of the error.
-		/// @return "Audio file opening error".
-		[[nodiscard]] std::string_view name() const noexcept override;
-
-		/// Gets the description of the error.
-		/// @return Description of the error.
-		[[nodiscard]] std::string_view description() const noexcept override;
-
-		/// Gets further details about the error.
-		/// @return Always empty.
-		[[nodiscard]] std::string_view details() const noexcept override;
-
-		/// @}
-
-	  private:
-		/// The description of the error.
-		std::string m_description;
-	};
-
 	/// Interface for a 16-bit mono or stereo audio stream.
 	class audio_stream
 	{

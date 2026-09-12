@@ -2,7 +2,6 @@
 /// @brief Provides an audio device class.
 
 #pragma once
-#include "../utility/exception.hpp"
 #include "../utility/zstring_view.hpp"
 
 struct ALCdevice;
@@ -11,29 +10,6 @@ struct ALCdevice;
 
 namespace tr
 {
-	/// Exception thrown when audio device opening fails.
-	struct audio_device_open_error final : public tr::exception
-	{
-		/// @name Information
-		/// @{
-
-		/// Gets the name of the error.
-		/// @return `"Audio device opening error"`.
-		[[nodiscard]] std::string_view name() const noexcept override;
-
-		/// Gets the description of the error.
-		/// @return Always empty.
-		[[nodiscard]] std::string_view description() const noexcept override;
-
-		/// Gets further details about the error.
-		/// @return Always empty.
-		[[nodiscard]] std::string_view details() const noexcept override;
-
-		/// @}
-	};
-
-	//
-
 	/// Representation of a physical audio device.
 	class audio_device
 	{
@@ -56,6 +32,17 @@ namespace tr
 		[[nodiscard]] tr::zstring_view name() const noexcept;
 
 		/// @}
+		/// @cond al_interop
+		/// @name OpenAL interoperability
+		/// @{
+
+		/// Unwraps the OpenAL device pointer.
+		/// @note This does not release the pointer.
+		/// @return Pointer to the OpenAL device.
+		[[nodiscard]] ALCdevice* unwrap() const noexcept;
+
+		/// @}
+		/// @endcond
 
 	  private:
 		/// Device closer.
@@ -70,10 +57,5 @@ namespace tr
 
 		/// Owning pointer to the OpenAL audio device.
 		std::unique_ptr<ALCdevice, deleter> m_ptr;
-
-		//
-
-		// Accesses the raw OpenAL device pointer.
-		friend class audio_context;
 	};
 } // namespace tr
