@@ -29,6 +29,7 @@
 #include <tr/utility/iterator_interface.hpp>        // IWYU pragma: export
 #include <tr/utility/line.hpp>                      // IWYU pragma: export
 #include <tr/utility/localization_map.hpp>          // IWYU pragma: export
+#include <tr/utility/lock_free_queue.hpp>           // IWYU pragma: export
 #include <tr/utility/logger.hpp>                    // IWYU pragma: export
 #include <tr/utility/macro.hpp>                     // IWYU pragma: export
 #include <tr/utility/math.hpp>                      // IWYU pragma: export
