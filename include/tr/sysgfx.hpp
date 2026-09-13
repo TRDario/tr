@@ -5,12 +5,11 @@
 ///
 /// Using this module requires the option TR_BUILD_SYSGFX to be turned on in CMake.
 ///
-/// When using this module, the standard main entry point is replaced with several custom functions that must be defined, see main.hpp.
-///
-/// Most classes and functions in this module cannot be used in main::parse_command_line. Exceptions to this include the classes and
-/// functions in dialog.hpp, main.hpp, path.hpp, and state_machine.hpp.
+/// Most classes and functions in this module cannot be used outside of the callbacks run by `tr::run_main_loops()`. Exceptions to this
+/// include the classes and functions in application, dialog.hpp , logger.hpp, and path.hpp.
 
 #pragma once
+#include "sysgfx/application.hpp"         // IWYU pragma: export
 #include "sysgfx/atlas.hpp"               // IWYU pragma: export
 #include "sysgfx/bitmap.hpp"              // IWYU pragma: export
 #include "sysgfx/bitmap_iterators.hpp"    // IWYU pragma: export
@@ -26,7 +25,6 @@
 #include "sysgfx/graphics_context.hpp"    // IWYU pragma: export
 #include "sysgfx/index_buffer.hpp"        // IWYU pragma: export
 #include "sysgfx/keyboard.hpp"            // IWYU pragma: export
-#include "sysgfx/main.hpp"                // IWYU pragma: export
 #include "sysgfx/mouse.hpp"               // IWYU pragma: export
 #include "sysgfx/path.hpp"                // IWYU pragma: export
 #include "sysgfx/render_target.hpp"       // IWYU pragma: export

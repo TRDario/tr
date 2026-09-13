@@ -86,6 +86,7 @@ if(TR_BUILD_SYSGFX)
 
 	message("-- tr: Building system and graphics module")
 	target_sources(tr_sysgfx PRIVATE
+		src/sysgfx/application.cpp
 		src/sysgfx/bitmap_iterators.cpp
 		src/sysgfx/bitmap.cpp
 		src/sysgfx/bitmap_view.cpp
@@ -105,7 +106,6 @@ if(TR_BUILD_SYSGFX)
 		src/sysgfx/keyboard.cpp
 		src/sysgfx/log_sink.cpp
 		src/sysgfx/logger.cpp
-		src/sysgfx/main.cpp
 		src/sysgfx/path.cpp
 		src/sysgfx/ping_pong_target.cpp
 		src/sysgfx/render_target.cpp
