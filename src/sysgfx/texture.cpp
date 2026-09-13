@@ -1,8 +1,9 @@
 /// @file
 /// @brief Implements texture.hpp.
 
-#include <tr/sysgfx/gl_defines.hpp>
+#include "internal/opengl_definitions.hpp"
 #include <tr/sysgfx/graphics_context.hpp>
+#include <tr/sysgfx/sub_bitmap.hpp>
 #include <tr/sysgfx/texture.hpp>
 #include <tr/sysgfx/texture_view.hpp>
 #include <tr/utility/out_handle.hpp>
@@ -188,7 +189,7 @@ tr::texture tr::texture::allocate(glm::ivec2 size, mipmaps mipmaps, pixel_format
 	TR_ASSERT(size.x > 0 && size.y > 0, "Tried to allocate a texture with an invalid size of {}x{}.", size.x, size.y);
 
 	graphics_context& context{this->context()};
-	const gl_api& gl{context.gl()};
+	const internal::opengl& gl{context.gl()};
 
 	unsigned int old_handle;
 	glm::ivec2 old_size;
@@ -288,7 +289,7 @@ void tr::texture::set_filtering(min_filter min_filter, mag_filter mag_filter) no
 {
 	TR_ASSERT(valid(), "Tried to set filtering of a texture in an invalid state.");
 
-	const gl_api& gl{context().gl()};
+	const internal::opengl& gl{context().gl()};
 	gl.set_texture_parameter_i(m_handle.get(), GL_TEXTURE_MIN_FILTER, std::to_underlying(min_filter));
 	gl.set_texture_parameter_i(m_handle.get(), GL_TEXTURE_MAG_FILTER, std::to_underlying(mag_filter));
 }
@@ -298,7 +299,7 @@ void tr::texture::set_wrap(wrap wrap) noexcept
 
 	TR_ASSERT(valid(), "Tried to set wrapping of a texture in an invalid state.");
 
-	const gl_api& gl{context().gl()};
+	const internal::opengl& gl{context().gl()};
 	gl.set_texture_parameter_i(m_handle.get(), GL_TEXTURE_WRAP_S, std::to_underlying(wrap));
 	gl.set_texture_parameter_i(m_handle.get(), GL_TEXTURE_WRAP_T, std::to_underlying(wrap));
 	gl.set_texture_parameter_i(m_handle.get(), GL_TEXTURE_WRAP_R, std::to_underlying(wrap));
@@ -344,7 +345,7 @@ void tr::texture::set_region(glm::ivec2 tl, sub_bitmap bitmap) noexcept
 			  "Tried to set out-of-bounds region from ({}, {}) to ({}, {}) in a texture with size {}x{}.", tl.x, tl.y,
 			  tl.x + bitmap.size().x, tl.y + bitmap.size().y, m_size.x, m_size.y);
 
-	const gl_api& gl{context().gl()};
+	const internal::opengl& gl{context().gl()};
 	gl.set_pixel_store_i(GL_UNPACK_ALIGNMENT, 1);
 	gl.set_pixel_store_i(GL_UNPACK_ROW_LENGTH, bitmap.pitch() / pixel_bytes(bitmap.format()));
 	gl.set_2d_texture_sub_image(m_handle.get(), 0, tl.x, tl.y, bitmap.size().x, bitmap.size().y, gl_format(bitmap.format()),
@@ -358,7 +359,7 @@ std::string tr::texture::label() const
 {
 	TR_ASSERT(valid(), "Tried to get the label of a texture in an invalid state.");
 
-	const gl_api& gl{context().gl()};
+	const internal::opengl& gl{context().gl()};
 	int label_length;
 	gl.get_object_label(GL_TEXTURE, m_handle.get(), 0, &label_length, nullptr);
 	if (label_length > 0) {

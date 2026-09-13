@@ -1,8 +1,8 @@
 /// @file
 /// @brief Implements dialog.hpp.
 
-#include "../../include/tr/sysgfx/dialog.hpp"
 #include <SDL3/SDL.h>
+#include <tr/sysgfx/dialog.hpp>
 
 using namespace std::chrono_literals;
 

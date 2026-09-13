@@ -1,11 +1,11 @@
 /// @file
-/// @brief Provides a TrueType font class and related functions.
+/// @brief Provides `tr::ttfont` and related functions.
 
 #pragma once
-#include "../utility/alignment.hpp"
-#include "../utility/color.hpp"
-#include "../utility/enum.hpp"
-#include "../utility/exception.hpp"
+#include <tr/utility/alignment.hpp>
+#include <tr/utility/color.hpp>
+#include <tr/utility/enum.hpp>
+#include <tr/utility/exception.hpp>
 
 struct TTF_Font;
 namespace tr
@@ -105,7 +105,10 @@ namespace tr
 		/// @param description_fmt Error description format string.
 		/// @param args Formatting arguments.
 		template <typename... Args>
-		[[nodiscard]] ttfont_error(std::format_string<Args...> description_fmt, Args&&... args);
+		[[nodiscard]] ttfont_error(std::format_string<Args...> description_fmt, Args&&... args)
+			: ttfont_error{std::format(description_fmt, std::forward<Args>(args)...)}
+		{
+		}
 
 		/// @}
 		/// @name Information
@@ -329,7 +332,10 @@ namespace tr
 	/// @exception ttf_load_error If loading the font failed.
 	/// @return Loaded TrueType font.
 	template <std::ranges::contiguous_range Range>
-	[[nodiscard]] ttfont load_embedded_ttfont(Range&& range, float size = 16);
+	[[nodiscard]] ttfont load_embedded_ttfont(Range&& range, float size = 16)
+	{
+		return load_embedded_ttfont(std::span<const std::byte>{range_bytes(range)}, size);
+	};
 
 	/// Loads a font from file.
 	/// @param path Path to the font file.
@@ -363,5 +369,3 @@ namespace tr
 
 	/// @}
 } // namespace tr
-
-#include "impl/ttfont.hpp" // IWYU pragma: export

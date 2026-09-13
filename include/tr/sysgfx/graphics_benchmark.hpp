@@ -2,9 +2,9 @@
 /// @brief Provides a graphics benchmark class.
 
 #pragma once
-#include "../utility/chrono.hpp"
-#include "../utility/handle.hpp"
-#include "../utility/ref.hpp"
+#include <tr/utility/chrono.hpp>
+#include <tr/utility/handle.hpp>
+#include <tr/utility/ref.hpp>
 
 namespace tr
 {

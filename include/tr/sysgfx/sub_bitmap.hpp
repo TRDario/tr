@@ -2,12 +2,14 @@
 /// @brief Provides a sub-bitmap class.
 
 #pragma once
-#include "../utility/rectangle.hpp"
+#include <tr/utility/rectangle.hpp>
 
 namespace tr
 {
 	class bitmap;
 	class bitmap_view;
+	class const_pixel_iterator;
+	class const_pixel_proxy;
 	enum class pixel_format;
 } // namespace tr
 
@@ -21,11 +23,11 @@ namespace tr
 	class sub_bitmap
 	{
 	  public:
-		/// Immutable pixel reference.
-		class reference;
+		/// Immutable pixel reference used by the sub-bitmap.
+		using reference = const_pixel_proxy;
 
-		/// Immutable iterator.
-		class iterator;
+		/// Immutable iterator used by the sub-bitmap.
+		using iterator = const_pixel_iterator;
 
 		/// @name Constructors
 		/// @{

@@ -1,9 +1,10 @@
 /// @file
 /// @brief Implements cursor.hpp.
 
-#include "../../include/tr/sysgfx/cursor.hpp"
-#include "../../include/tr/sysgfx/bitmap.hpp"
 #include <SDL3/SDL.h>
+#include <tr/sysgfx/bitmap.hpp>
+#include <tr/sysgfx/bitmap_view.hpp>
+#include <tr/sysgfx/cursor.hpp>
 
 //
 

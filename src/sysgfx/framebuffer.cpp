@@ -1,8 +1,8 @@
 /// @file
 /// @brief Implements framebuffer.hpp.
 
+#include "internal/opengl_definitions.hpp"
 #include <tr/sysgfx/framebuffer.hpp>
-#include <tr/sysgfx/gl_defines.hpp>
 #include <tr/sysgfx/graphics_context.hpp>
 #include <tr/sysgfx/texture_view.hpp>
 #include <tr/utility/out_handle.hpp>
@@ -71,7 +71,7 @@ std::string tr::framebuffer::label() const
 {
 	TR_ASSERT(valid(), "Tried to get the label of a framebuffer in an invalid state");
 
-	const gl_api& gl{context().gl()};
+	const internal::opengl& gl{context().gl()};
 
 	int label_length;
 	gl.get_object_label(GL_FRAMEBUFFER, unwrap(), 0, &label_length, nullptr);
@@ -93,7 +93,7 @@ unsigned int tr::framebuffer::unwrap() const noexcept
 }
 
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-tr::graphics_object_id tr::framebuffer::id() const noexcept
+tr::internal::graphics_object_id tr::framebuffer::id() const noexcept
 {
 	return m_handle.get_deleter().id;
 }

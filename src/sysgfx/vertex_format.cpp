@@ -1,7 +1,7 @@
 /// @file
-/// @brief Implements the non-templated parts of vertex_format.hpp.
+/// @brief Implements vertex_format.hpp.
 
-#include <tr/sysgfx/gl_defines.hpp>
+#include "internal/opengl_definitions.hpp"
 #include <tr/sysgfx/graphics_context.hpp>
 #include <tr/sysgfx/vertex_format.hpp>
 #include <tr/utility/out_handle.hpp>
@@ -14,7 +14,7 @@ tr::vertex_format::vertex_format(graphics_context& context, std::span<const vert
 	, m_bindings{bindings}
 #endif
 {
-	const gl_api& gl{context.gl()};
+	const internal::opengl& gl{context.gl()};
 	gl.create_vertex_arrays(1, out_handle(m_handle));
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 	context.registry().vertex_formats.emplace(id());
@@ -93,7 +93,7 @@ std::string tr::vertex_format::label() const
 {
 	TR_ASSERT(valid(), "Tried to get the label of a vertex format in an invalid state.");
 
-	const gl_api& gl{context().gl()};
+	const internal::opengl& gl{context().gl()};
 	int label_length;
 	gl.get_object_label(GL_VERTEX_ARRAY, unwrap(), 0, &label_length, nullptr);
 	if (label_length > 0) {
@@ -114,7 +114,7 @@ unsigned int tr::vertex_format::unwrap() const noexcept
 }
 
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-tr::graphics_object_id tr::vertex_format::id() const noexcept
+tr::internal::graphics_object_id tr::vertex_format::id() const noexcept
 {
 	return m_handle.get_deleter().id;
 }

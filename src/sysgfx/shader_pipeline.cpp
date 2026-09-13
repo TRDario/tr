@@ -1,11 +1,11 @@
 /// @file
 /// @brief Implements shader_pipeline.hpp.
 
-#include "../../include/tr/sysgfx/shader_pipeline.hpp"
-#include "../../include/tr/sysgfx/gl_defines.hpp"
-#include "../../include/tr/sysgfx/graphics_context.hpp"
-#include "../../include/tr/utility/hash_map.hpp"
-#include "tr/sysgfx/shader.hpp"
+#include "internal/opengl_definitions.hpp"
+#include <tr/sysgfx/graphics_context.hpp>
+#include <tr/sysgfx/shader.hpp>
+#include <tr/sysgfx/shader_pipeline.hpp>
+#include <tr/utility/hash_map.hpp>
 #include <tr/utility/out_handle.hpp>
 
 //
@@ -67,7 +67,7 @@ void tr::shader_pipeline::set_shaders(const vertex_shader& vertex_shader, const 
 	assert_shaders_compatible();
 #endif
 
-	const gl_api& gl{context().gl()};
+	const internal::opengl& gl{context().gl()};
 	gl.use_program_stages(unwrap(), GL_VERTEX_SHADER_BIT, vertex_shader.unwrap());
 	gl.use_program_stages(unwrap(), GL_FRAGMENT_SHADER_BIT, fragment_shader.unwrap());
 }
@@ -121,7 +121,7 @@ std::string tr::shader_pipeline::label() const
 {
 	TR_ASSERT(valid(), "Tried to get the label of a shader pipeline in an invalid state");
 
-	const gl_api& gl{context().gl()};
+	const internal::opengl& gl{context().gl()};
 
 	int label_length;
 	gl.get_object_label(GL_PROGRAM_PIPELINE, unwrap(), 0, &label_length, nullptr);
@@ -150,17 +150,17 @@ unsigned int tr::shader_pipeline::unwrap() const noexcept
 }
 
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-tr::graphics_object_id tr::shader_pipeline::id() const noexcept
+tr::internal::graphics_object_id tr::shader_pipeline::id() const noexcept
 {
 	return m_handle.get_deleter().id;
 }
 
-const tr::shader_pipeline::vertex_shader_debug_info_t& tr::shader_pipeline::vertex_shader_debug_info() const noexcept
+const tr::internal::vertex_shader_debug_info& tr::shader_pipeline::vertex_shader_debug_info() const noexcept
 {
 	return m_vertex_shader_debug_info;
 }
 
-const tr::shader_pipeline::fragment_shader_debug_info_t& tr::shader_pipeline::fragment_shader_debug_info() const noexcept
+const tr::internal::fragment_shader_debug_info& tr::shader_pipeline::fragment_shader_debug_info() const noexcept
 {
 	return m_fragment_shader_debug_info;
 }
@@ -169,7 +169,7 @@ const tr::shader_pipeline::fragment_shader_debug_info_t& tr::shader_pipeline::fr
 
 void tr::shader_pipeline::assert_shaders_compatible() const noexcept
 {
-	const graphics_object_registry& registry{context().registry()};
+	const internal::graphics_object_registry& registry{context().registry()};
 	if (!(registry.shaders.contains(m_vertex_shader_debug_info.id) && registry.shaders.contains(m_fragment_shader_debug_info.id))) {
 		return;
 	}
@@ -186,7 +186,7 @@ void tr::shader_pipeline::assert_shaders_compatible() const noexcept
 				  "Vertex shader '{}' has output '{}' at location {} that was not found in fragment shader '{}''s inputs.",
 				  *this, m_vertex_shader_debug_info.label, info, location, m_fragment_shader_debug_info.label);
 
-		const glsl_variable& frag_info{get(m_fragment_shader_debug_info.inputs, location)};
+		const internal::glsl_variable& frag_info{get(m_fragment_shader_debug_info.inputs, location)};
 		TR_ASSERT(frag_info.type == info.type && frag_info.array_size == info.array_size,
 				  "Tried to set mismatched shaders to shader pipeline {}:\n"
 				  "Vertex shader '{}' has output '{}' at location {}, but the input '{}' at the same location in fragment shader '{}' is "
@@ -196,83 +196,3 @@ void tr::shader_pipeline::assert_shaders_compatible() const noexcept
 	}
 }
 #endif
-
-//
-
-tr::owning_shader_pipeline::owning_shader_pipeline(graphics_context& context, tr::vertex_shader&& vertex_shader,
-												   tr::fragment_shader&& fragment_shader) noexcept
-	: m_vertex_shader{std::move(vertex_shader)}
-	, m_fragment_shader{std::move(fragment_shader)}
-	, m_shader_pipeline{context, m_vertex_shader, m_fragment_shader}
-{
-}
-
-//
-
-tr::owning_shader_pipeline::operator const tr::shader_pipeline&() const noexcept
-{
-	return m_shader_pipeline;
-}
-
-//
-
-tr::graphics_context& tr::owning_shader_pipeline::context() const noexcept
-{
-	return m_shader_pipeline.context();
-}
-
-//
-
-tr::vertex_shader& tr::owning_shader_pipeline::vertex_shader() noexcept
-{
-	TR_ASSERT(valid(), "Tried to get vertex shader of an owning shader pipeline in an invalid state.");
-
-	return m_vertex_shader;
-}
-
-const tr::vertex_shader& tr::owning_shader_pipeline::vertex_shader() const noexcept
-{
-	TR_ASSERT(valid(), "Tried to get vertex shader of an owning shader pipeline in an invalid state.");
-
-	return m_vertex_shader;
-}
-
-tr::fragment_shader& tr::owning_shader_pipeline::fragment_shader() noexcept
-{
-	TR_ASSERT(valid(), "Tried to get fragment shader of an owning shader pipeline in an invalid state.");
-
-	return m_fragment_shader;
-}
-
-const tr::fragment_shader& tr::owning_shader_pipeline::fragment_shader() const noexcept
-{
-	TR_ASSERT(valid(), "Tried to get fragment shader of an owning shader pipeline in an invalid state.");
-
-	return m_fragment_shader;
-}
-
-//
-
-bool tr::owning_shader_pipeline::valid() const noexcept
-{
-	return m_shader_pipeline.valid();
-}
-
-//
-
-void tr::owning_shader_pipeline::set_label(std::string_view label) noexcept
-{
-	m_shader_pipeline.set_label(label);
-}
-
-std::string tr::owning_shader_pipeline::label() const
-{
-	return m_shader_pipeline.label();
-}
-
-//
-
-unsigned int tr::owning_shader_pipeline::unwrap() const noexcept
-{
-	return m_shader_pipeline.unwrap();
-}

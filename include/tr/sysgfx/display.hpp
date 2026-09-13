@@ -2,7 +2,7 @@
 /// @brief Provides display querying functions.
 
 #pragma once
-#include "../utility/integer.hpp"
+#include <tr/utility/integer.hpp>
 
 //
 

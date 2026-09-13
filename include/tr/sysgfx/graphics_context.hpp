@@ -2,15 +2,15 @@
 /// @brief Provides a window graphics context class and related datatypes.
 
 #pragma once
-#include "../utility/exception.hpp"
-#include "../utility/zstring_view.hpp"
-#include "gl_api.hpp"
-#include "index_buffer.hpp"
-#include "render_target.hpp"
-#include "vertex_buffer.hpp"
-#include "vertex_format.hpp"
+#include <tr/sysgfx/dynamic_vertex_buffer.hpp>
+#include <tr/sysgfx/internal/opengl.hpp>
+#include <tr/sysgfx/render_target.hpp>
+#include <tr/sysgfx/static_vertex_buffer.hpp>
+#include <tr/sysgfx/vertex_format.hpp>
+#include <tr/utility/exception.hpp>
+#include <tr/utility/zstring_view.hpp>
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-#include "graphics_object_registry.hpp"
+#include <tr/sysgfx/internal/graphics_object_registry.hpp>
 #endif
 
 struct SDL_GLContextState;
@@ -18,7 +18,9 @@ struct SDL_Window;
 namespace tr
 {
 	struct blend_mode;
+	class dynamic_index_buffer;
 	class shader_pipeline;
+	class static_index_buffer;
 	class window_view;
 } // namespace tr
 
@@ -213,27 +215,68 @@ namespace tr
 		void set_vertex_format(const vertex_format& format) noexcept;
 
 		/// Sets an active vertex buffer.
-		/// @tparam UntypedVertexBuffer Untyped vertex buffer type.
 		/// @param buffer Buffer to set as active.
 		/// @param slot Slot to set the buffer in.
 		/// @param offset Starting offset within the buffer to bind.
 		/// @param stride Stride between the elements of the vertex buffer.
-		template <any_untyped_vertex_buffer UntypedVertexBuffer>
-		void set_vertex_buffer(const UntypedVertexBuffer& buffer, int slot, ssize offset, usize stride) noexcept;
+		void set_vertex_buffer(const untyped_static_vertex_buffer& buffer, int slot, ssize offset, usize stride) noexcept;
 
 		/// Sets an active vertex buffer.
-		/// @tparam TypedVertexBuffer Typed vertex buffer type.
 		/// @param buffer Buffer to set as active.
 		/// @param slot Slot to set the buffer in.
 		/// @param offset Starting offset within the buffer to bind.
-		template <any_typed_vertex_buffer TypedVertexBuffer>
-		void set_vertex_buffer(const TypedVertexBuffer& buffer, int slot, ssize offset) noexcept;
+		/// @param stride Stride between the elements of the vertex buffer.
+		void set_vertex_buffer(const untyped_dynamic_vertex_buffer& buffer, int slot, ssize offset, usize stride) noexcept;
+
+		/// Sets an active vertex buffer.
+		/// @tparam Element Type of the vertex buffer elements.
+		/// @param buffer Buffer to set as active.
+		/// @param slot Slot to set the buffer in.
+		/// @param offset Starting offset within the buffer to bind.
+		template <standard_layout Element>
+		void set_vertex_buffer(const static_vertex_buffer<Element>& buffer, int slot, ssize offset) noexcept
+		{
+			TR_ASSERT(buffer.valid(), "Tried to set a vertex buffer in an invalid state to a graphics context.");
+			TR_ASSERT(&buffer.context() == this, "Tried to set vertex buffer {} to a context it is not associated with.", buffer);
+
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
+			std::string label{buffer.label()};
+			check_typed_vertex_buffer(label, slot, as_vertex_attribute_list<Element>);
+			m_set_vertex_buffer_debug_info.id = buffer.id();
+			m_set_vertex_buffer_debug_info.label = std::move(label);
+#endif
+
+			gl().bind_vertex_buffer(slot, buffer.unwrap(), offset * sizeof(Element), sizeof(Element));
+		}
+
+		/// Sets an active vertex buffer.
+		/// @tparam Element Type of the vertex buffer elements.
+		/// @param buffer Buffer to set as active.
+		/// @param slot Slot to set the buffer in.
+		/// @param offset Starting offset within the buffer to bind.
+		template <standard_layout Element>
+		void set_vertex_buffer(const dynamic_vertex_buffer<Element>& buffer, int slot, ssize offset) noexcept
+		{
+			TR_ASSERT(buffer.valid(), "Tried to set a vertex buffer in an invalid state to a graphics context.");
+			TR_ASSERT(&buffer.context() == this, "Tried to set vertex buffer {} to a context it is not associated with.", buffer);
+
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
+			std::string label{buffer.label()};
+			check_typed_vertex_buffer(label, slot, as_vertex_attribute_list<Element>);
+			m_set_vertex_buffer_debug_info.id = buffer.id();
+			m_set_vertex_buffer_debug_info.label = std::move(label);
+#endif
+
+			gl().bind_vertex_buffer(slot, buffer.unwrap(), offset * sizeof(Element), sizeof(Element));
+		}
 
 		/// Sets the active index buffer.
-		/// @tparam IndexBuffer Index buffer type.
 		/// @param buffer Buffer to set as active.
-		template <any_index_buffer IndexBuffer>
-		void set_index_buffer(const IndexBuffer& buffer) noexcept;
+		void set_index_buffer(const static_index_buffer& buffer) noexcept;
+
+		/// Sets the active index buffer.
+		/// @param buffer Buffer to set as active.
+		void set_index_buffer(const dynamic_index_buffer& buffer) noexcept;
 
 		/// @}
 		/// @name Clearing
@@ -309,13 +352,23 @@ namespace tr
 
 		/// Sets the context as current and returns the OpenGL API.
 		/// @return Refernce to the OpenGL API functions.
-		[[nodiscard]] const gl_api& gl() const noexcept;
+		[[nodiscard]] const internal::opengl& gl() const noexcept;
 
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 		/// Gets the graphics object registry associated with the context.
 		/// @return Reference to the graphics object registry associated with the context.
-		[[nodiscard]] graphics_object_registry& registry() noexcept;
+		[[nodiscard]] internal::graphics_object_registry& registry() noexcept;
 #endif
+
+		//
+
+		/// Allocates a texture unit.
+		/// @return Allocated texture unit index.
+		unsigned int allocate_texture_unit() noexcept;
+
+		/// Frees a texture unit.
+		/// @param texture_unit Index of the texture unit.
+		void free_texture_unit(unsigned int texture_unit) noexcept;
 
 		//
 
@@ -334,7 +387,7 @@ namespace tr
 		{
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 			/// Registry of objects created on the context.
-			graphics_object_registry registry;
+			internal::graphics_object_registry registry;
 #endif
 
 			//
@@ -349,7 +402,7 @@ namespace tr
 		struct set_object_debug_info
 		{
 			/// Unique graphics object ID of the object.
-			graphics_object_id id{graphics_object_id::invalid};
+			internal::graphics_object_id id{internal::graphics_object_id::invalid};
 
 			/// Label of the object.
 			std::string label{"<unset>"};
@@ -359,7 +412,7 @@ namespace tr
 		struct set_vertex_format_debug_info
 		{
 			/// Unique graphics object ID of the vertex format.
-			graphics_object_id id{graphics_object_id::invalid};
+			internal::graphics_object_id id{internal::graphics_object_id::invalid};
 
 			/// Label of the vertex format.
 			std::string label{"<unbound>"};
@@ -378,7 +431,7 @@ namespace tr
 		std::unique_ptr<SDL_GLContextState, deleter> m_ptr;
 
 		/// OpenGL function pointers.
-		gl_api m_gl_api;
+		internal::opengl m_gl;
 
 		/// Next available renderer id.
 		renderer_id m_next_renderer_id{2};
@@ -419,17 +472,8 @@ namespace tr
 		/// @param label Label of the vertex buffer.
 		/// @param slot Slot the vertex buffer is being set to.
 		/// @param attrs Vertex attribute list of the elements of the vertex buffer.
-		void check_typed_vertex_buffer(std::string label, int slot, std::span<const vertex_attribute> attrs) noexcept;
+		void check_typed_vertex_buffer(const std::string& label, int slot, std::span<const vertex_attribute> attrs) noexcept;
 #endif
-
-		/// Sets an active vertex buffer.
-		/// @tparam VertexBuffer Vertex buffer type.
-		/// @param buffer Buffer to set as active.
-		/// @param slot Slot to set the buffer in.
-		/// @param offset Starting offset within the buffer in bytes to bind.
-		/// @param stride Stride between the elements of the vertex buffer.
-		template <any_vertex_buffer VertexBuffer>
-		void set_vertex_buffer_base(const VertexBuffer& buffer, int slot, ssize offset, usize stride) noexcept;
 
 		//
 
@@ -444,12 +488,5 @@ namespace tr
 		/// Asserts the validity of objects set to the graphics context.
 		void assert_valid_drawing_state(check_index_buffer check_index_buffer) noexcept;
 #endif
-
-		//
-
-		// Accesses `m_allocated_texture_units`.
-		friend class texture_unit;
 	};
 } // namespace tr
-
-#include "impl/graphics_context.hpp" // IWYU pragma: export

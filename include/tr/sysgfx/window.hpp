@@ -2,10 +2,10 @@
 /// @brief Provides window classes and related datatypes.
 
 #pragma once
-#include "../utility/exception.hpp"
-#include "../utility/zstring_view.hpp"
+#include <tr/utility/exception.hpp>
+#include <tr/utility/zstring_view.hpp>
 #ifdef _WIN32
-#include "../utility/timer.hpp"
+#include <tr/utility/timer.hpp>
 #endif
 
 namespace tr
@@ -112,6 +112,14 @@ namespace tr
 		/// @param parameters Initial window parameters.
 		/// @exception window_open_error If opening the window failed.
 		[[nodiscard]] explicit window(zstring_view title, window_parameters parameters = {});
+
+		/// @}
+		/// @name Validity
+		/// @{
+
+		/// Gets whether the window is in a valid state.
+		/// @return `true` if the window is in a valid state, `false` otherwise.
+		[[nodiscard]] bool valid() const noexcept;
 
 		/// @}
 		/// @name View

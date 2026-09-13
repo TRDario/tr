@@ -2,8 +2,8 @@
 /// @brief Provides clipboard utilities.
 
 #pragma once
-#include "../utility/exception.hpp"
-#include "../utility/zstring_view.hpp"
+#include <tr/utility/exception.hpp>
+#include <tr/utility/zstring_view.hpp>
 
 //
 

@@ -1,8 +1,8 @@
 /// @file
 /// @brief Implements clipboard.hpp.
 
-#include "../../include/tr/sysgfx/clipboard.hpp"
 #include <SDL3/SDL.h>
+#include <tr/sysgfx/clipboard.hpp>
 
 //
 

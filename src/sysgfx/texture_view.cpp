@@ -1,7 +1,7 @@
 /// @file
 /// @brief Implements texture_view.hpp.
 
-#include "../../include/tr/sysgfx/texture_view.hpp"
+#include <tr/sysgfx/texture_view.hpp>
 
 //
 

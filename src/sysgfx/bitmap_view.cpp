@@ -1,11 +1,11 @@
 /// @file
-/// @brief Implements the non-templated parts of bitmap_view.hpp.
+/// @brief Implements bitmap_view.hpp.
 
-#include "../../include/tr/sysgfx/bitmap_view.hpp"
-#include "../../include/tr/sysgfx/bitmap.hpp"
-#include "../../include/tr/sysgfx/bitmap_iterators.hpp"
 #include <SDL3/SDL.h>
 #include <SDL3_image/SDL_image.h>
+#include <tr/sysgfx/bitmap.hpp>
+#include <tr/sysgfx/bitmap_view.hpp>
+#include <tr/sysgfx/pixel_iterator.hpp>
 
 //
 

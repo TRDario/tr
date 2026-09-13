@@ -1,40 +1,32 @@
 /// @file
-/// @brief Implements texture_unit.hpp.
+/// @brief Implements internal/texture_unit.hpp.
 
-#include "../../include/tr/sysgfx/texture_unit.hpp"
-#include "../../include/tr/sysgfx/graphics_context.hpp"
-#include "../../include/tr/sysgfx/texture_view.hpp"
+#include <tr/sysgfx/graphics_context.hpp>
+#include <tr/sysgfx/internal/texture_unit.hpp>
+#include <tr/sysgfx/texture_view.hpp>
 
 //
 
-tr::texture_unit::texture_unit(graphics_context& context) noexcept
-	: m_handle{deleter{context}}
+tr::internal::texture_unit::texture_unit(graphics_context& context) noexcept
+	: m_handle{context.allocate_texture_unit(), deleter{context}}
 {
-	for (unsigned int free_index{0}; free_index < context.m_allocated_texture_units.size(); ++free_index) {
-		if (!context.m_allocated_texture_units[free_index]) {
-			context.m_allocated_texture_units[free_index] = true;
-			m_handle.reset(free_index);
-			return;
-		}
-	}
-	TR_ASSERT(m_handle.has_value(), "Tried to allocate more than 80 texture units simultaneously.");
 }
 
-void tr::texture_unit::deleter::operator()(unsigned int id) const noexcept
+void tr::internal::texture_unit::deleter::operator()(unsigned int id) const noexcept
 {
-	context->m_allocated_texture_units[id] = false;
+	context->free_texture_unit(id);
 }
 
 //
 
-unsigned int tr::texture_unit::id() const noexcept
+unsigned int tr::internal::texture_unit::id() const noexcept
 {
 	return m_handle.get();
 }
 
 //
 
-void tr::texture_unit::set(texture_view texture) noexcept
+void tr::internal::texture_unit::set(texture_view texture) noexcept
 {
 	const unsigned int texture_id{texture.unwrap()};
 	m_handle.get_deleter().context->gl().bind_textures(m_handle.get(), 1, &texture_id);

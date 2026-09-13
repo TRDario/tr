@@ -1,9 +1,11 @@
 /// @file
 /// @brief Implements sub_bitmap.hpp.
 
-#include "../../include/tr/sysgfx/sub_bitmap.hpp"
-#include "../../include/tr/sysgfx/bitmap_iterators.hpp"
 #include <SDL3/SDL.h>
+#include <tr/sysgfx/bitmap.hpp>
+#include <tr/sysgfx/bitmap_view.hpp>
+#include <tr/sysgfx/pixel_iterator.hpp>
+#include <tr/sysgfx/sub_bitmap.hpp>
 
 //
 

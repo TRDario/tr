@@ -1,7 +1,7 @@
 /// @file
 /// @brief Implements graphics_buffer.hpp.
 
-#include <tr/sysgfx/gl_defines.hpp>
+#include "internal/opengl_definitions.hpp"
 #include <tr/sysgfx/graphics_buffer.hpp>
 #include <tr/sysgfx/graphics_context.hpp>
 #include <tr/utility/out_handle.hpp>
@@ -43,7 +43,7 @@ bool tr::graphics_buffer::valid() const noexcept
 
 std::string tr::graphics_buffer::label() const
 {
-	const gl_api& gl{context().gl()};
+	const internal::opengl& gl{context().gl()};
 
 	int label_length;
 	gl.get_object_label(GL_BUFFER, unwrap(), 0, &label_length, nullptr);
@@ -78,7 +78,7 @@ void tr::graphics_buffer::reallocate()
 }
 
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-tr::graphics_object_id tr::graphics_buffer::id() const noexcept
+tr::internal::graphics_object_id tr::graphics_buffer::id() const noexcept
 {
 	return m_handle.get_deleter().id;
 }

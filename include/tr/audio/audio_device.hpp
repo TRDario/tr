@@ -2,7 +2,7 @@
 /// @brief Provides an audio device class.
 
 #pragma once
-#include "../utility/zstring_view.hpp"
+#include <tr/utility/zstring_view.hpp>
 
 struct ALCdevice;
 

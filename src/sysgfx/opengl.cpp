@@ -1,0 +1,120 @@
+/// @file
+/// @brief Implements internal/opengl.hpp.
+
+#include "internal/loaded_opengl_function.hpp"
+#include <SDL3/SDL.h>
+#include <tr/sysgfx/internal/opengl.hpp>
+
+//
+
+tr::internal::opengl::opengl() noexcept
+	: allocate_2d_texture_storage{loaded_opengl_function{"glTextureStorage2D"}}
+	, allocate_buffer_storage{loaded_opengl_function{"glNamedBufferStorage"}}
+	, begin_query{loaded_opengl_function{"glBeginQuery"}}
+	, bind_buffer{loaded_opengl_function{"glBindBuffer"}}
+	, bind_buffer_base{loaded_opengl_function{"glBindBufferBase"}}
+	, bind_buffer_range{loaded_opengl_function{"glBindBufferRange"}}
+	, bind_framebuffer{loaded_opengl_function{"glBindFramebuffer"}}
+	, bind_program_pipeline{loaded_opengl_function{"glBindProgramPipeline"}}
+	, bind_textures{loaded_opengl_function{"glBindTextures"}}
+	, bind_vertex_array{loaded_opengl_function{"glBindVertexArray"}}
+	, bind_vertex_buffer{loaded_opengl_function{"glBindVertexBuffer"}}
+	, clear{loaded_opengl_function{"glClear"}}
+	, clear_texture_image{loaded_opengl_function{"glClearTexImage"}}
+	, clear_texture_sub_image{loaded_opengl_function{"glClearTexSubImage"}}
+	, copy_image_sub_data{loaded_opengl_function{"glCopyImageSubData"}}
+	, create_buffers{loaded_opengl_function{"glCreateBuffers"}}
+	, create_framebuffers{loaded_opengl_function{"glCreateFramebuffers"}}
+	, create_program_pipelines{loaded_opengl_function{"glCreateProgramPipelines"}}
+	, create_shader_program_v{loaded_opengl_function{"glCreateShaderProgramv"}}
+	, create_textures{loaded_opengl_function{"glCreateTextures"}}
+	, create_vertex_arrays{loaded_opengl_function{"glCreateVertexArrays"}}
+	, delete_buffers{loaded_opengl_function{"glDeleteBuffers"}}
+	, delete_framebuffers{loaded_opengl_function{"glDeleteFramebuffers"}}
+	, delete_program{loaded_opengl_function{"glDeleteProgram"}}
+	, delete_program_pipelines{loaded_opengl_function{"glDeleteProgramPipelines"}}
+	, delete_queries{loaded_opengl_function{"glDeleteQueries"}}
+	, delete_textures{loaded_opengl_function{"glDeleteTextures"}}
+	, delete_vertex_arrays{loaded_opengl_function{"glDeleteVertexArrays"}}
+	, disable{loaded_opengl_function{"glDisable"}}
+	, draw_arrays{loaded_opengl_function{"glDrawArrays"}}
+	, draw_arrays_instanced{loaded_opengl_function{"glDrawArraysInstanced"}}
+	, draw_elements{loaded_opengl_function{"glDrawElements"}}
+	, draw_elements_instanced{loaded_opengl_function{"glDrawElementsInstanced"}}
+	, enable{loaded_opengl_function{"glEnable"}}
+	, enable_vertex_array_attribute{loaded_opengl_function{"glEnableVertexArrayAttrib"}}
+	, end_query{loaded_opengl_function{"glEndQuery"}}
+	, generate_queries{loaded_opengl_function{"glGenQueries"}}
+	, generate_texture_mipmap{loaded_opengl_function{"glGenerateTextureMipmap"}}
+	, get_error{loaded_opengl_function{"glGetError"}}
+	, get_buffer_parameter_iv{loaded_opengl_function{"glGetNamedBufferParameteriv"}}
+	, get_integer_v{loaded_opengl_function{"glGetIntegerv"}}
+	, get_object_label{loaded_opengl_function{"glGetObjectLabel"}}
+	, get_program_info_log{loaded_opengl_function{"glGetProgramInfoLog"}}
+	, get_program_interface_iv{loaded_opengl_function{"glGetProgramInterfaceiv"}}
+	, get_program_iv{loaded_opengl_function{"glGetProgramiv"}}
+	, get_program_resource_iv{loaded_opengl_function{"glGetProgramResourceiv"}}
+	, get_program_resource_name{loaded_opengl_function{"glGetProgramResourceName"}}
+	, get_query_object_i64v{loaded_opengl_function{"glGetQueryObjecti64v"}}
+	, get_string{loaded_opengl_function{"glGetString"}}
+	, get_texture_parameter_fv{loaded_opengl_function{"glGetTextureParameterfv"}}
+	, get_texture_parameter_iv{loaded_opengl_function{"glGetTextureParameteriv"}}
+	, invalidate_buffer_data{loaded_opengl_function{"glInvalidateBufferData"}}
+	, map_buffer_range{loaded_opengl_function{"glMapNamedBufferRange"}}
+	, set_2d_texture_sub_image{loaded_opengl_function{"glTextureSubImage2D"}}
+	, set_buffer_sub_data{loaded_opengl_function{"glNamedBufferSubData"}}
+	, set_clear_color{loaded_opengl_function{"glClearColor"}}
+	, set_clear_depth{loaded_opengl_function{"glClearDepth"}}
+	, set_clear_stencil{loaded_opengl_function{"glClearStencil"}}
+	, set_debug_message_callback{loaded_opengl_function{"glDebugMessageCallback"}}
+	, set_debug_message_control{loaded_opengl_function{"glDebugMessageControl"}}
+	, set_framebuffer_texture{loaded_opengl_function{"glNamedFramebufferTexture"}}
+	, set_object_label{loaded_opengl_function{"glObjectLabel"}}
+	, set_pixel_store_i{loaded_opengl_function{"glPixelStorei"}}
+	, set_polygon_mode{loaded_opengl_function{"glPolygonMode"}}
+	, set_program_uniform_1f{loaded_opengl_function{"glProgramUniform1f"}}
+	, set_program_uniform_1fv{loaded_opengl_function{"glProgramUniform1fv"}}
+	, set_program_uniform_2f{loaded_opengl_function{"glProgramUniform2f"}}
+	, set_program_uniform_2fv{loaded_opengl_function{"glProgramUniform2fv"}}
+	, set_program_uniform_3f{loaded_opengl_function{"glProgramUniform3f"}}
+	, set_program_uniform_3fv{loaded_opengl_function{"glProgramUniform3fv"}}
+	, set_program_uniform_4f{loaded_opengl_function{"glProgramUniform4f"}}
+	, set_program_uniform_4fv{loaded_opengl_function{"glProgramUniform4fv"}}
+	, set_program_uniform_1i{loaded_opengl_function{"glProgramUniform1i"}}
+	, set_program_uniform_1iv{loaded_opengl_function{"glProgramUniform1iv"}}
+	, set_program_uniform_2i{loaded_opengl_function{"glProgramUniform2i"}}
+	, set_program_uniform_2iv{loaded_opengl_function{"glProgramUniform2iv"}}
+	, set_program_uniform_3i{loaded_opengl_function{"glProgramUniform3i"}}
+	, set_program_uniform_3iv{loaded_opengl_function{"glProgramUniform3iv"}}
+	, set_program_uniform_4i{loaded_opengl_function{"glProgramUniform4i"}}
+	, set_program_uniform_4iv{loaded_opengl_function{"glProgramUniform4iv"}}
+	, set_program_uniform_1ui{loaded_opengl_function{"glProgramUniform1ui"}}
+	, set_program_uniform_1uiv{loaded_opengl_function{"glProgramUniform1uiv"}}
+	, set_program_uniform_2ui{loaded_opengl_function{"glProgramUniform2ui"}}
+	, set_program_uniform_2uiv{loaded_opengl_function{"glProgramUniform2uiv"}}
+	, set_program_uniform_3ui{loaded_opengl_function{"glProgramUniform3ui"}}
+	, set_program_uniform_3uiv{loaded_opengl_function{"glProgramUniform3uiv"}}
+	, set_program_uniform_4ui{loaded_opengl_function{"glProgramUniform4ui"}}
+	, set_program_uniform_4uiv{loaded_opengl_function{"glProgramUniform4uiv"}}
+	, set_program_uniform_matrix2fv{loaded_opengl_function{"glProgramUniformMatrix2fv"}}
+	, set_program_uniform_matrix3fv{loaded_opengl_function{"glProgramUniformMatrix3fv"}}
+	, set_program_uniform_matrix4fv{loaded_opengl_function{"glProgramUniformMatrix4fv"}}
+	, set_program_uniform_matrix2x3fv{loaded_opengl_function{"glProgramUniformMatrix2x3fv"}}
+	, set_program_uniform_matrix2x4fv{loaded_opengl_function{"glProgramUniformMatrix2x4fv"}}
+	, set_program_uniform_matrix3x2fv{loaded_opengl_function{"glProgramUniformMatrix3x2fv"}}
+	, set_program_uniform_matrix3x4fv{loaded_opengl_function{"glProgramUniformMatrix3x4fv"}}
+	, set_program_uniform_matrix4x2fv{loaded_opengl_function{"glProgramUniformMatrix4x2fv"}}
+	, set_program_uniform_matrix4x3fv{loaded_opengl_function{"glProgramUniformMatrix4x3fv"}}
+	, set_scissor{loaded_opengl_function{"glScissor"}}
+	, set_separate_blend_equations{loaded_opengl_function{"glBlendEquationSeparate"}}
+	, set_separate_blend_function{loaded_opengl_function{"glBlendFuncSeparate"}}
+	, set_texture_parameter_fv{loaded_opengl_function{"glTextureParameterfv"}}
+	, set_texture_parameter_i{loaded_opengl_function{"glTextureParameteri"}}
+	, set_vertex_array_attribute_binding{loaded_opengl_function{"glVertexArrayAttribBinding"}}
+	, set_vertex_array_attribute_format{loaded_opengl_function{"glVertexArrayAttribFormat"}}
+	, set_vertex_array_binding_divisor{loaded_opengl_function{"glVertexArrayBindingDivisor"}}
+	, set_viewport{loaded_opengl_function{"glViewport"}}
+	, unmap_buffer{loaded_opengl_function{"glUnmapNamedBuffer"}}
+	, use_program_stages{loaded_opengl_function{"glUseProgramStages"}}
+{
+}

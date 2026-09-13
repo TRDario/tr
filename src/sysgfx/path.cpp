@@ -1,8 +1,8 @@
 /// @file
 /// @brief Implements path.hpp.
 
-#include "../../include/tr/sysgfx/path.hpp"
 #include <SDL3/SDL.h>
+#include <tr/sysgfx/path.hpp>
 
 //
 

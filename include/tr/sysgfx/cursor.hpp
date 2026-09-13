@@ -2,7 +2,7 @@
 /// @brief Provides a mouse cursor class and related functionality.
 
 #pragma once
-#include "../utility/exception.hpp"
+#include <tr/utility/exception.hpp>
 
 struct SDL_Cursor;
 namespace tr
