@@ -91,7 +91,7 @@ namespace tr
 		/// @details Uncaught exceptions from this function will display a dialog box and quit the application.
 		/// @param event Event to handle.
 		/// @return Application state signal after handling the event.
-		virtual signal handle_event(const tr::event& event);
+		virtual signal handle_event(const event& event);
 
 		/// Primary update callback function.
 		/// @details Uncaught exceptions from this function will display a dialog box and quit the application.

@@ -1,32 +1,8 @@
 /// @file
-/// @brief Implements the non-constexpr parts of keyboard.hpp.
+/// @brief Implements keyboard.hpp.
 
-#include "../../include/tr/sysgfx/keyboard.hpp"
-#include "../../include/tr/sysgfx/event.hpp"
 #include <SDL3/SDL.h>
-
-//
-
-namespace tr
-{
-	namespace
-	{
-		/// Sentinel for an invalid key state index.
-		static constexpr int invalid_key_state_index{-1};
-
-		/// Converts a scancode into a key state index.
-		/// @param key Scancode.
-		/// @return Index of the scancode within the keyboard state buffer.
-		[[nodiscard]] constexpr int to_key_state_index(scancode key) noexcept
-		{
-			int index{std::to_underlying(key) - 4};
-			if (index >= 102) {
-				index -= 122;
-			}
-			return (index >= 0 && index <= 109) ? index : invalid_key_state_index;
-		}
-	} // namespace
-} // namespace tr
+#include <tr/sysgfx/keyboard.hpp>
 
 //
 
@@ -35,9 +11,9 @@ std::string tr::name(keycode key)
 	return SDL_GetKeyName(std::to_underlying(key));
 }
 
-tr::keycode tr::to_keycode_fallback(zstring_view str) noexcept
+tr::keycode tr::internal::to_keycode(zstring_view str) noexcept
 {
-	return keycode(SDL_GetKeyFromName(str.c_str()));
+	return static_cast<keycode>(SDL_GetKeyFromName(str.c_str()));
 }
 
 //
@@ -56,112 +32,6 @@ std::string tr::key_chord::name() const
 	}
 	str.append(tr::name(key));
 	return str;
-}
-
-//
-
-bool tr::scan_state::held(scancode key) const noexcept
-{
-	const int index{to_key_state_index(key)};
-	if (index == invalid_key_state_index) {
-		return false;
-	}
-	const std::byte& byte{buffer[index / 8]};
-	return static_cast<bool>(byte & static_cast<std::byte>(1 << (index % 8)));
-}
-
-void tr::scan_state::handle_event(const event& event) noexcept
-{
-	if (event.is<key_down_event>()) {
-		handle_event(event.as<key_down_event>());
-	}
-	else if (event.is<key_up_event>()) {
-		handle_event(event.as<key_up_event>());
-	}
-}
-
-void tr::scan_state::handle_event(const key_down_event& event) noexcept
-{
-	force_down(event.scan);
-}
-
-void tr::scan_state::handle_event(const key_up_event& event) noexcept
-{
-	force_up(event.scan);
-}
-
-void tr::scan_state::force_down(scancode key) noexcept
-{
-	const int index{to_key_state_index(key)};
-	if (index == invalid_key_state_index) {
-		return;
-	}
-	std::byte& byte{buffer[index / 8]};
-	byte |= static_cast<std::byte>(1 << (index % 8));
-}
-
-void tr::scan_state::force_up(scancode key) noexcept
-{
-	const int index{to_key_state_index(key)};
-	if (index == invalid_key_state_index) {
-		return;
-	}
-	std::byte& byte{buffer[index / 8]};
-	byte &= ~static_cast<std::byte>(1 << (index % 8));
-}
-
-bool tr::keyboard_state::held(keymod kmods) const noexcept
-{
-	return (mods & kmods) == kmods;
-}
-
-bool tr::keyboard_state::held(scan_chord chord) const noexcept
-{
-	return held(chord.mods) && held(chord.scan);
-}
-
-void tr::keyboard_state::handle_event(const event& event) noexcept
-{
-	if (event.is<key_down_event>()) {
-		handle_event(event.as<key_down_event>());
-	}
-	else if (event.is<key_up_event>()) {
-		handle_event(event.as<key_up_event>());
-	}
-}
-
-void tr::keyboard_state::handle_event(const key_down_event& event) noexcept
-{
-	scan_state::handle_event(event);
-	mods = event.mods;
-}
-
-void tr::keyboard_state::handle_event(const key_up_event& event) noexcept
-{
-	scan_state::handle_event(event);
-	mods = event.mods;
-}
-
-//
-
-std::size_t boost::hash<tr::scancode>::operator()(tr::scancode code) const noexcept
-{
-	return static_cast<std::size_t>(code);
-}
-
-std::size_t boost::hash<tr::keycode>::operator()(tr::keycode code) const noexcept
-{
-	return static_cast<std::size_t>(code);
-}
-
-std::size_t boost::hash<tr::scan_chord>::operator()(tr::scan_chord chord) const noexcept
-{
-	return (static_cast<std::size_t>(chord.scan) << 32) | static_cast<std::size_t>(chord.mods);
-}
-
-std::size_t boost::hash<tr::key_chord>::operator()(tr::key_chord chord) const noexcept
-{
-	return (static_cast<std::size_t>(chord.key) << 32) | static_cast<std::size_t>(chord.mods);
 }
 
 //

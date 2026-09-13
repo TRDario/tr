@@ -87,39 +87,44 @@ if(TR_BUILD_SYSGFX)
 	message("-- tr: Building system and graphics module")
 	target_sources(tr_sysgfx PRIVATE
 		src/sysgfx/application.cpp
-		src/sysgfx/bitmap_iterators.cpp
 		src/sysgfx/bitmap.cpp
 		src/sysgfx/bitmap_view.cpp
 		src/sysgfx/clipboard.cpp
 		src/sysgfx/cursor.cpp
 		src/sysgfx/dialog.cpp
 		src/sysgfx/display.cpp
+		src/sysgfx/dynamic_index_buffer.cpp
 		src/sysgfx/event.cpp
 		src/sysgfx/framebuffer.cpp
-		src/sysgfx/gl_api.cpp
 		src/sysgfx/graphics_object_registry.cpp
 		src/sysgfx/graphics_benchmark.cpp
 		src/sysgfx/graphics_buffer.cpp
-		src/sysgfx/graphics_buffer_map.cpp
 		src/sysgfx/graphics_context.cpp
-		src/sysgfx/index_buffer.cpp
 		src/sysgfx/keyboard.cpp
 		src/sysgfx/log_sink.cpp
 		src/sysgfx/logger.cpp
+		src/sysgfx/mapped_untyped_graphics_buffer_span.cpp
+		src/sysgfx/opengl.cpp
+		src/sysgfx/owning_shader_pipeline.cpp
 		src/sysgfx/path.cpp
 		src/sysgfx/ping_pong_target.cpp
+		src/sysgfx/pixel_format.cpp
+		src/sysgfx/pixel_iterator.cpp
+		src/sysgfx/pixel_proxy.cpp
 		src/sysgfx/render_target.cpp
-		src/sysgfx/shader_buffer.cpp
 		src/sysgfx/shader_pipeline.cpp
 		src/sysgfx/shader.cpp
+		src/sysgfx/static_index_buffer.cpp
 		src/sysgfx/sub_bitmap.cpp
 		src/sysgfx/texture.cpp
 		src/sysgfx/texture_target.cpp
 		src/sysgfx/texture_unit.cpp
 		src/sysgfx/texture_view.cpp
 		src/sysgfx/ttfont.cpp
-		src/sysgfx/uniform_buffer.cpp
-		src/sysgfx/vertex_buffer.cpp
+		src/sysgfx/untyped_dynamic_vertex_buffer.cpp
+		src/sysgfx/untyped_shader_buffer.cpp
+		src/sysgfx/untyped_static_vertex_buffer.cpp
+		src/sysgfx/untyped_uniform_buffer.cpp
 		src/sysgfx/vertex_format.cpp
 		src/sysgfx/window_view.cpp
 		src/sysgfx/window.cpp

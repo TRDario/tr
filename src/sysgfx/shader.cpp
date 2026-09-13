@@ -1,15 +1,15 @@
 /// @file
-/// @brief Implements the non-templated parts of shader.hpp.
+/// @brief Implements shader.hpp.
 
-#include "../../include/tr/sysgfx/shader.hpp"
-#include "../../include/tr/sysgfx/gl_defines.hpp"
-#include "../../include/tr/sysgfx/graphics_context.hpp"
-#include "../../include/tr/sysgfx/shader_buffer.hpp"
-#include "../../include/tr/sysgfx/texture.hpp"
-#include "../../include/tr/sysgfx/texture_view.hpp"
-#include "../../include/tr/sysgfx/uniform_buffer.hpp"
-#include "../../include/tr/utility/hash_map.hpp"
-#include "../../include/tr/utility/iostream.hpp"
+#include "internal/opengl_definitions.hpp"
+#include <tr/sysgfx/graphics_context.hpp>
+#include <tr/sysgfx/shader.hpp>
+#include <tr/sysgfx/shader_buffer.hpp>
+#include <tr/sysgfx/texture.hpp>
+#include <tr/sysgfx/texture_view.hpp>
+#include <tr/sysgfx/uniform_buffer.hpp>
+#include <tr/utility/hash_map.hpp>
+#include <tr/utility/iostream.hpp>
 
 //
 
@@ -43,7 +43,7 @@ tr::shader::shader(graphics_context& context, zstring_view source, unsigned int 
 	context.registry().shaders.emplace(id());
 #endif
 
-	const gl_api& gl{context.gl()};
+	const internal::opengl& gl{context.gl()};
 
 	int linked;
 	gl.get_program_iv(unwrap(), GL_LINK_STATUS, &linked);
@@ -75,7 +75,7 @@ namespace tr
 	} // namespace
 } // namespace tr
 
-void tr::shader::find_uniforms(const gl_api& gl)
+void tr::shader::find_uniforms(const internal::opengl& gl)
 {
 	int uniforms{0};
 	gl.get_program_interface_iv(unwrap(), GL_UNIFORM, GL_ACTIVE_RESOURCES, &uniforms);
@@ -93,12 +93,12 @@ void tr::shader::find_uniforms(const gl_api& gl)
 		gl.get_program_resource_name(unwrap(), GL_UNIFORM, i, uniform_name_buffer.size(), NULL, uniform_name_buffer.data());
 		m_uniforms.insert({
 			static_cast<unsigned int>(location),
-			{std::move(uniform_name_buffer), static_cast<glsl_type>(var_type), array_size},
+			{std::move(uniform_name_buffer), static_cast<internal::glsl_type>(var_type), array_size},
 		});
 	}
 }
 
-void tr::shader::find_inputs(const gl_api& gl)
+void tr::shader::find_inputs(const internal::opengl& gl)
 {
 	int inputs{0};
 	gl.get_program_interface_iv(unwrap(), GL_PROGRAM_INPUT, GL_ACTIVE_RESOURCES, &inputs);
@@ -112,12 +112,12 @@ void tr::shader::find_inputs(const gl_api& gl)
 		gl.get_program_resource_name(unwrap(), GL_PROGRAM_INPUT, i, input_name_buffer.size(), NULL, input_name_buffer.data());
 		m_inputs.insert({
 			static_cast<unsigned int>(location),
-			{std::move(input_name_buffer), static_cast<glsl_type>(var_type), array_size},
+			{std::move(input_name_buffer), static_cast<internal::glsl_type>(var_type), array_size},
 		});
 	}
 }
 
-void tr::shader::find_outputs(const gl_api& gl)
+void tr::shader::find_outputs(const internal::opengl& gl)
 {
 	int inputs{0};
 	gl.get_program_interface_iv(unwrap(), GL_PROGRAM_OUTPUT, GL_ACTIVE_RESOURCES, &inputs);
@@ -132,7 +132,7 @@ void tr::shader::find_outputs(const gl_api& gl)
 		if (!output_name_buffer.starts_with("gl_")) {
 			m_outputs.insert({
 				static_cast<unsigned int>(location),
-				{std::move(output_name_buffer), static_cast<glsl_type>(var_type), array_size},
+				{std::move(output_name_buffer), static_cast<internal::glsl_type>(var_type), array_size},
 			});
 		}
 	}
@@ -142,22 +142,22 @@ void tr::shader::find_outputs(const gl_api& gl)
 #define TR_ASSERT_SHADER_UNIFORM(target_type)                                                                                              \
 	do {                                                                                                                                   \
 		TR_ASSERT(valid(), "Tried to set  uniform on a shader in an invalid state.");                                                      \
-		const opt_ref<glsl_variable> uniform{try_get(m_uniforms, index)};                                                                  \
+		const opt_ref<internal::glsl_variable> uniform{try_get(m_uniforms, index)};                                                        \
 		TR_ASSERT(uniform.has_ref(), "Tried to set uniform with invalid index '{}' in shader {}.", index, *this);                          \
-		TR_ASSERT(uniform->type == as_glsl_type<target_type> && uniform->array_size == 1,                                                  \
+		TR_ASSERT(uniform->type == internal::as_glsl_type<target_type> && uniform->array_size == 1,                                        \
 				  "Tried to set uniform with signature '{}' in shader {} with a value of type '{}'.", *uniform, *this,                     \
-				  as_glsl_type<target_type>);                                                                                              \
+				  internal::as_glsl_type<target_type>);                                                                                    \
 	} while (0)
 
 /// Asserts that a shader array uniform exists and is of the correct type.
 #define TR_ASSERT_SHADER_ARRAY_UNIFORM(target_type)                                                                                        \
 	do {                                                                                                                                   \
 		TR_ASSERT(valid(), "Tried to set a uniform on a shader in an invalid state.");                                                     \
-		const opt_ref<glsl_variable> uniform{try_get(m_uniforms, index)};                                                                  \
+		const opt_ref<internal::glsl_variable> uniform{try_get(m_uniforms, index)};                                                        \
 		TR_ASSERT(uniform.has_ref(), "Tried to set uniform with invalid index '{}' in shader {}.", index, *this);                          \
-		TR_ASSERT(uniform->type == as_glsl_type<target_type> && uniform->array_size == int(value.size()),                                  \
+		TR_ASSERT(uniform->type == internal::as_glsl_type<target_type> && uniform->array_size == int(value.size()),                        \
 				  "Tried to set uniform with signature '{}' in shader {} with a value of type '{}[{}]'.", *uniform, *this,                 \
-				  as_glsl_type<target_type>, value.size());                                                                                \
+				  internal::as_glsl_type<target_type>, value.size());                                                                      \
 	} while (0)
 
 #else
@@ -491,13 +491,13 @@ void tr::shader::set_uniform(int index, texture_view value)
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 	const auto uniform_it{m_uniforms.find(index)};
 	TR_ASSERT(uniform_it != m_uniforms.end(), "Tried to set uniform with invalid index '{}' in shader {}.", index, *this);
-	TR_ASSERT(uniform_it->second.type == glsl_type::sampler2D && uniform_it->second.array_size == 1,
+	TR_ASSERT(uniform_it->second.type == internal::glsl_type::sampler2D && uniform_it->second.array_size == 1,
 			  "Tried to set uniform with signature '{}' in shader {} with a value of type 'sampler2D'.", uniform_it->second, *this);
 #endif
 
 	auto unit_it{m_texture_units.find(index)};
 	if (unit_it == m_texture_units.end()) {
-		unit_it = m_texture_units.insert({index, texture_unit{context()}}).first;
+		unit_it = m_texture_units.insert({index, internal::texture_unit{context()}}).first;
 		context().gl().set_program_uniform_1i(unwrap(), index, unit_it->second.id());
 	}
 	unit_it->second.set(value);
@@ -510,7 +510,7 @@ void tr::shader::set_storage_buffer(unsigned int index, unsigned int buffer_id, 
 	context().gl().bind_buffer_range(GL_SHADER_STORAGE_BUFFER, index, buffer_id, 0, buffer_size);
 }
 
-void tr::shader::set_storage_buffer(unsigned int index, basic_shader_buffer& buffer) noexcept
+void tr::shader::set_storage_buffer(unsigned int index, untyped_shader_buffer& buffer) noexcept
 {
 	set_storage_buffer(index, buffer.unwrap(), buffer.header_size() + buffer.array_size());
 }
@@ -522,7 +522,7 @@ void tr::shader::set_uniform_buffer(unsigned int index, unsigned int buffer_id) 
 	context().gl().bind_buffer_base(GL_UNIFORM_BUFFER, index, buffer_id);
 }
 
-void tr::shader::set_uniform_buffer(unsigned int index, const basic_uniform_buffer& buffer) noexcept
+void tr::shader::set_uniform_buffer(unsigned int index, const untyped_uniform_buffer& buffer) noexcept
 {
 	set_uniform_buffer(index, buffer.unwrap());
 }
@@ -547,7 +547,7 @@ std::string tr::shader::label() const
 {
 	TR_ASSERT(valid(), "Tried to get the label of a shader in an invalid state.");
 
-	const gl_api& gl{context().gl()};
+	const internal::opengl& gl{context().gl()};
 
 	int label_length;
 	gl.get_object_label(GL_PROGRAM, unwrap(), 0, &label_length, nullptr);
@@ -569,17 +569,17 @@ unsigned int tr::shader::unwrap() const noexcept
 }
 
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-tr::graphics_object_id tr::shader::id() const noexcept
+tr::internal::graphics_object_id tr::shader::id() const noexcept
 {
 	return m_program.get_deleter().id;
 }
 
-const boost::unordered_flat_map<unsigned int, tr::glsl_variable>& tr::shader::inputs() const noexcept
+const boost::unordered_flat_map<unsigned int, tr::internal::glsl_variable>& tr::shader::inputs() const noexcept
 {
 	return m_inputs;
 }
 
-const boost::unordered_flat_map<unsigned int, tr::glsl_variable>& tr::shader::outputs() const noexcept
+const boost::unordered_flat_map<unsigned int, tr::internal::glsl_variable>& tr::shader::outputs() const noexcept
 {
 	return m_outputs;
 }

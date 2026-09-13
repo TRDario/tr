@@ -2,14 +2,19 @@
 /// @brief Provides `tr::render_target`.
 
 #pragma once
-#include "../utility/rectangle.hpp"
-#include "../utility/ref.hpp"
+#include <tr/utility/rectangle.hpp>
+#include <tr/utility/ref.hpp>
 
 namespace tr
 {
 	class framebuffer;
 	class graphics_context;
-	enum class graphics_object_id : unsigned int;
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
+	namespace internal
+	{
+		enum class graphics_object_id : u32;
+	}
+#endif
 } // namespace tr
 
 //
@@ -36,7 +41,7 @@ namespace tr
 			ref<const graphics_context> context;
 
 			/// Unique graphics object ID of the framebuffer.
-			graphics_object_id id;
+			internal::graphics_object_id id;
 
 			/// Label of the framebuffer.
 			std::string label;

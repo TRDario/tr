@@ -1,9 +1,9 @@
 /// @file
 /// @brief Implements ping_pong_target.hpp.
 
-#include "../../include/tr/sysgfx/ping_pong_target.hpp"
-#include "../../include/tr/sysgfx/render_target.hpp"
-#include "../../include/tr/sysgfx/texture_view.hpp"
+#include <tr/sysgfx/ping_pong_target.hpp>
+#include <tr/sysgfx/render_target.hpp>
+#include <tr/sysgfx/texture_view.hpp>
 
 //
 

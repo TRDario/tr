@@ -1,9 +1,10 @@
 /// @file
 /// @brief Implements texture_target.hpp.
 
-#include "../../include/tr/sysgfx/texture_target.hpp"
-#include "../../include/tr/sysgfx/graphics_context.hpp"
-#include "../../include/tr/sysgfx/texture_view.hpp"
+#include <tr/sysgfx/graphics_context.hpp>
+#include <tr/sysgfx/sub_bitmap.hpp>
+#include <tr/sysgfx/texture_target.hpp>
+#include <tr/sysgfx/texture_view.hpp>
 
 //
 

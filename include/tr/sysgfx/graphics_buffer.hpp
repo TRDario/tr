@@ -2,11 +2,11 @@
 /// @brief Provides `tr::graphics_buffer`.
 
 #pragma once
-#include "../utility/handle.hpp"
-#include "../utility/ref.hpp"
+#include <tr/utility/handle.hpp>
+#include <tr/utility/ref.hpp>
 
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-#include "graphics_object_registry.hpp"
+#include <tr/sysgfx/internal/graphics_object_registry.hpp>
 #endif
 
 namespace tr
@@ -90,7 +90,7 @@ namespace tr
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 		/// Gets the unique graphics object ID of the buffer.
 		/// @return Unique graphics object ID of the buffer.
-		[[nodiscard]] graphics_object_id id() const noexcept;
+		[[nodiscard]] internal::graphics_object_id id() const noexcept;
 #endif
 
 		/// @}
@@ -105,7 +105,7 @@ namespace tr
 
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 			/// Handle to the unique graphics object ID of the buffer.
-			graphics_object_id_handle id{};
+			internal::graphics_object_id_handle id{};
 #endif
 
 			//

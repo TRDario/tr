@@ -2,8 +2,8 @@
 /// @brief Provides a non-owning window view class.
 
 #pragma once
-#include "../utility/exception.hpp"
-#include "../utility/zstring_view.hpp"
+#include <tr/utility/exception.hpp>
+#include <tr/utility/zstring_view.hpp>
 
 namespace tr
 {
@@ -40,11 +40,18 @@ namespace tr
 		/// @{
 
 		/// Constructs a window error.
+		/// @param description Description of the error.
+		[[nodiscard]] window_error(std::string&& description) noexcept;
+
+		/// Constructs a window error.
 		/// @tparam Args Types of the formatting arguments.
 		/// @param description_fmt Description format string.
 		/// @param args Description formatting arguments.
 		template <typename... Args>
-		[[nodiscard]] explicit window_error(std::format_string<Args...> description_fmt, Args&&... args) noexcept;
+		[[nodiscard]] explicit window_error(std::format_string<Args...> description_fmt, Args&&... args) noexcept
+			: window_error{std::format(description_fmt, std::forward<Args>(args)...)}
+		{
+		}
 
 		/// @}
 		/// @name Information
@@ -70,10 +77,6 @@ namespace tr
 
 		/// Details of the error.
 		std::string_view m_details;
-
-		/// Constructs a window error.
-		/// @param description Description of the error.
-		[[nodiscard]] window_error(std::string&& description) noexcept;
 	};
 
 	//
@@ -227,5 +230,3 @@ namespace tr
 		SDL_Window* m_ptr;
 	};
 } // namespace tr
-
-#include "impl/window_view.hpp" // IWYU pragma: export

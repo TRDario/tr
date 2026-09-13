@@ -2,8 +2,8 @@
 /// @brief Provides a texture rendering target.
 
 #pragma once
-#include "framebuffer.hpp"
-#include "texture.hpp"
+#include <tr/sysgfx/framebuffer.hpp>
+#include <tr/sysgfx/texture.hpp>
 
 namespace tr
 {

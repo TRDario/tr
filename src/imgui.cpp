@@ -1,13 +1,13 @@
 /// @file
 /// @brief Implements imgui.hpp.
 
-#include "../include/tr/imgui.hpp"
-#include "../include/tr/sysgfx/event.hpp"
-#include "../include/tr/sysgfx/graphics_context.hpp"
-#include "../include/tr/sysgfx/texture_view.hpp"
-#include "../include/tr/sysgfx/window_view.hpp"
 #include <backends/imgui_impl_opengl3.h>
 #include <backends/imgui_impl_sdl3.h>
+#include <tr/imgui.hpp>
+#include <tr/sysgfx/event.hpp>
+#include <tr/sysgfx/graphics_context.hpp>
+#include <tr/sysgfx/texture_view.hpp>
+#include <tr/sysgfx/window_view.hpp>
 
 //
 

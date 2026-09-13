@@ -147,6 +147,25 @@ namespace tr
 
 //
 
+tr::application::signal tr::application::initialize()
+{
+	return signal::proceed;
+}
+
+tr::application::signal tr::application::handle_event(const event&)
+{
+	return signal::proceed;
+}
+
+tr::application::signal tr::application::update(duration)
+{
+	return signal::proceed;
+}
+
+void tr::application::shut_down(signal) {}
+
+//
+
 void tr::set_application_metadata(const application::metadata& metadata)
 {
 	SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_NAME_STRING, metadata.name.c_str());

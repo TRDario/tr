@@ -2,12 +2,12 @@
 /// @brief Provides a bitmap view class.
 
 #pragma once
-#include "sub_bitmap.hpp"
+#include <tr/sysgfx/sub_bitmap.hpp>
 
 namespace tr
 {
 	enum class pixel_format;
-}
+} // namespace tr
 
 struct SDL_Surface;
 
@@ -20,10 +20,10 @@ namespace tr
 	{
 	  public:
 		/// Immutable pixel reference.
-		using reference = sub_bitmap::reference;
+		using reference = const_pixel_proxy;
 
 		/// Immutable iterator.
-		using iterator = sub_bitmap::iterator;
+		using iterator = const_pixel_iterator;
 
 		/// @name Constructors
 		/// @{
@@ -39,7 +39,10 @@ namespace tr
 		/// @param size Size of the bitmap.
 		/// @param format Format of the bitmap.
 		template <std::ranges::contiguous_range Range>
-		[[nodiscard]] bitmap_view(Range&& range, glm::ivec2 size, pixel_format format);
+		[[nodiscard]] bitmap_view(Range&& range, glm::ivec2 size, pixel_format format)
+			: bitmap_view{std::span<const std::byte>{range_bytes(range)}, size, format}
+		{
+		}
 
 		/// Creates a bitmap view over pixel data.
 		/// @param raw_data_start Pointer to the pixel data.
@@ -151,5 +154,3 @@ namespace tr
 		std::unique_ptr<SDL_Surface, deleter> m_ptr;
 	};
 } // namespace tr
-
-#include "impl/bitmap_view.hpp" // IWYU pragma: export

@@ -1,9 +1,9 @@
 /// @file
 /// @brief Implements ttfont.hpp.
 
-#include "../../include/tr/sysgfx/ttfont.hpp"
-#include "../../include/tr/sysgfx/bitmap.hpp"
 #include <SDL3_ttf/SDL_ttf.h>
+#include <tr/sysgfx/bitmap.hpp>
+#include <tr/sysgfx/ttfont.hpp>
 
 //
 

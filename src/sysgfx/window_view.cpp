@@ -1,6 +1,7 @@
-#include "../../include/tr/sysgfx/window_view.hpp"
-#include "../../include/tr/sysgfx/bitmap.hpp"
 #include <SDL3/SDL.h>
+#include <tr/sysgfx/bitmap.hpp>
+#include <tr/sysgfx/bitmap_view.hpp>
+#include <tr/sysgfx/window_view.hpp>
 
 //
 
@@ -30,6 +31,7 @@ std::string_view tr::window_error::details() const noexcept
 tr::window_view::window_view(SDL_Window* ptr) noexcept
 	: m_ptr{ptr}
 {
+	TR_ASSERT(ptr != nullptr, "Tried to create a view to a window in an invalid state.");
 }
 
 //

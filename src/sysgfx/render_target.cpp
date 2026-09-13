@@ -1,16 +1,16 @@
 /// @file
 /// @brief Implements render_target.hpp.
 
-#include "../../include/tr/sysgfx/render_target.hpp"
-#include "../../include/tr/sysgfx/framebuffer.hpp"
-#include "../../include/tr/sysgfx/graphics_context.hpp"
-#include "../../include/tr/sysgfx/window_view.hpp"
+#include <tr/sysgfx/framebuffer.hpp>
+#include <tr/sysgfx/graphics_context.hpp>
+#include <tr/sysgfx/render_target.hpp>
+#include <tr/sysgfx/window_view.hpp>
 
 //
 
 tr::render_target::render_target(const graphics_context& context) noexcept
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-	: m_framebuffer_info{0, context.window().size(), context, graphics_object_id::invalid, "<backbuffer>"}
+	: m_framebuffer_info{0, context.window().size(), context, internal::graphics_object_id::invalid, "<backbuffer>"}
 #else
 	: m_framebuffer_info{0, context.window().size()}
 #endif

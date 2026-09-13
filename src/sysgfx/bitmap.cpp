@@ -1,17 +1,12 @@
 /// @file
-/// @brief Implements the non-templated parts of bitmap.hpp.
+/// @brief Implements bitmap.hpp.
 
-#include "../../include/tr/sysgfx/bitmap.hpp"
-#include "../../include/tr/sysgfx/bitmap_iterators.hpp"
 #include <SDL3/SDL.h>
 #include <SDL3_image/SDL_image.h>
-
-//
-
-int tr::pixel_bytes(pixel_format format) noexcept
-{
-	return SDL_BYTESPERPIXEL(std::to_underlying(format));
-}
+#include <tr/sysgfx/bitmap.hpp>
+#include <tr/sysgfx/bitmap_view.hpp>
+#include <tr/sysgfx/sub_bitmap.hpp>
+#include <tr/utility/color.hpp>
 
 //
 
@@ -212,7 +207,7 @@ tr::bitmap::const_iterator tr::bitmap::cend() const noexcept
 {
 	TR_ASSERT(m_ptr != nullptr, "Tried to get an iterator to the end of a moved-from bitmap.");
 
-	return sub_bitmap(*this).end();
+	return sub_bitmap{*this}.end();
 }
 
 //

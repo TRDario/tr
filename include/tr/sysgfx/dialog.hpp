@@ -2,7 +2,7 @@
 /// @brief Provides an interface for triggering native OS dialog boxes.
 
 #pragma once
-#include "../utility/zstring_view.hpp"
+#include <tr/utility/zstring_view.hpp>
 
 //
 

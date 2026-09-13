@@ -1,8 +1,8 @@
 /// @file
-/// @brief Implements the non-templated parts of event.hpp.
+/// @brief Implements event.hpp.
 
-#include "../../include/tr/sysgfx/event.hpp"
 #include <SDL3/SDL.h>
+#include <tr/sysgfx/event.hpp>
 
 using namespace std::chrono_literals;
 
@@ -44,14 +44,14 @@ tr::key_down_event::key_down_event(const event& event) noexcept
 	mods = convert_keymods(sdl.mod);
 }
 
-tr::key_down_event::operator scan_chord() const noexcept
+tr::scan_chord tr::key_down_event::scan_chord() const noexcept
 {
-	return {mods, scan};
+	return tr::scan_chord{mods, scan};
 }
 
-tr::key_down_event::operator key_chord() const noexcept
+tr::key_chord tr::key_down_event::key_chord() const noexcept
 {
-	return {mods, key};
+	return tr::key_chord{mods, key};
 }
 
 //

@@ -156,13 +156,13 @@ namespace tr
 		if constexpr (decltype(span)::extent != std::dynamic_extent) {
 			static_assert(decltype(span)::extent % sizeof(Element) == 0,
 						  "Cannot reinterpret byte range as an object span due to size / sizeof(T) not being an integer.");
-			return std::span<Element, decltype(span)::extent / sizeof(Element)>{reinterpret_cast<Element*>(span.data())};
+			return std::span<const Element, decltype(span)::extent / sizeof(Element)>{reinterpret_cast<const Element*>(span.data())};
 		}
 		else {
 			TR_ASSERT(span.size() % sizeof(Element) == 0,
 					  "Cannot reinterpret byte range as a span of '{}' due to size ({}) / sizeof({}) ({}) not being an integer.",
-					  type_name<Element>(), span.size(), type_name<Element>(), sizeof(Element));
-			return std::span{reinterpret_cast<Element*>(span.data()), span.size() / sizeof(Element)};
+					  type_name<const Element>(), span.size(), type_name<const Element>(), sizeof(Element));
+			return std::span{reinterpret_cast<const Element*>(span.data()), span.size() / sizeof(Element)};
 		}
 	}
 

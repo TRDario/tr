@@ -1,153 +1,22 @@
 /// @file
-/// @brief Provides GPU buffers accessible to shaders.
+/// @brief Provides `tr::shader_buffer`.
 
 #pragma once
-#include "../utility/concepts.hpp"
-#include "graphics_buffer.hpp"
-#include "graphics_buffer_map.hpp"
+#include <tr/sysgfx/graphics_buffer_map_access.hpp>
+#include <tr/sysgfx/mapped_graphics_buffer_object.hpp>
+#include <tr/sysgfx/mapped_graphics_buffer_span.hpp>
+#include <tr/sysgfx/untyped_shader_buffer.hpp>
+#include <tr/utility/type_name.hpp>
 
 //
 
 namespace tr
 {
-	/// GPU buffer accessable to a shader.
-	/// @details Shader buffers are divided into a fixed header block segment and a resizable array segment.
-	class basic_shader_buffer : private graphics_buffer
-	{
-	  public:
-		/// @name Constructors
-		/// @{
-
-		/// Allocates an uninitialized shader buffer.
-		/// @param context Graphics context to create the buffer on.
-		/// @param header_size Size of the fixed header block in bytes.
-		/// @param capacity Maximum capacity of the dyuamic array in bytes.
-		/// @param map_type Type of map to create when mapping the buffer.
-		[[nodiscard]] basic_shader_buffer(graphics_context& context, usize header_size, usize capacity,
-										  map_type map_type = map_type::write_only);
-
-		/// @}
-		/// @name Context
-		/// @{
-
-		using graphics_buffer::context;
-
-		/// @}
-		/// @name State
-		/// @{
-
-		using graphics_buffer::valid;
-
-		/// @}
-		/// @name Size
-		/// @{
-
-		/// Gets the size of the fixed header block.
-		/// @return Size of the fixed header block in bytes.
-		[[nodiscard]] usize header_size() const noexcept;
-
-		/// Gets the size of the dynamic array.
-		/// @return Size of the dynamic array in bytes.
-		[[nodiscard]] usize array_size() const noexcept;
-
-		/// Gets the maximum capacity of the dynamic array.
-		/// @return Maximum capacity of the dynamic array in bytes.
-		[[nodiscard]] usize array_capacity() const noexcept;
-
-		/// @}
-		/// @name Setting
-		/// @{
-
-		/// Sets the data of the header.
-		/// @param data Data to set the header with.
-		/// @pre `data` must be of the same size as the buffer's header.
-		void set_header(std::span<const std::byte> data) noexcept;
-
-		/// Sets the data of the dynamic array.
-		/// @param data Data to set the dynamic array with.
-		/// @pre `data` must be smaller than or equal to the capacity of the buffer's dynamic array.
-		void set_array(std::span<const std::byte> data) noexcept;
-
-		/// Resizes the dynamic array.
-		/// @param size Size of the dynamic array in bytes.
-		/// @pre `size` must be less than or equal to the capacity of the buffer's dynamic array.
-		void resize_array(usize size) noexcept;
-
-		/// @}
-		/// @name Mapping
-		/// @{
-
-		/// Gets whether the buffer is mapped.
-		/// @return `true` if the buffer is mapped, `false` otherwise.
-		[[nodiscard]] bool mapped() const noexcept;
-
-		/// Maps the fixed header of the buffer.
-		/// @return Map of the fixed header of the buffer.
-		[[nodiscard]] basic_graphics_buffer_map map_header();
-
-		/// Maps the dynamic array of the buffer.
-		/// @return Map of the dynamic array of the buffer.
-		[[nodiscard]] basic_graphics_buffer_map map_array();
-
-		/// Maps the entire buffer.
-		/// @return Map of the buffer.
-		[[nodiscard]] basic_graphics_buffer_map map();
-
-		/// @}
-		/// @name Label
-		/// @{
-
-		using graphics_buffer::label;
-
-		using graphics_buffer::set_label;
-
-		/// @}
-		/// @cond gl_interop
-		/// @name OpenGL interoperability
-		/// @{
-
-		using graphics_buffer::unwrap;
-
-		/// @}
-		/// @endcond
-#ifdef TR_ENABLE_CHECKED_GRAPHICS
-		/// @cond implementation_details
-		/// @name Implementation details
-		/// @{
-
-		using graphics_buffer::id;
-
-		/// @}
-		/// @endcond
-#endif
-
-	  private:
-		// Map type of the buffer.
-		map_type m_map_type;
-
-		// Size of the header.
-		usize m_header_size;
-
-		// Current size of the array.
-		usize m_array_size;
-
-		// Capacity of the array.
-		usize m_array_capacity;
-
-		//
-
-		/// Maps a range of the buffer.
-		/// @param offset Starting offset of the map in bytes.
-		/// @param size Size of the map in bytes.
-		/// @return Buffer range map.
-		[[nodiscard]] basic_graphics_buffer_map map_range(usize offset, usize size);
-	};
-
 	/// Shader buffer with a typed header and array.
 	/// @tparam Header Type of the header object stored at the front of the buffer.
 	/// @tparam ArrayElement Type of the buffer dynamic array elements.
 	template <typename Header, typename ArrayElement>
-	class shader_buffer : private basic_shader_buffer
+	class shader_buffer : private untyped_shader_buffer
 	{
 	  public:
 		/// @name Constructors
@@ -157,19 +26,23 @@ namespace tr
 		/// @param context Graphics context to create the buffer on.
 		/// @param capacity Maximum capacity of the buffer array in elements.
 		/// @param map_type Type of map to create when mapping the buffer.
-		[[nodiscard]] shader_buffer(graphics_context& context, usize capacity, map_type map_type = map_type::write_only);
+		[[nodiscard]] shader_buffer(graphics_context& context, usize capacity,
+									graphics_buffer_map_access map_type = graphics_buffer_map_access::write_only)
+			: untyped_shader_buffer{context, sizeof(Header), capacity * sizeof(ArrayElement), map_type}
+		{
+		}
 
 		/// @}
 		/// @name Context
 		/// @{
 
-		using basic_shader_buffer::context;
+		using untyped_shader_buffer::context;
 
 		/// @}
 		/// @name State
 		/// @{
 
-		using basic_shader_buffer::valid;
+		using untyped_shader_buffer::valid;
 
 		/// @}
 		/// @name Size
@@ -177,59 +50,78 @@ namespace tr
 
 		/// Gets the size of the dynamic array.
 		/// @return Size of the dynamic array in elements.
-		[[nodiscard]] usize array_size() const noexcept;
+		[[nodiscard]] usize array_size() const noexcept
+		{
+			return untyped_shader_buffer::array_size() / sizeof(ArrayElement);
+		}
 
 		/// Gets the maximum capacity of the dynamic array.
 		/// @return Maximum capacity of the dynamic array in elements.
-		[[nodiscard]] usize array_capacity() const noexcept;
+		[[nodiscard]] usize array_capacity() const noexcept
+		{
+			return untyped_shader_buffer::array_capacity() / sizeof(ArrayElement);
+		}
 
 		/// @}
 		/// @name Setting
 		/// @{
 
 		/// Sets the data of the header.
-		/// @param header Header objet to copy into the buffer.
-		void set_header(const Header& header) noexcept;
+		/// @param header Header object to copy into the buffer.
+		void set_header(const Header& header) noexcept
+		{
+			untyped_shader_buffer::set_header(as_bytes(header));
+		}
 
 		/// Sets the data of the dynamic array.
-		/// @tparam Range Contiguous range of array elements.
 		/// @param data Data to set the dynamic array to.
-		template <typed_contiguous_const_range<ArrayElement> Range>
-		void set_array(Range&& data) noexcept;
+		void set_array(std::span<const ArrayElement> data) noexcept
+		{
+			untyped_shader_buffer::set_array(std::as_bytes(data));
+		}
 
 		/// Resizes the dynamic array.
 		/// @param size Size of the array in elements.
 		/// @pre `size` must be less than or equal to the capacity of the array.
-		void resize_array(usize size) noexcept;
+		void resize_array(usize size) noexcept
+		{
+			untyped_shader_buffer::resize_array(size * sizeof(ArrayElement));
+		}
 
 		/// @}
 		/// @name Mapping
 		/// @{
 
-		using basic_shader_buffer::mapped;
+		using untyped_shader_buffer::mapped;
 
 		/// Maps the fixed header of the buffer.
 		/// @return Map of the fixed header of the buffer.
-		[[nodiscard]] graphics_buffer_object_map<Header> map_header();
+		[[nodiscard]] mapped_graphics_buffer_object<Header> map_header()
+		{
+			return mapped_graphics_buffer_object<Header>{untyped_shader_buffer::map_header()};
+		}
 
 		/// Maps the dynamic array of the buffer.
 		/// @return Map of the dynamic array of the buffer.
-		[[nodiscard]] graphics_buffer_span_map<ArrayElement> map_array();
+		[[nodiscard]] mapped_graphics_buffer_span<ArrayElement> map_array()
+		{
+			return mapped_graphics_buffer_span<ArrayElement>{untyped_shader_buffer::map_array()};
+		}
 
 		/// @}
 		/// @name Label
 		/// @{
 
-		using basic_shader_buffer::label;
+		using untyped_shader_buffer::label;
 
-		using basic_shader_buffer::set_label;
+		using untyped_shader_buffer::set_label;
 
 		/// @}
 		/// @cond gl_interop
 		/// @name OpenGL interoperability
 		/// @{
 
-		using basic_shader_buffer::unwrap;
+		using untyped_shader_buffer::unwrap;
 
 		/// @}
 		/// @endcond
@@ -238,100 +130,7 @@ namespace tr
 		/// @name Implementation details
 		/// @{
 
-		using basic_shader_buffer::id;
-
-		/// @}
-		/// @endcond
-#endif
-	};
-
-	/// Specialized shader buffer with no header before the array.
-	/// @tparam Element Type of the array elements.
-	template <typename Element>
-	class shader_array : private basic_shader_buffer
-	{
-	  public:
-		/// @name Constructors
-		/// @{
-
-		/// Allocates an uninitialized shader array.
-		/// @param context Graphics context to create the array on.
-		/// @param capacity Maximum capacity of the array in elements.
-		/// @param map_type Type of map to create when mapping the array.
-		[[nodiscard]] shader_array(graphics_context& context, usize capacity, map_type map_type = map_type::write_only);
-
-		/// @}
-		/// @name Context
-		/// @{
-
-		using basic_shader_buffer::context;
-
-		/// @}
-		/// @name State
-		/// @{
-
-		using basic_shader_buffer::valid;
-
-		/// @}
-		/// @name Size
-		/// @{
-
-		/// Gets the size of the array.
-		/// @return Size of the array in elements.
-		[[nodiscard]] usize size() const noexcept;
-
-		/// Gets the maximum capacity of the array.
-		/// @return Maximum capacity of the array in elements.
-		[[nodiscard]] usize capacity() const noexcept;
-
-		/// @}
-		/// @name Setting
-		/// @{
-
-		/// Sets the data of the array.
-		/// @tparam Range Contiguous range of elements.
-		/// @param data Data to set the array to.
-		template <typed_contiguous_const_range<Element> Range>
-		void set(Range&& data) noexcept;
-
-		/// Resizes the array.
-		/// @param size Size of the array in elements.
-		/// @pre `size` must be less than or equal to the capacity of the array.
-		void resize(usize size) noexcept;
-
-		/// @}
-		/// @name Mapping
-		/// @{
-
-		using basic_shader_buffer::mapped;
-
-		/// Maps the array.
-		/// @return Map of the array.
-		[[nodiscard]] graphics_buffer_span_map<Element> map();
-
-		/// @}
-		/// @name Label
-		/// @{
-
-		using basic_shader_buffer::label;
-
-		using basic_shader_buffer::set_label;
-
-		/// @}
-		/// @cond gl_interop
-		/// @name OpenGL interoperability
-		/// @{
-
-		using basic_shader_buffer::unwrap;
-
-		/// @}
-		/// @endcond
-#ifdef TR_ENABLE_CHECKED_GRAPHICS
-		/// @cond implementation_details
-		/// @name Implementation details
-		/// @{
-
-		using basic_shader_buffer::id;
+		using untyped_shader_buffer::id;
 
 		/// @}
 		/// @endcond
@@ -339,4 +138,39 @@ namespace tr
 	};
 } // namespace tr
 
-#include "impl/shader_buffer.hpp" // IWYU pragma: export
+//
+
+/// Shader buffer formatter.
+template <typename Header, typename ArrayElement>
+struct std::formatter<tr::shader_buffer<Header, ArrayElement>>
+{
+	/// Parses the format specification.
+	/// @tparam ParseContext Parsing context type.
+	/// @param context Parsing context.
+	/// @return Iterator to the end of the parsed specification.
+	template <typename ParseContext>
+	constexpr ParseContext::iterator parse(ParseContext& context)
+	{
+		if (context.begin() != context.end() && *context.begin() != '}') {
+			throw std::format_error{"Invalid shader buffer format specification."};
+		}
+		return context.begin();
+	}
+
+	/// Formats a shader buffer.
+	/// @tparam FormatContext Formatting context type.
+	/// @param buffer Shader buffer to format.
+	/// @param context Formatting context.
+	/// @return Iterator to the end of the output range.
+	template <typename FormatContext>
+	FormatContext::iterator format(const tr::shader_buffer<Header, ArrayElement>& buffer, FormatContext& context) const
+	{
+		if (buffer.valid()) {
+			return std::format_to(context.out(), "\"{}\" (OpenGL ID: {})", buffer.label(), buffer.unwrap());
+		}
+		else {
+			return std::format_to(context.out(), "<invalid {}/{} shader buffer at {}>", tr::type_name<Header>(),
+								  tr::type_name<ArrayElement>(), static_cast<const void*>(&buffer));
+		}
+	}
+};

@@ -1,101 +1,19 @@
 /// @file
-/// @brief Provides uniform buffer classes.
+/// @brief Provides `tr::uniform_buffer`.
 
 #pragma once
-#include "graphics_buffer.hpp"
-#include "graphics_buffer_map.hpp"
+#include <tr/sysgfx/mapped_graphics_buffer_object.hpp>
+#include <tr/sysgfx/untyped_uniform_buffer.hpp>
+#include <tr/utility/type_name.hpp>
 
 //
 
 namespace tr
 {
-	/// Basic shader uniform buffer.
-	class basic_uniform_buffer : private graphics_buffer
-	{
-	  public:
-		/// Allocates an uninitialized uniform buffer.
-		/// @param context Graphics context to create the buffer on.
-		/// @param size Initial size of the buffer.
-		[[nodiscard]] basic_uniform_buffer(graphics_context& context, usize size);
-
-		/// @name Context
-		/// @{
-
-		using graphics_buffer::context;
-
-		/// @}
-		/// @name State
-		/// @{
-
-		using graphics_buffer::valid;
-
-		/// @}
-		/// @name Size
-		/// @{
-
-		/// Gets the size of the buffer.
-		/// @return Size of the buffer in bytes.
-		[[nodiscard]] usize size() const noexcept;
-
-		/// @}
-		/// @name Setting
-		/// @{
-
-		/// Sets the data of the buffer.
-		/// @param data Data to copy into the buffer.
-		void set(std::span<const std::byte> data) noexcept;
-
-		/// @}
-		/// @name Mapping
-		/// @{
-
-		/// Gets whether the buffer is mapped.
-		/// @return `true` if the buffer is mapped, `false` otherwise.
-		[[nodiscard]] bool mapped() const noexcept;
-
-		/// Maps the buffer.
-		/// @return Write-only map of the buffer.
-		[[nodiscard]] basic_graphics_buffer_map map();
-
-		/// @}
-		/// @name Label
-		/// @{
-
-		using graphics_buffer::label;
-
-		using graphics_buffer::set_label;
-
-		/// @}
-		/// @cond gl_interop
-		/// @name OpenGL interoperability
-		/// @{
-
-		using graphics_buffer::unwrap;
-
-		/// @}
-		/// @endcond
-#ifdef TR_ENABLE_CHECKED_GRAPHICS
-		/// @cond implementation_details
-		/// @name Implementation details
-		/// @{
-
-		using graphics_buffer::id;
-
-		/// @}
-		/// @endcond
-#endif
-
-	  private:
-		/// Size of the buffer.
-		usize m_size;
-	};
-
-	//
-
 	/// Typed shader uniform buffer.
 	/// @tparam Object Objet contained in the buffer.
 	template <typename Object>
-	class uniform_buffer : private basic_uniform_buffer
+	class uniform_buffer : private untyped_uniform_buffer
 	{
 	  public:
 		/// @name Constructors
@@ -103,19 +21,22 @@ namespace tr
 
 		/// Allocates an uninitialized uniform buffer.
 		/// @param context Graphics context to create the buffer on.
-		[[nodiscard]] uniform_buffer(graphics_context& context);
+		[[nodiscard]] uniform_buffer(graphics_context& context)
+			: untyped_uniform_buffer{context, sizeof(Object)}
+		{
+		}
 
 		/// @}
 		/// @name Context
 		/// @{
 
-		using basic_uniform_buffer::context;
+		using untyped_uniform_buffer::context;
 
 		/// @}
 		/// @name State
 		/// @{
 
-		using basic_uniform_buffer::valid;
+		using untyped_uniform_buffer::valid;
 
 		/// @}
 		/// @name Setting
@@ -123,32 +44,38 @@ namespace tr
 
 		/// Sets the contents of the buffer.
 		/// @param data Object to copy into the buffer.
-		void set(const Object& data) noexcept;
+		void set(const Object& data) noexcept
+		{
+			untyped_uniform_buffer::set(as_bytes(data));
+		}
 
 		/// @}
 		/// @name Mapping
 		/// @{
 
-		using basic_uniform_buffer::mapped;
+		using untyped_uniform_buffer::mapped;
 
 		/// Maps the buffer.
 		/// @return Write-only map of the buffer object.
-		[[nodiscard]] graphics_buffer_object_map<Object> map();
+		[[nodiscard]] mapped_graphics_buffer_object<Object> map()
+		{
+			return mapped_untyped_graphics_buffer_span{untyped_uniform_buffer::map()};
+		}
 
 		/// @}
 		/// @name Label
 		/// @{
 
-		using basic_uniform_buffer::label;
+		using untyped_uniform_buffer::label;
 
-		using basic_uniform_buffer::set_label;
+		using untyped_uniform_buffer::set_label;
 
 		/// @}
 		/// @cond gl_interop
 		/// @name OpenGL interoperability
 		/// @{
 
-		using basic_uniform_buffer::unwrap;
+		using untyped_uniform_buffer::unwrap;
 
 		/// @}
 		/// @endcond
@@ -157,7 +84,7 @@ namespace tr
 		/// @name Implementation details
 		/// @{
 
-		using basic_uniform_buffer::id;
+		using untyped_uniform_buffer::id;
 
 		/// @}
 		/// @endcond
@@ -165,4 +92,39 @@ namespace tr
 	};
 } // namespace tr
 
-#include "impl/uniform_buffer.hpp" // IWYU pragma: export
+//
+
+/// Uniform buffer formatter.
+template <typename Object>
+struct std::formatter<tr::uniform_buffer<Object>>
+{
+	/// Parses the format specification.
+	/// @tparam ParseContext Parsing context type.
+	/// @param context Parsing context.
+	/// @return Iterator to the end of the parsed specification.
+	template <typename ParseContext>
+	constexpr ParseContext::iterator parse(ParseContext& context)
+	{
+		if (context.begin() != context.end() && *context.begin() != '}') {
+			throw std::format_error{"Invalid uniform buffer format specification."};
+		}
+		return context.begin();
+	}
+
+	/// Formats a uniform buffer.
+	/// @tparam FormatContext Formatting context type.
+	/// @param buffer Uniform buffer to format.
+	/// @param context Formatting context.
+	/// @return Iterator to the end of the output range.
+	template <typename FormatContext>
+	FormatContext::iterator format(const tr::uniform_buffer<Object>& buffer, FormatContext& context) const
+	{
+		if (buffer.valid()) {
+			return std::format_to(context.out(), "\"{}\" (OpenGL ID: {})", buffer.label(), buffer.unwrap());
+		}
+		else {
+			return std::format_to(context.out(), "<invalid {} uniform buffer at {}>", tr::type_name<Object>(),
+								  static_cast<const void*>(&buffer));
+		}
+	}
+};

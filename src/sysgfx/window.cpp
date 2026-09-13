@@ -1,10 +1,10 @@
 ﻿/// @file
 /// @brief Implements window.hpp.
 
-#include "../../include/tr/sysgfx/window.hpp"
-#include "../../include/tr/sysgfx/bitmap.hpp"
-#include "../../include/tr/sysgfx/window_view.hpp"
 #include <SDL3/SDL.h>
+#include <tr/sysgfx/bitmap.hpp>
+#include <tr/sysgfx/window.hpp>
+#include <tr/sysgfx/window_view.hpp>
 
 //
 
@@ -72,6 +72,13 @@ tr::window::window(zstring_view title, window_parameters parameters)
 void tr::window::deleter::operator()(SDL_Window* window) noexcept
 {
 	SDL_DestroyWindow(window);
+}
+
+//
+
+bool tr::window::valid() const noexcept
+{
+	return m_ptr != nullptr;
 }
 
 //
@@ -201,6 +208,8 @@ void tr::window::set_vsync(vsync vsync)
 
 void tr::window::set_mouse_mode(mouse_mode mode)
 {
+	TR_ASSERT(valid(), "Tried to set mouse mode of window in an invalid state.");
+
 	if (!SDL_SetWindowRelativeMouseMode(m_ptr.get(), std::to_underlying(mode))) {
 		throw window_error("Failed to set mouse mode on window '{}'.", title());
 	}

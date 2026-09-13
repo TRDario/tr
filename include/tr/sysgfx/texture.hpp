@@ -1,14 +1,17 @@
 /// @file
-/// @brief Provides a GPU texture container class and related types.
+/// @brief Provides `tr::texture`.
 
 #pragma once
-#include "../utility/handle.hpp"
-#include "../utility/ref.hpp"
-#include "bitmap.hpp"
+#include <tr/sysgfx/pixel_format.hpp>
+#include <tr/utility/color.hpp>
+#include <tr/utility/handle.hpp>
+#include <tr/utility/rectangle.hpp>
+#include <tr/utility/ref.hpp>
 
 namespace tr
 {
 	class graphics_context;
+	class sub_bitmap;
 	class texture_view;
 } // namespace tr
 
@@ -173,12 +176,12 @@ namespace tr
 
 		/// Clears the texture.
 		/// @param color Color to clear the texture to.
-		void clear(rgbaf color) noexcept;
+		void clear(rgbaf color = rgba8{}) noexcept;
 
 		/// Clears a region of the texture.
 		/// @param region Region of the texture to clear.
 		/// @param color Color to clear the texture region to.
-		void clear_region(rectangle<int> region, rgbaf color) noexcept;
+		void clear_region(rectangle<int> region, rgbaf color = rgba8{}) noexcept;
 
 		/// Copies a region from another texture.
 		/// @param tl Top-left corner of the copied region within the target texture.
@@ -249,3 +252,39 @@ namespace tr
 		//
 	};
 } // namespace tr
+
+//
+
+/// Texture formatter.
+template <>
+struct std::formatter<tr::texture>
+{
+	/// Parses the format specification.
+	/// @tparam ParseContext Parsing context type.
+	/// @param context Parsing context.
+	/// @return Iterator to the end of the parsed specification.
+	template <typename ParseContext>
+	constexpr ParseContext::iterator parse(ParseContext& context)
+	{
+		if (context.begin() != context.end() && *context.begin() != '}') {
+			throw std::format_error{"Invalid texture format specification."};
+		}
+		return context.begin();
+	}
+
+	/// Formats a texture.
+	/// @tparam FormatContext Formatting context type.
+	/// @param texture Texture to format.
+	/// @param context Formatting context.
+	/// @return Iterator to the end of the output range.
+	template <typename FormatContext>
+	FormatContext::iterator format(const tr::texture& texture, FormatContext& context) const
+	{
+		if (texture.valid()) {
+			return std::format_to(context.out(), "\"{}\" (OpenGL ID: {})", texture.label(), texture.unwrap());
+		}
+		else {
+			return std::format_to(context.out(), "<invalid texture at {}>", static_cast<const void*>(&texture));
+		}
+	}
+};

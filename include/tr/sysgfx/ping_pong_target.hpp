@@ -2,7 +2,7 @@
 /// @brief Provides `tr::ping_pong_target`.
 
 #pragma once
-#include "texture_target.hpp"
+#include <tr/sysgfx/texture_target.hpp>
 
 //
 
@@ -140,4 +140,38 @@ namespace tr
 	};
 } // namespace tr
 
-#include "impl/ping_pong_target.hpp" // IWYU pragma: export
+//
+
+/// Ping-pong target formatter.
+template <>
+struct std::formatter<tr::ping_pong_target>
+{
+	/// Parses the format specification.
+	/// @tparam ParseContext Parsing context type.
+	/// @param context Parsing context.
+	/// @return Iterator to the end of the parsed specification.
+	template <typename ParseContext>
+	constexpr ParseContext::iterator parse(ParseContext& context)
+	{
+		if (context.begin() != context.end() && *context.begin() != '}') {
+			throw std::format_error{"Invalid ping-pong target format specification."};
+		}
+		return context.begin();
+	}
+
+	/// Formats a ping-pong target.
+	/// @tparam FormatContext Formatting context type.
+	/// @param target Ping-pong target to format.
+	/// @param context Formatting context.
+	/// @return Iterator to the end of the output range.
+	template <typename FormatContext>
+	FormatContext::iterator format(const tr::ping_pong_target& target, FormatContext& context) const
+	{
+		if (target.valid()) {
+			return std::format_to(context.out(), "\"{}\"", target.label());
+		}
+		else {
+			return std::format_to(context.out(), "<invalid ping-pong target at {}>", static_cast<const void*>(&target));
+		}
+	}
+};

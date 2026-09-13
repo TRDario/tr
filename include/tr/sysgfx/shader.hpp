@@ -3,28 +3,27 @@
 /// @details For an explanation of shaders, see the description of `tr::shader`.
 
 #pragma once
-#include "../utility/exception.hpp"
-#include "../utility/ref.hpp"
-#include "../utility/zstring_view.hpp"
-#include "texture_unit.hpp"
+#include <tr/sysgfx/internal/texture_unit.hpp>
+#include <tr/sysgfx/shader_array.hpp>
+#include <tr/sysgfx/shader_buffer.hpp>
+#include <tr/sysgfx/uniform_buffer.hpp>
+#include <tr/utility/exception.hpp>
+#include <tr/utility/ref.hpp>
+#include <tr/utility/zstring_view.hpp>
 
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-#include "gl_checks.hpp"
-#include "graphics_object_registry.hpp"
+#include <tr/sysgfx/internal/glsl_variable.hpp>
+#include <tr/sysgfx/internal/graphics_object_registry.hpp>
 #endif
 
 namespace tr
 {
-	// clang-format off
-	class basic_shader_buffer;
-	class basic_uniform_buffer;
-	struct gl_api;
 	class graphics_context;
-	template <typename Element> class shader_array;
-	template <typename Header, typename ArrayElement> class shader_buffer;
 	class texture_view;
-	template <typename Object> class uniform_buffer;
-	// clang-format on
+	namespace internal
+	{
+		struct opengl;
+	}
 } // namespace tr
 
 //
@@ -93,9 +92,9 @@ namespace tr
 	class shader
 	{
 	  public:
+		/// @cond implementation_details
 		/// @name Constructors
 		/// @{
-		/// @cond implementation_details
 
 		/// Constructs a shader.
 		/// @param context Graphics context to create the shader on.
@@ -104,8 +103,8 @@ namespace tr
 		/// @exception shader_load_error If loading the shader failed.
 		[[nodiscard]] shader(graphics_context& context, zstring_view source, unsigned int type);
 
-		/// @endcond
 		/// @}
+		/// @endcond
 		/// @name Context
 		/// @{
 
@@ -388,7 +387,7 @@ namespace tr
 		/// Sets a shader storage buffer.
 		/// @param index Storage buffer location index.
 		/// @param buffer Buffer to set.
-		void set_storage_buffer(unsigned int index, basic_shader_buffer& buffer) noexcept;
+		void set_storage_buffer(unsigned int index, untyped_shader_buffer& buffer) noexcept;
 
 		/// Sets a shader storage buffer.
 		/// @tparam Header Type of the header object stored at the front of the buffer.
@@ -396,26 +395,35 @@ namespace tr
 		/// @param index Storage buffer location index.
 		/// @param buffer Buffer to set.
 		template <typename Header, typename ArrayElement>
-		void set_storage_buffer(unsigned int index, shader_buffer<Header, ArrayElement>& buffer) noexcept;
+		void set_storage_buffer(unsigned int index, shader_buffer<Header, ArrayElement>& buffer) noexcept
+		{
+			set_storage_buffer(index, buffer.unwrap(), sizeof(Header) + sizeof(ArrayElement) * buffer.array_size());
+		}
 
 		/// Sets a shader storage buffer.
 		/// @tparam Element Type of the array elements.
 		/// @param index Storage buffer location index.
 		/// @param buffer Buffer to set.
 		template <typename Element>
-		void set_storage_buffer(unsigned int index, shader_array<Element>& buffer) noexcept;
+		void set_storage_buffer(unsigned int index, shader_array<Element>& buffer) noexcept
+		{
+			set_storage_buffer(index, buffer.unwrap(), sizeof(Element) * buffer.size());
+		}
 
 		/// Sets a uniform storage buffer.
 		/// @param index Storage buffer location index.
 		/// @param buffer Buffer to set.
-		void set_uniform_buffer(unsigned int index, const basic_uniform_buffer& buffer) noexcept;
+		void set_uniform_buffer(unsigned int index, const untyped_uniform_buffer& buffer) noexcept;
 
 		/// Sets a uniform storage buffer.
 		/// @tparam Object Objet contained in the buffer.
 		/// @param index Storage buffer location index.
 		/// @param buffer Buffer to set.
 		template <typename Object>
-		void set_uniform_buffer(unsigned int index, const uniform_buffer<Object>& buffer) noexcept;
+		void set_uniform_buffer(unsigned int index, const uniform_buffer<Object>& buffer) noexcept
+		{
+			set_uniform_buffer(index, buffer.unwrap());
+		}
 
 		/// @}
 		/// @name State
@@ -455,15 +463,15 @@ namespace tr
 
 		/// Gets the unique graphics object ID of the shader.
 		/// @return Unique graphics object ID of the shader.
-		[[nodiscard]] graphics_object_id id() const noexcept;
+		[[nodiscard]] internal::graphics_object_id id() const noexcept;
 
 		/// Gets the shader's inputs.
 		/// @return Map of shader inputs.
-		[[nodiscard]] const boost::unordered_flat_map<unsigned int, glsl_variable>& inputs() const noexcept;
+		[[nodiscard]] const boost::unordered_flat_map<unsigned int, internal::glsl_variable>& inputs() const noexcept;
 
 		/// Gets the shader's outputs.
 		/// @return Map of shader outputs.
-		[[nodiscard]] const boost::unordered_flat_map<unsigned int, glsl_variable>& outputs() const noexcept;
+		[[nodiscard]] const boost::unordered_flat_map<unsigned int, internal::glsl_variable>& outputs() const noexcept;
 
 		/// @}
 		/// @endcond
@@ -478,7 +486,7 @@ namespace tr
 
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 			/// Handle to the unique graphics object ID of the shader.
-			graphics_object_id_handle id{};
+			internal::graphics_object_id_handle id{};
 #endif
 
 			//
@@ -492,17 +500,17 @@ namespace tr
 		handle<unsigned int, 0, deleter> m_program;
 
 		/// Texture units allocated to this shader.
-		boost::unordered_flat_map<int, texture_unit> m_texture_units;
+		boost::unordered_flat_map<int, internal::texture_unit> m_texture_units;
 
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 		/// List of non-block uniforms obtained by introspection.
-		boost::unordered_flat_map<unsigned int, glsl_variable> m_uniforms;
+		boost::unordered_flat_map<unsigned int, internal::glsl_variable> m_uniforms;
 
 		/// List of input variables obtained by introspection.
-		boost::unordered_flat_map<unsigned int, glsl_variable> m_inputs;
+		boost::unordered_flat_map<unsigned int, internal::glsl_variable> m_inputs;
 
 		/// List of output variables obtained by introspection.
-		boost::unordered_flat_map<unsigned int, glsl_variable> m_outputs;
+		boost::unordered_flat_map<unsigned int, internal::glsl_variable> m_outputs;
 #endif
 
 		//
@@ -510,15 +518,15 @@ namespace tr
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 		/// Finds the uniforms of the shader using introspection.
 		/// @param gl Structure holding the OpenGL API.
-		void find_uniforms(const gl_api& gl);
+		void find_uniforms(const internal::opengl& gl);
 
 		/// Finds the input variables of the shader using introspection.
 		/// @param gl Structure holding the OpenGL API.
-		void find_inputs(const gl_api& gl);
+		void find_inputs(const internal::opengl& gl);
 
 		/// Finds the output variables of the shader using introspection.
 		/// @param gl Structure holding the OpenGL API.
-		void find_outputs(const gl_api& gl);
+		void find_outputs(const internal::opengl& gl);
 #endif
 
 		//
@@ -589,4 +597,106 @@ namespace tr
 	/// @}
 } // namespace tr
 
-#include "impl/shader.hpp" // IWYU pragma: export
+//
+
+/// Shader formatter.
+template <>
+struct std::formatter<tr::shader>
+{
+	/// Parses the format specification.
+	/// @tparam ParseContext Parsing context type.
+	/// @param context Parsing context.
+	/// @return Iterator to the end of the parsed specification.
+	template <typename ParseContext>
+	constexpr ParseContext::iterator parse(ParseContext& context)
+	{
+		if (context.begin() != context.end() && *context.begin() != '}') {
+			throw std::format_error{"Invalid shader format specification."};
+		}
+		return context.begin();
+	}
+
+	/// Formats a shader.
+	/// @tparam FormatContext Formatting context type.
+	/// @param shader Shader to format.
+	/// @param context Formatting context.
+	/// @return Iterator to the end of the output range.
+	template <typename FormatContext>
+	FormatContext::iterator format(const tr::shader& shader, FormatContext& context) const
+	{
+		if (shader.valid()) {
+			return std::format_to(context.out(), "\"{}\" (OpenGL ID: {})", shader.label(), shader.unwrap());
+		}
+		else {
+			return std::format_to(context.out(), "<invalid shader at {}>", static_cast<const void*>(&shader));
+		}
+	}
+};
+
+/// Vertex shader formatter.
+template <>
+struct std::formatter<tr::vertex_shader>
+{
+	/// Parses the format specification.
+	/// @tparam ParseContext Parsing context type.
+	/// @param context Parsing context.
+	/// @return Iterator to the end of the parsed specification.
+	template <typename ParseContext>
+	constexpr ParseContext::iterator parse(ParseContext& context)
+	{
+		if (context.begin() != context.end() && *context.begin() != '}') {
+			throw std::format_error{"Invalid vertex shader format specification."};
+		}
+		return context.begin();
+	}
+
+	/// Formats a vertex shader.
+	/// @tparam FormatContext Formatting context type.
+	/// @param shader Vertex shader to format.
+	/// @param context Formatting context.
+	/// @return Iterator to the end of the output range.
+	template <typename FormatContext>
+	FormatContext::iterator format(const tr::vertex_shader& shader, FormatContext& context) const
+	{
+		if (shader.valid()) {
+			return std::format_to(context.out(), "\"{}\" (OpenGL ID: {})", shader.label(), shader.unwrap());
+		}
+		else {
+			return std::format_to(context.out(), "<invalid vertex shader at {}>", static_cast<const void*>(&shader));
+		}
+	}
+};
+
+/// Fragment shader formatter.
+template <>
+struct std::formatter<tr::fragment_shader>
+{
+	/// Parses the format specification.
+	/// @tparam ParseContext Parsing context type.
+	/// @param context Parsing context.
+	/// @return Iterator to the end of the parsed specification.
+	template <typename ParseContext>
+	constexpr ParseContext::iterator parse(ParseContext& context)
+	{
+		if (context.begin() != context.end() && *context.begin() != '}') {
+			throw std::format_error{"Invalid fragment shader format specification."};
+		}
+		return context.begin();
+	}
+
+	/// Formats a fragment shader.
+	/// @tparam FormatContext Formatting context type.
+	/// @param shader Fragment shader to format.
+	/// @param context Formatting context.
+	/// @return Iterator to the end of the output range.
+	template <typename FormatContext>
+	FormatContext::iterator format(const tr::fragment_shader& shader, FormatContext& context) const
+	{
+		if (shader.valid()) {
+			return std::format_to(context.out(), "\"{}\" (OpenGL ID: {})", shader.label(), shader.unwrap());
+		}
+		else {
+			return std::format_to(context.out(), "<invalid fragment shader at {}>", static_cast<const void*>(&shader));
+		}
+	}
+};

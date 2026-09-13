@@ -2,7 +2,7 @@
 /// @brief Provides mouse datatypes.
 
 #pragma once
-#include "../utility/enum.hpp"
+#include <tr/utility/enum.hpp>
 
 //
 

@@ -1,5 +1,5 @@
 /// @file
-/// @brief Defines an opaque view to a GPU texture that is passed to many functions.
+/// @brief Provides `tr::texture_view`.
 
 #pragma once
 

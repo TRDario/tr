@@ -2,11 +2,11 @@
 /// @brief Provides `tr::framebuffer`.
 
 #pragma once
-#include "../utility/handle.hpp"
-#include "../utility/ref.hpp"
+#include <tr/utility/handle.hpp>
+#include <tr/utility/ref.hpp>
 
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-#include "graphics_object_registry.hpp"
+#include <tr/sysgfx/internal/graphics_object_registry.hpp>
 #endif
 
 namespace tr
@@ -139,7 +139,7 @@ namespace tr
 
 		/// Gets the unique graphics object ID of the framebuffer.
 		/// @return Unique graphics object ID of the framebuffer.
-		[[nodiscard]] graphics_object_id id() const noexcept;
+		[[nodiscard]] internal::graphics_object_id id() const noexcept;
 
 		/// @}
 		/// @endcond
@@ -154,7 +154,7 @@ namespace tr
 
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 			/// Handle to the unique graphics object ID of the framebuffer.
-			graphics_object_id_handle id{};
+			internal::graphics_object_id_handle id{};
 #endif
 
 			//
@@ -171,4 +171,38 @@ namespace tr
 	};
 } // namespace tr
 
-#include "impl/framebuffer.hpp" // IWYU pragma: export
+//
+
+/// Framebuffer formatter.
+template <>
+struct std::formatter<tr::framebuffer>
+{
+	/// Parses the format specification.
+	/// @tparam ParseContext Parsing context type.
+	/// @param context Parsing context.
+	/// @return Iterator to the end of the parsed specification.
+	template <typename ParseContext>
+	constexpr ParseContext::iterator parse(ParseContext& context)
+	{
+		if (context.begin() != context.end() && *context.begin() != '}') {
+			throw std::format_error{"Invalid framebuffer format specification."};
+		}
+		return context.begin();
+	}
+
+	/// Formats a framebuffer.
+	/// @tparam FormatContext Formatting context type.
+	/// @param framebuffer Framebuffer to format.
+	/// @param context Formatting context.
+	/// @return Iterator to the end of the output range.
+	template <typename FormatContext>
+	FormatContext::iterator format(const tr::framebuffer& framebuffer, FormatContext& context) const
+	{
+		if (framebuffer.valid()) {
+			return std::format_to(context.out(), "\"{}\" (OpenGL ID: {})", framebuffer.label(), framebuffer.unwrap());
+		}
+		else {
+			return std::format_to(context.out(), "<invalid framebuffer at {}>", static_cast<const void*>(&framebuffer));
+		}
+	}
+};
