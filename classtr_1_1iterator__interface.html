@@ -146,16 +146,16 @@ class tr::iterator_interface&lt; Iterator, DeducedBrackets &gt;</div><p><span cl
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ace6879efc86f31350aca1ae401f7b1f9" id="r_ace6879efc86f31350aca1ae401f7b1f9"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ace6879efc86f31350aca1ae401f7b1f9">operator-&gt;</a> () const</td></tr>
-<tr class="memdesc:ace6879efc86f31350aca1ae401f7b1f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Synthesized pointer dereferencing operator.  <br /></td></tr>
-<tr class="memitem:a06d90b2f5b9f7bb4253938b82699973f" id="r_a06d90b2f5b9f7bb4253938b82699973f"><td class="memTemplParams" colspan="2">template&lt;typename Difference = DeducedBrackets&gt; <br />
-requires (requires(Iterator it) { it + diff; })</td></tr>
-<tr class="memitem:a06d90b2f5b9f7bb4253938b82699973f template"><td class="memItemLeft">constexpr decltype(auto)&#160;</td><td class="memItemRight"><a class="el" href="#a06d90b2f5b9f7bb4253938b82699973f">operator[]</a> (Difference diff) const</td></tr>
-<tr class="memdesc:a06d90b2f5b9f7bb4253938b82699973f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Synthesized subscripting operator.  <br /></td></tr>
+<tr class="memitem:a01f6c2a0577617b5fa006dbe8498e0a9" id="r_a01f6c2a0577617b5fa006dbe8498e0a9"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#a01f6c2a0577617b5fa006dbe8498e0a9">operator-&gt;</a> () const noexcept(noexcept(*base()))</td></tr>
+<tr class="memdesc:a01f6c2a0577617b5fa006dbe8498e0a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Synthesized pointer dereferencing operator.  <br /></td></tr>
+<tr class="memitem:a409a0e6f3be2d5e48538297ec05cd282" id="r_a409a0e6f3be2d5e48538297ec05cd282"><td class="memTemplParams" colspan="2">template&lt;typename Difference = DeducedBrackets&gt; <br />
+requires (requires { *(base() + diff); })</td></tr>
+<tr class="memitem:a409a0e6f3be2d5e48538297ec05cd282 template"><td class="memItemLeft">constexpr decltype(auto)&#160;</td><td class="memItemRight"><a class="el" href="#a409a0e6f3be2d5e48538297ec05cd282">operator[]</a> (Difference diff) const noexcept(noexcept(*(base()+diff)))</td></tr>
+<tr class="memdesc:a409a0e6f3be2d5e48538297ec05cd282"><td class="mdescLeft">&#160;</td><td class="mdescRight">Synthesized subscripting operator.  <br /></td></tr>
 </table>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="ace6879efc86f31350aca1ae401f7b1f9" name="ace6879efc86f31350aca1ae401f7b1f9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ace6879efc86f31350aca1ae401f7b1f9">&#9670;&#160;</a></span>operator-&gt;()</h2>
+<a id="a01f6c2a0577617b5fa006dbe8498e0a9" name="a01f6c2a0577617b5fa006dbe8498e0a9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a01f6c2a0577617b5fa006dbe8498e0a9">&#9670;&#160;</a></span>operator-&gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -174,7 +174,7 @@ template&lt;typename Iterator, typename DeducedBrackets = void&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -182,8 +182,8 @@ template&lt;typename Iterator, typename DeducedBrackets = void&gt; </div>
 
 </div>
 </div>
-<a id="a06d90b2f5b9f7bb4253938b82699973f" name="a06d90b2f5b9f7bb4253938b82699973f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a06d90b2f5b9f7bb4253938b82699973f">&#9670;&#160;</a></span>operator[]()</h2>
+<a id="a409a0e6f3be2d5e48538297ec05cd282" name="a409a0e6f3be2d5e48538297ec05cd282"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a409a0e6f3be2d5e48538297ec05cd282">&#9670;&#160;</a></span>operator[]()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -191,7 +191,7 @@ template&lt;typename Iterator, typename DeducedBrackets = void&gt; </div>
 template&lt;typename Iterator, typename DeducedBrackets = void&gt; </div>
 <div class="memtemplate">
 template&lt;typename Difference = DeducedBrackets&gt; <br />
-requires (requires(Iterator it) { it + diff; })</div>
+requires (requires { *(base() + diff); })</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -205,7 +205,7 @@ requires (requires(Iterator it) { it + diff; })</div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

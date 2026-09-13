@@ -146,32 +146,37 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a8ea9627ef46e8da21e862a4c5d2a8f8f" id="r_a8ea9627ef46e8da21e862a4c5d2a8f8f"><td class="memItemLeft"><a class="el" href="#ac5dfd7b729b0e6c79467c1150d914573">audio_context</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a8ea9627ef46e8da21e862a4c5d2a8f8f">operator=</a> (<a class="el" href="#ac5dfd7b729b0e6c79467c1150d914573">audio_context</a> &amp;&amp;)=delete</td></tr>
 <tr class="memdesc:a8ea9627ef46e8da21e862a4c5d2a8f8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Audio contexts are not movable.  <br /></td></tr>
 <tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Master gain</div></td></tr>
-<tr class="memitem:a00f378e8095739373a5529bc670638a2" id="r_a00f378e8095739373a5529bc670638a2"><td class="memItemLeft">float&#160;</td><td class="memItemRight"><a class="el" href="#a00f378e8095739373a5529bc670638a2">master_gain</a> () const</td></tr>
-<tr class="memdesc:a00f378e8095739373a5529bc670638a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the master gain.  <br /></td></tr>
-<tr class="memitem:a835b1df52479b0d20740895f49de1a44" id="r_a835b1df52479b0d20740895f49de1a44"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a835b1df52479b0d20740895f49de1a44">set_master_gain</a> (float gain)</td></tr>
-<tr class="memdesc:a835b1df52479b0d20740895f49de1a44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the master gain.  <br /></td></tr>
+<tr class="memitem:a09e79b01d2a67447ed2255b66218f66e" id="r_a09e79b01d2a67447ed2255b66218f66e"><td class="memItemLeft">float&#160;</td><td class="memItemRight"><a class="el" href="#a09e79b01d2a67447ed2255b66218f66e">master_gain</a> () const noexcept</td></tr>
+<tr class="memdesc:a09e79b01d2a67447ed2255b66218f66e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the master gain.  <br /></td></tr>
+<tr class="memitem:aa5c34e3b0ae824c1822fd48ac546c2d4" id="r_aa5c34e3b0ae824c1822fd48ac546c2d4"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aa5c34e3b0ae824c1822fd48ac546c2d4">set_master_gain</a> (float gain) noexcept</td></tr>
+<tr class="memdesc:aa5c34e3b0ae824c1822fd48ac546c2d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the master gain.  <br /></td></tr>
 <tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Class gain</div></td></tr>
 <tr><td colspan="2" class="ititle"><div class="groupText"><p>Audio sources may be marked with any combination of <a class="el" href="namespacetr.html#ad97d980b5fdd18b0346b4690c31963b8" title="Maximum number of audio classes.">tr::audio_class_count</a> audio classes (passed in the form of the <a class="el" href="namespacetr.html#a3ec0222857c22fe4fe10f1f31f094f5f" title="Bitmask of audio class IDs.">audio_class_mask</a> bitset), each of which has its own gain multiplier which is multiplied with the base gain set on the source. </p>
 </div></td></tr>
-<tr class="memitem:a0c2216841e244c192ab3288cfabfa7ce" id="r_a0c2216841e244c192ab3288cfabfa7ce"><td class="memItemLeft">float&#160;</td><td class="memItemRight"><a class="el" href="#a0c2216841e244c192ab3288cfabfa7ce">class_gain</a> (<a class="el" href="namespacetr.html#ab81a84cec42a61d70297240cc77bd2e4">audio_class_id</a> id) const</td></tr>
-<tr class="memdesc:a0c2216841e244c192ab3288cfabfa7ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an audio class's gain modifier.  <br /></td></tr>
-<tr class="memitem:a2560652cc3985c90047ef9783c14662b" id="r_a2560652cc3985c90047ef9783c14662b"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a2560652cc3985c90047ef9783c14662b">set_class_gain</a> (<a class="el" href="namespacetr.html#ab81a84cec42a61d70297240cc77bd2e4">audio_class_id</a> id, float gain)</td></tr>
-<tr class="memdesc:a2560652cc3985c90047ef9783c14662b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an audio class's gain modifier.  <br /></td></tr>
+<tr class="memitem:a06670493ac3b73429f8adcbfd84184cf" id="r_a06670493ac3b73429f8adcbfd84184cf"><td class="memItemLeft">float&#160;</td><td class="memItemRight"><a class="el" href="#a06670493ac3b73429f8adcbfd84184cf">class_gain</a> (<a class="el" href="namespacetr.html#ab81a84cec42a61d70297240cc77bd2e4">audio_class_id</a> id) const noexcept</td></tr>
+<tr class="memdesc:a06670493ac3b73429f8adcbfd84184cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an audio class's gain modifier.  <br /></td></tr>
+<tr class="memitem:af139bd2ec9cd82bdb93294009bcd3908" id="r_af139bd2ec9cd82bdb93294009bcd3908"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#af139bd2ec9cd82bdb93294009bcd3908">set_class_gain</a> (<a class="el" href="namespacetr.html#ab81a84cec42a61d70297240cc77bd2e4">audio_class_id</a> id, float gain) noexcept</td></tr>
+<tr class="memdesc:af139bd2ec9cd82bdb93294009bcd3908"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an audio class's gain modifier.  <br /></td></tr>
 <tr id="pub-methods-4" class="groupHeader"><td colspan="2"><div class="groupHeader">Listener position</div></td></tr>
-<tr class="memitem:ade1aa49f9af7d1a3ba2012210594ffe4" id="r_ade1aa49f9af7d1a3ba2012210594ffe4"><td class="memItemLeft">glm::vec3&#160;</td><td class="memItemRight"><a class="el" href="#ade1aa49f9af7d1a3ba2012210594ffe4">listener_position</a> () const</td></tr>
-<tr class="memdesc:ade1aa49f9af7d1a3ba2012210594ffe4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the position of the listener.  <br /></td></tr>
-<tr class="memitem:afdea2abef2b71cf5c0a98f9ba855208b" id="r_afdea2abef2b71cf5c0a98f9ba855208b"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#afdea2abef2b71cf5c0a98f9ba855208b">set_listener_position</a> (glm::vec3 position)</td></tr>
-<tr class="memdesc:afdea2abef2b71cf5c0a98f9ba855208b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the position of the listener.  <br /></td></tr>
+<tr class="memitem:acff3185508f5d0dd3804800aadb70ea2" id="r_acff3185508f5d0dd3804800aadb70ea2"><td class="memItemLeft">glm::vec3&#160;</td><td class="memItemRight"><a class="el" href="#acff3185508f5d0dd3804800aadb70ea2">listener_position</a> () const noexcept</td></tr>
+<tr class="memdesc:acff3185508f5d0dd3804800aadb70ea2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the position of the listener.  <br /></td></tr>
+<tr class="memitem:a1fe0b9ed91d9ffb8e51f6b104cb2d5e5" id="r_a1fe0b9ed91d9ffb8e51f6b104cb2d5e5"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a1fe0b9ed91d9ffb8e51f6b104cb2d5e5">set_listener_position</a> (glm::vec3 position) noexcept</td></tr>
+<tr class="memdesc:a1fe0b9ed91d9ffb8e51f6b104cb2d5e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the position of the listener.  <br /></td></tr>
 <tr id="pub-methods-5" class="groupHeader"><td colspan="2"><div class="groupHeader">Listener velocity</div></td></tr>
-<tr class="memitem:a5d8c0bb9b842404609f01d893d201d99" id="r_a5d8c0bb9b842404609f01d893d201d99"><td class="memItemLeft">glm::vec3&#160;</td><td class="memItemRight"><a class="el" href="#a5d8c0bb9b842404609f01d893d201d99">listener_velocity</a> () const</td></tr>
-<tr class="memdesc:a5d8c0bb9b842404609f01d893d201d99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the velocity of the listener.  <br /></td></tr>
-<tr class="memitem:a6e3d2fdd64584451ada0de326927d5c5" id="r_a6e3d2fdd64584451ada0de326927d5c5"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a6e3d2fdd64584451ada0de326927d5c5">set_listener_velocity</a> (glm::vec3 velocity)</td></tr>
-<tr class="memdesc:a6e3d2fdd64584451ada0de326927d5c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the velocity of the listener.  <br /></td></tr>
+<tr class="memitem:a943e49a8adcba13e748fc48d9cfffd87" id="r_a943e49a8adcba13e748fc48d9cfffd87"><td class="memItemLeft">glm::vec3&#160;</td><td class="memItemRight"><a class="el" href="#a943e49a8adcba13e748fc48d9cfffd87">listener_velocity</a> () const noexcept</td></tr>
+<tr class="memdesc:a943e49a8adcba13e748fc48d9cfffd87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the velocity of the listener.  <br /></td></tr>
+<tr class="memitem:a03bfd373edeb69700e75662dd73d9e62" id="r_a03bfd373edeb69700e75662dd73d9e62"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a03bfd373edeb69700e75662dd73d9e62">set_listener_velocity</a> (glm::vec3 velocity) noexcept</td></tr>
+<tr class="memdesc:a03bfd373edeb69700e75662dd73d9e62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the velocity of the listener.  <br /></td></tr>
 <tr id="pub-methods-6" class="groupHeader"><td colspan="2"><div class="groupHeader">Listener orientation</div></td></tr>
-<tr class="memitem:a8ac1af54b57977ffc31d6dd6ee187aa0" id="r_a8ac1af54b57977ffc31d6dd6ee187aa0"><td class="memItemLeft"><a class="el" href="structtr_1_1orientation.html">orientation</a>&#160;</td><td class="memItemRight"><a class="el" href="#a8ac1af54b57977ffc31d6dd6ee187aa0">listener_orientation</a> () const</td></tr>
-<tr class="memdesc:a8ac1af54b57977ffc31d6dd6ee187aa0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the orientation of the listener.  <br /></td></tr>
-<tr class="memitem:a8f8ad8abdca86f53e37fe9189da60402" id="r_a8f8ad8abdca86f53e37fe9189da60402"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a8f8ad8abdca86f53e37fe9189da60402">set_listener_orientation</a> (orientation orientation)</td></tr>
-<tr class="memdesc:a8f8ad8abdca86f53e37fe9189da60402"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the orientation of the listener.  <br /></td></tr>
+<tr class="memitem:a32c330a57ecf5072f08f066b0bbf075d" id="r_a32c330a57ecf5072f08f066b0bbf075d"><td class="memItemLeft"><a class="el" href="structtr_1_1orientation.html">orientation</a>&#160;</td><td class="memItemRight"><a class="el" href="#a32c330a57ecf5072f08f066b0bbf075d">listener_orientation</a> () const noexcept</td></tr>
+<tr class="memdesc:a32c330a57ecf5072f08f066b0bbf075d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the orientation of the listener.  <br /></td></tr>
+<tr class="memitem:ab06062108bbf238534b8e71b19268c98" id="r_ab06062108bbf238534b8e71b19268c98"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ab06062108bbf238534b8e71b19268c98">set_listener_orientation</a> (orientation orientation) noexcept</td></tr>
+<tr class="memdesc:ab06062108bbf238534b8e71b19268c98"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the orientation of the listener.  <br /></td></tr>
+<tr id="pub-methods-7" class="groupHeader"><td colspan="2"><div class="groupHeader">Object factories</div></td></tr>
+<tr class="memitem:ad065bb69162eb8a9432a58825e75ed6c" id="r_ad065bb69162eb8a9432a58825e75ed6c"><td class="memItemLeft">std::shared_ptr&lt; <a class="el" href="classtr_1_1audio__buffer.html">audio_buffer</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#ad065bb69162eb8a9432a58825e75ed6c">create_audio_buffer</a> ()</td></tr>
+<tr class="memdesc:ad065bb69162eb8a9432a58825e75ed6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a shared audio buffer pointer.  <br /></td></tr>
+<tr class="memitem:a84968be1735089e9ea2d1cbeda983dbb" id="r_a84968be1735089e9ea2d1cbeda983dbb"><td class="memItemLeft">std::shared_ptr&lt; <a class="el" href="classtr_1_1audio__source.html">audio_source</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a84968be1735089e9ea2d1cbeda983dbb">create_audio_source</a> (int priority)</td></tr>
+<tr class="memdesc:a84968be1735089e9ea2d1cbeda983dbb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a shared audio source pointer.  <br /></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ac5dfd7b729b0e6c79467c1150d914573" name="ac5dfd7b729b0e6c79467c1150d914573"></a>
@@ -179,6 +184,9 @@ Public Member Functions</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">tr::audio_context::audio_context </td>
@@ -187,6 +195,11 @@ Public Member Functions</h2></td></tr>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -304,11 +317,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a00f378e8095739373a5529bc670638a2" name="a00f378e8095739373a5529bc670638a2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a00f378e8095739373a5529bc670638a2">&#9670;&#160;</a></span>master_gain()</h2>
+<a id="a09e79b01d2a67447ed2255b66218f66e" name="a09e79b01d2a67447ed2255b66218f66e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09e79b01d2a67447ed2255b66218f66e">&#9670;&#160;</a></span>master_gain()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">float tr::audio_context::master_gain </td>
@@ -317,16 +333,24 @@ Public Member Functions</h2></td></tr>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Master gain factor. </dd></dl>
 
 </div>
 </div>
-<a id="a835b1df52479b0d20740895f49de1a44" name="a835b1df52479b0d20740895f49de1a44"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a835b1df52479b0d20740895f49de1a44">&#9670;&#160;</a></span>set_master_gain()</h2>
+<a id="aa5c34e3b0ae824c1822fd48ac546c2d4" name="aa5c34e3b0ae824c1822fd48ac546c2d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa5c34e3b0ae824c1822fd48ac546c2d4">&#9670;&#160;</a></span>set_master_gain()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void tr::audio_context::set_master_gain </td>
@@ -335,6 +359,11 @@ Public Member Functions</h2></td></tr>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -345,11 +374,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a0c2216841e244c192ab3288cfabfa7ce" name="a0c2216841e244c192ab3288cfabfa7ce"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0c2216841e244c192ab3288cfabfa7ce">&#9670;&#160;</a></span>class_gain()</h2>
+<a id="a06670493ac3b73429f8adcbfd84184cf" name="a06670493ac3b73429f8adcbfd84184cf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a06670493ac3b73429f8adcbfd84184cf">&#9670;&#160;</a></span>class_gain()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">float tr::audio_context::class_gain </td>
@@ -358,6 +390,11 @@ Public Member Functions</h2></td></tr>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -369,11 +406,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a2560652cc3985c90047ef9783c14662b" name="a2560652cc3985c90047ef9783c14662b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2560652cc3985c90047ef9783c14662b">&#9670;&#160;</a></span>set_class_gain()</h2>
+<a id="af139bd2ec9cd82bdb93294009bcd3908" name="af139bd2ec9cd82bdb93294009bcd3908"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af139bd2ec9cd82bdb93294009bcd3908">&#9670;&#160;</a></span>set_class_gain()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void tr::audio_context::set_class_gain </td>
@@ -386,6 +426,11 @@ Public Member Functions</h2></td></tr>
           <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>gain</em></span>&#160;)</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -397,11 +442,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ade1aa49f9af7d1a3ba2012210594ffe4" name="ade1aa49f9af7d1a3ba2012210594ffe4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ade1aa49f9af7d1a3ba2012210594ffe4">&#9670;&#160;</a></span>listener_position()</h2>
+<a id="acff3185508f5d0dd3804800aadb70ea2" name="acff3185508f5d0dd3804800aadb70ea2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acff3185508f5d0dd3804800aadb70ea2">&#9670;&#160;</a></span>listener_position()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">glm::vec3 tr::audio_context::listener_position </td>
@@ -410,16 +458,24 @@ Public Member Functions</h2></td></tr>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Position of the listener. </dd></dl>
 
 </div>
 </div>
-<a id="afdea2abef2b71cf5c0a98f9ba855208b" name="afdea2abef2b71cf5c0a98f9ba855208b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afdea2abef2b71cf5c0a98f9ba855208b">&#9670;&#160;</a></span>set_listener_position()</h2>
+<a id="a1fe0b9ed91d9ffb8e51f6b104cb2d5e5" name="a1fe0b9ed91d9ffb8e51f6b104cb2d5e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1fe0b9ed91d9ffb8e51f6b104cb2d5e5">&#9670;&#160;</a></span>set_listener_position()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void tr::audio_context::set_listener_position </td>
@@ -428,6 +484,11 @@ Public Member Functions</h2></td></tr>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -438,11 +499,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a5d8c0bb9b842404609f01d893d201d99" name="a5d8c0bb9b842404609f01d893d201d99"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5d8c0bb9b842404609f01d893d201d99">&#9670;&#160;</a></span>listener_velocity()</h2>
+<a id="a943e49a8adcba13e748fc48d9cfffd87" name="a943e49a8adcba13e748fc48d9cfffd87"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a943e49a8adcba13e748fc48d9cfffd87">&#9670;&#160;</a></span>listener_velocity()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">glm::vec3 tr::audio_context::listener_velocity </td>
@@ -451,16 +515,24 @@ Public Member Functions</h2></td></tr>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Velocity vector of the listener. </dd></dl>
 
 </div>
 </div>
-<a id="a6e3d2fdd64584451ada0de326927d5c5" name="a6e3d2fdd64584451ada0de326927d5c5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6e3d2fdd64584451ada0de326927d5c5">&#9670;&#160;</a></span>set_listener_velocity()</h2>
+<a id="a03bfd373edeb69700e75662dd73d9e62" name="a03bfd373edeb69700e75662dd73d9e62"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a03bfd373edeb69700e75662dd73d9e62">&#9670;&#160;</a></span>set_listener_velocity()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void tr::audio_context::set_listener_velocity </td>
@@ -469,6 +541,11 @@ Public Member Functions</h2></td></tr>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -479,11 +556,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a8ac1af54b57977ffc31d6dd6ee187aa0" name="a8ac1af54b57977ffc31d6dd6ee187aa0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8ac1af54b57977ffc31d6dd6ee187aa0">&#9670;&#160;</a></span>listener_orientation()</h2>
+<a id="a32c330a57ecf5072f08f066b0bbf075d" name="a32c330a57ecf5072f08f066b0bbf075d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a32c330a57ecf5072f08f066b0bbf075d">&#9670;&#160;</a></span>listener_orientation()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="structtr_1_1orientation.html">orientation</a> tr::audio_context::listener_orientation </td>
@@ -492,16 +572,24 @@ Public Member Functions</h2></td></tr>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Orientation of the listener. </dd></dl>
 
 </div>
 </div>
-<a id="a8f8ad8abdca86f53e37fe9189da60402" name="a8f8ad8abdca86f53e37fe9189da60402"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8f8ad8abdca86f53e37fe9189da60402">&#9670;&#160;</a></span>set_listener_orientation()</h2>
+<a id="ab06062108bbf238534b8e71b19268c98" name="ab06062108bbf238534b8e71b19268c98"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab06062108bbf238534b8e71b19268c98">&#9670;&#160;</a></span>set_listener_orientation()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void tr::audio_context::set_listener_orientation </td>
@@ -510,6 +598,11 @@ Public Member Functions</h2></td></tr>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -517,6 +610,64 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="ad065bb69162eb8a9432a58825e75ed6c" name="ad065bb69162eb8a9432a58825e75ed6c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad065bb69162eb8a9432a58825e75ed6c">&#9670;&#160;</a></span>create_audio_buffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classtr_1_1audio__buffer.html">audio_buffer</a> &gt; tr::audio_context::create_audio_buffer </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>Shared pointer to a new audio buffer. </dd></dl>
+
+</div>
+</div>
+<a id="a84968be1735089e9ea2d1cbeda983dbb" name="a84968be1735089e9ea2d1cbeda983dbb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a84968be1735089e9ea2d1cbeda983dbb">&#9670;&#160;</a></span>create_audio_source()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="classtr_1_1audio__source.html">audio_source</a> &gt; tr::audio_context::create_audio_source </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>priority</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">priority</td><td>Priority of the audio source. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Shared pointer to a new audio source. Result may be null if the source could not be allocated. </dd></dl>
 
 </div>
 </div>

@@ -134,10 +134,10 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1aud
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
-<tr class="memitem:a0b56f0344a4bfae094aee73c65140599" id="r_a0b56f0344a4bfae094aee73c65140599"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a0b56f0344a4bfae094aee73c65140599">audio_stream</a> ()</td></tr>
-<tr class="memdesc:a0b56f0344a4bfae094aee73c65140599"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes an audio stream.  <br /></td></tr>
-<tr class="memitem:aff8340cae1fd8cc1750623d6e089c666" id="r_aff8340cae1fd8cc1750623d6e089c666"><td class="memItemLeft">virtual&#160;</td><td class="memItemRight"><a class="el" href="#aff8340cae1fd8cc1750623d6e089c666">~audio_stream</a> ()=default</td></tr>
-<tr class="memdesc:aff8340cae1fd8cc1750623d6e089c666"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys the audio stream.  <br /></td></tr>
+<tr class="memitem:a6c2c7c84fbcebf0a2add5837b677eabb" id="r_a6c2c7c84fbcebf0a2add5837b677eabb"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a6c2c7c84fbcebf0a2add5837b677eabb">audio_stream</a> () noexcept</td></tr>
+<tr class="memdesc:a6c2c7c84fbcebf0a2add5837b677eabb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes an audio stream.  <br /></td></tr>
+<tr class="memitem:a2efcd27edf05e891074ca1c7d6ccf1f7" id="r_a2efcd27edf05e891074ca1c7d6ccf1f7"><td class="memItemLeft">virtual&#160;</td><td class="memItemRight"><a class="el" href="#a2efcd27edf05e891074ca1c7d6ccf1f7">~audio_stream</a> () noexcept=default</td></tr>
+<tr class="memdesc:a2efcd27edf05e891074ca1c7d6ccf1f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys the audio stream.  <br /></td></tr>
 <tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Information</div></td></tr>
 <tr class="memitem:a8bfc38301fe686d9eb720ab28c723a40" id="r_a8bfc38301fe686d9eb720ab28c723a40"><td class="memItemLeft">virtual <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a>&#160;</td><td class="memItemRight"><a class="el" href="#a8bfc38301fe686d9eb720ab28c723a40">length</a> () const =0</td></tr>
 <tr class="memdesc:a8bfc38301fe686d9eb720ab28c723a40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the length of the stream.  <br /></td></tr>
@@ -177,11 +177,14 @@ Static Protected Attributes</h2></td></tr>
 <tr class="memdesc:ab5945fe521d8fcded9eaa6a374d1d108"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sentinel representing an unknown ending loop point.  <br /></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a0b56f0344a4bfae094aee73c65140599" name="a0b56f0344a4bfae094aee73c65140599"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0b56f0344a4bfae094aee73c65140599">&#9670;&#160;</a></span>audio_stream()</h2>
+<a id="a6c2c7c84fbcebf0a2add5837b677eabb" name="a6c2c7c84fbcebf0a2add5837b677eabb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c2c7c84fbcebf0a2add5837b677eabb">&#9670;&#160;</a></span>audio_stream()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">tr::audio_stream::audio_stream </td>
@@ -190,12 +193,17 @@ Static Protected Attributes</h2></td></tr>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="aff8340cae1fd8cc1750623d6e089c666" name="aff8340cae1fd8cc1750623d6e089c666"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aff8340cae1fd8cc1750623d6e089c666">&#9670;&#160;</a></span>~audio_stream()</h2>
+<a id="a2efcd27edf05e891074ca1c7d6ccf1f7" name="a2efcd27edf05e891074ca1c7d6ccf1f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2efcd27edf05e891074ca1c7d6ccf1f7">&#9670;&#160;</a></span>~audio_stream()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -212,7 +220,7 @@ Static Protected Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel virtual">virtual</span><span class="mlabel default">default</span></span>  </td>
+<span class="mlabels"><span class="mlabel virtual">virtual</span><span class="mlabel default">default</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -238,7 +246,7 @@ Static Protected Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel pure-virtual">pure virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel pure-virtual">pure virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -264,7 +272,7 @@ Static Protected Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel pure-virtual">pure virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel pure-virtual">pure virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -290,7 +298,7 @@ Static Protected Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel pure-virtual">pure virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel pure-virtual">pure virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -316,7 +324,7 @@ Static Protected Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel pure-virtual">pure virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel pure-virtual">pure virtual</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -384,6 +392,9 @@ Static Protected Attributes</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">bool tr::audio_stream::looping </td>
@@ -392,6 +403,11 @@ Static Protected Attributes</h2></td></tr>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the stream is looping, <span class="tt">false</span> otherwise. </dd></dl>
 
@@ -425,6 +441,9 @@ Static Protected Attributes</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> tr::audio_stream::loop_start </td>
@@ -433,6 +452,11 @@ Static Protected Attributes</h2></td></tr>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Starting loop sample of the stream. </dd></dl>
 
@@ -466,6 +490,9 @@ Static Protected Attributes</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> tr::audio_stream::loop_end </td>
@@ -474,6 +501,11 @@ Static Protected Attributes</h2></td></tr>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Ending loop sample of the stream. </dd></dl>
 

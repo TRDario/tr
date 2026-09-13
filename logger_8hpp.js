@@ -1,16 +1,10 @@
 var logger_8hpp =
 [
-    [ "tr::logger_backend", "classtr_1_1logger__backend.html", "classtr_1_1logger__backend" ],
-    [ "tr::console_logger", "classtr_1_1console__logger.html", "classtr_1_1console__logger" ],
-    [ "tr::file_logger", "classtr_1_1file__logger.html", "classtr_1_1file__logger" ],
-    [ "tr::console_and_file_logger", "classtr_1_1console__and__file__logger.html", "classtr_1_1console__and__file__logger" ],
     [ "tr::logger", "classtr_1_1logger.html", "classtr_1_1logger" ],
-    [ "tr::severity", "namespacetr.html#a6e51135988c652c3017a878f9025667c", [
-      [ "tr::severity::info", "namespacetr.html#a6e51135988c652c3017a878f9025667cacaf9b6b99962bf5c2264824231d7a40c", null ],
-      [ "tr::severity::warning", "namespacetr.html#a6e51135988c652c3017a878f9025667ca7b83d3f08fa392b79e3f553b585971cd", null ],
-      [ "tr::severity::error", "namespacetr.html#a6e51135988c652c3017a878f9025667cacb5e100e5a9a3e7f6d1fd97512215282", null ],
-      [ "tr::severity::fatal", "namespacetr.html#a6e51135988c652c3017a878f9025667cadf6402fd9ecc60f5a2159fdf45711cd4", null ]
-    ] ],
-    [ "tr::make_logger", "namespacetr.html#a97927c3ed93641fd4bba0b822e63d31a", null ],
-    [ "tr::error_logger", "namespacetr.html#a7cb98ce8eb7e48ecb437887b7c6a6ba6", null ]
+    [ "TR_LOG_TRACE", "logger_8hpp.html#a994dd5a24c559fb1b8422f664e5a8a7a", null ],
+    [ "TR_LOG_DEBUG", "logger_8hpp.html#a91e2fbce8dac30af481ba36fdf6b6e0f", null ],
+    [ "TR_LOG_INFO", "logger_8hpp.html#a77e8cc408a37e4cee28dc4e6c5d012a0", null ],
+    [ "TR_LOG_WARNING", "logger_8hpp.html#af63c6ffc5832c76c7d31529ed2660017", null ],
+    [ "TR_LOG_ERROR", "logger_8hpp.html#ac9eb0731094d9f199b4ebca3c63c7af0", null ],
+    [ "TR_LOG_FATAL", "logger_8hpp.html#a8d93e3229c3b87ab40925869e2e868ed", null ]
 ];

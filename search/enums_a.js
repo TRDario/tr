@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['valign_0',['valign',['../namespacetr.html#ad21349bd98833f80de30b17a9338f97b',1,'tr']]],
-  ['vertex_5fattribute_5ftype_1',['vertex_attribute_type',['../namespacetr.html#ad8eb4f799ddd3f5874fa4b1ad5c63032',1,'tr']]],
-  ['vsync_2',['vsync',['../namespacetr.html#a8022fe327c140227536483d9a7ac36d9',1,'tr']]]
+  ['ttf_5fstyle_0',['ttf_style',['../namespacetr.html#aee6753fe7ad980521da36ce9ab20c41b',1,'tr']]],
+  ['type_1',['type',['../classtr_1_1application.html#a52455c54911b67d7984c5103cb497e2f',1,'tr::application']]]
 ];

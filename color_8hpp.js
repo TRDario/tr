@@ -5,8 +5,8 @@ var color_8hpp =
     [ "tr::rgba8", "structtr_1_1rgba8.html", "structtr_1_1rgba8" ],
     [ "tr::rgbaf", "structtr_1_1rgbaf.html", "structtr_1_1rgbaf" ],
     [ "tr::hsv", "structtr_1_1hsv.html", "structtr_1_1hsv" ],
-    [ "tr::literals::color_literals::operator\"\"_rgb8", "namespacetr_1_1literals_1_1color__literals.html#a855955b0be30de00fa89db99ca2fc10d", null ],
-    [ "tr::literals::color_literals::operator\"\"_rgbf", "namespacetr_1_1literals_1_1color__literals.html#a0680b2344e776b1d535725eb33d5a507", null ],
-    [ "tr::literals::color_literals::operator\"\"_rgba8", "namespacetr_1_1literals_1_1color__literals.html#aae8c5a9bc23c4f12586819eb56ab0c66", null ],
-    [ "tr::literals::color_literals::operator\"\"_rgbaf", "namespacetr_1_1literals_1_1color__literals.html#ae6f41e1f07cfd4bbdc871ab1d07290b9", null ]
+    [ "tr::literals::color_literals::operator\"\"_rgba8", "namespacetr_1_1literals_1_1color__literals.html#a4c9c9334d5acadf1f6589146cd42f17e", null ],
+    [ "tr::literals::color_literals::operator\"\"_rgbaf", "namespacetr_1_1literals_1_1color__literals.html#a4da6bd99cff897d25c88304fbf1795d3", null ],
+    [ "tr::literals::color_literals::operator\"\"_rgb8", "namespacetr_1_1literals_1_1color__literals.html#a2aaf8a5f565c6223d7ea7c801f36ce94", null ],
+    [ "tr::literals::color_literals::operator\"\"_rgbf", "namespacetr_1_1literals_1_1color__literals.html#a3ba0a1c51b6664debfdb05508bfccd1e", null ]
 ];

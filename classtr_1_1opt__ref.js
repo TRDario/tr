@@ -1,15 +1,15 @@
 var classtr_1_1opt__ref =
 [
-    [ "opt_ref", "classtr_1_1opt__ref.html#a3bebaa6e67670cebd51228de60a39317", null ],
-    [ "opt_ref", "classtr_1_1opt__ref.html#a30c15fabb996e2cb25a247e37a995b8a", null ],
-    [ "opt_ref", "classtr_1_1opt__ref.html#afe08b3feb4b8a90c1212296eecc87f31", null ],
+    [ "opt_ref", "classtr_1_1opt__ref.html#ae111e0355d0382a9a6576736bb4d1159", null ],
+    [ "opt_ref", "classtr_1_1opt__ref.html#ae6ae78030b3422e3d06ec500375c0397", null ],
+    [ "opt_ref", "classtr_1_1opt__ref.html#a3c164ff3640b4106b93f5d1f83038a82", null ],
+    [ "opt_ref", "classtr_1_1opt__ref.html#acfd7518401da9d7564257be684484a93", null ],
     [ "opt_ref", "classtr_1_1opt__ref.html#ac1e63a536cbbc94c9c61845c0b99f660", null ],
-    [ "operator opt_ref< const T >", "classtr_1_1opt__ref.html#af629bb10afe021ad780b4e4945ba236d", null ],
-    [ "operator opt_ref< U >", "classtr_1_1opt__ref.html#ab8a6eb077acdb9b6aeb41acc7f16f1c7", null ],
-    [ "has_ref", "classtr_1_1opt__ref.html#a0244880c208c9d0c8bf9ba079bec4c5a", null ],
-    [ "as_ptr", "classtr_1_1opt__ref.html#a3840c859b6ffc74bebab1286a2ff8955", null ],
-    [ "operator->", "classtr_1_1opt__ref.html#a4793cf4db82a9d17aefca0b393b371fe", null ],
-    [ "operator*", "classtr_1_1opt__ref.html#a075ae26959a0d7968632bb7b7a5ecd83", null ],
-    [ "operator==", "classtr_1_1opt__ref.html#a783b4208d4b2abb06ed7899a5cecd159", null ],
-    [ "make_opt_ref", "classtr_1_1opt__ref.html#af32c86362e354c64db609c1362b874da", null ]
+    [ "operator opt_ref< const T >", "classtr_1_1opt__ref.html#ab53f5c7c3548bfa1eb1bed9549049994", null ],
+    [ "operator opt_ref< U >", "classtr_1_1opt__ref.html#aad2aa076729d21d39e2c1ca97267ce2b", null ],
+    [ "has_ref", "classtr_1_1opt__ref.html#abe5d627f816ea699977bd1a6a48e1adb", null ],
+    [ "as_ptr", "classtr_1_1opt__ref.html#a44cf6b886ceb8173c88c79185ffcedba", null ],
+    [ "operator->", "classtr_1_1opt__ref.html#affd51d8487f9ba1ef5bb38b9b33f3c65", null ],
+    [ "operator*", "classtr_1_1opt__ref.html#aa73f075a515953b01728e8de70c1223f", null ],
+    [ "operator==", "classtr_1_1opt__ref.html#aaaaaacf9e0e0e9fa177b62f044a231cb", null ]
 ];

@@ -1,6 +1,6 @@
 var display_8hpp =
 [
-    [ "tr::display_size", "namespacetr.html#a75080f69c0b18ea487062bf5aef53a28", null ],
-    [ "tr::max_msaa", "namespacetr.html#aeb02ed0c8dff16fe427fa9160d2312a2", null ],
-    [ "tr::refresh_rate", "namespacetr.html#a72af4a95bd13e9caf0e048e0488cc6b6", null ]
+    [ "tr::display_size", "namespacetr.html#a8158eba89839d1554a8d8befdcf49640", null ],
+    [ "tr::max_msaa", "namespacetr.html#a7cd47fd7297d1af20665319cf9fd26cb", null ],
+    [ "tr::refresh_rate", "namespacetr.html#a1b88497d560081def5647f52fd9af1a8", null ]
 ];

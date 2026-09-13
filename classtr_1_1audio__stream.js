@@ -1,7 +1,7 @@
 var classtr_1_1audio__stream =
 [
-    [ "audio_stream", "classtr_1_1audio__stream.html#a0b56f0344a4bfae094aee73c65140599", null ],
-    [ "~audio_stream", "classtr_1_1audio__stream.html#aff8340cae1fd8cc1750623d6e089c666", null ],
+    [ "audio_stream", "classtr_1_1audio__stream.html#a6c2c7c84fbcebf0a2add5837b677eabb", null ],
+    [ "~audio_stream", "classtr_1_1audio__stream.html#a2efcd27edf05e891074ca1c7d6ccf1f7", null ],
     [ "length", "classtr_1_1audio__stream.html#a8bfc38301fe686d9eb720ab28c723a40", null ],
     [ "channels", "classtr_1_1audio__stream.html#aaf373f6a471f5d782c15ed2e0703eb43", null ],
     [ "sample_rate", "classtr_1_1audio__stream.html#a343a4fb5e1eb893089ae23b816f3a30c", null ],

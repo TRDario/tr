@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('handle_8hpp.ht
 </div><!--header-->
 <div class="contents">
 
-<p>Provides <span class="tt"><a class="el" href="classtr_1_1handle.html" title="RAII wrapper over non-pointer handles.">tr::handle</a></span> and related utilities.  
+<p>Provides <span class="tt"><a class="el" href="classtr_1_1handle.html" title="RAII wrapper over non-pointer handles.">tr::handle</a></span>.  
 </p>
 
 <p><a href="handle_8hpp_source.html">Go to the source code of this file.</a></p>
@@ -139,8 +139,6 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tag struct used in some handle functions to suppress empty value checking.  <a href="structtr_1_1maybe__empty__t.html#details">More...</a><br /></td></tr>
 <tr class="memitem:tr_3A_3Ahandle_3C_20Base_2C_20Empty_2C_20Deleter_20_3E" id="r_tr_3A_3Ahandle_3C_20Base_2C_20Empty_2C_20Deleter_20_3E"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classtr_1_1handle.html">tr::handle&lt; Base, Empty, Deleter &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">RAII wrapper over non-pointer handles.  <a href="classtr_1_1handle.html#details">More...</a><br /></td></tr>
-<tr class="memitem:tr_3A_3Aout_5Fhandle_5Ft_3C_20Base_2C_20Empty_2C_20Deleter_2C_20SkipEmptyHandleCheck_20_3E" id="r_tr_3A_3Aout_5Fhandle_5Ft_3C_20Base_2C_20Empty_2C_20Deleter_2C_20SkipEmptyHandleCheck_20_3E"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classtr_1_1out__handle__t.html">tr::out_handle_t&lt; Base, Empty, Deleter, SkipEmptyHandleCheck &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrapper type returned by out_handle.  <a href="classtr_1_1out__handle__t.html#details">More...</a><br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-namespaces" class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
@@ -153,16 +151,6 @@ Concepts</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Valid handle deleter type for a handle to <span class="tt">Base</span>. <br /></td></tr>
 <tr class="memitem:tr_3A_3Adefault_5Fconstructible_5Fhandle_5Fdeleter" id="r_tr_3A_3Adefault_5Fconstructible_5Fhandle_5Fdeleter"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concepttr_1_1default__constructible__handle__deleter.html">tr::default_constructible_handle_deleter</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructible handle deleter. <br /></td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
-Functions</h2></td></tr>
-<tr id="func-members-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Output handle</div></td></tr>
-<tr class="memitem:a5713b7c2f6c9626d6e0b60259f818bb2" id="r_a5713b7c2f6c9626d6e0b60259f818bb2"><td class="memTemplParams" colspan="2">template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&gt; </td></tr>
-<tr class="memitem:a5713b7c2f6c9626d6e0b60259f818bb2 template"><td class="memItemLeft"><a class="el" href="classtr_1_1out__handle__t.html">out_handle_t</a>&lt; Base, Empty, Deleter, false &gt;&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#a5713b7c2f6c9626d6e0b60259f818bb2">tr::out_handle</a> (handle&lt; Base, Empty, Deleter &gt; &amp;handle)</td></tr>
-<tr class="memdesc:a5713b7c2f6c9626d6e0b60259f818bb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wraps a handle for use in functions that output using a pointer, akin to std::out_ptr.  <br /></td></tr>
-<tr class="memitem:acf9785e4e5859fb2b5f2d58ec7f4fe83" id="r_acf9785e4e5859fb2b5f2d58ec7f4fe83"><td class="memTemplParams" colspan="2">template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&gt; </td></tr>
-<tr class="memitem:acf9785e4e5859fb2b5f2d58ec7f4fe83 template"><td class="memItemLeft"><a class="el" href="classtr_1_1out__handle__t.html">out_handle_t</a>&lt; Base, Empty, Deleter, true &gt;&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#acf9785e4e5859fb2b5f2d58ec7f4fe83">tr::out_handle</a> (handle&lt; Base, Empty, Deleter &gt; &amp;handle, <a class="el" href="structtr_1_1maybe__empty__t.html">maybe_empty_t</a>)</td></tr>
-<tr class="memdesc:acf9785e4e5859fb2b5f2d58ec7f4fe83"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wraps a handle for use in functions that output using a pointer, akin to std::out_ptr.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>

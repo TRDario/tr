@@ -6,9 +6,15 @@ var searchData=
   ['tr_5fdefine_5fprivate_5fenum_5fbitmask_5foperators_3',['TR_DEFINE_PRIVATE_ENUM_BITMASK_OPERATORS',['../enum_8hpp.html#a1b981fbf85d8879c6b8e9cb03c480efa',1,'enum.hpp']]],
   ['tr_5ffilename_4',['TR_FILENAME',['../macro_8hpp.html#ae14060500ab70f0914841cb0ef6397ce',1,'macro.hpp']]],
   ['tr_5fjoin_5',['TR_JOIN',['../macro_8hpp.html#aeb217b3c5792ac1f5f5c865085d5d186',1,'macro.hpp']]],
-  ['tr_5fmacro_5fcomma_5fguard_6',['TR_MACRO_COMMA_GUARD',['../macro_8hpp.html#aed399fc89266aaff2714d8bfdb0f3c19',1,'macro.hpp']]],
-  ['tr_5fpath_5fcstr_7',['TR_PATH_CSTR',['../macro_8hpp.html#aa3a3d6d8ac219f1a5137f331189f861e',1,'macro.hpp']]],
-  ['tr_5fstringify_8',['TR_STRINGIFY',['../macro_8hpp.html#a700ea98c90f9e40c626d3631b5d23d6c',1,'macro.hpp']]],
-  ['tr_5funreachable_9',['TR_UNREACHABLE',['../macro_8hpp.html#a2ba7b799c46dfa140bb14ccb2ee4bbcc',1,'macro.hpp']]],
-  ['tr_5funspecialized_5fvariable_5ftemplate_10',['TR_UNSPECIALIZED_VARIABLE_TEMPLATE',['../macro_8hpp.html#ad2f9fd581e4dc8f2fa82c3d4bb81d91b',1,'macro.hpp']]]
+  ['tr_5flog_5fdebug_6',['TR_LOG_DEBUG',['../logger_8hpp.html#a91e2fbce8dac30af481ba36fdf6b6e0f',1,'logger.hpp']]],
+  ['tr_5flog_5ferror_7',['TR_LOG_ERROR',['../logger_8hpp.html#ac9eb0731094d9f199b4ebca3c63c7af0',1,'logger.hpp']]],
+  ['tr_5flog_5ffatal_8',['TR_LOG_FATAL',['../logger_8hpp.html#a8d93e3229c3b87ab40925869e2e868ed',1,'logger.hpp']]],
+  ['tr_5flog_5finfo_9',['TR_LOG_INFO',['../logger_8hpp.html#a77e8cc408a37e4cee28dc4e6c5d012a0',1,'logger.hpp']]],
+  ['tr_5flog_5ftrace_10',['TR_LOG_TRACE',['../logger_8hpp.html#a994dd5a24c559fb1b8422f664e5a8a7a',1,'logger.hpp']]],
+  ['tr_5flog_5fwarning_11',['TR_LOG_WARNING',['../logger_8hpp.html#af63c6ffc5832c76c7d31529ed2660017',1,'logger.hpp']]],
+  ['tr_5fmacro_5fcomma_5fguard_12',['TR_MACRO_COMMA_GUARD',['../macro_8hpp.html#aed399fc89266aaff2714d8bfdb0f3c19',1,'macro.hpp']]],
+  ['tr_5fpath_5fcstr_13',['TR_PATH_CSTR',['../macro_8hpp.html#aa3a3d6d8ac219f1a5137f331189f861e',1,'macro.hpp']]],
+  ['tr_5fstringify_14',['TR_STRINGIFY',['../macro_8hpp.html#a700ea98c90f9e40c626d3631b5d23d6c',1,'macro.hpp']]],
+  ['tr_5funreachable_15',['TR_UNREACHABLE',['../macro_8hpp.html#a2ba7b799c46dfa140bb14ccb2ee4bbcc',1,'macro.hpp']]],
+  ['tr_5funspecialized_5fvariable_5ftemplate_16',['TR_UNSPECIALIZED_VARIABLE_TEMPLATE',['../macro_8hpp.html#ad2f9fd581e4dc8f2fa82c3d4bb81d91b',1,'macro.hpp']]]
 ];

@@ -134,15 +134,15 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1tex
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
-<tr class="memitem:aa7d10a123dce1a84df53ac0b629230cf" id="r_aa7d10a123dce1a84df53ac0b629230cf"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#aa7d10a123dce1a84df53ac0b629230cf">texture_view</a> ()=default</td></tr>
-<tr class="memdesc:aa7d10a123dce1a84df53ac0b629230cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an empty texture view.  <br /></td></tr>
+<tr class="memitem:a93178e68b8caf0fb19f657cec2e021f4" id="r_a93178e68b8caf0fb19f657cec2e021f4"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a93178e68b8caf0fb19f657cec2e021f4">texture_view</a> () noexcept=default</td></tr>
+<tr class="memdesc:a93178e68b8caf0fb19f657cec2e021f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an empty texture view.  <br /></td></tr>
 <tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">State</div></td></tr>
-<tr class="memitem:a7309b2b0e0af95bbd26a78a8172eed6a" id="r_a7309b2b0e0af95bbd26a78a8172eed6a"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a7309b2b0e0af95bbd26a78a8172eed6a">empty</a> () const</td></tr>
-<tr class="memdesc:a7309b2b0e0af95bbd26a78a8172eed6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the view is empty.  <br /></td></tr>
+<tr class="memitem:ac49a013d953f3897635ff52fd0a33915" id="r_ac49a013d953f3897635ff52fd0a33915"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#ac49a013d953f3897635ff52fd0a33915">empty</a> () const noexcept</td></tr>
+<tr class="memdesc:ac49a013d953f3897635ff52fd0a33915"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the view is empty.  <br /></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="aa7d10a123dce1a84df53ac0b629230cf" name="aa7d10a123dce1a84df53ac0b629230cf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa7d10a123dce1a84df53ac0b629230cf">&#9670;&#160;</a></span>texture_view()</h2>
+<a id="a93178e68b8caf0fb19f657cec2e021f4" name="a93178e68b8caf0fb19f657cec2e021f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a93178e68b8caf0fb19f657cec2e021f4">&#9670;&#160;</a></span>texture_view()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -159,7 +159,7 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span><span class="mlabel default">default</span></span>  </td>
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel default">default</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -167,11 +167,14 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="a7309b2b0e0af95bbd26a78a8172eed6a" name="a7309b2b0e0af95bbd26a78a8172eed6a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7309b2b0e0af95bbd26a78a8172eed6a">&#9670;&#160;</a></span>empty()</h2>
+<a id="ac49a013d953f3897635ff52fd0a33915" name="ac49a013d953f3897635ff52fd0a33915"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac49a013d953f3897635ff52fd0a33915">&#9670;&#160;</a></span>empty()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">bool tr::texture_view::empty </td>
@@ -180,6 +183,11 @@ Public Member Functions</h2></td></tr>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the view is empty, <span class="tt">false</span> otherwise. </dd></dl>
 

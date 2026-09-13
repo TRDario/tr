@@ -153,38 +153,38 @@ Public Types</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
-<tr class="memitem:ac482b956ac49b27eec2f22a0c9d81ebe" id="r_ac482b956ac49b27eec2f22a0c9d81ebe"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ac482b956ac49b27eec2f22a0c9d81ebe">iterator</a> ()=default</td></tr>
-<tr class="memdesc:ac482b956ac49b27eec2f22a0c9d81ebe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default-constructs an iterator.  <br /></td></tr>
-<tr class="memitem:afe36b133624f3b53cba993c9b6ee7b14" id="r_afe36b133624f3b53cba993c9b6ee7b14"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#afe36b133624f3b53cba993c9b6ee7b14">iterator</a> (<a class="el" href="classtr_1_1sub__bitmap.html#a577bb2e5c5efef7a77f04bc81648c2a9">sub_bitmap</a> bitmap, glm::ivec2 pos)</td></tr>
-<tr class="memdesc:afe36b133624f3b53cba993c9b6ee7b14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an iterator to a bitmap pixel.  <br /></td></tr>
+<tr class="memitem:ae87a3dc1ae969ac87e93d1b9ef2cd009" id="r_ae87a3dc1ae969ac87e93d1b9ef2cd009"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ae87a3dc1ae969ac87e93d1b9ef2cd009">iterator</a> () noexcept=default</td></tr>
+<tr class="memdesc:ae87a3dc1ae969ac87e93d1b9ef2cd009"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default-constructs an iterator.  <br /></td></tr>
+<tr class="memitem:a221e36fe3ec16df3dc8f4529d3684ec8" id="r_a221e36fe3ec16df3dc8f4529d3684ec8"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a221e36fe3ec16df3dc8f4529d3684ec8">iterator</a> (<a class="el" href="classtr_1_1sub__bitmap.html#a2e7024d823cb675fd27cce2d46267de5">sub_bitmap</a> bitmap, glm::ivec2 pos) noexcept</td></tr>
+<tr class="memdesc:a221e36fe3ec16df3dc8f4529d3684ec8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an iterator to a bitmap pixel.  <br /></td></tr>
 <tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Comparison operators</div></td></tr>
-<tr class="memitem:a5efe55a03c28a9429e31e1a80cf10e70" id="r_a5efe55a03c28a9429e31e1a80cf10e70"><td class="memItemLeft">std::partial_ordering&#160;</td><td class="memItemRight"><a class="el" href="#a5efe55a03c28a9429e31e1a80cf10e70">operator&lt;=&gt;</a> (const <a class="el" href="#ac482b956ac49b27eec2f22a0c9d81ebe">iterator</a> &amp;rhs) const</td></tr>
-<tr class="memdesc:a5efe55a03c28a9429e31e1a80cf10e70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares iterators.  <br /></td></tr>
-<tr class="memitem:ae451cb08421ac80cf4becb6f933aac81" id="r_ae451cb08421ac80cf4becb6f933aac81"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#ae451cb08421ac80cf4becb6f933aac81">operator==</a> (const <a class="el" href="#ac482b956ac49b27eec2f22a0c9d81ebe">iterator</a> &amp;rhs) const</td></tr>
-<tr class="memdesc:ae451cb08421ac80cf4becb6f933aac81"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares iterators for equality.  <br /></td></tr>
+<tr class="memitem:a773be45e449d7c92b8982b5f8154bfe1" id="r_a773be45e449d7c92b8982b5f8154bfe1"><td class="memItemLeft">std::partial_ordering&#160;</td><td class="memItemRight"><a class="el" href="#a773be45e449d7c92b8982b5f8154bfe1">operator&lt;=&gt;</a> (const <a class="el" href="#ae87a3dc1ae969ac87e93d1b9ef2cd009">iterator</a> &amp;rhs) const noexcept</td></tr>
+<tr class="memdesc:a773be45e449d7c92b8982b5f8154bfe1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares iterators.  <br /></td></tr>
+<tr class="memitem:ab76d9c1f20bfb5b9717c278a6da719e9" id="r_ab76d9c1f20bfb5b9717c278a6da719e9"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#ab76d9c1f20bfb5b9717c278a6da719e9">operator==</a> (const <a class="el" href="#ae87a3dc1ae969ac87e93d1b9ef2cd009">iterator</a> &amp;rhs) const noexcept</td></tr>
+<tr class="memdesc:ab76d9c1f20bfb5b9717c278a6da719e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares iterators for equality.  <br /></td></tr>
 <tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Position</div></td></tr>
-<tr class="memitem:ac4e950573af0f814cbcf6fffc3b587d5" id="r_ac4e950573af0f814cbcf6fffc3b587d5"><td class="memItemLeft">glm::ivec2&#160;</td><td class="memItemRight"><a class="el" href="#ac4e950573af0f814cbcf6fffc3b587d5">pos</a> () const</td></tr>
-<tr class="memdesc:ac4e950573af0f814cbcf6fffc3b587d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the 2D position of the iterator within the bitmap.  <br /></td></tr>
+<tr class="memitem:a37cd1a74883773624ac4b9a02065a1d5" id="r_a37cd1a74883773624ac4b9a02065a1d5"><td class="memItemLeft">glm::ivec2&#160;</td><td class="memItemRight"><a class="el" href="#a37cd1a74883773624ac4b9a02065a1d5">pos</a> () const noexcept</td></tr>
+<tr class="memdesc:a37cd1a74883773624ac4b9a02065a1d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the 2D position of the iterator within the bitmap.  <br /></td></tr>
 <tr class="inherit_header pub_methods_classtr_1_1iterator__interface"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_classtr_1_1iterator__interface')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Member Functions inherited from <a class="el" href="classtr_1_1iterator__interface.html">tr::iterator_interface&lt; iterator, glm::ivec2 &gt;</a></td></tr>
-<tr class="memitem:ace6879efc86f31350aca1ae401f7b1f9 inherit pub_methods_classtr_1_1iterator__interface" id="r_ace6879efc86f31350aca1ae401f7b1f9"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="classtr_1_1iterator__interface.html#ace6879efc86f31350aca1ae401f7b1f9">operator-&gt;</a> () const</td></tr>
-<tr class="memdesc:ace6879efc86f31350aca1ae401f7b1f9 inherit pub_methods_classtr_1_1iterator__interface"><td class="mdescLeft">&#160;</td><td class="mdescRight">Synthesized pointer dereferencing operator.  <br /></td></tr>
-<tr class="memitem:a06d90b2f5b9f7bb4253938b82699973f inherit pub_methods_classtr_1_1iterator__interface" id="r_a06d90b2f5b9f7bb4253938b82699973f"><td class="memItemLeft">constexpr decltype(auto)&#160;</td><td class="memItemRight"><a class="el" href="classtr_1_1iterator__interface.html#a06d90b2f5b9f7bb4253938b82699973f">operator[]</a> (Difference diff) const</td></tr>
-<tr class="memdesc:a06d90b2f5b9f7bb4253938b82699973f inherit pub_methods_classtr_1_1iterator__interface"><td class="mdescLeft">&#160;</td><td class="mdescRight">Synthesized subscripting operator.  <br /></td></tr>
+<tr class="memitem:a01f6c2a0577617b5fa006dbe8498e0a9 inherit pub_methods_classtr_1_1iterator__interface" id="r_a01f6c2a0577617b5fa006dbe8498e0a9"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="classtr_1_1iterator__interface.html#a01f6c2a0577617b5fa006dbe8498e0a9">operator-&gt;</a> () const noexcept(noexcept(*base()))</td></tr>
+<tr class="memdesc:a01f6c2a0577617b5fa006dbe8498e0a9 inherit pub_methods_classtr_1_1iterator__interface"><td class="mdescLeft">&#160;</td><td class="mdescRight">Synthesized pointer dereferencing operator.  <br /></td></tr>
+<tr class="memitem:a409a0e6f3be2d5e48538297ec05cd282 inherit pub_methods_classtr_1_1iterator__interface" id="r_a409a0e6f3be2d5e48538297ec05cd282"><td class="memItemLeft">constexpr decltype(auto)&#160;</td><td class="memItemRight"><a class="el" href="classtr_1_1iterator__interface.html#a409a0e6f3be2d5e48538297ec05cd282">operator[]</a> (Difference diff) const noexcept(noexcept(*(base()+diff)))</td></tr>
+<tr class="memdesc:a409a0e6f3be2d5e48538297ec05cd282 inherit pub_methods_classtr_1_1iterator__interface"><td class="mdescLeft">&#160;</td><td class="mdescRight">Synthesized subscripting operator.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-member-group" class="groupheader"><a id="member-group" name="member-group"></a>
 Other operators</h2></td></tr>
-<tr class="memitem:a70ecfa86bf14305954817b086ca5982b" id="r_a70ecfa86bf14305954817b086ca5982b"><td class="memItemLeft"><a class="el" href="#af6f9537d4b0ab5e48d73ebe8d0306b68">value_type</a>&#160;</td><td class="memItemRight"><a class="el" href="#a70ecfa86bf14305954817b086ca5982b">operator*</a> () const</td></tr>
-<tr class="memdesc:a70ecfa86bf14305954817b086ca5982b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dereferences the iterator.  <br /></td></tr>
-<tr class="memitem:a8dedbcdb82238ed36d286c11daf9ffcc" id="r_a8dedbcdb82238ed36d286c11daf9ffcc"><td class="memItemLeft"><a class="el" href="#af480e844b59118ebf07c101632815238">pointer</a>&#160;</td><td class="memItemRight"><a class="el" href="#a8dedbcdb82238ed36d286c11daf9ffcc">operator-&gt;</a> () const</td></tr>
-<tr class="memdesc:a8dedbcdb82238ed36d286c11daf9ffcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dereferences the iterator through a pointer.  <br /></td></tr>
-<tr class="memitem:a4d08e7bffdeb0a1c10e55fdea6161c00" id="r_a4d08e7bffdeb0a1c10e55fdea6161c00"><td class="memItemLeft"><a class="el" href="#ac482b956ac49b27eec2f22a0c9d81ebe">iterator</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a4d08e7bffdeb0a1c10e55fdea6161c00">operator++</a> ()</td></tr>
-<tr class="memdesc:a4d08e7bffdeb0a1c10e55fdea6161c00"><td class="mdescLeft">&#160;</td><td class="mdescRight">Increments the iterator.  <br /></td></tr>
-<tr class="memitem:a188cbefa0fb6c350d591e5442f74e0dc" id="r_a188cbefa0fb6c350d591e5442f74e0dc"><td class="memItemLeft"><a class="el" href="#ac482b956ac49b27eec2f22a0c9d81ebe">iterator</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a188cbefa0fb6c350d591e5442f74e0dc">operator+=</a> (<a class="el" href="#affb429590cdc9757b04a3442a96a9565">difference_type</a> diff)</td></tr>
-<tr class="memdesc:a188cbefa0fb6c350d591e5442f74e0dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Advances the iterator.  <br /></td></tr>
-<tr class="memitem:a667a90a235ddcdd1f901e12e1dd547c4" id="r_a667a90a235ddcdd1f901e12e1dd547c4"><td class="memItemLeft"><a class="el" href="#ac482b956ac49b27eec2f22a0c9d81ebe">iterator</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a667a90a235ddcdd1f901e12e1dd547c4">operator+=</a> (glm::ivec2 diff)</td></tr>
-<tr class="memdesc:a667a90a235ddcdd1f901e12e1dd547c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Advances an iterator.  <br /></td></tr>
-<tr class="memitem:adea9e531abda110ba9d3b453c9d9e03a" id="r_adea9e531abda110ba9d3b453c9d9e03a"><td class="memItemLeft"><a class="el" href="#ac482b956ac49b27eec2f22a0c9d81ebe">iterator</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#adea9e531abda110ba9d3b453c9d9e03a">operator--</a> ()</td></tr>
-<tr class="memdesc:adea9e531abda110ba9d3b453c9d9e03a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrements the iterator.  <br /></td></tr>
+<tr class="memitem:abb431a58f97ec38607fbc00bac7c63b2" id="r_abb431a58f97ec38607fbc00bac7c63b2"><td class="memItemLeft"><a class="el" href="#af6f9537d4b0ab5e48d73ebe8d0306b68">value_type</a>&#160;</td><td class="memItemRight"><a class="el" href="#abb431a58f97ec38607fbc00bac7c63b2">operator*</a> () const noexcept</td></tr>
+<tr class="memdesc:abb431a58f97ec38607fbc00bac7c63b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dereferences the iterator.  <br /></td></tr>
+<tr class="memitem:ac9c43ec33f35e8ec059b87e3d36b7dbf" id="r_ac9c43ec33f35e8ec059b87e3d36b7dbf"><td class="memItemLeft"><a class="el" href="#af480e844b59118ebf07c101632815238">pointer</a>&#160;</td><td class="memItemRight"><a class="el" href="#ac9c43ec33f35e8ec059b87e3d36b7dbf">operator-&gt;</a> () const noexcept</td></tr>
+<tr class="memdesc:ac9c43ec33f35e8ec059b87e3d36b7dbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dereferences the iterator through a pointer.  <br /></td></tr>
+<tr class="memitem:af52c96ddb24e3ee4927f9fa81bd3b9ea" id="r_af52c96ddb24e3ee4927f9fa81bd3b9ea"><td class="memItemLeft"><a class="el" href="#ae87a3dc1ae969ac87e93d1b9ef2cd009">iterator</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#af52c96ddb24e3ee4927f9fa81bd3b9ea">operator++</a> () noexcept</td></tr>
+<tr class="memdesc:af52c96ddb24e3ee4927f9fa81bd3b9ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Increments the iterator.  <br /></td></tr>
+<tr class="memitem:a77866c05df46aade8ff7ad6d9325db97" id="r_a77866c05df46aade8ff7ad6d9325db97"><td class="memItemLeft"><a class="el" href="#ae87a3dc1ae969ac87e93d1b9ef2cd009">iterator</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a77866c05df46aade8ff7ad6d9325db97">operator+=</a> (<a class="el" href="#affb429590cdc9757b04a3442a96a9565">difference_type</a> diff) noexcept</td></tr>
+<tr class="memdesc:a77866c05df46aade8ff7ad6d9325db97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Advances the iterator.  <br /></td></tr>
+<tr class="memitem:ae0f7885a5ac39da0d3d7ef08d4129944" id="r_ae0f7885a5ac39da0d3d7ef08d4129944"><td class="memItemLeft"><a class="el" href="#ae87a3dc1ae969ac87e93d1b9ef2cd009">iterator</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ae0f7885a5ac39da0d3d7ef08d4129944">operator+=</a> (glm::ivec2 diff) noexcept</td></tr>
+<tr class="memdesc:ae0f7885a5ac39da0d3d7ef08d4129944"><td class="mdescLeft">&#160;</td><td class="mdescRight">Advances an iterator.  <br /></td></tr>
+<tr class="memitem:add8cde6eacf769e53d935ce7b6a1068d" id="r_add8cde6eacf769e53d935ce7b6a1068d"><td class="memItemLeft"><a class="el" href="#ae87a3dc1ae969ac87e93d1b9ef2cd009">iterator</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#add8cde6eacf769e53d935ce7b6a1068d">operator--</a> () noexcept</td></tr>
+<tr class="memdesc:add8cde6eacf769e53d935ce7b6a1068d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrements the iterator.  <br /></td></tr>
 </table>
 <a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Member Typedef Documentation</h2>
 <a id="af6f9537d4b0ab5e48d73ebe8d0306b68" name="af6f9537d4b0ab5e48d73ebe8d0306b68"></a>
@@ -230,8 +230,8 @@ Other operators</h2></td></tr>
 </div>
 </div>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ac482b956ac49b27eec2f22a0c9d81ebe" name="ac482b956ac49b27eec2f22a0c9d81ebe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac482b956ac49b27eec2f22a0c9d81ebe">&#9670;&#160;</a></span>iterator() <span class="overload">[1/2]</span></h2>
+<a id="ae87a3dc1ae969ac87e93d1b9ef2cd009" name="ae87a3dc1ae969ac87e93d1b9ef2cd009"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae87a3dc1ae969ac87e93d1b9ef2cd009">&#9670;&#160;</a></span>iterator() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -248,23 +248,26 @@ Other operators</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel default">default</span></span>  </td>
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel default">default</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="afe36b133624f3b53cba993c9b6ee7b14" name="afe36b133624f3b53cba993c9b6ee7b14"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afe36b133624f3b53cba993c9b6ee7b14">&#9670;&#160;</a></span>iterator() <span class="overload">[2/2]</span></h2>
+<a id="a221e36fe3ec16df3dc8f4529d3684ec8" name="a221e36fe3ec16df3dc8f4529d3684ec8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a221e36fe3ec16df3dc8f4529d3684ec8">&#9670;&#160;</a></span>iterator() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">tr::sub_bitmap::iterator::iterator </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classtr_1_1sub__bitmap.html#a577bb2e5c5efef7a77f04bc81648c2a9">sub_bitmap</a></td>          <td class="paramname"><span class="paramname"><em>bitmap</em></span>, </td>
+          <td class="paramtype"><a class="el" href="classtr_1_1sub__bitmap.html#a2e7024d823cb675fd27cce2d46267de5">sub_bitmap</a></td>          <td class="paramname"><span class="paramname"><em>bitmap</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -272,6 +275,11 @@ Other operators</h2></td></tr>
           <td class="paramtype">glm::ivec2</td>          <td class="paramname"><span class="paramname"><em>pos</em></span>&#160;)</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -284,19 +292,27 @@ Other operators</h2></td></tr>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="a5efe55a03c28a9429e31e1a80cf10e70" name="a5efe55a03c28a9429e31e1a80cf10e70"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5efe55a03c28a9429e31e1a80cf10e70">&#9670;&#160;</a></span>operator&lt;=&gt;()</h2>
+<a id="a773be45e449d7c92b8982b5f8154bfe1" name="a773be45e449d7c92b8982b5f8154bfe1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a773be45e449d7c92b8982b5f8154bfe1">&#9670;&#160;</a></span>operator&lt;=&gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">std::partial_ordering tr::sub_bitmap::iterator::operator&lt;=&gt; </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="#ac482b956ac49b27eec2f22a0c9d81ebe">iterator</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="#ae87a3dc1ae969ac87e93d1b9ef2cd009">iterator</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -308,19 +324,27 @@ Other operators</h2></td></tr>
 
 </div>
 </div>
-<a id="ae451cb08421ac80cf4becb6f933aac81" name="ae451cb08421ac80cf4becb6f933aac81"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae451cb08421ac80cf4becb6f933aac81">&#9670;&#160;</a></span>operator==()</h2>
+<a id="ab76d9c1f20bfb5b9717c278a6da719e9" name="ab76d9c1f20bfb5b9717c278a6da719e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab76d9c1f20bfb5b9717c278a6da719e9">&#9670;&#160;</a></span>operator==()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">bool tr::sub_bitmap::iterator::operator== </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="#ac482b956ac49b27eec2f22a0c9d81ebe">iterator</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="#ae87a3dc1ae969ac87e93d1b9ef2cd009">iterator</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -332,11 +356,14 @@ Other operators</h2></td></tr>
 
 </div>
 </div>
-<a id="a70ecfa86bf14305954817b086ca5982b" name="a70ecfa86bf14305954817b086ca5982b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a70ecfa86bf14305954817b086ca5982b">&#9670;&#160;</a></span>operator*()</h2>
+<a id="abb431a58f97ec38607fbc00bac7c63b2" name="abb431a58f97ec38607fbc00bac7c63b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abb431a58f97ec38607fbc00bac7c63b2">&#9670;&#160;</a></span>operator*()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="#af6f9537d4b0ab5e48d73ebe8d0306b68">value_type</a> tr::sub_bitmap::iterator::operator* </td>
@@ -345,16 +372,24 @@ Other operators</h2></td></tr>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Pixel reference. </dd></dl>
 
 </div>
 </div>
-<a id="a8dedbcdb82238ed36d286c11daf9ffcc" name="a8dedbcdb82238ed36d286c11daf9ffcc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8dedbcdb82238ed36d286c11daf9ffcc">&#9670;&#160;</a></span>operator-&gt;()</h2>
+<a id="ac9c43ec33f35e8ec059b87e3d36b7dbf" name="ac9c43ec33f35e8ec059b87e3d36b7dbf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac9c43ec33f35e8ec059b87e3d36b7dbf">&#9670;&#160;</a></span>operator-&gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="#af480e844b59118ebf07c101632815238">pointer</a> tr::sub_bitmap::iterator::operator-&gt; </td>
@@ -363,42 +398,63 @@ Other operators</h2></td></tr>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Pointer to a pixel reference. </dd></dl>
 
 </div>
 </div>
-<a id="a4d08e7bffdeb0a1c10e55fdea6161c00" name="a4d08e7bffdeb0a1c10e55fdea6161c00"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4d08e7bffdeb0a1c10e55fdea6161c00">&#9670;&#160;</a></span>operator++()</h2>
+<a id="af52c96ddb24e3ee4927f9fa81bd3b9ea" name="af52c96ddb24e3ee4927f9fa81bd3b9ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af52c96ddb24e3ee4927f9fa81bd3b9ea">&#9670;&#160;</a></span>operator++()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="#ac482b956ac49b27eec2f22a0c9d81ebe">iterator</a> &amp; tr::sub_bitmap::iterator::operator++ </td>
+          <td class="memname"><a class="el" href="#ae87a3dc1ae969ac87e93d1b9ef2cd009">iterator</a> &amp; tr::sub_bitmap::iterator::operator++ </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Reference to <span class="tt">*this</span>. </dd></dl>
 
 </div>
 </div>
-<a id="a188cbefa0fb6c350d591e5442f74e0dc" name="a188cbefa0fb6c350d591e5442f74e0dc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a188cbefa0fb6c350d591e5442f74e0dc">&#9670;&#160;</a></span>operator+=() <span class="overload">[1/2]</span></h2>
+<a id="a77866c05df46aade8ff7ad6d9325db97" name="a77866c05df46aade8ff7ad6d9325db97"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a77866c05df46aade8ff7ad6d9325db97">&#9670;&#160;</a></span>operator+=() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="#ac482b956ac49b27eec2f22a0c9d81ebe">iterator</a> &amp; tr::sub_bitmap::iterator::operator+= </td>
+          <td class="memname"><a class="el" href="#ae87a3dc1ae969ac87e93d1b9ef2cd009">iterator</a> &amp; tr::sub_bitmap::iterator::operator+= </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="#affb429590cdc9757b04a3442a96a9565">difference_type</a></td>          <td class="paramname"><span class="paramname"><em>diff</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -410,19 +466,27 @@ Other operators</h2></td></tr>
 
 </div>
 </div>
-<a id="a667a90a235ddcdd1f901e12e1dd547c4" name="a667a90a235ddcdd1f901e12e1dd547c4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a667a90a235ddcdd1f901e12e1dd547c4">&#9670;&#160;</a></span>operator+=() <span class="overload">[2/2]</span></h2>
+<a id="ae0f7885a5ac39da0d3d7ef08d4129944" name="ae0f7885a5ac39da0d3d7ef08d4129944"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0f7885a5ac39da0d3d7ef08d4129944">&#9670;&#160;</a></span>operator+=() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="#ac482b956ac49b27eec2f22a0c9d81ebe">iterator</a> &amp; tr::sub_bitmap::iterator::operator+= </td>
+          <td class="memname"><a class="el" href="#ae87a3dc1ae969ac87e93d1b9ef2cd009">iterator</a> &amp; tr::sub_bitmap::iterator::operator+= </td>
           <td>(</td>
           <td class="paramtype">glm::ivec2</td>          <td class="paramname"><span class="paramname"><em>diff</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -434,29 +498,40 @@ Other operators</h2></td></tr>
 
 </div>
 </div>
-<a id="adea9e531abda110ba9d3b453c9d9e03a" name="adea9e531abda110ba9d3b453c9d9e03a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adea9e531abda110ba9d3b453c9d9e03a">&#9670;&#160;</a></span>operator--()</h2>
+<a id="add8cde6eacf769e53d935ce7b6a1068d" name="add8cde6eacf769e53d935ce7b6a1068d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add8cde6eacf769e53d935ce7b6a1068d">&#9670;&#160;</a></span>operator--()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="#ac482b956ac49b27eec2f22a0c9d81ebe">iterator</a> &amp; tr::sub_bitmap::iterator::operator-- </td>
+          <td class="memname"><a class="el" href="#ae87a3dc1ae969ac87e93d1b9ef2cd009">iterator</a> &amp; tr::sub_bitmap::iterator::operator-- </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Reference to <span class="tt">*this</span>. </dd></dl>
 
 </div>
 </div>
-<a id="ac4e950573af0f814cbcf6fffc3b587d5" name="ac4e950573af0f814cbcf6fffc3b587d5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac4e950573af0f814cbcf6fffc3b587d5">&#9670;&#160;</a></span>pos()</h2>
+<a id="a37cd1a74883773624ac4b9a02065a1d5" name="a37cd1a74883773624ac4b9a02065a1d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a37cd1a74883773624ac4b9a02065a1d5">&#9670;&#160;</a></span>pos()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">glm::ivec2 tr::sub_bitmap::iterator::pos </td>
@@ -465,6 +540,11 @@ Other operators</h2></td></tr>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Psosition of the iterator within the bitmap. </dd></dl>
 

@@ -151,30 +151,30 @@ Public Types</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
-<tr class="memitem:a7b2a7f08ec445fb51be96f407be78697" id="r_a7b2a7f08ec445fb51be96f407be78697"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a7b2a7f08ec445fb51be96f407be78697">indexed_iterator</a> ()=default</td></tr>
-<tr class="memdesc:a7b2a7f08ec445fb51be96f407be78697"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default-constructs an indexed codepoint iterator.  <br /></td></tr>
-<tr class="memitem:a879179bb10fbe6ead71bb4240ca03aa4" id="r_a879179bb10fbe6ead71bb4240ca03aa4"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a879179bb10fbe6ead71bb4240ca03aa4">indexed_iterator</a> (const char *ptr, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a0cfca98bbeed1e31ae9ef0344fb39389">ssize</a> index)</td></tr>
-<tr class="memdesc:a879179bb10fbe6ead71bb4240ca03aa4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an indexed codepoint iterator.  <br /></td></tr>
+<tr class="memitem:a1524c40d0dfb1b1a6b9be41be7269dea" id="r_a1524c40d0dfb1b1a6b9be41be7269dea"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a1524c40d0dfb1b1a6b9be41be7269dea">indexed_iterator</a> () noexcept=default</td></tr>
+<tr class="memdesc:a1524c40d0dfb1b1a6b9be41be7269dea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default-constructs an indexed codepoint iterator.  <br /></td></tr>
+<tr class="memitem:a52dd2c12e7453f7ac5438be9a8298fc4" id="r_a52dd2c12e7453f7ac5438be9a8298fc4"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a52dd2c12e7453f7ac5438be9a8298fc4">indexed_iterator</a> (const char *ptr, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a0cfca98bbeed1e31ae9ef0344fb39389">ssize</a> index) noexcept</td></tr>
+<tr class="memdesc:a52dd2c12e7453f7ac5438be9a8298fc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an indexed codepoint iterator.  <br /></td></tr>
 <tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Conversion operators</div></td></tr>
-<tr class="memitem:a2b7aa1b43870de472858a0af5131caaf" id="r_a2b7aa1b43870de472858a0af5131caaf"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a2b7aa1b43870de472858a0af5131caaf">operator iterator</a> () const</td></tr>
-<tr class="memdesc:a2b7aa1b43870de472858a0af5131caaf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the operator to an unindexed codepoint iterator.  <br /></td></tr>
+<tr class="memitem:ac685a2c4cdc8f470461be4419c87c9e3" id="r_ac685a2c4cdc8f470461be4419c87c9e3"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#ac685a2c4cdc8f470461be4419c87c9e3">operator iterator</a> () const noexcept</td></tr>
+<tr class="memdesc:ac685a2c4cdc8f470461be4419c87c9e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the operator to an unindexed codepoint iterator.  <br /></td></tr>
 <tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Other operators</div></td></tr>
-<tr class="memitem:a1ce0f1d9df5d64da8c0dc67be4fff6bb" id="r_a1ce0f1d9df5d64da8c0dc67be4fff6bb"><td class="memItemLeft">constexpr <a class="el" href="namespacetr.html#aeffe1b14b7778ab5180bec7c14f372b9">codepoint</a>&#160;</td><td class="memItemRight"><a class="el" href="#a1ce0f1d9df5d64da8c0dc67be4fff6bb">operator*</a> () const</td></tr>
-<tr class="memdesc:a1ce0f1d9df5d64da8c0dc67be4fff6bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dereferences the iterator.  <br /></td></tr>
-<tr class="memitem:a2979c3df9526e4e5fe3bd62eca51c4b1" id="r_a2979c3df9526e4e5fe3bd62eca51c4b1"><td class="memItemLeft">constexpr <a class="el" href="#a7b2a7f08ec445fb51be96f407be78697">indexed_iterator</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a2979c3df9526e4e5fe3bd62eca51c4b1">operator++</a> ()</td></tr>
-<tr class="memdesc:a2979c3df9526e4e5fe3bd62eca51c4b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Increments the iterator.  <br /></td></tr>
-<tr class="memitem:a8aef88ba49921eacd35bcf700f99692c" id="r_a8aef88ba49921eacd35bcf700f99692c"><td class="memItemLeft">constexpr <a class="el" href="#a7b2a7f08ec445fb51be96f407be78697">indexed_iterator</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a8aef88ba49921eacd35bcf700f99692c">operator--</a> ()</td></tr>
-<tr class="memdesc:a8aef88ba49921eacd35bcf700f99692c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrements the iterator.  <br /></td></tr>
+<tr class="memitem:a9d87727471f3774343193fc4eaa08eef" id="r_a9d87727471f3774343193fc4eaa08eef"><td class="memItemLeft">constexpr <a class="el" href="namespacetr.html#aeffe1b14b7778ab5180bec7c14f372b9">codepoint</a>&#160;</td><td class="memItemRight"><a class="el" href="#a9d87727471f3774343193fc4eaa08eef">operator*</a> () const noexcept</td></tr>
+<tr class="memdesc:a9d87727471f3774343193fc4eaa08eef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dereferences the iterator.  <br /></td></tr>
+<tr class="memitem:a4422493544d3337ba6820fdeb071b070" id="r_a4422493544d3337ba6820fdeb071b070"><td class="memItemLeft">constexpr <a class="el" href="#a1524c40d0dfb1b1a6b9be41be7269dea">indexed_iterator</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a4422493544d3337ba6820fdeb071b070">operator++</a> () noexcept</td></tr>
+<tr class="memdesc:a4422493544d3337ba6820fdeb071b070"><td class="mdescLeft">&#160;</td><td class="mdescRight">Increments the iterator.  <br /></td></tr>
+<tr class="memitem:a15bd652d034fa2dd266f2008056171df" id="r_a15bd652d034fa2dd266f2008056171df"><td class="memItemLeft">constexpr <a class="el" href="#a1524c40d0dfb1b1a6b9be41be7269dea">indexed_iterator</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a15bd652d034fa2dd266f2008056171df">operator--</a> () noexcept</td></tr>
+<tr class="memdesc:a15bd652d034fa2dd266f2008056171df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrements the iterator.  <br /></td></tr>
 <tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Unwrapping</div></td></tr>
-<tr class="memitem:aef314f5992e0ad7db94ff13868867173" id="r_aef314f5992e0ad7db94ff13868867173"><td class="memItemLeft">constexpr const char *&#160;</td><td class="memItemRight"><a class="el" href="#aef314f5992e0ad7db94ff13868867173">base</a> () const</td></tr>
-<tr class="memdesc:aef314f5992e0ad7db94ff13868867173"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a const char pointer to the beginning of the iterator's UTF-8 character.  <br /></td></tr>
-<tr class="memitem:af7bbe361e92c55d09d8dd18fe66c374a" id="r_af7bbe361e92c55d09d8dd18fe66c374a"><td class="memItemLeft">constexpr <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a0cfca98bbeed1e31ae9ef0344fb39389">ssize</a>&#160;</td><td class="memItemRight"><a class="el" href="#af7bbe361e92c55d09d8dd18fe66c374a">index</a> () const</td></tr>
-<tr class="memdesc:af7bbe361e92c55d09d8dd18fe66c374a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The index of the iterator.  <br /></td></tr>
+<tr class="memitem:a3d722457dbf6ea7aa77a92199290f263" id="r_a3d722457dbf6ea7aa77a92199290f263"><td class="memItemLeft">constexpr const char *&#160;</td><td class="memItemRight"><a class="el" href="#a3d722457dbf6ea7aa77a92199290f263">base</a> () const noexcept</td></tr>
+<tr class="memdesc:a3d722457dbf6ea7aa77a92199290f263"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a const char pointer to the beginning of the iterator's UTF-8 character.  <br /></td></tr>
+<tr class="memitem:a09be138e9d6a620668ff5a4b97f4df8c" id="r_a09be138e9d6a620668ff5a4b97f4df8c"><td class="memItemLeft">constexpr <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a0cfca98bbeed1e31ae9ef0344fb39389">ssize</a>&#160;</td><td class="memItemRight"><a class="el" href="#a09be138e9d6a620668ff5a4b97f4df8c">index</a> () const noexcept</td></tr>
+<tr class="memdesc:a09be138e9d6a620668ff5a4b97f4df8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the index of the iterator.  <br /></td></tr>
 <tr class="inherit_header pub_methods_classtr_1_1iterator__interface"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_classtr_1_1iterator__interface')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Member Functions inherited from <a class="el" href="classtr_1_1iterator__interface.html">tr::iterator_interface&lt; indexed_iterator &gt;</a></td></tr>
-<tr class="memitem:ace6879efc86f31350aca1ae401f7b1f9 inherit pub_methods_classtr_1_1iterator__interface" id="r_ace6879efc86f31350aca1ae401f7b1f9"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="classtr_1_1iterator__interface.html#ace6879efc86f31350aca1ae401f7b1f9">operator-&gt;</a> () const</td></tr>
-<tr class="memdesc:ace6879efc86f31350aca1ae401f7b1f9 inherit pub_methods_classtr_1_1iterator__interface"><td class="mdescLeft">&#160;</td><td class="mdescRight">Synthesized pointer dereferencing operator.  <br /></td></tr>
-<tr class="memitem:a06d90b2f5b9f7bb4253938b82699973f inherit pub_methods_classtr_1_1iterator__interface" id="r_a06d90b2f5b9f7bb4253938b82699973f"><td class="memItemLeft">constexpr decltype(auto)&#160;</td><td class="memItemRight"><a class="el" href="classtr_1_1iterator__interface.html#a06d90b2f5b9f7bb4253938b82699973f">operator[]</a> (Difference diff) const</td></tr>
-<tr class="memdesc:a06d90b2f5b9f7bb4253938b82699973f inherit pub_methods_classtr_1_1iterator__interface"><td class="mdescLeft">&#160;</td><td class="mdescRight">Synthesized subscripting operator.  <br /></td></tr>
+<tr class="memitem:a01f6c2a0577617b5fa006dbe8498e0a9 inherit pub_methods_classtr_1_1iterator__interface" id="r_a01f6c2a0577617b5fa006dbe8498e0a9"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="classtr_1_1iterator__interface.html#a01f6c2a0577617b5fa006dbe8498e0a9">operator-&gt;</a> () const noexcept(noexcept(*base()))</td></tr>
+<tr class="memdesc:a01f6c2a0577617b5fa006dbe8498e0a9 inherit pub_methods_classtr_1_1iterator__interface"><td class="mdescLeft">&#160;</td><td class="mdescRight">Synthesized pointer dereferencing operator.  <br /></td></tr>
+<tr class="memitem:a409a0e6f3be2d5e48538297ec05cd282 inherit pub_methods_classtr_1_1iterator__interface" id="r_a409a0e6f3be2d5e48538297ec05cd282"><td class="memItemLeft">constexpr decltype(auto)&#160;</td><td class="memItemRight"><a class="el" href="classtr_1_1iterator__interface.html#a409a0e6f3be2d5e48538297ec05cd282">operator[]</a> (Difference diff) const noexcept(noexcept(*(base()+diff)))</td></tr>
+<tr class="memdesc:a409a0e6f3be2d5e48538297ec05cd282 inherit pub_methods_classtr_1_1iterator__interface"><td class="mdescLeft">&#160;</td><td class="mdescRight">Synthesized subscripting operator.  <br /></td></tr>
 </table>
 <a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Member Typedef Documentation</h2>
 <a id="a1f68e38d8c80edcf625dd39808698948" name="a1f68e38d8c80edcf625dd39808698948"></a>
@@ -206,8 +206,8 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a7b2a7f08ec445fb51be96f407be78697" name="a7b2a7f08ec445fb51be96f407be78697"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7b2a7f08ec445fb51be96f407be78697">&#9670;&#160;</a></span>indexed_iterator() <span class="overload">[1/2]</span></h2>
+<a id="a1524c40d0dfb1b1a6b9be41be7269dea" name="a1524c40d0dfb1b1a6b9be41be7269dea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1524c40d0dfb1b1a6b9be41be7269dea">&#9670;&#160;</a></span>indexed_iterator() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -224,15 +224,15 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span><span class="mlabel default">default</span></span>  </td>
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel default">default</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a879179bb10fbe6ead71bb4240ca03aa4" name="a879179bb10fbe6ead71bb4240ca03aa4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a879179bb10fbe6ead71bb4240ca03aa4">&#9670;&#160;</a></span>indexed_iterator() <span class="overload">[2/2]</span></h2>
+<a id="a52dd2c12e7453f7ac5438be9a8298fc4" name="a52dd2c12e7453f7ac5438be9a8298fc4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a52dd2c12e7453f7ac5438be9a8298fc4">&#9670;&#160;</a></span>indexed_iterator() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -253,7 +253,7 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -268,8 +268,8 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="a2b7aa1b43870de472858a0af5131caaf" name="a2b7aa1b43870de472858a0af5131caaf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2b7aa1b43870de472858a0af5131caaf">&#9670;&#160;</a></span>operator iterator()</h2>
+<a id="ac685a2c4cdc8f470461be4419c87c9e3" name="ac685a2c4cdc8f470461be4419c87c9e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac685a2c4cdc8f470461be4419c87c9e3">&#9670;&#160;</a></span>operator iterator()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -286,7 +286,7 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -294,8 +294,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a1ce0f1d9df5d64da8c0dc67be4fff6bb" name="a1ce0f1d9df5d64da8c0dc67be4fff6bb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1ce0f1d9df5d64da8c0dc67be4fff6bb">&#9670;&#160;</a></span>operator*()</h2>
+<a id="a9d87727471f3774343193fc4eaa08eef" name="a9d87727471f3774343193fc4eaa08eef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d87727471f3774343193fc4eaa08eef">&#9670;&#160;</a></span>operator*()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -312,7 +312,7 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -320,8 +320,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a2979c3df9526e4e5fe3bd62eca51c4b1" name="a2979c3df9526e4e5fe3bd62eca51c4b1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2979c3df9526e4e5fe3bd62eca51c4b1">&#9670;&#160;</a></span>operator++()</h2>
+<a id="a4422493544d3337ba6820fdeb071b070" name="a4422493544d3337ba6820fdeb071b070"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4422493544d3337ba6820fdeb071b070">&#9670;&#160;</a></span>operator++()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -330,7 +330,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="#a7b2a7f08ec445fb51be96f407be78697">indexed_iterator</a> &amp; tr::utf8::indexed_iterator::operator++ </td>
+          <td class="memname"><a class="el" href="#a1524c40d0dfb1b1a6b9be41be7269dea">indexed_iterator</a> &amp; tr::utf8::indexed_iterator::operator++ </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -338,7 +338,7 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -346,8 +346,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a8aef88ba49921eacd35bcf700f99692c" name="a8aef88ba49921eacd35bcf700f99692c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8aef88ba49921eacd35bcf700f99692c">&#9670;&#160;</a></span>operator--()</h2>
+<a id="a15bd652d034fa2dd266f2008056171df" name="a15bd652d034fa2dd266f2008056171df"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a15bd652d034fa2dd266f2008056171df">&#9670;&#160;</a></span>operator--()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -356,7 +356,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="#a7b2a7f08ec445fb51be96f407be78697">indexed_iterator</a> &amp; tr::utf8::indexed_iterator::operator-- </td>
+          <td class="memname"><a class="el" href="#a1524c40d0dfb1b1a6b9be41be7269dea">indexed_iterator</a> &amp; tr::utf8::indexed_iterator::operator-- </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -364,7 +364,7 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -372,8 +372,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aef314f5992e0ad7db94ff13868867173" name="aef314f5992e0ad7db94ff13868867173"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aef314f5992e0ad7db94ff13868867173">&#9670;&#160;</a></span>base()</h2>
+<a id="a3d722457dbf6ea7aa77a92199290f263" name="a3d722457dbf6ea7aa77a92199290f263"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d722457dbf6ea7aa77a92199290f263">&#9670;&#160;</a></span>base()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -390,7 +390,7 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -398,8 +398,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="af7bbe361e92c55d09d8dd18fe66c374a" name="af7bbe361e92c55d09d8dd18fe66c374a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af7bbe361e92c55d09d8dd18fe66c374a">&#9670;&#160;</a></span>index()</h2>
+<a id="a09be138e9d6a620668ff5a4b97f4df8c" name="a09be138e9d6a620668ff5a4b97f4df8c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09be138e9d6a620668ff5a4b97f4df8c">&#9670;&#160;</a></span>index()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -416,7 +416,7 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

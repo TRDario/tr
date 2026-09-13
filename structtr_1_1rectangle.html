@@ -141,29 +141,29 @@ struct tr::rectangle&lt; Element &gt;</div><dl class="tparams"><dt>Template Para
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a638f36394d275ed28be3690d77bb0161" id="r_a638f36394d275ed28be3690d77bb0161"><td class="memTemplParams" colspan="2">template&lt;typename ElementR&gt; </td></tr>
-<tr class="memitem:a638f36394d275ed28be3690d77bb0161 template"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="#a638f36394d275ed28be3690d77bb0161">operator==</a> (const <a class="el" href="#a30cebc1ccdb0431c9be4e72952c7ce65">rectangle</a>&lt; ElementR &gt; &amp;rhs) const</td></tr>
-<tr class="memdesc:a638f36394d275ed28be3690d77bb0161"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares two rectangles for equality.  <br /></td></tr>
+<tr class="memitem:adc93476a234d4d26fa55c5870b53b081" id="r_adc93476a234d4d26fa55c5870b53b081"><td class="memTemplParams" colspan="2">template&lt;typename ElementR&gt; </td></tr>
+<tr class="memitem:adc93476a234d4d26fa55c5870b53b081 template"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="#adc93476a234d4d26fa55c5870b53b081">operator==</a> (const <a class="el" href="#aee02ca751c172f0da342b6a1ce0abfe5">rectangle</a>&lt; ElementR &gt; &amp;rhs) const noexcept</td></tr>
+<tr class="memdesc:adc93476a234d4d26fa55c5870b53b081"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares two rectangles for equality.  <br /></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
-<tr class="memitem:a30cebc1ccdb0431c9be4e72952c7ce65" id="r_a30cebc1ccdb0431c9be4e72952c7ce65"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a30cebc1ccdb0431c9be4e72952c7ce65">rectangle</a> ()=default</td></tr>
-<tr class="memdesc:a30cebc1ccdb0431c9be4e72952c7ce65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default-constructs a rectangle.  <br /></td></tr>
-<tr class="memitem:ac1e1b5c371f8166fff7e4ff2c681e8fd" id="r_ac1e1b5c371f8166fff7e4ff2c681e8fd"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#ac1e1b5c371f8166fff7e4ff2c681e8fd">rectangle</a> (glm::tvec2&lt; Element &gt; tl, glm::tvec2&lt; Element &gt; size)</td></tr>
-<tr class="memdesc:ac1e1b5c371f8166fff7e4ff2c681e8fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a rectangle from a top-left corner and size.  <br /></td></tr>
-<tr class="memitem:a612fe7c7e7d1799920d466a84a4082a9" id="r_a612fe7c7e7d1799920d466a84a4082a9"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a612fe7c7e7d1799920d466a84a4082a9">rectangle</a> (glm::tvec2&lt; Element &gt; size)</td></tr>
-<tr class="memdesc:a612fe7c7e7d1799920d466a84a4082a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a rectangle with the top-left corner at the origin.  <br /></td></tr>
-<tr class="memitem:a42b26e82b04c4f45a5f15547921537e0" id="r_a42b26e82b04c4f45a5f15547921537e0"><td class="memTemplParams" colspan="2">template&lt;typename ElementR&gt; </td></tr>
-<tr class="memitem:a42b26e82b04c4f45a5f15547921537e0 template"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a42b26e82b04c4f45a5f15547921537e0">rectangle</a> (const rectangle&lt; ElementR &gt; &amp;rectangle)</td></tr>
-<tr class="memdesc:a42b26e82b04c4f45a5f15547921537e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy-constructs a rectangle.  <br /></td></tr>
+<tr class="memitem:aee02ca751c172f0da342b6a1ce0abfe5" id="r_aee02ca751c172f0da342b6a1ce0abfe5"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#aee02ca751c172f0da342b6a1ce0abfe5">rectangle</a> () noexcept=default</td></tr>
+<tr class="memdesc:aee02ca751c172f0da342b6a1ce0abfe5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default-constructs a rectangle.  <br /></td></tr>
+<tr class="memitem:a9bb9338fb81d4f163446a4e0ce45c084" id="r_a9bb9338fb81d4f163446a4e0ce45c084"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a9bb9338fb81d4f163446a4e0ce45c084">rectangle</a> (glm::tvec2&lt; Element &gt; tl, glm::tvec2&lt; Element &gt; size) noexcept</td></tr>
+<tr class="memdesc:a9bb9338fb81d4f163446a4e0ce45c084"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a rectangle from a top-left corner and size.  <br /></td></tr>
+<tr class="memitem:a9d70af7a730acdf2384e815a0fd152f2" id="r_a9d70af7a730acdf2384e815a0fd152f2"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a9d70af7a730acdf2384e815a0fd152f2">rectangle</a> (glm::tvec2&lt; Element &gt; size) noexcept</td></tr>
+<tr class="memdesc:a9d70af7a730acdf2384e815a0fd152f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a rectangle with the top-left corner at the origin.  <br /></td></tr>
+<tr class="memitem:a5ff57bd25b18de51d9da87283b61b2ae" id="r_a5ff57bd25b18de51d9da87283b61b2ae"><td class="memTemplParams" colspan="2">template&lt;typename ElementR&gt; </td></tr>
+<tr class="memitem:a5ff57bd25b18de51d9da87283b61b2ae template"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a5ff57bd25b18de51d9da87283b61b2ae">rectangle</a> (const rectangle&lt; ElementR &gt; &amp;rectangle) noexcept</td></tr>
+<tr class="memdesc:a5ff57bd25b18de51d9da87283b61b2ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy-constructs a rectangle.  <br /></td></tr>
 <tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Contains</div></td></tr>
-<tr class="memitem:a93ab57455654d1c492244cf2ee653a26" id="r_a93ab57455654d1c492244cf2ee653a26"><td class="memTemplParams" colspan="2">template&lt;typename ElementR = Element&gt; </td></tr>
-<tr class="memitem:a93ab57455654d1c492244cf2ee653a26 template"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="#a93ab57455654d1c492244cf2ee653a26">contains</a> (glm::tvec2&lt; ElementR &gt; point) const</td></tr>
-<tr class="memdesc:a93ab57455654d1c492244cf2ee653a26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines whether a point is contained within the rectangle.  <br /></td></tr>
-<tr class="memitem:aa880c290b9975ecd4c5e57c3f23e0b40" id="r_aa880c290b9975ecd4c5e57c3f23e0b40"><td class="memTemplParams" colspan="2">template&lt;typename ElementR = Element&gt; </td></tr>
-<tr class="memitem:aa880c290b9975ecd4c5e57c3f23e0b40 template"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="#aa880c290b9975ecd4c5e57c3f23e0b40">contains</a> (const rectangle&lt; ElementR &gt; &amp;rectangle) const</td></tr>
-<tr class="memdesc:aa880c290b9975ecd4c5e57c3f23e0b40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines whether another rectangle is contained entirely within the rectangle.  <br /></td></tr>
+<tr class="memitem:a2df766bb202b240450f091271d4d7902" id="r_a2df766bb202b240450f091271d4d7902"><td class="memTemplParams" colspan="2">template&lt;typename ElementR = Element&gt; </td></tr>
+<tr class="memitem:a2df766bb202b240450f091271d4d7902 template"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="#a2df766bb202b240450f091271d4d7902">contains</a> (glm::tvec2&lt; ElementR &gt; point) const noexcept</td></tr>
+<tr class="memdesc:a2df766bb202b240450f091271d4d7902"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines whether a point is contained within the rectangle.  <br /></td></tr>
+<tr class="memitem:a5b1a97db478b35b2f6ef06bb977adc9c" id="r_a5b1a97db478b35b2f6ef06bb977adc9c"><td class="memTemplParams" colspan="2">template&lt;typename ElementR = Element&gt; </td></tr>
+<tr class="memitem:a5b1a97db478b35b2f6ef06bb977adc9c template"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="#a5b1a97db478b35b2f6ef06bb977adc9c">contains</a> (const rectangle&lt; ElementR &gt; &amp;rectangle) const noexcept</td></tr>
+<tr class="memdesc:a5b1a97db478b35b2f6ef06bb977adc9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines whether another rectangle is contained entirely within the rectangle.  <br /></td></tr>
 <tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Edges</div></td></tr>
-<tr class="memitem:abcc645dcf68226fa59addb516031fdd7" id="r_abcc645dcf68226fa59addb516031fdd7"><td class="memItemLeft">constexpr <a class="el" href="structtr_1_1rectangle__edges.html">rectangle_edges</a>&lt; Element &gt;&#160;</td><td class="memItemRight"><a class="el" href="#abcc645dcf68226fa59addb516031fdd7">edges</a> () const</td></tr>
-<tr class="memdesc:abcc645dcf68226fa59addb516031fdd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the edges of the rectangle.  <br /></td></tr>
+<tr class="memitem:a4873d5d0512c9044f92a501a2c1670d0" id="r_a4873d5d0512c9044f92a501a2c1670d0"><td class="memItemLeft">constexpr <a class="el" href="structtr_1_1rectangle__edges.html">rectangle_edges</a>&lt; Element &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a4873d5d0512c9044f92a501a2c1670d0">edges</a> () const noexcept</td></tr>
+<tr class="memdesc:a4873d5d0512c9044f92a501a2c1670d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the edges of the rectangle.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -171,8 +171,8 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a7a4f04d0affc620375ddb1679e927905" id="r_a7a4f04d0affc620375ddb1679e927905"><td class="memItemLeft">glm::tvec2&lt; Element &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a7a4f04d0affc620375ddb1679e927905">size</a></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a30cebc1ccdb0431c9be4e72952c7ce65" name="a30cebc1ccdb0431c9be4e72952c7ce65"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a30cebc1ccdb0431c9be4e72952c7ce65">&#9670;&#160;</a></span>rectangle() <span class="overload">[1/4]</span></h2>
+<a id="aee02ca751c172f0da342b6a1ce0abfe5" name="aee02ca751c172f0da342b6a1ce0abfe5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee02ca751c172f0da342b6a1ce0abfe5">&#9670;&#160;</a></span>rectangle() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -191,15 +191,15 @@ template&lt;typename Element&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span><span class="mlabel default">default</span></span>  </td>
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel default">default</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="ac1e1b5c371f8166fff7e4ff2c681e8fd" name="ac1e1b5c371f8166fff7e4ff2c681e8fd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac1e1b5c371f8166fff7e4ff2c681e8fd">&#9670;&#160;</a></span>rectangle() <span class="overload">[2/4]</span></h2>
+<a id="a9bb9338fb81d4f163446a4e0ce45c084" name="a9bb9338fb81d4f163446a4e0ce45c084"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9bb9338fb81d4f163446a4e0ce45c084">&#9670;&#160;</a></span>rectangle() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -222,7 +222,7 @@ template&lt;typename Element&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -236,8 +236,8 @@ template&lt;typename Element&gt; </div>
 
 </div>
 </div>
-<a id="a612fe7c7e7d1799920d466a84a4082a9" name="a612fe7c7e7d1799920d466a84a4082a9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a612fe7c7e7d1799920d466a84a4082a9">&#9670;&#160;</a></span>rectangle() <span class="overload">[3/4]</span></h2>
+<a id="a9d70af7a730acdf2384e815a0fd152f2" name="a9d70af7a730acdf2384e815a0fd152f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d70af7a730acdf2384e815a0fd152f2">&#9670;&#160;</a></span>rectangle() <span class="overload">[3/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -256,7 +256,7 @@ template&lt;typename Element&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -269,8 +269,8 @@ template&lt;typename Element&gt; </div>
 
 </div>
 </div>
-<a id="a42b26e82b04c4f45a5f15547921537e0" name="a42b26e82b04c4f45a5f15547921537e0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a42b26e82b04c4f45a5f15547921537e0">&#9670;&#160;</a></span>rectangle() <span class="overload">[4/4]</span></h2>
+<a id="a5ff57bd25b18de51d9da87283b61b2ae" name="a5ff57bd25b18de51d9da87283b61b2ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ff57bd25b18de51d9da87283b61b2ae">&#9670;&#160;</a></span>rectangle() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -291,7 +291,7 @@ template&lt;typename ElementR&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -311,8 +311,8 @@ template&lt;typename ElementR&gt; </div>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="a638f36394d275ed28be3690d77bb0161" name="a638f36394d275ed28be3690d77bb0161"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a638f36394d275ed28be3690d77bb0161">&#9670;&#160;</a></span>operator==()</h2>
+<a id="adc93476a234d4d26fa55c5870b53b081" name="adc93476a234d4d26fa55c5870b53b081"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc93476a234d4d26fa55c5870b53b081">&#9670;&#160;</a></span>operator==()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -327,13 +327,13 @@ template&lt;typename ElementR&gt; </div>
         <tr>
           <td class="memname">bool <a class="el" href="structtr_1_1rectangle.html">tr::rectangle</a>&lt; Element &gt;::operator== </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="#a30cebc1ccdb0431c9be4e72952c7ce65">rectangle</a>&lt; ElementR &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="#aee02ca751c172f0da342b6a1ce0abfe5">rectangle</a>&lt; ElementR &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -353,8 +353,8 @@ template&lt;typename ElementR&gt; </div>
 
 </div>
 </div>
-<a id="a93ab57455654d1c492244cf2ee653a26" name="a93ab57455654d1c492244cf2ee653a26"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a93ab57455654d1c492244cf2ee653a26">&#9670;&#160;</a></span>contains() <span class="overload">[1/2]</span></h2>
+<a id="a2df766bb202b240450f091271d4d7902" name="a2df766bb202b240450f091271d4d7902"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2df766bb202b240450f091271d4d7902">&#9670;&#160;</a></span>contains() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -375,7 +375,7 @@ template&lt;typename ElementR = Element&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -395,8 +395,8 @@ template&lt;typename ElementR = Element&gt; </div>
 
 </div>
 </div>
-<a id="aa880c290b9975ecd4c5e57c3f23e0b40" name="aa880c290b9975ecd4c5e57c3f23e0b40"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa880c290b9975ecd4c5e57c3f23e0b40">&#9670;&#160;</a></span>contains() <span class="overload">[2/2]</span></h2>
+<a id="a5b1a97db478b35b2f6ef06bb977adc9c" name="a5b1a97db478b35b2f6ef06bb977adc9c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b1a97db478b35b2f6ef06bb977adc9c">&#9670;&#160;</a></span>contains() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -411,13 +411,13 @@ template&lt;typename ElementR = Element&gt; </div>
         <tr>
           <td class="memname">bool <a class="el" href="structtr_1_1rectangle.html">tr::rectangle</a>&lt; Element &gt;::contains </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="#a30cebc1ccdb0431c9be4e72952c7ce65">rectangle</a>&lt; ElementR &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>rectangle</em></span></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="#aee02ca751c172f0da342b6a1ce0abfe5">rectangle</a>&lt; ElementR &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>rectangle</em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -437,8 +437,8 @@ template&lt;typename ElementR = Element&gt; </div>
 
 </div>
 </div>
-<a id="abcc645dcf68226fa59addb516031fdd7" name="abcc645dcf68226fa59addb516031fdd7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abcc645dcf68226fa59addb516031fdd7">&#9670;&#160;</a></span>edges()</h2>
+<a id="a4873d5d0512c9044f92a501a2c1670d0" name="a4873d5d0512c9044f92a501a2c1670d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4873d5d0512c9044f92a501a2c1670d0">&#9670;&#160;</a></span>edges()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -457,7 +457,7 @@ template&lt;typename Element&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

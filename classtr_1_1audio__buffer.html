@@ -146,16 +146,16 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a5df9aedc339238b0a07cdfffd20fe7be" id="r_a5df9aedc339238b0a07cdfffd20fe7be"><td class="memItemLeft"><a class="el" href="#abfae79357fe3b63fffd4f9075a16065e">audio_buffer</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a5df9aedc339238b0a07cdfffd20fe7be">operator=</a> (<a class="el" href="#abfae79357fe3b63fffd4f9075a16065e">audio_buffer</a> &amp;&amp;)=delete</td></tr>
 <tr class="memdesc:a5df9aedc339238b0a07cdfffd20fe7be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Audio buffers are not movable.  <br /></td></tr>
 <tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Getters</div></td></tr>
-<tr class="memitem:af4ce9f780e0af701bc083fe3b98348b7" id="r_af4ce9f780e0af701bc083fe3b98348b7"><td class="memItemLeft"><a class="el" href="classtr_1_1audio__context.html">audio_context</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#af4ce9f780e0af701bc083fe3b98348b7">context</a> () const</td></tr>
-<tr class="memdesc:af4ce9f780e0af701bc083fe3b98348b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the context of the audio buffer.  <br /></td></tr>
-<tr class="memitem:a79125a304c7d99073aacb7b6d250e371" id="r_a79125a304c7d99073aacb7b6d250e371"><td class="memItemLeft"><a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a>&#160;</td><td class="memItemRight"><a class="el" href="#a79125a304c7d99073aacb7b6d250e371">size</a> () const</td></tr>
-<tr class="memdesc:a79125a304c7d99073aacb7b6d250e371"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the size of the buffer's storage.  <br /></td></tr>
-<tr class="memitem:a6d9fc251ea7097d0367ea8c6625ca829" id="r_a6d9fc251ea7097d0367ea8c6625ca829"><td class="memItemLeft"><a class="el" href="namespacetr_1_1aliases_1_1chrono__aliases.html#a83b95a8c03cf278276131bc7b19db47c">fsecs</a>&#160;</td><td class="memItemRight"><a class="el" href="#a6d9fc251ea7097d0367ea8c6625ca829">length</a> () const</td></tr>
-<tr class="memdesc:a6d9fc251ea7097d0367ea8c6625ca829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the length of the buffer's audio.  <br /></td></tr>
-<tr class="memitem:a2238d645461c931f5f8e0069886e98eb" id="r_a2238d645461c931f5f8e0069886e98eb"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a2238d645461c931f5f8e0069886e98eb">sample_rate</a> () const</td></tr>
-<tr class="memdesc:a2238d645461c931f5f8e0069886e98eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the sample rate of the buffer's audio.  <br /></td></tr>
-<tr class="memitem:af2101dac7addb5ffa55ad889655d6386" id="r_af2101dac7addb5ffa55ad889655d6386"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#af2101dac7addb5ffa55ad889655d6386">channels</a> () const</td></tr>
-<tr class="memdesc:af2101dac7addb5ffa55ad889655d6386"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the number of channels in the buffer's audio.  <br /></td></tr>
+<tr class="memitem:a2e8968257857913fdad49eb0c3e9c8a4" id="r_a2e8968257857913fdad49eb0c3e9c8a4"><td class="memItemLeft"><a class="el" href="classtr_1_1audio__context.html">audio_context</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a2e8968257857913fdad49eb0c3e9c8a4">context</a> () const noexcept</td></tr>
+<tr class="memdesc:a2e8968257857913fdad49eb0c3e9c8a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the context of the audio buffer.  <br /></td></tr>
+<tr class="memitem:a3bef8e2dea329e2e68f5187439f2f0f4" id="r_a3bef8e2dea329e2e68f5187439f2f0f4"><td class="memItemLeft"><a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a>&#160;</td><td class="memItemRight"><a class="el" href="#a3bef8e2dea329e2e68f5187439f2f0f4">size</a> () const noexcept</td></tr>
+<tr class="memdesc:a3bef8e2dea329e2e68f5187439f2f0f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the size of the buffer's storage.  <br /></td></tr>
+<tr class="memitem:ab1b1293f0a271480a829dc0fd7e143fd" id="r_ab1b1293f0a271480a829dc0fd7e143fd"><td class="memItemLeft"><a class="el" href="namespacetr_1_1aliases_1_1chrono__aliases.html#a83b95a8c03cf278276131bc7b19db47c">fsecs</a>&#160;</td><td class="memItemRight"><a class="el" href="#ab1b1293f0a271480a829dc0fd7e143fd">length</a> () const noexcept</td></tr>
+<tr class="memdesc:ab1b1293f0a271480a829dc0fd7e143fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the length of the buffer's audio.  <br /></td></tr>
+<tr class="memitem:a3a8e7fc4c45f8ab166fb65631fb9348b" id="r_a3a8e7fc4c45f8ab166fb65631fb9348b"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a3a8e7fc4c45f8ab166fb65631fb9348b">sample_rate</a> () const noexcept</td></tr>
+<tr class="memdesc:a3a8e7fc4c45f8ab166fb65631fb9348b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the sample rate of the buffer's audio.  <br /></td></tr>
+<tr class="memitem:aad5ffc0ffdc9634639034c24fff3101e" id="r_aad5ffc0ffdc9634639034c24fff3101e"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#aad5ffc0ffdc9634639034c24fff3101e">channels</a> () const noexcept</td></tr>
+<tr class="memdesc:aad5ffc0ffdc9634639034c24fff3101e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the number of channels in the buffer's audio.  <br /></td></tr>
 <tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Setters</div></td></tr>
 <tr class="memitem:a51b24cbbab83040945f1ead6d15b001c" id="r_a51b24cbbab83040945f1ead6d15b001c"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a51b24cbbab83040945f1ead6d15b001c">set</a> (std::span&lt; const <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a79db663f0e653c7d88222bd0453689e0">i16</a> &gt; data, <a class="el" href="namespacetr.html#aadc8d482d8d35a661880c99bdd86069e">audio_format</a> format, int frequency)</td></tr>
 </table>
@@ -261,11 +261,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="af4ce9f780e0af701bc083fe3b98348b7" name="af4ce9f780e0af701bc083fe3b98348b7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af4ce9f780e0af701bc083fe3b98348b7">&#9670;&#160;</a></span>context()</h2>
+<a id="a2e8968257857913fdad49eb0c3e9c8a4" name="a2e8968257857913fdad49eb0c3e9c8a4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e8968257857913fdad49eb0c3e9c8a4">&#9670;&#160;</a></span>context()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="classtr_1_1audio__context.html">audio_context</a> &amp; tr::audio_buffer::context </td>
@@ -274,16 +277,24 @@ Public Member Functions</h2></td></tr>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Reference to the audio context. </dd></dl>
 
 </div>
 </div>
-<a id="a79125a304c7d99073aacb7b6d250e371" name="a79125a304c7d99073aacb7b6d250e371"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a79125a304c7d99073aacb7b6d250e371">&#9670;&#160;</a></span>size()</h2>
+<a id="a3bef8e2dea329e2e68f5187439f2f0f4" name="a3bef8e2dea329e2e68f5187439f2f0f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3bef8e2dea329e2e68f5187439f2f0f4">&#9670;&#160;</a></span>size()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> tr::audio_buffer::size </td>
@@ -292,16 +303,24 @@ Public Member Functions</h2></td></tr>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Size of the buffer's storage in samples. </dd></dl>
 
 </div>
 </div>
-<a id="a6d9fc251ea7097d0367ea8c6625ca829" name="a6d9fc251ea7097d0367ea8c6625ca829"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6d9fc251ea7097d0367ea8c6625ca829">&#9670;&#160;</a></span>length()</h2>
+<a id="ab1b1293f0a271480a829dc0fd7e143fd" name="ab1b1293f0a271480a829dc0fd7e143fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab1b1293f0a271480a829dc0fd7e143fd">&#9670;&#160;</a></span>length()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="namespacetr_1_1aliases_1_1chrono__aliases.html#a83b95a8c03cf278276131bc7b19db47c">fsecs</a> tr::audio_buffer::length </td>
@@ -310,16 +329,24 @@ Public Member Functions</h2></td></tr>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Length of the buffer's audio in seconds. </dd></dl>
 
 </div>
 </div>
-<a id="a2238d645461c931f5f8e0069886e98eb" name="a2238d645461c931f5f8e0069886e98eb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2238d645461c931f5f8e0069886e98eb">&#9670;&#160;</a></span>sample_rate()</h2>
+<a id="a3a8e7fc4c45f8ab166fb65631fb9348b" name="a3a8e7fc4c45f8ab166fb65631fb9348b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3a8e7fc4c45f8ab166fb65631fb9348b">&#9670;&#160;</a></span>sample_rate()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">int tr::audio_buffer::sample_rate </td>
@@ -328,16 +355,24 @@ Public Member Functions</h2></td></tr>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Sample rate of the buffer's audio. </dd></dl>
 
 </div>
 </div>
-<a id="af2101dac7addb5ffa55ad889655d6386" name="af2101dac7addb5ffa55ad889655d6386"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af2101dac7addb5ffa55ad889655d6386">&#9670;&#160;</a></span>channels()</h2>
+<a id="aad5ffc0ffdc9634639034c24fff3101e" name="aad5ffc0ffdc9634639034c24fff3101e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aad5ffc0ffdc9634639034c24fff3101e">&#9670;&#160;</a></span>channels()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">int tr::audio_buffer::channels </td>
@@ -346,6 +381,11 @@ Public Member Functions</h2></td></tr>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Number of channels in the buffer's audio. </dd></dl>
 

@@ -134,20 +134,23 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1sto
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
-<tr class="memitem:a281e89b188b986f9a1bcdf60f74299f0" id="r_a281e89b188b986f9a1bcdf60f74299f0"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a281e89b188b986f9a1bcdf60f74299f0">stopwatch</a> ()</td></tr>
-<tr class="memdesc:a281e89b188b986f9a1bcdf60f74299f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs and starts the stopwatch.  <br /></td></tr>
+<tr class="memitem:a77b566f980022f3b241acbb5225d464a" id="r_a77b566f980022f3b241acbb5225d464a"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a77b566f980022f3b241acbb5225d464a">stopwatch</a> () noexcept</td></tr>
+<tr class="memdesc:a77b566f980022f3b241acbb5225d464a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs and starts the stopwatch.  <br /></td></tr>
 <tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Access</div></td></tr>
-<tr class="memitem:af94456e6d794674e226f1fa665a67916" id="r_af94456e6d794674e226f1fa665a67916"><td class="memItemLeft"><a class="el" href="namespacetr.html#a0a06575d52c3090c44755b9a8174f146">duration</a>&#160;</td><td class="memItemRight"><a class="el" href="#af94456e6d794674e226f1fa665a67916">elapsed</a> () const</td></tr>
-<tr class="memdesc:af94456e6d794674e226f1fa665a67916"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the elapsed time since the stopwatch was started.  <br /></td></tr>
-<tr class="memitem:a19247311dbdd34770fd82c75d8b20915" id="r_a19247311dbdd34770fd82c75d8b20915"><td class="memItemLeft"><a class="el" href="namespacetr.html#a0a06575d52c3090c44755b9a8174f146">duration</a>&#160;</td><td class="memItemRight"><a class="el" href="#a19247311dbdd34770fd82c75d8b20915">lap</a> ()</td></tr>
-<tr class="memdesc:a19247311dbdd34770fd82c75d8b20915"><td class="mdescLeft">&#160;</td><td class="mdescRight">Restarts the stopwatch and gets the elapsed time since it was started.  <br /></td></tr>
+<tr class="memitem:a5a440d51d5403185028aadcf4620cc55" id="r_a5a440d51d5403185028aadcf4620cc55"><td class="memItemLeft"><a class="el" href="namespacetr.html#a0a06575d52c3090c44755b9a8174f146">duration</a>&#160;</td><td class="memItemRight"><a class="el" href="#a5a440d51d5403185028aadcf4620cc55">elapsed</a> () const noexcept</td></tr>
+<tr class="memdesc:a5a440d51d5403185028aadcf4620cc55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the elapsed time since the stopwatch was started.  <br /></td></tr>
+<tr class="memitem:a234bc99ef9835da47e013171ffa627c4" id="r_a234bc99ef9835da47e013171ffa627c4"><td class="memItemLeft"><a class="el" href="namespacetr.html#a0a06575d52c3090c44755b9a8174f146">duration</a>&#160;</td><td class="memItemRight"><a class="el" href="#a234bc99ef9835da47e013171ffa627c4">lap</a> () noexcept</td></tr>
+<tr class="memdesc:a234bc99ef9835da47e013171ffa627c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Restarts the stopwatch and gets the elapsed time since it was started.  <br /></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a281e89b188b986f9a1bcdf60f74299f0" name="a281e89b188b986f9a1bcdf60f74299f0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a281e89b188b986f9a1bcdf60f74299f0">&#9670;&#160;</a></span>stopwatch()</h2>
+<a id="a77b566f980022f3b241acbb5225d464a" name="a77b566f980022f3b241acbb5225d464a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a77b566f980022f3b241acbb5225d464a">&#9670;&#160;</a></span>stopwatch()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">tr::stopwatch::stopwatch </td>
@@ -156,16 +159,24 @@ Public Member Functions</h2></td></tr>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="af94456e6d794674e226f1fa665a67916" name="af94456e6d794674e226f1fa665a67916"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af94456e6d794674e226f1fa665a67916">&#9670;&#160;</a></span>elapsed()</h2>
+<a id="a5a440d51d5403185028aadcf4620cc55" name="a5a440d51d5403185028aadcf4620cc55"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a440d51d5403185028aadcf4620cc55">&#9670;&#160;</a></span>elapsed()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="namespacetr.html#a0a06575d52c3090c44755b9a8174f146">duration</a> tr::stopwatch::elapsed </td>
@@ -174,16 +185,24 @@ Public Member Functions</h2></td></tr>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Elapsed time since the stopwatch was started. </dd></dl>
 
 </div>
 </div>
-<a id="a19247311dbdd34770fd82c75d8b20915" name="a19247311dbdd34770fd82c75d8b20915"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a19247311dbdd34770fd82c75d8b20915">&#9670;&#160;</a></span>lap()</h2>
+<a id="a234bc99ef9835da47e013171ffa627c4" name="a234bc99ef9835da47e013171ffa627c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a234bc99ef9835da47e013171ffa627c4">&#9670;&#160;</a></span>lap()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="namespacetr.html#a0a06575d52c3090c44755b9a8174f146">duration</a> tr::stopwatch::lap </td>
@@ -192,6 +211,11 @@ Public Member Functions</h2></td></tr>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Elapsed time of the previous lap. </dd></dl>
 

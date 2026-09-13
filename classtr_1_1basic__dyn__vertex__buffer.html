@@ -137,56 +137,55 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1bas
  <div class="center">
   <img src="classtr_1_1basic__dyn__vertex__buffer.png" usemap="#tr_3A_3Abasic_5Fdyn_5Fvertex_5Fbuffer_map" alt=""/>
   <map id="tr_3A_3Abasic_5Fdyn_5Fvertex_5Fbuffer_map" name="tr_3A_3Abasic_5Fdyn_5Fvertex_5Fbuffer_map">
-<area href="classtr_1_1graphics__buffer.html" title="Base class for buffers living on a graphics context." alt="tr::graphics_buffer" shape="rect" coords="434,0,641,24"/>
-<area href="classtr_1_1dyn__vertex__buffer.html" alt="tr::dyn_vertex_buffer&lt; glm::vec2 &gt;" shape="rect" coords="0,112,207,136"/>
-<area href="classtr_1_1dyn__vertex__buffer.html" alt="tr::dyn_vertex_buffer&lt; tr::rgba8 &gt;" shape="rect" coords="217,112,424,136"/>
-<area href="classtr_1_1dyn__vertex__buffer.html" alt="tr::dyn_vertex_buffer&lt; circle &gt;" shape="rect" coords="434,112,641,136"/>
-<area href="classtr_1_1dyn__vertex__buffer.html" alt="tr::dyn_vertex_buffer&lt; glyph &gt;" shape="rect" coords="651,112,858,136"/>
-<area href="classtr_1_1dyn__vertex__buffer.html" title="Typed dynamic vertex buffer class." alt="tr::dyn_vertex_buffer&lt; Element &gt;" shape="rect" coords="868,112,1075,136"/>
+<area href="classtr_1_1graphics__buffer.html" title="Base class for buffers living on a graphics context." alt="tr::graphics_buffer" shape="rect" coords="0,0,198,24"/>
+<area href="classtr_1_1dyn__vertex__buffer.html" title="Typed dynamic vertex buffer class." alt="tr::dyn_vertex_buffer&lt; Element &gt;" shape="rect" coords="0,112,198,136"/>
   </map>
 </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Size</div></td></tr>
-<tr class="memitem:a05a932d9ae530aeaf751737d76bcad11" id="r_a05a932d9ae530aeaf751737d76bcad11"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a05a932d9ae530aeaf751737d76bcad11">empty</a> () const</td></tr>
-<tr class="memdesc:a05a932d9ae530aeaf751737d76bcad11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the vertex buffer is empty.  <br /></td></tr>
-<tr class="memitem:a6890674a7ada9bb3bd0e201630bcb033" id="r_a6890674a7ada9bb3bd0e201630bcb033"><td class="memItemLeft"><a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a>&#160;</td><td class="memItemRight"><a class="el" href="#a6890674a7ada9bb3bd0e201630bcb033">size</a> () const</td></tr>
-<tr class="memdesc:a6890674a7ada9bb3bd0e201630bcb033"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the size of the vertex buffer contents.  <br /></td></tr>
-<tr class="memitem:a64a1a8dbb45ad0f26ab5007ac74ac33c" id="r_a64a1a8dbb45ad0f26ab5007ac74ac33c"><td class="memItemLeft"><a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a>&#160;</td><td class="memItemRight"><a class="el" href="#a64a1a8dbb45ad0f26ab5007ac74ac33c">capacity</a> () const</td></tr>
-<tr class="memdesc:a64a1a8dbb45ad0f26ab5007ac74ac33c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the capacity of the vertex buffer.  <br /></td></tr>
+<tr class="memitem:ae22af91bc0fef51eb25d3ba37b56f236" id="r_ae22af91bc0fef51eb25d3ba37b56f236"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#ae22af91bc0fef51eb25d3ba37b56f236">empty</a> () const noexcept</td></tr>
+<tr class="memdesc:ae22af91bc0fef51eb25d3ba37b56f236"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the vertex buffer is empty.  <br /></td></tr>
+<tr class="memitem:adef712689b12d158a312f833151162f8" id="r_adef712689b12d158a312f833151162f8"><td class="memItemLeft"><a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a>&#160;</td><td class="memItemRight"><a class="el" href="#adef712689b12d158a312f833151162f8">size</a> () const noexcept</td></tr>
+<tr class="memdesc:adef712689b12d158a312f833151162f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the size of the vertex buffer contents.  <br /></td></tr>
+<tr class="memitem:aacf17639fdbbe54a4c3705da179fc628" id="r_aacf17639fdbbe54a4c3705da179fc628"><td class="memItemLeft"><a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a>&#160;</td><td class="memItemRight"><a class="el" href="#aacf17639fdbbe54a4c3705da179fc628">capacity</a> () const noexcept</td></tr>
+<tr class="memdesc:aacf17639fdbbe54a4c3705da179fc628"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the capacity of the vertex buffer.  <br /></td></tr>
 <tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Setting</div></td></tr>
-<tr class="memitem:a3e4471b26b00b6c5c94d2d98c354a95a" id="r_a3e4471b26b00b6c5c94d2d98c354a95a"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a3e4471b26b00b6c5c94d2d98c354a95a">clear</a> ()</td></tr>
-<tr class="memdesc:a3e4471b26b00b6c5c94d2d98c354a95a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the size of the vertex buffer to 0.  <br /></td></tr>
+<tr class="memitem:ace74a3d4409f71918ca83b40a2f148b8" id="r_ace74a3d4409f71918ca83b40a2f148b8"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ace74a3d4409f71918ca83b40a2f148b8">clear</a> () noexcept</td></tr>
+<tr class="memdesc:ace74a3d4409f71918ca83b40a2f148b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the size of the vertex buffer to 0.  <br /></td></tr>
 <tr class="memitem:af795103ce1f224d12555d30cc0ec9dba" id="r_af795103ce1f224d12555d30cc0ec9dba"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#af795103ce1f224d12555d30cc0ec9dba">resize</a> (<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> size)</td></tr>
 <tr class="memdesc:af795103ce1f224d12555d30cc0ec9dba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the buffer and resizes it, potentially resizing it.  <br /></td></tr>
 <tr class="memitem:abee27c52ea2d1fd3243874746d77db1e" id="r_abee27c52ea2d1fd3243874746d77db1e"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#abee27c52ea2d1fd3243874746d77db1e">reserve</a> (<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> capacity)</td></tr>
 <tr class="memdesc:abee27c52ea2d1fd3243874746d77db1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the buffer and guarantees a certain capacity for it.  <br /></td></tr>
 <tr class="memitem:a2fc1525054bd6787049f2554390a7d9e" id="r_a2fc1525054bd6787049f2554390a7d9e"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a2fc1525054bd6787049f2554390a7d9e">set</a> (std::span&lt; const std::byte &gt; data)</td></tr>
 <tr class="memdesc:a2fc1525054bd6787049f2554390a7d9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the contents of the buffer, potentially reallocating it.  <br /></td></tr>
-<tr class="memitem:aeda3e45b8829b8b1ec69040676389317" id="r_aeda3e45b8829b8b1ec69040676389317"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aeda3e45b8829b8b1ec69040676389317">set_region</a> (<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> offset, std::span&lt; const std::byte &gt; data)</td></tr>
-<tr class="memdesc:aeda3e45b8829b8b1ec69040676389317"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a region of the buffer.  <br /></td></tr>
+<tr class="memitem:ae2f2b088cb581ab057c5eb07ff768982" id="r_ae2f2b088cb581ab057c5eb07ff768982"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ae2f2b088cb581ab057c5eb07ff768982">set_region</a> (<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> offset, std::span&lt; const std::byte &gt; data) noexcept</td></tr>
+<tr class="memdesc:ae2f2b088cb581ab057c5eb07ff768982"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a region of the buffer.  <br /></td></tr>
 <tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
-<tr class="memitem:a06d9e2187dbc1834b2a6bbea8a44d0bc" id="r_a06d9e2187dbc1834b2a6bbea8a44d0bc"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a06d9e2187dbc1834b2a6bbea8a44d0bc">graphics_buffer</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context)</td></tr>
-<tr class="memdesc:a06d9e2187dbc1834b2a6bbea8a44d0bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an empty buffer.  <br /></td></tr>
+<tr class="memitem:a8d312e4b4a5a4fc7225fe88162bdd722" id="r_a8d312e4b4a5a4fc7225fe88162bdd722"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a8d312e4b4a5a4fc7225fe88162bdd722">graphics_buffer</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context) noexcept</td></tr>
+<tr class="memdesc:a8d312e4b4a5a4fc7225fe88162bdd722"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an empty buffer.  <br /></td></tr>
 <tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Context</div></td></tr>
-<tr class="memitem:aa7323654826d026acc2bc31bed2ed286" id="r_aa7323654826d026acc2bc31bed2ed286"><td class="memItemLeft"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#aa7323654826d026acc2bc31bed2ed286">context</a> () const</td></tr>
-<tr class="memdesc:aa7323654826d026acc2bc31bed2ed286"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a reference to the graphics context the buffer is on.  <br /></td></tr>
+<tr class="memitem:a2c5c352444ab4d10ed3add4a8cd03f9a" id="r_a2c5c352444ab4d10ed3add4a8cd03f9a"><td class="memItemLeft"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a2c5c352444ab4d10ed3add4a8cd03f9a">context</a> () const noexcept</td></tr>
+<tr class="memdesc:a2c5c352444ab4d10ed3add4a8cd03f9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a reference to the graphics context the buffer is on.  <br /></td></tr>
 <tr id="pub-methods-4" class="groupHeader"><td colspan="2"><div class="groupHeader">State</div></td></tr>
-<tr class="memitem:a645762c5d78538a69025a259dce68834" id="r_a645762c5d78538a69025a259dce68834"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a645762c5d78538a69025a259dce68834">valid</a> () const</td></tr>
-<tr class="memdesc:a645762c5d78538a69025a259dce68834"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the buffer is in a valid state.  <br /></td></tr>
+<tr class="memitem:ab3a7924563ab5b21ec88e5004dd17d6a" id="r_ab3a7924563ab5b21ec88e5004dd17d6a"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#ab3a7924563ab5b21ec88e5004dd17d6a">valid</a> () const noexcept</td></tr>
+<tr class="memdesc:ab3a7924563ab5b21ec88e5004dd17d6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the buffer is in a valid state.  <br /></td></tr>
 <tr id="pub-methods-5" class="groupHeader"><td colspan="2"><div class="groupHeader">Label</div></td></tr>
 <tr class="memitem:ada4364c0295af892b869f2be3ed62777" id="r_ada4364c0295af892b869f2be3ed62777"><td class="memItemLeft">std::string&#160;</td><td class="memItemRight"><a class="el" href="#ada4364c0295af892b869f2be3ed62777">label</a> () const</td></tr>
 <tr class="memdesc:ada4364c0295af892b869f2be3ed62777"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the label of the buffer.  <br /></td></tr>
-<tr class="memitem:a791c5d26a17cce2fe3850cb8e1ba5697" id="r_a791c5d26a17cce2fe3850cb8e1ba5697"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a791c5d26a17cce2fe3850cb8e1ba5697">set_label</a> (std::string_view label)</td></tr>
-<tr class="memdesc:a791c5d26a17cce2fe3850cb8e1ba5697"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the label of the buffer.  <br /></td></tr>
+<tr class="memitem:ab5e025d8fb771727e580f881a1e65fac" id="r_ab5e025d8fb771727e580f881a1e65fac"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ab5e025d8fb771727e580f881a1e65fac">set_label</a> (std::string_view label) noexcept</td></tr>
+<tr class="memdesc:ab5e025d8fb771727e580f881a1e65fac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the label of the buffer.  <br /></td></tr>
 </table>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="a05a932d9ae530aeaf751737d76bcad11" name="a05a932d9ae530aeaf751737d76bcad11"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a05a932d9ae530aeaf751737d76bcad11">&#9670;&#160;</a></span>empty()</h2>
+<a id="ae22af91bc0fef51eb25d3ba37b56f236" name="ae22af91bc0fef51eb25d3ba37b56f236"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae22af91bc0fef51eb25d3ba37b56f236">&#9670;&#160;</a></span>empty()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">bool tr::basic_dyn_vertex_buffer::empty </td>
@@ -195,16 +194,24 @@ Public Member Functions</h2></td></tr>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if thevertex buffer is empty, <span class="tt">false</span> otherwise. </dd></dl>
 
 </div>
 </div>
-<a id="a6890674a7ada9bb3bd0e201630bcb033" name="a6890674a7ada9bb3bd0e201630bcb033"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6890674a7ada9bb3bd0e201630bcb033">&#9670;&#160;</a></span>size()</h2>
+<a id="adef712689b12d158a312f833151162f8" name="adef712689b12d158a312f833151162f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adef712689b12d158a312f833151162f8">&#9670;&#160;</a></span>size()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> tr::basic_dyn_vertex_buffer::size </td>
@@ -213,16 +220,24 @@ Public Member Functions</h2></td></tr>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Size of the vertex buffer in bytes. </dd></dl>
 
 </div>
 </div>
-<a id="a64a1a8dbb45ad0f26ab5007ac74ac33c" name="a64a1a8dbb45ad0f26ab5007ac74ac33c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a64a1a8dbb45ad0f26ab5007ac74ac33c">&#9670;&#160;</a></span>capacity()</h2>
+<a id="aacf17639fdbbe54a4c3705da179fc628" name="aacf17639fdbbe54a4c3705da179fc628"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aacf17639fdbbe54a4c3705da179fc628">&#9670;&#160;</a></span>capacity()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> tr::basic_dyn_vertex_buffer::capacity </td>
@@ -231,16 +246,24 @@ Public Member Functions</h2></td></tr>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Capacity of the vertex buffer in bytes. </dd></dl>
 
 </div>
 </div>
-<a id="a3e4471b26b00b6c5c94d2d98c354a95a" name="a3e4471b26b00b6c5c94d2d98c354a95a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3e4471b26b00b6c5c94d2d98c354a95a">&#9670;&#160;</a></span>clear()</h2>
+<a id="ace74a3d4409f71918ca83b40a2f148b8" name="ace74a3d4409f71918ca83b40a2f148b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace74a3d4409f71918ca83b40a2f148b8">&#9670;&#160;</a></span>clear()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void tr::basic_dyn_vertex_buffer::clear </td>
@@ -249,6 +272,11 @@ Public Member Functions</h2></td></tr>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>
@@ -322,11 +350,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aeda3e45b8829b8b1ec69040676389317" name="aeda3e45b8829b8b1ec69040676389317"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeda3e45b8829b8b1ec69040676389317">&#9670;&#160;</a></span>set_region()</h2>
+<a id="ae2f2b088cb581ab057c5eb07ff768982" name="ae2f2b088cb581ab057c5eb07ff768982"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae2f2b088cb581ab057c5eb07ff768982">&#9670;&#160;</a></span>set_region()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void tr::basic_dyn_vertex_buffer::set_region </td>
@@ -339,6 +370,11 @@ Public Member Functions</h2></td></tr>
           <td class="paramtype">std::span&lt; const std::byte &gt;</td>          <td class="paramname"><span class="paramname"><em>data</em></span>&#160;)</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -351,8 +387,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a06d9e2187dbc1834b2a6bbea8a44d0bc" name="a06d9e2187dbc1834b2a6bbea8a44d0bc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a06d9e2187dbc1834b2a6bbea8a44d0bc">&#9670;&#160;</a></span>graphics_buffer()</h2>
+<a id="a8d312e4b4a5a4fc7225fe88162bdd722" name="a8d312e4b4a5a4fc7225fe88162bdd722"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d312e4b4a5a4fc7225fe88162bdd722">&#9670;&#160;</a></span>graphics_buffer()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -361,7 +397,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classtr_1_1graphics__buffer.html#a06d9e2187dbc1834b2a6bbea8a44d0bc">tr::graphics_buffer::graphics_buffer</a> </td>
+          <td class="memname"><a class="el" href="classtr_1_1graphics__buffer.html#a8d312e4b4a5a4fc7225fe88162bdd722">tr::graphics_buffer::graphics_buffer</a> </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>context</em></span></td><td>)</td>
           <td></td>
@@ -369,7 +405,7 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel explicit">explicit</span></span>  </td>
+<span class="mlabels"><span class="mlabel explicit">explicit</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -382,37 +418,53 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aa7323654826d026acc2bc31bed2ed286" name="aa7323654826d026acc2bc31bed2ed286"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa7323654826d026acc2bc31bed2ed286">&#9670;&#160;</a></span>context()</h2>
+<a id="a2c5c352444ab4d10ed3add4a8cd03f9a" name="a2c5c352444ab4d10ed3add4a8cd03f9a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c5c352444ab4d10ed3add4a8cd03f9a">&#9670;&#160;</a></span>context()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp; <a class="el" href="classtr_1_1graphics__buffer.html#aa7323654826d026acc2bc31bed2ed286">tr::graphics_buffer::context</a> </td>
+          <td class="memname"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp; <a class="el" href="classtr_1_1graphics__buffer.html#a2c5c352444ab4d10ed3add4a8cd03f9a">tr::graphics_buffer::context</a> </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Reference to the graphics context the buffer is on. </dd></dl>
 
 </div>
 </div>
-<a id="a645762c5d78538a69025a259dce68834" name="a645762c5d78538a69025a259dce68834"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a645762c5d78538a69025a259dce68834">&#9670;&#160;</a></span>valid()</h2>
+<a id="ab3a7924563ab5b21ec88e5004dd17d6a" name="ab3a7924563ab5b21ec88e5004dd17d6a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3a7924563ab5b21ec88e5004dd17d6a">&#9670;&#160;</a></span>valid()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="classtr_1_1graphics__buffer.html#a645762c5d78538a69025a259dce68834">tr::graphics_buffer::valid</a> </td>
+          <td class="memname">bool <a class="el" href="classtr_1_1graphics__buffer.html#ab3a7924563ab5b21ec88e5004dd17d6a">tr::graphics_buffer::valid</a> </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the buffer is in a valid state, <span class="tt">false</span> if it is in an invalid state. </dd></dl>
 
@@ -423,6 +475,9 @@ Public Member Functions</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">std::string <a class="el" href="classtr_1_1graphics__buffer.html#ada4364c0295af892b869f2be3ed62777">tr::graphics_buffer::label</a> </td>
@@ -431,24 +486,37 @@ Public Member Functions</h2></td></tr>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Label of the buffer, or "&lt;unnamed&gt;". </dd></dl>
 
 </div>
 </div>
-<a id="a791c5d26a17cce2fe3850cb8e1ba5697" name="a791c5d26a17cce2fe3850cb8e1ba5697"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a791c5d26a17cce2fe3850cb8e1ba5697">&#9670;&#160;</a></span>set_label()</h2>
+<a id="ab5e025d8fb771727e580f881a1e65fac" name="ab5e025d8fb771727e580f881a1e65fac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab5e025d8fb771727e580f881a1e65fac">&#9670;&#160;</a></span>set_label()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="classtr_1_1graphics__buffer.html#a791c5d26a17cce2fe3850cb8e1ba5697">tr::graphics_buffer::set_label</a> </td>
+          <td class="memname">void <a class="el" href="classtr_1_1graphics__buffer.html#ab5e025d8fb771727e580f881a1e65fac">tr::graphics_buffer::set_label</a> </td>
           <td>(</td>
           <td class="paramtype">std::string_view</td>          <td class="paramname"><span class="paramname"><em>label</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">

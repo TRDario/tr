@@ -1,7 +1,7 @@
 var classtr_1_1audio__file__open__error =
 [
-    [ "audio_file_open_error", "classtr_1_1audio__file__open__error.html#a9d02a95e56d6d800ce1f116184a8eb86", null ],
-    [ "name", "classtr_1_1audio__file__open__error.html#a967a65590c15cb012f9a6acb163eb34c", null ],
-    [ "description", "classtr_1_1audio__file__open__error.html#abf613d080e2469b5cc707c0228601282", null ],
-    [ "details", "classtr_1_1audio__file__open__error.html#a78e1c29884ad0c388a77bf35c4ef0dcb", null ]
+    [ "audio_file_open_error", "classtr_1_1audio__file__open__error.html#af6fe6fd95d0a0c775fffd93431942d06", null ],
+    [ "name", "classtr_1_1audio__file__open__error.html#a299ce62753da0e4badd0c57bbd59cff9", null ],
+    [ "description", "classtr_1_1audio__file__open__error.html#a281e9cc446556101cdbbf7a48eae1d15", null ],
+    [ "details", "classtr_1_1audio__file__open__error.html#a22d89dda8c07e2a56b0a07b1cfab2925", null ]
 ];

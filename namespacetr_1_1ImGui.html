@@ -141,8 +141,8 @@ Functions</h2></td></tr>
 <tr class="memitem:ab67962fb9e55074d23dfa6bbc9d36a98" id="r_ab67962fb9e55074d23dfa6bbc9d36a98"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ab67962fb9e55074d23dfa6bbc9d36a98">Shutdown</a> ()</td></tr>
 <tr class="memdesc:ab67962fb9e55074d23dfa6bbc9d36a98"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shuts the Dear <a class="el" href="namespacetr_1_1ImGui.html" title="Namespace containing functionality for integrating Dear ImGui with tr.">ImGui</a> backends needed to work with tr down.  <br /></td></tr>
 <tr id="func-members-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Drawing</div></td></tr>
-<tr class="memitem:a1e2137167421e29d9a595f248872dae7" id="r_a1e2137167421e29d9a595f248872dae7"><td class="memItemLeft">ImTextureID&#160;</td><td class="memItemRight"><a class="el" href="#a1e2137167421e29d9a595f248872dae7">GetTextureID</a> (<a class="el" href="classtr_1_1texture__view.html">texture_view</a> texture)</td></tr>
-<tr class="memdesc:a1e2137167421e29d9a595f248872dae7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the Dear <a class="el" href="namespacetr_1_1ImGui.html" title="Namespace containing functionality for integrating Dear ImGui with tr.">ImGui</a> texture ID for a tr texture view.  <br /></td></tr>
+<tr class="memitem:aa524527c25072338e1d515d62a9c571f" id="r_aa524527c25072338e1d515d62a9c571f"><td class="memItemLeft">ImTextureID&#160;</td><td class="memItemRight"><a class="el" href="#aa524527c25072338e1d515d62a9c571f">GetTextureID</a> (<a class="el" href="classtr_1_1texture__view.html">texture_view</a> texture) noexcept</td></tr>
+<tr class="memdesc:aa524527c25072338e1d515d62a9c571f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the Dear <a class="el" href="namespacetr_1_1ImGui.html" title="Namespace containing functionality for integrating Dear ImGui with tr.">ImGui</a> texture ID for a tr texture view.  <br /></td></tr>
 <tr class="memitem:a3f987ea722aececd6d0cc7966269bae5" id="r_a3f987ea722aececd6d0cc7966269bae5"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a3f987ea722aececd6d0cc7966269bae5">NewFrame</a> ()</td></tr>
 <tr class="memdesc:a3f987ea722aececd6d0cc7966269bae5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prepares the Dear <a class="el" href="namespacetr_1_1ImGui.html" title="Namespace containing functionality for integrating Dear ImGui with tr.">ImGui</a> backends needed to work with tr for a new frame.  <br /></td></tr>
 <tr class="memitem:a67acf931602fd5170f734ca56a07864e" id="r_a67acf931602fd5170f734ca56a07864e"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a67acf931602fd5170f734ca56a07864e">Draw</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context)</td></tr>
@@ -187,7 +187,7 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section note"><dt>Note</dt><dd>This function should preferably be called on every <span class="tt"><a class="el" href="namespacetr__main.html#a20aea765fe2a0e65a3585947de5324c6" title="Called whenever an event needs to be handled.">tr_main::handle_event</a></span> call. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This function should preferably be called on every <span class="tt">tr_main::handle_event</span> call. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">event</td><td>Event to process. </td></tr>
@@ -215,11 +215,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a1e2137167421e29d9a595f248872dae7" name="a1e2137167421e29d9a595f248872dae7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1e2137167421e29d9a595f248872dae7">&#9670;&#160;</a></span>GetTextureID()</h2>
+<a id="aa524527c25072338e1d515d62a9c571f" name="aa524527c25072338e1d515d62a9c571f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa524527c25072338e1d515d62a9c571f">&#9670;&#160;</a></span>GetTextureID()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">ImTextureID tr::ImGui::GetTextureID </td>
@@ -228,6 +231,11 @@ Functions</h2></td></tr>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">

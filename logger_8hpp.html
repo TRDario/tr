@@ -128,50 +128,243 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('logger_8hpp.ht
 </div><!--header-->
 <div class="contents">
 
-<p>Provides <span class="tt"><a class="el" href="classtr_1_1logger.html" title="Flexible logger class.">tr::logger</a></span> and related utilities.  
+<p>Provides the <span class="tt"><a class="el" href="classtr_1_1logger.html" title="Logging subsystem singleton.">tr::logger</a></span> singleton.  
 </p>
 
 <p><a href="logger_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:tr_3A_3Alogger_5Fbackend" id="r_tr_3A_3Alogger_5Fbackend"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classtr_1_1logger__backend.html">tr::logger_backend</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logger backend interface.  <a href="classtr_1_1logger__backend.html#details">More...</a><br /></td></tr>
-<tr class="memitem:tr_3A_3Aconsole_5Flogger" id="r_tr_3A_3Aconsole_5Flogger"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classtr_1_1console__logger.html">tr::console_logger</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Console logger backend.  <a href="classtr_1_1console__logger.html#details">More...</a><br /></td></tr>
-<tr class="memitem:tr_3A_3Afile_5Flogger" id="r_tr_3A_3Afile_5Flogger"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classtr_1_1file__logger.html">tr::file_logger</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">File logger backend.  <a href="classtr_1_1file__logger.html#details">More...</a><br /></td></tr>
-<tr class="memitem:tr_3A_3Aconsole_5Fand_5Ffile_5Flogger" id="r_tr_3A_3Aconsole_5Fand_5Ffile_5Flogger"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classtr_1_1console__and__file__logger.html">tr::console_and_file_logger</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Joint console and file logger backend.  <a href="classtr_1_1console__and__file__logger.html#details">More...</a><br /></td></tr>
 <tr class="memitem:tr_3A_3Alogger" id="r_tr_3A_3Alogger"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classtr_1_1logger.html">tr::logger</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flexible logger class.  <a href="classtr_1_1logger.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logging subsystem singleton.  <a href="classtr_1_1logger.html#details">More...</a><br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-namespaces" class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
 <tr class="memitem:tr" id="r_tr"><td class="memItemLeft">namespace &#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html">tr</a></td></tr>
 <tr class="memdesc:namespacetr"><td class="mdescLeft">&#160;</td><td class="mdescRight">Namespace containing all tr functionality. <br /></td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 id="header-enum-members" class="groupheader"><a id="enum-members" name="enum-members"></a>
-Enumerations</h2></td></tr>
-<tr class="memitem:a6e51135988c652c3017a878f9025667c" id="r_a6e51135988c652c3017a878f9025667c"><td class="memItemLeft">enum class &#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#a6e51135988c652c3017a878f9025667c">tr::severity</a> : char { <a class="el" href="namespacetr.html#a6e51135988c652c3017a878f9025667cacaf9b6b99962bf5c2264824231d7a40c">tr::info</a> = 'I'
-, <a class="el" href="namespacetr.html#a6e51135988c652c3017a878f9025667ca7b83d3f08fa392b79e3f553b585971cd">tr::warning</a> = 'W'
-, <a class="el" href="namespacetr.html#a6e51135988c652c3017a878f9025667cacb5e100e5a9a3e7f6d1fd97512215282">tr::error</a> = 'E'
-, <a class="el" href="namespacetr.html#a6e51135988c652c3017a878f9025667cadf6402fd9ecc60f5a2159fdf45711cd4">tr::fatal</a> = 'F'
- }</td></tr>
-<tr class="memdesc:a6e51135988c652c3017a878f9025667c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Log message severity levels.  <a href="namespacetr.html#a6e51135988c652c3017a878f9025667c">More...</a><br /></td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:a97927c3ed93641fd4bba0b822e63d31a" id="r_a97927c3ed93641fd4bba0b822e63d31a"><td class="memTemplParams" colspan="2">template&lt;std::derived_from&lt; <a class="el" href="classtr_1_1logger__backend.html">logger_backend</a> &gt; Backend, typename... Args&gt; <br />
-requires (std::constructible_from&lt;Backend, Args...&gt;)</td></tr>
-<tr class="memitem:a97927c3ed93641fd4bba0b822e63d31a template"><td class="memItemLeft"><a class="el" href="classtr_1_1logger.html">logger</a>&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#a97927c3ed93641fd4bba0b822e63d31a">tr::make_logger</a> (Args &amp;&amp;... args)</td></tr>
-<tr class="memdesc:a97927c3ed93641fd4bba0b822e63d31a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a logger with an initial backend created in-place.  <br /></td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:a7cb98ce8eb7e48ecb437887b7c6a6ba6" id="r_a7cb98ce8eb7e48ecb437887b7c6a6ba6"><td class="memItemLeft"><a class="el" href="classtr_1_1logger.html">logger</a>&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#a7cb98ce8eb7e48ecb437887b7c6a6ba6">tr::error_logger</a> {<a class="el" href="namespacetr.html#a97927c3ed93641fd4bba0b822e63d31a">make_logger</a>&lt;<a class="el" href="classtr_1_1console__logger.html">console_logger</a>&gt;(&quot;tr&quot;)}</td></tr>
-<tr class="memdesc:a7cb98ce8eb7e48ecb437887b7c6a6ba6"><td class="mdescLeft">&#160;</td><td class="mdescRight">tr's default error logger, may be redirected.  <br /></td></tr>
+<tr class="heading"><td colspan="2"><h2 id="header-define-members" class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a994dd5a24c559fb1b8422f664e5a8a7a" id="r_a994dd5a24c559fb1b8422f664e5a8a7a"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#a994dd5a24c559fb1b8422f664e5a8a7a">TR_LOG_TRACE</a>(source,  fmt, ...)</td></tr>
+<tr class="memdesc:a994dd5a24c559fb1b8422f664e5a8a7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs a trace message.  <br /></td></tr>
+<tr class="memitem:a91e2fbce8dac30af481ba36fdf6b6e0f" id="r_a91e2fbce8dac30af481ba36fdf6b6e0f"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#a91e2fbce8dac30af481ba36fdf6b6e0f">TR_LOG_DEBUG</a>(source,  fmt, ...)</td></tr>
+<tr class="memdesc:a91e2fbce8dac30af481ba36fdf6b6e0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs a debug message.  <br /></td></tr>
+<tr class="memitem:a77e8cc408a37e4cee28dc4e6c5d012a0" id="r_a77e8cc408a37e4cee28dc4e6c5d012a0"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#a77e8cc408a37e4cee28dc4e6c5d012a0">TR_LOG_INFO</a>(source,  fmt, ...)</td></tr>
+<tr class="memdesc:a77e8cc408a37e4cee28dc4e6c5d012a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs information.  <br /></td></tr>
+<tr class="memitem:af63c6ffc5832c76c7d31529ed2660017" id="r_af63c6ffc5832c76c7d31529ed2660017"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#af63c6ffc5832c76c7d31529ed2660017">TR_LOG_WARNING</a>(source,  fmt, ...)</td></tr>
+<tr class="memdesc:af63c6ffc5832c76c7d31529ed2660017"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs a warning.  <br /></td></tr>
+<tr class="memitem:ac9eb0731094d9f199b4ebca3c63c7af0" id="r_ac9eb0731094d9f199b4ebca3c63c7af0"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#ac9eb0731094d9f199b4ebca3c63c7af0">TR_LOG_ERROR</a>(source,  fmt, ...)</td></tr>
+<tr class="memdesc:ac9eb0731094d9f199b4ebca3c63c7af0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs an error.  <br /></td></tr>
+<tr class="memitem:a8d93e3229c3b87ab40925869e2e868ed" id="r_a8d93e3229c3b87ab40925869e2e868ed"><td class="memItemLeft">#define&#160;</td><td class="memItemRight"><a class="el" href="#a8d93e3229c3b87ab40925869e2e868ed">TR_LOG_FATAL</a>(source,  fmt, ...)</td></tr>
+<tr class="memdesc:a8d93e3229c3b87ab40925869e2e868ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs a fatal error.  <br /></td></tr>
 </table>
+<a name="doc-define-members" id="doc-define-members"></a><h2 id="header-doc-define-members" class="groupheader">Macro Definition Documentation</h2>
+<a id="a994dd5a24c559fb1b8422f664e5a8a7a" name="a994dd5a24c559fb1b8422f664e5a8a7a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a994dd5a24c559fb1b8422f664e5a8a7a">&#9670;&#160;</a></span>TR_LOG_TRACE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TR_LOG_TRACE</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>source</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>fmt</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em></em></span>...&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Formatting is done through <span class="tt">std::format</span>, so <span class="tt">fmt</span> must be a valid format string and all further arguments must be formattable.</p>
+<p>This macro only has an effect if <span class="tt">TR_ENABLE_LOG_TRACE</span> is enabled. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">source</td><td>Message source identifier. </td></tr>
+    <tr><td class="paramname">fmt</td><td>Format string. </td></tr>
+    <tr><td class="paramname">...</td><td>Formatting arguments. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a91e2fbce8dac30af481ba36fdf6b6e0f" name="a91e2fbce8dac30af481ba36fdf6b6e0f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91e2fbce8dac30af481ba36fdf6b6e0f">&#9670;&#160;</a></span>TR_LOG_DEBUG</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TR_LOG_DEBUG</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>source</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>fmt</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em></em></span>...&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Formatting is done through <span class="tt">std::format</span>, so <span class="tt">fmt</span> must be a valid format string and all further arguments must be formattable.</p>
+<p>This macro only has an effect if <span class="tt">TR_ENABLE_LOG_DEBUG</span> is enabled. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">source</td><td>Message source identifier. </td></tr>
+    <tr><td class="paramname">fmt</td><td>Format string. </td></tr>
+    <tr><td class="paramname">...</td><td>Formatting arguments. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a77e8cc408a37e4cee28dc4e6c5d012a0" name="a77e8cc408a37e4cee28dc4e6c5d012a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a77e8cc408a37e4cee28dc4e6c5d012a0">&#9670;&#160;</a></span>TR_LOG_INFO</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TR_LOG_INFO</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>source</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>fmt</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em></em></span>...&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">source</td><td>Message source identifier. </td></tr>
+    <tr><td class="paramname">fmt</td><td>Format string. </td></tr>
+    <tr><td class="paramname">...</td><td>Formatting arguments. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="af63c6ffc5832c76c7d31529ed2660017" name="af63c6ffc5832c76c7d31529ed2660017"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af63c6ffc5832c76c7d31529ed2660017">&#9670;&#160;</a></span>TR_LOG_WARNING</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TR_LOG_WARNING</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>source</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>fmt</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em></em></span>...&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">source</td><td>Message source identifier. </td></tr>
+    <tr><td class="paramname">fmt</td><td>Format string. </td></tr>
+    <tr><td class="paramname">...</td><td>Formatting arguments. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ac9eb0731094d9f199b4ebca3c63c7af0" name="ac9eb0731094d9f199b4ebca3c63c7af0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac9eb0731094d9f199b4ebca3c63c7af0">&#9670;&#160;</a></span>TR_LOG_ERROR</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TR_LOG_ERROR</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>source</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>fmt</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em></em></span>...&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">source</td><td>Message source identifier. </td></tr>
+    <tr><td class="paramname">fmt</td><td>Format string. </td></tr>
+    <tr><td class="paramname">...</td><td>Formatting arguments. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a8d93e3229c3b87ab40925869e2e868ed" name="a8d93e3229c3b87ab40925869e2e868ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d93e3229c3b87ab40925869e2e868ed">&#9670;&#160;</a></span>TR_LOG_FATAL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define TR_LOG_FATAL</td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>source</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>fmt</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em></em></span>...&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">source</td><td>Message source identifier. </td></tr>
+    <tr><td class="paramname">fmt</td><td>Format string. </td></tr>
+    <tr><td class="paramname">...</td><td>Formatting arguments. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <div id="page-nav" class="page-nav-panel">
@@ -185,7 +378,7 @@ Variables</h2></td></tr>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a href="dir_48c35ed6b28060506e9df53e28b74a05.html">tr</a></li><li class="navelem"><a href="dir_49e87bacfc1bb4f26f06b7a1989b192a.html">utility</a></li><li class="navelem"><a href="logger_8hpp.html">logger.hpp</a></li>
+    <li class="navelem"><a href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a href="dir_48c35ed6b28060506e9df53e28b74a05.html">tr</a></li><li class="navelem"><a href="dir_697f726910a7296205b6ff25f822d718.html">sysgfx</a></li><li class="navelem"><a href="logger_8hpp.html">logger.hpp</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.17.0 </li>
   </ul>
 </div>

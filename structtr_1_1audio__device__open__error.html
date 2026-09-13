@@ -144,19 +144,19 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('structtr_1_1au
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Information</div></td></tr>
-<tr class="memitem:a3d98e12b2b34a3708b326c6d59d1aa10" id="r_a3d98e12b2b34a3708b326c6d59d1aa10"><td class="memItemLeft">std::string_view&#160;</td><td class="memItemRight"><a class="el" href="#a3d98e12b2b34a3708b326c6d59d1aa10">name</a> () const override</td></tr>
-<tr class="memdesc:a3d98e12b2b34a3708b326c6d59d1aa10"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the name of the error.  <br /></td></tr>
-<tr class="memitem:a4e171b17462567a28ebcd6cf76c423bf" id="r_a4e171b17462567a28ebcd6cf76c423bf"><td class="memItemLeft">std::string_view&#160;</td><td class="memItemRight"><a class="el" href="#a4e171b17462567a28ebcd6cf76c423bf">description</a> () const override</td></tr>
-<tr class="memdesc:a4e171b17462567a28ebcd6cf76c423bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the description of the error.  <br /></td></tr>
-<tr class="memitem:adf4d9405f0441ee330ce5836b4e6d8f9" id="r_adf4d9405f0441ee330ce5836b4e6d8f9"><td class="memItemLeft">std::string_view&#160;</td><td class="memItemRight"><a class="el" href="#adf4d9405f0441ee330ce5836b4e6d8f9">details</a> () const override</td></tr>
-<tr class="memdesc:adf4d9405f0441ee330ce5836b4e6d8f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets further details about the error.  <br /></td></tr>
+<tr class="memitem:a593c3fe37a8395f854bdc1c3b53494f7" id="r_a593c3fe37a8395f854bdc1c3b53494f7"><td class="memItemLeft">std::string_view&#160;</td><td class="memItemRight"><a class="el" href="#a593c3fe37a8395f854bdc1c3b53494f7">name</a> () const noexcept override</td></tr>
+<tr class="memdesc:a593c3fe37a8395f854bdc1c3b53494f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the name of the error.  <br /></td></tr>
+<tr class="memitem:a5a6541b8c6f1a28d293e660a3e3aa4da" id="r_a5a6541b8c6f1a28d293e660a3e3aa4da"><td class="memItemLeft">std::string_view&#160;</td><td class="memItemRight"><a class="el" href="#a5a6541b8c6f1a28d293e660a3e3aa4da">description</a> () const noexcept override</td></tr>
+<tr class="memdesc:a5a6541b8c6f1a28d293e660a3e3aa4da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the description of the error.  <br /></td></tr>
+<tr class="memitem:a4bbfb942716a34fa4ce5fe7fa04d764c" id="r_a4bbfb942716a34fa4ce5fe7fa04d764c"><td class="memItemLeft">std::string_view&#160;</td><td class="memItemRight"><a class="el" href="#a4bbfb942716a34fa4ce5fe7fa04d764c">details</a> () const noexcept override</td></tr>
+<tr class="memdesc:a4bbfb942716a34fa4ce5fe7fa04d764c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets further details about the error.  <br /></td></tr>
 <tr class="inherit_header pub_methods_classtr_1_1exception"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_classtr_1_1exception')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Member Functions inherited from <a class="el" href="classtr_1_1exception.html">tr::exception</a></td></tr>
 <tr class="memitem:a00892b4abc5abaeb536e960543b7254c inherit pub_methods_classtr_1_1exception" id="r_a00892b4abc5abaeb536e960543b7254c"><td class="memItemLeft">const char *&#160;</td><td class="memItemRight"><a class="el" href="classtr_1_1exception.html#a00892b4abc5abaeb536e960543b7254c">what</a> () const noexcept final</td></tr>
 <tr class="memdesc:a00892b4abc5abaeb536e960543b7254c inherit pub_methods_classtr_1_1exception"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a formatted error message.  <br /></td></tr>
 </table>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="a3d98e12b2b34a3708b326c6d59d1aa10" name="a3d98e12b2b34a3708b326c6d59d1aa10"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3d98e12b2b34a3708b326c6d59d1aa10">&#9670;&#160;</a></span>name()</h2>
+<a id="a593c3fe37a8395f854bdc1c3b53494f7" name="a593c3fe37a8395f854bdc1c3b53494f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a593c3fe37a8395f854bdc1c3b53494f7">&#9670;&#160;</a></span>name()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -173,18 +173,18 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel virtual">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel override">override</span><span class="mlabel virtual">virtual</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd><span class="tt">"Audio device opening error"</span>. </dd></dl>
 
-<p>Implements <a class="el" href="classtr_1_1exception.html#a9f6eea88da50c895f034e1216fd257c5">tr::exception</a>.</p>
+<p>Implements <a class="el" href="classtr_1_1exception.html#ac44aaad3bc2fca5359317fead7b5831b">tr::exception</a>.</p>
 
 </div>
 </div>
-<a id="a4e171b17462567a28ebcd6cf76c423bf" name="a4e171b17462567a28ebcd6cf76c423bf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4e171b17462567a28ebcd6cf76c423bf">&#9670;&#160;</a></span>description()</h2>
+<a id="a5a6541b8c6f1a28d293e660a3e3aa4da" name="a5a6541b8c6f1a28d293e660a3e3aa4da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a6541b8c6f1a28d293e660a3e3aa4da">&#9670;&#160;</a></span>description()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -201,18 +201,18 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel virtual">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel override">override</span><span class="mlabel virtual">virtual</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Always empty. </dd></dl>
 
-<p>Implements <a class="el" href="classtr_1_1exception.html#a59dec933c039eab500104fd9a000a7b7">tr::exception</a>.</p>
+<p>Implements <a class="el" href="classtr_1_1exception.html#a1da44d607b7e2666fcc24aabae326a9f">tr::exception</a>.</p>
 
 </div>
 </div>
-<a id="adf4d9405f0441ee330ce5836b4e6d8f9" name="adf4d9405f0441ee330ce5836b4e6d8f9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adf4d9405f0441ee330ce5836b4e6d8f9">&#9670;&#160;</a></span>details()</h2>
+<a id="a4bbfb942716a34fa4ce5fe7fa04d764c" name="a4bbfb942716a34fa4ce5fe7fa04d764c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4bbfb942716a34fa4ce5fe7fa04d764c">&#9670;&#160;</a></span>details()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -229,13 +229,13 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel override">override</span><span class="mlabel virtual">virtual</span></span>  </td>
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel override">override</span><span class="mlabel virtual">virtual</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Always empty. </dd></dl>
 
-<p>Implements <a class="el" href="classtr_1_1exception.html#af681e630c41ba5989ddfb1a107d46369">tr::exception</a>.</p>
+<p>Implements <a class="el" href="classtr_1_1exception.html#a26b7c5d53aa369a7b52bd650490d558d">tr::exception</a>.</p>
 
 </div>
 </div>

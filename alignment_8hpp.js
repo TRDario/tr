@@ -21,9 +21,9 @@ var alignment_8hpp =
       [ "tr::align::bc", "namespacetr.html#ac49d62ec06251ab54db81b814219c605a5360af35bde9ebd8f01f492dc059593c", null ],
       [ "tr::align::br", "namespacetr.html#ac49d62ec06251ab54db81b814219c605adc634e2072827fe0b5be9a2063390544", null ]
     ] ],
-    [ "tr::to_halign", "namespacetr.html#a229258cb3e5eee67de597c604b594494", null ],
-    [ "tr::to_valign", "namespacetr.html#ad53a7aa824984a43cc6f3300e421af89", null ],
-    [ "tr::operator|", "namespacetr.html#af7fbf4629d12a5653ed50122a8ec5b18", null ],
-    [ "tr::operator|", "namespacetr.html#a939c9ff7d55c3bcafbe680e6a63629d7", null ],
-    [ "tr::tl", "namespacetr.html#a2940f019ceaa38d941868340c4352a7f", null ]
+    [ "tr::to_halign", "namespacetr.html#a4819d23292963aeb3a48146927769684", null ],
+    [ "tr::to_valign", "namespacetr.html#a55223037fba88ac39da106748ef71b1c", null ],
+    [ "tr::operator|", "namespacetr.html#aa7610842da3c11d1caeec2a0880a7c1e", null ],
+    [ "tr::operator|", "namespacetr.html#a7b983802b20c17234ad7d4b973e6de22", null ],
+    [ "tr::tl", "namespacetr.html#a75ecdbc62d8d9e29ef67c0fcf840e382", null ]
 ];

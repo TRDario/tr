@@ -1,75 +1,75 @@
 var namespacetr_1_1literals =
 [
     [ "angle_literals", "namespacetr_1_1literals_1_1angle__literals.html", [
-      [ "operator\"\"_deg", "namespacetr_1_1literals_1_1angle__literals.html#a7e9866049c5b59a545c75f4620a1442a", null ],
-      [ "operator\"\"_deg", "namespacetr_1_1literals_1_1angle__literals.html#a0fd24fea2dcbc59eb096b81fb747e675", null ],
-      [ "operator\"\"_rad", "namespacetr_1_1literals_1_1angle__literals.html#a47e5023a5af2ba15ec678c8845272974", null ],
-      [ "operator\"\"_rad", "namespacetr_1_1literals_1_1angle__literals.html#a7742a30203354251c97a8038d698b136", null ],
-      [ "operator\"\"_tr", "namespacetr_1_1literals_1_1angle__literals.html#ab08bb250ff7d83aee74d895e2c245497", null ],
-      [ "operator\"\"_tr", "namespacetr_1_1literals_1_1angle__literals.html#aa7aa4a9e4615447739de7abde22e5588", null ]
+      [ "operator\"\"_deg", "namespacetr_1_1literals_1_1angle__literals.html#a7c1df5427c56239a657627ca9616a893", null ],
+      [ "operator\"\"_deg", "namespacetr_1_1literals_1_1angle__literals.html#a0b58635abfe9eacb014a8eb77c9b0c5b", null ],
+      [ "operator\"\"_rad", "namespacetr_1_1literals_1_1angle__literals.html#a5e4764c38aa83f9f7a9986d17750c6df", null ],
+      [ "operator\"\"_rad", "namespacetr_1_1literals_1_1angle__literals.html#a4eb2dbfea9b0ea329f04d1ac35e95116", null ],
+      [ "operator\"\"_tr", "namespacetr_1_1literals_1_1angle__literals.html#a4aec95368b8fcf32706546f731b9b867", null ],
+      [ "operator\"\"_tr", "namespacetr_1_1literals_1_1angle__literals.html#a11ea175f250c689643894bc582f32150", null ]
     ] ],
     [ "chrono_literals", "namespacetr_1_1literals_1_1chrono__literals.html", [
-      [ "operator\"\"_hz", "namespacetr_1_1literals_1_1chrono__literals.html#ada47568012f0d1e6e3694c514d93d80b", null ],
-      [ "operator\"\"_hz", "namespacetr_1_1literals_1_1chrono__literals.html#a92db556558a1f7f811614b6ec8a878aa", null ]
+      [ "operator\"\"_hz", "namespacetr_1_1literals_1_1chrono__literals.html#a2ef4948d9497f3df15f198c917efffd6", null ],
+      [ "operator\"\"_hz", "namespacetr_1_1literals_1_1chrono__literals.html#ae4c3fc5407f301d06c4086de6d63ca4c", null ]
     ] ],
     [ "color_literals", "namespacetr_1_1literals_1_1color__literals.html", [
-      [ "operator\"\"_rgb8", "namespacetr_1_1literals_1_1color__literals.html#a855955b0be30de00fa89db99ca2fc10d", null ],
-      [ "operator\"\"_rgbf", "namespacetr_1_1literals_1_1color__literals.html#a0680b2344e776b1d535725eb33d5a507", null ],
-      [ "operator\"\"_rgba8", "namespacetr_1_1literals_1_1color__literals.html#aae8c5a9bc23c4f12586819eb56ab0c66", null ],
-      [ "operator\"\"_rgbaf", "namespacetr_1_1literals_1_1color__literals.html#ae6f41e1f07cfd4bbdc871ab1d07290b9", null ]
+      [ "operator\"\"_rgba8", "namespacetr_1_1literals_1_1color__literals.html#a4c9c9334d5acadf1f6589146cd42f17e", null ],
+      [ "operator\"\"_rgbaf", "namespacetr_1_1literals_1_1color__literals.html#a4da6bd99cff897d25c88304fbf1795d3", null ],
+      [ "operator\"\"_rgb8", "namespacetr_1_1literals_1_1color__literals.html#a2aaf8a5f565c6223d7ea7c801f36ce94", null ],
+      [ "operator\"\"_rgbf", "namespacetr_1_1literals_1_1color__literals.html#a3ba0a1c51b6664debfdb05508bfccd1e", null ]
     ] ],
     [ "integer_literals", "namespacetr_1_1literals_1_1integer__literals.html", [
-      [ "operator\"\"_u8", "namespacetr_1_1literals_1_1integer__literals.html#addb406a88c5f952949800f07de8bdcdf", null ],
-      [ "operator\"\"_u16", "namespacetr_1_1literals_1_1integer__literals.html#a1d67eda392f2a998c77a695f680ccb51", null ],
-      [ "operator\"\"_u32", "namespacetr_1_1literals_1_1integer__literals.html#a6bd6899fcd94a35d82d8ce04dcaafd90", null ],
-      [ "operator\"\"_u64", "namespacetr_1_1literals_1_1integer__literals.html#a4a09abedf8c8d8ee7d858084ede0d32d", null ],
-      [ "operator\"\"_i8", "namespacetr_1_1literals_1_1integer__literals.html#ab60faf1e140764877f53942fec16c026", null ],
-      [ "operator\"\"_i16", "namespacetr_1_1literals_1_1integer__literals.html#a39021c2d08143161d12f2baa3d1fc22b", null ],
-      [ "operator\"\"_i32", "namespacetr_1_1literals_1_1integer__literals.html#a18967085dab02633e189a95d467b6cbc", null ],
-      [ "operator\"\"_i64", "namespacetr_1_1literals_1_1integer__literals.html#a8385729992867586bc0293b12dd8ded0", null ]
+      [ "operator\"\"_u8", "namespacetr_1_1literals_1_1integer__literals.html#a6fe390147eedea1f9b1d5f177476e549", null ],
+      [ "operator\"\"_u16", "namespacetr_1_1literals_1_1integer__literals.html#acc5d89120ebddb8f0a9f382a35ef58a1", null ],
+      [ "operator\"\"_u32", "namespacetr_1_1literals_1_1integer__literals.html#a6106c327c06543801a981ca9fe8f26c6", null ],
+      [ "operator\"\"_u64", "namespacetr_1_1literals_1_1integer__literals.html#a3d2bc9300626a2cab03ecd72f01848f0", null ],
+      [ "operator\"\"_i8", "namespacetr_1_1literals_1_1integer__literals.html#a239483a7256462d6d19f63662562e832", null ],
+      [ "operator\"\"_i16", "namespacetr_1_1literals_1_1integer__literals.html#aa26472820fdde319b9fc23e78e44c697", null ],
+      [ "operator\"\"_i32", "namespacetr_1_1literals_1_1integer__literals.html#a4dc849e19111d9ca12a09276c187b2e6", null ],
+      [ "operator\"\"_i64", "namespacetr_1_1literals_1_1integer__literals.html#a4d46a099de943decb7935bde54669bb4", null ]
     ] ],
     [ "keyboard_literals", "namespacetr_1_1literals_1_1keyboard__literals.html", [
-      [ "operator\"\"_s", "namespacetr_1_1literals_1_1keyboard__literals.html#aeba379565ac47aa854cdabda0f8a1bec", null ],
-      [ "operator\"\"_sc", "namespacetr_1_1literals_1_1keyboard__literals.html#a7382e1a86c5640b9f9abb2085b0a5bae", null ],
-      [ "operator\"\"_k", "namespacetr_1_1literals_1_1keyboard__literals.html#a05bf2d334c428eb0074e22eb9a1d5e17", null ],
-      [ "operator\"\"_kc", "namespacetr_1_1literals_1_1keyboard__literals.html#aa00c364bcd2e81444931ac1d14f4cfdd", null ]
+      [ "operator\"\"_s", "namespacetr_1_1literals_1_1keyboard__literals.html#a004afe5920e791b832d61d16a4ef6a5b", null ],
+      [ "operator\"\"_sc", "namespacetr_1_1literals_1_1keyboard__literals.html#aefcf29b041872f77599e51ffab177a55", null ],
+      [ "operator\"\"_k", "namespacetr_1_1literals_1_1keyboard__literals.html#a9c447401cdcfd41fa05b1b370016b93b", null ],
+      [ "operator\"\"_kc", "namespacetr_1_1literals_1_1keyboard__literals.html#a8f6fac23df175350dad982428811db05", null ]
     ] ],
     [ "matrix_operators", "namespacetr_1_1literals_1_1matrix__operators.html", [
-      [ "operator*", "namespacetr_1_1literals_1_1matrix__operators.html#acea7980967bcaad5d4eecee4d4113b17", null ],
-      [ "operator*", "namespacetr_1_1literals_1_1matrix__operators.html#a071db3990f0967a324faf91fb7e0196f", null ],
-      [ "operator*", "namespacetr_1_1literals_1_1matrix__operators.html#a4d21dc229f93d30040bcc97951c8ce12", null ],
-      [ "operator*", "namespacetr_1_1literals_1_1matrix__operators.html#af614c933a900d389e0afc695c75529ed", null ]
+      [ "operator*", "namespacetr_1_1literals_1_1matrix__operators.html#a30b96c384a2b216f934b182d0f1a5dd7", null ],
+      [ "operator*", "namespacetr_1_1literals_1_1matrix__operators.html#a92dd69a9ae283ca55a29337d7875888d", null ],
+      [ "operator*", "namespacetr_1_1literals_1_1matrix__operators.html#af4088a44ea911e8aa39f4c473d6931e1", null ],
+      [ "operator*", "namespacetr_1_1literals_1_1matrix__operators.html#a38c6f9769bdba6831f98241a2bc229b4", null ]
     ] ],
     [ "zstring_view_literals", "namespacetr_1_1literals_1_1zstring__view__literals.html", [
-      [ "operator\"\"_zsv", "namespacetr_1_1literals_1_1zstring__view__literals.html#a749137167107871dd7a52ac2f1590c94", null ]
+      [ "operator\"\"_zsv", "namespacetr_1_1literals_1_1zstring__view__literals.html#aa1c9900b06f2b238149a4f4c6d9511b4", null ]
     ] ],
-    [ "operator\"\"_s", "namespacetr_1_1literals_1_1keyboard__literals.html#aeba379565ac47aa854cdabda0f8a1bec", null ],
-    [ "operator\"\"_sc", "namespacetr_1_1literals_1_1keyboard__literals.html#a7382e1a86c5640b9f9abb2085b0a5bae", null ],
-    [ "operator\"\"_k", "namespacetr_1_1literals_1_1keyboard__literals.html#a05bf2d334c428eb0074e22eb9a1d5e17", null ],
-    [ "operator\"\"_kc", "namespacetr_1_1literals_1_1keyboard__literals.html#aa00c364bcd2e81444931ac1d14f4cfdd", null ],
-    [ "operator\"\"_deg", "namespacetr_1_1literals_1_1angle__literals.html#a7e9866049c5b59a545c75f4620a1442a", null ],
-    [ "operator\"\"_deg", "namespacetr_1_1literals_1_1angle__literals.html#a0fd24fea2dcbc59eb096b81fb747e675", null ],
-    [ "operator\"\"_rad", "namespacetr_1_1literals_1_1angle__literals.html#a47e5023a5af2ba15ec678c8845272974", null ],
-    [ "operator\"\"_rad", "namespacetr_1_1literals_1_1angle__literals.html#a7742a30203354251c97a8038d698b136", null ],
-    [ "operator\"\"_tr", "namespacetr_1_1literals_1_1angle__literals.html#ab08bb250ff7d83aee74d895e2c245497", null ],
-    [ "operator\"\"_tr", "namespacetr_1_1literals_1_1angle__literals.html#aa7aa4a9e4615447739de7abde22e5588", null ],
-    [ "operator\"\"_hz", "namespacetr_1_1literals_1_1chrono__literals.html#ada47568012f0d1e6e3694c514d93d80b", null ],
-    [ "operator\"\"_hz", "namespacetr_1_1literals_1_1chrono__literals.html#a92db556558a1f7f811614b6ec8a878aa", null ],
-    [ "operator\"\"_rgb8", "namespacetr_1_1literals_1_1color__literals.html#a855955b0be30de00fa89db99ca2fc10d", null ],
-    [ "operator\"\"_rgbf", "namespacetr_1_1literals_1_1color__literals.html#a0680b2344e776b1d535725eb33d5a507", null ],
-    [ "operator\"\"_rgba8", "namespacetr_1_1literals_1_1color__literals.html#aae8c5a9bc23c4f12586819eb56ab0c66", null ],
-    [ "operator\"\"_rgbaf", "namespacetr_1_1literals_1_1color__literals.html#ae6f41e1f07cfd4bbdc871ab1d07290b9", null ],
-    [ "operator\"\"_u8", "namespacetr_1_1literals_1_1integer__literals.html#addb406a88c5f952949800f07de8bdcdf", null ],
-    [ "operator\"\"_u16", "namespacetr_1_1literals_1_1integer__literals.html#a1d67eda392f2a998c77a695f680ccb51", null ],
-    [ "operator\"\"_u32", "namespacetr_1_1literals_1_1integer__literals.html#a6bd6899fcd94a35d82d8ce04dcaafd90", null ],
-    [ "operator\"\"_u64", "namespacetr_1_1literals_1_1integer__literals.html#a4a09abedf8c8d8ee7d858084ede0d32d", null ],
-    [ "operator\"\"_i8", "namespacetr_1_1literals_1_1integer__literals.html#ab60faf1e140764877f53942fec16c026", null ],
-    [ "operator\"\"_i16", "namespacetr_1_1literals_1_1integer__literals.html#a39021c2d08143161d12f2baa3d1fc22b", null ],
-    [ "operator\"\"_i32", "namespacetr_1_1literals_1_1integer__literals.html#a18967085dab02633e189a95d467b6cbc", null ],
-    [ "operator\"\"_i64", "namespacetr_1_1literals_1_1integer__literals.html#a8385729992867586bc0293b12dd8ded0", null ],
-    [ "operator*", "namespacetr_1_1literals_1_1matrix__operators.html#acea7980967bcaad5d4eecee4d4113b17", null ],
-    [ "operator*", "namespacetr_1_1literals_1_1matrix__operators.html#a071db3990f0967a324faf91fb7e0196f", null ],
-    [ "operator*", "namespacetr_1_1literals_1_1matrix__operators.html#a4d21dc229f93d30040bcc97951c8ce12", null ],
-    [ "operator*", "namespacetr_1_1literals_1_1matrix__operators.html#af614c933a900d389e0afc695c75529ed", null ],
-    [ "operator\"\"_zsv", "namespacetr_1_1literals_1_1zstring__view__literals.html#a749137167107871dd7a52ac2f1590c94", null ]
+    [ "operator\"\"_s", "namespacetr_1_1literals_1_1keyboard__literals.html#a004afe5920e791b832d61d16a4ef6a5b", null ],
+    [ "operator\"\"_sc", "namespacetr_1_1literals_1_1keyboard__literals.html#aefcf29b041872f77599e51ffab177a55", null ],
+    [ "operator\"\"_k", "namespacetr_1_1literals_1_1keyboard__literals.html#a9c447401cdcfd41fa05b1b370016b93b", null ],
+    [ "operator\"\"_kc", "namespacetr_1_1literals_1_1keyboard__literals.html#a8f6fac23df175350dad982428811db05", null ],
+    [ "operator\"\"_deg", "namespacetr_1_1literals_1_1angle__literals.html#a7c1df5427c56239a657627ca9616a893", null ],
+    [ "operator\"\"_deg", "namespacetr_1_1literals_1_1angle__literals.html#a0b58635abfe9eacb014a8eb77c9b0c5b", null ],
+    [ "operator\"\"_rad", "namespacetr_1_1literals_1_1angle__literals.html#a5e4764c38aa83f9f7a9986d17750c6df", null ],
+    [ "operator\"\"_rad", "namespacetr_1_1literals_1_1angle__literals.html#a4eb2dbfea9b0ea329f04d1ac35e95116", null ],
+    [ "operator\"\"_tr", "namespacetr_1_1literals_1_1angle__literals.html#a4aec95368b8fcf32706546f731b9b867", null ],
+    [ "operator\"\"_tr", "namespacetr_1_1literals_1_1angle__literals.html#a11ea175f250c689643894bc582f32150", null ],
+    [ "operator\"\"_hz", "namespacetr_1_1literals_1_1chrono__literals.html#a2ef4948d9497f3df15f198c917efffd6", null ],
+    [ "operator\"\"_hz", "namespacetr_1_1literals_1_1chrono__literals.html#ae4c3fc5407f301d06c4086de6d63ca4c", null ],
+    [ "operator\"\"_rgba8", "namespacetr_1_1literals_1_1color__literals.html#a4c9c9334d5acadf1f6589146cd42f17e", null ],
+    [ "operator\"\"_rgbaf", "namespacetr_1_1literals_1_1color__literals.html#a4da6bd99cff897d25c88304fbf1795d3", null ],
+    [ "operator\"\"_rgb8", "namespacetr_1_1literals_1_1color__literals.html#a2aaf8a5f565c6223d7ea7c801f36ce94", null ],
+    [ "operator\"\"_rgbf", "namespacetr_1_1literals_1_1color__literals.html#a3ba0a1c51b6664debfdb05508bfccd1e", null ],
+    [ "operator\"\"_u8", "namespacetr_1_1literals_1_1integer__literals.html#a6fe390147eedea1f9b1d5f177476e549", null ],
+    [ "operator\"\"_u16", "namespacetr_1_1literals_1_1integer__literals.html#acc5d89120ebddb8f0a9f382a35ef58a1", null ],
+    [ "operator\"\"_u32", "namespacetr_1_1literals_1_1integer__literals.html#a6106c327c06543801a981ca9fe8f26c6", null ],
+    [ "operator\"\"_u64", "namespacetr_1_1literals_1_1integer__literals.html#a3d2bc9300626a2cab03ecd72f01848f0", null ],
+    [ "operator\"\"_i8", "namespacetr_1_1literals_1_1integer__literals.html#a239483a7256462d6d19f63662562e832", null ],
+    [ "operator\"\"_i16", "namespacetr_1_1literals_1_1integer__literals.html#aa26472820fdde319b9fc23e78e44c697", null ],
+    [ "operator\"\"_i32", "namespacetr_1_1literals_1_1integer__literals.html#a4dc849e19111d9ca12a09276c187b2e6", null ],
+    [ "operator\"\"_i64", "namespacetr_1_1literals_1_1integer__literals.html#a4d46a099de943decb7935bde54669bb4", null ],
+    [ "operator*", "namespacetr_1_1literals_1_1matrix__operators.html#a30b96c384a2b216f934b182d0f1a5dd7", null ],
+    [ "operator*", "namespacetr_1_1literals_1_1matrix__operators.html#a92dd69a9ae283ca55a29337d7875888d", null ],
+    [ "operator*", "namespacetr_1_1literals_1_1matrix__operators.html#af4088a44ea911e8aa39f4c473d6931e1", null ],
+    [ "operator*", "namespacetr_1_1literals_1_1matrix__operators.html#a38c6f9769bdba6831f98241a2bc229b4", null ],
+    [ "operator\"\"_zsv", "namespacetr_1_1literals_1_1zstring__view__literals.html#aa1c9900b06f2b238149a4f4c6d9511b4", null ]
 ];

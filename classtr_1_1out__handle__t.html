@@ -145,22 +145,25 @@ class tr::out_handle_t&lt; Base, Empty, Deleter, SkipEmptyHandleCheck &gt;</div>
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
-<tr class="memitem:a1aed25804042b10fd0b3ece11e444412" id="r_a1aed25804042b10fd0b3ece11e444412"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a1aed25804042b10fd0b3ece11e444412">out_handle_t</a> (handle&lt; Base, Empty, Deleter &gt; &amp;handle)</td></tr>
-<tr class="memdesc:a1aed25804042b10fd0b3ece11e444412"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wraps an output handle.  <br /></td></tr>
-<tr class="memitem:a7b3a47764c68938c6c2945fafcc610a0" id="r_a7b3a47764c68938c6c2945fafcc610a0"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a7b3a47764c68938c6c2945fafcc610a0">~out_handle_t</a> ()</td></tr>
-<tr class="memdesc:a7b3a47764c68938c6c2945fafcc610a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the handle.  <br /></td></tr>
+<tr class="memitem:afa88c0becc9bf1e8018a88a4e33c45c3" id="r_afa88c0becc9bf1e8018a88a4e33c45c3"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#afa88c0becc9bf1e8018a88a4e33c45c3">out_handle_t</a> (handle&lt; Base, Empty, Deleter &gt; &amp;handle) noexcept</td></tr>
+<tr class="memdesc:afa88c0becc9bf1e8018a88a4e33c45c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wraps an output handle.  <br /></td></tr>
+<tr class="memitem:abecd34949324f05fef39f78d96ff4df7" id="r_abecd34949324f05fef39f78d96ff4df7"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#abecd34949324f05fef39f78d96ff4df7">~out_handle_t</a> () noexcept</td></tr>
+<tr class="memdesc:abecd34949324f05fef39f78d96ff4df7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the handle.  <br /></td></tr>
 <tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Conversion operators</div></td></tr>
-<tr class="memitem:ad718b324c87d4f089b69cd7d5d3f49a8" id="r_ad718b324c87d4f089b69cd7d5d3f49a8"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ad718b324c87d4f089b69cd7d5d3f49a8">operator Base *</a> ()</td></tr>
-<tr class="memdesc:ad718b324c87d4f089b69cd7d5d3f49a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a pointer that can be used by a function writing a base value.  <br /></td></tr>
+<tr class="memitem:ad3e99284995bc7fd7cddf5f828eed770" id="r_ad3e99284995bc7fd7cddf5f828eed770"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ad3e99284995bc7fd7cddf5f828eed770">operator Base *</a> () noexcept</td></tr>
+<tr class="memdesc:ad3e99284995bc7fd7cddf5f828eed770"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a pointer that can be used by a function writing a base value.  <br /></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a1aed25804042b10fd0b3ece11e444412" name="a1aed25804042b10fd0b3ece11e444412"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1aed25804042b10fd0b3ece11e444412">&#9670;&#160;</a></span>out_handle_t()</h2>
+<a id="afa88c0becc9bf1e8018a88a4e33c45c3" name="afa88c0becc9bf1e8018a88a4e33c45c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afa88c0becc9bf1e8018a88a4e33c45c3">&#9670;&#160;</a></span>out_handle_t()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter, bool SkipEmptyHandleCheck&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="classtr_1_1out__handle__t.html">tr::out_handle_t</a>&lt; Base, Empty, Deleter, SkipEmptyHandleCheck &gt;::out_handle_t </td>
@@ -169,6 +172,11 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter,
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -179,33 +187,44 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter,
 
 </div>
 </div>
-<a id="a7b3a47764c68938c6c2945fafcc610a0" name="a7b3a47764c68938c6c2945fafcc610a0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7b3a47764c68938c6c2945fafcc610a0">&#9670;&#160;</a></span>~out_handle_t()</h2>
+<a id="abecd34949324f05fef39f78d96ff4df7" name="abecd34949324f05fef39f78d96ff4df7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abecd34949324f05fef39f78d96ff4df7">&#9670;&#160;</a></span>~out_handle_t()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter, bool SkipEmptyHandleCheck&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classtr_1_1out__handle__t.html">tr::out_handle_t</a>&lt; Base, Empty, Deleter, SkipEmptyHandleCheck &gt;::~<a class="el" href="#a1aed25804042b10fd0b3ece11e444412">out_handle_t</a> </td>
+          <td class="memname"><a class="el" href="classtr_1_1out__handle__t.html">tr::out_handle_t</a>&lt; Base, Empty, Deleter, SkipEmptyHandleCheck &gt;::~<a class="el" href="#afa88c0becc9bf1e8018a88a4e33c45c3">out_handle_t</a> </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="ad718b324c87d4f089b69cd7d5d3f49a8" name="ad718b324c87d4f089b69cd7d5d3f49a8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad718b324c87d4f089b69cd7d5d3f49a8">&#9670;&#160;</a></span>operator Base *()</h2>
+<a id="ad3e99284995bc7fd7cddf5f828eed770" name="ad3e99284995bc7fd7cddf5f828eed770"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3e99284995bc7fd7cddf5f828eed770">&#9670;&#160;</a></span>operator Base *()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter, bool SkipEmptyHandleCheck&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="classtr_1_1out__handle__t.html">tr::out_handle_t</a>&lt; Base, Empty, Deleter, SkipEmptyHandleCheck &gt;::operator Base * </td>
@@ -214,6 +233,11 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter,
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Pointer that can be used by a function writing a base value. </dd></dl>
 

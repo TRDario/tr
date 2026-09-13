@@ -7,11 +7,9 @@ var classtr_1_1audio__device__list__view__iterator =
     [ "const_reference", "classtr_1_1audio__device__list__view__iterator.html#a9bcb099a27d44799ed4e97b1b7b4cc9e", null ],
     [ "size_type", "classtr_1_1audio__device__list__view__iterator.html#a4d765203c31b07b7b7c7f9c069af19e2", null ],
     [ "difference_type", "classtr_1_1audio__device__list__view__iterator.html#a0f2000bc043b22dff8595805bb1baafd", null ],
-    [ "audio_device_list_view_iterator", "classtr_1_1audio__device__list__view__iterator.html#a48b6c78666e20623fc8c7debf1d28968", null ],
-    [ "operator*", "classtr_1_1audio__device__list__view__iterator.html#aeaf38c39ba0a1a8c7e23895a5b869596", null ],
-    [ "operator->", "classtr_1_1audio__device__list__view__iterator.html#aef312fe773996fdb4f112e7136f6cafb", null ],
-    [ "operator++", "classtr_1_1audio__device__list__view__iterator.html#a7419ca7c699500eb123de0f4ef415058", null ],
-    [ "operator++", "classtr_1_1audio__device__list__view__iterator.html#ac68280a949a58394e70c49374042a56a", null ],
-    [ "operator<=>", "classtr_1_1audio__device__list__view__iterator.html#a96d3d63a78e733185ef489028bb36577", null ],
-    [ "operator==", "classtr_1_1audio__device__list__view__iterator.html#a80e58628778b68a0bcd1461fb1eed56d", null ]
+    [ "audio_device_list_view_iterator", "classtr_1_1audio__device__list__view__iterator.html#afb46fa7b5dd18767004fc7b621aa422f", null ],
+    [ "operator*", "classtr_1_1audio__device__list__view__iterator.html#a32c57cebf5244c62692ae71ad4c470d6", null ],
+    [ "operator->", "classtr_1_1audio__device__list__view__iterator.html#afade09c87c65f86872921d0529bb6f7b", null ],
+    [ "operator++", "classtr_1_1audio__device__list__view__iterator.html#a7c6bbe7aa53b0d0e40b2fca40851c9d7", null ],
+    [ "operator++", "classtr_1_1audio__device__list__view__iterator.html#a60d27a3d703b7883c4e149946a05eec4", null ]
 ];

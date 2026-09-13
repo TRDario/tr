@@ -129,22 +129,30 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1enu
 <div class="contents">
 
 <p>Wraps an enum class to allow conversion to bool, used in <span class="tt"><a class="el" href="enum_8hpp.html#ab698ab87c9e744246906751f19046ae4" title="Defines bitmask operators (&amp;, |, ^, ~) for enum class types.">TR_DEFINE_ENUM_BITMASK_OPERATORS</a></span>.  
-</p>
-<table class="memberdecls">
+ <a href="#details">More...</a></p>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;enumerator Enum&gt;<br />
+class tr::enum_wrapper&lt; Enum &gt;</div><dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Enum</td><td>Wrapped enumerator type. </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aaca5a4c45a78683da748507180dc8d08" id="r_aaca5a4c45a78683da748507180dc8d08"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#aaca5a4c45a78683da748507180dc8d08">enum_wrapper</a> (Enum value)</td></tr>
-<tr class="memdesc:aaca5a4c45a78683da748507180dc8d08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wraps an enumerator value.  <br /></td></tr>
-<tr class="memitem:aeb4cfec4f9c382d3af55c0d28dd2ae09" id="r_aeb4cfec4f9c382d3af55c0d28dd2ae09"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#aeb4cfec4f9c382d3af55c0d28dd2ae09">operator bool</a> () const</td></tr>
-<tr class="memdesc:aeb4cfec4f9c382d3af55c0d28dd2ae09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the enumerator to a boolean.  <br /></td></tr>
-<tr class="memitem:aec4c834e128492b40c5055a1bd6b6942" id="r_aec4c834e128492b40c5055a1bd6b6942"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#aec4c834e128492b40c5055a1bd6b6942">operator Enum</a> () const</td></tr>
-<tr class="memdesc:aec4c834e128492b40c5055a1bd6b6942"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unwraps the enumerator.  <br /></td></tr>
-<tr class="memitem:a9e689c577afca1a1dd82c4695e80c9ff" id="r_a9e689c577afca1a1dd82c4695e80c9ff"><td class="memItemLeft">constexpr Enum&#160;</td><td class="memItemRight"><a class="el" href="#a9e689c577afca1a1dd82c4695e80c9ff">unwrap</a> () const</td></tr>
-<tr class="memdesc:a9e689c577afca1a1dd82c4695e80c9ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unwraps the enumerator.  <br /></td></tr>
+<tr class="memitem:aaba32c91fb0f9fa0c0e7f04c1713269a" id="r_aaba32c91fb0f9fa0c0e7f04c1713269a"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#aaba32c91fb0f9fa0c0e7f04c1713269a">enum_wrapper</a> (Enum value) noexcept</td></tr>
+<tr class="memdesc:aaba32c91fb0f9fa0c0e7f04c1713269a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wraps an enumerator value.  <br /></td></tr>
+<tr class="memitem:a1fec4220faa5b332b9ab235d89f76896" id="r_a1fec4220faa5b332b9ab235d89f76896"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a1fec4220faa5b332b9ab235d89f76896">operator bool</a> () const noexcept</td></tr>
+<tr class="memdesc:a1fec4220faa5b332b9ab235d89f76896"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the enumerator to a boolean.  <br /></td></tr>
+<tr class="memitem:a00f90575162f68b887cfb25eb718c764" id="r_a00f90575162f68b887cfb25eb718c764"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a00f90575162f68b887cfb25eb718c764">operator Enum</a> () const noexcept</td></tr>
+<tr class="memdesc:a00f90575162f68b887cfb25eb718c764"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unwraps the enumerator.  <br /></td></tr>
+<tr class="memitem:af5eb8640142b361b630abf72c99119d7" id="r_af5eb8640142b361b630abf72c99119d7"><td class="memItemLeft">constexpr Enum&#160;</td><td class="memItemRight"><a class="el" href="#af5eb8640142b361b630abf72c99119d7">unwrap</a> () const noexcept</td></tr>
+<tr class="memdesc:af5eb8640142b361b630abf72c99119d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unwraps the enumerator.  <br /></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="aaca5a4c45a78683da748507180dc8d08" name="aaca5a4c45a78683da748507180dc8d08"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaca5a4c45a78683da748507180dc8d08">&#9670;&#160;</a></span>enum_wrapper()</h2>
+<a id="aaba32c91fb0f9fa0c0e7f04c1713269a" name="aaba32c91fb0f9fa0c0e7f04c1713269a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaba32c91fb0f9fa0c0e7f04c1713269a">&#9670;&#160;</a></span>enum_wrapper()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -163,7 +171,7 @@ template&lt;enumerator Enum&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -177,8 +185,8 @@ template&lt;enumerator Enum&gt; </div>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="aeb4cfec4f9c382d3af55c0d28dd2ae09" name="aeb4cfec4f9c382d3af55c0d28dd2ae09"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeb4cfec4f9c382d3af55c0d28dd2ae09">&#9670;&#160;</a></span>operator bool()</h2>
+<a id="a1fec4220faa5b332b9ab235d89f76896" name="a1fec4220faa5b332b9ab235d89f76896"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1fec4220faa5b332b9ab235d89f76896">&#9670;&#160;</a></span>operator bool()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -197,7 +205,7 @@ template&lt;enumerator Enum&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel explicit">explicit</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel explicit">explicit</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -205,8 +213,8 @@ template&lt;enumerator Enum&gt; </div>
 
 </div>
 </div>
-<a id="aec4c834e128492b40c5055a1bd6b6942" name="aec4c834e128492b40c5055a1bd6b6942"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aec4c834e128492b40c5055a1bd6b6942">&#9670;&#160;</a></span>operator Enum()</h2>
+<a id="a00f90575162f68b887cfb25eb718c764" name="a00f90575162f68b887cfb25eb718c764"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00f90575162f68b887cfb25eb718c764">&#9670;&#160;</a></span>operator Enum()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -225,7 +233,7 @@ template&lt;enumerator Enum&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -233,8 +241,8 @@ template&lt;enumerator Enum&gt; </div>
 
 </div>
 </div>
-<a id="a9e689c577afca1a1dd82c4695e80c9ff" name="a9e689c577afca1a1dd82c4695e80c9ff"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9e689c577afca1a1dd82c4695e80c9ff">&#9670;&#160;</a></span>unwrap()</h2>
+<a id="af5eb8640142b361b630abf72c99119d7" name="af5eb8640142b361b630abf72c99119d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af5eb8640142b361b630abf72c99119d7">&#9670;&#160;</a></span>unwrap()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -253,7 +261,7 @@ template&lt;enumerator Enum&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

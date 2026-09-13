@@ -152,24 +152,29 @@ class tr::graphics_buffer_object_map&lt; Object &gt;</div><dl class="tparams"><d
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Access</div></td></tr>
-<tr class="memitem:aca1e852c7b7c5334b682e53810432d79" id="r_aca1e852c7b7c5334b682e53810432d79"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#aca1e852c7b7c5334b682e53810432d79">operator Object &amp;</a> () const</td></tr>
-<tr class="memdesc:aca1e852c7b7c5334b682e53810432d79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a reference to the object.  <br /></td></tr>
-<tr class="memitem:a4664c24319e1ba49652dd0a73345e4a9" id="r_a4664c24319e1ba49652dd0a73345e4a9"><td class="memItemLeft">Object &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a4664c24319e1ba49652dd0a73345e4a9">operator*</a> () const</td></tr>
-<tr class="memdesc:a4664c24319e1ba49652dd0a73345e4a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a reference to the object.  <br /></td></tr>
-<tr class="memitem:ab29f1daefd0b7b9adb41fa86c9b013bb" id="r_ab29f1daefd0b7b9adb41fa86c9b013bb"><td class="memItemLeft">Object *&#160;</td><td class="memItemRight"><a class="el" href="#ab29f1daefd0b7b9adb41fa86c9b013bb">operator-&gt;</a> () const</td></tr>
-<tr class="memdesc:ab29f1daefd0b7b9adb41fa86c9b013bb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer access to the mapped object.  <br /></td></tr>
-<tr class="memitem:ab3a10fb68aa5c03cd8f390c4e2258a3c" id="r_ab3a10fb68aa5c03cd8f390c4e2258a3c"><td class="memTemplParams" colspan="2">template&lt;std::assignable_from&lt; Object &gt; T&gt; </td></tr>
-<tr class="memitem:ab3a10fb68aa5c03cd8f390c4e2258a3c template"><td class="memItemLeft">Object &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ab3a10fb68aa5c03cd8f390c4e2258a3c">operator=</a> (T &amp;&amp;rhs) const</td></tr>
-<tr class="memdesc:ab3a10fb68aa5c03cd8f390c4e2258a3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assigns the object.  <br /></td></tr>
+<tr class="memitem:a9de15f94ae30759dfb227539c24f2ce5" id="r_a9de15f94ae30759dfb227539c24f2ce5"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a9de15f94ae30759dfb227539c24f2ce5">operator Object &amp;</a> () const noexcept</td></tr>
+<tr class="memdesc:a9de15f94ae30759dfb227539c24f2ce5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a reference to the object.  <br /></td></tr>
+<tr class="memitem:a742ce18d838bdce9c983a8c1c23f292e" id="r_a742ce18d838bdce9c983a8c1c23f292e"><td class="memItemLeft">Object &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a742ce18d838bdce9c983a8c1c23f292e">get</a> () const noexcept</td></tr>
+<tr class="memdesc:a742ce18d838bdce9c983a8c1c23f292e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a reference to the object.  <br /></td></tr>
+<tr class="memitem:a9b002718c11216b11b034ba34459a2b5" id="r_a9b002718c11216b11b034ba34459a2b5"><td class="memItemLeft">Object &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a9b002718c11216b11b034ba34459a2b5">operator*</a> () const noexcept</td></tr>
+<tr class="memdesc:a9b002718c11216b11b034ba34459a2b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a reference to the object.  <br /></td></tr>
+<tr class="memitem:aadfc8805318e6effd35b6c023712e0b4" id="r_aadfc8805318e6effd35b6c023712e0b4"><td class="memItemLeft">Object *&#160;</td><td class="memItemRight"><a class="el" href="#aadfc8805318e6effd35b6c023712e0b4">operator-&gt;</a> () const noexcept</td></tr>
+<tr class="memdesc:aadfc8805318e6effd35b6c023712e0b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer access to the mapped object.  <br /></td></tr>
+<tr class="memitem:a7d13ac2eee016744cab6cd4d268358ba" id="r_a7d13ac2eee016744cab6cd4d268358ba"><td class="memTemplParams" colspan="2">template&lt;std::assignable_from&lt; Object &gt; T&gt; </td></tr>
+<tr class="memitem:a7d13ac2eee016744cab6cd4d268358ba template"><td class="memItemLeft">Object &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a7d13ac2eee016744cab6cd4d268358ba">operator=</a> (T &amp;&amp;rhs) const noexcept(std::is_nothrow_assignable_v&lt; Object, T &gt;)</td></tr>
+<tr class="memdesc:a7d13ac2eee016744cab6cd4d268358ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assigns the object.  <br /></td></tr>
 </table>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="aca1e852c7b7c5334b682e53810432d79" name="aca1e852c7b7c5334b682e53810432d79"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aca1e852c7b7c5334b682e53810432d79">&#9670;&#160;</a></span>operator Object &amp;()</h2>
+<a id="a9de15f94ae30759dfb227539c24f2ce5" name="a9de15f94ae30759dfb227539c24f2ce5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9de15f94ae30759dfb227539c24f2ce5">&#9670;&#160;</a></span>operator Object &amp;()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;typename Object&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="classtr_1_1graphics__buffer__object__map.html">tr::graphics_buffer_object_map</a>&lt; Object &gt;::operator Object &amp; </td>
@@ -178,18 +183,54 @@ template&lt;typename Object&gt; </div>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Reference to the contained object. </dd></dl>
 
 </div>
 </div>
-<a id="a4664c24319e1ba49652dd0a73345e4a9" name="a4664c24319e1ba49652dd0a73345e4a9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4664c24319e1ba49652dd0a73345e4a9">&#9670;&#160;</a></span>operator*()</h2>
+<a id="a742ce18d838bdce9c983a8c1c23f292e" name="a742ce18d838bdce9c983a8c1c23f292e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a742ce18d838bdce9c983a8c1c23f292e">&#9670;&#160;</a></span>get()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;typename Object&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Object &amp; <a class="el" href="classtr_1_1graphics__buffer__object__map.html">tr::graphics_buffer_object_map</a>&lt; Object &gt;::get </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>Reference to the contained object. </dd></dl>
+
+</div>
+</div>
+<a id="a9b002718c11216b11b034ba34459a2b5" name="a9b002718c11216b11b034ba34459a2b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b002718c11216b11b034ba34459a2b5">&#9670;&#160;</a></span>operator*()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Object&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">Object &amp; <a class="el" href="classtr_1_1graphics__buffer__object__map.html">tr::graphics_buffer_object_map</a>&lt; Object &gt;::operator* </td>
@@ -198,18 +239,26 @@ template&lt;typename Object&gt; </div>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Reference to the contained object. </dd></dl>
 
 </div>
 </div>
-<a id="ab29f1daefd0b7b9adb41fa86c9b013bb" name="ab29f1daefd0b7b9adb41fa86c9b013bb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab29f1daefd0b7b9adb41fa86c9b013bb">&#9670;&#160;</a></span>operator-&gt;()</h2>
+<a id="aadfc8805318e6effd35b6c023712e0b4" name="aadfc8805318e6effd35b6c023712e0b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aadfc8805318e6effd35b6c023712e0b4">&#9670;&#160;</a></span>operator-&gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;typename Object&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">Object * <a class="el" href="classtr_1_1graphics__buffer__object__map.html">tr::graphics_buffer_object_map</a>&lt; Object &gt;::operator-&gt; </td>
@@ -218,13 +267,18 @@ template&lt;typename Object&gt; </div>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Pointer to the contained object. </dd></dl>
 
 </div>
 </div>
-<a id="ab3a10fb68aa5c03cd8f390c4e2258a3c" name="ab3a10fb68aa5c03cd8f390c4e2258a3c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab3a10fb68aa5c03cd8f390c4e2258a3c">&#9670;&#160;</a></span>operator=()</h2>
+<a id="a7d13ac2eee016744cab6cd4d268358ba" name="a7d13ac2eee016744cab6cd4d268358ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d13ac2eee016744cab6cd4d268358ba">&#9670;&#160;</a></span>operator=()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -232,6 +286,9 @@ template&lt;typename Object&gt; </div>
 template&lt;typename Object&gt; </div>
 <div class="memtemplate">
 template&lt;std::assignable_from&lt; Object &gt; T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">Object &amp; <a class="el" href="classtr_1_1graphics__buffer__object__map.html">tr::graphics_buffer_object_map</a>&lt; Object &gt;::operator= </td>
@@ -240,6 +297,11 @@ template&lt;std::assignable_from&lt; Object &gt; T&gt; </div>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">

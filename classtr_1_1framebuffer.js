@@ -12,11 +12,11 @@ var classtr_1_1framebuffer =
       [ "depth", "classtr_1_1framebuffer.html#a1c95ac79da562291ef7df23708286ab0a12a055bf01a31369fe81ac35d85c7bc1", null ],
       [ "stencil", "classtr_1_1framebuffer.html#a1c95ac79da562291ef7df23708286ab0a667f218c5ed2c9cf25734500472e7c4a", null ]
     ] ],
-    [ "framebuffer", "classtr_1_1framebuffer.html#a37c9f016089770322c247f0852ede348", null ],
-    [ "context", "classtr_1_1framebuffer.html#a20577676b39ef9f226176d9b6f4ee683", null ],
-    [ "attach", "classtr_1_1framebuffer.html#a3147eb464d15e2c75e5fd45a2965a099", null ],
-    [ "detach", "classtr_1_1framebuffer.html#ab683fe993c7fc83e73844f16d5c10098", null ],
-    [ "valid", "classtr_1_1framebuffer.html#a8ab2c5df0ad60f6302e5bcd6f96ffda8", null ],
-    [ "set_label", "classtr_1_1framebuffer.html#aa5e6d23c96f47d0c2c48690287fbb026", null ],
+    [ "framebuffer", "classtr_1_1framebuffer.html#a38aa600bf2744ce6ec43a977013ba6c1", null ],
+    [ "context", "classtr_1_1framebuffer.html#af9301b17ab0ad50658a86b10afb39c45", null ],
+    [ "attach", "classtr_1_1framebuffer.html#a727364c010b0625db73f97df29982cca", null ],
+    [ "detach", "classtr_1_1framebuffer.html#ab88cc4218f24de1cb985d5acc20cd652", null ],
+    [ "valid", "classtr_1_1framebuffer.html#a5a4974c052b8f0e329fbb57fb97672b5", null ],
+    [ "set_label", "classtr_1_1framebuffer.html#a60f64afb5ac12218adc055b8534dff60", null ],
     [ "label", "classtr_1_1framebuffer.html#abe2d2e9fbea303d5f91295ae5c7314cf", null ]
 ];

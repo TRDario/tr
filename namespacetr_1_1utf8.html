@@ -142,6 +142,8 @@ Classes</h2></td></tr>
 Concepts</h2></td></tr>
 <tr class="memitem:input_5Fiterator" id="r_input_5Fiterator"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concepttr_1_1utf8_1_1input__iterator.html">input_iterator</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Supported input iterator type. <br /></td></tr>
+<tr class="memitem:bidirectional_5Fiterator" id="r_bidirectional_5Fiterator"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concepttr_1_1utf8_1_1bidirectional__iterator.html">bidirectional_iterator</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Supported bidirectional input iterator type. <br /></td></tr>
 <tr class="memitem:output_5Fstring" id="r_output_5Fstring"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concepttr_1_1utf8_1_1output__string.html">output_string</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Supported output string type. <br /></td></tr>
 </table><table class="memberdecls">
@@ -155,21 +157,21 @@ Typedefs</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr id="func-members-0" class="groupHeader"><td colspan="2"><div class="groupHeader">UTF-8 operations</div></td></tr>
-<tr class="memitem:abc8a833e2e2710afe08cf606973f34f9" id="r_abc8a833e2e2710afe08cf606973f34f9"><td class="memTemplParams" colspan="2">template&lt;input_iterator Iterator&gt; </td></tr>
-<tr class="memitem:abc8a833e2e2710afe08cf606973f34f9 template"><td class="memItemLeft">constexpr <a class="el" href="namespacetr.html#aeffe1b14b7778ab5180bec7c14f372b9">codepoint</a>&#160;</td><td class="memItemRight"><a class="el" href="#abc8a833e2e2710afe08cf606973f34f9">to_cp</a> (Iterator it)</td></tr>
-<tr class="memdesc:abc8a833e2e2710afe08cf606973f34f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a UTF-8 sequence to a Unicode codepoint.  <br /></td></tr>
-<tr class="memitem:a2eb61d0ec4dc7f651809f303a35617a6" id="r_a2eb61d0ec4dc7f651809f303a35617a6"><td class="memTemplParams" colspan="2">template&lt;input_iterator Iterator&gt; </td></tr>
-<tr class="memitem:a2eb61d0ec4dc7f651809f303a35617a6 template"><td class="memItemLeft">constexpr Iterator&#160;</td><td class="memItemRight"><a class="el" href="#a2eb61d0ec4dc7f651809f303a35617a6">next</a> (Iterator it)</td></tr>
-<tr class="memdesc:a2eb61d0ec4dc7f651809f303a35617a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an iterator to the next character.  <br /></td></tr>
-<tr class="memitem:a5f79373222a688385d0f7035ff92b7a9" id="r_a5f79373222a688385d0f7035ff92b7a9"><td class="memTemplParams" colspan="2">template&lt;input_iterator Iterator&gt; </td></tr>
-<tr class="memitem:a5f79373222a688385d0f7035ff92b7a9 template"><td class="memItemLeft">constexpr Iterator&#160;</td><td class="memItemRight"><a class="el" href="#a5f79373222a688385d0f7035ff92b7a9">next</a> (Iterator it, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> n)</td></tr>
-<tr class="memdesc:a5f79373222a688385d0f7035ff92b7a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an iterator to the nth next character.  <br /></td></tr>
-<tr class="memitem:a9cb425e876c06b5e148ff14df087cd6d" id="r_a9cb425e876c06b5e148ff14df087cd6d"><td class="memTemplParams" colspan="2">template&lt;input_iterator Iterator&gt; </td></tr>
-<tr class="memitem:a9cb425e876c06b5e148ff14df087cd6d template"><td class="memItemLeft">constexpr Iterator&#160;</td><td class="memItemRight"><a class="el" href="#a9cb425e876c06b5e148ff14df087cd6d">prev</a> (Iterator it)</td></tr>
-<tr class="memdesc:a9cb425e876c06b5e148ff14df087cd6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an iterator to the previous character.  <br /></td></tr>
-<tr class="memitem:aa1a7d89b242dc0660d36c885085262dc" id="r_aa1a7d89b242dc0660d36c885085262dc"><td class="memTemplParams" colspan="2">template&lt;input_iterator Iterator&gt; </td></tr>
-<tr class="memitem:aa1a7d89b242dc0660d36c885085262dc template"><td class="memItemLeft">constexpr Iterator&#160;</td><td class="memItemRight"><a class="el" href="#aa1a7d89b242dc0660d36c885085262dc">prev</a> (Iterator it, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> n)</td></tr>
-<tr class="memdesc:aa1a7d89b242dc0660d36c885085262dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an iterator to the nth previous character.  <br /></td></tr>
+<tr class="memitem:a61ae05b12a5efe9961d4d5573a9be3f7" id="r_a61ae05b12a5efe9961d4d5573a9be3f7"><td class="memTemplParams" colspan="2">template&lt;input_iterator Iterator&gt; </td></tr>
+<tr class="memitem:a61ae05b12a5efe9961d4d5573a9be3f7 template"><td class="memItemLeft">constexpr <a class="el" href="namespacetr.html#aeffe1b14b7778ab5180bec7c14f372b9">codepoint</a>&#160;</td><td class="memItemRight"><a class="el" href="#a61ae05b12a5efe9961d4d5573a9be3f7">to_cp</a> (Iterator it) noexcept(noexcept(*++it))</td></tr>
+<tr class="memdesc:a61ae05b12a5efe9961d4d5573a9be3f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a UTF-8 sequence to a Unicode codepoint.  <br /></td></tr>
+<tr class="memitem:a24f1dfbf11a422bc5c810e91956715be" id="r_a24f1dfbf11a422bc5c810e91956715be"><td class="memTemplParams" colspan="2">template&lt;input_iterator Iterator&gt; </td></tr>
+<tr class="memitem:a24f1dfbf11a422bc5c810e91956715be template"><td class="memItemLeft">constexpr Iterator&#160;</td><td class="memItemRight"><a class="el" href="#a24f1dfbf11a422bc5c810e91956715be">next</a> (Iterator it) noexcept(noexcept(*++it))</td></tr>
+<tr class="memdesc:a24f1dfbf11a422bc5c810e91956715be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an iterator to the next character.  <br /></td></tr>
+<tr class="memitem:a1766a073b1e1b08fd62a0e766bd07156" id="r_a1766a073b1e1b08fd62a0e766bd07156"><td class="memTemplParams" colspan="2">template&lt;input_iterator Iterator&gt; </td></tr>
+<tr class="memitem:a1766a073b1e1b08fd62a0e766bd07156 template"><td class="memItemLeft">constexpr Iterator&#160;</td><td class="memItemRight"><a class="el" href="#a1766a073b1e1b08fd62a0e766bd07156">next</a> (Iterator it, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> n) noexcept(noexcept(*++it))</td></tr>
+<tr class="memdesc:a1766a073b1e1b08fd62a0e766bd07156"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an iterator to the nth next character.  <br /></td></tr>
+<tr class="memitem:a3453bf86c395f034406c70ed97eed9ea" id="r_a3453bf86c395f034406c70ed97eed9ea"><td class="memTemplParams" colspan="2">template&lt;bidirectional_iterator Iterator&gt; </td></tr>
+<tr class="memitem:a3453bf86c395f034406c70ed97eed9ea template"><td class="memItemLeft">constexpr Iterator&#160;</td><td class="memItemRight"><a class="el" href="#a3453bf86c395f034406c70ed97eed9ea">prev</a> (Iterator it) noexcept(noexcept(*--it))</td></tr>
+<tr class="memdesc:a3453bf86c395f034406c70ed97eed9ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an iterator to the previous character.  <br /></td></tr>
+<tr class="memitem:a12b28f33f0aefb95c87ddad415530268" id="r_a12b28f33f0aefb95c87ddad415530268"><td class="memTemplParams" colspan="2">template&lt;bidirectional_iterator Iterator&gt; </td></tr>
+<tr class="memitem:a12b28f33f0aefb95c87ddad415530268 template"><td class="memItemLeft">constexpr Iterator&#160;</td><td class="memItemRight"><a class="el" href="#a12b28f33f0aefb95c87ddad415530268">prev</a> (Iterator it, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> n) noexcept(noexcept(*--it))</td></tr>
+<tr class="memdesc:a12b28f33f0aefb95c87ddad415530268"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an iterator to the nth previous character.  <br /></td></tr>
 <tr class="memitem:afc54d9bcc1d16f44b80af8837b8ccb15" id="r_afc54d9bcc1d16f44b80af8837b8ccb15"><td class="memTemplParams" colspan="2">template&lt;output_string String&gt; </td></tr>
 <tr class="memitem:afc54d9bcc1d16f44b80af8837b8ccb15 template"><td class="memItemLeft">constexpr String::iterator&#160;</td><td class="memItemRight"><a class="el" href="#afc54d9bcc1d16f44b80af8837b8ccb15">insert</a> (String &amp;str, typename String::iterator where, <a class="el" href="namespacetr.html#aeffe1b14b7778ab5180bec7c14f372b9">codepoint</a> cp)</td></tr>
 <tr class="memdesc:afc54d9bcc1d16f44b80af8837b8ccb15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inserts a character into a UTF-8-encoded string.  <br /></td></tr>
@@ -180,26 +182,26 @@ Functions</h2></td></tr>
 <tr class="memitem:af6d90913aa4723a99f5467805d50068d template"><td class="memItemLeft">constexpr void&#160;</td><td class="memItemRight"><a class="el" href="#af6d90913aa4723a99f5467805d50068d">pop_back</a> (String &amp;str)</td></tr>
 <tr class="memdesc:af6d90913aa4723a99f5467805d50068d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pops back a character from a UTF-8 encoded string.  <br /></td></tr>
 <tr id="func-members-1" class="groupHeader"><td colspan="2"><div class="groupHeader">UTF-8 iterators</div></td></tr>
-<tr class="memitem:a840314c8d9a0127a7e1b5e52598c2f61" id="r_a840314c8d9a0127a7e1b5e52598c2f61"><td class="memItemLeft">constexpr <a class="el" href="classtr_1_1utf8_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a840314c8d9a0127a7e1b5e52598c2f61">begin</a> (std::string_view str)</td></tr>
-<tr class="memdesc:a840314c8d9a0127a7e1b5e52598c2f61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a beginning codepoint iterator for a UTF-8 string view.  <br /></td></tr>
-<tr class="memitem:af7a059d7f5890630b80870e6332a002a" id="r_af7a059d7f5890630b80870e6332a002a"><td class="memItemLeft">constexpr <a class="el" href="classtr_1_1utf8_1_1indexed__iterator.html">indexed_iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#af7a059d7f5890630b80870e6332a002a">ibegin</a> (std::string_view str)</td></tr>
-<tr class="memdesc:af7a059d7f5890630b80870e6332a002a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an indexed beginning codepoint iterator for a UTF-8 string view.  <br /></td></tr>
-<tr class="memitem:a20d6dcd8d880a1dcf1e8475975ca3853" id="r_a20d6dcd8d880a1dcf1e8475975ca3853"><td class="memItemLeft">constexpr <a class="el" href="classtr_1_1utf8_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a20d6dcd8d880a1dcf1e8475975ca3853">end</a> (std::string_view str)</td></tr>
-<tr class="memdesc:a20d6dcd8d880a1dcf1e8475975ca3853"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an ending codepoint iterator for a UTF-8 string view.  <br /></td></tr>
-<tr class="memitem:a70765fe3145edb1eb69b43ab45406e57" id="r_a70765fe3145edb1eb69b43ab45406e57"><td class="memItemLeft">constexpr <a class="el" href="classtr_1_1utf8_1_1indexed__iterator.html">indexed_iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a70765fe3145edb1eb69b43ab45406e57">iend</a> (std::string_view str)</td></tr>
-<tr class="memdesc:a70765fe3145edb1eb69b43ab45406e57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an indexed ending codepoint iterator for a UTF-8 string view.  <br /></td></tr>
-<tr class="memitem:a21123e52d9f175dd3bf255cad3bfa97a" id="r_a21123e52d9f175dd3bf255cad3bfa97a"><td class="memItemLeft">constexpr <a class="el" href="#aaa0b2ccfe620e11f8febeec0d159ee89">reverse_iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a21123e52d9f175dd3bf255cad3bfa97a">rbegin</a> (std::string_view str)</td></tr>
-<tr class="memdesc:a21123e52d9f175dd3bf255cad3bfa97a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a reversed beginning codepoint iterator for a UTF-8 string view.  <br /></td></tr>
-<tr class="memitem:a9b1c4847f3c17a523e0bbac9db58f44c" id="r_a9b1c4847f3c17a523e0bbac9db58f44c"><td class="memItemLeft">constexpr <a class="el" href="#abfe34f57f9c5716c28093cb5830dc56b">reverse_indexed_iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a9b1c4847f3c17a523e0bbac9db58f44c">ribegin</a> (std::string_view str)</td></tr>
-<tr class="memdesc:a9b1c4847f3c17a523e0bbac9db58f44c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an indexed reversed beginning codepoint iterator for a UTF-8 string view.  <br /></td></tr>
-<tr class="memitem:a2a3161ca401de596be5b72b8906c8443" id="r_a2a3161ca401de596be5b72b8906c8443"><td class="memItemLeft">constexpr <a class="el" href="#aaa0b2ccfe620e11f8febeec0d159ee89">reverse_iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a2a3161ca401de596be5b72b8906c8443">rend</a> (std::string_view str)</td></tr>
-<tr class="memdesc:a2a3161ca401de596be5b72b8906c8443"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a reversed ending codepoint iterator for a UTF-8 string view.  <br /></td></tr>
-<tr class="memitem:a25916b5f68da2a6b8fc8da5d7bb6f883" id="r_a25916b5f68da2a6b8fc8da5d7bb6f883"><td class="memItemLeft">constexpr <a class="el" href="#abfe34f57f9c5716c28093cb5830dc56b">reverse_indexed_iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a25916b5f68da2a6b8fc8da5d7bb6f883">riend</a> (std::string_view str)</td></tr>
-<tr class="memdesc:a25916b5f68da2a6b8fc8da5d7bb6f883"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an indexed reversed ending codepoint iterator for a UTF-8 string view.  <br /></td></tr>
-<tr class="memitem:a154c7378824c99038f702d43efec9bcc" id="r_a154c7378824c99038f702d43efec9bcc"><td class="memItemLeft">constexpr std::ranges::subrange&lt; <a class="el" href="classtr_1_1utf8_1_1iterator.html">iterator</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a154c7378824c99038f702d43efec9bcc">range</a> (std::string_view str)</td></tr>
-<tr class="memdesc:a154c7378824c99038f702d43efec9bcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a codepoint iterator range pair for a UTF-8 string view.  <br /></td></tr>
-<tr class="memitem:a12ee82a822a41d351ae42cb5f0dbbb65" id="r_a12ee82a822a41d351ae42cb5f0dbbb65"><td class="memItemLeft">constexpr <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a>&#160;</td><td class="memItemRight"><a class="el" href="#a12ee82a822a41d351ae42cb5f0dbbb65">length</a> (std::string_view str)</td></tr>
-<tr class="memdesc:a12ee82a822a41d351ae42cb5f0dbbb65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Counts the number of unicode characters in a UTF-8 string view.  <br /></td></tr>
+<tr class="memitem:ac4275623f5f902b51da47c79d9ad1ed2" id="r_ac4275623f5f902b51da47c79d9ad1ed2"><td class="memItemLeft">constexpr <a class="el" href="classtr_1_1utf8_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#ac4275623f5f902b51da47c79d9ad1ed2">begin</a> (std::string_view str) noexcept</td></tr>
+<tr class="memdesc:ac4275623f5f902b51da47c79d9ad1ed2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a beginning codepoint iterator for a UTF-8 string view.  <br /></td></tr>
+<tr class="memitem:a4d3d09c83ba56d57e49d637fc8d38119" id="r_a4d3d09c83ba56d57e49d637fc8d38119"><td class="memItemLeft">constexpr <a class="el" href="classtr_1_1utf8_1_1indexed__iterator.html">indexed_iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a4d3d09c83ba56d57e49d637fc8d38119">ibegin</a> (std::string_view str) noexcept</td></tr>
+<tr class="memdesc:a4d3d09c83ba56d57e49d637fc8d38119"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an indexed beginning codepoint iterator for a UTF-8 string view.  <br /></td></tr>
+<tr class="memitem:a16387d4424b4461bf3d08d70d404affa" id="r_a16387d4424b4461bf3d08d70d404affa"><td class="memItemLeft">constexpr <a class="el" href="classtr_1_1utf8_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a16387d4424b4461bf3d08d70d404affa">end</a> (std::string_view str) noexcept</td></tr>
+<tr class="memdesc:a16387d4424b4461bf3d08d70d404affa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an ending codepoint iterator for a UTF-8 string view.  <br /></td></tr>
+<tr class="memitem:aa76696bf6a51b53a2e8b904a4011cd66" id="r_aa76696bf6a51b53a2e8b904a4011cd66"><td class="memItemLeft">constexpr <a class="el" href="classtr_1_1utf8_1_1indexed__iterator.html">indexed_iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#aa76696bf6a51b53a2e8b904a4011cd66">iend</a> (std::string_view str) noexcept</td></tr>
+<tr class="memdesc:aa76696bf6a51b53a2e8b904a4011cd66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an indexed ending codepoint iterator for a UTF-8 string view.  <br /></td></tr>
+<tr class="memitem:a707a396bde6e33442cb3d0f32862d84b" id="r_a707a396bde6e33442cb3d0f32862d84b"><td class="memItemLeft">constexpr <a class="el" href="#aaa0b2ccfe620e11f8febeec0d159ee89">reverse_iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a707a396bde6e33442cb3d0f32862d84b">rbegin</a> (std::string_view str) noexcept</td></tr>
+<tr class="memdesc:a707a396bde6e33442cb3d0f32862d84b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a reversed beginning codepoint iterator for a UTF-8 string view.  <br /></td></tr>
+<tr class="memitem:a91c486990ef4b42b225339dd2fcb8084" id="r_a91c486990ef4b42b225339dd2fcb8084"><td class="memItemLeft">constexpr <a class="el" href="#abfe34f57f9c5716c28093cb5830dc56b">reverse_indexed_iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a91c486990ef4b42b225339dd2fcb8084">ribegin</a> (std::string_view str) noexcept</td></tr>
+<tr class="memdesc:a91c486990ef4b42b225339dd2fcb8084"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an indexed reversed beginning codepoint iterator for a UTF-8 string view.  <br /></td></tr>
+<tr class="memitem:a8a288d402046cb90168ed40c39942adf" id="r_a8a288d402046cb90168ed40c39942adf"><td class="memItemLeft">constexpr <a class="el" href="#aaa0b2ccfe620e11f8febeec0d159ee89">reverse_iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a8a288d402046cb90168ed40c39942adf">rend</a> (std::string_view str) noexcept</td></tr>
+<tr class="memdesc:a8a288d402046cb90168ed40c39942adf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a reversed ending codepoint iterator for a UTF-8 string view.  <br /></td></tr>
+<tr class="memitem:a955b38dc3eb8dc55ab85d11fa8353f5b" id="r_a955b38dc3eb8dc55ab85d11fa8353f5b"><td class="memItemLeft">constexpr <a class="el" href="#abfe34f57f9c5716c28093cb5830dc56b">reverse_indexed_iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a955b38dc3eb8dc55ab85d11fa8353f5b">riend</a> (std::string_view str) noexcept</td></tr>
+<tr class="memdesc:a955b38dc3eb8dc55ab85d11fa8353f5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an indexed reversed ending codepoint iterator for a UTF-8 string view.  <br /></td></tr>
+<tr class="memitem:a90d625233d38a04030aed40aec690483" id="r_a90d625233d38a04030aed40aec690483"><td class="memItemLeft">constexpr std::ranges::subrange&lt; <a class="el" href="classtr_1_1utf8_1_1iterator.html">iterator</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a90d625233d38a04030aed40aec690483">range</a> (std::string_view str) noexcept</td></tr>
+<tr class="memdesc:a90d625233d38a04030aed40aec690483"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a codepoint iterator range pair for a UTF-8 string view.  <br /></td></tr>
+<tr class="memitem:a2e95f46fba44ca58a3293eea41b6d218" id="r_a2e95f46fba44ca58a3293eea41b6d218"><td class="memItemLeft">constexpr <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a>&#160;</td><td class="memItemRight"><a class="el" href="#a2e95f46fba44ca58a3293eea41b6d218">length</a> (std::string_view str) noexcept</td></tr>
+<tr class="memdesc:a2e95f46fba44ca58a3293eea41b6d218"><td class="mdescLeft">&#160;</td><td class="mdescRight">Counts the number of unicode characters in a UTF-8 string view.  <br /></td></tr>
 </table>
 <a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Typedef Documentation</h2>
 <a id="aaa0b2ccfe620e11f8febeec0d159ee89" name="aaa0b2ccfe620e11f8febeec0d159ee89"></a>
@@ -231,8 +233,8 @@ Functions</h2></td></tr>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
-<a id="abc8a833e2e2710afe08cf606973f34f9" name="abc8a833e2e2710afe08cf606973f34f9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abc8a833e2e2710afe08cf606973f34f9">&#9670;&#160;</a></span>to_cp()</h2>
+<a id="a61ae05b12a5efe9961d4d5573a9be3f7" name="a61ae05b12a5efe9961d4d5573a9be3f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a61ae05b12a5efe9961d4d5573a9be3f7">&#9670;&#160;</a></span>to_cp()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -251,7 +253,7 @@ template&lt;input_iterator Iterator&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -271,8 +273,8 @@ template&lt;input_iterator Iterator&gt; </div>
 
 </div>
 </div>
-<a id="a2eb61d0ec4dc7f651809f303a35617a6" name="a2eb61d0ec4dc7f651809f303a35617a6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2eb61d0ec4dc7f651809f303a35617a6">&#9670;&#160;</a></span>next() <span class="overload">[1/2]</span></h2>
+<a id="a24f1dfbf11a422bc5c810e91956715be" name="a24f1dfbf11a422bc5c810e91956715be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24f1dfbf11a422bc5c810e91956715be">&#9670;&#160;</a></span>next() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -291,7 +293,7 @@ template&lt;input_iterator Iterator&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -311,8 +313,8 @@ template&lt;input_iterator Iterator&gt; </div>
 
 </div>
 </div>
-<a id="a5f79373222a688385d0f7035ff92b7a9" name="a5f79373222a688385d0f7035ff92b7a9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5f79373222a688385d0f7035ff92b7a9">&#9670;&#160;</a></span>next() <span class="overload">[2/2]</span></h2>
+<a id="a1766a073b1e1b08fd62a0e766bd07156" name="a1766a073b1e1b08fd62a0e766bd07156"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1766a073b1e1b08fd62a0e766bd07156">&#9670;&#160;</a></span>next() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -335,7 +337,7 @@ template&lt;input_iterator Iterator&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -356,13 +358,13 @@ template&lt;input_iterator Iterator&gt; </div>
 
 </div>
 </div>
-<a id="a9cb425e876c06b5e148ff14df087cd6d" name="a9cb425e876c06b5e148ff14df087cd6d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9cb425e876c06b5e148ff14df087cd6d">&#9670;&#160;</a></span>prev() <span class="overload">[1/2]</span></h2>
+<a id="a3453bf86c395f034406c70ed97eed9ea" name="a3453bf86c395f034406c70ed97eed9ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3453bf86c395f034406c70ed97eed9ea">&#9670;&#160;</a></span>prev() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;input_iterator Iterator&gt; </div>
+template&lt;bidirectional_iterator Iterator&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -376,7 +378,7 @@ template&lt;input_iterator Iterator&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -396,13 +398,13 @@ template&lt;input_iterator Iterator&gt; </div>
 
 </div>
 </div>
-<a id="aa1a7d89b242dc0660d36c885085262dc" name="aa1a7d89b242dc0660d36c885085262dc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa1a7d89b242dc0660d36c885085262dc">&#9670;&#160;</a></span>prev() <span class="overload">[2/2]</span></h2>
+<a id="a12b28f33f0aefb95c87ddad415530268" name="a12b28f33f0aefb95c87ddad415530268"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a12b28f33f0aefb95c87ddad415530268">&#9670;&#160;</a></span>prev() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;input_iterator Iterator&gt; </div>
+template&lt;bidirectional_iterator Iterator&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -420,7 +422,7 @@ template&lt;input_iterator Iterator&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -576,8 +578,8 @@ template&lt;output_string String&gt; </div>
 
 </div>
 </div>
-<a id="a840314c8d9a0127a7e1b5e52598c2f61" name="a840314c8d9a0127a7e1b5e52598c2f61"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a840314c8d9a0127a7e1b5e52598c2f61">&#9670;&#160;</a></span>begin()</h2>
+<a id="ac4275623f5f902b51da47c79d9ad1ed2" name="ac4275623f5f902b51da47c79d9ad1ed2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac4275623f5f902b51da47c79d9ad1ed2">&#9670;&#160;</a></span>begin()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -594,7 +596,7 @@ template&lt;output_string String&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -608,8 +610,8 @@ template&lt;output_string String&gt; </div>
 
 </div>
 </div>
-<a id="af7a059d7f5890630b80870e6332a002a" name="af7a059d7f5890630b80870e6332a002a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af7a059d7f5890630b80870e6332a002a">&#9670;&#160;</a></span>ibegin()</h2>
+<a id="a4d3d09c83ba56d57e49d637fc8d38119" name="a4d3d09c83ba56d57e49d637fc8d38119"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d3d09c83ba56d57e49d637fc8d38119">&#9670;&#160;</a></span>ibegin()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -626,7 +628,7 @@ template&lt;output_string String&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -640,8 +642,8 @@ template&lt;output_string String&gt; </div>
 
 </div>
 </div>
-<a id="a20d6dcd8d880a1dcf1e8475975ca3853" name="a20d6dcd8d880a1dcf1e8475975ca3853"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a20d6dcd8d880a1dcf1e8475975ca3853">&#9670;&#160;</a></span>end()</h2>
+<a id="a16387d4424b4461bf3d08d70d404affa" name="a16387d4424b4461bf3d08d70d404affa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16387d4424b4461bf3d08d70d404affa">&#9670;&#160;</a></span>end()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -658,7 +660,7 @@ template&lt;output_string String&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -672,8 +674,8 @@ template&lt;output_string String&gt; </div>
 
 </div>
 </div>
-<a id="a70765fe3145edb1eb69b43ab45406e57" name="a70765fe3145edb1eb69b43ab45406e57"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a70765fe3145edb1eb69b43ab45406e57">&#9670;&#160;</a></span>iend()</h2>
+<a id="aa76696bf6a51b53a2e8b904a4011cd66" name="aa76696bf6a51b53a2e8b904a4011cd66"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa76696bf6a51b53a2e8b904a4011cd66">&#9670;&#160;</a></span>iend()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -690,7 +692,7 @@ template&lt;output_string String&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -704,8 +706,8 @@ template&lt;output_string String&gt; </div>
 
 </div>
 </div>
-<a id="a21123e52d9f175dd3bf255cad3bfa97a" name="a21123e52d9f175dd3bf255cad3bfa97a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a21123e52d9f175dd3bf255cad3bfa97a">&#9670;&#160;</a></span>rbegin()</h2>
+<a id="a707a396bde6e33442cb3d0f32862d84b" name="a707a396bde6e33442cb3d0f32862d84b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a707a396bde6e33442cb3d0f32862d84b">&#9670;&#160;</a></span>rbegin()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -722,7 +724,7 @@ template&lt;output_string String&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -736,8 +738,8 @@ template&lt;output_string String&gt; </div>
 
 </div>
 </div>
-<a id="a9b1c4847f3c17a523e0bbac9db58f44c" name="a9b1c4847f3c17a523e0bbac9db58f44c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9b1c4847f3c17a523e0bbac9db58f44c">&#9670;&#160;</a></span>ribegin()</h2>
+<a id="a91c486990ef4b42b225339dd2fcb8084" name="a91c486990ef4b42b225339dd2fcb8084"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91c486990ef4b42b225339dd2fcb8084">&#9670;&#160;</a></span>ribegin()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -754,7 +756,7 @@ template&lt;output_string String&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -768,8 +770,8 @@ template&lt;output_string String&gt; </div>
 
 </div>
 </div>
-<a id="a2a3161ca401de596be5b72b8906c8443" name="a2a3161ca401de596be5b72b8906c8443"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2a3161ca401de596be5b72b8906c8443">&#9670;&#160;</a></span>rend()</h2>
+<a id="a8a288d402046cb90168ed40c39942adf" name="a8a288d402046cb90168ed40c39942adf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a288d402046cb90168ed40c39942adf">&#9670;&#160;</a></span>rend()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -786,7 +788,7 @@ template&lt;output_string String&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -800,8 +802,8 @@ template&lt;output_string String&gt; </div>
 
 </div>
 </div>
-<a id="a25916b5f68da2a6b8fc8da5d7bb6f883" name="a25916b5f68da2a6b8fc8da5d7bb6f883"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a25916b5f68da2a6b8fc8da5d7bb6f883">&#9670;&#160;</a></span>riend()</h2>
+<a id="a955b38dc3eb8dc55ab85d11fa8353f5b" name="a955b38dc3eb8dc55ab85d11fa8353f5b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a955b38dc3eb8dc55ab85d11fa8353f5b">&#9670;&#160;</a></span>riend()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -818,7 +820,7 @@ template&lt;output_string String&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -832,8 +834,8 @@ template&lt;output_string String&gt; </div>
 
 </div>
 </div>
-<a id="a154c7378824c99038f702d43efec9bcc" name="a154c7378824c99038f702d43efec9bcc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a154c7378824c99038f702d43efec9bcc">&#9670;&#160;</a></span>range()</h2>
+<a id="a90d625233d38a04030aed40aec690483" name="a90d625233d38a04030aed40aec690483"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a90d625233d38a04030aed40aec690483">&#9670;&#160;</a></span>range()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -850,7 +852,7 @@ template&lt;output_string String&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -864,8 +866,8 @@ template&lt;output_string String&gt; </div>
 
 </div>
 </div>
-<a id="a12ee82a822a41d351ae42cb5f0dbbb65" name="a12ee82a822a41d351ae42cb5f0dbbb65"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a12ee82a822a41d351ae42cb5f0dbbb65">&#9670;&#160;</a></span>length()</h2>
+<a id="a2e95f46fba44ca58a3293eea41b6d218" name="a2e95f46fba44ca58a3293eea41b6d218"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e95f46fba44ca58a3293eea41b6d218">&#9670;&#160;</a></span>length()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -882,7 +884,7 @@ template&lt;output_string String&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

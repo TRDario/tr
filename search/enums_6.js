@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['pixel_5fformat_0',['pixel_format',['../namespacetr.html#ac1babae6e9367fc90585a8791dadc746',1,'tr']]],
-  ['primitive_1',['primitive',['../namespacetr.html#a400576423c7753c57e41f5375e765753',1,'tr']]]
+  ['origin_0',['origin',['../classtr_1_1audio__source.html#a9010d77cfe555e0c6346b5a7f82baa44',1,'tr::audio_source']]]
 ];

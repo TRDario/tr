@@ -136,39 +136,41 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1ang
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
-<tr class="memitem:aa37ab39681a4db231c698bab3a4996cd" id="r_aa37ab39681a4db231c698bab3a4996cd"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#aa37ab39681a4db231c698bab3a4996cd">angle</a> ()=default</td></tr>
-<tr class="memdesc:aa37ab39681a4db231c698bab3a4996cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a zero angle.  <br /></td></tr>
+<tr class="memitem:a878d3fbcabff80d296143cfeb66c136f" id="r_a878d3fbcabff80d296143cfeb66c136f"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a878d3fbcabff80d296143cfeb66c136f">angle</a> () noexcept=default</td></tr>
+<tr class="memdesc:a878d3fbcabff80d296143cfeb66c136f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a zero angle.  <br /></td></tr>
+<tr class="memitem:a00d7c8d9d455b2a56b1ab411e284c596" id="r_a00d7c8d9d455b2a56b1ab411e284c596"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a00d7c8d9d455b2a56b1ab411e284c596">angle</a> (float rads) noexcept</td></tr>
+<tr class="memdesc:a00d7c8d9d455b2a56b1ab411e284c596"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an angle from a numeric value in radians.  <br /></td></tr>
 <tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Conversion</div></td></tr>
-<tr class="memitem:ad6dbfd5f8900f5c128a96a998f8814a3" id="r_ad6dbfd5f8900f5c128a96a998f8814a3"><td class="memItemLeft">constexpr float&#160;</td><td class="memItemRight"><a class="el" href="#ad6dbfd5f8900f5c128a96a998f8814a3">rads</a> () const</td></tr>
-<tr class="memdesc:ad6dbfd5f8900f5c128a96a998f8814a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the angle value into a numeric radian value.  <br /></td></tr>
-<tr class="memitem:a455c4db957b83ff3bf244ed1aab363ae" id="r_a455c4db957b83ff3bf244ed1aab363ae"><td class="memItemLeft">constexpr float&#160;</td><td class="memItemRight"><a class="el" href="#a455c4db957b83ff3bf244ed1aab363ae">degs</a> () const</td></tr>
-<tr class="memdesc:a455c4db957b83ff3bf244ed1aab363ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the angle value into a numeric degree value.  <br /></td></tr>
-<tr class="memitem:a6ff07990334bd71ae282362d131bafed" id="r_a6ff07990334bd71ae282362d131bafed"><td class="memItemLeft">constexpr float&#160;</td><td class="memItemRight"><a class="el" href="#a6ff07990334bd71ae282362d131bafed">turns</a> () const</td></tr>
-<tr class="memdesc:a6ff07990334bd71ae282362d131bafed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the angle value into a numeric turn value.  <br /></td></tr>
+<tr class="memitem:a8561e252e53e28def51ee40eaeef0840" id="r_a8561e252e53e28def51ee40eaeef0840"><td class="memItemLeft">constexpr float&#160;</td><td class="memItemRight"><a class="el" href="#a8561e252e53e28def51ee40eaeef0840">rads</a> () const noexcept</td></tr>
+<tr class="memdesc:a8561e252e53e28def51ee40eaeef0840"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the angle value into a numeric radian value.  <br /></td></tr>
+<tr class="memitem:abc8e4ee86fc184f1bd713f44112b9522" id="r_abc8e4ee86fc184f1bd713f44112b9522"><td class="memItemLeft">constexpr float&#160;</td><td class="memItemRight"><a class="el" href="#abc8e4ee86fc184f1bd713f44112b9522">degs</a> () const noexcept</td></tr>
+<tr class="memdesc:abc8e4ee86fc184f1bd713f44112b9522"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the angle value into a numeric degree value.  <br /></td></tr>
+<tr class="memitem:a2e2c5e8e7e79e4ac9ac293db06513a76" id="r_a2e2c5e8e7e79e4ac9ac293db06513a76"><td class="memItemLeft">constexpr float&#160;</td><td class="memItemRight"><a class="el" href="#a2e2c5e8e7e79e4ac9ac293db06513a76">turns</a> () const noexcept</td></tr>
+<tr class="memdesc:a2e2c5e8e7e79e4ac9ac293db06513a76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the angle value into a numeric turn value.  <br /></td></tr>
 <tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Trigonometry</div></td></tr>
-<tr class="memitem:a5085b569b6a881fa1aab7d2b3243f434" id="r_a5085b569b6a881fa1aab7d2b3243f434"><td class="memItemLeft">float&#160;</td><td class="memItemRight"><a class="el" href="#a5085b569b6a881fa1aab7d2b3243f434">sin</a> () const</td></tr>
-<tr class="memdesc:a5085b569b6a881fa1aab7d2b3243f434"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the sine of the angle.  <br /></td></tr>
-<tr class="memitem:ab59ca083832d66edf3bf8db16e8da551" id="r_ab59ca083832d66edf3bf8db16e8da551"><td class="memItemLeft">float&#160;</td><td class="memItemRight"><a class="el" href="#ab59ca083832d66edf3bf8db16e8da551">cos</a> () const</td></tr>
-<tr class="memdesc:ab59ca083832d66edf3bf8db16e8da551"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the cosine of the angle.  <br /></td></tr>
-<tr class="memitem:adc32af673da3487c97bfc555a481b5ea" id="r_adc32af673da3487c97bfc555a481b5ea"><td class="memItemLeft">float&#160;</td><td class="memItemRight"><a class="el" href="#adc32af673da3487c97bfc555a481b5ea">tan</a> () const</td></tr>
-<tr class="memdesc:adc32af673da3487c97bfc555a481b5ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the tangent of the angle.  <br /></td></tr>
+<tr class="memitem:ab3c3d16a4371e8e4b1e878a9942bf335" id="r_ab3c3d16a4371e8e4b1e878a9942bf335"><td class="memItemLeft">float&#160;</td><td class="memItemRight"><a class="el" href="#ab3c3d16a4371e8e4b1e878a9942bf335">sin</a> () const noexcept</td></tr>
+<tr class="memdesc:ab3c3d16a4371e8e4b1e878a9942bf335"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the sine of the angle.  <br /></td></tr>
+<tr class="memitem:a6ac32d92580c106d32e2ab7c8dc9f72c" id="r_a6ac32d92580c106d32e2ab7c8dc9f72c"><td class="memItemLeft">float&#160;</td><td class="memItemRight"><a class="el" href="#a6ac32d92580c106d32e2ab7c8dc9f72c">cos</a> () const noexcept</td></tr>
+<tr class="memdesc:a6ac32d92580c106d32e2ab7c8dc9f72c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the cosine of the angle.  <br /></td></tr>
+<tr class="memitem:a72914108033d961b0b1d86cd85e24f07" id="r_a72914108033d961b0b1d86cd85e24f07"><td class="memItemLeft">float&#160;</td><td class="memItemRight"><a class="el" href="#a72914108033d961b0b1d86cd85e24f07">tan</a> () const noexcept</td></tr>
+<tr class="memdesc:a72914108033d961b0b1d86cd85e24f07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the tangent of the angle.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-member-group" class="groupheader"><a id="member-group" name="member-group"></a>
 Arithmetic operators</h2></td></tr>
-<tr class="memitem:a8587e053b4c1d450bc0666c897cc3978" id="r_a8587e053b4c1d450bc0666c897cc3978"><td class="memItemLeft">constexpr <a class="el" href="#aa37ab39681a4db231c698bab3a4996cd">angle</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a8587e053b4c1d450bc0666c897cc3978">operator+=</a> (<a class="el" href="#aa37ab39681a4db231c698bab3a4996cd">angle</a> rhs)</td></tr>
-<tr class="memdesc:a8587e053b4c1d450bc0666c897cc3978"><td class="mdescLeft">&#160;</td><td class="mdescRight">Angle addition.  <br /></td></tr>
-<tr class="memitem:ac83cb66d4e135b154f73b65d6f2b70c9" id="r_ac83cb66d4e135b154f73b65d6f2b70c9"><td class="memItemLeft">constexpr <a class="el" href="#aa37ab39681a4db231c698bab3a4996cd">angle</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ac83cb66d4e135b154f73b65d6f2b70c9">operator-=</a> (<a class="el" href="#aa37ab39681a4db231c698bab3a4996cd">angle</a> rhs)</td></tr>
-<tr class="memdesc:ac83cb66d4e135b154f73b65d6f2b70c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Angle subtraction.  <br /></td></tr>
-<tr class="memitem:a2ec9eeec38360e58cc2f289bb8498979" id="r_a2ec9eeec38360e58cc2f289bb8498979"><td class="memTemplParams" colspan="2">template&lt;arithmetic Factor&gt; </td></tr>
-<tr class="memitem:a2ec9eeec38360e58cc2f289bb8498979 template"><td class="memItemLeft">constexpr <a class="el" href="#aa37ab39681a4db231c698bab3a4996cd">angle</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a2ec9eeec38360e58cc2f289bb8498979">operator*=</a> (Factor rhs)</td></tr>
-<tr class="memdesc:a2ec9eeec38360e58cc2f289bb8498979"><td class="mdescLeft">&#160;</td><td class="mdescRight">Angle multiplication.  <br /></td></tr>
-<tr class="memitem:a794761881c43e1cdf7a65de7e97ed3b0" id="r_a794761881c43e1cdf7a65de7e97ed3b0"><td class="memTemplParams" colspan="2">template&lt;arithmetic Factor&gt; </td></tr>
-<tr class="memitem:a794761881c43e1cdf7a65de7e97ed3b0 template"><td class="memItemLeft">constexpr <a class="el" href="#aa37ab39681a4db231c698bab3a4996cd">angle</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a794761881c43e1cdf7a65de7e97ed3b0">operator/=</a> (Factor rhs)</td></tr>
-<tr class="memdesc:a794761881c43e1cdf7a65de7e97ed3b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Angle division.  <br /></td></tr>
+<tr class="memitem:a886ebb5c4bd78be756164c2541a1e0f5" id="r_a886ebb5c4bd78be756164c2541a1e0f5"><td class="memItemLeft">constexpr <a class="el" href="#a878d3fbcabff80d296143cfeb66c136f">angle</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a886ebb5c4bd78be756164c2541a1e0f5">operator+=</a> (<a class="el" href="#a878d3fbcabff80d296143cfeb66c136f">angle</a> rhs) noexcept</td></tr>
+<tr class="memdesc:a886ebb5c4bd78be756164c2541a1e0f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Angle addition.  <br /></td></tr>
+<tr class="memitem:a4eb0e4e38a75acdeed37d54899def531" id="r_a4eb0e4e38a75acdeed37d54899def531"><td class="memItemLeft">constexpr <a class="el" href="#a878d3fbcabff80d296143cfeb66c136f">angle</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a4eb0e4e38a75acdeed37d54899def531">operator-=</a> (<a class="el" href="#a878d3fbcabff80d296143cfeb66c136f">angle</a> rhs) noexcept</td></tr>
+<tr class="memdesc:a4eb0e4e38a75acdeed37d54899def531"><td class="mdescLeft">&#160;</td><td class="mdescRight">Angle subtraction.  <br /></td></tr>
+<tr class="memitem:a6ffdfe92b4613d2fd704ccc283039c1e" id="r_a6ffdfe92b4613d2fd704ccc283039c1e"><td class="memTemplParams" colspan="2">template&lt;arithmetic Factor&gt; </td></tr>
+<tr class="memitem:a6ffdfe92b4613d2fd704ccc283039c1e template"><td class="memItemLeft">constexpr <a class="el" href="#a878d3fbcabff80d296143cfeb66c136f">angle</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a6ffdfe92b4613d2fd704ccc283039c1e">operator*=</a> (Factor rhs) noexcept</td></tr>
+<tr class="memdesc:a6ffdfe92b4613d2fd704ccc283039c1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Angle multiplication.  <br /></td></tr>
+<tr class="memitem:a9f7e36be9f9eb423070dae274c4a0360" id="r_a9f7e36be9f9eb423070dae274c4a0360"><td class="memTemplParams" colspan="2">template&lt;arithmetic Factor&gt; </td></tr>
+<tr class="memitem:a9f7e36be9f9eb423070dae274c4a0360 template"><td class="memItemLeft">constexpr <a class="el" href="#a878d3fbcabff80d296143cfeb66c136f">angle</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a9f7e36be9f9eb423070dae274c4a0360">operator/=</a> (Factor rhs) noexcept</td></tr>
+<tr class="memdesc:a9f7e36be9f9eb423070dae274c4a0360"><td class="mdescLeft">&#160;</td><td class="mdescRight">Angle division.  <br /></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="aa37ab39681a4db231c698bab3a4996cd" name="aa37ab39681a4db231c698bab3a4996cd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa37ab39681a4db231c698bab3a4996cd">&#9670;&#160;</a></span>angle()</h2>
+<a id="a878d3fbcabff80d296143cfeb66c136f" name="a878d3fbcabff80d296143cfeb66c136f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a878d3fbcabff80d296143cfeb66c136f">&#9670;&#160;</a></span>angle() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -185,16 +187,15 @@ Arithmetic operators</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span><span class="mlabel default">default</span></span>  </td>
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel default">default</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="a8587e053b4c1d450bc0666c897cc3978" name="a8587e053b4c1d450bc0666c897cc3978"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8587e053b4c1d450bc0666c897cc3978">&#9670;&#160;</a></span>operator+=()</h2>
+<a id="a00d7c8d9d455b2a56b1ab411e284c596" name="a00d7c8d9d455b2a56b1ab411e284c596"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00d7c8d9d455b2a56b1ab411e284c596">&#9670;&#160;</a></span>angle() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -203,15 +204,47 @@ Arithmetic operators</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="#aa37ab39681a4db231c698bab3a4996cd">angle</a> &amp; tr::angle::operator+= </td>
+          <td class="memname">tr::angle::angle </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="#aa37ab39681a4db231c698bab3a4996cd">angle</a></td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>rads</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel explicit">explicit</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rads</td><td>Representation of the angle in radians. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="a886ebb5c4bd78be756164c2541a1e0f5" name="a886ebb5c4bd78be756164c2541a1e0f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a886ebb5c4bd78be756164c2541a1e0f5">&#9670;&#160;</a></span>operator+=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a878d3fbcabff80d296143cfeb66c136f">angle</a> &amp; tr::angle::operator+= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#a878d3fbcabff80d296143cfeb66c136f">angle</a></td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -225,8 +258,8 @@ Arithmetic operators</h2></td></tr>
 
 </div>
 </div>
-<a id="ac83cb66d4e135b154f73b65d6f2b70c9" name="ac83cb66d4e135b154f73b65d6f2b70c9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac83cb66d4e135b154f73b65d6f2b70c9">&#9670;&#160;</a></span>operator-=()</h2>
+<a id="a4eb0e4e38a75acdeed37d54899def531" name="a4eb0e4e38a75acdeed37d54899def531"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4eb0e4e38a75acdeed37d54899def531">&#9670;&#160;</a></span>operator-=()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -235,15 +268,15 @@ Arithmetic operators</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="#aa37ab39681a4db231c698bab3a4996cd">angle</a> &amp; tr::angle::operator-= </td>
+          <td class="memname"><a class="el" href="#a878d3fbcabff80d296143cfeb66c136f">angle</a> &amp; tr::angle::operator-= </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="#aa37ab39681a4db231c698bab3a4996cd">angle</a></td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="#a878d3fbcabff80d296143cfeb66c136f">angle</a></td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -257,8 +290,8 @@ Arithmetic operators</h2></td></tr>
 
 </div>
 </div>
-<a id="a2ec9eeec38360e58cc2f289bb8498979" name="a2ec9eeec38360e58cc2f289bb8498979"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2ec9eeec38360e58cc2f289bb8498979">&#9670;&#160;</a></span>operator*=()</h2>
+<a id="a6ffdfe92b4613d2fd704ccc283039c1e" name="a6ffdfe92b4613d2fd704ccc283039c1e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ffdfe92b4613d2fd704ccc283039c1e">&#9670;&#160;</a></span>operator*=()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -269,7 +302,7 @@ template&lt;arithmetic Factor&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="#aa37ab39681a4db231c698bab3a4996cd">angle</a> &amp; tr::angle::operator*= </td>
+          <td class="memname"><a class="el" href="#a878d3fbcabff80d296143cfeb66c136f">angle</a> &amp; tr::angle::operator*= </td>
           <td>(</td>
           <td class="paramtype">Factor</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
           <td></td>
@@ -277,7 +310,7 @@ template&lt;arithmetic Factor&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -297,8 +330,8 @@ template&lt;arithmetic Factor&gt; </div>
 
 </div>
 </div>
-<a id="a794761881c43e1cdf7a65de7e97ed3b0" name="a794761881c43e1cdf7a65de7e97ed3b0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a794761881c43e1cdf7a65de7e97ed3b0">&#9670;&#160;</a></span>operator/=()</h2>
+<a id="a9f7e36be9f9eb423070dae274c4a0360" name="a9f7e36be9f9eb423070dae274c4a0360"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f7e36be9f9eb423070dae274c4a0360">&#9670;&#160;</a></span>operator/=()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -309,7 +342,7 @@ template&lt;arithmetic Factor&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="#aa37ab39681a4db231c698bab3a4996cd">angle</a> &amp; tr::angle::operator/= </td>
+          <td class="memname"><a class="el" href="#a878d3fbcabff80d296143cfeb66c136f">angle</a> &amp; tr::angle::operator/= </td>
           <td>(</td>
           <td class="paramtype">Factor</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
           <td></td>
@@ -317,7 +350,7 @@ template&lt;arithmetic Factor&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -337,8 +370,8 @@ template&lt;arithmetic Factor&gt; </div>
 
 </div>
 </div>
-<a id="ad6dbfd5f8900f5c128a96a998f8814a3" name="ad6dbfd5f8900f5c128a96a998f8814a3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad6dbfd5f8900f5c128a96a998f8814a3">&#9670;&#160;</a></span>rads()</h2>
+<a id="a8561e252e53e28def51ee40eaeef0840" name="a8561e252e53e28def51ee40eaeef0840"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8561e252e53e28def51ee40eaeef0840">&#9670;&#160;</a></span>rads()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -355,7 +388,7 @@ template&lt;arithmetic Factor&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -363,8 +396,8 @@ template&lt;arithmetic Factor&gt; </div>
 
 </div>
 </div>
-<a id="a455c4db957b83ff3bf244ed1aab363ae" name="a455c4db957b83ff3bf244ed1aab363ae"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a455c4db957b83ff3bf244ed1aab363ae">&#9670;&#160;</a></span>degs()</h2>
+<a id="abc8e4ee86fc184f1bd713f44112b9522" name="abc8e4ee86fc184f1bd713f44112b9522"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc8e4ee86fc184f1bd713f44112b9522">&#9670;&#160;</a></span>degs()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -381,7 +414,7 @@ template&lt;arithmetic Factor&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -389,8 +422,8 @@ template&lt;arithmetic Factor&gt; </div>
 
 </div>
 </div>
-<a id="a6ff07990334bd71ae282362d131bafed" name="a6ff07990334bd71ae282362d131bafed"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6ff07990334bd71ae282362d131bafed">&#9670;&#160;</a></span>turns()</h2>
+<a id="a2e2c5e8e7e79e4ac9ac293db06513a76" name="a2e2c5e8e7e79e4ac9ac293db06513a76"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e2c5e8e7e79e4ac9ac293db06513a76">&#9670;&#160;</a></span>turns()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -407,7 +440,7 @@ template&lt;arithmetic Factor&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -415,8 +448,8 @@ template&lt;arithmetic Factor&gt; </div>
 
 </div>
 </div>
-<a id="a5085b569b6a881fa1aab7d2b3243f434" name="a5085b569b6a881fa1aab7d2b3243f434"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5085b569b6a881fa1aab7d2b3243f434">&#9670;&#160;</a></span>sin()</h2>
+<a id="ab3c3d16a4371e8e4b1e878a9942bf335" name="ab3c3d16a4371e8e4b1e878a9942bf335"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3c3d16a4371e8e4b1e878a9942bf335">&#9670;&#160;</a></span>sin()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -433,7 +466,7 @@ template&lt;arithmetic Factor&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -441,8 +474,8 @@ template&lt;arithmetic Factor&gt; </div>
 
 </div>
 </div>
-<a id="ab59ca083832d66edf3bf8db16e8da551" name="ab59ca083832d66edf3bf8db16e8da551"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab59ca083832d66edf3bf8db16e8da551">&#9670;&#160;</a></span>cos()</h2>
+<a id="a6ac32d92580c106d32e2ab7c8dc9f72c" name="a6ac32d92580c106d32e2ab7c8dc9f72c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ac32d92580c106d32e2ab7c8dc9f72c">&#9670;&#160;</a></span>cos()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -459,7 +492,7 @@ template&lt;arithmetic Factor&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -467,8 +500,8 @@ template&lt;arithmetic Factor&gt; </div>
 
 </div>
 </div>
-<a id="adc32af673da3487c97bfc555a481b5ea" name="adc32af673da3487c97bfc555a481b5ea"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adc32af673da3487c97bfc555a481b5ea">&#9670;&#160;</a></span>tan()</h2>
+<a id="a72914108033d961b0b1d86cd85e24f07" name="a72914108033d961b0b1d86cd85e24f07"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a72914108033d961b0b1d86cd85e24f07">&#9670;&#160;</a></span>tan()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -485,7 +518,7 @@ template&lt;arithmetic Factor&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

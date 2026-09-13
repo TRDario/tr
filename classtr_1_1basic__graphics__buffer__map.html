@@ -144,16 +144,21 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1bas
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Conversion operators</div></td></tr>
-<tr class="memitem:a1e6b946e5ed631a4fe6e9441f7f85285" id="r_a1e6b946e5ed631a4fe6e9441f7f85285"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a1e6b946e5ed631a4fe6e9441f7f85285">operator std::span&lt; std::byte &gt;</a> () const</td></tr>
-<tr class="memdesc:a1e6b946e5ed631a4fe6e9441f7f85285"><td class="mdescLeft">&#160;</td><td class="mdescRight">Casts the map into a regular span.  <br /></td></tr>
+<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Span conversion</div></td></tr>
+<tr class="memitem:adea02183a87e71fd4b6e9e2e554a6877" id="r_adea02183a87e71fd4b6e9e2e554a6877"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#adea02183a87e71fd4b6e9e2e554a6877">operator std::span&lt; std::byte &gt;</a> () const noexcept</td></tr>
+<tr class="memdesc:adea02183a87e71fd4b6e9e2e554a6877"><td class="mdescLeft">&#160;</td><td class="mdescRight">Casts the map into a regular span.  <br /></td></tr>
+<tr class="memitem:a1ac8263fe9b78055a56798358a64c81e" id="r_a1ac8263fe9b78055a56798358a64c81e"><td class="memItemLeft">std::span&lt; std::byte &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a1ac8263fe9b78055a56798358a64c81e">span</a> () const noexcept</td></tr>
+<tr class="memdesc:a1ac8263fe9b78055a56798358a64c81e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Casts the map into a regular span.  <br /></td></tr>
 </table>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="a1e6b946e5ed631a4fe6e9441f7f85285" name="a1e6b946e5ed631a4fe6e9441f7f85285"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1e6b946e5ed631a4fe6e9441f7f85285">&#9670;&#160;</a></span>operator std::span&lt; std::byte &gt;()</h2>
+<a id="adea02183a87e71fd4b6e9e2e554a6877" name="adea02183a87e71fd4b6e9e2e554a6877"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adea02183a87e71fd4b6e9e2e554a6877">&#9670;&#160;</a></span>operator std::span&lt; std::byte &gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">tr::basic_graphics_buffer_map::operator std::span&lt; std::byte &gt; </td>
@@ -162,6 +167,37 @@ Public Member Functions</h2></td></tr>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>Span of bytes covering the buffer map. </dd></dl>
+
+</div>
+</div>
+<a id="a1ac8263fe9b78055a56798358a64c81e" name="a1ac8263fe9b78055a56798358a64c81e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1ac8263fe9b78055a56798358a64c81e">&#9670;&#160;</a></span>span()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::span&lt; std::byte &gt; tr::basic_graphics_buffer_map::span </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Span of bytes covering the buffer map. </dd></dl>
 

@@ -1,9 +1,9 @@
 var vector_8hpp =
 [
-    [ "tr::normal", "namespacetr.html#a11cedb700d341ebe20d240b56fd52bdd", null ],
-    [ "tr::magth", "namespacetr.html#a0d46a10bfc4f4c34ce7a12cd5bb9e33e", null ],
-    [ "tr::length2", "namespacetr.html#adc26fb7fc2cb1dc696b16828ca5e28ea", null ],
-    [ "tr::distance2", "namespacetr.html#a625dd877ebb824bcf3e00bafaf068121", null ],
-    [ "tr::inverse", "namespacetr.html#a5c774b71cf044ff3a1fc17e13e68d2e2", null ],
-    [ "tr::cross", "namespacetr.html#a71e2bf9c48c1420ba025f7a4692e5abc", null ]
+    [ "tr::normal", "namespacetr.html#ab410badc290d674dbf54d9353e294056", null ],
+    [ "tr::magth", "namespacetr.html#a27f1bc27d793376c5e573921971174ed", null ],
+    [ "tr::length2", "namespacetr.html#a829a88aee24c21abdbbe779e5b81c64c", null ],
+    [ "tr::distance2", "namespacetr.html#a6bfe13cd6af9cb6e85468bf62e5ef57e", null ],
+    [ "tr::inverse", "namespacetr.html#a1f9751d26f9e4e53fb6fe2b00ca4a80c", null ],
+    [ "tr::cross", "namespacetr.html#ab683c4851eb40ad8b873ed7840365b12", null ]
 ];

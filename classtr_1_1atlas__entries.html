@@ -151,8 +151,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a980e0453bcbe3c3289a296fbf89d7fb8" id="r_a980e0453bcbe3c3289a296fbf89d7fb8"><td class="memTemplParams" colspan="2">template&lt;hash_keylike&lt; Key, Hash, Pred &gt; Keylike&gt; </td></tr>
 <tr class="memitem:a980e0453bcbe3c3289a296fbf89d7fb8 template"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a980e0453bcbe3c3289a296fbf89d7fb8">contains</a> (Keylike &amp;&amp;key) const</td></tr>
 <tr class="memdesc:a980e0453bcbe3c3289a296fbf89d7fb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the atlas contains a key.  <br /></td></tr>
-<tr class="memitem:a7effdff1fc11794fce791c6b644cebd9" id="r_a7effdff1fc11794fce791c6b644cebd9"><td class="memItemLeft"><a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a>&#160;</td><td class="memItemRight"><a class="el" href="#a7effdff1fc11794fce791c6b644cebd9">entries</a> () const</td></tr>
-<tr class="memdesc:a7effdff1fc11794fce791c6b644cebd9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the number of entries in the atlas.  <br /></td></tr>
+<tr class="memitem:a5fa437038c39850bd81c81bf43211161" id="r_a5fa437038c39850bd81c81bf43211161"><td class="memItemLeft"><a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a>&#160;</td><td class="memItemRight"><a class="el" href="#a5fa437038c39850bd81c81bf43211161">entries</a> () const noexcept</td></tr>
+<tr class="memdesc:a5fa437038c39850bd81c81bf43211161"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the number of entries in the atlas.  <br /></td></tr>
 <tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Access</div></td></tr>
 <tr class="memitem:a7af288bdb974722d631de34534bf2879" id="r_a7af288bdb974722d631de34534bf2879"><td class="memTemplParams" colspan="2">template&lt;hash_keylike&lt; Key, Hash, Pred &gt; Keylike&gt; </td></tr>
 <tr class="memitem:a7af288bdb974722d631de34534bf2879 template"><td class="memItemLeft">const Value &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a7af288bdb974722d631de34534bf2879">operator[]</a> (Keylike &amp;&amp;key) const</td></tr>
@@ -186,7 +186,7 @@ template&lt;typename Key, atlas_entries_value_type Value = rectangle&lt;u16&gt;,
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel default">default</span></span>  </td>
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel default">default</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -203,6 +203,9 @@ template&lt;typename Key, atlas_entries_value_type Value = rectangle&lt;u16&gt;,
 template&lt;typename Key, atlas_entries_value_type Value = rectangle&lt;u16&gt;, hasher&lt; Key &gt; Hash = boost::hash&lt;Key&gt;, equality_predicate&lt; Key &gt; Pred = std::equal_to&lt;Key&gt;&gt; </div>
 <div class="memtemplate">
 template&lt;hash_keylike&lt; Key, Hash, Pred &gt; Keylike&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">bool <a class="el" href="classtr_1_1atlas__entries.html">tr::atlas_entries</a>&lt; Key, Value, Hash, Pred &gt;::contains </td>
@@ -211,6 +214,11 @@ template&lt;hash_keylike&lt; Key, Hash, Pred &gt; Keylike&gt; </div>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
@@ -228,13 +236,16 @@ template&lt;hash_keylike&lt; Key, Hash, Pred &gt; Keylike&gt; </div>
 
 </div>
 </div>
-<a id="a7effdff1fc11794fce791c6b644cebd9" name="a7effdff1fc11794fce791c6b644cebd9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7effdff1fc11794fce791c6b644cebd9">&#9670;&#160;</a></span>entries()</h2>
+<a id="a5fa437038c39850bd81c81bf43211161" name="a5fa437038c39850bd81c81bf43211161"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5fa437038c39850bd81c81bf43211161">&#9670;&#160;</a></span>entries()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;typename Key, atlas_entries_value_type Value = rectangle&lt;u16&gt;, hasher&lt; Key &gt; Hash = boost::hash&lt;Key&gt;, equality_predicate&lt; Key &gt; Pred = std::equal_to&lt;Key&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> <a class="el" href="classtr_1_1atlas__entries.html">tr::atlas_entries</a>&lt; Key, Value, Hash, Pred &gt;::entries </td>
@@ -243,6 +254,11 @@ template&lt;typename Key, atlas_entries_value_type Value = rectangle&lt;u16&gt;,
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Number of entries in the atlas. </dd></dl>
 
@@ -257,6 +273,9 @@ template&lt;typename Key, atlas_entries_value_type Value = rectangle&lt;u16&gt;,
 template&lt;typename Key, atlas_entries_value_type Value = rectangle&lt;u16&gt;, hasher&lt; Key &gt; Hash = boost::hash&lt;Key&gt;, equality_predicate&lt; Key &gt; Pred = std::equal_to&lt;Key&gt;&gt; </div>
 <div class="memtemplate">
 template&lt;hash_keylike&lt; Key, Hash, Pred &gt; Keylike&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">const Value &amp; <a class="el" href="classtr_1_1atlas__entries.html">tr::atlas_entries</a>&lt; Key, Value, Hash, Pred &gt;::operator[] </td>
@@ -265,6 +284,11 @@ template&lt;hash_keylike&lt; Key, Hash, Pred &gt; Keylike&gt; </div>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
@@ -290,6 +314,9 @@ template&lt;hash_keylike&lt; Key, Hash, Pred &gt; Keylike&gt; </div>
 <div class="memproto">
 <div class="memtemplate">
 template&lt;typename Key, atlas_entries_value_type Value = rectangle&lt;u16&gt;, hasher&lt; Key &gt; Hash = boost::hash&lt;Key&gt;, equality_predicate&lt; Key &gt; Pred = std::equal_to&lt;Key&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void <a class="el" href="classtr_1_1atlas__entries.html">tr::atlas_entries</a>&lt; Key, Value, Hash, Pred &gt;::clear </td>
@@ -298,6 +325,11 @@ template&lt;typename Key, atlas_entries_value_type Value = rectangle&lt;u16&gt;,
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>
@@ -312,6 +344,9 @@ template&lt;typename Key, atlas_entries_value_type Value = rectangle&lt;u16&gt;,
 <div class="memtemplate">
 template&lt;hash_keylike&lt; Key, Hash, Pred &gt; Keylike, typename... Args&gt; <br />
 requires (std::constructible_from&lt;Value, <a class="el" href="structtr_1_1rectangle.html">tr::rectangle</a>&lt;<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a6991e9925796abf87530c4ec24b82bb8">u16</a>&gt;, Args...&gt;)</div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">std::optional&lt; glm::u16vec2 &gt; <a class="el" href="classtr_1_1atlas__entries.html">tr::atlas_entries</a>&lt; Key, Value, Hash, Pred &gt;::try_insert </td>
@@ -334,6 +369,11 @@ requires (std::constructible_from&lt;Value, <a class="el" href="structtr_1_1rect
           <td class="paramtype">Args &amp;&amp;...</td>          <td class="paramname"><span class="paramname"><em>extra_args</em></span>&#160;)</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">

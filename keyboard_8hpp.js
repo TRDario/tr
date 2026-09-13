@@ -17,12 +17,12 @@ var keyboard_8hpp =
       [ "tr::keymod::alt", "namespacetr.html#a8efaea616aca72ed620aeec3493fff11a34823136d0dd91d0f5d22db740f7679c", null ],
       [ "tr::keymod::unknown", "namespacetr.html#a8efaea616aca72ed620aeec3493fff11aad921d60486366258809553a3db49a4a", null ]
     ] ],
-    [ "tr::to_scancode", "namespacetr.html#a1c2aeb6950c41dd07f40fb173442030b", null ],
-    [ "tr::to_keycode", "namespacetr.html#a960ea93971db165f8e1c65108a236401", null ],
-    [ "tr::name", "namespacetr.html#a494b2ceeae652346e5ab09cdbfab5075", null ],
+    [ "tr::to_scancode", "namespacetr.html#ac704a529dce5eec908649379e8522ab1", null ],
+    [ "tr::to_keycode", "namespacetr.html#ac84c6d0c7158915622ee906fc928a62f", null ],
+    [ "tr::name", "namespacetr.html#a43515093e721783af0c2a0b19f27eb31", null ],
     [ "tr::name", "namespacetr.html#a42d21aa22baebfff2652fafff4a4e1eb", null ],
-    [ "tr::literals::keyboard_literals::operator\"\"_s", "namespacetr_1_1literals_1_1keyboard__literals.html#aeba379565ac47aa854cdabda0f8a1bec", null ],
-    [ "tr::literals::keyboard_literals::operator\"\"_sc", "namespacetr_1_1literals_1_1keyboard__literals.html#a7382e1a86c5640b9f9abb2085b0a5bae", null ],
-    [ "tr::literals::keyboard_literals::operator\"\"_k", "namespacetr_1_1literals_1_1keyboard__literals.html#a05bf2d334c428eb0074e22eb9a1d5e17", null ],
-    [ "tr::literals::keyboard_literals::operator\"\"_kc", "namespacetr_1_1literals_1_1keyboard__literals.html#aa00c364bcd2e81444931ac1d14f4cfdd", null ]
+    [ "tr::literals::keyboard_literals::operator\"\"_s", "namespacetr_1_1literals_1_1keyboard__literals.html#a004afe5920e791b832d61d16a4ef6a5b", null ],
+    [ "tr::literals::keyboard_literals::operator\"\"_sc", "namespacetr_1_1literals_1_1keyboard__literals.html#aefcf29b041872f77599e51ffab177a55", null ],
+    [ "tr::literals::keyboard_literals::operator\"\"_k", "namespacetr_1_1literals_1_1keyboard__literals.html#a9c447401cdcfd41fa05b1b370016b93b", null ],
+    [ "tr::literals::keyboard_literals::operator\"\"_kc", "namespacetr_1_1literals_1_1keyboard__literals.html#a8f6fac23df175350dad982428811db05", null ]
 ];

@@ -1,7 +1,7 @@
 var hierarchy =
 [
     [ "tr::angle", "classtr_1_1angle.html", null ],
-    [ "tr::app_metadata", "structtr_1_1app__metadata.html", null ],
+    [ "tr::application", "classtr_1_1application.html", null ],
     [ "tr::atlas_entries&lt; Key, Value, Hash, Pred &gt;", "classtr_1_1atlas__entries.html", null ],
     [ "tr::atlas_packer", "classtr_1_1atlas__packer.html", null ],
     [ "tr::audio_buffer", "classtr_1_1audio__buffer.html", null ],
@@ -16,20 +16,51 @@ var hierarchy =
       [ "tr::graphics_buffer_object_map< Object >", "classtr_1_1graphics__buffer__object__map.html", null ],
       [ "tr::graphics_buffer_span_map< Element >", "classtr_1_1graphics__buffer__span__map.html", null ]
     ] ],
-    [ "tr::basic_renderer", "classtr_1_1basic__renderer.html", null ],
+    [ "tr::basic_inplace_string&lt; CharT, Capacity, Traits &gt;", "classtr_1_1basic__inplace__string.html", null ],
     [ "tr::basic_zstring_view&lt; CharT, Traits &gt;", "classtr_1_1basic__zstring__view.html", null ],
     [ "tr::benchmark", "classtr_1_1benchmark.html", null ],
     [ "tr::binary_reader&lt; Out &gt;", "structtr_1_1binary__reader.html", null ],
+    [ "tr::binary_reader&lt; boost::unordered_flat_map&lt; Key, Value, Other... &gt; &gt;", "structtr_1_1binary__reader_3_01boost_1_1unordered__flat__map_3_01Key_00_01Value_00_01Other_8_8_8_01_4_01_4.html", null ],
+    [ "tr::binary_reader&lt; boost::unordered_flat_set&lt; Key, Other... &gt; &gt;", "structtr_1_1binary__reader_3_01boost_1_1unordered__flat__set_3_01Key_00_01Other_8_8_8_01_4_01_4.html", null ],
+    [ "tr::binary_reader&lt; boost::unordered_node_map&lt; Key, Value, Other... &gt; &gt;", "structtr_1_1binary__reader_3_01boost_1_1unordered__node__map_3_01Key_00_01Value_00_01Other_8_8_8_01_4_01_4.html", null ],
+    [ "tr::binary_reader&lt; boost::unordered_node_set&lt; Key, Other... &gt; &gt;", "structtr_1_1binary__reader_3_01boost_1_1unordered__node__set_3_01Key_00_01Other_8_8_8_01_4_01_4.html", null ],
+    [ "tr::binary_reader&lt; Defaulted &gt;", "structtr_1_1binary__reader_3_01Defaulted_01_4.html", null ],
+    [ "tr::binary_reader&lt; std::array&lt; Element, Size &gt; &gt;", "structtr_1_1binary__reader_3_01std_1_1array_3_01Element_00_01Size_01_4_01_4.html", null ],
+    [ "tr::binary_reader&lt; std::map&lt; Key, Value, Other... &gt; &gt;", "structtr_1_1binary__reader_3_01std_1_1map_3_01Key_00_01Value_00_01Other_8_8_8_01_4_01_4.html", null ],
+    [ "tr::binary_reader&lt; std::pair&lt; First, Second &gt; &gt;", "structtr_1_1binary__reader_3_01std_1_1pair_3_01First_00_01Second_01_4_01_4.html", null ],
+    [ "tr::binary_reader&lt; std::set&lt; Key, Other... &gt; &gt;", "structtr_1_1binary__reader_3_01std_1_1set_3_01Key_00_01Other_8_8_8_01_4_01_4.html", null ],
+    [ "tr::binary_reader&lt; std::string &gt;", "structtr_1_1binary__reader_3_01std_1_1string_01_4.html", null ],
+    [ "tr::binary_reader&lt; std::vector&lt; Element &gt; &gt;", "structtr_1_1binary__reader_3_01std_1_1vector_3_01Element_01_4_01_4.html", null ],
+    [ "tr::binary_reader&lt; tr::basic_inplace_string&lt; CharT, Capacity, Traits &gt; &gt;", "structtr_1_1binary__reader_3_01tr_1_1basic__inplace__string_3_01CharT_00_01Capacity_00_01Traits_01_4_01_4.html", null ],
+    [ "tr::binary_reader&lt; tr::static_vector&lt; Element, Capacity &gt; &gt;", "structtr_1_1binary__reader_3_01tr_1_1static__vector_3_01Element_00_01Capacity_01_4_01_4.html", null ],
     [ "tr::binary_writer&lt; In &gt;", "structtr_1_1binary__writer.html", null ],
+    [ "tr::binary_writer&lt; boost::unordered_flat_map&lt; Key, Value, Other... &gt; &gt;", "structtr_1_1binary__writer_3_01boost_1_1unordered__flat__map_3_01Key_00_01Value_00_01Other_8_8_8_01_4_01_4.html", null ],
+    [ "tr::binary_writer&lt; boost::unordered_flat_set&lt; Key, Other... &gt; &gt;", "structtr_1_1binary__writer_3_01boost_1_1unordered__flat__set_3_01Key_00_01Other_8_8_8_01_4_01_4.html", null ],
+    [ "tr::binary_writer&lt; boost::unordered_node_map&lt; Key, Value, Other... &gt; &gt;", "structtr_1_1binary__writer_3_01boost_1_1unordered__node__map_3_01Key_00_01Value_00_01Other_8_8_8_01_4_01_4.html", null ],
+    [ "tr::binary_writer&lt; boost::unordered_node_set&lt; Key, Other... &gt; &gt;", "structtr_1_1binary__writer_3_01boost_1_1unordered__node__set_3_01Key_00_01Other_8_8_8_01_4_01_4.html", null ],
+    [ "tr::binary_writer&lt; char[Size]&gt;", "structtr_1_1binary__writer_3_01char_0fSize_0e_4.html", null ],
+    [ "tr::binary_writer&lt; const char * &gt;", "structtr_1_1binary__writer_3_01const_01char_01_5_01_4.html", null ],
+    [ "tr::binary_writer&lt; Defaulted &gt;", "structtr_1_1binary__writer_3_01Defaulted_01_4.html", null ],
+    [ "tr::binary_writer&lt; Element[Size]&gt;", "structtr_1_1binary__writer_3_01Element_0fSize_0e_4.html", null ],
+    [ "tr::binary_writer&lt; std::array&lt; Element, Size &gt; &gt;", "structtr_1_1binary__writer_3_01std_1_1array_3_01Element_00_01Size_01_4_01_4.html", null ],
+    [ "tr::binary_writer&lt; std::basic_string_view&lt; CharT, Traits &gt; &gt;", "structtr_1_1binary__writer.html", [
+      [ "tr::binary_writer< tr::basic_zstring_view< CharT, Traits > >", "structtr_1_1binary__writer_3_01tr_1_1basic__zstring__view_3_01CharT_00_01Traits_01_4_01_4.html", null ]
+    ] ],
+    [ "tr::binary_writer&lt; std::map&lt; Key, Value, Other... &gt; &gt;", "structtr_1_1binary__writer_3_01std_1_1map_3_01Key_00_01Value_00_01Other_8_8_8_01_4_01_4.html", null ],
+    [ "tr::binary_writer&lt; std::pair&lt; First, Second &gt; &gt;", "structtr_1_1binary__writer_3_01std_1_1pair_3_01First_00_01Second_01_4_01_4.html", null ],
+    [ "tr::binary_writer&lt; std::set&lt; Key, Other... &gt; &gt;", "structtr_1_1binary__writer_3_01std_1_1set_3_01Key_00_01Other_8_8_8_01_4_01_4.html", null ],
+    [ "tr::binary_writer&lt; std::span&lt; Element, Size &gt; &gt;", "structtr_1_1binary__writer_3_01std_1_1span_3_01Element_00_01Size_01_4_01_4.html", null ],
+    [ "tr::binary_writer&lt; std::string &gt;", "structtr_1_1binary__writer_3_01std_1_1string_01_4.html", null ],
+    [ "tr::binary_writer&lt; std::string_view &gt;", "structtr_1_1binary__writer_3_01std_1_1string__view_01_4.html", null ],
+    [ "tr::binary_writer&lt; std::vector&lt; Element &gt; &gt;", "structtr_1_1binary__writer_3_01std_1_1vector_3_01Element_01_4_01_4.html", null ],
+    [ "tr::binary_writer&lt; tr::basic_inplace_string&lt; CharT, Capacity, Traits &gt; &gt;", "structtr_1_1binary__writer_3_01tr_1_1basic__inplace__string_3_01CharT_00_01Capacity_00_01Traits_01_4_01_4.html", null ],
+    [ "tr::binary_writer&lt; tr::static_vector&lt; Element, Capacity &gt; &gt;", "structtr_1_1binary__writer_3_01tr_1_1static__vector_3_01Element_00_01Capacity_01_4_01_4.html", null ],
     [ "tr::bitmap", "classtr_1_1bitmap.html", null ],
     [ "tr::bitmap_atlas&lt; Key, Value, Hash, Pred &gt;", "structtr_1_1bitmap__atlas.html", null ],
     [ "tr::bitmap_view", "classtr_1_1bitmap__view.html", null ],
     [ "tr::blend_mode", "structtr_1_1blend__mode.html", null ],
     [ "tr::circle", "structtr_1_1circle.html", null ],
-    [ "tr::circle_renderer", "classtr_1_1circle__renderer.html", null ],
-    [ "tr::color_mesh_ref", "structtr_1_1color__mesh__ref.html", null ],
     [ "tr::cursor", "classtr_1_1cursor.html", null ],
-    [ "tr::debug_renderer", "classtr_1_1debug__renderer.html", null ],
     [ "tr::defer&lt; Fn &gt;", "classtr_1_1defer.html", null ],
     [ "Deleter", null, [
       [ "tr::handle< unsigned int, 0, deleter >", "classtr_1_1handle.html", null ],
@@ -37,9 +68,6 @@ var hierarchy =
       [ "tr::handle< Base, Empty, Deleter >", "classtr_1_1handle.html", null ]
     ] ],
     [ "tr::dialog_filter", "structtr_1_1dialog__filter.html", null ],
-    [ "tr::basic_renderer::drawer", "classtr_1_1basic__renderer_1_1drawer.html", null ],
-    [ "tr::circle_renderer::drawer", "classtr_1_1circle__renderer_1_1drawer.html", null ],
-    [ "tr::drop_state_t", "structtr_1_1drop__state__t.html", null ],
     [ "tr::dyn_atlas&lt; Key, Value, Hash, Pred &gt;", "classtr_1_1dyn__atlas.html", null ],
     [ "tr::basic_zstring_view&lt; CharT, Traits &gt;::end_sentinel", "structtr_1_1basic__zstring__view_1_1end__sentinel.html", null ],
     [ "tr::enum_wrapper&lt; Enum &gt;", "classtr_1_1enum__wrapper.html", null ],
@@ -60,8 +88,8 @@ var hierarchy =
         [ "tr::file_not_found", "classtr_1_1file__not__found.html", null ],
         [ "tr::file_open_error", "classtr_1_1file__open__error.html", null ],
         [ "tr::graphics_context_init_error", "classtr_1_1graphics__context__init__error.html", null ],
-        [ "tr::init_error", "classtr_1_1init__error.html", null ],
         [ "tr::out_of_memory", "structtr_1_1out__of__memory.html", null ],
+        [ "tr::path_error", "classtr_1_1path__error.html", null ],
         [ "tr::set_clipboard_error", "classtr_1_1set__clipboard__error.html", null ],
         [ "tr::shader_load_error", "classtr_1_1shader__load__error.html", null ],
         [ "tr::ttfont_error", "classtr_1_1ttfont__error.html", null ],
@@ -71,16 +99,19 @@ var hierarchy =
         [ "tr::window_open_error", "classtr_1_1window__open__error.html", null ]
       ] ]
     ] ],
+    [ "std::formatter", null, [
+      [ "std::formatter< tr::basic_inplace_string< CharT, Capacity, Traits >, CharT >", "structstd_1_1formatter_3_01tr_1_1basic__inplace__string_3_01CharT_00_01Capacity_00_01Traits_01_4_00_01CharT_01_4.html", null ],
+      [ "std::formatter< tr::basic_zstring_view< CharT, Traits > >", "structstd_1_1formatter_3_01tr_1_1basic__zstring__view_3_01CharT_00_01Traits_01_4_01_4.html", null ]
+    ] ],
+    [ "std::formatter&lt; tr::angle, CharT &gt;", "classstd_1_1formatter_3_01tr_1_1angle_00_01CharT_01_4.html", null ],
+    [ "std::formatter&lt; tr::log_level &gt;", "classstd_1_1formatter_3_01tr_1_1log__level_01_4.html", null ],
+    [ "std::formatter&lt; tr::log_message &gt;", "classstd_1_1formatter_3_01tr_1_1log__message_01_4.html", null ],
     [ "tr::framebuffer", "classtr_1_1framebuffer.html", null ],
     [ "tr::function_traits&lt; Function &gt;", "structtr_1_1function__traits.html", null ],
     [ "tr::glyph_metrics", "structtr_1_1glyph__metrics.html", null ],
     [ "tr::graphics_benchmark", "classtr_1_1graphics__benchmark.html", null ],
     [ "tr::graphics_buffer", "classtr_1_1graphics__buffer.html", [
       [ "tr::basic_dyn_vertex_buffer", "classtr_1_1basic__dyn__vertex__buffer.html", [
-        [ "tr::dyn_vertex_buffer< glm::vec2 >", "classtr_1_1dyn__vertex__buffer.html", null ],
-        [ "tr::dyn_vertex_buffer< tr::rgba8 >", "classtr_1_1dyn__vertex__buffer.html", null ],
-        [ "tr::dyn_vertex_buffer< circle >", "classtr_1_1dyn__vertex__buffer.html", null ],
-        [ "tr::dyn_vertex_buffer< glyph >", "classtr_1_1dyn__vertex__buffer.html", null ],
         [ "tr::dyn_vertex_buffer< Element >", "classtr_1_1dyn__vertex__buffer.html", null ]
       ] ],
       [ "tr::basic_shader_buffer", "classtr_1_1basic__shader__buffer.html", [
@@ -88,8 +119,6 @@ var hierarchy =
         [ "tr::shader_buffer< Header, ArrayElement >", "classtr_1_1shader__buffer.html", null ]
       ] ],
       [ "tr::basic_static_vertex_buffer", "classtr_1_1basic__static__vertex__buffer.html", [
-        [ "tr::static_vertex_buffer< glm::u8vec2 >", "classtr_1_1static__vertex__buffer.html", null ],
-        [ "tr::static_vertex_buffer< glm::vec2 >", "classtr_1_1static__vertex__buffer.html", null ],
         [ "tr::static_vertex_buffer< Element >", "classtr_1_1static__vertex__buffer.html", null ]
       ] ],
       [ "tr::basic_uniform_buffer", "classtr_1_1basic__uniform__buffer.html", [
@@ -136,24 +165,21 @@ var hierarchy =
       [ "tr::bitmap::iterator", "classtr_1_1bitmap_1_1iterator.html", null ],
       [ "tr::sub_bitmap::iterator", "classtr_1_1sub__bitmap_1_1iterator.html", null ]
     ] ],
-    [ "tr::keep_state_t", "structtr_1_1keep__state__t.html", null ],
     [ "tr::key_chord", "structtr_1_1key__chord.html", null ],
     [ "tr::key_down_event", "structtr_1_1key__down__event.html", null ],
     [ "tr::key_up_event", "structtr_1_1key__up__event.html", null ],
-    [ "tr::layered_multidrawer&lt; Drawers &gt;", "classtr_1_1layered__multidrawer.html", null ],
     [ "tr::line_segment", "structtr_1_1line__segment.html", null ],
     [ "tr::localization_map", "classtr_1_1localization__map.html", null ],
-    [ "tr::logger", "classtr_1_1logger.html", null ],
-    [ "tr::logger_backend", "classtr_1_1logger__backend.html", [
-      [ "tr::console_logger", "classtr_1_1console__logger.html", [
-        [ "tr::console_and_file_logger", "classtr_1_1console__and__file__logger.html", null ]
-      ] ],
-      [ "tr::file_logger", "classtr_1_1file__logger.html", [
-        [ "tr::console_and_file_logger", "classtr_1_1console__and__file__logger.html", null ]
-      ] ]
+    [ "tr::lock_free_queue&lt; Element, Capacity &gt;", "classtr_1_1lock__free__queue.html", null ],
+    [ "tr::log_message", "structtr_1_1log__message.html", null ],
+    [ "tr::log_sink", "classtr_1_1log__sink.html", [
+      [ "tr::directory_log_sink", "classtr_1_1directory__log__sink.html", null ],
+      [ "tr::stdout_log_sink", "classtr_1_1stdout__log__sink.html", null ]
     ] ],
+    [ "tr::logger", "classtr_1_1logger.html", null ],
     [ "tr::maybe_empty_t", "structtr_1_1maybe__empty__t.html", null ],
     [ "tr::benchmark::measurement", "structtr_1_1benchmark_1_1measurement.html", null ],
+    [ "tr::application::metadata", "structtr_1_1application_1_1metadata.html", null ],
     [ "tr::mouse_down_event", "structtr_1_1mouse__down__event.html", null ],
     [ "tr::mouse_motion_event", "structtr_1_1mouse__motion__event.html", null ],
     [ "tr::mouse_state", "structtr_1_1mouse__state.html", null ],
@@ -165,19 +191,19 @@ var hierarchy =
     [ "tr::out_handle_t&lt; Base, Empty, Deleter, SkipEmptyHandleCheck &gt;", "classtr_1_1out__handle__t.html", null ],
     [ "tr::owning_shader_pipeline", "classtr_1_1owning__shader__pipeline.html", null ],
     [ "tr::localization_map::parser::parse_result", "structtr_1_1localization__map_1_1parser_1_1parse__result.html", null ],
+    [ "tr::ping_pong_target", "classtr_1_1ping__pong__target.html", null ],
     [ "tr::pointer_iterator&lt; Iterator, Pointer &gt;", "classtr_1_1pointer__iterator.html", null ],
     [ "tr::pointer_iterator&lt; const_iterator, const_pointer &gt;", "classtr_1_1pointer__iterator.html", [
-      [ "tr::static_string< Capacity >::const_iterator", "structtr_1_1static__string_1_1const__iterator.html", null ],
+      [ "tr::basic_inplace_string< CharT, Capacity, Traits >::const_iterator", "structtr_1_1basic__inplace__string_1_1const__iterator.html", null ],
       [ "tr::static_vector< Element, Capacity >::const_iterator", "structtr_1_1static__vector_1_1const__iterator.html", null ]
     ] ],
     [ "tr::pointer_iterator&lt; iterator, const_pointer &gt;", "classtr_1_1pointer__iterator.html", [
       [ "tr::basic_zstring_view< CharT, Traits >::iterator", "structtr_1_1basic__zstring__view_1_1iterator.html", null ]
     ] ],
     [ "tr::pointer_iterator&lt; iterator, pointer &gt;", "classtr_1_1pointer__iterator.html", [
-      [ "tr::static_string< Capacity >::iterator", "structtr_1_1static__string_1_1iterator.html", null ],
+      [ "tr::basic_inplace_string< CharT, Capacity, Traits >::iterator", "structtr_1_1basic__inplace__string_1_1iterator.html", null ],
       [ "tr::static_vector< Element, Capacity >::iterator", "structtr_1_1static__vector_1_1iterator.html", null ]
     ] ],
-    [ "tr::post_processing_buffer", "classtr_1_1post__processing__buffer.html", null ],
     [ "tr::quit_event", "structtr_1_1quit__event.html", null ],
     [ "tr::rectangle&lt; Element &gt;", "structtr_1_1rectangle.html", null ],
     [ "tr::rectangle_edges&lt; Element &gt;", "structtr_1_1rectangle__edges.html", null ],
@@ -199,12 +225,7 @@ var hierarchy =
       [ "tr::vertex_shader", "classtr_1_1vertex__shader.html", null ]
     ] ],
     [ "tr::shader_pipeline", "classtr_1_1shader__pipeline.html", null ],
-    [ "tr::simple_color_mesh_ref", "structtr_1_1simple__color__mesh__ref.html", null ],
-    [ "tr::simple_textured_mesh_ref", "structtr_1_1simple__textured__mesh__ref.html", null ],
-    [ "tr::size_type&lt; S &gt;", "structtr_1_1size__type.html", null ],
-    [ "tr::state", "structtr_1_1state.html", null ],
-    [ "tr::state_machine", "classtr_1_1state__machine.html", null ],
-    [ "tr::static_string&lt; Capacity &gt;", "classtr_1_1static__string.html", null ],
+    [ "tr::size_type&lt; Max &gt;", "structtr_1_1size__type.html", null ],
     [ "tr::static_vector&lt; Element, Capacity &gt;", "classtr_1_1static__vector.html", null ],
     [ "tr::stopwatch", "classtr_1_1stopwatch.html", null ],
     [ "std::streambuf", null, [
@@ -215,13 +236,11 @@ var hierarchy =
       ] ]
     ] ],
     [ "tr::string_literal&lt; Size &gt;", "structtr_1_1string__literal.html", null ],
-    [ "tr::debug_renderer::style", "structtr_1_1debug__renderer_1_1style.html", null ],
     [ "tr::sub_bitmap", "classtr_1_1sub__bitmap.html", null ],
     [ "tr::text_input_event", "structtr_1_1text__input__event.html", null ],
     [ "tr::texture", "classtr_1_1texture.html", null ],
     [ "tr::texture_target", "classtr_1_1texture__target.html", null ],
     [ "tr::texture_view", "classtr_1_1texture__view.html", null ],
-    [ "tr::textured_mesh_ref", "structtr_1_1textured__mesh__ref.html", null ],
     [ "tr::timer", "classtr_1_1timer.html", null ],
     [ "tr::triangle", "structtr_1_1triangle.html", null ],
     [ "tr::ttf_measure_result", "structtr_1_1ttf__measure__result.html", null ],

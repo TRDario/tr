@@ -171,60 +171,60 @@ Public Types</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
-<tr class="memitem:a6ac732c23118027e7b278f0e528a7c55" id="r_a6ac732c23118027e7b278f0e528a7c55"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a6ac732c23118027e7b278f0e528a7c55">basic_zstring_view</a> ()=default</td></tr>
-<tr class="memdesc:a6ac732c23118027e7b278f0e528a7c55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an empty string view.  <br /></td></tr>
-<tr class="memitem:ad4ca49cb8e51f8ed8a50b42720baa5c9" id="r_ad4ca49cb8e51f8ed8a50b42720baa5c9"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#ad4ca49cb8e51f8ed8a50b42720baa5c9">basic_zstring_view</a> (const CharT *ptr)</td></tr>
-<tr class="memdesc:ad4ca49cb8e51f8ed8a50b42720baa5c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a string view from a NUL-terminated string pointer.  <br /></td></tr>
-<tr class="memitem:a6f4e7cff9e3085fb6994b575ea685bba" id="r_a6f4e7cff9e3085fb6994b575ea685bba"><td class="memTemplParams" colspan="2">template&lt;typename Allocator&gt; </td></tr>
-<tr class="memitem:a6f4e7cff9e3085fb6994b575ea685bba template"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a6f4e7cff9e3085fb6994b575ea685bba">basic_zstring_view</a> (const std::basic_string&lt; CharT, Traits, Allocator &gt; &amp;str)</td></tr>
-<tr class="memdesc:a6f4e7cff9e3085fb6994b575ea685bba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a string view from a standard string.  <br /></td></tr>
+<tr class="memitem:acdd7c08ec5e62a5bd2c547d22a60fd07" id="r_acdd7c08ec5e62a5bd2c547d22a60fd07"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#acdd7c08ec5e62a5bd2c547d22a60fd07">basic_zstring_view</a> () noexcept=default</td></tr>
+<tr class="memdesc:acdd7c08ec5e62a5bd2c547d22a60fd07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an empty string view.  <br /></td></tr>
+<tr class="memitem:ab4874bbd51cc59d0bca837bb1bb71df5" id="r_ab4874bbd51cc59d0bca837bb1bb71df5"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#ab4874bbd51cc59d0bca837bb1bb71df5">basic_zstring_view</a> (const CharT *ptr) noexcept</td></tr>
+<tr class="memdesc:ab4874bbd51cc59d0bca837bb1bb71df5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a string view from a NUL-terminated string pointer.  <br /></td></tr>
+<tr class="memitem:a772a9391543969c39931b86f25d8f67d" id="r_a772a9391543969c39931b86f25d8f67d"><td class="memTemplParams" colspan="2">template&lt;typename Allocator&gt; </td></tr>
+<tr class="memitem:a772a9391543969c39931b86f25d8f67d template"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a772a9391543969c39931b86f25d8f67d">basic_zstring_view</a> (const std::basic_string&lt; CharT, Traits, Allocator &gt; &amp;str) noexcept</td></tr>
+<tr class="memdesc:a772a9391543969c39931b86f25d8f67d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a string view from a standard string.  <br /></td></tr>
 <tr class="memitem:aaf1837224dd7524a65ae728b4c7b4bea" id="r_aaf1837224dd7524a65ae728b4c7b4bea"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#aaf1837224dd7524a65ae728b4c7b4bea">basic_zstring_view</a> (const basic_zstring_view &amp;rhs) noexcept=default</td></tr>
 <tr class="memdesc:aaf1837224dd7524a65ae728b4c7b4bea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Trivially copies a string view.  <br /></td></tr>
 <tr class="memitem:ab0831d7c1cfcbf52149c1279a38988ce" id="r_ab0831d7c1cfcbf52149c1279a38988ce"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#ab0831d7c1cfcbf52149c1279a38988ce">basic_zstring_view</a> (basic_zstring_view &amp;&amp;rhs) noexcept=default</td></tr>
 <tr class="memdesc:ab0831d7c1cfcbf52149c1279a38988ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Trivially moves a string view.  <br /></td></tr>
 <tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Assignment operators</div></td></tr>
-<tr class="memitem:a4292ecc34bb0fe44f0c57f97dbd82981" id="r_a4292ecc34bb0fe44f0c57f97dbd82981"><td class="memItemLeft">constexpr <a class="el" href="#a6ac732c23118027e7b278f0e528a7c55">basic_zstring_view</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a4292ecc34bb0fe44f0c57f97dbd82981">operator=</a> (const <a class="el" href="#a6ac732c23118027e7b278f0e528a7c55">basic_zstring_view</a> &amp;rhs) noexcept=default</td></tr>
+<tr class="memitem:a4292ecc34bb0fe44f0c57f97dbd82981" id="r_a4292ecc34bb0fe44f0c57f97dbd82981"><td class="memItemLeft">constexpr <a class="el" href="#acdd7c08ec5e62a5bd2c547d22a60fd07">basic_zstring_view</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a4292ecc34bb0fe44f0c57f97dbd82981">operator=</a> (const <a class="el" href="#acdd7c08ec5e62a5bd2c547d22a60fd07">basic_zstring_view</a> &amp;rhs) noexcept=default</td></tr>
 <tr class="memdesc:a4292ecc34bb0fe44f0c57f97dbd82981"><td class="mdescLeft">&#160;</td><td class="mdescRight">Trivially copies a string view.  <br /></td></tr>
-<tr class="memitem:af19815c4f00ac5d64617bc00177d6618" id="r_af19815c4f00ac5d64617bc00177d6618"><td class="memItemLeft">constexpr <a class="el" href="#a6ac732c23118027e7b278f0e528a7c55">basic_zstring_view</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#af19815c4f00ac5d64617bc00177d6618">operator=</a> (<a class="el" href="#a6ac732c23118027e7b278f0e528a7c55">basic_zstring_view</a> &amp;&amp;rhs) noexcept=default</td></tr>
+<tr class="memitem:af19815c4f00ac5d64617bc00177d6618" id="r_af19815c4f00ac5d64617bc00177d6618"><td class="memItemLeft">constexpr <a class="el" href="#acdd7c08ec5e62a5bd2c547d22a60fd07">basic_zstring_view</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#af19815c4f00ac5d64617bc00177d6618">operator=</a> (<a class="el" href="#acdd7c08ec5e62a5bd2c547d22a60fd07">basic_zstring_view</a> &amp;&amp;rhs) noexcept=default</td></tr>
 <tr class="memdesc:af19815c4f00ac5d64617bc00177d6618"><td class="mdescLeft">&#160;</td><td class="mdescRight">Trivially moves a string view.  <br /></td></tr>
 <tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Conversion operators</div></td></tr>
-<tr class="memitem:a78178c6be6ea33f123a9033faad42a1c" id="r_a78178c6be6ea33f123a9033faad42a1c"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a78178c6be6ea33f123a9033faad42a1c">operator std::basic_string_view&lt; CharT, Traits &gt;</a> () const</td></tr>
-<tr class="memdesc:a78178c6be6ea33f123a9033faad42a1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the view into a standard string view.  <br /></td></tr>
+<tr class="memitem:a364bbbc20f21e46cd8db2b22daaba6ac" id="r_a364bbbc20f21e46cd8db2b22daaba6ac"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a364bbbc20f21e46cd8db2b22daaba6ac">operator std::basic_string_view&lt; CharT, Traits &gt;</a> () const noexcept</td></tr>
+<tr class="memdesc:a364bbbc20f21e46cd8db2b22daaba6ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the view into a standard string view.  <br /></td></tr>
 <tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Comparison operators</div></td></tr>
-<tr class="memitem:ad325e0d9b8fd394c637a91cb01620296" id="r_ad325e0d9b8fd394c637a91cb01620296"><td class="memItemLeft">constexpr std::strong_ordering&#160;</td><td class="memItemRight"><a class="el" href="#ad325e0d9b8fd394c637a91cb01620296">operator&lt;=&gt;</a> (this <a class="el" href="#a6ac732c23118027e7b278f0e528a7c55">basic_zstring_view</a> lhs, std::type_identity_t&lt; <a class="el" href="#a6ac732c23118027e7b278f0e528a7c55">basic_zstring_view</a> &gt; rhs)</td></tr>
-<tr class="memdesc:ad325e0d9b8fd394c637a91cb01620296"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares NUL-terminated string views.  <br /></td></tr>
-<tr class="memitem:ab32b3bf1bcf92d63006c09ce24afd6ec" id="r_ab32b3bf1bcf92d63006c09ce24afd6ec"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="#ab32b3bf1bcf92d63006c09ce24afd6ec">operator==</a> (this <a class="el" href="#a6ac732c23118027e7b278f0e528a7c55">basic_zstring_view</a> lhs, std::type_identity_t&lt; <a class="el" href="#a6ac732c23118027e7b278f0e528a7c55">basic_zstring_view</a> &gt; rhs)</td></tr>
-<tr class="memdesc:ab32b3bf1bcf92d63006c09ce24afd6ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares NUL-terminated string views for equality.  <br /></td></tr>
+<tr class="memitem:adde01a6fe10edb496ae2f44039f80730" id="r_adde01a6fe10edb496ae2f44039f80730"><td class="memItemLeft">constexpr std::strong_ordering&#160;</td><td class="memItemRight"><a class="el" href="#adde01a6fe10edb496ae2f44039f80730">operator&lt;=&gt;</a> (this <a class="el" href="#acdd7c08ec5e62a5bd2c547d22a60fd07">basic_zstring_view</a> lhs, std::type_identity_t&lt; <a class="el" href="#acdd7c08ec5e62a5bd2c547d22a60fd07">basic_zstring_view</a> &gt; rhs) noexcept</td></tr>
+<tr class="memdesc:adde01a6fe10edb496ae2f44039f80730"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares NUL-terminated string views.  <br /></td></tr>
+<tr class="memitem:a39163a8516af84786b9d5f5488cc6d67" id="r_a39163a8516af84786b9d5f5488cc6d67"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="#a39163a8516af84786b9d5f5488cc6d67">operator==</a> (this <a class="el" href="#acdd7c08ec5e62a5bd2c547d22a60fd07">basic_zstring_view</a> lhs, std::type_identity_t&lt; <a class="el" href="#acdd7c08ec5e62a5bd2c547d22a60fd07">basic_zstring_view</a> &gt; rhs) noexcept</td></tr>
+<tr class="memdesc:a39163a8516af84786b9d5f5488cc6d67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares NUL-terminated string views for equality.  <br /></td></tr>
 <tr id="pub-methods-4" class="groupHeader"><td colspan="2"><div class="groupHeader">Iterators</div></td></tr>
-<tr class="memitem:a351f396b93e5992ae2c91ae2bf02af6d" id="r_a351f396b93e5992ae2c91ae2bf02af6d"><td class="memItemLeft">constexpr <a class="el" href="structtr_1_1basic__zstring__view_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a351f396b93e5992ae2c91ae2bf02af6d">begin</a> () const</td></tr>
-<tr class="memdesc:a351f396b93e5992ae2c91ae2bf02af6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an iterator to the beginning of the string.  <br /></td></tr>
-<tr class="memitem:abb4ca413c8a79ec3c4bbbbba6a7a2e21" id="r_abb4ca413c8a79ec3c4bbbbba6a7a2e21"><td class="memItemLeft">constexpr <a class="el" href="#a40e3a74e5b128dabca676275aae471b4">const_iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#abb4ca413c8a79ec3c4bbbbba6a7a2e21">cbegin</a> () const</td></tr>
-<tr class="memdesc:abb4ca413c8a79ec3c4bbbbba6a7a2e21"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an iterator to the beginning of the string.  <br /></td></tr>
-<tr class="memitem:acc0e668d7aa64859a13baed23d8ceb2b" id="r_acc0e668d7aa64859a13baed23d8ceb2b"><td class="memItemLeft">constexpr <a class="el" href="structtr_1_1basic__zstring__view_1_1end__sentinel.html">end_sentinel</a>&#160;</td><td class="memItemRight"><a class="el" href="#acc0e668d7aa64859a13baed23d8ceb2b">end</a> () const</td></tr>
-<tr class="memdesc:acc0e668d7aa64859a13baed23d8ceb2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an iterator sentinel to the end of the string.  <br /></td></tr>
-<tr class="memitem:a92269fe75a85f400d8dcdfc1ca8f73e3" id="r_a92269fe75a85f400d8dcdfc1ca8f73e3"><td class="memItemLeft">constexpr <a class="el" href="structtr_1_1basic__zstring__view_1_1end__sentinel.html">end_sentinel</a>&#160;</td><td class="memItemRight"><a class="el" href="#a92269fe75a85f400d8dcdfc1ca8f73e3">cend</a> () const</td></tr>
-<tr class="memdesc:a92269fe75a85f400d8dcdfc1ca8f73e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an iterator sentinel to the end of the string.  <br /></td></tr>
+<tr class="memitem:a170a58744af23de4200a94a02894ce1c" id="r_a170a58744af23de4200a94a02894ce1c"><td class="memItemLeft">constexpr <a class="el" href="structtr_1_1basic__zstring__view_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a170a58744af23de4200a94a02894ce1c">begin</a> () const noexcept</td></tr>
+<tr class="memdesc:a170a58744af23de4200a94a02894ce1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an iterator to the beginning of the string.  <br /></td></tr>
+<tr class="memitem:ae1af47970b2c34a07af94f96d05334f2" id="r_ae1af47970b2c34a07af94f96d05334f2"><td class="memItemLeft">constexpr <a class="el" href="#a40e3a74e5b128dabca676275aae471b4">const_iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#ae1af47970b2c34a07af94f96d05334f2">cbegin</a> () const noexcept</td></tr>
+<tr class="memdesc:ae1af47970b2c34a07af94f96d05334f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an iterator to the beginning of the string.  <br /></td></tr>
+<tr class="memitem:a11f5f3d0fcb6c8429b9f5494f6108280" id="r_a11f5f3d0fcb6c8429b9f5494f6108280"><td class="memItemLeft">constexpr <a class="el" href="structtr_1_1basic__zstring__view_1_1end__sentinel.html">end_sentinel</a>&#160;</td><td class="memItemRight"><a class="el" href="#a11f5f3d0fcb6c8429b9f5494f6108280">end</a> () const noexcept</td></tr>
+<tr class="memdesc:a11f5f3d0fcb6c8429b9f5494f6108280"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an iterator sentinel to the end of the string.  <br /></td></tr>
+<tr class="memitem:a3d49edcc8510c678908bf31b0bebbca2" id="r_a3d49edcc8510c678908bf31b0bebbca2"><td class="memItemLeft">constexpr <a class="el" href="structtr_1_1basic__zstring__view_1_1end__sentinel.html">end_sentinel</a>&#160;</td><td class="memItemRight"><a class="el" href="#a3d49edcc8510c678908bf31b0bebbca2">cend</a> () const noexcept</td></tr>
+<tr class="memdesc:a3d49edcc8510c678908bf31b0bebbca2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an iterator sentinel to the end of the string.  <br /></td></tr>
 <tr id="pub-methods-5" class="groupHeader"><td colspan="2"><div class="groupHeader">Access</div></td></tr>
-<tr class="memitem:a48881d1c1ffe8b2f7f4d06adbfec7576" id="r_a48881d1c1ffe8b2f7f4d06adbfec7576"><td class="memItemLeft">constexpr <a class="el" href="#a728530456616811652c6d6af00f2f54f">const_reference</a>&#160;</td><td class="memItemRight"><a class="el" href="#a48881d1c1ffe8b2f7f4d06adbfec7576">operator[]</a> (<a class="el" href="#a535103f157466eaa9f9b179034bc6536">size_type</a> index) const</td></tr>
-<tr class="memdesc:a48881d1c1ffe8b2f7f4d06adbfec7576"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accesses a specific character.  <br /></td></tr>
-<tr class="memitem:a0510e73ed382984d494a4e633ca4fb63" id="r_a0510e73ed382984d494a4e633ca4fb63"><td class="memItemLeft">constexpr <a class="el" href="#a728530456616811652c6d6af00f2f54f">const_reference</a>&#160;</td><td class="memItemRight"><a class="el" href="#a0510e73ed382984d494a4e633ca4fb63">at</a> (<a class="el" href="#a535103f157466eaa9f9b179034bc6536">size_type</a> index) const</td></tr>
-<tr class="memdesc:a0510e73ed382984d494a4e633ca4fb63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accesses a specific character.  <br /></td></tr>
-<tr class="memitem:a3681a0190b46413ce0d8d16819fa52d1" id="r_a3681a0190b46413ce0d8d16819fa52d1"><td class="memItemLeft">constexpr <a class="el" href="#a728530456616811652c6d6af00f2f54f">const_reference</a>&#160;</td><td class="memItemRight"><a class="el" href="#a3681a0190b46413ce0d8d16819fa52d1">front</a> () const</td></tr>
-<tr class="memdesc:a3681a0190b46413ce0d8d16819fa52d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accesses the first character in the string.  <br /></td></tr>
-<tr class="memitem:a04c1715e991af41be2979a0fa6a29927" id="r_a04c1715e991af41be2979a0fa6a29927"><td class="memItemLeft">constexpr <a class="el" href="#a31d58faa65a6cddabe24288560b8eb73">const_pointer</a>&#160;</td><td class="memItemRight"><a class="el" href="#a04c1715e991af41be2979a0fa6a29927">data</a> () const</td></tr>
-<tr class="memdesc:a04c1715e991af41be2979a0fa6a29927"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a pointer to the raw data of the string.  <br /></td></tr>
-<tr class="memitem:a2c95612a265b8ec5f02a2b3c7b026820" id="r_a2c95612a265b8ec5f02a2b3c7b026820"><td class="memItemLeft">constexpr <a class="el" href="#a31d58faa65a6cddabe24288560b8eb73">const_pointer</a>&#160;</td><td class="memItemRight"><a class="el" href="#a2c95612a265b8ec5f02a2b3c7b026820">c_str</a> () const</td></tr>
-<tr class="memdesc:a2c95612a265b8ec5f02a2b3c7b026820"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a pointer to the raw C-string.  <br /></td></tr>
+<tr class="memitem:a53fcbeac796a6c8fd914f186d0c1b40d" id="r_a53fcbeac796a6c8fd914f186d0c1b40d"><td class="memItemLeft">constexpr <a class="el" href="#a728530456616811652c6d6af00f2f54f">const_reference</a>&#160;</td><td class="memItemRight"><a class="el" href="#a53fcbeac796a6c8fd914f186d0c1b40d">operator[]</a> (<a class="el" href="#a535103f157466eaa9f9b179034bc6536">size_type</a> index) const noexcept</td></tr>
+<tr class="memdesc:a53fcbeac796a6c8fd914f186d0c1b40d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accesses a specific character.  <br /></td></tr>
+<tr class="memitem:a5c13fcafe49d462e8cf0bd6a8c082030" id="r_a5c13fcafe49d462e8cf0bd6a8c082030"><td class="memItemLeft">constexpr <a class="el" href="#a728530456616811652c6d6af00f2f54f">const_reference</a>&#160;</td><td class="memItemRight"><a class="el" href="#a5c13fcafe49d462e8cf0bd6a8c082030">at</a> (<a class="el" href="#a535103f157466eaa9f9b179034bc6536">size_type</a> index) const noexcept</td></tr>
+<tr class="memdesc:a5c13fcafe49d462e8cf0bd6a8c082030"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accesses a specific character.  <br /></td></tr>
+<tr class="memitem:ab57aedfadffdac27f187679180a382a8" id="r_ab57aedfadffdac27f187679180a382a8"><td class="memItemLeft">constexpr <a class="el" href="#a728530456616811652c6d6af00f2f54f">const_reference</a>&#160;</td><td class="memItemRight"><a class="el" href="#ab57aedfadffdac27f187679180a382a8">front</a> () const noexcept</td></tr>
+<tr class="memdesc:ab57aedfadffdac27f187679180a382a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accesses the first character in the string.  <br /></td></tr>
+<tr class="memitem:aacb5cffc8042f40b4ff720aa62bb92d6" id="r_aacb5cffc8042f40b4ff720aa62bb92d6"><td class="memItemLeft">constexpr <a class="el" href="#a31d58faa65a6cddabe24288560b8eb73">const_pointer</a>&#160;</td><td class="memItemRight"><a class="el" href="#aacb5cffc8042f40b4ff720aa62bb92d6">data</a> () const noexcept</td></tr>
+<tr class="memdesc:aacb5cffc8042f40b4ff720aa62bb92d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a pointer to the raw data of the string.  <br /></td></tr>
+<tr class="memitem:a90076bb40522088c9be4f3fd7a2079a7" id="r_a90076bb40522088c9be4f3fd7a2079a7"><td class="memItemLeft">constexpr <a class="el" href="#a31d58faa65a6cddabe24288560b8eb73">const_pointer</a>&#160;</td><td class="memItemRight"><a class="el" href="#a90076bb40522088c9be4f3fd7a2079a7">c_str</a> () const noexcept</td></tr>
+<tr class="memdesc:a90076bb40522088c9be4f3fd7a2079a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a pointer to the raw C-string.  <br /></td></tr>
 <tr id="pub-methods-6" class="groupHeader"><td colspan="2"><div class="groupHeader">Length</div></td></tr>
-<tr class="memitem:a3582b124e0bad0bd1d4d86b16b7a08da" id="r_a3582b124e0bad0bd1d4d86b16b7a08da"><td class="memItemLeft">constexpr <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a>&#160;</td><td class="memItemRight"><a class="el" href="#a3582b124e0bad0bd1d4d86b16b7a08da">length</a> () const</td></tr>
-<tr class="memdesc:a3582b124e0bad0bd1d4d86b16b7a08da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the length of the string as if by strlen.  <br /></td></tr>
-<tr class="memitem:a91dd6fa3622dd8ff7168df1906febf3c" id="r_a91dd6fa3622dd8ff7168df1906febf3c"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="#a91dd6fa3622dd8ff7168df1906febf3c">empty</a> () const</td></tr>
-<tr class="memdesc:a91dd6fa3622dd8ff7168df1906febf3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the string view is empty.  <br /></td></tr>
+<tr class="memitem:adb701d7d10179a9e610bd38cb64f4eb8" id="r_adb701d7d10179a9e610bd38cb64f4eb8"><td class="memItemLeft">constexpr <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a>&#160;</td><td class="memItemRight"><a class="el" href="#adb701d7d10179a9e610bd38cb64f4eb8">length</a> () const noexcept</td></tr>
+<tr class="memdesc:adb701d7d10179a9e610bd38cb64f4eb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the length of the string as if by strlen.  <br /></td></tr>
+<tr class="memitem:a3a2c86f5b0eaa0e806fa18e9f2ca4d70" id="r_a3a2c86f5b0eaa0e806fa18e9f2ca4d70"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="#a3a2c86f5b0eaa0e806fa18e9f2ca4d70">empty</a> () const noexcept</td></tr>
+<tr class="memdesc:a3a2c86f5b0eaa0e806fa18e9f2ca4d70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the string view is empty.  <br /></td></tr>
 <tr id="pub-methods-7" class="groupHeader"><td colspan="2"><div class="groupHeader">Sub-strings</div></td></tr>
-<tr class="memitem:a5d6da40487f18123fc6411fc037d7882" id="r_a5d6da40487f18123fc6411fc037d7882"><td class="memItemLeft">constexpr <a class="el" href="#a6ac732c23118027e7b278f0e528a7c55">basic_zstring_view</a>&#160;</td><td class="memItemRight"><a class="el" href="#a5d6da40487f18123fc6411fc037d7882">substr</a> (<a class="el" href="#a535103f157466eaa9f9b179034bc6536">size_type</a> pos=0) const</td></tr>
-<tr class="memdesc:a5d6da40487f18123fc6411fc037d7882"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a sub-string view.  <br /></td></tr>
-<tr class="memitem:a2e68c572be739ffac7c5c5b91c414a58" id="r_a2e68c572be739ffac7c5c5b91c414a58"><td class="memItemLeft">constexpr void&#160;</td><td class="memItemRight"><a class="el" href="#a2e68c572be739ffac7c5c5b91c414a58">remove_prefix</a> (<a class="el" href="#a535103f157466eaa9f9b179034bc6536">size_type</a> n)</td></tr>
-<tr class="memdesc:a2e68c572be739ffac7c5c5b91c414a58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves the start of the view forward.  <br /></td></tr>
+<tr class="memitem:a08cd03c64779989a896a4ec23e9f46c6" id="r_a08cd03c64779989a896a4ec23e9f46c6"><td class="memItemLeft">constexpr <a class="el" href="#acdd7c08ec5e62a5bd2c547d22a60fd07">basic_zstring_view</a>&#160;</td><td class="memItemRight"><a class="el" href="#a08cd03c64779989a896a4ec23e9f46c6">substr</a> (<a class="el" href="#a535103f157466eaa9f9b179034bc6536">size_type</a> pos=0) const noexcept</td></tr>
+<tr class="memdesc:a08cd03c64779989a896a4ec23e9f46c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a sub-string view.  <br /></td></tr>
+<tr class="memitem:a63a734c515d1fa6a5d0d9c82aabee6fb" id="r_a63a734c515d1fa6a5d0d9c82aabee6fb"><td class="memItemLeft">constexpr void&#160;</td><td class="memItemRight"><a class="el" href="#a63a734c515d1fa6a5d0d9c82aabee6fb">remove_prefix</a> (<a class="el" href="#a535103f157466eaa9f9b179034bc6536">size_type</a> n) noexcept</td></tr>
+<tr class="memdesc:a63a734c515d1fa6a5d0d9c82aabee6fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves the start of the view forward.  <br /></td></tr>
 </table>
 <a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Member Typedef Documentation</h2>
 <a id="a6bcbad483e40c1dcc43381293f35a5b4" name="a6bcbad483e40c1dcc43381293f35a5b4"></a>
@@ -372,8 +372,8 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
 </div>
 </div>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a6ac732c23118027e7b278f0e528a7c55" name="a6ac732c23118027e7b278f0e528a7c55"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6ac732c23118027e7b278f0e528a7c55">&#9670;&#160;</a></span>basic_zstring_view() <span class="overload">[1/5]</span></h2>
+<a id="acdd7c08ec5e62a5bd2c547d22a60fd07" name="acdd7c08ec5e62a5bd2c547d22a60fd07"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acdd7c08ec5e62a5bd2c547d22a60fd07">&#9670;&#160;</a></span>basic_zstring_view() <span class="overload">[1/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -392,15 +392,15 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span><span class="mlabel default">default</span></span>  </td>
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel default">default</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="ad4ca49cb8e51f8ed8a50b42720baa5c9" name="ad4ca49cb8e51f8ed8a50b42720baa5c9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad4ca49cb8e51f8ed8a50b42720baa5c9">&#9670;&#160;</a></span>basic_zstring_view() <span class="overload">[2/5]</span></h2>
+<a id="ab4874bbd51cc59d0bca837bb1bb71df5" name="ab4874bbd51cc59d0bca837bb1bb71df5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab4874bbd51cc59d0bca837bb1bb71df5">&#9670;&#160;</a></span>basic_zstring_view() <span class="overload">[2/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -419,7 +419,7 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -432,8 +432,8 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
 
 </div>
 </div>
-<a id="a6f4e7cff9e3085fb6994b575ea685bba" name="a6f4e7cff9e3085fb6994b575ea685bba"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6f4e7cff9e3085fb6994b575ea685bba">&#9670;&#160;</a></span>basic_zstring_view() <span class="overload">[3/5]</span></h2>
+<a id="a772a9391543969c39931b86f25d8f67d" name="a772a9391543969c39931b86f25d8f67d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a772a9391543969c39931b86f25d8f67d">&#9670;&#160;</a></span>basic_zstring_view() <span class="overload">[3/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -454,7 +454,7 @@ template&lt;typename Allocator&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -493,7 +493,7 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span><span class="mlabel default">default</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel default">default</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -526,7 +526,7 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span><span class="mlabel default">default</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel default">default</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -552,9 +552,9 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="#a6ac732c23118027e7b278f0e528a7c55">basic_zstring_view</a> &amp; <a class="el" href="classtr_1_1basic__zstring__view.html">tr::basic_zstring_view</a>&lt; CharT, Traits &gt;::operator= </td>
+          <td class="memname"><a class="el" href="#acdd7c08ec5e62a5bd2c547d22a60fd07">basic_zstring_view</a> &amp; <a class="el" href="classtr_1_1basic__zstring__view.html">tr::basic_zstring_view</a>&lt; CharT, Traits &gt;::operator= </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="#a6ac732c23118027e7b278f0e528a7c55">basic_zstring_view</a>&lt; CharT, Traits &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="#acdd7c08ec5e62a5bd2c547d22a60fd07">basic_zstring_view</a>&lt; CharT, Traits &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -586,9 +586,9 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="#a6ac732c23118027e7b278f0e528a7c55">basic_zstring_view</a> &amp; <a class="el" href="classtr_1_1basic__zstring__view.html">tr::basic_zstring_view</a>&lt; CharT, Traits &gt;::operator= </td>
+          <td class="memname"><a class="el" href="#acdd7c08ec5e62a5bd2c547d22a60fd07">basic_zstring_view</a> &amp; <a class="el" href="classtr_1_1basic__zstring__view.html">tr::basic_zstring_view</a>&lt; CharT, Traits &gt;::operator= </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="#a6ac732c23118027e7b278f0e528a7c55">basic_zstring_view</a>&lt; CharT, Traits &gt; &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="#acdd7c08ec5e62a5bd2c547d22a60fd07">basic_zstring_view</a>&lt; CharT, Traits &gt; &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -608,8 +608,8 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
 
 </div>
 </div>
-<a id="a78178c6be6ea33f123a9033faad42a1c" name="a78178c6be6ea33f123a9033faad42a1c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a78178c6be6ea33f123a9033faad42a1c">&#9670;&#160;</a></span>operator std::basic_string_view&lt; CharT, Traits &gt;()</h2>
+<a id="a364bbbc20f21e46cd8db2b22daaba6ac" name="a364bbbc20f21e46cd8db2b22daaba6ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a364bbbc20f21e46cd8db2b22daaba6ac">&#9670;&#160;</a></span>operator std::basic_string_view&lt; CharT, Traits &gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -628,7 +628,7 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -636,8 +636,8 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
 
 </div>
 </div>
-<a id="ad325e0d9b8fd394c637a91cb01620296" name="ad325e0d9b8fd394c637a91cb01620296"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad325e0d9b8fd394c637a91cb01620296">&#9670;&#160;</a></span>operator&lt;=&gt;()</h2>
+<a id="adde01a6fe10edb496ae2f44039f80730" name="adde01a6fe10edb496ae2f44039f80730"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adde01a6fe10edb496ae2f44039f80730">&#9670;&#160;</a></span>operator&lt;=&gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -650,17 +650,17 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
         <tr>
           <td class="memname">std::strong_ordering <a class="el" href="classtr_1_1basic__zstring__view.html">tr::basic_zstring_view</a>&lt; CharT, Traits &gt;::operator&lt;=&gt; </td>
           <td>(</td>
-          <td class="paramtype">this <a class="el" href="#a6ac732c23118027e7b278f0e528a7c55">basic_zstring_view</a>&lt; CharT, Traits &gt;</td>          <td class="paramname"><span class="paramname"><em>lhs</em></span>, </td>
+          <td class="paramtype">this <a class="el" href="#acdd7c08ec5e62a5bd2c547d22a60fd07">basic_zstring_view</a>&lt; CharT, Traits &gt;</td>          <td class="paramname"><span class="paramname"><em>lhs</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::type_identity_t&lt; <a class="el" href="#a6ac732c23118027e7b278f0e528a7c55">basic_zstring_view</a>&lt; CharT, Traits &gt; &gt;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span>&#160;)</td>
+          <td class="paramtype">std::type_identity_t&lt; <a class="el" href="#acdd7c08ec5e62a5bd2c547d22a60fd07">basic_zstring_view</a>&lt; CharT, Traits &gt; &gt;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -674,8 +674,8 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
 
 </div>
 </div>
-<a id="ab32b3bf1bcf92d63006c09ce24afd6ec" name="ab32b3bf1bcf92d63006c09ce24afd6ec"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab32b3bf1bcf92d63006c09ce24afd6ec">&#9670;&#160;</a></span>operator==()</h2>
+<a id="a39163a8516af84786b9d5f5488cc6d67" name="a39163a8516af84786b9d5f5488cc6d67"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a39163a8516af84786b9d5f5488cc6d67">&#9670;&#160;</a></span>operator==()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -688,17 +688,17 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
         <tr>
           <td class="memname">bool <a class="el" href="classtr_1_1basic__zstring__view.html">tr::basic_zstring_view</a>&lt; CharT, Traits &gt;::operator== </td>
           <td>(</td>
-          <td class="paramtype">this <a class="el" href="#a6ac732c23118027e7b278f0e528a7c55">basic_zstring_view</a>&lt; CharT, Traits &gt;</td>          <td class="paramname"><span class="paramname"><em>lhs</em></span>, </td>
+          <td class="paramtype">this <a class="el" href="#acdd7c08ec5e62a5bd2c547d22a60fd07">basic_zstring_view</a>&lt; CharT, Traits &gt;</td>          <td class="paramname"><span class="paramname"><em>lhs</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::type_identity_t&lt; <a class="el" href="#a6ac732c23118027e7b278f0e528a7c55">basic_zstring_view</a>&lt; CharT, Traits &gt; &gt;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span>&#160;)</td>
+          <td class="paramtype">std::type_identity_t&lt; <a class="el" href="#acdd7c08ec5e62a5bd2c547d22a60fd07">basic_zstring_view</a>&lt; CharT, Traits &gt; &gt;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -712,8 +712,8 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
 
 </div>
 </div>
-<a id="a351f396b93e5992ae2c91ae2bf02af6d" name="a351f396b93e5992ae2c91ae2bf02af6d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a351f396b93e5992ae2c91ae2bf02af6d">&#9670;&#160;</a></span>begin()</h2>
+<a id="a170a58744af23de4200a94a02894ce1c" name="a170a58744af23de4200a94a02894ce1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a170a58744af23de4200a94a02894ce1c">&#9670;&#160;</a></span>begin()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -732,7 +732,7 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -740,8 +740,8 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
 
 </div>
 </div>
-<a id="abb4ca413c8a79ec3c4bbbbba6a7a2e21" name="abb4ca413c8a79ec3c4bbbbba6a7a2e21"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abb4ca413c8a79ec3c4bbbbba6a7a2e21">&#9670;&#160;</a></span>cbegin()</h2>
+<a id="ae1af47970b2c34a07af94f96d05334f2" name="ae1af47970b2c34a07af94f96d05334f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae1af47970b2c34a07af94f96d05334f2">&#9670;&#160;</a></span>cbegin()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -760,7 +760,7 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -768,8 +768,8 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
 
 </div>
 </div>
-<a id="acc0e668d7aa64859a13baed23d8ceb2b" name="acc0e668d7aa64859a13baed23d8ceb2b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acc0e668d7aa64859a13baed23d8ceb2b">&#9670;&#160;</a></span>end()</h2>
+<a id="a11f5f3d0fcb6c8429b9f5494f6108280" name="a11f5f3d0fcb6c8429b9f5494f6108280"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a11f5f3d0fcb6c8429b9f5494f6108280">&#9670;&#160;</a></span>end()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -788,7 +788,7 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -796,8 +796,8 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
 
 </div>
 </div>
-<a id="a92269fe75a85f400d8dcdfc1ca8f73e3" name="a92269fe75a85f400d8dcdfc1ca8f73e3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a92269fe75a85f400d8dcdfc1ca8f73e3">&#9670;&#160;</a></span>cend()</h2>
+<a id="a3d49edcc8510c678908bf31b0bebbca2" name="a3d49edcc8510c678908bf31b0bebbca2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3d49edcc8510c678908bf31b0bebbca2">&#9670;&#160;</a></span>cend()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -816,7 +816,7 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -824,8 +824,8 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
 
 </div>
 </div>
-<a id="a48881d1c1ffe8b2f7f4d06adbfec7576" name="a48881d1c1ffe8b2f7f4d06adbfec7576"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a48881d1c1ffe8b2f7f4d06adbfec7576">&#9670;&#160;</a></span>operator[]()</h2>
+<a id="a53fcbeac796a6c8fd914f186d0c1b40d" name="a53fcbeac796a6c8fd914f186d0c1b40d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a53fcbeac796a6c8fd914f186d0c1b40d">&#9670;&#160;</a></span>operator[]()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -844,7 +844,7 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -858,8 +858,8 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
 
 </div>
 </div>
-<a id="a0510e73ed382984d494a4e633ca4fb63" name="a0510e73ed382984d494a4e633ca4fb63"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0510e73ed382984d494a4e633ca4fb63">&#9670;&#160;</a></span>at()</h2>
+<a id="a5c13fcafe49d462e8cf0bd6a8c082030" name="a5c13fcafe49d462e8cf0bd6a8c082030"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c13fcafe49d462e8cf0bd6a8c082030">&#9670;&#160;</a></span>at()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -878,7 +878,7 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -892,8 +892,8 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
 
 </div>
 </div>
-<a id="a3681a0190b46413ce0d8d16819fa52d1" name="a3681a0190b46413ce0d8d16819fa52d1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3681a0190b46413ce0d8d16819fa52d1">&#9670;&#160;</a></span>front()</h2>
+<a id="ab57aedfadffdac27f187679180a382a8" name="ab57aedfadffdac27f187679180a382a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab57aedfadffdac27f187679180a382a8">&#9670;&#160;</a></span>front()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -912,7 +912,7 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -920,8 +920,8 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
 
 </div>
 </div>
-<a id="a04c1715e991af41be2979a0fa6a29927" name="a04c1715e991af41be2979a0fa6a29927"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a04c1715e991af41be2979a0fa6a29927">&#9670;&#160;</a></span>data()</h2>
+<a id="aacb5cffc8042f40b4ff720aa62bb92d6" name="aacb5cffc8042f40b4ff720aa62bb92d6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aacb5cffc8042f40b4ff720aa62bb92d6">&#9670;&#160;</a></span>data()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -940,7 +940,7 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -948,8 +948,8 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
 
 </div>
 </div>
-<a id="a2c95612a265b8ec5f02a2b3c7b026820" name="a2c95612a265b8ec5f02a2b3c7b026820"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2c95612a265b8ec5f02a2b3c7b026820">&#9670;&#160;</a></span>c_str()</h2>
+<a id="a90076bb40522088c9be4f3fd7a2079a7" name="a90076bb40522088c9be4f3fd7a2079a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a90076bb40522088c9be4f3fd7a2079a7">&#9670;&#160;</a></span>c_str()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -968,7 +968,7 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -976,8 +976,8 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
 
 </div>
 </div>
-<a id="a3582b124e0bad0bd1d4d86b16b7a08da" name="a3582b124e0bad0bd1d4d86b16b7a08da"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3582b124e0bad0bd1d4d86b16b7a08da">&#9670;&#160;</a></span>length()</h2>
+<a id="adb701d7d10179a9e610bd38cb64f4eb8" name="adb701d7d10179a9e610bd38cb64f4eb8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adb701d7d10179a9e610bd38cb64f4eb8">&#9670;&#160;</a></span>length()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -996,7 +996,7 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -1004,8 +1004,8 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
 
 </div>
 </div>
-<a id="a91dd6fa3622dd8ff7168df1906febf3c" name="a91dd6fa3622dd8ff7168df1906febf3c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a91dd6fa3622dd8ff7168df1906febf3c">&#9670;&#160;</a></span>empty()</h2>
+<a id="a3a2c86f5b0eaa0e806fa18e9f2ca4d70" name="a3a2c86f5b0eaa0e806fa18e9f2ca4d70"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3a2c86f5b0eaa0e806fa18e9f2ca4d70">&#9670;&#160;</a></span>empty()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1024,7 +1024,7 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -1032,8 +1032,8 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
 
 </div>
 </div>
-<a id="a5d6da40487f18123fc6411fc037d7882" name="a5d6da40487f18123fc6411fc037d7882"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5d6da40487f18123fc6411fc037d7882">&#9670;&#160;</a></span>substr()</h2>
+<a id="a08cd03c64779989a896a4ec23e9f46c6" name="a08cd03c64779989a896a4ec23e9f46c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a08cd03c64779989a896a4ec23e9f46c6">&#9670;&#160;</a></span>substr()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1044,7 +1044,7 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="#a6ac732c23118027e7b278f0e528a7c55">basic_zstring_view</a> <a class="el" href="classtr_1_1basic__zstring__view.html">tr::basic_zstring_view</a>&lt; CharT, Traits &gt;::substr </td>
+          <td class="memname"><a class="el" href="#acdd7c08ec5e62a5bd2c547d22a60fd07">basic_zstring_view</a> <a class="el" href="classtr_1_1basic__zstring__view.html">tr::basic_zstring_view</a>&lt; CharT, Traits &gt;::substr </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="#a535103f157466eaa9f9b179034bc6536">size_type</a></td>          <td class="paramname"><span class="paramname"><em>pos</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0</span></td><td>)</td>
           <td> const</td>
@@ -1052,7 +1052,7 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -1066,8 +1066,8 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
 
 </div>
 </div>
-<a id="a2e68c572be739ffac7c5c5b91c414a58" name="a2e68c572be739ffac7c5c5b91c414a58"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2e68c572be739ffac7c5c5b91c414a58">&#9670;&#160;</a></span>remove_prefix()</h2>
+<a id="a63a734c515d1fa6a5d0d9c82aabee6fb" name="a63a734c515d1fa6a5d0d9c82aabee6fb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a63a734c515d1fa6a5d0d9c82aabee6fb">&#9670;&#160;</a></span>remove_prefix()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1086,7 +1086,7 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

@@ -1,0 +1,4 @@
+var structtr_1_1binary__writer_3_01tr_1_1basic__inplace__string_3_01CharT_00_01Capacity_00_01Traits_01_4_01_4 =
+[
+    [ "operator()", "structtr_1_1binary__writer_3_01tr_1_1basic__inplace__string_3_01CharT_00_01Capacity_00_01Traits_01_4_01_4.html#a08ac67ed8a965f2d09033bd852ed4908", null ]
+];

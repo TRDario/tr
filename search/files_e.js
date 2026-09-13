@@ -1,9 +1,7 @@
 var searchData=
 [
-  ['ranges_2ehpp_0',['ranges.hpp',['../ranges_8hpp.html',1,'']]],
-  ['rectangle_2ehpp_1',['rectangle.hpp',['../rectangle_8hpp.html',1,'']]],
-  ['rectangle_5fedges_2ehpp_2',['rectangle_edges.hpp',['../rectangle__edges_8hpp.html',1,'']]],
-  ['reference_2ehpp_3',['reference.hpp',['../reference_8hpp.html',1,'']]],
-  ['render_5ftarget_2ehpp_4',['render_target.hpp',['../render__target_8hpp.html',1,'']]],
-  ['rng_2ehpp_5',['rng.hpp',['../rng_8hpp.html',1,'']]]
+  ['path_2ehpp_0',['path.hpp',['../path_8hpp.html',1,'']]],
+  ['ping_5fpong_5ftarget_2ehpp_1',['ping_pong_target.hpp',['../ping__pong__target_8hpp.html',1,'']]],
+  ['pointer_5fiterator_2ehpp_2',['pointer_iterator.hpp',['../pointer__iterator_8hpp.html',1,'']]],
+  ['polygon_2ehpp_3',['polygon.hpp',['../polygon_8hpp.html',1,'']]]
 ];

@@ -17,8 +17,8 @@ var chrono_8hpp =
     [ "tr::aliases::chrono_aliases::fnsecs", "namespacetr_1_1aliases_1_1chrono__aliases.html#ad60e5d51fac841ea8fcf37d97bb54b1d", null ],
     [ "tr::aliases::chrono_aliases::dnsecs", "namespacetr_1_1aliases_1_1chrono__aliases.html#a41821b61d711d973df068b1e052c1cf7", null ],
     [ "tr::aliases::chrono_aliases::insecs", "namespacetr_1_1aliases_1_1chrono__aliases.html#a26a3b5e6bbf9f483e33d31c2697344dc", null ],
-    [ "tr::literals::chrono_literals::operator\"\"_hz", "namespacetr_1_1literals_1_1chrono__literals.html#ada47568012f0d1e6e3694c514d93d80b", null ],
-    [ "tr::literals::chrono_literals::operator\"\"_hz", "namespacetr_1_1literals_1_1chrono__literals.html#a92db556558a1f7f811614b6ec8a878aa", null ],
-    [ "tr::ratio", "namespacetr.html#a81d43bc7076fbb5285aa0a3f11ecc835", null ],
-    [ "tr::localtime", "namespacetr.html#aa16da3990161d4963974eed1ecffac35", null ]
+    [ "tr::literals::chrono_literals::operator\"\"_hz", "namespacetr_1_1literals_1_1chrono__literals.html#a2ef4948d9497f3df15f198c917efffd6", null ],
+    [ "tr::literals::chrono_literals::operator\"\"_hz", "namespacetr_1_1literals_1_1chrono__literals.html#ae4c3fc5407f301d06c4086de6d63ca4c", null ],
+    [ "tr::ratio", "namespacetr.html#a655d6b45d021a02814d9364b1a6e7580", null ],
+    [ "tr::localtime", "namespacetr.html#ac45fedac45bd7da2557d89a637e770af", null ]
 ];

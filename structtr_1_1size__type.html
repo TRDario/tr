@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=11" />
   <meta name="generator" content="Doxygen 1.17.0" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>tr: tr::size_type&lt; S &gt; Struct Template Reference</title>
+  <title>tr: tr::size_type&lt; Max &gt; Struct Template Reference</title>
   <link href="tabs.css" rel="stylesheet" type="text/css" />
   <script type="text/javascript" src="jquery.js"></script>
   <script type="text/javascript" src="dynsections.js"></script>
@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
   </div>
 </div>
 <script type="text/javascript">
-document.addEventListener('DOMContentLoaded',() => { initNavTree('structtr_1_1size__type.html','',''); });
+document.addEventListener('DOMContentLoaded',() => { initNavTree('structtr_1_1size__type.html','','structtr_1_1size__type-members'); });
 </script>
 <div id="container">
 <div id="doc-content">
@@ -124,21 +124,48 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('structtr_1_1si
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">tr::size_type&lt; S &gt; Struct Template Reference</div></div>
+  <div class="headertitle"><div class="title">tr::size_type&lt; Max &gt; Struct Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Stores the type that can store an integer in the range [0, <span class="tt">S</span>] in <span class="tt">::type</span>.  
+<p>Stores the type that can store an integer in the range [0, <span class="tt">Max</span>] in <span class="tt">::type</span>.  
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> S&gt;<br />
-struct tr::size_type&lt; S &gt;</div><dl class="tparams"><dt>Template Parameters</dt><dd>
+<div class="textblock"><div class="compoundTemplParams">template&lt;<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Max&gt;<br />
+struct tr::size_type&lt; Max &gt;</div><dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">S</td><td>Maximum value that needs to be stored. </td></tr>
+    <tr><td class="paramname">Max</td><td>Maximum value that needs to be stored. </td></tr>
   </table>
   </dd>
 </dl>
-</div></div><!-- contents -->
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-types" class="groupheader"><a id="pub-types" name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a1fbc58d33b278aed98ba7f6fc7652adb" id="r_a1fbc58d33b278aed98ba7f6fc7652adb"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a1fbc58d33b278aed98ba7f6fc7652adb">type</a></td></tr>
+<tr class="memdesc:a1fbc58d33b278aed98ba7f6fc7652adb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Integer type that can store an integer in the range [0, <span class="tt">Max</span>].  <br /></td></tr>
+</table>
+<a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Member Typedef Documentation</h2>
+<a id="a1fbc58d33b278aed98ba7f6fc7652adb" name="a1fbc58d33b278aed98ba7f6fc7652adb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1fbc58d33b278aed98ba7f6fc7652adb">&#9670;&#160;</a></span>type</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Max&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="structtr_1_1size__type.html">tr::size_type</a>&lt; Max &gt;::type</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">std::conditional_t&lt;Max &lt;= UINT32_MAX,</div>
+<div class="line">                                       std::conditional_t&lt;Max &lt;= UINT16_MAX, std::conditional_t&lt;Max &lt;= UINT8_MAX, u8, u16&gt;, <a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#a28316522024e2e46cd0a6469e745897e">u32</a>&gt;, <a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#aaad9e5eeeb9ae331c3cdb7468c3db554">u64</a>&gt;</div>
+<div class="ttc" id="anamespacetr_1_1aliases_1_1integer__aliases_html_a28316522024e2e46cd0a6469e745897e"><div class="ttname"><a href="namespacetr_1_1aliases_1_1integer__aliases.html#a28316522024e2e46cd0a6469e745897e">tr::aliases::integer_aliases::u32</a></div><div class="ttdeci">std::uint32_t u32</div><div class="ttdoc">32-bit unsigned integer.</div><div class="ttdef"><b>Definition</b> integer.hpp:23</div></div>
+<div class="ttc" id="anamespacetr_1_1aliases_1_1integer__aliases_html_aaad9e5eeeb9ae331c3cdb7468c3db554"><div class="ttname"><a href="namespacetr_1_1aliases_1_1integer__aliases.html#aaad9e5eeeb9ae331c3cdb7468c3db554">tr::aliases::integer_aliases::u64</a></div><div class="ttdeci">std::uint64_t u64</div><div class="ttdoc">64-bit unsigned integer.</div><div class="ttdef"><b>Definition</b> integer.hpp:26</div></div>
+</div><!-- fragment -->
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <div id="page-nav" class="page-nav-panel">
 <div id="page-nav-resize-handle"></div>

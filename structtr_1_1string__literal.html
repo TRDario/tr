@@ -142,27 +142,27 @@ struct tr::string_literal&lt; Size &gt;</div><dl class="tparams"><dt>Template Pa
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
-<tr class="memitem:adfbe25f9624fe67593b7c2b52c61cf73" id="r_adfbe25f9624fe67593b7c2b52c61cf73"><td class="memItemLeft">consteval&#160;</td><td class="memItemRight"><a class="el" href="#adfbe25f9624fe67593b7c2b52c61cf73">string_literal</a> (const char(&amp;str)[Size])</td></tr>
-<tr class="memdesc:adfbe25f9624fe67593b7c2b52c61cf73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a template string literal from a real string literal.  <br /></td></tr>
+<tr class="memitem:a9afd26a1ec62274c769050c6eb7a1140" id="r_a9afd26a1ec62274c769050c6eb7a1140"><td class="memItemLeft">consteval&#160;</td><td class="memItemRight"><a class="el" href="#a9afd26a1ec62274c769050c6eb7a1140">string_literal</a> (const char(&amp;str)[Size]) noexcept</td></tr>
+<tr class="memdesc:a9afd26a1ec62274c769050c6eb7a1140"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a template string literal from a real string literal.  <br /></td></tr>
 <tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Conversion operators</div></td></tr>
-<tr class="memitem:a97475debbdcf760a772f4231a7f16eab" id="r_a97475debbdcf760a772f4231a7f16eab"><td class="memItemLeft">consteval&#160;</td><td class="memItemRight"><a class="el" href="#a97475debbdcf760a772f4231a7f16eab">operator const char *</a> () const</td></tr>
-<tr class="memdesc:a97475debbdcf760a772f4231a7f16eab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a C-string pointing to the string literal.  <br /></td></tr>
-<tr class="memitem:a241f5bfe8dfeb477d99691b46167681a" id="r_a241f5bfe8dfeb477d99691b46167681a"><td class="memItemLeft">consteval&#160;</td><td class="memItemRight"><a class="el" href="#a241f5bfe8dfeb477d99691b46167681a">operator std::string_view</a> () const</td></tr>
-<tr class="memdesc:a241f5bfe8dfeb477d99691b46167681a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a string view to the string literal.  <br /></td></tr>
-<tr class="memitem:ad7a5d9fb67def2176dd087749c0a5525" id="r_ad7a5d9fb67def2176dd087749c0a5525"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
-<tr class="memitem:ad7a5d9fb67def2176dd087749c0a5525 template"><td class="memItemLeft">consteval&#160;</td><td class="memItemRight"><a class="el" href="#ad7a5d9fb67def2176dd087749c0a5525">operator std::format_string&lt; Args... &gt;</a> () const</td></tr>
-<tr class="memdesc:ad7a5d9fb67def2176dd087749c0a5525"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a format string view to the string literal.  <br /></td></tr>
+<tr class="memitem:a92efd75547bb8bf5e777ed73ee547e78" id="r_a92efd75547bb8bf5e777ed73ee547e78"><td class="memItemLeft">consteval&#160;</td><td class="memItemRight"><a class="el" href="#a92efd75547bb8bf5e777ed73ee547e78">operator const char *</a> () const noexcept</td></tr>
+<tr class="memdesc:a92efd75547bb8bf5e777ed73ee547e78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a C-string pointing to the string literal.  <br /></td></tr>
+<tr class="memitem:a6fa662d6001a8a9af22e6b56bfffb9e6" id="r_a6fa662d6001a8a9af22e6b56bfffb9e6"><td class="memItemLeft">consteval&#160;</td><td class="memItemRight"><a class="el" href="#a6fa662d6001a8a9af22e6b56bfffb9e6">operator std::string_view</a> () const noexcept</td></tr>
+<tr class="memdesc:a6fa662d6001a8a9af22e6b56bfffb9e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a string view to the string literal.  <br /></td></tr>
+<tr class="memitem:a2f3ef6a4930a1553de10e0e6c0a4dcf7" id="r_a2f3ef6a4930a1553de10e0e6c0a4dcf7"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
+<tr class="memitem:a2f3ef6a4930a1553de10e0e6c0a4dcf7 template"><td class="memItemLeft">consteval&#160;</td><td class="memItemRight"><a class="el" href="#a2f3ef6a4930a1553de10e0e6c0a4dcf7">operator std::format_string&lt; Args... &gt;</a> () const noexcept</td></tr>
+<tr class="memdesc:a2f3ef6a4930a1553de10e0e6c0a4dcf7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a format string view to the string literal.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-member-group" class="groupheader"><a id="member-group" name="member-group"></a>
 Data</h2></td></tr>
 <tr class="memitem:a6fddcfbdb9391ff9bf4c2ffc60359c57" id="r_a6fddcfbdb9391ff9bf4c2ffc60359c57"><td class="memItemLeft">char&#160;</td><td class="memItemRight"><a class="el" href="#a6fddcfbdb9391ff9bf4c2ffc60359c57">data</a> [Size]</td></tr>
 <tr class="memdesc:a6fddcfbdb9391ff9bf4c2ffc60359c57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Backing character array of the string.  <br /></td></tr>
-<tr class="memitem:a1048d09f38734706c4632decc41caf99" id="r_a1048d09f38734706c4632decc41caf99"><td class="memItemLeft">static consteval <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a>&#160;</td><td class="memItemRight"><a class="el" href="#a1048d09f38734706c4632decc41caf99">size</a> ()</td></tr>
-<tr class="memdesc:a1048d09f38734706c4632decc41caf99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the length of the literal.  <br /></td></tr>
+<tr class="memitem:a5cac6fea8b798bc89762fafddb52d54d" id="r_a5cac6fea8b798bc89762fafddb52d54d"><td class="memItemLeft">static consteval <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a>&#160;</td><td class="memItemRight"><a class="el" href="#a5cac6fea8b798bc89762fafddb52d54d">size</a> () noexcept</td></tr>
+<tr class="memdesc:a5cac6fea8b798bc89762fafddb52d54d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the length of the literal.  <br /></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="adfbe25f9624fe67593b7c2b52c61cf73" name="adfbe25f9624fe67593b7c2b52c61cf73"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adfbe25f9624fe67593b7c2b52c61cf73">&#9670;&#160;</a></span>string_literal()</h2>
+<a id="a9afd26a1ec62274c769050c6eb7a1140" name="a9afd26a1ec62274c769050c6eb7a1140"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9afd26a1ec62274c769050c6eb7a1140">&#9670;&#160;</a></span>string_literal()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -181,7 +181,7 @@ template&lt;<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel consteval">consteval</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel consteval">consteval</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -195,8 +195,8 @@ template&lt;<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="a97475debbdcf760a772f4231a7f16eab" name="a97475debbdcf760a772f4231a7f16eab"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a97475debbdcf760a772f4231a7f16eab">&#9670;&#160;</a></span>operator const char *()</h2>
+<a id="a92efd75547bb8bf5e777ed73ee547e78" name="a92efd75547bb8bf5e777ed73ee547e78"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a92efd75547bb8bf5e777ed73ee547e78">&#9670;&#160;</a></span>operator const char *()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -215,7 +215,7 @@ template&lt;<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel consteval">consteval</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel consteval">consteval</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -223,8 +223,8 @@ template&lt;<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#
 
 </div>
 </div>
-<a id="a241f5bfe8dfeb477d99691b46167681a" name="a241f5bfe8dfeb477d99691b46167681a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a241f5bfe8dfeb477d99691b46167681a">&#9670;&#160;</a></span>operator std::string_view()</h2>
+<a id="a6fa662d6001a8a9af22e6b56bfffb9e6" name="a6fa662d6001a8a9af22e6b56bfffb9e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6fa662d6001a8a9af22e6b56bfffb9e6">&#9670;&#160;</a></span>operator std::string_view()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -243,7 +243,7 @@ template&lt;<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel consteval">consteval</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel consteval">consteval</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -251,8 +251,8 @@ template&lt;<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#
 
 </div>
 </div>
-<a id="ad7a5d9fb67def2176dd087749c0a5525" name="ad7a5d9fb67def2176dd087749c0a5525"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad7a5d9fb67def2176dd087749c0a5525">&#9670;&#160;</a></span>operator std::format_string&lt; Args... &gt;()</h2>
+<a id="a2f3ef6a4930a1553de10e0e6c0a4dcf7" name="a2f3ef6a4930a1553de10e0e6c0a4dcf7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2f3ef6a4930a1553de10e0e6c0a4dcf7">&#9670;&#160;</a></span>operator std::format_string&lt; Args... &gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -273,7 +273,7 @@ template&lt;typename... Args&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel consteval">consteval</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel consteval">consteval</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -287,8 +287,8 @@ template&lt;typename... Args&gt; </div>
 
 </div>
 </div>
-<a id="a1048d09f38734706c4632decc41caf99" name="a1048d09f38734706c4632decc41caf99"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1048d09f38734706c4632decc41caf99">&#9670;&#160;</a></span>size()</h2>
+<a id="a5cac6fea8b798bc89762fafddb52d54d" name="a5cac6fea8b798bc89762fafddb52d54d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5cac6fea8b798bc89762fafddb52d54d">&#9670;&#160;</a></span>size()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -307,7 +307,7 @@ template&lt;<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel static">static</span><span class="mlabel consteval">consteval</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel static">static</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel consteval">consteval</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

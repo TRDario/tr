@@ -1,7 +1,7 @@
 var classtr_1_1window__error =
 [
-    [ "window_error", "classtr_1_1window__error.html#a3eaa5cb2096156387fd79450f42120ee", null ],
-    [ "name", "classtr_1_1window__error.html#ac95a95448623d85868502bff2c083069", null ],
-    [ "description", "classtr_1_1window__error.html#a217f09c16d80e3bac6438109e046e81d", null ],
-    [ "details", "classtr_1_1window__error.html#a58a517bd20a9e2ef478b094351e106cc", null ]
+    [ "window_error", "classtr_1_1window__error.html#af69d41f52349ad0e9bf691c542b5c0c1", null ],
+    [ "name", "classtr_1_1window__error.html#ab8a94ec5da95befe6ce931980bb24fac", null ],
+    [ "description", "classtr_1_1window__error.html#a0b1f9eac835baeca1823c56c1e1b7119", null ],
+    [ "details", "classtr_1_1window__error.html#a9272a81cb76411b9959dc91c8a00f6ea", null ]
 ];

@@ -1,14 +1,14 @@
 var matrix_8hpp =
 [
-    [ "tr::ortho", "namespacetr.html#ad092ff57dbe28a106cab9f9d4c1044b2", null ],
-    [ "tr::scale_around", "namespacetr.html#a48947ae6e6dfcf79a0a61323e0a8d66c", null ],
-    [ "tr::scale_around", "namespacetr.html#a99500cfb6105f3e1f9431b8aaf2b110c", null ],
-    [ "tr::rotate_around", "namespacetr.html#a029fcdc7a16cf9f8a018a5f6b46c8e08", null ],
-    [ "tr::rotate_around", "namespacetr.html#a3e547259dd572f583b6c40effd06f754", null ],
-    [ "tr::literals::matrix_operators::operator*", "namespacetr_1_1literals_1_1matrix__operators.html#acea7980967bcaad5d4eecee4d4113b17", null ],
-    [ "tr::literals::matrix_operators::operator*", "namespacetr_1_1literals_1_1matrix__operators.html#a071db3990f0967a324faf91fb7e0196f", null ],
-    [ "tr::literals::matrix_operators::operator*", "namespacetr_1_1literals_1_1matrix__operators.html#a4d21dc229f93d30040bcc97951c8ce12", null ],
-    [ "tr::literals::matrix_operators::operator*", "namespacetr_1_1literals_1_1matrix__operators.html#af614c933a900d389e0afc695c75529ed", null ],
+    [ "tr::ortho", "namespacetr.html#a17dcbb81641738193d2743f53fba0dbb", null ],
+    [ "tr::scale_around", "namespacetr.html#a3630628ffd152670c738ae766a453cfc", null ],
+    [ "tr::scale_around", "namespacetr.html#ac72b125d13fbc448dacb9abe55d77137", null ],
+    [ "tr::rotate_around", "namespacetr.html#ab9ce86a63c252859671bec3566b7801d", null ],
+    [ "tr::rotate_around", "namespacetr.html#a89e8746966517fd15a2065347306b997", null ],
+    [ "tr::literals::matrix_operators::operator*", "namespacetr_1_1literals_1_1matrix__operators.html#a30b96c384a2b216f934b182d0f1a5dd7", null ],
+    [ "tr::literals::matrix_operators::operator*", "namespacetr_1_1literals_1_1matrix__operators.html#a92dd69a9ae283ca55a29337d7875888d", null ],
+    [ "tr::literals::matrix_operators::operator*", "namespacetr_1_1literals_1_1matrix__operators.html#af4088a44ea911e8aa39f4c473d6931e1", null ],
+    [ "tr::literals::matrix_operators::operator*", "namespacetr_1_1literals_1_1matrix__operators.html#a38c6f9769bdba6831f98241a2bc229b4", null ],
     [ "tr::x_axis", "namespacetr.html#ae904599aaec85e8fdcce1cbed338b78e", null ],
     [ "tr::y_axis", "namespacetr.html#abf4d1094c8865c581c862d90eda4993e", null ],
     [ "tr::z_axis", "namespacetr.html#ac299d23e2b9359bbad910f65cbcc4dc7", null ]

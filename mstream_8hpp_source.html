@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('mstream_8hpp_s
 <a href="mstream_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#pragma once</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;<a class="code" href="common_8hpp.html">common.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;<a class="code" href="common_8hpp.html">tr/utility/common.hpp</a>&gt;</span></div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment">//</span></div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
@@ -141,11 +141,11 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('mstream_8hpp_s
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    {</div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>      <span class="keyword">public</span>:</div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span></div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="classtr_1_1memorybuf.html#a14d9122b5848460f10629559c3eb33ad">   20</a></span>        <span class="keyword">explicit</span> <a class="code hl_function" href="classtr_1_1memorybuf.html#a14d9122b5848460f10629559c3eb33ad">memorybuf</a>(std::span&lt;char&gt; buffer);</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="classtr_1_1memorybuf.html#a14d9122b5848460f10629559c3eb33ad">   20</a></span>        [[nodiscard]] <span class="keyword">explicit</span> <a class="code hl_function" href="classtr_1_1memorybuf.html#a14d9122b5848460f10629559c3eb33ad">memorybuf</a>(std::span&lt;char&gt; buffer);</div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="classtr_1_1memorybuf.html#a95ac181556b93d55a71865825346cd64">   24</a></span>        <span class="keyword">explicit</span> <a class="code hl_function" href="classtr_1_1memorybuf.html#a95ac181556b93d55a71865825346cd64">memorybuf</a>(std::span&lt;unsigned char&gt; buffer);</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="classtr_1_1memorybuf.html#a95ac181556b93d55a71865825346cd64">   24</a></span>        [[nodiscard]] <span class="keyword">explicit</span> <a class="code hl_function" href="classtr_1_1memorybuf.html#a95ac181556b93d55a71865825346cd64">memorybuf</a>(std::span&lt;unsigned char&gt; buffer);</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span></div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="classtr_1_1memorybuf.html#a35632a491cf65291bb59b04a33c78310">   28</a></span>        <span class="keyword">explicit</span> <a class="code hl_function" href="classtr_1_1memorybuf.html#a35632a491cf65291bb59b04a33c78310">memorybuf</a>(std::span&lt;std::byte&gt; buffer);</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="classtr_1_1memorybuf.html#a35632a491cf65291bb59b04a33c78310">   28</a></span>        [[nodiscard]] <span class="keyword">explicit</span> <a class="code hl_function" href="classtr_1_1memorybuf.html#a35632a491cf65291bb59b04a33c78310">memorybuf</a>(std::span&lt;std::byte&gt; buffer);</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span></div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>      <span class="keyword">private</span>:</div>
@@ -164,11 +164,11 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('mstream_8hpp_s
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    {</div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>      <span class="keyword">public</span>:</div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span></div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="classtr_1_1imstream.html#a5066b8cc2e3ab4c476b875423019b342">   52</a></span>        <span class="keyword">explicit</span> <a class="code hl_function" href="classtr_1_1imstream.html#a5066b8cc2e3ab4c476b875423019b342">imstream</a>(std::span&lt;const char&gt; buffer);</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="classtr_1_1imstream.html#a5066b8cc2e3ab4c476b875423019b342">   52</a></span>        [[nodiscard]] <span class="keyword">explicit</span> <a class="code hl_function" href="classtr_1_1imstream.html#a5066b8cc2e3ab4c476b875423019b342">imstream</a>(std::span&lt;const char&gt; buffer);</div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span></div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="classtr_1_1imstream.html#a64182c86e505b62d8f22ec871504991f">   56</a></span>        <span class="keyword">explicit</span> <a class="code hl_function" href="classtr_1_1imstream.html#a64182c86e505b62d8f22ec871504991f">imstream</a>(std::span&lt;const unsigned char&gt; buffer);</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="classtr_1_1imstream.html#a64182c86e505b62d8f22ec871504991f">   56</a></span>        [[nodiscard]] <span class="keyword">explicit</span> <a class="code hl_function" href="classtr_1_1imstream.html#a64182c86e505b62d8f22ec871504991f">imstream</a>(std::span&lt;const unsigned char&gt; buffer);</div>
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span></div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="classtr_1_1imstream.html#a1c985176380d22247b2efb02a091b999">   60</a></span>        <span class="keyword">explicit</span> <a class="code hl_function" href="classtr_1_1imstream.html#a1c985176380d22247b2efb02a091b999">imstream</a>(std::span&lt;const std::byte&gt; buffer);</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="classtr_1_1imstream.html#a1c985176380d22247b2efb02a091b999">   60</a></span>        [[nodiscard]] <span class="keyword">explicit</span> <a class="code hl_function" href="classtr_1_1imstream.html#a1c985176380d22247b2efb02a091b999">imstream</a>(std::span&lt;const std::byte&gt; buffer);</div>
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span></div>
 <div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    };</div>
 </div>
@@ -178,11 +178,11 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('mstream_8hpp_s
 <div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    {</div>
 <div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>      <span class="keyword">public</span>:</div>
 <div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span></div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno"><a class="line" href="classtr_1_1omstream.html#a6e735c4a9efbb63833dbb29320a9232d">   74</a></span>        <span class="keyword">explicit</span> <a class="code hl_function" href="classtr_1_1omstream.html#a6e735c4a9efbb63833dbb29320a9232d">omstream</a>(std::span&lt;char&gt; buffer);</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno"><a class="line" href="classtr_1_1omstream.html#a6e735c4a9efbb63833dbb29320a9232d">   74</a></span>        [[nodiscard]] <span class="keyword">explicit</span> <a class="code hl_function" href="classtr_1_1omstream.html#a6e735c4a9efbb63833dbb29320a9232d">omstream</a>(std::span&lt;char&gt; buffer);</div>
 <div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span></div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno"><a class="line" href="classtr_1_1omstream.html#a1a637d5b1e042324da07383aa071987f">   78</a></span>        <span class="keyword">explicit</span> <a class="code hl_function" href="classtr_1_1omstream.html#a1a637d5b1e042324da07383aa071987f">omstream</a>(std::span&lt;unsigned char&gt; buffer);</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno"><a class="line" href="classtr_1_1omstream.html#a1a637d5b1e042324da07383aa071987f">   78</a></span>        [[nodiscard]] <span class="keyword">explicit</span> <a class="code hl_function" href="classtr_1_1omstream.html#a1a637d5b1e042324da07383aa071987f">omstream</a>(std::span&lt;unsigned char&gt; buffer);</div>
 <div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span></div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno"><a class="line" href="classtr_1_1omstream.html#a7bba20d589b17f5f1e2b79f7c54f4a23">   82</a></span>        <span class="keyword">explicit</span> <a class="code hl_function" href="classtr_1_1omstream.html#a7bba20d589b17f5f1e2b79f7c54f4a23">omstream</a>(std::span&lt;std::byte&gt; buffer);</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno"><a class="line" href="classtr_1_1omstream.html#a7bba20d589b17f5f1e2b79f7c54f4a23">   82</a></span>        [[nodiscard]] <span class="keyword">explicit</span> <a class="code hl_function" href="classtr_1_1omstream.html#a7bba20d589b17f5f1e2b79f7c54f4a23">omstream</a>(std::span&lt;std::byte&gt; buffer);</div>
 <div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span></div>
 <div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    };</div>
 </div>
@@ -192,11 +192,11 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('mstream_8hpp_s
 <div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>    {</div>
 <div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>      <span class="keyword">public</span>:</div>
 <div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span></div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno"><a class="line" href="classtr_1_1mstream.html#a6dfbc2c213cca4e7af49de97f9e3573f">   96</a></span>        <span class="keyword">explicit</span> <a class="code hl_function" href="classtr_1_1mstream.html#a6dfbc2c213cca4e7af49de97f9e3573f">mstream</a>(std::span&lt;char&gt; buffer);</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno"><a class="line" href="classtr_1_1mstream.html#a6dfbc2c213cca4e7af49de97f9e3573f">   96</a></span>        [[nodiscard]] <span class="keyword">explicit</span> <a class="code hl_function" href="classtr_1_1mstream.html#a6dfbc2c213cca4e7af49de97f9e3573f">mstream</a>(std::span&lt;char&gt; buffer);</div>
 <div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span></div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno"><a class="line" href="classtr_1_1mstream.html#affc3cd7d6f3ff61b4c3c920afb99be7c">  100</a></span>        <span class="keyword">explicit</span> <a class="code hl_function" href="classtr_1_1mstream.html#affc3cd7d6f3ff61b4c3c920afb99be7c">mstream</a>(std::span&lt;unsigned char&gt; buffer);</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno"><a class="line" href="classtr_1_1mstream.html#affc3cd7d6f3ff61b4c3c920afb99be7c">  100</a></span>        [[nodiscard]] <span class="keyword">explicit</span> <a class="code hl_function" href="classtr_1_1mstream.html#affc3cd7d6f3ff61b4c3c920afb99be7c">mstream</a>(std::span&lt;unsigned char&gt; buffer);</div>
 <div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span></div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno"><a class="line" href="classtr_1_1mstream.html#a7c3c66b10e0aa22fc027e31a8765c58f">  104</a></span>        <span class="keyword">explicit</span> <a class="code hl_function" href="classtr_1_1mstream.html#a7c3c66b10e0aa22fc027e31a8765c58f">mstream</a>(std::span&lt;std::byte&gt; buffer);</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno"><a class="line" href="classtr_1_1mstream.html#a7c3c66b10e0aa22fc027e31a8765c58f">  104</a></span>        [[nodiscard]] <span class="keyword">explicit</span> <a class="code hl_function" href="classtr_1_1mstream.html#a7c3c66b10e0aa22fc027e31a8765c58f">mstream</a>(std::span&lt;std::byte&gt; buffer);</div>
 <div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span></div>
 <div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>    };</div>
 </div>

@@ -130,21 +130,36 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('type__name_8hp
 <a href="type__name_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#pragma once</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;<a class="code" href="common_8hpp.html">common.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;<a class="code" href="common_8hpp.html">tr/utility/common.hpp</a>&gt;</span></div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment">//</span></div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacetr.html">tr</a></div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>{</div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="namespacetr.html#a4b843743e9000b6235dfd1ff859ab4fd">   16</a></span>    <span class="keyword">consteval</span> std::string_view <a class="code hl_function" href="namespacetr.html#a4b843743e9000b6235dfd1ff859ab4fd">type_name</a>();</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>} <span class="comment">// namespace tr</span></div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#include &quot;impl/type_name.hpp&quot;</span> <span class="comment">// IWYU pragma: export</span></div>
+<div class="foldopen" id="foldopen00016" data-start="{" data-end="}">
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="namespacetr.html#a1c483c366687381116591f7b6c1e7583">   16</a></span>    [[nodiscard]] <span class="keyword">consteval</span> std::string_view <a class="code hl_function" href="namespacetr.html#a1c483c366687381116591f7b6c1e7583">type_name</a>() noexcept</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    {</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#ifdef __clang__</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        <span class="keyword">constexpr</span> std::string_view function_name{std::source_location::current().function_name()};</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        <span class="keywordflow">return</span> std::string_view{function_name.begin() + 38, function_name.end() - 1};</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#elifdef(_MSC_VER)</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        <span class="keyword">constexpr</span> std::string_view function_name{std::source_location::current().function_name()};</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        <span class="keywordflow">return</span> std::string_view{function_name.begin() + 88, function_name.end() - 7};</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#elifdef(__GNUC__)</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>        <span class="keyword">constexpr</span> std::string_view function_name{</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>            []&lt;<span class="keyword">typename</span> U&gt;() { <span class="keywordflow">return</span> std::source_location::current().function_name(); }.template operator()&lt;T&gt;()};</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        <span class="keywordflow">return</span> std::string_view{function_name.begin() + 14, function_name.begin() + function_name.find(<span class="stringliteral">&quot;lambda&quot;</span>) - 6};</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        <span class="keyword">static_assert</span>(<span class="keyword">false</span>, <span class="stringliteral">&quot;tr::type_name is not implemented for this compiler!&quot;</span>);</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    }</div>
+</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>} <span class="comment">// namespace tr</span></div>
 <div class="ttc" id="acommon_8hpp_html"><div class="ttname"><a href="common_8hpp.html">common.hpp</a></div><div class="ttdoc">Provides commonly included headers.</div></div>
 <div class="ttc" id="anamespacetr_html"><div class="ttname"><a href="namespacetr.html">tr</a></div><div class="ttdoc">Namespace containing all tr functionality.</div><div class="ttdef"><b>Definition</b> audio_buffer.hpp:10</div></div>
-<div class="ttc" id="anamespacetr_html_a4b843743e9000b6235dfd1ff859ab4fd"><div class="ttname"><a href="namespacetr.html#a4b843743e9000b6235dfd1ff859ab4fd">tr::type_name</a></div><div class="ttdeci">consteval std::string_view type_name()</div><div class="ttdoc">Gets a human-readable name string for a type.</div></div>
+<div class="ttc" id="anamespacetr_html_a1c483c366687381116591f7b6c1e7583"><div class="ttname"><a href="namespacetr.html#a1c483c366687381116591f7b6c1e7583">tr::type_name</a></div><div class="ttdeci">consteval std::string_view type_name() noexcept</div><div class="ttdoc">Gets a human-readable name string for a type.</div><div class="ttdef"><b>Definition</b> type_name.hpp:16</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

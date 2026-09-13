@@ -1,11 +1,11 @@
 var draw__geometry_8hpp =
 [
-    [ "tr::smooth_polygon_vertices", "namespacetr.html#a3c70e5a37ad6ba07f5e2659193ec694e", null ],
-    [ "tr::smooth_arc_vertices", "namespacetr.html#ae8652e3da81bf115909be1b1e635b923", null ],
-    [ "tr::line_strip_indices", "namespacetr.html#aeeee6ee46146f0f5d7f5b460bc3ae51a", null ],
-    [ "tr::line_loop_indices", "namespacetr.html#a392cb3f3b24221891c1d84875f98b585", null ],
-    [ "tr::polygon_indices", "namespacetr.html#abf01543beacba68921fe75009418224a", null ],
-    [ "tr::polygon_outline_indices", "namespacetr.html#a7d8bcfad74b6df745d7e2937f33a470f", null ],
+    [ "tr::smooth_polygon_vertices", "namespacetr.html#aed71d76703f90adcdb9c6bf764700019", null ],
+    [ "tr::smooth_arc_vertices", "namespacetr.html#af256a2e3011d4fb8163a26235e68c63e", null ],
+    [ "tr::line_strip_indices", "namespacetr.html#ada3ef9d48c38410a140e08ea202914e1", null ],
+    [ "tr::line_loop_indices", "namespacetr.html#a8998cddb66add36cf0e0c4716babd8a0", null ],
+    [ "tr::polygon_indices", "namespacetr.html#a46c1d5fbe793ee16c5a28076a0694800", null ],
+    [ "tr::polygon_outline_indices", "namespacetr.html#ad566ec3e112ae159f97e8ac4919c264f", null ],
     [ "tr::fill_line_strip_indices", "namespacetr.html#a0972b5707a65a34832a71b0a51aa9d38", null ],
     [ "tr::fill_line_loop_indices", "namespacetr.html#abc15e48e9843c7865fe9a8ec8bc78f3e", null ],
     [ "tr::fill_convex_polygon_indices", "namespacetr.html#a678d7d8aff243c4091922405c7e711c2", null ],

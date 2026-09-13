@@ -32,7 +32,7 @@ var bitmap_8hpp =
       [ "tr::pixel_format::rgba32", "namespacetr.html#ac1babae6e9367fc90585a8791dadc746ab1500b383bccdb3946114a5d708706c4", null ],
       [ "tr::pixel_format::argb32", "namespacetr.html#ac1babae6e9367fc90585a8791dadc746ae57a429bc01664112d277cc6d93d3ad6", null ]
     ] ],
-    [ "tr::pixel_bytes", "namespacetr.html#ad94c21f4183ce346f5d54a439b9f8ae9", null ],
+    [ "tr::pixel_bytes", "namespacetr.html#a863741db9393b682758ed4093cfbab2d", null ],
     [ "tr::create_checkerboard", "namespacetr.html#ac65915d228130f1d5718c738fee6e5f8", null ],
     [ "tr::load_embedded_bitmap", "namespacetr.html#a6323c1c7268fac9925b45c0dff07d3ba", null ],
     [ "tr::load_embedded_bitmap", "namespacetr.html#afb92ea6213c863574ca64eef174f08b2", null ],

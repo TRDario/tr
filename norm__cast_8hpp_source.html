@@ -130,29 +130,92 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('norm__cast_8hp
 <a href="norm__cast_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#pragma once</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment">//</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;<a class="code" href="macro_8hpp.html">tr/utility/macro.hpp</a>&gt;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;<a class="code" href="norm__cast_8hpp.html">tr/utility/norm_cast.hpp</a>&gt;</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacetr.html">tr</a></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>{</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span></div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <span class="keyword">template</span> &lt;std::<span class="keywordtype">float</span>ing_po<span class="keywordtype">int</span> To, std::<span class="keywordtype">float</span>ing_po<span class="keywordtype">int</span> From&gt;</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="namespacetr.html#a907aede53a6c3c7aaea860ecaad31b6a">   19</a></span>    <span class="keyword">constexpr</span> To <a class="code hl_function" href="namespacetr.html#a907aede53a6c3c7aaea860ecaad31b6a">norm_cast</a>(From from);</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span></div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <span class="keyword">template</span> &lt;std::<span class="keywordtype">float</span>ing_po<span class="keywordtype">int</span> To, std::<span class="keywordtype">int</span>egral From&gt;</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="namespacetr.html#a907aede53a6c3c7aaea860ecaad31b6a">   27</a></span>    <span class="keyword">constexpr</span> To <a class="code hl_function" href="namespacetr.html#a907aede53a6c3c7aaea860ecaad31b6a">norm_cast</a>(From from);</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span></div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <span class="keyword">template</span> &lt;std::<span class="keywordtype">int</span>egral To, std::<span class="keywordtype">float</span>ing_po<span class="keywordtype">int</span> From&gt;</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="namespacetr.html#a907aede53a6c3c7aaea860ecaad31b6a">   35</a></span>    <span class="keyword">constexpr</span> To <a class="code hl_function" href="namespacetr.html#a907aede53a6c3c7aaea860ecaad31b6a">norm_cast</a>(From from);</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span></div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <span class="keyword">template</span> &lt;std::<span class="keywordtype">int</span>egral To, std::<span class="keywordtype">int</span>egral From&gt;</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="namespacetr.html#a907aede53a6c3c7aaea860ecaad31b6a">   43</a></span>    <span class="keyword">constexpr</span> To <a class="code hl_function" href="namespacetr.html#a907aede53a6c3c7aaea860ecaad31b6a">norm_cast</a>(From from);</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span></div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>} <span class="comment">// namespace tr</span></div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="preprocessor">#include &quot;impl/norm_cast.hpp&quot;</span> <span class="comment">// IWYU pragma: export</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment">//</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacetr.html">tr</a></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>{</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    <span class="keyword">template</span> &lt;std::<span class="keywordtype">float</span>ing_po<span class="keywordtype">int</span> To, std::<span class="keywordtype">float</span>ing_po<span class="keywordtype">int</span> From&gt;</div>
+<div class="foldopen" id="foldopen00021" data-start="{" data-end="}">
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="namespacetr.html#a1ebf34a83293fd952afab49b44f7b49a">   21</a></span>    [[nodiscard]] <span class="keyword">constexpr</span> To <a class="code hl_function" href="namespacetr.html#a1ebf34a83293fd952afab49b44f7b49a">norm_cast</a>(From from) <span class="keyword">noexcept</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    {</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        <a class="code hl_define" href="macro_8hpp.html#a9524128b336bcd23aef93fde1b1bed05">TR_ASSERT</a>(from &gt;= 0 &amp;&amp; from &lt;= 1, <span class="stringliteral">&quot;Cannot perform a normalizing cast on value {} outside the range [0, 1].&quot;</span>, from);</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>        <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>To<span class="keyword">&gt;</span>(from);</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    }</div>
+</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    <span class="keyword">template</span> &lt;std::<span class="keywordtype">int</span>egral To, std::<span class="keywordtype">int</span>egral From&gt;</div>
+<div class="foldopen" id="foldopen00034" data-start="{" data-end="}">
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="namespacetr.html#a1ebf34a83293fd952afab49b44f7b49a">   34</a></span>    [[nodiscard]] <span class="keyword">constexpr</span> To <a class="code hl_function" href="namespacetr.html#a1ebf34a83293fd952afab49b44f7b49a">norm_cast</a>(From from) <span class="keyword">noexcept</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    {</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        <span class="keyword">using </span>UFrom = std::make_unsigned_t&lt;From&gt;;</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        <span class="keyword">using </span>UTo = std::make_unsigned_t&lt;To&gt;;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        <span class="comment">// Identity.</span></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::same_as&lt;From, To&gt;) {</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>            <span class="keywordflow">return</span> from;</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        }</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        <span class="comment">// Same-width conversion.</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        <span class="keywordflow">else</span> <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (<span class="keyword">sizeof</span>(From) == <span class="keyword">sizeof</span>(To)) {</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>            <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>To<span class="keyword">&gt;</span>(<span class="keyword">static_cast&lt;</span>UFrom<span class="keyword">&gt;</span>(from) + 1 + std::numeric_limits&lt;UFrom&gt;::max() / 2);</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        }</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        <span class="comment">// Narrowing conversion.</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>        <span class="keywordflow">else</span> <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (<span class="keyword">sizeof</span>(From) &gt; <span class="keyword">sizeof</span>(To)) {</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>            <span class="keywordflow">return</span> <a class="code hl_function" href="namespacetr.html#a1ebf34a83293fd952afab49b44f7b49a">norm_cast&lt;To&gt;</a>(<span class="keyword">static_cast&lt;</span>UTo<span class="keyword">&gt;</span>(<a class="code hl_function" href="namespacetr.html#a1ebf34a83293fd952afab49b44f7b49a">norm_cast&lt;UFrom&gt;</a>(from) &gt;&gt; ((<span class="keyword">sizeof</span>(From) - <span class="keyword">sizeof</span>(To)) * 8ULL)));</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        }</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        <span class="comment">// Widening conversion.</span></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>            <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (<span class="keyword">sizeof</span>(To) != 8) {</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>                <span class="keyword">constexpr</span> <span class="keyword">auto</span> factor{std::numeric_limits&lt;UTo&gt;::max() / std::numeric_limits&lt;UFrom&gt;::max()};</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>                <span class="keywordflow">return</span> <a class="code hl_function" href="namespacetr.html#a1ebf34a83293fd952afab49b44f7b49a">norm_cast&lt;To&gt;</a>(<span class="keyword">static_cast&lt;</span>UTo<span class="keyword">&gt;</span>(<a class="code hl_function" href="namespacetr.html#a1ebf34a83293fd952afab49b44f7b49a">norm_cast&lt;UFrom&gt;</a>(from) * factor));</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>            }</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>            <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>                <span class="keywordflow">return</span> <a class="code hl_function" href="namespacetr.html#a1ebf34a83293fd952afab49b44f7b49a">norm_cast&lt;To&gt;</a>(<a class="code hl_function" href="namespacetr.html#a1ebf34a83293fd952afab49b44f7b49a">norm_cast&lt;double&gt;</a>(from));</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>            }</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        }</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    }</div>
+</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span></div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    <span class="keyword">template</span> &lt;std::<span class="keywordtype">float</span>ing_po<span class="keywordtype">int</span> To, std::<span class="keywordtype">int</span>egral From&gt;</div>
+<div class="foldopen" id="foldopen00069" data-start="{" data-end="}">
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno"><a class="line" href="namespacetr.html#a1ebf34a83293fd952afab49b44f7b49a">   69</a></span>    [[nodiscard]] <span class="keyword">constexpr</span> To <a class="code hl_function" href="namespacetr.html#a1ebf34a83293fd952afab49b44f7b49a">norm_cast</a>(From from) <span class="keyword">noexcept</span></div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    {</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        <span class="keyword">using </span>UFrom = std::make_unsigned_t&lt;From&gt;;</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> </div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>To<span class="keyword">&gt;</span>(<span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(<a class="code hl_function" href="namespacetr.html#a1ebf34a83293fd952afab49b44f7b49a">norm_cast&lt;UFrom&gt;</a>(from)) / <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(std::numeric_limits&lt;UFrom&gt;::max()));</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    }</div>
+</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span></div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    <span class="keyword">template</span> &lt;std::<span class="keywordtype">int</span>egral To, std::<span class="keywordtype">float</span>ing_po<span class="keywordtype">int</span> From&gt;</div>
+<div class="foldopen" id="foldopen00082" data-start="{" data-end="}">
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno"><a class="line" href="namespacetr.html#a1ebf34a83293fd952afab49b44f7b49a">   82</a></span>    [[nodiscard]] <span class="keyword">constexpr</span> To <a class="code hl_function" href="namespacetr.html#a1ebf34a83293fd952afab49b44f7b49a">norm_cast</a>(From from) <span class="keyword">noexcept</span></div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    {</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        <a class="code hl_define" href="macro_8hpp.html#a9524128b336bcd23aef93fde1b1bed05">TR_ASSERT</a>(from &gt;= 0 &amp;&amp; from &lt;= 1, <span class="stringliteral">&quot;Cannot perform a normalizing cast on value {} outside the range [0, 1].&quot;</span>, from);</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        <span class="keyword">using </span>UTo = std::make_unsigned_t&lt;To&gt;;</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        <span class="keyword">const</span> <span class="keywordtype">double</span> result{<span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(from) * <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(std::numeric_limits&lt;UTo&gt;::max())};</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>        <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (<span class="keyword">sizeof</span>(To) == 8) {</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>            <span class="comment">// Safety checks for upper limit rounding are necessary for 64-bit.</span></div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>            <span class="keywordflow">return</span> <a class="code hl_function" href="namespacetr.html#a1ebf34a83293fd952afab49b44f7b49a">norm_cast&lt;To&gt;</a>(result == <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(std::numeric_limits&lt;UTo&gt;::max()) ? std::numeric_limits&lt;UTo&gt;::max()</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>                                                                                                : <span class="keyword">static_cast&lt;</span>UTo<span class="keyword">&gt;</span>(result));</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>        }</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>        <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>            <span class="keywordflow">return</span> <a class="code hl_function" href="namespacetr.html#a1ebf34a83293fd952afab49b44f7b49a">norm_cast&lt;To&gt;</a>(<span class="keyword">static_cast&lt;</span>UTo<span class="keyword">&gt;</span>(result));</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>        }</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    }</div>
+</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span></div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>} <span class="comment">// namespace tr</span></div>
+<div class="ttc" id="amacro_8hpp_html"><div class="ttname"><a href="macro_8hpp.html">macro.hpp</a></div><div class="ttdoc">Provides macro utilities.</div></div>
+<div class="ttc" id="amacro_8hpp_html_a9524128b336bcd23aef93fde1b1bed05"><div class="ttname"><a href="macro_8hpp.html#a9524128b336bcd23aef93fde1b1bed05">TR_ASSERT</a></div><div class="ttdeci">#define TR_ASSERT(condition, fmt,...)</div><div class="ttdoc">Custom assertion macro.</div><div class="ttdef"><b>Definition</b> macro.hpp:93</div></div>
 <div class="ttc" id="anamespacetr_html"><div class="ttname"><a href="namespacetr.html">tr</a></div><div class="ttdoc">Namespace containing all tr functionality.</div><div class="ttdef"><b>Definition</b> audio_buffer.hpp:10</div></div>
-<div class="ttc" id="anamespacetr_html_a907aede53a6c3c7aaea860ecaad31b6a"><div class="ttname"><a href="namespacetr.html#a907aede53a6c3c7aaea860ecaad31b6a">tr::norm_cast</a></div><div class="ttdeci">constexpr To norm_cast(From from)</div><div class="ttdoc">Converts a floating point number in the range [0-1] to another floating point number in the range [0-...</div></div>
+<div class="ttc" id="anamespacetr_html_a1ebf34a83293fd952afab49b44f7b49a"><div class="ttname"><a href="namespacetr.html#a1ebf34a83293fd952afab49b44f7b49a">tr::norm_cast</a></div><div class="ttdeci">constexpr To norm_cast(From from) noexcept</div><div class="ttdoc">Converts a floating point number in the range [0-1] to another floating point number in the range [0-...</div><div class="ttdef"><b>Definition</b> norm_cast.hpp:21</div></div>
+<div class="ttc" id="anorm__cast_8hpp_html"><div class="ttname"><a href="norm__cast_8hpp.html">norm_cast.hpp</a></div><div class="ttdoc">Provides tr::norm_cast().</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

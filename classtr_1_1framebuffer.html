@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1fra
 <div class="textblock"><p>A framebuffer is a collection of references to buffers used as a destination for rendering. The default framebuffer is used to render to the screen, while instances of <span class="tt"><a class="el" href="classtr_1_1framebuffer.html" title="Container for a framebuffer object.">tr::framebuffer</a></span> may have arbitrary textures attached to them as rendering targets.</p>
 <p>Strictly speaking, instances of <span class="tt"><a class="el" href="classtr_1_1framebuffer.html" title="Container for a framebuffer object.">tr::framebuffer</a></span> are only containers for these underlying framebuffers. This means, for example, that setting a render target on a graphics context does not set a render target of a literal <span class="tt"><a class="el" href="classtr_1_1framebuffer.html" title="Container for a framebuffer object.">tr::framebuffer</a></span> object at a specific location in memory, but rather the value it contains. If the value is moved to a different instance of <span class="tt"><a class="el" href="classtr_1_1framebuffer.html" title="Container for a framebuffer object.">tr::framebuffer</a></span>, that value will still be set on the context. If the instance is overriden with a new value, the old value is destroyed and the graphics context will no longer have a set render target.</p>
 <p>Every instance of <span class="tt"><a class="el" href="classtr_1_1framebuffer.html" title="Container for a framebuffer object.">tr::framebuffer</a></span> is associated with a graphics context and cannot outlive its parent context.</p>
-<p><span class="tt"><a class="el" href="classtr_1_1framebuffer.html" title="Container for a framebuffer object.">tr::framebuffer</a></span> instances are movable, but not copyable. A moved-from instance of <span class="tt"><a class="el" href="classtr_1_1framebuffer.html" title="Container for a framebuffer object.">tr::framebuffer</a></span> is left in a special 'invalid' state. Invalid <span class="tt"><a class="el" href="classtr_1_1framebuffer.html" title="Container for a framebuffer object.">tr::framebuffer</a></span> instances may not be interacted with besides moving a new value into them and checking for validity using <span class="tt"><a class="el" href="#a8ab2c5df0ad60f6302e5bcd6f96ffda8" title="Gets whether the framebuffer is in a valid state.">valid()</a></span>.</p>
+<p><span class="tt"><a class="el" href="classtr_1_1framebuffer.html" title="Container for a framebuffer object.">tr::framebuffer</a></span> instances are movable, but not copyable. A moved-from instance of <span class="tt"><a class="el" href="classtr_1_1framebuffer.html" title="Container for a framebuffer object.">tr::framebuffer</a></span> is left in a special 'invalid' state. Invalid <span class="tt"><a class="el" href="classtr_1_1framebuffer.html" title="Container for a framebuffer object.">tr::framebuffer</a></span> instances may not be interacted with besides moving a new value into them and checking for validity using <span class="tt"><a class="el" href="#a5a4974c052b8f0e329fbb57fb97672b5" title="Gets whether the framebuffer is in a valid state.">valid()</a></span>.</p>
 <p><span class="tt"><a class="el" href="classtr_1_1framebuffer.html" title="Container for a framebuffer object.">tr::framebuffer</a></span> instances may be labeled and are formattable. Example format output: <span class="tt">"My framebuffer" (OpenGL ID: 5)</span>. </p>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-types" class="groupheader"><a id="pub-types" name="pub-types"></a>
@@ -159,22 +159,22 @@ Public Types</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
-<tr class="memitem:a37c9f016089770322c247f0852ede348" id="r_a37c9f016089770322c247f0852ede348"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a37c9f016089770322c247f0852ede348">framebuffer</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context)</td></tr>
-<tr class="memdesc:a37c9f016089770322c247f0852ede348"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an empty framebuffer.  <br /></td></tr>
+<tr class="memitem:a38aa600bf2744ce6ec43a977013ba6c1" id="r_a38aa600bf2744ce6ec43a977013ba6c1"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a38aa600bf2744ce6ec43a977013ba6c1">framebuffer</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context) noexcept</td></tr>
+<tr class="memdesc:a38aa600bf2744ce6ec43a977013ba6c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an empty framebuffer.  <br /></td></tr>
 <tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Context</div></td></tr>
-<tr class="memitem:a20577676b39ef9f226176d9b6f4ee683" id="r_a20577676b39ef9f226176d9b6f4ee683"><td class="memItemLeft"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a20577676b39ef9f226176d9b6f4ee683">context</a> () const</td></tr>
-<tr class="memdesc:a20577676b39ef9f226176d9b6f4ee683"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a reference to the graphics context the framebuffer is on.  <br /></td></tr>
+<tr class="memitem:af9301b17ab0ad50658a86b10afb39c45" id="r_af9301b17ab0ad50658a86b10afb39c45"><td class="memItemLeft"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#af9301b17ab0ad50658a86b10afb39c45">context</a> () const noexcept</td></tr>
+<tr class="memdesc:af9301b17ab0ad50658a86b10afb39c45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a reference to the graphics context the framebuffer is on.  <br /></td></tr>
 <tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Attachments</div></td></tr>
-<tr class="memitem:a3147eb464d15e2c75e5fd45a2965a099" id="r_a3147eb464d15e2c75e5fd45a2965a099"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a3147eb464d15e2c75e5fd45a2965a099">attach</a> (attachment<a class="el" href="#a1c95ac79da562291ef7df23708286ab0">attachment</a> attachment<a class="el" href="#a1c95ac79da562291ef7df23708286ab0">attachment</a>, <a class="el" href="classtr_1_1texture__view.html">texture_view</a> texture)</td></tr>
-<tr class="memdesc:a3147eb464d15e2c75e5fd45a2965a099"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attaches a texture to the framebuffer.  <br /></td></tr>
-<tr class="memitem:ab683fe993c7fc83e73844f16d5c10098" id="r_ab683fe993c7fc83e73844f16d5c10098"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ab683fe993c7fc83e73844f16d5c10098">detach</a> (attachment<a class="el" href="#a1c95ac79da562291ef7df23708286ab0">attachment</a> attachment<a class="el" href="#a1c95ac79da562291ef7df23708286ab0">attachment</a>)</td></tr>
-<tr class="memdesc:ab683fe993c7fc83e73844f16d5c10098"><td class="mdescLeft">&#160;</td><td class="mdescRight">Detaches whatever is on the specified attachment.  <br /></td></tr>
+<tr class="memitem:a727364c010b0625db73f97df29982cca" id="r_a727364c010b0625db73f97df29982cca"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a727364c010b0625db73f97df29982cca">attach</a> (attachment<a class="el" href="#a1c95ac79da562291ef7df23708286ab0">attachment</a> attachment<a class="el" href="#a1c95ac79da562291ef7df23708286ab0">attachment</a>, <a class="el" href="classtr_1_1texture__view.html">texture_view</a> texture) noexcept</td></tr>
+<tr class="memdesc:a727364c010b0625db73f97df29982cca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attaches a texture to the framebuffer.  <br /></td></tr>
+<tr class="memitem:ab88cc4218f24de1cb985d5acc20cd652" id="r_ab88cc4218f24de1cb985d5acc20cd652"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ab88cc4218f24de1cb985d5acc20cd652">detach</a> (attachment<a class="el" href="#a1c95ac79da562291ef7df23708286ab0">attachment</a> attachment<a class="el" href="#a1c95ac79da562291ef7df23708286ab0">attachment</a>) noexcept</td></tr>
+<tr class="memdesc:ab88cc4218f24de1cb985d5acc20cd652"><td class="mdescLeft">&#160;</td><td class="mdescRight">Detaches whatever is on the specified attachment.  <br /></td></tr>
 <tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">State</div></td></tr>
-<tr class="memitem:a8ab2c5df0ad60f6302e5bcd6f96ffda8" id="r_a8ab2c5df0ad60f6302e5bcd6f96ffda8"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a8ab2c5df0ad60f6302e5bcd6f96ffda8">valid</a> () const</td></tr>
-<tr class="memdesc:a8ab2c5df0ad60f6302e5bcd6f96ffda8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the framebuffer is in a valid state.  <br /></td></tr>
+<tr class="memitem:a5a4974c052b8f0e329fbb57fb97672b5" id="r_a5a4974c052b8f0e329fbb57fb97672b5"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a5a4974c052b8f0e329fbb57fb97672b5">valid</a> () const noexcept</td></tr>
+<tr class="memdesc:a5a4974c052b8f0e329fbb57fb97672b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the framebuffer is in a valid state.  <br /></td></tr>
 <tr id="pub-methods-4" class="groupHeader"><td colspan="2"><div class="groupHeader">Label</div></td></tr>
-<tr class="memitem:aa5e6d23c96f47d0c2c48690287fbb026" id="r_aa5e6d23c96f47d0c2c48690287fbb026"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aa5e6d23c96f47d0c2c48690287fbb026">set_label</a> (std::string_view label)</td></tr>
-<tr class="memdesc:aa5e6d23c96f47d0c2c48690287fbb026"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the debug label of the framebuffer.  <br /></td></tr>
+<tr class="memitem:a60f64afb5ac12218adc055b8534dff60" id="r_a60f64afb5ac12218adc055b8534dff60"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a60f64afb5ac12218adc055b8534dff60">set_label</a> (std::string_view label) noexcept</td></tr>
+<tr class="memdesc:a60f64afb5ac12218adc055b8534dff60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the debug label of the framebuffer.  <br /></td></tr>
 <tr class="memitem:abe2d2e9fbea303d5f91295ae5c7314cf" id="r_abe2d2e9fbea303d5f91295ae5c7314cf"><td class="memItemLeft">std::string&#160;</td><td class="memItemRight"><a class="el" href="#abe2d2e9fbea303d5f91295ae5c7314cf">label</a> () const</td></tr>
 <tr class="memdesc:abe2d2e9fbea303d5f91295ae5c7314cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the debug label of the framebuffer.  <br /></td></tr>
 </table>
@@ -224,8 +224,8 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a37c9f016089770322c247f0852ede348" name="a37c9f016089770322c247f0852ede348"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a37c9f016089770322c247f0852ede348">&#9670;&#160;</a></span>framebuffer()</h2>
+<a id="a38aa600bf2744ce6ec43a977013ba6c1" name="a38aa600bf2744ce6ec43a977013ba6c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a38aa600bf2744ce6ec43a977013ba6c1">&#9670;&#160;</a></span>framebuffer()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -242,7 +242,7 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel explicit">explicit</span></span>  </td>
+<span class="mlabels"><span class="mlabel explicit">explicit</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -256,11 +256,14 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="a20577676b39ef9f226176d9b6f4ee683" name="a20577676b39ef9f226176d9b6f4ee683"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a20577676b39ef9f226176d9b6f4ee683">&#9670;&#160;</a></span>context()</h2>
+<a id="af9301b17ab0ad50658a86b10afb39c45" name="af9301b17ab0ad50658a86b10afb39c45"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af9301b17ab0ad50658a86b10afb39c45">&#9670;&#160;</a></span>context()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp; tr::framebuffer::context </td>
@@ -269,15 +272,23 @@ Public Member Functions</h2></td></tr>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a3147eb464d15e2c75e5fd45a2965a099" name="a3147eb464d15e2c75e5fd45a2965a099"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3147eb464d15e2c75e5fd45a2965a099">&#9670;&#160;</a></span>attach()</h2>
+<a id="a727364c010b0625db73f97df29982cca" name="a727364c010b0625db73f97df29982cca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a727364c010b0625db73f97df29982cca">&#9670;&#160;</a></span>attach()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void tr::framebuffer::attach </td>
@@ -290,6 +301,11 @@ Public Member Functions</h2></td></tr>
           <td class="paramtype"><a class="el" href="classtr_1_1texture__view.html">texture_view</a></td>          <td class="paramname"><span class="paramname"><em>texture</em></span>&#160;)</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -301,11 +317,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ab683fe993c7fc83e73844f16d5c10098" name="ab683fe993c7fc83e73844f16d5c10098"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab683fe993c7fc83e73844f16d5c10098">&#9670;&#160;</a></span>detach()</h2>
+<a id="ab88cc4218f24de1cb985d5acc20cd652" name="ab88cc4218f24de1cb985d5acc20cd652"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab88cc4218f24de1cb985d5acc20cd652">&#9670;&#160;</a></span>detach()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void tr::framebuffer::detach </td>
@@ -314,6 +333,11 @@ Public Member Functions</h2></td></tr>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -324,11 +348,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a8ab2c5df0ad60f6302e5bcd6f96ffda8" name="a8ab2c5df0ad60f6302e5bcd6f96ffda8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8ab2c5df0ad60f6302e5bcd6f96ffda8">&#9670;&#160;</a></span>valid()</h2>
+<a id="a5a4974c052b8f0e329fbb57fb97672b5" name="a5a4974c052b8f0e329fbb57fb97672b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a4974c052b8f0e329fbb57fb97672b5">&#9670;&#160;</a></span>valid()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">bool tr::framebuffer::valid </td>
@@ -337,16 +364,24 @@ Public Member Functions</h2></td></tr>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the framebuffer is in a valid state, <span class="tt">false</span> if it is in an invalid state. </dd></dl>
 
 </div>
 </div>
-<a id="aa5e6d23c96f47d0c2c48690287fbb026" name="aa5e6d23c96f47d0c2c48690287fbb026"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa5e6d23c96f47d0c2c48690287fbb026">&#9670;&#160;</a></span>set_label()</h2>
+<a id="a60f64afb5ac12218adc055b8534dff60" name="a60f64afb5ac12218adc055b8534dff60"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a60f64afb5ac12218adc055b8534dff60">&#9670;&#160;</a></span>set_label()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void tr::framebuffer::set_label </td>
@@ -355,6 +390,11 @@ Public Member Functions</h2></td></tr>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -370,6 +410,9 @@ Public Member Functions</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">std::string tr::framebuffer::label </td>
@@ -378,6 +421,11 @@ Public Member Functions</h2></td></tr>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Debug label of the framebuffer. </dd></dl>
 

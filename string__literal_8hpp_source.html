@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('string__litera
 <a href="string__literal_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#pragma once</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;<a class="code" href="integer_8hpp.html">integer.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;<a class="code" href="integer_8hpp.html">tr/utility/integer.hpp</a>&gt;</span></div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment">//</span></div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
@@ -138,39 +138,81 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('string__litera
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>{</div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <span class="keyword">template</span> &lt;usize Size&gt;</div>
 <div class="foldopen" id="foldopen00014" data-start="{" data-end="};">
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="structtr_1_1string__literal.html">   14</a></span>    <span class="keyword">struct </span><a class="code hl_function" href="structtr_1_1string__literal.html#adfbe25f9624fe67593b7c2b52c61cf73">string_literal</a></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="structtr_1_1string__literal.html">   14</a></span>    <span class="keyword">struct </span><a class="code hl_function" href="structtr_1_1string__literal.html#a9afd26a1ec62274c769050c6eb7a1140">string_literal</a></div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    {</div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span></div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="structtr_1_1string__literal.html#adfbe25f9624fe67593b7c2b52c61cf73">   21</a></span>        <span class="keyword">consteval</span> <a class="code hl_function" href="structtr_1_1string__literal.html#adfbe25f9624fe67593b7c2b52c61cf73">string_literal</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> (&amp;str)[Size]);</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span></div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span></div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="structtr_1_1string__literal.html#a97475debbdcf760a772f4231a7f16eab">   29</a></span>        <span class="keyword">consteval</span> <span class="keyword">operator</span> <span class="keyword">const</span> <span class="keywordtype">char</span>*() <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span></div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="structtr_1_1string__literal.html#a241f5bfe8dfeb477d99691b46167681a">   33</a></span>        <span class="keyword">consteval</span> <span class="keyword">operator</span> std::string_view() <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span></div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        <span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Args&gt;</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="structtr_1_1string__literal.html#ad7a5d9fb67def2176dd087749c0a5525">   39</a></span>        <span class="keyword">consteval</span> <span class="keyword">operator</span> std::format_string&lt;Args...&gt;() <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span></div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span></div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="structtr_1_1string__literal.html#a6fddcfbdb9391ff9bf4c2ffc60359c57">   46</a></span>        <span class="keywordtype">char</span> <a class="code hl_variable" href="structtr_1_1string__literal.html#a6fddcfbdb9391ff9bf4c2ffc60359c57">data</a>[Size];</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span></div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno"><a class="line" href="structtr_1_1string__literal.html#a1048d09f38734706c4632decc41caf99">   50</a></span>        <span class="keyword">consteval</span> <span class="keyword">static</span> <a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> <a class="code hl_function" href="structtr_1_1string__literal.html#a1048d09f38734706c4632decc41caf99">size</a>();</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span></div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    };</div>
+<div class="foldopen" id="foldopen00021" data-start="{" data-end="}">
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="structtr_1_1string__literal.html#a9afd26a1ec62274c769050c6eb7a1140">   21</a></span>        [[nodiscard]] <span class="keyword">consteval</span> <a class="code hl_function" href="structtr_1_1string__literal.html#a9afd26a1ec62274c769050c6eb7a1140">string_literal</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> (&amp;str)[Size]) <span class="keyword">noexcept</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        {</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>            std::ranges::copy(str, <a class="code hl_variable" href="structtr_1_1string__literal.html#a6fddcfbdb9391ff9bf4c2ffc60359c57">data</a>);</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        }</div>
 </div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span></div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> First, <span class="keyword">typename</span> Second, <span class="keyword">typename</span>... Rest&gt;</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="namespacetr.html#a7d5250a247d16fcae0b2d8051240710f">   60</a></span>    <span class="keyword">consteval</span> <span class="keyword">auto</span> <a class="code hl_function" href="namespacetr.html#a7d5250a247d16fcae0b2d8051240710f">concatenate_string_literals</a>(First&amp;&amp; first, Second&amp;&amp; second, Rest&amp;&amp;... rest);</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>} <span class="comment">// namespace tr</span></div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="preprocessor">#include &quot;impl/string_literal.hpp&quot;</span> <span class="comment">// IWYU pragma: export</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span></div>
+<div class="foldopen" id="foldopen00032" data-start="{" data-end="}">
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="structtr_1_1string__literal.html#a92efd75547bb8bf5e777ed73ee547e78">   32</a></span>        [[nodiscard]] <span class="keyword">consteval</span> <span class="keyword">operator</span> <span class="keyword">const</span> <span class="keywordtype">char</span>*() <span class="keyword">const</span> <span class="keyword">noexcept</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        {</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="structtr_1_1string__literal.html#a6fddcfbdb9391ff9bf4c2ffc60359c57">data</a>;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        }</div>
+</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span></div>
+<div class="foldopen" id="foldopen00039" data-start="{" data-end="}">
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="structtr_1_1string__literal.html#a6fa662d6001a8a9af22e6b56bfffb9e6">   39</a></span>        [[nodiscard]] <span class="keyword">consteval</span> <span class="keyword">operator</span> std::string_view() const noexcept</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        {</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>            <span class="keywordflow">return</span> <a class="code hl_variable" href="structtr_1_1string__literal.html#a6fddcfbdb9391ff9bf4c2ffc60359c57">data</a>;</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        }</div>
+</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span></div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        <span class="keyword">template</span> &lt;<span class="keyword">typename</span>... Args&gt;</div>
+<div class="foldopen" id="foldopen00048" data-start="{" data-end="}">
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="structtr_1_1string__literal.html#a2f3ef6a4930a1553de10e0e6c0a4dcf7">   48</a></span>        [[nodiscard]] <span class="keyword">consteval</span> <span class="keyword">operator</span> std::format_string&lt;Args...&gt;() <span class="keyword">const</span> <span class="keyword">noexcept</span></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        {</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>            <span class="keywordflow">return</span> std::string_view{*<span class="keyword">this</span>};</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        }</div>
+</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span></div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span></div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno"><a class="line" href="structtr_1_1string__literal.html#a6fddcfbdb9391ff9bf4c2ffc60359c57">   58</a></span>        <span class="keywordtype">char</span> <a class="code hl_variable" href="structtr_1_1string__literal.html#a6fddcfbdb9391ff9bf4c2ffc60359c57">data</a>[Size];</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span></div>
+<div class="foldopen" id="foldopen00062" data-start="{" data-end="}">
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno"><a class="line" href="structtr_1_1string__literal.html#a5cac6fea8b798bc89762fafddb52d54d">   62</a></span>        [[nodiscard]] <span class="keyword">consteval</span> <span class="keyword">static</span> <a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> <a class="code hl_function" href="structtr_1_1string__literal.html#a5cac6fea8b798bc89762fafddb52d54d">size</a>() noexcept</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        {</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>            <span class="keywordflow">return</span> Size - 1;</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        }</div>
+</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span></div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    };</div>
+</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span></div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> First, <span class="keyword">typename</span> Second, <span class="keyword">typename</span>... Rest&gt;</div>
+<div class="foldopen" id="foldopen00075" data-start="{" data-end="}">
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno"><a class="line" href="namespacetr.html#adc923d997834d5cc499fd132d170dee0">   75</a></span>    [[nodiscard]] <span class="keyword">consteval</span> <span class="keyword">auto</span> <a class="code hl_function" href="namespacetr.html#adc923d997834d5cc499fd132d170dee0">concatenate_string_literals</a>(First&amp;&amp; first, Second&amp;&amp; second, Rest&amp;&amp;... rest) <span class="keyword">noexcept</span></div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    {</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (<span class="keyword">sizeof</span>...(Rest) == 0) {</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>            <span class="keyword">const</span> <a class="code hl_struct" href="structtr_1_1string__literal.html">tr::string_literal</a> <a class="code hl_enumvalue" href="namespacetr.html#a4edd5ed4e6341a9436a505d8203fa820a811882fecd5c7618d7099ebbd39ea254">left</a>{first};</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>            <span class="keyword">const</span> <a class="code hl_struct" href="structtr_1_1string__literal.html">tr::string_literal</a> <a class="code hl_enumvalue" href="namespacetr.html#a4edd5ed4e6341a9436a505d8203fa820a7c4f29407893c334a6cb7a87bf045c0d">right</a>{second};</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>            <a class="code hl_struct" href="structtr_1_1string__literal.html">tr::string_literal</a>&lt;<span class="keyword">decltype</span>(<a class="code hl_enumvalue" href="namespacetr.html#a4edd5ed4e6341a9436a505d8203fa820a811882fecd5c7618d7099ebbd39ea254">left</a>)::size() + <span class="keyword">decltype</span>(<a class="code hl_enumvalue" href="namespacetr.html#a4edd5ed4e6341a9436a505d8203fa820a7c4f29407893c334a6cb7a87bf045c0d">right</a>)::size() + 1&gt; concatenated{{}};</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>            std::ranges::copy(<a class="code hl_enumvalue" href="namespacetr.html#a4edd5ed4e6341a9436a505d8203fa820a811882fecd5c7618d7099ebbd39ea254">left</a>.data, std::ranges::begin(concatenated.data));</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>            std::ranges::copy(<a class="code hl_enumvalue" href="namespacetr.html#a4edd5ed4e6341a9436a505d8203fa820a7c4f29407893c334a6cb7a87bf045c0d">right</a>.data, std::ranges::begin(concatenated.data) + <a class="code hl_enumvalue" href="namespacetr.html#a4edd5ed4e6341a9436a505d8203fa820a811882fecd5c7618d7099ebbd39ea254">left</a>.size());</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>            <span class="keywordflow">return</span> concatenated;</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        }</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>            <span class="keywordflow">return</span> <a class="code hl_function" href="namespacetr.html#adc923d997834d5cc499fd132d170dee0">concatenate_string_literals</a>(<a class="code hl_function" href="namespacetr.html#adc923d997834d5cc499fd132d170dee0">concatenate_string_literals</a>(std::forward&lt;First&gt;(first), std::forward&lt;Second&gt;(second)),</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>                                               std::forward&lt;Rest&gt;(rest)...);</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        }</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>    }</div>
+</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>} <span class="comment">// namespace tr</span></div>
 <div class="ttc" id="ainteger_8hpp_html"><div class="ttname"><a href="integer_8hpp.html">integer.hpp</a></div><div class="ttdoc">Provides integer utilities.</div></div>
 <div class="ttc" id="anamespacetr_1_1aliases_1_1integer__aliases_html_a401704cad707ec504dfeae361641bb9b"><div class="ttname"><a href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">tr::aliases::integer_aliases::usize</a></div><div class="ttdeci">std::size_t usize</div><div class="ttdoc">Unsigned size integer.</div><div class="ttdef"><b>Definition</b> integer.hpp:29</div></div>
 <div class="ttc" id="anamespacetr_html"><div class="ttname"><a href="namespacetr.html">tr</a></div><div class="ttdoc">Namespace containing all tr functionality.</div><div class="ttdef"><b>Definition</b> audio_buffer.hpp:10</div></div>
-<div class="ttc" id="anamespacetr_html_a7d5250a247d16fcae0b2d8051240710f"><div class="ttname"><a href="namespacetr.html#a7d5250a247d16fcae0b2d8051240710f">tr::concatenate_string_literals</a></div><div class="ttdeci">consteval auto concatenate_string_literals(First &amp;&amp;first, Second &amp;&amp;second, Rest &amp;&amp;... rest)</div><div class="ttdoc">Concatenates two or more string literals into a new string literal.</div></div>
-<div class="ttc" id="astructtr_1_1string__literal_html_a1048d09f38734706c4632decc41caf99"><div class="ttname"><a href="structtr_1_1string__literal.html#a1048d09f38734706c4632decc41caf99">tr::string_literal::size</a></div><div class="ttdeci">static consteval usize size()</div><div class="ttdoc">Gets the length of the literal.</div></div>
-<div class="ttc" id="astructtr_1_1string__literal_html_a6fddcfbdb9391ff9bf4c2ffc60359c57"><div class="ttname"><a href="structtr_1_1string__literal.html#a6fddcfbdb9391ff9bf4c2ffc60359c57">tr::string_literal::data</a></div><div class="ttdeci">char data[Size]</div><div class="ttdoc">Backing character array of the string.</div><div class="ttdef"><b>Definition</b> string_literal.hpp:46</div></div>
-<div class="ttc" id="astructtr_1_1string__literal_html_adfbe25f9624fe67593b7c2b52c61cf73"><div class="ttname"><a href="structtr_1_1string__literal.html#adfbe25f9624fe67593b7c2b52c61cf73">tr::string_literal::string_literal</a></div><div class="ttdeci">consteval string_literal(const char(&amp;str)[Size])</div><div class="ttdoc">Constructs a template string literal from a real string literal.</div></div>
+<div class="ttc" id="anamespacetr_html_a4edd5ed4e6341a9436a505d8203fa820a7c4f29407893c334a6cb7a87bf045c0d"><div class="ttname"><a href="namespacetr.html#a4edd5ed4e6341a9436a505d8203fa820a7c4f29407893c334a6cb7a87bf045c0d">tr::mouse_button::right</a></div><div class="ttdeci">@ right</div><div class="ttdoc">Right mouse button.</div><div class="ttdef"><b>Definition</b> mouse.hpp:24</div></div>
+<div class="ttc" id="anamespacetr_html_a4edd5ed4e6341a9436a505d8203fa820a811882fecd5c7618d7099ebbd39ea254"><div class="ttname"><a href="namespacetr.html#a4edd5ed4e6341a9436a505d8203fa820a811882fecd5c7618d7099ebbd39ea254">tr::mouse_button::left</a></div><div class="ttdeci">@ left</div><div class="ttdoc">Left mouse button.</div><div class="ttdef"><b>Definition</b> mouse.hpp:18</div></div>
+<div class="ttc" id="anamespacetr_html_adc923d997834d5cc499fd132d170dee0"><div class="ttname"><a href="namespacetr.html#adc923d997834d5cc499fd132d170dee0">tr::concatenate_string_literals</a></div><div class="ttdeci">consteval auto concatenate_string_literals(First &amp;&amp;first, Second &amp;&amp;second, Rest &amp;&amp;... rest) noexcept</div><div class="ttdoc">Concatenates two or more string literals into a new string literal.</div><div class="ttdef"><b>Definition</b> string_literal.hpp:75</div></div>
+<div class="ttc" id="astructtr_1_1string__literal_html"><div class="ttname"><a href="structtr_1_1string__literal.html">tr::string_literal</a></div><div class="ttdoc">Literal object holding a character array intended to allow passing string literals as non-type templa...</div><div class="ttdef"><b>Definition</b> string_literal.hpp:15</div></div>
+<div class="ttc" id="astructtr_1_1string__literal_html_a5cac6fea8b798bc89762fafddb52d54d"><div class="ttname"><a href="structtr_1_1string__literal.html#a5cac6fea8b798bc89762fafddb52d54d">tr::string_literal::size</a></div><div class="ttdeci">static consteval usize size() noexcept</div><div class="ttdoc">Gets the length of the literal.</div><div class="ttdef"><b>Definition</b> string_literal.hpp:62</div></div>
+<div class="ttc" id="astructtr_1_1string__literal_html_a6fddcfbdb9391ff9bf4c2ffc60359c57"><div class="ttname"><a href="structtr_1_1string__literal.html#a6fddcfbdb9391ff9bf4c2ffc60359c57">tr::string_literal::data</a></div><div class="ttdeci">char data[Size]</div><div class="ttdoc">Backing character array of the string.</div><div class="ttdef"><b>Definition</b> string_literal.hpp:58</div></div>
+<div class="ttc" id="astructtr_1_1string__literal_html_a9afd26a1ec62274c769050c6eb7a1140"><div class="ttname"><a href="structtr_1_1string__literal.html#a9afd26a1ec62274c769050c6eb7a1140">tr::string_literal::string_literal</a></div><div class="ttdeci">consteval string_literal(const char(&amp;str)[Size]) noexcept</div><div class="ttdoc">Constructs a template string literal from a real string literal.</div><div class="ttdef"><b>Definition</b> string_literal.hpp:21</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

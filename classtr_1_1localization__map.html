@@ -139,15 +139,15 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1loc
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
-<tr class="memitem:a41e8407b7779fcb90fb8797b15b36ece" id="r_a41e8407b7779fcb90fb8797b15b36ece"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a41e8407b7779fcb90fb8797b15b36ece">localization_map</a> ()=default</td></tr>
-<tr class="memdesc:a41e8407b7779fcb90fb8797b15b36ece"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an empty localization map.  <br /></td></tr>
+<tr class="memitem:a5fb5ce712340d4a1ba129fa84f9536d4" id="r_a5fb5ce712340d4a1ba129fa84f9536d4"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a5fb5ce712340d4a1ba129fa84f9536d4">localization_map</a> () noexcept=default</td></tr>
+<tr class="memdesc:a5fb5ce712340d4a1ba129fa84f9536d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an empty localization map.  <br /></td></tr>
 <tr class="memitem:abd0fdb874eedeabb16a041ed044cb712" id="r_abd0fdb874eedeabb16a041ed044cb712"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#abd0fdb874eedeabb16a041ed044cb712">localization_map</a> (const <a class="el" href="namespacetr.html#a65762811bf75aeb7480a0f41d1908e2f">string_flat_map</a>&lt; std::string &gt; &amp;map)</td></tr>
 <tr class="memdesc:abd0fdb874eedeabb16a041ed044cb712"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copies a localization map.  <br /></td></tr>
-<tr class="memitem:a83419730af2d1e40a9eb4f80c2c0d863" id="r_a83419730af2d1e40a9eb4f80c2c0d863"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a83419730af2d1e40a9eb4f80c2c0d863">localization_map</a> (<a class="el" href="namespacetr.html#a65762811bf75aeb7480a0f41d1908e2f">string_flat_map</a>&lt; std::string &gt; &amp;&amp;map)</td></tr>
-<tr class="memdesc:a83419730af2d1e40a9eb4f80c2c0d863"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves a localization map.  <br /></td></tr>
+<tr class="memitem:a510319842791ea1dda684f5e6f8e90c3" id="r_a510319842791ea1dda684f5e6f8e90c3"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a510319842791ea1dda684f5e6f8e90c3">localization_map</a> (<a class="el" href="namespacetr.html#a65762811bf75aeb7480a0f41d1908e2f">string_flat_map</a>&lt; std::string &gt; &amp;&amp;map) noexcept</td></tr>
+<tr class="memdesc:a510319842791ea1dda684f5e6f8e90c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves a localization map.  <br /></td></tr>
 <tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Manipulation</div></td></tr>
-<tr class="memitem:a652bd9943eb0c4a9fa9f00a00e6ecc78" id="r_a652bd9943eb0c4a9fa9f00a00e6ecc78"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a652bd9943eb0c4a9fa9f00a00e6ecc78">clear</a> ()</td></tr>
-<tr class="memdesc:a652bd9943eb0c4a9fa9f00a00e6ecc78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the localization map.  <br /></td></tr>
+<tr class="memitem:af77e50710f7befac642e2e229d8c1dd0" id="r_af77e50710f7befac642e2e229d8c1dd0"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#af77e50710f7befac642e2e229d8c1dd0">clear</a> () noexcept</td></tr>
+<tr class="memdesc:af77e50710f7befac642e2e229d8c1dd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the localization map.  <br /></td></tr>
 <tr class="memitem:aad19de581d7337c6facdf28ed0ac3be8" id="r_aad19de581d7337c6facdf28ed0ac3be8"><td class="memItemLeft">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight"><a class="el" href="#aad19de581d7337c6facdf28ed0ac3be8">load_script</a> (std::string_view script)</td></tr>
 <tr class="memdesc:aad19de581d7337c6facdf28ed0ac3be8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a localization script, returning any non-fatal errors.  <br /></td></tr>
 <tr class="memitem:a1915d1e0ed16ecb1d85a4d0dcf846ea8" id="r_a1915d1e0ed16ecb1d85a4d0dcf846ea8"><td class="memItemLeft">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a1915d1e0ed16ecb1d85a4d0dcf846ea8">load_script_file</a> (const std::filesystem::path &amp;path)</td></tr>
@@ -159,8 +159,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a3e0ac06f05dd83229654cca049eeec16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a localization string associated with a key.  <br /></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a41e8407b7779fcb90fb8797b15b36ece" name="a41e8407b7779fcb90fb8797b15b36ece"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a41e8407b7779fcb90fb8797b15b36ece">&#9670;&#160;</a></span>localization_map() <span class="overload">[1/3]</span></h2>
+<a id="a5fb5ce712340d4a1ba129fa84f9536d4" name="a5fb5ce712340d4a1ba129fa84f9536d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5fb5ce712340d4a1ba129fa84f9536d4">&#9670;&#160;</a></span>localization_map() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -177,7 +177,7 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel default">default</span></span>  </td>
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel default">default</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -189,6 +189,9 @@ Public Member Functions</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">tr::localization_map::localization_map </td>
@@ -197,6 +200,11 @@ Public Member Functions</h2></td></tr>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -207,11 +215,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a83419730af2d1e40a9eb4f80c2c0d863" name="a83419730af2d1e40a9eb4f80c2c0d863"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a83419730af2d1e40a9eb4f80c2c0d863">&#9670;&#160;</a></span>localization_map() <span class="overload">[3/3]</span></h2>
+<a id="a510319842791ea1dda684f5e6f8e90c3" name="a510319842791ea1dda684f5e6f8e90c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a510319842791ea1dda684f5e6f8e90c3">&#9670;&#160;</a></span>localization_map() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">tr::localization_map::localization_map </td>
@@ -220,6 +231,11 @@ Public Member Functions</h2></td></tr>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -231,11 +247,14 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="a652bd9943eb0c4a9fa9f00a00e6ecc78" name="a652bd9943eb0c4a9fa9f00a00e6ecc78"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a652bd9943eb0c4a9fa9f00a00e6ecc78">&#9670;&#160;</a></span>clear()</h2>
+<a id="af77e50710f7befac642e2e229d8c1dd0" name="af77e50710f7befac642e2e229d8c1dd0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af77e50710f7befac642e2e229d8c1dd0">&#9670;&#160;</a></span>clear()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void tr::localization_map::clear </td>
@@ -244,6 +263,11 @@ Public Member Functions</h2></td></tr>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>
@@ -308,6 +332,9 @@ Public Member Functions</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">bool tr::localization_map::contains </td>
@@ -316,6 +343,11 @@ Public Member Functions</h2></td></tr>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -332,6 +364,9 @@ Public Member Functions</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">std::string_view tr::localization_map::operator[] </td>
@@ -340,6 +375,11 @@ Public Member Functions</h2></td></tr>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">

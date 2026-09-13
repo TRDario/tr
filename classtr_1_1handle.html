@@ -151,52 +151,52 @@ class tr::handle&lt; Base, Empty, Deleter &gt;</div><dl class="tparams"><dt>Temp
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
-<tr class="memitem:a8988074ef6ceae0d61550ae2b646c7b9" id="r_a8988074ef6ceae0d61550ae2b646c7b9"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a8988074ef6ceae0d61550ae2b646c7b9">handle</a> ()</td></tr>
-<tr class="memdesc:a8988074ef6ceae0d61550ae2b646c7b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default-constructs an empty handle.  <br /></td></tr>
-<tr class="memitem:a54428602317bb232bf1448ab6585bf2b" id="r_a54428602317bb232bf1448ab6585bf2b"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a54428602317bb232bf1448ab6585bf2b">handle</a> (Base value)</td></tr>
-<tr class="memdesc:a54428602317bb232bf1448ab6585bf2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a handle from a base type value.  <br /></td></tr>
-<tr class="memitem:a2dedd850cf50071f1b0126ecbaae2099" id="r_a2dedd850cf50071f1b0126ecbaae2099"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a2dedd850cf50071f1b0126ecbaae2099">handle</a> (Base value, <a class="el" href="structtr_1_1maybe__empty__t.html">maybe_empty_t</a>)</td></tr>
-<tr class="memdesc:a2dedd850cf50071f1b0126ecbaae2099"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a handle from a base type value without checking for the invalid case.  <br /></td></tr>
-<tr class="memitem:a9203c45221ffe66fc135def5f7eea5a8" id="r_a9203c45221ffe66fc135def5f7eea5a8"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a9203c45221ffe66fc135def5f7eea5a8">handle</a> (Deleter &amp;&amp;deleter)</td></tr>
-<tr class="memdesc:a9203c45221ffe66fc135def5f7eea5a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default-constructs an empty handle.  <br /></td></tr>
-<tr class="memitem:a4e2dfcbee83e443ef3dc5b0c95e84d6c" id="r_a4e2dfcbee83e443ef3dc5b0c95e84d6c"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a4e2dfcbee83e443ef3dc5b0c95e84d6c">handle</a> (Base value, Deleter &amp;&amp;deleter)</td></tr>
-<tr class="memdesc:a4e2dfcbee83e443ef3dc5b0c95e84d6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a handle from a base type value and a deleter.  <br /></td></tr>
-<tr class="memitem:a26100ce8b0103c46d046f94f1524080c" id="r_a26100ce8b0103c46d046f94f1524080c"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a26100ce8b0103c46d046f94f1524080c">handle</a> (Base value, Deleter &amp;&amp;deleter, <a class="el" href="structtr_1_1maybe__empty__t.html">maybe_empty_t</a>)</td></tr>
-<tr class="memdesc:a26100ce8b0103c46d046f94f1524080c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a handle from a base type value and a deleter without checking for the invalid case.  <br /></td></tr>
-<tr class="memitem:abaa83c739e95d41b8d4f7f8c3b9b1660" id="r_abaa83c739e95d41b8d4f7f8c3b9b1660"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#abaa83c739e95d41b8d4f7f8c3b9b1660">handle</a> (handle &amp;&amp;rhs) noexcept</td></tr>
-<tr class="memdesc:abaa83c739e95d41b8d4f7f8c3b9b1660"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a handle by moving from another handle.  <br /></td></tr>
-<tr class="memitem:a7ccc55b0ad123eef7e4d1650dc90aa2e" id="r_a7ccc55b0ad123eef7e4d1650dc90aa2e"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a7ccc55b0ad123eef7e4d1650dc90aa2e">~handle</a> ()</td></tr>
-<tr class="memdesc:a7ccc55b0ad123eef7e4d1650dc90aa2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys the handle.  <br /></td></tr>
+<tr class="memitem:abb96a1a599d85a1cba18c38103846a5d" id="r_abb96a1a599d85a1cba18c38103846a5d"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#abb96a1a599d85a1cba18c38103846a5d">handle</a> () noexcept(std::is_nothrow_default_constructible_v&lt; Deleter &gt;)</td></tr>
+<tr class="memdesc:abb96a1a599d85a1cba18c38103846a5d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default-constructs an empty handle.  <br /></td></tr>
+<tr class="memitem:a42ea34ae351cc2727f960ea8aae6bd52" id="r_a42ea34ae351cc2727f960ea8aae6bd52"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a42ea34ae351cc2727f960ea8aae6bd52">handle</a> (Base value) noexcept(std::is_nothrow_default_constructible_v&lt; Deleter &gt;)</td></tr>
+<tr class="memdesc:a42ea34ae351cc2727f960ea8aae6bd52"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a handle from a base type value.  <br /></td></tr>
+<tr class="memitem:addef300a4edbeafcfb3fe8e12adf7161" id="r_addef300a4edbeafcfb3fe8e12adf7161"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#addef300a4edbeafcfb3fe8e12adf7161">handle</a> (Base value, <a class="el" href="structtr_1_1maybe__empty__t.html">maybe_empty_t</a>) noexcept(std::is_nothrow_default_constructible_v&lt; Deleter &gt;)</td></tr>
+<tr class="memdesc:addef300a4edbeafcfb3fe8e12adf7161"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a handle from a base type value without checking for the invalid case.  <br /></td></tr>
+<tr class="memitem:a8d5e4fcd245e3839e0c41c4f55aabc13" id="r_a8d5e4fcd245e3839e0c41c4f55aabc13"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a8d5e4fcd245e3839e0c41c4f55aabc13">handle</a> (Deleter &amp;&amp;deleter) noexcept(std::is_nothrow_move_constructible_v&lt; Deleter &gt;)</td></tr>
+<tr class="memdesc:a8d5e4fcd245e3839e0c41c4f55aabc13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default-constructs an empty handle.  <br /></td></tr>
+<tr class="memitem:a835d2b6069d9fbd54726edd5d4446840" id="r_a835d2b6069d9fbd54726edd5d4446840"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a835d2b6069d9fbd54726edd5d4446840">handle</a> (Base value, Deleter &amp;&amp;deleter) noexcept(std::is_nothrow_move_constructible_v&lt; Deleter &gt;)</td></tr>
+<tr class="memdesc:a835d2b6069d9fbd54726edd5d4446840"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a handle from a base type value and a deleter.  <br /></td></tr>
+<tr class="memitem:ac5b886cd902c2fa6b01443b521fe4532" id="r_ac5b886cd902c2fa6b01443b521fe4532"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#ac5b886cd902c2fa6b01443b521fe4532">handle</a> (Base value, Deleter &amp;&amp;deleter, <a class="el" href="structtr_1_1maybe__empty__t.html">maybe_empty_t</a>) noexcept(std::is_nothrow_move_constructible_v&lt; Deleter &gt;)</td></tr>
+<tr class="memdesc:ac5b886cd902c2fa6b01443b521fe4532"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a handle from a base type value and a deleter without checking for the invalid case.  <br /></td></tr>
+<tr class="memitem:a304035f545fddc8f271ba7f3084e993f" id="r_a304035f545fddc8f271ba7f3084e993f"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a304035f545fddc8f271ba7f3084e993f">handle</a> (handle &amp;&amp;rhs) noexcept(std::is_nothrow_move_constructible_v&lt; Deleter &gt;)</td></tr>
+<tr class="memdesc:a304035f545fddc8f271ba7f3084e993f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a handle by moving from another handle.  <br /></td></tr>
+<tr class="memitem:adca993a8c6c8fa864e7d9a3a1605c97d" id="r_adca993a8c6c8fa864e7d9a3a1605c97d"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#adca993a8c6c8fa864e7d9a3a1605c97d">~handle</a> () noexcept</td></tr>
+<tr class="memdesc:adca993a8c6c8fa864e7d9a3a1605c97d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys the handle.  <br /></td></tr>
 <tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Assignment operators</div></td></tr>
-<tr class="memitem:ae89bbff513f95445ddcf5509c11f277a" id="r_ae89bbff513f95445ddcf5509c11f277a"><td class="memItemLeft">constexpr <a class="el" href="#a8988074ef6ceae0d61550ae2b646c7b9">handle</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ae89bbff513f95445ddcf5509c11f277a">operator=</a> (<a class="el" href="#a8988074ef6ceae0d61550ae2b646c7b9">handle</a> &amp;&amp;rhs) noexcept</td></tr>
-<tr class="memdesc:ae89bbff513f95445ddcf5509c11f277a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move-assigns the handle.  <br /></td></tr>
+<tr class="memitem:ad8bd5a254b0febd682c22d39be4b56e3" id="r_ad8bd5a254b0febd682c22d39be4b56e3"><td class="memItemLeft">constexpr <a class="el" href="#abb96a1a599d85a1cba18c38103846a5d">handle</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ad8bd5a254b0febd682c22d39be4b56e3">operator=</a> (<a class="el" href="#abb96a1a599d85a1cba18c38103846a5d">handle</a> &amp;&amp;rhs) noexcept(std::is_nothrow_move_assignable_v&lt; Deleter &gt;)</td></tr>
+<tr class="memdesc:ad8bd5a254b0febd682c22d39be4b56e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move-assigns the handle.  <br /></td></tr>
 <tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">State</div></td></tr>
-<tr class="memitem:ade80204fd986d6b63404d8f220e0e66f" id="r_ade80204fd986d6b63404d8f220e0e66f"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="#ade80204fd986d6b63404d8f220e0e66f">has_value</a> () const</td></tr>
-<tr class="memdesc:ade80204fd986d6b63404d8f220e0e66f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the handle contains a value.  <br /></td></tr>
-<tr class="memitem:a4d271b578124ede7f7d657dec103c0f5" id="r_a4d271b578124ede7f7d657dec103c0f5"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a4d271b578124ede7f7d657dec103c0f5">operator bool</a> () const</td></tr>
-<tr class="memdesc:a4d271b578124ede7f7d657dec103c0f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the handle contains a value.  <br /></td></tr>
+<tr class="memitem:a468f01d59d17da3e6f43a596c6cb901d" id="r_a468f01d59d17da3e6f43a596c6cb901d"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="#a468f01d59d17da3e6f43a596c6cb901d">has_value</a> () const noexcept</td></tr>
+<tr class="memdesc:a468f01d59d17da3e6f43a596c6cb901d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the handle contains a value.  <br /></td></tr>
+<tr class="memitem:a910a15649c951d1dea2b857d16764a71" id="r_a910a15649c951d1dea2b857d16764a71"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a910a15649c951d1dea2b857d16764a71">operator bool</a> () const noexcept</td></tr>
+<tr class="memdesc:a910a15649c951d1dea2b857d16764a71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the handle contains a value.  <br /></td></tr>
 <tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Getters</div></td></tr>
-<tr class="memitem:a2e9aa230c237cd38fe141d3a0f0c2042" id="r_a2e9aa230c237cd38fe141d3a0f0c2042"><td class="memItemLeft">constexpr const Base &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a2e9aa230c237cd38fe141d3a0f0c2042">get</a> () const</td></tr>
-<tr class="memdesc:a2e9aa230c237cd38fe141d3a0f0c2042"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the handle's base type value.  <br /></td></tr>
-<tr class="memitem:a0be6390490c60c5cf2ae32627930a5d2" id="r_a0be6390490c60c5cf2ae32627930a5d2"><td class="memItemLeft">constexpr const Base &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a0be6390490c60c5cf2ae32627930a5d2">get</a> (<a class="el" href="structtr_1_1maybe__empty__t.html">maybe_empty_t</a>) const</td></tr>
-<tr class="memdesc:a0be6390490c60c5cf2ae32627930a5d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the handle's base type value without checking for the invalid case.  <br /></td></tr>
-<tr class="memitem:af0591ec7e952dec663964cb47a3f2f13" id="r_af0591ec7e952dec663964cb47a3f2f13"><td class="memItemLeft">constexpr Deleter &amp;&#160;</td><td class="memItemRight"><a class="el" href="#af0591ec7e952dec663964cb47a3f2f13">get_deleter</a> ()</td></tr>
-<tr class="memdesc:af0591ec7e952dec663964cb47a3f2f13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the handle's deleter.  <br /></td></tr>
-<tr class="memitem:ad3ba4826c448226963084984944767d2" id="r_ad3ba4826c448226963084984944767d2"><td class="memItemLeft">constexpr const Deleter &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ad3ba4826c448226963084984944767d2">get_deleter</a> () const</td></tr>
-<tr class="memdesc:ad3ba4826c448226963084984944767d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the handle's deleter.  <br /></td></tr>
+<tr class="memitem:ad1290a431524f76f75f18126503c20a8" id="r_ad1290a431524f76f75f18126503c20a8"><td class="memItemLeft">constexpr const Base &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ad1290a431524f76f75f18126503c20a8">get</a> () const noexcept</td></tr>
+<tr class="memdesc:ad1290a431524f76f75f18126503c20a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the handle's base type value.  <br /></td></tr>
+<tr class="memitem:ad6a15840ab1524440783560ad5897cb1" id="r_ad6a15840ab1524440783560ad5897cb1"><td class="memItemLeft">constexpr const Base &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ad6a15840ab1524440783560ad5897cb1">get</a> (<a class="el" href="structtr_1_1maybe__empty__t.html">maybe_empty_t</a>) const noexcept</td></tr>
+<tr class="memdesc:ad6a15840ab1524440783560ad5897cb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the handle's base type value without checking for the invalid case.  <br /></td></tr>
+<tr class="memitem:ad3a18339ce940d0c17ea8f1ad76424d2" id="r_ad3a18339ce940d0c17ea8f1ad76424d2"><td class="memItemLeft">constexpr Deleter &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ad3a18339ce940d0c17ea8f1ad76424d2">get_deleter</a> () noexcept</td></tr>
+<tr class="memdesc:ad3a18339ce940d0c17ea8f1ad76424d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the handle's deleter.  <br /></td></tr>
+<tr class="memitem:ac5771b88587cd7c483f73b30c3f3a1b2" id="r_ac5771b88587cd7c483f73b30c3f3a1b2"><td class="memItemLeft">constexpr const Deleter &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ac5771b88587cd7c483f73b30c3f3a1b2">get_deleter</a> () const noexcept</td></tr>
+<tr class="memdesc:ac5771b88587cd7c483f73b30c3f3a1b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the handle's deleter.  <br /></td></tr>
 <tr id="pub-methods-4" class="groupHeader"><td colspan="2"><div class="groupHeader">Resetting</div></td></tr>
-<tr class="memitem:ae11139c4173f77814a7de7810c421b7e" id="r_ae11139c4173f77814a7de7810c421b7e"><td class="memItemLeft">constexpr Base&#160;</td><td class="memItemRight"><a class="el" href="#ae11139c4173f77814a7de7810c421b7e">release</a> ()</td></tr>
-<tr class="memdesc:ae11139c4173f77814a7de7810c421b7e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Releases ownership over the handle, if any.  <br /></td></tr>
-<tr class="memitem:aabb642e4c2690246af7584665bc4e117" id="r_aabb642e4c2690246af7584665bc4e117"><td class="memItemLeft">constexpr void&#160;</td><td class="memItemRight"><a class="el" href="#aabb642e4c2690246af7584665bc4e117">reset</a> ()</td></tr>
-<tr class="memdesc:aabb642e4c2690246af7584665bc4e117"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the handle to an empty state.  <br /></td></tr>
-<tr class="memitem:af7d57151291df1f4a0c8215b38eda875" id="r_af7d57151291df1f4a0c8215b38eda875"><td class="memItemLeft">constexpr void&#160;</td><td class="memItemRight"><a class="el" href="#af7d57151291df1f4a0c8215b38eda875">reset</a> (Base value)</td></tr>
-<tr class="memdesc:af7d57151291df1f4a0c8215b38eda875"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the handle to a non-empty state.  <br /></td></tr>
-<tr class="memitem:a80648853309fd749b11031501e1915e2" id="r_a80648853309fd749b11031501e1915e2"><td class="memItemLeft">constexpr void&#160;</td><td class="memItemRight"><a class="el" href="#a80648853309fd749b11031501e1915e2">reset</a> (Base value, <a class="el" href="structtr_1_1maybe__empty__t.html">maybe_empty_t</a>)</td></tr>
-<tr class="memdesc:a80648853309fd749b11031501e1915e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the handle to a new state without checking for the invalid case.  <br /></td></tr>
+<tr class="memitem:a94aaf49cd0d070a65cce21b12473b377" id="r_a94aaf49cd0d070a65cce21b12473b377"><td class="memItemLeft">constexpr Base&#160;</td><td class="memItemRight"><a class="el" href="#a94aaf49cd0d070a65cce21b12473b377">release</a> () noexcept</td></tr>
+<tr class="memdesc:a94aaf49cd0d070a65cce21b12473b377"><td class="mdescLeft">&#160;</td><td class="mdescRight">Releases ownership over the handle, if any.  <br /></td></tr>
+<tr class="memitem:a7a72f468271e9795623f8b10f993a844" id="r_a7a72f468271e9795623f8b10f993a844"><td class="memItemLeft">constexpr void&#160;</td><td class="memItemRight"><a class="el" href="#a7a72f468271e9795623f8b10f993a844">reset</a> () noexcept</td></tr>
+<tr class="memdesc:a7a72f468271e9795623f8b10f993a844"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the handle to an empty state.  <br /></td></tr>
+<tr class="memitem:af6225f7bded61d2c1179c3a2f2c50698" id="r_af6225f7bded61d2c1179c3a2f2c50698"><td class="memItemLeft">constexpr void&#160;</td><td class="memItemRight"><a class="el" href="#af6225f7bded61d2c1179c3a2f2c50698">reset</a> (Base value) noexcept</td></tr>
+<tr class="memdesc:af6225f7bded61d2c1179c3a2f2c50698"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the handle to a non-empty state.  <br /></td></tr>
+<tr class="memitem:a0708f4c30ab3ad74096ff2a861065461" id="r_a0708f4c30ab3ad74096ff2a861065461"><td class="memItemLeft">constexpr void&#160;</td><td class="memItemRight"><a class="el" href="#a0708f4c30ab3ad74096ff2a861065461">reset</a> (Base value, <a class="el" href="structtr_1_1maybe__empty__t.html">maybe_empty_t</a>) noexcept</td></tr>
+<tr class="memdesc:a0708f4c30ab3ad74096ff2a861065461"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the handle to a new state without checking for the invalid case.  <br /></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a8988074ef6ceae0d61550ae2b646c7b9" name="a8988074ef6ceae0d61550ae2b646c7b9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8988074ef6ceae0d61550ae2b646c7b9">&#9670;&#160;</a></span>handle() <span class="overload">[1/7]</span></h2>
+<a id="abb96a1a599d85a1cba18c38103846a5d" name="abb96a1a599d85a1cba18c38103846a5d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abb96a1a599d85a1cba18c38103846a5d">&#9670;&#160;</a></span>handle() <span class="overload">[1/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -215,15 +215,15 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a54428602317bb232bf1448ab6585bf2b" name="a54428602317bb232bf1448ab6585bf2b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a54428602317bb232bf1448ab6585bf2b">&#9670;&#160;</a></span>handle() <span class="overload">[2/7]</span></h2>
+<a id="a42ea34ae351cc2727f960ea8aae6bd52" name="a42ea34ae351cc2727f960ea8aae6bd52"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a42ea34ae351cc2727f960ea8aae6bd52">&#9670;&#160;</a></span>handle() <span class="overload">[2/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -242,7 +242,7 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel explicit">explicit</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel explicit">explicit</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -255,8 +255,8 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
 
 </div>
 </div>
-<a id="a2dedd850cf50071f1b0126ecbaae2099" name="a2dedd850cf50071f1b0126ecbaae2099"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2dedd850cf50071f1b0126ecbaae2099">&#9670;&#160;</a></span>handle() <span class="overload">[3/7]</span></h2>
+<a id="addef300a4edbeafcfb3fe8e12adf7161" name="addef300a4edbeafcfb3fe8e12adf7161"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#addef300a4edbeafcfb3fe8e12adf7161">&#9670;&#160;</a></span>handle() <span class="overload">[3/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -279,7 +279,7 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel explicit">explicit</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel explicit">explicit</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -292,8 +292,8 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
 
 </div>
 </div>
-<a id="a9203c45221ffe66fc135def5f7eea5a8" name="a9203c45221ffe66fc135def5f7eea5a8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9203c45221ffe66fc135def5f7eea5a8">&#9670;&#160;</a></span>handle() <span class="overload">[4/7]</span></h2>
+<a id="a8d5e4fcd245e3839e0c41c4f55aabc13" name="a8d5e4fcd245e3839e0c41c4f55aabc13"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d5e4fcd245e3839e0c41c4f55aabc13">&#9670;&#160;</a></span>handle() <span class="overload">[4/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -312,7 +312,7 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -325,8 +325,8 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
 
 </div>
 </div>
-<a id="a4e2dfcbee83e443ef3dc5b0c95e84d6c" name="a4e2dfcbee83e443ef3dc5b0c95e84d6c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4e2dfcbee83e443ef3dc5b0c95e84d6c">&#9670;&#160;</a></span>handle() <span class="overload">[5/7]</span></h2>
+<a id="a835d2b6069d9fbd54726edd5d4446840" name="a835d2b6069d9fbd54726edd5d4446840"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a835d2b6069d9fbd54726edd5d4446840">&#9670;&#160;</a></span>handle() <span class="overload">[5/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -349,7 +349,7 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel explicit">explicit</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel explicit">explicit</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -364,8 +364,8 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
 
 </div>
 </div>
-<a id="a26100ce8b0103c46d046f94f1524080c" name="a26100ce8b0103c46d046f94f1524080c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a26100ce8b0103c46d046f94f1524080c">&#9670;&#160;</a></span>handle() <span class="overload">[6/7]</span></h2>
+<a id="ac5b886cd902c2fa6b01443b521fe4532" name="ac5b886cd902c2fa6b01443b521fe4532"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac5b886cd902c2fa6b01443b521fe4532">&#9670;&#160;</a></span>handle() <span class="overload">[6/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -393,7 +393,7 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel explicit">explicit</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel explicit">explicit</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -407,8 +407,8 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
 
 </div>
 </div>
-<a id="abaa83c739e95d41b8d4f7f8c3b9b1660" name="abaa83c739e95d41b8d4f7f8c3b9b1660"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abaa83c739e95d41b8d4f7f8c3b9b1660">&#9670;&#160;</a></span>handle() <span class="overload">[7/7]</span></h2>
+<a id="a304035f545fddc8f271ba7f3084e993f" name="a304035f545fddc8f271ba7f3084e993f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a304035f545fddc8f271ba7f3084e993f">&#9670;&#160;</a></span>handle() <span class="overload">[7/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -427,7 +427,7 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -440,8 +440,8 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
 
 </div>
 </div>
-<a id="a7ccc55b0ad123eef7e4d1650dc90aa2e" name="a7ccc55b0ad123eef7e4d1650dc90aa2e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7ccc55b0ad123eef7e4d1650dc90aa2e">&#9670;&#160;</a></span>~handle()</h2>
+<a id="adca993a8c6c8fa864e7d9a3a1605c97d" name="adca993a8c6c8fa864e7d9a3a1605c97d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adca993a8c6c8fa864e7d9a3a1605c97d">&#9670;&#160;</a></span>~handle()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -452,7 +452,7 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classtr_1_1handle.html">tr::handle</a>&lt; Base, Empty, Deleter &gt;::~<a class="el" href="#a8988074ef6ceae0d61550ae2b646c7b9">handle</a> </td>
+          <td class="memname"><a class="el" href="classtr_1_1handle.html">tr::handle</a>&lt; Base, Empty, Deleter &gt;::~<a class="el" href="#abb96a1a599d85a1cba18c38103846a5d">handle</a> </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -460,7 +460,7 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -468,8 +468,8 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="ae89bbff513f95445ddcf5509c11f277a" name="ae89bbff513f95445ddcf5509c11f277a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae89bbff513f95445ddcf5509c11f277a">&#9670;&#160;</a></span>operator=()</h2>
+<a id="ad8bd5a254b0febd682c22d39be4b56e3" name="ad8bd5a254b0febd682c22d39be4b56e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad8bd5a254b0febd682c22d39be4b56e3">&#9670;&#160;</a></span>operator=()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -480,15 +480,15 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="#a8988074ef6ceae0d61550ae2b646c7b9">handle</a> &amp; <a class="el" href="classtr_1_1handle.html">tr::handle</a>&lt; Base, Empty, Deleter &gt;::operator= </td>
+          <td class="memname"><a class="el" href="#abb96a1a599d85a1cba18c38103846a5d">handle</a> &amp; <a class="el" href="classtr_1_1handle.html">tr::handle</a>&lt; Base, Empty, Deleter &gt;::operator= </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="#a8988074ef6ceae0d61550ae2b646c7b9">handle</a>&lt; Base, Empty, Deleter &gt; &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="#abb96a1a599d85a1cba18c38103846a5d">handle</a>&lt; Base, Empty, Deleter &gt; &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -502,8 +502,8 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
 
 </div>
 </div>
-<a id="ade80204fd986d6b63404d8f220e0e66f" name="ade80204fd986d6b63404d8f220e0e66f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ade80204fd986d6b63404d8f220e0e66f">&#9670;&#160;</a></span>has_value()</h2>
+<a id="a468f01d59d17da3e6f43a596c6cb901d" name="a468f01d59d17da3e6f43a596c6cb901d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a468f01d59d17da3e6f43a596c6cb901d">&#9670;&#160;</a></span>has_value()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -522,7 +522,7 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -530,8 +530,8 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
 
 </div>
 </div>
-<a id="a4d271b578124ede7f7d657dec103c0f5" name="a4d271b578124ede7f7d657dec103c0f5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4d271b578124ede7f7d657dec103c0f5">&#9670;&#160;</a></span>operator bool()</h2>
+<a id="a910a15649c951d1dea2b857d16764a71" name="a910a15649c951d1dea2b857d16764a71"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a910a15649c951d1dea2b857d16764a71">&#9670;&#160;</a></span>operator bool()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -550,7 +550,7 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel explicit">explicit</span><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel explicit">explicit</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -558,8 +558,8 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
 
 </div>
 </div>
-<a id="a2e9aa230c237cd38fe141d3a0f0c2042" name="a2e9aa230c237cd38fe141d3a0f0c2042"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2e9aa230c237cd38fe141d3a0f0c2042">&#9670;&#160;</a></span>get() <span class="overload">[1/2]</span></h2>
+<a id="ad1290a431524f76f75f18126503c20a8" name="ad1290a431524f76f75f18126503c20a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1290a431524f76f75f18126503c20a8">&#9670;&#160;</a></span>get() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -578,7 +578,7 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -587,8 +587,8 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
 
 </div>
 </div>
-<a id="a0be6390490c60c5cf2ae32627930a5d2" name="a0be6390490c60c5cf2ae32627930a5d2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0be6390490c60c5cf2ae32627930a5d2">&#9670;&#160;</a></span>get() <span class="overload">[2/2]</span></h2>
+<a id="ad6a15840ab1524440783560ad5897cb1" name="ad6a15840ab1524440783560ad5897cb1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad6a15840ab1524440783560ad5897cb1">&#9670;&#160;</a></span>get() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -607,7 +607,7 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -615,8 +615,8 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
 
 </div>
 </div>
-<a id="af0591ec7e952dec663964cb47a3f2f13" name="af0591ec7e952dec663964cb47a3f2f13"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af0591ec7e952dec663964cb47a3f2f13">&#9670;&#160;</a></span>get_deleter() <span class="overload">[1/2]</span></h2>
+<a id="ad3a18339ce940d0c17ea8f1ad76424d2" name="ad3a18339ce940d0c17ea8f1ad76424d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3a18339ce940d0c17ea8f1ad76424d2">&#9670;&#160;</a></span>get_deleter() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -635,7 +635,7 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -643,8 +643,8 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
 
 </div>
 </div>
-<a id="ad3ba4826c448226963084984944767d2" name="ad3ba4826c448226963084984944767d2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad3ba4826c448226963084984944767d2">&#9670;&#160;</a></span>get_deleter() <span class="overload">[2/2]</span></h2>
+<a id="ac5771b88587cd7c483f73b30c3f3a1b2" name="ac5771b88587cd7c483f73b30c3f3a1b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac5771b88587cd7c483f73b30c3f3a1b2">&#9670;&#160;</a></span>get_deleter() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -663,7 +663,7 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -671,8 +671,8 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
 
 </div>
 </div>
-<a id="ae11139c4173f77814a7de7810c421b7e" name="ae11139c4173f77814a7de7810c421b7e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae11139c4173f77814a7de7810c421b7e">&#9670;&#160;</a></span>release()</h2>
+<a id="a94aaf49cd0d070a65cce21b12473b377" name="a94aaf49cd0d070a65cce21b12473b377"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a94aaf49cd0d070a65cce21b12473b377">&#9670;&#160;</a></span>release()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -691,7 +691,7 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -699,8 +699,8 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
 
 </div>
 </div>
-<a id="aabb642e4c2690246af7584665bc4e117" name="aabb642e4c2690246af7584665bc4e117"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aabb642e4c2690246af7584665bc4e117">&#9670;&#160;</a></span>reset() <span class="overload">[1/3]</span></h2>
+<a id="a7a72f468271e9795623f8b10f993a844" name="a7a72f468271e9795623f8b10f993a844"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a72f468271e9795623f8b10f993a844">&#9670;&#160;</a></span>reset() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -719,15 +719,15 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="af7d57151291df1f4a0c8215b38eda875" name="af7d57151291df1f4a0c8215b38eda875"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af7d57151291df1f4a0c8215b38eda875">&#9670;&#160;</a></span>reset() <span class="overload">[2/3]</span></h2>
+<a id="af6225f7bded61d2c1179c3a2f2c50698" name="af6225f7bded61d2c1179c3a2f2c50698"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af6225f7bded61d2c1179c3a2f2c50698">&#9670;&#160;</a></span>reset() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -746,7 +746,7 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -760,8 +760,8 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
 
 </div>
 </div>
-<a id="a80648853309fd749b11031501e1915e2" name="a80648853309fd749b11031501e1915e2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a80648853309fd749b11031501e1915e2">&#9670;&#160;</a></span>reset() <span class="overload">[3/3]</span></h2>
+<a id="a0708f4c30ab3ad74096ff2a861065461" name="a0708f4c30ab3ad74096ff2a861065461"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0708f4c30ab3ad74096ff2a861065461">&#9670;&#160;</a></span>reset() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -784,7 +784,7 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

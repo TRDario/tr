@@ -131,40 +131,40 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1gra
 <p>Graphics benchmark.  
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The graphics benchmark mostly has the same usage pattern as the regular benchmark, with .<a class="el" href="#aef2a7f12eae76d088c9df9750bb4d3d4" title="Starts a new measurement.">start()</a> and .<a class="el" href="#a5353be005c41f4de81461b43dc8b9c3a" title="Stops a measurement.">stop()</a> methods delineating the benchmarked region of code, however it has an additional .<a class="el" href="#a2be4d7673b23aa13ffb339e74c1ad11c" title="Fetches the latest measurement from the GPU. This blocks execution until the GPU is done.">fetch()</a> method that much be called to make the measurement accessable to the CPU and add it to the measurement deque. </p>
+<div class="textblock"><p>The graphics benchmark mostly has the same usage pattern as the regular benchmark, with .<a class="el" href="#a8054c022fb76654b81c61b1267a088f2" title="Starts a new measurement.">start()</a> and .<a class="el" href="#ac07f766e02ba1e41d1e4c4f8a40c3ad8" title="Stops a measurement.">stop()</a> methods delineating the benchmarked region of code, however it has an additional .<a class="el" href="#a2be4d7673b23aa13ffb339e74c1ad11c" title="Fetches the latest measurement from the GPU. This blocks execution until the GPU is done.">fetch()</a> method that much be called to make the measurement accessable to the CPU and add it to the measurement deque. </p>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
-<tr class="memitem:a0ab512b5898b662519aef4a7240c722d" id="r_a0ab512b5898b662519aef4a7240c722d"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a0ab512b5898b662519aef4a7240c722d">graphics_benchmark</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context)</td></tr>
-<tr class="memdesc:a0ab512b5898b662519aef4a7240c722d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an empty graphics benchmark.  <br /></td></tr>
+<tr class="memitem:a78fe5c4e4b3195b9f946a2ecc277bb47" id="r_a78fe5c4e4b3195b9f946a2ecc277bb47"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a78fe5c4e4b3195b9f946a2ecc277bb47">graphics_benchmark</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context) noexcept</td></tr>
+<tr class="memdesc:a78fe5c4e4b3195b9f946a2ecc277bb47"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an empty graphics benchmark.  <br /></td></tr>
 <tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Context</div></td></tr>
-<tr class="memitem:a79c8446adac230eb4b208c4da9b66b53" id="r_a79c8446adac230eb4b208c4da9b66b53"><td class="memItemLeft"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a79c8446adac230eb4b208c4da9b66b53">context</a> () const</td></tr>
-<tr class="memdesc:a79c8446adac230eb4b208c4da9b66b53"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a reference to the graphics context the benchmark is on.  <br /></td></tr>
+<tr class="memitem:a011d91c0ae2899d52477552ce663846d" id="r_a011d91c0ae2899d52477552ce663846d"><td class="memItemLeft"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a011d91c0ae2899d52477552ce663846d">context</a> () const noexcept</td></tr>
+<tr class="memdesc:a011d91c0ae2899d52477552ce663846d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a reference to the graphics context the benchmark is on.  <br /></td></tr>
 <tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Controls</div></td></tr>
-<tr class="memitem:aef2a7f12eae76d088c9df9750bb4d3d4" id="r_aef2a7f12eae76d088c9df9750bb4d3d4"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aef2a7f12eae76d088c9df9750bb4d3d4">start</a> ()</td></tr>
-<tr class="memdesc:aef2a7f12eae76d088c9df9750bb4d3d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts a new measurement.  <br /></td></tr>
-<tr class="memitem:a5353be005c41f4de81461b43dc8b9c3a" id="r_a5353be005c41f4de81461b43dc8b9c3a"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a5353be005c41f4de81461b43dc8b9c3a">stop</a> ()</td></tr>
-<tr class="memdesc:a5353be005c41f4de81461b43dc8b9c3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops a measurement.  <br /></td></tr>
+<tr class="memitem:a8054c022fb76654b81c61b1267a088f2" id="r_a8054c022fb76654b81c61b1267a088f2"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a8054c022fb76654b81c61b1267a088f2">start</a> () noexcept</td></tr>
+<tr class="memdesc:a8054c022fb76654b81c61b1267a088f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts a new measurement.  <br /></td></tr>
+<tr class="memitem:ac07f766e02ba1e41d1e4c4f8a40c3ad8" id="r_ac07f766e02ba1e41d1e4c4f8a40c3ad8"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ac07f766e02ba1e41d1e4c4f8a40c3ad8">stop</a> () noexcept</td></tr>
+<tr class="memdesc:ac07f766e02ba1e41d1e4c4f8a40c3ad8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops a measurement.  <br /></td></tr>
 <tr class="memitem:a2be4d7673b23aa13ffb339e74c1ad11c" id="r_a2be4d7673b23aa13ffb339e74c1ad11c"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a2be4d7673b23aa13ffb339e74c1ad11c">fetch</a> ()</td></tr>
 <tr class="memdesc:a2be4d7673b23aa13ffb339e74c1ad11c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetches the latest measurement from the GPU. This blocks execution until the GPU is done.  <br /></td></tr>
-<tr class="memitem:aa7092ee2015474e2de1fd91cf2f7dca2" id="r_aa7092ee2015474e2de1fd91cf2f7dca2"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aa7092ee2015474e2de1fd91cf2f7dca2">clear</a> ()</td></tr>
-<tr class="memdesc:aa7092ee2015474e2de1fd91cf2f7dca2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears all previous and ongoing measurements from the queue.  <br /></td></tr>
+<tr class="memitem:abe82fc832fa3cb2bf6bf79c3ca670cfa" id="r_abe82fc832fa3cb2bf6bf79c3ca670cfa"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#abe82fc832fa3cb2bf6bf79c3ca670cfa">clear</a> () noexcept</td></tr>
+<tr class="memdesc:abe82fc832fa3cb2bf6bf79c3ca670cfa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears all previous and ongoing measurements from the queue.  <br /></td></tr>
 <tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Results</div></td></tr>
-<tr class="memitem:ace0d7e1101a145c8374639290ee2820e" id="r_ace0d7e1101a145c8374639290ee2820e"><td class="memItemLeft"><a class="el" href="namespacetr.html#a0a06575d52c3090c44755b9a8174f146">duration</a>&#160;</td><td class="memItemRight"><a class="el" href="#ace0d7e1101a145c8374639290ee2820e">latest</a> () const</td></tr>
-<tr class="memdesc:ace0d7e1101a145c8374639290ee2820e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the duration of the latest measurement.  <br /></td></tr>
-<tr class="memitem:a7e55c12d27ea6333d951720e5ebe5bec" id="r_a7e55c12d27ea6333d951720e5ebe5bec"><td class="memItemLeft"><a class="el" href="namespacetr.html#a0a06575d52c3090c44755b9a8174f146">duration</a>&#160;</td><td class="memItemRight"><a class="el" href="#a7e55c12d27ea6333d951720e5ebe5bec">min</a> () const</td></tr>
-<tr class="memdesc:a7e55c12d27ea6333d951720e5ebe5bec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the duration of the shortest available measurement.  <br /></td></tr>
-<tr class="memitem:a6c241de649b53e12fe2c17dcc157c167" id="r_a6c241de649b53e12fe2c17dcc157c167"><td class="memItemLeft"><a class="el" href="namespacetr.html#a0a06575d52c3090c44755b9a8174f146">duration</a>&#160;</td><td class="memItemRight"><a class="el" href="#a6c241de649b53e12fe2c17dcc157c167">max</a> () const</td></tr>
-<tr class="memdesc:a6c241de649b53e12fe2c17dcc157c167"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the duration of the longest available measurement.  <br /></td></tr>
-<tr class="memitem:a5e24a3c751b000faea681e6ff5f99bbc" id="r_a5e24a3c751b000faea681e6ff5f99bbc"><td class="memItemLeft"><a class="el" href="namespacetr.html#a0a06575d52c3090c44755b9a8174f146">duration</a>&#160;</td><td class="memItemRight"><a class="el" href="#a5e24a3c751b000faea681e6ff5f99bbc">avg</a> () const</td></tr>
-<tr class="memdesc:a5e24a3c751b000faea681e6ff5f99bbc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the average duration of the available measurements.  <br /></td></tr>
-<tr class="memitem:a401af95bc370941bba31c9e2e5c57544" id="r_a401af95bc370941bba31c9e2e5c57544"><td class="memItemLeft">const std::deque&lt; <a class="el" href="namespacetr.html#a0a06575d52c3090c44755b9a8174f146">duration</a> &gt; &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a401af95bc370941bba31c9e2e5c57544">measurements</a> () const</td></tr>
-<tr class="memdesc:a401af95bc370941bba31c9e2e5c57544"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the available measurements.  <br /></td></tr>
+<tr class="memitem:af6ad05e39320afc2f7b001500504d41b" id="r_af6ad05e39320afc2f7b001500504d41b"><td class="memItemLeft"><a class="el" href="namespacetr.html#a0a06575d52c3090c44755b9a8174f146">duration</a>&#160;</td><td class="memItemRight"><a class="el" href="#af6ad05e39320afc2f7b001500504d41b">latest</a> () const noexcept</td></tr>
+<tr class="memdesc:af6ad05e39320afc2f7b001500504d41b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the duration of the latest measurement.  <br /></td></tr>
+<tr class="memitem:a6e367e4a66c6c00b9c73e8decc6fd527" id="r_a6e367e4a66c6c00b9c73e8decc6fd527"><td class="memItemLeft"><a class="el" href="namespacetr.html#a0a06575d52c3090c44755b9a8174f146">duration</a>&#160;</td><td class="memItemRight"><a class="el" href="#a6e367e4a66c6c00b9c73e8decc6fd527">min</a> () const noexcept</td></tr>
+<tr class="memdesc:a6e367e4a66c6c00b9c73e8decc6fd527"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the duration of the shortest available measurement.  <br /></td></tr>
+<tr class="memitem:a3ea086b36f3f9aaf82925eb850796bdd" id="r_a3ea086b36f3f9aaf82925eb850796bdd"><td class="memItemLeft"><a class="el" href="namespacetr.html#a0a06575d52c3090c44755b9a8174f146">duration</a>&#160;</td><td class="memItemRight"><a class="el" href="#a3ea086b36f3f9aaf82925eb850796bdd">max</a> () const noexcept</td></tr>
+<tr class="memdesc:a3ea086b36f3f9aaf82925eb850796bdd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the duration of the longest available measurement.  <br /></td></tr>
+<tr class="memitem:aadc965dac94434c8c61ea15e25b765a8" id="r_aadc965dac94434c8c61ea15e25b765a8"><td class="memItemLeft"><a class="el" href="namespacetr.html#a0a06575d52c3090c44755b9a8174f146">duration</a>&#160;</td><td class="memItemRight"><a class="el" href="#aadc965dac94434c8c61ea15e25b765a8">avg</a> () const noexcept</td></tr>
+<tr class="memdesc:aadc965dac94434c8c61ea15e25b765a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the average duration of the available measurements.  <br /></td></tr>
+<tr class="memitem:a341a0daee7e49a9b0e378a7a7a61a08c" id="r_a341a0daee7e49a9b0e378a7a7a61a08c"><td class="memItemLeft">const std::deque&lt; <a class="el" href="namespacetr.html#a0a06575d52c3090c44755b9a8174f146">duration</a> &gt; &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a341a0daee7e49a9b0e378a7a7a61a08c">measurements</a> () const noexcept</td></tr>
+<tr class="memdesc:a341a0daee7e49a9b0e378a7a7a61a08c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the available measurements.  <br /></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a0ab512b5898b662519aef4a7240c722d" name="a0ab512b5898b662519aef4a7240c722d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0ab512b5898b662519aef4a7240c722d">&#9670;&#160;</a></span>graphics_benchmark()</h2>
+<a id="a78fe5c4e4b3195b9f946a2ecc277bb47" name="a78fe5c4e4b3195b9f946a2ecc277bb47"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a78fe5c4e4b3195b9f946a2ecc277bb47">&#9670;&#160;</a></span>graphics_benchmark()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -181,7 +181,7 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel explicit">explicit</span></span>  </td>
+<span class="mlabels"><span class="mlabel explicit">explicit</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -195,11 +195,14 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="a79c8446adac230eb4b208c4da9b66b53" name="a79c8446adac230eb4b208c4da9b66b53"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a79c8446adac230eb4b208c4da9b66b53">&#9670;&#160;</a></span>context()</h2>
+<a id="a011d91c0ae2899d52477552ce663846d" name="a011d91c0ae2899d52477552ce663846d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a011d91c0ae2899d52477552ce663846d">&#9670;&#160;</a></span>context()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp; tr::graphics_benchmark::context </td>
@@ -208,16 +211,24 @@ Public Member Functions</h2></td></tr>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Reference to the graphics context the benchmark is on. </dd></dl>
 
 </div>
 </div>
-<a id="aef2a7f12eae76d088c9df9750bb4d3d4" name="aef2a7f12eae76d088c9df9750bb4d3d4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aef2a7f12eae76d088c9df9750bb4d3d4">&#9670;&#160;</a></span>start()</h2>
+<a id="a8054c022fb76654b81c61b1267a088f2" name="a8054c022fb76654b81c61b1267a088f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8054c022fb76654b81c61b1267a088f2">&#9670;&#160;</a></span>start()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void tr::graphics_benchmark::start </td>
@@ -226,15 +237,23 @@ Public Member Functions</h2></td></tr>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a5353be005c41f4de81461b43dc8b9c3a" name="a5353be005c41f4de81461b43dc8b9c3a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5353be005c41f4de81461b43dc8b9c3a">&#9670;&#160;</a></span>stop()</h2>
+<a id="ac07f766e02ba1e41d1e4c4f8a40c3ad8" name="ac07f766e02ba1e41d1e4c4f8a40c3ad8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac07f766e02ba1e41d1e4c4f8a40c3ad8">&#9670;&#160;</a></span>stop()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void tr::graphics_benchmark::stop </td>
@@ -243,6 +262,11 @@ Public Member Functions</h2></td></tr>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>
@@ -264,11 +288,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aa7092ee2015474e2de1fd91cf2f7dca2" name="aa7092ee2015474e2de1fd91cf2f7dca2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa7092ee2015474e2de1fd91cf2f7dca2">&#9670;&#160;</a></span>clear()</h2>
+<a id="abe82fc832fa3cb2bf6bf79c3ca670cfa" name="abe82fc832fa3cb2bf6bf79c3ca670cfa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abe82fc832fa3cb2bf6bf79c3ca670cfa">&#9670;&#160;</a></span>clear()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void tr::graphics_benchmark::clear </td>
@@ -277,15 +304,23 @@ Public Member Functions</h2></td></tr>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="ace0d7e1101a145c8374639290ee2820e" name="ace0d7e1101a145c8374639290ee2820e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ace0d7e1101a145c8374639290ee2820e">&#9670;&#160;</a></span>latest()</h2>
+<a id="af6ad05e39320afc2f7b001500504d41b" name="af6ad05e39320afc2f7b001500504d41b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af6ad05e39320afc2f7b001500504d41b">&#9670;&#160;</a></span>latest()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="namespacetr.html#a0a06575d52c3090c44755b9a8174f146">duration</a> tr::graphics_benchmark::latest </td>
@@ -294,16 +329,24 @@ Public Member Functions</h2></td></tr>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Duration of the latest measurement. </dd></dl>
 
 </div>
 </div>
-<a id="a7e55c12d27ea6333d951720e5ebe5bec" name="a7e55c12d27ea6333d951720e5ebe5bec"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7e55c12d27ea6333d951720e5ebe5bec">&#9670;&#160;</a></span>min()</h2>
+<a id="a6e367e4a66c6c00b9c73e8decc6fd527" name="a6e367e4a66c6c00b9c73e8decc6fd527"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e367e4a66c6c00b9c73e8decc6fd527">&#9670;&#160;</a></span>min()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="namespacetr.html#a0a06575d52c3090c44755b9a8174f146">duration</a> tr::graphics_benchmark::min </td>
@@ -312,16 +355,24 @@ Public Member Functions</h2></td></tr>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Duration of the shortest available measurement. </dd></dl>
 
 </div>
 </div>
-<a id="a6c241de649b53e12fe2c17dcc157c167" name="a6c241de649b53e12fe2c17dcc157c167"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6c241de649b53e12fe2c17dcc157c167">&#9670;&#160;</a></span>max()</h2>
+<a id="a3ea086b36f3f9aaf82925eb850796bdd" name="a3ea086b36f3f9aaf82925eb850796bdd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3ea086b36f3f9aaf82925eb850796bdd">&#9670;&#160;</a></span>max()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="namespacetr.html#a0a06575d52c3090c44755b9a8174f146">duration</a> tr::graphics_benchmark::max </td>
@@ -330,16 +381,24 @@ Public Member Functions</h2></td></tr>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Duration of the longest available measurement. </dd></dl>
 
 </div>
 </div>
-<a id="a5e24a3c751b000faea681e6ff5f99bbc" name="a5e24a3c751b000faea681e6ff5f99bbc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5e24a3c751b000faea681e6ff5f99bbc">&#9670;&#160;</a></span>avg()</h2>
+<a id="aadc965dac94434c8c61ea15e25b765a8" name="aadc965dac94434c8c61ea15e25b765a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aadc965dac94434c8c61ea15e25b765a8">&#9670;&#160;</a></span>avg()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="namespacetr.html#a0a06575d52c3090c44755b9a8174f146">duration</a> tr::graphics_benchmark::avg </td>
@@ -348,16 +407,24 @@ Public Member Functions</h2></td></tr>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Average duration of the available measurements. </dd></dl>
 
 </div>
 </div>
-<a id="a401af95bc370941bba31c9e2e5c57544" name="a401af95bc370941bba31c9e2e5c57544"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a401af95bc370941bba31c9e2e5c57544">&#9670;&#160;</a></span>measurements()</h2>
+<a id="a341a0daee7e49a9b0e378a7a7a61a08c" name="a341a0daee7e49a9b0e378a7a7a61a08c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a341a0daee7e49a9b0e378a7a7a61a08c">&#9670;&#160;</a></span>measurements()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">const std::deque&lt; <a class="el" href="namespacetr.html#a0a06575d52c3090c44755b9a8174f146">duration</a> &gt; &amp; tr::graphics_benchmark::measurements </td>
@@ -366,6 +433,11 @@ Public Member Functions</h2></td></tr>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Reference to the queue of available measurements. </dd></dl>
 

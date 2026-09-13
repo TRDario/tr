@@ -18,5 +18,6 @@ var event_8hpp =
     [ "tr::quit_event", "structtr_1_1quit__event.html", null ],
     [ "tr::event", "classtr_1_1event.html", "classtr_1_1event" ],
     [ "tr::event_type", "concepttr_1_1event__type.html", null ],
-    [ "tr::event_visitor", "concepttr_1_1event__visitor.html", null ]
+    [ "tr::event_visitor", "concepttr_1_1event__visitor.html", null ],
+    [ "tr::nothrow_event_visitor", "concepttr_1_1nothrow__event__visitor.html", null ]
 ];

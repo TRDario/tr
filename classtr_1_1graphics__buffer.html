@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1gra
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section note"><dt>Note</dt><dd><span class="tt"><a class="el" href="classtr_1_1graphics__buffer.html" title="Base class for buffers living on a graphics context.">tr::graphics_buffer</a></span> isn't intended to be directly instanced, it is merely documented because some buffers inherit methods from it.</dd></dl>
 <p>Every instance of <span class="tt"><a class="el" href="classtr_1_1graphics__buffer.html" title="Base class for buffers living on a graphics context.">tr::graphics_buffer</a></span> is associated with a graphics context and cannot outlive its parent context.</p>
-<p><span class="tt"><a class="el" href="classtr_1_1graphics__buffer.html" title="Base class for buffers living on a graphics context.">tr::graphics_buffer</a></span> instances are movable, but not copyable. A moved-from instance of <span class="tt"><a class="el" href="classtr_1_1graphics__buffer.html" title="Base class for buffers living on a graphics context.">tr::graphics_buffer</a></span> is left in a special 'invalid' state. Invalid <span class="tt"><a class="el" href="classtr_1_1graphics__buffer.html" title="Base class for buffers living on a graphics context.">tr::graphics_buffer</a></span> instances may not be interacted with besides moving a new value into them and checking for validity using <span class="tt"><a class="el" href="#a645762c5d78538a69025a259dce68834" title="Gets whether the buffer is in a valid state.">valid()</a></span>.</p>
+<p><span class="tt"><a class="el" href="classtr_1_1graphics__buffer.html" title="Base class for buffers living on a graphics context.">tr::graphics_buffer</a></span> instances are movable, but not copyable. A moved-from instance of <span class="tt"><a class="el" href="classtr_1_1graphics__buffer.html" title="Base class for buffers living on a graphics context.">tr::graphics_buffer</a></span> is left in a special 'invalid' state. Invalid <span class="tt"><a class="el" href="classtr_1_1graphics__buffer.html" title="Base class for buffers living on a graphics context.">tr::graphics_buffer</a></span> instances may not be interacted with besides moving a new value into them and checking for validity using <span class="tt"><a class="el" href="#ab3a7924563ab5b21ec88e5004dd17d6a" title="Gets whether the buffer is in a valid state.">valid()</a></span>.</p>
 <p><span class="tt"><a class="el" href="classtr_1_1graphics__buffer.html" title="Base class for buffers living on a graphics context.">tr::graphics_buffer</a></span> instances may be labeled and are formattable. Example format output: <span class="tt">"My buffer" (OpenGL ID: 5)</span>. </p>
 </div><div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Inheritance diagram for tr::graphics_buffer:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -143,45 +143,39 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1gra
   <img src="classtr_1_1graphics__buffer.png" usemap="#tr_3A_3Agraphics_5Fbuffer_map" alt=""/>
   <map id="tr_3A_3Agraphics_5Fbuffer_map" name="tr_3A_3Agraphics_5Fbuffer_map">
 <area href="classtr_1_1basic__dyn__vertex__buffer.html" title="Dynamic vertex buffer class." alt="tr::basic_dyn_vertex_buffer" shape="rect" coords="0,56,258,80"/>
-<area href="classtr_1_1basic__shader__buffer.html" title="GPU buffer accessable to a shader." alt="tr::basic_shader_buffer" shape="rect" coords="536,56,794,80"/>
-<area href="classtr_1_1basic__static__vertex__buffer.html" title="Static vertex buffer class for holding immutable vertex data." alt="tr::basic_static_vertex_buffer" shape="rect" coords="1072,56,1330,80"/>
-<area href="classtr_1_1basic__uniform__buffer.html" title="Basic shader uniform buffer." alt="tr::basic_uniform_buffer" shape="rect" coords="1608,56,1866,80"/>
-<area href="classtr_1_1dyn__index__buffer.html" title="Dynamic index buffer class." alt="tr::dyn_index_buffer" shape="rect" coords="1876,56,2134,80"/>
-<area href="classtr_1_1static__index__buffer.html" title="Static index buffer class for holding immutable index data." alt="tr::static_index_buffer" shape="rect" coords="2144,56,2402,80"/>
-<area href="classtr_1_1dyn__vertex__buffer.html" alt="tr::dyn_vertex_buffer&lt; glm::vec2 &gt;" shape="rect" coords="268,112,526,136"/>
-<area href="classtr_1_1dyn__vertex__buffer.html" alt="tr::dyn_vertex_buffer&lt; tr::rgba8 &gt;" shape="rect" coords="268,168,526,192"/>
-<area href="classtr_1_1dyn__vertex__buffer.html" alt="tr::dyn_vertex_buffer&lt; circle &gt;" shape="rect" coords="268,224,526,248"/>
-<area href="classtr_1_1dyn__vertex__buffer.html" alt="tr::dyn_vertex_buffer&lt; glyph &gt;" shape="rect" coords="268,280,526,304"/>
-<area href="classtr_1_1dyn__vertex__buffer.html" title="Typed dynamic vertex buffer class." alt="tr::dyn_vertex_buffer&lt; Element &gt;" shape="rect" coords="268,336,526,360"/>
-<area href="classtr_1_1shader__array.html" title="Specialized shader buffer with no header before the array." alt="tr::shader_array&lt; Element &gt;" shape="rect" coords="804,112,1062,136"/>
-<area href="classtr_1_1shader__buffer.html" title="Shader buffer with a typed header and array." alt="tr::shader_buffer&lt; Header, ArrayElement &gt;" shape="rect" coords="804,168,1062,192"/>
-<area href="classtr_1_1static__vertex__buffer.html" alt="tr::static_vertex_buffer&lt; glm::u8vec2 &gt;" shape="rect" coords="1340,112,1598,136"/>
-<area href="classtr_1_1static__vertex__buffer.html" alt="tr::static_vertex_buffer&lt; glm::vec2 &gt;" shape="rect" coords="1340,168,1598,192"/>
-<area href="classtr_1_1static__vertex__buffer.html" title="Typed static vertex buffer class for holding immutable vertex data of a single type." alt="tr::static_vertex_buffer&lt; Element &gt;" shape="rect" coords="1340,224,1598,248"/>
-<area href="classtr_1_1uniform__buffer.html" title="Typed shader uniform buffer." alt="tr::uniform_buffer&lt; Object &gt;" shape="rect" coords="1608,112,1866,136"/>
+<area href="classtr_1_1basic__shader__buffer.html" title="GPU buffer accessable to a shader." alt="tr::basic_shader_buffer" shape="rect" coords="402,56,660,80"/>
+<area href="classtr_1_1basic__static__vertex__buffer.html" title="Static vertex buffer class for holding immutable vertex data." alt="tr::basic_static_vertex_buffer" shape="rect" coords="804,56,1062,80"/>
+<area href="classtr_1_1basic__uniform__buffer.html" title="Basic shader uniform buffer." alt="tr::basic_uniform_buffer" shape="rect" coords="1072,56,1330,80"/>
+<area href="classtr_1_1dyn__index__buffer.html" title="Dynamic index buffer class." alt="tr::dyn_index_buffer" shape="rect" coords="1340,56,1598,80"/>
+<area href="classtr_1_1static__index__buffer.html" title="Static index buffer class for holding immutable index data." alt="tr::static_index_buffer" shape="rect" coords="1608,56,1866,80"/>
+<area href="classtr_1_1dyn__vertex__buffer.html" title="Typed dynamic vertex buffer class." alt="tr::dyn_vertex_buffer&lt; Element &gt;" shape="rect" coords="0,112,258,136"/>
+<area href="classtr_1_1shader__array.html" title="Specialized shader buffer with no header before the array." alt="tr::shader_array&lt; Element &gt;" shape="rect" coords="268,112,526,136"/>
+<area href="classtr_1_1shader__buffer.html" title="Shader buffer with a typed header and array." alt="tr::shader_buffer&lt; Header, ArrayElement &gt;" shape="rect" coords="536,112,794,136"/>
+<area href="classtr_1_1static__vertex__buffer.html" title="Typed static vertex buffer class for holding immutable vertex data of a single type." alt="tr::static_vertex_buffer&lt; Element &gt;" shape="rect" coords="804,112,1062,136"/>
+<area href="classtr_1_1uniform__buffer.html" title="Typed shader uniform buffer." alt="tr::uniform_buffer&lt; Object &gt;" shape="rect" coords="1072,112,1330,136"/>
   </map>
 </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
-<tr class="memitem:a06d9e2187dbc1834b2a6bbea8a44d0bc" id="r_a06d9e2187dbc1834b2a6bbea8a44d0bc"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a06d9e2187dbc1834b2a6bbea8a44d0bc">graphics_buffer</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context)</td></tr>
-<tr class="memdesc:a06d9e2187dbc1834b2a6bbea8a44d0bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an empty buffer.  <br /></td></tr>
+<tr class="memitem:a8d312e4b4a5a4fc7225fe88162bdd722" id="r_a8d312e4b4a5a4fc7225fe88162bdd722"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a8d312e4b4a5a4fc7225fe88162bdd722">graphics_buffer</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context) noexcept</td></tr>
+<tr class="memdesc:a8d312e4b4a5a4fc7225fe88162bdd722"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an empty buffer.  <br /></td></tr>
 <tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Context</div></td></tr>
-<tr class="memitem:aa7323654826d026acc2bc31bed2ed286" id="r_aa7323654826d026acc2bc31bed2ed286"><td class="memItemLeft"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#aa7323654826d026acc2bc31bed2ed286">context</a> () const</td></tr>
-<tr class="memdesc:aa7323654826d026acc2bc31bed2ed286"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a reference to the graphics context the buffer is on.  <br /></td></tr>
+<tr class="memitem:a2c5c352444ab4d10ed3add4a8cd03f9a" id="r_a2c5c352444ab4d10ed3add4a8cd03f9a"><td class="memItemLeft"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a2c5c352444ab4d10ed3add4a8cd03f9a">context</a> () const noexcept</td></tr>
+<tr class="memdesc:a2c5c352444ab4d10ed3add4a8cd03f9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a reference to the graphics context the buffer is on.  <br /></td></tr>
 <tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">State</div></td></tr>
-<tr class="memitem:a645762c5d78538a69025a259dce68834" id="r_a645762c5d78538a69025a259dce68834"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a645762c5d78538a69025a259dce68834">valid</a> () const</td></tr>
-<tr class="memdesc:a645762c5d78538a69025a259dce68834"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the buffer is in a valid state.  <br /></td></tr>
+<tr class="memitem:ab3a7924563ab5b21ec88e5004dd17d6a" id="r_ab3a7924563ab5b21ec88e5004dd17d6a"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#ab3a7924563ab5b21ec88e5004dd17d6a">valid</a> () const noexcept</td></tr>
+<tr class="memdesc:ab3a7924563ab5b21ec88e5004dd17d6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the buffer is in a valid state.  <br /></td></tr>
 <tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Label</div></td></tr>
 <tr class="memitem:ada4364c0295af892b869f2be3ed62777" id="r_ada4364c0295af892b869f2be3ed62777"><td class="memItemLeft">std::string&#160;</td><td class="memItemRight"><a class="el" href="#ada4364c0295af892b869f2be3ed62777">label</a> () const</td></tr>
 <tr class="memdesc:ada4364c0295af892b869f2be3ed62777"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the label of the buffer.  <br /></td></tr>
-<tr class="memitem:a791c5d26a17cce2fe3850cb8e1ba5697" id="r_a791c5d26a17cce2fe3850cb8e1ba5697"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a791c5d26a17cce2fe3850cb8e1ba5697">set_label</a> (std::string_view label)</td></tr>
-<tr class="memdesc:a791c5d26a17cce2fe3850cb8e1ba5697"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the label of the buffer.  <br /></td></tr>
+<tr class="memitem:ab5e025d8fb771727e580f881a1e65fac" id="r_ab5e025d8fb771727e580f881a1e65fac"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ab5e025d8fb771727e580f881a1e65fac">set_label</a> (std::string_view label) noexcept</td></tr>
+<tr class="memdesc:ab5e025d8fb771727e580f881a1e65fac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the label of the buffer.  <br /></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a06d9e2187dbc1834b2a6bbea8a44d0bc" name="a06d9e2187dbc1834b2a6bbea8a44d0bc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a06d9e2187dbc1834b2a6bbea8a44d0bc">&#9670;&#160;</a></span>graphics_buffer()</h2>
+<a id="a8d312e4b4a5a4fc7225fe88162bdd722" name="a8d312e4b4a5a4fc7225fe88162bdd722"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d312e4b4a5a4fc7225fe88162bdd722">&#9670;&#160;</a></span>graphics_buffer()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -198,7 +192,7 @@ Public Member Functions</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel explicit">explicit</span></span>  </td>
+<span class="mlabels"><span class="mlabel explicit">explicit</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -212,11 +206,14 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="aa7323654826d026acc2bc31bed2ed286" name="aa7323654826d026acc2bc31bed2ed286"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa7323654826d026acc2bc31bed2ed286">&#9670;&#160;</a></span>context()</h2>
+<a id="a2c5c352444ab4d10ed3add4a8cd03f9a" name="a2c5c352444ab4d10ed3add4a8cd03f9a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c5c352444ab4d10ed3add4a8cd03f9a">&#9670;&#160;</a></span>context()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp; tr::graphics_buffer::context </td>
@@ -225,16 +222,24 @@ Public Member Functions</h2></td></tr>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Reference to the graphics context the buffer is on. </dd></dl>
 
 </div>
 </div>
-<a id="a645762c5d78538a69025a259dce68834" name="a645762c5d78538a69025a259dce68834"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a645762c5d78538a69025a259dce68834">&#9670;&#160;</a></span>valid()</h2>
+<a id="ab3a7924563ab5b21ec88e5004dd17d6a" name="ab3a7924563ab5b21ec88e5004dd17d6a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3a7924563ab5b21ec88e5004dd17d6a">&#9670;&#160;</a></span>valid()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">bool tr::graphics_buffer::valid </td>
@@ -243,6 +248,11 @@ Public Member Functions</h2></td></tr>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the buffer is in a valid state, <span class="tt">false</span> if it is in an invalid state. </dd></dl>
 
@@ -253,6 +263,9 @@ Public Member Functions</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">std::string tr::graphics_buffer::label </td>
@@ -261,16 +274,24 @@ Public Member Functions</h2></td></tr>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Label of the buffer, or "&lt;unnamed&gt;". </dd></dl>
 
 </div>
 </div>
-<a id="a791c5d26a17cce2fe3850cb8e1ba5697" name="a791c5d26a17cce2fe3850cb8e1ba5697"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a791c5d26a17cce2fe3850cb8e1ba5697">&#9670;&#160;</a></span>set_label()</h2>
+<a id="ab5e025d8fb771727e580f881a1e65fac" name="ab5e025d8fb771727e580f881a1e65fac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab5e025d8fb771727e580f881a1e65fac">&#9670;&#160;</a></span>set_label()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void tr::graphics_buffer::set_label </td>
@@ -279,6 +300,11 @@ Public Member Functions</h2></td></tr>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">

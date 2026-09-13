@@ -128,260 +128,186 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1log
 </div><!--header-->
 <div class="contents">
 
-<p>Flexible logger class.  
+<p>Logging subsystem singleton.  
 </p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
-<tr class="memitem:a33757803b13d8b3ec50435632e8d9181" id="r_a33757803b13d8b3ec50435632e8d9181"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a33757803b13d8b3ec50435632e8d9181">logger</a> ()</td></tr>
-<tr class="memdesc:a33757803b13d8b3ec50435632e8d9181"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an empty logger.  <br /></td></tr>
-<tr class="memitem:ada0f7ecbd77efbf5e86ac217216820b3" id="r_ada0f7ecbd77efbf5e86ac217216820b3"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ada0f7ecbd77efbf5e86ac217216820b3">logger</a> (std::unique_ptr&lt; <a class="el" href="classtr_1_1logger__backend.html">logger_backend</a> &gt; &amp;&amp;backend)</td></tr>
-<tr class="memdesc:ada0f7ecbd77efbf5e86ac217216820b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a logger with a backend.  <br /></td></tr>
-<tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Status</div></td></tr>
-<tr class="memitem:a97567aaf6516393a8f94e26353bc5c36" id="r_a97567aaf6516393a8f94e26353bc5c36"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a97567aaf6516393a8f94e26353bc5c36">active</a> () const</td></tr>
-<tr class="memdesc:a97567aaf6516393a8f94e26353bc5c36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the logger is active.  <br /></td></tr>
-<tr class="memitem:a4defb3dfbb49713cea1b44dfecd87db0" id="r_a4defb3dfbb49713cea1b44dfecd87db0"><td class="memItemLeft">const <a class="el" href="classtr_1_1logger__backend.html">logger_backend</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a4defb3dfbb49713cea1b44dfecd87db0">backend</a> () const</td></tr>
-<tr class="memdesc:a4defb3dfbb49713cea1b44dfecd87db0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the backend of the logger.  <br /></td></tr>
-<tr class="memitem:a8925f5cb9356babb1532b971129cc92c" id="r_a8925f5cb9356babb1532b971129cc92c"><td class="memItemLeft"><a class="el" href="classtr_1_1logger__backend.html">logger_backend</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a8925f5cb9356babb1532b971129cc92c">backend</a> ()</td></tr>
-<tr class="memdesc:a8925f5cb9356babb1532b971129cc92c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the backend of the logger.  <br /></td></tr>
-<tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Backend manipulation</div></td></tr>
-<tr class="memitem:aba26e36d78d58a3b06db33d5988ba580" id="r_aba26e36d78d58a3b06db33d5988ba580"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aba26e36d78d58a3b06db33d5988ba580">clear_backend</a> ()</td></tr>
-<tr class="memdesc:aba26e36d78d58a3b06db33d5988ba580"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the logger's backend.  <br /></td></tr>
-<tr class="memitem:a8de1fa1958a332ea178c19639086204f" id="r_a8de1fa1958a332ea178c19639086204f"><td class="memTemplParams" colspan="2">template&lt;std::derived_from&lt; <a class="el" href="classtr_1_1logger__backend.html">logger_backend</a> &gt; Backend, typename... Args&gt; <br />
-requires (std::constructible_from&lt;Backend, Args...&gt;)</td></tr>
-<tr class="memitem:a8de1fa1958a332ea178c19639086204f template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a8de1fa1958a332ea178c19639086204f">replace_backend_with</a> (Args &amp;&amp;... args)</td></tr>
-<tr class="memdesc:a8de1fa1958a332ea178c19639086204f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replaces the logger's backend.  <br /></td></tr>
-<tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Logging</div></td></tr>
-<tr class="memitem:a13a947c98d7e2405a77e3e07a399ae0b" id="r_a13a947c98d7e2405a77e3e07a399ae0b"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a13a947c98d7e2405a77e3e07a399ae0b">log</a> (severity<a class="el" href="namespacetr.html#a6e51135988c652c3017a878f9025667c">severity</a> severity<a class="el" href="namespacetr.html#a6e51135988c652c3017a878f9025667c">severity</a>, std::string_view string)</td></tr>
-<tr class="memdesc:a13a947c98d7e2405a77e3e07a399ae0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs a message.  <br /></td></tr>
-<tr class="memitem:acfc9209431bdc4ec8239802d2f5a2071" id="r_acfc9209431bdc4ec8239802d2f5a2071"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#acfc9209431bdc4ec8239802d2f5a2071">log</a> (severity<a class="el" href="namespacetr.html#a6e51135988c652c3017a878f9025667c">severity</a> severity<a class="el" href="namespacetr.html#a6e51135988c652c3017a878f9025667c">severity</a>, const std::exception &amp;error)</td></tr>
-<tr class="memdesc:acfc9209431bdc4ec8239802d2f5a2071"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs an exception.  <br /></td></tr>
-<tr class="memitem:aad9813949898dd8ceed3994b60134a80" id="r_aad9813949898dd8ceed3994b60134a80"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
-<tr class="memitem:aad9813949898dd8ceed3994b60134a80 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aad9813949898dd8ceed3994b60134a80">log</a> (severity<a class="el" href="namespacetr.html#a6e51135988c652c3017a878f9025667c">severity</a> severity<a class="el" href="namespacetr.html#a6e51135988c652c3017a878f9025667c">severity</a>, std::format_string&lt; Args... &gt; fmt, Args &amp;&amp;... args)</td></tr>
-<tr class="memdesc:aad9813949898dd8ceed3994b60134a80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs a message.  <br /></td></tr>
-<tr class="memitem:ae6366af13c40f3ec5264c16c79bd673c" id="r_ae6366af13c40f3ec5264c16c79bd673c"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ae6366af13c40f3ec5264c16c79bd673c">log_continue</a> (std::string_view string)</td></tr>
-<tr class="memdesc:ae6366af13c40f3ec5264c16c79bd673c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs a message continuing from a previous line.  <br /></td></tr>
-<tr class="memitem:aee35282ee541eb99d98d1d828b10073d" id="r_aee35282ee541eb99d98d1d828b10073d"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aee35282ee541eb99d98d1d828b10073d">log_continue</a> (const std::exception &amp;error)</td></tr>
-<tr class="memdesc:aee35282ee541eb99d98d1d828b10073d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs an exception continuing from a previous line.  <br /></td></tr>
-<tr class="memitem:a71ef76c5d1378ab6c30638bec2da963c" id="r_a71ef76c5d1378ab6c30638bec2da963c"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
-<tr class="memitem:a71ef76c5d1378ab6c30638bec2da963c template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a71ef76c5d1378ab6c30638bec2da963c">log_continue</a> (std::format_string&lt; Args... &gt; fmt, Args &amp;&amp;... args)</td></tr>
-<tr class="memdesc:a71ef76c5d1378ab6c30638bec2da963c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs a message continuing from a previous line.  <br /></td></tr>
+<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Level</div></td></tr>
+<tr class="memitem:a99f79687566eb18ddbcd72c6cb3ae8b8" id="r_a99f79687566eb18ddbcd72c6cb3ae8b8"><td class="memItemLeft"><a class="el" href="namespacetr.html#af80aef48811e46f90a915d32219add20">log_level</a>&#160;</td><td class="memItemRight"><a class="el" href="#a99f79687566eb18ddbcd72c6cb3ae8b8">min_level</a> () const noexcept</td></tr>
+<tr class="memdesc:a99f79687566eb18ddbcd72c6cb3ae8b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the minimum handled log level.  <br /></td></tr>
+<tr class="memitem:a957e36fbfbbe261ee218e44fc5328018" id="r_a957e36fbfbbe261ee218e44fc5328018"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a957e36fbfbbe261ee218e44fc5328018">set_min_level</a> (<a class="el" href="namespacetr.html#af80aef48811e46f90a915d32219add20">log_level</a> level) noexcept</td></tr>
+<tr class="memdesc:a957e36fbfbbe261ee218e44fc5328018"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the minimum handled log level.  <br /></td></tr>
+<tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Sinks</div></td></tr>
+<tr class="memitem:a4350e0dc4e4855296492d30b311a3773" id="r_a4350e0dc4e4855296492d30b311a3773"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a4350e0dc4e4855296492d30b311a3773">register_sink</a> (std::shared_ptr&lt; <a class="el" href="classtr_1_1log__sink.html">log_sink</a> &gt; sink)</td></tr>
+<tr class="memdesc:a4350e0dc4e4855296492d30b311a3773"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers a sink to the logger.  <br /></td></tr>
+<tr class="memitem:a5d33b984babe491aea2ec6822c1497de" id="r_a5d33b984babe491aea2ec6822c1497de"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a5d33b984babe491aea2ec6822c1497de">clear_sinks</a> () noexcept</td></tr>
+<tr class="memdesc:a5d33b984babe491aea2ec6822c1497de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears all sinks from the logger.  <br /></td></tr>
+<tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Logging</div></td></tr>
+<tr class="memitem:a74b5c74aa8005e241856aa848fb960ec" id="r_a74b5c74aa8005e241856aa848fb960ec"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
+<tr class="memitem:a74b5c74aa8005e241856aa848fb960ec template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a74b5c74aa8005e241856aa848fb960ec">log</a> (<a class="el" href="namespacetr.html#af80aef48811e46f90a915d32219add20">log_level</a> level, std::string_view source, std::format_string&lt; Args... &gt; fmt, Args &amp;&amp;... args)</td></tr>
+<tr class="memdesc:a74b5c74aa8005e241856aa848fb960ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs a message to the logger.  <br /></td></tr>
+<tr class="memitem:ac17cb66fa524807b931a9b0dc0038710" id="r_ac17cb66fa524807b931a9b0dc0038710"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ac17cb66fa524807b931a9b0dc0038710">flush</a> ()</td></tr>
+<tr class="memdesc:ac17cb66fa524807b931a9b0dc0038710"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flushes all pending log messages to the registered sinks and flushes the sinks afterwards.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr id="pub-static-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Instance</div></td></tr>
+<tr class="memitem:aa7bb301f9a3e03d8ff9bc8b4a6623e70" id="r_aa7bb301f9a3e03d8ff9bc8b4a6623e70"><td class="memItemLeft">static logger &amp;&#160;</td><td class="memItemRight"><a class="el" href="#aa7bb301f9a3e03d8ff9bc8b4a6623e70">instance</a> ()</td></tr>
+<tr class="memdesc:aa7bb301f9a3e03d8ff9bc8b4a6623e70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a reference to the logger instance.  <br /></td></tr>
 </table>
-<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a33757803b13d8b3ec50435632e8d9181" name="a33757803b13d8b3ec50435632e8d9181"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a33757803b13d8b3ec50435632e8d9181">&#9670;&#160;</a></span>logger() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">tr::logger::logger </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ada0f7ecbd77efbf5e86ac217216820b3" name="ada0f7ecbd77efbf5e86ac217216820b3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ada0f7ecbd77efbf5e86ac217216820b3">&#9670;&#160;</a></span>logger() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">tr::logger::logger </td>
-          <td>(</td>
-          <td class="paramtype">std::unique_ptr&lt; <a class="el" href="classtr_1_1logger__backend.html">logger_backend</a> &gt; &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>backend</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">backend</td><td>Logger backend to forward messages to. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="a97567aaf6516393a8f94e26353bc5c36" name="a97567aaf6516393a8f94e26353bc5c36"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a97567aaf6516393a8f94e26353bc5c36">&#9670;&#160;</a></span>active()</h2>
+<a id="aa7bb301f9a3e03d8ff9bc8b4a6623e70" name="aa7bb301f9a3e03d8ff9bc8b4a6623e70"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa7bb301f9a3e03d8ff9bc8b4a6623e70">&#9670;&#160;</a></span>instance()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool tr::logger::active </td>
+          <td class="memname">logger &amp; tr::logger::instance </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>Reference to the logger instance. </dd></dl>
+
+</div>
+</div>
+<a id="a99f79687566eb18ddbcd72c6cb3ae8b8" name="a99f79687566eb18ddbcd72c6cb3ae8b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a99f79687566eb18ddbcd72c6cb3ae8b8">&#9670;&#160;</a></span>min_level()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacetr.html#af80aef48811e46f90a915d32219add20">log_level</a> tr::logger::min_level </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the logger contains a backend, <span class="tt">false</span> otherwise. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Minimum handled log level. </dd></dl>
 
 </div>
 </div>
-<a id="a4defb3dfbb49713cea1b44dfecd87db0" name="a4defb3dfbb49713cea1b44dfecd87db0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4defb3dfbb49713cea1b44dfecd87db0">&#9670;&#160;</a></span>backend() <span class="overload">[1/2]</span></h2>
+<a id="a957e36fbfbbe261ee218e44fc5328018" name="a957e36fbfbbe261ee218e44fc5328018"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a957e36fbfbbe261ee218e44fc5328018">&#9670;&#160;</a></span>set_min_level()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="classtr_1_1logger__backend.html">logger_backend</a> &amp; tr::logger::backend </td>
+          <td class="memname">void tr::logger::set_min_level </td>
           <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>Reference to the backend of the logger. </dd></dl>
-
-</div>
-</div>
-<a id="a8925f5cb9356babb1532b971129cc92c" name="a8925f5cb9356babb1532b971129cc92c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8925f5cb9356babb1532b971129cc92c">&#9670;&#160;</a></span>backend() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classtr_1_1logger__backend.html">logger_backend</a> &amp; tr::logger::backend </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="namespacetr.html#af80aef48811e46f90a915d32219add20">log_level</a></td>          <td class="paramname"><span class="paramname"><em>level</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>Reference to the backend of the logger. </dd></dl>
-
-</div>
-</div>
-<a id="aba26e36d78d58a3b06db33d5988ba580" name="aba26e36d78d58a3b06db33d5988ba580"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aba26e36d78d58a3b06db33d5988ba580">&#9670;&#160;</a></span>clear_backend()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void tr::logger::clear_backend </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a8de1fa1958a332ea178c19639086204f" name="a8de1fa1958a332ea178c19639086204f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8de1fa1958a332ea178c19639086204f">&#9670;&#160;</a></span>replace_backend_with()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;std::derived_from&lt; <a class="el" href="classtr_1_1logger__backend.html">logger_backend</a> &gt; Backend, typename... Args&gt; <br />
-requires (std::constructible_from&lt;Backend, Args...&gt;)</div>
-      <table class="memname">
-        <tr>
-          <td class="memname">void tr::logger::replace_backend_with </td>
-          <td>(</td>
-          <td class="paramtype">Args &amp;&amp;...</td>          <td class="paramname"><span class="paramname"><em>args</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">Backend</td><td>Backend to emplace into the logger. </td></tr>
-    <tr><td class="paramname">Args</td><td>Types of the arguments to the backend's constructor. </td></tr>
-  </table>
-  </dd>
-</dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">args</td><td>Arguments to the backend's constructor. </td></tr>
+    <tr><td class="paramname">level</td><td>Minimum handled log level. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a13a947c98d7e2405a77e3e07a399ae0b" name="a13a947c98d7e2405a77e3e07a399ae0b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a13a947c98d7e2405a77e3e07a399ae0b">&#9670;&#160;</a></span>log() <span class="overload">[1/3]</span></h2>
+<a id="a4350e0dc4e4855296492d30b311a3773" name="a4350e0dc4e4855296492d30b311a3773"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4350e0dc4e4855296492d30b311a3773">&#9670;&#160;</a></span>register_sink()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::logger::log </td>
+          <td class="memname">void tr::logger::register_sink </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="namespacetr.html#a6e51135988c652c3017a878f9025667c">severity</a></td>          <td class="paramname"><span class="paramname"><em>severity</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classtr_1_1log__sink.html">log_sink</a> &gt;</td>          <td class="paramname"><span class="paramname"><em>sink</em></span></td><td>)</td>
           <td></td>
-          <td class="paramtype">std::string_view</td>          <td class="paramname"><span class="paramname"><em>string</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">severity</td><td>Severity of the message. </td></tr>
-    <tr><td class="paramname">string</td><td>String of the message. </td></tr>
+    <tr><td class="paramname">sink</td><td>Shared pointer to the sink to register. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="acfc9209431bdc4ec8239802d2f5a2071" name="acfc9209431bdc4ec8239802d2f5a2071"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acfc9209431bdc4ec8239802d2f5a2071">&#9670;&#160;</a></span>log() <span class="overload">[2/3]</span></h2>
+<a id="a5d33b984babe491aea2ec6822c1497de" name="a5d33b984babe491aea2ec6822c1497de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5d33b984babe491aea2ec6822c1497de">&#9670;&#160;</a></span>clear_sinks()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::logger::log </td>
+          <td class="memname">void tr::logger::clear_sinks </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="namespacetr.html#a6e51135988c652c3017a878f9025667c">severity</a></td>          <td class="paramname"><span class="paramname"><em>severity</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
-          <td class="paramtype">const std::exception &amp;</td>          <td class="paramname"><span class="paramname"><em>error</em></span>&#160;)</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">severity</td><td>Severity of the message. </td></tr>
-    <tr><td class="paramname">error</td><td>Exception to extract a message from. </td></tr>
-  </table>
-  </dd>
-</dl>
 
 </div>
 </div>
-<a id="aad9813949898dd8ceed3994b60134a80" name="aad9813949898dd8ceed3994b60134a80"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aad9813949898dd8ceed3994b60134a80">&#9670;&#160;</a></span>log() <span class="overload">[3/3]</span></h2>
+<a id="a74b5c74aa8005e241856aa848fb960ec" name="a74b5c74aa8005e241856aa848fb960ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a74b5c74aa8005e241856aa848fb960ec">&#9670;&#160;</a></span>log()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;typename... Args&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void tr::logger::log </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="namespacetr.html#a6e51135988c652c3017a878f9025667c">severity</a></td>          <td class="paramname"><span class="paramname"><em>severity</em></span>, </td>
+          <td class="paramtype"><a class="el" href="namespacetr.html#af80aef48811e46f90a915d32219add20">log_level</a></td>          <td class="paramname"><span class="paramname"><em>level</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string_view</td>          <td class="paramname"><span class="paramname"><em>source</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -394,7 +320,13 @@ template&lt;typename... Args&gt; </div>
           <td class="paramtype">Args &amp;&amp;...</td>          <td class="paramname"><span class="paramname"><em>args</em></span>&#160;)</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
+<dl class="section note"><dt>Note</dt><dd>The logger has a fixed-size queue of messages it can handle. If the queue is full, the message is silently dropped. </dd></dl>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Args</td><td>Formatting argument types. </td></tr>
@@ -403,7 +335,8 @@ template&lt;typename... Args&gt; </div>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">severity</td><td>Severity of the message. </td></tr>
+    <tr><td class="paramname">level</td><td>Log level of the message. </td></tr>
+    <tr><td class="paramname">source</td><td>Message source identifier. </td></tr>
     <tr><td class="paramname">fmt</td><td>Format string. </td></tr>
     <tr><td class="paramname">args</td><td>Formatting arguments. </td></tr>
   </table>
@@ -412,85 +345,20 @@ template&lt;typename... Args&gt; </div>
 
 </div>
 </div>
-<a id="ae6366af13c40f3ec5264c16c79bd673c" name="ae6366af13c40f3ec5264c16c79bd673c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae6366af13c40f3ec5264c16c79bd673c">&#9670;&#160;</a></span>log_continue() <span class="overload">[1/3]</span></h2>
+<a id="ac17cb66fa524807b931a9b0dc0038710" name="ac17cb66fa524807b931a9b0dc0038710"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac17cb66fa524807b931a9b0dc0038710">&#9670;&#160;</a></span>flush()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::logger::log_continue </td>
+          <td class="memname">void tr::logger::flush </td>
           <td>(</td>
-          <td class="paramtype">std::string_view</td>          <td class="paramname"><span class="paramname"><em>string</em></span></td><td>)</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">string</td><td>String of the message continuation. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="aee35282ee541eb99d98d1d828b10073d" name="aee35282ee541eb99d98d1d828b10073d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aee35282ee541eb99d98d1d828b10073d">&#9670;&#160;</a></span>log_continue() <span class="overload">[2/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void tr::logger::log_continue </td>
-          <td>(</td>
-          <td class="paramtype">const std::exception &amp;</td>          <td class="paramname"><span class="paramname"><em>error</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">error</td><td>Exception to extract a message continuation from. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a71ef76c5d1378ab6c30638bec2da963c" name="a71ef76c5d1378ab6c30638bec2da963c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a71ef76c5d1378ab6c30638bec2da963c">&#9670;&#160;</a></span>log_continue() <span class="overload">[3/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename... Args&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">void tr::logger::log_continue </td>
-          <td>(</td>
-          <td class="paramtype">std::format_string&lt; Args... &gt;</td>          <td class="paramname"><span class="paramname"><em>fmt</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">Args &amp;&amp;...</td>          <td class="paramname"><span class="paramname"><em>args</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">Args</td><td>Formatting argument types. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">fmt</td><td>Format string. </td></tr>
-    <tr><td class="paramname">args</td><td>Formatting arguments. </td></tr>
-  </table>
-  </dd>
-</dl>
 
 </div>
 </div>

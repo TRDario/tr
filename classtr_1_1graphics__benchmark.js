@@ -1,14 +1,14 @@
 var classtr_1_1graphics__benchmark =
 [
-    [ "graphics_benchmark", "classtr_1_1graphics__benchmark.html#a0ab512b5898b662519aef4a7240c722d", null ],
-    [ "context", "classtr_1_1graphics__benchmark.html#a79c8446adac230eb4b208c4da9b66b53", null ],
-    [ "start", "classtr_1_1graphics__benchmark.html#aef2a7f12eae76d088c9df9750bb4d3d4", null ],
-    [ "stop", "classtr_1_1graphics__benchmark.html#a5353be005c41f4de81461b43dc8b9c3a", null ],
+    [ "graphics_benchmark", "classtr_1_1graphics__benchmark.html#a78fe5c4e4b3195b9f946a2ecc277bb47", null ],
+    [ "context", "classtr_1_1graphics__benchmark.html#a011d91c0ae2899d52477552ce663846d", null ],
+    [ "start", "classtr_1_1graphics__benchmark.html#a8054c022fb76654b81c61b1267a088f2", null ],
+    [ "stop", "classtr_1_1graphics__benchmark.html#ac07f766e02ba1e41d1e4c4f8a40c3ad8", null ],
     [ "fetch", "classtr_1_1graphics__benchmark.html#a2be4d7673b23aa13ffb339e74c1ad11c", null ],
-    [ "clear", "classtr_1_1graphics__benchmark.html#aa7092ee2015474e2de1fd91cf2f7dca2", null ],
-    [ "latest", "classtr_1_1graphics__benchmark.html#ace0d7e1101a145c8374639290ee2820e", null ],
-    [ "min", "classtr_1_1graphics__benchmark.html#a7e55c12d27ea6333d951720e5ebe5bec", null ],
-    [ "max", "classtr_1_1graphics__benchmark.html#a6c241de649b53e12fe2c17dcc157c167", null ],
-    [ "avg", "classtr_1_1graphics__benchmark.html#a5e24a3c751b000faea681e6ff5f99bbc", null ],
-    [ "measurements", "classtr_1_1graphics__benchmark.html#a401af95bc370941bba31c9e2e5c57544", null ]
+    [ "clear", "classtr_1_1graphics__benchmark.html#abe82fc832fa3cb2bf6bf79c3ca670cfa", null ],
+    [ "latest", "classtr_1_1graphics__benchmark.html#af6ad05e39320afc2f7b001500504d41b", null ],
+    [ "min", "classtr_1_1graphics__benchmark.html#a6e367e4a66c6c00b9c73e8decc6fd527", null ],
+    [ "max", "classtr_1_1graphics__benchmark.html#a3ea086b36f3f9aaf82925eb850796bdd", null ],
+    [ "avg", "classtr_1_1graphics__benchmark.html#aadc965dac94434c8c61ea15e25b765a8", null ],
+    [ "measurements", "classtr_1_1graphics__benchmark.html#a341a0daee7e49a9b0e378a7a7a61a08c", null ]
 ];
