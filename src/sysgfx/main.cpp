@@ -4,11 +4,11 @@
 #define SDL_MAIN_USE_CALLBACKS 1
 #include "../../include/tr/sysgfx/main.hpp"
 #include "../../include/tr/sysgfx/dialog.hpp"
-#include "../../include/tr/utility/logger.hpp"
 #include "../../include/tr/utility/opt_ref.hpp"
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
 #include <SDL3_ttf/SDL_ttf.h>
+#include <tr/sysgfx/logger.hpp>
 #include <tr/utility/dynamic_ref_cast.hpp>
 #undef main
 
@@ -52,14 +52,13 @@ namespace tr
 					message.push_back('\n');
 					message.append(details);
 				}
-				error_logger.log(severity::fatal, *tr_exception);
 			}
 			else {
 				message = std::format("A fatal error has occurred ({}).", error.what());
-				error_logger.log(severity::fatal, error);
 			}
 			message.append("\nPress OK to exit the application.");
 
+			TR_LOG_FATAL("tr", "{}", error.what());
 			show_message_box(message_box_type::error, message_box_layout::ok, title, message);
 		}
 	} // namespace
@@ -130,10 +129,7 @@ extern "C"
 		}
 
 		if (!SDL_Init(SDL_INIT_VIDEO) || !TTF_Init()) {
-			if (tr::error_logger.active()) {
-				tr::error_logger.log(tr::severity::fatal, "Failed to initialize SDL3.");
-				tr::error_logger.log_continue(SDL_GetError());
-			}
+			std::println(stderr, "Failed to initialize SDL3: {}", SDL_GetError());
 
 			const std::string title{std::format("{} - Fatal Error", tr_main::metadata.name)};
 			const std::string message{

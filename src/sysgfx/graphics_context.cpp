@@ -8,6 +8,7 @@
 #include "../../include/tr/sysgfx/texture.hpp"
 #include "../../include/tr/sysgfx/window_view.hpp"
 #include <SDL3/SDL.h>
+#include <tr/sysgfx/logger.hpp>
 
 //
 
@@ -66,41 +67,22 @@ namespace tr
 			}
 		}
 
-		/// Gets a readable string for an OpenGL debug log severity.
+		/// Converts OpenGL debug severity to a tr log level.
 		/// @param value OpenGL debug severity.
-		/// @return String representation of the debug severity.
-		[[nodiscard]] std::string_view gl_severity(unsigned int value) noexcept
+		/// @return tr log level equivalent.
+		[[nodiscard]] log_level tr_log_level(unsigned int value) noexcept
 		{
 			switch (value) {
 			case GL_DEBUG_SEVERITY_NOTIFICATION:
-				return "Info";
+				return log_level::trace;
 			case GL_DEBUG_SEVERITY_LOW:
-				return "Low";
+				return log_level::info;
 			case GL_DEBUG_SEVERITY_MEDIUM:
-				return "Mid";
+				return log_level::warning;
 			case GL_DEBUG_SEVERITY_HIGH:
-				return "High";
+				return log_level::error;
 			default:
-				return "Unknown";
-			}
-		}
-
-		/// Converts OpenGL debug severity to tr severity.
-		/// @param value OpenGL debug severity.
-		/// @return tr severity equivalent.
-		[[nodiscard]] tr::severity tr_severity(unsigned int value) noexcept
-		{
-			switch (value) {
-			case GL_DEBUG_SEVERITY_NOTIFICATION:
-				return severity::info;
-			case GL_DEBUG_SEVERITY_LOW:
-				return severity::info;
-			case GL_DEBUG_SEVERITY_MEDIUM:
-				return severity::warning;
-			case GL_DEBUG_SEVERITY_HIGH:
-				return severity::error;
-			default:
-				return severity::info;
+				return log_level::info;
 			}
 		}
 
@@ -133,17 +115,12 @@ namespace tr
 		/// @param severity Message severity.
 		/// @param length Length of the debug message.
 		/// @param message Pointer to the debug message string.
-		/// @param user_param Pointer to the graphics context logger.
 		void gl_debug_cb(unsigned int source, unsigned int type, unsigned int, unsigned int severity, int length, const char* message,
-						 const void* user_param) noexcept
+						 const void*) noexcept
 		{
 			try {
-				logger& log{*const_cast<logger*>(static_cast<const logger*>(user_param))};
-
 				const std::string_view msg{message, static_cast<usize>(length)};
-				if (log.active()) {
-					log.log(tr_severity(severity), "[{}] | [{}] | [{}] | {}", gl_severity(severity), gl_type(type), gl_source(source), msg);
-				}
+				logger::instance().log(tr_log_level(severity), "gl", "[{}] | [{}] | {}", gl_type(type), gl_source(source), msg);
 			}
 			catch (...) {
 			}
@@ -179,12 +156,9 @@ tr::graphics_context::graphics_context(window_view window)
 	if (context_flags & GL_CONTEXT_FLAG_DEBUG_BIT) {
 		m_gl_api.enable(GL_DEBUG_OUTPUT);
 		m_gl_api.enable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
-		m_gl_api.set_debug_message_callback(gl_debug_cb, &logger);
+		m_gl_api.set_debug_message_callback(gl_debug_cb, nullptr);
 		m_gl_api.set_debug_message_control(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, NULL, GL_TRUE);
 		m_gl_api.set_debug_message_control(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_NOTIFICATION, 0, NULL, GL_FALSE);
-
-		static int logger_id{0};
-		logger.replace_backend_with<console_logger>(std::format("gfx-{}", logger_id++));
 	}
 }
 

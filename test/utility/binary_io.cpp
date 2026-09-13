@@ -4,7 +4,6 @@
 #include <gtest/gtest.h>
 #include <tr/utility/binary_io.hpp>
 #include <tr/utility/binary_io_specializations.hpp>
-#include <tr/utility/logger.hpp>
 #include <tr/utility/rng.hpp>
 
 //
@@ -41,7 +40,6 @@ TEST(binary_io_test, primitives)
 	CHECK_ROUNDTRIP(rng.generate<tr::u64>());
 	CHECK_ROUNDTRIP(rng.generate<float>());
 	CHECK_ROUNDTRIP(rng.generate<double>());
-	CHECK_ROUNDTRIP(tr::severity::error);
 	CHECK_ROUNDTRIP(rng.generate<glm::vec2>(100));
 	CHECK_ROUNDTRIP(TR_MACRO_COMMA_GUARD(glm::ortho(0.0f, 1000.0f, 1000.0f, 0.0f)));
 	CHECK_ROUNDTRIP(TR_MACRO_COMMA_GUARD(std::pair<int, float>(rng.generate<int>(), rng.generate<float>())));

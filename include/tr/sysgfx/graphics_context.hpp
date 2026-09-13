@@ -3,7 +3,6 @@
 
 #pragma once
 #include "../utility/exception.hpp"
-#include "../utility/logger.hpp"
 #include "../utility/zstring_view.hpp"
 #include "gl_api.hpp"
 #include "index_buffer.hpp"
@@ -121,11 +120,6 @@ namespace tr
 			/// Context OpenGL version.
 			zstring_view gl_version;
 		};
-
-		//
-
-		/// Logger used by the context.
-		logger logger;
 
 		/// @name Constructors
 		/// @{

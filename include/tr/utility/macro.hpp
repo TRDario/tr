@@ -2,9 +2,7 @@
 /// @brief Provides macro utilities.
 
 #pragma once
-#ifdef TR_ENABLE_ASSERTS
-#include <tr/utility/logger.hpp> // IWYU pragma: keep
-#endif
+#include <tr/utility/common.hpp>
 
 //
 
@@ -12,7 +10,7 @@
 #ifdef TR_ENABLE_ASSERTS
 #define TR_IMPL_UNREACHABLE(file, line)                                                                                                    \
 	do {                                                                                                                                   \
-		::tr::error_logger.log(::tr::severity::fatal, "Unreachable code section reached at " file ":" TR_STRINGIFY(line) ".");             \
+		std::println(stderr, "Unreachable code section reached at " file ":" TR_STRINGIFY(line) ", aborting.");                            \
 		std::abort();                                                                                                                      \
 	} while (0)
 #endif
@@ -69,11 +67,9 @@
 #ifdef TR_ENABLE_ASSERTS
 #define TR_IMPL_ASSERT(condition, file, line, fmt, ...)                                                                                    \
 	do {                                                                                                                                   \
-		if (!(condition)) {                                                                                                                \
-			if (::tr::error_logger.active()) {                                                                                             \
-				::tr::error_logger.log(::tr::severity::fatal, "Assertion failed at " file ":" TR_STRINGIFY(line) ":");                     \
-				::tr::error_logger.log_continue(fmt __VA_OPT__(, ) __VA_ARGS__);                                                           \
-			}                                                                                                                              \
+		if (!(condition)) [[unlikely]] {                                                                                                   \
+			std::println(stderr, "Assertion failed at " file ":" TR_STRINGIFY(line) ":");                                                  \
+			std::println(stderr, fmt __VA_OPT__(, ) __VA_ARGS__);                                                                          \
 			std::abort();                                                                                                                  \
 		}                                                                                                                                  \
 	} while (0)

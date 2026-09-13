@@ -42,3 +42,7 @@
 #include "sysgfx/vertex_format.hpp"       // IWYU pragma: export
 #include "sysgfx/window.hpp"              // IWYU pragma: export
 #include "sysgfx/window_view.hpp"         // IWYU pragma: export
+#include <tr/sysgfx/log_level.hpp>
+#include <tr/sysgfx/log_message.hpp>
+#include <tr/sysgfx/log_sink.hpp>
+#include <tr/sysgfx/logger.hpp>

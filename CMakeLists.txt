@@ -65,7 +65,6 @@ target_sources(tr_utility PRIVATE
 	src/utility/iostream.cpp
 	src/utility/line.cpp
 	src/utility/localization_map.cpp
-	src/utility/logger.cpp
 	src/utility/matrix.cpp
 	src/utility/mstream.cpp
 	src/utility/polygon.cpp
@@ -104,6 +103,8 @@ if(TR_BUILD_SYSGFX)
 		src/sysgfx/graphics_context.cpp
 		src/sysgfx/index_buffer.cpp
 		src/sysgfx/keyboard.cpp
+		src/sysgfx/log_sink.cpp
+		src/sysgfx/logger.cpp
 		src/sysgfx/main.cpp
 		src/sysgfx/path.cpp
 		src/sysgfx/ping_pong_target.cpp
