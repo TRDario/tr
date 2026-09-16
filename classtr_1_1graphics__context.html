@@ -131,7 +131,8 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1gra
 <p>Window graphics context.  
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Graphics contexts are associated with a window and their properties depend on the graphics properties set during window construction. </p>
+<div class="textblock"><p>Window graphics context. </p>
+<p>Graphics contexts are associated with a window and their properties depend on the graphics properties set during window construction. </p>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
@@ -180,15 +181,20 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a77520fa5777b971b2a074423f9114db5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the active blending mode.  <br /></td></tr>
 <tr class="memitem:a9242740f07b35bcf767448f3518d9186" id="r_a9242740f07b35bcf767448f3518d9186"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a9242740f07b35bcf767448f3518d9186">set_vertex_format</a> (const <a class="el" href="classtr_1_1vertex__format.html">vertex_format</a> &amp;format) noexcept</td></tr>
 <tr class="memdesc:a9242740f07b35bcf767448f3518d9186"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the active vertex format.  <br /></td></tr>
-<tr class="memitem:a0e4c3f7be17df2619591e484471f274f" id="r_a0e4c3f7be17df2619591e484471f274f"><td class="memTemplParams" colspan="2">template&lt;any_untyped_vertex_buffer UntypedVertexBuffer&gt; </td></tr>
-<tr class="memitem:a0e4c3f7be17df2619591e484471f274f template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a0e4c3f7be17df2619591e484471f274f">set_vertex_buffer</a> (const UntypedVertexBuffer &amp;buffer, int slot, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a0cfca98bbeed1e31ae9ef0344fb39389">ssize</a> offset, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> stride) noexcept</td></tr>
-<tr class="memdesc:a0e4c3f7be17df2619591e484471f274f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an active vertex buffer.  <br /></td></tr>
-<tr class="memitem:ae52d1cc69d35f620275d9dc1f0c0e8f5" id="r_ae52d1cc69d35f620275d9dc1f0c0e8f5"><td class="memTemplParams" colspan="2">template&lt;any_typed_vertex_buffer TypedVertexBuffer&gt; </td></tr>
-<tr class="memitem:ae52d1cc69d35f620275d9dc1f0c0e8f5 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ae52d1cc69d35f620275d9dc1f0c0e8f5">set_vertex_buffer</a> (const TypedVertexBuffer &amp;buffer, int slot, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a0cfca98bbeed1e31ae9ef0344fb39389">ssize</a> offset) noexcept</td></tr>
-<tr class="memdesc:ae52d1cc69d35f620275d9dc1f0c0e8f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an active vertex buffer.  <br /></td></tr>
-<tr class="memitem:a79384379b2ac8cce7a497487e20160a8" id="r_a79384379b2ac8cce7a497487e20160a8"><td class="memTemplParams" colspan="2">template&lt;any_index_buffer IndexBuffer&gt; </td></tr>
-<tr class="memitem:a79384379b2ac8cce7a497487e20160a8 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a79384379b2ac8cce7a497487e20160a8">set_index_buffer</a> (const IndexBuffer &amp;buffer) noexcept</td></tr>
-<tr class="memdesc:a79384379b2ac8cce7a497487e20160a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the active index buffer.  <br /></td></tr>
+<tr class="memitem:a9decb9506012ae365b85e8e83723d24a" id="r_a9decb9506012ae365b85e8e83723d24a"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a9decb9506012ae365b85e8e83723d24a">set_vertex_buffer</a> (const <a class="el" href="classtr_1_1untyped__static__vertex__buffer.html">untyped_static_vertex_buffer</a> &amp;buffer, int slot, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a0cfca98bbeed1e31ae9ef0344fb39389">ssize</a> offset, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> stride) noexcept</td></tr>
+<tr class="memdesc:a9decb9506012ae365b85e8e83723d24a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an active vertex buffer.  <br /></td></tr>
+<tr class="memitem:a9f17fc7c9c709a2c97dd91e7c6a8eb51" id="r_a9f17fc7c9c709a2c97dd91e7c6a8eb51"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a9f17fc7c9c709a2c97dd91e7c6a8eb51">set_vertex_buffer</a> (const <a class="el" href="classtr_1_1untyped__dynamic__vertex__buffer.html">untyped_dynamic_vertex_buffer</a> &amp;buffer, int slot, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a0cfca98bbeed1e31ae9ef0344fb39389">ssize</a> offset, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> stride) noexcept</td></tr>
+<tr class="memdesc:a9f17fc7c9c709a2c97dd91e7c6a8eb51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an active vertex buffer.  <br /></td></tr>
+<tr class="memitem:a8b1bfb8169505fbed84c95b26ca4c0f9" id="r_a8b1bfb8169505fbed84c95b26ca4c0f9"><td class="memTemplParams" colspan="2">template&lt;standard_layout Element&gt; </td></tr>
+<tr class="memitem:a8b1bfb8169505fbed84c95b26ca4c0f9 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a8b1bfb8169505fbed84c95b26ca4c0f9">set_vertex_buffer</a> (const <a class="el" href="classtr_1_1static__vertex__buffer.html">static_vertex_buffer</a>&lt; Element &gt; &amp;buffer, int slot, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a0cfca98bbeed1e31ae9ef0344fb39389">ssize</a> offset) noexcept</td></tr>
+<tr class="memdesc:a8b1bfb8169505fbed84c95b26ca4c0f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an active vertex buffer.  <br /></td></tr>
+<tr class="memitem:a58516545f55d9b2cd815ccda702994ae" id="r_a58516545f55d9b2cd815ccda702994ae"><td class="memTemplParams" colspan="2">template&lt;standard_layout Element&gt; </td></tr>
+<tr class="memitem:a58516545f55d9b2cd815ccda702994ae template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a58516545f55d9b2cd815ccda702994ae">set_vertex_buffer</a> (const <a class="el" href="classtr_1_1dynamic__vertex__buffer.html">dynamic_vertex_buffer</a>&lt; Element &gt; &amp;buffer, int slot, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a0cfca98bbeed1e31ae9ef0344fb39389">ssize</a> offset) noexcept</td></tr>
+<tr class="memdesc:a58516545f55d9b2cd815ccda702994ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an active vertex buffer.  <br /></td></tr>
+<tr class="memitem:a4741c94a6af8778074514fb567cccff2" id="r_a4741c94a6af8778074514fb567cccff2"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a4741c94a6af8778074514fb567cccff2">set_index_buffer</a> (const <a class="el" href="classtr_1_1static__index__buffer.html">static_index_buffer</a> &amp;buffer) noexcept</td></tr>
+<tr class="memdesc:a4741c94a6af8778074514fb567cccff2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the active index buffer.  <br /></td></tr>
+<tr class="memitem:afe6bbfefd856ec696b2168cea5c242bc" id="r_afe6bbfefd856ec696b2168cea5c242bc"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#afe6bbfefd856ec696b2168cea5c242bc">set_index_buffer</a> (const <a class="el" href="classtr_1_1dynamic__index__buffer.html">dynamic_index_buffer</a> &amp;buffer) noexcept</td></tr>
+<tr class="memdesc:afe6bbfefd856ec696b2168cea5c242bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the active index buffer.  <br /></td></tr>
 <tr id="pub-methods-6" class="groupHeader"><td colspan="2"><div class="groupHeader">Clearing</div></td></tr>
 <tr class="memitem:a15ab939eb6e33ca7c21d5e55add99fa9" id="r_a15ab939eb6e33ca7c21d5e55add99fa9"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a15ab939eb6e33ca7c21d5e55add99fa9">clear_backbuffer</a> (<a class="el" href="structtr_1_1rgbaf.html">rgbaf</a> color={0, 0, 0, 0}) noexcept</td></tr>
 <tr class="memdesc:a15ab939eb6e33ca7c21d5e55add99fa9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the backbuffer's color.  <br /></td></tr>
@@ -231,6 +237,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Creates a graphics context on a window. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">window</td><td>Window to create the graphics context for. </td></tr>
@@ -269,6 +277,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Graphics contexts are not movable. </p>
+
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
@@ -295,6 +305,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Graphics contexts are not movable. </p>
+
 </div>
 </div>
 <a id="a9c909cea23a9d309fdc86f6ac71bec7c" name="a9c909cea23a9d309fdc86f6ac71bec7c"></a>
@@ -319,6 +331,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets info about the context. </p>
 <dl class="section return"><dt>Returns</dt><dd>Info about the context. </dd></dl>
 
 </div>
@@ -345,6 +359,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets a view to the window the context is on. </p>
 <dl class="section return"><dt>Returns</dt><dd>View to the window the context is on. </dd></dl>
 
 </div>
@@ -371,6 +387,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets a render target spanning the entire backbuffer. </p>
 <dl class="section return"><dt>Returns</dt><dd>Render target spanning the entire backbuffer. </dd></dl>
 
 </div>
@@ -397,6 +415,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets a reference to a vertex format describing an array of vec2. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the vec2 vertex format. </dd></dl>
 
 </div>
@@ -423,6 +443,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets a reference to a vertex format descibing arrays of vec2 (position), vec2 (uv) and <a class="el" href="structtr_1_1rgba8.html" title="8-bit RGBA color.">rgba8</a> (color). </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the 2D vertex format. </dd></dl>
 
 </div>
@@ -449,6 +471,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Allocates a fresh renderer ID. </p>
 <dl class="section return"><dt>Returns</dt><dd>Unused renderer ID. </dd></dl>
 
 </div>
@@ -475,6 +499,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Checks whether the passed renderer ID is the active renderer, sets it as active and returns true if not. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">id</td><td>Renderer ID to check. </td></tr>
@@ -507,6 +533,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Sets whether rendering should be done as a wireframe. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">arg</td><td>Whether to use wireframe rendering. </td></tr>
@@ -538,6 +566,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Sets whether face culling should be used. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">arg</td><td>Whether to use face culling. </td></tr>
@@ -569,6 +599,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Sets whether depth testing should be used. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">arg</td><td>Whether to use depth testing. </td></tr>
@@ -600,6 +632,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Sets the active render target. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">target</td><td>Render target to set as active. </td></tr>
@@ -631,6 +665,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Sets the active shader pipeline. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">pipeline</td><td>Pipeline to set as active. </td></tr>
@@ -662,6 +698,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Sets the active blending mode. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">blend_mode</td><td>Blending mode to set as active. </td></tr>
@@ -693,6 +731,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Sets the active vertex format. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">format</td><td>Vertex format to set as active. </td></tr>
@@ -702,13 +742,11 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a0e4c3f7be17df2619591e484471f274f" name="a0e4c3f7be17df2619591e484471f274f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0e4c3f7be17df2619591e484471f274f">&#9670;&#160;</a></span>set_vertex_buffer() <span class="overload">[1/2]</span></h2>
+<a id="a9decb9506012ae365b85e8e83723d24a" name="a9decb9506012ae365b85e8e83723d24a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9decb9506012ae365b85e8e83723d24a">&#9670;&#160;</a></span>set_vertex_buffer() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;any_untyped_vertex_buffer UntypedVertexBuffer&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -716,7 +754,7 @@ template&lt;any_untyped_vertex_buffer UntypedVertexBuffer&gt; </div>
         <tr>
           <td class="memname">void tr::graphics_context::set_vertex_buffer </td>
           <td>(</td>
-          <td class="paramtype">const UntypedVertexBuffer &amp;</td>          <td class="paramname"><span class="paramname"><em>buffer</em></span>, </td>
+          <td class="paramtype">const <a class="el" href="classtr_1_1untyped__static__vertex__buffer.html">untyped_static_vertex_buffer</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>buffer</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -740,12 +778,8 @@ template&lt;any_untyped_vertex_buffer UntypedVertexBuffer&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">UntypedVertexBuffer</td><td>Untyped vertex buffer type. </td></tr>
-  </table>
-  </dd>
-</dl>
+
+<p>Sets an active vertex buffer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">buffer</td><td>Buffer to set as active. </td></tr>
@@ -758,13 +792,11 @@ template&lt;any_untyped_vertex_buffer UntypedVertexBuffer&gt; </div>
 
 </div>
 </div>
-<a id="ae52d1cc69d35f620275d9dc1f0c0e8f5" name="ae52d1cc69d35f620275d9dc1f0c0e8f5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae52d1cc69d35f620275d9dc1f0c0e8f5">&#9670;&#160;</a></span>set_vertex_buffer() <span class="overload">[2/2]</span></h2>
+<a id="a9f17fc7c9c709a2c97dd91e7c6a8eb51" name="a9f17fc7c9c709a2c97dd91e7c6a8eb51"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f17fc7c9c709a2c97dd91e7c6a8eb51">&#9670;&#160;</a></span>set_vertex_buffer() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;any_typed_vertex_buffer TypedVertexBuffer&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -772,7 +804,59 @@ template&lt;any_typed_vertex_buffer TypedVertexBuffer&gt; </div>
         <tr>
           <td class="memname">void tr::graphics_context::set_vertex_buffer </td>
           <td>(</td>
-          <td class="paramtype">const TypedVertexBuffer &amp;</td>          <td class="paramname"><span class="paramname"><em>buffer</em></span>, </td>
+          <td class="paramtype">const <a class="el" href="classtr_1_1untyped__dynamic__vertex__buffer.html">untyped_dynamic_vertex_buffer</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>buffer</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>slot</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a0cfca98bbeed1e31ae9ef0344fb39389">ssize</a></td>          <td class="paramname"><span class="paramname"><em>offset</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a></td>          <td class="paramname"><span class="paramname"><em>stride</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets an active vertex buffer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">buffer</td><td>Buffer to set as active. </td></tr>
+    <tr><td class="paramname">slot</td><td>Slot to set the buffer in. </td></tr>
+    <tr><td class="paramname">offset</td><td>Starting offset within the buffer to bind. </td></tr>
+    <tr><td class="paramname">stride</td><td>Stride between the elements of the vertex buffer. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a8b1bfb8169505fbed84c95b26ca4c0f9" name="a8b1bfb8169505fbed84c95b26ca4c0f9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8b1bfb8169505fbed84c95b26ca4c0f9">&#9670;&#160;</a></span>set_vertex_buffer() <span class="overload">[3/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;standard_layout Element&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tr::graphics_context::set_vertex_buffer </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classtr_1_1static__vertex__buffer.html">static_vertex_buffer</a>&lt; Element &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>buffer</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -787,13 +871,15 @@ template&lt;any_typed_vertex_buffer TypedVertexBuffer&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Sets an active vertex buffer. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">TypedVertexBuffer</td><td>Typed vertex buffer type. </td></tr>
+    <tr><td class="paramname">Element</td><td>Type of the vertex buffer elements. </td></tr>
   </table>
   </dd>
 </dl>
@@ -808,13 +894,63 @@ template&lt;any_typed_vertex_buffer TypedVertexBuffer&gt; </div>
 
 </div>
 </div>
-<a id="a79384379b2ac8cce7a497487e20160a8" name="a79384379b2ac8cce7a497487e20160a8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a79384379b2ac8cce7a497487e20160a8">&#9670;&#160;</a></span>set_index_buffer()</h2>
+<a id="a58516545f55d9b2cd815ccda702994ae" name="a58516545f55d9b2cd815ccda702994ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a58516545f55d9b2cd815ccda702994ae">&#9670;&#160;</a></span>set_vertex_buffer() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;any_index_buffer IndexBuffer&gt; </div>
+template&lt;standard_layout Element&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tr::graphics_context::set_vertex_buffer </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classtr_1_1dynamic__vertex__buffer.html">dynamic_vertex_buffer</a>&lt; Element &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>buffer</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>slot</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a0cfca98bbeed1e31ae9ef0344fb39389">ssize</a></td>          <td class="paramname"><span class="paramname"><em>offset</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets an active vertex buffer. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Element</td><td>Type of the vertex buffer elements. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">buffer</td><td>Buffer to set as active. </td></tr>
+    <tr><td class="paramname">slot</td><td>Slot to set the buffer in. </td></tr>
+    <tr><td class="paramname">offset</td><td>Starting offset within the buffer to bind. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a4741c94a6af8778074514fb567cccff2" name="a4741c94a6af8778074514fb567cccff2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4741c94a6af8778074514fb567cccff2">&#9670;&#160;</a></span>set_index_buffer() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -822,7 +958,7 @@ template&lt;any_index_buffer IndexBuffer&gt; </div>
         <tr>
           <td class="memname">void tr::graphics_context::set_index_buffer </td>
           <td>(</td>
-          <td class="paramtype">const IndexBuffer &amp;</td>          <td class="paramname"><span class="paramname"><em>buffer</em></span></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="classtr_1_1static__index__buffer.html">static_index_buffer</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>buffer</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -832,12 +968,41 @@ template&lt;any_index_buffer IndexBuffer&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">IndexBuffer</td><td>Index buffer type. </td></tr>
+
+<p>Sets the active index buffer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">buffer</td><td>Buffer to set as active. </td></tr>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="afe6bbfefd856ec696b2168cea5c242bc" name="afe6bbfefd856ec696b2168cea5c242bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe6bbfefd856ec696b2168cea5c242bc">&#9670;&#160;</a></span>set_index_buffer() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tr::graphics_context::set_index_buffer </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classtr_1_1dynamic__index__buffer.html">dynamic_index_buffer</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>buffer</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the active index buffer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">buffer</td><td>Buffer to set as active. </td></tr>
@@ -869,6 +1034,8 @@ template&lt;any_index_buffer IndexBuffer&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Clears the backbuffer's color. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">color</td><td>Color to clear the backbuffer to. </td></tr>
@@ -909,6 +1076,8 @@ template&lt;any_index_buffer IndexBuffer&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Clears the backbuffer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">color</td><td>Color to clear the backbuffer to. </td></tr>
@@ -946,6 +1115,8 @@ template&lt;any_index_buffer IndexBuffer&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Clears a backbuffer region's color. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">region</td><td>Region of the backbuffer to clear. </td></tr>
@@ -992,6 +1163,8 @@ template&lt;any_index_buffer IndexBuffer&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Clears a backbuffer region. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">region</td><td>Region of the backbuffer to clear. </td></tr>
@@ -1035,6 +1208,8 @@ template&lt;any_index_buffer IndexBuffer&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Draws a mesh from a vertex buffer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">type</td><td>Primitive type to draw. </td></tr>
@@ -1082,6 +1257,8 @@ template&lt;any_index_buffer IndexBuffer&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Draws an instanced mesh from a vertex buffer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">type</td><td>Primitive type to draw. </td></tr>
@@ -1125,6 +1302,8 @@ template&lt;any_index_buffer IndexBuffer&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Draws an indexed mesh. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">type</td><td>Primitive type to draw. </td></tr>
@@ -1172,6 +1351,8 @@ template&lt;any_index_buffer IndexBuffer&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Draws an instanced indexed mesh. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">type</td><td>Primitive type to draw. </td></tr>

@@ -1,6 +1,7 @@
 var texture_8hpp =
 [
     [ "tr::texture", "classtr_1_1texture.html", "classtr_1_1texture" ],
+    [ "std::formatter&lt; tr::texture &gt;", "structstd_1_1formatter_3_01tr_1_1texture_01_4.html", "structstd_1_1formatter_3_01tr_1_1texture_01_4" ],
     [ "tr::mipmaps", "namespacetr.html#acc7c3ec65e91b3d9d879c9bca6e51ce6", [
       [ "tr::mipmaps::disabled", "namespacetr.html#acc7c3ec65e91b3d9d879c9bca6e51ce6a075ae3d2fc31640504f814f60e5ef713", null ],
       [ "tr::mipmaps::enabled", "namespacetr.html#acc7c3ec65e91b3d9d879c9bca6e51ce6aa10311459433adf322f2590a4987c423", null ]

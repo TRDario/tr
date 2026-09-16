@@ -131,7 +131,8 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1pin
 <p>Ping-pong texture rendering target.  
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p><span class="tt"><a class="el" href="classtr_1_1ping__pong__target.html" title="Ping-pong texture rendering target.">tr::ping_pong_target</a></span> models a pair of <span class="tt"><a class="el" href="classtr_1_1texture__target.html" title="2D texture rendering target.">tr::texture_target</a></span> objects, the "source" and "destination". The source target is read-only and may be sampled from, while the destination target is write-only and may be rendered to. The targets may be swapped at any point. This arrangement is useful for certain techniques such as applying post-processing shaders.</p>
+<div class="textblock"><p>Ping-pong texture rendering target. </p>
+<p><span class="tt"><a class="el" href="classtr_1_1ping__pong__target.html" title="Ping-pong texture rendering target.">tr::ping_pong_target</a></span> models a pair of <span class="tt"><a class="el" href="classtr_1_1texture__target.html" title="2D texture rendering target.">tr::texture_target</a></span> objects, the "source" and "destination". The source target is read-only and may be sampled from, while the destination target is write-only and may be rendered to. The targets may be swapped at any point. This arrangement is useful for certain techniques such as applying post-processing shaders.</p>
 <p><span class="tt"><a class="el" href="classtr_1_1ping__pong__target.html" title="Ping-pong texture rendering target.">tr::ping_pong_target</a></span> has a notion of 'completeness'. An instance of the class may be constructed without allocating complete textures; such an instance is considered incomplete until the textures are fully allocated. Incomplete ping-pong targets may not be used for most actions.</p>
 <p>Every instance of <span class="tt"><a class="el" href="classtr_1_1ping__pong__target.html" title="Ping-pong texture rendering target.">tr::ping_pong_target</a></span> is associated with a graphics context and cannot outlive its parent context.</p>
 <p><span class="tt"><a class="el" href="classtr_1_1ping__pong__target.html" title="Ping-pong texture rendering target.">tr::ping_pong_target</a></span> instances are movable, but not copyable. A moved-from instance of <span class="tt"><a class="el" href="classtr_1_1ping__pong__target.html" title="Ping-pong texture rendering target.">tr::ping_pong_target</a></span> is left in a special 'invalid' state. Invalid <span class="tt"><a class="el" href="classtr_1_1ping__pong__target.html" title="Ping-pong texture rendering target.">tr::ping_pong_target</a></span> instances may not be interacted with besides moving a new value into them and checking for validity using <span class="tt"><a class="el" href="#ae8fc1d22c5431d074765010ec88d30bf" title="Gets whether the ping-pong target is in a valid state.">valid()</a></span>. </p>
@@ -201,6 +202,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Constructs an incomplete ping-pong target. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">context</td><td>Graphics context to create the ping-pong target on. </td></tr>
@@ -246,6 +249,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Constructs a complete ping-pong target. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">context</td><td>Graphics context to create the ping-pong target on. </td></tr>
@@ -281,6 +286,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets a reference to the graphics context the ping-pong target is on. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the graphics context the ping-pong target is on. </dd></dl>
 
 </div>
@@ -307,6 +314,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets whether the ping-pong target is in a valid state. </p>
 <dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the ping-pong target is in a valid state, <span class="tt">false</span> if it is in an invalid state. </dd></dl>
 
 </div>
@@ -333,6 +342,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets whether the ping-pong target is complete. </p>
 <dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the ping-pong target is complete, <span class="tt">false</span> otherwise. </dd></dl>
 
 </div>
@@ -359,6 +370,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the size of the ping-pong target textures. </p>
 <dl class="section return"><dt>Returns</dt><dd>Size of the ping-pong target textures. </dd></dl>
 
 </div>
@@ -386,6 +399,8 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>(Re-)allocates the ping-pong target textures and discards any previous data. </p>
 <p>If the target was previously constucted incomplete, this function completes it. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">size</td><td>Size of the target textures. </td></tr>
@@ -419,6 +434,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Clears the destination buffer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">color</td><td>Color to clear the destination buffer to. </td></tr>
@@ -455,6 +472,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Sets the filters used by the target texture samplers. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">min_filter</td><td>Minifying filter to use. </td></tr>
@@ -487,6 +506,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Sets the wrapping used by the target texture samplers. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">wrap</td><td>Wrapping type to use. </td></tr>
@@ -518,6 +539,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Sets the border color of the target texture samplers (used when <span class="tt">wrap::BORDER_CLAMP</span> is in use). </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">color</td><td>Border color to use. </td></tr>
@@ -549,6 +572,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets a view to the source target texture. </p>
 <p>This texture view stays valid until a call to <span class="tt"><a class="el" href="#ae8b39196911049138c86a5c5b0a75372" title="(Re-)allocates the ping-pong target textures and discards any previous data.">allocate()</a>, <a class="el" href="#ae27d0055145d756cf64c4bd403940a6f" title="Swaps the source and destination targets.">swap()</a></span>, or the destruction of the buffer. </p><dl class="section pre"><dt>Precondition</dt><dd>The target must be complete to call this function. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>View to the source target texture. </dd></dl>
 
@@ -576,6 +601,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the destination render target. </p>
 <p>This render target stays valid until a call to <span class="tt"><a class="el" href="#ae8b39196911049138c86a5c5b0a75372" title="(Re-)allocates the ping-pong target textures and discards any previous data.">allocate()</a>, <a class="el" href="#ae27d0055145d756cf64c4bd403940a6f" title="Swaps the source and destination targets.">swap()</a></span>, or the destruction of the buffer. </p><dl class="section pre"><dt>Precondition</dt><dd>The target must be complete to call this function. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>Destination render target. </dd></dl>
 
@@ -604,6 +631,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Swaps the source and destination targets. </p>
+
 </div>
 </div>
 <a id="acfcdd9ba2aa1728bda96c7ec354f81c4" name="acfcdd9ba2aa1728bda96c7ec354f81c4"></a>
@@ -628,6 +657,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the debug label of the ping-pong target. </p>
 <dl class="section return"><dt>Returns</dt><dd>Debug label of the ping-pong target. </dd></dl>
 
 </div>
@@ -646,6 +677,8 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Sets the debug label of the ping-pong target. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">label</td><td>Debug label of the ping-pong target. </td></tr>

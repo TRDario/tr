@@ -18,9 +18,12 @@ var classtr_1_1graphics__context =
     [ "set_shader_pipeline", "classtr_1_1graphics__context.html#a1d9e1841c685905a825bdaa0b838af68", null ],
     [ "set_blend_mode", "classtr_1_1graphics__context.html#a77520fa5777b971b2a074423f9114db5", null ],
     [ "set_vertex_format", "classtr_1_1graphics__context.html#a9242740f07b35bcf767448f3518d9186", null ],
-    [ "set_vertex_buffer", "classtr_1_1graphics__context.html#a0e4c3f7be17df2619591e484471f274f", null ],
-    [ "set_vertex_buffer", "classtr_1_1graphics__context.html#ae52d1cc69d35f620275d9dc1f0c0e8f5", null ],
-    [ "set_index_buffer", "classtr_1_1graphics__context.html#a79384379b2ac8cce7a497487e20160a8", null ],
+    [ "set_vertex_buffer", "classtr_1_1graphics__context.html#a9decb9506012ae365b85e8e83723d24a", null ],
+    [ "set_vertex_buffer", "classtr_1_1graphics__context.html#a9f17fc7c9c709a2c97dd91e7c6a8eb51", null ],
+    [ "set_vertex_buffer", "classtr_1_1graphics__context.html#a8b1bfb8169505fbed84c95b26ca4c0f9", null ],
+    [ "set_vertex_buffer", "classtr_1_1graphics__context.html#a58516545f55d9b2cd815ccda702994ae", null ],
+    [ "set_index_buffer", "classtr_1_1graphics__context.html#a4741c94a6af8778074514fb567cccff2", null ],
+    [ "set_index_buffer", "classtr_1_1graphics__context.html#afe6bbfefd856ec696b2168cea5c242bc", null ],
     [ "clear_backbuffer", "classtr_1_1graphics__context.html#a15ab939eb6e33ca7c21d5e55add99fa9", null ],
     [ "clear_backbuffer", "classtr_1_1graphics__context.html#abf27ec04b8aaae60ccb67dce288b772d", null ],
     [ "clear_backbuffer_region", "classtr_1_1graphics__context.html#a2903b663856133e550d2c0f5dee9b3c3", null ],
@@ -28,6 +31,5 @@ var classtr_1_1graphics__context =
     [ "draw", "classtr_1_1graphics__context.html#a27e01e4ee5884513047b05aae7bb6237", null ],
     [ "draw_instances", "classtr_1_1graphics__context.html#a4d07e9e89f9e9de16ed193fc115dd534", null ],
     [ "draw_indexed", "classtr_1_1graphics__context.html#ae889c4eeb7c354c293c7b3d1ad5727b0", null ],
-    [ "draw_indexed_instances", "classtr_1_1graphics__context.html#abe0293de2e4b51a99dfda2cdc6c89814", null ],
-    [ "texture_unit", "classtr_1_1graphics__context.html#a2d3502c9c7259388747ab82c22c647ac", null ]
+    [ "draw_indexed_instances", "classtr_1_1graphics__context.html#abe0293de2e4b51a99dfda2cdc6c89814", null ]
 ];

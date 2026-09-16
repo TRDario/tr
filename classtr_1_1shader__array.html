@@ -132,7 +132,8 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1sha
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename Element&gt;<br />
-class tr::shader_array&lt; Element &gt;</div><dl class="tparams"><dt>Template Parameters</dt><dd>
+class tr::shader_array&lt; Element &gt;</div><p>Specialized shader buffer with no header before the array. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Element</td><td>Type of the array elements. </td></tr>
   </table>
@@ -145,46 +146,34 @@ class tr::shader_array&lt; Element &gt;</div><dl class="tparams"><dt>Template Pa
  <div class="center">
   <img src="classtr_1_1shader__array.png" usemap="#tr_3A_3Ashader_5Farray_3C_20Element_20_3E_map" alt=""/>
   <map id="tr_3A_3Ashader_5Farray_3C_20Element_20_3E_map" name="tr_3A_3Ashader_5Farray_3C_20Element_20_3E_map">
-<area href="classtr_1_1basic__shader__buffer.html" title="GPU buffer accessable to a shader." alt="tr::basic_shader_buffer" shape="rect" coords="0,0,171,24"/>
+<area href="classtr_1_1untyped__shader__buffer.html" title="Untyped shader-accessible GPU buffer." alt="tr::untyped_shader_buffer" shape="rect" coords="0,0,171,24"/>
   </map>
 </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
-<tr class="memitem:a4088a8c17a636772a034eb94fb3ed2a9" id="r_a4088a8c17a636772a034eb94fb3ed2a9"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a4088a8c17a636772a034eb94fb3ed2a9">shader_array</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> capacity, map_type<a class="el" href="namespacetr.html#a831d5c2dfdf51fe4068d34d5b1d70f81">map_type</a> map_type<a class="el" href="namespacetr.html#a831d5c2dfdf51fe4068d34d5b1d70f81">map_type</a>=<a class="el" href="namespacetr.html#a831d5c2dfdf51fe4068d34d5b1d70f81a2629564984b808cf7e6cfc61a0286d69">map_type::write_only</a>)</td></tr>
-<tr class="memdesc:a4088a8c17a636772a034eb94fb3ed2a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates an uninitialized shader array.  <br /></td></tr>
+<tr class="memitem:a1cae03119031a06086148856215e00e1" id="r_a1cae03119031a06086148856215e00e1"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a1cae03119031a06086148856215e00e1">shader_array</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> capacity, <a class="el" href="namespacetr.html#a05bfa9f1eba3f81364c4ca5d89fedbcd">graphics_buffer_map_access</a> map_type=<a class="el" href="namespacetr.html#a05bfa9f1eba3f81364c4ca5d89fedbcda2629564984b808cf7e6cfc61a0286d69">graphics_buffer_map_access::write_only</a>)</td></tr>
+<tr class="memdesc:a1cae03119031a06086148856215e00e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates an uninitialized shader array.  <br /></td></tr>
 <tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Size</div></td></tr>
 <tr class="memitem:a340fb3cb90e17b6ebedf4b30aeb8feba" id="r_a340fb3cb90e17b6ebedf4b30aeb8feba"><td class="memItemLeft"><a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a>&#160;</td><td class="memItemRight"><a class="el" href="#a340fb3cb90e17b6ebedf4b30aeb8feba">size</a> () const noexcept</td></tr>
 <tr class="memdesc:a340fb3cb90e17b6ebedf4b30aeb8feba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the size of the array.  <br /></td></tr>
 <tr class="memitem:a338c803c219d042502c0ecbdcf97f3f2" id="r_a338c803c219d042502c0ecbdcf97f3f2"><td class="memItemLeft"><a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a>&#160;</td><td class="memItemRight"><a class="el" href="#a338c803c219d042502c0ecbdcf97f3f2">capacity</a> () const noexcept</td></tr>
 <tr class="memdesc:a338c803c219d042502c0ecbdcf97f3f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the maximum capacity of the array.  <br /></td></tr>
 <tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Setting</div></td></tr>
-<tr class="memitem:a0368ed86e0166e96a899cfc2ff21b565" id="r_a0368ed86e0166e96a899cfc2ff21b565"><td class="memTemplParams" colspan="2">template&lt;typed_contiguous_const_range&lt; Element &gt; Range&gt; </td></tr>
-<tr class="memitem:a0368ed86e0166e96a899cfc2ff21b565 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a0368ed86e0166e96a899cfc2ff21b565">set</a> (Range &amp;&amp;data) noexcept</td></tr>
-<tr class="memdesc:a0368ed86e0166e96a899cfc2ff21b565"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the data of the array.  <br /></td></tr>
+<tr class="memitem:ae1afd1e1eb629d34eab519480db7f4c3" id="r_ae1afd1e1eb629d34eab519480db7f4c3"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ae1afd1e1eb629d34eab519480db7f4c3">set</a> (std::span&lt; const Element &gt; data) noexcept</td></tr>
+<tr class="memdesc:ae1afd1e1eb629d34eab519480db7f4c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the data of the array.  <br /></td></tr>
 <tr class="memitem:a531a243fafd98fa3b014d42b3f656165" id="r_a531a243fafd98fa3b014d42b3f656165"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a531a243fafd98fa3b014d42b3f656165">resize</a> (<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> size) noexcept</td></tr>
 <tr class="memdesc:a531a243fafd98fa3b014d42b3f656165"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resizes the array.  <br /></td></tr>
 <tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Mapping</div></td></tr>
-<tr class="memitem:a70a98798fa9fa7bbcd4be9f49dc9fb83" id="r_a70a98798fa9fa7bbcd4be9f49dc9fb83"><td class="memItemLeft"><a class="el" href="classtr_1_1graphics__buffer__span__map.html">graphics_buffer_span_map</a>&lt; Element &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a70a98798fa9fa7bbcd4be9f49dc9fb83">map</a> ()</td></tr>
-<tr class="memdesc:a70a98798fa9fa7bbcd4be9f49dc9fb83"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maps the array.  <br /></td></tr>
-<tr class="memitem:aa18afa7f6fca547c293cf118569cfca6" id="r_aa18afa7f6fca547c293cf118569cfca6"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#aa18afa7f6fca547c293cf118569cfca6">mapped</a> () const noexcept</td></tr>
-<tr class="memdesc:aa18afa7f6fca547c293cf118569cfca6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the buffer is mapped.  <br /></td></tr>
-<tr id="pub-methods-4" class="groupHeader"><td colspan="2"><div class="groupHeader">Context</div></td></tr>
-<tr class="memitem:a2c5c352444ab4d10ed3add4a8cd03f9a" id="r_a2c5c352444ab4d10ed3add4a8cd03f9a"><td class="memItemLeft"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a2c5c352444ab4d10ed3add4a8cd03f9a">context</a> () const noexcept</td></tr>
-<tr class="memdesc:a2c5c352444ab4d10ed3add4a8cd03f9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a reference to the graphics context the buffer is on.  <br /></td></tr>
-<tr id="pub-methods-5" class="groupHeader"><td colspan="2"><div class="groupHeader">State</div></td></tr>
-<tr class="memitem:ab3a7924563ab5b21ec88e5004dd17d6a" id="r_ab3a7924563ab5b21ec88e5004dd17d6a"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#ab3a7924563ab5b21ec88e5004dd17d6a">valid</a> () const noexcept</td></tr>
-<tr class="memdesc:ab3a7924563ab5b21ec88e5004dd17d6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the buffer is in a valid state.  <br /></td></tr>
-<tr id="pub-methods-6" class="groupHeader"><td colspan="2"><div class="groupHeader">Label</div></td></tr>
-<tr class="memitem:ada4364c0295af892b869f2be3ed62777" id="r_ada4364c0295af892b869f2be3ed62777"><td class="memItemLeft">std::string&#160;</td><td class="memItemRight"><a class="el" href="#ada4364c0295af892b869f2be3ed62777">label</a> () const</td></tr>
-<tr class="memdesc:ada4364c0295af892b869f2be3ed62777"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the label of the buffer.  <br /></td></tr>
-<tr class="memitem:ab5e025d8fb771727e580f881a1e65fac" id="r_ab5e025d8fb771727e580f881a1e65fac"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ab5e025d8fb771727e580f881a1e65fac">set_label</a> (std::string_view label) noexcept</td></tr>
-<tr class="memdesc:ab5e025d8fb771727e580f881a1e65fac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the label of the buffer.  <br /></td></tr>
+<tr class="memitem:aace1dd0bfe52d743975a43a337eb2bd6" id="r_aace1dd0bfe52d743975a43a337eb2bd6"><td class="memItemLeft"><a class="el" href="classtr_1_1mapped__graphics__buffer__span.html">mapped_graphics_buffer_span</a>&lt; Element &gt;&#160;</td><td class="memItemRight"><a class="el" href="#aace1dd0bfe52d743975a43a337eb2bd6">map</a> ()</td></tr>
+<tr class="memdesc:aace1dd0bfe52d743975a43a337eb2bd6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maps the array.  <br /></td></tr>
+<tr class="memitem:a2170a5a42b53d7fe44c297b82b2fe4c5" id="r_a2170a5a42b53d7fe44c297b82b2fe4c5"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a2170a5a42b53d7fe44c297b82b2fe4c5">mapped</a> () const noexcept</td></tr>
+<tr class="memdesc:a2170a5a42b53d7fe44c297b82b2fe4c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the buffer is mapped.  <br /></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a4088a8c17a636772a034eb94fb3ed2a9" name="a4088a8c17a636772a034eb94fb3ed2a9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4088a8c17a636772a034eb94fb3ed2a9">&#9670;&#160;</a></span>shader_array()</h2>
+<a id="a1cae03119031a06086148856215e00e1" name="a1cae03119031a06086148856215e00e1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1cae03119031a06086148856215e00e1">&#9670;&#160;</a></span>shader_array()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -207,15 +196,17 @@ template&lt;typename Element&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespacetr.html#a831d5c2dfdf51fe4068d34d5b1d70f81">map_type</a></td>          <td class="paramname"><span class="paramname"><em>map_type</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="namespacetr.html#a831d5c2dfdf51fe4068d34d5b1d70f81a2629564984b808cf7e6cfc61a0286d69">map_type::write_only</a></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="namespacetr.html#a05bfa9f1eba3f81364c4ca5d89fedbcd">graphics_buffer_map_access</a></td>          <td class="paramname"><span class="paramname"><em>map_type</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="namespacetr.html#a05bfa9f1eba3f81364c4ca5d89fedbcda2629564984b808cf7e6cfc61a0286d69">graphics_buffer_map_access::write_only</a></span>&#160;)</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Allocates an uninitialized shader array. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">context</td><td>Graphics context to create the array on. </td></tr>
@@ -248,10 +239,12 @@ template&lt;typename Element&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the size of the array. </p>
 <dl class="section return"><dt>Returns</dt><dd>Size of the array in elements. </dd></dl>
 
 </div>
@@ -276,23 +269,23 @@ template&lt;typename Element&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the maximum capacity of the array. </p>
 <dl class="section return"><dt>Returns</dt><dd>Maximum capacity of the array in elements. </dd></dl>
 
 </div>
 </div>
-<a id="a0368ed86e0166e96a899cfc2ff21b565" name="a0368ed86e0166e96a899cfc2ff21b565"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0368ed86e0166e96a899cfc2ff21b565">&#9670;&#160;</a></span>set()</h2>
+<a id="ae1afd1e1eb629d34eab519480db7f4c3" name="ae1afd1e1eb629d34eab519480db7f4c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae1afd1e1eb629d34eab519480db7f4c3">&#9670;&#160;</a></span>set()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;typename Element&gt; </div>
-<div class="memtemplate">
-template&lt;typed_contiguous_const_range&lt; Element &gt; Range&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -300,22 +293,18 @@ template&lt;typed_contiguous_const_range&lt; Element &gt; Range&gt; </div>
         <tr>
           <td class="memname">void <a class="el" href="classtr_1_1shader__array.html">tr::shader_array</a>&lt; Element &gt;::set </td>
           <td>(</td>
-          <td class="paramtype">Range &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>data</em></span></td><td>)</td>
+          <td class="paramtype">std::span&lt; const Element &gt;</td>          <td class="paramname"><span class="paramname"><em>data</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">Range</td><td>Contiguous range of elements. </td></tr>
-  </table>
-  </dd>
-</dl>
+
+<p>Sets the data of the array. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">data</td><td>Data to set the array to. </td></tr>
@@ -345,10 +334,12 @@ template&lt;typename Element&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Resizes the array. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">size</td><td>Size of the array in elements. </td></tr>
@@ -359,8 +350,8 @@ template&lt;typename Element&gt; </div>
 
 </div>
 </div>
-<a id="a70a98798fa9fa7bbcd4be9f49dc9fb83" name="a70a98798fa9fa7bbcd4be9f49dc9fb83"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a70a98798fa9fa7bbcd4be9f49dc9fb83">&#9670;&#160;</a></span>map()</h2>
+<a id="aace1dd0bfe52d743975a43a337eb2bd6" name="aace1dd0bfe52d743975a43a337eb2bd6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aace1dd0bfe52d743975a43a337eb2bd6">&#9670;&#160;</a></span>map()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -371,7 +362,7 @@ template&lt;typename Element&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classtr_1_1graphics__buffer__span__map.html">graphics_buffer_span_map</a>&lt; Element &gt; <a class="el" href="classtr_1_1shader__array.html">tr::shader_array</a>&lt; Element &gt;::map </td>
+          <td class="memname"><a class="el" href="classtr_1_1mapped__graphics__buffer__span.html">mapped_graphics_buffer_span</a>&lt; Element &gt; <a class="el" href="classtr_1_1shader__array.html">tr::shader_array</a>&lt; Element &gt;::map </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -379,16 +370,18 @@ template&lt;typename Element&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Maps the array. </p>
 <dl class="section return"><dt>Returns</dt><dd>Map of the array. </dd></dl>
 
 </div>
 </div>
-<a id="a2c5c352444ab4d10ed3add4a8cd03f9a" name="a2c5c352444ab4d10ed3add4a8cd03f9a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2c5c352444ab4d10ed3add4a8cd03f9a">&#9670;&#160;</a></span>context()</h2>
+<a id="a2170a5a42b53d7fe44c297b82b2fe4c5" name="a2170a5a42b53d7fe44c297b82b2fe4c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2170a5a42b53d7fe44c297b82b2fe4c5">&#9670;&#160;</a></span>mapped()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -399,7 +392,7 @@ template&lt;typename Element&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp; <a class="el" href="classtr_1_1graphics__buffer.html#a2c5c352444ab4d10ed3add4a8cd03f9a">tr::graphics_buffer::context</a> </td>
+          <td class="memname">bool <a class="el" href="classtr_1_1untyped__shader__buffer.html#a2170a5a42b53d7fe44c297b82b2fe4c5">tr::untyped_shader_buffer::mapped</a> </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -411,124 +404,9 @@ template&lt;typename Element&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>Reference to the graphics context the buffer is on. </dd></dl>
 
-</div>
-</div>
-<a id="ab3a7924563ab5b21ec88e5004dd17d6a" name="ab3a7924563ab5b21ec88e5004dd17d6a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab3a7924563ab5b21ec88e5004dd17d6a">&#9670;&#160;</a></span>valid()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Element&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool <a class="el" href="classtr_1_1graphics__buffer.html#ab3a7924563ab5b21ec88e5004dd17d6a">tr::graphics_buffer::valid</a> </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the buffer is in a valid state, <span class="tt">false</span> if it is in an invalid state. </dd></dl>
-
-</div>
-</div>
-<a id="aa18afa7f6fca547c293cf118569cfca6" name="aa18afa7f6fca547c293cf118569cfca6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa18afa7f6fca547c293cf118569cfca6">&#9670;&#160;</a></span>mapped()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Element&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool <a class="el" href="classtr_1_1basic__shader__buffer.html#aa18afa7f6fca547c293cf118569cfca6">tr::basic_shader_buffer::mapped</a> </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
+<p>Gets whether the buffer is mapped. </p>
 <dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the buffer is mapped, <span class="tt">false</span> otherwise. </dd></dl>
-
-</div>
-</div>
-<a id="ada4364c0295af892b869f2be3ed62777" name="ada4364c0295af892b869f2be3ed62777"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ada4364c0295af892b869f2be3ed62777">&#9670;&#160;</a></span>label()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Element&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string <a class="el" href="classtr_1_1graphics__buffer.html#ada4364c0295af892b869f2be3ed62777">tr::graphics_buffer::label</a> </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>Label of the buffer, or "&lt;unnamed&gt;". </dd></dl>
-
-</div>
-</div>
-<a id="ab5e025d8fb771727e580f881a1e65fac" name="ab5e025d8fb771727e580f881a1e65fac"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab5e025d8fb771727e580f881a1e65fac">&#9670;&#160;</a></span>set_label()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Element&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="classtr_1_1graphics__buffer.html#ab5e025d8fb771727e580f881a1e65fac">tr::graphics_buffer::set_label</a> </td>
-          <td>(</td>
-          <td class="paramtype">std::string_view</td>          <td class="paramname"><span class="paramname"><em>label</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">label</td><td>Label of the buffer. </td></tr>
-  </table>
-  </dd>
-</dl>
 
 </div>
 </div>

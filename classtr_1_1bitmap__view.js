@@ -1,7 +1,7 @@
 var classtr_1_1bitmap__view =
 [
-    [ "reference", "classtr_1_1bitmap__view.html#afdff2cc294b09075dddf03b762f12cf4", null ],
-    [ "iterator", "classtr_1_1bitmap__view.html#a2eaab9600466f890953803dd8d76d74a", null ],
+    [ "reference", "classtr_1_1bitmap__view.html#a53be375d6577715b07a0c41faeb4642c", null ],
+    [ "iterator", "classtr_1_1bitmap__view.html#aeb64526106d7cddc023d6cdb08536067", null ],
     [ "bitmap_view", "classtr_1_1bitmap__view.html#aecf13813d93967908d70920ccc8c58f5", null ],
     [ "bitmap_view", "classtr_1_1bitmap__view.html#a4f6262ae7aebdfe2ac21b9537f8430a4", null ],
     [ "bitmap_view", "classtr_1_1bitmap__view.html#ab11261802de05992ac47071573417ad2", null ],

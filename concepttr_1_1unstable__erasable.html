@@ -129,8 +129,10 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('concepttr_1_1u
 <div class="contents">
 
 <p>Vector-like container that <span class="tt"><a class="el" href="namespacetr.html#ac5b33d830728b978ef3c208ac64e9164" title="O(1) unstable vector-like container erase function.">tr::unstable_erase</a></span> may be used on.  
-</p>
-<h2 id="header-conceptdef" class="groupheader">Concept definition</h2>
+<a href="#details">More...</a></p>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Vector-like container that <span class="tt"><a class="el" href="namespacetr.html#ac5b33d830728b978ef3c208ac64e9164" title="O(1) unstable vector-like container erase function.">tr::unstable_erase</a></span> may be used on. </p>
+</div><h2 id="header-conceptdef" class="groupheader">Concept definition</h2>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepttr_1_1unstable__erasable.html">unstable_erasable</a> = std::ranges::contiguous_range&lt;T&gt; &amp;&amp; std::movable&lt;std::ranges::range_value_t&lt;T&gt;&gt; &amp;&amp;</div>
 <div class="line">                                <span class="keyword">requires</span>(T&amp; v) { v.pop_back(); }</div>

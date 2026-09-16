@@ -132,7 +132,8 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1sha
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename Header, typename ArrayElement&gt;<br />
-class tr::shader_buffer&lt; Header, ArrayElement &gt;</div><dl class="tparams"><dt>Template Parameters</dt><dd>
+class tr::shader_buffer&lt; Header, ArrayElement &gt;</div><p>Shader buffer with a typed header and array. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Header</td><td>Type of the header object stored at the front of the buffer. </td></tr>
     <tr><td class="paramname">ArrayElement</td><td>Type of the buffer dynamic array elements. </td></tr>
@@ -146,14 +147,14 @@ class tr::shader_buffer&lt; Header, ArrayElement &gt;</div><dl class="tparams"><
  <div class="center">
   <img src="classtr_1_1shader__buffer.png" usemap="#tr_3A_3Ashader_5Fbuffer_3C_20Header_2C_20ArrayElement_20_3E_map" alt=""/>
   <map id="tr_3A_3Ashader_5Fbuffer_3C_20Header_2C_20ArrayElement_20_3E_map" name="tr_3A_3Ashader_5Fbuffer_3C_20Header_2C_20ArrayElement_20_3E_map">
-<area href="classtr_1_1basic__shader__buffer.html" title="GPU buffer accessable to a shader." alt="tr::basic_shader_buffer" shape="rect" coords="0,0,258,24"/>
+<area href="classtr_1_1untyped__shader__buffer.html" title="Untyped shader-accessible GPU buffer." alt="tr::untyped_shader_buffer" shape="rect" coords="0,0,258,24"/>
   </map>
 </div></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
-<tr class="memitem:a3a6a132ce6ca09b57354c9eeca1a7004" id="r_a3a6a132ce6ca09b57354c9eeca1a7004"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a3a6a132ce6ca09b57354c9eeca1a7004">shader_buffer</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> capacity, map_type<a class="el" href="namespacetr.html#a831d5c2dfdf51fe4068d34d5b1d70f81">map_type</a> map_type<a class="el" href="namespacetr.html#a831d5c2dfdf51fe4068d34d5b1d70f81">map_type</a>=<a class="el" href="namespacetr.html#a831d5c2dfdf51fe4068d34d5b1d70f81a2629564984b808cf7e6cfc61a0286d69">map_type::write_only</a>)</td></tr>
+<tr class="memitem:afccf35fd6c51b42d2e346a174a7ad214" id="r_afccf35fd6c51b42d2e346a174a7ad214"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#afccf35fd6c51b42d2e346a174a7ad214">shader_buffer</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> capacity, <a class="el" href="namespacetr.html#a05bfa9f1eba3f81364c4ca5d89fedbcd">graphics_buffer_map_access</a> map_type=<a class="el" href="namespacetr.html#a05bfa9f1eba3f81364c4ca5d89fedbcda2629564984b808cf7e6cfc61a0286d69">graphics_buffer_map_access::write_only</a>)</td></tr>
 <tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Size</div></td></tr>
 <tr class="memitem:ac2a7227e5b4c0a4c1ab7a71aeec74403" id="r_ac2a7227e5b4c0a4c1ab7a71aeec74403"><td class="memItemLeft"><a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a>&#160;</td><td class="memItemRight"><a class="el" href="#ac2a7227e5b4c0a4c1ab7a71aeec74403">array_size</a> () const noexcept</td></tr>
 <tr class="memdesc:ac2a7227e5b4c0a4c1ab7a71aeec74403"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the size of the dynamic array.  <br /></td></tr>
@@ -162,33 +163,21 @@ Public Member Functions</h2></td></tr>
 <tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Setting</div></td></tr>
 <tr class="memitem:a13be5ba1294e34100533369d5f75eac9" id="r_a13be5ba1294e34100533369d5f75eac9"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a13be5ba1294e34100533369d5f75eac9">set_header</a> (const Header &amp;header) noexcept</td></tr>
 <tr class="memdesc:a13be5ba1294e34100533369d5f75eac9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the data of the header.  <br /></td></tr>
-<tr class="memitem:a534107570f1e6d81aa158894eca8e106" id="r_a534107570f1e6d81aa158894eca8e106"><td class="memTemplParams" colspan="2">template&lt;typed_contiguous_const_range&lt; ArrayElement &gt; Range&gt; </td></tr>
-<tr class="memitem:a534107570f1e6d81aa158894eca8e106 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a534107570f1e6d81aa158894eca8e106">set_array</a> (Range &amp;&amp;data) noexcept</td></tr>
-<tr class="memdesc:a534107570f1e6d81aa158894eca8e106"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the data of the dynamic array.  <br /></td></tr>
+<tr class="memitem:a19ea602dbcd7296473604e7644a97a40" id="r_a19ea602dbcd7296473604e7644a97a40"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a19ea602dbcd7296473604e7644a97a40">set_array</a> (std::span&lt; const ArrayElement &gt; data) noexcept</td></tr>
+<tr class="memdesc:a19ea602dbcd7296473604e7644a97a40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the data of the dynamic array.  <br /></td></tr>
 <tr class="memitem:ac88dcfbc76c73a3d4dc3a02eff1a0342" id="r_ac88dcfbc76c73a3d4dc3a02eff1a0342"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ac88dcfbc76c73a3d4dc3a02eff1a0342">resize_array</a> (<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> size) noexcept</td></tr>
 <tr class="memdesc:ac88dcfbc76c73a3d4dc3a02eff1a0342"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resizes the dynamic array.  <br /></td></tr>
 <tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Mapping</div></td></tr>
-<tr class="memitem:a235f8b0fba8bd8f3042b3b14f487b82a" id="r_a235f8b0fba8bd8f3042b3b14f487b82a"><td class="memItemLeft"><a class="el" href="classtr_1_1graphics__buffer__object__map.html">graphics_buffer_object_map</a>&lt; Header &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a235f8b0fba8bd8f3042b3b14f487b82a">map_header</a> ()</td></tr>
-<tr class="memdesc:a235f8b0fba8bd8f3042b3b14f487b82a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maps the fixed header of the buffer.  <br /></td></tr>
-<tr class="memitem:a1a984c1444cfd790f12ea15817ed5753" id="r_a1a984c1444cfd790f12ea15817ed5753"><td class="memItemLeft"><a class="el" href="classtr_1_1graphics__buffer__span__map.html">graphics_buffer_span_map</a>&lt; ArrayElement &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a1a984c1444cfd790f12ea15817ed5753">map_array</a> ()</td></tr>
-<tr class="memdesc:a1a984c1444cfd790f12ea15817ed5753"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maps the dynamic array of the buffer.  <br /></td></tr>
-<tr class="memitem:aa18afa7f6fca547c293cf118569cfca6" id="r_aa18afa7f6fca547c293cf118569cfca6"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#aa18afa7f6fca547c293cf118569cfca6">mapped</a> () const noexcept</td></tr>
-<tr class="memdesc:aa18afa7f6fca547c293cf118569cfca6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the buffer is mapped.  <br /></td></tr>
-<tr id="pub-methods-4" class="groupHeader"><td colspan="2"><div class="groupHeader">Context</div></td></tr>
-<tr class="memitem:a2c5c352444ab4d10ed3add4a8cd03f9a" id="r_a2c5c352444ab4d10ed3add4a8cd03f9a"><td class="memItemLeft"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a2c5c352444ab4d10ed3add4a8cd03f9a">context</a> () const noexcept</td></tr>
-<tr class="memdesc:a2c5c352444ab4d10ed3add4a8cd03f9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a reference to the graphics context the buffer is on.  <br /></td></tr>
-<tr id="pub-methods-5" class="groupHeader"><td colspan="2"><div class="groupHeader">State</div></td></tr>
-<tr class="memitem:ab3a7924563ab5b21ec88e5004dd17d6a" id="r_ab3a7924563ab5b21ec88e5004dd17d6a"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#ab3a7924563ab5b21ec88e5004dd17d6a">valid</a> () const noexcept</td></tr>
-<tr class="memdesc:ab3a7924563ab5b21ec88e5004dd17d6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the buffer is in a valid state.  <br /></td></tr>
-<tr id="pub-methods-6" class="groupHeader"><td colspan="2"><div class="groupHeader">Label</div></td></tr>
-<tr class="memitem:ada4364c0295af892b869f2be3ed62777" id="r_ada4364c0295af892b869f2be3ed62777"><td class="memItemLeft">std::string&#160;</td><td class="memItemRight"><a class="el" href="#ada4364c0295af892b869f2be3ed62777">label</a> () const</td></tr>
-<tr class="memdesc:ada4364c0295af892b869f2be3ed62777"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the label of the buffer.  <br /></td></tr>
-<tr class="memitem:ab5e025d8fb771727e580f881a1e65fac" id="r_ab5e025d8fb771727e580f881a1e65fac"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ab5e025d8fb771727e580f881a1e65fac">set_label</a> (std::string_view label) noexcept</td></tr>
-<tr class="memdesc:ab5e025d8fb771727e580f881a1e65fac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the label of the buffer.  <br /></td></tr>
+<tr class="memitem:aaf6f31d250c3f9d29bab112d4a1b7576" id="r_aaf6f31d250c3f9d29bab112d4a1b7576"><td class="memItemLeft"><a class="el" href="classtr_1_1mapped__graphics__buffer__object.html">mapped_graphics_buffer_object</a>&lt; Header &gt;&#160;</td><td class="memItemRight"><a class="el" href="#aaf6f31d250c3f9d29bab112d4a1b7576">map_header</a> ()</td></tr>
+<tr class="memdesc:aaf6f31d250c3f9d29bab112d4a1b7576"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maps the fixed header of the buffer.  <br /></td></tr>
+<tr class="memitem:a48a4957aa74cc63f3d1c3e3af4d447b0" id="r_a48a4957aa74cc63f3d1c3e3af4d447b0"><td class="memItemLeft"><a class="el" href="classtr_1_1mapped__graphics__buffer__span.html">mapped_graphics_buffer_span</a>&lt; ArrayElement &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a48a4957aa74cc63f3d1c3e3af4d447b0">map_array</a> ()</td></tr>
+<tr class="memdesc:a48a4957aa74cc63f3d1c3e3af4d447b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maps the dynamic array of the buffer.  <br /></td></tr>
+<tr class="memitem:a2170a5a42b53d7fe44c297b82b2fe4c5" id="r_a2170a5a42b53d7fe44c297b82b2fe4c5"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a2170a5a42b53d7fe44c297b82b2fe4c5">mapped</a> () const noexcept</td></tr>
+<tr class="memdesc:a2170a5a42b53d7fe44c297b82b2fe4c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the buffer is mapped.  <br /></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a3a6a132ce6ca09b57354c9eeca1a7004" name="a3a6a132ce6ca09b57354c9eeca1a7004"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3a6a132ce6ca09b57354c9eeca1a7004">&#9670;&#160;</a></span>shader_buffer()</h2>
+<a id="afccf35fd6c51b42d2e346a174a7ad214" name="afccf35fd6c51b42d2e346a174a7ad214"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afccf35fd6c51b42d2e346a174a7ad214">&#9670;&#160;</a></span>shader_buffer()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -211,12 +200,12 @@ template&lt;typename Header, typename ArrayElement&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespacetr.html#a831d5c2dfdf51fe4068d34d5b1d70f81">map_type</a></td>          <td class="paramname"><span class="paramname"><em>map_type</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="namespacetr.html#a831d5c2dfdf51fe4068d34d5b1d70f81a2629564984b808cf7e6cfc61a0286d69">map_type::write_only</a></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="namespacetr.html#a05bfa9f1eba3f81364c4ca5d89fedbcd">graphics_buffer_map_access</a></td>          <td class="paramname"><span class="paramname"><em>map_type</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="namespacetr.html#a05bfa9f1eba3f81364c4ca5d89fedbcda2629564984b808cf7e6cfc61a0286d69">graphics_buffer_map_access::write_only</a></span>&#160;)</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -252,10 +241,12 @@ template&lt;typename Header, typename ArrayElement&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the size of the dynamic array. </p>
 <dl class="section return"><dt>Returns</dt><dd>Size of the dynamic array in elements. </dd></dl>
 
 </div>
@@ -280,10 +271,12 @@ template&lt;typename Header, typename ArrayElement&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the maximum capacity of the dynamic array. </p>
 <dl class="section return"><dt>Returns</dt><dd>Maximum capacity of the dynamic array in elements. </dd></dl>
 
 </div>
@@ -308,28 +301,28 @@ template&lt;typename Header, typename ArrayElement&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Sets the data of the header. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">header</td><td>Header objet to copy into the buffer. </td></tr>
+    <tr><td class="paramname">header</td><td>Header object to copy into the buffer. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a534107570f1e6d81aa158894eca8e106" name="a534107570f1e6d81aa158894eca8e106"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a534107570f1e6d81aa158894eca8e106">&#9670;&#160;</a></span>set_array()</h2>
+<a id="a19ea602dbcd7296473604e7644a97a40" name="a19ea602dbcd7296473604e7644a97a40"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19ea602dbcd7296473604e7644a97a40">&#9670;&#160;</a></span>set_array()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;typename Header, typename ArrayElement&gt; </div>
-<div class="memtemplate">
-template&lt;typed_contiguous_const_range&lt; ArrayElement &gt; Range&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -337,22 +330,18 @@ template&lt;typed_contiguous_const_range&lt; ArrayElement &gt; Range&gt; </div>
         <tr>
           <td class="memname">void <a class="el" href="classtr_1_1shader__buffer.html">tr::shader_buffer</a>&lt; Header, ArrayElement &gt;::set_array </td>
           <td>(</td>
-          <td class="paramtype">Range &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>data</em></span></td><td>)</td>
+          <td class="paramtype">std::span&lt; const ArrayElement &gt;</td>          <td class="paramname"><span class="paramname"><em>data</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">Range</td><td>Contiguous range of array elements. </td></tr>
-  </table>
-  </dd>
-</dl>
+
+<p>Sets the data of the dynamic array. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">data</td><td>Data to set the dynamic array to. </td></tr>
@@ -382,10 +371,12 @@ template&lt;typename Header, typename ArrayElement&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Resizes the dynamic array. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">size</td><td>Size of the array in elements. </td></tr>
@@ -396,8 +387,8 @@ template&lt;typename Header, typename ArrayElement&gt; </div>
 
 </div>
 </div>
-<a id="a235f8b0fba8bd8f3042b3b14f487b82a" name="a235f8b0fba8bd8f3042b3b14f487b82a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a235f8b0fba8bd8f3042b3b14f487b82a">&#9670;&#160;</a></span>map_header()</h2>
+<a id="aaf6f31d250c3f9d29bab112d4a1b7576" name="aaf6f31d250c3f9d29bab112d4a1b7576"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf6f31d250c3f9d29bab112d4a1b7576">&#9670;&#160;</a></span>map_header()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -408,7 +399,7 @@ template&lt;typename Header, typename ArrayElement&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classtr_1_1graphics__buffer__object__map.html">graphics_buffer_object_map</a>&lt; Header &gt; <a class="el" href="classtr_1_1shader__buffer.html">tr::shader_buffer</a>&lt; Header, ArrayElement &gt;::map_header </td>
+          <td class="memname"><a class="el" href="classtr_1_1mapped__graphics__buffer__object.html">mapped_graphics_buffer_object</a>&lt; Header &gt; <a class="el" href="classtr_1_1shader__buffer.html">tr::shader_buffer</a>&lt; Header, ArrayElement &gt;::map_header </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -416,16 +407,18 @@ template&lt;typename Header, typename ArrayElement&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Maps the fixed header of the buffer. </p>
 <dl class="section return"><dt>Returns</dt><dd>Map of the fixed header of the buffer. </dd></dl>
 
 </div>
 </div>
-<a id="a1a984c1444cfd790f12ea15817ed5753" name="a1a984c1444cfd790f12ea15817ed5753"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1a984c1444cfd790f12ea15817ed5753">&#9670;&#160;</a></span>map_array()</h2>
+<a id="a48a4957aa74cc63f3d1c3e3af4d447b0" name="a48a4957aa74cc63f3d1c3e3af4d447b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48a4957aa74cc63f3d1c3e3af4d447b0">&#9670;&#160;</a></span>map_array()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -436,7 +429,7 @@ template&lt;typename Header, typename ArrayElement&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classtr_1_1graphics__buffer__span__map.html">graphics_buffer_span_map</a>&lt; ArrayElement &gt; <a class="el" href="classtr_1_1shader__buffer.html">tr::shader_buffer</a>&lt; Header, ArrayElement &gt;::map_array </td>
+          <td class="memname"><a class="el" href="classtr_1_1mapped__graphics__buffer__span.html">mapped_graphics_buffer_span</a>&lt; ArrayElement &gt; <a class="el" href="classtr_1_1shader__buffer.html">tr::shader_buffer</a>&lt; Header, ArrayElement &gt;::map_array </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -444,16 +437,18 @@ template&lt;typename Header, typename ArrayElement&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Maps the dynamic array of the buffer. </p>
 <dl class="section return"><dt>Returns</dt><dd>Map of the dynamic array of the buffer. </dd></dl>
 
 </div>
 </div>
-<a id="a2c5c352444ab4d10ed3add4a8cd03f9a" name="a2c5c352444ab4d10ed3add4a8cd03f9a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2c5c352444ab4d10ed3add4a8cd03f9a">&#9670;&#160;</a></span>context()</h2>
+<a id="a2170a5a42b53d7fe44c297b82b2fe4c5" name="a2170a5a42b53d7fe44c297b82b2fe4c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2170a5a42b53d7fe44c297b82b2fe4c5">&#9670;&#160;</a></span>mapped()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -464,7 +459,7 @@ template&lt;typename Header, typename ArrayElement&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp; <a class="el" href="classtr_1_1graphics__buffer.html#a2c5c352444ab4d10ed3add4a8cd03f9a">tr::graphics_buffer::context</a> </td>
+          <td class="memname">bool <a class="el" href="classtr_1_1untyped__shader__buffer.html#a2170a5a42b53d7fe44c297b82b2fe4c5">tr::untyped_shader_buffer::mapped</a> </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -476,124 +471,9 @@ template&lt;typename Header, typename ArrayElement&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>Reference to the graphics context the buffer is on. </dd></dl>
 
-</div>
-</div>
-<a id="ab3a7924563ab5b21ec88e5004dd17d6a" name="ab3a7924563ab5b21ec88e5004dd17d6a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab3a7924563ab5b21ec88e5004dd17d6a">&#9670;&#160;</a></span>valid()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Header, typename ArrayElement&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool <a class="el" href="classtr_1_1graphics__buffer.html#ab3a7924563ab5b21ec88e5004dd17d6a">tr::graphics_buffer::valid</a> </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the buffer is in a valid state, <span class="tt">false</span> if it is in an invalid state. </dd></dl>
-
-</div>
-</div>
-<a id="aa18afa7f6fca547c293cf118569cfca6" name="aa18afa7f6fca547c293cf118569cfca6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa18afa7f6fca547c293cf118569cfca6">&#9670;&#160;</a></span>mapped()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Header, typename ArrayElement&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool <a class="el" href="classtr_1_1basic__shader__buffer.html#aa18afa7f6fca547c293cf118569cfca6">tr::basic_shader_buffer::mapped</a> </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
+<p>Gets whether the buffer is mapped. </p>
 <dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the buffer is mapped, <span class="tt">false</span> otherwise. </dd></dl>
-
-</div>
-</div>
-<a id="ada4364c0295af892b869f2be3ed62777" name="ada4364c0295af892b869f2be3ed62777"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ada4364c0295af892b869f2be3ed62777">&#9670;&#160;</a></span>label()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Header, typename ArrayElement&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string <a class="el" href="classtr_1_1graphics__buffer.html#ada4364c0295af892b869f2be3ed62777">tr::graphics_buffer::label</a> </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>Label of the buffer, or "&lt;unnamed&gt;". </dd></dl>
-
-</div>
-</div>
-<a id="ab5e025d8fb771727e580f881a1e65fac" name="ab5e025d8fb771727e580f881a1e65fac"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab5e025d8fb771727e580f881a1e65fac">&#9670;&#160;</a></span>set_label()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename Header, typename ArrayElement&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="classtr_1_1graphics__buffer.html#ab5e025d8fb771727e580f881a1e65fac">tr::graphics_buffer::set_label</a> </td>
-          <td>(</td>
-          <td class="paramtype">std::string_view</td>          <td class="paramname"><span class="paramname"><em>label</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">label</td><td>Label of the buffer. </td></tr>
-  </table>
-  </dd>
-</dl>
 
 </div>
 </div>

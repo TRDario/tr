@@ -131,7 +131,8 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1gra
 <p>Base class for buffers living on a graphics context.  
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><dl class="section note"><dt>Note</dt><dd><span class="tt"><a class="el" href="classtr_1_1graphics__buffer.html" title="Base class for buffers living on a graphics context.">tr::graphics_buffer</a></span> isn't intended to be directly instanced, it is merely documented because some buffers inherit methods from it.</dd></dl>
+<div class="textblock"><p>Base class for buffers living on a graphics context. </p>
+<dl class="section note"><dt>Note</dt><dd><span class="tt"><a class="el" href="classtr_1_1graphics__buffer.html" title="Base class for buffers living on a graphics context.">tr::graphics_buffer</a></span> isn't intended to be directly instanced, it is merely documented because some buffers inherit methods from it.</dd></dl>
 <p>Every instance of <span class="tt"><a class="el" href="classtr_1_1graphics__buffer.html" title="Base class for buffers living on a graphics context.">tr::graphics_buffer</a></span> is associated with a graphics context and cannot outlive its parent context.</p>
 <p><span class="tt"><a class="el" href="classtr_1_1graphics__buffer.html" title="Base class for buffers living on a graphics context.">tr::graphics_buffer</a></span> instances are movable, but not copyable. A moved-from instance of <span class="tt"><a class="el" href="classtr_1_1graphics__buffer.html" title="Base class for buffers living on a graphics context.">tr::graphics_buffer</a></span> is left in a special 'invalid' state. Invalid <span class="tt"><a class="el" href="classtr_1_1graphics__buffer.html" title="Base class for buffers living on a graphics context.">tr::graphics_buffer</a></span> instances may not be interacted with besides moving a new value into them and checking for validity using <span class="tt"><a class="el" href="#ab3a7924563ab5b21ec88e5004dd17d6a" title="Gets whether the buffer is in a valid state.">valid()</a></span>.</p>
 <p><span class="tt"><a class="el" href="classtr_1_1graphics__buffer.html" title="Base class for buffers living on a graphics context.">tr::graphics_buffer</a></span> instances may be labeled and are formattable. Example format output: <span class="tt">"My buffer" (OpenGL ID: 5)</span>. </p>
@@ -142,17 +143,17 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1gra
  <div class="center">
   <img src="classtr_1_1graphics__buffer.png" usemap="#tr_3A_3Agraphics_5Fbuffer_map" alt=""/>
   <map id="tr_3A_3Agraphics_5Fbuffer_map" name="tr_3A_3Agraphics_5Fbuffer_map">
-<area href="classtr_1_1basic__dyn__vertex__buffer.html" title="Dynamic vertex buffer class." alt="tr::basic_dyn_vertex_buffer" shape="rect" coords="0,56,258,80"/>
-<area href="classtr_1_1basic__shader__buffer.html" title="GPU buffer accessable to a shader." alt="tr::basic_shader_buffer" shape="rect" coords="402,56,660,80"/>
-<area href="classtr_1_1basic__static__vertex__buffer.html" title="Static vertex buffer class for holding immutable vertex data." alt="tr::basic_static_vertex_buffer" shape="rect" coords="804,56,1062,80"/>
-<area href="classtr_1_1basic__uniform__buffer.html" title="Basic shader uniform buffer." alt="tr::basic_uniform_buffer" shape="rect" coords="1072,56,1330,80"/>
-<area href="classtr_1_1dyn__index__buffer.html" title="Dynamic index buffer class." alt="tr::dyn_index_buffer" shape="rect" coords="1340,56,1598,80"/>
-<area href="classtr_1_1static__index__buffer.html" title="Static index buffer class for holding immutable index data." alt="tr::static_index_buffer" shape="rect" coords="1608,56,1866,80"/>
-<area href="classtr_1_1dyn__vertex__buffer.html" title="Typed dynamic vertex buffer class." alt="tr::dyn_vertex_buffer&lt; Element &gt;" shape="rect" coords="0,112,258,136"/>
-<area href="classtr_1_1shader__array.html" title="Specialized shader buffer with no header before the array." alt="tr::shader_array&lt; Element &gt;" shape="rect" coords="268,112,526,136"/>
-<area href="classtr_1_1shader__buffer.html" title="Shader buffer with a typed header and array." alt="tr::shader_buffer&lt; Header, ArrayElement &gt;" shape="rect" coords="536,112,794,136"/>
-<area href="classtr_1_1static__vertex__buffer.html" title="Typed static vertex buffer class for holding immutable vertex data of a single type." alt="tr::static_vertex_buffer&lt; Element &gt;" shape="rect" coords="804,112,1062,136"/>
-<area href="classtr_1_1uniform__buffer.html" title="Typed shader uniform buffer." alt="tr::uniform_buffer&lt; Object &gt;" shape="rect" coords="1072,112,1330,136"/>
+<area href="classtr_1_1dynamic__index__buffer.html" title="Dynamic index buffer class." alt="tr::dynamic_index_buffer" shape="rect" coords="0,56,258,80"/>
+<area href="classtr_1_1static__index__buffer.html" title="Static index buffer class for holding immutable index data." alt="tr::static_index_buffer" shape="rect" coords="268,56,526,80"/>
+<area href="classtr_1_1untyped__dynamic__vertex__buffer.html" title="Dynamic vertex buffer class." alt="tr::untyped_dynamic_vertex_buffer" shape="rect" coords="536,56,794,80"/>
+<area href="classtr_1_1untyped__shader__buffer.html" title="Untyped shader-accessible GPU buffer." alt="tr::untyped_shader_buffer" shape="rect" coords="938,56,1196,80"/>
+<area href="classtr_1_1untyped__static__vertex__buffer.html" title="Static vertex buffer class for holding immutable vertex data." alt="tr::untyped_static_vertex_buffer" shape="rect" coords="1340,56,1598,80"/>
+<area href="classtr_1_1untyped__uniform__buffer.html" title="Untyped shader uniform buffer." alt="tr::untyped_uniform_buffer" shape="rect" coords="1608,56,1866,80"/>
+<area href="classtr_1_1dynamic__vertex__buffer.html" title="Typed dynamic vertex buffer class." alt="tr::dynamic_vertex_buffer&lt; Element &gt;" shape="rect" coords="536,112,794,136"/>
+<area href="classtr_1_1shader__array.html" title="Specialized shader buffer with no header before the array." alt="tr::shader_array&lt; Element &gt;" shape="rect" coords="804,112,1062,136"/>
+<area href="classtr_1_1shader__buffer.html" title="Shader buffer with a typed header and array." alt="tr::shader_buffer&lt; Header, ArrayElement &gt;" shape="rect" coords="1072,112,1330,136"/>
+<area href="classtr_1_1static__vertex__buffer.html" title="Typed static vertex buffer class for holding immutable vertex data of a single type." alt="tr::static_vertex_buffer&lt; Element &gt;" shape="rect" coords="1340,112,1598,136"/>
+<area href="classtr_1_1uniform__buffer.html" title="Typed shader uniform buffer." alt="tr::uniform_buffer&lt; Object &gt;" shape="rect" coords="1608,112,1866,136"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -196,6 +197,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Constructs an empty buffer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">context</td><td>Graphics context to create the buffer on. </td></tr>
@@ -228,6 +231,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets a reference to the graphics context the buffer is on. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the graphics context the buffer is on. </dd></dl>
 
 </div>
@@ -254,6 +259,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets whether the buffer is in a valid state. </p>
 <dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the buffer is in a valid state, <span class="tt">false</span> if it is in an invalid state. </dd></dl>
 
 </div>
@@ -280,6 +287,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the label of the buffer. </p>
 <dl class="section return"><dt>Returns</dt><dd>Label of the buffer, or "&lt;unnamed&gt;". </dd></dl>
 
 </div>
@@ -306,6 +315,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Sets the label of the buffer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">label</td><td>Label of the buffer. </td></tr>

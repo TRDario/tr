@@ -129,8 +129,10 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('concepttr_1_1h
 <div class="contents">
 
 <p>Valid handle deleter type for a handle to <span class="tt">Base</span>.  
-</p>
-<h2 id="header-conceptdef" class="groupheader">Concept definition</h2>
+<a href="#details">More...</a></p>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Valid handle deleter type for a handle to <span class="tt">Base</span>. </p>
+</div><h2 id="header-conceptdef" class="groupheader">Concept definition</h2>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> Base&gt;</div>
 <div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepttr_1_1handle__deleter.html">handle_deleter</a> = std::invocable&lt;T, Base&gt; &amp;&amp; (std::move_constructible&lt;T&gt; || std::copy_constructible&lt;T&gt;) &amp;&amp;</div>
 <div class="line">                             std::is_nothrow_invocable_v&lt;T, Base&gt;</div>

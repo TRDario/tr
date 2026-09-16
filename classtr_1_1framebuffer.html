@@ -131,7 +131,8 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1fra
 <p>Container for a framebuffer object.  
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A framebuffer is a collection of references to buffers used as a destination for rendering. The default framebuffer is used to render to the screen, while instances of <span class="tt"><a class="el" href="classtr_1_1framebuffer.html" title="Container for a framebuffer object.">tr::framebuffer</a></span> may have arbitrary textures attached to them as rendering targets.</p>
+<div class="textblock"><p>Container for a framebuffer object. </p>
+<p>A framebuffer is a collection of references to buffers used as a destination for rendering. The default framebuffer is used to render to the screen, while instances of <span class="tt"><a class="el" href="classtr_1_1framebuffer.html" title="Container for a framebuffer object.">tr::framebuffer</a></span> may have arbitrary textures attached to them as rendering targets.</p>
 <p>Strictly speaking, instances of <span class="tt"><a class="el" href="classtr_1_1framebuffer.html" title="Container for a framebuffer object.">tr::framebuffer</a></span> are only containers for these underlying framebuffers. This means, for example, that setting a render target on a graphics context does not set a render target of a literal <span class="tt"><a class="el" href="classtr_1_1framebuffer.html" title="Container for a framebuffer object.">tr::framebuffer</a></span> object at a specific location in memory, but rather the value it contains. If the value is moved to a different instance of <span class="tt"><a class="el" href="classtr_1_1framebuffer.html" title="Container for a framebuffer object.">tr::framebuffer</a></span>, that value will still be set on the context. If the instance is overriden with a new value, the old value is destroyed and the graphics context will no longer have a set render target.</p>
 <p>Every instance of <span class="tt"><a class="el" href="classtr_1_1framebuffer.html" title="Container for a framebuffer object.">tr::framebuffer</a></span> is associated with a graphics context and cannot outlive its parent context.</p>
 <p><span class="tt"><a class="el" href="classtr_1_1framebuffer.html" title="Container for a framebuffer object.">tr::framebuffer</a></span> instances are movable, but not copyable. A moved-from instance of <span class="tt"><a class="el" href="classtr_1_1framebuffer.html" title="Container for a framebuffer object.">tr::framebuffer</a></span> is left in a special 'invalid' state. Invalid <span class="tt"><a class="el" href="classtr_1_1framebuffer.html" title="Container for a framebuffer object.">tr::framebuffer</a></span> instances may not be interacted with besides moving a new value into them and checking for validity using <span class="tt"><a class="el" href="#a5a4974c052b8f0e329fbb57fb97672b5" title="Gets whether the framebuffer is in a valid state.">valid()</a></span>.</p>
@@ -198,6 +199,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Framebuffer attachments. </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a1c95ac79da562291ef7df23708286ab0a32d432a5c34169a945991d0de8b478d9" name="a1c95ac79da562291ef7df23708286ab0a32d432a5c34169a945991d0de8b478d9"></a>color0&#160;</td><td class="fielddoc"><p>First color attachment. </p>
 </td></tr>
@@ -246,6 +249,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Creates an empty framebuffer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">context</td><td>Graphics context to create the framebuffer on. </td></tr>
@@ -279,6 +284,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Gets a reference to the graphics context the framebuffer is on. </p>
+
 </div>
 </div>
 <a id="a727364c010b0625db73f97df29982cca" name="a727364c010b0625db73f97df29982cca"></a>
@@ -307,6 +314,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Attaches a texture to the framebuffer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">attachment</td><td>Attachment to set. </td></tr>
@@ -339,6 +348,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Detaches whatever is on the specified attachment. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">attachment</td><td>Attachment to clear. </td></tr>
@@ -370,6 +381,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets whether the framebuffer is in a valid state. </p>
 <dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the framebuffer is in a valid state, <span class="tt">false</span> if it is in an invalid state. </dd></dl>
 
 </div>
@@ -396,6 +409,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Sets the debug label of the framebuffer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">label</td><td>Debug label of the framebuffer. </td></tr>
@@ -427,6 +442,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the debug label of the framebuffer. </p>
 <dl class="section return"><dt>Returns</dt><dd>Debug label of the framebuffer. </dd></dl>
 
 </div>

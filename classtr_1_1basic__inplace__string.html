@@ -132,7 +132,8 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1bas
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity, typename Traits = std::char_traits&lt;CharT&gt;&gt;<br />
-class tr::basic_inplace_string&lt; CharT, Capacity, Traits &gt;</div><p><span class="tt"><a class="el" href="namespacetr.html#a4d681c14ee065f1812f6873bcd1e7850" title="Basic 8-bit character inplace string alias.">tr::inplace_string</a></span> mirrors the interface of a standard string, but its characters are stored inplace within the object. Additionally, unlike a standard string, it is not guaranteed to be NUL-terminated. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
+class tr::basic_inplace_string&lt; CharT, Capacity, Traits &gt;</div><p>Inplace-allocated fixed-capacity string. </p>
+<p><span class="tt"><a class="el" href="namespacetr.html#a4d681c14ee065f1812f6873bcd1e7850" title="Basic 8-bit character inplace string alias.">tr::inplace_string</a></span> mirrors the interface of a standard string, but its characters are stored inplace within the object. Additionally, unlike a standard string, it is not guaranteed to be NUL-terminated. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">CharT</td><td>Character type used by the string. </td></tr>
     <tr><td class="paramname">Capacity</td><td>Maximum capacity of the string. </td></tr>
@@ -282,6 +283,8 @@ template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1intege
       </table>
 </div><div class="memdoc">
 
+<p>Value type used by the container. </p>
+
 </div>
 </div>
 <a id="adba0ccb6ecfa6ca8171064fa254b5a49" name="adba0ccb6ecfa6ca8171064fa254b5a49"></a>
@@ -297,6 +300,8 @@ template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1intege
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Size type used by the container. </p>
 
 </div>
 </div>
@@ -314,6 +319,8 @@ template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1intege
       </table>
 </div><div class="memdoc">
 
+<p>Difference type used by the container. </p>
+
 </div>
 </div>
 <a id="ae7b74c59588c5610f9d171eb17c5db35" name="ae7b74c59588c5610f9d171eb17c5db35"></a>
@@ -329,6 +336,8 @@ template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1intege
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Reference type used by the container. </p>
 
 </div>
 </div>
@@ -346,6 +355,8 @@ template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1intege
       </table>
 </div><div class="memdoc">
 
+<p>Constant reference type used by the container. </p>
+
 </div>
 </div>
 <a id="a6bd58c8b6ba74fc9279e3a8fdb1fc3be" name="a6bd58c8b6ba74fc9279e3a8fdb1fc3be"></a>
@@ -362,6 +373,8 @@ template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1intege
       </table>
 </div><div class="memdoc">
 
+<p>Pointer type used by the container. </p>
+
 </div>
 </div>
 <a id="a0b355319c45c438472f458647fd515a3" name="a0b355319c45c438472f458647fd515a3"></a>
@@ -377,6 +390,8 @@ template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1intege
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Constant pointer used by the container. </p>
 
 </div>
 </div>
@@ -405,6 +420,8 @@ template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1intege
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Creates an empty string. </p>
 
 </div>
 </div>
@@ -436,6 +453,8 @@ template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1intege
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Creates a string with a starting size. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">size</td><td>Initial size of the string. </td></tr>
@@ -472,6 +491,8 @@ template&lt;<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Creates a string by copying from a string literal. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">literal</td><td>String literal to copy. </td></tr>
@@ -505,6 +526,8 @@ template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1intege
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Creates a string by copying from another string. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">str</td><td>String to copy. </td></tr>
@@ -541,6 +564,8 @@ template&lt;std::convertible_to&lt; std::basic_string_view&lt; CharT, Traits &gt
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Creates a string by copying from another string. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">str</td><td>String to copy. </td></tr>
@@ -576,6 +601,8 @@ template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1intege
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets a string view over the string. </p>
 <dl class="section return"><dt>Returns</dt><dd>View over the string. </dd></dl>
 
 </div>
@@ -604,6 +631,8 @@ template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1intege
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets a standard string copy of the string. </p>
 <dl class="section return"><dt>Returns</dt><dd>Standard string copy of the string. </dd></dl>
 
 </div>
@@ -632,6 +661,8 @@ template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1intege
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Compares two inplace strings for equality. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">rhs</td><td>String to compare with. </td></tr>
@@ -666,6 +697,8 @@ template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1intege
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Compares two inplace strings for equality. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">rhs</td><td>String to compare with. </td></tr>
@@ -702,6 +735,8 @@ template&lt;std::convertible_to&lt; std::basic_string_view&lt; CharT, Traits &gt
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Compares two strings. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">rhs</td><td>String to compare with. </td></tr>
@@ -738,6 +773,8 @@ template&lt;std::convertible_to&lt; std::basic_string_view&lt; CharT, Traits &gt
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Compares two strings for equality. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">rhs</td><td>String to compare with. </td></tr>
@@ -772,6 +809,8 @@ template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1intege
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets a reference to a character in the string. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">offset</td><td>Index of the character within the string. </td></tr>
@@ -807,6 +846,8 @@ template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1intege
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets a reference to a character in the string. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">offset</td><td>Index of the character within the string. </td></tr>
@@ -842,6 +883,8 @@ template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1intege
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets a reference to the first character in the string. </p>
 <dl class="section pre"><dt>Precondition</dt><dd>The string must not be empty. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the first character in the string. </dd></dl>
 
@@ -871,6 +914,8 @@ template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1intege
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets a reference to the first character in the string. </p>
 <dl class="section pre"><dt>Precondition</dt><dd>The string must not be empty. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the first character in the string. </dd></dl>
 
@@ -900,6 +945,8 @@ template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1intege
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets a reference to the last character in the string. </p>
 <dl class="section pre"><dt>Precondition</dt><dd>The string must not be empty. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the last character in the string. </dd></dl>
 
@@ -929,6 +976,8 @@ template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1intege
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets a reference to the last character in the string. </p>
 <dl class="section pre"><dt>Precondition</dt><dd>The string must not be empty. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the last character in the string. </dd></dl>
 
@@ -958,6 +1007,8 @@ template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1intege
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets a pointer to the data of the string. </p>
 <dl class="section return"><dt>Returns</dt><dd>Pointer to the data of the string. </dd></dl>
 
 </div>
@@ -986,6 +1037,8 @@ template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1intege
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets a pointer to the data of the string. </p>
 <dl class="section return"><dt>Returns</dt><dd>Pointer to the data of the string. </dd></dl>
 
 </div>
@@ -1014,6 +1067,8 @@ template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1intege
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets an iterator to the beginning of the string. </p>
 <dl class="section return"><dt>Returns</dt><dd>Iterator to the beginning of the string. </dd></dl>
 
 </div>
@@ -1042,6 +1097,8 @@ template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1intege
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets an iterator to the beginning of the string. </p>
 <dl class="section return"><dt>Returns</dt><dd>Iterator to the beginning of the string. </dd></dl>
 
 </div>
@@ -1070,6 +1127,8 @@ template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1intege
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets an iterator to the beginning of the string. </p>
 <dl class="section return"><dt>Returns</dt><dd>Iterator to the beginning of the string. </dd></dl>
 
 </div>
@@ -1098,6 +1157,8 @@ template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1intege
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets an iterator to the end of the string. </p>
 <dl class="section return"><dt>Returns</dt><dd>Iterator to the end of the string. </dd></dl>
 
 </div>
@@ -1126,6 +1187,8 @@ template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1intege
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets an iterator to the end of the string. </p>
 <dl class="section return"><dt>Returns</dt><dd>Iterator to the end of the string. </dd></dl>
 
 </div>
@@ -1154,6 +1217,8 @@ template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1intege
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets an iterator to the end of the string. </p>
 <dl class="section return"><dt>Returns</dt><dd>Iterator to the end of the string. </dd></dl>
 
 </div>
@@ -1182,6 +1247,8 @@ template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1intege
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets whether the string is empty. </p>
 <dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the string is empty, <span class="tt">false</span> otherwise. </dd></dl>
 
 </div>
@@ -1210,6 +1277,8 @@ template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1intege
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the current size of the string. </p>
 <dl class="section return"><dt>Returns</dt><dd>Size of the string. </dd></dl>
 
 </div>
@@ -1238,6 +1307,8 @@ template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1intege
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the maximum capacity of the string. </p>
 <dl class="section return"><dt>Returns</dt><dd>Maximum capacity of the string. </dd></dl>
 
 </div>
@@ -1267,6 +1338,8 @@ template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1intege
 </table>
 </div><div class="memdoc">
 
+<p>Erases all characters from the string. </p>
+
 </div>
 </div>
 <a id="af9fa8282c6ebdf260e1c8cffd1141e54" name="af9fa8282c6ebdf260e1c8cffd1141e54"></a>
@@ -1293,6 +1366,8 @@ template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1intege
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Appends a character to the string. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">chr</td><td>Character to append to the string. </td></tr>
@@ -1327,6 +1402,8 @@ template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1intege
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Appends a character to the string. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">chr</td><td>Character to append to the string. </td></tr>
@@ -1361,6 +1438,8 @@ template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1intege
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Appends a character to the string. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">chr</td><td>Character to append to the string. </td></tr>
@@ -1402,6 +1481,8 @@ template&lt;forward_iterator_to_convertible_to&lt; <a class="el" href="#ac74f9a5
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Appends a range to the string. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Iterator</td><td>Forward iterator type to an element convertible to <span class="tt">char</span>. </td></tr>
@@ -1444,6 +1525,8 @@ template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1intege
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Appends a substring to the string. </p>
 <dl class="section pre"><dt>Precondition</dt><dd><span class="tt">this-&gt;<a class="el" href="#a195b29c11dd70f8e387f9db9ffe99a52" title="Gets the current size of the string.">size()</a> + str.size()</span> must be less than or equal to <span class="tt">Capacity</span>. </dd></dl>
 
 </div>
@@ -1472,6 +1555,8 @@ template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1intege
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Appends a substring to the string. </p>
 <dl class="section pre"><dt>Precondition</dt><dd><span class="tt">this-&gt;<a class="el" href="#a195b29c11dd70f8e387f9db9ffe99a52" title="Gets the current size of the string.">size()</a> + str.size()</span> must be less than or equal to <span class="tt">Capacity</span>. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>Reference to <span class="tt">*this</span>. </dd></dl>
 
@@ -1505,6 +1590,8 @@ template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1intege
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Inserts a character into the string. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">where</td><td>Position within the string to insert the character. </td></tr>
@@ -1552,6 +1639,8 @@ template&lt;forward_iterator_to_convertible_to&lt; <a class="el" href="#ac74f9a5
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Inserts a range into the string. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Iterator</td><td>Forward iterator type to an element convertible to <span class="tt">char</span>. </td></tr>
@@ -1600,6 +1689,8 @@ template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1intege
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Inserts a substring into the string. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">where</td><td>Position within the string to insert the substring. </td></tr>
@@ -1637,6 +1728,8 @@ template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1intege
 </table>
 </div><div class="memdoc">
 
+<p>Erases a character from the end of the string. </p>
+
 </div>
 </div>
 <a id="a67d27d12d33b0436f2f6f9c40d366d17" name="a67d27d12d33b0436f2f6f9c40d366d17"></a>
@@ -1663,6 +1756,8 @@ template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1intege
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Erases a character from the string. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">where</td><td>Iterator to the character to erase. </td></tr>
@@ -1701,6 +1796,8 @@ template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1intege
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Erases a portion of the string. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">start</td><td>Iterator to the first character to erase. </td></tr>
@@ -1740,6 +1837,8 @@ template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1intege
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Resizes the string, filling it with a character if necessary. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">size</td><td>New size of the string. </td></tr>

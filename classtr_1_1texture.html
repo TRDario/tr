@@ -129,8 +129,10 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1tex
 <div class="contents">
 
 <p>2D GPU texture container.  
-</p>
-<table class="memberdecls">
+ <a href="#details">More...</a></p>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>2D GPU texture container. </p>
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
@@ -166,10 +168,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a22218c3c84d29b802564a5ed6b871026" id="r_a22218c3c84d29b802564a5ed6b871026"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a22218c3c84d29b802564a5ed6b871026">set_border_color</a> (<a class="el" href="structtr_1_1rgbaf.html">rgbaf</a> color) noexcept</td></tr>
 <tr class="memdesc:a22218c3c84d29b802564a5ed6b871026"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the border color of the texture sampler (used when <span class="tt">wrap::BORDER_CLAMP</span> is in use).  <br /></td></tr>
 <tr id="pub-methods-6" class="groupHeader"><td colspan="2"><div class="groupHeader">Clearing &amp; setting</div></td></tr>
-<tr class="memitem:a3df919edb15b6ad23e769a276ae0f0d5" id="r_a3df919edb15b6ad23e769a276ae0f0d5"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a3df919edb15b6ad23e769a276ae0f0d5">clear</a> (<a class="el" href="structtr_1_1rgbaf.html">rgbaf</a> color) noexcept</td></tr>
-<tr class="memdesc:a3df919edb15b6ad23e769a276ae0f0d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the texture.  <br /></td></tr>
-<tr class="memitem:a17730c401f1e3fee78e862eed08e58f1" id="r_a17730c401f1e3fee78e862eed08e58f1"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a17730c401f1e3fee78e862eed08e58f1">clear_region</a> (<a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; int &gt; region, <a class="el" href="structtr_1_1rgbaf.html">rgbaf</a> color) noexcept</td></tr>
-<tr class="memdesc:a17730c401f1e3fee78e862eed08e58f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears a region of the texture.  <br /></td></tr>
+<tr class="memitem:a27787261e8e2ce30d97bca87d1fd2065" id="r_a27787261e8e2ce30d97bca87d1fd2065"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a27787261e8e2ce30d97bca87d1fd2065">clear</a> (<a class="el" href="structtr_1_1rgbaf.html">rgbaf</a> color=<a class="el" href="structtr_1_1rgba8.html">rgba8</a>{}) noexcept</td></tr>
+<tr class="memdesc:a27787261e8e2ce30d97bca87d1fd2065"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the texture.  <br /></td></tr>
+<tr class="memitem:a431b3195a850a1f43cf91e7e56890705" id="r_a431b3195a850a1f43cf91e7e56890705"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a431b3195a850a1f43cf91e7e56890705">clear_region</a> (<a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; int &gt; region, <a class="el" href="structtr_1_1rgbaf.html">rgbaf</a> color=<a class="el" href="structtr_1_1rgba8.html">rgba8</a>{}) noexcept</td></tr>
+<tr class="memdesc:a431b3195a850a1f43cf91e7e56890705"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears a region of the texture.  <br /></td></tr>
 <tr class="memitem:ad6bd2c492d9b4e25c3c725a5df77ac39" id="r_ad6bd2c492d9b4e25c3c725a5df77ac39"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ad6bd2c492d9b4e25c3c725a5df77ac39">copy_region</a> (glm::ivec2 tl, <a class="el" href="classtr_1_1texture__view.html">texture_view</a> src, <a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; int &gt; region) noexcept</td></tr>
 <tr class="memdesc:ad6bd2c492d9b4e25c3c725a5df77ac39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copies a region from another texture.  <br /></td></tr>
 <tr class="memitem:a95eaf5310e18fb4781b1fc14fb788c12" id="r_a95eaf5310e18fb4781b1fc14fb788c12"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a95eaf5310e18fb4781b1fc14fb788c12">set_region</a> (glm::ivec2 tl, <a class="el" href="classtr_1_1sub__bitmap.html">sub_bitmap</a> bitmap) noexcept</td></tr>
@@ -203,6 +205,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Creates an incomplete texture. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">context</td><td>Graphics context to create the texture on. </td></tr>
@@ -248,6 +252,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Allocates an uninitialized texture. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">context</td><td>Graphics context to create the texture on. </td></tr>
@@ -296,6 +302,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Constructs a texture with data uploaded from a bitmap. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">context</td><td>Graphics context to create the texture on. </td></tr>
@@ -331,6 +339,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets a view to the texture. </p>
 <dl class="section return"><dt>Returns</dt><dd>View to the texture. </dd></dl>
 
 </div>
@@ -357,6 +367,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets a view to the texture. </p>
 <dl class="section return"><dt>Returns</dt><dd>View to the texture. </dd></dl>
 
 </div>
@@ -383,6 +395,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets a reference to the graphics context the texture is on. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the graphics context the texture is on. </dd></dl>
 
 </div>
@@ -409,6 +423,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets whether the texture is in a valid state. </p>
 <dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the texture is in a valid state, <span class="tt">false</span> if it is in an invalid state. </dd></dl>
 
 </div>
@@ -435,6 +451,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets whether the texture is complete. </p>
 <dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the texture is complete, <span class="tt">false</span> otherwise. </dd></dl>
 
 </div>
@@ -461,6 +479,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the size of the texture. </p>
 <dl class="section return"><dt>Returns</dt><dd>Size of the texture. </dd></dl>
 
 </div>
@@ -488,6 +508,8 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Allocates the texture and releases the previously held storage as a new texture. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">size</td><td>Size of the texture. </td></tr>
@@ -526,6 +548,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Sets the filters used by the texture sampler. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">min_filter</td><td>Minifying filter to use. </td></tr>
@@ -558,6 +582,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Sets the wrapping used by the texture sampler. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">wrap</td><td>Wrapping type to use. </td></tr>
@@ -589,6 +615,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Sets the border color of the texture sampler (used when <span class="tt">wrap::BORDER_CLAMP</span> is in use). </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">color</td><td>Border color to use. </td></tr>
@@ -598,8 +626,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a3df919edb15b6ad23e769a276ae0f0d5" name="a3df919edb15b6ad23e769a276ae0f0d5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3df919edb15b6ad23e769a276ae0f0d5">&#9670;&#160;</a></span>clear()</h2>
+<a id="a27787261e8e2ce30d97bca87d1fd2065" name="a27787261e8e2ce30d97bca87d1fd2065"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a27787261e8e2ce30d97bca87d1fd2065">&#9670;&#160;</a></span>clear()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -610,7 +638,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">void tr::texture::clear </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structtr_1_1rgbaf.html">rgbaf</a></td>          <td class="paramname"><span class="paramname"><em>color</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="structtr_1_1rgbaf.html">rgbaf</a></td>          <td class="paramname"><span class="paramname"><em>color</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="structtr_1_1rgba8.html">rgba8</a>{}</span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -620,6 +648,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Clears the texture. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">color</td><td>Color to clear the texture to. </td></tr>
@@ -629,8 +659,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a17730c401f1e3fee78e862eed08e58f1" name="a17730c401f1e3fee78e862eed08e58f1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a17730c401f1e3fee78e862eed08e58f1">&#9670;&#160;</a></span>clear_region()</h2>
+<a id="a431b3195a850a1f43cf91e7e56890705" name="a431b3195a850a1f43cf91e7e56890705"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a431b3195a850a1f43cf91e7e56890705">&#9670;&#160;</a></span>clear_region()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -646,7 +676,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structtr_1_1rgbaf.html">rgbaf</a></td>          <td class="paramname"><span class="paramname"><em>color</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="structtr_1_1rgbaf.html">rgbaf</a></td>          <td class="paramname"><span class="paramname"><em>color</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="structtr_1_1rgba8.html">rgba8</a>{}</span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -655,6 +685,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Clears a region of the texture. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">region</td><td>Region of the texture to clear. </td></tr>
@@ -696,6 +728,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Copies a region from another texture. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">tl</td><td>Top-left corner of the copied region within the target texture. </td></tr>
@@ -733,6 +767,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Sets a region of the texture. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">tl</td><td>Top-left corner of the copied region within the target texture. </td></tr>
@@ -765,6 +801,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the debug label of the texture. </p>
 <dl class="section return"><dt>Returns</dt><dd>Debug label of the texture. </dd></dl>
 
 </div>
@@ -791,6 +829,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Sets the debug label of the texture. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">label</td><td>Debug label of the texture. </td></tr>

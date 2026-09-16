@@ -129,8 +129,10 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('logger_8hpp.ht
 <div class="contents">
 
 <p>Provides the <span class="tt"><a class="el" href="classtr_1_1logger.html" title="Logging subsystem singleton.">tr::logger</a></span> singleton.  
-</p>
-
+<a href="#details">More...</a></p>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Provides the <span class="tt"><a class="el" href="classtr_1_1logger.html" title="Logging subsystem singleton.">tr::logger</a></span> singleton. </p>
+</div>
 <p><a href="logger_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
@@ -182,6 +184,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Logs a trace message. </p>
 <p>Formatting is done through <span class="tt">std::format</span>, so <span class="tt">fmt</span> must be a valid format string and all further arguments must be formattable.</p>
 <p>This macro only has an effect if <span class="tt">TR_ENABLE_LOG_TRACE</span> is enabled. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -217,6 +221,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Logs a debug message. </p>
 <p>Formatting is done through <span class="tt">std::format</span>, so <span class="tt">fmt</span> must be a valid format string and all further arguments must be formattable.</p>
 <p>This macro only has an effect if <span class="tt">TR_ENABLE_LOG_DEBUG</span> is enabled. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -252,6 +258,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Logs information. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">source</td><td>Message source identifier. </td></tr>
@@ -286,6 +294,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Logs a warning. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">source</td><td>Message source identifier. </td></tr>
@@ -320,6 +330,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Logs an error. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">source</td><td>Message source identifier. </td></tr>
@@ -354,6 +366,8 @@ Macros</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Logs a fatal error. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">source</td><td>Message source identifier. </td></tr>

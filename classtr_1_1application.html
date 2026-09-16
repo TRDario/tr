@@ -129,8 +129,10 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1app
 <div class="contents">
 
 <p>Interface for an application run in the main loop of tr.  
-</p>
-<table class="memberdecls">
+ <a href="#details">More...</a></p>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Interface for an application run in the main loop of tr. </p>
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:metadata" id="r_metadata"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structtr_1_1application_1_1metadata.html">metadata</a></td></tr>
@@ -158,8 +160,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:ae4693d15a2a266522a1c8636b57783c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys the application.  <br /></td></tr>
 <tr class="memitem:a21ede20338183f25b06cbdfe10cc330b" id="r_a21ede20338183f25b06cbdfe10cc330b"><td class="memItemLeft">virtual <a class="el" href="#ad468e60c47e951ff861df0f9daa9bd7b">signal</a>&#160;</td><td class="memItemRight"><a class="el" href="#a21ede20338183f25b06cbdfe10cc330b">initialize</a> ()</td></tr>
 <tr class="memdesc:a21ede20338183f25b06cbdfe10cc330b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function called once at the beginning of execution after the initialization of systems.  <br /></td></tr>
-<tr class="memitem:a29c780c5f5e23a14580876c6f9aac72c" id="r_a29c780c5f5e23a14580876c6f9aac72c"><td class="memItemLeft">virtual <a class="el" href="#ad468e60c47e951ff861df0f9daa9bd7b">signal</a>&#160;</td><td class="memItemRight"><a class="el" href="#a29c780c5f5e23a14580876c6f9aac72c">handle_event</a> (const <a class="el" href="classtr_1_1event.html">tr::event</a> &amp;event)</td></tr>
-<tr class="memdesc:a29c780c5f5e23a14580876c6f9aac72c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function called whenever an event needs to be handled.  <br /></td></tr>
+<tr class="memitem:a160bde93f0bb17aecbbe24ccfc2fcc5a" id="r_a160bde93f0bb17aecbbe24ccfc2fcc5a"><td class="memItemLeft">virtual <a class="el" href="#ad468e60c47e951ff861df0f9daa9bd7b">signal</a>&#160;</td><td class="memItemRight"><a class="el" href="#a160bde93f0bb17aecbbe24ccfc2fcc5a">handle_event</a> (const event &amp;event)</td></tr>
+<tr class="memdesc:a160bde93f0bb17aecbbe24ccfc2fcc5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function called whenever an event needs to be handled.  <br /></td></tr>
 <tr class="memitem:a7544b8b75ad439d7a03341ff7d97f4cf" id="r_a7544b8b75ad439d7a03341ff7d97f4cf"><td class="memItemLeft">virtual <a class="el" href="#ad468e60c47e951ff861df0f9daa9bd7b">signal</a>&#160;</td><td class="memItemRight"><a class="el" href="#a7544b8b75ad439d7a03341ff7d97f4cf">update</a> (<a class="el" href="namespacetr.html#a0a06575d52c3090c44755b9a8174f146">duration</a> delta)</td></tr>
 <tr class="memdesc:a7544b8b75ad439d7a03341ff7d97f4cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Primary update callback function.  <br /></td></tr>
 <tr class="memitem:a4b38208354e4ac8820f70d51a1914636" id="r_a4b38208354e4ac8820f70d51a1914636"><td class="memItemLeft">virtual void&#160;</td><td class="memItemRight"><a class="el" href="#a4b38208354e4ac8820f70d51a1914636">shut_down</a> (signal<a class="el" href="#ad468e60c47e951ff861df0f9daa9bd7b">signal</a> signal<a class="el" href="#ad468e60c47e951ff861df0f9daa9bd7b">signal</a>)</td></tr>
@@ -185,6 +187,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Signals used for defining the control flow of the application callbacks. </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ad468e60c47e951ff861df0f9daa9bd7bac0dfc2c94bd5e3e0e48e9084ef8cc0e2" name="ad468e60c47e951ff861df0f9daa9bd7bac0dfc2c94bd5e3e0e48e9084ef8cc0e2"></a>proceed&#160;</td><td class="fielddoc"><p>Continue execution. </p>
 </td></tr>
@@ -215,6 +219,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Supported application types. </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a52455c54911b67d7984c5103cb497e2fac8d46d341bea4fd5bff866a65ff8aea9" name="a52455c54911b67d7984c5103cb497e2fac8d46d341bea4fd5bff866a65ff8aea9"></a>game&#160;</td><td class="fielddoc"><p>The application is a game. </p>
 </td></tr>
@@ -248,6 +254,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Applications are not copyable. </p>
+
 </div>
 </div>
 <a id="a6246e8813709061f9981cc96404e9efd" name="a6246e8813709061f9981cc96404e9efd"></a>
@@ -272,6 +280,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Applications are not movable. </p>
 
 </div>
 </div>
@@ -298,6 +308,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Destroys the application. </p>
+
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
@@ -323,12 +335,14 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Callback function called once at the beginning of execution after the initialization of systems. </p>
 <p>Uncaught exceptions from this function will display a dialog box and quit the application. </p><dl class="section return"><dt>Returns</dt><dd>Application state signal after initialization. </dd></dl>
 
 </div>
 </div>
-<a id="a29c780c5f5e23a14580876c6f9aac72c" name="a29c780c5f5e23a14580876c6f9aac72c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a29c780c5f5e23a14580876c6f9aac72c">&#9670;&#160;</a></span>handle_event()</h2>
+<a id="a160bde93f0bb17aecbbe24ccfc2fcc5a" name="a160bde93f0bb17aecbbe24ccfc2fcc5a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a160bde93f0bb17aecbbe24ccfc2fcc5a">&#9670;&#160;</a></span>handle_event()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -339,7 +353,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">virtual <a class="el" href="#ad468e60c47e951ff861df0f9daa9bd7b">signal</a> tr::application::handle_event </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classtr_1_1event.html">tr::event</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>event</em></span></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="classtr_1_1event.html">event</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>event</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -349,6 +363,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Callback function called whenever an event needs to be handled. </p>
 <p>Not guaranteed to be called on the main thread.</p>
 <p>Uncaught exceptions from this function will display a dialog box and quit the application. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -382,6 +398,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Primary update callback function. </p>
 <p>Uncaught exceptions from this function will display a dialog box and quit the application. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">delta</td><td>Time since the last update. </td></tr>
@@ -414,6 +432,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Callback function called once at the end of execution right before the destruction of systems. </p>
 <p>Uncaught exceptions from this function will display a dialog box and quit the application. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">signal</td><td>Signal that caused the shutdown. </td></tr>

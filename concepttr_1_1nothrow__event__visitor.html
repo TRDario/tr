@@ -129,8 +129,10 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('concepttr_1_1n
 <div class="contents">
 
 <p>Valid event visitor type that doesn't throw.  
-</p>
-<h2 id="header-conceptdef" class="groupheader">Concept definition</h2>
+<a href="#details">More...</a></p>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Valid event visitor type that doesn't throw. </p>
+</div><h2 id="header-conceptdef" class="groupheader">Concept definition</h2>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepttr_1_1nothrow__event__visitor.html">nothrow_event_visitor</a> = <a class="code hl_concept" href="concepttr_1_1event__visitor.html">event_visitor&lt;T&gt;</a> &amp;&amp; <span class="keyword">noexcept</span>(std::declval&lt;T&gt;(std::declval&lt;quit_event&gt;())) &amp;&amp;</div>
 <div class="line">                                    <span class="keyword">noexcept</span>(std::declval&lt;T&gt;(std::declval&lt;window_show_event&gt;())) &amp;&amp;</div>

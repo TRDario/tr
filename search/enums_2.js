@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['halign_0',['halign',['../namespacetr.html#af9ec050fca3710298b3ca45a9307a0d5',1,'tr']]]
+  ['graphics_5fbuffer_5fmap_5faccess_0',['graphics_buffer_map_access',['../namespacetr.html#a05bfa9f1eba3f81364c4ca5d89fedbcd',1,'tr']]]
 ];

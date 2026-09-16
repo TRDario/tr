@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['element_5ftype_0',['element_type',['../classtr_1_1graphics__buffer__span__map.html#a14d05a2fc51831011d6af7b2cc11a223',1,'tr::graphics_buffer_span_map']]]
+  ['element_5ftype_0',['element_type',['../classtr_1_1mapped__graphics__buffer__span.html#afb63bf41c9a8f12b8ece629ee8cf3400',1,'tr::mapped_graphics_buffer_span']]]
 ];

@@ -129,8 +129,10 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1rng
 <div class="contents">
 
 <p>Xorshiftr128+ random number generator.  
-</p>
-<table class="memberdecls">
+ <a href="#details">More...</a></p>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Xorshiftr128+ random number generator. </p>
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
@@ -197,6 +199,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Initializes RNG. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">seed</td><td>Seed to initialize the generator with. </td></tr>
@@ -229,6 +233,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Advances the RNG and returns a value. </p>
 <dl class="section return"><dt>Returns</dt><dd>New randomly-generated value. </dd></dl>
 
 </div>
@@ -257,6 +263,8 @@ template&lt;std::integral Integer&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Generates a random integral value. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Integer</td><td>Integer type. </td></tr>
@@ -291,6 +299,8 @@ template&lt;std::integral Integer&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Generates a random integral value in the range [0, <span class="tt">max</span>). </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Integer</td><td>Integer type. </td></tr>
@@ -336,6 +346,8 @@ template&lt;std::integral Integer&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Generates a random integral value in the range [<span class="tt">min</span>, <span class="tt">max</span>). </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Integer</td><td>Integer type. </td></tr>
@@ -378,6 +390,8 @@ template&lt;std::floating_point FloatingPoint&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Generates a random floating point value in the range [0, 1). </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">FloatingPoint</td><td>Floating-point type. </td></tr>
@@ -412,6 +426,8 @@ template&lt;std::floating_point FloatingPoint&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Generates a random floating point value in the range [0, <span class="tt">max</span>). </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">FloatingPoint</td><td>Floating-point type. </td></tr>
@@ -457,6 +473,8 @@ template&lt;std::floating_point FloatingPoint&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Generates a random floating point value in the range [<span class="tt">min</span>, <span class="tt">max</span>). </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">FloatingPoint</td><td>Floating-point type. </td></tr>
@@ -499,6 +517,8 @@ template&lt;std::same_as&lt; <a class="el" href="classtr_1_1angle.html">angle</a
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Generates a random angle value in the range [0tr, 1tr). </p>
 <dl class="section return"><dt>Returns</dt><dd>Random angle in the range [0tr, 1tr). </dd></dl>
 
 </div>
@@ -525,6 +545,8 @@ template&lt;std::same_as&lt; <a class="el" href="classtr_1_1angle.html">angle</a
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Generates a random angle value in the range [0, <span class="tt">max</span>). </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">max</td><td>Upper bound of the random range. </td></tr>
@@ -562,6 +584,8 @@ template&lt;std::same_as&lt; <a class="el" href="classtr_1_1angle.html">angle</a
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Generates a random angle value in the range [<span class="tt">min</span>, <span class="tt">max</span>). </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">min</td><td>Lower bound of the random range. </td></tr>
@@ -598,6 +622,8 @@ template&lt;std::same_as&lt; glm::vec2 &gt;&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Generates a random vector with a specific magnitude. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">magnitude</td><td>Magnitude of the vector. </td></tr>
@@ -632,6 +658,8 @@ template&lt;std::same_as&lt; glm::vec2 &gt;&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Generates a random point within a rectangular region. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">region</td><td>Region to constrain the vector to. </td></tr>
@@ -664,6 +692,8 @@ template&lt;std::same_as&lt; glm::vec2 &gt;&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Generates a random sign (-1 or 1). </p>
 <dl class="section return"><dt>Returns</dt><dd><span class="tt">-1</span> or <span class="tt">1</span>. </dd></dl>
 
 </div>

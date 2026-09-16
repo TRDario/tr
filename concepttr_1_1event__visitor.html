@@ -131,7 +131,8 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('concepttr_1_1e
 <p>Valid event visitor type.  
 <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Event visitors must be callable with all event types, and all overloads must return the same type. </p>
+<div class="textblock"><p>Valid event visitor type. </p>
+<p>Event visitors must be callable with all event types, and all overloads must return the same type. </p>
 </div><h2 id="header-conceptdef" class="groupheader">Concept definition</h2>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepttr_1_1event__visitor.html">event_visitor</a> = std::invocable&lt;T, quit_event&gt; &amp;&amp; std::invocable&lt;T, window_show_event&gt; &amp;&amp; std::invocable&lt;T, window_hide_event&gt; &amp;&amp;</div>

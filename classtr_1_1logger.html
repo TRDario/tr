@@ -129,8 +129,10 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1log
 <div class="contents">
 
 <p>Logging subsystem singleton.  
-</p>
-<table class="memberdecls">
+ <a href="#details">More...</a></p>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Logging subsystem singleton. </p>
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Level</div></td></tr>
@@ -179,6 +181,8 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets a reference to the logger instance. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the logger instance. </dd></dl>
 
 </div>
@@ -205,6 +209,8 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the minimum handled log level. </p>
 <dl class="section return"><dt>Returns</dt><dd>Minimum handled log level. </dd></dl>
 
 </div>
@@ -231,6 +237,8 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Sets the minimum handled log level. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">level</td><td>Minimum handled log level. </td></tr>
@@ -254,6 +262,8 @@ Static Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Registers a sink to the logger. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">sink</td><td>Shared pointer to the sink to register. </td></tr>
@@ -285,6 +295,8 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Clears all sinks from the logger. </p>
 
 </div>
 </div>
@@ -326,6 +338,8 @@ template&lt;typename... Args&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Logs a message to the logger. </p>
 <dl class="section note"><dt>Note</dt><dd>The logger has a fixed-size queue of messages it can handle. If the queue is full, the message is silently dropped. </dd></dl>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
@@ -359,6 +373,8 @@ template&lt;typename... Args&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Flushes all pending log messages to the registered sinks and flushes the sinks afterwards. </p>
 
 </div>
 </div>

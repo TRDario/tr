@@ -1,5 +1,6 @@
 var classtr_1_1window__error =
 [
+    [ "window_error", "classtr_1_1window__error.html#a5d1d10eb1900626e7ccdceb0676e1fba", null ],
     [ "window_error", "classtr_1_1window__error.html#af69d41f52349ad0e9bf691c542b5c0c1", null ],
     [ "name", "classtr_1_1window__error.html#ab8a94ec5da95befe6ce931980bb24fac", null ],
     [ "description", "classtr_1_1window__error.html#a0b1f9eac835baeca1823c56c1e1b7119", null ],

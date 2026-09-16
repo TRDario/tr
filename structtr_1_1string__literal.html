@@ -132,7 +132,8 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('structtr_1_1st
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Size&gt;<br />
-struct tr::string_literal&lt; Size &gt;</div><dl class="tparams"><dt>Template Parameters</dt><dd>
+struct tr::string_literal&lt; Size &gt;</div><p>Literal object holding a character array intended to allow passing string literals as non-type template parameters. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Size</td><td>Number of characters in the literal + 1 for the NUL-terminator. </td></tr>
   </table>
@@ -185,6 +186,8 @@ template&lt;<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Constructs a template string literal from a real string literal. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">str</td><td>Source string literal to copy. </td></tr>
@@ -219,6 +222,8 @@ template&lt;<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets a C-string pointing to the string literal. </p>
 <dl class="section return"><dt>Returns</dt><dd>C-string pointing to the string literal. </dd></dl>
 
 </div>
@@ -247,6 +252,8 @@ template&lt;<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets a string view to the string literal. </p>
 <dl class="section return"><dt>Returns</dt><dd>String view to the string literal. </dd></dl>
 
 </div>
@@ -277,6 +284,8 @@ template&lt;typename... Args&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets a format string view to the string literal. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Args</td><td>List of arguments to the formatting function. </td></tr>
@@ -311,6 +320,8 @@ template&lt;<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the length of the literal. </p>
 <dl class="section return"><dt>Returns</dt><dd>Length of the string literal. </dd></dl>
 
 </div>
@@ -329,6 +340,8 @@ template&lt;<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Backing character array of the string. </p>
 
 </div>
 </div>

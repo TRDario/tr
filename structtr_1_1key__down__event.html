@@ -129,18 +129,20 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('structtr_1_1ke
 <div class="contents">
 
 <p>Event emitted when a key is pressed.  
-</p>
-<table class="memberdecls">
+ <a href="#details">More...</a></p>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Event emitted when a key is pressed. </p>
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
 <tr class="memitem:a1c1b71a38a104a901d5cdba0f43ce2f6" id="r_a1c1b71a38a104a901d5cdba0f43ce2f6"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a1c1b71a38a104a901d5cdba0f43ce2f6">key_down_event</a> (const event &amp;event) noexcept</td></tr>
 <tr class="memdesc:a1c1b71a38a104a901d5cdba0f43ce2f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a generic event into a key down event.  <br /></td></tr>
-<tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Conversion operators</div></td></tr>
-<tr class="memitem:a2139f25ebfac1ac344582e5478e8bdb6" id="r_a2139f25ebfac1ac344582e5478e8bdb6"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a2139f25ebfac1ac344582e5478e8bdb6">operator scan_chord</a> () const noexcept</td></tr>
-<tr class="memdesc:a2139f25ebfac1ac344582e5478e8bdb6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the pressed scan chord.  <br /></td></tr>
-<tr class="memitem:aa38fab19d51cceb64a0ac153a277a211" id="r_aa38fab19d51cceb64a0ac153a277a211"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#aa38fab19d51cceb64a0ac153a277a211">operator key_chord</a> () const noexcept</td></tr>
-<tr class="memdesc:aa38fab19d51cceb64a0ac153a277a211"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the pressed key chord.  <br /></td></tr>
+<tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Chords</div></td></tr>
+<tr class="memitem:a64b74d961c97103b5bdd469e70336a2d" id="r_a64b74d961c97103b5bdd469e70336a2d"><td class="memItemLeft">scan_chord&#160;</td><td class="memItemRight"><a class="el" href="#a64b74d961c97103b5bdd469e70336a2d">scan_chord</a> () const noexcept</td></tr>
+<tr class="memdesc:a64b74d961c97103b5bdd469e70336a2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the pressed scan chord.  <br /></td></tr>
+<tr class="memitem:a37111d9c39729170dce61fc26bbff47a" id="r_a37111d9c39729170dce61fc26bbff47a"><td class="memItemLeft">key_chord&#160;</td><td class="memItemRight"><a class="el" href="#a37111d9c39729170dce61fc26bbff47a">key_chord</a> () const noexcept</td></tr>
+<tr class="memdesc:a37111d9c39729170dce61fc26bbff47a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the pressed key chord.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -178,6 +180,8 @@ Public Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Converts a generic event into a key down event. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">event</td><td>Event to convert. </td></tr>
@@ -188,8 +192,8 @@ Public Attributes</h2></td></tr>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="a2139f25ebfac1ac344582e5478e8bdb6" name="a2139f25ebfac1ac344582e5478e8bdb6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2139f25ebfac1ac344582e5478e8bdb6">&#9670;&#160;</a></span>operator scan_chord()</h2>
+<a id="a64b74d961c97103b5bdd469e70336a2d" name="a64b74d961c97103b5bdd469e70336a2d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a64b74d961c97103b5bdd469e70336a2d">&#9670;&#160;</a></span>scan_chord()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -198,7 +202,7 @@ Public Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">tr::key_down_event::operator <a class="el" href="structtr_1_1scan__chord.html">scan_chord</a> </td>
+          <td class="memname">scan_chord tr::key_down_event::scan_chord </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -210,12 +214,14 @@ Public Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the pressed scan chord. </p>
 <dl class="section return"><dt>Returns</dt><dd>Pressed scan chord. </dd></dl>
 
 </div>
 </div>
-<a id="aa38fab19d51cceb64a0ac153a277a211" name="aa38fab19d51cceb64a0ac153a277a211"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa38fab19d51cceb64a0ac153a277a211">&#9670;&#160;</a></span>operator key_chord()</h2>
+<a id="a37111d9c39729170dce61fc26bbff47a" name="a37111d9c39729170dce61fc26bbff47a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a37111d9c39729170dce61fc26bbff47a">&#9670;&#160;</a></span>key_chord()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -224,7 +230,7 @@ Public Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">tr::key_down_event::operator <a class="el" href="structtr_1_1key__chord.html">key_chord</a> </td>
+          <td class="memname">key_chord tr::key_down_event::key_chord </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -236,6 +242,8 @@ Public Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the pressed key chord. </p>
 <dl class="section return"><dt>Returns</dt><dd>Pressed key chord. </dd></dl>
 
 </div>
@@ -253,6 +261,8 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>View to the window associated with the event. </p>
+
 </div>
 </div>
 <a id="a624051223b2a7b340f242d8c86f932f9" name="a624051223b2a7b340f242d8c86f932f9"></a>
@@ -266,6 +276,8 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Whether the event is a repeat. </p>
 
 </div>
 </div>
@@ -281,6 +293,8 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Physical keycode of the pressed key. </p>
+
 </div>
 </div>
 <a id="a1e4fde142cd0e93f3532c3c84103b54f" name="a1e4fde142cd0e93f3532c3c84103b54f"></a>
@@ -295,6 +309,8 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Virtual keycode of the pressed key. </p>
+
 </div>
 </div>
 <a id="afa567b816b57342ea42fa889aa818d2e" name="afa567b816b57342ea42fa889aa818d2e"></a>
@@ -308,6 +324,8 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Bitmask of held modifiers when the key was pressed. </p>
 
 </div>
 </div>

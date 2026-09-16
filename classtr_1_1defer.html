@@ -133,7 +133,8 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1def
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;std::invocable Fn&gt;<br />
 requires (std::is_nothrow_invocable_v&lt;Fn&gt;)<br />
-class tr::defer&lt; Fn &gt;</div><dl class="tparams"><dt>Template Parameters</dt><dd>
+class tr::defer&lt; Fn &gt;</div><p>RAII deferred function call. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Fn</td><td>Deferred function type. </td></tr>
   </table>
@@ -172,6 +173,8 @@ template&lt;std::invocable Fn&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Constructs a deferred function call. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">fn</td><td>Function to defer. </td></tr>
@@ -205,6 +208,8 @@ template&lt;std::invocable Fn&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Calls the deferred function. </p>
 
 </div>
 </div>

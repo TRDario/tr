@@ -129,46 +129,51 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1win
 <div class="contents">
 
 <p>Window object.  
-</p>
-<table class="memberdecls">
+ <a href="#details">More...</a></p>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Window object. </p>
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
 <tr class="memitem:a48514485ad24e8d26248b1be9ec1063f" id="r_a48514485ad24e8d26248b1be9ec1063f"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a48514485ad24e8d26248b1be9ec1063f">window</a> (<a class="el" href="namespacetr.html#af4536441b49fec056af6a2432b30afff">zstring_view</a> title, <a class="el" href="structtr_1_1window__parameters.html">window_parameters</a> parameters={})</td></tr>
 <tr class="memdesc:a48514485ad24e8d26248b1be9ec1063f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens a window.  <br /></td></tr>
-<tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">View</div></td></tr>
+<tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Validity</div></td></tr>
+<tr class="memitem:acd437a75e8758102e1fcc114c7a5d28c" id="r_acd437a75e8758102e1fcc114c7a5d28c"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#acd437a75e8758102e1fcc114c7a5d28c">valid</a> () const noexcept</td></tr>
+<tr class="memdesc:acd437a75e8758102e1fcc114c7a5d28c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the window is in a valid state.  <br /></td></tr>
+<tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">View</div></td></tr>
 <tr class="memitem:ab0a25155bdea690d018f1deba02c2c2d" id="r_ab0a25155bdea690d018f1deba02c2c2d"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ab0a25155bdea690d018f1deba02c2c2d">operator window_view</a> () noexcept</td></tr>
 <tr class="memdesc:ab0a25155bdea690d018f1deba02c2c2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a view to the window.  <br /></td></tr>
 <tr class="memitem:a4c741752add9336109ebdd9a6f3d3f32" id="r_a4c741752add9336109ebdd9a6f3d3f32"><td class="memItemLeft"><a class="el" href="classtr_1_1window__view.html">window_view</a>&#160;</td><td class="memItemRight"><a class="el" href="#a4c741752add9336109ebdd9a6f3d3f32">view</a> () noexcept</td></tr>
 <tr class="memdesc:a4c741752add9336109ebdd9a6f3d3f32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a view to the window.  <br /></td></tr>
-<tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Title</div></td></tr>
+<tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Title</div></td></tr>
 <tr class="memitem:ae1ae8a1200b5ae64c2a286e7a5bd21fe" id="r_ae1ae8a1200b5ae64c2a286e7a5bd21fe"><td class="memItemLeft"><a class="el" href="namespacetr.html#af4536441b49fec056af6a2432b30afff">zstring_view</a>&#160;</td><td class="memItemRight"><a class="el" href="#ae1ae8a1200b5ae64c2a286e7a5bd21fe">title</a> () const noexcept</td></tr>
 <tr class="memdesc:ae1ae8a1200b5ae64c2a286e7a5bd21fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the title of the window.  <br /></td></tr>
 <tr class="memitem:a1acfbbccf202cf1b7c0434759cffdd37" id="r_a1acfbbccf202cf1b7c0434759cffdd37"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a1acfbbccf202cf1b7c0434759cffdd37">set_title</a> (<a class="el" href="namespacetr.html#af4536441b49fec056af6a2432b30afff">zstring_view</a> title)</td></tr>
 <tr class="memdesc:a1acfbbccf202cf1b7c0434759cffdd37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the title of the window.  <br /></td></tr>
-<tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Icon</div></td></tr>
+<tr id="pub-methods-4" class="groupHeader"><td colspan="2"><div class="groupHeader">Icon</div></td></tr>
 <tr class="memitem:a2f26d5f93cafc3e74d015bb29033f665" id="r_a2f26d5f93cafc3e74d015bb29033f665"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a2f26d5f93cafc3e74d015bb29033f665">set_icon</a> (const bitmap &amp;bitmap)</td></tr>
 <tr class="memdesc:a2f26d5f93cafc3e74d015bb29033f665"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the icon of the window.  <br /></td></tr>
 <tr class="memitem:af4fbf3e5eca25a242cdde6eaa6a7d768" id="r_af4fbf3e5eca25a242cdde6eaa6a7d768"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#af4fbf3e5eca25a242cdde6eaa6a7d768">set_icon</a> (const <a class="el" href="classtr_1_1bitmap__view.html">bitmap_view</a> &amp;bitmap)</td></tr>
 <tr class="memdesc:af4fbf3e5eca25a242cdde6eaa6a7d768"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the icon of the window.  <br /></td></tr>
-<tr id="pub-methods-4" class="groupHeader"><td colspan="2"><div class="groupHeader">Size</div></td></tr>
+<tr id="pub-methods-5" class="groupHeader"><td colspan="2"><div class="groupHeader">Size</div></td></tr>
 <tr class="memitem:a5dd9f95c95eddfd7d1cc764294163d2e" id="r_a5dd9f95c95eddfd7d1cc764294163d2e"><td class="memItemLeft">glm::ivec2&#160;</td><td class="memItemRight"><a class="el" href="#a5dd9f95c95eddfd7d1cc764294163d2e">size</a> () const</td></tr>
 <tr class="memdesc:a5dd9f95c95eddfd7d1cc764294163d2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the size of the window.  <br /></td></tr>
 <tr class="memitem:a4751f74492987c6107988a1c9ba6f55f" id="r_a4751f74492987c6107988a1c9ba6f55f"><td class="memItemLeft">float&#160;</td><td class="memItemRight"><a class="el" href="#a4751f74492987c6107988a1c9ba6f55f">pixel_density</a> () const</td></tr>
 <tr class="memdesc:a4751f74492987c6107988a1c9ba6f55f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the window's pixel density factor.  <br /></td></tr>
 <tr class="memitem:a95a4db9bb80c63c75e636a9afa462b0f" id="r_a95a4db9bb80c63c75e636a9afa462b0f"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a95a4db9bb80c63c75e636a9afa462b0f">set_size</a> (glm::ivec2 size)</td></tr>
 <tr class="memdesc:a95a4db9bb80c63c75e636a9afa462b0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the size of the window.  <br /></td></tr>
-<tr id="pub-methods-5" class="groupHeader"><td colspan="2"><div class="groupHeader">Fullscreen</div></td></tr>
+<tr id="pub-methods-6" class="groupHeader"><td colspan="2"><div class="groupHeader">Fullscreen</div></td></tr>
 <tr class="memitem:ace117ee7d34bc54963bde0604cf96bb5" id="r_ace117ee7d34bc54963bde0604cf96bb5"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#ace117ee7d34bc54963bde0604cf96bb5">fullscreen</a> () const noexcept</td></tr>
 <tr class="memdesc:ace117ee7d34bc54963bde0604cf96bb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the window is fullscreen or not.  <br /></td></tr>
 <tr class="memitem:a82a3836cf483921c9c61efc5aca73db1" id="r_a82a3836cf483921c9c61efc5aca73db1"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a82a3836cf483921c9c61efc5aca73db1">set_fullscreen</a> (bool fullscreen)</td></tr>
 <tr class="memdesc:a82a3836cf483921c9c61efc5aca73db1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets whether the window is fullscreen or not.  <br /></td></tr>
-<tr id="pub-methods-6" class="groupHeader"><td colspan="2"><div class="groupHeader">Visibility</div></td></tr>
+<tr id="pub-methods-7" class="groupHeader"><td colspan="2"><div class="groupHeader">Visibility</div></td></tr>
 <tr class="memitem:ad92bf58a96ed6425fff98727686791d9" id="r_ad92bf58a96ed6425fff98727686791d9"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ad92bf58a96ed6425fff98727686791d9">show</a> ()</td></tr>
 <tr class="memdesc:ad92bf58a96ed6425fff98727686791d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unhides the window.  <br /></td></tr>
 <tr class="memitem:adbb117e2b134007e65b5b5a61f2fce02" id="r_adbb117e2b134007e65b5b5a61f2fce02"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#adbb117e2b134007e65b5b5a61f2fce02">hide</a> ()</td></tr>
 <tr class="memdesc:adbb117e2b134007e65b5b5a61f2fce02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hides the window.  <br /></td></tr>
-<tr id="pub-methods-7" class="groupHeader"><td colspan="2"><div class="groupHeader">Status</div></td></tr>
+<tr id="pub-methods-8" class="groupHeader"><td colspan="2"><div class="groupHeader">Status</div></td></tr>
 <tr class="memitem:a996133ede6323cbdd1b64112ee85691b" id="r_a996133ede6323cbdd1b64112ee85691b"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a996133ede6323cbdd1b64112ee85691b">maximized</a> () const noexcept</td></tr>
 <tr class="memdesc:a996133ede6323cbdd1b64112ee85691b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the window is maximized.  <br /></td></tr>
 <tr class="memitem:aeeb848fcb180f7f1d3b3b73a5e4fc3b9" id="r_aeeb848fcb180f7f1d3b3b73a5e4fc3b9"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#aeeb848fcb180f7f1d3b3b73a5e4fc3b9">minimized</a> () const noexcept</td></tr>
@@ -177,18 +182,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a05235a5cd78a1a82977100a8932574db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the window has input focus.  <br /></td></tr>
 <tr class="memitem:a2792f0ad5b977af38c0a371b975e5ec7" id="r_a2792f0ad5b977af38c0a371b975e5ec7"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a2792f0ad5b977af38c0a371b975e5ec7">raise</a> ()</td></tr>
 <tr class="memdesc:a2792f0ad5b977af38c0a371b975e5ec7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Raises the window to have input focus.  <br /></td></tr>
-<tr id="pub-methods-8" class="groupHeader"><td colspan="2"><div class="groupHeader">V-sync</div></td></tr>
+<tr id="pub-methods-9" class="groupHeader"><td colspan="2"><div class="groupHeader">V-sync</div></td></tr>
 <tr class="memitem:a61f98428581e2c53c059a7fe40263f12" id="r_a61f98428581e2c53c059a7fe40263f12"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a61f98428581e2c53c059a7fe40263f12">set_vsync</a> (vsync<a class="el" href="namespacetr.html#a8022fe327c140227536483d9a7ac36d9">vsync</a> vsync<a class="el" href="namespacetr.html#a8022fe327c140227536483d9a7ac36d9">vsync</a>)</td></tr>
 <tr class="memdesc:a61f98428581e2c53c059a7fe40263f12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the window's V-sync mode.  <br /></td></tr>
-<tr id="pub-methods-9" class="groupHeader"><td colspan="2"><div class="groupHeader">Text input</div></td></tr>
+<tr id="pub-methods-10" class="groupHeader"><td colspan="2"><div class="groupHeader">Text input</div></td></tr>
 <tr class="memitem:a7887bf35431b7e48b92f06be4d2efecc" id="r_a7887bf35431b7e48b92f06be4d2efecc"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a7887bf35431b7e48b92f06be4d2efecc">enable_text_input</a> () noexcept</td></tr>
 <tr class="memdesc:a7887bf35431b7e48b92f06be4d2efecc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the sending of text input events in the window.  <br /></td></tr>
 <tr class="memitem:a4e849df2815b3a11dde609519b143829" id="r_a4e849df2815b3a11dde609519b143829"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a4e849df2815b3a11dde609519b143829">disable_text_input</a> () noexcept</td></tr>
 <tr class="memdesc:a4e849df2815b3a11dde609519b143829"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the sending of text input events in the window.  <br /></td></tr>
-<tr id="pub-methods-10" class="groupHeader"><td colspan="2"><div class="groupHeader">Mouse mode</div></td></tr>
+<tr id="pub-methods-11" class="groupHeader"><td colspan="2"><div class="groupHeader">Mouse mode</div></td></tr>
 <tr class="memitem:a94112e505eb789b0339382825d95bd6d" id="r_a94112e505eb789b0339382825d95bd6d"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a94112e505eb789b0339382825d95bd6d">set_mouse_mode</a> (<a class="el" href="namespacetr.html#ad15e1eebb57dc4d57047653e40dd523b">mouse_mode</a> mode)</td></tr>
 <tr class="memdesc:a94112e505eb789b0339382825d95bd6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the mouse mode in the window.  <br /></td></tr>
-<tr id="pub-methods-11" class="groupHeader"><td colspan="2"><div class="groupHeader">Backbuffer</div></td></tr>
+<tr id="pub-methods-12" class="groupHeader"><td colspan="2"><div class="groupHeader">Backbuffer</div></td></tr>
 <tr class="memitem:a6cf1e6becbb39531d4da3e1124655cbe" id="r_a6cf1e6becbb39531d4da3e1124655cbe"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a6cf1e6becbb39531d4da3e1124655cbe">flip_backbuffer</a> () noexcept</td></tr>
 <tr class="memdesc:a6cf1e6becbb39531d4da3e1124655cbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Swaps the window's front- and backbuffer.  <br /></td></tr>
 </table>
@@ -219,6 +224,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Opens a window. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">title</td><td>Initial window title. </td></tr>
@@ -236,6 +243,34 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="acd437a75e8758102e1fcc114c7a5d28c" name="acd437a75e8758102e1fcc114c7a5d28c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd437a75e8758102e1fcc114c7a5d28c">&#9670;&#160;</a></span>valid()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tr::window::valid </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets whether the window is in a valid state. </p>
+<dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the window is in a valid state, <span class="tt">false</span> otherwise. </dd></dl>
+
+</div>
+</div>
 <a id="ab0a25155bdea690d018f1deba02c2c2d" name="ab0a25155bdea690d018f1deba02c2c2d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab0a25155bdea690d018f1deba02c2c2d">&#9670;&#160;</a></span>operator window_view()</h2>
 
@@ -258,6 +293,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Creates a view to the window. </p>
 <dl class="section return"><dt>Returns</dt><dd>View to the window. </dd></dl>
 
 </div>
@@ -284,6 +321,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Creates a view to the window. </p>
 <dl class="section return"><dt>Returns</dt><dd>View to the window. </dd></dl>
 
 </div>
@@ -310,6 +349,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the title of the window. </p>
 <dl class="section return"><dt>Returns</dt><dd>Title of the window. </dd></dl>
 
 </div>
@@ -328,6 +369,8 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Sets the title of the window. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">title</td><td>New window title string. </td></tr>
@@ -357,6 +400,8 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Sets the icon of the window. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">bitmap</td><td>Icon bitmap. </td></tr>
@@ -386,6 +431,8 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Sets the icon of the window. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">bitmap</td><td>Icon bitmap view. </td></tr>
@@ -423,6 +470,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the size of the window. </p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
     <tr><td class="paramname">window_error</td><td>If getting the size of the window failed. </td></tr>
@@ -455,6 +504,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the window's pixel density factor. </p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
     <tr><td class="paramname">window_error</td><td>If getting the pixel density of the window failed. </td></tr>
@@ -479,6 +530,8 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Sets the size of the window. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">size</td><td>New size of the window in pixels. </td></tr>
@@ -516,6 +569,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets whether the window is fullscreen or not. </p>
 <dl class="section return"><dt>Returns</dt><dd>Whether the window is fullscreen or not. </dd></dl>
 
 </div>
@@ -534,6 +589,8 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Sets whether the window is fullscreen or not. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">fullscreen</td><td>Whether to enable fullscreen or not. </td></tr>
@@ -563,6 +620,8 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Unhides the window. </p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
     <tr><td class="paramname">window_error</td><td>If showing the window failed. </td></tr>
@@ -586,6 +645,8 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Hides the window. </p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
     <tr><td class="paramname">window_error</td><td>If hiding the window failed. </td></tr>
@@ -617,6 +678,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets whether the window is maximized. </p>
 <dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the window is maximized, <span class="tt">false</span> otherwise. </dd></dl>
 
 </div>
@@ -643,6 +706,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets whether the window is minimized. </p>
 <dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the window is minimized, <span class="tt">false</span> otherwise. </dd></dl>
 
 </div>
@@ -669,6 +734,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets whether the window has input focus. </p>
 <dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the window has input focus, <span class="tt">false</span> otherwise. </dd></dl>
 
 </div>
@@ -687,6 +754,8 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Raises the window to have input focus. </p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
     <tr><td class="paramname">window_error</td><td>If raising the window failed. </td></tr>
@@ -710,6 +779,8 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Sets the window's V-sync mode. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">vsync</td><td>V-sync mode to set. <span class="tt"><a class="el" href="namespacetr.html#a8022fe327c140227536483d9a7ac36d9a8cb043b2dace9afc0680e6bae5cd316f" title="Vsync is enabled, but late swaps happen immediately instead of waiting for the next retrace.">vsync::adaptive</a></span> may fall back to <span class="tt"><a class="el" href="namespacetr.html#a8022fe327c140227536483d9a7ac36d9aa10311459433adf322f2590a4987c423" title="Vsync is enabled.">vsync::enabled</a></span>. </td></tr>
@@ -748,6 +819,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Enables the sending of text input events in the window. </p>
+
 </div>
 </div>
 <a id="a4e849df2815b3a11dde609519b143829" name="a4e849df2815b3a11dde609519b143829"></a>
@@ -773,6 +846,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Disables the sending of text input events in the window. </p>
+
 </div>
 </div>
 <a id="a94112e505eb789b0339382825d95bd6d" name="a94112e505eb789b0339382825d95bd6d"></a>
@@ -789,6 +864,8 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Sets the mouse mode in the window. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">mode</td><td>Mouse mode to set. </td></tr>
@@ -826,6 +903,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Swaps the window's front- and backbuffer. </p>
 
 </div>
 </div>

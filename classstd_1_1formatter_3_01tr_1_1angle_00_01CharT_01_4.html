@@ -132,7 +132,8 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classstd_1_1fo
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename CharT&gt;<br />
-class std::formatter&lt; tr::angle, CharT &gt;</div><p>Angles may be output in radians, degrees, or turns, indicated by a leading <span class="tt">r</span>/<span class="tt">d</span>/<span class="tt">t</span> in the format specification. Afterwards, a floating-point format specification may be used to indicate the numeric format.</p>
+class std::formatter&lt; tr::angle, CharT &gt;</div><p>Angle formatter. </p>
+<p>Angles may be output in radians, degrees, or turns, indicated by a leading <span class="tt">r</span>/<span class="tt">d</span>/<span class="tt">t</span> in the format specification. Afterwards, a floating-point format specification may be used to indicate the numeric format.</p>
 <p>Example format output: <span class="tt">std::format("{:d.3f}", <a class="el" href="namespacetr.html#aadadc097333e208ce621a7d4d0c6618c" title="Constructs an angle expressed in degrees.">tr::degs</a>(1.23456f))</span> -&gt; <span class="tt">1.235deg</span>. </p>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
@@ -168,6 +169,8 @@ template&lt;typename CharT&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Parses the format specification. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">context</td><td>Parsing context. </td></tr>
@@ -208,6 +211,8 @@ template&lt;std::output_iterator&lt; const CharT &amp; &gt; OutputIt&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Formats an angle. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">FormatContext</td><td>Formatting context type. </td></tr>

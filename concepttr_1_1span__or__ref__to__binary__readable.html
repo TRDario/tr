@@ -129,8 +129,10 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('concepttr_1_1s
 <div class="contents">
 
 <p>Type passable to the variadic read_binary: a span or a reference to a binary readable.  
-</p>
-<h2 id="header-conceptdef" class="groupheader">Concept definition</h2>
+<a href="#details">More...</a></p>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Type passable to the variadic read_binary: a span or a reference to a binary readable. </p>
+</div><h2 id="header-conceptdef" class="groupheader">Concept definition</h2>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepttr_1_1span__or__ref__to__binary__readable.html">span_or_ref_to_binary_readable</a> = (<a class="code hl_concept" href="concepttr_1_1lvalue__reference.html">lvalue_reference&lt;T&gt;</a> &amp;&amp; <a class="code hl_concept" href="concepttr_1_1binary__readable.html">binary_readable&lt;std::remove_reference_t&lt;T&gt;</a>&gt;) ||</div>
 <div class="line">                                             <a class="code hl_concept" href="concepttr_1_1specialization__of__tv.html">specialization_of_tv</a>&lt;std::remove_cvref_t&lt;T&gt;, std::span&gt;</div>

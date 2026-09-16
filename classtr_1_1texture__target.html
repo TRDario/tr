@@ -129,8 +129,10 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1tex
 <div class="contents">
 
 <p>2D texture rendering target.  
-</p>
-<table class="memberdecls">
+ <a href="#details">More...</a></p>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>2D texture rendering target. </p>
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
@@ -203,6 +205,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Creates an incomplete texture target. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">context</td><td>Graphics context to create the texture target on. </td></tr>
@@ -248,6 +252,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Allocates an uninitialized texture target. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">context</td><td>Graphics context to create the texture target on. </td></tr>
@@ -296,6 +302,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Constructs a texture target with data uploaded from a bitmap. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">context</td><td>Graphics context to create the texture target on. </td></tr>
@@ -331,6 +339,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Creates a view to the texture target texture. </p>
 <dl class="section return"><dt>Returns</dt><dd>View to the texture target texture. </dd></dl>
 
 </div>
@@ -357,6 +367,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Creates a reference to the texture render target. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the texture render target. </dd></dl>
 
 </div>
@@ -383,6 +395,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets a reference to the graphics context the texture target is on. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the graphics context the texture target is on. </dd></dl>
 
 </div>
@@ -409,6 +423,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets whether the texture target is in a valid state. </p>
 <dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the texture target is in a valid state, <span class="tt">false</span> if it is in an invalid state. </dd></dl>
 
 </div>
@@ -435,6 +451,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets whether the texture target is complete. </p>
 <dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the texture target is complete, <span class="tt">false</span> otherwise. </dd></dl>
 
 </div>
@@ -461,6 +479,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the size of the texture target. </p>
 <dl class="section return"><dt>Returns</dt><dd>Size of the texture target. </dd></dl>
 
 </div>
@@ -488,6 +508,8 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Allocates a texture and releases the previously held storage as a new texture. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">size</td><td>Size of the texture. </td></tr>
@@ -526,6 +548,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Sets the filters used by the texture sampler. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">min_filter</td><td>Minifying filter to use. </td></tr>
@@ -558,6 +582,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Sets the wrapping used by the texture sampler. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">wrap</td><td>Wrapping type to use. </td></tr>
@@ -589,6 +615,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Sets the border color of the texture sampler (used when <span class="tt">wrap::BORDER_CLAMP</span> is in use). </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">color</td><td>Border color to use. </td></tr>
@@ -620,6 +648,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Clears the texture target. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">color</td><td>Color to clear the texture to. </td></tr>
@@ -655,6 +685,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Clears a region of the texture target. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">region</td><td>Region of the texture to clear. </td></tr>
@@ -696,6 +728,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Copies a region from another texture. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">tl</td><td>Top-left corner of the copied region within the target texture. </td></tr>
@@ -733,6 +767,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Sets a region of the texture target. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">tl</td><td>Top-left corner of the copied region within the target texture. </td></tr>
@@ -765,6 +801,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the debug label of the texture target. </p>
 <dl class="section return"><dt>Returns</dt><dd>Debug label of the texture target. </dd></dl>
 
 </div>
@@ -783,6 +821,8 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Sets the debug label of the texture target. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">label</td><td>Debug label of the texture target. </td></tr>

@@ -132,7 +132,8 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1han
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&gt;<br />
-class tr::handle&lt; Base, Empty, Deleter &gt;</div><dl class="tparams"><dt>Template Parameters</dt><dd>
+class tr::handle&lt; Base, Empty, Deleter &gt;</div><p>RAII wrapper over non-pointer handles. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Base</td><td>Wrapped type. </td></tr>
     <tr><td class="paramname">Empty</td><td>Empty handle sentinel value. </td></tr>
@@ -220,6 +221,8 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
 </table>
 </div><div class="memdoc">
 
+<p>Default-constructs an empty handle. </p>
+
 </div>
 </div>
 <a id="a42ea34ae351cc2727f960ea8aae6bd52" name="a42ea34ae351cc2727f960ea8aae6bd52"></a>
@@ -246,6 +249,8 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Constructs a handle from a base type value. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">value</td><td>Value to hold. </td></tr>
@@ -283,6 +288,8 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Constructs a handle from a base type value without checking for the invalid case. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">value</td><td>Value to hold. </td></tr>
@@ -316,6 +323,8 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Default-constructs an empty handle. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">deleter</td><td>Deleter instance. </td></tr>
@@ -353,6 +362,8 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Constructs a handle from a base type value and a deleter. </p>
 <dl class="section pre"><dt>Precondition</dt><dd><span class="tt">value</span> must not be equal to <span class="tt">Empty</span>. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -397,6 +408,8 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Constructs a handle from a base type value and a deleter without checking for the invalid case. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">value</td><td>Value to hold. </td></tr>
@@ -431,6 +444,8 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Constructs a handle by moving from another handle. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">rhs</td><td>Handle to move. </td></tr>
@@ -465,6 +480,8 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
 </table>
 </div><div class="memdoc">
 
+<p>Destroys the handle. </p>
+
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
@@ -492,6 +509,8 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Move-assigns the handle. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">rhs</td><td>Handle to move. </td></tr>
@@ -526,6 +545,8 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Checks if the handle contains a value. </p>
 <dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the handle contains a value, <span class="tt">false</span> otherwise. </dd></dl>
 
 </div>
@@ -554,6 +575,8 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Checks if the handle contains a value. </p>
 <dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the handle contains a value, <span class="tt">false</span> otherwise. </dd></dl>
 
 </div>
@@ -582,6 +605,8 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the handle's base type value. </p>
 <dl class="section pre"><dt>Precondition</dt><dd>The handle must contain a value. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the contained value. </dd></dl>
 
@@ -611,6 +636,8 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the handle's base type value without checking for the invalid case. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the contained value. </dd></dl>
 
 </div>
@@ -639,6 +666,8 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the handle's deleter. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the handle's deleter. </dd></dl>
 
 </div>
@@ -667,6 +696,8 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the handle's deleter. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the handle's deleter. </dd></dl>
 
 </div>
@@ -695,6 +726,8 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Releases ownership over the handle, if any. </p>
 <dl class="section return"><dt>Returns</dt><dd>Previously contained value. </dd></dl>
 
 </div>
@@ -724,6 +757,8 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
 </table>
 </div><div class="memdoc">
 
+<p>Resets the handle to an empty state. </p>
+
 </div>
 </div>
 <a id="af6225f7bded61d2c1179c3a2f2c50698" name="af6225f7bded61d2c1179c3a2f2c50698"></a>
@@ -750,6 +785,8 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Resets the handle to a non-empty state. </p>
 <dl class="section pre"><dt>Precondition</dt><dd><span class="tt">value</span> must not be equal to <span class="tt">Empty</span>. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -788,6 +825,8 @@ template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Resets the handle to a new state without checking for the invalid case. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">value</td><td>New value to hold. </td></tr>

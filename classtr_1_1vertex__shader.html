@@ -131,7 +131,8 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1ver
 <p>Vertex shader program.  
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A vertex shader is a shader program that transforms vertices passed to the drawing operation and outputs data passed along to the fragment shader.</p>
+<div class="textblock"><p>Vertex shader program. </p>
+<p>A vertex shader is a shader program that transforms vertices passed to the drawing operation and outputs data passed along to the fragment shader.</p>
 <p>Everything brought up in the description of <span class="tt"><a class="el" href="classtr_1_1shader.html" title="Base shader program class.">tr::shader</a></span> applies to this class as well. </p>
 </div><div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Inheritance diagram for tr::vertex_shader:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -239,16 +240,16 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a02971882b8e8d0b4898e74dde509d0eb inherit pub_methods_classtr_1_1shader"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mat4x3 array uniform.  <br /></td></tr>
 <tr class="memitem:aec50b6bd802404d1ae59f8f40a674eec inherit pub_methods_classtr_1_1shader" id="r_aec50b6bd802404d1ae59f8f40a674eec"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="classtr_1_1shader.html#aec50b6bd802404d1ae59f8f40a674eec">set_uniform</a> (int index, <a class="el" href="classtr_1_1texture__view.html">texture_view</a> texture)</td></tr>
 <tr class="memdesc:aec50b6bd802404d1ae59f8f40a674eec inherit pub_methods_classtr_1_1shader"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a texture sampler uniform.  <br /></td></tr>
-<tr class="memitem:a3ff3f9689e9af279adf56f7b8639c497 inherit pub_methods_classtr_1_1shader" id="r_a3ff3f9689e9af279adf56f7b8639c497"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="classtr_1_1shader.html#a3ff3f9689e9af279adf56f7b8639c497">set_storage_buffer</a> (unsigned int index, <a class="el" href="classtr_1_1basic__shader__buffer.html">basic_shader_buffer</a> &amp;buffer) noexcept</td></tr>
-<tr class="memdesc:a3ff3f9689e9af279adf56f7b8639c497 inherit pub_methods_classtr_1_1shader"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a shader storage buffer.  <br /></td></tr>
+<tr class="memitem:a0cc2f17714a8015d98eea01eeea129ae inherit pub_methods_classtr_1_1shader" id="r_a0cc2f17714a8015d98eea01eeea129ae"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="classtr_1_1shader.html#a0cc2f17714a8015d98eea01eeea129ae">set_storage_buffer</a> (unsigned int index, <a class="el" href="classtr_1_1untyped__shader__buffer.html">untyped_shader_buffer</a> &amp;buffer) noexcept</td></tr>
+<tr class="memdesc:a0cc2f17714a8015d98eea01eeea129ae inherit pub_methods_classtr_1_1shader"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a shader storage buffer.  <br /></td></tr>
 <tr class="memitem:a73bf56c0deaf16f1b744e075faf26050 inherit pub_methods_classtr_1_1shader" id="r_a73bf56c0deaf16f1b744e075faf26050"><td class="memTemplParams" colspan="2">template&lt;typename Header, typename ArrayElement&gt; </td></tr>
 <tr class="memitem:a73bf56c0deaf16f1b744e075faf26050 inherit pub_methods_classtr_1_1shader template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="classtr_1_1shader.html#a73bf56c0deaf16f1b744e075faf26050">set_storage_buffer</a> (unsigned int index, <a class="el" href="classtr_1_1shader__buffer.html">shader_buffer</a>&lt; Header, ArrayElement &gt; &amp;buffer) noexcept</td></tr>
 <tr class="memdesc:a73bf56c0deaf16f1b744e075faf26050 inherit pub_methods_classtr_1_1shader"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a shader storage buffer.  <br /></td></tr>
 <tr class="memitem:a2d33966234ecd1998a2e71c6877d8f22 inherit pub_methods_classtr_1_1shader" id="r_a2d33966234ecd1998a2e71c6877d8f22"><td class="memTemplParams" colspan="2">template&lt;typename Element&gt; </td></tr>
 <tr class="memitem:a2d33966234ecd1998a2e71c6877d8f22 inherit pub_methods_classtr_1_1shader template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="classtr_1_1shader.html#a2d33966234ecd1998a2e71c6877d8f22">set_storage_buffer</a> (unsigned int index, <a class="el" href="classtr_1_1shader__array.html">shader_array</a>&lt; Element &gt; &amp;buffer) noexcept</td></tr>
 <tr class="memdesc:a2d33966234ecd1998a2e71c6877d8f22 inherit pub_methods_classtr_1_1shader"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a shader storage buffer.  <br /></td></tr>
-<tr class="memitem:af5baaa8dd9277e5d01e9b3f19d712573 inherit pub_methods_classtr_1_1shader" id="r_af5baaa8dd9277e5d01e9b3f19d712573"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="classtr_1_1shader.html#af5baaa8dd9277e5d01e9b3f19d712573">set_uniform_buffer</a> (unsigned int index, const <a class="el" href="classtr_1_1basic__uniform__buffer.html">basic_uniform_buffer</a> &amp;buffer) noexcept</td></tr>
-<tr class="memdesc:af5baaa8dd9277e5d01e9b3f19d712573 inherit pub_methods_classtr_1_1shader"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a uniform storage buffer.  <br /></td></tr>
+<tr class="memitem:a821a17187cf7914879dcd62967a309b1 inherit pub_methods_classtr_1_1shader" id="r_a821a17187cf7914879dcd62967a309b1"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="classtr_1_1shader.html#a821a17187cf7914879dcd62967a309b1">set_uniform_buffer</a> (unsigned int index, const <a class="el" href="classtr_1_1untyped__uniform__buffer.html">untyped_uniform_buffer</a> &amp;buffer) noexcept</td></tr>
+<tr class="memdesc:a821a17187cf7914879dcd62967a309b1 inherit pub_methods_classtr_1_1shader"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a uniform storage buffer.  <br /></td></tr>
 <tr class="memitem:aa4ba59093654baa4b71479dcf3931273 inherit pub_methods_classtr_1_1shader" id="r_aa4ba59093654baa4b71479dcf3931273"><td class="memTemplParams" colspan="2">template&lt;typename Object&gt; </td></tr>
 <tr class="memitem:aa4ba59093654baa4b71479dcf3931273 inherit pub_methods_classtr_1_1shader template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="classtr_1_1shader.html#aa4ba59093654baa4b71479dcf3931273">set_uniform_buffer</a> (unsigned int index, const <a class="el" href="classtr_1_1uniform__buffer.html">uniform_buffer</a>&lt; Object &gt; &amp;buffer) noexcept</td></tr>
 <tr class="memdesc:aa4ba59093654baa4b71479dcf3931273 inherit pub_methods_classtr_1_1shader"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a uniform storage buffer.  <br /></td></tr>
@@ -286,6 +287,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Creates a vertex shader from source code. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">context</td><td>Graphics context to create the vertex shader on. </td></tr>

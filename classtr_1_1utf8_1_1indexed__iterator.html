@@ -129,8 +129,10 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1utf
 <div class="contents">
 
 <p>Indexed Unicode codepoint iterator for UTF-8 string views.  
-</p>
-<div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Inheritance diagram for tr::utf8::indexed_iterator:</div>
+ <a href="#details">More...</a></p>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Indexed Unicode codepoint iterator for UTF-8 string views. </p>
+</div><div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Inheritance diagram for tr::utf8::indexed_iterator:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
@@ -189,6 +191,8 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Value type used by the iterator. </p>
+
 </div>
 </div>
 <a id="aa8351684fba9dab4d6339ca34142bc6d" name="aa8351684fba9dab4d6339ca34142bc6d"></a>
@@ -202,6 +206,8 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Difference type used by the iterator. </p>
 
 </div>
 </div>
@@ -228,6 +234,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Default-constructs an indexed codepoint iterator. </p>
 
 </div>
 </div>
@@ -257,6 +265,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Constructs an indexed codepoint iterator. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">ptr</td><td>Pointer to the beginning of a UTF-8 character sequence. </td></tr>
@@ -290,6 +300,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Converts the operator to an unindexed codepoint iterator. </p>
 <dl class="section return"><dt>Returns</dt><dd>Unindexed equivalent of <span class="tt">*this</span>. </dd></dl>
 
 </div>
@@ -316,6 +328,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Dereferences the iterator. </p>
 <dl class="section return"><dt>Returns</dt><dd>Codepoint representation of the sequence the iterator is pointing at. </dd></dl>
 
 </div>
@@ -342,6 +356,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Increments the iterator. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to <span class="tt">*this</span>. </dd></dl>
 
 </div>
@@ -368,6 +384,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Decrements the iterator. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to <span class="tt">*this</span>. </dd></dl>
 
 </div>
@@ -394,6 +412,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets a const char pointer to the beginning of the iterator's UTF-8 character. </p>
 <dl class="section return"><dt>Returns</dt><dd>Const char pointer to the beginning of the iterator's UTF-8 character. </dd></dl>
 
 </div>
@@ -420,6 +440,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the index of the iterator. </p>
 <dl class="section return"><dt>Returns</dt><dd>Index of the iterator. </dd></dl>
 
 </div>

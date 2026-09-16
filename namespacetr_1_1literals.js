@@ -31,8 +31,8 @@ var namespacetr_1_1literals =
     [ "keyboard_literals", "namespacetr_1_1literals_1_1keyboard__literals.html", [
       [ "operator\"\"_s", "namespacetr_1_1literals_1_1keyboard__literals.html#a004afe5920e791b832d61d16a4ef6a5b", null ],
       [ "operator\"\"_sc", "namespacetr_1_1literals_1_1keyboard__literals.html#aefcf29b041872f77599e51ffab177a55", null ],
-      [ "operator\"\"_k", "namespacetr_1_1literals_1_1keyboard__literals.html#a9c447401cdcfd41fa05b1b370016b93b", null ],
-      [ "operator\"\"_kc", "namespacetr_1_1literals_1_1keyboard__literals.html#a8f6fac23df175350dad982428811db05", null ]
+      [ "operator\"\"_k", "namespacetr_1_1literals_1_1keyboard__literals.html#a805ab26fce5fcf7068a8d24dc22a3b00", null ],
+      [ "operator\"\"_kc", "namespacetr_1_1literals_1_1keyboard__literals.html#a7c01436d1ba3b4bc2c5458b1b55eb53f", null ]
     ] ],
     [ "matrix_operators", "namespacetr_1_1literals_1_1matrix__operators.html", [
       [ "operator*", "namespacetr_1_1literals_1_1matrix__operators.html#a30b96c384a2b216f934b182d0f1a5dd7", null ],
@@ -45,8 +45,8 @@ var namespacetr_1_1literals =
     ] ],
     [ "operator\"\"_s", "namespacetr_1_1literals_1_1keyboard__literals.html#a004afe5920e791b832d61d16a4ef6a5b", null ],
     [ "operator\"\"_sc", "namespacetr_1_1literals_1_1keyboard__literals.html#aefcf29b041872f77599e51ffab177a55", null ],
-    [ "operator\"\"_k", "namespacetr_1_1literals_1_1keyboard__literals.html#a9c447401cdcfd41fa05b1b370016b93b", null ],
-    [ "operator\"\"_kc", "namespacetr_1_1literals_1_1keyboard__literals.html#a8f6fac23df175350dad982428811db05", null ],
+    [ "operator\"\"_k", "namespacetr_1_1literals_1_1keyboard__literals.html#a805ab26fce5fcf7068a8d24dc22a3b00", null ],
+    [ "operator\"\"_kc", "namespacetr_1_1literals_1_1keyboard__literals.html#a7c01436d1ba3b4bc2c5458b1b55eb53f", null ],
     [ "operator\"\"_deg", "namespacetr_1_1literals_1_1angle__literals.html#a7c1df5427c56239a657627ca9616a893", null ],
     [ "operator\"\"_deg", "namespacetr_1_1literals_1_1angle__literals.html#a0b58635abfe9eacb014a8eb77c9b0c5b", null ],
     [ "operator\"\"_rad", "namespacetr_1_1literals_1_1angle__literals.html#a5e4764c38aa83f9f7a9986d17750c6df", null ],

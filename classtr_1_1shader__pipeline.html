@@ -131,7 +131,8 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1sha
 <p>Container for a shader program pipeline.  
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>A shader pipeline is an object that references vertex and fragment shader program stages that are to be used during the rendering process when the pipeline is set on the graphics context. These referenced shaders must be compatible: the outputs of the vertex shader must match the inputs of the fragment shader.</p>
+<div class="textblock"><p>Container for a shader program pipeline. </p>
+<p>A shader pipeline is an object that references vertex and fragment shader program stages that are to be used during the rendering process when the pipeline is set on the graphics context. These referenced shaders must be compatible: the outputs of the vertex shader must match the inputs of the fragment shader.</p>
 <p>Strictly speaking, instances of <span class="tt"><a class="el" href="classtr_1_1shader__pipeline.html" title="Container for a shader program pipeline.">tr::shader_pipeline</a></span> are only containers for these underlying shader pipeline objects. This means, for example, that setting a shader pipeline on a graphics context does not set the literal <span class="tt"><a class="el" href="classtr_1_1shader__pipeline.html" title="Container for a shader program pipeline.">tr::shader_pipeline</a></span> object at a specific location in memory, but rather the value it contains. If the value is moved to a different instance of <span class="tt"><a class="el" href="classtr_1_1shader__pipeline.html" title="Container for a shader program pipeline.">tr::shader_pipeline</a></span>, that value will still be set on the context. If the instance is overriden with a new value, the old value is destroyed and the graphics context will no longer have a set shader pipeline.</p>
 <p><span class="tt"><a class="el" href="classtr_1_1shader__pipeline.html" title="Container for a shader program pipeline.">tr::shader_pipeline</a></span> has a notion of 'completeness'. An instance of the class may be constructed without set shaders; such an instance is considered incomplete until a valid vertex and fragment shader are set to it. Incomplete shader pipelines may not be set to a graphics context.</p>
 <p>Every instance of <span class="tt"><a class="el" href="classtr_1_1shader__pipeline.html" title="Container for a shader program pipeline.">tr::shader_pipeline</a></span> is associated with a graphics context and cannot outlive its parent context.</p>
@@ -187,6 +188,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Constructs an incomplete shader pipeline. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">context</td><td>Graphics context to create the pipeline on. </td></tr>
@@ -227,6 +230,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Constructs a complete shader pipeline. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">context</td><td>Graphics context to create the pipeline on. </td></tr>
@@ -263,6 +268,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets a reference to the graphics context the pipeline is on. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the graphics context the pipeline is on. </dd></dl>
 
 </div>
@@ -293,6 +300,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Sets both shaders of the pipeline. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">vertex_shader</td><td>Vertex shader to use on the pipeline. </td></tr>
@@ -327,6 +336,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Sets a vertex shader to the pipeline. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">vertex_shader</td><td>Vertex shader to set to the pipeline. </td></tr>
@@ -360,6 +371,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Sets a fragment shader to the pipeline. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">fragment_shader</td><td>Fragment shader to set to the pipeline. </td></tr>
@@ -393,6 +406,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets whether the pipeline is in a valid state. </p>
 <dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the pipeline is in a valid state, <span class="tt">false</span> if it is in an invalid state. </dd></dl>
 
 </div>
@@ -419,6 +434,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Sets the debug label of the pipeline. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">label</td><td>Debug label of the pipeline. </td></tr>
@@ -450,6 +467,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the debug label of the pipeline. </p>
 <dl class="section return"><dt>Returns</dt><dd>Debug label of the pipeline. </dd></dl>
 
 </div>

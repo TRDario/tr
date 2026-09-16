@@ -131,7 +131,8 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1own
 <p>Container for a shader program pipeline that owns its shaders.  
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Most things brought up in the description of <span class="tt"><a class="el" href="classtr_1_1shader__pipeline.html" title="Container for a shader program pipeline.">tr::shader_pipeline</a></span> apply to this class as well, though instances of <span class="tt"><a class="el" href="classtr_1_1owning__shader__pipeline.html" title="Container for a shader program pipeline that owns its shaders.">tr::owning_shader_pipeline</a></span> are always complete. </p>
+<div class="textblock"><p>Container for a shader program pipeline that owns its shaders. </p>
+<p>Most things brought up in the description of <span class="tt"><a class="el" href="classtr_1_1shader__pipeline.html" title="Container for a shader program pipeline.">tr::shader_pipeline</a></span> apply to this class as well, though instances of <span class="tt"><a class="el" href="classtr_1_1owning__shader__pipeline.html" title="Container for a shader program pipeline that owns its shaders.">tr::owning_shader_pipeline</a></span> are always complete. </p>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -147,12 +148,12 @@ Public Member Functions</h2></td></tr>
 <tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Shaders</div></td></tr>
 <tr class="memitem:ae763b538d6ddcd84aad3d36d9a16a044" id="r_ae763b538d6ddcd84aad3d36d9a16a044"><td class="memItemLeft">vertex_shader &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ae763b538d6ddcd84aad3d36d9a16a044">vertex_shader</a> () noexcept</td></tr>
 <tr class="memdesc:ae763b538d6ddcd84aad3d36d9a16a044"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the vertex shader.  <br /></td></tr>
-<tr class="memitem:a8b159eaee357857d034119c741dc9b99" id="r_a8b159eaee357857d034119c741dc9b99"><td class="memItemLeft">const class vertex_shader &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a8b159eaee357857d034119c741dc9b99">vertex_shader</a> () const noexcept</td></tr>
-<tr class="memdesc:a8b159eaee357857d034119c741dc9b99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the vertex shader.  <br /></td></tr>
+<tr class="memitem:ae26ca7ac93ce68c5a9a2dbf74c14b826" id="r_ae26ca7ac93ce68c5a9a2dbf74c14b826"><td class="memItemLeft">const <a class="el" href="classtr_1_1vertex__shader.html">tr::vertex_shader</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ae26ca7ac93ce68c5a9a2dbf74c14b826">vertex_shader</a> () const noexcept</td></tr>
+<tr class="memdesc:ae26ca7ac93ce68c5a9a2dbf74c14b826"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the vertex shader.  <br /></td></tr>
 <tr class="memitem:ad52a3f9eb78c6614a042777071c4f8dd" id="r_ad52a3f9eb78c6614a042777071c4f8dd"><td class="memItemLeft">fragment_shader &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ad52a3f9eb78c6614a042777071c4f8dd">fragment_shader</a> () noexcept</td></tr>
 <tr class="memdesc:ad52a3f9eb78c6614a042777071c4f8dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the fragment shader.  <br /></td></tr>
-<tr class="memitem:a4d1b18263f13335303ac194be9c0558e" id="r_a4d1b18263f13335303ac194be9c0558e"><td class="memItemLeft">const class fragment_shader &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a4d1b18263f13335303ac194be9c0558e">fragment_shader</a> () const noexcept</td></tr>
-<tr class="memdesc:a4d1b18263f13335303ac194be9c0558e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the fragment shader.  <br /></td></tr>
+<tr class="memitem:a192ee5cc6eae733790f793643f6d1dc7" id="r_a192ee5cc6eae733790f793643f6d1dc7"><td class="memItemLeft">const <a class="el" href="classtr_1_1fragment__shader.html">tr::fragment_shader</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a192ee5cc6eae733790f793643f6d1dc7">fragment_shader</a> () const noexcept</td></tr>
+<tr class="memdesc:a192ee5cc6eae733790f793643f6d1dc7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the fragment shader.  <br /></td></tr>
 <tr id="pub-methods-4" class="groupHeader"><td colspan="2"><div class="groupHeader">State</div></td></tr>
 <tr class="memitem:adee4e66a544f93ff7d21b132b9211365" id="r_adee4e66a544f93ff7d21b132b9211365"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#adee4e66a544f93ff7d21b132b9211365">valid</a> () const noexcept</td></tr>
 <tr class="memdesc:adee4e66a544f93ff7d21b132b9211365"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the pipeline is in a valid state.  <br /></td></tr>
@@ -194,6 +195,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Creates an owning shader pipeline. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">context</td><td>Graphics context to create the pipeline on. </td></tr>
@@ -229,6 +232,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the base pipeline object. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the base pipeline object. </dd></dl>
 
 </div>
@@ -255,6 +260,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets a reference to the graphics context the pipeline is on. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the graphics context the pipeline is on. </dd></dl>
 
 </div>
@@ -281,12 +288,14 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the vertex shader. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the vertex shader of the pipeline. </dd></dl>
 
 </div>
 </div>
-<a id="a8b159eaee357857d034119c741dc9b99" name="a8b159eaee357857d034119c741dc9b99"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8b159eaee357857d034119c741dc9b99">&#9670;&#160;</a></span>vertex_shader() <span class="overload">[2/2]</span></h2>
+<a id="ae26ca7ac93ce68c5a9a2dbf74c14b826" name="ae26ca7ac93ce68c5a9a2dbf74c14b826"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae26ca7ac93ce68c5a9a2dbf74c14b826">&#9670;&#160;</a></span>vertex_shader() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -295,7 +304,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const class vertex_shader &amp; tr::owning_shader_pipeline::vertex_shader </td>
+          <td class="memname">const <a class="el" href="classtr_1_1vertex__shader.html">tr::vertex_shader</a> &amp; tr::owning_shader_pipeline::vertex_shader </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -307,6 +316,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the vertex shader. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the vertex shader of the pipeline. </dd></dl>
 
 </div>
@@ -333,12 +344,14 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the fragment shader. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the fragment shader of the pipeline. </dd></dl>
 
 </div>
 </div>
-<a id="a4d1b18263f13335303ac194be9c0558e" name="a4d1b18263f13335303ac194be9c0558e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4d1b18263f13335303ac194be9c0558e">&#9670;&#160;</a></span>fragment_shader() <span class="overload">[2/2]</span></h2>
+<a id="a192ee5cc6eae733790f793643f6d1dc7" name="a192ee5cc6eae733790f793643f6d1dc7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a192ee5cc6eae733790f793643f6d1dc7">&#9670;&#160;</a></span>fragment_shader() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -347,7 +360,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const class fragment_shader &amp; tr::owning_shader_pipeline::fragment_shader </td>
+          <td class="memname">const <a class="el" href="classtr_1_1fragment__shader.html">tr::fragment_shader</a> &amp; tr::owning_shader_pipeline::fragment_shader </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -359,6 +372,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the fragment shader. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the fragment shader of the pipeline. </dd></dl>
 
 </div>
@@ -385,6 +400,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets whether the pipeline is in a valid state. </p>
 <dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the pipeline is in a valid state, <span class="tt">false</span> if it is in an invalid state. </dd></dl>
 
 </div>
@@ -411,6 +428,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Sets the debug label of the pipeline. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">label</td><td>Debug label of the pipeline. </td></tr>
@@ -442,6 +461,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the debug label of the pipeline. </p>
 <dl class="section return"><dt>Returns</dt><dd>Debug label of the pipeline. </dd></dl>
 
 </div>

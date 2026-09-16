@@ -14,7 +14,7 @@ var classtr_1_1application =
     [ "application", "classtr_1_1application.html#a6246e8813709061f9981cc96404e9efd", null ],
     [ "~application", "classtr_1_1application.html#ae4693d15a2a266522a1c8636b57783c5", null ],
     [ "initialize", "classtr_1_1application.html#a21ede20338183f25b06cbdfe10cc330b", null ],
-    [ "handle_event", "classtr_1_1application.html#a29c780c5f5e23a14580876c6f9aac72c", null ],
+    [ "handle_event", "classtr_1_1application.html#a160bde93f0bb17aecbbe24ccfc2fcc5a", null ],
     [ "update", "classtr_1_1application.html#a7544b8b75ad439d7a03341ff7d97f4cf", null ],
     [ "shut_down", "classtr_1_1application.html#a4b38208354e4ac8820f70d51a1914636", null ]
 ];

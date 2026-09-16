@@ -131,7 +131,8 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1loc
 <p>Localization map class with support for reading custom localization files.  
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The localization file consists of lines in the format: <span class="tt">[&lt;KEY&gt; = "&lt;VALUE&gt;"] [#COMMENT]</span></p>
+<div class="textblock"><p>Localization map class with support for reading custom localization files. </p>
+<p>The localization file consists of lines in the format: <span class="tt">[&lt;KEY&gt; = "&lt;VALUE&gt;"] [#COMMENT]</span></p>
 <p>Empty lines and lines consisting entirely of comments are ignored, as is any whitespace between the tokens.</p>
 <p><span class="tt">KEY</span> must consist entirely of ASCII alphanumeric characters and <span class="tt">_</span>.</p>
 <p><span class="tt">VALUE</span> can contain any Unicode characters, but a few have to be escaped: newlines with <span class="tt">\n</span>, backslashes with <span class="tt">\\</span>, quotes with <span class="tt">\"</span>. </p>
@@ -182,6 +183,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Constructs an empty localization map. </p>
+
 </div>
 </div>
 <a id="abd0fdb874eedeabb16a041ed044cb712" name="abd0fdb874eedeabb16a041ed044cb712"></a>
@@ -206,6 +209,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Copies a localization map. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">map</td><td>Localization map to copy. </td></tr>
@@ -237,6 +242,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Moves a localization map. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">map</td><td>Localization map to move. </td></tr>
@@ -270,6 +277,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Clears the localization map. </p>
+
 </div>
 </div>
 <a id="aad19de581d7337c6facdf28ed0ac3be8" name="aad19de581d7337c6facdf28ed0ac3be8"></a>
@@ -286,6 +295,8 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Loads a localization script, returning any non-fatal errors. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">script</td><td>Script string in the format defined in the class description. </td></tr>
@@ -310,6 +321,8 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Loads a localization script file, returning any non-fatal errors. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">path</td><td>Path to a script file in the format defined in the class description. </td></tr>
@@ -349,6 +362,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets whether a key has a corresponding localization string in the map. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">key</td><td>Localization key to check. </td></tr>
@@ -381,6 +396,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets a localization string associated with a key. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">key</td><td>Localization key to get a localization string for. </td></tr>

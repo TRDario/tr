@@ -132,7 +132,8 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1poi
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c5412d">pointer</a> Pointer&gt;<br />
-class tr::pointer_iterator&lt; Iterator, Pointer &gt;</div><p>This may be used to ensure that an iterator is unique to a class. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
+class tr::pointer_iterator&lt; Iterator, Pointer &gt;</div><p>CRTP base class that may be inherited from to define an iterator based on a wrapped pointer. </p>
+<p>This may be used to ensure that an iterator is unique to a class. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Iterator</td><td>Derived iterator type. </td></tr>
     <tr><td class="paramname">Pointer</td><td>Raw pointer type. </td></tr>
@@ -195,6 +196,8 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
       </table>
 </div><div class="memdoc">
 
+<p>Difference type used by the iterator. </p>
+
 </div>
 </div>
 <a id="af81146c759eb8933c1eb8e8361c70110" name="af81146c759eb8933c1eb8e8361c70110"></a>
@@ -210,6 +213,8 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Value type used by the iterator. </p>
 
 </div>
 </div>
@@ -227,6 +232,8 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
       </table>
 </div><div class="memdoc">
 
+<p>Pointer type used by the iterator. </p>
+
 </div>
 </div>
 <a id="a3cdb18e417791febeb42b9e212091d9e" name="a3cdb18e417791febeb42b9e212091d9e"></a>
@@ -243,6 +250,8 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
       </table>
 </div><div class="memdoc">
 
+<p>Reference type used by the iterator. </p>
+
 </div>
 </div>
 <a id="ae7ea9b6c1ee56caf75c87363ee04aba7" name="ae7ea9b6c1ee56caf75c87363ee04aba7"></a>
@@ -258,6 +267,8 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Iterator category the iterator belongs to. </p>
 
 </div>
 </div>
@@ -287,6 +298,8 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
 </table>
 </div><div class="memdoc">
 
+<p>Default-constructs an iterator. </p>
+
 </div>
 </div>
 <a id="a7833c041ea942dd098f702e778513f33" name="a7833c041ea942dd098f702e778513f33"></a>
@@ -313,6 +326,8 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Constructs an iterator. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">base</td><td>Base pointer. </td></tr>
@@ -347,6 +362,8 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Dereferences the iterator. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the dereferenced value. </dd></dl>
 
 </div>
@@ -375,6 +392,8 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Dereferences the iterator. </p>
 <dl class="section return"><dt>Returns</dt><dd>Pointer to the dereferenced value. </dd></dl>
 
 </div>
@@ -403,6 +422,8 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Dereferences the iterator with a subscript. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">diff</td><td>Offset to the target value. </td></tr>
@@ -437,6 +458,8 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Pre-increments the iterator. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to <span class="tt">*this</span>. </dd></dl>
 
 </div>
@@ -465,6 +488,8 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Post-increments the iterator. </p>
 <dl class="section return"><dt>Returns</dt><dd>Copy of <span class="tt">*this</span> before it was incremented. </dd></dl>
 
 </div>
@@ -493,6 +518,8 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Pre-decrements the iterator. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to <span class="tt">*this</span>. </dd></dl>
 
 </div>
@@ -521,6 +548,8 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Post-decrements the iterator. </p>
 <dl class="section return"><dt>Returns</dt><dd>Copy of <span class="tt">*this</span> before it was decremented. </dd></dl>
 
 </div>
@@ -549,6 +578,8 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Advances the iterator. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">diff</td><td>Amount of steps to advance by. </td></tr>
@@ -583,6 +614,8 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Subtracts from the iterator. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">diff</td><td>Amount of steps to subtract by. </td></tr>
@@ -617,6 +650,8 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Unwraps the iterator. </p>
 <dl class="section return"><dt>Returns</dt><dd>Base pointer. </dd></dl>
 
 </div>

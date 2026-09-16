@@ -131,7 +131,8 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1ver
 <p>Container for a GPU vertex format.  
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Vertex formats define the layout of vertex data passed to a drawing operation. This includes the type, attributes and divisor of the data set to be held in one or more indexed vertex buffers. They can be considered the counterpart of vertex array objects in OpenGL.</p>
+<div class="textblock"><p>Container for a GPU vertex format. </p>
+<p>Vertex formats define the layout of vertex data passed to a drawing operation. This includes the type, attributes and divisor of the data set to be held in one or more indexed vertex buffers. They can be considered the counterpart of vertex array objects in OpenGL.</p>
 <p>Strictly speaking, instances of <span class="tt"><a class="el" href="classtr_1_1vertex__format.html" title="Container for a GPU vertex format.">tr::vertex_format</a></span> are only containers for these underlying vertex format objects. This means, for example, that setting a vertex format on a graphics context does not set the literal <span class="tt"><a class="el" href="classtr_1_1vertex__format.html" title="Container for a GPU vertex format.">tr::vertex_format</a></span> object at a specific location in memory, but rather the value it contains. If the value is moved to a different instance of <span class="tt"><a class="el" href="classtr_1_1vertex__format.html" title="Container for a GPU vertex format.">tr::vertex_format</a></span>, that value will still be set on the context. If the instance is overriden with a new value, the old value is destroyed and the graphics context will no longer have a set vertex format.</p>
 <p>Every instance of <span class="tt"><a class="el" href="classtr_1_1vertex__format.html" title="Container for a GPU vertex format.">tr::vertex_format</a></span> is associated with a graphics context and cannot outlive its parent context.</p>
 <p><span class="tt"><a class="el" href="classtr_1_1vertex__format.html" title="Container for a GPU vertex format.">tr::vertex_format</a></span> instances are movable, but not copyable. A moved-from instance of <span class="tt"><a class="el" href="classtr_1_1vertex__format.html" title="Container for a GPU vertex format.">tr::vertex_format</a></span> is left in a special 'invalid' state. Invalid <span class="tt"><a class="el" href="classtr_1_1vertex__format.html" title="Container for a GPU vertex format.">tr::vertex_format</a></span> instances may not be interacted with besides moving a new value into them and checking for validity using <span class="tt"><a class="el" href="#ae32c1b8d981d74096a43a2f26bf8be32" title="Gets whether the vertex format is in a valid state.">valid()</a></span>.</p>
@@ -181,6 +182,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Creates a new vertex format. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">context</td><td>Graphics context to create the format on. </td></tr>
@@ -215,6 +218,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets a reference to the graphics context the vertex format is on. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the graphics context the vertex format is on. </dd></dl>
 
 </div>
@@ -241,6 +246,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets whether the vertex format is in a valid state. </p>
 <dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the vertex format is in a valid state, <span class="tt">false</span> if it is in an invalid state. </dd></dl>
 
 </div>
@@ -267,6 +274,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Sets the debug label of the vertex format. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">label</td><td>Label of the vertex format. </td></tr>
@@ -298,6 +307,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the debug label of the vertex format. </p>
 <dl class="section return"><dt>Returns</dt><dd>Label of the vertex format. </dd></dl>
 
 </div>

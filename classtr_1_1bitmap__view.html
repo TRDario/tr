@@ -129,14 +129,16 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1bit
 <div class="contents">
 
 <p>Non-owning view over bitmap data.  
-</p>
-<table class="memberdecls">
+ <a href="#details">More...</a></p>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Non-owning view over bitmap data. </p>
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-types" class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:afdff2cc294b09075dddf03b762f12cf4" id="r_afdff2cc294b09075dddf03b762f12cf4"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#afdff2cc294b09075dddf03b762f12cf4">reference</a> = <a class="el" href="classtr_1_1sub__bitmap_1_1reference.html">sub_bitmap::reference</a></td></tr>
-<tr class="memdesc:afdff2cc294b09075dddf03b762f12cf4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Immutable pixel reference.  <br /></td></tr>
-<tr class="memitem:a2eaab9600466f890953803dd8d76d74a" id="r_a2eaab9600466f890953803dd8d76d74a"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a2eaab9600466f890953803dd8d76d74a">iterator</a> = <a class="el" href="classtr_1_1sub__bitmap_1_1iterator.html">sub_bitmap::iterator</a></td></tr>
-<tr class="memdesc:a2eaab9600466f890953803dd8d76d74a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Immutable iterator.  <br /></td></tr>
+<tr class="memitem:a53be375d6577715b07a0c41faeb4642c" id="r_a53be375d6577715b07a0c41faeb4642c"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a53be375d6577715b07a0c41faeb4642c">reference</a> = <a class="el" href="classtr_1_1const__pixel__proxy.html">const_pixel_proxy</a></td></tr>
+<tr class="memdesc:a53be375d6577715b07a0c41faeb4642c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Immutable pixel reference.  <br /></td></tr>
+<tr class="memitem:aeb64526106d7cddc023d6cdb08536067" id="r_aeb64526106d7cddc023d6cdb08536067"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#aeb64526106d7cddc023d6cdb08536067">iterator</a> = <a class="el" href="classtr_1_1const__pixel__iterator.html">const_pixel_iterator</a></td></tr>
+<tr class="memdesc:aeb64526106d7cddc023d6cdb08536067"><td class="mdescLeft">&#160;</td><td class="mdescRight">Immutable iterator.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -161,51 +163,55 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a07446dc42430a4217d76b6c6e31b8864" id="r_a07446dc42430a4217d76b6c6e31b8864"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a07446dc42430a4217d76b6c6e31b8864">pitch</a> () const noexcept</td></tr>
 <tr class="memdesc:a07446dc42430a4217d76b6c6e31b8864"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the pitch of the bitmap.  <br /></td></tr>
 <tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Access</div></td></tr>
-<tr class="memitem:a967afe78b6c7cbd8eb208feb116876a2" id="r_a967afe78b6c7cbd8eb208feb116876a2"><td class="memItemLeft"><a class="el" href="#afdff2cc294b09075dddf03b762f12cf4">reference</a>&#160;</td><td class="memItemRight"><a class="el" href="#a967afe78b6c7cbd8eb208feb116876a2">operator[]</a> (int x, int y) const noexcept</td></tr>
+<tr class="memitem:a967afe78b6c7cbd8eb208feb116876a2" id="r_a967afe78b6c7cbd8eb208feb116876a2"><td class="memItemLeft"><a class="el" href="#a53be375d6577715b07a0c41faeb4642c">reference</a>&#160;</td><td class="memItemRight"><a class="el" href="#a967afe78b6c7cbd8eb208feb116876a2">operator[]</a> (int x, int y) const noexcept</td></tr>
 <tr class="memdesc:a967afe78b6c7cbd8eb208feb116876a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets immutable access to a pixel of the bitmap.  <br /></td></tr>
-<tr class="memitem:a87e5a7bf30677e1b74dec387bc2415de" id="r_a87e5a7bf30677e1b74dec387bc2415de"><td class="memItemLeft"><a class="el" href="#afdff2cc294b09075dddf03b762f12cf4">reference</a>&#160;</td><td class="memItemRight"><a class="el" href="#a87e5a7bf30677e1b74dec387bc2415de">operator[]</a> (glm::ivec2 pos) const noexcept</td></tr>
+<tr class="memitem:a87e5a7bf30677e1b74dec387bc2415de" id="r_a87e5a7bf30677e1b74dec387bc2415de"><td class="memItemLeft"><a class="el" href="#a53be375d6577715b07a0c41faeb4642c">reference</a>&#160;</td><td class="memItemRight"><a class="el" href="#a87e5a7bf30677e1b74dec387bc2415de">operator[]</a> (glm::ivec2 pos) const noexcept</td></tr>
 <tr class="memdesc:a87e5a7bf30677e1b74dec387bc2415de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets immutable access to a pixel of the bitmap.  <br /></td></tr>
 <tr class="memitem:a0f390974d33946dcaa281a110d211d05" id="r_a0f390974d33946dcaa281a110d211d05"><td class="memItemLeft">const std::byte *&#160;</td><td class="memItemRight"><a class="el" href="#a0f390974d33946dcaa281a110d211d05">data</a> () const noexcept</td></tr>
 <tr class="memdesc:a0f390974d33946dcaa281a110d211d05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the raw data of the bitmap.  <br /></td></tr>
 <tr id="pub-methods-4" class="groupHeader"><td colspan="2"><div class="groupHeader">Iterators</div></td></tr>
-<tr class="memitem:a3848c60465930a5bb2ac6c8faa45081c" id="r_a3848c60465930a5bb2ac6c8faa45081c"><td class="memItemLeft"><a class="el" href="#a2eaab9600466f890953803dd8d76d74a">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a3848c60465930a5bb2ac6c8faa45081c">begin</a> () const noexcept</td></tr>
+<tr class="memitem:a3848c60465930a5bb2ac6c8faa45081c" id="r_a3848c60465930a5bb2ac6c8faa45081c"><td class="memItemLeft"><a class="el" href="#aeb64526106d7cddc023d6cdb08536067">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a3848c60465930a5bb2ac6c8faa45081c">begin</a> () const noexcept</td></tr>
 <tr class="memdesc:a3848c60465930a5bb2ac6c8faa45081c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an immutable iterator to the beginning of the bitmap.  <br /></td></tr>
-<tr class="memitem:a03cf25e1e48cef93100e2d4d64a6b0a9" id="r_a03cf25e1e48cef93100e2d4d64a6b0a9"><td class="memItemLeft"><a class="el" href="#a2eaab9600466f890953803dd8d76d74a">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a03cf25e1e48cef93100e2d4d64a6b0a9">cbegin</a> () const noexcept</td></tr>
+<tr class="memitem:a03cf25e1e48cef93100e2d4d64a6b0a9" id="r_a03cf25e1e48cef93100e2d4d64a6b0a9"><td class="memItemLeft"><a class="el" href="#aeb64526106d7cddc023d6cdb08536067">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a03cf25e1e48cef93100e2d4d64a6b0a9">cbegin</a> () const noexcept</td></tr>
 <tr class="memdesc:a03cf25e1e48cef93100e2d4d64a6b0a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an immutable iterator to the beginning of the bitmap.  <br /></td></tr>
-<tr class="memitem:a9538f4960a229243983d02907d6a51d3" id="r_a9538f4960a229243983d02907d6a51d3"><td class="memItemLeft"><a class="el" href="#a2eaab9600466f890953803dd8d76d74a">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a9538f4960a229243983d02907d6a51d3">end</a> () const noexcept</td></tr>
+<tr class="memitem:a9538f4960a229243983d02907d6a51d3" id="r_a9538f4960a229243983d02907d6a51d3"><td class="memItemLeft"><a class="el" href="#aeb64526106d7cddc023d6cdb08536067">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a9538f4960a229243983d02907d6a51d3">end</a> () const noexcept</td></tr>
 <tr class="memdesc:a9538f4960a229243983d02907d6a51d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an immutable iterator to one past the end of the bitmap.  <br /></td></tr>
-<tr class="memitem:af0f89b49773e359021e368ce8e38f2b7" id="r_af0f89b49773e359021e368ce8e38f2b7"><td class="memItemLeft"><a class="el" href="#a2eaab9600466f890953803dd8d76d74a">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#af0f89b49773e359021e368ce8e38f2b7">cend</a> () const noexcept</td></tr>
+<tr class="memitem:af0f89b49773e359021e368ce8e38f2b7" id="r_af0f89b49773e359021e368ce8e38f2b7"><td class="memItemLeft"><a class="el" href="#aeb64526106d7cddc023d6cdb08536067">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#af0f89b49773e359021e368ce8e38f2b7">cend</a> () const noexcept</td></tr>
 <tr class="memdesc:af0f89b49773e359021e368ce8e38f2b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an immutable iterator to one past the end of the bitmap.  <br /></td></tr>
 <tr id="pub-methods-5" class="groupHeader"><td colspan="2"><div class="groupHeader">Saving</div></td></tr>
 <tr class="memitem:a1477de16bc5068385eb8ce3c4c4d3ebe" id="r_a1477de16bc5068385eb8ce3c4c4d3ebe"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a1477de16bc5068385eb8ce3c4c4d3ebe">save</a> (const std::filesystem::path &amp;path) const</td></tr>
 <tr class="memdesc:a1477de16bc5068385eb8ce3c4c4d3ebe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Saves the bitmap to a .png file.  <br /></td></tr>
 </table>
 <a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Member Typedef Documentation</h2>
-<a id="afdff2cc294b09075dddf03b762f12cf4" name="afdff2cc294b09075dddf03b762f12cf4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afdff2cc294b09075dddf03b762f12cf4">&#9670;&#160;</a></span>reference</h2>
+<a id="a53be375d6577715b07a0c41faeb4642c" name="a53be375d6577715b07a0c41faeb4642c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a53be375d6577715b07a0c41faeb4642c">&#9670;&#160;</a></span>reference</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="#afdff2cc294b09075dddf03b762f12cf4">tr::bitmap_view::reference</a> = <a class="el" href="classtr_1_1sub__bitmap_1_1reference.html">sub_bitmap::reference</a></td>
+          <td class="memname">using <a class="el" href="#a53be375d6577715b07a0c41faeb4642c">tr::bitmap_view::reference</a> = <a class="el" href="classtr_1_1const__pixel__proxy.html">const_pixel_proxy</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p>Immutable pixel reference. </p>
+
 </div>
 </div>
-<a id="a2eaab9600466f890953803dd8d76d74a" name="a2eaab9600466f890953803dd8d76d74a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2eaab9600466f890953803dd8d76d74a">&#9670;&#160;</a></span>iterator</h2>
+<a id="aeb64526106d7cddc023d6cdb08536067" name="aeb64526106d7cddc023d6cdb08536067"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb64526106d7cddc023d6cdb08536067">&#9670;&#160;</a></span>iterator</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="#a2eaab9600466f890953803dd8d76d74a">tr::bitmap_view::iterator</a> = <a class="el" href="classtr_1_1sub__bitmap_1_1iterator.html">sub_bitmap::iterator</a></td>
+          <td class="memname">using <a class="el" href="#aeb64526106d7cddc023d6cdb08536067">tr::bitmap_view::iterator</a> = <a class="el" href="classtr_1_1const__pixel__iterator.html">const_pixel_iterator</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Immutable iterator. </p>
 
 </div>
 </div>
@@ -241,6 +247,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Creates a bitmap view over contiguous pixel data. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">raw_data</td><td>Span holding the pixel data. </td></tr>
@@ -281,10 +289,12 @@ template&lt;std::ranges::contiguous_range Range&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Creates a bitmap view over a range of pixel data. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">range</td><td>Range holding the pixel data. </td></tr>
@@ -332,6 +342,8 @@ template&lt;std::ranges::contiguous_range Range&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Creates a bitmap view over pixel data. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">raw_data_start</td><td>Pointer to the pixel data. </td></tr>
@@ -367,6 +379,8 @@ template&lt;std::ranges::contiguous_range Range&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Creates a sub-bitmap spanning the entire bitmap view. </p>
 <dl class="section return"><dt>Returns</dt><dd>Sub-bitmap spanning the entire bitmap view. </dd></dl>
 
 </div>
@@ -393,6 +407,8 @@ template&lt;std::ranges::contiguous_range Range&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Creates a sub-bitmap of the bitmap view. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">region</td><td>Region of the bitmap to create a sub-bitmap of. </td></tr>
@@ -425,6 +441,8 @@ template&lt;std::ranges::contiguous_range Range&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the size of the bitmap. </p>
 <dl class="section return"><dt>Returns</dt><dd>Size of the bitmap. </dd></dl>
 
 </div>
@@ -451,6 +469,8 @@ template&lt;std::ranges::contiguous_range Range&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the format of the bitmap. </p>
 <dl class="section return"><dt>Returns</dt><dd>Format of the bitmap. </dd></dl>
 
 </div>
@@ -477,6 +497,8 @@ template&lt;std::ranges::contiguous_range Range&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the pitch of the bitmap. </p>
 <dl class="section return"><dt>Returns</dt><dd>Pitch of the bitmap. </dd></dl>
 
 </div>
@@ -491,7 +513,7 @@ template&lt;std::ranges::contiguous_range Range&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="#afdff2cc294b09075dddf03b762f12cf4">reference</a> tr::bitmap_view::operator[] </td>
+          <td class="memname"><a class="el" href="#a53be375d6577715b07a0c41faeb4642c">reference</a> tr::bitmap_view::operator[] </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>x</em></span>, </td>
         </tr>
@@ -507,6 +529,8 @@ template&lt;std::ranges::contiguous_range Range&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets immutable access to a pixel of the bitmap. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">x,y</td><td>Position of the bitmap within the bitmap. </td></tr>
@@ -527,7 +551,7 @@ template&lt;std::ranges::contiguous_range Range&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="#afdff2cc294b09075dddf03b762f12cf4">reference</a> tr::bitmap_view::operator[] </td>
+          <td class="memname"><a class="el" href="#a53be375d6577715b07a0c41faeb4642c">reference</a> tr::bitmap_view::operator[] </td>
           <td>(</td>
           <td class="paramtype">glm::ivec2</td>          <td class="paramname"><span class="paramname"><em>pos</em></span></td><td>)</td>
           <td> const</td>
@@ -539,6 +563,8 @@ template&lt;std::ranges::contiguous_range Range&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets immutable access to a pixel of the bitmap. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">pos</td><td>Position of the pixel within the bitmap. </td></tr>
@@ -571,6 +597,8 @@ template&lt;std::ranges::contiguous_range Range&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the raw data of the bitmap. </p>
 <dl class="section return"><dt>Returns</dt><dd>Pointer to the data of the bitmap. </dd></dl>
 
 </div>
@@ -585,7 +613,7 @@ template&lt;std::ranges::contiguous_range Range&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="#a2eaab9600466f890953803dd8d76d74a">iterator</a> tr::bitmap_view::begin </td>
+          <td class="memname"><a class="el" href="#aeb64526106d7cddc023d6cdb08536067">iterator</a> tr::bitmap_view::begin </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -597,6 +625,8 @@ template&lt;std::ranges::contiguous_range Range&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets an immutable iterator to the beginning of the bitmap. </p>
 <dl class="section return"><dt>Returns</dt><dd>Iterator to the beginning of the bitmap. </dd></dl>
 
 </div>
@@ -611,7 +641,7 @@ template&lt;std::ranges::contiguous_range Range&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="#a2eaab9600466f890953803dd8d76d74a">iterator</a> tr::bitmap_view::cbegin </td>
+          <td class="memname"><a class="el" href="#aeb64526106d7cddc023d6cdb08536067">iterator</a> tr::bitmap_view::cbegin </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -623,6 +653,8 @@ template&lt;std::ranges::contiguous_range Range&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets an immutable iterator to the beginning of the bitmap. </p>
 <dl class="section return"><dt>Returns</dt><dd>Iterator to the beginning of the bitmap. </dd></dl>
 
 </div>
@@ -637,7 +669,7 @@ template&lt;std::ranges::contiguous_range Range&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="#a2eaab9600466f890953803dd8d76d74a">iterator</a> tr::bitmap_view::end </td>
+          <td class="memname"><a class="el" href="#aeb64526106d7cddc023d6cdb08536067">iterator</a> tr::bitmap_view::end </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -649,6 +681,8 @@ template&lt;std::ranges::contiguous_range Range&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets an immutable iterator to one past the end of the bitmap. </p>
 <dl class="section return"><dt>Returns</dt><dd>Iterator to the end of the bitmap. </dd></dl>
 
 </div>
@@ -663,7 +697,7 @@ template&lt;std::ranges::contiguous_range Range&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="#a2eaab9600466f890953803dd8d76d74a">iterator</a> tr::bitmap_view::cend </td>
+          <td class="memname"><a class="el" href="#aeb64526106d7cddc023d6cdb08536067">iterator</a> tr::bitmap_view::cend </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -675,6 +709,8 @@ template&lt;std::ranges::contiguous_range Range&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets an immutable iterator to one past the end of the bitmap. </p>
 <dl class="section return"><dt>Returns</dt><dd>Iterator to the end of the bitmap. </dd></dl>
 
 </div>
@@ -693,6 +729,8 @@ template&lt;std::ranges::contiguous_range Range&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Saves the bitmap to a .png file. </p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
     <tr><td class="paramname">bitmap_save_error</td><td>If saving the bitmap to file failed. </td></tr>

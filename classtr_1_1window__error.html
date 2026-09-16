@@ -129,8 +129,10 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1win
 <div class="contents">
 
 <p>Window error.  
-</p>
-<div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Inheritance diagram for tr::window_error:</div>
+ <a href="#details">More...</a></p>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Window error. </p>
+</div><div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Inheritance diagram for tr::window_error:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-0-content" class="dyncontent" style="display:none;">
@@ -144,6 +146,8 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1win
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
+<tr class="memitem:a5d1d10eb1900626e7ccdceb0676e1fba" id="r_a5d1d10eb1900626e7ccdceb0676e1fba"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a5d1d10eb1900626e7ccdceb0676e1fba">window_error</a> (std::string &amp;&amp;description) noexcept</td></tr>
+<tr class="memdesc:a5d1d10eb1900626e7ccdceb0676e1fba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a window error.  <br /></td></tr>
 <tr class="memitem:af69d41f52349ad0e9bf691c542b5c0c1" id="r_af69d41f52349ad0e9bf691c542b5c0c1"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; </td></tr>
 <tr class="memitem:af69d41f52349ad0e9bf691c542b5c0c1 template"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#af69d41f52349ad0e9bf691c542b5c0c1">window_error</a> (std::format_string&lt; Args... &gt; description_fmt, Args &amp;&amp;... args) noexcept</td></tr>
 <tr class="memdesc:af69d41f52349ad0e9bf691c542b5c0c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a window error.  <br /></td></tr>
@@ -159,8 +163,41 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a00892b4abc5abaeb536e960543b7254c inherit pub_methods_classtr_1_1exception"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a formatted error message.  <br /></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a5d1d10eb1900626e7ccdceb0676e1fba" name="a5d1d10eb1900626e7ccdceb0676e1fba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5d1d10eb1900626e7ccdceb0676e1fba">&#9670;&#160;</a></span>window_error() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tr::window_error::window_error </td>
+          <td>(</td>
+          <td class="paramtype">std::string &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>description</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructs a window error. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">description</td><td>Description of the error. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="af69d41f52349ad0e9bf691c542b5c0c1" name="af69d41f52349ad0e9bf691c542b5c0c1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af69d41f52349ad0e9bf691c542b5c0c1">&#9670;&#160;</a></span>window_error()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#af69d41f52349ad0e9bf691c542b5c0c1">&#9670;&#160;</a></span>window_error() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -183,10 +220,12 @@ template&lt;typename... Args&gt; </div>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel explicit">explicit</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel explicit">explicit</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Constructs a window error. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Args</td><td>Types of the formatting arguments. </td></tr>
@@ -226,6 +265,8 @@ template&lt;typename... Args&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the name of the error. </p>
 <dl class="section return"><dt>Returns</dt><dd><span class="tt">"Window error"</span>. </dd></dl>
 
 <p>Implements <a class="el" href="classtr_1_1exception.html#ac44aaad3bc2fca5359317fead7b5831b">tr::exception</a>.</p>
@@ -254,6 +295,8 @@ template&lt;typename... Args&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the description of the error. </p>
 <dl class="section return"><dt>Returns</dt><dd>Description of the error. </dd></dl>
 
 <p>Implements <a class="el" href="classtr_1_1exception.html#a1da44d607b7e2666fcc24aabae326a9f">tr::exception</a>.</p>
@@ -282,6 +325,8 @@ template&lt;typename... Args&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets further details about the error. </p>
 <dl class="section return"><dt>Returns</dt><dd>Details of the error. </dd></dl>
 
 <p>Implements <a class="el" href="classtr_1_1exception.html#a26b7c5d53aa369a7b52bd650490d558d">tr::exception</a>.</p>

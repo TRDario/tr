@@ -3,7 +3,7 @@ var searchData=
   ['what_0',['what',['../classtr_1_1exception.html#a00892b4abc5abaeb536e960543b7254c',1,'tr::exception']]],
   ['winding_5forder_1',['winding_order',['../structtr_1_1triangle.html#a663d8adb9dd87ae19344cf401cffe62b',1,'tr::triangle']]],
   ['window_2',['window',['../classtr_1_1graphics__context.html#adf3b185d86aaf9dc76d9c4a29f08a6a4',1,'tr::graphics_context::window()'],['../classtr_1_1window.html#a48514485ad24e8d26248b1be9ec1063f',1,'tr::window::window()']]],
-  ['window_5ferror_3',['window_error',['../classtr_1_1window__error.html#af69d41f52349ad0e9bf691c542b5c0c1',1,'tr::window_error']]],
+  ['window_5ferror_3',['window_error',['../classtr_1_1window__error.html#a5d1d10eb1900626e7ccdceb0676e1fba',1,'tr::window_error::window_error(std::string &amp;&amp;description) noexcept'],['../classtr_1_1window__error.html#af69d41f52349ad0e9bf691c542b5c0c1',1,'tr::window_error::window_error(std::format_string&lt; Args... &gt; description_fmt, Args &amp;&amp;... args) noexcept']]],
   ['window_5fgain_5ffocus_5fevent_4',['window_gain_focus_event',['../structtr_1_1window__gain__focus__event.html#a26c5e8e4247ac9ac3105cb63f2ccba80',1,'tr::window_gain_focus_event']]],
   ['window_5fhide_5fevent_5',['window_hide_event',['../structtr_1_1window__hide__event.html#a01418803cdcfd8fbe06fbebf6ea50798',1,'tr::window_hide_event']]],
   ['window_5flose_5ffocus_5fevent_6',['window_lose_focus_event',['../structtr_1_1window__lose__focus__event.html#add47925c20d897f9122430c45b3a3d71',1,'tr::window_lose_focus_event']]],

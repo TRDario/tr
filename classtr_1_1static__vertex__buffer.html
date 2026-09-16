@@ -132,7 +132,8 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1sta
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;standard_layout Element&gt;<br />
-class tr::static_vertex_buffer&lt; Element &gt;</div><dl class="tparams"><dt>Template Parameters</dt><dd>
+class tr::static_vertex_buffer&lt; Element &gt;</div><p>Typed static vertex buffer class for holding immutable vertex data of a single type. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Element</td><td>Type of the elements of the buffer. </td></tr>
   </table>
@@ -145,7 +146,7 @@ class tr::static_vertex_buffer&lt; Element &gt;</div><dl class="tparams"><dt>Tem
  <div class="center">
   <img src="classtr_1_1static__vertex__buffer.png" usemap="#tr_3A_3Astatic_5Fvertex_5Fbuffer_3C_20Element_20_3E_map" alt=""/>
   <map id="tr_3A_3Astatic_5Fvertex_5Fbuffer_3C_20Element_20_3E_map" name="tr_3A_3Astatic_5Fvertex_5Fbuffer_3C_20Element_20_3E_map">
-<area href="classtr_1_1basic__static__vertex__buffer.html" title="Static vertex buffer class for holding immutable vertex data." alt="tr::basic_static_vertex_buffer" shape="rect" coords="0,0,206,24"/>
+<area href="classtr_1_1untyped__static__vertex__buffer.html" title="Static vertex buffer class for holding immutable vertex data." alt="tr::untyped_static_vertex_buffer" shape="rect" coords="0,0,206,24"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -157,20 +158,8 @@ Public Types</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
-<tr class="memitem:abb7785764179a50becd31dbc547c5604" id="r_abb7785764179a50becd31dbc547c5604"><td class="memTemplParams" colspan="2">template&lt;typed_contiguous_const_range&lt; Element &gt; Range&gt; </td></tr>
-<tr class="memitem:abb7785764179a50becd31dbc547c5604 template"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#abb7785764179a50becd31dbc547c5604">static_vertex_buffer</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context, Range &amp;&amp;range)</td></tr>
-<tr class="memdesc:abb7785764179a50becd31dbc547c5604"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uploads vertex data into a static vertex buffer.  <br /></td></tr>
-<tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Context</div></td></tr>
-<tr class="memitem:a2c5c352444ab4d10ed3add4a8cd03f9a" id="r_a2c5c352444ab4d10ed3add4a8cd03f9a"><td class="memItemLeft"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a2c5c352444ab4d10ed3add4a8cd03f9a">context</a> () const noexcept</td></tr>
-<tr class="memdesc:a2c5c352444ab4d10ed3add4a8cd03f9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a reference to the graphics context the buffer is on.  <br /></td></tr>
-<tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">State</div></td></tr>
-<tr class="memitem:ab3a7924563ab5b21ec88e5004dd17d6a" id="r_ab3a7924563ab5b21ec88e5004dd17d6a"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#ab3a7924563ab5b21ec88e5004dd17d6a">valid</a> () const noexcept</td></tr>
-<tr class="memdesc:ab3a7924563ab5b21ec88e5004dd17d6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the buffer is in a valid state.  <br /></td></tr>
-<tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Label</div></td></tr>
-<tr class="memitem:ada4364c0295af892b869f2be3ed62777" id="r_ada4364c0295af892b869f2be3ed62777"><td class="memItemLeft">std::string&#160;</td><td class="memItemRight"><a class="el" href="#ada4364c0295af892b869f2be3ed62777">label</a> () const</td></tr>
-<tr class="memdesc:ada4364c0295af892b869f2be3ed62777"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the label of the buffer.  <br /></td></tr>
-<tr class="memitem:ab5e025d8fb771727e580f881a1e65fac" id="r_ab5e025d8fb771727e580f881a1e65fac"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ab5e025d8fb771727e580f881a1e65fac">set_label</a> (std::string_view label) noexcept</td></tr>
-<tr class="memdesc:ab5e025d8fb771727e580f881a1e65fac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the label of the buffer.  <br /></td></tr>
+<tr class="memitem:a482960f2e89dede57d5ba3a1ee7b9ccb" id="r_a482960f2e89dede57d5ba3a1ee7b9ccb"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a482960f2e89dede57d5ba3a1ee7b9ccb">static_vertex_buffer</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context, std::span&lt; const Element &gt; range)</td></tr>
+<tr class="memdesc:a482960f2e89dede57d5ba3a1ee7b9ccb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uploads vertex data into a static vertex buffer.  <br /></td></tr>
 </table>
 <a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Member Typedef Documentation</h2>
 <a id="ad5374fd96f0ac8ec098e00f6105e3b62" name="ad5374fd96f0ac8ec098e00f6105e3b62"></a>
@@ -187,18 +176,18 @@ template&lt;standard_layout Element&gt; </div>
       </table>
 </div><div class="memdoc">
 
+<p>Value type used by the buffer. </p>
+
 </div>
 </div>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="abb7785764179a50becd31dbc547c5604" name="abb7785764179a50becd31dbc547c5604"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abb7785764179a50becd31dbc547c5604">&#9670;&#160;</a></span>static_vertex_buffer()</h2>
+<a id="a482960f2e89dede57d5ba3a1ee7b9ccb" name="a482960f2e89dede57d5ba3a1ee7b9ccb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a482960f2e89dede57d5ba3a1ee7b9ccb">&#9670;&#160;</a></span>static_vertex_buffer()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;standard_layout Element&gt; </div>
-<div class="memtemplate">
-template&lt;typed_contiguous_const_range&lt; Element &gt; Range&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -211,143 +200,21 @@ template&lt;typed_contiguous_const_range&lt; Element &gt; Range&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Range &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>range</em></span>&#160;)</td>
+          <td class="paramtype">std::span&lt; const Element &gt;</td>          <td class="paramname"><span class="paramname"><em>range</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">Range</td><td>Vertex buffer data range. </td></tr>
-  </table>
-  </dd>
-</dl>
+
+<p>Uploads vertex data into a static vertex buffer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">context</td><td>Graphics context to create the buffer on. </td></tr>
     <tr><td class="paramname">range</td><td>Data to upload to the buffer. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="a2c5c352444ab4d10ed3add4a8cd03f9a" name="a2c5c352444ab4d10ed3add4a8cd03f9a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2c5c352444ab4d10ed3add4a8cd03f9a">&#9670;&#160;</a></span>context()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;standard_layout Element&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp; <a class="el" href="classtr_1_1graphics__buffer.html#a2c5c352444ab4d10ed3add4a8cd03f9a">tr::graphics_buffer::context</a> </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>Reference to the graphics context the buffer is on. </dd></dl>
-
-</div>
-</div>
-<a id="ab3a7924563ab5b21ec88e5004dd17d6a" name="ab3a7924563ab5b21ec88e5004dd17d6a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab3a7924563ab5b21ec88e5004dd17d6a">&#9670;&#160;</a></span>valid()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;standard_layout Element&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool <a class="el" href="classtr_1_1graphics__buffer.html#ab3a7924563ab5b21ec88e5004dd17d6a">tr::graphics_buffer::valid</a> </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the buffer is in a valid state, <span class="tt">false</span> if it is in an invalid state. </dd></dl>
-
-</div>
-</div>
-<a id="ada4364c0295af892b869f2be3ed62777" name="ada4364c0295af892b869f2be3ed62777"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ada4364c0295af892b869f2be3ed62777">&#9670;&#160;</a></span>label()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;standard_layout Element&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string <a class="el" href="classtr_1_1graphics__buffer.html#ada4364c0295af892b869f2be3ed62777">tr::graphics_buffer::label</a> </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>Label of the buffer, or "&lt;unnamed&gt;". </dd></dl>
-
-</div>
-</div>
-<a id="ab5e025d8fb771727e580f881a1e65fac" name="ab5e025d8fb771727e580f881a1e65fac"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab5e025d8fb771727e580f881a1e65fac">&#9670;&#160;</a></span>set_label()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;standard_layout Element&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="classtr_1_1graphics__buffer.html#ab5e025d8fb771727e580f881a1e65fac">tr::graphics_buffer::set_label</a> </td>
-          <td>(</td>
-          <td class="paramtype">std::string_view</td>          <td class="paramname"><span class="paramname"><em>label</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">label</td><td>Label of the buffer. </td></tr>
   </table>
   </dd>
 </dl>

@@ -131,7 +131,8 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1dir
 <p>Logging sink outputting to log files in a directory.  
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The directory sink places every source in a separate log file titled after it.</p>
+<div class="textblock"><p>Logging sink outputting to log files in a directory. </p>
+<p>The directory sink places every source in a separate log file titled after it.</p>
 <p>Logs from previous runs are rotated through the subdirectories <span class="tt">old</span>, <span class="tt">older</span> and <span class="tt">oldest</span> before they are discarded. </p>
 </div><div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Inheritance diagram for tr::directory_log_sink:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -171,6 +172,8 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Creates a directory logging sink. </p>
 <p>If the directory does not exist, it is created. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">directory_path</td><td>Path to the directory containing the log files. </td></tr>
@@ -203,6 +206,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Outputs a logging message to a log file. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">message</td><td>Log message to output. </td></tr>
@@ -236,6 +241,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Flushes the sink (no-op). </p>
 
 <p>Implements <a class="el" href="classtr_1_1log__sink.html#a338875a2a5b2c59d45f7deb66909986a">tr::log_sink</a>.</p>
 

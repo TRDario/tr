@@ -132,7 +132,8 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('structtr_1_1bi
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename CharT, typename Traits&gt;<br />
-struct tr::binary_writer&lt; tr::basic_zstring_view&lt; CharT, Traits &gt; &gt;</div><dl class="tparams"><dt>Template Parameters</dt><dd>
+struct tr::binary_writer&lt; tr::basic_zstring_view&lt; CharT, Traits &gt; &gt;</div><p>NUL-terminated string view binary writer. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">CharT</td><td>Character type used by the string. </td></tr>
     <tr><td class="paramname">Traits</td><td>Character traits used by the string. </td></tr>
@@ -185,6 +186,8 @@ Static Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Writes a variable to a stream. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">os</td><td>Output stream. </td></tr>

@@ -131,7 +131,8 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1aud
 <p>Audio data buffer.  
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Audio buffers are attached to audio sources and may store 16-bit mono or stereo audio data. </p>
+<div class="textblock"><p>Audio data buffer. </p>
+<p>Audio buffers are attached to audio sources and may store 16-bit mono or stereo audio data. </p>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -183,6 +184,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Audio buffers are not copyable. </p>
+
 </div>
 </div>
 <a id="a6d3fb6792839d503b0c9dcd2f51881a6" name="a6d3fb6792839d503b0c9dcd2f51881a6"></a>
@@ -207,6 +210,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Audio buffers are not movable. </p>
 
 </div>
 </div>
@@ -234,6 +239,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Audio buffers are not copyable. </p>
+
 </div>
 </div>
 <a id="a5df9aedc339238b0a07cdfffd20fe7be" name="a5df9aedc339238b0a07cdfffd20fe7be"></a>
@@ -259,6 +266,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Audio buffers are not movable. </p>
+
 </div>
 </div>
 <a id="a2e8968257857913fdad49eb0c3e9c8a4" name="a2e8968257857913fdad49eb0c3e9c8a4"></a>
@@ -283,6 +292,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the context of the audio buffer. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to the audio context. </dd></dl>
 
 </div>
@@ -309,6 +320,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the size of the buffer's storage. </p>
 <dl class="section return"><dt>Returns</dt><dd>Size of the buffer's storage in samples. </dd></dl>
 
 </div>
@@ -335,6 +348,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the length of the buffer's audio. </p>
 <dl class="section return"><dt>Returns</dt><dd>Length of the buffer's audio in seconds. </dd></dl>
 
 </div>
@@ -361,6 +376,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the sample rate of the buffer's audio. </p>
 <dl class="section return"><dt>Returns</dt><dd>Sample rate of the buffer's audio. </dd></dl>
 
 </div>
@@ -387,6 +404,8 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the number of channels in the buffer's audio. </p>
 <dl class="section return"><dt>Returns</dt><dd>Number of channels in the buffer's audio. </dd></dl>
 
 </div>

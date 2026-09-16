@@ -129,8 +129,10 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('structtr_1_1ke
 <div class="contents">
 
 <p>Keycode chord.  
-</p>
-<table class="memberdecls">
+ <a href="#details">More...</a></p>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Keycode chord. </p>
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
@@ -175,6 +177,8 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Default-constructs a key chord. </p>
+
 </div>
 </div>
 <a id="a7f5c418e810a11f1b210fbce173adb47" name="a7f5c418e810a11f1b210fbce173adb47"></a>
@@ -195,10 +199,12 @@ Public Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Constructs a key chord without modifiers. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">key</td><td>Chord keycode. </td></tr>
@@ -230,10 +236,12 @@ Public Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Constructs a key chord from components. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">mods</td><td>Chord modifiers. </td></tr>
@@ -262,10 +270,12 @@ Public Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel explicit">explicit</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel explicit">explicit</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Converts a string to a key chord. </p>
 <p>An invalid string results in a chord with <span class="tt"><a class="el" href="namespacetr.html#a142886ba179e0da074221ab4a8b6a6adaad921d60486366258809553a3db49a4a" title="Unknown keycode.">keycode::unknown</a></span>. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">cstr</td><td>Chord string. </td></tr>
@@ -298,6 +308,8 @@ Public Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Gets the name of the key chord. </p>
 <dl class="section return"><dt>Returns</dt><dd>Chord string. </dd></dl>
 
 </div>

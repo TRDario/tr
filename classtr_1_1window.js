@@ -1,6 +1,7 @@
 var classtr_1_1window =
 [
     [ "window", "classtr_1_1window.html#a48514485ad24e8d26248b1be9ec1063f", null ],
+    [ "valid", "classtr_1_1window.html#acd437a75e8758102e1fcc114c7a5d28c", null ],
     [ "operator window_view", "classtr_1_1window.html#ab0a25155bdea690d018f1deba02c2c2d", null ],
     [ "view", "classtr_1_1window.html#a4c741752add9336109ebdd9a6f3d3f32", null ],
     [ "title", "classtr_1_1window.html#ae1ae8a1200b5ae64c2a286e7a5bd21fe", null ],
