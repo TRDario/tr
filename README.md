@@ -17,7 +17,7 @@ Requires a C++23-compatible compiler and standard library, as well as CMake 3.23
 
 Tested on and guaranteed to build with Clang(-cl) on Linux and Windows. Probably works with MSVC and GCC too, but I haven't tested them.
 
-For more details, see [this page from the documentation](https://trdario.github.io/tr/md_pages_2configuration__and__building.html).
+For more details, see [this page from the documentation](https://trdario.github.io/tr/md_pages_2building.html).
 
 ## Documentation
 
@@ -33,4 +33,4 @@ tr is currently in the process of being covered with unit tests.
 
 ## Licence
 
-All assets and code are under the [Apache License 2.0](https://github.com/TRDario/tr/blob/master/LICENSE.md).
+All assets and code are under the [Apache License 2.0](https://github.com/TRDario/tr/blob/main/LICENSE.md).
