@@ -1,30 +1,11 @@
+/// @file
+/// @brief Implements window_view.hpp.
+
 #include <SDL3/SDL.h>
 #include <tr/sysgfx/bitmap.hpp>
 #include <tr/sysgfx/bitmap_view.hpp>
+#include <tr/sysgfx/exception.hpp>
 #include <tr/sysgfx/window_view.hpp>
-
-//
-
-tr::window_error::window_error(std::string&& description) noexcept
-	: m_description{description}
-	, m_details{SDL_GetError()}
-{
-}
-
-std::string_view tr::window_error::name() const noexcept
-{
-	return "Window error";
-}
-
-std::string_view tr::window_error::description() const noexcept
-{
-	return m_description;
-}
-
-std::string_view tr::window_error::details() const noexcept
-{
-	return m_details;
-}
 
 //
 

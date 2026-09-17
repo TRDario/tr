@@ -5,34 +5,13 @@
 #include <SDL3/SDL.h>
 #include <tr/sysgfx/blending.hpp>
 #include <tr/sysgfx/dynamic_index_buffer.hpp>
+#include <tr/sysgfx/exception.hpp>
 #include <tr/sysgfx/graphics_context.hpp>
 #include <tr/sysgfx/logger.hpp>
 #include <tr/sysgfx/shader_pipeline.hpp>
 #include <tr/sysgfx/static_index_buffer.hpp>
 #include <tr/sysgfx/texture.hpp>
 #include <tr/sysgfx/window_view.hpp>
-
-//
-
-tr::graphics_context_init_error::graphics_context_init_error()
-	: m_description{SDL_GetError()}
-{
-}
-
-std::string_view tr::graphics_context_init_error::name() const noexcept
-{
-	return "Graphics context opening error";
-}
-
-std::string_view tr::graphics_context_init_error::description() const noexcept
-{
-	return m_description;
-}
-
-std::string_view tr::graphics_context_init_error::details() const noexcept
-{
-	return {};
-}
 
 //
 

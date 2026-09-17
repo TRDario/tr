@@ -4,6 +4,7 @@
 #include "internal/opengl_definitions.hpp"
 #include <tr/sysgfx/graphics_context.hpp>
 #include <tr/sysgfx/static_index_buffer.hpp>
+#include <tr/utility/exception.hpp>
 
 //
 

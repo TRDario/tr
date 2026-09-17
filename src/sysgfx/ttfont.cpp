@@ -3,6 +3,7 @@
 
 #include <SDL3_ttf/SDL_ttf.h>
 #include <tr/sysgfx/bitmap.hpp>
+#include <tr/sysgfx/exception.hpp>
 #include <tr/sysgfx/ttfont.hpp>
 
 //
@@ -29,51 +30,6 @@ namespace tr
 		}
 	} // namespace
 } // namespace tr
-
-//
-
-tr::ttfont_load_error::ttfont_load_error(std::string_view path, std::string&& details)
-	: m_description{std::format("Failed to load bitmap from '{}'", path)}
-	, m_details{std::move(details)}
-{
-}
-
-std::string_view tr::ttfont_load_error::name() const noexcept
-{
-	return "TrueType font loading error";
-}
-
-std::string_view tr::ttfont_load_error::description() const noexcept
-{
-	return m_description;
-}
-
-std::string_view tr::ttfont_load_error::details() const noexcept
-{
-	return m_details;
-}
-
-//
-
-tr::ttfont_render_error::ttfont_render_error(std::string_view description) noexcept
-	: m_description{description}
-{
-}
-
-std::string_view tr::ttfont_render_error::name() const noexcept
-{
-	return "TrueType font rendering error";
-}
-
-std::string_view tr::ttfont_render_error::description() const noexcept
-{
-	return m_description;
-}
-
-std::string_view tr::ttfont_render_error::details() const noexcept
-{
-	return {};
-}
 
 //
 

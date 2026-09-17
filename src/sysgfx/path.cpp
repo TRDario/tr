@@ -2,29 +2,8 @@
 /// @brief Implements path.hpp.
 
 #include <SDL3/SDL.h>
+#include <tr/sysgfx/exception.hpp>
 #include <tr/sysgfx/path.hpp>
-
-//
-
-tr::path_error::path_error(std::string_view description) noexcept
-	: m_description{description}
-{
-}
-
-std::string_view tr::path_error::name() const noexcept
-{
-	return "Path error";
-}
-
-std::string_view tr::path_error::description() const noexcept
-{
-	return m_description;
-}
-
-std::string_view tr::path_error::details() const noexcept
-{
-	return {};
-}
 
 //
 

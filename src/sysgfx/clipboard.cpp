@@ -3,28 +3,7 @@
 
 #include <SDL3/SDL.h>
 #include <tr/sysgfx/clipboard.hpp>
-
-//
-
-tr::set_clipboard_error::set_clipboard_error() noexcept
-	: m_description{SDL_GetError()}
-{
-}
-
-std::string_view tr::set_clipboard_error::name() const noexcept
-{
-	return "Clipboard setting error";
-}
-
-std::string_view tr::set_clipboard_error::description() const noexcept
-{
-	return m_description;
-}
-
-std::string_view tr::set_clipboard_error::details() const noexcept
-{
-	return {};
-}
+#include <tr/sysgfx/exception.hpp>
 
 //
 

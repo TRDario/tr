@@ -65,39 +65,6 @@ namespace tr
 		u8 multisamples{0};
 	};
 
-	/// Window opening error.
-	class window_open_error : public exception
-	{
-	  public:
-		/// @name Constructors
-		/// @{
-
-		/// Constructs a window opening error.
-		[[nodiscard]] explicit window_open_error() noexcept;
-
-		/// @}
-		/// @name Information
-		/// @{
-
-		/// Gets the name of the error.
-		/// @return `"Window opening error"`.
-		[[nodiscard]] std::string_view name() const noexcept override;
-
-		/// Gets the description of the error.
-		/// @return Description of the error.
-		[[nodiscard]] std::string_view description() const noexcept override;
-
-		/// Gets further details about the error.
-		/// @return Always empty.
-		[[nodiscard]] std::string_view details() const noexcept override;
-
-		/// @}
-
-	  private:
-		/// Description of the error.
-		std::string m_description;
-	};
-
 	//
 
 	/// Window object.

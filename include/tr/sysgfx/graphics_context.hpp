@@ -7,7 +7,6 @@
 #include <tr/sysgfx/render_target.hpp>
 #include <tr/sysgfx/static_vertex_buffer.hpp>
 #include <tr/sysgfx/vertex_format.hpp>
-#include <tr/utility/exception.hpp>
 #include <tr/utility/zstring_view.hpp>
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 #include <tr/sysgfx/internal/graphics_object_registry.hpp>
@@ -65,43 +64,6 @@ namespace tr
 		/// The vertices are sent to the tessellation shaders as patches.
 		patches = 14
 	};
-
-	//
-
-	/// Graphics context initialization error.
-	class graphics_context_init_error : public exception
-	{
-	  public:
-		/// @name Constructors
-		/// @{
-
-		/// Constructs a graphics context initialization error.
-		[[nodiscard]] graphics_context_init_error();
-
-		/// @}
-		/// @name Information
-		/// @{
-
-		/// Gets the name of the error.
-		/// @return `"Graphics context opening error"`.
-		[[nodiscard]] std::string_view name() const noexcept override;
-
-		/// Gets the description of the error.
-		/// @return Description of the error.
-		[[nodiscard]] std::string_view description() const noexcept override;
-
-		/// Gets further details about the error.
-		/// @return Always empty.
-		[[nodiscard]] std::string_view details() const noexcept override;
-
-		/// @}
-
-	  private:
-		/// Description of the error.
-		std::string m_description;
-	};
-
-	//
 
 	/// Window graphics context.
 	/// @details

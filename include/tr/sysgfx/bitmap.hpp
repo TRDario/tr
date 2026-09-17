@@ -4,7 +4,6 @@
 #pragma once
 #include <tr/sysgfx/pixel_format.hpp>
 #include <tr/sysgfx/pixel_iterator.hpp>
-#include <tr/utility/exception.hpp>
 #include <tr/utility/rectangle.hpp>
 
 struct SDL_Surface;
@@ -17,84 +16,6 @@ namespace tr
 
 namespace tr
 {
-	/// Error thrown when bitmap loading fails.
-	class bitmap_load_error : public exception
-	{
-	  public:
-		/// @name Constructors
-		/// @{
-
-		/// Constructs an exception.
-		/// @param path Path to the bitmap file.
-		/// @param details Details of the error.
-		[[nodiscard]] bitmap_load_error(std::string_view path, std::string&& details);
-
-		/// @}
-		/// @name Information
-		/// @{
-
-		/// Gets the name of the error.
-		/// @return `"Bitmap loading error"`.
-		[[nodiscard]] std::string_view name() const noexcept override;
-
-		/// Gets the description of the error.
-		/// @return Description of the error.
-		[[nodiscard]] std::string_view description() const noexcept override;
-
-		/// Gets further details about the error.
-		/// @return Details of the error.
-		[[nodiscard]] std::string_view details() const noexcept override;
-
-		/// @}
-
-	  private:
-		/// Description of the error.
-		std::string m_description;
-
-		/// Details of the error.
-		std::string m_details;
-	};
-
-	/// Error thrown when bitmap saving fails.
-	class bitmap_save_error : public exception
-	{
-	  public:
-		/// @name Constructors
-		/// @{
-
-		/// Constructs an exception.
-		/// @param path Path to the bitmap file.
-		/// @param details Details of the error.
-		[[nodiscard]] bitmap_save_error(std::string_view path, std::string&& details);
-
-		/// @}
-		/// @name Information
-		/// @{
-
-		/// Gets the name of the error.
-		/// @return `"Bitmap saving error"`.
-		[[nodiscard]] std::string_view name() const noexcept override;
-
-		/// Gets the description of the error.
-		/// @return Description of the error.
-		[[nodiscard]] std::string_view description() const noexcept override;
-
-		/// Gets further details about the error.
-		/// @return Details of the error.
-		[[nodiscard]] std::string_view details() const noexcept override;
-
-		/// @}
-
-	  private:
-		/// Description of the error.
-		std::string m_description;
-
-		/// Details of the error.
-		std::string m_details;
-	};
-
-	//
-
 	/// Class containing owned bitmap data.
 	class bitmap
 	{

@@ -5,7 +5,6 @@
 #include <tr/utility/alignment.hpp>
 #include <tr/utility/color.hpp>
 #include <tr/utility/enum.hpp>
-#include <tr/utility/exception.hpp>
 
 struct TTF_Font;
 namespace tr
@@ -17,127 +16,6 @@ namespace tr
 
 namespace tr
 {
-	/// Error thrown when font loading fails.
-	class ttfont_load_error : public exception
-	{
-	  public:
-		/// @name Constructors
-		/// @{
-
-		/// Constructs an exception.
-		/// @param path Path to the file that failed to load.
-		/// @param details Details of the error.
-		[[nodiscard]] ttfont_load_error(std::string_view path, std::string&& details);
-
-		/// @}
-		/// @name Information
-		/// @{
-
-		/// Gets the name of the error.
-		/// @return `"TrueType font loading error"`.
-		[[nodiscard]] std::string_view name() const noexcept override;
-
-		/// Gets the description of the error.
-		/// @return Description of the error.
-		[[nodiscard]] std::string_view description() const noexcept override;
-
-		/// Gets further details about the error.
-		/// @return Details of the error.
-		[[nodiscard]] std::string_view details() const noexcept override;
-
-		/// @}
-
-	  private:
-		/// Description of the error.
-		std::string m_description;
-
-		/// Details of the error.
-		std::string m_details;
-	};
-
-	/// Error thrown when font bitmap rendering fails.
-	class ttfont_render_error : public exception
-	{
-	  public:
-		/// @name Constructors
-		/// @{
-
-		/// Constructs an exception.
-		/// @param description Description of the error.
-		[[nodiscard]] ttfont_render_error(std::string_view description) noexcept;
-
-		/// @}
-		/// @name Information
-		/// @{
-
-		/// Gets the name of the error.
-		/// @return `"TrueType font rendering error"`.
-		[[nodiscard]] std::string_view name() const noexcept override;
-
-		/// Gets the description of the error.
-		/// @return Description of the error.
-		[[nodiscard]] std::string_view description() const noexcept override;
-
-		/// Gets further details about the error.
-		/// @return Always empty.
-		[[nodiscard]] std::string_view details() const noexcept override;
-
-		/// @}
-
-	  private:
-		// Description of the error.
-		std::string_view m_description;
-	};
-
-	/// Error thrown when font manipulation fails.
-	class ttfont_error : public exception
-	{
-	  public:
-		/// @name Constructors
-		/// @{
-
-		/// Constructs a window error.
-		/// @param description Description of the error.
-		[[nodiscard]] ttfont_error(std::string&& description) noexcept;
-
-		/// Constructs a font error.
-		/// @tparam Args Types of the formatting arguments.
-		/// @param description_fmt Error description format string.
-		/// @param args Formatting arguments.
-		template <typename... Args>
-		[[nodiscard]] ttfont_error(std::format_string<Args...> description_fmt, Args&&... args)
-			: ttfont_error{std::format(description_fmt, std::forward<Args>(args)...)}
-		{
-		}
-
-		/// @}
-		/// @name Information
-		/// @{
-
-		/// Gets the name of the error.
-		/// @return `"TrueType font error"`.
-		[[nodiscard]] std::string_view name() const noexcept override;
-
-		/// Gets the description of the error.
-		/// @return Description of the error.
-		[[nodiscard]] std::string_view description() const noexcept override;
-
-		/// Gets further details about the error.
-		/// @return Details of the error.
-		[[nodiscard]] std::string_view details() const noexcept override;
-
-		/// @}
-
-	  private:
-		/// Description of the error.
-		std::string m_description;
-
-		/// Details of the error.
-		std::string_view m_details;
-	};
-
-	//
-
 	/// Font style types (may be ORed together).
 	enum class ttf_style : u8
 	{

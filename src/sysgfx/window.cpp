@@ -3,30 +3,9 @@
 
 #include <SDL3/SDL.h>
 #include <tr/sysgfx/bitmap.hpp>
+#include <tr/sysgfx/exception.hpp>
 #include <tr/sysgfx/window.hpp>
 #include <tr/sysgfx/window_view.hpp>
-
-//
-
-tr::window_open_error::window_open_error() noexcept
-	: m_description{SDL_GetError()}
-{
-}
-
-std::string_view tr::window_open_error::name() const noexcept
-{
-	return "Window opening error";
-}
-
-std::string_view tr::window_open_error::description() const noexcept
-{
-	return m_description;
-}
-
-std::string_view tr::window_open_error::details() const noexcept
-{
-	return {};
-}
 
 //
 

@@ -95,6 +95,7 @@ if(TR_BUILD_SYSGFX)
 		src/sysgfx/display.cpp
 		src/sysgfx/dynamic_index_buffer.cpp
 		src/sysgfx/event.cpp
+		src/sysgfx/exception.cpp
 		src/sysgfx/framebuffer.cpp
 		src/sysgfx/graphics_object_registry.cpp
 		src/sysgfx/graphics_benchmark.cpp

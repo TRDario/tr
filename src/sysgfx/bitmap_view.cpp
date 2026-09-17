@@ -5,6 +5,7 @@
 #include <SDL3_image/SDL_image.h>
 #include <tr/sysgfx/bitmap.hpp>
 #include <tr/sysgfx/bitmap_view.hpp>
+#include <tr/sysgfx/exception.hpp>
 #include <tr/sysgfx/pixel_iterator.hpp>
 
 //

@@ -5,29 +5,7 @@
 #include <tr/sysgfx/bitmap.hpp>
 #include <tr/sysgfx/bitmap_view.hpp>
 #include <tr/sysgfx/cursor.hpp>
-
-//
-
-tr::cursor_error::cursor_error(std::string_view description) noexcept
-	: m_description{description}
-	, m_details{SDL_GetError()}
-{
-}
-
-std::string_view tr::cursor_error::name() const noexcept
-{
-	return "Cursor error";
-}
-
-std::string_view tr::cursor_error::description() const noexcept
-{
-	return m_description;
-}
-
-std::string_view tr::cursor_error::details() const noexcept
-{
-	return m_details;
-}
+#include <tr/sysgfx/exception.hpp>
 
 //
 

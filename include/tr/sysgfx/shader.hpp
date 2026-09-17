@@ -7,7 +7,6 @@
 #include <tr/sysgfx/shader_array.hpp>
 #include <tr/sysgfx/shader_buffer.hpp>
 #include <tr/sysgfx/uniform_buffer.hpp>
-#include <tr/utility/exception.hpp>
 #include <tr/utility/ref.hpp>
 #include <tr/utility/zstring_view.hpp>
 
@@ -30,46 +29,6 @@ namespace tr
 
 namespace tr
 {
-	/// Error thrown when shader loading fails.
-	class shader_load_error : public exception
-	{
-	  public:
-		/// @name Constructors
-		/// @{
-
-		/// Constructs an exception.
-		/// @param path Path to the file that failed to load.
-		/// @param details Shader loading error details.
-		[[nodiscard]] shader_load_error(std::string_view path, std::string&& details);
-
-		/// @}
-		/// @name Information
-		/// @{
-
-		/// Gets the name of the error.
-		/// @return `"Shader loading error"`.
-		[[nodiscard]] std::string_view name() const noexcept override;
-
-		/// Gets the description of the error.
-		/// @return Description of the error.
-		[[nodiscard]] std::string_view description() const noexcept override;
-
-		/// Gets further details about the error.
-		/// @return Details of the error.
-		[[nodiscard]] std::string_view details() const noexcept override;
-
-		/// @}
-
-	  private:
-		/// Description of the error.
-		std::string m_description;
-
-		/// Details of the error.
-		std::string m_details;
-	};
-
-	//
-
 	/// Base shader program class.
 	/// @details
 	/// Shader programs are small programs run on the GPU during a step of the graphics pipeline. tr allows the creation and use of custom

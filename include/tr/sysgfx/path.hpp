@@ -8,33 +8,6 @@
 
 namespace tr
 {
-	/// Error thrown when getting a path failed.
-	class path_error : public exception
-	{
-	  public:
-		/// Creates a path error.
-		/// @param description Description of the error.
-		[[nodiscard]] path_error(std::string_view description) noexcept;
-
-		//
-
-		/// Gets the name of the error.
-		/// @return `"Path error"`.
-		[[nodiscard]] std::string_view name() const noexcept override;
-
-		/// Gets the description of the error.
-		/// @return Description of the error.
-		[[nodiscard]] std::string_view description() const noexcept override;
-
-		/// Gets further details about the error.
-		/// @return Always empty.
-		[[nodiscard]] std::string_view details() const noexcept override;
-
-	  private:
-		/// Description of the error.
-		std::string_view m_description;
-	};
-
 	/// @name Paths
 	/// @{
 

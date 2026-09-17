@@ -3,6 +3,7 @@
 
 #include <tr/sysgfx/graphics_context.hpp>
 #include <tr/sysgfx/mapped_untyped_graphics_buffer_span.hpp>
+#include <tr/utility/exception.hpp>
 
 //
 

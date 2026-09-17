@@ -2,7 +2,7 @@
 /// @brief Provides a mouse cursor class and related functionality.
 
 #pragma once
-#include <tr/utility/exception.hpp>
+#include <tr/utility/common.hpp>
 
 struct SDL_Cursor;
 namespace tr
@@ -53,43 +53,6 @@ namespace tr
 
 		/// Pointing hand cursor.
 		hand
-	};
-
-	/// Cursor error.
-	class cursor_error : public exception
-	{
-	  public:
-		/// @name Constructors
-		/// @{
-
-		/// Constructs a cursor error.
-		/// @param description Description of the error.
-		[[nodiscard]] cursor_error(std::string_view description) noexcept;
-
-		/// @}
-		/// @name Information
-		/// @{
-
-		/// Gets the name of the error.
-		/// @return `"Cursor error"`.
-		[[nodiscard]] std::string_view name() const noexcept override;
-
-		/// Gets the description of the error.
-		/// @return Description of the error.
-		[[nodiscard]] std::string_view description() const noexcept override;
-
-		/// Gets further details about the error.
-		/// @return Always empty.
-		[[nodiscard]] std::string_view details() const noexcept override;
-
-		/// @}
-
-	  private:
-		/// Description of the error.
-		std::string_view m_description;
-
-		/// Details of the error.
-		std::string_view m_details;
 	};
 
 	/// Mouse cursor graphic.

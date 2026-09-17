@@ -5,54 +5,9 @@
 #include <SDL3_image/SDL_image.h>
 #include <tr/sysgfx/bitmap.hpp>
 #include <tr/sysgfx/bitmap_view.hpp>
+#include <tr/sysgfx/exception.hpp>
 #include <tr/sysgfx/sub_bitmap.hpp>
 #include <tr/utility/color.hpp>
-
-//
-
-tr::bitmap_load_error::bitmap_load_error(std::string_view path, std::string&& details)
-	: m_description{std::format("Failed to load bitmap from '{}'", path)}
-	, m_details{std::move(details)}
-{
-}
-
-std::string_view tr::bitmap_load_error::name() const noexcept
-{
-	return "Bitmap loading error";
-}
-
-std::string_view tr::bitmap_load_error::description() const noexcept
-{
-	return m_description;
-}
-
-std::string_view tr::bitmap_load_error::details() const noexcept
-{
-	return m_details;
-}
-
-//
-
-tr::bitmap_save_error::bitmap_save_error(std::string_view path, std::string&& details)
-	: m_description{std::format("Failed to save bitmap to '{}'", path)}
-	, m_details{std::move(details)}
-{
-}
-
-std::string_view tr::bitmap_save_error::name() const noexcept
-{
-	return "Bitmap saving error";
-}
-
-std::string_view tr::bitmap_save_error::description() const noexcept
-{
-	return m_description;
-}
-
-std::string_view tr::bitmap_save_error::details() const noexcept
-{
-	return m_details;
-}
 
 //
 

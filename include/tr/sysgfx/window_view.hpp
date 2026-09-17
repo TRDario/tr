@@ -32,55 +32,6 @@ namespace tr
 
 	//
 
-	/// Window error.
-	class window_error : public exception
-	{
-	  public:
-		/// @name Constructors
-		/// @{
-
-		/// Constructs a window error.
-		/// @param description Description of the error.
-		[[nodiscard]] window_error(std::string&& description) noexcept;
-
-		/// Constructs a window error.
-		/// @tparam Args Types of the formatting arguments.
-		/// @param description_fmt Description format string.
-		/// @param args Description formatting arguments.
-		template <typename... Args>
-		[[nodiscard]] explicit window_error(std::format_string<Args...> description_fmt, Args&&... args) noexcept
-			: window_error{std::format(description_fmt, std::forward<Args>(args)...)}
-		{
-		}
-
-		/// @}
-		/// @name Information
-		/// @{
-
-		/// Gets the name of the error.
-		/// @return `"Window error"`.
-		[[nodiscard]] std::string_view name() const noexcept override;
-
-		/// Gets the description of the error.
-		/// @return Description of the error.
-		[[nodiscard]] std::string_view description() const noexcept override;
-
-		/// Gets further details about the error.
-		/// @return Details of the error.
-		[[nodiscard]] std::string_view details() const noexcept override;
-
-		/// @}
-
-	  private:
-		/// Description of the error.
-		std::string m_description;
-
-		/// Details of the error.
-		std::string_view m_details;
-	};
-
-	//
-
 	/// Non-owning window view.
 	class window_view
 	{

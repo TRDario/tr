@@ -2,6 +2,7 @@
 /// @brief Implements shader.hpp.
 
 #include "internal/opengl_definitions.hpp"
+#include <tr/sysgfx/exception.hpp>
 #include <tr/sysgfx/graphics_context.hpp>
 #include <tr/sysgfx/shader.hpp>
 #include <tr/sysgfx/shader_buffer.hpp>
@@ -10,29 +11,6 @@
 #include <tr/sysgfx/uniform_buffer.hpp>
 #include <tr/utility/hash_map.hpp>
 #include <tr/utility/iostream.hpp>
-
-//
-
-tr::shader_load_error::shader_load_error(std::string_view path, std::string&& details)
-	: m_description{std::format("Failed to load shader from '{}'", path)}
-	, m_details{std::move(details)}
-{
-}
-
-std::string_view tr::shader_load_error::name() const noexcept
-{
-	return "Shader loading error";
-}
-
-std::string_view tr::shader_load_error::description() const noexcept
-{
-	return m_description;
-}
-
-std::string_view tr::shader_load_error::details() const noexcept
-{
-	return m_details;
-}
 
 //
 

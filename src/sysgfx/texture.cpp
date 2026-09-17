@@ -6,6 +6,7 @@
 #include <tr/sysgfx/sub_bitmap.hpp>
 #include <tr/sysgfx/texture.hpp>
 #include <tr/sysgfx/texture_view.hpp>
+#include <tr/utility/exception.hpp>
 #include <tr/utility/out_handle.hpp>
 
 //
