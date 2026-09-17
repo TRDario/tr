@@ -125,7 +125,7 @@ namespace tr
 		// Chord scancode.
 		scancode scan{scancode::unknown};
 
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Default-constructs a scan chord.
@@ -222,7 +222,7 @@ namespace tr
 		// Chord keycode.
 		keycode key{keycode::unknown};
 
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Default-constructs a key chord.

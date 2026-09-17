@@ -15,14 +15,56 @@ namespace tr
 namespace tr
 {
 	/// Untyped shader uniform buffer.
+	/// @details
+	/// `tr::untyped_uniform_buffer` represents a graphics buffer used to store data for shader uniform access. `tr::untyped_uniform_buffer`
+	/// does not enforce any specific data format and may be used when flexibility is needed, while `tr::uniform_buffer` models a buffer
+	/// holding a specific structure. Instances of `tr::untyped_uniform_buffer` are allocated once and cannot be resized.
+	///
+	/// Strictly speaking, instances of `tr::untyped_uniform_buffer` are only containers for these underlying buffer objects. This means,
+	/// for example, that setting an untyped uniform buffer on a shader does not set the literal `tr::untyped_uniform_buffer` object at a
+	/// specific location in memory, but rather the value it contains. If the value is moved to a different instance of
+	/// `tr::untyped_uniform_buffer`, that value will still be set on the shader. If the instance is overriden with a new value, the old
+	/// value is destroyed and the shader will no longer have a set buffer.
+	///
+	/// Every instance of `tr::untyped_uniform_buffer` is associated with a graphics context and cannot outlive its parent context.
+	///
+	/// Moved-from instances of `tr::untyped_uniform_buffer` are left in a special 'invalid' state. Invalid `tr::untyped_uniform_buffer`
+	/// instances may not be interacted with besides moving a new value into them and checking for validity using `valid()`.
+	///
+	/// `tr::untyped_uniform_buffer` instances may be labeled and are formattable. Example format output: `"My buffer" (OpenGL ID: 5)`.
 	class untyped_uniform_buffer : private graphics_buffer
 	{
 	  public:
+		/// @name Constructors and destructors
+		/// @{
+
 		/// Allocates an uninitialized uniform buffer.
 		/// @param context Graphics context to create the buffer on.
 		/// @param size Initial size of the buffer.
 		[[nodiscard]] untyped_uniform_buffer(graphics_context& context, usize size);
 
+		/// Untyped uniform buffers are not copyable.
+		untyped_uniform_buffer(const untyped_uniform_buffer&) = delete;
+
+		/// Moves an untyped uniform buffer.
+		/// @details `rhs` is left in an invalid state after the move as per the class description.
+		/// @param rhs Untyped uniform buffer to move from.
+		[[nodiscard]] untyped_uniform_buffer(untyped_uniform_buffer&& rhs) noexcept = default;
+
+		/// @}
+		/// @name Assignment operators
+		/// @{
+
+		/// Untyped uniform buffers are not copyable.
+		untyped_uniform_buffer& operator=(const untyped_uniform_buffer&) = delete;
+
+		/// Moves an untyped uniform buffer.
+		/// @details `rhs` is left in an invalid state after the move as per the class description.
+		/// @param rhs Untyped uniform buffer to move from.
+		/// @return Reference to `*this`.
+		untyped_uniform_buffer& operator=(untyped_uniform_buffer&& rhs) noexcept = default;
+
+		/// @}
 		/// @name Context
 		/// @{
 

@@ -9,7 +9,7 @@
 
 namespace tr
 {
-	/// Basic bitmap atlas structure.
+	/// Bitmap atlas structure.
 	/// @tparam Key Atlas key type.
 	/// @tparam Value Atlas value type.
 	/// @tparam Hash Atlas key hasher.

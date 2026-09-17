@@ -96,6 +96,7 @@ if(TR_BUILD_SYSGFX)
 		src/sysgfx/dynamic_index_buffer.cpp
 		src/sysgfx/event.cpp
 		src/sysgfx/exception.cpp
+		src/sysgfx/file_dialog.cpp
 		src/sysgfx/framebuffer.cpp
 		src/sysgfx/graphics_object_registry.cpp
 		src/sysgfx/graphics_benchmark.cpp
@@ -105,14 +106,19 @@ if(TR_BUILD_SYSGFX)
 		src/sysgfx/log_sink.cpp
 		src/sysgfx/logger.cpp
 		src/sysgfx/mapped_untyped_graphics_buffer_span.cpp
+		src/sysgfx/metadata.cpp
 		src/sysgfx/opengl.cpp
+		src/sysgfx/opengl_debug_callback.cpp
+		src/sysgfx/opengl_texture_format.cpp
 		src/sysgfx/owning_shader_pipeline.cpp
 		src/sysgfx/path.cpp
 		src/sysgfx/ping_pong_target.cpp
+		src/sysgfx/pixel_color.cpp
 		src/sysgfx/pixel_format.cpp
 		src/sysgfx/pixel_iterator.cpp
 		src/sysgfx/pixel_proxy.cpp
 		src/sysgfx/render_target.cpp
+		src/sysgfx/sdl_main_callbacks.cpp
 		src/sysgfx/shader_pipeline.cpp
 		src/sysgfx/shader.cpp
 		src/sysgfx/static_index_buffer.cpp

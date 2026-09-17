@@ -1,12 +1,12 @@
 /// @file
-/// @brief Provides `tr::loaded_openal_function`.
+/// @brief Provides `tr::internal::loaded_openal_function`.
 
 #pragma once
 #include <AL/alc.h>
 
 //
 
-namespace tr
+namespace tr::internal
 {
 	/// Wrapper around a void pointer that automatically casts it to a function pointer type.
 	class loaded_openal_function
@@ -43,4 +43,4 @@ namespace tr
 		/// Base pointer type.
 		void* m_ptr;
 	};
-} // namespace tr
+} // namespace tr::internal

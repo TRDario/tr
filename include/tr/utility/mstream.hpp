@@ -12,7 +12,7 @@ namespace tr
 	class memorybuf : public std::streambuf
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Constructs a memory buffer from a buffer.
@@ -44,7 +44,7 @@ namespace tr
 	class imstream : private memorybuf, public std::istream
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Constructs an imstream from a buffer.
@@ -66,7 +66,7 @@ namespace tr
 	class omstream : private memorybuf, public std::ostream
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Constructs an omstream from a buffer.
@@ -88,7 +88,7 @@ namespace tr
 	class mstream : private memorybuf, public std::iostream
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Constructs an mstream from a buffer.

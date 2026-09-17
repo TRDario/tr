@@ -17,8 +17,13 @@ namespace tr
 	class log_sink
 	{
 	  public:
+		/// @name Constructors and destructors
+		/// @{
+
 		/// Destroys the sink.
 		virtual ~log_sink() noexcept = default;
+
+		/// @}
 
 		//
 

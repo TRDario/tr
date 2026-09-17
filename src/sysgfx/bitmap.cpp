@@ -68,21 +68,28 @@ tr::sub_bitmap tr::bitmap::sub(rectangle<int> region) const noexcept
 
 //
 
+bool tr::bitmap_view::valid() const noexcept
+{
+	return m_ptr != nullptr;
+}
+
 glm::ivec2 tr::bitmap::size() const noexcept
 {
+	TR_ASSERT(valid(), "Tried to get the size of a bitmap in an invalid state.");
+
 	return {m_ptr->w, m_ptr->h};
 }
 
 tr::pixel_format tr::bitmap::format() const noexcept
 {
-	TR_ASSERT(m_ptr != nullptr, "Tried to get the format of a moved-from bitmap.");
+	TR_ASSERT(valid(), "Tried to get the format of a bitmap in an invalid state.");
 
 	return static_cast<pixel_format>(m_ptr->format);
 }
 
 int tr::bitmap::pitch() const noexcept
 {
-	TR_ASSERT(m_ptr != nullptr, "Tried to get the pitch of a moved-from bitmap.");
+	TR_ASSERT(valid(), "Tried to get the pitch of a bitmap in an invalid state.");
 
 	return m_ptr->pitch;
 }
@@ -111,14 +118,14 @@ tr::bitmap::const_reference tr::bitmap::operator[](glm::ivec2 pos) const noexcep
 
 std::byte* tr::bitmap::data() noexcept
 {
-	TR_ASSERT(m_ptr != nullptr, "Tried to get the data of a moved-from bitmap.");
+	TR_ASSERT(valid(), "Tried to get the data of a bitmap in an invalid state.");
 
 	return static_cast<std::byte*>(m_ptr->pixels);
 }
 
 const std::byte* tr::bitmap::data() const noexcept
 {
-	TR_ASSERT(m_ptr != nullptr, "Tried to get the data of a moved-from bitmap.");
+	TR_ASSERT(valid(), "Tried to get the data of a bitmap in an invalid state.");
 
 	return static_cast<const std::byte*>(m_ptr->pixels);
 }
@@ -127,9 +134,9 @@ const std::byte* tr::bitmap::data() const noexcept
 
 tr::bitmap::iterator tr::bitmap::begin() noexcept
 {
-	TR_ASSERT(m_ptr != nullptr, "Tried to get an iterator to the beginning of a moved-from bitmap.");
+	TR_ASSERT(valid(), "Tried to get an iterator to the beginning of a bitmap in an invalid state.");
 
-	return {*this, {}};
+	return iterator{*this, glm::vec2{0, 0}};
 }
 
 tr::bitmap::const_iterator tr::bitmap::begin() const noexcept
@@ -139,28 +146,28 @@ tr::bitmap::const_iterator tr::bitmap::begin() const noexcept
 
 tr::bitmap::const_iterator tr::bitmap::cbegin() const noexcept
 {
-	TR_ASSERT(m_ptr != nullptr, "Tried to get an iterator to the beginning of a moved-from bitmap.");
+	TR_ASSERT(valid(), "Tried to get an iterator to the beginning of a bitmap in an invalid state.");
 
 	return sub_bitmap{*this}.begin();
 }
 
 tr::bitmap::iterator tr::bitmap::end() noexcept
 {
-	TR_ASSERT(m_ptr != nullptr, "Tried to get an iterator to the end of a moved-from bitmap.");
+	TR_ASSERT(valid(), "Tried to get an iterator to the end of a bitmap in an invalid state.");
 
-	return {*this, {0, size().y}};
+	return iterator{*this, glm::vec2{0, size().y}};
 }
 
 tr::bitmap::const_iterator tr::bitmap::end() const noexcept
 {
-	TR_ASSERT(m_ptr != nullptr, "Tried to get an iterator to the end of a moved-from bitmap.");
+	TR_ASSERT(valid(), "Tried to get an iterator to the end of a bitmap in an invalid state.");
 
 	return cend();
 }
 
 tr::bitmap::const_iterator tr::bitmap::cend() const noexcept
 {
-	TR_ASSERT(m_ptr != nullptr, "Tried to get an iterator to the end of a moved-from bitmap.");
+	TR_ASSERT(valid(), "Tried to get an iterator to the end of a bitmap in an invalid state.");
 
 	return sub_bitmap{*this}.end();
 }
@@ -169,7 +176,7 @@ tr::bitmap::const_iterator tr::bitmap::cend() const noexcept
 
 void tr::bitmap::blit(glm::ivec2 tl, sub_bitmap source) noexcept
 {
-	TR_ASSERT(m_ptr != nullptr, "Tried to blit to a moved-from bitmap.");
+	TR_ASSERT(valid(), "Tried to blit to a bitmap in an invalid state.");
 	TR_ASSERT(rectangle<int>{size()}.contains(tl + source.size()),
 			  "Tried to blit to out-of-bounds region from ({}, {}) to ({}, {}) in a bitmap of size {}x{}.", tl.x, tl.y,
 			  tl.x + source.size().x, tl.y + source.size().y, size().x, size().y);
@@ -197,7 +204,7 @@ void tr::bitmap::fill(rectangle<int> region, rgba8 color) noexcept
 
 void tr::bitmap::save(const std::filesystem::path& path) const
 {
-	TR_ASSERT(m_ptr != nullptr, "Tried to save a moved-from bitmap.");
+	TR_ASSERT(valid(), "Tried to save a bitmap in an invalid state.");
 
 	if (!IMG_SavePNG(m_ptr.get(), TR_PATH_CSTR(path))) {
 		throw bitmap_save_error{path.string(), SDL_GetError()};
@@ -238,7 +245,7 @@ tr::bitmap tr::load_bitmap_file(const std::filesystem::path& path)
 		throw bitmap_load_error{path.string(), "File not found."};
 	}
 
-	SDL_Surface* ptr{IMG_Load(TR_PATH_CSTR(path))};
+	SDL_Surface* const ptr{IMG_Load(TR_PATH_CSTR(path))};
 	if (ptr == nullptr) {
 		throw bitmap_load_error{path.string(), SDL_GetError()};
 	}

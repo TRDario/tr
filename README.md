@@ -29,8 +29,6 @@ Examples and more detailed documentation are planned to be added at a later date
 
 tr is currently in the process of being covered with unit tests.
 
-![Unit test coverage progress bar](https://progress-bar.xyz/39?title=Unit+test+coverage:&width=100&scale=100&suffix=%2100+files)
-
 ## Licence
 
 All assets and code are under the [Apache License 2.0](https://github.com/TRDario/tr/blob/main/LICENSE.md).

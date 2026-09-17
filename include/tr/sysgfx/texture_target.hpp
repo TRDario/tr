@@ -14,11 +14,28 @@ namespace tr
 
 namespace tr
 {
-	/// 2D texture rendering target.
+	/// Two-dimensional texture rendering target.
+	/// @details
+	/// `tr::texture_target` bundles a `tr::texture` object together with a `tr::framebuffer` object, modelling a texture that can be used
+	/// as a rendering target and sampled at a later time.
+	///
+	/// All caveats pertaining to the distinction between class instances and the underlying texture objects brought up in the class
+	/// documentation of `tr::texture` holds for `tr::texture_target` as well. Setting a render target of the texture to the graphics
+	/// context and then moving it maintains the set render target, while overwriting it clears the set render target for that context.
+	///
+	/// `tr::texture_target` has a notion of 'completeness'. An instance of the class may be constructed without allocating actual texture
+	/// data. Such an instance is considered incomplete until the `allocate()` method is invoked. Incomplete textures may not be used for
+	/// most actions.
+	///
+	/// Every instance of `tr::texture_target` is associated with a graphics context and cannot outlive its parent context.
+	///
+	/// Moved-from instances of `tr::texture_target` are left in a special 'invalid' state, distinct from the incomplete state. Invalid
+	/// `tr::texture_target` instances may not be interacted with besides moving a new value into them and checking for validity using
+	/// `valid()`.
 	class texture_target
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Creates an incomplete texture target.
@@ -41,17 +58,50 @@ namespace tr
 		[[nodiscard]] texture_target(graphics_context& context, sub_bitmap bitmap, mipmaps mipmaps = mipmaps::disabled,
 									 std::optional<pixel_format> format = std::nullopt);
 
+		/// Texture targets are not copyable.
+		texture_target(const texture_target&) = delete;
+
+		/// Moves a texture target.
+		/// @details `rhs` is left in an invalid state after the move as per the class description.
+		/// @param rhs Texture target to move from.
+		[[nodiscard]] texture_target(texture_target&& rhs) noexcept = default;
+
 		/// @}
-		/// @name Conversion operators
+		/// @name Assignment operators
 		/// @{
 
-		/// Creates a view to the texture target texture.
-		/// @return View to the texture target texture.
+		/// Texture targets are not copyable.
+		texture_target& operator=(const texture_target&) noexcept = delete;
+
+		/// Moves a texture target.
+		/// @details `rhs` is left in an invalid state after the move as per the class description.
+		/// @param rhs Texture target to move from.
+		/// @return Reference to `*this`.
+		texture_target& operator=(texture_target&& rhs) = default;
+
+		/// @}
+		/// @name View
+		/// @{
+
+		/// Gets a view to the texture.
+		/// @return View to the texture.
 		[[nodiscard]] operator texture_view() const noexcept;
 
-		/// Creates a reference to the texture render target.
-		/// @return Reference to the texture render target.
+		/// Gets a view to the texture.
+		/// @return View to the texture.
+		[[nodiscard]] texture_view view() const noexcept;
+
+		/// @}
+		/// @name Render target
+		/// @{
+
+		/// Creates a render target spanning the texture.
+		/// @return Render target spanning the texture.
 		[[nodiscard]] operator render_target() noexcept;
+
+		/// Creates a render target spanning the texture.
+		/// @return Render target spanning the texture.
+		[[nodiscard]] render_target target() noexcept;
 
 		/// @}
 		/// @name Context

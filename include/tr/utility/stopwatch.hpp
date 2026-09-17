@@ -12,7 +12,7 @@ namespace tr
 	class stopwatch
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Constructs and starts the stopwatch.

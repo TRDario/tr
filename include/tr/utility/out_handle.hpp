@@ -17,7 +17,7 @@ namespace tr
 	class out_handle_t
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Wraps an output handle.

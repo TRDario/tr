@@ -31,7 +31,7 @@ namespace tr
 		/// Immutable iterator.
 		using iterator = const_pixel_iterator;
 
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Creates a bitmap view over contiguous pixel data.
@@ -76,7 +76,7 @@ namespace tr
 		/// @details `rhs` is left in an invalid state after the move as per the class description.
 		/// @param rhs Bitmap view to move.
 		/// @return Reference to `*this`.
-		bitmap_view& operator=(bitmap_view&&) noexcept = default;
+		bitmap_view& operator=(bitmap_view&& rhs) noexcept = default;
 
 		/// @}
 		/// @name Sub-bitmaps
@@ -95,8 +95,8 @@ namespace tr
 		/// @name Information
 		/// @{
 
-		/// Gets whether the bitmap view is valid.
-		/// @return `true` if the bitmap view is valid, `false` otherwise.
+		/// Gets whether the bitmap view is in a valid state.
+		/// @return `true` if the bitmap view is in a valid state, `false` otherwise.
 		[[nodiscard]] bool valid() const noexcept;
 
 		/// Gets the size of the bitmap.

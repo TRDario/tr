@@ -14,7 +14,7 @@ namespace tr
 	class audio_device
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Opens an audio device.

@@ -18,7 +18,7 @@ namespace tr
 	{
 	  public:
 		/// @cond implementation_details
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Undefined, required to default-construct iterators.
@@ -61,7 +61,7 @@ namespace tr
 	{
 	  public:
 		/// @cond implementation_details
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Undefined, required to default-construct iterators.

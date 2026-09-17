@@ -11,12 +11,28 @@
 namespace tr
 {
 	/// Typed shader uniform buffer.
-	/// @tparam Object Objet contained in the buffer.
+	/// @details
+	/// `tr::uniform_buffer` is the typed equivalent of `tr::untyped_uniform_buffer`, modeling a buffer holding a specific uniform
+	/// structure.
+	///
+	/// Strictly speaking, instances of `tr::uniform_buffer` are only containers for these underlying buffer objects. This means, for
+	/// example, that setting a uniform buffer on a shader does not set the literal `tr::uniform_buffer` object at a specific location in
+	/// memory, but rather the value it contains. If the value is moved to a different instance of `tr::uniform_buffer`, that value will
+	/// still be set on the shader. If the instance is overriden with a new value, the old value is destroyed and the shader will no longer
+	/// have a set buffer.
+	///
+	/// Every instance of `tr::uniform_buffer` is associated with a graphics context and cannot outlive its parent context.
+	///
+	/// Moved-from instances of `tr::uniform_buffer` are left in a special 'invalid' state. Invalid `tr::uniform_buffer` instances may not
+	/// be interacted with besides moving a new value into them and checking for validity using `valid()`.
+	///
+	/// `tr::uniform_buffer` instances may be labeled and are formattable. Example format output: `"My buffer" (OpenGL ID: 5)`.
+	/// @tparam Object Object contained in the buffer.
 	template <typename Object>
 	class uniform_buffer : private untyped_uniform_buffer
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Allocates an uninitialized uniform buffer.
@@ -25,6 +41,27 @@ namespace tr
 			: untyped_uniform_buffer{context, sizeof(Object)}
 		{
 		}
+
+		/// Uniform buffers are not copyable.
+		uniform_buffer(const uniform_buffer&) = delete;
+
+		/// Moves a uniform buffer.
+		/// @details `rhs` is left in an invalid state after the move as per the class description.
+		/// @param rhs Uniform buffer to move from.
+		[[nodiscard]] uniform_buffer(uniform_buffer&& rhs) noexcept = default;
+
+		/// @}
+		/// @name Assignment operators
+		/// @{
+
+		/// Uniform buffers are not copyable.
+		uniform_buffer& operator=(const uniform_buffer&) = delete;
+
+		/// Moves a uniform buffer.
+		/// @details `rhs` is left in an invalid state after the move as per the class description.
+		/// @param rhs Uniform buffer to move from.
+		/// @return Reference to `*this`.
+		uniform_buffer& operator=(uniform_buffer&& rhs) noexcept = default;
 
 		/// @}
 		/// @name Context

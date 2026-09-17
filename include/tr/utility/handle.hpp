@@ -37,7 +37,7 @@ namespace tr
 	class handle : private Deleter
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Default-constructs an empty handle.

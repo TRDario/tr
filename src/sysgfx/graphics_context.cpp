@@ -1,13 +1,13 @@
 /// @file
 /// @brief Implements graphics_context.hpp.
 
+#include "internal/opengl_debug_callback.hpp"
 #include "internal/opengl_definitions.hpp"
 #include <SDL3/SDL.h>
 #include <tr/sysgfx/blending.hpp>
 #include <tr/sysgfx/dynamic_index_buffer.hpp>
 #include <tr/sysgfx/exception.hpp>
 #include <tr/sysgfx/graphics_context.hpp>
-#include <tr/sysgfx/logger.hpp>
 #include <tr/sysgfx/shader_pipeline.hpp>
 #include <tr/sysgfx/static_index_buffer.hpp>
 #include <tr/sysgfx/texture.hpp>
@@ -15,120 +15,14 @@
 
 //
 
-namespace tr
-{
-	namespace
-	{
-		/// Gets a readable string for an OpenGL debug log message type.
-		/// @param value OpenGL debug type.
-		/// @return String representation of the debug type.
-		[[nodiscard]] std::string_view gl_type(unsigned int value) noexcept
-		{
-			switch (value) {
-			case GL_DEBUG_TYPE_ERROR:
-				return "Error";
-			case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR:
-				return "Deprecated Behavior";
-			case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:
-				return "Undefined Behavior";
-			case GL_DEBUG_TYPE_PORTABILITY:
-				return "Portability Concern";
-			case GL_DEBUG_TYPE_PERFORMANCE:
-				return "Performance Concern";
-			case GL_DEBUG_TYPE_MARKER:
-				return "Marker";
-			case GL_DEBUG_TYPE_PUSH_GROUP:
-				return "Group Push";
-			case GL_DEBUG_TYPE_POP_GROUP:
-				return "Group Pop";
-			case GL_DEBUG_TYPE_OTHER:
-				return "Other";
-			default:
-				return "Unknown";
-			}
-		}
-
-		/// Converts OpenGL debug severity to a tr log level.
-		/// @param value OpenGL debug severity.
-		/// @return tr log level equivalent.
-		[[nodiscard]] log_level tr_log_level(unsigned int value) noexcept
-		{
-			switch (value) {
-			case GL_DEBUG_SEVERITY_NOTIFICATION:
-				return log_level::trace;
-			case GL_DEBUG_SEVERITY_LOW:
-				return log_level::info;
-			case GL_DEBUG_SEVERITY_MEDIUM:
-				return log_level::warning;
-			case GL_DEBUG_SEVERITY_HIGH:
-				return log_level::error;
-			default:
-				return log_level::info;
-			}
-		}
-
-		/// Gets a readable string for an OpenGL debug log source.
-		/// @param value OpenGL debug source.
-		/// @return String representation of the debug source.
-		[[nodiscard]] std::string_view gl_source(unsigned int value) noexcept
-		{
-			switch (value) {
-			case GL_DEBUG_SOURCE_API:
-				return "API";
-			case GL_DEBUG_SOURCE_WINDOW_SYSTEM:
-				return "Window System";
-			case GL_DEBUG_SOURCE_SHADER_COMPILER:
-				return "Shader Compiler";
-			case GL_DEBUG_SOURCE_THIRD_PARTY:
-				return "Third Party";
-			case GL_DEBUG_SOURCE_APPLICATION:
-				return "Application";
-			case GL_DEBUG_SOURCE_OTHER:
-				return "Other";
-			default:
-				return "Unknown";
-			}
-		}
-
-		/// OpenGL debug log callback.
-		/// @param source Message source.
-		/// @param type Message type.
-		/// @param severity Message severity.
-		/// @param length Length of the debug message.
-		/// @param message Pointer to the debug message string.
-		void gl_debug_cb(unsigned int source, unsigned int type, unsigned int, unsigned int severity, int length, const char* message,
-						 const void*) noexcept
-		{
-			try {
-				const std::string_view msg{message, static_cast<usize>(length)};
-				logger::instance().log(tr_log_level(severity), "gl", "[{}] | [{}] | {}", gl_type(type), gl_source(source), msg);
-			}
-			catch (...) {
-			}
-		}
-
-		//
-
-		/// Creates an SDL OpenGL context.
-		/// @param window Pointer to the SDL window.
-		/// @return SDL OpenGL context pointer.
-		[[nodiscard]] SDL_GLContext create_context(SDL_Window* window)
-		{
-			SDL_GLContext context{SDL_GL_CreateContext(window)};
-			if (context == nullptr) {
-				throw graphics_context_init_error{};
-			}
-			return context;
-		}
-	} // namespace
-} // namespace tr
-
-//
-
 tr::graphics_context::graphics_context(window_view window)
 	: m_window{window.unwrap()}
-	, m_ptr{create_context(m_window)}
+	, m_ptr{SDL_GL_CreateContext(window.unwrap())}
 {
+	if (m_ptr == nullptr) {
+		throw graphics_context_init_error{};
+	}
+
 	m_gl.enable(GL_BLEND);
 	m_gl.enable(GL_SCISSOR_TEST);
 
@@ -137,7 +31,7 @@ tr::graphics_context::graphics_context(window_view window)
 	if (context_flags & GL_CONTEXT_FLAG_DEBUG_BIT) {
 		m_gl.enable(GL_DEBUG_OUTPUT);
 		m_gl.enable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
-		m_gl.set_debug_message_callback(gl_debug_cb, nullptr);
+		m_gl.set_debug_message_callback(internal::opengl_debug_callback, nullptr);
 		m_gl.set_debug_message_control(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, NULL, GL_TRUE);
 		m_gl.set_debug_message_control(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_NOTIFICATION, 0, NULL, GL_FALSE);
 	}
@@ -180,25 +74,6 @@ tr::window_view tr::graphics_context::window() const noexcept
 tr::render_target tr::graphics_context::backbuffer() const noexcept
 {
 	return render_target{*this};
-}
-
-const tr::vertex_format& tr::graphics_context::vec2_vertex_format() noexcept
-{
-	if (!m_vec2_vertex_format.has_value()) {
-		m_vec2_vertex_format.emplace(*this, as_vertex_bindings<vertex_binding_tag<glm::vec2>>);
-		m_vec2_vertex_format->set_label("(tr) glm::vec2 Vertex Format");
-	}
-	return *m_vec2_vertex_format;
-}
-
-const tr::vertex_format& tr::graphics_context::basic_2d_vertex_format() noexcept
-{
-	if (!m_basic_2d_vertex_format.has_value()) {
-		m_basic_2d_vertex_format
-			.emplace(*this, as_vertex_bindings<vertex_binding_tag<glm::vec2>, vertex_binding_tag<glm::vec2>, vertex_binding_tag<rgba8>>);
-		m_basic_2d_vertex_format->set_label("(tr) Basic 2D Vertex Format");
-	}
-	return *m_basic_2d_vertex_format;
 }
 
 //
@@ -248,7 +123,7 @@ void tr::graphics_context::set_depth_test(bool arg) noexcept
 
 void tr::graphics_context::set_render_target(const render_target& target) noexcept
 {
-	const render_target::framebuffer_info_t& framebuffer_info{target.framebuffer_info()};
+	const internal::framebuffer_info& framebuffer_info{target.framebuffer_info()};
 
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 	TR_ASSERT(framebuffer_info.context.as_ptr() == this, "Tried to set render target to a context it is not associated with.");

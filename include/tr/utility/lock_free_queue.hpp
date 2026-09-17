@@ -24,7 +24,7 @@ namespace tr
 	class lock_free_queue
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Creates an empty queue.

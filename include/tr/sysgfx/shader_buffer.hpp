@@ -12,14 +12,33 @@
 
 namespace tr
 {
-	/// Shader buffer with a typed header and array.
+	/// Typed shader-accessible GPU buffer.
+	/// @details
+	/// `tr::shader_buffer` represents the typed equivalent of `tr::untyped_shader_buffer`, a graphics buffer used to store data for
+	/// shader access. Shader buffers consist of a fixed-size header block and a resizable array block; the array block can be resized up to
+	/// a maximum capacity. Shader buffers are allocated once and cannot be resized beyond their maximum capacity. Shader buffers can be set
+	/// or mapped for direct access by the CPU; the map type of any given buffer is specified during construction and cannot be changed
+	/// afterwards.
+	///
+	/// Strictly speaking, instances of `tr::shader_buffer` are only containers for these underlying buffer objects. This means, for
+	/// example, that setting a shader buffer on a shader does not set the literal `tr::shader_buffer` object at a specific location in
+	/// memory, but rather the value it contains. If the value is moved to a different instance of `tr::shader_buffer`, that value will
+	/// still be set on the shader. If the instance is overriden with a new value, the old value is destroyed and the shader will no longer
+	/// have a set buffer.
+	///
+	/// Every instance of `tr::shader_buffer` is associated with a graphics context and cannot outlive its parent context.
+	///
+	/// Moved-from instances of `tr::shader_buffer` are left in a special 'invalid' state. Invalid `tr::shader_buffer` instances may not be
+	/// interacted with besides moving a new value into them and checking for validity using `valid()`.
+	///
+	/// `tr::shader_buffer` instances may be labeled and are formattable. Example format output: `"My buffer" (OpenGL ID: 5)`.
 	/// @tparam Header Type of the header object stored at the front of the buffer.
 	/// @tparam ArrayElement Type of the buffer dynamic array elements.
 	template <typename Header, typename ArrayElement>
 	class shader_buffer : private untyped_shader_buffer
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		// Allocates an uninitialized shader buffer.
@@ -31,6 +50,27 @@ namespace tr
 			: untyped_shader_buffer{context, sizeof(Header), capacity * sizeof(ArrayElement), map_type}
 		{
 		}
+
+		/// Shader buffers are not copyable.
+		shader_buffer(const shader_buffer&) = delete;
+
+		/// Moves a shader buffer.
+		/// @details `rhs` is left in an invalid state after the move as per the class description.
+		/// @param rhs Shader buffer to move from.
+		[[nodiscard]] shader_buffer(shader_buffer&& rhs) noexcept = default;
+
+		/// @}
+		/// @name Assignment operators
+		/// @{
+
+		/// Shader buffers are not copyable.
+		shader_buffer& operator=(const shader_buffer&) = delete;
+
+		/// Moves a shader buffer.
+		/// @details `rhs` is left in an invalid state after the move as per the class description.
+		/// @param rhs Shader buffer to move from.
+		/// @return Reference to `*this`.
+		shader_buffer& operator=(shader_buffer&& rhs) noexcept = default;
 
 		/// @}
 		/// @name Context

@@ -31,7 +31,7 @@ namespace tr
 	class atlas_entries
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Creates an empty atlas.

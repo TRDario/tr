@@ -16,7 +16,10 @@ namespace tr
 
 namespace tr
 {
-	/// Class containing owned bitmap data.
+	///  Two-dimensional bitmap image.
+	/// @details
+	/// Moved-from instances of `tr::bitmap` are left in a special 'invalid' state. Invalid `tr::bitmap` instances may not be interacted
+	/// with besides moving a new value into them and checking for validity using `valid()`.
 	class bitmap
 	{
 	  public:
@@ -32,7 +35,7 @@ namespace tr
 		/// Constant iterator type used by the bitmap.
 		using const_iterator = const_pixel_iterator;
 
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// @cond sdl_interop
@@ -63,15 +66,23 @@ namespace tr
 		/// @param format Pixel format of the bitmap.
 		[[nodiscard]] explicit bitmap(sub_bitmap source, pixel_format format = pixel_format::rgba32);
 
+		/// Bitmaps are not copyable.
+		bitmap(const bitmap&) = delete;
+
 		/// Moves a bitmap.
-		/// @param bitmap Bitmap to move.
-		[[nodiscard]] bitmap(bitmap&& bitmap) noexcept = default;
+		/// @details `rhs` is left in an invalid state after the move as per the class description.
+		/// @param rhs Bitmap to move.
+		[[nodiscard]] bitmap(bitmap&& rhs) noexcept = default;
 
 		/// @}
 		/// @name Assignment operators
 		/// @{
 
+		/// Bitmaps are not copyable.
+		bitmap& operator=(const bitmap&) = delete;
+
 		/// Moves a bitmap.
+		/// @details `rhs` is left in an invalid state after the move as per the class description.
 		/// @param rhs Bitmap to move.
 		/// @return Reference to `*this`.
 		bitmap& operator=(bitmap&& rhs) noexcept = default;
@@ -92,6 +103,10 @@ namespace tr
 		/// @}
 		/// @name Information
 		/// @{
+
+		/// Gets whether the bitmap is in a valid state.
+		/// @return `true` if the bitmap is in a valid state, `false` otherwise.
+		[[nodiscard]] bool valid() const noexcept;
 
 		/// Gets the size of the bitmap.
 		/// @return Size of the bitmap.

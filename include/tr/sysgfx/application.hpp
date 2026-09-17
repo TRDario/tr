@@ -34,42 +34,8 @@ namespace tr
 			abort
 		};
 
-		/// Supported application types.
-		enum class type
-		{
-			/// The application is a game.
-			game,
-
-			/// The application type is unspecified.
-			application
-		};
-
-		/// Application metadata.
-		struct metadata
-		{
-			/// Name of the application.
-			zstring_view name{};
-
-			/// Version of the application.
-			zstring_view version{};
-
-			/// Identifier of the application.
-			zstring_view identifier{};
-
-			/// Developer of the application.
-			zstring_view developer{};
-
-			/// Short copyright notice.
-			zstring_view copyright{};
-
-			/// URL relevant to the application.
-			zstring_view url{};
-
-			/// Application type.
-			type type{type::application};
-		};
-
-		//
+		/// @name Constructors and destructors
+		/// @{
 
 		/// Applications are not copyable.
 		application(const application&) = delete;
@@ -80,7 +46,17 @@ namespace tr
 		/// Destroys the application.
 		virtual ~application() noexcept = default;
 
-		//
+		/// @}
+		/// @name Assignment operators
+		/// @{
+
+		/// Applications are not copyable.
+		application& operator=(const application&) = delete;
+
+		/// Applications are not movable.
+		application& operator=(application&&) = delete;
+
+		/// @}
 
 		/// Callback function called once at the beginning of execution after the initialization of systems.
 		/// @details Uncaught exceptions from this function will display a dialog box and quit the application.
@@ -110,11 +86,6 @@ namespace tr
 
 	/// @name Application
 	/// @{
-
-	/// Sets application metadata.
-	/// @note This function must be called at least once before you can use `tr::user_directory()`.
-	/// @param metadata Application metadata to set.
-	void set_application_metadata(const application::metadata& metadata);
 
 	/// Executes the main loop of the program.
 	/// @param application Application to run.

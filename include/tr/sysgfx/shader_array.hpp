@@ -10,13 +10,30 @@
 
 namespace tr
 {
-	/// Specialized shader buffer with no header before the array.
+	/// Typed shader-accessible GPU array.
+	/// @details
+	/// `tr::shader_array` is a special case of `tr::shader_buffer`, a graphics buffer used to store data for shader access. Shader arrays
+	/// are resizable up to a maximum capacity specified during construction. Shader arrays can be set or mapped for direct access by the
+	/// CPU; the map type of any given array is specified during construction and cannot be changed afterwards.
+	///
+	/// Strictly speaking, instances of `tr::shader_array` are only containers for these underlying buffer objects. This means, for
+	/// example, that setting a shader array on a shader does not set the literal `tr::shader_array` object at a specific location in
+	/// memory, but rather the value it contains. If the value is moved to a different instance of `tr::shader_array`, that value will
+	/// still be set on the shader. If the instance is overriden with a new value, the old value is destroyed and the shader will no longer
+	/// have a set buffer.
+	///
+	/// Every instance of `tr::shader_array` is associated with a graphics context and cannot outlive its parent context.
+	///
+	/// Moved-from instances of `tr::shader_array` are left in a special 'invalid' state. Invalid `tr::shader_array` instances may not be
+	/// interacted with besides moving a new value into them and checking for validity using `valid()`.
+	///
+	/// `tr::shader_array` instances may be labeled and are formattable. Example format output: `"My array" (OpenGL ID: 5)`.
 	/// @tparam Element Type of the array elements.
 	template <typename Element>
 	class shader_array : private untyped_shader_buffer
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Allocates an uninitialized shader array.
@@ -28,6 +45,27 @@ namespace tr
 			: untyped_shader_buffer{context, 0, capacity * sizeof(Element), map_type}
 		{
 		}
+
+		/// Shader arrays are not copyable.
+		shader_array(const shader_array&) = delete;
+
+		/// Moves a shader array.
+		/// @details `rhs` is left in an invalid state after the move as per the class description.
+		/// @param rhs Shader array to move from.
+		[[nodiscard]] shader_array(shader_array&& rhs) noexcept = default;
+
+		/// @}
+		/// @name Assignment operators
+		/// @{
+
+		/// Shader arrays are not copyable.
+		shader_array& operator=(const shader_array&) = delete;
+
+		/// Moves a shader array.
+		/// @details `rhs` is left in an invalid state after the move as per the class description.
+		/// @param rhs Shader array to move from.
+		/// @return Reference to `*this`.
+		shader_array& operator=(shader_array&& rhs) noexcept = default;
 
 		/// @}
 		/// @name Context

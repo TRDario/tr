@@ -22,7 +22,7 @@ namespace tr
 			duration duration;
 		};
 
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Constructs an empty benchmark.

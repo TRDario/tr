@@ -79,11 +79,31 @@ namespace tr
 
 	//
 
-	/// 2D GPU texture container.
+	/// Container for a two-dimensional image texture accessable to shaders.
+	/// @details
+	/// While `tr::bitmap` is a container for two-dimensional image data in main memory, `tr::texture` is a container for two-dimensional
+	/// image data stored on the graphics device. This texture data is then able to set on a shader sampler uniform location and sampled
+	/// during the rendering process.
+	///
+	/// Strictly speaking, instances of `tr::texture` are only containers for these underlying texture objects. This means, for example,
+	/// that setting a texture on a shader does not set the literal `tr::texture` object at a specific location in memory, but rather the
+	/// value it contains. If the value is moved to a different instance of `tr::texture`, that value will still be set on the shader. If
+	/// the instance is overriden with a new value, the old value is destroyed and the shader will no longer have a set buffer. Instances of
+	/// `tr::texture` may at any point allocate new texture objects and release previously held texture objects using the `allocate()`
+	/// method.
+	///
+	/// `tr::texture` has a notion of 'completeness'. An instance of the class may be constructed without allocating actual texture data.
+	/// Such an instance is considered incomplete until the `allocate()` method is invoked. Incomplete textures may not be used for most
+	/// actions.
+	///
+	/// Every instance of `tr::texture` is associated with a graphics context and cannot outlive its parent context.
+	///
+	/// Moved-from instances of `tr::texture` are left in a special 'invalid' state, distinct from the incomplete state. Invalid
+	/// `tr::texture` instances may not be interacted with besides moving a new value into them and checking for validity using `valid()`.
 	class texture
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Creates an incomplete texture.
@@ -106,8 +126,29 @@ namespace tr
 		[[nodiscard]] texture(graphics_context& context, sub_bitmap bitmap, mipmaps mipmaps = mipmaps::disabled,
 							  std::optional<pixel_format> format = std::nullopt);
 
+		/// Textures are not copyable.
+		texture(const texture&) = delete;
+
+		/// Moves a texture.
+		/// @details `rhs` is left in an invalid state after the move as per the class description.
+		/// @param rhs Texture to move from.
+		[[nodiscard]] texture(texture&& rhs) noexcept = default;
+
 		/// @}
-		/// @name Views
+		/// @name Assignment operators
+		/// @{
+
+		/// Textures are not copyable.
+		texture& operator=(const texture&) = delete;
+
+		/// Moves a texture.
+		/// @details `rhs` is left in an invalid state after the move as per the class description.
+		/// @param rhs Texture to move from.
+		/// @return Reference to `*this`.
+		texture& operator=(texture&& rhs) noexcept = default;
+
+		/// @}
+		/// @name View
 		/// @{
 
 		/// Gets a view to the texture.

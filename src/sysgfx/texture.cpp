@@ -2,154 +2,13 @@
 /// @brief Implements texture.hpp.
 
 #include "internal/opengl_definitions.hpp"
+#include "internal/opengl_texture_format.hpp"
 #include <tr/sysgfx/graphics_context.hpp>
 #include <tr/sysgfx/sub_bitmap.hpp>
 #include <tr/sysgfx/texture.hpp>
 #include <tr/sysgfx/texture_view.hpp>
 #include <tr/utility/exception.hpp>
 #include <tr/utility/out_handle.hpp>
-
-//
-
-namespace tr
-{
-	namespace
-	{
-		/// Converts a pixel format to an OpenGL texture format.
-		/// @param format Pixel format type.
-		/// @return Equivalent OpenGL texture format.
-		[[nodiscard]] unsigned int gl_tex_format(pixel_format format) noexcept
-		{
-			switch (format) {
-			case pixel_format::r8:
-				return GL_R8;
-			case pixel_format::rgb_p332:
-				return GL_R3_G3_B2;
-			case pixel_format::xrgb_p4444:
-			case pixel_format::xbgr_p4444:
-				return GL_RGB4;
-			case pixel_format::xrgb_p1555:
-			case pixel_format::xbgr_p1555:
-				return GL_RGB5;
-			case pixel_format::argb_p4444:
-			case pixel_format::rgba_p4444:
-			case pixel_format::abgr_p4444:
-			case pixel_format::bgra_p4444:
-				return GL_RGBA4;
-			case pixel_format::argb_p1555:
-			case pixel_format::rgba_p5551:
-			case pixel_format::abgr_p1555:
-			case pixel_format::bgra_p5551:
-				return GL_RGB5_A1;
-			case pixel_format::rgb_p565:
-			case pixel_format::bgr_p565:
-				return GL_RGB565;
-			case pixel_format::rgb24:
-			case pixel_format::bgr24:
-			case pixel_format::bgrx32:
-			case pixel_format::xbgr32:
-			case pixel_format::rgbx32:
-			case pixel_format::xrgb32:
-				return GL_RGB8;
-			case pixel_format::bgra32:
-			case pixel_format::abgr32:
-			case pixel_format::argb32:
-			case pixel_format::rgba32:
-				return GL_RGBA8;
-			default:
-				TR_UNREACHABLE;
-			}
-		}
-
-		/// Converts a pixel format to an OpenGL format.
-		/// @param format Pixel format type.
-		/// @return Equivalent OpenGL format.
-		[[nodiscard]] unsigned int gl_format(pixel_format format) noexcept
-		{
-			switch (format) {
-			case pixel_format::r8:
-				return GL_RED;
-			case pixel_format::rgb_p332:
-			case pixel_format::xbgr_p4444:
-			case pixel_format::xbgr_p1555:
-			case pixel_format::rgb_p565:
-			case pixel_format::rgb24:
-			case pixel_format::xbgr32:
-			case pixel_format::rgbx32:
-				return GL_RGB;
-			case pixel_format::xrgb_p4444:
-			case pixel_format::xrgb_p1555:
-			case pixel_format::bgr_p565:
-			case pixel_format::bgr24:
-			case pixel_format::bgrx32:
-			case pixel_format::xrgb32:
-				return GL_BGR;
-			case pixel_format::rgba_p4444:
-			case pixel_format::abgr_p4444:
-			case pixel_format::rgba_p5551:
-			case pixel_format::abgr_p1555:
-			case pixel_format::abgr32:
-			case pixel_format::rgba32:
-				return GL_RGBA;
-			case pixel_format::argb_p4444:
-			case pixel_format::bgra_p4444:
-			case pixel_format::argb_p1555:
-			case pixel_format::bgra_p5551:
-			case pixel_format::bgra32:
-			case pixel_format::argb32:
-				return GL_BGRA;
-			default:
-				TR_UNREACHABLE;
-			}
-		}
-
-		/// Converts a pixel format to an OpenGL type.
-		/// @param format Pixel format type.
-		/// @return Equivalent OpenGL type.
-		[[nodiscard]] unsigned int gl_type(pixel_format format) noexcept
-		{
-			switch (format) {
-			case pixel_format::r8:
-			case pixel_format::rgb24:
-			case pixel_format::rgba32:
-			case pixel_format::bgr24:
-			case pixel_format::bgra32:
-				return GL_UNSIGNED_BYTE;
-			case pixel_format::rgb_p332:
-				return GL_UNSIGNED_BYTE_3_3_2;
-			case pixel_format::rgba_p4444:
-			case pixel_format::bgra_p4444:
-				return GL_UNSIGNED_SHORT_4_4_4_4;
-			case pixel_format::xrgb_p4444:
-			case pixel_format::xbgr_p4444:
-			case pixel_format::argb_p4444:
-			case pixel_format::abgr_p4444:
-				return GL_UNSIGNED_SHORT_4_4_4_4_REV;
-			case pixel_format::rgba_p5551:
-			case pixel_format::bgra_p5551:
-				return GL_UNSIGNED_SHORT_5_5_5_1;
-			case pixel_format::xrgb_p1555:
-			case pixel_format::xbgr_p1555:
-			case pixel_format::argb_p1555:
-			case pixel_format::abgr_p1555:
-				return GL_UNSIGNED_SHORT_1_5_5_5_REV;
-			case pixel_format::rgb_p565:
-			case pixel_format::bgr_p565:
-				return GL_UNSIGNED_SHORT_5_6_5;
-			case pixel_format::rgbx32:
-			case pixel_format::bgrx32:
-				return GL_UNSIGNED_INT_8_8_8_8_REV;
-			case pixel_format::xrgb32:
-			case pixel_format::xbgr32:
-			case pixel_format::argb32:
-			case pixel_format::abgr32:
-				return GL_UNSIGNED_INT_8_8_8_8;
-			default:
-				TR_UNREACHABLE;
-			}
-		}
-	} // namespace
-} // namespace tr
 
 //
 
@@ -231,7 +90,7 @@ tr::texture tr::texture::allocate(glm::ivec2 size, mipmaps mipmaps, pixel_format
 	}
 
 	const int levels{mipmaps == mipmaps::enabled ? floor_cast<int>(std::log2(std::max(size.x, size.y)) + 1) : 1};
-	gl.allocate_2d_texture_storage(m_handle.get(), levels, gl_tex_format(format), size.x, size.y);
+	gl.allocate_2d_texture_storage(m_handle.get(), levels, internal::opengl_texture_format(format), size.x, size.y);
 	if (gl.get_error() == GL_OUT_OF_MEMORY) {
 		throw out_of_memory{"texture allocation"};
 	}
@@ -349,8 +208,9 @@ void tr::texture::set_region(glm::ivec2 tl, sub_bitmap bitmap) noexcept
 	const internal::opengl& gl{context().gl()};
 	gl.set_pixel_store_i(GL_UNPACK_ALIGNMENT, 1);
 	gl.set_pixel_store_i(GL_UNPACK_ROW_LENGTH, bitmap.pitch() / pixel_bytes(bitmap.format()));
-	gl.set_2d_texture_sub_image(m_handle.get(), 0, tl.x, tl.y, bitmap.size().x, bitmap.size().y, gl_format(bitmap.format()),
-								gl_type(bitmap.format()), bitmap.data());
+	gl.set_2d_texture_sub_image(m_handle.get(), 0, tl.x, tl.y, bitmap.size().x, bitmap.size().y,
+								internal::opengl_texture_format_layout(bitmap.format()),
+								internal::opengl_texture_format_type(bitmap.format()), bitmap.data());
 	gl.generate_texture_mipmap(m_handle.get());
 }
 

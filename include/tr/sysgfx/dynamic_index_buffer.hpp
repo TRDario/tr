@@ -9,14 +9,53 @@
 
 namespace tr
 {
-	/// Dynamic index buffer class.
+	/// Dynamic index buffer.
+	/// @details
+	/// `tr::dynamic_index_buffer` represents a graphics buffer used to store index data. Unlike `tr::static_index_buffer`, it allows for
+	/// dynamic resizing and updating of its contents, making it suitable for scenarios where the index data changes often at runtime.
+	///
+	/// Strictly speaking, instances of `tr::dynamic_index_buffer` are only containers for these underlying buffer objects. This means, for
+	/// example, that setting a dynamic index buffer on a graphics context does not set the literal `tr::dynamic_index_buffer` object at a
+	/// specific location in memory, but rather the value it contains. If the value is moved to a different instance of
+	/// `tr::dynamic_index_buffer`, that value will still be set on the context. If the instance is overriden with a new value, the old
+	/// value is destroyed and the graphics context will no longer have a set index buffer.
+	///
+	/// Every instance of `tr::dynamic_index_buffer` is associated with a graphics context and cannot outlive its parent context.
+	///
+	/// Moved-from instances of `tr::dynamic_index_buffer` are left in a special 'invalid' state. Invalid `tr::dynamic_index_buffer`
+	/// instances may not be interacted with besides moving a new value into them and checking for validity using `valid()`.
+	///
+	/// `tr::dynamic_index_buffer` instances may be labeled and are formattable. Example format output: `"My index buffer" (OpenGL ID: 5)`.
 	class dynamic_index_buffer : private graphics_buffer
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
-		using graphics_buffer::graphics_buffer;
+		/// Creates an empty dynamic index buffer.
+		/// @param context Graphics context to create the buffer on.
+		[[nodiscard]] explicit dynamic_index_buffer(graphics_context& context) noexcept;
+
+		/// Dynamic index buffers are not copyable.
+		dynamic_index_buffer(const dynamic_index_buffer&) = delete;
+
+		/// Moves a dynamic index buffer.
+		/// @details `rhs` is left in an invalid state after the move as per the class description.
+		/// @param rhs Dynamic index buffer to move.
+		[[nodiscard]] dynamic_index_buffer(dynamic_index_buffer&& rhs) noexcept = default;
+
+		/// @}
+		/// @name Assignment operators
+		/// @{
+
+		/// Dynamic index buffers are not copyable.
+		dynamic_index_buffer& operator=(const dynamic_index_buffer&) = delete;
+
+		/// Moves a dynamic index buffer.
+		/// @details `rhs` is left in an invalid state after the move as per the class description.
+		/// @param rhs Dynamic index buffer to move.
+		/// @return Reference to `*this`.
+		dynamic_index_buffer& operator=(dynamic_index_buffer&& rhs) noexcept = default;
 
 		/// @}
 		/// @name Context
@@ -101,10 +140,10 @@ namespace tr
 
 	  private:
 		/// Used size of the buffer in elements.
-		usize m_size{0};
+		usize m_size;
 
 		/// Capacity of the buffer in elements.
-		usize m_capacity{0};
+		usize m_capacity;
 	};
 } // namespace tr
 

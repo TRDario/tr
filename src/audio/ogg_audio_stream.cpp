@@ -6,7 +6,7 @@
 
 //
 
-tr::ogg_audio_stream::ogg_audio_stream(const std::filesystem::path& path)
+tr::internal::ogg_audio_stream::ogg_audio_stream(const std::filesystem::path& path)
 {
 	const int result{ov_fopen(TR_PATH_CSTR(path), &m_file)};
 	if (result != 0) {
@@ -49,43 +49,43 @@ tr::ogg_audio_stream::ogg_audio_stream(const std::filesystem::path& path)
 	}
 }
 
-tr::ogg_audio_stream::~ogg_audio_stream() noexcept
+tr::internal::ogg_audio_stream::~ogg_audio_stream() noexcept
 {
 	ov_clear(&m_file);
 }
 
 //
 
-tr::usize tr::ogg_audio_stream::length() const
+tr::usize tr::internal::ogg_audio_stream::length() const
 {
 	return ov_pcm_total(&m_file, -1);
 }
 
-int tr::ogg_audio_stream::channels() const
+int tr::internal::ogg_audio_stream::channels() const
 {
 	return ov_info(&m_file, -1)->channels;
 }
 
-int tr::ogg_audio_stream::sample_rate() const
+int tr::internal::ogg_audio_stream::sample_rate() const
 {
 	return ov_info(&m_file, -1)->rate;
 }
 
 //
 
-tr::usize tr::ogg_audio_stream::tell() const
+tr::usize tr::internal::ogg_audio_stream::tell() const
 {
 	return ov_pcm_tell(&m_file);
 }
 
-void tr::ogg_audio_stream::seek(tr::usize where)
+void tr::internal::ogg_audio_stream::seek(tr::usize where)
 {
 	ov_pcm_seek(&m_file, where);
 }
 
 //
 
-void tr::ogg_audio_stream::raw_read(std::span<tr::i16> buffer)
+void tr::internal::ogg_audio_stream::raw_read(std::span<tr::i16> buffer)
 {
 	char* raw_dest{reinterpret_cast<char*>(buffer.data())};
 	int bytes_left{static_cast<int>(buffer.size_bytes())};

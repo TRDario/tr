@@ -61,7 +61,7 @@ namespace tr
 		/// Constant iterator type used by the string.
 		using const_iterator = iterator;
 
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Constructs an empty string view.

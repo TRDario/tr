@@ -1,5 +1,5 @@
 /// @file
-/// @brief Provides `tr::ogg_audio_stream`.
+/// @brief Provides `tr::internal::ogg_audio_stream`.
 
 #pragma once
 #include <tr/audio/audio_stream.hpp>
@@ -7,13 +7,13 @@
 
 //
 
-namespace tr
+namespace tr::internal
 {
 	/// Ogg audio file backend.
 	class ogg_audio_stream final : public audio_stream
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Loads an Ogg stream from file.
@@ -50,4 +50,4 @@ namespace tr
 		/// Handle to the Ogg file.
 		mutable OggVorbis_File m_file{};
 	};
-} // namespace tr
+} // namespace tr::internal

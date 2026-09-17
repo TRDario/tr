@@ -1,6 +1,5 @@
 /// @file
-/// @brief Provides `tr::shader_pipeline` and `tr::owning_shader_pipeline`.
-/// @details For an explanation of shader pipelines, see the description of `tr::shader_pipeline`.
+/// @brief Provides `tr::shader_pipeline`.
 
 #pragma once
 #include <tr/utility/handle.hpp>
@@ -39,20 +38,28 @@ namespace tr
 	///
 	/// Every instance of `tr::shader_pipeline` is associated with a graphics context and cannot outlive its parent context.
 	///
-	/// `tr::shader_pipeline` instances are movable, but not copyable. A moved-from instance of `tr::shader_pipeline` is left in a special
-	/// 'invalid' state, distinct from the incomplete state. Invalid `tr::shader_pipeline` instances may not be interacted with besides
-	/// moving a new value into them and checking for validity using `valid()`.
+	/// Moved-from instances of `tr::shader_pipeline` are left in a special 'invalid' state, distinct from the incomplete state. Invalid
+	/// `tr::shader_pipeline` instances may not be interacted with besides moving a new value into them and checking for validity using
+	/// `valid()`.
 	///
 	/// `tr::shader_pipeline` instances may be labeled and are formattable. Example format output: `"My pipeline" (OpenGL ID: 5)`.
 	class shader_pipeline
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Constructs an incomplete shader pipeline.
 		/// @param context Graphics context to create the pipeline on.
 		[[nodiscard]] explicit shader_pipeline(graphics_context& context) noexcept;
+
+		/// Shader pipelines are not copyable.
+		shader_pipeline(const shader_pipeline&) = delete;
+
+		/// Moves a shader pipeline.
+		/// @details `rhs` is left in an invalid state after the move as per the class description.
+		/// @param rhs Shader pipeline to move.
+		[[nodiscard]] shader_pipeline(shader_pipeline&& rhs) noexcept = default;
 
 		/// Constructs a complete shader pipeline.
 		/// @param context Graphics context to create the pipeline on.
@@ -63,6 +70,19 @@ namespace tr
 		/// `%fragment_shader` be destroyed while still set on the pipeline.
 		[[nodiscard]] shader_pipeline(graphics_context& context, const vertex_shader& vertex_shader,
 									  const fragment_shader& fragment_shader) noexcept;
+
+		/// @}
+		/// @name Assignment operators
+		/// @{
+
+		/// Shader pipelines are not copyable.
+		shader_pipeline& operator=(const shader_pipeline&) = delete;
+
+		/// Moves a shader pipeline.
+		/// @details `rhs` is left in an invalid state after the move as per the class description.
+		/// @param rhs Shader pipeline to move.
+		/// @return Reference to `*this`.
+		shader_pipeline& operator=(shader_pipeline&& rhs) noexcept = default;
 
 		/// @}
 		/// @name Context

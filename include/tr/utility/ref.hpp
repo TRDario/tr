@@ -13,7 +13,7 @@ namespace tr
 	class ref
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Wraps a reference.

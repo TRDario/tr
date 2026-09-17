@@ -8,6 +8,15 @@
 
 //
 
+tr::dynamic_index_buffer::dynamic_index_buffer(graphics_context& context) noexcept
+	: graphics_buffer{context}
+	, m_size{0}
+	, m_capacity{0}
+{
+}
+
+//
+
 bool tr::dynamic_index_buffer::empty() const noexcept
 {
 	return m_size == 0;

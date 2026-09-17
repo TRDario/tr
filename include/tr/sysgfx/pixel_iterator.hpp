@@ -29,7 +29,7 @@ namespace tr
 		/// Difference type used by the iterator.
 		using difference_type = int;
 
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Default-constructs an iterator.
@@ -132,7 +132,7 @@ namespace tr
 		/// Difference type used by the iterator.
 		using difference_type = int;
 
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Default-constructs an iterator.

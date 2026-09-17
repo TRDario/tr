@@ -18,7 +18,7 @@ namespace tr
 	class rng
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Initializes RNG.

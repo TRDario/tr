@@ -96,7 +96,7 @@ std::unique_ptr<tr::audio_stream> tr::open_audio_file(const std::filesystem::pat
 
 	const std::string extension{path.extension().string()};
 	if (extension == ".ogg") {
-		return std::make_unique<ogg_audio_stream>(path);
+		return std::make_unique<internal::ogg_audio_stream>(path);
 	}
 	else {
 		throw audio_file_open_error{std::format("Unsupported audio file extension '{}'", extension)};

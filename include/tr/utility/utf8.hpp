@@ -213,7 +213,7 @@ namespace tr::utf8
 		/// Difference type used by the iterator.
 		using difference_type = ssize;
 
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Default-constructs a codepoint iterator.
@@ -307,7 +307,7 @@ namespace tr::utf8
 		/// Difference type used by the iterator.
 		using difference_type = ssize;
 
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Default-constructs an indexed codepoint iterator.

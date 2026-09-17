@@ -67,7 +67,7 @@ namespace tr
 		/// Reverse iterator type used by the container.
 		using reverse_iterator = std::reverse_iterator<iterator>;
 
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Creates an empty vector.

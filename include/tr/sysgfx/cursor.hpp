@@ -55,11 +55,14 @@ namespace tr
 		hand
 	};
 
-	/// Mouse cursor graphic.
+	/// Mouse cursor image.
+	/// @details
+	/// Moved-from instances of `tr::cursor` are left in a special 'invalid' state. Invalid `tr::cursor` instances may not be interacted
+	/// with besides moving a new value into them and checking for validity using `valid()`.
 	class cursor
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Creates a default mouse cursor.
@@ -87,6 +90,35 @@ namespace tr
 		/// @param focus Focus point on the bitmap.
 		[[nodiscard]] cursor(const bitmap_view& view, glm::ivec2 focus);
 
+		/// Cursors are not copyable.
+		cursor(const cursor&) = delete;
+
+		/// Moves a cursor.
+		/// @details `rhs` is left in an invalid state after the move as per the class description.
+		/// @param rhs Cursor to move.
+		[[nodiscard]] cursor(cursor&& rhs) noexcept;
+
+		/// @}
+		/// @name Assignment operators
+		/// @{
+
+		/// Cursors are not copyable.
+		cursor& operator=(const cursor&) = delete;
+
+		/// Moves a cursor.
+		/// @details `rhs` is left in an invalid state after the move as per the class description.
+		/// @param rhs Cursor to move.
+		/// @return Reference to `*this`.
+		cursor& operator=(cursor&& rhs) noexcept = default;
+
+		/// @}
+		/// @name Validity
+		/// @{
+
+		/// Gets whether the cursor is in a valid state.
+		/// @return `true` if the cursor is in a valid state, `false` otherwise.
+		[[nodiscard]] bool valid() const noexcept;
+
 		/// @}
 		/// @cond sdl_interop
 		/// @name SDL interoperability
@@ -95,7 +127,7 @@ namespace tr
 		/// Unwraps the SDL cursor pointer.
 		/// @note This does not release the pointer.
 		/// @return Pointer to the SDL cursor.
-		[[nodiscard]] SDL_Cursor* unwrap() const;
+		[[nodiscard]] SDL_Cursor* unwrap() const noexcept;
 
 		/// @}
 		/// @endcond
@@ -127,7 +159,7 @@ namespace tr
 	void hide_cursor();
 
 	/// Sets the mouse cursor.
-	/// @param cursor Cursor to set.
+	/// @param cursor Cursor to set. The cursor does not have to stay alive after this.
 	/// @exception cursor_error If setting the cursor failed.
 	void set_cursor(const cursor& cursor);
 

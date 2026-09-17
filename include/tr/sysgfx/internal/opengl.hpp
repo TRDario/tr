@@ -9,8 +9,8 @@
 namespace tr::internal
 {
 	/// OpenGL debug callback signature.
-	using opengl_debug_callback = void (*)(unsigned int source, unsigned int type, unsigned int id, unsigned int severity, int length,
-										   const char* message, const void* userParam) noexcept;
+	using opengl_debug_callback_t = void (*)(unsigned int source, unsigned int type, unsigned int id, unsigned int severity, int length,
+											 const char* message, const void* userParam) noexcept;
 
 	/// Structure holding OpenGL API functions.
 	struct opengl
@@ -204,7 +204,7 @@ namespace tr::internal
 		void (*set_clear_stencil)(int s) noexcept;
 
 		/// Pointer to glDebugMessageCallback.
-		void (*set_debug_message_callback)(opengl_debug_callback callback, const void* userParam) noexcept;
+		void (*set_debug_message_callback)(opengl_debug_callback_t callback, const void* userParam) noexcept;
 
 		/// Pointer to glDebugMessageControl.
 		void (*set_debug_message_control)(unsigned int source, unsigned int type, unsigned int severity, int count, const unsigned int* ids,

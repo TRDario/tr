@@ -12,7 +12,7 @@ namespace tr
 	class audio_stream
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Initializes an audio stream.

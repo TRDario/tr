@@ -25,20 +25,40 @@ namespace tr
 	///
 	/// Every instance of `tr::graphics_buffer` is associated with a graphics context and cannot outlive its parent context.
 	///
-	/// `tr::graphics_buffer` instances are movable, but not copyable. A moved-from instance of `tr::graphics_buffer` is left in a special
-	/// 'invalid' state. Invalid `tr::graphics_buffer` instances may not be interacted with besides moving a new value into them and
-	/// checking for validity using `valid()`.
+	/// Moved-from instances of `tr::graphics_buffer` are left in a special 'invalid' state. Invalid `tr::graphics_buffer` instances may
+	/// not be interacted with besides moving a new value into them and checking for validity using `valid()`.
 	///
 	/// `tr::graphics_buffer` instances may be labeled and are formattable. Example format output: `"My buffer" (OpenGL ID: 5)`.
 	class graphics_buffer
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
-		/// Constructs an empty buffer.
+		/// Constructs an empty graphics buffer.
 		/// @param context Graphics context to create the buffer on.
 		[[nodiscard]] explicit graphics_buffer(graphics_context& context) noexcept;
+
+		/// Graphics buffers are not copyable.
+		graphics_buffer(const graphics_buffer&) = delete;
+
+		/// Moves a graphics buffer.
+		/// @details `rhs` is left in an invalid state after the move as per the class description.
+		/// @param rhs Graphics buffer to move.
+		[[nodiscard]] graphics_buffer(graphics_buffer&& rhs) noexcept = default;
+
+		/// @}
+		/// @name Assignment operators
+		/// @{
+
+		/// Graphics buffers are not copyable.
+		graphics_buffer& operator=(const graphics_buffer&) = delete;
+
+		/// Moves a graphics buffer.
+		/// @details `rhs` is left in an invalid state after the move as per the class description.
+		/// @param rhs Graphics buffer to move.
+		/// @return Reference to `*this`.
+		graphics_buffer& operator=(graphics_buffer&& rhs) noexcept = default;
 
 		/// @}
 		/// @name Context

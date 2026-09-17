@@ -8,6 +8,15 @@
 
 //
 
+tr::untyped_dynamic_vertex_buffer::untyped_dynamic_vertex_buffer(graphics_context& context) noexcept
+	: graphics_buffer{context}
+	, m_size{0}
+	, m_capacity{0}
+{
+}
+
+//
+
 bool tr::untyped_dynamic_vertex_buffer::empty() const noexcept
 {
 	return m_size == 0;

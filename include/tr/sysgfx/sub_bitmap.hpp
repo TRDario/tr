@@ -29,7 +29,7 @@ namespace tr
 		/// Immutable iterator used by the sub-bitmap.
 		using iterator = const_pixel_iterator;
 
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Constructs a sub-bitmap.

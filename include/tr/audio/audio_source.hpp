@@ -64,7 +64,7 @@ namespace tr
 		/// Sentinel value representing the end of the audio.
 		static constexpr fsecs end{fsecs::max()};
 
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// @cond implementation_details

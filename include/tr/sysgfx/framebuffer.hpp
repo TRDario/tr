@@ -32,9 +32,8 @@ namespace tr
 	///
 	/// Every instance of `tr::framebuffer` is associated with a graphics context and cannot outlive its parent context.
 	///
-	/// `tr::framebuffer` instances are movable, but not copyable. A moved-from instance of `tr::framebuffer` is left in a special 'invalid'
-	/// state. Invalid `tr::framebuffer` instances may not be interacted with besides moving a new value into them and checking for validity
-	/// using `valid()`.
+	/// Moved-from instances of `tr::framebuffer` are left in a special 'invalid' state. Invalid `tr::framebuffer` instances may not be
+	/// interacted with besides moving a new value into them and checking for validity using `valid()`.
 	///
 	/// `tr::framebuffer` instances may be labeled and are formattable. Example format output: `"My %framebuffer" (OpenGL ID: 5)`.
 	class framebuffer
@@ -74,12 +73,33 @@ namespace tr
 			stencil = 36128,
 		};
 
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Creates an empty framebuffer.
 		/// @param context Graphics context to create the framebuffer on.
 		[[nodiscard]] explicit framebuffer(graphics_context& context) noexcept;
+
+		/// Framebuffers are not copyable.
+		framebuffer(const framebuffer&) = delete;
+
+		/// Moves a framebuffer.
+		/// @details `rhs` is left in an invalid state after the move as per the class description.
+		/// @param rhs Framebuffer to move.
+		[[nodiscard]] framebuffer(framebuffer&& rhs) noexcept = default;
+
+		/// @}
+		/// @name Assignment operators
+		/// @{
+
+		/// Framebuffers are not copyable.
+		framebuffer& operator=(const framebuffer&) = delete;
+
+		/// Moves a framebuffer.
+		/// @details `rhs` is left in an invalid state after the move as per the class description.
+		/// @param rhs Framebuffer to move.
+		/// @return Reference to `*this`.
+		framebuffer& operator=(framebuffer&& rhs) noexcept = default;
 
 		/// @}
 		/// @name Context

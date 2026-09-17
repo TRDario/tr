@@ -9,17 +9,58 @@
 
 namespace tr
 {
-	/// Static vertex buffer class for holding immutable vertex data.
+	/// Static, immutable untyped vertex buffer.
+	/// @details
+	/// `tr::untyped_static_vertex_buffer` represents a graphics buffer used to store vertex data. Unlike
+	/// `tr::dynamic_untyped_vertex_buffer`, it represents a single, static allocation of immutable data, making it suitable for scenarios
+	/// where the vertex data is constant. `tr::untyped_static_vertex_buffer` does not enforce any specific data format and may be used when
+	/// flexibility is needed, while `tr::static_vertex_buffer` models a buffer holding vertices of a specific type.
+	///
+	/// Strictly speaking, instances of `tr::untyped_static_vertex_buffer` are only containers for these underlying buffer objects. This
+	/// means, for example, that setting a static vertex buffer on a graphics context does not set the literal
+	/// `tr::untyped_static_vertex_buffer` object at a specific location in memory, but rather the value it contains. If the value is moved
+	/// to a different instance of `tr::untyped_static_vertex_buffer`, that value will still be set on the context. If the instance is
+	/// overriden with a new value, the old value is destroyed and the graphics context will no longer have a set vertex buffer.
+	///
+	/// Every instance of `tr::untyped_static_vertex_buffer` is associated with a graphics context and cannot outlive its parent context.
+	///
+	/// Moved-from instances of `tr::untyped_static_vertex_buffer` are left in a special 'invalid' state. Invalid
+	/// `tr::untyped_static_vertex_buffer` instances may not be interacted with besides moving a new value into them and checking for
+	/// validity using `valid()`.
+	///
+	/// `tr::untyped_static_vertex_buffer` instances may be labeled and are formattable. Example format output: `"My vertex buffer" (OpenGL
+	/// ID: 5)`.
 	class untyped_static_vertex_buffer : private graphics_buffer
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Uploads vertex data into a static vertex buffer.
 		/// @param context Graphics context to create the buffer on.
 		/// @param data Data to upload to the buffer.
 		[[nodiscard]] untyped_static_vertex_buffer(graphics_context& context, std::span<const std::byte> data);
+
+		/// Untyped static vertex buffers are not copyable.
+		untyped_static_vertex_buffer(const untyped_static_vertex_buffer&) = delete;
+
+		/// Moves an untyped static vertex buffer.
+		/// @details `rhs` is left in an invalid state after the move as per the class description.
+		/// @param rhs Untyped static vertex buffer to move.
+		[[nodiscard]] untyped_static_vertex_buffer(untyped_static_vertex_buffer&& rhs) noexcept = default;
+
+		/// @}
+		/// @name Assignment operators
+		/// @{
+
+		/// Untyped static vertex buffers are not copyable.
+		untyped_static_vertex_buffer& operator=(const untyped_static_vertex_buffer&) = delete;
+
+		/// Moves an untyped static vertex buffer.
+		/// @details `rhs` is left in an invalid state after the move as per the class description.
+		/// @param rhs Untyped static vertex buffer to move.
+		/// @return Reference to `*this`.
+		untyped_static_vertex_buffer& operator=(untyped_static_vertex_buffer&& rhs) noexcept = default;
 
 		/// @}
 		/// @name Context

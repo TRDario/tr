@@ -61,7 +61,7 @@ namespace tr
 			}
 		};
 
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Creates an empty string.

@@ -2,6 +2,7 @@
 /// @brief Provides `tr::render_target`.
 
 #pragma once
+#include <tr/sysgfx/internal/framebuffer_info.hpp>
 #include <tr/utility/rectangle.hpp>
 #include <tr/utility/ref.hpp>
 
@@ -21,35 +22,17 @@ namespace tr
 
 namespace tr
 {
-	/// Opaque reference to a texture or framebuffer that can be drawn to.
+	/// Reference to a rendering target.
+	/// @details
+	/// `tr::render_target` is a reference to a specific rendering target. It is designed to be cheap to pass around, though passing by
+	/// reference is still recommended due to its size.
+	///
+	/// If not empty, the render target reference should not outlive the texture object it is pointing at, as it will otherwise become
+	/// dangling.
 	class render_target
 	{
 	  public:
-		/// @cond implementation_details
-
-		/// Information about the render target's framebuffer.
-		struct framebuffer_info_t
-		{
-			/// OpenGL FBO ID of the framebuffer.
-			unsigned int fbo;
-
-			/// Size of the framebuffer.
-			glm::ivec2 size;
-
-#ifdef TR_ENABLE_CHECKED_GRAPHICS
-			/// Reference to the context the render target is on.
-			ref<const graphics_context> context;
-
-			/// Unique graphics object ID of the framebuffer.
-			internal::graphics_object_id id;
-
-			/// Label of the framebuffer.
-			std::string label;
-#endif
-		};
-
-		/// @endcond
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Constructs a backbuffer render target.
@@ -69,6 +52,24 @@ namespace tr
 		/// @param scissor_box Scissor box of the framebuffer.
 		[[nodiscard]] render_target(const framebuffer& framebuffer, glm::ivec2 framebuffer_size, rectangle<int> viewport,
 									rectangle<int> scissor_box) noexcept;
+
+		/// Render targets are trivially copyable.
+		[[nodiscard]] render_target(const render_target&) noexcept = default;
+
+		/// Render targets are trivially movable.
+		[[nodiscard]] render_target(render_target&&) noexcept = default;
+
+		/// @}
+		/// @name Assignment operators
+		/// @{
+
+		/// Render targets are trivially copyable.
+		/// @return Reference to `*this`.
+		render_target& operator=(const render_target&) noexcept = default;
+
+		/// Render targets are trivially movable.
+		/// @return Reference to `*this`.
+		render_target& operator=(render_target&&) noexcept = default;
 
 		/// @}
 		/// @name Properties
@@ -105,13 +106,13 @@ namespace tr
 
 		/// Gets information about the render target's framebuffer.
 		/// @return Information about the render target's framebuffer.
-		[[nodiscard]] const framebuffer_info_t& framebuffer_info() const noexcept;
+		[[nodiscard]] const internal::framebuffer_info& framebuffer_info() const noexcept;
 
 		/// @endcond
 
 	  private:
 		/// Information about the render target's framebuffer.
-		framebuffer_info_t m_framebuffer_info;
+		internal::framebuffer_info m_framebuffer_info;
 
 		/// Viewport of the render target.
 		rectangle<int> m_viewport;

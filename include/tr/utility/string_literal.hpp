@@ -13,7 +13,7 @@ namespace tr
 	template <usize Size>
 	struct string_literal
 	{
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Constructs a template string literal from a real string literal.

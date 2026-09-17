@@ -12,6 +12,24 @@
 namespace tr
 {
 	/// Dynamically-allocated texture atlas.
+	/// @details
+	/// `tr::dynamic_atlas` is an abstraction over a `tr::texture` that allows for dynamic allocation of sub-textures within the texture.
+	/// It is intended to be used as a texture atlas, where each entry in the atlas is associated with a key and a rectangle within the
+	/// texture.
+	///
+	/// Strictly speaking, instances of `tr::dynamic_atlas` are only containers for these underlying textures. This means, for example,
+	/// that setting a dynamic atlas as a texture on a shader uniform does not associate it with a literal `tr::dynamic_atlas` object at a
+	/// specific location in memory, but rather the value it contains. If the value is moved to a different instance of `tr::dynamic_atlas`,
+	/// that value will still be set on the shader uniform. If the instance is overriden with a new value, the old value is destroyed and
+	/// the shader will no longer have a set texture on that uniform. In addition, modifying the atlas may reallocate the underlying
+	/// texture, which invalidates any texture views that were previously obtained from it.
+	///
+	/// Every instance of `tr::dynamic_atlas` is associated with a graphics context and cannot outlive its parent context.
+	///
+	/// Moved-from instances of `tr::dynamic_atlas` are left in a special 'invalid' state. Invalid `tr::dynamic_atlas` instances may not be
+	/// interacted with besides moving a new value into them and checking for validity using `valid()`.
+	///
+	/// `tr::dynamic_atlas` instances may be labeled and are formattable. Example format output: `"My atlas" (Texture OpenGL ID: 5)`.
 	/// @tparam Key Atlas key type.
 	/// @tparam Value Atlas value type.
 	/// @tparam Hash Atlas key hasher.
@@ -21,7 +39,7 @@ namespace tr
 	class dynamic_atlas
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Creates an empty atlas.
@@ -47,6 +65,27 @@ namespace tr
 			, m_entries{std::move(source.rectangles)}
 		{
 		}
+
+		/// Dynamic atlases are not copyable.
+		dynamic_atlas(const dynamic_atlas&) = delete;
+
+		/// Moves a dynamic atlas.
+		/// @details `rhs` is left in an invalid state after the move as per the class description.
+		/// @param rhs Dynamic atlas to move.
+		[[nodiscard]] dynamic_atlas(dynamic_atlas&& rhs) noexcept = default;
+
+		/// @}
+		/// @name Assignment operators
+		/// @{
+
+		/// Dynamic atlases are not copyable.
+		dynamic_atlas& operator=(const dynamic_atlas&) = delete;
+
+		/// Moves a dynamic atlas.
+		/// @details `rhs` is left in an invalid state after the move as per the class description.
+		/// @param rhs Dynamic atlas to move.
+		/// @return Reference to `*this`.
+		dynamic_atlas& operator=(dynamic_atlas&& rhs) noexcept = default;
 
 		/// @}
 		/// @name Context
@@ -96,6 +135,7 @@ namespace tr
 		}
 
 		/// Gets a view to the atlas texture.
+		/// @note This texture view stays valid until a call to `reserve()`, `add()`, `clear()`, or the destruction of the atlas.
 		/// @return View to the atlas texture.
 		[[nodiscard]] operator texture_view() const noexcept
 		{
@@ -110,6 +150,7 @@ namespace tr
 		}
 
 		/// Gets a view to the atlas texture.
+		/// @note This texture view stays valid until a call to `reserve()`, `add()`, `clear()`, or the destruction of the atlas.
 		/// @return View to the atlas texture.
 		[[nodiscard]] texture_view view() const noexcept
 		{

@@ -12,7 +12,7 @@ namespace tr
 	class file_not_found : public exception
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Constructs an exception.
@@ -46,7 +46,7 @@ namespace tr
 	class file_open_error : public exception
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Constructs an exception.

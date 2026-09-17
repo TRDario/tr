@@ -16,7 +16,7 @@ namespace tr
 	class owning_shader_pipeline
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Creates an owning shader pipeline.

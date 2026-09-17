@@ -10,6 +10,15 @@
 namespace tr
 {
 	/// Mapped graphics buffer span.
+	/// @details
+	/// `tr::mapped_graphics_buffer_span` represents the CPU mapping of a typed graphics buffer span and models access to it as such. The
+	/// span is automatically unmapped when the map is destroyed.
+	///
+	/// Every instance of `tr::mapped_graphics_buffer_span` is associated with a graphics context, as well as with a buffer, and
+	/// cannot outlive either.
+	///
+	/// Moved-from instances of `tr::mapped_graphics_buffer_span` are left in a special 'invalid' state. Invalid
+	/// `tr::mapped_graphics_buffer_span` instances may not be interacted with besides moving a new value into them.
 	/// @tparam Element Type of the elements of the span.
 	template <typename Element>
 	class mapped_graphics_buffer_span
@@ -42,9 +51,10 @@ namespace tr
 		/// Iterator type used by the span.
 		using iterator = std::span<Element>::iterator;
 
-		/// @cond implementation_details
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
+
+		/// @cond implementation_details
 
 		/// Wraps an untyped buffer map.
 		/// @param map Untyped buffer map.
@@ -53,8 +63,30 @@ namespace tr
 		{
 		}
 
-		/// @}
 		/// @endcond
+
+		/// Graphics buffer span maps are not copyable.
+		mapped_graphics_buffer_span(const mapped_graphics_buffer_span&) = delete;
+
+		/// Moves a graphics buffer span map.
+		/// @details `rhs` is left in an invalid state after the move as per the class description.
+		/// @param rhs Graphics buffer span map to move.
+		[[nodiscard]] mapped_graphics_buffer_span(mapped_graphics_buffer_span&& rhs) = default;
+
+		/// @}
+		/// @name Assignment operators
+		/// @{
+
+		/// Graphics buffer span maps are not copyable.
+		mapped_graphics_buffer_span& operator=(const mapped_graphics_buffer_span&) = delete;
+
+		/// Moves a graphics buffer span map.
+		/// @details `rhs` is left in an invalid state after the move as per the class description.
+		/// @param rhs Graphics buffer span map to move.
+		/// @return Reference to `*this`.
+		mapped_graphics_buffer_span& operator=(mapped_graphics_buffer_span&& rhs) = default;
+
+		/// @}
 		/// @name Span conversion
 		/// @{
 

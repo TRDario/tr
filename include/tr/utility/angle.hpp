@@ -15,7 +15,7 @@ namespace tr
 	class angle
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Constructs a zero angle.

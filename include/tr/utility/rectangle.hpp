@@ -19,7 +19,7 @@ namespace tr
 		// Size of the rectangle.
 		glm::tvec2<Element> size;
 
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Default-constructs a rectangle.

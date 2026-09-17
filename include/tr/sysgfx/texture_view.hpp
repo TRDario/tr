@@ -7,11 +7,19 @@
 
 namespace tr
 {
-	/// Opaque optional view to a GPU texture.
+	/// Lightweight optional reference to a texture object.
+	/// @details
+	/// `tr::texture_view` is a lightweight optional reference to a specific texture object. It is designed to be cheap to pass around and
+	/// copy.
+	///
+	/// If not empty, the texture view should not outlive the texture object it is pointing at, as it will otherwise become dangling.
+	///
+	/// @warning It is important to stress the distinction between texture objects and instances of `tr::texture` or other similar classes
+	/// for the purposes of this class, see the documentation of `tr::texture` for more information.
 	class texture_view
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Creates an empty texture view.
@@ -25,14 +33,31 @@ namespace tr
 
 		/// @endcond
 
+		/// Texture views are trivially copyable.
+		[[nodiscard]] constexpr texture_view(const texture_view&) noexcept = default;
+
+		/// Texture views are trivially movable.
+		[[nodiscard]] constexpr texture_view(texture_view&&) noexcept = default;
+
+		/// @}
+		/// @name Assignment operators
+		/// @{
+
+		/// Texture views are trivially copyable.
+		/// @return Reference to `*this`.
+		texture_view& operator=(const texture_view&) noexcept = default;
+
+		/// Texture views are trivially movable.
+		/// @return Reference to `*this`.
+		texture_view& operator=(texture_view&&) noexcept = default;
+
 		/// @}
 		/// @name Comparison operators
 		/// @{
 
-		/// Compares whether two texture views point to the same texture.
-		/// @param lhs, rhs Texture views to compare.
-		/// @return Whether two texture views point to the same texture.
-		[[nodiscard]] friend bool operator==(texture_view lhs, texture_view rhs) noexcept = default;
+		/// Texture views are trivially equality-comparable.
+		/// @return `true` if the views point to the same texture object, `false` otherwise.
+		[[nodiscard]] friend bool operator==(texture_view, texture_view) noexcept = default;
 
 		/// @}
 		/// @name State

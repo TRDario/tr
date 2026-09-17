@@ -41,27 +41,19 @@ tr::shader::shader(graphics_context& context, zstring_view source, unsigned int 
 }
 
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-namespace tr
-{
-	namespace
-	{
-		/// Properties queried for uniforms.
-		constexpr std::array<unsigned int, 5> uniform_properties{GL_BLOCK_INDEX, GL_TYPE, GL_ARRAY_SIZE, GL_NAME_LENGTH, GL_LOCATION};
-
-		/// Properties queried for inputs and outputs.
-		constexpr std::array<unsigned int, 4> input_output_properties{GL_TYPE, GL_ARRAY_SIZE, GL_NAME_LENGTH, GL_LOCATION};
-	} // namespace
-} // namespace tr
 
 void tr::shader::find_uniforms(const internal::opengl& gl)
 {
+	/// Properties queried for uniforms.
+	constexpr std::array<unsigned int, 5> uniform_properties{GL_BLOCK_INDEX, GL_TYPE, GL_ARRAY_SIZE, GL_NAME_LENGTH, GL_LOCATION};
+
 	int uniforms{0};
 	gl.get_program_interface_iv(unwrap(), GL_UNIFORM, GL_ACTIVE_RESOURCES, &uniforms);
 	for (int i = 0; i < uniforms; ++i) {
 		std::array<int, uniform_properties.size()> values;
 		const auto& [block_index, var_type, array_size, name_length, location]{values};
-		gl.get_program_resource_iv(unwrap(), GL_UNIFORM, i, uniform_properties.size(), uniform_properties.data(), uniform_properties.size(),
-								   NULL, values.data());
+		gl.get_program_resource_iv(unwrap(), GL_UNIFORM, i, uniform_properties.size(), uniform_properties.data(), values.size(), NULL,
+								   values.data());
 
 		if (block_index != -1) {
 			continue;
@@ -78,13 +70,16 @@ void tr::shader::find_uniforms(const internal::opengl& gl)
 
 void tr::shader::find_inputs(const internal::opengl& gl)
 {
+	/// Properties queried for inputs.
+	constexpr std::array<unsigned int, 4> input_properties{GL_TYPE, GL_ARRAY_SIZE, GL_NAME_LENGTH, GL_LOCATION};
+
 	int inputs{0};
 	gl.get_program_interface_iv(unwrap(), GL_PROGRAM_INPUT, GL_ACTIVE_RESOURCES, &inputs);
 	for (int i = 0; i < inputs; ++i) {
-		std::array<int, input_output_properties.size()> values;
+		std::array<int, input_properties.size()> values;
 		const auto& [var_type, array_size, name_length, location]{values};
-		gl.get_program_resource_iv(unwrap(), GL_PROGRAM_INPUT, i, input_output_properties.size(), input_output_properties.data(),
-								   input_output_properties.size(), NULL, values.data());
+		gl.get_program_resource_iv(unwrap(), GL_PROGRAM_INPUT, i, input_properties.size(), input_properties.data(), values.size(), NULL,
+								   values.data());
 
 		std::string input_name_buffer(name_length, '\0');
 		gl.get_program_resource_name(unwrap(), GL_PROGRAM_INPUT, i, input_name_buffer.size(), NULL, input_name_buffer.data());
@@ -97,13 +92,16 @@ void tr::shader::find_inputs(const internal::opengl& gl)
 
 void tr::shader::find_outputs(const internal::opengl& gl)
 {
+	/// Properties queried for outputs.
+	constexpr std::array<unsigned int, 4> output_properties{GL_TYPE, GL_ARRAY_SIZE, GL_NAME_LENGTH, GL_LOCATION};
+
 	int inputs{0};
 	gl.get_program_interface_iv(unwrap(), GL_PROGRAM_OUTPUT, GL_ACTIVE_RESOURCES, &inputs);
 	for (int i = 0; i < inputs; ++i) {
-		std::array<int, input_output_properties.size()> values;
+		std::array<int, output_properties.size()> values;
 		const auto& [var_type, array_size, name_length, location]{values};
-		gl.get_program_resource_iv(unwrap(), GL_PROGRAM_OUTPUT, i, input_output_properties.size(), input_output_properties.data(),
-								   input_output_properties.size(), NULL, values.data());
+		gl.get_program_resource_iv(unwrap(), GL_PROGRAM_OUTPUT, i, output_properties.size(), output_properties.data(), values.size(), NULL,
+								   values.data());
 
 		std::string output_name_buffer(name_length, '\0');
 		gl.get_program_resource_name(unwrap(), GL_PROGRAM_OUTPUT, i, output_name_buffer.size(), NULL, output_name_buffer.data());

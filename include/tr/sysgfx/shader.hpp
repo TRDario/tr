@@ -1,6 +1,5 @@
 /// @file
 /// @brief Provides `tr::vertex_shader`, `tr::fragment_shader`, and related functionality.
-/// @details For an explanation of shaders, see the description of `tr::shader`.
 
 #pragma once
 #include <tr/sysgfx/internal/texture_unit.hpp>
@@ -44,15 +43,15 @@ namespace tr
 	///
 	/// Every shader object is associated with a graphics context and cannot outlive its parent context.
 	///
-	/// Shader objects are movable, but not copyable. A moved-from instance of a shader object is left in a special 'invalid' state. Invalid
-	/// shader objects may not be interacted with besides moving a new value into them and checking for validity using `valid()`.
+	/// Moved-from instances of shader objects are left in a special 'invalid' state. Invalid shader objects may not be interacted with
+	/// besides moving a new value into them and checking for validity using `valid()`.
 	///
 	/// Shader objects may be labeled and are formattable. Example format output: `"My %shader" (OpenGL ID: 5)`.
 	class shader
 	{
 	  public:
 		/// @cond implementation_details
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Constructs a shader.
@@ -62,8 +61,29 @@ namespace tr
 		/// @exception shader_load_error If loading the shader failed.
 		[[nodiscard]] shader(graphics_context& context, zstring_view source, unsigned int type);
 
+		/// Shaders are not copyable.
+		shader(const shader&) = delete;
+
+		/// Moves a shader.
+		/// @details `rhs` is left in an invalid state after the move as per the class description.
+		/// @param rhs Shader to move.
+		[[nodiscard]] shader(shader&& rhs) noexcept = default;
+
 		/// @}
 		/// @endcond
+		/// @name Assignment operators
+		/// @{
+
+		/// Shaders are not copyable.
+		shader& operator=(const shader&) = delete;
+
+		/// Moves a shader.
+		/// @details `rhs` is left in an invalid state after the move as per the class description.
+		/// @param rhs Shader to move.
+		/// @return Reference to `*this`.
+		shader& operator=(shader&& rhs) noexcept = default;
+
+		/// @}
 		/// @name Context
 		/// @{
 

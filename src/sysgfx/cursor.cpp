@@ -44,6 +44,20 @@ void tr::cursor::deleter::operator()(SDL_Cursor* ptr) noexcept
 
 //
 
+bool tr::cursor::valid() const noexcept
+{
+	return m_ptr != nullptr;
+}
+
+//
+
+SDL_Cursor* tr::cursor::unwrap() const noexcept
+{
+	return m_ptr.get();
+}
+
+//
+
 void tr::show_cursor()
 {
 	if (!SDL_ShowCursor()) {
@@ -60,6 +74,8 @@ void tr::hide_cursor()
 
 void tr::set_cursor(const cursor& cursor)
 {
+	TR_ASSERT(cursor.valid(), "Tried to set a cursor in an invalid state.");
+
 	if (!SDL_SetCursor(cursor.unwrap())) {
 		throw cursor_error("Failed to set mouse cursor.");
 	}

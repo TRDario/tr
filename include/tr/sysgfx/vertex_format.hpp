@@ -33,15 +33,14 @@ namespace tr
 	///
 	/// Every instance of `tr::vertex_format` is associated with a graphics context and cannot outlive its parent context.
 	///
-	/// `tr::vertex_format` instances are movable, but not copyable. A moved-from instance of `tr::vertex_format` is left in a special
-	/// 'invalid' state. Invalid `tr::vertex_format` instances may not be interacted with besides moving a new value into them and checking
-	/// for validity using `valid()`.
+	/// Moved-from instances of `tr::vertex_format` are left in a special 'invalid' state. Invalid `tr::vertex_format` instances may not be
+	/// interacted with besides moving a new value into them and checking for validity using `valid()`.
 	///
 	/// `tr::vertex_format` instances may be labeled and are formattable. Example format output: `"My vertex format" (OpenGL ID: 5)`.
 	class vertex_format
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Creates a new vertex format.
@@ -49,6 +48,27 @@ namespace tr
 		/// @param bindings Vertex bindings of the format.
 		/// @post `bindings` must stay valid for the duration of the lifetime of the vertex format.
 		[[nodiscard]] vertex_format(graphics_context& context, std::span<const vertex_binding> bindings) noexcept;
+
+		/// Vertex formats are not copyable.
+		vertex_format(const vertex_format&) = delete;
+
+		/// Moves a vertex format.
+		/// @details `rhs` is left in an invalid state after the move as per the class description.
+		/// @param rhs Vertex format to move.
+		[[nodiscard]] vertex_format(vertex_format&& rhs) noexcept = default;
+
+		/// @}
+		/// @name Assignment operators
+		/// @{
+
+		/// Vertex formats are not copyable.
+		vertex_format& operator=(const vertex_format&) = delete;
+
+		/// Moves a vertex format.
+		/// @details `rhs` is left in an invalid state after the move as per the class description.
+		/// @param rhs Vertex format to move.
+		/// @return Reference to `*this`.
+		vertex_format& operator=(vertex_format&& rhs) noexcept = default;
 
 		/// @}
 		/// @name Context

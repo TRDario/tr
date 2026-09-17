@@ -23,7 +23,7 @@ namespace tr
 	class graphics_benchmark
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Constructs an empty graphics benchmark.

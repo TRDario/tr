@@ -31,7 +31,7 @@ namespace tr
 		/// Blue color channel.
 		u8 b;
 
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Default-constructs an RGB color.
@@ -259,7 +259,7 @@ namespace tr
 		/// Blue color channel.
 		float b;
 
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Default-constructs an RGB color.
@@ -495,7 +495,7 @@ namespace tr
 		/// Alpha channel.
 		u8 a;
 
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Default-constructs an RGBA color.
@@ -750,7 +750,7 @@ namespace tr
 		/// Alpha channel.
 		float a;
 
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Default-constructs an RGBA color.
@@ -1008,7 +1008,7 @@ namespace tr
 		/// Value channel.
 		float v;
 
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Default-constructs a HSV color.

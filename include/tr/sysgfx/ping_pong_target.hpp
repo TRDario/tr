@@ -20,18 +20,25 @@ namespace tr
 	///
 	/// Every instance of `tr::ping_pong_target` is associated with a graphics context and cannot outlive its parent context.
 	///
-	/// `tr::ping_pong_target` instances are movable, but not copyable. A moved-from instance of `tr::ping_pong_target` is left in a special
-	/// 'invalid' state. Invalid `tr::ping_pong_target` instances may not be interacted with besides moving a new value into them and
-	/// checking for validity using `valid()`.
+	/// Moved-from instances of `tr::ping_pong_target` are left in a special 'invalid' state. Invalid `tr::ping_pong_target` instances may
+	/// not be interacted with besides moving a new value into them and checking for validity using `valid()`.
 	class ping_pong_target
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Constructs an incomplete ping-pong target.
 		/// @param context Graphics context to create the ping-pong target on.
 		[[nodiscard]] explicit ping_pong_target(graphics_context& context) noexcept;
+
+		/// Ping-pong targets are not copyable.
+		ping_pong_target(const ping_pong_target&) = delete;
+
+		/// Moves a ping-pong target.
+		/// @details `rhs` is left in an invalid state after the move as per the class description.
+		/// @param rhs Ping-pong target to move.
+		[[nodiscard]] ping_pong_target(ping_pong_target&& rhs) noexcept = default;
 
 		/// Constructs a complete ping-pong target.
 		/// @param context Graphics context to create the ping-pong target on.
@@ -40,6 +47,19 @@ namespace tr
 		/// @param format Pixel format of the target textures.
 		[[nodiscard]] ping_pong_target(graphics_context& context, glm::ivec2 size, mipmaps mipmaps = mipmaps::disabled,
 									   pixel_format format = pixel_format::rgba32);
+
+		/// @}
+		/// @name Assignment operators
+		/// @{
+
+		/// Ping-pong targets are not copyable.
+		ping_pong_target& operator=(const ping_pong_target&) = delete;
+
+		/// Moves a ping-pong target.
+		/// @details `rhs` is left in an invalid state after the move as per the class description.
+		/// @param rhs Ping-pong target to move.
+		/// @return Reference to `*this`.
+		ping_pong_target& operator=(ping_pong_target&& rhs) noexcept = default;
 
 		/// @}
 		/// @name Context

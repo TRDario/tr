@@ -26,7 +26,7 @@ namespace tr
 		/// Bottom edge value.
 		Element bottom{0};
 
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Constructs a set of edges with value 0.

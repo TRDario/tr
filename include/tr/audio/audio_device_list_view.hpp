@@ -33,7 +33,7 @@ namespace tr
 		/// Differenec type used by the iterator.
 		using difference_type = std::ptrdiff_t;
 
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Constructs an iterator.

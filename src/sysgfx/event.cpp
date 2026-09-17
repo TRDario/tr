@@ -1,36 +1,11 @@
 /// @file
 /// @brief Implements event.hpp.
 
+#include "internal/convert_sdl_keymods.hpp"
 #include <SDL3/SDL.h>
 #include <tr/sysgfx/event.hpp>
 
 using namespace std::chrono_literals;
-
-//
-
-namespace tr
-{
-	namespace
-	{
-		/// Converts SDL keymods to tr keymods.
-		/// @param mods SDL keymods.
-		/// @return Equivalent tr keymods.
-		[[nodiscard]] constexpr keymod convert_keymods(SDL_Keymod mods) noexcept
-		{
-			if (mods & SDL_KMOD_SHIFT) {
-				mods |= SDL_KMOD_SHIFT;
-			}
-			if (mods & SDL_KMOD_CTRL) {
-				mods |= SDL_KMOD_CTRL;
-			}
-			if (mods & SDL_KMOD_ALT) {
-				mods |= SDL_KMOD_ALT;
-			}
-			mods &= (SDL_KMOD_SHIFT | SDL_KMOD_CTRL | SDL_KMOD_ALT);
-			return static_cast<keymod>(mods);
-		}
-	} // namespace
-} // namespace tr
 
 //
 
@@ -41,7 +16,7 @@ tr::key_down_event::key_down_event(const event& event) noexcept
 	repeat = sdl.repeat;
 	scan = static_cast<scancode>(sdl.scancode);
 	key = static_cast<keycode>(sdl.key);
-	mods = convert_keymods(sdl.mod);
+	mods = internal::convert_sdl_keymods(sdl.mod);
 }
 
 tr::scan_chord tr::key_down_event::scan_chord() const noexcept
@@ -62,7 +37,7 @@ tr::key_up_event::key_up_event(const event& event) noexcept
 	const SDL_KeyboardEvent& sdl{event.unwrap().key};
 	scan = static_cast<scancode>(sdl.scancode);
 	key = static_cast<keycode>(sdl.key);
-	mods = convert_keymods(sdl.mod);
+	mods = internal::convert_sdl_keymods(sdl.mod);
 }
 
 //

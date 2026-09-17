@@ -16,7 +16,7 @@ namespace tr
 	class decryption_error : public exception
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Constructs an exception.

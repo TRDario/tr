@@ -35,7 +35,7 @@ namespace tr
 	class audio_context_init_error final : public tr::exception
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Creates an audio context initialization error.
@@ -69,7 +69,7 @@ namespace tr
 	class audio_file_open_error final : public exception
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Constructs an exception.

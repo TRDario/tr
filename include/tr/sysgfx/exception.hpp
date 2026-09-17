@@ -12,7 +12,7 @@ namespace tr
 	class bitmap_load_error : public exception
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Constructs an exception.
@@ -50,7 +50,7 @@ namespace tr
 	class bitmap_save_error : public exception
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Constructs an exception.
@@ -88,7 +88,7 @@ namespace tr
 	class cursor_error : public exception
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Constructs a cursor error.
@@ -125,7 +125,7 @@ namespace tr
 	class graphics_context_init_error : public exception
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Constructs a graphics context initialization error.
@@ -185,7 +185,7 @@ namespace tr
 	class set_clipboard_error : public exception
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Constructs a clipboard setting error.
@@ -218,7 +218,7 @@ namespace tr
 	class shader_load_error : public exception
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Constructs an exception.
@@ -256,7 +256,7 @@ namespace tr
 	class ttfont_load_error : public exception
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Constructs an exception.
@@ -294,7 +294,7 @@ namespace tr
 	class ttfont_render_error : public exception
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Constructs an exception.
@@ -328,7 +328,7 @@ namespace tr
 	class ttfont_error : public exception
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Constructs a window error.
@@ -422,7 +422,7 @@ namespace tr
 	class window_open_error : public exception
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Constructs a window opening error.

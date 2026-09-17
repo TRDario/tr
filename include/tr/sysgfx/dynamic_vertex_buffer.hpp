@@ -11,6 +11,24 @@
 namespace tr
 {
 	/// Typed dynamic vertex buffer class.
+	/// @details
+	/// `tr::dynamic_vertex_buffer` represents a graphics buffer used to store vertex data. Unlike
+	/// `tr::static_vertex_buffer`, it allows for dynamic resizing and updating of its contents, making it suitable for scenarios where the
+	/// vertex data changes often at runtime. It is the typed equivalent of `tr::untyped_static_vertex_buffer`.
+	///
+	/// Strictly speaking, instances of `tr::dynamic_vertex_buffer` are only containers for these underlying buffer objects. This means, for
+	/// example, that setting a dynamic vertex buffer on a graphics context does not set the literal `tr::dynamic_vertex_buffer` object at a
+	/// specific location in memory, but rather the value it contains. If the value is moved to a different instance of
+	/// `tr::dynamic_vertex_buffer`, that value will still be set on the context. If the instance is overriden with a new value, the old
+	/// value is destroyed and the graphics context will no longer have a set vertex buffer.
+	///
+	/// Every instance of `tr::dynamic_vertex_buffer` is associated with a graphics context and cannot outlive its parent context.
+	///
+	/// Moved-from instances of `tr::dynamic_vertex_buffer` are left in a special 'invalid' state. Invalid `tr::dynamic_vertex_buffer`
+	/// instances may not be interacted with besides moving a new value into them and checking for validity using `valid()`.
+	///
+	/// `tr::dynamic_vertex_buffer` instances may be labeled and are formattable. Example format output: `"My vertex buffer" (OpenGL ID:
+	/// 5)`.
 	/// @tparam Element Type of the elements of the buffer.
 	template <standard_layout Element>
 	class dynamic_vertex_buffer : private untyped_dynamic_vertex_buffer
@@ -19,10 +37,36 @@ namespace tr
 		/// Value type used by the buffer.
 		using value_type = Element;
 
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
-		using untyped_dynamic_vertex_buffer::untyped_dynamic_vertex_buffer;
+		/// Creates an empty dynamic vertex buffer.
+		/// @param context Graphics context to create the buffer on.
+		[[nodiscard]] explicit dynamic_vertex_buffer(graphics_context& context) noexcept
+			: untyped_dynamic_vertex_buffer{context}
+		{
+		}
+
+		/// Dynamic vertex buffers are not copyable.
+		dynamic_vertex_buffer(const dynamic_vertex_buffer&) = delete;
+
+		/// Moves a dynamic vertex buffer.
+		/// @details `rhs` is left in an invalid state after the move as per the class description.
+		/// @param rhs Dynamic vertex buffer to move.
+		[[nodiscard]] dynamic_vertex_buffer(dynamic_vertex_buffer&& rhs) noexcept = default;
+
+		/// @}
+		/// @name Assignment operators
+		/// @{
+
+		/// Dynamic vertex buffers are not copyable.
+		dynamic_vertex_buffer& operator=(const dynamic_vertex_buffer&) = delete;
+
+		/// Moves a dynamic vertex buffer.
+		/// @details `rhs` is left in an invalid state after the move as per the class description.
+		/// @param rhs Dynamic vertex buffer to move.
+		/// @return Reference to `*this`.
+		dynamic_vertex_buffer& operator=(dynamic_vertex_buffer&& rhs) noexcept = default;
 
 		/// @}
 		/// @name Context

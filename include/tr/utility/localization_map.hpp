@@ -21,7 +21,7 @@ namespace tr
 	class localization_map
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Constructs an empty localization map.

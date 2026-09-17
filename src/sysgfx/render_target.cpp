@@ -73,7 +73,7 @@ tr::render_target tr::render_target::scissored(rectangle<int> scissor_box) const
 
 //
 
-const tr::render_target::framebuffer_info_t& tr::render_target::framebuffer_info() const noexcept
+const tr::internal::framebuffer_info& tr::render_target::framebuffer_info() const noexcept
 {
 	return m_framebuffer_info;
 }

@@ -15,20 +15,60 @@ namespace tr
 namespace tr
 {
 	/// Untyped shader-accessible GPU buffer.
-	/// @details Shader buffers are divided into a fixed header block segment and a resizable array segment.
+	/// @details
+	/// `tr::untyped_shader_buffer` represents a graphics buffer used to store data for shader access. Shader buffers consist of a
+	/// fixed-size header block and a resizable array block; the array block can be resized up to a maximum capacity.
+	/// `tr::untyped_shader_buffer` does not enforce any specific data format and may be used when flexibility is needed, while
+	/// `tr::shader_buffer` models a more typical uniformly typed buffer. Shader buffers are allocated once and cannot be resized beyond
+	/// their maximum capacity. Shader buffers can be set or mapped for direct access by the CPU; the map type of any given buffer is
+	/// specified during construction and cannot be changed afterwards.
+	///
+	/// Strictly speaking, instances of `tr::untyped_shader_buffer` are only containers for these underlying buffer objects. This means, for
+	/// example, that setting an untyped shader buffer on a shader does not set the literal `tr::untyped_shader_buffer` object at a specific
+	/// location in memory, but rather the value it contains. If the value is moved to a different instance of `tr::untyped_shader_buffer`,
+	/// that value will still be set on the shader. If the instance is overriden with a new value, the old value is destroyed and the shader
+	/// will no longer have a set buffer.
+	///
+	/// Every instance of `tr::untyped_shader_buffer` is associated with a graphics context and cannot outlive its parent context.
+	///
+	/// Moved-from instances of `tr::untyped_shader_buffer` are left in a special 'invalid' state. Invalid `tr::untyped_shader_buffer`
+	/// instances may not be interacted with besides moving a new value into them and checking for validity using `valid()`.
+	///
+	/// `tr::untyped_shader_buffer` instances may be labeled and are formattable. Example format output: `"My buffer" (OpenGL ID: 5)`.
 	class untyped_shader_buffer : private graphics_buffer
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Allocates an uninitialized shader buffer.
 		/// @param context Graphics context to create the buffer on.
 		/// @param header_size Size of the fixed header block in bytes.
-		/// @param capacity Maximum capacity of the dyuamic array in bytes.
+		/// @param capacity Maximum capacity of the dynamic array in bytes.
 		/// @param map_type Type of map to create when mapping the buffer.
 		[[nodiscard]] untyped_shader_buffer(graphics_context& context, usize header_size, usize capacity,
 											graphics_buffer_map_access map_type = graphics_buffer_map_access::write_only);
+
+		/// Untyped shader buffers are not copyable.
+		untyped_shader_buffer(const untyped_shader_buffer&) = delete;
+
+		/// Moves an untyped shader buffer.
+		/// @details `rhs` is left in an invalid state after the move as per the class description.
+		/// @param rhs Untyped shader buffer to move from.
+		[[nodiscard]] untyped_shader_buffer(untyped_shader_buffer&& rhs) noexcept = default;
+
+		/// @}
+		/// @name Assignment operators
+		/// @{
+
+		/// Untyped shader buffers are not copyable.
+		untyped_shader_buffer& operator=(const untyped_shader_buffer&) = delete;
+
+		/// Moves an untyped shader buffer.
+		/// @details `rhs` is left in an invalid state after the move as per the class description.
+		/// @param rhs Untyped shader buffer to move from.
+		/// @return Reference to `*this`.
+		untyped_shader_buffer& operator=(untyped_shader_buffer&& rhs) noexcept = default;
 
 		/// @}
 		/// @name Context

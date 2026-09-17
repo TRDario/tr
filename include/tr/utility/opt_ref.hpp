@@ -14,7 +14,7 @@ namespace tr
 	class opt_ref
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Creates an empty optional reference.

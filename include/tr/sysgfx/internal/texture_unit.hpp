@@ -19,7 +19,7 @@ namespace tr::internal
 	class texture_unit
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Allocates a texture unit on a graphics context.

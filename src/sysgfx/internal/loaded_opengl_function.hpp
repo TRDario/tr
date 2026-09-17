@@ -1,12 +1,12 @@
 /// @file
-/// @brief Provides `tr::loaded_opengl_function`.
+/// @brief Provides `tr::internal::loaded_opengl_function`.
 
 #pragma once
 #include <SDL3/SDL.h>
 
 //
 
-namespace tr
+namespace tr::internal
 {
 	/// Wrapper around a void pointer that automatically casts it to a function pointer type.
 	class loaded_opengl_function
@@ -42,4 +42,4 @@ namespace tr
 		/// Base pointer type.
 		SDL_FunctionPointer m_ptr;
 	};
-} // namespace tr
+} // namespace tr::internal

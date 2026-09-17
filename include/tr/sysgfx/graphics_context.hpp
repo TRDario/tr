@@ -9,6 +9,7 @@
 #include <tr/sysgfx/vertex_format.hpp>
 #include <tr/utility/zstring_view.hpp>
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
+#include <tr/sysgfx/internal/graphics_object_debug_info.hpp>
 #include <tr/sysgfx/internal/graphics_object_registry.hpp>
 #endif
 
@@ -85,7 +86,7 @@ namespace tr
 			zstring_view gl_version;
 		};
 
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Creates a graphics context on a window.
@@ -93,12 +94,18 @@ namespace tr
 		/// @exception graphics_context_init_error If creating the graphics context failed.
 		[[nodiscard]] graphics_context(window_view window);
 
+		/// Graphics contexts are not copyable.
+		graphics_context(const graphics_context&) = delete;
+
 		/// Graphics contexts are not movable.
 		graphics_context(graphics_context&&) = delete;
 
 		/// @}
 		/// @name Assignment operators
 		/// @{
+
+		/// Graphics contexts are not copyable.
+		graphics_context& operator=(const graphics_context&) = delete;
 
 		/// Graphics contexts are not movable.
 		graphics_context& operator=(graphics_context&&) = delete;
@@ -122,14 +129,6 @@ namespace tr
 		/// Gets a render target spanning the entire backbuffer.
 		/// @return Render target spanning the entire backbuffer.
 		[[nodiscard]] render_target backbuffer() const noexcept;
-
-		/// Gets a reference to a vertex format describing an array of vec2.
-		/// @return Reference to the vec2 vertex format.
-		[[nodiscard]] const vertex_format& vec2_vertex_format() noexcept;
-
-		/// Gets a reference to a vertex format descibing arrays of vec2 (position), vec2 (uv) and rgba8 (color).
-		/// @return Reference to the 2D vertex format.
-		[[nodiscard]] const vertex_format& basic_2d_vertex_format() noexcept;
 
 		/// @}
 		/// @name Renderers
@@ -359,31 +358,6 @@ namespace tr
 			void operator()(SDL_GLContextState* context) const noexcept;
 		};
 
-#ifdef TR_ENABLE_CHECKED_GRAPHICS
-		/// Debug information about an object set on the context.
-		struct set_object_debug_info
-		{
-			/// Unique graphics object ID of the object.
-			internal::graphics_object_id id{internal::graphics_object_id::invalid};
-
-			/// Label of the object.
-			std::string label{"<unset>"};
-		};
-
-		/// Debug information about the set vertex format.
-		struct set_vertex_format_debug_info
-		{
-			/// Unique graphics object ID of the vertex format.
-			internal::graphics_object_id id{internal::graphics_object_id::invalid};
-
-			/// Label of the vertex format.
-			std::string label{"<unbound>"};
-
-			/// Bindings of the vertex format.
-			std::span<const vertex_binding> bindings;
-		};
-#endif
-
 		//
 
 		/// Pointer to the window the context was created on.
@@ -404,27 +378,21 @@ namespace tr
 		/// Tracks which texture units are allocated.
 		std::bitset<80> m_allocated_texture_units;
 
-		/// Vertex format description an array of vec2.
-		std::optional<vertex_format> m_vec2_vertex_format;
-
-		/// Vertex format descibing arrays of vec2 (position), vec2 (uv) and rgba8 (color).
-		std::optional<vertex_format> m_basic_2d_vertex_format;
-
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 		/// Debug information about the framebuffer set to the context.
-		set_object_debug_info m_set_framebuffer_debug_info{.label{"<backbuffer>"}};
+		internal::set_object_debug_info m_set_framebuffer_debug_info{.label{"<backbuffer>"}};
 
 		/// Debug information about the shader pipeline set to the context.
-		set_object_debug_info m_set_shader_pipeline_debug_info;
+		internal::set_object_debug_info m_set_shader_pipeline_debug_info;
 
 		/// Debug information about the vertex format set to the context.
-		set_vertex_format_debug_info m_set_vertex_format_debug_info;
+		internal::set_vertex_format_debug_info m_set_vertex_format_debug_info;
 
 		/// Debug information about the vertex buffer set to the context.
-		set_object_debug_info m_set_vertex_buffer_debug_info;
+		internal::set_object_debug_info m_set_vertex_buffer_debug_info;
 
 		/// Debug information about the index buffer set to the context.
-		set_object_debug_info m_set_index_buffer_debug_info;
+		internal::set_object_debug_info m_set_index_buffer_debug_info;
 #endif
 
 		//

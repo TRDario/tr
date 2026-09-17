@@ -1,52 +1,10 @@
 /// @file
 /// @brief Implements pixel_proxy.hpp.
 
+#include "internal/pixel_color.hpp"
 #include <SDL3/SDL.h>
 #include <tr/sysgfx/pixel_proxy.hpp>
 #include <tr/utility/color.hpp>
-
-//
-
-namespace tr
-{
-	namespace
-	{
-		/// 24-bit integer.
-		using u24 = tr::u8[3];
-
-		//
-
-		/// Extracts an RGBA8 color value from a pixel.
-		/// @param data Pointer to the pixel data.
-		/// @param format Format of the pixel.
-		/// @return Color of the pixel.
-		[[nodiscard]] rgba8 pixel_color(const std::byte* data, pixel_format format) noexcept
-		{
-			u32 value{};
-			switch (pixel_bytes(format)) {
-			case 1:
-				value = *reinterpret_cast<const u8*>(data);
-				break;
-			case 2:
-				value = *reinterpret_cast<const u16*>(data);
-				break;
-			case 3: {
-				const u24& arr{*reinterpret_cast<const u24*>(data)};
-				value = arr[0] << 16 | arr[1] << 8 | arr[2];
-				break;
-			}
-			case 4:
-				value = *reinterpret_cast<const u32*>(data);
-				break;
-			}
-
-			rgba8 color;
-			SDL_GetRGBA(value, SDL_GetPixelFormatDetails(static_cast<SDL_PixelFormat>(format)), nullptr, &color.r, &color.g, &color.b,
-						&color.a);
-			return color;
-		}
-	} // namespace
-} // namespace tr
 
 //
 
@@ -68,7 +26,7 @@ tr::pixel_format tr::const_pixel_proxy::format() const noexcept
 
 tr::const_pixel_proxy::operator tr::rgba8() const noexcept
 {
-	return pixel_color(m_data, m_format);
+	return internal::pixel_color(m_data, m_format);
 }
 
 //
@@ -91,7 +49,7 @@ tr::pixel_format tr::pixel_proxy::format() const noexcept
 
 tr::pixel_proxy::operator tr::rgba8() const noexcept
 {
-	return pixel_color(m_data, m_format);
+	return internal::pixel_color(m_data, m_format);
 }
 
 tr::pixel_proxy& tr::pixel_proxy::operator=(rgba8 color) noexcept
@@ -106,7 +64,7 @@ tr::pixel_proxy& tr::pixel_proxy::operator=(rgba8 color) noexcept
 		*reinterpret_cast<u16*>(m_data) = formatted;
 		break;
 	case 3: {
-		u24& arr{*reinterpret_cast<u24*>(m_data)};
+		internal::u24& arr{*reinterpret_cast<internal::u24*>(m_data)};
 		arr[0] = formatted >> 16;
 		arr[1] = formatted >> 8;
 		arr[2] = formatted;

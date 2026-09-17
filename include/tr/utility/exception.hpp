@@ -44,7 +44,7 @@ namespace tr
 	/// Out-of-memory exception.
 	struct out_of_memory : public exception
 	{
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Constructs an out-of-memory exception (arguments are formatted in-place).
@@ -92,7 +92,7 @@ namespace tr
 	class custom_exception : public exception
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Constructs an exception.

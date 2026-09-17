@@ -21,7 +21,7 @@ namespace tr
 		/// Callback function signature expected by the timer.
 		using callback = std::function<void()>;
 
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Constructs an inactive timer.

@@ -14,7 +14,7 @@ namespace tr
 	class atlas_packer
 	{
 	  public:
-		/// @name Constructors
+		/// @name Constructors and destructors
 		/// @{
 
 		/// Creates an empty packer.

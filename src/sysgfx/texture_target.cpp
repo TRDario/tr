@@ -32,10 +32,22 @@ tr::texture_target::texture_target(graphics_context& context, sub_bitmap bitmap,
 
 tr::texture_target::operator texture_view() const noexcept
 {
+	return view();
+}
+
+tr::texture_view tr::texture_target::view() const noexcept
+{
 	return m_texture;
 }
 
+//
+
 tr::texture_target::operator tr::render_target() noexcept
+{
+	return target();
+}
+
+tr::render_target tr::texture_target::target() noexcept
 {
 	TR_ASSERT(complete(), "Tried to create a render target for an incomplete texture.");
 
