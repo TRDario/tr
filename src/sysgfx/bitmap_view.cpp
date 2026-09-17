@@ -45,6 +45,11 @@ tr::sub_bitmap tr::bitmap_view::sub(rectangle<int> region) const noexcept
 
 //
 
+bool tr::bitmap_view::valid() const noexcept
+{
+	return m_ptr != nullptr;
+}
+
 glm::ivec2 tr::bitmap_view::size() const noexcept
 {
 	return {m_ptr->w, m_ptr->h};
@@ -52,14 +57,14 @@ glm::ivec2 tr::bitmap_view::size() const noexcept
 
 tr::pixel_format tr::bitmap_view::format() const noexcept
 {
-	TR_ASSERT(m_ptr != nullptr, "Tried to get the format of a moved-from bitmap view.");
+	TR_ASSERT(valid(), "Tried to get the format of a bitmap view in an invalid state.");
 
 	return static_cast<pixel_format>(m_ptr->format);
 }
 
 int tr::bitmap_view::pitch() const noexcept
 {
-	TR_ASSERT(m_ptr != nullptr, "Tried to get the pitch of a moved-from bitmap view.");
+	TR_ASSERT(valid(), "Tried to get the pitch of a bitmap view in an invalid state.");
 
 	return m_ptr->pitch;
 }
@@ -78,7 +83,7 @@ tr::bitmap_view::reference tr::bitmap_view::operator[](glm::ivec2 pos) const noe
 
 const std::byte* tr::bitmap_view::data() const noexcept
 {
-	TR_ASSERT(m_ptr != nullptr, "Tried to get the data of a moved-from bitmap view.");
+	TR_ASSERT(valid(), "Tried to get the data of a bitmap view in an invalid state.");
 
 	return static_cast<const std::byte*>(m_ptr->pixels);
 }
@@ -92,7 +97,7 @@ tr::bitmap_view::iterator tr::bitmap_view::begin() const noexcept
 
 tr::bitmap_view::iterator tr::bitmap_view::cbegin() const noexcept
 {
-	TR_ASSERT(m_ptr != nullptr, "Tried to get an iterator to the beginning of a moved-from bitmap view.");
+	TR_ASSERT(valid(), "Tried to get an iterator to the beginning of a bitmap view in an invalid state.");
 
 	return sub_bitmap{*this}.begin();
 }
@@ -104,7 +109,7 @@ tr::bitmap_view::iterator tr::bitmap_view::end() const noexcept
 
 tr::bitmap_view::iterator tr::bitmap_view::cend() const noexcept
 {
-	TR_ASSERT(m_ptr != nullptr, "Tried to get an iterator to the end of a moved-from bitmap view.");
+	TR_ASSERT(valid(), "Tried to get an iterator to the end of a bitmap view in an invalid state.");
 
 	return sub_bitmap{*this}.end();
 }
@@ -113,7 +118,7 @@ tr::bitmap_view::iterator tr::bitmap_view::cend() const noexcept
 
 void tr::bitmap_view::save(const std::filesystem::path& path) const
 {
-	TR_ASSERT(m_ptr != nullptr, "Tried to save a moved-from bitmap.");
+	TR_ASSERT(valid(), "Tried to save a bitmap view in an invalid state.");
 
 	if (!IMG_SavePNG(m_ptr.get(), TR_PATH_CSTR(path))) {
 		throw bitmap_save_error{path.string(), SDL_GetError()};

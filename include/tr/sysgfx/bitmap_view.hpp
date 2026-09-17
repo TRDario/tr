@@ -1,5 +1,5 @@
 /// @file
-/// @brief Provides a bitmap view class.
+/// @brief Provides `tr::bitmap_view`.
 
 #pragma once
 #include <tr/sysgfx/sub_bitmap.hpp>
@@ -15,7 +15,13 @@ struct SDL_Surface;
 
 namespace tr
 {
-	/// Non-owning view over bitmap data.
+	/// Non-owning bitmap view.
+	/// @details
+	/// `tr::bitmap_view` implements an interface analogous to `tr::bitmap`, but does not own or allow modification of the underlying pixel
+	/// data. It is not to be confused with `tr::sub_bitmap`, which is a view into a sub-region of a bitmap or bitmap view.
+	///
+	/// Moved-from instances of `tr::bitmap_view` are left in a special 'invalid' state. Invalid `tr::bitmap_view` instances may not be
+	/// interacted with besides moving a new value into them and checking for validity using `valid()`.
 	class bitmap_view
 	{
 	  public:
@@ -51,6 +57,27 @@ namespace tr
 		/// @param format Format of the bitmap.
 		[[nodiscard]] bitmap_view(const std::byte* raw_data_start, int pitch, glm::ivec2 size, pixel_format format);
 
+		/// Bitmap views are not copyable.
+		bitmap_view(const bitmap_view&) = delete;
+
+		/// Moves a bitmap view.
+		/// @details `rhs` is left in an invalid state after the move as per the class description.
+		/// @param rhs Bitmap view to move.
+		[[nodiscard]] bitmap_view(bitmap_view&& rhs) noexcept = default;
+
+		/// @}
+		/// @name Assignment operators
+		/// @{
+
+		/// Bitmap views are not copyable.
+		bitmap_view& operator=(const bitmap_view&) = delete;
+
+		/// Moves a bitmap view.
+		/// @details `rhs` is left in an invalid state after the move as per the class description.
+		/// @param rhs Bitmap view to move.
+		/// @return Reference to `*this`.
+		bitmap_view& operator=(bitmap_view&&) noexcept = default;
+
 		/// @}
 		/// @name Sub-bitmaps
 		/// @{
@@ -67,6 +94,10 @@ namespace tr
 		/// @}
 		/// @name Information
 		/// @{
+
+		/// Gets whether the bitmap view is valid.
+		/// @return `true` if the bitmap view is valid, `false` otherwise.
+		[[nodiscard]] bool valid() const noexcept;
 
 		/// Gets the size of the bitmap.
 		/// @return Size of the bitmap.
