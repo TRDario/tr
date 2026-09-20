@@ -33,7 +33,7 @@ void tr::application::shut_down(signal) {}
 
 int tr::run_main_loop(application& application, int argc, const char** argv)
 {
-	TR_ASSERT(!internal::running_application.has_ref(), "Tried to invoke the main loop while it is already ongoing.");
+	TR_ASSERT(!internal::running_application.has_value(), "Tried to invoke the main loop while it is already ongoing.");
 
 	internal::running_application = application;
 	const int exit_code{SDL_RunApp(argc, const_cast<char**>(argv), internal::run_main_loop, nullptr)};

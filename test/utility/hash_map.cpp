@@ -38,8 +38,8 @@ TEST_F(hash_map_test, try_get)
 	EXPECT_EQ(*tr::try_get(std::as_const(map1), "two"), 2);
 	EXPECT_EQ(*tr::try_get(map2, "four"), 4);
 	EXPECT_EQ(*tr::try_get(std::as_const(map2), "five"), 5);
-	EXPECT_FALSE(tr::try_get(map1, "three").has_ref());
-	EXPECT_FALSE(tr::try_get(std::as_const(map1), "three").has_ref());
-	EXPECT_FALSE(tr::try_get(map2, "three").has_ref());
-	EXPECT_FALSE(tr::try_get(std::as_const(map2), "three").has_ref());
+	EXPECT_FALSE(tr::try_get(map1, "three").has_value());
+	EXPECT_FALSE(tr::try_get(std::as_const(map1), "three").has_value());
+	EXPECT_FALSE(tr::try_get(map2, "three").has_value());
+	EXPECT_FALSE(tr::try_get(std::as_const(map2), "three").has_value());
 }

@@ -119,7 +119,7 @@ void tr::shader::find_outputs(const internal::opengl& gl)
 	do {                                                                                                                                   \
 		TR_ASSERT(valid(), "Tried to set  uniform on a shader in an invalid state.");                                                      \
 		const opt_ref<internal::glsl_variable> uniform{try_get(m_uniforms, index)};                                                        \
-		TR_ASSERT(uniform.has_ref(), "Tried to set uniform with invalid index '{}' in shader {}.", index, *this);                          \
+		TR_ASSERT(uniform.has_value(), "Tried to set uniform with invalid index '{}' in shader {}.", index, *this);                        \
 		TR_ASSERT(uniform->type == internal::as_glsl_type<target_type> && uniform->array_size == 1,                                        \
 				  "Tried to set uniform with signature '{}' in shader {} with a value of type '{}'.", *uniform, *this,                     \
 				  internal::as_glsl_type<target_type>);                                                                                    \
@@ -130,7 +130,7 @@ void tr::shader::find_outputs(const internal::opengl& gl)
 	do {                                                                                                                                   \
 		TR_ASSERT(valid(), "Tried to set a uniform on a shader in an invalid state.");                                                     \
 		const opt_ref<internal::glsl_variable> uniform{try_get(m_uniforms, index)};                                                        \
-		TR_ASSERT(uniform.has_ref(), "Tried to set uniform with invalid index '{}' in shader {}.", index, *this);                          \
+		TR_ASSERT(uniform.has_value(), "Tried to set uniform with invalid index '{}' in shader {}.", index, *this);                        \
 		TR_ASSERT(uniform->type == internal::as_glsl_type<target_type> && uniform->array_size == int(value.size()),                        \
 				  "Tried to set uniform with signature '{}' in shader {} with a value of type '{}[{}]'.", *uniform, *this,                 \
 				  internal::as_glsl_type<target_type>, value.size());                                                                      \

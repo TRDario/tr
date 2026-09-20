@@ -11,15 +11,15 @@ TEST(variant_test, get_if)
 	std::variant<int, float, char> var1{5.0f};
 	const tr::opt_ref<int> var1_int{tr::get_if<int>(var1)};
 	const tr::opt_ref<float> var1_float{tr::get_if<float>(var1)};
-	EXPECT_FALSE(var1_int.has_ref());
-	EXPECT_TRUE(var1_float.has_ref());
+	EXPECT_FALSE(var1_int.has_value());
+	EXPECT_TRUE(var1_float.has_value());
 	EXPECT_EQ(*var1_float, 5.0f);
 
 	const std::variant<int, float, char> var2{5};
 	const tr::opt_ref<const int> var2_int{tr::get_if<int>(var2)};
 	const tr::opt_ref<const float> var2_float{tr::get_if<float>(var2)};
-	EXPECT_FALSE(var2_float.has_ref());
-	EXPECT_TRUE(var2_int.has_ref());
+	EXPECT_FALSE(var2_float.has_value());
+	EXPECT_TRUE(var2_int.has_value());
 	EXPECT_EQ(*var2_int, 5);
 
 	std::variant<int, float, char> var3{'a'};

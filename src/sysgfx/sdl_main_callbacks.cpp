@@ -16,7 +16,7 @@
 
 void tr::internal::show_fatal_error_message_box(const std::exception& error)
 {
-	if (dynamic_ref_cast<const std::bad_alloc>(error).has_ref() || dynamic_ref_cast<const out_of_memory>(error).has_ref()) {
+	if (dynamic_ref_cast<const std::bad_alloc>(error).has_value() || dynamic_ref_cast<const out_of_memory>(error).has_value()) {
 		emergency_buffer.reset();
 	}
 
@@ -25,7 +25,7 @@ void tr::internal::show_fatal_error_message_box(const std::exception& error)
 
 	opt_ref<const exception> tr_exception{dynamic_ref_cast<const exception>(error)};
 	std::string message;
-	if (tr_exception.has_ref()) {
+	if (tr_exception.has_value()) {
 		message = std::format("A fatal error has occurred ({}).", tr_exception->name());
 		const std::string_view description{tr_exception->description()};
 		if (!description.empty()) {

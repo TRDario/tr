@@ -78,7 +78,7 @@ namespace tr
 
 		/// Returns whether the optional reference holds a reference to an object.
 		/// @return `true` if a reference is contained, `false` otherwise.
-		[[nodiscard]] constexpr bool has_ref() const noexcept
+		[[nodiscard]] constexpr bool has_value() const noexcept
 		{
 			return m_base != nullptr;
 		}
@@ -99,7 +99,7 @@ namespace tr
 		/// @return Raw pointer to the object.
 		[[nodiscard]] constexpr T* operator->() const noexcept
 		{
-			TR_ASSERT(has_ref(), "Tried to dereference empty optional reference.");
+			TR_ASSERT(has_value(), "Tried to dereference empty optional reference.");
 
 			return m_base;
 		}
@@ -109,7 +109,7 @@ namespace tr
 		/// @return Raw reference to the object.
 		[[nodiscard]] constexpr T& operator*() const noexcept
 		{
-			TR_ASSERT(has_ref(), "Tried to dereference empty optional reference.");
+			TR_ASSERT(has_value(), "Tried to dereference empty optional reference.");
 
 			return *m_base;
 		}
