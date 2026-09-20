@@ -6,44 +6,58 @@
 
 //
 
+TEST(variant_test, is)
+{
+	tr::variant<int, float, char> var{5.0f};
+	EXPECT_FALSE(var.is<int>());
+	EXPECT_TRUE(var.is<float>());
+	EXPECT_FALSE(var.is<char>());
+}
+
 TEST(variant_test, get_if)
 {
-	std::variant<int, float, char> var1{5.0f};
-	const tr::opt_ref<int> var1_int{tr::get_if<int>(var1)};
-	const tr::opt_ref<float> var1_float{tr::get_if<float>(var1)};
+	tr::variant<int, float, char> var1{5.0f};
+	const tr::opt_ref<int> var1_int{var1.get_if<int>()};
+	const tr::opt_ref<float> var1_float{var1};
 	EXPECT_FALSE(var1_int.has_value());
 	EXPECT_TRUE(var1_float.has_value());
 	EXPECT_EQ(*var1_float, 5.0f);
 
-	const std::variant<int, float, char> var2{5};
-	const tr::opt_ref<const int> var2_int{tr::get_if<int>(var2)};
-	const tr::opt_ref<const float> var2_float{tr::get_if<float>(var2)};
+	const tr::variant<int, float, char> var2{5};
+	const tr::opt_ref<const int> var2_int{var2.get_if<int>()};
+	const tr::opt_ref<const float> var2_float{var2};
 	EXPECT_FALSE(var2_float.has_value());
 	EXPECT_TRUE(var2_int.has_value());
 	EXPECT_EQ(*var2_int, 5);
-
-	std::variant<int, float, char> var3{'a'};
-	const std::optional<int> var3_int{tr::get_if<int>(std::move(var3))};
-	const std::optional<float> var3_char{tr::get_if<char>(std::move(var3))};
-	EXPECT_FALSE(var3_int.has_value());
-	EXPECT_TRUE(var3_char.has_value());
-	EXPECT_EQ(*var3_char, 'a');
-
-	const std::variant<int, float, char> var4{'b'};
-	const std::optional<const int> var4_int{tr::get_if<int>(std::move(var4))};
-	const std::optional<const char> var4_char{tr::get_if<char>(std::move(var4))};
-	EXPECT_FALSE(var4_int.has_value());
-	EXPECT_TRUE(var4_char.has_value());
-	EXPECT_EQ(*var4_char, 'b');
 }
 
-TEST(variant_test, if_is)
+TEST(variant_test, get)
 {
-	bool flag{false};
-	const std::variant<int, float, char> var{5.0f};
+	tr::variant<int, float, char> var1{5.0f};
+	float& val1{var1.get<float>()};
+	EXPECT_EQ(val1, 5.0f);
+	val1 = 10.0f;
+	EXPECT_EQ(var1.get<float>(), 10.0f);
 
-	tr::if_is<int>(var, [&flag](int a) { flag = true; });
-	EXPECT_FALSE(flag);
-	tr::if_is<float>(var, [&flag](float a) { flag = true; });
-	EXPECT_TRUE(flag);
+	const tr::variant<int, float, char> var2{5};
+	const int& val2{var2.get<int>()};
+	EXPECT_EQ(val2, 5);
+
+	tr::variant<int, float, std::string> var3{"string"};
+	std::string val3{std::move(var3).get<std::string>()};
+	EXPECT_EQ(val3, "string");
+}
+
+TEST(variant_test, visit)
+{
+	constexpr auto visitor{[]<typename T>(const T& v) { return std::same_as<T, int>; }};
+
+	const tr::variant<int, float, char> var1{5};
+	EXPECT_TRUE(var1.visit(visitor));
+
+	const tr::variant<int, float, char> var2{'a'};
+	EXPECT_FALSE(var2.visit(visitor));
+
+	const tr::variant<int, float, char> var3{2.5f};
+	EXPECT_FALSE(var3.visit(visitor));
 }

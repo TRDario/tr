@@ -464,17 +464,15 @@ void tr::audio_source::play()
 
 void tr::audio_source::play(const std::lock_guard<std::mutex>&)
 {
-
-	if_is<buffered_stream>(m_data_source, [this](buffered_stream& stream) {
+	if (opt_ref<buffered_stream> stream{m_data_source}; stream.has_value()) {
 		if (state() == state::initial || state() == state::stopped) {
 			detach_buffer();
-			const static_vector<unsigned int, 4> filled_buffers{stream.try_refill_all()};
+			const static_vector<unsigned int, 4> filled_buffers{stream->try_refill_all()};
 			if (!filled_buffers.empty()) {
 				context().al().source_queue_buffers(context().unwrap(), unwrap(), filled_buffers.size(), filled_buffers.data());
 			}
 		}
-	});
-
+	}
 	context().al().source_play(context().unwrap(), unwrap());
 }
 
@@ -491,7 +489,9 @@ void tr::audio_source::stop()
 void tr::audio_source::stop(const std::lock_guard<std::mutex>&)
 {
 	context().al().source_stop(context().unwrap(), unwrap());
-	if_is<buffered_stream>(m_data_source, [](buffered_stream& stream) { stream.seek(stream.loop_start()); });
+	if (opt_ref<buffered_stream> stream{m_data_source}; stream.has_value()) {
+		stream->seek(stream->loop_start());
+	}
 }
 
 //
@@ -697,7 +697,7 @@ void tr::audio_source::detach_buffer() noexcept
 
 void tr::audio_source::refill_if_needed()
 {
-	if_is<buffered_stream>(m_data_source, [this](buffered_stream& stream) {
+	if (opt_ref<buffered_stream> stream{m_data_source}; stream.has_value()) {
 		ALint nbuffers;
 		context().al().get_source_property_i(context().unwrap(), unwrap(), AL_BUFFERS_PROCESSED, &nbuffers);
 		if (nbuffers == 0) {
@@ -706,9 +706,9 @@ void tr::audio_source::refill_if_needed()
 
 		static_vector<unsigned int, 4> buffers(nbuffers);
 		context().al().source_unqueue_buffers(context().unwrap(), unwrap(), nbuffers, buffers.data());
-		const static_vector<unsigned int, 4> filled_buffers{stream.try_refill(buffers)};
+		const static_vector<unsigned int, 4> filled_buffers{stream->try_refill(buffers)};
 		if (!filled_buffers.empty()) {
 			context().al().source_queue_buffers(context().unwrap(), unwrap(), filled_buffers.size(), filled_buffers.data());
 		}
-	});
+	}
 }

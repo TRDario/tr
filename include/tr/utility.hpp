@@ -16,6 +16,7 @@
 #include <tr/utility/circle.hpp>                    // IWYU pragma: export
 #include <tr/utility/color.hpp>                     // IWYU pragma: export
 #include <tr/utility/concepts.hpp>                  // IWYU pragma: export
+#include <tr/utility/copy_qualifiers.hpp>           // IWYU pragma: export
 #include <tr/utility/defer.hpp>                     // IWYU pragma: export
 #include <tr/utility/draw_geometry.hpp>             // IWYU pragma: export
 #include <tr/utility/dynamic_ref_cast.hpp>          // IWYU pragma: export

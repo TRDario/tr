@@ -5,6 +5,7 @@
 #include <tr/utility/angle.hpp>
 #include <tr/utility/chrono.hpp>
 #include <tr/utility/ref.hpp>
+#include <tr/utility/variant.hpp>
 
 namespace tr
 {
@@ -132,5 +133,5 @@ namespace tr::internal
 	};
 
 	/// Generic audio command.
-	using generic_audio_command = std::variant<audio_command<float>, audio_command<angle, angle>, audio_command<glm::vec3>>;
+	using generic_audio_command = variant<audio_command<float>, audio_command<angle, angle>, audio_command<glm::vec3>>;
 } // namespace tr::internal

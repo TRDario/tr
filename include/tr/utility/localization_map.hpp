@@ -3,21 +3,13 @@
 
 #pragma once
 #include <tr/utility/hash_map.hpp>
+#include <tr/utility/zstring_view.hpp>
 
 //
 
 namespace tr
 {
-	/// Localization map class with support for reading custom localization files.
-	/// @details
-	/// The localization file consists of lines in the format: `[<KEY> = "<VALUE>"] [#COMMENT]`
-	///
-	/// Empty lines and lines consisting entirely of comments are ignored, as is any whitespace between the tokens.
-	///
-	/// `KEY` must consist entirely of ASCII alphanumeric characters and `_`.
-	///
-	/// `VALUE` can contain any Unicode characters, but a few have to be escaped: newlines with `\n`, backslashes with `\\`, quotes with
-	/// `\"`.
+	/// Optimized localization key-value map.
 	class localization_map
 	{
 	  public:
@@ -28,110 +20,82 @@ namespace tr
 		[[nodiscard]] localization_map() noexcept = default;
 
 		/// Copies a localization map.
-		/// @param map Localization map to copy.
-		[[nodiscard]] localization_map(const string_flat_map<std::string>& map);
+		/// @param rhs Localization map to copy.
+		[[nodiscard]] localization_map(const localization_map& rhs);
 
 		/// Moves a localization map.
-		/// @param map Localization map to move.
-		[[nodiscard]] localization_map(string_flat_map<std::string>&& map) noexcept;
+		/// @details `rhs` will be left empty after the move.
+		/// @param rhs Localization map to move.
+		[[nodiscard]] localization_map(localization_map&& rhs) noexcept = default;
 
 		/// @}
-		/// @name Manipulation
+		/// @name Assignment operators
 		/// @{
 
-		/// Clears the localization map.
-		void clear() noexcept;
+		/// Copies a localization map.
+		/// @param rhs Localization map to copy.
+		/// @return Reference to `*this`.
+		localization_map& operator=(const localization_map& rhs);
 
-		/// Loads a localization script, returning any non-fatal errors.
-		/// @param script Script string in the format defined in the class description.
-		/// @return Vector of non-fatal error message strings.
-		std::vector<std::string> load_script(std::string_view script);
-
-		/// Loads a localization script file, returning any non-fatal errors.
-		/// @param path Path to a script file in the format defined in the class description.
-		/// @exception file_not_found If the script file was not found.
-		/// @exception file_open_error If opening the script file failed.
-		/// @return Vector of non-fatal error message strings.
-		std::vector<std::string> load_script_file(const std::filesystem::path& path);
+		/// Moves a localization map.
+		/// @details `rhs` will be left empty after the move.
+		/// @param rhs Localization map to move.
+		/// @return Reference to `*this`.
+		localization_map& operator=(localization_map&& rhs) noexcept = default;
 
 		/// @}
 		/// @name Access
 		/// @{
 
+		/// Gets the number of entries in the map.
+		/// @return Number of entries in the map.
+		[[nodiscard]] usize size() const noexcept;
+
 		/// Gets whether a key has a corresponding localization string in the map.
 		/// @param key Localization key to check.
 		/// @return `true` if a string is associated with `key`, `false` otherwise.
-		[[nodiscard]] bool contains(std::string_view key) const;
+		[[nodiscard]] bool contains(std::string_view key) const noexcept;
 
 		/// Gets a localization string associated with a key.
 		/// @param key Localization key to get a localization string for.
 		/// @post The string `key` is a view of must stay alive after the function returns in case it's returned.
 		/// @return Localization string associated with a key, or `key` if one doesn't exist.
-		[[nodiscard]] std::string_view operator[](std::string_view key) const;
+		[[nodiscard]] std::string_view operator[](std::string_view key) const noexcept;
+
+		/// @}
+		/// @name Modification
+		/// @{
+
+		/// Clears the localization map.
+		void clear() noexcept;
+
+		/// Reserves memory for up to `capacity` entries in the map.
+		/// @param capacity Expected number of entries in the map.
+		void reserve(usize capacity);
+
+		/// Inserts a key-value pair into the localization map.
+		/// @param key Localization key.
+		/// @param value Localization value associated with `key`.
+		void insert(std::string_view key, std::string_view value);
 
 		/// @}
 
 	  private:
-		/// Localization script parser.
-		class parser
-		{
-		  public:
-			/// Result of a parse operation.
-			struct parse_result
-			{
-				/// Localization key.
-				std::string_view key;
+		/// String storage pool.
+		/// @details Key-value strings are stored interleaved separated by NUL.
+		std::vector<char> m_string_pool;
 
-				/// Localization value.
-				std::string value;
-			};
-
-			//
-
-			/// Tries to parse a line of script.
-			[[nodiscard]] std::optional<parse_result> parse_line(std::string_view line);
-
-			//
-
-			/// Returns the list of errors generated during parsing.
-			[[nodiscard]] std::vector<std::string> errors() noexcept;
-
-		  private:
-			/// List of errors generated during parsing.
-			std::vector<std::string> m_errors;
-
-			/// Current line number.
-			int m_line{0};
-
-			//
-
-			/// Tries to parse a key and write it to out.
-			/// @param line Localization script line.
-			/// @param out Output localization key.
-			/// @return Remaining line or an empty string view on error.
-			[[nodiscard]] std::string_view parse_key(std::string_view line, std::string_view& out);
-
-			/// Tries to parse an `=` delimiter.
-			/// @param line Localization script line.
-			/// @return Remaining line or an empty string view on error.
-			[[nodiscard]] std::string_view parse_delimiter(std::string_view line);
-
-			/// Tries to parse a value and write it to `out`.
-			/// @param line Localization script line.
-			/// @param out Output localization value.
-			/// @return `true` if the parsing was successful, `false` if an error occurred.
-			[[nodiscard]] bool parse_value(std::string_view line, std::string& out);
-
-			/// Tries to process escape sequences in a raw value string and write the final value to `out`.
-			/// @param raw Raw localization script value string.
-			/// @param out Output localization value.
-			/// @return `true` if the parsing was successful, `false` if an error occurred.
-			[[nodiscard]] bool process_escape_sequences(std::string_view raw, std::string& out);
-		};
+		/// Set of keys present in the map.
+		boost::unordered_flat_set<zstring_view, string_hash, string_eq> m_keys;
 
 		//
 
-		/// Base string map.
-		string_flat_map<std::string> m_map;
+		/// Finds the next key string after `it`.
+		/// @param it Iterator to a key string.
+		/// @return Iterator to the beginning of the next key string.
+		std::vector<char>::const_iterator find_next_key(std::vector<char>::const_iterator it) const noexcept;
+
+		/// Builds `m_keys` after an `m_string_pool` reallocation.
+		void build_keys();
 	};
 } // namespace tr

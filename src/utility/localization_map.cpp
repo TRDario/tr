@@ -1,194 +1,98 @@
 /// @file
 /// @brief Implements localization_map.hpp.
 
-#include <tr/utility/iostream.hpp>
 #include <tr/utility/localization_map.hpp>
 
 //
 
-namespace tr
+tr::localization_map::localization_map(const localization_map& rhs)
+	: m_string_pool{rhs.m_string_pool}
 {
-	namespace
-	{
-		/// Trims whitespace from the line.
-		/// @param line Line string view.
-		/// @return String view to the line with the leading whitespace removed.
-		[[nodiscard]] std::string_view trim_whitespace(std::string_view line) noexcept
-		{
-			return {std::ranges::find_if_not(line, [](char c) { return std::isspace(c); }), line.end()};
-		}
-	} // namespace
-} // namespace tr
-
-//
-
-std::string_view tr::localization_map::parser::parse_key(std::string_view line, std::string_view& out)
-{
-	std::string_view::iterator end{std::ranges::find_if(line, [](char c) { return !std::isalnum(c) && c != '_'; })};
-	if (line.begin() == end) {
-		m_errors.emplace_back(std::format("line {}: Expected a key.", m_line));
-		return {};
-	}
-	out = {line.begin(), end};
-	return trim_whitespace({end, line.end()});
-}
-
-std::string_view tr::localization_map::parser::parse_delimiter(std::string_view line)
-{
-	if (line[0] != '=') {
-		m_errors.emplace_back(std::format("line {}: Expected '=' after key.", m_line));
-		return {};
-	}
-	return trim_whitespace(line.substr(1));
-}
-
-bool tr::localization_map::parser::process_escape_sequences(std::string_view raw, std::string& out)
-{
-	out.reserve(raw.size());
-	for (std::string_view::iterator chr_it = raw.begin(); chr_it != raw.end(); ++chr_it) {
-		if (*chr_it == '\\') {
-			if (++chr_it == raw.end()) {
-				m_errors.emplace_back(std::format("line {}: Unterminated escape sequence in value string.", m_line));
-				return false;
-			}
-
-			if (*chr_it == 'n') {
-				out.push_back('\n');
-			}
-			else if (*chr_it == '\\') {
-				out.push_back('\\');
-			}
-			else if (*chr_it == '"') {
-				out.push_back('"');
-			}
-			else {
-				m_errors.emplace_back(std::format("line {}: Unknown escape sequence \\{} in value string.", m_line, *chr_it));
-				return false;
-			}
-		}
-		else {
-			out.push_back(*chr_it);
-		}
-	}
-	out.shrink_to_fit();
-	return true;
-}
-
-bool tr::localization_map::parser::parse_value(std::string_view line, std::string& out)
-{
-	if (line[0] != '"') {
-		m_errors.emplace_back(std::format("line {}: Expected quoted string after '<key> = '.", m_line));
-		return false;
-	}
-
-	std::string_view::iterator begin{line.begin() + 1};
-	std::string_view::iterator end{line.begin()};
-	while ((end = std::find(end + 1, line.end(), '"')) != line.end()) {
-		int leading_backslashes{0};
-		for (std::string_view::iterator it = std::prev(end); *it == '\\' && it != begin; ++leading_backslashes, --it) {}
-		if (leading_backslashes % 2 == 0) {
-			break;
-		}
-	}
-
-	if (end == line.end()) {
-		m_errors.emplace_back(std::format("line {}: Unterminated quoted string.", m_line));
-		return false;
-	}
-
-	line = trim_whitespace({end + 1, line.end()});
-	if (!line.empty() && line[0] != '#') {
-		m_errors.emplace_back(std::format("line {}: Expected comment or newline after quoted string.", m_line));
-		return false;
-	}
-
-	return process_escape_sequences({begin, end}, out);
-}
-
-std::optional<tr::localization_map::parser::parse_result> tr::localization_map::parser::parse_line(std::string_view line)
-{
-	++m_line;
-	parse_result parsed_line;
-	line = trim_whitespace(line);
-	if (line.empty() || line[0] == '#') {
-		return std::nullopt;
-	}
-	line = parse_key(line, parsed_line.key);
-	if (line.empty()) {
-		return std::nullopt;
-	}
-	line = parse_delimiter(line);
-	if (line.empty()) {
-		return std::nullopt;
-	}
-	if (!parse_value(line, parsed_line.value)) {
-		return std::nullopt;
-	}
-	return std::move(parsed_line);
-}
-
-std::vector<std::string> tr::localization_map::parser::errors() noexcept
-{
-	return std::move(m_errors);
+	build_keys();
 }
 
 //
 
-tr::localization_map::localization_map(const string_flat_map<std::string>& map)
-	: m_map{map}
+tr::localization_map& tr::localization_map::operator=(const localization_map& rhs)
 {
+	m_string_pool = rhs.m_string_pool;
+	m_keys.clear();
+	build_keys();
+	return *this;
 }
 
-tr::localization_map::localization_map(string_flat_map<std::string>&& map) noexcept
-	: m_map{std::move(map)}
+//
+
+tr::usize tr::localization_map::size() const noexcept
 {
+	return m_keys.size();
+}
+
+bool tr::localization_map::contains(std::string_view key) const noexcept
+{
+	return m_keys.contains(key);
+}
+
+std::string_view tr::localization_map::operator[](std::string_view key) const noexcept
+{
+	const boost::unordered_flat_set<zstring_view, string_hash, string_eq>::iterator it{m_keys.find(key)};
+	if (it == m_keys.end()) {
+		return key;
+	}
+	return std::string_view{it->c_str() + it->length() + 1};
 }
 
 //
 
 void tr::localization_map::clear() noexcept
 {
-	m_map.clear();
+	m_string_pool.clear();
+	m_keys.clear();
 }
 
-std::vector<std::string> tr::localization_map::load_script(std::string_view script)
+void tr::localization_map::reserve(usize capacity)
 {
-	parser parser;
-	while (!script.empty()) {
-		const std::string_view::iterator line_end{std::ranges::find(script, '\n')};
-
-		std::optional<parser::parse_result> result{parser.parse_line({script.begin(), line_end})};
-		if (result.has_value()) {
-			const opt_ref<std::string> value{try_get(m_map, result->key)};
-			if (value.has_ref()) {
-				*value = std::move(result->value);
-			}
-			else {
-				m_map.emplace(result->key, std::move(result->value));
-			}
-		}
-
-		script = line_end == script.end() ? std::string_view{} : std::string_view{line_end + 1, script.end()};
+	const usize old_pool_capacity{m_string_pool.capacity()};
+	m_string_pool.reserve(capacity * 64); // Heuristic based on Bodge localization.
+	m_keys.reserve(capacity);
+	if (m_string_pool.capacity() > old_pool_capacity) {
+		m_keys.clear();
+		build_keys();
 	}
-	return parser.errors();
 }
 
-std::vector<std::string> tr::localization_map::load_script_file(const std::filesystem::path& path)
+void tr::localization_map::insert(std::string_view key, std::string_view value)
 {
-	std::ostringstream ss;
-	ss << tr::open_file_r(path).rdbuf();
-	return load_script(ss.view());
+	TR_ASSERT(!contains(key), "Tried to insert duplicate key {} into a localization map.", key);
+
+	const usize new_key_begin_index{m_string_pool.size()};
+	const usize old_pool_capacity{m_string_pool.capacity()};
+	m_string_pool.append_range(key);
+	m_string_pool.push_back('\0');
+	m_string_pool.append_range(value);
+	m_string_pool.push_back('\0');
+	if (m_string_pool.capacity() > old_pool_capacity) {
+		m_keys.clear();
+		build_keys();
+	}
+	else {
+		m_keys.emplace(&m_string_pool[new_key_begin_index]);
+	}
 }
 
 //
 
-bool tr::localization_map::contains(std::string_view key) const
+std::vector<char>::const_iterator tr::localization_map::find_next_key(std::vector<char>::const_iterator it) const noexcept
 {
-	return m_map.contains(key);
+	namespace rs = std::ranges;
+
+	it = rs::next(rs::find(it, m_string_pool.end(), '\0'));
+	return rs::next(rs::find(it, m_string_pool.end(), '\0'));
 }
 
-std::string_view tr::localization_map::operator[](std::string_view key) const
+void tr::localization_map::build_keys()
 {
-	const opt_ref<const std::string> value{try_get(m_map, key)};
-	return value.has_ref() ? *value : key;
+	for (std::vector<char>::const_iterator it{m_string_pool.begin()}; it != m_string_pool.end(); it = find_next_key(it)) {
+		m_keys.emplace(std::to_address(it));
+	}
 }

@@ -83,6 +83,11 @@ namespace tr
 	concept nothrow_iterator = std::input_or_output_iterator<T> && noexcept(++std::declval<T&>()) &&
 							   noexcept(std::declval<const T&>() != std::declval<const T&>()) && noexcept(*std::declval<T&>());
 
+	/// Input iterator to a type convertible to `Element`.
+	/// @tparam Element Type the iterator's dereferenced value must be convertible to.
+	template <typename T, typename Element>
+	concept input_iterator_to_convertible_to = std::input_iterator<T> && std::convertible_to<std::iter_reference_t<T>, Element>;
+
 	/// Forward iterator to a type convertible to `Element`.
 	/// @tparam Element Type the iterator's dereferenced value must be convertible to.
 	template <typename T, typename Element>
@@ -150,11 +155,27 @@ namespace tr
 
 	//
 
+	/// Gets the type at offset `I` of parameter pack `Ts`.
+	/// @tparam I Type offset within the parameter pack.
+	/// @tparam Ts Parameter pack to get a type from.
+	template <usize I, typename... Ts>
+		requires(sizeof...(Ts) > I)
+	using pack_index_t = std::tuple_element_t<I, std::tuple<Ts...>>;
+
+	/// Gets the type at the front of of parameter pack `Ts`.
+	/// @tparam Ts Parameter pack to get the front type from.
+	template <typename... Ts>
+		requires(sizeof...(Ts) >= 1)
+	using pack_front_t = pack_index_t<0, Ts...>;
+
 	/// Type contained within a list of types.
 	/// @tparam Ts List of accepted types.
 	template <typename T, typename... Ts>
 	concept one_of = (std::same_as<T, Ts> || ...);
 
+	/// Concept denoting a parameter pack of identical types.
+	template <typename... Ts>
+	concept all_same = (std::same_as<pack_front_t<Ts...>, Ts> && ...);
 	//
 
 	/// Formattable type.

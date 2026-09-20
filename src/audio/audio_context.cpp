@@ -176,7 +176,7 @@ void tr::audio_context::thread_loop(std::stop_token stoken) noexcept
 			for (audio_source& source : deref(m_sources)) {
 				source.refill_if_needed();
 			}
-			erase_if(m_commands, [](auto& c) { return std::visit([]<typename T>(T& c) { return c.execute() == T::status::done; }, c); });
+			erase_if(m_commands, [](auto& cmd) { return cmd.visit([]<typename T>(T& cmd) { return cmd.execute() == T::status::done; }); });
 		}
 		catch (std::exception& err) {
 			return;
