@@ -5,6 +5,7 @@
 #include <tr/audio/audio_buffer.hpp>
 #include <tr/audio/audio_class.hpp>
 #include <tr/audio/audio_stream.hpp>
+#include <tr/utility/optional_variant.hpp>
 #include <tr/utility/static_vector.hpp>
 
 namespace tr
@@ -519,7 +520,7 @@ namespace tr
 		handle<unsigned int, 0, deleter> m_handle;
 
 		/// Data source of the source.
-		std::variant<std::monostate, std::shared_ptr<audio_buffer>, buffered_stream> m_data_source;
+		optional_variant<std::shared_ptr<audio_buffer>, buffered_stream> m_data_source;
 
 		/// Priority of the source.
 		int m_priority;

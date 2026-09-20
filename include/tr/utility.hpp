@@ -39,6 +39,8 @@
 #include <tr/utility/mstream.hpp>                   // IWYU pragma: export
 #include <tr/utility/norm_cast.hpp>                 // IWYU pragma: export
 #include <tr/utility/opt_ref.hpp>                   // IWYU pragma: export
+#include <tr/utility/optional_result.hpp>           // IWYU pragma: export
+#include <tr/utility/optional_variant.hpp>          // IWYU pragma: export
 #include <tr/utility/out_handle.hpp>                // IWYU pragma: export
 #include <tr/utility/pointer_iterator.hpp>          // IWYU pragma: export
 #include <tr/utility/polygon.hpp>                   // IWYU pragma: export
@@ -46,6 +48,7 @@
 #include <tr/utility/rectangle.hpp>                 // IWYU pragma: export
 #include <tr/utility/rectangle_edges.hpp>           // IWYU pragma: export
 #include <tr/utility/ref.hpp>                       // IWYU pragma: export
+#include <tr/utility/result.hpp>                    // IWYU pragma: export
 #include <tr/utility/rng.hpp>                       // IWYU pragma: export
 #include <tr/utility/specialization_of.hpp>         // IWYU pragma: export
 #include <tr/utility/static_vector.hpp>             // IWYU pragma: export

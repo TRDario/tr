@@ -181,7 +181,7 @@ void tr::audio_source::clear(const std::lock_guard<std::mutex>& lock)
 	stop(lock);
 	set_loop_points(lock, start, end);
 	detach_buffer();
-	m_data_source.emplace<std::monostate>();
+	m_data_source.reset();
 	set_looping(lock, false);
 }
 
@@ -498,8 +498,7 @@ void tr::audio_source::stop(const std::lock_guard<std::mutex>&)
 
 tr::fsecs tr::audio_source::length() const
 {
-	// clang-format off
-	return std::visit([]<typename T>(const T& data_source) {
+	return m_data_source.visit([]<typename T>(const T& data_source) {
 		if constexpr (std::same_as<T, buffered_stream>) {
 			return data_source.length();
 		}
@@ -510,15 +509,12 @@ tr::fsecs tr::audio_source::length() const
 		else {
 			return fsecs::zero();
 		}
-	}, m_data_source);
-	// clang-format on
+	});
 }
 
 tr::fsecs tr::audio_source::offset() const
 {
-	// clang-format off
-	return std::visit([this]<typename T>(const T& data_source) {
-		
+	return m_data_source.visit([this]<typename T>(const T& data_source) {
 		float offset;
 		context().al().get_source_property_f(context().unwrap(), unwrap(), AL_SEC_OFFSET, &offset);
 
@@ -535,8 +531,7 @@ tr::fsecs tr::audio_source::offset() const
 		else {
 			return fsecs{offset};
 		}
-	}, m_data_source);
-	// clang-format on
+	});
 }
 
 void tr::audio_source::set_offset(fsecs offset)
@@ -546,9 +541,7 @@ void tr::audio_source::set_offset(fsecs offset)
 
 void tr::audio_source::set_offset(const std::lock_guard<std::mutex>& lock, fsecs offset)
 {
-	// clang-format off
-	std::visit([&lock, offset, this]<typename T>(T& data_source) {
-		
+	m_data_source.visit([&lock, offset, this]<typename T>(T& data_source) {
 		if constexpr (std::same_as<T, buffered_stream>) {
 			const auto prev_state{state()};
 			data_source.seek(offset);
@@ -569,16 +562,14 @@ void tr::audio_source::set_offset(const std::lock_guard<std::mutex>& lock, fsecs
 		else {
 			context().al().set_source_property_f(context().unwrap(), unwrap(), AL_SEC_OFFSET, offset.count());
 		}
-	}, m_data_source);
-	// clang-format on
+	});
 }
 
 //
 
 bool tr::audio_source::looping() const
 {
-	// clang-format off
-	return std::visit([this]<typename T>(const T& data_source) -> bool {
+	return m_data_source.visit([this]<typename T>(const T& data_source) -> bool {
 		if constexpr (std::same_as<T, buffered_stream>) {
 			return data_source.looping();
 		}
@@ -587,14 +578,12 @@ bool tr::audio_source::looping() const
 			context().al().get_source_property_i(context().unwrap(), unwrap(), AL_LOOPING, &looping);
 			return looping;
 		}
-	}, m_data_source);
-	// clang-format on
+	});
 }
 
 tr::fsecs tr::audio_source::loop_start() const
 {
-	// clang-format off
-	return std::visit([]<typename T>(const T& data_source) {
+	return m_data_source.visit([]<typename T>(const T& data_source) {
 		if constexpr (std::same_as<T, buffered_stream>) {
 			return data_source.loop_start();
 		}
@@ -604,14 +593,12 @@ tr::fsecs tr::audio_source::loop_start() const
 		else {
 			return fsecs::zero();
 		}
-	}, m_data_source);
-	// clang-format on
+	});
 }
 
 tr::fsecs tr::audio_source::loop_end() const
 {
-	// clang-format off
-	return std::visit([]<typename T>(const T& data_source) {
+	return m_data_source.visit([]<typename T>(const T& data_source) {
 		if constexpr (std::same_as<T, buffered_stream>) {
 			return data_source.loop_end();
 		}
@@ -621,8 +608,7 @@ tr::fsecs tr::audio_source::loop_end() const
 		else {
 			return fsecs::zero();
 		}
-	}, m_data_source);
-	// clang-format on
+	});
 }
 
 void tr::audio_source::set_looping(bool value)
@@ -632,16 +618,14 @@ void tr::audio_source::set_looping(bool value)
 
 void tr::audio_source::set_looping(const std::lock_guard<std::mutex>&, bool value)
 {
-	// clang-format off
-	std::visit([value, this]<typename T>(T& data_source) {
+	m_data_source.visit([value, this]<typename T>(T& data_source) {
 		if constexpr (std::same_as<T, buffered_stream>) {
 			data_source.set_looping(value);
 		}
 		else {
 			context().al().set_source_property_i(context().unwrap(), unwrap(), AL_LOOPING, value);
 		}
-	}, m_data_source);
-	// clang-format on
+	});
 }
 
 void tr::audio_source::set_loop_points(fsecs start_point, fsecs end_point)
@@ -660,8 +644,7 @@ void tr::audio_source::set_loop_points(const std::lock_guard<std::mutex>&, fsecs
 	TR_ASSERT(start_point < end_point, "Tried to set audio source loop end before start (start: {}s, end: {}s).", start_point.count(),
 			  end_point.count());
 
-	// clang-format off
-	std::visit([start_point, end_point, this]<typename T>(T& data_source) {
+	m_data_source.visit([start_point, end_point, this]<typename T>(T& data_source) {
 		if constexpr (std::same_as<T, buffered_stream>) {
 			data_source.set_loop_points(start_point, end_point);
 		}
@@ -670,8 +653,7 @@ void tr::audio_source::set_loop_points(const std::lock_guard<std::mutex>&, fsecs
 			data_source->set_loop_points(start_point, end_point);
 			attach_buffer(*data_source);
 		}
-	}, m_data_source);
-	// clang-format on
+	});
 }
 
 //
