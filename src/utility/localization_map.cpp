@@ -6,18 +6,22 @@
 //
 
 tr::localization_map::localization_map(const localization_map& rhs)
-	: m_string_pool{rhs.m_string_pool}
+	: m_pool{rhs.m_pool}
 {
-	build_keys();
+	for (string_pool::iterator it{m_pool.begin()}; it != m_pool.end(); std::advance(it, 2)) {
+		m_keys.insert(it);
+	}
 }
 
 //
 
 tr::localization_map& tr::localization_map::operator=(const localization_map& rhs)
 {
-	m_string_pool = rhs.m_string_pool;
+	m_pool = rhs.m_pool;
 	m_keys.clear();
-	build_keys();
+	for (string_pool::iterator it{m_pool.begin()}; it != m_pool.end(); std::advance(it, 2)) {
+		m_keys.insert(it);
+	}
 	return *this;
 }
 
@@ -35,64 +39,58 @@ bool tr::localization_map::contains(std::string_view key) const noexcept
 
 std::string_view tr::localization_map::operator[](std::string_view key) const noexcept
 {
-	const boost::unordered_flat_set<zstring_view, string_hash, string_eq>::iterator it{m_keys.find(key)};
+	const auto it{m_keys.find(key)};
 	if (it == m_keys.end()) {
 		return key;
 	}
-	return std::string_view{it->c_str() + it->length() + 1};
+	return std::string_view{*std::next(*it)};
 }
 
 //
 
 void tr::localization_map::clear() noexcept
 {
-	m_string_pool.clear();
+	m_pool.clear();
 	m_keys.clear();
 }
 
-void tr::localization_map::reserve(usize capacity)
+void tr::localization_map::update(std::string_view key, std::string_view value)
 {
-	const usize old_pool_capacity{m_string_pool.capacity()};
-	m_string_pool.reserve(capacity * 64); // Heuristic based on Bodge localization.
-	m_keys.reserve(capacity);
-	if (m_string_pool.capacity() > old_pool_capacity) {
-		m_keys.clear();
-		build_keys();
+	const auto old_key_it{m_keys.find(key)};
+	const string_pool::iterator new_key_it{m_pool.end()};
+	const bool replaced_key{old_key_it != m_keys.end()};
+	const usize old_pool_capacity{m_pool.capacity()};
+
+	if (replaced_key) {
+		m_pool.erase(*old_key_it, std::next(*old_key_it, 2));
 	}
-}
+	m_pool.append(key);
+	m_pool.append(value);
 
-void tr::localization_map::insert(std::string_view key, std::string_view value)
-{
-	TR_ASSERT(!contains(key), "Tried to insert duplicate key {} into a localization map.", key);
-
-	const usize new_key_begin_index{m_string_pool.size()};
-	const usize old_pool_capacity{m_string_pool.capacity()};
-	m_string_pool.append_range(key);
-	m_string_pool.push_back('\0');
-	m_string_pool.append_range(value);
-	m_string_pool.push_back('\0');
-	if (m_string_pool.capacity() > old_pool_capacity) {
+	if (replaced_key || m_pool.capacity() > old_pool_capacity) {
 		m_keys.clear();
-		build_keys();
+		for (string_pool::iterator it{m_pool.begin()}; it != m_pool.end(); std::advance(it, 2)) {
+			m_keys.insert(it);
+		}
 	}
 	else {
-		m_keys.emplace(&m_string_pool[new_key_begin_index]);
+		m_keys.insert(new_key_it);
 	}
 }
 
 //
 
-std::vector<char>::const_iterator tr::localization_map::find_next_key(std::vector<char>::const_iterator it) const noexcept
+tr::usize tr::localization_map::string_pool_iterator_hash::operator()(string_pool::iterator it) const noexcept
 {
-	namespace rs = std::ranges;
-
-	it = rs::next(rs::find(it, m_string_pool.end(), '\0'));
-	return rs::next(rs::find(it, m_string_pool.end(), '\0'));
+	return (*this)(*it);
 }
 
-void tr::localization_map::build_keys()
+bool tr::localization_map::string_pool_iterator_eq::operator()(string_pool::iterator lhs, std::string_view rhs) const noexcept
 {
-	for (std::vector<char>::const_iterator it{m_string_pool.begin()}; it != m_string_pool.end(); it = find_next_key(it)) {
-		m_keys.emplace(std::to_address(it));
-	}
+	return *lhs == rhs;
+}
+
+bool tr::localization_map::string_pool_iterator_eq::operator()(std::string_view lhs, string_pool::iterator rhs) const noexcept
+{
+	return lhs == *rhs;
 }

@@ -100,6 +100,11 @@ namespace tr
 
 	//
 
+	/// Input range to a type convertible to `Element`.
+	/// @tparam Element Type the range's values must be convertible to.
+	template <typename T, typename Element>
+	concept input_range_to_convertible_to = std::ranges::input_range<T> && std::convertible_to<std::ranges::range_reference_t<T>, Element>;
+
 	/// Forward range to a type convertible to `Element`.
 	/// @tparam Element Type the range's values must be convertible to.
 	template <typename T, typename Element>
