@@ -67,24 +67,19 @@ namespace tr
 		/// @}
 	};
 
+	//
+
 	/// Concatenates two or more string literals into a new string literal.
-	/// @tparam First, Second, Rest Raw string literals and/or `tr::string_literal` specializations.
-	/// @param first, second, rest Strings to concatenate.
+	/// @tparam StringLiterals Types convertible to `tr::string_literal`.
+	/// @param literals String literals to concatenate.
 	/// @return New string literal stored in a `tr::string_literal` object.
-	template <typename First, typename Second, typename... Rest>
-	[[nodiscard]] consteval auto concatenate_string_literals(First&& first, Second&& second, Rest&&... rest) noexcept
+	template <typename... StringLiterals>
+		requires(requires(StringLiterals&& t) { string_literal{t}; } && ...)
+	[[nodiscard]] consteval auto concatenate_string_literals(StringLiterals&&... literals) noexcept
 	{
-		if constexpr (sizeof...(Rest) == 0) {
-			const tr::string_literal left{first};
-			const tr::string_literal right{second};
-			tr::string_literal<decltype(left)::size() + decltype(right)::size() + 1> concatenated{{}};
-			std::ranges::copy(left.data, std::ranges::begin(concatenated.data));
-			std::ranges::copy(right.data, std::ranges::begin(concatenated.data) + left.size());
-			return concatenated;
-		}
-		else {
-			return concatenate_string_literals(concatenate_string_literals(std::forward<First>(first), std::forward<Second>(second)),
-											   std::forward<Rest>(rest)...);
-		}
+		char buffer[(decltype(string_literal{std::declval<StringLiterals>()})::size() + ...) + 1]{};
+		char* buffer_it{std::ranges::begin(buffer)};
+		(..., (buffer_it = std::ranges::copy(std::string_view{string_literal{literals}}, buffer_it).out));
+		return string_literal{buffer};
 	}
 } // namespace tr
