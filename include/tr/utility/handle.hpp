@@ -236,7 +236,7 @@ namespace tr
 
 //
 
-#ifndef TR_DOXYGEN_SKIP
+#ifndef TR_DOXYGEN
 /// Handle hasher.
 /// @tparam Base Wrapped type.
 /// @tparam Empty Empty handle sentinel value.

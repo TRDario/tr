@@ -363,7 +363,7 @@ namespace tr
 
 //
 
-#ifndef TR_DOXYGEN_SKIP
+#ifndef TR_DOXYGEN
 /// Scancode hasher.
 template <>
 struct boost::hash<tr::scancode>

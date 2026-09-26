@@ -328,7 +328,7 @@ namespace tr
 
 //
 
-#ifndef TR_DOXYGEN_SKIP
+#ifndef TR_DOXYGEN
 /// Designates basic_zstring_view as a view.
 /// @tparam CharT Character type used by the string.
 /// @tparam Traits Character traits used by the string.
@@ -352,7 +352,7 @@ struct std::formatter<tr::basic_zstring_view<CharT, Traits>> : std::formatter<st
 {
 };
 
-#ifndef TR_DOXYGEN_SKIP
+#ifndef TR_DOXYGEN
 /// NUL-terminated string view hasher.
 /// @tparam CharT Character type used by the string.
 /// @tparam Traits Character traits used by the string.
