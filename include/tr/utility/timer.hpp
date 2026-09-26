@@ -34,7 +34,7 @@ namespace tr
 		/// @tparam Callback Base callback object type.
 		/// @param interval Interval at which the callback is called.
 		/// @param cb Callback object.
-		template <arithmetic Rep, specialization_of_v<std::ratio> Period, std::convertible_to<std::function<void()>> Callback>
+		template <arithmetic Rep, specialization_of_c<std::ratio> Period, std::convertible_to<std::function<void()>> Callback>
 		[[nodiscard]] timer(const std::chrono::duration<Rep, Period>& interval, Callback&& cb)
 			: m_thread{timer_loop, std::chrono::duration_cast<duration>(interval), callback{std::forward<Callback>(cb)}}
 		{

@@ -44,7 +44,7 @@ namespace tr
 	/// Type passable to the variadic read_binary: a span or a reference to a binary readable.
 	template <typename T>
 	concept span_or_ref_to_binary_readable = (lvalue_reference<T> && binary_readable<std::remove_reference_t<T>>) ||
-											 specialization_of_tv<std::remove_cvref_t<T>, std::span>;
+											 specialization_of_tc<std::remove_cvref_t<T>, std::span>;
 
 	/// Type able to be constructed with read_binary.
 	template <typename T>

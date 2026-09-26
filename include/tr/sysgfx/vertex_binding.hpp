@@ -50,7 +50,7 @@ namespace tr
 		/// Holds a list of vertex bindings as if gotten by `tr::as_vertex_binding`.
 		/// @tparam BindingTags List of vertex binding tags.
 		/// @hideinitializer
-		template <specialization_of_tv<vertex_binding_tag>... BindingTags>
+		template <specialization_of_tc<vertex_binding_tag>... BindingTags>
 		inline constexpr std::array<vertex_binding, sizeof...(BindingTags)> as_vertex_bindings_array{
 			as_vertex_binding<typename BindingTags::type, BindingTags::divisor>...,
 		};
@@ -61,7 +61,7 @@ namespace tr
 	/// Holds a span of vertex bindings as if gotten by `tr::as_vertex_binding` with a guaranteed static lifetime.
 	/// @tparam BindingTags List of vertex binding tags, see `tr::vertex_binding_tag`.
 	/// @hideinitializer
-	template <specialization_of_tv<vertex_binding_tag>... BindingTags>
+	template <specialization_of_tc<vertex_binding_tag>... BindingTags>
 	inline constexpr std::span<const vertex_binding, sizeof...(BindingTags)> as_vertex_bindings{
 		internal::as_vertex_bindings_array<BindingTags...>,
 	};
