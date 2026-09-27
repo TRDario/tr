@@ -8,7 +8,7 @@ var searchData=
   ['adaptive_5',['adaptive',['../namespacetr.html#a8022fe327c140227536483d9a7ac36d9a8cb043b2dace9afc0680e6bae5cd316f',1,'tr']]],
   ['add_6',['add',['../namespacetr.html#aead4294434ac2897c9ce8318a8216b18a34ec78fcc91ffb1e54cd85e4a0924332',1,'tr']]],
   ['alt_7',['alt',['../namespacetr.html#a8efaea616aca72ed620aeec3493fff11a34823136d0dd91d0f5d22db740f7679c',1,'tr']]],
-  ['application_8',['application',['../classtr_1_1application.html#a52455c54911b67d7984c5103cb497e2fa3676d55f84497cbeadfc614c1b1b62fc',1,'tr::application']]],
+  ['application_8',['application',['../structtr_1_1metadata.html#a09b9df9b42f284629fc795f7a1999756a3676d55f84497cbeadfc614c1b1b62fc',1,'tr::metadata']]],
   ['argb32_9',['argb32',['../namespacetr.html#ac1babae6e9367fc90585a8791dadc746ae57a429bc01664112d277cc6d93d3ad6',1,'tr']]],
   ['argb_5fp1555_10',['argb_p1555',['../namespacetr.html#ac1babae6e9367fc90585a8791dadc746aeb9334a47d2852e2aad0535246adf326',1,'tr']]],
   ['argb_5fp4444_11',['argb_p4444',['../namespacetr.html#ac1babae6e9367fc90585a8791dadc746a1f7122530bee42e01e627286b144182e',1,'tr']]],

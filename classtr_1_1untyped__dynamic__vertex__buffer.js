@@ -1,5 +1,10 @@
 var classtr_1_1untyped__dynamic__vertex__buffer =
 [
+    [ "untyped_dynamic_vertex_buffer", "classtr_1_1untyped__dynamic__vertex__buffer.html#a9f8911ea872d17f3a608702464e3db36", null ],
+    [ "untyped_dynamic_vertex_buffer", "classtr_1_1untyped__dynamic__vertex__buffer.html#ac95279ed6812006c5ea93f01f6b4e4a4", null ],
+    [ "untyped_dynamic_vertex_buffer", "classtr_1_1untyped__dynamic__vertex__buffer.html#a3fd3378e263bce5296fc0b9c43b6d84b", null ],
+    [ "operator=", "classtr_1_1untyped__dynamic__vertex__buffer.html#acc890dbd41a9cfef9cf89eb643ea0459", null ],
+    [ "operator=", "classtr_1_1untyped__dynamic__vertex__buffer.html#ae109aeaf27dfef271dd4940aaf8da046", null ],
     [ "empty", "classtr_1_1untyped__dynamic__vertex__buffer.html#abbfc975338cb65f62022b35f37df4599", null ],
     [ "size", "classtr_1_1untyped__dynamic__vertex__buffer.html#a6a324e46fc3876ff18cd1808fb4a6450", null ],
     [ "capacity", "classtr_1_1untyped__dynamic__vertex__buffer.html#ab13ea52a25ad52af44821adb7b740907", null ],
@@ -8,7 +13,6 @@ var classtr_1_1untyped__dynamic__vertex__buffer =
     [ "reserve", "classtr_1_1untyped__dynamic__vertex__buffer.html#aa8b5079f528886299247754344e9cc4a", null ],
     [ "set", "classtr_1_1untyped__dynamic__vertex__buffer.html#a934037f263d9c35c61e77971239ce102", null ],
     [ "set_region", "classtr_1_1untyped__dynamic__vertex__buffer.html#a813e40140da59020b69d86041a3198d3", null ],
-    [ "graphics_buffer", "classtr_1_1untyped__dynamic__vertex__buffer.html#a8d312e4b4a5a4fc7225fe88162bdd722", null ],
     [ "context", "classtr_1_1untyped__dynamic__vertex__buffer.html#a2c5c352444ab4d10ed3add4a8cd03f9a", null ],
     [ "valid", "classtr_1_1untyped__dynamic__vertex__buffer.html#ab3a7924563ab5b21ec88e5004dd17d6a", null ],
     [ "label", "classtr_1_1untyped__dynamic__vertex__buffer.html#ada4364c0295af892b869f2be3ed62777", null ],

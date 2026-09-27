@@ -1,0 +1,4 @@
+var structstd_1_1formatter_3_01tr_1_1localization__script__expected__equals__or__opening__brace_01_4 =
+[
+    [ "format_message", "structstd_1_1formatter_3_01tr_1_1localization__script__expected__equals__or__opening__brace_01_4.html#a681e6c05d580955e7352d3fe4e192f9e", null ]
+];

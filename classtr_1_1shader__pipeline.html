@@ -136,30 +136,39 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1sha
 <p>Strictly speaking, instances of <span class="tt"><a class="el" href="classtr_1_1shader__pipeline.html" title="Container for a shader program pipeline.">tr::shader_pipeline</a></span> are only containers for these underlying shader pipeline objects. This means, for example, that setting a shader pipeline on a graphics context does not set the literal <span class="tt"><a class="el" href="classtr_1_1shader__pipeline.html" title="Container for a shader program pipeline.">tr::shader_pipeline</a></span> object at a specific location in memory, but rather the value it contains. If the value is moved to a different instance of <span class="tt"><a class="el" href="classtr_1_1shader__pipeline.html" title="Container for a shader program pipeline.">tr::shader_pipeline</a></span>, that value will still be set on the context. If the instance is overriden with a new value, the old value is destroyed and the graphics context will no longer have a set shader pipeline.</p>
 <p><span class="tt"><a class="el" href="classtr_1_1shader__pipeline.html" title="Container for a shader program pipeline.">tr::shader_pipeline</a></span> has a notion of 'completeness'. An instance of the class may be constructed without set shaders; such an instance is considered incomplete until a valid vertex and fragment shader are set to it. Incomplete shader pipelines may not be set to a graphics context.</p>
 <p>Every instance of <span class="tt"><a class="el" href="classtr_1_1shader__pipeline.html" title="Container for a shader program pipeline.">tr::shader_pipeline</a></span> is associated with a graphics context and cannot outlive its parent context.</p>
-<p><span class="tt"><a class="el" href="classtr_1_1shader__pipeline.html" title="Container for a shader program pipeline.">tr::shader_pipeline</a></span> instances are movable, but not copyable. A moved-from instance of <span class="tt"><a class="el" href="classtr_1_1shader__pipeline.html" title="Container for a shader program pipeline.">tr::shader_pipeline</a></span> is left in a special 'invalid' state, distinct from the incomplete state. Invalid <span class="tt"><a class="el" href="classtr_1_1shader__pipeline.html" title="Container for a shader program pipeline.">tr::shader_pipeline</a></span> instances may not be interacted with besides moving a new value into them and checking for validity using <span class="tt"><a class="el" href="#a766a7c7c4af6936914c49f1a2508b3e2" title="Gets whether the pipeline is in a valid state.">valid()</a></span>.</p>
+<p>Moved-from instances of <span class="tt"><a class="el" href="classtr_1_1shader__pipeline.html" title="Container for a shader program pipeline.">tr::shader_pipeline</a></span> are left in a special 'invalid' state, distinct from the incomplete state. Invalid <span class="tt"><a class="el" href="classtr_1_1shader__pipeline.html" title="Container for a shader program pipeline.">tr::shader_pipeline</a></span> instances may not be interacted with besides moving a new value into them and checking for validity using <span class="tt"><a class="el" href="#a766a7c7c4af6936914c49f1a2508b3e2" title="Gets whether the pipeline is in a valid state.">valid()</a></span>.</p>
 <p><span class="tt"><a class="el" href="classtr_1_1shader__pipeline.html" title="Container for a shader program pipeline.">tr::shader_pipeline</a></span> instances may be labeled and are formattable. Example format output: <span class="tt">"My pipeline" (OpenGL ID: 5)</span>. </p>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
+<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors and destructors</div></td></tr>
 <tr class="memitem:a2c1a29e9b8881a3f8f3df86089afffcd" id="r_a2c1a29e9b8881a3f8f3df86089afffcd"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a2c1a29e9b8881a3f8f3df86089afffcd">shader_pipeline</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context) noexcept</td></tr>
 <tr class="memdesc:a2c1a29e9b8881a3f8f3df86089afffcd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an incomplete shader pipeline.  <br /></td></tr>
+<tr class="memitem:ac63b6cf5a5ff6403715eb454a0fe260a" id="r_ac63b6cf5a5ff6403715eb454a0fe260a"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ac63b6cf5a5ff6403715eb454a0fe260a">shader_pipeline</a> (const shader_pipeline &amp;)=delete</td></tr>
+<tr class="memdesc:ac63b6cf5a5ff6403715eb454a0fe260a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shader pipelines are not copyable.  <br /></td></tr>
+<tr class="memitem:adc277c4ceaeaaccd464fd3d81d250a84" id="r_adc277c4ceaeaaccd464fd3d81d250a84"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#adc277c4ceaeaaccd464fd3d81d250a84">shader_pipeline</a> (shader_pipeline &amp;&amp;rhs) noexcept=default</td></tr>
+<tr class="memdesc:adc277c4ceaeaaccd464fd3d81d250a84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves a shader pipeline.  <br /></td></tr>
 <tr class="memitem:a792db28db324240b0205b90f0dd056f8" id="r_a792db28db324240b0205b90f0dd056f8"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a792db28db324240b0205b90f0dd056f8">shader_pipeline</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context, const vertex_shader &amp;vertex_shader, const fragment_shader &amp;fragment_shader) noexcept</td></tr>
 <tr class="memdesc:a792db28db324240b0205b90f0dd056f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a complete shader pipeline.  <br /></td></tr>
-<tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Context</div></td></tr>
+<tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Assignment operators</div></td></tr>
+<tr class="memitem:af9191d577eee474334ed10d25f76a10d" id="r_af9191d577eee474334ed10d25f76a10d"><td class="memItemLeft"><a class="el" href="#a2c1a29e9b8881a3f8f3df86089afffcd">shader_pipeline</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#af9191d577eee474334ed10d25f76a10d">operator=</a> (const <a class="el" href="#a2c1a29e9b8881a3f8f3df86089afffcd">shader_pipeline</a> &amp;)=delete</td></tr>
+<tr class="memdesc:af9191d577eee474334ed10d25f76a10d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shader pipelines are not copyable.  <br /></td></tr>
+<tr class="memitem:adf88da7f7902c728758ed6eb34974b59" id="r_adf88da7f7902c728758ed6eb34974b59"><td class="memItemLeft"><a class="el" href="#a2c1a29e9b8881a3f8f3df86089afffcd">shader_pipeline</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#adf88da7f7902c728758ed6eb34974b59">operator=</a> (<a class="el" href="#a2c1a29e9b8881a3f8f3df86089afffcd">shader_pipeline</a> &amp;&amp;rhs) noexcept=default</td></tr>
+<tr class="memdesc:adf88da7f7902c728758ed6eb34974b59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves a shader pipeline.  <br /></td></tr>
+<tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Context</div></td></tr>
 <tr class="memitem:a3585f674e324682087b683af7ee624f6" id="r_a3585f674e324682087b683af7ee624f6"><td class="memItemLeft"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a3585f674e324682087b683af7ee624f6">context</a> () const noexcept</td></tr>
 <tr class="memdesc:a3585f674e324682087b683af7ee624f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a reference to the graphics context the pipeline is on.  <br /></td></tr>
-<tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Shaders</div></td></tr>
+<tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Shaders</div></td></tr>
 <tr class="memitem:a26ff9cc49aa9bf50a248e623ab390c7d" id="r_a26ff9cc49aa9bf50a248e623ab390c7d"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a26ff9cc49aa9bf50a248e623ab390c7d">set_shaders</a> (const vertex_shader &amp;vertex_shader, const fragment_shader &amp;fragment_shader) noexcept</td></tr>
 <tr class="memdesc:a26ff9cc49aa9bf50a248e623ab390c7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets both shaders of the pipeline.  <br /></td></tr>
 <tr class="memitem:a9c3c90a42ca88873fc52869d7de7bb45" id="r_a9c3c90a42ca88873fc52869d7de7bb45"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a9c3c90a42ca88873fc52869d7de7bb45">set_vertex_shader</a> (const vertex_shader &amp;vertex_shader) noexcept</td></tr>
 <tr class="memdesc:a9c3c90a42ca88873fc52869d7de7bb45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a vertex shader to the pipeline.  <br /></td></tr>
 <tr class="memitem:a120c730ff285a7dae8bbe9fd67d04e70" id="r_a120c730ff285a7dae8bbe9fd67d04e70"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a120c730ff285a7dae8bbe9fd67d04e70">set_fragment_shader</a> (const fragment_shader &amp;fragment_shader) noexcept</td></tr>
 <tr class="memdesc:a120c730ff285a7dae8bbe9fd67d04e70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a fragment shader to the pipeline.  <br /></td></tr>
-<tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">State</div></td></tr>
+<tr id="pub-methods-4" class="groupHeader"><td colspan="2"><div class="groupHeader">State</div></td></tr>
 <tr class="memitem:a766a7c7c4af6936914c49f1a2508b3e2" id="r_a766a7c7c4af6936914c49f1a2508b3e2"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a766a7c7c4af6936914c49f1a2508b3e2">valid</a> () const noexcept</td></tr>
 <tr class="memdesc:a766a7c7c4af6936914c49f1a2508b3e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the pipeline is in a valid state.  <br /></td></tr>
-<tr id="pub-methods-4" class="groupHeader"><td colspan="2"><div class="groupHeader">Label</div></td></tr>
+<tr id="pub-methods-5" class="groupHeader"><td colspan="2"><div class="groupHeader">Label</div></td></tr>
 <tr class="memitem:a179cf5e3db62e06ef4b5008225f6edd7" id="r_a179cf5e3db62e06ef4b5008225f6edd7"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a179cf5e3db62e06ef4b5008225f6edd7">set_label</a> (std::string_view label) noexcept</td></tr>
 <tr class="memdesc:a179cf5e3db62e06ef4b5008225f6edd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the debug label of the pipeline.  <br /></td></tr>
 <tr class="memitem:aa02b2ac41290285c00cf10d4bcb2742f" id="r_aa02b2ac41290285c00cf10d4bcb2742f"><td class="memItemLeft">std::string&#160;</td><td class="memItemRight"><a class="el" href="#aa02b2ac41290285c00cf10d4bcb2742f">label</a> () const</td></tr>
@@ -167,7 +176,7 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a2c1a29e9b8881a3f8f3df86089afffcd" name="a2c1a29e9b8881a3f8f3df86089afffcd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2c1a29e9b8881a3f8f3df86089afffcd">&#9670;&#160;</a></span>shader_pipeline() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c1a29e9b8881a3f8f3df86089afffcd">&#9670;&#160;</a></span>shader_pipeline() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -199,8 +208,68 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ac63b6cf5a5ff6403715eb454a0fe260a" name="ac63b6cf5a5ff6403715eb454a0fe260a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac63b6cf5a5ff6403715eb454a0fe260a">&#9670;&#160;</a></span>shader_pipeline() <span class="overload">[2/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tr::shader_pipeline::shader_pipeline </td>
+          <td>(</td>
+          <td class="paramtype">const shader_pipeline &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Shader pipelines are not copyable. </p>
+
+</div>
+</div>
+<a id="adc277c4ceaeaaccd464fd3d81d250a84" name="adc277c4ceaeaaccd464fd3d81d250a84"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc277c4ceaeaaccd464fd3d81d250a84">&#9670;&#160;</a></span>shader_pipeline() <span class="overload">[3/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tr::shader_pipeline::shader_pipeline </td>
+          <td>(</td>
+          <td class="paramtype">shader_pipeline &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel default">default</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Moves a shader pipeline. </p>
+<p><span class="tt">rhs</span> is left in an invalid state after the move as per the class description. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rhs</td><td>Shader pipeline to move. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a792db28db324240b0205b90f0dd056f8" name="a792db28db324240b0205b90f0dd056f8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a792db28db324240b0205b90f0dd056f8">&#9670;&#160;</a></span>shader_pipeline() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a792db28db324240b0205b90f0dd056f8">&#9670;&#160;</a></span>shader_pipeline() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -246,6 +315,67 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="af9191d577eee474334ed10d25f76a10d" name="af9191d577eee474334ed10d25f76a10d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af9191d577eee474334ed10d25f76a10d">&#9670;&#160;</a></span>operator=() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a2c1a29e9b8881a3f8f3df86089afffcd">shader_pipeline</a> &amp; tr::shader_pipeline::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="#a2c1a29e9b8881a3f8f3df86089afffcd">shader_pipeline</a> &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Shader pipelines are not copyable. </p>
+
+</div>
+</div>
+<a id="adf88da7f7902c728758ed6eb34974b59" name="adf88da7f7902c728758ed6eb34974b59"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adf88da7f7902c728758ed6eb34974b59">&#9670;&#160;</a></span>operator=() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a2c1a29e9b8881a3f8f3df86089afffcd">shader_pipeline</a> &amp; tr::shader_pipeline::operator= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#a2c1a29e9b8881a3f8f3df86089afffcd">shader_pipeline</a> &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel default">default</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Moves a shader pipeline. </p>
+<p><span class="tt">rhs</span> is left in an invalid state after the move as per the class description. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rhs</td><td>Shader pipeline to move. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Reference to <span class="tt">*this</span>. </dd></dl>
+
+</div>
+</div>
 <a id="a3585f674e324682087b683af7ee624f6" name="a3585f674e324682087b683af7ee624f6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3585f674e324682087b683af7ee624f6">&#9670;&#160;</a></span>context()</h2>
 

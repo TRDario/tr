@@ -1,8 +1,5 @@
 var ttfont_8hpp =
 [
-    [ "tr::ttfont_load_error", "classtr_1_1ttfont__load__error.html", "classtr_1_1ttfont__load__error" ],
-    [ "tr::ttfont_render_error", "classtr_1_1ttfont__render__error.html", "classtr_1_1ttfont__render__error" ],
-    [ "tr::ttfont_error", "classtr_1_1ttfont__error.html", "classtr_1_1ttfont__error" ],
     [ "tr::glyph_metrics", "structtr_1_1glyph__metrics.html", "structtr_1_1glyph__metrics" ],
     [ "tr::ttf_measure_result", "structtr_1_1ttf__measure__result.html", "structtr_1_1ttf__measure__result" ],
     [ "tr::ttfont", "classtr_1_1ttfont.html", "classtr_1_1ttfont" ],

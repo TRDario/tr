@@ -1,6 +1,10 @@
 var classtr_1_1shader__buffer =
 [
     [ "shader_buffer", "classtr_1_1shader__buffer.html#afccf35fd6c51b42d2e346a174a7ad214", null ],
+    [ "shader_buffer", "classtr_1_1shader__buffer.html#a01898ee4592638ce4c6c21250f930c11", null ],
+    [ "shader_buffer", "classtr_1_1shader__buffer.html#ab82973085e2c3e6569cf8769abd3f10c", null ],
+    [ "operator=", "classtr_1_1shader__buffer.html#a5feb3d8b9ea63832575b1106e3ab128f", null ],
+    [ "operator=", "classtr_1_1shader__buffer.html#a2e6d1e9782f46feeedd08c6903a934ac", null ],
     [ "array_size", "classtr_1_1shader__buffer.html#ac2a7227e5b4c0a4c1ab7a71aeec74403", null ],
     [ "array_capacity", "classtr_1_1shader__buffer.html#a841cf4694b341ccd9803bfd3f73bf334", null ],
     [ "set_header", "classtr_1_1shader__buffer.html#a13be5ba1294e34100533369d5f75eac9", null ],

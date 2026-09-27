@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['parse_5fresult_0',['parse_result',['../structtr_1_1localization__map_1_1parser_1_1parse__result.html',1,'tr::localization_map::parser']]],
+  ['parse_5flocalization_5fscript_5fresult_0',['parse_localization_script_result',['../structtr_1_1parse__localization__script__result.html',1,'tr']]],
   ['path_5ferror_1',['path_error',['../classtr_1_1path__error.html',1,'tr']]],
   ['ping_5fpong_5ftarget_2',['ping_pong_target',['../classtr_1_1ping__pong__target.html',1,'tr']]],
   ['pixel_5fiterator_3',['pixel_iterator',['../classtr_1_1pixel__iterator.html',1,'tr']]],

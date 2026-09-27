@@ -1,6 +1,5 @@
 var shader_8hpp =
 [
-    [ "tr::shader_load_error", "classtr_1_1shader__load__error.html", "classtr_1_1shader__load__error" ],
     [ "tr::shader", "classtr_1_1shader.html", "classtr_1_1shader" ],
     [ "tr::vertex_shader", "classtr_1_1vertex__shader.html", "classtr_1_1vertex__shader" ],
     [ "tr::fragment_shader", "classtr_1_1fragment__shader.html", "classtr_1_1fragment__shader" ],

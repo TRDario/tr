@@ -179,11 +179,11 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('vector_8hpp_so
 <div class="foldopen" id="foldopen00073" data-start="{" data-end="}">
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno"><a class="line" href="namespacetr.html#a1f9751d26f9e4e53fb6fe2b00ca4a80c">   73</a></span>    [[nodiscard]] <span class="keyword">constexpr</span> glm::vec&lt;Dimensions, float&gt; <a class="code hl_function" href="namespacetr.html#a1f9751d26f9e4e53fb6fe2b00ca4a80c">inverse</a>(glm::vec&lt;Dimensions, Element&gt; v) <span class="keyword">noexcept</span></div>
 <div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    {</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        glm::vec&lt;Dimensions, float&gt; result;</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        glm::vec&lt;Dimensions, float&gt; <a class="code hl_class" href="classtr_1_1result.html">result</a>;</div>
 <div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; Dimensions; ++i) {</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>            result[i] = <span class="keyword">static_cast&lt;</span><span class="keywordtype">float</span><span class="keyword">&gt;</span>(1.0f / v[i]);</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>            <a class="code hl_class" href="classtr_1_1result.html">result</a>[i] = <span class="keyword">static_cast&lt;</span><span class="keywordtype">float</span><span class="keyword">&gt;</span>(1.0f / v[i]);</div>
 <div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        }</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        <span class="keywordflow">return</span> result;</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        <span class="keywordflow">return</span> <a class="code hl_class" href="classtr_1_1result.html">result</a>;</div>
 <div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    }</div>
 </div>
 <div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span></div>
@@ -198,6 +198,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('vector_8hpp_so
 <div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>} <span class="comment">// namespace tr</span></div>
 <div class="ttc" id="aangle_8hpp_html"><div class="ttname"><a href="angle_8hpp.html">angle.hpp</a></div><div class="ttdoc">Provides tr::angle, as well as related functions and literals.</div></div>
 <div class="ttc" id="aclasstr_1_1angle_html"><div class="ttname"><a href="classtr_1_1angle.html">tr::angle</a></div><div class="ttdoc">Abstract angle datatype.</div><div class="ttdef"><b>Definition</b> angle.hpp:16</div></div>
+<div class="ttc" id="aclasstr_1_1result_html"><div class="ttname"><a href="classtr_1_1result.html">tr::result</a></div><div class="ttdef"><b>Definition</b> result.hpp:28</div></div>
 <div class="ttc" id="amacro_8hpp_html_a2ba7b799c46dfa140bb14ccb2ee4bbcc"><div class="ttname"><a href="macro_8hpp.html#a2ba7b799c46dfa140bb14ccb2ee4bbcc">TR_UNREACHABLE</a></div><div class="ttdeci">#define TR_UNREACHABLE</div><div class="ttdoc">Marks a code segment as unreachable.</div><div class="ttdef"><b>Definition</b> macro.hpp:25</div></div>
 <div class="ttc" id="anamespacetr_html"><div class="ttname"><a href="namespacetr.html">tr</a></div><div class="ttdoc">Namespace containing all tr functionality.</div><div class="ttdef"><b>Definition</b> audio_buffer.hpp:10</div></div>
 <div class="ttc" id="anamespacetr_html_a07bcd5cd18dd64e81be4b4c24b1beaea"><div class="ttname"><a href="namespacetr.html#a07bcd5cd18dd64e81be4b4c24b1beaea">tr::sqr</a></div><div class="ttdeci">constexpr auto sqr(const T &amp;v) noexcept(noexcept(v *v))</div><div class="ttdoc">Squaring operation.</div><div class="ttdef"><b>Definition</b> math.hpp:113</div></div>

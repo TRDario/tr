@@ -128,10 +128,15 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1dyn
 </div><!--header-->
 <div class="contents">
 
-<p>Dynamic index buffer class.  
+<p>Dynamic index buffer.  
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Dynamic index buffer class. </p>
+<div class="textblock"><p>Dynamic index buffer. </p>
+<p><span class="tt"><a class="el" href="classtr_1_1dynamic__index__buffer.html" title="Dynamic index buffer.">tr::dynamic_index_buffer</a></span> represents a graphics buffer used to store index data. Unlike <span class="tt"><a class="el" href="classtr_1_1static__index__buffer.html" title="Static, immutable index buffer.">tr::static_index_buffer</a></span>, it allows for dynamic resizing and updating of its contents, making it suitable for scenarios where the index data changes often at runtime.</p>
+<p>Strictly speaking, instances of <span class="tt"><a class="el" href="classtr_1_1dynamic__index__buffer.html" title="Dynamic index buffer.">tr::dynamic_index_buffer</a></span> are only containers for these underlying buffer objects. This means, for example, that setting a dynamic index buffer on a graphics context does not set the literal <span class="tt"><a class="el" href="classtr_1_1dynamic__index__buffer.html" title="Dynamic index buffer.">tr::dynamic_index_buffer</a></span> object at a specific location in memory, but rather the value it contains. If the value is moved to a different instance of <span class="tt"><a class="el" href="classtr_1_1dynamic__index__buffer.html" title="Dynamic index buffer.">tr::dynamic_index_buffer</a></span>, that value will still be set on the context. If the instance is overriden with a new value, the old value is destroyed and the graphics context will no longer have a set index buffer.</p>
+<p>Every instance of <span class="tt"><a class="el" href="classtr_1_1dynamic__index__buffer.html" title="Dynamic index buffer.">tr::dynamic_index_buffer</a></span> is associated with a graphics context and cannot outlive its parent context.</p>
+<p>Moved-from instances of <span class="tt"><a class="el" href="classtr_1_1dynamic__index__buffer.html" title="Dynamic index buffer.">tr::dynamic_index_buffer</a></span> are left in a special 'invalid' state. Invalid <span class="tt"><a class="el" href="classtr_1_1dynamic__index__buffer.html" title="Dynamic index buffer.">tr::dynamic_index_buffer</a></span> instances may not be interacted with besides moving a new value into them and checking for validity using <span class="tt"><a class="el" href="#ab3a7924563ab5b21ec88e5004dd17d6a" title="Gets whether the buffer is in a valid state.">valid()</a></span>.</p>
+<p><span class="tt"><a class="el" href="classtr_1_1dynamic__index__buffer.html" title="Dynamic index buffer.">tr::dynamic_index_buffer</a></span> instances may be labeled and are formattable. Example format output: <span class="tt">"My index buffer" (OpenGL ID: 5)</span>. </p>
 </div><div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Inheritance diagram for tr::dynamic_index_buffer:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
 </div>
@@ -145,14 +150,26 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1dyn
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Size</div></td></tr>
+<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors and destructors</div></td></tr>
+<tr class="memitem:aa144859780f0f7b705d36ec3edc28175" id="r_aa144859780f0f7b705d36ec3edc28175"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#aa144859780f0f7b705d36ec3edc28175">dynamic_index_buffer</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context) noexcept</td></tr>
+<tr class="memdesc:aa144859780f0f7b705d36ec3edc28175"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an empty dynamic index buffer.  <br /></td></tr>
+<tr class="memitem:a6a7765b8b6abfcaac37b9e221a9bdabc" id="r_a6a7765b8b6abfcaac37b9e221a9bdabc"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a6a7765b8b6abfcaac37b9e221a9bdabc">dynamic_index_buffer</a> (const dynamic_index_buffer &amp;)=delete</td></tr>
+<tr class="memdesc:a6a7765b8b6abfcaac37b9e221a9bdabc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dynamic index buffers are not copyable.  <br /></td></tr>
+<tr class="memitem:ad5bcb41c5dfa1ebf4136247bb31e08b0" id="r_ad5bcb41c5dfa1ebf4136247bb31e08b0"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ad5bcb41c5dfa1ebf4136247bb31e08b0">dynamic_index_buffer</a> (dynamic_index_buffer &amp;&amp;rhs) noexcept=default</td></tr>
+<tr class="memdesc:ad5bcb41c5dfa1ebf4136247bb31e08b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves a dynamic index buffer.  <br /></td></tr>
+<tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Assignment operators</div></td></tr>
+<tr class="memitem:aae0b96ecf98563375a7d33e25b8c3228" id="r_aae0b96ecf98563375a7d33e25b8c3228"><td class="memItemLeft"><a class="el" href="#aa144859780f0f7b705d36ec3edc28175">dynamic_index_buffer</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#aae0b96ecf98563375a7d33e25b8c3228">operator=</a> (const <a class="el" href="#aa144859780f0f7b705d36ec3edc28175">dynamic_index_buffer</a> &amp;)=delete</td></tr>
+<tr class="memdesc:aae0b96ecf98563375a7d33e25b8c3228"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dynamic index buffers are not copyable.  <br /></td></tr>
+<tr class="memitem:a34afbde9b56938fc68e7d53780ced979" id="r_a34afbde9b56938fc68e7d53780ced979"><td class="memItemLeft"><a class="el" href="#aa144859780f0f7b705d36ec3edc28175">dynamic_index_buffer</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a34afbde9b56938fc68e7d53780ced979">operator=</a> (<a class="el" href="#aa144859780f0f7b705d36ec3edc28175">dynamic_index_buffer</a> &amp;&amp;rhs) noexcept=default</td></tr>
+<tr class="memdesc:a34afbde9b56938fc68e7d53780ced979"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves a dynamic index buffer.  <br /></td></tr>
+<tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Size</div></td></tr>
 <tr class="memitem:a669c2323ac49903a68de5d3420796693" id="r_a669c2323ac49903a68de5d3420796693"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a669c2323ac49903a68de5d3420796693">empty</a> () const noexcept</td></tr>
 <tr class="memdesc:a669c2323ac49903a68de5d3420796693"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the index buffer is empty.  <br /></td></tr>
 <tr class="memitem:a7842154c538bfef5068c92524166e5a1" id="r_a7842154c538bfef5068c92524166e5a1"><td class="memItemLeft"><a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a>&#160;</td><td class="memItemRight"><a class="el" href="#a7842154c538bfef5068c92524166e5a1">size</a> () const noexcept</td></tr>
 <tr class="memdesc:a7842154c538bfef5068c92524166e5a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the size of the index buffer contents.  <br /></td></tr>
 <tr class="memitem:a9ce04c20c0611ce3d9844ebba61f16d1" id="r_a9ce04c20c0611ce3d9844ebba61f16d1"><td class="memItemLeft"><a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a>&#160;</td><td class="memItemRight"><a class="el" href="#a9ce04c20c0611ce3d9844ebba61f16d1">capacity</a> () const noexcept</td></tr>
 <tr class="memdesc:a9ce04c20c0611ce3d9844ebba61f16d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the capacity of the index buffer.  <br /></td></tr>
-<tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Setting</div></td></tr>
+<tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Setting</div></td></tr>
 <tr class="memitem:af7d4cea230533b776d6e81670c67dfa8" id="r_af7d4cea230533b776d6e81670c67dfa8"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#af7d4cea230533b776d6e81670c67dfa8">clear</a> () noexcept</td></tr>
 <tr class="memdesc:af7d4cea230533b776d6e81670c67dfa8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the size of the index buffer to 0.  <br /></td></tr>
 <tr class="memitem:aef998aadc095ecad7de16b301b645268" id="r_aef998aadc095ecad7de16b301b645268"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aef998aadc095ecad7de16b301b645268">resize</a> (<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> size)</td></tr>
@@ -163,22 +180,174 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a4c94b17221b0bb84769d50cc662676d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the contents of the buffer, potentially reallocating in the process.  <br /></td></tr>
 <tr class="memitem:aa54d57ec981fc828abfae51403c88c49" id="r_aa54d57ec981fc828abfae51403c88c49"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aa54d57ec981fc828abfae51403c88c49">set_region</a> (<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> offset, std::span&lt; const <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a6991e9925796abf87530c4ec24b82bb8">u16</a> &gt; data) noexcept</td></tr>
 <tr class="memdesc:aa54d57ec981fc828abfae51403c88c49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a region of the buffer.  <br /></td></tr>
-<tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
-<tr class="memitem:a8d312e4b4a5a4fc7225fe88162bdd722" id="r_a8d312e4b4a5a4fc7225fe88162bdd722"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a8d312e4b4a5a4fc7225fe88162bdd722">graphics_buffer</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context) noexcept</td></tr>
-<tr class="memdesc:a8d312e4b4a5a4fc7225fe88162bdd722"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an empty buffer.  <br /></td></tr>
-<tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Context</div></td></tr>
+<tr id="pub-methods-4" class="groupHeader"><td colspan="2"><div class="groupHeader">Context</div></td></tr>
 <tr class="memitem:a2c5c352444ab4d10ed3add4a8cd03f9a" id="r_a2c5c352444ab4d10ed3add4a8cd03f9a"><td class="memItemLeft"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a2c5c352444ab4d10ed3add4a8cd03f9a">context</a> () const noexcept</td></tr>
 <tr class="memdesc:a2c5c352444ab4d10ed3add4a8cd03f9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a reference to the graphics context the buffer is on.  <br /></td></tr>
-<tr id="pub-methods-4" class="groupHeader"><td colspan="2"><div class="groupHeader">State</div></td></tr>
+<tr id="pub-methods-5" class="groupHeader"><td colspan="2"><div class="groupHeader">State</div></td></tr>
 <tr class="memitem:ab3a7924563ab5b21ec88e5004dd17d6a" id="r_ab3a7924563ab5b21ec88e5004dd17d6a"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#ab3a7924563ab5b21ec88e5004dd17d6a">valid</a> () const noexcept</td></tr>
 <tr class="memdesc:ab3a7924563ab5b21ec88e5004dd17d6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the buffer is in a valid state.  <br /></td></tr>
-<tr id="pub-methods-5" class="groupHeader"><td colspan="2"><div class="groupHeader">Label</div></td></tr>
+<tr id="pub-methods-6" class="groupHeader"><td colspan="2"><div class="groupHeader">Label</div></td></tr>
 <tr class="memitem:ada4364c0295af892b869f2be3ed62777" id="r_ada4364c0295af892b869f2be3ed62777"><td class="memItemLeft">std::string&#160;</td><td class="memItemRight"><a class="el" href="#ada4364c0295af892b869f2be3ed62777">label</a> () const</td></tr>
 <tr class="memdesc:ada4364c0295af892b869f2be3ed62777"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the label of the buffer.  <br /></td></tr>
 <tr class="memitem:ab5e025d8fb771727e580f881a1e65fac" id="r_ab5e025d8fb771727e580f881a1e65fac"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ab5e025d8fb771727e580f881a1e65fac">set_label</a> (std::string_view label) noexcept</td></tr>
 <tr class="memdesc:ab5e025d8fb771727e580f881a1e65fac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the label of the buffer.  <br /></td></tr>
 </table>
+<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="aa144859780f0f7b705d36ec3edc28175" name="aa144859780f0f7b705d36ec3edc28175"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa144859780f0f7b705d36ec3edc28175">&#9670;&#160;</a></span>dynamic_index_buffer() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tr::dynamic_index_buffer::dynamic_index_buffer </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>context</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel explicit">explicit</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates an empty dynamic index buffer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">context</td><td>Graphics context to create the buffer on. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a6a7765b8b6abfcaac37b9e221a9bdabc" name="a6a7765b8b6abfcaac37b9e221a9bdabc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a7765b8b6abfcaac37b9e221a9bdabc">&#9670;&#160;</a></span>dynamic_index_buffer() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tr::dynamic_index_buffer::dynamic_index_buffer </td>
+          <td>(</td>
+          <td class="paramtype">const dynamic_index_buffer &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Dynamic index buffers are not copyable. </p>
+
+</div>
+</div>
+<a id="ad5bcb41c5dfa1ebf4136247bb31e08b0" name="ad5bcb41c5dfa1ebf4136247bb31e08b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad5bcb41c5dfa1ebf4136247bb31e08b0">&#9670;&#160;</a></span>dynamic_index_buffer() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tr::dynamic_index_buffer::dynamic_index_buffer </td>
+          <td>(</td>
+          <td class="paramtype">dynamic_index_buffer &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel default">default</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Moves a dynamic index buffer. </p>
+<p><span class="tt">rhs</span> is left in an invalid state after the move as per the class description. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rhs</td><td>Dynamic index buffer to move. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="aae0b96ecf98563375a7d33e25b8c3228" name="aae0b96ecf98563375a7d33e25b8c3228"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae0b96ecf98563375a7d33e25b8c3228">&#9670;&#160;</a></span>operator=() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#aa144859780f0f7b705d36ec3edc28175">dynamic_index_buffer</a> &amp; tr::dynamic_index_buffer::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="#aa144859780f0f7b705d36ec3edc28175">dynamic_index_buffer</a> &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Dynamic index buffers are not copyable. </p>
+
+</div>
+</div>
+<a id="a34afbde9b56938fc68e7d53780ced979" name="a34afbde9b56938fc68e7d53780ced979"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a34afbde9b56938fc68e7d53780ced979">&#9670;&#160;</a></span>operator=() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#aa144859780f0f7b705d36ec3edc28175">dynamic_index_buffer</a> &amp; tr::dynamic_index_buffer::operator= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#aa144859780f0f7b705d36ec3edc28175">dynamic_index_buffer</a> &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel default">default</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Moves a dynamic index buffer. </p>
+<p><span class="tt">rhs</span> is left in an invalid state after the move as per the class description. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rhs</td><td>Dynamic index buffer to move. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Reference to <span class="tt">*this</span>. </dd></dl>
+
+</div>
+</div>
 <a id="a669c2323ac49903a68de5d3420796693" name="a669c2323ac49903a68de5d3420796693"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a669c2323ac49903a68de5d3420796693">&#9670;&#160;</a></span>empty()</h2>
 
@@ -401,39 +570,6 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section pre"><dt>Precondition</dt><dd><span class="tt">offset + data.size()</span> must be less than or equal to the size of the buffer. </dd></dl>
-
-</div>
-</div>
-<a id="a8d312e4b4a5a4fc7225fe88162bdd722" name="a8d312e4b4a5a4fc7225fe88162bdd722"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8d312e4b4a5a4fc7225fe88162bdd722">&#9670;&#160;</a></span>graphics_buffer()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classtr_1_1graphics__buffer.html#a8d312e4b4a5a4fc7225fe88162bdd722">tr::graphics_buffer::graphics_buffer</a> </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>context</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel explicit">explicit</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Constructs an empty buffer. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">context</td><td>Graphics context to create the buffer on. </td></tr>
-  </table>
-  </dd>
-</dl>
 
 </div>
 </div>

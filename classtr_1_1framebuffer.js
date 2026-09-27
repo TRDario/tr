@@ -13,6 +13,10 @@ var classtr_1_1framebuffer =
       [ "stencil", "classtr_1_1framebuffer.html#a1c95ac79da562291ef7df23708286ab0a667f218c5ed2c9cf25734500472e7c4a", null ]
     ] ],
     [ "framebuffer", "classtr_1_1framebuffer.html#a38aa600bf2744ce6ec43a977013ba6c1", null ],
+    [ "framebuffer", "classtr_1_1framebuffer.html#a697e324a714aac93d9ef4d84e5e9c77b", null ],
+    [ "framebuffer", "classtr_1_1framebuffer.html#a077af05724e4b34877da7aae8d0797da", null ],
+    [ "operator=", "classtr_1_1framebuffer.html#aa62d160111698cc6d7b8721026b2daf2", null ],
+    [ "operator=", "classtr_1_1framebuffer.html#aed6f4f7482ffeb5458d3cc196b0cca06", null ],
     [ "context", "classtr_1_1framebuffer.html#af9301b17ab0ad50658a86b10afb39c45", null ],
     [ "attach", "classtr_1_1framebuffer.html#a727364c010b0625db73f97df29982cca", null ],
     [ "detach", "classtr_1_1framebuffer.html#ab88cc4218f24de1cb985d5acc20cd652", null ],

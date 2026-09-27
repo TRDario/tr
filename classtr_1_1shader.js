@@ -1,5 +1,7 @@
 var classtr_1_1shader =
 [
+    [ "operator=", "classtr_1_1shader.html#a93300faa1eee8e2ca3df656f33a0ffb3", null ],
+    [ "operator=", "classtr_1_1shader.html#a0bf5e6ef498bba7466e9616d63a68083", null ],
     [ "context", "classtr_1_1shader.html#aed161fd903dcab2771cbbe17e1d9fa12", null ],
     [ "set_uniform", "classtr_1_1shader.html#a51c6f7ea2d0ad2a008f2aecf0342a6a3", null ],
     [ "set_uniform", "classtr_1_1shader.html#a7067ec594b9a41ef610d4a7ca71b0ee3", null ],

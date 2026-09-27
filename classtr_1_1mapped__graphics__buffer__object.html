@@ -128,21 +128,33 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1map
 </div><!--header-->
 <div class="contents">
 
-<p>Mapped graphics buffer object.  
+<p>Map of a graphics buffer object.  
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename Object&gt;<br />
-class tr::mapped_graphics_buffer_object&lt; Object &gt;</div><p>Mapped graphics buffer object. </p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
+class tr::mapped_graphics_buffer_object&lt; Object &gt;</div><p>Map of a graphics buffer object. </p>
+<p><span class="tt"><a class="el" href="classtr_1_1mapped__graphics__buffer__object.html" title="Map of a graphics buffer object.">tr::mapped_graphics_buffer_object</a></span> represents the CPU mapping of a graphics buffer object and models access to it as such. The object is automatically unmapped when the map is destroyed.</p>
+<p>Every instance of <span class="tt"><a class="el" href="classtr_1_1mapped__graphics__buffer__object.html" title="Map of a graphics buffer object.">tr::mapped_graphics_buffer_object</a></span> is associated with a graphics context, as well as with a buffer, and cannot outlive either.</p>
+<p>Moved-from instances of <span class="tt"><a class="el" href="classtr_1_1mapped__graphics__buffer__object.html" title="Map of a graphics buffer object.">tr::mapped_graphics_buffer_object</a></span> are left in a special 'invalid' state. Invalid <span class="tt"><a class="el" href="classtr_1_1mapped__graphics__buffer__object.html" title="Map of a graphics buffer object.">tr::mapped_graphics_buffer_object</a></span> instances may not be interacted with besides moving a new value into them. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">Object</td><td>Object type contained in the map. </td></tr>
+    <tr><td class="paramname">Object</td><td>Type of the mapped object. </td></tr>
   </table>
   </dd>
 </dl>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Access</div></td></tr>
+<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors and destructors</div></td></tr>
+<tr class="memitem:a720c5181e9dfda9184d6692d932abdc8" id="r_a720c5181e9dfda9184d6692d932abdc8"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a720c5181e9dfda9184d6692d932abdc8">mapped_graphics_buffer_object</a> (const mapped_graphics_buffer_object &amp;)=delete</td></tr>
+<tr class="memdesc:a720c5181e9dfda9184d6692d932abdc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Graphics buffer object maps are not copyable.  <br /></td></tr>
+<tr class="memitem:a9a9da413feae36f75c5d83fd792b154d" id="r_a9a9da413feae36f75c5d83fd792b154d"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a9a9da413feae36f75c5d83fd792b154d">mapped_graphics_buffer_object</a> (mapped_graphics_buffer_object &amp;&amp;rhs)=default</td></tr>
+<tr class="memdesc:a9a9da413feae36f75c5d83fd792b154d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves a graphics buffer object map.  <br /></td></tr>
+<tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Assignment operators</div></td></tr>
+<tr class="memitem:ac9982f7ab8413531f1b8ca6ba1efeaf5" id="r_ac9982f7ab8413531f1b8ca6ba1efeaf5"><td class="memItemLeft"><a class="el" href="#a720c5181e9dfda9184d6692d932abdc8">mapped_graphics_buffer_object</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ac9982f7ab8413531f1b8ca6ba1efeaf5">operator=</a> (const <a class="el" href="#a720c5181e9dfda9184d6692d932abdc8">mapped_graphics_buffer_object</a> &amp;)=delete</td></tr>
+<tr class="memdesc:ac9982f7ab8413531f1b8ca6ba1efeaf5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Graphics buffer object maps are not copyable.  <br /></td></tr>
+<tr class="memitem:a761cd6cad0970c1cf954dfa888ec4834" id="r_a761cd6cad0970c1cf954dfa888ec4834"><td class="memItemLeft"><a class="el" href="#a720c5181e9dfda9184d6692d932abdc8">mapped_graphics_buffer_object</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a761cd6cad0970c1cf954dfa888ec4834">operator=</a> (<a class="el" href="#a720c5181e9dfda9184d6692d932abdc8">mapped_graphics_buffer_object</a> &amp;&amp;rhs)=default</td></tr>
+<tr class="memdesc:a761cd6cad0970c1cf954dfa888ec4834"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves a graphics buffer object map.  <br /></td></tr>
+<tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Access</div></td></tr>
 <tr class="memitem:a38dffc4dbc196d444af13e31098e8ea9" id="r_a38dffc4dbc196d444af13e31098e8ea9"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a38dffc4dbc196d444af13e31098e8ea9">operator Object &amp;</a> () const noexcept</td></tr>
 <tr class="memdesc:a38dffc4dbc196d444af13e31098e8ea9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a reference to the object.  <br /></td></tr>
 <tr class="memitem:a30574abb2fcac402296e7c4c2c138f9d" id="r_a30574abb2fcac402296e7c4c2c138f9d"><td class="memItemLeft">Object &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a30574abb2fcac402296e7c4c2c138f9d">get</a> () const noexcept</td></tr>
@@ -155,7 +167,137 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a93c9374f3d3368d10bd1daf4ccc4b1f0 template"><td class="memItemLeft">Object &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a93c9374f3d3368d10bd1daf4ccc4b1f0">operator=</a> (ObjectAssignable &amp;&amp;rhs) const noexcept(std::is_nothrow_assignable_v&lt; Object, ObjectAssignable &gt;)</td></tr>
 <tr class="memdesc:a93c9374f3d3368d10bd1daf4ccc4b1f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assigns the object.  <br /></td></tr>
 </table>
+<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a720c5181e9dfda9184d6692d932abdc8" name="a720c5181e9dfda9184d6692d932abdc8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a720c5181e9dfda9184d6692d932abdc8">&#9670;&#160;</a></span>mapped_graphics_buffer_object() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Object&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classtr_1_1mapped__graphics__buffer__object.html">tr::mapped_graphics_buffer_object</a>&lt; Object &gt;::mapped_graphics_buffer_object </td>
+          <td>(</td>
+          <td class="paramtype">const mapped_graphics_buffer_object&lt; Object &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Graphics buffer object maps are not copyable. </p>
+
+</div>
+</div>
+<a id="a9a9da413feae36f75c5d83fd792b154d" name="a9a9da413feae36f75c5d83fd792b154d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9a9da413feae36f75c5d83fd792b154d">&#9670;&#160;</a></span>mapped_graphics_buffer_object() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Object&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classtr_1_1mapped__graphics__buffer__object.html">tr::mapped_graphics_buffer_object</a>&lt; Object &gt;::mapped_graphics_buffer_object </td>
+          <td>(</td>
+          <td class="paramtype">mapped_graphics_buffer_object&lt; Object &gt; &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel default">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Moves a graphics buffer object map. </p>
+<p><span class="tt">rhs</span> is left in an invalid state after the move as per the class description. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rhs</td><td>Graphics buffer object map to move. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="ac9982f7ab8413531f1b8ca6ba1efeaf5" name="ac9982f7ab8413531f1b8ca6ba1efeaf5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac9982f7ab8413531f1b8ca6ba1efeaf5">&#9670;&#160;</a></span>operator=() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Object&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a720c5181e9dfda9184d6692d932abdc8">mapped_graphics_buffer_object</a> &amp; <a class="el" href="classtr_1_1mapped__graphics__buffer__object.html">tr::mapped_graphics_buffer_object</a>&lt; Object &gt;::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="#a720c5181e9dfda9184d6692d932abdc8">mapped_graphics_buffer_object</a>&lt; Object &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Graphics buffer object maps are not copyable. </p>
+
+</div>
+</div>
+<a id="a761cd6cad0970c1cf954dfa888ec4834" name="a761cd6cad0970c1cf954dfa888ec4834"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a761cd6cad0970c1cf954dfa888ec4834">&#9670;&#160;</a></span>operator=() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Object&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a720c5181e9dfda9184d6692d932abdc8">mapped_graphics_buffer_object</a> &amp; <a class="el" href="classtr_1_1mapped__graphics__buffer__object.html">tr::mapped_graphics_buffer_object</a>&lt; Object &gt;::operator= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#a720c5181e9dfda9184d6692d932abdc8">mapped_graphics_buffer_object</a>&lt; Object &gt; &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel default">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Moves a graphics buffer object map. </p>
+<p><span class="tt">rhs</span> is left in an invalid state after the move as per the class description. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rhs</td><td>Graphics buffer object map to move. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Reference to <span class="tt">*this</span>. </dd></dl>
+
+</div>
+</div>
 <a id="a38dffc4dbc196d444af13e31098e8ea9" name="a38dffc4dbc196d444af13e31098e8ea9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a38dffc4dbc196d444af13e31098e8ea9">&#9670;&#160;</a></span>operator Object &amp;()</h2>
 
@@ -277,7 +419,7 @@ template&lt;typename Object&gt; </div>
 </div>
 </div>
 <a id="a93c9374f3d3368d10bd1daf4ccc4b1f0" name="a93c9374f3d3368d10bd1daf4ccc4b1f0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a93c9374f3d3368d10bd1daf4ccc4b1f0">&#9670;&#160;</a></span>operator=()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a93c9374f3d3368d10bd1daf4ccc4b1f0">&#9670;&#160;</a></span>operator=() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">

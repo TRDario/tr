@@ -1,6 +1,5 @@
 var cursor_8hpp =
 [
-    [ "tr::cursor_error", "classtr_1_1cursor__error.html", "classtr_1_1cursor__error" ],
     [ "tr::cursor", "classtr_1_1cursor.html", "classtr_1_1cursor" ],
     [ "tr::sys_cursor", "namespacetr.html#aa7a1fb973e2b89b37e78a95d4461171f", [
       [ "tr::sys_cursor::arrow", "namespacetr.html#aa7a1fb973e2b89b37e78a95d4461171fa9022a153e6190f10d9b57aa4232b8aea", null ],

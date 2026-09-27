@@ -178,10 +178,14 @@ Concepts</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Standard layout type. <br /></td></tr>
 <tr class="memitem:tr_3A_3Anothrow_5Fiterator" id="r_tr_3A_3Anothrow_5Fiterator"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concepttr_1_1nothrow__iterator.html">tr::nothrow_iterator</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterator that does not throw. <br /></td></tr>
+<tr class="memitem:tr_3A_3Ainput_5Fiterator_5Fto_5Fconvertible_5Fto" id="r_tr_3A_3Ainput_5Fiterator_5Fto_5Fconvertible_5Fto"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concepttr_1_1input__iterator__to__convertible__to.html">tr::input_iterator_to_convertible_to</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input iterator to a type convertible to <span class="tt">Element</span>. <br /></td></tr>
 <tr class="memitem:tr_3A_3Aforward_5Fiterator_5Fto_5Fconvertible_5Fto" id="r_tr_3A_3Aforward_5Fiterator_5Fto_5Fconvertible_5Fto"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concepttr_1_1forward__iterator__to__convertible__to.html">tr::forward_iterator_to_convertible_to</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forward iterator to a type convertible to <span class="tt">Element</span>. <br /></td></tr>
 <tr class="memitem:tr_3A_3Anothrow_5Fforward_5Fiterator_5Fto_5Fconvertible_5Fto" id="r_tr_3A_3Anothrow_5Fforward_5Fiterator_5Fto_5Fconvertible_5Fto"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concepttr_1_1nothrow__forward__iterator__to__convertible__to.html">tr::nothrow_forward_iterator_to_convertible_to</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forward iterator to a type convertible to <span class="tt">Element</span> that does not throw. <br /></td></tr>
+<tr class="memitem:tr_3A_3Ainput_5Frange_5Fto_5Fconvertible_5Fto" id="r_tr_3A_3Ainput_5Frange_5Fto_5Fconvertible_5Fto"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concepttr_1_1input__range__to__convertible__to.html">tr::input_range_to_convertible_to</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input range to a type convertible to <span class="tt">Element</span>. <br /></td></tr>
 <tr class="memitem:tr_3A_3Aforward_5Frange_5Fto_5Fconvertible_5Fto" id="r_tr_3A_3Aforward_5Frange_5Fto_5Fconvertible_5Fto"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concepttr_1_1forward__range__to__convertible__to.html">tr::forward_range_to_convertible_to</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forward range to a type convertible to <span class="tt">Element</span>. <br /></td></tr>
 <tr class="memitem:tr_3A_3Anothrow_5Fforward_5Frange_5Fto_5Fconvertible_5Fto" id="r_tr_3A_3Anothrow_5Fforward_5Frange_5Fto_5Fconvertible_5Fto"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concepttr_1_1nothrow__forward__range__to__convertible__to.html">tr::nothrow_forward_range_to_convertible_to</a></td></tr>
@@ -204,6 +208,8 @@ Concepts</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Borrowed mutable contiguous range whose elements are of a certain type. <br /></td></tr>
 <tr class="memitem:tr_3A_3Aone_5Fof" id="r_tr_3A_3Aone_5Fof"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concepttr_1_1one__of.html">tr::one_of</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type contained within a list of types. <br /></td></tr>
+<tr class="memitem:tr_3A_3Aall_5Fsame" id="r_tr_3A_3Aall_5Fsame"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concepttr_1_1all__same.html">tr::all_same</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Concept denoting a parameter pack of identical types. <br /></td></tr>
 <tr class="memitem:tr_3A_3Aformattable_5Fwith" id="r_tr_3A_3Aformattable_5Fwith"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concepttr_1_1formattable__with.html">tr::formattable_with</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Formattable type. <br /></td></tr>
 <tr class="memitem:tr_3A_3Aformattable" id="r_tr_3A_3Aformattable"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concepttr_1_1formattable.html">tr::formattable</a></td></tr>
@@ -216,6 +222,15 @@ Concepts</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Equality predicate compatible with a specific type. <br /></td></tr>
 <tr class="memitem:tr_3A_3Ahash_5Fkeylike" id="r_tr_3A_3Ahash_5Fkeylike"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concepttr_1_1hash__keylike.html">tr::hash_keylike</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">"Keylike" type compatible with a hash collection. <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-typedef-members" class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:adaa0b58ab1084f75317767afcd32400a" id="r_adaa0b58ab1084f75317767afcd32400a"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> I, typename... Ts&gt; </td></tr>
+<tr class="memitem:adaa0b58ab1084f75317767afcd32400a template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#adaa0b58ab1084f75317767afcd32400a">tr::pack_index_t</a> = std::tuple_element_t&lt;I, std::tuple&lt;Ts...&gt;&gt;</td></tr>
+<tr class="memdesc:adaa0b58ab1084f75317767afcd32400a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the type at offset <span class="tt">I</span> of parameter pack <span class="tt">Ts</span>.  <br /></td></tr>
+<tr class="memitem:a5784662797fb366b987ef06f9b72e062" id="r_a5784662797fb366b987ef06f9b72e062"><td class="memTemplParams" colspan="2">template&lt;typename... Ts&gt; </td></tr>
+<tr class="memitem:a5784662797fb366b987ef06f9b72e062 template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#a5784662797fb366b987ef06f9b72e062">tr::pack_front_t</a> = <a class="el" href="namespacetr.html#adaa0b58ab1084f75317767afcd32400a">pack_index_t</a>&lt;0, Ts...&gt;</td></tr>
+<tr class="memdesc:a5784662797fb366b987ef06f9b72e062"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the type at the front of of parameter pack <span class="tt">Ts</span>.  <br /></td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->

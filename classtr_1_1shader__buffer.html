@@ -128,12 +128,16 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1sha
 </div><!--header-->
 <div class="contents">
 
-<p>Shader buffer with a typed header and array.  
+<p>Typed shader-accessible GPU buffer.  
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename Header, typename ArrayElement&gt;<br />
-class tr::shader_buffer&lt; Header, ArrayElement &gt;</div><p>Shader buffer with a typed header and array. </p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
+class tr::shader_buffer&lt; Header, ArrayElement &gt;</div><p>Typed shader-accessible GPU buffer. </p>
+<p><span class="tt"><a class="el" href="classtr_1_1shader__buffer.html" title="Typed shader-accessible GPU buffer.">tr::shader_buffer</a></span> represents the typed equivalent of <span class="tt"><a class="el" href="classtr_1_1untyped__shader__buffer.html" title="Untyped shader-accessible GPU buffer.">tr::untyped_shader_buffer</a></span>, a graphics buffer used to store data for shader access. Shader buffers consist of a fixed-size header block and a resizable array block; the array block can be resized up to a maximum capacity. Shader buffers are allocated once and cannot be resized beyond their maximum capacity. Shader buffers can be set or mapped for direct access by the CPU; the map type of any given buffer is specified during construction and cannot be changed afterwards.</p>
+<p>Strictly speaking, instances of <span class="tt"><a class="el" href="classtr_1_1shader__buffer.html" title="Typed shader-accessible GPU buffer.">tr::shader_buffer</a></span> are only containers for these underlying buffer objects. This means, for example, that setting a shader buffer on a shader does not set the literal <span class="tt"><a class="el" href="classtr_1_1shader__buffer.html" title="Typed shader-accessible GPU buffer.">tr::shader_buffer</a></span> object at a specific location in memory, but rather the value it contains. If the value is moved to a different instance of <span class="tt"><a class="el" href="classtr_1_1shader__buffer.html" title="Typed shader-accessible GPU buffer.">tr::shader_buffer</a></span>, that value will still be set on the shader. If the instance is overriden with a new value, the old value is destroyed and the shader will no longer have a set buffer.</p>
+<p>Every instance of <span class="tt"><a class="el" href="classtr_1_1shader__buffer.html" title="Typed shader-accessible GPU buffer.">tr::shader_buffer</a></span> is associated with a graphics context and cannot outlive its parent context.</p>
+<p>Moved-from instances of <span class="tt"><a class="el" href="classtr_1_1shader__buffer.html" title="Typed shader-accessible GPU buffer.">tr::shader_buffer</a></span> are left in a special 'invalid' state. Invalid <span class="tt"><a class="el" href="classtr_1_1shader__buffer.html" title="Typed shader-accessible GPU buffer.">tr::shader_buffer</a></span> instances may not be interacted with besides moving a new value into them and checking for validity using <span class="tt"><a class="el" href="classtr_1_1untyped__shader__buffer.html#ab3a7924563ab5b21ec88e5004dd17d6a" title="Gets whether the buffer is in a valid state.">valid()</a></span>.</p>
+<p><span class="tt"><a class="el" href="classtr_1_1shader__buffer.html" title="Typed shader-accessible GPU buffer.">tr::shader_buffer</a></span> instances may be labeled and are formattable. Example format output: <span class="tt">"My buffer" (OpenGL ID: 5)</span>. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Header</td><td>Type of the header object stored at the front of the buffer. </td></tr>
     <tr><td class="paramname">ArrayElement</td><td>Type of the buffer dynamic array elements. </td></tr>
@@ -153,21 +157,30 @@ class tr::shader_buffer&lt; Header, ArrayElement &gt;</div><p>Shader buffer with
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
+<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors and destructors</div></td></tr>
 <tr class="memitem:afccf35fd6c51b42d2e346a174a7ad214" id="r_afccf35fd6c51b42d2e346a174a7ad214"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#afccf35fd6c51b42d2e346a174a7ad214">shader_buffer</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> capacity, <a class="el" href="namespacetr.html#a05bfa9f1eba3f81364c4ca5d89fedbcd">graphics_buffer_map_access</a> map_type=<a class="el" href="namespacetr.html#a05bfa9f1eba3f81364c4ca5d89fedbcda2629564984b808cf7e6cfc61a0286d69">graphics_buffer_map_access::write_only</a>)</td></tr>
-<tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Size</div></td></tr>
+<tr class="memitem:a01898ee4592638ce4c6c21250f930c11" id="r_a01898ee4592638ce4c6c21250f930c11"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a01898ee4592638ce4c6c21250f930c11">shader_buffer</a> (const shader_buffer &amp;)=delete</td></tr>
+<tr class="memdesc:a01898ee4592638ce4c6c21250f930c11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shader buffers are not copyable.  <br /></td></tr>
+<tr class="memitem:ab82973085e2c3e6569cf8769abd3f10c" id="r_ab82973085e2c3e6569cf8769abd3f10c"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ab82973085e2c3e6569cf8769abd3f10c">shader_buffer</a> (shader_buffer &amp;&amp;rhs) noexcept=default</td></tr>
+<tr class="memdesc:ab82973085e2c3e6569cf8769abd3f10c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves a shader buffer.  <br /></td></tr>
+<tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Assignment operators</div></td></tr>
+<tr class="memitem:a5feb3d8b9ea63832575b1106e3ab128f" id="r_a5feb3d8b9ea63832575b1106e3ab128f"><td class="memItemLeft"><a class="el" href="#afccf35fd6c51b42d2e346a174a7ad214">shader_buffer</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a5feb3d8b9ea63832575b1106e3ab128f">operator=</a> (const <a class="el" href="#afccf35fd6c51b42d2e346a174a7ad214">shader_buffer</a> &amp;)=delete</td></tr>
+<tr class="memdesc:a5feb3d8b9ea63832575b1106e3ab128f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shader buffers are not copyable.  <br /></td></tr>
+<tr class="memitem:a2e6d1e9782f46feeedd08c6903a934ac" id="r_a2e6d1e9782f46feeedd08c6903a934ac"><td class="memItemLeft"><a class="el" href="#afccf35fd6c51b42d2e346a174a7ad214">shader_buffer</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a2e6d1e9782f46feeedd08c6903a934ac">operator=</a> (<a class="el" href="#afccf35fd6c51b42d2e346a174a7ad214">shader_buffer</a> &amp;&amp;rhs) noexcept=default</td></tr>
+<tr class="memdesc:a2e6d1e9782f46feeedd08c6903a934ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves a shader buffer.  <br /></td></tr>
+<tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Size</div></td></tr>
 <tr class="memitem:ac2a7227e5b4c0a4c1ab7a71aeec74403" id="r_ac2a7227e5b4c0a4c1ab7a71aeec74403"><td class="memItemLeft"><a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a>&#160;</td><td class="memItemRight"><a class="el" href="#ac2a7227e5b4c0a4c1ab7a71aeec74403">array_size</a> () const noexcept</td></tr>
 <tr class="memdesc:ac2a7227e5b4c0a4c1ab7a71aeec74403"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the size of the dynamic array.  <br /></td></tr>
 <tr class="memitem:a841cf4694b341ccd9803bfd3f73bf334" id="r_a841cf4694b341ccd9803bfd3f73bf334"><td class="memItemLeft"><a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a>&#160;</td><td class="memItemRight"><a class="el" href="#a841cf4694b341ccd9803bfd3f73bf334">array_capacity</a> () const noexcept</td></tr>
 <tr class="memdesc:a841cf4694b341ccd9803bfd3f73bf334"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the maximum capacity of the dynamic array.  <br /></td></tr>
-<tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Setting</div></td></tr>
+<tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Setting</div></td></tr>
 <tr class="memitem:a13be5ba1294e34100533369d5f75eac9" id="r_a13be5ba1294e34100533369d5f75eac9"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a13be5ba1294e34100533369d5f75eac9">set_header</a> (const Header &amp;header) noexcept</td></tr>
 <tr class="memdesc:a13be5ba1294e34100533369d5f75eac9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the data of the header.  <br /></td></tr>
 <tr class="memitem:a19ea602dbcd7296473604e7644a97a40" id="r_a19ea602dbcd7296473604e7644a97a40"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a19ea602dbcd7296473604e7644a97a40">set_array</a> (std::span&lt; const ArrayElement &gt; data) noexcept</td></tr>
 <tr class="memdesc:a19ea602dbcd7296473604e7644a97a40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the data of the dynamic array.  <br /></td></tr>
 <tr class="memitem:ac88dcfbc76c73a3d4dc3a02eff1a0342" id="r_ac88dcfbc76c73a3d4dc3a02eff1a0342"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ac88dcfbc76c73a3d4dc3a02eff1a0342">resize_array</a> (<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> size) noexcept</td></tr>
 <tr class="memdesc:ac88dcfbc76c73a3d4dc3a02eff1a0342"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resizes the dynamic array.  <br /></td></tr>
-<tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Mapping</div></td></tr>
+<tr id="pub-methods-4" class="groupHeader"><td colspan="2"><div class="groupHeader">Mapping</div></td></tr>
 <tr class="memitem:aaf6f31d250c3f9d29bab112d4a1b7576" id="r_aaf6f31d250c3f9d29bab112d4a1b7576"><td class="memItemLeft"><a class="el" href="classtr_1_1mapped__graphics__buffer__object.html">mapped_graphics_buffer_object</a>&lt; Header &gt;&#160;</td><td class="memItemRight"><a class="el" href="#aaf6f31d250c3f9d29bab112d4a1b7576">map_header</a> ()</td></tr>
 <tr class="memdesc:aaf6f31d250c3f9d29bab112d4a1b7576"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maps the fixed header of the buffer.  <br /></td></tr>
 <tr class="memitem:a48a4957aa74cc63f3d1c3e3af4d447b0" id="r_a48a4957aa74cc63f3d1c3e3af4d447b0"><td class="memItemLeft"><a class="el" href="classtr_1_1mapped__graphics__buffer__span.html">mapped_graphics_buffer_span</a>&lt; ArrayElement &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a48a4957aa74cc63f3d1c3e3af4d447b0">map_array</a> ()</td></tr>
@@ -177,7 +190,7 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="afccf35fd6c51b42d2e346a174a7ad214" name="afccf35fd6c51b42d2e346a174a7ad214"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afccf35fd6c51b42d2e346a174a7ad214">&#9670;&#160;</a></span>shader_buffer()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#afccf35fd6c51b42d2e346a174a7ad214">&#9670;&#160;</a></span>shader_buffer() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -220,7 +233,136 @@ template&lt;typename Header, typename ArrayElement&gt; </div>
 
 </div>
 </div>
+<a id="a01898ee4592638ce4c6c21250f930c11" name="a01898ee4592638ce4c6c21250f930c11"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a01898ee4592638ce4c6c21250f930c11">&#9670;&#160;</a></span>shader_buffer() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Header, typename ArrayElement&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classtr_1_1shader__buffer.html">tr::shader_buffer</a>&lt; Header, ArrayElement &gt;::shader_buffer </td>
+          <td>(</td>
+          <td class="paramtype">const shader_buffer&lt; Header, ArrayElement &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Shader buffers are not copyable. </p>
+
+</div>
+</div>
+<a id="ab82973085e2c3e6569cf8769abd3f10c" name="ab82973085e2c3e6569cf8769abd3f10c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab82973085e2c3e6569cf8769abd3f10c">&#9670;&#160;</a></span>shader_buffer() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Header, typename ArrayElement&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classtr_1_1shader__buffer.html">tr::shader_buffer</a>&lt; Header, ArrayElement &gt;::shader_buffer </td>
+          <td>(</td>
+          <td class="paramtype">shader_buffer&lt; Header, ArrayElement &gt; &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel default">default</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Moves a shader buffer. </p>
+<p><span class="tt">rhs</span> is left in an invalid state after the move as per the class description. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rhs</td><td>Shader buffer to move from. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="a5feb3d8b9ea63832575b1106e3ab128f" name="a5feb3d8b9ea63832575b1106e3ab128f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5feb3d8b9ea63832575b1106e3ab128f">&#9670;&#160;</a></span>operator=() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Header, typename ArrayElement&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#afccf35fd6c51b42d2e346a174a7ad214">shader_buffer</a> &amp; <a class="el" href="classtr_1_1shader__buffer.html">tr::shader_buffer</a>&lt; Header, ArrayElement &gt;::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="#afccf35fd6c51b42d2e346a174a7ad214">shader_buffer</a>&lt; Header, ArrayElement &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Shader buffers are not copyable. </p>
+
+</div>
+</div>
+<a id="a2e6d1e9782f46feeedd08c6903a934ac" name="a2e6d1e9782f46feeedd08c6903a934ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e6d1e9782f46feeedd08c6903a934ac">&#9670;&#160;</a></span>operator=() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Header, typename ArrayElement&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#afccf35fd6c51b42d2e346a174a7ad214">shader_buffer</a> &amp; <a class="el" href="classtr_1_1shader__buffer.html">tr::shader_buffer</a>&lt; Header, ArrayElement &gt;::operator= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#afccf35fd6c51b42d2e346a174a7ad214">shader_buffer</a>&lt; Header, ArrayElement &gt; &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel default">default</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Moves a shader buffer. </p>
+<p><span class="tt">rhs</span> is left in an invalid state after the move as per the class description. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rhs</td><td>Shader buffer to move from. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Reference to <span class="tt">*this</span>. </dd></dl>
+
+</div>
+</div>
 <a id="ac2a7227e5b4c0a4c1ab7a71aeec74403" name="ac2a7227e5b4c0a4c1ab7a71aeec74403"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac2a7227e5b4c0a4c1ab7a71aeec74403">&#9670;&#160;</a></span>array_size()</h2>
 

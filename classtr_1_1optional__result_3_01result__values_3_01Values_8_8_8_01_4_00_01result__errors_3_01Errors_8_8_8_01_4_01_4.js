@@ -1,0 +1,6 @@
+var classtr_1_1optional__result_3_01result__values_3_01Values_8_8_8_01_4_00_01result__errors_3_01Errors_8_8_8_01_4_01_4 =
+[
+    [ "is_empty", "classtr_1_1optional__result_3_01result__values_3_01Values_8_8_8_01_4_00_01result__errors_3_01Errors_8_8_8_01_4_01_4.html#a22ec2435cada92ec092ba735e3be4ae7", null ],
+    [ "is_value", "classtr_1_1optional__result_3_01result__values_3_01Values_8_8_8_01_4_00_01result__errors_3_01Errors_8_8_8_01_4_01_4.html#a6a8cdca11d062b0ba80c6ad6617eb795", null ],
+    [ "is_error", "classtr_1_1optional__result_3_01result__values_3_01Values_8_8_8_01_4_00_01result__errors_3_01Errors_8_8_8_01_4_01_4.html#a4166b05209961cbf1b55c2ce45405a53", null ]
+];

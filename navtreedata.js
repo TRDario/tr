@@ -48,6 +48,10 @@ var NAVTREE =
         [ "<span class=\"tt\">tr_target_template(TARGET)</span>", "md_pages_2cmake.html#autotoc_md17", null ]
       ] ]
     ] ],
+    [ "tr Localization File Format (.tloc)", "md_pages_2tloc.html", [
+      [ "Example", "md_pages_2tloc.html#autotoc_md19", null ],
+      [ "EBNF Grammar", "md_pages_2tloc.html#autotoc_md20", null ]
+    ] ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
@@ -87,21 +91,23 @@ var NAVTREEINDEX =
 "alignment_8hpp.html",
 "classtr_1_1audio__device__list__view__iterator.html#a7c6bbe7aa53b0d0e40b2fca40851c9d7",
 "classtr_1_1basic__inplace__string.html#ab9c7fae7c1388ecc2c8c8c53c8fba81e",
-"classtr_1_1const__pixel__iterator.html#a6bd98a7bd3179422dcab4965a694068f",
-"classtr_1_1framebuffer.html#a38aa600bf2744ce6ec43a977013ba6c1",
-"classtr_1_1mapped__graphics__buffer__object.html",
-"classtr_1_1pointer__iterator.html#a94755443674be73ebfd2ad8d203d1261",
-"classtr_1_1shader__load__error.html#aee8a36d2102d5d239a94145e944c9d09",
+"classtr_1_1bitmap__view.html#aecf13813d93967908d70920ccc8c58f5",
+"classtr_1_1file__not__found.html#a00b5c4def5409764bc00c23c190de1b0",
+"classtr_1_1iterator__interface.html#afc7bddd2faeba2ab471946698c3c0e83",
+"classtr_1_1path__error.html#ad7c574cc71bbb8977b91a7375f68122c",
+"classtr_1_1shader.html#a37aa158f5abef72c7bf2229b8d00e365",
+"classtr_1_1static__vector.html#a4a9ba258cbcb064c446cee4b6a983d76",
 "classtr_1_1texture.html#ae79c3322df4676127a1f4026bf65fee6",
-"classtr_1_1utf8_1_1indexed__iterator.html#aa8351684fba9dab4d6339ca34142bc6d",
-"concepttr_1_1reference.html",
-"namespacemembers_o.html",
-"namespacetr.html#aa7a1fb973e2b89b37e78a95d4461171faccc573e23fb3be984600b29db6a9aebf",
-"namespacetr_1_1aliases_1_1chrono__aliases.html#afe24d78ac5137aa0cc0f5e66dd1d5336",
-"static__vertex__buffer_8hpp.html",
-"structtr_1_1blend__mode.html#a90f2ceb73409d8938b3a223e063b01da",
-"structtr_1_1rectangle__edges.html#a91562c6d95894bac434030664e86a0a8",
-"structtr_1_1string__literal.html"
+"classtr_1_1untyped__static__vertex__buffer.html#a848b57c21372928863a1228cad90a0f0",
+"concepts.html",
+"iterator__interface_8hpp_source.html",
+"namespacetr.html#a4f55a6732ca16f0cb0409a76dcb96457",
+"namespacetr.html#ae44ad404b6a9e622edc462338c5f0f69",
+"namespacetr_1_1literals_1_1integer__literals.html#aa26472820fdde319b9fc23e78e44c697",
+"structtr_1_1audio__device__open__error.html",
+"structtr_1_1key__down__event.html#a64b74d961c97103b5bdd469e70336a2d",
+"structtr_1_1rectangle.html#a9d70af7a730acdf2384e815a0fd152f2",
+"structtr_1_1scan__chord.html#acb976db99d86d180203827fec036e4a3"
 ];
 
 const SYNCONMSG = 'click to disable panel synchronization';

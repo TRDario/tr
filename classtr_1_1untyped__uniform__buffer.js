@@ -1,6 +1,10 @@
 var classtr_1_1untyped__uniform__buffer =
 [
     [ "untyped_uniform_buffer", "classtr_1_1untyped__uniform__buffer.html#a7feda924bf1a1aacf322349e7a618c0a", null ],
+    [ "untyped_uniform_buffer", "classtr_1_1untyped__uniform__buffer.html#abf21459a114a73ce333312d6bd81311d", null ],
+    [ "untyped_uniform_buffer", "classtr_1_1untyped__uniform__buffer.html#adb1451df5842dd43b2c5f07ac0db4953", null ],
+    [ "operator=", "classtr_1_1untyped__uniform__buffer.html#a7af885dbd4c545ff0c7f1425ade79b2f", null ],
+    [ "operator=", "classtr_1_1untyped__uniform__buffer.html#a6c2115b5b8de69473a85c445e8336bc2", null ],
     [ "size", "classtr_1_1untyped__uniform__buffer.html#af187bb32fa6aa347734e1da1e3671a09", null ],
     [ "set", "classtr_1_1untyped__uniform__buffer.html#a8fd7e7f72c0e636c9f3772e4d5caefb1", null ],
     [ "mapped", "classtr_1_1untyped__uniform__buffer.html#a658b96d6240e22aef69b85d95ad2ef9e", null ],

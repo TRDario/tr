@@ -2,7 +2,7 @@ var searchData=
 [
   ['angle_0',['angle',['../classtr_1_1angle.html',1,'tr']]],
   ['application_1',['application',['../classtr_1_1application.html',1,'tr']]],
-  ['args_5ftuple_2',['args_tuple',['../structtr_1_1function__traits.html',1,'tr']]],
+  ['apply_5fresult_3c_20t_2c_20tuplelike_20_3e_2',['apply_result&lt; T, TupleLike &gt;',['../structtr_1_1apply__result_3_01T_00_01TupleLike_01_4.html',1,'tr']]],
   ['atlas_5fentries_3',['atlas_entries',['../classtr_1_1atlas__entries.html',1,'tr']]],
   ['atlas_5fentries_3c_20key_2c_20value_2c_20boost_3a_3ahash_3c_20key_20_3e_2c_20std_3a_3aequal_5fto_3c_20key_20_3e_20_3e_4',['atlas_entries&lt; Key, Value, boost::hash&lt; Key &gt;, std::equal_to&lt; Key &gt; &gt;',['../classtr_1_1atlas__entries.html',1,'tr']]],
   ['atlas_5fpacker_5',['atlas_packer',['../classtr_1_1atlas__packer.html',1,'tr']]],

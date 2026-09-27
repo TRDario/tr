@@ -142,7 +142,7 @@ class tr::opt_ref&lt; T &gt;</div><p>Wrapper over a pointer representing optiona
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
+<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors and destructors</div></td></tr>
 <tr class="memitem:ae111e0355d0382a9a6576736bb4d1159" id="r_ae111e0355d0382a9a6576736bb4d1159"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#ae111e0355d0382a9a6576736bb4d1159">opt_ref</a> () noexcept=default</td></tr>
 <tr class="memdesc:ae111e0355d0382a9a6576736bb4d1159"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an empty optional reference.  <br /></td></tr>
 <tr class="memitem:ae6ae78030b3422e3d06ec500375c0397" id="r_ae6ae78030b3422e3d06ec500375c0397"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#ae6ae78030b3422e3d06ec500375c0397">opt_ref</a> (std::nullopt_t) noexcept</td></tr>
@@ -161,8 +161,8 @@ requires (std::convertible_to&lt;T&amp;, U&amp;&gt;)</td></tr>
 <tr class="memitem:aad2aa076729d21d39e2c1ca97267ce2b template"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#aad2aa076729d21d39e2c1ca97267ce2b">operator opt_ref&lt; U &gt;</a> () const noexcept</td></tr>
 <tr class="memdesc:aad2aa076729d21d39e2c1ca97267ce2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the reference to a base class reference.  <br /></td></tr>
 <tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Status</div></td></tr>
-<tr class="memitem:abe5d627f816ea699977bd1a6a48e1adb" id="r_abe5d627f816ea699977bd1a6a48e1adb"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="#abe5d627f816ea699977bd1a6a48e1adb">has_ref</a> () const noexcept</td></tr>
-<tr class="memdesc:abe5d627f816ea699977bd1a6a48e1adb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether the optional reference holds a reference to an object.  <br /></td></tr>
+<tr class="memitem:a63bf5f4d50a6d59bfbca08a664e565ab" id="r_a63bf5f4d50a6d59bfbca08a664e565ab"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="#a63bf5f4d50a6d59bfbca08a664e565ab">has_value</a> () const noexcept</td></tr>
+<tr class="memdesc:a63bf5f4d50a6d59bfbca08a664e565ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns whether the optional reference holds a reference to an object.  <br /></td></tr>
 <tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Access</div></td></tr>
 <tr class="memitem:a44cf6b886ceb8173c88c79185ffcedba" id="r_a44cf6b886ceb8173c88c79185ffcedba"><td class="memItemLeft">constexpr T *&#160;</td><td class="memItemRight"><a class="el" href="#a44cf6b886ceb8173c88c79185ffcedba">as_ptr</a> () const noexcept</td></tr>
 <tr class="memdesc:a44cf6b886ceb8173c88c79185ffcedba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the optional reference into a pointer to the referenced object, or nullptr.  <br /></td></tr>
@@ -393,8 +393,8 @@ requires (std::convertible_to&lt;T&amp;, U&amp;&gt;)</div>
 
 </div>
 </div>
-<a id="abe5d627f816ea699977bd1a6a48e1adb" name="abe5d627f816ea699977bd1a6a48e1adb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abe5d627f816ea699977bd1a6a48e1adb">&#9670;&#160;</a></span>has_ref()</h2>
+<a id="a63bf5f4d50a6d59bfbca08a664e565ab" name="a63bf5f4d50a6d59bfbca08a664e565ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a63bf5f4d50a6d59bfbca08a664e565ab">&#9670;&#160;</a></span>has_value()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -405,7 +405,7 @@ template&lt;typename T&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="classtr_1_1opt__ref.html">tr::opt_ref</a>&lt; T &gt;::has_ref </td>
+          <td class="memname">bool <a class="el" href="classtr_1_1opt__ref.html">tr::opt_ref</a>&lt; T &gt;::has_value </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>

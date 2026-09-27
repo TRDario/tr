@@ -1,0 +1,4 @@
+var structstd_1_1formatter_3_01tr_1_1localization__script__expected__symbol__or__closing__brace_01_4 =
+[
+    [ "format_message", "structstd_1_1formatter_3_01tr_1_1localization__script__expected__symbol__or__closing__brace_01_4.html#a482f2805055f25ce1d3f3fadeb1be3d7", null ]
+];

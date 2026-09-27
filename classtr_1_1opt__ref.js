@@ -7,7 +7,7 @@ var classtr_1_1opt__ref =
     [ "opt_ref", "classtr_1_1opt__ref.html#ac1e63a536cbbc94c9c61845c0b99f660", null ],
     [ "operator opt_ref< const T >", "classtr_1_1opt__ref.html#ab53f5c7c3548bfa1eb1bed9549049994", null ],
     [ "operator opt_ref< U >", "classtr_1_1opt__ref.html#aad2aa076729d21d39e2c1ca97267ce2b", null ],
-    [ "has_ref", "classtr_1_1opt__ref.html#abe5d627f816ea699977bd1a6a48e1adb", null ],
+    [ "has_value", "classtr_1_1opt__ref.html#a63bf5f4d50a6d59bfbca08a664e565ab", null ],
     [ "as_ptr", "classtr_1_1opt__ref.html#a44cf6b886ceb8173c88c79185ffcedba", null ],
     [ "operator->", "classtr_1_1opt__ref.html#affd51d8487f9ba1ef5bb38b9b33f3c65", null ],
     [ "operator*", "classtr_1_1opt__ref.html#aa73f075a515953b01728e8de70c1223f", null ],

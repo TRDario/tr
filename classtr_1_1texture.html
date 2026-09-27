@@ -128,46 +128,60 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1tex
 </div><!--header-->
 <div class="contents">
 
-<p>2D GPU texture container.  
+<p>Container for a two-dimensional image texture accessable to shaders.  
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>2D GPU texture container. </p>
+<div class="textblock"><p>Container for a two-dimensional image texture accessable to shaders. </p>
+<p>While <span class="tt"><a class="el" href="classtr_1_1bitmap.html" title="Two-dimensional bitmap image.">tr::bitmap</a></span> is a container for two-dimensional image data in main memory, <span class="tt"><a class="el" href="classtr_1_1texture.html" title="Container for a two-dimensional image texture accessable to shaders.">tr::texture</a></span> is a container for two-dimensional image data stored on the graphics device. This texture data is then able to set on a shader sampler uniform location and sampled during the rendering process.</p>
+<p>Strictly speaking, instances of <span class="tt"><a class="el" href="classtr_1_1texture.html" title="Container for a two-dimensional image texture accessable to shaders.">tr::texture</a></span> are only containers for these underlying texture objects. This means, for example, that setting a texture on a shader does not set the literal <span class="tt"><a class="el" href="classtr_1_1texture.html" title="Container for a two-dimensional image texture accessable to shaders.">tr::texture</a></span> object at a specific location in memory, but rather the value it contains. If the value is moved to a different instance of <span class="tt"><a class="el" href="classtr_1_1texture.html" title="Container for a two-dimensional image texture accessable to shaders.">tr::texture</a></span>, that value will still be set on the shader. If the instance is overriden with a new value, the old value is destroyed and the shader will no longer have a set buffer. Instances of <span class="tt"><a class="el" href="classtr_1_1texture.html" title="Container for a two-dimensional image texture accessable to shaders.">tr::texture</a></span> may at any point allocate new texture objects and release previously held texture objects using the <span class="tt"><a class="el" href="#a7dcd2d5ea57dd7419a0b68c0c3a3880d" title="Allocates the texture and releases the previously held storage as a new texture.">allocate()</a></span> method.</p>
+<p><span class="tt"><a class="el" href="classtr_1_1texture.html" title="Container for a two-dimensional image texture accessable to shaders.">tr::texture</a></span> has a notion of 'completeness'. An instance of the class may be constructed without allocating actual texture data. Such an instance is considered incomplete until the <span class="tt"><a class="el" href="#a7dcd2d5ea57dd7419a0b68c0c3a3880d" title="Allocates the texture and releases the previously held storage as a new texture.">allocate()</a></span> method is invoked. Incomplete textures may not be used for most actions.</p>
+<p>Every instance of <span class="tt"><a class="el" href="classtr_1_1texture.html" title="Container for a two-dimensional image texture accessable to shaders.">tr::texture</a></span> is associated with a graphics context and cannot outlive its parent context.</p>
+<p>Moved-from instances of <span class="tt"><a class="el" href="classtr_1_1texture.html" title="Container for a two-dimensional image texture accessable to shaders.">tr::texture</a></span> are left in a special 'invalid' state, distinct from the incomplete state. Invalid <span class="tt"><a class="el" href="classtr_1_1texture.html" title="Container for a two-dimensional image texture accessable to shaders.">tr::texture</a></span> instances may not be interacted with besides moving a new value into them and checking for validity using <span class="tt"><a class="el" href="#ae79c3322df4676127a1f4026bf65fee6" title="Gets whether the texture is in a valid state.">valid()</a></span>. </p>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
+<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors and destructors</div></td></tr>
 <tr class="memitem:a888ac405b51648c58b79473a9117ee26" id="r_a888ac405b51648c58b79473a9117ee26"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a888ac405b51648c58b79473a9117ee26">texture</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context) noexcept</td></tr>
 <tr class="memdesc:a888ac405b51648c58b79473a9117ee26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an incomplete texture.  <br /></td></tr>
 <tr class="memitem:a5149d98c45e7f5472800d959c9ed1f01" id="r_a5149d98c45e7f5472800d959c9ed1f01"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a5149d98c45e7f5472800d959c9ed1f01">texture</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context, glm::ivec2 size, mipmaps<a class="el" href="namespacetr.html#acc7c3ec65e91b3d9d879c9bca6e51ce6">mipmaps</a> mipmaps<a class="el" href="namespacetr.html#acc7c3ec65e91b3d9d879c9bca6e51ce6">mipmaps</a>=<a class="el" href="namespacetr.html#acc7c3ec65e91b3d9d879c9bca6e51ce6a075ae3d2fc31640504f814f60e5ef713">mipmaps::disabled</a>, <a class="el" href="namespacetr.html#ac1babae6e9367fc90585a8791dadc746">pixel_format</a> format=<a class="el" href="namespacetr.html#ac1babae6e9367fc90585a8791dadc746ab1500b383bccdb3946114a5d708706c4">pixel_format::rgba32</a>)</td></tr>
 <tr class="memdesc:a5149d98c45e7f5472800d959c9ed1f01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates an uninitialized texture.  <br /></td></tr>
 <tr class="memitem:aff5c1ec9cbee65edd8d1c32ed79c2b22" id="r_aff5c1ec9cbee65edd8d1c32ed79c2b22"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#aff5c1ec9cbee65edd8d1c32ed79c2b22">texture</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context, <a class="el" href="classtr_1_1sub__bitmap.html">sub_bitmap</a> bitmap, mipmaps<a class="el" href="namespacetr.html#acc7c3ec65e91b3d9d879c9bca6e51ce6">mipmaps</a> mipmaps<a class="el" href="namespacetr.html#acc7c3ec65e91b3d9d879c9bca6e51ce6">mipmaps</a>=<a class="el" href="namespacetr.html#acc7c3ec65e91b3d9d879c9bca6e51ce6a075ae3d2fc31640504f814f60e5ef713">mipmaps::disabled</a>, std::optional&lt; <a class="el" href="namespacetr.html#ac1babae6e9367fc90585a8791dadc746">pixel_format</a> &gt; format=std::nullopt)</td></tr>
 <tr class="memdesc:aff5c1ec9cbee65edd8d1c32ed79c2b22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a texture with data uploaded from a bitmap.  <br /></td></tr>
-<tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Views</div></td></tr>
+<tr class="memitem:a197cb32b5931d2731e371cbd59801344" id="r_a197cb32b5931d2731e371cbd59801344"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a197cb32b5931d2731e371cbd59801344">texture</a> (const texture &amp;)=delete</td></tr>
+<tr class="memdesc:a197cb32b5931d2731e371cbd59801344"><td class="mdescLeft">&#160;</td><td class="mdescRight">Textures are not copyable.  <br /></td></tr>
+<tr class="memitem:a2be5ebed3948bfd5d0248cd59f740ca5" id="r_a2be5ebed3948bfd5d0248cd59f740ca5"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a2be5ebed3948bfd5d0248cd59f740ca5">texture</a> (texture &amp;&amp;rhs) noexcept=default</td></tr>
+<tr class="memdesc:a2be5ebed3948bfd5d0248cd59f740ca5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves a texture.  <br /></td></tr>
+<tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Assignment operators</div></td></tr>
+<tr class="memitem:a424a2cf05f89869c9da7a1c0b4e6174f" id="r_a424a2cf05f89869c9da7a1c0b4e6174f"><td class="memItemLeft"><a class="el" href="#a888ac405b51648c58b79473a9117ee26">texture</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a424a2cf05f89869c9da7a1c0b4e6174f">operator=</a> (const <a class="el" href="#a888ac405b51648c58b79473a9117ee26">texture</a> &amp;)=delete</td></tr>
+<tr class="memdesc:a424a2cf05f89869c9da7a1c0b4e6174f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Textures are not copyable.  <br /></td></tr>
+<tr class="memitem:ab8195390851f1eddfc5a05ce597a861c" id="r_ab8195390851f1eddfc5a05ce597a861c"><td class="memItemLeft"><a class="el" href="#a888ac405b51648c58b79473a9117ee26">texture</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ab8195390851f1eddfc5a05ce597a861c">operator=</a> (<a class="el" href="#a888ac405b51648c58b79473a9117ee26">texture</a> &amp;&amp;rhs) noexcept=default</td></tr>
+<tr class="memdesc:ab8195390851f1eddfc5a05ce597a861c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves a texture.  <br /></td></tr>
+<tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">View</div></td></tr>
 <tr class="memitem:ab792f6702cf6a3be320b66b92641c7ec" id="r_ab792f6702cf6a3be320b66b92641c7ec"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ab792f6702cf6a3be320b66b92641c7ec">operator texture_view</a> () const noexcept</td></tr>
 <tr class="memdesc:ab792f6702cf6a3be320b66b92641c7ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a view to the texture.  <br /></td></tr>
 <tr class="memitem:a39d4cbcc85ca7101b993914abf024326" id="r_a39d4cbcc85ca7101b993914abf024326"><td class="memItemLeft"><a class="el" href="classtr_1_1texture__view.html">texture_view</a>&#160;</td><td class="memItemRight"><a class="el" href="#a39d4cbcc85ca7101b993914abf024326">view</a> () const noexcept</td></tr>
 <tr class="memdesc:a39d4cbcc85ca7101b993914abf024326"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a view to the texture.  <br /></td></tr>
-<tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Context</div></td></tr>
+<tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Context</div></td></tr>
 <tr class="memitem:a5c2a89fea1dbeb0ac8875d68a101bf17" id="r_a5c2a89fea1dbeb0ac8875d68a101bf17"><td class="memItemLeft"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a5c2a89fea1dbeb0ac8875d68a101bf17">context</a> () const noexcept</td></tr>
 <tr class="memdesc:a5c2a89fea1dbeb0ac8875d68a101bf17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a reference to the graphics context the texture is on.  <br /></td></tr>
-<tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">State</div></td></tr>
+<tr id="pub-methods-4" class="groupHeader"><td colspan="2"><div class="groupHeader">State</div></td></tr>
 <tr class="memitem:ae79c3322df4676127a1f4026bf65fee6" id="r_ae79c3322df4676127a1f4026bf65fee6"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#ae79c3322df4676127a1f4026bf65fee6">valid</a> () const noexcept</td></tr>
 <tr class="memdesc:ae79c3322df4676127a1f4026bf65fee6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the texture is in a valid state.  <br /></td></tr>
 <tr class="memitem:a7e10239f1be5df5ea38ce04f1a49fe9c" id="r_a7e10239f1be5df5ea38ce04f1a49fe9c"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a7e10239f1be5df5ea38ce04f1a49fe9c">complete</a> () const noexcept</td></tr>
 <tr class="memdesc:a7e10239f1be5df5ea38ce04f1a49fe9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the texture is complete.  <br /></td></tr>
 <tr class="memitem:afb61a783e6d8e5091f3e76ee11d31808" id="r_afb61a783e6d8e5091f3e76ee11d31808"><td class="memItemLeft">glm::ivec2&#160;</td><td class="memItemRight"><a class="el" href="#afb61a783e6d8e5091f3e76ee11d31808">size</a> () const noexcept</td></tr>
 <tr class="memdesc:afb61a783e6d8e5091f3e76ee11d31808"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the size of the texture.  <br /></td></tr>
-<tr id="pub-methods-4" class="groupHeader"><td colspan="2"><div class="groupHeader">Allocation</div></td></tr>
+<tr id="pub-methods-5" class="groupHeader"><td colspan="2"><div class="groupHeader">Allocation</div></td></tr>
 <tr class="memitem:a7dcd2d5ea57dd7419a0b68c0c3a3880d" id="r_a7dcd2d5ea57dd7419a0b68c0c3a3880d"><td class="memItemLeft"><a class="el" href="#a888ac405b51648c58b79473a9117ee26">texture</a>&#160;</td><td class="memItemRight"><a class="el" href="#a7dcd2d5ea57dd7419a0b68c0c3a3880d">allocate</a> (glm::ivec2 size, mipmaps<a class="el" href="namespacetr.html#acc7c3ec65e91b3d9d879c9bca6e51ce6">mipmaps</a> mipmaps<a class="el" href="namespacetr.html#acc7c3ec65e91b3d9d879c9bca6e51ce6">mipmaps</a>=<a class="el" href="namespacetr.html#acc7c3ec65e91b3d9d879c9bca6e51ce6a075ae3d2fc31640504f814f60e5ef713">mipmaps::disabled</a>, <a class="el" href="namespacetr.html#ac1babae6e9367fc90585a8791dadc746">pixel_format</a> format=<a class="el" href="namespacetr.html#ac1babae6e9367fc90585a8791dadc746ab1500b383bccdb3946114a5d708706c4">pixel_format::rgba32</a>)</td></tr>
 <tr class="memdesc:a7dcd2d5ea57dd7419a0b68c0c3a3880d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates the texture and releases the previously held storage as a new texture.  <br /></td></tr>
-<tr id="pub-methods-5" class="groupHeader"><td colspan="2"><div class="groupHeader">Attributes</div></td></tr>
+<tr id="pub-methods-6" class="groupHeader"><td colspan="2"><div class="groupHeader">Attributes</div></td></tr>
 <tr class="memitem:ab82171e2735ca60253210a4fe84001fe" id="r_ab82171e2735ca60253210a4fe84001fe"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ab82171e2735ca60253210a4fe84001fe">set_filtering</a> (min_filter<a class="el" href="namespacetr.html#a9b0a51b975f6e11e760cb82c40c9b40e">min_filter</a> min_filter<a class="el" href="namespacetr.html#a9b0a51b975f6e11e760cb82c40c9b40e">min_filter</a>, mag_filter<a class="el" href="namespacetr.html#a26ba47c29e07f3ca8eb9cdf73a06a424">mag_filter</a> mag_filter<a class="el" href="namespacetr.html#a26ba47c29e07f3ca8eb9cdf73a06a424">mag_filter</a>) noexcept</td></tr>
 <tr class="memdesc:ab82171e2735ca60253210a4fe84001fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the filters used by the texture sampler.  <br /></td></tr>
 <tr class="memitem:a7cac15ca34a1262b54ff445f926523be" id="r_a7cac15ca34a1262b54ff445f926523be"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a7cac15ca34a1262b54ff445f926523be">set_wrap</a> (wrap<a class="el" href="namespacetr.html#a3e4670572d9d0189d10f4f474d1ebfa3">wrap</a> wrap<a class="el" href="namespacetr.html#a3e4670572d9d0189d10f4f474d1ebfa3">wrap</a>) noexcept</td></tr>
 <tr class="memdesc:a7cac15ca34a1262b54ff445f926523be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the wrapping used by the texture sampler.  <br /></td></tr>
 <tr class="memitem:a22218c3c84d29b802564a5ed6b871026" id="r_a22218c3c84d29b802564a5ed6b871026"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a22218c3c84d29b802564a5ed6b871026">set_border_color</a> (<a class="el" href="structtr_1_1rgbaf.html">rgbaf</a> color) noexcept</td></tr>
 <tr class="memdesc:a22218c3c84d29b802564a5ed6b871026"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the border color of the texture sampler (used when <span class="tt">wrap::BORDER_CLAMP</span> is in use).  <br /></td></tr>
-<tr id="pub-methods-6" class="groupHeader"><td colspan="2"><div class="groupHeader">Clearing &amp; setting</div></td></tr>
+<tr id="pub-methods-7" class="groupHeader"><td colspan="2"><div class="groupHeader">Clearing &amp; setting</div></td></tr>
 <tr class="memitem:a27787261e8e2ce30d97bca87d1fd2065" id="r_a27787261e8e2ce30d97bca87d1fd2065"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a27787261e8e2ce30d97bca87d1fd2065">clear</a> (<a class="el" href="structtr_1_1rgbaf.html">rgbaf</a> color=<a class="el" href="structtr_1_1rgba8.html">rgba8</a>{}) noexcept</td></tr>
 <tr class="memdesc:a27787261e8e2ce30d97bca87d1fd2065"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the texture.  <br /></td></tr>
 <tr class="memitem:a431b3195a850a1f43cf91e7e56890705" id="r_a431b3195a850a1f43cf91e7e56890705"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a431b3195a850a1f43cf91e7e56890705">clear_region</a> (<a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; int &gt; region, <a class="el" href="structtr_1_1rgbaf.html">rgbaf</a> color=<a class="el" href="structtr_1_1rgba8.html">rgba8</a>{}) noexcept</td></tr>
@@ -176,7 +190,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:ad6bd2c492d9b4e25c3c725a5df77ac39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copies a region from another texture.  <br /></td></tr>
 <tr class="memitem:a95eaf5310e18fb4781b1fc14fb788c12" id="r_a95eaf5310e18fb4781b1fc14fb788c12"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a95eaf5310e18fb4781b1fc14fb788c12">set_region</a> (glm::ivec2 tl, <a class="el" href="classtr_1_1sub__bitmap.html">sub_bitmap</a> bitmap) noexcept</td></tr>
 <tr class="memdesc:a95eaf5310e18fb4781b1fc14fb788c12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a region of the texture.  <br /></td></tr>
-<tr id="pub-methods-7" class="groupHeader"><td colspan="2"><div class="groupHeader">Label</div></td></tr>
+<tr id="pub-methods-8" class="groupHeader"><td colspan="2"><div class="groupHeader">Label</div></td></tr>
 <tr class="memitem:a289a56f4af2dac7d1a20437f1a7bc2ca" id="r_a289a56f4af2dac7d1a20437f1a7bc2ca"><td class="memItemLeft">std::string&#160;</td><td class="memItemRight"><a class="el" href="#a289a56f4af2dac7d1a20437f1a7bc2ca">label</a> () const</td></tr>
 <tr class="memdesc:a289a56f4af2dac7d1a20437f1a7bc2ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the debug label of the texture.  <br /></td></tr>
 <tr class="memitem:afcf392e7ff8a673257bc996f6cbe2109" id="r_afcf392e7ff8a673257bc996f6cbe2109"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#afcf392e7ff8a673257bc996f6cbe2109">set_label</a> (std::string_view label) noexcept</td></tr>
@@ -184,7 +198,7 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a888ac405b51648c58b79473a9117ee26" name="a888ac405b51648c58b79473a9117ee26"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a888ac405b51648c58b79473a9117ee26">&#9670;&#160;</a></span>texture() <span class="overload">[1/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a888ac405b51648c58b79473a9117ee26">&#9670;&#160;</a></span>texture() <span class="overload">[1/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -217,7 +231,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a5149d98c45e7f5472800d959c9ed1f01" name="a5149d98c45e7f5472800d959c9ed1f01"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5149d98c45e7f5472800d959c9ed1f01">&#9670;&#160;</a></span>texture() <span class="overload">[2/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5149d98c45e7f5472800d959c9ed1f01">&#9670;&#160;</a></span>texture() <span class="overload">[2/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -267,7 +281,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="aff5c1ec9cbee65edd8d1c32ed79c2b22" name="aff5c1ec9cbee65edd8d1c32ed79c2b22"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aff5c1ec9cbee65edd8d1c32ed79c2b22">&#9670;&#160;</a></span>texture() <span class="overload">[3/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aff5c1ec9cbee65edd8d1c32ed79c2b22">&#9670;&#160;</a></span>texture() <span class="overload">[3/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -316,7 +330,128 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a197cb32b5931d2731e371cbd59801344" name="a197cb32b5931d2731e371cbd59801344"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a197cb32b5931d2731e371cbd59801344">&#9670;&#160;</a></span>texture() <span class="overload">[4/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tr::texture::texture </td>
+          <td>(</td>
+          <td class="paramtype">const texture &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Textures are not copyable. </p>
+
+</div>
+</div>
+<a id="a2be5ebed3948bfd5d0248cd59f740ca5" name="a2be5ebed3948bfd5d0248cd59f740ca5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2be5ebed3948bfd5d0248cd59f740ca5">&#9670;&#160;</a></span>texture() <span class="overload">[5/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tr::texture::texture </td>
+          <td>(</td>
+          <td class="paramtype">texture &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel default">default</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Moves a texture. </p>
+<p><span class="tt">rhs</span> is left in an invalid state after the move as per the class description. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rhs</td><td>Texture to move from. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="a424a2cf05f89869c9da7a1c0b4e6174f" name="a424a2cf05f89869c9da7a1c0b4e6174f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a424a2cf05f89869c9da7a1c0b4e6174f">&#9670;&#160;</a></span>operator=() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a888ac405b51648c58b79473a9117ee26">texture</a> &amp; tr::texture::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="#a888ac405b51648c58b79473a9117ee26">texture</a> &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Textures are not copyable. </p>
+
+</div>
+</div>
+<a id="ab8195390851f1eddfc5a05ce597a861c" name="ab8195390851f1eddfc5a05ce597a861c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab8195390851f1eddfc5a05ce597a861c">&#9670;&#160;</a></span>operator=() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a888ac405b51648c58b79473a9117ee26">texture</a> &amp; tr::texture::operator= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#a888ac405b51648c58b79473a9117ee26">texture</a> &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel default">default</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Moves a texture. </p>
+<p><span class="tt">rhs</span> is left in an invalid state after the move as per the class description. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rhs</td><td>Texture to move from. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Reference to <span class="tt">*this</span>. </dd></dl>
+
+</div>
+</div>
 <a id="ab792f6702cf6a3be320b66b92641c7ec" name="ab792f6702cf6a3be320b66b92641c7ec"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab792f6702cf6a3be320b66b92641c7ec">&#9670;&#160;</a></span>operator texture_view()</h2>
 

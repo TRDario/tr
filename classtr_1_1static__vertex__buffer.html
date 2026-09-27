@@ -128,12 +128,16 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1sta
 </div><!--header-->
 <div class="contents">
 
-<p>Typed static vertex buffer class for holding immutable vertex data of a single type.  
+<p>Static, immutable typed vertex buffer.  
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;standard_layout Element&gt;<br />
-class tr::static_vertex_buffer&lt; Element &gt;</div><p>Typed static vertex buffer class for holding immutable vertex data of a single type. </p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
+class tr::static_vertex_buffer&lt; Element &gt;</div><p>Static, immutable typed vertex buffer. </p>
+<p><span class="tt"><a class="el" href="classtr_1_1static__vertex__buffer.html" title="Static, immutable typed vertex buffer.">tr::static_vertex_buffer</a></span> represents a graphics buffer used to store vertex data. Unlike <span class="tt"><a class="el" href="classtr_1_1dynamic__vertex__buffer.html" title="Typed dynamic vertex buffer class.">tr::dynamic_vertex_buffer</a></span>, it represents a single, static allocation of immutable data, making it suitable for scenarios where the vertex data is constant. It is the typed equivalent of <span class="tt"><a class="el" href="classtr_1_1untyped__static__vertex__buffer.html" title="Static, immutable untyped vertex buffer.">tr::untyped_static_vertex_buffer</a></span>.</p>
+<p>Strictly speaking, instances of <span class="tt"><a class="el" href="classtr_1_1static__vertex__buffer.html" title="Static, immutable typed vertex buffer.">tr::static_vertex_buffer</a></span> are only containers for these underlying buffer objects. This means, for example, that setting a static vertex buffer on a graphics context does not set the literal <span class="tt"><a class="el" href="classtr_1_1static__vertex__buffer.html" title="Static, immutable typed vertex buffer.">tr::static_vertex_buffer</a></span> object at a specific location in memory, but rather the value it contains. If the value is moved to a different instance of <span class="tt"><a class="el" href="classtr_1_1static__vertex__buffer.html" title="Static, immutable typed vertex buffer.">tr::static_vertex_buffer</a></span>, that value will still be set on the context. If the instance is overriden with a new value, the old value is destroyed and the graphics context will no longer have a set vertex buffer.</p>
+<p>Every instance of <span class="tt"><a class="el" href="classtr_1_1static__vertex__buffer.html" title="Static, immutable typed vertex buffer.">tr::static_vertex_buffer</a></span> is associated with a graphics context and cannot outlive its parent context.</p>
+<p>Moved-from instances of <span class="tt"><a class="el" href="classtr_1_1static__vertex__buffer.html" title="Static, immutable typed vertex buffer.">tr::static_vertex_buffer</a></span> are left in a special 'invalid' state. Invalid <span class="tt"><a class="el" href="classtr_1_1static__vertex__buffer.html" title="Static, immutable typed vertex buffer.">tr::static_vertex_buffer</a></span> instances may not be interacted with besides moving a new value into them and checking for validity using <span class="tt"><a class="el" href="classtr_1_1untyped__static__vertex__buffer.html#ab3a7924563ab5b21ec88e5004dd17d6a" title="Gets whether the buffer is in a valid state.">valid()</a></span>.</p>
+<p><span class="tt"><a class="el" href="classtr_1_1static__vertex__buffer.html" title="Static, immutable typed vertex buffer.">tr::static_vertex_buffer</a></span> instances may be labeled and are formattable. Example format output: <span class="tt">"My vertex buffer" (OpenGL ID: 5)</span>. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Element</td><td>Type of the elements of the buffer. </td></tr>
   </table>
@@ -146,7 +150,7 @@ class tr::static_vertex_buffer&lt; Element &gt;</div><p>Typed static vertex buff
  <div class="center">
   <img src="classtr_1_1static__vertex__buffer.png" usemap="#tr_3A_3Astatic_5Fvertex_5Fbuffer_3C_20Element_20_3E_map" alt=""/>
   <map id="tr_3A_3Astatic_5Fvertex_5Fbuffer_3C_20Element_20_3E_map" name="tr_3A_3Astatic_5Fvertex_5Fbuffer_3C_20Element_20_3E_map">
-<area href="classtr_1_1untyped__static__vertex__buffer.html" title="Static vertex buffer class for holding immutable vertex data." alt="tr::untyped_static_vertex_buffer" shape="rect" coords="0,0,206,24"/>
+<area href="classtr_1_1untyped__static__vertex__buffer.html" title="Static, immutable untyped vertex buffer." alt="tr::untyped_static_vertex_buffer" shape="rect" coords="0,0,206,24"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -157,9 +161,18 @@ Public Types</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
+<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors and destructors</div></td></tr>
 <tr class="memitem:a482960f2e89dede57d5ba3a1ee7b9ccb" id="r_a482960f2e89dede57d5ba3a1ee7b9ccb"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a482960f2e89dede57d5ba3a1ee7b9ccb">static_vertex_buffer</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context, std::span&lt; const Element &gt; range)</td></tr>
 <tr class="memdesc:a482960f2e89dede57d5ba3a1ee7b9ccb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uploads vertex data into a static vertex buffer.  <br /></td></tr>
+<tr class="memitem:a9c3c630964bfa1e9c1a83fb3a6c21002" id="r_a9c3c630964bfa1e9c1a83fb3a6c21002"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a9c3c630964bfa1e9c1a83fb3a6c21002">static_vertex_buffer</a> (const static_vertex_buffer &amp;)=delete</td></tr>
+<tr class="memdesc:a9c3c630964bfa1e9c1a83fb3a6c21002"><td class="mdescLeft">&#160;</td><td class="mdescRight">Static vertex buffers are not copyable.  <br /></td></tr>
+<tr class="memitem:ab3db5efa2eae3538351ef34f4b134051" id="r_ab3db5efa2eae3538351ef34f4b134051"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ab3db5efa2eae3538351ef34f4b134051">static_vertex_buffer</a> (static_vertex_buffer &amp;&amp;rhs) noexcept=default</td></tr>
+<tr class="memdesc:ab3db5efa2eae3538351ef34f4b134051"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves a static vertex buffer.  <br /></td></tr>
+<tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Assignment operators</div></td></tr>
+<tr class="memitem:ad62331e80161f28d1316fa7932861907" id="r_ad62331e80161f28d1316fa7932861907"><td class="memItemLeft"><a class="el" href="#a482960f2e89dede57d5ba3a1ee7b9ccb">static_vertex_buffer</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ad62331e80161f28d1316fa7932861907">operator=</a> (const <a class="el" href="#a482960f2e89dede57d5ba3a1ee7b9ccb">static_vertex_buffer</a> &amp;)=delete</td></tr>
+<tr class="memdesc:ad62331e80161f28d1316fa7932861907"><td class="mdescLeft">&#160;</td><td class="mdescRight">Static vertex buffers are not copyable.  <br /></td></tr>
+<tr class="memitem:ac73cc4a36ddf4588e86e311ea101d9c7" id="r_ac73cc4a36ddf4588e86e311ea101d9c7"><td class="memItemLeft"><a class="el" href="#a482960f2e89dede57d5ba3a1ee7b9ccb">static_vertex_buffer</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ac73cc4a36ddf4588e86e311ea101d9c7">operator=</a> (<a class="el" href="#a482960f2e89dede57d5ba3a1ee7b9ccb">static_vertex_buffer</a> &amp;&amp;rhs) noexcept=default</td></tr>
+<tr class="memdesc:ac73cc4a36ddf4588e86e311ea101d9c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves a static vertex buffer.  <br /></td></tr>
 </table>
 <a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Member Typedef Documentation</h2>
 <a id="ad5374fd96f0ac8ec098e00f6105e3b62" name="ad5374fd96f0ac8ec098e00f6105e3b62"></a>
@@ -182,7 +195,7 @@ template&lt;standard_layout Element&gt; </div>
 </div>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a482960f2e89dede57d5ba3a1ee7b9ccb" name="a482960f2e89dede57d5ba3a1ee7b9ccb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a482960f2e89dede57d5ba3a1ee7b9ccb">&#9670;&#160;</a></span>static_vertex_buffer()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a482960f2e89dede57d5ba3a1ee7b9ccb">&#9670;&#160;</a></span>static_vertex_buffer() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -218,6 +231,136 @@ template&lt;standard_layout Element&gt; </div>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a9c3c630964bfa1e9c1a83fb3a6c21002" name="a9c3c630964bfa1e9c1a83fb3a6c21002"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c3c630964bfa1e9c1a83fb3a6c21002">&#9670;&#160;</a></span>static_vertex_buffer() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;standard_layout Element&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classtr_1_1static__vertex__buffer.html">tr::static_vertex_buffer</a>&lt; Element &gt;::static_vertex_buffer </td>
+          <td>(</td>
+          <td class="paramtype">const static_vertex_buffer&lt; Element &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Static vertex buffers are not copyable. </p>
+
+</div>
+</div>
+<a id="ab3db5efa2eae3538351ef34f4b134051" name="ab3db5efa2eae3538351ef34f4b134051"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3db5efa2eae3538351ef34f4b134051">&#9670;&#160;</a></span>static_vertex_buffer() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;standard_layout Element&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classtr_1_1static__vertex__buffer.html">tr::static_vertex_buffer</a>&lt; Element &gt;::static_vertex_buffer </td>
+          <td>(</td>
+          <td class="paramtype">static_vertex_buffer&lt; Element &gt; &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel default">default</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Moves a static vertex buffer. </p>
+<p><span class="tt">rhs</span> is left in an invalid state after the move as per the class description. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rhs</td><td>Static vertex buffer to move. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="ad62331e80161f28d1316fa7932861907" name="ad62331e80161f28d1316fa7932861907"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad62331e80161f28d1316fa7932861907">&#9670;&#160;</a></span>operator=() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;standard_layout Element&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a482960f2e89dede57d5ba3a1ee7b9ccb">static_vertex_buffer</a> &amp; <a class="el" href="classtr_1_1static__vertex__buffer.html">tr::static_vertex_buffer</a>&lt; Element &gt;::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="#a482960f2e89dede57d5ba3a1ee7b9ccb">static_vertex_buffer</a>&lt; Element &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Static vertex buffers are not copyable. </p>
+
+</div>
+</div>
+<a id="ac73cc4a36ddf4588e86e311ea101d9c7" name="ac73cc4a36ddf4588e86e311ea101d9c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac73cc4a36ddf4588e86e311ea101d9c7">&#9670;&#160;</a></span>operator=() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;standard_layout Element&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a482960f2e89dede57d5ba3a1ee7b9ccb">static_vertex_buffer</a> &amp; <a class="el" href="classtr_1_1static__vertex__buffer.html">tr::static_vertex_buffer</a>&lt; Element &gt;::operator= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#a482960f2e89dede57d5ba3a1ee7b9ccb">static_vertex_buffer</a>&lt; Element &gt; &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel default">default</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Moves a static vertex buffer. </p>
+<p><span class="tt">rhs</span> is left in an invalid state after the move as per the class description. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rhs</td><td>Static vertex buffer to move. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Reference to <span class="tt">*this</span>. </dd></dl>
 
 </div>
 </div>

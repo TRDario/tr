@@ -133,7 +133,12 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1dyn
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;standard_layout Element&gt;<br />
 class tr::dynamic_vertex_buffer&lt; Element &gt;</div><p>Typed dynamic vertex buffer class. </p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
+<p><span class="tt"><a class="el" href="classtr_1_1dynamic__vertex__buffer.html" title="Typed dynamic vertex buffer class.">tr::dynamic_vertex_buffer</a></span> represents a graphics buffer used to store vertex data. Unlike <span class="tt"><a class="el" href="classtr_1_1static__vertex__buffer.html" title="Static, immutable typed vertex buffer.">tr::static_vertex_buffer</a></span>, it allows for dynamic resizing and updating of its contents, making it suitable for scenarios where the vertex data changes often at runtime. It is the typed equivalent of <span class="tt"><a class="el" href="classtr_1_1untyped__static__vertex__buffer.html" title="Static, immutable untyped vertex buffer.">tr::untyped_static_vertex_buffer</a></span>.</p>
+<p>Strictly speaking, instances of <span class="tt"><a class="el" href="classtr_1_1dynamic__vertex__buffer.html" title="Typed dynamic vertex buffer class.">tr::dynamic_vertex_buffer</a></span> are only containers for these underlying buffer objects. This means, for example, that setting a dynamic vertex buffer on a graphics context does not set the literal <span class="tt"><a class="el" href="classtr_1_1dynamic__vertex__buffer.html" title="Typed dynamic vertex buffer class.">tr::dynamic_vertex_buffer</a></span> object at a specific location in memory, but rather the value it contains. If the value is moved to a different instance of <span class="tt"><a class="el" href="classtr_1_1dynamic__vertex__buffer.html" title="Typed dynamic vertex buffer class.">tr::dynamic_vertex_buffer</a></span>, that value will still be set on the context. If the instance is overriden with a new value, the old value is destroyed and the graphics context will no longer have a set vertex buffer.</p>
+<p>Every instance of <span class="tt"><a class="el" href="classtr_1_1dynamic__vertex__buffer.html" title="Typed dynamic vertex buffer class.">tr::dynamic_vertex_buffer</a></span> is associated with a graphics context and cannot outlive its parent context.</p>
+<p>Moved-from instances of <span class="tt"><a class="el" href="classtr_1_1dynamic__vertex__buffer.html" title="Typed dynamic vertex buffer class.">tr::dynamic_vertex_buffer</a></span> are left in a special 'invalid' state. Invalid <span class="tt"><a class="el" href="classtr_1_1dynamic__vertex__buffer.html" title="Typed dynamic vertex buffer class.">tr::dynamic_vertex_buffer</a></span> instances may not be interacted with besides moving a new value into them and checking for validity using <span class="tt"><a class="el" href="classtr_1_1untyped__dynamic__vertex__buffer.html#ab3a7924563ab5b21ec88e5004dd17d6a" title="Gets whether the buffer is in a valid state.">valid()</a></span>.</p>
+<p><span class="tt"><a class="el" href="classtr_1_1dynamic__vertex__buffer.html" title="Typed dynamic vertex buffer class.">tr::dynamic_vertex_buffer</a></span> instances may be labeled and are formattable. Example format output: <span class="tt">"My vertex buffer" (OpenGL ID:
+5)</span>. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Element</td><td>Type of the elements of the buffer. </td></tr>
   </table>
@@ -146,7 +151,7 @@ class tr::dynamic_vertex_buffer&lt; Element &gt;</div><p>Typed dynamic vertex bu
  <div class="center">
   <img src="classtr_1_1dynamic__vertex__buffer.png" usemap="#tr_3A_3Adynamic_5Fvertex_5Fbuffer_3C_20Element_20_3E_map" alt=""/>
   <map id="tr_3A_3Adynamic_5Fvertex_5Fbuffer_3C_20Element_20_3E_map" name="tr_3A_3Adynamic_5Fvertex_5Fbuffer_3C_20Element_20_3E_map">
-<area href="classtr_1_1untyped__dynamic__vertex__buffer.html" title="Dynamic vertex buffer class." alt="tr::untyped_dynamic_vertex_buffer" shape="rect" coords="0,0,224,24"/>
+<area href="classtr_1_1untyped__dynamic__vertex__buffer.html" title="Untyped dynamic vertex buffer class." alt="tr::untyped_dynamic_vertex_buffer" shape="rect" coords="0,0,224,24"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -157,14 +162,26 @@ Public Types</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Size</div></td></tr>
+<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors and destructors</div></td></tr>
+<tr class="memitem:a8d3c3c92430967b29df1e0e74db1e9cc" id="r_a8d3c3c92430967b29df1e0e74db1e9cc"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a8d3c3c92430967b29df1e0e74db1e9cc">dynamic_vertex_buffer</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context) noexcept</td></tr>
+<tr class="memdesc:a8d3c3c92430967b29df1e0e74db1e9cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an empty dynamic vertex buffer.  <br /></td></tr>
+<tr class="memitem:a2eb1309838c8a6f8793f212e34225902" id="r_a2eb1309838c8a6f8793f212e34225902"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a2eb1309838c8a6f8793f212e34225902">dynamic_vertex_buffer</a> (const dynamic_vertex_buffer &amp;)=delete</td></tr>
+<tr class="memdesc:a2eb1309838c8a6f8793f212e34225902"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dynamic vertex buffers are not copyable.  <br /></td></tr>
+<tr class="memitem:ad02e4247b055bcafe9f1f43fba6c2082" id="r_ad02e4247b055bcafe9f1f43fba6c2082"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ad02e4247b055bcafe9f1f43fba6c2082">dynamic_vertex_buffer</a> (dynamic_vertex_buffer &amp;&amp;rhs) noexcept=default</td></tr>
+<tr class="memdesc:ad02e4247b055bcafe9f1f43fba6c2082"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves a dynamic vertex buffer.  <br /></td></tr>
+<tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Assignment operators</div></td></tr>
+<tr class="memitem:abadc48a11178303b004d360413dd2f75" id="r_abadc48a11178303b004d360413dd2f75"><td class="memItemLeft"><a class="el" href="#a8d3c3c92430967b29df1e0e74db1e9cc">dynamic_vertex_buffer</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#abadc48a11178303b004d360413dd2f75">operator=</a> (const <a class="el" href="#a8d3c3c92430967b29df1e0e74db1e9cc">dynamic_vertex_buffer</a> &amp;)=delete</td></tr>
+<tr class="memdesc:abadc48a11178303b004d360413dd2f75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dynamic vertex buffers are not copyable.  <br /></td></tr>
+<tr class="memitem:ad147b96bdd9d652c29a7919167a5a5ea" id="r_ad147b96bdd9d652c29a7919167a5a5ea"><td class="memItemLeft"><a class="el" href="#a8d3c3c92430967b29df1e0e74db1e9cc">dynamic_vertex_buffer</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ad147b96bdd9d652c29a7919167a5a5ea">operator=</a> (<a class="el" href="#a8d3c3c92430967b29df1e0e74db1e9cc">dynamic_vertex_buffer</a> &amp;&amp;rhs) noexcept=default</td></tr>
+<tr class="memdesc:ad147b96bdd9d652c29a7919167a5a5ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves a dynamic vertex buffer.  <br /></td></tr>
+<tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Size</div></td></tr>
 <tr class="memitem:a287d0cb40296e3fa94905486a21c6a86" id="r_a287d0cb40296e3fa94905486a21c6a86"><td class="memItemLeft"><a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a>&#160;</td><td class="memItemRight"><a class="el" href="#a287d0cb40296e3fa94905486a21c6a86">size</a> () const noexcept</td></tr>
 <tr class="memdesc:a287d0cb40296e3fa94905486a21c6a86"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the size of the vertex buffer contents.  <br /></td></tr>
 <tr class="memitem:a16ed71dcd59cfffaa5942f3db0dcd843" id="r_a16ed71dcd59cfffaa5942f3db0dcd843"><td class="memItemLeft"><a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a>&#160;</td><td class="memItemRight"><a class="el" href="#a16ed71dcd59cfffaa5942f3db0dcd843">capacity</a> () const noexcept</td></tr>
 <tr class="memdesc:a16ed71dcd59cfffaa5942f3db0dcd843"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the capacity of the vertex buffer.  <br /></td></tr>
 <tr class="memitem:abbfc975338cb65f62022b35f37df4599" id="r_abbfc975338cb65f62022b35f37df4599"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#abbfc975338cb65f62022b35f37df4599">empty</a> () const noexcept</td></tr>
 <tr class="memdesc:abbfc975338cb65f62022b35f37df4599"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the vertex buffer is empty.  <br /></td></tr>
-<tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Setting</div></td></tr>
+<tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Setting</div></td></tr>
 <tr class="memitem:a7c89ce7ccf6eb531a7f523388533fce5" id="r_a7c89ce7ccf6eb531a7f523388533fce5"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a7c89ce7ccf6eb531a7f523388533fce5">resize</a> (<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> size)</td></tr>
 <tr class="memdesc:a7c89ce7ccf6eb531a7f523388533fce5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the buffer and resizes it, potentially reallocating it.  <br /></td></tr>
 <tr class="memitem:abed811bef9ec0cd5771ce3d9b82b8176" id="r_abed811bef9ec0cd5771ce3d9b82b8176"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#abed811bef9ec0cd5771ce3d9b82b8176">reserve</a> (<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> capacity)</td></tr>
@@ -195,7 +212,172 @@ template&lt;standard_layout Element&gt; </div>
 
 </div>
 </div>
+<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a8d3c3c92430967b29df1e0e74db1e9cc" name="a8d3c3c92430967b29df1e0e74db1e9cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d3c3c92430967b29df1e0e74db1e9cc">&#9670;&#160;</a></span>dynamic_vertex_buffer() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;standard_layout Element&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classtr_1_1dynamic__vertex__buffer.html">tr::dynamic_vertex_buffer</a>&lt; Element &gt;::dynamic_vertex_buffer </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>context</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel explicit">explicit</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates an empty dynamic vertex buffer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">context</td><td>Graphics context to create the buffer on. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a2eb1309838c8a6f8793f212e34225902" name="a2eb1309838c8a6f8793f212e34225902"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2eb1309838c8a6f8793f212e34225902">&#9670;&#160;</a></span>dynamic_vertex_buffer() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;standard_layout Element&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classtr_1_1dynamic__vertex__buffer.html">tr::dynamic_vertex_buffer</a>&lt; Element &gt;::dynamic_vertex_buffer </td>
+          <td>(</td>
+          <td class="paramtype">const dynamic_vertex_buffer&lt; Element &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Dynamic vertex buffers are not copyable. </p>
+
+</div>
+</div>
+<a id="ad02e4247b055bcafe9f1f43fba6c2082" name="ad02e4247b055bcafe9f1f43fba6c2082"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad02e4247b055bcafe9f1f43fba6c2082">&#9670;&#160;</a></span>dynamic_vertex_buffer() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;standard_layout Element&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classtr_1_1dynamic__vertex__buffer.html">tr::dynamic_vertex_buffer</a>&lt; Element &gt;::dynamic_vertex_buffer </td>
+          <td>(</td>
+          <td class="paramtype">dynamic_vertex_buffer&lt; Element &gt; &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel default">default</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Moves a dynamic vertex buffer. </p>
+<p><span class="tt">rhs</span> is left in an invalid state after the move as per the class description. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rhs</td><td>Dynamic vertex buffer to move. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="abadc48a11178303b004d360413dd2f75" name="abadc48a11178303b004d360413dd2f75"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abadc48a11178303b004d360413dd2f75">&#9670;&#160;</a></span>operator=() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;standard_layout Element&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a8d3c3c92430967b29df1e0e74db1e9cc">dynamic_vertex_buffer</a> &amp; <a class="el" href="classtr_1_1dynamic__vertex__buffer.html">tr::dynamic_vertex_buffer</a>&lt; Element &gt;::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="#a8d3c3c92430967b29df1e0e74db1e9cc">dynamic_vertex_buffer</a>&lt; Element &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Dynamic vertex buffers are not copyable. </p>
+
+</div>
+</div>
+<a id="ad147b96bdd9d652c29a7919167a5a5ea" name="ad147b96bdd9d652c29a7919167a5a5ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad147b96bdd9d652c29a7919167a5a5ea">&#9670;&#160;</a></span>operator=() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;standard_layout Element&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a8d3c3c92430967b29df1e0e74db1e9cc">dynamic_vertex_buffer</a> &amp; <a class="el" href="classtr_1_1dynamic__vertex__buffer.html">tr::dynamic_vertex_buffer</a>&lt; Element &gt;::operator= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#a8d3c3c92430967b29df1e0e74db1e9cc">dynamic_vertex_buffer</a>&lt; Element &gt; &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel default">default</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Moves a dynamic vertex buffer. </p>
+<p><span class="tt">rhs</span> is left in an invalid state after the move as per the class description. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rhs</td><td>Dynamic vertex buffer to move. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Reference to <span class="tt">*this</span>. </dd></dl>
+
+</div>
+</div>
 <a id="a287d0cb40296e3fa94905486a21c6a86" name="a287d0cb40296e3fa94905486a21c6a86"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a287d0cb40296e3fa94905486a21c6a86">&#9670;&#160;</a></span>size()</h2>
 

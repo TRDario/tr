@@ -133,11 +133,6 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1app
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Interface for an application run in the main loop of tr. </p>
 </div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:metadata" id="r_metadata"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structtr_1_1application_1_1metadata.html">metadata</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Application metadata.  <a href="structtr_1_1application_1_1metadata.html#details">More...</a><br /></td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-types" class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
 <tr class="memitem:ad468e60c47e951ff861df0f9daa9bd7b" id="r_ad468e60c47e951ff861df0f9daa9bd7b"><td class="memItemLeft">enum class &#160;</td><td class="memItemRight"><a class="el" href="#ad468e60c47e951ff861df0f9daa9bd7b">signal</a> { <a class="el" href="#ad468e60c47e951ff861df0f9daa9bd7bac0dfc2c94bd5e3e0e48e9084ef8cc0e2">proceed</a>
@@ -145,19 +140,9 @@ Public Types</h2></td></tr>
 , <a class="el" href="#ad468e60c47e951ff861df0f9daa9bd7ba5bb94a1c12413a2e5d14deabab29f2aa">abort</a>
  }</td></tr>
 <tr class="memdesc:ad468e60c47e951ff861df0f9daa9bd7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Signals used for defining the control flow of the application callbacks.  <a href="#ad468e60c47e951ff861df0f9daa9bd7b">More...</a><br /></td></tr>
-<tr class="memitem:a52455c54911b67d7984c5103cb497e2f" id="r_a52455c54911b67d7984c5103cb497e2f"><td class="memItemLeft">enum class &#160;</td><td class="memItemRight"><a class="el" href="#a52455c54911b67d7984c5103cb497e2f">type</a> { <a class="el" href="#a52455c54911b67d7984c5103cb497e2fac8d46d341bea4fd5bff866a65ff8aea9">game</a>
-, <a class="el" href="#a52455c54911b67d7984c5103cb497e2fa3676d55f84497cbeadfc614c1b1b62fc">application</a>
- }</td></tr>
-<tr class="memdesc:a52455c54911b67d7984c5103cb497e2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Supported application types.  <a href="#a52455c54911b67d7984c5103cb497e2f">More...</a><br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a0c2b10813e8ca3e62e952997ec9f8b63" id="r_a0c2b10813e8ca3e62e952997ec9f8b63"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a0c2b10813e8ca3e62e952997ec9f8b63">application</a> (const application &amp;)=delete</td></tr>
-<tr class="memdesc:a0c2b10813e8ca3e62e952997ec9f8b63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applications are not copyable.  <br /></td></tr>
-<tr class="memitem:a6246e8813709061f9981cc96404e9efd" id="r_a6246e8813709061f9981cc96404e9efd"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a6246e8813709061f9981cc96404e9efd">application</a> (application &amp;&amp;)=delete</td></tr>
-<tr class="memdesc:a6246e8813709061f9981cc96404e9efd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applications are not movable.  <br /></td></tr>
-<tr class="memitem:ae4693d15a2a266522a1c8636b57783c5" id="r_ae4693d15a2a266522a1c8636b57783c5"><td class="memItemLeft">virtual&#160;</td><td class="memItemRight"><a class="el" href="#ae4693d15a2a266522a1c8636b57783c5">~application</a> () noexcept=default</td></tr>
-<tr class="memdesc:ae4693d15a2a266522a1c8636b57783c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys the application.  <br /></td></tr>
 <tr class="memitem:a21ede20338183f25b06cbdfe10cc330b" id="r_a21ede20338183f25b06cbdfe10cc330b"><td class="memItemLeft">virtual <a class="el" href="#ad468e60c47e951ff861df0f9daa9bd7b">signal</a>&#160;</td><td class="memItemRight"><a class="el" href="#a21ede20338183f25b06cbdfe10cc330b">initialize</a> ()</td></tr>
 <tr class="memdesc:a21ede20338183f25b06cbdfe10cc330b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function called once at the beginning of execution after the initialization of systems.  <br /></td></tr>
 <tr class="memitem:a160bde93f0bb17aecbbe24ccfc2fcc5a" id="r_a160bde93f0bb17aecbbe24ccfc2fcc5a"><td class="memItemLeft">virtual <a class="el" href="#ad468e60c47e951ff861df0f9daa9bd7b">signal</a>&#160;</td><td class="memItemRight"><a class="el" href="#a160bde93f0bb17aecbbe24ccfc2fcc5a">handle_event</a> (const event &amp;event)</td></tr>
@@ -166,6 +151,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a7544b8b75ad439d7a03341ff7d97f4cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Primary update callback function.  <br /></td></tr>
 <tr class="memitem:a4b38208354e4ac8820f70d51a1914636" id="r_a4b38208354e4ac8820f70d51a1914636"><td class="memItemLeft">virtual void&#160;</td><td class="memItemRight"><a class="el" href="#a4b38208354e4ac8820f70d51a1914636">shut_down</a> (signal<a class="el" href="#ad468e60c47e951ff861df0f9daa9bd7b">signal</a> signal<a class="el" href="#ad468e60c47e951ff861df0f9daa9bd7b">signal</a>)</td></tr>
 <tr class="memdesc:a4b38208354e4ac8820f70d51a1914636"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function called once at the end of execution right before the destruction of systems.  <br /></td></tr>
+<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors and destructors</div></td></tr>
+<tr class="memitem:a0c2b10813e8ca3e62e952997ec9f8b63" id="r_a0c2b10813e8ca3e62e952997ec9f8b63"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a0c2b10813e8ca3e62e952997ec9f8b63">application</a> (const application &amp;)=delete</td></tr>
+<tr class="memdesc:a0c2b10813e8ca3e62e952997ec9f8b63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applications are not copyable.  <br /></td></tr>
+<tr class="memitem:a6246e8813709061f9981cc96404e9efd" id="r_a6246e8813709061f9981cc96404e9efd"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a6246e8813709061f9981cc96404e9efd">application</a> (application &amp;&amp;)=delete</td></tr>
+<tr class="memdesc:a6246e8813709061f9981cc96404e9efd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applications are not movable.  <br /></td></tr>
+<tr class="memitem:ae4693d15a2a266522a1c8636b57783c5" id="r_ae4693d15a2a266522a1c8636b57783c5"><td class="memItemLeft">virtual&#160;</td><td class="memItemRight"><a class="el" href="#ae4693d15a2a266522a1c8636b57783c5">~application</a> () noexcept=default</td></tr>
+<tr class="memdesc:ae4693d15a2a266522a1c8636b57783c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys the application.  <br /></td></tr>
+<tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Assignment operators</div></td></tr>
+<tr class="memitem:aa6d9215406cb4f0bef8c756f7313e7b3" id="r_aa6d9215406cb4f0bef8c756f7313e7b3"><td class="memItemLeft"><a class="el" href="#a0c2b10813e8ca3e62e952997ec9f8b63">application</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#aa6d9215406cb4f0bef8c756f7313e7b3">operator=</a> (const <a class="el" href="#a0c2b10813e8ca3e62e952997ec9f8b63">application</a> &amp;)=delete</td></tr>
+<tr class="memdesc:aa6d9215406cb4f0bef8c756f7313e7b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applications are not copyable.  <br /></td></tr>
+<tr class="memitem:ac32bbb2302db79567faff5480b8d87cf" id="r_ac32bbb2302db79567faff5480b8d87cf"><td class="memItemLeft"><a class="el" href="#a0c2b10813e8ca3e62e952997ec9f8b63">application</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ac32bbb2302db79567faff5480b8d87cf">operator=</a> (<a class="el" href="#a0c2b10813e8ca3e62e952997ec9f8b63">application</a> &amp;&amp;)=delete</td></tr>
+<tr class="memdesc:ac32bbb2302db79567faff5480b8d87cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applications are not movable.  <br /></td></tr>
 </table>
 <a name="doc-enum-members" id="doc-enum-members"></a><h2 id="header-doc-enum-members" class="groupheader">Member Enumeration Documentation</h2>
 <a id="ad468e60c47e951ff861df0f9daa9bd7b" name="ad468e60c47e951ff861df0f9daa9bd7b"></a>
@@ -195,36 +192,6 @@ Public Member Functions</h2></td></tr>
 <tr><td class="fieldname"><a id="ad468e60c47e951ff861df0f9daa9bd7baf24f62eeb789199b9b2e467df3b1876b" name="ad468e60c47e951ff861df0f9daa9bd7baf24f62eeb789199b9b2e467df3b1876b"></a>exit&#160;</td><td class="fielddoc"><p>Regular exit. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="ad468e60c47e951ff861df0f9daa9bd7ba5bb94a1c12413a2e5d14deabab29f2aa" name="ad468e60c47e951ff861df0f9daa9bd7ba5bb94a1c12413a2e5d14deabab29f2aa"></a>abort&#160;</td><td class="fielddoc"><p>Abnormal exit. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a id="a52455c54911b67d7984c5103cb497e2f" name="a52455c54911b67d7984c5103cb497e2f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a52455c54911b67d7984c5103cb497e2f">&#9670;&#160;</a></span>type</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum class <a class="el" href="#a52455c54911b67d7984c5103cb497e2f">tr::application::type</a></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel strong">strong</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Supported application types. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a52455c54911b67d7984c5103cb497e2fac8d46d341bea4fd5bff866a65ff8aea9" name="a52455c54911b67d7984c5103cb497e2fac8d46d341bea4fd5bff866a65ff8aea9"></a>game&#160;</td><td class="fielddoc"><p>The application is a game. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a52455c54911b67d7984c5103cb497e2fa3676d55f84497cbeadfc614c1b1b62fc" name="a52455c54911b67d7984c5103cb497e2fa3676d55f84497cbeadfc614c1b1b62fc"></a>application&#160;</td><td class="fielddoc"><p>The application type is unspecified. </p>
 </td></tr>
 </table>
 
@@ -313,6 +280,60 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="aa6d9215406cb4f0bef8c756f7313e7b3" name="aa6d9215406cb4f0bef8c756f7313e7b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa6d9215406cb4f0bef8c756f7313e7b3">&#9670;&#160;</a></span>operator=() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a0c2b10813e8ca3e62e952997ec9f8b63">application</a> &amp; tr::application::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="#a0c2b10813e8ca3e62e952997ec9f8b63">application</a> &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Applications are not copyable. </p>
+
+</div>
+</div>
+<a id="ac32bbb2302db79567faff5480b8d87cf" name="ac32bbb2302db79567faff5480b8d87cf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac32bbb2302db79567faff5480b8d87cf">&#9670;&#160;</a></span>operator=() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a0c2b10813e8ca3e62e952997ec9f8b63">application</a> &amp; tr::application::operator= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#a0c2b10813e8ca3e62e952997ec9f8b63">application</a> &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Applications are not movable. </p>
+
+</div>
+</div>
 <a id="a21ede20338183f25b06cbdfe10cc330b" name="a21ede20338183f25b06cbdfe10cc330b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a21ede20338183f25b06cbdfe10cc330b">&#9670;&#160;</a></span>initialize()</h2>
 

@@ -133,7 +133,9 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1map
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename Element&gt;<br />
 class tr::mapped_graphics_buffer_span&lt; Element &gt;</div><p>Mapped graphics buffer span. </p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
+<p><span class="tt"><a class="el" href="classtr_1_1mapped__graphics__buffer__span.html" title="Mapped graphics buffer span.">tr::mapped_graphics_buffer_span</a></span> represents the CPU mapping of a typed graphics buffer span and models access to it as such. The span is automatically unmapped when the map is destroyed.</p>
+<p>Every instance of <span class="tt"><a class="el" href="classtr_1_1mapped__graphics__buffer__span.html" title="Mapped graphics buffer span.">tr::mapped_graphics_buffer_span</a></span> is associated with a graphics context, as well as with a buffer, and cannot outlive either.</p>
+<p>Moved-from instances of <span class="tt"><a class="el" href="classtr_1_1mapped__graphics__buffer__span.html" title="Mapped graphics buffer span.">tr::mapped_graphics_buffer_span</a></span> are left in a special 'invalid' state. Invalid <span class="tt"><a class="el" href="classtr_1_1mapped__graphics__buffer__span.html" title="Mapped graphics buffer span.">tr::mapped_graphics_buffer_span</a></span> instances may not be interacted with besides moving a new value into them. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Element</td><td>Type of the elements of the span. </td></tr>
   </table>
@@ -163,12 +165,22 @@ Public Types</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Span conversion</div></td></tr>
+<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors and destructors</div></td></tr>
+<tr class="memitem:a6053a7456f1524ee90b5f96d15405d10" id="r_a6053a7456f1524ee90b5f96d15405d10"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a6053a7456f1524ee90b5f96d15405d10">mapped_graphics_buffer_span</a> (const mapped_graphics_buffer_span &amp;)=delete</td></tr>
+<tr class="memdesc:a6053a7456f1524ee90b5f96d15405d10"><td class="mdescLeft">&#160;</td><td class="mdescRight">Graphics buffer span maps are not copyable.  <br /></td></tr>
+<tr class="memitem:ab5446c3cfd4db9c7a5e68666033a2107" id="r_ab5446c3cfd4db9c7a5e68666033a2107"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ab5446c3cfd4db9c7a5e68666033a2107">mapped_graphics_buffer_span</a> (mapped_graphics_buffer_span &amp;&amp;rhs)=default</td></tr>
+<tr class="memdesc:ab5446c3cfd4db9c7a5e68666033a2107"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves a graphics buffer span map.  <br /></td></tr>
+<tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Assignment operators</div></td></tr>
+<tr class="memitem:a5987c5b0b30db565397a6477167a7ca1" id="r_a5987c5b0b30db565397a6477167a7ca1"><td class="memItemLeft"><a class="el" href="#a6053a7456f1524ee90b5f96d15405d10">mapped_graphics_buffer_span</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a5987c5b0b30db565397a6477167a7ca1">operator=</a> (const <a class="el" href="#a6053a7456f1524ee90b5f96d15405d10">mapped_graphics_buffer_span</a> &amp;)=delete</td></tr>
+<tr class="memdesc:a5987c5b0b30db565397a6477167a7ca1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Graphics buffer span maps are not copyable.  <br /></td></tr>
+<tr class="memitem:ac6962cf0604ae27c21e9b07822233295" id="r_ac6962cf0604ae27c21e9b07822233295"><td class="memItemLeft"><a class="el" href="#a6053a7456f1524ee90b5f96d15405d10">mapped_graphics_buffer_span</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ac6962cf0604ae27c21e9b07822233295">operator=</a> (<a class="el" href="#a6053a7456f1524ee90b5f96d15405d10">mapped_graphics_buffer_span</a> &amp;&amp;rhs)=default</td></tr>
+<tr class="memdesc:ac6962cf0604ae27c21e9b07822233295"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves a graphics buffer span map.  <br /></td></tr>
+<tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Span conversion</div></td></tr>
 <tr class="memitem:aa2a46cf4e7edb7319e74741d0b3ef608" id="r_aa2a46cf4e7edb7319e74741d0b3ef608"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#aa2a46cf4e7edb7319e74741d0b3ef608">operator std::span&lt; Element &gt;</a> () const noexcept</td></tr>
 <tr class="memdesc:aa2a46cf4e7edb7319e74741d0b3ef608"><td class="mdescLeft">&#160;</td><td class="mdescRight">Casts the map into a regular span.  <br /></td></tr>
 <tr class="memitem:a587ca6aea98c992767af150b85c0c180" id="r_a587ca6aea98c992767af150b85c0c180"><td class="memItemLeft">std::span&lt; Element &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a587ca6aea98c992767af150b85c0c180">span</a> () const noexcept</td></tr>
 <tr class="memdesc:a587ca6aea98c992767af150b85c0c180"><td class="mdescLeft">&#160;</td><td class="mdescRight">Casts the map into a regular span.  <br /></td></tr>
-<tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Access</div></td></tr>
+<tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Access</div></td></tr>
 <tr class="memitem:a4e6f8f53a50cd5d6c88edad6102d3d22" id="r_a4e6f8f53a50cd5d6c88edad6102d3d22"><td class="memItemLeft"><a class="el" href="#a52713b683ef41558250c8d24e15bd1d5">reference</a>&#160;</td><td class="memItemRight"><a class="el" href="#a4e6f8f53a50cd5d6c88edad6102d3d22">operator[]</a> (<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> index) const noexcept</td></tr>
 <tr class="memdesc:a4e6f8f53a50cd5d6c88edad6102d3d22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Indexes into the map.  <br /></td></tr>
 <tr class="memitem:a86a816b0e05046ebf965cf070d8a3d89" id="r_a86a816b0e05046ebf965cf070d8a3d89"><td class="memItemLeft"><a class="el" href="#af106a79560a09ed5815e0442ee43deea">pointer</a>&#160;</td><td class="memItemRight"><a class="el" href="#a86a816b0e05046ebf965cf070d8a3d89">data</a> () const noexcept</td></tr>
@@ -343,7 +355,137 @@ template&lt;typename Element&gt; </div>
 
 </div>
 </div>
+<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a6053a7456f1524ee90b5f96d15405d10" name="a6053a7456f1524ee90b5f96d15405d10"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6053a7456f1524ee90b5f96d15405d10">&#9670;&#160;</a></span>mapped_graphics_buffer_span() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Element&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classtr_1_1mapped__graphics__buffer__span.html">tr::mapped_graphics_buffer_span</a>&lt; Element &gt;::mapped_graphics_buffer_span </td>
+          <td>(</td>
+          <td class="paramtype">const mapped_graphics_buffer_span&lt; Element &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Graphics buffer span maps are not copyable. </p>
+
+</div>
+</div>
+<a id="ab5446c3cfd4db9c7a5e68666033a2107" name="ab5446c3cfd4db9c7a5e68666033a2107"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab5446c3cfd4db9c7a5e68666033a2107">&#9670;&#160;</a></span>mapped_graphics_buffer_span() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Element&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classtr_1_1mapped__graphics__buffer__span.html">tr::mapped_graphics_buffer_span</a>&lt; Element &gt;::mapped_graphics_buffer_span </td>
+          <td>(</td>
+          <td class="paramtype">mapped_graphics_buffer_span&lt; Element &gt; &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel default">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Moves a graphics buffer span map. </p>
+<p><span class="tt">rhs</span> is left in an invalid state after the move as per the class description. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rhs</td><td>Graphics buffer span map to move. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="a5987c5b0b30db565397a6477167a7ca1" name="a5987c5b0b30db565397a6477167a7ca1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5987c5b0b30db565397a6477167a7ca1">&#9670;&#160;</a></span>operator=() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Element&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a6053a7456f1524ee90b5f96d15405d10">mapped_graphics_buffer_span</a> &amp; <a class="el" href="classtr_1_1mapped__graphics__buffer__span.html">tr::mapped_graphics_buffer_span</a>&lt; Element &gt;::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="#a6053a7456f1524ee90b5f96d15405d10">mapped_graphics_buffer_span</a>&lt; Element &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Graphics buffer span maps are not copyable. </p>
+
+</div>
+</div>
+<a id="ac6962cf0604ae27c21e9b07822233295" name="ac6962cf0604ae27c21e9b07822233295"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6962cf0604ae27c21e9b07822233295">&#9670;&#160;</a></span>operator=() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Element&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a6053a7456f1524ee90b5f96d15405d10">mapped_graphics_buffer_span</a> &amp; <a class="el" href="classtr_1_1mapped__graphics__buffer__span.html">tr::mapped_graphics_buffer_span</a>&lt; Element &gt;::operator= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#a6053a7456f1524ee90b5f96d15405d10">mapped_graphics_buffer_span</a>&lt; Element &gt; &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel default">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Moves a graphics buffer span map. </p>
+<p><span class="tt">rhs</span> is left in an invalid state after the move as per the class description. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rhs</td><td>Graphics buffer span map to move. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Reference to <span class="tt">*this</span>. </dd></dl>
+
+</div>
+</div>
 <a id="aa2a46cf4e7edb7319e74741d0b3ef608" name="aa2a46cf4e7edb7319e74741d0b3ef608"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa2a46cf4e7edb7319e74741d0b3ef608">&#9670;&#160;</a></span>operator std::span&lt; Element &gt;()</h2>
 

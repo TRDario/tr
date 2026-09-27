@@ -128,28 +128,39 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1ren
 </div><!--header-->
 <div class="contents">
 
-<p>Opaque reference to a texture or framebuffer that can be drawn to.  
+<p>Reference to a rendering target.  
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Opaque reference to a texture or framebuffer that can be drawn to. </p>
+<div class="textblock"><p>Reference to a rendering target. </p>
+<p><span class="tt"><a class="el" href="classtr_1_1render__target.html" title="Reference to a rendering target.">tr::render_target</a></span> is a reference to a specific rendering target. It is designed to be cheap to pass around, though passing by reference is still recommended due to its size.</p>
+<p>If not empty, the render target reference should not outlive the texture object it is pointing at, as it will otherwise become dangling. </p>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
+<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors and destructors</div></td></tr>
 <tr class="memitem:ab6d1d1e6bb9777c3e034c992ba1473de" id="r_ab6d1d1e6bb9777c3e034c992ba1473de"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ab6d1d1e6bb9777c3e034c992ba1473de">render_target</a> (const <a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context) noexcept</td></tr>
 <tr class="memdesc:ab6d1d1e6bb9777c3e034c992ba1473de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a backbuffer render target.  <br /></td></tr>
 <tr class="memitem:a7e22b0344817b7b21d5145a35d68c879" id="r_a7e22b0344817b7b21d5145a35d68c879"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a7e22b0344817b7b21d5145a35d68c879">render_target</a> (const framebuffer &amp;framebuffer, glm::ivec2 framebuffer_size) noexcept</td></tr>
 <tr class="memdesc:a7e22b0344817b7b21d5145a35d68c879"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a render target on a framebuffer.  <br /></td></tr>
 <tr class="memitem:a9c7b2180f4a48260b9613932469de0bd" id="r_a9c7b2180f4a48260b9613932469de0bd"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a9c7b2180f4a48260b9613932469de0bd">render_target</a> (const framebuffer &amp;framebuffer, glm::ivec2 framebuffer_size, <a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; int &gt; viewport, <a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; int &gt; scissor_box) noexcept</td></tr>
 <tr class="memdesc:a9c7b2180f4a48260b9613932469de0bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a render target on a framebuffer.  <br /></td></tr>
-<tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Properties</div></td></tr>
+<tr class="memitem:a6bf51681ca2722ea37f1c147cff2a15c" id="r_a6bf51681ca2722ea37f1c147cff2a15c"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a6bf51681ca2722ea37f1c147cff2a15c">render_target</a> (const render_target &amp;) noexcept=default</td></tr>
+<tr class="memdesc:a6bf51681ca2722ea37f1c147cff2a15c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Render targets are trivially copyable.  <br /></td></tr>
+<tr class="memitem:a0ee643ec43fee8b5a8dd015a8c80a4c1" id="r_a0ee643ec43fee8b5a8dd015a8c80a4c1"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a0ee643ec43fee8b5a8dd015a8c80a4c1">render_target</a> (render_target &amp;&amp;) noexcept=default</td></tr>
+<tr class="memdesc:a0ee643ec43fee8b5a8dd015a8c80a4c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Render targets are trivially movable.  <br /></td></tr>
+<tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Assignment operators</div></td></tr>
+<tr class="memitem:a85df27adad454feae09e5726bc355ead" id="r_a85df27adad454feae09e5726bc355ead"><td class="memItemLeft"><a class="el" href="#ab6d1d1e6bb9777c3e034c992ba1473de">render_target</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a85df27adad454feae09e5726bc355ead">operator=</a> (const <a class="el" href="#ab6d1d1e6bb9777c3e034c992ba1473de">render_target</a> &amp;) noexcept=default</td></tr>
+<tr class="memdesc:a85df27adad454feae09e5726bc355ead"><td class="mdescLeft">&#160;</td><td class="mdescRight">Render targets are trivially copyable.  <br /></td></tr>
+<tr class="memitem:ab77eb09ffa77325262e7190c1c4027b5" id="r_ab77eb09ffa77325262e7190c1c4027b5"><td class="memItemLeft"><a class="el" href="#ab6d1d1e6bb9777c3e034c992ba1473de">render_target</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ab77eb09ffa77325262e7190c1c4027b5">operator=</a> (<a class="el" href="#ab6d1d1e6bb9777c3e034c992ba1473de">render_target</a> &amp;&amp;) noexcept=default</td></tr>
+<tr class="memdesc:ab77eb09ffa77325262e7190c1c4027b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Render targets are trivially movable.  <br /></td></tr>
+<tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Properties</div></td></tr>
 <tr class="memitem:ad1734274f38c2bcc1b5e106eae40bbf7" id="r_ad1734274f38c2bcc1b5e106eae40bbf7"><td class="memItemLeft">glm::ivec2&#160;</td><td class="memItemRight"><a class="el" href="#ad1734274f38c2bcc1b5e106eae40bbf7">size</a> () const noexcept</td></tr>
 <tr class="memdesc:ad1734274f38c2bcc1b5e106eae40bbf7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the size of the render target.  <br /></td></tr>
 <tr class="memitem:abb4cb6357ef4661d598becbbbaa51f31" id="r_abb4cb6357ef4661d598becbbbaa51f31"><td class="memItemLeft"><a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; int &gt;&#160;</td><td class="memItemRight"><a class="el" href="#abb4cb6357ef4661d598becbbbaa51f31">viewport</a> () const noexcept</td></tr>
 <tr class="memdesc:abb4cb6357ef4661d598becbbbaa51f31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the viewport of the render target within the target framebuffer.  <br /></td></tr>
 <tr class="memitem:a042ff7ee02783192fb6bd3e3b8e982f6" id="r_a042ff7ee02783192fb6bd3e3b8e982f6"><td class="memItemLeft"><a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; int &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a042ff7ee02783192fb6bd3e3b8e982f6">scissor_box</a> () const noexcept</td></tr>
 <tr class="memdesc:a042ff7ee02783192fb6bd3e3b8e982f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the scissor box of the render target within the target framebuffer.  <br /></td></tr>
-<tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Subtargets</div></td></tr>
+<tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Subtargets</div></td></tr>
 <tr class="memitem:a02c8d05207f65976d52ad6c44649ed50" id="r_a02c8d05207f65976d52ad6c44649ed50"><td class="memItemLeft"><a class="el" href="#ab6d1d1e6bb9777c3e034c992ba1473de">render_target</a>&#160;</td><td class="memItemRight"><a class="el" href="#a02c8d05207f65976d52ad6c44649ed50">cropped</a> (<a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; int &gt; viewport) const noexcept</td></tr>
 <tr class="memdesc:a02c8d05207f65976d52ad6c44649ed50"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new render target with a cropped viewport and full scissor box.  <br /></td></tr>
 <tr class="memitem:a162d212cd10899acf0d9101e1d99f736" id="r_a162d212cd10899acf0d9101e1d99f736"><td class="memItemLeft"><a class="el" href="#ab6d1d1e6bb9777c3e034c992ba1473de">render_target</a>&#160;</td><td class="memItemRight"><a class="el" href="#a162d212cd10899acf0d9101e1d99f736">scissored</a> (<a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; int &gt; scissor_box) const noexcept</td></tr>
@@ -157,7 +168,7 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ab6d1d1e6bb9777c3e034c992ba1473de" name="ab6d1d1e6bb9777c3e034c992ba1473de"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab6d1d1e6bb9777c3e034c992ba1473de">&#9670;&#160;</a></span>render_target() <span class="overload">[1/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab6d1d1e6bb9777c3e034c992ba1473de">&#9670;&#160;</a></span>render_target() <span class="overload">[1/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -191,7 +202,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a7e22b0344817b7b21d5145a35d68c879" name="a7e22b0344817b7b21d5145a35d68c879"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7e22b0344817b7b21d5145a35d68c879">&#9670;&#160;</a></span>render_target() <span class="overload">[2/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a7e22b0344817b7b21d5145a35d68c879">&#9670;&#160;</a></span>render_target() <span class="overload">[2/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -229,7 +240,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a9c7b2180f4a48260b9613932469de0bd" name="a9c7b2180f4a48260b9613932469de0bd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9c7b2180f4a48260b9613932469de0bd">&#9670;&#160;</a></span>render_target() <span class="overload">[3/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c7b2180f4a48260b9613932469de0bd">&#9670;&#160;</a></span>render_target() <span class="overload">[3/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -278,7 +289,117 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a6bf51681ca2722ea37f1c147cff2a15c" name="a6bf51681ca2722ea37f1c147cff2a15c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6bf51681ca2722ea37f1c147cff2a15c">&#9670;&#160;</a></span>render_target() <span class="overload">[4/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tr::render_target::render_target </td>
+          <td>(</td>
+          <td class="paramtype">const render_target &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel default">default</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Render targets are trivially copyable. </p>
+
+</div>
+</div>
+<a id="a0ee643ec43fee8b5a8dd015a8c80a4c1" name="a0ee643ec43fee8b5a8dd015a8c80a4c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ee643ec43fee8b5a8dd015a8c80a4c1">&#9670;&#160;</a></span>render_target() <span class="overload">[5/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tr::render_target::render_target </td>
+          <td>(</td>
+          <td class="paramtype">render_target &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel default">default</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Render targets are trivially movable. </p>
+
+</div>
+</div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="a85df27adad454feae09e5726bc355ead" name="a85df27adad454feae09e5726bc355ead"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85df27adad454feae09e5726bc355ead">&#9670;&#160;</a></span>operator=() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#ab6d1d1e6bb9777c3e034c992ba1473de">render_target</a> &amp; tr::render_target::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="#ab6d1d1e6bb9777c3e034c992ba1473de">render_target</a> &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel default">default</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Render targets are trivially copyable. </p>
+<dl class="section return"><dt>Returns</dt><dd>Reference to <span class="tt">*this</span>. </dd></dl>
+
+</div>
+</div>
+<a id="ab77eb09ffa77325262e7190c1c4027b5" name="ab77eb09ffa77325262e7190c1c4027b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab77eb09ffa77325262e7190c1c4027b5">&#9670;&#160;</a></span>operator=() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#ab6d1d1e6bb9777c3e034c992ba1473de">render_target</a> &amp; tr::render_target::operator= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#ab6d1d1e6bb9777c3e034c992ba1473de">render_target</a> &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel default">default</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Render targets are trivially movable. </p>
+<dl class="section return"><dt>Returns</dt><dd>Reference to <span class="tt">*this</span>. </dd></dl>
+
+</div>
+</div>
 <a id="ad1734274f38c2bcc1b5e106eae40bbf7" name="ad1734274f38c2bcc1b5e106eae40bbf7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad1734274f38c2bcc1b5e106eae40bbf7">&#9670;&#160;</a></span>size()</h2>
 

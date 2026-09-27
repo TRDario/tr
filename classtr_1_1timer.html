@@ -142,10 +142,10 @@ Public Types</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
+<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors and destructors</div></td></tr>
 <tr class="memitem:a5a8e14f3699fbc4809decb2c692419da" id="r_a5a8e14f3699fbc4809decb2c692419da"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a5a8e14f3699fbc4809decb2c692419da">timer</a> ()=default</td></tr>
 <tr class="memdesc:a5a8e14f3699fbc4809decb2c692419da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an inactive timer.  <br /></td></tr>
-<tr class="memitem:a40b989267ac82cb64ed1f84ca0c42f9c" id="r_a40b989267ac82cb64ed1f84ca0c42f9c"><td class="memTemplParams" colspan="2">template&lt;arithmetic Rep, specialization_of_v&lt; std::ratio &gt; Period, std::convertible_to&lt; std::function&lt; void()&gt; &gt; Callback&gt; </td></tr>
+<tr class="memitem:a40b989267ac82cb64ed1f84ca0c42f9c" id="r_a40b989267ac82cb64ed1f84ca0c42f9c"><td class="memTemplParams" colspan="2">template&lt;arithmetic Rep, specialization_of_c&lt; std::ratio &gt; Period, std::convertible_to&lt; std::function&lt; void()&gt; &gt; Callback&gt; </td></tr>
 <tr class="memitem:a40b989267ac82cb64ed1f84ca0c42f9c template"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a40b989267ac82cb64ed1f84ca0c42f9c">timer</a> (const std::chrono::duration&lt; Rep, Period &gt; &amp;interval, Callback &amp;&amp;cb)</td></tr>
 <tr class="memdesc:a40b989267ac82cb64ed1f84ca0c42f9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an active timer.  <br /></td></tr>
 <tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Status</div></td></tr>
@@ -203,7 +203,7 @@ Public Member Functions</h2></td></tr>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;arithmetic Rep, specialization_of_v&lt; std::ratio &gt; Period, std::convertible_to&lt; std::function&lt; void()&gt; &gt; Callback&gt; </div>
+template&lt;arithmetic Rep, specialization_of_c&lt; std::ratio &gt; Period, std::convertible_to&lt; std::function&lt; void()&gt; &gt; Callback&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">

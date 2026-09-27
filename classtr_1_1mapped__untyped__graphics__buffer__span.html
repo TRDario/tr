@@ -132,16 +132,151 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1map
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Map of a span of an untyped graphics buffer. </p>
+<p><span class="tt"><a class="el" href="classtr_1_1mapped__untyped__graphics__buffer__span.html" title="Map of a span of an untyped graphics buffer.">tr::mapped_untyped_graphics_buffer_span</a></span> represents the CPU mapping of a span of an untyped graphics buffer. Unlike <span class="tt"><a class="el" href="classtr_1_1mapped__graphics__buffer__span.html" title="Mapped graphics buffer span.">tr::mapped_graphics_buffer_span</a></span> or <span class="tt"><a class="el" href="classtr_1_1mapped__graphics__buffer__object.html" title="Map of a graphics buffer object.">tr::mapped_graphics_buffer_object</a></span>, it does not attempt to model the contents of the buffer, but is instead a minimal wrapper around a span of bytes that unmaps the buffer when destroyed.</p>
+<p>Every instance of <span class="tt"><a class="el" href="classtr_1_1mapped__untyped__graphics__buffer__span.html" title="Map of a span of an untyped graphics buffer.">tr::mapped_untyped_graphics_buffer_span</a></span> is associated with a graphics context, as well as with a buffer, and cannot outlive either.</p>
+<p>Moved-from instances of <span class="tt"><a class="el" href="classtr_1_1mapped__untyped__graphics__buffer__span.html" title="Map of a span of an untyped graphics buffer.">tr::mapped_untyped_graphics_buffer_span</a></span> are left in a special 'invalid' state. Invalid <span class="tt"><a class="el" href="classtr_1_1mapped__untyped__graphics__buffer__span.html" title="Map of a span of an untyped graphics buffer.">tr::mapped_untyped_graphics_buffer_span</a></span> instances may not be interacted with besides moving a new value into them. </p>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Span conversion</div></td></tr>
+<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors and destructors</div></td></tr>
+<tr class="memitem:a938bebe18e93116c6eced88a36fa6d05" id="r_a938bebe18e93116c6eced88a36fa6d05"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a938bebe18e93116c6eced88a36fa6d05">mapped_untyped_graphics_buffer_span</a> (const mapped_untyped_graphics_buffer_span &amp;)=delete</td></tr>
+<tr class="memdesc:a938bebe18e93116c6eced88a36fa6d05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Untyped graphics buffer span maps are not copyable.  <br /></td></tr>
+<tr class="memitem:a012b7a778a18e3799286de5ee71ada06" id="r_a012b7a778a18e3799286de5ee71ada06"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a012b7a778a18e3799286de5ee71ada06">mapped_untyped_graphics_buffer_span</a> (mapped_untyped_graphics_buffer_span &amp;&amp;rhs) noexcept=default</td></tr>
+<tr class="memdesc:a012b7a778a18e3799286de5ee71ada06"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves an untyped graphics buffer span map.  <br /></td></tr>
+<tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Assignment operators</div></td></tr>
+<tr class="memitem:a2a5f326b905980b1dbc5c031b7b2dc78" id="r_a2a5f326b905980b1dbc5c031b7b2dc78"><td class="memItemLeft"><a class="el" href="#a938bebe18e93116c6eced88a36fa6d05">mapped_untyped_graphics_buffer_span</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a2a5f326b905980b1dbc5c031b7b2dc78">operator=</a> (const <a class="el" href="#a938bebe18e93116c6eced88a36fa6d05">mapped_untyped_graphics_buffer_span</a> &amp;)=delete</td></tr>
+<tr class="memdesc:a2a5f326b905980b1dbc5c031b7b2dc78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Untyped graphics buffer span maps are not copyable.  <br /></td></tr>
+<tr class="memitem:a0965dc33c6c9fb52ac0eb5b206226836" id="r_a0965dc33c6c9fb52ac0eb5b206226836"><td class="memItemLeft"><a class="el" href="#a938bebe18e93116c6eced88a36fa6d05">mapped_untyped_graphics_buffer_span</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a0965dc33c6c9fb52ac0eb5b206226836">operator=</a> (<a class="el" href="#a938bebe18e93116c6eced88a36fa6d05">mapped_untyped_graphics_buffer_span</a> &amp;&amp;rhs) noexcept=default</td></tr>
+<tr class="memdesc:a0965dc33c6c9fb52ac0eb5b206226836"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves an untyped graphics buffer span map.  <br /></td></tr>
+<tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Span conversion</div></td></tr>
 <tr class="memitem:a8feb98e5d155655bbbd773fc8e1b5a88" id="r_a8feb98e5d155655bbbd773fc8e1b5a88"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a8feb98e5d155655bbbd773fc8e1b5a88">operator std::span&lt; std::byte &gt;</a> () const noexcept</td></tr>
 <tr class="memdesc:a8feb98e5d155655bbbd773fc8e1b5a88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Casts the map into a regular span.  <br /></td></tr>
 <tr class="memitem:a6c99e8a2ef1618e965eea935a0500e97" id="r_a6c99e8a2ef1618e965eea935a0500e97"><td class="memItemLeft">std::span&lt; std::byte &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a6c99e8a2ef1618e965eea935a0500e97">span</a> () const noexcept</td></tr>
 <tr class="memdesc:a6c99e8a2ef1618e965eea935a0500e97"><td class="mdescLeft">&#160;</td><td class="mdescRight">Casts the map into a regular span.  <br /></td></tr>
 </table>
+<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a938bebe18e93116c6eced88a36fa6d05" name="a938bebe18e93116c6eced88a36fa6d05"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a938bebe18e93116c6eced88a36fa6d05">&#9670;&#160;</a></span>mapped_untyped_graphics_buffer_span() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tr::mapped_untyped_graphics_buffer_span::mapped_untyped_graphics_buffer_span </td>
+          <td>(</td>
+          <td class="paramtype">const mapped_untyped_graphics_buffer_span &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Untyped graphics buffer span maps are not copyable. </p>
+
+</div>
+</div>
+<a id="a012b7a778a18e3799286de5ee71ada06" name="a012b7a778a18e3799286de5ee71ada06"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a012b7a778a18e3799286de5ee71ada06">&#9670;&#160;</a></span>mapped_untyped_graphics_buffer_span() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tr::mapped_untyped_graphics_buffer_span::mapped_untyped_graphics_buffer_span </td>
+          <td>(</td>
+          <td class="paramtype">mapped_untyped_graphics_buffer_span &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel default">default</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Moves an untyped graphics buffer span map. </p>
+<p><span class="tt">rhs</span> is left in an invalid state after the move as per the class description. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rhs</td><td>Untyped graphics buffer span map to move from. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="a2a5f326b905980b1dbc5c031b7b2dc78" name="a2a5f326b905980b1dbc5c031b7b2dc78"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a5f326b905980b1dbc5c031b7b2dc78">&#9670;&#160;</a></span>operator=() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a938bebe18e93116c6eced88a36fa6d05">mapped_untyped_graphics_buffer_span</a> &amp; tr::mapped_untyped_graphics_buffer_span::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="#a938bebe18e93116c6eced88a36fa6d05">mapped_untyped_graphics_buffer_span</a> &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Untyped graphics buffer span maps are not copyable. </p>
+
+</div>
+</div>
+<a id="a0965dc33c6c9fb52ac0eb5b206226836" name="a0965dc33c6c9fb52ac0eb5b206226836"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0965dc33c6c9fb52ac0eb5b206226836">&#9670;&#160;</a></span>operator=() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a938bebe18e93116c6eced88a36fa6d05">mapped_untyped_graphics_buffer_span</a> &amp; tr::mapped_untyped_graphics_buffer_span::operator= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#a938bebe18e93116c6eced88a36fa6d05">mapped_untyped_graphics_buffer_span</a> &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel default">default</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Moves an untyped graphics buffer span map. </p>
+<p><span class="tt">rhs</span> is left in an invalid state after the move as per the class description. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rhs</td><td>Untyped graphics buffer span map to move from. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Reference to <span class="tt">*this</span>. </dd></dl>
+
+</div>
+</div>
 <a id="a8feb98e5d155655bbbd773fc8e1b5a88" name="a8feb98e5d155655bbbd773fc8e1b5a88"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8feb98e5d155655bbbd773fc8e1b5a88">&#9670;&#160;</a></span>operator std::span&lt; std::byte &gt;()</h2>
 

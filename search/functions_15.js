@@ -8,5 +8,6 @@ var searchData=
   ['_7elog_5fsink_5',['~log_sink',['../classtr_1_1log__sink.html#a1f96bfacd368c1d079a8b1f4cb00f0ad',1,'tr::log_sink']]],
   ['_7eout_5fhandle_5ft_6',['~out_handle_t',['../classtr_1_1out__handle__t.html#abecd34949324f05fef39f78d96ff4df7',1,'tr::out_handle_t']]],
   ['_7estatic_5fvector_7',['~static_vector',['../classtr_1_1static__vector.html#ae95e89583f08acd3dfb1d5687f558a63',1,'tr::static_vector']]],
-  ['_7estdout_5flog_5fsink_8',['~stdout_log_sink',['../classtr_1_1stdout__log__sink.html#a8e8d0206aefd5308d74eb3e0efa61bc6',1,'tr::stdout_log_sink']]]
+  ['_7estdout_5flog_5fsink_8',['~stdout_log_sink',['../classtr_1_1stdout__log__sink.html#a8e8d0206aefd5308d74eb3e0efa61bc6',1,'tr::stdout_log_sink']]],
+  ['_7estring_5fbuilder_5ft_9',['~string_builder_t',['../classtr_1_1string__pool_1_1string__builder__t.html#a8917938973efcc6787769b919c6e7fbe',1,'tr::string_pool::string_builder_t']]]
 ];

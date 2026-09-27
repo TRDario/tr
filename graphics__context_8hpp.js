@@ -1,6 +1,5 @@
 var graphics__context_8hpp =
 [
-    [ "tr::graphics_context_init_error", "classtr_1_1graphics__context__init__error.html", "classtr_1_1graphics__context__init__error" ],
     [ "tr::graphics_context", "classtr_1_1graphics__context.html", "classtr_1_1graphics__context" ],
     [ "tr::graphics_context::info", "structtr_1_1graphics__context_1_1info.html", "structtr_1_1graphics__context_1_1info" ],
     [ "tr::renderer_id", "namespacetr.html#a1eb2948abd308c1bd0658317416db0a7", [

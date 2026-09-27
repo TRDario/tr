@@ -12,5 +12,7 @@ var searchData=
   ['stereo16_9',['stereo16',['../namespacetr.html#aadc8d482d8d35a661880c99bdd86069ead9c37a9391c91175a6c155b3803ec8b1',1,'tr']]],
   ['stopped_10',['stopped',['../classtr_1_1audio__source.html#ade6190c1289d24318487c039dba70b47af0a0bfe6bc7d2c58d2989034f83183e0',1,'tr::audio_source']]],
   ['strikethrough_11',['strikethrough',['../namespacetr.html#aee6753fe7ad980521da36ce9ab20c41baae9a363b2dfa9181da7ffde8e37813b5',1,'tr']]],
-  ['subtract_12',['subtract',['../namespacetr.html#aead4294434ac2897c9ce8318a8216b18a97f415c180230ce76bafa74bc058ef5f',1,'tr']]]
+  ['string_12',['string',['../namespacetr.html#a358cbb7b209d738d608455b760766575ab45cffe084dd3d20d928bee85e7b0f21',1,'tr']]],
+  ['subtract_13',['subtract',['../namespacetr.html#aead4294434ac2897c9ce8318a8216b18a97f415c180230ce76bafa74bc058ef5f',1,'tr']]],
+  ['symbol_14',['symbol',['../namespacetr.html#a358cbb7b209d738d608455b760766575a97bff26855a8bfa63e05d5477e794b24',1,'tr']]]
 ];

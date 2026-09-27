@@ -5,7 +5,7 @@ var classtr_1_1iterator__interface =
     [ "operator++", "classtr_1_1iterator__interface.html#a93b9e7ccded245071654bed7f21711bc", null ],
     [ "operator--", "classtr_1_1iterator__interface.html#a9c08003f8048cc225c48dff4db6ba0f4", null ],
     [ "operator-=", "classtr_1_1iterator__interface.html#a366456deabca4fbdb7bbbaa28056d992", null ],
-    [ "operator+", "classtr_1_1iterator__interface.html#a40ed11588c060d0eb572c7b87fec407a", null ],
-    [ "operator+", "classtr_1_1iterator__interface.html#a34d8d289d5956cd022406d3eff074654", null ],
-    [ "operator-", "classtr_1_1iterator__interface.html#a820a8005eefbcd9e9767c90dd8160856", null ]
+    [ "operator+", "classtr_1_1iterator__interface.html#afc7bddd2faeba2ab471946698c3c0e83", null ],
+    [ "operator+", "classtr_1_1iterator__interface.html#adee51ee4544013f0da2eff6718eecf06", null ],
+    [ "operator-", "classtr_1_1iterator__interface.html#a2da1265b1a6e7f194020df66a08d2017", null ]
 ];

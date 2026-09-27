@@ -133,7 +133,11 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1dyn
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename Key, atlas_entries_value_type Value, hasher&lt; Key &gt; Hash = boost::hash&lt;Key&gt;, equality_predicate&lt; Key &gt; Pred = std::equal_to&lt;Key&gt;&gt;<br />
 class tr::dynamic_atlas&lt; Key, Value, Hash, Pred &gt;</div><p>Dynamically-allocated texture atlas. </p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
+<p><span class="tt"><a class="el" href="classtr_1_1dynamic__atlas.html" title="Dynamically-allocated texture atlas.">tr::dynamic_atlas</a></span> is an abstraction over a <span class="tt"><a class="el" href="classtr_1_1texture.html" title="Container for a two-dimensional image texture accessable to shaders.">tr::texture</a></span> that allows for dynamic allocation of sub-textures within the texture. It is intended to be used as a texture atlas, where each entry in the atlas is associated with a key and a rectangle within the texture.</p>
+<p>Strictly speaking, instances of <span class="tt"><a class="el" href="classtr_1_1dynamic__atlas.html" title="Dynamically-allocated texture atlas.">tr::dynamic_atlas</a></span> are only containers for these underlying textures. This means, for example, that setting a dynamic atlas as a texture on a shader uniform does not associate it with a literal <span class="tt"><a class="el" href="classtr_1_1dynamic__atlas.html" title="Dynamically-allocated texture atlas.">tr::dynamic_atlas</a></span> object at a specific location in memory, but rather the value it contains. If the value is moved to a different instance of <span class="tt"><a class="el" href="classtr_1_1dynamic__atlas.html" title="Dynamically-allocated texture atlas.">tr::dynamic_atlas</a></span>, that value will still be set on the shader uniform. If the instance is overriden with a new value, the old value is destroyed and the shader will no longer have a set texture on that uniform. In addition, modifying the atlas may reallocate the underlying texture, which invalidates any texture views that were previously obtained from it.</p>
+<p>Every instance of <span class="tt"><a class="el" href="classtr_1_1dynamic__atlas.html" title="Dynamically-allocated texture atlas.">tr::dynamic_atlas</a></span> is associated with a graphics context and cannot outlive its parent context.</p>
+<p>Moved-from instances of <span class="tt"><a class="el" href="classtr_1_1dynamic__atlas.html" title="Dynamically-allocated texture atlas.">tr::dynamic_atlas</a></span> are left in a special 'invalid' state. Invalid <span class="tt"><a class="el" href="classtr_1_1dynamic__atlas.html" title="Dynamically-allocated texture atlas.">tr::dynamic_atlas</a></span> instances may not be interacted with besides moving a new value into them and checking for validity using <span class="tt"><a class="el" href="#a2948ea48213ad883ed9467fde0d49e7f" title="Gets whether the atlas is in a valid state.">valid()</a></span>.</p>
+<p><span class="tt"><a class="el" href="classtr_1_1dynamic__atlas.html" title="Dynamically-allocated texture atlas.">tr::dynamic_atlas</a></span> instances may be labeled and are formattable. Example format output: <span class="tt">"My atlas" (Texture OpenGL ID: 5)</span>. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Key</td><td>Atlas key type. </td></tr>
     <tr><td class="paramname">Value</td><td>Atlas value type. </td></tr>
@@ -145,24 +149,33 @@ class tr::dynamic_atlas&lt; Key, Value, Hash, Pred &gt;</div><p>Dynamically-allo
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
+<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors and destructors</div></td></tr>
 <tr class="memitem:a45f73dfa91ab890abf99df2e299508e7" id="r_a45f73dfa91ab890abf99df2e299508e7"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a45f73dfa91ab890abf99df2e299508e7">dynamic_atlas</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context) noexcept</td></tr>
 <tr class="memdesc:a45f73dfa91ab890abf99df2e299508e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an empty atlas.  <br /></td></tr>
 <tr class="memitem:ae265879e4dacb108881f1761bef72f8e" id="r_ae265879e4dacb108881f1761bef72f8e"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ae265879e4dacb108881f1761bef72f8e">dynamic_atlas</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context, glm::ivec2 size)</td></tr>
 <tr class="memdesc:ae265879e4dacb108881f1761bef72f8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an empty atlas with an initial size.  <br /></td></tr>
 <tr class="memitem:a97c12ec3fe00959ff511bb2dde357a1b" id="r_a97c12ec3fe00959ff511bb2dde357a1b"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a97c12ec3fe00959ff511bb2dde357a1b">dynamic_atlas</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context, <a class="el" href="structtr_1_1bitmap__atlas.html">bitmap_atlas</a>&lt; Key, Value, Hash, Pred &gt; &amp;&amp;source)</td></tr>
 <tr class="memdesc:a97c12ec3fe00959ff511bb2dde357a1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uploads a bitmap atlas.  <br /></td></tr>
-<tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Context</div></td></tr>
+<tr class="memitem:a68169a27d47015cc1771f6b787b51fff" id="r_a68169a27d47015cc1771f6b787b51fff"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a68169a27d47015cc1771f6b787b51fff">dynamic_atlas</a> (const dynamic_atlas &amp;)=delete</td></tr>
+<tr class="memdesc:a68169a27d47015cc1771f6b787b51fff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dynamic atlases are not copyable.  <br /></td></tr>
+<tr class="memitem:a518a1b6754ea87c9d5a992e03b360d34" id="r_a518a1b6754ea87c9d5a992e03b360d34"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a518a1b6754ea87c9d5a992e03b360d34">dynamic_atlas</a> (dynamic_atlas &amp;&amp;rhs) noexcept=default</td></tr>
+<tr class="memdesc:a518a1b6754ea87c9d5a992e03b360d34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves a dynamic atlas.  <br /></td></tr>
+<tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Assignment operators</div></td></tr>
+<tr class="memitem:ac24104a3cc980b6ffae250431399da2f" id="r_ac24104a3cc980b6ffae250431399da2f"><td class="memItemLeft"><a class="el" href="#a45f73dfa91ab890abf99df2e299508e7">dynamic_atlas</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ac24104a3cc980b6ffae250431399da2f">operator=</a> (const <a class="el" href="#a45f73dfa91ab890abf99df2e299508e7">dynamic_atlas</a> &amp;)=delete</td></tr>
+<tr class="memdesc:ac24104a3cc980b6ffae250431399da2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dynamic atlases are not copyable.  <br /></td></tr>
+<tr class="memitem:a75f2f03941b2c7e782c6e54427d09677" id="r_a75f2f03941b2c7e782c6e54427d09677"><td class="memItemLeft"><a class="el" href="#a45f73dfa91ab890abf99df2e299508e7">dynamic_atlas</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a75f2f03941b2c7e782c6e54427d09677">operator=</a> (<a class="el" href="#a45f73dfa91ab890abf99df2e299508e7">dynamic_atlas</a> &amp;&amp;rhs) noexcept=default</td></tr>
+<tr class="memdesc:a75f2f03941b2c7e782c6e54427d09677"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves a dynamic atlas.  <br /></td></tr>
+<tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Context</div></td></tr>
 <tr class="memitem:a660bde80acc27965f43c9f80f87a0a9c" id="r_a660bde80acc27965f43c9f80f87a0a9c"><td class="memItemLeft"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a660bde80acc27965f43c9f80f87a0a9c">context</a> () const noexcept</td></tr>
 <tr class="memdesc:a660bde80acc27965f43c9f80f87a0a9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a reference to the graphics context the atlas is on.  <br /></td></tr>
-<tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">State</div></td></tr>
+<tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">State</div></td></tr>
 <tr class="memitem:a2948ea48213ad883ed9467fde0d49e7f" id="r_a2948ea48213ad883ed9467fde0d49e7f"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a2948ea48213ad883ed9467fde0d49e7f">valid</a> () const noexcept</td></tr>
 <tr class="memdesc:a2948ea48213ad883ed9467fde0d49e7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the atlas is in a valid state.  <br /></td></tr>
 <tr class="memitem:ae10582c3464692325499b0b24ac8adc8" id="r_ae10582c3464692325499b0b24ac8adc8"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#ae10582c3464692325499b0b24ac8adc8">complete</a> () const noexcept</td></tr>
 <tr class="memdesc:ae10582c3464692325499b0b24ac8adc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the atlas texture is complete.  <br /></td></tr>
 <tr class="memitem:a5e80b7c05b4b4e975a4a0b3a7e67f704" id="r_a5e80b7c05b4b4e975a4a0b3a7e67f704"><td class="memItemLeft">glm::ivec2&#160;</td><td class="memItemRight"><a class="el" href="#a5e80b7c05b4b4e975a4a0b3a7e67f704">size</a> () const noexcept</td></tr>
 <tr class="memdesc:a5e80b7c05b4b4e975a4a0b3a7e67f704"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the size of the atlas texture.  <br /></td></tr>
-<tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Texture</div></td></tr>
+<tr id="pub-methods-4" class="groupHeader"><td colspan="2"><div class="groupHeader">Texture</div></td></tr>
 <tr class="memitem:a3514dce2a87f32ef5e62caa5731c9a22" id="r_a3514dce2a87f32ef5e62caa5731c9a22"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a3514dce2a87f32ef5e62caa5731c9a22">operator const texture &amp;</a> () const noexcept</td></tr>
 <tr class="memdesc:a3514dce2a87f32ef5e62caa5731c9a22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the atlas texture.  <br /></td></tr>
 <tr class="memitem:aa2aa48898fd0864fe671d1c6b6e4bd31" id="r_aa2aa48898fd0864fe671d1c6b6e4bd31"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#aa2aa48898fd0864fe671d1c6b6e4bd31">operator texture_view</a> () const noexcept</td></tr>
@@ -171,23 +184,23 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:ac441728b81c1d2c55d741a210f594b00"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the atlas texture.  <br /></td></tr>
 <tr class="memitem:a8dfed361fa0894328cef8e024d77450f" id="r_a8dfed361fa0894328cef8e024d77450f"><td class="memItemLeft"><a class="el" href="classtr_1_1texture__view.html">texture_view</a>&#160;</td><td class="memItemRight"><a class="el" href="#a8dfed361fa0894328cef8e024d77450f">view</a> () const noexcept</td></tr>
 <tr class="memdesc:a8dfed361fa0894328cef8e024d77450f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a view to the atlas texture.  <br /></td></tr>
-<tr id="pub-methods-4" class="groupHeader"><td colspan="2"><div class="groupHeader">Attributes</div></td></tr>
+<tr id="pub-methods-5" class="groupHeader"><td colspan="2"><div class="groupHeader">Attributes</div></td></tr>
 <tr class="memitem:a04f5eee8ecc84e651667afa8c628a996" id="r_a04f5eee8ecc84e651667afa8c628a996"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a04f5eee8ecc84e651667afa8c628a996">set_filtering</a> (min_filter<a class="el" href="namespacetr.html#a9b0a51b975f6e11e760cb82c40c9b40e">min_filter</a> min_filter<a class="el" href="namespacetr.html#a9b0a51b975f6e11e760cb82c40c9b40e">min_filter</a>, mag_filter<a class="el" href="namespacetr.html#a26ba47c29e07f3ca8eb9cdf73a06a424">mag_filter</a> mag_filter<a class="el" href="namespacetr.html#a26ba47c29e07f3ca8eb9cdf73a06a424">mag_filter</a>) noexcept</td></tr>
 <tr class="memdesc:a04f5eee8ecc84e651667afa8c628a996"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the filters used by the atlas texture sampler.  <br /></td></tr>
-<tr id="pub-methods-5" class="groupHeader"><td colspan="2"><div class="groupHeader">Information</div></td></tr>
+<tr id="pub-methods-6" class="groupHeader"><td colspan="2"><div class="groupHeader">Information</div></td></tr>
 <tr class="memitem:aced7b1271c285d189c90031dc3e776d2" id="r_aced7b1271c285d189c90031dc3e776d2"><td class="memTemplParams" colspan="2">template&lt;hash_keylike&lt; Key, Hash, Pred &gt; Keylike&gt; </td></tr>
 <tr class="memitem:aced7b1271c285d189c90031dc3e776d2 template"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#aced7b1271c285d189c90031dc3e776d2">contains</a> (Keylike &amp;&amp;key) const</td></tr>
 <tr class="memdesc:aced7b1271c285d189c90031dc3e776d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the atlas contains an entry.  <br /></td></tr>
 <tr class="memitem:a10d4295e6667009e0a75b4a179f5a284" id="r_a10d4295e6667009e0a75b4a179f5a284"><td class="memItemLeft"><a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a>&#160;</td><td class="memItemRight"><a class="el" href="#a10d4295e6667009e0a75b4a179f5a284">entries</a> () const noexcept</td></tr>
 <tr class="memdesc:a10d4295e6667009e0a75b4a179f5a284"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the number of entries in the atlas.  <br /></td></tr>
-<tr id="pub-methods-6" class="groupHeader"><td colspan="2"><div class="groupHeader">Access</div></td></tr>
+<tr id="pub-methods-7" class="groupHeader"><td colspan="2"><div class="groupHeader">Access</div></td></tr>
 <tr class="memitem:a18943138f2e282eff144c28b57db2e4e" id="r_a18943138f2e282eff144c28b57db2e4e"><td class="memTemplParams" colspan="2">template&lt;hash_keylike&lt; Key, Hash, Pred &gt; Keylike&gt; </td></tr>
 <tr class="memitem:a18943138f2e282eff144c28b57db2e4e template"><td class="memItemLeft"><a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; float &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a18943138f2e282eff144c28b57db2e4e">operator[]</a> (Keylike &amp;&amp;key) const</td></tr>
 <tr class="memdesc:a18943138f2e282eff144c28b57db2e4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a rectangle associated with a certain key.  <br /></td></tr>
 <tr class="memitem:a77986fdb4c0b99c979f06952fbfec572" id="r_a77986fdb4c0b99c979f06952fbfec572"><td class="memTemplParams" colspan="2">template&lt;hash_keylike&lt; Key, Hash, Pred &gt; Keylike&gt; </td></tr>
 <tr class="memitem:a77986fdb4c0b99c979f06952fbfec572 template"><td class="memItemLeft">const Value &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a77986fdb4c0b99c979f06952fbfec572">raw</a> (Keylike &amp;&amp;key) const</td></tr>
 <tr class="memdesc:a77986fdb4c0b99c979f06952fbfec572"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the raw value associated with a certain key.  <br /></td></tr>
-<tr id="pub-methods-7" class="groupHeader"><td colspan="2"><div class="groupHeader">Manipulation</div></td></tr>
+<tr id="pub-methods-8" class="groupHeader"><td colspan="2"><div class="groupHeader">Manipulation</div></td></tr>
 <tr class="memitem:ab0bc3aa6c7dbaae77251258caa1cf2f6" id="r_ab0bc3aa6c7dbaae77251258caa1cf2f6"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ab0bc3aa6c7dbaae77251258caa1cf2f6">reserve</a> (glm::ivec2 capacity)</td></tr>
 <tr class="memdesc:ab0bc3aa6c7dbaae77251258caa1cf2f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reserves a certain amount of space in the bitmap.  <br /></td></tr>
 <tr class="memitem:afea15b12320a4369246004be96f82d99" id="r_afea15b12320a4369246004be96f82d99"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; <br />
@@ -196,7 +209,7 @@ requires (std::constructible_from&lt;Value, <a class="el" href="structtr_1_1rect
 <tr class="memdesc:afea15b12320a4369246004be96f82d99"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an entry to the atlas.  <br /></td></tr>
 <tr class="memitem:ad533ddb21893a9250a566cb4eea44dba" id="r_ad533ddb21893a9250a566cb4eea44dba"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ad533ddb21893a9250a566cb4eea44dba">clear</a> ()</td></tr>
 <tr class="memdesc:ad533ddb21893a9250a566cb4eea44dba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes all entries from the atlas.  <br /></td></tr>
-<tr id="pub-methods-8" class="groupHeader"><td colspan="2"><div class="groupHeader">Label</div></td></tr>
+<tr id="pub-methods-9" class="groupHeader"><td colspan="2"><div class="groupHeader">Label</div></td></tr>
 <tr class="memitem:aa63799f3a458d8f5cfc946e361bcb509" id="r_aa63799f3a458d8f5cfc946e361bcb509"><td class="memItemLeft">std::string&#160;</td><td class="memItemRight"><a class="el" href="#aa63799f3a458d8f5cfc946e361bcb509">label</a> () const</td></tr>
 <tr class="memdesc:aa63799f3a458d8f5cfc946e361bcb509"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the debug label of the atlas.  <br /></td></tr>
 <tr class="memitem:a50c4e960d6e0224f9e00c6c1d1835a72" id="r_a50c4e960d6e0224f9e00c6c1d1835a72"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a50c4e960d6e0224f9e00c6c1d1835a72">set_label</a> (std::string_view label) noexcept</td></tr>
@@ -204,7 +217,7 @@ requires (std::constructible_from&lt;Value, <a class="el" href="structtr_1_1rect
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a45f73dfa91ab890abf99df2e299508e7" name="a45f73dfa91ab890abf99df2e299508e7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a45f73dfa91ab890abf99df2e299508e7">&#9670;&#160;</a></span>dynamic_atlas() <span class="overload">[1/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a45f73dfa91ab890abf99df2e299508e7">&#9670;&#160;</a></span>dynamic_atlas() <span class="overload">[1/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -239,7 +252,7 @@ template&lt;typename Key, atlas_entries_value_type Value, hasher&lt; Key &gt; Ha
 </div>
 </div>
 <a id="ae265879e4dacb108881f1761bef72f8e" name="ae265879e4dacb108881f1761bef72f8e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae265879e4dacb108881f1761bef72f8e">&#9670;&#160;</a></span>dynamic_atlas() <span class="overload">[2/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae265879e4dacb108881f1761bef72f8e">&#9670;&#160;</a></span>dynamic_atlas() <span class="overload">[2/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -279,7 +292,7 @@ template&lt;typename Key, atlas_entries_value_type Value, hasher&lt; Key &gt; Ha
 </div>
 </div>
 <a id="a97c12ec3fe00959ff511bb2dde357a1b" name="a97c12ec3fe00959ff511bb2dde357a1b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a97c12ec3fe00959ff511bb2dde357a1b">&#9670;&#160;</a></span>dynamic_atlas() <span class="overload">[3/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a97c12ec3fe00959ff511bb2dde357a1b">&#9670;&#160;</a></span>dynamic_atlas() <span class="overload">[3/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -318,7 +331,136 @@ template&lt;typename Key, atlas_entries_value_type Value, hasher&lt; Key &gt; Ha
 
 </div>
 </div>
+<a id="a68169a27d47015cc1771f6b787b51fff" name="a68169a27d47015cc1771f6b787b51fff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a68169a27d47015cc1771f6b787b51fff">&#9670;&#160;</a></span>dynamic_atlas() <span class="overload">[4/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Key, atlas_entries_value_type Value, hasher&lt; Key &gt; Hash = boost::hash&lt;Key&gt;, equality_predicate&lt; Key &gt; Pred = std::equal_to&lt;Key&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classtr_1_1dynamic__atlas.html">tr::dynamic_atlas</a>&lt; Key, Value, Hash, Pred &gt;::dynamic_atlas </td>
+          <td>(</td>
+          <td class="paramtype">const dynamic_atlas&lt; Key, Value, Hash, Pred &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Dynamic atlases are not copyable. </p>
+
+</div>
+</div>
+<a id="a518a1b6754ea87c9d5a992e03b360d34" name="a518a1b6754ea87c9d5a992e03b360d34"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a518a1b6754ea87c9d5a992e03b360d34">&#9670;&#160;</a></span>dynamic_atlas() <span class="overload">[5/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Key, atlas_entries_value_type Value, hasher&lt; Key &gt; Hash = boost::hash&lt;Key&gt;, equality_predicate&lt; Key &gt; Pred = std::equal_to&lt;Key&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classtr_1_1dynamic__atlas.html">tr::dynamic_atlas</a>&lt; Key, Value, Hash, Pred &gt;::dynamic_atlas </td>
+          <td>(</td>
+          <td class="paramtype">dynamic_atlas&lt; Key, Value, Hash, Pred &gt; &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel default">default</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Moves a dynamic atlas. </p>
+<p><span class="tt">rhs</span> is left in an invalid state after the move as per the class description. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rhs</td><td>Dynamic atlas to move. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="ac24104a3cc980b6ffae250431399da2f" name="ac24104a3cc980b6ffae250431399da2f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac24104a3cc980b6ffae250431399da2f">&#9670;&#160;</a></span>operator=() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Key, atlas_entries_value_type Value, hasher&lt; Key &gt; Hash = boost::hash&lt;Key&gt;, equality_predicate&lt; Key &gt; Pred = std::equal_to&lt;Key&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a45f73dfa91ab890abf99df2e299508e7">dynamic_atlas</a> &amp; <a class="el" href="classtr_1_1dynamic__atlas.html">tr::dynamic_atlas</a>&lt; Key, Value, Hash, Pred &gt;::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="#a45f73dfa91ab890abf99df2e299508e7">dynamic_atlas</a>&lt; Key, Value, Hash, Pred &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Dynamic atlases are not copyable. </p>
+
+</div>
+</div>
+<a id="a75f2f03941b2c7e782c6e54427d09677" name="a75f2f03941b2c7e782c6e54427d09677"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a75f2f03941b2c7e782c6e54427d09677">&#9670;&#160;</a></span>operator=() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Key, atlas_entries_value_type Value, hasher&lt; Key &gt; Hash = boost::hash&lt;Key&gt;, equality_predicate&lt; Key &gt; Pred = std::equal_to&lt;Key&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a45f73dfa91ab890abf99df2e299508e7">dynamic_atlas</a> &amp; <a class="el" href="classtr_1_1dynamic__atlas.html">tr::dynamic_atlas</a>&lt; Key, Value, Hash, Pred &gt;::operator= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#a45f73dfa91ab890abf99df2e299508e7">dynamic_atlas</a>&lt; Key, Value, Hash, Pred &gt; &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel default">default</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Moves a dynamic atlas. </p>
+<p><span class="tt">rhs</span> is left in an invalid state after the move as per the class description. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rhs</td><td>Dynamic atlas to move. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Reference to <span class="tt">*this</span>. </dd></dl>
+
+</div>
+</div>
 <a id="a660bde80acc27965f43c9f80f87a0a9c" name="a660bde80acc27965f43c9f80f87a0a9c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a660bde80acc27965f43c9f80f87a0a9c">&#9670;&#160;</a></span>context()</h2>
 
@@ -495,6 +637,7 @@ template&lt;typename Key, atlas_entries_value_type Value, hasher&lt; Key &gt; Ha
 </div><div class="memdoc">
 
 <p>Gets a view to the atlas texture. </p>
+<dl class="section note"><dt>Note</dt><dd>This texture view stays valid until a call to <span class="tt"><a class="el" href="#ab0bc3aa6c7dbaae77251258caa1cf2f6" title="Reserves a certain amount of space in the bitmap.">reserve()</a></span>, <span class="tt"><a class="el" href="#afea15b12320a4369246004be96f82d99" title="Adds an entry to the atlas.">add()</a></span>, <span class="tt"><a class="el" href="#ad533ddb21893a9250a566cb4eea44dba" title="Removes all entries from the atlas.">clear()</a></span>, or the destruction of the atlas. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>View to the atlas texture. </dd></dl>
 
 </div>
@@ -555,6 +698,7 @@ template&lt;typename Key, atlas_entries_value_type Value, hasher&lt; Key &gt; Ha
 </div><div class="memdoc">
 
 <p>Gets a view to the atlas texture. </p>
+<dl class="section note"><dt>Note</dt><dd>This texture view stays valid until a call to <span class="tt"><a class="el" href="#ab0bc3aa6c7dbaae77251258caa1cf2f6" title="Reserves a certain amount of space in the bitmap.">reserve()</a></span>, <span class="tt"><a class="el" href="#afea15b12320a4369246004be96f82d99" title="Adds an entry to the atlas.">add()</a></span>, <span class="tt"><a class="el" href="#ad533ddb21893a9250a566cb4eea44dba" title="Removes all entries from the atlas.">clear()</a></span>, or the destruction of the atlas. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>View to the atlas texture. </dd></dl>
 
 </div>

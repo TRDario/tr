@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1sha
 <p>Objects of this type may not be instantiated directly. Rather, vertex and fragment shaders are subclassed as <span class="tt"><a class="el" href="classtr_1_1vertex__shader.html" title="Vertex shader program.">tr::vertex_shader</a></span> and <span class="tt"><a class="el" href="classtr_1_1fragment__shader.html" title="Fragment shader program.">tr::fragment_shader</a></span> respectively.</p>
 <p>Strictly speaking, shader objects are only containers for the underlying shader programs. This means, for example, that setting a shader on a shader pipeline object does not set the literal shader object at a specific location in memory, but rather the value it contains. If the value is moved to a different shader object, that value will still be set on the pipeline. If the object is overriden with a new value, the old value is destroyed and the pipeline reverts to an incomplete state.</p>
 <p>Every shader object is associated with a graphics context and cannot outlive its parent context.</p>
-<p>Shader objects are movable, but not copyable. A moved-from instance of a shader object is left in a special 'invalid' state. Invalid shader objects may not be interacted with besides moving a new value into them and checking for validity using <span class="tt"><a class="el" href="#a38d9b2452ce3b7ceee8603ac231b0985" title="Gets whether the shader is in a valid state.">valid()</a></span>.</p>
+<p>Moved-from instances of shader objects are left in a special 'invalid' state. Invalid shader objects may not be interacted with besides moving a new value into them and checking for validity using <span class="tt"><a class="el" href="#a38d9b2452ce3b7ceee8603ac231b0985" title="Gets whether the shader is in a valid state.">valid()</a></span>.</p>
 <p>Shader objects may be labeled and are formattable. Example format output: <span class="tt">"My shader" (OpenGL ID: 5)</span>. </p>
 </div><div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Inheritance diagram for tr::shader:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -152,10 +152,15 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1sha
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Context</div></td></tr>
+<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Assignment operators</div></td></tr>
+<tr class="memitem:a93300faa1eee8e2ca3df656f33a0ffb3" id="r_a93300faa1eee8e2ca3df656f33a0ffb3"><td class="memItemLeft"><a class="el" href="classtr_1_1shader.html">shader</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a93300faa1eee8e2ca3df656f33a0ffb3">operator=</a> (const <a class="el" href="classtr_1_1shader.html">shader</a> &amp;)=delete</td></tr>
+<tr class="memdesc:a93300faa1eee8e2ca3df656f33a0ffb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shaders are not copyable.  <br /></td></tr>
+<tr class="memitem:a0bf5e6ef498bba7466e9616d63a68083" id="r_a0bf5e6ef498bba7466e9616d63a68083"><td class="memItemLeft"><a class="el" href="classtr_1_1shader.html">shader</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a0bf5e6ef498bba7466e9616d63a68083">operator=</a> (<a class="el" href="classtr_1_1shader.html">shader</a> &amp;&amp;rhs) noexcept=default</td></tr>
+<tr class="memdesc:a0bf5e6ef498bba7466e9616d63a68083"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves a shader.  <br /></td></tr>
+<tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Context</div></td></tr>
 <tr class="memitem:aed161fd903dcab2771cbbe17e1d9fa12" id="r_aed161fd903dcab2771cbbe17e1d9fa12"><td class="memItemLeft"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#aed161fd903dcab2771cbbe17e1d9fa12">context</a> () const noexcept</td></tr>
 <tr class="memdesc:aed161fd903dcab2771cbbe17e1d9fa12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a reference to the graphics context the shader is on.  <br /></td></tr>
-<tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Uniforms</div></td></tr>
+<tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Uniforms</div></td></tr>
 <tr class="memitem:a51c6f7ea2d0ad2a008f2aecf0342a6a3" id="r_a51c6f7ea2d0ad2a008f2aecf0342a6a3"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a51c6f7ea2d0ad2a008f2aecf0342a6a3">set_uniform</a> (int index, bool value) noexcept</td></tr>
 <tr class="memdesc:a51c6f7ea2d0ad2a008f2aecf0342a6a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a boolean uniform.  <br /></td></tr>
 <tr class="memitem:a7067ec594b9a41ef610d4a7ca71b0ee3" id="r_a7067ec594b9a41ef610d4a7ca71b0ee3"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a7067ec594b9a41ef610d4a7ca71b0ee3">set_uniform</a> (int index, int value) noexcept</td></tr>
@@ -244,7 +249,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a02971882b8e8d0b4898e74dde509d0eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mat4x3 array uniform.  <br /></td></tr>
 <tr class="memitem:aec50b6bd802404d1ae59f8f40a674eec" id="r_aec50b6bd802404d1ae59f8f40a674eec"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aec50b6bd802404d1ae59f8f40a674eec">set_uniform</a> (int index, <a class="el" href="classtr_1_1texture__view.html">texture_view</a> texture)</td></tr>
 <tr class="memdesc:aec50b6bd802404d1ae59f8f40a674eec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a texture sampler uniform.  <br /></td></tr>
-<tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Storage buffers</div></td></tr>
+<tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Storage buffers</div></td></tr>
 <tr class="memitem:a0cc2f17714a8015d98eea01eeea129ae" id="r_a0cc2f17714a8015d98eea01eeea129ae"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a0cc2f17714a8015d98eea01eeea129ae">set_storage_buffer</a> (unsigned int index, <a class="el" href="classtr_1_1untyped__shader__buffer.html">untyped_shader_buffer</a> &amp;buffer) noexcept</td></tr>
 <tr class="memdesc:a0cc2f17714a8015d98eea01eeea129ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a shader storage buffer.  <br /></td></tr>
 <tr class="memitem:a73bf56c0deaf16f1b744e075faf26050" id="r_a73bf56c0deaf16f1b744e075faf26050"><td class="memTemplParams" colspan="2">template&lt;typename Header, typename ArrayElement&gt; </td></tr>
@@ -258,16 +263,77 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa4ba59093654baa4b71479dcf3931273" id="r_aa4ba59093654baa4b71479dcf3931273"><td class="memTemplParams" colspan="2">template&lt;typename Object&gt; </td></tr>
 <tr class="memitem:aa4ba59093654baa4b71479dcf3931273 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aa4ba59093654baa4b71479dcf3931273">set_uniform_buffer</a> (unsigned int index, const <a class="el" href="classtr_1_1uniform__buffer.html">uniform_buffer</a>&lt; Object &gt; &amp;buffer) noexcept</td></tr>
 <tr class="memdesc:aa4ba59093654baa4b71479dcf3931273"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a uniform storage buffer.  <br /></td></tr>
-<tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">State</div></td></tr>
+<tr id="pub-methods-4" class="groupHeader"><td colspan="2"><div class="groupHeader">State</div></td></tr>
 <tr class="memitem:a38d9b2452ce3b7ceee8603ac231b0985" id="r_a38d9b2452ce3b7ceee8603ac231b0985"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a38d9b2452ce3b7ceee8603ac231b0985">valid</a> () const noexcept</td></tr>
 <tr class="memdesc:a38d9b2452ce3b7ceee8603ac231b0985"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the shader is in a valid state.  <br /></td></tr>
-<tr id="pub-methods-4" class="groupHeader"><td colspan="2"><div class="groupHeader">Label</div></td></tr>
+<tr id="pub-methods-5" class="groupHeader"><td colspan="2"><div class="groupHeader">Label</div></td></tr>
 <tr class="memitem:ae7b16bb3b7b2192a0cce6912b0a94edf" id="r_ae7b16bb3b7b2192a0cce6912b0a94edf"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ae7b16bb3b7b2192a0cce6912b0a94edf">set_label</a> (std::string_view label) noexcept</td></tr>
 <tr class="memdesc:ae7b16bb3b7b2192a0cce6912b0a94edf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the debug label of the shader.  <br /></td></tr>
 <tr class="memitem:acccb075cdc625ed4371ef0794abc1818" id="r_acccb075cdc625ed4371ef0794abc1818"><td class="memItemLeft">std::string&#160;</td><td class="memItemRight"><a class="el" href="#acccb075cdc625ed4371ef0794abc1818">label</a> () const</td></tr>
 <tr class="memdesc:acccb075cdc625ed4371ef0794abc1818"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the debug label of the shader.  <br /></td></tr>
 </table>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="a93300faa1eee8e2ca3df656f33a0ffb3" name="a93300faa1eee8e2ca3df656f33a0ffb3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a93300faa1eee8e2ca3df656f33a0ffb3">&#9670;&#160;</a></span>operator=() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classtr_1_1shader.html">shader</a> &amp; tr::shader::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classtr_1_1shader.html">shader</a> &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Shaders are not copyable. </p>
+
+</div>
+</div>
+<a id="a0bf5e6ef498bba7466e9616d63a68083" name="a0bf5e6ef498bba7466e9616d63a68083"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0bf5e6ef498bba7466e9616d63a68083">&#9670;&#160;</a></span>operator=() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classtr_1_1shader.html">shader</a> &amp; tr::shader::operator= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classtr_1_1shader.html">shader</a> &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel default">default</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Moves a shader. </p>
+<p><span class="tt">rhs</span> is left in an invalid state after the move as per the class description. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rhs</td><td>Shader to move. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Reference to <span class="tt">*this</span>. </dd></dl>
+
+</div>
+</div>
 <a id="aed161fd903dcab2771cbbe17e1d9fa12" name="aed161fd903dcab2771cbbe17e1d9fa12"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aed161fd903dcab2771cbbe17e1d9fa12">&#9670;&#160;</a></span>context()</h2>
 

@@ -2,6 +2,7 @@ var hierarchy =
 [
     [ "tr::angle", "classtr_1_1angle.html", null ],
     [ "tr::application", "classtr_1_1application.html", null ],
+    [ "tr::apply_result&lt; T, TupleLike &gt;", "structtr_1_1apply__result_3_01T_00_01TupleLike_01_4.html", null ],
     [ "tr::atlas_entries&lt; Key, Value, Hash, Pred &gt;", "classtr_1_1atlas__entries.html", null ],
     [ "tr::atlas_packer", "classtr_1_1atlas__packer.html", null ],
     [ "tr::audio_buffer", "classtr_1_1audio__buffer.html", null ],
@@ -61,6 +62,7 @@ var hierarchy =
     [ "tr::blend_mode", "structtr_1_1blend__mode.html", null ],
     [ "tr::circle", "structtr_1_1circle.html", null ],
     [ "tr::const_pixel_proxy", "classtr_1_1const__pixel__proxy.html", null ],
+    [ "tr::copy_qualifiers&lt; T, Qualified &gt;", "structtr_1_1copy__qualifiers.html", null ],
     [ "tr::cursor", "classtr_1_1cursor.html", null ],
     [ "tr::defer&lt; Fn &gt;", "classtr_1_1defer.html", null ],
     [ "Deleter", null, [
@@ -70,6 +72,7 @@ var hierarchy =
     ] ],
     [ "tr::dialog_filter", "structtr_1_1dialog__filter.html", null ],
     [ "tr::dynamic_atlas&lt; Key, Value, Hash, Pred &gt;", "classtr_1_1dynamic__atlas.html", null ],
+    [ "tr::empty_variant_t", "structtr_1_1empty__variant__t.html", null ],
     [ "tr::basic_zstring_view&lt; CharT, Traits &gt;::end_sentinel", "structtr_1_1basic__zstring__view_1_1end__sentinel.html", null ],
     [ "tr::enum_wrapper&lt; Enum &gt;", "classtr_1_1enum__wrapper.html", null ],
     [ "std::equal_to", null, [
@@ -112,6 +115,8 @@ var hierarchy =
     [ "std::formatter&lt; tr::framebuffer &gt;", "structstd_1_1formatter_3_01tr_1_1framebuffer_01_4.html", null ],
     [ "std::formatter&lt; tr::key_chord &gt;", "structstd_1_1formatter_3_01tr_1_1key__chord_01_4.html", null ],
     [ "std::formatter&lt; tr::keycode &gt;", "structstd_1_1formatter_3_01tr_1_1keycode_01_4.html", null ],
+    [ "std::formatter&lt; tr::localization_script_error &gt;", "structstd_1_1formatter_3_01tr_1_1localization__script__error_01_4.html", null ],
+    [ "std::formatter&lt; tr::localization_token_type &gt;", "structstd_1_1formatter_3_01tr_1_1localization__token__type_01_4.html", null ],
     [ "std::formatter&lt; tr::log_level &gt;", "classstd_1_1formatter_3_01tr_1_1log__level_01_4.html", null ],
     [ "std::formatter&lt; tr::log_message &gt;", "classstd_1_1formatter_3_01tr_1_1log__message_01_4.html", null ],
     [ "std::formatter&lt; tr::owning_shader_pipeline &gt;", "structstd_1_1formatter_3_01tr_1_1owning__shader__pipeline_01_4.html", null ],
@@ -134,7 +139,6 @@ var hierarchy =
     [ "std::formatter&lt; tr::vertex_format &gt;", "structstd_1_1formatter_3_01tr_1_1vertex__format_01_4.html", null ],
     [ "std::formatter&lt; tr::vertex_shader &gt;", "structstd_1_1formatter_3_01tr_1_1vertex__shader_01_4.html", null ],
     [ "tr::framebuffer", "classtr_1_1framebuffer.html", null ],
-    [ "tr::function_traits&lt; Function &gt;", "structtr_1_1function__traits.html", null ],
     [ "tr::glyph_metrics", "structtr_1_1glyph__metrics.html", null ],
     [ "tr::graphics_benchmark", "classtr_1_1graphics__benchmark.html", null ],
     [ "tr::graphics_buffer", "classtr_1_1graphics__buffer.html", [
@@ -160,6 +164,9 @@ var hierarchy =
     ] ],
     [ "tr::hsv", "structtr_1_1hsv.html", null ],
     [ "tr::graphics_context::info", "structtr_1_1graphics__context_1_1info.html", null ],
+    [ "std::integral_constant", null, [
+      [ "std::variant_size< VariantLike >", "structstd_1_1variant__size_3_01VariantLike_01_4.html", null ]
+    ] ],
     [ "std::ios_base", null, [
       [ "std::basic_ios< Char >", null, [
         [ "std::basic_istream< Char >", null, [
@@ -177,10 +184,11 @@ var hierarchy =
     [ "std::iostream", null, [
       [ "tr::mstream", "classtr_1_1mstream.html", null ]
     ] ],
+    [ "tr::is_applicable&lt; T, TupleLike &gt;", "structtr_1_1is__applicable.html", null ],
     [ "tr::is_specialization_of&lt; T, Template &gt;", "structtr_1_1is__specialization__of.html", null ],
-    [ "tr::is_specialization_of_tv&lt; T, Template &gt;", "structtr_1_1is__specialization__of__tv.html", null ],
-    [ "tr::is_specialization_of_v&lt; T, Template &gt;", "structtr_1_1is__specialization__of__v.html", null ],
-    [ "tr::is_specialization_of_vt&lt; T, Template &gt;", "structtr_1_1is__specialization__of__vt.html", null ],
+    [ "tr::is_specialization_of_c&lt; T, Template &gt;", "structtr_1_1is__specialization__of__c.html", null ],
+    [ "tr::is_specialization_of_ct&lt; T, Template &gt;", "structtr_1_1is__specialization__of__ct.html", null ],
+    [ "tr::is_specialization_of_tc&lt; T, Template &gt;", "structtr_1_1is__specialization__of__tc.html", null ],
     [ "tr::iterator_interface&lt; Iterator, DeducedBrackets &gt;", "classtr_1_1iterator__interface.html", null ],
     [ "tr::iterator_interface&lt; const_pixel_iterator, glm::ivec2 &gt;", "classtr_1_1iterator__interface.html", [
       [ "tr::const_pixel_iterator", "classtr_1_1const__pixel__iterator.html", null ]
@@ -189,6 +197,7 @@ var hierarchy =
       [ "tr::utf8::indexed_iterator", "classtr_1_1utf8_1_1indexed__iterator.html", null ]
     ] ],
     [ "tr::iterator_interface&lt; iterator &gt;", "classtr_1_1iterator__interface.html", [
+      [ "tr::string_pool::iterator", "classtr_1_1string__pool_1_1iterator.html", null ],
       [ "tr::utf8::iterator", "classtr_1_1utf8_1_1iterator.html", null ]
     ] ],
     [ "tr::iterator_interface&lt; pixel_iterator, glm::ivec2 &gt;", "classtr_1_1iterator__interface.html", [
@@ -198,7 +207,56 @@ var hierarchy =
     [ "tr::key_down_event", "structtr_1_1key__down__event.html", null ],
     [ "tr::key_up_event", "structtr_1_1key__up__event.html", null ],
     [ "tr::line_segment", "structtr_1_1line__segment.html", null ],
+    [ "tr::localization_error_formatter&lt; Error, Base &gt;", "structtr_1_1localization__error__formatter.html", null ],
+    [ "tr::localization_error_formatter&lt; tr::localization_script_duplicate_key &gt;", "structtr_1_1localization__error__formatter.html", [
+      [ "std::formatter< tr::localization_script_duplicate_key >", "structstd_1_1formatter_3_01tr_1_1localization__script__duplicate__key_01_4.html", null ]
+    ] ],
+    [ "tr::localization_error_formatter&lt; tr::localization_script_expected_closing_brace &gt;", "structtr_1_1localization__error__formatter.html", [
+      [ "std::formatter< tr::localization_script_expected_closing_brace >", "structstd_1_1formatter_3_01tr_1_1localization__script__expected__closing__brace_01_4.html", null ]
+    ] ],
+    [ "tr::localization_error_formatter&lt; tr::localization_script_expected_equals_or_opening_brace &gt;", "structtr_1_1localization__error__formatter.html", [
+      [ "std::formatter< tr::localization_script_expected_equals_or_opening_brace >", "structstd_1_1formatter_3_01tr_1_1localization__script__expected__equals__or__opening__brace_01_4.html", null ]
+    ] ],
+    [ "tr::localization_error_formatter&lt; tr::localization_script_expected_string &gt;", "structtr_1_1localization__error__formatter.html", [
+      [ "std::formatter< tr::localization_script_expected_string >", "structstd_1_1formatter_3_01tr_1_1localization__script__expected__string_01_4.html", null ]
+    ] ],
+    [ "tr::localization_error_formatter&lt; tr::localization_script_expected_symbol &gt;", "structtr_1_1localization__error__formatter.html", [
+      [ "std::formatter< tr::localization_script_expected_symbol >", "structstd_1_1formatter_3_01tr_1_1localization__script__expected__symbol_01_4.html", null ]
+    ] ],
+    [ "tr::localization_error_formatter&lt; tr::localization_script_expected_symbol_or_closing_brace &gt;", "structtr_1_1localization__error__formatter.html", [
+      [ "std::formatter< tr::localization_script_expected_symbol_or_closing_brace >", "structstd_1_1formatter_3_01tr_1_1localization__script__expected__symbol__or__closing__brace_01_4.html", null ]
+    ] ],
+    [ "tr::localization_error_formatter&lt; tr::localization_script_extraneous_closing_brace &gt;", "structtr_1_1localization__error__formatter.html", [
+      [ "std::formatter< tr::localization_script_extraneous_closing_brace >", "structstd_1_1formatter_3_01tr_1_1localization__script__extraneous__closing__brace_01_4.html", null ]
+    ] ],
+    [ "tr::localization_error_formatter&lt; tr::localization_script_unexpected_backslash &gt;", "structtr_1_1localization__error__formatter.html", [
+      [ "std::formatter< tr::localization_script_unexpected_backslash >", "structstd_1_1formatter_3_01tr_1_1localization__script__unexpected__backslash_01_4.html", null ]
+    ] ],
+    [ "tr::localization_error_formatter&lt; tr::localization_script_unexpected_slash &gt;", "structtr_1_1localization__error__formatter.html", [
+      [ "std::formatter< tr::localization_script_unexpected_slash >", "structstd_1_1formatter_3_01tr_1_1localization__script__unexpected__slash_01_4.html", null ]
+    ] ],
+    [ "tr::localization_error_formatter&lt; tr::localization_script_unknown_escape_sequence &gt;", "structtr_1_1localization__error__formatter.html", [
+      [ "std::formatter< tr::localization_script_unknown_escape_sequence >", "structstd_1_1formatter_3_01tr_1_1localization__script__unknown__escape__sequence_01_4.html", null ]
+    ] ],
+    [ "tr::localization_error_formatter&lt; tr::localization_script_unterminated_multiline_comment &gt;", "structtr_1_1localization__error__formatter.html", [
+      [ "std::formatter< tr::localization_script_unterminated_multiline_comment >", "structstd_1_1formatter_3_01tr_1_1localization__script__unterminated__multiline__comment_01_4.html", null ]
+    ] ],
+    [ "tr::localization_error_formatter&lt; tr::localization_script_unterminated_string &gt;", "structtr_1_1localization__error__formatter.html", [
+      [ "std::formatter< tr::localization_script_unterminated_string >", "structstd_1_1formatter_3_01tr_1_1localization__script__unterminated__string_01_4.html", null ]
+    ] ],
     [ "tr::localization_map", "classtr_1_1localization__map.html", null ],
+    [ "tr::localization_script_duplicate_key", "structtr_1_1localization__script__duplicate__key.html", null ],
+    [ "tr::localization_script_expected_closing_brace", "structtr_1_1localization__script__expected__closing__brace.html", null ],
+    [ "tr::localization_script_expected_equals_or_opening_brace", "structtr_1_1localization__script__expected__equals__or__opening__brace.html", null ],
+    [ "tr::localization_script_expected_string", "structtr_1_1localization__script__expected__string.html", null ],
+    [ "tr::localization_script_expected_symbol", "structtr_1_1localization__script__expected__symbol.html", null ],
+    [ "tr::localization_script_expected_symbol_or_closing_brace", "structtr_1_1localization__script__expected__symbol__or__closing__brace.html", null ],
+    [ "tr::localization_script_extraneous_closing_brace", "structtr_1_1localization__script__extraneous__closing__brace.html", null ],
+    [ "tr::localization_script_unexpected_backslash", "structtr_1_1localization__script__unexpected__backslash.html", null ],
+    [ "tr::localization_script_unexpected_slash", "structtr_1_1localization__script__unexpected__slash.html", null ],
+    [ "tr::localization_script_unknown_escape_sequence", "structtr_1_1localization__script__unknown__escape__sequence.html", null ],
+    [ "tr::localization_script_unterminated_multiline_comment", "structtr_1_1localization__script__unterminated__multiline__comment.html", null ],
+    [ "tr::localization_script_unterminated_string", "structtr_1_1localization__script__unterminated__string.html", null ],
     [ "tr::lock_free_queue&lt; Element, Capacity &gt;", "classtr_1_1lock__free__queue.html", null ],
     [ "tr::log_message", "structtr_1_1log__message.html", null ],
     [ "tr::log_sink", "classtr_1_1log__sink.html", [
@@ -211,7 +269,7 @@ var hierarchy =
     [ "tr::mapped_untyped_graphics_buffer_span", "classtr_1_1mapped__untyped__graphics__buffer__span.html", null ],
     [ "tr::maybe_empty_t", "structtr_1_1maybe__empty__t.html", null ],
     [ "tr::benchmark::measurement", "structtr_1_1benchmark_1_1measurement.html", null ],
-    [ "tr::application::metadata", "structtr_1_1application_1_1metadata.html", null ],
+    [ "tr::metadata", "structtr_1_1metadata.html", null ],
     [ "tr::mouse_down_event", "structtr_1_1mouse__down__event.html", null ],
     [ "tr::mouse_motion_event", "structtr_1_1mouse__motion__event.html", null ],
     [ "tr::mouse_state", "structtr_1_1mouse__state.html", null ],
@@ -219,10 +277,11 @@ var hierarchy =
     [ "tr::mouse_wheel_event", "structtr_1_1mouse__wheel__event.html", null ],
     [ "tr::normalized&lt; T &gt;", "structtr_1_1normalized.html", null ],
     [ "tr::opt_ref&lt; T &gt;", "classtr_1_1opt__ref.html", null ],
+    [ "tr::optional_result&lt; Values, Errors &gt;", "classtr_1_1optional__result.html", null ],
     [ "tr::orientation", "structtr_1_1orientation.html", null ],
     [ "tr::out_handle_t&lt; Base, Empty, Deleter, SkipEmptyHandleCheck &gt;", "classtr_1_1out__handle__t.html", null ],
     [ "tr::owning_shader_pipeline", "classtr_1_1owning__shader__pipeline.html", null ],
-    [ "tr::localization_map::parser::parse_result", "structtr_1_1localization__map_1_1parser_1_1parse__result.html", null ],
+    [ "tr::parse_localization_script_result&lt; ErrorOut &gt;", "structtr_1_1parse__localization__script__result.html", null ],
     [ "tr::ping_pong_target", "classtr_1_1ping__pong__target.html", null ],
     [ "tr::pixel_proxy", "classtr_1_1pixel__proxy.html", null ],
     [ "tr::pointer_iterator&lt; Iterator, Pointer &gt;", "classtr_1_1pointer__iterator.html", null ],
@@ -242,6 +301,9 @@ var hierarchy =
     [ "tr::rectangle_edges&lt; Element &gt;", "structtr_1_1rectangle__edges.html", null ],
     [ "tr::ref&lt; T &gt;", "classtr_1_1ref.html", null ],
     [ "tr::render_target", "classtr_1_1render__target.html", null ],
+    [ "tr::result&lt; Values, Errors &gt;", "classtr_1_1result.html", null ],
+    [ "tr::result_errors&lt; Alternatives &gt;", "structtr_1_1result__errors.html", null ],
+    [ "tr::result_values&lt; Alternatives &gt;", "structtr_1_1result__values.html", null ],
     [ "tr::rgb8", "structtr_1_1rgb8.html", null ],
     [ "tr::rgba8", "structtr_1_1rgba8.html", null ],
     [ "tr::rgbaf", "structtr_1_1rgbaf.html", null ],
@@ -263,7 +325,9 @@ var hierarchy =
         [ "tr::omstream", "classtr_1_1omstream.html", null ]
       ] ]
     ] ],
+    [ "tr::string_pool::string_builder_t", "classtr_1_1string__pool_1_1string__builder__t.html", null ],
     [ "tr::string_literal&lt; Size &gt;", "structtr_1_1string__literal.html", null ],
+    [ "tr::string_pool", "classtr_1_1string__pool.html", null ],
     [ "tr::sub_bitmap", "classtr_1_1sub__bitmap.html", null ],
     [ "tr::text_input_event", "structtr_1_1text__input__event.html", null ],
     [ "tr::texture", "classtr_1_1texture.html", null ],
@@ -274,6 +338,21 @@ var hierarchy =
     [ "tr::ttf_measure_result", "structtr_1_1ttf__measure__result.html", null ],
     [ "tr::ttfont", "classtr_1_1ttfont.html", null ],
     [ "tr::unknown_event", "structtr_1_1unknown__event.html", null ],
+    [ "std::variant", null, [
+      [ "tr::variant< localization_script_unexpected_backslash, localization_script_unexpected_slash, localization_script_unknown_escape_sequence, localization_script_unterminated_multiline_comment, localization_script_unterminated_string, localization_script_expected_symbol, localization_script_expected_closing_brace, localization_script_extraneous_closing_brace, localization_script_expected_symbol_or_closing_brace, localization_script_expected_equals_or_opening_brace, localization_script_expected_string, localization_script_duplicate_key >", "classtr_1_1variant.html", null ],
+      [ "tr::variant< empty_variant_t, Alternatives... >", "classtr_1_1variant.html", [
+        [ "tr::optional_variant< Values..., Errors... >", "classtr_1_1optional__variant.html", [
+          [ "tr::optional_result< result_values< Values... >, result_errors< Errors... > >", "classtr_1_1optional__result_3_01result__values_3_01Values_8_8_8_01_4_00_01result__errors_3_01Errors_8_8_8_01_4_01_4.html", null ]
+        ] ],
+        [ "tr::optional_variant< std::shared_ptr< tr::audio_buffer >, buffered_stream >", "classtr_1_1optional__variant.html", null ],
+        [ "tr::optional_variant< Alternatives >", "classtr_1_1optional__variant.html", null ]
+      ] ],
+      [ "tr::variant< Values..., Errors... >", "classtr_1_1variant.html", [
+        [ "tr::result< result_values< Values... >, result_errors< Errors... > >", "classtr_1_1result_3_01result__values_3_01Values_8_8_8_01_4_00_01result__errors_3_01Errors_8_8_8_01_4_01_4.html", null ]
+      ] ],
+      [ "tr::variant< Alternatives >", "classtr_1_1variant.html", null ]
+    ] ],
+    [ "std::variant_alternative&lt; I, VariantLike &gt;", "structstd_1_1variant__alternative_3_01I_00_01VariantLike_01_4.html", null ],
     [ "tr::vertex_attribute", "structtr_1_1vertex__attribute.html", null ],
     [ "tr::vertex_binding", "structtr_1_1vertex__binding.html", null ],
     [ "tr::vertex_binding_tag&lt; T, Divisor &gt;", "structtr_1_1vertex__binding__tag.html", null ],

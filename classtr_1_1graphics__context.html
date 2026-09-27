@@ -141,12 +141,16 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
+<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors and destructors</div></td></tr>
 <tr class="memitem:a938cf4b7f00ef3d8f46b918fd3fe22a3" id="r_a938cf4b7f00ef3d8f46b918fd3fe22a3"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a938cf4b7f00ef3d8f46b918fd3fe22a3">graphics_context</a> (<a class="el" href="classtr_1_1window__view.html">window_view</a> window)</td></tr>
 <tr class="memdesc:a938cf4b7f00ef3d8f46b918fd3fe22a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a graphics context on a window.  <br /></td></tr>
+<tr class="memitem:a2eb41e7c32d291c825763740ba1593a5" id="r_a2eb41e7c32d291c825763740ba1593a5"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a2eb41e7c32d291c825763740ba1593a5">graphics_context</a> (const graphics_context &amp;)=delete</td></tr>
+<tr class="memdesc:a2eb41e7c32d291c825763740ba1593a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Graphics contexts are not copyable.  <br /></td></tr>
 <tr class="memitem:a876eb68159fbe4641f9d394665731791" id="r_a876eb68159fbe4641f9d394665731791"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a876eb68159fbe4641f9d394665731791">graphics_context</a> (graphics_context &amp;&amp;)=delete</td></tr>
 <tr class="memdesc:a876eb68159fbe4641f9d394665731791"><td class="mdescLeft">&#160;</td><td class="mdescRight">Graphics contexts are not movable.  <br /></td></tr>
 <tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Assignment operators</div></td></tr>
+<tr class="memitem:abbf4d1c7198b8430741a1f06bb536fa5" id="r_abbf4d1c7198b8430741a1f06bb536fa5"><td class="memItemLeft"><a class="el" href="#a938cf4b7f00ef3d8f46b918fd3fe22a3">graphics_context</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#abbf4d1c7198b8430741a1f06bb536fa5">operator=</a> (const <a class="el" href="#a938cf4b7f00ef3d8f46b918fd3fe22a3">graphics_context</a> &amp;)=delete</td></tr>
+<tr class="memdesc:abbf4d1c7198b8430741a1f06bb536fa5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Graphics contexts are not copyable.  <br /></td></tr>
 <tr class="memitem:a43c350030c1a3e59fa873c2f50bccab3" id="r_a43c350030c1a3e59fa873c2f50bccab3"><td class="memItemLeft"><a class="el" href="#a938cf4b7f00ef3d8f46b918fd3fe22a3">graphics_context</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a43c350030c1a3e59fa873c2f50bccab3">operator=</a> (<a class="el" href="#a938cf4b7f00ef3d8f46b918fd3fe22a3">graphics_context</a> &amp;&amp;)=delete</td></tr>
 <tr class="memdesc:a43c350030c1a3e59fa873c2f50bccab3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Graphics contexts are not movable.  <br /></td></tr>
 <tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Information</div></td></tr>
@@ -157,10 +161,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:adf3b185d86aaf9dc76d9c4a29f08a6a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a view to the window the context is on.  <br /></td></tr>
 <tr class="memitem:aabda6d8ddb2b31b0da7fef77cf11d238" id="r_aabda6d8ddb2b31b0da7fef77cf11d238"><td class="memItemLeft"><a class="el" href="classtr_1_1render__target.html">render_target</a>&#160;</td><td class="memItemRight"><a class="el" href="#aabda6d8ddb2b31b0da7fef77cf11d238">backbuffer</a> () const noexcept</td></tr>
 <tr class="memdesc:aabda6d8ddb2b31b0da7fef77cf11d238"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a render target spanning the entire backbuffer.  <br /></td></tr>
-<tr class="memitem:a867884681328b74121e7779a0e86220c" id="r_a867884681328b74121e7779a0e86220c"><td class="memItemLeft">const <a class="el" href="classtr_1_1vertex__format.html">vertex_format</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a867884681328b74121e7779a0e86220c">vec2_vertex_format</a> () noexcept</td></tr>
-<tr class="memdesc:a867884681328b74121e7779a0e86220c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a reference to a vertex format describing an array of vec2.  <br /></td></tr>
-<tr class="memitem:a844198e4f04ccf35bb7e7543d508a646" id="r_a844198e4f04ccf35bb7e7543d508a646"><td class="memItemLeft">const <a class="el" href="classtr_1_1vertex__format.html">vertex_format</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a844198e4f04ccf35bb7e7543d508a646">basic_2d_vertex_format</a> () noexcept</td></tr>
-<tr class="memdesc:a844198e4f04ccf35bb7e7543d508a646"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a reference to a vertex format descibing arrays of vec2 (position), vec2 (uv) and <a class="el" href="structtr_1_1rgba8.html" title="8-bit RGBA color.">rgba8</a> (color).  <br /></td></tr>
 <tr id="pub-methods-4" class="groupHeader"><td colspan="2"><div class="groupHeader">Renderers</div></td></tr>
 <tr class="memitem:ab068a67094a06a514b19a34e651c289c" id="r_ab068a67094a06a514b19a34e651c289c"><td class="memItemLeft"><a class="el" href="namespacetr.html#a1eb2948abd308c1bd0658317416db0a7">renderer_id</a>&#160;</td><td class="memItemRight"><a class="el" href="#ab068a67094a06a514b19a34e651c289c">allocate_renderer_id</a> () noexcept</td></tr>
 <tr class="memdesc:ab068a67094a06a514b19a34e651c289c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates a fresh renderer ID.  <br /></td></tr>
@@ -216,7 +216,7 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a938cf4b7f00ef3d8f46b918fd3fe22a3" name="a938cf4b7f00ef3d8f46b918fd3fe22a3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a938cf4b7f00ef3d8f46b918fd3fe22a3">&#9670;&#160;</a></span>graphics_context() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a938cf4b7f00ef3d8f46b918fd3fe22a3">&#9670;&#160;</a></span>graphics_context() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -254,8 +254,35 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a2eb41e7c32d291c825763740ba1593a5" name="a2eb41e7c32d291c825763740ba1593a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2eb41e7c32d291c825763740ba1593a5">&#9670;&#160;</a></span>graphics_context() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tr::graphics_context::graphics_context </td>
+          <td>(</td>
+          <td class="paramtype">const graphics_context &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Graphics contexts are not copyable. </p>
+
+</div>
+</div>
 <a id="a876eb68159fbe4641f9d394665731791" name="a876eb68159fbe4641f9d394665731791"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a876eb68159fbe4641f9d394665731791">&#9670;&#160;</a></span>graphics_context() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a876eb68159fbe4641f9d394665731791">&#9670;&#160;</a></span>graphics_context() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -282,8 +309,35 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="abbf4d1c7198b8430741a1f06bb536fa5" name="abbf4d1c7198b8430741a1f06bb536fa5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abbf4d1c7198b8430741a1f06bb536fa5">&#9670;&#160;</a></span>operator=() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a938cf4b7f00ef3d8f46b918fd3fe22a3">graphics_context</a> &amp; tr::graphics_context::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="#a938cf4b7f00ef3d8f46b918fd3fe22a3">graphics_context</a> &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Graphics contexts are not copyable. </p>
+
+</div>
+</div>
 <a id="a43c350030c1a3e59fa873c2f50bccab3" name="a43c350030c1a3e59fa873c2f50bccab3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a43c350030c1a3e59fa873c2f50bccab3">&#9670;&#160;</a></span>operator=()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a43c350030c1a3e59fa873c2f50bccab3">&#9670;&#160;</a></span>operator=() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -390,62 +444,6 @@ Public Member Functions</h2></td></tr>
 
 <p>Gets a render target spanning the entire backbuffer. </p>
 <dl class="section return"><dt>Returns</dt><dd>Render target spanning the entire backbuffer. </dd></dl>
-
-</div>
-</div>
-<a id="a867884681328b74121e7779a0e86220c" name="a867884681328b74121e7779a0e86220c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a867884681328b74121e7779a0e86220c">&#9670;&#160;</a></span>vec2_vertex_format()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const <a class="el" href="classtr_1_1vertex__format.html">vertex_format</a> &amp; tr::graphics_context::vec2_vertex_format </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets a reference to a vertex format describing an array of vec2. </p>
-<dl class="section return"><dt>Returns</dt><dd>Reference to the vec2 vertex format. </dd></dl>
-
-</div>
-</div>
-<a id="a844198e4f04ccf35bb7e7543d508a646" name="a844198e4f04ccf35bb7e7543d508a646"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a844198e4f04ccf35bb7e7543d508a646">&#9670;&#160;</a></span>basic_2d_vertex_format()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const <a class="el" href="classtr_1_1vertex__format.html">vertex_format</a> &amp; tr::graphics_context::basic_2d_vertex_format </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets a reference to a vertex format descibing arrays of vec2 (position), vec2 (uv) and <a class="el" href="structtr_1_1rgba8.html" title="8-bit RGBA color.">rgba8</a> (color). </p>
-<dl class="section return"><dt>Returns</dt><dd>Reference to the 2D vertex format. </dd></dl>
 
 </div>
 </div>

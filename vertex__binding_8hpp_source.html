@@ -165,14 +165,14 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('vertex__bindin
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <span class="keyword">namespace </span>internal</div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    {</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        <span class="keyword">template</span> &lt;specialization_of_tv&lt;vertex_binding_tag&gt;... BindingTags&gt;</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        <span class="keyword">template</span> &lt;specialization_of_tc&lt;vertex_binding_tag&gt;... BindingTags&gt;</div>
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        <span class="keyword">inline</span> <span class="keyword">constexpr</span> std::array&lt;vertex_binding, <span class="keyword">sizeof</span>...(BindingTags)&gt; as_vertex_bindings_array{</div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>            <a class="code hl_variable" href="namespacetr.html#acae3dfa2d6deb05490cbbc2c436deff7">as_vertex_binding&lt;typename BindingTags::type, BindingTags::divisor&gt;</a>...,</div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        };</div>
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    } <span class="comment">// namespace internal</span></div>
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span></div>
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span></div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <span class="keyword">template</span> &lt;specialization_of_tv&lt;vertex_binding_tag&gt;... BindingTags&gt;</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <span class="keyword">template</span> &lt;specialization_of_tc&lt;vertex_binding_tag&gt;... BindingTags&gt;</div>
 <div class="foldopen" id="foldopen00065" data-start="{" data-end="};">
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno"><a class="line" href="namespacetr.html#a914dfdd8f225efa355d832e1308cbf86">   65</a></span>    <span class="keyword">inline</span> <span class="keyword">constexpr</span> std::span&lt;<span class="keyword">const</span> <a class="code hl_struct" href="structtr_1_1vertex__binding.html">vertex_binding</a>, <span class="keyword">sizeof</span>...(BindingTags)&gt; <a class="code hl_variable" href="namespacetr.html#a914dfdd8f225efa355d832e1308cbf86">as_vertex_bindings</a>{</div>
 <div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        internal::as_vertex_bindings_array&lt;BindingTags...&gt;,</div>

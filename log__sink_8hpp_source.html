@@ -145,59 +145,61 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('log__sink_8hpp
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="classtr_1_1log__sink.html">   17</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classtr_1_1log__sink.html">log_sink</a></div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    {</div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>      <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="classtr_1_1log__sink.html#a1f96bfacd368c1d079a8b1f4cb00f0ad">   21</a></span>        <span class="keyword">virtual</span> <a class="code hl_function" href="classtr_1_1log__sink.html#a1f96bfacd368c1d079a8b1f4cb00f0ad">~log_sink</a>() noexcept = default;</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        <span class="comment">//</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span></div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="classtr_1_1log__sink.html#a21eb46ef683d71fefd6fff1dd05bd7a2">   27</a></span>        virtual <span class="keywordtype">void</span> <a class="code hl_function" href="classtr_1_1log__sink.html#a21eb46ef683d71fefd6fff1dd05bd7a2">log</a>(const <a class="code hl_struct" href="structtr_1_1log__message.html">log_message</a>&amp; message) = 0;</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span></div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="classtr_1_1log__sink.html#a338875a2a5b2c59d45f7deb66909986a">   30</a></span>        virtual <span class="keywordtype">void</span> <a class="code hl_function" href="classtr_1_1log__sink.html#a338875a2a5b2c59d45f7deb66909986a">flush</a>() = 0;</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    };</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="classtr_1_1log__sink.html#a1f96bfacd368c1d079a8b1f4cb00f0ad">   24</a></span>        <span class="keyword">virtual</span> <a class="code hl_function" href="classtr_1_1log__sink.html#a1f96bfacd368c1d079a8b1f4cb00f0ad">~log_sink</a>() noexcept = default;</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        <span class="comment">//</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="classtr_1_1log__sink.html#a21eb46ef683d71fefd6fff1dd05bd7a2">   32</a></span>        virtual <span class="keywordtype">void</span> <a class="code hl_function" href="classtr_1_1log__sink.html#a21eb46ef683d71fefd6fff1dd05bd7a2">log</a>(const <a class="code hl_struct" href="structtr_1_1log__message.html">log_message</a>&amp; message) = 0;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="classtr_1_1log__sink.html#a338875a2a5b2c59d45f7deb66909986a">   35</a></span>        virtual <span class="keywordtype">void</span> <a class="code hl_function" href="classtr_1_1log__sink.html#a338875a2a5b2c59d45f7deb66909986a">flush</a>() = 0;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    };</div>
 </div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    <span class="comment">//</span></div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span></div>
-<div class="foldopen" id="foldopen00036" data-start="{" data-end="};">
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="classtr_1_1stdout__log__sink.html">   36</a></span>    class <a class="code hl_class" href="classtr_1_1stdout__log__sink.html">stdout_log_sink</a> final : public <a class="code hl_class" href="classtr_1_1log__sink.html">log_sink</a></div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    {</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>      <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="classtr_1_1stdout__log__sink.html#a8e8d0206aefd5308d74eb3e0efa61bc6">   40</a></span>        <a class="code hl_function" href="classtr_1_1stdout__log__sink.html#a8e8d0206aefd5308d74eb3e0efa61bc6">~stdout_log_sink</a>() noexcept override;</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        <span class="comment">//</span></div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span></div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="classtr_1_1stdout__log__sink.html#a039b1cf8ed177707965b0b573fe30024">   46</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classtr_1_1stdout__log__sink.html#a039b1cf8ed177707965b0b573fe30024">log</a>(const <a class="code hl_struct" href="structtr_1_1log__message.html">log_message</a>&amp; message) override;</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span></div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno"><a class="line" href="classtr_1_1stdout__log__sink.html#a02ba799f1859ddbb99d3c55c218ef516">   49</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classtr_1_1stdout__log__sink.html#a02ba799f1859ddbb99d3c55c218ef516">flush</a>() override;</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    };</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    <span class="comment">//</span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span></div>
+<div class="foldopen" id="foldopen00041" data-start="{" data-end="};">
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="classtr_1_1stdout__log__sink.html">   41</a></span>    class <a class="code hl_class" href="classtr_1_1stdout__log__sink.html">stdout_log_sink</a> final : public <a class="code hl_class" href="classtr_1_1log__sink.html">log_sink</a></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    {</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>      <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="classtr_1_1stdout__log__sink.html#a8e8d0206aefd5308d74eb3e0efa61bc6">   45</a></span>        <a class="code hl_function" href="classtr_1_1stdout__log__sink.html#a8e8d0206aefd5308d74eb3e0efa61bc6">~stdout_log_sink</a>() noexcept override;</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        <span class="comment">//</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="classtr_1_1stdout__log__sink.html#a039b1cf8ed177707965b0b573fe30024">   51</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classtr_1_1stdout__log__sink.html#a039b1cf8ed177707965b0b573fe30024">log</a>(const <a class="code hl_struct" href="structtr_1_1log__message.html">log_message</a>&amp; message) override;</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span></div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="classtr_1_1stdout__log__sink.html#a02ba799f1859ddbb99d3c55c218ef516">   54</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classtr_1_1stdout__log__sink.html#a02ba799f1859ddbb99d3c55c218ef516">flush</a>() override;</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    };</div>
 </div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    <span class="comment">//</span></div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span></div>
-<div class="foldopen" id="foldopen00059" data-start="{" data-end="};">
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno"><a class="line" href="classtr_1_1directory__log__sink.html">   59</a></span>    class <a class="code hl_function" href="classtr_1_1directory__log__sink.html#ac23b3232a68e0e08a64e80cdc4cc742b">directory_log_sink</a> final : public <a class="code hl_class" href="classtr_1_1log__sink.html">log_sink</a></div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    {</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>      <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno"><a class="line" href="classtr_1_1directory__log__sink.html#ac23b3232a68e0e08a64e80cdc4cc742b">   65</a></span>        <a class="code hl_function" href="classtr_1_1directory__log__sink.html#ac23b3232a68e0e08a64e80cdc4cc742b">directory_log_sink</a>(std::filesystem::path directory_path);</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        <span class="comment">//</span></div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span></div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno"><a class="line" href="classtr_1_1directory__log__sink.html#abd6e7777f21f482506997a1e22afbf79">   71</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classtr_1_1directory__log__sink.html#abd6e7777f21f482506997a1e22afbf79">log</a>(<span class="keyword">const</span> <a class="code hl_struct" href="structtr_1_1log__message.html">log_message</a>&amp; message) <span class="keyword">noexcept</span> <span class="keyword">override</span>;</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span></div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno"><a class="line" href="classtr_1_1directory__log__sink.html#a42647f548c646ba35c9c0194a771a113">   74</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classtr_1_1directory__log__sink.html#a42647f548c646ba35c9c0194a771a113">flush</a>() noexcept<span class="keyword"> override </span>{}</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>      <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        std::filesystem::path m_directory_path;</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    };</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    <span class="comment">//</span></div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span></div>
+<div class="foldopen" id="foldopen00064" data-start="{" data-end="};">
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno"><a class="line" href="classtr_1_1directory__log__sink.html">   64</a></span>    class <a class="code hl_function" href="classtr_1_1directory__log__sink.html#ac23b3232a68e0e08a64e80cdc4cc742b">directory_log_sink</a> final : public <a class="code hl_class" href="classtr_1_1log__sink.html">log_sink</a></div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    {</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>      <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno"><a class="line" href="classtr_1_1directory__log__sink.html#ac23b3232a68e0e08a64e80cdc4cc742b">   70</a></span>        <a class="code hl_function" href="classtr_1_1directory__log__sink.html#ac23b3232a68e0e08a64e80cdc4cc742b">directory_log_sink</a>(std::filesystem::path directory_path);</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        <span class="comment">//</span></div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span></div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno"><a class="line" href="classtr_1_1directory__log__sink.html#abd6e7777f21f482506997a1e22afbf79">   76</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classtr_1_1directory__log__sink.html#abd6e7777f21f482506997a1e22afbf79">log</a>(<span class="keyword">const</span> <a class="code hl_struct" href="structtr_1_1log__message.html">log_message</a>&amp; message) <span class="keyword">noexcept</span> <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span></div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno"><a class="line" href="classtr_1_1directory__log__sink.html#a42647f548c646ba35c9c0194a771a113">   79</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classtr_1_1directory__log__sink.html#a42647f548c646ba35c9c0194a771a113">flush</a>() noexcept<span class="keyword"> override </span>{}</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>      <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>        std::filesystem::path m_directory_path;</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    };</div>
 </div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>} <span class="comment">// namespace tr</span></div>
-<div class="ttc" id="aclasstr_1_1directory__log__sink_html_a42647f548c646ba35c9c0194a771a113"><div class="ttname"><a href="classtr_1_1directory__log__sink.html#a42647f548c646ba35c9c0194a771a113">tr::directory_log_sink::flush</a></div><div class="ttdeci">void flush() noexcept override</div><div class="ttdoc">Flushes the sink (no-op).</div><div class="ttdef"><b>Definition</b> log_sink.hpp:74</div></div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>} <span class="comment">// namespace tr</span></div>
+<div class="ttc" id="aclasstr_1_1directory__log__sink_html_a42647f548c646ba35c9c0194a771a113"><div class="ttname"><a href="classtr_1_1directory__log__sink.html#a42647f548c646ba35c9c0194a771a113">tr::directory_log_sink::flush</a></div><div class="ttdeci">void flush() noexcept override</div><div class="ttdoc">Flushes the sink (no-op).</div><div class="ttdef"><b>Definition</b> log_sink.hpp:79</div></div>
 <div class="ttc" id="aclasstr_1_1directory__log__sink_html_abd6e7777f21f482506997a1e22afbf79"><div class="ttname"><a href="classtr_1_1directory__log__sink.html#abd6e7777f21f482506997a1e22afbf79">tr::directory_log_sink::log</a></div><div class="ttdeci">void log(const log_message &amp;message) noexcept override</div><div class="ttdoc">Outputs a logging message to a log file.</div></div>
 <div class="ttc" id="aclasstr_1_1directory__log__sink_html_ac23b3232a68e0e08a64e80cdc4cc742b"><div class="ttname"><a href="classtr_1_1directory__log__sink.html#ac23b3232a68e0e08a64e80cdc4cc742b">tr::directory_log_sink::directory_log_sink</a></div><div class="ttdeci">directory_log_sink(std::filesystem::path directory_path)</div><div class="ttdoc">Creates a directory logging sink.</div></div>
 <div class="ttc" id="aclasstr_1_1log__sink_html"><div class="ttname"><a href="classtr_1_1log__sink.html">tr::log_sink</a></div><div class="ttdoc">Interface for sinks recieving log messages.</div><div class="ttdef"><b>Definition</b> log_sink.hpp:18</div></div>
 <div class="ttc" id="aclasstr_1_1log__sink_html_a1f96bfacd368c1d079a8b1f4cb00f0ad"><div class="ttname"><a href="classtr_1_1log__sink.html#a1f96bfacd368c1d079a8b1f4cb00f0ad">tr::log_sink::~log_sink</a></div><div class="ttdeci">virtual ~log_sink() noexcept=default</div><div class="ttdoc">Destroys the sink.</div></div>
 <div class="ttc" id="aclasstr_1_1log__sink_html_a21eb46ef683d71fefd6fff1dd05bd7a2"><div class="ttname"><a href="classtr_1_1log__sink.html#a21eb46ef683d71fefd6fff1dd05bd7a2">tr::log_sink::log</a></div><div class="ttdeci">virtual void log(const log_message &amp;message)=0</div><div class="ttdoc">Handles a log message.</div></div>
 <div class="ttc" id="aclasstr_1_1log__sink_html_a338875a2a5b2c59d45f7deb66909986a"><div class="ttname"><a href="classtr_1_1log__sink.html#a338875a2a5b2c59d45f7deb66909986a">tr::log_sink::flush</a></div><div class="ttdeci">virtual void flush()=0</div><div class="ttdoc">Flushes the sink.</div></div>
-<div class="ttc" id="aclasstr_1_1stdout__log__sink_html"><div class="ttname"><a href="classtr_1_1stdout__log__sink.html">tr::stdout_log_sink</a></div><div class="ttdoc">Logging sink outputting to the standard output.</div><div class="ttdef"><b>Definition</b> log_sink.hpp:37</div></div>
+<div class="ttc" id="aclasstr_1_1stdout__log__sink_html"><div class="ttname"><a href="classtr_1_1stdout__log__sink.html">tr::stdout_log_sink</a></div><div class="ttdoc">Logging sink outputting to the standard output.</div><div class="ttdef"><b>Definition</b> log_sink.hpp:42</div></div>
 <div class="ttc" id="aclasstr_1_1stdout__log__sink_html_a02ba799f1859ddbb99d3c55c218ef516"><div class="ttname"><a href="classtr_1_1stdout__log__sink.html#a02ba799f1859ddbb99d3c55c218ef516">tr::stdout_log_sink::flush</a></div><div class="ttdeci">void flush() override</div><div class="ttdoc">Flushes the standard output.</div></div>
 <div class="ttc" id="aclasstr_1_1stdout__log__sink_html_a039b1cf8ed177707965b0b573fe30024"><div class="ttname"><a href="classtr_1_1stdout__log__sink.html#a039b1cf8ed177707965b0b573fe30024">tr::stdout_log_sink::log</a></div><div class="ttdeci">void log(const log_message &amp;message) override</div><div class="ttdoc">Outputs a logging message to the standard output.</div></div>
 <div class="ttc" id="aclasstr_1_1stdout__log__sink_html_a8e8d0206aefd5308d74eb3e0efa61bc6"><div class="ttname"><a href="classtr_1_1stdout__log__sink.html#a8e8d0206aefd5308d74eb3e0efa61bc6">tr::stdout_log_sink::~stdout_log_sink</a></div><div class="ttdeci">~stdout_log_sink() noexcept override</div><div class="ttdoc">Flushes the standard output.</div></div>

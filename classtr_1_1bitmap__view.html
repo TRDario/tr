@@ -128,10 +128,12 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1bit
 </div><!--header-->
 <div class="contents">
 
-<p>Non-owning view over bitmap data.  
+<p>Non-owning bitmap view.  
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Non-owning view over bitmap data. </p>
+<div class="textblock"><p>Non-owning bitmap view. </p>
+<p><span class="tt"><a class="el" href="classtr_1_1bitmap__view.html" title="Non-owning bitmap view.">tr::bitmap_view</a></span> implements an interface analogous to <span class="tt"><a class="el" href="classtr_1_1bitmap.html" title="Two-dimensional bitmap image.">tr::bitmap</a></span>, but does not own or allow modification of the underlying pixel data. It is not to be confused with <span class="tt"><a class="el" href="classtr_1_1sub__bitmap.html" title="View over a rectangular region of a bitmap.">tr::sub_bitmap</a></span>, which is a view into a sub-region of a bitmap or bitmap view.</p>
+<p>Moved-from instances of <span class="tt"><a class="el" href="classtr_1_1bitmap__view.html" title="Non-owning bitmap view.">tr::bitmap_view</a></span> are left in a special 'invalid' state. Invalid <span class="tt"><a class="el" href="classtr_1_1bitmap__view.html" title="Non-owning bitmap view.">tr::bitmap_view</a></span> instances may not be interacted with besides moving a new value into them and checking for validity using <span class="tt"><a class="el" href="#a26d5db1dde0f526bab40558689b0b3a1" title="Gets whether the bitmap view is in a valid state.">valid()</a></span>. </p>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-types" class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
@@ -142,7 +144,7 @@ Public Types</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors</div></td></tr>
+<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors and destructors</div></td></tr>
 <tr class="memitem:aecf13813d93967908d70920ccc8c58f5" id="r_aecf13813d93967908d70920ccc8c58f5"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#aecf13813d93967908d70920ccc8c58f5">bitmap_view</a> (std::span&lt; const std::byte &gt; raw_data, glm::ivec2 size, <a class="el" href="namespacetr.html#ac1babae6e9367fc90585a8791dadc746">pixel_format</a> format)</td></tr>
 <tr class="memdesc:aecf13813d93967908d70920ccc8c58f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a bitmap view over contiguous pixel data.  <br /></td></tr>
 <tr class="memitem:a4f6262ae7aebdfe2ac21b9537f8430a4" id="r_a4f6262ae7aebdfe2ac21b9537f8430a4"><td class="memTemplParams" colspan="2">template&lt;std::ranges::contiguous_range Range&gt; </td></tr>
@@ -150,26 +152,37 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a4f6262ae7aebdfe2ac21b9537f8430a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a bitmap view over a range of pixel data.  <br /></td></tr>
 <tr class="memitem:ab11261802de05992ac47071573417ad2" id="r_ab11261802de05992ac47071573417ad2"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ab11261802de05992ac47071573417ad2">bitmap_view</a> (const std::byte *raw_data_start, int pitch, glm::ivec2 size, <a class="el" href="namespacetr.html#ac1babae6e9367fc90585a8791dadc746">pixel_format</a> format)</td></tr>
 <tr class="memdesc:ab11261802de05992ac47071573417ad2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a bitmap view over pixel data.  <br /></td></tr>
-<tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Sub-bitmaps</div></td></tr>
+<tr class="memitem:a78759cecd3f332bcb49ee89a05f65803" id="r_a78759cecd3f332bcb49ee89a05f65803"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a78759cecd3f332bcb49ee89a05f65803">bitmap_view</a> (const bitmap_view &amp;)=delete</td></tr>
+<tr class="memdesc:a78759cecd3f332bcb49ee89a05f65803"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bitmap views are not copyable.  <br /></td></tr>
+<tr class="memitem:a7bf553ffd06fba5a530166ab4c92cbea" id="r_a7bf553ffd06fba5a530166ab4c92cbea"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a7bf553ffd06fba5a530166ab4c92cbea">bitmap_view</a> (bitmap_view &amp;&amp;rhs) noexcept=default</td></tr>
+<tr class="memdesc:a7bf553ffd06fba5a530166ab4c92cbea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves a bitmap view.  <br /></td></tr>
+<tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Assignment operators</div></td></tr>
+<tr class="memitem:a82b10435bdca0ee4b3e7a7f48aed15d4" id="r_a82b10435bdca0ee4b3e7a7f48aed15d4"><td class="memItemLeft"><a class="el" href="#aecf13813d93967908d70920ccc8c58f5">bitmap_view</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a82b10435bdca0ee4b3e7a7f48aed15d4">operator=</a> (const <a class="el" href="#aecf13813d93967908d70920ccc8c58f5">bitmap_view</a> &amp;)=delete</td></tr>
+<tr class="memdesc:a82b10435bdca0ee4b3e7a7f48aed15d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bitmap views are not copyable.  <br /></td></tr>
+<tr class="memitem:a7f55b7fe3970fcc11515e89f4ebd389b" id="r_a7f55b7fe3970fcc11515e89f4ebd389b"><td class="memItemLeft"><a class="el" href="#aecf13813d93967908d70920ccc8c58f5">bitmap_view</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a7f55b7fe3970fcc11515e89f4ebd389b">operator=</a> (<a class="el" href="#aecf13813d93967908d70920ccc8c58f5">bitmap_view</a> &amp;&amp;rhs) noexcept=default</td></tr>
+<tr class="memdesc:a7f55b7fe3970fcc11515e89f4ebd389b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves a bitmap view.  <br /></td></tr>
+<tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Sub-bitmaps</div></td></tr>
 <tr class="memitem:a6f3e90485e61407812e0028b593412b3" id="r_a6f3e90485e61407812e0028b593412b3"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a6f3e90485e61407812e0028b593412b3">operator sub_bitmap</a> () const noexcept</td></tr>
 <tr class="memdesc:a6f3e90485e61407812e0028b593412b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a sub-bitmap spanning the entire bitmap view.  <br /></td></tr>
 <tr class="memitem:a35d80f7f586fee378bdcd34f52ea8428" id="r_a35d80f7f586fee378bdcd34f52ea8428"><td class="memItemLeft"><a class="el" href="classtr_1_1sub__bitmap.html">sub_bitmap</a>&#160;</td><td class="memItemRight"><a class="el" href="#a35d80f7f586fee378bdcd34f52ea8428">sub</a> (<a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; int &gt; region) const noexcept</td></tr>
 <tr class="memdesc:a35d80f7f586fee378bdcd34f52ea8428"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a sub-bitmap of the bitmap view.  <br /></td></tr>
-<tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Information</div></td></tr>
+<tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Information</div></td></tr>
+<tr class="memitem:a26d5db1dde0f526bab40558689b0b3a1" id="r_a26d5db1dde0f526bab40558689b0b3a1"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a26d5db1dde0f526bab40558689b0b3a1">valid</a> () const noexcept</td></tr>
+<tr class="memdesc:a26d5db1dde0f526bab40558689b0b3a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the bitmap view is in a valid state.  <br /></td></tr>
 <tr class="memitem:a21e9cd9896d5f607b3676d684f09febe" id="r_a21e9cd9896d5f607b3676d684f09febe"><td class="memItemLeft">glm::ivec2&#160;</td><td class="memItemRight"><a class="el" href="#a21e9cd9896d5f607b3676d684f09febe">size</a> () const noexcept</td></tr>
 <tr class="memdesc:a21e9cd9896d5f607b3676d684f09febe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the size of the bitmap.  <br /></td></tr>
 <tr class="memitem:aeb8e73924427a3736cbc389b46f5f4a6" id="r_aeb8e73924427a3736cbc389b46f5f4a6"><td class="memItemLeft"><a class="el" href="namespacetr.html#ac1babae6e9367fc90585a8791dadc746">pixel_format</a>&#160;</td><td class="memItemRight"><a class="el" href="#aeb8e73924427a3736cbc389b46f5f4a6">format</a> () const noexcept</td></tr>
 <tr class="memdesc:aeb8e73924427a3736cbc389b46f5f4a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the format of the bitmap.  <br /></td></tr>
 <tr class="memitem:a07446dc42430a4217d76b6c6e31b8864" id="r_a07446dc42430a4217d76b6c6e31b8864"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a07446dc42430a4217d76b6c6e31b8864">pitch</a> () const noexcept</td></tr>
 <tr class="memdesc:a07446dc42430a4217d76b6c6e31b8864"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the pitch of the bitmap.  <br /></td></tr>
-<tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Access</div></td></tr>
+<tr id="pub-methods-4" class="groupHeader"><td colspan="2"><div class="groupHeader">Access</div></td></tr>
 <tr class="memitem:a967afe78b6c7cbd8eb208feb116876a2" id="r_a967afe78b6c7cbd8eb208feb116876a2"><td class="memItemLeft"><a class="el" href="#a53be375d6577715b07a0c41faeb4642c">reference</a>&#160;</td><td class="memItemRight"><a class="el" href="#a967afe78b6c7cbd8eb208feb116876a2">operator[]</a> (int x, int y) const noexcept</td></tr>
 <tr class="memdesc:a967afe78b6c7cbd8eb208feb116876a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets immutable access to a pixel of the bitmap.  <br /></td></tr>
 <tr class="memitem:a87e5a7bf30677e1b74dec387bc2415de" id="r_a87e5a7bf30677e1b74dec387bc2415de"><td class="memItemLeft"><a class="el" href="#a53be375d6577715b07a0c41faeb4642c">reference</a>&#160;</td><td class="memItemRight"><a class="el" href="#a87e5a7bf30677e1b74dec387bc2415de">operator[]</a> (glm::ivec2 pos) const noexcept</td></tr>
 <tr class="memdesc:a87e5a7bf30677e1b74dec387bc2415de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets immutable access to a pixel of the bitmap.  <br /></td></tr>
 <tr class="memitem:a0f390974d33946dcaa281a110d211d05" id="r_a0f390974d33946dcaa281a110d211d05"><td class="memItemLeft">const std::byte *&#160;</td><td class="memItemRight"><a class="el" href="#a0f390974d33946dcaa281a110d211d05">data</a> () const noexcept</td></tr>
 <tr class="memdesc:a0f390974d33946dcaa281a110d211d05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the raw data of the bitmap.  <br /></td></tr>
-<tr id="pub-methods-4" class="groupHeader"><td colspan="2"><div class="groupHeader">Iterators</div></td></tr>
+<tr id="pub-methods-5" class="groupHeader"><td colspan="2"><div class="groupHeader">Iterators</div></td></tr>
 <tr class="memitem:a3848c60465930a5bb2ac6c8faa45081c" id="r_a3848c60465930a5bb2ac6c8faa45081c"><td class="memItemLeft"><a class="el" href="#aeb64526106d7cddc023d6cdb08536067">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a3848c60465930a5bb2ac6c8faa45081c">begin</a> () const noexcept</td></tr>
 <tr class="memdesc:a3848c60465930a5bb2ac6c8faa45081c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an immutable iterator to the beginning of the bitmap.  <br /></td></tr>
 <tr class="memitem:a03cf25e1e48cef93100e2d4d64a6b0a9" id="r_a03cf25e1e48cef93100e2d4d64a6b0a9"><td class="memItemLeft"><a class="el" href="#aeb64526106d7cddc023d6cdb08536067">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a03cf25e1e48cef93100e2d4d64a6b0a9">cbegin</a> () const noexcept</td></tr>
@@ -178,7 +191,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a9538f4960a229243983d02907d6a51d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an immutable iterator to one past the end of the bitmap.  <br /></td></tr>
 <tr class="memitem:af0f89b49773e359021e368ce8e38f2b7" id="r_af0f89b49773e359021e368ce8e38f2b7"><td class="memItemLeft"><a class="el" href="#aeb64526106d7cddc023d6cdb08536067">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#af0f89b49773e359021e368ce8e38f2b7">cend</a> () const noexcept</td></tr>
 <tr class="memdesc:af0f89b49773e359021e368ce8e38f2b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an immutable iterator to one past the end of the bitmap.  <br /></td></tr>
-<tr id="pub-methods-5" class="groupHeader"><td colspan="2"><div class="groupHeader">Saving</div></td></tr>
+<tr id="pub-methods-6" class="groupHeader"><td colspan="2"><div class="groupHeader">Saving</div></td></tr>
 <tr class="memitem:a1477de16bc5068385eb8ce3c4c4d3ebe" id="r_a1477de16bc5068385eb8ce3c4c4d3ebe"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a1477de16bc5068385eb8ce3c4c4d3ebe">save</a> (const std::filesystem::path &amp;path) const</td></tr>
 <tr class="memdesc:a1477de16bc5068385eb8ce3c4c4d3ebe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Saves the bitmap to a .png file.  <br /></td></tr>
 </table>
@@ -217,7 +230,7 @@ Public Member Functions</h2></td></tr>
 </div>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aecf13813d93967908d70920ccc8c58f5" name="aecf13813d93967908d70920ccc8c58f5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aecf13813d93967908d70920ccc8c58f5">&#9670;&#160;</a></span>bitmap_view() <span class="overload">[1/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aecf13813d93967908d70920ccc8c58f5">&#9670;&#160;</a></span>bitmap_view() <span class="overload">[1/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -261,7 +274,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a4f6262ae7aebdfe2ac21b9537f8430a4" name="a4f6262ae7aebdfe2ac21b9537f8430a4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4f6262ae7aebdfe2ac21b9537f8430a4">&#9670;&#160;</a></span>bitmap_view() <span class="overload">[2/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f6262ae7aebdfe2ac21b9537f8430a4">&#9670;&#160;</a></span>bitmap_view() <span class="overload">[2/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -307,7 +320,7 @@ template&lt;std::ranges::contiguous_range Range&gt; </div>
 </div>
 </div>
 <a id="ab11261802de05992ac47071573417ad2" name="ab11261802de05992ac47071573417ad2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab11261802de05992ac47071573417ad2">&#9670;&#160;</a></span>bitmap_view() <span class="overload">[3/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab11261802de05992ac47071573417ad2">&#9670;&#160;</a></span>bitmap_view() <span class="overload">[3/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -356,7 +369,128 @@ template&lt;std::ranges::contiguous_range Range&gt; </div>
 
 </div>
 </div>
+<a id="a78759cecd3f332bcb49ee89a05f65803" name="a78759cecd3f332bcb49ee89a05f65803"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a78759cecd3f332bcb49ee89a05f65803">&#9670;&#160;</a></span>bitmap_view() <span class="overload">[4/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tr::bitmap_view::bitmap_view </td>
+          <td>(</td>
+          <td class="paramtype">const bitmap_view &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Bitmap views are not copyable. </p>
+
+</div>
+</div>
+<a id="a7bf553ffd06fba5a530166ab4c92cbea" name="a7bf553ffd06fba5a530166ab4c92cbea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7bf553ffd06fba5a530166ab4c92cbea">&#9670;&#160;</a></span>bitmap_view() <span class="overload">[5/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tr::bitmap_view::bitmap_view </td>
+          <td>(</td>
+          <td class="paramtype">bitmap_view &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel default">default</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Moves a bitmap view. </p>
+<p><span class="tt">rhs</span> is left in an invalid state after the move as per the class description. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rhs</td><td>Bitmap view to move. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="a82b10435bdca0ee4b3e7a7f48aed15d4" name="a82b10435bdca0ee4b3e7a7f48aed15d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a82b10435bdca0ee4b3e7a7f48aed15d4">&#9670;&#160;</a></span>operator=() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#aecf13813d93967908d70920ccc8c58f5">bitmap_view</a> &amp; tr::bitmap_view::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="#aecf13813d93967908d70920ccc8c58f5">bitmap_view</a> &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel delete">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Bitmap views are not copyable. </p>
+
+</div>
+</div>
+<a id="a7f55b7fe3970fcc11515e89f4ebd389b" name="a7f55b7fe3970fcc11515e89f4ebd389b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f55b7fe3970fcc11515e89f4ebd389b">&#9670;&#160;</a></span>operator=() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#aecf13813d93967908d70920ccc8c58f5">bitmap_view</a> &amp; tr::bitmap_view::operator= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#aecf13813d93967908d70920ccc8c58f5">bitmap_view</a> &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel default">default</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Moves a bitmap view. </p>
+<p><span class="tt">rhs</span> is left in an invalid state after the move as per the class description. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rhs</td><td>Bitmap view to move. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Reference to <span class="tt">*this</span>. </dd></dl>
+
+</div>
+</div>
 <a id="a6f3e90485e61407812e0028b593412b3" name="a6f3e90485e61407812e0028b593412b3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6f3e90485e61407812e0028b593412b3">&#9670;&#160;</a></span>operator sub_bitmap()</h2>
 
@@ -416,6 +550,34 @@ template&lt;std::ranges::contiguous_range Range&gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Sub-bitmap spanning a region of the bitmap view. </dd></dl>
+
+</div>
+</div>
+<a id="a26d5db1dde0f526bab40558689b0b3a1" name="a26d5db1dde0f526bab40558689b0b3a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a26d5db1dde0f526bab40558689b0b3a1">&#9670;&#160;</a></span>valid()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tr::bitmap_view::valid </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets whether the bitmap view is in a valid state. </p>
+<dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the bitmap view is in a valid state, <span class="tt">false</span> otherwise. </dd></dl>
 
 </div>
 </div>
