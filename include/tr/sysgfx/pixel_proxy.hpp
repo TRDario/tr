@@ -21,9 +21,6 @@ namespace tr
 		/// @name Constructors and destructors
 		/// @{
 
-		/// Undefined, required to default-construct iterators.
-		[[nodiscard]] const_pixel_proxy() noexcept = default;
-
 		/// Wraps a pointer to the pixel data.
 		/// @param data Pointer to the pixel data.
 		/// @param pixel_format Format of the pixel.
@@ -63,9 +60,6 @@ namespace tr
 		/// @cond implementation_details
 		/// @name Constructors and destructors
 		/// @{
-
-		/// Undefined, required to default-construct iterators.
-		[[nodiscard]] pixel_proxy() noexcept = default;
 
 		/// Wraps a pointer to the pixel data.
 		/// @param data Pointer to the pixel data.

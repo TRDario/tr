@@ -6,6 +6,8 @@
 #include <tr/sysgfx/bitmap.hpp>
 #include <tr/sysgfx/bitmap_view.hpp>
 #include <tr/sysgfx/exception.hpp>
+#include <tr/sysgfx/pixel_iterator.hpp>
+#include <tr/sysgfx/pixel_proxy.hpp>
 #include <tr/sysgfx/sub_bitmap.hpp>
 #include <tr/utility/color.hpp>
 
@@ -136,7 +138,7 @@ tr::bitmap::iterator tr::bitmap::begin() noexcept
 {
 	TR_ASSERT(valid(), "Tried to get an iterator to the beginning of a bitmap in an invalid state.");
 
-	return iterator{*this, glm::vec2{0, 0}};
+	return iterator{data(), m_ptr->pitch, m_ptr->w, format(), 0};
 }
 
 tr::bitmap::const_iterator tr::bitmap::begin() const noexcept
@@ -155,7 +157,7 @@ tr::bitmap::iterator tr::bitmap::end() noexcept
 {
 	TR_ASSERT(valid(), "Tried to get an iterator to the end of a bitmap in an invalid state.");
 
-	return iterator{*this, glm::vec2{0, size().y}};
+	return iterator{data(), m_ptr->pitch, m_ptr->w, format(), m_ptr->h * m_ptr->pitch};
 }
 
 tr::bitmap::const_iterator tr::bitmap::end() const noexcept

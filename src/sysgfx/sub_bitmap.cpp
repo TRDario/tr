@@ -5,6 +5,7 @@
 #include <tr/sysgfx/bitmap.hpp>
 #include <tr/sysgfx/bitmap_view.hpp>
 #include <tr/sysgfx/pixel_iterator.hpp>
+#include <tr/sysgfx/pixel_proxy.hpp>
 #include <tr/sysgfx/sub_bitmap.hpp>
 
 //
@@ -74,14 +75,14 @@ tr::sub_bitmap::reference tr::sub_bitmap::operator[](glm::ivec2 pos) const noexc
 
 const std::byte* tr::sub_bitmap::data() const noexcept
 {
-	return static_cast<const std::byte*>(m_ptr->pixels) + pitch() * m_region.tl.y + pixel_bytes(format()) * m_region.tl.x;
+	return static_cast<const std::byte*>(m_ptr->pixels) + m_ptr->pitch * m_region.tl.y + pixel_bytes(format()) * m_region.tl.x;
 }
 
 //
 
 tr::sub_bitmap::iterator tr::sub_bitmap::begin() const noexcept
 {
-	return iterator{*this, {}};
+	return iterator{data(), m_ptr->pitch, m_region.size.x, format(), 0};
 }
 
 tr::sub_bitmap::iterator tr::sub_bitmap::cbegin() const noexcept
@@ -91,7 +92,7 @@ tr::sub_bitmap::iterator tr::sub_bitmap::cbegin() const noexcept
 
 tr::sub_bitmap::iterator tr::sub_bitmap::end() const noexcept
 {
-	return iterator{*this, {0, size().y}};
+	return iterator{data(), m_ptr->pitch, m_region.size.x, format(), m_region.size.y * m_ptr->pitch};
 }
 
 tr::sub_bitmap::iterator tr::sub_bitmap::cend() const noexcept

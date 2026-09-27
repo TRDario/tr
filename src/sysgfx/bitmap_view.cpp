@@ -7,6 +7,7 @@
 #include <tr/sysgfx/bitmap_view.hpp>
 #include <tr/sysgfx/exception.hpp>
 #include <tr/sysgfx/pixel_iterator.hpp>
+#include <tr/sysgfx/pixel_proxy.hpp>
 
 //
 

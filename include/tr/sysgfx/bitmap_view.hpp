@@ -4,13 +4,6 @@
 #pragma once
 #include <tr/sysgfx/sub_bitmap.hpp>
 
-namespace tr
-{
-	enum class pixel_format;
-} // namespace tr
-
-struct SDL_Surface;
-
 //
 
 namespace tr

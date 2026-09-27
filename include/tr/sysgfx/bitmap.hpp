@@ -3,14 +3,19 @@
 
 #pragma once
 #include <tr/sysgfx/pixel_format.hpp>
-#include <tr/sysgfx/pixel_iterator.hpp>
 #include <tr/utility/rectangle.hpp>
 
 struct SDL_Surface;
 namespace tr
 {
 	class bitmap_view;
-}
+	class const_pixel_iterator;
+	class const_pixel_proxy;
+	class pixel_iterator;
+	class pixel_proxy;
+	struct rgba8;
+	class sub_bitmap;
+} // namespace tr
 
 //
 

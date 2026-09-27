@@ -90,8 +90,8 @@ namespace tr
 		/// @return Copy of `it` advanced by `diff`.
 		template <typename Difference>
 		[[nodiscard]] friend constexpr Iterator operator+(const iterator_interface& it, Difference diff)
-			noexcept(noexcept(Iterator{it.base()} += diff))
-			requires(requires { Iterator{it.base()} += diff; })
+			noexcept(noexcept(std::declval<Iterator&>() += diff))
+			requires(requires { std::declval<Iterator&>() += diff; })
 		{
 			Iterator copy{it.base()};
 			copy += diff;
@@ -105,8 +105,8 @@ namespace tr
 		/// @return Copy of `it` advanced by `diff`.
 		template <typename Difference>
 		[[nodiscard]] friend constexpr Iterator operator+(Difference diff, const iterator_interface& it)
-			noexcept(noexcept(Iterator{it.base()} += diff))
-			requires(requires { Iterator{it.base()} += diff; })
+			noexcept(noexcept(std::declval<Iterator&>() += diff))
+			requires(requires { std::declval<Iterator&>() += diff; })
 		{
 			Iterator copy{it.base()};
 			copy += diff;
@@ -120,8 +120,8 @@ namespace tr
 		/// @return Copy of `it` subtracted by `diff`.
 		template <typename Difference>
 		[[nodiscard]] friend constexpr Iterator operator-(const iterator_interface& it, Difference diff)
-			noexcept(noexcept(Iterator{it.base()} -= diff))
-			requires(requires { Iterator{it.base()} -= diff; })
+			noexcept(noexcept(std::declval<Iterator&>() -= diff))
+			requires(requires { std::declval<Iterator&>() -= diff; })
 		{
 			Iterator copy{it.base()};
 			copy -= diff;
