@@ -30,8 +30,9 @@ namespace tr::internal
 	//
 
 	/// Shim around `running_application->initialize()` to make it compatible with SDL.
+	/// @param argc, argv Command-line arguments.
 	/// @return SDL app result.
-	[[nodiscard]] SDL_AppResult initialize(void**, int, char**);
+	[[nodiscard]] SDL_AppResult initialize(void**, int argc, char** argv);
 
 	/// Shim around `running_application->handle_event()` to make it compatible with SDL.
 	/// @param sdl_event SDL event to handle.
@@ -47,8 +48,7 @@ namespace tr::internal
 	void shut_down(void*, SDL_AppResult result);
 
 	/// Shim around `SDL_EnterAppMainCallbacks()` to call it through SDL_RunApp.
-	/// @param argc Command-line argument count.
-	/// @param argv Command-line argument values.
+	/// @param argc, argv Command-line arguments.
 	/// @return Exit code of the application.
 	[[nodiscard]] int run_main_loop(int argc, char** argv) noexcept;
 } // namespace tr::internal

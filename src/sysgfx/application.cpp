@@ -12,7 +12,7 @@
 
 //
 
-tr::application::signal tr::application::initialize()
+tr::application::signal tr::application::initialize(std::span<const zstring_view>)
 {
 	return signal::proceed;
 }

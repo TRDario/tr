@@ -49,7 +49,7 @@ void tr::internal::show_fatal_error_message_box(const std::exception& error)
 
 //
 
-SDL_AppResult tr::internal::initialize(void**, int, char**)
+SDL_AppResult tr::internal::initialize(void**, int argc, char** argv)
 {
 	if (!SDL_Init(SDL_INIT_VIDEO) || !TTF_Init()) {
 		std::println(stderr, "Failed to initialize SDL3: {}", SDL_GetError());
@@ -64,7 +64,8 @@ SDL_AppResult tr::internal::initialize(void**, int, char**)
 	}
 
 	try {
-		return static_cast<SDL_AppResult>(running_application->initialize());
+		const std::span<const zstring_view> args{reinterpret_cast<const zstring_view*>(argv), static_cast<usize>(argc)};
+		return static_cast<SDL_AppResult>(running_application->initialize(args));
 	}
 	catch (std::exception& err) {
 		show_fatal_error_message_box(err);

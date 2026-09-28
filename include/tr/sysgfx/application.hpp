@@ -63,8 +63,9 @@ namespace tr
 
 		/// Callback function called once at the beginning of execution after the initialization of systems.
 		/// @details Uncaught exceptions from this function will display a dialog box and quit the application.
+		/// @param args Application command-line arguments.
 		/// @return Application state signal after initialization.
-		virtual signal initialize();
+		virtual signal initialize(std::span<const zstring_view> args);
 
 		/// Callback function called whenever an event needs to be handled. Not guaranteed to be called on the main thread.
 		/// @details Uncaught exceptions from this function will display a dialog box and quit the application.
