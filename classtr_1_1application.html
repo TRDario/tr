@@ -143,8 +143,8 @@ Public Types</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a21ede20338183f25b06cbdfe10cc330b" id="r_a21ede20338183f25b06cbdfe10cc330b"><td class="memItemLeft">virtual <a class="el" href="#ad468e60c47e951ff861df0f9daa9bd7b">signal</a>&#160;</td><td class="memItemRight"><a class="el" href="#a21ede20338183f25b06cbdfe10cc330b">initialize</a> ()</td></tr>
-<tr class="memdesc:a21ede20338183f25b06cbdfe10cc330b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function called once at the beginning of execution after the initialization of systems.  <br /></td></tr>
+<tr class="memitem:ac8c829e7732a48d6fed728aa20dec118" id="r_ac8c829e7732a48d6fed728aa20dec118"><td class="memItemLeft">virtual <a class="el" href="#ad468e60c47e951ff861df0f9daa9bd7b">signal</a>&#160;</td><td class="memItemRight"><a class="el" href="#ac8c829e7732a48d6fed728aa20dec118">initialize</a> (std::span&lt; const <a class="el" href="namespacetr.html#af4536441b49fec056af6a2432b30afff">zstring_view</a> &gt; args)</td></tr>
+<tr class="memdesc:ac8c829e7732a48d6fed728aa20dec118"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function called once at the beginning of execution after the initialization of systems.  <br /></td></tr>
 <tr class="memitem:a160bde93f0bb17aecbbe24ccfc2fcc5a" id="r_a160bde93f0bb17aecbbe24ccfc2fcc5a"><td class="memItemLeft">virtual <a class="el" href="#ad468e60c47e951ff861df0f9daa9bd7b">signal</a>&#160;</td><td class="memItemRight"><a class="el" href="#a160bde93f0bb17aecbbe24ccfc2fcc5a">handle_event</a> (const event &amp;event)</td></tr>
 <tr class="memdesc:a160bde93f0bb17aecbbe24ccfc2fcc5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function called whenever an event needs to be handled.  <br /></td></tr>
 <tr class="memitem:a7544b8b75ad439d7a03341ff7d97f4cf" id="r_a7544b8b75ad439d7a03341ff7d97f4cf"><td class="memItemLeft">virtual <a class="el" href="#ad468e60c47e951ff861df0f9daa9bd7b">signal</a>&#160;</td><td class="memItemRight"><a class="el" href="#a7544b8b75ad439d7a03341ff7d97f4cf">update</a> (<a class="el" href="namespacetr.html#a0a06575d52c3090c44755b9a8174f146">duration</a> delta)</td></tr>
@@ -363,8 +363,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a21ede20338183f25b06cbdfe10cc330b" name="a21ede20338183f25b06cbdfe10cc330b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a21ede20338183f25b06cbdfe10cc330b">&#9670;&#160;</a></span>initialize()</h2>
+<a id="ac8c829e7732a48d6fed728aa20dec118" name="ac8c829e7732a48d6fed728aa20dec118"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac8c829e7732a48d6fed728aa20dec118">&#9670;&#160;</a></span>initialize()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -375,7 +375,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">virtual <a class="el" href="#ad468e60c47e951ff861df0f9daa9bd7b">signal</a> tr::application::initialize </td>
           <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td class="paramtype">std::span&lt; const <a class="el" href="namespacetr.html#af4536441b49fec056af6a2432b30afff">zstring_view</a> &gt;</td>          <td class="paramname"><span class="paramname"><em>args</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -387,7 +387,13 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Callback function called once at the beginning of execution after the initialization of systems. </p>
-<p>Uncaught exceptions from this function will display a dialog box and quit the application. </p><dl class="section return"><dt>Returns</dt><dd>Application state signal after initialization. </dd></dl>
+<p>Uncaught exceptions from this function will display a dialog box and quit the application. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">args</td><td>Application command-line arguments. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Application state signal after initialization. </dd></dl>
 
 </div>
 </div>

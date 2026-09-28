@@ -19,7 +19,7 @@ var searchData=
   ['info_16',['info',['../structtr_1_1graphics__context_1_1info.html',1,'tr::graphics_context::info'],['../classtr_1_1graphics__context.html#a9c909cea23a9d309fdc86f6ac71bec7c',1,'tr::graphics_context::info() const noexcept'],['../namespacetr.html#a4d5881ba37a7337aca11853f1ae62da1acaf9b6b99962bf5c2264824231d7a40c',1,'tr::info'],['../namespacetr.html#af80aef48811e46f90a915d32219add20acaf9b6b99962bf5c2264824231d7a40c',1,'tr::info']]],
   ['init_17',['Init',['../namespacetr_1_1ImGui.html#ac12f6959cfa5a87a8d002662d06109a9',1,'tr::ImGui']]],
   ['initial_18',['initial',['../classtr_1_1audio__source.html#ade6190c1289d24318487c039dba70b47acc51b81974287ab79cef9e94fe778cc9',1,'tr::audio_source']]],
-  ['initialize_19',['initialize',['../classtr_1_1application.html#a21ede20338183f25b06cbdfe10cc330b',1,'tr::application']]],
+  ['initialize_19',['initialize',['../classtr_1_1application.html#ac8c829e7732a48d6fed728aa20dec118',1,'tr::application']]],
   ['inner_5fcone_5fwidth_20',['inner_cone_width',['../classtr_1_1audio__source.html#aab6eb89545ebf94ebf487d04ce308bf0',1,'tr::audio_source']]],
   ['inplace_5fstring_21',['inplace_string',['../namespacetr.html#a4d681c14ee065f1812f6873bcd1e7850',1,'tr']]],
   ['inplace_5fstring_2ehpp_22',['inplace_string.hpp',['../inplace__string_8hpp.html',1,'']]],
