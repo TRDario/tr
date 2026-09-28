@@ -139,7 +139,7 @@ namespace tr
 		if (logger.min_level() <= ::tr::log_level::trace) {                                                                                \
 			logger.log(::tr::log_level::trace, source, fmt __VA_OPT__(, ) __VA_ARGS__);                                                    \
 		}                                                                                                                                  \
-	}
+	} while (0)
 #else
 #define TR_LOG_TRACE(source, fmt, ...) void(0)
 #endif
