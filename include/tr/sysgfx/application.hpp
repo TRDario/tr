@@ -37,6 +37,9 @@ namespace tr
 		/// @name Constructors and destructors
 		/// @{
 
+		/// Constructs an application.
+		[[nodiscard]] application() noexcept = default;
+
 		/// Applications are not copyable.
 		application(const application&) = delete;
 
