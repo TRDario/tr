@@ -258,7 +258,7 @@ Static Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Gets the length of the stream. </p>
-<dl class="section return"><dt>Returns</dt><dd>Number of samples in the stream. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Number of frames in the stream. </dd></dl>
 
 </div>
 </div>
@@ -342,7 +342,7 @@ Static Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Gets the current offset within the stream. </p>
-<dl class="section return"><dt>Returns</dt><dd>Offset sample within the stream. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Offset frames within the stream. </dd></dl>
 
 </div>
 </div>
@@ -372,7 +372,7 @@ Static Protected Attributes</h2></td></tr>
 <p>Seeks to an offset relative to the beginning. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">where</td><td>Offset sample within the stream. </td></tr>
+    <tr><td class="paramname">where</td><td>Offset frames within the stream. </td></tr>
   </table>
   </dd>
 </dl>
@@ -482,7 +482,7 @@ Static Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Gets the loop start of the stream. </p>
-<dl class="section return"><dt>Returns</dt><dd>Starting loop sample of the stream. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Starting loop frame of the stream. </dd></dl>
 
 </div>
 </div>
@@ -504,7 +504,7 @@ Static Protected Attributes</h2></td></tr>
 <p>Sets the loop start of the stream. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">loop_start</td><td>Starting loop sample of the stream. </td></tr>
+    <tr><td class="paramname">loop_start</td><td>Starting loop frame of the stream (will be clamped between <span class="tt">0</span> and <span class="tt"><a class="el" href="#a5ee060ae392c94f0f113972c5d509aaa" title="Gets the loop end of the stream.">loop_end()</a> - 1</span>). </td></tr>
   </table>
   </dd>
 </dl>
@@ -535,7 +535,7 @@ Static Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Gets the loop end of the stream. </p>
-<dl class="section return"><dt>Returns</dt><dd>Ending loop sample of the stream. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Ending loop frame of the stream. </dd></dl>
 
 </div>
 </div>
@@ -557,7 +557,7 @@ Static Protected Attributes</h2></td></tr>
 <p>Sets the loop end of the stream. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">loop_end</td><td>Ending loop sample of the stream (will be clamped to the length of the stream). </td></tr>
+    <tr><td class="paramname">loop_end</td><td>Ending loop frame of the stream (will be clamped between <span class="tt"><a class="el" href="#a42e8aa70048781442e6d954f4c103b38" title="Gets the loop start of the stream.">loop_start()</a> + 1</span> and the length of the stream). </td></tr>
   </table>
   </dd>
 </dl>
