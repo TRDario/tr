@@ -31,6 +31,7 @@ namespace tr
 		/// @param raw_data Span holding the pixel data.
 		/// @param size Size of the bitmap.
 		/// @param format Format of the bitmap.
+		/// @post The data pointed to by `raw_data` must stay alive for the duration of the lifetime of the bitmap view.
 		[[nodiscard]] bitmap_view(std::span<const std::byte> raw_data, glm::ivec2 size, pixel_format format);
 
 		/// Creates a bitmap view over a range of pixel data.
@@ -109,7 +110,7 @@ namespace tr
 		/// @{
 
 		/// Gets immutable access to a pixel of the bitmap.
-		/// @param x, y Position of the bitmap within the bitmap.
+		/// @param x, y Position of the pixel within the bitmap.
 		/// @return Reference to a pixel of the bitmap.
 		[[nodiscard]] reference operator[](int x, int y) const noexcept;
 

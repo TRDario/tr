@@ -26,7 +26,7 @@ namespace tr
 		/// @{
 
 		/// Gets the length of the stream.
-		/// @return Number of samples in the stream.
+		/// @return Number of frames in the stream.
 		[[nodiscard]] virtual usize length() const = 0;
 
 		/// Gets the number of channels in the stream.
@@ -42,11 +42,11 @@ namespace tr
 		/// @{
 
 		/// Gets the current offset within the stream.
-		/// @return Offset sample within the stream.
+		/// @return Offset frames within the stream.
 		[[nodiscard]] virtual usize tell() const = 0;
 
 		/// Seeks to an offset relative to the beginning.
-		/// @param where Offset sample within the stream.
+		/// @param where Offset frames within the stream.
 		virtual void seek(usize where) = 0;
 
 		/// Reads from the stream and returns the span of the buffer that was written to.
@@ -67,19 +67,19 @@ namespace tr
 		void set_looping(bool looping);
 
 		/// Gets the loop start of the stream.
-		/// @return Starting loop sample of the stream.
+		/// @return Starting loop frame of the stream.
 		[[nodiscard]] usize loop_start() const;
 
 		/// Sets the loop start of the stream.
-		/// @param loop_start Starting loop sample of the stream.
+		/// @param loop_start Starting loop frame of the stream (will be clamped between `0` and `loop_end() - 1`).
 		void set_loop_start(usize loop_start);
 
 		/// Gets the loop end of the stream.
-		/// @return Ending loop sample of the stream.
+		/// @return Ending loop frame of the stream.
 		[[nodiscard]] usize loop_end() const;
 
 		/// Sets the loop end of the stream.
-		/// @param loop_end Ending loop sample of the stream (will be clamped to the length of the stream).
+		/// @param loop_end Ending loop frame of the stream (will be clamped between `loop_start() + 1` and the length of the stream).
 		void set_loop_end(usize loop_end);
 
 		/// @}
@@ -98,10 +98,10 @@ namespace tr
 		/// Whether the stream is looping.
 		bool m_looping;
 
-		/// Loop starting sample offset.
+		/// Loop starting frame offset.
 		usize m_loop_start;
 
-		/// Loop ending sample offset.
+		/// Loop ending frame offset.
 		mutable usize m_loop_end;
 	};
 
@@ -111,8 +111,8 @@ namespace tr
 	/// Opens an audio stream from file.
 	/// @note Currently, only Ogg files are supported.
 	/// @note Ogg files may have embedded loop point metadata which is automatically detected and set by the opening function:
-	/// @note - LOOPSTART=[SAMPLE] sets the starting loop point and enables looping.
-	/// @note - LOOPEND=[SAMPLE] sets the ending loop point and enables looping.
+	/// @note - LOOPSTART=[FRAME] sets the starting loop point and enables looping.
+	/// @note - LOOPEND=[FRAME] sets the ending loop point and enables looping.
 	/// @note - LOOP enables looping.
 	/// @param path Path to the audio file.
 	/// @exception audio_file_open_error If opening the file failed.

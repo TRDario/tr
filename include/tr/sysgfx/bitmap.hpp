@@ -130,7 +130,7 @@ namespace tr
 		/// @{
 
 		/// Gets mutable access to a pixel of the bitmap.
-		/// @param x, y Position of the bitmap within the bitmap.
+		/// @param x, y Position of the pixel within the bitmap.
 		/// @return Reference to a pixel of the bitmap.
 		[[nodiscard]] reference operator[](int x, int y) noexcept;
 

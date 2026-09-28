@@ -207,7 +207,7 @@ namespace tr
 		/// @param wrap Wrapping type to use.
 		void set_wrap(wrap wrap) noexcept;
 
-		/// Sets the border color of the texture sampler (used when `wrap::BORDER_CLAMP` is in use).
+		/// Sets the border color of the texture sampler (used when `wrap::border_clamp` is in use).
 		/// @param color Border color to use.
 		void set_border_color(rgbaf color) noexcept;
 

@@ -36,7 +36,6 @@ namespace tr
 		/// @cond implementation_details
 
 		/// Constructs an empty audio buffer.
-		/// @warning The buffer must outlive any audio sources using it, but be destroyed before the audio context it is on.
 		/// @param context Context to create the buffer on.
 		[[nodiscard]] explicit audio_buffer(audio_context& context) noexcept;
 
