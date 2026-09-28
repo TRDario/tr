@@ -1,5 +1,7 @@
 var NAVTREEINDEX15 =
 {
+"namespacetr_1_1literals_1_1integer__literals.html#a6fe390147eedea1f9b1d5f177476e549":[3,0,0,10,23],
+"namespacetr_1_1literals_1_1integer__literals.html#aa26472820fdde319b9fc23e78e44c697":[3,0,0,7,5],
 "namespacetr_1_1literals_1_1integer__literals.html#aa26472820fdde319b9fc23e78e44c697":[3,0,0,512],
 "namespacetr_1_1literals_1_1integer__literals.html#aa26472820fdde319b9fc23e78e44c697":[3,0,0,10,3,5],
 "namespacetr_1_1literals_1_1integer__literals.html#aa26472820fdde319b9fc23e78e44c697":[3,0,0,10,28],
@@ -247,7 +249,5 @@ var NAVTREEINDEX15 =
 "structstd_1_1variant__size_3_01VariantLike_01_4.html":[5,0,0,46],
 "structtr_1_1apply__result_3_01T_00_01TupleLike_01_4.html":[3,0,0,16],
 "structtr_1_1apply__result_3_01T_00_01TupleLike_01_4.html":[5,0,1,3],
-"structtr_1_1apply__result_3_01T_00_01TupleLike_01_4.html#ac2f604f322592e7987a4e2481575f05d":[3,0,0,16,0],
-"structtr_1_1apply__result_3_01T_00_01TupleLike_01_4.html#ac2f604f322592e7987a4e2481575f05d":[5,0,1,3,0],
-"structtr_1_1audio__device__open__error.html":[3,0,0,25]
+"structtr_1_1apply__result_3_01T_00_01TupleLike_01_4.html#ac2f604f322592e7987a4e2481575f05d":[3,0,0,16,0]
 };

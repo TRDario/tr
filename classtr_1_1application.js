@@ -5,6 +5,7 @@ var classtr_1_1application =
       [ "exit", "classtr_1_1application.html#ad468e60c47e951ff861df0f9daa9bd7baf24f62eeb789199b9b2e467df3b1876b", null ],
       [ "abort", "classtr_1_1application.html#ad468e60c47e951ff861df0f9daa9bd7ba5bb94a1c12413a2e5d14deabab29f2aa", null ]
     ] ],
+    [ "application", "classtr_1_1application.html#abae28fe327ac3197965b2629e8c051bd", null ],
     [ "application", "classtr_1_1application.html#a0c2b10813e8ca3e62e952997ec9f8b63", null ],
     [ "application", "classtr_1_1application.html#a6246e8813709061f9981cc96404e9efd", null ],
     [ "~application", "classtr_1_1application.html#ae4693d15a2a266522a1c8636b57783c5", null ],

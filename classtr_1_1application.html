@@ -152,6 +152,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a4b38208354e4ac8820f70d51a1914636" id="r_a4b38208354e4ac8820f70d51a1914636"><td class="memItemLeft">virtual void&#160;</td><td class="memItemRight"><a class="el" href="#a4b38208354e4ac8820f70d51a1914636">shut_down</a> (signal<a class="el" href="#ad468e60c47e951ff861df0f9daa9bd7b">signal</a> signal<a class="el" href="#ad468e60c47e951ff861df0f9daa9bd7b">signal</a>)</td></tr>
 <tr class="memdesc:a4b38208354e4ac8820f70d51a1914636"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function called once at the end of execution right before the destruction of systems.  <br /></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors and destructors</div></td></tr>
+<tr class="memitem:abae28fe327ac3197965b2629e8c051bd" id="r_abae28fe327ac3197965b2629e8c051bd"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#abae28fe327ac3197965b2629e8c051bd">application</a> () noexcept=default</td></tr>
+<tr class="memdesc:abae28fe327ac3197965b2629e8c051bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an application.  <br /></td></tr>
 <tr class="memitem:a0c2b10813e8ca3e62e952997ec9f8b63" id="r_a0c2b10813e8ca3e62e952997ec9f8b63"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a0c2b10813e8ca3e62e952997ec9f8b63">application</a> (const application &amp;)=delete</td></tr>
 <tr class="memdesc:a0c2b10813e8ca3e62e952997ec9f8b63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applications are not copyable.  <br /></td></tr>
 <tr class="memitem:a6246e8813709061f9981cc96404e9efd" id="r_a6246e8813709061f9981cc96404e9efd"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a6246e8813709061f9981cc96404e9efd">application</a> (application &amp;&amp;)=delete</td></tr>
@@ -159,9 +161,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ae4693d15a2a266522a1c8636b57783c5" id="r_ae4693d15a2a266522a1c8636b57783c5"><td class="memItemLeft">virtual&#160;</td><td class="memItemRight"><a class="el" href="#ae4693d15a2a266522a1c8636b57783c5">~application</a> () noexcept=default</td></tr>
 <tr class="memdesc:ae4693d15a2a266522a1c8636b57783c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys the application.  <br /></td></tr>
 <tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Assignment operators</div></td></tr>
-<tr class="memitem:aa6d9215406cb4f0bef8c756f7313e7b3" id="r_aa6d9215406cb4f0bef8c756f7313e7b3"><td class="memItemLeft"><a class="el" href="#a0c2b10813e8ca3e62e952997ec9f8b63">application</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#aa6d9215406cb4f0bef8c756f7313e7b3">operator=</a> (const <a class="el" href="#a0c2b10813e8ca3e62e952997ec9f8b63">application</a> &amp;)=delete</td></tr>
+<tr class="memitem:aa6d9215406cb4f0bef8c756f7313e7b3" id="r_aa6d9215406cb4f0bef8c756f7313e7b3"><td class="memItemLeft"><a class="el" href="#abae28fe327ac3197965b2629e8c051bd">application</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#aa6d9215406cb4f0bef8c756f7313e7b3">operator=</a> (const <a class="el" href="#abae28fe327ac3197965b2629e8c051bd">application</a> &amp;)=delete</td></tr>
 <tr class="memdesc:aa6d9215406cb4f0bef8c756f7313e7b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applications are not copyable.  <br /></td></tr>
-<tr class="memitem:ac32bbb2302db79567faff5480b8d87cf" id="r_ac32bbb2302db79567faff5480b8d87cf"><td class="memItemLeft"><a class="el" href="#a0c2b10813e8ca3e62e952997ec9f8b63">application</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ac32bbb2302db79567faff5480b8d87cf">operator=</a> (<a class="el" href="#a0c2b10813e8ca3e62e952997ec9f8b63">application</a> &amp;&amp;)=delete</td></tr>
+<tr class="memitem:ac32bbb2302db79567faff5480b8d87cf" id="r_ac32bbb2302db79567faff5480b8d87cf"><td class="memItemLeft"><a class="el" href="#abae28fe327ac3197965b2629e8c051bd">application</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ac32bbb2302db79567faff5480b8d87cf">operator=</a> (<a class="el" href="#abae28fe327ac3197965b2629e8c051bd">application</a> &amp;&amp;)=delete</td></tr>
 <tr class="memdesc:ac32bbb2302db79567faff5480b8d87cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applications are not movable.  <br /></td></tr>
 </table>
 <a name="doc-enum-members" id="doc-enum-members"></a><h2 id="header-doc-enum-members" class="groupheader">Member Enumeration Documentation</h2>
@@ -198,8 +200,35 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="abae28fe327ac3197965b2629e8c051bd" name="abae28fe327ac3197965b2629e8c051bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abae28fe327ac3197965b2629e8c051bd">&#9670;&#160;</a></span>application() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tr::application::application </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel default">default</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructs an application. </p>
+
+</div>
+</div>
 <a id="a0c2b10813e8ca3e62e952997ec9f8b63" name="a0c2b10813e8ca3e62e952997ec9f8b63"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0c2b10813e8ca3e62e952997ec9f8b63">&#9670;&#160;</a></span>application() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0c2b10813e8ca3e62e952997ec9f8b63">&#9670;&#160;</a></span>application() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -226,7 +255,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a6246e8813709061f9981cc96404e9efd" name="a6246e8813709061f9981cc96404e9efd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6246e8813709061f9981cc96404e9efd">&#9670;&#160;</a></span>application() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6246e8813709061f9981cc96404e9efd">&#9670;&#160;</a></span>application() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -290,9 +319,9 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="#a0c2b10813e8ca3e62e952997ec9f8b63">application</a> &amp; tr::application::operator= </td>
+          <td class="memname"><a class="el" href="#abae28fe327ac3197965b2629e8c051bd">application</a> &amp; tr::application::operator= </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="#a0c2b10813e8ca3e62e952997ec9f8b63">application</a> &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="#abae28fe327ac3197965b2629e8c051bd">application</a> &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -317,9 +346,9 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="#a0c2b10813e8ca3e62e952997ec9f8b63">application</a> &amp; tr::application::operator= </td>
+          <td class="memname"><a class="el" href="#abae28fe327ac3197965b2629e8c051bd">application</a> &amp; tr::application::operator= </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="#a0c2b10813e8ca3e62e952997ec9f8b63">application</a> &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="#abae28fe327ac3197965b2629e8c051bd">application</a> &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>

@@ -1,5 +1,7 @@
 var NAVTREEINDEX3 =
 {
+"classtr_1_1bitmap__view.html#aeb8e73924427a3736cbc389b46f5f4a6":[3,0,0,75,13],
+"classtr_1_1bitmap__view.html#aeb8e73924427a3736cbc389b46f5f4a6":[5,0,1,62,13],
 "classtr_1_1bitmap__view.html#aecf13813d93967908d70920ccc8c58f5":[3,0,0,75,2],
 "classtr_1_1bitmap__view.html#aecf13813d93967908d70920ccc8c58f5":[5,0,1,62,2],
 "classtr_1_1bitmap__view.html#af0f89b49773e359021e368ce8e38f2b7":[3,0,0,75,21],
@@ -247,7 +249,5 @@ var NAVTREEINDEX3 =
 "classtr_1_1exception.html#a26b7c5d53aa369a7b52bd650490d558d":[3,0,0,94,2],
 "classtr_1_1exception.html#a26b7c5d53aa369a7b52bd650490d558d":[5,0,1,81,2],
 "classtr_1_1exception.html#ac44aaad3bc2fca5359317fead7b5831b":[3,0,0,94,0],
-"classtr_1_1exception.html#ac44aaad3bc2fca5359317fead7b5831b":[5,0,1,81,0],
-"classtr_1_1file__not__found.html":[3,0,0,95],
-"classtr_1_1file__not__found.html":[5,0,1,82]
+"classtr_1_1exception.html#ac44aaad3bc2fca5359317fead7b5831b":[5,0,1,81,0]
 };
