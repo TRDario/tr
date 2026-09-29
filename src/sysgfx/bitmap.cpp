@@ -70,7 +70,7 @@ tr::sub_bitmap tr::bitmap::sub(rectangle<int> region) const noexcept
 
 //
 
-bool tr::bitmap_view::valid() const noexcept
+bool tr::bitmap::valid() const noexcept
 {
 	return m_ptr != nullptr;
 }
