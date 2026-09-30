@@ -26,7 +26,7 @@ namespace tr
 	/// Moved-from instances of `tr::uniform_buffer` are left in a special 'invalid' state. Invalid `tr::uniform_buffer` instances may not
 	/// be interacted with besides moving a new value into them and checking for validity using `valid()`.
 	///
-	/// `tr::uniform_buffer` instances may be labeled and are formattable. Example format output: `"My buffer" (OpenGL ID: 5)`.
+	/// `tr::uniform_buffer` instances may be labeled and are formattable. Example format output: `"My buffer" (ID: 3, UBO: 5)`.
 	/// @tparam Object Object contained in the buffer.
 	template <typename Object>
 	class uniform_buffer : private untyped_uniform_buffer
@@ -116,7 +116,6 @@ namespace tr
 
 		/// @}
 		/// @endcond
-#ifdef TR_ENABLE_CHECKED_GRAPHICS
 		/// @cond implementation_details
 		/// @name Implementation details
 		/// @{
@@ -125,7 +124,6 @@ namespace tr
 
 		/// @}
 		/// @endcond
-#endif
 	};
 } // namespace tr
 
@@ -157,7 +155,8 @@ struct std::formatter<tr::uniform_buffer<Object>>
 	FormatContext::iterator format(const tr::uniform_buffer<Object>& buffer, FormatContext& context) const
 	{
 		if (buffer.valid()) {
-			return std::format_to(context.out(), "\"{}\" (OpenGL ID: {})", buffer.label(), buffer.unwrap());
+			return std::format_to(context.out(), "\"{}\" (ID: {}, UBO: {})", buffer.label(), std::to_underlying(buffer.id()),
+								  buffer.unwrap());
 		}
 		else {
 			return std::format_to(context.out(), "<invalid {} uniform buffer at {}>", tr::type_name<Object>(),

@@ -27,7 +27,7 @@ namespace tr
 	/// Moved-from instances of `tr::shader_array` are left in a special 'invalid' state. Invalid `tr::shader_array` instances may not be
 	/// interacted with besides moving a new value into them and checking for validity using `valid()`.
 	///
-	/// `tr::shader_array` instances may be labeled and are formattable. Example format output: `"My array" (OpenGL ID: 5)`.
+	/// `tr::shader_array` instances may be labeled and are formattable. Example format output: `"My array" (ID: 3, SSBO: 5)`.
 	/// @tparam Element Type of the array elements.
 	template <typename Element>
 	class shader_array : private untyped_shader_buffer
@@ -146,7 +146,6 @@ namespace tr
 
 		/// @}
 		/// @endcond
-#ifdef TR_ENABLE_CHECKED_GRAPHICS
 		/// @cond implementation_details
 		/// @name Implementation details
 		/// @{
@@ -155,7 +154,6 @@ namespace tr
 
 		/// @}
 		/// @endcond
-#endif
 	};
 } // namespace tr
 
@@ -187,7 +185,8 @@ struct std::formatter<tr::shader_array<Element>>
 	FormatContext::iterator format(const tr::shader_array<Element>& array, FormatContext& context) const
 	{
 		if (array.valid()) {
-			return std::format_to(context.out(), "\"{}\" (OpenGL ID: {})", array.label(), array.unwrap());
+			return std::format_to(context.out(), "\"{}\" (ID: {}, SSBO: {})", array.label(), std::to_underlying(array.id()),
+								  array.unwrap());
 		}
 		else {
 			return std::format_to(context.out(), "<invalid {} shader array at {}>", tr::type_name<Element>(),

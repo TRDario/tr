@@ -95,6 +95,16 @@ namespace tr
 
 		/// @}
 		/// @endcond
+		/// @cond implementation_details
+		/// @name Implementation details
+		/// @{
+
+		/// Gets the unique graphics object ID of the shader pipeline.
+		/// @return Unique graphics object ID of the shader pipeline.
+		[[nodiscard]] internal::graphics_object_id id() const noexcept;
+
+		/// @}
+		/// @endcond
 
 	  private:
 		/// Held vertex shader.
@@ -136,7 +146,8 @@ struct std::formatter<tr::owning_shader_pipeline>
 	FormatContext::iterator format(const tr::owning_shader_pipeline& pipeline, FormatContext& context) const
 	{
 		if (pipeline.valid()) {
-			return std::format_to(context.out(), "\"{}\" (OpenGL ID: {})", pipeline.label(), pipeline.unwrap());
+			return std::format_to(context.out(), "\"{}\" (ID: {}, PPO: {})", pipeline.label(), std::to_underlying(pipeline.id()),
+								  pipeline.unwrap());
 		}
 		else {
 			return std::format_to(context.out(), "<invalid owning shader pipeline at {}>", static_cast<const void*>(&pipeline));

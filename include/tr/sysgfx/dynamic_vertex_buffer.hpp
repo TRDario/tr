@@ -27,7 +27,7 @@ namespace tr
 	/// Moved-from instances of `tr::dynamic_vertex_buffer` are left in a special 'invalid' state. Invalid `tr::dynamic_vertex_buffer`
 	/// instances may not be interacted with besides moving a new value into them and checking for validity using `valid()`.
 	///
-	/// `tr::dynamic_vertex_buffer` instances may be labeled and are formattable. Example format output: `"My vertex buffer" (OpenGL ID:
+	/// `tr::dynamic_vertex_buffer` instances may be labeled and are formattable. Example format output: `"My vertex buffer" (ID: 3, IBO:
 	/// 5)`.
 	/// @tparam Element Type of the elements of the buffer.
 	template <standard_layout Element>
@@ -153,7 +153,6 @@ namespace tr
 
 		/// @}
 		/// @endcond
-#ifdef TR_ENABLE_CHECKED_GRAPHICS
 		/// @cond implementation_details
 		/// @name Implementation details
 		/// @{
@@ -162,7 +161,6 @@ namespace tr
 
 		/// @}
 		/// @endcond
-#endif
 	};
 } // namespace tr
 
@@ -194,7 +192,7 @@ struct std::formatter<tr::dynamic_vertex_buffer<Element>>
 	FormatContext::iterator format(const tr::dynamic_vertex_buffer<Element>& buffer, FormatContext& context) const
 	{
 		if (buffer.valid()) {
-			return std::format_to(context.out(), "\"{}\" (OpenGL ID: {})", buffer.label(), buffer.unwrap());
+			return std::format_to(context.out(), "\"{}\" (ID: {}, VBO: {})", buffer.label(), buffer.id(), buffer.unwrap());
 		}
 		else {
 			return std::format_to(context.out(), "<invalid {} dynamic vertex buffer at {}>", tr::type_name<Element>(),

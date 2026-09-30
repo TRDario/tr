@@ -2,6 +2,7 @@
 /// @brief Provides `tr::vertex_shader`, `tr::fragment_shader`, and related functionality.
 
 #pragma once
+#include <tr/sysgfx/internal/graphics_object_id.hpp>
 #include <tr/sysgfx/internal/texture_unit.hpp>
 #include <tr/sysgfx/shader_array.hpp>
 #include <tr/sysgfx/shader_buffer.hpp>
@@ -11,7 +12,6 @@
 
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 #include <tr/sysgfx/internal/glsl_variable.hpp>
-#include <tr/sysgfx/internal/graphics_object_registry.hpp>
 #endif
 
 namespace tr
@@ -46,7 +46,7 @@ namespace tr
 	/// Moved-from instances of shader objects are left in a special 'invalid' state. Invalid shader objects may not be interacted with
 	/// besides moving a new value into them and checking for validity using `valid()`.
 	///
-	/// Shader objects may be labeled and are formattable. Example format output: `"My %shader" (OpenGL ID: 5)`.
+	/// Shader objects may be labeled and are formattable. Example format output: `"My %shader" (ID: 3, PO: 3)`.
 	class shader
 	{
 	  public:
@@ -435,7 +435,6 @@ namespace tr
 
 		/// @}
 		/// @endcond
-#ifdef TR_ENABLE_CHECKED_GRAPHICS
 		/// @cond implementation_details
 		/// @name Implementation details
 		/// @{
@@ -444,6 +443,7 @@ namespace tr
 		/// @return Unique graphics object ID of the shader.
 		[[nodiscard]] internal::graphics_object_id id() const noexcept;
 
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 		/// Gets the shader's inputs.
 		/// @return Map of shader inputs.
 		[[nodiscard]] const boost::unordered_flat_map<unsigned int, internal::glsl_variable>& inputs() const noexcept;
@@ -451,10 +451,10 @@ namespace tr
 		/// Gets the shader's outputs.
 		/// @return Map of shader outputs.
 		[[nodiscard]] const boost::unordered_flat_map<unsigned int, internal::glsl_variable>& outputs() const noexcept;
+#endif
 
 		/// @}
 		/// @endcond
-#endif
 
 	  private:
 		/// Shader program deleter.
@@ -463,10 +463,8 @@ namespace tr
 			/// Reference to the graphics context the shader is on.
 			ref<graphics_context> context;
 
-#ifdef TR_ENABLE_CHECKED_GRAPHICS
 			/// Handle to the unique graphics object ID of the shader.
 			internal::graphics_object_id_handle id{};
-#endif
 
 			//
 
@@ -604,7 +602,8 @@ struct std::formatter<tr::shader>
 	FormatContext::iterator format(const tr::shader& shader, FormatContext& context) const
 	{
 		if (shader.valid()) {
-			return std::format_to(context.out(), "\"{}\" (OpenGL ID: {})", shader.label(), shader.unwrap());
+			return std::format_to(context.out(), "\"{}\" (ID: {}, PO: {})", shader.label(), std::to_underlying(shader.id()),
+								  shader.unwrap());
 		}
 		else {
 			return std::format_to(context.out(), "<invalid shader at {}>", static_cast<const void*>(&shader));
@@ -638,7 +637,8 @@ struct std::formatter<tr::vertex_shader>
 	FormatContext::iterator format(const tr::vertex_shader& shader, FormatContext& context) const
 	{
 		if (shader.valid()) {
-			return std::format_to(context.out(), "\"{}\" (OpenGL ID: {})", shader.label(), shader.unwrap());
+			return std::format_to(context.out(), "\"{}\" (ID: {}, PO: {})", shader.label(), std::to_underlying(shader.id()),
+								  shader.unwrap());
 		}
 		else {
 			return std::format_to(context.out(), "<invalid vertex shader at {}>", static_cast<const void*>(&shader));
@@ -672,7 +672,8 @@ struct std::formatter<tr::fragment_shader>
 	FormatContext::iterator format(const tr::fragment_shader& shader, FormatContext& context) const
 	{
 		if (shader.valid()) {
-			return std::format_to(context.out(), "\"{}\" (OpenGL ID: {})", shader.label(), shader.unwrap());
+			return std::format_to(context.out(), "\"{}\" (ID: {}, PO: {})", shader.label(), std::to_underlying(shader.id()),
+								  shader.unwrap());
 		}
 		else {
 			return std::format_to(context.out(), "<invalid fragment shader at {}>", static_cast<const void*>(&shader));

@@ -3,13 +3,10 @@
 /// @details For an explanation of vertex formats, see the description of `tr::vertex_format`.
 
 #pragma once
+#include <tr/sysgfx/internal/graphics_object_id.hpp>
 #include <tr/sysgfx/vertex_binding.hpp>
 #include <tr/utility/handle.hpp>
 #include <tr/utility/ref.hpp>
-
-#ifdef TR_ENABLE_CHECKED_GRAPHICS
-#include <tr/sysgfx/internal/graphics_object_registry.hpp>
-#endif
 
 namespace tr
 {
@@ -36,7 +33,7 @@ namespace tr
 	/// Moved-from instances of `tr::vertex_format` are left in a special 'invalid' state. Invalid `tr::vertex_format` instances may not be
 	/// interacted with besides moving a new value into them and checking for validity using `valid()`.
 	///
-	/// `tr::vertex_format` instances may be labeled and are formattable. Example format output: `"My vertex format" (OpenGL ID: 5)`.
+	/// `tr::vertex_format` instances may be labeled and are formattable. Example format output: `"My vertex format" (ID: 3, VAO: 5)`.
 	class vertex_format
 	{
 	  public:
@@ -110,7 +107,6 @@ namespace tr
 
 		/// @}
 		/// @endcond
-#ifdef TR_ENABLE_CHECKED_GRAPHICS
 		/// @cond implementation_details
 		/// @name Implementation details
 		/// @{
@@ -119,13 +115,14 @@ namespace tr
 		/// @return Unique graphics object ID of the vertex format.
 		[[nodiscard]] internal::graphics_object_id id() const noexcept;
 
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 		/// Gets information about the vertex format's bindings.
 		/// @return Information about the vertex format's bindings.
 		[[nodiscard]] std::span<const vertex_binding> bindings() const noexcept;
+#endif
 
 		/// @}
 		/// @endcond
-#endif
 
 	  private:
 		/// VAO deleter class.
@@ -134,10 +131,8 @@ namespace tr
 			/// Reference to the graphics context the VAO is on.
 			ref<graphics_context> context;
 
-#ifdef TR_ENABLE_CHECKED_GRAPHICS
 			/// Handle to the unique graphics object ID of the vertex format.
 			internal::graphics_object_id_handle id{};
-#endif
 
 			//
 
@@ -186,7 +181,8 @@ struct std::formatter<tr::vertex_format>
 	FormatContext::iterator format(const tr::vertex_format& format, FormatContext& context) const
 	{
 		if (format.valid()) {
-			return std::format_to(context.out(), "\"{}\" (OpenGL ID: {})", format.label(), format.unwrap());
+			return std::format_to(context.out(), "\"{}\" (ID: {}, VAO: {})", format.label(), std::to_underlying(format.id()),
+								  format.unwrap());
 		}
 		else {
 			return std::format_to(context.out(), "<invalid vertex format at {}>", static_cast<const void*>(&format));

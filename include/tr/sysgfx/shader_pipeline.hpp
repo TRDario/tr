@@ -2,11 +2,12 @@
 /// @brief Provides `tr::shader_pipeline`.
 
 #pragma once
+#include <tr/sysgfx/internal/graphics_object_id.hpp>
 #include <tr/utility/handle.hpp>
 #include <tr/utility/ref.hpp>
 
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-#include <tr/sysgfx/internal/graphics_object_debug_info.hpp>
+#include <tr/sysgfx/internal/glsl_variable.hpp>
 #endif
 
 namespace tr
@@ -42,7 +43,7 @@ namespace tr
 	/// `tr::shader_pipeline` instances may not be interacted with besides moving a new value into them and checking for validity using
 	/// `valid()`.
 	///
-	/// `tr::shader_pipeline` instances may be labeled and are formattable. Example format output: `"My pipeline" (OpenGL ID: 5)`.
+	/// `tr::shader_pipeline` instances may be labeled and are formattable. Example format output: `"My pipeline" (ID: 3, PPO: 3)`.
 	class shader_pipeline
 	{
 	  public:
@@ -150,7 +151,6 @@ namespace tr
 
 		/// @}
 		/// @endcond
-#ifdef TR_ENABLE_CHECKED_GRAPHICS
 		/// @cond implementation_details
 		/// @name Implementation details
 		/// @{
@@ -159,17 +159,26 @@ namespace tr
 		/// @return Unique graphics object ID of the shader pipeline.
 		[[nodiscard]] internal::graphics_object_id id() const noexcept;
 
-		/// Gets debug information about the set vertex shader.
-		/// @return Reference to the structure containing debug information about the set vertex shader.
-		[[nodiscard]] const internal::vertex_shader_debug_info& vertex_shader_debug_info() const noexcept;
+		/// Gets the unique graphics object ID of the vertex shader set on the pipeline.
+		/// @return Unique graphics object ID of the vertex shader set on the pipeline.
+		[[nodiscard]] internal::graphics_object_id vertex_shader_id() const noexcept;
 
-		/// Gets debug information about the set fragment shader.
-		/// @return Reference to the structure containing debug information about the set fragment shader.
-		[[nodiscard]] const internal::fragment_shader_debug_info& fragment_shader_debug_info() const noexcept;
+		/// Gets the unique graphics object ID of the fragment shader set on the pipeline.
+		/// @return Unique graphics object ID of the fragment shader set on the pipeline.
+		[[nodiscard]] internal::graphics_object_id fragment_shader_id() const noexcept;
+
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
+		/// Gets the outputs of the vertex shader set on the pipeline.
+		/// @return Reference to the outputs of the vertex shader set on the pipeline.
+		[[nodiscard]] const boost::unordered_flat_map<unsigned int, internal::glsl_variable>& vertex_shader_outputs() const noexcept;
+
+		/// Gets the inputs of the fragment shader set on the pipeline.
+		/// @return Reference to the inputs of the fragment shader set on the pipeline.
+		[[nodiscard]] const boost::unordered_flat_map<unsigned int, internal::glsl_variable>& fragment_shader_inputs() const noexcept;
+#endif
 
 		/// @}
 		/// @endcond
-#endif
 
 	  private:
 		/// Shader pipeline deleter.
@@ -178,10 +187,8 @@ namespace tr
 			/// Reference to the graphics context the pipeline is on.
 			ref<graphics_context> context;
 
-#ifdef TR_ENABLE_CHECKED_GRAPHICS
 			/// Handle to the unique graphics object ID of the pipeline.
 			internal::graphics_object_id_handle id{};
-#endif
 
 			//
 
@@ -195,19 +202,18 @@ namespace tr
 		/// Handle to the OpenGL shader pipeline.
 		handle<unsigned int, 0, deleter> m_handle;
 
-#ifdef TR_ENABLE_CHECKED_GRAPHICS
-		/// Debug information about the set vertex shader.
-		internal::vertex_shader_debug_info m_vertex_shader_debug_info;
+		/// Unique graphics object ID of the vertex shader.
+		internal::graphics_object_id m_vertex_shader_id{internal::graphics_object_id::invalid};
 
-		/// Debug information about the set fragment shader.
-		internal::fragment_shader_debug_info m_fragment_shader_debug_info;
-#endif
-
-		//
+		/// Unique graphics object ID of the fragment shader.
+		internal::graphics_object_id m_fragment_shader_id{internal::graphics_object_id::invalid};
 
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-		/// Asserts that the set vertex and fragment shaders are compatible.
-		void assert_shaders_compatible() const noexcept;
+		/// Outputs of the vertex shader.
+		boost::unordered_flat_map<unsigned int, internal::glsl_variable> m_vertex_shader_outputs;
+
+		/// Inputs of the fragment shader.
+		boost::unordered_flat_map<unsigned int, internal::glsl_variable> m_fragment_shader_inputs;
 #endif
 	};
 } // namespace tr
@@ -240,7 +246,8 @@ struct std::formatter<tr::shader_pipeline>
 	FormatContext::iterator format(const tr::shader_pipeline& pipeline, FormatContext& context) const
 	{
 		if (pipeline.valid()) {
-			return std::format_to(context.out(), "\"{}\" (OpenGL ID: {})", pipeline.label(), pipeline.unwrap());
+			return std::format_to(context.out(), "\"{}\" (ID: {}, PPO: {})", pipeline.label(), std::to_underlying(pipeline.id()),
+								  pipeline.unwrap());
 		}
 		else {
 			return std::format_to(context.out(), "<invalid shader pipeline at {}>", static_cast<const void*>(&pipeline));

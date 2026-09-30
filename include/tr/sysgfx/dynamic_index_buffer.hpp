@@ -25,7 +25,7 @@ namespace tr
 	/// Moved-from instances of `tr::dynamic_index_buffer` are left in a special 'invalid' state. Invalid `tr::dynamic_index_buffer`
 	/// instances may not be interacted with besides moving a new value into them and checking for validity using `valid()`.
 	///
-	/// `tr::dynamic_index_buffer` instances may be labeled and are formattable. Example format output: `"My index buffer" (OpenGL ID: 5)`.
+	/// `tr::dynamic_index_buffer` instances may be labeled and are formattable. Example format output: `"My index buffer" (ID: 3, IBO: 5)`.
 	class dynamic_index_buffer : private graphics_buffer
 	{
 	  public:
@@ -127,7 +127,6 @@ namespace tr
 
 		/// @}
 		/// @endcond
-#ifdef TR_ENABLE_CHECKED_GRAPHICS
 		/// @cond implementation_details
 		/// @name Implementation details
 		/// @{
@@ -136,7 +135,6 @@ namespace tr
 
 		/// @}
 		/// @endcond
-#endif
 
 	  private:
 		/// Used size of the buffer in elements.
@@ -175,7 +173,8 @@ struct std::formatter<tr::dynamic_index_buffer>
 	FormatContext::iterator format(const tr::dynamic_index_buffer& buffer, FormatContext& context) const
 	{
 		if (buffer.valid()) {
-			return std::format_to(context.out(), "\"{}\" (OpenGL ID: {})", buffer.label(), buffer.unwrap());
+			return std::format_to(context.out(), "\"{}\" (ID: {}, IBO: {})", buffer.label(), std::to_underlying(buffer.id()),
+								  buffer.unwrap());
 		}
 		else {
 			return std::format_to(context.out(), "<invalid dynamic index buffer at {}>", static_cast<const void*>(&buffer));

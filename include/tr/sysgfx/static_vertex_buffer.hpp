@@ -27,7 +27,8 @@ namespace tr
 	/// Moved-from instances of `tr::static_vertex_buffer` are left in a special 'invalid' state. Invalid `tr::static_vertex_buffer`
 	/// instances may not be interacted with besides moving a new value into them and checking for validity using `valid()`.
 	///
-	/// `tr::static_vertex_buffer` instances may be labeled and are formattable. Example format output: `"My vertex buffer" (OpenGL ID: 5)`.
+	/// `tr::static_vertex_buffer` instances may be labeled and are formattable. Example format output: `"My vertex buffer" (ID: 3, VBO:
+	/// 5)`.
 	/// @tparam Element Type of the elements of the buffer.
 	template <standard_layout Element>
 	class static_vertex_buffer : private untyped_static_vertex_buffer
@@ -97,7 +98,6 @@ namespace tr
 
 		/// @}
 		/// @endcond
-#ifdef TR_ENABLE_CHECKED_GRAPHICS
 		/// @cond implementation_details
 		/// @name Implementation details
 		/// @{
@@ -106,7 +106,6 @@ namespace tr
 
 		/// @}
 		/// @endcond
-#endif
 	};
 } // namespace tr
 
@@ -138,7 +137,8 @@ struct std::formatter<tr::static_vertex_buffer<Element>>
 	FormatContext::iterator format(const tr::static_vertex_buffer<Element>& buffer, FormatContext& context) const
 	{
 		if (buffer.valid()) {
-			return std::format_to(context.out(), "\"{}\" (OpenGL ID: {})", buffer.label(), buffer.unwrap());
+			return std::format_to(context.out(), "\"{}\" (ID: {}, VBO: {})", buffer.label(), std::to_underlying(buffer.id()),
+								  buffer.unwrap());
 		}
 		else {
 			return std::format_to(context.out(), "<invalid {} static vertex buffer at {}>", tr::type_name<Element>(),

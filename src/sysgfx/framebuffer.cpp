@@ -14,14 +14,14 @@ tr::framebuffer::framebuffer(graphics_context& context) noexcept
 {
 	context.gl().create_framebuffers(1, out_handle(m_handle));
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-	context.registry().framebuffers.emplace(id());
+	context.registered_framebuffers().emplace(id());
 #endif
 }
 
 void tr::framebuffer::deleter::operator()(unsigned int fbo) const noexcept
 {
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-	context->registry().framebuffers.erase(id);
+	context->registered_framebuffers().erase(id);
 #endif
 	context->gl().delete_framebuffers(1, &fbo);
 }
@@ -92,9 +92,7 @@ unsigned int tr::framebuffer::unwrap() const noexcept
 	return m_handle.get();
 }
 
-#ifdef TR_ENABLE_CHECKED_GRAPHICS
 tr::internal::graphics_object_id tr::framebuffer::id() const noexcept
 {
 	return m_handle.get_deleter().id;
 }
-#endif

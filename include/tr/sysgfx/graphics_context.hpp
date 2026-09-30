@@ -2,22 +2,20 @@
 /// @brief Provides a window graphics context class and related datatypes.
 
 #pragma once
+#include <tr/sysgfx/blending.hpp>
 #include <tr/sysgfx/dynamic_vertex_buffer.hpp>
+#include <tr/sysgfx/internal/graphics_object_id.hpp>
 #include <tr/sysgfx/internal/opengl.hpp>
+#include <tr/sysgfx/logger.hpp>
 #include <tr/sysgfx/render_target.hpp>
 #include <tr/sysgfx/static_vertex_buffer.hpp>
 #include <tr/sysgfx/vertex_format.hpp>
 #include <tr/utility/zstring_view.hpp>
-#ifdef TR_ENABLE_CHECKED_GRAPHICS
-#include <tr/sysgfx/internal/graphics_object_debug_info.hpp>
-#include <tr/sysgfx/internal/graphics_object_registry.hpp>
-#endif
 
 struct SDL_GLContextState;
 struct SDL_Window;
 namespace tr
 {
-	struct blend_mode;
 	class dynamic_index_buffer;
 	class shader_pipeline;
 	class static_index_buffer;
@@ -28,16 +26,6 @@ namespace tr
 
 namespace tr
 {
-	/// Renderer ID.
-	enum class renderer_id : u32
-	{
-		/// No particular renderer is being used.
-		no_renderer,
-
-		/// `tr::ImGui::Draw`.
-		imgui_renderer
-	};
-
 	/// Rendering primitives.
 	enum class primitive
 	{
@@ -131,105 +119,161 @@ namespace tr
 		[[nodiscard]] render_target backbuffer() const noexcept;
 
 		/// @}
-		/// @name Renderers
+		/// @name Wireframe mode
 		/// @{
 
-		/// Allocates a fresh renderer ID.
-		/// @return Unused renderer ID.
-		[[nodiscard]] renderer_id allocate_renderer_id() noexcept;
-
-		/// Checks whether the passed renderer ID is the active renderer, sets it as active and returns true if not.
-		/// @param id Renderer ID to check.
-		/// @return `true` if the renderer needs to be setup, `false` otherwise.
-		[[nodiscard]] bool should_setup_renderer(renderer_id id) noexcept;
-
-		/// @}
-		/// @name Setters
-		/// @{
+		/// Gets whether wireframe rendering is enabled.
+		/// @return `true` if wireframe rendering is enabled, `false` otherwise.
+		[[nodiscard]] bool wireframe_mode_enabled() const noexcept;
 
 		/// Sets whether rendering should be done as a wireframe.
-		/// @param arg Whether to use wireframe rendering.
-		void set_wireframe_mode(bool arg) noexcept;
+		/// @param enable Whether to enable wireframe rendering.
+		void set_wireframe_mode(bool enable) noexcept;
+
+		/// @}
+		/// @name Face culling
+		/// @{
+
+		/// Gets whether face culling is enabled.
+		/// @return `true` if face culling is enabled, `false` otherwise.
+		[[nodiscard]] bool face_culling_enabled() const noexcept;
 
 		/// Sets whether face culling should be used.
-		/// @param arg Whether to use face culling.
-		void set_face_culling(bool arg) noexcept;
+		/// @param enable Whether to enable face culling.
+		void set_face_culling(bool enable) noexcept;
+
+		/// @}
+		/// @name Depth testing
+		/// @{
+
+		/// Gets whether depth testing is enabled.
+		/// @return `true` if depth testing is enabled, `false` otherwise.
+		[[nodiscard]] bool depth_testing_enabled() const noexcept;
 
 		/// Sets whether depth testing should be used.
-		/// @param arg Whether to use depth testing.
-		void set_depth_test(bool arg) noexcept;
+		/// @param enable Whether to enable depth testing.
+		void set_depth_testing(bool enable) noexcept;
+
+		/// @}
+		/// @name Render target
+		/// @{
 
 		/// Sets the active render target.
 		/// @param target Render target to set as active.
 		void set_render_target(const render_target& target) noexcept;
 
+		/// @}
+		/// @name Shader pipeline
+		/// @{
+
 		/// Sets the active shader pipeline.
 		/// @param pipeline Pipeline to set as active.
 		void set_shader_pipeline(const shader_pipeline& pipeline) noexcept;
 
+		/// @}
+		/// @name Blending
+		/// @{
+
+		/// Gets the active blending mode.
+		/// @return Reference to the active blending mode.
+		const blend_mode& blend_mode() const noexcept;
+
 		/// Sets the active blending mode.
 		/// @param blend_mode Blending mode to set as active.
-		void set_blend_mode(const blend_mode& blend_mode) noexcept;
+		void set_blend_mode(const tr::blend_mode& blend_mode) noexcept;
+
+		/// @}
+		/// @name Vertex format
+		/// @{
 
 		/// Sets the active vertex format.
 		/// @param format Vertex format to set as active.
 		void set_vertex_format(const vertex_format& format) noexcept;
 
-		/// Sets an active vertex buffer.
-		/// @param buffer Buffer to set as active.
-		/// @param slot Slot to set the buffer in.
-		/// @param offset Starting offset within the buffer to bind.
-		/// @param stride Stride between the elements of the vertex buffer.
-		void set_vertex_buffer(const untyped_static_vertex_buffer& buffer, int slot, ssize offset, usize stride) noexcept;
+		/// @}
+		/// @name Vertex buffers
+		/// @{
 
 		/// Sets an active vertex buffer.
 		/// @param buffer Buffer to set as active.
 		/// @param slot Slot to set the buffer in.
-		/// @param offset Starting offset within the buffer to bind.
+		/// @param offset Starting offset within the buffer to set.
 		/// @param stride Stride between the elements of the vertex buffer.
-		void set_vertex_buffer(const untyped_dynamic_vertex_buffer& buffer, int slot, ssize offset, usize stride) noexcept;
+		void set_vertex_buffer(const untyped_static_vertex_buffer& buffer, int slot, ssize offset, int stride) noexcept;
+
+		/// Sets an active vertex buffer.
+		/// @param buffer Buffer to set as active.
+		/// @param slot Slot to set the buffer in.
+		/// @param offset Starting offset within the buffer to set.
+		/// @param stride Stride between the elements of the vertex buffer.
+		void set_vertex_buffer(const untyped_dynamic_vertex_buffer& buffer, int slot, ssize offset, int stride) noexcept;
 
 		/// Sets an active vertex buffer.
 		/// @tparam Element Type of the vertex buffer elements.
 		/// @param buffer Buffer to set as active.
 		/// @param slot Slot to set the buffer in.
-		/// @param offset Starting offset within the buffer to bind.
+		/// @param offset Starting offset within the buffer to set.
 		template <standard_layout Element>
-		void set_vertex_buffer(const static_vertex_buffer<Element>& buffer, int slot, ssize offset) noexcept
+		void set_vertex_buffer(const static_vertex_buffer<Element>& buffer, int slot, int offset) noexcept
 		{
 			TR_ASSERT(buffer.valid(), "Tried to set a vertex buffer in an invalid state to a graphics context.");
 			TR_ASSERT(&buffer.context() == this, "Tried to set vertex buffer {} to a context it is not associated with.", buffer);
 
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-			std::string label{buffer.label()};
-			check_typed_vertex_buffer(label, slot, as_vertex_attribute_list<Element>);
-			m_set_vertex_buffer_debug_info.id = buffer.id();
-			m_set_vertex_buffer_debug_info.label = std::move(label);
+			check_typed_vertex_buffer(buffer.label(), slot, as_vertex_attribute_list<Element>);
 #endif
+			if (m_bound_vertex_buffers.size() <= static_cast<usize>(slot)) {
+				m_bound_vertex_buffers.resize(slot + 1);
+			}
 
-			gl().bind_vertex_buffer(slot, buffer.unwrap(), offset * sizeof(Element), sizeof(Element));
+			bound_vertex_buffer_info& bound_vertex_buffer{m_bound_vertex_buffers[slot]};
+			if (internal::graphics_object_id id{buffer.id()};
+				bound_vertex_buffer.id != id || bound_vertex_buffer.offset != offset || bound_vertex_buffer.stride != sizeof(Element)) {
+				TR_LOG_TRACE("gfx", "Setting vertex buffer {} to context.", buffer);
+				gl().bind_vertex_buffer(slot, buffer.unwrap(), offset * sizeof(Element), sizeof(Element));
+				bound_vertex_buffer.id = id;
+				bound_vertex_buffer.offset = offset * sizeof(Element);
+				bound_vertex_buffer.stride = sizeof(Element);
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
+				bound_vertex_buffer.vertex_attributes = {};
+#endif
+			}
 		}
 
 		/// Sets an active vertex buffer.
 		/// @tparam Element Type of the vertex buffer elements.
 		/// @param buffer Buffer to set as active.
 		/// @param slot Slot to set the buffer in.
-		/// @param offset Starting offset within the buffer to bind.
+		/// @param offset Starting offset within the buffer to set.
 		template <standard_layout Element>
-		void set_vertex_buffer(const dynamic_vertex_buffer<Element>& buffer, int slot, ssize offset) noexcept
+		void set_vertex_buffer(const dynamic_vertex_buffer<Element>& buffer, int slot, int offset) noexcept
 		{
 			TR_ASSERT(buffer.valid(), "Tried to set a vertex buffer in an invalid state to a graphics context.");
 			TR_ASSERT(&buffer.context() == this, "Tried to set vertex buffer {} to a context it is not associated with.", buffer);
 
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-			std::string label{buffer.label()};
-			check_typed_vertex_buffer(label, slot, as_vertex_attribute_list<Element>);
-			m_set_vertex_buffer_debug_info.id = buffer.id();
-			m_set_vertex_buffer_debug_info.label = std::move(label);
+			check_typed_vertex_buffer(buffer.label(), slot, as_vertex_attribute_list<Element>);
 #endif
+			if (m_bound_vertex_buffers.size() <= static_cast<usize>(slot)) {
+				m_bound_vertex_buffers.resize(slot + 1);
+			}
 
-			gl().bind_vertex_buffer(slot, buffer.unwrap(), offset * sizeof(Element), sizeof(Element));
+			bound_vertex_buffer_info& bound_vertex_buffer{m_bound_vertex_buffers[slot]};
+			if (internal::graphics_object_id id{buffer.id()};
+				bound_vertex_buffer.id != id || bound_vertex_buffer.offset != offset || bound_vertex_buffer.stride != sizeof(Element)) {
+				TR_LOG_TRACE("gfx", "Setting vertex buffer {} to context.", buffer);
+				gl().bind_vertex_buffer(slot, buffer.unwrap(), offset * sizeof(Element), sizeof(Element));
+				bound_vertex_buffer.id = id;
+				bound_vertex_buffer.offset = offset * sizeof(Element);
+				bound_vertex_buffer.stride = sizeof(Element);
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
+				bound_vertex_buffer.vertex_attributes = {};
+#endif
+			}
 		}
+
+		/// @name Index buffer
+		/// @{
 
 		/// Sets the active index buffer.
 		/// @param buffer Buffer to set as active.
@@ -316,9 +360,25 @@ namespace tr
 		[[nodiscard]] const internal::opengl& gl() const noexcept;
 
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-		/// Gets the graphics object registry associated with the context.
-		/// @return Reference to the graphics object registry associated with the context.
-		[[nodiscard]] internal::graphics_object_registry& registry() noexcept;
+		/// Gets the set of framebuffers registered on this context.
+		/// @return Reference to the set of framebuffers registered on this context.
+		[[nodiscard]] boost::unordered_flat_set<internal::graphics_object_id>& registered_framebuffers() noexcept;
+
+		/// Gets the set of shaders registered on this context.
+		/// @return Reference to the set of shaders registered on this context.
+		[[nodiscard]] boost::unordered_flat_set<internal::graphics_object_id>& registered_shaders() noexcept;
+
+		/// Gets the set of shader pipelines registered on this context.
+		/// @return Reference to the set of shader pipelines registered on this context.
+		[[nodiscard]] boost::unordered_flat_set<internal::graphics_object_id>& registered_shader_pipelines() noexcept;
+
+		/// Gets the set of vertex formats registered on this context.
+		/// @return Reference to the set of vertex formats registered on this context.
+		[[nodiscard]] boost::unordered_flat_set<internal::graphics_object_id>& registered_vertex_formats() noexcept;
+
+		/// Gets the set of buffers registered on this context.
+		/// @return Reference to the set of buffers registered on this context.
+		[[nodiscard]] boost::unordered_flat_set<internal::graphics_object_id>& registered_buffers() noexcept;
 #endif
 
 		//
@@ -347,8 +407,20 @@ namespace tr
 		struct deleter
 		{
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-			/// Registry of objects created on the context.
-			internal::graphics_object_registry registry;
+			/// Set of active registered framebuffer IDs.
+			boost::unordered_flat_set<internal::graphics_object_id> registered_framebuffers;
+
+			/// Set of active registered shader IDs.
+			boost::unordered_flat_set<internal::graphics_object_id> registered_shaders;
+
+			/// Set of active registered shader pipeline IDs.
+			boost::unordered_flat_set<internal::graphics_object_id> registered_shader_pipelines;
+
+			/// Set of active registered vertex format IDs.
+			boost::unordered_flat_set<internal::graphics_object_id> registered_vertex_formats;
+
+			/// Set of active registered buffer IDs.
+			boost::unordered_flat_set<internal::graphics_object_id> registered_buffers;
 #endif
 
 			//
@@ -356,6 +428,24 @@ namespace tr
 			/// Destroys a graphics context.
 			/// @param context Pointer to the SDL OpenGL context.
 			void operator()(SDL_GLContextState* context) const noexcept;
+		};
+
+		/// Information about a bound vertex buffer.
+		struct bound_vertex_buffer_info
+		{
+			/// Unique graphics object ID of the vertex buffer.
+			internal::graphics_object_id id{internal::graphics_object_id::invalid};
+
+			/// Starting offset within the buffer.
+			ssize offset{};
+
+			/// Stride between the elements of the vertex buffer.
+			int stride{};
+
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
+			/// Vertex attributes of the element type of the vertex buffer.
+			std::span<const vertex_attribute> vertex_attributes{};
+#endif
 		};
 
 		//
@@ -369,31 +459,47 @@ namespace tr
 		/// OpenGL function pointers.
 		internal::opengl m_gl;
 
-		/// Next available renderer id.
-		renderer_id m_next_renderer_id{2};
-
-		/// ID of the current active renderer.
-		renderer_id m_active_renderer{renderer_id::no_renderer};
-
 		/// Tracks which texture units are allocated.
 		std::bitset<80> m_allocated_texture_units;
 
+		/// Whether wireframe mode is enabled.
+		bool m_wireframe_mode_enabled{false};
+
+		/// Whether face culling is enabled.
+		bool m_face_culling_enabled{false};
+
+		/// Whether depth testing is enabled.
+		bool m_depth_testing_enabled{false};
+
+		/// Unique graphics object ID of the bound framebuffer ('invalid' is a valid value representing the backbuffer).
+		internal::graphics_object_id m_bound_framebuffer{internal::graphics_object_id::invalid};
+
+		/// Active viewport.
+		rectangle<u16> m_viewport;
+
+		/// Active scissor box.
+		rectangle<u16> m_scissor_box;
+
+		/// Unique graphics object ID of the bound shader pipeline.
+		internal::graphics_object_id m_bound_shader_pipeline{internal::graphics_object_id::invalid};
+
+		/// Active blending mode.
+		tr::blend_mode m_blend_mode{blend_multiplier::one, blend_fn::add, blend_multiplier::zero,
+									blend_multiplier::one, blend_fn::add, blend_multiplier::zero};
+
+		/// Unique graphics object ID of the bound vertex format.
+		internal::graphics_object_id m_bound_vertex_format{internal::graphics_object_id::invalid};
+
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-		/// Debug information about the framebuffer set to the context.
-		internal::set_object_debug_info m_set_framebuffer_debug_info{.label{"<backbuffer>"}};
-
-		/// Debug information about the shader pipeline set to the context.
-		internal::set_object_debug_info m_set_shader_pipeline_debug_info;
-
-		/// Debug information about the vertex format set to the context.
-		internal::set_vertex_format_debug_info m_set_vertex_format_debug_info;
-
-		/// Debug information about the vertex buffer set to the context.
-		internal::set_object_debug_info m_set_vertex_buffer_debug_info;
-
-		/// Debug information about the index buffer set to the context.
-		internal::set_object_debug_info m_set_index_buffer_debug_info;
+		/// Bindings of the bound vertex format.
+		std::span<const vertex_binding> m_bound_vertex_format_bindings;
 #endif
+
+		/// Information about bound vertex buffers.
+		std::vector<bound_vertex_buffer_info> m_bound_vertex_buffers;
+
+		/// Unique graphics object ID ID of the bound index buffer.
+		internal::graphics_object_id m_bound_index_buffer{internal::graphics_object_id::invalid};
 
 		//
 
@@ -401,13 +507,11 @@ namespace tr
 		/// Checks if a vertex buffer's type's attribute match those of the current vertex format.
 		/// @param label Label of the vertex buffer.
 		/// @param slot Slot the vertex buffer is being set to.
-		/// @param attrs Vertex attribute list of the elements of the vertex buffer.
-		void check_typed_vertex_buffer(const std::string& label, int slot, std::span<const vertex_attribute> attrs) noexcept;
-#endif
+		/// @param vertex_attributes Vertex attribute list of the elements of the vertex buffer.
+		void check_typed_vertex_buffer(const std::string& label, int slot, std::span<const vertex_attribute> vertex_attributes) noexcept;
 
 		//
 
-#ifdef TR_ENABLE_CHECKED_GRAPHICS
 		/// Whether to check the set index buffer.
 		enum class check_index_buffer : bool
 		{

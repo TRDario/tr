@@ -28,8 +28,8 @@ namespace tr
 	/// `tr::untyped_dynamic_vertex_buffer` instances may not be interacted with besides moving a new value into them and checking for
 	/// validity using `valid()`.
 	///
-	/// `tr::untyped_dynamic_vertex_buffer` instances may be labeled and are formattable. Example format output: `"My vertex buffer" (OpenGL
-	/// ID: 5)`.
+	/// `tr::untyped_dynamic_vertex_buffer` instances may be labeled and are formattable. Example format output: `"My vertex buffer" (ID: 3,
+	/// VBO: 5)`.
 	class untyped_dynamic_vertex_buffer : private graphics_buffer
 	{
 	  public:
@@ -131,7 +131,6 @@ namespace tr
 
 		/// @}
 		/// @endcond
-#ifdef TR_ENABLE_CHECKED_GRAPHICS
 		/// @cond implementation_details
 		/// @name Implementation details
 		/// @{
@@ -140,7 +139,6 @@ namespace tr
 
 		/// @}
 		/// @endcond
-#endif
 
 	  private:
 		/// Used size of the buffer in bytes.
@@ -179,7 +177,8 @@ struct std::formatter<tr::untyped_dynamic_vertex_buffer>
 	FormatContext::iterator format(const tr::untyped_dynamic_vertex_buffer& buffer, FormatContext& context) const
 	{
 		if (buffer.valid()) {
-			return std::format_to(context.out(), "\"{}\" (OpenGL ID: {})", buffer.label(), buffer.unwrap());
+			return std::format_to(context.out(), "\"{}\" (ID: {}, VBO: {})", buffer.label(), std::to_underlying(buffer.id()),
+								  buffer.unwrap());
 		}
 		else {
 			return std::format_to(context.out(), "<invalid untyped dynamic vertex buffer at {}>", static_cast<const void*>(&buffer));

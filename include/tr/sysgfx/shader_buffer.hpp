@@ -31,7 +31,7 @@ namespace tr
 	/// Moved-from instances of `tr::shader_buffer` are left in a special 'invalid' state. Invalid `tr::shader_buffer` instances may not be
 	/// interacted with besides moving a new value into them and checking for validity using `valid()`.
 	///
-	/// `tr::shader_buffer` instances may be labeled and are formattable. Example format output: `"My buffer" (OpenGL ID: 5)`.
+	/// `tr::shader_buffer` instances may be labeled and are formattable. Example format output: `"My buffer" (ID: 3, SSBO: 5)`.
 	/// @tparam Header Type of the header object stored at the front of the buffer.
 	/// @tparam ArrayElement Type of the buffer dynamic array elements.
 	template <typename Header, typename ArrayElement>
@@ -165,7 +165,6 @@ namespace tr
 
 		/// @}
 		/// @endcond
-#ifdef TR_ENABLE_CHECKED_GRAPHICS
 		/// @cond implementation_details
 		/// @name Implementation details
 		/// @{
@@ -174,7 +173,6 @@ namespace tr
 
 		/// @}
 		/// @endcond
-#endif
 	};
 } // namespace tr
 
@@ -206,7 +204,8 @@ struct std::formatter<tr::shader_buffer<Header, ArrayElement>>
 	FormatContext::iterator format(const tr::shader_buffer<Header, ArrayElement>& buffer, FormatContext& context) const
 	{
 		if (buffer.valid()) {
-			return std::format_to(context.out(), "\"{}\" (OpenGL ID: {})", buffer.label(), buffer.unwrap());
+			return std::format_to(context.out(), "\"{}\" (ID: {}, SSBO: {})", buffer.label(), std::to_underlying(buffer.id()),
+								  buffer.unwrap());
 		}
 		else {
 			return std::format_to(context.out(), "<invalid {}/{} shader buffer at {}>", tr::type_name<Header>(),

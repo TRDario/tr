@@ -101,7 +101,7 @@ if(TR_BUILD_SYSGFX)
 		src/sysgfx/exception.cpp
 		src/sysgfx/file_dialog.cpp
 		src/sysgfx/framebuffer.cpp
-		src/sysgfx/graphics_object_registry.cpp
+		src/sysgfx/graphics_object_id.cpp
 		src/sysgfx/graphics_benchmark.cpp
 		src/sysgfx/graphics_buffer.cpp
 		src/sysgfx/graphics_context.cpp

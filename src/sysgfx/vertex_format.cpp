@@ -17,7 +17,7 @@ tr::vertex_format::vertex_format(graphics_context& context, std::span<const vert
 	const internal::opengl& gl{context.gl()};
 	gl.create_vertex_arrays(1, out_handle(m_handle));
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-	context.registry().vertex_formats.emplace(id());
+	context.registered_vertex_formats().emplace(id());
 #endif
 
 	unsigned int attr_id{0};
@@ -59,7 +59,7 @@ tr::vertex_format::vertex_format(graphics_context& context, std::span<const vert
 void tr::vertex_format::deleter::operator()(unsigned int vao) const noexcept
 {
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-	context->registry().vertex_formats.erase(id);
+	context->registered_vertex_formats().erase(id);
 #endif
 	context->gl().delete_vertex_arrays(1, &vao);
 }
@@ -113,12 +113,12 @@ unsigned int tr::vertex_format::unwrap() const noexcept
 	return m_handle.get();
 }
 
-#ifdef TR_ENABLE_CHECKED_GRAPHICS
 tr::internal::graphics_object_id tr::vertex_format::id() const noexcept
 {
 	return m_handle.get_deleter().id;
 }
 
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 std::span<const tr::vertex_binding> tr::vertex_format::bindings() const noexcept
 {
 	return m_bindings;

@@ -41,8 +41,7 @@ void tr::ImGui::NewFrame()
 	ImGui_ImplSDL3_NewFrame();
 }
 
-void tr::ImGui::Draw(graphics_context& context)
+void tr::ImGui::Draw()
 {
-	(void)context.should_setup_renderer(renderer_id::imgui_renderer);
 	ImGui_ImplOpenGL3_RenderDrawData(::ImGui::GetDrawData());
 }

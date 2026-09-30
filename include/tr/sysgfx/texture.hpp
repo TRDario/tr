@@ -100,6 +100,8 @@ namespace tr
 	///
 	/// Moved-from instances of `tr::texture` are left in a special 'invalid' state, distinct from the incomplete state. Invalid
 	/// `tr::texture` instances may not be interacted with besides moving a new value into them and checking for validity using `valid()`.
+	///
+	/// `tr::texture` instances may be labeled and are formattable. Example format output: `"My texture" (OpenGL ID: 5)`.
 	class texture
 	{
 	  public:

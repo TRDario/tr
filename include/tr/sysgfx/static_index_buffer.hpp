@@ -25,7 +25,8 @@ namespace tr
 	/// Moved-from instances of `tr::static_index_buffer` are left in a special 'invalid' state. Invalid `tr::static_index_buffer`
 	/// instances may not be interacted with besides moving a new value into them and checking for validity using `valid()`.
 	///
-	/// `tr::static_index_buffer` instances may be labeled and are formattable. Example format output: `"My index buffer" (OpenGL ID: 5)`.
+	/// `tr::static_index_buffer` instances may be labeled and are formattable. Example format output: `"My index buffer" (ID: 3, IBO:
+	/// 5)`.
 	class static_index_buffer : private graphics_buffer
 	{
 	  public:
@@ -87,7 +88,6 @@ namespace tr
 
 		/// @}
 		/// @endcond
-#ifdef TR_ENABLE_CHECKED_GRAPHICS
 		/// @cond implementation_details
 		/// @name Implementation details
 		/// @{
@@ -96,7 +96,6 @@ namespace tr
 
 		/// @}
 		/// @endcond
-#endif
 
 	  private:
 		/// Size of the buffer in elements.
@@ -132,7 +131,8 @@ struct std::formatter<tr::static_index_buffer>
 	FormatContext::iterator format(const tr::static_index_buffer& buffer, FormatContext& context) const
 	{
 		if (buffer.valid()) {
-			return std::format_to(context.out(), "\"{}\" (OpenGL ID: {})", buffer.label(), buffer.unwrap());
+			return std::format_to(context.out(), "\"{}\" (ID: {}, IBO: {})", buffer.label(), std::to_underlying(buffer.id()),
+								  buffer.unwrap());
 		}
 		else {
 			return std::format_to(context.out(), "<invalid static index buffer at {}>", static_cast<const void*>(&buffer));

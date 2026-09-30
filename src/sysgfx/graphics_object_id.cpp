@@ -1,7 +1,7 @@
 /// @file
-/// @brief Implements internal/graphics_object_registry.hpp.
+/// @brief Implements internal/graphics_object_id.hpp.
 
-#include <tr/sysgfx/internal/graphics_object_registry.hpp>
+#include <tr/sysgfx/internal/graphics_object_id.hpp>
 
 //
 

@@ -73,7 +73,7 @@ void tr::internal::opengl_debug_callback(unsigned int source, unsigned int type,
 										 const char* message, const void*) noexcept
 {
 	try {
-		logger::instance().log(opengl_debug_severity_log_level(severity), "gl", "[{}] | [{}] | {}", opengl_debug_type_string(type),
+		logger::instance().log(opengl_debug_severity_log_level(severity), "gfx", "OpenGL: [{}] | [{}] | {}", opengl_debug_type_string(type),
 							   opengl_debug_source_string(source), std::string_view{message, static_cast<usize>(length)});
 	}
 	catch (...) {

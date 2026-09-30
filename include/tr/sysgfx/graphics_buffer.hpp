@@ -2,12 +2,9 @@
 /// @brief Provides `tr::graphics_buffer`.
 
 #pragma once
+#include <tr/sysgfx/internal/graphics_object_id.hpp>
 #include <tr/utility/handle.hpp>
 #include <tr/utility/ref.hpp>
-
-#ifdef TR_ENABLE_CHECKED_GRAPHICS
-#include <tr/sysgfx/internal/graphics_object_registry.hpp>
-#endif
 
 namespace tr
 {
@@ -27,8 +24,6 @@ namespace tr
 	///
 	/// Moved-from instances of `tr::graphics_buffer` are left in a special 'invalid' state. Invalid `tr::graphics_buffer` instances may
 	/// not be interacted with besides moving a new value into them and checking for validity using `valid()`.
-	///
-	/// `tr::graphics_buffer` instances may be labeled and are formattable. Example format output: `"My buffer" (OpenGL ID: 5)`.
 	class graphics_buffer
 	{
 	  public:
@@ -107,11 +102,9 @@ namespace tr
 		/// Reallocates the buffer while preserving its label (if applicable).
 		void reallocate();
 
-#ifdef TR_ENABLE_CHECKED_GRAPHICS
 		/// Gets the unique graphics object ID of the buffer.
 		/// @return Unique graphics object ID of the buffer.
 		[[nodiscard]] internal::graphics_object_id id() const noexcept;
-#endif
 
 		/// @}
 		/// @endcond
@@ -123,10 +116,8 @@ namespace tr
 			/// Reference to the context the buffer is on.
 			ref<graphics_context> context;
 
-#ifdef TR_ENABLE_CHECKED_GRAPHICS
 			/// Handle to the unique graphics object ID of the buffer.
 			internal::graphics_object_id_handle id{};
-#endif
 
 			//
 

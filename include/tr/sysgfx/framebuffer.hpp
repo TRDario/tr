@@ -2,12 +2,9 @@
 /// @brief Provides `tr::framebuffer`.
 
 #pragma once
+#include <tr/sysgfx/internal/graphics_object_id.hpp>
 #include <tr/utility/handle.hpp>
 #include <tr/utility/ref.hpp>
-
-#ifdef TR_ENABLE_CHECKED_GRAPHICS
-#include <tr/sysgfx/internal/graphics_object_registry.hpp>
-#endif
 
 namespace tr
 {
@@ -35,7 +32,7 @@ namespace tr
 	/// Moved-from instances of `tr::framebuffer` are left in a special 'invalid' state. Invalid `tr::framebuffer` instances may not be
 	/// interacted with besides moving a new value into them and checking for validity using `valid()`.
 	///
-	/// `tr::framebuffer` instances may be labeled and are formattable. Example format output: `"My %framebuffer" (OpenGL ID: 5)`.
+	/// `tr::framebuffer` instances may be labeled and are formattable. Example format output: `"My %framebuffer" (ID: 3, FBO: 5)`.
 	class framebuffer
 	{
 	  public:
@@ -106,6 +103,7 @@ namespace tr
 		/// @{
 
 		/// Gets a reference to the graphics context the framebuffer is on.
+		/// @return Reference to the graphics context the framebuffer is on.
 		[[nodiscard]] graphics_context& context() const noexcept;
 
 		/// @}
@@ -153,7 +151,6 @@ namespace tr
 
 		/// @}
 		/// @endcond
-#ifdef TR_ENABLE_CHECKED_GRAPHICS
 		/// @cond implementation_details
 		/// @name Implementation details
 
@@ -163,7 +160,6 @@ namespace tr
 
 		/// @}
 		/// @endcond
-#endif
 
 	  private:
 		/// Framebuffer deleter.
@@ -172,10 +168,8 @@ namespace tr
 			/// Reference to the graphics context the framebuffer is on.
 			ref<graphics_context> context;
 
-#ifdef TR_ENABLE_CHECKED_GRAPHICS
 			/// Handle to the unique graphics object ID of the framebuffer.
 			internal::graphics_object_id_handle id{};
-#endif
 
 			//
 
@@ -219,7 +213,8 @@ struct std::formatter<tr::framebuffer>
 	FormatContext::iterator format(const tr::framebuffer& framebuffer, FormatContext& context) const
 	{
 		if (framebuffer.valid()) {
-			return std::format_to(context.out(), "\"{}\" (OpenGL ID: {})", framebuffer.label(), framebuffer.unwrap());
+			return std::format_to(context.out(), "\"{}\" (ID: {}, FBO: {})", framebuffer.label(), std::to_underlying(framebuffer.id()),
+								  framebuffer.unwrap());
 		}
 		else {
 			return std::format_to(context.out(), "<invalid framebuffer at {}>", static_cast<const void*>(&framebuffer));

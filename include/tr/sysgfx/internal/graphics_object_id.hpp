@@ -1,8 +1,7 @@
 /// @file
-/// @brief Provides `tr::internal::graphics_object_registry`.
+/// @brief Provides `tr::internal::graphics_object_id` and `tr::internal::graphics_object_id_handle`.
 
 #pragma once
-#include <tr/utility/common.hpp>
 
 //
 
@@ -50,26 +49,5 @@ namespace tr::internal
 	  private:
 		/// Base ID.
 		graphics_object_id m_id;
-	};
-
-	//
-
-	/// Graphics object registry used to track the validity of graphics objects when `TR_ENABLE_CHECKED_GRAPHICS` is enabled.
-	struct graphics_object_registry
-	{
-		/// Set of valid active framebuffer IDs.
-		boost::unordered_flat_set<graphics_object_id> framebuffers;
-
-		/// Set of valid active shader IDs.
-		boost::unordered_flat_set<graphics_object_id> shaders;
-
-		/// Set of valid active shader pipeline IDs.
-		boost::unordered_flat_set<graphics_object_id> shader_pipelines;
-
-		/// Set of valid active vertex format IDs.
-		boost::unordered_flat_set<graphics_object_id> vertex_formats;
-
-		/// Set of valid active buffer IDs.
-		boost::unordered_flat_set<graphics_object_id> buffers;
 	};
 } // namespace tr::internal

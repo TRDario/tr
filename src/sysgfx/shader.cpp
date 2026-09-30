@@ -18,7 +18,7 @@ tr::shader::shader(graphics_context& context, zstring_view source, unsigned int 
 	: m_program{context.gl().create_shader_program_v(type, 1, reinterpret_cast<const char**>(&source)), deleter{context}}
 {
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-	context.registry().shaders.emplace(id());
+	context.registered_shaders().emplace(id());
 #endif
 
 	const internal::opengl& gl{context.gl()};
@@ -144,7 +144,7 @@ void tr::shader::find_outputs(const internal::opengl& gl)
 void tr::shader::deleter::operator()(unsigned int program) const noexcept
 {
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-	context->registry().shaders.erase(id);
+	context->registered_shaders().erase(id);
 #endif
 	context->gl().delete_program(program);
 }
@@ -544,12 +544,12 @@ unsigned int tr::shader::unwrap() const noexcept
 	return m_program.get();
 }
 
-#ifdef TR_ENABLE_CHECKED_GRAPHICS
 tr::internal::graphics_object_id tr::shader::id() const noexcept
 {
 	return m_program.get_deleter().id;
 }
 
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 const boost::unordered_flat_map<unsigned int, tr::internal::glsl_variable>& tr::shader::inputs() const noexcept
 {
 	return m_inputs;

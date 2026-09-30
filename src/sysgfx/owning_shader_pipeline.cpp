@@ -82,3 +82,8 @@ unsigned int tr::owning_shader_pipeline::unwrap() const noexcept
 {
 	return m_shader_pipeline.unwrap();
 }
+
+tr::internal::graphics_object_id tr::owning_shader_pipeline::id() const noexcept
+{
+	return m_shader_pipeline.id();
+}

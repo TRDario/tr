@@ -15,7 +15,7 @@ tr::shader_pipeline::shader_pipeline(graphics_context& context) noexcept
 {
 	context.gl().create_program_pipelines(1, out_handle(m_handle));
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-	context.registry().shader_pipelines.emplace(id());
+	context.registered_shader_pipelines().emplace(id());
 #endif
 }
 
@@ -29,7 +29,7 @@ tr::shader_pipeline::shader_pipeline(graphics_context& context, const vertex_sha
 void tr::shader_pipeline::deleter::operator()(unsigned int ppo) const noexcept
 {
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-	context->registry().shader_pipelines.erase(id);
+	context->registered_shader_pipelines().erase(id);
 #endif
 	context->gl().delete_program_pipelines(1, &ppo);
 }
@@ -56,20 +56,41 @@ void tr::shader_pipeline::set_shaders(const vertex_shader& vertex_shader, const 
 	TR_ASSERT(&fragment_shader.context() == &context(),
 			  "Tried to set fragment shader '{}' to pipeline '{}' despite them not being on the same graphics context.",
 			  fragment_shader.label(), label());
-
+	TR_ASSERT(vertex_shader.outputs().size() == fragment_shader.inputs().size(),
+			  "Tried to set mismatched shaders to shader pipeline {}:\n"
+			  "Vertex shader '{}' has {} outputs, fragment shader '{}' has {} inputs.",
+			  *this, vertex_shader.label(), vertex_shader.outputs().size(), fragment_shader.label(), fragment_shader.inputs().size());
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-	m_vertex_shader_debug_info.id = vertex_shader.id();
-	m_vertex_shader_debug_info.label = vertex_shader.label();
-	m_vertex_shader_debug_info.outputs = vertex_shader.outputs();
-	m_fragment_shader_debug_info.id = fragment_shader.id();
-	m_fragment_shader_debug_info.label = fragment_shader.label();
-	m_fragment_shader_debug_info.inputs = fragment_shader.inputs();
-	assert_shaders_compatible();
+	for (const auto& [location, info] : vertex_shader.outputs()) {
+		TR_ASSERT(fragment_shader.inputs().contains(location),
+				  "Tried to set mismatched shaders to shader pipeline {}:\n"
+				  "Vertex shader '{}' has output '{}' at location {} that was not found in fragment shader '{}''s inputs.",
+				  *this, vertex_shader.label(), info, location, fragment_shader.label());
+
+		const internal::glsl_variable& frag_info{get(fragment_shader.inputs(), location)};
+		TR_ASSERT(frag_info.type == info.type && frag_info.array_size == info.array_size,
+				  "Tried to set mismatched shaders to shader pipeline {}:\n"
+				  "Vertex shader '{}' has output '{}' at location {}, but the input '{}' at the same location in fragment shader '{}' is "
+				  "not compatible with it.",
+				  *this, vertex_shader.label(), info, location, get(fragment_shader.inputs(), location), fragment_shader.label());
+	}
 #endif
 
 	const internal::opengl& gl{context().gl()};
-	gl.use_program_stages(unwrap(), GL_VERTEX_SHADER_BIT, vertex_shader.unwrap());
-	gl.use_program_stages(unwrap(), GL_FRAGMENT_SHADER_BIT, fragment_shader.unwrap());
+	if (internal::graphics_object_id id{vertex_shader.id()}; m_vertex_shader_id != id) {
+		TR_LOG_TRACE("gfx", "Setting vertex shader {} on shader pipeline {}.", vertex_shader, *this);
+		gl.use_program_stages(unwrap(), GL_VERTEX_SHADER_BIT, vertex_shader.unwrap());
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
+		m_vertex_shader_outputs = vertex_shader.outputs();
+#endif
+	}
+	if (internal::graphics_object_id id{fragment_shader.id()}; m_fragment_shader_id != id) {
+		TR_LOG_TRACE("gfx", "Setting fragment shader {} on shader pipeline {}.", vertex_shader, *this);
+		gl.use_program_stages(unwrap(), GL_FRAGMENT_SHADER_BIT, fragment_shader.unwrap());
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
+		m_fragment_shader_inputs = fragment_shader.inputs();
+#endif
+	}
 }
 
 void tr::shader_pipeline::set_vertex_shader(const vertex_shader& vertex_shader) noexcept
@@ -79,15 +100,36 @@ void tr::shader_pipeline::set_vertex_shader(const vertex_shader& vertex_shader) 
 	TR_ASSERT(&vertex_shader.context() == &context(),
 			  "Tried to set vertex shader '{}' to pipeline '{}' despite them not being on the same graphics context.",
 			  vertex_shader.label(), label());
-
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-	m_vertex_shader_debug_info.id = vertex_shader.id();
-	m_vertex_shader_debug_info.label = vertex_shader.label();
-	m_vertex_shader_debug_info.outputs = vertex_shader.outputs();
-	assert_shaders_compatible();
+	if (m_fragment_shader_id != internal::graphics_object_id::invalid) {
+		TR_ASSERT(vertex_shader.outputs().size() == m_fragment_shader_inputs.size(),
+				  "Tried to set mismatched shaders to shader pipeline {}:\n"
+				  "Vertex shader '{}' has {} outputs, set fragment shader has {} inputs.",
+				  *this, vertex_shader.label(), vertex_shader.outputs().size(), m_fragment_shader_inputs.size());
+		for (const auto& [location, info] : vertex_shader.outputs()) {
+			TR_ASSERT(m_fragment_shader_inputs.contains(location),
+					  "Tried to set mismatched shaders to shader pipeline {}:\n"
+					  "Vertex shader '{}' has output '{}' at location {} that was not found in the set fragment shader's inputs.",
+					  *this, vertex_shader.label(), info, location);
+
+			const internal::glsl_variable& frag_info{get(m_fragment_shader_inputs, location)};
+			TR_ASSERT(
+				frag_info.type == info.type && frag_info.array_size == info.array_size,
+				"Tried to set mismatched shaders to shader pipeline {}:\n"
+				"Vertex shader '{}' has output '{}' at location {}, but the input '{}' at the same location in the set fragment shader is "
+				"not compatible with it.",
+				*this, vertex_shader.label(), info, location, get(m_fragment_shader_inputs, location));
+		}
+	}
 #endif
 
-	context().gl().use_program_stages(unwrap(), GL_VERTEX_SHADER_BIT, vertex_shader.unwrap());
+	if (internal::graphics_object_id id{vertex_shader.id()}; m_vertex_shader_id != id) {
+		TR_LOG_TRACE("gfx", "Setting vertex shader {} on shader pipeline {}.", vertex_shader, *this);
+		context().gl().use_program_stages(unwrap(), GL_VERTEX_SHADER_BIT, vertex_shader.unwrap());
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
+		m_vertex_shader_outputs = vertex_shader.outputs();
+#endif
+	}
 }
 
 void tr::shader_pipeline::set_fragment_shader(const fragment_shader& fragment_shader) noexcept
@@ -97,15 +139,36 @@ void tr::shader_pipeline::set_fragment_shader(const fragment_shader& fragment_sh
 	TR_ASSERT(&fragment_shader.context() == &context(),
 			  "Tried to set fragment shader '{}' to pipeline '{}' despite them not being on the same graphics context.",
 			  fragment_shader.label(), label());
-
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-	m_fragment_shader_debug_info.id = fragment_shader.id();
-	m_fragment_shader_debug_info.label = fragment_shader.label();
-	m_fragment_shader_debug_info.inputs = fragment_shader.inputs();
-	assert_shaders_compatible();
+	if (m_vertex_shader_id != internal::graphics_object_id::invalid) {
+		TR_ASSERT(m_vertex_shader_outputs.size() == fragment_shader.inputs().size(),
+				  "Tried to set mismatched shaders to shader pipeline {}:\n"
+				  "Set vertex shader has {} outputs, fragment shader '{}' has {} inputs.",
+				  *this, m_vertex_shader_outputs.size(), fragment_shader.label(), fragment_shader.inputs().size());
+		for (const auto& [location, info] : m_vertex_shader_outputs) {
+			TR_ASSERT(fragment_shader.inputs().contains(location),
+					  "Tried to set mismatched shaders to shader pipeline {}:\n"
+					  "Set vertex shader has output '{}' at location {} that was not found in fragment shader '{}''s inputs.",
+					  *this, info, location, fragment_shader.label());
+
+			const internal::glsl_variable& frag_info{get(fragment_shader.inputs(), location)};
+			TR_ASSERT(
+				frag_info.type == info.type && frag_info.array_size == info.array_size,
+				"Tried to set mismatched shaders to shader pipeline {}:\n"
+				"Set vertex shader has output '{}' at location {}, but the input '{}' at the same location in fragment shader '{}' is "
+				"not compatible with it.",
+				*this, info, location, get(fragment_shader.inputs(), location), fragment_shader.label());
+		}
+	}
 #endif
 
-	context().gl().use_program_stages(unwrap(), GL_FRAGMENT_SHADER_BIT, fragment_shader.unwrap());
+	if (internal::graphics_object_id id{fragment_shader.id()}; m_fragment_shader_id != id) {
+		TR_LOG_TRACE("gfx", "Setting fragment shader {} on shader pipeline {}.", fragment_shader, *this);
+		context().gl().use_program_stages(unwrap(), GL_FRAGMENT_SHADER_BIT, fragment_shader.unwrap());
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
+		m_fragment_shader_inputs = fragment_shader.inputs();
+#endif
+	}
 }
 
 //
@@ -149,50 +212,29 @@ unsigned int tr::shader_pipeline::unwrap() const noexcept
 	return m_handle.get();
 }
 
-#ifdef TR_ENABLE_CHECKED_GRAPHICS
 tr::internal::graphics_object_id tr::shader_pipeline::id() const noexcept
 {
 	return m_handle.get_deleter().id;
 }
 
-const tr::internal::vertex_shader_debug_info& tr::shader_pipeline::vertex_shader_debug_info() const noexcept
+tr::internal::graphics_object_id tr::shader_pipeline::vertex_shader_id() const noexcept
 {
-	return m_vertex_shader_debug_info;
+	return m_vertex_shader_id;
 }
 
-const tr::internal::fragment_shader_debug_info& tr::shader_pipeline::fragment_shader_debug_info() const noexcept
+tr::internal::graphics_object_id tr::shader_pipeline::fragment_shader_id() const noexcept
 {
-	return m_fragment_shader_debug_info;
+	return m_fragment_shader_id;
 }
 
-//
-
-void tr::shader_pipeline::assert_shaders_compatible() const noexcept
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
+const boost::unordered_flat_map<unsigned int, tr::internal::glsl_variable>& tr::shader_pipeline::vertex_shader_outputs() const noexcept
 {
-	const internal::graphics_object_registry& registry{context().registry()};
-	if (!(registry.shaders.contains(m_vertex_shader_debug_info.id) && registry.shaders.contains(m_fragment_shader_debug_info.id))) {
-		return;
-	}
+	return m_vertex_shader_outputs;
+}
 
-	TR_ASSERT(m_vertex_shader_debug_info.outputs.size() == m_fragment_shader_debug_info.inputs.size(),
-			  "Tried to set mismatched shaders to shader pipeline {}:\n"
-			  "Vertex shader '{}' has {} outputs, fragment shader '{}' has {} inputs.",
-			  *this, m_vertex_shader_debug_info.label, m_vertex_shader_debug_info.outputs.size(), m_fragment_shader_debug_info.label,
-			  m_fragment_shader_debug_info.inputs.size());
-
-	for (const auto& [location, info] : m_vertex_shader_debug_info.outputs) {
-		TR_ASSERT(m_fragment_shader_debug_info.inputs.contains(location),
-				  "Tried to set mismatched shaders to shader pipeline {}:\n"
-				  "Vertex shader '{}' has output '{}' at location {} that was not found in fragment shader '{}''s inputs.",
-				  *this, m_vertex_shader_debug_info.label, info, location, m_fragment_shader_debug_info.label);
-
-		const internal::glsl_variable& frag_info{get(m_fragment_shader_debug_info.inputs, location)};
-		TR_ASSERT(frag_info.type == info.type && frag_info.array_size == info.array_size,
-				  "Tried to set mismatched shaders to shader pipeline {}:\n"
-				  "Vertex shader '{}' has output '{}' at location {}, but the input '{}' at the same location in fragment shader '{}' is "
-				  "not compatible with it.",
-				  *this, m_vertex_shader_debug_info.label, info, location, get(m_fragment_shader_debug_info.inputs, location),
-				  m_fragment_shader_debug_info.label);
-	}
+const boost::unordered_flat_map<unsigned int, tr::internal::glsl_variable>& tr::shader_pipeline::fragment_shader_inputs() const noexcept
+{
+	return m_fragment_shader_inputs;
 }
 #endif

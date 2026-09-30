@@ -54,8 +54,7 @@ namespace tr
 
 		/// Draws a Dear ImGui frame.
 		/// @note This function should be called after `::ImGui::Render`.
-		/// @param context Graphics context to draw the frame on.
-		void Draw(graphics_context& context);
+		void Draw();
 
 		/// @}
 	} // namespace ImGui

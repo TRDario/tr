@@ -15,13 +15,27 @@
 
 //
 
+namespace tr::internal
+{
+	namespace
+	{
+		/// Pointer to the current graphics context.
+		thread_local SDL_GLContextState* current_graphics_context{nullptr};
+	} // namespace
+} // namespace tr::internal
+
+//
+
 tr::graphics_context::graphics_context(window_view window)
 	: m_window{window.unwrap()}
-	, m_ptr{SDL_GL_CreateContext(window.unwrap())}
+	, m_ptr{SDL_GL_CreateContext(m_window)}
+	, m_viewport{{}, window.size()}
+	, m_scissor_box{{}, window.size()}
 {
 	if (m_ptr == nullptr) {
 		throw graphics_context_init_error{};
 	}
+	internal::current_graphics_context = m_ptr.get();
 
 	m_gl.enable(GL_BLEND);
 	m_gl.enable(GL_SCISSOR_TEST);
@@ -30,7 +44,9 @@ tr::graphics_context::graphics_context(window_view window)
 	m_gl.get_integer_v(GL_CONTEXT_FLAGS, &context_flags);
 	if (context_flags & GL_CONTEXT_FLAG_DEBUG_BIT) {
 		m_gl.enable(GL_DEBUG_OUTPUT);
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
 		m_gl.enable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+#endif
 		m_gl.set_debug_message_callback(internal::opengl_debug_callback, nullptr);
 		m_gl.set_debug_message_control(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, NULL, GL_TRUE);
 		m_gl.set_debug_message_control(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_NOTIFICATION, 0, NULL, GL_FALSE);
@@ -40,15 +56,19 @@ tr::graphics_context::graphics_context(window_view window)
 void tr::graphics_context::deleter::operator()(SDL_GLContextState* context) const noexcept
 {
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-	TR_ASSERT(registry.framebuffers.empty(), "Tried to destroy a graphics context while one or more framebuffers were still alive on it.");
-	TR_ASSERT(registry.shaders.empty(), "Tried to destroy a graphics context while one or more shaders were still alive on it.");
-	TR_ASSERT(registry.shader_pipelines.empty(),
+	TR_ASSERT(registered_framebuffers.empty(),
+			  "Tried to destroy a graphics context while one or more framebuffers were still alive on it.");
+	TR_ASSERT(registered_shaders.empty(), "Tried to destroy a graphics context while one or more shaders were still alive on it.");
+	TR_ASSERT(registered_shader_pipelines.empty(),
 			  "Tried to destroy a graphics context while one or more shader pipelines were still alive on it.");
-	TR_ASSERT(registry.vertex_formats.empty(),
+	TR_ASSERT(registered_vertex_formats.empty(),
 			  "Tried to destroy a graphics context while one or more vertex formats were still alive on it.");
-	TR_ASSERT(registry.buffers.empty(), "Tried to destroy a graphics context while one or more buffers were still alive on it.");
+	TR_ASSERT(registered_buffers.empty(), "Tried to destroy a graphics context while one or more buffers were still alive on it.");
 #endif
 
+	if (internal::current_graphics_context == context) {
+		internal::current_graphics_context = nullptr;
+	}
 	SDL_GL_DestroyContext(context);
 }
 
@@ -56,11 +76,12 @@ void tr::graphics_context::deleter::operator()(SDL_GLContextState* context) cons
 
 struct tr::graphics_context::info tr::graphics_context::info() const noexcept
 {
-	const internal::opengl& gl{this->gl()};
+	using get_string_t = const unsigned char* (*)(unsigned int);
+	const get_string_t get_string{gl().get_string};
 	return {
-		reinterpret_cast<const char*>(gl.get_string(GL_VENDOR)),
-		reinterpret_cast<const char*>(gl.get_string(GL_RENDERER)),
-		reinterpret_cast<const char*>(gl.get_string(GL_VERSION)),
+		reinterpret_cast<const char*>(get_string(GL_VENDOR)),
+		reinterpret_cast<const char*>(get_string(GL_RENDERER)),
+		reinterpret_cast<const char*>(get_string(GL_VERSION)),
 	};
 }
 
@@ -78,44 +99,46 @@ tr::render_target tr::graphics_context::backbuffer() const noexcept
 
 //
 
-tr::renderer_id tr::graphics_context::allocate_renderer_id() noexcept
+bool tr::graphics_context::wireframe_mode_enabled() const noexcept
 {
-	const renderer_id id{m_next_renderer_id};
-	m_next_renderer_id = renderer_id{std::to_underlying(m_next_renderer_id) + 1};
-	return id;
+	return m_wireframe_mode_enabled;
 }
 
-bool tr::graphics_context::should_setup_renderer(renderer_id id) noexcept
+void tr::graphics_context::set_wireframe_mode(bool enable) noexcept
 {
-	const bool result{m_active_renderer != id};
-	m_active_renderer = id;
-	return result;
+	if (m_wireframe_mode_enabled != enable) {
+		gl().set_polygon_mode(GL_FRONT_AND_BACK, enable ? GL_LINE : GL_FILL);
+		m_wireframe_mode_enabled = enable;
+	}
 }
 
 //
 
-void tr::graphics_context::set_wireframe_mode(bool arg) noexcept
+bool tr::graphics_context::face_culling_enabled() const noexcept
 {
-	gl().set_polygon_mode(GL_FRONT_AND_BACK, arg ? GL_LINE : GL_FILL);
+	return m_face_culling_enabled;
 }
 
-void tr::graphics_context::set_face_culling(bool arg) noexcept
+void tr::graphics_context::set_face_culling(bool enable) noexcept
 {
-	if (arg) {
-		gl().enable(GL_CULL_FACE);
-	}
-	else {
-		gl().disable(GL_CULL_FACE);
+	if (m_face_culling_enabled != enable) {
+		const internal::opengl& gl{this->gl()};
+		enable ? gl.enable(GL_CULL_FACE) : gl.disable(GL_CULL_FACE);
 	}
 }
 
-void tr::graphics_context::set_depth_test(bool arg) noexcept
+//
+
+bool tr::graphics_context::depth_testing_enabled() const noexcept
 {
-	if (arg) {
-		gl().enable(GL_DEPTH_TEST);
-	}
-	else {
-		gl().disable(GL_DEPTH_TEST);
+	return m_depth_testing_enabled;
+}
+
+void tr::graphics_context::set_depth_testing(bool enable) noexcept
+{
+	if (m_depth_testing_enabled != enable) {
+		const internal::opengl& gl{this->gl()};
+		enable ? gl.enable(GL_DEPTH_TEST) : gl.disable(GL_DEPTH_TEST);
 	}
 }
 
@@ -123,26 +146,41 @@ void tr::graphics_context::set_depth_test(bool arg) noexcept
 
 void tr::graphics_context::set_render_target(const render_target& target) noexcept
 {
-	const internal::framebuffer_info& framebuffer_info{target.framebuffer_info()};
-
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-	TR_ASSERT(framebuffer_info.context.as_ptr() == this, "Tried to set render target to a context it is not associated with.");
-	TR_ASSERT(registry().framebuffers.contains(framebuffer_info.id),
+	TR_ASSERT(&target.context() == this, "Tried to set render target to a context it is not associated with.");
+	TR_ASSERT(registered_framebuffers().contains(target.framebuffer_id()),
 			  "Tried to set render target on a framebuffer in an invalid state to a context.");
 #endif
 
 	const internal::opengl& gl{this->gl()};
-	const rectangle<int> viewport{target.viewport()};
-	const rectangle<int> scissor_box{target.scissor_box()};
-	const int bottom{framebuffer_info.size.y - viewport.tl.y - viewport.size.y};
-	gl.bind_framebuffer(GL_DRAW_FRAMEBUFFER, framebuffer_info.fbo);
-	gl.set_viewport(viewport.tl.x, bottom, viewport.size.x, viewport.size.y);
-	gl.set_scissor(scissor_box.tl.x, bottom, scissor_box.size.x, scissor_box.size.y);
-
-#ifdef TR_ENABLE_CHECKED_GRAPHICS
-	m_set_framebuffer_debug_info.id = framebuffer_info.id;
-	m_set_framebuffer_debug_info.label = framebuffer_info.label;
+	const rectangle<u16> viewport{target.viewport()};
+	const int bottom{target.framebuffer_height() - viewport.tl.y - viewport.size.y};
+	if (internal::graphics_object_id id{target.framebuffer_id()}; m_bound_framebuffer != id) {
+#ifdef TR_ENABLE_LOG_TRACE
+		int label_length;
+		std::string framebuffer_label;
+		gl.get_object_label(GL_FRAMEBUFFER, target.framebuffer_fbo(), 0, &label_length, nullptr);
+		if (label_length > 0) {
+			framebuffer_label.resize(label_length, '\0');
+			gl.get_object_label(GL_FRAMEBUFFER, target.framebuffer_fbo(), label_length + 1, nullptr, framebuffer_label.data());
+		}
+		else {
+			framebuffer_label = "<unnamed>";
+		}
+		TR_LOG_TRACE("gfx", "Setting framebuffer \"{}\" (ID: {}, FBO: {}) on context at {}", framebuffer_label, std::to_underlying(id),
+					 target.framebuffer_fbo(), static_cast<void*>(this));
 #endif
+		gl.bind_framebuffer(GL_DRAW_FRAMEBUFFER, target.framebuffer_fbo());
+		m_bound_framebuffer = id;
+	}
+	if (m_viewport != viewport) {
+		gl.set_viewport(viewport.tl.x, bottom, viewport.size.x, viewport.size.y);
+		m_viewport = viewport;
+	}
+	if (const rectangle<u16> scissor_box{target.scissor_box()}; m_scissor_box != scissor_box) {
+		gl.set_scissor(scissor_box.tl.x, bottom, scissor_box.size.x, scissor_box.size.y);
+		m_scissor_box = scissor_box;
+	}
 }
 
 void tr::graphics_context::set_shader_pipeline(const shader_pipeline& pipeline) noexcept
@@ -150,89 +188,121 @@ void tr::graphics_context::set_shader_pipeline(const shader_pipeline& pipeline) 
 	TR_ASSERT(pipeline.valid(), "Tried to set a shader pipeline in an invalid state to a context.");
 	TR_ASSERT(&pipeline.context() == this, "Tried to set shader pipeline {} to a context it is not associated with.", pipeline);
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-	TR_ASSERT(registry().shaders.contains(pipeline.vertex_shader_debug_info().id),
-			  "Tried to set shader pipeline {} with invalid set vertex shader '{}'.", pipeline, pipeline.vertex_shader_debug_info().label);
-	TR_ASSERT(registry().shaders.contains(pipeline.fragment_shader_debug_info().id),
-			  "Tried to set shader pipeline {} with invalid set fragment shader '{}'.", pipeline,
-			  pipeline.fragment_shader_debug_info().label);
+	TR_ASSERT(registered_shaders().contains(pipeline.vertex_shader_id()), "Tried to set shader pipeline {} with invalid set vertex shader.",
+			  pipeline);
+	TR_ASSERT(registered_shaders().contains(pipeline.fragment_shader_id()),
+			  "Tried to set shader pipeline {} with invalid set fragment shader.", pipeline);
 #endif
 
-	gl().bind_program_pipeline(pipeline.unwrap());
-
-#ifdef TR_ENABLE_CHECKED_GRAPHICS
-	m_set_shader_pipeline_debug_info.id = pipeline.id();
-	m_set_shader_pipeline_debug_info.label = pipeline.label();
-#endif
+	if (internal::graphics_object_id id{pipeline.id()}; m_bound_shader_pipeline != id) {
+		TR_LOG_TRACE("gfx", "Setting shader pipeline {} on context.", pipeline);
+		gl().bind_program_pipeline(pipeline.unwrap());
+		m_bound_shader_pipeline = id;
+	}
 }
 
-void tr::graphics_context::set_blend_mode(const blend_mode& bm) noexcept
+//
+
+const tr::blend_mode& tr::graphics_context::blend_mode() const noexcept
 {
-	const internal::opengl& gl{this->gl()};
-	gl.set_separate_blend_equations(std::to_underlying(bm.rgb_fn), std::to_underlying(bm.alpha_fn));
-	gl.set_separate_blend_function(std::to_underlying(bm.rgb_src), std::to_underlying(bm.rgb_dst), std::to_underlying(bm.alpha_src),
-								   std::to_underlying(bm.alpha_dst));
+	return m_blend_mode;
 }
+
+void tr::graphics_context::set_blend_mode(const tr::blend_mode& blend_mode) noexcept
+{
+	if (m_blend_mode != blend_mode) {
+		const internal::opengl& gl{this->gl()};
+		gl.set_separate_blend_equations(std::to_underlying(blend_mode.rgb_fn), std::to_underlying(blend_mode.alpha_fn));
+		gl.set_separate_blend_function(std::to_underlying(blend_mode.rgb_src), std::to_underlying(blend_mode.rgb_dst),
+									   std::to_underlying(blend_mode.alpha_src), std::to_underlying(blend_mode.alpha_dst));
+	}
+}
+
+//
 
 void tr::graphics_context::set_vertex_format(const vertex_format& format) noexcept
 {
 	TR_ASSERT(format.valid(), "Tried to set vertex format in an invalid state to a graphics context.");
 	TR_ASSERT(&format.context() == this, "Tried to set vertex format {} to a context it is not associated with.", format);
 
+	if (internal::graphics_object_id id{format.id()}; m_bound_vertex_format != id) {
+		TR_LOG_TRACE("gfx", "Binding vertex format {} to context.", format);
+		gl().bind_vertex_array(format.unwrap());
+		m_bound_vertex_format = id;
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-	m_set_vertex_format_debug_info.id = format.id();
-	m_set_vertex_format_debug_info.label = format.label();
-	m_set_vertex_format_debug_info.bindings = format.bindings();
+		m_bound_vertex_format_bindings = format.bindings();
 #endif
-
-	gl().bind_vertex_array(format.unwrap());
+	}
 }
 
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-void tr::graphics_context::check_typed_vertex_buffer(const std::string& label, int slot, std::span<const vertex_attribute> attrs) noexcept
+void tr::graphics_context::check_typed_vertex_buffer(const std::string& label, int slot,
+													 std::span<const vertex_attribute> vertex_attributes) noexcept
 {
-	TR_ASSERT(usize(slot) < m_set_vertex_format_debug_info.bindings.size(),
-			  "Tried to set vertex buffer '{}' to invalid slot {} (max in vertex format '{}': {}).", label, slot,
-			  m_set_vertex_format_debug_info.label, m_set_vertex_format_debug_info.bindings.size());
+	TR_ASSERT(usize(slot) < m_bound_vertex_format_bindings.size(),
+			  "Tried to set vertex buffer '{}' to invalid slot {} (max in set vertex format: {}).", label, slot,
+			  m_bound_vertex_format_bindings.size());
 
-	const std::span<const vertex_attribute> ref{m_set_vertex_format_debug_info.bindings.begin()[slot].attrs};
-	TR_ASSERT(attrs.size() == ref.size(),
-			  "Tried to set vertex buffer '{}' of a different type from the one in vertex format '{}' (has {} attributes instead of {}).",
-			  label, m_set_vertex_format_debug_info.label, attrs.size(), ref.size());
-	for (usize i = 0; i < attrs.size(); ++i) {
-		const vertex_attribute& lhs{attrs.begin()[i]};
+	const std::span<const vertex_attribute> ref{m_bound_vertex_format_bindings.begin()[slot].attrs};
+	TR_ASSERT(
+		vertex_attributes.size() == ref.size(),
+		"Tried to set vertex buffer '{}' of a different type from the one in the set vertex format (has {} attributes instead of {}).",
+		label, vertex_attributes.size(), ref.size());
+	for (usize i = 0; i < vertex_attributes.size(); ++i) {
+		const vertex_attribute& lhs{vertex_attributes.begin()[i]};
 		const vertex_attribute& rhs{ref.begin()[i]};
 		TR_ASSERT(lhs.type == rhs.type && lhs.elements == rhs.elements,
-				  "Tried to set vertex buffer '{}' of a type different from than the one in vertex format '{}' (expected '{}' in "
+				  "Tried to set vertex buffer '{}' of a type different from than the one in the set vertex format (expected '{}' in "
 				  "attribute {}, got '{}').",
-				  label, m_set_vertex_format_debug_info.label, rhs, i, lhs);
+				  label, rhs, i, lhs);
 	}
 }
 #endif
 
-void tr::graphics_context::set_vertex_buffer(const untyped_static_vertex_buffer& buffer, int slot, ssize offset, usize stride) noexcept
+void tr::graphics_context::set_vertex_buffer(const untyped_static_vertex_buffer& buffer, int slot, ssize offset, int stride) noexcept
 {
 	TR_ASSERT(buffer.valid(), "Tried to set a vertex buffer in an invalid state to a graphics context.");
 	TR_ASSERT(&buffer.context() == this, "Tried to set vertex buffer {} to a context it is not associated with.", buffer);
 
-	gl().bind_vertex_buffer(slot, buffer.unwrap(), offset, stride);
+	if (m_bound_vertex_buffers.size() <= static_cast<usize>(slot)) {
+		m_bound_vertex_buffers.resize(slot + 1);
+	}
 
+	bound_vertex_buffer_info& bound_vertex_buffer{m_bound_vertex_buffers[slot]};
+	if (internal::graphics_object_id id{buffer.id()};
+		bound_vertex_buffer.id != id || bound_vertex_buffer.offset != offset || bound_vertex_buffer.stride != stride) {
+		TR_LOG_TRACE("gfx", "Binding vertex buffer {} to context.", buffer);
+		gl().bind_vertex_buffer(slot, buffer.unwrap(), offset, stride);
+		bound_vertex_buffer.id = id;
+		bound_vertex_buffer.offset = offset;
+		bound_vertex_buffer.stride = stride;
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-	m_set_vertex_buffer_debug_info.id = buffer.id();
-	m_set_vertex_buffer_debug_info.label = buffer.label();
+		bound_vertex_buffer.vertex_attributes = {};
 #endif
+	}
 }
 
-void tr::graphics_context::set_vertex_buffer(const untyped_dynamic_vertex_buffer& buffer, int slot, ssize offset, usize stride) noexcept
+void tr::graphics_context::set_vertex_buffer(const untyped_dynamic_vertex_buffer& buffer, int slot, ssize offset, int stride) noexcept
 {
 	TR_ASSERT(buffer.valid(), "Tried to set a vertex buffer in an invalid state to a graphics context.");
 	TR_ASSERT(&buffer.context() == this, "Tried to set vertex buffer {} to a context it is not associated with.", buffer);
 
-	gl().bind_vertex_buffer(slot, buffer.unwrap(), offset, stride);
+	if (m_bound_vertex_buffers.size() <= static_cast<usize>(slot)) {
+		m_bound_vertex_buffers.resize(slot + 1);
+	}
 
+	bound_vertex_buffer_info& bound_vertex_buffer{m_bound_vertex_buffers[slot]};
+	if (internal::graphics_object_id id{buffer.id()};
+		bound_vertex_buffer.id != id || bound_vertex_buffer.offset != offset || bound_vertex_buffer.stride != stride) {
+		TR_LOG_TRACE("gfx", "Binding vertex buffer {} to context.", buffer);
+		gl().bind_vertex_buffer(slot, buffer.unwrap(), offset, stride);
+		bound_vertex_buffer.id = id;
+		bound_vertex_buffer.offset = offset;
+		bound_vertex_buffer.stride = stride;
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-	m_set_vertex_buffer_debug_info.id = buffer.id();
-	m_set_vertex_buffer_debug_info.label = buffer.label();
+		bound_vertex_buffer.vertex_attributes = {};
 #endif
+	}
 }
 
 void tr::graphics_context::set_index_buffer(const static_index_buffer& buffer) noexcept
@@ -240,12 +310,11 @@ void tr::graphics_context::set_index_buffer(const static_index_buffer& buffer) n
 	TR_ASSERT(buffer.valid(), "Tried to set invalid index buffer to a graphics context.");
 	TR_ASSERT(&buffer.context() == this, "Tried to set index buffer {} to a context it is not associated with.", buffer);
 
-	gl().bind_buffer(GL_ELEMENT_ARRAY_BUFFER, buffer.unwrap());
-
-#ifdef TR_ENABLE_CHECKED_GRAPHICS
-	m_set_index_buffer_debug_info.id = buffer.id();
-	m_set_index_buffer_debug_info.label = buffer.label();
-#endif
+	if (internal::graphics_object_id id{buffer.id()}; m_bound_index_buffer != id) {
+		TR_LOG_TRACE("gfx", "Binding index buffer {} to context.", buffer);
+		gl().bind_buffer(GL_ELEMENT_ARRAY_BUFFER, buffer.unwrap());
+		m_bound_index_buffer = id;
+	}
 }
 
 void tr::graphics_context::set_index_buffer(const dynamic_index_buffer& buffer) noexcept
@@ -253,12 +322,11 @@ void tr::graphics_context::set_index_buffer(const dynamic_index_buffer& buffer) 
 	TR_ASSERT(buffer.valid(), "Tried to set invalid index buffer to a graphics context.");
 	TR_ASSERT(&buffer.context() == this, "Tried to set index buffer {} to a context it is not associated with.", buffer);
 
-	gl().bind_buffer(GL_ELEMENT_ARRAY_BUFFER, buffer.unwrap());
-
-#ifdef TR_ENABLE_CHECKED_GRAPHICS
-	m_set_index_buffer_debug_info.id = buffer.id();
-	m_set_index_buffer_debug_info.label = buffer.label();
-#endif
+	if (internal::graphics_object_id id{buffer.id()}; m_bound_index_buffer != id) {
+		TR_LOG_TRACE("gfx", "Binding index buffer {} to context.", buffer);
+		gl().bind_buffer(GL_ELEMENT_ARRAY_BUFFER, buffer.unwrap());
+		m_bound_index_buffer = id;
+	}
 }
 
 //
@@ -329,7 +397,8 @@ void tr::graphics_context::draw_indexed(primitive type, usize offset, usize indi
 	assert_valid_drawing_state(check_index_buffer::yes);
 #endif
 
-	gl().draw_elements(std::to_underlying(type), indices, GL_UNSIGNED_SHORT, reinterpret_cast<const void*>(offset * sizeof(u16)));
+	const void* const byte_offset{reinterpret_cast<const void*>(offset * sizeof(u16))};
+	gl().draw_elements(std::to_underlying(type), indices, GL_UNSIGNED_SHORT, byte_offset);
 }
 
 void tr::graphics_context::draw_indexed_instances(primitive type, usize offset, usize indices, int instances) noexcept
@@ -338,8 +407,8 @@ void tr::graphics_context::draw_indexed_instances(primitive type, usize offset, 
 	assert_valid_drawing_state(check_index_buffer::yes);
 #endif
 
-	gl().draw_elements_instanced(std::to_underlying(type), indices, GL_UNSIGNED_SHORT, reinterpret_cast<const void*>(offset * sizeof(u16)),
-								 instances);
+	const void* const byte_offset{reinterpret_cast<const void*>(offset * sizeof(u16))};
+	gl().draw_elements_instanced(std::to_underlying(type), indices, GL_UNSIGNED_SHORT, byte_offset, instances);
 }
 
 //
@@ -353,14 +422,37 @@ SDL_GLContextState* tr::graphics_context::unwrap() const noexcept
 
 const tr::internal::opengl& tr::graphics_context::gl() const noexcept
 {
-	SDL_GL_MakeCurrent(m_window, m_ptr.get());
+	if (SDL_GLContextState* context_pointer{m_ptr.get()}; internal::current_graphics_context != context_pointer) {
+		TR_LOG_TRACE("gfx", "Setting graphics context at {} as current.", static_cast<void*>(context_pointer));
+		SDL_GL_MakeCurrent(m_window, context_pointer);
+	}
 	return m_gl;
 }
 
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
-tr::internal::graphics_object_registry& tr::graphics_context::registry() noexcept
+boost::unordered_flat_set<tr::internal::graphics_object_id>& tr::graphics_context::registered_framebuffers() noexcept
 {
-	return m_ptr.get_deleter().registry;
+	return m_ptr.get_deleter().registered_framebuffers;
+}
+
+boost::unordered_flat_set<tr::internal::graphics_object_id>& tr::graphics_context::registered_shaders() noexcept
+{
+	return m_ptr.get_deleter().registered_shaders;
+}
+
+boost::unordered_flat_set<tr::internal::graphics_object_id>& tr::graphics_context::registered_shader_pipelines() noexcept
+{
+	return m_ptr.get_deleter().registered_shader_pipelines;
+}
+
+boost::unordered_flat_set<tr::internal::graphics_object_id>& tr::graphics_context::registered_vertex_formats() noexcept
+{
+	return m_ptr.get_deleter().registered_vertex_formats;
+}
+
+boost::unordered_flat_set<tr::internal::graphics_object_id>& tr::graphics_context::registered_buffers() noexcept
+{
+	return m_ptr.get_deleter().registered_buffers;
 }
 #endif
 
@@ -375,6 +467,7 @@ unsigned int tr::graphics_context::allocate_texture_unit() noexcept
 		}
 	}
 	TR_ASSERT(false, "Tried to allocate more than 80 texture units simultaneously.");
+	TR_UNREACHABLE;
 }
 
 void tr::graphics_context::free_texture_unit(unsigned int texture_unit) noexcept
@@ -405,19 +498,34 @@ void tr::graphics_context::move_label(unsigned int type, unsigned int old_id, un
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 void tr::graphics_context::assert_valid_drawing_state(check_index_buffer check_index_buffer) noexcept
 {
-	internal::graphics_object_registry& registry{this->registry()};
+	TR_ASSERT(m_bound_framebuffer == internal::graphics_object_id::invalid || registered_framebuffers().contains(m_bound_framebuffer),
+			  "Tried to perform a drawing operation with an invalid set render target.");
+	TR_ASSERT(registered_shader_pipelines().contains(m_bound_shader_pipeline),
+			  "Tried to perform a drawing operation with an invalid set shader pipeline.");
+	TR_ASSERT(registered_vertex_formats().contains(m_bound_vertex_format),
+			  "Tried to perform a drawing operation with an invalid set vertex format.");
+	for (usize slot = 0; slot < m_bound_vertex_format_bindings.size(); ++slot) {
+		TR_ASSERT(registered_buffers().contains(m_bound_vertex_buffers[slot].id),
+				  "Tried to perform a drawing operation with an invalid set vertex buffer in slot {}.", slot);
 
-	TR_ASSERT(m_set_framebuffer_debug_info.id == internal::graphics_object_id::invalid ||
-				  registry.framebuffers.contains(m_set_framebuffer_debug_info.id),
-			  "Tried to perform a drawing operation with an invalid set render target on framebuffer '{}'.",
-			  m_set_framebuffer_debug_info.label);
-	TR_ASSERT(registry.shader_pipelines.contains(m_set_shader_pipeline_debug_info.id),
-			  "Tried to perform a drawing operation with an invalid set shader pipeline '{}'.", m_set_shader_pipeline_debug_info.label);
-	TR_ASSERT(registry.vertex_formats.contains(m_set_vertex_format_debug_info.id),
-			  "Tried to perform a drawing operation with an invalid set vertex format '{}'.", m_set_vertex_format_debug_info.label);
-	TR_ASSERT(registry.buffers.contains(m_set_vertex_buffer_debug_info.id),
-			  "Tried to perform a drawing operation with an invalid set vertex buffer '{}'.", m_set_vertex_buffer_debug_info.label);
-	TR_ASSERT(check_index_buffer == check_index_buffer::no || registry.buffers.contains(m_set_index_buffer_debug_info.id),
-			  "Tried to perform a drawing operation with an invalid set index buffer '{}'.", m_set_index_buffer_debug_info.label);
+		if (m_bound_vertex_buffers[slot].vertex_attributes.empty()) {
+			continue;
+		}
+
+		TR_ASSERT(m_bound_vertex_buffers[slot].vertex_attributes.size() == m_bound_vertex_format_bindings[slot].attrs.size(),
+				  "Tried to perform a drawing operation with a vertex buffer in slot {} holding a different type from the one in the set "
+				  "vertex format (has {} attributes instead of {}).",
+				  slot, m_bound_vertex_buffers[slot].vertex_attributes.size(), m_bound_vertex_format_bindings[slot].attrs.size());
+		for (usize i = 0; i < m_bound_vertex_format_bindings[i].attrs.size(); ++i) {
+			const vertex_attribute& lhs{m_bound_vertex_buffers[i].vertex_attributes[i]};
+			const vertex_attribute& rhs{m_bound_vertex_format_bindings[i].attrs[i]};
+			TR_ASSERT(lhs.type == rhs.type && lhs.elements == rhs.elements,
+					  "Tried to perform a drawing operation with a vertex buffer in slot {} holding a type different from than the one in "
+					  "the set vertex format (expected '{}' in attribute {}, got '{}').",
+					  m_bound_vertex_format_bindings[slot].attrs, rhs, i, lhs);
+		}
+	}
+	TR_ASSERT(check_index_buffer == check_index_buffer::no || registered_buffers().contains(m_bound_index_buffer),
+			  "Tried to perform a drawing operation with an invalid set index buffer.");
 }
 #endif
