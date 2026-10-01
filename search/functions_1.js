@@ -12,7 +12,8 @@ var searchData=
   ['bitmap_5fload_5ferror_9',['bitmap_load_error',['../classtr_1_1bitmap__load__error.html#a2d1f89f91a55f34bd3e66af36395924c',1,'tr::bitmap_load_error']]],
   ['bitmap_5fsave_5ferror_10',['bitmap_save_error',['../classtr_1_1bitmap__save__error.html#a0e9ee14f72cd306c8408d019d9586481',1,'tr::bitmap_save_error']]],
   ['bitmap_5fview_11',['bitmap_view',['../classtr_1_1bitmap__view.html#aecf13813d93967908d70920ccc8c58f5',1,'tr::bitmap_view::bitmap_view(std::span&lt; const std::byte &gt; raw_data, glm::ivec2 size, pixel_format format)'],['../classtr_1_1bitmap__view.html#a4f6262ae7aebdfe2ac21b9537f8430a4',1,'tr::bitmap_view::bitmap_view(Range &amp;&amp;range, glm::ivec2 size, pixel_format format)'],['../classtr_1_1bitmap__view.html#ab11261802de05992ac47071573417ad2',1,'tr::bitmap_view::bitmap_view(const std::byte *raw_data_start, int pitch, glm::ivec2 size, pixel_format format)'],['../classtr_1_1bitmap__view.html#a78759cecd3f332bcb49ee89a05f65803',1,'tr::bitmap_view::bitmap_view(const bitmap_view &amp;)=delete'],['../classtr_1_1bitmap__view.html#a7bf553ffd06fba5a530166ab4c92cbea',1,'tr::bitmap_view::bitmap_view(bitmap_view &amp;&amp;rhs) noexcept=default']]],
-  ['blit_12',['blit',['../classtr_1_1bitmap.html#a9adaf055e0408a63e780004390cb2570',1,'tr::bitmap']]],
-  ['break_5foverlong_5flines_13',['break_overlong_lines',['../namespacetr.html#a541d4f26e223083bde0b6c35b475ea55',1,'tr']]],
-  ['build_5fbitmap_5fatlas_14',['build_bitmap_atlas',['../namespacetr.html#a5d8fdb33bbd912cfc307819d45a5f59e',1,'tr']]]
+  ['blend_5fmode_12',['blend_mode',['../classtr_1_1graphics__context.html#a17cb62ed4da6c404e289682eacee86b2',1,'tr::graphics_context']]],
+  ['blit_13',['blit',['../classtr_1_1bitmap.html#a9adaf055e0408a63e780004390cb2570',1,'tr::bitmap']]],
+  ['break_5foverlong_5flines_14',['break_overlong_lines',['../namespacetr.html#a541d4f26e223083bde0b6c35b475ea55',1,'tr']]],
+  ['build_5fbitmap_5fatlas_15',['build_bitmap_atlas',['../namespacetr.html#a5d8fdb33bbd912cfc307819d45a5f59e',1,'tr']]]
 ];

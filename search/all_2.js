@@ -73,7 +73,7 @@ var searchData=
   ['create_5faudio_5fsource_70',['create_audio_source',['../classtr_1_1audio__context.html#a84968be1735089e9ea2d1cbeda983dbb',1,'tr::audio_context']]],
   ['create_5fcheckerboard_71',['create_checkerboard',['../namespacetr.html#ac65915d228130f1d5718c738fee6e5f8',1,'tr']]],
   ['crend_72',['crend',['../classtr_1_1static__vector.html#a115cba3c166b8766a7f84e4fd72b93e5',1,'tr::static_vector']]],
-  ['cropped_73',['cropped',['../classtr_1_1render__target.html#a02c8d05207f65976d52ad6c44649ed50',1,'tr::render_target']]],
+  ['cropped_73',['cropped',['../classtr_1_1render__target.html#adaa89b438228be45d408e130ac86bd08',1,'tr::render_target']]],
   ['cross_74',['cross',['../namespacetr.html#ab683c4851eb40ad8b873ed7840365b12',1,'tr']]],
   ['crosshair_75',['crosshair',['../namespacetr.html#aa7a1fb973e2b89b37e78a95d4461171faad90324c60706e26f566f84a1b1f55b0',1,'tr']]],
   ['ctrl_76',['ctrl',['../namespacetr.html#a8efaea616aca72ed620aeec3493fff11abbf7ea1d373e03d16d1418909b05eaf6',1,'tr']]],

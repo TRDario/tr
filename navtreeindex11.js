@@ -1,5 +1,9 @@
 var NAVTREEINDEX11 =
 {
+"clipboard_8hpp.html":[6,0,0,0,1,5],
+"clipboard_8hpp_source.html":[6,0,0,0,1,5],
+"color_8hpp.html":[6,0,0,0,2,10],
+"color_8hpp_source.html":[6,0,0,0,2,10],
 "common_8hpp.html":[6,0,0,0,2,11],
 "common_8hpp_source.html":[6,0,0,0,2,11],
 "concepts.html":[4],
@@ -245,9 +249,5 @@ var NAVTREEINDEX11 =
 "imgui_8hpp.html":[6,0,0,0,4],
 "imgui_8hpp_source.html":[6,0,0,0,4],
 "index.html":[],
-"inplace__string_8hpp.html":[6,0,0,0,2,23],
-"inplace__string_8hpp_source.html":[6,0,0,0,2,23],
-"integer_8hpp.html":[6,0,0,0,2,24],
-"integer_8hpp_source.html":[6,0,0,0,2,24],
-"iostream_8hpp.html":[6,0,0,0,2,25]
+"inplace__string_8hpp.html":[6,0,0,0,2,23]
 };

@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1fra
 <p>Strictly speaking, instances of <span class="tt"><a class="el" href="classtr_1_1framebuffer.html" title="Container for a framebuffer object.">tr::framebuffer</a></span> are only containers for these underlying framebuffers. This means, for example, that setting a render target on a graphics context does not set a render target of a literal <span class="tt"><a class="el" href="classtr_1_1framebuffer.html" title="Container for a framebuffer object.">tr::framebuffer</a></span> object at a specific location in memory, but rather the value it contains. If the value is moved to a different instance of <span class="tt"><a class="el" href="classtr_1_1framebuffer.html" title="Container for a framebuffer object.">tr::framebuffer</a></span>, that value will still be set on the context. If the instance is overriden with a new value, the old value is destroyed and the graphics context will no longer have a set render target.</p>
 <p>Every instance of <span class="tt"><a class="el" href="classtr_1_1framebuffer.html" title="Container for a framebuffer object.">tr::framebuffer</a></span> is associated with a graphics context and cannot outlive its parent context.</p>
 <p>Moved-from instances of <span class="tt"><a class="el" href="classtr_1_1framebuffer.html" title="Container for a framebuffer object.">tr::framebuffer</a></span> are left in a special 'invalid' state. Invalid <span class="tt"><a class="el" href="classtr_1_1framebuffer.html" title="Container for a framebuffer object.">tr::framebuffer</a></span> instances may not be interacted with besides moving a new value into them and checking for validity using <span class="tt"><a class="el" href="#a5a4974c052b8f0e329fbb57fb97672b5" title="Gets whether the framebuffer is in a valid state.">valid()</a></span>.</p>
-<p><span class="tt"><a class="el" href="classtr_1_1framebuffer.html" title="Container for a framebuffer object.">tr::framebuffer</a></span> instances may be labeled and are formattable. Example format output: <span class="tt">"My framebuffer" (OpenGL ID: 5)</span>. </p>
+<p><span class="tt"><a class="el" href="classtr_1_1framebuffer.html" title="Container for a framebuffer object.">tr::framebuffer</a></span> instances may be labeled and are formattable. Example format output: <span class="tt">"My framebuffer" (ID: 3, FBO: 5)</span>. </p>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-types" class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
@@ -415,6 +415,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Gets a reference to the graphics context the framebuffer is on. </p>
+<dl class="section return"><dt>Returns</dt><dd>Reference to the graphics context the framebuffer is on. </dd></dl>
 
 </div>
 </div>

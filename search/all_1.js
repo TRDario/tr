@@ -79,7 +79,7 @@ var searchData=
   ['bitmap_5fview_2ehpp_76',['bitmap_view.hpp',['../bitmap__view_8hpp.html',1,'']]],
   ['bl_77',['bl',['../namespacetr.html#ac49d62ec06251ab54db81b814219c605afd18772cbac19277b20dcccc1b90efb9',1,'tr']]],
   ['blend_5ffn_78',['blend_fn',['../namespacetr.html#aead4294434ac2897c9ce8318a8216b18',1,'tr']]],
-  ['blend_5fmode_79',['blend_mode',['../structtr_1_1blend__mode.html',1,'tr']]],
+  ['blend_5fmode_79',['blend_mode',['../structtr_1_1blend__mode.html',1,'tr::blend_mode'],['../classtr_1_1graphics__context.html#a17cb62ed4da6c404e289682eacee86b2',1,'tr::graphics_context::blend_mode()']]],
   ['blend_5fmultiplier_80',['blend_multiplier',['../namespacetr.html#ad78867559889835099c2feb9da1e0426',1,'tr']]],
   ['blending_2ehpp_81',['blending.hpp',['../blending_8hpp.html',1,'']]],
   ['blit_82',['blit',['../classtr_1_1bitmap.html#a9adaf055e0408a63e780004390cb2570',1,'tr::bitmap']]],

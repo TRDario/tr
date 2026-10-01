@@ -2,10 +2,6 @@ var graphics__context_8hpp =
 [
     [ "tr::graphics_context", "classtr_1_1graphics__context.html", "classtr_1_1graphics__context" ],
     [ "tr::graphics_context::info", "structtr_1_1graphics__context_1_1info.html", "structtr_1_1graphics__context_1_1info" ],
-    [ "tr::renderer_id", "namespacetr.html#a1eb2948abd308c1bd0658317416db0a7", [
-      [ "tr::renderer_id::no_renderer", "namespacetr.html#a1eb2948abd308c1bd0658317416db0a7a2efe866948399a1850b63f7250f04a47", null ],
-      [ "tr::renderer_id::imgui_renderer", "namespacetr.html#a1eb2948abd308c1bd0658317416db0a7a44b7707d23a3ab327bb5e97c712d4beb", null ]
-    ] ],
     [ "tr::primitive", "namespacetr.html#a400576423c7753c57e41f5375e765753", [
       [ "tr::primitive::points", "namespacetr.html#a400576423c7753c57e41f5375e765753a0aab81de5c4c87021772015efc184d67", null ],
       [ "tr::primitive::lines", "namespacetr.html#a400576423c7753c57e41f5375e765753a980da98409d058c365664ff7ea33dd6b", null ],

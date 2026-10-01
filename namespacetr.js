@@ -43,7 +43,7 @@ var namespacetr =
       [ "Shutdown", "namespacetr_1_1ImGui.html#ab67962fb9e55074d23dfa6bbc9d36a98", null ],
       [ "GetTextureID", "namespacetr_1_1ImGui.html#aa524527c25072338e1d515d62a9c571f", null ],
       [ "NewFrame", "namespacetr_1_1ImGui.html#a3f987ea722aececd6d0cc7966269bae5", null ],
-      [ "Draw", "namespacetr_1_1ImGui.html#a67acf931602fd5170f734ca56a07864e", null ]
+      [ "Draw", "namespacetr_1_1ImGui.html#a888ab39d7b77d579d87bc8978a0d03d5", null ]
     ] ],
     [ "integer_aliases", "namespacetr_1_1aliases_1_1integer__aliases.html", [
       [ "u8", "namespacetr_1_1aliases_1_1integer__aliases.html#a942cfbfc8bf5094139c2f52fba2b8b17", null ],
@@ -464,10 +464,6 @@ var namespacetr =
       [ "read_only", "namespacetr.html#a05bfa9f1eba3f81364c4ca5d89fedbcdabefe72871b2de8f4f0e20108517e31fe", null ],
       [ "write_only", "namespacetr.html#a05bfa9f1eba3f81364c4ca5d89fedbcda2629564984b808cf7e6cfc61a0286d69", null ],
       [ "read_write", "namespacetr.html#a05bfa9f1eba3f81364c4ca5d89fedbcda06ad287ea83b37a6f9db3d8d10d72c8f", null ]
-    ] ],
-    [ "renderer_id", "namespacetr.html#a1eb2948abd308c1bd0658317416db0a7", [
-      [ "no_renderer", "namespacetr.html#a1eb2948abd308c1bd0658317416db0a7a2efe866948399a1850b63f7250f04a47", null ],
-      [ "imgui_renderer", "namespacetr.html#a1eb2948abd308c1bd0658317416db0a7a44b7707d23a3ab327bb5e97c712d4beb", null ]
     ] ],
     [ "primitive", "namespacetr.html#a400576423c7753c57e41f5375e765753", [
       [ "points", "namespacetr.html#a400576423c7753c57e41f5375e765753a0aab81de5c4c87021772015efc184d67", null ],

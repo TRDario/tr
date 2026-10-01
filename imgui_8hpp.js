@@ -5,5 +5,5 @@ var imgui_8hpp =
     [ "tr::ImGui::Shutdown", "namespacetr_1_1ImGui.html#ab67962fb9e55074d23dfa6bbc9d36a98", null ],
     [ "tr::ImGui::GetTextureID", "namespacetr_1_1ImGui.html#aa524527c25072338e1d515d62a9c571f", null ],
     [ "tr::ImGui::NewFrame", "namespacetr_1_1ImGui.html#a3f987ea722aececd6d0cc7966269bae5", null ],
-    [ "tr::ImGui::Draw", "namespacetr_1_1ImGui.html#a67acf931602fd5170f734ca56a07864e", null ]
+    [ "tr::ImGui::Draw", "namespacetr_1_1ImGui.html#a888ab39d7b77d579d87bc8978a0d03d5", null ]
 ];

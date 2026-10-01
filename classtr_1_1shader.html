@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1sha
 <p>Strictly speaking, shader objects are only containers for the underlying shader programs. This means, for example, that setting a shader on a shader pipeline object does not set the literal shader object at a specific location in memory, but rather the value it contains. If the value is moved to a different shader object, that value will still be set on the pipeline. If the object is overriden with a new value, the old value is destroyed and the pipeline reverts to an incomplete state.</p>
 <p>Every shader object is associated with a graphics context and cannot outlive its parent context.</p>
 <p>Moved-from instances of shader objects are left in a special 'invalid' state. Invalid shader objects may not be interacted with besides moving a new value into them and checking for validity using <span class="tt"><a class="el" href="#a38d9b2452ce3b7ceee8603ac231b0985" title="Gets whether the shader is in a valid state.">valid()</a></span>.</p>
-<p>Shader objects may be labeled and are formattable. Example format output: <span class="tt">"My shader" (OpenGL ID: 5)</span>. </p>
+<p>Shader objects may be labeled and are formattable. Example format output: <span class="tt">"My shader" (ID: 3, PO: 3)</span>. </p>
 </div><div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Inheritance diagram for tr::shader:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
 </div>

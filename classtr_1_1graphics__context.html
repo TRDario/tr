@@ -161,41 +161,52 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:adf3b185d86aaf9dc76d9c4a29f08a6a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a view to the window the context is on.  <br /></td></tr>
 <tr class="memitem:aabda6d8ddb2b31b0da7fef77cf11d238" id="r_aabda6d8ddb2b31b0da7fef77cf11d238"><td class="memItemLeft"><a class="el" href="classtr_1_1render__target.html">render_target</a>&#160;</td><td class="memItemRight"><a class="el" href="#aabda6d8ddb2b31b0da7fef77cf11d238">backbuffer</a> () const noexcept</td></tr>
 <tr class="memdesc:aabda6d8ddb2b31b0da7fef77cf11d238"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a render target spanning the entire backbuffer.  <br /></td></tr>
-<tr id="pub-methods-4" class="groupHeader"><td colspan="2"><div class="groupHeader">Renderers</div></td></tr>
-<tr class="memitem:ab068a67094a06a514b19a34e651c289c" id="r_ab068a67094a06a514b19a34e651c289c"><td class="memItemLeft"><a class="el" href="namespacetr.html#a1eb2948abd308c1bd0658317416db0a7">renderer_id</a>&#160;</td><td class="memItemRight"><a class="el" href="#ab068a67094a06a514b19a34e651c289c">allocate_renderer_id</a> () noexcept</td></tr>
-<tr class="memdesc:ab068a67094a06a514b19a34e651c289c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates a fresh renderer ID.  <br /></td></tr>
-<tr class="memitem:a46418b2b83b082db46ccf3dbc6f682a0" id="r_a46418b2b83b082db46ccf3dbc6f682a0"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a46418b2b83b082db46ccf3dbc6f682a0">should_setup_renderer</a> (<a class="el" href="namespacetr.html#a1eb2948abd308c1bd0658317416db0a7">renderer_id</a> id) noexcept</td></tr>
-<tr class="memdesc:a46418b2b83b082db46ccf3dbc6f682a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether the passed renderer ID is the active renderer, sets it as active and returns true if not.  <br /></td></tr>
-<tr id="pub-methods-5" class="groupHeader"><td colspan="2"><div class="groupHeader">Setters</div></td></tr>
-<tr class="memitem:ae5ed19bce482b33c990a224b3ddc1fe9" id="r_ae5ed19bce482b33c990a224b3ddc1fe9"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ae5ed19bce482b33c990a224b3ddc1fe9">set_wireframe_mode</a> (bool arg) noexcept</td></tr>
-<tr class="memdesc:ae5ed19bce482b33c990a224b3ddc1fe9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets whether rendering should be done as a wireframe.  <br /></td></tr>
-<tr class="memitem:a8d0421942ab779f91c92ea879ba3fb4c" id="r_a8d0421942ab779f91c92ea879ba3fb4c"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a8d0421942ab779f91c92ea879ba3fb4c">set_face_culling</a> (bool arg) noexcept</td></tr>
-<tr class="memdesc:a8d0421942ab779f91c92ea879ba3fb4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets whether face culling should be used.  <br /></td></tr>
-<tr class="memitem:a1a393640503f61b4be5c83866f4c65e8" id="r_a1a393640503f61b4be5c83866f4c65e8"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a1a393640503f61b4be5c83866f4c65e8">set_depth_test</a> (bool arg) noexcept</td></tr>
-<tr class="memdesc:a1a393640503f61b4be5c83866f4c65e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets whether depth testing should be used.  <br /></td></tr>
+<tr id="pub-methods-4" class="groupHeader"><td colspan="2"><div class="groupHeader">Wireframe mode</div></td></tr>
+<tr class="memitem:a3b18e978f1cc753ed13d2f910916fa43" id="r_a3b18e978f1cc753ed13d2f910916fa43"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a3b18e978f1cc753ed13d2f910916fa43">wireframe_mode_enabled</a> () const noexcept</td></tr>
+<tr class="memdesc:a3b18e978f1cc753ed13d2f910916fa43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether wireframe rendering is enabled.  <br /></td></tr>
+<tr class="memitem:a5f41bc353d4ac9e5d9df775381221fbf" id="r_a5f41bc353d4ac9e5d9df775381221fbf"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a5f41bc353d4ac9e5d9df775381221fbf">set_wireframe_mode</a> (bool enable) noexcept</td></tr>
+<tr class="memdesc:a5f41bc353d4ac9e5d9df775381221fbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets whether rendering should be done as a wireframe.  <br /></td></tr>
+<tr id="pub-methods-5" class="groupHeader"><td colspan="2"><div class="groupHeader">Face culling</div></td></tr>
+<tr class="memitem:afc48ae9c4f49c40c8c05e855f4e87a70" id="r_afc48ae9c4f49c40c8c05e855f4e87a70"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#afc48ae9c4f49c40c8c05e855f4e87a70">face_culling_enabled</a> () const noexcept</td></tr>
+<tr class="memdesc:afc48ae9c4f49c40c8c05e855f4e87a70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether face culling is enabled.  <br /></td></tr>
+<tr class="memitem:a3aec4fa22a1ec65a9366ee39327b6191" id="r_a3aec4fa22a1ec65a9366ee39327b6191"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a3aec4fa22a1ec65a9366ee39327b6191">set_face_culling</a> (bool enable) noexcept</td></tr>
+<tr class="memdesc:a3aec4fa22a1ec65a9366ee39327b6191"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets whether face culling should be used.  <br /></td></tr>
+<tr id="pub-methods-6" class="groupHeader"><td colspan="2"><div class="groupHeader">Depth testing</div></td></tr>
+<tr class="memitem:a9dc2419ac7dff26549f1b6cf5e0ddadf" id="r_a9dc2419ac7dff26549f1b6cf5e0ddadf"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a9dc2419ac7dff26549f1b6cf5e0ddadf">depth_testing_enabled</a> () const noexcept</td></tr>
+<tr class="memdesc:a9dc2419ac7dff26549f1b6cf5e0ddadf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether depth testing is enabled.  <br /></td></tr>
+<tr class="memitem:a5db20d4057df315e6050624bd096b567" id="r_a5db20d4057df315e6050624bd096b567"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a5db20d4057df315e6050624bd096b567">set_depth_testing</a> (bool enable) noexcept</td></tr>
+<tr class="memdesc:a5db20d4057df315e6050624bd096b567"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets whether depth testing should be used.  <br /></td></tr>
+<tr id="pub-methods-7" class="groupHeader"><td colspan="2"><div class="groupHeader">Render target</div></td></tr>
 <tr class="memitem:ac0d6c447ece2ff9955e0741005bb2680" id="r_ac0d6c447ece2ff9955e0741005bb2680"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ac0d6c447ece2ff9955e0741005bb2680">set_render_target</a> (const <a class="el" href="classtr_1_1render__target.html">render_target</a> &amp;target) noexcept</td></tr>
 <tr class="memdesc:ac0d6c447ece2ff9955e0741005bb2680"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the active render target.  <br /></td></tr>
+<tr id="pub-methods-8" class="groupHeader"><td colspan="2"><div class="groupHeader">Shader pipeline</div></td></tr>
 <tr class="memitem:a1d9e1841c685905a825bdaa0b838af68" id="r_a1d9e1841c685905a825bdaa0b838af68"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a1d9e1841c685905a825bdaa0b838af68">set_shader_pipeline</a> (const <a class="el" href="classtr_1_1shader__pipeline.html">shader_pipeline</a> &amp;pipeline) noexcept</td></tr>
 <tr class="memdesc:a1d9e1841c685905a825bdaa0b838af68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the active shader pipeline.  <br /></td></tr>
-<tr class="memitem:a77520fa5777b971b2a074423f9114db5" id="r_a77520fa5777b971b2a074423f9114db5"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a77520fa5777b971b2a074423f9114db5">set_blend_mode</a> (const blend_mode &amp;blend_mode) noexcept</td></tr>
-<tr class="memdesc:a77520fa5777b971b2a074423f9114db5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the active blending mode.  <br /></td></tr>
+<tr id="pub-methods-9" class="groupHeader"><td colspan="2"><div class="groupHeader">Blending</div></td></tr>
+<tr class="memitem:a17cb62ed4da6c404e289682eacee86b2" id="r_a17cb62ed4da6c404e289682eacee86b2"><td class="memItemLeft">const blend_mode &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a17cb62ed4da6c404e289682eacee86b2">blend_mode</a> () const noexcept</td></tr>
+<tr class="memdesc:a17cb62ed4da6c404e289682eacee86b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the active blending mode.  <br /></td></tr>
+<tr class="memitem:a2d14d608057f0e1ce3bd205f24bc90e1" id="r_a2d14d608057f0e1ce3bd205f24bc90e1"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a2d14d608057f0e1ce3bd205f24bc90e1">set_blend_mode</a> (const <a class="el" href="structtr_1_1blend__mode.html">tr::blend_mode</a> &amp;blend_mode) noexcept</td></tr>
+<tr class="memdesc:a2d14d608057f0e1ce3bd205f24bc90e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the active blending mode.  <br /></td></tr>
+<tr id="pub-methods-10" class="groupHeader"><td colspan="2"><div class="groupHeader">Vertex format</div></td></tr>
 <tr class="memitem:a9242740f07b35bcf767448f3518d9186" id="r_a9242740f07b35bcf767448f3518d9186"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a9242740f07b35bcf767448f3518d9186">set_vertex_format</a> (const <a class="el" href="classtr_1_1vertex__format.html">vertex_format</a> &amp;format) noexcept</td></tr>
 <tr class="memdesc:a9242740f07b35bcf767448f3518d9186"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the active vertex format.  <br /></td></tr>
-<tr class="memitem:a9decb9506012ae365b85e8e83723d24a" id="r_a9decb9506012ae365b85e8e83723d24a"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a9decb9506012ae365b85e8e83723d24a">set_vertex_buffer</a> (const <a class="el" href="classtr_1_1untyped__static__vertex__buffer.html">untyped_static_vertex_buffer</a> &amp;buffer, int slot, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a0cfca98bbeed1e31ae9ef0344fb39389">ssize</a> offset, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> stride) noexcept</td></tr>
-<tr class="memdesc:a9decb9506012ae365b85e8e83723d24a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an active vertex buffer.  <br /></td></tr>
-<tr class="memitem:a9f17fc7c9c709a2c97dd91e7c6a8eb51" id="r_a9f17fc7c9c709a2c97dd91e7c6a8eb51"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a9f17fc7c9c709a2c97dd91e7c6a8eb51">set_vertex_buffer</a> (const <a class="el" href="classtr_1_1untyped__dynamic__vertex__buffer.html">untyped_dynamic_vertex_buffer</a> &amp;buffer, int slot, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a0cfca98bbeed1e31ae9ef0344fb39389">ssize</a> offset, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> stride) noexcept</td></tr>
-<tr class="memdesc:a9f17fc7c9c709a2c97dd91e7c6a8eb51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an active vertex buffer.  <br /></td></tr>
-<tr class="memitem:a8b1bfb8169505fbed84c95b26ca4c0f9" id="r_a8b1bfb8169505fbed84c95b26ca4c0f9"><td class="memTemplParams" colspan="2">template&lt;standard_layout Element&gt; </td></tr>
-<tr class="memitem:a8b1bfb8169505fbed84c95b26ca4c0f9 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a8b1bfb8169505fbed84c95b26ca4c0f9">set_vertex_buffer</a> (const <a class="el" href="classtr_1_1static__vertex__buffer.html">static_vertex_buffer</a>&lt; Element &gt; &amp;buffer, int slot, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a0cfca98bbeed1e31ae9ef0344fb39389">ssize</a> offset) noexcept</td></tr>
-<tr class="memdesc:a8b1bfb8169505fbed84c95b26ca4c0f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an active vertex buffer.  <br /></td></tr>
-<tr class="memitem:a58516545f55d9b2cd815ccda702994ae" id="r_a58516545f55d9b2cd815ccda702994ae"><td class="memTemplParams" colspan="2">template&lt;standard_layout Element&gt; </td></tr>
-<tr class="memitem:a58516545f55d9b2cd815ccda702994ae template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a58516545f55d9b2cd815ccda702994ae">set_vertex_buffer</a> (const <a class="el" href="classtr_1_1dynamic__vertex__buffer.html">dynamic_vertex_buffer</a>&lt; Element &gt; &amp;buffer, int slot, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a0cfca98bbeed1e31ae9ef0344fb39389">ssize</a> offset) noexcept</td></tr>
-<tr class="memdesc:a58516545f55d9b2cd815ccda702994ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an active vertex buffer.  <br /></td></tr>
+<tr id="pub-methods-11" class="groupHeader"><td colspan="2"><div class="groupHeader">Vertex buffers</div></td></tr>
+<tr class="memitem:abb0dbd82da0cc701fb301b68f0c703fc" id="r_abb0dbd82da0cc701fb301b68f0c703fc"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#abb0dbd82da0cc701fb301b68f0c703fc">set_vertex_buffer</a> (const <a class="el" href="classtr_1_1untyped__static__vertex__buffer.html">untyped_static_vertex_buffer</a> &amp;buffer, int slot, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a0cfca98bbeed1e31ae9ef0344fb39389">ssize</a> offset, int stride) noexcept</td></tr>
+<tr class="memdesc:abb0dbd82da0cc701fb301b68f0c703fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an active vertex buffer.  <br /></td></tr>
+<tr class="memitem:a7cf6249338138d0a601c328d195019b1" id="r_a7cf6249338138d0a601c328d195019b1"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a7cf6249338138d0a601c328d195019b1">set_vertex_buffer</a> (const <a class="el" href="classtr_1_1untyped__dynamic__vertex__buffer.html">untyped_dynamic_vertex_buffer</a> &amp;buffer, int slot, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a0cfca98bbeed1e31ae9ef0344fb39389">ssize</a> offset, int stride) noexcept</td></tr>
+<tr class="memdesc:a7cf6249338138d0a601c328d195019b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an active vertex buffer.  <br /></td></tr>
+<tr class="memitem:a0025007d38ce4528b7760c11b6754f22" id="r_a0025007d38ce4528b7760c11b6754f22"><td class="memTemplParams" colspan="2">template&lt;standard_layout Element&gt; </td></tr>
+<tr class="memitem:a0025007d38ce4528b7760c11b6754f22 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a0025007d38ce4528b7760c11b6754f22">set_vertex_buffer</a> (const <a class="el" href="classtr_1_1static__vertex__buffer.html">static_vertex_buffer</a>&lt; Element &gt; &amp;buffer, int slot, int offset) noexcept</td></tr>
+<tr class="memdesc:a0025007d38ce4528b7760c11b6754f22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an active vertex buffer.  <br /></td></tr>
+<tr class="memitem:a3b721c1a5b642a53b930d182e0e817e9" id="r_a3b721c1a5b642a53b930d182e0e817e9"><td class="memTemplParams" colspan="2">template&lt;standard_layout Element&gt; </td></tr>
+<tr class="memitem:a3b721c1a5b642a53b930d182e0e817e9 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a3b721c1a5b642a53b930d182e0e817e9">set_vertex_buffer</a> (const <a class="el" href="classtr_1_1dynamic__vertex__buffer.html">dynamic_vertex_buffer</a>&lt; Element &gt; &amp;buffer, int slot, int offset) noexcept</td></tr>
+<tr class="memdesc:a3b721c1a5b642a53b930d182e0e817e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an active vertex buffer.  <br /></td></tr>
+<tr id="pub-methods-12" class="groupHeader"><td colspan="2"><div class="groupHeader">Index buffer</div></td></tr>
 <tr class="memitem:a4741c94a6af8778074514fb567cccff2" id="r_a4741c94a6af8778074514fb567cccff2"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a4741c94a6af8778074514fb567cccff2">set_index_buffer</a> (const <a class="el" href="classtr_1_1static__index__buffer.html">static_index_buffer</a> &amp;buffer) noexcept</td></tr>
 <tr class="memdesc:a4741c94a6af8778074514fb567cccff2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the active index buffer.  <br /></td></tr>
 <tr class="memitem:afe6bbfefd856ec696b2168cea5c242bc" id="r_afe6bbfefd856ec696b2168cea5c242bc"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#afe6bbfefd856ec696b2168cea5c242bc">set_index_buffer</a> (const <a class="el" href="classtr_1_1dynamic__index__buffer.html">dynamic_index_buffer</a> &amp;buffer) noexcept</td></tr>
 <tr class="memdesc:afe6bbfefd856ec696b2168cea5c242bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the active index buffer.  <br /></td></tr>
-<tr id="pub-methods-6" class="groupHeader"><td colspan="2"><div class="groupHeader">Clearing</div></td></tr>
+<tr id="pub-methods-13" class="groupHeader"><td colspan="2"><div class="groupHeader">Clearing</div></td></tr>
 <tr class="memitem:a15ab939eb6e33ca7c21d5e55add99fa9" id="r_a15ab939eb6e33ca7c21d5e55add99fa9"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a15ab939eb6e33ca7c21d5e55add99fa9">clear_backbuffer</a> (<a class="el" href="structtr_1_1rgbaf.html">rgbaf</a> color={0, 0, 0, 0}) noexcept</td></tr>
 <tr class="memdesc:a15ab939eb6e33ca7c21d5e55add99fa9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the backbuffer's color.  <br /></td></tr>
 <tr class="memitem:abf27ec04b8aaae60ccb67dce288b772d" id="r_abf27ec04b8aaae60ccb67dce288b772d"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#abf27ec04b8aaae60ccb67dce288b772d">clear_backbuffer</a> (<a class="el" href="structtr_1_1rgbaf.html">rgbaf</a> color, double depth, int stencil) noexcept</td></tr>
@@ -204,7 +215,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a2903b663856133e550d2c0f5dee9b3c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears a backbuffer region's color.  <br /></td></tr>
 <tr class="memitem:a2d791dc92664e06d00be71918eee0a51" id="r_a2d791dc92664e06d00be71918eee0a51"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a2d791dc92664e06d00be71918eee0a51">clear_backbuffer_region</a> (<a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; int &gt; region, <a class="el" href="structtr_1_1rgbaf.html">rgbaf</a> color, double depth, int stencil) noexcept</td></tr>
 <tr class="memdesc:a2d791dc92664e06d00be71918eee0a51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears a backbuffer region.  <br /></td></tr>
-<tr id="pub-methods-7" class="groupHeader"><td colspan="2"><div class="groupHeader">Drawing</div></td></tr>
+<tr id="pub-methods-14" class="groupHeader"><td colspan="2"><div class="groupHeader">Drawing</div></td></tr>
 <tr class="memitem:a27e01e4ee5884513047b05aae7bb6237" id="r_a27e01e4ee5884513047b05aae7bb6237"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a27e01e4ee5884513047b05aae7bb6237">draw</a> (<a class="el" href="namespacetr.html#a400576423c7753c57e41f5375e765753">primitive</a> type, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> offset, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> vertices) noexcept</td></tr>
 <tr class="memdesc:a27e01e4ee5884513047b05aae7bb6237"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws a mesh from a vertex buffer.  <br /></td></tr>
 <tr class="memitem:a4d07e9e89f9e9de16ed193fc115dd534" id="r_a4d07e9e89f9e9de16ed193fc115dd534"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a4d07e9e89f9e9de16ed193fc115dd534">draw_instances</a> (<a class="el" href="namespacetr.html#a400576423c7753c57e41f5375e765753">primitive</a> type, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> offset, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> vertices, int instances) noexcept</td></tr>
@@ -447,8 +458,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ab068a67094a06a514b19a34e651c289c" name="ab068a67094a06a514b19a34e651c289c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab068a67094a06a514b19a34e651c289c">&#9670;&#160;</a></span>allocate_renderer_id()</h2>
+<a id="a3b18e978f1cc753ed13d2f910916fa43" name="a3b18e978f1cc753ed13d2f910916fa43"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b18e978f1cc753ed13d2f910916fa43">&#9670;&#160;</a></span>wireframe_mode_enabled()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -457,10 +468,10 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespacetr.html#a1eb2948abd308c1bd0658317416db0a7">renderer_id</a> tr::graphics_context::allocate_renderer_id </td>
+          <td class="memname">bool tr::graphics_context::wireframe_mode_enabled </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
+          <td> const</td>
         </tr>
       </table>
   </td>
@@ -470,47 +481,13 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Allocates a fresh renderer ID. </p>
-<dl class="section return"><dt>Returns</dt><dd>Unused renderer ID. </dd></dl>
+<p>Gets whether wireframe rendering is enabled. </p>
+<dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if wireframe rendering is enabled, <span class="tt">false</span> otherwise. </dd></dl>
 
 </div>
 </div>
-<a id="a46418b2b83b082db46ccf3dbc6f682a0" name="a46418b2b83b082db46ccf3dbc6f682a0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a46418b2b83b082db46ccf3dbc6f682a0">&#9670;&#160;</a></span>should_setup_renderer()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool tr::graphics_context::should_setup_renderer </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="namespacetr.html#a1eb2948abd308c1bd0658317416db0a7">renderer_id</a></td>          <td class="paramname"><span class="paramname"><em>id</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Checks whether the passed renderer ID is the active renderer, sets it as active and returns true if not. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">id</td><td>Renderer ID to check. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the renderer needs to be setup, <span class="tt">false</span> otherwise. </dd></dl>
-
-</div>
-</div>
-<a id="ae5ed19bce482b33c990a224b3ddc1fe9" name="ae5ed19bce482b33c990a224b3ddc1fe9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae5ed19bce482b33c990a224b3ddc1fe9">&#9670;&#160;</a></span>set_wireframe_mode()</h2>
+<a id="a5f41bc353d4ac9e5d9df775381221fbf" name="a5f41bc353d4ac9e5d9df775381221fbf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f41bc353d4ac9e5d9df775381221fbf">&#9670;&#160;</a></span>set_wireframe_mode()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -521,7 +498,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">void tr::graphics_context::set_wireframe_mode </td>
           <td>(</td>
-          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>arg</em></span></td><td>)</td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>enable</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -535,15 +512,43 @@ Public Member Functions</h2></td></tr>
 <p>Sets whether rendering should be done as a wireframe. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">arg</td><td>Whether to use wireframe rendering. </td></tr>
+    <tr><td class="paramname">enable</td><td>Whether to enable wireframe rendering. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a8d0421942ab779f91c92ea879ba3fb4c" name="a8d0421942ab779f91c92ea879ba3fb4c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8d0421942ab779f91c92ea879ba3fb4c">&#9670;&#160;</a></span>set_face_culling()</h2>
+<a id="afc48ae9c4f49c40c8c05e855f4e87a70" name="afc48ae9c4f49c40c8c05e855f4e87a70"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc48ae9c4f49c40c8c05e855f4e87a70">&#9670;&#160;</a></span>face_culling_enabled()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tr::graphics_context::face_culling_enabled </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets whether face culling is enabled. </p>
+<dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if face culling is enabled, <span class="tt">false</span> otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="a3aec4fa22a1ec65a9366ee39327b6191" name="a3aec4fa22a1ec65a9366ee39327b6191"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3aec4fa22a1ec65a9366ee39327b6191">&#9670;&#160;</a></span>set_face_culling()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -554,7 +559,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">void tr::graphics_context::set_face_culling </td>
           <td>(</td>
-          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>arg</em></span></td><td>)</td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>enable</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -568,15 +573,15 @@ Public Member Functions</h2></td></tr>
 <p>Sets whether face culling should be used. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">arg</td><td>Whether to use face culling. </td></tr>
+    <tr><td class="paramname">enable</td><td>Whether to enable face culling. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a1a393640503f61b4be5c83866f4c65e8" name="a1a393640503f61b4be5c83866f4c65e8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1a393640503f61b4be5c83866f4c65e8">&#9670;&#160;</a></span>set_depth_test()</h2>
+<a id="a9dc2419ac7dff26549f1b6cf5e0ddadf" name="a9dc2419ac7dff26549f1b6cf5e0ddadf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9dc2419ac7dff26549f1b6cf5e0ddadf">&#9670;&#160;</a></span>depth_testing_enabled()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -585,9 +590,37 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::graphics_context::set_depth_test </td>
+          <td class="memname">bool tr::graphics_context::depth_testing_enabled </td>
           <td>(</td>
-          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>arg</em></span></td><td>)</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets whether depth testing is enabled. </p>
+<dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if depth testing is enabled, <span class="tt">false</span> otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="a5db20d4057df315e6050624bd096b567" name="a5db20d4057df315e6050624bd096b567"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5db20d4057df315e6050624bd096b567">&#9670;&#160;</a></span>set_depth_testing()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tr::graphics_context::set_depth_testing </td>
+          <td>(</td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>enable</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -601,7 +634,7 @@ Public Member Functions</h2></td></tr>
 <p>Sets whether depth testing should be used. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">arg</td><td>Whether to use depth testing. </td></tr>
+    <tr><td class="paramname">enable</td><td>Whether to enable depth testing. </td></tr>
   </table>
   </dd>
 </dl>
@@ -674,8 +707,36 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a77520fa5777b971b2a074423f9114db5" name="a77520fa5777b971b2a074423f9114db5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a77520fa5777b971b2a074423f9114db5">&#9670;&#160;</a></span>set_blend_mode()</h2>
+<a id="a17cb62ed4da6c404e289682eacee86b2" name="a17cb62ed4da6c404e289682eacee86b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a17cb62ed4da6c404e289682eacee86b2">&#9670;&#160;</a></span>blend_mode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const blend_mode &amp; tr::graphics_context::blend_mode </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the active blending mode. </p>
+<dl class="section return"><dt>Returns</dt><dd>Reference to the active blending mode. </dd></dl>
+
+</div>
+</div>
+<a id="a2d14d608057f0e1ce3bd205f24bc90e1" name="a2d14d608057f0e1ce3bd205f24bc90e1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d14d608057f0e1ce3bd205f24bc90e1">&#9670;&#160;</a></span>set_blend_mode()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -686,7 +747,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">void tr::graphics_context::set_blend_mode </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structtr_1_1blend__mode.html">blend_mode</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>blend_mode</em></span></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="structtr_1_1blend__mode.html">tr::blend_mode</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>blend_mode</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -740,8 +801,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a9decb9506012ae365b85e8e83723d24a" name="a9decb9506012ae365b85e8e83723d24a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9decb9506012ae365b85e8e83723d24a">&#9670;&#160;</a></span>set_vertex_buffer() <span class="overload">[1/4]</span></h2>
+<a id="abb0dbd82da0cc701fb301b68f0c703fc" name="abb0dbd82da0cc701fb301b68f0c703fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abb0dbd82da0cc701fb301b68f0c703fc">&#9670;&#160;</a></span>set_vertex_buffer() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -767,7 +828,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a></td>          <td class="paramname"><span class="paramname"><em>stride</em></span>&#160;)</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>stride</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -782,7 +843,7 @@ Public Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">buffer</td><td>Buffer to set as active. </td></tr>
     <tr><td class="paramname">slot</td><td>Slot to set the buffer in. </td></tr>
-    <tr><td class="paramname">offset</td><td>Starting offset within the buffer to bind. </td></tr>
+    <tr><td class="paramname">offset</td><td>Starting offset within the buffer to set. </td></tr>
     <tr><td class="paramname">stride</td><td>Stride between the elements of the vertex buffer. </td></tr>
   </table>
   </dd>
@@ -790,8 +851,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a9f17fc7c9c709a2c97dd91e7c6a8eb51" name="a9f17fc7c9c709a2c97dd91e7c6a8eb51"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9f17fc7c9c709a2c97dd91e7c6a8eb51">&#9670;&#160;</a></span>set_vertex_buffer() <span class="overload">[2/4]</span></h2>
+<a id="a7cf6249338138d0a601c328d195019b1" name="a7cf6249338138d0a601c328d195019b1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7cf6249338138d0a601c328d195019b1">&#9670;&#160;</a></span>set_vertex_buffer() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -817,7 +878,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a></td>          <td class="paramname"><span class="paramname"><em>stride</em></span>&#160;)</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>stride</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -832,7 +893,7 @@ Public Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">buffer</td><td>Buffer to set as active. </td></tr>
     <tr><td class="paramname">slot</td><td>Slot to set the buffer in. </td></tr>
-    <tr><td class="paramname">offset</td><td>Starting offset within the buffer to bind. </td></tr>
+    <tr><td class="paramname">offset</td><td>Starting offset within the buffer to set. </td></tr>
     <tr><td class="paramname">stride</td><td>Stride between the elements of the vertex buffer. </td></tr>
   </table>
   </dd>
@@ -840,8 +901,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a8b1bfb8169505fbed84c95b26ca4c0f9" name="a8b1bfb8169505fbed84c95b26ca4c0f9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8b1bfb8169505fbed84c95b26ca4c0f9">&#9670;&#160;</a></span>set_vertex_buffer() <span class="overload">[3/4]</span></h2>
+<a id="a0025007d38ce4528b7760c11b6754f22" name="a0025007d38ce4528b7760c11b6754f22"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0025007d38ce4528b7760c11b6754f22">&#9670;&#160;</a></span>set_vertex_buffer() <span class="overload">[3/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -864,7 +925,7 @@ template&lt;standard_layout Element&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a0cfca98bbeed1e31ae9ef0344fb39389">ssize</a></td>          <td class="paramname"><span class="paramname"><em>offset</em></span>&#160;)</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>offset</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -885,15 +946,15 @@ template&lt;standard_layout Element&gt; </div>
   <table class="params">
     <tr><td class="paramname">buffer</td><td>Buffer to set as active. </td></tr>
     <tr><td class="paramname">slot</td><td>Slot to set the buffer in. </td></tr>
-    <tr><td class="paramname">offset</td><td>Starting offset within the buffer to bind. </td></tr>
+    <tr><td class="paramname">offset</td><td>Starting offset within the buffer to set. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a58516545f55d9b2cd815ccda702994ae" name="a58516545f55d9b2cd815ccda702994ae"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a58516545f55d9b2cd815ccda702994ae">&#9670;&#160;</a></span>set_vertex_buffer() <span class="overload">[4/4]</span></h2>
+<a id="a3b721c1a5b642a53b930d182e0e817e9" name="a3b721c1a5b642a53b930d182e0e817e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b721c1a5b642a53b930d182e0e817e9">&#9670;&#160;</a></span>set_vertex_buffer() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -916,7 +977,7 @@ template&lt;standard_layout Element&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a0cfca98bbeed1e31ae9ef0344fb39389">ssize</a></td>          <td class="paramname"><span class="paramname"><em>offset</em></span>&#160;)</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>offset</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -937,7 +998,7 @@ template&lt;standard_layout Element&gt; </div>
   <table class="params">
     <tr><td class="paramname">buffer</td><td>Buffer to set as active. </td></tr>
     <tr><td class="paramname">slot</td><td>Slot to set the buffer in. </td></tr>
-    <tr><td class="paramname">offset</td><td>Starting offset within the buffer to bind. </td></tr>
+    <tr><td class="paramname">offset</td><td>Starting offset within the buffer to set. </td></tr>
   </table>
   </dd>
 </dl>
