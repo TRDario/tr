@@ -74,7 +74,7 @@ Defining `TR_ENABLE_CHECKED_GRAPHICS` enables extensive validity checking of gra
 When using `tr_target_template`, it is defined by default in debug builds (but not RelWithDebInfo).
 
 Defining `TR_ENABLE_LOG_DEBUG` enables logging of debug messages from the library.
-When using `tr_target_template`, it is defined by default in debug builds (but not RelWithDebInfo).
+When using `tr_target_template`, it is defined by default in builds with debug info (Debug and RelWithDebInfo).
 
 Defining `TR_ENABLE_LOG_TRACE` enables logging of trace messages from the library.
 When using `tr_target_template`, it is defined by default in debug builds (but not RelWithDebInfo).

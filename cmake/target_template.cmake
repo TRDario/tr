@@ -61,7 +61,7 @@ function(tr_target_template TARGET)
 	endif()
 	target_compile_definitions(${TARGET} PUBLIC
 		$<$<CONFIG:Debug>:TR_ENABLE_LOG_TRACE>
-		$<$<CONFIG:Debug>:TR_ENABLE_LOG_DEBUG>
+		$<$<CONFIG:Debug>:TR_ENABLE_LOG_DEBUG>$<$<CONFIG:RelWithDebInfo>:TR_ENABLE_ASSERTS>
 		$<$<CONFIG:Debug>:TR_ENABLE_CHECKED_GRAPHICS>
 		$<$<CONFIG:Debug>:TR_ENABLE_ASSERTS>$<$<CONFIG:RelWithDebInfo>:TR_ENABLE_ASSERTS>
 	)
