@@ -146,16 +146,18 @@ void tr::graphics_context::set_depth_testing(bool enable) noexcept
 
 void tr::graphics_context::set_render_target(const render_target& target) noexcept
 {
+	const internal::graphics_object_id framebuffer_id{target.framebuffer_id()};
+
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 	TR_ASSERT(&target.context() == this, "Tried to set render target to a context it is not associated with.");
-	TR_ASSERT(registered_framebuffers().contains(target.framebuffer_id()),
+	TR_ASSERT(framebuffer_id == internal::graphics_object_id::invalid || registered_framebuffers().contains(framebuffer_id),
 			  "Tried to set render target on a framebuffer in an invalid state to a context.");
 #endif
 
 	const internal::opengl& gl{this->gl()};
 	const rectangle<u16> viewport{target.viewport()};
 	const int bottom{target.framebuffer_height() - viewport.tl.y - viewport.size.y};
-	if (internal::graphics_object_id id{target.framebuffer_id()}; m_bound_framebuffer != id) {
+	if (m_bound_framebuffer != framebuffer_id) {
 #ifdef TR_ENABLE_LOG_TRACE
 		int label_length;
 		std::string framebuffer_label;
@@ -167,11 +169,11 @@ void tr::graphics_context::set_render_target(const render_target& target) noexce
 		else {
 			framebuffer_label = "<unnamed>";
 		}
-		TR_LOG_TRACE("gfx", "Setting framebuffer \"{}\" (ID: {}, FBO: {}) on context at {}", framebuffer_label, std::to_underlying(id),
-					 target.framebuffer_fbo(), static_cast<void*>(this));
+		TR_LOG_TRACE("gfx", "Setting framebuffer \"{}\" (ID: {}, FBO: {}) on context at {}", framebuffer_label,
+					 std::to_underlying(framebuffer_id), target.framebuffer_fbo(), static_cast<void*>(this));
 #endif
 		gl.bind_framebuffer(GL_DRAW_FRAMEBUFFER, target.framebuffer_fbo());
-		m_bound_framebuffer = id;
+		m_bound_framebuffer = framebuffer_id;
 	}
 	if (m_viewport != viewport) {
 		gl.set_viewport(viewport.tl.x, bottom, viewport.size.x, viewport.size.y);
