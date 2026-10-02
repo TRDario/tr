@@ -109,7 +109,6 @@ if(TR_BUILD_SYSGFX)
 		src/sysgfx/log_sink.cpp
 		src/sysgfx/logger.cpp
 		src/sysgfx/mapped_untyped_graphics_buffer_span.cpp
-		src/sysgfx/metadata.cpp
 		src/sysgfx/opengl.cpp
 		src/sysgfx/opengl_debug_callback.cpp
 		src/sysgfx/opengl_texture_format.cpp
@@ -121,7 +120,6 @@ if(TR_BUILD_SYSGFX)
 		src/sysgfx/pixel_iterator.cpp
 		src/sysgfx/pixel_proxy.cpp
 		src/sysgfx/render_target.cpp
-		src/sysgfx/sdl_main_callbacks.cpp
 		src/sysgfx/shader_pipeline.cpp
 		src/sysgfx/shader.cpp
 		src/sysgfx/static_index_buffer.cpp

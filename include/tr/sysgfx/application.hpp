@@ -11,12 +11,50 @@
 
 #pragma once
 #include <tr/sysgfx/event.hpp>
+#include <tr/sysgfx/internal/application.hpp>
 #include <tr/utility/chrono.hpp>
 
 //
 
 namespace tr
 {
+	/// Application metadata.
+	struct application_metadata
+	{
+		/// Supported application types.
+		enum class application_type
+		{
+			/// The application is a game.
+			game,
+
+			/// The application type is unspecified.
+			application
+		};
+
+		//
+
+		/// Name of the application.
+		zstring_view name{};
+
+		/// Version of the application.
+		zstring_view version{};
+
+		/// Identifier of the application.
+		zstring_view identifier{};
+
+		/// Developer of the application.
+		zstring_view developer{};
+
+		/// Short copyright notice.
+		zstring_view copyright{};
+
+		/// URL relevant to the application.
+		zstring_view url{};
+
+		/// Application type.
+		application_type type{application_type::application};
+	};
+
 	/// Interface for an application run in the main loop of tr.
 	class application
 	{
@@ -47,6 +85,7 @@ namespace tr
 		application(application&&) = delete;
 
 		/// Destroys the application.
+		/// @details Uncaught exceptions from this function will display a dialog box.
 		virtual ~application() noexcept = default;
 
 		/// @}
@@ -78,11 +117,6 @@ namespace tr
 		/// @param delta Time since the last update.
 		/// @return Application state signal after updating.
 		virtual signal update(duration delta);
-
-		/// Callback function called once at the end of execution right before the destruction of systems.
-		/// @details Uncaught exceptions from this function will display a dialog box and quit the application.
-		/// @param signal Signal that caused the shutdown.
-		virtual void shut_down(signal signal);
 	};
 
 	/// Sentinel representing an uncapped update frequency (the default behavior).
@@ -91,12 +125,21 @@ namespace tr
 	/// @name Application
 	/// @{
 
-	/// Executes the main loop of the program.
-	/// @param application Application to run.
-	/// @param argc Command-line argument count.
-	/// @param argv Command-line argument values.
+	/// Runs an application.
+	/// @tparam Application Application type fulfilling the `tr::application` interface.
+	/// @tparam Args Types of the arguments to the application constructor.
+	/// @param argc, argv Command-line arguments.
+	/// @param metadata Metadata of the application.
+	/// @param args Arguments to the application constructor.
 	/// @return Exit code of the application.
-	[[nodiscard]] int run_main_loop(application& application, int argc, const char** argv);
+	template <typename Application, typename... Args>
+		requires std::derived_from<Application, application> && std::constructible_from<Application, Args...>
+	[[nodiscard]] int run_application(int argc, const char** argv, const application_metadata& metadata, Args&&... args)
+	{
+		internal::set_application_metadata(metadata);
+		std::unique_ptr<Application> application{std::make_unique<Application>(std::forward<Args>(args)...)};
+		return internal::run_application(std::move(application), argc, argv);
+	}
 
 	/// Sets the frequency at which update() is called in the main loop (by default uncapped).
 	/// @param frequency Frequency at which update() should be called in the main loop, or `tr::uncapped_update_frequency`.

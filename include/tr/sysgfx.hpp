@@ -36,7 +36,6 @@
 #include <tr/sysgfx/mapped_graphics_buffer_object.hpp>       // IWYU pragma: export
 #include <tr/sysgfx/mapped_graphics_buffer_span.hpp>         // IWYU pragma: export
 #include <tr/sysgfx/mapped_untyped_graphics_buffer_span.hpp> // IWYU pragma: export
-#include <tr/sysgfx/metadata.hpp>                            // IWYU pragma: export
 #include <tr/sysgfx/mouse.hpp>                               // IWYU pragma: export
 #include <tr/sysgfx/owning_shader_pipeline.hpp>              // IWYU pragma: export
 #include <tr/sysgfx/path.hpp>                                // IWYU pragma: export
