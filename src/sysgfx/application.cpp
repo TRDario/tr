@@ -8,6 +8,8 @@
 #include <SDL3_ttf/SDL_ttf.h>
 #include <tr/sysgfx/application.hpp>
 #include <tr/sysgfx/dialog.hpp>
+#include <tr/sysgfx/logger.hpp>
+#include <tr/utility/dynamic_ref_cast.hpp>
 #include <tr/utility/opt_ref.hpp>
 
 //
@@ -50,6 +52,41 @@ void tr::internal::set_application_metadata(const application_metadata& metadata
 }
 
 //
+
+//
+
+void tr::internal::show_fatal_error_message_box(const std::exception& error)
+{
+	if (dynamic_ref_cast<const std::bad_alloc>(error).has_value() || dynamic_ref_cast<const out_of_memory>(error).has_value()) {
+		emergency_buffer.reset();
+	}
+
+	const char* const application_name{SDL_GetAppMetadataProperty(SDL_PROP_APP_METADATA_NAME_STRING)};
+	const std::string title{std::format("{} - Fatal Error", application_name)};
+
+	opt_ref<const exception> tr_exception{dynamic_ref_cast<const exception>(error)};
+	std::string message;
+	if (tr_exception.has_value()) {
+		message = std::format("A fatal error has occurred ({}).", tr_exception->name());
+		const std::string_view description{tr_exception->description()};
+		if (!description.empty()) {
+			message.push_back('\n');
+			message.append(description);
+		}
+		const std::string_view details{tr_exception->details()};
+		if (!details.empty()) {
+			message.push_back('\n');
+			message.append(details);
+		}
+	}
+	else {
+		message = std::format("A fatal error has occurred ({}).", error.what());
+	}
+	message.append("\nPress OK to exit the application.");
+
+	TR_LOG_FATAL("tr", "{}", error.what());
+	show_message_box(message_box_type::error, message_box_layout::ok, title, message);
+}
 
 SDL_AppResult tr::internal::initialize_application(void**, int argc, char** argv)
 {
