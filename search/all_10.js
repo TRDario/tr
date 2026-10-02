@@ -79,6 +79,6 @@ var searchData=
   ['rolloff_5ffactor_76',['rolloff_factor',['../classtr_1_1audio__source.html#a0720e88654526a348bafe0045faa346b',1,'tr::audio_source']]],
   ['rotate_5faround_77',['rotate_around',['../namespacetr.html#ab9ce86a63c252859671bec3566b7801d',1,'tr::rotate_around(const glm::mat4 &amp;matrix, glm::vec2 center, angle rotation) noexcept'],['../namespacetr.html#a89e8746966517fd15a2065347306b997',1,'tr::rotate_around(const glm::mat4 &amp;matrix, glm::vec3 center, angle rotation, glm::vec3 axis) noexcept']]],
   ['round_5fcast_78',['round_cast',['../namespacetr.html#a88c3d4184d289ab474a121983d94161e',1,'tr']]],
-  ['run_5fmain_5floop_79',['run_main_loop',['../namespacetr.html#ae9f9b44a6c4f7fa21988574a0bde55e6',1,'tr']]],
+  ['run_5fapplication_79',['run_application',['../namespacetr.html#a1c1cfd2a6376f9c1141be9438e86a3f5',1,'tr']]],
   ['rvalue_5freference_80',['rvalue_reference',['../concepttr_1_1rvalue__reference.html',1,'tr']]]
 ];

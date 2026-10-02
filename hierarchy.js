@@ -2,6 +2,7 @@ var hierarchy =
 [
     [ "tr::angle", "classtr_1_1angle.html", null ],
     [ "tr::application", "classtr_1_1application.html", null ],
+    [ "tr::application_metadata", "structtr_1_1application__metadata.html", null ],
     [ "tr::apply_result&lt; T, TupleLike &gt;", "structtr_1_1apply__result_3_01T_00_01TupleLike_01_4.html", null ],
     [ "tr::atlas_entries&lt; Key, Value, Hash, Pred &gt;", "classtr_1_1atlas__entries.html", null ],
     [ "tr::atlas_packer", "classtr_1_1atlas__packer.html", null ],
@@ -269,7 +270,6 @@ var hierarchy =
     [ "tr::mapped_untyped_graphics_buffer_span", "classtr_1_1mapped__untyped__graphics__buffer__span.html", null ],
     [ "tr::maybe_empty_t", "structtr_1_1maybe__empty__t.html", null ],
     [ "tr::benchmark::measurement", "structtr_1_1benchmark_1_1measurement.html", null ],
-    [ "tr::metadata", "structtr_1_1metadata.html", null ],
     [ "tr::mouse_down_event", "structtr_1_1mouse__down__event.html", null ],
     [ "tr::mouse_motion_event", "structtr_1_1mouse__motion__event.html", null ],
     [ "tr::mouse_state", "structtr_1_1mouse__state.html", null ],

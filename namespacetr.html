@@ -168,6 +168,8 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abstract angle datatype.  <a href="classtr_1_1angle.html#details">More...</a><br /></td></tr>
 <tr class="memitem:application" id="r_application"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classtr_1_1application.html">application</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interface for an application run in the main loop of tr.  <a href="classtr_1_1application.html#details">More...</a><br /></td></tr>
+<tr class="memitem:application_5Fmetadata" id="r_application_5Fmetadata"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structtr_1_1application__metadata.html">application_metadata</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Application metadata.  <a href="structtr_1_1application__metadata.html#details">More...</a><br /></td></tr>
 <tr class="memitem:apply_5Fresult_3C_20T_2C_20TupleLike_20_3E" id="r_apply_5Fresult_3C_20T_2C_20TupleLike_20_3E"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structtr_1_1apply__result_3_01T_00_01TupleLike_01_4.html">apply_result&lt; T, TupleLike &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type trait deducing the result type of applying a callable object with a tuple of arguments.  <a href="structtr_1_1apply__result_3_01T_00_01TupleLike_01_4.html#details">More...</a><br /></td></tr>
 <tr class="memitem:atlas_5Fentries" id="r_atlas_5Fentries"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classtr_1_1atlas__entries.html">atlas_entries</a></td></tr>
@@ -416,8 +418,6 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tag struct used in some handle functions to suppress empty value checking.  <a href="structtr_1_1maybe__empty__t.html#details">More...</a><br /></td></tr>
 <tr class="memitem:memorybuf" id="r_memorybuf"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classtr_1_1memorybuf.html">memorybuf</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">iostream buffer operating on a memory buffer.  <a href="classtr_1_1memorybuf.html#details">More...</a><br /></td></tr>
-<tr class="memitem:metadata" id="r_metadata"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structtr_1_1metadata.html">metadata</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Application metadata.  <a href="structtr_1_1metadata.html#details">More...</a><br /></td></tr>
 <tr class="memitem:mouse_5Fdown_5Fevent" id="r_mouse_5Fdown_5Fevent"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structtr_1_1mouse__down__event.html">mouse_down_event</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event emitted when a mouse button is pressed.  <a href="structtr_1_1mouse__down__event.html#details">More...</a><br /></td></tr>
 <tr class="memitem:mouse_5Fmotion_5Fevent" id="r_mouse_5Fmotion_5Fevent"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structtr_1_1mouse__motion__event.html">mouse_motion_event</a></td></tr>
@@ -1142,8 +1142,10 @@ requires (requires(StringLiterals&amp;&amp; t) { <a class="el" href="structtr_1_
 <tr class="memitem:abd1b216fab3f8261778719ecedb13db2" id="r_abd1b216fab3f8261778719ecedb13db2"><td class="memItemLeft"><a class="el" href="#ae2af8d8b8559678f68c155fce4770859">audio_device_list_view</a>&#160;</td><td class="memItemRight"><a class="el" href="#abd1b216fab3f8261778719ecedb13db2">available_audio_devices</a> () noexcept</td></tr>
 <tr class="memdesc:abd1b216fab3f8261778719ecedb13db2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a view to the list of available audio devices.  <br /></td></tr>
 <tr id="func-members-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Application</div></td></tr>
-<tr class="memitem:ae9f9b44a6c4f7fa21988574a0bde55e6" id="r_ae9f9b44a6c4f7fa21988574a0bde55e6"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#ae9f9b44a6c4f7fa21988574a0bde55e6">run_main_loop</a> (application &amp;application, int argc, const char **argv)</td></tr>
-<tr class="memdesc:ae9f9b44a6c4f7fa21988574a0bde55e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Executes the main loop of the program.  <br /></td></tr>
+<tr class="memitem:a1c1cfd2a6376f9c1141be9438e86a3f5" id="r_a1c1cfd2a6376f9c1141be9438e86a3f5"><td class="memTemplParams" colspan="2">template&lt;typename Application, typename... Args&gt; <br />
+requires std::derived_from&lt;Application, <a class="el" href="classtr_1_1application.html">application</a>&gt; &amp;&amp; std::constructible_from&lt;Application, Args...&gt;</td></tr>
+<tr class="memitem:a1c1cfd2a6376f9c1141be9438e86a3f5 template"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a1c1cfd2a6376f9c1141be9438e86a3f5">run_application</a> (int argc, const char **argv, const <a class="el" href="structtr_1_1application__metadata.html">application_metadata</a> &amp;metadata, Args &amp;&amp;... args)</td></tr>
+<tr class="memdesc:a1c1cfd2a6376f9c1141be9438e86a3f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs an application.  <br /></td></tr>
 <tr class="memitem:a8245ecf1e271ff4898f87bec4dcb7e63" id="r_a8245ecf1e271ff4898f87bec4dcb7e63"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a8245ecf1e271ff4898f87bec4dcb7e63">set_update_frequency</a> (float frequency) noexcept</td></tr>
 <tr class="memdesc:a8245ecf1e271ff4898f87bec4dcb7e63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the frequency at which update() is called in the main loop (by default uncapped).  <br /></td></tr>
 <tr id="func-members-4" class="groupHeader"><td colspan="2"><div class="groupHeader">Bitmap factories</div></td></tr>
@@ -1203,23 +1205,20 @@ requires (requires(StringLiterals&amp;&amp; t) { <a class="el" href="structtr_1_
 <tr class="memdesc:a43515093e721783af0c2a0b19f27eb31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the name of a scancode.  <br /></td></tr>
 <tr class="memitem:a42d21aa22baebfff2652fafff4a4e1eb" id="r_a42d21aa22baebfff2652fafff4a4e1eb"><td class="memItemLeft">std::string&#160;</td><td class="memItemRight"><a class="el" href="#a42d21aa22baebfff2652fafff4a4e1eb">name</a> (<a class="el" href="#a142886ba179e0da074221ab4a8b6a6ad">keycode</a> key)</td></tr>
 <tr class="memdesc:a42d21aa22baebfff2652fafff4a4e1eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the name of a keycode.  <br /></td></tr>
-<tr id="func-members-11" class="groupHeader"><td colspan="2"><div class="groupHeader">Metadata</div></td></tr>
-<tr class="memitem:a74deadc67f3a5072d818069f259f266f" id="r_a74deadc67f3a5072d818069f259f266f"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a74deadc67f3a5072d818069f259f266f">set_metadata</a> (const metadata &amp;metadata)</td></tr>
-<tr class="memdesc:a74deadc67f3a5072d818069f259f266f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets application metadata.  <br /></td></tr>
-<tr id="func-members-12" class="groupHeader"><td colspan="2"><div class="groupHeader">Paths</div></td></tr>
+<tr id="func-members-11" class="groupHeader"><td colspan="2"><div class="groupHeader">Paths</div></td></tr>
 <tr class="memitem:a7cd08e1d8ab689d537f64de2683dc7a1" id="r_a7cd08e1d8ab689d537f64de2683dc7a1"><td class="memItemLeft">std::filesystem::path&#160;</td><td class="memItemRight"><a class="el" href="#a7cd08e1d8ab689d537f64de2683dc7a1">executable_directory</a> ()</td></tr>
 <tr class="memdesc:a7cd08e1d8ab689d537f64de2683dc7a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a path to the executable directory.  <br /></td></tr>
 <tr class="memitem:a9cd73fd577159e94afeceae9d8c8fb61" id="r_a9cd73fd577159e94afeceae9d8c8fb61"><td class="memItemLeft">std::filesystem::path&#160;</td><td class="memItemRight"><a class="el" href="#a9cd73fd577159e94afeceae9d8c8fb61">user_directory</a> ()</td></tr>
 <tr class="memdesc:a9cd73fd577159e94afeceae9d8c8fb61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a path to a safe user directory where data can be stored.  <br /></td></tr>
-<tr id="func-members-13" class="groupHeader"><td colspan="2"><div class="groupHeader">Pixel format</div></td></tr>
+<tr id="func-members-12" class="groupHeader"><td colspan="2"><div class="groupHeader">Pixel format</div></td></tr>
 <tr class="memitem:a863741db9393b682758ed4093cfbab2d" id="r_a863741db9393b682758ed4093cfbab2d"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a863741db9393b682758ed4093cfbab2d">pixel_bytes</a> (<a class="el" href="#ac1babae6e9367fc90585a8791dadc746">pixel_format</a> format) noexcept</td></tr>
 <tr class="memdesc:a863741db9393b682758ed4093cfbab2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the number of bytes per pixel for a given format.  <br /></td></tr>
-<tr id="func-members-14" class="groupHeader"><td colspan="2"><div class="groupHeader">Shaders</div></td></tr>
+<tr id="func-members-13" class="groupHeader"><td colspan="2"><div class="groupHeader">Shaders</div></td></tr>
 <tr class="memitem:ae157f4dcee09b871aa8495fb1784c245" id="r_ae157f4dcee09b871aa8495fb1784c245"><td class="memItemLeft"><a class="el" href="classtr_1_1vertex__shader.html">vertex_shader</a>&#160;</td><td class="memItemRight"><a class="el" href="#ae157f4dcee09b871aa8495fb1784c245">load_vertex_shader</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context, const std::filesystem::path &amp;path)</td></tr>
 <tr class="memdesc:ae157f4dcee09b871aa8495fb1784c245"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a vertex shader from file.  <br /></td></tr>
 <tr class="memitem:aa62d3888fce4fe93546e0629d342b81c" id="r_aa62d3888fce4fe93546e0629d342b81c"><td class="memItemLeft"><a class="el" href="classtr_1_1fragment__shader.html">fragment_shader</a>&#160;</td><td class="memItemRight"><a class="el" href="#aa62d3888fce4fe93546e0629d342b81c">load_fragment_shader</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context, const std::filesystem::path &amp;path)</td></tr>
 <tr class="memdesc:aa62d3888fce4fe93546e0629d342b81c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a fragment shader from file.  <br /></td></tr>
-<tr id="func-members-15" class="groupHeader"><td colspan="2"><div class="groupHeader">TrueType font factories</div></td></tr>
+<tr id="func-members-14" class="groupHeader"><td colspan="2"><div class="groupHeader">TrueType font factories</div></td></tr>
 <tr class="memitem:aaf333a38f7df41ab7196e6242bb76a3f" id="r_aaf333a38f7df41ab7196e6242bb76a3f"><td class="memItemLeft"><a class="el" href="classtr_1_1ttfont.html">ttfont</a>&#160;</td><td class="memItemRight"><a class="el" href="#aaf333a38f7df41ab7196e6242bb76a3f">load_embedded_ttfont</a> (std::span&lt; const std::byte &gt; data, float size=16)</td></tr>
 <tr class="memdesc:aaf333a38f7df41ab7196e6242bb76a3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads an embedded font file.  <br /></td></tr>
 <tr class="memitem:a960ee5e19a1567508a3e09cb5456c19f" id="r_a960ee5e19a1567508a3e09cb5456c19f"><td class="memTemplParams" colspan="2">template&lt;std::ranges::contiguous_range Range&gt; </td></tr>
@@ -1227,14 +1226,14 @@ requires (requires(StringLiterals&amp;&amp; t) { <a class="el" href="structtr_1_
 <tr class="memdesc:a960ee5e19a1567508a3e09cb5456c19f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads an embedded font file.  <br /></td></tr>
 <tr class="memitem:a2b452e9e443b5caa8df09aa11ebdda66" id="r_a2b452e9e443b5caa8df09aa11ebdda66"><td class="memItemLeft"><a class="el" href="classtr_1_1ttfont.html">ttfont</a>&#160;</td><td class="memItemRight"><a class="el" href="#a2b452e9e443b5caa8df09aa11ebdda66">load_ttfont_file</a> (const std::filesystem::path &amp;path, float size=16)</td></tr>
 <tr class="memdesc:a2b452e9e443b5caa8df09aa11ebdda66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a font from file.  <br /></td></tr>
-<tr id="func-members-16" class="groupHeader"><td colspan="2"><div class="groupHeader">Text splitting</div></td></tr>
+<tr id="func-members-15" class="groupHeader"><td colspan="2"><div class="groupHeader">Text splitting</div></td></tr>
 <tr class="memitem:a1157e726fe61e5b9e74752996e31d29b" id="r_a1157e726fe61e5b9e74752996e31d29b"><td class="memItemLeft">std::vector&lt; std::string_view &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a1157e726fe61e5b9e74752996e31d29b">split_into_lines</a> (std::string_view str)</td></tr>
 <tr class="memdesc:a1157e726fe61e5b9e74752996e31d29b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Splits a string view into a list of lines.  <br /></td></tr>
 <tr class="memitem:a541d4f26e223083bde0b6c35b475ea55" id="r_a541d4f26e223083bde0b6c35b475ea55"><td class="memItemLeft">std::vector&lt; std::string_view &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a541d4f26e223083bde0b6c35b475ea55">break_overlong_lines</a> (std::vector&lt; std::string_view &gt; &amp;&amp;lines, const <a class="el" href="classtr_1_1ttfont.html">ttfont</a> &amp;font, int max_w)</td></tr>
 <tr class="memdesc:a541d4f26e223083bde0b6c35b475ea55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Splits a vector of lines, breaking overlong lines according to the font's current size, style, and outline.  <br /></td></tr>
 <tr class="memitem:ab26a1cc766f2ea8553b4d41663e20d90" id="r_ab26a1cc766f2ea8553b4d41663e20d90"><td class="memItemLeft">std::vector&lt; std::string_view &gt;&#160;</td><td class="memItemRight"><a class="el" href="#ab26a1cc766f2ea8553b4d41663e20d90">split_into_lines</a> (std::string_view str, const <a class="el" href="classtr_1_1ttfont.html">ttfont</a> &amp;font, int max_w)</td></tr>
 <tr class="memdesc:ab26a1cc766f2ea8553b4d41663e20d90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Splits a string view into a list of lines, breaking overlong lines according to the font's current size, style, and outline.  <br /></td></tr>
-<tr id="func-members-17" class="groupHeader"><td colspan="2"><div class="groupHeader">Alignment</div></td></tr>
+<tr id="func-members-16" class="groupHeader"><td colspan="2"><div class="groupHeader">Alignment</div></td></tr>
 <tr class="memitem:a4819d23292963aeb3a48146927769684" id="r_a4819d23292963aeb3a48146927769684"><td class="memItemLeft">constexpr <a class="el" href="#af9ec050fca3710298b3ca45a9307a0d5">halign</a>&#160;</td><td class="memItemRight"><a class="el" href="#a4819d23292963aeb3a48146927769684">to_halign</a> (align<a class="el" href="#ac49d62ec06251ab54db81b814219c605">align</a> align<a class="el" href="#ac49d62ec06251ab54db81b814219c605">align</a>) noexcept</td></tr>
 <tr class="memdesc:a4819d23292963aeb3a48146927769684"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the horizontal component of a 2D alignment.  <br /></td></tr>
 <tr class="memitem:a55223037fba88ac39da106748ef71b1c" id="r_a55223037fba88ac39da106748ef71b1c"><td class="memItemLeft">constexpr <a class="el" href="#ad21349bd98833f80de30b17a9338f97b">valign</a>&#160;</td><td class="memItemRight"><a class="el" href="#a55223037fba88ac39da106748ef71b1c">to_valign</a> (align<a class="el" href="#ac49d62ec06251ab54db81b814219c605">align</a> align<a class="el" href="#ac49d62ec06251ab54db81b814219c605">align</a>) noexcept</td></tr>
@@ -1246,7 +1245,7 @@ requires (requires(StringLiterals&amp;&amp; t) { <a class="el" href="structtr_1_
 <tr class="memitem:a75ecdbc62d8d9e29ef67c0fcf840e382" id="r_a75ecdbc62d8d9e29ef67c0fcf840e382"><td class="memTemplParams" colspan="2">template&lt;typename Element&gt; </td></tr>
 <tr class="memitem:a75ecdbc62d8d9e29ef67c0fcf840e382 template"><td class="memItemLeft">constexpr glm::tvec2&lt; Element &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a75ecdbc62d8d9e29ef67c0fcf840e382">tl</a> (glm::tvec2&lt; Element &gt; pos, glm::tvec2&lt; Element &gt; size, <a class="el" href="#ac49d62ec06251ab54db81b814219c605">align</a> pos_anchor) noexcept</td></tr>
 <tr class="memdesc:a75ecdbc62d8d9e29ef67c0fcf840e382"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the top-left corner of a rectangle given a position, size, and anchor point.  <br /></td></tr>
-<tr id="func-members-18" class="groupHeader"><td colspan="2"><div class="groupHeader">Angle constructors</div></td></tr>
+<tr id="func-members-17" class="groupHeader"><td colspan="2"><div class="groupHeader">Angle constructors</div></td></tr>
 <tr class="memitem:aa6a9ec8afc9ebee1bd33af6df932bda5" id="r_aa6a9ec8afc9ebee1bd33af6df932bda5"><td class="memTemplParams" colspan="2">template&lt;arithmetic Number&gt; </td></tr>
 <tr class="memitem:aa6a9ec8afc9ebee1bd33af6df932bda5 template"><td class="memItemLeft">constexpr <a class="el" href="classtr_1_1angle.html">angle</a>&#160;</td><td class="memItemRight"><a class="el" href="#aa6a9ec8afc9ebee1bd33af6df932bda5">rads</a> (Number th) noexcept</td></tr>
 <tr class="memdesc:aa6a9ec8afc9ebee1bd33af6df932bda5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an angle expressed in radians.  <br /></td></tr>
@@ -1271,7 +1270,7 @@ requires (requires(StringLiterals&amp;&amp; t) { <a class="el" href="structtr_1_
 <tr class="memitem:a51b2abfc3c8220b2cb225d052dc19682" id="r_a51b2abfc3c8220b2cb225d052dc19682"><td class="memTemplParams" colspan="2">template&lt;arithmetic Number&gt; </td></tr>
 <tr class="memitem:a51b2abfc3c8220b2cb225d052dc19682 template"><td class="memItemLeft"><a class="el" href="classtr_1_1angle.html">angle</a>&#160;</td><td class="memItemRight"><a class="el" href="#a51b2abfc3c8220b2cb225d052dc19682">atan2</a> (glm::tvec2&lt; Number &gt; p) noexcept</td></tr>
 <tr class="memdesc:a51b2abfc3c8220b2cb225d052dc19682"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the principal value of the arc tangent <span class="tt">p.y / p.x</span>.  <br /></td></tr>
-<tr id="func-members-19" class="groupHeader"><td colspan="2"><div class="groupHeader">Mathematical operations</div></td></tr>
+<tr id="func-members-18" class="groupHeader"><td colspan="2"><div class="groupHeader">Mathematical operations</div></td></tr>
 <tr class="memitem:a4c304762c06a6e63372e321a2da4dbbb" id="r_a4c304762c06a6e63372e321a2da4dbbb"><td class="memItemLeft">constexpr <a class="el" href="classtr_1_1angle.html">angle</a>&#160;</td><td class="memItemRight"><a class="el" href="#a4c304762c06a6e63372e321a2da4dbbb">abs</a> (<a class="el" href="classtr_1_1angle.html">angle</a> th) noexcept</td></tr>
 <tr class="memdesc:a4c304762c06a6e63372e321a2da4dbbb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the absolute value of an angle.  <br /></td></tr>
 <tr class="memitem:ac2ed9181a1ba044d648d4fab75583c97" id="r_ac2ed9181a1ba044d648d4fab75583c97"><td class="memTemplParams" colspan="2">template&lt;std::floating_point Ratio&gt; </td></tr>
@@ -1292,7 +1291,7 @@ requires (requires(StringLiterals&amp;&amp; t) { <a class="el" href="structtr_1_
 <tr class="memitem:a07bcd5cd18dd64e81be4b4c24b1beaea" id="r_a07bcd5cd18dd64e81be4b4c24b1beaea"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
 <tr class="memitem:a07bcd5cd18dd64e81be4b4c24b1beaea template"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#a07bcd5cd18dd64e81be4b4c24b1beaea">sqr</a> (const T &amp;v) noexcept(noexcept(v *v))</td></tr>
 <tr class="memdesc:a07bcd5cd18dd64e81be4b4c24b1beaea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Squaring operation.  <br /></td></tr>
-<tr id="func-members-20" class="groupHeader"><td colspan="2"><div class="groupHeader">Binary IO</div></td></tr>
+<tr id="func-members-19" class="groupHeader"><td colspan="2"><div class="groupHeader">Binary IO</div></td></tr>
 <tr class="memitem:a50d72bfc725edabbbeb3fd7dea54cc93" id="r_a50d72bfc725edabbbeb3fd7dea54cc93"><td class="memTemplParams" colspan="2">template&lt;binary_readable Out&gt; </td></tr>
 <tr class="memitem:a50d72bfc725edabbbeb3fd7dea54cc93 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a50d72bfc725edabbbeb3fd7dea54cc93">read_binary</a> (std::istream &amp;is, Out &amp;out)</td></tr>
 <tr class="memdesc:a50d72bfc725edabbbeb3fd7dea54cc93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads binary data from a stream.  <br /></td></tr>
@@ -1322,13 +1321,13 @@ requires (sizeof...(Ins) &gt;= 2)</td></tr>
 <tr class="memdesc:a564dc00a3e8bd7ed3ddd92661684f3f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes binary data to a stream.  <br /></td></tr>
 <tr class="memitem:a28b063bbda74084a48b104d089479462" id="r_a28b063bbda74084a48b104d089479462"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a28b063bbda74084a48b104d089479462">write_binary_magic</a> (std::ostream &amp;os, std::string_view magic)</td></tr>
 <tr class="memdesc:a28b063bbda74084a48b104d089479462"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes magic bytes to a stream.  <br /></td></tr>
-<tr id="func-members-21" class="groupHeader"><td colspan="2"><div class="groupHeader">Chrono</div></td></tr>
+<tr id="func-members-20" class="groupHeader"><td colspan="2"><div class="groupHeader">Chrono</div></td></tr>
 <tr class="memitem:a655d6b45d021a02814d9364b1a6e7580" id="r_a655d6b45d021a02814d9364b1a6e7580"><td class="memTemplParams" colspan="2">template&lt;typename Rep1, typename Rep2, typename Period1, typename Period2&gt; </td></tr>
 <tr class="memitem:a655d6b45d021a02814d9364b1a6e7580 template"><td class="memItemLeft">constexpr float&#160;</td><td class="memItemRight"><a class="el" href="#a655d6b45d021a02814d9364b1a6e7580">ratio</a> (std::chrono::duration&lt; Rep1, Period1 &gt; a, std::chrono::duration&lt; Rep2, Period2 &gt; b) noexcept</td></tr>
 <tr class="memdesc:a655d6b45d021a02814d9364b1a6e7580"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the ratio between two durations.  <br /></td></tr>
 <tr class="memitem:ac45fedac45bd7da2557d89a637e770af" id="r_ac45fedac45bd7da2557d89a637e770af"><td class="memItemLeft">std::tm&#160;</td><td class="memItemRight"><a class="el" href="#ac45fedac45bd7da2557d89a637e770af">localtime</a> (std::time_t time) noexcept</td></tr>
 <tr class="memdesc:ac45fedac45bd7da2557d89a637e770af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cross-platform, thread-safe localtime.  <br /></td></tr>
-<tr id="func-members-22" class="groupHeader"><td colspan="2"><div class="groupHeader">Intersection</div></td></tr>
+<tr id="func-members-21" class="groupHeader"><td colspan="2"><div class="groupHeader">Intersection</div></td></tr>
 <tr class="memitem:addf6ebc202f99ac7c2790d9db131cfd5" id="r_addf6ebc202f99ac7c2790d9db131cfd5"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#addf6ebc202f99ac7c2790d9db131cfd5">intersecting</a> (const <a class="el" href="structtr_1_1circle.html">circle</a> &amp;c1, const <a class="el" href="structtr_1_1circle.html">circle</a> &amp;c2) noexcept</td></tr>
 <tr class="memdesc:addf6ebc202f99ac7c2790d9db131cfd5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines if two circles intersect.  <br /></td></tr>
 <tr class="memitem:a3213cfec2ea83397bbe81dc230097678" id="r_a3213cfec2ea83397bbe81dc230097678"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a3213cfec2ea83397bbe81dc230097678">collinear</a> (glm::vec2 a, glm::vec2 b, glm::vec2 c) noexcept</td></tr>
@@ -1351,7 +1350,7 @@ requires (sizeof...(Ins) &gt;= 2)</td></tr>
 <tr class="memitem:aa3abbb75591bdbe2ae93bcd85f2cad6a" id="r_aa3abbb75591bdbe2ae93bcd85f2cad6a"><td class="memTemplParams" colspan="2">template&lt;typename Element&gt; </td></tr>
 <tr class="memitem:aa3abbb75591bdbe2ae93bcd85f2cad6a template"><td class="memItemLeft">constexpr std::optional&lt; <a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; Element &gt; &gt;&#160;</td><td class="memItemRight"><a class="el" href="#aa3abbb75591bdbe2ae93bcd85f2cad6a">intersection</a> (<a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; Element &gt; lhs, <a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; Element &gt; rhs) noexcept</td></tr>
 <tr class="memdesc:aa3abbb75591bdbe2ae93bcd85f2cad6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the intersection of two rectangles.  <br /></td></tr>
-<tr id="func-members-23" class="groupHeader"><td colspan="2"><div class="groupHeader">Drawing geometry</div></td></tr>
+<tr id="func-members-22" class="groupHeader"><td colspan="2"><div class="groupHeader">Drawing geometry</div></td></tr>
 <tr class="memitem:aed71d76703f90adcdb9c6bf764700019" id="r_aed71d76703f90adcdb9c6bf764700019"><td class="memItemLeft"><a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a>&#160;</td><td class="memItemRight"><a class="el" href="#aed71d76703f90adcdb9c6bf764700019">smooth_polygon_vertices</a> (float r) noexcept</td></tr>
 <tr class="memdesc:aed71d76703f90adcdb9c6bf764700019"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the number of segments needed to draw a smooth circle with pixel radius <span class="tt">r</span>.  <br /></td></tr>
 <tr class="memitem:af256a2e3011d4fb8163a26235e68c63e" id="r_af256a2e3011d4fb8163a26235e68c63e"><td class="memItemLeft"><a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a>&#160;</td><td class="memItemRight"><a class="el" href="#af256a2e3011d4fb8163a26235e68c63e">smooth_arc_vertices</a> (float r, <a class="el" href="classtr_1_1angle.html">angle</a> sizeth) noexcept</td></tr>
@@ -1445,7 +1444,7 @@ requires (sizeof...(Ins) &gt;= 2)</td></tr>
 <tr class="memitem:adff3b3942eb9dd68b98443bf7946ee0b" id="r_adff3b3942eb9dd68b98443bf7946ee0b"><td class="memTemplParams" colspan="2">template&lt;sized_output_range&lt; glm::vec2 &gt; Range&gt; </td></tr>
 <tr class="memitem:adff3b3942eb9dd68b98443bf7946ee0b template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#adff3b3942eb9dd68b98443bf7946ee0b">fill_circle_outline_vertices</a> (Range &amp;&amp;out, circle circle, float thickness)</td></tr>
 <tr class="memdesc:adff3b3942eb9dd68b98443bf7946ee0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Outputs circle outline vertices to a range.  <br /></td></tr>
-<tr id="func-members-24" class="groupHeader"><td colspan="2"><div class="groupHeader">Casts</div></td></tr>
+<tr id="func-members-23" class="groupHeader"><td colspan="2"><div class="groupHeader">Casts</div></td></tr>
 <tr class="memitem:a178ceaf20aa2aafc283d9643b825f121" id="r_a178ceaf20aa2aafc283d9643b825f121"><td class="memTemplParams" colspan="2">template&lt;typename To, typename From&gt; <br />
 requires (std::derived_from&lt;To, From&gt;)</td></tr>
 <tr class="memitem:a178ceaf20aa2aafc283d9643b825f121 template"><td class="memItemLeft">constexpr <a class="el" href="classtr_1_1opt__ref.html">tr::opt_ref</a>&lt; To &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a178ceaf20aa2aafc283d9643b825f121">dynamic_ref_cast</a> (From &amp;ref) noexcept</td></tr>
@@ -1479,7 +1478,7 @@ requires (std::derived_from&lt;To, From&gt;)</td></tr>
 <tr class="memitem:a1ebf34a83293fd952afab49b44f7b49a" id="r_a1ebf34a83293fd952afab49b44f7b49a"><td class="memTemplParams" colspan="2">template&lt;std::integral To, std::floating_point From&gt; </td></tr>
 <tr class="memitem:a1ebf34a83293fd952afab49b44f7b49a template"><td class="memItemLeft">constexpr To&#160;</td><td class="memItemRight"><a class="el" href="#a1ebf34a83293fd952afab49b44f7b49a">norm_cast</a> (From from) noexcept</td></tr>
 <tr class="memdesc:a1ebf34a83293fd952afab49b44f7b49a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a floating-point number in the range [0-1] to a normalized integer.  <br /></td></tr>
-<tr id="func-members-25" class="groupHeader"><td colspan="2"><div class="groupHeader">Encryption</div></td></tr>
+<tr id="func-members-24" class="groupHeader"><td colspan="2"><div class="groupHeader">Encryption</div></td></tr>
 <tr class="memitem:acb315904a218964a4296e41a82e529b6" id="r_acb315904a218964a4296e41a82e529b6"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#acb315904a218964a4296e41a82e529b6">encrypt_to</a> (std::vector&lt; std::byte &gt; &amp;out, std::span&lt; const std::byte &gt; raw)</td></tr>
 <tr class="memdesc:acb315904a218964a4296e41a82e529b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypts data to a vector.  <br /></td></tr>
 <tr class="memitem:a29c61b5211c16dce452ba5050300f8b1" id="r_a29c61b5211c16dce452ba5050300f8b1"><td class="memTemplParams" colspan="2">template&lt;std::ranges::contiguous_range Range&gt; </td></tr>
@@ -1490,12 +1489,12 @@ requires (std::derived_from&lt;To, From&gt;)</td></tr>
 <tr class="memitem:a4da3ac4182fbe993b59e8d6bfbd9836f" id="r_a4da3ac4182fbe993b59e8d6bfbd9836f"><td class="memTemplParams" colspan="2">template&lt;std::ranges::contiguous_range Range&gt; </td></tr>
 <tr class="memitem:a4da3ac4182fbe993b59e8d6bfbd9836f template"><td class="memItemLeft">std::vector&lt; std::byte &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a4da3ac4182fbe993b59e8d6bfbd9836f">encrypt</a> (Range &amp;&amp;range)</td></tr>
 <tr class="memdesc:a4da3ac4182fbe993b59e8d6bfbd9836f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Encrypts data.  <br /></td></tr>
-<tr id="func-members-26" class="groupHeader"><td colspan="2"><div class="groupHeader">Decryption</div></td></tr>
+<tr id="func-members-25" class="groupHeader"><td colspan="2"><div class="groupHeader">Decryption</div></td></tr>
 <tr class="memitem:acdc5cb9b2b9ec199b82d65f8f27e9e0c" id="r_acdc5cb9b2b9ec199b82d65f8f27e9e0c"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#acdc5cb9b2b9ec199b82d65f8f27e9e0c">decrypt_to</a> (std::vector&lt; std::byte &gt; &amp;out, std::vector&lt; std::byte &gt; encrypted)</td></tr>
 <tr class="memdesc:acdc5cb9b2b9ec199b82d65f8f27e9e0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrypts data encrypted by <span class="tt"><a class="el" href="#a659fe161560e1868b1aa2d2c8c1d0062" title="Encrypts data.">encrypt()</a></span> to a vector.  <br /></td></tr>
 <tr class="memitem:a156982b581de7bb472445270762e0274" id="r_a156982b581de7bb472445270762e0274"><td class="memItemLeft">std::vector&lt; std::byte &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a156982b581de7bb472445270762e0274">decrypt</a> (std::vector&lt; std::byte &gt; encrypted)</td></tr>
 <tr class="memdesc:a156982b581de7bb472445270762e0274"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrypts data encrypted by <span class="tt"><a class="el" href="#a659fe161560e1868b1aa2d2c8c1d0062" title="Encrypts data.">encrypt()</a></span>.  <br /></td></tr>
-<tr id="func-members-27" class="groupHeader"><td colspan="2"><div class="groupHeader">Hash maps</div></td></tr>
+<tr id="func-members-26" class="groupHeader"><td colspan="2"><div class="groupHeader">Hash maps</div></td></tr>
 <tr class="memitem:adcb5a091c022e230569cfd086eee44d6" id="r_adcb5a091c022e230569cfd086eee44d6"><td class="memTemplParams" colspan="2">template&lt;typename Key, typename Value, hasher&lt; Key &gt; Hash, equality_predicate&lt; Key &gt; Pred, hash_keylike&lt; Key, Hash, Pred &gt; Keylike&gt; </td></tr>
 <tr class="memitem:adcb5a091c022e230569cfd086eee44d6 template"><td class="memItemLeft">Value &amp;&#160;</td><td class="memItemRight"><a class="el" href="#adcb5a091c022e230569cfd086eee44d6">get</a> (boost::unordered_flat_map&lt; Key, Value, Hash, Pred &gt; &amp;map, Keylike &amp;&amp;keylike)</td></tr>
 <tr class="memdesc:adcb5a091c022e230569cfd086eee44d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a value from a flat map.  <br /></td></tr>
@@ -1520,7 +1519,7 @@ requires (std::derived_from&lt;To, From&gt;)</td></tr>
 <tr class="memitem:a2d4d1dd7b84d78cd82cb885414f3ce58" id="r_a2d4d1dd7b84d78cd82cb885414f3ce58"><td class="memTemplParams" colspan="2">template&lt;typename Key, typename Value, hasher&lt; Key &gt; Hash, equality_predicate&lt; Key &gt; Pred, hash_keylike&lt; Key, Hash, Pred &gt; Keylike&gt; </td></tr>
 <tr class="memitem:a2d4d1dd7b84d78cd82cb885414f3ce58 template"><td class="memItemLeft"><a class="el" href="classtr_1_1opt__ref.html">opt_ref</a>&lt; const Value &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a2d4d1dd7b84d78cd82cb885414f3ce58">try_get</a> (const boost::unordered_node_map&lt; Key, Value, Hash, Pred &gt; &amp;map, Keylike &amp;&amp;keylike)</td></tr>
 <tr class="memdesc:a2d4d1dd7b84d78cd82cb885414f3ce58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tries to get a value from a node map.  <br /></td></tr>
-<tr id="func-members-28" class="groupHeader"><td colspan="2"><div class="groupHeader">Overloaded operators</div></td></tr>
+<tr id="func-members-27" class="groupHeader"><td colspan="2"><div class="groupHeader">Overloaded operators</div></td></tr>
 <tr class="memitem:a25b531ed1c4880c52a36b1d8b626673b" id="r_a25b531ed1c4880c52a36b1d8b626673b"><td class="memTemplParams" colspan="2">template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">tr::usize</a> Capacity, typename Traits&gt; </td></tr>
 <tr class="memitem:a25b531ed1c4880c52a36b1d8b626673b template"><td class="memItemLeft">std::ostream &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a25b531ed1c4880c52a36b1d8b626673b">operator&lt;&lt;</a> (std::ostream &amp;os, const <a class="el" href="classtr_1_1basic__inplace__string.html">basic_inplace_string</a>&lt; CharT, Capacity, Traits &gt; &amp;str)</td></tr>
 <tr class="memdesc:a25b531ed1c4880c52a36b1d8b626673b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output stream formatter for inplace strings.  <br /></td></tr>
@@ -1536,7 +1535,7 @@ requires (std::derived_from&lt;To, From&gt;)</td></tr>
 <tr class="memitem:a8f91fe304a9183adfd9946cdecfa23e9" id="r_a8f91fe304a9183adfd9946cdecfa23e9"><td class="memTemplParams" colspan="2">template&lt;typename CharT, typename Traits&gt; </td></tr>
 <tr class="memitem:a8f91fe304a9183adfd9946cdecfa23e9 template"><td class="memItemLeft">std::filesystem::path&#160;</td><td class="memItemRight"><a class="el" href="#a8f91fe304a9183adfd9946cdecfa23e9">operator/</a> (const std::filesystem::path &amp;lhs, <a class="el" href="classtr_1_1basic__zstring__view.html">basic_zstring_view</a>&lt; CharT, Traits &gt; rhs)</td></tr>
 <tr class="memdesc:a8f91fe304a9183adfd9946cdecfa23e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Path construction operator for NUL-terminated string views.  <br /></td></tr>
-<tr id="func-members-29" class="groupHeader"><td colspan="2"><div class="groupHeader">Localization script</div></td></tr>
+<tr id="func-members-28" class="groupHeader"><td colspan="2"><div class="groupHeader">Localization script</div></td></tr>
 <tr class="memitem:af225ea8b08af60de5be7f17e7c4d6737" id="r_af225ea8b08af60de5be7f17e7c4d6737"><td class="memTemplParams" colspan="2">template&lt;std::output_iterator&lt; <a class="el" href="#a5d0b9d07f28d7988881dea3b58bec727">localization_script_error</a> &gt; ErrorOut, input_iterator_to_convertible_to&lt; char &gt; Iterator, std::sentinel_for&lt; Iterator &gt; Sentinel&gt; </td></tr>
 <tr class="memitem:af225ea8b08af60de5be7f17e7c4d6737 template"><td class="memItemLeft"><a class="el" href="structtr_1_1parse__localization__script__result.html">parse_localization_script_result</a>&lt; ErrorOut &gt;&#160;</td><td class="memItemRight"><a class="el" href="#af225ea8b08af60de5be7f17e7c4d6737">parse_localization_script</a> (ErrorOut error_out, Iterator begin, Sentinel end, std::string_view chunk_name=&quot;&lt;unnamed&gt;&quot;)</td></tr>
 <tr class="memdesc:af225ea8b08af60de5be7f17e7c4d6737"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses localization script into a localization map.  <br /></td></tr>
@@ -1555,7 +1554,7 @@ requires (std::derived_from&lt;To, From&gt;)</td></tr>
 <tr class="memitem:a8915b2185182f626be9ac558945decd3" id="r_a8915b2185182f626be9ac558945decd3"><td class="memTemplParams" colspan="2">template&lt;std::output_iterator&lt; <a class="el" href="#a5d0b9d07f28d7988881dea3b58bec727">localization_script_error</a> &gt; ErrorOut&gt; </td></tr>
 <tr class="memitem:a8915b2185182f626be9ac558945decd3 template"><td class="memItemLeft">ErrorOut&#160;</td><td class="memItemRight"><a class="el" href="#a8915b2185182f626be9ac558945decd3">parse_localization_script_file_to</a> (<a class="el" href="classtr_1_1localization__map.html">localization_map</a> &amp;out, ErrorOut error_out, const std::filesystem::path &amp;path)</td></tr>
 <tr class="memdesc:a8915b2185182f626be9ac558945decd3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parses a localization script file into a localization map.  <br /></td></tr>
-<tr id="func-members-30" class="groupHeader"><td colspan="2"><div class="groupHeader">Matrix operations</div></td></tr>
+<tr id="func-members-29" class="groupHeader"><td colspan="2"><div class="groupHeader">Matrix operations</div></td></tr>
 <tr class="memitem:a17dcbb81641738193d2743f53fba0dbb" id="r_a17dcbb81641738193d2743f53fba0dbb"><td class="memItemLeft">glm::mat4&#160;</td><td class="memItemRight"><a class="el" href="#a17dcbb81641738193d2743f53fba0dbb">ortho</a> (<a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; float &gt; region) noexcept</td></tr>
 <tr class="memdesc:a17dcbb81641738193d2743f53fba0dbb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Produces an orthographic transform for a rectangular region.  <br /></td></tr>
 <tr class="memitem:a3630628ffd152670c738ae766a453cfc" id="r_a3630628ffd152670c738ae766a453cfc"><td class="memItemLeft">glm::mat4&#160;</td><td class="memItemRight"><a class="el" href="#a3630628ffd152670c738ae766a453cfc">scale_around</a> (const glm::mat4 &amp;matrix, glm::vec2 center, glm::vec2 scale) noexcept</td></tr>
@@ -1566,14 +1565,14 @@ requires (std::derived_from&lt;To, From&gt;)</td></tr>
 <tr class="memdesc:ab9ce86a63c252859671bec3566b7801d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies a 2D rotation around a point to a matrix.  <br /></td></tr>
 <tr class="memitem:a89e8746966517fd15a2065347306b997" id="r_a89e8746966517fd15a2065347306b997"><td class="memItemLeft">glm::mat4&#160;</td><td class="memItemRight"><a class="el" href="#a89e8746966517fd15a2065347306b997">rotate_around</a> (const glm::mat4 &amp;matrix, glm::vec3 center, <a class="el" href="classtr_1_1angle.html">angle</a> rotation, glm::vec3 axis) noexcept</td></tr>
 <tr class="memdesc:a89e8746966517fd15a2065347306b997"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies a 3D rotation around a point to a matrix.  <br /></td></tr>
-<tr id="func-members-31" class="groupHeader"><td colspan="2"><div class="groupHeader">Output handle</div></td></tr>
+<tr id="func-members-30" class="groupHeader"><td colspan="2"><div class="groupHeader">Output handle</div></td></tr>
 <tr class="memitem:a4f55a6732ca16f0cb0409a76dcb96457" id="r_a4f55a6732ca16f0cb0409a76dcb96457"><td class="memTemplParams" colspan="2">template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&gt; </td></tr>
 <tr class="memitem:a4f55a6732ca16f0cb0409a76dcb96457 template"><td class="memItemLeft"><a class="el" href="classtr_1_1out__handle__t.html">out_handle_t</a>&lt; Base, Empty, Deleter, false &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a4f55a6732ca16f0cb0409a76dcb96457">out_handle</a> (handle&lt; Base, Empty, Deleter &gt; &amp;handle) noexcept</td></tr>
 <tr class="memdesc:a4f55a6732ca16f0cb0409a76dcb96457"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wraps a handle for use in functions that output using a pointer, akin to std::out_ptr.  <br /></td></tr>
 <tr class="memitem:ae8d4204495724ef402c2beb4e79752b0" id="r_ae8d4204495724ef402c2beb4e79752b0"><td class="memTemplParams" colspan="2">template&lt;std::regular Base, Base Empty, handle_deleter&lt; Base &gt; Deleter&gt; </td></tr>
 <tr class="memitem:ae8d4204495724ef402c2beb4e79752b0 template"><td class="memItemLeft"><a class="el" href="classtr_1_1out__handle__t.html">out_handle_t</a>&lt; Base, Empty, Deleter, true &gt;&#160;</td><td class="memItemRight"><a class="el" href="#ae8d4204495724ef402c2beb4e79752b0">out_handle</a> (handle&lt; Base, Empty, Deleter &gt; &amp;handle, <a class="el" href="structtr_1_1maybe__empty__t.html">maybe_empty_t</a>) noexcept</td></tr>
 <tr class="memdesc:ae8d4204495724ef402c2beb4e79752b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wraps a handle for use in functions that output using a pointer, akin to std::out_ptr.  <br /></td></tr>
-<tr id="func-members-32" class="groupHeader"><td colspan="2"><div class="groupHeader">Polygons</div></td></tr>
+<tr id="func-members-31" class="groupHeader"><td colspan="2"><div class="groupHeader">Polygons</div></td></tr>
 <tr class="memitem:a19261ada13cf1a456deb8a16e66173c6" id="r_a19261ada13cf1a456deb8a16e66173c6"><td class="memItemLeft"><a class="el" href="#ae9b7761d946bc2847ec7c53113b5eb9d">winding_order</a>&#160;</td><td class="memItemRight"><a class="el" href="#a19261ada13cf1a456deb8a16e66173c6">polygon_winding_order</a> (<a class="el" href="#a1822833999d4fd3ae28259f4e02d58a0">polygon_view</a> polygon) noexcept</td></tr>
 <tr class="memdesc:a19261ada13cf1a456deb8a16e66173c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds the winding order of a polygon.  <br /></td></tr>
 <tr class="memitem:adfa76e19bea96d119ffec05be70b37f9" id="r_adfa76e19bea96d119ffec05be70b37f9"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#adfa76e19bea96d119ffec05be70b37f9">simple_polygon</a> (<a class="el" href="#a1822833999d4fd3ae28259f4e02d58a0">polygon_view</a> polygon) noexcept</td></tr>
@@ -1582,7 +1581,7 @@ requires (std::derived_from&lt;To, From&gt;)</td></tr>
 <tr class="memdesc:a1f3f618a5531c8ac6f59bc0f86e46d48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines whether a point is contained in a polygon.  <br /></td></tr>
 <tr class="memitem:a5bfb1a945c29b2c480be878061646e73" id="r_a5bfb1a945c29b2c480be878061646e73"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a5bfb1a945c29b2c480be878061646e73">intersecting</a> (<a class="el" href="#a1822833999d4fd3ae28259f4e02d58a0">polygon_view</a> a, <a class="el" href="#a1822833999d4fd3ae28259f4e02d58a0">polygon_view</a> b) noexcept</td></tr>
 <tr class="memdesc:a5bfb1a945c29b2c480be878061646e73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines whether two polygons are intersecting.  <br /></td></tr>
-<tr id="func-members-33" class="groupHeader"><td colspan="2"><div class="groupHeader">Ranges</div></td></tr>
+<tr id="func-members-32" class="groupHeader"><td colspan="2"><div class="groupHeader">Ranges</div></td></tr>
 <tr class="memitem:a58fc59ddb34d8bbd1500649def4071ba" id="r_a58fc59ddb34d8bbd1500649def4071ba"><td class="memTemplParams" colspan="2">template&lt;standard_layout To, standard_layout From, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Extent&gt; </td></tr>
 <tr class="memitem:a58fc59ddb34d8bbd1500649def4071ba template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="#a58fc59ddb34d8bbd1500649def4071ba">reinterpret_span</a> (std::span&lt; From, Extent &gt; from) noexcept</td></tr>
 <tr class="memdesc:a58fc59ddb34d8bbd1500649def4071ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reinterprets a span of one type to a span of another.  <br /></td></tr>
@@ -1628,7 +1627,7 @@ requires (std::equality_comparable_with&lt;std::ranges::range_value_t&lt;Searche
 <tr class="memitem:ac5b33d830728b978ef3c208ac64e9164" id="r_ac5b33d830728b978ef3c208ac64e9164"><td class="memTemplParams" colspan="2">template&lt;unstable_erasable Container&gt; </td></tr>
 <tr class="memitem:ac5b33d830728b978ef3c208ac64e9164 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ac5b33d830728b978ef3c208ac64e9164">unstable_erase</a> (Container &amp;container, typename Container::iterator where)</td></tr>
 <tr class="memdesc:ac5b33d830728b978ef3c208ac64e9164"><td class="mdescLeft">&#160;</td><td class="mdescRight">O(1) unstable vector-like container erase function.  <br /></td></tr>
-<tr id="func-members-34" class="groupHeader"><td colspan="2"><div class="groupHeader">Vector operations</div></td></tr>
+<tr id="func-members-33" class="groupHeader"><td colspan="2"><div class="groupHeader">Vector operations</div></td></tr>
 <tr class="memitem:ab410badc290d674dbf54d9353e294056" id="r_ab410badc290d674dbf54d9353e294056"><td class="memItemLeft">glm::vec2&#160;</td><td class="memItemRight"><a class="el" href="#ab410badc290d674dbf54d9353e294056">normal</a> (<a class="el" href="classtr_1_1angle.html">angle</a> th) noexcept</td></tr>
 <tr class="memdesc:ab410badc290d674dbf54d9353e294056"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a normalized vector from an angle value.  <br /></td></tr>
 <tr class="memitem:a27f1bc27d793376c5e573921971174ed" id="r_a27f1bc27d793376c5e573921971174ed"><td class="memItemLeft">glm::vec2&#160;</td><td class="memItemRight"><a class="el" href="#a27f1bc27d793376c5e573921971174ed">magth</a> (float mag, <a class="el" href="classtr_1_1angle.html">angle</a> th) noexcept</td></tr>
@@ -3441,29 +3440,37 @@ Ogg files may have embedded loop point metadata which is automatically detected 
 
 </div>
 </div>
-<a id="ae9f9b44a6c4f7fa21988574a0bde55e6" name="ae9f9b44a6c4f7fa21988574a0bde55e6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae9f9b44a6c4f7fa21988574a0bde55e6">&#9670;&#160;</a></span>run_main_loop()</h2>
+<a id="a1c1cfd2a6376f9c1141be9438e86a3f5" name="a1c1cfd2a6376f9c1141be9438e86a3f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c1cfd2a6376f9c1141be9438e86a3f5">&#9670;&#160;</a></span>run_application()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename Application, typename... Args&gt; <br />
+requires std::derived_from&lt;Application, <a class="el" href="classtr_1_1application.html">application</a>&gt; &amp;&amp; std::constructible_from&lt;Application, Args...&gt;</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">int tr::run_main_loop </td>
+          <td class="memname">int tr::run_application </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classtr_1_1application.html">application</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>application</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>argc</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const char **</td>          <td class="paramname"><span class="paramname"><em>argv</em></span>&#160;)</td>
+          <td class="paramtype">const char **</td>          <td class="paramname"><span class="paramname"><em>argv</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structtr_1_1application__metadata.html">application_metadata</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>metadata</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Args &amp;&amp;...</td>          <td class="paramname"><span class="paramname"><em>args</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -3473,12 +3480,19 @@ Ogg files may have embedded loop point metadata which is automatically detected 
 </table>
 </div><div class="memdoc">
 
-<p>Executes the main loop of the program. </p>
+<p>Runs an application. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Application</td><td>Application type fulfilling the <span class="tt"><a class="el" href="classtr_1_1application.html" title="Interface for an application run in the main loop of tr.">tr::application</a></span> interface. </td></tr>
+    <tr><td class="paramname">Args</td><td>Types of the arguments to the application constructor. </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">application</td><td>Application to run. </td></tr>
-    <tr><td class="paramname">argc</td><td>Command-line argument count. </td></tr>
-    <tr><td class="paramname">argv</td><td>Command-line argument values. </td></tr>
+    <tr><td class="paramname">argc,argv</td><td>Command-line arguments. </td></tr>
+    <tr><td class="paramname">metadata</td><td>Metadata of the application. </td></tr>
+    <tr><td class="paramname">args</td><td>Arguments to the application constructor. </td></tr>
   </table>
   </dd>
 </dl>
@@ -4399,32 +4413,6 @@ template&lt;typename Key, hasher&lt; Key &gt; Hash = boost::hash&lt;Key&gt;, equ
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>View to the name of the logging level. </dd></dl>
-
-</div>
-</div>
-<a id="a74deadc67f3a5072d818069f259f266f" name="a74deadc67f3a5072d818069f259f266f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a74deadc67f3a5072d818069f259f266f">&#9670;&#160;</a></span>set_metadata()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void tr::set_metadata </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="structtr_1_1metadata.html">metadata</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>metadata</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Sets application metadata. </p>
-<dl class="section note"><dt>Note</dt><dd>This function must be called at least once before you can use <span class="tt"><a class="el" href="#a9cd73fd577159e94afeceae9d8c8fb61" title="Gets a path to a safe user directory where data can be stored.">tr::user_directory()</a></span>. </dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">metadata</td><td>Application metadata to set. </td></tr>
-  </table>
-  </dd>
-</dl>
 
 </div>
 </div>

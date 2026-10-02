@@ -65,7 +65,7 @@ var searchData=
   ['copy_5fqualifiers_2ehpp_62',['copy_qualifiers.hpp',['../copy__qualifiers_8hpp.html',1,'']]],
   ['copy_5fqualifiers_5ft_63',['copy_qualifiers_t',['../namespacetr.html#aca4d94d6a67f843433716cda8de65f86',1,'tr']]],
   ['copy_5fregion_64',['copy_region',['../classtr_1_1texture.html#ad6bd2c492d9b4e25c3c725a5df77ac39',1,'tr::texture::copy_region()'],['../classtr_1_1texture__target.html#ad16f04dfde21114bfab01890e5d8ec77',1,'tr::texture_target::copy_region()']]],
-  ['copyright_65',['copyright',['../structtr_1_1metadata.html#a16fda172c3bd32d98c5e0592156e5600',1,'tr::metadata']]],
+  ['copyright_65',['copyright',['../structtr_1_1application__metadata.html#ac534e7114daf0ad03b1401a5cd1b34ba',1,'tr::application_metadata']]],
   ['cos_66',['cos',['../classtr_1_1angle.html#a6ac32d92580c106d32e2ab7c8dc9f72c',1,'tr::angle']]],
   ['cr_67',['cr',['../namespacetr.html#ac49d62ec06251ab54db81b814219c605a324d8a1d3f81e730d5099a48cee0c5b6',1,'tr']]],
   ['crbegin_68',['crbegin',['../classtr_1_1static__vector.html#ae213612b3b53213df9dc98bb1f1046c9',1,'tr::static_vector']]],

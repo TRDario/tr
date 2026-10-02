@@ -13,6 +13,5 @@ var classtr_1_1application =
     [ "operator=", "classtr_1_1application.html#ac32bbb2302db79567faff5480b8d87cf", null ],
     [ "initialize", "classtr_1_1application.html#ac8c829e7732a48d6fed728aa20dec118", null ],
     [ "handle_event", "classtr_1_1application.html#a160bde93f0bb17aecbbe24ccfc2fcc5a", null ],
-    [ "update", "classtr_1_1application.html#a7544b8b75ad439d7a03341ff7d97f4cf", null ],
-    [ "shut_down", "classtr_1_1application.html#a4b38208354e4ac8820f70d51a1914636", null ]
+    [ "update", "classtr_1_1application.html#a7544b8b75ad439d7a03341ff7d97f4cf", null ]
 ];

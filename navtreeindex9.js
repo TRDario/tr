@@ -1,7 +1,5 @@
 var NAVTREEINDEX9 =
 {
-"classtr_1_1texture.html#ab8195390851f1eddfc5a05ce597a861c":[3,0,0,196,6],
-"classtr_1_1texture.html#ab8195390851f1eddfc5a05ce597a861c":[5,0,1,183,6],
 "classtr_1_1texture.html#ab82171e2735ca60253210a4fe84001fe":[3,0,0,196,14],
 "classtr_1_1texture.html#ab82171e2735ca60253210a4fe84001fe":[5,0,1,183,14],
 "classtr_1_1texture.html#ad6bd2c492d9b4e25c3c725a5df77ac39":[3,0,0,196,19],
@@ -249,5 +247,7 @@ var NAVTREEINDEX9 =
 "classtr_1_1untyped__shader__buffer.html#ada4364c0295af892b869f2be3ed62777":[3,0,0,209,17],
 "classtr_1_1untyped__shader__buffer.html#ada4364c0295af892b869f2be3ed62777":[5,0,1,196,17],
 "classtr_1_1untyped__static__vertex__buffer.html":[3,0,0,210],
-"classtr_1_1untyped__static__vertex__buffer.html":[5,0,1,197]
+"classtr_1_1untyped__static__vertex__buffer.html":[5,0,1,197],
+"classtr_1_1untyped__static__vertex__buffer.html#a1131784cbbc54f75f59fccdbf368da1d":[3,0,0,210,1],
+"classtr_1_1untyped__static__vertex__buffer.html#a1131784cbbc54f75f59fccdbf368da1d":[5,0,1,197,1]
 };

@@ -19,7 +19,7 @@ var searchData=
   ['vector_2ehpp_16',['vector.hpp',['../vector_8hpp.html',1,'']]],
   ['velocity_17',['velocity',['../classtr_1_1audio__source.html#aaf92813d3d8d7aa956ded0420bcc098a',1,'tr::audio_source']]],
   ['vendor_18',['vendor',['../structtr_1_1graphics__context_1_1info.html#ae914167e44aeca58f6e32a04ac02dc1e',1,'tr::graphics_context::info']]],
-  ['version_19',['version',['../structtr_1_1metadata.html#a441ce925d43850836343b0a099bd2f35',1,'tr::metadata']]],
+  ['version_19',['version',['../structtr_1_1application__metadata.html#ae9297858a05f8db0768bf9cc4e238746',1,'tr::application_metadata']]],
   ['vertex_5fattribute_20',['vertex_attribute',['../structtr_1_1vertex__attribute.html',1,'tr']]],
   ['vertex_5fattribute_2ehpp_21',['vertex_attribute.hpp',['../vertex__attribute_8hpp.html',1,'']]],
   ['vertex_5fattribute_5ftype_22',['vertex_attribute_type',['../namespacetr.html#ad8eb4f799ddd3f5874fa4b1ad5c63032',1,'tr']]],

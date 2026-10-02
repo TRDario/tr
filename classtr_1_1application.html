@@ -149,8 +149,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a160bde93f0bb17aecbbe24ccfc2fcc5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function called whenever an event needs to be handled.  <br /></td></tr>
 <tr class="memitem:a7544b8b75ad439d7a03341ff7d97f4cf" id="r_a7544b8b75ad439d7a03341ff7d97f4cf"><td class="memItemLeft">virtual <a class="el" href="#ad468e60c47e951ff861df0f9daa9bd7b">signal</a>&#160;</td><td class="memItemRight"><a class="el" href="#a7544b8b75ad439d7a03341ff7d97f4cf">update</a> (<a class="el" href="namespacetr.html#a0a06575d52c3090c44755b9a8174f146">duration</a> delta)</td></tr>
 <tr class="memdesc:a7544b8b75ad439d7a03341ff7d97f4cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Primary update callback function.  <br /></td></tr>
-<tr class="memitem:a4b38208354e4ac8820f70d51a1914636" id="r_a4b38208354e4ac8820f70d51a1914636"><td class="memItemLeft">virtual void&#160;</td><td class="memItemRight"><a class="el" href="#a4b38208354e4ac8820f70d51a1914636">shut_down</a> (signal<a class="el" href="#ad468e60c47e951ff861df0f9daa9bd7b">signal</a> signal<a class="el" href="#ad468e60c47e951ff861df0f9daa9bd7b">signal</a>)</td></tr>
-<tr class="memdesc:a4b38208354e4ac8820f70d51a1914636"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function called once at the end of execution right before the destruction of systems.  <br /></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors and destructors</div></td></tr>
 <tr class="memitem:abae28fe327ac3197965b2629e8c051bd" id="r_abae28fe327ac3197965b2629e8c051bd"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#abae28fe327ac3197965b2629e8c051bd">application</a> () noexcept=default</td></tr>
 <tr class="memdesc:abae28fe327ac3197965b2629e8c051bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an application.  <br /></td></tr>
@@ -305,6 +303,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Destroys the application. </p>
+<p>Uncaught exceptions from this function will display a dialog box. </p>
 
 </div>
 </div>
@@ -463,39 +462,6 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Application state signal after updating. </dd></dl>
-
-</div>
-</div>
-<a id="a4b38208354e4ac8820f70d51a1914636" name="a4b38208354e4ac8820f70d51a1914636"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4b38208354e4ac8820f70d51a1914636">&#9670;&#160;</a></span>shut_down()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">virtual void tr::application::shut_down </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="#ad468e60c47e951ff861df0f9daa9bd7b">signal</a></td>          <td class="paramname"><span class="paramname"><em>signal</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel virtual">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Callback function called once at the end of execution right before the destruction of systems. </p>
-<p>Uncaught exceptions from this function will display a dialog box and quit the application. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">signal</td><td>Signal that caused the shutdown. </td></tr>
-  </table>
-  </dd>
-</dl>
 
 </div>
 </div>

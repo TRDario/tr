@@ -6,7 +6,7 @@ var searchData=
   ['i8_3',['i8',['../namespacetr_1_1aliases_1_1integer__aliases.html#a779bb4d064ca94926aa32fa26288a062',1,'tr::i8'],['../namespacetr_1_1aliases_1_1integer__aliases.html#a779bb4d064ca94926aa32fa26288a062',1,'tr::aliases::i8'],['../namespacetr_1_1aliases_1_1integer__aliases.html#a779bb4d064ca94926aa32fa26288a062',1,'tr::aliases::integer_aliases::i8'],['../namespacetr.html#ad8eb4f799ddd3f5874fa4b1ad5c63032a5a32061159a30eeebb309052be870e00',1,'tr::i8']]],
   ['ibeam_4',['ibeam',['../namespacetr.html#aa7a1fb973e2b89b37e78a95d4461171fa67d5a92fabc2cc76f7cc53a8d1a0f722',1,'tr']]],
   ['ibegin_5',['ibegin',['../namespacetr_1_1utf8.html#a4d3d09c83ba56d57e49d637fc8d38119',1,'tr::utf8']]],
-  ['identifier_6',['identifier',['../structtr_1_1metadata.html#a957faa5514dbdb590c7d935397476351',1,'tr::metadata']]],
+  ['identifier_6',['identifier',['../structtr_1_1application__metadata.html#aefe94d404918fe8a56cec3e77723200d',1,'tr::application_metadata']]],
   ['iend_7',['iend',['../namespacetr_1_1utf8.html#aa76696bf6a51b53a2e8b904a4011cd66',1,'tr::utf8']]],
   ['imgui_20integration_20module_8',['ImGui integration module',['../md_pages_2building.html#autotoc_md6',1,'']]],
   ['imgui_2ehpp_9',['imgui.hpp',['../imgui_8hpp.html',1,'']]],

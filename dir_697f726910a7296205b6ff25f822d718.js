@@ -27,7 +27,6 @@ var dir_697f726910a7296205b6ff25f822d718 =
     [ "mapped_graphics_buffer_object.hpp", "mapped__graphics__buffer__object_8hpp.html", "mapped__graphics__buffer__object_8hpp" ],
     [ "mapped_graphics_buffer_span.hpp", "mapped__graphics__buffer__span_8hpp.html", "mapped__graphics__buffer__span_8hpp" ],
     [ "mapped_untyped_graphics_buffer_span.hpp", "mapped__untyped__graphics__buffer__span_8hpp.html", "mapped__untyped__graphics__buffer__span_8hpp" ],
-    [ "metadata.hpp", "metadata_8hpp.html", "metadata_8hpp" ],
     [ "mouse.hpp", "mouse_8hpp.html", "mouse_8hpp" ],
     [ "owning_shader_pipeline.hpp", "owning__shader__pipeline_8hpp.html", "owning__shader__pipeline_8hpp" ],
     [ "path.hpp", "path_8hpp.html", "path_8hpp" ],

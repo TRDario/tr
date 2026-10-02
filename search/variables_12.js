@@ -4,5 +4,5 @@ var searchData=
   ['unknown_5floop_5fpoint_1',['unknown_loop_point',['../classtr_1_1audio__stream.html#ab5945fe521d8fcded9eaa6a374d1d108',1,'tr::audio_stream']]],
   ['unlimited_5fwidth_2',['unlimited_width',['../namespacetr.html#a75a77d450281a7313d484846dbbe7ea8',1,'tr']]],
   ['up_3',['up',['../structtr_1_1orientation.html#ad4cf1e6d05a00013cfcba986f0ce5aac',1,'tr::orientation']]],
-  ['url_4',['url',['../structtr_1_1metadata.html#a5650c7e2462bc1804ac74b316fa53a82',1,'tr::metadata']]]
+  ['url_4',['url',['../structtr_1_1application__metadata.html#ad2cfd2375cc97a232f33ff1a19f96136',1,'tr::application_metadata']]]
 ];
