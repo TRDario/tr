@@ -40,7 +40,7 @@ void tr::internal::set_application_metadata(const application_metadata& metadata
 	SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_COPYRIGHT_STRING, metadata.copyright.c_str());
 	SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_URL_STRING, metadata.url.c_str());
 	SDL_SetAppMetadataProperty(SDL_PROP_APP_METADATA_TYPE_STRING,
-							   metadata.type == application_metadata::application_type::game ? "game" : "application");
+							   metadata.type == application_metadata::type::game ? "game" : "application");
 	if (!metadata.name.empty()) {
 		if (!metadata.version.empty()) {
 			std::println("Launching {} {}.", metadata.name, metadata.version);

@@ -22,7 +22,7 @@ namespace tr
 	struct application_metadata
 	{
 		/// Supported application types.
-		enum class application_type
+		enum class type
 		{
 			/// The application is a game.
 			game,
@@ -52,7 +52,7 @@ namespace tr
 		zstring_view url{};
 
 		/// Application type.
-		application_type type{application_type::application};
+		type type{type::application};
 	};
 
 	/// Interface for an application run in the main loop of tr.
