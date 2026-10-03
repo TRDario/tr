@@ -1222,6 +1222,8 @@ requires std::derived_from&lt;Application, <a class="el" href="classtr_1_1applic
 <tr class="memdesc:ae157f4dcee09b871aa8495fb1784c245"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a vertex shader from file.  <br /></td></tr>
 <tr class="memitem:aa62d3888fce4fe93546e0629d342b81c" id="r_aa62d3888fce4fe93546e0629d342b81c"><td class="memItemLeft"><a class="el" href="classtr_1_1fragment__shader.html">fragment_shader</a>&#160;</td><td class="memItemRight"><a class="el" href="#aa62d3888fce4fe93546e0629d342b81c">load_fragment_shader</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context, const std::filesystem::path &amp;path)</td></tr>
 <tr class="memdesc:aa62d3888fce4fe93546e0629d342b81c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a fragment shader from file.  <br /></td></tr>
+<tr class="memitem:a16c26c5df93a6ea880b3f182edac816a" id="r_a16c26c5df93a6ea880b3f182edac816a"><td class="memItemLeft"><a class="el" href="classtr_1_1compute__shader.html">compute_shader</a>&#160;</td><td class="memItemRight"><a class="el" href="#a16c26c5df93a6ea880b3f182edac816a">load_compute_shader</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context, const std::filesystem::path &amp;path)</td></tr>
+<tr class="memdesc:a16c26c5df93a6ea880b3f182edac816a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads a compute shader from file.  <br /></td></tr>
 <tr id="func-members-14" class="groupHeader"><td colspan="2"><div class="groupHeader">TrueType font factories</div></td></tr>
 <tr class="memitem:aaf333a38f7df41ab7196e6242bb76a3f" id="r_aaf333a38f7df41ab7196e6242bb76a3f"><td class="memItemLeft"><a class="el" href="classtr_1_1ttfont.html">ttfont</a>&#160;</td><td class="memItemRight"><a class="el" href="#aaf333a38f7df41ab7196e6242bb76a3f">load_embedded_ttfont</a> (std::span&lt; const std::byte &gt; data, float size=16)</td></tr>
 <tr class="memdesc:aaf333a38f7df41ab7196e6242bb76a3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads an embedded font file.  <br /></td></tr>
@@ -4605,6 +4607,51 @@ template&lt;typename Key, hasher&lt; Key &gt; Hash = boost::hash&lt;Key&gt;, equ
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Loaded frament shader. </dd></dl>
+
+</div>
+</div>
+<a id="a16c26c5df93a6ea880b3f182edac816a" name="a16c26c5df93a6ea880b3f182edac816a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16c26c5df93a6ea880b3f182edac816a">&#9670;&#160;</a></span>load_compute_shader()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classtr_1_1compute__shader.html">compute_shader</a> tr::load_compute_shader </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>context</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::filesystem::path &amp;</td>          <td class="paramname"><span class="paramname"><em>path</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Loads a compute shader from file. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">context</td><td>Graphics context to create the compute shader on. </td></tr>
+    <tr><td class="paramname">path</td><td>Path to the shader GLSL source code file. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">shader_load_error</td><td>If loading the shader failed. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Loaded compute shader. </dd></dl>
 
 </div>
 </div>

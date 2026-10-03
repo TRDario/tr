@@ -1,5 +1,6 @@
 var NAVTREEINDEX17 =
 {
+"structtr_1_1graphics__context_1_1info.html":[5,0,1,91,0],
 "structtr_1_1graphics__context_1_1info.html#a709b9942684adc54b92501eb25976590":[3,0,0,104,0,1],
 "structtr_1_1graphics__context_1_1info.html#a709b9942684adc54b92501eb25976590":[5,0,1,91,0,1],
 "structtr_1_1graphics__context_1_1info.html#ae59398457475ee729bd19a9afff81461":[3,0,0,104,0,2],
@@ -248,6 +249,5 @@ var NAVTREEINDEX17 =
 "structtr_1_1mouse__wheel__event.html":[5,0,1,133],
 "structtr_1_1mouse__wheel__event.html#a085f594630bab0eb0530fc914d9fb787":[3,0,0,146,1],
 "structtr_1_1mouse__wheel__event.html#a085f594630bab0eb0530fc914d9fb787":[5,0,1,133,1],
-"structtr_1_1mouse__wheel__event.html#a1f48a8a8bfee11e801c220750915b791":[3,0,0,146,2],
-"structtr_1_1mouse__wheel__event.html#a1f48a8a8bfee11e801c220750915b791":[5,0,1,133,2]
+"structtr_1_1mouse__wheel__event.html#a1f48a8a8bfee11e801c220750915b791":[3,0,0,146,2]
 };

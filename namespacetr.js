@@ -661,6 +661,7 @@ var namespacetr =
     [ "pixel_bytes", "namespacetr.html#a863741db9393b682758ed4093cfbab2d", null ],
     [ "load_vertex_shader", "namespacetr.html#ae157f4dcee09b871aa8495fb1784c245", null ],
     [ "load_fragment_shader", "namespacetr.html#aa62d3888fce4fe93546e0629d342b81c", null ],
+    [ "load_compute_shader", "namespacetr.html#a16c26c5df93a6ea880b3f182edac816a", null ],
     [ "load_embedded_ttfont", "namespacetr.html#aaf333a38f7df41ab7196e6242bb76a3f", null ],
     [ "load_embedded_ttfont", "namespacetr.html#a960ee5e19a1567508a3e09cb5456c19f", null ],
     [ "load_ttfont_file", "namespacetr.html#a2b452e9e443b5caa8df09aa11ebdda66", null ],

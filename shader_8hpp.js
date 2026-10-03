@@ -9,5 +9,6 @@ var shader_8hpp =
     [ "std::formatter&lt; tr::fragment_shader &gt;", "structstd_1_1formatter_3_01tr_1_1fragment__shader_01_4.html", "structstd_1_1formatter_3_01tr_1_1fragment__shader_01_4" ],
     [ "std::formatter&lt; tr::compute_shader &gt;", "structstd_1_1formatter_3_01tr_1_1compute__shader_01_4.html", "structstd_1_1formatter_3_01tr_1_1compute__shader_01_4" ],
     [ "tr::load_vertex_shader", "namespacetr.html#ae157f4dcee09b871aa8495fb1784c245", null ],
-    [ "tr::load_fragment_shader", "namespacetr.html#aa62d3888fce4fe93546e0629d342b81c", null ]
+    [ "tr::load_fragment_shader", "namespacetr.html#aa62d3888fce4fe93546e0629d342b81c", null ],
+    [ "tr::load_compute_shader", "namespacetr.html#a16c26c5df93a6ea880b3f182edac816a", null ]
 ];

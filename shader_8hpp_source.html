@@ -393,132 +393,134 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('shader_8hpp_so
 <div class="line"><a id="l00596" name="l00596"></a><span class="lineno">  596</span></div>
 <div class="line"><a id="l00602" name="l00602"></a><span class="lineno"><a class="line" href="namespacetr.html#aa62d3888fce4fe93546e0629d342b81c">  602</a></span>    [[nodiscard]] <a class="code hl_class" href="classtr_1_1fragment__shader.html">fragment_shader</a> <a class="code hl_function" href="namespacetr.html#aa62d3888fce4fe93546e0629d342b81c">load_fragment_shader</a>(<a class="code hl_class" href="classtr_1_1graphics__context.html">graphics_context</a>&amp; context, <span class="keyword">const</span> std::filesystem::path&amp; path);</div>
 <div class="line"><a id="l00603" name="l00603"></a><span class="lineno">  603</span></div>
-<div class="line"><a id="l00605" name="l00605"></a><span class="lineno">  605</span>} <span class="comment">// namespace tr</span></div>
-<div class="line"><a id="l00606" name="l00606"></a><span class="lineno">  606</span> </div>
-<div class="line"><a id="l00607" name="l00607"></a><span class="lineno">  607</span><span class="comment">//</span></div>
-<div class="line"><a id="l00608" name="l00608"></a><span class="lineno">  608</span></div>
-<div class="line"><a id="l00610" name="l00610"></a><span class="lineno">  610</span><span class="keyword">template</span> &lt;&gt;</div>
-<div class="foldopen" id="foldopen00611" data-start="{" data-end="};">
-<div class="line"><a id="l00611" name="l00611"></a><span class="lineno"><a class="line" href="structstd_1_1formatter_3_01tr_1_1shader_01_4.html">  611</a></span><span class="keyword">struct </span>std::formatter&lt;<a class="code hl_namespace" href="namespacetr.html">tr</a>::shader&gt;</div>
-<div class="line"><a id="l00612" name="l00612"></a><span class="lineno">  612</span>{</div>
-<div class="line"><a id="l00617" name="l00617"></a><span class="lineno">  617</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> ParseContext&gt;</div>
-<div class="foldopen" id="foldopen00618" data-start="{" data-end="}">
-<div class="line"><a id="l00618" name="l00618"></a><span class="lineno"><a class="line" href="structstd_1_1formatter_3_01tr_1_1shader_01_4.html#aa83cabc68c9351117d4db9eecc31108e">  618</a></span>    <span class="keyword">constexpr</span> ParseContext::iterator <a class="code hl_function" href="structstd_1_1formatter_3_01tr_1_1shader_01_4.html#aa83cabc68c9351117d4db9eecc31108e">parse</a>(ParseContext&amp; context)</div>
-<div class="line"><a id="l00619" name="l00619"></a><span class="lineno">  619</span>    {</div>
-<div class="line"><a id="l00620" name="l00620"></a><span class="lineno">  620</span>        <span class="keywordflow">if</span> (context.begin() != context.end() &amp;&amp; *context.begin() != <span class="charliteral">&#39;}&#39;</span>) {</div>
-<div class="line"><a id="l00621" name="l00621"></a><span class="lineno">  621</span>            <span class="keywordflow">throw</span> std::format_error{<span class="stringliteral">&quot;Invalid shader format specification.&quot;</span>};</div>
-<div class="line"><a id="l00622" name="l00622"></a><span class="lineno">  622</span>        }</div>
-<div class="line"><a id="l00623" name="l00623"></a><span class="lineno">  623</span>        <span class="keywordflow">return</span> context.begin();</div>
-<div class="line"><a id="l00624" name="l00624"></a><span class="lineno">  624</span>    }</div>
+<div class="line"><a id="l00609" name="l00609"></a><span class="lineno"><a class="line" href="namespacetr.html#a16c26c5df93a6ea880b3f182edac816a">  609</a></span>    [[nodiscard]] <a class="code hl_class" href="classtr_1_1compute__shader.html">compute_shader</a> <a class="code hl_function" href="namespacetr.html#a16c26c5df93a6ea880b3f182edac816a">load_compute_shader</a>(<a class="code hl_class" href="classtr_1_1graphics__context.html">graphics_context</a>&amp; context, <span class="keyword">const</span> std::filesystem::path&amp; path);</div>
+<div class="line"><a id="l00610" name="l00610"></a><span class="lineno">  610</span></div>
+<div class="line"><a id="l00612" name="l00612"></a><span class="lineno">  612</span>} <span class="comment">// namespace tr</span></div>
+<div class="line"><a id="l00613" name="l00613"></a><span class="lineno">  613</span> </div>
+<div class="line"><a id="l00614" name="l00614"></a><span class="lineno">  614</span><span class="comment">//</span></div>
+<div class="line"><a id="l00615" name="l00615"></a><span class="lineno">  615</span></div>
+<div class="line"><a id="l00617" name="l00617"></a><span class="lineno">  617</span><span class="keyword">template</span> &lt;&gt;</div>
+<div class="foldopen" id="foldopen00618" data-start="{" data-end="};">
+<div class="line"><a id="l00618" name="l00618"></a><span class="lineno"><a class="line" href="structstd_1_1formatter_3_01tr_1_1shader_01_4.html">  618</a></span><span class="keyword">struct </span>std::formatter&lt;<a class="code hl_namespace" href="namespacetr.html">tr</a>::shader&gt;</div>
+<div class="line"><a id="l00619" name="l00619"></a><span class="lineno">  619</span>{</div>
+<div class="line"><a id="l00624" name="l00624"></a><span class="lineno">  624</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> ParseContext&gt;</div>
+<div class="foldopen" id="foldopen00625" data-start="{" data-end="}">
+<div class="line"><a id="l00625" name="l00625"></a><span class="lineno"><a class="line" href="structstd_1_1formatter_3_01tr_1_1shader_01_4.html#aa83cabc68c9351117d4db9eecc31108e">  625</a></span>    <span class="keyword">constexpr</span> ParseContext::iterator <a class="code hl_function" href="structstd_1_1formatter_3_01tr_1_1shader_01_4.html#aa83cabc68c9351117d4db9eecc31108e">parse</a>(ParseContext&amp; context)</div>
+<div class="line"><a id="l00626" name="l00626"></a><span class="lineno">  626</span>    {</div>
+<div class="line"><a id="l00627" name="l00627"></a><span class="lineno">  627</span>        <span class="keywordflow">if</span> (context.begin() != context.end() &amp;&amp; *context.begin() != <span class="charliteral">&#39;}&#39;</span>) {</div>
+<div class="line"><a id="l00628" name="l00628"></a><span class="lineno">  628</span>            <span class="keywordflow">throw</span> std::format_error{<span class="stringliteral">&quot;Invalid shader format specification.&quot;</span>};</div>
+<div class="line"><a id="l00629" name="l00629"></a><span class="lineno">  629</span>        }</div>
+<div class="line"><a id="l00630" name="l00630"></a><span class="lineno">  630</span>        <span class="keywordflow">return</span> context.begin();</div>
+<div class="line"><a id="l00631" name="l00631"></a><span class="lineno">  631</span>    }</div>
 </div>
-<div class="line"><a id="l00625" name="l00625"></a><span class="lineno">  625</span></div>
-<div class="line"><a id="l00631" name="l00631"></a><span class="lineno">  631</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> FormatContext&gt;</div>
-<div class="foldopen" id="foldopen00632" data-start="{" data-end="}">
-<div class="line"><a id="l00632" name="l00632"></a><span class="lineno"><a class="line" href="structstd_1_1formatter_3_01tr_1_1shader_01_4.html#ae7f060fea50c7c363ab295ce47a56952">  632</a></span>    FormatContext::iterator <a class="code hl_function" href="structstd_1_1formatter_3_01tr_1_1shader_01_4.html#ae7f060fea50c7c363ab295ce47a56952">format</a>(<span class="keyword">const</span> <a class="code hl_class" href="classtr_1_1shader.html">tr::shader</a>&amp; shader, FormatContext&amp; context)<span class="keyword"> const</span></div>
-<div class="line"><a id="l00633" name="l00633"></a><span class="lineno">  633</span><span class="keyword">    </span>{</div>
-<div class="line"><a id="l00634" name="l00634"></a><span class="lineno">  634</span>        <span class="keywordflow">if</span> (shader.<a class="code hl_function" href="classtr_1_1shader.html#a38d9b2452ce3b7ceee8603ac231b0985">valid</a>()) {</div>
-<div class="line"><a id="l00635" name="l00635"></a><span class="lineno">  635</span>            <span class="keywordflow">return</span> std::format_to(context.out(), <span class="stringliteral">&quot;\&quot;{}\&quot; (ID: {}, PO: {})&quot;</span>, shader.<a class="code hl_function" href="classtr_1_1shader.html#acccb075cdc625ed4371ef0794abc1818">label</a>(), std::to_underlying(shader.id()),</div>
-<div class="line"><a id="l00636" name="l00636"></a><span class="lineno">  636</span>                                  shader.unwrap());</div>
-<div class="line"><a id="l00637" name="l00637"></a><span class="lineno">  637</span>        }</div>
-<div class="line"><a id="l00638" name="l00638"></a><span class="lineno">  638</span>        <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00639" name="l00639"></a><span class="lineno">  639</span>            <span class="keywordflow">return</span> std::format_to(context.out(), <span class="stringliteral">&quot;&lt;invalid shader at {}&gt;&quot;</span>, <span class="keyword">static_cast&lt;</span><span class="keyword">const </span><span class="keywordtype">void</span>*<span class="keyword">&gt;</span>(&amp;shader));</div>
-<div class="line"><a id="l00640" name="l00640"></a><span class="lineno">  640</span>        }</div>
-<div class="line"><a id="l00641" name="l00641"></a><span class="lineno">  641</span>    }</div>
+<div class="line"><a id="l00632" name="l00632"></a><span class="lineno">  632</span></div>
+<div class="line"><a id="l00638" name="l00638"></a><span class="lineno">  638</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> FormatContext&gt;</div>
+<div class="foldopen" id="foldopen00639" data-start="{" data-end="}">
+<div class="line"><a id="l00639" name="l00639"></a><span class="lineno"><a class="line" href="structstd_1_1formatter_3_01tr_1_1shader_01_4.html#ae7f060fea50c7c363ab295ce47a56952">  639</a></span>    FormatContext::iterator <a class="code hl_function" href="structstd_1_1formatter_3_01tr_1_1shader_01_4.html#ae7f060fea50c7c363ab295ce47a56952">format</a>(<span class="keyword">const</span> <a class="code hl_class" href="classtr_1_1shader.html">tr::shader</a>&amp; shader, FormatContext&amp; context)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00640" name="l00640"></a><span class="lineno">  640</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00641" name="l00641"></a><span class="lineno">  641</span>        <span class="keywordflow">if</span> (shader.<a class="code hl_function" href="classtr_1_1shader.html#a38d9b2452ce3b7ceee8603ac231b0985">valid</a>()) {</div>
+<div class="line"><a id="l00642" name="l00642"></a><span class="lineno">  642</span>            <span class="keywordflow">return</span> std::format_to(context.out(), <span class="stringliteral">&quot;\&quot;{}\&quot; (ID: {}, PO: {})&quot;</span>, shader.<a class="code hl_function" href="classtr_1_1shader.html#acccb075cdc625ed4371ef0794abc1818">label</a>(), std::to_underlying(shader.id()),</div>
+<div class="line"><a id="l00643" name="l00643"></a><span class="lineno">  643</span>                                  shader.unwrap());</div>
+<div class="line"><a id="l00644" name="l00644"></a><span class="lineno">  644</span>        }</div>
+<div class="line"><a id="l00645" name="l00645"></a><span class="lineno">  645</span>        <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00646" name="l00646"></a><span class="lineno">  646</span>            <span class="keywordflow">return</span> std::format_to(context.out(), <span class="stringliteral">&quot;&lt;invalid shader at {}&gt;&quot;</span>, <span class="keyword">static_cast&lt;</span><span class="keyword">const </span><span class="keywordtype">void</span>*<span class="keyword">&gt;</span>(&amp;shader));</div>
+<div class="line"><a id="l00647" name="l00647"></a><span class="lineno">  647</span>        }</div>
+<div class="line"><a id="l00648" name="l00648"></a><span class="lineno">  648</span>    }</div>
 </div>
-<div class="line"><a id="l00642" name="l00642"></a><span class="lineno">  642</span>};</div>
+<div class="line"><a id="l00649" name="l00649"></a><span class="lineno">  649</span>};</div>
 </div>
-<div class="line"><a id="l00643" name="l00643"></a><span class="lineno">  643</span></div>
-<div class="line"><a id="l00645" name="l00645"></a><span class="lineno">  645</span><span class="keyword">template</span> &lt;&gt;</div>
-<div class="foldopen" id="foldopen00646" data-start="{" data-end="};">
-<div class="line"><a id="l00646" name="l00646"></a><span class="lineno"><a class="line" href="structstd_1_1formatter_3_01tr_1_1vertex__shader_01_4.html">  646</a></span><span class="keyword">struct </span>std::formatter&lt;<a class="code hl_namespace" href="namespacetr.html">tr</a>::vertex_shader&gt;</div>
-<div class="line"><a id="l00647" name="l00647"></a><span class="lineno">  647</span>{</div>
-<div class="line"><a id="l00652" name="l00652"></a><span class="lineno">  652</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> ParseContext&gt;</div>
-<div class="foldopen" id="foldopen00653" data-start="{" data-end="}">
-<div class="line"><a id="l00653" name="l00653"></a><span class="lineno"><a class="line" href="structstd_1_1formatter_3_01tr_1_1vertex__shader_01_4.html#aaa27de771ca75fc51bc87cb55b408c2d">  653</a></span>    <span class="keyword">constexpr</span> ParseContext::iterator <a class="code hl_function" href="structstd_1_1formatter_3_01tr_1_1vertex__shader_01_4.html#aaa27de771ca75fc51bc87cb55b408c2d">parse</a>(ParseContext&amp; context)</div>
-<div class="line"><a id="l00654" name="l00654"></a><span class="lineno">  654</span>    {</div>
-<div class="line"><a id="l00655" name="l00655"></a><span class="lineno">  655</span>        <span class="keywordflow">if</span> (context.begin() != context.end() &amp;&amp; *context.begin() != <span class="charliteral">&#39;}&#39;</span>) {</div>
-<div class="line"><a id="l00656" name="l00656"></a><span class="lineno">  656</span>            <span class="keywordflow">throw</span> std::format_error{<span class="stringliteral">&quot;Invalid vertex shader format specification.&quot;</span>};</div>
-<div class="line"><a id="l00657" name="l00657"></a><span class="lineno">  657</span>        }</div>
-<div class="line"><a id="l00658" name="l00658"></a><span class="lineno">  658</span>        <span class="keywordflow">return</span> context.begin();</div>
-<div class="line"><a id="l00659" name="l00659"></a><span class="lineno">  659</span>    }</div>
+<div class="line"><a id="l00650" name="l00650"></a><span class="lineno">  650</span></div>
+<div class="line"><a id="l00652" name="l00652"></a><span class="lineno">  652</span><span class="keyword">template</span> &lt;&gt;</div>
+<div class="foldopen" id="foldopen00653" data-start="{" data-end="};">
+<div class="line"><a id="l00653" name="l00653"></a><span class="lineno"><a class="line" href="structstd_1_1formatter_3_01tr_1_1vertex__shader_01_4.html">  653</a></span><span class="keyword">struct </span>std::formatter&lt;<a class="code hl_namespace" href="namespacetr.html">tr</a>::vertex_shader&gt;</div>
+<div class="line"><a id="l00654" name="l00654"></a><span class="lineno">  654</span>{</div>
+<div class="line"><a id="l00659" name="l00659"></a><span class="lineno">  659</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> ParseContext&gt;</div>
+<div class="foldopen" id="foldopen00660" data-start="{" data-end="}">
+<div class="line"><a id="l00660" name="l00660"></a><span class="lineno"><a class="line" href="structstd_1_1formatter_3_01tr_1_1vertex__shader_01_4.html#aaa27de771ca75fc51bc87cb55b408c2d">  660</a></span>    <span class="keyword">constexpr</span> ParseContext::iterator <a class="code hl_function" href="structstd_1_1formatter_3_01tr_1_1vertex__shader_01_4.html#aaa27de771ca75fc51bc87cb55b408c2d">parse</a>(ParseContext&amp; context)</div>
+<div class="line"><a id="l00661" name="l00661"></a><span class="lineno">  661</span>    {</div>
+<div class="line"><a id="l00662" name="l00662"></a><span class="lineno">  662</span>        <span class="keywordflow">if</span> (context.begin() != context.end() &amp;&amp; *context.begin() != <span class="charliteral">&#39;}&#39;</span>) {</div>
+<div class="line"><a id="l00663" name="l00663"></a><span class="lineno">  663</span>            <span class="keywordflow">throw</span> std::format_error{<span class="stringliteral">&quot;Invalid vertex shader format specification.&quot;</span>};</div>
+<div class="line"><a id="l00664" name="l00664"></a><span class="lineno">  664</span>        }</div>
+<div class="line"><a id="l00665" name="l00665"></a><span class="lineno">  665</span>        <span class="keywordflow">return</span> context.begin();</div>
+<div class="line"><a id="l00666" name="l00666"></a><span class="lineno">  666</span>    }</div>
 </div>
-<div class="line"><a id="l00660" name="l00660"></a><span class="lineno">  660</span></div>
-<div class="line"><a id="l00666" name="l00666"></a><span class="lineno">  666</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> FormatContext&gt;</div>
-<div class="foldopen" id="foldopen00667" data-start="{" data-end="}">
-<div class="line"><a id="l00667" name="l00667"></a><span class="lineno"><a class="line" href="structstd_1_1formatter_3_01tr_1_1vertex__shader_01_4.html#a6a281f306386c2219c28b896aa090a11">  667</a></span>    FormatContext::iterator <a class="code hl_function" href="structstd_1_1formatter_3_01tr_1_1vertex__shader_01_4.html#a6a281f306386c2219c28b896aa090a11">format</a>(<span class="keyword">const</span> <a class="code hl_class" href="classtr_1_1vertex__shader.html">tr::vertex_shader</a>&amp; shader, FormatContext&amp; context)<span class="keyword"> const</span></div>
-<div class="line"><a id="l00668" name="l00668"></a><span class="lineno">  668</span><span class="keyword">    </span>{</div>
-<div class="line"><a id="l00669" name="l00669"></a><span class="lineno">  669</span>        <span class="keywordflow">if</span> (shader.<a class="code hl_function" href="classtr_1_1shader.html#a38d9b2452ce3b7ceee8603ac231b0985">valid</a>()) {</div>
-<div class="line"><a id="l00670" name="l00670"></a><span class="lineno">  670</span>            <span class="keywordflow">return</span> std::format_to(context.out(), <span class="stringliteral">&quot;\&quot;{}\&quot; (ID: {}, PO: {})&quot;</span>, shader.<a class="code hl_function" href="classtr_1_1shader.html#acccb075cdc625ed4371ef0794abc1818">label</a>(), std::to_underlying(shader.id()),</div>
-<div class="line"><a id="l00671" name="l00671"></a><span class="lineno">  671</span>                                  shader.unwrap());</div>
-<div class="line"><a id="l00672" name="l00672"></a><span class="lineno">  672</span>        }</div>
-<div class="line"><a id="l00673" name="l00673"></a><span class="lineno">  673</span>        <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00674" name="l00674"></a><span class="lineno">  674</span>            <span class="keywordflow">return</span> std::format_to(context.out(), <span class="stringliteral">&quot;&lt;invalid vertex shader at {}&gt;&quot;</span>, <span class="keyword">static_cast&lt;</span><span class="keyword">const </span><span class="keywordtype">void</span>*<span class="keyword">&gt;</span>(&amp;shader));</div>
-<div class="line"><a id="l00675" name="l00675"></a><span class="lineno">  675</span>        }</div>
-<div class="line"><a id="l00676" name="l00676"></a><span class="lineno">  676</span>    }</div>
+<div class="line"><a id="l00667" name="l00667"></a><span class="lineno">  667</span></div>
+<div class="line"><a id="l00673" name="l00673"></a><span class="lineno">  673</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> FormatContext&gt;</div>
+<div class="foldopen" id="foldopen00674" data-start="{" data-end="}">
+<div class="line"><a id="l00674" name="l00674"></a><span class="lineno"><a class="line" href="structstd_1_1formatter_3_01tr_1_1vertex__shader_01_4.html#a6a281f306386c2219c28b896aa090a11">  674</a></span>    FormatContext::iterator <a class="code hl_function" href="structstd_1_1formatter_3_01tr_1_1vertex__shader_01_4.html#a6a281f306386c2219c28b896aa090a11">format</a>(<span class="keyword">const</span> <a class="code hl_class" href="classtr_1_1vertex__shader.html">tr::vertex_shader</a>&amp; shader, FormatContext&amp; context)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00675" name="l00675"></a><span class="lineno">  675</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00676" name="l00676"></a><span class="lineno">  676</span>        <span class="keywordflow">if</span> (shader.<a class="code hl_function" href="classtr_1_1shader.html#a38d9b2452ce3b7ceee8603ac231b0985">valid</a>()) {</div>
+<div class="line"><a id="l00677" name="l00677"></a><span class="lineno">  677</span>            <span class="keywordflow">return</span> std::format_to(context.out(), <span class="stringliteral">&quot;\&quot;{}\&quot; (ID: {}, PO: {})&quot;</span>, shader.<a class="code hl_function" href="classtr_1_1shader.html#acccb075cdc625ed4371ef0794abc1818">label</a>(), std::to_underlying(shader.id()),</div>
+<div class="line"><a id="l00678" name="l00678"></a><span class="lineno">  678</span>                                  shader.unwrap());</div>
+<div class="line"><a id="l00679" name="l00679"></a><span class="lineno">  679</span>        }</div>
+<div class="line"><a id="l00680" name="l00680"></a><span class="lineno">  680</span>        <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00681" name="l00681"></a><span class="lineno">  681</span>            <span class="keywordflow">return</span> std::format_to(context.out(), <span class="stringliteral">&quot;&lt;invalid vertex shader at {}&gt;&quot;</span>, <span class="keyword">static_cast&lt;</span><span class="keyword">const </span><span class="keywordtype">void</span>*<span class="keyword">&gt;</span>(&amp;shader));</div>
+<div class="line"><a id="l00682" name="l00682"></a><span class="lineno">  682</span>        }</div>
+<div class="line"><a id="l00683" name="l00683"></a><span class="lineno">  683</span>    }</div>
 </div>
-<div class="line"><a id="l00677" name="l00677"></a><span class="lineno">  677</span>};</div>
+<div class="line"><a id="l00684" name="l00684"></a><span class="lineno">  684</span>};</div>
 </div>
-<div class="line"><a id="l00678" name="l00678"></a><span class="lineno">  678</span></div>
-<div class="line"><a id="l00680" name="l00680"></a><span class="lineno">  680</span><span class="keyword">template</span> &lt;&gt;</div>
-<div class="foldopen" id="foldopen00681" data-start="{" data-end="};">
-<div class="line"><a id="l00681" name="l00681"></a><span class="lineno"><a class="line" href="structstd_1_1formatter_3_01tr_1_1fragment__shader_01_4.html">  681</a></span><span class="keyword">struct </span>std::formatter&lt;<a class="code hl_namespace" href="namespacetr.html">tr</a>::fragment_shader&gt;</div>
-<div class="line"><a id="l00682" name="l00682"></a><span class="lineno">  682</span>{</div>
-<div class="line"><a id="l00687" name="l00687"></a><span class="lineno">  687</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> ParseContext&gt;</div>
-<div class="foldopen" id="foldopen00688" data-start="{" data-end="}">
-<div class="line"><a id="l00688" name="l00688"></a><span class="lineno"><a class="line" href="structstd_1_1formatter_3_01tr_1_1fragment__shader_01_4.html#ae5eaae79374f277ed9e79ecab53e3d1e">  688</a></span>    <span class="keyword">constexpr</span> ParseContext::iterator <a class="code hl_function" href="structstd_1_1formatter_3_01tr_1_1fragment__shader_01_4.html#ae5eaae79374f277ed9e79ecab53e3d1e">parse</a>(ParseContext&amp; context)</div>
-<div class="line"><a id="l00689" name="l00689"></a><span class="lineno">  689</span>    {</div>
-<div class="line"><a id="l00690" name="l00690"></a><span class="lineno">  690</span>        <span class="keywordflow">if</span> (context.begin() != context.end() &amp;&amp; *context.begin() != <span class="charliteral">&#39;}&#39;</span>) {</div>
-<div class="line"><a id="l00691" name="l00691"></a><span class="lineno">  691</span>            <span class="keywordflow">throw</span> std::format_error{<span class="stringliteral">&quot;Invalid fragment shader format specification.&quot;</span>};</div>
-<div class="line"><a id="l00692" name="l00692"></a><span class="lineno">  692</span>        }</div>
-<div class="line"><a id="l00693" name="l00693"></a><span class="lineno">  693</span>        <span class="keywordflow">return</span> context.begin();</div>
-<div class="line"><a id="l00694" name="l00694"></a><span class="lineno">  694</span>    }</div>
+<div class="line"><a id="l00685" name="l00685"></a><span class="lineno">  685</span></div>
+<div class="line"><a id="l00687" name="l00687"></a><span class="lineno">  687</span><span class="keyword">template</span> &lt;&gt;</div>
+<div class="foldopen" id="foldopen00688" data-start="{" data-end="};">
+<div class="line"><a id="l00688" name="l00688"></a><span class="lineno"><a class="line" href="structstd_1_1formatter_3_01tr_1_1fragment__shader_01_4.html">  688</a></span><span class="keyword">struct </span>std::formatter&lt;<a class="code hl_namespace" href="namespacetr.html">tr</a>::fragment_shader&gt;</div>
+<div class="line"><a id="l00689" name="l00689"></a><span class="lineno">  689</span>{</div>
+<div class="line"><a id="l00694" name="l00694"></a><span class="lineno">  694</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> ParseContext&gt;</div>
+<div class="foldopen" id="foldopen00695" data-start="{" data-end="}">
+<div class="line"><a id="l00695" name="l00695"></a><span class="lineno"><a class="line" href="structstd_1_1formatter_3_01tr_1_1fragment__shader_01_4.html#ae5eaae79374f277ed9e79ecab53e3d1e">  695</a></span>    <span class="keyword">constexpr</span> ParseContext::iterator <a class="code hl_function" href="structstd_1_1formatter_3_01tr_1_1fragment__shader_01_4.html#ae5eaae79374f277ed9e79ecab53e3d1e">parse</a>(ParseContext&amp; context)</div>
+<div class="line"><a id="l00696" name="l00696"></a><span class="lineno">  696</span>    {</div>
+<div class="line"><a id="l00697" name="l00697"></a><span class="lineno">  697</span>        <span class="keywordflow">if</span> (context.begin() != context.end() &amp;&amp; *context.begin() != <span class="charliteral">&#39;}&#39;</span>) {</div>
+<div class="line"><a id="l00698" name="l00698"></a><span class="lineno">  698</span>            <span class="keywordflow">throw</span> std::format_error{<span class="stringliteral">&quot;Invalid fragment shader format specification.&quot;</span>};</div>
+<div class="line"><a id="l00699" name="l00699"></a><span class="lineno">  699</span>        }</div>
+<div class="line"><a id="l00700" name="l00700"></a><span class="lineno">  700</span>        <span class="keywordflow">return</span> context.begin();</div>
+<div class="line"><a id="l00701" name="l00701"></a><span class="lineno">  701</span>    }</div>
 </div>
-<div class="line"><a id="l00695" name="l00695"></a><span class="lineno">  695</span></div>
-<div class="line"><a id="l00701" name="l00701"></a><span class="lineno">  701</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> FormatContext&gt;</div>
-<div class="foldopen" id="foldopen00702" data-start="{" data-end="}">
-<div class="line"><a id="l00702" name="l00702"></a><span class="lineno"><a class="line" href="structstd_1_1formatter_3_01tr_1_1fragment__shader_01_4.html#af7292acf9577f22a0fca104194a1aa15">  702</a></span>    FormatContext::iterator <a class="code hl_function" href="structstd_1_1formatter_3_01tr_1_1fragment__shader_01_4.html#af7292acf9577f22a0fca104194a1aa15">format</a>(<span class="keyword">const</span> <a class="code hl_class" href="classtr_1_1fragment__shader.html">tr::fragment_shader</a>&amp; shader, FormatContext&amp; context)<span class="keyword"> const</span></div>
-<div class="line"><a id="l00703" name="l00703"></a><span class="lineno">  703</span><span class="keyword">    </span>{</div>
-<div class="line"><a id="l00704" name="l00704"></a><span class="lineno">  704</span>        <span class="keywordflow">if</span> (shader.<a class="code hl_function" href="classtr_1_1shader.html#a38d9b2452ce3b7ceee8603ac231b0985">valid</a>()) {</div>
-<div class="line"><a id="l00705" name="l00705"></a><span class="lineno">  705</span>            <span class="keywordflow">return</span> std::format_to(context.out(), <span class="stringliteral">&quot;\&quot;{}\&quot; (ID: {}, PO: {})&quot;</span>, shader.<a class="code hl_function" href="classtr_1_1shader.html#acccb075cdc625ed4371ef0794abc1818">label</a>(), std::to_underlying(shader.id()),</div>
-<div class="line"><a id="l00706" name="l00706"></a><span class="lineno">  706</span>                                  shader.unwrap());</div>
-<div class="line"><a id="l00707" name="l00707"></a><span class="lineno">  707</span>        }</div>
-<div class="line"><a id="l00708" name="l00708"></a><span class="lineno">  708</span>        <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00709" name="l00709"></a><span class="lineno">  709</span>            <span class="keywordflow">return</span> std::format_to(context.out(), <span class="stringliteral">&quot;&lt;invalid fragment shader at {}&gt;&quot;</span>, <span class="keyword">static_cast&lt;</span><span class="keyword">const </span><span class="keywordtype">void</span>*<span class="keyword">&gt;</span>(&amp;shader));</div>
-<div class="line"><a id="l00710" name="l00710"></a><span class="lineno">  710</span>        }</div>
-<div class="line"><a id="l00711" name="l00711"></a><span class="lineno">  711</span>    }</div>
+<div class="line"><a id="l00702" name="l00702"></a><span class="lineno">  702</span></div>
+<div class="line"><a id="l00708" name="l00708"></a><span class="lineno">  708</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> FormatContext&gt;</div>
+<div class="foldopen" id="foldopen00709" data-start="{" data-end="}">
+<div class="line"><a id="l00709" name="l00709"></a><span class="lineno"><a class="line" href="structstd_1_1formatter_3_01tr_1_1fragment__shader_01_4.html#af7292acf9577f22a0fca104194a1aa15">  709</a></span>    FormatContext::iterator <a class="code hl_function" href="structstd_1_1formatter_3_01tr_1_1fragment__shader_01_4.html#af7292acf9577f22a0fca104194a1aa15">format</a>(<span class="keyword">const</span> <a class="code hl_class" href="classtr_1_1fragment__shader.html">tr::fragment_shader</a>&amp; shader, FormatContext&amp; context)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00710" name="l00710"></a><span class="lineno">  710</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00711" name="l00711"></a><span class="lineno">  711</span>        <span class="keywordflow">if</span> (shader.<a class="code hl_function" href="classtr_1_1shader.html#a38d9b2452ce3b7ceee8603ac231b0985">valid</a>()) {</div>
+<div class="line"><a id="l00712" name="l00712"></a><span class="lineno">  712</span>            <span class="keywordflow">return</span> std::format_to(context.out(), <span class="stringliteral">&quot;\&quot;{}\&quot; (ID: {}, PO: {})&quot;</span>, shader.<a class="code hl_function" href="classtr_1_1shader.html#acccb075cdc625ed4371ef0794abc1818">label</a>(), std::to_underlying(shader.id()),</div>
+<div class="line"><a id="l00713" name="l00713"></a><span class="lineno">  713</span>                                  shader.unwrap());</div>
+<div class="line"><a id="l00714" name="l00714"></a><span class="lineno">  714</span>        }</div>
+<div class="line"><a id="l00715" name="l00715"></a><span class="lineno">  715</span>        <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00716" name="l00716"></a><span class="lineno">  716</span>            <span class="keywordflow">return</span> std::format_to(context.out(), <span class="stringliteral">&quot;&lt;invalid fragment shader at {}&gt;&quot;</span>, <span class="keyword">static_cast&lt;</span><span class="keyword">const </span><span class="keywordtype">void</span>*<span class="keyword">&gt;</span>(&amp;shader));</div>
+<div class="line"><a id="l00717" name="l00717"></a><span class="lineno">  717</span>        }</div>
+<div class="line"><a id="l00718" name="l00718"></a><span class="lineno">  718</span>    }</div>
 </div>
-<div class="line"><a id="l00712" name="l00712"></a><span class="lineno">  712</span>};</div>
+<div class="line"><a id="l00719" name="l00719"></a><span class="lineno">  719</span>};</div>
 </div>
-<div class="line"><a id="l00713" name="l00713"></a><span class="lineno">  713</span></div>
-<div class="line"><a id="l00715" name="l00715"></a><span class="lineno">  715</span><span class="keyword">template</span> &lt;&gt;</div>
-<div class="foldopen" id="foldopen00716" data-start="{" data-end="};">
-<div class="line"><a id="l00716" name="l00716"></a><span class="lineno"><a class="line" href="structstd_1_1formatter_3_01tr_1_1compute__shader_01_4.html">  716</a></span><span class="keyword">struct </span>std::formatter&lt;<a class="code hl_namespace" href="namespacetr.html">tr</a>::compute_shader&gt;</div>
-<div class="line"><a id="l00717" name="l00717"></a><span class="lineno">  717</span>{</div>
-<div class="line"><a id="l00722" name="l00722"></a><span class="lineno">  722</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> ParseContext&gt;</div>
-<div class="foldopen" id="foldopen00723" data-start="{" data-end="}">
-<div class="line"><a id="l00723" name="l00723"></a><span class="lineno"><a class="line" href="structstd_1_1formatter_3_01tr_1_1compute__shader_01_4.html#a4b42b0f6000dc40e101889660764bb0b">  723</a></span>    <span class="keyword">constexpr</span> ParseContext::iterator <a class="code hl_function" href="structstd_1_1formatter_3_01tr_1_1compute__shader_01_4.html#a4b42b0f6000dc40e101889660764bb0b">parse</a>(ParseContext&amp; context)</div>
-<div class="line"><a id="l00724" name="l00724"></a><span class="lineno">  724</span>    {</div>
-<div class="line"><a id="l00725" name="l00725"></a><span class="lineno">  725</span>        <span class="keywordflow">if</span> (context.begin() != context.end() &amp;&amp; *context.begin() != <span class="charliteral">&#39;}&#39;</span>) {</div>
-<div class="line"><a id="l00726" name="l00726"></a><span class="lineno">  726</span>            <span class="keywordflow">throw</span> std::format_error{<span class="stringliteral">&quot;Invalid compute shader format specification.&quot;</span>};</div>
-<div class="line"><a id="l00727" name="l00727"></a><span class="lineno">  727</span>        }</div>
-<div class="line"><a id="l00728" name="l00728"></a><span class="lineno">  728</span>        <span class="keywordflow">return</span> context.begin();</div>
-<div class="line"><a id="l00729" name="l00729"></a><span class="lineno">  729</span>    }</div>
+<div class="line"><a id="l00720" name="l00720"></a><span class="lineno">  720</span></div>
+<div class="line"><a id="l00722" name="l00722"></a><span class="lineno">  722</span><span class="keyword">template</span> &lt;&gt;</div>
+<div class="foldopen" id="foldopen00723" data-start="{" data-end="};">
+<div class="line"><a id="l00723" name="l00723"></a><span class="lineno"><a class="line" href="structstd_1_1formatter_3_01tr_1_1compute__shader_01_4.html">  723</a></span><span class="keyword">struct </span>std::formatter&lt;<a class="code hl_namespace" href="namespacetr.html">tr</a>::compute_shader&gt;</div>
+<div class="line"><a id="l00724" name="l00724"></a><span class="lineno">  724</span>{</div>
+<div class="line"><a id="l00729" name="l00729"></a><span class="lineno">  729</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> ParseContext&gt;</div>
+<div class="foldopen" id="foldopen00730" data-start="{" data-end="}">
+<div class="line"><a id="l00730" name="l00730"></a><span class="lineno"><a class="line" href="structstd_1_1formatter_3_01tr_1_1compute__shader_01_4.html#a4b42b0f6000dc40e101889660764bb0b">  730</a></span>    <span class="keyword">constexpr</span> ParseContext::iterator <a class="code hl_function" href="structstd_1_1formatter_3_01tr_1_1compute__shader_01_4.html#a4b42b0f6000dc40e101889660764bb0b">parse</a>(ParseContext&amp; context)</div>
+<div class="line"><a id="l00731" name="l00731"></a><span class="lineno">  731</span>    {</div>
+<div class="line"><a id="l00732" name="l00732"></a><span class="lineno">  732</span>        <span class="keywordflow">if</span> (context.begin() != context.end() &amp;&amp; *context.begin() != <span class="charliteral">&#39;}&#39;</span>) {</div>
+<div class="line"><a id="l00733" name="l00733"></a><span class="lineno">  733</span>            <span class="keywordflow">throw</span> std::format_error{<span class="stringliteral">&quot;Invalid compute shader format specification.&quot;</span>};</div>
+<div class="line"><a id="l00734" name="l00734"></a><span class="lineno">  734</span>        }</div>
+<div class="line"><a id="l00735" name="l00735"></a><span class="lineno">  735</span>        <span class="keywordflow">return</span> context.begin();</div>
+<div class="line"><a id="l00736" name="l00736"></a><span class="lineno">  736</span>    }</div>
 </div>
-<div class="line"><a id="l00730" name="l00730"></a><span class="lineno">  730</span></div>
-<div class="line"><a id="l00736" name="l00736"></a><span class="lineno">  736</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> FormatContext&gt;</div>
-<div class="foldopen" id="foldopen00737" data-start="{" data-end="}">
-<div class="line"><a id="l00737" name="l00737"></a><span class="lineno"><a class="line" href="structstd_1_1formatter_3_01tr_1_1compute__shader_01_4.html#a26188015daf2055f3af4f13faaf2ce65">  737</a></span>    FormatContext::iterator <a class="code hl_function" href="structstd_1_1formatter_3_01tr_1_1compute__shader_01_4.html#a26188015daf2055f3af4f13faaf2ce65">format</a>(<span class="keyword">const</span> <a class="code hl_class" href="classtr_1_1compute__shader.html">tr::compute_shader</a>&amp; shader, FormatContext&amp; context)<span class="keyword"> const</span></div>
-<div class="line"><a id="l00738" name="l00738"></a><span class="lineno">  738</span><span class="keyword">    </span>{</div>
-<div class="line"><a id="l00739" name="l00739"></a><span class="lineno">  739</span>        <span class="keywordflow">if</span> (shader.<a class="code hl_function" href="classtr_1_1shader.html#a38d9b2452ce3b7ceee8603ac231b0985">valid</a>()) {</div>
-<div class="line"><a id="l00740" name="l00740"></a><span class="lineno">  740</span>            <span class="keywordflow">return</span> std::format_to(context.out(), <span class="stringliteral">&quot;\&quot;{}\&quot; (ID: {}, PO: {})&quot;</span>, shader.<a class="code hl_function" href="classtr_1_1shader.html#acccb075cdc625ed4371ef0794abc1818">label</a>(), std::to_underlying(shader.id()),</div>
-<div class="line"><a id="l00741" name="l00741"></a><span class="lineno">  741</span>                                  shader.unwrap());</div>
-<div class="line"><a id="l00742" name="l00742"></a><span class="lineno">  742</span>        }</div>
-<div class="line"><a id="l00743" name="l00743"></a><span class="lineno">  743</span>        <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00744" name="l00744"></a><span class="lineno">  744</span>            <span class="keywordflow">return</span> std::format_to(context.out(), <span class="stringliteral">&quot;&lt;invalid compute shader at {}&gt;&quot;</span>, <span class="keyword">static_cast&lt;</span><span class="keyword">const </span><span class="keywordtype">void</span>*<span class="keyword">&gt;</span>(&amp;shader));</div>
-<div class="line"><a id="l00745" name="l00745"></a><span class="lineno">  745</span>        }</div>
-<div class="line"><a id="l00746" name="l00746"></a><span class="lineno">  746</span>    }</div>
+<div class="line"><a id="l00737" name="l00737"></a><span class="lineno">  737</span></div>
+<div class="line"><a id="l00743" name="l00743"></a><span class="lineno">  743</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> FormatContext&gt;</div>
+<div class="foldopen" id="foldopen00744" data-start="{" data-end="}">
+<div class="line"><a id="l00744" name="l00744"></a><span class="lineno"><a class="line" href="structstd_1_1formatter_3_01tr_1_1compute__shader_01_4.html#a26188015daf2055f3af4f13faaf2ce65">  744</a></span>    FormatContext::iterator <a class="code hl_function" href="structstd_1_1formatter_3_01tr_1_1compute__shader_01_4.html#a26188015daf2055f3af4f13faaf2ce65">format</a>(<span class="keyword">const</span> <a class="code hl_class" href="classtr_1_1compute__shader.html">tr::compute_shader</a>&amp; shader, FormatContext&amp; context)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00745" name="l00745"></a><span class="lineno">  745</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00746" name="l00746"></a><span class="lineno">  746</span>        <span class="keywordflow">if</span> (shader.<a class="code hl_function" href="classtr_1_1shader.html#a38d9b2452ce3b7ceee8603ac231b0985">valid</a>()) {</div>
+<div class="line"><a id="l00747" name="l00747"></a><span class="lineno">  747</span>            <span class="keywordflow">return</span> std::format_to(context.out(), <span class="stringliteral">&quot;\&quot;{}\&quot; (ID: {}, PO: {})&quot;</span>, shader.<a class="code hl_function" href="classtr_1_1shader.html#acccb075cdc625ed4371ef0794abc1818">label</a>(), std::to_underlying(shader.id()),</div>
+<div class="line"><a id="l00748" name="l00748"></a><span class="lineno">  748</span>                                  shader.unwrap());</div>
+<div class="line"><a id="l00749" name="l00749"></a><span class="lineno">  749</span>        }</div>
+<div class="line"><a id="l00750" name="l00750"></a><span class="lineno">  750</span>        <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00751" name="l00751"></a><span class="lineno">  751</span>            <span class="keywordflow">return</span> std::format_to(context.out(), <span class="stringliteral">&quot;&lt;invalid compute shader at {}&gt;&quot;</span>, <span class="keyword">static_cast&lt;</span><span class="keyword">const </span><span class="keywordtype">void</span>*<span class="keyword">&gt;</span>(&amp;shader));</div>
+<div class="line"><a id="l00752" name="l00752"></a><span class="lineno">  752</span>        }</div>
+<div class="line"><a id="l00753" name="l00753"></a><span class="lineno">  753</span>    }</div>
 </div>
-<div class="line"><a id="l00747" name="l00747"></a><span class="lineno">  747</span>};</div>
+<div class="line"><a id="l00754" name="l00754"></a><span class="lineno">  754</span>};</div>
 </div>
 <div class="ttc" id="aclasstr_1_1compute__shader_html"><div class="ttname"><a href="classtr_1_1compute__shader.html">tr::compute_shader</a></div><div class="ttdoc">Compute shader program.</div><div class="ttdef"><b>Definition</b> shader.hpp:578</div></div>
 <div class="ttc" id="aclasstr_1_1compute__shader_html_a06fc2e4c226cd6413c2cd9b6f0034056"><div class="ttname"><a href="classtr_1_1compute__shader.html#a06fc2e4c226cd6413c2cd9b6f0034056">tr::compute_shader::compute_shader</a></div><div class="ttdeci">compute_shader(graphics_context &amp;context, zstring_view source)</div><div class="ttdoc">Creates a compute shader from source code.</div></div>
@@ -553,6 +555,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('shader_8hpp_so
 <div class="ttc" id="aclasstr_1_1vertex__shader_html_a913726733d5d92108199a548f9947f4f"><div class="ttname"><a href="classtr_1_1vertex__shader.html#a913726733d5d92108199a548f9947f4f">tr::vertex_shader::vertex_shader</a></div><div class="ttdeci">vertex_shader(graphics_context &amp;context, zstring_view source)</div><div class="ttdoc">Creates a vertex shader from source code.</div></div>
 <div class="ttc" id="anamespacetr_1_1internal_html"><div class="ttname"><a href="namespacetr_1_1internal.html">tr::internal</a></div><div class="ttdef"><b>Definition</b> render_target.hpp:13</div></div>
 <div class="ttc" id="anamespacetr_html"><div class="ttname"><a href="namespacetr.html">tr</a></div><div class="ttdoc">Namespace containing all tr functionality.</div><div class="ttdef"><b>Definition</b> audio_buffer.hpp:10</div></div>
+<div class="ttc" id="anamespacetr_html_a16c26c5df93a6ea880b3f182edac816a"><div class="ttname"><a href="namespacetr.html#a16c26c5df93a6ea880b3f182edac816a">tr::load_compute_shader</a></div><div class="ttdeci">compute_shader load_compute_shader(graphics_context &amp;context, const std::filesystem::path &amp;path)</div><div class="ttdoc">Loads a compute shader from file.</div></div>
 <div class="ttc" id="anamespacetr_html_a237d040341dd8a174a37871b9c3bc20a"><div class="ttname"><a href="namespacetr.html#a237d040341dd8a174a37871b9c3bc20a">tr::access</a></div><div class="ttdeci">access</div><div class="ttdoc">Access types.</div><div class="ttdef"><b>Definition</b> access.hpp:13</div></div>
 <div class="ttc" id="anamespacetr_html_aa62d3888fce4fe93546e0629d342b81c"><div class="ttname"><a href="namespacetr.html#aa62d3888fce4fe93546e0629d342b81c">tr::load_fragment_shader</a></div><div class="ttdeci">fragment_shader load_fragment_shader(graphics_context &amp;context, const std::filesystem::path &amp;path)</div><div class="ttdoc">Loads a fragment shader from file.</div></div>
 <div class="ttc" id="anamespacetr_html_ae157f4dcee09b871aa8495fb1784c245"><div class="ttname"><a href="namespacetr.html#ae157f4dcee09b871aa8495fb1784c245">tr::load_vertex_shader</a></div><div class="ttdeci">vertex_shader load_vertex_shader(graphics_context &amp;context, const std::filesystem::path &amp;path)</div><div class="ttdoc">Loads a vertex shader from file.</div></div>
@@ -560,14 +563,14 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('shader_8hpp_so
 <div class="ttc" id="aref_8hpp_html"><div class="ttname"><a href="ref_8hpp.html">ref.hpp</a></div><div class="ttdoc">Provides tr::ref.</div></div>
 <div class="ttc" id="ashader__array_8hpp_html"><div class="ttname"><a href="shader__array_8hpp.html">shader_array.hpp</a></div><div class="ttdoc">Provides tr::shader_array.</div></div>
 <div class="ttc" id="ashader__buffer_8hpp_html"><div class="ttname"><a href="shader__buffer_8hpp.html">shader_buffer.hpp</a></div><div class="ttdoc">Provides tr::shader_buffer.</div></div>
-<div class="ttc" id="astructstd_1_1formatter_3_01tr_1_1compute__shader_01_4_html_a26188015daf2055f3af4f13faaf2ce65"><div class="ttname"><a href="structstd_1_1formatter_3_01tr_1_1compute__shader_01_4.html#a26188015daf2055f3af4f13faaf2ce65">std::formatter&lt; tr::compute_shader &gt;::format</a></div><div class="ttdeci">FormatContext::iterator format(const tr::compute_shader &amp;shader, FormatContext &amp;context) const</div><div class="ttdoc">Formats a compute shader.</div><div class="ttdef"><b>Definition</b> shader.hpp:737</div></div>
-<div class="ttc" id="astructstd_1_1formatter_3_01tr_1_1compute__shader_01_4_html_a4b42b0f6000dc40e101889660764bb0b"><div class="ttname"><a href="structstd_1_1formatter_3_01tr_1_1compute__shader_01_4.html#a4b42b0f6000dc40e101889660764bb0b">std::formatter&lt; tr::compute_shader &gt;::parse</a></div><div class="ttdeci">constexpr ParseContext::iterator parse(ParseContext &amp;context)</div><div class="ttdoc">Parses the format specification.</div><div class="ttdef"><b>Definition</b> shader.hpp:723</div></div>
-<div class="ttc" id="astructstd_1_1formatter_3_01tr_1_1fragment__shader_01_4_html_ae5eaae79374f277ed9e79ecab53e3d1e"><div class="ttname"><a href="structstd_1_1formatter_3_01tr_1_1fragment__shader_01_4.html#ae5eaae79374f277ed9e79ecab53e3d1e">std::formatter&lt; tr::fragment_shader &gt;::parse</a></div><div class="ttdeci">constexpr ParseContext::iterator parse(ParseContext &amp;context)</div><div class="ttdoc">Parses the format specification.</div><div class="ttdef"><b>Definition</b> shader.hpp:688</div></div>
-<div class="ttc" id="astructstd_1_1formatter_3_01tr_1_1fragment__shader_01_4_html_af7292acf9577f22a0fca104194a1aa15"><div class="ttname"><a href="structstd_1_1formatter_3_01tr_1_1fragment__shader_01_4.html#af7292acf9577f22a0fca104194a1aa15">std::formatter&lt; tr::fragment_shader &gt;::format</a></div><div class="ttdeci">FormatContext::iterator format(const tr::fragment_shader &amp;shader, FormatContext &amp;context) const</div><div class="ttdoc">Formats a fragment shader.</div><div class="ttdef"><b>Definition</b> shader.hpp:702</div></div>
-<div class="ttc" id="astructstd_1_1formatter_3_01tr_1_1shader_01_4_html_aa83cabc68c9351117d4db9eecc31108e"><div class="ttname"><a href="structstd_1_1formatter_3_01tr_1_1shader_01_4.html#aa83cabc68c9351117d4db9eecc31108e">std::formatter&lt; tr::shader &gt;::parse</a></div><div class="ttdeci">constexpr ParseContext::iterator parse(ParseContext &amp;context)</div><div class="ttdoc">Parses the format specification.</div><div class="ttdef"><b>Definition</b> shader.hpp:618</div></div>
-<div class="ttc" id="astructstd_1_1formatter_3_01tr_1_1shader_01_4_html_ae7f060fea50c7c363ab295ce47a56952"><div class="ttname"><a href="structstd_1_1formatter_3_01tr_1_1shader_01_4.html#ae7f060fea50c7c363ab295ce47a56952">std::formatter&lt; tr::shader &gt;::format</a></div><div class="ttdeci">FormatContext::iterator format(const tr::shader &amp;shader, FormatContext &amp;context) const</div><div class="ttdoc">Formats a shader.</div><div class="ttdef"><b>Definition</b> shader.hpp:632</div></div>
-<div class="ttc" id="astructstd_1_1formatter_3_01tr_1_1vertex__shader_01_4_html_a6a281f306386c2219c28b896aa090a11"><div class="ttname"><a href="structstd_1_1formatter_3_01tr_1_1vertex__shader_01_4.html#a6a281f306386c2219c28b896aa090a11">std::formatter&lt; tr::vertex_shader &gt;::format</a></div><div class="ttdeci">FormatContext::iterator format(const tr::vertex_shader &amp;shader, FormatContext &amp;context) const</div><div class="ttdoc">Formats a vertex shader.</div><div class="ttdef"><b>Definition</b> shader.hpp:667</div></div>
-<div class="ttc" id="astructstd_1_1formatter_3_01tr_1_1vertex__shader_01_4_html_aaa27de771ca75fc51bc87cb55b408c2d"><div class="ttname"><a href="structstd_1_1formatter_3_01tr_1_1vertex__shader_01_4.html#aaa27de771ca75fc51bc87cb55b408c2d">std::formatter&lt; tr::vertex_shader &gt;::parse</a></div><div class="ttdeci">constexpr ParseContext::iterator parse(ParseContext &amp;context)</div><div class="ttdoc">Parses the format specification.</div><div class="ttdef"><b>Definition</b> shader.hpp:653</div></div>
+<div class="ttc" id="astructstd_1_1formatter_3_01tr_1_1compute__shader_01_4_html_a26188015daf2055f3af4f13faaf2ce65"><div class="ttname"><a href="structstd_1_1formatter_3_01tr_1_1compute__shader_01_4.html#a26188015daf2055f3af4f13faaf2ce65">std::formatter&lt; tr::compute_shader &gt;::format</a></div><div class="ttdeci">FormatContext::iterator format(const tr::compute_shader &amp;shader, FormatContext &amp;context) const</div><div class="ttdoc">Formats a compute shader.</div><div class="ttdef"><b>Definition</b> shader.hpp:744</div></div>
+<div class="ttc" id="astructstd_1_1formatter_3_01tr_1_1compute__shader_01_4_html_a4b42b0f6000dc40e101889660764bb0b"><div class="ttname"><a href="structstd_1_1formatter_3_01tr_1_1compute__shader_01_4.html#a4b42b0f6000dc40e101889660764bb0b">std::formatter&lt; tr::compute_shader &gt;::parse</a></div><div class="ttdeci">constexpr ParseContext::iterator parse(ParseContext &amp;context)</div><div class="ttdoc">Parses the format specification.</div><div class="ttdef"><b>Definition</b> shader.hpp:730</div></div>
+<div class="ttc" id="astructstd_1_1formatter_3_01tr_1_1fragment__shader_01_4_html_ae5eaae79374f277ed9e79ecab53e3d1e"><div class="ttname"><a href="structstd_1_1formatter_3_01tr_1_1fragment__shader_01_4.html#ae5eaae79374f277ed9e79ecab53e3d1e">std::formatter&lt; tr::fragment_shader &gt;::parse</a></div><div class="ttdeci">constexpr ParseContext::iterator parse(ParseContext &amp;context)</div><div class="ttdoc">Parses the format specification.</div><div class="ttdef"><b>Definition</b> shader.hpp:695</div></div>
+<div class="ttc" id="astructstd_1_1formatter_3_01tr_1_1fragment__shader_01_4_html_af7292acf9577f22a0fca104194a1aa15"><div class="ttname"><a href="structstd_1_1formatter_3_01tr_1_1fragment__shader_01_4.html#af7292acf9577f22a0fca104194a1aa15">std::formatter&lt; tr::fragment_shader &gt;::format</a></div><div class="ttdeci">FormatContext::iterator format(const tr::fragment_shader &amp;shader, FormatContext &amp;context) const</div><div class="ttdoc">Formats a fragment shader.</div><div class="ttdef"><b>Definition</b> shader.hpp:709</div></div>
+<div class="ttc" id="astructstd_1_1formatter_3_01tr_1_1shader_01_4_html_aa83cabc68c9351117d4db9eecc31108e"><div class="ttname"><a href="structstd_1_1formatter_3_01tr_1_1shader_01_4.html#aa83cabc68c9351117d4db9eecc31108e">std::formatter&lt; tr::shader &gt;::parse</a></div><div class="ttdeci">constexpr ParseContext::iterator parse(ParseContext &amp;context)</div><div class="ttdoc">Parses the format specification.</div><div class="ttdef"><b>Definition</b> shader.hpp:625</div></div>
+<div class="ttc" id="astructstd_1_1formatter_3_01tr_1_1shader_01_4_html_ae7f060fea50c7c363ab295ce47a56952"><div class="ttname"><a href="structstd_1_1formatter_3_01tr_1_1shader_01_4.html#ae7f060fea50c7c363ab295ce47a56952">std::formatter&lt; tr::shader &gt;::format</a></div><div class="ttdeci">FormatContext::iterator format(const tr::shader &amp;shader, FormatContext &amp;context) const</div><div class="ttdoc">Formats a shader.</div><div class="ttdef"><b>Definition</b> shader.hpp:639</div></div>
+<div class="ttc" id="astructstd_1_1formatter_3_01tr_1_1vertex__shader_01_4_html_a6a281f306386c2219c28b896aa090a11"><div class="ttname"><a href="structstd_1_1formatter_3_01tr_1_1vertex__shader_01_4.html#a6a281f306386c2219c28b896aa090a11">std::formatter&lt; tr::vertex_shader &gt;::format</a></div><div class="ttdeci">FormatContext::iterator format(const tr::vertex_shader &amp;shader, FormatContext &amp;context) const</div><div class="ttdoc">Formats a vertex shader.</div><div class="ttdef"><b>Definition</b> shader.hpp:674</div></div>
+<div class="ttc" id="astructstd_1_1formatter_3_01tr_1_1vertex__shader_01_4_html_aaa27de771ca75fc51bc87cb55b408c2d"><div class="ttname"><a href="structstd_1_1formatter_3_01tr_1_1vertex__shader_01_4.html#aaa27de771ca75fc51bc87cb55b408c2d">std::formatter&lt; tr::vertex_shader &gt;::parse</a></div><div class="ttdeci">constexpr ParseContext::iterator parse(ParseContext &amp;context)</div><div class="ttdoc">Parses the format specification.</div><div class="ttdef"><b>Definition</b> shader.hpp:660</div></div>
 <div class="ttc" id="astructtr_1_1copy__qualifiers_html"><div class="ttname"><a href="structtr_1_1copy__qualifiers.html">tr::type</a></div></div>
 <div class="ttc" id="auniform__buffer_8hpp_html"><div class="ttname"><a href="uniform__buffer_8hpp.html">uniform_buffer.hpp</a></div><div class="ttdoc">Provides tr::uniform_buffer.</div></div>
 <div class="ttc" id="azstring__view_8hpp_html"><div class="ttname"><a href="zstring__view_8hpp.html">zstring_view.hpp</a></div><div class="ttdoc">Provides tr::basic_zstring_view and related functions.</div></div>

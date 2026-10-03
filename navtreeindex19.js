@@ -1,5 +1,6 @@
 var NAVTREEINDEX19 =
 {
+"structtr_1_1rgbf.html#a304186819efabaaf65e6c4f2897245f3":[5,0,1,164,9],
 "structtr_1_1rgbf.html#a3269ca5778314504b85ede5f2b45b778":[3,0,0,177,17],
 "structtr_1_1rgbf.html#a3269ca5778314504b85ede5f2b45b778":[5,0,1,164,17],
 "structtr_1_1rgbf.html#a3b0e24dd6eabc4d40876f2880699d9d0":[3,0,0,177,19],
