@@ -22,5 +22,5 @@ var searchData=
   ['wrap_19',['wrap',['../namespacetr.html#a3e4670572d9d0189d10f4f474d1ebfa3',1,'tr']]],
   ['write_5fbinary_20',['write_binary',['../namespacetr.html#aa260e2b0da215d5585e8ee8a9d9f5c5a',1,'tr::write_binary(std::ostream &amp;os, const In &amp;in)'],['../namespacetr.html#a564dc00a3e8bd7ed3ddd92661684f3f0',1,'tr::write_binary(std::ostream &amp;os, const Ins &amp;... ins)']]],
   ['write_5fbinary_5fmagic_21',['write_binary_magic',['../namespacetr.html#a28b063bbda74084a48b104d089479462',1,'tr']]],
-  ['write_5fonly_22',['write_only',['../namespacetr.html#a05bfa9f1eba3f81364c4ca5d89fedbcda2629564984b808cf7e6cfc61a0286d69',1,'tr']]]
+  ['write_5fonly_22',['write_only',['../namespacetr.html#a237d040341dd8a174a37871b9c3bc20aa2629564984b808cf7e6cfc61a0286d69',1,'tr']]]
 ];

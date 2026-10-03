@@ -157,8 +157,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a3fcd68e30374d1fcd073bcdfbaa792cc" id="r_a3fcd68e30374d1fcd073bcdfbaa792cc"><td class="memItemLeft"><a class="el" href="#abe2b5c1ec1428623be9517140a0f98f7">texture_target</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a3fcd68e30374d1fcd073bcdfbaa792cc">operator=</a> (<a class="el" href="#abe2b5c1ec1428623be9517140a0f98f7">texture_target</a> &amp;&amp;rhs)=default</td></tr>
 <tr class="memdesc:a3fcd68e30374d1fcd073bcdfbaa792cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves a texture target.  <br /></td></tr>
 <tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">View</div></td></tr>
+<tr class="memitem:a241355b833c97cc6a22ca4b50e460871" id="r_a241355b833c97cc6a22ca4b50e460871"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a241355b833c97cc6a22ca4b50e460871">operator mutable_texture_view</a> () noexcept</td></tr>
+<tr class="memdesc:a241355b833c97cc6a22ca4b50e460871"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a mutable view to the texture.  <br /></td></tr>
 <tr class="memitem:abf7d4a134efb80bd325f1c7568f72fec" id="r_abf7d4a134efb80bd325f1c7568f72fec"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#abf7d4a134efb80bd325f1c7568f72fec">operator texture_view</a> () const noexcept</td></tr>
 <tr class="memdesc:abf7d4a134efb80bd325f1c7568f72fec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a view to the texture.  <br /></td></tr>
+<tr class="memitem:ae91c4e3a68db4161510794e195a9a9fa" id="r_ae91c4e3a68db4161510794e195a9a9fa"><td class="memItemLeft"><a class="el" href="classtr_1_1mutable__texture__view.html">mutable_texture_view</a>&#160;</td><td class="memItemRight"><a class="el" href="#ae91c4e3a68db4161510794e195a9a9fa">view</a> () noexcept</td></tr>
+<tr class="memdesc:ae91c4e3a68db4161510794e195a9a9fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a mutable view to the texture.  <br /></td></tr>
 <tr class="memitem:aefcb17a4d3c8db0a695596f6072fcd64" id="r_aefcb17a4d3c8db0a695596f6072fcd64"><td class="memItemLeft"><a class="el" href="classtr_1_1texture__view.html">texture_view</a>&#160;</td><td class="memItemRight"><a class="el" href="#aefcb17a4d3c8db0a695596f6072fcd64">view</a> () const noexcept</td></tr>
 <tr class="memdesc:aefcb17a4d3c8db0a695596f6072fcd64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a view to the texture.  <br /></td></tr>
 <tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Render target</div></td></tr>
@@ -457,6 +461,34 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a241355b833c97cc6a22ca4b50e460871" name="a241355b833c97cc6a22ca4b50e460871"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a241355b833c97cc6a22ca4b50e460871">&#9670;&#160;</a></span>operator mutable_texture_view()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tr::texture_target::operator <a class="el" href="classtr_1_1mutable__texture__view.html">mutable_texture_view</a> </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets a mutable view to the texture. </p>
+<dl class="section return"><dt>Returns</dt><dd>Mutable view to the texture. </dd></dl>
+
+</div>
+</div>
 <a id="abf7d4a134efb80bd325f1c7568f72fec" name="abf7d4a134efb80bd325f1c7568f72fec"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#abf7d4a134efb80bd325f1c7568f72fec">&#9670;&#160;</a></span>operator texture_view()</h2>
 
@@ -485,8 +517,36 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="ae91c4e3a68db4161510794e195a9a9fa" name="ae91c4e3a68db4161510794e195a9a9fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae91c4e3a68db4161510794e195a9a9fa">&#9670;&#160;</a></span>view() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classtr_1_1mutable__texture__view.html">mutable_texture_view</a> tr::texture_target::view </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets a mutable view to the texture. </p>
+<dl class="section return"><dt>Returns</dt><dd>Mutable view to the texture. </dd></dl>
+
+</div>
+</div>
 <a id="aefcb17a4d3c8db0a695596f6072fcd64" name="aefcb17a4d3c8db0a695596f6072fcd64"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aefcb17a4d3c8db0a695596f6072fcd64">&#9670;&#160;</a></span>view()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aefcb17a4d3c8db0a695596f6072fcd64">&#9670;&#160;</a></span>view() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">

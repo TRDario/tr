@@ -158,15 +158,15 @@ class tr::shader_buffer&lt; Header, ArrayElement &gt;</div><p>Typed shader-acces
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors and destructors</div></td></tr>
-<tr class="memitem:afccf35fd6c51b42d2e346a174a7ad214" id="r_afccf35fd6c51b42d2e346a174a7ad214"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#afccf35fd6c51b42d2e346a174a7ad214">shader_buffer</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> capacity, <a class="el" href="namespacetr.html#a05bfa9f1eba3f81364c4ca5d89fedbcd">graphics_buffer_map_access</a> map_type=<a class="el" href="namespacetr.html#a05bfa9f1eba3f81364c4ca5d89fedbcda2629564984b808cf7e6cfc61a0286d69">graphics_buffer_map_access::write_only</a>)</td></tr>
+<tr class="memitem:ac609a1015991257b995db1caac612083" id="r_ac609a1015991257b995db1caac612083"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ac609a1015991257b995db1caac612083">shader_buffer</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> capacity, <a class="el" href="namespacetr.html#a237d040341dd8a174a37871b9c3bc20a">access</a> map_type=<a class="el" href="namespacetr.html#a237d040341dd8a174a37871b9c3bc20aa2629564984b808cf7e6cfc61a0286d69">access::write_only</a>)</td></tr>
 <tr class="memitem:a01898ee4592638ce4c6c21250f930c11" id="r_a01898ee4592638ce4c6c21250f930c11"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a01898ee4592638ce4c6c21250f930c11">shader_buffer</a> (const shader_buffer &amp;)=delete</td></tr>
 <tr class="memdesc:a01898ee4592638ce4c6c21250f930c11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shader buffers are not copyable.  <br /></td></tr>
 <tr class="memitem:ab82973085e2c3e6569cf8769abd3f10c" id="r_ab82973085e2c3e6569cf8769abd3f10c"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ab82973085e2c3e6569cf8769abd3f10c">shader_buffer</a> (shader_buffer &amp;&amp;rhs) noexcept=default</td></tr>
 <tr class="memdesc:ab82973085e2c3e6569cf8769abd3f10c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves a shader buffer.  <br /></td></tr>
 <tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Assignment operators</div></td></tr>
-<tr class="memitem:a5feb3d8b9ea63832575b1106e3ab128f" id="r_a5feb3d8b9ea63832575b1106e3ab128f"><td class="memItemLeft"><a class="el" href="#afccf35fd6c51b42d2e346a174a7ad214">shader_buffer</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a5feb3d8b9ea63832575b1106e3ab128f">operator=</a> (const <a class="el" href="#afccf35fd6c51b42d2e346a174a7ad214">shader_buffer</a> &amp;)=delete</td></tr>
+<tr class="memitem:a5feb3d8b9ea63832575b1106e3ab128f" id="r_a5feb3d8b9ea63832575b1106e3ab128f"><td class="memItemLeft"><a class="el" href="#ac609a1015991257b995db1caac612083">shader_buffer</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a5feb3d8b9ea63832575b1106e3ab128f">operator=</a> (const <a class="el" href="#ac609a1015991257b995db1caac612083">shader_buffer</a> &amp;)=delete</td></tr>
 <tr class="memdesc:a5feb3d8b9ea63832575b1106e3ab128f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shader buffers are not copyable.  <br /></td></tr>
-<tr class="memitem:a2e6d1e9782f46feeedd08c6903a934ac" id="r_a2e6d1e9782f46feeedd08c6903a934ac"><td class="memItemLeft"><a class="el" href="#afccf35fd6c51b42d2e346a174a7ad214">shader_buffer</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a2e6d1e9782f46feeedd08c6903a934ac">operator=</a> (<a class="el" href="#afccf35fd6c51b42d2e346a174a7ad214">shader_buffer</a> &amp;&amp;rhs) noexcept=default</td></tr>
+<tr class="memitem:a2e6d1e9782f46feeedd08c6903a934ac" id="r_a2e6d1e9782f46feeedd08c6903a934ac"><td class="memItemLeft"><a class="el" href="#ac609a1015991257b995db1caac612083">shader_buffer</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a2e6d1e9782f46feeedd08c6903a934ac">operator=</a> (<a class="el" href="#ac609a1015991257b995db1caac612083">shader_buffer</a> &amp;&amp;rhs) noexcept=default</td></tr>
 <tr class="memdesc:a2e6d1e9782f46feeedd08c6903a934ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves a shader buffer.  <br /></td></tr>
 <tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Size</div></td></tr>
 <tr class="memitem:ac2a7227e5b4c0a4c1ab7a71aeec74403" id="r_ac2a7227e5b4c0a4c1ab7a71aeec74403"><td class="memItemLeft"><a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a>&#160;</td><td class="memItemRight"><a class="el" href="#ac2a7227e5b4c0a4c1ab7a71aeec74403">array_size</a> () const noexcept</td></tr>
@@ -189,8 +189,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a2170a5a42b53d7fe44c297b82b2fe4c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the buffer is mapped.  <br /></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="afccf35fd6c51b42d2e346a174a7ad214" name="afccf35fd6c51b42d2e346a174a7ad214"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afccf35fd6c51b42d2e346a174a7ad214">&#9670;&#160;</a></span>shader_buffer() <span class="overload">[1/3]</span></h2>
+<a id="ac609a1015991257b995db1caac612083" name="ac609a1015991257b995db1caac612083"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac609a1015991257b995db1caac612083">&#9670;&#160;</a></span>shader_buffer() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -213,7 +213,7 @@ template&lt;typename Header, typename ArrayElement&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespacetr.html#a05bfa9f1eba3f81364c4ca5d89fedbcd">graphics_buffer_map_access</a></td>          <td class="paramname"><span class="paramname"><em>map_type</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="namespacetr.html#a05bfa9f1eba3f81364c4ca5d89fedbcda2629564984b808cf7e6cfc61a0286d69">graphics_buffer_map_access::write_only</a></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="namespacetr.html#a237d040341dd8a174a37871b9c3bc20a">access</a></td>          <td class="paramname"><span class="paramname"><em>map_type</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="namespacetr.html#a237d040341dd8a174a37871b9c3bc20aa2629564984b808cf7e6cfc61a0286d69">access::write_only</a></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -310,9 +310,9 @@ template&lt;typename Header, typename ArrayElement&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="#afccf35fd6c51b42d2e346a174a7ad214">shader_buffer</a> &amp; <a class="el" href="classtr_1_1shader__buffer.html">tr::shader_buffer</a>&lt; Header, ArrayElement &gt;::operator= </td>
+          <td class="memname"><a class="el" href="#ac609a1015991257b995db1caac612083">shader_buffer</a> &amp; <a class="el" href="classtr_1_1shader__buffer.html">tr::shader_buffer</a>&lt; Header, ArrayElement &gt;::operator= </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="#afccf35fd6c51b42d2e346a174a7ad214">shader_buffer</a>&lt; Header, ArrayElement &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="#ac609a1015991257b995db1caac612083">shader_buffer</a>&lt; Header, ArrayElement &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -339,9 +339,9 @@ template&lt;typename Header, typename ArrayElement&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="#afccf35fd6c51b42d2e346a174a7ad214">shader_buffer</a> &amp; <a class="el" href="classtr_1_1shader__buffer.html">tr::shader_buffer</a>&lt; Header, ArrayElement &gt;::operator= </td>
+          <td class="memname"><a class="el" href="#ac609a1015991257b995db1caac612083">shader_buffer</a> &amp; <a class="el" href="classtr_1_1shader__buffer.html">tr::shader_buffer</a>&lt; Header, ArrayElement &gt;::operator= </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="#afccf35fd6c51b42d2e346a174a7ad214">shader_buffer</a>&lt; Header, ArrayElement &gt; &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="#ac609a1015991257b995db1caac612083">shader_buffer</a>&lt; Header, ArrayElement &gt; &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>

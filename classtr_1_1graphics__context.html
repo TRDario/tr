@@ -182,6 +182,8 @@ Public Member Functions</h2></td></tr>
 <tr id="pub-methods-8" class="groupHeader"><td colspan="2"><div class="groupHeader">Shader pipeline</div></td></tr>
 <tr class="memitem:a1d9e1841c685905a825bdaa0b838af68" id="r_a1d9e1841c685905a825bdaa0b838af68"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a1d9e1841c685905a825bdaa0b838af68">set_shader_pipeline</a> (const <a class="el" href="classtr_1_1shader__pipeline.html">shader_pipeline</a> &amp;pipeline) noexcept</td></tr>
 <tr class="memdesc:a1d9e1841c685905a825bdaa0b838af68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the active shader pipeline.  <br /></td></tr>
+<tr class="memitem:a4c511863f91cc808f1ad00d602277d46" id="r_a4c511863f91cc808f1ad00d602277d46"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a4c511863f91cc808f1ad00d602277d46">dispatch_compute_shader</a> (const <a class="el" href="classtr_1_1compute__shader.html">compute_shader</a> &amp;shader, glm::uvec3 groups) noexcept</td></tr>
+<tr class="memdesc:a4c511863f91cc808f1ad00d602277d46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dispatches a compute shader.  <br /></td></tr>
 <tr id="pub-methods-9" class="groupHeader"><td colspan="2"><div class="groupHeader">Blending</div></td></tr>
 <tr class="memitem:a17cb62ed4da6c404e289682eacee86b2" id="r_a17cb62ed4da6c404e289682eacee86b2"><td class="memItemLeft">const blend_mode &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a17cb62ed4da6c404e289682eacee86b2">blend_mode</a> () const noexcept</td></tr>
 <tr class="memdesc:a17cb62ed4da6c404e289682eacee86b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the active blending mode.  <br /></td></tr>
@@ -701,6 +703,44 @@ Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">pipeline</td><td>Pipeline to set as active. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a4c511863f91cc808f1ad00d602277d46" name="a4c511863f91cc808f1ad00d602277d46"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c511863f91cc808f1ad00d602277d46">&#9670;&#160;</a></span>dispatch_compute_shader()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tr::graphics_context::dispatch_compute_shader </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classtr_1_1compute__shader.html">compute_shader</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>shader</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">glm::uvec3</td>          <td class="paramname"><span class="paramname"><em>groups</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Dispatches a compute shader. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">shader</td><td>Compute shader to dispatch. </td></tr>
+    <tr><td class="paramname">groups</td><td>Number of groups to launch in all 3 dimensions. </td></tr>
   </table>
   </dd>
 </dl>

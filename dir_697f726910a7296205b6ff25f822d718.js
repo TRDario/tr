@@ -1,5 +1,6 @@
 var dir_697f726910a7296205b6ff25f822d718 =
 [
+    [ "access.hpp", "access_8hpp.html", "access_8hpp" ],
     [ "application.hpp", "application_8hpp.html", "application_8hpp" ],
     [ "bitmap.hpp", "bitmap_8hpp.html", "bitmap_8hpp" ],
     [ "bitmap_atlas.hpp", "bitmap__atlas_8hpp.html", "bitmap__atlas_8hpp" ],
@@ -17,7 +18,6 @@ var dir_697f726910a7296205b6ff25f822d718 =
     [ "framebuffer.hpp", "framebuffer_8hpp.html", "framebuffer_8hpp" ],
     [ "graphics_benchmark.hpp", "graphics__benchmark_8hpp.html", "graphics__benchmark_8hpp" ],
     [ "graphics_buffer.hpp", "graphics__buffer_8hpp.html", "graphics__buffer_8hpp" ],
-    [ "graphics_buffer_map_access.hpp", "graphics__buffer__map__access_8hpp.html", "graphics__buffer__map__access_8hpp" ],
     [ "graphics_context.hpp", "graphics__context_8hpp.html", "graphics__context_8hpp" ],
     [ "keyboard.hpp", "keyboard_8hpp.html", "keyboard_8hpp" ],
     [ "log_level.hpp", "log__level_8hpp.html", "log__level_8hpp" ],
@@ -28,6 +28,7 @@ var dir_697f726910a7296205b6ff25f822d718 =
     [ "mapped_graphics_buffer_span.hpp", "mapped__graphics__buffer__span_8hpp.html", "mapped__graphics__buffer__span_8hpp" ],
     [ "mapped_untyped_graphics_buffer_span.hpp", "mapped__untyped__graphics__buffer__span_8hpp.html", "mapped__untyped__graphics__buffer__span_8hpp" ],
     [ "mouse.hpp", "mouse_8hpp.html", "mouse_8hpp" ],
+    [ "mutable_texture_view.hpp", "mutable__texture__view_8hpp.html", "mutable__texture__view_8hpp" ],
     [ "owning_shader_pipeline.hpp", "owning__shader__pipeline_8hpp.html", "owning__shader__pipeline_8hpp" ],
     [ "path.hpp", "path_8hpp.html", "path_8hpp" ],
     [ "ping_pong_target.hpp", "ping__pong__target_8hpp.html", "ping__pong__target_8hpp" ],

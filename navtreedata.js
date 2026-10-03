@@ -88,26 +88,26 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"alignment_8hpp.html",
-"classtr_1_1audio__device__list__view__iterator.html#a7c6bbe7aa53b0d0e40b2fca40851c9d7",
-"classtr_1_1basic__inplace__string.html#ab9c7fae7c1388ecc2c8c8c53c8fba81e",
-"classtr_1_1bitmap__view.html#aecf13813d93967908d70920ccc8c58f5",
-"classtr_1_1file__not__found.html#a00b5c4def5409764bc00c23c190de1b0",
-"classtr_1_1iterator__interface.html#a9c08003f8048cc225c48dff4db6ba0f4",
-"classtr_1_1path__error.html",
-"classtr_1_1shader.html#a30ef64198e93bef7060ed8b5882856d1",
-"classtr_1_1static__vector.html#a4543071fcf3cb9cbbdcdffc8b72ced87",
-"classtr_1_1texture.html#ab82171e2735ca60253210a4fe84001fe",
-"classtr_1_1untyped__static__vertex__buffer.html#a2c5c352444ab4d10ed3add4a8cd03f9a",
-"color_8hpp.html",
-"integer_8hpp_source.html",
-"namespacetr.html#a4f55a6732ca16f0cb0409a76dcb96457",
-"namespacetr.html#ae8aec055281a84fbdee68b31447c7faf",
-"namespacetr_1_1literals_1_1integer__literals.html#aa26472820fdde319b9fc23e78e44c697",
-"structtr_1_1application__metadata.html#a3e3455c026c8afbd071ea24ac002b373",
-"structtr_1_1key__chord.html#a8f7123a28cfb67e5494ca847706dfa5b",
-"structtr_1_1rectangle.html#ad3af933e850e3ca2a7bfd2941ed746c0",
-"structtr_1_1scan__chord.html#adfcdca840520244465c87a165b0f3104"
+"access_8hpp.html",
+"classtr_1_1audio__device__list__view__iterator.html#a63a01416d1c081d9921f4cbdf3de4320",
+"classtr_1_1basic__inplace__string.html#aafd70c7d47889e78fabcf49fc2e8d5df",
+"classtr_1_1bitmap__view.html#aeb8e73924427a3736cbc389b46f5f4a6",
+"classtr_1_1exception.html#a00892b4abc5abaeb536e960543b7254c",
+"classtr_1_1iterator__interface.html",
+"classtr_1_1optional__variant.html#a41c3079ac33a4454dfc162d50f260144",
+"classtr_1_1rng.html#ab6a8de8e0f6f5e224c53f0033b8ca331",
+"classtr_1_1static__vector.html#a1082f08c650fb1325981de608fdca76e",
+"classtr_1_1texture.html",
+"classtr_1_1untyped__dynamic__vertex__buffer.html#ae109aeaf27dfef271dd4940aaf8da046",
+"classtr_1_1window__open__error.html#a84c3ae49661a66113f7695e315916b80",
+"functions_func_s.html",
+"namespacetr.html#a380bb62772559b444f8745fd5ecf649d",
+"namespacetr.html#ad15e1eebb57dc4d57047653e40dd523badc4d53aa0d117d8b189b36d161af4e96",
+"namespacetr_1_1literals_1_1color__literals.html",
+"structstd_1_1formatter_3_01tr_1_1shader__array_3_01Element_01_4_01_4.html",
+"structtr_1_1graphics__context_1_1info.html#a709b9942684adc54b92501eb25976590",
+"structtr_1_1mouse__wheel__event.html#a84939c8085b1e0fef1a0915385390af9",
+"structtr_1_1rgbf.html#a3269ca5778314504b85ede5f2b45b778"
 ];
 
 const SYNCONMSG = 'click to disable panel synchronization';

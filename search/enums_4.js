@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['keycode_0',['keycode',['../namespacetr.html#a142886ba179e0da074221ab4a8b6a6ad',1,'tr']]],
-  ['keymod_1',['keymod',['../namespacetr.html#a8efaea616aca72ed620aeec3493fff11',1,'tr']]]
+  ['localization_5ftoken_5ftype_0',['localization_token_type',['../namespacetr.html#a358cbb7b209d738d608455b760766575',1,'tr']]],
+  ['log_5flevel_1',['log_level',['../namespacetr.html#af80aef48811e46f90a915d32219add20',1,'tr']]]
 ];

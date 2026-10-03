@@ -158,8 +158,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab8195390851f1eddfc5a05ce597a861c" id="r_ab8195390851f1eddfc5a05ce597a861c"><td class="memItemLeft"><a class="el" href="#a888ac405b51648c58b79473a9117ee26">texture</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ab8195390851f1eddfc5a05ce597a861c">operator=</a> (<a class="el" href="#a888ac405b51648c58b79473a9117ee26">texture</a> &amp;&amp;rhs) noexcept=default</td></tr>
 <tr class="memdesc:ab8195390851f1eddfc5a05ce597a861c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves a texture.  <br /></td></tr>
 <tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">View</div></td></tr>
+<tr class="memitem:a30e83f50ab51342e117d87a50c2679b4" id="r_a30e83f50ab51342e117d87a50c2679b4"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a30e83f50ab51342e117d87a50c2679b4">operator mutable_texture_view</a> () noexcept</td></tr>
+<tr class="memdesc:a30e83f50ab51342e117d87a50c2679b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a mutable view to the texture.  <br /></td></tr>
 <tr class="memitem:ab792f6702cf6a3be320b66b92641c7ec" id="r_ab792f6702cf6a3be320b66b92641c7ec"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ab792f6702cf6a3be320b66b92641c7ec">operator texture_view</a> () const noexcept</td></tr>
 <tr class="memdesc:ab792f6702cf6a3be320b66b92641c7ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a view to the texture.  <br /></td></tr>
+<tr class="memitem:aa2f61dba6b31ac9f5a231aa1c72580e8" id="r_aa2f61dba6b31ac9f5a231aa1c72580e8"><td class="memItemLeft"><a class="el" href="classtr_1_1mutable__texture__view.html">mutable_texture_view</a>&#160;</td><td class="memItemRight"><a class="el" href="#aa2f61dba6b31ac9f5a231aa1c72580e8">view</a> () noexcept</td></tr>
+<tr class="memdesc:aa2f61dba6b31ac9f5a231aa1c72580e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a mutable view to the texture.  <br /></td></tr>
 <tr class="memitem:a39d4cbcc85ca7101b993914abf024326" id="r_a39d4cbcc85ca7101b993914abf024326"><td class="memItemLeft"><a class="el" href="classtr_1_1texture__view.html">texture_view</a>&#160;</td><td class="memItemRight"><a class="el" href="#a39d4cbcc85ca7101b993914abf024326">view</a> () const noexcept</td></tr>
 <tr class="memdesc:a39d4cbcc85ca7101b993914abf024326"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a view to the texture.  <br /></td></tr>
 <tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Context</div></td></tr>
@@ -176,6 +180,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a7dcd2d5ea57dd7419a0b68c0c3a3880d" id="r_a7dcd2d5ea57dd7419a0b68c0c3a3880d"><td class="memItemLeft"><a class="el" href="#a888ac405b51648c58b79473a9117ee26">texture</a>&#160;</td><td class="memItemRight"><a class="el" href="#a7dcd2d5ea57dd7419a0b68c0c3a3880d">allocate</a> (glm::ivec2 size, mipmaps<a class="el" href="namespacetr.html#acc7c3ec65e91b3d9d879c9bca6e51ce6">mipmaps</a> mipmaps<a class="el" href="namespacetr.html#acc7c3ec65e91b3d9d879c9bca6e51ce6">mipmaps</a>=<a class="el" href="namespacetr.html#acc7c3ec65e91b3d9d879c9bca6e51ce6a075ae3d2fc31640504f814f60e5ef713">mipmaps::disabled</a>, <a class="el" href="namespacetr.html#ac1babae6e9367fc90585a8791dadc746">pixel_format</a> format=<a class="el" href="namespacetr.html#ac1babae6e9367fc90585a8791dadc746ab1500b383bccdb3946114a5d708706c4">pixel_format::rgba32</a>)</td></tr>
 <tr class="memdesc:a7dcd2d5ea57dd7419a0b68c0c3a3880d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates the texture and releases the previously held storage as a new texture.  <br /></td></tr>
 <tr id="pub-methods-6" class="groupHeader"><td colspan="2"><div class="groupHeader">Attributes</div></td></tr>
+<tr class="memitem:a4b745048ef9b2f5d5019f39eb7b4b638" id="r_a4b745048ef9b2f5d5019f39eb7b4b638"><td class="memItemLeft"><a class="el" href="namespacetr.html#ac1babae6e9367fc90585a8791dadc746">pixel_format</a>&#160;</td><td class="memItemRight"><a class="el" href="#a4b745048ef9b2f5d5019f39eb7b4b638">format</a> () const noexcept</td></tr>
+<tr class="memdesc:a4b745048ef9b2f5d5019f39eb7b4b638"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the pixel format of the texture.  <br /></td></tr>
 <tr class="memitem:ab82171e2735ca60253210a4fe84001fe" id="r_ab82171e2735ca60253210a4fe84001fe"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ab82171e2735ca60253210a4fe84001fe">set_filtering</a> (min_filter<a class="el" href="namespacetr.html#a9b0a51b975f6e11e760cb82c40c9b40e">min_filter</a> min_filter<a class="el" href="namespacetr.html#a9b0a51b975f6e11e760cb82c40c9b40e">min_filter</a>, mag_filter<a class="el" href="namespacetr.html#a26ba47c29e07f3ca8eb9cdf73a06a424">mag_filter</a> mag_filter<a class="el" href="namespacetr.html#a26ba47c29e07f3ca8eb9cdf73a06a424">mag_filter</a>) noexcept</td></tr>
 <tr class="memdesc:ab82171e2735ca60253210a4fe84001fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the filters used by the texture sampler.  <br /></td></tr>
 <tr class="memitem:a7cac15ca34a1262b54ff445f926523be" id="r_a7cac15ca34a1262b54ff445f926523be"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a7cac15ca34a1262b54ff445f926523be">set_wrap</a> (wrap<a class="el" href="namespacetr.html#a3e4670572d9d0189d10f4f474d1ebfa3">wrap</a> wrap<a class="el" href="namespacetr.html#a3e4670572d9d0189d10f4f474d1ebfa3">wrap</a>) noexcept</td></tr>
@@ -453,6 +459,34 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a30e83f50ab51342e117d87a50c2679b4" name="a30e83f50ab51342e117d87a50c2679b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a30e83f50ab51342e117d87a50c2679b4">&#9670;&#160;</a></span>operator mutable_texture_view()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tr::texture::operator <a class="el" href="classtr_1_1mutable__texture__view.html">mutable_texture_view</a> </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets a mutable view to the texture. </p>
+<dl class="section return"><dt>Returns</dt><dd>Mutable view to the texture. </dd></dl>
+
+</div>
+</div>
 <a id="ab792f6702cf6a3be320b66b92641c7ec" name="ab792f6702cf6a3be320b66b92641c7ec"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab792f6702cf6a3be320b66b92641c7ec">&#9670;&#160;</a></span>operator texture_view()</h2>
 
@@ -481,8 +515,36 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="aa2f61dba6b31ac9f5a231aa1c72580e8" name="aa2f61dba6b31ac9f5a231aa1c72580e8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa2f61dba6b31ac9f5a231aa1c72580e8">&#9670;&#160;</a></span>view() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classtr_1_1mutable__texture__view.html">mutable_texture_view</a> tr::texture::view </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets a mutable view to the texture. </p>
+<dl class="section return"><dt>Returns</dt><dd>Mutable view to the texture. </dd></dl>
+
+</div>
+</div>
 <a id="a39d4cbcc85ca7101b993914abf024326" name="a39d4cbcc85ca7101b993914abf024326"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a39d4cbcc85ca7101b993914abf024326">&#9670;&#160;</a></span>view()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a39d4cbcc85ca7101b993914abf024326">&#9670;&#160;</a></span>view() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -655,6 +717,34 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Previously held storage as a new texture. </dd></dl>
+
+</div>
+</div>
+<a id="a4b745048ef9b2f5d5019f39eb7b4b638" name="a4b745048ef9b2f5d5019f39eb7b4b638"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b745048ef9b2f5d5019f39eb7b4b638">&#9670;&#160;</a></span>format()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacetr.html#ac1babae6e9367fc90585a8791dadc746">pixel_format</a> tr::texture::format </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the pixel format of the texture. </p>
+<dl class="section return"><dt>Returns</dt><dd>Pixel format of the texture. </dd></dl>
 
 </div>
 </div>

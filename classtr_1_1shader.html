@@ -145,8 +145,9 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1sha
  <div class="center">
   <img src="classtr_1_1shader.png" usemap="#tr_3A_3Ashader_map" alt=""/>
   <map id="tr_3A_3Ashader_map" name="tr_3A_3Ashader_map">
-<area href="classtr_1_1fragment__shader.html" title="Fragment shader program." alt="tr::fragment_shader" shape="rect" coords="0,56,121,80"/>
-<area href="classtr_1_1vertex__shader.html" title="Vertex shader program." alt="tr::vertex_shader" shape="rect" coords="131,56,252,80"/>
+<area href="classtr_1_1compute__shader.html" title="Compute shader program." alt="tr::compute_shader" shape="rect" coords="0,56,121,80"/>
+<area href="classtr_1_1fragment__shader.html" title="Fragment shader program." alt="tr::fragment_shader" shape="rect" coords="131,56,252,80"/>
+<area href="classtr_1_1vertex__shader.html" title="Vertex shader program." alt="tr::vertex_shader" shape="rect" coords="262,56,383,80"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -247,9 +248,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:ae178e2ab041f84bdaeb76c4f6c9061fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mat4x3 uniform.  <br /></td></tr>
 <tr class="memitem:a02971882b8e8d0b4898e74dde509d0eb" id="r_a02971882b8e8d0b4898e74dde509d0eb"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a02971882b8e8d0b4898e74dde509d0eb">set_uniform</a> (int index, std::span&lt; const glm::mat4x3 &gt; value) noexcept</td></tr>
 <tr class="memdesc:a02971882b8e8d0b4898e74dde509d0eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a mat4x3 array uniform.  <br /></td></tr>
-<tr class="memitem:aec50b6bd802404d1ae59f8f40a674eec" id="r_aec50b6bd802404d1ae59f8f40a674eec"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aec50b6bd802404d1ae59f8f40a674eec">set_uniform</a> (int index, <a class="el" href="classtr_1_1texture__view.html">texture_view</a> texture)</td></tr>
-<tr class="memdesc:aec50b6bd802404d1ae59f8f40a674eec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a texture sampler uniform.  <br /></td></tr>
-<tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Storage buffers</div></td></tr>
+<tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Texture uniforms</div></td></tr>
+<tr class="memitem:a1475ccd45052746cb2075a1f64b3ba55" id="r_a1475ccd45052746cb2075a1f64b3ba55"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a1475ccd45052746cb2075a1f64b3ba55">set_sampler_uniform</a> (int index, <a class="el" href="classtr_1_1texture__view.html">texture_view</a> texture)</td></tr>
+<tr class="memdesc:a1475ccd45052746cb2075a1f64b3ba55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a texture sampler uniform.  <br /></td></tr>
+<tr class="memitem:a56556129d0b198db1e3e73f9c5acdd40" id="r_a56556129d0b198db1e3e73f9c5acdd40"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a56556129d0b198db1e3e73f9c5acdd40">set_image_uniform</a> (int index, <a class="el" href="classtr_1_1mutable__texture__view.html">mutable_texture_view</a> texture, access<a class="el" href="namespacetr.html#a237d040341dd8a174a37871b9c3bc20a">access</a> access<a class="el" href="namespacetr.html#a237d040341dd8a174a37871b9c3bc20a">access</a>)</td></tr>
+<tr class="memdesc:a56556129d0b198db1e3e73f9c5acdd40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a texture image uniform.  <br /></td></tr>
+<tr id="pub-methods-4" class="groupHeader"><td colspan="2"><div class="groupHeader">Storage buffers</div></td></tr>
 <tr class="memitem:a0cc2f17714a8015d98eea01eeea129ae" id="r_a0cc2f17714a8015d98eea01eeea129ae"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a0cc2f17714a8015d98eea01eeea129ae">set_storage_buffer</a> (unsigned int index, <a class="el" href="classtr_1_1untyped__shader__buffer.html">untyped_shader_buffer</a> &amp;buffer) noexcept</td></tr>
 <tr class="memdesc:a0cc2f17714a8015d98eea01eeea129ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a shader storage buffer.  <br /></td></tr>
 <tr class="memitem:a73bf56c0deaf16f1b744e075faf26050" id="r_a73bf56c0deaf16f1b744e075faf26050"><td class="memTemplParams" colspan="2">template&lt;typename Header, typename ArrayElement&gt; </td></tr>
@@ -263,10 +267,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa4ba59093654baa4b71479dcf3931273" id="r_aa4ba59093654baa4b71479dcf3931273"><td class="memTemplParams" colspan="2">template&lt;typename Object&gt; </td></tr>
 <tr class="memitem:aa4ba59093654baa4b71479dcf3931273 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aa4ba59093654baa4b71479dcf3931273">set_uniform_buffer</a> (unsigned int index, const <a class="el" href="classtr_1_1uniform__buffer.html">uniform_buffer</a>&lt; Object &gt; &amp;buffer) noexcept</td></tr>
 <tr class="memdesc:aa4ba59093654baa4b71479dcf3931273"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a uniform storage buffer.  <br /></td></tr>
-<tr id="pub-methods-4" class="groupHeader"><td colspan="2"><div class="groupHeader">State</div></td></tr>
+<tr id="pub-methods-5" class="groupHeader"><td colspan="2"><div class="groupHeader">State</div></td></tr>
 <tr class="memitem:a38d9b2452ce3b7ceee8603ac231b0985" id="r_a38d9b2452ce3b7ceee8603ac231b0985"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a38d9b2452ce3b7ceee8603ac231b0985">valid</a> () const noexcept</td></tr>
 <tr class="memdesc:a38d9b2452ce3b7ceee8603ac231b0985"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the shader is in a valid state.  <br /></td></tr>
-<tr id="pub-methods-5" class="groupHeader"><td colspan="2"><div class="groupHeader">Label</div></td></tr>
+<tr id="pub-methods-6" class="groupHeader"><td colspan="2"><div class="groupHeader">Label</div></td></tr>
 <tr class="memitem:ae7b16bb3b7b2192a0cce6912b0a94edf" id="r_ae7b16bb3b7b2192a0cce6912b0a94edf"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ae7b16bb3b7b2192a0cce6912b0a94edf">set_label</a> (std::string_view label) noexcept</td></tr>
 <tr class="memdesc:ae7b16bb3b7b2192a0cce6912b0a94edf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the debug label of the shader.  <br /></td></tr>
 <tr class="memitem:acccb075cdc625ed4371ef0794abc1818" id="r_acccb075cdc625ed4371ef0794abc1818"><td class="memItemLeft">std::string&#160;</td><td class="memItemRight"><a class="el" href="#acccb075cdc625ed4371ef0794abc1818">label</a> () const</td></tr>
@@ -363,7 +367,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a51c6f7ea2d0ad2a008f2aecf0342a6a3" name="a51c6f7ea2d0ad2a008f2aecf0342a6a3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a51c6f7ea2d0ad2a008f2aecf0342a6a3">&#9670;&#160;</a></span>set_uniform() <span class="overload">[1/44]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a51c6f7ea2d0ad2a008f2aecf0342a6a3">&#9670;&#160;</a></span>set_uniform() <span class="overload">[1/43]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -402,7 +406,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a7067ec594b9a41ef610d4a7ca71b0ee3" name="a7067ec594b9a41ef610d4a7ca71b0ee3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7067ec594b9a41ef610d4a7ca71b0ee3">&#9670;&#160;</a></span>set_uniform() <span class="overload">[2/44]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a7067ec594b9a41ef610d4a7ca71b0ee3">&#9670;&#160;</a></span>set_uniform() <span class="overload">[2/43]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -441,7 +445,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a9d5165ee172d5f0d23a6104f87a83ba8" name="a9d5165ee172d5f0d23a6104f87a83ba8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9d5165ee172d5f0d23a6104f87a83ba8">&#9670;&#160;</a></span>set_uniform() <span class="overload">[3/44]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d5165ee172d5f0d23a6104f87a83ba8">&#9670;&#160;</a></span>set_uniform() <span class="overload">[3/43]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -480,7 +484,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a736f5c3809552f83227e7848ffedfc3f" name="a736f5c3809552f83227e7848ffedfc3f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a736f5c3809552f83227e7848ffedfc3f">&#9670;&#160;</a></span>set_uniform() <span class="overload">[4/44]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a736f5c3809552f83227e7848ffedfc3f">&#9670;&#160;</a></span>set_uniform() <span class="overload">[4/43]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -519,7 +523,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="af162534e5446e926a5f43ee818ef259e" name="af162534e5446e926a5f43ee818ef259e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af162534e5446e926a5f43ee818ef259e">&#9670;&#160;</a></span>set_uniform() <span class="overload">[5/44]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#af162534e5446e926a5f43ee818ef259e">&#9670;&#160;</a></span>set_uniform() <span class="overload">[5/43]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -558,7 +562,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a6b5ee8eb92cf189403dd72672cca0f58" name="a6b5ee8eb92cf189403dd72672cca0f58"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6b5ee8eb92cf189403dd72672cca0f58">&#9670;&#160;</a></span>set_uniform() <span class="overload">[6/44]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b5ee8eb92cf189403dd72672cca0f58">&#9670;&#160;</a></span>set_uniform() <span class="overload">[6/43]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -597,7 +601,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="ad63b255ec75ef98e6ff900cc1c7a65af" name="ad63b255ec75ef98e6ff900cc1c7a65af"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad63b255ec75ef98e6ff900cc1c7a65af">&#9670;&#160;</a></span>set_uniform() <span class="overload">[7/44]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad63b255ec75ef98e6ff900cc1c7a65af">&#9670;&#160;</a></span>set_uniform() <span class="overload">[7/43]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -636,7 +640,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="aab362e12f5e5709eca6ccee25e1eb69d" name="aab362e12f5e5709eca6ccee25e1eb69d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aab362e12f5e5709eca6ccee25e1eb69d">&#9670;&#160;</a></span>set_uniform() <span class="overload">[8/44]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aab362e12f5e5709eca6ccee25e1eb69d">&#9670;&#160;</a></span>set_uniform() <span class="overload">[8/43]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -675,7 +679,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="aceb21f3fc81379e3cebe4d771b371a13" name="aceb21f3fc81379e3cebe4d771b371a13"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aceb21f3fc81379e3cebe4d771b371a13">&#9670;&#160;</a></span>set_uniform() <span class="overload">[9/44]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aceb21f3fc81379e3cebe4d771b371a13">&#9670;&#160;</a></span>set_uniform() <span class="overload">[9/43]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -714,7 +718,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="ab9ba4217c9fc34b5febca82641f2bd66" name="ab9ba4217c9fc34b5febca82641f2bd66"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab9ba4217c9fc34b5febca82641f2bd66">&#9670;&#160;</a></span>set_uniform() <span class="overload">[10/44]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab9ba4217c9fc34b5febca82641f2bd66">&#9670;&#160;</a></span>set_uniform() <span class="overload">[10/43]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -753,7 +757,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a47027fb0c625255010e665a3073228b9" name="a47027fb0c625255010e665a3073228b9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a47027fb0c625255010e665a3073228b9">&#9670;&#160;</a></span>set_uniform() <span class="overload">[11/44]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a47027fb0c625255010e665a3073228b9">&#9670;&#160;</a></span>set_uniform() <span class="overload">[11/43]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -792,7 +796,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="ac7e8c8090b3ac2b043bd4ed6a40bac53" name="ac7e8c8090b3ac2b043bd4ed6a40bac53"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac7e8c8090b3ac2b043bd4ed6a40bac53">&#9670;&#160;</a></span>set_uniform() <span class="overload">[12/44]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7e8c8090b3ac2b043bd4ed6a40bac53">&#9670;&#160;</a></span>set_uniform() <span class="overload">[12/43]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -831,7 +835,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a90136455ed8f2b5e440c8fdca5ed3a87" name="a90136455ed8f2b5e440c8fdca5ed3a87"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a90136455ed8f2b5e440c8fdca5ed3a87">&#9670;&#160;</a></span>set_uniform() <span class="overload">[13/44]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a90136455ed8f2b5e440c8fdca5ed3a87">&#9670;&#160;</a></span>set_uniform() <span class="overload">[13/43]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -870,7 +874,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a68382c585a25c2a84b3b4f9f668eedf7" name="a68382c585a25c2a84b3b4f9f668eedf7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a68382c585a25c2a84b3b4f9f668eedf7">&#9670;&#160;</a></span>set_uniform() <span class="overload">[14/44]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a68382c585a25c2a84b3b4f9f668eedf7">&#9670;&#160;</a></span>set_uniform() <span class="overload">[14/43]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -909,7 +913,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a2fad0dd5a111fccd6932994b7402f782" name="a2fad0dd5a111fccd6932994b7402f782"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2fad0dd5a111fccd6932994b7402f782">&#9670;&#160;</a></span>set_uniform() <span class="overload">[15/44]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a2fad0dd5a111fccd6932994b7402f782">&#9670;&#160;</a></span>set_uniform() <span class="overload">[15/43]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -948,7 +952,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a859648342642222782579c3fb3031d4f" name="a859648342642222782579c3fb3031d4f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a859648342642222782579c3fb3031d4f">&#9670;&#160;</a></span>set_uniform() <span class="overload">[16/44]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a859648342642222782579c3fb3031d4f">&#9670;&#160;</a></span>set_uniform() <span class="overload">[16/43]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -987,7 +991,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="ae129d8df4a342c0f5942592a5998f011" name="ae129d8df4a342c0f5942592a5998f011"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae129d8df4a342c0f5942592a5998f011">&#9670;&#160;</a></span>set_uniform() <span class="overload">[17/44]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae129d8df4a342c0f5942592a5998f011">&#9670;&#160;</a></span>set_uniform() <span class="overload">[17/43]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1026,7 +1030,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="acbad4bdd6be8cab28bd3461fa0df9038" name="acbad4bdd6be8cab28bd3461fa0df9038"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acbad4bdd6be8cab28bd3461fa0df9038">&#9670;&#160;</a></span>set_uniform() <span class="overload">[18/44]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#acbad4bdd6be8cab28bd3461fa0df9038">&#9670;&#160;</a></span>set_uniform() <span class="overload">[18/43]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1065,7 +1069,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a37aa158f5abef72c7bf2229b8d00e365" name="a37aa158f5abef72c7bf2229b8d00e365"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a37aa158f5abef72c7bf2229b8d00e365">&#9670;&#160;</a></span>set_uniform() <span class="overload">[19/44]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a37aa158f5abef72c7bf2229b8d00e365">&#9670;&#160;</a></span>set_uniform() <span class="overload">[19/43]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1104,7 +1108,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="adfdf471534a91112677ff2968ed8fe9d" name="adfdf471534a91112677ff2968ed8fe9d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adfdf471534a91112677ff2968ed8fe9d">&#9670;&#160;</a></span>set_uniform() <span class="overload">[20/44]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#adfdf471534a91112677ff2968ed8fe9d">&#9670;&#160;</a></span>set_uniform() <span class="overload">[20/43]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1143,7 +1147,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a77f374acb5c07f2e8c1b7632c364039a" name="a77f374acb5c07f2e8c1b7632c364039a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a77f374acb5c07f2e8c1b7632c364039a">&#9670;&#160;</a></span>set_uniform() <span class="overload">[21/44]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a77f374acb5c07f2e8c1b7632c364039a">&#9670;&#160;</a></span>set_uniform() <span class="overload">[21/43]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1182,7 +1186,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a409afc966efefd0247f20bf289873575" name="a409afc966efefd0247f20bf289873575"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a409afc966efefd0247f20bf289873575">&#9670;&#160;</a></span>set_uniform() <span class="overload">[22/44]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a409afc966efefd0247f20bf289873575">&#9670;&#160;</a></span>set_uniform() <span class="overload">[22/43]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1221,7 +1225,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a7db06d68a3e342ac539482896c0c3f97" name="a7db06d68a3e342ac539482896c0c3f97"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7db06d68a3e342ac539482896c0c3f97">&#9670;&#160;</a></span>set_uniform() <span class="overload">[23/44]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a7db06d68a3e342ac539482896c0c3f97">&#9670;&#160;</a></span>set_uniform() <span class="overload">[23/43]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1260,7 +1264,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a353e82cef36edf5a820308cd0df243d2" name="a353e82cef36edf5a820308cd0df243d2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a353e82cef36edf5a820308cd0df243d2">&#9670;&#160;</a></span>set_uniform() <span class="overload">[24/44]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a353e82cef36edf5a820308cd0df243d2">&#9670;&#160;</a></span>set_uniform() <span class="overload">[24/43]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1299,7 +1303,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="ad9fae2113032e33bc779f456260a838c" name="ad9fae2113032e33bc779f456260a838c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad9fae2113032e33bc779f456260a838c">&#9670;&#160;</a></span>set_uniform() <span class="overload">[25/44]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad9fae2113032e33bc779f456260a838c">&#9670;&#160;</a></span>set_uniform() <span class="overload">[25/43]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1338,7 +1342,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a739e81baf2aca76214259229d405d8fe" name="a739e81baf2aca76214259229d405d8fe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a739e81baf2aca76214259229d405d8fe">&#9670;&#160;</a></span>set_uniform() <span class="overload">[26/44]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a739e81baf2aca76214259229d405d8fe">&#9670;&#160;</a></span>set_uniform() <span class="overload">[26/43]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1377,7 +1381,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a30ef64198e93bef7060ed8b5882856d1" name="a30ef64198e93bef7060ed8b5882856d1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a30ef64198e93bef7060ed8b5882856d1">&#9670;&#160;</a></span>set_uniform() <span class="overload">[27/44]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a30ef64198e93bef7060ed8b5882856d1">&#9670;&#160;</a></span>set_uniform() <span class="overload">[27/43]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1416,7 +1420,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a4224dacb437c90e940ca815c19f422a9" name="a4224dacb437c90e940ca815c19f422a9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4224dacb437c90e940ca815c19f422a9">&#9670;&#160;</a></span>set_uniform() <span class="overload">[28/44]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a4224dacb437c90e940ca815c19f422a9">&#9670;&#160;</a></span>set_uniform() <span class="overload">[28/43]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1455,7 +1459,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a8db64aa0d6dde5924a556880d9293d30" name="a8db64aa0d6dde5924a556880d9293d30"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8db64aa0d6dde5924a556880d9293d30">&#9670;&#160;</a></span>set_uniform() <span class="overload">[29/44]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a8db64aa0d6dde5924a556880d9293d30">&#9670;&#160;</a></span>set_uniform() <span class="overload">[29/43]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1494,7 +1498,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a5059306853121912e1912e586fcab82c" name="a5059306853121912e1912e586fcab82c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5059306853121912e1912e586fcab82c">&#9670;&#160;</a></span>set_uniform() <span class="overload">[30/44]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5059306853121912e1912e586fcab82c">&#9670;&#160;</a></span>set_uniform() <span class="overload">[30/43]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1533,7 +1537,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="af2c048e131357bb6cab4f353dfba868e" name="af2c048e131357bb6cab4f353dfba868e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af2c048e131357bb6cab4f353dfba868e">&#9670;&#160;</a></span>set_uniform() <span class="overload">[31/44]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#af2c048e131357bb6cab4f353dfba868e">&#9670;&#160;</a></span>set_uniform() <span class="overload">[31/43]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1572,7 +1576,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a26275d294bb4e3c57da18f552734b602" name="a26275d294bb4e3c57da18f552734b602"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a26275d294bb4e3c57da18f552734b602">&#9670;&#160;</a></span>set_uniform() <span class="overload">[32/44]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a26275d294bb4e3c57da18f552734b602">&#9670;&#160;</a></span>set_uniform() <span class="overload">[32/43]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1611,7 +1615,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a9a8a676a513dfc2300a58a0cff31f638" name="a9a8a676a513dfc2300a58a0cff31f638"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9a8a676a513dfc2300a58a0cff31f638">&#9670;&#160;</a></span>set_uniform() <span class="overload">[33/44]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a9a8a676a513dfc2300a58a0cff31f638">&#9670;&#160;</a></span>set_uniform() <span class="overload">[33/43]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1650,7 +1654,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="aaa7b80f4a688cba6f7aff8a3ab5b2fc5" name="aaa7b80f4a688cba6f7aff8a3ab5b2fc5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaa7b80f4a688cba6f7aff8a3ab5b2fc5">&#9670;&#160;</a></span>set_uniform() <span class="overload">[34/44]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa7b80f4a688cba6f7aff8a3ab5b2fc5">&#9670;&#160;</a></span>set_uniform() <span class="overload">[34/43]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1689,7 +1693,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a6043caeee7661c2ee2c4a1fc3253aff0" name="a6043caeee7661c2ee2c4a1fc3253aff0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6043caeee7661c2ee2c4a1fc3253aff0">&#9670;&#160;</a></span>set_uniform() <span class="overload">[35/44]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6043caeee7661c2ee2c4a1fc3253aff0">&#9670;&#160;</a></span>set_uniform() <span class="overload">[35/43]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1728,7 +1732,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a996fee2aa57dfe3f21588b3428c12422" name="a996fee2aa57dfe3f21588b3428c12422"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a996fee2aa57dfe3f21588b3428c12422">&#9670;&#160;</a></span>set_uniform() <span class="overload">[36/44]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a996fee2aa57dfe3f21588b3428c12422">&#9670;&#160;</a></span>set_uniform() <span class="overload">[36/43]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1767,7 +1771,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a0358c003ab35de629b21ca8b49997f1b" name="a0358c003ab35de629b21ca8b49997f1b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0358c003ab35de629b21ca8b49997f1b">&#9670;&#160;</a></span>set_uniform() <span class="overload">[37/44]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a0358c003ab35de629b21ca8b49997f1b">&#9670;&#160;</a></span>set_uniform() <span class="overload">[37/43]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1806,7 +1810,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a63a0b4b2f6dce626ad1316079a2997c4" name="a63a0b4b2f6dce626ad1316079a2997c4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a63a0b4b2f6dce626ad1316079a2997c4">&#9670;&#160;</a></span>set_uniform() <span class="overload">[38/44]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a63a0b4b2f6dce626ad1316079a2997c4">&#9670;&#160;</a></span>set_uniform() <span class="overload">[38/43]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1845,7 +1849,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a638f0e2f8bee4b7ed6fcb9c39cd367d5" name="a638f0e2f8bee4b7ed6fcb9c39cd367d5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a638f0e2f8bee4b7ed6fcb9c39cd367d5">&#9670;&#160;</a></span>set_uniform() <span class="overload">[39/44]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a638f0e2f8bee4b7ed6fcb9c39cd367d5">&#9670;&#160;</a></span>set_uniform() <span class="overload">[39/43]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1884,7 +1888,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a46037b6ea0e2837c8932fd43ad643701" name="a46037b6ea0e2837c8932fd43ad643701"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a46037b6ea0e2837c8932fd43ad643701">&#9670;&#160;</a></span>set_uniform() <span class="overload">[40/44]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a46037b6ea0e2837c8932fd43ad643701">&#9670;&#160;</a></span>set_uniform() <span class="overload">[40/43]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1923,7 +1927,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="acc2a40be9849a597fb783dcd4ab84b75" name="acc2a40be9849a597fb783dcd4ab84b75"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acc2a40be9849a597fb783dcd4ab84b75">&#9670;&#160;</a></span>set_uniform() <span class="overload">[41/44]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#acc2a40be9849a597fb783dcd4ab84b75">&#9670;&#160;</a></span>set_uniform() <span class="overload">[41/43]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1962,7 +1966,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="ae178e2ab041f84bdaeb76c4f6c9061fb" name="ae178e2ab041f84bdaeb76c4f6c9061fb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae178e2ab041f84bdaeb76c4f6c9061fb">&#9670;&#160;</a></span>set_uniform() <span class="overload">[42/44]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae178e2ab041f84bdaeb76c4f6c9061fb">&#9670;&#160;</a></span>set_uniform() <span class="overload">[42/43]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2001,7 +2005,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a02971882b8e8d0b4898e74dde509d0eb" name="a02971882b8e8d0b4898e74dde509d0eb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a02971882b8e8d0b4898e74dde509d0eb">&#9670;&#160;</a></span>set_uniform() <span class="overload">[43/44]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a02971882b8e8d0b4898e74dde509d0eb">&#9670;&#160;</a></span>set_uniform() <span class="overload">[43/43]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2039,14 +2043,14 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aec50b6bd802404d1ae59f8f40a674eec" name="aec50b6bd802404d1ae59f8f40a674eec"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aec50b6bd802404d1ae59f8f40a674eec">&#9670;&#160;</a></span>set_uniform() <span class="overload">[44/44]</span></h2>
+<a id="a1475ccd45052746cb2075a1f64b3ba55" name="a1475ccd45052746cb2075a1f64b3ba55"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1475ccd45052746cb2075a1f64b3ba55">&#9670;&#160;</a></span>set_sampler_uniform()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::shader::set_uniform </td>
+          <td class="memname">void tr::shader::set_sampler_uniform </td>
           <td>(</td>
           <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
         </tr>
@@ -2063,6 +2067,43 @@ Public Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">index</td><td>Uniform location index. </td></tr>
     <tr><td class="paramname">texture</td><td>Texture to set. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section pre"><dt>Precondition</dt><dd>The uniform at index <span class="tt">index</span> must exist and be of a matching type. </dd></dl>
+
+</div>
+</div>
+<a id="a56556129d0b198db1e3e73f9c5acdd40" name="a56556129d0b198db1e3e73f9c5acdd40"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a56556129d0b198db1e3e73f9c5acdd40">&#9670;&#160;</a></span>set_image_uniform()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tr::shader::set_image_uniform </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>index</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classtr_1_1mutable__texture__view.html">mutable_texture_view</a></td>          <td class="paramname"><span class="paramname"><em>texture</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacetr.html#a237d040341dd8a174a37871b9c3bc20a">access</a></td>          <td class="paramname"><span class="paramname"><em>access</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets a texture image uniform. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">index</td><td>Uniform location index. </td></tr>
+    <tr><td class="paramname">texture</td><td>Texture to set. </td></tr>
+    <tr><td class="paramname">access</td><td>Image access type. </td></tr>
   </table>
   </dd>
 </dl>

@@ -15,6 +15,7 @@ var classtr_1_1ping__pong__target =
     [ "set_filtering", "classtr_1_1ping__pong__target.html#a63f6163ded9bbcc9b6d9c3edda440793", null ],
     [ "set_wrap", "classtr_1_1ping__pong__target.html#abd1d2fd370ac807db5b14dd3e6451076", null ],
     [ "set_border_color", "classtr_1_1ping__pong__target.html#a29a1c8066cd8ba546f98ea0156071a25", null ],
+    [ "source", "classtr_1_1ping__pong__target.html#acf91be174ea7b469db0309a83eccffe5", null ],
     [ "source", "classtr_1_1ping__pong__target.html#af3e8a9d1125b4a4ea10b7cb2f79b0c8a", null ],
     [ "destination", "classtr_1_1ping__pong__target.html#a10683b21eaee527bb4a829f2ae248050", null ],
     [ "swap", "classtr_1_1ping__pong__target.html#ae27d0055145d756cf64c4bd403940a6f", null ],

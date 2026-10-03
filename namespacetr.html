@@ -294,6 +294,8 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Blending mode information.  <a href="structtr_1_1blend__mode.html#details">More...</a><br /></td></tr>
 <tr class="memitem:circle" id="r_circle"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structtr_1_1circle.html">circle</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Circle datatype.  <a href="structtr_1_1circle.html#details">More...</a><br /></td></tr>
+<tr class="memitem:compute_5Fshader" id="r_compute_5Fshader"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classtr_1_1compute__shader.html">compute_shader</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute shader program.  <a href="classtr_1_1compute__shader.html#details">More...</a><br /></td></tr>
 <tr class="memitem:const_5Fpixel_5Fiterator" id="r_const_5Fpixel_5Fiterator"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classtr_1_1const__pixel__iterator.html">const_pixel_iterator</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Immutable bitmap pixel iterator.  <a href="classtr_1_1const__pixel__iterator.html#details">More...</a><br /></td></tr>
 <tr class="memitem:const_5Fpixel_5Fproxy" id="r_const_5Fpixel_5Fproxy"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classtr_1_1const__pixel__proxy.html">const_pixel_proxy</a></td></tr>
@@ -430,6 +432,8 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event emitted when the mouse wheel is moved.  <a href="structtr_1_1mouse__wheel__event.html#details">More...</a><br /></td></tr>
 <tr class="memitem:mstream" id="r_mstream"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classtr_1_1mstream.html">mstream</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Input-output memory stream.  <a href="classtr_1_1mstream.html#details">More...</a><br /></td></tr>
+<tr class="memitem:mutable_5Ftexture_5Fview" id="r_mutable_5Ftexture_5Fview"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classtr_1_1mutable__texture__view.html">mutable_texture_view</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lightweight optional reference to a mutable texture object.  <a href="classtr_1_1mutable__texture__view.html#details">More...</a><br /></td></tr>
 <tr class="memitem:normalized" id="r_normalized"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structtr_1_1normalized.html">normalized</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tag to signify an integral vertex attribute should be normalized.  <a href="structtr_1_1normalized.html#details">More...</a><br /></td></tr>
 <tr class="memitem:omstream" id="r_omstream"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classtr_1_1omstream.html">omstream</a></td></tr>
@@ -832,6 +836,11 @@ Enumerations</h2></td></tr>
 , <a class="el" href="#aadc8d482d8d35a661880c99bdd86069ead9c37a9391c91175a6c155b3803ec8b1">stereo16</a> = 0x1103
  }</td></tr>
 <tr class="memdesc:aadc8d482d8d35a661880c99bdd86069e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Audio data formats.  <a href="#aadc8d482d8d35a661880c99bdd86069e">More...</a><br /></td></tr>
+<tr class="memitem:a237d040341dd8a174a37871b9c3bc20a" id="r_a237d040341dd8a174a37871b9c3bc20a"><td class="memItemLeft">enum class &#160;</td><td class="memItemRight"><a class="el" href="#a237d040341dd8a174a37871b9c3bc20a">access</a> : u32 { <a class="el" href="#a237d040341dd8a174a37871b9c3bc20aabefe72871b2de8f4f0e20108517e31fe">read_only</a> = 1
+, <a class="el" href="#a237d040341dd8a174a37871b9c3bc20aa2629564984b808cf7e6cfc61a0286d69">write_only</a> = 2
+, <a class="el" href="#a237d040341dd8a174a37871b9c3bc20aa06ad287ea83b37a6f9db3d8d10d72c8f">read_write</a> = 3
+ }</td></tr>
+<tr class="memdesc:a237d040341dd8a174a37871b9c3bc20a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Access types.  <a href="#a237d040341dd8a174a37871b9c3bc20a">More...</a><br /></td></tr>
 <tr class="memitem:aead4294434ac2897c9ce8318a8216b18" id="r_aead4294434ac2897c9ce8318a8216b18"><td class="memItemLeft">enum class &#160;</td><td class="memItemRight"><a class="el" href="#aead4294434ac2897c9ce8318a8216b18">blend_fn</a> { <br />
 &#160;&#160;<a class="el" href="#aead4294434ac2897c9ce8318a8216b18a34ec78fcc91ffb1e54cd85e4a0924332">add</a> = 0x8006
 , <a class="el" href="#aead4294434ac2897c9ce8318a8216b18ad8bd79cc131920d5de426f914d17405a">min</a>
@@ -892,11 +901,6 @@ Enumerations</h2></td></tr>
 , <a class="el" href="#a7f28eae560c1098cb5b87baad7ff5326a10aec35353f9c4096a71c38654c3d402">cancel</a>
  }</td></tr>
 <tr class="memdesc:a7f28eae560c1098cb5b87baad7ff5326"><td class="mdescLeft">&#160;</td><td class="mdescRight">Message box selection.  <a href="#a7f28eae560c1098cb5b87baad7ff5326">More...</a><br /></td></tr>
-<tr class="memitem:a05bfa9f1eba3f81364c4ca5d89fedbcd" id="r_a05bfa9f1eba3f81364c4ca5d89fedbcd"><td class="memItemLeft">enum class &#160;</td><td class="memItemRight"><a class="el" href="#a05bfa9f1eba3f81364c4ca5d89fedbcd">graphics_buffer_map_access</a> : u32 { <a class="el" href="#a05bfa9f1eba3f81364c4ca5d89fedbcdabefe72871b2de8f4f0e20108517e31fe">read_only</a> = 1
-, <a class="el" href="#a05bfa9f1eba3f81364c4ca5d89fedbcda2629564984b808cf7e6cfc61a0286d69">write_only</a> = 2
-, <a class="el" href="#a05bfa9f1eba3f81364c4ca5d89fedbcda06ad287ea83b37a6f9db3d8d10d72c8f">read_write</a> = 3
- }</td></tr>
-<tr class="memdesc:a05bfa9f1eba3f81364c4ca5d89fedbcd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Graphics buffer map access type.  <a href="#a05bfa9f1eba3f81364c4ca5d89fedbcd">More...</a><br /></td></tr>
 <tr class="memitem:a400576423c7753c57e41f5375e765753" id="r_a400576423c7753c57e41f5375e765753"><td class="memItemLeft">enum class &#160;</td><td class="memItemRight"><a class="el" href="#a400576423c7753c57e41f5375e765753">primitive</a> { <br />
 &#160;&#160;<a class="el" href="#a400576423c7753c57e41f5375e765753a0aab81de5c4c87021772015efc184d67">points</a>
 , <a class="el" href="#a400576423c7753c57e41f5375e765753a980da98409d058c365664ff7ea33dd6b">lines</a>
@@ -2156,6 +2160,38 @@ template&lt;<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#
 
 </div>
 </div>
+<a id="a237d040341dd8a174a37871b9c3bc20a" name="a237d040341dd8a174a37871b9c3bc20a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a237d040341dd8a174a37871b9c3bc20a">&#9670;&#160;</a></span>access</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum class <a class="el" href="#a237d040341dd8a174a37871b9c3bc20a">tr::access</a> : <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a28316522024e2e46cd0a6469e745897e">u32</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel strong">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Access types. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a237d040341dd8a174a37871b9c3bc20aabefe72871b2de8f4f0e20108517e31fe" name="a237d040341dd8a174a37871b9c3bc20aabefe72871b2de8f4f0e20108517e31fe"></a>read_only&#160;</td><td class="fielddoc"><p>Read-only access. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a237d040341dd8a174a37871b9c3bc20aa2629564984b808cf7e6cfc61a0286d69" name="a237d040341dd8a174a37871b9c3bc20aa2629564984b808cf7e6cfc61a0286d69"></a>write_only&#160;</td><td class="fielddoc"><p>Write-only access. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a237d040341dd8a174a37871b9c3bc20aa06ad287ea83b37a6f9db3d8d10d72c8f" name="a237d040341dd8a174a37871b9c3bc20aa06ad287ea83b37a6f9db3d8d10d72c8f"></a>read_write&#160;</td><td class="fielddoc"><p>Read-write access. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 <a id="aead4294434ac2897c9ce8318a8216b18" name="aead4294434ac2897c9ce8318a8216b18"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aead4294434ac2897c9ce8318a8216b18">&#9670;&#160;</a></span>blend_fn</h2>
 
@@ -2381,38 +2417,6 @@ template&lt;<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#
 <tr><td class="fieldname"><a id="a7f28eae560c1098cb5b87baad7ff5326a7fa3b767c460b54a2be4d49030b349c7" name="a7f28eae560c1098cb5b87baad7ff5326a7fa3b767c460b54a2be4d49030b349c7"></a>no&#160;</td><td class="fielddoc"><p>User pressed "No" or dismissed a <span class="tt"><a class="el" href="#a027a146e82b3de429a02c03fe2ae4bffa20f0596c21ad67a7fda598ffc7d038d1" title="Message box with &quot;Yes&quot; and &quot;No&quot; buttons.">message_box_layout::yes_no</a></span> message box. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="a7f28eae560c1098cb5b87baad7ff5326a10aec35353f9c4096a71c38654c3d402" name="a7f28eae560c1098cb5b87baad7ff5326a10aec35353f9c4096a71c38654c3d402"></a>cancel&#160;</td><td class="fielddoc"><p>User pressed "Cancel" or dismissed a <span class="tt"><a class="el" href="#a027a146e82b3de429a02c03fe2ae4bffa5c5cb337bb234e240912dc139048038c" title="Message box with &quot;Yes&quot;, &quot;No&quot; and &quot;Cancel&quot; buttons.">message_box_layout::yes_no_cancel</a></span> message box. </p>
-</td></tr>
-</table>
-
-</div>
-</div>
-<a id="a05bfa9f1eba3f81364c4ca5d89fedbcd" name="a05bfa9f1eba3f81364c4ca5d89fedbcd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a05bfa9f1eba3f81364c4ca5d89fedbcd">&#9670;&#160;</a></span>graphics_buffer_map_access</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum class <a class="el" href="#a05bfa9f1eba3f81364c4ca5d89fedbcd">tr::graphics_buffer_map_access</a> : <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a28316522024e2e46cd0a6469e745897e">u32</a></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel strong">strong</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Graphics buffer map access type. </p>
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a05bfa9f1eba3f81364c4ca5d89fedbcdabefe72871b2de8f4f0e20108517e31fe" name="a05bfa9f1eba3f81364c4ca5d89fedbcdabefe72871b2de8f4f0e20108517e31fe"></a>read_only&#160;</td><td class="fielddoc"><p>Read-only map. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a05bfa9f1eba3f81364c4ca5d89fedbcda2629564984b808cf7e6cfc61a0286d69" name="a05bfa9f1eba3f81364c4ca5d89fedbcda2629564984b808cf7e6cfc61a0286d69"></a>write_only&#160;</td><td class="fielddoc"><p>Write-only map. </p>
-</td></tr>
-<tr><td class="fieldname"><a id="a05bfa9f1eba3f81364c4ca5d89fedbcda06ad287ea83b37a6f9db3d8d10d72c8f" name="a05bfa9f1eba3f81364c4ca5d89fedbcda06ad287ea83b37a6f9db3d8d10d72c8f"></a>read_write&#160;</td><td class="fielddoc"><p>Read-write map. </p>
 </td></tr>
 </table>
 

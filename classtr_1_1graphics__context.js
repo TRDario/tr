@@ -17,6 +17,7 @@ var classtr_1_1graphics__context =
     [ "set_depth_testing", "classtr_1_1graphics__context.html#a5db20d4057df315e6050624bd096b567", null ],
     [ "set_render_target", "classtr_1_1graphics__context.html#ac0d6c447ece2ff9955e0741005bb2680", null ],
     [ "set_shader_pipeline", "classtr_1_1graphics__context.html#a1d9e1841c685905a825bdaa0b838af68", null ],
+    [ "dispatch_compute_shader", "classtr_1_1graphics__context.html#a4c511863f91cc808f1ad00d602277d46", null ],
     [ "blend_mode", "classtr_1_1graphics__context.html#a17cb62ed4da6c404e289682eacee86b2", null ],
     [ "set_blend_mode", "classtr_1_1graphics__context.html#a2d14d608057f0e1ce3bd205f24bc90e1", null ],
     [ "set_vertex_format", "classtr_1_1graphics__context.html#a9242740f07b35bcf767448f3518d9186", null ],

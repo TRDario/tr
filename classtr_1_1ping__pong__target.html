@@ -176,6 +176,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a29a1c8066cd8ba546f98ea0156071a25" id="r_a29a1c8066cd8ba546f98ea0156071a25"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a29a1c8066cd8ba546f98ea0156071a25">set_border_color</a> (<a class="el" href="structtr_1_1rgbaf.html">rgbaf</a> color) noexcept</td></tr>
 <tr class="memdesc:a29a1c8066cd8ba546f98ea0156071a25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the border color of the target texture samplers (used when <span class="tt">wrap::BORDER_CLAMP</span> is in use).  <br /></td></tr>
 <tr id="pub-methods-6" class="groupHeader"><td colspan="2"><div class="groupHeader">Targets</div></td></tr>
+<tr class="memitem:acf91be174ea7b469db0309a83eccffe5" id="r_acf91be174ea7b469db0309a83eccffe5"><td class="memItemLeft"><a class="el" href="classtr_1_1mutable__texture__view.html">mutable_texture_view</a>&#160;</td><td class="memItemRight"><a class="el" href="#acf91be174ea7b469db0309a83eccffe5">source</a> () noexcept</td></tr>
+<tr class="memdesc:acf91be174ea7b469db0309a83eccffe5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a mutable view to the source target texture.  <br /></td></tr>
 <tr class="memitem:af3e8a9d1125b4a4ea10b7cb2f79b0c8a" id="r_af3e8a9d1125b4a4ea10b7cb2f79b0c8a"><td class="memItemLeft"><a class="el" href="classtr_1_1texture__view.html">texture_view</a>&#160;</td><td class="memItemRight"><a class="el" href="#af3e8a9d1125b4a4ea10b7cb2f79b0c8a">source</a> () const noexcept</td></tr>
 <tr class="memdesc:af3e8a9d1125b4a4ea10b7cb2f79b0c8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a view to the source target texture.  <br /></td></tr>
 <tr class="memitem:a10683b21eaee527bb4a829f2ae248050" id="r_a10683b21eaee527bb4a829f2ae248050"><td class="memItemLeft"><a class="el" href="classtr_1_1render__target.html">render_target</a>&#160;</td><td class="memItemRight"><a class="el" href="#a10683b21eaee527bb4a829f2ae248050">destination</a> () noexcept</td></tr>
@@ -680,8 +682,37 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="acf91be174ea7b469db0309a83eccffe5" name="acf91be174ea7b469db0309a83eccffe5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acf91be174ea7b469db0309a83eccffe5">&#9670;&#160;</a></span>source() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classtr_1_1mutable__texture__view.html">mutable_texture_view</a> tr::ping_pong_target::source </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets a mutable view to the source target texture. </p>
+<p>This texture view stays valid until a call to <span class="tt"><a class="el" href="#ae8b39196911049138c86a5c5b0a75372" title="(Re-)allocates the ping-pong target textures and discards any previous data.">allocate()</a>, <a class="el" href="#ae27d0055145d756cf64c4bd403940a6f" title="Swaps the source and destination targets.">swap()</a></span>, or the destruction of the buffer. </p><dl class="section pre"><dt>Precondition</dt><dd>The target must be complete to call this function. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Mutable view to the source target texture. </dd></dl>
+
+</div>
+</div>
 <a id="af3e8a9d1125b4a4ea10b7cb2f79b0c8a" name="af3e8a9d1125b4a4ea10b7cb2f79b0c8a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af3e8a9d1125b4a4ea10b7cb2f79b0c8a">&#9670;&#160;</a></span>source()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#af3e8a9d1125b4a4ea10b7cb2f79b0c8a">&#9670;&#160;</a></span>source() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">

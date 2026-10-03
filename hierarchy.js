@@ -109,6 +109,7 @@ var hierarchy =
       [ "std::formatter< tr::basic_zstring_view< CharT, Traits > >", "structstd_1_1formatter_3_01tr_1_1basic__zstring__view_3_01CharT_00_01Traits_01_4_01_4.html", null ]
     ] ],
     [ "std::formatter&lt; tr::angle, CharT &gt;", "classstd_1_1formatter_3_01tr_1_1angle_00_01CharT_01_4.html", null ],
+    [ "std::formatter&lt; tr::compute_shader &gt;", "structstd_1_1formatter_3_01tr_1_1compute__shader_01_4.html", null ],
     [ "std::formatter&lt; tr::dynamic_atlas&lt; Key, Value, Hash, Pred &gt; &gt;", "structstd_1_1formatter_3_01tr_1_1dynamic__atlas_3_01Key_00_01Value_00_01Hash_00_01Pred_01_4_01_4.html", null ],
     [ "std::formatter&lt; tr::dynamic_index_buffer &gt;", "structstd_1_1formatter_3_01tr_1_1dynamic__index__buffer_01_4.html", null ],
     [ "std::formatter&lt; tr::dynamic_vertex_buffer&lt; Element &gt; &gt;", "structstd_1_1formatter_3_01tr_1_1dynamic__vertex__buffer_3_01Element_01_4_01_4.html", null ],
@@ -275,6 +276,7 @@ var hierarchy =
     [ "tr::mouse_state", "structtr_1_1mouse__state.html", null ],
     [ "tr::mouse_up_event", "structtr_1_1mouse__up__event.html", null ],
     [ "tr::mouse_wheel_event", "structtr_1_1mouse__wheel__event.html", null ],
+    [ "tr::mutable_texture_view", "classtr_1_1mutable__texture__view.html", null ],
     [ "tr::normalized&lt; T &gt;", "structtr_1_1normalized.html", null ],
     [ "tr::opt_ref&lt; T &gt;", "classtr_1_1opt__ref.html", null ],
     [ "tr::optional_result&lt; Values, Errors &gt;", "classtr_1_1optional__result.html", null ],
@@ -311,6 +313,7 @@ var hierarchy =
     [ "tr::rng", "classtr_1_1rng.html", null ],
     [ "tr::scan_chord", "structtr_1_1scan__chord.html", null ],
     [ "tr::shader", "classtr_1_1shader.html", [
+      [ "tr::compute_shader", "classtr_1_1compute__shader.html", null ],
       [ "tr::fragment_shader", "classtr_1_1fragment__shader.html", null ],
       [ "tr::vertex_shader", "classtr_1_1vertex__shader.html", null ]
     ] ],

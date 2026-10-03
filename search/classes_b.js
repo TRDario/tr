@@ -11,5 +11,6 @@ var searchData=
   ['mouse_5fstate_8',['mouse_state',['../structtr_1_1mouse__state.html',1,'tr']]],
   ['mouse_5fup_5fevent_9',['mouse_up_event',['../structtr_1_1mouse__up__event.html',1,'tr']]],
   ['mouse_5fwheel_5fevent_10',['mouse_wheel_event',['../structtr_1_1mouse__wheel__event.html',1,'tr']]],
-  ['mstream_11',['mstream',['../classtr_1_1mstream.html',1,'tr']]]
+  ['mstream_11',['mstream',['../classtr_1_1mstream.html',1,'tr']]],
+  ['mutable_5ftexture_5fview_12',['mutable_texture_view',['../classtr_1_1mutable__texture__view.html',1,'tr']]]
 ];

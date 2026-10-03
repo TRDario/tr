@@ -150,6 +150,7 @@ var namespacetr =
     [ "bitmap_view", "classtr_1_1bitmap__view.html", "classtr_1_1bitmap__view" ],
     [ "blend_mode", "structtr_1_1blend__mode.html", "structtr_1_1blend__mode" ],
     [ "circle", "structtr_1_1circle.html", "structtr_1_1circle" ],
+    [ "compute_shader", "classtr_1_1compute__shader.html", "classtr_1_1compute__shader" ],
     [ "const_pixel_iterator", "classtr_1_1const__pixel__iterator.html", "classtr_1_1const__pixel__iterator" ],
     [ "const_pixel_proxy", "classtr_1_1const__pixel__proxy.html", "classtr_1_1const__pixel__proxy" ],
     [ "copy_qualifiers", "structtr_1_1copy__qualifiers.html", "structtr_1_1copy__qualifiers" ],
@@ -218,6 +219,7 @@ var namespacetr =
     [ "mouse_up_event", "structtr_1_1mouse__up__event.html", "structtr_1_1mouse__up__event" ],
     [ "mouse_wheel_event", "structtr_1_1mouse__wheel__event.html", "structtr_1_1mouse__wheel__event" ],
     [ "mstream", "classtr_1_1mstream.html", "classtr_1_1mstream" ],
+    [ "mutable_texture_view", "classtr_1_1mutable__texture__view.html", "classtr_1_1mutable__texture__view" ],
     [ "normalized", "structtr_1_1normalized.html", null ],
     [ "omstream", "classtr_1_1omstream.html", "classtr_1_1omstream" ],
     [ "opt_ref", "classtr_1_1opt__ref.html", "classtr_1_1opt__ref" ],
@@ -411,6 +413,11 @@ var namespacetr =
       [ "mono16", "namespacetr.html#aadc8d482d8d35a661880c99bdd86069ea6b53b9f17c96fdeeac1fe6a4b4f64b88", null ],
       [ "stereo16", "namespacetr.html#aadc8d482d8d35a661880c99bdd86069ead9c37a9391c91175a6c155b3803ec8b1", null ]
     ] ],
+    [ "access", "namespacetr.html#a237d040341dd8a174a37871b9c3bc20a", [
+      [ "read_only", "namespacetr.html#a237d040341dd8a174a37871b9c3bc20aabefe72871b2de8f4f0e20108517e31fe", null ],
+      [ "write_only", "namespacetr.html#a237d040341dd8a174a37871b9c3bc20aa2629564984b808cf7e6cfc61a0286d69", null ],
+      [ "read_write", "namespacetr.html#a237d040341dd8a174a37871b9c3bc20aa06ad287ea83b37a6f9db3d8d10d72c8f", null ]
+    ] ],
     [ "blend_fn", "namespacetr.html#aead4294434ac2897c9ce8318a8216b18", [
       [ "add", "namespacetr.html#aead4294434ac2897c9ce8318a8216b18a34ec78fcc91ffb1e54cd85e4a0924332", null ],
       [ "min", "namespacetr.html#aead4294434ac2897c9ce8318a8216b18ad8bd79cc131920d5de426f914d17405a", null ],
@@ -459,11 +466,6 @@ var namespacetr =
       [ "yes", "namespacetr.html#a7f28eae560c1098cb5b87baad7ff5326aa6105c0a611b41b08f1209506350279e", null ],
       [ "no", "namespacetr.html#a7f28eae560c1098cb5b87baad7ff5326a7fa3b767c460b54a2be4d49030b349c7", null ],
       [ "cancel", "namespacetr.html#a7f28eae560c1098cb5b87baad7ff5326a10aec35353f9c4096a71c38654c3d402", null ]
-    ] ],
-    [ "graphics_buffer_map_access", "namespacetr.html#a05bfa9f1eba3f81364c4ca5d89fedbcd", [
-      [ "read_only", "namespacetr.html#a05bfa9f1eba3f81364c4ca5d89fedbcdabefe72871b2de8f4f0e20108517e31fe", null ],
-      [ "write_only", "namespacetr.html#a05bfa9f1eba3f81364c4ca5d89fedbcda2629564984b808cf7e6cfc61a0286d69", null ],
-      [ "read_write", "namespacetr.html#a05bfa9f1eba3f81364c4ca5d89fedbcda06ad287ea83b37a6f9db3d8d10d72c8f", null ]
     ] ],
     [ "primitive", "namespacetr.html#a400576423c7753c57e41f5375e765753", [
       [ "points", "namespacetr.html#a400576423c7753c57e41f5375e765753a0aab81de5c4c87021772015efc184d67", null ],
