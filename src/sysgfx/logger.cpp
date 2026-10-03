@@ -100,6 +100,13 @@ void tr::logger::dispatch_to_sinks(const log_message& message) noexcept
 
 void tr::logger::dispatcher_thread(std::stop_token stoken) noexcept
 {
+	// clang-format off
+	const std::stop_callback stop_callback{stoken, [this] {
+		m_sent_messages.fetch_add(1, std::memory_order_release);
+		m_sent_messages.notify_one();
+	}};
+	// clang-format on
+
 	log_message message;
 	while (!stoken.stop_requested()) {
 		while (m_message_queue.try_pop_front(message)) {
