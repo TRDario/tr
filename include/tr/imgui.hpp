@@ -49,7 +49,7 @@ namespace tr
 		ImTextureID GetTextureID(texture_view texture) noexcept;
 
 		/// Prepares the Dear ImGui backends needed to work with tr for a new frame.
-		/// @note This function should be called after `::ImGui::NewFrame`.
+		/// @note This function should be called before `::ImGui::NewFrame`.
 		void NewFrame();
 
 		/// Draws a Dear ImGui frame.

@@ -80,6 +80,7 @@ void tr::shader_pipeline::set_shaders(const vertex_shader& vertex_shader, const 
 	if (internal::graphics_object_id id{vertex_shader.id()}; m_vertex_shader_id != id) {
 		TR_LOG_TRACE("gfx", "Setting vertex shader {} on shader pipeline {}.", vertex_shader, *this);
 		gl.use_program_stages(unwrap(), GL_VERTEX_SHADER_BIT, vertex_shader.unwrap());
+		m_vertex_shader_id = id;
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 		m_vertex_shader_outputs = vertex_shader.outputs();
 #endif
@@ -87,6 +88,7 @@ void tr::shader_pipeline::set_shaders(const vertex_shader& vertex_shader, const 
 	if (internal::graphics_object_id id{fragment_shader.id()}; m_fragment_shader_id != id) {
 		TR_LOG_TRACE("gfx", "Setting fragment shader {} on shader pipeline {}.", vertex_shader, *this);
 		gl.use_program_stages(unwrap(), GL_FRAGMENT_SHADER_BIT, fragment_shader.unwrap());
+		m_fragment_shader_id = id;
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 		m_fragment_shader_inputs = fragment_shader.inputs();
 #endif
