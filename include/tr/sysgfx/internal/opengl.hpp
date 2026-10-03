@@ -43,6 +43,10 @@ namespace tr::internal
 		/// Pointer to glBindFramebuffer.
 		void (*bind_framebuffer)(unsigned int target, unsigned int framebuffer) noexcept;
 
+		/// Pointer to glBindImageTexture.
+		void (*bind_image_texture)(unsigned int unit, unsigned int texture, int level, bool layered, int layer, unsigned int access,
+								   unsigned int format) noexcept;
+
 		/// Pointer to glBindProgramPipeline.
 		void (*bind_program_pipeline)(unsigned int pipeline) noexcept;
 
@@ -111,6 +115,9 @@ namespace tr::internal
 
 		/// Pointer to glDisable.
 		void (*disable)(unsigned int cap) noexcept;
+
+		/// Pointer to glDispatchCompute.
+		void (*dispatch_compute_shader)(unsigned int num_groups_x, unsigned int num_groups_y, unsigned int num_groups_z) noexcept;
 
 		/// Pointer to glDrawArrays.
 		void (*draw_arrays)(unsigned int mode, int first, int count) noexcept;
@@ -353,6 +360,9 @@ namespace tr::internal
 
 		/// Pointer to glUnmapNamedBuffer.
 		bool (*unmap_buffer)(unsigned int buffer) noexcept;
+
+		/// Pointer to glUseProgram.
+		void (*use_program)(unsigned int program) noexcept;
 
 		/// Pointer to glUseProgramStages.
 		void (*use_program_stages)(unsigned int pipeline, unsigned int stages, unsigned int program) noexcept;

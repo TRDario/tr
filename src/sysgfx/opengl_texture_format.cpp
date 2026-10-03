@@ -131,3 +131,42 @@ unsigned int tr::internal::opengl_texture_format_type(pixel_format format) noexc
 		TR_UNREACHABLE;
 	}
 }
+
+//
+
+unsigned int tr::internal::opengl_image_format(pixel_format format) noexcept
+{
+	switch (format) {
+	case pixel_format::r8:
+		return GL_R8;
+	case pixel_format::rgb_p332:
+	case pixel_format::xrgb_p4444:
+	case pixel_format::xbgr_p4444:
+	case pixel_format::rgb24:
+	case pixel_format::bgr24:
+	case pixel_format::bgrx32:
+	case pixel_format::xbgr32:
+	case pixel_format::rgbx32:
+	case pixel_format::xrgb32:
+		return GL_RGB8;
+	case pixel_format::rgba_p4444:
+	case pixel_format::bgra_p4444:
+	case pixel_format::argb_p4444:
+	case pixel_format::abgr_p4444:
+	case pixel_format::rgba_p5551:
+	case pixel_format::bgra_p5551:
+	case pixel_format::xrgb_p1555:
+	case pixel_format::xbgr_p1555:
+	case pixel_format::argb_p1555:
+	case pixel_format::abgr_p1555:
+	case pixel_format::rgb_p565:
+	case pixel_format::bgr_p565:
+	case pixel_format::bgra32:
+	case pixel_format::abgr32:
+	case pixel_format::argb32:
+	case pixel_format::rgba32:
+		return GL_RGBA8;
+	default:
+		TR_UNREACHABLE;
+	}
+}

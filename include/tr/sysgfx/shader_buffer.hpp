@@ -2,7 +2,7 @@
 /// @brief Provides `tr::shader_buffer`.
 
 #pragma once
-#include <tr/sysgfx/graphics_buffer_map_access.hpp>
+#include <tr/sysgfx/access.hpp>
 #include <tr/sysgfx/mapped_graphics_buffer_object.hpp>
 #include <tr/sysgfx/mapped_graphics_buffer_span.hpp>
 #include <tr/sysgfx/untyped_shader_buffer.hpp>
@@ -45,8 +45,7 @@ namespace tr
 		/// @param context Graphics context to create the buffer on.
 		/// @param capacity Maximum capacity of the buffer array in elements.
 		/// @param map_type Type of map to create when mapping the buffer.
-		[[nodiscard]] shader_buffer(graphics_context& context, usize capacity,
-									graphics_buffer_map_access map_type = graphics_buffer_map_access::write_only)
+		[[nodiscard]] shader_buffer(graphics_context& context, usize capacity, access map_type = access::write_only)
 			: untyped_shader_buffer{context, sizeof(Header), capacity * sizeof(ArrayElement), map_type}
 		{
 		}

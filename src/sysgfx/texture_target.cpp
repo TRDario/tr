@@ -2,6 +2,7 @@
 /// @brief Implements texture_target.hpp.
 
 #include <tr/sysgfx/graphics_context.hpp>
+#include <tr/sysgfx/mutable_texture_view.hpp>
 #include <tr/sysgfx/sub_bitmap.hpp>
 #include <tr/sysgfx/texture_target.hpp>
 #include <tr/sysgfx/texture_view.hpp>
@@ -30,9 +31,19 @@ tr::texture_target::texture_target(graphics_context& context, sub_bitmap bitmap,
 
 //
 
+tr::texture_target::operator mutable_texture_view() noexcept
+{
+	return view();
+}
+
 tr::texture_target::operator texture_view() const noexcept
 {
 	return view();
+}
+
+tr::mutable_texture_view tr::texture_target::view() noexcept
+{
+	return m_texture;
 }
 
 tr::texture_view tr::texture_target::view() const noexcept

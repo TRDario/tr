@@ -90,7 +90,10 @@ namespace tr::internal
 		mat4x3,
 
 		/// Sampler variable.
-		sampler2D = 0x8B5E
+		sampler2D = 0x8B5E,
+
+		/// Image variable.
+		image2D = 0x904D,
 	};
 
 	//
@@ -308,6 +311,9 @@ class std::formatter<tr::internal::glsl_type>
 			break;
 		case tr::internal::glsl_type::sampler2D:
 			string = "sampler2D";
+			break;
+		case tr::internal::glsl_type::image2D:
+			string = "image2D";
 			break;
 		default:
 			string = "<unknown>";

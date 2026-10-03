@@ -2,8 +2,8 @@
 /// @brief Provides `tr::untyped_shader_buffer`.
 
 #pragma once
+#include <tr/sysgfx/access.hpp>
 #include <tr/sysgfx/graphics_buffer.hpp>
-#include <tr/sysgfx/graphics_buffer_map_access.hpp>
 
 namespace tr
 {
@@ -47,7 +47,7 @@ namespace tr
 		/// @param capacity Maximum capacity of the dynamic array in bytes.
 		/// @param map_type Type of map to create when mapping the buffer.
 		[[nodiscard]] untyped_shader_buffer(graphics_context& context, usize header_size, usize capacity,
-											graphics_buffer_map_access map_type = graphics_buffer_map_access::write_only);
+											access map_type = access::write_only);
 
 		/// Untyped shader buffers are not copyable.
 		untyped_shader_buffer(const untyped_shader_buffer&) = delete;
@@ -165,7 +165,7 @@ namespace tr
 
 	  private:
 		// Map type of the buffer.
-		graphics_buffer_map_access m_map_type;
+		access m_map_type;
 
 		// Size of the header.
 		usize m_header_size;

@@ -8,6 +8,7 @@
 #include <tr/sysgfx/dynamic_index_buffer.hpp>
 #include <tr/sysgfx/exception.hpp>
 #include <tr/sysgfx/graphics_context.hpp>
+#include <tr/sysgfx/shader.hpp>
 #include <tr/sysgfx/shader_pipeline.hpp>
 #include <tr/sysgfx/static_index_buffer.hpp>
 #include <tr/sysgfx/texture.hpp>
@@ -196,11 +197,29 @@ void tr::graphics_context::set_shader_pipeline(const shader_pipeline& pipeline) 
 			  "Tried to set shader pipeline {} with invalid set fragment shader.", pipeline);
 #endif
 
+	const internal::opengl& gl{this->gl()};
+	if (m_bound_shader != internal::graphics_object_id::invalid) {
+		gl.use_program(0);
+	}
 	if (internal::graphics_object_id id{pipeline.id()}; m_bound_shader_pipeline != id) {
 		TR_LOG_TRACE("gfx", "Setting shader pipeline {} on context.", pipeline);
-		gl().bind_program_pipeline(pipeline.unwrap());
+		gl.bind_program_pipeline(pipeline.unwrap());
 		m_bound_shader_pipeline = id;
 	}
+}
+
+void tr::graphics_context::dispatch_compute_shader(const compute_shader& shader, glm::uvec3 groups) noexcept
+{
+	TR_ASSERT(shader.valid(), "Tried to dispatch a compute shader in an invalid state to a context.");
+	TR_ASSERT(&shader.context() == this, "Tried to dispatch shader {} om a context it is not associated with.", shader);
+
+	const internal::opengl& gl{this->gl()};
+	if (internal::graphics_object_id id{shader.id()}; m_bound_shader != id) {
+		TR_LOG_TRACE("gfx", "Setting shader program {} on context.", shader);
+		gl.use_program(shader.unwrap());
+		m_bound_shader = id;
+	}
+	gl.dispatch_compute_shader(groups.x, groups.y, groups.z);
 }
 
 //
@@ -477,6 +496,27 @@ void tr::graphics_context::free_texture_unit(unsigned int texture_unit) noexcept
 	TR_ASSERT(m_allocated_texture_units[texture_unit], "Tried to free already free texture unit.");
 
 	m_allocated_texture_units[texture_unit] = false;
+}
+
+//
+
+unsigned int tr::graphics_context::allocate_image_unit() noexcept
+{
+	for (unsigned int free_index{0}; free_index < m_allocated_image_units.size(); ++free_index) {
+		if (!m_allocated_image_units[free_index]) {
+			m_allocated_image_units[free_index] = true;
+			return free_index;
+		}
+	}
+	TR_ASSERT(false, "Tried to allocate more than 80 image units simultaneously.");
+	TR_UNREACHABLE;
+}
+
+void tr::graphics_context::free_image_unit(unsigned int image_unit) noexcept
+{
+	TR_ASSERT(m_allocated_image_units[image_unit], "Tried to free already free image unit.");
+
+	m_allocated_image_units[image_unit] = false;
 }
 
 //

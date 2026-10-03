@@ -4,9 +4,9 @@
 #include "internal/opengl_definitions.hpp"
 #include <tr/sysgfx/exception.hpp>
 #include <tr/sysgfx/graphics_context.hpp>
+#include <tr/sysgfx/mutable_texture_view.hpp>
 #include <tr/sysgfx/shader.hpp>
 #include <tr/sysgfx/shader_buffer.hpp>
-#include <tr/sysgfx/texture.hpp>
 #include <tr/sysgfx/texture_view.hpp>
 #include <tr/sysgfx/uniform_buffer.hpp>
 #include <tr/utility/hash_map.hpp>
@@ -461,7 +461,9 @@ void tr::shader::set_uniform(int index, std::span<const glm::mat4x3> value) noex
 	context().gl().set_program_uniform_matrix4x3fv(unwrap(), index, value.size(), false, value_ptr(value[0]));
 }
 
-void tr::shader::set_uniform(int index, texture_view value)
+//
+
+void tr::shader::set_sampler_uniform(int index, texture_view value)
 {
 	TR_ASSERT(valid(), "Tried to set a uniform on a shader in an invalid state.");
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
@@ -478,6 +480,26 @@ void tr::shader::set_uniform(int index, texture_view value)
 	}
 	unit_it->second.set(value);
 }
+
+void tr::shader::set_image_uniform(int index, mutable_texture_view texture, access access)
+{
+	TR_ASSERT(valid(), "Tried to set a uniform on a shader in an invalid state.");
+#ifdef TR_ENABLE_CHECKED_GRAPHICS
+	const auto uniform_it{m_uniforms.find(index)};
+	TR_ASSERT(uniform_it != m_uniforms.end(), "Tried to set uniform with invalid index '{}' in shader {}.", index, *this);
+	TR_ASSERT(uniform_it->second.type == internal::glsl_type::image2D && uniform_it->second.array_size == 1,
+			  "Tried to set uniform with signature '{}' in shader {} with a value of type 'image2D'.", uniform_it->second, *this);
+#endif
+
+	auto unit_it{m_image_units.find(index)};
+	if (unit_it == m_image_units.end()) {
+		unit_it = m_image_units.insert({index, internal::image_unit{context()}}).first;
+		context().gl().set_program_uniform_1i(unwrap(), index, unit_it->second.id());
+	}
+	unit_it->second.set(texture, access);
+}
+
+//
 
 void tr::shader::set_storage_buffer(unsigned int index, unsigned int buffer_id, std::intptr_t buffer_size) noexcept
 {

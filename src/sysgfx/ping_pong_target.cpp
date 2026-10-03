@@ -1,6 +1,7 @@
 /// @file
 /// @brief Implements ping_pong_target.hpp.
 
+#include <tr/sysgfx/mutable_texture_view.hpp>
 #include <tr/sysgfx/ping_pong_target.hpp>
 #include <tr/sysgfx/render_target.hpp>
 #include <tr/sysgfx/texture_view.hpp>
@@ -101,6 +102,14 @@ void tr::ping_pong_target::set_border_color(rgbaf color) noexcept
 }
 
 //
+
+tr::mutable_texture_view tr::ping_pong_target::source() noexcept
+{
+	TR_ASSERT(valid(), "Tried to get the source of a ping-pong target in an invalid state.");
+	TR_ASSERT(complete(), "Tried to get the source of an incomplete ping-pong target.");
+
+	return m_targets[m_source_index];
+}
 
 tr::texture_view tr::ping_pong_target::source() const noexcept
 {

@@ -3,6 +3,7 @@
 
 #pragma once
 #include <tr/sysgfx/bitmap_atlas.hpp>
+#include <tr/sysgfx/mutable_texture_view.hpp>
 #include <tr/sysgfx/sub_bitmap.hpp>
 #include <tr/sysgfx/texture.hpp>
 #include <tr/sysgfx/texture_view.hpp>
@@ -134,6 +135,14 @@ namespace tr
 			return m_texture;
 		}
 
+		/// Gets a mutable view to the atlas texture.
+		/// @note This texture view stays valid until a call to `reserve()`, `add()`, `clear()`, or the destruction of the atlas.
+		/// @return Mutable view to the atlas texture.
+		[[nodiscard]] operator mutable_texture_view() noexcept
+		{
+			return m_texture;
+		}
+
 		/// Gets a view to the atlas texture.
 		/// @note This texture view stays valid until a call to `reserve()`, `add()`, `clear()`, or the destruction of the atlas.
 		/// @return View to the atlas texture.
@@ -145,6 +154,14 @@ namespace tr
 		/// Gets the atlas texture.
 		/// @return Reference to the atlas texture.
 		[[nodiscard]] const texture& texture() const noexcept
+		{
+			return m_texture;
+		}
+
+		/// Gets a mutable view to the atlas texture.
+		/// @note This texture view stays valid until a call to `reserve()`, `add()`, `clear()`, or the destruction of the atlas.
+		/// @return Mutable view to the atlas texture.
+		[[nodiscard]] mutable_texture_view view() noexcept
 		{
 			return m_texture;
 		}

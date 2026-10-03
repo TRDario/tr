@@ -22,4 +22,11 @@ namespace tr::internal
 	/// @param format Pixel format.
 	/// @return Equivalent OpenGL texture format type.
 	[[nodiscard]] unsigned int opengl_texture_format_type(pixel_format format) noexcept;
+
+	//
+
+	/// Converts a pixel format to an OpenGL image format.
+	/// @param format Pixel format.
+	/// @return Equivalent OpenGL image format.
+	[[nodiscard]] unsigned int opengl_image_format(pixel_format format) noexcept;
 } // namespace tr::internal

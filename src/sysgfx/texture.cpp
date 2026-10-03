@@ -4,6 +4,7 @@
 #include "internal/opengl_definitions.hpp"
 #include "internal/opengl_texture_format.hpp"
 #include <tr/sysgfx/graphics_context.hpp>
+#include <tr/sysgfx/mutable_texture_view.hpp>
 #include <tr/sysgfx/sub_bitmap.hpp>
 #include <tr/sysgfx/texture.hpp>
 #include <tr/sysgfx/texture_view.hpp>
@@ -14,13 +15,15 @@
 
 tr::texture::texture(graphics_context& context) noexcept
 	: m_handle{deleter{context}}
+	, m_format{}
 	, m_size{0, 0}
 {
 	context.gl().create_textures(GL_TEXTURE_2D, 1, out_handle(m_handle));
 }
 
-tr::texture::texture(graphics_context& context, unsigned int handle, glm::ivec2 size) noexcept
+tr::texture::texture(graphics_context& context, unsigned int handle, pixel_format format, glm::ivec2 size) noexcept
 	: m_handle{handle, deleter{context}, maybe_empty}
+	, m_format{format}
 	, m_size{size}
 {
 }
@@ -52,9 +55,11 @@ tr::texture tr::texture::allocate(glm::ivec2 size, mipmaps mipmaps, pixel_format
 	const internal::opengl& gl{context.gl()};
 
 	unsigned int old_handle;
+	pixel_format old_format;
 	glm::ivec2 old_size;
 	if (complete()) {
 		old_handle = m_handle.get();
+		old_format = m_format;
 		old_size = m_size;
 
 		unsigned int new_handle;
@@ -86,6 +91,7 @@ tr::texture tr::texture::allocate(glm::ivec2 size, mipmaps mipmaps, pixel_format
 			gl.create_textures(GL_TEXTURE_2D, 1, out_handle(m_handle));
 		}
 		old_handle = 0;
+		old_format = {};
 		old_size = {};
 	}
 
@@ -94,16 +100,29 @@ tr::texture tr::texture::allocate(glm::ivec2 size, mipmaps mipmaps, pixel_format
 	if (gl.get_error() == GL_OUT_OF_MEMORY) {
 		throw out_of_memory{"texture allocation"};
 	}
+	m_format = format;
 	m_size = size;
 
-	return texture{context, old_handle, old_size};
+	return texture{context, old_handle, old_format, old_size};
 }
 
 //
 
+tr::texture::operator mutable_texture_view() noexcept
+{
+	return view();
+}
+
 tr::texture::operator texture_view() const noexcept
 {
 	return view();
+}
+
+tr::mutable_texture_view tr::texture::view() noexcept
+{
+	TR_ASSERT(valid(), "Tried to create a view over a texture in an invalid state.");
+
+	return mutable_texture_view{m_handle.get(), m_format};
 }
 
 tr::texture_view tr::texture::view() const noexcept
@@ -144,6 +163,11 @@ glm::ivec2 tr::texture::size() const noexcept
 }
 
 //
+
+tr::pixel_format tr::texture::format() const noexcept
+{
+	return m_format;
+}
 
 void tr::texture::set_filtering(min_filter min_filter, mag_filter mag_filter) noexcept
 {

@@ -105,10 +105,12 @@ if(TR_BUILD_SYSGFX)
 		src/sysgfx/graphics_benchmark.cpp
 		src/sysgfx/graphics_buffer.cpp
 		src/sysgfx/graphics_context.cpp
+		src/sysgfx/image_unit.cpp
 		src/sysgfx/keyboard.cpp
 		src/sysgfx/log_sink.cpp
 		src/sysgfx/logger.cpp
 		src/sysgfx/mapped_untyped_graphics_buffer_span.cpp
+		src/sysgfx/mutable_texture_view.cpp
 		src/sysgfx/opengl.cpp
 		src/sysgfx/opengl_debug_callback.cpp
 		src/sysgfx/opengl_texture_format.cpp

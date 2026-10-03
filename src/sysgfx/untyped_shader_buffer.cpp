@@ -9,8 +9,7 @@
 
 //
 
-tr::untyped_shader_buffer::untyped_shader_buffer(graphics_context& context, usize header_size, usize capacity,
-												 graphics_buffer_map_access map_type)
+tr::untyped_shader_buffer::untyped_shader_buffer(graphics_context& context, usize header_size, usize capacity, access map_type)
 	: graphics_buffer{context}
 	, m_map_type{map_type}
 	, m_header_size{header_size}

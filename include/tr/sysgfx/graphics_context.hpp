@@ -16,6 +16,7 @@ struct SDL_GLContextState;
 struct SDL_Window;
 namespace tr
 {
+	class compute_shader;
 	class dynamic_index_buffer;
 	class shader_pipeline;
 	class static_index_buffer;
@@ -169,6 +170,11 @@ namespace tr
 		/// Sets the active shader pipeline.
 		/// @param pipeline Pipeline to set as active.
 		void set_shader_pipeline(const shader_pipeline& pipeline) noexcept;
+
+		/// Dispatches a compute shader.
+		/// @param shader Compute shader to dispatch.
+		/// @param groups Number of groups to launch in all 3 dimensions.
+		void dispatch_compute_shader(const compute_shader& shader, glm::uvec3 groups) noexcept;
 
 		/// @}
 		/// @name Blending
@@ -393,6 +399,16 @@ namespace tr
 
 		//
 
+		/// Allocates an image unit.
+		/// @return Allocated image unit index.
+		unsigned int allocate_image_unit() noexcept;
+
+		/// Frees an image unit.
+		/// @param image_unit Index of the image unit.
+		void free_image_unit(unsigned int image_unit) noexcept;
+
+		//
+
 		/// Moves a label from one object to another.
 		/// @param type OpenGL object type.
 		/// @param old_id Old object ID.
@@ -462,6 +478,9 @@ namespace tr
 		/// Tracks which texture units are allocated.
 		std::bitset<80> m_allocated_texture_units;
 
+		/// Tracks which image units are allocated.
+		std::bitset<80> m_allocated_image_units;
+
 		/// Whether wireframe mode is enabled.
 		bool m_wireframe_mode_enabled{false};
 
@@ -482,6 +501,9 @@ namespace tr
 
 		/// Unique graphics object ID of the bound shader pipeline.
 		internal::graphics_object_id m_bound_shader_pipeline{internal::graphics_object_id::invalid};
+
+		/// Unique graphics object ID of the bound shader.
+		internal::graphics_object_id m_bound_shader{internal::graphics_object_id::invalid};
 
 		/// Active blending mode.
 		tr::blend_mode m_blend_mode{blend_multiplier::one, blend_fn::add, blend_multiplier::zero,

@@ -122,6 +122,12 @@ namespace tr
 		/// @name Targets
 		/// @{
 
+		/// Gets a mutable view to the source target texture.
+		/// @details This texture view stays valid until a call to `allocate(), swap()`, or the destruction of the buffer.
+		/// @pre The target must be complete to call this function.
+		/// @return Mutable view to the source target texture.
+		[[nodiscard]] mutable_texture_view source() noexcept;
+
 		/// Gets a view to the source target texture.
 		/// @details This texture view stays valid until a call to `allocate(), swap()`, or the destruction of the buffer.
 		/// @pre The target must be complete to call this function.

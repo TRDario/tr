@@ -83,9 +83,17 @@ namespace tr
 		/// @name View
 		/// @{
 
+		/// Gets a mutable view to the texture.
+		/// @return Mutable view to the texture.
+		[[nodiscard]] operator mutable_texture_view() noexcept;
+
 		/// Gets a view to the texture.
 		/// @return View to the texture.
 		[[nodiscard]] operator texture_view() const noexcept;
+
+		/// Gets a mutable view to the texture.
+		/// @return Mutable view to the texture.
+		[[nodiscard]] mutable_texture_view view() noexcept;
 
 		/// Gets a view to the texture.
 		/// @return View to the texture.

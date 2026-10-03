@@ -11,6 +11,7 @@
 namespace tr
 {
 	class graphics_context;
+	class mutable_texture_view;
 	class sub_bitmap;
 	class texture_view;
 } // namespace tr
@@ -153,9 +154,17 @@ namespace tr
 		/// @name View
 		/// @{
 
+		/// Gets a mutable view to the texture.
+		/// @return Mutable view to the texture.
+		[[nodiscard]] operator mutable_texture_view() noexcept;
+
 		/// Gets a view to the texture.
 		/// @return View to the texture.
 		[[nodiscard]] operator texture_view() const noexcept;
+
+		/// Gets a mutable view to the texture.
+		/// @return Mutable view to the texture.
+		[[nodiscard]] mutable_texture_view view() noexcept;
 
 		/// Gets a view to the texture.
 		/// @return View to the texture.
@@ -199,6 +208,10 @@ namespace tr
 		/// @}
 		/// @name Attributes
 		/// @{
+
+		/// Gets the pixel format of the texture.
+		/// @return Pixel format of the texture.
+		[[nodiscard]] pixel_format format() const noexcept;
 
 		/// Sets the filters used by the texture sampler.
 		/// @param min_filter Minifying filter to use.
@@ -281,7 +294,10 @@ namespace tr
 		/// Handle to the OpenGL texture.
 		mutable handle<unsigned int, 0, deleter> m_handle;
 
-		/// Cached size of the texture.
+		/// Pixel format of the texture.
+		pixel_format m_format;
+
+		/// Size of the texture.
 		glm::ivec2 m_size;
 
 		//
@@ -290,7 +306,7 @@ namespace tr
 		/// @param context Graphics context the texture is on.
 		/// @param handle Handle to the OpenGL texture.
 		/// @param size Cached size of the texture.
-		[[nodiscard]] texture(graphics_context& context, unsigned int handle, glm::ivec2 size) noexcept;
+		[[nodiscard]] texture(graphics_context& context, unsigned int handle, pixel_format pixel_format, glm::ivec2 size) noexcept;
 
 		//
 	};

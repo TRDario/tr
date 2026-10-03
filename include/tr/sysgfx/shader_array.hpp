@@ -40,8 +40,7 @@ namespace tr
 		/// @param context Graphics context to create the array on.
 		/// @param capacity Maximum capacity of the array in elements.
 		/// @param map_type Type of map to create when mapping the array.
-		[[nodiscard]] shader_array(graphics_context& context, usize capacity,
-								   graphics_buffer_map_access map_type = graphics_buffer_map_access::write_only)
+		[[nodiscard]] shader_array(graphics_context& context, usize capacity, access map_type = access::write_only)
 			: untyped_shader_buffer{context, 0, capacity * sizeof(Element), map_type}
 		{
 		}

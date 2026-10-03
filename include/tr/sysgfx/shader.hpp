@@ -3,6 +3,7 @@
 
 #pragma once
 #include <tr/sysgfx/internal/graphics_object_id.hpp>
+#include <tr/sysgfx/internal/image_unit.hpp>
 #include <tr/sysgfx/internal/texture_unit.hpp>
 #include <tr/sysgfx/shader_array.hpp>
 #include <tr/sysgfx/shader_buffer.hpp>
@@ -353,11 +354,22 @@ namespace tr
 		/// @pre The uniform at index `index` must exist and be of a matching type.
 		void set_uniform(int index, std::span<const glm::mat4x3> value) noexcept;
 
+		/// @}
+		/// @name Texture uniforms
+		/// @{
+
 		/// Sets a texture sampler uniform.
 		/// @param index Uniform location index.
 		/// @param texture Texture to set.
 		/// @pre The uniform at index `index` must exist and be of a matching type.
-		void set_uniform(int index, texture_view texture);
+		void set_sampler_uniform(int index, texture_view texture);
+
+		/// Sets a texture image uniform.
+		/// @param index Uniform location index.
+		/// @param texture Texture to set.
+		/// @param access Image access type.
+		/// @pre The uniform at index `index` must exist and be of a matching type.
+		void set_image_uniform(int index, mutable_texture_view texture, access access);
 
 		/// @}
 		/// @name Storage buffers
@@ -479,6 +491,9 @@ namespace tr
 		/// Texture units allocated to this shader.
 		boost::unordered_flat_map<int, internal::texture_unit> m_texture_units;
 
+		/// Image units allocated to this shader.
+		boost::unordered_flat_map<int, internal::image_unit> m_image_units;
+
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 		/// List of non-block uniforms obtained by introspection.
 		boost::unordered_flat_map<unsigned int, internal::glsl_variable> m_uniforms;
@@ -552,6 +567,21 @@ namespace tr
 		/// @param source Fragment shader GLSL source code.
 		/// @exception shader_load_error If loading the shader failed.
 		[[nodiscard]] fragment_shader(graphics_context& context, zstring_view source);
+	};
+
+	/// Compute shader program.
+	/// @details
+	/// A compute shader is a shader program that is executed to compute arbitrary information independently of the regular shader pipeline.
+	///
+	/// Everything brought up in the description of `tr::shader` applies to this class as well.
+	class compute_shader : public shader
+	{
+	  public:
+		/// Creates a compute shader from source code.
+		/// @param context Graphics context to create the compute shader on.
+		/// @param source Compute shader GLSL source code.
+		/// @exception shader_load_error If loading the shader failed.
+		[[nodiscard]] compute_shader(graphics_context& context, zstring_view source);
 	};
 
 	/// @name Shaders
@@ -677,6 +707,41 @@ struct std::formatter<tr::fragment_shader>
 		}
 		else {
 			return std::format_to(context.out(), "<invalid fragment shader at {}>", static_cast<const void*>(&shader));
+		}
+	}
+};
+
+/// Compute shader formatter.
+template <>
+struct std::formatter<tr::compute_shader>
+{
+	/// Parses the format specification.
+	/// @tparam ParseContext Parsing context type.
+	/// @param context Parsing context.
+	/// @return Iterator to the end of the parsed specification.
+	template <typename ParseContext>
+	constexpr ParseContext::iterator parse(ParseContext& context)
+	{
+		if (context.begin() != context.end() && *context.begin() != '}') {
+			throw std::format_error{"Invalid compute shader format specification."};
+		}
+		return context.begin();
+	}
+
+	/// Formats a compute shader.
+	/// @tparam FormatContext Formatting context type.
+	/// @param shader Compute shader to format.
+	/// @param context Formatting context.
+	/// @return Iterator to the end of the output range.
+	template <typename FormatContext>
+	FormatContext::iterator format(const tr::compute_shader& shader, FormatContext& context) const
+	{
+		if (shader.valid()) {
+			return std::format_to(context.out(), "\"{}\" (ID: {}, PO: {})", shader.label(), std::to_underlying(shader.id()),
+								  shader.unwrap());
+		}
+		else {
+			return std::format_to(context.out(), "<invalid compute shader at {}>", static_cast<const void*>(&shader));
 		}
 	}
 };

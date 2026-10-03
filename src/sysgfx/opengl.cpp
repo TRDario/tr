@@ -15,6 +15,7 @@ tr::internal::opengl::opengl() noexcept
 	, bind_buffer_base{loaded_opengl_function{"glBindBufferBase"}}
 	, bind_buffer_range{loaded_opengl_function{"glBindBufferRange"}}
 	, bind_framebuffer{loaded_opengl_function{"glBindFramebuffer"}}
+	, bind_image_texture{loaded_opengl_function{"glBindImageTexture"}}
 	, bind_program_pipeline{loaded_opengl_function{"glBindProgramPipeline"}}
 	, bind_textures{loaded_opengl_function{"glBindTextures"}}
 	, bind_vertex_array{loaded_opengl_function{"glBindVertexArray"}}
@@ -37,6 +38,7 @@ tr::internal::opengl::opengl() noexcept
 	, delete_textures{loaded_opengl_function{"glDeleteTextures"}}
 	, delete_vertex_arrays{loaded_opengl_function{"glDeleteVertexArrays"}}
 	, disable{loaded_opengl_function{"glDisable"}}
+	, dispatch_compute_shader{loaded_opengl_function{"glDispatchCompute"}}
 	, draw_arrays{loaded_opengl_function{"glDrawArrays"}}
 	, draw_arrays_instanced{loaded_opengl_function{"glDrawArraysInstanced"}}
 	, draw_elements{loaded_opengl_function{"glDrawElements"}}
@@ -115,6 +117,7 @@ tr::internal::opengl::opengl() noexcept
 	, set_vertex_array_binding_divisor{loaded_opengl_function{"glVertexArrayBindingDivisor"}}
 	, set_viewport{loaded_opengl_function{"glViewport"}}
 	, unmap_buffer{loaded_opengl_function{"glUnmapNamedBuffer"}}
+	, use_program{loaded_opengl_function{"glUseProgram"}}
 	, use_program_stages{loaded_opengl_function{"glUseProgramStages"}}
 {
 }

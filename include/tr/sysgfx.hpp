@@ -9,6 +9,7 @@
 /// include the classes and functions in application, dialog.hpp, logger.hpp, and path.hpp.
 
 #pragma once
+#include <tr/sysgfx/access.hpp>                              // IWYU pragma: export
 #include <tr/sysgfx/application.hpp>                         // IWYU pragma: export
 #include <tr/sysgfx/bitmap.hpp>                              // IWYU pragma: export
 #include <tr/sysgfx/bitmap_atlas.hpp>                        // IWYU pragma: export
@@ -26,7 +27,6 @@
 #include <tr/sysgfx/framebuffer.hpp>                         // IWYU pragma: export
 #include <tr/sysgfx/graphics_benchmark.hpp>                  // IWYU pragma: export
 #include <tr/sysgfx/graphics_buffer.hpp>                     // IWYU pragma: export
-#include <tr/sysgfx/graphics_buffer_map_access.hpp>          // IWYU pragma: export
 #include <tr/sysgfx/graphics_context.hpp>                    // IWYU pragma: export
 #include <tr/sysgfx/keyboard.hpp>                            // IWYU pragma: export
 #include <tr/sysgfx/log_level.hpp>                           // IWYU pragma: export
@@ -37,6 +37,7 @@
 #include <tr/sysgfx/mapped_graphics_buffer_span.hpp>         // IWYU pragma: export
 #include <tr/sysgfx/mapped_untyped_graphics_buffer_span.hpp> // IWYU pragma: export
 #include <tr/sysgfx/mouse.hpp>                               // IWYU pragma: export
+#include <tr/sysgfx/mutable_texture_view.hpp>                // IWYU pragma: export
 #include <tr/sysgfx/owning_shader_pipeline.hpp>              // IWYU pragma: export
 #include <tr/sysgfx/path.hpp>                                // IWYU pragma: export
 #include <tr/sysgfx/ping_pong_target.hpp>                    // IWYU pragma: export
