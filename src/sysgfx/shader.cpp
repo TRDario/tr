@@ -632,3 +632,27 @@ tr::fragment_shader tr::load_fragment_shader(graphics_context& context, const st
 		throw shader_load_error{path.string(), "An error occurred when trying to open the file."};
 	}
 }
+
+tr::compute_shader::compute_shader(graphics_context& context, zstring_view source)
+	: shader{context, source, GL_COMPUTE_SHADER}
+{
+}
+
+tr::compute_shader tr::load_compute_shader(graphics_context& context, const std::filesystem::path& path)
+{
+	try {
+		std::ifstream file{open_file_r(path)};
+		compute_shader shader{context, std::string{std::istreambuf_iterator<char>{file}, std::istreambuf_iterator<char>{}}};
+		shader.set_label(path.filename().string());
+		return shader;
+	}
+	catch (shader_load_error& err) {
+		throw shader_load_error{path.string(), std::string{err.details()}};
+	}
+	catch (file_not_found&) {
+		throw shader_load_error{path.string(), "File not found."};
+	}
+	catch (file_open_error&) {
+		throw shader_load_error{path.string(), "An error occurred when trying to open the file."};
+	}
+}

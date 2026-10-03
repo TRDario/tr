@@ -601,6 +601,13 @@ namespace tr
 	/// @return Loaded frament shader.
 	[[nodiscard]] fragment_shader load_fragment_shader(graphics_context& context, const std::filesystem::path& path);
 
+	/// Loads a compute shader from file.
+	/// @param context Graphics context to create the compute shader on.
+	/// @param path Path to the shader GLSL source code file.
+	/// @exception shader_load_error If loading the shader failed.
+	/// @return Loaded compute shader.
+	[[nodiscard]] compute_shader load_compute_shader(graphics_context& context, const std::filesystem::path& path);
+
 	/// @}
 } // namespace tr
 
