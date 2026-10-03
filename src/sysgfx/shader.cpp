@@ -83,10 +83,12 @@ void tr::shader::find_inputs(const internal::opengl& gl)
 
 		std::string input_name_buffer(name_length, '\0');
 		gl.get_program_resource_name(unwrap(), GL_PROGRAM_INPUT, i, input_name_buffer.size(), NULL, input_name_buffer.data());
-		m_inputs.insert({
-			static_cast<unsigned int>(location),
-			{std::move(input_name_buffer), static_cast<internal::glsl_type>(var_type), array_size},
-		});
+		if (!input_name_buffer.starts_with("gl_")) {
+			m_outputs.insert({
+				static_cast<unsigned int>(location),
+				{std::move(input_name_buffer), static_cast<internal::glsl_type>(var_type), array_size},
+			});
+		}
 	}
 }
 
