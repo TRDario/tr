@@ -162,13 +162,18 @@ void tr::graphics_context::set_render_target(const render_target& target) noexce
 #ifdef TR_ENABLE_LOG_TRACE
 		int label_length;
 		std::string framebuffer_label;
-		gl.get_object_label(GL_FRAMEBUFFER, target.framebuffer_fbo(), 0, &label_length, nullptr);
-		if (label_length > 0) {
-			framebuffer_label.resize(label_length, '\0');
-			gl.get_object_label(GL_FRAMEBUFFER, target.framebuffer_fbo(), label_length + 1, nullptr, framebuffer_label.data());
+		if (target.framebuffer_fbo() != 0) {
+			gl.get_object_label(GL_FRAMEBUFFER, target.framebuffer_fbo(), 0, &label_length, nullptr);
+			if (label_length > 0) {
+				framebuffer_label.resize(label_length, '\0');
+				gl.get_object_label(GL_FRAMEBUFFER, target.framebuffer_fbo(), label_length + 1, nullptr, framebuffer_label.data());
+			}
+			else {
+				framebuffer_label = "<unnamed>";
+			}
 		}
 		else {
-			framebuffer_label = "<unnamed>";
+			framebuffer_label = std::format("<backbuffer of '{}'>", SDL_GetWindowTitle(m_window));
 		}
 		TR_LOG_TRACE("gfx", "Setting framebuffer \"{}\" (ID: {}, FBO: {}) on context at {}", framebuffer_label,
 					 std::to_underlying(framebuffer_id), target.framebuffer_fbo(), static_cast<void*>(this));
