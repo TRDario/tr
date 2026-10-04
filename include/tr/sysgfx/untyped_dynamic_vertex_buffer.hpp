@@ -38,7 +38,8 @@ namespace tr
 
 		/// Creates an empty untyped dynamic index buffer.
 		/// @param context Graphics context to create the buffer on.
-		[[nodiscard]] explicit untyped_dynamic_vertex_buffer(graphics_context& context) noexcept;
+		/// @param label Label of the buffer.
+		[[nodiscard]] explicit untyped_dynamic_vertex_buffer(graphics_context& context, std::string_view label = {}) noexcept;
 
 		/// Untyped dynamic index buffers are not copyable.
 		untyped_dynamic_vertex_buffer(const untyped_dynamic_vertex_buffer&) = delete;

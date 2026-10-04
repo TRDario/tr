@@ -8,14 +8,17 @@
 
 //
 
-tr::ping_pong_target::ping_pong_target(graphics_context& context) noexcept
-	: m_targets{texture_target{context}, texture_target{context}}
+tr::ping_pong_target::ping_pong_target(graphics_context& context, std::string_view label) noexcept
+	: m_targets{texture_target{context, label.empty() ? std::string{} : std::format("{} - Target 0", label)},
+				texture_target{context, label.empty() ? std::string{} : std::format("{} - Target 1", label)}}
 	, m_source_index{0}
 {
 }
 
-tr::ping_pong_target::ping_pong_target(graphics_context& context, glm::ivec2 size, mipmaps mipmaps, pixel_format format)
-	: m_targets{texture_target{context, size, mipmaps, format}, texture_target{context, size, mipmaps, format}}
+tr::ping_pong_target::ping_pong_target(graphics_context& context, glm::ivec2 size, mipmaps mipmaps, pixel_format format,
+									   std::string_view label)
+	: m_targets{texture_target{context, size, mipmaps, format, label.empty() ? std::string{} : std::format("{} - Target 0", label)},
+				texture_target{context, size, mipmaps, format, label.empty() ? std::string{} : std::format("{} - Target 1", label)}}
 	, m_source_index{0}
 {
 }

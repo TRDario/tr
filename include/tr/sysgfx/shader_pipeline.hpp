@@ -52,7 +52,19 @@ namespace tr
 
 		/// Constructs an incomplete shader pipeline.
 		/// @param context Graphics context to create the pipeline on.
-		[[nodiscard]] explicit shader_pipeline(graphics_context& context) noexcept;
+		/// @param label Label of the pipeline.
+		[[nodiscard]] explicit shader_pipeline(graphics_context& context, std::string_view label = {}) noexcept;
+
+		/// Constructs a complete shader pipeline.
+		/// @param context Graphics context to create the pipeline on.
+		/// @param vertex_shader Vertex shader to initially use on the pipeline.
+		/// @param fragment_shader Fragment shader to initially use on the pipeline.
+		/// @param label Label of the pipeline.
+		/// @pre `%vertex_shader` and `%fragment_shader` must be compatible with each other and be on `%context`.
+		/// @post The pipeline will revert to an incomplete state should either one of the current values of `%vertex_shader` or
+		/// `%fragment_shader` be destroyed while still set on the pipeline.
+		[[nodiscard]] shader_pipeline(graphics_context& context, const vertex_shader& vertex_shader, const fragment_shader& fragment_shader,
+									  std::string_view label = {}) noexcept;
 
 		/// Shader pipelines are not copyable.
 		shader_pipeline(const shader_pipeline&) = delete;
@@ -61,16 +73,6 @@ namespace tr
 		/// @details `rhs` is left in an invalid state after the move as per the class description.
 		/// @param rhs Shader pipeline to move.
 		[[nodiscard]] shader_pipeline(shader_pipeline&& rhs) noexcept = default;
-
-		/// Constructs a complete shader pipeline.
-		/// @param context Graphics context to create the pipeline on.
-		/// @param vertex_shader Vertex shader to initially use on the pipeline.
-		/// @param fragment_shader Fragment shader to initially use on the pipeline.
-		/// @pre `%vertex_shader` and `%fragment_shader` must be compatible with each other and be on `%context`.
-		/// @post The pipeline will revert to an incomplete state should either one of the current values of `%vertex_shader` or
-		/// `%fragment_shader` be destroyed while still set on the pipeline.
-		[[nodiscard]] shader_pipeline(graphics_context& context, const vertex_shader& vertex_shader,
-									  const fragment_shader& fragment_shader) noexcept;
 
 		/// @}
 		/// @name Assignment operators

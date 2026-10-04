@@ -13,12 +13,15 @@
 
 //
 
-tr::texture::texture(graphics_context& context) noexcept
+tr::texture::texture(graphics_context& context, std::string_view label) noexcept
 	: m_handle{deleter{context}}
 	, m_format{}
 	, m_size{0, 0}
 {
 	context.gl().create_textures(GL_TEXTURE_2D, 1, out_handle(m_handle));
+	if (!label.empty()) {
+		set_label(label);
+	}
 }
 
 tr::texture::texture(graphics_context& context, unsigned int handle, pixel_format format, glm::ivec2 size) noexcept
@@ -28,14 +31,15 @@ tr::texture::texture(graphics_context& context, unsigned int handle, pixel_forma
 {
 }
 
-tr::texture::texture(graphics_context& context, glm::ivec2 size, mipmaps mipmaps, pixel_format format)
-	: texture{context}
+tr::texture::texture(graphics_context& context, glm::ivec2 size, mipmaps mipmaps, pixel_format format, std::string_view label)
+	: texture{context, label}
 {
 	allocate(size, mipmaps, format);
 }
 
-tr::texture::texture(graphics_context& context, sub_bitmap bitmap, mipmaps mipmaps, std::optional<pixel_format> format)
-	: texture{context, bitmap.size(), mipmaps, format.value_or(bitmap.format())}
+tr::texture::texture(graphics_context& context, sub_bitmap bitmap, mipmaps mipmaps, std::optional<pixel_format> format,
+					 std::string_view label)
+	: texture{context, bitmap.size(), mipmaps, format.value_or(bitmap.format()), label}
 {
 	set_region({0, 0}, bitmap);
 }
@@ -98,7 +102,7 @@ tr::texture tr::texture::allocate(glm::ivec2 size, mipmaps mipmaps, pixel_format
 	const int levels{mipmaps == mipmaps::enabled ? floor_cast<int>(std::log2(std::max(size.x, size.y)) + 1) : 1};
 	gl.allocate_2d_texture_storage(m_handle.get(), levels, internal::opengl_texture_format(format), size.x, size.y);
 	if (gl.get_error() == GL_OUT_OF_MEMORY) {
-		throw out_of_memory{"texture allocation"};
+		throw out_of_memory{"allocation of texture {}", *this};
 	}
 	m_format = format;
 	m_size = size;

@@ -39,7 +39,8 @@ namespace tr
 		/// Uploads vertex data into a static vertex buffer.
 		/// @param context Graphics context to create the buffer on.
 		/// @param data Data to upload to the buffer.
-		[[nodiscard]] untyped_static_vertex_buffer(graphics_context& context, std::span<const std::byte> data);
+		/// @param label Label of the buffer.
+		[[nodiscard]] untyped_static_vertex_buffer(graphics_context& context, std::span<const std::byte> data, std::string_view label = {});
 
 		/// Untyped static vertex buffers are not copyable.
 		untyped_static_vertex_buffer(const untyped_static_vertex_buffer&) = delete;

@@ -32,7 +32,8 @@ namespace tr
 
 		/// Constructs an empty graphics buffer.
 		/// @param context Graphics context to create the buffer on.
-		[[nodiscard]] explicit graphics_buffer(graphics_context& context) noexcept;
+		/// @param label Label of the buffer.
+		[[nodiscard]] explicit graphics_buffer(graphics_context& context, std::string_view label = {}) noexcept;
 
 		/// Graphics buffers are not copyable.
 		graphics_buffer(const graphics_buffer&) = delete;

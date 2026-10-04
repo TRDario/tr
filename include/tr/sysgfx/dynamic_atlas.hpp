@@ -45,24 +45,27 @@ namespace tr
 
 		/// Creates an empty atlas.
 		/// @param context Graphics context to create the atlas on.
-		[[nodiscard]] explicit dynamic_atlas(graphics_context& context) noexcept
-			: m_texture{context}
+		/// @param label Label of the atlas.
+		[[nodiscard]] explicit dynamic_atlas(graphics_context& context, std::string_view label = {}) noexcept
+			: m_texture{context, label}
 		{
 		}
 
 		/// Creates an empty atlas with an initial size.
 		/// @param context Graphics context to create the atlas on.
 		/// @param size Initial size of the atlas.
-		[[nodiscard]] dynamic_atlas(graphics_context& context, glm::ivec2 size)
-			: m_texture{context, size, mipmaps::enabled}
+		/// @param label Label of the atlas.
+		[[nodiscard]] dynamic_atlas(graphics_context& context, glm::ivec2 size, std::string_view label = {})
+			: m_texture{context, size, mipmaps::enabled, tr::pixel_format::rgba32, label}
 		{
 		}
 
 		/// Uploads a bitmap atlas.
 		/// @param context Graphics context to create the atlas on.
 		/// @param source Bitmap atlas to use as a source.
-		[[nodiscard]] dynamic_atlas(graphics_context& context, bitmap_atlas<Key, Value, Hash, Pred>&& source)
-			: m_texture{context, source.bitmap, mipmaps::enabled}
+		/// @param label Label of the atlas.
+		[[nodiscard]] dynamic_atlas(graphics_context& context, bitmap_atlas<Key, Value, Hash, Pred>&& source, std::string_view label = {})
+			: m_texture{context, source.bitmap, mipmaps::enabled, tr::pixel_format::rgba32, label}
 			, m_entries{std::move(source.rectangles)}
 		{
 		}

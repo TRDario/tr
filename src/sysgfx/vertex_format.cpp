@@ -8,7 +8,7 @@
 
 //
 
-tr::vertex_format::vertex_format(graphics_context& context, std::span<const vertex_binding> bindings) noexcept
+tr::vertex_format::vertex_format(graphics_context& context, std::span<const vertex_binding> bindings, std::string_view label) noexcept
 	: m_handle{deleter{context}}
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 	, m_bindings{bindings}
@@ -19,6 +19,9 @@ tr::vertex_format::vertex_format(graphics_context& context, std::span<const vert
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 	context.registered_vertex_formats().emplace(id());
 #endif
+	if (!label.empty()) {
+		set_label(label);
+	}
 
 	unsigned int attr_id{0};
 	for (int binding_id = 0; binding_id < static_cast<int>(bindings.size()); ++binding_id) {
@@ -27,8 +30,8 @@ tr::vertex_format::vertex_format(graphics_context& context, std::span<const vert
 		gl.set_vertex_array_binding_divisor(unwrap(), binding_id, binding.divisor);
 		unsigned int offset{0};
 		for (const vertex_attribute& attribute : binding.attrs) {
-			TR_ASSERT(attribute.type != vertex_attribute_type::unknown, "Tried to construct vertex format with invalid attribute '{}'.",
-					  attribute);
+			TR_ASSERT(attribute.type != vertex_attribute_type::unknown, "Tried to construct vertex format {} with invalid attribute '{}'.",
+					  *this, attribute);
 
 			gl.set_vertex_array_attribute_format(unwrap(), attr_id, attribute.elements, std::to_underlying(attribute.type),
 												 attribute.normalized, offset);

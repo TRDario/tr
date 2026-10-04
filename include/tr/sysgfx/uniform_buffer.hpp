@@ -37,8 +37,9 @@ namespace tr
 
 		/// Allocates an uninitialized uniform buffer.
 		/// @param context Graphics context to create the buffer on.
-		[[nodiscard]] uniform_buffer(graphics_context& context)
-			: untyped_uniform_buffer{context, sizeof(Object)}
+		/// @param label Label of the buffer.
+		[[nodiscard]] uniform_buffer(graphics_context& context, std::string_view label = {})
+			: untyped_uniform_buffer{context, sizeof(Object), label}
 		{
 		}
 

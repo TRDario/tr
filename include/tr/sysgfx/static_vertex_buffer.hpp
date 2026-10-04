@@ -42,9 +42,10 @@ namespace tr
 
 		/// Uploads vertex data into a static vertex buffer.
 		/// @param context Graphics context to create the buffer on.
-		/// @param range Data to upload to the buffer.
-		[[nodiscard]] static_vertex_buffer(graphics_context& context, std::span<const Element> range)
-			: untyped_static_vertex_buffer{context, std::as_bytes(range)}
+		/// @param data Data to upload to the buffer.
+		/// @param label Label of the buffer.
+		[[nodiscard]] static_vertex_buffer(graphics_context& context, std::span<const Element> data, std::string_view label = {})
+			: untyped_static_vertex_buffer{context, std::as_bytes(data), label}
 		{
 		}
 

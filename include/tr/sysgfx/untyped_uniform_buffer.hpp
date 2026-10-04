@@ -41,7 +41,8 @@ namespace tr
 		/// Allocates an uninitialized uniform buffer.
 		/// @param context Graphics context to create the buffer on.
 		/// @param size Initial size of the buffer.
-		[[nodiscard]] untyped_uniform_buffer(graphics_context& context, usize size);
+		/// @param label Label of the buffer.
+		[[nodiscard]] untyped_uniform_buffer(graphics_context& context, usize size, std::string_view label = {});
 
 		/// Untyped uniform buffers are not copyable.
 		untyped_uniform_buffer(const untyped_uniform_buffer&) = delete;

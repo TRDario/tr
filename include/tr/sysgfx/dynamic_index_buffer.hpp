@@ -34,7 +34,8 @@ namespace tr
 
 		/// Creates an empty dynamic index buffer.
 		/// @param context Graphics context to create the buffer on.
-		[[nodiscard]] explicit dynamic_index_buffer(graphics_context& context) noexcept;
+		/// @param label Label of the buffer.
+		[[nodiscard]] dynamic_index_buffer(graphics_context& context, std::string_view label = {}) noexcept;
 
 		/// Dynamic index buffers are not copyable.
 		dynamic_index_buffer(const dynamic_index_buffer&) = delete;

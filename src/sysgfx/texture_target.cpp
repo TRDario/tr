@@ -9,22 +9,23 @@
 
 //
 
-tr::texture_target::texture_target(graphics_context& context) noexcept
-	: m_texture{context}
-	, m_framebuffer{context}
+tr::texture_target::texture_target(graphics_context& context, std::string_view label) noexcept
+	: m_texture{context, label.empty() ? std::string{} : std::format("{} - Texture", label)}
+	, m_framebuffer{context, label.empty() ? std::string{} : std::format("{} - Framebuffer", label)}
 {
 }
 
-tr::texture_target::texture_target(graphics_context& context, glm::ivec2 size, mipmaps mipmaps, pixel_format format)
-	: m_texture{context, size, mipmaps, format}
-	, m_framebuffer{context}
+tr::texture_target::texture_target(graphics_context& context, glm::ivec2 size, mipmaps mipmaps, pixel_format format, std::string_view label)
+	: m_texture{context, size, mipmaps, format, label.empty() ? std::string{} : std::format("{} - Texture", label)}
+	, m_framebuffer{context, label.empty() ? std::string{} : std::format("{} - Framebuffer", label)}
 {
 	m_framebuffer.attach(framebuffer::attachment::color0, m_texture);
 }
 
-tr::texture_target::texture_target(graphics_context& context, sub_bitmap bitmap, mipmaps mipmaps, std::optional<pixel_format> format)
-	: m_texture{context, bitmap, mipmaps, format}
-	, m_framebuffer{context}
+tr::texture_target::texture_target(graphics_context& context, sub_bitmap bitmap, mipmaps mipmaps, std::optional<pixel_format> format,
+								   std::string_view label)
+	: m_texture{context, bitmap, mipmaps, format, label.empty() ? std::string{} : std::format("{} - Texture", label)}
+	, m_framebuffer{context, label.empty() ? std::string{} : std::format("{} - Framebuffer", label)}
 {
 	m_framebuffer.attach(framebuffer::attachment::color0, m_texture);
 }

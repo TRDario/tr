@@ -9,13 +9,16 @@
 
 //
 
-tr::framebuffer::framebuffer(graphics_context& context) noexcept
+tr::framebuffer::framebuffer(graphics_context& context, std::string_view label) noexcept
 	: m_handle{deleter{context}}
 {
 	context.gl().create_framebuffers(1, out_handle(m_handle));
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 	context.registered_framebuffers().emplace(id());
 #endif
+	if (!label.empty()) {
+		set_label(label);
+	}
 }
 
 void tr::framebuffer::deleter::operator()(unsigned int fbo) const noexcept

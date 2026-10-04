@@ -8,8 +8,8 @@
 
 //
 
-tr::untyped_dynamic_vertex_buffer::untyped_dynamic_vertex_buffer(graphics_context& context) noexcept
-	: graphics_buffer{context}
+tr::untyped_dynamic_vertex_buffer::untyped_dynamic_vertex_buffer(graphics_context& context, std::string_view label) noexcept
+	: graphics_buffer{context, label}
 	, m_size{0}
 	, m_capacity{0}
 {
@@ -54,7 +54,7 @@ void tr::untyped_dynamic_vertex_buffer::reserve(usize capacity)
 		reallocate();
 		gl.allocate_buffer_storage(unwrap(), capacity, nullptr, GL_DYNAMIC_STORAGE_BIT);
 		if (gl.get_error() == GL_OUT_OF_MEMORY) {
-			throw out_of_memory{"allocation of vertex buffer '{}'", label()};
+			throw out_of_memory{"allocation of vertex buffer {}", *this};
 		}
 		m_capacity = capacity;
 	}
@@ -72,8 +72,8 @@ void tr::untyped_dynamic_vertex_buffer::set(std::span<const std::byte> data)
 
 void tr::untyped_dynamic_vertex_buffer::set_region(usize offset, std::span<const std::byte> data) noexcept
 {
-	TR_ASSERT(offset + data.size() <= m_size, "Tried to set out-of-bounds region [{}, {}) in vertex buffer '{}' of size {}.", offset,
-			  offset + data.size(), label(), m_size);
+	TR_ASSERT(offset + data.size() <= m_size, "Tried to set out-of-bounds region [{}, {}) in vertex buffer {} of size {}.", offset,
+			  offset + data.size(), *this, m_size);
 
 	context().gl().set_buffer_sub_data(unwrap(), offset, data.size(), data.data());
 }

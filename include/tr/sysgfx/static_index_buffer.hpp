@@ -36,7 +36,8 @@ namespace tr
 		/// Uploads index data into a static index buffer.
 		/// @param context Graphics context to create the buffer on.
 		/// @param data Data to copy into the buffer.
-		[[nodiscard]] static_index_buffer(graphics_context& context, std::span<const u16> data);
+		/// @param label Label of the buffer.
+		[[nodiscard]] static_index_buffer(graphics_context& context, std::span<const u16> data, std::string_view label = {});
 
 		/// Static index buffers are not copyable.
 		static_index_buffer(const static_index_buffer&) = delete;

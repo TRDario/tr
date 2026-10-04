@@ -45,8 +45,10 @@ namespace tr
 		/// @param context Graphics context to create the buffer on.
 		/// @param capacity Maximum capacity of the buffer array in elements.
 		/// @param map_type Type of map to create when mapping the buffer.
-		[[nodiscard]] shader_buffer(graphics_context& context, usize capacity, access map_type = access::write_only)
-			: untyped_shader_buffer{context, sizeof(Header), capacity * sizeof(ArrayElement), map_type}
+		/// @param label Label of the buffer.
+		[[nodiscard]] shader_buffer(graphics_context& context, usize capacity, access map_type = access::write_only,
+									std::string_view label = {})
+			: untyped_shader_buffer{context, sizeof(Header), capacity * sizeof(ArrayElement), map_type, label}
 		{
 		}
 

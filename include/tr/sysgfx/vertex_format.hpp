@@ -43,8 +43,10 @@ namespace tr
 		/// Creates a new vertex format.
 		/// @param context Graphics context to create the format on.
 		/// @param bindings Vertex bindings of the format.
+		/// @param label Label of the vertex format.
 		/// @post `bindings` must stay valid for the duration of the lifetime of the vertex format.
-		[[nodiscard]] vertex_format(graphics_context& context, std::span<const vertex_binding> bindings) noexcept;
+		[[nodiscard]] vertex_format(graphics_context& context, std::span<const vertex_binding> bindings,
+									std::string_view label = {}) noexcept;
 
 		/// Vertex formats are not copyable.
 		vertex_format(const vertex_format&) = delete;

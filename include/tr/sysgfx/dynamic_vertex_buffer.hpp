@@ -42,8 +42,9 @@ namespace tr
 
 		/// Creates an empty dynamic vertex buffer.
 		/// @param context Graphics context to create the buffer on.
-		[[nodiscard]] explicit dynamic_vertex_buffer(graphics_context& context) noexcept
-			: untyped_dynamic_vertex_buffer{context}
+		/// @param label Label of the buffer.
+		[[nodiscard]] dynamic_vertex_buffer(graphics_context& context, std::string_view label = {}) noexcept
+			: untyped_dynamic_vertex_buffer{context, label}
 		{
 		}
 

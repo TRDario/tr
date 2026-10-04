@@ -23,9 +23,10 @@ namespace tr
 		/// @param context Graphics context to create the pipeline on.
 		/// @param vertex_shader Vertex shader to move into the pipeline.
 		/// @param fragment_shader Fragment shader to move into the pipeline.
+		/// @param label Label of the pipeline.
 		/// @pre `%vertex_shader` and `%fragment_shader` must be valid shaders and be on `%context`.
-		[[nodiscard]] owning_shader_pipeline(graphics_context& context, vertex_shader&& vertex_shader,
-											 fragment_shader&& fragment_shader) noexcept;
+		[[nodiscard]] owning_shader_pipeline(graphics_context& context, vertex_shader&& vertex_shader, fragment_shader&& fragment_shader,
+											 std::string_view label = {}) noexcept;
 
 		/// @}
 		/// @name Conversion operators

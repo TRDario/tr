@@ -6,10 +6,10 @@
 //
 
 tr::owning_shader_pipeline::owning_shader_pipeline(graphics_context& context, tr::vertex_shader&& vertex_shader,
-												   tr::fragment_shader&& fragment_shader) noexcept
+												   tr::fragment_shader&& fragment_shader, std::string_view label) noexcept
 	: m_vertex_shader{std::move(vertex_shader)}
 	, m_fragment_shader{std::move(fragment_shader)}
-	, m_shader_pipeline{context, m_vertex_shader, m_fragment_shader}
+	, m_shader_pipeline{context, m_vertex_shader, m_fragment_shader, label}
 {
 }
 

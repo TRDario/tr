@@ -8,8 +8,8 @@
 
 //
 
-tr::dynamic_index_buffer::dynamic_index_buffer(graphics_context& context) noexcept
-	: graphics_buffer{context}
+tr::dynamic_index_buffer::dynamic_index_buffer(graphics_context& context, std::string_view label) noexcept
+	: graphics_buffer{context, label}
 	, m_size{0}
 	, m_capacity{0}
 {
@@ -55,7 +55,7 @@ void tr::dynamic_index_buffer::reserve(usize capacity)
 		reallocate();
 		gl.allocate_buffer_storage(unwrap(), capacity * sizeof(u16), nullptr, GL_DYNAMIC_STORAGE_BIT);
 		if (gl.get_error() == GL_OUT_OF_MEMORY) {
-			throw out_of_memory{"allocation of index buffer '{}'", label()};
+			throw out_of_memory{"allocation of index buffer {}", *this};
 		}
 		m_capacity = capacity;
 	}

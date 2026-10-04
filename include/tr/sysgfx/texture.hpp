@@ -111,23 +111,26 @@ namespace tr
 
 		/// Creates an incomplete texture.
 		/// @param context Graphics context to create the texture on.
-		[[nodiscard]] explicit texture(graphics_context& context) noexcept;
+		/// @param label Label of the texture.
+		[[nodiscard]] explicit texture(graphics_context& context, std::string_view label = {}) noexcept;
 
 		/// Allocates an uninitialized texture.
 		/// @param context Graphics context to create the texture on.
 		/// @param size Size of the texture.
 		/// @param mipmaps Whether to generate mipmaps for the texture.
 		/// @param format Pixel format of the texture.
+		/// @param label Label of the texture.
 		[[nodiscard]] texture(graphics_context& context, glm::ivec2 size, mipmaps mipmaps = mipmaps::disabled,
-							  pixel_format format = pixel_format::rgba32);
+							  pixel_format format = pixel_format::rgba32, std::string_view label = {});
 
 		/// Constructs a texture with data uploaded from a bitmap.
 		/// @param context Graphics context to create the texture on.
 		/// @param bitmap Bitmap data to copy to the texture.
 		/// @param mipmaps Whether to generate mipmaps for the texture.
 		/// @param format Pixel format of the texture.
+		/// @param label Label of the texture.
 		[[nodiscard]] texture(graphics_context& context, sub_bitmap bitmap, mipmaps mipmaps = mipmaps::disabled,
-							  std::optional<pixel_format> format = std::nullopt);
+							  std::optional<pixel_format> format = std::nullopt, std::string_view label = {});
 
 		/// Textures are not copyable.
 		texture(const texture&) = delete;

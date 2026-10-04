@@ -46,8 +46,9 @@ namespace tr
 		/// @param header_size Size of the fixed header block in bytes.
 		/// @param capacity Maximum capacity of the dynamic array in bytes.
 		/// @param map_type Type of map to create when mapping the buffer.
+		/// @param label Label of the buffer.
 		[[nodiscard]] untyped_shader_buffer(graphics_context& context, usize header_size, usize capacity,
-											access map_type = access::write_only);
+											access map_type = access::write_only, std::string_view label = {});
 
 		/// Untyped shader buffers are not copyable.
 		untyped_shader_buffer(const untyped_shader_buffer&) = delete;

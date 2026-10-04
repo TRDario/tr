@@ -75,7 +75,8 @@ namespace tr
 
 		/// Creates an empty framebuffer.
 		/// @param context Graphics context to create the framebuffer on.
-		[[nodiscard]] explicit framebuffer(graphics_context& context) noexcept;
+		/// @param label Label of the framebuffer.
+		[[nodiscard]] explicit framebuffer(graphics_context& context, std::string_view label = {}) noexcept;
 
 		/// Framebuffers are not copyable.
 		framebuffer(const framebuffer&) = delete;
