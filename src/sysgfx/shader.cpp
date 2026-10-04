@@ -14,7 +14,7 @@
 
 //
 
-tr::shader::shader(graphics_context& context, zstring_view source, unsigned int type)
+tr::shader::shader(graphics_context& context, zstring_view source, unsigned int type, std::string_view label)
 	: m_program{context.gl().create_shader_program_v(type, 1, reinterpret_cast<const char**>(&source)), deleter{context}}
 {
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
@@ -31,6 +31,9 @@ tr::shader::shader(graphics_context& context, zstring_view source, unsigned int 
 		std::string info_log_buffer(info_log_buffer_size, '\0');
 		gl.get_program_info_log(unwrap(), info_log_buffer_size, nullptr, info_log_buffer.data());
 		throw shader_load_error{"(Embedded)", std::format("Failed to compile/link a shader\n{}", info_log_buffer)};
+	}
+	if (!label.empty()) {
+		set_label(label);
 	}
 
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
@@ -587,16 +590,16 @@ const boost::unordered_flat_map<unsigned int, tr::internal::glsl_variable>& tr::
 
 //
 
-tr::vertex_shader::vertex_shader(graphics_context& context, zstring_view source)
-	: shader{context, source, GL_VERTEX_SHADER}
+tr::vertex_shader::vertex_shader(graphics_context& context, zstring_view source, std::string_view label)
+	: shader{context, source, GL_VERTEX_SHADER, label}
 {
 }
 
-tr::vertex_shader tr::load_vertex_shader(graphics_context& context, const std::filesystem::path& path)
+tr::vertex_shader tr::load_vertex_shader(graphics_context& context, const std::filesystem::path& path, std::string_view label)
 {
 	try {
 		std::ifstream file{open_file_r(path)};
-		vertex_shader shader{context, std::string{std::istreambuf_iterator<char>{file}, std::istreambuf_iterator<char>{}}};
+		vertex_shader shader{context, std::string{std::istreambuf_iterator<char>{file}, std::istreambuf_iterator<char>{}}, label};
 		shader.set_label(path.filename().string());
 		return shader;
 	}
@@ -611,16 +614,16 @@ tr::vertex_shader tr::load_vertex_shader(graphics_context& context, const std::f
 	}
 }
 
-tr::fragment_shader::fragment_shader(graphics_context& context, zstring_view source)
-	: shader{context, source, GL_FRAGMENT_SHADER}
+tr::fragment_shader::fragment_shader(graphics_context& context, zstring_view source, std::string_view label)
+	: shader{context, source, GL_FRAGMENT_SHADER, label}
 {
 }
 
-tr::fragment_shader tr::load_fragment_shader(graphics_context& context, const std::filesystem::path& path)
+tr::fragment_shader tr::load_fragment_shader(graphics_context& context, const std::filesystem::path& path, std::string_view label)
 {
 	try {
 		std::ifstream file{open_file_r(path)};
-		fragment_shader shader{context, std::string{std::istreambuf_iterator<char>{file}, std::istreambuf_iterator<char>{}}};
+		fragment_shader shader{context, std::string{std::istreambuf_iterator<char>{file}, std::istreambuf_iterator<char>{}}, label};
 		shader.set_label(path.filename().string());
 		return shader;
 	}
@@ -635,16 +638,16 @@ tr::fragment_shader tr::load_fragment_shader(graphics_context& context, const st
 	}
 }
 
-tr::compute_shader::compute_shader(graphics_context& context, zstring_view source)
-	: shader{context, source, GL_COMPUTE_SHADER}
+tr::compute_shader::compute_shader(graphics_context& context, zstring_view source, std::string_view label)
+	: shader{context, source, GL_COMPUTE_SHADER, label}
 {
 }
 
-tr::compute_shader tr::load_compute_shader(graphics_context& context, const std::filesystem::path& path)
+tr::compute_shader tr::load_compute_shader(graphics_context& context, const std::filesystem::path& path, std::string_view label)
 {
 	try {
 		std::ifstream file{open_file_r(path)};
-		compute_shader shader{context, std::string{std::istreambuf_iterator<char>{file}, std::istreambuf_iterator<char>{}}};
+		compute_shader shader{context, std::string{std::istreambuf_iterator<char>{file}, std::istreambuf_iterator<char>{}}, label};
 		shader.set_label(path.filename().string());
 		return shader;
 	}

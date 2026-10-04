@@ -59,8 +59,9 @@ namespace tr
 		/// @param context Graphics context to create the shader on.
 		/// @param source Shader GLSL source code.
 		/// @param type Shader type (`GL_VERTEX_SHADER` or `GL_FRAGMENT_SHADER`).
+		/// @param label Label of the shader.
 		/// @exception shader_load_error If loading the shader failed.
-		[[nodiscard]] shader(graphics_context& context, zstring_view source, unsigned int type);
+		[[nodiscard]] shader(graphics_context& context, zstring_view source, unsigned int type, std::string_view label);
 
 		/// Shaders are not copyable.
 		shader(const shader&) = delete;
@@ -549,8 +550,9 @@ namespace tr
 		/// Creates a vertex shader from source code.
 		/// @param context Graphics context to create the vertex shader on.
 		/// @param source Vertex shader GLSL source code.
+		/// @param label Label of the shader.
 		/// @exception shader_load_error If loading the shader failed.
-		[[nodiscard]] vertex_shader(graphics_context& context, zstring_view source);
+		[[nodiscard]] vertex_shader(graphics_context& context, zstring_view source, std::string_view label = {});
 	};
 
 	/// Fragment shader program.
@@ -565,8 +567,9 @@ namespace tr
 		/// Creates a fragment shader from source code.
 		/// @param context Graphics context to create the fragment shader on.
 		/// @param source Fragment shader GLSL source code.
+		/// @param label Label of the shader.
 		/// @exception shader_load_error If loading the shader failed.
-		[[nodiscard]] fragment_shader(graphics_context& context, zstring_view source);
+		[[nodiscard]] fragment_shader(graphics_context& context, zstring_view source, std::string_view label = {});
 	};
 
 	/// Compute shader program.
@@ -580,8 +583,9 @@ namespace tr
 		/// Creates a compute shader from source code.
 		/// @param context Graphics context to create the compute shader on.
 		/// @param source Compute shader GLSL source code.
+		/// @param label Label of the shader.
 		/// @exception shader_load_error If loading the shader failed.
-		[[nodiscard]] compute_shader(graphics_context& context, zstring_view source);
+		[[nodiscard]] compute_shader(graphics_context& context, zstring_view source, std::string_view label = {});
 	};
 
 	/// @name Shaders
@@ -590,23 +594,29 @@ namespace tr
 	/// Loads a vertex shader from file.
 	/// @param context Graphics context to create the vertex shader on.
 	/// @param path Path to the shader GLSL source code file.
+	/// @param label Label of the shader.
 	/// @exception shader_load_error If loading the shader failed.
 	/// @return Loaded vertex shader.
-	[[nodiscard]] vertex_shader load_vertex_shader(graphics_context& context, const std::filesystem::path& path);
+	[[nodiscard]] vertex_shader load_vertex_shader(graphics_context& context, const std::filesystem::path& path,
+												   std::string_view label = {});
 
 	/// Loads a fragment shader from file.
 	/// @param context Graphics context to create the fragment shader on.
 	/// @param path Path to the shader GLSL source code file.
+	/// @param label Label of the shader.
 	/// @exception shader_load_error If loading the shader failed.
 	/// @return Loaded frament shader.
-	[[nodiscard]] fragment_shader load_fragment_shader(graphics_context& context, const std::filesystem::path& path);
+	[[nodiscard]] fragment_shader load_fragment_shader(graphics_context& context, const std::filesystem::path& path,
+													   std::string_view label = {});
 
 	/// Loads a compute shader from file.
 	/// @param context Graphics context to create the compute shader on.
 	/// @param path Path to the shader GLSL source code file.
+	/// @param label Label of the shader.
 	/// @exception shader_load_error If loading the shader failed.
 	/// @return Loaded compute shader.
-	[[nodiscard]] compute_shader load_compute_shader(graphics_context& context, const std::filesystem::path& path);
+	[[nodiscard]] compute_shader load_compute_shader(graphics_context& context, const std::filesystem::path& path,
+													 std::string_view label = {});
 
 	/// @}
 } // namespace tr
