@@ -147,8 +147,8 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1fra
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:abf750439237c27c02086a9030cf2ddce" id="r_abf750439237c27c02086a9030cf2ddce"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#abf750439237c27c02086a9030cf2ddce">fragment_shader</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context, <a class="el" href="namespacetr.html#af4536441b49fec056af6a2432b30afff">zstring_view</a> source)</td></tr>
-<tr class="memdesc:abf750439237c27c02086a9030cf2ddce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a fragment shader from source code.  <br /></td></tr>
+<tr class="memitem:a87c885e05d7d3a0b111f3d91a2f4d237" id="r_a87c885e05d7d3a0b111f3d91a2f4d237"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a87c885e05d7d3a0b111f3d91a2f4d237">fragment_shader</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context, <a class="el" href="namespacetr.html#af4536441b49fec056af6a2432b30afff">zstring_view</a> source, std::string_view label={})</td></tr>
+<tr class="memdesc:a87c885e05d7d3a0b111f3d91a2f4d237"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a fragment shader from source code.  <br /></td></tr>
 <tr class="inherit_header pub_methods_classtr_1_1shader"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_classtr_1_1shader')"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Member Functions inherited from <a class="el" href="classtr_1_1shader.html">tr::shader</a></td></tr>
 <tr class="memitem:a93300faa1eee8e2ca3df656f33a0ffb3 inherit pub_methods_classtr_1_1shader" id="r_a93300faa1eee8e2ca3df656f33a0ffb3"><td class="memItemLeft"><a class="el" href="classtr_1_1shader.html">shader</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="classtr_1_1shader.html#a93300faa1eee8e2ca3df656f33a0ffb3">operator=</a> (const <a class="el" href="classtr_1_1shader.html">shader</a> &amp;)=delete</td></tr>
 <tr class="memdesc:a93300faa1eee8e2ca3df656f33a0ffb3 inherit pub_methods_classtr_1_1shader"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shaders are not copyable.  <br /></td></tr>
@@ -267,8 +267,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:acccb075cdc625ed4371ef0794abc1818 inherit pub_methods_classtr_1_1shader"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the debug label of the shader.  <br /></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="abf750439237c27c02086a9030cf2ddce" name="abf750439237c27c02086a9030cf2ddce"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abf750439237c27c02086a9030cf2ddce">&#9670;&#160;</a></span>fragment_shader()</h2>
+<a id="a87c885e05d7d3a0b111f3d91a2f4d237" name="a87c885e05d7d3a0b111f3d91a2f4d237"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a87c885e05d7d3a0b111f3d91a2f4d237">&#9670;&#160;</a></span>fragment_shader()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -284,7 +284,12 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespacetr.html#af4536441b49fec056af6a2432b30afff">zstring_view</a></td>          <td class="paramname"><span class="paramname"><em>source</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="namespacetr.html#af4536441b49fec056af6a2432b30afff">zstring_view</a></td>          <td class="paramname"><span class="paramname"><em>source</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string_view</td>          <td class="paramname"><span class="paramname"><em>label</em></span><span class="paramdefsep"> = </span><span class="paramdefval">{}</span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -299,6 +304,7 @@ Public Member Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">context</td><td>Graphics context to create the fragment shader on. </td></tr>
     <tr><td class="paramname">source</td><td>Fragment shader GLSL source code. </td></tr>
+    <tr><td class="paramname">label</td><td>Label of the shader. </td></tr>
   </table>
   </dd>
 </dl>

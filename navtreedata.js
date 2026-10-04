@@ -101,7 +101,7 @@ var NAVTREEINDEX =
 "classtr_1_1untyped__dynamic__vertex__buffer.html#ae109aeaf27dfef271dd4940aaf8da046",
 "classtr_1_1window__open__error.html#a84c3ae49661a66113f7695e315916b80",
 "functions_func_s.html",
-"namespacetr.html#a3630628ffd152670c738ae766a453cfc",
+"namespacetr.html#a380bb62772559b444f8745fd5ecf649d",
 "namespacetr.html#ad15e1eebb57dc4d57047653e40dd523ba99c483e1d11b1a279a2a1a3960528487",
 "namespacetr_1_1literals_1_1color__literals.html",
 "structstd_1_1formatter_3_01tr_1_1shader_01_4.html#ae7f060fea50c7c363ab295ce47a56952",
