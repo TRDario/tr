@@ -157,16 +157,16 @@ class tr::shader_array&lt; Element &gt;</div><p>Typed shader-accessible GPU arra
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors and destructors</div></td></tr>
-<tr class="memitem:a01ac95f389669f5aef212b05a6aa2f2e" id="r_a01ac95f389669f5aef212b05a6aa2f2e"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a01ac95f389669f5aef212b05a6aa2f2e">shader_array</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> capacity, <a class="el" href="namespacetr.html#a237d040341dd8a174a37871b9c3bc20a">access</a> map_type=<a class="el" href="namespacetr.html#a237d040341dd8a174a37871b9c3bc20aa2629564984b808cf7e6cfc61a0286d69">access::write_only</a>)</td></tr>
-<tr class="memdesc:a01ac95f389669f5aef212b05a6aa2f2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates an uninitialized shader array.  <br /></td></tr>
+<tr class="memitem:a6dc4a12a0a5eb9cae12f2e7d043a3c70" id="r_a6dc4a12a0a5eb9cae12f2e7d043a3c70"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a6dc4a12a0a5eb9cae12f2e7d043a3c70">shader_array</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> capacity, <a class="el" href="namespacetr.html#a237d040341dd8a174a37871b9c3bc20a">access</a> map_type=<a class="el" href="namespacetr.html#a237d040341dd8a174a37871b9c3bc20aa2629564984b808cf7e6cfc61a0286d69">access::write_only</a>, std::string_view label={})</td></tr>
+<tr class="memdesc:a6dc4a12a0a5eb9cae12f2e7d043a3c70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates an uninitialized shader array.  <br /></td></tr>
 <tr class="memitem:a5ce0cfb58cfa4126e16c870381ed90d4" id="r_a5ce0cfb58cfa4126e16c870381ed90d4"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a5ce0cfb58cfa4126e16c870381ed90d4">shader_array</a> (const shader_array &amp;)=delete</td></tr>
 <tr class="memdesc:a5ce0cfb58cfa4126e16c870381ed90d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shader arrays are not copyable.  <br /></td></tr>
 <tr class="memitem:a6e4194f69640281d5c6b19df2bfcaf4a" id="r_a6e4194f69640281d5c6b19df2bfcaf4a"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a6e4194f69640281d5c6b19df2bfcaf4a">shader_array</a> (shader_array &amp;&amp;rhs) noexcept=default</td></tr>
 <tr class="memdesc:a6e4194f69640281d5c6b19df2bfcaf4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves a shader array.  <br /></td></tr>
 <tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Assignment operators</div></td></tr>
-<tr class="memitem:ad2874437195265cb39d77447066b6ca4" id="r_ad2874437195265cb39d77447066b6ca4"><td class="memItemLeft"><a class="el" href="#a01ac95f389669f5aef212b05a6aa2f2e">shader_array</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ad2874437195265cb39d77447066b6ca4">operator=</a> (const <a class="el" href="#a01ac95f389669f5aef212b05a6aa2f2e">shader_array</a> &amp;)=delete</td></tr>
+<tr class="memitem:ad2874437195265cb39d77447066b6ca4" id="r_ad2874437195265cb39d77447066b6ca4"><td class="memItemLeft"><a class="el" href="#a6dc4a12a0a5eb9cae12f2e7d043a3c70">shader_array</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ad2874437195265cb39d77447066b6ca4">operator=</a> (const <a class="el" href="#a6dc4a12a0a5eb9cae12f2e7d043a3c70">shader_array</a> &amp;)=delete</td></tr>
 <tr class="memdesc:ad2874437195265cb39d77447066b6ca4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shader arrays are not copyable.  <br /></td></tr>
-<tr class="memitem:a84d3bafafd0556250f13b6c6877f0876" id="r_a84d3bafafd0556250f13b6c6877f0876"><td class="memItemLeft"><a class="el" href="#a01ac95f389669f5aef212b05a6aa2f2e">shader_array</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a84d3bafafd0556250f13b6c6877f0876">operator=</a> (<a class="el" href="#a01ac95f389669f5aef212b05a6aa2f2e">shader_array</a> &amp;&amp;rhs) noexcept=default</td></tr>
+<tr class="memitem:a84d3bafafd0556250f13b6c6877f0876" id="r_a84d3bafafd0556250f13b6c6877f0876"><td class="memItemLeft"><a class="el" href="#a6dc4a12a0a5eb9cae12f2e7d043a3c70">shader_array</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a84d3bafafd0556250f13b6c6877f0876">operator=</a> (<a class="el" href="#a6dc4a12a0a5eb9cae12f2e7d043a3c70">shader_array</a> &amp;&amp;rhs) noexcept=default</td></tr>
 <tr class="memdesc:a84d3bafafd0556250f13b6c6877f0876"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves a shader array.  <br /></td></tr>
 <tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Size</div></td></tr>
 <tr class="memitem:a340fb3cb90e17b6ebedf4b30aeb8feba" id="r_a340fb3cb90e17b6ebedf4b30aeb8feba"><td class="memItemLeft"><a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a>&#160;</td><td class="memItemRight"><a class="el" href="#a340fb3cb90e17b6ebedf4b30aeb8feba">size</a> () const noexcept</td></tr>
@@ -185,8 +185,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a2170a5a42b53d7fe44c297b82b2fe4c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the buffer is mapped.  <br /></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a01ac95f389669f5aef212b05a6aa2f2e" name="a01ac95f389669f5aef212b05a6aa2f2e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a01ac95f389669f5aef212b05a6aa2f2e">&#9670;&#160;</a></span>shader_array() <span class="overload">[1/3]</span></h2>
+<a id="a6dc4a12a0a5eb9cae12f2e7d043a3c70" name="a6dc4a12a0a5eb9cae12f2e7d043a3c70"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6dc4a12a0a5eb9cae12f2e7d043a3c70">&#9670;&#160;</a></span>shader_array() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -209,7 +209,12 @@ template&lt;typename Element&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespacetr.html#a237d040341dd8a174a37871b9c3bc20a">access</a></td>          <td class="paramname"><span class="paramname"><em>map_type</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="namespacetr.html#a237d040341dd8a174a37871b9c3bc20aa2629564984b808cf7e6cfc61a0286d69">access::write_only</a></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="namespacetr.html#a237d040341dd8a174a37871b9c3bc20a">access</a></td>          <td class="paramname"><span class="paramname"><em>map_type</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="namespacetr.html#a237d040341dd8a174a37871b9c3bc20aa2629564984b808cf7e6cfc61a0286d69">access::write_only</a></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string_view</td>          <td class="paramname"><span class="paramname"><em>label</em></span><span class="paramdefsep"> = </span><span class="paramdefval">{}</span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -225,6 +230,7 @@ template&lt;typename Element&gt; </div>
     <tr><td class="paramname">context</td><td>Graphics context to create the array on. </td></tr>
     <tr><td class="paramname">capacity</td><td>Maximum capacity of the array in elements. </td></tr>
     <tr><td class="paramname">map_type</td><td>Type of map to create when mapping the array. </td></tr>
+    <tr><td class="paramname">label</td><td>Label of the array. </td></tr>
   </table>
   </dd>
 </dl>
@@ -308,9 +314,9 @@ template&lt;typename Element&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="#a01ac95f389669f5aef212b05a6aa2f2e">shader_array</a> &amp; <a class="el" href="classtr_1_1shader__array.html">tr::shader_array</a>&lt; Element &gt;::operator= </td>
+          <td class="memname"><a class="el" href="#a6dc4a12a0a5eb9cae12f2e7d043a3c70">shader_array</a> &amp; <a class="el" href="classtr_1_1shader__array.html">tr::shader_array</a>&lt; Element &gt;::operator= </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="#a01ac95f389669f5aef212b05a6aa2f2e">shader_array</a>&lt; Element &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="#a6dc4a12a0a5eb9cae12f2e7d043a3c70">shader_array</a>&lt; Element &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -337,9 +343,9 @@ template&lt;typename Element&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="#a01ac95f389669f5aef212b05a6aa2f2e">shader_array</a> &amp; <a class="el" href="classtr_1_1shader__array.html">tr::shader_array</a>&lt; Element &gt;::operator= </td>
+          <td class="memname"><a class="el" href="#a6dc4a12a0a5eb9cae12f2e7d043a3c70">shader_array</a> &amp; <a class="el" href="classtr_1_1shader__array.html">tr::shader_array</a>&lt; Element &gt;::operator= </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="#a01ac95f389669f5aef212b05a6aa2f2e">shader_array</a>&lt; Element &gt; &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="#a6dc4a12a0a5eb9cae12f2e7d043a3c70">shader_array</a>&lt; Element &gt; &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>

@@ -157,16 +157,16 @@ class tr::uniform_buffer&lt; Object &gt;</div><p>Typed shader uniform buffer. </
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors and destructors</div></td></tr>
-<tr class="memitem:a80724469173735cdc9fca3797329a740" id="r_a80724469173735cdc9fca3797329a740"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a80724469173735cdc9fca3797329a740">uniform_buffer</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context)</td></tr>
-<tr class="memdesc:a80724469173735cdc9fca3797329a740"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates an uninitialized uniform buffer.  <br /></td></tr>
+<tr class="memitem:ab618aa619394f3a622aff6cf4daa816a" id="r_ab618aa619394f3a622aff6cf4daa816a"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ab618aa619394f3a622aff6cf4daa816a">uniform_buffer</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context, std::string_view label={})</td></tr>
+<tr class="memdesc:ab618aa619394f3a622aff6cf4daa816a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates an uninitialized uniform buffer.  <br /></td></tr>
 <tr class="memitem:af016fb62a68a4c32fe3a14a904c871cb" id="r_af016fb62a68a4c32fe3a14a904c871cb"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#af016fb62a68a4c32fe3a14a904c871cb">uniform_buffer</a> (const uniform_buffer &amp;)=delete</td></tr>
 <tr class="memdesc:af016fb62a68a4c32fe3a14a904c871cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uniform buffers are not copyable.  <br /></td></tr>
 <tr class="memitem:af8b4ec2a321e281d34d119944a8173c1" id="r_af8b4ec2a321e281d34d119944a8173c1"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#af8b4ec2a321e281d34d119944a8173c1">uniform_buffer</a> (uniform_buffer &amp;&amp;rhs) noexcept=default</td></tr>
 <tr class="memdesc:af8b4ec2a321e281d34d119944a8173c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves a uniform buffer.  <br /></td></tr>
 <tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Assignment operators</div></td></tr>
-<tr class="memitem:ac0ff5ca013cb90aeea31212da859945a" id="r_ac0ff5ca013cb90aeea31212da859945a"><td class="memItemLeft"><a class="el" href="#a80724469173735cdc9fca3797329a740">uniform_buffer</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ac0ff5ca013cb90aeea31212da859945a">operator=</a> (const <a class="el" href="#a80724469173735cdc9fca3797329a740">uniform_buffer</a> &amp;)=delete</td></tr>
+<tr class="memitem:ac0ff5ca013cb90aeea31212da859945a" id="r_ac0ff5ca013cb90aeea31212da859945a"><td class="memItemLeft"><a class="el" href="#ab618aa619394f3a622aff6cf4daa816a">uniform_buffer</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ac0ff5ca013cb90aeea31212da859945a">operator=</a> (const <a class="el" href="#ab618aa619394f3a622aff6cf4daa816a">uniform_buffer</a> &amp;)=delete</td></tr>
 <tr class="memdesc:ac0ff5ca013cb90aeea31212da859945a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uniform buffers are not copyable.  <br /></td></tr>
-<tr class="memitem:ab3700a8e2ec67125b2e741ff51773d4e" id="r_ab3700a8e2ec67125b2e741ff51773d4e"><td class="memItemLeft"><a class="el" href="#a80724469173735cdc9fca3797329a740">uniform_buffer</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ab3700a8e2ec67125b2e741ff51773d4e">operator=</a> (<a class="el" href="#a80724469173735cdc9fca3797329a740">uniform_buffer</a> &amp;&amp;rhs) noexcept=default</td></tr>
+<tr class="memitem:ab3700a8e2ec67125b2e741ff51773d4e" id="r_ab3700a8e2ec67125b2e741ff51773d4e"><td class="memItemLeft"><a class="el" href="#ab618aa619394f3a622aff6cf4daa816a">uniform_buffer</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ab3700a8e2ec67125b2e741ff51773d4e">operator=</a> (<a class="el" href="#ab618aa619394f3a622aff6cf4daa816a">uniform_buffer</a> &amp;&amp;rhs) noexcept=default</td></tr>
 <tr class="memdesc:ab3700a8e2ec67125b2e741ff51773d4e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves a uniform buffer.  <br /></td></tr>
 <tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Setting</div></td></tr>
 <tr class="memitem:ae3297d9933a33c203f02d1a4c7e97757" id="r_ae3297d9933a33c203f02d1a4c7e97757"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ae3297d9933a33c203f02d1a4c7e97757">set</a> (const Object &amp;data) noexcept</td></tr>
@@ -178,8 +178,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a658b96d6240e22aef69b85d95ad2ef9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the buffer is mapped.  <br /></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a80724469173735cdc9fca3797329a740" name="a80724469173735cdc9fca3797329a740"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a80724469173735cdc9fca3797329a740">&#9670;&#160;</a></span>uniform_buffer() <span class="overload">[1/3]</span></h2>
+<a id="ab618aa619394f3a622aff6cf4daa816a" name="ab618aa619394f3a622aff6cf4daa816a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab618aa619394f3a622aff6cf4daa816a">&#9670;&#160;</a></span>uniform_buffer() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -192,8 +192,12 @@ template&lt;typename Object&gt; </div>
         <tr>
           <td class="memname"><a class="el" href="classtr_1_1uniform__buffer.html">tr::uniform_buffer</a>&lt; Object &gt;::uniform_buffer </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>context</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>context</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">std::string_view</td>          <td class="paramname"><span class="paramname"><em>label</em></span><span class="paramdefsep"> = </span><span class="paramdefval">{}</span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -207,6 +211,7 @@ template&lt;typename Object&gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">context</td><td>Graphics context to create the buffer on. </td></tr>
+    <tr><td class="paramname">label</td><td>Label of the buffer. </td></tr>
   </table>
   </dd>
 </dl>
@@ -290,9 +295,9 @@ template&lt;typename Object&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="#a80724469173735cdc9fca3797329a740">uniform_buffer</a> &amp; <a class="el" href="classtr_1_1uniform__buffer.html">tr::uniform_buffer</a>&lt; Object &gt;::operator= </td>
+          <td class="memname"><a class="el" href="#ab618aa619394f3a622aff6cf4daa816a">uniform_buffer</a> &amp; <a class="el" href="classtr_1_1uniform__buffer.html">tr::uniform_buffer</a>&lt; Object &gt;::operator= </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="#a80724469173735cdc9fca3797329a740">uniform_buffer</a>&lt; Object &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="#ab618aa619394f3a622aff6cf4daa816a">uniform_buffer</a>&lt; Object &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -319,9 +324,9 @@ template&lt;typename Object&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="#a80724469173735cdc9fca3797329a740">uniform_buffer</a> &amp; <a class="el" href="classtr_1_1uniform__buffer.html">tr::uniform_buffer</a>&lt; Object &gt;::operator= </td>
+          <td class="memname"><a class="el" href="#ab618aa619394f3a622aff6cf4daa816a">uniform_buffer</a> &amp; <a class="el" href="classtr_1_1uniform__buffer.html">tr::uniform_buffer</a>&lt; Object &gt;::operator= </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="#a80724469173735cdc9fca3797329a740">uniform_buffer</a>&lt; Object &gt; &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="#ab618aa619394f3a622aff6cf4daa816a">uniform_buffer</a>&lt; Object &gt; &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>

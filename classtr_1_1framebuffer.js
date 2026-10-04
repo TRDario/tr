@@ -12,7 +12,7 @@ var classtr_1_1framebuffer =
       [ "depth", "classtr_1_1framebuffer.html#a1c95ac79da562291ef7df23708286ab0a12a055bf01a31369fe81ac35d85c7bc1", null ],
       [ "stencil", "classtr_1_1framebuffer.html#a1c95ac79da562291ef7df23708286ab0a667f218c5ed2c9cf25734500472e7c4a", null ]
     ] ],
-    [ "framebuffer", "classtr_1_1framebuffer.html#a38aa600bf2744ce6ec43a977013ba6c1", null ],
+    [ "framebuffer", "classtr_1_1framebuffer.html#aae440eedf0df51241b03653cc316083a", null ],
     [ "framebuffer", "classtr_1_1framebuffer.html#a697e324a714aac93d9ef4d84e5e9c77b", null ],
     [ "framebuffer", "classtr_1_1framebuffer.html#a077af05724e4b34877da7aae8d0797da", null ],
     [ "operator=", "classtr_1_1framebuffer.html#aa62d160111698cc6d7b8721026b2daf2", null ],

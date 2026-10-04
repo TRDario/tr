@@ -163,16 +163,16 @@ Public Types</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors and destructors</div></td></tr>
-<tr class="memitem:a482960f2e89dede57d5ba3a1ee7b9ccb" id="r_a482960f2e89dede57d5ba3a1ee7b9ccb"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a482960f2e89dede57d5ba3a1ee7b9ccb">static_vertex_buffer</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context, std::span&lt; const Element &gt; range)</td></tr>
-<tr class="memdesc:a482960f2e89dede57d5ba3a1ee7b9ccb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uploads vertex data into a static vertex buffer.  <br /></td></tr>
+<tr class="memitem:a0e348142905d368287bb71711a1cb7f0" id="r_a0e348142905d368287bb71711a1cb7f0"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a0e348142905d368287bb71711a1cb7f0">static_vertex_buffer</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context, std::span&lt; const Element &gt; data, std::string_view label={})</td></tr>
+<tr class="memdesc:a0e348142905d368287bb71711a1cb7f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Uploads vertex data into a static vertex buffer.  <br /></td></tr>
 <tr class="memitem:a9c3c630964bfa1e9c1a83fb3a6c21002" id="r_a9c3c630964bfa1e9c1a83fb3a6c21002"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a9c3c630964bfa1e9c1a83fb3a6c21002">static_vertex_buffer</a> (const static_vertex_buffer &amp;)=delete</td></tr>
 <tr class="memdesc:a9c3c630964bfa1e9c1a83fb3a6c21002"><td class="mdescLeft">&#160;</td><td class="mdescRight">Static vertex buffers are not copyable.  <br /></td></tr>
 <tr class="memitem:ab3db5efa2eae3538351ef34f4b134051" id="r_ab3db5efa2eae3538351ef34f4b134051"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ab3db5efa2eae3538351ef34f4b134051">static_vertex_buffer</a> (static_vertex_buffer &amp;&amp;rhs) noexcept=default</td></tr>
 <tr class="memdesc:ab3db5efa2eae3538351ef34f4b134051"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves a static vertex buffer.  <br /></td></tr>
 <tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Assignment operators</div></td></tr>
-<tr class="memitem:ad62331e80161f28d1316fa7932861907" id="r_ad62331e80161f28d1316fa7932861907"><td class="memItemLeft"><a class="el" href="#a482960f2e89dede57d5ba3a1ee7b9ccb">static_vertex_buffer</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ad62331e80161f28d1316fa7932861907">operator=</a> (const <a class="el" href="#a482960f2e89dede57d5ba3a1ee7b9ccb">static_vertex_buffer</a> &amp;)=delete</td></tr>
+<tr class="memitem:ad62331e80161f28d1316fa7932861907" id="r_ad62331e80161f28d1316fa7932861907"><td class="memItemLeft"><a class="el" href="#a0e348142905d368287bb71711a1cb7f0">static_vertex_buffer</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ad62331e80161f28d1316fa7932861907">operator=</a> (const <a class="el" href="#a0e348142905d368287bb71711a1cb7f0">static_vertex_buffer</a> &amp;)=delete</td></tr>
 <tr class="memdesc:ad62331e80161f28d1316fa7932861907"><td class="mdescLeft">&#160;</td><td class="mdescRight">Static vertex buffers are not copyable.  <br /></td></tr>
-<tr class="memitem:ac73cc4a36ddf4588e86e311ea101d9c7" id="r_ac73cc4a36ddf4588e86e311ea101d9c7"><td class="memItemLeft"><a class="el" href="#a482960f2e89dede57d5ba3a1ee7b9ccb">static_vertex_buffer</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ac73cc4a36ddf4588e86e311ea101d9c7">operator=</a> (<a class="el" href="#a482960f2e89dede57d5ba3a1ee7b9ccb">static_vertex_buffer</a> &amp;&amp;rhs) noexcept=default</td></tr>
+<tr class="memitem:ac73cc4a36ddf4588e86e311ea101d9c7" id="r_ac73cc4a36ddf4588e86e311ea101d9c7"><td class="memItemLeft"><a class="el" href="#a0e348142905d368287bb71711a1cb7f0">static_vertex_buffer</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ac73cc4a36ddf4588e86e311ea101d9c7">operator=</a> (<a class="el" href="#a0e348142905d368287bb71711a1cb7f0">static_vertex_buffer</a> &amp;&amp;rhs) noexcept=default</td></tr>
 <tr class="memdesc:ac73cc4a36ddf4588e86e311ea101d9c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves a static vertex buffer.  <br /></td></tr>
 </table>
 <a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Member Typedef Documentation</h2>
@@ -195,8 +195,8 @@ template&lt;standard_layout Element&gt; </div>
 </div>
 </div>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a482960f2e89dede57d5ba3a1ee7b9ccb" name="a482960f2e89dede57d5ba3a1ee7b9ccb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a482960f2e89dede57d5ba3a1ee7b9ccb">&#9670;&#160;</a></span>static_vertex_buffer() <span class="overload">[1/3]</span></h2>
+<a id="a0e348142905d368287bb71711a1cb7f0" name="a0e348142905d368287bb71711a1cb7f0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e348142905d368287bb71711a1cb7f0">&#9670;&#160;</a></span>static_vertex_buffer() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -214,7 +214,12 @@ template&lt;standard_layout Element&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::span&lt; const Element &gt;</td>          <td class="paramname"><span class="paramname"><em>range</em></span>&#160;)</td>
+          <td class="paramtype">std::span&lt; const Element &gt;</td>          <td class="paramname"><span class="paramname"><em>data</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string_view</td>          <td class="paramname"><span class="paramname"><em>label</em></span><span class="paramdefsep"> = </span><span class="paramdefval">{}</span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -228,7 +233,8 @@ template&lt;standard_layout Element&gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">context</td><td>Graphics context to create the buffer on. </td></tr>
-    <tr><td class="paramname">range</td><td>Data to upload to the buffer. </td></tr>
+    <tr><td class="paramname">data</td><td>Data to upload to the buffer. </td></tr>
+    <tr><td class="paramname">label</td><td>Label of the buffer. </td></tr>
   </table>
   </dd>
 </dl>
@@ -312,9 +318,9 @@ template&lt;standard_layout Element&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="#a482960f2e89dede57d5ba3a1ee7b9ccb">static_vertex_buffer</a> &amp; <a class="el" href="classtr_1_1static__vertex__buffer.html">tr::static_vertex_buffer</a>&lt; Element &gt;::operator= </td>
+          <td class="memname"><a class="el" href="#a0e348142905d368287bb71711a1cb7f0">static_vertex_buffer</a> &amp; <a class="el" href="classtr_1_1static__vertex__buffer.html">tr::static_vertex_buffer</a>&lt; Element &gt;::operator= </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="#a482960f2e89dede57d5ba3a1ee7b9ccb">static_vertex_buffer</a>&lt; Element &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="#a0e348142905d368287bb71711a1cb7f0">static_vertex_buffer</a>&lt; Element &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -341,9 +347,9 @@ template&lt;standard_layout Element&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="#a482960f2e89dede57d5ba3a1ee7b9ccb">static_vertex_buffer</a> &amp; <a class="el" href="classtr_1_1static__vertex__buffer.html">tr::static_vertex_buffer</a>&lt; Element &gt;::operator= </td>
+          <td class="memname"><a class="el" href="#a0e348142905d368287bb71711a1cb7f0">static_vertex_buffer</a> &amp; <a class="el" href="classtr_1_1static__vertex__buffer.html">tr::static_vertex_buffer</a>&lt; Element &gt;::operator= </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="#a482960f2e89dede57d5ba3a1ee7b9ccb">static_vertex_buffer</a>&lt; Element &gt; &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="#a0e348142905d368287bb71711a1cb7f0">static_vertex_buffer</a>&lt; Element &gt; &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>

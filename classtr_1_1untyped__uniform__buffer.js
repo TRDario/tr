@@ -1,6 +1,6 @@
 var classtr_1_1untyped__uniform__buffer =
 [
-    [ "untyped_uniform_buffer", "classtr_1_1untyped__uniform__buffer.html#a7feda924bf1a1aacf322349e7a618c0a", null ],
+    [ "untyped_uniform_buffer", "classtr_1_1untyped__uniform__buffer.html#aefa1c355d107725c3af730b6774640e2", null ],
     [ "untyped_uniform_buffer", "classtr_1_1untyped__uniform__buffer.html#abf21459a114a73ce333312d6bd81311d", null ],
     [ "untyped_uniform_buffer", "classtr_1_1untyped__uniform__buffer.html#adb1451df5842dd43b2c5f07ac0db4953", null ],
     [ "operator=", "classtr_1_1untyped__uniform__buffer.html#a7af885dbd4c545ff0c7f1425ade79b2f", null ],

@@ -1,6 +1,6 @@
 var classtr_1_1graphics__buffer =
 [
-    [ "graphics_buffer", "classtr_1_1graphics__buffer.html#a8d312e4b4a5a4fc7225fe88162bdd722", null ],
+    [ "graphics_buffer", "classtr_1_1graphics__buffer.html#a23d4b85623be22559d9d05de8404502e", null ],
     [ "graphics_buffer", "classtr_1_1graphics__buffer.html#a1d51a30b92cee925f336974d0c484e6f", null ],
     [ "graphics_buffer", "classtr_1_1graphics__buffer.html#a4e69c632c90f3cf91b20c428d2ed90a4", null ],
     [ "operator=", "classtr_1_1graphics__buffer.html#a98f35d3a06fc5ade101280dd5e73668b", null ],

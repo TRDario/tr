@@ -1,6 +1,6 @@
 var classtr_1_1static__index__buffer =
 [
-    [ "static_index_buffer", "classtr_1_1static__index__buffer.html#a42e306e2e3020655d9544a4e5c8774c6", null ],
+    [ "static_index_buffer", "classtr_1_1static__index__buffer.html#a76868cd0cd2f523a682e3fd4349b1a63", null ],
     [ "static_index_buffer", "classtr_1_1static__index__buffer.html#a2ccf318c1596ff5933307a3a798aa756", null ],
     [ "static_index_buffer", "classtr_1_1static__index__buffer.html#a7601be985f647992cc79448660282913", null ],
     [ "operator=", "classtr_1_1static__index__buffer.html#a0b1e6d79bacba9a7db80b097aa8befd3", null ],

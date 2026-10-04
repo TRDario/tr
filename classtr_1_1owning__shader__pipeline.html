@@ -137,8 +137,8 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1own
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors and destructors</div></td></tr>
-<tr class="memitem:a6d0f1aa3f414eb98c436a1b470879b93" id="r_a6d0f1aa3f414eb98c436a1b470879b93"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a6d0f1aa3f414eb98c436a1b470879b93">owning_shader_pipeline</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context, vertex_shader &amp;&amp;vertex_shader, fragment_shader &amp;&amp;fragment_shader) noexcept</td></tr>
-<tr class="memdesc:a6d0f1aa3f414eb98c436a1b470879b93"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an owning shader pipeline.  <br /></td></tr>
+<tr class="memitem:aacbbb78da6f80647c8fbf0c3a6242620" id="r_aacbbb78da6f80647c8fbf0c3a6242620"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#aacbbb78da6f80647c8fbf0c3a6242620">owning_shader_pipeline</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context, vertex_shader &amp;&amp;vertex_shader, fragment_shader &amp;&amp;fragment_shader, std::string_view label={}) noexcept</td></tr>
+<tr class="memdesc:aacbbb78da6f80647c8fbf0c3a6242620"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an owning shader pipeline.  <br /></td></tr>
 <tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Conversion operators</div></td></tr>
 <tr class="memitem:aba1cc685a21390b0e3d71f688e506fd7" id="r_aba1cc685a21390b0e3d71f688e506fd7"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#aba1cc685a21390b0e3d71f688e506fd7">operator const shader_pipeline &amp;</a> () const noexcept</td></tr>
 <tr class="memdesc:aba1cc685a21390b0e3d71f688e506fd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the base pipeline object.  <br /></td></tr>
@@ -164,8 +164,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:afc967500d2850f3b1da603f5b0e0e837"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the debug label of the pipeline.  <br /></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a6d0f1aa3f414eb98c436a1b470879b93" name="a6d0f1aa3f414eb98c436a1b470879b93"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6d0f1aa3f414eb98c436a1b470879b93">&#9670;&#160;</a></span>owning_shader_pipeline()</h2>
+<a id="aacbbb78da6f80647c8fbf0c3a6242620" name="aacbbb78da6f80647c8fbf0c3a6242620"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aacbbb78da6f80647c8fbf0c3a6242620">&#9670;&#160;</a></span>owning_shader_pipeline()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -186,7 +186,12 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="#ad52a3f9eb78c6614a042777071c4f8dd">fragment_shader</a> &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>fragment_shader</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="#ad52a3f9eb78c6614a042777071c4f8dd">fragment_shader</a> &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>fragment_shader</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string_view</td>          <td class="paramname"><span class="paramname"><em>label</em></span><span class="paramdefsep"> = </span><span class="paramdefval">{}</span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -202,6 +207,7 @@ Public Member Functions</h2></td></tr>
     <tr><td class="paramname">context</td><td>Graphics context to create the pipeline on. </td></tr>
     <tr><td class="paramname">vertex_shader</td><td>Vertex shader to move into the pipeline. </td></tr>
     <tr><td class="paramname">fragment_shader</td><td>Fragment shader to move into the pipeline. </td></tr>
+    <tr><td class="paramname">label</td><td>Label of the pipeline. </td></tr>
   </table>
   </dd>
 </dl>

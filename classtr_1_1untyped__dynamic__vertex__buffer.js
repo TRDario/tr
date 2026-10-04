@@ -1,6 +1,6 @@
 var classtr_1_1untyped__dynamic__vertex__buffer =
 [
-    [ "untyped_dynamic_vertex_buffer", "classtr_1_1untyped__dynamic__vertex__buffer.html#a9f8911ea872d17f3a608702464e3db36", null ],
+    [ "untyped_dynamic_vertex_buffer", "classtr_1_1untyped__dynamic__vertex__buffer.html#a4f1d47c1c67c6ba9b93c6de2a922b652", null ],
     [ "untyped_dynamic_vertex_buffer", "classtr_1_1untyped__dynamic__vertex__buffer.html#ac95279ed6812006c5ea93f01f6b4e4a4", null ],
     [ "untyped_dynamic_vertex_buffer", "classtr_1_1untyped__dynamic__vertex__buffer.html#a3fd3378e263bce5296fc0b9c43b6d84b", null ],
     [ "operator=", "classtr_1_1untyped__dynamic__vertex__buffer.html#acc890dbd41a9cfef9cf89eb643ea0459", null ],
