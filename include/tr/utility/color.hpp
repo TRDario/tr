@@ -298,6 +298,17 @@ namespace tr
 		[[nodiscard]] constexpr rgbf(hsv hsv) noexcept;
 
 		/// @}
+		/// @name Conversion operators
+		/// @{
+
+		/// Converts the color to its vector equivalent.
+		/// @return Vector equivalent of the color.
+		[[nodiscard]] explicit constexpr operator glm::vec3() const noexcept
+		{
+			return glm::vec3{r, g, b};
+		}
+
+		/// @}
 		/// @name Comparison operators
 		/// @{
 
@@ -805,6 +816,17 @@ namespace tr
 		/// @param hsv Color to convert to RGBA.
 		/// @param a Alpha channel.
 		[[nodiscard]] constexpr rgbaf(hsv hsv, float a = 1.0f) noexcept;
+
+		/// @}
+		/// @name Conversion operators
+		/// @{
+
+		/// Converts the color to its vector equivalent.
+		/// @return Vector equivalent of the color.
+		[[nodiscard]] explicit constexpr operator glm::vec4() const noexcept
+		{
+			return glm::vec4{r, g, b, a};
+		}
 
 		/// @}
 		/// @name Comparison operators
