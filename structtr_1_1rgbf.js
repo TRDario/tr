@@ -6,6 +6,7 @@ var structtr_1_1rgbf =
     [ "rgbf", "structtr_1_1rgbf.html#abee0fc54bbab00aa9d8b80b8eb40b366", null ],
     [ "rgbf", "structtr_1_1rgbf.html#a6c6b7298b0ac22933bccf5ce62bdefe0", null ],
     [ "rgbf", "structtr_1_1rgbf.html#a25be1a0de82ceaa07348416aa547c708", null ],
+    [ "operator glm::vec3", "structtr_1_1rgbf.html#a06cf54665963a33f0de4b7ad4b25cb5f", null ],
     [ "operator+=", "structtr_1_1rgbf.html#ac308cb695f2f4aafa6931c39b8076699", null ],
     [ "operator-=", "structtr_1_1rgbf.html#a1dd3e6d7619768bdbf5c6f65fcec274c", null ],
     [ "operator*=", "structtr_1_1rgbf.html#a913697a981b0c033ddd6e2a498485ccb", null ],
