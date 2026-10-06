@@ -13,6 +13,7 @@ add_executable(
 	enum.cpp
 	handle.cpp
 	hash_map.cpp
+	inplace_vector.cpp
 	localization_map.cpp
 	localization_script.cpp
 	math.cpp
@@ -27,7 +28,6 @@ add_executable(
 	ref.cpp
 	rng.cpp
 	specialization_of.cpp
-	static_vector.cpp
 	stopwatch.cpp
 	string_literal.cpp
 	timer.cpp

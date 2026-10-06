@@ -5,8 +5,8 @@
 #include <tr/audio/audio_buffer.hpp>
 #include <tr/audio/audio_class.hpp>
 #include <tr/audio/audio_stream.hpp>
+#include <tr/utility/inplace_vector.hpp>
 #include <tr/utility/optional_variant.hpp>
-#include <tr/utility/static_vector.hpp>
 
 namespace tr
 {
@@ -472,12 +472,12 @@ namespace tr
 
 			/// Tries to refill all buffers.
 			/// @return List of buffers that can be requeued.
-			[[nodiscard]] static_vector<unsigned int, 4> try_refill_all();
+			[[nodiscard]] inplace_vector<unsigned int, 4> try_refill_all();
 
 			/// Tries to refill buffers.
 			/// @param buffers List of buffers to try to refill.
 			/// @return List of buffers that can be requeued.
-			[[nodiscard]] static_vector<unsigned int, 4> try_refill(static_vector<unsigned int, 4> buffers);
+			[[nodiscard]] inplace_vector<unsigned int, 4> try_refill(inplace_vector<unsigned int, 4> buffers);
 
 		  private:
 			/// Audio buffer used by the buffered stream.

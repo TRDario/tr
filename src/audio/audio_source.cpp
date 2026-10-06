@@ -103,12 +103,12 @@ tr::fsecs tr::audio_source::buffered_stream::buffer_start_offset(unsigned int id
 
 //
 
-tr::static_vector<unsigned int, 4> tr::audio_source::buffered_stream::try_refill_all()
+tr::inplace_vector<unsigned int, 4> tr::audio_source::buffered_stream::try_refill_all()
 {
-	return try_refill(static_vector<unsigned int, 4>{m_buffers | std::views::transform([](buffer& b) { return b.unwrap(); })});
+	return try_refill(inplace_vector<unsigned int, 4>{m_buffers | std::views::transform([](buffer& b) { return b.unwrap(); })});
 }
 
-tr::static_vector<unsigned int, 4> tr::audio_source::buffered_stream::try_refill(static_vector<unsigned int, 4> buffers)
+tr::inplace_vector<unsigned int, 4> tr::audio_source::buffered_stream::try_refill(inplace_vector<unsigned int, 4> buffers)
 {
 	for (int i = 0; i < buffers.size(); ++i) {
 		if (!m_stream->looping() && m_stream->tell() == m_stream->length()) {
@@ -467,7 +467,7 @@ void tr::audio_source::play(const std::lock_guard<std::mutex>&)
 	if (opt_ref<buffered_stream> stream{m_data_source}; stream.has_value()) {
 		if (state() == state::initial || state() == state::stopped) {
 			detach_buffer();
-			const static_vector<unsigned int, 4> filled_buffers{stream->try_refill_all()};
+			const inplace_vector<unsigned int, 4> filled_buffers{stream->try_refill_all()};
 			if (!filled_buffers.empty()) {
 				context().al().source_queue_buffers(context().unwrap(), unwrap(), filled_buffers.size(), filled_buffers.data());
 			}
@@ -686,9 +686,9 @@ void tr::audio_source::refill_if_needed()
 			return;
 		}
 
-		static_vector<unsigned int, 4> buffers(nbuffers);
+		inplace_vector<unsigned int, 4> buffers(nbuffers);
 		context().al().source_unqueue_buffers(context().unwrap(), unwrap(), nbuffers, buffers.data());
-		const static_vector<unsigned int, 4> filled_buffers{stream->try_refill(buffers)};
+		const inplace_vector<unsigned int, 4> filled_buffers{stream->try_refill(buffers)};
 		if (!filled_buffers.empty()) {
 			context().al().source_queue_buffers(context().unwrap(), unwrap(), filled_buffers.size(), filled_buffers.data());
 		}

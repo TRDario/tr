@@ -5,7 +5,6 @@
 #include <tr/utility/hash_map.hpp>
 #include <tr/utility/internal/localization/lexer.hpp>
 #include <tr/utility/internal/localization/parser_error.hpp>
-#include <tr/utility/static_vector.hpp>
 #include <tr/utility/string_pool.hpp>
 
 //

@@ -3,7 +3,7 @@
 
 #include <gtest/gtest.h>
 #include <tr/utility/inplace_string.hpp>
-#include <tr/utility/static_vector.hpp>
+#include <tr/utility/inplace_vector.hpp>
 #include <tr/utility/utf8.hpp>
 
 //
@@ -76,7 +76,7 @@ TEST(utf8_test, pop_back)
 
 TEST(utf8_test, iterator)
 {
-	tr::static_vector<tr::codepoint, 4> range_codepoints;
+	tr::inplace_vector<tr::codepoint, 4> range_codepoints;
 	for (tr::codepoint cp : tr::utf8::range(characters)) {
 		range_codepoints.emplace_back(cp);
 	}

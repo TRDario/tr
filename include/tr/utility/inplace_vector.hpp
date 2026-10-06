@@ -1,5 +1,5 @@
 /// @file
-/// @brief Provides `tr::static_vector`.
+/// @brief Provides `tr::inplace_vector`.
 
 #pragma once
 #include <tr/utility/binary_io_specializations.hpp>
@@ -12,13 +12,13 @@ namespace tr
 {
 	/// Inplace-allocated, fixed-capacity vector.
 	/// @details
-	/// `tr::static_vector` mirrors the interace of a standard vector, but its elements are stored inplace within the object.
+	/// `tr::inplace_vector` mirrors the interace of a standard vector, but its elements are stored inplace within the object.
 	///
-	/// Instances of `tr::static_vector` are copyable if `Element` is copyable and movable if `Element` is movable.
+	/// Instances of `tr::inplace_vector` are copyable if `Element` is copyable and movable if `Element` is movable.
 	/// @tparam Element Type of the elements of the vector.
 	/// @tparam Capacity Maximum capacity of the vector.
 	template <nothrow_destructible Element, usize Capacity>
-	class static_vector
+	class inplace_vector
 	{
 	  public:
 		/// Size type used by the container.
@@ -71,15 +71,15 @@ namespace tr
 		/// @{
 
 		/// Creates an empty vector.
-		[[nodiscard]] constexpr static_vector() noexcept = default;
+		[[nodiscard]] constexpr inplace_vector() noexcept = default;
 
 		/// Creates a vector with a certain number of default-initialized values.
 		/// @param size Initial size of the vector.
-		[[nodiscard]] explicit static_vector(size_type size) noexcept(std::is_nothrow_default_constructible_v<Element>)
+		[[nodiscard]] explicit inplace_vector(size_type size) noexcept(std::is_nothrow_default_constructible_v<Element>)
 			requires(std::default_initializable<Element>)
 			: m_size{size}
 		{
-			TR_ASSERT(size <= Capacity, "Tried to create a static vector of size {} but with a max capacity of only {}.", size, Capacity);
+			TR_ASSERT(size <= Capacity, "Tried to create an inplace vector of size {} but with a max capacity of only {}.", size, Capacity);
 
 			std::uninitialized_default_construct(begin(), end());
 		}
@@ -87,11 +87,11 @@ namespace tr
 		/// Creates a vector with a certain number of copies of a value.
 		/// @param size Initial size of the vector.
 		/// @param value Value to initialize the values of the vector to.
-		[[nodiscard]] static_vector(size_type size, const Element& value) noexcept(std::is_nothrow_copy_constructible_v<Element>)
+		[[nodiscard]] inplace_vector(size_type size, const Element& value) noexcept(std::is_nothrow_copy_constructible_v<Element>)
 			requires(std::copy_constructible<Element>)
 			: m_size{size}
 		{
-			TR_ASSERT(size <= Capacity, "Tried to create a static vector of size {} but with a max capacity of only {}.", size, Capacity);
+			TR_ASSERT(size <= Capacity, "Tried to create an inplace vector of size {} but with a max capacity of only {}.", size, Capacity);
 
 			std::uninitialized_fill(begin(), end(), value);
 		}
@@ -103,7 +103,7 @@ namespace tr
 		/// @param last Ending iterator to the copied range.
 		/// @pre `std::ranges::distance(first, last)` must be less than or equal to `Capacity`.
 		template <forward_iterator_to_convertible_to<Element> Iterator, std::sentinel_for<Iterator> Sentinel>
-		[[nodiscard]] static_vector(Iterator first, Sentinel last) noexcept(nothrow_forward_iterator_to_convertible_to<Iterator, Element>)
+		[[nodiscard]] inplace_vector(Iterator first, Sentinel last) noexcept(nothrow_forward_iterator_to_convertible_to<Iterator, Element>)
 			: m_size{static_cast<size_type>(std::ranges::distance(first, last))}
 		{
 			std::uninitialized_copy(first, last, begin());
@@ -114,38 +114,38 @@ namespace tr
 		/// @param range Range to copy into the vector.
 		/// @pre `std::ranges::size(range)` must be less than or equal to `Capacity`.
 		template <forward_range_to_convertible_to<Element> Range>
-		[[nodiscard]] explicit static_vector(Range&& range) noexcept(nothrow_forward_range_to_convertible_to<Range, Element>)
-			: static_vector{std::ranges::begin(range), std::ranges::end(range)}
+		[[nodiscard]] explicit inplace_vector(Range&& range) noexcept(nothrow_forward_range_to_convertible_to<Range, Element>)
+			: inplace_vector{std::ranges::begin(range), std::ranges::end(range)}
 		{
 		}
 
 		/// Creates a vector from an initializer list.
 		/// @param init Initializer list of elements to copy into the vector.
-		[[nodiscard]] static_vector(std::initializer_list<Element> init) noexcept(std::is_nothrow_copy_constructible_v<Element>)
+		[[nodiscard]] inplace_vector(std::initializer_list<Element> init) noexcept(std::is_nothrow_copy_constructible_v<Element>)
 			requires(std::copy_constructible<Element>)
-			: static_vector{init.begin(), init.end()}
+			: inplace_vector{init.begin(), init.end()}
 		{
 		}
 
 		/// Copies a vector.
 		/// @param rhs Vector to copy.
-		[[nodiscard]] static_vector(const static_vector& rhs) noexcept(std::is_nothrow_copy_constructible_v<Element>)
+		[[nodiscard]] inplace_vector(const inplace_vector& rhs) noexcept(std::is_nothrow_copy_constructible_v<Element>)
 			requires(std::copy_constructible<Element>)
-			: static_vector{rhs.begin(), rhs.end()}
+			: inplace_vector{rhs.begin(), rhs.end()}
 		{
 		}
 
 		/// Moves a vector.
 		/// @param rhs Vector to move. The vector will be in a cleared state after this operation.
-		[[nodiscard]] static_vector(static_vector&& rhs) noexcept(std::is_nothrow_move_constructible_v<Element>)
+		[[nodiscard]] inplace_vector(inplace_vector&& rhs) noexcept(std::is_nothrow_move_constructible_v<Element>)
 			requires(std::move_constructible<Element>)
-			: static_vector{std::move_iterator{rhs.begin()}, std::move_iterator{rhs.end()}}
+			: inplace_vector{std::move_iterator{rhs.begin()}, std::move_iterator{rhs.end()}}
 		{
 			rhs.clear();
 		}
 
 		/// Destroys the vector.
-		~static_vector() noexcept
+		~inplace_vector() noexcept
 		{
 			std::destroy(begin(), end());
 		}
@@ -154,10 +154,10 @@ namespace tr
 		/// @name Assignment operators
 		/// @{
 
-		/// Copy-assigns a static vector.
+		/// Copy-assigns an inplace vector.
 		/// @param rhs Vector to copy.
 		/// @return Reference to `*this`.
-		static_vector& operator=(const static_vector& rhs) noexcept(std::is_nothrow_copy_constructible_v<Element>)
+		inplace_vector& operator=(const inplace_vector& rhs) noexcept(std::is_nothrow_copy_constructible_v<Element>)
 			requires(std::copy_constructible<Element>)
 		{
 			std::destroy(begin(), end());
@@ -166,10 +166,10 @@ namespace tr
 			return *this;
 		}
 
-		/// Move-assigns a static vector.
+		/// Move-assigns an inplace vector.
 		/// @param rhs Vector to move. The vector will be in a cleared state after this operation.
 		/// @return Reference to `*this`.
-		static_vector& operator=(static_vector&& rhs) noexcept(std::is_nothrow_move_constructible_v<Element>)
+		inplace_vector& operator=(inplace_vector&& rhs) noexcept(std::is_nothrow_move_constructible_v<Element>)
 			requires(std::move_constructible<Element>)
 		{
 			std::destroy(begin(), end());
@@ -189,7 +189,7 @@ namespace tr
 		/// @return Reference to a value within the vector.
 		[[nodiscard]] reference at(size_type offset) noexcept
 		{
-			TR_ASSERT(offset < m_size, "Tried to do an out-of-bounds read at position {} of static vector with size {}.", offset, m_size);
+			TR_ASSERT(offset < m_size, "Tried to do an out-of-bounds read at position {} of inplace vector of size {}.", offset, m_size);
 
 			return data()[offset];
 		}
@@ -200,7 +200,7 @@ namespace tr
 		/// @return Reference to a value within the vector.
 		[[nodiscard]] const_reference at(size_type offset) const noexcept
 		{
-			TR_ASSERT(offset < m_size, "Tried to do an out-of-bounds read at position {} of static vector with size {}.", offset, m_size);
+			TR_ASSERT(offset < m_size, "Tried to do an out-of-bounds read at position {} of inplace vector of size {}.", offset, m_size);
 
 			return data()[offset];
 		}
@@ -428,8 +428,8 @@ namespace tr
 			const auto inserted_elements{std::ranges::distance(first, last)};
 
 			TR_ASSERT(static_cast<usize>(m_size + inserted_elements) <= Capacity,
-					  "Tried to do an insert into a static vector that would put it past its capacity of {}.", Capacity);
-			TR_ASSERT(where >= begin() && where <= end(), "Tried to pass an invalid iterator to static_vector::insert.");
+					  "Tried to do an insert into an inplace vector that would put it past its capacity of {}.", Capacity);
+			TR_ASSERT(where >= begin() && where <= end(), "Tried to pass an invalid iterator to inplace_vector::insert.");
 
 			const iterator mwhere{begin() + std::ranges::distance(cbegin(), where)};
 			const difference_type affected_elements{std::ranges::distance(mwhere, end())};
@@ -486,8 +486,8 @@ namespace tr
 		iterator emplace(const_iterator where, Args&&... args)
 			noexcept(nothrow_movable<Element> && std::is_nothrow_constructible_v<Element, Args...>)
 		{
-			TR_ASSERT(m_size < Capacity, "Tried to insert into a static vector that is already at its capacity of {}.", Capacity);
-			TR_ASSERT(where >= begin() && where <= end(), "Tried to pass an invalid iterator to static_vector::insert.");
+			TR_ASSERT(m_size < Capacity, "Tried to insert into an inplace vector that is already at its capacity of {}.", Capacity);
+			TR_ASSERT(where >= begin() && where <= end(), "Tried to pass an invalid iterator to inplace_vector::insert.");
 
 			const iterator mwhere{begin() + std::distance(cbegin(), where)};
 			if (mwhere != end()) {
@@ -506,7 +506,7 @@ namespace tr
 		iterator erase(const_iterator where) noexcept(std::is_nothrow_move_assignable_v<Element>)
 			requires(move_assignable<Element>)
 		{
-			TR_ASSERT(where >= begin() && where < end(), "Tried to pass an invalid iterator to static_vector::erase.");
+			TR_ASSERT(where >= begin() && where < end(), "Tried to pass an invalid iterator to inplace_vector::erase.");
 
 			const iterator mwhere{begin() + (where - begin())};
 			std::move(mwhere + 1, end(), mwhere);
@@ -522,8 +522,8 @@ namespace tr
 		iterator erase(const_iterator first, const_iterator last) noexcept(std::is_nothrow_move_assignable_v<Element>)
 			requires(move_assignable<Element>)
 		{
-			TR_ASSERT(first >= begin() && first < end(), "Tried to pass an invalid start iterator to static_vector::erase.");
-			TR_ASSERT(last >= begin() && last <= end(), "Tried to pass an invalid end iterator to static_vector::erase.");
+			TR_ASSERT(first >= begin() && first < end(), "Tried to pass an invalid start iterator to inplace_vector::erase.");
+			TR_ASSERT(last >= begin() && last <= end(), "Tried to pass an invalid end iterator to inplace_vector::erase.");
 
 			const iterator mfirst{begin() + (first - begin())};
 			const iterator mlast{begin() + (last - begin())};
@@ -613,7 +613,7 @@ namespace tr
 		void resize(size_type size) noexcept(std::is_nothrow_default_constructible_v<Element>)
 			requires(std::default_initializable<Element>)
 		{
-			TR_ASSERT(size <= max_size(), "Tried to resize a static vector with capacity {} to size {}.", max_size(), size);
+			TR_ASSERT(size <= max_size(), "Tried to resize an inplace vector with capacity {} to size {}.", max_size(), size);
 
 			const iterator old_end{end()};
 			m_size = size;
@@ -632,7 +632,7 @@ namespace tr
 		void resize(size_type size, const Element& value) noexcept(std::is_nothrow_copy_constructible_v<Element>)
 			requires(std::copy_constructible<Element>)
 		{
-			TR_ASSERT(size <= max_size(), "Tried to resize a static vector with capacity {} to size {}.", max_size(), size);
+			TR_ASSERT(size <= max_size(), "Tried to resize an inplace vector with capacity {} to size {}.", max_size(), size);
 
 			const iterator old_end{end()};
 			m_size = size;
@@ -657,32 +657,32 @@ namespace tr
 
 //
 
-/// Static vector binary reader.
+/// Inplace vector binary reader.
 /// @tparam Element Type of the elements of the vector.
 /// @tparam Capacity Maximum capacity of the vector.
 template <tr::binary_constructible Element, tr::usize Capacity>
-struct tr::binary_reader<tr::static_vector<Element, Capacity>>
+struct tr::binary_reader<tr::inplace_vector<Element, Capacity>>
 {
 	/// Reads a variable from a stream.
 	/// @param is Input stream.
 	/// @param out Output parameter.
-	void operator()(std::istream& is, static_vector<Element, Capacity>& out) const
+	void operator()(std::istream& is, inplace_vector<Element, Capacity>& out) const
 	{
-		out.resize(read_binary<typename static_vector<Element, Capacity>::size_type>(is));
+		out.resize(read_binary<typename inplace_vector<Element, Capacity>::size_type>(is));
 		read_binary(is, std::span{out});
 	}
 };
 
-/// Static vector binary writer.
+/// Inplace vector binary writer.
 /// @tparam Element Type of the elements of the vector.
 /// @tparam Capacity Maximum capacity of the vector.
 template <tr::binary_writable Element, tr::usize Capacity>
-struct tr::binary_writer<tr::static_vector<Element, Capacity>>
+struct tr::binary_writer<tr::inplace_vector<Element, Capacity>>
 {
 	/// Writes a variable to a stream.
 	/// @param os Output stream.
 	/// @param in Variable to write to the stream.
-	void operator()(std::ostream& os, const static_vector<Element, Capacity>& in) const
+	void operator()(std::ostream& os, const inplace_vector<Element, Capacity>& in) const
 	{
 		write_binary(os, in.size());
 		write_binary(os, std::span{in});
