@@ -9,14 +9,13 @@ var searchData=
   ['shader_5fpipeline_6',['shader_pipeline',['../classtr_1_1shader__pipeline.html',1,'tr']]],
   ['size_5ftype_7',['size_type',['../structtr_1_1size__type.html',1,'tr']]],
   ['static_5findex_5fbuffer_8',['static_index_buffer',['../classtr_1_1static__index__buffer.html',1,'tr']]],
-  ['static_5fvector_9',['static_vector',['../classtr_1_1static__vector.html',1,'tr']]],
-  ['static_5fvertex_5fbuffer_10',['static_vertex_buffer',['../classtr_1_1static__vertex__buffer.html',1,'tr']]],
-  ['stdout_5flog_5fsink_11',['stdout_log_sink',['../classtr_1_1stdout__log__sink.html',1,'tr']]],
-  ['stopwatch_12',['stopwatch',['../classtr_1_1stopwatch.html',1,'tr']]],
-  ['string_5fbuilder_5ft_13',['string_builder_t',['../classtr_1_1string__pool_1_1string__builder__t.html',1,'tr::string_pool']]],
-  ['string_5feq_14',['string_eq',['../structtr_1_1string__eq.html',1,'tr']]],
-  ['string_5fhash_15',['string_hash',['../structtr_1_1string__hash.html',1,'tr']]],
-  ['string_5fliteral_16',['string_literal',['../structtr_1_1string__literal.html',1,'tr']]],
-  ['string_5fpool_17',['string_pool',['../classtr_1_1string__pool.html',1,'tr']]],
-  ['sub_5fbitmap_18',['sub_bitmap',['../classtr_1_1sub__bitmap.html',1,'tr']]]
+  ['static_5fvertex_5fbuffer_9',['static_vertex_buffer',['../classtr_1_1static__vertex__buffer.html',1,'tr']]],
+  ['stdout_5flog_5fsink_10',['stdout_log_sink',['../classtr_1_1stdout__log__sink.html',1,'tr']]],
+  ['stopwatch_11',['stopwatch',['../classtr_1_1stopwatch.html',1,'tr']]],
+  ['string_5fbuilder_5ft_12',['string_builder_t',['../classtr_1_1string__pool_1_1string__builder__t.html',1,'tr::string_pool']]],
+  ['string_5feq_13',['string_eq',['../structtr_1_1string__eq.html',1,'tr']]],
+  ['string_5fhash_14',['string_hash',['../structtr_1_1string__hash.html',1,'tr']]],
+  ['string_5fliteral_15',['string_literal',['../structtr_1_1string__literal.html',1,'tr']]],
+  ['string_5fpool_16',['string_pool',['../classtr_1_1string__pool.html',1,'tr']]],
+  ['sub_5fbitmap_17',['sub_bitmap',['../classtr_1_1sub__bitmap.html',1,'tr']]]
 ];

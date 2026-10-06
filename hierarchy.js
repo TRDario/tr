@@ -30,9 +30,9 @@ var hierarchy =
     [ "tr::binary_reader&lt; std::string &gt;", "structtr_1_1binary__reader_3_01std_1_1string_01_4.html", null ],
     [ "tr::binary_reader&lt; std::vector&lt; Element &gt; &gt;", "structtr_1_1binary__reader_3_01std_1_1vector_3_01Element_01_4_01_4.html", null ],
     [ "tr::binary_reader&lt; tr::basic_inplace_string&lt; CharT, Capacity, Traits &gt; &gt;", "structtr_1_1binary__reader_3_01tr_1_1basic__inplace__string_3_01CharT_00_01Capacity_00_01Traits_01_4_01_4.html", null ],
+    [ "tr::binary_reader&lt; tr::inplace_vector&lt; Element, Capacity &gt; &gt;", "structtr_1_1binary__reader_3_01tr_1_1inplace__vector_3_01Element_00_01Capacity_01_4_01_4.html", null ],
     [ "tr::binary_reader&lt; tr::key_chord &gt;", "structtr_1_1binary__reader_3_01tr_1_1key__chord_01_4.html", null ],
     [ "tr::binary_reader&lt; tr::scan_chord &gt;", "structtr_1_1binary__reader_3_01tr_1_1scan__chord_01_4.html", null ],
-    [ "tr::binary_reader&lt; tr::static_vector&lt; Element, Capacity &gt; &gt;", "structtr_1_1binary__reader_3_01tr_1_1static__vector_3_01Element_00_01Capacity_01_4_01_4.html", null ],
     [ "tr::binary_writer&lt; In &gt;", "structtr_1_1binary__writer.html", null ],
     [ "tr::binary_writer&lt; boost::unordered_flat_map&lt; Key, Value, Other... &gt; &gt;", "structtr_1_1binary__writer_3_01boost_1_1unordered__flat__map_3_01Key_00_01Value_00_01Other_8_8_8_01_4_01_4.html", null ],
     [ "tr::binary_writer&lt; boost::unordered_flat_set&lt; Key, Other... &gt; &gt;", "structtr_1_1binary__writer_3_01boost_1_1unordered__flat__set_3_01Key_00_01Other_8_8_8_01_4_01_4.html", null ],
@@ -54,9 +54,9 @@ var hierarchy =
     [ "tr::binary_writer&lt; std::string_view &gt;", "structtr_1_1binary__writer_3_01std_1_1string__view_01_4.html", null ],
     [ "tr::binary_writer&lt; std::vector&lt; Element &gt; &gt;", "structtr_1_1binary__writer_3_01std_1_1vector_3_01Element_01_4_01_4.html", null ],
     [ "tr::binary_writer&lt; tr::basic_inplace_string&lt; CharT, Capacity, Traits &gt; &gt;", "structtr_1_1binary__writer_3_01tr_1_1basic__inplace__string_3_01CharT_00_01Capacity_00_01Traits_01_4_01_4.html", null ],
+    [ "tr::binary_writer&lt; tr::inplace_vector&lt; Element, Capacity &gt; &gt;", "structtr_1_1binary__writer_3_01tr_1_1inplace__vector_3_01Element_00_01Capacity_01_4_01_4.html", null ],
     [ "tr::binary_writer&lt; tr::key_chord &gt;", "structtr_1_1binary__writer_3_01tr_1_1key__chord_01_4.html", null ],
     [ "tr::binary_writer&lt; tr::scan_chord &gt;", "structtr_1_1binary__writer_3_01tr_1_1scan__chord_01_4.html", null ],
-    [ "tr::binary_writer&lt; tr::static_vector&lt; Element, Capacity &gt; &gt;", "structtr_1_1binary__writer_3_01tr_1_1static__vector_3_01Element_00_01Capacity_01_4_01_4.html", null ],
     [ "tr::bitmap", "classtr_1_1bitmap.html", null ],
     [ "tr::bitmap_atlas&lt; Key, Value, Hash, Pred &gt;", "structtr_1_1bitmap__atlas.html", null ],
     [ "tr::bitmap_view", "classtr_1_1bitmap__view.html", null ],
@@ -166,6 +166,7 @@ var hierarchy =
     ] ],
     [ "tr::hsv", "structtr_1_1hsv.html", null ],
     [ "tr::graphics_context::info", "structtr_1_1graphics__context_1_1info.html", null ],
+    [ "tr::inplace_vector&lt; Element, Capacity &gt;", "classtr_1_1inplace__vector.html", null ],
     [ "std::integral_constant", null, [
       [ "std::variant_size< VariantLike >", "structstd_1_1variant__size_3_01VariantLike_01_4.html", null ]
     ] ],
@@ -289,14 +290,14 @@ var hierarchy =
     [ "tr::pointer_iterator&lt; Iterator, Pointer &gt;", "classtr_1_1pointer__iterator.html", null ],
     [ "tr::pointer_iterator&lt; const_iterator, const_pointer &gt;", "classtr_1_1pointer__iterator.html", [
       [ "tr::basic_inplace_string< CharT, Capacity, Traits >::const_iterator", "structtr_1_1basic__inplace__string_1_1const__iterator.html", null ],
-      [ "tr::static_vector< Element, Capacity >::const_iterator", "structtr_1_1static__vector_1_1const__iterator.html", null ]
+      [ "tr::inplace_vector< Element, Capacity >::const_iterator", "structtr_1_1inplace__vector_1_1const__iterator.html", null ]
     ] ],
     [ "tr::pointer_iterator&lt; iterator, const_pointer &gt;", "classtr_1_1pointer__iterator.html", [
       [ "tr::basic_zstring_view< CharT, Traits >::iterator", "structtr_1_1basic__zstring__view_1_1iterator.html", null ]
     ] ],
     [ "tr::pointer_iterator&lt; iterator, pointer &gt;", "classtr_1_1pointer__iterator.html", [
       [ "tr::basic_inplace_string< CharT, Capacity, Traits >::iterator", "structtr_1_1basic__inplace__string_1_1iterator.html", null ],
-      [ "tr::static_vector< Element, Capacity >::iterator", "structtr_1_1static__vector_1_1iterator.html", null ]
+      [ "tr::inplace_vector< Element, Capacity >::iterator", "structtr_1_1inplace__vector_1_1iterator.html", null ]
     ] ],
     [ "tr::quit_event", "structtr_1_1quit__event.html", null ],
     [ "tr::rectangle&lt; Element &gt;", "structtr_1_1rectangle.html", null ],
@@ -319,7 +320,6 @@ var hierarchy =
     ] ],
     [ "tr::shader_pipeline", "classtr_1_1shader__pipeline.html", null ],
     [ "tr::size_type&lt; Max &gt;", "structtr_1_1size__type.html", null ],
-    [ "tr::static_vector&lt; Element, Capacity &gt;", "classtr_1_1static__vector.html", null ],
     [ "tr::stopwatch", "classtr_1_1stopwatch.html", null ],
     [ "std::streambuf", null, [
       [ "tr::memorybuf", "classtr_1_1memorybuf.html", [
