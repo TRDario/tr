@@ -15,7 +15,7 @@
 //
 
 tr::shader::shader(graphics_context& context, zstring_view source, unsigned int type, std::string_view label)
-	: m_program{context.gl().create_shader_program_v(type, 1, reinterpret_cast<const char**>(&source)), deleter{context}}
+	: m_handle{context.gl().create_shader_program_v(type, 1, reinterpret_cast<const char**>(&source)), deleter{context}}
 {
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 	context.registered_shaders().emplace(id());
@@ -160,7 +160,7 @@ tr::graphics_context& tr::shader::context() const noexcept
 {
 	TR_ASSERT(valid(), "Tried to get context of a shader in an invalid state.");
 
-	return m_program.get_deleter().context;
+	return m_handle.get_deleter().context;
 }
 
 //
@@ -534,7 +534,7 @@ void tr::shader::set_uniform_buffer(unsigned int index, const untyped_uniform_bu
 
 bool tr::shader::valid() const noexcept
 {
-	return m_program.has_value();
+	return m_handle.has_value();
 }
 
 //
@@ -568,12 +568,12 @@ std::string tr::shader::label() const
 
 unsigned int tr::shader::unwrap() const noexcept
 {
-	return m_program.get();
+	return m_handle.get();
 }
 
 tr::internal::graphics_object_id tr::shader::id() const noexcept
 {
-	return m_program.get_deleter().id;
+	return m_handle.get_deleter().id;
 }
 
 #ifdef TR_ENABLE_CHECKED_GRAPHICS

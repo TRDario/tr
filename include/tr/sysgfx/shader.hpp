@@ -487,7 +487,7 @@ namespace tr
 		};
 
 		/// Handle to the OpenGL program.
-		handle<unsigned int, 0, deleter> m_program;
+		handle<unsigned int, 0, deleter> m_handle;
 
 		/// Texture units allocated to this shader.
 		boost::unordered_flat_map<int, internal::texture_unit> m_texture_units;
