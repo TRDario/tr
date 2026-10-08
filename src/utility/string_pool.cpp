@@ -44,6 +44,13 @@ tr::string_pool::string_builder_t::string_builder_t(string_builder_t&& rhs) noex
 {
 }
 
+tr::string_pool::string_builder_t::~string_builder_t() noexcept
+{
+	if (m_pool.has_value()) {
+		m_pool->m_data.push_back('\0');
+	}
+}
+
 tr::string_pool::string_builder_t& tr::string_pool::string_builder_t::operator=(string_builder_t&& rhs) noexcept
 {
 	if (m_pool.has_value()) {
