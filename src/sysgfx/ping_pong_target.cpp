@@ -145,8 +145,8 @@ std::string tr::ping_pong_target::label() const
 	TR_ASSERT(valid(), "Tried to get label of a ping-pong target target in an invalid state.");
 
 	std::string label{m_targets[0].label()};
-	if (label.ends_with("- Target 0")) {
-		label.resize(label.size() - 10);
+	if (label.ends_with(" - Target 0")) {
+		label.resize(label.size() - 11);
 	}
 	return label;
 }

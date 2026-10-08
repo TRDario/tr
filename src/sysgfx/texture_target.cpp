@@ -143,8 +143,8 @@ void tr::texture_target::set_region(glm::ivec2 tl, sub_bitmap bitmap) noexcept
 std::string tr::texture_target::label() const
 {
 	std::string label{m_texture.label()};
-	if (label.ends_with("- Texture")) {
-		label.resize(label.size() - 9);
+	if (label.ends_with(" - Texture")) {
+		label.resize(label.size() - 10);
 	}
 	return label;
 }
