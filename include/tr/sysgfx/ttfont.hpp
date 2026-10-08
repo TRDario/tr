@@ -67,7 +67,7 @@ namespace tr
 
 	//
 
-	// TrueType font.
+	/// TrueType font.
 	class ttfont
 	{
 	  public:
