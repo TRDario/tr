@@ -37,11 +37,21 @@ tr::texture::texture(graphics_context& context, glm::ivec2 size, mipmaps mipmaps
 	allocate(size, mipmaps, format);
 }
 
+tr::texture::texture(graphics_context& context, glm::ivec2 size, std::string_view label)
+	: texture{context, size, mipmaps::disabled, pixel_format::rgba32, label}
+{
+}
+
 tr::texture::texture(graphics_context& context, sub_bitmap bitmap, mipmaps mipmaps, std::optional<pixel_format> format,
 					 std::string_view label)
 	: texture{context, bitmap.size(), mipmaps, format.value_or(bitmap.format()), label}
 {
 	set_region({0, 0}, bitmap);
+}
+
+tr::texture::texture(graphics_context& context, sub_bitmap bitmap, std::string_view label)
+	: texture{context, bitmap, mipmaps::disabled, std::nullopt, label}
+{
 }
 
 void tr::texture::deleter::operator()(unsigned int texture) const noexcept

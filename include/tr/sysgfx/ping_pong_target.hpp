@@ -42,6 +42,12 @@ namespace tr
 		[[nodiscard]] ping_pong_target(graphics_context& context, glm::ivec2 size, mipmaps mipmaps = mipmaps::disabled,
 									   pixel_format format = pixel_format::rgba32, std::string_view label = {});
 
+		/// Constructs a complete ping-pong target.
+		/// @param context Graphics context to create the ping-pong target on.
+		/// @param size Initial size of the target textures.
+		/// @param label Label of the ping-pong target.
+		[[nodiscard]] ping_pong_target(graphics_context& context, glm::ivec2 size, std::string_view label);
+
 		/// Ping-pong targets are not copyable.
 		ping_pong_target(const ping_pong_target&) = delete;
 

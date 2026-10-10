@@ -22,12 +22,14 @@ tr::texture_target::texture_target(graphics_context& context, glm::ivec2 size, m
 	m_framebuffer.attach(framebuffer::attachment::color0, m_texture);
 }
 
-tr::texture_target::texture_target(graphics_context& context, sub_bitmap bitmap, mipmaps mipmaps, std::optional<pixel_format> format,
-								   std::string_view label)
-	: m_texture{context, bitmap, mipmaps, format, label.empty() ? std::string{} : std::format("{} - Texture", label)}
-	, m_framebuffer{context, label.empty() ? std::string{} : std::format("{} - Framebuffer", label)}
+tr::texture_target::texture_target(graphics_context& context, glm::ivec2 size, std::string_view label)
+	: texture_target{context, size, mipmaps::disabled, pixel_format::rgba32, label}
 {
-	m_framebuffer.attach(framebuffer::attachment::color0, m_texture);
+}
+
+tr::texture_target::texture_target(graphics_context& context, sub_bitmap bitmap, std::string_view label)
+	: texture_target{context, bitmap, mipmaps::disabled, std::nullopt, label}
+{
 }
 
 //

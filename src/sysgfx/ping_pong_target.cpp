@@ -23,6 +23,11 @@ tr::ping_pong_target::ping_pong_target(graphics_context& context, glm::ivec2 siz
 {
 }
 
+tr::ping_pong_target::ping_pong_target(graphics_context& context, glm::ivec2 size, std::string_view label)
+	: ping_pong_target{context, size, mipmaps::disabled, pixel_format::rgba32, label}
+{
+}
+
 //
 
 tr::graphics_context& tr::ping_pong_target::context() const noexcept
