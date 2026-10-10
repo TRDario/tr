@@ -48,9 +48,10 @@ var NAVTREE =
         [ "<span class=\"tt\">tr_target_template(TARGET)</span>", "md_pages_2cmake.html#autotoc_md17", null ]
       ] ]
     ] ],
+    [ "LLDB Formatters", "md_pages_2lldb.html", null ],
     [ "tr Localization File Format (.tloc)", "md_pages_2tloc.html", [
-      [ "Example", "md_pages_2tloc.html#autotoc_md19", null ],
-      [ "EBNF Grammar", "md_pages_2tloc.html#autotoc_md20", null ]
+      [ "Example", "md_pages_2tloc.html#autotoc_md20", null ],
+      [ "EBNF Grammar", "md_pages_2tloc.html#autotoc_md21", null ]
     ] ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
@@ -101,10 +102,10 @@ var NAVTREEINDEX =
 "classtr_1_1untyped__dynamic__vertex__buffer.html#ae109aeaf27dfef271dd4940aaf8da046",
 "classtr_1_1window__open__error.html#a84c3ae49661a66113f7695e315916b80",
 "functions_func_s.html",
-"namespacetr.html#a358cbb7b209d738d608455b760766575ab45cffe084dd3d20d928bee85e7b0f21",
-"namespacetr.html#ad0e1f5e54b5fc6f186bd7cddad8d1a58",
+"namespacetr.html#a358cbb7b209d738d608455b760766575a97bff26855a8bfa63e05d5477e794b24",
+"namespacetr.html#aceb92ce9906f6ef341aeeadb332099c5",
 "namespacetr_1_1literals_1_1chrono__literals.html#ae4c3fc5407f301d06c4086de6d63ca4c",
-"structstd_1_1formatter_3_01tr_1_1shader_01_4.html#ae7f060fea50c7c363ab295ce47a56952",
+"structstd_1_1formatter_3_01tr_1_1shader_01_4.html#aa83cabc68c9351117d4db9eecc31108e",
 "structtr_1_1graphics__context_1_1info.html",
 "structtr_1_1mouse__up__event.html#adddef1253846bbdc24f404d0a6fef253",
 "structtr_1_1rgbf.html#a08858aab0c77d9f195894045761431c0"

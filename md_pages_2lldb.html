@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=11" />
   <meta name="generator" content="Doxygen 1.18.0" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>tr: Related Pages</title>
+  <title>tr: LLDB Formatters</title>
   <link href="tabs.css" rel="stylesheet" type="text/css" />
   <script type="text/javascript" src="jquery.js"></script>
   <script type="text/javascript" src="dynsections.js"></script>
@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', codefold.init);
   </div>
 </div>
 <script type="text/javascript">
-document.addEventListener('DOMContentLoaded',() => { initNavTree('pages.html','',''); });
+document.addEventListener('DOMContentLoaded',() => { initNavTree('md_pages_2lldb.html','',''); });
 </script>
 <div id="container">
 <div id="doc-content">
@@ -121,19 +121,34 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('pages.html',''
 </div>
 </div>
 
-<div class="header">
-  <div class="headertitle"><div class="title">Related Pages</div></div>
+<div><div class="header">
+  <div class="headertitle"><div class="title">LLDB Formatters </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock">Here is a list of all related documentation pages:</div><div class="directory">
-<table class="directory">
-<tr id="row_0_" class="even"><td class="entry"><span class="spacer">&#160;</span><a class="el" href="md_pages_2building.html" target="_self">Configuration and Building</a></td><td class="desc"></td></tr>
-<tr id="row_1_" class="odd"><td class="entry"><span class="spacer">&#160;</span><a class="el" href="md_pages_2cmake.html" target="_self">CMake Library</a></td><td class="desc"></td></tr>
-<tr id="row_2_" class="even"><td class="entry"><span class="spacer">&#160;</span><a class="el" href="md_pages_2lldb.html" target="_self">LLDB Formatters</a></td><td class="desc"></td></tr>
-<tr id="row_3_" class="odd"><td class="entry"><span class="spacer">&#160;</span><a class="el" href="md_pages_2tloc.html" target="_self">tr Localization File Format (.tloc)</a></td><td class="desc"></td></tr>
-</table>
-</div><!-- directory -->
-</div><!-- contents -->
+<div class="textblock"><p><a class="anchor" id="autotoc_md18"></a></p>
+<p>tr provides LLDB formatters for several datatypes and containers used and provided by the library. This includes:</p><ul>
+<li>glm vector types</li>
+<li>boost::unordered containers</li>
+<li>most tr graphical objects</li>
+<li><span class="tt"><a class="el" href="classtr_1_1angle.html" title="Abstract angle datatype.">tr::angle</a></span></li>
+<li><span class="tt"><a class="el" href="classtr_1_1atlas__entries.html" title="Atlas packer combined with a list of entries.">tr::atlas_entries</a></span></li>
+<li><span class="tt"><a class="el" href="classtr_1_1basic__zstring__view.html" title="View to a NUL-terminated string.">tr::basic_zstring_view</a></span></li>
+<li><span class="tt"><a class="el" href="classtr_1_1enum__wrapper.html" title="Wraps an enum class to allow conversion to bool, used in TR_DEFINE_ENUM_BITMASK_OPERATORS.">tr::enum_wrapper</a></span></li>
+<li><span class="tt"><a class="el" href="classtr_1_1handle.html" title="RAII wrapper over non-pointer handles.">tr::handle</a></span></li>
+<li><span class="tt"><a class="el" href="namespacetr.html#a4d681c14ee065f1812f6873bcd1e7850" title="Basic 8-bit character inplace string alias.">tr::inplace_string</a></span> and its iterators</li>
+<li><span class="tt"><a class="el" href="classtr_1_1inplace__vector.html" title="Inplace-allocated, fixed-capacity vector.">tr::inplace_vector</a></span> and its iterators</li>
+<li><span class="tt"><a class="el" href="classtr_1_1localization__map.html" title="Optimized localization key-value map.">tr::localization_map</a></span></li>
+<li><span class="tt"><a class="el" href="classtr_1_1lock__free__queue.html" title="Lock-free inplace queue intended for use in multi-threaded, high-performance environments.">tr::lock_free_queue</a></span></li>
+<li><span class="tt"><a class="el" href="classtr_1_1ref.html" title="Alternative reference wrapper.">tr::ref</a></span>/<span class="tt"><a class="el" href="classtr_1_1opt__ref.html" title="Wrapper over a pointer representing optional reference semantics.">tr::opt_ref</a></span></li>
+<li><span class="tt"><a class="el" href="structtr_1_1rgb8.html" title="8-bit RGB color.">tr::rgb8</a></span>/<span class="tt"><a class="el" href="structtr_1_1rgbf.html" title="Floating-point RGB color.">tr::rgbf</a></span>/<span class="tt"><a class="el" href="structtr_1_1rgba8.html" title="8-bit RGBA color.">tr::rgba8</a></span>/<span class="tt"><a class="el" href="structtr_1_1rgbaf.html" title="Floating-point RGBA color.">tr::rgbaf</a></span>/<span class="tt"><a class="el" href="structtr_1_1hsv.html" title="Floating-point HSV color.">tr::hsv</a></span></li>
+<li><span class="tt"><a class="el" href="structtr_1_1string__literal.html" title="Literal object holding a character array intended to allow passing string literals as non-type templa...">tr::string_literal</a></span></li>
+<li><span class="tt"><a class="el" href="classtr_1_1string__pool.html" title="Pooled string storage.">tr::string_pool</a></span></li>
+<li><span class="tt"><a class="el" href="classtr_1_1texture__view.html" title="Lightweight optional reference to a texture object.">tr::texture_view</a></span>/<span class="tt"><a class="el" href="classtr_1_1mutable__texture__view.html" title="Lightweight optional reference to a mutable texture object.">tr::mutable_texture_view</a></span></li>
+<li><span class="tt"><a class="el" href="classtr_1_1utf8_1_1iterator.html" title="Unicode codepoint iterator for UTF-8 string views.">tr::utf8::iterator</a></span>/<span class="tt"><a class="el" href="classtr_1_1utf8_1_1indexed__iterator.html" title="Indexed Unicode codepoint iterator for UTF-8 string views.">tr::utf8::indexed_iterator</a></span></li>
+</ul>
+<p>The easiest way to include these formatters is to insert <span class="tt">command script import &lt;path to ptr&gt;/lldb/tr.py</span> inside <span class="tt">.lldbinit</span> in your project or home directory to automatically include the full list on startup. </p>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
 </div><!-- doc-content -->
 </div><!-- container -->
 <!-- start footer part -->

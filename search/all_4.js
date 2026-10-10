@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['ebnf_20grammar_0',['EBNF Grammar',['../md_pages_2tloc.html#autotoc_md20',1,'']]],
+  ['ebnf_20grammar_0',['EBNF Grammar',['../md_pages_2tloc.html#autotoc_md21',1,'']]],
   ['edge_5fclamp_1',['edge_clamp',['../namespacetr.html#a3e4670572d9d0189d10f4f474d1ebfa3a8c1532dc6ee57dff888d0b493686499a',1,'tr']]],
   ['edges_2',['edges',['../structtr_1_1rectangle.html#a4873d5d0512c9044f92a501a2c1670d0',1,'tr::rectangle']]],
   ['elapsed_3',['elapsed',['../classtr_1_1stopwatch.html#a5a440d51d5403185028aadcf4620cc55',1,'tr::stopwatch']]],
@@ -38,7 +38,7 @@ var searchData=
   ['event_2ehpp_35',['event.hpp',['../event_8hpp.html',1,'']]],
   ['event_5ftype_36',['event_type',['../concepttr_1_1event__type.html',1,'tr']]],
   ['event_5fvisitor_37',['event_visitor',['../concepttr_1_1event__visitor.html',1,'tr']]],
-  ['example_38',['Example',['../md_pages_2tloc.html#autotoc_md19',1,'']]],
+  ['example_38',['Example',['../md_pages_2tloc.html#autotoc_md20',1,'']]],
   ['exception_39',['exception',['../classtr_1_1exception.html',1,'tr']]],
   ['executable_5fdirectory_40',['executable_directory',['../namespacetr.html#a7cd08e1d8ab689d537f64de2683dc7a1',1,'tr']]],
   ['exit_41',['exit',['../classtr_1_1application.html#ad468e60c47e951ff861df0f9daa9bd7baf24f62eeb789199b9b2e467df3b1876b',1,'tr::application']]]

@@ -125,12 +125,12 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('md_pages_2tloc
   <div class="headertitle"><div class="title">tr Localization File Format (.tloc) </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md18"></a></p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md19"></a></p>
 <p>tr provides a file format for localization files (henceforth referred to as 'tloc').</p>
 <p>tloc is a textual file format for defining localization key-value pairs. Key-value pairs may additionally be scoped in namespaces, and both line and multiline comments are supported in C++ style.</p>
 <p>Namespace may freely be opened multiple times within the same document, while keys are not allowed to be repeated within the same chunk.</p>
 <p>tloc is parsed with <span class="tt">tr::parse_localization_to()</span> and related functions.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md19"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md20"></a>
 Example</h1>
 <div class="fragment"><div class="line">foo {</div>
 <div class="line">    /* Multiline</div>
@@ -145,7 +145,7 @@ Example</h1>
 <p>Key: <span class="tt">foo.bar.baz</span>, Value: <span class="tt">simple value</span></p>
 <p>Key: <span class="tt">foo.qux</span>, Value: <span class="tt">value with "quotes"</span></p>
 <p>Key: <span class="tt">quux</span>, Value: <span class="tt">value with \backslashes\</span></p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md20"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md21"></a>
 EBNF Grammar</h1>
 <div class="fragment"><div class="line">character                   = ? Any individual Unicode codepoint encoded as UTF-8 ? ;</div>
 <div class="line"> </div>
