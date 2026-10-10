@@ -1,5 +1,15 @@
 var NAVTREEINDEX18 =
 {
+"structtr_1_1mouse__state.html#a5886151caa1c95afad5c3455ff013f15":[4,0,0,145,0],
+"structtr_1_1mouse__state.html#a5886151caa1c95afad5c3455ff013f15":[6,0,1,132,0],
+"structtr_1_1mouse__up__event.html":[4,0,0,146],
+"structtr_1_1mouse__up__event.html":[6,0,1,133],
+"structtr_1_1mouse__up__event.html#a20fc397543aa372c0e6b2d4ffbdfb0ac":[4,0,0,146,0],
+"structtr_1_1mouse__up__event.html#a20fc397543aa372c0e6b2d4ffbdfb0ac":[6,0,1,133,0],
+"structtr_1_1mouse__up__event.html#a516547eacad16a95804f3f88caa57b2b":[4,0,0,146,1],
+"structtr_1_1mouse__up__event.html#a516547eacad16a95804f3f88caa57b2b":[6,0,1,133,1],
+"structtr_1_1mouse__up__event.html#a82cae01fe3c7ca9436c116df1172412c":[4,0,0,146,3],
+"structtr_1_1mouse__up__event.html#a82cae01fe3c7ca9436c116df1172412c":[6,0,1,133,3],
 "structtr_1_1mouse__up__event.html#adddef1253846bbdc24f404d0a6fef253":[4,0,0,146,2],
 "structtr_1_1mouse__up__event.html#adddef1253846bbdc24f404d0a6fef253":[6,0,1,133,2],
 "structtr_1_1mouse__wheel__event.html":[4,0,0,147],
@@ -239,15 +249,5 @@ var NAVTREEINDEX18 =
 "structtr_1_1rgbaf.html#ad8a3ee7e98ef7a734ea3abacc448d866":[4,0,0,177,25],
 "structtr_1_1rgbaf.html#ad8a3ee7e98ef7a734ea3abacc448d866":[6,0,1,164,25],
 "structtr_1_1rgbaf.html#aeeaf853a8c9ce66b0bbf622634f9175a":[4,0,0,177,12],
-"structtr_1_1rgbaf.html#aeeaf853a8c9ce66b0bbf622634f9175a":[6,0,1,164,12],
-"structtr_1_1rgbaf.html#af37bed868b6ed605876974f6a2db2525":[4,0,0,177,15],
-"structtr_1_1rgbaf.html#af37bed868b6ed605876974f6a2db2525":[6,0,1,164,15],
-"structtr_1_1rgbaf.html#afc7bc8e306bb9069b043b49745d02e70":[4,0,0,177,1],
-"structtr_1_1rgbaf.html#afc7bc8e306bb9069b043b49745d02e70":[6,0,1,164,1],
-"structtr_1_1rgbf.html":[4,0,0,178],
-"structtr_1_1rgbf.html":[6,0,1,165],
-"structtr_1_1rgbf.html#a01ea8e00fcfefd2fb3cd024ee956bac6":[4,0,0,178,0],
-"structtr_1_1rgbf.html#a01ea8e00fcfefd2fb3cd024ee956bac6":[6,0,1,165,0],
-"structtr_1_1rgbf.html#a06cf54665963a33f0de4b7ad4b25cb5f":[4,0,0,178,6],
-"structtr_1_1rgbf.html#a06cf54665963a33f0de4b7ad4b25cb5f":[6,0,1,165,6]
+"structtr_1_1rgbaf.html#aeeaf853a8c9ce66b0bbf622634f9175a":[6,0,1,164,12]
 };

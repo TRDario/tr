@@ -142,6 +142,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:af90814eb95d30aa39710790115c00cef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an incomplete ping-pong target.  <br /></td></tr>
 <tr class="memitem:a6ec0617a356ef3df9107aed992e35655" id="r_a6ec0617a356ef3df9107aed992e35655"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a6ec0617a356ef3df9107aed992e35655">ping_pong_target</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context, glm::ivec2 size, mipmaps<a class="el" href="namespacetr.html#acc7c3ec65e91b3d9d879c9bca6e51ce6">mipmaps</a> mipmaps<a class="el" href="namespacetr.html#acc7c3ec65e91b3d9d879c9bca6e51ce6">mipmaps</a>=<a class="el" href="namespacetr.html#acc7c3ec65e91b3d9d879c9bca6e51ce6a075ae3d2fc31640504f814f60e5ef713">mipmaps::disabled</a>, <a class="el" href="namespacetr.html#ac1babae6e9367fc90585a8791dadc746">pixel_format</a> format=<a class="el" href="namespacetr.html#ac1babae6e9367fc90585a8791dadc746ab1500b383bccdb3946114a5d708706c4">pixel_format::rgba32</a>, std::string_view label={})</td></tr>
 <tr class="memdesc:a6ec0617a356ef3df9107aed992e35655"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a complete ping-pong target.  <br /></td></tr>
+<tr class="memitem:a72cce0f8975f43f0bd19cff6ad77497f" id="r_a72cce0f8975f43f0bd19cff6ad77497f"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a72cce0f8975f43f0bd19cff6ad77497f">ping_pong_target</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context, glm::ivec2 size, std::string_view label)</td></tr>
+<tr class="memdesc:a72cce0f8975f43f0bd19cff6ad77497f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a complete ping-pong target.  <br /></td></tr>
 <tr class="memitem:aacc0dc990fd773a8e412d7a73a6310d0" id="r_aacc0dc990fd773a8e412d7a73a6310d0"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#aacc0dc990fd773a8e412d7a73a6310d0">ping_pong_target</a> (const ping_pong_target &amp;)=delete</td></tr>
 <tr class="memdesc:aacc0dc990fd773a8e412d7a73a6310d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ping-pong targets are not copyable.  <br /></td></tr>
 <tr class="memitem:ac71b2ed11e54cb194d673563583a10c5" id="r_ac71b2ed11e54cb194d673563583a10c5"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ac71b2ed11e54cb194d673563583a10c5">ping_pong_target</a> (ping_pong_target &amp;&amp;rhs) noexcept=default</td></tr>
@@ -190,7 +192,7 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="af90814eb95d30aa39710790115c00cef" name="af90814eb95d30aa39710790115c00cef"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af90814eb95d30aa39710790115c00cef">&#9670;&#160;</a></span>ping_pong_target() <span class="overload">[1/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#af90814eb95d30aa39710790115c00cef">&#9670;&#160;</a></span>ping_pong_target() <span class="overload">[1/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -228,7 +230,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a6ec0617a356ef3df9107aed992e35655" name="a6ec0617a356ef3df9107aed992e35655"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6ec0617a356ef3df9107aed992e35655">&#9670;&#160;</a></span>ping_pong_target() <span class="overload">[2/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ec0617a356ef3df9107aed992e35655">&#9670;&#160;</a></span>ping_pong_target() <span class="overload">[2/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -283,8 +285,52 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a72cce0f8975f43f0bd19cff6ad77497f" name="a72cce0f8975f43f0bd19cff6ad77497f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a72cce0f8975f43f0bd19cff6ad77497f">&#9670;&#160;</a></span>ping_pong_target() <span class="overload">[3/5]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tr::ping_pong_target::ping_pong_target </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>context</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">glm::ivec2</td>          <td class="paramname"><span class="paramname"><em>size</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string_view</td>          <td class="paramname"><span class="paramname"><em>label</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructs a complete ping-pong target. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">context</td><td>Graphics context to create the ping-pong target on. </td></tr>
+    <tr><td class="paramname">size</td><td>Initial size of the target textures. </td></tr>
+    <tr><td class="paramname">label</td><td>Label of the ping-pong target. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="aacc0dc990fd773a8e412d7a73a6310d0" name="aacc0dc990fd773a8e412d7a73a6310d0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aacc0dc990fd773a8e412d7a73a6310d0">&#9670;&#160;</a></span>ping_pong_target() <span class="overload">[3/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aacc0dc990fd773a8e412d7a73a6310d0">&#9670;&#160;</a></span>ping_pong_target() <span class="overload">[4/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -311,7 +357,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="ac71b2ed11e54cb194d673563583a10c5" name="ac71b2ed11e54cb194d673563583a10c5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac71b2ed11e54cb194d673563583a10c5">&#9670;&#160;</a></span>ping_pong_target() <span class="overload">[4/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac71b2ed11e54cb194d673563583a10c5">&#9670;&#160;</a></span>ping_pong_target() <span class="overload">[5/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">

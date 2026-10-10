@@ -1,5 +1,15 @@
 var NAVTREEINDEX17 =
 {
+"structtr_1_1empty__variant__t.html":[4,0,0,93],
+"structtr_1_1empty__variant__t.html":[6,0,1,80],
+"structtr_1_1glyph__metrics.html":[4,0,0,101],
+"structtr_1_1glyph__metrics.html":[6,0,1,88],
+"structtr_1_1glyph__metrics.html#a9801a49e14000c5acc636185377d4851":[4,0,0,101,1],
+"structtr_1_1glyph__metrics.html#a9801a49e14000c5acc636185377d4851":[6,0,1,88,1],
+"structtr_1_1glyph__metrics.html#ae8a12ef7c99768dc2ffb6578424f28e6":[4,0,0,101,2],
+"structtr_1_1glyph__metrics.html#ae8a12ef7c99768dc2ffb6578424f28e6":[6,0,1,88,2],
+"structtr_1_1glyph__metrics.html#af2ee440245a187dbdf799b93fe0d949c":[4,0,0,101,0],
+"structtr_1_1glyph__metrics.html#af2ee440245a187dbdf799b93fe0d949c":[6,0,1,88,0],
 "structtr_1_1graphics__context_1_1info.html":[4,0,0,104,0],
 "structtr_1_1graphics__context_1_1info.html":[6,0,1,91,0],
 "structtr_1_1graphics__context_1_1info.html#a709b9942684adc54b92501eb25976590":[4,0,0,104,0,1],
@@ -239,15 +249,5 @@ var NAVTREEINDEX17 =
 "structtr_1_1mouse__state.html":[4,0,0,145],
 "structtr_1_1mouse__state.html":[6,0,1,132],
 "structtr_1_1mouse__state.html#a40dfd33e70138e3d7f67bcbf3c711430":[4,0,0,145,1],
-"structtr_1_1mouse__state.html#a40dfd33e70138e3d7f67bcbf3c711430":[6,0,1,132,1],
-"structtr_1_1mouse__state.html#a5886151caa1c95afad5c3455ff013f15":[4,0,0,145,0],
-"structtr_1_1mouse__state.html#a5886151caa1c95afad5c3455ff013f15":[6,0,1,132,0],
-"structtr_1_1mouse__up__event.html":[4,0,0,146],
-"structtr_1_1mouse__up__event.html":[6,0,1,133],
-"structtr_1_1mouse__up__event.html#a20fc397543aa372c0e6b2d4ffbdfb0ac":[4,0,0,146,0],
-"structtr_1_1mouse__up__event.html#a20fc397543aa372c0e6b2d4ffbdfb0ac":[6,0,1,133,0],
-"structtr_1_1mouse__up__event.html#a516547eacad16a95804f3f88caa57b2b":[4,0,0,146,1],
-"structtr_1_1mouse__up__event.html#a516547eacad16a95804f3f88caa57b2b":[6,0,1,133,1],
-"structtr_1_1mouse__up__event.html#a82cae01fe3c7ca9436c116df1172412c":[4,0,0,146,3],
-"structtr_1_1mouse__up__event.html#a82cae01fe3c7ca9436c116df1172412c":[6,0,1,133,3]
+"structtr_1_1mouse__state.html#a40dfd33e70138e3d7f67bcbf3c711430":[6,0,1,132,1]
 };

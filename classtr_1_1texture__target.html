@@ -143,8 +143,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:ac5feae04c17323bab10a28771097f274"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an incomplete texture target.  <br /></td></tr>
 <tr class="memitem:a05e74eb645d19974849f0f9cd39df6e9" id="r_a05e74eb645d19974849f0f9cd39df6e9"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a05e74eb645d19974849f0f9cd39df6e9">texture_target</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context, glm::ivec2 size, mipmaps<a class="el" href="namespacetr.html#acc7c3ec65e91b3d9d879c9bca6e51ce6">mipmaps</a> mipmaps<a class="el" href="namespacetr.html#acc7c3ec65e91b3d9d879c9bca6e51ce6">mipmaps</a>=<a class="el" href="namespacetr.html#acc7c3ec65e91b3d9d879c9bca6e51ce6a075ae3d2fc31640504f814f60e5ef713">mipmaps::disabled</a>, <a class="el" href="namespacetr.html#ac1babae6e9367fc90585a8791dadc746">pixel_format</a> format=<a class="el" href="namespacetr.html#ac1babae6e9367fc90585a8791dadc746ab1500b383bccdb3946114a5d708706c4">pixel_format::rgba32</a>, std::string_view label={})</td></tr>
 <tr class="memdesc:a05e74eb645d19974849f0f9cd39df6e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates an uninitialized texture target.  <br /></td></tr>
+<tr class="memitem:a957746e72e7f162d843b0df09ee25fb7" id="r_a957746e72e7f162d843b0df09ee25fb7"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a957746e72e7f162d843b0df09ee25fb7">texture_target</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context, glm::ivec2 size, std::string_view label={})</td></tr>
+<tr class="memdesc:a957746e72e7f162d843b0df09ee25fb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates an uninitialized texture target.  <br /></td></tr>
 <tr class="memitem:ad8ec7b5d807fd76969e36a6d2e95e485" id="r_ad8ec7b5d807fd76969e36a6d2e95e485"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ad8ec7b5d807fd76969e36a6d2e95e485">texture_target</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context, <a class="el" href="classtr_1_1sub__bitmap.html">sub_bitmap</a> bitmap, mipmaps<a class="el" href="namespacetr.html#acc7c3ec65e91b3d9d879c9bca6e51ce6">mipmaps</a> mipmaps<a class="el" href="namespacetr.html#acc7c3ec65e91b3d9d879c9bca6e51ce6">mipmaps</a>=<a class="el" href="namespacetr.html#acc7c3ec65e91b3d9d879c9bca6e51ce6a075ae3d2fc31640504f814f60e5ef713">mipmaps::disabled</a>, std::optional&lt; <a class="el" href="namespacetr.html#ac1babae6e9367fc90585a8791dadc746">pixel_format</a> &gt; format=std::nullopt, std::string_view label={})</td></tr>
 <tr class="memdesc:ad8ec7b5d807fd76969e36a6d2e95e485"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a texture target with data uploaded from a bitmap.  <br /></td></tr>
+<tr class="memitem:a0e92e90fe4404e15893e48028eb64967" id="r_a0e92e90fe4404e15893e48028eb64967"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a0e92e90fe4404e15893e48028eb64967">texture_target</a> (<a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;context, <a class="el" href="classtr_1_1sub__bitmap.html">sub_bitmap</a> bitmap, std::string_view label={})</td></tr>
+<tr class="memdesc:a0e92e90fe4404e15893e48028eb64967"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a texture target with data uploaded from a bitmap.  <br /></td></tr>
 <tr class="memitem:ad6836d4f1365bd80fa3295246a5655c1" id="r_ad6836d4f1365bd80fa3295246a5655c1"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ad6836d4f1365bd80fa3295246a5655c1">texture_target</a> (const texture_target &amp;)=delete</td></tr>
 <tr class="memdesc:ad6836d4f1365bd80fa3295246a5655c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Texture targets are not copyable.  <br /></td></tr>
 <tr class="memitem:acb47c0bcd627384520b1ac83bfddb2a9" id="r_acb47c0bcd627384520b1ac83bfddb2a9"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#acb47c0bcd627384520b1ac83bfddb2a9">texture_target</a> (texture_target &amp;&amp;rhs) noexcept=default</td></tr>
@@ -205,7 +209,7 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ac5feae04c17323bab10a28771097f274" name="ac5feae04c17323bab10a28771097f274"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac5feae04c17323bab10a28771097f274">&#9670;&#160;</a></span>texture_target() <span class="overload">[1/5]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac5feae04c17323bab10a28771097f274">&#9670;&#160;</a></span>texture_target() <span class="overload">[1/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -243,7 +247,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a05e74eb645d19974849f0f9cd39df6e9" name="a05e74eb645d19974849f0f9cd39df6e9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a05e74eb645d19974849f0f9cd39df6e9">&#9670;&#160;</a></span>texture_target() <span class="overload">[2/5]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a05e74eb645d19974849f0f9cd39df6e9">&#9670;&#160;</a></span>texture_target() <span class="overload">[2/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -298,8 +302,52 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a957746e72e7f162d843b0df09ee25fb7" name="a957746e72e7f162d843b0df09ee25fb7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a957746e72e7f162d843b0df09ee25fb7">&#9670;&#160;</a></span>texture_target() <span class="overload">[3/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tr::texture_target::texture_target </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>context</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">glm::ivec2</td>          <td class="paramname"><span class="paramname"><em>size</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string_view</td>          <td class="paramname"><span class="paramname"><em>label</em></span><span class="paramdefsep"> = </span><span class="paramdefval">{}</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Allocates an uninitialized texture target. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">context</td><td>Graphics context to create the texture target on. </td></tr>
+    <tr><td class="paramname">size</td><td>Size of the texture. </td></tr>
+    <tr><td class="paramname">label</td><td>Label of the texture target. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ad8ec7b5d807fd76969e36a6d2e95e485" name="ad8ec7b5d807fd76969e36a6d2e95e485"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad8ec7b5d807fd76969e36a6d2e95e485">&#9670;&#160;</a></span>texture_target() <span class="overload">[3/5]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad8ec7b5d807fd76969e36a6d2e95e485">&#9670;&#160;</a></span>texture_target() <span class="overload">[4/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -354,8 +402,52 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a0e92e90fe4404e15893e48028eb64967" name="a0e92e90fe4404e15893e48028eb64967"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e92e90fe4404e15893e48028eb64967">&#9670;&#160;</a></span>texture_target() <span class="overload">[5/7]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tr::texture_target::texture_target </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>context</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classtr_1_1sub__bitmap.html">sub_bitmap</a></td>          <td class="paramname"><span class="paramname"><em>bitmap</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string_view</td>          <td class="paramname"><span class="paramname"><em>label</em></span><span class="paramdefsep"> = </span><span class="paramdefval">{}</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructs a texture target with data uploaded from a bitmap. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">context</td><td>Graphics context to create the texture target on. </td></tr>
+    <tr><td class="paramname">bitmap</td><td>Bitmap data to copy to the texture. </td></tr>
+    <tr><td class="paramname">label</td><td>Label of the texture target. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="ad6836d4f1365bd80fa3295246a5655c1" name="ad6836d4f1365bd80fa3295246a5655c1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad6836d4f1365bd80fa3295246a5655c1">&#9670;&#160;</a></span>texture_target() <span class="overload">[4/5]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ad6836d4f1365bd80fa3295246a5655c1">&#9670;&#160;</a></span>texture_target() <span class="overload">[6/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -382,7 +474,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="acb47c0bcd627384520b1ac83bfddb2a9" name="acb47c0bcd627384520b1ac83bfddb2a9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acb47c0bcd627384520b1ac83bfddb2a9">&#9670;&#160;</a></span>texture_target() <span class="overload">[5/5]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#acb47c0bcd627384520b1ac83bfddb2a9">&#9670;&#160;</a></span>texture_target() <span class="overload">[7/7]</span></h2>
 
 <div class="memitem">
 <div class="memproto">

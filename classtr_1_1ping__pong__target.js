@@ -2,6 +2,7 @@ var classtr_1_1ping__pong__target =
 [
     [ "ping_pong_target", "classtr_1_1ping__pong__target.html#af90814eb95d30aa39710790115c00cef", null ],
     [ "ping_pong_target", "classtr_1_1ping__pong__target.html#a6ec0617a356ef3df9107aed992e35655", null ],
+    [ "ping_pong_target", "classtr_1_1ping__pong__target.html#a72cce0f8975f43f0bd19cff6ad77497f", null ],
     [ "ping_pong_target", "classtr_1_1ping__pong__target.html#aacc0dc990fd773a8e412d7a73a6310d0", null ],
     [ "ping_pong_target", "classtr_1_1ping__pong__target.html#ac71b2ed11e54cb194d673563583a10c5", null ],
     [ "operator=", "classtr_1_1ping__pong__target.html#aec8b20dfe27704632511c7917c01afeb", null ],

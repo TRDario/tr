@@ -2,7 +2,9 @@ var classtr_1_1texture =
 [
     [ "texture", "classtr_1_1texture.html#ad431307f4d3266e56f1efc2827ef7ea4", null ],
     [ "texture", "classtr_1_1texture.html#adc8e9df9114b36046f2c5eb3af594b2e", null ],
+    [ "texture", "classtr_1_1texture.html#a15e4c9ef3adfadc13aa37417d92be2d5", null ],
     [ "texture", "classtr_1_1texture.html#a24c9e496da80da75a31f4f165f5c8634", null ],
+    [ "texture", "classtr_1_1texture.html#ae0be75d7f6a451ba1a8cc45df165cc95", null ],
     [ "texture", "classtr_1_1texture.html#a197cb32b5931d2731e371cbd59801344", null ],
     [ "texture", "classtr_1_1texture.html#a2be5ebed3948bfd5d0248cd59f740ca5", null ],
     [ "operator=", "classtr_1_1texture.html#a424a2cf05f89869c9da7a1c0b4e6174f", null ],

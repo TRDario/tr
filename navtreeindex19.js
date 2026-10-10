@@ -1,5 +1,15 @@
 var NAVTREEINDEX19 =
 {
+"structtr_1_1rgbaf.html#af37bed868b6ed605876974f6a2db2525":[4,0,0,177,15],
+"structtr_1_1rgbaf.html#af37bed868b6ed605876974f6a2db2525":[6,0,1,164,15],
+"structtr_1_1rgbaf.html#afc7bc8e306bb9069b043b49745d02e70":[4,0,0,177,1],
+"structtr_1_1rgbaf.html#afc7bc8e306bb9069b043b49745d02e70":[6,0,1,164,1],
+"structtr_1_1rgbf.html":[4,0,0,178],
+"structtr_1_1rgbf.html":[6,0,1,165],
+"structtr_1_1rgbf.html#a01ea8e00fcfefd2fb3cd024ee956bac6":[4,0,0,178,0],
+"structtr_1_1rgbf.html#a01ea8e00fcfefd2fb3cd024ee956bac6":[6,0,1,165,0],
+"structtr_1_1rgbf.html#a06cf54665963a33f0de4b7ad4b25cb5f":[4,0,0,178,6],
+"structtr_1_1rgbf.html#a06cf54665963a33f0de4b7ad4b25cb5f":[6,0,1,165,6],
 "structtr_1_1rgbf.html#a08858aab0c77d9f195894045761431c0":[4,0,0,178,17],
 "structtr_1_1rgbf.html#a08858aab0c77d9f195894045761431c0":[6,0,1,165,17],
 "structtr_1_1rgbf.html#a091267ff4bff63e2ad9a09684fbeadcb":[4,0,0,178,19],
