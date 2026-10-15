@@ -25,7 +25,6 @@
 #include <tr/sysgfx/event.hpp>                               // IWYU pragma: export
 #include <tr/sysgfx/exception.hpp>                           // IWYU pragma: export
 #include <tr/sysgfx/framebuffer.hpp>                         // IWYU pragma: export
-#include <tr/sysgfx/graphics_benchmark.hpp>                  // IWYU pragma: export
 #include <tr/sysgfx/graphics_buffer.hpp>                     // IWYU pragma: export
 #include <tr/sysgfx/graphics_context.hpp>                    // IWYU pragma: export
 #include <tr/sysgfx/keyboard.hpp>                            // IWYU pragma: export
@@ -55,6 +54,7 @@
 #include <tr/sysgfx/texture.hpp>                             // IWYU pragma: export
 #include <tr/sysgfx/texture_target.hpp>                      // IWYU pragma: export
 #include <tr/sysgfx/texture_view.hpp>                        // IWYU pragma: export
+#include <tr/sysgfx/timer_query.hpp>                         // IWYU pragma: export
 #include <tr/sysgfx/ttfont.hpp>                              // IWYU pragma: export
 #include <tr/sysgfx/uniform_buffer.hpp>                      // IWYU pragma: export
 #include <tr/sysgfx/untyped_dynamic_vertex_buffer.hpp>       // IWYU pragma: export
