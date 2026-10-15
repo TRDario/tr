@@ -36,5 +36,5 @@ var searchData=
   ['audio_5fsource_33',['audio_source',['../classtr_1_1audio__source.html#adb6dcf060a558159951e0f88e1e0cf17',1,'tr::audio_source::audio_source(const audio_source &amp;)=delete'],['../classtr_1_1audio__source.html#a4736c0c7c13e7256db90beb673d4ff19',1,'tr::audio_source::audio_source(audio_source &amp;&amp;)=delete']]],
   ['audio_5fstream_34',['audio_stream',['../classtr_1_1audio__stream.html#a6c2c7c84fbcebf0a2add5837b677eabb',1,'tr::audio_stream']]],
   ['available_5faudio_5fdevices_35',['available_audio_devices',['../namespacetr.html#abd1b216fab3f8261778719ecedb13db2',1,'tr']]],
-  ['avg_36',['avg',['../classtr_1_1graphics__benchmark.html#aadc965dac94434c8c61ea15e25b765a8',1,'tr::graphics_benchmark::avg()'],['../classtr_1_1benchmark.html#a47eaa4f03cb784b8eb11f66397692cc8',1,'tr::benchmark::avg()']]]
+  ['avg_36',['avg',['../classtr_1_1benchmark.html#a47eaa4f03cb784b8eb11f66397692cc8',1,'tr::benchmark']]]
 ];

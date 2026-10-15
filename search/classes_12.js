@@ -5,11 +5,12 @@ var searchData=
   ['texture_5ftarget_2',['texture_target',['../classtr_1_1texture__target.html',1,'tr']]],
   ['texture_5fview_3',['texture_view',['../classtr_1_1texture__view.html',1,'tr']]],
   ['timer_4',['timer',['../classtr_1_1timer.html',1,'tr']]],
-  ['triangle_5',['triangle',['../structtr_1_1triangle.html',1,'tr']]],
-  ['ttf_5fmeasure_5fresult_6',['ttf_measure_result',['../structtr_1_1ttf__measure__result.html',1,'tr']]],
-  ['ttfont_7',['ttfont',['../classtr_1_1ttfont.html',1,'tr']]],
-  ['ttfont_5ferror_8',['ttfont_error',['../classtr_1_1ttfont__error.html',1,'tr']]],
-  ['ttfont_5fload_5ferror_9',['ttfont_load_error',['../classtr_1_1ttfont__load__error.html',1,'tr']]],
-  ['ttfont_5frender_5ferror_10',['ttfont_render_error',['../classtr_1_1ttfont__render__error.html',1,'tr']]],
-  ['type_11',['type',['../structtr_1_1copy__qualifiers.html',1,'tr::type&lt; T, Qualified &gt;'],['../structtr_1_1size__type.html',1,'tr::type&lt; Max &gt;']]]
+  ['timer_5fquery_5',['timer_query',['../classtr_1_1timer__query.html',1,'tr']]],
+  ['triangle_6',['triangle',['../structtr_1_1triangle.html',1,'tr']]],
+  ['ttf_5fmeasure_5fresult_7',['ttf_measure_result',['../structtr_1_1ttf__measure__result.html',1,'tr']]],
+  ['ttfont_8',['ttfont',['../classtr_1_1ttfont.html',1,'tr']]],
+  ['ttfont_5ferror_9',['ttfont_error',['../classtr_1_1ttfont__error.html',1,'tr']]],
+  ['ttfont_5fload_5ferror_10',['ttfont_load_error',['../classtr_1_1ttfont__load__error.html',1,'tr']]],
+  ['ttfont_5frender_5ferror_11',['ttfont_render_error',['../classtr_1_1ttfont__render__error.html',1,'tr']]],
+  ['type_12',['type',['../structtr_1_1copy__qualifiers.html',1,'tr::type&lt; T, Qualified &gt;'],['../structtr_1_1size__type.html',1,'tr::type&lt; Max &gt;']]]
 ];

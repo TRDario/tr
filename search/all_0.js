@@ -96,5 +96,5 @@ var searchData=
   ['audio_5fstream_93',['audio_stream',['../classtr_1_1audio__stream.html',1,'tr::audio_stream'],['../classtr_1_1audio__stream.html#a6c2c7c84fbcebf0a2add5837b677eabb',1,'tr::audio_stream::audio_stream()']]],
   ['audio_5fstream_2ehpp_94',['audio_stream.hpp',['../audio__stream_8hpp.html',1,'']]],
   ['available_5faudio_5fdevices_95',['available_audio_devices',['../namespacetr.html#abd1b216fab3f8261778719ecedb13db2',1,'tr']]],
-  ['avg_96',['avg',['../classtr_1_1graphics__benchmark.html#aadc965dac94434c8c61ea15e25b765a8',1,'tr::graphics_benchmark::avg()'],['../classtr_1_1benchmark.html#a47eaa4f03cb784b8eb11f66397692cc8',1,'tr::benchmark::avg()']]]
+  ['avg_96',['avg',['../classtr_1_1benchmark.html#a47eaa4f03cb784b8eb11f66397692cc8',1,'tr::benchmark']]]
 ];

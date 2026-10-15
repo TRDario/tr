@@ -132,6 +132,7 @@ var hierarchy =
     [ "std::formatter&lt; tr::static_index_buffer &gt;", "structstd_1_1formatter_3_01tr_1_1static__index__buffer_01_4.html", null ],
     [ "std::formatter&lt; tr::static_vertex_buffer&lt; Element &gt; &gt;", "structstd_1_1formatter_3_01tr_1_1static__vertex__buffer_3_01Element_01_4_01_4.html", null ],
     [ "std::formatter&lt; tr::texture &gt;", "structstd_1_1formatter_3_01tr_1_1texture_01_4.html", null ],
+    [ "std::formatter&lt; tr::timer_query &gt;", "structstd_1_1formatter_3_01tr_1_1timer__query_01_4.html", null ],
     [ "std::formatter&lt; tr::uniform_buffer&lt; Object &gt; &gt;", "structstd_1_1formatter_3_01tr_1_1uniform__buffer_3_01Object_01_4_01_4.html", null ],
     [ "std::formatter&lt; tr::untyped_dynamic_vertex_buffer &gt;", "structstd_1_1formatter_3_01tr_1_1untyped__dynamic__vertex__buffer_01_4.html", null ],
     [ "std::formatter&lt; tr::untyped_shader_buffer &gt;", "structstd_1_1formatter_3_01tr_1_1untyped__shader__buffer_01_4.html", null ],
@@ -142,7 +143,6 @@ var hierarchy =
     [ "std::formatter&lt; tr::vertex_shader &gt;", "structstd_1_1formatter_3_01tr_1_1vertex__shader_01_4.html", null ],
     [ "tr::framebuffer", "classtr_1_1framebuffer.html", null ],
     [ "tr::glyph_metrics", "structtr_1_1glyph__metrics.html", null ],
-    [ "tr::graphics_benchmark", "classtr_1_1graphics__benchmark.html", null ],
     [ "tr::graphics_buffer", "classtr_1_1graphics__buffer.html", [
       [ "tr::dynamic_index_buffer", "classtr_1_1dynamic__index__buffer.html", null ],
       [ "tr::static_index_buffer", "classtr_1_1static__index__buffer.html", null ],
@@ -337,6 +337,7 @@ var hierarchy =
     [ "tr::texture_target", "classtr_1_1texture__target.html", null ],
     [ "tr::texture_view", "classtr_1_1texture__view.html", null ],
     [ "tr::timer", "classtr_1_1timer.html", null ],
+    [ "tr::timer_query", "classtr_1_1timer__query.html", null ],
     [ "tr::triangle", "structtr_1_1triangle.html", null ],
     [ "tr::ttf_measure_result", "structtr_1_1ttf__measure__result.html", null ],
     [ "tr::ttfont", "classtr_1_1ttfont.html", null ],
