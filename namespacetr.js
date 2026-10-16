@@ -104,6 +104,7 @@ var namespacetr =
     [ "backbuffer_resize_event", "structtr_1_1backbuffer__resize__event.html", "structtr_1_1backbuffer__resize__event" ],
     [ "basic_inplace_string", "classtr_1_1basic__inplace__string.html", "classtr_1_1basic__inplace__string" ],
     [ "basic_zstring_view", "classtr_1_1basic__zstring__view.html", "classtr_1_1basic__zstring__view" ],
+    [ "basic_zstring_view_zspan", "classtr_1_1basic__zstring__view__zspan.html", "classtr_1_1basic__zstring__view__zspan" ],
     [ "benchmark", "classtr_1_1benchmark.html", "classtr_1_1benchmark" ],
     [ "binary_reader", "structtr_1_1binary__reader.html", null ],
     [ "binary_reader&lt; boost::unordered_flat_map&lt; Key, Value, Other... &gt; &gt;", "structtr_1_1binary__reader_3_01boost_1_1unordered__flat__map_3_01Key_00_01Value_00_01Other_8_8_8_01_4_01_4.html", null ],
@@ -409,6 +410,7 @@ var namespacetr =
     [ "polygon_view", "namespacetr.html#a1822833999d4fd3ae28259f4e02d58a0", null ],
     [ "codepoint", "namespacetr.html#aeffe1b14b7778ab5180bec7c14f372b9", null ],
     [ "zstring_view", "namespacetr.html#af4536441b49fec056af6a2432b30afff", null ],
+    [ "zstring_view_zspan", "namespacetr.html#ad235a84a8935109ea559902b6467232f", null ],
     [ "audio_format", "namespacetr.html#aadc8d482d8d35a661880c99bdd86069e", [
       [ "mono16", "namespacetr.html#aadc8d482d8d35a661880c99bdd86069ea6b53b9f17c96fdeeac1fe6a4b4f64b88", null ],
       [ "stereo16", "namespacetr.html#aadc8d482d8d35a661880c99bdd86069ead9c37a9391c91175a6c155b3803ec8b1", null ]

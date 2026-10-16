@@ -75,6 +75,7 @@ var annotated_dup =
       [ "backbuffer_resize_event", "structtr_1_1backbuffer__resize__event.html", "structtr_1_1backbuffer__resize__event" ],
       [ "basic_inplace_string", "classtr_1_1basic__inplace__string.html", "classtr_1_1basic__inplace__string" ],
       [ "basic_zstring_view", "classtr_1_1basic__zstring__view.html", "classtr_1_1basic__zstring__view" ],
+      [ "basic_zstring_view_zspan", "classtr_1_1basic__zstring__view__zspan.html", "classtr_1_1basic__zstring__view__zspan" ],
       [ "benchmark", "classtr_1_1benchmark.html", "classtr_1_1benchmark" ],
       [ "binary_reader", "structtr_1_1binary__reader.html", null ],
       [ "binary_reader&lt; boost::unordered_flat_map&lt; Key, Value, Other... &gt; &gt;", "structtr_1_1binary__reader_3_01boost_1_1unordered__flat__map_3_01Key_00_01Value_00_01Other_8_8_8_01_4_01_4.html", null ],

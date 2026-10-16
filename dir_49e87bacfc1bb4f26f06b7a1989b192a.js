@@ -60,5 +60,6 @@ var dir_49e87bacfc1bb4f26f06b7a1989b192a =
     [ "utf8.hpp", "utf8_8hpp.html", "utf8_8hpp" ],
     [ "variant.hpp", "variant_8hpp.html", "variant_8hpp" ],
     [ "vector.hpp", "vector_8hpp.html", "vector_8hpp" ],
-    [ "zstring_view.hpp", "zstring__view_8hpp.html", "zstring__view_8hpp" ]
+    [ "zstring_view.hpp", "zstring__view_8hpp.html", "zstring__view_8hpp" ],
+    [ "zstring_view_zspan.hpp", "zstring__view__zspan_8hpp.html", "zstring__view__zspan_8hpp" ]
 ];

@@ -16,6 +16,7 @@ var hierarchy =
     [ "tr::backbuffer_resize_event", "structtr_1_1backbuffer__resize__event.html", null ],
     [ "tr::basic_inplace_string&lt; CharT, Capacity, Traits &gt;", "classtr_1_1basic__inplace__string.html", null ],
     [ "tr::basic_zstring_view&lt; CharT, Traits &gt;", "classtr_1_1basic__zstring__view.html", null ],
+    [ "tr::basic_zstring_view_zspan&lt; CharT, Traits &gt;", "classtr_1_1basic__zstring__view__zspan.html", null ],
     [ "tr::benchmark", "classtr_1_1benchmark.html", null ],
     [ "tr::binary_reader&lt; Out &gt;", "structtr_1_1binary__reader.html", null ],
     [ "tr::binary_reader&lt; boost::unordered_flat_map&lt; Key, Value, Other... &gt; &gt;", "structtr_1_1binary__reader_3_01boost_1_1unordered__flat__map_3_01Key_00_01Value_00_01Other_8_8_8_01_4_01_4.html", null ],
@@ -75,6 +76,7 @@ var hierarchy =
     [ "tr::dynamic_atlas&lt; Key, Value, Hash, Pred &gt;", "classtr_1_1dynamic__atlas.html", null ],
     [ "tr::empty_variant_t", "structtr_1_1empty__variant__t.html", null ],
     [ "tr::basic_zstring_view&lt; CharT, Traits &gt;::end_sentinel", "structtr_1_1basic__zstring__view_1_1end__sentinel.html", null ],
+    [ "tr::basic_zstring_view_zspan&lt; CharT, Traits &gt;::end_sentinel", "structtr_1_1basic__zstring__view__zspan_1_1end__sentinel.html", null ],
     [ "tr::enum_wrapper&lt; Enum &gt;", "classtr_1_1enum__wrapper.html", null ],
     [ "std::equal_to", null, [
       [ "tr::string_eq", "structtr_1_1string__eq.html", null ]
@@ -291,6 +293,9 @@ var hierarchy =
     [ "tr::pointer_iterator&lt; const_iterator, const_pointer &gt;", "classtr_1_1pointer__iterator.html", [
       [ "tr::basic_inplace_string< CharT, Capacity, Traits >::const_iterator", "structtr_1_1basic__inplace__string_1_1const__iterator.html", null ],
       [ "tr::inplace_vector< Element, Capacity >::const_iterator", "structtr_1_1inplace__vector_1_1const__iterator.html", null ]
+    ] ],
+    [ "tr::pointer_iterator&lt; iterator, const CharT ** &gt;", "classtr_1_1pointer__iterator.html", [
+      [ "tr::basic_zstring_view_zspan< CharT, Traits >::iterator", "classtr_1_1basic__zstring__view__zspan_1_1iterator.html", null ]
     ] ],
     [ "tr::pointer_iterator&lt; iterator, const_pointer &gt;", "classtr_1_1pointer__iterator.html", [
       [ "tr::basic_zstring_view< CharT, Traits >::iterator", "structtr_1_1basic__zstring__view_1_1iterator.html", null ]
