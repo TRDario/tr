@@ -116,6 +116,13 @@ namespace tr
 			return !empty() ? m_ptr : std::string_view{};
 		}
 
+		/// Converts the view into a standard path.
+		/// @return Standard path equivalent to `*this`.
+		[[nodiscard]] explicit constexpr operator std::filesystem::path() const noexcept
+		{
+			return std::filesystem::path{c_str()};
+		}
+
 		/// @}
 		/// @name Comparison operators
 		/// @{
@@ -234,13 +241,6 @@ namespace tr
 		/// @name Length
 		/// @{
 
-		/// Gets the length of the string as if by strlen.
-		/// @return Length of the string.
-		[[nodiscard]] constexpr usize length() const noexcept
-		{
-			return std::string_view{*this}.length();
-		}
-
 		/// Gets whether the string view is empty.
 		/// @return `true` if the view points to `nullptr` or an empty string, `false` otherwise.
 		[[nodiscard]] constexpr bool empty() const noexcept
@@ -314,13 +314,37 @@ namespace tr
 	/// Path construction operator for NUL-terminated string views.
 	/// @tparam CharT Character type used by the string.
 	/// @tparam Traits Character traits used by the string.
-	/// @param lhs Path to concatename.
-	/// @param rhs String to concatenate onto the path.
-	/// @return Concatenated path.
+	/// @param lhs Path to append to.
+	/// @param rhs String to append onto the path.
+	/// @return Appended-to path.
 	template <typename CharT, typename Traits>
 	[[nodiscard]] std::filesystem::path operator/(const std::filesystem::path& lhs, basic_zstring_view<CharT, Traits> rhs)
 	{
-		return lhs / std::filesystem::path{rhs.c_str()};
+		return lhs / rhs.c_str();
+	}
+
+	/// Path appending operator for NUL-terminated string views.
+	/// @tparam CharT Character type used by the string.
+	/// @tparam Traits Character traits used by the string.
+	/// @param lhs Path to append to.
+	/// @param rhs String to concatenate onto the path.
+	/// @return Reference to `lhs`.
+	template <typename CharT, typename Traits>
+	std::filesystem::path& operator/=(std::filesystem::path& lhs, basic_zstring_view<CharT, Traits> rhs)
+	{
+		return lhs /= rhs.c_str();
+	}
+
+	/// Path concatenation operator for NUL-terminated string views.
+	/// @tparam CharT Character type used by the string.
+	/// @tparam Traits Character traits used by the string.
+	/// @param lhs Path to concatenate to.
+	/// @param rhs String to concatenate onto the path.
+	/// @return Reference to `lhs`.
+	template <typename CharT, typename Traits>
+	std::filesystem::path& operator+=(std::filesystem::path& lhs, basic_zstring_view<CharT, Traits> rhs)
+	{
+		return lhs += rhs.c_str();
 	}
 
 	/// @}

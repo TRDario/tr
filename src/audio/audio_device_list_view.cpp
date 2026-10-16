@@ -29,7 +29,7 @@ tr::audio_device_list_view_iterator::const_pointer tr::audio_device_list_view_it
 tr::audio_device_list_view_iterator& tr::audio_device_list_view_iterator::operator++() noexcept
 {
 	TR_ASSERT(!m_view.empty(), "Tried to increment audio device list end iterator.");
-	m_view.remove_prefix(m_view.length() + 1);
+	m_view.remove_prefix(std::string_view{m_view}.size() + 1);
 	return *this;
 }
 

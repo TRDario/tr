@@ -61,6 +61,17 @@ TEST(zstring_view_test, substr)
 	EXPECT_EQ("testTEST"_zsv.substr(4), "TEST");
 }
 
+TEST(zstring_view_test, path)
+{
+	std::filesystem::path path{"a"};
+	path /= "b"_zsv;
+	EXPECT_EQ(path.stem(), "b");
+	EXPECT_EQ(path.parent_path(), "a");
+	path += "c"_zsv;
+	EXPECT_EQ(path.stem(), "bc");
+	EXPECT_EQ((path / "d"_zsv).stem(), "d");
+}
+
 TEST(zstring_view_test, ostream)
 {
 	std::ostringstream str;
