@@ -13,6 +13,7 @@
 #include <tr/sysgfx/event.hpp>
 #include <tr/sysgfx/internal/application.hpp>
 #include <tr/utility/chrono.hpp>
+#include <tr/utility/zstring_view_zspan.hpp>
 
 //
 
@@ -104,7 +105,7 @@ namespace tr
 		/// @details Uncaught exceptions from this function will display a dialog box and quit the application.
 		/// @param args Application command-line arguments.
 		/// @return Application state signal after initialization.
-		virtual signal initialize(std::span<const zstring_view> args);
+		virtual signal initialize(zstring_view_zspan args);
 
 		/// Callback function called whenever an event needs to be handled. Not guaranteed to be called on the main thread.
 		/// @details Uncaught exceptions from this function will display a dialog box and quit the application.

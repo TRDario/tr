@@ -63,6 +63,7 @@
 #include <tr/utility/variant.hpp>                   // IWYU pragma: export
 #include <tr/utility/vector.hpp>                    // IWYU pragma: export
 #include <tr/utility/zstring_view.hpp>              // IWYU pragma: export
+#include <tr/utility/zstring_view_zspan.hpp>        // IWYU pragma: export
 
 /// Namespace containing all tr functionality
 namespace tr

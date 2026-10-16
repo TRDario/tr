@@ -14,7 +14,7 @@
 
 //
 
-tr::application::signal tr::application::initialize(std::span<const zstring_view>)
+tr::application::signal tr::application::initialize(zstring_view_zspan)
 {
 	return signal::proceed;
 }
@@ -88,7 +88,7 @@ void tr::internal::show_fatal_error_message_box(const std::exception& error)
 	show_message_box(message_box_type::error, message_box_layout::ok, title, message);
 }
 
-SDL_AppResult tr::internal::initialize_application(void**, int argc, char** argv)
+SDL_AppResult tr::internal::initialize_application(void**, int, char** argv)
 {
 	if (!SDL_Init(SDL_INIT_VIDEO) || !TTF_Init()) {
 		std::println(stderr, "Failed to initialize SDL3: {}", SDL_GetError());
@@ -103,8 +103,7 @@ SDL_AppResult tr::internal::initialize_application(void**, int argc, char** argv
 	}
 
 	try {
-		const std::span<const zstring_view> args{reinterpret_cast<const zstring_view*>(argv), static_cast<usize>(argc)};
-		return static_cast<SDL_AppResult>(running_application->initialize(args));
+		return static_cast<SDL_AppResult>(running_application->initialize(zstring_view_zspan{argv}));
 	}
 	catch (std::exception& err) {
 		show_fatal_error_message_box(err);

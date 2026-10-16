@@ -11,6 +11,7 @@ def __lldb_init_module(debugger: lldb.SBDebugger, _):
 
 	files = [
 		"atlas_entries",
+		"basic_zstring_view_zspan"
 		"boost_unordered",
 		"graphics_object",
 		"inplace_string",
@@ -20,7 +21,7 @@ def __lldb_init_module(debugger: lldb.SBDebugger, _):
 		"opt_ref",
 		"ref",
 		"string_pool",
-		"utf8"
+		"utf8",
 	]
 	for file in files:
 		debugger.HandleCommand(f'command script import "{os.path.join(directory, f"{file}.py")}"')
