@@ -95,6 +95,6 @@ class std::formatter<tr::log_level>
 	template <typename FormatContext>
 	constexpr FormatContext::iterator format(tr::log_level level, FormatContext& context) const
 	{
-		return std::ranges::copy(name(level), context.out()).out;
+		return std::format_to(context.out(), "{}", name(level));
 	}
 };

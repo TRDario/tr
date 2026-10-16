@@ -111,30 +111,30 @@ class std::formatter<tr::vertex_attribute>
 	{
 		switch (attribute.type) {
 		case tr::vertex_attribute_type::i8:
-			context.advance_to(std::ranges::copy("i8", context.out()).out);
+			context.advance_to(std::format_to(context.out(), "i8"));
 			break;
 		case tr::vertex_attribute_type::u8:
-			context.advance_to(std::ranges::copy("u8", context.out()).out);
+			context.advance_to(std::format_to(context.out(), "u8"));
 			break;
 		case tr::vertex_attribute_type::i16:
-			context.advance_to(std::ranges::copy("i16", context.out()).out);
+			context.advance_to(std::format_to(context.out(), "i16"));
 			break;
 		case tr::vertex_attribute_type::u16:
-			context.advance_to(std::ranges::copy("u16", context.out()).out);
+			context.advance_to(std::format_to(context.out(), "u16"));
 			break;
 		case tr::vertex_attribute_type::i32:
-			context.advance_to(std::ranges::copy("i32", context.out()).out);
+			context.advance_to(std::format_to(context.out(), "i32"));
 			break;
 		case tr::vertex_attribute_type::u32:
-			context.advance_to(std::ranges::copy("u32", context.out()).out);
+			context.advance_to(std::format_to(context.out(), "u32"));
 			break;
 		case tr::vertex_attribute_type::f32:
 			if (attribute.elements == 1) {
-				return std::ranges::copy("float", context.out()).out;
+				return std::format_to(context.out(), "float");
 			}
 			break;
 		default:
-			return std::ranges::copy("<unknown>", context.out()).out;
+			return std::format_to(context.out(), "<unknown>");
 		}
 
 		if (attribute.elements != 1) {
