@@ -19,6 +19,7 @@ var classtr_1_1basic__zstring__view =
     [ "operator=", "classtr_1_1basic__zstring__view.html#a4292ecc34bb0fe44f0c57f97dbd82981", null ],
     [ "operator=", "classtr_1_1basic__zstring__view.html#af19815c4f00ac5d64617bc00177d6618", null ],
     [ "operator std::basic_string_view< CharT, Traits >", "classtr_1_1basic__zstring__view.html#a364bbbc20f21e46cd8db2b22daaba6ac", null ],
+    [ "operator std::filesystem::path", "classtr_1_1basic__zstring__view.html#ad2b216628e21c9ee6a4931caeb80722c", null ],
     [ "operator<=>", "classtr_1_1basic__zstring__view.html#adde01a6fe10edb496ae2f44039f80730", null ],
     [ "operator==", "classtr_1_1basic__zstring__view.html#a39163a8516af84786b9d5f5488cc6d67", null ],
     [ "begin", "classtr_1_1basic__zstring__view.html#a170a58744af23de4200a94a02894ce1c", null ],
@@ -30,7 +31,6 @@ var classtr_1_1basic__zstring__view =
     [ "front", "classtr_1_1basic__zstring__view.html#ab57aedfadffdac27f187679180a382a8", null ],
     [ "data", "classtr_1_1basic__zstring__view.html#aacb5cffc8042f40b4ff720aa62bb92d6", null ],
     [ "c_str", "classtr_1_1basic__zstring__view.html#a90076bb40522088c9be4f3fd7a2079a7", null ],
-    [ "length", "classtr_1_1basic__zstring__view.html#adb701d7d10179a9e610bd38cb64f4eb8", null ],
     [ "empty", "classtr_1_1basic__zstring__view.html#a3a2c86f5b0eaa0e806fa18e9f2ca4d70", null ],
     [ "substr", "classtr_1_1basic__zstring__view.html#a08cd03c64779989a896a4ec23e9f46c6", null ],
     [ "remove_prefix", "classtr_1_1basic__zstring__view.html#a63a734c515d1fa6a5d0d9c82aabee6fb", null ]

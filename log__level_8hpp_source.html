@@ -207,7 +207,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('log__level_8hp
 <div class="foldopen" id="foldopen00096" data-start="{" data-end="}">
 <div class="line"><a id="l00096" name="l00096"></a><span class="lineno"><a class="line" href="classstd_1_1formatter_3_01tr_1_1log__level_01_4.html#ac2a74c9bda48976c5113b90a64a25f26">   96</a></span>    <span class="keyword">constexpr</span> FormatContext::iterator <a class="code hl_function" href="classstd_1_1formatter_3_01tr_1_1log__level_01_4.html#ac2a74c9bda48976c5113b90a64a25f26">format</a>(<a class="code hl_enumeration" href="namespacetr.html#af80aef48811e46f90a915d32219add20">tr::log_level</a> level, FormatContext&amp; context)<span class="keyword"> const</span></div>
 <div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span><span class="keyword">    </span>{</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>        <span class="keywordflow">return</span> std::ranges::copy(name(level), context.out()).out;</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>        <span class="keywordflow">return</span> std::format_to(context.out(), <span class="stringliteral">&quot;{}&quot;</span>, name(level));</div>
 <div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>    }</div>
 </div>
 <div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>};</div>

@@ -1,5 +1,7 @@
 var NAVTREEINDEX17 =
 {
+"structtr_1_1binary__writer_3_01tr_1_1scan__chord_01_4.html":[4,0,0,72],
+"structtr_1_1binary__writer_3_01tr_1_1scan__chord_01_4.html":[6,0,1,59],
 "structtr_1_1binary__writer_3_01tr_1_1scan__chord_01_4.html#aeb264e565683bc6c22e7f66c26c2a4c6":[4,0,0,72,0],
 "structtr_1_1binary__writer_3_01tr_1_1scan__chord_01_4.html#aeb264e565683bc6c22e7f66c26c2a4c6":[6,0,1,59,0],
 "structtr_1_1bitmap__atlas.html":[4,0,0,74],
@@ -247,7 +249,5 @@ var NAVTREEINDEX17 =
 "structtr_1_1localization__script__unterminated__multiline__comment.html#ae4819580c40d68dee2656b8ae3d8c621":[4,0,0,132,0],
 "structtr_1_1localization__script__unterminated__multiline__comment.html#ae4819580c40d68dee2656b8ae3d8c621":[6,0,1,119,0],
 "structtr_1_1localization__script__unterminated__string.html":[4,0,0,133],
-"structtr_1_1localization__script__unterminated__string.html":[6,0,1,120],
-"structtr_1_1localization__script__unterminated__string.html#a85a4f4e25e274bb4d0dc36c5c609dfe1":[4,0,0,133,1],
-"structtr_1_1localization__script__unterminated__string.html#a85a4f4e25e274bb4d0dc36c5c609dfe1":[6,0,1,120,1]
+"structtr_1_1localization__script__unterminated__string.html":[6,0,1,120]
 };

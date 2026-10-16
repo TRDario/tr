@@ -8,5 +8,7 @@ var zstring__view_8hpp =
     [ "tr::zstring_view", "namespacetr.html#af4536441b49fec056af6a2432b30afff", null ],
     [ "tr::literals::zstring_view_literals::operator\"\"_zsv", "namespacetr_1_1literals_1_1zstring__view__literals.html#aa1c9900b06f2b238149a4f4c6d9511b4", null ],
     [ "tr::operator<<", "namespacetr.html#a055a349159a749c1584d15a878c4c17a", null ],
-    [ "tr::operator/", "namespacetr.html#a8f91fe304a9183adfd9946cdecfa23e9", null ]
+    [ "tr::operator/", "namespacetr.html#a8f91fe304a9183adfd9946cdecfa23e9", null ],
+    [ "tr::operator/=", "namespacetr.html#aec152ac722f7c4355ffebbe107b16593", null ],
+    [ "tr::operator+=", "namespacetr.html#a8714b5e08136b617b4f739b78a3dd35b", null ]
 ];

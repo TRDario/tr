@@ -189,6 +189,8 @@ Public Member Functions</h2></td></tr>
 <tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Conversion operators</div></td></tr>
 <tr class="memitem:a364bbbc20f21e46cd8db2b22daaba6ac" id="r_a364bbbc20f21e46cd8db2b22daaba6ac"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a364bbbc20f21e46cd8db2b22daaba6ac">operator std::basic_string_view&lt; CharT, Traits &gt;</a> () const noexcept</td></tr>
 <tr class="memdesc:a364bbbc20f21e46cd8db2b22daaba6ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the view into a standard string view.  <br /></td></tr>
+<tr class="memitem:ad2b216628e21c9ee6a4931caeb80722c" id="r_ad2b216628e21c9ee6a4931caeb80722c"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#ad2b216628e21c9ee6a4931caeb80722c">operator std::filesystem::path</a> () const noexcept</td></tr>
+<tr class="memdesc:ad2b216628e21c9ee6a4931caeb80722c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the view into a standard path.  <br /></td></tr>
 <tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Comparison operators</div></td></tr>
 <tr class="memitem:adde01a6fe10edb496ae2f44039f80730" id="r_adde01a6fe10edb496ae2f44039f80730"><td class="memItemLeft">constexpr std::strong_ordering&#160;</td><td class="memItemRight"><a class="el" href="#adde01a6fe10edb496ae2f44039f80730">operator&lt;=&gt;</a> (this <a class="el" href="#acdd7c08ec5e62a5bd2c547d22a60fd07">basic_zstring_view</a> lhs, std::type_identity_t&lt; <a class="el" href="#acdd7c08ec5e62a5bd2c547d22a60fd07">basic_zstring_view</a> &gt; rhs) noexcept</td></tr>
 <tr class="memdesc:adde01a6fe10edb496ae2f44039f80730"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares NUL-terminated string views.  <br /></td></tr>
@@ -215,8 +217,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a90076bb40522088c9be4f3fd7a2079a7" id="r_a90076bb40522088c9be4f3fd7a2079a7"><td class="memItemLeft">constexpr <a class="el" href="#a31d58faa65a6cddabe24288560b8eb73">const_pointer</a>&#160;</td><td class="memItemRight"><a class="el" href="#a90076bb40522088c9be4f3fd7a2079a7">c_str</a> () const noexcept</td></tr>
 <tr class="memdesc:a90076bb40522088c9be4f3fd7a2079a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a pointer to the raw C-string.  <br /></td></tr>
 <tr id="pub-methods-6" class="groupHeader"><td colspan="2"><div class="groupHeader">Length</div></td></tr>
-<tr class="memitem:adb701d7d10179a9e610bd38cb64f4eb8" id="r_adb701d7d10179a9e610bd38cb64f4eb8"><td class="memItemLeft">constexpr <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a>&#160;</td><td class="memItemRight"><a class="el" href="#adb701d7d10179a9e610bd38cb64f4eb8">length</a> () const noexcept</td></tr>
-<tr class="memdesc:adb701d7d10179a9e610bd38cb64f4eb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the length of the string as if by strlen.  <br /></td></tr>
 <tr class="memitem:a3a2c86f5b0eaa0e806fa18e9f2ca4d70" id="r_a3a2c86f5b0eaa0e806fa18e9f2ca4d70"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="#a3a2c86f5b0eaa0e806fa18e9f2ca4d70">empty</a> () const noexcept</td></tr>
 <tr class="memdesc:a3a2c86f5b0eaa0e806fa18e9f2ca4d70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the string view is empty.  <br /></td></tr>
 <tr id="pub-methods-7" class="groupHeader"><td colspan="2"><div class="groupHeader">Sub-strings</div></td></tr>
@@ -669,6 +669,36 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
 
 </div>
 </div>
+<a id="ad2b216628e21c9ee6a4931caeb80722c" name="ad2b216628e21c9ee6a4931caeb80722c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2b216628e21c9ee6a4931caeb80722c">&#9670;&#160;</a></span>operator std::filesystem::path()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classtr_1_1basic__zstring__view.html">tr::basic_zstring_view</a>&lt; CharT, Traits &gt;::operator std::filesystem::path </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel explicit">explicit</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Converts the view into a standard path. </p>
+<dl class="section return"><dt>Returns</dt><dd>Standard path equivalent to <span class="tt">*this</span>. </dd></dl>
+
+</div>
+</div>
 <a id="adde01a6fe10edb496ae2f44039f80730" name="adde01a6fe10edb496ae2f44039f80730"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#adde01a6fe10edb496ae2f44039f80730">&#9670;&#160;</a></span>operator&lt;=&gt;()</h2>
 
@@ -1028,36 +1058,6 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
 
 <p>Gets a pointer to the raw C-string. </p>
 <dl class="section return"><dt>Returns</dt><dd>Pointer to the first character in the string. </dd></dl>
-
-</div>
-</div>
-<a id="adb701d7d10179a9e610bd38cb64f4eb8" name="adb701d7d10179a9e610bd38cb64f4eb8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adb701d7d10179a9e610bd38cb64f4eb8">&#9670;&#160;</a></span>length()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> <a class="el" href="classtr_1_1basic__zstring__view.html">tr::basic_zstring_view</a>&lt; CharT, Traits &gt;::length </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Gets the length of the string as if by strlen. </p>
-<dl class="section return"><dt>Returns</dt><dd>Length of the string. </dd></dl>
 
 </div>
 </div>

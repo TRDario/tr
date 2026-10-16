@@ -843,6 +843,8 @@ var namespacetr =
     [ "operator\"\"_zsv", "namespacetr_1_1literals_1_1zstring__view__literals.html#aa1c9900b06f2b238149a4f4c6d9511b4", null ],
     [ "operator<<", "namespacetr.html#a055a349159a749c1584d15a878c4c17a", null ],
     [ "operator/", "namespacetr.html#a8f91fe304a9183adfd9946cdecfa23e9", null ],
+    [ "operator/=", "namespacetr.html#aec152ac722f7c4355ffebbe107b16593", null ],
+    [ "operator+=", "namespacetr.html#a8714b5e08136b617b4f739b78a3dd35b", null ],
     [ "audio_class_count", "namespacetr.html#ad97d980b5fdd18b0346b4690c31963b8", null ],
     [ "uncapped_update_frequency", "namespacetr.html#ad84b4a51051e612d3e1a71629412f0b9", null ],
     [ "alpha_blending", "namespacetr.html#a0bbbc8cfc51a0842c925f417813b9250", null ],

@@ -1544,6 +1544,12 @@ requires (std::derived_from&lt;To, From&gt;)</td></tr>
 <tr class="memitem:a8f91fe304a9183adfd9946cdecfa23e9" id="r_a8f91fe304a9183adfd9946cdecfa23e9"><td class="memTemplParams" colspan="2">template&lt;typename CharT, typename Traits&gt; </td></tr>
 <tr class="memitem:a8f91fe304a9183adfd9946cdecfa23e9 template"><td class="memItemLeft">std::filesystem::path&#160;</td><td class="memItemRight"><a class="el" href="#a8f91fe304a9183adfd9946cdecfa23e9">operator/</a> (const std::filesystem::path &amp;lhs, <a class="el" href="classtr_1_1basic__zstring__view.html">basic_zstring_view</a>&lt; CharT, Traits &gt; rhs)</td></tr>
 <tr class="memdesc:a8f91fe304a9183adfd9946cdecfa23e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Path construction operator for NUL-terminated string views.  <br /></td></tr>
+<tr class="memitem:aec152ac722f7c4355ffebbe107b16593" id="r_aec152ac722f7c4355ffebbe107b16593"><td class="memTemplParams" colspan="2">template&lt;typename CharT, typename Traits&gt; </td></tr>
+<tr class="memitem:aec152ac722f7c4355ffebbe107b16593 template"><td class="memItemLeft">std::filesystem::path &amp;&#160;</td><td class="memItemRight"><a class="el" href="#aec152ac722f7c4355ffebbe107b16593">operator/=</a> (std::filesystem::path &amp;lhs, <a class="el" href="classtr_1_1basic__zstring__view.html">basic_zstring_view</a>&lt; CharT, Traits &gt; rhs)</td></tr>
+<tr class="memdesc:aec152ac722f7c4355ffebbe107b16593"><td class="mdescLeft">&#160;</td><td class="mdescRight">Path appending operator for NUL-terminated string views.  <br /></td></tr>
+<tr class="memitem:a8714b5e08136b617b4f739b78a3dd35b" id="r_a8714b5e08136b617b4f739b78a3dd35b"><td class="memTemplParams" colspan="2">template&lt;typename CharT, typename Traits&gt; </td></tr>
+<tr class="memitem:a8714b5e08136b617b4f739b78a3dd35b template"><td class="memItemLeft">std::filesystem::path &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a8714b5e08136b617b4f739b78a3dd35b">operator+=</a> (std::filesystem::path &amp;lhs, <a class="el" href="classtr_1_1basic__zstring__view.html">basic_zstring_view</a>&lt; CharT, Traits &gt; rhs)</td></tr>
+<tr class="memdesc:a8714b5e08136b617b4f739b78a3dd35b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Path concatenation operator for NUL-terminated string views.  <br /></td></tr>
 <tr id="func-members-28" class="groupHeader"><td colspan="2"><div class="groupHeader">Localization script</div></td></tr>
 <tr class="memitem:af225ea8b08af60de5be7f17e7c4d6737" id="r_af225ea8b08af60de5be7f17e7c4d6737"><td class="memTemplParams" colspan="2">template&lt;std::output_iterator&lt; <a class="el" href="#a5d0b9d07f28d7988881dea3b58bec727">localization_script_error</a> &gt; ErrorOut, input_iterator_to_convertible_to&lt; char &gt; Iterator, std::sentinel_for&lt; Iterator &gt; Sentinel&gt; </td></tr>
 <tr class="memitem:af225ea8b08af60de5be7f17e7c4d6737 template"><td class="memItemLeft"><a class="el" href="structtr_1_1parse__localization__script__result.html">parse_localization_script_result</a>&lt; ErrorOut &gt;&#160;</td><td class="memItemRight"><a class="el" href="#af225ea8b08af60de5be7f17e7c4d6737">parse_localization_script</a> (ErrorOut error_out, Iterator begin, Sentinel end, std::string_view chunk_name=&quot;&lt;unnamed&gt;&quot;)</td></tr>
@@ -11551,12 +11557,92 @@ template&lt;typename CharT, typename Traits&gt; </div>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">lhs</td><td>Path to concatename. </td></tr>
+    <tr><td class="paramname">lhs</td><td>Path to append to. </td></tr>
+    <tr><td class="paramname">rhs</td><td>String to append onto the path. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Appended-to path. </dd></dl>
+
+</div>
+</div>
+<a id="aec152ac722f7c4355ffebbe107b16593" name="aec152ac722f7c4355ffebbe107b16593"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aec152ac722f7c4355ffebbe107b16593">&#9670;&#160;</a></span>operator/=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename CharT, typename Traits&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">std::filesystem::path &amp; tr::operator/= </td>
+          <td>(</td>
+          <td class="paramtype">std::filesystem::path &amp;</td>          <td class="paramname"><span class="paramname"><em>lhs</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classtr_1_1basic__zstring__view.html">basic_zstring_view</a>&lt; CharT, Traits &gt;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Path appending operator for NUL-terminated string views. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">CharT</td><td>Character type used by the string. </td></tr>
+    <tr><td class="paramname">Traits</td><td>Character traits used by the string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">lhs</td><td>Path to append to. </td></tr>
     <tr><td class="paramname">rhs</td><td>String to concatenate onto the path. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Concatenated path. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Reference to <span class="tt">lhs</span>. </dd></dl>
+
+</div>
+</div>
+<a id="a8714b5e08136b617b4f739b78a3dd35b" name="a8714b5e08136b617b4f739b78a3dd35b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8714b5e08136b617b4f739b78a3dd35b">&#9670;&#160;</a></span>operator+=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename CharT, typename Traits&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">std::filesystem::path &amp; tr::operator+= </td>
+          <td>(</td>
+          <td class="paramtype">std::filesystem::path &amp;</td>          <td class="paramname"><span class="paramname"><em>lhs</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classtr_1_1basic__zstring__view.html">basic_zstring_view</a>&lt; CharT, Traits &gt;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Path concatenation operator for NUL-terminated string views. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">CharT</td><td>Character type used by the string. </td></tr>
+    <tr><td class="paramname">Traits</td><td>Character traits used by the string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">lhs</td><td>Path to concatenate to. </td></tr>
+    <tr><td class="paramname">rhs</td><td>String to concatenate onto the path. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Reference to <span class="tt">lhs</span>. </dd></dl>
 
 </div>
 </div>

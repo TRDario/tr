@@ -1,5 +1,7 @@
 var NAVTREEINDEX15 =
 {
+"namespacetr_1_1aliases_1_1integer__aliases.html#a779bb4d064ca94926aa32fa26288a062":[4,0,0,0,1,5],
+"namespacetr_1_1aliases_1_1integer__aliases.html#a779bb4d064ca94926aa32fa26288a062":[4,0,0,0,23],
 "namespacetr_1_1aliases_1_1integer__aliases.html#a79db663f0e653c7d88222bd0453689e0":[4,0,0,6,6],
 "namespacetr_1_1aliases_1_1integer__aliases.html#a79db663f0e653c7d88222bd0453689e0":[4,0,0,330],
 "namespacetr_1_1aliases_1_1integer__aliases.html#a79db663f0e653c7d88222bd0453689e0":[4,0,0,0,1,6],
@@ -247,7 +249,5 @@ var NAVTREEINDEX15 =
 "structstd_1_1formatter_3_01tr_1_1fragment__shader_01_4.html#af7292acf9577f22a0fca104194a1aa15":[6,0,0,7,1],
 "structstd_1_1formatter_3_01tr_1_1framebuffer_01_4.html":[6,0,0,8],
 "structstd_1_1formatter_3_01tr_1_1framebuffer_01_4.html#a5cf19f9c9e3d8beb310388963c986d67":[6,0,0,8,0],
-"structstd_1_1formatter_3_01tr_1_1framebuffer_01_4.html#ac8939f6df25293ed305d05b1dbffc0b0":[6,0,0,8,1],
-"structstd_1_1formatter_3_01tr_1_1key__chord_01_4.html":[6,0,0,9],
-"structstd_1_1formatter_3_01tr_1_1key__chord_01_4.html#a2f315e31cf8aa681db4d31067d51e770":[6,0,0,9,1]
+"structstd_1_1formatter_3_01tr_1_1framebuffer_01_4.html#ac8939f6df25293ed305d05b1dbffc0b0":[6,0,0,8,1]
 };
