@@ -5,6 +5,18 @@
 #include <tr/utility/macro.hpp>
 #include <tr/utility/norm_cast.hpp>
 
+namespace tr
+{
+	template <std::floating_point To, std::floating_point From>
+	[[nodiscard]] constexpr To norm_cast(From from) noexcept;
+	template <std::integral To, std::integral From>
+	[[nodiscard]] constexpr To norm_cast(From from) noexcept;
+	template <std::floating_point To, std::integral From>
+	[[nodiscard]] constexpr To norm_cast(From from) noexcept;
+	template <std::integral To, std::floating_point From>
+	[[nodiscard]] constexpr To norm_cast(From from) noexcept;
+} // namespace tr
+
 //
 
 namespace tr
@@ -50,13 +62,8 @@ namespace tr
 		}
 		// Widening conversion.
 		else {
-			if constexpr (sizeof(To) != 8) {
-				constexpr auto factor{std::numeric_limits<UTo>::max() / std::numeric_limits<UFrom>::max()};
-				return norm_cast<To>(static_cast<UTo>(norm_cast<UFrom>(from) * factor));
-			}
-			else {
-				return norm_cast<To>(norm_cast<double>(from));
-			}
+			constexpr auto factor{std::numeric_limits<UTo>::max() / std::numeric_limits<UFrom>::max()};
+			return norm_cast<To>(static_cast<UTo>(norm_cast<UFrom>(from) * factor));
 		}
 	}
 
@@ -81,17 +88,15 @@ namespace tr
 	template <std::integral To, std::floating_point From>
 	[[nodiscard]] constexpr To norm_cast(From from) noexcept
 	{
-		TR_ASSERT(from >= 0 && from <= 1, "Cannot perform a normalizing cast on value {} outside the range [0, 1].", from);
-
 		using UTo = std::make_unsigned_t<To>;
 
-		const double result{static_cast<double>(from) * static_cast<double>(std::numeric_limits<UTo>::max())};
-		if constexpr (sizeof(To) == 8) {
-			// Safety checks for upper limit rounding are necessary for 64-bit.
-			return norm_cast<To>(result == static_cast<double>(std::numeric_limits<UTo>::max()) ? std::numeric_limits<UTo>::max()
-																								: static_cast<UTo>(result));
+		TR_ASSERT(from >= 0 && from <= 1, "Cannot perform a normalizing cast on value {} outside the range [0, 1].", from);
+
+		if (from == From{1}) {
+			return std::numeric_limits<To>::max();
 		}
 		else {
+			const long double result{static_cast<long double>(from) * static_cast<long double>(std::numeric_limits<UTo>::max())};
 			return norm_cast<To>(static_cast<UTo>(result));
 		}
 	}
