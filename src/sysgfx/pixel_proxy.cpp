@@ -64,10 +64,7 @@ tr::pixel_proxy& tr::pixel_proxy::operator=(rgba8 color) noexcept
 		*reinterpret_cast<u16*>(m_data) = formatted;
 		break;
 	case 3: {
-		internal::u24& arr{*reinterpret_cast<internal::u24*>(m_data)};
-		arr[0] = formatted >> 16;
-		arr[1] = formatted >> 8;
-		arr[2] = formatted;
+		std::memcpy(m_data, &formatted, 3);
 		break;
 	}
 	case 4:

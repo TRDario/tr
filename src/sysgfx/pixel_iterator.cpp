@@ -80,7 +80,7 @@ glm::ivec2 tr::const_pixel_iterator::pos() const noexcept
 	TR_ASSERT(m_bitmap_begin != nullptr, "Tried to get position of a singular pixel iterator.");
 
 	const difference_type pixel_offset{this->pixel_offset()};
-	return glm::ivec2{pixel_offset / m_bitmap_width, pixel_offset % m_bitmap_width};
+	return glm::ivec2{pixel_offset % m_bitmap_width, pixel_offset / m_bitmap_width};
 }
 
 tr::const_pixel_iterator::difference_type tr::const_pixel_iterator::pixel_offset() const noexcept
@@ -166,7 +166,7 @@ glm::ivec2 tr::pixel_iterator::pos() const noexcept
 	TR_ASSERT(m_bitmap_begin != nullptr, "Tried to get position of a singular pixel iterator.");
 
 	const difference_type pixel_offset{this->pixel_offset()};
-	return glm::ivec2{pixel_offset / m_bitmap_width, pixel_offset % m_bitmap_width};
+	return glm::ivec2{pixel_offset % m_bitmap_width, pixel_offset / m_bitmap_width};
 }
 
 tr::pixel_iterator::difference_type tr::pixel_iterator::pixel_offset() const noexcept

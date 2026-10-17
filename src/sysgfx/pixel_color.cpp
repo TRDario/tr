@@ -3,6 +3,7 @@
 
 #include "internal/pixel_color.hpp"
 #include <SDL3/SDL.h>
+#include <cstring>
 
 //
 
@@ -17,8 +18,7 @@ tr::rgba8 tr::internal::pixel_color(const std::byte* data, pixel_format format) 
 		value = *reinterpret_cast<const u16*>(data);
 		break;
 	case 3: {
-		const u24& arr{*reinterpret_cast<const u24*>(data)};
-		value = arr[0] << 16 | arr[1] << 8 | arr[2];
+		std::memcpy(&value, data, 3);
 		break;
 	}
 	case 4:

@@ -226,13 +226,14 @@ tr::bitmap tr::create_checkerboard(glm::ivec2 size)
 {
 	constexpr rgba8 black{0, 0, 0, 255};
 	constexpr rgba8 magenta{255, 0, 255, 255};
-	const glm::ivec2 half_size{size / 2};
+	const glm::ivec2 first_half_size{size / 2};
+	const glm::ivec2 second_half_size{size - first_half_size};
 
 	bitmap bitmap{size, pixel_format::rgb24};
-	bitmap.fill({{0, 0}, half_size}, black);
-	bitmap.fill({{half_size.x, 0}, half_size}, magenta);
-	bitmap.fill({{0, half_size.x}, half_size}, magenta);
-	bitmap.fill({half_size, half_size}, black);
+	bitmap.fill({{0, 0}, first_half_size}, black);
+	bitmap.fill({{first_half_size.x, 0}, {second_half_size.x, first_half_size.y}}, magenta);
+	bitmap.fill({{0, first_half_size.y}, {first_half_size.x, second_half_size.y}}, magenta);
+	bitmap.fill({first_half_size, second_half_size}, black);
 	return bitmap;
 }
 
