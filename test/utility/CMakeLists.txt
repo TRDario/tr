@@ -30,6 +30,7 @@ add_executable(
 	specialization_of.cpp
 	stopwatch.cpp
 	string_literal.cpp
+	temporary_file.cpp
 	timer.cpp
 	triangle.cpp
 	type_name.cpp

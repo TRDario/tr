@@ -56,6 +56,7 @@
 #include <tr/utility/stopwatch.hpp>                 // IWYU pragma: export
 #include <tr/utility/string_literal.hpp>            // IWYU pragma: export
 #include <tr/utility/string_pool.hpp>               // IWYU pragma: export
+#include <tr/utility/temporary_file.hpp>            // IWYU pragma: export
 #include <tr/utility/timer.hpp>                     // IWYU pragma: export
 #include <tr/utility/triangle.hpp>                  // IWYU pragma: export
 #include <tr/utility/type_name.hpp>                 // IWYU pragma: export

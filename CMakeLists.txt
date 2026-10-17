@@ -73,6 +73,7 @@ target_sources(tr_utility PRIVATE
 	src/utility/rng.cpp
 	src/utility/stopwatch.cpp
 	src/utility/string_pool.cpp
+	src/utility/temporary_file.cpp
 	src/utility/timer.cpp
 	src/utility/triangle.cpp
 	src/utility/vector.cpp
