@@ -30,7 +30,7 @@ namespace tr
 		};
 
 		/// Iterator type used by the span.
-		class iterator : public pointer_iterator<iterator, const CharT**>
+		class iterator : public pointer_iterator<iterator, const CharT* const*>
 		{
 		  public:
 			using pointer_iterator<iterator, const CharT**>::pointer_iterator;
@@ -67,9 +67,9 @@ namespace tr
 			/// @}
 
 		  private:
-			using pointer_iterator<iterator, const CharT**>::operator*;
+			using pointer_iterator<iterator, const CharT* const*>::operator*;
 
-			using pointer_iterator<iterator, const CharT**>::operator[];
+			using pointer_iterator<iterator, const CharT* const*>::operator[];
 		};
 
 		/// Constant iterator type used by the span.
@@ -83,14 +83,14 @@ namespace tr
 
 		/// Constructs a NUL-terminated string view span.
 		/// @param ptr Pointer to the NUL-terminated string view span.
-		[[nodiscard]] constexpr basic_zstring_view_zspan(CharT** ptr) noexcept
-			: m_ptr{const_cast<const CharT**>(ptr)}
+		[[nodiscard]] constexpr basic_zstring_view_zspan(CharT* const* ptr) noexcept
+			: m_ptr{const_cast<const CharT* const*>(ptr)}
 		{
 		}
 
 		/// Constructs a NUL-terminated string view span.
 		/// @param ptr Pointer to the NUL-terminated string view span.
-		[[nodiscard]] constexpr basic_zstring_view_zspan(const CharT** ptr) noexcept
+		[[nodiscard]] constexpr basic_zstring_view_zspan(const CharT* const* ptr) noexcept
 			: m_ptr{ptr}
 		{
 		}
@@ -156,7 +156,7 @@ namespace tr
 
 		/// Gets a pointer to the raw data of the span.
 		/// @return Pointer to the first string pointer in the span.
-		[[nodiscard]] constexpr const CharT** data() const noexcept
+		[[nodiscard]] constexpr const CharT* const* data() const noexcept
 		{
 			return m_ptr;
 		}
@@ -176,7 +176,7 @@ namespace tr
 
 	  private:
 		/// Pointer to the underlying character pointer array.
-		const CharT** m_ptr{nullptr};
+		const CharT* const* m_ptr{nullptr};
 	};
 
 	/// Span of NUL-terminated string views.
