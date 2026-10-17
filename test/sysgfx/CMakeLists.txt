@@ -1,5 +1,6 @@
 add_executable(
 	sysgfx_test
+	file_dialog.cpp
     logger.cpp
 )
 target_link_libraries(

@@ -1,5 +1,5 @@
 /// @file
-/// @brief Tests utility/logger.hpp.
+/// @brief Tests sysgfx/logger.hpp.
 
 #include <gtest/gtest.h>
 #include <tr/sysgfx/logger.hpp>

@@ -94,7 +94,6 @@ if(TR_BUILD_SYSGFX)
 		src/sysgfx/bitmap_view.cpp
 		src/sysgfx/clipboard.cpp
 		src/sysgfx/cursor.cpp
-		src/sysgfx/dialog.cpp
 		src/sysgfx/display.cpp
 		src/sysgfx/dynamic_index_buffer.cpp
 		src/sysgfx/event.cpp
@@ -109,6 +108,7 @@ if(TR_BUILD_SYSGFX)
 		src/sysgfx/log_sink.cpp
 		src/sysgfx/logger.cpp
 		src/sysgfx/mapped_untyped_graphics_buffer_span.cpp
+		src/sysgfx/message_box.cpp
 		src/sysgfx/mutable_texture_view.cpp
 		src/sysgfx/opengl.cpp
 		src/sysgfx/opengl_debug_callback.cpp

@@ -1,44 +1,27 @@
 /// @file
 /// @brief Implements internal/file_dialog.hpp.
 
-#include "internal/file_dialog.hpp"
 #include <SDL3/SDL.h>
-
-using namespace std::chrono_literals;
+#include <tr/sysgfx/file_dialog.hpp>
 
 //
 
-void tr::internal::file_dialog_callback(void* userdata, const char* const* files, int)
+void tr::internal::show_open_file_dialog(raw_file_dialog_callback callback, void* userdata, std::span<const file_dialog_filter> filters,
+										 zstring_view default_path, bool allow_multiple) noexcept
 {
-	file_dialog_context& context{*static_cast<file_dialog_context*>(userdata)};
-	if (files != nullptr) {
-		while (*files != nullptr) {
-			context.paths.emplace_back(*files++);
-		}
-	}
-	context.done = true;
+	SDL_ShowOpenFileDialog(callback, userdata, nullptr, reinterpret_cast<const SDL_DialogFileFilter*>(filters.data()), filters.size(),
+						   default_path.c_str(), allow_multiple);
 }
 
-std::vector<std::filesystem::path> tr::internal::show_open_file_dialog(std::span<const tr::dialog_filter> filters,
-																	   zstring_view default_path, bool allow_multiple)
+void tr::internal::show_save_file_dialog(raw_file_dialog_callback callback, void* userdata, std::span<const file_dialog_filter> filters,
+										 zstring_view default_path) noexcept
 {
-	file_dialog_context ctx{};
-	SDL_ShowOpenFileDialog(file_dialog_callback, &ctx, nullptr, reinterpret_cast<const SDL_DialogFileFilter*>(filters.data()),
-						   filters.size(), default_path.c_str(), allow_multiple);
-	while (!ctx.done) {
-		SDL_PumpEvents();
-		std::this_thread::sleep_for(10ms);
-	}
-	return std::move(ctx.paths);
+	SDL_ShowSaveFileDialog(callback, userdata, nullptr, reinterpret_cast<const SDL_DialogFileFilter*>(filters.data()), filters.size(),
+						   default_path.c_str());
 }
 
-std::vector<std::filesystem::path> tr::internal::show_open_folder_dialog(zstring_view default_path, bool allow_multiple)
+void tr::internal::show_open_folder_dialog(raw_file_dialog_callback callback, void* userdata, zstring_view default_path,
+										   bool allow_multiple) noexcept
 {
-	file_dialog_context ctx{};
-	SDL_ShowOpenFolderDialog(file_dialog_callback, &ctx, nullptr, default_path.c_str(), allow_multiple);
-	while (!ctx.done) {
-		SDL_PumpEvents();
-		std::this_thread::sleep_for(10ms);
-	}
-	return std::move(ctx.paths);
+	SDL_ShowOpenFolderDialog(callback, userdata, nullptr, default_path.c_str(), allow_multiple);
 }

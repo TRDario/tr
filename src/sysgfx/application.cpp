@@ -7,8 +7,8 @@
 #include <SDL3/SDL_main.h>
 #include <SDL3_ttf/SDL_ttf.h>
 #include <tr/sysgfx/application.hpp>
-#include <tr/sysgfx/dialog.hpp>
 #include <tr/sysgfx/logger.hpp>
+#include <tr/sysgfx/message_box.hpp>
 #include <tr/utility/dynamic_ref_cast.hpp>
 #include <tr/utility/opt_ref.hpp>
 

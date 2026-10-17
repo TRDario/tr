@@ -17,13 +17,13 @@
 #include <tr/sysgfx/blending.hpp>                            // IWYU pragma: export
 #include <tr/sysgfx/clipboard.hpp>                           // IWYU pragma: export
 #include <tr/sysgfx/cursor.hpp>                              // IWYU pragma: export
-#include <tr/sysgfx/dialog.hpp>                              // IWYU pragma: export
 #include <tr/sysgfx/display.hpp>                             // IWYU pragma: export
 #include <tr/sysgfx/dynamic_atlas.hpp>                       // IWYU pragma: export
 #include <tr/sysgfx/dynamic_index_buffer.hpp>                // IWYU pragma: export
 #include <tr/sysgfx/dynamic_vertex_buffer.hpp>               // IWYU pragma: export
 #include <tr/sysgfx/event.hpp>                               // IWYU pragma: export
 #include <tr/sysgfx/exception.hpp>                           // IWYU pragma: export
+#include <tr/sysgfx/file_dialog.hpp>                         // IWYU pragma: export
 #include <tr/sysgfx/framebuffer.hpp>                         // IWYU pragma: export
 #include <tr/sysgfx/graphics_buffer.hpp>                     // IWYU pragma: export
 #include <tr/sysgfx/graphics_context.hpp>                    // IWYU pragma: export
@@ -35,6 +35,7 @@
 #include <tr/sysgfx/mapped_graphics_buffer_object.hpp>       // IWYU pragma: export
 #include <tr/sysgfx/mapped_graphics_buffer_span.hpp>         // IWYU pragma: export
 #include <tr/sysgfx/mapped_untyped_graphics_buffer_span.hpp> // IWYU pragma: export
+#include <tr/sysgfx/message_box.hpp>                         // IWYU pragma: export
 #include <tr/sysgfx/mouse.hpp>                               // IWYU pragma: export
 #include <tr/sysgfx/mutable_texture_view.hpp>                // IWYU pragma: export
 #include <tr/sysgfx/owning_shader_pipeline.hpp>              // IWYU pragma: export
