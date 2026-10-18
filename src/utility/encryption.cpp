@@ -11,7 +11,7 @@
 namespace
 {
 	/// Size of an encrypted chunk header.
-	constexpr tr::usize header_size{7};
+	constexpr tr::usize header_size{8};
 } // namespace
 
 //
@@ -46,7 +46,7 @@ void tr::encrypt_to(std::vector<std::byte>& out, std::span<const std::byte> raw)
 
 	omstream header{std::views::take(out, header_size)};
 	write_binary_magic(header, "tr");
-	write_binary(header, key, static_cast<u32>(raw.size()));
+	write_binary(header, key, static_cast<u8>(static_cast<u8>(key) - 3), static_cast<u32>(raw.size()));
 
 	const std::span<char> compressed{reinterpret_span<char>(std::span{out}).subspan(header_size)};
 	const int used_size{LZ4_compress_default(reinterpret_cast<const char*>(raw.data()), compressed.data(), raw.size(), compressed.size())};
@@ -68,16 +68,24 @@ std::vector<std::byte> tr::encrypt(std::span<const std::byte> raw)
 
 void tr::decrypt_to(std::vector<std::byte>& out, std::vector<std::byte> encrypted)
 {
+	if (encrypted.size() < header_size) {
+		throw decryption_error{"Invalid or missing encrypted data header."};
+	}
+
 	imstream header{std::views::take(encrypted, header_size)};
 	const std::span<const char> compressed{reinterpret_span<const char>(std::span{encrypted}).subspan(header_size)};
 
-	if (encrypted.size() < header_size || !read_binary_magic(header, "tr")) {
-		throw decryption_error{"Invalid compressed data header."};
+	if (!read_binary_magic(header, "tr")) {
+		throw decryption_error{"Invalid encrypted data header."};
 	}
 
 	const std::byte key{read_binary<std::byte>(header)};
 	for (std::byte& byte : std::views::drop(encrypted, 3)) {
 		byte = static_cast<std::byte>(static_cast<u8>(byte) + 170) ^ key;
+	}
+
+	if (static_cast<std::byte>(read_binary<u8>(header) + 3) != key) {
+		throw decryption_error{"Invalid encrypted data header."};
 	}
 
 	out.resize(read_binary<u32>(header));
