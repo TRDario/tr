@@ -68,18 +68,15 @@ namespace tr
 		/// @{
 
 		/// Determines whether a point is contained within the rectangle.
+		/// @details A point along the edges and corners of the rectangle is considered contained.
 		/// @tparam ElementR Element type of the point.
 		/// @param point Point to check for being in the rectangle.
 		/// @return `true` if `point` is within the rectangle, `false` otherwise.
 		template <typename ElementR = Element>
 		[[nodiscard]] constexpr bool contains(glm::tvec2<ElementR> point) const noexcept
 		{
-			for (int i = 0; i < 2; ++i) {
-				if (point[i] < tl[i] || point[i] > tl[i] + size[i]) {
-					return false;
-				}
-			}
-			return true;
+			const rectangle_edges<Element> edges{this->edges()};
+			return point.x >= edges.left && point.x <= edges.right && point.y >= edges.top && point.y <= edges.bottom;
 		}
 
 		/// Determines whether another rectangle is contained entirely within the rectangle.
@@ -100,7 +97,16 @@ namespace tr
 		/// @return Set of edges corresponding to the rectangle.
 		[[nodiscard]] constexpr rectangle_edges<Element> edges() const noexcept
 		{
-			return {tl.x, tl.y, tl.x + size.x, tl.y + size.y};
+			rectangle_edges<Element> edges{tl.x, tl.y, tl.x + size.x, tl.y + size.y};
+			if constexpr (!std::unsigned_integral<Element>) {
+				if (edges.left > edges.right) {
+					std::swap(edges.left, edges.right);
+				}
+				if (edges.top > edges.bottom) {
+					std::swap(edges.top, edges.bottom);
+				}
+			}
+			return edges;
 		}
 
 		/// @}
@@ -110,17 +116,18 @@ namespace tr
 	/// @{
 
 	/// Determines if two rectangles intersect.
+	/// @details Rectangles that touch but don't overlap are not considered intersecting.
 	/// @tparam ElementL, ElementR Element types of the rectangle vectors.
 	/// @param lhs, rhs Rectangles to check for an intersection.
 	/// @return `true` if the rectangles intersect, `false` otherwise.
 	template <typename ElementL, typename ElementR>
 	[[nodiscard]] constexpr bool intersecting(rectangle<ElementL> lhs, rectangle<ElementR> rhs) noexcept
 	{
-		return lhs.contains(rhs.tl) || lhs.contains(rhs.tl + rhs.size) || rhs.contains(lhs.tl + glm::tvec2<ElementL>{lhs.size.x, 0}) ||
-			   rhs.contains(lhs.tl + glm::tvec2<ElementL>{0, lhs.size.y});
+		return intersection(lhs, rhs).has_value();
 	}
 
 	/// Computes the intersection of two rectangles.
+	/// @details Rectangles that touch but don't overlap are not considered intersecting.
 	/// @tparam Element Element type of the rectangle vectors.
 	/// @param lhs, rhs Rectangles to get the intersection of.
 	/// @return Intersection rectangle, if one exists.
