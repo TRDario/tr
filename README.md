@@ -2,8 +2,6 @@
 
 C++23 game development framework based on SDL3, OpenGL 4.5, and OpenAL.
 
-As of now primarily geared towards 2D games and tools, but is in theory usable for 3D as well.
-
 > [!WARNING]
 > This is primarily a personal project, fine-tuned to my needs and preferences.
 >
@@ -15,7 +13,7 @@ As of now primarily geared towards 2D games and tools, but is in theory usable f
 
 Requires a C++23-compatible compiler and standard library, as well as CMake 3.23 to build.
 
-Tested on and guaranteed to build with Clang(-cl) on Linux and Windows. Probably works with MSVC and GCC too, but I haven't tested them.
+Tested on and guaranteed to build with Clang/libstdc++ on Linux and clang-cl/MSVC STL on Windows. Other combinations of compilers and standard libraries are untested as of now.
 
 For more details, see [this page from the documentation](https://trdario.github.io/tr/md_pages_2building.html).
 
@@ -23,11 +21,13 @@ For more details, see [this page from the documentation](https://trdario.github.
 
 Documentation for tr can be accessed [here](https://trdario.github.io/tr/) or built yourself using Doxygen with the doxyfile provided in /doxygen.
 
-Examples and more detailed documentation are planned to be added at a later date.
+Examples are planned to be added at a later date.
 
 ## Testing
 
-tr is currently in the process of being covered with unit tests.
+tr is partially covered with unit tests, primarily within the utility and audio module. The tests are written with GoogleTest and are run through the CMake test driver.
+
+Further unit tests are planned to be added at a later date.
 
 ## Licence
 

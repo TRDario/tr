@@ -13,8 +13,8 @@ settings. The command takes care of several compile options, compile definitions
 See [the page on CMake](cmake.md) for more information on available definitions and functions.
 
 @note
-The library has been tested on and guaranteed to build with Clang(-cl) on Linux and Windows.
-It is likely to work with MSVC and GCC too, but these compilers have not been tested extensively and are currently not a priority.
+The library has been tested on and guaranteed to build with Clang/libstdc++ on Linux and clang-cl/MSVC STL on Windows.
+Other combinations of compilers and standard libraries that meet the requirements are likely to work, but are largely untested and deprioritized as of now.
 
 ## Modules
 
