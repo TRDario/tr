@@ -213,6 +213,9 @@ namespace tr::utf8
 		/// Difference type used by the iterator.
 		using difference_type = ssize;
 
+		/// Iterator concept of the iterator.
+		using iterator_concept = std::bidirectional_iterator_tag;
+
 		/// @name Constructors and destructors
 		/// @{
 
@@ -292,9 +295,6 @@ namespace tr::utf8
 		const char* m_ptr{nullptr};
 	};
 
-	/// Unicode codepoint const reverse iterator for UTF-8 string views.
-	using reverse_iterator = std::reverse_iterator<iterator>;
-
 	//
 
 	/// Indexed Unicode codepoint iterator for UTF-8 string views.
@@ -306,6 +306,9 @@ namespace tr::utf8
 
 		/// Difference type used by the iterator.
 		using difference_type = ssize;
+
+		/// Iterator concept of the iterator.
+		using iterator_concept = std::bidirectional_iterator_tag;
 
 		/// @name Constructors and destructors
 		/// @{
@@ -416,9 +419,6 @@ namespace tr::utf8
 		ssize m_index{0};
 	};
 
-	/// Unicode codepoint const reverse iterator for UTF-8 string views.
-	using reverse_indexed_iterator = std::reverse_iterator<indexed_iterator>;
-
 	/// @name UTF-8 iterators
 	/// @{
 
@@ -430,7 +430,7 @@ namespace tr::utf8
 		if (str.empty()) {
 			return {};
 		}
-		return str.data();
+		return iterator{str.data()};
 	}
 
 	/// Creates an indexed beginning codepoint iterator for a UTF-8 string view.
@@ -439,9 +439,9 @@ namespace tr::utf8
 	[[nodiscard]] constexpr indexed_iterator ibegin(std::string_view str) noexcept
 	{
 		if (str.empty()) {
-			return {};
+			return indexed_iterator{};
 		}
-		return {str.data(), 0};
+		return indexed_iterator{str.data(), 0};
 	}
 
 	/// Creates an ending codepoint iterator for a UTF-8 string view.
@@ -450,9 +450,9 @@ namespace tr::utf8
 	[[nodiscard]] constexpr iterator end(std::string_view str) noexcept
 	{
 		if (str.empty()) {
-			return {};
+			return indexed_iterator{};
 		}
-		return str.data() + str.size();
+		return iterator{str.data() + str.size()};
 	}
 
 	/// Creates an indexed ending codepoint iterator for a UTF-8 string view.
@@ -461,53 +461,9 @@ namespace tr::utf8
 	[[nodiscard]] constexpr indexed_iterator iend(std::string_view str) noexcept
 	{
 		if (str.empty()) {
-			return {};
+			return indexed_iterator{};
 		}
-		return {str.data() + str.size(), ssize(str.size())};
-	}
-
-	/// Creates a reversed beginning codepoint iterator for a UTF-8 string view.
-	/// @param str String to get the iterator for.
-	/// @return Reversed beginning codepoint iterator for `str`.
-	[[nodiscard]] constexpr reverse_iterator rbegin(std::string_view str) noexcept
-	{
-		if (str.empty()) {
-			return {};
-		}
-		return reverse_iterator{tr::utf8::end(str)};
-	}
-
-	/// Creates an indexed reversed beginning codepoint iterator for a UTF-8 string view.
-	/// @param str String to get the iterator for.
-	/// @return Indexed reversed beginning codepoint iterator for `str`.
-	[[nodiscard]] constexpr reverse_indexed_iterator ribegin(std::string_view str) noexcept
-	{
-		if (str.empty()) {
-			return {};
-		}
-		return reverse_indexed_iterator{tr::utf8::iend(str)};
-	}
-
-	/// Creates a reversed ending codepoint iterator for a UTF-8 string view.
-	/// @param str String to get the iterator for.
-	/// @return Reversed ending codepoint iterator for `str`.
-	[[nodiscard]] constexpr reverse_iterator rend(std::string_view str) noexcept
-	{
-		if (str.empty()) {
-			return {};
-		}
-		return reverse_iterator{tr::utf8::begin(str)};
-	}
-
-	/// Creates an indexed reversed ending codepoint iterator for a UTF-8 string view.
-	/// @param str String to get the iterator for.
-	/// @return Indexed reversed ending codepoint iterator for `str`.
-	[[nodiscard]] constexpr reverse_indexed_iterator riend(std::string_view str) noexcept
-	{
-		if (str.empty()) {
-			return {};
-		}
-		return reverse_indexed_iterator{tr::utf8::ibegin(str)};
+		return indexed_iterator{str.data() + str.size(), std::distance(utf8::begin(str), utf8::end(str))};
 	}
 
 	/// Creates a codepoint iterator range pair for a UTF-8 string view.
@@ -515,7 +471,7 @@ namespace tr::utf8
 	/// @return Codepoint iterator range over `str`.
 	[[nodiscard]] constexpr std::ranges::subrange<iterator> range(std::string_view str) noexcept
 	{
-		return {utf8::begin(str), utf8::end(str)};
+		return std::ranges::subrange<iterator>{utf8::begin(str), utf8::end(str)};
 	}
 
 	/// Counts the number of unicode characters in a UTF-8 string view.
