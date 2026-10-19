@@ -9,20 +9,8 @@ using namespace tr::matrix_operators;
 
 //
 
-TEST(matrix_test, operators)
-{
-	const glm::mat4 transform{tr::rotate_around(glm::mat4{1.0f}, {100, 100, 100}, 45_deg, tr::y_axis)};
-
-	const glm::vec4 regular_operator0{transform * glm::vec4{250, 250, 0, 1}};
-	const glm::vec2 custom_operator0{transform * glm::vec2{250, 250}};
-	EXPECT_EQ(glm::vec2{regular_operator0}, custom_operator0);
-
-	const glm::vec4 regular_operator1{transform * glm::vec4{250, 250, 50, 1}};
-	const glm::vec3 custom_operator1{transform * glm::vec3{250, 250, 50}};
-	EXPECT_EQ(glm::vec3{regular_operator1}, custom_operator1);
-}
-
-TEST(matrix_test, ortho)
+/// Tests creating an orthogonal transformation.
+TEST(MatrixTest, CreatesOrthogonalTransformation)
 {
 	const glm::mat4 transform{tr::ortho({{0, 0}, {500, 500}})};
 
@@ -35,7 +23,8 @@ TEST(matrix_test, ortho)
 	EXPECT_FLOAT_EQ(transformed1.y, -0.5f);
 }
 
-TEST(matrix_test, scale_around2)
+/// Tests creating a 2D scaling transformation centered on a point.
+TEST(MatrixTest, CreatesCentered2DScalingTransformation)
 {
 	const glm::mat4 transform{tr::scale_around(glm::mat4{1.0f}, {100, 100}, {2.0f, 3.0f})};
 
@@ -48,7 +37,8 @@ TEST(matrix_test, scale_around2)
 	EXPECT_FLOAT_EQ(transformed1.y, -50.0f);
 }
 
-TEST(matrix_test, scale_around3)
+/// Tests creating a 3D scaling transformation centered on a point.
+TEST(MatrixTest, CreatesCentered3DScalingTransformation)
 {
 	const glm::mat4 transform{tr::scale_around(glm::mat4{1.0f}, {50, 50, 50}, {2.0f, 3.0f, 1.5f})};
 
@@ -63,7 +53,8 @@ TEST(matrix_test, scale_around3)
 	EXPECT_FLOAT_EQ(transformed1.z, 50.0f);
 }
 
-TEST(matrix_test, rotate_around2)
+/// Tests creating a 2D rotation transformation centered on a point.
+TEST(MatrixTest, CreatesCentered2DRotationTransformation)
 {
 	const glm::mat4 transform{tr::rotate_around(glm::mat4{1.0f}, {250, 250}, 90_deg)};
 
@@ -76,7 +67,8 @@ TEST(matrix_test, rotate_around2)
 	EXPECT_FLOAT_EQ(transformed1.y, 250);
 }
 
-TEST(matrix_test, rotate_around3)
+/// Tests creating a 3D rotation transformation centered on a point.
+TEST(MatrixTest, CreatesCentered3DRotationTransformation)
 {
 	const glm::mat4 transform{tr::rotate_around(glm::mat4{1.0f}, {100, 100, 100}, 180_deg, tr::x_axis)};
 
@@ -89,4 +81,21 @@ TEST(matrix_test, rotate_around3)
 	EXPECT_FLOAT_EQ(transformed1.x, 100);
 	EXPECT_NEAR(transformed1.y, 0, 1e-3);
 	EXPECT_FLOAT_EQ(transformed1.z, 100);
+}
+
+/// Tests multiplying matrices with vectors.
+TEST(MatrixTest, MultipliesVectors)
+{
+	const glm::mat4 transform{tr::rotate_around(glm::mat4{1.0f}, {100, 100, 100}, 45_deg, tr::y_axis)};
+
+	const glm::vec4 regular_operator0{transform * glm::vec4{250, 250, 0, 1}};
+	const glm::vec2 custom_operator0{transform * glm::vec2{250, 250}};
+	EXPECT_FLOAT_EQ(regular_operator0.x, custom_operator0.x);
+	EXPECT_FLOAT_EQ(regular_operator0.y, custom_operator0.y);
+
+	const glm::vec4 regular_operator1{transform * glm::vec4{250, 250, 50, 1}};
+	const glm::vec3 custom_operator1{transform * glm::vec3{250, 250, 50}};
+	EXPECT_FLOAT_EQ(regular_operator1.x, custom_operator1.x);
+	EXPECT_FLOAT_EQ(regular_operator1.y, custom_operator1.y);
+	EXPECT_FLOAT_EQ(regular_operator1.z, custom_operator1.z);
 }

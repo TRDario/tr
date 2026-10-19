@@ -70,18 +70,6 @@ namespace tr
 			/// @{
 
 			/// Performs matrix multiplication on a 2D vector.
-			/// @param v Vector to multiply with.
-			/// @param m Matrix to multiply with.
-			/// @return Result of the matrix multiplication.
-			[[nodiscard]] glm::vec2 operator*(glm::vec2 v, const glm::mat4& m) noexcept;
-
-			/// Performs matrix multiplication on a 3D vector.
-			/// @param v Vector to multiply with.
-			/// @param m Matrix to multiply with.
-			/// @return Result of the matrix multiplication.
-			[[nodiscard]] glm::vec3 operator*(glm::vec3 v, const glm::mat4& m) noexcept;
-
-			/// Performs matrix multiplication on a 2D vector.
 			/// @param m Matrix to multiply with.
 			/// @param v Vector to multiply with.
 			/// @return Result of the matrix multiplication.

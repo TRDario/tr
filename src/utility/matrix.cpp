@@ -32,16 +32,6 @@ glm::mat4 tr::rotate_around(const glm::mat4& matrix, glm::vec3 center, angle rot
 
 //
 
-glm::vec2 tr::matrix_operators::operator*(glm::vec2 v, const glm::mat4& m) noexcept
-{
-	return glm::vec4{v, 0, 1} * m;
-}
-
-glm::vec3 tr::matrix_operators::operator*(glm::vec3 v, const glm::mat4& m) noexcept
-{
-	return glm::vec4{v, 1} * m;
-}
-
 glm::vec2 tr::matrix_operators::operator*(const glm::mat4& m, glm::vec2 v) noexcept
 {
 	return m * glm::vec4{v, 0, 1};
