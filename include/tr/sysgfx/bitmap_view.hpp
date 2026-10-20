@@ -38,7 +38,9 @@ namespace tr
 		/// @param range Range holding the pixel data.
 		/// @param size Size of the bitmap.
 		/// @param format Format of the bitmap.
+		/// @post The data pointed to by `range` must stay alive for the duration of the lifetime of the bitmap view.
 		template <std::ranges::contiguous_range Range>
+			requires std::ranges::borrowed_range<Range>
 		[[nodiscard]] bitmap_view(Range&& range, glm::ivec2 size, pixel_format format)
 			: bitmap_view{std::span<const std::byte>{range_bytes(range)}, size, format}
 		{

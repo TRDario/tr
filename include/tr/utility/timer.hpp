@@ -36,7 +36,8 @@ namespace tr
 		/// @param cb Callback object.
 		template <arithmetic Rep, specialization_of_c<std::ratio> Period, std::convertible_to<std::function<void()>> Callback>
 		[[nodiscard]] timer(const std::chrono::duration<Rep, Period>& interval, Callback&& cb)
-			: m_thread{timer_loop, std::chrono::duration_cast<duration>(interval), callback{std::forward<Callback>(cb)}}
+			: m_active{std::make_shared<std::atomic_bool>(true)}
+			, m_thread{timer_loop, std::chrono::duration_cast<duration>(interval), callback{std::forward<Callback>(cb)}, m_active}
 		{
 		}
 
@@ -51,6 +52,9 @@ namespace tr
 		/// @}
 
 	  private:
+		/// Timer activity status.
+		std::shared_ptr<std::atomic_bool> m_active;
+
 		/// Timer thread.
 		std::jthread m_thread;
 
@@ -60,6 +64,7 @@ namespace tr
 		/// @param stoken Thread stop token.
 		/// @param interval Timer interval.
 		/// @param cb Callback object.
-		static void timer_loop(std::stop_token stoken, duration interval, callback cb) noexcept;
+		/// @param active Timer activity status.
+		static void timer_loop(std::stop_token stoken, duration interval, callback cb, std::shared_ptr<std::atomic_bool> active) noexcept;
 	};
 } // namespace tr

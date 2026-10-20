@@ -173,7 +173,7 @@ namespace tr
 	/// @tparam WhitelistRange Type of the whitelist range.
 	/// @param searched Range to search.
 	/// @param whitelist List of elements to search for.
-	/// @return Iterator to the first element in `searched` that matches one in `whitelist`.
+	/// @return Iterator to the last element in `searched` that matches one in `whitelist`.
 	template <std::ranges::range SearchedRange, std::ranges::forward_range WhitelistRange>
 		requires(std::equality_comparable_with<std::ranges::range_value_t<SearchedRange>, std::ranges::range_value_t<WhitelistRange>>)
 	[[nodiscard]] constexpr std::ranges::borrowed_iterator_t<SearchedRange> find_last_of(SearchedRange&& searched,

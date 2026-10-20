@@ -20,8 +20,8 @@ namespace tr
 	/// 3-dimensional audio source.
 	/// @details
 	/// The number of audio sources that may exist on a context at one time is potentially very limited (128 by default), so the only
-	/// "constructor" (create_audio_source) of audio sources explicitly only tries to allocate one, culling lower priority sources without
-	/// any remaining references if necessary.
+	/// "constructor" (create_audio_source) of audio sources explicitly only tries to allocate one, culling lower or equal priority sources
+	/// without any remaining references if necessary.
 	///
 	/// Audio sources have an associated priority level that is used when evaluating whether they can get culled; this is what is specified
 	/// in the allocation function.

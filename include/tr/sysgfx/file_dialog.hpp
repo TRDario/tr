@@ -22,12 +22,12 @@ namespace tr
 	/// @{
 
 	/// Shows an "Open File" dialog and asynchronously invokes a callback after it is closed.
-	/// @details The callback may be called on a separate thread. It is not recommended to throw exceptions from it.
 	/// @tparam Callback Type of the callback callable.
-	/// @param callback Callback callable.
-	/// @param filters List of applicable file filters. The list and all of the string views inside the filters contained within it must
-	/// remain valid until the callback is called.
+	/// @param callback Callback callable. It may be called on a separate thread, so it is not recommended to throw exceptions from it.
+	/// @param filters List of applicable file filters.
 	/// @param default_path Default path to start the dialog at.
+	/// @pre `filters` and all of the string views inside the filters contained within it must remain valid until the callback is called.
+	/// @post The string view passed to the callback is only guaranteed to stay alive for the duration of the callback.
 	template <std::invocable<zstring_view, int> Callback>
 	void show_open_file_dialog(Callback&& callback, std::span<const file_dialog_filter> filters = {}, zstring_view default_path = {})
 		noexcept(internal::is_stateless_invocable_v<Callback, void (*)(zstring_view, int)>)
@@ -76,12 +76,12 @@ namespace tr
 	}
 
 	/// Shows an "Open File" dialog with the ability to choose multiple files and asynchronously invokes a callback after it is closed.
-	/// @details The callback may be called on a separate thread. It is not recommended to throw exceptions from it.
 	/// @tparam Callback Type of the callback callable.
-	/// @param callback Callback callable.
-	/// @param filters List of applicable file filters. The list and all of the string views inside the filters contained within it must
-	/// remain valid until the callback is called.
+	/// @param callback Callback callable. It may be called on a separate thread, so it is not recommended to throw exceptions from it.
+	/// @param filters List of applicable file filters.
 	/// @param default_path Default path to start the dialog at.
+	/// @pre `filters` and all of the string views inside the filters contained within it must remain valid until the callback is called.
+	/// @post The string view span passed to the callback is only guaranteed to stay alive for the duration of the callback.
 	template <std::invocable<zstring_view_zspan, int> Callback>
 	void show_open_files_dialog(Callback&& callback, std::span<const file_dialog_filter> filters = {}, zstring_view default_path = {})
 		noexcept(internal::is_stateless_invocable_v<Callback, void (*)(zstring_view_zspan, int)>)
@@ -130,12 +130,12 @@ namespace tr
 	}
 
 	/// Shows a "Save File" dialog and asynchronously invokes a callback after it is closed.
-	/// @details The callback may be called on a separate thread. It is not recommended to throw exceptions from it.
 	/// @tparam Callback Type of the callback callable.
-	/// @param callback Callback callable.
-	/// @param filters List of applicable file filters. The list and all of the string views inside the filters contained within it must
-	/// remain valid until the callback is called.
+	/// @param callback Callback callable. It may be called on a separate thread, so it is not recommended to throw exceptions from it.
+	/// @param filters List of applicable file filters.
 	/// @param default_path Default path to start the dialog at.
+	/// @pre `filters` and all of the string views inside the filters contained within it must remain valid until the callback is called.
+	/// @post The string view passed to the callback is only guaranteed to stay alive for the duration of the callback.
 	template <std::invocable<zstring_view, int> Callback>
 	void show_save_file_dialog(Callback&& callback, std::span<const file_dialog_filter> filters = {}, zstring_view default_path = {})
 		noexcept(internal::is_stateless_invocable_v<Callback, void (*)(zstring_view, int)>)
@@ -181,10 +181,10 @@ namespace tr
 	}
 
 	/// Shows an "Open Folder" dialog and asynchronously invokes a callback after it is closed.
-	/// @details The callback may be called on a separate thread. It is not recommended to throw exceptions from it.
 	/// @tparam Callback Type of the callback callable.
-	/// @param callback Callback callable.
+	/// @param callback Callback callable. It may be called on a separate thread, so it is not recommended to throw exceptions from it.
 	/// @param default_path Default path to start the dialog at.
+	/// @post The string view passed to the callback is only guaranteed to stay alive for the duration of the callback.
 	template <std::invocable<zstring_view> Callback>
 	void show_open_folder_dialog(Callback&& callback, zstring_view default_path = {})
 		noexcept(internal::is_stateless_invocable_v<Callback, void (*)(zstring_view)>)
@@ -229,11 +229,11 @@ namespace tr
 		}
 	}
 
-	/// Shows an "Open Folder" dialog with the ability to choose multiple files and asynchronously invokes a callback after it is closed.
-	/// @details The callback may be called on a separate thread. It is not recommended to throw exceptions from it.
+	/// Shows an "Open Folder" dialog with the ability to choose multiple folders and asynchronously invokes a callback after it is closed.
 	/// @tparam Callback Type of the callback callable.
-	/// @param callback Callback callable.
+	/// @param callback Callback callable. It may be called on a separate thread, so it is not recommended to throw exceptions from it.
 	/// @param default_path Default path to start the dialog at.
+	/// @post The string view span passed to the callback is only guaranteed to stay alive for the duration of the callback.
 	template <std::invocable<zstring_view_zspan> Callback>
 	void show_open_folders_dialog(Callback&& callback, zstring_view default_path = {})
 		noexcept(internal::is_stateless_invocable_v<Callback, void (*)(zstring_view_zspan)>)

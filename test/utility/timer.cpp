@@ -73,6 +73,28 @@ TEST(TimerTest, ConstructsActive)
 	EXPECT_LT(times[2] - start, 2s);
 }
 
+/// Tests that a timer with a non-positive interval becomes inactive.
+TEST(TimerTest, NonPositiveIntervalBecomesInactive)
+{
+	tr::timer timer{0ns, [] {}};
+	const std::chrono::steady_clock::time_point deadline{std::chrono::steady_clock::now() + 2s};
+	while (timer.active() && std::chrono::steady_clock::now() < deadline) {
+		std::this_thread::yield();
+	}
+	EXPECT_FALSE(timer.active());
+}
+
+/// Tests that a timer becomes inactive after its callback throws.
+TEST(TimerTest, ThrowingCallbackBecomesInactive)
+{
+	tr::timer timer{1ms, [] { throw std::runtime_error{"timer callback failure"}; }};
+	const std::chrono::steady_clock::time_point deadline{std::chrono::steady_clock::now() + 2s};
+	while (timer.active() && std::chrono::steady_clock::now() < deadline) {
+		std::this_thread::yield();
+	}
+	EXPECT_FALSE(timer.active());
+}
+
 /// Tests that moving the timer transfers ownership.
 TEST(TimerTest, MovingTransfersOwnership)
 {

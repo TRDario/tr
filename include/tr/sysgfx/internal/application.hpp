@@ -20,5 +20,5 @@ namespace tr::internal
 	/// @param argc Command-line argument count.
 	/// @param argv Command-line argument values.
 	/// @return Exit code of the application.
-	[[nodiscard]] int run_application(std::unique_ptr<application> application, int argc, const char** argv);
+	[[nodiscard]] int run_application(std::unique_ptr<application> application, int argc, char** argv);
 } // namespace tr::internal

@@ -89,8 +89,8 @@ namespace tr
 	/// Strictly speaking, instances of `tr::texture` are only containers for these underlying texture objects. This means, for example,
 	/// that setting a texture on a shader does not set the literal `tr::texture` object at a specific location in memory, but rather the
 	/// value it contains. If the value is moved to a different instance of `tr::texture`, that value will still be set on the shader. If
-	/// the instance is overriden with a new value, the old value is destroyed and the shader will no longer have a set buffer. Instances of
-	/// `tr::texture` may at any point allocate new texture objects and release previously held texture objects using the `allocate()`
+	/// the instance is overriden with a new value, the old value is destroyed and the shader will no longer have a set texture. Instances
+	/// of `tr::texture` may at any point allocate new texture objects and release previously held texture objects using the `allocate()`
 	/// method.
 	///
 	/// `tr::texture` has a notion of 'completeness'. An instance of the class may be constructed without allocating actual texture data.

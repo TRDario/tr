@@ -139,13 +139,7 @@ SDL_AppResult tr::internal::update_application(void*)
 
 void tr::internal::shut_down_application(void*, SDL_AppResult)
 {
-	try {
-		running_application.reset();
-	}
-	catch (std::exception& err) {
-		internal::show_fatal_error_message_box(err);
-	}
-
+	running_application.reset();
 	TTF_Quit();
 }
 
@@ -155,12 +149,12 @@ int tr::internal::run_application_main_loop(int argc, char** argv) noexcept
 									 shut_down_application);
 }
 
-int tr::internal::run_application(std::unique_ptr<application> application, int argc, const char** argv)
+int tr::internal::run_application(std::unique_ptr<application> application, int argc, char** argv)
 {
 	TR_ASSERT(running_application == nullptr, "Tried to invoke the main loop while it is already ongoing.");
 
 	running_application = std::move(application);
-	const int exit_code{SDL_RunApp(argc, const_cast<char**>(argv), run_application_main_loop, nullptr)};
+	const int exit_code{SDL_RunApp(argc, argv, run_application_main_loop, nullptr)};
 	return exit_code;
 }
 

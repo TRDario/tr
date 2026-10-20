@@ -14,7 +14,7 @@ namespace tr
 	/// @details
 	/// `tr::dynamic_vertex_buffer` represents a graphics buffer used to store vertex data. Unlike
 	/// `tr::static_vertex_buffer`, it allows for dynamic resizing and updating of its contents, making it suitable for scenarios where the
-	/// vertex data changes often at runtime. It is the typed equivalent of `tr::untyped_static_vertex_buffer`.
+	/// vertex data changes often at runtime. It is the typed equivalent of `tr::untyped_dynamic_vertex_buffer`.
 	///
 	/// Strictly speaking, instances of `tr::dynamic_vertex_buffer` are only containers for these underlying buffer objects. This means, for
 	/// example, that setting a dynamic vertex buffer on a graphics context does not set the literal `tr::dynamic_vertex_buffer` object at a
@@ -27,7 +27,7 @@ namespace tr
 	/// Moved-from instances of `tr::dynamic_vertex_buffer` are left in a special 'invalid' state. Invalid `tr::dynamic_vertex_buffer`
 	/// instances may not be interacted with besides moving a new value into them and checking for validity using `valid()`.
 	///
-	/// `tr::dynamic_vertex_buffer` instances may be labeled and are formattable. Example format output: `"My vertex buffer" (ID: 3, IBO:
+	/// `tr::dynamic_vertex_buffer` instances may be labeled and are formattable. Example format output: `"My vertex buffer" (ID: 3, VBO:
 	/// 5)`.
 	/// @tparam Element Type of the elements of the buffer.
 	template <standard_layout Element>

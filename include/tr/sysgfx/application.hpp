@@ -1,13 +1,14 @@
 /// @file
 /// @brief Provides `tr::application` and `tr::run_main_loop()`.
 /// @details
-/// In order to make use of most system and graphics module functionality, the tr main loop must be invoked in `main()`. The main loop
-/// function `tr::run_main_loop()` takes an object representing the application state. The application object contains the virtual callback
-/// functions `tr::application::initialize()`, `tr::application::handle_event()`, `tr::application::update()`, and
-/// `tr::application::shut_down()`. These functions are invoked when appropriate by the main loop.
+/// In order to make use of most system and graphics module functionality, the tr application loop must be invoked in `main()`. The
+/// application loop function `tr::run_application()` initializes internal subsystems and constructs an application state object from the
+/// arguments passed into the function. The application object contains the virtual callback functions `tr::application::initialize()`,
+/// `tr::application::handle_event()`, and `tr::application::update()`. These functions are invoked when appropriate by the application
+/// loop.
 ///
-/// The lifetime of the system and graphics module functionality is limited to the duration of the main loop. Do not attempt to call system
-/// and graphics functions outside of the loop, outside of some explicit exceptions.
+/// The lifetime of the system and graphics module functionality is limited to the duration of the application loop. Do not attempt to call
+/// system and graphics functions outside of the loop, outside of some explicit exceptions.
 
 #pragma once
 #include <tr/sysgfx/event_view.hpp>
@@ -86,7 +87,6 @@ namespace tr
 		application(application&&) = delete;
 
 		/// Destroys the application.
-		/// @details Uncaught exceptions from this function will display a dialog box.
 		virtual ~application() noexcept = default;
 
 		/// @}
@@ -135,7 +135,7 @@ namespace tr
 	/// @return Exit code of the application.
 	template <typename Application, typename... Args>
 		requires std::derived_from<Application, application> && std::constructible_from<Application, Args...>
-	[[nodiscard]] int run_application(int argc, const char** argv, const application_metadata& metadata, Args&&... args)
+	[[nodiscard]] int run_application(int argc, char** argv, const application_metadata& metadata, Args&&... args)
 	{
 		internal::set_application_metadata(metadata);
 		std::unique_ptr<Application> application{std::make_unique<Application>(std::forward<Args>(args)...)};

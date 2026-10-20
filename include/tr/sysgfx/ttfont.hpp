@@ -58,7 +58,7 @@ namespace tr
 		/// String that will fit.
 		std::string_view text;
 
-		/// Size of the fitting string.
+		/// Measured width of the fitting string.
 		int size;
 	};
 
