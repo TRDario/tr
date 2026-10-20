@@ -13,6 +13,7 @@ add_executable(
 	dynamic_ref_cast.cpp
 	encryption.cpp
 	enum.cpp
+	exception.cpp
 	handle.cpp
 	hash_map.cpp
 	inplace_vector.cpp
