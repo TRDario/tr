@@ -255,14 +255,14 @@ namespace tr
 		/// @return Pointer to the data of the vector.
 		[[nodiscard]] pointer data() noexcept
 		{
-			return reinterpret_cast<pointer>(m_buffer);
+			return std::launder(reinterpret_cast<pointer>(m_buffer));
 		}
 
 		/// Gets a pointer to the data of the vector.
 		/// @return Pointer to the data of the vector.
 		[[nodiscard]] const_pointer data() const noexcept
 		{
-			return reinterpret_cast<const_pointer>(m_buffer);
+			return std::launder(reinterpret_cast<const_pointer>(m_buffer));
 		}
 
 		/// @}
