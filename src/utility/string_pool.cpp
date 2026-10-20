@@ -5,8 +5,9 @@
 
 //
 
-tr::string_pool::iterator::iterator(std::vector<char>::const_iterator base) noexcept
-	: m_base{base}
+tr::string_pool::iterator::iterator(std::vector<char>::const_iterator begin, std::vector<char>::const_iterator base) noexcept
+	: m_begin{begin}
+	, m_base{base}
 {
 }
 
@@ -18,7 +19,10 @@ tr::string_pool::iterator& tr::string_pool::iterator::operator++() noexcept
 
 tr::string_pool::iterator& tr::string_pool::iterator::operator--() noexcept
 {
-	while (*--m_base != '\0') {}
+	--m_base;
+	while (m_base != m_begin && *(m_base - 1) != '\0') {
+		--m_base;
+	}
 	return *this;
 }
 
@@ -71,12 +75,12 @@ std::back_insert_iterator<std::vector<char>> tr::string_pool::string_builder_t::
 
 tr::string_pool::iterator tr::string_pool::begin() const noexcept
 {
-	return iterator{m_data.begin()};
+	return iterator{m_data.begin(), m_data.begin()};
 }
 
 tr::string_pool::iterator tr::string_pool::end() const noexcept
 {
-	return iterator{m_data.end()};
+	return iterator{m_data.begin(), m_data.end()};
 }
 
 //
@@ -105,10 +109,12 @@ void tr::string_pool::clear() noexcept
 
 tr::string_pool::iterator tr::string_pool::append(std::string_view string)
 {
+	TR_ASSERT(!std::ranges::contains(string, '\0'), "Tried to append string with embedded NUL characters to a string pool.");
+
 	const usize offset{m_data.size()};
 	m_data.append_range(string);
 	m_data.push_back('\0');
-	return iterator{m_data.begin() + offset};
+	return iterator{m_data.begin(), m_data.begin() + offset};
 }
 
 tr::string_pool::string_builder_t tr::string_pool::string_builder() noexcept
@@ -118,10 +124,12 @@ tr::string_pool::string_builder_t tr::string_pool::string_builder() noexcept
 
 tr::string_pool::iterator tr::string_pool::erase(iterator where) noexcept
 {
-	return iterator{m_data.erase(where.base(), std::next(where).base())};
+	const auto base{m_data.erase(where.base(), std::next(where).base())};
+	return iterator{m_data.begin(), base};
 }
 
 tr::string_pool::iterator tr::string_pool::erase(iterator begin, iterator end) noexcept
 {
-	return iterator{m_data.erase(begin.base(), end.base())};
+	const auto base{m_data.erase(begin.base(), end.base())};
+	return iterator{m_data.begin(), base};
 }

@@ -29,6 +29,7 @@ add_executable(
 	rng.cpp
 	specialization_of.cpp
 	stopwatch.cpp
+	string_pool.cpp
 	string_literal.cpp
 	temporary_file.cpp
 	timer.cpp

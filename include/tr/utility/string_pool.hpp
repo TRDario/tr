@@ -37,8 +37,9 @@ namespace tr
 			[[nodiscard]] iterator() noexcept = default;
 
 			/// Constructs an iterator.
-			/// @param ptr Base iterator to the beginning of the pointed-to string.
-			[[nodiscard]] explicit iterator(std::vector<char>::const_iterator base) noexcept;
+			/// @param begin Base iterator to the beginning of the string pool.
+			/// @param base Base iterator to the beginning of the pointed-to string.
+			[[nodiscard]] iterator(std::vector<char>::const_iterator begin, std::vector<char>::const_iterator base) noexcept;
 
 			/// @}
 			/// @endcond
@@ -80,6 +81,9 @@ namespace tr
 			/// @endcond
 
 		  private:
+			/// Base iterator to the beginning of the string pool.
+			std::vector<char>::const_iterator m_begin;
+
 			/// Base iterator to the beginning of the pointed-to string.
 			std::vector<char>::const_iterator m_base;
 		};
@@ -198,11 +202,14 @@ namespace tr
 
 		/// Appends a string to the string pool.
 		/// @note This invalidates all string views and iterators to strings in the pool if a reallocation occurs.
+		/// @param string String to append. Must not contain any embedded NUL characters.
 		/// @return Iterator to the appended string.
 		iterator append(std::string_view string);
 
 		/// Creates a string builder object to enable inplace string emplacement.
 		/// @note It is not allowed to have multiple string builders alive at once for a given string pool.
+		/// @warning Keeping any iterators to the string pool and especially iterating through it are not allowed while a string builder is
+		/// alive for it.
 		/// @return String builder object.
 		[[nodiscard]] string_builder_t string_builder() noexcept;
 
