@@ -3,29 +3,50 @@
 
 #include <gtest/gtest.h>
 #include <tr/utility/circle.hpp>
-#include <tr/utility/rng.hpp>
 
 //
 
-TEST(circle_test, contains)
+/// Tests that a point inside a circle is reported as contained.
+TEST(CircleTest, ContainsPointInside)
 {
-	tr::rng rng;
-	const tr::circle circle{rng.generate<glm::vec2>(100000), rng.generate(2.0f, 1000.0f)};
-
-	for (int i = 0; i < 1000000; ++i) {
-		EXPECT_TRUE(circle.contains(circle.center + rng.generate<glm::vec2>(rng.generate(0.0f, circle.radius - 0.1f))));
-	}
-	for (int i = 0; i < 1000000; ++i) {
-		EXPECT_FALSE(circle.contains(circle.center + rng.generate<glm::vec2>(rng.generate(circle.radius + 0.1f, 1e12f))));
-	}
+	const tr::circle circle{{-50, 100}, 25};
+	EXPECT_TRUE(circle.contains(glm::vec2{-60, 90}));
 }
 
-TEST(circle_test, intersecting)
+/// Tests that a point on the edge of a circle is reported as contained.
+TEST(CircleTest, ContainsPointOnEdge)
+{
+	const tr::circle circle{{-50, 100}, 25};
+	EXPECT_TRUE(circle.contains(glm::vec2{-50, 75}));
+}
+
+/// Tests that a point outside of a circle is reported as not contained.
+TEST(CircleTest, DoesNotContainPointOutside)
+{
+	const tr::circle circle{{-50, 100}, 25};
+	EXPECT_FALSE(circle.contains(glm::vec2{-25, 75}));
+}
+
+/// Tests that overlapping circles are reported as intersecting.
+TEST(CircleTest, OverlappingCirclesIntersect)
 {
 	const tr::circle circle0{{100, 100}, 200};
 	const tr::circle circle1{{250, 100}, 100};
-	const tr::circle circle2{{425, 100}, 100};
 	EXPECT_TRUE(tr::intersecting(circle0, circle1));
-	EXPECT_TRUE(tr::intersecting(circle1, circle2));
-	EXPECT_FALSE(tr::intersecting(circle0, circle2));
+}
+
+/// Tests that tangential circles are reported as intersecting.
+TEST(CircleTest, TangentialCirclesIntersect)
+{
+	const tr::circle circle0{{100, 100}, 200};
+	const tr::circle circle1{{400, 100}, 100};
+	EXPECT_TRUE(tr::intersecting(circle0, circle1));
+}
+
+/// Tests that separated circles are reported as not intersecting.
+TEST(CircleTest, SeparatedCirclesDoNotIntersect)
+{
+	const tr::circle circle0{{100, 100}, 200};
+	const tr::circle circle1{{450, 100}, 100};
+	EXPECT_FALSE(tr::intersecting(circle0, circle1));
 }

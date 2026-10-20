@@ -62,7 +62,7 @@ struct mock_audio_stream : public tr::audio_stream
 //
 
 /// Test fixture used to test audio sources.
-class audio_source_test : public testing::Test
+class AudioSourceTests : public testing::Test
 {
   protected:
 	/// Device the source's context is created on.
@@ -83,7 +83,7 @@ class audio_source_test : public testing::Test
 	//
 
 	/// Constructs the fixture.
-	audio_source_test()
+	AudioSourceTests()
 		: device{}
 		, context{device}
 		, buffer{tr::create_audio_buffer(context, buffer_data, tr::audio_format::mono16, 44100)}
@@ -95,23 +95,27 @@ class audio_source_test : public testing::Test
 
 //
 
-TEST_F(audio_source_test, context)
+/// Tests getting the context of an audio source.
+TEST_F(AudioSourceTests, GetsContext)
 {
 	EXPECT_EQ(&context, &source->context());
 }
 
-TEST_F(audio_source_test, priority)
+/// Tests getting the priority of an audio source.
+TEST_F(AudioSourceTests, GetsPriority)
 {
 	EXPECT_EQ(source->priority(), 0);
 }
 
-TEST_F(audio_source_test, class_mask)
+/// Tests controlling the class mask of an audio source.
+TEST_F(AudioSourceTests, ControlsClassMask)
 {
 	source->set_class_mask(0x00000080);
 	EXPECT_EQ(source->class_mask(), 0x00000080);
 }
 
-TEST_F(audio_source_test, pitch)
+/// Tests controlling the pitch of an audio source.
+TEST_F(AudioSourceTests, ControlsPitch)
 {
 	source->set_pitch(1.5f);
 	EXPECT_EQ(source->pitch(), 1.5f);
@@ -121,7 +125,8 @@ TEST_F(audio_source_test, pitch)
 	EXPECT_EQ(source->pitch(), 0.5f);
 }
 
-TEST_F(audio_source_test, gain)
+/// Tests controlling the gain of an audio source.
+TEST_F(AudioSourceTests, ControlsGain)
 {
 	source->set_gain(1.5f);
 	EXPECT_EQ(source->gain(), 1.5f);
@@ -131,7 +136,8 @@ TEST_F(audio_source_test, gain)
 	EXPECT_EQ(source->gain(), 0.5f);
 }
 
-TEST_F(audio_source_test, max_distance)
+/// Tests controlling the maximum distance of an audio source.
+TEST_F(AudioSourceTests, ControlsMaxDistance)
 {
 	source->set_max_distance(1000.0f);
 	EXPECT_EQ(source->max_distance(), 1000.0f);
@@ -141,7 +147,8 @@ TEST_F(audio_source_test, max_distance)
 	EXPECT_EQ(source->max_distance(), 100.0f);
 }
 
-TEST_F(audio_source_test, rolloff_factor)
+/// Tests controlling the rolloff factor of an audio source.
+TEST_F(AudioSourceTests, ControlsRolloffFactor)
 {
 	source->set_rolloff_factor(2.0f);
 	EXPECT_EQ(source->rolloff_factor(), 2.0f);
@@ -151,7 +158,8 @@ TEST_F(audio_source_test, rolloff_factor)
 	EXPECT_EQ(source->rolloff_factor(), 0.5f);
 }
 
-TEST_F(audio_source_test, reference_distance)
+/// Tests controlling the reference distance of an audio source.
+TEST_F(AudioSourceTests, ControlsReferenceDistance)
 {
 	source->set_reference_distance(1000.0f);
 	EXPECT_EQ(source->reference_distance(), 1000.0f);
@@ -161,7 +169,8 @@ TEST_F(audio_source_test, reference_distance)
 	EXPECT_EQ(source->reference_distance(), 100.0f);
 }
 
-TEST_F(audio_source_test, gain_outside_cone)
+/// Tests controlling the gain outside the cone of an audio source.
+TEST_F(AudioSourceTests, ControlsGainOutsideCone)
 {
 	source->set_gain_outside_cone(0.5f);
 	EXPECT_EQ(source->gain_outside_cone(), 0.5f);
@@ -171,7 +180,8 @@ TEST_F(audio_source_test, gain_outside_cone)
 	EXPECT_EQ(source->gain_outside_cone(), 1.0f);
 }
 
-TEST_F(audio_source_test, cone_widths)
+/// Tests controlling the cone widths of an audio source.
+TEST_F(AudioSourceTests, ControlsConeWidths)
 {
 	source->set_cone_widths(60_deg, 120_deg);
 	EXPECT_EQ(source->inner_cone_width(), 60_deg);
@@ -183,7 +193,8 @@ TEST_F(audio_source_test, cone_widths)
 	EXPECT_EQ(source->outer_cone_width(), 240_deg);
 }
 
-TEST_F(audio_source_test, position)
+/// Tests controlling the position of an audio source.
+TEST_F(AudioSourceTests, ControlsPosition)
 {
 	const glm::vec3 first_position{100, 100, 100};
 	const glm::vec3 second_position{200, 200, 200};
@@ -196,7 +207,8 @@ TEST_F(audio_source_test, position)
 	EXPECT_EQ(source->position(), second_position);
 }
 
-TEST_F(audio_source_test, velocity)
+/// Tests controlling the velocity of an audio source.
+TEST_F(AudioSourceTests, ControlsVelocity)
 {
 	const glm::vec3 first_velocity{100, 100, 100};
 	const glm::vec3 second_velocity{200, 200, 200};
@@ -209,7 +221,8 @@ TEST_F(audio_source_test, velocity)
 	EXPECT_EQ(source->velocity(), second_velocity);
 }
 
-TEST_F(audio_source_test, direction)
+/// Tests controlling the direction of an audio source.
+TEST_F(AudioSourceTests, ControlsDirection)
 {
 	const glm::vec3 first_direction{0, 1, 0};
 	const glm::vec3 second_direction{1, 0, 0};
@@ -222,7 +235,8 @@ TEST_F(audio_source_test, direction)
 	EXPECT_EQ(source->direction(), second_direction);
 }
 
-TEST_F(audio_source_test, origin)
+/// Tests controlling the origin of an audio source.
+TEST_F(AudioSourceTests, ControlsOrigin)
 {
 	source->set_origin(tr::audio_source::origin::listener);
 	EXPECT_EQ(source->origin(), tr::audio_source::origin::listener);
@@ -230,7 +244,8 @@ TEST_F(audio_source_test, origin)
 	EXPECT_EQ(source->origin(), tr::audio_source::origin::absolute);
 }
 
-TEST_F(audio_source_test, buffer)
+/// Tests using an audio buffer as an attachment for an audio source.
+TEST_F(AudioSourceTests, UsesBufferSource)
 {
 	source->use(buffer);
 	EXPECT_EQ(source->length(), 1.0s);
@@ -254,7 +269,8 @@ TEST_F(audio_source_test, buffer)
 	EXPECT_EQ(source->loop_end(), 0.75s);
 }
 
-TEST_F(audio_source_test, stream)
+/// Tests using an audio stream as an attachment for an audio source.
+TEST_F(AudioSourceTests, UsesStreamSource)
 {
 	source->use(std::move(stream));
 	EXPECT_EQ(source->length(), 10.0s);
@@ -279,7 +295,8 @@ TEST_F(audio_source_test, stream)
 	EXPECT_EQ(source->state(), tr::audio_source::state::stopped);
 }
 
-TEST_F(audio_source_test, empty)
+/// Tests clearing the attachment an audio source.
+TEST_F(AudioSourceTests, ClearsAttachment)
 {
 	source->clear();
 

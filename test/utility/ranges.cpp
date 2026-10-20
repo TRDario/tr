@@ -6,7 +6,8 @@
 
 //
 
-TEST(ranges_test, reinterpret_span)
+/// Tests span reinterpreting.
+TEST(RangesTest, ReinterpretsSpan)
 {
 	constexpr std::array<tr::u16, 2> data{0x4080, 0x4080};
 	const auto reinterpreted{tr::reinterpret_span<const tr::u8>(std::span{data})};
@@ -17,7 +18,8 @@ TEST(ranges_test, reinterpret_span)
 	EXPECT_EQ(reinterpreted[3], 0x40);
 }
 
-TEST(ranges_test, object_bytes_round_trip)
+/// Tests `tr::as_object()` roundtripping.
+TEST(RangesTest, ObjectBytesRoundTrips)
 {
 	std::pair<int, float> vs{1, 2.0f};
 
@@ -29,7 +31,8 @@ TEST(ranges_test, object_bytes_round_trip)
 	EXPECT_EQ(vs.first, 5);
 }
 
-TEST(ranges_test, range_bytes_round_trip)
+/// Tests `tr::range_bytes()` roundtripping.
+TEST(RangesTest, RangeBytesRoundTrips)
 {
 	std::vector<int> vs{1, 2, 3, 4, 5};
 
@@ -41,30 +44,43 @@ TEST(ranges_test, range_bytes_round_trip)
 	EXPECT_EQ(vs[0], 10);
 }
 
-TEST(ranges_test, find)
+/// Tests finding the last matching value out of a set.
+TEST(RangesTest, FindsLastOf)
 {
 	const std::vector<int> vs{1, 1, 1, 1, 1, 2, 3, 4, 5, 1, 2, 3, 2, 4, 5, 4, 5, 4, 5};
-	constexpr std::array<int, 2> pattern0{1, 3};
-	constexpr std::array<int, 2> pattern1{4, 5};
-
-	const auto last_of_it{tr::find_last_of(vs, pattern0)};
+	constexpr std::array<int, 2> pattern{1, 3};
+	const auto last_of_it{tr::find_last_of(vs, pattern)};
 	EXPECT_EQ(last_of_it, vs.begin() + 11);
-
-	const auto first_not_of_it{tr::find_first_not_of(vs, pattern0)};
-	EXPECT_EQ(first_not_of_it, vs.begin() + 5);
-
-	const auto last_not_of_it{tr::find_last_not_of(vs, pattern1)};
-	EXPECT_EQ(last_not_of_it, vs.begin() + 12);
 }
 
-TEST(ranges_test, sum)
+/// Tests finding the first matching value not out of a set.
+TEST(RangesTest, FindsFirstNotOf)
+{
+	const std::vector<int> vs{1, 1, 1, 1, 1, 2, 3, 4, 5, 1, 2, 3, 2, 4, 5, 4, 5, 4, 5};
+	constexpr std::array<int, 2> pattern{1, 3};
+	const auto first_not_of_it{tr::find_first_not_of(vs, pattern)};
+	EXPECT_EQ(first_not_of_it, vs.begin() + 5);
+}
+
+/// Tests finding the last matching value not out of a set.
+TEST(RangesTest, FindsLastNotOf)
+{
+	const std::vector<int> vs{1, 1, 1, 1, 1, 2, 3, 4, 5, 1, 2, 3, 2, 4, 5, 4, 5, 4, 5};
+	constexpr std::array<int, 2> pattern{4, 5};
+	const auto first_not_of_it{tr::find_last_not_of(vs, pattern)};
+	EXPECT_EQ(first_not_of_it, vs.begin() + 12);
+}
+
+/// Tests summing values.
+TEST(RangesTest, Sums)
 {
 	constexpr std::array<int, 5> vs{1, 2, 3, 4, 5};
 	const int sum{tr::sum(vs, 0)};
 	EXPECT_EQ(sum, 15);
 }
 
-TEST(ranges_test, deref)
+/// Tests creating a dereference view.
+TEST(RangesTest, CreatesDereferenceView)
 {
 	std::array<std::unique_ptr<int>, 5> vs{std::make_unique<int>(1), std::make_unique<int>(2), std::make_unique<int>(3),
 										   std::make_unique<int>(4), std::make_unique<int>(5)};
@@ -76,7 +92,8 @@ TEST(ranges_test, deref)
 	EXPECT_EQ(sum, 20);
 }
 
-TEST(ranges_test, unstable_erase)
+/// Tests unstable erasing.
+TEST(RangesTest, UnstableErases)
 {
 	std::vector<int> vs{1, 2, 3, 4, 5};
 	tr::unstable_erase(vs, std::ranges::find(vs, 3));

@@ -38,7 +38,7 @@ class test_sink final : public tr::log_sink
 //
 
 /// Logger testing fixture.
-class logger_test : public testing::Test
+class LoggerTest : public testing::Test
 {
   protected:
 	/// Testing sink.
@@ -47,7 +47,7 @@ class logger_test : public testing::Test
 	//
 
 	/// Constructs and registers a testing sink to the logger.
-	logger_test()
+	LoggerTest()
 		: sink{std::make_shared<test_sink>()}
 	{
 		tr::logger::instance().set_min_level(tr::log_level::info);
@@ -60,7 +60,8 @@ class logger_test : public testing::Test
 
 //
 
-TEST_F(logger_test, basic_logging)
+/// Tests logging messages to the logger.
+TEST_F(LoggerTest, Logs)
 {
 	TR_LOG_INFO("test", "Foo");
 	TR_LOG_WARNING("test", "Bar");
@@ -78,7 +79,8 @@ TEST_F(logger_test, basic_logging)
 	EXPECT_EQ(sink->collected_messages()[3].string, "Qux");
 }
 
-TEST_F(logger_test, min_level_filtering)
+/// Tests logger filtering.
+TEST_F(LoggerTest, Filters)
 {
 	tr::logger::instance().set_min_level(tr::log_level::error);
 	EXPECT_EQ(tr::logger::instance().min_level(), tr::log_level::error);
@@ -95,7 +97,8 @@ TEST_F(logger_test, min_level_filtering)
 	EXPECT_EQ(sink->collected_messages()[1].string, "Qux");
 }
 
-TEST_F(logger_test, multiple_threads_logging)
+/// Tests multiple threads logging at once.
+TEST_F(LoggerTest, MultipleThreadsLogging)
 {
 	// thread_count * thread_messages < 4096 (logger queue capacity) to avoid dropped messages.
 	constexpr tr::usize thread_count{10};

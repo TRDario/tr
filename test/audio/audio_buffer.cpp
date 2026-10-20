@@ -11,7 +11,7 @@ using namespace std::chrono_literals;
 //
 
 /// Fixture used to test audio buffers.
-class audio_buffer_test : public testing::Test
+class AudioBufferTest : public testing::Test
 {
   protected:
 	/// Device the buffer's context is created on.
@@ -26,7 +26,7 @@ class audio_buffer_test : public testing::Test
 	//
 
 	/// Constructs the fixture.
-	audio_buffer_test()
+	AudioBufferTest()
 		: device{}
 		, context{device}
 		, buffer{context.create_audio_buffer()}
@@ -36,12 +36,14 @@ class audio_buffer_test : public testing::Test
 
 //
 
-TEST_F(audio_buffer_test, context)
+/// Tests getting the context of an audio buffer.
+TEST_F(AudioBufferTest, HasContext)
 {
 	EXPECT_EQ(&context, &buffer->context());
 }
 
-TEST_F(audio_buffer_test, mono)
+/// Tests setting mono audio to an audio buffer.
+TEST_F(AudioBufferTest, SetsMonoAudio)
 {
 	constexpr std::array<tr::i16, 44100> data{};
 
@@ -52,7 +54,8 @@ TEST_F(audio_buffer_test, mono)
 	EXPECT_EQ(buffer->channels(), 1);
 }
 
-TEST_F(audio_buffer_test, stereo)
+/// Tests setting stereo audio to an audio buffer.
+TEST_F(AudioBufferTest, SetsStereoAudio)
 {
 	constexpr std::array<tr::i16, 88200> data{};
 

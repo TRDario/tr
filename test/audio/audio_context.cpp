@@ -9,7 +9,7 @@
 //
 
 /// Fixture used to test audio contexts.
-class audio_context_test : public testing::Test
+class AudioContextTest : public testing::Test
 {
   protected:
 	/// Device the context is created on.
@@ -21,7 +21,7 @@ class audio_context_test : public testing::Test
 	//
 
 	/// Constructs the fixture.
-	audio_context_test()
+	AudioContextTest()
 		: device{}
 		, context{device}
 	{
@@ -30,13 +30,15 @@ class audio_context_test : public testing::Test
 
 //
 
-TEST_F(audio_context_test, master_gain)
+/// Tests setting and getting the master gain on an audio context.
+TEST_F(AudioContextTest, ControlsMasterGain)
 {
 	context.set_master_gain(2.0f);
 	EXPECT_EQ(context.master_gain(), 2.0f);
 }
 
-TEST_F(audio_context_test, class_gain)
+/// Tests setting and getting the class gain on an audio context.
+TEST_F(AudioContextTest, ControlsClassGain)
 {
 	EXPECT_EQ(context.class_gain(0), 1.0f);
 
@@ -47,7 +49,8 @@ TEST_F(audio_context_test, class_gain)
 	EXPECT_EQ(context.class_gain(1), 1.5f);
 }
 
-TEST_F(audio_context_test, listener_position)
+/// Tests setting and getting the listener position on an audio context.
+TEST_F(AudioContextTest, ControlsListenerPosition)
 {
 	const glm::vec3 position{100, 100, 100};
 
@@ -55,7 +58,8 @@ TEST_F(audio_context_test, listener_position)
 	EXPECT_EQ(context.listener_position(), position);
 }
 
-TEST_F(audio_context_test, listener_velocity)
+/// Tests setting and getting the listener velocity on an audio context.
+TEST_F(AudioContextTest, ControlsListenerVelocity)
 {
 	const glm::vec3 velocity{100, 100, 100};
 
@@ -63,7 +67,8 @@ TEST_F(audio_context_test, listener_velocity)
 	EXPECT_EQ(context.listener_velocity(), velocity);
 }
 
-TEST_F(audio_context_test, listener_orientation)
+/// Tests setting and getting the listener orientation on an audio context.
+TEST_F(AudioContextTest, ControlsListenerOrientation)
 {
 	const tr::orientation orientation{{1, 0, 0}, {0, 1, 0}};
 

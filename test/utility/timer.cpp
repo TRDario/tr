@@ -8,38 +8,86 @@ using namespace std::chrono_literals;
 
 //
 
-TEST(timer_test, inactive)
+/// Incrementable counter used by the callback of the timer.
+class callback_counter
+{
+  public:
+	/// Increments the counter.
+	void increment()
+	{
+		/* Lock scope */ {
+			std::lock_guard lock{m_mutex};
+			m_timestamps.push_back(std::chrono::steady_clock::now());
+		}
+		m_cv.notify_one();
+	}
+
+	/// Waits for a minimum count.
+	/// @param minimum_count Minimum count to wait for.
+	/// @return Whether the wait was successful.
+	[[nodiscard]] bool wait_for(int minimum_count)
+	{
+		std::unique_lock lock{m_mutex};
+		return m_cv.wait_for(lock, 2s, [&] { return m_timestamps.size() >= minimum_count; });
+	}
+
+	/// Gets the list of timestamps.
+	/// @return Reference to the list of timestamps.
+	[[nodiscard]] const std::vector<std::chrono::steady_clock::time_point>& timestamps() const noexcept
+	{
+		return m_timestamps;
+	}
+
+  private:
+	/// Callback counter mutex.
+	std::mutex m_mutex;
+
+	/// Callback counter condition variable.
+	std::condition_variable m_cv;
+
+	/// List of callback timestamps.
+	std::vector<std::chrono::steady_clock::time_point> m_timestamps;
+};
+
+//
+
+/// Tests that a default-constructed timer is inactive.
+TEST(TimerTest, DefaultConstructsEmpty)
 {
 	tr::timer timer;
 	EXPECT_FALSE(timer.active());
 }
 
-TEST(timer_test, active)
+/// Tests a timer constructed active.
+TEST(TimerTest, ConstructsActive)
 {
-	std::atomic_int i = 0;
-	tr::timer timer{50ms, [&] { i++; }};
+	callback_counter counter;
+	const std::chrono::steady_clock::time_point start{std::chrono::steady_clock::now()};
+	tr::timer timer{10ms, [&] { counter.increment(); }};
 
-	std::this_thread::sleep_for(255ms);
-	EXPECT_EQ(i, 5);
-	std::this_thread::sleep_for(250ms);
-	EXPECT_EQ(i, 10);
+	EXPECT_TRUE(timer.active());
+	EXPECT_TRUE(counter.wait_for(3));
+	const std::vector<std::chrono::steady_clock::time_point>& times{counter.timestamps()};
+	ASSERT_GE(times.size(), 3);
+	EXPECT_GE(times[2] - start, 25ms);
+	EXPECT_LT(times[2] - start, 2s);
 }
 
-TEST(timer_test, move)
+/// Tests that moving the timer transfers ownership.
+TEST(TimerTest, MovingTransfersOwnership)
 {
-	std::atomic_int i = 0;
-	tr::timer timer{50ms, [&] { i++; }};
+	callback_counter counter;
+	tr::timer timer{10ms, [&] { counter.increment(); }};
+	ASSERT_TRUE(timer.active());
+	ASSERT_TRUE(counter.wait_for(2));
 
-	std::this_thread::sleep_for(255ms);
-	EXPECT_EQ(i, 5);
-
-	tr::timer timer2 = std::move(timer);
-
-	std::this_thread::sleep_for(250ms);
-	EXPECT_EQ(i, 10);
+	tr::timer timer2{std::move(timer)};
+	EXPECT_FALSE(timer.active());
+	ASSERT_TRUE(timer2.active());
+	ASSERT_TRUE(counter.wait_for(4));
 
 	timer = std::move(timer2);
-
-	std::this_thread::sleep_for(250ms);
-	EXPECT_EQ(i, 15);
+	EXPECT_TRUE(timer.active());
+	EXPECT_FALSE(timer2.active());
+	EXPECT_TRUE(counter.wait_for(6));
 }

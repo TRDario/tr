@@ -52,7 +52,7 @@ using tagged_deleter_handle = tr::handle<int, 0, tagged_deleter>;
 //
 
 /// Handle text fixture.
-class handle_test : public testing::Test
+class HandleTest : public testing::Test
 {
   protected:
 	void SetUp() override
@@ -63,25 +63,34 @@ class handle_test : public testing::Test
 
 //
 
+/// Tests that a stateless deleter satisfies `tr::handle_deleter`.
 static_assert(tr::handle_deleter<stateless_deleter, int>);
 
+/// Tests that a tagged deleter satisfies `tr::handle_deleter`.
 static_assert(tr::handle_deleter<tagged_deleter, int>);
 
+/// Tests that a lambda satisfies `tr::handle_deleter`.
 static_assert(tr::handle_deleter<decltype([](int) noexcept {}), int>);
 
+/// Tests that a function pointer satisfies `tr::handle_deleter`.
 static_assert(tr::handle_deleter<void (*)(int) noexcept, int>);
 
+/// Tests that `stateless_deleter` is default-constructible.
 static_assert(tr::default_constructible_handle_deleter<stateless_deleter>);
 
+/// Tests that `tagged_deleter` is not default-constructible.
 static_assert(!tr::default_constructible_handle_deleter<tagged_deleter>);
 
+/// Tests that a function pointer is not default-constructible.
 static_assert(!tr::default_constructible_handle_deleter<void (*)(int)>);
 
+/// Tests that a stateless deleter handle only takes up the size of the value.
 static_assert(sizeof(tr::handle<int, 0, stateless_deleter>) == sizeof(int));
 
 //
 
-TEST_F(handle_test, default_constructor)
+/// Tests that a handle default-constructs empty.
+TEST_F(HandleTest, DefaultConstructsEmpty)
 {
 	const stateless_deleter_handle empty;
 	EXPECT_FALSE(empty);
@@ -89,7 +98,8 @@ TEST_F(handle_test, default_constructor)
 	EXPECT_EQ(empty.get(tr::maybe_empty), 0);
 }
 
-TEST_F(handle_test, default_constructor_with_deleter)
+/// Tests constructing an empty handle with a deleter.
+TEST_F(HandleTest, ConstructsEmptyWithDeleter)
 {
 	const tagged_deleter_handle empty{tagged_deleter{1}};
 	EXPECT_FALSE(empty);
@@ -98,7 +108,8 @@ TEST_F(handle_test, default_constructor_with_deleter)
 	EXPECT_EQ(empty.get_deleter().id, 1);
 }
 
-TEST_F(handle_test, value_constructor)
+/// Tests constructing a handle with a value.
+TEST_F(HandleTest, ConstructsWithValue)
 {
 	const stateless_deleter_handle full{1};
 	EXPECT_TRUE(full);
@@ -106,7 +117,8 @@ TEST_F(handle_test, value_constructor)
 	EXPECT_EQ(full.get(), 1);
 }
 
-TEST_F(handle_test, value_constructor_with_deleter)
+/// Tests constructing a handle with a value and a deleter.
+TEST_F(HandleTest, ConstructsWithValueAndDeleter)
 {
 	const tagged_deleter_handle full{1, tagged_deleter{1}};
 	EXPECT_TRUE(full);
@@ -115,7 +127,8 @@ TEST_F(handle_test, value_constructor_with_deleter)
 	EXPECT_EQ(full.get_deleter().id, 1);
 }
 
-TEST_F(handle_test, empty_value_constructor)
+/// Tests constructing a handle with `tr::maybe_empty`.
+TEST_F(HandleTest, ConstructsMaybeEmpty)
 {
 	const stateless_deleter_handle empty{0, tr::maybe_empty};
 	EXPECT_FALSE(empty);
@@ -123,7 +136,8 @@ TEST_F(handle_test, empty_value_constructor)
 	EXPECT_EQ(empty.get(tr::maybe_empty), 0);
 }
 
-TEST_F(handle_test, empty_value_constructor_with_deleter)
+/// Tests constructing a handle with `tr::maybe_empty` and a deleter.
+TEST_F(HandleTest, ConstructsMaybeEmptyWithDeleter)
 {
 	const tagged_deleter_handle empty{0, tagged_deleter{1}, tr::maybe_empty};
 	EXPECT_FALSE(empty);
@@ -132,7 +146,8 @@ TEST_F(handle_test, empty_value_constructor_with_deleter)
 	EXPECT_EQ(empty.get_deleter().id, 1);
 }
 
-TEST_F(handle_test, move_constructor)
+/// Tests that move-constructing a handle transfers ownership.
+TEST_F(HandleTest, MoveConstructorTransfersOwnership)
 {
 	stateless_deleter_handle handle1{5};
 	const stateless_deleter_handle handle2{std::move(handle1)};
@@ -141,7 +156,8 @@ TEST_F(handle_test, move_constructor)
 	EXPECT_EQ(handle2.get(), 5);
 }
 
-TEST_F(handle_test, destructor)
+/// Tests that the destructor of a handle calls the deleter, but only if not empty.
+TEST_F(HandleTest, DestructorCallsDeleterIfNonEmpty)
 {
 	{
 		stateless_deleter_handle empty;
@@ -155,7 +171,8 @@ TEST_F(handle_test, destructor)
 	EXPECT_EQ(stateless_deleter::last_deleted_value, 5);
 }
 
-TEST_F(handle_test, move_assignment)
+/// Tests that move-assigning a handle deletes the previous value and transfers ownership.
+TEST_F(HandleTest, MoveAssignmentDeletesValueAndTransfersOwnership)
 {
 	stateless_deleter_handle handle1{5};
 	stateless_deleter_handle handle2{10};
@@ -167,7 +184,8 @@ TEST_F(handle_test, move_assignment)
 	EXPECT_EQ(stateless_deleter::last_deleted_value, 10);
 }
 
-TEST_F(handle_test, release)
+/// Tests that releasing a handle returns the value without deleting it and empties the handle.
+TEST_F(HandleTest, ReleaseReturnsValueWithoutDeletingAndEmpties)
 {
 	stateless_deleter_handle handle{5};
 	int released_value{handle.release()};
@@ -176,7 +194,8 @@ TEST_F(handle_test, release)
 	EXPECT_EQ(released_value, 5);
 }
 
-TEST_F(handle_test, reset)
+/// Tests that resetting a handle calls the deleter and empties the handle.
+TEST_F(HandleTest, ResetCallsDeleterAndEmpties)
 {
 	stateless_deleter_handle handle{5};
 

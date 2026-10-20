@@ -6,9 +6,10 @@
 
 //
 
-TEST(defer_test, increment)
+/// Tests that a deferred operation executes on scope end.
+TEST(DeferTest, ExecutesOnScopeEnd)
 {
-	int i = 0;
+	int i{0};
 	{
 		TR_DEFER(++i);
 		EXPECT_EQ(i, 0);

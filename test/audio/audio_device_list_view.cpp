@@ -7,7 +7,8 @@
 
 //
 
-TEST(audio_device_list_view_test, audio_device_list_view_iterator)
+/// Tests iterating through an audio device list view.
+TEST(AudioDeviceListViewTest, Iterates)
 {
 	constexpr const char* raw_device_list{"test1\0test2\0test3\0"};
 	tr::audio_device_list_view_iterator it{raw_device_list};

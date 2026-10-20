@@ -7,18 +7,21 @@
 
 //
 
+/// Dummy base class.
 struct base
 {
 	virtual ~base() = default;
 };
 
+/// Dummy derived class.
 struct derived : base
 {
 };
 
 //
 
-TEST(opt_ref_test, empty)
+/// Tests constructing an empty optional reference.
+TEST(OptRefTest, ConstructsEmpty)
 {
 	tr::opt_ref<int> empty1;
 	tr::opt_ref<int> empty2(std::nullopt);
@@ -29,7 +32,8 @@ TEST(opt_ref_test, empty)
 	EXPECT_EQ(empty1, empty2);
 }
 
-TEST(opt_ref_test, construction)
+/// Tests constructing an optional reference from a reference.
+TEST(OptRefTest, ConstructsFromReference)
 {
 	int data{10};
 	tr::opt_ref<int> wrapped_ref{data};
@@ -39,7 +43,8 @@ TEST(opt_ref_test, construction)
 	EXPECT_EQ(*wrapped_ref, 10);
 }
 
-TEST(opt_ref_test, const_qualification)
+/// Tests constructing an optional reference to const from an optional reference to non-const.
+TEST(OptRefTest, ConstructsOptRefToConstFromNonConst)
 {
 	int data{10};
 	tr::opt_ref<int> wrapped_ref{data};
@@ -49,7 +54,8 @@ TEST(opt_ref_test, const_qualification)
 	EXPECT_EQ(*wrapped_cref, 10);
 }
 
-TEST(opt_ref_test, base_class_conversion)
+/// Tests constructing an optional reference to base from an optional reference to derived.
+TEST(OptRefTest, ConstructsOptRefToBaseFromDerived)
 {
 	derived data{};
 	tr::opt_ref<derived> wrapped_ref{data};
@@ -59,7 +65,8 @@ TEST(opt_ref_test, base_class_conversion)
 	EXPECT_EQ((base*)&data, wrapped_base_ref.as_ptr());
 }
 
-TEST(opt_ref_test, equality)
+/// Tests comparing optional references.
+TEST(OptRefTest, Compares)
 {
 	int data1{10};
 	int data2{10};
@@ -77,7 +84,29 @@ TEST(opt_ref_test, equality)
 	EXPECT_NE(wrapped_ref1_opt, empty_ref);
 }
 
-TEST(opt_ref_test, make_opt_ref)
+/// Tests accessing the value an optional reference points to.
+TEST(OptRefTest, ProvidesAccess)
+{
+	/// Dummy value struct.
+	struct data_t
+	{
+		int value;
+	};
+
+	data_t data{10};
+	tr::opt_ref<data_t> wrapped_ref{data};
+	EXPECT_TRUE(wrapped_ref.has_value());
+	EXPECT_EQ((*wrapped_ref).value, 10);
+	EXPECT_EQ(wrapped_ref->value, 10);
+	EXPECT_EQ(wrapped_ref.as_ptr(), &data);
+	(*wrapped_ref).value = 15;
+	EXPECT_EQ(data.value, 15);
+	wrapped_ref->value = 20;
+	EXPECT_EQ(data.value, 20);
+}
+
+/// Tests making an optional reference from a pointer.
+TEST(OptRefTest, MakeOptRef)
 {
 	int data{10};
 	auto empty_ref{tr::make_opt_ref<int>(nullptr)};

@@ -33,14 +33,20 @@ static void set_c_handle(int* handle, int value)
 
 //
 
-TEST(out_handle_test, out_handle)
+/// Tests setting a handle via `tr::out_handle()`.
+TEST(OutHandleTest, SetsHandle)
 {
 	tr::handle<int, 0, stateless_deleter> handle;
 
 	set_c_handle(tr::out_handle(handle), 10);
 	EXPECT_TRUE(handle.has_value());
 	EXPECT_EQ(handle.get(), 10);
+}
 
+/// Tests setting a handle to empty via `tr::out_handle()`.
+TEST(OutHandleTest, SetsHandleToEmpty)
+{
+	tr::handle<int, 0, stateless_deleter> handle{10};
 	set_c_handle(tr::out_handle(handle, tr::maybe_empty), 0);
 	EXPECT_FALSE(handle.has_value());
 	EXPECT_EQ(stateless_deleter::deleted_count, 1);

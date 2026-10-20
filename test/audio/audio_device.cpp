@@ -7,7 +7,8 @@
 
 //
 
-TEST(audio_device_test, available_audio_devices)
+/// Tests getting available audio devices.
+TEST(AudioDeviceTest, GetsAvailableAudioDevices)
 {
 	const tr::audio_device_list_view audio_devices{tr::available_audio_devices()};
 	for (tr::zstring_view device_name : audio_devices) {

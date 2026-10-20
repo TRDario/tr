@@ -88,7 +88,8 @@ struct tracked_int
 
 //
 
-TEST(inplace_vector_test, default_construction)
+/// Tests whether a default-constructed inplace vector is empty.
+TEST(InplaceVectorTest, DefaultConstructsEmpty)
 {
 	tracked_int::reset_counts();
 	const tr::inplace_vector<tracked_int, 256> vector;
@@ -98,7 +99,8 @@ TEST(inplace_vector_test, default_construction)
 	EXPECT_EQ(tracked_int::constructed, 0);
 }
 
-TEST(inplace_vector_test, sized_default_construction)
+/// Tests whether an inplace vector constructed with an initial size default-constructs elements.
+TEST(InplaceVectorTest, SizedConstructorDefaultConstructsElements)
 {
 	tracked_int::reset_counts();
 	const tr::inplace_vector<tracked_int, 256> vector(3);
@@ -111,7 +113,8 @@ TEST(inplace_vector_test, sized_default_construction)
 	EXPECT_EQ(vector[2], 0);
 }
 
-TEST(inplace_vector_test, sized_construction)
+/// Tests whether an inplace vector constructed with an initial size and value copy-constructs elements.
+TEST(InplaceVectorTest, FillConstructorCopiesElements)
 {
 	tracked_int::reset_counts();
 	const tr::inplace_vector<tracked_int, 256> vector(3, 5);
@@ -124,7 +127,8 @@ TEST(inplace_vector_test, sized_construction)
 	EXPECT_EQ(vector[2], 5);
 }
 
-TEST(inplace_vector_test, iterator_construction)
+/// Tests whether an inplace vector constructed from an iterator pair copies elements from it.
+TEST(InplaceVectorTest, IteratorPairConstructorCopiesElements)
 {
 	std::array<tracked_int, 5> source{1, 2, 3, 4, 5};
 	tracked_int::reset_counts();
@@ -148,7 +152,8 @@ TEST(inplace_vector_test, iterator_construction)
 	EXPECT_EQ(moved[2], 5);
 }
 
-TEST(inplace_vector_test, range_construction)
+/// Tests whether an inplace vector constructed from a range copies elements from it.
+TEST(InplaceVectorTest, RangeConstructorCopiesElements)
 {
 	std::array<tracked_int, 5> source{1, 2, 3, 4, 5};
 	tracked_int::reset_counts();
@@ -165,7 +170,8 @@ TEST(inplace_vector_test, range_construction)
 	EXPECT_EQ(vector[4], 5);
 }
 
-TEST(inplace_vector_test, initializer_list_construction)
+/// Tests whether an inplace vector constructed from an initializer list copies elements from it.
+TEST(InplaceVectorTest, InitializerListConstructorCopiesElements)
 {
 	const tr::inplace_vector<tracked_int, 256> vector{1, 2, 3};
 	EXPECT_EQ(vector.size(), 3);
@@ -174,7 +180,8 @@ TEST(inplace_vector_test, initializer_list_construction)
 	EXPECT_EQ(vector[2], 3);
 }
 
-TEST(inplace_vector_test, copy_construction)
+/// Tests whether a copy-constructed inplace vector copies elements.
+TEST(InplaceVectorTest, CopyConstructorCopiesElements)
 {
 	const tr::inplace_vector<tracked_int, 256> original{1, 2, 3, 4, 5};
 	tracked_int::reset_counts();
@@ -191,7 +198,8 @@ TEST(inplace_vector_test, copy_construction)
 	EXPECT_EQ(copy[4], 5);
 }
 
-TEST(inplace_vector_test, move_construction)
+/// Tests whether a move-constructed inplace vector moves elements.
+TEST(InplaceVectorTest, MoveConstructorMovesElements)
 {
 	tr::inplace_vector<tracked_int, 256> original{1, 2, 3, 4, 5};
 	tracked_int::reset_counts();
@@ -208,7 +216,8 @@ TEST(inplace_vector_test, move_construction)
 	EXPECT_EQ(copy[4], 5);
 }
 
-TEST(inplace_vector_test, destruction)
+/// Tests whether an inplace vector destructor destroys its elements.
+TEST(InplaceVectorTest, DestructorDestroysElements)
 {
 	tracked_int::reset_counts();
 	{
@@ -224,7 +233,8 @@ TEST(inplace_vector_test, destruction)
 	EXPECT_EQ(tracked_int::destroyed, 5);
 }
 
-TEST(inplace_vector_test, access)
+/// Tests accessing an inplace vector.
+TEST(InplaceVectorTest, ProvidesAccess)
 {
 	tr::inplace_vector<int, 256> vector{1, 2, 3, 4, 5};
 	const tr::inplace_vector<int, 256> cvector{1, 2, 3, 4, 5};
@@ -245,7 +255,8 @@ TEST(inplace_vector_test, access)
 	EXPECT_EQ(vector[4], 50);
 }
 
-TEST(inplace_vector_test, range)
+/// Tests an inplace vector as a range.
+TEST(InplaceVectorTest, ModelsRange)
 {
 	tr::inplace_vector<int, 256> vector{1, 2, 3, 4, 5};
 	const tr::inplace_vector<int, 256> cvector{1, 2, 3, 4, 5};
@@ -272,7 +283,8 @@ TEST(inplace_vector_test, range)
 	EXPECT_TRUE(std::ranges::equal(comp.begin(), comp.end(), vector.crbegin(), vector.crend()));
 }
 
-TEST(inplace_vector_test, insert)
+/// Tests inserting into an inplace vector.
+TEST(InplaceVectorTest, Inserts)
 {
 	const std::array<tracked_int, 5> source{1, 2, 3, 4, 5};
 	const std::array<tracked_int, 6> comp1{2, 1, 2, 3, 4, 5};
@@ -341,7 +353,8 @@ TEST(inplace_vector_test, insert)
 	EXPECT_TRUE(std::ranges::equal(vector, comp12));
 }
 
-TEST(inplace_vector_test, erase)
+/// Tests erasing from an inplace vector.
+TEST(InplaceVectorTest, Erases)
 {
 	tr::inplace_vector<tracked_int, 256> vector{1, 2, 3, 4, 5};
 	const std::array<tracked_int, 4> comp1{1, 2, 4, 5};
@@ -369,7 +382,8 @@ TEST(inplace_vector_test, erase)
 	EXPECT_EQ(vector.size(), 0);
 }
 
-TEST(inplace_vector_test, resize)
+/// Tests resizing an inplace vector.
+TEST(InplaceVectorTest, Resizes)
 {
 	const tracked_int copy{1};
 	tr::inplace_vector<tracked_int, 256> vector;
@@ -393,7 +407,8 @@ TEST(inplace_vector_test, resize)
 	EXPECT_EQ(vector.size(), 3);
 }
 
-TEST(inplace_vector_test, lifetime)
+/// Tests whether an inplace vector correctly handles the lifetimes of its elements.
+TEST(InplaceVectorTest, CorrectlyHandlesElementLifetimes)
 {
 	{
 		tr::inplace_vector<tracked_int, 256> vector{};
@@ -408,7 +423,8 @@ TEST(inplace_vector_test, lifetime)
 	EXPECT_EQ(tracked_int::constructed + tracked_int::copy_constructed + tracked_int::move_constructed, tracked_int::destroyed);
 }
 
-TEST(inplace_vector_test, binary_io_roundtrip)
+/// Tests roundtripped an inplace vector through binary IO.
+TEST(InplaceVectorTest, BinaryIoRoundtrips)
 {
 	std::stringstream io;
 

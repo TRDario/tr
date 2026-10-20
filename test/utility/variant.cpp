@@ -6,7 +6,8 @@
 
 //
 
-TEST(variant_test, is)
+/// Tests checking a variant alternative.
+TEST(VariantTest, ChecksAlternative)
 {
 	tr::variant<int, float, char> var{5.0f};
 	EXPECT_FALSE(var.is<int>());
@@ -14,24 +15,44 @@ TEST(variant_test, is)
 	EXPECT_FALSE(var.is<char>());
 }
 
-TEST(variant_test, get_if)
+/// Tests optionally getting a variant alternative.
+TEST(VariantTest, GetsOptionalAlternative)
 {
 	tr::variant<int, float, char> var1{5.0f};
 	const tr::opt_ref<int> var1_int{var1.get_if<int>()};
-	const tr::opt_ref<float> var1_float{var1};
+	const tr::opt_ref<float> var1_float{var1.get_if<float>()};
 	EXPECT_FALSE(var1_int.has_value());
 	EXPECT_TRUE(var1_float.has_value());
 	EXPECT_EQ(*var1_float, 5.0f);
 
 	const tr::variant<int, float, char> var2{5};
 	const tr::opt_ref<const int> var2_int{var2.get_if<int>()};
+	const tr::opt_ref<const float> var2_float{var2.get_if<float>()};
+	EXPECT_FALSE(var2_float.has_value());
+	EXPECT_TRUE(var2_int.has_value());
+	EXPECT_EQ(*var2_int, 5);
+}
+
+/// Tests converting a variant to an optional reference to an alternative.
+TEST(VariantTest, ConvertsToAlternativeOptRef)
+{
+	tr::variant<int, float, char> var1{5.0f};
+	const tr::opt_ref<int> var1_int{var1};
+	const tr::opt_ref<float> var1_float{var1};
+	EXPECT_FALSE(var1_int.has_value());
+	EXPECT_TRUE(var1_float.has_value());
+	EXPECT_EQ(*var1_float, 5.0f);
+
+	const tr::variant<int, float, char> var2{5};
+	const tr::opt_ref<const int> var2_int{var2};
 	const tr::opt_ref<const float> var2_float{var2};
 	EXPECT_FALSE(var2_float.has_value());
 	EXPECT_TRUE(var2_int.has_value());
 	EXPECT_EQ(*var2_int, 5);
 }
 
-TEST(variant_test, get)
+/// Tests getting a variant alternative.
+TEST(VariantTest, GetsAlternative)
 {
 	tr::variant<int, float, char> var1{5.0f};
 	float& val1{var1.get<float>()};
@@ -48,7 +69,8 @@ TEST(variant_test, get)
 	EXPECT_EQ(val3, "string");
 }
 
-TEST(variant_test, visit)
+/// Tests visiting a variant.
+TEST(VariantTest, Visits)
 {
 	constexpr auto visitor{[]<typename T>(const T& v) { return std::same_as<T, int>; }};
 

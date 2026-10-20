@@ -3,11 +3,11 @@
 
 #include <gtest/gtest.h>
 #include <tr/utility/math.hpp>
-#include <tr/utility/rng.hpp>
 
 //
 
-TEST(math_test, round_cast)
+/// Tests rounding and casting a value.
+TEST(MathTest, RoundCasts)
 {
 	EXPECT_EQ(tr::round_cast<int>(4.00), 4);
 	EXPECT_EQ(tr::round_cast<int>(4.43), 4);
@@ -16,7 +16,8 @@ TEST(math_test, round_cast)
 	EXPECT_EQ(tr::round_cast<int>(5.00), 5);
 }
 
-TEST(math_test, floor_cast)
+/// Tests flooring and casting a value.
+TEST(MathTest, FloorCasts)
 {
 	EXPECT_EQ(tr::floor_cast<int>(4.00), 4);
 	EXPECT_EQ(tr::floor_cast<int>(4.43), 4);
@@ -25,7 +26,8 @@ TEST(math_test, floor_cast)
 	EXPECT_EQ(tr::floor_cast<int>(5.00), 5);
 }
 
-TEST(math_test, ceil_cast)
+/// Tests ceiling and casting a value.
+TEST(MathTest, CeilingCasts)
 {
 	EXPECT_EQ(tr::ceil_cast<int>(4.00), 4);
 	EXPECT_EQ(tr::ceil_cast<int>(4.43), 5);
@@ -34,18 +36,21 @@ TEST(math_test, ceil_cast)
 	EXPECT_EQ(tr::ceil_cast<int>(5.00), 5);
 }
 
-TEST(math_test, sgn)
+/// Tests calculating the sign of a value.
+TEST(MathTest, CalculatesSign)
 {
 	EXPECT_EQ(tr::sgn(-INFINITY), -1);
 	EXPECT_EQ(tr::sgn(-10), -1);
 	EXPECT_EQ(tr::sgn(0), 0);
 	EXPECT_EQ(tr::sgn(+0.0), 0);
 	EXPECT_EQ(tr::sgn(-0.0), 0);
+	EXPECT_EQ(tr::sgn(NAN), 0);
 	EXPECT_EQ(tr::sgn(10), 1);
 	EXPECT_EQ(tr::sgn(+INFINITY), 1);
 }
 
-TEST(math_test, mod)
+/// Tests calculating the modulo of a value.
+TEST(MathTest, CalculatesModulo)
 {
 	EXPECT_EQ(tr::mod(50, 3), 2);
 	EXPECT_EQ(tr::mod(-50, 3), -2);
@@ -53,7 +58,8 @@ TEST(math_test, mod)
 	EXPECT_EQ(tr::mod(-50.0, 4.25), -3.25);
 }
 
-TEST(math_test, eucmod)
+/// Tests calculating the euclidian modulo of a value.
+TEST(MathTest, CalculatesEuclidianModulo)
 {
 	EXPECT_EQ(tr::eucmod(50, 3), 2);
 	EXPECT_EQ(tr::eucmod(-50, 3), 1);
@@ -61,7 +67,8 @@ TEST(math_test, eucmod)
 	EXPECT_EQ(tr::eucmod(-50.0, 4.25), 1);
 }
 
-TEST(math_test, lerp)
+/// Tests lerping between two values.
+TEST(MathTest, Lerps)
 {
 	EXPECT_EQ(tr::lerp(0, 100, 0.65f), 65);
 	EXPECT_EQ(tr::lerp(50.0f, -50.0f, 0.5), 0);
@@ -69,7 +76,8 @@ TEST(math_test, lerp)
 	EXPECT_EQ(tr::lerp(20.0f, 50.0f, 1.0f), 50.0f);
 }
 
-TEST(math_test, sqr)
+/// Tests calculating the square of a value.
+TEST(MathTest, CalculatesSquare)
 {
 	EXPECT_EQ(tr::sqr(-3), 9);
 	EXPECT_EQ(tr::sqr(0), 0);

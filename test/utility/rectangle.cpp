@@ -6,8 +6,8 @@
 
 //
 
-/// Tests a default-constructed rectangle.
-TEST(RectangleTest, DefaultConstructed)
+/// Tests default-constructing a rectangle.
+TEST(RectangleTest, DefaultConstructsWithZeroSize)
 {
 	const tr::rectangle<float> default_constructed{};
 	EXPECT_EQ(default_constructed.tl.x, 0);
@@ -16,8 +16,8 @@ TEST(RectangleTest, DefaultConstructed)
 	EXPECT_EQ(default_constructed.size.y, 0);
 }
 
-/// Tests a rectangle constructed from a top-left corner and size.
-TEST(RectangleTest, FromTopLeftAndSize)
+/// Tests constructing a rectangle from a top-left corner and size.
+TEST(RectangleTest, ConstructsFromTopLeftAndSize)
 {
 	const tr::rectangle<float> tl_and_size{{100, 150}, {200, 250}};
 	EXPECT_EQ(tl_and_size.tl.x, 100);
@@ -26,8 +26,8 @@ TEST(RectangleTest, FromTopLeftAndSize)
 	EXPECT_EQ(tl_and_size.size.y, 250);
 }
 
-/// Tests a rectangle constructed from a size.
-TEST(RectangleTest, FromSize)
+/// Tests constructing a rectangle from a size.
+TEST(RectangleTest, ConstructsFromSize)
 {
 	const tr::rectangle<float> size_only{{100, 150}};
 	EXPECT_EQ(size_only.tl.x, 0);
@@ -36,8 +36,8 @@ TEST(RectangleTest, FromSize)
 	EXPECT_EQ(size_only.size.y, 150);
 }
 
-/// Tests a rectangle converted from a different-type rectangle.
-TEST(RectangleTest, FromDifferentTypeRectangle)
+/// Tests converting a rectangle from a different-type rectangle.
+TEST(RectangleTest, ConvertsFromDifferentRectangle)
 {
 	const tr::rectangle<float> converted{tr::rectangle<int>{{50, 100}, {150, 200}}};
 	EXPECT_EQ(converted.tl.x, 50);
@@ -46,8 +46,8 @@ TEST(RectangleTest, FromDifferentTypeRectangle)
 	EXPECT_EQ(converted.size.y, 200);
 }
 
-/// Tests the equality comparison of rectangles.
-TEST(RectangleTest, EqualityComparison)
+/// Tests comparing rectangles.
+TEST(RectangleTest, Compares)
 {
 	const tr::rectangle<float> frect{{50, 100}, {150, 200}};
 	const tr::rectangle<int> irect{{50, 100}, {150, 200}};
@@ -56,8 +56,8 @@ TEST(RectangleTest, EqualityComparison)
 	EXPECT_NE(frect, urect);
 }
 
-/// Tests `tr::rectangle::edges()`.
-TEST(RectangleTest, ConversionToEdges)
+/// Tests converting a rectangle to the set of its edges.
+TEST(RectangleTest, ConvertsToEdges)
 {
 	const tr::rectangle<float> rectangle{{100, 150}, {200, 250}};
 	const tr::rectangle_edges<float> edges{rectangle.edges()};
@@ -67,8 +67,8 @@ TEST(RectangleTest, ConversionToEdges)
 	EXPECT_EQ(edges.bottom, 400);
 }
 
-/// Tests `tr::rectangle::edges()` when the rectangle has negative size.
-TEST(RectangleTest, ConversionToEdgesWithNegativeSize)
+/// Tests converting a rectangle to the set of its edges when a rectangle has negative size.
+TEST(RectangleTest, ConvertsToEdgesWithNegativeSize)
 {
 	const tr::rectangle<float> rectangle{{300, 400}, {-200, -250}};
 	const tr::rectangle_edges<float> edges{rectangle.edges()};
@@ -78,15 +78,15 @@ TEST(RectangleTest, ConversionToEdgesWithNegativeSize)
 	EXPECT_EQ(edges.bottom, 400);
 }
 
-/// Tests whether `tr::rectangle::contains()` flags an inside point as contained.
+/// Tests that a point inside a rectangle is reported as contained.
 TEST(RectangleTest, ContainsPointInside)
 {
 	const tr::rectangle<float> rectangle{{100, 150}, {200, 250}};
 	EXPECT_TRUE(rectangle.contains({200, 200}));
 }
 
-/// Tests whether `tr::rectangle::contains()` flags a point on a vertex of the rectangle as contained.
-TEST(RectangleTest, ContainsPointOnVertex)
+/// Tests that points on the vertices of a rectangle are reported as contained.
+TEST(RectangleTest, ContainsVertices)
 {
 	const tr::rectangle<float> rectangle{{100, 150}, {200, 250}};
 	const tr::rectangle_edges<float> edges{rectangle.edges()};
@@ -96,8 +96,8 @@ TEST(RectangleTest, ContainsPointOnVertex)
 	EXPECT_TRUE(rectangle.contains({edges.right, edges.bottom}));
 }
 
-/// Tests whether `tr::rectangle::contains()` flags a point on an edge of the rectangle as contained.
-TEST(RectangleTest, ContainsPointOnEdge)
+/// Tests that points on the edges of a rectangle are reported as contained.
+TEST(RectangleTest, ContainsPointsOnEdge)
 {
 	const tr::rectangle<float> rectangle{{100, 150}, {200, 250}};
 	EXPECT_TRUE(rectangle.contains({200, 150}));
@@ -106,14 +106,14 @@ TEST(RectangleTest, ContainsPointOnEdge)
 	EXPECT_TRUE(rectangle.contains({100, 300}));
 }
 
-/// Tests whether `tr::rectangle::contains()` flags the single point of a zero-size rectangle as contained.
+/// Tests that the the single point of a zero-size rectangle is reported contained.
 TEST(RectangleTest, ZeroSizeContainsSinglePoint)
 {
 	const tr::rectangle<float> rectangle{{100, 150}, {0, 0}};
 	EXPECT_TRUE(rectangle.contains(rectangle.tl));
 }
 
-/// Tests whether `tr::rectangle::contains()` flags an outside point as not contained.
+/// Tests that a point outside a rectangle is not reported as contained.
 TEST(RectangleTest, DoesNotContainPointOutside)
 {
 	const tr::rectangle<float> rectangle{{100, 150}, {200, 250}};
@@ -123,35 +123,35 @@ TEST(RectangleTest, DoesNotContainPointOutside)
 	EXPECT_FALSE(rectangle.contains({150, 450}));
 }
 
-/// Tests whether `tr::rectangle::contains()` flags an inside rectangle as contained.
+/// Tests that a rectangle inside a rectangle is reported as contained.
 TEST(RectangleTest, ContainsInsideRectangle)
 {
 	const tr::rectangle<float> rectangle{{100, 150}, {200, 250}};
 	EXPECT_TRUE(rectangle.contains({{125, 160}, {40, 40}}));
 }
 
-/// Tests whether `tr::rectangle::contains()` flags an identical rectangle as contained.
+/// Tests that a copy of a rectangle is reported as contained.
 TEST(RectangleTest, ContainsIdenticalRectangle)
 {
 	const tr::rectangle<float> rectangle{{100, 150}, {200, 250}};
 	EXPECT_TRUE(rectangle.contains(rectangle));
 }
 
-/// Tests whether `tr::rectangle::contains()` flags an overlapping rectangle as not contained.
+/// Tests that a rectangle partially overlapping a rectangle is not reported as contained.
 TEST(RectangleTest, DoesNotContainOverlappingRectangle)
 {
 	const tr::rectangle<float> rectangle{{100, 150}, {200, 250}};
 	EXPECT_FALSE(rectangle.contains({{150, 200}, {200, 250}}));
 }
 
-/// Tests whether `tr::rectangle::contains()` flags an outside rectangle as not contained.
+/// Tests that a rectangle outside a rectangle is not reported as contained.
 TEST(RectangleTest, DoesNotContainOutsideRectangle)
 {
 	const tr::rectangle<float> rectangle{{100, 150}, {200, 250}};
 	EXPECT_FALSE(rectangle.contains({{500, 500}, {200, 250}}));
 }
 
-/// Tests that overlapping rectangles are deemed to intersect.
+/// Tests that overlapping rectangles intersect.
 TEST(RectangleTest, OverlappingRectanglesIntersect)
 {
 	const tr::rectangle<float> a{{100, 100}, {200, 100}};
@@ -167,7 +167,7 @@ TEST(RectangleTest, OverlappingRectanglesIntersect)
 	EXPECT_EQ(ab->size.y, 25);
 }
 
-/// Tests that touching rectangles are deemed to not intersect.
+/// Tests that touching rectangles do not intersect.
 TEST(RectangleTest, TouchingRectanglesDoNotIntersect)
 {
 	const tr::rectangle<float> a{{100, 100}, {200, 100}};
@@ -187,7 +187,7 @@ TEST(RectangleTest, TouchingRectanglesDoNotIntersect)
 	EXPECT_FALSE(ac.has_value());
 }
 
-/// Tests that separated rectangles are deemed to not intersect.
+/// Tests that separated rectangles do not intersect.
 TEST(RectangleTest, SeparatedRectanglesDoNotIntersect)
 {
 	const tr::rectangle<float> a{{100, 100}, {200, 100}};

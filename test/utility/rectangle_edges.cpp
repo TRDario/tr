@@ -6,7 +6,8 @@
 
 //
 
-TEST(rectangle_edges_test, construction)
+/// Tests rectangle edge constructors.
+TEST(RectangleEdgesTest, Constructs)
 {
 	const tr::rectangle_edges<float> edges0{};
 	EXPECT_EQ(edges0.left, 0);
@@ -37,4 +38,14 @@ TEST(rectangle_edges_test, construction)
 	EXPECT_EQ(edges4.top, 4.0f);
 	EXPECT_EQ(edges4.right, 3.5f);
 	EXPECT_EQ(edges4.bottom, 4.5f);
+}
+
+/// Tests comparing rectangle edges.
+TEST(RectangleEdgesTest, Compares)
+{
+	const tr::rectangle_edges<float> edges0{2.5f};
+	const tr::rectangle_edges<float> edges1{2.5f, 2.5f, 2.5f, 2.5f};
+	const tr::rectangle_edges<float> edges2{2.5f, 2.0f};
+	EXPECT_EQ(edges0, edges1);
+	EXPECT_NE(edges0, edges2);
 }

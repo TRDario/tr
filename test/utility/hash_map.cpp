@@ -7,7 +7,7 @@
 //
 
 /// Hash map test fixture.
-class hash_map_test : public ::testing::Test
+class HashMapTest : public ::testing::Test
 {
   protected:
 	/// First test map.
@@ -19,7 +19,8 @@ class hash_map_test : public ::testing::Test
 
 //
 
-TEST_F(hash_map_test, get)
+/// Tests `tr::get()` for hash maps.
+TEST_F(HashMapTest, Gets)
 {
 	EXPECT_EQ(tr::get(map1, "one"), 1);
 	EXPECT_EQ(tr::get(std::as_const(map1), "two"), 2);
@@ -32,7 +33,8 @@ TEST_F(hash_map_test, get)
 	EXPECT_EQ(tr::get(map2, "four"), 40);
 }
 
-TEST_F(hash_map_test, try_get)
+/// Tests `tr::try_get()` for hash maps.
+TEST_F(HashMapTest, TriesGetting)
 {
 	EXPECT_EQ(*tr::try_get(map1, "one"), 1);
 	EXPECT_EQ(*tr::try_get(std::as_const(map1), "two"), 2);

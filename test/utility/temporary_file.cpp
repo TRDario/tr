@@ -7,10 +7,10 @@
 //
 
 /// Tests that a temporary file handle is not copyable.
-static_assert(!std::copyable<tr::temporary_file>, "tr::temporary_file should not be copyable but is!");
+static_assert(!std::copyable<tr::temporary_file>, "tr::temporary_file should not be copyable, but is!");
 
 /// Tests that a temporary file handle is movable.
-static_assert(std::movable<tr::temporary_file>, "tr::temporary_file should be movable but is not!");
+static_assert(std::movable<tr::temporary_file>, "tr::temporary_file should be movable, but is not!");
 
 //
 

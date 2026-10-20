@@ -7,7 +7,7 @@
 //
 
 /// Localization script test fixture.
-class localization_script_test : public ::testing::Test
+class LocalizationScriptTest : public ::testing::Test
 {
   protected:
 	/// Vector of localization script errors.
@@ -18,23 +18,24 @@ class localization_script_test : public ::testing::Test
 };
 
 /// Test fixture for localization script tests revolving around key-value pairs.
-class localization_script_key_value_test : public localization_script_test
+class LocalizationScriptKeyValueTest : public LocalizationScriptTest
 {
 };
 
 /// Test fixture for localization script tests revolving around namespaces.
-class localization_script_namespace_test : public localization_script_test
+class LocalizationScriptNamespaceTest : public LocalizationScriptTest
 {
 };
 
 /// Test fixture for localization script tests revolving around errors.
-class localization_script_error_test : public localization_script_test
+class LocalizationScriptErrorTest : public LocalizationScriptTest
 {
 };
 
 //
 
-TEST_F(localization_script_key_value_test, basic)
+/// Tests a basic localization script.
+TEST_F(LocalizationScriptKeyValueTest, ParsesValue)
 {
 	tr::parse_localization_script_to(map, std::back_inserter(errors), "foo=\"Foo\"");
 	EXPECT_TRUE(errors.empty());
@@ -42,7 +43,8 @@ TEST_F(localization_script_key_value_test, basic)
 	EXPECT_EQ(map["foo"], "Foo");
 }
 
-TEST_F(localization_script_key_value_test, whitespace)
+/// Tests a localization script with varied whitespace.
+TEST_F(LocalizationScriptKeyValueTest, ParsesValueWithWhitespace)
 {
 	tr::parse_localization_script_to(map, std::back_inserter(errors), "foo // line comment \n\t=\n\t /* Multiline comment */ \"Foo\"");
 	EXPECT_TRUE(errors.empty());
@@ -50,7 +52,8 @@ TEST_F(localization_script_key_value_test, whitespace)
 	EXPECT_EQ(map["foo"], "Foo");
 }
 
-TEST_F(localization_script_key_value_test, unicode)
+/// Tests a localization script with Unicode characters.
+TEST_F(LocalizationScriptKeyValueTest, ParsesValueWithUnicode)
 {
 	tr::parse_localization_script_to(map, std::back_inserter(errors), "ač東😳 = \"Ač東😳\"");
 	EXPECT_TRUE(errors.empty());
@@ -58,7 +61,8 @@ TEST_F(localization_script_key_value_test, unicode)
 	EXPECT_EQ(map["ač東😳"], "Ač東😳");
 }
 
-TEST_F(localization_script_key_value_test, escaped)
+/// Tests a localization script value with escaped characters.
+TEST_F(LocalizationScriptKeyValueTest, ParsesEscapedValue)
 {
 	tr::parse_localization_script_to(map, std::back_inserter(errors), R"(foo = "\\, \", \n")");
 	EXPECT_TRUE(errors.empty());
@@ -66,7 +70,8 @@ TEST_F(localization_script_key_value_test, escaped)
 	EXPECT_EQ(map["foo"], "\\, \", \n");
 }
 
-TEST_F(localization_script_key_value_test, multiline)
+/// Tests a localization script multiline value.
+TEST_F(LocalizationScriptKeyValueTest, ParsesMultilineValue)
 {
 	tr::parse_localization_script_to(map, std::back_inserter(errors), "foo = \"Multiline\nValue\"");
 	EXPECT_TRUE(errors.empty());
@@ -74,7 +79,8 @@ TEST_F(localization_script_key_value_test, multiline)
 	EXPECT_EQ(map["foo"], "Multiline\nValue");
 }
 
-TEST_F(localization_script_key_value_test, multiple)
+/// Tests a localization script with multiple values.
+TEST_F(LocalizationScriptKeyValueTest, ParsesScriptWithMultipleValues)
 {
 	tr::parse_localization_script_to(map, std::back_inserter(errors), "foo = \"Foo\"bar=\"Bar\"\nbaz = \"Baz\"");
 	EXPECT_TRUE(errors.empty());
@@ -86,14 +92,16 @@ TEST_F(localization_script_key_value_test, multiple)
 
 //
 
-TEST_F(localization_script_namespace_test, empty)
+/// Tests a localization script with an empty namespace.
+TEST_F(LocalizationScriptNamespaceTest, ParsesEmptyNamespace)
 {
 	tr::parse_localization_script_to(map, std::back_inserter(errors), "foo {}");
 	EXPECT_TRUE(errors.empty());
 	EXPECT_EQ(map.size(), 0);
 }
 
-TEST_F(localization_script_namespace_test, basic)
+/// Tests a localization script with a basic namespace.
+TEST_F(LocalizationScriptNamespaceTest, ParsesBasicNamespace)
 {
 	tr::parse_localization_script_to(map, std::back_inserter(errors), "foo{bar = \"Bar\" baz = \"Baz\"}");
 	EXPECT_TRUE(errors.empty());
@@ -102,7 +110,8 @@ TEST_F(localization_script_namespace_test, basic)
 	EXPECT_EQ(map["foo.baz"], "Baz");
 }
 
-TEST_F(localization_script_namespace_test, whitespace)
+/// Tests a localization script with a namespace and varied namespace.
+TEST_F(LocalizationScriptNamespaceTest, ParsesNamespaceWithWhitespace)
 {
 	constexpr std::string_view script{R"(
 		foo /* multiline comment */ {
@@ -120,7 +129,8 @@ TEST_F(localization_script_namespace_test, whitespace)
 	EXPECT_EQ(map["foo.baz"], "Baz");
 }
 
-TEST_F(localization_script_namespace_test, nested)
+/// Tests a localization script with a nested namespaces.
+TEST_F(LocalizationScriptNamespaceTest, ParsesNestedNamespaces)
 {
 	constexpr std::string_view script{R"(
 		foo {
@@ -136,7 +146,8 @@ TEST_F(localization_script_namespace_test, nested)
 	EXPECT_EQ(map["foo.bar.baz"], "Baz");
 }
 
-TEST_F(localization_script_namespace_test, reopening)
+/// Tests a localization script with a namespace that is reopened.
+TEST_F(LocalizationScriptNamespaceTest, ParsesReopenedNamespace)
 {
 	constexpr std::string_view script{R"(
 		foo {
@@ -160,7 +171,8 @@ TEST_F(localization_script_namespace_test, reopening)
 
 //
 
-TEST_F(localization_script_error_test, unexpected_backslash)
+/// Tests a localization script that triggers an unexpected backslash error.
+TEST_F(LocalizationScriptErrorTest, ReportsUnexpectedBackslashError)
 {
 	tr::parse_localization_script_to(map, std::back_inserter(errors), "\\foo\\{\\bar\\=\\\"Bar\"\\}\\");
 	EXPECT_EQ(errors.size(), 7);
@@ -171,7 +183,8 @@ TEST_F(localization_script_error_test, unexpected_backslash)
 	EXPECT_EQ(map["foo.bar"], "Bar");
 }
 
-TEST_F(localization_script_error_test, unexpected_slash)
+/// Tests a localization script that triggers an unexpected slash error.
+TEST_F(LocalizationScriptErrorTest, ReportsUnexpectedSlashError)
 {
 	tr::parse_localization_script_to(map, std::back_inserter(errors), "/foo/{/bar/=/\"Bar\"/}/");
 	EXPECT_EQ(errors.size(), 7);
@@ -182,7 +195,8 @@ TEST_F(localization_script_error_test, unexpected_slash)
 	EXPECT_EQ(map["foo.bar"], "Bar");
 }
 
-TEST_F(localization_script_error_test, unknown_escape_sequence)
+/// Tests a localization script that triggers an unknown escape sequence error.
+TEST_F(LocalizationScriptErrorTest, ReportsUnknownEscapeSequenceError)
 {
 	tr::parse_localization_script_to(map, std::back_inserter(errors), R"(foo = "\\, \", \n, \e")");
 	EXPECT_EQ(errors.size(), 1);
@@ -192,7 +206,8 @@ TEST_F(localization_script_error_test, unknown_escape_sequence)
 	EXPECT_EQ(map["foo"], "\\, \", \n, ");
 }
 
-TEST_F(localization_script_error_test, unterminated_string)
+/// Tests a localization script that triggers an unterminated string error.
+TEST_F(LocalizationScriptErrorTest, ReportsUnterminatedStringError)
 {
 	tr::parse_localization_script_to(map, std::back_inserter(errors), "foo = \"Unterminated");
 	EXPECT_EQ(errors.size(), 2);
@@ -200,7 +215,8 @@ TEST_F(localization_script_error_test, unterminated_string)
 	EXPECT_EQ(map.size(), 0);
 }
 
-TEST_F(localization_script_error_test, unterminated_multiline_comment)
+/// Tests a localization script that triggers an unterminated multiline comment error.
+TEST_F(LocalizationScriptErrorTest, ReportsUnterminatedMultilineCommentError)
 {
 	tr::parse_localization_script_to(map, std::back_inserter(errors), "/*This is a comment*");
 	EXPECT_EQ(errors.size(), 1);
@@ -208,7 +224,8 @@ TEST_F(localization_script_error_test, unterminated_multiline_comment)
 	EXPECT_EQ(map.size(), 0);
 }
 
-TEST_F(localization_script_error_test, expected_symbol)
+/// Tests a localization script that triggers an expected symbol error.
+TEST_F(LocalizationScriptErrorTest, ReportsExpectedSymbolError)
 {
 	tr::parse_localization_script_to(map, std::back_inserter(errors), "= \"Foo\"");
 	EXPECT_EQ(errors.size(), 2);
@@ -218,7 +235,8 @@ TEST_F(localization_script_error_test, expected_symbol)
 	EXPECT_EQ(map.size(), 0);
 }
 
-TEST_F(localization_script_error_test, expected_closing_brace)
+/// Tests a localization script that triggers an expected closing brace error.
+TEST_F(LocalizationScriptErrorTest, ReportsExpectedClosingBraceError)
 {
 	tr::parse_localization_script_to(map, std::back_inserter(errors), "foo {\nbar {\nbaz = \"Baz\"");
 	EXPECT_EQ(errors.size(), 2);
@@ -230,7 +248,8 @@ TEST_F(localization_script_error_test, expected_closing_brace)
 	EXPECT_EQ(map["foo.bar.baz"], "Baz");
 }
 
-TEST_F(localization_script_error_test, extraneous_closing_brace)
+/// Tests a localization script that triggers an extraneous closing brace error.
+TEST_F(LocalizationScriptErrorTest, ReportsExtraneousClosingBraceError)
 {
 	tr::parse_localization_script_to(map, std::back_inserter(errors), "foo { bar = \"Bar\" } }");
 	EXPECT_EQ(errors.size(), 1);
@@ -239,7 +258,8 @@ TEST_F(localization_script_error_test, extraneous_closing_brace)
 	EXPECT_EQ(map["foo.bar"], "Bar");
 }
 
-TEST_F(localization_script_error_test, expected_symbol_or_closing_brace)
+/// Tests a localization script that triggers an expected symbol or closing brace error.
+TEST_F(LocalizationScriptErrorTest, ReportsExpectedSymbolOrClosingBraceError)
 {
 	tr::parse_localization_script_to(map, std::back_inserter(errors), "foo { = \"Foo\" }");
 	EXPECT_EQ(errors.size(), 2);
@@ -249,7 +269,8 @@ TEST_F(localization_script_error_test, expected_symbol_or_closing_brace)
 	EXPECT_EQ(map.size(), 0);
 }
 
-TEST_F(localization_script_error_test, expected_equals_or_opening_brace)
+/// Tests a localization script that triggers an expected equals or opening brace error.
+TEST_F(LocalizationScriptErrorTest, ReportsExpectedEqualsOrOpeningBraceError)
 {
 	tr::parse_localization_script_to(map, std::back_inserter(errors), "foo");
 	EXPECT_EQ(errors.size(), 1);
@@ -257,7 +278,8 @@ TEST_F(localization_script_error_test, expected_equals_or_opening_brace)
 	EXPECT_EQ(map.size(), 0);
 }
 
-TEST_F(localization_script_error_test, expected_string)
+/// Tests a localization script that triggers an expected string error.
+TEST_F(LocalizationScriptErrorTest, ReportsExpectedStringError)
 {
 	tr::parse_localization_script_to(map, std::back_inserter(errors), "foo=");
 	EXPECT_EQ(errors.size(), 1);
@@ -265,7 +287,8 @@ TEST_F(localization_script_error_test, expected_string)
 	EXPECT_EQ(map.size(), 0);
 }
 
-TEST_F(localization_script_error_test, duplicate_key)
+/// Tests a localization script that triggers a duplicate key error.
+TEST_F(LocalizationScriptErrorTest, ReportsDuplicateKeyError)
 {
 	tr::parse_localization_script_to(map, std::back_inserter(errors), "foo = \"Foo\"\nfoo = \"Bar\"");
 	EXPECT_EQ(errors.size(), 1);

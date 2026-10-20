@@ -6,13 +6,15 @@
 
 //
 
-TEST(localization_map_test, default_constructor)
+/// Tests that a localization map default-constructs empty.
+TEST(LocalizationMapTest, DefaultConstructsEmpty)
 {
 	tr::localization_map map;
 	EXPECT_EQ(map.size(), 0);
 }
 
-TEST(localization_map_test, iterator_pair_constructor)
+/// Tests constructing a localization map from an iterator pair.
+TEST(LocalizationMapTest, ConstructsFromIteratorPair)
 {
 	constexpr std::array<std::pair<std::string_view, std::string_view>, 2> data{{{"first", "First"}, {"second", "Second"}}};
 
@@ -23,7 +25,8 @@ TEST(localization_map_test, iterator_pair_constructor)
 	EXPECT_FALSE(map.contains("third"));
 }
 
-TEST(localization_map_test, range_constructor)
+/// Tests constructing a localization map from a range.
+TEST(LocalizationMapTest, ConstructsFromRange)
 {
 	const tr::localization_map map{{{"first", "First"}, {"second", "Second"}}};
 	EXPECT_EQ(map.size(), 2);
@@ -33,7 +36,8 @@ TEST(localization_map_test, range_constructor)
 }
 
 #if defined(TR_ENABLE_ASSERTS) && defined(GTEST_HAS_DEATH_TEST)
-TEST(localization_map_test, constructor_duplicate_keys)
+/// Tests that constructing a localization map with duplicate keys triggers an assertion.
+TEST(LocalizationMapTest, ConstructingWithDuplicateKeysTriggersAssertion)
 {
 	constexpr std::array<std::pair<std::string_view, std::string_view>, 2> data{{{"first", "First"}, {"first", "Second"}}};
 
@@ -41,7 +45,8 @@ TEST(localization_map_test, constructor_duplicate_keys)
 }
 #endif
 
-TEST(localization_map_test, copy_constructor)
+/// Tests that copy-constructing a localization map copies values from the original map.
+TEST(LocalizationMapTest, CopyConstructorCopiesValues)
 {
 	const tr::localization_map original{{{"first", "First"}, {"second", "Second"}}};
 	const tr::localization_map copy{original};
@@ -50,7 +55,8 @@ TEST(localization_map_test, copy_constructor)
 	EXPECT_NE(original["first"].data(), copy["first"].data());
 }
 
-TEST(localization_map_test, move_constructor)
+/// Tests that move-constructing a localization map transfers values from the original map.
+TEST(LocalizationMapTest, MoveConstructorTransfersValues)
 {
 	tr::localization_map original{{{"first", "First"}, {"second", "Second"}}};
 	const tr::localization_map moved{std::move(original)};
@@ -60,7 +66,8 @@ TEST(localization_map_test, move_constructor)
 	EXPECT_TRUE(moved.contains("second"));
 }
 
-TEST(localization_map_test, copy_assignment)
+/// Tests that copy-assigning a localization map replaces its contents with copied values from the original map.
+TEST(LocalizationMapTest, CopyAssignmentReplacesValuesWithCopied)
 {
 	tr::localization_map map1{{{"first", "First"}, {"second", "Second"}}};
 	tr::localization_map map2{{{"third", "Third"}, {"fourth", "Fourth"}}};
@@ -72,7 +79,8 @@ TEST(localization_map_test, copy_assignment)
 	EXPECT_NE(map1["third"].data(), map2["third"].data());
 }
 
-TEST(localization_map_test, move_assignment)
+/// Tests that copy-assigning a localization map replaces its contents with transferred values from the original map.
+TEST(LocalizationMapTest, MoveAssignmentReplacesValuesWithTransferred)
 {
 	tr::localization_map map1{{{"first", "First"}, {"second", "Second"}}};
 	tr::localization_map map2{{{"third", "Third"}, {"fourth", "Fourth"}}};
@@ -83,16 +91,24 @@ TEST(localization_map_test, move_assignment)
 	EXPECT_TRUE(map1.contains("third"));
 }
 
-TEST(localization_map_test, subscript)
+/// Tests that accessing a localization map with present keys returns associated values.
+TEST(LocalizationMapTest, AccessWithPresentKeyReturnsValue)
+{
+	const tr::localization_map map{{{"first", "First"}, {"second", "Second"}}};
+	EXPECT_EQ(map["first"], "First");
+	EXPECT_EQ(map["second"], "Second");
+}
+
+/// Tests that accessing a localization map with a missing key returns the passed key.
+TEST(LocalizationMapTest, AccessWithMissingKeyReturnsKey)
 {
 	const tr::localization_map map{{{"first", "First"}, {"second", "Second"}}};
 	const std::string_view missing_key{"third"};
-	EXPECT_EQ(map["first"], "First");
-	EXPECT_EQ(map["second"], "Second");
 	EXPECT_EQ(map[missing_key].data(), missing_key.data());
 }
 
-TEST(localization_map_test, clear)
+/// Tests that clearing a localization map erases its values.
+TEST(LocalizationMapTest, ClearEmptiesMap)
 {
 	tr::localization_map map{{{"first", "First"}, {"second", "Second"}}};
 	EXPECT_EQ(map.size(), 2);
@@ -100,34 +116,42 @@ TEST(localization_map_test, clear)
 	EXPECT_EQ(map.size(), 0);
 }
 
-TEST(localization_map_test, update_single)
+/// Tests that updating a localization map with a new key adds a new value.
+TEST(LocalizationMapTest, UpdateWithNewKeyAddsValue)
 {
 	tr::localization_map map{{{"first", "First"}, {"second", "Second"}}};
 	map.update("third", "Third");
 	EXPECT_EQ(map.size(), 3);
 	EXPECT_EQ(map["third"], "Third");
+}
+
+/// Tests that updating a localization map with a present key replaces the associated value.
+TEST(LocalizationMapTest, UpdateWithPresentKeyReplacesValue)
+{
+	tr::localization_map map{{{"first", "First"}, {"second", "Second"}}};
 	map.update("first", "1st");
-	EXPECT_EQ(map.size(), 3);
+	EXPECT_EQ(map.size(), 2);
 	EXPECT_EQ(map["first"], "1st");
 }
 
-TEST(localization_map_test, update_iterator_pair)
+/// Tests updating a localization map with an iterator pair to a range of key-value pairs.
+TEST(LocalizationMapTest, UpdatesWithIteratorPair)
 {
 	constexpr std::array<std::pair<std::string_view, std::string_view>, 2> extra{{{"third", "Third"}, {"first", "1st"}}};
 
 	tr::localization_map map{{{"first", "First"}, {"second", "Second"}}};
 	map.update(extra.begin(), extra.end());
 	EXPECT_EQ(map.size(), 3);
-	EXPECT_EQ(map["third"], "Third");
-	map.update("first", "1st");
-	EXPECT_EQ(map.size(), 3);
 	EXPECT_EQ(map["first"], "1st");
+	EXPECT_EQ(map["third"], "Third");
 }
 
-TEST(localization_map_test, update_range)
+/// Tests updating a localization map with a range of key-value pairs.
+TEST(LocalizationMapTest, UpdatesWithRange)
 {
 	tr::localization_map map{{{"first", "First"}, {"second", "Second"}}};
 	map.update({{"third", "Third"}, {"first", "1st"}});
 	EXPECT_EQ(map.size(), 3);
+	EXPECT_EQ(map["first"], "1st");
 	EXPECT_EQ(map["third"], "Third");
 }

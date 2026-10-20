@@ -6,7 +6,7 @@
 
 //
 
-/// Tests the various overloads of `tr::encrypt(_to)()` and asserts they produce the same result.
+/// Tests the various encryption overloads and asserts they produce the same result.
 TEST(EncryptionTest, Encrypts)
 {
 	const std::array<char, 4> data{'t', 'e', 's', 't'};
@@ -21,13 +21,13 @@ TEST(EncryptionTest, Encrypts)
 	EXPECT_EQ(out0.size(), out3.size());
 }
 
-/// Tests that `tr::decrypt()` rejects an input with a truncated header.
+/// Tests rejecting the decryption of an input with a truncated header.
 TEST(EncryptionTest, RejectsDecryptingTruncatedHeader)
 {
 	EXPECT_THROW((void)tr::decrypt(std::vector<std::byte>{std::byte{'t'}, std::byte{'r'}}), tr::decryption_error);
 }
 
-/// Tests that `tr::decrypt()` rejects an input with invalid header magic.
+/// Tests rejecting the decryption of an input with invalid header magic.
 TEST(EncryptionTest, RejectsDecryptingInvalidHeaderMagic)
 {
 	EXPECT_THROW((void)tr::decrypt(std::vector<std::byte>{std::byte{'t'}, std::byte{'j'}, std::byte{0}, std::byte{83}, std::byte{0},
@@ -35,7 +35,7 @@ TEST(EncryptionTest, RejectsDecryptingInvalidHeaderMagic)
 				 tr::decryption_error);
 }
 
-/// Tests that `tr::decrypt()` rejects an input with an invalid header key.
+/// Tests rejecting the decryption of an input with an invalid header key.
 TEST(EncryptionTest, RejectsDecryptingInvalidHeaderKey)
 {
 	EXPECT_THROW((void)tr::decrypt(std::vector<std::byte>{std::byte{'t'}, std::byte{'r'}, std::byte{0}, std::byte{84}, std::byte{0},
@@ -43,7 +43,7 @@ TEST(EncryptionTest, RejectsDecryptingInvalidHeaderKey)
 				 tr::decryption_error);
 }
 
-/// Tests that `tr::decrypt()` rejects an input with an invalid payload.
+/// Tests rejecting the decryption of an input with an invalid payload.
 TEST(EncryptionTest, RejectsDecryptingInvalidPayload)
 {
 	EXPECT_THROW((void)tr::decrypt(std::vector<std::byte>{std::byte{'t'}, std::byte{'r'}, std::byte{0}, std::byte{83}, std::byte{0},
@@ -51,7 +51,7 @@ TEST(EncryptionTest, RejectsDecryptingInvalidPayload)
 				 tr::decryption_error);
 }
 
-/// Tests the various overloads of `tr::decrypt(_to)()` and asserts they produce the same result.
+/// Tests the various decryption overloads and asserts they produce the same result.
 TEST(EncryptionTest, Decrypts)
 {
 	const std::vector<std::byte> input{
@@ -67,13 +67,13 @@ TEST(EncryptionTest, Decrypts)
 	EXPECT_EQ(out1_string, "test");
 }
 
-/// Tests that `tr::encrypt()` and `tr::decrypt()` round trip an empty payload.
+/// Tests encrypting and decrypting an empty payload.
 TEST(EncryptionTest, RoundTripsEmptyPayload)
 {
 	EXPECT_TRUE(tr::decrypt(tr::encrypt({})).empty());
 }
 
-/// Tests that `tr::encrypt()` and `tr::decrypt()` round trip data.
+/// Tests encrypting and decrypting data.
 TEST(EncryptionTest, RoundTripsData)
 {
 	const std::array<char, 4> data{'t', 'e', 's', 't'};

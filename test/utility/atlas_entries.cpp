@@ -6,14 +6,16 @@
 
 //
 
-TEST(atlas_entries_test, empty)
+/// Tests that defaulted-constructed atlas entries are empty.
+TEST(AtlasEntriesTest, DefaultConstructsEmpty)
 {
 	tr::atlas_entries<int> entries;
 	EXPECT_FALSE(entries.contains(0));
 	EXPECT_EQ(entries.entries(), 0);
 }
 
-TEST(atlas_entries_test, try_insert_success)
+/// Tests successfully inserting into atlas entries.
+TEST(AtlasEntriesTest, InsertsFitting)
 {
 	struct entry_with_extra
 	{
@@ -37,7 +39,8 @@ TEST(atlas_entries_test, try_insert_success)
 	EXPECT_EQ(entries_with_extra[0].extra, 10);
 }
 
-TEST(atlas_entries_test, try_insert_failure)
+/// Tests failing to insert an entry that would not fit into atlas entries.
+TEST(AtlasEntriesTest, FailsToInsertNonFitting)
 {
 	tr::atlas_entries<int> entries;
 	EXPECT_FALSE(entries.try_insert(0, {512, 512}, {256, 256}).has_value());
@@ -45,7 +48,8 @@ TEST(atlas_entries_test, try_insert_failure)
 	EXPECT_EQ(entries.entries(), 0);
 }
 
-TEST(atlas_entries_test, clear)
+/// Tests inserting entries into atlas entries, erasing them, and inserting an entry that would have previously not fit into them.
+TEST(AtlasEntriesTest, ClearsAndInsertsPreviouslyNonFitting)
 {
 	tr::atlas_entries<int> entries;
 	EXPECT_TRUE(entries.try_insert(0, {255, 255}, {256, 256}).has_value());
