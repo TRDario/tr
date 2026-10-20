@@ -7,6 +7,7 @@ add_executable(
 	binary_io.cpp
 	circle.cpp
 	color.cpp
+	copy_qualifiers.cpp
 	defer.cpp
 	dynamic_ref_cast.cpp
 	encryption.cpp

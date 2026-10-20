@@ -12,9 +12,17 @@ namespace tr
 	template <typename T, typename Qualified>
 	struct copy_qualifiers
 	{
+	  private:
+		/// Adds const to `T` if `Qualified` is const.
+		using maybe_const = std::conditional_t<std::is_const_v<std::remove_reference_t<Qualified>>, std::add_const_t<T>, T>;
+
+		/// Adds & to `T` if `Qualified` is &.
+		using maybe_lref = std::conditional_t<std::is_lvalue_reference_v<Qualified>, std::add_lvalue_reference_t<maybe_const>, maybe_const>;
+
+	  public:
 		/// Holds `T` qualified with the same qualifiers as `Qualified`.
 		/// @hideinitializer
-		using type = decltype(std::forward_like<Qualified>(std::declval<std::remove_cvref_t<T>>()));
+		using type = std::conditional_t<std::is_rvalue_reference_v<Qualified>, std::add_rvalue_reference_t<maybe_lref>, maybe_lref>;
 	};
 
 	/// Copies const/ref qualifiers from `Qualified` to `T`.
