@@ -117,7 +117,6 @@ if(TR_BUILD_SYSGFX)
 		src/sysgfx/owning_shader_pipeline.cpp
 		src/sysgfx/path.cpp
 		src/sysgfx/ping_pong_target.cpp
-		src/sysgfx/pixel_color.cpp
 		src/sysgfx/pixel_format.cpp
 		src/sysgfx/pixel_iterator.cpp
 		src/sysgfx/pixel_proxy.cpp
