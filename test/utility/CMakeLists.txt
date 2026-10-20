@@ -1,6 +1,7 @@
 add_executable(
 	utility_test
 	alignment.cpp
+	apply.cpp
 	atlas_packer.cpp
 	atlas_entries.cpp
 	benchmark.cpp
