@@ -43,9 +43,6 @@ namespace tr
 		/// Texture views are trivially copyable.
 		[[nodiscard]] constexpr mutable_texture_view(const mutable_texture_view&) noexcept = default;
 
-		/// Texture views are trivially movable.
-		[[nodiscard]] constexpr mutable_texture_view(mutable_texture_view&&) noexcept = default;
-
 		/// @}
 		/// @name Assignment operators
 		/// @{
@@ -53,10 +50,6 @@ namespace tr
 		/// Texture views are trivially copyable.
 		/// @return Reference to `*this`.
 		mutable_texture_view& operator=(const mutable_texture_view&) noexcept = default;
-
-		/// Texture views are trivially movable.
-		/// @return Reference to `*this`.
-		mutable_texture_view& operator=(mutable_texture_view&&) noexcept = default;
 
 		/// @}
 		/// @name Comparison operators

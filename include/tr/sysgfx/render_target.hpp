@@ -66,9 +66,6 @@ namespace tr
 		/// Render targets are trivially copyable.
 		[[nodiscard]] render_target(const render_target&) noexcept = default;
 
-		/// Render targets are trivially movable.
-		[[nodiscard]] render_target(render_target&&) noexcept = default;
-
 		/// @}
 		/// @name Assignment operators
 		/// @{
@@ -76,10 +73,6 @@ namespace tr
 		/// Render targets are trivially copyable.
 		/// @return Reference to `*this`.
 		render_target& operator=(const render_target&) noexcept = default;
-
-		/// Render targets are trivially movable.
-		/// @return Reference to `*this`.
-		render_target& operator=(render_target&&) noexcept = default;
 
 		/// @}
 		/// @name Properties
