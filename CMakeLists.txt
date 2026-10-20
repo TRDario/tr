@@ -97,7 +97,8 @@ if(TR_BUILD_SYSGFX)
 		src/sysgfx/cursor.cpp
 		src/sysgfx/display.cpp
 		src/sysgfx/dynamic_index_buffer.cpp
-		src/sysgfx/event.cpp
+		src/sysgfx/event_types.cpp
+		src/sysgfx/event_view.cpp
 		src/sysgfx/exception.cpp
 		src/sysgfx/file_dialog.cpp
 		src/sysgfx/framebuffer.cpp

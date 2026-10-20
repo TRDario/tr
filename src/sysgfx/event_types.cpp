@@ -1,15 +1,14 @@
 /// @file
-/// @brief Implements event.hpp.
+/// @brief Implements event_types.hpp.
 
 #include "internal/convert_sdl_keymods.hpp"
 #include <SDL3/SDL.h>
-#include <tr/sysgfx/event.hpp>
-
-using namespace std::chrono_literals;
+#include <tr/sysgfx/event_types.hpp>
+#include <tr/sysgfx/event_view.hpp>
 
 //
 
-tr::key_down_event::key_down_event(const event& event) noexcept
+tr::key_down_event::key_down_event(event_view event) noexcept
 	: window{SDL_GetWindowFromID(event.unwrap().key.windowID)}
 {
 	const SDL_KeyboardEvent& sdl{event.unwrap().key};
@@ -31,7 +30,7 @@ tr::key_chord tr::key_down_event::key_chord() const noexcept
 
 //
 
-tr::key_up_event::key_up_event(const event& event) noexcept
+tr::key_up_event::key_up_event(event_view event) noexcept
 	: window{SDL_GetWindowFromID(event.unwrap().key.windowID)}
 {
 	const SDL_KeyboardEvent& sdl{event.unwrap().key};
@@ -42,7 +41,7 @@ tr::key_up_event::key_up_event(const event& event) noexcept
 
 //
 
-tr::text_input_event::text_input_event(const event& event) noexcept
+tr::text_input_event::text_input_event(event_view event) noexcept
 	: window{SDL_GetWindowFromID(event.unwrap().text.windowID)}
 {
 	const SDL_TextInputEvent& sdl{event.unwrap().text};
@@ -51,7 +50,7 @@ tr::text_input_event::text_input_event(const event& event) noexcept
 
 //
 
-tr::mouse_motion_event::mouse_motion_event(const event& event) noexcept
+tr::mouse_motion_event::mouse_motion_event(event_view event) noexcept
 	: window{SDL_GetWindowFromID(event.unwrap().motion.windowID)}
 {
 	const SDL_MouseMotionEvent& sdl{event.unwrap().motion};
@@ -64,7 +63,7 @@ tr::mouse_motion_event::mouse_motion_event(const event& event) noexcept
 
 //
 
-tr::mouse_down_event::mouse_down_event(const event& event) noexcept
+tr::mouse_down_event::mouse_down_event(event_view event) noexcept
 	: window{SDL_GetWindowFromID(event.unwrap().button.windowID)}
 {
 	const SDL_MouseButtonEvent& sdl{event.unwrap().button};
@@ -75,7 +74,7 @@ tr::mouse_down_event::mouse_down_event(const event& event) noexcept
 
 //
 
-tr::mouse_up_event::mouse_up_event(const event& event) noexcept
+tr::mouse_up_event::mouse_up_event(event_view event) noexcept
 	: window{SDL_GetWindowFromID(event.unwrap().button.windowID)}
 {
 	const SDL_MouseButtonEvent& sdl{event.unwrap().button};
@@ -85,7 +84,7 @@ tr::mouse_up_event::mouse_up_event(const event& event) noexcept
 
 //
 
-tr::mouse_wheel_event::mouse_wheel_event(const event& event) noexcept
+tr::mouse_wheel_event::mouse_wheel_event(event_view event) noexcept
 	: window{SDL_GetWindowFromID(event.unwrap().wheel.windowID)}
 {
 	const SDL_MouseWheelEvent& sdl{event.unwrap().wheel};
@@ -95,21 +94,21 @@ tr::mouse_wheel_event::mouse_wheel_event(const event& event) noexcept
 
 //
 
-tr::window_show_event::window_show_event(const event& event) noexcept
+tr::window_show_event::window_show_event(event_view event) noexcept
 	: window{SDL_GetWindowFromID(event.unwrap().window.windowID)}
 {
 }
 
 //
 
-tr::window_hide_event::window_hide_event(const event& event) noexcept
+tr::window_hide_event::window_hide_event(event_view event) noexcept
 	: window{SDL_GetWindowFromID(event.unwrap().window.windowID)}
 {
 }
 
 //
 
-tr::backbuffer_resize_event::backbuffer_resize_event(const event& event) noexcept
+tr::backbuffer_resize_event::backbuffer_resize_event(event_view event) noexcept
 	: window{SDL_GetWindowFromID(event.unwrap().window.windowID)}
 {
 	const SDL_WindowEvent& sdl{event.unwrap().window};
@@ -118,42 +117,28 @@ tr::backbuffer_resize_event::backbuffer_resize_event(const event& event) noexcep
 
 //
 
-tr::window_mouse_enter_event::window_mouse_enter_event(const event& event) noexcept
+tr::window_mouse_enter_event::window_mouse_enter_event(event_view event) noexcept
 	: window{SDL_GetWindowFromID(event.unwrap().window.windowID)}
 {
 }
 
 //
 
-tr::window_mouse_leave_event::window_mouse_leave_event(const event& event) noexcept
+tr::window_mouse_leave_event::window_mouse_leave_event(event_view event) noexcept
 	: window{SDL_GetWindowFromID(event.unwrap().window.windowID)}
 {
 }
 
 //
 
-tr::window_gain_focus_event::window_gain_focus_event(const event& event) noexcept
+tr::window_gain_focus_event::window_gain_focus_event(event_view event) noexcept
 	: window{SDL_GetWindowFromID(event.unwrap().window.windowID)}
 {
 }
 
 //
 
-tr::window_lose_focus_event::window_lose_focus_event(const event& event) noexcept
+tr::window_lose_focus_event::window_lose_focus_event(event_view event) noexcept
 	: window{SDL_GetWindowFromID(event.unwrap().window.windowID)}
 {
-}
-
-//
-
-tr::u32 tr::event::type() const noexcept
-{
-	return unwrap().type;
-}
-
-//
-
-const SDL_Event& tr::event::unwrap() const noexcept
-{
-	return *reinterpret_cast<const SDL_Event*>(m_buffer);
 }

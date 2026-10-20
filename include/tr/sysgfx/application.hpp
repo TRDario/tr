@@ -10,7 +10,7 @@
 /// and graphics functions outside of the loop, outside of some explicit exceptions.
 
 #pragma once
-#include <tr/sysgfx/event.hpp>
+#include <tr/sysgfx/event_view.hpp>
 #include <tr/sysgfx/internal/application.hpp>
 #include <tr/utility/chrono.hpp>
 #include <tr/utility/zstring_view_zspan.hpp>
@@ -111,7 +111,7 @@ namespace tr
 		/// @details Uncaught exceptions from this function will display a dialog box and quit the application.
 		/// @param event Event to handle.
 		/// @return Application state signal after handling the event.
-		virtual signal handle_event(const event& event);
+		virtual signal handle_event(event_view event);
 
 		/// Primary update callback function.
 		/// @details Uncaught exceptions from this function will display a dialog box and quit the application.

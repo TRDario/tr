@@ -21,7 +21,8 @@
 #include <tr/sysgfx/dynamic_atlas.hpp>                       // IWYU pragma: export
 #include <tr/sysgfx/dynamic_index_buffer.hpp>                // IWYU pragma: export
 #include <tr/sysgfx/dynamic_vertex_buffer.hpp>               // IWYU pragma: export
-#include <tr/sysgfx/event.hpp>                               // IWYU pragma: export
+#include <tr/sysgfx/event_types.hpp>                         // IWYU pragma: export
+#include <tr/sysgfx/event_view.hpp>                          // IWYU pragma: export
 #include <tr/sysgfx/exception.hpp>                           // IWYU pragma: export
 #include <tr/sysgfx/file_dialog.hpp>                         // IWYU pragma: export
 #include <tr/sysgfx/framebuffer.hpp>                         // IWYU pragma: export

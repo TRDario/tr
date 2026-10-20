@@ -19,7 +19,7 @@ tr::application::signal tr::application::initialize(zstring_view_zspan)
 	return signal::proceed;
 }
 
-tr::application::signal tr::application::handle_event(const event&)
+tr::application::signal tr::application::handle_event(event_view)
 {
 	return signal::proceed;
 }
@@ -114,7 +114,7 @@ SDL_AppResult tr::internal::initialize_application(void**, int, char** argv)
 SDL_AppResult tr::internal::handle_application_event(void*, SDL_Event* sdl_event)
 {
 	try {
-		return static_cast<SDL_AppResult>(running_application->handle_event(reinterpret_cast<const event&>(*sdl_event)));
+		return static_cast<SDL_AppResult>(running_application->handle_event(event_view{*sdl_event}));
 	}
 	catch (std::exception& err) {
 		internal::show_fatal_error_message_box(err);
