@@ -78,5 +78,5 @@ std::ifstream tr::open_file_r(const std::filesystem::path& path, std::ios::openm
 
 bool tr::reached_eof(std::istream& stream)
 {
-	return !stream.eof() && stream.peek() != EOF;
+	return stream.eof() || stream.peek() == EOF;
 }

@@ -17,6 +17,7 @@ add_executable(
 	exception.cpp
 	handle.cpp
 	hash_map.cpp
+	iostream.cpp
 	inplace_vector.cpp
 	localization_map.cpp
 	localization_script.cpp

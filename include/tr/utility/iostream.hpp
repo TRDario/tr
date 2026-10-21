@@ -83,7 +83,7 @@ namespace tr
 	/// @param openmode Stream opening mode.
 	/// @exception file_open_error If opening the file failed.
 	/// @return Output stream to the file at `path`.
-	[[nodiscard]] std::ofstream open_file_w(const std::filesystem::path& path, std::ios::openmode openmode = std::ios::in);
+	[[nodiscard]] std::ofstream open_file_w(const std::filesystem::path& path, std::ios::openmode openmode = std::ios::out);
 
 	/// Opens a file for reading with extra checks.
 	/// @param path Path to the file to open.
@@ -91,7 +91,7 @@ namespace tr
 	/// @exception file_not_found If the file was not found.
 	/// @exception file_open_error If opening the file failed.
 	/// @return Input stream to the file at `path`.
-	[[nodiscard]] std::ifstream open_file_r(const std::filesystem::path& path, std::ios::openmode openmode = std::ios::out);
+	[[nodiscard]] std::ifstream open_file_r(const std::filesystem::path& path, std::ios::openmode openmode = std::ios::in);
 
 	//
 
