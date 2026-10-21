@@ -6,6 +6,7 @@ add_executable(
 	atlas_entries.cpp
 	benchmark.cpp
 	binary_io.cpp
+	chrono.cpp
 	circle.cpp
 	color.cpp
 	copy_qualifiers.cpp
