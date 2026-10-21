@@ -37,6 +37,8 @@ Parameters:
 
 ### `tr_git_hash_setup()`
 
+`<PATH TO TR SOURCE>/cmake/git_hash.make` must be included to use this function.
+
 Generates a header which defines the `GIT_HASH` macro as a string holding the hash of the current git commit.
 This header can be included with `#include <git_hash.hpp>` from within the project that called this function by linking `git_hash` to any
 target using it.

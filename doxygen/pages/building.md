@@ -63,6 +63,14 @@ This module is enabled by setting `TR_BUILD_IMGUI` to `ON` during CMake configur
 This module introduces a dependency on [Dear ImGui](https://github.com/ocornut/imgui), as well as the tr system and graphics module,
 which it will automatically enable if it was not previously enabled.
 
+### Tests
+
+Test suites checking the functionality of tr are provided with the library.
+
+Building tests is enabled by setting `TR_BUILD_TESTS` to `ON` during CMake configuration.
+
+Which tests are built is determined automatically based on the previously set compile definitions and modules.
+
 ## Compile definitions
 
 tr allows defining several compile macro definitions to control the behavior of the library.

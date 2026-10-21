@@ -25,7 +25,7 @@ Examples are planned to be added at a later date.
 
 ## Testing
 
-tr is partially covered with unit tests, primarily within the utility and audio module. The tests are written with GoogleTest and are run through the CMake test driver.
+tr is partially covered with unit tests, primarily within the utility and audio module.
 
 Further unit tests are planned to be added at a later date.
 
