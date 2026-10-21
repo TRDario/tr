@@ -1,23 +1,24 @@
-name: Doxygen Action
+name: Generate documentation pages
 
 on:
   push:
     branches: [ main ]
 
 jobs:
-  build:
+  generate-documentation-pages:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-        
-    - name: Doxygen Action
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Generate documentation from source (Doxygen)
       uses: mattnotmitt/doxygen-action@edge
       with:
         doxyfile-path: "./Doxyfile"
         working-directory: "./doxygen"
 
-    - name: Deploy
+    - name: Deploy GitHub pages
       uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}

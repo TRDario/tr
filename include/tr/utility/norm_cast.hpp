@@ -3,19 +3,18 @@
 
 #pragma once
 #include <tr/utility/macro.hpp>
-#include <tr/utility/norm_cast.hpp>
 
+#ifndef TR_DOXYGEN
 namespace tr
 {
-	template <std::floating_point To, std::floating_point From>
-	[[nodiscard]] constexpr To norm_cast(From from) noexcept;
-	template <std::integral To, std::integral From>
-	[[nodiscard]] constexpr To norm_cast(From from) noexcept;
-	template <std::floating_point To, std::integral From>
-	[[nodiscard]] constexpr To norm_cast(From from) noexcept;
-	template <std::integral To, std::floating_point From>
-	[[nodiscard]] constexpr To norm_cast(From from) noexcept;
+	// clang-format off
+	template <std::floating_point To, std::floating_point From> constexpr To norm_cast(From from) noexcept;
+	template <std::integral To, std::integral From> constexpr To norm_cast(From from) noexcept;
+	template <std::floating_point To, std::integral From> constexpr To norm_cast(From from) noexcept;
+	template <std::integral To, std::floating_point From> constexpr To norm_cast(From from) noexcept;
+	// clgna-format on
 } // namespace tr
+#endif
 
 //
 
