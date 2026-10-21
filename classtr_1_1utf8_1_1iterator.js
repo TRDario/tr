@@ -2,6 +2,7 @@ var classtr_1_1utf8_1_1iterator =
 [
     [ "value_type", "classtr_1_1utf8_1_1iterator.html#a009c17506e4f13dc0c881580c677e50f", null ],
     [ "difference_type", "classtr_1_1utf8_1_1iterator.html#a94321bfaca5ab1fb47c30b2898b56307", null ],
+    [ "iterator_concept", "classtr_1_1utf8_1_1iterator.html#ab1d794ff18dd126b64e98a1c9a41da6a", null ],
     [ "iterator", "classtr_1_1utf8_1_1iterator.html#a05e3f1ea9dcbbec5c7b409a347fcf807", null ],
     [ "iterator", "classtr_1_1utf8_1_1iterator.html#acde51f34084dd61344eeb3ef0e789f91", null ],
     [ "operator*", "classtr_1_1utf8_1_1iterator.html#ade5f0473574459c567916f282432fe9e", null ],

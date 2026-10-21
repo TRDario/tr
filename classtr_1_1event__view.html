@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=11" />
   <meta name="generator" content="Doxygen 1.18.0" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>tr: tr::event Class Reference</title>
+  <title>tr: tr::event_view Class Reference</title>
   <link href="tabs.css" rel="stylesheet" type="text/css" />
   <script type="text/javascript" src="jquery.js"></script>
   <script type="text/javascript" src="dynsections.js"></script>
@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', codefold.init);
   </div>
 </div>
 <script type="text/javascript">
-document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1event.html','','classtr_1_1event-members'); });
+document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1event__view.html','','classtr_1_1event__view-members'); });
 </script>
 <div id="container">
 <div id="doc-content">
@@ -122,32 +122,94 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1eve
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">tr::event Class Reference</div></div>
+  <div class="headertitle"><div class="title">tr::event_view Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Unified event type.  
+<p>View to a generic event.  
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Unified event type. </p>
+<div class="textblock"><p>View to a generic event. </p>
+<p><span class="tt"><a class="el" href="classtr_1_1event__view.html" title="View to a generic event.">tr::event_view</a></span> represents a view to a generic system event. It is designed to be cheap to pass around and copy. </p>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Alternatives</div></td></tr>
-<tr class="memitem:a26260bc029b13aa53fe36e9af5926f05" id="r_a26260bc029b13aa53fe36e9af5926f05"><td class="memTemplParams" colspan="2">template&lt;event_type T&gt; </td></tr>
-<tr class="memitem:a26260bc029b13aa53fe36e9af5926f05 template"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a26260bc029b13aa53fe36e9af5926f05">is</a> () const noexcept</td></tr>
-<tr class="memdesc:a26260bc029b13aa53fe36e9af5926f05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether the event is of a certain type.  <br /></td></tr>
-<tr class="memitem:adbf8b43cad303e4b8a7e8fa48ec2555f" id="r_adbf8b43cad303e4b8a7e8fa48ec2555f"><td class="memTemplParams" colspan="2">template&lt;event_type T&gt; </td></tr>
-<tr class="memitem:adbf8b43cad303e4b8a7e8fa48ec2555f template"><td class="memItemLeft">T&#160;</td><td class="memItemRight"><a class="el" href="#adbf8b43cad303e4b8a7e8fa48ec2555f">as</a> () const noexcept</td></tr>
-<tr class="memdesc:adbf8b43cad303e4b8a7e8fa48ec2555f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the event into a sub-type.  <br /></td></tr>
-<tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Visiting</div></td></tr>
-<tr class="memitem:a4300d8384a1fdfac469276f574d8e1bc" id="r_a4300d8384a1fdfac469276f574d8e1bc"><td class="memTemplParams" colspan="2">template&lt;event_visitor Visitor&gt; </td></tr>
-<tr class="memitem:a4300d8384a1fdfac469276f574d8e1bc template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="#a4300d8384a1fdfac469276f574d8e1bc">visit</a> (Visitor &amp;&amp;visitor) const noexcept(nothrow_event_visitor&lt; Visitor &gt;)</td></tr>
-<tr class="memdesc:a4300d8384a1fdfac469276f574d8e1bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Visits the event.  <br /></td></tr>
+<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors and destructors</div></td></tr>
+<tr class="memitem:a8321df57a52c4be5173f9e102d508d58" id="r_a8321df57a52c4be5173f9e102d508d58"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a8321df57a52c4be5173f9e102d508d58">event_view</a> (const event_view &amp;rhs) noexcept=default</td></tr>
+<tr class="memdesc:a8321df57a52c4be5173f9e102d508d58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event views are trivially copyable.  <br /></td></tr>
+<tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Assignment operators</div></td></tr>
+<tr class="memitem:a57422499dd6909ce329c047bdfba761b" id="r_a57422499dd6909ce329c047bdfba761b"><td class="memItemLeft"><a class="el" href="#a8321df57a52c4be5173f9e102d508d58">event_view</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a57422499dd6909ce329c047bdfba761b">operator=</a> (const <a class="el" href="#a8321df57a52c4be5173f9e102d508d58">event_view</a> &amp;rhs) noexcept=default</td></tr>
+<tr class="memdesc:a57422499dd6909ce329c047bdfba761b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event views are trivially copyable.  <br /></td></tr>
+<tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Alternatives</div></td></tr>
+<tr class="memitem:a4feb83925085f278ad53948b3c5ba47d" id="r_a4feb83925085f278ad53948b3c5ba47d"><td class="memTemplParams" colspan="2">template&lt;event_type T&gt; </td></tr>
+<tr class="memitem:a4feb83925085f278ad53948b3c5ba47d template"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a4feb83925085f278ad53948b3c5ba47d">is</a> () const noexcept</td></tr>
+<tr class="memdesc:a4feb83925085f278ad53948b3c5ba47d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether the event is of a certain type.  <br /></td></tr>
+<tr class="memitem:aa0a92215a384acd53c2d7a89f1041b5a" id="r_aa0a92215a384acd53c2d7a89f1041b5a"><td class="memTemplParams" colspan="2">template&lt;event_type T&gt; </td></tr>
+<tr class="memitem:aa0a92215a384acd53c2d7a89f1041b5a template"><td class="memItemLeft">T&#160;</td><td class="memItemRight"><a class="el" href="#aa0a92215a384acd53c2d7a89f1041b5a">as</a> () const noexcept</td></tr>
+<tr class="memdesc:aa0a92215a384acd53c2d7a89f1041b5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the event into a sub-type.  <br /></td></tr>
+<tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Visiting</div></td></tr>
+<tr class="memitem:a7cba699cf727d974abaca67a924a57a5" id="r_a7cba699cf727d974abaca67a924a57a5"><td class="memTemplParams" colspan="2">template&lt;event_view_visitor Visitor&gt; </td></tr>
+<tr class="memitem:a7cba699cf727d974abaca67a924a57a5 template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="#a7cba699cf727d974abaca67a924a57a5">visit</a> (Visitor &amp;&amp;visitor) const noexcept(nothrow_event_view_visitor&lt; Visitor &gt;)</td></tr>
+<tr class="memdesc:a7cba699cf727d974abaca67a924a57a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Visits the event.  <br /></td></tr>
 </table>
+<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a8321df57a52c4be5173f9e102d508d58" name="a8321df57a52c4be5173f9e102d508d58"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8321df57a52c4be5173f9e102d508d58">&#9670;&#160;</a></span>event_view()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tr::event_view::event_view </td>
+          <td>(</td>
+          <td class="paramtype">const event_view &amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel default">default</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Event views are trivially copyable. </p>
+
+</div>
+</div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="a26260bc029b13aa53fe36e9af5926f05" name="a26260bc029b13aa53fe36e9af5926f05"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a26260bc029b13aa53fe36e9af5926f05">&#9670;&#160;</a></span>is()</h2>
+<a id="a57422499dd6909ce329c047bdfba761b" name="a57422499dd6909ce329c047bdfba761b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a57422499dd6909ce329c047bdfba761b">&#9670;&#160;</a></span>operator=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a8321df57a52c4be5173f9e102d508d58">event_view</a> &amp; tr::event_view::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="#a8321df57a52c4be5173f9e102d508d58">event_view</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel default">default</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Event views are trivially copyable. </p>
+
+</div>
+</div>
+<a id="a4feb83925085f278ad53948b3c5ba47d" name="a4feb83925085f278ad53948b3c5ba47d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4feb83925085f278ad53948b3c5ba47d">&#9670;&#160;</a></span>is()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -158,7 +220,7 @@ template&lt;event_type T&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool tr::event::is </td>
+          <td class="memname">bool tr::event_view::is </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -182,8 +244,8 @@ template&lt;event_type T&gt; </div>
 
 </div>
 </div>
-<a id="adbf8b43cad303e4b8a7e8fa48ec2555f" name="adbf8b43cad303e4b8a7e8fa48ec2555f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adbf8b43cad303e4b8a7e8fa48ec2555f">&#9670;&#160;</a></span>as()</h2>
+<a id="aa0a92215a384acd53c2d7a89f1041b5a" name="aa0a92215a384acd53c2d7a89f1041b5a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0a92215a384acd53c2d7a89f1041b5a">&#9670;&#160;</a></span>as()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -194,7 +256,7 @@ template&lt;event_type T&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">T tr::event::as </td>
+          <td class="memname">T tr::event_view::as </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -219,19 +281,19 @@ template&lt;event_type T&gt; </div>
 
 </div>
 </div>
-<a id="a4300d8384a1fdfac469276f574d8e1bc" name="a4300d8384a1fdfac469276f574d8e1bc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4300d8384a1fdfac469276f574d8e1bc">&#9670;&#160;</a></span>visit()</h2>
+<a id="a7cba699cf727d974abaca67a924a57a5" name="a7cba699cf727d974abaca67a924a57a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7cba699cf727d974abaca67a924a57a5">&#9670;&#160;</a></span>visit()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;event_visitor Visitor&gt; </div>
+template&lt;event_view_visitor Visitor&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">auto tr::event::visit </td>
+          <td class="memname">auto tr::event_view::visit </td>
           <td>(</td>
           <td class="paramtype">Visitor &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>visitor</em></span></td><td>)</td>
           <td> const</td>
@@ -274,7 +336,7 @@ template&lt;event_visitor Visitor&gt; </div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a href="namespacetr.html">tr</a></li><li class="navelem"><a href="classtr_1_1event.html">event</a></li>
+    <li class="navelem"><a href="namespacetr.html">tr</a></li><li class="navelem"><a href="classtr_1_1event__view.html">event_view</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.18.0 </li>
   </ul>
 </div>

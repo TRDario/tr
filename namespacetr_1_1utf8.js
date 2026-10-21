@@ -5,8 +5,6 @@ var namespacetr_1_1utf8 =
     [ "input_iterator", "concepttr_1_1utf8_1_1input__iterator.html", null ],
     [ "bidirectional_iterator", "concepttr_1_1utf8_1_1bidirectional__iterator.html", null ],
     [ "output_string", "concepttr_1_1utf8_1_1output__string.html", null ],
-    [ "reverse_iterator", "namespacetr_1_1utf8.html#aaa0b2ccfe620e11f8febeec0d159ee89", null ],
-    [ "reverse_indexed_iterator", "namespacetr_1_1utf8.html#abfe34f57f9c5716c28093cb5830dc56b", null ],
     [ "to_cp", "namespacetr_1_1utf8.html#a61ae05b12a5efe9961d4d5573a9be3f7", null ],
     [ "next", "namespacetr_1_1utf8.html#a24f1dfbf11a422bc5c810e91956715be", null ],
     [ "next", "namespacetr_1_1utf8.html#a1766a073b1e1b08fd62a0e766bd07156", null ],
@@ -19,10 +17,6 @@ var namespacetr_1_1utf8 =
     [ "ibegin", "namespacetr_1_1utf8.html#a4d3d09c83ba56d57e49d637fc8d38119", null ],
     [ "end", "namespacetr_1_1utf8.html#a16387d4424b4461bf3d08d70d404affa", null ],
     [ "iend", "namespacetr_1_1utf8.html#aa76696bf6a51b53a2e8b904a4011cd66", null ],
-    [ "rbegin", "namespacetr_1_1utf8.html#a707a396bde6e33442cb3d0f32862d84b", null ],
-    [ "ribegin", "namespacetr_1_1utf8.html#a91c486990ef4b42b225339dd2fcb8084", null ],
-    [ "rend", "namespacetr_1_1utf8.html#a8a288d402046cb90168ed40c39942adf", null ],
-    [ "riend", "namespacetr_1_1utf8.html#a955b38dc3eb8dc55ab85d11fa8353f5b", null ],
     [ "range", "namespacetr_1_1utf8.html#a90d625233d38a04030aed40aec690483", null ],
     [ "length", "namespacetr_1_1utf8.html#a2e95f46fba44ca58a3293eea41b6d218", null ]
 ];

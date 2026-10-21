@@ -1,4 +1,4 @@
-var event_8hpp =
+var event__types_8hpp =
 [
     [ "tr::key_down_event", "structtr_1_1key__down__event.html", "structtr_1_1key__down__event" ],
     [ "tr::key_up_event", "structtr_1_1key__up__event.html", "structtr_1_1key__up__event" ],
@@ -16,8 +16,5 @@ var event_8hpp =
     [ "tr::window_lose_focus_event", "structtr_1_1window__lose__focus__event.html", "structtr_1_1window__lose__focus__event" ],
     [ "tr::unknown_event", "structtr_1_1unknown__event.html", null ],
     [ "tr::quit_event", "structtr_1_1quit__event.html", null ],
-    [ "tr::event", "classtr_1_1event.html", "classtr_1_1event" ],
-    [ "tr::event_type", "concepttr_1_1event__type.html", null ],
-    [ "tr::event_visitor", "concepttr_1_1event__visitor.html", null ],
-    [ "tr::nothrow_event_visitor", "concepttr_1_1nothrow__event__visitor.html", null ]
+    [ "tr::event_type", "concepttr_1_1event__type.html", null ]
 ];

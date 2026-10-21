@@ -23,10 +23,10 @@ var searchData=
   ['min_5flevel_20',['min_level',['../classtr_1_1logger.html#a99f79687566eb18ddbcd72c6cb3ae8b8',1,'tr::logger']]],
   ['minimized_21',['minimized',['../classtr_1_1window.html#aeeb848fcb180f7f1d3b3b73a5e4fc3b9',1,'tr::window::minimized()'],['../classtr_1_1window__view.html#ad85d027536abdc11d8b8869bc479bb66',1,'tr::window_view::minimized()']]],
   ['mod_22',['mod',['../namespacetr.html#ac76cad356147dd79afe84b6ba8b0215e',1,'tr']]],
-  ['mouse_5fdown_5fevent_23',['mouse_down_event',['../structtr_1_1mouse__down__event.html#ad8d08bf8e0fd6885877290c15582a0be',1,'tr::mouse_down_event']]],
-  ['mouse_5fmotion_5fevent_24',['mouse_motion_event',['../structtr_1_1mouse__motion__event.html#a8c2fd6fde2f815f17daaa6bedd9631f5',1,'tr::mouse_motion_event']]],
-  ['mouse_5fup_5fevent_25',['mouse_up_event',['../structtr_1_1mouse__up__event.html#a20fc397543aa372c0e6b2d4ffbdfb0ac',1,'tr::mouse_up_event']]],
-  ['mouse_5fwheel_5fevent_26',['mouse_wheel_event',['../structtr_1_1mouse__wheel__event.html#a84939c8085b1e0fef1a0915385390af9',1,'tr::mouse_wheel_event']]],
+  ['mouse_5fdown_5fevent_23',['mouse_down_event',['../structtr_1_1mouse__down__event.html#aa53c8e5aa9f20f3dab27cb3b7945ef3c',1,'tr::mouse_down_event']]],
+  ['mouse_5fmotion_5fevent_24',['mouse_motion_event',['../structtr_1_1mouse__motion__event.html#a3c36cf8c5fee5baf73cf00d62613553c',1,'tr::mouse_motion_event']]],
+  ['mouse_5fup_5fevent_25',['mouse_up_event',['../structtr_1_1mouse__up__event.html#a678a7527f845154fcc054855513b5a6e',1,'tr::mouse_up_event']]],
+  ['mouse_5fwheel_5fevent_26',['mouse_wheel_event',['../structtr_1_1mouse__wheel__event.html#a6f83f50d22fbb21c4d3465bf9d7414a1',1,'tr::mouse_wheel_event']]],
   ['mstream_27',['mstream',['../classtr_1_1mstream.html#a6dfbc2c213cca4e7af49de97f9e3573f',1,'tr::mstream::mstream(std::span&lt; char &gt; buffer)'],['../classtr_1_1mstream.html#affc3cd7d6f3ff61b4c3c920afb99be7c',1,'tr::mstream::mstream(std::span&lt; unsigned char &gt; buffer)'],['../classtr_1_1mstream.html#a7c3c66b10e0aa22fc027e31a8765c58f',1,'tr::mstream::mstream(std::span&lt; std::byte &gt; buffer)']]],
-  ['mutable_5ftexture_5fview_28',['mutable_texture_view',['../classtr_1_1mutable__texture__view.html#a93729c6d1976ead1b2214f4a3d89e4c0',1,'tr::mutable_texture_view::mutable_texture_view() noexcept=default'],['../classtr_1_1mutable__texture__view.html#a775018c9c6fa078355c1a4052cc62b88',1,'tr::mutable_texture_view::mutable_texture_view(const mutable_texture_view &amp;) noexcept=default'],['../classtr_1_1mutable__texture__view.html#ac81f6ae50c5057ed33ef979b6443ebc9',1,'tr::mutable_texture_view::mutable_texture_view(mutable_texture_view &amp;&amp;) noexcept=default']]]
+  ['mutable_5ftexture_5fview_28',['mutable_texture_view',['../classtr_1_1mutable__texture__view.html#a93729c6d1976ead1b2214f4a3d89e4c0',1,'tr::mutable_texture_view::mutable_texture_view() noexcept=default'],['../classtr_1_1mutable__texture__view.html#a775018c9c6fa078355c1a4052cc62b88',1,'tr::mutable_texture_view::mutable_texture_view(const mutable_texture_view &amp;) noexcept=default']]]
 ];

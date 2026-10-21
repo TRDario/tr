@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['ebnf_20grammar_0',['EBNF Grammar',['../md_pages_2tloc.html#autotoc_md21',1,'']]],
+  ['ebnf_20grammar_0',['EBNF Grammar',['../md_pages_2tloc.html#autotoc_md22',1,'']]],
   ['edge_5fclamp_1',['edge_clamp',['../namespacetr.html#a3e4670572d9d0189d10f4f474d1ebfa3a8c1532dc6ee57dff888d0b493686499a',1,'tr']]],
   ['edges_2',['edges',['../structtr_1_1rectangle.html#a4873d5d0512c9044f92a501a2c1670d0',1,'tr::rectangle']]],
   ['elapsed_3',['elapsed',['../classtr_1_1stopwatch.html#a5a440d51d5403185028aadcf4620cc55',1,'tr::stopwatch']]],
@@ -31,15 +31,16 @@ var searchData=
   ['equality_5fpredicate_28',['equality_predicate',['../concepttr_1_1equality__predicate.html',1,'tr']]],
   ['equals_29',['equals',['../namespacetr.html#a358cbb7b209d738d608455b760766575a51c3f59625962b899c03595d6cdfb284',1,'tr']]],
   ['erase_30',['erase',['../classtr_1_1basic__inplace__string.html#a67d27d12d33b0436f2f6f9c40d366d17',1,'tr::basic_inplace_string::erase(const_iterator where) noexcept'],['../classtr_1_1basic__inplace__string.html#a406cc9fb76b71c7864c23f497218dabb',1,'tr::basic_inplace_string::erase(const_iterator start, const_iterator end) noexcept'],['../classtr_1_1inplace__vector.html#aeffe9b1eb5dfc95ffe4c0a667b3a17cd',1,'tr::inplace_vector::erase(const_iterator where) noexcept(std::is_nothrow_move_assignable_v&lt; Element &gt;)'],['../classtr_1_1inplace__vector.html#a6c6db908c2ba203aecfa3934f383e67f',1,'tr::inplace_vector::erase(const_iterator first, const_iterator last) noexcept(std::is_nothrow_move_assignable_v&lt; Element &gt;)'],['../classtr_1_1string__pool.html#ad7753a5666773be2d6ed83b21b79c9c8',1,'tr::string_pool::erase(iterator where) noexcept'],['../classtr_1_1string__pool.html#a6420cec62a0ddfa59549b8e42b04020d',1,'tr::string_pool::erase(iterator begin, iterator end) noexcept'],['../namespacetr_1_1utf8.html#a4fb9fd5cd1db4245dfcf7100d4422d2d',1,'tr::utf8::erase()']]],
-  ['error_31',['error',['../namespacetr.html#a4d5881ba37a7337aca11853f1ae62da1acb5e100e5a9a3e7f6d1fd97512215282',1,'tr::error'],['../namespacetr.html#af80aef48811e46f90a915d32219add20acb5e100e5a9a3e7f6d1fd97512215282',1,'tr::error']]],
+  ['error_31',['error',['../namespacetr.html#af80aef48811e46f90a915d32219add20acb5e100e5a9a3e7f6d1fd97512215282',1,'tr::error'],['../namespacetr.html#a4d5881ba37a7337aca11853f1ae62da1acb5e100e5a9a3e7f6d1fd97512215282',1,'tr::error']]],
   ['error_5fout_32',['error_out',['../structtr_1_1parse__localization__script__result.html#a014118aec1d3d9cf6fe413b7ca6db65d',1,'tr::parse_localization_script_result']]],
   ['eucmod_33',['eucmod',['../namespacetr.html#aa76acbfd3de657a1b3c90d5cb9f6454b',1,'tr']]],
-  ['event_34',['event',['../classtr_1_1event.html',1,'tr']]],
-  ['event_2ehpp_35',['event.hpp',['../event_8hpp.html',1,'']]],
-  ['event_5ftype_36',['event_type',['../concepttr_1_1event__type.html',1,'tr']]],
-  ['event_5fvisitor_37',['event_visitor',['../concepttr_1_1event__visitor.html',1,'tr']]],
-  ['example_38',['Example',['../md_pages_2tloc.html#autotoc_md20',1,'']]],
-  ['exception_39',['exception',['../classtr_1_1exception.html',1,'tr']]],
-  ['executable_5fdirectory_40',['executable_directory',['../namespacetr.html#a7cd08e1d8ab689d537f64de2683dc7a1',1,'tr']]],
-  ['exit_41',['exit',['../classtr_1_1application.html#ad468e60c47e951ff861df0f9daa9bd7baf24f62eeb789199b9b2e467df3b1876b',1,'tr::application']]]
+  ['event_5ftype_34',['event_type',['../concepttr_1_1event__type.html',1,'tr']]],
+  ['event_5ftypes_2ehpp_35',['event_types.hpp',['../event__types_8hpp.html',1,'']]],
+  ['event_5fview_36',['event_view',['../classtr_1_1event__view.html',1,'tr::event_view'],['../classtr_1_1event__view.html#a8321df57a52c4be5173f9e102d508d58',1,'tr::event_view::event_view()']]],
+  ['event_5fview_2ehpp_37',['event_view.hpp',['../event__view_8hpp.html',1,'']]],
+  ['event_5fview_5fvisitor_38',['event_view_visitor',['../concepttr_1_1event__view__visitor.html',1,'tr']]],
+  ['example_39',['Example',['../md_pages_2tloc.html#autotoc_md21',1,'']]],
+  ['exception_40',['exception',['../classtr_1_1exception.html',1,'tr']]],
+  ['executable_5fdirectory_41',['executable_directory',['../namespacetr.html#a7cd08e1d8ab689d537f64de2683dc7a1',1,'tr']]],
+  ['exit_42',['exit',['../classtr_1_1application.html#ad468e60c47e951ff861df0f9daa9bd7baf24f62eeb789199b9b2e467df3b1876b',1,'tr::application']]]
 ];

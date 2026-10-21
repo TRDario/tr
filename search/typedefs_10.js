@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['zstring_5fview_0',['zstring_view',['../namespacetr.html#af4536441b49fec056af6a2432b30afff',1,'tr']]],
-  ['zstring_5fview_5fzspan_1',['zstring_view_zspan',['../namespacetr.html#ad235a84a8935109ea559902b6467232f',1,'tr']]]
+  ['wzstring_5fview_0',['wzstring_view',['../namespacetr.html#ab29d00b42d92d07c0e9a12b5a71f8642',1,'tr']]],
+  ['wzstring_5fview_5fzspan_1',['wzstring_view_zspan',['../namespacetr.html#a5e094e167093cbc3b9b720223223130c',1,'tr']]]
 ];

@@ -152,8 +152,8 @@ Public Types</h2></td></tr>
 <tr class="memdesc:a104bf1bab477913203ab2169bbec31ff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size type used by the span.  <br /></td></tr>
 <tr class="memitem:adf74aa4c3208d24990aab962e9eb58de" id="r_adf74aa4c3208d24990aab962e9eb58de"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#adf74aa4c3208d24990aab962e9eb58de">difference_type</a> = <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a0cfca98bbeed1e31ae9ef0344fb39389">ssize</a></td></tr>
 <tr class="memdesc:adf74aa4c3208d24990aab962e9eb58de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Difference type used by the span.  <br /></td></tr>
-<tr class="memitem:a2ba278cc53d4dc1d16d86fc84f502d43" id="r_a2ba278cc53d4dc1d16d86fc84f502d43"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a2ba278cc53d4dc1d16d86fc84f502d43">value_type</a> = <a class="el" href="namespacetr.html#af4536441b49fec056af6a2432b30afff">zstring_view</a></td></tr>
-<tr class="memdesc:a2ba278cc53d4dc1d16d86fc84f502d43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Value type used by the span.  <br /></td></tr>
+<tr class="memitem:a5fff2ea48756dacfabdc9509f1629cc3" id="r_a5fff2ea48756dacfabdc9509f1629cc3"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a5fff2ea48756dacfabdc9509f1629cc3">value_type</a> = <a class="el" href="classtr_1_1basic__zstring__view.html">basic_zstring_view</a>&lt;CharT, Traits&gt;</td></tr>
+<tr class="memdesc:a5fff2ea48756dacfabdc9509f1629cc3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Value type used by the span.  <br /></td></tr>
 <tr class="memitem:a3fc67b6b04caaf90a895535e62e35a62" id="r_a3fc67b6b04caaf90a895535e62e35a62"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a3fc67b6b04caaf90a895535e62e35a62">const_iterator</a> = <a class="el" href="classtr_1_1basic__zstring__view__zspan_1_1iterator.html">iterator</a></td></tr>
 <tr class="memdesc:a3fc67b6b04caaf90a895535e62e35a62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constant iterator type used by the span.  <br /></td></tr>
 </table><table class="memberdecls">
@@ -162,10 +162,10 @@ Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors and destructors</div></td></tr>
 <tr class="memitem:a5b4380363010a4d19ba70cb85bd02f17" id="r_a5b4380363010a4d19ba70cb85bd02f17"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a5b4380363010a4d19ba70cb85bd02f17">basic_zstring_view_zspan</a> () noexcept=default</td></tr>
 <tr class="memdesc:a5b4380363010a4d19ba70cb85bd02f17"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an empty NUL-terminated string view span.  <br /></td></tr>
-<tr class="memitem:ad37286e7e018edd47641bc282cddf6f0" id="r_ad37286e7e018edd47641bc282cddf6f0"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#ad37286e7e018edd47641bc282cddf6f0">basic_zstring_view_zspan</a> (CharT **ptr) noexcept</td></tr>
-<tr class="memdesc:ad37286e7e018edd47641bc282cddf6f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a NUL-terminated string view span.  <br /></td></tr>
-<tr class="memitem:a1311af1f8a7122a317240dd42add94e8" id="r_a1311af1f8a7122a317240dd42add94e8"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a1311af1f8a7122a317240dd42add94e8">basic_zstring_view_zspan</a> (const CharT **ptr) noexcept</td></tr>
-<tr class="memdesc:a1311af1f8a7122a317240dd42add94e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a NUL-terminated string view span.  <br /></td></tr>
+<tr class="memitem:a45fa55e143e64a0ea603e6ca4c95ca01" id="r_a45fa55e143e64a0ea603e6ca4c95ca01"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a45fa55e143e64a0ea603e6ca4c95ca01">basic_zstring_view_zspan</a> (CharT *const *ptr) noexcept</td></tr>
+<tr class="memdesc:a45fa55e143e64a0ea603e6ca4c95ca01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a NUL-terminated string view span.  <br /></td></tr>
+<tr class="memitem:aaf9363437bc1f61903c3eca1774103cc" id="r_aaf9363437bc1f61903c3eca1774103cc"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#aaf9363437bc1f61903c3eca1774103cc">basic_zstring_view_zspan</a> (const CharT *const *ptr) noexcept</td></tr>
+<tr class="memdesc:aaf9363437bc1f61903c3eca1774103cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a NUL-terminated string view span.  <br /></td></tr>
 <tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Iterators</div></td></tr>
 <tr class="memitem:a0e86f8e38b5b4d802385e1764b941dea" id="r_a0e86f8e38b5b4d802385e1764b941dea"><td class="memItemLeft">constexpr <a class="el" href="classtr_1_1basic__zstring__view__zspan_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a0e86f8e38b5b4d802385e1764b941dea">begin</a> () const noexcept</td></tr>
 <tr class="memdesc:a0e86f8e38b5b4d802385e1764b941dea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an iterator to the beginning of the span.  <br /></td></tr>
@@ -176,14 +176,14 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a11b3d3aa1265dc61a9f03b370923efd9" id="r_a11b3d3aa1265dc61a9f03b370923efd9"><td class="memItemLeft">constexpr <a class="el" href="structtr_1_1basic__zstring__view__zspan_1_1end__sentinel.html">end_sentinel</a>&#160;</td><td class="memItemRight"><a class="el" href="#a11b3d3aa1265dc61a9f03b370923efd9">cend</a> () const noexcept</td></tr>
 <tr class="memdesc:a11b3d3aa1265dc61a9f03b370923efd9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an iterator sentinel to the end of the span.  <br /></td></tr>
 <tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Access</div></td></tr>
-<tr class="memitem:a22ce1bd1426b53593cf0d51e54280ce3" id="r_a22ce1bd1426b53593cf0d51e54280ce3"><td class="memItemLeft">constexpr <a class="el" href="#a2ba278cc53d4dc1d16d86fc84f502d43">value_type</a>&#160;</td><td class="memItemRight"><a class="el" href="#a22ce1bd1426b53593cf0d51e54280ce3">operator[]</a> (<a class="el" href="#a104bf1bab477913203ab2169bbec31ff">size_type</a> index) const noexcept</td></tr>
+<tr class="memitem:a22ce1bd1426b53593cf0d51e54280ce3" id="r_a22ce1bd1426b53593cf0d51e54280ce3"><td class="memItemLeft">constexpr <a class="el" href="#a5fff2ea48756dacfabdc9509f1629cc3">value_type</a>&#160;</td><td class="memItemRight"><a class="el" href="#a22ce1bd1426b53593cf0d51e54280ce3">operator[]</a> (<a class="el" href="#a104bf1bab477913203ab2169bbec31ff">size_type</a> index) const noexcept</td></tr>
 <tr class="memdesc:a22ce1bd1426b53593cf0d51e54280ce3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accesses a specific string.  <br /></td></tr>
-<tr class="memitem:abeb357f581b7821a9c1341e153f12698" id="r_abeb357f581b7821a9c1341e153f12698"><td class="memItemLeft">constexpr <a class="el" href="#a2ba278cc53d4dc1d16d86fc84f502d43">value_type</a>&#160;</td><td class="memItemRight"><a class="el" href="#abeb357f581b7821a9c1341e153f12698">at</a> (<a class="el" href="#a104bf1bab477913203ab2169bbec31ff">size_type</a> index) const noexcept</td></tr>
+<tr class="memitem:abeb357f581b7821a9c1341e153f12698" id="r_abeb357f581b7821a9c1341e153f12698"><td class="memItemLeft">constexpr <a class="el" href="#a5fff2ea48756dacfabdc9509f1629cc3">value_type</a>&#160;</td><td class="memItemRight"><a class="el" href="#abeb357f581b7821a9c1341e153f12698">at</a> (<a class="el" href="#a104bf1bab477913203ab2169bbec31ff">size_type</a> index) const noexcept</td></tr>
 <tr class="memdesc:abeb357f581b7821a9c1341e153f12698"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accesses a specific string.  <br /></td></tr>
-<tr class="memitem:acbf0b8f6ba1df88b53757160505ad4d6" id="r_acbf0b8f6ba1df88b53757160505ad4d6"><td class="memItemLeft">constexpr <a class="el" href="#a2ba278cc53d4dc1d16d86fc84f502d43">value_type</a>&#160;</td><td class="memItemRight"><a class="el" href="#acbf0b8f6ba1df88b53757160505ad4d6">front</a> () const noexcept</td></tr>
+<tr class="memitem:acbf0b8f6ba1df88b53757160505ad4d6" id="r_acbf0b8f6ba1df88b53757160505ad4d6"><td class="memItemLeft">constexpr <a class="el" href="#a5fff2ea48756dacfabdc9509f1629cc3">value_type</a>&#160;</td><td class="memItemRight"><a class="el" href="#acbf0b8f6ba1df88b53757160505ad4d6">front</a> () const noexcept</td></tr>
 <tr class="memdesc:acbf0b8f6ba1df88b53757160505ad4d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accesses the first string in the span.  <br /></td></tr>
-<tr class="memitem:a2eef47b2f612cd3d923c6f7b611feef3" id="r_a2eef47b2f612cd3d923c6f7b611feef3"><td class="memItemLeft">constexpr const CharT **&#160;</td><td class="memItemRight"><a class="el" href="#a2eef47b2f612cd3d923c6f7b611feef3">data</a> () const noexcept</td></tr>
-<tr class="memdesc:a2eef47b2f612cd3d923c6f7b611feef3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a pointer to the raw data of the span.  <br /></td></tr>
+<tr class="memitem:a8df5a4e1f82c8750295aa0b5d0e8e9db" id="r_a8df5a4e1f82c8750295aa0b5d0e8e9db"><td class="memItemLeft">constexpr const CharT *const *&#160;</td><td class="memItemRight"><a class="el" href="#a8df5a4e1f82c8750295aa0b5d0e8e9db">data</a> () const noexcept</td></tr>
+<tr class="memdesc:a8df5a4e1f82c8750295aa0b5d0e8e9db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a pointer to the raw data of the span.  <br /></td></tr>
 <tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Length</div></td></tr>
 <tr class="memitem:a1e6e1a353bd4eddbb5b82e7fc8e6e16b" id="r_a1e6e1a353bd4eddbb5b82e7fc8e6e16b"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="#a1e6e1a353bd4eddbb5b82e7fc8e6e16b">empty</a> () const noexcept</td></tr>
 <tr class="memdesc:a1e6e1a353bd4eddbb5b82e7fc8e6e16b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the span is empty.  <br /></td></tr>
@@ -225,8 +225,8 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
 
 </div>
 </div>
-<a id="a2ba278cc53d4dc1d16d86fc84f502d43" name="a2ba278cc53d4dc1d16d86fc84f502d43"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2ba278cc53d4dc1d16d86fc84f502d43">&#9670;&#160;</a></span>value_type</h2>
+<a id="a5fff2ea48756dacfabdc9509f1629cc3" name="a5fff2ea48756dacfabdc9509f1629cc3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5fff2ea48756dacfabdc9509f1629cc3">&#9670;&#160;</a></span>value_type</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -234,7 +234,7 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
 template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="classtr_1_1basic__zstring__view__zspan.html">tr::basic_zstring_view_zspan</a>&lt; CharT, Traits &gt;::value_type = <a class="el" href="namespacetr.html#af4536441b49fec056af6a2432b30afff">zstring_view</a></td>
+          <td class="memname">using <a class="el" href="classtr_1_1basic__zstring__view__zspan.html">tr::basic_zstring_view_zspan</a>&lt; CharT, Traits &gt;::value_type = <a class="el" href="classtr_1_1basic__zstring__view.html">basic_zstring_view</a>&lt;CharT, Traits&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -291,8 +291,8 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
 
 </div>
 </div>
-<a id="ad37286e7e018edd47641bc282cddf6f0" name="ad37286e7e018edd47641bc282cddf6f0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad37286e7e018edd47641bc282cddf6f0">&#9670;&#160;</a></span>basic_zstring_view_zspan() <span class="overload">[2/3]</span></h2>
+<a id="a45fa55e143e64a0ea603e6ca4c95ca01" name="a45fa55e143e64a0ea603e6ca4c95ca01"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a45fa55e143e64a0ea603e6ca4c95ca01">&#9670;&#160;</a></span>basic_zstring_view_zspan() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -305,7 +305,7 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
         <tr>
           <td class="memname"><a class="el" href="classtr_1_1basic__zstring__view__zspan.html">tr::basic_zstring_view_zspan</a>&lt; CharT, Traits &gt;::basic_zstring_view_zspan </td>
           <td>(</td>
-          <td class="paramtype">CharT **</td>          <td class="paramname"><span class="paramname"><em>ptr</em></span></td><td>)</td>
+          <td class="paramtype">CharT *const *</td>          <td class="paramname"><span class="paramname"><em>ptr</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -326,8 +326,8 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
 
 </div>
 </div>
-<a id="a1311af1f8a7122a317240dd42add94e8" name="a1311af1f8a7122a317240dd42add94e8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1311af1f8a7122a317240dd42add94e8">&#9670;&#160;</a></span>basic_zstring_view_zspan() <span class="overload">[3/3]</span></h2>
+<a id="aaf9363437bc1f61903c3eca1774103cc" name="aaf9363437bc1f61903c3eca1774103cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf9363437bc1f61903c3eca1774103cc">&#9670;&#160;</a></span>basic_zstring_view_zspan() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -340,7 +340,7 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
         <tr>
           <td class="memname"><a class="el" href="classtr_1_1basic__zstring__view__zspan.html">tr::basic_zstring_view_zspan</a>&lt; CharT, Traits &gt;::basic_zstring_view_zspan </td>
           <td>(</td>
-          <td class="paramtype">const CharT **</td>          <td class="paramname"><span class="paramname"><em>ptr</em></span></td><td>)</td>
+          <td class="paramtype">const CharT *const *</td>          <td class="paramname"><span class="paramname"><em>ptr</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -494,7 +494,7 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="#a2ba278cc53d4dc1d16d86fc84f502d43">value_type</a> <a class="el" href="classtr_1_1basic__zstring__view__zspan.html">tr::basic_zstring_view_zspan</a>&lt; CharT, Traits &gt;::operator[] </td>
+          <td class="memname"><a class="el" href="#a5fff2ea48756dacfabdc9509f1629cc3">value_type</a> <a class="el" href="classtr_1_1basic__zstring__view__zspan.html">tr::basic_zstring_view_zspan</a>&lt; CharT, Traits &gt;::operator[] </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="#a104bf1bab477913203ab2169bbec31ff">size_type</a></td>          <td class="paramname"><span class="paramname"><em>index</em></span></td><td>)</td>
           <td> const</td>
@@ -530,7 +530,7 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="#a2ba278cc53d4dc1d16d86fc84f502d43">value_type</a> <a class="el" href="classtr_1_1basic__zstring__view__zspan.html">tr::basic_zstring_view_zspan</a>&lt; CharT, Traits &gt;::at </td>
+          <td class="memname"><a class="el" href="#a5fff2ea48756dacfabdc9509f1629cc3">value_type</a> <a class="el" href="classtr_1_1basic__zstring__view__zspan.html">tr::basic_zstring_view_zspan</a>&lt; CharT, Traits &gt;::at </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="#a104bf1bab477913203ab2169bbec31ff">size_type</a></td>          <td class="paramname"><span class="paramname"><em>index</em></span></td><td>)</td>
           <td> const</td>
@@ -566,7 +566,7 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="#a2ba278cc53d4dc1d16d86fc84f502d43">value_type</a> <a class="el" href="classtr_1_1basic__zstring__view__zspan.html">tr::basic_zstring_view_zspan</a>&lt; CharT, Traits &gt;::front </td>
+          <td class="memname"><a class="el" href="#a5fff2ea48756dacfabdc9509f1629cc3">value_type</a> <a class="el" href="classtr_1_1basic__zstring__view__zspan.html">tr::basic_zstring_view_zspan</a>&lt; CharT, Traits &gt;::front </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -584,8 +584,8 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
 
 </div>
 </div>
-<a id="a2eef47b2f612cd3d923c6f7b611feef3" name="a2eef47b2f612cd3d923c6f7b611feef3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2eef47b2f612cd3d923c6f7b611feef3">&#9670;&#160;</a></span>data()</h2>
+<a id="a8df5a4e1f82c8750295aa0b5d0e8e9db" name="a8df5a4e1f82c8750295aa0b5d0e8e9db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8df5a4e1f82c8750295aa0b5d0e8e9db">&#9670;&#160;</a></span>data()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -596,7 +596,7 @@ template&lt;typename CharT, typename Traits = std::char_traits&lt;CharT&gt;&gt; 
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">const CharT ** <a class="el" href="classtr_1_1basic__zstring__view__zspan.html">tr::basic_zstring_view_zspan</a>&lt; CharT, Traits &gt;::data </td>
+          <td class="memname">const CharT *const  * <a class="el" href="classtr_1_1basic__zstring__view__zspan.html">tr::basic_zstring_view_zspan</a>&lt; CharT, Traits &gt;::data </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>

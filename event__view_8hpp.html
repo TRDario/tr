@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=11" />
   <meta name="generator" content="Doxygen 1.18.0" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>tr: tr::event_visitor Concept Reference</title>
+  <title>tr: event_view.hpp File Reference</title>
   <link href="tabs.css" rel="stylesheet" type="text/css" />
   <script type="text/javascript" src="jquery.js"></script>
   <script type="text/javascript" src="dynsections.js"></script>
@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', codefold.init);
   </div>
 </div>
 <script type="text/javascript">
-document.addEventListener('DOMContentLoaded',() => { initNavTree('concepttr_1_1event__visitor.html','',''); });
+document.addEventListener('DOMContentLoaded',() => { initNavTree('event__view_8hpp.html','',''); });
 </script>
 <div id="container">
 <div id="doc-content">
@@ -122,47 +122,48 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('concepttr_1_1e
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">tr::event_visitor Concept Reference</div></div>
+  <div class="headertitle"><div class="title">event_view.hpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Valid event visitor type.  
+<p>Provides <span class="tt"><a class="el" href="classtr_1_1event__view.html" title="View to a generic event.">tr::event_view</a></span>.  
 <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Valid event visitor type. </p>
-<p>Event visitors must be callable with all event types, and all overloads must return the same type. </p>
-</div><h2 id="header-conceptdef" class="groupheader">Concept definition</h2>
-<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepttr_1_1event__visitor.html">event_visitor</a> = std::invocable&lt;T, quit_event&gt; &amp;&amp; std::invocable&lt;T, window_show_event&gt; &amp;&amp; std::invocable&lt;T, window_hide_event&gt; &amp;&amp;</div>
-<div class="line">                            std::invocable&lt;T, backbuffer_resize_event&gt; &amp;&amp; std::invocable&lt;T, window_gain_focus_event&gt; &amp;&amp;</div>
-<div class="line">                            std::invocable&lt;T, window_lose_focus_event&gt; &amp;&amp; std::invocable&lt;T, window_mouse_enter_event&gt; &amp;&amp;</div>
-<div class="line">                            std::invocable&lt;T, window_mouse_leave_event&gt; &amp;&amp; std::invocable&lt;T, key_down_event&gt; &amp;&amp;</div>
-<div class="line">                            std::invocable&lt;T, key_up_event&gt; &amp;&amp; std::invocable&lt;T, text_input_event&gt; &amp;&amp;</div>
-<div class="line">                            std::invocable&lt;T, mouse_motion_event&gt; &amp;&amp; std::invocable&lt;T, mouse_down_event&gt; &amp;&amp;</div>
-<div class="line">                            std::invocable&lt;T, mouse_up_event&gt; &amp;&amp; std::invocable&lt;T, mouse_wheel_event&gt; &amp;&amp; std::invocable&lt;T, unknown_event&gt; &amp;&amp;</div>
-<div class="line">                            std::same_as&lt;std::invoke_result_t&lt;T, quit_event&gt;, std::invoke_result_t&lt;T, window_show_event&gt;&gt; &amp;&amp;</div>
-<div class="line">                            std::same_as&lt;std::invoke_result_t&lt;T, quit_event&gt;, std::invoke_result_t&lt;T, window_hide_event&gt;&gt; &amp;&amp;</div>
-<div class="line">                            std::same_as&lt;std::invoke_result_t&lt;T, quit_event&gt;, std::invoke_result_t&lt;T, backbuffer_resize_event&gt;&gt; &amp;&amp;</div>
-<div class="line">                            std::same_as&lt;std::invoke_result_t&lt;T, quit_event&gt;, std::invoke_result_t&lt;T, window_gain_focus_event&gt;&gt; &amp;&amp;</div>
-<div class="line">                            std::same_as&lt;std::invoke_result_t&lt;T, quit_event&gt;, std::invoke_result_t&lt;T, window_lose_focus_event&gt;&gt; &amp;&amp;</div>
-<div class="line">                            std::same_as&lt;std::invoke_result_t&lt;T, quit_event&gt;, std::invoke_result_t&lt;T, window_mouse_enter_event&gt;&gt; &amp;&amp;</div>
-<div class="line">                            std::same_as&lt;std::invoke_result_t&lt;T, quit_event&gt;, std::invoke_result_t&lt;T, window_mouse_leave_event&gt;&gt; &amp;&amp;</div>
-<div class="line">                            std::same_as&lt;std::invoke_result_t&lt;T, quit_event&gt;, std::invoke_result_t&lt;T, key_down_event&gt;&gt; &amp;&amp;</div>
-<div class="line">                            std::same_as&lt;std::invoke_result_t&lt;T, quit_event&gt;, std::invoke_result_t&lt;T, key_up_event&gt;&gt; &amp;&amp;</div>
-<div class="line">                            std::same_as&lt;std::invoke_result_t&lt;T, quit_event&gt;, std::invoke_result_t&lt;T, text_input_event&gt;&gt; &amp;&amp;</div>
-<div class="line">                            std::same_as&lt;std::invoke_result_t&lt;T, quit_event&gt;, std::invoke_result_t&lt;T, mouse_motion_event&gt;&gt; &amp;&amp;</div>
-<div class="line">                            std::same_as&lt;std::invoke_result_t&lt;T, quit_event&gt;, std::invoke_result_t&lt;T, mouse_down_event&gt;&gt; &amp;&amp;</div>
-<div class="line">                            std::same_as&lt;std::invoke_result_t&lt;T, quit_event&gt;, std::invoke_result_t&lt;T, mouse_up_event&gt;&gt; &amp;&amp;</div>
-<div class="line">                            std::same_as&lt;std::invoke_result_t&lt;T, quit_event&gt;, std::invoke_result_t&lt;T, mouse_wheel_event&gt;&gt; &amp;&amp;</div>
-<div class="line">                            std::same_as&lt;std::invoke_result_t&lt;T, quit_event&gt;, std::invoke_result_t&lt;T, unknown_event&gt;&gt;</div>
-<div class="ttc" id="aconcepttr_1_1event__visitor_html"><div class="ttname"><a href="concepttr_1_1event__visitor.html">tr::event_visitor</a></div><div class="ttdoc">Valid event visitor type.</div><div class="ttdef"><b>Definition</b> event.hpp:298</div></div>
-</div><!-- fragment --></div><!-- contents -->
+<div class="textblock"><p>Provides <span class="tt"><a class="el" href="classtr_1_1event__view.html" title="View to a generic event.">tr::event_view</a></span>. </p>
+</div>
+<p><a href="event__view_8hpp_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:tr_3A_3Aevent_5Fview" id="r_tr_3A_3Aevent_5Fview"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classtr_1_1event__view.html">tr::event_view</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">View to a generic event.  <a href="classtr_1_1event__view.html#details">More...</a><br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-namespaces" class="groupheader"><a id="namespaces" name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:tr" id="r_tr"><td class="memItemLeft">namespace &#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html">tr</a></td></tr>
+<tr class="memdesc:namespacetr"><td class="mdescLeft">&#160;</td><td class="mdescRight">Namespace containing all tr functionality. <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-concepts" class="groupheader"><a id="concepts" name="concepts"></a>
+Concepts</h2></td></tr>
+<tr class="memitem:tr_3A_3Aevent_5Fview_5Fvisitor" id="r_tr_3A_3Aevent_5Fview_5Fvisitor"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concepttr_1_1event__view__visitor.html">tr::event_view_visitor</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Valid event view visitor type. <br /></td></tr>
+<tr class="memitem:tr_3A_3Anothrow_5Fevent_5Fview_5Fvisitor" id="r_tr_3A_3Anothrow_5Fevent_5Fview_5Fvisitor"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concepttr_1_1nothrow__event__view__visitor.html">tr::nothrow_event_view_visitor</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Valid event view visitor type that doesn't throw. <br /></td></tr>
+</table>
+</div><!-- contents -->
 </div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
 </div><!-- container -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a href="namespacetr.html">tr</a></li><li class="navelem"><a href="concepttr_1_1event__visitor.html">event_visitor</a></li>
+    <li class="navelem"><a href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a href="dir_48c35ed6b28060506e9df53e28b74a05.html">tr</a></li><li class="navelem"><a href="dir_697f726910a7296205b6ff25f822d718.html">sysgfx</a></li><li class="navelem"><a href="event__view_8hpp.html">event_view.hpp</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.18.0 </li>
   </ul>
 </div>

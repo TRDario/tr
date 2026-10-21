@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('optional__vari
 <div class="foldopen" id="foldopen00039" data-start="{" data-end="}">
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="classtr_1_1optional__variant.html#a1da9f1b8eec74f4b0375d15eada1b1b1">   39</a></span>        [[nodiscard]] <span class="keyword">constexpr</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="classtr_1_1optional__variant.html#a1da9f1b8eec74f4b0375d15eada1b1b1">has_value</a>() const noexcept</div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        {</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>            <span class="keywordflow">return</span> std::holds_alternative&lt;empty_variant_t&gt;(*<span class="keyword">this</span>);</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>            <span class="keywordflow">return</span> !std::holds_alternative&lt;empty_variant_t&gt;(*<span class="keyword">this</span>);</div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        }</div>
 </div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span></div>

@@ -7,7 +7,7 @@ var searchData=
   ['pixel_5fproxy_4',['pixel_proxy',['../classtr_1_1pixel__proxy.html',1,'tr']]],
   ['pointer_5fiterator_5',['pointer_iterator',['../classtr_1_1pointer__iterator.html',1,'tr']]],
   ['pointer_5fiterator_3c_20const_5fiterator_2c_20const_5fpointer_20_3e_6',['pointer_iterator&lt; const_iterator, const_pointer &gt;',['../classtr_1_1pointer__iterator.html',1,'tr']]],
-  ['pointer_5fiterator_3c_20iterator_2c_20const_20chart_20_2a_2a_20_3e_7',['pointer_iterator&lt; iterator, const CharT ** &gt;',['../classtr_1_1pointer__iterator.html',1,'tr']]],
+  ['pointer_5fiterator_3c_20iterator_2c_20const_20chart_20_2aconst_20_2a_20_3e_7',['pointer_iterator&lt; iterator, const CharT *const * &gt;',['../classtr_1_1pointer__iterator.html',1,'tr']]],
   ['pointer_5fiterator_3c_20iterator_2c_20const_5fpointer_20_3e_8',['pointer_iterator&lt; iterator, const_pointer &gt;',['../classtr_1_1pointer__iterator.html',1,'tr']]],
   ['pointer_5fiterator_3c_20iterator_2c_20pointer_20_3e_9',['pointer_iterator&lt; iterator, pointer &gt;',['../classtr_1_1pointer__iterator.html',1,'tr']]]
 ];

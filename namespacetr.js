@@ -76,8 +76,6 @@ var namespacetr =
     ] ],
     [ "literals", "namespacetr_1_1literals.html", "namespacetr_1_1literals" ],
     [ "matrix_operators", "namespacetr_1_1literals_1_1matrix__operators.html", [
-      [ "operator*", "namespacetr_1_1literals_1_1matrix__operators.html#a30b96c384a2b216f934b182d0f1a5dd7", null ],
-      [ "operator*", "namespacetr_1_1literals_1_1matrix__operators.html#a92dd69a9ae283ca55a29337d7875888d", null ],
       [ "operator*", "namespacetr_1_1literals_1_1matrix__operators.html#af4088a44ea911e8aa39f4c473d6931e1", null ],
       [ "operator*", "namespacetr_1_1literals_1_1matrix__operators.html#a38c6f9769bdba6831f98241a2bc229b4", null ]
     ] ],
@@ -160,15 +158,15 @@ var namespacetr =
     [ "custom_exception", "classtr_1_1custom__exception.html", "classtr_1_1custom__exception" ],
     [ "decryption_error", "classtr_1_1decryption__error.html", "classtr_1_1decryption__error" ],
     [ "defer", "classtr_1_1defer.html", "classtr_1_1defer" ],
-    [ "dialog_filter", "structtr_1_1dialog__filter.html", "structtr_1_1dialog__filter" ],
     [ "directory_log_sink", "classtr_1_1directory__log__sink.html", "classtr_1_1directory__log__sink" ],
     [ "dynamic_atlas", "classtr_1_1dynamic__atlas.html", "classtr_1_1dynamic__atlas" ],
     [ "dynamic_index_buffer", "classtr_1_1dynamic__index__buffer.html", "classtr_1_1dynamic__index__buffer" ],
     [ "dynamic_vertex_buffer", "classtr_1_1dynamic__vertex__buffer.html", "classtr_1_1dynamic__vertex__buffer" ],
     [ "empty_variant_t", "structtr_1_1empty__variant__t.html", null ],
     [ "enum_wrapper", "classtr_1_1enum__wrapper.html", "classtr_1_1enum__wrapper" ],
-    [ "event", "classtr_1_1event.html", "classtr_1_1event" ],
+    [ "event_view", "classtr_1_1event__view.html", "classtr_1_1event__view" ],
     [ "exception", "classtr_1_1exception.html", "classtr_1_1exception" ],
+    [ "file_dialog_filter", "structtr_1_1file__dialog__filter.html", "structtr_1_1file__dialog__filter" ],
     [ "file_not_found", "classtr_1_1file__not__found.html", "classtr_1_1file__not__found" ],
     [ "file_open_error", "classtr_1_1file__open__error.html", "classtr_1_1file__open__error" ],
     [ "fragment_shader", "classtr_1_1fragment__shader.html", "classtr_1_1fragment__shader" ],
@@ -268,6 +266,7 @@ var namespacetr =
     [ "string_literal", "structtr_1_1string__literal.html", "structtr_1_1string__literal" ],
     [ "string_pool", "classtr_1_1string__pool.html", "classtr_1_1string__pool" ],
     [ "sub_bitmap", "classtr_1_1sub__bitmap.html", "classtr_1_1sub__bitmap" ],
+    [ "temporary_file", "classtr_1_1temporary__file.html", "classtr_1_1temporary__file" ],
     [ "text_input_event", "structtr_1_1text__input__event.html", "structtr_1_1text__input__event" ],
     [ "texture", "classtr_1_1texture.html", "classtr_1_1texture" ],
     [ "texture_target", "classtr_1_1texture__target.html", "classtr_1_1texture__target" ],
@@ -327,7 +326,7 @@ var namespacetr =
     [ "enumerator", "concepttr_1_1enumerator.html", null ],
     [ "equality_predicate", "concepttr_1_1equality__predicate.html", null ],
     [ "event_type", "concepttr_1_1event__type.html", null ],
-    [ "event_visitor", "concepttr_1_1event__visitor.html", null ],
+    [ "event_view_visitor", "concepttr_1_1event__view__visitor.html", null ],
     [ "formattable", "concepttr_1_1formattable.html", null ],
     [ "formattable_with", "concepttr_1_1formattable__with.html", null ],
     [ "forward_iterator_to_convertible_to", "concepttr_1_1forward__iterator__to__convertible__to.html", null ],
@@ -342,7 +341,7 @@ var namespacetr =
     [ "move_assignable", "concepttr_1_1move__assignable.html", null ],
     [ "non_const_lvalue_reference", "concepttr_1_1non__const__lvalue__reference.html", null ],
     [ "nothrow_destructible", "concepttr_1_1nothrow__destructible.html", null ],
-    [ "nothrow_event_visitor", "concepttr_1_1nothrow__event__visitor.html", null ],
+    [ "nothrow_event_view_visitor", "concepttr_1_1nothrow__event__view__visitor.html", null ],
     [ "nothrow_forward_iterator_to_convertible_to", "concepttr_1_1nothrow__forward__iterator__to__convertible__to.html", null ],
     [ "nothrow_forward_range_to_convertible_to", "concepttr_1_1nothrow__forward__range__to__convertible__to.html", null ],
     [ "nothrow_iterator", "concepttr_1_1nothrow__iterator.html", null ],
@@ -410,7 +409,9 @@ var namespacetr =
     [ "polygon_view", "namespacetr.html#a1822833999d4fd3ae28259f4e02d58a0", null ],
     [ "codepoint", "namespacetr.html#aeffe1b14b7778ab5180bec7c14f372b9", null ],
     [ "zstring_view", "namespacetr.html#af4536441b49fec056af6a2432b30afff", null ],
+    [ "wzstring_view", "namespacetr.html#ab29d00b42d92d07c0e9a12b5a71f8642", null ],
     [ "zstring_view_zspan", "namespacetr.html#ad235a84a8935109ea559902b6467232f", null ],
+    [ "wzstring_view_zspan", "namespacetr.html#a5e094e167093cbc3b9b720223223130c", null ],
     [ "audio_format", "namespacetr.html#aadc8d482d8d35a661880c99bdd86069e", [
       [ "mono16", "namespacetr.html#aadc8d482d8d35a661880c99bdd86069ea6b53b9f17c96fdeeac1fe6a4b4f64b88", null ],
       [ "stereo16", "namespacetr.html#aadc8d482d8d35a661880c99bdd86069ead9c37a9391c91175a6c155b3803ec8b1", null ]
@@ -453,22 +454,6 @@ var namespacetr =
       [ "no", "namespacetr.html#aa7a1fb973e2b89b37e78a95d4461171fa7fa3b767c460b54a2be4d49030b349c7", null ],
       [ "hand", "namespacetr.html#aa7a1fb973e2b89b37e78a95d4461171fa573ce5969e9884d49d4fab77b09a306a", null ]
     ] ],
-    [ "message_box_type", "namespacetr.html#a4d5881ba37a7337aca11853f1ae62da1", [
-      [ "error", "namespacetr.html#a4d5881ba37a7337aca11853f1ae62da1acb5e100e5a9a3e7f6d1fd97512215282", null ],
-      [ "warning", "namespacetr.html#a4d5881ba37a7337aca11853f1ae62da1a7b83d3f08fa392b79e3f553b585971cd", null ],
-      [ "info", "namespacetr.html#a4d5881ba37a7337aca11853f1ae62da1acaf9b6b99962bf5c2264824231d7a40c", null ]
-    ] ],
-    [ "message_box_layout", "namespacetr.html#a027a146e82b3de429a02c03fe2ae4bff", [
-      [ "ok", "namespacetr.html#a027a146e82b3de429a02c03fe2ae4bffa444bcb3a3fcf8389296c49467f27e1d6", null ],
-      [ "yes_no", "namespacetr.html#a027a146e82b3de429a02c03fe2ae4bffa20f0596c21ad67a7fda598ffc7d038d1", null ],
-      [ "yes_no_cancel", "namespacetr.html#a027a146e82b3de429a02c03fe2ae4bffa5c5cb337bb234e240912dc139048038c", null ]
-    ] ],
-    [ "message_box_button", "namespacetr.html#a7f28eae560c1098cb5b87baad7ff5326", [
-      [ "ok", "namespacetr.html#a7f28eae560c1098cb5b87baad7ff5326a444bcb3a3fcf8389296c49467f27e1d6", null ],
-      [ "yes", "namespacetr.html#a7f28eae560c1098cb5b87baad7ff5326aa6105c0a611b41b08f1209506350279e", null ],
-      [ "no", "namespacetr.html#a7f28eae560c1098cb5b87baad7ff5326a7fa3b767c460b54a2be4d49030b349c7", null ],
-      [ "cancel", "namespacetr.html#a7f28eae560c1098cb5b87baad7ff5326a10aec35353f9c4096a71c38654c3d402", null ]
-    ] ],
     [ "primitive", "namespacetr.html#a400576423c7753c57e41f5375e765753", [
       [ "points", "namespacetr.html#a400576423c7753c57e41f5375e765753a0aab81de5c4c87021772015efc184d67", null ],
       [ "lines", "namespacetr.html#a400576423c7753c57e41f5375e765753a980da98409d058c365664ff7ea33dd6b", null ],
@@ -500,6 +485,22 @@ var namespacetr =
       [ "error", "namespacetr.html#af80aef48811e46f90a915d32219add20acb5e100e5a9a3e7f6d1fd97512215282", null ],
       [ "fatal", "namespacetr.html#af80aef48811e46f90a915d32219add20adf6402fd9ecc60f5a2159fdf45711cd4", null ],
       [ "off", "namespacetr.html#af80aef48811e46f90a915d32219add20a3262d48df5d75e3452f0f16b313b7808", null ]
+    ] ],
+    [ "message_box_type", "namespacetr.html#a4d5881ba37a7337aca11853f1ae62da1", [
+      [ "error", "namespacetr.html#a4d5881ba37a7337aca11853f1ae62da1acb5e100e5a9a3e7f6d1fd97512215282", null ],
+      [ "warning", "namespacetr.html#a4d5881ba37a7337aca11853f1ae62da1a7b83d3f08fa392b79e3f553b585971cd", null ],
+      [ "info", "namespacetr.html#a4d5881ba37a7337aca11853f1ae62da1acaf9b6b99962bf5c2264824231d7a40c", null ]
+    ] ],
+    [ "message_box_layout", "namespacetr.html#a027a146e82b3de429a02c03fe2ae4bff", [
+      [ "ok", "namespacetr.html#a027a146e82b3de429a02c03fe2ae4bffa444bcb3a3fcf8389296c49467f27e1d6", null ],
+      [ "yes_no", "namespacetr.html#a027a146e82b3de429a02c03fe2ae4bffa20f0596c21ad67a7fda598ffc7d038d1", null ],
+      [ "yes_no_cancel", "namespacetr.html#a027a146e82b3de429a02c03fe2ae4bffa5c5cb337bb234e240912dc139048038c", null ]
+    ] ],
+    [ "message_box_button", "namespacetr.html#a7f28eae560c1098cb5b87baad7ff5326", [
+      [ "ok", "namespacetr.html#a7f28eae560c1098cb5b87baad7ff5326a444bcb3a3fcf8389296c49467f27e1d6", null ],
+      [ "yes", "namespacetr.html#a7f28eae560c1098cb5b87baad7ff5326aa6105c0a611b41b08f1209506350279e", null ],
+      [ "no", "namespacetr.html#a7f28eae560c1098cb5b87baad7ff5326a7fa3b767c460b54a2be4d49030b349c7", null ],
+      [ "cancel", "namespacetr.html#a7f28eae560c1098cb5b87baad7ff5326a10aec35353f9c4096a71c38654c3d402", null ]
     ] ],
     [ "mouse_button", "namespacetr.html#a4edd5ed4e6341a9436a505d8203fa820", [
       [ "none", "namespacetr.html#a4edd5ed4e6341a9436a505d8203fa820a334c4a4c42fdb79d7ebc3e73b517e6f8", null ],
@@ -626,7 +627,7 @@ var namespacetr =
     [ "operator==", "namespacetr.html#a5cda759b49fdca7d2dd2f3ab6fca9a89", null ],
     [ "available_audio_devices", "namespacetr.html#abd1b216fab3f8261778719ecedb13db2", null ],
     [ "open_audio_file", "namespacetr.html#af65c53dd7299b84583792403a5d977ff", null ],
-    [ "run_application", "namespacetr.html#a1c1cfd2a6376f9c1141be9438e86a3f5", null ],
+    [ "run_application", "namespacetr.html#a44b4ce0e234ad7bb45eddf2634130d10", null ],
     [ "set_update_frequency", "namespacetr.html#a8245ecf1e271ff4898f87bec4dcb7e63", null ],
     [ "create_checkerboard", "namespacetr.html#ac65915d228130f1d5718c738fee6e5f8", null ],
     [ "load_embedded_bitmap", "namespacetr.html#a6323c1c7268fac9925b45c0dff07d3ba", null ],
@@ -639,15 +640,14 @@ var namespacetr =
     [ "show_cursor", "namespacetr.html#a4c6ed8387dc62bf8b190cc27a6eafa8b", null ],
     [ "hide_cursor", "namespacetr.html#a9bca977f04b77ea8fe33081adbc2d103", null ],
     [ "set_cursor", "namespacetr.html#ac3eb6e678623a05bdee0a6fbd6a887f0", null ],
-    [ "show_message_box", "namespacetr.html#a95299851f26b7463a3e8cd921ae63d66", null ],
-    [ "show_open_file_dialog", "namespacetr.html#ab6db26eb90a25b5ad7966d284e60027d", null ],
-    [ "show_open_files_dialog", "namespacetr.html#ac1a2ce2a431ac778a041a559f33a6384", null ],
-    [ "show_open_folder_dialog", "namespacetr.html#a331476cd06f3ffd9235c5fd088aa7eaf", null ],
-    [ "show_open_folders_dialog", "namespacetr.html#a4b6935eca2c1aeba8b3ed8bdc1831a7a", null ],
-    [ "show_save_file_dialog", "namespacetr.html#a57f7480d64ea881cf42fd54ce717c31e", null ],
     [ "display_size", "namespacetr.html#a8158eba89839d1554a8d8befdcf49640", null ],
     [ "max_msaa", "namespacetr.html#a7cd47fd7297d1af20665319cf9fd26cb", null ],
     [ "refresh_rate", "namespacetr.html#a1b88497d560081def5647f52fd9af1a8", null ],
+    [ "show_open_file_dialog", "namespacetr.html#a85f6b9a09581bcde934a28b47e8b0c0b", null ],
+    [ "show_open_files_dialog", "namespacetr.html#acf07b9b088755f806e5903c9509ba763", null ],
+    [ "show_save_file_dialog", "namespacetr.html#a9324a72b74d848d23955f544ca5c996b", null ],
+    [ "show_open_folder_dialog", "namespacetr.html#a338fa47af77de46f0f045c3fb58b1e42", null ],
+    [ "show_open_folders_dialog", "namespacetr.html#a3e1d32f10980df508e208e63c4730edf", null ],
     [ "to_scancode", "namespacetr.html#ac704a529dce5eec908649379e8522ab1", null ],
     [ "to_keycode", "namespacetr.html#ac84c6d0c7158915622ee906fc928a62f", null ],
     [ "name", "namespacetr.html#a43515093e721783af0c2a0b19f27eb31", null ],
@@ -658,6 +658,7 @@ var namespacetr =
     [ "operator\"\"_kc", "namespacetr_1_1literals_1_1keyboard__literals.html#a7c01436d1ba3b4bc2c5458b1b55eb53f", null ],
     [ "operator<=>", "namespacetr.html#af35f594a5ad66f1a9db5393a1465d8c9", null ],
     [ "name", "namespacetr.html#aeef8b5696bd246f726149ab921fb55dc", null ],
+    [ "show_message_box", "namespacetr.html#aa569ba36047e9a1572a9ba711e355c07", null ],
     [ "executable_directory", "namespacetr.html#a7cd08e1d8ab689d537f64de2683dc7a1", null ],
     [ "user_directory", "namespacetr.html#a9cd73fd577159e94afeceae9d8c8fb61", null ],
     [ "pixel_bytes", "namespacetr.html#a863741db9393b682758ed4093cfbab2d", null ],
@@ -769,8 +770,8 @@ var namespacetr =
     [ "operator\"\"_i16", "namespacetr_1_1literals_1_1integer__literals.html#aa26472820fdde319b9fc23e78e44c697", null ],
     [ "operator\"\"_i32", "namespacetr_1_1literals_1_1integer__literals.html#a4dc849e19111d9ca12a09276c187b2e6", null ],
     [ "operator\"\"_i64", "namespacetr_1_1literals_1_1integer__literals.html#a4d46a099de943decb7935bde54669bb4", null ],
-    [ "open_file_w", "namespacetr.html#a4495953062855411051e1472d2c8dd94", null ],
-    [ "open_file_r", "namespacetr.html#aef7bfd0393e870fa373774b007317532", null ],
+    [ "open_file_w", "namespacetr.html#ad3015981052bf741b1eff02708e32789", null ],
+    [ "open_file_r", "namespacetr.html#aeb86995a8c01c3f3a9988717176abb8b", null ],
     [ "reached_eof", "namespacetr.html#a68b81ff0036f7e206c9e3a1dec904e19", null ],
     [ "collinear", "namespacetr.html#a3213cfec2ea83397bbe81dc230097678", null ],
     [ "intersecting", "namespacetr.html#a7c2fb8aec5f09441120fe808e1816e6d", null ],
@@ -798,8 +799,6 @@ var namespacetr =
     [ "scale_around", "namespacetr.html#ac72b125d13fbc448dacb9abe55d77137", null ],
     [ "rotate_around", "namespacetr.html#ab9ce86a63c252859671bec3566b7801d", null ],
     [ "rotate_around", "namespacetr.html#a89e8746966517fd15a2065347306b997", null ],
-    [ "operator*", "namespacetr_1_1literals_1_1matrix__operators.html#a30b96c384a2b216f934b182d0f1a5dd7", null ],
-    [ "operator*", "namespacetr_1_1literals_1_1matrix__operators.html#a92dd69a9ae283ca55a29337d7875888d", null ],
     [ "operator*", "namespacetr_1_1literals_1_1matrix__operators.html#af4088a44ea911e8aa39f4c473d6931e1", null ],
     [ "operator*", "namespacetr_1_1literals_1_1matrix__operators.html#a38c6f9769bdba6831f98241a2bc229b4", null ],
     [ "norm_cast", "namespacetr.html#a1ebf34a83293fd952afab49b44f7b49a", null ],

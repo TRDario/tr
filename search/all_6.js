@@ -13,7 +13,7 @@ var searchData=
   ['gettextureid_10',['GetTextureID',['../namespacetr_1_1ImGui.html#aa524527c25072338e1d515d62a9c571f',1,'tr::ImGui']]],
   ['gl_5fversion_11',['gl_version',['../structtr_1_1graphics__context_1_1info.html#ae59398457475ee729bd19a9afff81461',1,'tr::graphics_context::info']]],
   ['glyph_5fmetrics_12',['glyph_metrics',['../structtr_1_1glyph__metrics.html',1,'tr']]],
-  ['grammar_13',['EBNF Grammar',['../md_pages_2tloc.html#autotoc_md21',1,'']]],
+  ['grammar_13',['EBNF Grammar',['../md_pages_2tloc.html#autotoc_md22',1,'']]],
   ['graphics_20module_14',['System and graphics module',['../md_pages_2building.html#autotoc_md5',1,'']]],
   ['graphics_5fbuffer_15',['graphics_buffer',['../classtr_1_1graphics__buffer.html',1,'tr::graphics_buffer'],['../classtr_1_1graphics__buffer.html#a23d4b85623be22559d9d05de8404502e',1,'tr::graphics_buffer::graphics_buffer(graphics_context &amp;context, std::string_view label={}) noexcept'],['../classtr_1_1graphics__buffer.html#a1d51a30b92cee925f336974d0c484e6f',1,'tr::graphics_buffer::graphics_buffer(const graphics_buffer &amp;)=delete'],['../classtr_1_1graphics__buffer.html#a4e69c632c90f3cf91b20c428d2ed90a4',1,'tr::graphics_buffer::graphics_buffer(graphics_buffer &amp;&amp;rhs) noexcept=default']]],
   ['graphics_5fbuffer_2ehpp_16',['graphics_buffer.hpp',['../graphics__buffer_8hpp.html',1,'']]],

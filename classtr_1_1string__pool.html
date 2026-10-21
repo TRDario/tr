@@ -522,6 +522,12 @@ Public Member Functions</h2></td></tr>
 
 <p>Appends a string to the string pool. </p>
 <dl class="section note"><dt>Note</dt><dd>This invalidates all string views and iterators to strings in the pool if a reallocation occurs. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">string</td><td>String to append. Must not contain any embedded NUL characters. </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section return"><dt>Returns</dt><dd>Iterator to the appended string. </dd></dl>
 
 </div>
@@ -551,6 +557,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Creates a string builder object to enable inplace string emplacement. </p>
 <dl class="section note"><dt>Note</dt><dd>It is not allowed to have multiple string builders alive at once for a given string pool. </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>Keeping any iterators to the string pool and especially iterating through it are not allowed while a string builder is alive for it. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>String builder object. </dd></dl>
 
 </div>

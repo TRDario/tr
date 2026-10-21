@@ -1,6 +1,5 @@
-var dialog_8hpp =
+var message__box_8hpp =
 [
-    [ "tr::dialog_filter", "structtr_1_1dialog__filter.html", "structtr_1_1dialog__filter" ],
     [ "tr::message_box_type", "namespacetr.html#a4d5881ba37a7337aca11853f1ae62da1", [
       [ "tr::message_box_type::error", "namespacetr.html#a4d5881ba37a7337aca11853f1ae62da1acb5e100e5a9a3e7f6d1fd97512215282", null ],
       [ "tr::message_box_type::warning", "namespacetr.html#a4d5881ba37a7337aca11853f1ae62da1a7b83d3f08fa392b79e3f553b585971cd", null ],
@@ -17,10 +16,5 @@ var dialog_8hpp =
       [ "tr::message_box_button::no", "namespacetr.html#a7f28eae560c1098cb5b87baad7ff5326a7fa3b767c460b54a2be4d49030b349c7", null ],
       [ "tr::message_box_button::cancel", "namespacetr.html#a7f28eae560c1098cb5b87baad7ff5326a10aec35353f9c4096a71c38654c3d402", null ]
     ] ],
-    [ "tr::show_message_box", "namespacetr.html#a95299851f26b7463a3e8cd921ae63d66", null ],
-    [ "tr::show_open_file_dialog", "namespacetr.html#ab6db26eb90a25b5ad7966d284e60027d", null ],
-    [ "tr::show_open_files_dialog", "namespacetr.html#ac1a2ce2a431ac778a041a559f33a6384", null ],
-    [ "tr::show_open_folder_dialog", "namespacetr.html#a331476cd06f3ffd9235c5fd088aa7eaf", null ],
-    [ "tr::show_open_folders_dialog", "namespacetr.html#a4b6935eca2c1aeba8b3ed8bdc1831a7a", null ],
-    [ "tr::show_save_file_dialog", "namespacetr.html#a57f7480d64ea881cf42fd54ce717c31e", null ]
+    [ "tr::show_message_box", "namespacetr.html#aa569ba36047e9a1572a9ba711e355c07", null ]
 ];

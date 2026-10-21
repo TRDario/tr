@@ -72,7 +72,6 @@ var hierarchy =
       [ "tr::handle< unsigned int, 0, unmapper >", "classtr_1_1handle.html", null ],
       [ "tr::handle< Base, Empty, Deleter >", "classtr_1_1handle.html", null ]
     ] ],
-    [ "tr::dialog_filter", "structtr_1_1dialog__filter.html", null ],
     [ "tr::dynamic_atlas&lt; Key, Value, Hash, Pred &gt;", "classtr_1_1dynamic__atlas.html", null ],
     [ "tr::empty_variant_t", "structtr_1_1empty__variant__t.html", null ],
     [ "tr::basic_zstring_view&lt; CharT, Traits &gt;::end_sentinel", "structtr_1_1basic__zstring__view_1_1end__sentinel.html", null ],
@@ -81,7 +80,7 @@ var hierarchy =
     [ "std::equal_to", null, [
       [ "tr::string_eq", "structtr_1_1string__eq.html", null ]
     ] ],
-    [ "tr::event", "classtr_1_1event.html", null ],
+    [ "tr::event_view", "classtr_1_1event__view.html", null ],
     [ "std::exception", null, [
       [ "tr::exception", "classtr_1_1exception.html", [
         [ "tr::audio_context_init_error", "classtr_1_1audio__context__init__error.html", null ],
@@ -106,6 +105,7 @@ var hierarchy =
         [ "tr::window_open_error", "classtr_1_1window__open__error.html", null ]
       ] ]
     ] ],
+    [ "tr::file_dialog_filter", "structtr_1_1file__dialog__filter.html", null ],
     [ "std::formatter", null, [
       [ "std::formatter< tr::basic_inplace_string< CharT, Capacity, Traits >, CharT >", "structstd_1_1formatter_3_01tr_1_1basic__inplace__string_3_01CharT_00_01Capacity_00_01Traits_01_4_00_01CharT_01_4.html", null ],
       [ "std::formatter< tr::basic_zstring_view< CharT, Traits > >", "structstd_1_1formatter_3_01tr_1_1basic__zstring__view_3_01CharT_00_01Traits_01_4_01_4.html", null ]
@@ -289,13 +289,12 @@ var hierarchy =
     [ "tr::parse_localization_script_result&lt; ErrorOut &gt;", "structtr_1_1parse__localization__script__result.html", null ],
     [ "tr::ping_pong_target", "classtr_1_1ping__pong__target.html", null ],
     [ "tr::pixel_proxy", "classtr_1_1pixel__proxy.html", null ],
-    [ "tr::pointer_iterator&lt; Iterator, Pointer &gt;", "classtr_1_1pointer__iterator.html", null ],
+    [ "tr::pointer_iterator&lt; Iterator, Pointer &gt;", "classtr_1_1pointer__iterator.html", [
+      [ "tr::basic_zstring_view_zspan< CharT, Traits >::iterator", "classtr_1_1basic__zstring__view__zspan_1_1iterator.html", null ]
+    ] ],
     [ "tr::pointer_iterator&lt; const_iterator, const_pointer &gt;", "classtr_1_1pointer__iterator.html", [
       [ "tr::basic_inplace_string< CharT, Capacity, Traits >::const_iterator", "structtr_1_1basic__inplace__string_1_1const__iterator.html", null ],
       [ "tr::inplace_vector< Element, Capacity >::const_iterator", "structtr_1_1inplace__vector_1_1const__iterator.html", null ]
-    ] ],
-    [ "tr::pointer_iterator&lt; iterator, const CharT ** &gt;", "classtr_1_1pointer__iterator.html", [
-      [ "tr::basic_zstring_view_zspan< CharT, Traits >::iterator", "classtr_1_1basic__zstring__view__zspan_1_1iterator.html", null ]
     ] ],
     [ "tr::pointer_iterator&lt; iterator, const_pointer &gt;", "classtr_1_1pointer__iterator.html", [
       [ "tr::basic_zstring_view< CharT, Traits >::iterator", "structtr_1_1basic__zstring__view_1_1iterator.html", null ]
@@ -337,6 +336,7 @@ var hierarchy =
     [ "tr::string_literal&lt; Size &gt;", "structtr_1_1string__literal.html", null ],
     [ "tr::string_pool", "classtr_1_1string__pool.html", null ],
     [ "tr::sub_bitmap", "classtr_1_1sub__bitmap.html", null ],
+    [ "tr::temporary_file", "classtr_1_1temporary__file.html", null ],
     [ "tr::text_input_event", "structtr_1_1text__input__event.html", null ],
     [ "tr::texture", "classtr_1_1texture.html", null ],
     [ "tr::texture_target", "classtr_1_1texture__target.html", null ],

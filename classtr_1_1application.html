@@ -143,8 +143,8 @@ Public Types</h2></td></tr>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a76cce249d808c43e7515af030ea5ef58" id="r_a76cce249d808c43e7515af030ea5ef58"><td class="memItemLeft">virtual <a class="el" href="#ad468e60c47e951ff861df0f9daa9bd7b">signal</a>&#160;</td><td class="memItemRight"><a class="el" href="#a76cce249d808c43e7515af030ea5ef58">initialize</a> (<a class="el" href="namespacetr.html#ad235a84a8935109ea559902b6467232f">zstring_view_zspan</a> args)</td></tr>
 <tr class="memdesc:a76cce249d808c43e7515af030ea5ef58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function called once at the beginning of execution after the initialization of systems.  <br /></td></tr>
-<tr class="memitem:a160bde93f0bb17aecbbe24ccfc2fcc5a" id="r_a160bde93f0bb17aecbbe24ccfc2fcc5a"><td class="memItemLeft">virtual <a class="el" href="#ad468e60c47e951ff861df0f9daa9bd7b">signal</a>&#160;</td><td class="memItemRight"><a class="el" href="#a160bde93f0bb17aecbbe24ccfc2fcc5a">handle_event</a> (const event &amp;event)</td></tr>
-<tr class="memdesc:a160bde93f0bb17aecbbe24ccfc2fcc5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function called whenever an event needs to be handled.  <br /></td></tr>
+<tr class="memitem:affafb51fdbcfb027e2172a13f569230e" id="r_affafb51fdbcfb027e2172a13f569230e"><td class="memItemLeft">virtual <a class="el" href="#ad468e60c47e951ff861df0f9daa9bd7b">signal</a>&#160;</td><td class="memItemRight"><a class="el" href="#affafb51fdbcfb027e2172a13f569230e">handle_event</a> (<a class="el" href="classtr_1_1event__view.html">event_view</a> event)</td></tr>
+<tr class="memdesc:affafb51fdbcfb027e2172a13f569230e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Callback function called whenever an event needs to be handled.  <br /></td></tr>
 <tr class="memitem:a7544b8b75ad439d7a03341ff7d97f4cf" id="r_a7544b8b75ad439d7a03341ff7d97f4cf"><td class="memItemLeft">virtual <a class="el" href="#ad468e60c47e951ff861df0f9daa9bd7b">signal</a>&#160;</td><td class="memItemRight"><a class="el" href="#a7544b8b75ad439d7a03341ff7d97f4cf">update</a> (<a class="el" href="namespacetr.html#a0a06575d52c3090c44755b9a8174f146">duration</a> delta)</td></tr>
 <tr class="memdesc:a7544b8b75ad439d7a03341ff7d97f4cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Primary update callback function.  <br /></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors and destructors</div></td></tr>
@@ -301,7 +301,6 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Destroys the application. </p>
-<p>Uncaught exceptions from this function will display a dialog box. </p>
 
 </div>
 </div>
@@ -394,8 +393,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a160bde93f0bb17aecbbe24ccfc2fcc5a" name="a160bde93f0bb17aecbbe24ccfc2fcc5a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a160bde93f0bb17aecbbe24ccfc2fcc5a">&#9670;&#160;</a></span>handle_event()</h2>
+<a id="affafb51fdbcfb027e2172a13f569230e" name="affafb51fdbcfb027e2172a13f569230e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#affafb51fdbcfb027e2172a13f569230e">&#9670;&#160;</a></span>handle_event()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -406,7 +405,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">virtual <a class="el" href="#ad468e60c47e951ff861df0f9daa9bd7b">signal</a> tr::application::handle_event </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classtr_1_1event.html">event</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>event</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classtr_1_1event__view.html">event_view</a></td>          <td class="paramname"><span class="paramname"><em>event</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>

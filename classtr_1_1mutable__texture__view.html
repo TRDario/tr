@@ -141,13 +141,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a93729c6d1976ead1b2214f4a3d89e4c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an empty texture view.  <br /></td></tr>
 <tr class="memitem:a775018c9c6fa078355c1a4052cc62b88" id="r_a775018c9c6fa078355c1a4052cc62b88"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a775018c9c6fa078355c1a4052cc62b88">mutable_texture_view</a> (const mutable_texture_view &amp;) noexcept=default</td></tr>
 <tr class="memdesc:a775018c9c6fa078355c1a4052cc62b88"><td class="mdescLeft">&#160;</td><td class="mdescRight">Texture views are trivially copyable.  <br /></td></tr>
-<tr class="memitem:ac81f6ae50c5057ed33ef979b6443ebc9" id="r_ac81f6ae50c5057ed33ef979b6443ebc9"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#ac81f6ae50c5057ed33ef979b6443ebc9">mutable_texture_view</a> (mutable_texture_view &amp;&amp;) noexcept=default</td></tr>
-<tr class="memdesc:ac81f6ae50c5057ed33ef979b6443ebc9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Texture views are trivially movable.  <br /></td></tr>
 <tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Assignment operators</div></td></tr>
 <tr class="memitem:a134f63371d4d9e0f02e8cf141708f414" id="r_a134f63371d4d9e0f02e8cf141708f414"><td class="memItemLeft"><a class="el" href="#a93729c6d1976ead1b2214f4a3d89e4c0">mutable_texture_view</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a134f63371d4d9e0f02e8cf141708f414">operator=</a> (const <a class="el" href="#a93729c6d1976ead1b2214f4a3d89e4c0">mutable_texture_view</a> &amp;) noexcept=default</td></tr>
 <tr class="memdesc:a134f63371d4d9e0f02e8cf141708f414"><td class="mdescLeft">&#160;</td><td class="mdescRight">Texture views are trivially copyable.  <br /></td></tr>
-<tr class="memitem:a3e5daa9572aed5a604e52593c7077c1c" id="r_a3e5daa9572aed5a604e52593c7077c1c"><td class="memItemLeft"><a class="el" href="#a93729c6d1976ead1b2214f4a3d89e4c0">mutable_texture_view</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a3e5daa9572aed5a604e52593c7077c1c">operator=</a> (<a class="el" href="#a93729c6d1976ead1b2214f4a3d89e4c0">mutable_texture_view</a> &amp;&amp;) noexcept=default</td></tr>
-<tr class="memdesc:a3e5daa9572aed5a604e52593c7077c1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Texture views are trivially movable.  <br /></td></tr>
 <tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Conversion operators</div></td></tr>
 <tr class="memitem:a9463efc5bd1eefb3f1c9f8e9e7ac8128" id="r_a9463efc5bd1eefb3f1c9f8e9e7ac8128"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a9463efc5bd1eefb3f1c9f8e9e7ac8128">operator texture_view</a> () const noexcept</td></tr>
 <tr class="memdesc:a9463efc5bd1eefb3f1c9f8e9e7ac8128"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the base texture view equivalent to <span class="tt">*this</span>.  <br /></td></tr>
@@ -159,7 +155,7 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a93729c6d1976ead1b2214f4a3d89e4c0" name="a93729c6d1976ead1b2214f4a3d89e4c0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a93729c6d1976ead1b2214f4a3d89e4c0">&#9670;&#160;</a></span>mutable_texture_view() <span class="overload">[1/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a93729c6d1976ead1b2214f4a3d89e4c0">&#9670;&#160;</a></span>mutable_texture_view() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -186,7 +182,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a775018c9c6fa078355c1a4052cc62b88" name="a775018c9c6fa078355c1a4052cc62b88"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a775018c9c6fa078355c1a4052cc62b88">&#9670;&#160;</a></span>mutable_texture_view() <span class="overload">[2/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a775018c9c6fa078355c1a4052cc62b88">&#9670;&#160;</a></span>mutable_texture_view() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -212,36 +208,9 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ac81f6ae50c5057ed33ef979b6443ebc9" name="ac81f6ae50c5057ed33ef979b6443ebc9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac81f6ae50c5057ed33ef979b6443ebc9">&#9670;&#160;</a></span>mutable_texture_view() <span class="overload">[3/3]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">tr::mutable_texture_view::mutable_texture_view </td>
-          <td>(</td>
-          <td class="paramtype">mutable_texture_view &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel default">default</span><span class="mlabel noexcept">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Texture views are trivially movable. </p>
-
-</div>
-</div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
 <a id="a134f63371d4d9e0f02e8cf141708f414" name="a134f63371d4d9e0f02e8cf141708f414"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a134f63371d4d9e0f02e8cf141708f414">&#9670;&#160;</a></span>operator=() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a134f63371d4d9e0f02e8cf141708f414">&#9670;&#160;</a></span>operator=()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -264,34 +233,6 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Texture views are trivially copyable. </p>
-<dl class="section return"><dt>Returns</dt><dd>Reference to <span class="tt">*this</span>. </dd></dl>
-
-</div>
-</div>
-<a id="a3e5daa9572aed5a604e52593c7077c1c" name="a3e5daa9572aed5a604e52593c7077c1c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3e5daa9572aed5a604e52593c7077c1c">&#9670;&#160;</a></span>operator=() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="#a93729c6d1976ead1b2214f4a3d89e4c0">mutable_texture_view</a> &amp; tr::mutable_texture_view::operator= </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="#a93729c6d1976ead1b2214f4a3d89e4c0">mutable_texture_view</a> &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel default">default</span><span class="mlabel noexcept">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Texture views are trivially movable. </p>
 <dl class="section return"><dt>Returns</dt><dd>Reference to <span class="tt">*this</span>. </dd></dl>
 
 </div>

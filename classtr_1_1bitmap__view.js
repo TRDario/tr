@@ -3,7 +3,7 @@ var classtr_1_1bitmap__view =
     [ "reference", "classtr_1_1bitmap__view.html#a53be375d6577715b07a0c41faeb4642c", null ],
     [ "iterator", "classtr_1_1bitmap__view.html#aeb64526106d7cddc023d6cdb08536067", null ],
     [ "bitmap_view", "classtr_1_1bitmap__view.html#aecf13813d93967908d70920ccc8c58f5", null ],
-    [ "bitmap_view", "classtr_1_1bitmap__view.html#a4f6262ae7aebdfe2ac21b9537f8430a4", null ],
+    [ "bitmap_view", "classtr_1_1bitmap__view.html#adbc457e74216ee5bb343bfcd6ae8cca9", null ],
     [ "bitmap_view", "classtr_1_1bitmap__view.html#ab11261802de05992ac47071573417ad2", null ],
     [ "bitmap_view", "classtr_1_1bitmap__view.html#a78759cecd3f332bcb49ee89a05f65803", null ],
     [ "bitmap_view", "classtr_1_1bitmap__view.html#a7bf553ffd06fba5a530166ab4c92cbea", null ],

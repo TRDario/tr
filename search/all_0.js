@@ -44,7 +44,7 @@ var searchData=
   ['array_5fcapacity_41',['array_capacity',['../classtr_1_1shader__buffer.html#a841cf4694b341ccd9803bfd3f73bf334',1,'tr::shader_buffer::array_capacity()'],['../classtr_1_1untyped__shader__buffer.html#a388afec4db11253728d5091e21d10a6c',1,'tr::untyped_shader_buffer::array_capacity()']]],
   ['array_5fsize_42',['array_size',['../classtr_1_1shader__buffer.html#ac2a7227e5b4c0a4c1ab7a71aeec74403',1,'tr::shader_buffer::array_size()'],['../classtr_1_1untyped__shader__buffer.html#a683fdb9e6ae7f34ad4f9786ca9c83a5b',1,'tr::untyped_shader_buffer::array_size()']]],
   ['arrow_43',['arrow',['../namespacetr.html#aa7a1fb973e2b89b37e78a95d4461171fa9022a153e6190f10d9b57aa4232b8aea',1,'tr']]],
-  ['as_44',['as',['../classtr_1_1event.html#adbf8b43cad303e4b8a7e8fa48ec2555f',1,'tr::event']]],
+  ['as_44',['as',['../classtr_1_1event__view.html#aa0a92215a384acd53c2d7a89f1041b5a',1,'tr::event_view']]],
   ['as_5fbytes_45',['as_bytes',['../namespacetr.html#a1ade17063ce94d23f026f6f7f61d87fe',1,'tr']]],
   ['as_5fmut_5fbytes_46',['as_mut_bytes',['../namespacetr.html#a0cdbc1de03caa66bc744e6f1374c9d69',1,'tr']]],
   ['as_5fmut_5fobject_47',['as_mut_object',['../namespacetr.html#aba98e8e39e62213aececcdaf0a726376',1,'tr']]],

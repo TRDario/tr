@@ -147,13 +147,6 @@ Concepts</h2></td></tr>
 <tr class="memitem:output_5Fstring" id="r_output_5Fstring"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concepttr_1_1utf8_1_1output__string.html">output_string</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Supported output string type. <br /></td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 id="header-typedef-members" class="groupheader"><a id="typedef-members" name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:aaa0b2ccfe620e11f8febeec0d159ee89" id="r_aaa0b2ccfe620e11f8febeec0d159ee89"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#aaa0b2ccfe620e11f8febeec0d159ee89">reverse_iterator</a> = std::reverse_iterator&lt;<a class="el" href="classtr_1_1utf8_1_1iterator.html">iterator</a>&gt;</td></tr>
-<tr class="memdesc:aaa0b2ccfe620e11f8febeec0d159ee89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unicode codepoint const reverse iterator for UTF-8 string views.  <br /></td></tr>
-<tr class="memitem:abfe34f57f9c5716c28093cb5830dc56b" id="r_abfe34f57f9c5716c28093cb5830dc56b"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#abfe34f57f9c5716c28093cb5830dc56b">reverse_indexed_iterator</a> = std::reverse_iterator&lt;<a class="el" href="classtr_1_1utf8_1_1indexed__iterator.html">indexed_iterator</a>&gt;</td></tr>
-<tr class="memdesc:abfe34f57f9c5716c28093cb5830dc56b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unicode codepoint const reverse iterator for UTF-8 string views.  <br /></td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr id="func-members-0" class="groupHeader"><td colspan="2"><div class="groupHeader">UTF-8 operations</div></td></tr>
@@ -190,52 +183,11 @@ Functions</h2></td></tr>
 <tr class="memdesc:a16387d4424b4461bf3d08d70d404affa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an ending codepoint iterator for a UTF-8 string view.  <br /></td></tr>
 <tr class="memitem:aa76696bf6a51b53a2e8b904a4011cd66" id="r_aa76696bf6a51b53a2e8b904a4011cd66"><td class="memItemLeft">constexpr <a class="el" href="classtr_1_1utf8_1_1indexed__iterator.html">indexed_iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#aa76696bf6a51b53a2e8b904a4011cd66">iend</a> (std::string_view str) noexcept</td></tr>
 <tr class="memdesc:aa76696bf6a51b53a2e8b904a4011cd66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an indexed ending codepoint iterator for a UTF-8 string view.  <br /></td></tr>
-<tr class="memitem:a707a396bde6e33442cb3d0f32862d84b" id="r_a707a396bde6e33442cb3d0f32862d84b"><td class="memItemLeft">constexpr <a class="el" href="#aaa0b2ccfe620e11f8febeec0d159ee89">reverse_iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a707a396bde6e33442cb3d0f32862d84b">rbegin</a> (std::string_view str) noexcept</td></tr>
-<tr class="memdesc:a707a396bde6e33442cb3d0f32862d84b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a reversed beginning codepoint iterator for a UTF-8 string view.  <br /></td></tr>
-<tr class="memitem:a91c486990ef4b42b225339dd2fcb8084" id="r_a91c486990ef4b42b225339dd2fcb8084"><td class="memItemLeft">constexpr <a class="el" href="#abfe34f57f9c5716c28093cb5830dc56b">reverse_indexed_iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a91c486990ef4b42b225339dd2fcb8084">ribegin</a> (std::string_view str) noexcept</td></tr>
-<tr class="memdesc:a91c486990ef4b42b225339dd2fcb8084"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an indexed reversed beginning codepoint iterator for a UTF-8 string view.  <br /></td></tr>
-<tr class="memitem:a8a288d402046cb90168ed40c39942adf" id="r_a8a288d402046cb90168ed40c39942adf"><td class="memItemLeft">constexpr <a class="el" href="#aaa0b2ccfe620e11f8febeec0d159ee89">reverse_iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a8a288d402046cb90168ed40c39942adf">rend</a> (std::string_view str) noexcept</td></tr>
-<tr class="memdesc:a8a288d402046cb90168ed40c39942adf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a reversed ending codepoint iterator for a UTF-8 string view.  <br /></td></tr>
-<tr class="memitem:a955b38dc3eb8dc55ab85d11fa8353f5b" id="r_a955b38dc3eb8dc55ab85d11fa8353f5b"><td class="memItemLeft">constexpr <a class="el" href="#abfe34f57f9c5716c28093cb5830dc56b">reverse_indexed_iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a955b38dc3eb8dc55ab85d11fa8353f5b">riend</a> (std::string_view str) noexcept</td></tr>
-<tr class="memdesc:a955b38dc3eb8dc55ab85d11fa8353f5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an indexed reversed ending codepoint iterator for a UTF-8 string view.  <br /></td></tr>
 <tr class="memitem:a90d625233d38a04030aed40aec690483" id="r_a90d625233d38a04030aed40aec690483"><td class="memItemLeft">constexpr std::ranges::subrange&lt; <a class="el" href="classtr_1_1utf8_1_1iterator.html">iterator</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a90d625233d38a04030aed40aec690483">range</a> (std::string_view str) noexcept</td></tr>
 <tr class="memdesc:a90d625233d38a04030aed40aec690483"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a codepoint iterator range pair for a UTF-8 string view.  <br /></td></tr>
 <tr class="memitem:a2e95f46fba44ca58a3293eea41b6d218" id="r_a2e95f46fba44ca58a3293eea41b6d218"><td class="memItemLeft">constexpr <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a>&#160;</td><td class="memItemRight"><a class="el" href="#a2e95f46fba44ca58a3293eea41b6d218">length</a> (std::string_view str) noexcept</td></tr>
 <tr class="memdesc:a2e95f46fba44ca58a3293eea41b6d218"><td class="mdescLeft">&#160;</td><td class="mdescRight">Counts the number of unicode characters in a UTF-8 string view.  <br /></td></tr>
 </table>
-<a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Typedef Documentation</h2>
-<a id="aaa0b2ccfe620e11f8febeec0d159ee89" name="aaa0b2ccfe620e11f8febeec0d159ee89"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaa0b2ccfe620e11f8febeec0d159ee89">&#9670;&#160;</a></span>reverse_iterator</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">using <a class="el" href="#aaa0b2ccfe620e11f8febeec0d159ee89">tr::utf8::reverse_iterator</a> = std::reverse_iterator&lt;<a class="el" href="classtr_1_1utf8_1_1iterator.html">iterator</a>&gt;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Unicode codepoint const reverse iterator for UTF-8 string views. </p>
-
-</div>
-</div>
-<a id="abfe34f57f9c5716c28093cb5830dc56b" name="abfe34f57f9c5716c28093cb5830dc56b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abfe34f57f9c5716c28093cb5830dc56b">&#9670;&#160;</a></span>reverse_indexed_iterator</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">using <a class="el" href="#abfe34f57f9c5716c28093cb5830dc56b">tr::utf8::reverse_indexed_iterator</a> = std::reverse_iterator&lt;<a class="el" href="classtr_1_1utf8_1_1indexed__iterator.html">indexed_iterator</a>&gt;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Unicode codepoint const reverse iterator for UTF-8 string views. </p>
-
-</div>
-</div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
 <a id="a61ae05b12a5efe9961d4d5573a9be3f7" name="a61ae05b12a5efe9961d4d5573a9be3f7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a61ae05b12a5efe9961d4d5573a9be3f7">&#9670;&#160;</a></span>to_cp()</h2>
@@ -731,142 +683,6 @@ template&lt;output_string String&gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Indexed ending codepoint iterator for <span class="tt">str</span>. </dd></dl>
-
-</div>
-</div>
-<a id="a707a396bde6e33442cb3d0f32862d84b" name="a707a396bde6e33442cb3d0f32862d84b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a707a396bde6e33442cb3d0f32862d84b">&#9670;&#160;</a></span>rbegin()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="#aaa0b2ccfe620e11f8febeec0d159ee89">reverse_iterator</a> tr::utf8::rbegin </td>
-          <td>(</td>
-          <td class="paramtype">std::string_view</td>          <td class="paramname"><span class="paramname"><em>str</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Creates a reversed beginning codepoint iterator for a UTF-8 string view. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">str</td><td>String to get the iterator for. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Reversed beginning codepoint iterator for <span class="tt">str</span>. </dd></dl>
-
-</div>
-</div>
-<a id="a91c486990ef4b42b225339dd2fcb8084" name="a91c486990ef4b42b225339dd2fcb8084"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a91c486990ef4b42b225339dd2fcb8084">&#9670;&#160;</a></span>ribegin()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="#abfe34f57f9c5716c28093cb5830dc56b">reverse_indexed_iterator</a> tr::utf8::ribegin </td>
-          <td>(</td>
-          <td class="paramtype">std::string_view</td>          <td class="paramname"><span class="paramname"><em>str</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Creates an indexed reversed beginning codepoint iterator for a UTF-8 string view. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">str</td><td>String to get the iterator for. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Indexed reversed beginning codepoint iterator for <span class="tt">str</span>. </dd></dl>
-
-</div>
-</div>
-<a id="a8a288d402046cb90168ed40c39942adf" name="a8a288d402046cb90168ed40c39942adf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8a288d402046cb90168ed40c39942adf">&#9670;&#160;</a></span>rend()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="#aaa0b2ccfe620e11f8febeec0d159ee89">reverse_iterator</a> tr::utf8::rend </td>
-          <td>(</td>
-          <td class="paramtype">std::string_view</td>          <td class="paramname"><span class="paramname"><em>str</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Creates a reversed ending codepoint iterator for a UTF-8 string view. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">str</td><td>String to get the iterator for. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Reversed ending codepoint iterator for <span class="tt">str</span>. </dd></dl>
-
-</div>
-</div>
-<a id="a955b38dc3eb8dc55ab85d11fa8353f5b" name="a955b38dc3eb8dc55ab85d11fa8353f5b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a955b38dc3eb8dc55ab85d11fa8353f5b">&#9670;&#160;</a></span>riend()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="#abfe34f57f9c5716c28093cb5830dc56b">reverse_indexed_iterator</a> tr::utf8::riend </td>
-          <td>(</td>
-          <td class="paramtype">std::string_view</td>          <td class="paramname"><span class="paramname"><em>str</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Creates an indexed reversed ending codepoint iterator for a UTF-8 string view. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">str</td><td>String to get the iterator for. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Indexed reversed ending codepoint iterator for <span class="tt">str</span>. </dd></dl>
 
 </div>
 </div>

@@ -54,6 +54,7 @@ var dir_49e87bacfc1bb4f26f06b7a1989b192a =
     [ "stopwatch.hpp", "stopwatch_8hpp.html", "stopwatch_8hpp" ],
     [ "string_literal.hpp", "string__literal_8hpp.html", "string__literal_8hpp" ],
     [ "string_pool.hpp", "string__pool_8hpp.html", "string__pool_8hpp" ],
+    [ "temporary_file.hpp", "temporary__file_8hpp.html", "temporary__file_8hpp" ],
     [ "timer.hpp", "timer_8hpp.html", "timer_8hpp" ],
     [ "triangle.hpp", "triangle_8hpp.html", "triangle_8hpp" ],
     [ "type_name.hpp", "type__name_8hpp.html", "type__name_8hpp" ],

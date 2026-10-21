@@ -35,8 +35,6 @@ var namespacetr_1_1literals =
       [ "operator\"\"_kc", "namespacetr_1_1literals_1_1keyboard__literals.html#a7c01436d1ba3b4bc2c5458b1b55eb53f", null ]
     ] ],
     [ "matrix_operators", "namespacetr_1_1literals_1_1matrix__operators.html", [
-      [ "operator*", "namespacetr_1_1literals_1_1matrix__operators.html#a30b96c384a2b216f934b182d0f1a5dd7", null ],
-      [ "operator*", "namespacetr_1_1literals_1_1matrix__operators.html#a92dd69a9ae283ca55a29337d7875888d", null ],
       [ "operator*", "namespacetr_1_1literals_1_1matrix__operators.html#af4088a44ea911e8aa39f4c473d6931e1", null ],
       [ "operator*", "namespacetr_1_1literals_1_1matrix__operators.html#a38c6f9769bdba6831f98241a2bc229b4", null ]
     ] ],
@@ -67,8 +65,6 @@ var namespacetr_1_1literals =
     [ "operator\"\"_i16", "namespacetr_1_1literals_1_1integer__literals.html#aa26472820fdde319b9fc23e78e44c697", null ],
     [ "operator\"\"_i32", "namespacetr_1_1literals_1_1integer__literals.html#a4dc849e19111d9ca12a09276c187b2e6", null ],
     [ "operator\"\"_i64", "namespacetr_1_1literals_1_1integer__literals.html#a4d46a099de943decb7935bde54669bb4", null ],
-    [ "operator*", "namespacetr_1_1literals_1_1matrix__operators.html#a30b96c384a2b216f934b182d0f1a5dd7", null ],
-    [ "operator*", "namespacetr_1_1literals_1_1matrix__operators.html#a92dd69a9ae283ca55a29337d7875888d", null ],
     [ "operator*", "namespacetr_1_1literals_1_1matrix__operators.html#af4088a44ea911e8aa39f4c473d6931e1", null ],
     [ "operator*", "namespacetr_1_1literals_1_1matrix__operators.html#a38c6f9769bdba6831f98241a2bc229b4", null ],
     [ "operator\"\"_zsv", "namespacetr_1_1literals_1_1zstring__view__literals.html#aa1c9900b06f2b238149a4f4c6d9511b4", null ]
