@@ -289,7 +289,7 @@ namespace tr
 	template <arithmetic Number>
 	[[nodiscard]] angle atan2(Number y, Number x) noexcept
 	{
-		return rads(std::atan(y, x));
+		return rads(std::atan2(y, x));
 	}
 
 	/// Computes the principal value of the arc tangent `p.y / p.x`.
