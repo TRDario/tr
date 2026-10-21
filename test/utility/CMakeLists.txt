@@ -24,11 +24,14 @@ add_executable(
 	mstream.cpp
 	norm_cast.cpp
 	opt_ref.cpp
+	optional_variant.cpp
+	optional_result.cpp
 	out_handle.cpp
 	ranges.cpp
 	rectangle_edges.cpp
 	rectangle.cpp
 	ref.cpp
+	result.cpp
 	rng.cpp
 	specialization_of.cpp
 	stopwatch.cpp

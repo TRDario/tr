@@ -38,7 +38,7 @@ namespace tr
 		/// @return `true` if the variant holds a value, `false` otherwise.
 		[[nodiscard]] constexpr bool has_value() const noexcept
 		{
-			return std::holds_alternative<empty_variant_t>(*this);
+			return !std::holds_alternative<empty_variant_t>(*this);
 		}
 
 		/// Resets the variant into an empty state.

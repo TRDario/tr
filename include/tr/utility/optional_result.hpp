@@ -46,7 +46,7 @@ namespace tr
 		/// @return `true` if the variant is empty, `false` otherwise.
 		[[nodiscard]] constexpr bool is_empty() const noexcept
 		{
-			return !std::holds_alternative<empty_variant_t>(*this);
+			return std::holds_alternative<empty_variant_t>(*this);
 		}
 
 		/// Gets if the variant holds a value type.
