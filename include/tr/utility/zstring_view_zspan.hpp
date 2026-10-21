@@ -22,7 +22,7 @@ namespace tr
 		using difference_type = ssize;
 
 		/// Value type used by the span.
-		using value_type = zstring_view;
+		using value_type = basic_zstring_view<CharT, Traits>;
 
 		/// End sentinel type used by the span.
 		struct end_sentinel
@@ -33,7 +33,7 @@ namespace tr
 		class iterator : public pointer_iterator<iterator, const CharT* const*>
 		{
 		  public:
-			using pointer_iterator<iterator, const CharT**>::pointer_iterator;
+			using pointer_iterator<iterator, const CharT* const*>::pointer_iterator;
 
 			/// @name Comparison operators
 			/// @{
@@ -181,6 +181,9 @@ namespace tr
 
 	/// Span of NUL-terminated string views.
 	using zstring_view_zspan = basic_zstring_view_zspan<char>;
+
+	/// Span of NUL-terminated wide string views.
+	using wzstring_view_zspan = basic_zstring_view_zspan<wchar_t>;
 } // namespace tr
 
 //

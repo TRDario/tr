@@ -113,7 +113,7 @@ namespace tr
 		/// @return Standard string view equivalent to `*this`.
 		[[nodiscard]] constexpr operator std::basic_string_view<CharT, Traits>() const noexcept
 		{
-			return !empty() ? m_ptr : std::string_view{};
+			return !empty() ? m_ptr : std::basic_string_view<CharT, Traits>{};
 		}
 
 		/// Converts the view into a standard path.
@@ -276,6 +276,9 @@ namespace tr
 
 	/// NUL-terminated 8-bit character string view.
 	using zstring_view = basic_zstring_view<char>;
+
+	/// NUL-terminated wide character string view.
+	using wzstring_view = basic_zstring_view<wchar_t>;
 
 	inline namespace literals
 	{

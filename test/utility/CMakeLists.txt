@@ -47,6 +47,7 @@ add_executable(
 	utf8.cpp
 	variant.cpp
 	zstring_view.cpp
+	zstring_view_zspan.cpp
 )
 target_link_libraries(
 	utility_test
