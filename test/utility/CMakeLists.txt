@@ -23,6 +23,7 @@ add_executable(
 	iterator_interface.cpp
 	localization_map.cpp
 	localization_script.cpp
+	lock_free_queue.cpp
 	math.cpp
 	matrix.cpp
 	mstream.cpp
