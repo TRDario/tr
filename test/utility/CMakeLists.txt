@@ -20,6 +20,7 @@ add_executable(
 	hash_map.cpp
 	iostream.cpp
 	inplace_vector.cpp
+	iterator_interface.cpp
 	localization_map.cpp
 	localization_script.cpp
 	math.cpp
