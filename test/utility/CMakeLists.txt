@@ -33,6 +33,7 @@ add_executable(
 	optional_result.cpp
 	out_handle.cpp
 	pointer_iterator.cpp
+	polygon.cpp
 	ranges.cpp
 	rectangle_edges.cpp
 	rectangle.cpp

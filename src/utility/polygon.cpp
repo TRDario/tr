@@ -4,6 +4,7 @@
 #include <tr/utility/line.hpp>
 #include <tr/utility/polygon.hpp>
 #include <tr/utility/triangle.hpp>
+#include <tr/utility/vector.hpp>
 
 //
 
@@ -40,13 +41,24 @@ bool tr::simple_polygon(polygon_view vertices) noexcept
 
 bool tr::point_in_polygon(glm::vec2 p, polygon_view vertices) noexcept
 {
-	usize hits{0};
-	for (usize i = 0; i < vertices.size(); ++i) {
-		const line_segment segment{vertices[i], vertices[(i + 1) % vertices.size()]};
-		const std::optional<glm::vec2> ray_intersection{intersection(p, 0_deg, segment)};
-		hits += ray_intersection.has_value() && ray_intersection->x >= p.x && *ray_intersection != segment.b;
+	bool inside{false};
+	for (usize i = 0, j = vertices.size() - 1; i < vertices.size(); j = i++) {
+		const glm::dvec2 a{vertices[j]};
+		const glm::dvec2 b{vertices[i]};
+		const glm::dvec2 min{glm::min(a, b)};
+		const glm::dvec2 max{glm::max(a, b)};
+		const glm::dvec2 edge_delta{b - a};
+		const double cross{tr::cross(edge_delta, glm::dvec2{p} - a)};
+
+		if (cross == 0 && p.x >= min.x && p.x <= max.x && p.y >= min.y && p.y <= max.y) {
+			return true;
+		}
+
+		if ((a.y > p.y) != (b.y > p.y) && ((cross > 0) == (edge_delta.y > 0))) {
+			inside = !inside;
+		}
 	}
-	return hits % 2 == 1;
+	return inside;
 }
 
 bool tr::intersecting(polygon_view a, polygon_view b) noexcept
