@@ -102,8 +102,8 @@ namespace tr
 		/// @param first Beginning iterator to the copied range.
 		/// @param last Ending iterator to the copied range.
 		/// @pre `std::ranges::distance(first, last)` must be less than or equal to `Capacity`.
-		template <forward_iterator_to_convertible_to<Element> Iterator, std::sentinel_for<Iterator> Sentinel>
-		[[nodiscard]] inplace_vector(Iterator first, Sentinel last) noexcept(nothrow_forward_iterator_to_convertible_to<Iterator, Element>)
+		template <forward_iterator_to<Element> Iterator, std::sentinel_for<Iterator> Sentinel>
+		[[nodiscard]] inplace_vector(Iterator first, Sentinel last) noexcept(nothrow_forward_iterator_to<Iterator, Element>)
 			: m_size{static_cast<size_type>(std::ranges::distance(first, last))}
 		{
 			std::uninitialized_copy(first, last, begin());
@@ -420,10 +420,10 @@ namespace tr
 		/// @param last Ending iterator of the range to insert.
 		/// @pre `this->size() + std::distance(first, last)` must be less than or equal to `Capacity`.
 		/// @return Iterator to the position where the range was inserted.
-		template <forward_iterator_to_convertible_to<Element> Iterator, std::sentinel_for<Iterator> Sentinel>
+		template <forward_iterator_to<Element> Iterator, std::sentinel_for<Iterator> Sentinel>
 			requires(std::move_constructible<Element> && move_assignable<Element>)
 		iterator insert(const_iterator where, Iterator first, Sentinel last)
-			noexcept(nothrow_movable<Element> && nothrow_forward_iterator_to_convertible_to<Iterator, Element>)
+			noexcept(nothrow_movable<Element> && nothrow_forward_iterator_to<Iterator, Element>)
 		{
 			const auto inserted_elements{std::ranges::distance(first, last)};
 
@@ -573,8 +573,8 @@ namespace tr
 		/// @param last Ending iterator of the range to append.
 		/// @pre `this->size() + std::distance(first, last)` must be less than or equal to `Capacity`.
 		/// @return Iterator to the position where the first element was appended.
-		template <forward_iterator_to_convertible_to<Element> Iterator, std::sentinel_for<Iterator> Sentinel>
-		iterator append(Iterator first, Sentinel last) noexcept(nothrow_forward_iterator_to_convertible_to<Iterator, Element>)
+		template <forward_iterator_to<Element> Iterator, std::sentinel_for<Iterator> Sentinel>
+		iterator append(Iterator first, Sentinel last) noexcept(nothrow_forward_iterator_to<Iterator, Element>)
 		{
 			return insert(end(), first, last);
 		}

@@ -358,7 +358,7 @@ namespace tr
 		/// @param first Beginning iterator of the range to append.
 		/// @param last Ending iterator of the range to append.
 		/// @pre `this->size() + std::distance(begin, end)` must be less than or equal to `Capacity`.
-		template <forward_iterator_to_convertible_to<value_type> Iterator, std::sentinel_for<Iterator> Sentinel>
+		template <forward_iterator_to<value_type> Iterator, std::sentinel_for<Iterator> Sentinel>
 		constexpr void append(Iterator first, Sentinel last) noexcept(noexcept(std::ranges::copy(first, last, end())))
 		{
 			std::ranges::copy(first, last, end());
@@ -410,7 +410,7 @@ namespace tr
 		/// @param last Ending iterator of the range to insert.
 		/// @pre `this->size() + std::distance(first, last)` must be less than or equal to `Capacity`.
 		/// @return Iterator to the position where the range was inserted.
-		template <forward_iterator_to_convertible_to<value_type> Iterator, std::sentinel_for<Iterator> Sentinel>
+		template <forward_iterator_to<value_type> Iterator, std::sentinel_for<Iterator> Sentinel>
 		constexpr iterator insert(const_iterator where, Iterator first, Sentinel last)
 			noexcept(noexcept(std::ranges::copy(first, last, begin() + (where - begin()))))
 		{

@@ -19,6 +19,7 @@ add_executable(
 	handle.cpp
 	hash_map.cpp
 	iostream.cpp
+	iterator_concepts.cpp
 	inplace_vector.cpp
 	iterator_interface.cpp
 	localization_map.cpp

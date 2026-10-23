@@ -193,7 +193,7 @@ namespace tr::internal::localization
 	/// @param end Iterator to the end of the character range.
 	/// @param chunk_name Name of the parsed chunk.
 	/// @return List of localization key-value pairs.
-	template <std::output_iterator<localization_script_error> ErrorOut, input_iterator_to_convertible_to<char> Iterator,
+	template <std::output_iterator<localization_script_error> ErrorOut, input_iterator_to<char> Iterator,
 			  std::sentinel_for<Iterator> Sentinel>
 	[[nodiscard]] parse_localization_script_result<ErrorOut> parse_localization_script(ErrorOut error_out, Iterator begin, Sentinel end,
 																					   std::string_view chunk_name)

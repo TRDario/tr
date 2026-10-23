@@ -29,6 +29,7 @@
 #include <tr/utility/inplace_vector.hpp>            // IWYU pragma: export
 #include <tr/utility/integer.hpp>                   // IWYU pragma: export
 #include <tr/utility/iostream.hpp>                  // IWYU pragma: export
+#include <tr/utility/iterator_concepts.hpp>         // IWYU pragma: export
 #include <tr/utility/iterator_interface.hpp>        // IWYU pragma: export
 #include <tr/utility/line.hpp>                      // IWYU pragma: export
 #include <tr/utility/localization_map.hpp>          // IWYU pragma: export
