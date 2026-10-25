@@ -11,10 +11,10 @@ class TriangleTest : public ::testing::Test
 {
   protected:
 	/// First triangle
-	const tr::triangle tri0{{100, 100}, {200, 100}, {150, 150}};
+	const tr::triangle<float> tri0{{100, 100}, {200, 100}, {150, 150}};
 
 	/// Second triangle.
-	const tr::triangle tri1{{200, 100}, {100, 100}, {150, 150}};
+	const tr::triangle<double> tri1{{200, 100}, {100, 100}, {150, 150}};
 };
 
 //
@@ -29,8 +29,10 @@ TEST_F(TriangleTest, ComputesWindingOrder)
 /// Tests that a point inside the triangles is reported as contained.
 TEST_F(TriangleTest, ContainsInternalPoint)
 {
-	EXPECT_TRUE(tri0.contains({150, 125}));
-	EXPECT_TRUE(tri1.contains({150, 125}));
+	EXPECT_TRUE(tri0.contains(glm::vec2{150, 125}));
+	EXPECT_TRUE(tri0.contains(glm::dvec2{150, 125}));
+	EXPECT_TRUE(tri1.contains(glm::vec2{150, 125}));
+	EXPECT_TRUE(tri1.contains(glm::dvec2{150, 125}));
 }
 
 /// Tests that the vertices of the triangles are reported as contained.

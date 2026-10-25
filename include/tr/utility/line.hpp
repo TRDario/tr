@@ -15,7 +15,7 @@ namespace tr
 {
 	/// 2D line segment datatype.
 	/// @tparam Rep Representation type of the line segment.
-	template <std::floating_point Rep>
+	template <arithmetic Rep>
 	struct line_segment
 	{
 		/// First point of the line segment.
@@ -30,7 +30,7 @@ namespace tr
 		/// Casts the line segment to a line segment represented with another representation type.
 		/// @tparam TargetRep Representation type to cast to.
 		/// @return Cast line segment value.
-		template <std::floating_point TargetRep>
+		template <arithmetic TargetRep>
 		[[nodiscard]] explicit constexpr operator line_segment<TargetRep>() const noexcept
 		{
 			return line_segment<TargetRep>{static_cast<glm::tvec2<TargetRep>>(a), static_cast<glm::tvec2<TargetRep>>(b)};
@@ -42,14 +42,14 @@ namespace tr
 
 		/// Gets the length of the line segment.
 		/// @return `|b-a|`.
-		[[nodiscard]] Rep length() const noexcept
+		[[nodiscard]] auto length() const noexcept
 		{
 			return std::sqrt(length2());
 		}
 
 		/// Gets the square length of the line segment.
 		/// @return `|b-a|²`.
-		[[nodiscard]] constexpr Rep length2() const noexcept
+		[[nodiscard]] constexpr auto length2() const noexcept
 		{
 			const glm::tvec2<Rep> delta{b - a};
 			return glm::dot(delta, delta);
@@ -63,10 +63,11 @@ namespace tr
 		/// @tparam PointRep Representation type of the point to project.
 		/// @param point Point to project onto the line.
 		/// @return Projection of `point` onto the line.
-		template <arithmetic PointRep>
+		template <arithmetic PointRep = Rep>
 		[[nodiscard]] constexpr glm::tvec2<std::common_type_t<Rep, PointRep>> closest_point(glm::tvec2<PointRep> point) const noexcept
 		{
-			using CommonRep = std::common_type_t<Rep, PointRep>;
+			using BaseCommonRep = std::common_type_t<Rep, PointRep>;
+			using CommonRep = std::conditional_t<std::integral<BaseCommonRep>, double, BaseCommonRep>;
 			const glm::tvec2<CommonRep> a_cr{a};
 
 			const glm::tvec2<CommonRep> delta{glm::tvec2<CommonRep>{b} - a_cr};
@@ -85,10 +86,11 @@ namespace tr
 	/// @tparam ARep, BRep, CRep Representation types of the points.
 	/// @param a, b, c Points to check for collinearity.
 	/// @return `true` if the points are collinear, `false` otherwise.
-	template <std::floating_point ARep, std::floating_point BRep, std::floating_point CRep>
+	template <arithmetic ARep, arithmetic BRep, arithmetic CRep>
 	[[nodiscard]] constexpr bool collinear(glm::tvec2<ARep> a, glm::tvec2<BRep> b, glm::tvec2<CRep> c) noexcept
 	{
-		using CommonRep = std::common_type_t<ARep, BRep, CRep>;
+		using BaseCommonRep = std::common_type_t<ARep, BRep, CRep>;
+		using CommonRep = std::conditional_t<std::integral<BaseCommonRep>, double, BaseCommonRep>;
 		const glm::tvec2<CommonRep> a_cr{a};
 		const glm::tvec2<CommonRep> b_cr{b};
 		const glm::tvec2<CommonRep> c_cr{c};
@@ -101,10 +103,11 @@ namespace tr
 	/// @tparam LhsRep, RhsRep Representation types of the line segments.
 	/// @param lhs, rhs Line segments to check for intersection.
 	/// @return `true` if the lines intersect, `false` otherwise.
-	template <std::floating_point LhsRep, std::floating_point RhsRep>
+	template <arithmetic LhsRep, arithmetic RhsRep>
 	[[nodiscard]] constexpr bool intersecting(const line_segment<LhsRep>& lhs, const line_segment<RhsRep>& rhs) noexcept
 	{
-		using CommonRep = std::common_type_t<LhsRep, RhsRep>;
+		using BaseCommonRep = std::common_type_t<LhsRep, RhsRep>;
+		using CommonRep = std::conditional_t<std::integral<BaseCommonRep>, double, BaseCommonRep>;
 		const line_segment<CommonRep> lhs_cr{static_cast<line_segment<CommonRep>>(lhs)};
 		const line_segment<CommonRep> rhs_cr{static_cast<line_segment<CommonRep>>(rhs)};
 
@@ -128,11 +131,12 @@ namespace tr
 	/// @tparam LhsRep, RhsRep Representation types of the line segments.
 	/// @param lhs, rhs Line segments to check for intersection.
 	/// @return Intersection point of the lines, if one exists.
-	template <std::floating_point LhsRep, std::floating_point RhsRep>
+	template <arithmetic LhsRep, arithmetic RhsRep>
 	[[nodiscard]] constexpr std::optional<glm::tvec2<std::common_type_t<LhsRep, RhsRep>>> intersection(
 		const line_segment<LhsRep>& lhs, const line_segment<RhsRep>& rhs) noexcept
 	{
-		using CommonRep = std::common_type_t<LhsRep, RhsRep>;
+		using BaseCommonRep = std::common_type_t<LhsRep, RhsRep>;
+		using CommonRep = std::conditional_t<std::integral<BaseCommonRep>, double, BaseCommonRep>;
 		const line_segment<CommonRep> lhs_cr{static_cast<line_segment<CommonRep>>(lhs)};
 		const line_segment<CommonRep> rhs_cr{static_cast<line_segment<CommonRep>>(rhs)};
 
@@ -163,7 +167,7 @@ namespace tr
 	/// @param lhs_angle Angle of the first line.
 	/// @param rhs Line segment to check for intersection.
 	/// @return Intersection point of the lines, if one exists.
-	template <std::floating_point PointRep, std::floating_point AngleRep, std::floating_point SegmentRep>
+	template <arithmetic PointRep, std::floating_point AngleRep, arithmetic SegmentRep>
 	[[nodiscard]] std::optional<glm::tvec2<std::common_type_t<PointRep, AngleRep, SegmentRep>>> intersection(
 		glm::tvec2<PointRep> lhs_point, angle<AngleRep> lhs_angle, const line_segment<SegmentRep>& rhs) noexcept
 	{
@@ -195,8 +199,7 @@ namespace tr
 	/// @param rhs_point Point on the second line.
 	/// @param rhs_angle Angle of the second line.
 	/// @return Intersection point of the lines, if one exists.
-	template <std::floating_point LhsPointRep, std::floating_point LhsAngleRep, std::floating_point RhsPointRep,
-			  std::floating_point RhsAngleRep>
+	template <arithmetic LhsPointRep, std::floating_point LhsAngleRep, arithmetic RhsPointRep, std::floating_point RhsAngleRep>
 	[[nodiscard]] std::optional<glm::tvec2<std::common_type_t<LhsPointRep, LhsAngleRep, RhsPointRep, RhsAngleRep>>> intersection(
 		glm::tvec2<LhsPointRep> lhs_point, angle<LhsAngleRep> lhs_angle, glm::tvec2<RhsPointRep> rhs_point,
 		angle<RhsAngleRep> rhs_angle) noexcept
@@ -226,7 +229,7 @@ namespace tr
 	/// @param lhs_angle Angle of the first line.
 	/// @param rhs_a, rhs_b Points on the second line.
 	/// @return Intersection point of the lines, if one exists.
-	template <std::floating_point PointRep, std::floating_point AngleRep, std::floating_point ARep, std::floating_point BRep>
+	template <arithmetic PointRep, std::floating_point AngleRep, arithmetic ARep, arithmetic BRep>
 	[[nodiscard]] std::optional<glm::tvec2<std::common_type_t<PointRep, AngleRep, ARep, BRep>>> intersection(
 		glm::tvec2<PointRep> lhs_point, angle<AngleRep> lhs_angle, glm::tvec2<ARep> rhs_a, glm::tvec2<BRep> rhs_b) noexcept
 	{
@@ -252,11 +255,12 @@ namespace tr
 	/// @param lhs_a, lhs_b Points on the first line.
 	/// @param rhs_a, rhs_b Points on the second line.
 	/// @return Intersection point of the lines, if one exists.
-	template <std::floating_point LhsARep, std::floating_point LhsBRep, std::floating_point RhsARep, std::floating_point RhsBRep>
+	template <arithmetic LhsARep, arithmetic LhsBRep, arithmetic RhsARep, arithmetic RhsBRep>
 	[[nodiscard]] constexpr std::optional<glm::tvec2<std::common_type_t<LhsARep, LhsBRep, RhsARep, RhsBRep>>> insersection(
 		glm::tvec2<LhsARep> lhs_a, glm::tvec2<LhsBRep> lhs_b, glm::tvec2<RhsARep> rhs_a, glm::tvec2<RhsBRep> rhs_b) noexcept
 	{
-		using CommonRep = std::common_type_t<LhsARep, LhsBRep, RhsARep, RhsBRep>;
+		using BaseCommonRep = std::common_type_t<LhsARep, LhsBRep, RhsARep, RhsBRep>;
+		using CommonRep = std::conditional_t<std::integral<BaseCommonRep>, double, BaseCommonRep>;
 		const glm::tvec2<CommonRep> lhs_a_cr{lhs_a};
 		const glm::tvec2<CommonRep> lhs_b_cr{lhs_b};
 		const glm::tvec2<CommonRep> rhs_a_cr{rhs_a};
