@@ -36,7 +36,7 @@ void tr::bitmap_view::deleter::operator()(SDL_Surface* ptr) noexcept
 
 tr::bitmap_view::operator tr::sub_bitmap() const noexcept
 {
-	return sub({{}, size()});
+	return sub(rectangle<int>{.tl{0, 0}, .size{size()}});
 }
 
 tr::sub_bitmap tr::bitmap_view::sub(rectangle<int> region) const noexcept
@@ -53,7 +53,7 @@ bool tr::bitmap_view::valid() const noexcept
 
 glm::ivec2 tr::bitmap_view::size() const noexcept
 {
-	return {m_ptr->w, m_ptr->h};
+	return glm::ivec2{m_ptr->w, m_ptr->h};
 }
 
 tr::pixel_format tr::bitmap_view::format() const noexcept

@@ -10,7 +10,7 @@
 glm::ivec2 tr::display_size() noexcept
 {
 	const SDL_DisplayMode& mode{*SDL_GetDesktopDisplayMode(SDL_GetPrimaryDisplay())};
-	return {mode.w, mode.h};
+	return glm::ivec2{mode.w, mode.h};
 }
 
 tr::u8 tr::max_msaa() noexcept

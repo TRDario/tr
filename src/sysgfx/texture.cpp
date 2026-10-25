@@ -240,7 +240,7 @@ void tr::texture::copy_region(glm::ivec2 tl, texture_view src, rectangle<int> re
 void tr::texture::set_region(glm::ivec2 tl, sub_bitmap bitmap) noexcept
 {
 	TR_ASSERT(valid(), "Tried to set a region of a texture in an invalid state.");
-	TR_ASSERT(rectangle<int>{size()}.contains(tl + bitmap.size()),
+	TR_ASSERT((rectangle<int>{.tl{0, 0}, .size{size()}}).contains(tl + bitmap.size()),
 			  "Tried to set out-of-bounds region from ({}, {}) to ({}, {}) in a texture with size {}x{}.", tl.x, tl.y,
 			  tl.x + bitmap.size().x, tl.y + bitmap.size().y, m_size.x, m_size.y);
 

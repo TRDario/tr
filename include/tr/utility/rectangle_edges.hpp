@@ -2,29 +2,29 @@
 /// @brief Provides `tr::rectangle_edges`.
 
 #pragma once
+#include <tr/utility/arithmetic_concepts.hpp>
 #include <tr/utility/default_binary_io.hpp>
-#include <tr/utility/rectangle_edges.hpp>
 
 //
 
 namespace tr
 {
 	/// Set of rectangle edges.
-	/// @tparam Element Edge value type.
-	template <typename Element>
+	/// @tparam Rep Representation type of the edges.
+	template <arithmetic Rep>
 	struct rectangle_edges
 	{
 		/// Left edge value.
-		Element left{0};
+		Rep left{0};
 
 		/// Top edge value.
-		Element top{0};
+		Rep top{0};
 
 		/// Right edge value.
-		Element right{0};
+		Rep right{0};
 
 		/// Bottom edge value.
-		Element bottom{0};
+		Rep bottom{0};
 
 		/// @name Constructors and destructors
 		/// @{
@@ -34,7 +34,7 @@ namespace tr
 
 		/// Constructs a set of edges with the same value.
 		/// @param left Uniform edge value.
-		[[nodiscard]] constexpr rectangle_edges(Element left) noexcept
+		[[nodiscard]] constexpr rectangle_edges(Rep left) noexcept
 			: top{left}
 			, right{left}
 			, bottom{left}
@@ -45,7 +45,7 @@ namespace tr
 		/// Constructs a set of edges with top = bottom, left = right.
 		/// @param left Left and right edge value.
 		/// @param top Top and bottom edge value.
-		[[nodiscard]] constexpr rectangle_edges(Element left, Element top) noexcept
+		[[nodiscard]] constexpr rectangle_edges(Rep left, Rep top) noexcept
 			: left{left}
 			, top{top}
 			, right{left}
@@ -57,7 +57,7 @@ namespace tr
 		/// @param left Left edge value.
 		/// @param top Top and bottom edge value.
 		/// @param right Right edge value.
-		[[nodiscard]] constexpr rectangle_edges(Element left, Element top, Element right) noexcept
+		[[nodiscard]] constexpr rectangle_edges(Rep left, Rep top, Rep right) noexcept
 			: left{left}
 			, top{top}
 			, right{right}
@@ -70,7 +70,7 @@ namespace tr
 		/// @param top Top edge value.
 		/// @param right Right edge value.
 		/// @param bottom Bottom edge value.
-		[[nodiscard]] constexpr rectangle_edges(Element left, Element top, Element right, Element bottom) noexcept
+		[[nodiscard]] constexpr rectangle_edges(Rep left, Rep top, Rep right, Rep bottom) noexcept
 			: left{left}
 			, top{top}
 			, right{right}
@@ -99,5 +99,5 @@ namespace tr
 //
 
 /// Enables default binary IO for rectangle edges.
-template <typename Element>
-inline constexpr bool tr::enable_default_binary_io<tr::rectangle_edges<Element>>{true};
+template <typename Rep>
+inline constexpr bool tr::enable_default_binary_io<tr::rectangle_edges<Rep>>{true};

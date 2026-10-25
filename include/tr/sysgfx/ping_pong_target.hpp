@@ -108,7 +108,7 @@ namespace tr
 		/// Clears the destination buffer.
 		/// @param color Color to clear the destination buffer to.
 		/// @pre The target must be complete to call this function.
-		void clear_destination(rgba<float> color = {}) noexcept;
+		void clear_destination(rgba<float> color = {0, 0, 0, 0}) noexcept;
 
 		/// @}
 		/// @name Texture attributes

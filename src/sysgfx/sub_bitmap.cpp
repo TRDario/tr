@@ -36,7 +36,7 @@ tr::sub_bitmap tr::sub_bitmap::sub(rectangle<int> region) noexcept
 			  "Tried to create out-of-bounds sub-bitmap from ({}, {}) to ({}, {}) in a sub-bitmap of size {}x{}.", region.tl.x, region.tl.y,
 			  region.tl.x + region.size.x, region.tl.y + region.size.y, m_region.size.x, m_region.size.y);
 
-	return sub_bitmap{*this, {region.tl + m_region.tl, region.size}};
+	return sub_bitmap{*this, rectangle<int>{region.tl + m_region.tl, region.size}};
 }
 
 //

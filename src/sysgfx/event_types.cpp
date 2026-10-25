@@ -112,7 +112,7 @@ tr::backbuffer_resize_event::backbuffer_resize_event(event_view event) noexcept
 	: window{SDL_GetWindowFromID(event.unwrap().window.windowID)}
 {
 	const SDL_WindowEvent& sdl{event.unwrap().window};
-	size = {sdl.data1, sdl.data2};
+	size = glm::ivec2{sdl.data1, sdl.data2};
 }
 
 //

@@ -70,26 +70,26 @@ tr::internal::localization::lexer::handle_char_result tr::internal::localization
 	switch (chr) {
 	case '/':
 		m_state = state::matching_comment;
-		return {empty_variant, consumed_character};
+		return handle_char_result{empty_variant, consumed_character};
 	case '\\':
-		return {unexpected_backslash{m_line}, consumed_character};
+		return handle_char_result{unexpected_backslash{m_line}, consumed_character};
 	case '=':
-		return {equals_token{m_line}, consumed_character};
+		return handle_char_result{equals_token{m_line}, consumed_character};
 	case '{':
-		return {opening_brace_token{m_line}, consumed_character};
+		return handle_char_result{opening_brace_token{m_line}, consumed_character};
 	case '}':
-		return {closing_brace_token{m_line}, consumed_character};
+		return handle_char_result{closing_brace_token{m_line}, consumed_character};
 	case '"':
 		m_state = state::matching_string;
 		m_token_start_line = m_line;
-		return {empty_variant, consumed_character};
+		return handle_char_result{empty_variant, consumed_character};
 	default:
 		if (!std::isspace(static_cast<unsigned char>(chr)) && chr != '\0') {
 			m_state = state::matching_symbol;
 			m_token_start_line = m_line;
 			m_token_buffer.push_back(chr);
 		}
-		return {empty_variant, consumed_character};
+		return handle_char_result{empty_variant, consumed_character};
 	}
 }
 
@@ -98,13 +98,13 @@ tr::internal::localization::lexer::handle_char_result tr::internal::localization
 	switch (chr) {
 	case '/':
 		m_state = state::matching_line_comment;
-		return {empty_variant, consumed_character};
+		return handle_char_result{empty_variant, consumed_character};
 	case '*':
 		m_state = state::matching_multiline_comment;
-		return {empty_variant, consumed_character};
+		return handle_char_result{empty_variant, consumed_character};
 	default:
 		m_state = state::matching_any;
-		return {unexpected_slash{m_line}, didnt_consume_character};
+		return handle_char_result{unexpected_slash{m_line}, didnt_consume_character};
 	}
 }
 
@@ -113,7 +113,7 @@ tr::internal::localization::lexer::handle_char_result tr::internal::localization
 	if (chr == '\n') {
 		m_state = state::matching_any;
 	}
-	return {empty_variant, consumed_character};
+	return handle_char_result{empty_variant, consumed_character};
 }
 
 tr::internal::localization::lexer::handle_char_result tr::internal::localization::lexer::handle_multiline_comment_char(char chr)
@@ -121,7 +121,7 @@ tr::internal::localization::lexer::handle_char_result tr::internal::localization
 	if (chr == '*') {
 		m_state = state::matching_multiline_comment_asterisk;
 	}
-	return {empty_variant, consumed_character};
+	return handle_char_result{empty_variant, consumed_character};
 }
 
 tr::internal::localization::lexer::handle_char_result tr::internal::localization::lexer::handle_multiline_comment_asterisk_char(char chr)
@@ -134,7 +134,7 @@ tr::internal::localization::lexer::handle_char_result tr::internal::localization
 	default:
 		m_state = state::matching_multiline_comment;
 	}
-	return {empty_variant, consumed_character};
+	return handle_char_result{empty_variant, consumed_character};
 }
 
 tr::internal::localization::lexer::handle_char_result tr::internal::localization::lexer::handle_symbol_char(char chr)
@@ -147,15 +147,15 @@ tr::internal::localization::lexer::handle_char_result tr::internal::localization
 	case '{':
 	case '}':
 		m_state = state::matching_any;
-		return {symbol_token{m_token_start_line, std::exchange(m_token_buffer, std::string{})}, didnt_consume_character};
+		return handle_char_result{symbol_token{m_token_start_line, std::exchange(m_token_buffer, std::string{})}, didnt_consume_character};
 	default:
 		if (std::isspace(static_cast<unsigned char>(chr)) || chr == '\0') {
 			m_state = state::matching_any;
-			return {symbol_token{m_token_start_line, std::exchange(m_token_buffer, std::string{})}, consumed_character};
+			return handle_char_result{symbol_token{m_token_start_line, std::exchange(m_token_buffer, std::string{})}, consumed_character};
 		}
 		else {
 			m_token_buffer.push_back(chr);
-			return {empty_variant, consumed_character};
+			return handle_char_result{empty_variant, consumed_character};
 		}
 	}
 }
@@ -165,13 +165,13 @@ tr::internal::localization::lexer::handle_char_result tr::internal::localization
 	switch (chr) {
 	case '"':
 		m_state = state::matching_any;
-		return {string_token{m_token_start_line, std::exchange(m_token_buffer, std::string{})}, consumed_character};
+		return handle_char_result{string_token{m_token_start_line, std::exchange(m_token_buffer, std::string{})}, consumed_character};
 	case '\\':
 		m_state = state::matching_string_escape_sequence;
-		return {empty_variant, consumed_character};
+		return handle_char_result{empty_variant, consumed_character};
 	default:
 		m_token_buffer.push_back(chr);
-		return {empty_variant, consumed_character};
+		return handle_char_result{empty_variant, consumed_character};
 	}
 }
 
@@ -182,11 +182,11 @@ tr::internal::localization::lexer::handle_char_result tr::internal::localization
 	case '\\':
 	case '"':
 		m_token_buffer.push_back(chr);
-		return {empty_variant, consumed_character};
+		return handle_char_result{empty_variant, consumed_character};
 	case 'n':
 		m_token_buffer.push_back('\n');
-		return {empty_variant, consumed_character};
+		return handle_char_result{empty_variant, consumed_character};
 	default:
-		return {unknown_escape_sequence{m_line, chr}, consumed_character};
+		return handle_char_result{unknown_escape_sequence{m_line, chr}, consumed_character};
 	}
 }

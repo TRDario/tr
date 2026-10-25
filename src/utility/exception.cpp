@@ -33,7 +33,7 @@ std::string_view tr::out_of_memory::description() const noexcept
 
 std::string_view tr::out_of_memory::details() const noexcept
 {
-	return {};
+	return std::string_view{};
 }
 
 //

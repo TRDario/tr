@@ -118,19 +118,19 @@ namespace tr
 		case align::tl:
 			return pos;
 		case align::tc:
-			return {pos.x - size.x / 2, pos.y};
+			return glm::tvec2<Element>{pos.x - size.x / 2, pos.y};
 		case align::tr:
-			return {pos.x - size.x, pos.y};
+			return glm::tvec2<Element>{pos.x - size.x, pos.y};
 		case align::cl:
-			return {pos.x, pos.y - size.y / 2};
+			return glm::tvec2<Element>{pos.x, pos.y - size.y / 2};
 		case align::cc:
 			return pos - size / Element{2};
 		case align::cr:
-			return {pos.x - size.x, pos.y - size.y / 2};
+			return glm::tvec2<Element>{pos.x - size.x, pos.y - size.y / 2};
 		case align::bl:
-			return {pos.x, pos.y - size.y};
+			return glm::tvec2<Element>{pos.x, pos.y - size.y};
 		case align::bc:
-			return {pos.x - size.x / 2, pos.y - size.y};
+			return glm::tvec2<Element>{pos.x - size.x / 2, pos.y - size.y};
 		case align::br:
 			return pos - size;
 		default:

@@ -42,7 +42,7 @@ namespace tr
 		for (auto& [key, entry] : bitmaps) {
 			std::optional<glm::u16vec2> packing_result{entries.try_insert(std::move(key), entry.size(), size)};
 			if (!packing_result.has_value()) {
-				if (size == glm::ivec2{}) {
+				if (size == glm::ivec2{0, 0}) {
 					const glm::uvec2 usize{entry.size()};
 					size = {std::bit_ceil(usize.x + 1), std::bit_ceil(usize.y + 1)};
 					packing_result = entries.try_insert(std::move(key), usize, size);
@@ -58,7 +58,7 @@ namespace tr
 		for (const Key& k : std::views::keys(bitmaps)) {
 			bitmap.blit(entries[k].tl, get(bitmaps, k));
 		}
-		return {std::move(bitmap), std::move(bitmaps)};
+		return bitmap_atlas<Key, void, Hash, Pred>{std::move(bitmap), std::move(bitmaps)};
 	}
 
 	/// @}

@@ -13,12 +13,12 @@ std::string_view tr::audio_device_open_error::name() const noexcept
 
 std::string_view tr::audio_device_open_error::description() const noexcept
 {
-	return {};
+	return std::string_view{};
 }
 
 std::string_view tr::audio_device_open_error::details() const noexcept
 {
-	return {};
+	return std::string_view{};
 }
 
 //
@@ -40,7 +40,7 @@ std::string_view tr::audio_context_init_error::description() const noexcept
 
 std::string_view tr::audio_context_init_error::details() const noexcept
 {
-	return {};
+	return std::string_view{};
 }
 
 //
@@ -62,5 +62,5 @@ std::string_view tr::audio_file_open_error::description() const noexcept
 
 std::string_view tr::audio_file_open_error::details() const noexcept
 {
-	return {};
+	return std::string_view{};
 }

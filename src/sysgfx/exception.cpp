@@ -92,7 +92,7 @@ std::string_view tr::graphics_context_init_error::description() const noexcept
 
 std::string_view tr::graphics_context_init_error::details() const noexcept
 {
-	return {};
+	return std::string_view{};
 }
 
 //
@@ -114,7 +114,7 @@ std::string_view tr::path_error::description() const noexcept
 
 std::string_view tr::path_error::details() const noexcept
 {
-	return {};
+	return std::string_view{};
 }
 
 //
@@ -136,7 +136,7 @@ std::string_view tr::set_clipboard_error::description() const noexcept
 
 std::string_view tr::set_clipboard_error::details() const noexcept
 {
-	return {};
+	return std::string_view{};
 }
 
 //
@@ -204,7 +204,7 @@ std::string_view tr::ttfont_render_error::description() const noexcept
 
 std::string_view tr::ttfont_render_error::details() const noexcept
 {
-	return {};
+	return std::string_view{};
 }
 
 //
@@ -249,5 +249,5 @@ std::string_view tr::window_open_error::description() const noexcept
 
 std::string_view tr::window_open_error::details() const noexcept
 {
-	return {};
+	return std::string_view{};
 }

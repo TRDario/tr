@@ -26,17 +26,24 @@ tr::render_target::render_target([[maybe_unused]] const graphics_context& contex
 }
 
 tr::render_target::render_target(const graphics_context& context) noexcept
-	: render_target{context,
-					internal::graphics_object_id::invalid,
-					0,
-					context.window().size().y,
-					{{}, context.window().size()},
-					{{}, context.window().size()}}
+	: render_target{
+		  context,
+		  internal::graphics_object_id::invalid,
+		  0,
+		  context.window().size().y,
+		  rectangle<u16>{.tl{0, 0}, .size{context.window().size()}},
+		  rectangle<u16>{.tl{0, 0}, .size{context.window().size()}},
+	  }
 {
 }
 
 tr::render_target::render_target(const framebuffer& framebuffer, glm::ivec2 framebuffer_size) noexcept
-	: render_target{framebuffer, framebuffer_size.y, {{}, framebuffer_size}, {{}, framebuffer_size}}
+	: render_target{
+		  framebuffer,
+		  framebuffer_size.y,
+		  rectangle<u16>{.tl{0, 0}, .size{framebuffer_size}},
+		  rectangle<u16>{.tl{0, 0}, .size{framebuffer_size}},
+	  }
 {
 }
 

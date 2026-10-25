@@ -105,7 +105,7 @@ std::pair<tr::fsecs, tr::fsecs> tr::audio_buffer::loop_points() const noexcept
 	std::array<ALint, 2> loop_point_offsets{};
 	context().al().get_buffer_property_iv(context().unwrap(), unwrap(), AL_LOOP_POINTS_SOFT, loop_point_offsets.data());
 
-	return {fsecs{loop_point_offsets[0] / samples_per_second}, fsecs{loop_point_offsets[1] / samples_per_second}};
+	return std::pair{fsecs{loop_point_offsets[0] / samples_per_second}, fsecs{loop_point_offsets[1] / samples_per_second}};
 }
 
 void tr::audio_buffer::set_loop_points(fsecs start_point, fsecs end_point) noexcept

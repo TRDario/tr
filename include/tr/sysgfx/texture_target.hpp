@@ -184,12 +184,12 @@ namespace tr
 
 		/// Clears the texture target.
 		/// @param color Color to clear the texture to.
-		void clear(rgba<float> color) noexcept;
+		void clear(rgba<float> color = {0, 0, 0, 0}) noexcept;
 
 		/// Clears a region of the texture target.
 		/// @param region Region of the texture to clear.
 		/// @param color Color to clear the texture region to.
-		void clear_region(rectangle<int> region, rgba<float> color) noexcept;
+		void clear_region(rectangle<int> region, rgba<float> color = {0, 0, 0, 0}) noexcept;
 
 		/// Copies a region from another texture.
 		/// @param tl Top-left corner of the copied region within the target texture.

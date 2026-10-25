@@ -26,7 +26,7 @@ namespace tr::internal
 	[[nodiscard]] std::tuple<Ts...> lerp_tuple(const std::tuple<Ts...>& begin, const std::tuple<Ts...>& end, float ratio,
 											   std::index_sequence<Is...>) noexcept
 	{
-		return {tr::lerp(std::get<Is>(begin), std::get<Is>(end), ratio)...};
+		return std::tuple<Ts...>{tr::lerp(std::get<Is>(begin), std::get<Is>(end), ratio)...};
 	}
 
 	/// Audio command template.

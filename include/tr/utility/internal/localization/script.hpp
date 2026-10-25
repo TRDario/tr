@@ -219,6 +219,6 @@ namespace tr::internal::localization
 		for (key_value_pair& pair : pairs) {
 			out_pairs.emplace_back(std::move(pair.key), std::move(pair.value));
 		}
-		return {std::move(out_pairs), error_out};
+		return parse_localization_script_result<ErrorOut>{std::move(out_pairs), error_out};
 	}
 } // namespace tr::internal::localization

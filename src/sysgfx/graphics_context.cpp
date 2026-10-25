@@ -30,8 +30,8 @@ namespace tr::internal
 tr::graphics_context::graphics_context(window_view window)
 	: m_window{window.unwrap()}
 	, m_ptr{SDL_GL_CreateContext(m_window)}
-	, m_viewport{{}, window.size()}
-	, m_scissor_box{{}, window.size()}
+	, m_viewport{.tl{0, 0}, .size{window.size()}}
+	, m_scissor_box{.tl{0, 0}, .size{window.size()}}
 {
 	if (m_ptr == nullptr) {
 		throw graphics_context_init_error{};
@@ -379,7 +379,7 @@ void tr::graphics_context::clear_backbuffer(rgba<float> color, double depth, int
 
 void tr::graphics_context::clear_backbuffer_region(rectangle<int> region, rgba<float> color) noexcept
 {
-	set_render_target(backbuffer().cropped(region));
+	set_render_target(backbuffer().cropped(static_cast<rectangle<u16>>(region)));
 
 	const internal::opengl& gl{this->gl()};
 	gl.set_clear_color(color.r, color.g, color.b, color.a);
@@ -388,7 +388,7 @@ void tr::graphics_context::clear_backbuffer_region(rectangle<int> region, rgba<f
 
 void tr::graphics_context::clear_backbuffer_region(rectangle<int> region, rgba<float> color, double depth, int stencil) noexcept
 {
-	set_render_target(backbuffer().cropped(region));
+	set_render_target(backbuffer().cropped(static_cast<rectangle<u16>>(region)));
 
 	const internal::opengl& gl{this->gl()};
 	gl.set_clear_color(color.r, color.g, color.b, color.a);

@@ -49,7 +49,7 @@ void tr::window_view::set_icon(const bitmap_view& bitmap) const
 
 glm::ivec2 tr::window_view::size() const
 {
-	glm::ivec2 size{};
+	glm::ivec2 size;
 	return SDL_GetWindowSizeInPixels(m_ptr, &size.x, &size.y) ? size : throw window_error{"Failed to get size of window '{}'", title()};
 }
 

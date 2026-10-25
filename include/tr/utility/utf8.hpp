@@ -429,7 +429,7 @@ namespace tr::utf8
 	[[nodiscard]] constexpr iterator begin(std::string_view str) noexcept
 	{
 		if (str.empty()) {
-			return {};
+			return iterator{};
 		}
 		return iterator{str.data()};
 	}

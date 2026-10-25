@@ -259,14 +259,14 @@ namespace tr
 			if (capacity.x < size().x && capacity.y < size().y) {
 				return;
 			}
-			else if (m_texture.size() == glm::ivec2{}) {
+			else if (m_texture.size() == glm::ivec2{0, 0}) {
 				m_texture.allocate(capacity);
-				m_texture.clear({});
+				m_texture.clear();
 			}
 			else {
 				const tr::texture old_tex{m_texture.allocate(capacity)};
-				m_texture.clear({});
-				m_texture.copy_region({}, old_tex, {{}, old_tex.size()});
+				m_texture.clear();
+				m_texture.copy_region(glm::vec2{0, 0}, old_tex, rectangle<int>{.tl{}, .size{old_tex.size()}});
 			}
 		}
 
@@ -282,7 +282,7 @@ namespace tr
 			std::optional<glm::u16vec2> tl{m_entries.try_insert(std::move(key), bitmap.size(), size(), std::forward<Args>(args)...)};
 			if (!tl.has_value()) {
 				glm::u16vec2 new_size;
-				if (m_texture.size() == glm::ivec2{}) {
+				if (m_texture.size() == glm::ivec2{0, 0}) {
 					const glm::uvec2 usize{bitmap.size()};
 					new_size = {std::bit_ceil(usize.x + 1), std::bit_ceil(usize.y + 1)};
 					tl = m_entries.try_insert(std::move(key), usize, new_size, std::forward<Args>(args)...);
@@ -302,7 +302,7 @@ namespace tr
 		/// Removes all entries from the atlas.
 		void clear()
 		{
-			if (size() != glm::ivec2{0}) {
+			if (size() != glm::ivec2{0, 0}) {
 				m_texture.clear();
 				m_entries.clear();
 			}

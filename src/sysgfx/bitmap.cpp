@@ -59,7 +59,7 @@ void tr::bitmap::deleter::operator()(SDL_Surface* ptr) noexcept
 
 tr::bitmap::operator tr::sub_bitmap() const noexcept
 {
-	return sub({{}, size()});
+	return sub(rectangle<int>{.tl{0, 0}, .size{size()}});
 }
 
 tr::sub_bitmap tr::bitmap::sub(rectangle<int> region) const noexcept
@@ -78,7 +78,7 @@ glm::ivec2 tr::bitmap::size() const noexcept
 {
 	TR_ASSERT(valid(), "Tried to get the size of a bitmap in an invalid state.");
 
-	return {m_ptr->w, m_ptr->h};
+	return glm::ivec2{m_ptr->w, m_ptr->h};
 }
 
 tr::pixel_format tr::bitmap::format() const noexcept
@@ -178,7 +178,7 @@ tr::bitmap::const_iterator tr::bitmap::cend() const noexcept
 void tr::bitmap::blit(glm::ivec2 tl, sub_bitmap source) noexcept
 {
 	TR_ASSERT(valid(), "Tried to blit to a bitmap in an invalid state.");
-	TR_ASSERT(rectangle<int>{size()}.contains(tl + source.size()),
+	TR_ASSERT((rectangle<int>{.tl{0, 0}, .size{size()}}).contains(tl + source.size()),
 			  "Tried to blit to out-of-bounds region from ({}, {}) to ({}, {}) in a bitmap of size {}x{}.", tl.x, tl.y,
 			  tl.x + source.size().x, tl.y + source.size().y, size().x, size().y);
 
@@ -190,7 +190,7 @@ void tr::bitmap::blit(glm::ivec2 tl, sub_bitmap source) noexcept
 
 void tr::bitmap::fill(rectangle<int> region, rgba<u8> color) noexcept
 {
-	TR_ASSERT(rectangle<int>{size()}.contains(region.tl + region.size),
+	TR_ASSERT((rectangle<int>{.tl{0, 0}, .size{size()}}).contains(region.tl + region.size),
 			  "Tried to fill out-of-bounds region from ({}, {}) to ({}, {}) in a bitmap of size {}x{}.", region.tl.x, region.tl.y,
 			  region.tl.x + region.size.x, region.tl.y + region.size.y, size().x, size().y);
 
@@ -229,10 +229,10 @@ tr::bitmap tr::create_checkerboard(glm::ivec2 size)
 	const glm::ivec2 second_half_size{size - first_half_size};
 
 	bitmap bitmap{size, pixel_format::rgb24};
-	bitmap.fill({{0, 0}, first_half_size}, black);
-	bitmap.fill({{first_half_size.x, 0}, {second_half_size.x, first_half_size.y}}, magenta);
-	bitmap.fill({{0, first_half_size.y}, {first_half_size.x, second_half_size.y}}, magenta);
-	bitmap.fill({first_half_size, second_half_size}, black);
+	bitmap.fill(rectangle<int>{.tl{0, 0}, .size{first_half_size}}, black);
+	bitmap.fill(rectangle<int>{.tl{first_half_size.x, 0}, .size{second_half_size.x, first_half_size.y}}, magenta);
+	bitmap.fill(rectangle<int>{.tl{0, first_half_size.y}, .size{first_half_size.x, second_half_size.y}}, magenta);
+	bitmap.fill(rectangle<int>{.tl{first_half_size}, .size{second_half_size}}, black);
 	return bitmap;
 }
 

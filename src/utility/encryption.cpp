@@ -33,7 +33,7 @@ std::string_view tr::decryption_error::description() const noexcept
 
 std::string_view tr::decryption_error::details() const noexcept
 {
-	return {};
+	return std::string_view{};
 }
 
 //

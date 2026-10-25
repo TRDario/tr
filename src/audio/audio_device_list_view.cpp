@@ -61,5 +61,6 @@ bool tr::operator==(audio_device_list_view_iterator it, audio_device_list_view_e
 
 tr::audio_device_list_view tr::available_audio_devices() noexcept
 {
-	return {audio_device_list_view_iterator{alcGetString(nullptr, ALC_DEVICE_SPECIFIER)}, audio_device_list_view_end_sentinel{}};
+	return audio_device_list_view{audio_device_list_view_iterator{alcGetString(nullptr, ALC_DEVICE_SPECIFIER)},
+								  audio_device_list_view_end_sentinel{}};
 }
