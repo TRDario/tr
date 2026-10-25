@@ -14,6 +14,7 @@ add_executable(
 	color_cast.cpp
 	color_hex_code.cpp
 	defer.cpp
+	draw_geometry.cpp
 	dynamic_ref_cast.cpp
 	encryption.cpp
 	enum.cpp

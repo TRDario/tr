@@ -168,8 +168,8 @@ namespace tr
 	/// @param base Base index to count up from.
 	/// @pre `out` needs to have space for `polygon_indices(vertices)` indices.
 	/// @return Iterator to the end of the written range.
-	template <std::output_iterator<u16> Iterator, arithmetic Rep>
-	constexpr Iterator fill_simple_polygon_indices(Iterator out, std::span<const glm::tvec2<Rep>> vertices, u16 base)
+	template <std::output_iterator<u16> Iterator>
+	constexpr Iterator fill_simple_polygon_indices(Iterator out, std::span<const glm::vec2> vertices, u16 base)
 	{
 		TR_ASSERT(vertices.size() >= 3, "Tried to calculate indices for {}-sided polygon.", vertices.size());
 		TR_ASSERT(base + vertices.size() <= UINT16_MAX, "Index overflow detected in fill_simple_polygon_indices.");
@@ -184,7 +184,7 @@ namespace tr
 				const u16 right{static_cast<u16>(i == indices.size() - 1 ? 0 : i + 1)};
 
 				if (indices.size() > 3) {
-					const triangle tri{vertices[indices[left]], vertices[indices[i]], vertices[indices[right]]};
+					const triangle<float> tri{vertices[indices[left]], vertices[indices[i]], vertices[indices[right]]};
 					const auto is_in_tri{[&](usize j) { return j != left && j != i && j != right && tri.contains(vertices[indices[j]]); }};
 					if (tri.winding_order() != winding_order || std::ranges::any_of(std::views::iota(0uz, indices.size()), is_in_tri)) {
 						continue;
@@ -277,10 +277,10 @@ namespace tr
 	Iterator fill_rectangle_vertices(Iterator out, glm::vec2 pos, glm::vec2 anchor, glm::vec2 size, angle<float> rotation)
 	{
 		if (rotation == 0_rad) {
-			return fill_rectangle_vertices(out, {pos - anchor, size});
+			return fill_rectangle_vertices(out, rectangle<float>{pos - anchor, size});
 		}
 		else {
-			return fill_rectangle_vertices(out, {pos - anchor, size}, rotate_around(glm::mat4{1.0f}, pos, rotation));
+			return fill_rectangle_vertices(out, rectangle<float>{pos - anchor, size}, rotate_around(glm::mat4{1.0f}, pos, rotation));
 		}
 	}
 
@@ -312,8 +312,8 @@ namespace tr
 	template <std::output_iterator<glm::vec2> Iterator>
 	constexpr Iterator fill_rectangle_outline_vertices(Iterator out, rectangle<float> rectangle, float thickness)
 	{
-		out = fill_rectangle_vertices(out, {rectangle.tl - thickness / 2, rectangle.size + thickness});
-		return fill_rectangle_vertices(out, {rectangle.tl + thickness / 2, rectangle.size - thickness});
+		out = fill_rectangle_vertices(out, tr::rectangle<float>{rectangle.tl - thickness / 2, rectangle.size + thickness});
+		return fill_rectangle_vertices(out, tr::rectangle<float>{rectangle.tl + thickness / 2, rectangle.size - thickness});
 	}
 
 	/// Outputs rectangle outline vertices to a range of 8 vertices.
@@ -341,8 +341,8 @@ namespace tr
 	template <std::output_iterator<glm::vec2> Iterator>
 	constexpr Iterator fill_rectangle_outline_vertices(Iterator out, rectangle<float> rectangle, float thickness, const glm::mat4& mat)
 	{
-		out = fill_rectangle_vertices(out, {rectangle.tl - thickness / 2, rectangle.size + thickness}, mat);
-		return fill_rectangle_vertices(out, {rectangle.tl + thickness / 2, rectangle.size - thickness}, mat);
+		out = fill_rectangle_vertices(out, tr::rectangle<float>{rectangle.tl - thickness / 2, rectangle.size + thickness}, mat);
+		return fill_rectangle_vertices(out, tr::rectangle<float>{rectangle.tl + thickness / 2, rectangle.size - thickness}, mat);
 	}
 
 	/// Outputs transformed rectangle outline vertices to a range of 8 vertices.
@@ -375,10 +375,11 @@ namespace tr
 											 float thickness)
 	{
 		if (rotation == 0_rad) {
-			return fill_rectangle_outline_vertices(out, pos - anchor, size, thickness);
+			return fill_rectangle_outline_vertices(out, rectangle<float>{pos - anchor, size}, thickness);
 		}
 		else {
-			return fill_rectangle_outline_vertices(out, pos - anchor, size, thickness, rotate_around(glm::mat4{1.0f}, pos, rotation));
+			return fill_rectangle_outline_vertices(out, rectangle<float>{pos - anchor, size}, thickness,
+												   rotate_around(glm::mat4{1.0f}, pos, rotation));
 		}
 	}
 
@@ -500,8 +501,8 @@ namespace tr
 	Iterator fill_regular_polygon_outline_vertices(Iterator out, usize vertices, circle<float> circle, angle<float> rotation,
 												   float thickness)
 	{
-		out = fill_regular_polygon_vertices(out, vertices, {circle.center, circle.radius + thickness / 2}, rotation);
-		return fill_regular_polygon_vertices(out, vertices, {circle.center, circle.radius - thickness / 2}, rotation);
+		out = fill_regular_polygon_vertices(out, vertices, tr::circle<float>{circle.center, circle.radius + thickness / 2}, rotation);
+		return fill_regular_polygon_vertices(out, vertices, tr::circle<float>{circle.center, circle.radius - thickness / 2}, rotation);
 	}
 
 	/// Outputs regular polygon outline vertices to a range.
@@ -527,8 +528,8 @@ namespace tr
 	template <std::output_iterator<glm::vec2> Iterator>
 	Iterator fill_circle_outline_vertices(Iterator out, usize vertices, circle<float> circle, float thickness)
 	{
-		out = fill_circle_vertices(out, vertices, {circle.center, circle.radius + thickness / 2});
-		return fill_circle_vertices(out, vertices, {circle.center, circle.radius - thickness / 2});
+		out = fill_circle_vertices(out, vertices, tr::circle<float>{circle.center, circle.radius + thickness / 2});
+		return fill_circle_vertices(out, vertices, tr::circle<float>{circle.center, circle.radius - thickness / 2});
 	}
 
 	/// Outputs circle outline vertices to a range.
@@ -539,7 +540,7 @@ namespace tr
 	template <sized_output_range<glm::vec2> Range>
 	void fill_circle_outline_vertices(Range&& out, circle<float> circle, float thickness)
 	{
-		fill_circle_outline_vertices(std::begin(out), std::size(out) / 2, circle, thickness);
+		fill_circle_outline_vertices(std::ranges::begin(out), std::ranges::size(out) / 2, circle, thickness);
 	}
 
 	/// @}
