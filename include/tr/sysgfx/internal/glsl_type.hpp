@@ -99,8 +99,8 @@ namespace tr::internal
 	//
 
 	/// Maps a C++ type to a glsl_type enum value.
-	/// @tparam T C++ type to get the matching glsl_type value of.
-	template <typename T>
+	/// @tparam Target C++ type to get the matching glsl_type value of.
+	template <typename Target>
 	inline constexpr glsl_type as_glsl_type{glsl_type::undefined};
 
 	/// Specialization of `tr::as_glsl_type` for `bool`.

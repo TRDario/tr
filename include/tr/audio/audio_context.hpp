@@ -155,17 +155,17 @@ namespace tr
 		//
 
 		/// Creates an audio command on the context.
-		/// @tparam T Argument type.
+		/// @tparam Arg Type of the arguments.
 		/// @param source Audio source to command.
 		/// @param method Method the command calls when setting the value.
 		/// @param begin Initial value of the property being set.
 		/// @param end Final value of the property being set.
 		/// @param length Length of the command.
-		template <typename T>
-		void create_command(audio_source& source, internal::audio_command<T>::method_type method, T begin, T end, fsecs length)
+		template <typename Arg>
+		void create_command(audio_source& source, internal::audio_command<Arg>::method_type method, Arg begin, Arg end, fsecs length)
 		{
 			const std::lock_guard lock{m_mutex};
-			m_commands.emplace_back(std::in_place_type_t<internal::audio_command<T>>{}, source, method, begin, end, length);
+			m_commands.emplace_back(std::in_place_type_t<internal::audio_command<Arg>>{}, source, method, begin, end, length);
 		}
 
 		/// Creates an audio command on the context.
@@ -175,12 +175,12 @@ namespace tr
 		/// @param begin Initial values of the property being set.
 		/// @param end Final values of the property being set.
 		/// @param length Length of the command.
-		template <typename... Ts>
-		void create_command(audio_source& source, internal::audio_command<Ts...>::method_type method, const std::tuple<Ts...>& begin,
-							const std::tuple<Ts...>& end, fsecs length)
+		template <typename... Args>
+		void create_command(audio_source& source, internal::audio_command<Args...>::method_type method, const std::tuple<Args...>& begin,
+							const std::tuple<Args...>& end, fsecs length)
 		{
 			const std::lock_guard lock{m_mutex};
-			m_commands.emplace_back(std::in_place_type_t<internal::audio_command<Ts...>>{}, source, method, begin, end, length);
+			m_commands.emplace_back(std::in_place_type_t<internal::audio_command<Args...>>{}, source, method, begin, end, length);
 		}
 
 		/// @}

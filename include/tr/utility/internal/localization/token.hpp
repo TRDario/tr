@@ -76,6 +76,6 @@ namespace tr::internal::localization
 	};
 
 	/// Concept denoting a localization token.
-	template <typename T>
-	concept token = one_of<T, symbol_token, string_token, equals_token, opening_brace_token, closing_brace_token>;
+	template <typename Target>
+	concept token = one_of<Target, symbol_token, string_token, equals_token, opening_brace_token, closing_brace_token>;
 } // namespace tr::internal::localization

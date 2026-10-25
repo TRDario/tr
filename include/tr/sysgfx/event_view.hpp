@@ -13,49 +13,42 @@ namespace tr
 {
 	/// Valid event view visitor type.
 	/// @details Event visitors must be callable with all event types, and all overloads must return the same type.
-	template <typename T>
-	concept event_view_visitor = std::invocable<T, quit_event> && std::invocable<T, window_show_event> &&
-								 std::invocable<T, window_hide_event> && std::invocable<T, backbuffer_resize_event> &&
-								 std::invocable<T, window_gain_focus_event> && std::invocable<T, window_lose_focus_event> &&
-								 std::invocable<T, window_mouse_enter_event> && std::invocable<T, window_mouse_leave_event> &&
-								 std::invocable<T, key_down_event> && std::invocable<T, key_up_event> &&
-								 std::invocable<T, text_input_event> && std::invocable<T, mouse_motion_event> &&
-								 std::invocable<T, mouse_down_event> && std::invocable<T, mouse_up_event> &&
-								 std::invocable<T, mouse_wheel_event> && std::invocable<T, unknown_event> &&
-								 std::same_as<std::invoke_result_t<T, quit_event>, std::invoke_result_t<T, window_show_event>> &&
-								 std::same_as<std::invoke_result_t<T, quit_event>, std::invoke_result_t<T, window_hide_event>> &&
-								 std::same_as<std::invoke_result_t<T, quit_event>, std::invoke_result_t<T, backbuffer_resize_event>> &&
-								 std::same_as<std::invoke_result_t<T, quit_event>, std::invoke_result_t<T, window_gain_focus_event>> &&
-								 std::same_as<std::invoke_result_t<T, quit_event>, std::invoke_result_t<T, window_lose_focus_event>> &&
-								 std::same_as<std::invoke_result_t<T, quit_event>, std::invoke_result_t<T, window_mouse_enter_event>> &&
-								 std::same_as<std::invoke_result_t<T, quit_event>, std::invoke_result_t<T, window_mouse_leave_event>> &&
-								 std::same_as<std::invoke_result_t<T, quit_event>, std::invoke_result_t<T, key_down_event>> &&
-								 std::same_as<std::invoke_result_t<T, quit_event>, std::invoke_result_t<T, key_up_event>> &&
-								 std::same_as<std::invoke_result_t<T, quit_event>, std::invoke_result_t<T, text_input_event>> &&
-								 std::same_as<std::invoke_result_t<T, quit_event>, std::invoke_result_t<T, mouse_motion_event>> &&
-								 std::same_as<std::invoke_result_t<T, quit_event>, std::invoke_result_t<T, mouse_down_event>> &&
-								 std::same_as<std::invoke_result_t<T, quit_event>, std::invoke_result_t<T, mouse_up_event>> &&
-								 std::same_as<std::invoke_result_t<T, quit_event>, std::invoke_result_t<T, mouse_wheel_event>> &&
-								 std::same_as<std::invoke_result_t<T, quit_event>, std::invoke_result_t<T, unknown_event>>;
+	template <typename Target>
+	concept event_view_visitor =
+		std::invocable<Target, quit_event> && std::invocable<Target, window_show_event> && std::invocable<Target, window_hide_event> &&
+		std::invocable<Target, backbuffer_resize_event> && std::invocable<Target, window_gain_focus_event> &&
+		std::invocable<Target, window_lose_focus_event> && std::invocable<Target, window_mouse_enter_event> &&
+		std::invocable<Target, window_mouse_leave_event> && std::invocable<Target, key_down_event> &&
+		std::invocable<Target, key_up_event> && std::invocable<Target, text_input_event> && std::invocable<Target, mouse_motion_event> &&
+		std::invocable<Target, mouse_down_event> && std::invocable<Target, mouse_up_event> && std::invocable<Target, mouse_wheel_event> &&
+		std::invocable<Target, unknown_event> &&
+		all_same<std::invoke_result_t<Target, quit_event>, std::invoke_result_t<Target, window_show_event>,
+				 std::invoke_result_t<Target, window_hide_event>, std::invoke_result_t<Target, backbuffer_resize_event>,
+				 std::invoke_result_t<Target, window_gain_focus_event>, std::invoke_result_t<Target, window_lose_focus_event>,
+				 std::invoke_result_t<Target, window_mouse_enter_event>, std::invoke_result_t<Target, window_mouse_leave_event>,
+				 std::invoke_result_t<Target, key_down_event>, std::invoke_result_t<Target, key_up_event>,
+				 std::invoke_result_t<Target, text_input_event>, std::invoke_result_t<Target, mouse_motion_event>,
+				 std::invoke_result_t<Target, mouse_down_event>, std::invoke_result_t<Target, mouse_up_event>,
+				 std::invoke_result_t<Target, mouse_wheel_event>, std::invoke_result_t<Target, unknown_event>>;
 
 	/// Valid event view visitor type that doesn't throw.
-	template <typename T>
-	concept nothrow_event_view_visitor = event_view_visitor<T> && noexcept(std::declval<T>(std::declval<quit_event>())) &&
-										 noexcept(std::declval<T>(std::declval<window_show_event>())) &&
-										 noexcept(std::declval<T>(std::declval<window_hide_event>())) &&
-										 noexcept(std::declval<T>(std::declval<backbuffer_resize_event>())) &&
-										 noexcept(std::declval<T>(std::declval<window_gain_focus_event>())) &&
-										 noexcept(std::declval<T>(std::declval<window_lose_focus_event>())) &&
-										 noexcept(std::declval<T>(std::declval<window_mouse_enter_event>())) &&
-										 noexcept(std::declval<T>(std::declval<window_mouse_leave_event>())) &&
-										 noexcept(std::declval<T>(std::declval<key_down_event>())) &&
-										 noexcept(std::declval<T>(std::declval<key_up_event>())) &&
-										 noexcept(std::declval<T>(std::declval<text_input_event>())) &&
-										 noexcept(std::declval<T>(std::declval<mouse_motion_event>())) &&
-										 noexcept(std::declval<T>(std::declval<mouse_down_event>())) &&
-										 noexcept(std::declval<T>(std::declval<mouse_up_event>())) &&
-										 noexcept(std::declval<T>(std::declval<mouse_wheel_event>())) &&
-										 noexcept(std::declval<T>(std::declval<unknown_event>()));
+	template <typename Target>
+	concept nothrow_event_view_visitor = event_view_visitor<Target> && noexcept(std::declval<Target>(std::declval<quit_event>())) &&
+										 noexcept(std::declval<Target>(std::declval<window_show_event>())) &&
+										 noexcept(std::declval<Target>(std::declval<window_hide_event>())) &&
+										 noexcept(std::declval<Target>(std::declval<backbuffer_resize_event>())) &&
+										 noexcept(std::declval<Target>(std::declval<window_gain_focus_event>())) &&
+										 noexcept(std::declval<Target>(std::declval<window_lose_focus_event>())) &&
+										 noexcept(std::declval<Target>(std::declval<window_mouse_enter_event>())) &&
+										 noexcept(std::declval<Target>(std::declval<window_mouse_leave_event>())) &&
+										 noexcept(std::declval<Target>(std::declval<key_down_event>())) &&
+										 noexcept(std::declval<Target>(std::declval<key_up_event>())) &&
+										 noexcept(std::declval<Target>(std::declval<text_input_event>())) &&
+										 noexcept(std::declval<Target>(std::declval<mouse_motion_event>())) &&
+										 noexcept(std::declval<Target>(std::declval<mouse_down_event>())) &&
+										 noexcept(std::declval<Target>(std::declval<mouse_up_event>())) &&
+										 noexcept(std::declval<Target>(std::declval<mouse_wheel_event>())) &&
+										 noexcept(std::declval<Target>(std::declval<unknown_event>()));
 
 	//
 
@@ -91,110 +84,110 @@ namespace tr
 		/// @{
 
 		/// Checks whether the event is of a certain type.
-		/// @tparam T Event type.
-		/// @return Whether the event holds an event of type `T`.
-		template <event_type T>
+		/// @tparam Event Event type.
+		/// @return Whether the event holds an event of type `Event`.
+		template <event_type Event>
 		[[nodiscard]] bool is() const noexcept
 		{
-			if constexpr (std::same_as<T, quit_event>) {
+			if constexpr (std::same_as<Event, quit_event>) {
 				return type() == 0x100;
 			}
-			else if constexpr (std::same_as<T, window_show_event>) {
+			else if constexpr (std::same_as<Event, window_show_event>) {
 				return type() == 0x202;
 			}
-			else if constexpr (std::same_as<T, window_hide_event>) {
+			else if constexpr (std::same_as<Event, window_hide_event>) {
 				return type() == 0x203;
 			}
-			else if constexpr (std::same_as<T, backbuffer_resize_event>) {
+			else if constexpr (std::same_as<Event, backbuffer_resize_event>) {
 				return type() == 0x207;
 			}
-			else if constexpr (std::same_as<T, window_mouse_enter_event>) {
+			else if constexpr (std::same_as<Event, window_mouse_enter_event>) {
 				return type() == 0x20C;
 			}
-			else if constexpr (std::same_as<T, window_mouse_leave_event>) {
+			else if constexpr (std::same_as<Event, window_mouse_leave_event>) {
 				return type() == 0x20D;
 			}
-			else if constexpr (std::same_as<T, window_gain_focus_event>) {
+			else if constexpr (std::same_as<Event, window_gain_focus_event>) {
 				return type() == 0x20E;
 			}
-			else if constexpr (std::same_as<T, window_lose_focus_event>) {
+			else if constexpr (std::same_as<Event, window_lose_focus_event>) {
 				return type() == 0x20F;
 			}
-			else if constexpr (std::same_as<T, key_down_event>) {
+			else if constexpr (std::same_as<Event, key_down_event>) {
 				return type() == 0x300;
 			}
-			else if constexpr (std::same_as<T, key_up_event>) {
+			else if constexpr (std::same_as<Event, key_up_event>) {
 				return type() == 0x301;
 			}
-			else if constexpr (std::same_as<T, text_input_event>) {
+			else if constexpr (std::same_as<Event, text_input_event>) {
 				return type() == 0x303;
 			}
-			else if constexpr (std::same_as<T, mouse_motion_event>) {
+			else if constexpr (std::same_as<Event, mouse_motion_event>) {
 				return type() == 0x400;
 			}
-			else if constexpr (std::same_as<T, mouse_down_event>) {
+			else if constexpr (std::same_as<Event, mouse_down_event>) {
 				return type() == 0x401;
 			}
-			else if constexpr (std::same_as<T, mouse_up_event>) {
+			else if constexpr (std::same_as<Event, mouse_up_event>) {
 				return type() == 0x402;
 			}
-			else if constexpr (std::same_as<T, mouse_wheel_event>) {
+			else if constexpr (std::same_as<Event, mouse_wheel_event>) {
 				return type() == 0x403;
 			}
 		}
 
 		/// Converts the event into a sub-type.
-		/// @tparam T Event type.
-		/// @pre The event must hold an event of type `T`.
+		/// @tparam Event Event type.
+		/// @pre The event must hold an event of type `Event`.
 		/// @return Held event subtype.
-		template <event_type T>
-		[[nodiscard]] T as() const noexcept
+		template <event_type Event>
+		[[nodiscard]] Event as() const noexcept
 		{
-			TR_ASSERT(is<T>(), "Tried to convert event to a sub-type it is not.");
+			TR_ASSERT(is<Event>(), "Tried to convert event to a sub-type it is not.");
 
-			if constexpr (std::same_as<T, quit_event>) {
+			if constexpr (std::same_as<Event, quit_event>) {
 				return quit_event{};
 			}
-			else if constexpr (std::same_as<T, window_show_event>) {
+			else if constexpr (std::same_as<Event, window_show_event>) {
 				return window_show_event{*this};
 			}
-			else if constexpr (std::same_as<T, window_hide_event>) {
+			else if constexpr (std::same_as<Event, window_hide_event>) {
 				return window_hide_event{*this};
 			}
-			else if constexpr (std::same_as<T, backbuffer_resize_event>) {
+			else if constexpr (std::same_as<Event, backbuffer_resize_event>) {
 				return backbuffer_resize_event{*this};
 			}
-			else if constexpr (std::same_as<T, window_mouse_enter_event>) {
+			else if constexpr (std::same_as<Event, window_mouse_enter_event>) {
 				return window_mouse_enter_event{*this};
 			}
-			else if constexpr (std::same_as<T, window_mouse_leave_event>) {
+			else if constexpr (std::same_as<Event, window_mouse_leave_event>) {
 				return window_mouse_leave_event{*this};
 			}
-			else if constexpr (std::same_as<T, window_gain_focus_event>) {
+			else if constexpr (std::same_as<Event, window_gain_focus_event>) {
 				return window_gain_focus_event{*this};
 			}
-			else if constexpr (std::same_as<T, window_lose_focus_event>) {
+			else if constexpr (std::same_as<Event, window_lose_focus_event>) {
 				return window_lose_focus_event{*this};
 			}
-			else if constexpr (std::same_as<T, key_down_event>) {
+			else if constexpr (std::same_as<Event, key_down_event>) {
 				return key_down_event{*this};
 			}
-			else if constexpr (std::same_as<T, key_up_event>) {
+			else if constexpr (std::same_as<Event, key_up_event>) {
 				return key_up_event{*this};
 			}
-			else if constexpr (std::same_as<T, text_input_event>) {
+			else if constexpr (std::same_as<Event, text_input_event>) {
 				return text_input_event{*this};
 			}
-			else if constexpr (std::same_as<T, mouse_motion_event>) {
+			else if constexpr (std::same_as<Event, mouse_motion_event>) {
 				return mouse_motion_event{*this};
 			}
-			else if constexpr (std::same_as<T, mouse_down_event>) {
+			else if constexpr (std::same_as<Event, mouse_down_event>) {
 				return mouse_down_event{*this};
 			}
-			else if constexpr (std::same_as<T, mouse_up_event>) {
+			else if constexpr (std::same_as<Event, mouse_up_event>) {
 				return mouse_up_event{*this};
 			}
-			else if constexpr (std::same_as<T, mouse_wheel_event>) {
+			else if constexpr (std::same_as<Event, mouse_wheel_event>) {
 				return mouse_wheel_event{*this};
 			}
 		}

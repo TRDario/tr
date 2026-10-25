@@ -13,8 +13,8 @@ namespace tr
 {
 	/// Concept denoting a visitor applicable to a single variant.
 	/// @tparam Alternatives Qualified alternatives of the variant.
-	template <typename T, typename... Alternatives>
-	concept variant_visitor = (std::invocable<T, Alternatives> && ...) && all_same<std::invoke_result_t<T, Alternatives>...>;
+	template <typename Target, typename... Alternatives>
+	concept variant_visitor = (std::invocable<Target, Alternatives> && ...) && all_same<std::invoke_result_t<Target, Alternatives>...>;
 
 	//
 

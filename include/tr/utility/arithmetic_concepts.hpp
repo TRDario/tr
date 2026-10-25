@@ -9,6 +9,6 @@
 namespace tr
 {
 	/// Built-in arithmetic type.
-	template <typename T>
-	concept arithmetic = std::integral<T> || std::floating_point<T>;
+	template <typename Target>
+	concept arithmetic = std::integral<Target> || std::floating_point<Target>;
 } // namespace tr

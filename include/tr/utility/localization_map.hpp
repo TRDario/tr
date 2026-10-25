@@ -14,13 +14,13 @@ namespace tr
 	/// @details To fulfill this concept, a type has to destructure to two values convertible to `std::string_view`.
 	/// @note This concept is currently only enforced on Clang.
 	/// @hideinitializer
-	template <typename T>
+	template <typename Target>
 	concept localization_key_value_pair =
 #ifdef __clang__
 		requires {
-			requires __builtin_structured_binding_size(std::remove_cvref_t<T>) == 2;
-			requires std::convertible_to<internal::binding_t<0, T>, std::string_view>;
-			requires std::convertible_to<internal::binding_t<1, T>, std::string_view>;
+			requires __builtin_structured_binding_size(std::remove_cvref_t<Target>) == 2;
+			requires std::convertible_to<internal::binding_t<0, Target>, std::string_view>;
+			requires std::convertible_to<internal::binding_t<1, Target>, std::string_view>;
 		}
 #else
 		true

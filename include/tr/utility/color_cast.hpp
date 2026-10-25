@@ -33,23 +33,25 @@ namespace tr
 
 	/// Type that is directly castable to `To` using `tr::color_cast()`.
 	/// @tparam To Color type to cast to.
-	template <typename T, typename To>
-	concept directly_color_castable_to = requires(const T& from) {
-		{ color_caster<T, To>{}(from) } -> std::same_as<To>;
+	template <typename Target, typename To>
+	concept directly_color_castable_to = requires(const Target& from) {
+		{ color_caster<Target, To>{}(from) } -> std::same_as<To>;
 	};
 
 	/// Type that is indirectly castable to `To` using `tr::color_cast()`.
-	/// @details For `T` to be indirectly castable to `To`, it must be castable to `tr::rgba<double>`, and `tr::rgba<double>` must be
+	/// @details For `Target` to be indirectly castable to `To`, it must be castable to `tr::rgba<double>`, and `tr::rgba<double>` must be
 	/// castable to `To`.
 	/// @tparam To Color type to cast to.
-	template <typename T, typename To>
-	concept indirectly_color_castable_to = requires(const T& from, const rgba<double>& pivot) {
-		{ color_caster<T, rgba<double>>{}(from) } -> std::same_as<rgba<double>>;
+	template <typename Target, typename To>
+	concept indirectly_color_castable_to = requires(const Target& from, const rgba<double>& pivot) {
+		{ color_caster<Target, rgba<double>>{}(from) } -> std::same_as<rgba<double>>;
 		{ color_caster<rgba<double>, To>{}(pivot) } -> std::same_as<To>;
 	};
 
-	template <typename T, typename To>
-	concept color_castable_to = std::same_as<T, To> || directly_color_castable_to<T, To> || indirectly_color_castable_to<T, To>;
+	/// Type that is castable to `To` using `tr::color_cast()` directly or indirectly.
+	template <typename Target, typename To>
+	concept color_castable_to = std::same_as<Target, To> || directly_color_castable_to<Target, To> ||
+								indirectly_color_castable_to<Target, To>;
 
 	/// @}
 	/// @name Casts

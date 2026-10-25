@@ -21,23 +21,23 @@ namespace tr
 		std::span<const vertex_attribute> attrs;
 	};
 
-	/// Maps a type (attributes obtained using `tr::as_vertex_attribute_list<T>`) and divisor to a vertex binding at compile-time.
-	/// @tparam T Type to get the attribute list for.
+	/// Maps a type (attributes obtained using `tr::as_vertex_attribute_list<Target>`) and divisor to a vertex binding at compile-time.
+	/// @tparam Target Type to get the attribute list for.
 	/// @tparam Divisor Divisor of the binding.
 	/// @hideinitializer
-	template <typename T, u32 Divisor = not_instanced>
-	inline constexpr vertex_binding as_vertex_binding{Divisor, as_vertex_attribute_list<T>};
+	template <typename Target, u32 Divisor = not_instanced>
+	inline constexpr vertex_binding as_vertex_binding{Divisor, as_vertex_attribute_list<Target>};
 
 	//
 
 	/// Vertex binding point tag struct used in `tr::as_vertex_bindings`.
-	/// @tparam T Type to get the attribute list for.
+	/// @tparam Target Type to get the attribute list for.
 	/// @tparam Divisor Divisor of the binding.
-	template <typename T, u32 Divisor = not_instanced>
+	template <typename Target, u32 Divisor = not_instanced>
 	struct vertex_binding_tag
 	{
 		/// Type to get the attribute list for.
-		using type = T;
+		using type = Target;
 
 		/// Divisor of the binding.
 		static constexpr u32 divisor{Divisor};

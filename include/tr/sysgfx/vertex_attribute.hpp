@@ -53,17 +53,17 @@ namespace tr
 	};
 
 	/// Tag to signify an integral vertex attribute should be normalized.
-	/// @tparam T Type to signify is normalized.
-	template <typename T>
+	/// @tparam Target Type to signify is normalized.
+	template <typename Target>
 	struct normalized
 	{
 	};
 
 	/// Maps a C++ type to a vertex attribute.
 	/// @note Mappings for 32-bit or smaller integers (wrapped in normalized or not) and floats, vectors of such, and colors are predefined.
-	/// @tparam T Type to get the vertex attribute for.
+	/// @tparam Target Type to get the vertex attribute for.
 	/// @hideinitializer
-	template <typename T>
+	template <typename Target>
 	inline constexpr vertex_attribute as_vertex_attribute{
 		TR_UNSPECIALIZED_VARIABLE_TEMPLATE(T, vertex_attribute, "Type is not convertible to vertex_attribute!"),
 	};
@@ -72,11 +72,11 @@ namespace tr
 	/// @note If the list is composed entirely of types convertible to vertex attributes, they will be grouped into a list.
 	/// @note If the type has as_vertex_attribute_list as a public static array of vertex attributes, that list will be used.
 	/// @note Otherwise, the type must be manually specialized.
-	/// @tparam Ts Types to get the vertex attribute list for.
+	/// @tparam Targets Types to get the vertex attribute list for.
 	/// @hideinitializer
-	template <typename... Ts>
+	template <typename... Targets>
 	inline constexpr std::array as_vertex_attribute_list{
-		TR_UNSPECIALIZED_VARIABLE_TEMPLATE(Ts..., TR_MACRO_COMMA_GUARD(std::array<vertex_attribute, 0>),
+		TR_UNSPECIALIZED_VARIABLE_TEMPLATE(Targets..., TR_MACRO_COMMA_GUARD(std::array<vertex_attribute, 0>),
 										   "Type(s) is/are not convertible to vertex attribute list!"),
 	};
 } // namespace tr

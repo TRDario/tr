@@ -9,8 +9,8 @@
 namespace tr
 {
 	/// Wrapper over a pointer representing optional reference semantics.
-	/// @tparam T Type being referenced.
-	template <typename T>
+	/// @tparam Value Type being referenced.
+	template <typename Value>
 	class opt_ref
 	{
 	  public:
@@ -28,20 +28,20 @@ namespace tr
 
 		/// Wraps a reference.
 		/// @param ref Reference to wrap.
-		[[nodiscard]] constexpr opt_ref(T& ref) noexcept
+		[[nodiscard]] constexpr opt_ref(Value& ref) noexcept
 			: m_base{std::addressof(ref)}
 		{
 		}
 
 		/// Wraps a pointer.
 		/// @param ptr Pointer to wrap.
-		[[nodiscard]] constexpr explicit opt_ref(T* ptr) noexcept
+		[[nodiscard]] constexpr explicit opt_ref(Value* ptr) noexcept
 			: m_base{ptr}
 		{
 		}
 
 		/// Wrapping an rvalue is not permitted.
-		constexpr opt_ref(T&&) = delete;
+		constexpr opt_ref(Value&&) = delete;
 
 		/// @}
 		/// @name Conversion operators
@@ -49,16 +49,16 @@ namespace tr
 
 		/// Const-qualifies the optional reference.
 		/// @return Const-qualified version of the optional reference.
-		[[nodiscard]] constexpr operator opt_ref<const T>() const noexcept
+		[[nodiscard]] constexpr operator opt_ref<const Value>() const noexcept
 		{
-			return opt_ref<const T>{m_base};
+			return opt_ref<const Value>{m_base};
 		}
 
 		/// Converts the reference to a base class reference.
-		/// @tparam Base Base class of `T`.
+		/// @tparam Base Base class of `Value`.
 		/// @return Optional reference to the base class.
 		template <typename Base>
-			requires std::convertible_to<T&, Base&>
+			requires std::convertible_to<Value&, Base&>
 		[[nodiscard]] constexpr operator opt_ref<Base>() const noexcept
 		{
 			return opt_ref<Base>{static_cast<Base*>(as_ptr())};
@@ -90,7 +90,7 @@ namespace tr
 
 		/// Converts the optional reference into a pointer to the referenced object, or nullptr.
 		/// @return Pointer equivalent to the optional reference.
-		[[nodiscard]] constexpr T* as_ptr() const noexcept
+		[[nodiscard]] constexpr Value* as_ptr() const noexcept
 		{
 			return m_base;
 		}
@@ -98,7 +98,7 @@ namespace tr
 		/// Dereferences the referenced object.
 		/// @pre The optional reference must reference an object.
 		/// @return Raw pointer to the object.
-		[[nodiscard]] constexpr T* operator->() const noexcept
+		[[nodiscard]] constexpr Value* operator->() const noexcept
 		{
 			TR_ASSERT(has_value(), "Tried to dereference empty optional reference.");
 
@@ -108,7 +108,7 @@ namespace tr
 		/// Dereferences the referenced object.
 		/// @pre The optional reference must reference an object.
 		/// @return Raw reference to the object.
-		[[nodiscard]] constexpr T& operator*() const noexcept
+		[[nodiscard]] constexpr Value& operator*() const noexcept
 		{
 			TR_ASSERT(has_value(), "Tried to dereference empty optional reference.");
 
@@ -119,20 +119,20 @@ namespace tr
 
 	  private:
 		/// Pointer to the referenced object, or nullptr.
-		T* m_base{nullptr};
+		Value* m_base{nullptr};
 	};
 
 	/// @name Factories
 	/// @{
 
 	/// Converts a pointer into an optional reference.
-	/// @tparam T Type being referenced.
+	/// @tparam Value Type being referenced.
 	/// @param ptr Pointer to wrap into an optional reference.
 	/// @return Equivalent optional reference.
-	template <typename T>
-	[[nodiscard]] constexpr opt_ref<T> make_opt_ref(T* ptr) noexcept
+	template <typename Value>
+	[[nodiscard]] constexpr opt_ref<Value> make_opt_ref(Value* ptr) noexcept
 	{
-		return opt_ref<T>{ptr};
+		return opt_ref<Value>{ptr};
 	}
 
 	/// @}
@@ -140,11 +140,11 @@ namespace tr
 	/// @{
 
 	/// Compares whether a reference and an optional reference point to the same object.
-	/// @tparam T Type being referenced.
+	/// @tparam Value Type being referenced.
 	/// @param lhs, rhs References to compare.
 	/// @return Whether the references point to the same object.
-	template <typename T>
-	[[nodiscard]] constexpr bool operator==(opt_ref<T> lhs, const std::type_identity_t<T>& rhs) noexcept
+	template <typename Value>
+	[[nodiscard]] constexpr bool operator==(opt_ref<Value> lhs, const std::type_identity_t<Value>& rhs) noexcept
 	{
 		return lhs.as_ptr() == &rhs;
 	}

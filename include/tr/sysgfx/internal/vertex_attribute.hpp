@@ -124,10 +124,10 @@ namespace tr
 	inline constexpr vertex_attribute as_vertex_attribute<glm::vec4>{vertex_attribute_type::f32, 4, false};
 
 	/// Specialization of `as_vertex_attribute` for normalized integers.
-	template <typename T>
-	inline constexpr vertex_attribute as_vertex_attribute<normalized<T>>{
-		as_vertex_attribute<T>.type,
-		as_vertex_attribute<T>.elements,
+	template <typename Target>
+	inline constexpr vertex_attribute as_vertex_attribute<normalized<Target>>{
+		as_vertex_attribute<Target>.type,
+		as_vertex_attribute<Target>.elements,
 		true,
 	};
 
@@ -147,9 +147,9 @@ namespace tr
 	inline constexpr std::array as_vertex_attribute_list<Ts...>{as_vertex_attribute<Ts>...};
 
 	/// Specialization of `as_vertex_attribute_list` for types with a static `::as_vertex_attribute_list` member.
-	template <typename T>
+	template <typename Target>
 		requires requires {
-			{ T::as_vertex_attribute_list } -> cvref_specialization_of_tc<std::array>;
+			{ Target::as_vertex_attribute_list } -> cvref_specialization_of_tc<std::array>;
 		}
-	inline constexpr std::array as_vertex_attribute_list<T>{T::as_vertex_attribute_list};
+	inline constexpr std::array as_vertex_attribute_list<Target>{Target::as_vertex_attribute_list};
 } // namespace tr

@@ -50,55 +50,52 @@ namespace tr
 	/// @{
 
 	/// Sign operation.
-	/// @tparam Value type.
-	/// @param v Value to get the sign of.
+	/// @tparam X Value type.
+	/// @param x Value to get the sign of.
 	/// @return `1` if the value is positive, `-1` if the value is negative, or `0`.
-	template <arithmetic T>
-	[[nodiscard]] constexpr T sgn(T v) noexcept
+	template <arithmetic X>
+	[[nodiscard]] constexpr X sgn(X x) noexcept
 	{
-		if constexpr (std::unsigned_integral<T>) {
-			return v > T{0} ? T{1} : T{0};
+		if constexpr (std::unsigned_integral<X>) {
+			return x > X{0} ? X{1} : X{0};
 		}
 		else {
-			return v > T{0} ? T{1} : v < T{0} ? T{-1} : T{0};
+			return x > X{0} ? X{1} : x < X{0} ? X{-1} : X{0};
 		}
 	}
 
 	/// Generic modulo operation.
-	/// @tparam T1 Dividend type.
-	/// @tparam T2 Divisor type.
-	/// @param v Dividend value.
-	/// @param mod Divisor value.
-	/// @return `v % mod`.
-	template <typename T1, typename T2>
-	[[nodiscard]] constexpr auto mod(T1 v, T2 mod)
-		requires requires { v % mod; } || (arithmetic<T1> && arithmetic<T2>)
+	/// @tparam X, Y Value types.
+	/// @param x Dividend value.
+	/// @param y Divisor value.
+	/// @return `x % y`.
+	template <typename X, typename Y>
+	[[nodiscard]] constexpr auto mod(X x, Y y)
+		requires requires { x % y; } || (arithmetic<X> && arithmetic<Y>)
 	{
-		if constexpr ((std::floating_point<T1> || std::floating_point<T2>) && std::is_arithmetic_v<T1> && std::is_arithmetic_v<T2>) {
-			return static_cast<std::common_type_t<T1, T2>>(v) - static_cast<i64>(v / mod) * mod;
+		if constexpr ((std::floating_point<X> || std::floating_point<Y>) && arithmetic<X> && arithmetic<Y>) {
+			return static_cast<std::common_type_t<X, Y>>(x) - static_cast<i64>(x / y) * y;
 		}
 		else {
-			return v % mod;
+			return x % y;
 		}
 	}
 
 	/// Euclidian modulo operation (always returns in the range [0, `mod`)).
-	/// @tparam T1 Dividend type.
-	/// @tparam T2 Divisor type.
-	/// @param v Dividend value.
-	/// @param mod Divisor value.
-	/// @return Euclidian `v % mod`.
-	template <typename T1, typename T2>
-	[[nodiscard]] constexpr auto eucmod(T1 v, T2 mod)
-		requires requires { v % mod; } || (arithmetic<T1> && arithmetic<T2>)
+	/// @tparam X, Y Value types.
+	/// @param x Dividend value.
+	/// @param y Divisor value.
+	/// @return Euclidian `x % y`.
+	template <typename X, typename Y>
+	[[nodiscard]] constexpr auto eucmod(X x, Y y)
+		requires requires { x % y; } || (arithmetic<X> && arithmetic<Y>)
 	{
-		const auto normal_mod{tr::mod(v, mod)};
-		return normal_mod >= decltype(normal_mod){} ? normal_mod : normal_mod + mod;
+		const auto normal_mod{tr::mod(x, y)};
+		return normal_mod >= decltype(normal_mod){} ? normal_mod : normal_mod + y;
 	}
 
 	/// Linearly interpolates between two values.
-	/// @tparam T Value type.
-	/// @tparam Ratio Ratio type.
+	/// @tparam X, Y, A Value types.
 	/// @param x, y Sample values.
 	/// @param a Interpolation factor.
 	/// @return `a + t * (b − a)`.
@@ -110,14 +107,14 @@ namespace tr
 	}
 
 	/// Squaring operation.
-	/// @tparam T Value type.
-	/// @param v Value to square.
-	/// @return `v²`.
-	template <typename T>
-	[[nodiscard]] constexpr auto sqr(const T& v) noexcept(noexcept(v * v))
-		requires requires { v * v; }
+	/// @tparam X Value type.
+	/// @param x Value to square.
+	/// @return `x²`.
+	template <typename X>
+	[[nodiscard]] constexpr auto sqr(const X& x) noexcept(noexcept(x * x))
+		requires requires { x * x; }
 	{
-		return v * v;
+		return x * x;
 	}
 
 	/// @}

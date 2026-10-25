@@ -63,7 +63,7 @@ namespace tr::internal::localization
 	};
 
 	/// Concept denoting a localization parser error.
-	template <typename T>
-	concept parser_error = one_of<T, expected_symbol, expected_closing_brace, extraneous_closing_brace, expected_symbol_or_closing_brace,
-								  expected_equals_or_opening_brace, expected_string>;
+	template <typename Target>
+	concept parser_error = one_of<Target, expected_symbol, expected_closing_brace, extraneous_closing_brace,
+								  expected_symbol_or_closing_brace, expected_equals_or_opening_brace, expected_string>;
 } // namespace tr::internal::localization

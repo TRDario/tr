@@ -9,25 +9,25 @@
 //
 
 /// Helper template that checks for a binary round-trip of a value.
-/// @tparam T Type to round-trip.
+/// @tparam Value Type to round-trip.
 /// @param expected Value to round-trip.
-template <typename T>
-void expect_binary_round_trip(const T& expected)
+template <typename Value>
+void expect_binary_round_trip(const Value& expected)
 {
 	std::stringstream stream;
 	tr::write_binary(stream, expected);
-	EXPECT_EQ(tr::read_binary<T>(stream), expected);
+	EXPECT_EQ(tr::read_binary<Value>(stream), expected);
 }
 
 /// Helper template that checks for a binary round-trip of an unordered container.
-/// @tparam T Type to round-trip.
+/// @tparam Container Type to round-trip.
 /// @param expected Value to round-trip.
-template <typename T>
-void expect_unordered_container_binary_round_trip(const T& expected)
+template <typename Container>
+void expect_unordered_container_binary_round_trip(const Container& expected)
 {
 	std::stringstream stream;
 	tr::write_binary(stream, expected);
-	T round_tripped{tr::read_binary<T>(stream)};
+	Container round_tripped{tr::read_binary<Container>(stream)};
 	EXPECT_EQ(std::ranges::size(expected), std::ranges::size(round_tripped));
 	for (const auto& value : round_tripped) {
 		EXPECT_TRUE(std::ranges::contains(expected, value));

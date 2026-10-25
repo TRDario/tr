@@ -14,8 +14,8 @@ namespace tr
 {
 	/// Valid `tr::atlas_entries` value type.
 	/// @details Must be a `rectangle<u16>` or a structure containing a member `.uv` of type `rectangle<u16>`.
-	template <typename T>
-	concept atlas_entries_value_type = std::same_as<T, rectangle<u16>> || requires(const T& v) {
+	template <typename Target>
+	concept atlas_entries_value_type = std::same_as<Target, rectangle<u16>> || requires(const Target& v) {
 		{ v.uv } -> std::same_as<const rectangle<u16>&>;
 	};
 

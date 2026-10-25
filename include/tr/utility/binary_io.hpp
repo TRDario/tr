@@ -40,17 +40,17 @@ namespace tr
 	//
 
 	/// Type able to be read with read_binary.
-	template <typename T>
-	concept binary_readable = requires(std::istream& is, T& out) { tr::binary_reader<std::remove_cvref_t<T>>{}(is, out); } ||
-							  specialization_of_tc<std::remove_cvref_t<T>, std::span>;
+	template <typename Target>
+	concept binary_readable = requires(std::istream& is, Target& out) { tr::binary_reader<std::remove_cvref_t<Target>>{}(is, out); } ||
+							  specialization_of_tc<std::remove_cvref_t<Target>, std::span>;
 
 	/// Type able to be constructed with read_binary.
-	template <typename T>
-	concept binary_constructible = binary_readable<T> && std::default_initializable<T>;
+	template <typename Target>
+	concept binary_constructible = binary_readable<Target> && std::default_initializable<Target>;
 
 	/// Type able to be read with a stream write_binary.
-	template <typename T>
-	concept binary_writable = requires(std::ostream& os, const T& in) { tr::binary_writer<T>{}(os, in); };
+	template <typename Target>
+	concept binary_writable = requires(std::ostream& os, const Target& in) { tr::binary_writer<Target>{}(os, in); };
 
 	/// @name Binary IO
 	/// @{

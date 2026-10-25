@@ -9,8 +9,8 @@
 namespace tr
 {
 	/// If specialized to true, a default binary reader and writer are used (the object's bytes are directly read/written).
-	/// @tparam T Type to enable the default binary IO for.
-	template <typename T>
+	/// @tparam Target Type to enable the default binary IO for.
+	template <typename Target>
 	inline constexpr bool enable_default_binary_io{false};
 
 	/// Enables default binary IO for arithmetic types.

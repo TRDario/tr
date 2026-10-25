@@ -9,26 +9,26 @@
 namespace tr
 {
 	/// Gets the type at offset `I` of parameter pack `Ts`.
-	/// @tparam I Type offset within the parameter pack.
-	/// @tparam Ts Parameter pack to get a type from.
-	template <usize I, typename... Ts>
-		requires(sizeof...(Ts) > I)
-	using pack_index_t = std::tuple_element_t<I, std::tuple<Ts...>>;
+	/// @tparam Index Type offset within the parameter pack.
+	/// @tparam Pack Parameter pack to get a type from.
+	template <usize Index, typename... Pack>
+		requires(sizeof...(Pack) > Index)
+	using pack_index_t = std::tuple_element_t<Index, std::tuple<Pack...>>;
 
-	/// Gets the type at the front of of parameter pack `Ts`.
-	/// @tparam Ts Parameter pack to get the front type from.
-	template <typename... Ts>
-		requires(sizeof...(Ts) >= 1)
-	using pack_front_t = pack_index_t<0, Ts...>;
+	/// Gets the type at the front of of parameter pack `Pack`.
+	/// @tparam Pack Parameter pack to get the front type from.
+	template <typename... Pack>
+		requires(sizeof...(Pack) >= 1)
+	using pack_front_t = pack_index_t<0, Pack...>;
 
 	//
 
 	/// Type contained within a list of types.
-	/// @tparam Ts List of accepted types.
-	template <typename T, typename... Ts>
-	concept one_of = (std::same_as<T, Ts> || ...);
+	/// @tparam Accepted List of accepted types.
+	template <typename Target, typename... Accepted>
+	concept one_of = (std::same_as<Target, Accepted> || ...);
 
 	/// Concept denoting a parameter pack of identical types.
-	template <typename... Ts>
-	concept all_same = (std::same_as<pack_front_t<Ts...>, Ts> && ...);
+	template <typename... Targets>
+	concept all_same = (std::same_as<pack_front_t<Targets...>, Targets> && ...);
 } // namespace tr

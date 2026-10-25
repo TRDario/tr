@@ -10,23 +10,23 @@ namespace tr
 {
 	/// Hasher compatible with a specific type.
 	/// @tparam Hashed Type that must be hashable.
-	template <typename T, typename Hashed>
+	template <typename Target, typename Hashed>
 	concept hasher = requires(const Hashed& v) {
-		{ T{}(v) } -> std::convertible_to<u64>;
+		{ Target{}(v) } -> std::convertible_to<u64>;
 	};
 
 	/// Equality predicate compatible with a specific type.
 	/// @tparam Lhs Type on the left-hand side of the equality operation.
 	/// @tparam Rhs Type on the right-hand side of the equality operation.
-	template <typename T, typename Lhs, typename Rhs = Lhs>
+	template <typename Target, typename Lhs, typename Rhs = Lhs>
 	concept equality_predicate = requires(const Lhs& lhs, const Rhs& rhs) {
-		{ T{}(lhs, rhs) } -> std::same_as<bool>;
+		{ Target{}(lhs, rhs) } -> std::same_as<bool>;
 	};
 
 	/// "Keylike" type compatible with a hash collection.
 	/// @tparam Key Primary key type of the collection.
 	/// @tparam Hash Hasher type of the collection.
 	/// @tparam Eq Equality predicate type of the collection.
-	template <typename T, typename Key, typename Hash, typename Eq>
-	concept hash_keylike = hasher<Hash, T> && equality_predicate<Eq, Key, T>;
+	template <typename Target, typename Key, typename Hash, typename Eq>
+	concept hash_keylike = hasher<Hash, Target> && equality_predicate<Eq, Key, Target>;
 } // namespace tr

@@ -47,7 +47,7 @@ namespace tr::internal::localization
 	};
 
 	/// concept denoting a localization lexer error.
-	template <typename T>
-	concept lexer_error =
-		one_of<T, unexpected_backslash, unexpected_slash, unknown_escape_sequence, unterminated_multiline_comment, unterminated_string>;
+	template <typename Target>
+	concept lexer_error = one_of<Target, unexpected_backslash, unexpected_slash, unknown_escape_sequence, unterminated_multiline_comment,
+								 unterminated_string>;
 } // namespace tr::internal::localization

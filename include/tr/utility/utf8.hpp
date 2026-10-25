@@ -2,6 +2,7 @@
 /// @brief Provides UTF-8-handling utilities
 
 #pragma once
+#include <tr/utility/integer.hpp>
 #include <tr/utility/iterator_interface.hpp>
 #include <tr/utility/macro.hpp>
 #include <tr/utility/utf8.hpp>
@@ -18,16 +19,16 @@ namespace tr
 namespace tr::utf8
 {
 	/// Supported input iterator type.
-	template <typename T>
-	concept input_iterator = std::input_iterator<T> && std::same_as<std::iter_value_t<T>, char>;
+	template <typename Target>
+	concept input_iterator = std::input_iterator<Target> && std::same_as<std::iter_value_t<Target>, char>;
 
 	/// Supported bidirectional input iterator type.
-	template <typename T>
-	concept bidirectional_iterator = std::bidirectional_iterator<T> && std::same_as<std::iter_value_t<T>, char>;
+	template <typename Target>
+	concept bidirectional_iterator = std::bidirectional_iterator<Target> && std::same_as<std::iter_value_t<Target>, char>;
 
 	/// Supported output string type.
-	template <typename T>
-	concept output_string = requires(T& str, T::iterator it, const std::array<char, 4>& chars) {
+	template <typename Target>
+	concept output_string = requires(Target& str, Target::iterator it, const std::array<char, 4>& chars) {
 		{ str.empty() } -> std::same_as<bool>;
 		str.insert(it, '\0');
 		str.insert(it, chars.begin(), chars.end());

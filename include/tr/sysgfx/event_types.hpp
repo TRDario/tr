@@ -288,8 +288,8 @@ namespace tr
 	//
 
 	/// Valid event type.
-	template <typename T>
-	concept event_type = one_of<T, quit_event, window_show_event, window_hide_event, backbuffer_resize_event, window_gain_focus_event,
+	template <typename Target>
+	concept event_type = one_of<Target, quit_event, window_show_event, window_hide_event, backbuffer_resize_event, window_gain_focus_event,
 								window_lose_focus_event, window_mouse_enter_event, window_mouse_leave_event, key_down_event, key_up_event,
 								text_input_event, mouse_motion_event, mouse_down_event, mouse_up_event, mouse_wheel_event>;
 } // namespace tr

@@ -151,7 +151,7 @@ namespace tr
 		/// @param str Chord string.
 		[[nodiscard]] constexpr explicit scan_chord(std::string_view str) noexcept
 		{
-			const auto first_delimiter_pos{str.find('+')};
+			const usize first_delimiter_pos{str.find('+')};
 			if (first_delimiter_pos == str.npos) {
 				scan = to_scancode(str);
 				return;

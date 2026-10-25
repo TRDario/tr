@@ -124,12 +124,12 @@ tr::string_pool::string_builder_t tr::string_pool::string_builder() noexcept
 
 tr::string_pool::iterator tr::string_pool::erase(iterator where) noexcept
 {
-	const auto base{m_data.erase(where.base(), std::next(where).base())};
+	const decltype(m_data)::const_iterator base{m_data.erase(where.base(), std::next(where).base())};
 	return iterator{m_data.begin(), base};
 }
 
 tr::string_pool::iterator tr::string_pool::erase(iterator begin, iterator end) noexcept
 {
-	const auto base{m_data.erase(begin.base(), end.base())};
+	const decltype(m_data)::const_iterator base{m_data.erase(begin.base(), end.base())};
 	return iterator{m_data.begin(), base};
 }

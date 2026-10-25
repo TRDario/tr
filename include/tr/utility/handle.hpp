@@ -9,13 +9,13 @@
 namespace tr
 {
 	/// Valid handle deleter type for a handle to `Base`.
-	template <typename T, typename Base>
-	concept handle_deleter = std::invocable<T, Base> && (std::move_constructible<T> || std::copy_constructible<T>) &&
-							 std::is_nothrow_invocable_v<T, Base>;
+	template <typename Target, typename Base>
+	concept handle_deleter = std::invocable<Target, Base> && (std::move_constructible<Target> || std::copy_constructible<Target>) &&
+							 std::is_nothrow_invocable_v<Target, Base>;
 
 	/// Default constructible handle deleter.
-	template <typename T>
-	concept default_constructible_handle_deleter = std::default_initializable<T> && !std::is_pointer_v<T>;
+	template <typename Target>
+	concept default_constructible_handle_deleter = std::default_initializable<Target> && !std::is_pointer_v<Target>;
 
 	//
 

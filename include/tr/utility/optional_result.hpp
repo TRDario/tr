@@ -23,14 +23,14 @@ namespace tr
 		/// @{
 
 		/// Holds whether a type is a value type.
-		/// @tparam T Type to check.
-		template <typename T>
-		static constexpr bool is_value_type{one_of<T, Values...>};
+		/// @tparam Target Type to check.
+		template <typename Target>
+		static constexpr bool is_value_type{one_of<Target, Values...>};
 
 		/// Holds whether a type is a error type.
-		/// @tparam T Type to check.
-		template <typename T>
-		static constexpr bool is_error_type{one_of<T, Errors...>};
+		/// @tparam Target Type to check.
+		template <typename Target>
+		static constexpr bool is_error_type{one_of<Target, Errors...>};
 
 		/// @}
 		/// @name Constructors and destructors

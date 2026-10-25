@@ -30,7 +30,7 @@ namespace tr
 		/// @{
 
 		/// Casts the angle to an angle represented with another datatype.
-		/// @tparam U Representation type to cast to.
+		/// @tparam TargetRep Representation type to cast to.
 		/// @return Cast angle value.
 		template <std::floating_point TargetRep>
 		[[nodiscard]] constexpr operator angle<TargetRep>() const noexcept
@@ -43,7 +43,7 @@ namespace tr
 		/// @{
 
 		/// Adds an angle to the angle.
-		/// @tparam U Representation type of the right-hand side angle.
+		/// @tparam RhsRep Representation type of the right-hand side angle.
 		/// @param rhs Angle to add to the current angle value.
 		/// @return Reference to `*this`.
 		template <arithmetic RhsRep>
@@ -54,7 +54,7 @@ namespace tr
 		}
 
 		/// Subtracts an angle from the angle.
-		/// @tparam U Representation type of the right-hand side angle.
+		/// @tparam RhsRep Representation type of the right-hand side angle.
 		/// @param rhs Angle to subtract from the current angle value.
 		/// @return Reference to `*this`.
 		template <arithmetic RhsRep>
@@ -65,7 +65,7 @@ namespace tr
 		}
 
 		/// Multiplies the angle by a scalar.
-		/// @tparam U Type of the scalar.
+		/// @tparam Scalar Type of the scalar.
 		/// @param rhs Factor to multiply the angle with.
 		/// @return Reference to `*this`.
 		template <arithmetic Scalar>
@@ -76,7 +76,7 @@ namespace tr
 		}
 
 		/// Divides the angle by a scalar.
-		/// @tparam U Type of the scalar.
+		/// @tparam Scalar Type of the scalar.
 		/// @param rhs Factor to divide the angle with.
 		/// @return Reference to `*this`.
 		template <arithmetic Scalar>
@@ -87,7 +87,7 @@ namespace tr
 		}
 
 		/// Modulos the angle by another angle.
-		/// @tparam U Representation type of the right-hand side angle.
+		/// @tparam RhsRep Representation type of the right-hand side angle.
 		/// @param rhs Factor to divide the angle with.
 		/// @return Reference to `*this`.
 		template <arithmetic RhsRep>
