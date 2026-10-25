@@ -40,7 +40,9 @@ namespace tr
 	/// @tparam Range Contiguous range of standard layout elements.
 	/// @param range Contiguous range to reinterpret as bytes.
 	/// @return `range` reinterpreted as a range of bytes.
-	template <borrowed_standard_layout_range Range>
+	template <typename Range>
+		requires std::ranges::contiguous_range<Range> && std::ranges::borrowed_range<Range> &&
+				 std::is_standard_layout_v<std::ranges::range_value_t<Range>>
 	[[nodiscard]] auto range_bytes(Range&& range) noexcept
 	{
 		return std::as_bytes(std::span{range});
@@ -60,7 +62,10 @@ namespace tr
 	/// @tparam Range Contiguous range of standard layout elements.
 	/// @param range Contiguous range to reinterpret as bytes.
 	/// @return `range` reinterpreted as a range of mutable bytes.
-	template <borrowed_mutable_standard_layout_range Range>
+	template <typename Range>
+		requires std::ranges::contiguous_range<Range> && std::ranges::borrowed_range<Range> &&
+				 std::is_standard_layout_v<std::ranges::range_value_t<Range>> &&
+				 (!std::is_const_v<std::remove_reference_t<std::ranges::range_reference_t<Range>>>)
 	[[nodiscard]] auto range_mut_bytes(Range&& range) noexcept
 	{
 		return std::as_writable_bytes(std::span{range});
@@ -83,7 +88,9 @@ namespace tr
 	/// @tparam Range Contiguous range of mutable bytes.
 	/// @param bytes Range to reinterpret.
 	/// @return Reference to the reinterpreted object.
-	template <standard_layout Object, borrowed_typed_contiguous_mutable_range<std::byte> Range>
+	template <typename Object, typename Range>
+		requires std::is_standard_layout_v<Object> && std::ranges::contiguous_range<Range> && std::ranges::borrowed_range<Range> &&
+				 std::same_as<const std::byte, std::add_const_t<std::remove_reference_t<std::ranges::range_reference_t<Range>>>>
 	[[nodiscard]] Object& as_mut_object(Range&& bytes) noexcept
 	{
 		const auto span{tr::range_mut_bytes(bytes)};
@@ -104,7 +111,9 @@ namespace tr
 	/// @tparam Range Contiguous range of bytes.
 	/// @param bytes Range to reinterpret.
 	/// @return Reference to the reinterpreted object.
-	template <standard_layout Object, borrowed_typed_contiguous_const_range<std::byte> Range>
+	template <typename Object, typename Range>
+		requires std::is_standard_layout_v<Object> && std::ranges::contiguous_range<Range> && std::ranges::borrowed_range<Range> &&
+				 std::same_as<const std::byte, std::add_const_t<std::remove_reference_t<std::ranges::range_reference_t<Range>>>>
 	[[nodiscard]] const Object& as_object(Range&& bytes) noexcept
 	{
 		const auto span{tr::range_bytes(bytes)};
@@ -125,7 +134,9 @@ namespace tr
 	/// @tparam Range Contiguous range of mutable bytes.
 	/// @param bytes Range to reinterpret.
 	/// @return Span of `Element`.
-	template <standard_layout Element, borrowed_typed_contiguous_mutable_range<std::byte> Range>
+	template <typename Element, typename Range>
+		requires std::is_standard_layout_v<Element> && std::ranges::contiguous_range<Range> && std::ranges::borrowed_range<Range> &&
+				 std::same_as<std::byte, std::remove_reference_t<std::ranges::range_reference_t<Range>>>
 	[[nodiscard]] auto as_mut_objects(Range&& bytes) noexcept
 	{
 		const auto span{tr::range_mut_bytes(bytes)};
@@ -148,7 +159,9 @@ namespace tr
 	/// @tparam Range Contiguous range of bytes.
 	/// @param bytes Range to reinterpret.
 	/// @return Span of `const Element`.
-	template <standard_layout Element, borrowed_typed_contiguous_const_range<std::byte> Range>
+	template <typename Element, typename Range>
+		requires std::is_standard_layout_v<Element> && std::ranges::contiguous_range<Range> && std::ranges::borrowed_range<Range> &&
+				 std::same_as<std::byte, std::remove_reference_t<std::ranges::range_reference_t<Range>>>
 	[[nodiscard]] auto as_objects(Range&& bytes) noexcept
 	{
 		const auto span{tr::range_bytes(bytes)};
@@ -175,7 +188,7 @@ namespace tr
 	/// @param whitelist List of elements to search for.
 	/// @return Iterator to the last element in `searched` that matches one in `whitelist`.
 	template <std::ranges::range SearchedRange, std::ranges::forward_range WhitelistRange>
-		requires(std::equality_comparable_with<std::ranges::range_value_t<SearchedRange>, std::ranges::range_value_t<WhitelistRange>>)
+		requires std::equality_comparable_with<std::ranges::range_value_t<SearchedRange>, std::ranges::range_value_t<WhitelistRange>>
 	[[nodiscard]] constexpr std::ranges::borrowed_iterator_t<SearchedRange> find_last_of(SearchedRange&& searched,
 																						 WhitelistRange&& whitelist)
 	{
@@ -194,7 +207,7 @@ namespace tr
 	/// @param blacklist List of elements to not search for.
 	/// @return Iterator to the first element in `searched` that doesn't match one of the elements in `blacklist`.
 	template <std::ranges::range SearchedRange, std::ranges::forward_range BlacklistRange>
-		requires(std::equality_comparable_with<std::ranges::range_value_t<SearchedRange>, std::ranges::range_value_t<BlacklistRange>>)
+		requires std::equality_comparable_with<std::ranges::range_value_t<SearchedRange>, std::ranges::range_value_t<BlacklistRange>>
 	[[nodiscard]] constexpr std::ranges::borrowed_iterator_t<SearchedRange> find_first_not_of(SearchedRange&& searched,
 																							  BlacklistRange&& blacklist)
 	{
@@ -213,7 +226,7 @@ namespace tr
 	/// @param blacklist List of elements to not search for.
 	/// @return Iterator to the last element in `searched` that doesn't match one of the elements in `blacklist`.
 	template <std::ranges::bidirectional_range SearchedRange, std::ranges::forward_range BlacklistRange>
-		requires(std::equality_comparable_with<std::ranges::range_value_t<SearchedRange>, std::ranges::range_value_t<BlacklistRange>>)
+		requires std::equality_comparable_with<std::ranges::range_value_t<SearchedRange>, std::ranges::range_value_t<BlacklistRange>>
 	[[nodiscard]] constexpr std::ranges::borrowed_iterator_t<SearchedRange> find_last_not_of(SearchedRange&& searched,
 																							 BlacklistRange&& blacklist)
 	{

@@ -39,6 +39,7 @@ add_executable(
 	pack_traits.cpp
 	pointer_iterator.cpp
 	polygon.cpp
+	range_concepts.cpp
 	ranges.cpp
 	rectangle_edges.cpp
 	rectangle.cpp

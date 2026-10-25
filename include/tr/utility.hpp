@@ -51,6 +51,7 @@
 #include <tr/utility/pack_traits.hpp>               // IWYU pragma: export
 #include <tr/utility/pointer_iterator.hpp>          // IWYU pragma: export
 #include <tr/utility/polygon.hpp>                   // IWYU pragma: export
+#include <tr/utility/range_concepts.hpp>            // IWYU pragma: export
 #include <tr/utility/ranges.hpp>                    // IWYU pragma: export
 #include <tr/utility/rectangle.hpp>                 // IWYU pragma: export
 #include <tr/utility/rectangle_edges.hpp>           // IWYU pragma: export

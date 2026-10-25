@@ -6,6 +6,7 @@
 #include <tr/utility/circle.hpp>
 #include <tr/utility/matrix.hpp>
 #include <tr/utility/polygon.hpp>
+#include <tr/utility/range_concepts.hpp>
 #include <tr/utility/rectangle.hpp>
 #include <tr/utility/triangle.hpp>
 

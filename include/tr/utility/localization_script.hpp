@@ -7,6 +7,7 @@
 #include <tr/utility/iostream.hpp>
 #include <tr/utility/localization_map.hpp>
 #include <tr/utility/localization_script_error.hpp>
+#include <tr/utility/range_concepts.hpp>
 
 //
 
@@ -52,7 +53,7 @@ namespace tr
 	/// @param range Character range to parse.
 	/// @param chunk_name Name of the parsed chunk.
 	/// @return Localization script parsing result.
-	template <std::output_iterator<localization_script_error> ErrorOut, input_range_to_convertible_to<char> Range>
+	template <std::output_iterator<localization_script_error> ErrorOut, input_range_to<char> Range>
 	[[nodiscard]] parse_localization_script_result<ErrorOut> parse_localization_script(ErrorOut error_out, Range&& range,
 																					   std::string_view chunk_name = "<unnamed>")
 	{
@@ -103,7 +104,7 @@ namespace tr
 	/// @param range Character range to parse.
 	/// @param chunk_name Name of the parsed chunk.
 	/// @return End error output iterator.
-	template <std::output_iterator<localization_script_error> ErrorOut, input_range_to_convertible_to<char> Range>
+	template <std::output_iterator<localization_script_error> ErrorOut, input_range_to<char> Range>
 	ErrorOut parse_localization_script_to(localization_map& out, ErrorOut error_out, Range&& range,
 										  std::string_view chunk_name = "<unnamed>")
 	{
