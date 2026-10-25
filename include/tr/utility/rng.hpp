@@ -136,6 +136,7 @@ namespace tr
 	}
 
 	/// Generates a random vector with a specific magnitude.
+	/// @param rng RNG used to generate the value.
 	/// @param magnitude Magnitude of the vector.
 	/// @return Vector with a set magnitude and random direction.
 	template <std::floating_point Rep>
@@ -149,6 +150,7 @@ namespace tr
 	}
 
 	/// Generates a random point within a rectangular region.
+	/// @param rng RNG used to generate the value.
 	/// @param region Region to constrain the vector to.
 	/// @return Vector to a random point within `region`.
 	template <std::floating_point Rep>
