@@ -34,7 +34,14 @@ tr::u64 tr::rng::advance() noexcept
 	return x;
 }
 
-int tr::rng::generate_sign() noexcept
+//
+
+bool tr::generate_bool(rng& rng) noexcept
 {
-	return generate<bool>() * 2 - 1;
+	return rng.advance() >> 63;
+}
+
+int tr::generate_sign(rng& rng) noexcept
+{
+	return static_cast<int>(rng.advance() >> 63) * 2 - 1;
 }

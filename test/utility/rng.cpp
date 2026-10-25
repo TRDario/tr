@@ -29,7 +29,7 @@ TEST_F(RngTest, BoolDistributionIsBalanced)
 {
 	std::array<tr::i64, 2> results{};
 	for (int i = 0; i < 1000000; ++i) {
-		++results[rng.generate<bool>()];
+		++results[generate_bool(rng)];
 	}
 	EXPECT_LT(std::abs(results[1] - results[0]), 1000);
 }
@@ -39,7 +39,7 @@ TEST_F(RngTest, SignDistributionIsBalanced)
 {
 	std::array<tr::i64, 2> results{};
 	for (int i = 0; i < 1000000; ++i) {
-		const int value{rng.generate_sign()};
+		const int value{generate_sign(rng)};
 		EXPECT_TRUE(value == 1 || value == -1);
 		++results[(value + 1) / 2];
 	}
@@ -51,7 +51,7 @@ TEST_F(RngTest, IntMaxDistributionIsBalanced)
 {
 	std::array<tr::i64, 10> results{};
 	for (int i = 0; i < 1000000; ++i) {
-		const int result{rng.generate(10)};
+		const int result{generate_int(rng, 10)};
 		EXPECT_GE(result, 0);
 		EXPECT_LT(result, 10);
 		++results[result];
@@ -67,7 +67,7 @@ TEST_F(RngTest, IntMinMaxDistributionIsBalanced)
 {
 	std::array<tr::i64, 11> results{};
 	for (int i = 0; i < 1000000; ++i) {
-		const int result{rng.generate(-5, 6)};
+		const int result{generate_int(rng, -5, 6)};
 		EXPECT_GE(result, -5);
 		EXPECT_LE(result, 5);
 		++results[result + 5];
@@ -83,7 +83,7 @@ TEST_F(RngTest, FloatDistributionIsBalanced)
 {
 	double sum{0};
 	for (int i = 0; i < 1000000; ++i) {
-		const double result{rng.generate<double>()};
+		const double result{generate_float<double>(rng)};
 		EXPECT_GE(result, 0.0);
 		EXPECT_LT(result, 1.0);
 		sum += result;
@@ -96,7 +96,7 @@ TEST_F(RngTest, FloatMaxDistributionIsBalanced)
 {
 	double sum{0};
 	for (int i = 0; i < 1000000; ++i) {
-		const double result{rng.generate(5.0)};
+		const double result{generate_float(rng, 5.0)};
 		EXPECT_GE(result, 0.0);
 		EXPECT_LT(result, 5.0);
 		sum += result;
@@ -109,7 +109,7 @@ TEST_F(RngTest, FloatMinMaxDistributionIsBalanced)
 {
 	double sum{0};
 	for (int i = 0; i < 1000000; ++i) {
-		const double result{rng.generate(-2.0, 1.0)};
+		const double result{generate_float(rng, -2.0, 1.0)};
 		EXPECT_GE(result, -2.0);
 		EXPECT_LT(result, 1.0);
 		sum += result;
@@ -117,42 +117,12 @@ TEST_F(RngTest, FloatMinMaxDistributionIsBalanced)
 	EXPECT_NEAR(sum / 1000000, -0.5, 1e-2);
 }
 
-/// Tests for a balanced angle distribution in the range [0tr, MAX).
-TEST_F(RngTest, AngleMaxDistributionIsBalanced)
-{
-	using namespace tr::angle_literals;
-
-	tr::angle<double> sum{};
-	for (int i = 0; i < 100000; ++i) {
-		const tr::angle result{rng.generate(180_deg)};
-		EXPECT_GE(result, 0_deg);
-		EXPECT_LT(result, 180_deg);
-		sum += result;
-	}
-	EXPECT_NEAR((sum / 100000).degs(), 90, 0.75f);
-}
-
-/// Tests for a balanced angle distribution in the range [MIN, MAX).
-TEST_F(RngTest, AngleMinMaxDistributionIsBalanced)
-{
-	using namespace tr::angle_literals;
-
-	tr::angle<double> sum{};
-	for (int i = 0; i < 100000; ++i) {
-		const tr::angle result{rng.generate(0_deg, 270_deg)};
-		EXPECT_GE(result, 0_deg);
-		EXPECT_LT(result, 270_deg);
-		sum += result;
-	}
-	EXPECT_NEAR((sum / 100000).degs(), 135, 0.75f);
-}
-
 /// Tests for a balanced vector distribution with a fixed magnitude.
 TEST_F(RngTest, VectorMagnitudeDistributionIsBalanced)
 {
 	glm::vec2 sum{};
 	for (int i = 0; i < 1000000; ++i) {
-		const glm::vec2 result{rng.generate<glm::vec2>(2.5)};
+		const glm::vec2 result{generate_vec2(rng, 2.5f)};
 		EXPECT_NEAR(glm::length(result), 2.5, 1e-6);
 		sum += result;
 	}
@@ -166,7 +136,7 @@ TEST_F(RngTest, VectorRectDistributionIsBalanced)
 	const tr::rectangle<float> region{{-100, -100}, {200, 200}};
 	glm::vec2 sum{};
 	for (int i = 0; i < 1000000; ++i) {
-		const glm::vec2 result{rng.generate<glm::vec2>(region)};
+		const glm::vec2 result{generate_vec2(rng, region)};
 		EXPECT_TRUE(region.contains(result));
 		sum += result;
 	}

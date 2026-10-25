@@ -116,6 +116,54 @@ TEST(AngleTest, ComputesAbsoluteValueAndLerp)
 	EXPECT_NEAR(tr::lerp(350_deg, 10_degf, 0.5f).rads(), 0.0f, 1e-6f);
 }
 
+/// Tests for a balanced angle distribution in the range [0tr, 1tr).
+TEST(AngleTest, AngleDistributionIsBalanced)
+{
+	using namespace tr::angle_literals;
+
+	tr::rng rng{1337};
+	tr::angle<double> sum{};
+	for (int i = 0; i < 100000; ++i) {
+		const tr::angle result{tr::generate_angle(rng)};
+		EXPECT_GE(result, 0_deg);
+		EXPECT_LT(result, 360_deg);
+		sum += result;
+	}
+	EXPECT_NEAR((sum / 100000).degs(), 180, 0.75f);
+}
+
+/// Tests for a balanced angle distribution in the range [0tr, MAX).
+TEST(AngleTest, AngleMaxDistributionIsBalanced)
+{
+	using namespace tr::angle_literals;
+
+	tr::rng rng{1337};
+	tr::angle<double> sum{};
+	for (int i = 0; i < 100000; ++i) {
+		const tr::angle result{tr::generate_angle(rng, 180_deg)};
+		EXPECT_GE(result, 0_deg);
+		EXPECT_LT(result, 180_deg);
+		sum += result;
+	}
+	EXPECT_NEAR((sum / 100000).degs(), 90, 0.75f);
+}
+
+/// Tests for a balanced angle distribution in the range [MIN, MAX).
+TEST(AngleTest, AngleMinMaxDistributionIsBalanced)
+{
+	using namespace tr::angle_literals;
+
+	tr::rng rng{1337};
+	tr::angle<double> sum{};
+	for (int i = 0; i < 100000; ++i) {
+		const tr::angle result{tr::generate_angle(rng, 0_deg, 270_deg)};
+		EXPECT_GE(result, 0_deg);
+		EXPECT_LT(result, 270_deg);
+		sum += result;
+	}
+	EXPECT_NEAR((sum / 100000).degs(), 135, 0.75f);
+}
+
 /// Tests formatting angles in each supported unit.
 TEST(AngleTest, FormatsInRequestedUnit)
 {

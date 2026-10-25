@@ -1,6 +1,11 @@
+/// @file
+/// @brief Provides `tr::angle` and related functions.
+
 #pragma once
+#include <tr/utility/default_binary_io.hpp>
 #include <tr/utility/macro.hpp>
 #include <tr/utility/math.hpp>
+#include <tr/utility/rng.hpp>
 
 //
 
@@ -558,6 +563,46 @@ namespace tr
 			/// @}
 		} // namespace angle_literals
 	} // namespace literals
+
+	/// @name Random number generation
+	/// @{
+
+	/// Generates a random angle value in the range [0tr, 1tr].
+	/// @tparam Rep Representation type of the angle.
+	/// @param rng RNG used to generate the value.
+	/// @return Random angle value constrained to [0tr, 1tr].
+	template <std::floating_point Rep = double>
+	[[nodiscard]] angle<Rep> generate_angle(rng& rng) noexcept
+	{
+		return rads(generate_float(rng, Rep{0}, 2 * std::numbers::pi_v<Rep>));
+	}
+
+	/// Generates a random angle value in the range [0, `max`).
+	/// @tparam Rep Representation type of the angle.
+	/// @param rng RNG used to generate the value.
+	/// @param max Upper bound of the random range.
+	/// @pre `max` must be greater than 0.
+	/// @return Random angle value constrained to [0, `max`).
+	template <std::floating_point Rep>
+	[[nodiscard]] angle<Rep> generate_angle(rng& rng, angle<Rep> max) noexcept
+	{
+		return rads(generate_float(rng, max.rads()));
+	}
+
+	/// Generates a random angle value in the range [`min`, `max`).
+	/// @tparam Rep Representation type of the angle.
+	/// @param rng RNG used to generate the value.
+	/// @param min Lower bound of the random range.
+	/// @param max Upper bound of the random range.
+	/// @pre `min` must be less than `max`.
+	/// @return Random angle value constrained to [`min`, `max`).
+	template <std::floating_point Rep>
+	[[nodiscard]] angle<Rep> generate_angle(rng& rng, angle<Rep> min, angle<Rep> max) noexcept
+	{
+		return rads(generate_float(rng, min.rads(), max.rads()));
+	}
+
+	/// @}
 } // namespace tr
 
 //
@@ -568,8 +613,6 @@ struct std::common_type<tr::angle<LhsRep>, tr::angle<RhsRep>>
 {
 	using type = tr::angle<std::common_type_t<LhsRep, RhsRep>>;
 };
-
-//
 
 /// Angle formatter.
 /// @details
@@ -650,3 +693,9 @@ class std::formatter<tr::angle<Rep>, CharT>
 	/// Unit to use for the formatted angle.
 	unit m_unit;
 };
+
+//
+
+/// Enables default binary IO for rectangles.
+template <typename Rep>
+inline constexpr bool tr::enable_default_binary_io<tr::angle<Rep>>{true};
