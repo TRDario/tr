@@ -20,6 +20,7 @@ namespace tr
 
 		/// Constructs an invalid hex code exception.
 		/// @param hex_code Hex code string.
+		/// @param details String containing further details about the error.
 		[[nodiscard]] invalid_hex_code(std::string_view hex_code, std::string&& details);
 
 		/// @}
@@ -53,7 +54,7 @@ namespace tr
 
 	/// Creates a color value from a hex code string.
 	/// @tparam Color Type of the created color.
-	/// @param hex_code Hex code string. Must be in the format '#XXYYZZ' or '#XXYYZZWW' with no whitespace.
+	/// @param hex_code Hex code string. Must be in the format %"#XXYYZZ" or %"#XXYYZZWW" with no whitespace.
 	/// @exception invalid_hex_code If the hex code string is invalid.
 	template <typename Color = rgba<u8>>
 		requires color_castable_to<rgba<u8>, Color>
@@ -103,7 +104,7 @@ namespace tr
 			/// @{
 
 			/// 8-bit RGB hex code color literal.
-			/// @param str Color hex code string. Must be in the format '#XXYYZZ' or '#XXYYZZWW' with no whitespace.
+			/// @param str Color hex code string. Must be in the format %"#XXYYZZ" or %"#XXYYZZWW" with no whitespace.
 			/// @param length Length of the hex string.
 			/// @return Corresponding 8-bit RGB color.
 			[[nodiscard]] consteval rgb<u8> operator""_rgb8(const char* str, usize length) noexcept
@@ -112,7 +113,7 @@ namespace tr
 			}
 
 			/// Float RGB hex code color literal.
-			/// @param str Color hex code string. Must be in the format '#XXYYZZ' or '#XXYYZZWW' with no whitespace.
+			/// @param str Color hex code string. Must be in the format %"#XXYYZZ" or %"#XXYYZZWW" with no whitespace.
 			/// @param length Length of the hex string.
 			/// @return Corresponding float RGB color.
 			[[nodiscard]] consteval rgb<float> operator""_rgbf(const char* str, usize length) noexcept
@@ -121,7 +122,7 @@ namespace tr
 			}
 
 			/// Double RGB hex code color literal.
-			/// @param str Color hex code string. Must be in the format '#XXYYZZ' or '#XXYYZZWW' with no whitespace.
+			/// @param str Color hex code string. Must be in the format %"#XXYYZZ" or %"#XXYYZZWW" with no whitespace.
 			/// @param length Length of the hex string.
 			/// @return Corresponding double RGB color.
 			[[nodiscard]] consteval rgb<double> operator""_rgb(const char* str, usize length) noexcept
@@ -130,7 +131,7 @@ namespace tr
 			}
 
 			/// 8-bit RGBA hex code color literal.
-			/// @param str Color hex code string. Must be in the format '#XXYYZZ' or '#XXYYZZWW' with no whitespace.
+			/// @param str Color hex code string. Must be in the format %"#XXYYZZ" or %"#XXYYZZWW" with no whitespace.
 			/// @param length Length of the hex string.
 			/// @return Corresponding 8-bit RGBA color.
 			[[nodiscard]] consteval rgba<u8> operator""_rgba8(const char* str, usize length) noexcept
@@ -139,7 +140,7 @@ namespace tr
 			}
 
 			/// Float RGBA hex code color literal.
-			/// @param str Color hex code string. Must be in the format '#XXYYZZ' or '#XXYYZZWW' with no whitespace.
+			/// @param str Color hex code string. Must be in the format %"#XXYYZZ" or %"#XXYYZZWW" with no whitespace.
 			/// @param length Length of the hex string.
 			/// @return Corresponding float RGBA color.
 			[[nodiscard]] consteval rgba<float> operator""_rgbaf(const char* str, usize length) noexcept
@@ -148,7 +149,7 @@ namespace tr
 			}
 
 			/// Double RGBA hex code color literal.
-			/// @param str Color hex code string. Must be in the format '#XXYYZZ' or '#XXYYZZWW' with no whitespace.
+			/// @param str Color hex code string. Must be in the format %"#XXYYZZ" or %"#XXYYZZWW" with no whitespace.
 			/// @param length Length of the hex string.
 			/// @return Corresponding double RGBA color.
 			[[nodiscard]] consteval rgba<double> operator""_rgba(const char* str, usize length) noexcept

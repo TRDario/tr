@@ -48,7 +48,7 @@ template <>
 struct tr::color_caster<tr::hsv, tr::rgba<double>>
 {
 	/// Casts a color from `tr::hsv` to an equivalent value of type `tr::rgba<double>`.
-	/// @param from Color to cast.
+	/// @param hsv Color to cast.
 	/// @return Equivalent color value of type `tr::rgba<double>`.
 	[[nodiscard]] static constexpr rgba<double> operator()(const hsv& hsv) noexcept
 	{
@@ -97,7 +97,7 @@ template <>
 struct tr::color_caster<tr::rgba<double>, tr::hsv>
 {
 	/// Casts a color from `tr::rgba<double>` to an equivalent value of type `tr::hsv`.
-	/// @param from Color to cast.
+	/// @param rgba Color to cast.
 	/// @return Equivalent color value of type `tr::hsv`.
 	[[nodiscard]] static constexpr hsv operator()(const rgba<double>& rgba) noexcept
 	{
