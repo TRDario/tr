@@ -9,7 +9,7 @@ namespace tr
 	/// RAII deferred function call.
 	/// @tparam Fn Deferred function type.
 	template <std::invocable Fn>
-		requires(std::is_nothrow_invocable_v<Fn>)
+		requires std::is_nothrow_invocable_v<Fn>
 	class defer
 	{
 	  public:

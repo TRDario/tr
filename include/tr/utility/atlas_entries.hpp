@@ -102,7 +102,7 @@ namespace tr
 		/// @param extra_args Extra arguments associated with the rectangle value.
 		/// @return Position of the top-left corner of the rectangle, if found.
 		template <hash_keylike<Key, Hash, Pred> Keylike, typename... Args>
-			requires(std::constructible_from<Value, tr::rectangle<u16>, Args...>)
+			requires std::constructible_from<Value, tr::rectangle<u16>, Args...>
 		std::optional<glm::u16vec2> try_insert(Keylike&& key, glm::u16vec2 size, glm::u16vec2 texture_size, Args&&... extra_args)
 		{
 			TR_ASSERT(!contains(std::forward<Keylike>(key)),

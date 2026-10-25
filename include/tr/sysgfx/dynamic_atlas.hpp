@@ -276,7 +276,7 @@ namespace tr
 		/// @param bitmap Bitmap to copy into the atlas.
 		/// @param args Extra arguments associated with the entry.
 		template <typename... Args>
-			requires(std::constructible_from<Value, rectangle<u16>, Args...>)
+			requires std::constructible_from<Value, rectangle<u16>, Args...>
 		void add(Key key, sub_bitmap bitmap, Args&&... args)
 		{
 			std::optional<glm::u16vec2> tl{m_entries.try_insert(std::move(key), bitmap.size(), size(), std::forward<Args>(args)...)};

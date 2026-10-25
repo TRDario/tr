@@ -44,7 +44,7 @@ namespace tr
 		/// @param begin Iterator to the first key-value pair to add.
 		/// @param end Ending sentinel for the key-value pair range.
 		template <std::input_iterator Iterator, std::sentinel_for<Iterator> Sentinel>
-			requires(localization_key_value_pair<std::iter_reference_t<Iterator>>)
+			requires localization_key_value_pair<std::iter_reference_t<Iterator>>
 		[[nodiscard]] localization_map(Iterator begin, Sentinel end)
 		{
 			if constexpr (std::forward_iterator<Iterator>) {
@@ -84,7 +84,7 @@ namespace tr
 		/// @pre The key-value range must not contain duplicate keys.
 		/// @param range Key-value pair input range.
 		template <std::ranges::input_range Range = std::initializer_list<std::pair<std::string_view, std::string_view>>>
-			requires(localization_key_value_pair<std::ranges::range_reference_t<Range>>)
+			requires localization_key_value_pair<std::ranges::range_reference_t<Range>>
 		[[nodiscard]] explicit localization_map(Range&& range)
 			: localization_map(std::ranges::begin(range), std::ranges::end(range))
 		{
@@ -154,7 +154,7 @@ namespace tr
 		/// @param begin Iterator to the first key-value pair to add or replace.
 		/// @param end Ending sentinel for the key-value pair range.
 		template <std::input_iterator Iterator, std::sentinel_for<Iterator> Sentinel>
-			requires(localization_key_value_pair<std::iter_reference_t<Iterator>>)
+			requires localization_key_value_pair<std::iter_reference_t<Iterator>>
 		void update(Iterator begin, Sentinel end)
 		{
 			usize keys{0};
@@ -204,7 +204,7 @@ namespace tr
 		/// @tparam Sentinel Sentinel for `Iterator`.
 		/// @param range Key-value pair input range.
 		template <std::ranges::input_range Range = std::initializer_list<std::pair<std::string_view, std::string_view>>>
-			requires(localization_key_value_pair<std::ranges::range_reference_t<Range>>)
+			requires localization_key_value_pair<std::ranges::range_reference_t<Range>>
 		void update(Range&& range)
 		{
 			update(std::ranges::begin(range), std::ranges::end(range));

@@ -42,7 +42,7 @@ namespace tr
 
 		/// Default-constructs an empty handle.
 		[[nodiscard]] constexpr handle() noexcept(std::is_nothrow_default_constructible_v<Deleter>)
-			requires(default_constructible_handle_deleter<Deleter>)
+			requires default_constructible_handle_deleter<Deleter>
 			: m_base{Empty}
 		{
 		}
@@ -50,7 +50,7 @@ namespace tr
 		/// Constructs a handle from a base type value.
 		/// @param value Value to hold.
 		[[nodiscard]] constexpr explicit handle(Base value) noexcept(std::is_nothrow_default_constructible_v<Deleter>)
-			requires(default_constructible_handle_deleter<Deleter>)
+			requires default_constructible_handle_deleter<Deleter>
 			: m_base{value}
 		{
 			TR_ASSERT(value != Empty, "Cannot construct a handle from a value set aside as the empty value.");
@@ -59,7 +59,7 @@ namespace tr
 		/// Constructs a handle from a base type value without checking for the invalid case.
 		/// @param value Value to hold.
 		[[nodiscard]] constexpr explicit handle(Base value, maybe_empty_t) noexcept(std::is_nothrow_default_constructible_v<Deleter>)
-			requires(default_constructible_handle_deleter<Deleter>)
+			requires default_constructible_handle_deleter<Deleter>
 			: m_base{value}
 		{
 		}
@@ -77,7 +77,7 @@ namespace tr
 		/// @param value Value to hold.
 		/// @param deleter Deleter instance.
 		[[nodiscard]] constexpr explicit handle(Base value, Deleter&& deleter) noexcept(std::is_nothrow_move_constructible_v<Deleter>)
-			requires(std::move_constructible<Deleter>)
+			requires std::move_constructible<Deleter>
 			: Deleter{std::forward<Deleter>(deleter)}
 			, m_base{value}
 		{
@@ -89,7 +89,7 @@ namespace tr
 		/// @param deleter Deleter instance.
 		[[nodiscard]] constexpr explicit handle(Base value, Deleter&& deleter, maybe_empty_t)
 			noexcept(std::is_nothrow_move_constructible_v<Deleter>)
-			requires(std::move_constructible<Deleter>)
+			requires std::move_constructible<Deleter>
 			: Deleter{std::forward<Deleter>(deleter)}
 			, m_base{value}
 		{
@@ -98,7 +98,7 @@ namespace tr
 		/// Constructs a handle by moving from another handle.
 		/// @param rhs Handle to move.
 		[[nodiscard]] constexpr handle(handle&& rhs) noexcept(std::is_nothrow_move_constructible_v<Deleter>)
-			requires(std::move_constructible<Deleter>)
+			requires std::move_constructible<Deleter>
 			: Deleter{std::move(rhs)}
 			, m_base{std::exchange(rhs.m_base, Empty)}
 		{
@@ -120,7 +120,7 @@ namespace tr
 		/// @param rhs Handle to move.
 		/// @return Reference to `*this`.
 		constexpr handle& operator=(handle&& rhs) noexcept(std::is_nothrow_move_assignable_v<Deleter>)
-			requires(std::is_move_assignable_v<Deleter>)
+			requires std::is_move_assignable_v<Deleter>
 		{
 			if (has_value()) {
 				Deleter::operator()(m_base);

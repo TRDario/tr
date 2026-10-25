@@ -30,7 +30,7 @@ namespace tr
 	/// @tparam Values Value alternatives.
 	/// @tparam Errors Error alternatives.
 	template <typename... Values, typename... Errors>
-		requires((!one_of<Values, Errors...>) && ...)
+		requires(!one_of<Values, Errors...> && ...)
 	class result<result_values<Values...>, result_errors<Errors...>> : public variant<Values..., Errors...>
 	{
 	  public:

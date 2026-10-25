@@ -45,13 +45,13 @@ namespace tr
 		}
 
 		/// Converts the reference to a base class reference.
-		/// @tparam U Base class of `T`.
+		/// @tparam Base Base class of `T`.
 		/// @return Reference to the base class.
-		template <typename U>
-			requires(std::convertible_to<T&, U&>)
-		[[nodiscard]] constexpr operator ref<U>() const noexcept
+		template <typename Base>
+			requires std::convertible_to<T&, Base&>
+		[[nodiscard]] constexpr operator ref<Base>() const noexcept
 		{
-			return static_cast<U&>(**this);
+			return static_cast<Base&>(**this);
 		}
 
 		/// @}

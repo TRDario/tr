@@ -18,7 +18,7 @@ namespace tr
 	/// @param ref Reference to cast.
 	/// @return Reference cast to `To`, or `nullopt` if the cast was not successful.
 	template <typename To, typename From>
-		requires(std::derived_from<To, From>)
+		requires std::derived_from<To, From>
 	[[nodiscard]] constexpr tr::opt_ref<To> dynamic_ref_cast(From& ref) noexcept
 	{
 		return make_opt_ref(dynamic_cast<To*>(std::addressof(ref)));
@@ -30,7 +30,7 @@ namespace tr
 	/// @param ref Reference to cast.
 	/// @return Reference cast to `To`, or `nullopt` if the cast was not successful.
 	template <typename To, typename From>
-		requires(std::derived_from<To, From>)
+		requires std::derived_from<To, From>
 	[[nodiscard]] constexpr tr::opt_ref<To> dynamic_ref_cast(ref<From> ref) noexcept
 	{
 		return make_opt_ref(dynamic_cast<To*>(ref.as_ptr()));
@@ -42,7 +42,7 @@ namespace tr
 	/// @param ref Optional reference to cast.
 	/// @return Reference cast to `To`, or `nullopt` if the cast was not successful or `ref` was empty.
 	template <typename To, typename From>
-		requires(std::derived_from<To, From>)
+		requires std::derived_from<To, From>
 	[[nodiscard]] constexpr tr::opt_ref<To> dynamic_ref_cast(opt_ref<From> ref) noexcept
 	{
 		return make_opt_ref(dynamic_cast<To*>(ref.as_ptr()));

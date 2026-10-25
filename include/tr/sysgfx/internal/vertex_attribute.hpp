@@ -148,8 +148,8 @@ namespace tr
 
 	/// Specialization of `as_vertex_attribute_list` for types with a static `::as_vertex_attribute_list` member.
 	template <typename T>
-		requires(requires {
+		requires requires {
 			{ T::as_vertex_attribute_list } -> cvref_specialization_of_tc<std::array>;
-		})
+		}
 	inline constexpr std::array as_vertex_attribute_list<T>{T::as_vertex_attribute_list};
 } // namespace tr

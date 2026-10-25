@@ -53,7 +53,7 @@ namespace tr
 	/// @tparam TupleLike Tuple-like argument type.
 	/// @details This is the implementation for tuple-like second arguments.
 	template <typename T, typename TupleLike>
-		requires(requires { std::tuple_size<TupleLike>::value; })
+		requires requires { std::tuple_size<TupleLike>::value; }
 	struct is_applicable<T, TupleLike> : internal::is_applicable<T, TupleLike, std::make_index_sequence<std::tuple_size_v<TupleLike>>>
 	{
 	};

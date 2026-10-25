@@ -78,7 +78,7 @@ namespace tr
 		/// Creates a vector with a certain number of default-initialized values.
 		/// @param size Initial size of the vector.
 		[[nodiscard]] explicit inplace_vector(size_type size) noexcept(std::is_nothrow_default_constructible_v<Element>)
-			requires(std::default_initializable<Element>)
+			requires std::default_initializable<Element>
 			: m_size{size}
 		{
 			TR_ASSERT(size <= Capacity, "Tried to create an inplace vector of size {} but with a max capacity of only {}.", size, Capacity);
@@ -90,7 +90,7 @@ namespace tr
 		/// @param size Initial size of the vector.
 		/// @param value Value to initialize the values of the vector to.
 		[[nodiscard]] inplace_vector(size_type size, const Element& value) noexcept(std::is_nothrow_copy_constructible_v<Element>)
-			requires(std::copy_constructible<Element>)
+			requires std::copy_constructible<Element>
 			: m_size{size}
 		{
 			TR_ASSERT(size <= Capacity, "Tried to create an inplace vector of size {} but with a max capacity of only {}.", size, Capacity);
@@ -124,7 +124,7 @@ namespace tr
 		/// Creates a vector from an initializer list.
 		/// @param init Initializer list of elements to copy into the vector.
 		[[nodiscard]] inplace_vector(std::initializer_list<Element> init) noexcept(std::is_nothrow_copy_constructible_v<Element>)
-			requires(std::copy_constructible<Element>)
+			requires std::copy_constructible<Element>
 			: inplace_vector{init.begin(), init.end()}
 		{
 		}
@@ -132,7 +132,7 @@ namespace tr
 		/// Copies a vector.
 		/// @param rhs Vector to copy.
 		[[nodiscard]] inplace_vector(const inplace_vector& rhs) noexcept(std::is_nothrow_copy_constructible_v<Element>)
-			requires(std::copy_constructible<Element>)
+			requires std::copy_constructible<Element>
 			: inplace_vector{rhs.begin(), rhs.end()}
 		{
 		}
@@ -140,7 +140,7 @@ namespace tr
 		/// Moves a vector.
 		/// @param rhs Vector to move. The vector will be in a cleared state after this operation.
 		[[nodiscard]] inplace_vector(inplace_vector&& rhs) noexcept(std::is_nothrow_move_constructible_v<Element>)
-			requires(std::move_constructible<Element>)
+			requires std::move_constructible<Element>
 			: inplace_vector{std::move_iterator{rhs.begin()}, std::move_iterator{rhs.end()}}
 		{
 			rhs.clear();
@@ -160,7 +160,7 @@ namespace tr
 		/// @param rhs Vector to copy.
 		/// @return Reference to `*this`.
 		inplace_vector& operator=(const inplace_vector& rhs) noexcept(std::is_nothrow_copy_constructible_v<Element>)
-			requires(std::copy_constructible<Element>)
+			requires std::copy_constructible<Element>
 		{
 			std::destroy(begin(), end());
 			std::uninitialized_copy(rhs.begin(), rhs.end(), begin());

@@ -77,7 +77,7 @@ namespace tr
 		/// @param args Arguments to the constructor of a value.
 		/// @return `true` if the element was successfully emplaced, `false` otherwise.
 		template <typename... Args>
-			requires(std::constructible_from<Element, Args...>)
+			requires std::constructible_from<Element, Args...>
 		bool try_emplace_back(Args&&... args) noexcept(std::is_nothrow_constructible_v<Element, Args...>)
 		{
 			slot* slot{nullptr};
@@ -115,7 +115,7 @@ namespace tr
 		/// @param[out] out Value to write the output to.
 		/// @return `true` if a value was popped from the queue, `false` otherwise.
 		bool try_pop_front(Element& out) noexcept(std::is_nothrow_move_assignable_v<Element>)
-			requires(std::is_move_assignable_v<Element>)
+			requires std::is_move_assignable_v<Element>
 		{
 			slot* slot{nullptr};
 			std::size_t position{m_read_position.load(std::memory_order_relaxed)};
