@@ -7,6 +7,7 @@
 #include <tr/utility/alignment.hpp>                 // IWYU pragma: export
 #include <tr/utility/angle.hpp>                     // IWYU pragma: export
 #include <tr/utility/apply.hpp>                     // IWYU pragma: export
+#include <tr/utility/arithmetic_concepts.hpp>       // IWYU pragma: export
 #include <tr/utility/atlas_entries.hpp>             // IWYU pragma: export
 #include <tr/utility/atlas_packer.hpp>              // IWYU pragma: export
 #include <tr/utility/benchmark.hpp>                 // IWYU pragma: export

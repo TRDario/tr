@@ -3,6 +3,7 @@ add_executable(
 	alignment.cpp
 	angle.cpp
 	apply.cpp
+	arithmetic_concepts.cpp
 	atlas_packer.cpp
 	atlas_entries.cpp
 	benchmark.cpp

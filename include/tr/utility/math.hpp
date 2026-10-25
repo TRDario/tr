@@ -2,7 +2,8 @@
 /// @brief Provides mathematical utilities.
 
 #pragma once
-#include <tr/utility/concepts.hpp>
+#include <tr/utility/arithmetic_concepts.hpp>
+#include <tr/utility/integer.hpp>
 
 //
 
@@ -70,9 +71,11 @@ namespace tr
 	/// @param mod Divisor value.
 	/// @return `v % mod`.
 	template <typename T1, typename T2>
+		requires(arithmetic<T1> && arithmetic<T2>)
 	[[nodiscard]] constexpr auto mod(T1 v, T2 mod)
+		requires arithmetic<T1> && arithmetic<T2> || requires { v % mod; }
 	{
-		if constexpr ((std::floating_point<T1> || std::floating_point<T2>) && arithmetic<T1> && arithmetic<T2>) {
+		if constexpr ((std::floating_point<T1> || std::floating_point<T2>) && std::is_arithmetic_v<T1> && std::is_arithmetic_v<T2>) {
 			return static_cast<std::common_type_t<T1, T2>>(v) - static_cast<i64>(v / mod) * mod;
 		}
 		else {
@@ -88,6 +91,7 @@ namespace tr
 	/// @return Euclidian `v % mod`.
 	template <typename T1, typename T2>
 	[[nodiscard]] constexpr auto eucmod(T1 v, T2 mod)
+		requires arithmetic<T1> && arithmetic<T2> || requires { v % mod; }
 	{
 		const auto normal_mod{tr::mod(v, mod)};
 		return normal_mod >= decltype(normal_mod){} ? normal_mod : normal_mod + mod;
@@ -99,8 +103,9 @@ namespace tr
 	/// @param x, y Sample values.
 	/// @param a Interpolation factor.
 	/// @return `a + t * (b − a)`.
-	template <typename T, std::floating_point Ratio>
+	template <typename T, typename Ratio>
 	[[nodiscard]] constexpr T lerp(const T& x, const T& y, Ratio a) noexcept(noexcept(x * (1 - a) + y * a))
+		requires requires { x * (1 - a) + y * a; }
 	{
 		return x * (1 - a) + y * a;
 	}
@@ -111,6 +116,7 @@ namespace tr
 	/// @return `v²`.
 	template <typename T>
 	[[nodiscard]] constexpr auto sqr(const T& v) noexcept(noexcept(v * v))
+		requires requires { v * v; }
 	{
 		return v * v;
 	}
