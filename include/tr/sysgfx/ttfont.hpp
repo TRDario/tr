@@ -3,8 +3,8 @@
 
 #pragma once
 #include <tr/utility/alignment.hpp>
-#include <tr/utility/color.hpp>
 #include <tr/utility/enum.hpp>
+#include <tr/utility/rgba.hpp>
 
 struct TTF_Font;
 namespace tr
@@ -156,7 +156,7 @@ namespace tr
 		/// @param glyph Glyph to render.
 		/// @param color Glyph color.
 		/// @exception ttfont_render_error If rendering the glyph bitmap failed.
-		[[nodiscard]] bitmap render(u32 glyph, rgba8 color) const;
+		[[nodiscard]] bitmap render(u32 glyph, rgba<u8> color) const;
 
 		/// Renders a string of text.
 		/// @param text Text to render.
@@ -164,7 +164,7 @@ namespace tr
 		/// @param align Alignment of the lines of text.
 		/// @param color Text color.
 		/// @exception ttfont_render_error If rendering the string bitmap failed.
-		[[nodiscard]] bitmap render(std::string_view text, int max_w, halign align, rgba8 color) const;
+		[[nodiscard]] bitmap render(std::string_view text, int max_w, halign align, rgba<u8> color) const;
 
 		/// @}
 		/// @cond sdl_interop

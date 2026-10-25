@@ -3,10 +3,10 @@
 
 #pragma once
 #include <tr/sysgfx/pixel_format.hpp>
-#include <tr/utility/color.hpp>
 #include <tr/utility/handle.hpp>
 #include <tr/utility/rectangle.hpp>
 #include <tr/utility/ref.hpp>
+#include <tr/utility/rgba.hpp>
 
 namespace tr
 {
@@ -239,7 +239,7 @@ namespace tr
 
 		/// Sets the border color of the texture sampler (used when `wrap::border_clamp` is in use).
 		/// @param color Border color to use.
-		void set_border_color(rgbaf color) noexcept;
+		void set_border_color(rgba<float> color) noexcept;
 
 		/// @}
 		/// @name Clearing & setting
@@ -247,12 +247,12 @@ namespace tr
 
 		/// Clears the texture.
 		/// @param color Color to clear the texture to.
-		void clear(rgbaf color = rgba8{}) noexcept;
+		void clear(rgba<float> color = {}) noexcept;
 
 		/// Clears a region of the texture.
 		/// @param region Region of the texture to clear.
 		/// @param color Color to clear the texture region to.
-		void clear_region(rectangle<int> region, rgbaf color = rgba8{}) noexcept;
+		void clear_region(rectangle<int> region, rgba<float> color = {}) noexcept;
 
 		/// Copies a region from another texture.
 		/// @param tl Top-left corner of the copied region within the target texture.

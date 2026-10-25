@@ -60,6 +60,7 @@ target_sources(tr_utility PRIVATE
 	src/utility/binary_io.cpp
 	src/utility/chrono.cpp
 	src/utility/circle.cpp
+	src/utility/color_hex_code.cpp
 	src/utility/encryption.cpp
 	src/utility/exception.cpp
 	src/utility/iostream.cpp

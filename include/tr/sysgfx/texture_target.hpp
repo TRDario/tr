@@ -176,7 +176,7 @@ namespace tr
 
 		/// Sets the border color of the texture sampler (used when `wrap::BORDER_CLAMP` is in use).
 		/// @param color Border color to use.
-		void set_border_color(rgbaf color) noexcept;
+		void set_border_color(rgba<float> color) noexcept;
 
 		/// @}
 		/// @name Clearing & setting
@@ -184,12 +184,12 @@ namespace tr
 
 		/// Clears the texture target.
 		/// @param color Color to clear the texture to.
-		void clear(rgbaf color) noexcept;
+		void clear(rgba<float> color) noexcept;
 
 		/// Clears a region of the texture target.
 		/// @param region Region of the texture to clear.
 		/// @param color Color to clear the texture region to.
-		void clear_region(rectangle<int> region, rgbaf color) noexcept;
+		void clear_region(rectangle<int> region, rgba<float> color) noexcept;
 
 		/// Copies a region from another texture.
 		/// @param tl Top-left corner of the copied region within the target texture.

@@ -3,11 +3,7 @@
 
 #pragma once
 #include <tr/sysgfx/pixel_format.hpp>
-
-namespace tr
-{
-	struct rgba8;
-}
+#include <tr/utility/rgba.hpp>
 
 //
 
@@ -41,7 +37,7 @@ namespace tr
 
 		/// Gets the pixel's color value.
 		/// @return Color of the pixel.
-		[[nodiscard]] operator rgba8() const noexcept;
+		[[nodiscard]] operator rgba<u8>() const noexcept;
 
 		/// @}
 
@@ -81,12 +77,12 @@ namespace tr
 
 		/// Gets the pixel's color value.
 		/// @return Color of the pixel.
-		[[nodiscard]] operator rgba8() const noexcept;
+		[[nodiscard]] operator rgba<u8>() const noexcept;
 
 		/// Sets the pixel's color value.
 		/// @param color Color to set.
 		/// @return Reference to the pixel proxy.
-		pixel_proxy& operator=(rgba8 color) noexcept;
+		pixel_proxy& operator=(rgba<u8> color) noexcept;
 
 		/// @}
 

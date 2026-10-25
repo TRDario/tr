@@ -9,7 +9,6 @@
 #include <tr/sysgfx/pixel_iterator.hpp>
 #include <tr/sysgfx/pixel_proxy.hpp>
 #include <tr/sysgfx/sub_bitmap.hpp>
-#include <tr/utility/color.hpp>
 
 //
 
@@ -189,7 +188,7 @@ void tr::bitmap::blit(glm::ivec2 tl, sub_bitmap source) noexcept
 	SDL_BlitSurface(source.unwrap(), &sdl_source, m_ptr.get(), &sdl_destination);
 }
 
-void tr::bitmap::fill(rectangle<int> region, rgba8 color) noexcept
+void tr::bitmap::fill(rectangle<int> region, rgba<u8> color) noexcept
 {
 	TR_ASSERT(rectangle<int>{size()}.contains(region.tl + region.size),
 			  "Tried to fill out-of-bounds region from ({}, {}) to ({}, {}) in a bitmap of size {}x{}.", region.tl.x, region.tl.y,
@@ -224,8 +223,8 @@ SDL_Surface* tr::bitmap::unwrap() const noexcept
 
 tr::bitmap tr::create_checkerboard(glm::ivec2 size)
 {
-	constexpr rgba8 black{0, 0, 0, 255};
-	constexpr rgba8 magenta{255, 0, 255, 255};
+	constexpr rgba<u8> black{0, 0, 0, 255};
+	constexpr rgba<u8> magenta{255, 0, 255, 255};
 	const glm::ivec2 first_half_size{size / 2};
 	const glm::ivec2 second_half_size{size - first_half_size};
 

@@ -295,25 +295,25 @@ namespace tr
 
 		/// Clears the backbuffer's color.
 		/// @param color Color to clear the backbuffer to.
-		void clear_backbuffer(rgbaf color = {0, 0, 0, 0}) noexcept;
+		void clear_backbuffer(rgba<float> color = {0, 0, 0, 0}) noexcept;
 
 		/// Clears the backbuffer.
 		/// @param color Color to clear the backbuffer to.
 		/// @param depth Depth to clear the backbuffer to.
 		/// @param stencil Stencil to clear the backbuffer to.
-		void clear_backbuffer(rgbaf color, double depth, int stencil) noexcept;
+		void clear_backbuffer(rgba<float> color, double depth, int stencil) noexcept;
 
 		/// Clears a backbuffer region's color.
 		/// @param region Region of the backbuffer to clear.
 		/// @param color Color to clear the backbuffer region to.
-		void clear_backbuffer_region(rectangle<int> region, rgbaf color = {0, 0, 0, 0}) noexcept;
+		void clear_backbuffer_region(rectangle<int> region, rgba<float> color = {0, 0, 0, 0}) noexcept;
 
 		/// Clears a backbuffer region.
 		/// @param region Region of the backbuffer to clear.
 		/// @param color Color to clear the backbuffer region to.
 		/// @param depth Depth to clear the backbuffer region to.
 		/// @param stencil Stencil to clear the backbuffer region to.
-		void clear_backbuffer_region(rectangle<int> region, rgbaf color, double depth, int stencil) noexcept;
+		void clear_backbuffer_region(rectangle<int> region, rgba<float> color, double depth, int stencil) noexcept;
 
 		/// @}
 		/// @name Drawing

@@ -93,7 +93,7 @@ tr::texture tr::texture::allocate(glm::ivec2 size, mipmaps mipmaps, pixel_format
 		gl.set_texture_parameter_i(new_handle, GL_TEXTURE_WRAP_T, wrap);
 		gl.set_texture_parameter_i(new_handle, GL_TEXTURE_WRAP_R, wrap);
 
-		rgbaf border_color;
+		rgba<float> border_color;
 		gl.get_texture_parameter_fv(old_handle, GL_TEXTURE_BORDER_COLOR, &border_color.r);
 		gl.set_texture_parameter_fv(new_handle, GL_TEXTURE_BORDER_COLOR, &border_color.r);
 
@@ -203,7 +203,7 @@ void tr::texture::set_wrap(wrap wrap) noexcept
 	gl.set_texture_parameter_i(m_handle.get(), GL_TEXTURE_WRAP_R, std::to_underlying(wrap));
 }
 
-void tr::texture::set_border_color(rgbaf color) noexcept
+void tr::texture::set_border_color(rgba<float> color) noexcept
 {
 	TR_ASSERT(valid(), "Tried to set border color of a texture in an invalid state.");
 
@@ -212,14 +212,14 @@ void tr::texture::set_border_color(rgbaf color) noexcept
 
 //
 
-void tr::texture::clear(rgbaf color) noexcept
+void tr::texture::clear(rgba<float> color) noexcept
 {
 	TR_ASSERT(valid(), "Tried to clear a texture in an invalid state.");
 
 	context().gl().clear_texture_image(m_handle.get(), 0, GL_RGBA, GL_FLOAT, &color);
 }
 
-void tr::texture::clear_region(rectangle<int> region, rgbaf color) noexcept
+void tr::texture::clear_region(rectangle<int> region, rgba<float> color) noexcept
 {
 	TR_ASSERT(valid(), "Tried to clear a region of a texture in an invalid state.");
 

@@ -69,7 +69,7 @@ void tr::ping_pong_target::allocate(glm::ivec2 size, mipmaps mipmaps, pixel_form
 	}
 }
 
-void tr::ping_pong_target::clear_destination(rgbaf color) noexcept
+void tr::ping_pong_target::clear_destination(rgba<float> color) noexcept
 {
 	TR_ASSERT(valid(), "Tried to clear the destination of a ping-pong target in an invalid state.");
 	TR_ASSERT(complete(), "Tried to clear the destination of an incomplete ping-pong target.");
@@ -99,7 +99,7 @@ void tr::ping_pong_target::set_wrap(wrap wrap) noexcept
 	}
 }
 
-void tr::ping_pong_target::set_border_color(rgbaf color) noexcept
+void tr::ping_pong_target::set_border_color(rgba<float> color) noexcept
 {
 	TR_ASSERT(valid(), "Tried to set border color of a ping-pong target in an invalid state.");
 	TR_ASSERT(complete(), "Tried to set border color of an incomplete ping-pong target.");

@@ -14,7 +14,7 @@ tr provides LLDB formatters for several datatypes and containers used and provid
  - `tr::localization_map`
  - `tr::lock_free_queue`
  - `tr::ref`/`tr::opt_ref`
- - `tr::rgb8`/`tr::rgbf`/`tr::rgba8`/`tr::rgbaf`/`tr::hsv`
+ - `tr::rgb`/`tr::rgba`/`tr::hsv`
  - `tr::string_literal`
  - `tr::string_pool`
  - `tr::texture_view`/`tr::mutable_texture_view`

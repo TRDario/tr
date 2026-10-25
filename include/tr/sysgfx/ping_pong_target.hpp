@@ -107,7 +107,7 @@ namespace tr
 		/// Clears the destination buffer.
 		/// @param color Color to clear the destination buffer to.
 		/// @pre The target must be complete to call this function.
-		void clear_destination(rgbaf color = rgbaf{}) noexcept;
+		void clear_destination(rgba<float> color = {}) noexcept;
 
 		/// @}
 		/// @name Texture attributes
@@ -124,7 +124,7 @@ namespace tr
 
 		/// Sets the border color of the target texture samplers (used when `wrap::BORDER_CLAMP` is in use).
 		/// @param color Border color to use.
-		void set_border_color(rgbaf color) noexcept;
+		void set_border_color(rgba<float> color) noexcept;
 
 		/// @}
 		/// @name Targets

@@ -158,13 +158,13 @@ glm::ivec2 tr::ttfont::text_size(std::string_view text, int max_w) const
 
 //
 
-tr::bitmap tr::ttfont::render(u32 glyph, rgba8 color) const
+tr::bitmap tr::ttfont::render(u32 glyph, rgba<u8> color) const
 {
 	SDL_Surface* const ptr{TTF_RenderGlyph_Blended(m_ptr.get(), glyph, std::bit_cast<SDL_Color>(color))};
 	return ptr != nullptr ? bitmap{ptr} : throw ttfont_render_error{SDL_GetError()};
 }
 
-tr::bitmap tr::ttfont::render(std::string_view text, int max_w, halign align, rgba8 color) const
+tr::bitmap tr::ttfont::render(std::string_view text, int max_w, halign align, rgba<u8> color) const
 {
 	TTF_SetFontWrapAlignment(m_ptr.get(), static_cast<TTF_HorizontalAlignment>(align));
 	SDL_Surface* const ptr{TTF_RenderText_Blended_Wrapped(m_ptr.get(), text.data(), text.size(), std::bit_cast<SDL_Color>(color), max_w)};

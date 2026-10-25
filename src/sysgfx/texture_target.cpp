@@ -120,19 +120,19 @@ void tr::texture_target::set_wrap(wrap wrap) noexcept
 	m_texture.set_wrap(wrap);
 }
 
-void tr::texture_target::set_border_color(rgbaf color) noexcept
+void tr::texture_target::set_border_color(rgba<float> color) noexcept
 {
 	m_texture.set_border_color(color);
 }
 
 //
 
-void tr::texture_target::clear(rgbaf color) noexcept
+void tr::texture_target::clear(rgba<float> color) noexcept
 {
 	m_texture.clear(color);
 }
 
-void tr::texture_target::clear_region(rectangle<int> region, rgbaf color) noexcept
+void tr::texture_target::clear_region(rectangle<int> region, rgba<float> color) noexcept
 {
 	m_texture.clear_region(region, color);
 }

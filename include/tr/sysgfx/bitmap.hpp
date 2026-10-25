@@ -4,6 +4,7 @@
 #pragma once
 #include <tr/sysgfx/pixel_format.hpp>
 #include <tr/utility/rectangle.hpp>
+#include <tr/utility/rgba.hpp>
 
 struct SDL_Surface;
 namespace tr
@@ -13,7 +14,6 @@ namespace tr
 	class const_pixel_proxy;
 	class pixel_iterator;
 	class pixel_proxy;
-	struct rgba8;
 	class sub_bitmap;
 } // namespace tr
 
@@ -197,7 +197,7 @@ namespace tr
 		/// Fills a region of the bitmap with a solid color.
 		/// @param region Region of the bitmap to fill.
 		/// @param color Color to fill the region with.
-		void fill(rectangle<int> region, rgba8 color) noexcept;
+		void fill(rectangle<int> region, rgba<u8> color) noexcept;
 
 		/// @}
 		/// @name Saving

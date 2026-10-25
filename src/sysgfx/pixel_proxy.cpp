@@ -3,7 +3,6 @@
 
 #include <SDL3/SDL.h>
 #include <tr/sysgfx/pixel_proxy.hpp>
-#include <tr/utility/color.hpp>
 
 //
 
@@ -23,12 +22,12 @@ tr::pixel_format tr::const_pixel_proxy::format() const noexcept
 	return m_format;
 }
 
-tr::const_pixel_proxy::operator tr::rgba8() const noexcept
+tr::const_pixel_proxy::operator tr::rgba<u8>() const noexcept
 {
 	u32 value{0};
 	std::memcpy(&value, m_data, pixel_bytes(m_format));
 
-	rgba8 color;
+	rgba<u8> color;
 	SDL_GetRGBA(value, SDL_GetPixelFormatDetails(static_cast<SDL_PixelFormat>(m_format)), nullptr, &color.r, &color.g, &color.b, &color.a);
 	return color;
 }
@@ -51,17 +50,17 @@ tr::pixel_format tr::pixel_proxy::format() const noexcept
 	return m_format;
 }
 
-tr::pixel_proxy::operator tr::rgba8() const noexcept
+tr::pixel_proxy::operator tr::rgba<u8>() const noexcept
 {
 	u32 value{0};
 	std::memcpy(&value, m_data, pixel_bytes(m_format));
 
-	rgba8 color;
+	rgba<u8> color;
 	SDL_GetRGBA(value, SDL_GetPixelFormatDetails(static_cast<SDL_PixelFormat>(m_format)), nullptr, &color.r, &color.g, &color.b, &color.a);
 	return color;
 }
 
-tr::pixel_proxy& tr::pixel_proxy::operator=(rgba8 color) noexcept
+tr::pixel_proxy& tr::pixel_proxy::operator=(rgba<u8> color) noexcept
 {
 	const SDL_PixelFormatDetails* format_details{SDL_GetPixelFormatDetails(static_cast<SDL_PixelFormat>(m_format))};
 	const u32 formatted{SDL_MapRGBA(format_details, nullptr, color.r, color.g, color.b, color.a)};

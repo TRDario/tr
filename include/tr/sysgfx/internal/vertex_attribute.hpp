@@ -3,7 +3,8 @@
 
 #pragma once
 #include <tr/sysgfx/vertex_attribute.hpp>
-#include <tr/utility/color.hpp>
+#include <tr/utility/rgb.hpp>
+#include <tr/utility/rgba.hpp>
 #include <tr/utility/specialization_of.hpp>
 
 //
@@ -130,13 +131,13 @@ namespace tr
 		true,
 	};
 
-	/// Specialization of `as_vertex_attribute` for `rgb8`.
-	template <>
-	inline constexpr vertex_attribute as_vertex_attribute<rgb8>{as_vertex_attribute<normalized<glm::u8vec3>>};
+	/// Specialization of `as_vertex_attribute` for `rgb`.
+	template <arithmetic Element>
+	inline constexpr vertex_attribute as_vertex_attribute<rgb<Element>>{as_vertex_attribute<normalized<glm::tvec3<Element>>>};
 
-	/// Specialization of `as_vertex_attribute` for `rgba8`.
-	template <>
-	inline constexpr vertex_attribute as_vertex_attribute<rgba8>{as_vertex_attribute<normalized<glm::u8vec4>>};
+	/// Specialization of `as_vertex_attribute` for `rgba`.
+	template <arithmetic Element>
+	inline constexpr vertex_attribute as_vertex_attribute<rgba<Element>>{as_vertex_attribute<normalized<glm::tvec4<Element>>>};
 
 	//
 

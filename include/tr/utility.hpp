@@ -14,8 +14,8 @@
 #include <tr/utility/binary_io_specializations.hpp> // IWYU pragma: export
 #include <tr/utility/chrono.hpp>                    // IWYU pragma: export
 #include <tr/utility/circle.hpp>                    // IWYU pragma: export
-#include <tr/utility/color.hpp>                     // IWYU pragma: export
-#include <tr/utility/concepts.hpp>                  // IWYU pragma: export
+#include <tr/utility/color_cast.hpp>                // IWYU pragma: export
+#include <tr/utility/color_hex_code.hpp>            // IWYU pragma: export
 #include <tr/utility/copy_qualifiers.hpp>           // IWYU pragma: export
 #include <tr/utility/defer.hpp>                     // IWYU pragma: export
 #include <tr/utility/draw_geometry.hpp>             // IWYU pragma: export
@@ -25,6 +25,7 @@
 #include <tr/utility/exception.hpp>                 // IWYU pragma: export
 #include <tr/utility/handle.hpp>                    // IWYU pragma: export
 #include <tr/utility/hash_map.hpp>                  // IWYU pragma: export
+#include <tr/utility/hsv.hpp>                       // IWYU pragma: export
 #include <tr/utility/inplace_string.hpp>            // IWYU pragma: export
 #include <tr/utility/inplace_vector.hpp>            // IWYU pragma: export
 #include <tr/utility/integer.hpp>                   // IWYU pragma: export
@@ -52,6 +53,8 @@
 #include <tr/utility/rectangle_edges.hpp>           // IWYU pragma: export
 #include <tr/utility/ref.hpp>                       // IWYU pragma: export
 #include <tr/utility/result.hpp>                    // IWYU pragma: export
+#include <tr/utility/rgb.hpp>                       // IWYU pragma: export
+#include <tr/utility/rgba.hpp>                      // IWYU pragma: export
 #include <tr/utility/rng.hpp>                       // IWYU pragma: export
 #include <tr/utility/specialization_of.hpp>         // IWYU pragma: export
 #include <tr/utility/stopwatch.hpp>                 // IWYU pragma: export

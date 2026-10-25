@@ -9,8 +9,9 @@ add_executable(
 	binary_io.cpp
 	chrono.cpp
 	circle.cpp
-	color.cpp
 	copy_qualifiers.cpp
+	color_cast.cpp
+	color_hex_code.cpp
 	defer.cpp
 	dynamic_ref_cast.cpp
 	encryption.cpp
@@ -41,6 +42,8 @@ add_executable(
 	ref.cpp
 	result.cpp
 	rng.cpp
+	rgb.cpp
+	rgba.cpp
 	specialization_of.cpp
 	stopwatch.cpp
 	string_pool.cpp

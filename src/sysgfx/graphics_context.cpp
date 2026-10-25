@@ -357,7 +357,7 @@ void tr::graphics_context::set_index_buffer(const dynamic_index_buffer& buffer) 
 
 //
 
-void tr::graphics_context::clear_backbuffer(tr::rgbaf color) noexcept
+void tr::graphics_context::clear_backbuffer(rgba<float> color) noexcept
 {
 	set_render_target(backbuffer());
 
@@ -366,7 +366,7 @@ void tr::graphics_context::clear_backbuffer(tr::rgbaf color) noexcept
 	gl.clear(GL_COLOR_BUFFER_BIT);
 }
 
-void tr::graphics_context::clear_backbuffer(tr::rgbaf color, double depth, int stencil) noexcept
+void tr::graphics_context::clear_backbuffer(rgba<float> color, double depth, int stencil) noexcept
 {
 	set_render_target(backbuffer());
 
@@ -377,7 +377,7 @@ void tr::graphics_context::clear_backbuffer(tr::rgbaf color, double depth, int s
 	gl.clear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 }
 
-void tr::graphics_context::clear_backbuffer_region(rectangle<int> region, tr::rgbaf color) noexcept
+void tr::graphics_context::clear_backbuffer_region(rectangle<int> region, rgba<float> color) noexcept
 {
 	set_render_target(backbuffer().cropped(region));
 
@@ -386,7 +386,7 @@ void tr::graphics_context::clear_backbuffer_region(rectangle<int> region, tr::rg
 	gl.clear(GL_COLOR_BUFFER_BIT);
 }
 
-void tr::graphics_context::clear_backbuffer_region(rectangle<int> region, tr::rgbaf color, double depth, int stencil) noexcept
+void tr::graphics_context::clear_backbuffer_region(rectangle<int> region, rgba<float> color, double depth, int stencil) noexcept
 {
 	set_render_target(backbuffer().cropped(region));
 
