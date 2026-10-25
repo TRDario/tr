@@ -10,8 +10,8 @@
 TEST(RangesTest, ReinterpretsSpan)
 {
 	constexpr std::array<tr::u16, 2> data{0x4080, 0x4080};
-	const auto reinterpreted{tr::reinterpret_span<const tr::u8>(std::span{data})};
-	EXPECT_EQ(reinterpreted.size(), 4);
+	const std::span<const tr::u8> reinterpreted{tr::reinterpret_span<const tr::u8>(std::span{data})};
+	ASSERT_EQ(reinterpreted.size(), 4);
 	EXPECT_EQ(reinterpreted[0], 0x80);
 	EXPECT_EQ(reinterpreted[1], 0x40);
 	EXPECT_EQ(reinterpreted[2], 0x80);
@@ -23,11 +23,11 @@ TEST(RangesTest, ObjectBytesRoundTrips)
 {
 	std::pair<int, float> vs{1, 2.0f};
 
-	const auto vs_bytes{tr::as_bytes(vs)};
-	EXPECT_EQ(tr::as_object<decltype(vs)>(vs_bytes), vs);
+	const std::span<const std::byte, 8> vs_bytes{tr::as_bytes(vs)};
+	EXPECT_EQ((tr::as_object<std::pair<int, float>>(vs_bytes)), vs);
 
-	const auto vs_mut_bytes{tr::as_mut_bytes(vs)};
-	tr::as_mut_object<decltype(vs)>(vs_mut_bytes).first = 5;
+	const std::span<std::byte, 8> vs_mut_bytes{tr::as_mut_bytes(vs)};
+	tr::as_mut_object<std::pair<int, float>>(vs_mut_bytes).first = 5;
 	EXPECT_EQ(vs.first, 5);
 }
 
@@ -36,10 +36,10 @@ TEST(RangesTest, RangeBytesRoundTrips)
 {
 	std::vector<int> vs{1, 2, 3, 4, 5};
 
-	const auto vs_bytes{tr::range_bytes(vs)};
+	const std::span<const std::byte> vs_bytes{tr::range_bytes(vs)};
 	EXPECT_TRUE(std::ranges::equal(tr::as_objects<const int>(vs_bytes), vs));
 
-	const auto vs_mut_bytes{tr::range_mut_bytes(vs)};
+	const std::span<std::byte> vs_mut_bytes{tr::range_mut_bytes(vs)};
 	tr::as_mut_objects<int>(vs_mut_bytes)[0] = 10;
 	EXPECT_EQ(vs[0], 10);
 }
@@ -49,7 +49,7 @@ TEST(RangesTest, FindsLastOf)
 {
 	const std::vector<int> vs{1, 1, 1, 1, 1, 2, 3, 4, 5, 1, 2, 3, 2, 4, 5, 4, 5, 4, 5};
 	constexpr std::array<int, 2> pattern{1, 3};
-	const auto last_of_it{tr::find_last_of(vs, pattern)};
+	const std::vector<int>::const_iterator last_of_it{tr::find_last_of(vs, pattern)};
 	EXPECT_EQ(last_of_it, vs.begin() + 11);
 }
 
@@ -58,7 +58,7 @@ TEST(RangesTest, FindsFirstNotOf)
 {
 	const std::vector<int> vs{1, 1, 1, 1, 1, 2, 3, 4, 5, 1, 2, 3, 2, 4, 5, 4, 5, 4, 5};
 	constexpr std::array<int, 2> pattern{1, 3};
-	const auto first_not_of_it{tr::find_first_not_of(vs, pattern)};
+	const std::vector<int>::const_iterator first_not_of_it{tr::find_first_not_of(vs, pattern)};
 	EXPECT_EQ(first_not_of_it, vs.begin() + 5);
 }
 
@@ -67,7 +67,7 @@ TEST(RangesTest, FindsLastNotOf)
 {
 	const std::vector<int> vs{1, 1, 1, 1, 1, 2, 3, 4, 5, 1, 2, 3, 2, 4, 5, 4, 5, 4, 5};
 	constexpr std::array<int, 2> pattern{4, 5};
-	const auto first_not_of_it{tr::find_last_not_of(vs, pattern)};
+	const std::vector<int>::const_iterator first_not_of_it{tr::find_last_not_of(vs, pattern)};
 	EXPECT_EQ(first_not_of_it, vs.begin() + 12);
 }
 

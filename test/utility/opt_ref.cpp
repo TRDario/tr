@@ -38,7 +38,7 @@ TEST(OptRefTest, ConstructsFromReference)
 	int data{10};
 	tr::opt_ref<int> wrapped_ref{data};
 
-	EXPECT_TRUE(wrapped_ref.has_value());
+	ASSERT_TRUE(wrapped_ref.has_value());
 	EXPECT_EQ(wrapped_ref.as_ptr(), &data);
 	EXPECT_EQ(*wrapped_ref, 10);
 }
@@ -50,7 +50,7 @@ TEST(OptRefTest, ConstructsOptRefToConstFromNonConst)
 	tr::opt_ref<int> wrapped_ref{data};
 	tr::opt_ref<const int> wrapped_cref{data};
 
-	EXPECT_TRUE(wrapped_cref.has_value());
+	ASSERT_TRUE(wrapped_cref.has_value());
 	EXPECT_EQ(*wrapped_cref, 10);
 }
 
@@ -61,7 +61,7 @@ TEST(OptRefTest, ConstructsOptRefToBaseFromDerived)
 	tr::opt_ref<derived> wrapped_ref{data};
 	tr::opt_ref<base> wrapped_base_ref{data};
 
-	EXPECT_TRUE(wrapped_base_ref.has_value());
+	ASSERT_TRUE(wrapped_base_ref.has_value());
 	EXPECT_EQ((base*)&data, wrapped_base_ref.as_ptr());
 }
 
@@ -95,7 +95,7 @@ TEST(OptRefTest, ProvidesAccess)
 
 	data_t data{10};
 	tr::opt_ref<data_t> wrapped_ref{data};
-	EXPECT_TRUE(wrapped_ref.has_value());
+	ASSERT_TRUE(wrapped_ref.has_value());
 	EXPECT_EQ((*wrapped_ref).value, 10);
 	EXPECT_EQ(wrapped_ref->value, 10);
 	EXPECT_EQ(wrapped_ref.as_ptr(), &data);
@@ -113,6 +113,6 @@ TEST(OptRefTest, MakeOptRef)
 	auto wrapped_ref{tr::make_opt_ref(&data)};
 	EXPECT_FALSE(empty_ref.has_value());
 	EXPECT_EQ(empty_ref, std::nullopt);
-	EXPECT_TRUE(wrapped_ref.has_value());
+	ASSERT_TRUE(wrapped_ref.has_value());
 	EXPECT_EQ(wrapped_ref, data);
 }

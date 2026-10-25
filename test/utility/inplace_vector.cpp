@@ -105,7 +105,7 @@ TEST(InplaceVectorTest, SizedConstructorDefaultConstructsElements)
 	tracked_int::reset_counts();
 	const tr::inplace_vector<tracked_int, 256> vector(3);
 	EXPECT_FALSE(vector.empty());
-	EXPECT_EQ(vector.size(), 3);
+	ASSERT_EQ(vector.size(), 3);
 	EXPECT_EQ(vector.max_size(), 256);
 	EXPECT_EQ(tracked_int::constructed, 3);
 	EXPECT_EQ(vector[0], 0);
@@ -119,7 +119,7 @@ TEST(InplaceVectorTest, FillConstructorCopiesElements)
 	tracked_int::reset_counts();
 	const tr::inplace_vector<tracked_int, 256> vector(3, 5);
 	EXPECT_FALSE(vector.empty());
-	EXPECT_EQ(vector.size(), 3);
+	ASSERT_EQ(vector.size(), 3);
 	EXPECT_EQ(vector.max_size(), 256);
 	EXPECT_EQ(tracked_int::copy_constructed, 3);
 	EXPECT_EQ(vector[0], 5);
@@ -137,7 +137,7 @@ TEST(InplaceVectorTest, IteratorPairConstructorCopiesElements)
 	EXPECT_EQ(tracked_int::constructed, 0);
 	EXPECT_EQ(tracked_int::copy_constructed, 3);
 	EXPECT_EQ(tracked_int::move_constructed, 0);
-	EXPECT_EQ(copied.size(), 3);
+	ASSERT_EQ(copied.size(), 3);
 	EXPECT_EQ(copied[0], 2);
 	EXPECT_EQ(copied[1], 3);
 	EXPECT_EQ(copied[2], 4);
@@ -146,7 +146,7 @@ TEST(InplaceVectorTest, IteratorPairConstructorCopiesElements)
 	EXPECT_EQ(tracked_int::constructed, 0);
 	EXPECT_EQ(tracked_int::copy_constructed, 3);
 	EXPECT_EQ(tracked_int::move_constructed, 3);
-	EXPECT_EQ(moved.size(), 3);
+	ASSERT_EQ(moved.size(), 3);
 	EXPECT_EQ(moved[0], 3);
 	EXPECT_EQ(moved[1], 4);
 	EXPECT_EQ(moved[2], 5);
@@ -162,7 +162,7 @@ TEST(InplaceVectorTest, RangeConstructorCopiesElements)
 	EXPECT_EQ(tracked_int::constructed, 0);
 	EXPECT_EQ(tracked_int::copy_constructed, 5);
 	EXPECT_EQ(tracked_int::move_constructed, 0);
-	EXPECT_EQ(vector.size(), 5);
+	ASSERT_EQ(vector.size(), 5);
 	EXPECT_EQ(vector[0], 1);
 	EXPECT_EQ(vector[1], 2);
 	EXPECT_EQ(vector[2], 3);
@@ -174,7 +174,7 @@ TEST(InplaceVectorTest, RangeConstructorCopiesElements)
 TEST(InplaceVectorTest, InitializerListConstructorCopiesElements)
 {
 	const tr::inplace_vector<tracked_int, 256> vector{1, 2, 3};
-	EXPECT_EQ(vector.size(), 3);
+	ASSERT_EQ(vector.size(), 3);
 	EXPECT_EQ(vector[0], 1);
 	EXPECT_EQ(vector[1], 2);
 	EXPECT_EQ(vector[2], 3);
@@ -190,7 +190,7 @@ TEST(InplaceVectorTest, CopyConstructorCopiesElements)
 	EXPECT_EQ(tracked_int::constructed, 0);
 	EXPECT_EQ(tracked_int::copy_constructed, 5);
 	EXPECT_EQ(tracked_int::move_constructed, 0);
-	EXPECT_EQ(copy.size(), 5);
+	ASSERT_EQ(copy.size(), 5);
 	EXPECT_EQ(copy[0], 1);
 	EXPECT_EQ(copy[1], 2);
 	EXPECT_EQ(copy[2], 3);
@@ -208,7 +208,7 @@ TEST(InplaceVectorTest, MoveConstructorMovesElements)
 	EXPECT_EQ(tracked_int::constructed, 0);
 	EXPECT_EQ(tracked_int::copy_constructed, 0);
 	EXPECT_EQ(tracked_int::move_constructed, 5);
-	EXPECT_EQ(copy.size(), 5);
+	ASSERT_EQ(copy.size(), 5);
 	EXPECT_EQ(copy[0], 1);
 	EXPECT_EQ(copy[1], 2);
 	EXPECT_EQ(copy[2], 3);
@@ -398,7 +398,7 @@ TEST(InplaceVectorTest, Resizes)
 
 	vector.resize(10, copy);
 	EXPECT_EQ(tracked_int::copy_constructed, 5);
-	EXPECT_EQ(vector.size(), 10);
+	ASSERT_EQ(vector.size(), 10);
 	EXPECT_EQ(vector[4], 0);
 	EXPECT_EQ(vector[5], 1);
 

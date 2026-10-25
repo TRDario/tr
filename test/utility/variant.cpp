@@ -22,14 +22,14 @@ TEST(VariantTest, GetsOptionalAlternative)
 	const tr::opt_ref<int> var1_int{var1.get_if<int>()};
 	const tr::opt_ref<float> var1_float{var1.get_if<float>()};
 	EXPECT_FALSE(var1_int.has_value());
-	EXPECT_TRUE(var1_float.has_value());
+	ASSERT_TRUE(var1_float.has_value());
 	EXPECT_EQ(*var1_float, 5.0f);
 
 	const tr::variant<int, float, char> var2{5};
 	const tr::opt_ref<const int> var2_int{var2.get_if<int>()};
 	const tr::opt_ref<const float> var2_float{var2.get_if<float>()};
 	EXPECT_FALSE(var2_float.has_value());
-	EXPECT_TRUE(var2_int.has_value());
+	ASSERT_TRUE(var2_int.has_value());
 	EXPECT_EQ(*var2_int, 5);
 }
 
@@ -40,14 +40,14 @@ TEST(VariantTest, ConvertsToAlternativeOptRef)
 	const tr::opt_ref<int> var1_int{var1};
 	const tr::opt_ref<float> var1_float{var1};
 	EXPECT_FALSE(var1_int.has_value());
-	EXPECT_TRUE(var1_float.has_value());
+	ASSERT_TRUE(var1_float.has_value());
 	EXPECT_EQ(*var1_float, 5.0f);
 
 	const tr::variant<int, float, char> var2{5};
 	const tr::opt_ref<const int> var2_int{var2};
 	const tr::opt_ref<const float> var2_float{var2};
 	EXPECT_FALSE(var2_float.has_value());
-	EXPECT_TRUE(var2_int.has_value());
+	ASSERT_TRUE(var2_int.has_value());
 	EXPECT_EQ(*var2_int, 5);
 }
 

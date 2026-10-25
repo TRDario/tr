@@ -113,7 +113,7 @@ TEST_F(HandleTest, ConstructsWithValue)
 {
 	const stateless_deleter_handle full{1};
 	EXPECT_TRUE(full);
-	EXPECT_TRUE(full.has_value());
+	ASSERT_TRUE(full.has_value());
 	EXPECT_EQ(full.get(), 1);
 }
 
@@ -122,7 +122,7 @@ TEST_F(HandleTest, ConstructsWithValueAndDeleter)
 {
 	const tagged_deleter_handle full{1, tagged_deleter{1}};
 	EXPECT_TRUE(full);
-	EXPECT_TRUE(full.has_value());
+	ASSERT_TRUE(full.has_value());
 	EXPECT_EQ(full.get(), 1);
 	EXPECT_EQ(full.get_deleter().id, 1);
 }
@@ -152,7 +152,7 @@ TEST_F(HandleTest, MoveConstructorTransfersOwnership)
 	stateless_deleter_handle handle1{5};
 	const stateless_deleter_handle handle2{std::move(handle1)};
 	EXPECT_FALSE(handle1.has_value());
-	EXPECT_TRUE(handle2.has_value());
+	ASSERT_TRUE(handle2.has_value());
 	EXPECT_EQ(handle2.get(), 5);
 }
 
@@ -178,7 +178,7 @@ TEST_F(HandleTest, MoveAssignmentDeletesValueAndTransfersOwnership)
 	stateless_deleter_handle handle2{10};
 	handle2 = std::move(handle1);
 	EXPECT_FALSE(handle1.has_value());
-	EXPECT_TRUE(handle2.has_value());
+	ASSERT_TRUE(handle2.has_value());
 	EXPECT_EQ(handle2.get(), 5);
 	EXPECT_EQ(stateless_deleter::deleted_count, 1);
 	EXPECT_EQ(stateless_deleter::last_deleted_value, 10);
@@ -200,7 +200,7 @@ TEST_F(HandleTest, ResetCallsDeleterAndEmpties)
 	stateless_deleter_handle handle{5};
 
 	handle.reset(6);
-	EXPECT_TRUE(handle.has_value());
+	ASSERT_TRUE(handle.has_value());
 	EXPECT_EQ(handle.get(), 6);
 	EXPECT_EQ(stateless_deleter::deleted_count, 1);
 
@@ -209,7 +209,7 @@ TEST_F(HandleTest, ResetCallsDeleterAndEmpties)
 	EXPECT_EQ(stateless_deleter::deleted_count, 2);
 
 	handle.reset(7);
-	EXPECT_TRUE(handle.has_value());
+	ASSERT_TRUE(handle.has_value());
 	EXPECT_EQ(handle.get(), 7);
 	EXPECT_EQ(stateless_deleter::deleted_count, 2);
 

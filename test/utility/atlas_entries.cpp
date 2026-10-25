@@ -28,13 +28,13 @@ TEST(AtlasEntriesTest, InsertsFitting)
 
 	const glm::u16vec2 size{127, 127};
 	EXPECT_TRUE(entries.try_insert(0, size, {256, 256}).has_value());
-	EXPECT_TRUE(entries.contains(0));
 	EXPECT_EQ(entries.entries(), 1);
+	ASSERT_TRUE(entries.contains(0));
 	EXPECT_EQ(entries[0].size, size);
 
 	EXPECT_TRUE(entries_with_extra.try_insert(0, size, {256, 256}, 10).has_value());
-	EXPECT_TRUE(entries_with_extra.contains(0));
 	EXPECT_EQ(entries_with_extra.entries(), 1);
+	ASSERT_TRUE(entries_with_extra.contains(0));
 	EXPECT_EQ(entries_with_extra[0].uv.size, size);
 	EXPECT_EQ(entries_with_extra[0].extra, 10);
 }

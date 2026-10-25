@@ -27,7 +27,7 @@ TEST(BenchmarkTest, RecordsMeasurement)
 	benchmark.start();
 	std::this_thread::sleep_for(25ms);
 	benchmark.stop();
-	EXPECT_EQ(benchmark.measurements().size(), 1);
+	ASSERT_EQ(benchmark.measurements().size(), 1);
 	EXPECT_EQ(benchmark.measurements().back().duration, benchmark.latest());
 	EXPECT_GE(benchmark.latest(), 25ms);
 }
@@ -41,7 +41,7 @@ TEST(BenchmarkTest, AggregatesMeasurements)
 		std::this_thread::sleep_for(10ms);
 		benchmark.stop();
 	}
-	EXPECT_EQ(benchmark.measurements().size(), 5);
+	ASSERT_EQ(benchmark.measurements().size(), 5);
 	EXPECT_EQ(benchmark.measurements().back().duration, benchmark.latest());
 	EXPECT_LE(benchmark.min(), benchmark.avg());
 	EXPECT_LE(benchmark.avg(), benchmark.max());

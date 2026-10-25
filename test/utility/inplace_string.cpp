@@ -16,6 +16,7 @@ TEST(InplaceStringTest, DefaultConstructsEmpty)
 	EXPECT_TRUE(empty.empty());
 	EXPECT_EQ(empty.size(), 0);
 	EXPECT_EQ(empty.begin(), empty.end());
+	EXPECT_EQ(empty.max_size(), 32);
 }
 
 /// Tests constructing inplace strings sized, with and without a fill character.
@@ -145,7 +146,7 @@ TEST(InplaceStringTest, Clears)
 TEST(InplaceStringTest, AppendsCharacter)
 {
 	tr::inplace_string<32> string{"test"};
-	EXPECT_EQ(string.size(), 4);
+	ASSERT_EQ(string.size(), 4);
 
 	string.push_back('!');
 	EXPECT_EQ(string.back(), '!');
@@ -166,7 +167,7 @@ TEST(InplaceStringTest, AppendsCharacter)
 TEST(InplaceStringTest, AppendsString)
 {
 	tr::inplace_string<32> string{"test"};
-	EXPECT_EQ(string.size(), 4);
+	ASSERT_EQ(string.size(), 4);
 
 	string.append("!!!");
 	EXPECT_EQ(string.size(), 7);
@@ -186,7 +187,7 @@ TEST(InplaceStringTest, AppendsString)
 TEST(InplaceStringTest, Inserts)
 {
 	tr::inplace_string<32> string{"test"};
-	EXPECT_EQ(string.size(), 4);
+	ASSERT_EQ(string.size(), 4);
 
 	string.insert(string.begin(), "TEST");
 	EXPECT_EQ(string.size(), 8);
@@ -206,7 +207,7 @@ TEST(InplaceStringTest, Inserts)
 TEST(InplaceStringTest, PopsBack)
 {
 	tr::inplace_string<32> string{"test"};
-	EXPECT_EQ(string.size(), 4);
+	ASSERT_EQ(string.size(), 4);
 
 	string.pop_back();
 	EXPECT_EQ(string.size(), 3);
@@ -217,7 +218,7 @@ TEST(InplaceStringTest, PopsBack)
 TEST(InplaceStringTest, Erases)
 {
 	tr::inplace_string<32> string{"test!TEST"};
-	EXPECT_EQ(string.size(), 9);
+	ASSERT_EQ(string.size(), 9);
 
 	string.erase(string.begin() + 4);
 	EXPECT_EQ(string.size(), 8);
@@ -232,7 +233,7 @@ TEST(InplaceStringTest, Erases)
 TEST(InplaceStringTest, Resizes)
 {
 	tr::inplace_string<32> string{"test"};
-	EXPECT_EQ(string.size(), 4);
+	ASSERT_EQ(string.size(), 4);
 
 	string.resize(8, '!');
 	EXPECT_EQ(string.size(), 8);

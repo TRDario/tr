@@ -25,7 +25,10 @@ Examples are planned to be added at a later date.
 
 ## Testing
 
-tr is partially covered with unit tests, primarily within the utility and audio module.
+tr is partially covered with unit tests:
+ - utility: Fully covered
+ - audio: Almost entirely covered, pending revisions
+ - sysgfx: Almost entirely uncovered
 
 Further unit tests are planned to be added at a later date.
 

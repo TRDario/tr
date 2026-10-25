@@ -44,6 +44,7 @@ TEST(ZstringViewZspanTest, ProvidesAccess)
 	const char* const strings[]{"first", "second", "third", nullptr};
 	const tr::zstring_view_zspan span{strings};
 	EXPECT_FALSE(span.empty());
+	ASSERT_EQ(std::ranges::distance(span), 3);
 	EXPECT_EQ(span.data(), strings);
 	EXPECT_EQ(span.front(), "first");
 	EXPECT_EQ(span[1], "second");
@@ -61,7 +62,7 @@ TEST(ZstringViewZspanTest, Iterates)
 	}
 
 	EXPECT_EQ(values, (std::vector<std::string_view>{"alpha", "beta", "gamma"}));
-	EXPECT_EQ(std::ranges::distance(span), 3);
+	ASSERT_EQ(std::ranges::distance(span), 3);
 	EXPECT_EQ(span.begin()[1], "beta");
 }
 

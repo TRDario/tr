@@ -39,7 +39,7 @@ TEST(OutHandleTest, SetsHandle)
 	tr::handle<int, 0, stateless_deleter> handle;
 
 	set_c_handle(tr::out_handle(handle), 10);
-	EXPECT_TRUE(handle.has_value());
+	ASSERT_TRUE(handle.has_value());
 	EXPECT_EQ(handle.get(), 10);
 }
 

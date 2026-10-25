@@ -27,11 +27,11 @@ TEST(OptionalVariantTest, StoresAlternatives)
 {
 	tr::optional_variant<int, float> int_var{42};
 	EXPECT_TRUE(int_var.has_value());
-	EXPECT_TRUE(int_var.is<int>());
+	ASSERT_TRUE(int_var.is<int>());
 	EXPECT_EQ(int_var.get<int>(), 42);
 
 	const tr::optional_variant<int, float> float_var{2.5f};
 	EXPECT_TRUE(float_var.has_value());
-	EXPECT_TRUE(float_var.is<float>());
+	ASSERT_TRUE(float_var.is<float>());
 	EXPECT_EQ(float_var.get<float>(), 2.5f);
 }

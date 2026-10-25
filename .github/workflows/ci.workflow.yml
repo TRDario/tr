@@ -1,0 +1,75 @@
+name: Build and test
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
+    name: ${{ matrix.os }} / ${{ matrix.compiler }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            compiler: GCC
+            c_compiler: gcc
+            cxx_compiler: g++
+          - os: ubuntu-latest
+            compiler: Clang
+            c_compiler: clang
+            cxx_compiler: clang++
+          - os: windows-latest
+            compiler: MSVC
+            toolset: v143
+          - os: windows-latest
+            compiler: Clang
+            toolset: ClangCL
+
+    env:
+      ALSOFT_DRIVERS: "null"
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Install Linux build tools
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends ninja-build
+      
+      - name: Install Clang and lld
+        if: runner.os == 'Linux' && matrix.compiler == 'Clang'
+        run: sudo apt-get install -y --no-install-recommends clang lld
+      
+      - name: Configure (Linux)
+        if: runner.os == 'Linux'
+        run: >-
+          cmake -S . -B build -G "Ninja Multi-Config"
+          -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
+          -DCMAKE_CXX_COMPILER=${{ matrix.cxx_compiler }}
+          -DTR_BUILD_TESTS=ON
+      
+      - name: Configure (Windows)
+        if: runner.os == 'Windows'
+        run: >-
+          cmake -S . -B build -G "Visual Studio 17 2022" -A x64 -T ${{ matrix.toolset }}
+          -DTR_BUILD_TESTS=ON
+      
+      - name: Build and test all configurations
+        shell: bash
+        run: |
+          set -euo pipefail
+          for config in Debug RelWithDebInfo Release; do
+            echo "Building $config"
+            cmake --build build --config "$config" --parallel 2
+            echo "Testing $config"
+            ctest --test-dir build --build-config "$config" --output-on-failure --parallel 2
+          done
