@@ -17,6 +17,7 @@ add_executable(
 	encryption.cpp
 	enum.cpp
 	exception.cpp
+	format_concepts.cpp
 	handle.cpp
 	hash_map.cpp
 	iostream.cpp
