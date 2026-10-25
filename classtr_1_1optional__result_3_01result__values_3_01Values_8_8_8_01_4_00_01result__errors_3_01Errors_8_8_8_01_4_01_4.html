@@ -182,11 +182,11 @@ Public Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-attribs" class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
 <tr id="pub-static-attribs-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constants</div></td></tr>
-<tr class="memitem:a54317bb1b9c98fc7a7d42eeef3241c9f" id="r_a54317bb1b9c98fc7a7d42eeef3241c9f"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
-<tr class="memitem:a54317bb1b9c98fc7a7d42eeef3241c9f template"><td class="memItemLeft">static constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="#a54317bb1b9c98fc7a7d42eeef3241c9f">is_value_type</a> {one_of&lt;T, Values...&gt;}</td></tr>
+<tr class="memitem:a54317bb1b9c98fc7a7d42eeef3241c9f" id="r_a54317bb1b9c98fc7a7d42eeef3241c9f"><td class="memTemplParams" colspan="2">template&lt;typename Target&gt; </td></tr>
+<tr class="memitem:a54317bb1b9c98fc7a7d42eeef3241c9f template"><td class="memItemLeft">static constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="#a54317bb1b9c98fc7a7d42eeef3241c9f">is_value_type</a> {one_of&lt;Target, Values...&gt;}</td></tr>
 <tr class="memdesc:a54317bb1b9c98fc7a7d42eeef3241c9f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds whether a type is a value type.  <br /></td></tr>
-<tr class="memitem:a8e2ffd1f5082cefd21820e508eaf31e5" id="r_a8e2ffd1f5082cefd21820e508eaf31e5"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
-<tr class="memitem:a8e2ffd1f5082cefd21820e508eaf31e5 template"><td class="memItemLeft">static constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="#a8e2ffd1f5082cefd21820e508eaf31e5">is_error_type</a> {one_of&lt;T, Errors...&gt;}</td></tr>
+<tr class="memitem:a8e2ffd1f5082cefd21820e508eaf31e5" id="r_a8e2ffd1f5082cefd21820e508eaf31e5"><td class="memTemplParams" colspan="2">template&lt;typename Target&gt; </td></tr>
+<tr class="memitem:a8e2ffd1f5082cefd21820e508eaf31e5 template"><td class="memItemLeft">static constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="#a8e2ffd1f5082cefd21820e508eaf31e5">is_error_type</a> {one_of&lt;Target, Errors...&gt;}</td></tr>
 <tr class="memdesc:a8e2ffd1f5082cefd21820e508eaf31e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds whether a type is a error type.  <br /></td></tr>
 <tr class="inherit_header pub_static_attribs_classtr_1_1variant"><td colspan="2" class="dyn-inherit"><span class="dynarrow"><span class="arrowhead closed"></span></span>Static Public Attributes inherited from <a class="el" href="classtr_1_1variant.html">tr::variant&lt; empty_variant_t, Alternatives... &gt;</a></td></tr>
 <tr class="memitem:ac3fc9eb62a14ecb92c9f3b4595343c5a inherit pub_static_attribs_classtr_1_1variant" id="r_ac3fc9eb62a14ecb92c9f3b4595343c5a"><td class="memItemLeft">static constexpr <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a>&#160;</td><td class="memItemRight"><a class="el" href="classtr_1_1variant.html#ac3fc9eb62a14ecb92c9f3b4595343c5a">variant_size</a></td></tr>
@@ -300,13 +300,13 @@ template&lt;typename... Values, typename... Errors&gt; </div>
 <div class="memtemplate">
 template&lt;typename... Values, typename... Errors&gt; </div>
 <div class="memtemplate">
-template&lt;typename T&gt; </div>
+template&lt;typename Target&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="classtr_1_1optional__result.html">tr::optional_result</a>&lt; <a class="el" href="structtr_1_1result__values.html">result_values</a>&lt; Values... &gt;, <a class="el" href="structtr_1_1result__errors.html">result_errors</a>&lt; Errors... &gt; &gt;::is_value_type {one_of&lt;T, Values...&gt;}</td>
+          <td class="memname">bool <a class="el" href="classtr_1_1optional__result.html">tr::optional_result</a>&lt; <a class="el" href="structtr_1_1result__values.html">result_values</a>&lt; Values... &gt;, <a class="el" href="structtr_1_1result__errors.html">result_errors</a>&lt; Errors... &gt; &gt;::is_value_type {one_of&lt;Target, Values...&gt;}</td>
         </tr>
       </table>
   </td>
@@ -319,7 +319,7 @@ template&lt;typename T&gt; </div>
 <p>Holds whether a type is a value type. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>Type to check. </td></tr>
+    <tr><td class="paramname">Target</td><td>Type to check. </td></tr>
   </table>
   </dd>
 </dl>
@@ -334,13 +334,13 @@ template&lt;typename T&gt; </div>
 <div class="memtemplate">
 template&lt;typename... Values, typename... Errors&gt; </div>
 <div class="memtemplate">
-template&lt;typename T&gt; </div>
+template&lt;typename Target&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="classtr_1_1optional__result.html">tr::optional_result</a>&lt; <a class="el" href="structtr_1_1result__values.html">result_values</a>&lt; Values... &gt;, <a class="el" href="structtr_1_1result__errors.html">result_errors</a>&lt; Errors... &gt; &gt;::is_error_type {one_of&lt;T, Errors...&gt;}</td>
+          <td class="memname">bool <a class="el" href="classtr_1_1optional__result.html">tr::optional_result</a>&lt; <a class="el" href="structtr_1_1result__values.html">result_values</a>&lt; Values... &gt;, <a class="el" href="structtr_1_1result__errors.html">result_errors</a>&lt; Errors... &gt; &gt;::is_error_type {one_of&lt;Target, Errors...&gt;}</td>
         </tr>
       </table>
   </td>
@@ -353,7 +353,7 @@ template&lt;typename T&gt; </div>
 <p>Holds whether a type is a error type. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>Type to check. </td></tr>
+    <tr><td class="paramname">Target</td><td>Type to check. </td></tr>
   </table>
   </dd>
 </dl>

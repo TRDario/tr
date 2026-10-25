@@ -131,25 +131,25 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('concepttr_1_1n
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Valid event view visitor type that doesn't throw. </p>
 </div><h2 id="header-conceptdef" class="groupheader">Concept definition</h2>
-<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepttr_1_1nothrow__event__view__visitor.html">nothrow_event_view_visitor</a> = <a class="code hl_concept" href="concepttr_1_1event__view__visitor.html">event_view_visitor&lt;T&gt;</a> &amp;&amp; <span class="keyword">noexcept</span>(std::declval&lt;T&gt;(std::declval&lt;quit_event&gt;())) &amp;&amp;</div>
-<div class="line">                                         <span class="keyword">noexcept</span>(std::declval&lt;T&gt;(std::declval&lt;window_show_event&gt;())) &amp;&amp;</div>
-<div class="line">                                         <span class="keyword">noexcept</span>(std::declval&lt;T&gt;(std::declval&lt;window_hide_event&gt;())) &amp;&amp;</div>
-<div class="line">                                         <span class="keyword">noexcept</span>(std::declval&lt;T&gt;(std::declval&lt;backbuffer_resize_event&gt;())) &amp;&amp;</div>
-<div class="line">                                         <span class="keyword">noexcept</span>(std::declval&lt;T&gt;(std::declval&lt;window_gain_focus_event&gt;())) &amp;&amp;</div>
-<div class="line">                                         <span class="keyword">noexcept</span>(std::declval&lt;T&gt;(std::declval&lt;window_lose_focus_event&gt;())) &amp;&amp;</div>
-<div class="line">                                         <span class="keyword">noexcept</span>(std::declval&lt;T&gt;(std::declval&lt;window_mouse_enter_event&gt;())) &amp;&amp;</div>
-<div class="line">                                         <span class="keyword">noexcept</span>(std::declval&lt;T&gt;(std::declval&lt;window_mouse_leave_event&gt;())) &amp;&amp;</div>
-<div class="line">                                         <span class="keyword">noexcept</span>(std::declval&lt;T&gt;(std::declval&lt;key_down_event&gt;())) &amp;&amp;</div>
-<div class="line">                                         <span class="keyword">noexcept</span>(std::declval&lt;T&gt;(std::declval&lt;key_up_event&gt;())) &amp;&amp;</div>
-<div class="line">                                         <span class="keyword">noexcept</span>(std::declval&lt;T&gt;(std::declval&lt;text_input_event&gt;())) &amp;&amp;</div>
-<div class="line">                                         <span class="keyword">noexcept</span>(std::declval&lt;T&gt;(std::declval&lt;mouse_motion_event&gt;())) &amp;&amp;</div>
-<div class="line">                                         <span class="keyword">noexcept</span>(std::declval&lt;T&gt;(std::declval&lt;mouse_down_event&gt;())) &amp;&amp;</div>
-<div class="line">                                         <span class="keyword">noexcept</span>(std::declval&lt;T&gt;(std::declval&lt;mouse_up_event&gt;())) &amp;&amp;</div>
-<div class="line">                                         <span class="keyword">noexcept</span>(std::declval&lt;T&gt;(std::declval&lt;mouse_wheel_event&gt;())) &amp;&amp;</div>
-<div class="line">                                         <span class="keyword">noexcept</span>(std::declval&lt;T&gt;(std::declval&lt;unknown_event&gt;()))</div>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Target&gt;</div>
+<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepttr_1_1nothrow__event__view__visitor.html">nothrow_event_view_visitor</a> = <a class="code hl_concept" href="concepttr_1_1event__view__visitor.html">event_view_visitor&lt;Target&gt;</a> &amp;&amp; <span class="keyword">noexcept</span>(std::declval&lt;Target&gt;(std::declval&lt;quit_event&gt;())) &amp;&amp;</div>
+<div class="line">                                         <span class="keyword">noexcept</span>(std::declval&lt;Target&gt;(std::declval&lt;window_show_event&gt;())) &amp;&amp;</div>
+<div class="line">                                         <span class="keyword">noexcept</span>(std::declval&lt;Target&gt;(std::declval&lt;window_hide_event&gt;())) &amp;&amp;</div>
+<div class="line">                                         <span class="keyword">noexcept</span>(std::declval&lt;Target&gt;(std::declval&lt;backbuffer_resize_event&gt;())) &amp;&amp;</div>
+<div class="line">                                         <span class="keyword">noexcept</span>(std::declval&lt;Target&gt;(std::declval&lt;window_gain_focus_event&gt;())) &amp;&amp;</div>
+<div class="line">                                         <span class="keyword">noexcept</span>(std::declval&lt;Target&gt;(std::declval&lt;window_lose_focus_event&gt;())) &amp;&amp;</div>
+<div class="line">                                         <span class="keyword">noexcept</span>(std::declval&lt;Target&gt;(std::declval&lt;window_mouse_enter_event&gt;())) &amp;&amp;</div>
+<div class="line">                                         <span class="keyword">noexcept</span>(std::declval&lt;Target&gt;(std::declval&lt;window_mouse_leave_event&gt;())) &amp;&amp;</div>
+<div class="line">                                         <span class="keyword">noexcept</span>(std::declval&lt;Target&gt;(std::declval&lt;key_down_event&gt;())) &amp;&amp;</div>
+<div class="line">                                         <span class="keyword">noexcept</span>(std::declval&lt;Target&gt;(std::declval&lt;key_up_event&gt;())) &amp;&amp;</div>
+<div class="line">                                         <span class="keyword">noexcept</span>(std::declval&lt;Target&gt;(std::declval&lt;text_input_event&gt;())) &amp;&amp;</div>
+<div class="line">                                         <span class="keyword">noexcept</span>(std::declval&lt;Target&gt;(std::declval&lt;mouse_motion_event&gt;())) &amp;&amp;</div>
+<div class="line">                                         <span class="keyword">noexcept</span>(std::declval&lt;Target&gt;(std::declval&lt;mouse_down_event&gt;())) &amp;&amp;</div>
+<div class="line">                                         <span class="keyword">noexcept</span>(std::declval&lt;Target&gt;(std::declval&lt;mouse_up_event&gt;())) &amp;&amp;</div>
+<div class="line">                                         <span class="keyword">noexcept</span>(std::declval&lt;Target&gt;(std::declval&lt;mouse_wheel_event&gt;())) &amp;&amp;</div>
+<div class="line">                                         <span class="keyword">noexcept</span>(std::declval&lt;Target&gt;(std::declval&lt;unknown_event&gt;()))</div>
 <div class="ttc" id="aconcepttr_1_1event__view__visitor_html"><div class="ttname"><a href="concepttr_1_1event__view__visitor.html">tr::event_view_visitor</a></div><div class="ttdoc">Valid event view visitor type.</div><div class="ttdef"><b>Definition</b> event_view.hpp:17</div></div>
-<div class="ttc" id="aconcepttr_1_1nothrow__event__view__visitor_html"><div class="ttname"><a href="concepttr_1_1nothrow__event__view__visitor.html">tr::nothrow_event_view_visitor</a></div><div class="ttdoc">Valid event view visitor type that doesn&#39;t throw.</div><div class="ttdef"><b>Definition</b> event_view.hpp:43</div></div>
+<div class="ttc" id="aconcepttr_1_1nothrow__event__view__visitor_html"><div class="ttname"><a href="concepttr_1_1nothrow__event__view__visitor.html">tr::nothrow_event_view_visitor</a></div><div class="ttdoc">Valid event view visitor type that doesn&#39;t throw.</div><div class="ttdef"><b>Definition</b> event_view.hpp:36</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

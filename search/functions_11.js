@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['tan_0',['tan',['../classtr_1_1angle.html#a72914108033d961b0b1d86cd85e24f07',1,'tr::angle']]],
+  ['tan_0',['tan',['../classtr_1_1angle.html#a5ad5ee1480f944d8fe3c9a98fa49f297',1,'tr::angle']]],
   ['target_1',['target',['../classtr_1_1texture__target.html#a2b7508759c336477897e42a52e806bb1',1,'tr::texture_target']]],
   ['tell_2',['tell',['../classtr_1_1audio__stream.html#a2915229c4b7de063f2e34c7a58a9d660',1,'tr::audio_stream']]],
   ['temporary_5ffile_3',['temporary_file',['../classtr_1_1temporary__file.html#a621c8c5a6ef168dcb49c72dc2c3d5684',1,'tr::temporary_file::temporary_file(std::string_view filename_base, std::string_view extension={})'],['../classtr_1_1temporary__file.html#ac9cb61847756058d81d7f49479b8170b',1,'tr::temporary_file::temporary_file(const temporary_file &amp;)=delete'],['../classtr_1_1temporary__file.html#ae7d4e2c20dcbc7e7c2b5df230e869586',1,'tr::temporary_file::temporary_file(temporary_file &amp;&amp;rhs) noexcept']]],
@@ -18,13 +18,13 @@ var searchData=
   ['to_5fkeycode_15',['to_keycode',['../namespacetr.html#ac84c6d0c7158915622ee906fc928a62f',1,'tr']]],
   ['to_5fscancode_16',['to_scancode',['../namespacetr.html#ac704a529dce5eec908649379e8522ab1',1,'tr']]],
   ['to_5fvalign_17',['to_valign',['../namespacetr.html#a55223037fba88ac39da106748ef71b1c',1,'tr']]],
-  ['try_5femplace_5fback_18',['try_emplace_back',['../classtr_1_1lock__free__queue.html#aa8706dbf746c9d2535c239ecbbcadebc',1,'tr::lock_free_queue']]],
+  ['try_5femplace_5fback_18',['try_emplace_back',['../classtr_1_1lock__free__queue.html#a7bff20b39df64f86aa706eebb2295671',1,'tr::lock_free_queue']]],
   ['try_5fget_19',['try_get',['../namespacetr.html#ae23d8e15265b8c42dbe5fe6d9dfad3b2',1,'tr::try_get(boost::unordered_flat_map&lt; Key, Value, Hash, Pred &gt; &amp;map, Keylike &amp;&amp;keylike)'],['../namespacetr.html#a8a17e10b3a3118bd9ee4f57442585922',1,'tr::try_get(boost::unordered_node_map&lt; Key, Value, Hash, Pred &gt; &amp;map, Keylike &amp;&amp;keylike)'],['../namespacetr.html#ad0e1f5e54b5fc6f186bd7cddad8d1a58',1,'tr::try_get(const boost::unordered_flat_map&lt; Key, Value, Hash, Pred &gt; &amp;map, Keylike &amp;&amp;keylike)'],['../namespacetr.html#a2d4d1dd7b84d78cd82cb885414f3ce58',1,'tr::try_get(const boost::unordered_node_map&lt; Key, Value, Hash, Pred &gt; &amp;map, Keylike &amp;&amp;keylike)']]],
-  ['try_5finsert_20',['try_insert',['../classtr_1_1atlas__entries.html#a9db8652b17e4a43aad20b2688235ad3d',1,'tr::atlas_entries::try_insert()'],['../classtr_1_1atlas__packer.html#a3e01066c16d3ab2747da835c6cb4c9e5',1,'tr::atlas_packer::try_insert()']]],
-  ['try_5fpop_5ffront_21',['try_pop_front',['../classtr_1_1lock__free__queue.html#ab3164790bcdfa711489ab80c6aaa3819',1,'tr::lock_free_queue::try_pop_front(Element &amp;out) noexcept(std::is_nothrow_move_assignable_v&lt; Element &gt;)'],['../classtr_1_1lock__free__queue.html#ab755b39849a08ce4f164f4aad46766bd',1,'tr::lock_free_queue::try_pop_front() noexcept(std::is_nothrow_move_constructible_v&lt; Element &gt;)']]],
+  ['try_5finsert_20',['try_insert',['../classtr_1_1atlas__entries.html#a4885db56d6d04cd05e4e3aca9062385e',1,'tr::atlas_entries::try_insert()'],['../classtr_1_1atlas__packer.html#a3e01066c16d3ab2747da835c6cb4c9e5',1,'tr::atlas_packer::try_insert()']]],
+  ['try_5fpop_5ffront_21',['try_pop_front',['../classtr_1_1lock__free__queue.html#a4f230660c4fbaa65a1a1eccd92dab21e',1,'tr::lock_free_queue::try_pop_front(Element &amp;out) noexcept(std::is_nothrow_move_assignable_v&lt; Element &gt;)'],['../classtr_1_1lock__free__queue.html#ab755b39849a08ce4f164f4aad46766bd',1,'tr::lock_free_queue::try_pop_front() noexcept(std::is_nothrow_move_constructible_v&lt; Element &gt;)']]],
   ['ttfont_5ferror_22',['ttfont_error',['../classtr_1_1ttfont__error.html#af967c08b53654c35cc852ac1f84d2278',1,'tr::ttfont_error::ttfont_error(std::string &amp;&amp;description) noexcept'],['../classtr_1_1ttfont__error.html#ab8871072c36318d464ceef8141ca977a',1,'tr::ttfont_error::ttfont_error(std::format_string&lt; Args... &gt; description_fmt, Args &amp;&amp;... args)']]],
   ['ttfont_5fload_5ferror_23',['ttfont_load_error',['../classtr_1_1ttfont__load__error.html#ac0114182e89caf72086af2e947925de8',1,'tr::ttfont_load_error']]],
   ['ttfont_5frender_5ferror_24',['ttfont_render_error',['../classtr_1_1ttfont__render__error.html#a161cb6aad6b999a9b0f4a741b9038824',1,'tr::ttfont_render_error']]],
-  ['turns_25',['turns',['../classtr_1_1angle.html#a2e2c5e8e7e79e4ac9ac293db06513a76',1,'tr::angle::turns()'],['../namespacetr.html#aed4dcdb4f351af0a8ab76b9aa20858e2',1,'tr::turns(Number th) noexcept']]],
+  ['turns_25',['turns',['../classtr_1_1angle.html#addba8d93751075b7c8fb88028f8ce4cd',1,'tr::angle::turns()'],['../namespacetr.html#ad0c25d1227ce07a0de34a31a02aa8e1f',1,'tr::turns(Scalar th) noexcept']]],
   ['type_5fname_26',['type_name',['../namespacetr.html#a1c483c366687381116591f7b6c1e7583',1,'tr']]]
 ];

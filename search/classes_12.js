@@ -13,5 +13,5 @@ var searchData=
   ['ttfont_5ferror_10',['ttfont_error',['../classtr_1_1ttfont__error.html',1,'tr']]],
   ['ttfont_5fload_5ferror_11',['ttfont_load_error',['../classtr_1_1ttfont__load__error.html',1,'tr']]],
   ['ttfont_5frender_5ferror_12',['ttfont_render_error',['../classtr_1_1ttfont__render__error.html',1,'tr']]],
-  ['type_13',['type',['../structtr_1_1copy__qualifiers.html',1,'tr::type&lt; T, Qualified &gt;'],['../structtr_1_1size__type.html',1,'tr::type&lt; Max &gt;']]]
+  ['type_13',['type',['../structtr_1_1copy__qualifiers.html',1,'tr::type&lt; Target, Qualified &gt;'],['../structtr_1_1size__type.html',1,'tr::type&lt; Max &gt;']]]
 ];

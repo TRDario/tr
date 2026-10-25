@@ -196,6 +196,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a439e5e3203fa8ffe3da9044de27f5993 template"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="#a439e5e3203fa8ffe3da9044de27f5993">operator==</a> (const String &amp;rhs) const noexcept</td></tr>
 <tr class="memdesc:a439e5e3203fa8ffe3da9044de27f5993"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares two strings for equality.  <br /></td></tr>
 <tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Access</div></td></tr>
+<tr class="memitem:a985db0255a4f7f79c21039622b99e159" id="r_a985db0255a4f7f79c21039622b99e159"><td class="memItemLeft">constexpr <a class="el" href="#ae7b74c59588c5610f9d171eb17c5db35">reference</a>&#160;</td><td class="memItemRight"><a class="el" href="#a985db0255a4f7f79c21039622b99e159">at</a> (<a class="el" href="#adba0ccb6ecfa6ca8171064fa254b5a49">size_type</a> offset) noexcept</td></tr>
+<tr class="memdesc:a985db0255a4f7f79c21039622b99e159"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a reference to a character in the string.  <br /></td></tr>
+<tr class="memitem:adfe62a53fbbbd8f8a97a67b1bc81b619" id="r_adfe62a53fbbbd8f8a97a67b1bc81b619"><td class="memItemLeft">constexpr <a class="el" href="#a5c5e9700383630a4dfcf4e0785e6244f">const_reference</a>&#160;</td><td class="memItemRight"><a class="el" href="#adfe62a53fbbbd8f8a97a67b1bc81b619">at</a> (<a class="el" href="#adba0ccb6ecfa6ca8171064fa254b5a49">size_type</a> offset) const noexcept</td></tr>
+<tr class="memdesc:adfe62a53fbbbd8f8a97a67b1bc81b619"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a reference to a character in the string.  <br /></td></tr>
 <tr class="memitem:a4a8eb4e32895a477148913636993643b" id="r_a4a8eb4e32895a477148913636993643b"><td class="memItemLeft">constexpr <a class="el" href="#ae7b74c59588c5610f9d171eb17c5db35">reference</a>&#160;</td><td class="memItemRight"><a class="el" href="#a4a8eb4e32895a477148913636993643b">operator[]</a> (<a class="el" href="#adba0ccb6ecfa6ca8171064fa254b5a49">size_type</a> offset) noexcept</td></tr>
 <tr class="memdesc:a4a8eb4e32895a477148913636993643b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a reference to a character in the string.  <br /></td></tr>
 <tr class="memitem:a708193a7c153eba1c725e80850ca163c" id="r_a708193a7c153eba1c725e80850ca163c"><td class="memItemLeft">constexpr <a class="el" href="#a5c5e9700383630a4dfcf4e0785e6244f">const_reference</a>&#160;</td><td class="memItemRight"><a class="el" href="#a708193a7c153eba1c725e80850ca163c">operator[]</a> (<a class="el" href="#adba0ccb6ecfa6ca8171064fa254b5a49">size_type</a> offset) const noexcept</td></tr>
@@ -234,7 +238,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a461eeb85ef788e5b4f4e5035cdc866c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Appends a character to the string.  <br /></td></tr>
 <tr class="memitem:a13d41ca59f8e1404626a9b63ea2c4554" id="r_a13d41ca59f8e1404626a9b63ea2c4554"><td class="memItemLeft">constexpr <a class="el" href="#a3bc016aa6cc1562d991da7487d7a319d">basic_inplace_string</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a13d41ca59f8e1404626a9b63ea2c4554">operator+=</a> (<a class="el" href="#ac74f9a55d0af41068838f7c8cb34407c">value_type</a> chr) noexcept</td></tr>
 <tr class="memdesc:a13d41ca59f8e1404626a9b63ea2c4554"><td class="mdescLeft">&#160;</td><td class="mdescRight">Appends a character to the string.  <br /></td></tr>
-<tr class="memitem:a3ed7edbe1cf3e316ac50f1ad00176fc5" id="r_a3ed7edbe1cf3e316ac50f1ad00176fc5"><td class="memTemplParams" colspan="2">template&lt;forward_iterator_to_convertible_to&lt; <a class="el" href="#ac74f9a55d0af41068838f7c8cb34407c">value_type</a> &gt; Iterator, std::sentinel_for&lt; Iterator &gt; Sentinel&gt; </td></tr>
+<tr class="memitem:a3ed7edbe1cf3e316ac50f1ad00176fc5" id="r_a3ed7edbe1cf3e316ac50f1ad00176fc5"><td class="memTemplParams" colspan="2">template&lt;forward_iterator_to&lt; <a class="el" href="#ac74f9a55d0af41068838f7c8cb34407c">value_type</a> &gt; Iterator, std::sentinel_for&lt; Iterator &gt; Sentinel&gt; </td></tr>
 <tr class="memitem:a3ed7edbe1cf3e316ac50f1ad00176fc5 template"><td class="memItemLeft">constexpr void&#160;</td><td class="memItemRight"><a class="el" href="#a3ed7edbe1cf3e316ac50f1ad00176fc5">append</a> (Iterator first, Sentinel last) noexcept(noexcept(std::ranges::copy(first, last, <a class="el" href="#aed93b1090dec79df178ec1f75ecaac09">end</a>())))</td></tr>
 <tr class="memdesc:a3ed7edbe1cf3e316ac50f1ad00176fc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Appends a range to the string.  <br /></td></tr>
 <tr class="memitem:a3db36375ea18e029b9dd4a0e5ce8fcda" id="r_a3db36375ea18e029b9dd4a0e5ce8fcda"><td class="memItemLeft">constexpr void&#160;</td><td class="memItemRight"><a class="el" href="#a3db36375ea18e029b9dd4a0e5ce8fcda">append</a> (std::basic_string_view&lt; CharT, Traits &gt; str) noexcept</td></tr>
@@ -243,7 +247,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a175a2ae61a40794dbf6b948b6d9a5efc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Appends a substring to the string.  <br /></td></tr>
 <tr class="memitem:a63d01e32e55e2d2b3e0016a48ae50bcb" id="r_a63d01e32e55e2d2b3e0016a48ae50bcb"><td class="memItemLeft">constexpr <a class="el" href="structtr_1_1basic__inplace__string_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a63d01e32e55e2d2b3e0016a48ae50bcb">insert</a> (<a class="el" href="structtr_1_1basic__inplace__string_1_1const__iterator.html">const_iterator</a> where, <a class="el" href="#ac74f9a55d0af41068838f7c8cb34407c">value_type</a> chr) noexcept</td></tr>
 <tr class="memdesc:a63d01e32e55e2d2b3e0016a48ae50bcb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inserts a character into the string.  <br /></td></tr>
-<tr class="memitem:aee264d09ec6adec997b41e0dec9c29c1" id="r_aee264d09ec6adec997b41e0dec9c29c1"><td class="memTemplParams" colspan="2">template&lt;forward_iterator_to_convertible_to&lt; <a class="el" href="#ac74f9a55d0af41068838f7c8cb34407c">value_type</a> &gt; Iterator, std::sentinel_for&lt; Iterator &gt; Sentinel&gt; </td></tr>
+<tr class="memitem:aee264d09ec6adec997b41e0dec9c29c1" id="r_aee264d09ec6adec997b41e0dec9c29c1"><td class="memTemplParams" colspan="2">template&lt;forward_iterator_to&lt; <a class="el" href="#ac74f9a55d0af41068838f7c8cb34407c">value_type</a> &gt; Iterator, std::sentinel_for&lt; Iterator &gt; Sentinel&gt; </td></tr>
 <tr class="memitem:aee264d09ec6adec997b41e0dec9c29c1 template"><td class="memItemLeft">constexpr <a class="el" href="structtr_1_1basic__inplace__string_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#aee264d09ec6adec997b41e0dec9c29c1">insert</a> (<a class="el" href="structtr_1_1basic__inplace__string_1_1const__iterator.html">const_iterator</a> where, Iterator first, Sentinel last) noexcept(noexcept(std::ranges::copy(first, last, <a class="el" href="#ac32671f4a726d5c54f35e50cf9fcae22">begin</a>()+(where - <a class="el" href="#ac32671f4a726d5c54f35e50cf9fcae22">begin</a>()))))</td></tr>
 <tr class="memdesc:aee264d09ec6adec997b41e0dec9c29c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inserts a range into the string.  <br /></td></tr>
 <tr class="memitem:aacda3f7465e5a4566cea8bb9ee648fef" id="r_aacda3f7465e5a4566cea8bb9ee648fef"><td class="memItemLeft">constexpr <a class="el" href="structtr_1_1basic__inplace__string_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#aacda3f7465e5a4566cea8bb9ee648fef">insert</a> (<a class="el" href="structtr_1_1basic__inplace__string_1_1const__iterator.html">const_iterator</a> where, std::basic_string_view&lt; CharT, Traits &gt; str) noexcept</td></tr>
@@ -780,6 +784,80 @@ template&lt;std::convertible_to&lt; std::basic_string_view&lt; CharT, Traits &gt
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Whether the strings are identical. </dd></dl>
+
+</div>
+</div>
+<a id="a985db0255a4f7f79c21039622b99e159" name="a985db0255a4f7f79c21039622b99e159"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a985db0255a4f7f79c21039622b99e159">&#9670;&#160;</a></span>at() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity, typename Traits = std::char_traits&lt;CharT&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#ae7b74c59588c5610f9d171eb17c5db35">reference</a> <a class="el" href="classtr_1_1basic__inplace__string.html">tr::basic_inplace_string</a>&lt; CharT, Capacity, Traits &gt;::at </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#adba0ccb6ecfa6ca8171064fa254b5a49">size_type</a></td>          <td class="paramname"><span class="paramname"><em>offset</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets a reference to a character in the string. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">offset</td><td>Index of the character within the string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section pre"><dt>Precondition</dt><dd><span class="tt">offset</span> must be less than the size of the string. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Reference to a character within the string. </dd></dl>
+
+</div>
+</div>
+<a id="adfe62a53fbbbd8f8a97a67b1bc81b619" name="adfe62a53fbbbd8f8a97a67b1bc81b619"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adfe62a53fbbbd8f8a97a67b1bc81b619">&#9670;&#160;</a></span>at() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity, typename Traits = std::char_traits&lt;CharT&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a5c5e9700383630a4dfcf4e0785e6244f">const_reference</a> <a class="el" href="classtr_1_1basic__inplace__string.html">tr::basic_inplace_string</a>&lt; CharT, Capacity, Traits &gt;::at </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#adba0ccb6ecfa6ca8171064fa254b5a49">size_type</a></td>          <td class="paramname"><span class="paramname"><em>offset</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets a reference to a character in the string. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">offset</td><td>Index of the character within the string. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section pre"><dt>Precondition</dt><dd><span class="tt">offset</span> must be less than the size of the string. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Reference to a character within the string. </dd></dl>
 
 </div>
 </div>
@@ -1457,7 +1535,7 @@ template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1intege
 <div class="memtemplate">
 template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity, typename Traits = std::char_traits&lt;CharT&gt;&gt; </div>
 <div class="memtemplate">
-template&lt;forward_iterator_to_convertible_to&lt; <a class="el" href="#ac74f9a55d0af41068838f7c8cb34407c">value_type</a> &gt; Iterator, std::sentinel_for&lt; Iterator &gt; Sentinel&gt; </div>
+template&lt;forward_iterator_to&lt; <a class="el" href="#ac74f9a55d0af41068838f7c8cb34407c">value_type</a> &gt; Iterator, std::sentinel_for&lt; Iterator &gt; Sentinel&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -1610,7 +1688,7 @@ template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1intege
 <div class="memtemplate">
 template&lt;typename CharT, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity, typename Traits = std::char_traits&lt;CharT&gt;&gt; </div>
 <div class="memtemplate">
-template&lt;forward_iterator_to_convertible_to&lt; <a class="el" href="#ac74f9a55d0af41068838f7c8cb34407c">value_type</a> &gt; Iterator, std::sentinel_for&lt; Iterator &gt; Sentinel&gt; </div>
+template&lt;forward_iterator_to&lt; <a class="el" href="#ac74f9a55d0af41068838f7c8cb34407c">value_type</a> &gt; Iterator, std::sentinel_for&lt; Iterator &gt; Sentinel&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">

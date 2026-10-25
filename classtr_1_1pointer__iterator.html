@@ -129,7 +129,8 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1poi
 <p>CRTP base class that may be inherited from to define an iterator based on a wrapped pointer.  
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c5412d">pointer</a> Pointer&gt;<br />
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename Iterator, typename Pointer&gt;<br />
+requires std::is_pointer_v&lt;Pointer&gt;<br />
 class tr::pointer_iterator&lt; Iterator, Pointer &gt;</div><p>CRTP base class that may be inherited from to define an iterator based on a wrapped pointer. </p>
 <p>This may be used to ensure that an iterator is unique to a class. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
@@ -196,7 +197,7 @@ Public Member Functions</h2></td></tr>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c5412d">pointer</a> Pointer&gt; </div>
+template&lt;typename Iterator, typename Pointer&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="classtr_1_1pointer__iterator.html">tr::pointer_iterator</a>&lt; Iterator, Pointer &gt;::difference_type = std::pointer_traits&lt;Pointer&gt;::difference_type</td>
@@ -214,7 +215,7 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c5412d">pointer</a> Pointer&gt; </div>
+template&lt;typename Iterator, typename Pointer&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="classtr_1_1pointer__iterator.html">tr::pointer_iterator</a>&lt; Iterator, Pointer &gt;::value_type = std::pointer_traits&lt;Pointer&gt;::element_type</td>
@@ -232,7 +233,7 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c5412d">pointer</a> Pointer&gt; </div>
+template&lt;typename Iterator, typename Pointer&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="classtr_1_1pointer__iterator.html">tr::pointer_iterator</a>&lt; Iterator, Pointer &gt;::pointer = Pointer</td>
@@ -250,7 +251,7 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c5412d">pointer</a> Pointer&gt; </div>
+template&lt;typename Iterator, typename Pointer&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="classtr_1_1pointer__iterator.html">tr::pointer_iterator</a>&lt; Iterator, Pointer &gt;::reference = <a class="el" href="#af81146c759eb8933c1eb8e8361c70110">value_type</a>&amp;</td>
@@ -268,7 +269,7 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c5412d">pointer</a> Pointer&gt; </div>
+template&lt;typename Iterator, typename Pointer&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="classtr_1_1pointer__iterator.html">tr::pointer_iterator</a>&lt; Iterator, Pointer &gt;::iterator_category = std::contiguous_iterator_tag</td>
@@ -287,7 +288,7 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c5412d">pointer</a> Pointer&gt; </div>
+template&lt;typename Iterator, typename Pointer&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -316,7 +317,7 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c5412d">pointer</a> Pointer&gt; </div>
+template&lt;typename Iterator, typename Pointer&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -352,7 +353,7 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c5412d">pointer</a> Pointer&gt; </div>
+template&lt;typename Iterator, typename Pointer&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -382,7 +383,7 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c5412d">pointer</a> Pointer&gt; </div>
+template&lt;typename Iterator, typename Pointer&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -412,7 +413,7 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c5412d">pointer</a> Pointer&gt; </div>
+template&lt;typename Iterator, typename Pointer&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -448,7 +449,7 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c5412d">pointer</a> Pointer&gt; </div>
+template&lt;typename Iterator, typename Pointer&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -478,7 +479,7 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c5412d">pointer</a> Pointer&gt; </div>
+template&lt;typename Iterator, typename Pointer&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -508,7 +509,7 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c5412d">pointer</a> Pointer&gt; </div>
+template&lt;typename Iterator, typename Pointer&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -538,7 +539,7 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c5412d">pointer</a> Pointer&gt; </div>
+template&lt;typename Iterator, typename Pointer&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -568,7 +569,7 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c5412d">pointer</a> Pointer&gt; </div>
+template&lt;typename Iterator, typename Pointer&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -604,7 +605,7 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c5412d">pointer</a> Pointer&gt; </div>
+template&lt;typename Iterator, typename Pointer&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -640,7 +641,7 @@ template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Iterator, <a class="el" href="#af421db3098980120634fb66f55c5412d">pointer</a> Pointer&gt; </div>
+template&lt;typename Iterator, typename Pointer&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">

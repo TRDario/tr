@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=11" />
   <meta name="generator" content="Doxygen 1.18.0" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>tr: tr::ref&lt; T &gt; Class Template Reference</title>
+  <title>tr: tr::ref&lt; Value &gt; Class Template Reference</title>
   <link href="tabs.css" rel="stylesheet" type="text/css" />
   <script type="text/javascript" src="jquery.js"></script>
   <script type="text/javascript" src="dynsections.js"></script>
@@ -122,18 +122,18 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1ref
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">tr::ref&lt; T &gt; Class Template Reference</div></div>
+  <div class="headertitle"><div class="title">tr::ref&lt; Value &gt; Class Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
 <p>Alternative reference wrapper.  
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;typename T&gt;<br />
-class tr::ref&lt; T &gt;</div><p>Alternative reference wrapper. </p>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename Value&gt;<br />
+class tr::ref&lt; Value &gt;</div><p>Alternative reference wrapper. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>Type being referenced. </td></tr>
+    <tr><td class="paramname">Value</td><td>Type being referenced. </td></tr>
   </table>
   </dd>
 </dl>
@@ -141,43 +141,43 @@ class tr::ref&lt; T &gt;</div><p>Alternative reference wrapper. </p>
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors and destructors</div></td></tr>
-<tr class="memitem:a53173da502a885642877a93157fe0af5" id="r_a53173da502a885642877a93157fe0af5"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a53173da502a885642877a93157fe0af5">ref</a> (T &amp;ref) noexcept</td></tr>
-<tr class="memdesc:a53173da502a885642877a93157fe0af5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wraps a reference.  <br /></td></tr>
-<tr class="memitem:a20903e364d16039a6f978010180251cf" id="r_a20903e364d16039a6f978010180251cf"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a20903e364d16039a6f978010180251cf">ref</a> (T &amp;&amp;)=delete</td></tr>
-<tr class="memdesc:a20903e364d16039a6f978010180251cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrapping an rvalue is not permitted.  <br /></td></tr>
+<tr class="memitem:aef40923573675ae28909c7ff64c6af2f" id="r_aef40923573675ae28909c7ff64c6af2f"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#aef40923573675ae28909c7ff64c6af2f">ref</a> (Value &amp;ref) noexcept</td></tr>
+<tr class="memdesc:aef40923573675ae28909c7ff64c6af2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wraps a reference.  <br /></td></tr>
+<tr class="memitem:a505a7618bdc7b98e0dd081e87a3274f6" id="r_a505a7618bdc7b98e0dd081e87a3274f6"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a505a7618bdc7b98e0dd081e87a3274f6">ref</a> (Value &amp;&amp;)=delete</td></tr>
+<tr class="memdesc:a505a7618bdc7b98e0dd081e87a3274f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wrapping an rvalue is not permitted.  <br /></td></tr>
 <tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Conversion operators</div></td></tr>
-<tr class="memitem:a29aa5a29b2d87bde764de190094e6628" id="r_a29aa5a29b2d87bde764de190094e6628"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a29aa5a29b2d87bde764de190094e6628">operator T&amp;</a> () const noexcept</td></tr>
-<tr class="memdesc:a29aa5a29b2d87bde764de190094e6628"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unwraps the reference.  <br /></td></tr>
-<tr class="memitem:a7a4efcbaa19180695ece100fd5b9931d" id="r_a7a4efcbaa19180695ece100fd5b9931d"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a7a4efcbaa19180695ece100fd5b9931d">operator ref&lt; const T &gt;</a> () const noexcept</td></tr>
-<tr class="memdesc:a7a4efcbaa19180695ece100fd5b9931d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Const-qualifies the reference.  <br /></td></tr>
-<tr class="memitem:a3fcec6846966d34a496b0856f1af3224" id="r_a3fcec6846966d34a496b0856f1af3224"><td class="memTemplParams" colspan="2">template&lt;typename U&gt; <br />
-requires (std::convertible_to&lt;T&amp;, U&amp;&gt;)</td></tr>
-<tr class="memitem:a3fcec6846966d34a496b0856f1af3224 template"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a3fcec6846966d34a496b0856f1af3224">operator ref&lt; U &gt;</a> () const noexcept</td></tr>
-<tr class="memdesc:a3fcec6846966d34a496b0856f1af3224"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the reference to a base class reference.  <br /></td></tr>
+<tr class="memitem:ad77128ff4b9292c2c05581c69f555b69" id="r_ad77128ff4b9292c2c05581c69f555b69"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#ad77128ff4b9292c2c05581c69f555b69">operator Value &amp;</a> () const noexcept</td></tr>
+<tr class="memdesc:ad77128ff4b9292c2c05581c69f555b69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unwraps the reference.  <br /></td></tr>
+<tr class="memitem:aca8fb84a8388bdf19f57a3e49f0569cd" id="r_aca8fb84a8388bdf19f57a3e49f0569cd"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#aca8fb84a8388bdf19f57a3e49f0569cd">operator ref&lt; const Value &gt;</a> () const noexcept</td></tr>
+<tr class="memdesc:aca8fb84a8388bdf19f57a3e49f0569cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Const-qualifies the reference.  <br /></td></tr>
+<tr class="memitem:a9017d24f00ff579824264d022d6e96aa" id="r_a9017d24f00ff579824264d022d6e96aa"><td class="memTemplParams" colspan="2">template&lt;typename Base&gt; <br />
+requires std::convertible_to&lt;Value&amp;, Base&amp;&gt;</td></tr>
+<tr class="memitem:a9017d24f00ff579824264d022d6e96aa template"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a9017d24f00ff579824264d022d6e96aa">operator ref&lt; Base &gt;</a> () const noexcept</td></tr>
+<tr class="memdesc:a9017d24f00ff579824264d022d6e96aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the reference to a base class reference.  <br /></td></tr>
 <tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Access</div></td></tr>
-<tr class="memitem:a8e74a30e94bccc898c96e9458a383da0" id="r_a8e74a30e94bccc898c96e9458a383da0"><td class="memItemLeft">constexpr T *&#160;</td><td class="memItemRight"><a class="el" href="#a8e74a30e94bccc898c96e9458a383da0">as_ptr</a> () const noexcept</td></tr>
-<tr class="memdesc:a8e74a30e94bccc898c96e9458a383da0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the reference into a pointer to the referenced object.  <br /></td></tr>
-<tr class="memitem:a38f3f6d47170ba1b3098be0cc6b6a5f7" id="r_a38f3f6d47170ba1b3098be0cc6b6a5f7"><td class="memItemLeft">constexpr T *&#160;</td><td class="memItemRight"><a class="el" href="#a38f3f6d47170ba1b3098be0cc6b6a5f7">operator-&gt;</a> () const noexcept</td></tr>
-<tr class="memdesc:a38f3f6d47170ba1b3098be0cc6b6a5f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dereferences the referenced object.  <br /></td></tr>
-<tr class="memitem:a64ba7506fd16498b103ad09c067283e3" id="r_a64ba7506fd16498b103ad09c067283e3"><td class="memItemLeft">constexpr T &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a64ba7506fd16498b103ad09c067283e3">operator*</a> () const noexcept</td></tr>
-<tr class="memdesc:a64ba7506fd16498b103ad09c067283e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dereferences the referenced object.  <br /></td></tr>
+<tr class="memitem:a204d5170dcc17e15bb305872706e98f4" id="r_a204d5170dcc17e15bb305872706e98f4"><td class="memItemLeft">constexpr Value *&#160;</td><td class="memItemRight"><a class="el" href="#a204d5170dcc17e15bb305872706e98f4">as_ptr</a> () const noexcept</td></tr>
+<tr class="memdesc:a204d5170dcc17e15bb305872706e98f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the reference into a pointer to the referenced object.  <br /></td></tr>
+<tr class="memitem:ac4e181c118da5eeb68100374877b1f1b" id="r_ac4e181c118da5eeb68100374877b1f1b"><td class="memItemLeft">constexpr Value *&#160;</td><td class="memItemRight"><a class="el" href="#ac4e181c118da5eeb68100374877b1f1b">operator-&gt;</a> () const noexcept</td></tr>
+<tr class="memdesc:ac4e181c118da5eeb68100374877b1f1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dereferences the referenced object.  <br /></td></tr>
+<tr class="memitem:a96fa68c69f985c6a8ca7ede2edec79d9" id="r_a96fa68c69f985c6a8ca7ede2edec79d9"><td class="memItemLeft">constexpr Value &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a96fa68c69f985c6a8ca7ede2edec79d9">operator*</a> () const noexcept</td></tr>
+<tr class="memdesc:a96fa68c69f985c6a8ca7ede2edec79d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dereferences the referenced object.  <br /></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a53173da502a885642877a93157fe0af5" name="a53173da502a885642877a93157fe0af5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a53173da502a885642877a93157fe0af5">&#9670;&#160;</a></span>ref() <span class="overload">[1/2]</span></h2>
+<a id="aef40923573675ae28909c7ff64c6af2f" name="aef40923573675ae28909c7ff64c6af2f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef40923573675ae28909c7ff64c6af2f">&#9670;&#160;</a></span>ref() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T&gt; </div>
+template&lt;typename Value&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classtr_1_1ref.html">tr::ref</a>&lt; T &gt;::ref </td>
+          <td class="memname"><a class="el" href="classtr_1_1ref.html">tr::ref</a>&lt; Value &gt;::ref </td>
           <td>(</td>
-          <td class="paramtype">T &amp;</td>          <td class="paramname"><span class="paramname"><em>ref</em></span></td><td>)</td>
+          <td class="paramtype">Value &amp;</td>          <td class="paramname"><span class="paramname"><em>ref</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -198,21 +198,21 @@ template&lt;typename T&gt; </div>
 
 </div>
 </div>
-<a id="a20903e364d16039a6f978010180251cf" name="a20903e364d16039a6f978010180251cf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a20903e364d16039a6f978010180251cf">&#9670;&#160;</a></span>ref() <span class="overload">[2/2]</span></h2>
+<a id="a505a7618bdc7b98e0dd081e87a3274f6" name="a505a7618bdc7b98e0dd081e87a3274f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a505a7618bdc7b98e0dd081e87a3274f6">&#9670;&#160;</a></span>ref() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T&gt; </div>
+template&lt;typename Value&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classtr_1_1ref.html">tr::ref</a>&lt; T &gt;::ref </td>
+          <td class="memname"><a class="el" href="classtr_1_1ref.html">tr::ref</a>&lt; Value &gt;::ref </td>
           <td>(</td>
-          <td class="paramtype">T &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td class="paramtype">Value &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -228,19 +228,19 @@ template&lt;typename T&gt; </div>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="a29aa5a29b2d87bde764de190094e6628" name="a29aa5a29b2d87bde764de190094e6628"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a29aa5a29b2d87bde764de190094e6628">&#9670;&#160;</a></span>operator T&amp;()</h2>
+<a id="ad77128ff4b9292c2c05581c69f555b69" name="ad77128ff4b9292c2c05581c69f555b69"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad77128ff4b9292c2c05581c69f555b69">&#9670;&#160;</a></span>operator Value &amp;()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T&gt; </div>
+template&lt;typename Value&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classtr_1_1ref.html">tr::ref</a>&lt; T &gt;::operator T&amp; </td>
+          <td class="memname"><a class="el" href="classtr_1_1ref.html">tr::ref</a>&lt; Value &gt;::operator Value &amp; </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -258,19 +258,19 @@ template&lt;typename T&gt; </div>
 
 </div>
 </div>
-<a id="a7a4efcbaa19180695ece100fd5b9931d" name="a7a4efcbaa19180695ece100fd5b9931d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7a4efcbaa19180695ece100fd5b9931d">&#9670;&#160;</a></span>operator ref&lt; const T &gt;()</h2>
+<a id="aca8fb84a8388bdf19f57a3e49f0569cd" name="aca8fb84a8388bdf19f57a3e49f0569cd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca8fb84a8388bdf19f57a3e49f0569cd">&#9670;&#160;</a></span>operator ref&lt; const Value &gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T&gt; </div>
+template&lt;typename Value&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classtr_1_1ref.html">tr::ref</a>&lt; T &gt;::operator <a class="el" href="#a53173da502a885642877a93157fe0af5">ref</a>&lt; const T &gt; </td>
+          <td class="memname"><a class="el" href="classtr_1_1ref.html">tr::ref</a>&lt; Value &gt;::operator <a class="el" href="#aef40923573675ae28909c7ff64c6af2f">ref</a>&lt; const Value &gt; </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -288,22 +288,22 @@ template&lt;typename T&gt; </div>
 
 </div>
 </div>
-<a id="a3fcec6846966d34a496b0856f1af3224" name="a3fcec6846966d34a496b0856f1af3224"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3fcec6846966d34a496b0856f1af3224">&#9670;&#160;</a></span>operator ref&lt; U &gt;()</h2>
+<a id="a9017d24f00ff579824264d022d6e96aa" name="a9017d24f00ff579824264d022d6e96aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9017d24f00ff579824264d022d6e96aa">&#9670;&#160;</a></span>operator ref&lt; Base &gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T&gt; </div>
+template&lt;typename Value&gt; </div>
 <div class="memtemplate">
-template&lt;typename U&gt; <br />
-requires (std::convertible_to&lt;T&amp;, U&amp;&gt;)</div>
+template&lt;typename Base&gt; <br />
+requires std::convertible_to&lt;Value&amp;, Base&amp;&gt;</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classtr_1_1ref.html">tr::ref</a>&lt; T &gt;::operator <a class="el" href="#a53173da502a885642877a93157fe0af5">ref</a>&lt; U &gt; </td>
+          <td class="memname"><a class="el" href="classtr_1_1ref.html">tr::ref</a>&lt; Value &gt;::operator <a class="el" href="#aef40923573675ae28909c7ff64c6af2f">ref</a>&lt; Base &gt; </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -319,7 +319,7 @@ requires (std::convertible_to&lt;T&amp;, U&amp;&gt;)</div>
 <p>Converts the reference to a base class reference. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">U</td><td>Base class of <span class="tt">T</span>. </td></tr>
+    <tr><td class="paramname">Base</td><td>Base class of <span class="tt">Value</span>. </td></tr>
   </table>
   </dd>
 </dl>
@@ -327,19 +327,19 @@ requires (std::convertible_to&lt;T&amp;, U&amp;&gt;)</div>
 
 </div>
 </div>
-<a id="a8e74a30e94bccc898c96e9458a383da0" name="a8e74a30e94bccc898c96e9458a383da0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8e74a30e94bccc898c96e9458a383da0">&#9670;&#160;</a></span>as_ptr()</h2>
+<a id="a204d5170dcc17e15bb305872706e98f4" name="a204d5170dcc17e15bb305872706e98f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a204d5170dcc17e15bb305872706e98f4">&#9670;&#160;</a></span>as_ptr()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T&gt; </div>
+template&lt;typename Value&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">T * <a class="el" href="classtr_1_1ref.html">tr::ref</a>&lt; T &gt;::as_ptr </td>
+          <td class="memname">Value * <a class="el" href="classtr_1_1ref.html">tr::ref</a>&lt; Value &gt;::as_ptr </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -357,19 +357,19 @@ template&lt;typename T&gt; </div>
 
 </div>
 </div>
-<a id="a38f3f6d47170ba1b3098be0cc6b6a5f7" name="a38f3f6d47170ba1b3098be0cc6b6a5f7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a38f3f6d47170ba1b3098be0cc6b6a5f7">&#9670;&#160;</a></span>operator-&gt;()</h2>
+<a id="ac4e181c118da5eeb68100374877b1f1b" name="ac4e181c118da5eeb68100374877b1f1b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac4e181c118da5eeb68100374877b1f1b">&#9670;&#160;</a></span>operator-&gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T&gt; </div>
+template&lt;typename Value&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">T * <a class="el" href="classtr_1_1ref.html">tr::ref</a>&lt; T &gt;::operator-&gt; </td>
+          <td class="memname">Value * <a class="el" href="classtr_1_1ref.html">tr::ref</a>&lt; Value &gt;::operator-&gt; </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -387,19 +387,19 @@ template&lt;typename T&gt; </div>
 
 </div>
 </div>
-<a id="a64ba7506fd16498b103ad09c067283e3" name="a64ba7506fd16498b103ad09c067283e3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a64ba7506fd16498b103ad09c067283e3">&#9670;&#160;</a></span>operator*()</h2>
+<a id="a96fa68c69f985c6a8ca7ede2edec79d9" name="a96fa68c69f985c6a8ca7ede2edec79d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a96fa68c69f985c6a8ca7ede2edec79d9">&#9670;&#160;</a></span>operator*()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename T&gt; </div>
+template&lt;typename Value&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">T &amp; <a class="el" href="classtr_1_1ref.html">tr::ref</a>&lt; T &gt;::operator* </td>
+          <td class="memname">Value &amp; <a class="el" href="classtr_1_1ref.html">tr::ref</a>&lt; Value &gt;::operator* </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>

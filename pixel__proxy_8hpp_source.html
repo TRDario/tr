@@ -129,72 +129,72 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('pixel__proxy_8
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;<a class="code" href="pixel__format_8hpp.html">tr/sysgfx/pixel_format.hpp</a>&gt;</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacetr.html">tr</a></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>{</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>    <span class="keyword">struct </span><a class="code hl_struct" href="structtr_1_1rgba8.html">rgba8</a>;</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>}</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment">//</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacetr.html">tr</a></div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>{</div>
-<div class="foldopen" id="foldopen00017" data-start="{" data-end="};">
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="classtr_1_1const__pixel__proxy.html">   17</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classtr_1_1const__pixel__proxy.html">const_pixel_proxy</a></div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    {</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>      <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span></div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        [[nodiscard]] <a class="code hl_class" href="classtr_1_1const__pixel__proxy.html">const_pixel_proxy</a>(<span class="keyword">const</span> std::byte* <a class="code hl_function" href="classtr_1_1const__pixel__proxy.html#ab1ec7094b8f0768d8acde5caf0727bcb">data</a>, <a class="code hl_enumeration" href="namespacetr.html#ac1babae6e9367fc90585a8791dadc746">pixel_format</a> <a class="code hl_function" href="classtr_1_1const__pixel__proxy.html#a746355ef3e7f39969e8b483237cd85d2">format</a>) <span class="keyword">noexcept</span>;</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span></div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span></div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="classtr_1_1const__pixel__proxy.html#ab1ec7094b8f0768d8acde5caf0727bcb">   36</a></span>        [[nodiscard]] <span class="keyword">const</span> std::byte* <a class="code hl_function" href="classtr_1_1const__pixel__proxy.html#ab1ec7094b8f0768d8acde5caf0727bcb">data</a>() const noexcept;</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span></div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="classtr_1_1const__pixel__proxy.html#a746355ef3e7f39969e8b483237cd85d2">   40</a></span>        [[nodiscard]] <a class="code hl_enumeration" href="namespacetr.html#ac1babae6e9367fc90585a8791dadc746">pixel_format</a> <a class="code hl_function" href="classtr_1_1const__pixel__proxy.html#a746355ef3e7f39969e8b483237cd85d2">format</a>() const noexcept;</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span></div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="classtr_1_1const__pixel__proxy.html#a52ddcba97b3a3a0967bf20b33d1a0374">   44</a></span>        [[nodiscard]] operator <a class="code hl_struct" href="structtr_1_1rgba8.html">rgba8</a>() const noexcept;</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span></div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>      private:</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        const std::<span class="keywordtype">byte</span>* m_data;</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span></div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        <a class="code hl_enumeration" href="namespacetr.html#ac1babae6e9367fc90585a8791dadc746">pixel_format</a> m_format;</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    };</div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;<a class="code" href="integer_8hpp.html">tr/utility/integer.hpp</a>&gt;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;<a class="code" href="rgba_8hpp.html">tr/utility/rgba.hpp</a>&gt;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment">//</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacetr.html">tr</a></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>{</div>
+<div class="foldopen" id="foldopen00014" data-start="{" data-end="};">
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="classtr_1_1const__pixel__proxy.html">   14</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classtr_1_1const__pixel__proxy.html">const_pixel_proxy</a></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    {</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>      <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        [[nodiscard]] <a class="code hl_class" href="classtr_1_1const__pixel__proxy.html">const_pixel_proxy</a>(<span class="keyword">const</span> std::byte* <a class="code hl_function" href="classtr_1_1const__pixel__proxy.html#ab1ec7094b8f0768d8acde5caf0727bcb">data</a>, <a class="code hl_enumeration" href="namespacetr.html#ac1babae6e9367fc90585a8791dadc746">pixel_format</a> <a class="code hl_function" href="classtr_1_1const__pixel__proxy.html#a746355ef3e7f39969e8b483237cd85d2">format</a>) <span class="keyword">noexcept</span>;</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="classtr_1_1const__pixel__proxy.html#ab1ec7094b8f0768d8acde5caf0727bcb">   33</a></span>        [[nodiscard]] <span class="keyword">const</span> std::byte* <a class="code hl_function" href="classtr_1_1const__pixel__proxy.html#ab1ec7094b8f0768d8acde5caf0727bcb">data</a>() const noexcept;</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="classtr_1_1const__pixel__proxy.html#a746355ef3e7f39969e8b483237cd85d2">   37</a></span>        [[nodiscard]] <a class="code hl_enumeration" href="namespacetr.html#ac1babae6e9367fc90585a8791dadc746">pixel_format</a> <a class="code hl_function" href="classtr_1_1const__pixel__proxy.html#a746355ef3e7f39969e8b483237cd85d2">format</a>() const noexcept;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span></div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="classtr_1_1const__pixel__proxy.html#a84370289bfa7c10f1780c663a1764d8f">   41</a></span>        [[nodiscard]] operator <a class="code hl_struct" href="structtr_1_1rgba.html">rgba</a>&lt;<a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#a942cfbfc8bf5094139c2f52fba2b8b17">u8</a>&gt;() const noexcept;</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>      private:</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        const std::<span class="keywordtype">byte</span>* m_data;</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span></div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        <a class="code hl_enumeration" href="namespacetr.html#ac1babae6e9367fc90585a8791dadc746">pixel_format</a> m_format;</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    };</div>
 </div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span></div>
-<div class="foldopen" id="foldopen00057" data-start="{" data-end="};">
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno"><a class="line" href="classtr_1_1pixel__proxy.html">   57</a></span>    class <a class="code hl_class" href="classtr_1_1pixel__proxy.html">pixel_proxy</a></div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    {</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>      <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span></div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        [[nodiscard]] <a class="code hl_class" href="classtr_1_1pixel__proxy.html">pixel_proxy</a>(std::byte* <a class="code hl_function" href="classtr_1_1pixel__proxy.html#a969fd79261c9a7b3599d5edb36ba3cef">data</a>, <a class="code hl_enumeration" href="namespacetr.html#ac1babae6e9367fc90585a8791dadc746">pixel_format</a> <a class="code hl_function" href="classtr_1_1pixel__proxy.html#a448ac0bbbdf6a78cf162f8f66bbe698b">format</a>) <span class="keyword">noexcept</span>;</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span></div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span></div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno"><a class="line" href="classtr_1_1pixel__proxy.html#a969fd79261c9a7b3599d5edb36ba3cef">   76</a></span>        [[nodiscard]] std::byte* <a class="code hl_function" href="classtr_1_1pixel__proxy.html#a969fd79261c9a7b3599d5edb36ba3cef">data</a>() const noexcept;</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span></div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno"><a class="line" href="classtr_1_1pixel__proxy.html#a448ac0bbbdf6a78cf162f8f66bbe698b">   80</a></span>        [[nodiscard]] <a class="code hl_enumeration" href="namespacetr.html#ac1babae6e9367fc90585a8791dadc746">pixel_format</a> <a class="code hl_function" href="classtr_1_1pixel__proxy.html#a448ac0bbbdf6a78cf162f8f66bbe698b">format</a>() const noexcept;</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span></div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno"><a class="line" href="classtr_1_1pixel__proxy.html#a17b2c7830560e114377b4288c5d11291">   84</a></span>        [[nodiscard]] operator <a class="code hl_struct" href="structtr_1_1rgba8.html">rgba8</a>() const noexcept;</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span></div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno"><a class="line" href="classtr_1_1pixel__proxy.html#a8f98aba499a0aaed4763a804aa0265dc">   89</a></span>        <a class="code hl_class" href="classtr_1_1pixel__proxy.html">pixel_proxy</a>&amp; operator=(<a class="code hl_struct" href="structtr_1_1rgba8.html">rgba8</a> color) noexcept;</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span></div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span> </div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>      private:</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>        std::<span class="keywordtype">byte</span>* m_data;</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span></div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>        <a class="code hl_enumeration" href="namespacetr.html#ac1babae6e9367fc90585a8791dadc746">pixel_format</a> m_format;</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>    };</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span></div>
+<div class="foldopen" id="foldopen00054" data-start="{" data-end="};">
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="classtr_1_1pixel__proxy.html">   54</a></span>    class <a class="code hl_class" href="classtr_1_1pixel__proxy.html">pixel_proxy</a></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    {</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>      <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span></div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        [[nodiscard]] <a class="code hl_class" href="classtr_1_1pixel__proxy.html">pixel_proxy</a>(std::byte* <a class="code hl_function" href="classtr_1_1pixel__proxy.html#a969fd79261c9a7b3599d5edb36ba3cef">data</a>, <a class="code hl_enumeration" href="namespacetr.html#ac1babae6e9367fc90585a8791dadc746">pixel_format</a> <a class="code hl_function" href="classtr_1_1pixel__proxy.html#a448ac0bbbdf6a78cf162f8f66bbe698b">format</a>) <span class="keyword">noexcept</span>;</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span></div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span></div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno"><a class="line" href="classtr_1_1pixel__proxy.html#a969fd79261c9a7b3599d5edb36ba3cef">   73</a></span>        [[nodiscard]] std::byte* <a class="code hl_function" href="classtr_1_1pixel__proxy.html#a969fd79261c9a7b3599d5edb36ba3cef">data</a>() const noexcept;</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span></div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno"><a class="line" href="classtr_1_1pixel__proxy.html#a448ac0bbbdf6a78cf162f8f66bbe698b">   77</a></span>        [[nodiscard]] <a class="code hl_enumeration" href="namespacetr.html#ac1babae6e9367fc90585a8791dadc746">pixel_format</a> <a class="code hl_function" href="classtr_1_1pixel__proxy.html#a448ac0bbbdf6a78cf162f8f66bbe698b">format</a>() const noexcept;</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span></div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno"><a class="line" href="classtr_1_1pixel__proxy.html#a6f0d0d97ffb7eab27ceceda25faceb71">   81</a></span>        [[nodiscard]] operator <a class="code hl_struct" href="structtr_1_1rgba.html">rgba</a>&lt;<a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#a942cfbfc8bf5094139c2f52fba2b8b17">u8</a>&gt;() const noexcept;</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span></div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno"><a class="line" href="classtr_1_1pixel__proxy.html#aa142a3682e6a529e66227b846b86f8ee">   86</a></span>        <a class="code hl_class" href="classtr_1_1pixel__proxy.html">pixel_proxy</a>&amp; operator=(<a class="code hl_struct" href="structtr_1_1rgba.html">rgba</a>&lt;<a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#a942cfbfc8bf5094139c2f52fba2b8b17">u8</a>&gt; color) noexcept;</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span></div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>      private:</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>        std::<span class="keywordtype">byte</span>* m_data;</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span></div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>        <a class="code hl_enumeration" href="namespacetr.html#ac1babae6e9367fc90585a8791dadc746">pixel_format</a> m_format;</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    };</div>
 </div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>} <span class="comment">// namespace tr</span></div>
-<div class="ttc" id="aclasstr_1_1const__pixel__proxy_html"><div class="ttname"><a href="classtr_1_1const__pixel__proxy.html">tr::const_pixel_proxy</a></div><div class="ttdoc">Read-only proxy to a bitmap pixel.</div><div class="ttdef"><b>Definition</b> pixel_proxy.hpp:18</div></div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>} <span class="comment">// namespace tr</span></div>
+<div class="ttc" id="aclasstr_1_1const__pixel__proxy_html"><div class="ttname"><a href="classtr_1_1const__pixel__proxy.html">tr::const_pixel_proxy</a></div><div class="ttdoc">Read-only proxy to a bitmap pixel.</div><div class="ttdef"><b>Definition</b> pixel_proxy.hpp:15</div></div>
 <div class="ttc" id="aclasstr_1_1const__pixel__proxy_html_a746355ef3e7f39969e8b483237cd85d2"><div class="ttname"><a href="classtr_1_1const__pixel__proxy.html#a746355ef3e7f39969e8b483237cd85d2">tr::const_pixel_proxy::format</a></div><div class="ttdeci">pixel_format format() const noexcept</div><div class="ttdoc">Gets the format of the pixel.</div></div>
 <div class="ttc" id="aclasstr_1_1const__pixel__proxy_html_ab1ec7094b8f0768d8acde5caf0727bcb"><div class="ttname"><a href="classtr_1_1const__pixel__proxy.html#ab1ec7094b8f0768d8acde5caf0727bcb">tr::const_pixel_proxy::data</a></div><div class="ttdeci">const std::byte * data() const noexcept</div><div class="ttdoc">Gets a pointer to the data of the pixel.</div></div>
-<div class="ttc" id="aclasstr_1_1pixel__proxy_html"><div class="ttname"><a href="classtr_1_1pixel__proxy.html">tr::pixel_proxy</a></div><div class="ttdoc">Mutable proxy to a bitmap pixel.</div><div class="ttdef"><b>Definition</b> pixel_proxy.hpp:58</div></div>
+<div class="ttc" id="aclasstr_1_1pixel__proxy_html"><div class="ttname"><a href="classtr_1_1pixel__proxy.html">tr::pixel_proxy</a></div><div class="ttdoc">Mutable proxy to a bitmap pixel.</div><div class="ttdef"><b>Definition</b> pixel_proxy.hpp:55</div></div>
 <div class="ttc" id="aclasstr_1_1pixel__proxy_html_a448ac0bbbdf6a78cf162f8f66bbe698b"><div class="ttname"><a href="classtr_1_1pixel__proxy.html#a448ac0bbbdf6a78cf162f8f66bbe698b">tr::pixel_proxy::format</a></div><div class="ttdeci">pixel_format format() const noexcept</div><div class="ttdoc">Gets the format of the pixel.</div></div>
 <div class="ttc" id="aclasstr_1_1pixel__proxy_html_a969fd79261c9a7b3599d5edb36ba3cef"><div class="ttname"><a href="classtr_1_1pixel__proxy.html#a969fd79261c9a7b3599d5edb36ba3cef">tr::pixel_proxy::data</a></div><div class="ttdeci">std::byte * data() const noexcept</div><div class="ttdoc">Gets a pointer to the data of the pixel.</div></div>
+<div class="ttc" id="ainteger_8hpp_html"><div class="ttname"><a href="integer_8hpp.html">integer.hpp</a></div><div class="ttdoc">Provides integer utilities.</div></div>
+<div class="ttc" id="anamespacetr_1_1aliases_1_1integer__aliases_html_a942cfbfc8bf5094139c2f52fba2b8b17"><div class="ttname"><a href="namespacetr_1_1aliases_1_1integer__aliases.html#a942cfbfc8bf5094139c2f52fba2b8b17">tr::aliases::integer_aliases::u8</a></div><div class="ttdeci">std::uint8_t u8</div><div class="ttdoc">8-bit unsigned integer.</div><div class="ttdef"><b>Definition</b> integer.hpp:17</div></div>
 <div class="ttc" id="anamespacetr_html"><div class="ttname"><a href="namespacetr.html">tr</a></div><div class="ttdoc">Namespace containing all tr functionality.</div><div class="ttdef"><b>Definition</b> audio_buffer.hpp:10</div></div>
 <div class="ttc" id="anamespacetr_html_ac1babae6e9367fc90585a8791dadc746"><div class="ttname"><a href="namespacetr.html#ac1babae6e9367fc90585a8791dadc746">tr::pixel_format</a></div><div class="ttdeci">pixel_format</div><div class="ttdoc">Bitmap/texture pixel format.</div><div class="ttdef"><b>Definition</b> pixel_format.hpp:12</div></div>
 <div class="ttc" id="apixel__format_8hpp_html"><div class="ttname"><a href="pixel__format_8hpp.html">pixel_format.hpp</a></div><div class="ttdoc">Provides tr::pixel_format.</div></div>
-<div class="ttc" id="astructtr_1_1rgba8_html"><div class="ttname"><a href="structtr_1_1rgba8.html">tr::rgba8</a></div><div class="ttdoc">8-bit RGBA color.</div><div class="ttdef"><b>Definition</b> color.hpp:496</div></div>
+<div class="ttc" id="argba_8hpp_html"><div class="ttname"><a href="rgba_8hpp.html">rgba.hpp</a></div><div class="ttdoc">Provides tr::rgba.</div></div>
+<div class="ttc" id="astructtr_1_1rgba_html"><div class="ttname"><a href="structtr_1_1rgba.html">tr::rgba</a></div><div class="ttdoc">Color stored in the RGBA color model.</div><div class="ttdef"><b>Definition</b> rgba.hpp:24</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

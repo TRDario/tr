@@ -136,14 +136,14 @@ Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors and destructors</div></td></tr>
 <tr class="memitem:a5fb5ce712340d4a1ba129fa84f9536d4" id="r_a5fb5ce712340d4a1ba129fa84f9536d4"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a5fb5ce712340d4a1ba129fa84f9536d4">localization_map</a> () noexcept=default</td></tr>
 <tr class="memdesc:a5fb5ce712340d4a1ba129fa84f9536d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an empty localization map.  <br /></td></tr>
-<tr class="memitem:ad9f55e58fa1bd54aaa5fb552b6dc4260" id="r_ad9f55e58fa1bd54aaa5fb552b6dc4260"><td class="memTemplParams" colspan="2">template&lt;std::input_iterator Iterator, std::sentinel_for&lt; Iterator &gt; Sentinel&gt; <br />
-requires (localization_key_value_pair&lt;std::iter_reference_t&lt;Iterator&gt;&gt;)</td></tr>
-<tr class="memitem:ad9f55e58fa1bd54aaa5fb552b6dc4260 template"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ad9f55e58fa1bd54aaa5fb552b6dc4260">localization_map</a> (Iterator begin, Sentinel end)</td></tr>
-<tr class="memdesc:ad9f55e58fa1bd54aaa5fb552b6dc4260"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a localization map from a key-value iterator pair range.  <br /></td></tr>
-<tr class="memitem:a47d4a598f36a712746aa54ceccafb04d" id="r_a47d4a598f36a712746aa54ceccafb04d"><td class="memTemplParams" colspan="2">template&lt;std::ranges::input_range Range = std::initializer_list&lt;std::pair&lt;std::string_view, std::string_view&gt;&gt;&gt; <br />
-requires (localization_key_value_pair&lt;std::ranges::range_reference_t&lt;Range&gt;&gt;)</td></tr>
-<tr class="memitem:a47d4a598f36a712746aa54ceccafb04d template"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a47d4a598f36a712746aa54ceccafb04d">localization_map</a> (Range &amp;&amp;range)</td></tr>
-<tr class="memdesc:a47d4a598f36a712746aa54ceccafb04d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a localization map from a key-value range.  <br /></td></tr>
+<tr class="memitem:a74f0019a4251421b953694c2277cb968" id="r_a74f0019a4251421b953694c2277cb968"><td class="memTemplParams" colspan="2">template&lt;std::input_iterator Iterator, std::sentinel_for&lt; Iterator &gt; Sentinel&gt; <br />
+requires localization_key_value_pair&lt;std::iter_reference_t&lt;Iterator&gt;&gt;</td></tr>
+<tr class="memitem:a74f0019a4251421b953694c2277cb968 template"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a74f0019a4251421b953694c2277cb968">localization_map</a> (Iterator begin, Sentinel end)</td></tr>
+<tr class="memdesc:a74f0019a4251421b953694c2277cb968"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a localization map from a key-value iterator pair range.  <br /></td></tr>
+<tr class="memitem:a4014e47687d9e1089410a400f702d88c" id="r_a4014e47687d9e1089410a400f702d88c"><td class="memTemplParams" colspan="2">template&lt;std::ranges::input_range Range = std::initializer_list&lt;std::pair&lt;std::string_view, std::string_view&gt;&gt;&gt; <br />
+requires localization_key_value_pair&lt;std::ranges::range_reference_t&lt;Range&gt;&gt;</td></tr>
+<tr class="memitem:a4014e47687d9e1089410a400f702d88c template"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a4014e47687d9e1089410a400f702d88c">localization_map</a> (Range &amp;&amp;range)</td></tr>
+<tr class="memdesc:a4014e47687d9e1089410a400f702d88c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a localization map from a key-value range.  <br /></td></tr>
 <tr class="memitem:ac674ba0328ecc61f9f0b609f2f9fb1c9" id="r_ac674ba0328ecc61f9f0b609f2f9fb1c9"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ac674ba0328ecc61f9f0b609f2f9fb1c9">localization_map</a> (const localization_map &amp;rhs)</td></tr>
 <tr class="memdesc:ac674ba0328ecc61f9f0b609f2f9fb1c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copies a localization map.  <br /></td></tr>
 <tr class="memitem:a7531343a7916c38c6f3c77b436f52f44" id="r_a7531343a7916c38c6f3c77b436f52f44"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a7531343a7916c38c6f3c77b436f52f44">localization_map</a> (localization_map &amp;&amp;rhs) noexcept=default</td></tr>
@@ -165,14 +165,14 @@ requires (localization_key_value_pair&lt;std::ranges::range_reference_t&lt;Range
 <tr class="memdesc:af77e50710f7befac642e2e229d8c1dd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the localization map.  <br /></td></tr>
 <tr class="memitem:a95b7d0486da43d33d6c544ccdb22f06e" id="r_a95b7d0486da43d33d6c544ccdb22f06e"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a95b7d0486da43d33d6c544ccdb22f06e">update</a> (std::string_view key, std::string_view value)</td></tr>
 <tr class="memdesc:a95b7d0486da43d33d6c544ccdb22f06e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds or replaces a key-value pair in the map.  <br /></td></tr>
-<tr class="memitem:abf3882dbe519134134c0bfe34a313c10" id="r_abf3882dbe519134134c0bfe34a313c10"><td class="memTemplParams" colspan="2">template&lt;std::input_iterator Iterator, std::sentinel_for&lt; Iterator &gt; Sentinel&gt; <br />
-requires (localization_key_value_pair&lt;std::iter_reference_t&lt;Iterator&gt;&gt;)</td></tr>
-<tr class="memitem:abf3882dbe519134134c0bfe34a313c10 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#abf3882dbe519134134c0bfe34a313c10">update</a> (Iterator begin, Sentinel end)</td></tr>
-<tr class="memdesc:abf3882dbe519134134c0bfe34a313c10"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds and replaces key-value pairs in the map.  <br /></td></tr>
-<tr class="memitem:a7a64de338e3f7cde35e06f08726a1a8f" id="r_a7a64de338e3f7cde35e06f08726a1a8f"><td class="memTemplParams" colspan="2">template&lt;std::ranges::input_range Range = std::initializer_list&lt;std::pair&lt;std::string_view, std::string_view&gt;&gt;&gt; <br />
-requires (localization_key_value_pair&lt;std::ranges::range_reference_t&lt;Range&gt;&gt;)</td></tr>
-<tr class="memitem:a7a64de338e3f7cde35e06f08726a1a8f template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a7a64de338e3f7cde35e06f08726a1a8f">update</a> (Range &amp;&amp;range)</td></tr>
-<tr class="memdesc:a7a64de338e3f7cde35e06f08726a1a8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds and replaces key-value pairs in the map.  <br /></td></tr>
+<tr class="memitem:a3138c662c94991c57be608e3e7cc0496" id="r_a3138c662c94991c57be608e3e7cc0496"><td class="memTemplParams" colspan="2">template&lt;std::input_iterator Iterator, std::sentinel_for&lt; Iterator &gt; Sentinel&gt; <br />
+requires localization_key_value_pair&lt;std::iter_reference_t&lt;Iterator&gt;&gt;</td></tr>
+<tr class="memitem:a3138c662c94991c57be608e3e7cc0496 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a3138c662c94991c57be608e3e7cc0496">update</a> (Iterator begin, Sentinel end)</td></tr>
+<tr class="memdesc:a3138c662c94991c57be608e3e7cc0496"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds and replaces key-value pairs in the map.  <br /></td></tr>
+<tr class="memitem:aaf1048a95ef69c07e80c9603d66bd6b7" id="r_aaf1048a95ef69c07e80c9603d66bd6b7"><td class="memTemplParams" colspan="2">template&lt;std::ranges::input_range Range = std::initializer_list&lt;std::pair&lt;std::string_view, std::string_view&gt;&gt;&gt; <br />
+requires localization_key_value_pair&lt;std::ranges::range_reference_t&lt;Range&gt;&gt;</td></tr>
+<tr class="memitem:aaf1048a95ef69c07e80c9603d66bd6b7 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aaf1048a95ef69c07e80c9603d66bd6b7">update</a> (Range &amp;&amp;range)</td></tr>
+<tr class="memdesc:aaf1048a95ef69c07e80c9603d66bd6b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds and replaces key-value pairs in the map.  <br /></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a5fb5ce712340d4a1ba129fa84f9536d4" name="a5fb5ce712340d4a1ba129fa84f9536d4"></a>
@@ -202,14 +202,14 @@ requires (localization_key_value_pair&lt;std::ranges::range_reference_t&lt;Range
 
 </div>
 </div>
-<a id="ad9f55e58fa1bd54aaa5fb552b6dc4260" name="ad9f55e58fa1bd54aaa5fb552b6dc4260"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad9f55e58fa1bd54aaa5fb552b6dc4260">&#9670;&#160;</a></span>localization_map() <span class="overload">[2/5]</span></h2>
+<a id="a74f0019a4251421b953694c2277cb968" name="a74f0019a4251421b953694c2277cb968"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a74f0019a4251421b953694c2277cb968">&#9670;&#160;</a></span>localization_map() <span class="overload">[2/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;std::input_iterator Iterator, std::sentinel_for&lt; Iterator &gt; Sentinel&gt; <br />
-requires (localization_key_value_pair&lt;std::iter_reference_t&lt;Iterator&gt;&gt;)</div>
+requires localization_key_value_pair&lt;std::iter_reference_t&lt;Iterator&gt;&gt;</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -251,14 +251,14 @@ requires (localization_key_value_pair&lt;std::iter_reference_t&lt;Iterator&gt;&g
 
 </div>
 </div>
-<a id="a47d4a598f36a712746aa54ceccafb04d" name="a47d4a598f36a712746aa54ceccafb04d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a47d4a598f36a712746aa54ceccafb04d">&#9670;&#160;</a></span>localization_map() <span class="overload">[3/5]</span></h2>
+<a id="a4014e47687d9e1089410a400f702d88c" name="a4014e47687d9e1089410a400f702d88c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4014e47687d9e1089410a400f702d88c">&#9670;&#160;</a></span>localization_map() <span class="overload">[3/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;std::ranges::input_range Range = std::initializer_list&lt;std::pair&lt;std::string_view, std::string_view&gt;&gt;&gt; <br />
-requires (localization_key_value_pair&lt;std::ranges::range_reference_t&lt;Range&gt;&gt;)</div>
+requires localization_key_value_pair&lt;std::ranges::range_reference_t&lt;Range&gt;&gt;</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -576,14 +576,14 @@ requires (localization_key_value_pair&lt;std::ranges::range_reference_t&lt;Range
 
 </div>
 </div>
-<a id="abf3882dbe519134134c0bfe34a313c10" name="abf3882dbe519134134c0bfe34a313c10"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abf3882dbe519134134c0bfe34a313c10">&#9670;&#160;</a></span>update() <span class="overload">[2/3]</span></h2>
+<a id="a3138c662c94991c57be608e3e7cc0496" name="a3138c662c94991c57be608e3e7cc0496"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3138c662c94991c57be608e3e7cc0496">&#9670;&#160;</a></span>update() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;std::input_iterator Iterator, std::sentinel_for&lt; Iterator &gt; Sentinel&gt; <br />
-requires (localization_key_value_pair&lt;std::iter_reference_t&lt;Iterator&gt;&gt;)</div>
+requires localization_key_value_pair&lt;std::iter_reference_t&lt;Iterator&gt;&gt;</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -626,14 +626,14 @@ requires (localization_key_value_pair&lt;std::iter_reference_t&lt;Iterator&gt;&g
 
 </div>
 </div>
-<a id="a7a64de338e3f7cde35e06f08726a1a8f" name="a7a64de338e3f7cde35e06f08726a1a8f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7a64de338e3f7cde35e06f08726a1a8f">&#9670;&#160;</a></span>update() <span class="overload">[3/3]</span></h2>
+<a id="aaf1048a95ef69c07e80c9603d66bd6b7" name="aaf1048a95ef69c07e80c9603d66bd6b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf1048a95ef69c07e80c9603d66bd6b7">&#9670;&#160;</a></span>update() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;std::ranges::input_range Range = std::initializer_list&lt;std::pair&lt;std::string_view, std::string_view&gt;&gt;&gt; <br />
-requires (localization_key_value_pair&lt;std::ranges::range_reference_t&lt;Range&gt;&gt;)</div>
+requires localization_key_value_pair&lt;std::ranges::range_reference_t&lt;Range&gt;&gt;</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">

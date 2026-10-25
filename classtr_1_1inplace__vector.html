@@ -129,7 +129,8 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1inp
 <p>Inplace-allocated, fixed-capacity vector.  
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt;<br />
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt;<br />
+requires std::is_nothrow_destructible_v&lt;Element&gt;<br />
 class tr::inplace_vector&lt; Element, Capacity &gt;</div><p>Inplace-allocated, fixed-capacity vector. </p>
 <p><span class="tt"><a class="el" href="classtr_1_1inplace__vector.html" title="Inplace-allocated, fixed-capacity vector.">tr::inplace_vector</a></span> mirrors the interace of a standard vector, but its elements are stored inplace within the object.</p>
 <p>Instances of <span class="tt"><a class="el" href="classtr_1_1inplace__vector.html" title="Inplace-allocated, fixed-capacity vector.">tr::inplace_vector</a></span> are copyable if <span class="tt">Element</span> is copyable and movable if <span class="tt">Element</span> is movable. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
@@ -173,29 +174,29 @@ Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors and destructors</div></td></tr>
 <tr class="memitem:a2719c2828368b3621a2b9b5a1ccb586a" id="r_a2719c2828368b3621a2b9b5a1ccb586a"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a2719c2828368b3621a2b9b5a1ccb586a">inplace_vector</a> () noexcept=default</td></tr>
 <tr class="memdesc:a2719c2828368b3621a2b9b5a1ccb586a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an empty vector.  <br /></td></tr>
-<tr class="memitem:aa4c9ca5c5f59352559a95e74d76f9f32" id="r_aa4c9ca5c5f59352559a95e74d76f9f32"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#aa4c9ca5c5f59352559a95e74d76f9f32">inplace_vector</a> (<a class="el" href="#a0e33d7b81ecca075b2cc1262ca2a6787">size_type</a> size) noexcept(std::is_nothrow_default_constructible_v&lt; Element &gt;)</td></tr>
-<tr class="memdesc:aa4c9ca5c5f59352559a95e74d76f9f32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a vector with a certain number of default-initialized values.  <br /></td></tr>
-<tr class="memitem:aed3ada90b30ee13e1484bd187008068a" id="r_aed3ada90b30ee13e1484bd187008068a"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#aed3ada90b30ee13e1484bd187008068a">inplace_vector</a> (<a class="el" href="#a0e33d7b81ecca075b2cc1262ca2a6787">size_type</a> size, const Element &amp;value) noexcept(std::is_nothrow_copy_constructible_v&lt; Element &gt;)</td></tr>
-<tr class="memdesc:aed3ada90b30ee13e1484bd187008068a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a vector with a certain number of copies of a value.  <br /></td></tr>
-<tr class="memitem:a745db00acc8d97a5045dd0c1169fecd1" id="r_a745db00acc8d97a5045dd0c1169fecd1"><td class="memTemplParams" colspan="2">template&lt;forward_iterator_to_convertible_to&lt; Element &gt; Iterator, std::sentinel_for&lt; Iterator &gt; Sentinel&gt; </td></tr>
-<tr class="memitem:a745db00acc8d97a5045dd0c1169fecd1 template"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a745db00acc8d97a5045dd0c1169fecd1">inplace_vector</a> (Iterator first, Sentinel last) noexcept(nothrow_forward_iterator_to_convertible_to&lt; Iterator, Element &gt;)</td></tr>
-<tr class="memdesc:a745db00acc8d97a5045dd0c1169fecd1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a vector from an iterator pair.  <br /></td></tr>
-<tr class="memitem:a8885682ec933b71b5ee852492217fae5" id="r_a8885682ec933b71b5ee852492217fae5"><td class="memTemplParams" colspan="2">template&lt;forward_range_to_convertible_to&lt; Element &gt; Range&gt; </td></tr>
-<tr class="memitem:a8885682ec933b71b5ee852492217fae5 template"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a8885682ec933b71b5ee852492217fae5">inplace_vector</a> (Range &amp;&amp;range) noexcept(nothrow_forward_range_to_convertible_to&lt; Range, Element &gt;)</td></tr>
-<tr class="memdesc:a8885682ec933b71b5ee852492217fae5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a vector from a range.  <br /></td></tr>
-<tr class="memitem:a7502622cdaa69864eb8f453eef0c52b0" id="r_a7502622cdaa69864eb8f453eef0c52b0"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a7502622cdaa69864eb8f453eef0c52b0">inplace_vector</a> (std::initializer_list&lt; Element &gt; init) noexcept(std::is_nothrow_copy_constructible_v&lt; Element &gt;)</td></tr>
-<tr class="memdesc:a7502622cdaa69864eb8f453eef0c52b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a vector from an initializer list.  <br /></td></tr>
-<tr class="memitem:a79f98735008c518d90f18ec621237c19" id="r_a79f98735008c518d90f18ec621237c19"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a79f98735008c518d90f18ec621237c19">inplace_vector</a> (const inplace_vector &amp;rhs) noexcept(std::is_nothrow_copy_constructible_v&lt; Element &gt;)</td></tr>
-<tr class="memdesc:a79f98735008c518d90f18ec621237c19"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copies a vector.  <br /></td></tr>
-<tr class="memitem:a427c8e4befcce92707ecc26318c53fa9" id="r_a427c8e4befcce92707ecc26318c53fa9"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a427c8e4befcce92707ecc26318c53fa9">inplace_vector</a> (inplace_vector &amp;&amp;rhs) noexcept(std::is_nothrow_move_constructible_v&lt; Element &gt;)</td></tr>
-<tr class="memdesc:a427c8e4befcce92707ecc26318c53fa9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves a vector.  <br /></td></tr>
+<tr class="memitem:a3c139cf7496dde7c60fee7a46e30a1eb" id="r_a3c139cf7496dde7c60fee7a46e30a1eb"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a3c139cf7496dde7c60fee7a46e30a1eb">inplace_vector</a> (<a class="el" href="#a0e33d7b81ecca075b2cc1262ca2a6787">size_type</a> size) noexcept(std::is_nothrow_default_constructible_v&lt; Element &gt;)</td></tr>
+<tr class="memdesc:a3c139cf7496dde7c60fee7a46e30a1eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a vector with a certain number of default-initialized values.  <br /></td></tr>
+<tr class="memitem:a6756b9bb4772be9bce98be8343086dff" id="r_a6756b9bb4772be9bce98be8343086dff"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a6756b9bb4772be9bce98be8343086dff">inplace_vector</a> (<a class="el" href="#a0e33d7b81ecca075b2cc1262ca2a6787">size_type</a> size, const Element &amp;value) noexcept(std::is_nothrow_copy_constructible_v&lt; Element &gt;)</td></tr>
+<tr class="memdesc:a6756b9bb4772be9bce98be8343086dff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a vector with a certain number of copies of a value.  <br /></td></tr>
+<tr class="memitem:a05f118fb56e1fd041c8a5aebbf2a3b9d" id="r_a05f118fb56e1fd041c8a5aebbf2a3b9d"><td class="memTemplParams" colspan="2">template&lt;forward_iterator_to&lt; Element &gt; Iterator, std::sentinel_for&lt; Iterator &gt; Sentinel&gt; </td></tr>
+<tr class="memitem:a05f118fb56e1fd041c8a5aebbf2a3b9d template"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a05f118fb56e1fd041c8a5aebbf2a3b9d">inplace_vector</a> (Iterator first, Sentinel last) noexcept(nothrow_forward_iterator_to&lt; Iterator, Element &gt;)</td></tr>
+<tr class="memdesc:a05f118fb56e1fd041c8a5aebbf2a3b9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a vector from an iterator pair.  <br /></td></tr>
+<tr class="memitem:ae4dab13b056a8c49c48d4e4c625a017d" id="r_ae4dab13b056a8c49c48d4e4c625a017d"><td class="memTemplParams" colspan="2">template&lt;forward_range_to&lt; Element &gt; Range&gt; </td></tr>
+<tr class="memitem:ae4dab13b056a8c49c48d4e4c625a017d template"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ae4dab13b056a8c49c48d4e4c625a017d">inplace_vector</a> (Range &amp;&amp;range) noexcept(nothrow_forward_range_to&lt; Range, Element &gt;)</td></tr>
+<tr class="memdesc:ae4dab13b056a8c49c48d4e4c625a017d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a vector from a range.  <br /></td></tr>
+<tr class="memitem:af1a384c36d8365565160b9a4cbf587a2" id="r_af1a384c36d8365565160b9a4cbf587a2"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#af1a384c36d8365565160b9a4cbf587a2">inplace_vector</a> (std::initializer_list&lt; Element &gt; init) noexcept(std::is_nothrow_copy_constructible_v&lt; Element &gt;)</td></tr>
+<tr class="memdesc:af1a384c36d8365565160b9a4cbf587a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a vector from an initializer list.  <br /></td></tr>
+<tr class="memitem:a788d420b45bd5cf342f0a09cf74a62e3" id="r_a788d420b45bd5cf342f0a09cf74a62e3"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a788d420b45bd5cf342f0a09cf74a62e3">inplace_vector</a> (const inplace_vector &amp;rhs) noexcept(std::is_nothrow_copy_constructible_v&lt; Element &gt;)</td></tr>
+<tr class="memdesc:a788d420b45bd5cf342f0a09cf74a62e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copies a vector.  <br /></td></tr>
+<tr class="memitem:a6521833861f92dab3b310c445f9ec940" id="r_a6521833861f92dab3b310c445f9ec940"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a6521833861f92dab3b310c445f9ec940">inplace_vector</a> (inplace_vector &amp;&amp;rhs) noexcept(std::is_nothrow_move_constructible_v&lt; Element &gt;)</td></tr>
+<tr class="memdesc:a6521833861f92dab3b310c445f9ec940"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves a vector.  <br /></td></tr>
 <tr class="memitem:a5a3c98e26b14dae4cbd9e1b3944a0378" id="r_a5a3c98e26b14dae4cbd9e1b3944a0378"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a5a3c98e26b14dae4cbd9e1b3944a0378">~inplace_vector</a> () noexcept</td></tr>
 <tr class="memdesc:a5a3c98e26b14dae4cbd9e1b3944a0378"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys the vector.  <br /></td></tr>
 <tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Assignment operators</div></td></tr>
-<tr class="memitem:a55987289146aab846d65694444d77930" id="r_a55987289146aab846d65694444d77930"><td class="memItemLeft"><a class="el" href="#a2719c2828368b3621a2b9b5a1ccb586a">inplace_vector</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a55987289146aab846d65694444d77930">operator=</a> (const <a class="el" href="#a2719c2828368b3621a2b9b5a1ccb586a">inplace_vector</a> &amp;rhs) noexcept(std::is_nothrow_copy_constructible_v&lt; Element &gt;)</td></tr>
-<tr class="memdesc:a55987289146aab846d65694444d77930"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy-assigns an inplace vector.  <br /></td></tr>
-<tr class="memitem:a15e844416031f2ab51fca9960e134bb7" id="r_a15e844416031f2ab51fca9960e134bb7"><td class="memItemLeft"><a class="el" href="#a2719c2828368b3621a2b9b5a1ccb586a">inplace_vector</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a15e844416031f2ab51fca9960e134bb7">operator=</a> (<a class="el" href="#a2719c2828368b3621a2b9b5a1ccb586a">inplace_vector</a> &amp;&amp;rhs) noexcept(std::is_nothrow_move_constructible_v&lt; Element &gt;)</td></tr>
-<tr class="memdesc:a15e844416031f2ab51fca9960e134bb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move-assigns an inplace vector.  <br /></td></tr>
+<tr class="memitem:a752be38821c8f2ffeed3f11737871d38" id="r_a752be38821c8f2ffeed3f11737871d38"><td class="memItemLeft"><a class="el" href="#a2719c2828368b3621a2b9b5a1ccb586a">inplace_vector</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a752be38821c8f2ffeed3f11737871d38">operator=</a> (const <a class="el" href="#a2719c2828368b3621a2b9b5a1ccb586a">inplace_vector</a> &amp;rhs) noexcept(std::is_nothrow_copy_constructible_v&lt; Element &gt;)</td></tr>
+<tr class="memdesc:a752be38821c8f2ffeed3f11737871d38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copy-assigns an inplace vector.  <br /></td></tr>
+<tr class="memitem:a8ccf86fa77d5d5f4347b12eceadd34c4" id="r_a8ccf86fa77d5d5f4347b12eceadd34c4"><td class="memItemLeft"><a class="el" href="#a2719c2828368b3621a2b9b5a1ccb586a">inplace_vector</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a8ccf86fa77d5d5f4347b12eceadd34c4">operator=</a> (<a class="el" href="#a2719c2828368b3621a2b9b5a1ccb586a">inplace_vector</a> &amp;&amp;rhs) noexcept(std::is_nothrow_move_constructible_v&lt; Element &gt;)</td></tr>
+<tr class="memdesc:a8ccf86fa77d5d5f4347b12eceadd34c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Move-assigns an inplace vector.  <br /></td></tr>
 <tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Access</div></td></tr>
 <tr class="memitem:a59b3b67205fd025f68d5c5b285568165" id="r_a59b3b67205fd025f68d5c5b285568165"><td class="memItemLeft"><a class="el" href="#af661d5042c4a5389b79594782366ccdb">reference</a>&#160;</td><td class="memItemRight"><a class="el" href="#a59b3b67205fd025f68d5c5b285568165">at</a> (<a class="el" href="#a0e33d7b81ecca075b2cc1262ca2a6787">size_type</a> offset) noexcept</td></tr>
 <tr class="memdesc:a59b3b67205fd025f68d5c5b285568165"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a reference to a value in the vector.  <br /></td></tr>
@@ -245,50 +246,50 @@ Public Member Functions</h2></td></tr>
 <tr id="pub-methods-4" class="groupHeader"><td colspan="2"><div class="groupHeader">Manipulation</div></td></tr>
 <tr class="memitem:a82d004eae43b6ba5d93935a143d47b04" id="r_a82d004eae43b6ba5d93935a143d47b04"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a82d004eae43b6ba5d93935a143d47b04">clear</a> () noexcept</td></tr>
 <tr class="memdesc:a82d004eae43b6ba5d93935a143d47b04"><td class="mdescLeft">&#160;</td><td class="mdescRight">Erases all values from the vector.  <br /></td></tr>
-<tr class="memitem:ab0190507d49bf798c641df13e350589c" id="r_ab0190507d49bf798c641df13e350589c"><td class="memItemLeft"><a class="el" href="structtr_1_1inplace__vector_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#ab0190507d49bf798c641df13e350589c">insert</a> (<a class="el" href="structtr_1_1inplace__vector_1_1const__iterator.html">const_iterator</a> where, const Element &amp;value) noexcept(nothrow_movable&lt; Element &gt; &amp;&amp;std::is_nothrow_copy_constructible_v&lt; Element &gt;)</td></tr>
-<tr class="memdesc:ab0190507d49bf798c641df13e350589c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inserts a value into the vector.  <br /></td></tr>
-<tr class="memitem:a904e50fc3b4e9072f4f3cb47a77f5c46" id="r_a904e50fc3b4e9072f4f3cb47a77f5c46"><td class="memItemLeft"><a class="el" href="structtr_1_1inplace__vector_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a904e50fc3b4e9072f4f3cb47a77f5c46">insert</a> (<a class="el" href="structtr_1_1inplace__vector_1_1const__iterator.html">const_iterator</a> where, Element &amp;&amp;value) noexcept(nothrow_movable&lt; Element &gt;)</td></tr>
-<tr class="memdesc:a904e50fc3b4e9072f4f3cb47a77f5c46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inserts a value into the vector.  <br /></td></tr>
-<tr class="memitem:ace242e648f0f546293f22dc71ab01280" id="r_ace242e648f0f546293f22dc71ab01280"><td class="memTemplParams" colspan="2">template&lt;forward_iterator_to_convertible_to&lt; Element &gt; Iterator, std::sentinel_for&lt; Iterator &gt; Sentinel&gt; <br />
-requires (std::move_constructible&lt;Element&gt; &amp;&amp; move_assignable&lt;Element&gt;)</td></tr>
-<tr class="memitem:ace242e648f0f546293f22dc71ab01280 template"><td class="memItemLeft"><a class="el" href="structtr_1_1inplace__vector_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#ace242e648f0f546293f22dc71ab01280">insert</a> (<a class="el" href="structtr_1_1inplace__vector_1_1const__iterator.html">const_iterator</a> where, Iterator first, Sentinel last) noexcept(nothrow_movable&lt; Element &gt; &amp;&amp;nothrow_forward_iterator_to_convertible_to&lt; Iterator, Element &gt;)</td></tr>
-<tr class="memdesc:ace242e648f0f546293f22dc71ab01280"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inserts an iterator pair range into the string.  <br /></td></tr>
-<tr class="memitem:a6e418a7a77111ba7ff5eabf3009979a9" id="r_a6e418a7a77111ba7ff5eabf3009979a9"><td class="memTemplParams" colspan="2">template&lt;forward_range_to_convertible_to&lt; Element &gt; Range&gt; <br />
-requires (std::move_constructible&lt;Element&gt; &amp;&amp; move_assignable&lt;Element&gt;)</td></tr>
-<tr class="memitem:a6e418a7a77111ba7ff5eabf3009979a9 template"><td class="memItemLeft"><a class="el" href="structtr_1_1inplace__vector_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a6e418a7a77111ba7ff5eabf3009979a9">insert</a> (<a class="el" href="structtr_1_1inplace__vector_1_1const__iterator.html">const_iterator</a> where, Range &amp;&amp;range) noexcept(nothrow_movable&lt; Element &gt; &amp;&amp;nothrow_forward_range_to_convertible_to&lt; Range, Element &gt;)</td></tr>
-<tr class="memdesc:a6e418a7a77111ba7ff5eabf3009979a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inserts a range into the string.  <br /></td></tr>
-<tr class="memitem:a0c6f1d03acb9a1597af477964e1b6e08" id="r_a0c6f1d03acb9a1597af477964e1b6e08"><td class="memItemLeft"><a class="el" href="structtr_1_1inplace__vector_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a0c6f1d03acb9a1597af477964e1b6e08">insert</a> (<a class="el" href="structtr_1_1inplace__vector_1_1const__iterator.html">const_iterator</a> where, std::initializer_list&lt; Element &gt; init) noexcept(nothrow_movable&lt; Element &gt; &amp;&amp;std::is_nothrow_copy_constructible_v&lt; Element &gt;)</td></tr>
-<tr class="memdesc:a0c6f1d03acb9a1597af477964e1b6e08"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inserts an initializer list into the string.  <br /></td></tr>
-<tr class="memitem:a3fc63e379c3d9ca9663d1fcd03bb04e2" id="r_a3fc63e379c3d9ca9663d1fcd03bb04e2"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; <br />
-requires (std::move_constructible&lt;Element&gt; &amp;&amp; move_assignable&lt;Element&gt; &amp;&amp; std::constructible_from&lt;Element, Args...&gt;)</td></tr>
-<tr class="memitem:a3fc63e379c3d9ca9663d1fcd03bb04e2 template"><td class="memItemLeft"><a class="el" href="structtr_1_1inplace__vector_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a3fc63e379c3d9ca9663d1fcd03bb04e2">emplace</a> (<a class="el" href="structtr_1_1inplace__vector_1_1const__iterator.html">const_iterator</a> where, Args &amp;&amp;... args) noexcept(nothrow_movable&lt; Element &gt; &amp;&amp;std::is_nothrow_constructible_v&lt; Element, Args... &gt;)</td></tr>
-<tr class="memdesc:a3fc63e379c3d9ca9663d1fcd03bb04e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emplaces a value in the vector.  <br /></td></tr>
-<tr class="memitem:aeffe9b1eb5dfc95ffe4c0a667b3a17cd" id="r_aeffe9b1eb5dfc95ffe4c0a667b3a17cd"><td class="memItemLeft"><a class="el" href="structtr_1_1inplace__vector_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#aeffe9b1eb5dfc95ffe4c0a667b3a17cd">erase</a> (<a class="el" href="structtr_1_1inplace__vector_1_1const__iterator.html">const_iterator</a> where) noexcept(std::is_nothrow_move_assignable_v&lt; Element &gt;)</td></tr>
-<tr class="memdesc:aeffe9b1eb5dfc95ffe4c0a667b3a17cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Erases a value from the vector.  <br /></td></tr>
-<tr class="memitem:a6c6db908c2ba203aecfa3934f383e67f" id="r_a6c6db908c2ba203aecfa3934f383e67f"><td class="memItemLeft"><a class="el" href="structtr_1_1inplace__vector_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a6c6db908c2ba203aecfa3934f383e67f">erase</a> (<a class="el" href="structtr_1_1inplace__vector_1_1const__iterator.html">const_iterator</a> first, <a class="el" href="structtr_1_1inplace__vector_1_1const__iterator.html">const_iterator</a> last) noexcept(std::is_nothrow_move_assignable_v&lt; Element &gt;)</td></tr>
-<tr class="memdesc:a6c6db908c2ba203aecfa3934f383e67f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Erases a range of values from the vector.  <br /></td></tr>
-<tr class="memitem:aa2d52a6960d6b8ed1ad51cef0dcf0875" id="r_aa2d52a6960d6b8ed1ad51cef0dcf0875"><td class="memItemLeft"><a class="el" href="#af661d5042c4a5389b79594782366ccdb">reference</a>&#160;</td><td class="memItemRight"><a class="el" href="#aa2d52a6960d6b8ed1ad51cef0dcf0875">push_back</a> (const Element &amp;value) noexcept(std::is_nothrow_copy_constructible_v&lt; Element &gt;)</td></tr>
-<tr class="memdesc:aa2d52a6960d6b8ed1ad51cef0dcf0875"><td class="mdescLeft">&#160;</td><td class="mdescRight">Appends a value to the vector.  <br /></td></tr>
-<tr class="memitem:ad019abbaf2d7affd3661debfb1be10f8" id="r_ad019abbaf2d7affd3661debfb1be10f8"><td class="memItemLeft"><a class="el" href="#af661d5042c4a5389b79594782366ccdb">reference</a>&#160;</td><td class="memItemRight"><a class="el" href="#ad019abbaf2d7affd3661debfb1be10f8">push_back</a> (Element &amp;&amp;value) noexcept(std::is_nothrow_move_constructible_v&lt; Element &gt;)</td></tr>
-<tr class="memdesc:ad019abbaf2d7affd3661debfb1be10f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Appends a value to the vector.  <br /></td></tr>
-<tr class="memitem:a762b06ce8da19887d6d36c0a3171b57a" id="r_a762b06ce8da19887d6d36c0a3171b57a"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; <br />
-requires (std::constructible_from&lt;Element, Args...&gt;)</td></tr>
-<tr class="memitem:a762b06ce8da19887d6d36c0a3171b57a template"><td class="memItemLeft"><a class="el" href="#af661d5042c4a5389b79594782366ccdb">reference</a>&#160;</td><td class="memItemRight"><a class="el" href="#a762b06ce8da19887d6d36c0a3171b57a">emplace_back</a> (Args &amp;&amp;... args) noexcept(std::is_nothrow_constructible_v&lt; Element, Args... &gt;)</td></tr>
-<tr class="memdesc:a762b06ce8da19887d6d36c0a3171b57a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emplaces a value at the end of the vector.  <br /></td></tr>
-<tr class="memitem:aeb6d2ef39a2d4c053b237c1639035fc0" id="r_aeb6d2ef39a2d4c053b237c1639035fc0"><td class="memTemplParams" colspan="2">template&lt;forward_iterator_to_convertible_to&lt; Element &gt; Iterator, std::sentinel_for&lt; Iterator &gt; Sentinel&gt; </td></tr>
-<tr class="memitem:aeb6d2ef39a2d4c053b237c1639035fc0 template"><td class="memItemLeft"><a class="el" href="structtr_1_1inplace__vector_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#aeb6d2ef39a2d4c053b237c1639035fc0">append</a> (Iterator first, Sentinel last) noexcept(nothrow_forward_iterator_to_convertible_to&lt; Iterator, Element &gt;)</td></tr>
-<tr class="memdesc:aeb6d2ef39a2d4c053b237c1639035fc0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Appends an iterator pair range to the vector.  <br /></td></tr>
-<tr class="memitem:aa4de2028567fd2d078d9261612bc992c" id="r_aa4de2028567fd2d078d9261612bc992c"><td class="memTemplParams" colspan="2">template&lt;forward_range_to_convertible_to&lt; Element &gt; Range&gt; </td></tr>
-<tr class="memitem:aa4de2028567fd2d078d9261612bc992c template"><td class="memItemLeft"><a class="el" href="structtr_1_1inplace__vector_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#aa4de2028567fd2d078d9261612bc992c">append</a> (Range &amp;&amp;range) noexcept(nothrow_forward_range_to_convertible_to&lt; Range, Element &gt;)</td></tr>
-<tr class="memdesc:aa4de2028567fd2d078d9261612bc992c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Appends a range to the vector.  <br /></td></tr>
-<tr class="memitem:a323111eeb396e9cfe81e248c44eb8d85" id="r_a323111eeb396e9cfe81e248c44eb8d85"><td class="memItemLeft"><a class="el" href="structtr_1_1inplace__vector_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a323111eeb396e9cfe81e248c44eb8d85">append</a> (std::initializer_list&lt; Element &gt; init) noexcept(std::is_nothrow_copy_constructible_v&lt; Element &gt;)</td></tr>
-<tr class="memdesc:a323111eeb396e9cfe81e248c44eb8d85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Appends an initializer list to the vector.  <br /></td></tr>
+<tr class="memitem:ac4765a9ec94378006fc66f21a6452327" id="r_ac4765a9ec94378006fc66f21a6452327"><td class="memItemLeft"><a class="el" href="structtr_1_1inplace__vector_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#ac4765a9ec94378006fc66f21a6452327">insert</a> (<a class="el" href="structtr_1_1inplace__vector_1_1const__iterator.html">const_iterator</a> where, const Element &amp;value) noexcept(std::is_nothrow_move_constructible_v&lt; Element &gt; &amp;&amp;std::is_nothrow_move_assignable_v&lt; Element &gt; &amp;&amp;std::is_nothrow_copy_constructible_v&lt; Element &gt;)</td></tr>
+<tr class="memdesc:ac4765a9ec94378006fc66f21a6452327"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inserts a value into the vector.  <br /></td></tr>
+<tr class="memitem:a406d86451ec0b99bbf4fd7559798ef72" id="r_a406d86451ec0b99bbf4fd7559798ef72"><td class="memItemLeft"><a class="el" href="structtr_1_1inplace__vector_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a406d86451ec0b99bbf4fd7559798ef72">insert</a> (<a class="el" href="structtr_1_1inplace__vector_1_1const__iterator.html">const_iterator</a> where, Element &amp;&amp;value) noexcept(std::is_nothrow_move_constructible_v&lt; Element &gt; &amp;&amp;std::is_nothrow_move_assignable_v&lt; Element &gt;)</td></tr>
+<tr class="memdesc:a406d86451ec0b99bbf4fd7559798ef72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inserts a value into the vector.  <br /></td></tr>
+<tr class="memitem:a6721d5e1ba15f32ed15f0472d0af20ef" id="r_a6721d5e1ba15f32ed15f0472d0af20ef"><td class="memTemplParams" colspan="2">template&lt;forward_iterator_to&lt; Element &gt; Iterator, std::sentinel_for&lt; Iterator &gt; Sentinel&gt; <br />
+requires std::move_constructible&lt;Element&gt; &amp;&amp; std::is_move_assignable_v&lt;Element&gt;</td></tr>
+<tr class="memitem:a6721d5e1ba15f32ed15f0472d0af20ef template"><td class="memItemLeft"><a class="el" href="structtr_1_1inplace__vector_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a6721d5e1ba15f32ed15f0472d0af20ef">insert</a> (<a class="el" href="structtr_1_1inplace__vector_1_1const__iterator.html">const_iterator</a> where, Iterator first, Sentinel last) noexcept(std::is_nothrow_move_constructible_v&lt; Element &gt; &amp;&amp;std::is_nothrow_move_assignable_v&lt; Element &gt; &amp;&amp;nothrow_forward_iterator_to&lt; Iterator, Element &gt;)</td></tr>
+<tr class="memdesc:a6721d5e1ba15f32ed15f0472d0af20ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inserts an iterator pair range into the string.  <br /></td></tr>
+<tr class="memitem:a0a25dcb9686d999f42e113d94e59bf39" id="r_a0a25dcb9686d999f42e113d94e59bf39"><td class="memTemplParams" colspan="2">template&lt;forward_range_to&lt; Element &gt; Range&gt; <br />
+requires std::move_constructible&lt;Element&gt; &amp;&amp; std::is_move_assignable_v&lt;Element&gt;</td></tr>
+<tr class="memitem:a0a25dcb9686d999f42e113d94e59bf39 template"><td class="memItemLeft"><a class="el" href="structtr_1_1inplace__vector_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a0a25dcb9686d999f42e113d94e59bf39">insert</a> (<a class="el" href="structtr_1_1inplace__vector_1_1const__iterator.html">const_iterator</a> where, Range &amp;&amp;range) noexcept(std::is_nothrow_move_constructible_v&lt; Element &gt; &amp;&amp;std::is_nothrow_move_assignable_v&lt; Element &gt; &amp;&amp;nothrow_forward_range_to&lt; Range, Element &gt;)</td></tr>
+<tr class="memdesc:a0a25dcb9686d999f42e113d94e59bf39"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inserts a range into the string.  <br /></td></tr>
+<tr class="memitem:a4e85166b960d1a0c636882d4ad36b42f" id="r_a4e85166b960d1a0c636882d4ad36b42f"><td class="memItemLeft"><a class="el" href="structtr_1_1inplace__vector_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a4e85166b960d1a0c636882d4ad36b42f">insert</a> (<a class="el" href="structtr_1_1inplace__vector_1_1const__iterator.html">const_iterator</a> where, std::initializer_list&lt; Element &gt; init) noexcept(std::is_nothrow_move_constructible_v&lt; Element &gt; &amp;&amp;std::is_nothrow_move_assignable_v&lt; Element &gt; &amp;&amp;std::is_nothrow_copy_constructible_v&lt; Element &gt;)</td></tr>
+<tr class="memdesc:a4e85166b960d1a0c636882d4ad36b42f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inserts an initializer list into the string.  <br /></td></tr>
+<tr class="memitem:a6b3755e7e74abfcd519cafca9f474e68" id="r_a6b3755e7e74abfcd519cafca9f474e68"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; <br />
+requires std::move_constructible&lt;Element&gt; &amp;&amp; std::is_move_assignable_v&lt;Element&gt; &amp;&amp; std::constructible_from&lt;Element, Args...&gt;</td></tr>
+<tr class="memitem:a6b3755e7e74abfcd519cafca9f474e68 template"><td class="memItemLeft"><a class="el" href="structtr_1_1inplace__vector_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a6b3755e7e74abfcd519cafca9f474e68">emplace</a> (<a class="el" href="structtr_1_1inplace__vector_1_1const__iterator.html">const_iterator</a> where, Args &amp;&amp;... args) noexcept(std::is_nothrow_move_constructible_v&lt; Element &gt; &amp;&amp;std::is_nothrow_move_assignable_v&lt; Element &gt; &amp;&amp;std::is_nothrow_constructible_v&lt; Element, Args... &gt;)</td></tr>
+<tr class="memdesc:a6b3755e7e74abfcd519cafca9f474e68"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emplaces a value in the vector.  <br /></td></tr>
+<tr class="memitem:ab8170f8303f8d9944affde339de76258" id="r_ab8170f8303f8d9944affde339de76258"><td class="memItemLeft"><a class="el" href="structtr_1_1inplace__vector_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#ab8170f8303f8d9944affde339de76258">erase</a> (<a class="el" href="structtr_1_1inplace__vector_1_1const__iterator.html">const_iterator</a> where) noexcept(std::is_nothrow_move_assignable_v&lt; Element &gt;)</td></tr>
+<tr class="memdesc:ab8170f8303f8d9944affde339de76258"><td class="mdescLeft">&#160;</td><td class="mdescRight">Erases a value from the vector.  <br /></td></tr>
+<tr class="memitem:ad162c1656df0bc69551d7c050ef75915" id="r_ad162c1656df0bc69551d7c050ef75915"><td class="memItemLeft"><a class="el" href="structtr_1_1inplace__vector_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#ad162c1656df0bc69551d7c050ef75915">erase</a> (<a class="el" href="structtr_1_1inplace__vector_1_1const__iterator.html">const_iterator</a> first, <a class="el" href="structtr_1_1inplace__vector_1_1const__iterator.html">const_iterator</a> last) noexcept(std::is_nothrow_move_assignable_v&lt; Element &gt;)</td></tr>
+<tr class="memdesc:ad162c1656df0bc69551d7c050ef75915"><td class="mdescLeft">&#160;</td><td class="mdescRight">Erases a range of values from the vector.  <br /></td></tr>
+<tr class="memitem:aaeb6f77def0dfaebdf70f12fb8fe0092" id="r_aaeb6f77def0dfaebdf70f12fb8fe0092"><td class="memItemLeft"><a class="el" href="#af661d5042c4a5389b79594782366ccdb">reference</a>&#160;</td><td class="memItemRight"><a class="el" href="#aaeb6f77def0dfaebdf70f12fb8fe0092">push_back</a> (const Element &amp;value) noexcept(std::is_nothrow_copy_constructible_v&lt; Element &gt;)</td></tr>
+<tr class="memdesc:aaeb6f77def0dfaebdf70f12fb8fe0092"><td class="mdescLeft">&#160;</td><td class="mdescRight">Appends a value to the vector.  <br /></td></tr>
+<tr class="memitem:a1601df58cff514cab6af57b98f89a61c" id="r_a1601df58cff514cab6af57b98f89a61c"><td class="memItemLeft"><a class="el" href="#af661d5042c4a5389b79594782366ccdb">reference</a>&#160;</td><td class="memItemRight"><a class="el" href="#a1601df58cff514cab6af57b98f89a61c">push_back</a> (Element &amp;&amp;value) noexcept(std::is_nothrow_move_constructible_v&lt; Element &gt;)</td></tr>
+<tr class="memdesc:a1601df58cff514cab6af57b98f89a61c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Appends a value to the vector.  <br /></td></tr>
+<tr class="memitem:a82d92886591321e0f8f1d58730665550" id="r_a82d92886591321e0f8f1d58730665550"><td class="memTemplParams" colspan="2">template&lt;typename... Args&gt; <br />
+requires std::constructible_from&lt;Element, Args...&gt;</td></tr>
+<tr class="memitem:a82d92886591321e0f8f1d58730665550 template"><td class="memItemLeft"><a class="el" href="#af661d5042c4a5389b79594782366ccdb">reference</a>&#160;</td><td class="memItemRight"><a class="el" href="#a82d92886591321e0f8f1d58730665550">emplace_back</a> (Args &amp;&amp;... args) noexcept(std::is_nothrow_constructible_v&lt; Element, Args... &gt;)</td></tr>
+<tr class="memdesc:a82d92886591321e0f8f1d58730665550"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emplaces a value at the end of the vector.  <br /></td></tr>
+<tr class="memitem:af4fafdd0b59d1e625117c4cca49fdaf0" id="r_af4fafdd0b59d1e625117c4cca49fdaf0"><td class="memTemplParams" colspan="2">template&lt;forward_iterator_to&lt; Element &gt; Iterator, std::sentinel_for&lt; Iterator &gt; Sentinel&gt; </td></tr>
+<tr class="memitem:af4fafdd0b59d1e625117c4cca49fdaf0 template"><td class="memItemLeft"><a class="el" href="structtr_1_1inplace__vector_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#af4fafdd0b59d1e625117c4cca49fdaf0">append</a> (Iterator first, Sentinel last) noexcept(nothrow_forward_iterator_to&lt; Iterator, Element &gt;)</td></tr>
+<tr class="memdesc:af4fafdd0b59d1e625117c4cca49fdaf0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Appends an iterator pair range to the vector.  <br /></td></tr>
+<tr class="memitem:a2a28f0ef5bf7ea751def8526f71cd1c4" id="r_a2a28f0ef5bf7ea751def8526f71cd1c4"><td class="memTemplParams" colspan="2">template&lt;forward_range_to&lt; Element &gt; Range&gt; </td></tr>
+<tr class="memitem:a2a28f0ef5bf7ea751def8526f71cd1c4 template"><td class="memItemLeft"><a class="el" href="structtr_1_1inplace__vector_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a2a28f0ef5bf7ea751def8526f71cd1c4">append</a> (Range &amp;&amp;range) noexcept(nothrow_forward_range_to&lt; Range, Element &gt;)</td></tr>
+<tr class="memdesc:a2a28f0ef5bf7ea751def8526f71cd1c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Appends a range to the vector.  <br /></td></tr>
+<tr class="memitem:a9a58ac2dce70d8abdc2b3abe09711f04" id="r_a9a58ac2dce70d8abdc2b3abe09711f04"><td class="memItemLeft"><a class="el" href="structtr_1_1inplace__vector_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a9a58ac2dce70d8abdc2b3abe09711f04">append</a> (std::initializer_list&lt; Element &gt; init) noexcept(std::is_nothrow_copy_constructible_v&lt; Element &gt;)</td></tr>
+<tr class="memdesc:a9a58ac2dce70d8abdc2b3abe09711f04"><td class="mdescLeft">&#160;</td><td class="mdescRight">Appends an initializer list to the vector.  <br /></td></tr>
 <tr class="memitem:a33e8a0d7967989e01b9c4c83dddca46b" id="r_a33e8a0d7967989e01b9c4c83dddca46b"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a33e8a0d7967989e01b9c4c83dddca46b">pop_back</a> () noexcept</td></tr>
 <tr class="memdesc:a33e8a0d7967989e01b9c4c83dddca46b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Erases a value from the end of the vector.  <br /></td></tr>
-<tr class="memitem:a1bcff784355d080f6edd7067b9fe3950" id="r_a1bcff784355d080f6edd7067b9fe3950"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a1bcff784355d080f6edd7067b9fe3950">resize</a> (<a class="el" href="#a0e33d7b81ecca075b2cc1262ca2a6787">size_type</a> size) noexcept(std::is_nothrow_default_constructible_v&lt; Element &gt;)</td></tr>
-<tr class="memdesc:a1bcff784355d080f6edd7067b9fe3950"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resizes the vector, default-constructing values if necessary.  <br /></td></tr>
-<tr class="memitem:aa4b5d3dd11d9e7e44cc0d21d606c75b4" id="r_aa4b5d3dd11d9e7e44cc0d21d606c75b4"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aa4b5d3dd11d9e7e44cc0d21d606c75b4">resize</a> (<a class="el" href="#a0e33d7b81ecca075b2cc1262ca2a6787">size_type</a> size, const Element &amp;value) noexcept(std::is_nothrow_copy_constructible_v&lt; Element &gt;)</td></tr>
-<tr class="memdesc:aa4b5d3dd11d9e7e44cc0d21d606c75b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resizes the vector, copy-constructing values if necessary.  <br /></td></tr>
+<tr class="memitem:a5a30ec33b176f736aad614b46649668b" id="r_a5a30ec33b176f736aad614b46649668b"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a5a30ec33b176f736aad614b46649668b">resize</a> (<a class="el" href="#a0e33d7b81ecca075b2cc1262ca2a6787">size_type</a> size) noexcept(std::is_nothrow_default_constructible_v&lt; Element &gt;)</td></tr>
+<tr class="memdesc:a5a30ec33b176f736aad614b46649668b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resizes the vector, default-constructing values if necessary.  <br /></td></tr>
+<tr class="memitem:add3956cca5715dd2c719ad42ffec403c" id="r_add3956cca5715dd2c719ad42ffec403c"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#add3956cca5715dd2c719ad42ffec403c">resize</a> (<a class="el" href="#a0e33d7b81ecca075b2cc1262ca2a6787">size_type</a> size, const Element &amp;value) noexcept(std::is_nothrow_copy_constructible_v&lt; Element &gt;)</td></tr>
+<tr class="memdesc:add3956cca5715dd2c719ad42ffec403c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resizes the vector, copy-constructing values if necessary.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-member-group" class="groupheader"><a id="member-group" name="member-group"></a>
 Size</h2></td></tr>
@@ -306,7 +307,7 @@ Size</h2></td></tr>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="classtr_1_1inplace__vector.html">tr::inplace_vector</a>&lt; Element, Capacity &gt;::size_type = <a class="el" href="namespacetr.html#a986fe14e263de48cad2eafa264faaf25">size_type_t</a>&lt;Capacity&gt;</td>
@@ -324,7 +325,7 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="classtr_1_1inplace__vector.html">tr::inplace_vector</a>&lt; Element, Capacity &gt;::difference_type = std::ptrdiff_t</td>
@@ -342,7 +343,7 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="classtr_1_1inplace__vector.html">tr::inplace_vector</a>&lt; Element, Capacity &gt;::value_type = Element</td>
@@ -360,7 +361,7 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="classtr_1_1inplace__vector.html">tr::inplace_vector</a>&lt; Element, Capacity &gt;::reference = Element&amp;</td>
@@ -378,7 +379,7 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="classtr_1_1inplace__vector.html">tr::inplace_vector</a>&lt; Element, Capacity &gt;::const_reference = const Element&amp;</td>
@@ -396,7 +397,7 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="classtr_1_1inplace__vector.html">tr::inplace_vector</a>&lt; Element, Capacity &gt;::pointer = Element*</td>
@@ -414,7 +415,7 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="classtr_1_1inplace__vector.html">tr::inplace_vector</a>&lt; Element, Capacity &gt;::const_pointer = const Element*</td>
@@ -432,7 +433,7 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="classtr_1_1inplace__vector.html">tr::inplace_vector</a>&lt; Element, Capacity &gt;::const_reverse_iterator = std::reverse_iterator&lt;<a class="el" href="structtr_1_1inplace__vector_1_1const__iterator.html">const_iterator</a>&gt;</td>
@@ -450,7 +451,7 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="classtr_1_1inplace__vector.html">tr::inplace_vector</a>&lt; Element, Capacity &gt;::reverse_iterator = std::reverse_iterator&lt;<a class="el" href="structtr_1_1inplace__vector_1_1iterator.html">iterator</a>&gt;</td>
@@ -469,7 +470,7 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -492,13 +493,13 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 
 </div>
 </div>
-<a id="aa4c9ca5c5f59352559a95e74d76f9f32" name="aa4c9ca5c5f59352559a95e74d76f9f32"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa4c9ca5c5f59352559a95e74d76f9f32">&#9670;&#160;</a></span>inplace_vector() <span class="overload">[2/8]</span></h2>
+<a id="a3c139cf7496dde7c60fee7a46e30a1eb" name="a3c139cf7496dde7c60fee7a46e30a1eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c139cf7496dde7c60fee7a46e30a1eb">&#9670;&#160;</a></span>inplace_vector() <span class="overload">[2/8]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -527,13 +528,13 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 
 </div>
 </div>
-<a id="aed3ada90b30ee13e1484bd187008068a" name="aed3ada90b30ee13e1484bd187008068a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aed3ada90b30ee13e1484bd187008068a">&#9670;&#160;</a></span>inplace_vector() <span class="overload">[3/8]</span></h2>
+<a id="a6756b9bb4772be9bce98be8343086dff" name="a6756b9bb4772be9bce98be8343086dff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6756b9bb4772be9bce98be8343086dff">&#9670;&#160;</a></span>inplace_vector() <span class="overload">[3/8]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -567,15 +568,15 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 
 </div>
 </div>
-<a id="a745db00acc8d97a5045dd0c1169fecd1" name="a745db00acc8d97a5045dd0c1169fecd1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a745db00acc8d97a5045dd0c1169fecd1">&#9670;&#160;</a></span>inplace_vector() <span class="overload">[4/8]</span></h2>
+<a id="a05f118fb56e1fd041c8a5aebbf2a3b9d" name="a05f118fb56e1fd041c8a5aebbf2a3b9d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a05f118fb56e1fd041c8a5aebbf2a3b9d">&#9670;&#160;</a></span>inplace_vector() <span class="overload">[4/8]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <div class="memtemplate">
-template&lt;forward_iterator_to_convertible_to&lt; Element &gt; Iterator, std::sentinel_for&lt; Iterator &gt; Sentinel&gt; </div>
+template&lt;forward_iterator_to&lt; Element &gt; Iterator, std::sentinel_for&lt; Iterator &gt; Sentinel&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -617,15 +618,15 @@ template&lt;forward_iterator_to_convertible_to&lt; Element &gt; Iterator, std::s
 
 </div>
 </div>
-<a id="a8885682ec933b71b5ee852492217fae5" name="a8885682ec933b71b5ee852492217fae5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8885682ec933b71b5ee852492217fae5">&#9670;&#160;</a></span>inplace_vector() <span class="overload">[5/8]</span></h2>
+<a id="ae4dab13b056a8c49c48d4e4c625a017d" name="ae4dab13b056a8c49c48d4e4c625a017d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae4dab13b056a8c49c48d4e4c625a017d">&#9670;&#160;</a></span>inplace_vector() <span class="overload">[5/8]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <div class="memtemplate">
-template&lt;forward_range_to_convertible_to&lt; Element &gt; Range&gt; </div>
+template&lt;forward_range_to&lt; Element &gt; Range&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -661,13 +662,13 @@ template&lt;forward_range_to_convertible_to&lt; Element &gt; Range&gt; </div>
 
 </div>
 </div>
-<a id="a7502622cdaa69864eb8f453eef0c52b0" name="a7502622cdaa69864eb8f453eef0c52b0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7502622cdaa69864eb8f453eef0c52b0">&#9670;&#160;</a></span>inplace_vector() <span class="overload">[6/8]</span></h2>
+<a id="af1a384c36d8365565160b9a4cbf587a2" name="af1a384c36d8365565160b9a4cbf587a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af1a384c36d8365565160b9a4cbf587a2">&#9670;&#160;</a></span>inplace_vector() <span class="overload">[6/8]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -696,13 +697,13 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 
 </div>
 </div>
-<a id="a79f98735008c518d90f18ec621237c19" name="a79f98735008c518d90f18ec621237c19"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a79f98735008c518d90f18ec621237c19">&#9670;&#160;</a></span>inplace_vector() <span class="overload">[7/8]</span></h2>
+<a id="a788d420b45bd5cf342f0a09cf74a62e3" name="a788d420b45bd5cf342f0a09cf74a62e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a788d420b45bd5cf342f0a09cf74a62e3">&#9670;&#160;</a></span>inplace_vector() <span class="overload">[7/8]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -731,13 +732,13 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 
 </div>
 </div>
-<a id="a427c8e4befcce92707ecc26318c53fa9" name="a427c8e4befcce92707ecc26318c53fa9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a427c8e4befcce92707ecc26318c53fa9">&#9670;&#160;</a></span>inplace_vector() <span class="overload">[8/8]</span></h2>
+<a id="a6521833861f92dab3b310c445f9ec940" name="a6521833861f92dab3b310c445f9ec940"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6521833861f92dab3b310c445f9ec940">&#9670;&#160;</a></span>inplace_vector() <span class="overload">[8/8]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -772,7 +773,7 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -796,13 +797,13 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="a55987289146aab846d65694444d77930" name="a55987289146aab846d65694444d77930"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a55987289146aab846d65694444d77930">&#9670;&#160;</a></span>operator=() <span class="overload">[1/2]</span></h2>
+<a id="a752be38821c8f2ffeed3f11737871d38" name="a752be38821c8f2ffeed3f11737871d38"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a752be38821c8f2ffeed3f11737871d38">&#9670;&#160;</a></span>operator=() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -832,13 +833,13 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 
 </div>
 </div>
-<a id="a15e844416031f2ab51fca9960e134bb7" name="a15e844416031f2ab51fca9960e134bb7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a15e844416031f2ab51fca9960e134bb7">&#9670;&#160;</a></span>operator=() <span class="overload">[2/2]</span></h2>
+<a id="a8ccf86fa77d5d5f4347b12eceadd34c4" name="a8ccf86fa77d5d5f4347b12eceadd34c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ccf86fa77d5d5f4347b12eceadd34c4">&#9670;&#160;</a></span>operator=() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -874,7 +875,7 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -911,7 +912,7 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -948,7 +949,7 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -985,7 +986,7 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -1022,7 +1023,7 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -1052,7 +1053,7 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -1082,7 +1083,7 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -1112,7 +1113,7 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -1142,7 +1143,7 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -1172,7 +1173,7 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -1202,7 +1203,7 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -1232,7 +1233,7 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -1262,7 +1263,7 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -1292,7 +1293,7 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -1322,7 +1323,7 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -1352,7 +1353,7 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -1382,7 +1383,7 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -1412,7 +1413,7 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -1442,7 +1443,7 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -1472,7 +1473,7 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -1502,7 +1503,7 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -1532,7 +1533,7 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -1562,7 +1563,7 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -1592,7 +1593,7 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -1622,7 +1623,7 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -1652,7 +1653,7 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -1675,13 +1676,13 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 
 </div>
 </div>
-<a id="ab0190507d49bf798c641df13e350589c" name="ab0190507d49bf798c641df13e350589c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab0190507d49bf798c641df13e350589c">&#9670;&#160;</a></span>insert() <span class="overload">[1/5]</span></h2>
+<a id="ac4765a9ec94378006fc66f21a6452327" name="ac4765a9ec94378006fc66f21a6452327"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac4765a9ec94378006fc66f21a6452327">&#9670;&#160;</a></span>insert() <span class="overload">[1/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -1717,13 +1718,13 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 
 </div>
 </div>
-<a id="a904e50fc3b4e9072f4f3cb47a77f5c46" name="a904e50fc3b4e9072f4f3cb47a77f5c46"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a904e50fc3b4e9072f4f3cb47a77f5c46">&#9670;&#160;</a></span>insert() <span class="overload">[2/5]</span></h2>
+<a id="a406d86451ec0b99bbf4fd7559798ef72" name="a406d86451ec0b99bbf4fd7559798ef72"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a406d86451ec0b99bbf4fd7559798ef72">&#9670;&#160;</a></span>insert() <span class="overload">[2/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -1759,16 +1760,16 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 
 </div>
 </div>
-<a id="ace242e648f0f546293f22dc71ab01280" name="ace242e648f0f546293f22dc71ab01280"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ace242e648f0f546293f22dc71ab01280">&#9670;&#160;</a></span>insert() <span class="overload">[3/5]</span></h2>
+<a id="a6721d5e1ba15f32ed15f0472d0af20ef" name="a6721d5e1ba15f32ed15f0472d0af20ef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6721d5e1ba15f32ed15f0472d0af20ef">&#9670;&#160;</a></span>insert() <span class="overload">[3/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <div class="memtemplate">
-template&lt;forward_iterator_to_convertible_to&lt; Element &gt; Iterator, std::sentinel_for&lt; Iterator &gt; Sentinel&gt; <br />
-requires (std::move_constructible&lt;Element&gt; &amp;&amp; move_assignable&lt;Element&gt;)</div>
+template&lt;forward_iterator_to&lt; Element &gt; Iterator, std::sentinel_for&lt; Iterator &gt; Sentinel&gt; <br />
+requires std::move_constructible&lt;Element&gt; &amp;&amp; std::is_move_assignable_v&lt;Element&gt;</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -1817,16 +1818,16 @@ requires (std::move_constructible&lt;Element&gt; &amp;&amp; move_assignable&lt;E
 
 </div>
 </div>
-<a id="a6e418a7a77111ba7ff5eabf3009979a9" name="a6e418a7a77111ba7ff5eabf3009979a9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6e418a7a77111ba7ff5eabf3009979a9">&#9670;&#160;</a></span>insert() <span class="overload">[4/5]</span></h2>
+<a id="a0a25dcb9686d999f42e113d94e59bf39" name="a0a25dcb9686d999f42e113d94e59bf39"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a25dcb9686d999f42e113d94e59bf39">&#9670;&#160;</a></span>insert() <span class="overload">[4/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <div class="memtemplate">
-template&lt;forward_range_to_convertible_to&lt; Element &gt; Range&gt; <br />
-requires (std::move_constructible&lt;Element&gt; &amp;&amp; move_assignable&lt;Element&gt;)</div>
+template&lt;forward_range_to&lt; Element &gt; Range&gt; <br />
+requires std::move_constructible&lt;Element&gt; &amp;&amp; std::is_move_assignable_v&lt;Element&gt;</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -1868,13 +1869,13 @@ requires (std::move_constructible&lt;Element&gt; &amp;&amp; move_assignable&lt;E
 
 </div>
 </div>
-<a id="a0c6f1d03acb9a1597af477964e1b6e08" name="a0c6f1d03acb9a1597af477964e1b6e08"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0c6f1d03acb9a1597af477964e1b6e08">&#9670;&#160;</a></span>insert() <span class="overload">[5/5]</span></h2>
+<a id="a4e85166b960d1a0c636882d4ad36b42f" name="a4e85166b960d1a0c636882d4ad36b42f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e85166b960d1a0c636882d4ad36b42f">&#9670;&#160;</a></span>insert() <span class="overload">[5/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -1910,16 +1911,16 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 
 </div>
 </div>
-<a id="a3fc63e379c3d9ca9663d1fcd03bb04e2" name="a3fc63e379c3d9ca9663d1fcd03bb04e2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3fc63e379c3d9ca9663d1fcd03bb04e2">&#9670;&#160;</a></span>emplace()</h2>
+<a id="a6b3755e7e74abfcd519cafca9f474e68" name="a6b3755e7e74abfcd519cafca9f474e68"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b3755e7e74abfcd519cafca9f474e68">&#9670;&#160;</a></span>emplace()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <div class="memtemplate">
 template&lt;typename... Args&gt; <br />
-requires (std::move_constructible&lt;Element&gt; &amp;&amp; move_assignable&lt;Element&gt; &amp;&amp; std::constructible_from&lt;Element, Args...&gt;)</div>
+requires std::move_constructible&lt;Element&gt; &amp;&amp; std::is_move_assignable_v&lt;Element&gt; &amp;&amp; std::constructible_from&lt;Element, Args...&gt;</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -1961,13 +1962,13 @@ requires (std::move_constructible&lt;Element&gt; &amp;&amp; move_assignable&lt;E
 
 </div>
 </div>
-<a id="aeffe9b1eb5dfc95ffe4c0a667b3a17cd" name="aeffe9b1eb5dfc95ffe4c0a667b3a17cd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeffe9b1eb5dfc95ffe4c0a667b3a17cd">&#9670;&#160;</a></span>erase() <span class="overload">[1/2]</span></h2>
+<a id="ab8170f8303f8d9944affde339de76258" name="ab8170f8303f8d9944affde339de76258"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab8170f8303f8d9944affde339de76258">&#9670;&#160;</a></span>erase() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -1997,13 +1998,13 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 
 </div>
 </div>
-<a id="a6c6db908c2ba203aecfa3934f383e67f" name="a6c6db908c2ba203aecfa3934f383e67f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6c6db908c2ba203aecfa3934f383e67f">&#9670;&#160;</a></span>erase() <span class="overload">[2/2]</span></h2>
+<a id="ad162c1656df0bc69551d7c050ef75915" name="ad162c1656df0bc69551d7c050ef75915"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad162c1656df0bc69551d7c050ef75915">&#9670;&#160;</a></span>erase() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -2038,13 +2039,13 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 
 </div>
 </div>
-<a id="aa2d52a6960d6b8ed1ad51cef0dcf0875" name="aa2d52a6960d6b8ed1ad51cef0dcf0875"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa2d52a6960d6b8ed1ad51cef0dcf0875">&#9670;&#160;</a></span>push_back() <span class="overload">[1/2]</span></h2>
+<a id="aaeb6f77def0dfaebdf70f12fb8fe0092" name="aaeb6f77def0dfaebdf70f12fb8fe0092"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaeb6f77def0dfaebdf70f12fb8fe0092">&#9670;&#160;</a></span>push_back() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -2075,13 +2076,13 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 
 </div>
 </div>
-<a id="ad019abbaf2d7affd3661debfb1be10f8" name="ad019abbaf2d7affd3661debfb1be10f8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad019abbaf2d7affd3661debfb1be10f8">&#9670;&#160;</a></span>push_back() <span class="overload">[2/2]</span></h2>
+<a id="a1601df58cff514cab6af57b98f89a61c" name="a1601df58cff514cab6af57b98f89a61c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1601df58cff514cab6af57b98f89a61c">&#9670;&#160;</a></span>push_back() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -2112,16 +2113,16 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 
 </div>
 </div>
-<a id="a762b06ce8da19887d6d36c0a3171b57a" name="a762b06ce8da19887d6d36c0a3171b57a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a762b06ce8da19887d6d36c0a3171b57a">&#9670;&#160;</a></span>emplace_back()</h2>
+<a id="a82d92886591321e0f8f1d58730665550" name="a82d92886591321e0f8f1d58730665550"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a82d92886591321e0f8f1d58730665550">&#9670;&#160;</a></span>emplace_back()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <div class="memtemplate">
 template&lt;typename... Args&gt; <br />
-requires (std::constructible_from&lt;Element, Args...&gt;)</div>
+requires std::constructible_from&lt;Element, Args...&gt;</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -2158,15 +2159,15 @@ requires (std::constructible_from&lt;Element, Args...&gt;)</div>
 
 </div>
 </div>
-<a id="aeb6d2ef39a2d4c053b237c1639035fc0" name="aeb6d2ef39a2d4c053b237c1639035fc0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeb6d2ef39a2d4c053b237c1639035fc0">&#9670;&#160;</a></span>append() <span class="overload">[1/3]</span></h2>
+<a id="af4fafdd0b59d1e625117c4cca49fdaf0" name="af4fafdd0b59d1e625117c4cca49fdaf0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af4fafdd0b59d1e625117c4cca49fdaf0">&#9670;&#160;</a></span>append() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <div class="memtemplate">
-template&lt;forward_iterator_to_convertible_to&lt; Element &gt; Iterator, std::sentinel_for&lt; Iterator &gt; Sentinel&gt; </div>
+template&lt;forward_iterator_to&lt; Element &gt; Iterator, std::sentinel_for&lt; Iterator &gt; Sentinel&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -2209,15 +2210,15 @@ template&lt;forward_iterator_to_convertible_to&lt; Element &gt; Iterator, std::s
 
 </div>
 </div>
-<a id="aa4de2028567fd2d078d9261612bc992c" name="aa4de2028567fd2d078d9261612bc992c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa4de2028567fd2d078d9261612bc992c">&#9670;&#160;</a></span>append() <span class="overload">[2/3]</span></h2>
+<a id="a2a28f0ef5bf7ea751def8526f71cd1c4" name="a2a28f0ef5bf7ea751def8526f71cd1c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a28f0ef5bf7ea751def8526f71cd1c4">&#9670;&#160;</a></span>append() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <div class="memtemplate">
-template&lt;forward_range_to_convertible_to&lt; Element &gt; Range&gt; </div>
+template&lt;forward_range_to&lt; Element &gt; Range&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -2254,13 +2255,13 @@ template&lt;forward_range_to_convertible_to&lt; Element &gt; Range&gt; </div>
 
 </div>
 </div>
-<a id="a323111eeb396e9cfe81e248c44eb8d85" name="a323111eeb396e9cfe81e248c44eb8d85"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a323111eeb396e9cfe81e248c44eb8d85">&#9670;&#160;</a></span>append() <span class="overload">[3/3]</span></h2>
+<a id="a9a58ac2dce70d8abdc2b3abe09711f04" name="a9a58ac2dce70d8abdc2b3abe09711f04"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9a58ac2dce70d8abdc2b3abe09711f04">&#9670;&#160;</a></span>append() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -2297,7 +2298,7 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -2320,13 +2321,13 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 
 </div>
 </div>
-<a id="a1bcff784355d080f6edd7067b9fe3950" name="a1bcff784355d080f6edd7067b9fe3950"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1bcff784355d080f6edd7067b9fe3950">&#9670;&#160;</a></span>resize() <span class="overload">[1/2]</span></h2>
+<a id="a5a30ec33b176f736aad614b46649668b" name="a5a30ec33b176f736aad614b46649668b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a30ec33b176f736aad614b46649668b">&#9670;&#160;</a></span>resize() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -2356,13 +2357,13 @@ template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1ali
 
 </div>
 </div>
-<a id="aa4b5d3dd11d9e7e44cc0d21d606c75b4" name="aa4b5d3dd11d9e7e44cc0d21d606c75b4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa4b5d3dd11d9e7e44cc0d21d606c75b4">&#9670;&#160;</a></span>resize() <span class="overload">[2/2]</span></h2>
+<a id="add3956cca5715dd2c719ad42ffec403c" name="add3956cca5715dd2c719ad42ffec403c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add3956cca5715dd2c719ad42ffec403c">&#9670;&#160;</a></span>resize() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;nothrow_destructible Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
+template&lt;typename Element, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Capacity&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">

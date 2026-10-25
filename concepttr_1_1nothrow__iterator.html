@@ -131,10 +131,11 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('concepttr_1_1n
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Iterator that does not throw. </p>
 </div><h2 id="header-conceptdef" class="groupheader">Concept definition</h2>
-<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepttr_1_1nothrow__iterator.html">nothrow_iterator</a> = std::input_or_output_iterator&lt;T&gt; &amp;&amp; <span class="keyword">noexcept</span>(++std::declval&lt;T&amp;&gt;()) &amp;&amp;</div>
-<div class="line">                               <span class="keyword">noexcept</span>(std::declval&lt;const T&amp;&gt;() != std::declval&lt;const T&amp;&gt;()) &amp;&amp; <span class="keyword">noexcept</span>(*std::declval&lt;T&amp;&gt;())</div>
-<div class="ttc" id="aconcepttr_1_1nothrow__iterator_html"><div class="ttname"><a href="concepttr_1_1nothrow__iterator.html">tr::nothrow_iterator</a></div><div class="ttdoc">Iterator that does not throw.</div><div class="ttdef"><b>Definition</b> concepts.hpp:83</div></div>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Target&gt;</div>
+<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepttr_1_1nothrow__iterator.html">nothrow_iterator</a> = std::input_or_output_iterator&lt;Target&gt; &amp;&amp; <span class="keyword">noexcept</span>(++std::declval&lt;Target&amp;&gt;()) &amp;&amp;</div>
+<div class="line">                               <span class="keyword">noexcept</span>(std::declval&lt;const Target&amp;&gt;() != std::declval&lt;const Target&amp;&gt;()) &amp;&amp;</div>
+<div class="line">                               <span class="keyword">noexcept</span>(*std::declval&lt;Target&amp;&gt;())</div>
+<div class="ttc" id="aconcepttr_1_1nothrow__iterator_html"><div class="ttname"><a href="concepttr_1_1nothrow__iterator.html">tr::nothrow_iterator</a></div><div class="ttdoc">Iterator that does not throw.</div><div class="ttdef"><b>Definition</b> iterator_concepts.hpp:13</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=11" />
   <meta name="generator" content="Doxygen 1.18.0" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>tr: tr::triangle Struct Reference</title>
+  <title>tr: tr::triangle&lt; Rep &gt; Struct Template Reference</title>
   <link href="tabs.css" rel="stylesheet" type="text/css" />
   <script type="text/javascript" src="jquery.js"></script>
   <script type="text/javascript" src="dynsections.js"></script>
@@ -122,43 +122,59 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('structtr_1_1tr
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">tr::triangle Struct Reference</div></div>
+  <div class="headertitle"><div class="title">tr::triangle&lt; Rep &gt; Struct Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
 <p>2D triangle structure.  
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>2D triangle structure. </p>
+<div class="textblock"><div class="compoundTemplParams">template&lt;arithmetic Rep&gt;<br />
+struct tr::triangle&lt; Rep &gt;</div><p>2D triangle structure. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Rep</td><td>Representation type of the triangle. </td></tr>
+  </table>
+  </dd>
+</dl>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a663d8adb9dd87ae19344cf401cffe62b" id="r_a663d8adb9dd87ae19344cf401cffe62b"><td class="memItemLeft"><a class="el" href="namespacetr.html#ae9b7761d946bc2847ec7c53113b5eb9d">winding_order</a>&#160;</td><td class="memItemRight"><a class="el" href="#a663d8adb9dd87ae19344cf401cffe62b">winding_order</a> () const noexcept</td></tr>
-<tr class="memdesc:a663d8adb9dd87ae19344cf401cffe62b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines the winding order of the triangle.  <br /></td></tr>
-<tr class="memitem:a020c87c7fbd76bf91a1e4aae54610ea8" id="r_a020c87c7fbd76bf91a1e4aae54610ea8"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a020c87c7fbd76bf91a1e4aae54610ea8">contains</a> (glm::vec2 point) const noexcept</td></tr>
-<tr class="memdesc:a020c87c7fbd76bf91a1e4aae54610ea8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines whether a point is contained inside the triangle.  <br /></td></tr>
+<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Conversion operators</div></td></tr>
+<tr class="memitem:aa6a5b7e7421d442ef2bdd3faeffa04bd" id="r_aa6a5b7e7421d442ef2bdd3faeffa04bd"><td class="memTemplParams" colspan="2">template&lt;arithmetic TargetRep&gt; </td></tr>
+<tr class="memitem:aa6a5b7e7421d442ef2bdd3faeffa04bd template"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#aa6a5b7e7421d442ef2bdd3faeffa04bd">operator triangle&lt; TargetRep &gt;</a> () const noexcept</td></tr>
+<tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Mathematical operations</div></td></tr>
+<tr class="memitem:a029c2cbd6a604ea721194beb92376a6b" id="r_a029c2cbd6a604ea721194beb92376a6b"><td class="memItemLeft">constexpr <a class="el" href="namespacetr.html#ae9b7761d946bc2847ec7c53113b5eb9d">winding_order</a>&#160;</td><td class="memItemRight"><a class="el" href="#a029c2cbd6a604ea721194beb92376a6b">winding_order</a> () const noexcept</td></tr>
+<tr class="memdesc:a029c2cbd6a604ea721194beb92376a6b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines the winding order of the triangle.  <br /></td></tr>
+<tr class="memitem:a6af0fd6f43693b04d42aa9ce1442923b" id="r_a6af0fd6f43693b04d42aa9ce1442923b"><td class="memTemplParams" colspan="2">template&lt;arithmetic PointRep = Rep&gt; </td></tr>
+<tr class="memitem:a6af0fd6f43693b04d42aa9ce1442923b template"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="#a6af0fd6f43693b04d42aa9ce1442923b">contains</a> (glm::tvec2&lt; PointRep &gt; point) const noexcept</td></tr>
+<tr class="memdesc:a6af0fd6f43693b04d42aa9ce1442923b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines whether a point is contained inside the triangle.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a2cbb03216c7040425cb4fafe9a6635bd" id="r_a2cbb03216c7040425cb4fafe9a6635bd"><td class="memItemLeft">glm::vec2&#160;</td><td class="memItemRight"><a class="el" href="#a2cbb03216c7040425cb4fafe9a6635bd">a</a></td></tr>
-<tr class="memdesc:a2cbb03216c7040425cb4fafe9a6635bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">First point of the triangle.  <br /></td></tr>
-<tr class="memitem:ae4de3b9a5e88efee9448b756514c4cb8" id="r_ae4de3b9a5e88efee9448b756514c4cb8"><td class="memItemLeft">glm::vec2&#160;</td><td class="memItemRight"><a class="el" href="#ae4de3b9a5e88efee9448b756514c4cb8">b</a></td></tr>
-<tr class="memdesc:ae4de3b9a5e88efee9448b756514c4cb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Second point of the triangle.  <br /></td></tr>
-<tr class="memitem:a4f74e971cabd8a7c601a0ba38649b007" id="r_a4f74e971cabd8a7c601a0ba38649b007"><td class="memItemLeft">glm::vec2&#160;</td><td class="memItemRight"><a class="el" href="#a4f74e971cabd8a7c601a0ba38649b007">c</a></td></tr>
-<tr class="memdesc:a4f74e971cabd8a7c601a0ba38649b007"><td class="mdescLeft">&#160;</td><td class="mdescRight">Third point of the triangle.  <br /></td></tr>
+<tr class="memitem:a9458a09d19e4ed9a1e6dfd2c3edecc89" id="r_a9458a09d19e4ed9a1e6dfd2c3edecc89"><td class="memItemLeft">glm::tvec2&lt; Rep &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a9458a09d19e4ed9a1e6dfd2c3edecc89">a</a></td></tr>
+<tr class="memdesc:a9458a09d19e4ed9a1e6dfd2c3edecc89"><td class="mdescLeft">&#160;</td><td class="mdescRight">First point of the triangle.  <br /></td></tr>
+<tr class="memitem:a1e08e340e1a0eafddf746f286693e077" id="r_a1e08e340e1a0eafddf746f286693e077"><td class="memItemLeft">glm::tvec2&lt; Rep &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a1e08e340e1a0eafddf746f286693e077">b</a></td></tr>
+<tr class="memdesc:a1e08e340e1a0eafddf746f286693e077"><td class="mdescLeft">&#160;</td><td class="mdescRight">Second point of the triangle.  <br /></td></tr>
+<tr class="memitem:aa56950229d9825d6121647651928f68a" id="r_aa56950229d9825d6121647651928f68a"><td class="memItemLeft">glm::tvec2&lt; Rep &gt;&#160;</td><td class="memItemRight"><a class="el" href="#aa56950229d9825d6121647651928f68a">c</a></td></tr>
+<tr class="memdesc:aa56950229d9825d6121647651928f68a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Third point of the triangle.  <br /></td></tr>
 </table>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="a663d8adb9dd87ae19344cf401cffe62b" name="a663d8adb9dd87ae19344cf401cffe62b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a663d8adb9dd87ae19344cf401cffe62b">&#9670;&#160;</a></span>winding_order()</h2>
+<a id="aa6a5b7e7421d442ef2bdd3faeffa04bd" name="aa6a5b7e7421d442ef2bdd3faeffa04bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa6a5b7e7421d442ef2bdd3faeffa04bd">&#9670;&#160;</a></span>operator triangle&lt; TargetRep &gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;arithmetic Rep&gt; </div>
+<div class="memtemplate">
+template&lt;arithmetic TargetRep&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespacetr.html#ae9b7761d946bc2847ec7c53113b5eb9d">winding_order</a> tr::triangle::winding_order </td>
+          <td class="memname"><a class="el" href="structtr_1_1triangle.html">tr::triangle</a>&lt; Rep &gt;::operator <a class="el" href="structtr_1_1triangle.html">triangle</a>&lt; TargetRep &gt; </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -166,7 +182,34 @@ Public Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel explicit">explicit</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a029c2cbd6a604ea721194beb92376a6b" name="a029c2cbd6a604ea721194beb92376a6b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a029c2cbd6a604ea721194beb92376a6b">&#9670;&#160;</a></span>winding_order()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;arithmetic Rep&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacetr.html#ae9b7761d946bc2847ec7c53113b5eb9d">winding_order</a> <a class="el" href="structtr_1_1triangle.html">tr::triangle</a>&lt; Rep &gt;::winding_order </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -176,30 +219,40 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a020c87c7fbd76bf91a1e4aae54610ea8" name="a020c87c7fbd76bf91a1e4aae54610ea8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a020c87c7fbd76bf91a1e4aae54610ea8">&#9670;&#160;</a></span>contains()</h2>
+<a id="a6af0fd6f43693b04d42aa9ce1442923b" name="a6af0fd6f43693b04d42aa9ce1442923b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6af0fd6f43693b04d42aa9ce1442923b">&#9670;&#160;</a></span>contains()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;arithmetic Rep&gt; </div>
+<div class="memtemplate">
+template&lt;arithmetic PointRep = Rep&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool tr::triangle::contains </td>
+          <td class="memname">bool <a class="el" href="structtr_1_1triangle.html">tr::triangle</a>&lt; Rep &gt;::contains </td>
           <td>(</td>
-          <td class="paramtype">glm::vec2</td>          <td class="paramname"><span class="paramname"><em>point</em></span></td><td>)</td>
+          <td class="paramtype">glm::tvec2&lt; PointRep &gt;</td>          <td class="paramname"><span class="paramname"><em>point</em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 <p>Determines whether a point is contained inside the triangle. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">PointRet</td><td>Representation type of the point. </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">point</td><td>Point to check for being in the triangle. </td></tr>
@@ -211,14 +264,16 @@ Public Attributes</h2></td></tr>
 </div>
 </div>
 <a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
-<a id="a2cbb03216c7040425cb4fafe9a6635bd" name="a2cbb03216c7040425cb4fafe9a6635bd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2cbb03216c7040425cb4fafe9a6635bd">&#9670;&#160;</a></span>a</h2>
+<a id="a9458a09d19e4ed9a1e6dfd2c3edecc89" name="a9458a09d19e4ed9a1e6dfd2c3edecc89"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9458a09d19e4ed9a1e6dfd2c3edecc89">&#9670;&#160;</a></span>a</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;arithmetic Rep&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">glm::vec2 tr::triangle::a</td>
+          <td class="memname">glm::tvec2&lt;Rep&gt; <a class="el" href="structtr_1_1triangle.html">tr::triangle</a>&lt; Rep &gt;::a</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -227,14 +282,16 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="ae4de3b9a5e88efee9448b756514c4cb8" name="ae4de3b9a5e88efee9448b756514c4cb8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae4de3b9a5e88efee9448b756514c4cb8">&#9670;&#160;</a></span>b</h2>
+<a id="a1e08e340e1a0eafddf746f286693e077" name="a1e08e340e1a0eafddf746f286693e077"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e08e340e1a0eafddf746f286693e077">&#9670;&#160;</a></span>b</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;arithmetic Rep&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">glm::vec2 tr::triangle::b</td>
+          <td class="memname">glm::tvec2&lt;Rep&gt; <a class="el" href="structtr_1_1triangle.html">tr::triangle</a>&lt; Rep &gt;::b</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -243,14 +300,16 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a4f74e971cabd8a7c601a0ba38649b007" name="a4f74e971cabd8a7c601a0ba38649b007"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4f74e971cabd8a7c601a0ba38649b007">&#9670;&#160;</a></span>c</h2>
+<a id="aa56950229d9825d6121647651928f68a" name="aa56950229d9825d6121647651928f68a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa56950229d9825d6121647651928f68a">&#9670;&#160;</a></span>c</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;arithmetic Rep&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">glm::vec2 tr::triangle::c</td>
+          <td class="memname">glm::tvec2&lt;Rep&gt; <a class="el" href="structtr_1_1triangle.html">tr::triangle</a>&lt; Rep &gt;::c</td>
         </tr>
       </table>
 </div><div class="memdoc">

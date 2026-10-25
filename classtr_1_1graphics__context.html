@@ -195,10 +195,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:abb0dbd82da0cc701fb301b68f0c703fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an active vertex buffer.  <br /></td></tr>
 <tr class="memitem:a7cf6249338138d0a601c328d195019b1" id="r_a7cf6249338138d0a601c328d195019b1"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a7cf6249338138d0a601c328d195019b1">set_vertex_buffer</a> (const <a class="el" href="classtr_1_1untyped__dynamic__vertex__buffer.html">untyped_dynamic_vertex_buffer</a> &amp;buffer, int slot, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a0cfca98bbeed1e31ae9ef0344fb39389">ssize</a> offset, int stride) noexcept</td></tr>
 <tr class="memdesc:a7cf6249338138d0a601c328d195019b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an active vertex buffer.  <br /></td></tr>
-<tr class="memitem:a0025007d38ce4528b7760c11b6754f22" id="r_a0025007d38ce4528b7760c11b6754f22"><td class="memTemplParams" colspan="2">template&lt;standard_layout Element&gt; </td></tr>
+<tr class="memitem:a0025007d38ce4528b7760c11b6754f22" id="r_a0025007d38ce4528b7760c11b6754f22"><td class="memTemplParams" colspan="2">template&lt;typename Element&gt; </td></tr>
 <tr class="memitem:a0025007d38ce4528b7760c11b6754f22 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a0025007d38ce4528b7760c11b6754f22">set_vertex_buffer</a> (const <a class="el" href="classtr_1_1static__vertex__buffer.html">static_vertex_buffer</a>&lt; Element &gt; &amp;buffer, int slot, int offset) noexcept</td></tr>
 <tr class="memdesc:a0025007d38ce4528b7760c11b6754f22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an active vertex buffer.  <br /></td></tr>
-<tr class="memitem:a3b721c1a5b642a53b930d182e0e817e9" id="r_a3b721c1a5b642a53b930d182e0e817e9"><td class="memTemplParams" colspan="2">template&lt;standard_layout Element&gt; </td></tr>
+<tr class="memitem:a3b721c1a5b642a53b930d182e0e817e9" id="r_a3b721c1a5b642a53b930d182e0e817e9"><td class="memTemplParams" colspan="2">template&lt;typename Element&gt; </td></tr>
 <tr class="memitem:a3b721c1a5b642a53b930d182e0e817e9 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a3b721c1a5b642a53b930d182e0e817e9">set_vertex_buffer</a> (const <a class="el" href="classtr_1_1dynamic__vertex__buffer.html">dynamic_vertex_buffer</a>&lt; Element &gt; &amp;buffer, int slot, int offset) noexcept</td></tr>
 <tr class="memdesc:a3b721c1a5b642a53b930d182e0e817e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets an active vertex buffer.  <br /></td></tr>
 <tr id="pub-methods-12" class="groupHeader"><td colspan="2"><div class="groupHeader">Index buffer</div></td></tr>
@@ -207,14 +207,14 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:afe6bbfefd856ec696b2168cea5c242bc" id="r_afe6bbfefd856ec696b2168cea5c242bc"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#afe6bbfefd856ec696b2168cea5c242bc">set_index_buffer</a> (const <a class="el" href="classtr_1_1dynamic__index__buffer.html">dynamic_index_buffer</a> &amp;buffer) noexcept</td></tr>
 <tr class="memdesc:afe6bbfefd856ec696b2168cea5c242bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the active index buffer.  <br /></td></tr>
 <tr id="pub-methods-13" class="groupHeader"><td colspan="2"><div class="groupHeader">Clearing</div></td></tr>
-<tr class="memitem:a15ab939eb6e33ca7c21d5e55add99fa9" id="r_a15ab939eb6e33ca7c21d5e55add99fa9"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a15ab939eb6e33ca7c21d5e55add99fa9">clear_backbuffer</a> (<a class="el" href="structtr_1_1rgbaf.html">rgbaf</a> color={0, 0, 0, 0}) noexcept</td></tr>
-<tr class="memdesc:a15ab939eb6e33ca7c21d5e55add99fa9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the backbuffer's color.  <br /></td></tr>
-<tr class="memitem:abf27ec04b8aaae60ccb67dce288b772d" id="r_abf27ec04b8aaae60ccb67dce288b772d"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#abf27ec04b8aaae60ccb67dce288b772d">clear_backbuffer</a> (<a class="el" href="structtr_1_1rgbaf.html">rgbaf</a> color, double depth, int stencil) noexcept</td></tr>
-<tr class="memdesc:abf27ec04b8aaae60ccb67dce288b772d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the backbuffer.  <br /></td></tr>
-<tr class="memitem:a2903b663856133e550d2c0f5dee9b3c3" id="r_a2903b663856133e550d2c0f5dee9b3c3"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a2903b663856133e550d2c0f5dee9b3c3">clear_backbuffer_region</a> (<a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; int &gt; region, <a class="el" href="structtr_1_1rgbaf.html">rgbaf</a> color={0, 0, 0, 0}) noexcept</td></tr>
-<tr class="memdesc:a2903b663856133e550d2c0f5dee9b3c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears a backbuffer region's color.  <br /></td></tr>
-<tr class="memitem:a2d791dc92664e06d00be71918eee0a51" id="r_a2d791dc92664e06d00be71918eee0a51"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a2d791dc92664e06d00be71918eee0a51">clear_backbuffer_region</a> (<a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; int &gt; region, <a class="el" href="structtr_1_1rgbaf.html">rgbaf</a> color, double depth, int stencil) noexcept</td></tr>
-<tr class="memdesc:a2d791dc92664e06d00be71918eee0a51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears a backbuffer region.  <br /></td></tr>
+<tr class="memitem:a550c35e3554d8250cf08bf782a2f7876" id="r_a550c35e3554d8250cf08bf782a2f7876"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a550c35e3554d8250cf08bf782a2f7876">clear_backbuffer</a> (<a class="el" href="structtr_1_1rgba.html">rgba</a>&lt; float &gt; color={0, 0, 0, 0}) noexcept</td></tr>
+<tr class="memdesc:a550c35e3554d8250cf08bf782a2f7876"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the backbuffer's color.  <br /></td></tr>
+<tr class="memitem:a000a1dffe445438ef9506e4eb44d7b4b" id="r_a000a1dffe445438ef9506e4eb44d7b4b"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a000a1dffe445438ef9506e4eb44d7b4b">clear_backbuffer</a> (<a class="el" href="structtr_1_1rgba.html">rgba</a>&lt; float &gt; color, double depth, int stencil) noexcept</td></tr>
+<tr class="memdesc:a000a1dffe445438ef9506e4eb44d7b4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the backbuffer.  <br /></td></tr>
+<tr class="memitem:ab43b4ba4ca6ec73b317480fd2de15d36" id="r_ab43b4ba4ca6ec73b317480fd2de15d36"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ab43b4ba4ca6ec73b317480fd2de15d36">clear_backbuffer_region</a> (<a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; int &gt; region, <a class="el" href="structtr_1_1rgba.html">rgba</a>&lt; float &gt; color={0, 0, 0, 0}) noexcept</td></tr>
+<tr class="memdesc:ab43b4ba4ca6ec73b317480fd2de15d36"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears a backbuffer region's color.  <br /></td></tr>
+<tr class="memitem:a7844fdba99177b09dce7f03031624dae" id="r_a7844fdba99177b09dce7f03031624dae"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a7844fdba99177b09dce7f03031624dae">clear_backbuffer_region</a> (<a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; int &gt; region, <a class="el" href="structtr_1_1rgba.html">rgba</a>&lt; float &gt; color, double depth, int stencil) noexcept</td></tr>
+<tr class="memdesc:a7844fdba99177b09dce7f03031624dae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears a backbuffer region.  <br /></td></tr>
 <tr id="pub-methods-14" class="groupHeader"><td colspan="2"><div class="groupHeader">Drawing</div></td></tr>
 <tr class="memitem:a27e01e4ee5884513047b05aae7bb6237" id="r_a27e01e4ee5884513047b05aae7bb6237"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a27e01e4ee5884513047b05aae7bb6237">draw</a> (<a class="el" href="namespacetr.html#a400576423c7753c57e41f5375e765753">primitive</a> type, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> offset, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> vertices) noexcept</td></tr>
 <tr class="memdesc:a27e01e4ee5884513047b05aae7bb6237"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws a mesh from a vertex buffer.  <br /></td></tr>
@@ -945,7 +945,7 @@ Public Member Functions</h2></td></tr>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;standard_layout Element&gt; </div>
+template&lt;typename Element&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -997,7 +997,7 @@ template&lt;standard_layout Element&gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;standard_layout Element&gt; </div>
+template&lt;typename Element&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -1109,8 +1109,8 @@ template&lt;standard_layout Element&gt; </div>
 
 </div>
 </div>
-<a id="a15ab939eb6e33ca7c21d5e55add99fa9" name="a15ab939eb6e33ca7c21d5e55add99fa9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a15ab939eb6e33ca7c21d5e55add99fa9">&#9670;&#160;</a></span>clear_backbuffer() <span class="overload">[1/2]</span></h2>
+<a id="a550c35e3554d8250cf08bf782a2f7876" name="a550c35e3554d8250cf08bf782a2f7876"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a550c35e3554d8250cf08bf782a2f7876">&#9670;&#160;</a></span>clear_backbuffer() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1121,7 +1121,7 @@ template&lt;standard_layout Element&gt; </div>
         <tr>
           <td class="memname">void tr::graphics_context::clear_backbuffer </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structtr_1_1rgbaf.html">rgbaf</a></td>          <td class="paramname"><span class="paramname"><em>color</em></span><span class="paramdefsep"> = </span><span class="paramdefval">{0,&#160;0,&#160;0,&#160;0}</span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="structtr_1_1rgba.html">rgba</a>&lt; float &gt;</td>          <td class="paramname"><span class="paramname"><em>color</em></span><span class="paramdefsep"> = </span><span class="paramdefval">{0,&#160;0,&#160;0,&#160;0}</span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -1142,8 +1142,8 @@ template&lt;standard_layout Element&gt; </div>
 
 </div>
 </div>
-<a id="abf27ec04b8aaae60ccb67dce288b772d" name="abf27ec04b8aaae60ccb67dce288b772d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abf27ec04b8aaae60ccb67dce288b772d">&#9670;&#160;</a></span>clear_backbuffer() <span class="overload">[2/2]</span></h2>
+<a id="a000a1dffe445438ef9506e4eb44d7b4b" name="a000a1dffe445438ef9506e4eb44d7b4b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a000a1dffe445438ef9506e4eb44d7b4b">&#9670;&#160;</a></span>clear_backbuffer() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1154,7 +1154,7 @@ template&lt;standard_layout Element&gt; </div>
         <tr>
           <td class="memname">void tr::graphics_context::clear_backbuffer </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structtr_1_1rgbaf.html">rgbaf</a></td>          <td class="paramname"><span class="paramname"><em>color</em></span>, </td>
+          <td class="paramtype"><a class="el" href="structtr_1_1rgba.html">rgba</a>&lt; float &gt;</td>          <td class="paramname"><span class="paramname"><em>color</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -1186,8 +1186,8 @@ template&lt;standard_layout Element&gt; </div>
 
 </div>
 </div>
-<a id="a2903b663856133e550d2c0f5dee9b3c3" name="a2903b663856133e550d2c0f5dee9b3c3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2903b663856133e550d2c0f5dee9b3c3">&#9670;&#160;</a></span>clear_backbuffer_region() <span class="overload">[1/2]</span></h2>
+<a id="ab43b4ba4ca6ec73b317480fd2de15d36" name="ab43b4ba4ca6ec73b317480fd2de15d36"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab43b4ba4ca6ec73b317480fd2de15d36">&#9670;&#160;</a></span>clear_backbuffer_region() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1203,7 +1203,7 @@ template&lt;standard_layout Element&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structtr_1_1rgbaf.html">rgbaf</a></td>          <td class="paramname"><span class="paramname"><em>color</em></span><span class="paramdefsep"> = </span><span class="paramdefval">{0,&#160;0,&#160;0,&#160;0}</span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="structtr_1_1rgba.html">rgba</a>&lt; float &gt;</td>          <td class="paramname"><span class="paramname"><em>color</em></span><span class="paramdefsep"> = </span><span class="paramdefval">{0,&#160;0,&#160;0,&#160;0}</span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -1224,8 +1224,8 @@ template&lt;standard_layout Element&gt; </div>
 
 </div>
 </div>
-<a id="a2d791dc92664e06d00be71918eee0a51" name="a2d791dc92664e06d00be71918eee0a51"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2d791dc92664e06d00be71918eee0a51">&#9670;&#160;</a></span>clear_backbuffer_region() <span class="overload">[2/2]</span></h2>
+<a id="a7844fdba99177b09dce7f03031624dae" name="a7844fdba99177b09dce7f03031624dae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7844fdba99177b09dce7f03031624dae">&#9670;&#160;</a></span>clear_backbuffer_region() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1241,7 +1241,7 @@ template&lt;standard_layout Element&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structtr_1_1rgbaf.html">rgbaf</a></td>          <td class="paramname"><span class="paramname"><em>color</em></span>, </td>
+          <td class="paramtype"><a class="el" href="structtr_1_1rgba.html">rgba</a>&lt; float &gt;</td>          <td class="paramname"><span class="paramname"><em>color</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>

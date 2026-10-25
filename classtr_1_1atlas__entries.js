@@ -5,5 +5,5 @@ var classtr_1_1atlas__entries =
     [ "entries", "classtr_1_1atlas__entries.html#a5fa437038c39850bd81c81bf43211161", null ],
     [ "operator[]", "classtr_1_1atlas__entries.html#a7af288bdb974722d631de34534bf2879", null ],
     [ "clear", "classtr_1_1atlas__entries.html#ae9a4a9b7e81c685332702216292a69a9", null ],
-    [ "try_insert", "classtr_1_1atlas__entries.html#a9db8652b17e4a43aad20b2688235ad3d", null ]
+    [ "try_insert", "classtr_1_1atlas__entries.html#a4885db56d6d04cd05e4e3aca9062385e", null ]
 ];

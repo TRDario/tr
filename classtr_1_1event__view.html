@@ -141,12 +141,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a57422499dd6909ce329c047bdfba761b" id="r_a57422499dd6909ce329c047bdfba761b"><td class="memItemLeft"><a class="el" href="#a8321df57a52c4be5173f9e102d508d58">event_view</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a57422499dd6909ce329c047bdfba761b">operator=</a> (const <a class="el" href="#a8321df57a52c4be5173f9e102d508d58">event_view</a> &amp;rhs) noexcept=default</td></tr>
 <tr class="memdesc:a57422499dd6909ce329c047bdfba761b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event views are trivially copyable.  <br /></td></tr>
 <tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Alternatives</div></td></tr>
-<tr class="memitem:a4feb83925085f278ad53948b3c5ba47d" id="r_a4feb83925085f278ad53948b3c5ba47d"><td class="memTemplParams" colspan="2">template&lt;event_type T&gt; </td></tr>
+<tr class="memitem:a4feb83925085f278ad53948b3c5ba47d" id="r_a4feb83925085f278ad53948b3c5ba47d"><td class="memTemplParams" colspan="2">template&lt;event_type Event&gt; </td></tr>
 <tr class="memitem:a4feb83925085f278ad53948b3c5ba47d template"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a4feb83925085f278ad53948b3c5ba47d">is</a> () const noexcept</td></tr>
 <tr class="memdesc:a4feb83925085f278ad53948b3c5ba47d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether the event is of a certain type.  <br /></td></tr>
-<tr class="memitem:aa0a92215a384acd53c2d7a89f1041b5a" id="r_aa0a92215a384acd53c2d7a89f1041b5a"><td class="memTemplParams" colspan="2">template&lt;event_type T&gt; </td></tr>
-<tr class="memitem:aa0a92215a384acd53c2d7a89f1041b5a template"><td class="memItemLeft">T&#160;</td><td class="memItemRight"><a class="el" href="#aa0a92215a384acd53c2d7a89f1041b5a">as</a> () const noexcept</td></tr>
-<tr class="memdesc:aa0a92215a384acd53c2d7a89f1041b5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the event into a sub-type.  <br /></td></tr>
+<tr class="memitem:a263387e2ea3a6728c355815722f2c0e0" id="r_a263387e2ea3a6728c355815722f2c0e0"><td class="memTemplParams" colspan="2">template&lt;event_type Event&gt; </td></tr>
+<tr class="memitem:a263387e2ea3a6728c355815722f2c0e0 template"><td class="memItemLeft">Event&#160;</td><td class="memItemRight"><a class="el" href="#a263387e2ea3a6728c355815722f2c0e0">as</a> () const noexcept</td></tr>
+<tr class="memdesc:a263387e2ea3a6728c355815722f2c0e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the event into a sub-type.  <br /></td></tr>
 <tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Visiting</div></td></tr>
 <tr class="memitem:a7cba699cf727d974abaca67a924a57a5" id="r_a7cba699cf727d974abaca67a924a57a5"><td class="memTemplParams" colspan="2">template&lt;event_view_visitor Visitor&gt; </td></tr>
 <tr class="memitem:a7cba699cf727d974abaca67a924a57a5 template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="#a7cba699cf727d974abaca67a924a57a5">visit</a> (Visitor &amp;&amp;visitor) const noexcept(nothrow_event_view_visitor&lt; Visitor &gt;)</td></tr>
@@ -214,7 +214,7 @@ Public Member Functions</h2></td></tr>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;event_type T&gt; </div>
+template&lt;event_type Event&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -236,27 +236,27 @@ template&lt;event_type T&gt; </div>
 <p>Checks whether the event is of a certain type. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>Event type. </td></tr>
+    <tr><td class="paramname">Event</td><td>Event type. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Whether the event holds an event of type <span class="tt">T</span>. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Whether the event holds an event of type <span class="tt">Event</span>. </dd></dl>
 
 </div>
 </div>
-<a id="aa0a92215a384acd53c2d7a89f1041b5a" name="aa0a92215a384acd53c2d7a89f1041b5a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa0a92215a384acd53c2d7a89f1041b5a">&#9670;&#160;</a></span>as()</h2>
+<a id="a263387e2ea3a6728c355815722f2c0e0" name="a263387e2ea3a6728c355815722f2c0e0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a263387e2ea3a6728c355815722f2c0e0">&#9670;&#160;</a></span>as()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;event_type T&gt; </div>
+template&lt;event_type Event&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">T tr::event_view::as </td>
+          <td class="memname">Event tr::event_view::as </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -272,11 +272,11 @@ template&lt;event_type T&gt; </div>
 <p>Converts the event into a sub-type. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>Event type. </td></tr>
+    <tr><td class="paramname">Event</td><td>Event type. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section pre"><dt>Precondition</dt><dd>The event must hold an event of type <span class="tt">T</span>. </dd></dl>
+<dl class="section pre"><dt>Precondition</dt><dd>The event must hold an event of type <span class="tt">Event</span>. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>Held event subtype. </dd></dl>
 
 </div>

@@ -31,6 +31,6 @@ var classtr_1_1bitmap =
     [ "end", "classtr_1_1bitmap.html#ad2e97cea8712c051929d132e0da2acaa", null ],
     [ "cend", "classtr_1_1bitmap.html#aec578edce72f827579502c089e2cd613", null ],
     [ "blit", "classtr_1_1bitmap.html#a9adaf055e0408a63e780004390cb2570", null ],
-    [ "fill", "classtr_1_1bitmap.html#aad6ec1db83eed9322163a4573e6991b2", null ],
+    [ "fill", "classtr_1_1bitmap.html#a1745998b56a53841ed51b627f8202414", null ],
     [ "save", "classtr_1_1bitmap.html#a64d93fb669064cc945590af87d29900d", null ]
 ];

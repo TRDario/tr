@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=11" />
   <meta name="generator" content="Doxygen 1.18.0" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>tr: tr::line_segment Struct Reference</title>
+  <title>tr: tr::line_segment&lt; Rep &gt; Struct Template Reference</title>
   <link href="tabs.css" rel="stylesheet" type="text/css" />
   <script type="text/javascript" src="jquery.js"></script>
   <script type="text/javascript" src="dynsections.js"></script>
@@ -122,45 +122,61 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('structtr_1_1li
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">tr::line_segment Struct Reference</div></div>
+  <div class="headertitle"><div class="title">tr::line_segment&lt; Rep &gt; Struct Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
 <p>2D line segment datatype.  
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>2D line segment datatype. </p>
+<div class="textblock"><div class="compoundTemplParams">template&lt;arithmetic Rep&gt;<br />
+struct tr::line_segment&lt; Rep &gt;</div><p>2D line segment datatype. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Rep</td><td>Representation type of the line segment. </td></tr>
+  </table>
+  </dd>
+</dl>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Length</div></td></tr>
-<tr class="memitem:a771fecd6fc8d0129b946b16bae7417f7" id="r_a771fecd6fc8d0129b946b16bae7417f7"><td class="memItemLeft">float&#160;</td><td class="memItemRight"><a class="el" href="#a771fecd6fc8d0129b946b16bae7417f7">length</a> () const noexcept</td></tr>
-<tr class="memdesc:a771fecd6fc8d0129b946b16bae7417f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the length of the line segment.  <br /></td></tr>
-<tr class="memitem:a530b07762beeda9de0e976db7a0587f2" id="r_a530b07762beeda9de0e976db7a0587f2"><td class="memItemLeft">float&#160;</td><td class="memItemRight"><a class="el" href="#a530b07762beeda9de0e976db7a0587f2">length2</a> () const noexcept</td></tr>
-<tr class="memdesc:a530b07762beeda9de0e976db7a0587f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the square length of the line segment.  <br /></td></tr>
-<tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Points</div></td></tr>
-<tr class="memitem:a09a12bf5bdd7302eac6d2d7bbef4cee9" id="r_a09a12bf5bdd7302eac6d2d7bbef4cee9"><td class="memItemLeft">glm::vec2&#160;</td><td class="memItemRight"><a class="el" href="#a09a12bf5bdd7302eac6d2d7bbef4cee9">closest_point</a> (glm::vec2 p) const noexcept</td></tr>
-<tr class="memdesc:a09a12bf5bdd7302eac6d2d7bbef4cee9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the closest point to <span class="tt">p</span> on the line segment.  <br /></td></tr>
+<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Conversion operators</div></td></tr>
+<tr class="memitem:a706db3d51c48c99a38d9e33d4d4c0d02" id="r_a706db3d51c48c99a38d9e33d4d4c0d02"><td class="memTemplParams" colspan="2">template&lt;arithmetic TargetRep&gt; </td></tr>
+<tr class="memitem:a706db3d51c48c99a38d9e33d4d4c0d02 template"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a706db3d51c48c99a38d9e33d4d4c0d02">operator line_segment&lt; TargetRep &gt;</a> () const noexcept</td></tr>
+<tr class="memdesc:a706db3d51c48c99a38d9e33d4d4c0d02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Casts the line segment to a line segment represented with another representation type.  <br /></td></tr>
+<tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Length</div></td></tr>
+<tr class="memitem:a74fbab6ed84d74c433404b7ea9346235" id="r_a74fbab6ed84d74c433404b7ea9346235"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="#a74fbab6ed84d74c433404b7ea9346235">length</a> () const noexcept</td></tr>
+<tr class="memdesc:a74fbab6ed84d74c433404b7ea9346235"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the length of the line segment.  <br /></td></tr>
+<tr class="memitem:ab8495f4a3ef31adf34b687c117194ca7" id="r_ab8495f4a3ef31adf34b687c117194ca7"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ab8495f4a3ef31adf34b687c117194ca7">length2</a> () const noexcept</td></tr>
+<tr class="memdesc:ab8495f4a3ef31adf34b687c117194ca7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the square length of the line segment.  <br /></td></tr>
+<tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Points</div></td></tr>
+<tr class="memitem:a665d538c07d89615453cec7b1dc4e26a" id="r_a665d538c07d89615453cec7b1dc4e26a"><td class="memTemplParams" colspan="2">template&lt;arithmetic PointRep = Rep&gt; </td></tr>
+<tr class="memitem:a665d538c07d89615453cec7b1dc4e26a template"><td class="memItemLeft">constexpr glm::tvec2&lt; std::common_type_t&lt; Rep, PointRep &gt; &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a665d538c07d89615453cec7b1dc4e26a">closest_point</a> (glm::tvec2&lt; PointRep &gt; point) const noexcept</td></tr>
+<tr class="memdesc:a665d538c07d89615453cec7b1dc4e26a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the closest point to <span class="tt">point</span> on the line segment.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:aee6ecf5e998eb2ea0301aa9cb6af0859" id="r_aee6ecf5e998eb2ea0301aa9cb6af0859"><td class="memItemLeft">glm::vec2&#160;</td><td class="memItemRight"><a class="el" href="#aee6ecf5e998eb2ea0301aa9cb6af0859">a</a></td></tr>
-<tr class="memdesc:aee6ecf5e998eb2ea0301aa9cb6af0859"><td class="mdescLeft">&#160;</td><td class="mdescRight">The first point of the line segment.  <br /></td></tr>
-<tr class="memitem:abcc58de42d85e278f2e4e9cb38bed868" id="r_abcc58de42d85e278f2e4e9cb38bed868"><td class="memItemLeft">glm::vec2&#160;</td><td class="memItemRight"><a class="el" href="#abcc58de42d85e278f2e4e9cb38bed868">b</a></td></tr>
-<tr class="memdesc:abcc58de42d85e278f2e4e9cb38bed868"><td class="mdescLeft">&#160;</td><td class="mdescRight">The second point of the line segment.  <br /></td></tr>
+<tr class="memitem:a29bdc5f44a40bc4ba3737ef8a25885a7" id="r_a29bdc5f44a40bc4ba3737ef8a25885a7"><td class="memItemLeft">glm::tvec2&lt; Rep &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a29bdc5f44a40bc4ba3737ef8a25885a7">a</a></td></tr>
+<tr class="memdesc:a29bdc5f44a40bc4ba3737ef8a25885a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">First point of the line segment.  <br /></td></tr>
+<tr class="memitem:a4df43c7bad0dfbb9b9cac7b73d8895a1" id="r_a4df43c7bad0dfbb9b9cac7b73d8895a1"><td class="memItemLeft">glm::tvec2&lt; Rep &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a4df43c7bad0dfbb9b9cac7b73d8895a1">b</a></td></tr>
+<tr class="memdesc:a4df43c7bad0dfbb9b9cac7b73d8895a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Second point of the line segment.  <br /></td></tr>
 </table>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="a771fecd6fc8d0129b946b16bae7417f7" name="a771fecd6fc8d0129b946b16bae7417f7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a771fecd6fc8d0129b946b16bae7417f7">&#9670;&#160;</a></span>length()</h2>
+<a id="a706db3d51c48c99a38d9e33d4d4c0d02" name="a706db3d51c48c99a38d9e33d4d4c0d02"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a706db3d51c48c99a38d9e33d4d4c0d02">&#9670;&#160;</a></span>operator line_segment&lt; TargetRep &gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;arithmetic Rep&gt; </div>
+<div class="memtemplate">
+template&lt;arithmetic TargetRep&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">float tr::line_segment::length </td>
+          <td class="memname"><a class="el" href="structtr_1_1line__segment.html">tr::line_segment</a>&lt; Rep &gt;::operator <a class="el" href="structtr_1_1line__segment.html">line_segment</a>&lt; TargetRep &gt; </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -168,7 +184,43 @@ Public Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel explicit">explicit</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Casts the line segment to a line segment represented with another representation type. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">TargetRep</td><td>Representation type to cast to. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Cast line segment value. </dd></dl>
+
+</div>
+</div>
+<a id="a74fbab6ed84d74c433404b7ea9346235" name="a74fbab6ed84d74c433404b7ea9346235"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a74fbab6ed84d74c433404b7ea9346235">&#9670;&#160;</a></span>length()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;arithmetic Rep&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto <a class="el" href="structtr_1_1line__segment.html">tr::line_segment</a>&lt; Rep &gt;::length </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -178,17 +230,19 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a530b07762beeda9de0e976db7a0587f2" name="a530b07762beeda9de0e976db7a0587f2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a530b07762beeda9de0e976db7a0587f2">&#9670;&#160;</a></span>length2()</h2>
+<a id="ab8495f4a3ef31adf34b687c117194ca7" name="ab8495f4a3ef31adf34b687c117194ca7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab8495f4a3ef31adf34b687c117194ca7">&#9670;&#160;</a></span>length2()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;arithmetic Rep&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">float tr::line_segment::length2 </td>
+          <td class="memname">auto <a class="el" href="structtr_1_1line__segment.html">tr::line_segment</a>&lt; Rep &gt;::length2 </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -196,7 +250,7 @@ Public Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -206,70 +260,84 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a09a12bf5bdd7302eac6d2d7bbef4cee9" name="a09a12bf5bdd7302eac6d2d7bbef4cee9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a09a12bf5bdd7302eac6d2d7bbef4cee9">&#9670;&#160;</a></span>closest_point()</h2>
+<a id="a665d538c07d89615453cec7b1dc4e26a" name="a665d538c07d89615453cec7b1dc4e26a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a665d538c07d89615453cec7b1dc4e26a">&#9670;&#160;</a></span>closest_point()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;arithmetic Rep&gt; </div>
+<div class="memtemplate">
+template&lt;arithmetic PointRep = Rep&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">glm::vec2 tr::line_segment::closest_point </td>
+          <td class="memname">glm::tvec2&lt; std::common_type_t&lt; Rep, PointRep &gt; &gt; <a class="el" href="structtr_1_1line__segment.html">tr::line_segment</a>&lt; Rep &gt;::closest_point </td>
           <td>(</td>
-          <td class="paramtype">glm::vec2</td>          <td class="paramname"><span class="paramname"><em>p</em></span></td><td>)</td>
+          <td class="paramtype">glm::tvec2&lt; PointRep &gt;</td>          <td class="paramname"><span class="paramname"><em>point</em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Calculates the closest point to <span class="tt">p</span> on the line segment. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">p</td><td>Point to project onto the line. </td></tr>
+<p>Calculates the closest point to <span class="tt">point</span> on the line segment. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">PointRep</td><td>Representation type of the point to project. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Projection of <span class="tt">p</span> onto the line. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">point</td><td>Point to project onto the line. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Projection of <span class="tt">point</span> onto the line. </dd></dl>
 
 </div>
 </div>
 <a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
-<a id="aee6ecf5e998eb2ea0301aa9cb6af0859" name="aee6ecf5e998eb2ea0301aa9cb6af0859"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aee6ecf5e998eb2ea0301aa9cb6af0859">&#9670;&#160;</a></span>a</h2>
+<a id="a29bdc5f44a40bc4ba3737ef8a25885a7" name="a29bdc5f44a40bc4ba3737ef8a25885a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a29bdc5f44a40bc4ba3737ef8a25885a7">&#9670;&#160;</a></span>a</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;arithmetic Rep&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">glm::vec2 tr::line_segment::a</td>
+          <td class="memname">glm::tvec2&lt;Rep&gt; <a class="el" href="structtr_1_1line__segment.html">tr::line_segment</a>&lt; Rep &gt;::a</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>The first point of the line segment. </p>
+<p>First point of the line segment. </p>
 
 </div>
 </div>
-<a id="abcc58de42d85e278f2e4e9cb38bed868" name="abcc58de42d85e278f2e4e9cb38bed868"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abcc58de42d85e278f2e4e9cb38bed868">&#9670;&#160;</a></span>b</h2>
+<a id="a4df43c7bad0dfbb9b9cac7b73d8895a1" name="a4df43c7bad0dfbb9b9cac7b73d8895a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4df43c7bad0dfbb9b9cac7b73d8895a1">&#9670;&#160;</a></span>b</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;arithmetic Rep&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">glm::vec2 tr::line_segment::b</td>
+          <td class="memname">glm::tvec2&lt;Rep&gt; <a class="el" href="structtr_1_1line__segment.html">tr::line_segment</a>&lt; Rep &gt;::b</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>The second point of the line segment. </p>
+<p>Second point of the line segment. </p>
 
 </div>
 </div>

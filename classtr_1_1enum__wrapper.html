@@ -129,7 +129,8 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1enu
 <p>Wraps an enum class to allow conversion to bool, used in <span class="tt"><a class="el" href="enum_8hpp.html#ab698ab87c9e744246906751f19046ae4" title="Defines bitmask operators (&amp;, |, ^, ~) for enum class types.">TR_DEFINE_ENUM_BITMASK_OPERATORS</a></span>.  
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;enumerator Enum&gt;<br />
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename Enum&gt;<br />
+requires std::is_enum_v&lt;Enum&gt;<br />
 class tr::enum_wrapper&lt; Enum &gt;</div><p>Wraps an enum class to allow conversion to bool, used in <span class="tt"><a class="el" href="enum_8hpp.html#ab698ab87c9e744246906751f19046ae4" title="Defines bitmask operators (&amp;, |, ^, ~) for enum class types.">TR_DEFINE_ENUM_BITMASK_OPERATORS</a></span>. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
@@ -156,7 +157,7 @@ Public Member Functions</h2></td></tr>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;enumerator Enum&gt; </div>
+template&lt;typename Enum&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -192,7 +193,7 @@ template&lt;enumerator Enum&gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;enumerator Enum&gt; </div>
+template&lt;typename Enum&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -222,7 +223,7 @@ template&lt;enumerator Enum&gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;enumerator Enum&gt; </div>
+template&lt;typename Enum&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -252,7 +253,7 @@ template&lt;enumerator Enum&gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;enumerator Enum&gt; </div>
+template&lt;typename Enum&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">

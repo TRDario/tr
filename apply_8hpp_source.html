@@ -135,100 +135,102 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('apply_8hpp_sou
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacetr.html">tr</a></div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>{</div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#ifdef TR_DOXYGEN</span></div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> TupleLike&gt;</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Target, <span class="keyword">typename</span> TupleLike&gt;</div>
 <div class="foldopen" id="foldopen00015" data-start="{" data-end="};">
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="structtr_1_1is__applicable.html">   15</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="structtr_1_1is__applicable.html">is_applicable</a></div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    {</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="structtr_1_1is__applicable.html#adb50fac553b5adda9e5c0cab2627d485">   18</a></span>        <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keywordtype">bool</span> <a class="code hl_variable" href="structtr_1_1is__applicable.html#adb50fac553b5adda9e5c0cab2627d485">value</a>;</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="structtr_1_1is__applicable.html#a35a8cba133cd9fe1274e3e2ee015bd32">   18</a></span>        <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keywordtype">bool</span> <a class="code hl_variable" href="structtr_1_1is__applicable.html#a35a8cba133cd9fe1274e3e2ee015bd32">value</a>;</div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    };</div>
 </div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#else</span></div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <span class="keyword">namespace </span><a class="code hl_namespace" href="namespacetr_1_1internal.html">internal</a></div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    {</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> TupleLike, <span class="keyword">typename</span> IndexSequence&gt;</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Target, <span class="keyword">typename</span> TupleLike, <span class="keyword">typename</span> IndexSequence&gt;</div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        <span class="keyword">struct </span><a class="code hl_struct" href="structtr_1_1is__applicable.html">is_applicable</a> : std::false_type</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        {</div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        };</div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span></div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> TupleLike, <a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a>... Indices&gt;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Target, <span class="keyword">typename</span> TupleLike, <a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a>... Indices&gt;</div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>            <span class="keyword">requires</span>(<span class="keyword">requires</span> { <span class="keyword">typename</span> std::tuple_element_t&lt;Indices, TupleLike&gt;; } &amp;&amp; ...)</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        struct is_applicable&lt;T, TupleLike, std::index_sequence&lt;Indices...&gt;&gt;</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>            : std::is_invocable&lt;T, std::tuple_element_t&lt;Indices, TupleLike&gt;...&gt;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        struct is_applicable&lt;Target, TupleLike, std::index_sequence&lt;Indices...&gt;&gt;</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>            : std::is_invocable&lt;Target, std::tuple_element_t&lt;Indices, TupleLike&gt;...&gt;</div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        {</div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        };</div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    } <span class="comment">// namespace internal</span></div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span></div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> TupleLike&gt;</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Target, <span class="keyword">typename</span> TupleLike&gt;</div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <span class="keyword">struct </span><a class="code hl_struct" href="structtr_1_1is__applicable.html">is_applicable</a> : std::false_type</div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    {</div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    };</div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span></div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> TupleLike&gt;</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        <span class="keyword">requires</span>(<span class="keyword">requires</span> { std::tuple_size&lt;TupleLike&gt;::value; })</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    <span class="keyword">struct</span> <a class="code hl_struct" href="structtr_1_1is__applicable.html">is_applicable&lt;T, TupleLike&gt;</a> : <a class="code hl_namespace" href="namespacetr_1_1internal.html">internal</a>::<a class="code hl_struct" href="structtr_1_1is__applicable.html">is_applicable</a>&lt;T, TupleLike, std::make_index_sequence&lt;std::tuple_size_v&lt;TupleLike&gt;&gt;&gt;</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    {</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    };</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span></div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> TupleLike&gt;</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno"><a class="line" href="namespacetr.html#adc7be178a2ee4486b500e340bda738e8">   65</a></span>    <span class="keyword">inline</span> <span class="keyword">constexpr</span> <span class="keywordtype">bool</span> <a class="code hl_variable" href="namespacetr.html#adc7be178a2ee4486b500e340bda738e8">is_applicable_v</a>{<a class="code hl_variable" href="structtr_1_1is__applicable.html#adb50fac553b5adda9e5c0cab2627d485">is_applicable&lt;T, TupleLike&gt;::value</a>};</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span></div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> TupleLike&gt;</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno"><a class="line" href="concepttr_1_1applicable.html">   70</a></span>    <span class="keyword">concept </span><a class="code hl_concept" href="concepttr_1_1applicable.html">applicable</a> = <a class="code hl_variable" href="namespacetr.html#adc7be178a2ee4486b500e340bda738e8">is_applicable_v&lt;T, TupleLike&gt;</a>;</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    <span class="comment">//</span></div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span><span class="preprocessor">#ifdef TR_DOXYGEN</span></div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> TupleLike&gt;</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        <span class="keyword">requires</span> <a class="code hl_concept" href="concepttr_1_1applicable.html">applicable&lt;T, TupleLike&gt;</a></div>
-<div class="foldopen" id="foldopen00080" data-start="{" data-end="};">
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno"><a class="line" href="structtr_1_1apply__result_3_01T_00_01TupleLike_01_4.html">   80</a></span>    <span class="keyword">struct </span>apply_result&lt;T, TupleLike&gt;</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    {</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno"><a class="line" href="structtr_1_1apply__result_3_01T_00_01TupleLike_01_4.html#ac2f604f322592e7987a4e2481575f05d">   84</a></span>        <span class="keyword">using </span><a class="code hl_typedef" href="structtr_1_1apply__result_3_01T_00_01TupleLike_01_4.html#ac2f604f322592e7987a4e2481575f05d">type</a> = void;</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    };</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Target, <span class="keyword">typename</span> TupleLike&gt;</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        <span class="keyword">requires</span> <span class="keyword">requires</span> { std::tuple_size&lt;TupleLike&gt;::value; }</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    <span class="keyword">struct </span><a class="code hl_struct" href="structtr_1_1is__applicable.html">is_applicable</a>&lt;Target, TupleLike&gt;</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        : internal::is_applicable&lt;Target, TupleLike, std::make_index_sequence&lt;std::tuple_size_v&lt;TupleLike&gt;&gt;&gt;</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    {</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    };</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span></div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Target, <span class="keyword">typename</span> TupleLike&gt;</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno"><a class="line" href="namespacetr.html#adc7be178a2ee4486b500e340bda738e8">   66</a></span>    <span class="keyword">inline</span> <span class="keyword">constexpr</span> <span class="keywordtype">bool</span> <a class="code hl_variable" href="namespacetr.html#adc7be178a2ee4486b500e340bda738e8">is_applicable_v</a>{<a class="code hl_variable" href="structtr_1_1is__applicable.html#a35a8cba133cd9fe1274e3e2ee015bd32">is_applicable&lt;Target, TupleLike&gt;::value</a>};</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span></div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Target, <span class="keyword">typename</span> TupleLike&gt;</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno"><a class="line" href="concepttr_1_1applicable.html">   71</a></span>    <span class="keyword">concept </span><a class="code hl_concept" href="concepttr_1_1applicable.html">applicable</a> = <a class="code hl_variable" href="namespacetr.html#adc7be178a2ee4486b500e340bda738e8">is_applicable_v&lt;Target, TupleLike&gt;</a>;</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> </div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    <span class="comment">//</span></div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span><span class="preprocessor">#ifdef TR_DOXYGEN</span></div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Target, <span class="keyword">typename</span> TupleLike&gt;</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        <span class="keyword">requires</span> <a class="code hl_concept" href="concepttr_1_1applicable.html">applicable&lt;Target, TupleLike&gt;</a></div>
+<div class="foldopen" id="foldopen00081" data-start="{" data-end="};">
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno"><a class="line" href="structtr_1_1apply__result_3_01Target_00_01TupleLike_01_4.html">   81</a></span>    <span class="keyword">struct </span>apply_result&lt;Target, TupleLike&gt;</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    {</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno"><a class="line" href="structtr_1_1apply__result_3_01Target_00_01TupleLike_01_4.html#a19af7029310b1ba10b2dcb54c45682dd">   85</a></span>        <span class="keyword">using </span><a class="code hl_typedef" href="structtr_1_1apply__result_3_01Target_00_01TupleLike_01_4.html#a19af7029310b1ba10b2dcb54c45682dd">type</a> = void;</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    };</div>
 </div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span><span class="preprocessor">#else</span></div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    <span class="keyword">namespace </span><a class="code hl_namespace" href="namespacetr_1_1internal.html">internal</a></div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    {</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Callable, <span class="keyword">typename</span> TupleLike, <span class="keyword">typename</span> IndexSequence&gt;</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>        <span class="keyword">struct </span>apply_result</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>        {</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>            <span class="keyword">static_assert</span>(<span class="keyword">false</span>, <span class="stringliteral">&quot;Arguments do not fulfill the requirement &#39;tr::applicable&lt;Callable, TupleLike&gt;&#39;.&quot;</span>);</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>        };</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span></div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Callable, <span class="keyword">typename</span> TupleLike, <a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a>... Indices&gt;</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>        <span class="keyword">struct </span>apply_result&lt;Callable, TupleLike, std::index_sequence&lt;Indices...&gt;&gt;</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>            : std::invoke_result&lt;Callable, std::tuple_element_t&lt;Indices, TupleLike&gt;...&gt;</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>        {</div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>        };</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    } <span class="comment">// namespace internal</span></div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span></div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Callable, <span class="keyword">typename</span> TupleLike&gt;</div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>    <span class="keyword">struct </span>apply_result</div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>    {</div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>        <span class="keyword">static_assert</span>(<span class="keyword">false</span>, <span class="stringliteral">&quot;Arguments do not fulfill the requirement &#39;tr::applicable&lt;Callable, TupleLike&gt;&#39;.&quot;</span>);</div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    };</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span></div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> TupleLike&gt;</div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>        <span class="keyword">requires</span> <a class="code hl_concept" href="concepttr_1_1applicable.html">applicable&lt;T, TupleLike&gt;</a></div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>    <span class="keyword">struct </span>apply_result&lt;T, TupleLike&gt; : internal::apply_result&lt;T, TupleLike, std::make_index_sequence&lt;std::tuple_size_v&lt;TupleLike&gt;&gt;&gt;</div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>    {</div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>    };</div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span></div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Callable, <span class="keyword">typename</span> TupleLike&gt;</div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno"><a class="line" href="namespacetr.html#aaea20b286b1a6c01029ee8e87042e891">  136</a></span>    <span class="keyword">using </span><a class="code hl_typedef" href="namespacetr.html#aaea20b286b1a6c01029ee8e87042e891">apply_result_t</a> = apply_result&lt;Callable, TupleLike&gt;::type;</div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>} <span class="comment">// namespace tr</span></div>
-<div class="ttc" id="aconcepttr_1_1applicable_html"><div class="ttname"><a href="concepttr_1_1applicable.html">tr::applicable</a></div><div class="ttdoc">Concept denoting a functor that can be applied on tuple-like objects of a specific type.</div><div class="ttdef"><b>Definition</b> apply.hpp:70</div></div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    <span class="keyword">namespace </span><a class="code hl_namespace" href="namespacetr_1_1internal.html">internal</a></div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>    {</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Callable, <span class="keyword">typename</span> TupleLike, <span class="keyword">typename</span> IndexSequence&gt;</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>        <span class="keyword">struct </span>apply_result</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        {</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>            <span class="keyword">static_assert</span>(<span class="keyword">false</span>, <span class="stringliteral">&quot;Arguments do not fulfill the requirement &#39;tr::applicable&lt;Callable, TupleLike&gt;&#39;.&quot;</span>);</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>        };</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span></div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>        <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Callable, <span class="keyword">typename</span> TupleLike, <a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a>... Indices&gt;</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>        <span class="keyword">struct </span>apply_result&lt;Callable, TupleLike, std::index_sequence&lt;Indices...&gt;&gt;</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>            : std::invoke_result&lt;Callable, std::tuple_element_t&lt;Indices, TupleLike&gt;...&gt;</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>        {</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>        };</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    } <span class="comment">// namespace internal</span></div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span></div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Callable, <span class="keyword">typename</span> TupleLike&gt;</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>    <span class="keyword">struct </span>apply_result</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>    {</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>        <span class="keyword">static_assert</span>(<span class="keyword">false</span>, <span class="stringliteral">&quot;Arguments do not fulfill the requirement &#39;tr::applicable&lt;Callable, TupleLike&gt;&#39;.&quot;</span>);</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>    };</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span></div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Target, <span class="keyword">typename</span> TupleLike&gt;</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>        <span class="keyword">requires</span> <a class="code hl_concept" href="concepttr_1_1applicable.html">applicable&lt;Target, TupleLike&gt;</a></div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>    <span class="keyword">struct </span>apply_result&lt;Target, TupleLike&gt;</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>        : internal::apply_result&lt;Target, TupleLike, std::make_index_sequence&lt;std::tuple_size_v&lt;TupleLike&gt;&gt;&gt;</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>    {</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>    };</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span></div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Callable, <span class="keyword">typename</span> TupleLike&gt;</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno"><a class="line" href="namespacetr.html#aaea20b286b1a6c01029ee8e87042e891">  138</a></span>    <span class="keyword">using </span><a class="code hl_typedef" href="namespacetr.html#aaea20b286b1a6c01029ee8e87042e891">apply_result_t</a> = apply_result&lt;Callable, TupleLike&gt;::type;</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>} <span class="comment">// namespace tr</span></div>
+<div class="ttc" id="aconcepttr_1_1applicable_html"><div class="ttname"><a href="concepttr_1_1applicable.html">tr::applicable</a></div><div class="ttdoc">Concept denoting a functor that can be applied on tuple-like objects of a specific type.</div><div class="ttdef"><b>Definition</b> apply.hpp:71</div></div>
 <div class="ttc" id="ainteger_8hpp_html"><div class="ttname"><a href="integer_8hpp.html">integer.hpp</a></div><div class="ttdoc">Provides integer utilities.</div></div>
 <div class="ttc" id="anamespacetr_1_1aliases_1_1integer__aliases_html_a401704cad707ec504dfeae361641bb9b"><div class="ttname"><a href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">tr::aliases::integer_aliases::usize</a></div><div class="ttdeci">std::size_t usize</div><div class="ttdoc">Unsigned size integer.</div><div class="ttdef"><b>Definition</b> integer.hpp:29</div></div>
-<div class="ttc" id="anamespacetr_1_1internal_html"><div class="ttname"><a href="namespacetr_1_1internal.html">tr::internal</a></div><div class="ttdef"><b>Definition</b> render_target.hpp:13</div></div>
+<div class="ttc" id="anamespacetr_1_1internal_html"><div class="ttname"><a href="namespacetr_1_1internal.html">tr::internal</a></div><div class="ttdef"><b>Definition</b> render_target.hpp:14</div></div>
 <div class="ttc" id="anamespacetr_html"><div class="ttname"><a href="namespacetr.html">tr</a></div><div class="ttdoc">Namespace containing all tr functionality.</div><div class="ttdef"><b>Definition</b> audio_buffer.hpp:10</div></div>
-<div class="ttc" id="anamespacetr_html_aaea20b286b1a6c01029ee8e87042e891"><div class="ttname"><a href="namespacetr.html#aaea20b286b1a6c01029ee8e87042e891">tr::apply_result_t</a></div><div class="ttdeci">apply_result&lt; Callable, TupleLike &gt;::type apply_result_t</div><div class="ttdoc">Deduced result type of applying a callable object with a tuple of arguments.</div><div class="ttdef"><b>Definition</b> apply.hpp:136</div></div>
-<div class="ttc" id="anamespacetr_html_adc7be178a2ee4486b500e340bda738e8"><div class="ttname"><a href="namespacetr.html#adc7be178a2ee4486b500e340bda738e8">tr::is_applicable_v</a></div><div class="ttdeci">constexpr bool is_applicable_v</div><div class="ttdoc">Checks whether a functor of type T can be applied on an object of type TupleLike.</div><div class="ttdef"><b>Definition</b> apply.hpp:65</div></div>
-<div class="ttc" id="astructtr_1_1apply__result_3_01T_00_01TupleLike_01_4_html_ac2f604f322592e7987a4e2481575f05d"><div class="ttname"><a href="structtr_1_1apply__result_3_01T_00_01TupleLike_01_4.html#ac2f604f322592e7987a4e2481575f05d">tr::apply_result&lt; T, TupleLike &gt;::type</a></div><div class="ttdeci">void type</div><div class="ttdoc">Deduced result type of applying a callable object with a tuple of arguments.</div><div class="ttdef"><b>Definition</b> apply.hpp:84</div></div>
-<div class="ttc" id="astructtr_1_1is__applicable_html"><div class="ttname"><a href="structtr_1_1is__applicable.html">tr::is_applicable</a></div><div class="ttdoc">Type trait checking whether a functor of type T can be applied on an object of type TupleLike.</div><div class="ttdef"><b>Definition</b> apply.hpp:16</div></div>
-<div class="ttc" id="astructtr_1_1is__applicable_html_adb50fac553b5adda9e5c0cab2627d485"><div class="ttname"><a href="structtr_1_1is__applicable.html#adb50fac553b5adda9e5c0cab2627d485">tr::is_applicable::value</a></div><div class="ttdeci">static constexpr bool value</div><div class="ttdoc">Holds whether a functor of type T can be applied on an object of type TupleLike.</div><div class="ttdef"><b>Definition</b> apply.hpp:18</div></div>
+<div class="ttc" id="anamespacetr_html_aaea20b286b1a6c01029ee8e87042e891"><div class="ttname"><a href="namespacetr.html#aaea20b286b1a6c01029ee8e87042e891">tr::apply_result_t</a></div><div class="ttdeci">apply_result&lt; Callable, TupleLike &gt;::type apply_result_t</div><div class="ttdoc">Deduced result type of applying a callable object with a tuple of arguments.</div><div class="ttdef"><b>Definition</b> apply.hpp:138</div></div>
+<div class="ttc" id="anamespacetr_html_adc7be178a2ee4486b500e340bda738e8"><div class="ttname"><a href="namespacetr.html#adc7be178a2ee4486b500e340bda738e8">tr::is_applicable_v</a></div><div class="ttdeci">constexpr bool is_applicable_v</div><div class="ttdoc">Checks whether a functor of type Target can be applied on an object of type TupleLike.</div><div class="ttdef"><b>Definition</b> apply.hpp:66</div></div>
+<div class="ttc" id="astructtr_1_1apply__result_3_01Target_00_01TupleLike_01_4_html_a19af7029310b1ba10b2dcb54c45682dd"><div class="ttname"><a href="structtr_1_1apply__result_3_01Target_00_01TupleLike_01_4.html#a19af7029310b1ba10b2dcb54c45682dd">tr::apply_result&lt; Target, TupleLike &gt;::type</a></div><div class="ttdeci">void type</div><div class="ttdoc">Deduced result type of applying a callable object with a tuple of arguments.</div><div class="ttdef"><b>Definition</b> apply.hpp:85</div></div>
+<div class="ttc" id="astructtr_1_1is__applicable_html"><div class="ttname"><a href="structtr_1_1is__applicable.html">tr::is_applicable</a></div><div class="ttdoc">Type trait checking whether a functor of type Target can be applied on an object of type TupleLike.</div><div class="ttdef"><b>Definition</b> apply.hpp:16</div></div>
+<div class="ttc" id="astructtr_1_1is__applicable_html_a35a8cba133cd9fe1274e3e2ee015bd32"><div class="ttname"><a href="structtr_1_1is__applicable.html#a35a8cba133cd9fe1274e3e2ee015bd32">tr::is_applicable::value</a></div><div class="ttdeci">static constexpr bool value</div><div class="ttdoc">Holds whether a functor of type Target can be applied on an object of type TupleLike.</div><div class="ttdef"><b>Definition</b> apply.hpp:18</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

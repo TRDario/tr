@@ -159,10 +159,10 @@ Public Member Functions</h2></td></tr>
 <tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Manipulation</div></td></tr>
 <tr class="memitem:ae9a4a9b7e81c685332702216292a69a9" id="r_ae9a4a9b7e81c685332702216292a69a9"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ae9a4a9b7e81c685332702216292a69a9">clear</a> ()</td></tr>
 <tr class="memdesc:ae9a4a9b7e81c685332702216292a69a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the packer.  <br /></td></tr>
-<tr class="memitem:a9db8652b17e4a43aad20b2688235ad3d" id="r_a9db8652b17e4a43aad20b2688235ad3d"><td class="memTemplParams" colspan="2">template&lt;hash_keylike&lt; Key, Hash, Pred &gt; Keylike, typename... Args&gt; <br />
-requires (std::constructible_from&lt;Value, <a class="el" href="structtr_1_1rectangle.html">tr::rectangle</a>&lt;<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a6991e9925796abf87530c4ec24b82bb8">u16</a>&gt;, Args...&gt;)</td></tr>
-<tr class="memitem:a9db8652b17e4a43aad20b2688235ad3d template"><td class="memItemLeft">std::optional&lt; glm::u16vec2 &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a9db8652b17e4a43aad20b2688235ad3d">try_insert</a> (Keylike &amp;&amp;key, glm::u16vec2 size, glm::u16vec2 texture_size, Args &amp;&amp;... extra_args)</td></tr>
-<tr class="memdesc:a9db8652b17e4a43aad20b2688235ad3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tries to insert a rectangle and returns the top-left corner of the rectangle if successful.  <br /></td></tr>
+<tr class="memitem:a4885db56d6d04cd05e4e3aca9062385e" id="r_a4885db56d6d04cd05e4e3aca9062385e"><td class="memTemplParams" colspan="2">template&lt;hash_keylike&lt; Key, Hash, Pred &gt; Keylike, typename... Args&gt; <br />
+requires std::constructible_from&lt;Value, <a class="el" href="structtr_1_1rectangle.html">tr::rectangle</a>&lt;<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a6991e9925796abf87530c4ec24b82bb8">u16</a>&gt;, Args...&gt;</td></tr>
+<tr class="memitem:a4885db56d6d04cd05e4e3aca9062385e template"><td class="memItemLeft">std::optional&lt; glm::u16vec2 &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a4885db56d6d04cd05e4e3aca9062385e">try_insert</a> (Keylike &amp;&amp;key, glm::u16vec2 size, glm::u16vec2 texture_size, Args &amp;&amp;... extra_args)</td></tr>
+<tr class="memdesc:a4885db56d6d04cd05e4e3aca9062385e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tries to insert a rectangle and returns the top-left corner of the rectangle if successful.  <br /></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a5e34722ce56242b27fcbc0d55f6b34ab" name="a5e34722ce56242b27fcbc0d55f6b34ab"></a>
@@ -343,8 +343,8 @@ template&lt;typename Key, atlas_entries_value_type Value = rectangle&lt;u16&gt;,
 
 </div>
 </div>
-<a id="a9db8652b17e4a43aad20b2688235ad3d" name="a9db8652b17e4a43aad20b2688235ad3d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9db8652b17e4a43aad20b2688235ad3d">&#9670;&#160;</a></span>try_insert()</h2>
+<a id="a4885db56d6d04cd05e4e3aca9062385e" name="a4885db56d6d04cd05e4e3aca9062385e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4885db56d6d04cd05e4e3aca9062385e">&#9670;&#160;</a></span>try_insert()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -352,7 +352,7 @@ template&lt;typename Key, atlas_entries_value_type Value = rectangle&lt;u16&gt;,
 template&lt;typename Key, atlas_entries_value_type Value = rectangle&lt;u16&gt;, hasher&lt; Key &gt; Hash = boost::hash&lt;Key&gt;, equality_predicate&lt; Key &gt; Pred = std::equal_to&lt;Key&gt;&gt; </div>
 <div class="memtemplate">
 template&lt;hash_keylike&lt; Key, Hash, Pred &gt; Keylike, typename... Args&gt; <br />
-requires (std::constructible_from&lt;Value, <a class="el" href="structtr_1_1rectangle.html">tr::rectangle</a>&lt;<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a6991e9925796abf87530c4ec24b82bb8">u16</a>&gt;, Args...&gt;)</div>
+requires std::constructible_from&lt;Value, <a class="el" href="structtr_1_1rectangle.html">tr::rectangle</a>&lt;<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a6991e9925796abf87530c4ec24b82bb8">u16</a>&gt;, Args...&gt;</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">

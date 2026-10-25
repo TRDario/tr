@@ -132,30 +132,24 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('concepttr_1_1e
 <div class="textblock"><p>Valid event view visitor type. </p>
 <p>Event visitors must be callable with all event types, and all overloads must return the same type. </p>
 </div><h2 id="header-conceptdef" class="groupheader">Concept definition</h2>
-<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepttr_1_1event__view__visitor.html">event_view_visitor</a> = std::invocable&lt;T, quit_event&gt; &amp;&amp; std::invocable&lt;T, window_show_event&gt; &amp;&amp;</div>
-<div class="line">                                 std::invocable&lt;T, window_hide_event&gt; &amp;&amp; std::invocable&lt;T, backbuffer_resize_event&gt; &amp;&amp;</div>
-<div class="line">                                 std::invocable&lt;T, window_gain_focus_event&gt; &amp;&amp; std::invocable&lt;T, window_lose_focus_event&gt; &amp;&amp;</div>
-<div class="line">                                 std::invocable&lt;T, window_mouse_enter_event&gt; &amp;&amp; std::invocable&lt;T, window_mouse_leave_event&gt; &amp;&amp;</div>
-<div class="line">                                 std::invocable&lt;T, key_down_event&gt; &amp;&amp; std::invocable&lt;T, key_up_event&gt; &amp;&amp;</div>
-<div class="line">                                 std::invocable&lt;T, text_input_event&gt; &amp;&amp; std::invocable&lt;T, mouse_motion_event&gt; &amp;&amp;</div>
-<div class="line">                                 std::invocable&lt;T, mouse_down_event&gt; &amp;&amp; std::invocable&lt;T, mouse_up_event&gt; &amp;&amp;</div>
-<div class="line">                                 std::invocable&lt;T, mouse_wheel_event&gt; &amp;&amp; std::invocable&lt;T, unknown_event&gt; &amp;&amp;</div>
-<div class="line">                                 std::same_as&lt;std::invoke_result_t&lt;T, quit_event&gt;, std::invoke_result_t&lt;T, window_show_event&gt;&gt; &amp;&amp;</div>
-<div class="line">                                 std::same_as&lt;std::invoke_result_t&lt;T, quit_event&gt;, std::invoke_result_t&lt;T, window_hide_event&gt;&gt; &amp;&amp;</div>
-<div class="line">                                 std::same_as&lt;std::invoke_result_t&lt;T, quit_event&gt;, std::invoke_result_t&lt;T, backbuffer_resize_event&gt;&gt; &amp;&amp;</div>
-<div class="line">                                 std::same_as&lt;std::invoke_result_t&lt;T, quit_event&gt;, std::invoke_result_t&lt;T, window_gain_focus_event&gt;&gt; &amp;&amp;</div>
-<div class="line">                                 std::same_as&lt;std::invoke_result_t&lt;T, quit_event&gt;, std::invoke_result_t&lt;T, window_lose_focus_event&gt;&gt; &amp;&amp;</div>
-<div class="line">                                 std::same_as&lt;std::invoke_result_t&lt;T, quit_event&gt;, std::invoke_result_t&lt;T, window_mouse_enter_event&gt;&gt; &amp;&amp;</div>
-<div class="line">                                 std::same_as&lt;std::invoke_result_t&lt;T, quit_event&gt;, std::invoke_result_t&lt;T, window_mouse_leave_event&gt;&gt; &amp;&amp;</div>
-<div class="line">                                 std::same_as&lt;std::invoke_result_t&lt;T, quit_event&gt;, std::invoke_result_t&lt;T, key_down_event&gt;&gt; &amp;&amp;</div>
-<div class="line">                                 std::same_as&lt;std::invoke_result_t&lt;T, quit_event&gt;, std::invoke_result_t&lt;T, key_up_event&gt;&gt; &amp;&amp;</div>
-<div class="line">                                 std::same_as&lt;std::invoke_result_t&lt;T, quit_event&gt;, std::invoke_result_t&lt;T, text_input_event&gt;&gt; &amp;&amp;</div>
-<div class="line">                                 std::same_as&lt;std::invoke_result_t&lt;T, quit_event&gt;, std::invoke_result_t&lt;T, mouse_motion_event&gt;&gt; &amp;&amp;</div>
-<div class="line">                                 std::same_as&lt;std::invoke_result_t&lt;T, quit_event&gt;, std::invoke_result_t&lt;T, mouse_down_event&gt;&gt; &amp;&amp;</div>
-<div class="line">                                 std::same_as&lt;std::invoke_result_t&lt;T, quit_event&gt;, std::invoke_result_t&lt;T, mouse_up_event&gt;&gt; &amp;&amp;</div>
-<div class="line">                                 std::same_as&lt;std::invoke_result_t&lt;T, quit_event&gt;, std::invoke_result_t&lt;T, mouse_wheel_event&gt;&gt; &amp;&amp;</div>
-<div class="line">                                 std::same_as&lt;std::invoke_result_t&lt;T, quit_event&gt;, std::invoke_result_t&lt;T, unknown_event&gt;&gt;</div>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Target&gt;</div>
+<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepttr_1_1event__view__visitor.html">event_view_visitor</a> =</div>
+<div class="line">        std::invocable&lt;Target, quit_event&gt; &amp;&amp; std::invocable&lt;Target, window_show_event&gt; &amp;&amp; std::invocable&lt;Target, window_hide_event&gt; &amp;&amp;</div>
+<div class="line">        std::invocable&lt;Target, backbuffer_resize_event&gt; &amp;&amp; std::invocable&lt;Target, window_gain_focus_event&gt; &amp;&amp;</div>
+<div class="line">        std::invocable&lt;Target, window_lose_focus_event&gt; &amp;&amp; std::invocable&lt;Target, window_mouse_enter_event&gt; &amp;&amp;</div>
+<div class="line">        std::invocable&lt;Target, window_mouse_leave_event&gt; &amp;&amp; std::invocable&lt;Target, key_down_event&gt; &amp;&amp;</div>
+<div class="line">        std::invocable&lt;Target, key_up_event&gt; &amp;&amp; std::invocable&lt;Target, text_input_event&gt; &amp;&amp; std::invocable&lt;Target, mouse_motion_event&gt; &amp;&amp;</div>
+<div class="line">        std::invocable&lt;Target, mouse_down_event&gt; &amp;&amp; std::invocable&lt;Target, mouse_up_event&gt; &amp;&amp; std::invocable&lt;Target, mouse_wheel_event&gt; &amp;&amp;</div>
+<div class="line">        std::invocable&lt;Target, unknown_event&gt; &amp;&amp;</div>
+<div class="line">        <a class="code hl_concept" href="concepttr_1_1all__same.html">all_same&lt;std::invoke_result_t&lt;Target, quit_event&gt;</a>, std::invoke_result_t&lt;Target, window_show_event&gt;,</div>
+<div class="line">                 std::invoke_result_t&lt;Target, window_hide_event&gt;, std::invoke_result_t&lt;Target, backbuffer_resize_event&gt;,</div>
+<div class="line">                 std::invoke_result_t&lt;Target, window_gain_focus_event&gt;, std::invoke_result_t&lt;Target, window_lose_focus_event&gt;,</div>
+<div class="line">                 std::invoke_result_t&lt;Target, window_mouse_enter_event&gt;, std::invoke_result_t&lt;Target, window_mouse_leave_event&gt;,</div>
+<div class="line">                 std::invoke_result_t&lt;Target, key_down_event&gt;, std::invoke_result_t&lt;Target, key_up_event&gt;,</div>
+<div class="line">                 std::invoke_result_t&lt;Target, text_input_event&gt;, std::invoke_result_t&lt;Target, mouse_motion_event&gt;,</div>
+<div class="line">                 std::invoke_result_t&lt;Target, mouse_down_event&gt;, std::invoke_result_t&lt;Target, mouse_up_event&gt;,</div>
+<div class="line">                 std::invoke_result_t&lt;Target, mouse_wheel_event&gt;, std::invoke_result_t&lt;Target, unknown_event&gt;&gt;</div>
+<div class="ttc" id="aconcepttr_1_1all__same_html"><div class="ttname"><a href="concepttr_1_1all__same.html">tr::all_same</a></div><div class="ttdoc">Concept denoting a parameter pack of identical types.</div><div class="ttdef"><b>Definition</b> pack_traits.hpp:33</div></div>
 <div class="ttc" id="aconcepttr_1_1event__view__visitor_html"><div class="ttname"><a href="concepttr_1_1event__view__visitor.html">tr::event_view_visitor</a></div><div class="ttdoc">Valid event view visitor type.</div><div class="ttdef"><b>Definition</b> event_view.hpp:17</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

@@ -1,5 +1,5 @@
 var circle_8hpp =
 [
-    [ "tr::circle", "structtr_1_1circle.html", "structtr_1_1circle" ],
-    [ "tr::intersecting", "namespacetr.html#addf6ebc202f99ac7c2790d9db131cfd5", null ]
+    [ "tr::circle&lt; Rep &gt;", "structtr_1_1circle.html", "structtr_1_1circle" ],
+    [ "tr::intersecting", "namespacetr.html#a3acade8df8a6e7bd32ee5427a86122e1", null ]
 ];

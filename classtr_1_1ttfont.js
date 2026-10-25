@@ -12,6 +12,6 @@ var classtr_1_1ttfont =
     [ "kerning", "classtr_1_1ttfont.html#ac47e1f341ef0bf5819f5f50175696454", null ],
     [ "measure_text", "classtr_1_1ttfont.html#a2c7b74c78c303e51a65a2a3f42062641", null ],
     [ "text_size", "classtr_1_1ttfont.html#a015d5bcfdd4b1855c7930d054eac804e", null ],
-    [ "render", "classtr_1_1ttfont.html#afdc8afcc771a3c0f81df55c9e92b1a65", null ],
-    [ "render", "classtr_1_1ttfont.html#af6e64e61e5d8240c67d5a12c550e7661", null ]
+    [ "render", "classtr_1_1ttfont.html#a6cba29deba540356a31fcd541f8a3e39", null ],
+    [ "render", "classtr_1_1ttfont.html#af2bd45e27890c347a0f5148adcbb299e", null ]
 ];

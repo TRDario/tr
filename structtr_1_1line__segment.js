@@ -1,8 +1,9 @@
 var structtr_1_1line__segment =
 [
-    [ "length", "structtr_1_1line__segment.html#a771fecd6fc8d0129b946b16bae7417f7", null ],
-    [ "length2", "structtr_1_1line__segment.html#a530b07762beeda9de0e976db7a0587f2", null ],
-    [ "closest_point", "structtr_1_1line__segment.html#a09a12bf5bdd7302eac6d2d7bbef4cee9", null ],
-    [ "a", "structtr_1_1line__segment.html#aee6ecf5e998eb2ea0301aa9cb6af0859", null ],
-    [ "b", "structtr_1_1line__segment.html#abcc58de42d85e278f2e4e9cb38bed868", null ]
+    [ "operator line_segment< TargetRep >", "structtr_1_1line__segment.html#a706db3d51c48c99a38d9e33d4d4c0d02", null ],
+    [ "length", "structtr_1_1line__segment.html#a74fbab6ed84d74c433404b7ea9346235", null ],
+    [ "length2", "structtr_1_1line__segment.html#ab8495f4a3ef31adf34b687c117194ca7", null ],
+    [ "closest_point", "structtr_1_1line__segment.html#a665d538c07d89615453cec7b1dc4e26a", null ],
+    [ "a", "structtr_1_1line__segment.html#a29bdc5f44a40bc4ba3737ef8a25885a7", null ],
+    [ "b", "structtr_1_1line__segment.html#a4df43c7bad0dfbb9b9cac7b73d8895a1", null ]
 ];

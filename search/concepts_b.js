@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['object_0',['object',['../concepttr_1_1object.html',1,'tr']]],
-  ['one_5fof_1',['one_of',['../concepttr_1_1one__of.html',1,'tr']]],
-  ['output_5fstring_2',['output_string',['../concepttr_1_1utf8_1_1output__string.html',1,'tr::utf8']]]
+  ['sized_5foutput_5frange_0',['sized_output_range',['../concepttr_1_1sized__output__range.html',1,'tr']]],
+  ['specialization_5fof_1',['specialization_of',['../concepttr_1_1specialization__of.html',1,'tr']]],
+  ['specialization_5fof_5fc_2',['specialization_of_c',['../concepttr_1_1specialization__of__c.html',1,'tr']]],
+  ['specialization_5fof_5fct_3',['specialization_of_ct',['../concepttr_1_1specialization__of__ct.html',1,'tr']]],
+  ['specialization_5fof_5ftc_4',['specialization_of_tc',['../concepttr_1_1specialization__of__tc.html',1,'tr']]]
 ];

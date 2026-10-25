@@ -20,6 +20,8 @@ var classtr_1_1basic__inplace__string =
     [ "operator==", "classtr_1_1basic__inplace__string.html#ad767c144d975b640c6d8056b5ca46f9a", null ],
     [ "operator<=>", "classtr_1_1basic__inplace__string.html#ac463abe60f335e4b25b9a9bcffbdbcfb", null ],
     [ "operator==", "classtr_1_1basic__inplace__string.html#a439e5e3203fa8ffe3da9044de27f5993", null ],
+    [ "at", "classtr_1_1basic__inplace__string.html#a985db0255a4f7f79c21039622b99e159", null ],
+    [ "at", "classtr_1_1basic__inplace__string.html#adfe62a53fbbbd8f8a97a67b1bc81b619", null ],
     [ "operator[]", "classtr_1_1basic__inplace__string.html#a4a8eb4e32895a477148913636993643b", null ],
     [ "operator[]", "classtr_1_1basic__inplace__string.html#a708193a7c153eba1c725e80850ca163c", null ],
     [ "front", "classtr_1_1basic__inplace__string.html#ac82678a08b231b3f400512681a35d7b4", null ],

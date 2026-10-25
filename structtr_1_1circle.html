@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=11" />
   <meta name="generator" content="Doxygen 1.18.0" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>tr: tr::circle Struct Reference</title>
+  <title>tr: tr::circle&lt; Rep &gt; Struct Template Reference</title>
   <link href="tabs.css" rel="stylesheet" type="text/css" />
   <script type="text/javascript" src="jquery.js"></script>
   <script type="text/javascript" src="dynsections.js"></script>
@@ -122,52 +122,113 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('structtr_1_1ci
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">tr::circle Struct Reference</div></div>
+  <div class="headertitle"><div class="title">tr::circle&lt; Rep &gt; Struct Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
 <p>Circle datatype.  
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Circle datatype. </p>
+<div class="textblock"><div class="compoundTemplParams">template&lt;std::floating_point Rep&gt;<br />
+struct tr::circle&lt; Rep &gt;</div><p>Circle datatype. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Rep</td><td>Representation type of the circle. </td></tr>
+  </table>
+  </dd>
+</dl>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ab668010a6277282c90d18a253f08b480" id="r_ab668010a6277282c90d18a253f08b480"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#ab668010a6277282c90d18a253f08b480">contains</a> (glm::vec2 point) const noexcept</td></tr>
-<tr class="memdesc:ab668010a6277282c90d18a253f08b480"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines whether a point is contained inside the circle.  <br /></td></tr>
+<tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Conversion operators</div></td></tr>
+<tr class="memitem:a27415d6f591eb08a7408003d16bbea7b" id="r_a27415d6f591eb08a7408003d16bbea7b"><td class="memTemplParams" colspan="2">template&lt;std::floating_point TargetRep&gt; </td></tr>
+<tr class="memitem:a27415d6f591eb08a7408003d16bbea7b template"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a27415d6f591eb08a7408003d16bbea7b">operator circle&lt; TargetRep &gt;</a> () const noexcept</td></tr>
+<tr class="memdesc:a27415d6f591eb08a7408003d16bbea7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Casts the circle to a circle represented with another representation type.  <br /></td></tr>
+<tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Contains</div></td></tr>
+<tr class="memitem:aa32abdade3e4d2b5640e34a1dd1eb80b" id="r_aa32abdade3e4d2b5640e34a1dd1eb80b"><td class="memTemplParams" colspan="2">template&lt;arithmetic PointRep&gt; </td></tr>
+<tr class="memitem:aa32abdade3e4d2b5640e34a1dd1eb80b template"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="#aa32abdade3e4d2b5640e34a1dd1eb80b">contains</a> (glm::tvec2&lt; PointRep &gt; point) const noexcept</td></tr>
+<tr class="memdesc:aa32abdade3e4d2b5640e34a1dd1eb80b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines whether a point is contained inside the circle.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:ac1b0f3fb0872910dfa6b3d1db1517552" id="r_ac1b0f3fb0872910dfa6b3d1db1517552"><td class="memItemLeft">glm::vec2&#160;</td><td class="memItemRight"><a class="el" href="#ac1b0f3fb0872910dfa6b3d1db1517552">center</a></td></tr>
-<tr class="memdesc:ac1b0f3fb0872910dfa6b3d1db1517552"><td class="mdescLeft">&#160;</td><td class="mdescRight">Offset of the center of the circle.  <br /></td></tr>
-<tr class="memitem:a04a06d64a886a875c859288e8335120d" id="r_a04a06d64a886a875c859288e8335120d"><td class="memItemLeft">float&#160;</td><td class="memItemRight"><a class="el" href="#a04a06d64a886a875c859288e8335120d">radius</a></td></tr>
-<tr class="memdesc:a04a06d64a886a875c859288e8335120d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Radius of the circle.  <br /></td></tr>
+<tr class="memitem:a4cdb7ebb6d1790e3869e780af501d444" id="r_a4cdb7ebb6d1790e3869e780af501d444"><td class="memItemLeft">glm::tvec2&lt; Rep &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a4cdb7ebb6d1790e3869e780af501d444">center</a></td></tr>
+<tr class="memdesc:a4cdb7ebb6d1790e3869e780af501d444"><td class="mdescLeft">&#160;</td><td class="mdescRight">Offset of the center of the circle.  <br /></td></tr>
+<tr class="memitem:a94ab26f045add31b0f33c26ac6b512f8" id="r_a94ab26f045add31b0f33c26ac6b512f8"><td class="memItemLeft">Rep&#160;</td><td class="memItemRight"><a class="el" href="#a94ab26f045add31b0f33c26ac6b512f8">radius</a></td></tr>
+<tr class="memdesc:a94ab26f045add31b0f33c26ac6b512f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Radius of the circle.  <br /></td></tr>
 </table>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="ab668010a6277282c90d18a253f08b480" name="ab668010a6277282c90d18a253f08b480"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab668010a6277282c90d18a253f08b480">&#9670;&#160;</a></span>contains()</h2>
+<a id="a27415d6f591eb08a7408003d16bbea7b" name="a27415d6f591eb08a7408003d16bbea7b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a27415d6f591eb08a7408003d16bbea7b">&#9670;&#160;</a></span>operator circle&lt; TargetRep &gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;std::floating_point Rep&gt; </div>
+<div class="memtemplate">
+template&lt;std::floating_point TargetRep&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool tr::circle::contains </td>
+          <td class="memname"><a class="el" href="structtr_1_1circle.html">tr::circle</a>&lt; Rep &gt;::operator <a class="el" href="structtr_1_1circle.html">circle</a>&lt; TargetRep &gt; </td>
           <td>(</td>
-          <td class="paramtype">glm::vec2</td>          <td class="paramname"><span class="paramname"><em>point</em></span></td><td>)</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel explicit">explicit</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Casts the circle to a circle represented with another representation type. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">TargetRep</td><td>Representation type to cast to. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Cast circle value. </dd></dl>
+
+</div>
+</div>
+<a id="aa32abdade3e4d2b5640e34a1dd1eb80b" name="aa32abdade3e4d2b5640e34a1dd1eb80b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa32abdade3e4d2b5640e34a1dd1eb80b">&#9670;&#160;</a></span>contains()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;std::floating_point Rep&gt; </div>
+<div class="memtemplate">
+template&lt;arithmetic PointRep&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="structtr_1_1circle.html">tr::circle</a>&lt; Rep &gt;::contains </td>
+          <td>(</td>
+          <td class="paramtype">glm::tvec2&lt; PointRep &gt;</td>          <td class="paramname"><span class="paramname"><em>point</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
 <p>Determines whether a point is contained inside the circle. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">PointRep</td><td>Representation type of the point. </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">point</td><td>Point to check. </td></tr>
@@ -179,14 +240,16 @@ Public Attributes</h2></td></tr>
 </div>
 </div>
 <a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
-<a id="ac1b0f3fb0872910dfa6b3d1db1517552" name="ac1b0f3fb0872910dfa6b3d1db1517552"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac1b0f3fb0872910dfa6b3d1db1517552">&#9670;&#160;</a></span>center</h2>
+<a id="a4cdb7ebb6d1790e3869e780af501d444" name="a4cdb7ebb6d1790e3869e780af501d444"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4cdb7ebb6d1790e3869e780af501d444">&#9670;&#160;</a></span>center</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;std::floating_point Rep&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">glm::vec2 tr::circle::center</td>
+          <td class="memname">glm::tvec2&lt;Rep&gt; <a class="el" href="structtr_1_1circle.html">tr::circle</a>&lt; Rep &gt;::center</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -195,14 +258,16 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a04a06d64a886a875c859288e8335120d" name="a04a06d64a886a875c859288e8335120d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a04a06d64a886a875c859288e8335120d">&#9670;&#160;</a></span>radius</h2>
+<a id="a94ab26f045add31b0f33c26ac6b512f8" name="a94ab26f045add31b0f33c26ac6b512f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a94ab26f045add31b0f33c26ac6b512f8">&#9670;&#160;</a></span>radius</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;std::floating_point Rep&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">float tr::circle::radius</td>
+          <td class="memname">Rep <a class="el" href="structtr_1_1circle.html">tr::circle</a>&lt; Rep &gt;::radius</td>
         </tr>
       </table>
 </div><div class="memdoc">

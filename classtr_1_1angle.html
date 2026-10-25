@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=11" />
   <meta name="generator" content="Doxygen 1.18.0" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>tr: tr::angle Class Reference</title>
+  <title>tr: tr::angle&lt; Rep &gt; Class Template Reference</title>
   <link href="tabs.css" rel="stylesheet" type="text/css" />
   <script type="text/javascript" src="jquery.js"></script>
   <script type="text/javascript" src="dynsections.js"></script>
@@ -122,63 +122,78 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1ang
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">tr::angle Class Reference</div></div>
+  <div class="headertitle"><div class="title">tr::angle&lt; Rep &gt; Class Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
 <p>Abstract angle datatype.  
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Abstract angle datatype. </p>
-<dl class="section note"><dt>Note</dt><dd>Angles are internally stored with their value in radians in 32-bit floating point form, so all caveats pertaining to precision and comparison of floating-point values applies to angles as well. </dd></dl>
+<div class="textblock"><div class="compoundTemplParams">template&lt;std::floating_point Rep&gt;<br />
+class tr::angle&lt; Rep &gt;</div><p>Abstract angle datatype. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Rep</td><td>Representation type of the angle. </td></tr>
+  </table>
+  </dd>
+</dl>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors and destructors</div></td></tr>
-<tr class="memitem:a878d3fbcabff80d296143cfeb66c136f" id="r_a878d3fbcabff80d296143cfeb66c136f"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a878d3fbcabff80d296143cfeb66c136f">angle</a> () noexcept=default</td></tr>
-<tr class="memdesc:a878d3fbcabff80d296143cfeb66c136f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a zero angle.  <br /></td></tr>
-<tr class="memitem:a00d7c8d9d455b2a56b1ab411e284c596" id="r_a00d7c8d9d455b2a56b1ab411e284c596"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a00d7c8d9d455b2a56b1ab411e284c596">angle</a> (float rads) noexcept</td></tr>
-<tr class="memdesc:a00d7c8d9d455b2a56b1ab411e284c596"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an angle from a numeric value in radians.  <br /></td></tr>
-<tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Conversion</div></td></tr>
-<tr class="memitem:a8561e252e53e28def51ee40eaeef0840" id="r_a8561e252e53e28def51ee40eaeef0840"><td class="memItemLeft">constexpr float&#160;</td><td class="memItemRight"><a class="el" href="#a8561e252e53e28def51ee40eaeef0840">rads</a> () const noexcept</td></tr>
-<tr class="memdesc:a8561e252e53e28def51ee40eaeef0840"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the angle value into a numeric radian value.  <br /></td></tr>
-<tr class="memitem:abc8e4ee86fc184f1bd713f44112b9522" id="r_abc8e4ee86fc184f1bd713f44112b9522"><td class="memItemLeft">constexpr float&#160;</td><td class="memItemRight"><a class="el" href="#abc8e4ee86fc184f1bd713f44112b9522">degs</a> () const noexcept</td></tr>
-<tr class="memdesc:abc8e4ee86fc184f1bd713f44112b9522"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the angle value into a numeric degree value.  <br /></td></tr>
-<tr class="memitem:a2e2c5e8e7e79e4ac9ac293db06513a76" id="r_a2e2c5e8e7e79e4ac9ac293db06513a76"><td class="memItemLeft">constexpr float&#160;</td><td class="memItemRight"><a class="el" href="#a2e2c5e8e7e79e4ac9ac293db06513a76">turns</a> () const noexcept</td></tr>
-<tr class="memdesc:a2e2c5e8e7e79e4ac9ac293db06513a76"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the angle value into a numeric turn value.  <br /></td></tr>
-<tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Trigonometry</div></td></tr>
-<tr class="memitem:ab3c3d16a4371e8e4b1e878a9942bf335" id="r_ab3c3d16a4371e8e4b1e878a9942bf335"><td class="memItemLeft">float&#160;</td><td class="memItemRight"><a class="el" href="#ab3c3d16a4371e8e4b1e878a9942bf335">sin</a> () const noexcept</td></tr>
-<tr class="memdesc:ab3c3d16a4371e8e4b1e878a9942bf335"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the sine of the angle.  <br /></td></tr>
-<tr class="memitem:a6ac32d92580c106d32e2ab7c8dc9f72c" id="r_a6ac32d92580c106d32e2ab7c8dc9f72c"><td class="memItemLeft">float&#160;</td><td class="memItemRight"><a class="el" href="#a6ac32d92580c106d32e2ab7c8dc9f72c">cos</a> () const noexcept</td></tr>
-<tr class="memdesc:a6ac32d92580c106d32e2ab7c8dc9f72c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the cosine of the angle.  <br /></td></tr>
-<tr class="memitem:a72914108033d961b0b1d86cd85e24f07" id="r_a72914108033d961b0b1d86cd85e24f07"><td class="memItemLeft">float&#160;</td><td class="memItemRight"><a class="el" href="#a72914108033d961b0b1d86cd85e24f07">tan</a> () const noexcept</td></tr>
-<tr class="memdesc:a72914108033d961b0b1d86cd85e24f07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the tangent of the angle.  <br /></td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 id="header-member-group" class="groupheader"><a id="member-group" name="member-group"></a>
-Arithmetic operators</h2></td></tr>
-<tr class="memitem:a886ebb5c4bd78be756164c2541a1e0f5" id="r_a886ebb5c4bd78be756164c2541a1e0f5"><td class="memItemLeft">constexpr <a class="el" href="#a878d3fbcabff80d296143cfeb66c136f">angle</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a886ebb5c4bd78be756164c2541a1e0f5">operator+=</a> (<a class="el" href="#a878d3fbcabff80d296143cfeb66c136f">angle</a> rhs) noexcept</td></tr>
-<tr class="memdesc:a886ebb5c4bd78be756164c2541a1e0f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Angle addition.  <br /></td></tr>
-<tr class="memitem:a4eb0e4e38a75acdeed37d54899def531" id="r_a4eb0e4e38a75acdeed37d54899def531"><td class="memItemLeft">constexpr <a class="el" href="#a878d3fbcabff80d296143cfeb66c136f">angle</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a4eb0e4e38a75acdeed37d54899def531">operator-=</a> (<a class="el" href="#a878d3fbcabff80d296143cfeb66c136f">angle</a> rhs) noexcept</td></tr>
-<tr class="memdesc:a4eb0e4e38a75acdeed37d54899def531"><td class="mdescLeft">&#160;</td><td class="mdescRight">Angle subtraction.  <br /></td></tr>
-<tr class="memitem:a6ffdfe92b4613d2fd704ccc283039c1e" id="r_a6ffdfe92b4613d2fd704ccc283039c1e"><td class="memTemplParams" colspan="2">template&lt;arithmetic Factor&gt; </td></tr>
-<tr class="memitem:a6ffdfe92b4613d2fd704ccc283039c1e template"><td class="memItemLeft">constexpr <a class="el" href="#a878d3fbcabff80d296143cfeb66c136f">angle</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a6ffdfe92b4613d2fd704ccc283039c1e">operator*=</a> (Factor rhs) noexcept</td></tr>
-<tr class="memdesc:a6ffdfe92b4613d2fd704ccc283039c1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Angle multiplication.  <br /></td></tr>
-<tr class="memitem:a9f7e36be9f9eb423070dae274c4a0360" id="r_a9f7e36be9f9eb423070dae274c4a0360"><td class="memTemplParams" colspan="2">template&lt;arithmetic Factor&gt; </td></tr>
-<tr class="memitem:a9f7e36be9f9eb423070dae274c4a0360 template"><td class="memItemLeft">constexpr <a class="el" href="#a878d3fbcabff80d296143cfeb66c136f">angle</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a9f7e36be9f9eb423070dae274c4a0360">operator/=</a> (Factor rhs) noexcept</td></tr>
-<tr class="memdesc:a9f7e36be9f9eb423070dae274c4a0360"><td class="mdescLeft">&#160;</td><td class="mdescRight">Angle division.  <br /></td></tr>
+<tr class="memitem:aff7db063418e4ba84edb9c99ce760098" id="r_aff7db063418e4ba84edb9c99ce760098"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#aff7db063418e4ba84edb9c99ce760098">angle</a> () noexcept=default</td></tr>
+<tr class="memdesc:aff7db063418e4ba84edb9c99ce760098"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a zero angle.  <br /></td></tr>
+<tr class="memitem:a270aa9e8dbfb0f6abd971d52b07f3f59" id="r_a270aa9e8dbfb0f6abd971d52b07f3f59"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a270aa9e8dbfb0f6abd971d52b07f3f59">angle</a> (Rep rads) noexcept</td></tr>
+<tr class="memdesc:a270aa9e8dbfb0f6abd971d52b07f3f59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an angle from a numeric value in radians.  <br /></td></tr>
+<tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Conversion operators</div></td></tr>
+<tr class="memitem:a076f8cafadfeb9696e2a3910f20a5ad5" id="r_a076f8cafadfeb9696e2a3910f20a5ad5"><td class="memTemplParams" colspan="2">template&lt;std::floating_point TargetRep&gt; </td></tr>
+<tr class="memitem:a076f8cafadfeb9696e2a3910f20a5ad5 template"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a076f8cafadfeb9696e2a3910f20a5ad5">operator angle&lt; TargetRep &gt;</a> () const noexcept</td></tr>
+<tr class="memdesc:a076f8cafadfeb9696e2a3910f20a5ad5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Casts the angle to an angle represented with another datatype.  <br /></td></tr>
+<tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Arithmetic operators</div></td></tr>
+<tr class="memitem:a9fb23803823903c9a48ed15ee42cb4e8" id="r_a9fb23803823903c9a48ed15ee42cb4e8"><td class="memTemplParams" colspan="2">template&lt;arithmetic RhsRep&gt; </td></tr>
+<tr class="memitem:a9fb23803823903c9a48ed15ee42cb4e8 template"><td class="memItemLeft">constexpr <a class="el" href="#aff7db063418e4ba84edb9c99ce760098">angle</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a9fb23803823903c9a48ed15ee42cb4e8">operator+=</a> (<a class="el" href="#aff7db063418e4ba84edb9c99ce760098">angle</a>&lt; RhsRep &gt; rhs) noexcept</td></tr>
+<tr class="memdesc:a9fb23803823903c9a48ed15ee42cb4e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an angle to the angle.  <br /></td></tr>
+<tr class="memitem:af0e3ef7a4b58041899c6350fa0705ea5" id="r_af0e3ef7a4b58041899c6350fa0705ea5"><td class="memTemplParams" colspan="2">template&lt;arithmetic RhsRep&gt; </td></tr>
+<tr class="memitem:af0e3ef7a4b58041899c6350fa0705ea5 template"><td class="memItemLeft">constexpr <a class="el" href="#aff7db063418e4ba84edb9c99ce760098">angle</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#af0e3ef7a4b58041899c6350fa0705ea5">operator-=</a> (<a class="el" href="#aff7db063418e4ba84edb9c99ce760098">angle</a>&lt; RhsRep &gt; rhs) noexcept</td></tr>
+<tr class="memdesc:af0e3ef7a4b58041899c6350fa0705ea5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Subtracts an angle from the angle.  <br /></td></tr>
+<tr class="memitem:abe6a873b740cbc96aa5a6a1204b50f1c" id="r_abe6a873b740cbc96aa5a6a1204b50f1c"><td class="memTemplParams" colspan="2">template&lt;arithmetic Scalar&gt; </td></tr>
+<tr class="memitem:abe6a873b740cbc96aa5a6a1204b50f1c template"><td class="memItemLeft">constexpr <a class="el" href="#aff7db063418e4ba84edb9c99ce760098">angle</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#abe6a873b740cbc96aa5a6a1204b50f1c">operator*=</a> (Scalar rhs) noexcept</td></tr>
+<tr class="memdesc:abe6a873b740cbc96aa5a6a1204b50f1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiplies the angle by a scalar.  <br /></td></tr>
+<tr class="memitem:a79bd64cbd80a66dc52466b91d4195c5c" id="r_a79bd64cbd80a66dc52466b91d4195c5c"><td class="memTemplParams" colspan="2">template&lt;arithmetic Scalar&gt; </td></tr>
+<tr class="memitem:a79bd64cbd80a66dc52466b91d4195c5c template"><td class="memItemLeft">constexpr <a class="el" href="#aff7db063418e4ba84edb9c99ce760098">angle</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a79bd64cbd80a66dc52466b91d4195c5c">operator/=</a> (Scalar rhs) noexcept</td></tr>
+<tr class="memdesc:a79bd64cbd80a66dc52466b91d4195c5c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Divides the angle by a scalar.  <br /></td></tr>
+<tr class="memitem:a8e5c96f982f1cbbe3fd51453094c990f" id="r_a8e5c96f982f1cbbe3fd51453094c990f"><td class="memTemplParams" colspan="2">template&lt;arithmetic RhsRep&gt; </td></tr>
+<tr class="memitem:a8e5c96f982f1cbbe3fd51453094c990f template"><td class="memItemLeft">constexpr <a class="el" href="#aff7db063418e4ba84edb9c99ce760098">angle</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a8e5c96f982f1cbbe3fd51453094c990f">operator%=</a> (<a class="el" href="#aff7db063418e4ba84edb9c99ce760098">angle</a>&lt; RhsRep &gt; rhs) noexcept</td></tr>
+<tr class="memdesc:a8e5c96f982f1cbbe3fd51453094c990f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modulos the angle by another angle.  <br /></td></tr>
+<tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Conversion</div></td></tr>
+<tr class="memitem:a3c63fdef1fff3834541894d78fd42446" id="r_a3c63fdef1fff3834541894d78fd42446"><td class="memItemLeft">constexpr Rep&#160;</td><td class="memItemRight"><a class="el" href="#a3c63fdef1fff3834541894d78fd42446">rads</a> () const noexcept</td></tr>
+<tr class="memdesc:a3c63fdef1fff3834541894d78fd42446"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the angle value into a numeric radian value.  <br /></td></tr>
+<tr class="memitem:a5565b9d3328bcd11261ff26bee4d996c" id="r_a5565b9d3328bcd11261ff26bee4d996c"><td class="memItemLeft">constexpr Rep&#160;</td><td class="memItemRight"><a class="el" href="#a5565b9d3328bcd11261ff26bee4d996c">degs</a> () const noexcept</td></tr>
+<tr class="memdesc:a5565b9d3328bcd11261ff26bee4d996c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the angle value into a numeric degree value.  <br /></td></tr>
+<tr class="memitem:addba8d93751075b7c8fb88028f8ce4cd" id="r_addba8d93751075b7c8fb88028f8ce4cd"><td class="memItemLeft">constexpr Rep&#160;</td><td class="memItemRight"><a class="el" href="#addba8d93751075b7c8fb88028f8ce4cd">turns</a> () const noexcept</td></tr>
+<tr class="memdesc:addba8d93751075b7c8fb88028f8ce4cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the angle value into a numeric turn value.  <br /></td></tr>
+<tr id="pub-methods-4" class="groupHeader"><td colspan="2"><div class="groupHeader">Trigonometry</div></td></tr>
+<tr class="memitem:abfbc03de0f432eb135a000ef07055568" id="r_abfbc03de0f432eb135a000ef07055568"><td class="memItemLeft">Rep&#160;</td><td class="memItemRight"><a class="el" href="#abfbc03de0f432eb135a000ef07055568">sin</a> () const noexcept</td></tr>
+<tr class="memdesc:abfbc03de0f432eb135a000ef07055568"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the sine of the angle.  <br /></td></tr>
+<tr class="memitem:a5bf61bed510227fa289dd3fa6650e4ac" id="r_a5bf61bed510227fa289dd3fa6650e4ac"><td class="memItemLeft">Rep&#160;</td><td class="memItemRight"><a class="el" href="#a5bf61bed510227fa289dd3fa6650e4ac">cos</a> () const noexcept</td></tr>
+<tr class="memdesc:a5bf61bed510227fa289dd3fa6650e4ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the cosine of the angle.  <br /></td></tr>
+<tr class="memitem:a5ad5ee1480f944d8fe3c9a98fa49f297" id="r_a5ad5ee1480f944d8fe3c9a98fa49f297"><td class="memItemLeft">Rep&#160;</td><td class="memItemRight"><a class="el" href="#a5ad5ee1480f944d8fe3c9a98fa49f297">tan</a> () const noexcept</td></tr>
+<tr class="memdesc:a5ad5ee1480f944d8fe3c9a98fa49f297"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the tangent of the angle.  <br /></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a878d3fbcabff80d296143cfeb66c136f" name="a878d3fbcabff80d296143cfeb66c136f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a878d3fbcabff80d296143cfeb66c136f">&#9670;&#160;</a></span>angle() <span class="overload">[1/2]</span></h2>
+<a id="aff7db063418e4ba84edb9c99ce760098" name="aff7db063418e4ba84edb9c99ce760098"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aff7db063418e4ba84edb9c99ce760098">&#9670;&#160;</a></span>angle() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;std::floating_point Rep&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">tr::angle::angle </td>
+          <td class="memname"><a class="el" href="classtr_1_1angle.html">tr::angle</a>&lt; Rep &gt;::angle </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -195,19 +210,21 @@ Arithmetic operators</h2></td></tr>
 
 </div>
 </div>
-<a id="a00d7c8d9d455b2a56b1ab411e284c596" name="a00d7c8d9d455b2a56b1ab411e284c596"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a00d7c8d9d455b2a56b1ab411e284c596">&#9670;&#160;</a></span>angle() <span class="overload">[2/2]</span></h2>
+<a id="a270aa9e8dbfb0f6abd971d52b07f3f59" name="a270aa9e8dbfb0f6abd971d52b07f3f59"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a270aa9e8dbfb0f6abd971d52b07f3f59">&#9670;&#160;</a></span>angle() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;std::floating_point Rep&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">tr::angle::angle </td>
+          <td class="memname"><a class="el" href="classtr_1_1angle.html">tr::angle</a>&lt; Rep &gt;::angle </td>
           <td>(</td>
-          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>rads</em></span></td><td>)</td>
+          <td class="paramtype">Rep</td>          <td class="paramname"><span class="paramname"><em>rads</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -229,19 +246,61 @@ Arithmetic operators</h2></td></tr>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="a886ebb5c4bd78be756164c2541a1e0f5" name="a886ebb5c4bd78be756164c2541a1e0f5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a886ebb5c4bd78be756164c2541a1e0f5">&#9670;&#160;</a></span>operator+=()</h2>
+<a id="a076f8cafadfeb9696e2a3910f20a5ad5" name="a076f8cafadfeb9696e2a3910f20a5ad5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a076f8cafadfeb9696e2a3910f20a5ad5">&#9670;&#160;</a></span>operator angle&lt; TargetRep &gt;()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;std::floating_point Rep&gt; </div>
+<div class="memtemplate">
+template&lt;std::floating_point TargetRep&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="#a878d3fbcabff80d296143cfeb66c136f">angle</a> &amp; tr::angle::operator+= </td>
+          <td class="memname"><a class="el" href="classtr_1_1angle.html">tr::angle</a>&lt; Rep &gt;::operator <a class="el" href="#aff7db063418e4ba84edb9c99ce760098">angle</a>&lt; TargetRep &gt; </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="#a878d3fbcabff80d296143cfeb66c136f">angle</a></td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Casts the angle to an angle represented with another datatype. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">TargetRep</td><td>Representation type to cast to. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Cast angle value. </dd></dl>
+
+</div>
+</div>
+<a id="a9fb23803823903c9a48ed15ee42cb4e8" name="a9fb23803823903c9a48ed15ee42cb4e8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9fb23803823903c9a48ed15ee42cb4e8">&#9670;&#160;</a></span>operator+=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;std::floating_point Rep&gt; </div>
+<div class="memtemplate">
+template&lt;arithmetic RhsRep&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#aff7db063418e4ba84edb9c99ce760098">angle</a> &amp; <a class="el" href="classtr_1_1angle.html">tr::angle</a>&lt; Rep &gt;::operator+= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#aff7db063418e4ba84edb9c99ce760098">angle</a>&lt; RhsRep &gt;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -252,7 +311,13 @@ Arithmetic operators</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Angle addition. </p>
+<p>Adds an angle to the angle. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">RhsRep</td><td>Representation type of the right-hand side angle. </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">rhs</td><td>Angle to add to the current angle value. </td></tr>
@@ -263,19 +328,23 @@ Arithmetic operators</h2></td></tr>
 
 </div>
 </div>
-<a id="a4eb0e4e38a75acdeed37d54899def531" name="a4eb0e4e38a75acdeed37d54899def531"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4eb0e4e38a75acdeed37d54899def531">&#9670;&#160;</a></span>operator-=()</h2>
+<a id="af0e3ef7a4b58041899c6350fa0705ea5" name="af0e3ef7a4b58041899c6350fa0705ea5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af0e3ef7a4b58041899c6350fa0705ea5">&#9670;&#160;</a></span>operator-=()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;std::floating_point Rep&gt; </div>
+<div class="memtemplate">
+template&lt;arithmetic RhsRep&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="#a878d3fbcabff80d296143cfeb66c136f">angle</a> &amp; tr::angle::operator-= </td>
+          <td class="memname"><a class="el" href="#aff7db063418e4ba84edb9c99ce760098">angle</a> &amp; <a class="el" href="classtr_1_1angle.html">tr::angle</a>&lt; Rep &gt;::operator-= </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="#a878d3fbcabff80d296143cfeb66c136f">angle</a></td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="#aff7db063418e4ba84edb9c99ce760098">angle</a>&lt; RhsRep &gt;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -286,7 +355,13 @@ Arithmetic operators</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Angle subtraction. </p>
+<p>Subtracts an angle from the angle. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">RhsRep</td><td>Representation type of the right-hand side angle. </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">rhs</td><td>Angle to subtract from the current angle value. </td></tr>
@@ -297,21 +372,23 @@ Arithmetic operators</h2></td></tr>
 
 </div>
 </div>
-<a id="a6ffdfe92b4613d2fd704ccc283039c1e" name="a6ffdfe92b4613d2fd704ccc283039c1e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6ffdfe92b4613d2fd704ccc283039c1e">&#9670;&#160;</a></span>operator*=()</h2>
+<a id="abe6a873b740cbc96aa5a6a1204b50f1c" name="abe6a873b740cbc96aa5a6a1204b50f1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abe6a873b740cbc96aa5a6a1204b50f1c">&#9670;&#160;</a></span>operator*=()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;arithmetic Factor&gt; </div>
+template&lt;std::floating_point Rep&gt; </div>
+<div class="memtemplate">
+template&lt;arithmetic Scalar&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="#a878d3fbcabff80d296143cfeb66c136f">angle</a> &amp; tr::angle::operator*= </td>
+          <td class="memname"><a class="el" href="#aff7db063418e4ba84edb9c99ce760098">angle</a> &amp; <a class="el" href="classtr_1_1angle.html">tr::angle</a>&lt; Rep &gt;::operator*= </td>
           <td>(</td>
-          <td class="paramtype">Factor</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td class="paramtype">Scalar</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -322,10 +399,10 @@ template&lt;arithmetic Factor&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Angle multiplication. </p>
+<p>Multiplies the angle by a scalar. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">Factor</td><td>Scalar type. </td></tr>
+    <tr><td class="paramname">Scalar</td><td>Type of the scalar. </td></tr>
   </table>
   </dd>
 </dl>
@@ -339,21 +416,23 @@ template&lt;arithmetic Factor&gt; </div>
 
 </div>
 </div>
-<a id="a9f7e36be9f9eb423070dae274c4a0360" name="a9f7e36be9f9eb423070dae274c4a0360"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9f7e36be9f9eb423070dae274c4a0360">&#9670;&#160;</a></span>operator/=()</h2>
+<a id="a79bd64cbd80a66dc52466b91d4195c5c" name="a79bd64cbd80a66dc52466b91d4195c5c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a79bd64cbd80a66dc52466b91d4195c5c">&#9670;&#160;</a></span>operator/=()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;arithmetic Factor&gt; </div>
+template&lt;std::floating_point Rep&gt; </div>
+<div class="memtemplate">
+template&lt;arithmetic Scalar&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="#a878d3fbcabff80d296143cfeb66c136f">angle</a> &amp; tr::angle::operator/= </td>
+          <td class="memname"><a class="el" href="#aff7db063418e4ba84edb9c99ce760098">angle</a> &amp; <a class="el" href="classtr_1_1angle.html">tr::angle</a>&lt; Rep &gt;::operator/= </td>
           <td>(</td>
-          <td class="paramtype">Factor</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td class="paramtype">Scalar</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -364,10 +443,10 @@ template&lt;arithmetic Factor&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Angle division. </p>
+<p>Divides the angle by a scalar. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">Factor</td><td>Scalar type. </td></tr>
+    <tr><td class="paramname">Scalar</td><td>Type of the scalar. </td></tr>
   </table>
   </dd>
 </dl>
@@ -381,17 +460,63 @@ template&lt;arithmetic Factor&gt; </div>
 
 </div>
 </div>
-<a id="a8561e252e53e28def51ee40eaeef0840" name="a8561e252e53e28def51ee40eaeef0840"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8561e252e53e28def51ee40eaeef0840">&#9670;&#160;</a></span>rads()</h2>
+<a id="a8e5c96f982f1cbbe3fd51453094c990f" name="a8e5c96f982f1cbbe3fd51453094c990f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e5c96f982f1cbbe3fd51453094c990f">&#9670;&#160;</a></span>operator%=()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;std::floating_point Rep&gt; </div>
+<div class="memtemplate">
+template&lt;arithmetic RhsRep&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">float tr::angle::rads </td>
+          <td class="memname"><a class="el" href="#aff7db063418e4ba84edb9c99ce760098">angle</a> &amp; <a class="el" href="classtr_1_1angle.html">tr::angle</a>&lt; Rep &gt;::operator%= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#aff7db063418e4ba84edb9c99ce760098">angle</a>&lt; RhsRep &gt;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel constexpr">constexpr</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Modulos the angle by another angle. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">RhsRep</td><td>Representation type of the right-hand side angle. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">rhs</td><td>Factor to divide the angle with. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Reference to <span class="tt">*this</span>. </dd></dl>
+
+</div>
+</div>
+<a id="a3c63fdef1fff3834541894d78fd42446" name="a3c63fdef1fff3834541894d78fd42446"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c63fdef1fff3834541894d78fd42446">&#9670;&#160;</a></span>rads()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;std::floating_point Rep&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Rep <a class="el" href="classtr_1_1angle.html">tr::angle</a>&lt; Rep &gt;::rads </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -409,17 +534,19 @@ template&lt;arithmetic Factor&gt; </div>
 
 </div>
 </div>
-<a id="abc8e4ee86fc184f1bd713f44112b9522" name="abc8e4ee86fc184f1bd713f44112b9522"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abc8e4ee86fc184f1bd713f44112b9522">&#9670;&#160;</a></span>degs()</h2>
+<a id="a5565b9d3328bcd11261ff26bee4d996c" name="a5565b9d3328bcd11261ff26bee4d996c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5565b9d3328bcd11261ff26bee4d996c">&#9670;&#160;</a></span>degs()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;std::floating_point Rep&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">float tr::angle::degs </td>
+          <td class="memname">Rep <a class="el" href="classtr_1_1angle.html">tr::angle</a>&lt; Rep &gt;::degs </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -437,17 +564,19 @@ template&lt;arithmetic Factor&gt; </div>
 
 </div>
 </div>
-<a id="a2e2c5e8e7e79e4ac9ac293db06513a76" name="a2e2c5e8e7e79e4ac9ac293db06513a76"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2e2c5e8e7e79e4ac9ac293db06513a76">&#9670;&#160;</a></span>turns()</h2>
+<a id="addba8d93751075b7c8fb88028f8ce4cd" name="addba8d93751075b7c8fb88028f8ce4cd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#addba8d93751075b7c8fb88028f8ce4cd">&#9670;&#160;</a></span>turns()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;std::floating_point Rep&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">float tr::angle::turns </td>
+          <td class="memname">Rep <a class="el" href="classtr_1_1angle.html">tr::angle</a>&lt; Rep &gt;::turns </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -465,17 +594,19 @@ template&lt;arithmetic Factor&gt; </div>
 
 </div>
 </div>
-<a id="ab3c3d16a4371e8e4b1e878a9942bf335" name="ab3c3d16a4371e8e4b1e878a9942bf335"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab3c3d16a4371e8e4b1e878a9942bf335">&#9670;&#160;</a></span>sin()</h2>
+<a id="abfbc03de0f432eb135a000ef07055568" name="abfbc03de0f432eb135a000ef07055568"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abfbc03de0f432eb135a000ef07055568">&#9670;&#160;</a></span>sin()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;std::floating_point Rep&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">float tr::angle::sin </td>
+          <td class="memname">Rep <a class="el" href="classtr_1_1angle.html">tr::angle</a>&lt; Rep &gt;::sin </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -493,17 +624,19 @@ template&lt;arithmetic Factor&gt; </div>
 
 </div>
 </div>
-<a id="a6ac32d92580c106d32e2ab7c8dc9f72c" name="a6ac32d92580c106d32e2ab7c8dc9f72c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6ac32d92580c106d32e2ab7c8dc9f72c">&#9670;&#160;</a></span>cos()</h2>
+<a id="a5bf61bed510227fa289dd3fa6650e4ac" name="a5bf61bed510227fa289dd3fa6650e4ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5bf61bed510227fa289dd3fa6650e4ac">&#9670;&#160;</a></span>cos()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;std::floating_point Rep&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">float tr::angle::cos </td>
+          <td class="memname">Rep <a class="el" href="classtr_1_1angle.html">tr::angle</a>&lt; Rep &gt;::cos </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -521,17 +654,19 @@ template&lt;arithmetic Factor&gt; </div>
 
 </div>
 </div>
-<a id="a72914108033d961b0b1d86cd85e24f07" name="a72914108033d961b0b1d86cd85e24f07"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a72914108033d961b0b1d86cd85e24f07">&#9670;&#160;</a></span>tan()</h2>
+<a id="a5ad5ee1480f944d8fe3c9a98fa49f297" name="a5ad5ee1480f944d8fe3c9a98fa49f297"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ad5ee1480f944d8fe3c9a98fa49f297">&#9670;&#160;</a></span>tan()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;std::floating_point Rep&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">float tr::angle::tan </td>
+          <td class="memname">Rep <a class="el" href="classtr_1_1angle.html">tr::angle</a>&lt; Rep &gt;::tan </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>

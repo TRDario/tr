@@ -5,6 +5,6 @@ var searchData=
   ['delta_2',['delta',['../structtr_1_1mouse__motion__event.html#a7c0d9828b88d57439343f4d3786a7b36',1,'tr::mouse_motion_event::delta'],['../structtr_1_1mouse__wheel__event.html#a1f48a8a8bfee11e801c220750915b791',1,'tr::mouse_wheel_event::delta']]],
   ['deref_3',['deref',['../namespacetr.html#aa0d78302d0ac420d68fdfc191a15d2ea',1,'tr']]],
   ['developer_4',['developer',['../structtr_1_1application__metadata.html#a1c63df88f6fdd2caa372668616f7e010',1,'tr::application_metadata']]],
-  ['divisor_5',['divisor',['../structtr_1_1vertex__binding.html#ab9c362ef30e19197f4e123f9022243f6',1,'tr::vertex_binding::divisor'],['../structtr_1_1vertex__binding__tag.html#a03d20773abf875cbbfbed95ab9f1026b',1,'tr::vertex_binding_tag::divisor']]],
+  ['divisor_5',['divisor',['../structtr_1_1vertex__binding.html#ab9c362ef30e19197f4e123f9022243f6',1,'tr::vertex_binding::divisor'],['../structtr_1_1vertex__binding__tag.html#a08950aa446a9c314975b0cdc5d143e9f',1,'tr::vertex_binding_tag::divisor']]],
   ['duration_6',['duration',['../structtr_1_1benchmark_1_1measurement.html#a5a98b2798448477fc542ba4e7fc034f2',1,'tr::benchmark::measurement']]]
 ];

@@ -1,7 +1,7 @@
 var vertex__attribute_8hpp =
 [
     [ "tr::vertex_attribute", "structtr_1_1vertex__attribute.html", "structtr_1_1vertex__attribute" ],
-    [ "tr::normalized&lt; T &gt;", "structtr_1_1normalized.html", null ],
+    [ "tr::normalized&lt; Target &gt;", "structtr_1_1normalized.html", null ],
     [ "std::formatter&lt; tr::vertex_attribute &gt;", "classstd_1_1formatter_3_01tr_1_1vertex__attribute_01_4.html", "classstd_1_1formatter_3_01tr_1_1vertex__attribute_01_4" ],
     [ "tr::vertex_attribute_type", "namespacetr.html#ad8eb4f799ddd3f5874fa4b1ad5c63032", [
       [ "tr::vertex_attribute_type::unknown", "namespacetr.html#ad8eb4f799ddd3f5874fa4b1ad5c63032aad921d60486366258809553a3db49a4a", null ],

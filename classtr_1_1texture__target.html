@@ -190,13 +190,13 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a3202d209f6a0b4fdc3cbb42ca350ccb4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the filters used by the texture sampler.  <br /></td></tr>
 <tr class="memitem:a74f80a10063043171c178cc9a363edc7" id="r_a74f80a10063043171c178cc9a363edc7"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a74f80a10063043171c178cc9a363edc7">set_wrap</a> (wrap<a class="el" href="namespacetr.html#a3e4670572d9d0189d10f4f474d1ebfa3">wrap</a> wrap<a class="el" href="namespacetr.html#a3e4670572d9d0189d10f4f474d1ebfa3">wrap</a>) noexcept</td></tr>
 <tr class="memdesc:a74f80a10063043171c178cc9a363edc7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the wrapping used by the texture sampler.  <br /></td></tr>
-<tr class="memitem:a689bcfced7f16d22dcf00e6fa80ea76b" id="r_a689bcfced7f16d22dcf00e6fa80ea76b"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a689bcfced7f16d22dcf00e6fa80ea76b">set_border_color</a> (<a class="el" href="structtr_1_1rgbaf.html">rgbaf</a> color) noexcept</td></tr>
-<tr class="memdesc:a689bcfced7f16d22dcf00e6fa80ea76b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the border color of the texture sampler (used when <span class="tt">wrap::BORDER_CLAMP</span> is in use).  <br /></td></tr>
+<tr class="memitem:a0c1a1c32b440c566eafdc1072096e2d5" id="r_a0c1a1c32b440c566eafdc1072096e2d5"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a0c1a1c32b440c566eafdc1072096e2d5">set_border_color</a> (<a class="el" href="structtr_1_1rgba.html">rgba</a>&lt; float &gt; color) noexcept</td></tr>
+<tr class="memdesc:a0c1a1c32b440c566eafdc1072096e2d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the border color of the texture sampler (used when <span class="tt">wrap::BORDER_CLAMP</span> is in use).  <br /></td></tr>
 <tr id="pub-methods-8" class="groupHeader"><td colspan="2"><div class="groupHeader">Clearing &amp; setting</div></td></tr>
-<tr class="memitem:afd98a5638a737037345f52d455ef3d37" id="r_afd98a5638a737037345f52d455ef3d37"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#afd98a5638a737037345f52d455ef3d37">clear</a> (<a class="el" href="structtr_1_1rgbaf.html">rgbaf</a> color) noexcept</td></tr>
-<tr class="memdesc:afd98a5638a737037345f52d455ef3d37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the texture target.  <br /></td></tr>
-<tr class="memitem:ad895060c758e6ebf6cc940aeec78905b" id="r_ad895060c758e6ebf6cc940aeec78905b"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ad895060c758e6ebf6cc940aeec78905b">clear_region</a> (<a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; int &gt; region, <a class="el" href="structtr_1_1rgbaf.html">rgbaf</a> color) noexcept</td></tr>
-<tr class="memdesc:ad895060c758e6ebf6cc940aeec78905b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears a region of the texture target.  <br /></td></tr>
+<tr class="memitem:a2526bbe6a7519c9da563ccb05f649dcd" id="r_a2526bbe6a7519c9da563ccb05f649dcd"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a2526bbe6a7519c9da563ccb05f649dcd">clear</a> (<a class="el" href="structtr_1_1rgba.html">rgba</a>&lt; float &gt; color={0, 0, 0, 0}) noexcept</td></tr>
+<tr class="memdesc:a2526bbe6a7519c9da563ccb05f649dcd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the texture target.  <br /></td></tr>
+<tr class="memitem:aee45c7dd52cbec0a8c22d7776f79d8d8" id="r_aee45c7dd52cbec0a8c22d7776f79d8d8"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aee45c7dd52cbec0a8c22d7776f79d8d8">clear_region</a> (<a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; int &gt; region, <a class="el" href="structtr_1_1rgba.html">rgba</a>&lt; float &gt; color={0, 0, 0, 0}) noexcept</td></tr>
+<tr class="memdesc:aee45c7dd52cbec0a8c22d7776f79d8d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears a region of the texture target.  <br /></td></tr>
 <tr class="memitem:ad16f04dfde21114bfab01890e5d8ec77" id="r_ad16f04dfde21114bfab01890e5d8ec77"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ad16f04dfde21114bfab01890e5d8ec77">copy_region</a> (glm::ivec2 tl, <a class="el" href="classtr_1_1texture__view.html">texture_view</a> src, <a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; int &gt; region) noexcept</td></tr>
 <tr class="memdesc:ad16f04dfde21114bfab01890e5d8ec77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copies a region from another texture.  <br /></td></tr>
 <tr class="memitem:a39ae0ab8a4c1bf3ac6c2a3821f0bf66e" id="r_a39ae0ab8a4c1bf3ac6c2a3821f0bf66e"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a39ae0ab8a4c1bf3ac6c2a3821f0bf66e">set_region</a> (glm::ivec2 tl, <a class="el" href="classtr_1_1sub__bitmap.html">sub_bitmap</a> bitmap) noexcept</td></tr>
@@ -956,8 +956,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a689bcfced7f16d22dcf00e6fa80ea76b" name="a689bcfced7f16d22dcf00e6fa80ea76b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a689bcfced7f16d22dcf00e6fa80ea76b">&#9670;&#160;</a></span>set_border_color()</h2>
+<a id="a0c1a1c32b440c566eafdc1072096e2d5" name="a0c1a1c32b440c566eafdc1072096e2d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0c1a1c32b440c566eafdc1072096e2d5">&#9670;&#160;</a></span>set_border_color()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -968,7 +968,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">void tr::texture_target::set_border_color </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structtr_1_1rgbaf.html">rgbaf</a></td>          <td class="paramname"><span class="paramname"><em>color</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="structtr_1_1rgba.html">rgba</a>&lt; float &gt;</td>          <td class="paramname"><span class="paramname"><em>color</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -989,8 +989,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="afd98a5638a737037345f52d455ef3d37" name="afd98a5638a737037345f52d455ef3d37"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afd98a5638a737037345f52d455ef3d37">&#9670;&#160;</a></span>clear()</h2>
+<a id="a2526bbe6a7519c9da563ccb05f649dcd" name="a2526bbe6a7519c9da563ccb05f649dcd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2526bbe6a7519c9da563ccb05f649dcd">&#9670;&#160;</a></span>clear()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1001,7 +1001,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">void tr::texture_target::clear </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structtr_1_1rgbaf.html">rgbaf</a></td>          <td class="paramname"><span class="paramname"><em>color</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="structtr_1_1rgba.html">rgba</a>&lt; float &gt;</td>          <td class="paramname"><span class="paramname"><em>color</em></span><span class="paramdefsep"> = </span><span class="paramdefval">{0,&#160;0,&#160;0,&#160;0}</span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -1022,8 +1022,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ad895060c758e6ebf6cc940aeec78905b" name="ad895060c758e6ebf6cc940aeec78905b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad895060c758e6ebf6cc940aeec78905b">&#9670;&#160;</a></span>clear_region()</h2>
+<a id="aee45c7dd52cbec0a8c22d7776f79d8d8" name="aee45c7dd52cbec0a8c22d7776f79d8d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee45c7dd52cbec0a8c22d7776f79d8d8">&#9670;&#160;</a></span>clear_region()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1039,7 +1039,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structtr_1_1rgbaf.html">rgbaf</a></td>          <td class="paramname"><span class="paramname"><em>color</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="structtr_1_1rgba.html">rgba</a>&lt; float &gt;</td>          <td class="paramname"><span class="paramname"><em>color</em></span><span class="paramdefsep"> = </span><span class="paramdefval">{0,&#160;0,&#160;0,&#160;0}</span>&#160;)</td>
         </tr>
       </table>
   </td>

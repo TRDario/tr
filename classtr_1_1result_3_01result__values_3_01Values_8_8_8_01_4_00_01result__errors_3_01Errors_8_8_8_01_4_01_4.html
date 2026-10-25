@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1res
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename... Values, typename... Errors&gt;<br />
-requires ((!one_of&lt;Values, Errors...&gt;) &amp;&amp; ...)<br />
+requires (!one_of&lt;Values, Errors...&gt; &amp;&amp; ...)<br />
 class tr::result&lt; result_values&lt; Values... &gt;, result_errors&lt; Errors... &gt; &gt;</div><p>Result variant with distinct value and error alternatives. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
@@ -174,11 +174,11 @@ Public Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-attribs" class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
 <tr id="pub-static-attribs-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constants</div></td></tr>
-<tr class="memitem:a1e1d03c59e68fd6013786575c908dca2" id="r_a1e1d03c59e68fd6013786575c908dca2"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
-<tr class="memitem:a1e1d03c59e68fd6013786575c908dca2 template"><td class="memItemLeft">static constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="#a1e1d03c59e68fd6013786575c908dca2">is_value_type</a> {one_of&lt;T, Values...&gt;}</td></tr>
+<tr class="memitem:a1e1d03c59e68fd6013786575c908dca2" id="r_a1e1d03c59e68fd6013786575c908dca2"><td class="memTemplParams" colspan="2">template&lt;typename Target&gt; </td></tr>
+<tr class="memitem:a1e1d03c59e68fd6013786575c908dca2 template"><td class="memItemLeft">static constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="#a1e1d03c59e68fd6013786575c908dca2">is_value_type</a> {one_of&lt;Target, Values...&gt;}</td></tr>
 <tr class="memdesc:a1e1d03c59e68fd6013786575c908dca2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds whether a type is a value type.  <br /></td></tr>
-<tr class="memitem:ac559c5ea19511cdc9b29d0c46a80a44d" id="r_ac559c5ea19511cdc9b29d0c46a80a44d"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
-<tr class="memitem:ac559c5ea19511cdc9b29d0c46a80a44d template"><td class="memItemLeft">static constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="#ac559c5ea19511cdc9b29d0c46a80a44d">is_error_type</a> {one_of&lt;T, Errors...&gt;}</td></tr>
+<tr class="memitem:ac559c5ea19511cdc9b29d0c46a80a44d" id="r_ac559c5ea19511cdc9b29d0c46a80a44d"><td class="memTemplParams" colspan="2">template&lt;typename Target&gt; </td></tr>
+<tr class="memitem:ac559c5ea19511cdc9b29d0c46a80a44d template"><td class="memItemLeft">static constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="#ac559c5ea19511cdc9b29d0c46a80a44d">is_error_type</a> {one_of&lt;Target, Errors...&gt;}</td></tr>
 <tr class="memdesc:ac559c5ea19511cdc9b29d0c46a80a44d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds whether a type is a error type.  <br /></td></tr>
 <tr class="inherit_header pub_static_attribs_classtr_1_1variant"><td colspan="2" class="dyn-inherit"><span class="dynarrow"><span class="arrowhead closed"></span></span>Static Public Attributes inherited from <a class="el" href="classtr_1_1variant.html">tr::variant&lt; Values..., Errors... &gt;</a></td></tr>
 <tr class="memitem:ac3fc9eb62a14ecb92c9f3b4595343c5a inherit pub_static_attribs_classtr_1_1variant" id="r_ac3fc9eb62a14ecb92c9f3b4595343c5a"><td class="memItemLeft">static constexpr <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a>&#160;</td><td class="memItemRight"><a class="el" href="classtr_1_1variant.html#ac3fc9eb62a14ecb92c9f3b4595343c5a">variant_size</a></td></tr>
@@ -262,13 +262,13 @@ template&lt;typename... Values, typename... Errors&gt; </div>
 <div class="memtemplate">
 template&lt;typename... Values, typename... Errors&gt; </div>
 <div class="memtemplate">
-template&lt;typename T&gt; </div>
+template&lt;typename Target&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="classtr_1_1result.html">tr::result</a>&lt; <a class="el" href="structtr_1_1result__values.html">result_values</a>&lt; Values... &gt;, <a class="el" href="structtr_1_1result__errors.html">result_errors</a>&lt; Errors... &gt; &gt;::is_value_type {one_of&lt;T, Values...&gt;}</td>
+          <td class="memname">bool <a class="el" href="classtr_1_1result.html">tr::result</a>&lt; <a class="el" href="structtr_1_1result__values.html">result_values</a>&lt; Values... &gt;, <a class="el" href="structtr_1_1result__errors.html">result_errors</a>&lt; Errors... &gt; &gt;::is_value_type {one_of&lt;Target, Values...&gt;}</td>
         </tr>
       </table>
   </td>
@@ -281,7 +281,7 @@ template&lt;typename T&gt; </div>
 <p>Holds whether a type is a value type. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>Type to check. </td></tr>
+    <tr><td class="paramname">Target</td><td>Type to check. </td></tr>
   </table>
   </dd>
 </dl>
@@ -296,13 +296,13 @@ template&lt;typename T&gt; </div>
 <div class="memtemplate">
 template&lt;typename... Values, typename... Errors&gt; </div>
 <div class="memtemplate">
-template&lt;typename T&gt; </div>
+template&lt;typename Target&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="classtr_1_1result.html">tr::result</a>&lt; <a class="el" href="structtr_1_1result__values.html">result_values</a>&lt; Values... &gt;, <a class="el" href="structtr_1_1result__errors.html">result_errors</a>&lt; Errors... &gt; &gt;::is_error_type {one_of&lt;T, Errors...&gt;}</td>
+          <td class="memname">bool <a class="el" href="classtr_1_1result.html">tr::result</a>&lt; <a class="el" href="structtr_1_1result__values.html">result_values</a>&lt; Values... &gt;, <a class="el" href="structtr_1_1result__errors.html">result_errors</a>&lt; Errors... &gt; &gt;::is_error_type {one_of&lt;Target, Errors...&gt;}</td>
         </tr>
       </table>
   </td>
@@ -315,7 +315,7 @@ template&lt;typename T&gt; </div>
 <p>Holds whether a type is a error type. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">T</td><td>Type to check. </td></tr>
+    <tr><td class="paramname">Target</td><td>Type to check. </td></tr>
   </table>
   </dd>
 </dl>

@@ -129,14 +129,14 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('dynamic__verte
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;<a class="code" href="untyped__dynamic__vertex__buffer_8hpp.html">tr/sysgfx/untyped_dynamic_vertex_buffer.hpp</a>&gt;</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;<a class="code" href="concepts_8hpp.html">tr/utility/concepts.hpp</a>&gt;</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;<a class="code" href="type__name_8hpp.html">tr/utility/type_name.hpp</a>&gt;</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment">//</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacetr.html">tr</a></div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>{</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    <span class="keyword">template</span> &lt;standard_layout Element&gt;</div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;<a class="code" href="type__name_8hpp.html">tr/utility/type_name.hpp</a>&gt;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment">//</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacetr.html">tr</a></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>{</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Element&gt;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        <span class="keyword">requires</span> std::is_standard_layout_v&lt;Element&gt;</div>
 <div class="foldopen" id="foldopen00034" data-start="{" data-end="};">
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="classtr_1_1dynamic__vertex__buffer.html">   34</a></span>    <span class="keyword">class </span><a class="code hl_function" href="classtr_1_1dynamic__vertex__buffer.html#a266f544ee62b6b4934c2d5c94ae58041">dynamic_vertex_buffer</a> : <span class="keyword">private</span> <a class="code hl_function" href="classtr_1_1untyped__dynamic__vertex__buffer.html#a4f1d47c1c67c6ba9b93c6de2a922b652">untyped_dynamic_vertex_buffer</a></div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    {</div>
@@ -231,7 +231,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('dynamic__verte
 <div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span> </div>
 <div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span><span class="comment">//</span></div>
 <div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span></div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span><span class="keyword">template</span> &lt;tr::standard_layout Element&gt;</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Element&gt;</div>
 <div class="foldopen" id="foldopen00172" data-start="{" data-end="};">
 <div class="line"><a id="l00172" name="l00172"></a><span class="lineno"><a class="line" href="structstd_1_1formatter_3_01tr_1_1dynamic__vertex__buffer_3_01Element_01_4_01_4.html">  172</a></span><span class="keyword">struct </span>std::formatter&lt;<a class="code hl_namespace" href="namespacetr.html">tr</a>::dynamic_vertex_buffer&lt;Element&gt;&gt;</div>
 <div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>{</div>
@@ -289,7 +289,6 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('dynamic__verte
 <div class="ttc" id="aclasstr_1_1untyped__dynamic__vertex__buffer_html_abbfc975338cb65f62022b35f37df4599"><div class="ttname"><a href="classtr_1_1untyped__dynamic__vertex__buffer.html#abbfc975338cb65f62022b35f37df4599">tr::untyped_dynamic_vertex_buffer::empty</a></div><div class="ttdeci">bool empty() const noexcept</div><div class="ttdoc">Gets whether the vertex buffer is empty.</div></div>
 <div class="ttc" id="aclasstr_1_1untyped__dynamic__vertex__buffer_html_ac1debbc036925a020b1defe77c1392bf"><div class="ttname"><a href="classtr_1_1untyped__dynamic__vertex__buffer.html#ac1debbc036925a020b1defe77c1392bf">tr::untyped_dynamic_vertex_buffer::resize</a></div><div class="ttdeci">void resize(usize size)</div><div class="ttdoc">Clears the buffer and resizes it, potentially resizing it.</div></div>
 <div class="ttc" id="aclasstr_1_1untyped__dynamic__vertex__buffer_html_ada4364c0295af892b869f2be3ed62777"><div class="ttname"><a href="classtr_1_1untyped__dynamic__vertex__buffer.html#ada4364c0295af892b869f2be3ed62777">tr::untyped_dynamic_vertex_buffer::label</a></div><div class="ttdeci">std::string label() const</div><div class="ttdoc">Gets the label of the buffer.</div></div>
-<div class="ttc" id="aconcepts_8hpp_html"><div class="ttname"><a href="concepts_8hpp.html">concepts.hpp</a></div><div class="ttdoc">Provides concepts.</div></div>
 <div class="ttc" id="anamespacetr_1_1aliases_1_1integer__aliases_html_a401704cad707ec504dfeae361641bb9b"><div class="ttname"><a href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">tr::aliases::integer_aliases::usize</a></div><div class="ttdeci">std::size_t usize</div><div class="ttdoc">Unsigned size integer.</div><div class="ttdef"><b>Definition</b> integer.hpp:29</div></div>
 <div class="ttc" id="anamespacetr_html"><div class="ttname"><a href="namespacetr.html">tr</a></div><div class="ttdoc">Namespace containing all tr functionality.</div><div class="ttdef"><b>Definition</b> audio_buffer.hpp:10</div></div>
 <div class="ttc" id="anamespacetr_html_a1c483c366687381116591f7b6c1e7583"><div class="ttname"><a href="namespacetr.html#a1c483c366687381116591f7b6c1e7583">tr::type_name</a></div><div class="ttdeci">consteval std::string_view type_name() noexcept</div><div class="ttdoc">Gets a human-readable name string for a type.</div><div class="ttdef"><b>Definition</b> type_name.hpp:16</div></div>

@@ -151,21 +151,25 @@ Functions</h2></td></tr>
 <tr class="memitem:ab16f31bf61940c8b44d2e81dce910946 template"><td class="memItemLeft">constexpr To&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#ab16f31bf61940c8b44d2e81dce910946">tr::ceil_cast</a> (From from) noexcept</td></tr>
 <tr class="memdesc:ab16f31bf61940c8b44d2e81dce910946"><td class="mdescLeft">&#160;</td><td class="mdescRight">Casts a floating point number to an integer by rounding the value up.  <br /></td></tr>
 <tr id="func-members-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Mathematical operations</div></td></tr>
-<tr class="memitem:aceb92ce9906f6ef341aeeadb332099c5" id="r_aceb92ce9906f6ef341aeeadb332099c5"><td class="memTemplParams" colspan="2">template&lt;arithmetic T&gt; </td></tr>
-<tr class="memitem:aceb92ce9906f6ef341aeeadb332099c5 template"><td class="memItemLeft">constexpr T&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#aceb92ce9906f6ef341aeeadb332099c5">tr::sgn</a> (T v) noexcept</td></tr>
-<tr class="memdesc:aceb92ce9906f6ef341aeeadb332099c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sign operation.  <br /></td></tr>
-<tr class="memitem:ac76cad356147dd79afe84b6ba8b0215e" id="r_ac76cad356147dd79afe84b6ba8b0215e"><td class="memTemplParams" colspan="2">template&lt;typename T1, typename T2&gt; </td></tr>
-<tr class="memitem:ac76cad356147dd79afe84b6ba8b0215e template"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#ac76cad356147dd79afe84b6ba8b0215e">tr::mod</a> (T1 v, T2 mod)</td></tr>
-<tr class="memdesc:ac76cad356147dd79afe84b6ba8b0215e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generic modulo operation.  <br /></td></tr>
-<tr class="memitem:aa76acbfd3de657a1b3c90d5cb9f6454b" id="r_aa76acbfd3de657a1b3c90d5cb9f6454b"><td class="memTemplParams" colspan="2">template&lt;typename T1, typename T2&gt; </td></tr>
-<tr class="memitem:aa76acbfd3de657a1b3c90d5cb9f6454b template"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#aa76acbfd3de657a1b3c90d5cb9f6454b">tr::eucmod</a> (T1 v, T2 mod)</td></tr>
-<tr class="memdesc:aa76acbfd3de657a1b3c90d5cb9f6454b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Euclidian modulo operation (always returns in the range [0, <span class="tt"><a class="el" href="namespacetr.html#ac76cad356147dd79afe84b6ba8b0215e" title="Generic modulo operation.">mod</a></span>)).  <br /></td></tr>
-<tr class="memitem:a3fb193885890c9011743616173e0cb74" id="r_a3fb193885890c9011743616173e0cb74"><td class="memTemplParams" colspan="2">template&lt;typename T, std::floating_point Ratio&gt; </td></tr>
-<tr class="memitem:a3fb193885890c9011743616173e0cb74 template"><td class="memItemLeft">constexpr T&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#a3fb193885890c9011743616173e0cb74">tr::lerp</a> (const T &amp;x, const T &amp;y, Ratio a) noexcept(noexcept(x *(1 - a)+y *a))</td></tr>
-<tr class="memdesc:a3fb193885890c9011743616173e0cb74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Linearly interpolates between two values.  <br /></td></tr>
-<tr class="memitem:a07bcd5cd18dd64e81be4b4c24b1beaea" id="r_a07bcd5cd18dd64e81be4b4c24b1beaea"><td class="memTemplParams" colspan="2">template&lt;typename T&gt; </td></tr>
-<tr class="memitem:a07bcd5cd18dd64e81be4b4c24b1beaea template"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#a07bcd5cd18dd64e81be4b4c24b1beaea">tr::sqr</a> (const T &amp;v) noexcept(noexcept(v *v))</td></tr>
-<tr class="memdesc:a07bcd5cd18dd64e81be4b4c24b1beaea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Squaring operation.  <br /></td></tr>
+<tr class="memitem:ac2f5d86d70e5feb75ebfa7b50223081f" id="r_ac2f5d86d70e5feb75ebfa7b50223081f"><td class="memTemplParams" colspan="2">template&lt;arithmetic X&gt; </td></tr>
+<tr class="memitem:ac2f5d86d70e5feb75ebfa7b50223081f template"><td class="memItemLeft">constexpr X&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#ac2f5d86d70e5feb75ebfa7b50223081f">tr::sgn</a> (X x) noexcept</td></tr>
+<tr class="memdesc:ac2f5d86d70e5feb75ebfa7b50223081f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sign operation.  <br /></td></tr>
+<tr class="memitem:a8f6bf8435160814be5c05e2a226ce4fe" id="r_a8f6bf8435160814be5c05e2a226ce4fe"><td class="memTemplParams" colspan="2">template&lt;typename X, typename Y&gt; <br />
+requires requires { x % y; } || (arithmetic&lt;X&gt; &amp;&amp; arithmetic&lt;Y&gt;)</td></tr>
+<tr class="memitem:a8f6bf8435160814be5c05e2a226ce4fe template"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#a8f6bf8435160814be5c05e2a226ce4fe">tr::mod</a> (X x, Y y)</td></tr>
+<tr class="memdesc:a8f6bf8435160814be5c05e2a226ce4fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generic modulo operation.  <br /></td></tr>
+<tr class="memitem:a09bfceac61f47cef11f28a7646933b9b" id="r_a09bfceac61f47cef11f28a7646933b9b"><td class="memTemplParams" colspan="2">template&lt;typename X, typename Y&gt; <br />
+requires requires { x % y; } || (arithmetic&lt;X&gt; &amp;&amp; arithmetic&lt;Y&gt;)</td></tr>
+<tr class="memitem:a09bfceac61f47cef11f28a7646933b9b template"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#a09bfceac61f47cef11f28a7646933b9b">tr::eucmod</a> (X x, Y y)</td></tr>
+<tr class="memdesc:a09bfceac61f47cef11f28a7646933b9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Euclidian modulo operation (always returns in the range [0, <span class="tt"><a class="el" href="namespacetr.html#a8f6bf8435160814be5c05e2a226ce4fe" title="Generic modulo operation.">mod</a></span>)).  <br /></td></tr>
+<tr class="memitem:aabb3c67339754e32c04b117a4fd8ac1e" id="r_aabb3c67339754e32c04b117a4fd8ac1e"><td class="memTemplParams" colspan="2">template&lt;typename X, typename Y, typename A&gt; <br />
+requires requires { x * (1 - a) + y * a; }</td></tr>
+<tr class="memitem:aabb3c67339754e32c04b117a4fd8ac1e template"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#aabb3c67339754e32c04b117a4fd8ac1e">tr::lerp</a> (const X &amp;x, const Y &amp;y, A a) noexcept(noexcept(x *(1 - a)+y *a))</td></tr>
+<tr class="memdesc:aabb3c67339754e32c04b117a4fd8ac1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Linearly interpolates between two values.  <br /></td></tr>
+<tr class="memitem:aee9b1699dc51dec90ce125c6b53301ca" id="r_aee9b1699dc51dec90ce125c6b53301ca"><td class="memTemplParams" colspan="2">template&lt;typename X&gt; <br />
+requires requires { x * x; }</td></tr>
+<tr class="memitem:aee9b1699dc51dec90ce125c6b53301ca template"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#aee9b1699dc51dec90ce125c6b53301ca">tr::sqr</a> (const X &amp;x) noexcept(noexcept(x *x))</td></tr>
+<tr class="memdesc:aee9b1699dc51dec90ce125c6b53301ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Squaring operation.  <br /></td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->

@@ -129,7 +129,8 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1dyn
 <p>Typed dynamic vertex buffer class.  
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;standard_layout Element&gt;<br />
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename Element&gt;<br />
+requires std::is_standard_layout_v&lt;Element&gt;<br />
 class tr::dynamic_vertex_buffer&lt; Element &gt;</div><p>Typed dynamic vertex buffer class. </p>
 <p><span class="tt"><a class="el" href="classtr_1_1dynamic__vertex__buffer.html" title="Typed dynamic vertex buffer class.">tr::dynamic_vertex_buffer</a></span> represents a graphics buffer used to store vertex data. Unlike <span class="tt"><a class="el" href="classtr_1_1static__vertex__buffer.html" title="Static, immutable typed vertex buffer.">tr::static_vertex_buffer</a></span>, it allows for dynamic resizing and updating of its contents, making it suitable for scenarios where the vertex data changes often at runtime. It is the typed equivalent of <span class="tt"><a class="el" href="classtr_1_1untyped__dynamic__vertex__buffer.html" title="Untyped dynamic vertex buffer class.">tr::untyped_dynamic_vertex_buffer</a></span>.</p>
 <p>Strictly speaking, instances of <span class="tt"><a class="el" href="classtr_1_1dynamic__vertex__buffer.html" title="Typed dynamic vertex buffer class.">tr::dynamic_vertex_buffer</a></span> are only containers for these underlying buffer objects. This means, for example, that setting a dynamic vertex buffer on a graphics context does not set the literal <span class="tt"><a class="el" href="classtr_1_1dynamic__vertex__buffer.html" title="Typed dynamic vertex buffer class.">tr::dynamic_vertex_buffer</a></span> object at a specific location in memory, but rather the value it contains. If the value is moved to a different instance of <span class="tt"><a class="el" href="classtr_1_1dynamic__vertex__buffer.html" title="Typed dynamic vertex buffer class.">tr::dynamic_vertex_buffer</a></span>, that value will still be set on the context. If the instance is overriden with a new value, the old value is destroyed and the graphics context will no longer have a set vertex buffer.</p>
@@ -198,7 +199,7 @@ Public Member Functions</h2></td></tr>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;standard_layout Element&gt; </div>
+template&lt;typename Element&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="classtr_1_1dynamic__vertex__buffer.html">tr::dynamic_vertex_buffer</a>&lt; Element &gt;::value_type = Element</td>
@@ -217,7 +218,7 @@ template&lt;standard_layout Element&gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;standard_layout Element&gt; </div>
+template&lt;typename Element&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -257,7 +258,7 @@ template&lt;standard_layout Element&gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;standard_layout Element&gt; </div>
+template&lt;typename Element&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -286,7 +287,7 @@ template&lt;standard_layout Element&gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;standard_layout Element&gt; </div>
+template&lt;typename Element&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -322,7 +323,7 @@ template&lt;standard_layout Element&gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;standard_layout Element&gt; </div>
+template&lt;typename Element&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -351,7 +352,7 @@ template&lt;standard_layout Element&gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;standard_layout Element&gt; </div>
+template&lt;typename Element&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -387,7 +388,7 @@ template&lt;standard_layout Element&gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;standard_layout Element&gt; </div>
+template&lt;typename Element&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -417,7 +418,7 @@ template&lt;standard_layout Element&gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;standard_layout Element&gt; </div>
+template&lt;typename Element&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -447,7 +448,7 @@ template&lt;standard_layout Element&gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;standard_layout Element&gt; </div>
+template&lt;typename Element&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -482,7 +483,7 @@ template&lt;standard_layout Element&gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;standard_layout Element&gt; </div>
+template&lt;typename Element&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -517,7 +518,7 @@ template&lt;standard_layout Element&gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;standard_layout Element&gt; </div>
+template&lt;typename Element&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -552,7 +553,7 @@ template&lt;standard_layout Element&gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;standard_layout Element&gt; </div>
+template&lt;typename Element&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -593,7 +594,7 @@ template&lt;standard_layout Element&gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;standard_layout Element&gt; </div>
+template&lt;typename Element&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -623,7 +624,7 @@ template&lt;standard_layout Element&gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;standard_layout Element&gt; </div>
+template&lt;typename Element&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">

@@ -147,6 +147,35 @@ Namespaces</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:a0a5efb95e8d0a5a1aba4a3ef84dd415d" id="r_a0a5efb95e8d0a5a1aba4a3ef84dd415d"><td class="memItemLeft"><a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#aaad9e5eeeb9ae331c3cdb7468c3db554">u64</a>&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#a0a5efb95e8d0a5a1aba4a3ef84dd415d">tr::generate_random_seed</a> ()</td></tr>
 <tr class="memdesc:a0a5efb95e8d0a5a1aba4a3ef84dd415d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a random seed.  <br /></td></tr>
+<tr id="func-members-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Random number generation</div></td></tr>
+<tr class="memitem:a37648b53e5d9d937f6c1dcf459431ecc" id="r_a37648b53e5d9d937f6c1dcf459431ecc"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#a37648b53e5d9d937f6c1dcf459431ecc">tr::generate_bool</a> (rng &amp;rng) noexcept</td></tr>
+<tr class="memdesc:a37648b53e5d9d937f6c1dcf459431ecc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a random boolean value.  <br /></td></tr>
+<tr class="memitem:a2406e18700cbefc69bba38bc0a35ca3e" id="r_a2406e18700cbefc69bba38bc0a35ca3e"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#a2406e18700cbefc69bba38bc0a35ca3e">tr::generate_sign</a> (rng &amp;rng) noexcept</td></tr>
+<tr class="memdesc:a2406e18700cbefc69bba38bc0a35ca3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a random sign (-1 or 1).  <br /></td></tr>
+<tr class="memitem:ae44e7f518fbb5417b51aab0a4531b697" id="r_ae44e7f518fbb5417b51aab0a4531b697"><td class="memTemplParams" colspan="2">template&lt;std::integral Integer = int&gt; </td></tr>
+<tr class="memitem:ae44e7f518fbb5417b51aab0a4531b697 template"><td class="memItemLeft">Integer&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#ae44e7f518fbb5417b51aab0a4531b697">tr::generate_int</a> (rng &amp;rng) noexcept</td></tr>
+<tr class="memdesc:ae44e7f518fbb5417b51aab0a4531b697"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a random integral value.  <br /></td></tr>
+<tr class="memitem:a78e660ca520f18f5085267738feef865" id="r_a78e660ca520f18f5085267738feef865"><td class="memTemplParams" colspan="2">template&lt;std::integral Integer&gt; </td></tr>
+<tr class="memitem:a78e660ca520f18f5085267738feef865 template"><td class="memItemLeft">Integer&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#a78e660ca520f18f5085267738feef865">tr::generate_int</a> (rng &amp;rng, Integer max) noexcept</td></tr>
+<tr class="memdesc:a78e660ca520f18f5085267738feef865"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a random integral value in the range [0, <span class="tt">max</span>).  <br /></td></tr>
+<tr class="memitem:a12c9f0d8abba8b8f9bf16a88cee841b8" id="r_a12c9f0d8abba8b8f9bf16a88cee841b8"><td class="memTemplParams" colspan="2">template&lt;std::integral Integer&gt; </td></tr>
+<tr class="memitem:a12c9f0d8abba8b8f9bf16a88cee841b8 template"><td class="memItemLeft">Integer&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#a12c9f0d8abba8b8f9bf16a88cee841b8">tr::generate_int</a> (rng &amp;rng, Integer min, Integer max) noexcept</td></tr>
+<tr class="memdesc:a12c9f0d8abba8b8f9bf16a88cee841b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a random integral value in the range [<span class="tt">min</span>, <span class="tt">max</span>).  <br /></td></tr>
+<tr class="memitem:ada512956e04fbac94bd7f5d59658f455" id="r_ada512956e04fbac94bd7f5d59658f455"><td class="memTemplParams" colspan="2">template&lt;std::floating_point FloatingPoint = float&gt; </td></tr>
+<tr class="memitem:ada512956e04fbac94bd7f5d59658f455 template"><td class="memItemLeft">FloatingPoint&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#ada512956e04fbac94bd7f5d59658f455">tr::generate_float</a> (rng &amp;rng) noexcept</td></tr>
+<tr class="memdesc:ada512956e04fbac94bd7f5d59658f455"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a random floating point value in the range [0, 1).  <br /></td></tr>
+<tr class="memitem:ab27410910583b564fea712e1686cce23" id="r_ab27410910583b564fea712e1686cce23"><td class="memTemplParams" colspan="2">template&lt;std::floating_point FloatingPoint&gt; </td></tr>
+<tr class="memitem:ab27410910583b564fea712e1686cce23 template"><td class="memItemLeft">FloatingPoint&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#ab27410910583b564fea712e1686cce23">tr::generate_float</a> (rng &amp;rng, FloatingPoint max) noexcept</td></tr>
+<tr class="memdesc:ab27410910583b564fea712e1686cce23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a random floating point value in the range [0, <span class="tt">max</span>).  <br /></td></tr>
+<tr class="memitem:a90fe13eb84f0cfceb09d85cdc72873de" id="r_a90fe13eb84f0cfceb09d85cdc72873de"><td class="memTemplParams" colspan="2">template&lt;std::floating_point FloatingPoint&gt; </td></tr>
+<tr class="memitem:a90fe13eb84f0cfceb09d85cdc72873de template"><td class="memItemLeft">FloatingPoint&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#a90fe13eb84f0cfceb09d85cdc72873de">tr::generate_float</a> (rng &amp;rng, FloatingPoint min, FloatingPoint max) noexcept</td></tr>
+<tr class="memdesc:a90fe13eb84f0cfceb09d85cdc72873de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a random floating point value in the range [<span class="tt">min</span>, <span class="tt">max</span>).  <br /></td></tr>
+<tr class="memitem:abc0851f603d5824247e553425d3301d2" id="r_abc0851f603d5824247e553425d3301d2"><td class="memTemplParams" colspan="2">template&lt;std::floating_point Rep&gt; </td></tr>
+<tr class="memitem:abc0851f603d5824247e553425d3301d2 template"><td class="memItemLeft">glm::tvec2&lt; Rep &gt;&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#abc0851f603d5824247e553425d3301d2">tr::generate_vec2</a> (rng &amp;rng, Rep magnitude) noexcept</td></tr>
+<tr class="memdesc:abc0851f603d5824247e553425d3301d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a random vector with a specific magnitude.  <br /></td></tr>
+<tr class="memitem:a1793ab179e93324531bceef2f634f745" id="r_a1793ab179e93324531bceef2f634f745"><td class="memTemplParams" colspan="2">template&lt;std::floating_point Rep&gt; </td></tr>
+<tr class="memitem:a1793ab179e93324531bceef2f634f745 template"><td class="memItemLeft">glm::tvec2&lt; Rep &gt;&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#a1793ab179e93324531bceef2f634f745">tr::generate_vec2</a> (rng &amp;rng, const <a class="el" href="structtr_1_1rectangle.html">tr::rectangle</a>&lt; Rep &gt; &amp;region) noexcept</td></tr>
+<tr class="memdesc:a1793ab179e93324531bceef2f634f745"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a random point within a rectangular region.  <br /></td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->

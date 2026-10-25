@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=11" />
   <meta name="generator" content="Doxygen 1.18.0" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>tr: tr::rectangle_edges&lt; Element &gt; Struct Template Reference</title>
+  <title>tr: tr::rectangle_edges&lt; Rep &gt; Struct Template Reference</title>
   <link href="tabs.css" rel="stylesheet" type="text/css" />
   <script type="text/javascript" src="jquery.js"></script>
   <script type="text/javascript" src="dynsections.js"></script>
@@ -122,18 +122,18 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('structtr_1_1re
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">tr::rectangle_edges&lt; Element &gt; Struct Template Reference</div></div>
+  <div class="headertitle"><div class="title">tr::rectangle_edges&lt; Rep &gt; Struct Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
 <p>Set of rectangle edges.  
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;typename Element&gt;<br />
-struct tr::rectangle_edges&lt; Element &gt;</div><p>Set of rectangle edges. </p>
+<div class="textblock"><div class="compoundTemplParams">template&lt;arithmetic Rep&gt;<br />
+struct tr::rectangle_edges&lt; Rep &gt;</div><p>Set of rectangle edges. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">Element</td><td>Edge value type. </td></tr>
+    <tr><td class="paramname">Rep</td><td>Representation type of the edges. </td></tr>
   </table>
   </dd>
 </dl>
@@ -141,46 +141,46 @@ struct tr::rectangle_edges&lt; Element &gt;</div><p>Set of rectangle edges. </p>
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr id="pub-methods-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Constructors and destructors</div></td></tr>
-<tr class="memitem:a98f0fd3b91f1f85e48535a094cd99d07" id="r_a98f0fd3b91f1f85e48535a094cd99d07"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a98f0fd3b91f1f85e48535a094cd99d07">rectangle_edges</a> () noexcept=default</td></tr>
-<tr class="memdesc:a98f0fd3b91f1f85e48535a094cd99d07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a set of edges with value 0.  <br /></td></tr>
-<tr class="memitem:a27b9e8552c32c6df01dc0bdac9dfb786" id="r_a27b9e8552c32c6df01dc0bdac9dfb786"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a27b9e8552c32c6df01dc0bdac9dfb786">rectangle_edges</a> (Element left) noexcept</td></tr>
-<tr class="memdesc:a27b9e8552c32c6df01dc0bdac9dfb786"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a set of edges with the same value.  <br /></td></tr>
-<tr class="memitem:a5ebf0f966fe40a400e0a7c4c66f164a0" id="r_a5ebf0f966fe40a400e0a7c4c66f164a0"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a5ebf0f966fe40a400e0a7c4c66f164a0">rectangle_edges</a> (Element left, Element top) noexcept</td></tr>
-<tr class="memdesc:a5ebf0f966fe40a400e0a7c4c66f164a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a set of edges with top = bottom, left = right.  <br /></td></tr>
-<tr class="memitem:a038e04d0b7f5b8adddd21360309ced6d" id="r_a038e04d0b7f5b8adddd21360309ced6d"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a038e04d0b7f5b8adddd21360309ced6d">rectangle_edges</a> (Element left, Element top, Element right) noexcept</td></tr>
-<tr class="memdesc:a038e04d0b7f5b8adddd21360309ced6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a set of edges with top = bottom.  <br /></td></tr>
-<tr class="memitem:a1e2a755adda26ee165b33ac34c53612d" id="r_a1e2a755adda26ee165b33ac34c53612d"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a1e2a755adda26ee165b33ac34c53612d">rectangle_edges</a> (Element left, Element top, Element right, Element bottom) noexcept</td></tr>
-<tr class="memdesc:a1e2a755adda26ee165b33ac34c53612d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a set of edges.  <br /></td></tr>
+<tr class="memitem:aa6e57fb9eedb9670469f9f4eed3c4a29" id="r_aa6e57fb9eedb9670469f9f4eed3c4a29"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#aa6e57fb9eedb9670469f9f4eed3c4a29">rectangle_edges</a> () noexcept=default</td></tr>
+<tr class="memdesc:aa6e57fb9eedb9670469f9f4eed3c4a29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a set of edges with value 0.  <br /></td></tr>
+<tr class="memitem:abaa84864e06de11c9c81288a67bd3e43" id="r_abaa84864e06de11c9c81288a67bd3e43"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#abaa84864e06de11c9c81288a67bd3e43">rectangle_edges</a> (Rep left) noexcept</td></tr>
+<tr class="memdesc:abaa84864e06de11c9c81288a67bd3e43"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a set of edges with the same value.  <br /></td></tr>
+<tr class="memitem:a17987337de3a436df827da0dcc10db83" id="r_a17987337de3a436df827da0dcc10db83"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a17987337de3a436df827da0dcc10db83">rectangle_edges</a> (Rep left, Rep top) noexcept</td></tr>
+<tr class="memdesc:a17987337de3a436df827da0dcc10db83"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a set of edges with top = bottom, left = right.  <br /></td></tr>
+<tr class="memitem:ac2eb73f6880403109fcbfb72a82fbeab" id="r_ac2eb73f6880403109fcbfb72a82fbeab"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#ac2eb73f6880403109fcbfb72a82fbeab">rectangle_edges</a> (Rep left, Rep top, Rep right) noexcept</td></tr>
+<tr class="memdesc:ac2eb73f6880403109fcbfb72a82fbeab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a set of edges with top = bottom.  <br /></td></tr>
+<tr class="memitem:a8c6a20f488dd0b0e4199905ed286acd1" id="r_a8c6a20f488dd0b0e4199905ed286acd1"><td class="memItemLeft">constexpr&#160;</td><td class="memItemRight"><a class="el" href="#a8c6a20f488dd0b0e4199905ed286acd1">rectangle_edges</a> (Rep left, Rep top, Rep right, Rep bottom) noexcept</td></tr>
+<tr class="memdesc:a8c6a20f488dd0b0e4199905ed286acd1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a set of edges.  <br /></td></tr>
 <tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Comparison operators</div></td></tr>
-<tr class="memitem:ac8c7371fa37f5dff648bbe982c2a42e4" id="r_ac8c7371fa37f5dff648bbe982c2a42e4"><td class="memTemplParams" colspan="2">template&lt;typename ElementR&gt; </td></tr>
-<tr class="memitem:ac8c7371fa37f5dff648bbe982c2a42e4 template"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="#ac8c7371fa37f5dff648bbe982c2a42e4">operator==</a> (const <a class="el" href="#a98f0fd3b91f1f85e48535a094cd99d07">rectangle_edges</a>&lt; ElementR &gt; &amp;rhs) const noexcept</td></tr>
-<tr class="memdesc:ac8c7371fa37f5dff648bbe982c2a42e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares two sets of edges for equality.  <br /></td></tr>
+<tr class="memitem:a0e06776b50ecda1bfe107e8021fb1dac" id="r_a0e06776b50ecda1bfe107e8021fb1dac"><td class="memTemplParams" colspan="2">template&lt;typename ElementR&gt; </td></tr>
+<tr class="memitem:a0e06776b50ecda1bfe107e8021fb1dac template"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="#a0e06776b50ecda1bfe107e8021fb1dac">operator==</a> (const <a class="el" href="#aa6e57fb9eedb9670469f9f4eed3c4a29">rectangle_edges</a>&lt; ElementR &gt; &amp;rhs) const noexcept</td></tr>
+<tr class="memdesc:a0e06776b50ecda1bfe107e8021fb1dac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares two sets of edges for equality.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a91562c6d95894bac434030664e86a0a8" id="r_a91562c6d95894bac434030664e86a0a8"><td class="memItemLeft">Element&#160;</td><td class="memItemRight"><a class="el" href="#a91562c6d95894bac434030664e86a0a8">left</a> {0}</td></tr>
-<tr class="memdesc:a91562c6d95894bac434030664e86a0a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Left edge value.  <br /></td></tr>
-<tr class="memitem:affe58f438051c598c9f42872d7577e4b" id="r_affe58f438051c598c9f42872d7577e4b"><td class="memItemLeft">Element&#160;</td><td class="memItemRight"><a class="el" href="#affe58f438051c598c9f42872d7577e4b">top</a> {0}</td></tr>
-<tr class="memdesc:affe58f438051c598c9f42872d7577e4b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Top edge value.  <br /></td></tr>
-<tr class="memitem:a9872fbc04fe55ff0a5c484cdcaa4134f" id="r_a9872fbc04fe55ff0a5c484cdcaa4134f"><td class="memItemLeft">Element&#160;</td><td class="memItemRight"><a class="el" href="#a9872fbc04fe55ff0a5c484cdcaa4134f">right</a> {0}</td></tr>
-<tr class="memdesc:a9872fbc04fe55ff0a5c484cdcaa4134f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Right edge value.  <br /></td></tr>
-<tr class="memitem:a3c1d8ae625e924b9b9c9ceddee0371e0" id="r_a3c1d8ae625e924b9b9c9ceddee0371e0"><td class="memItemLeft">Element&#160;</td><td class="memItemRight"><a class="el" href="#a3c1d8ae625e924b9b9c9ceddee0371e0">bottom</a> {0}</td></tr>
-<tr class="memdesc:a3c1d8ae625e924b9b9c9ceddee0371e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bottom edge value.  <br /></td></tr>
+<tr class="memitem:a296d13505d0dd97b613011c352f8eee0" id="r_a296d13505d0dd97b613011c352f8eee0"><td class="memItemLeft">Rep&#160;</td><td class="memItemRight"><a class="el" href="#a296d13505d0dd97b613011c352f8eee0">left</a> {0}</td></tr>
+<tr class="memdesc:a296d13505d0dd97b613011c352f8eee0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Left edge value.  <br /></td></tr>
+<tr class="memitem:af1664fc83dc57c269624543f5a557f70" id="r_af1664fc83dc57c269624543f5a557f70"><td class="memItemLeft">Rep&#160;</td><td class="memItemRight"><a class="el" href="#af1664fc83dc57c269624543f5a557f70">top</a> {0}</td></tr>
+<tr class="memdesc:af1664fc83dc57c269624543f5a557f70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Top edge value.  <br /></td></tr>
+<tr class="memitem:a41432a593a9a890ffeaa3609bb9255c0" id="r_a41432a593a9a890ffeaa3609bb9255c0"><td class="memItemLeft">Rep&#160;</td><td class="memItemRight"><a class="el" href="#a41432a593a9a890ffeaa3609bb9255c0">right</a> {0}</td></tr>
+<tr class="memdesc:a41432a593a9a890ffeaa3609bb9255c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Right edge value.  <br /></td></tr>
+<tr class="memitem:a1e8cd0a5752a01c2e553dea50abc5e24" id="r_a1e8cd0a5752a01c2e553dea50abc5e24"><td class="memItemLeft">Rep&#160;</td><td class="memItemRight"><a class="el" href="#a1e8cd0a5752a01c2e553dea50abc5e24">bottom</a> {0}</td></tr>
+<tr class="memdesc:a1e8cd0a5752a01c2e553dea50abc5e24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bottom edge value.  <br /></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a98f0fd3b91f1f85e48535a094cd99d07" name="a98f0fd3b91f1f85e48535a094cd99d07"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a98f0fd3b91f1f85e48535a094cd99d07">&#9670;&#160;</a></span>rectangle_edges() <span class="overload">[1/5]</span></h2>
+<a id="aa6e57fb9eedb9670469f9f4eed3c4a29" name="aa6e57fb9eedb9670469f9f4eed3c4a29"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa6e57fb9eedb9670469f9f4eed3c4a29">&#9670;&#160;</a></span>rectangle_edges() <span class="overload">[1/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Element&gt; </div>
+template&lt;arithmetic Rep&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structtr_1_1rectangle__edges.html">tr::rectangle_edges</a>&lt; Element &gt;::rectangle_edges </td>
+          <td class="memname"><a class="el" href="structtr_1_1rectangle__edges.html">tr::rectangle_edges</a>&lt; Rep &gt;::rectangle_edges </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -197,21 +197,21 @@ template&lt;typename Element&gt; </div>
 
 </div>
 </div>
-<a id="a27b9e8552c32c6df01dc0bdac9dfb786" name="a27b9e8552c32c6df01dc0bdac9dfb786"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a27b9e8552c32c6df01dc0bdac9dfb786">&#9670;&#160;</a></span>rectangle_edges() <span class="overload">[2/5]</span></h2>
+<a id="abaa84864e06de11c9c81288a67bd3e43" name="abaa84864e06de11c9c81288a67bd3e43"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abaa84864e06de11c9c81288a67bd3e43">&#9670;&#160;</a></span>rectangle_edges() <span class="overload">[2/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Element&gt; </div>
+template&lt;arithmetic Rep&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structtr_1_1rectangle__edges.html">tr::rectangle_edges</a>&lt; Element &gt;::rectangle_edges </td>
+          <td class="memname"><a class="el" href="structtr_1_1rectangle__edges.html">tr::rectangle_edges</a>&lt; Rep &gt;::rectangle_edges </td>
           <td>(</td>
-          <td class="paramtype">Element</td>          <td class="paramname"><span class="paramname"><em>left</em></span></td><td>)</td>
+          <td class="paramtype">Rep</td>          <td class="paramname"><span class="paramname"><em>left</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -232,26 +232,26 @@ template&lt;typename Element&gt; </div>
 
 </div>
 </div>
-<a id="a5ebf0f966fe40a400e0a7c4c66f164a0" name="a5ebf0f966fe40a400e0a7c4c66f164a0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5ebf0f966fe40a400e0a7c4c66f164a0">&#9670;&#160;</a></span>rectangle_edges() <span class="overload">[3/5]</span></h2>
+<a id="a17987337de3a436df827da0dcc10db83" name="a17987337de3a436df827da0dcc10db83"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a17987337de3a436df827da0dcc10db83">&#9670;&#160;</a></span>rectangle_edges() <span class="overload">[3/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Element&gt; </div>
+template&lt;arithmetic Rep&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structtr_1_1rectangle__edges.html">tr::rectangle_edges</a>&lt; Element &gt;::rectangle_edges </td>
+          <td class="memname"><a class="el" href="structtr_1_1rectangle__edges.html">tr::rectangle_edges</a>&lt; Rep &gt;::rectangle_edges </td>
           <td>(</td>
-          <td class="paramtype">Element</td>          <td class="paramname"><span class="paramname"><em>left</em></span>, </td>
+          <td class="paramtype">Rep</td>          <td class="paramname"><span class="paramname"><em>left</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Element</td>          <td class="paramname"><span class="paramname"><em>top</em></span>&#160;)</td>
+          <td class="paramtype">Rep</td>          <td class="paramname"><span class="paramname"><em>top</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -272,31 +272,31 @@ template&lt;typename Element&gt; </div>
 
 </div>
 </div>
-<a id="a038e04d0b7f5b8adddd21360309ced6d" name="a038e04d0b7f5b8adddd21360309ced6d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a038e04d0b7f5b8adddd21360309ced6d">&#9670;&#160;</a></span>rectangle_edges() <span class="overload">[4/5]</span></h2>
+<a id="ac2eb73f6880403109fcbfb72a82fbeab" name="ac2eb73f6880403109fcbfb72a82fbeab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac2eb73f6880403109fcbfb72a82fbeab">&#9670;&#160;</a></span>rectangle_edges() <span class="overload">[4/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Element&gt; </div>
+template&lt;arithmetic Rep&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structtr_1_1rectangle__edges.html">tr::rectangle_edges</a>&lt; Element &gt;::rectangle_edges </td>
+          <td class="memname"><a class="el" href="structtr_1_1rectangle__edges.html">tr::rectangle_edges</a>&lt; Rep &gt;::rectangle_edges </td>
           <td>(</td>
-          <td class="paramtype">Element</td>          <td class="paramname"><span class="paramname"><em>left</em></span>, </td>
+          <td class="paramtype">Rep</td>          <td class="paramname"><span class="paramname"><em>left</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Element</td>          <td class="paramname"><span class="paramname"><em>top</em></span>, </td>
+          <td class="paramtype">Rep</td>          <td class="paramname"><span class="paramname"><em>top</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Element</td>          <td class="paramname"><span class="paramname"><em>right</em></span>&#160;)</td>
+          <td class="paramtype">Rep</td>          <td class="paramname"><span class="paramname"><em>right</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -318,36 +318,36 @@ template&lt;typename Element&gt; </div>
 
 </div>
 </div>
-<a id="a1e2a755adda26ee165b33ac34c53612d" name="a1e2a755adda26ee165b33ac34c53612d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1e2a755adda26ee165b33ac34c53612d">&#9670;&#160;</a></span>rectangle_edges() <span class="overload">[5/5]</span></h2>
+<a id="a8c6a20f488dd0b0e4199905ed286acd1" name="a8c6a20f488dd0b0e4199905ed286acd1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c6a20f488dd0b0e4199905ed286acd1">&#9670;&#160;</a></span>rectangle_edges() <span class="overload">[5/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Element&gt; </div>
+template&lt;arithmetic Rep&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structtr_1_1rectangle__edges.html">tr::rectangle_edges</a>&lt; Element &gt;::rectangle_edges </td>
+          <td class="memname"><a class="el" href="structtr_1_1rectangle__edges.html">tr::rectangle_edges</a>&lt; Rep &gt;::rectangle_edges </td>
           <td>(</td>
-          <td class="paramtype">Element</td>          <td class="paramname"><span class="paramname"><em>left</em></span>, </td>
+          <td class="paramtype">Rep</td>          <td class="paramname"><span class="paramname"><em>left</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Element</td>          <td class="paramname"><span class="paramname"><em>top</em></span>, </td>
+          <td class="paramtype">Rep</td>          <td class="paramname"><span class="paramname"><em>top</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Element</td>          <td class="paramname"><span class="paramname"><em>right</em></span>, </td>
+          <td class="paramtype">Rep</td>          <td class="paramname"><span class="paramname"><em>right</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Element</td>          <td class="paramname"><span class="paramname"><em>bottom</em></span>&#160;)</td>
+          <td class="paramtype">Rep</td>          <td class="paramname"><span class="paramname"><em>bottom</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -371,13 +371,13 @@ template&lt;typename Element&gt; </div>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="ac8c7371fa37f5dff648bbe982c2a42e4" name="ac8c7371fa37f5dff648bbe982c2a42e4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac8c7371fa37f5dff648bbe982c2a42e4">&#9670;&#160;</a></span>operator==()</h2>
+<a id="a0e06776b50ecda1bfe107e8021fb1dac" name="a0e06776b50ecda1bfe107e8021fb1dac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0e06776b50ecda1bfe107e8021fb1dac">&#9670;&#160;</a></span>operator==()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Element&gt; </div>
+template&lt;arithmetic Rep&gt; </div>
 <div class="memtemplate">
 template&lt;typename ElementR&gt; </div>
 <table class="mlabels">
@@ -385,9 +385,9 @@ template&lt;typename ElementR&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="structtr_1_1rectangle__edges.html">tr::rectangle_edges</a>&lt; Element &gt;::operator== </td>
+          <td class="memname">bool <a class="el" href="structtr_1_1rectangle__edges.html">tr::rectangle_edges</a>&lt; Rep &gt;::operator== </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="#a98f0fd3b91f1f85e48535a094cd99d07">rectangle_edges</a>&lt; ElementR &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td class="paramtype">const <a class="el" href="#aa6e57fb9eedb9670469f9f4eed3c4a29">rectangle_edges</a>&lt; ElementR &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
           <td> const</td>
         </tr>
       </table>
@@ -416,16 +416,16 @@ template&lt;typename ElementR&gt; </div>
 </div>
 </div>
 <a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
-<a id="a91562c6d95894bac434030664e86a0a8" name="a91562c6d95894bac434030664e86a0a8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a91562c6d95894bac434030664e86a0a8">&#9670;&#160;</a></span>left</h2>
+<a id="a296d13505d0dd97b613011c352f8eee0" name="a296d13505d0dd97b613011c352f8eee0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a296d13505d0dd97b613011c352f8eee0">&#9670;&#160;</a></span>left</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Element&gt; </div>
+template&lt;arithmetic Rep&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">Element <a class="el" href="structtr_1_1rectangle__edges.html">tr::rectangle_edges</a>&lt; Element &gt;::left {0}</td>
+          <td class="memname">Rep <a class="el" href="structtr_1_1rectangle__edges.html">tr::rectangle_edges</a>&lt; Rep &gt;::left {0}</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -434,16 +434,16 @@ template&lt;typename Element&gt; </div>
 
 </div>
 </div>
-<a id="affe58f438051c598c9f42872d7577e4b" name="affe58f438051c598c9f42872d7577e4b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#affe58f438051c598c9f42872d7577e4b">&#9670;&#160;</a></span>top</h2>
+<a id="af1664fc83dc57c269624543f5a557f70" name="af1664fc83dc57c269624543f5a557f70"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af1664fc83dc57c269624543f5a557f70">&#9670;&#160;</a></span>top</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Element&gt; </div>
+template&lt;arithmetic Rep&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">Element <a class="el" href="structtr_1_1rectangle__edges.html">tr::rectangle_edges</a>&lt; Element &gt;::top {0}</td>
+          <td class="memname">Rep <a class="el" href="structtr_1_1rectangle__edges.html">tr::rectangle_edges</a>&lt; Rep &gt;::top {0}</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -452,16 +452,16 @@ template&lt;typename Element&gt; </div>
 
 </div>
 </div>
-<a id="a9872fbc04fe55ff0a5c484cdcaa4134f" name="a9872fbc04fe55ff0a5c484cdcaa4134f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9872fbc04fe55ff0a5c484cdcaa4134f">&#9670;&#160;</a></span>right</h2>
+<a id="a41432a593a9a890ffeaa3609bb9255c0" name="a41432a593a9a890ffeaa3609bb9255c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a41432a593a9a890ffeaa3609bb9255c0">&#9670;&#160;</a></span>right</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Element&gt; </div>
+template&lt;arithmetic Rep&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">Element <a class="el" href="structtr_1_1rectangle__edges.html">tr::rectangle_edges</a>&lt; Element &gt;::right {0}</td>
+          <td class="memname">Rep <a class="el" href="structtr_1_1rectangle__edges.html">tr::rectangle_edges</a>&lt; Rep &gt;::right {0}</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -470,16 +470,16 @@ template&lt;typename Element&gt; </div>
 
 </div>
 </div>
-<a id="a3c1d8ae625e924b9b9c9ceddee0371e0" name="a3c1d8ae625e924b9b9c9ceddee0371e0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3c1d8ae625e924b9b9c9ceddee0371e0">&#9670;&#160;</a></span>bottom</h2>
+<a id="a1e8cd0a5752a01c2e553dea50abc5e24" name="a1e8cd0a5752a01c2e553dea50abc5e24"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e8cd0a5752a01c2e553dea50abc5e24">&#9670;&#160;</a></span>bottom</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;typename Element&gt; </div>
+template&lt;arithmetic Rep&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">Element <a class="el" href="structtr_1_1rectangle__edges.html">tr::rectangle_edges</a>&lt; Element &gt;::bottom {0}</td>
+          <td class="memname">Rep <a class="el" href="structtr_1_1rectangle__edges.html">tr::rectangle_edges</a>&lt; Rep &gt;::bottom {0}</td>
         </tr>
       </table>
 </div><div class="memdoc">

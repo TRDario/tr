@@ -149,12 +149,8 @@ Namespaces</h2></td></tr>
 Concepts</h2></td></tr>
 <tr class="memitem:tr_3A_3Abinary_5Freadable" id="r_tr_3A_3Abinary_5Freadable"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concepttr_1_1binary__readable.html">tr::binary_readable</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type able to be read with read_binary. <br /></td></tr>
-<tr class="memitem:tr_3A_3Aspan_5For_5Fref_5Fto_5Fbinary_5Freadable" id="r_tr_3A_3Aspan_5For_5Fref_5Fto_5Fbinary_5Freadable"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concepttr_1_1span__or__ref__to__binary__readable.html">tr::span_or_ref_to_binary_readable</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type passable to the variadic read_binary: a span or a reference to a binary readable. <br /></td></tr>
 <tr class="memitem:tr_3A_3Abinary_5Fconstructible" id="r_tr_3A_3Abinary_5Fconstructible"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concepttr_1_1binary__constructible.html">tr::binary_constructible</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type able to be constructed with read_binary. <br /></td></tr>
-<tr class="memitem:tr_3A_3Abinary_5Fflushable_5Fiterator" id="r_tr_3A_3Abinary_5Fflushable_5Fiterator"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concepttr_1_1binary__flushable__iterator.html">tr::binary_flushable_iterator</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterator type able to be used with flush_binary. <br /></td></tr>
 <tr class="memitem:tr_3A_3Abinary_5Fwritable" id="r_tr_3A_3Abinary_5Fwritable"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concepttr_1_1binary__writable.html">tr::binary_writable</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type able to be read with a stream write_binary. <br /></td></tr>
 </table><table class="memberdecls">
@@ -167,18 +163,20 @@ Functions</h2></td></tr>
 <tr class="memitem:a1dd5d0d7db29b72d5e6685258f63850e" id="r_a1dd5d0d7db29b72d5e6685258f63850e"><td class="memTemplParams" colspan="2">template&lt;binary_readable Out, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> Size&gt; </td></tr>
 <tr class="memitem:a1dd5d0d7db29b72d5e6685258f63850e template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#a1dd5d0d7db29b72d5e6685258f63850e">tr::read_binary</a> (std::istream &amp;is, std::span&lt; Out, Size &gt; out)</td></tr>
 <tr class="memdesc:a1dd5d0d7db29b72d5e6685258f63850e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads binary data from a stream.  <br /></td></tr>
-<tr class="memitem:aea619d2ada26705f0bd5ce8ba56351b1" id="r_aea619d2ada26705f0bd5ce8ba56351b1"><td class="memTemplParams" colspan="2">template&lt;span_or_ref_to_binary_readable... Outs&gt; <br />
-requires (sizeof...(Outs) &gt;= 2)</td></tr>
-<tr class="memitem:aea619d2ada26705f0bd5ce8ba56351b1 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#aea619d2ada26705f0bd5ce8ba56351b1">tr::read_binary</a> (std::istream &amp;is, Outs &amp;&amp;... outs)</td></tr>
-<tr class="memdesc:aea619d2ada26705f0bd5ce8ba56351b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads binary data from a stream.  <br /></td></tr>
+<tr class="memitem:a9327dc313cd950663c0bc6708fb4a62d" id="r_a9327dc313cd950663c0bc6708fb4a62d"><td class="memTemplParams" colspan="2">template&lt;typename... Outs&gt; <br />
+requires (sizeof...(Outs) &gt;= 2 &amp;&amp; (binary_readable&lt;Outs&gt; &amp;&amp; ...))</td></tr>
+<tr class="memitem:a9327dc313cd950663c0bc6708fb4a62d template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#a9327dc313cd950663c0bc6708fb4a62d">tr::read_binary</a> (std::istream &amp;is, Outs &amp;&amp;... outs)</td></tr>
+<tr class="memdesc:a9327dc313cd950663c0bc6708fb4a62d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads binary data from a stream.  <br /></td></tr>
 <tr class="memitem:a3df05c3088b1af8e42df2771d9fdc9ec" id="r_a3df05c3088b1af8e42df2771d9fdc9ec"><td class="memTemplParams" colspan="2">template&lt;binary_constructible Out&gt; </td></tr>
 <tr class="memitem:a3df05c3088b1af8e42df2771d9fdc9ec template"><td class="memItemLeft">Out&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#a3df05c3088b1af8e42df2771d9fdc9ec">tr::read_binary</a> (std::istream &amp;is)</td></tr>
 <tr class="memdesc:a3df05c3088b1af8e42df2771d9fdc9ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads binary data from a stream.  <br /></td></tr>
 <tr class="memitem:a232a461e6b885218468a9b4f4e3e3e63" id="r_a232a461e6b885218468a9b4f4e3e3e63"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#a232a461e6b885218468a9b4f4e3e3e63">tr::read_binary_magic</a> (std::istream &amp;is, std::string_view magic)</td></tr>
 <tr class="memdesc:a232a461e6b885218468a9b4f4e3e3e63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks for magic bytes from a stream.  <br /></td></tr>
-<tr class="memitem:aa67ac5b7d1c617be2bea2fbd624b5d9c" id="r_aa67ac5b7d1c617be2bea2fbd624b5d9c"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="concepttr_1_1binary__flushable__iterator.html">tr::binary_flushable_iterator</a> Iterator&gt; </td></tr>
-<tr class="memitem:aa67ac5b7d1c617be2bea2fbd624b5d9c template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#aa67ac5b7d1c617be2bea2fbd624b5d9c">tr::flush_binary</a> (std::istream &amp;is, Iterator out)</td></tr>
-<tr class="memdesc:aa67ac5b7d1c617be2bea2fbd624b5d9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flushes the rest of the stream into an output iterator.  <br /></td></tr>
+<tr class="memitem:a773c81727b467a21e5f7204baf85bd58" id="r_a773c81727b467a21e5f7204baf85bd58"><td class="memTemplParams" colspan="2">template&lt;typename Iterator&gt; <br />
+requires std::output_iterator&lt;Iterator, char&gt; || std::output_iterator&lt;Iterator, signed char&gt; || std::output_iterator&lt;Iterator,<br class="typebreak" />
+ unsigned char&gt; || std::output_iterator&lt;Iterator, std::byte&gt;</td></tr>
+<tr class="memitem:a773c81727b467a21e5f7204baf85bd58 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#a773c81727b467a21e5f7204baf85bd58">tr::flush_binary</a> (std::istream &amp;is, Iterator out)</td></tr>
+<tr class="memdesc:a773c81727b467a21e5f7204baf85bd58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flushes the rest of the stream into an output iterator.  <br /></td></tr>
 <tr class="memitem:a4f19e4853df2996880d06b0e9806bcef" id="r_a4f19e4853df2996880d06b0e9806bcef"><td class="memItemLeft">std::vector&lt; std::byte &gt;&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#a4f19e4853df2996880d06b0e9806bcef">tr::flush_binary</a> (std::istream &amp;is)</td></tr>
 <tr class="memdesc:a4f19e4853df2996880d06b0e9806bcef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flushes the rest of the stream into a vector of bytes.  <br /></td></tr>
 <tr class="memitem:aa260e2b0da215d5585e8ee8a9d9f5c5a" id="r_aa260e2b0da215d5585e8ee8a9d9f5c5a"><td class="memTemplParams" colspan="2">template&lt;binary_writable In&gt; </td></tr>

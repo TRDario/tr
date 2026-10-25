@@ -12,9 +12,7 @@ var searchData=
   ['result_3c_20result_5fvalues_3c_20values_2e_2e_2e_20_3e_2c_20result_5ferrors_3c_20errors_2e_2e_2e_20_3e_20_3e_9',['result&lt; result_values&lt; Values... &gt;, result_errors&lt; Errors... &gt; &gt;',['../classtr_1_1result_3_01result__values_3_01Values_8_8_8_01_4_00_01result__errors_3_01Errors_8_8_8_01_4_01_4.html',1,'tr']]],
   ['result_5ferrors_10',['result_errors',['../structtr_1_1result__errors.html',1,'tr']]],
   ['result_5fvalues_11',['result_values',['../structtr_1_1result__values.html',1,'tr']]],
-  ['rgb8_12',['rgb8',['../structtr_1_1rgb8.html',1,'tr']]],
-  ['rgba8_13',['rgba8',['../structtr_1_1rgba8.html',1,'tr']]],
-  ['rgbaf_14',['rgbaf',['../structtr_1_1rgbaf.html',1,'tr']]],
-  ['rgbf_15',['rgbf',['../structtr_1_1rgbf.html',1,'tr']]],
-  ['rng_16',['rng',['../classtr_1_1rng.html',1,'tr']]]
+  ['rgb_12',['rgb',['../structtr_1_1rgb.html',1,'tr']]],
+  ['rgba_13',['rgba',['../structtr_1_1rgba.html',1,'tr']]],
+  ['rng_14',['rng',['../classtr_1_1rng.html',1,'tr']]]
 ];

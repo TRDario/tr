@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('rectangle_8hpp
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:tr_3A_3Arectangle_3C_20Element_20_3E" id="r_tr_3A_3Arectangle_3C_20Element_20_3E"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structtr_1_1rectangle.html">tr::rectangle&lt; Element &gt;</a></td></tr>
+<tr class="memitem:tr_3A_3Arectangle_3C_20Rep_20_3E" id="r_tr_3A_3Arectangle_3C_20Rep_20_3E"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="structtr_1_1rectangle.html">tr::rectangle&lt; Rep &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rectangle object.  <a href="structtr_1_1rectangle.html#details">More...</a><br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-namespaces" class="groupheader"><a id="namespaces" name="namespaces"></a>
@@ -145,13 +145,17 @@ Namespaces</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr id="func-members-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Intersection</div></td></tr>
-<tr class="memitem:ab12df04d0f9dd33e4f987170294c065a" id="r_ab12df04d0f9dd33e4f987170294c065a"><td class="memTemplParams" colspan="2">template&lt;typename ElementL, typename ElementR&gt; </td></tr>
-<tr class="memitem:ab12df04d0f9dd33e4f987170294c065a template"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#ab12df04d0f9dd33e4f987170294c065a">tr::intersecting</a> (<a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; ElementL &gt; lhs, <a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; ElementR &gt; rhs) noexcept</td></tr>
-<tr class="memdesc:ab12df04d0f9dd33e4f987170294c065a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines if two rectangles intersect.  <br /></td></tr>
-<tr class="memitem:aa3abbb75591bdbe2ae93bcd85f2cad6a" id="r_aa3abbb75591bdbe2ae93bcd85f2cad6a"><td class="memTemplParams" colspan="2">template&lt;typename Element&gt; </td></tr>
-<tr class="memitem:aa3abbb75591bdbe2ae93bcd85f2cad6a template"><td class="memItemLeft">constexpr std::optional&lt; <a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; Element &gt; &gt;&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#aa3abbb75591bdbe2ae93bcd85f2cad6a">tr::intersection</a> (<a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; Element &gt; lhs, <a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; Element &gt; rhs) noexcept</td></tr>
-<tr class="memdesc:aa3abbb75591bdbe2ae93bcd85f2cad6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the intersection of two rectangles.  <br /></td></tr>
+<tr id="func-members-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Rectangle comparison operators</div></td></tr>
+<tr class="memitem:ad19a2a6f4e059a1bafaa95cdb4c0a0e1" id="r_ad19a2a6f4e059a1bafaa95cdb4c0a0e1"><td class="memTemplParams" colspan="2">template&lt;arithmetic LhsRep, arithmetic RhsRep&gt; </td></tr>
+<tr class="memitem:ad19a2a6f4e059a1bafaa95cdb4c0a0e1 template"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#ad19a2a6f4e059a1bafaa95cdb4c0a0e1">tr::operator==</a> (const <a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; LhsRep &gt; &amp;lhs, const <a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; RhsRep &gt; &amp;rhs) noexcept</td></tr>
+<tr class="memdesc:ad19a2a6f4e059a1bafaa95cdb4c0a0e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares two rectangles for equality.  <br /></td></tr>
+<tr id="func-members-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Intersection</div></td></tr>
+<tr class="memitem:a04b4a5af77535ad6f68d78bbd47305c7" id="r_a04b4a5af77535ad6f68d78bbd47305c7"><td class="memTemplParams" colspan="2">template&lt;arithmetic ARep, arithmetic BRep&gt; </td></tr>
+<tr class="memitem:a04b4a5af77535ad6f68d78bbd47305c7 template"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#a04b4a5af77535ad6f68d78bbd47305c7">tr::intersecting</a> (const <a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; ARep &gt; &amp;a, const <a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; BRep &gt; &amp;b) noexcept</td></tr>
+<tr class="memdesc:a04b4a5af77535ad6f68d78bbd47305c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determines if two rectangles intersect.  <br /></td></tr>
+<tr class="memitem:af31d4b412210c6edd98002da936cb4bd" id="r_af31d4b412210c6edd98002da936cb4bd"><td class="memTemplParams" colspan="2">template&lt;arithmetic ARep, arithmetic BRep&gt; </td></tr>
+<tr class="memitem:af31d4b412210c6edd98002da936cb4bd template"><td class="memItemLeft">constexpr std::optional&lt; <a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; std::common_type_t&lt; ARep, BRep &gt; &gt; &gt;&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#af31d4b412210c6edd98002da936cb4bd">tr::intersection</a> (const <a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; ARep &gt; &amp;a, const <a class="el" href="structtr_1_1rectangle.html">rectangle</a>&lt; BRep &gt; &amp;b) noexcept</td></tr>
+<tr class="memdesc:af31d4b412210c6edd98002da936cb4bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the intersection of two rectangles.  <br /></td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->

@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['magth_0',['magth',['../namespacetr.html#a27f1bc27d793376c5e573921971174ed',1,'tr']]],
-  ['make_5fopt_5fref_1',['make_opt_ref',['../namespacetr.html#a9eede95ae47736e004e1c614874f4d4f',1,'tr']]],
+  ['magth_0',['magth',['../namespacetr.html#a3c2ff6cfc6f6abdc98b6a4bf41d80248',1,'tr']]],
+  ['make_5fopt_5fref_1',['make_opt_ref',['../namespacetr.html#a8e331d1fc02b43d62d30ece410f5f15e',1,'tr']]],
   ['map_2',['map',['../classtr_1_1shader__array.html#aace1dd0bfe52d743975a43a337eb2bd6',1,'tr::shader_array::map()'],['../classtr_1_1uniform__buffer.html#a7a489df0e432eb890986d078b6301c8a',1,'tr::uniform_buffer::map()'],['../classtr_1_1untyped__shader__buffer.html#a1f0d7426747658323a446de5b6679d5e',1,'tr::untyped_shader_buffer::map()'],['../classtr_1_1untyped__uniform__buffer.html#a0ce5d55ba3fbb4c37aac31942fa516fd',1,'tr::untyped_uniform_buffer::map()']]],
   ['map_5farray_3',['map_array',['../classtr_1_1shader__buffer.html#a48a4957aa74cc63f3d1c3e3af4d447b0',1,'tr::shader_buffer::map_array()'],['../classtr_1_1untyped__shader__buffer.html#a1b1eb08b8a98d245fad5163db165d00f',1,'tr::untyped_shader_buffer::map_array()']]],
   ['map_5fheader_4',['map_header',['../classtr_1_1shader__buffer.html#aaf6f31d250c3f9d29bab112d4a1b7576',1,'tr::shader_buffer::map_header()'],['../classtr_1_1untyped__shader__buffer.html#ac41e669a8bb2aed56415c4200b40f47a',1,'tr::untyped_shader_buffer::map_header()']]],
@@ -22,7 +22,7 @@ var searchData=
   ['min_19',['min',['../classtr_1_1benchmark.html#aa8c60e2652d0ef41972c6137085ab008',1,'tr::benchmark']]],
   ['min_5flevel_20',['min_level',['../classtr_1_1logger.html#a99f79687566eb18ddbcd72c6cb3ae8b8',1,'tr::logger']]],
   ['minimized_21',['minimized',['../classtr_1_1window.html#aeeb848fcb180f7f1d3b3b73a5e4fc3b9',1,'tr::window::minimized()'],['../classtr_1_1window__view.html#ad85d027536abdc11d8b8869bc479bb66',1,'tr::window_view::minimized()']]],
-  ['mod_22',['mod',['../namespacetr.html#ac76cad356147dd79afe84b6ba8b0215e',1,'tr']]],
+  ['mod_22',['mod',['../namespacetr.html#a8f6bf8435160814be5c05e2a226ce4fe',1,'tr']]],
   ['mouse_5fdown_5fevent_23',['mouse_down_event',['../structtr_1_1mouse__down__event.html#aa53c8e5aa9f20f3dab27cb3b7945ef3c',1,'tr::mouse_down_event']]],
   ['mouse_5fmotion_5fevent_24',['mouse_motion_event',['../structtr_1_1mouse__motion__event.html#a3c36cf8c5fee5baf73cf00d62613553c',1,'tr::mouse_motion_event']]],
   ['mouse_5fup_5fevent_25',['mouse_up_event',['../structtr_1_1mouse__up__event.html#a678a7527f845154fcc054855513b5a6e',1,'tr::mouse_up_event']]],

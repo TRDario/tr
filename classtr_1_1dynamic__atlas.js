@@ -23,7 +23,7 @@ var classtr_1_1dynamic__atlas =
     [ "operator[]", "classtr_1_1dynamic__atlas.html#a18943138f2e282eff144c28b57db2e4e", null ],
     [ "raw", "classtr_1_1dynamic__atlas.html#a77986fdb4c0b99c979f06952fbfec572", null ],
     [ "reserve", "classtr_1_1dynamic__atlas.html#ab0bc3aa6c7dbaae77251258caa1cf2f6", null ],
-    [ "add", "classtr_1_1dynamic__atlas.html#afea15b12320a4369246004be96f82d99", null ],
+    [ "add", "classtr_1_1dynamic__atlas.html#a174f0563afcf727d714861850f1c9d40", null ],
     [ "clear", "classtr_1_1dynamic__atlas.html#ad533ddb21893a9250a566cb4eea44dba", null ],
     [ "label", "classtr_1_1dynamic__atlas.html#aa63799f3a458d8f5cfc946e361bcb509", null ],
     [ "set_label", "classtr_1_1dynamic__atlas.html#a50c4e960d6e0224f9e00c6c1d1835a72", null ]

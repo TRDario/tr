@@ -138,11 +138,11 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('concepttr_1_1e
   </dd>
 </dl>
 </div><h2 id="header-conceptdef" class="groupheader">Concept definition</h2>
-<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> Lhs, <span class="keyword">typename</span> Rhs = Lhs&gt;</div>
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Target, <span class="keyword">typename</span> Lhs, <span class="keyword">typename</span> Rhs = Lhs&gt;</div>
 <div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepttr_1_1equality__predicate.html">equality_predicate</a> = <span class="keyword">requires</span>(<span class="keyword">const</span> Lhs&amp; lhs, <span class="keyword">const</span> Rhs&amp; rhs) {</div>
-<div class="line">        { T{}(lhs, rhs) } -&gt; std::same_as&lt;bool&gt;;</div>
+<div class="line">        { Target{}(lhs, rhs) } -&gt; std::same_as&lt;bool&gt;;</div>
 <div class="line">    }</div>
-<div class="ttc" id="aconcepttr_1_1equality__predicate_html"><div class="ttname"><a href="concepttr_1_1equality__predicate.html">tr::equality_predicate</a></div><div class="ttdoc">Equality predicate compatible with a specific type.</div><div class="ttdef"><b>Definition</b> concepts.hpp:220</div></div>
+<div class="ttc" id="aconcepttr_1_1equality__predicate_html"><div class="ttname"><a href="concepttr_1_1equality__predicate.html">tr::equality_predicate</a></div><div class="ttdoc">Equality predicate compatible with a specific type.</div><div class="ttdef"><b>Definition</b> hash_concepts.hpp:22</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

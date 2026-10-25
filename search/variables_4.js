@@ -2,7 +2,7 @@ var searchData=
 [
   ['elements_0',['elements',['../structtr_1_1vertex__attribute.html#ad63a4a934d2e1e3f7fcbc87b7ee5c89e',1,'tr::vertex_attribute']]],
   ['empty_5fvariant_1',['empty_variant',['../namespacetr.html#a380bb62772559b444f8745fd5ecf649d',1,'tr']]],
-  ['enable_5fdefault_5fbinary_5fio_2',['enable_default_binary_io',['../namespacetr.html#ad21d04b5bb94eae4f64632b499df5a34',1,'tr']]],
+  ['enable_5fdefault_5fbinary_5fio_2',['enable_default_binary_io',['../namespacetr.html#a45becd3bd70a0eda5d57cef7119d0926',1,'tr']]],
   ['enable_5fdefault_5fbinary_5fio_3c_20arithmetic_20_3e_3',['enable_default_binary_io&lt; Arithmetic &gt;',['../namespacetr.html#ac446fe56637368747d19704299524715',1,'tr']]],
   ['enable_5fdefault_5fbinary_5fio_3c_20enumerator_20_3e_4',['enable_default_binary_io&lt; Enumerator &gt;',['../namespacetr.html#a8ff606ce66794d0d6d4b4c76394315aa',1,'tr']]],
   ['enable_5fdefault_5fbinary_5fio_3c_20glm_3a_3amat_3c_20columns_2c_20rows_2c_20element_20_3e_20_3e_5',['enable_default_binary_io&lt; glm::mat&lt; Columns, Rows, Element &gt; &gt;',['../namespacetr.html#adaba44c7d2dc58913e70e0d5ca39a8b4',1,'tr']]],

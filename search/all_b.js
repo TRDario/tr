@@ -2,8 +2,8 @@ var searchData=
 [
   ['macro_2ehpp_0',['macro.hpp',['../macro_8hpp.html',1,'']]],
   ['mag_5ffilter_1',['mag_filter',['../namespacetr.html#a26ba47c29e07f3ca8eb9cdf73a06a424',1,'tr']]],
-  ['magth_2',['magth',['../namespacetr.html#a27f1bc27d793376c5e573921971174ed',1,'tr']]],
-  ['make_5fopt_5fref_3',['make_opt_ref',['../namespacetr.html#a9eede95ae47736e004e1c614874f4d4f',1,'tr']]],
+  ['magth_2',['magth',['../namespacetr.html#a3c2ff6cfc6f6abdc98b6a4bf41d80248',1,'tr']]],
+  ['make_5fopt_5fref_3',['make_opt_ref',['../namespacetr.html#a8e331d1fc02b43d62d30ece410f5f15e',1,'tr']]],
   ['map_4',['map',['../structtr_1_1parse__localization__script__result.html#a959768c9628941560d50f85fe3825ae1',1,'tr::parse_localization_script_result::map'],['../classtr_1_1shader__array.html#aace1dd0bfe52d743975a43a337eb2bd6',1,'tr::shader_array::map()'],['../classtr_1_1uniform__buffer.html#a7a489df0e432eb890986d078b6301c8a',1,'tr::uniform_buffer::map()'],['../classtr_1_1untyped__shader__buffer.html#a1f0d7426747658323a446de5b6679d5e',1,'tr::untyped_shader_buffer::map()'],['../classtr_1_1untyped__uniform__buffer.html#a0ce5d55ba3fbb4c37aac31942fa516fd',1,'tr::untyped_uniform_buffer::map()']]],
   ['map_5farray_5',['map_array',['../classtr_1_1shader__buffer.html#a48a4957aa74cc63f3d1c3e3af4d447b0',1,'tr::shader_buffer::map_array()'],['../classtr_1_1untyped__shader__buffer.html#a1b1eb08b8a98d245fad5163db165d00f',1,'tr::untyped_shader_buffer::map_array()']]],
   ['map_5fheader_6',['map_header',['../classtr_1_1shader__buffer.html#aaf6f31d250c3f9d29bab112d4a1b7576',1,'tr::shader_buffer::map_header()'],['../classtr_1_1untyped__shader__buffer.html#ac41e669a8bb2aed56415c4200b40f47a',1,'tr::untyped_shader_buffer::map_header()']]],
@@ -43,7 +43,7 @@ var searchData=
   ['minimized_40',['minimized',['../classtr_1_1window.html#aeeb848fcb180f7f1d3b3b73a5e4fc3b9',1,'tr::window::minimized()'],['../classtr_1_1window__view.html#ad85d027536abdc11d8b8869bc479bb66',1,'tr::window_view::minimized()']]],
   ['mipmaps_41',['mipmaps',['../namespacetr.html#acc7c3ec65e91b3d9d879c9bca6e51ce6',1,'tr']]],
   ['mirror_5frepeat_42',['mirror_repeat',['../namespacetr.html#a3e4670572d9d0189d10f4f474d1ebfa3aa0987f6d6bef179be99f9ffd6f1cc73d',1,'tr']]],
-  ['mod_43',['mod',['../namespacetr.html#ac76cad356147dd79afe84b6ba8b0215e',1,'tr']]],
+  ['mod_43',['mod',['../namespacetr.html#a8f6bf8435160814be5c05e2a226ce4fe',1,'tr']]],
   ['mods_44',['mods',['../structtr_1_1key__down__event.html#afa567b816b57342ea42fa889aa818d2e',1,'tr::key_down_event::mods'],['../structtr_1_1key__up__event.html#a57ef542ceed1604a3d8cb690d44ae907',1,'tr::key_up_event::mods'],['../structtr_1_1scan__chord.html#afd58fd76556a80dadb8543359cdf3db2',1,'tr::scan_chord::mods'],['../structtr_1_1key__chord.html#a8f7123a28cfb67e5494ca847706dfa5b',1,'tr::key_chord::mods']]],
   ['module_45',['module',['../md_pages_2building.html#autotoc_md4',1,'Audio module'],['../md_pages_2building.html#autotoc_md6',1,'ImGui integration module'],['../md_pages_2building.html#autotoc_md5',1,'System and graphics module'],['../md_pages_2building.html#autotoc_md3',1,'Utility module']]],
   ['modules_46',['Modules',['../md_pages_2building.html#autotoc_md2',1,'']]],
@@ -57,11 +57,10 @@ var searchData=
   ['mouse_5fstate_54',['mouse_state',['../structtr_1_1mouse__state.html',1,'tr']]],
   ['mouse_5fup_5fevent_55',['mouse_up_event',['../structtr_1_1mouse__up__event.html',1,'tr::mouse_up_event'],['../structtr_1_1mouse__up__event.html#a678a7527f845154fcc054855513b5a6e',1,'tr::mouse_up_event::mouse_up_event()']]],
   ['mouse_5fwheel_5fevent_56',['mouse_wheel_event',['../structtr_1_1mouse__wheel__event.html',1,'tr::mouse_wheel_event'],['../structtr_1_1mouse__wheel__event.html#a6f83f50d22fbb21c4d3465bf9d7414a1',1,'tr::mouse_wheel_event::mouse_wheel_event()']]],
-  ['move_5fassignable_57',['move_assignable',['../concepttr_1_1move__assignable.html',1,'tr']]],
-  ['msecs_58',['msecs',['../namespacetr_1_1aliases_1_1chrono__aliases.html#a10cca773e420ce7e2dd4eb33c6381683',1,'tr::msecs'],['../namespacetr_1_1aliases_1_1chrono__aliases.html#a10cca773e420ce7e2dd4eb33c6381683',1,'tr::aliases::msecs'],['../namespacetr_1_1aliases_1_1chrono__aliases.html#a10cca773e420ce7e2dd4eb33c6381683',1,'tr::aliases::chrono_aliases::msecs']]],
-  ['mstream_59',['mstream',['../classtr_1_1mstream.html',1,'tr::mstream'],['../classtr_1_1mstream.html#a6dfbc2c213cca4e7af49de97f9e3573f',1,'tr::mstream::mstream(std::span&lt; char &gt; buffer)'],['../classtr_1_1mstream.html#affc3cd7d6f3ff61b4c3c920afb99be7c',1,'tr::mstream::mstream(std::span&lt; unsigned char &gt; buffer)'],['../classtr_1_1mstream.html#a7c3c66b10e0aa22fc027e31a8765c58f',1,'tr::mstream::mstream(std::span&lt; std::byte &gt; buffer)']]],
-  ['mstream_2ehpp_60',['mstream.hpp',['../mstream_8hpp.html',1,'']]],
-  ['multisamples_61',['multisamples',['../structtr_1_1window__parameters.html#a6e506536bb3f18f22084987d062e3387',1,'tr::window_parameters']]],
-  ['mutable_5ftexture_5fview_62',['mutable_texture_view',['../classtr_1_1mutable__texture__view.html',1,'tr::mutable_texture_view'],['../classtr_1_1mutable__texture__view.html#a93729c6d1976ead1b2214f4a3d89e4c0',1,'tr::mutable_texture_view::mutable_texture_view() noexcept=default'],['../classtr_1_1mutable__texture__view.html#a775018c9c6fa078355c1a4052cc62b88',1,'tr::mutable_texture_view::mutable_texture_view(const mutable_texture_view &amp;) noexcept=default']]],
-  ['mutable_5ftexture_5fview_2ehpp_63',['mutable_texture_view.hpp',['../mutable__texture__view_8hpp.html',1,'']]]
+  ['msecs_57',['msecs',['../namespacetr_1_1aliases_1_1chrono__aliases.html#a10cca773e420ce7e2dd4eb33c6381683',1,'tr::msecs'],['../namespacetr_1_1aliases_1_1chrono__aliases.html#a10cca773e420ce7e2dd4eb33c6381683',1,'tr::aliases::msecs'],['../namespacetr_1_1aliases_1_1chrono__aliases.html#a10cca773e420ce7e2dd4eb33c6381683',1,'tr::aliases::chrono_aliases::msecs']]],
+  ['mstream_58',['mstream',['../classtr_1_1mstream.html',1,'tr::mstream'],['../classtr_1_1mstream.html#a6dfbc2c213cca4e7af49de97f9e3573f',1,'tr::mstream::mstream(std::span&lt; char &gt; buffer)'],['../classtr_1_1mstream.html#affc3cd7d6f3ff61b4c3c920afb99be7c',1,'tr::mstream::mstream(std::span&lt; unsigned char &gt; buffer)'],['../classtr_1_1mstream.html#a7c3c66b10e0aa22fc027e31a8765c58f',1,'tr::mstream::mstream(std::span&lt; std::byte &gt; buffer)']]],
+  ['mstream_2ehpp_59',['mstream.hpp',['../mstream_8hpp.html',1,'']]],
+  ['multisamples_60',['multisamples',['../structtr_1_1window__parameters.html#a6e506536bb3f18f22084987d062e3387',1,'tr::window_parameters']]],
+  ['mutable_5ftexture_5fview_61',['mutable_texture_view',['../classtr_1_1mutable__texture__view.html',1,'tr::mutable_texture_view'],['../classtr_1_1mutable__texture__view.html#a93729c6d1976ead1b2214f4a3d89e4c0',1,'tr::mutable_texture_view::mutable_texture_view() noexcept=default'],['../classtr_1_1mutable__texture__view.html#a775018c9c6fa078355c1a4052cc62b88',1,'tr::mutable_texture_view::mutable_texture_view(const mutable_texture_view &amp;) noexcept=default']]],
+  ['mutable_5ftexture_5fview_2ehpp_62',['mutable_texture_view.hpp',['../mutable__texture__view_8hpp.html',1,'']]]
 ];
