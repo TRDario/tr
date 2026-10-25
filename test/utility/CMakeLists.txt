@@ -26,6 +26,7 @@ add_executable(
 	iterator_concepts.cpp
 	inplace_vector.cpp
 	iterator_interface.cpp
+	line.cpp
 	localization_map.cpp
 	localization_script.cpp
 	lock_free_queue.cpp

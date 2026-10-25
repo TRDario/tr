@@ -64,7 +64,6 @@ target_sources(tr_utility PRIVATE
 	src/utility/encryption.cpp
 	src/utility/exception.cpp
 	src/utility/iostream.cpp
-	src/utility/line.cpp
 	src/utility/localization_lexer.cpp
 	src/utility/localization_map.cpp
 	src/utility/localization_parser.cpp

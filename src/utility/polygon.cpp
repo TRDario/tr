@@ -27,10 +27,10 @@ bool tr::simple_polygon(polygon_view vertices) noexcept
 {
 	for (usize i = 0; i < vertices.size(); ++i) {
 		const usize ni{(i + 1) % vertices.size()};
-		const line_segment a{vertices[i], vertices[ni]};
+		const line_segment<float> a{vertices[i], vertices[ni]};
 		for (usize j = 0; j < vertices.size(); ++j) {
 			const usize nj{(j + 1) % vertices.size()};
-			const line_segment b{vertices[j], vertices[nj]};
+			const line_segment<float> b{vertices[j], vertices[nj]};
 			if (i != j && ni != j && nj != i && intersecting(a, b)) {
 				return false;
 			}
@@ -71,9 +71,9 @@ bool tr::intersecting(polygon_view a, polygon_view b) noexcept
 	}
 
 	for (usize i = 0; i < a.size(); ++i) {
-		const line_segment la{a[i], a[(i + 1) % a.size()]};
+		const line_segment<float> la{a[i], a[(i + 1) % a.size()]};
 		for (usize j = 0; j < b.size(); ++j) {
-			const line_segment lb{b[j], b[(j + 1) % b.size()]};
+			const line_segment<float> lb{b[j], b[(j + 1) % b.size()]};
 			if (intersecting(la, lb)) {
 				return true;
 			}
