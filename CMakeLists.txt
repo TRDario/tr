@@ -74,7 +74,6 @@ target_sources(tr_utility PRIVATE
 	src/utility/string_pool.cpp
 	src/utility/temporary_file.cpp
 	src/utility/timer.cpp
-	src/utility/vector.cpp
 )
 target_link_libraries(tr_utility PUBLIC glm::glm lz4::lz4 boost_unordered)
 target_link_libraries(tr INTERFACE tr::utility)

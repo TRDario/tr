@@ -12,37 +12,47 @@ namespace tr
 	/// @{
 
 	/// Creates a normalized vector from an angle value.
-	/// @param th Angle defining the direction the vector will be pointing in.
-	/// @return Normalized vector pointing in the direction defined by `th`.
-	[[nodiscard]] glm::vec2 normal(angle<float> th) noexcept;
+	/// @tparam Rep Representation type of the angle and result vector.
+	/// @param angle Angle defining the direction the vector will be pointing in.
+	/// @return Normalized vector pointing in the direction defined by `angle`.
+	template <std::floating_point Rep>
+	[[nodiscard]] glm::tvec2<Rep> normal(angle<Rep> angle) noexcept
+	{
+		return glm::tvec2<Rep>{angle.cos(), angle.sin()};
+	}
 
 	/// Creates a vector from a magnitude and angle.
-	/// @param mag Magnitude of the vector.
-	/// @param th Angle defining the direction the vector will be pointing in.
-	/// @return Vector pointing in the direction defined by `th` with magnitude `mag`.
-	[[nodiscard]] glm::vec2 magth(float mag, angle<float> th) noexcept;
+	/// @tparam Rep Representation type of the magnitude, angle and result vector.
+	/// @param magnitude Magnitude of the vector.
+	/// @param angle Angle defining the direction the vector will be pointing in.
+	/// @return Vector pointing in the direction defined by `angle` with magnitude `magnitude`.
+	template <std::floating_point Rep>
+	[[nodiscard]] glm::tvec2<Rep> magth(Rep magnitude, angle<float> angle) noexcept
+	{
+		return normal(angle) * magnitude;
+	}
 
 	//
 
 	/// Computes the squared length of a vector.
 	/// @tparam Dimensions Number of dimensions of the vector.
-	/// @tparam Element Type of the vector elements.
-	/// @param v Vector to get the square length of.
-	/// @return '|v|²'.
-	template <int Dimensions, typename Element>
-	[[nodiscard]] constexpr Element length2(glm::vec<Dimensions, Element> v) noexcept
+	/// @tparam Rep Representation type of the vector.
+	/// @param a Vector to get the square length of.
+	/// @return '|a|²'.
+	template <int Dimensions, arithmetic Rep>
+	[[nodiscard]] constexpr Rep length2(glm::vec<Dimensions, Rep> a) noexcept
 	{
 		if constexpr (Dimensions == 1) {
-			return sqr(v.x);
+			return sqr(a.x);
 		}
 		else if constexpr (Dimensions == 2) {
-			return sqr(v.x) + sqr(v.y);
+			return sqr(a.x) + sqr(a.y);
 		}
 		else if constexpr (Dimensions == 3) {
-			return sqr(v.x) + sqr(v.y) + sqr(v.z);
+			return sqr(a.x) + sqr(a.y) + sqr(a.z);
 		}
 		else if constexpr (Dimensions == 4) {
-			return sqr(v.x) + sqr(v.y) + sqr(v.z) + sqr(v.w);
+			return sqr(a.x) + sqr(a.y) + sqr(a.z) + sqr(a.w);
 		}
 		else {
 			TR_UNREACHABLE;
@@ -51,42 +61,39 @@ namespace tr
 
 	/// Computes the squared distance between two points.
 	/// @tparam Dimensions Number of dimensions of the vectors.
-	/// @tparam ElementL Type of the left vector elements.
-	/// @tparam ElementR Type of the right vector elements.
-	/// @param a Vector to the first point.
-	/// @param b Vector to the second point.
+	/// @tparam ARep, BRep Representation types of the vectors.
+	/// @param a, b Vectors to the points the distance is being measured for.
 	/// @return `|b-a|²`.
-	template <int Dimensions, typename ElementL, typename ElementR>
-	[[nodiscard]] constexpr std::common_type_t<ElementL, ElementR> distance2(glm::vec<Dimensions, ElementL> a,
-																			 glm::vec<Dimensions, ElementR> b) noexcept
+	template <int Dimensions, arithmetic ARep, arithmetic BRep>
+	[[nodiscard]] constexpr std::common_type_t<ARep, BRep> distance2(glm::vec<Dimensions, ARep> a, glm::vec<Dimensions, BRep> b) noexcept
 	{
-		return length2(glm::vec<Dimensions, std::common_type_t<ElementL, ElementR>>{b} -
-					   glm::vec<Dimensions, std::common_type_t<ElementL, ElementR>>{a});
+		return length2(glm::vec<Dimensions, std::common_type_t<ARep, BRep>>{b} - glm::vec<Dimensions, std::common_type_t<ARep, BRep>>{a});
 	}
 
 	/// Computes the inverse of a vector.
 	/// @tparam Dimensions Number of dimensions of the vector.
-	/// @tparam Element Type of the vector elements.
-	/// @param v Vector to get the inverse of.
-	/// @return `v⁻¹`.
-	template <int Dimensions, typename Element>
-	[[nodiscard]] constexpr glm::vec<Dimensions, float> inverse(glm::vec<Dimensions, Element> v) noexcept
+	/// @tparam Rep Representation type of the vector.
+	/// @param a Vector to get the inverse of.
+	/// @return `a⁻¹`.
+	template <int Dimensions, arithmetic Rep>
+	[[nodiscard]] constexpr auto inverse(glm::vec<Dimensions, Rep> a) noexcept
 	{
-		glm::vec<Dimensions, float> result;
+		using CommonRep = std::conditional_t<std::integral<Rep>, double, Rep>;
+
+		glm::vec<Dimensions, CommonRep> result;
 		for (int i = 0; i < Dimensions; ++i) {
-			result[i] = static_cast<float>(1.0f / v[i]);
+			result[i] = CommonRep{1} / a[i];
 		}
 		return result;
 	}
 
 	/// Computes the 2D cross product of two vectors.
 	/// @tparam Dimensions Number of dimensions of the vectors.
-	/// @tparam ElementL Type of the left vector elements.
-	/// @tparam ElementR Type of the right vector elements.
-	/// @param a, b Vector values.
+	/// @tparam ARep, BRep Representation types of the vectors.
+	/// @param a, b Values to get the cross product of.
 	/// @return `a×b`.
-	template <typename ElementL, typename ElementR>
-	[[nodiscard]] constexpr std::common_type_t<ElementL, ElementR> cross(glm::tvec2<ElementL> a, glm::tvec2<ElementR> b) noexcept
+	template <arithmetic ARep, arithmetic BRep>
+	[[nodiscard]] constexpr std::common_type_t<ARep, BRep> cross(glm::tvec2<ARep> a, glm::tvec2<BRep> b) noexcept
 	{
 		return a.x * b.y - a.y * b.x;
 	}

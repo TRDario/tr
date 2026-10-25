@@ -61,6 +61,7 @@ add_executable(
 	type_name.cpp
 	utf8.cpp
 	variant.cpp
+	vector.cpp
 	zstring_view.cpp
 	zstring_view_zspan.cpp
 )
