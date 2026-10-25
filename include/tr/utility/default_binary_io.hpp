@@ -2,7 +2,7 @@
 /// @brief Defines the `tr::enable_default_binary_io` customization point.
 
 #pragma once
-#include <tr/utility/concepts.hpp>
+#include <tr/utility/common.hpp>
 
 //
 
@@ -10,19 +10,19 @@ namespace tr
 {
 	/// If specialized to true, a default binary reader and writer are used (the object's bytes are directly read/written).
 	/// @tparam T Type to enable the default binary IO for.
-	template <cv_unqualified_object T>
+	template <typename T>
 	inline constexpr bool enable_default_binary_io{false};
 
 	/// Enables default binary IO for arithmetic types.
 	/// @tparam Arithmetic Built-in arithmetic type.
-	template <arithmetic Arithmetic>
-		requires(cv_unqualified_object<Arithmetic>)
+	template <typename Arithmetic>
+		requires std::is_arithmetic_v<Arithmetic>
 	inline constexpr bool enable_default_binary_io<Arithmetic>{true};
 
 	// Enables default binary IO for enumerators.
 	/// @tparam Enumerator Enumerator type.
-	template <enumerator Enumerator>
-		requires(cv_unqualified_object<Enumerator>)
+	template <typename Enumerator>
+		requires std::is_enum_v<Enumerator>
 	inline constexpr bool enable_default_binary_io<Enumerator>{true};
 
 	/// Enables default binary IO for vectors.

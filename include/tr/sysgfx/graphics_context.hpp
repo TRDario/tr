@@ -219,7 +219,7 @@ namespace tr
 		/// @param buffer Buffer to set as active.
 		/// @param slot Slot to set the buffer in.
 		/// @param offset Starting offset within the buffer to set.
-		template <standard_layout Element>
+		template <typename Element>
 		void set_vertex_buffer(const static_vertex_buffer<Element>& buffer, int slot, int offset) noexcept
 		{
 			TR_ASSERT(buffer.valid(), "Tried to set a vertex buffer in an invalid state to a graphics context.");
@@ -251,7 +251,7 @@ namespace tr
 		/// @param buffer Buffer to set as active.
 		/// @param slot Slot to set the buffer in.
 		/// @param offset Starting offset within the buffer to set.
-		template <standard_layout Element>
+		template <typename Element>
 		void set_vertex_buffer(const dynamic_vertex_buffer<Element>& buffer, int slot, int offset) noexcept
 		{
 			TR_ASSERT(buffer.valid(), "Tried to set a vertex buffer in an invalid state to a graphics context.");

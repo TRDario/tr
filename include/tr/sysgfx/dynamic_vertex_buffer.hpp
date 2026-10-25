@@ -3,7 +3,6 @@
 
 #pragma once
 #include <tr/sysgfx/untyped_dynamic_vertex_buffer.hpp>
-#include <tr/utility/concepts.hpp>
 #include <tr/utility/type_name.hpp>
 
 //
@@ -30,7 +29,8 @@ namespace tr
 	/// `tr::dynamic_vertex_buffer` instances may be labeled and are formattable. Example format output: `"My vertex buffer" (ID: 3, VBO:
 	/// 5)`.
 	/// @tparam Element Type of the elements of the buffer.
-	template <standard_layout Element>
+	template <typename Element>
+		requires std::is_standard_layout_v<Element>
 	class dynamic_vertex_buffer : private untyped_dynamic_vertex_buffer
 	{
 	  public:
@@ -168,7 +168,7 @@ namespace tr
 //
 
 /// Dynamic vertex buffer formatter.
-template <tr::standard_layout Element>
+template <typename Element>
 struct std::formatter<tr::dynamic_vertex_buffer<Element>>
 {
 	/// Parses the format specification.

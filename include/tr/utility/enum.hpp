@@ -2,7 +2,7 @@
 /// @brief Provides enumerator utilities.
 
 #pragma once
-#include <tr/utility/concepts.hpp>
+#include <tr/utility/common.hpp>
 
 //
 
@@ -10,7 +10,8 @@ namespace tr
 {
 	/// Wraps an enum class to allow conversion to bool, used in `TR_DEFINE_ENUM_BITMASK_OPERATORS`.
 	/// @tparam Enum Wrapped enumerator type.
-	template <enumerator Enum>
+	template <typename Enum>
+		requires std::is_enum_v<Enum>
 	class enum_wrapper
 	{
 	  public:

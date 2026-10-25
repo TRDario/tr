@@ -2,7 +2,7 @@
 /// @brief Provides an interface for reading and writing binary data.
 
 #pragma once
-#include <tr/utility/concepts.hpp>
+#include <tr/utility/integer.hpp>
 #include <tr/utility/specialization_of.hpp>
 
 //
@@ -11,7 +11,8 @@ namespace tr
 {
 	/// Interface for custom readers for use in read_binary.
 	/// @tparam Out Output type.
-	template <cv_unqualified_object Out>
+	/// @note Any overloads to const or reference-qualified types will be ignored.
+	template <typename Out>
 	struct binary_reader
 	{
 		static_assert("binary_reader is not specialized for this type!");
@@ -24,7 +25,8 @@ namespace tr
 
 	/// Interface for custom writers for use in write_binary.
 	/// @tparam In Input type.
-	template <cv_unqualified_object In>
+	/// @note Any overloads to const or reference-qualified types will be ignored.
+	template <typename In>
 	struct binary_writer
 	{
 		static_assert("binary_writer is not specialized for this type!");
@@ -39,25 +41,16 @@ namespace tr
 
 	/// Type able to be read with read_binary.
 	template <typename T>
-	concept binary_readable = requires(std::istream& is, T& out) { tr::binary_reader<std::remove_volatile_t<T>>{}(is, out); };
-
-	/// Type passable to the variadic read_binary: a span or a reference to a binary readable.
-	template <typename T>
-	concept span_or_ref_to_binary_readable = (lvalue_reference<T> && binary_readable<std::remove_reference_t<T>>) ||
-											 specialization_of_tc<std::remove_cvref_t<T>, std::span>;
+	concept binary_readable = requires(std::istream& is, T& out) { tr::binary_reader<std::remove_cvref_t<T>>{}(is, out); } ||
+							  specialization_of_tc<std::remove_cvref_t<T>, std::span>;
 
 	/// Type able to be constructed with read_binary.
 	template <typename T>
 	concept binary_constructible = binary_readable<T> && std::default_initializable<T>;
 
-	/// Iterator type able to be used with flush_binary.
-	template <typename T>
-	concept binary_flushable_iterator = std::output_iterator<T, char> || std::output_iterator<T, signed char> ||
-										std::output_iterator<T, unsigned char> || std::output_iterator<T, std::byte>;
-
 	/// Type able to be read with a stream write_binary.
 	template <typename T>
-	concept binary_writable = requires(std::ostream& os, const T& in) { tr::binary_writer<std::remove_cv_t<T>>{}(os, in); };
+	concept binary_writable = requires(std::ostream& os, const T& in) { tr::binary_writer<T>{}(os, in); };
 
 	/// @name Binary IO
 	/// @{
@@ -69,7 +62,7 @@ namespace tr
 	template <binary_readable Out>
 	void read_binary(std::istream& is, Out& out)
 	{
-		binary_reader<std::remove_volatile_t<Out>>{}(is, out);
+		binary_reader<Out>{}(is, out);
 	}
 
 	/// Reads binary data from a stream.
@@ -94,8 +87,8 @@ namespace tr
 	/// @tparam Outs Binary-readable types.
 	/// @param is Input stream.
 	/// @param outs Output variables.
-	template <span_or_ref_to_binary_readable... Outs>
-		requires(sizeof...(Outs) >= 2)
+	template <typename... Outs>
+		requires(sizeof...(Outs) >= 2 && (binary_readable<Outs> && ...))
 	void read_binary(std::istream& is, Outs&&... outs)
 	{
 		(read_binary(is, outs), ...);
@@ -125,7 +118,9 @@ namespace tr
 	/// @tparam Iterator Iterator to a character-like type.
 	/// @param is Input stream.
 	/// @param out Output iterator.
-	template <tr::binary_flushable_iterator Iterator>
+	template <typename Iterator>
+		requires std::output_iterator<Iterator, char> || std::output_iterator<Iterator, signed char> ||
+				 std::output_iterator<Iterator, unsigned char> || std::output_iterator<Iterator, std::byte>
 	void flush_binary(std::istream& is, Iterator out)
 	{
 		while (is.peek() != EOF) {

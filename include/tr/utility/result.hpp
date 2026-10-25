@@ -2,7 +2,6 @@
 /// @brief Provides `tr::result`.
 
 #pragma once
-#include <tr/utility/concepts.hpp>
 #include <tr/utility/optional_variant.hpp>
 #include <tr/utility/specialization_of.hpp>
 

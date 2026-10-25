@@ -2,7 +2,7 @@
 /// @brief Provides `tr::lock_free_queue`.
 
 #pragma once
-#include <tr/utility/concepts.hpp>
+#include <tr/utility/integer.hpp>
 #include <tr/utility/opt_ref.hpp>
 
 //
@@ -19,8 +19,8 @@ namespace tr
 	/// @note Smaller objects may have a significant amount of memory overhead comparative to their size.
 	/// @tparam Element Type of the elements of the queue.
 	/// @tparam Capacity Maximum capacity of the queue. Due to underlying implementation details may only be in powers of two.
-	template <nothrow_destructible Element, usize Capacity>
-		requires(std::has_single_bit(Capacity))
+	template <typename Element, usize Capacity>
+		requires std::is_nothrow_destructible_v<Element> && (std::has_single_bit(Capacity))
 	class lock_free_queue
 	{
 	  public:

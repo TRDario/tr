@@ -2,7 +2,7 @@
 /// @brief Provides miscellaneous range utilities.
 
 #pragma once
-#include <tr/utility/concepts.hpp>
+#include <tr/utility/integer.hpp>
 #include <tr/utility/macro.hpp>
 #include <tr/utility/type_name.hpp>
 
@@ -19,7 +19,8 @@ namespace tr
 	/// @tparam Extent Extent of the source span.
 	/// @param from Span to reinterpret.
 	/// @return Span reinterpreted as a span of another type.
-	template <standard_layout To, standard_layout From, usize Extent>
+	template <typename To, typename From, usize Extent>
+		requires std::is_standard_layout_v<To> && std::is_standard_layout_v<From>
 	[[nodiscard]] auto reinterpret_span(std::span<From, Extent> from) noexcept
 	{
 		if constexpr (Extent != std::dynamic_extent) {
@@ -52,7 +53,8 @@ namespace tr
 	/// @tparam Standard layout object type.
 	/// @param object Object to reinterpret as bytes.
 	/// @return `object` reinterpreted as a range of bytes.
-	template <standard_layout Object>
+	template <typename Object>
+		requires std::is_standard_layout_v<Object>
 	[[nodiscard]] std::span<const std::byte, sizeof(Object)> as_bytes(const Object& object) noexcept
 	{
 		return std::as_bytes(std::span<const Object, 1>{std::addressof(object), 1});
@@ -75,7 +77,8 @@ namespace tr
 	/// @tparam Standard layout object type.
 	/// @param object Object to reinterpret as bytes.
 	/// @return `object` reinterpreted as a range of mutable bytes.
-	template <standard_layout Object>
+	template <typename Object>
+		requires std::is_standard_layout_v<Object>
 	[[nodiscard]] std::span<std::byte, sizeof(Object)> as_mut_bytes(Object& object) noexcept
 	{
 		return std::as_writable_bytes(std::span<Object, 1>{std::addressof(object), 1});

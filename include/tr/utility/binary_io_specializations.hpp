@@ -11,8 +11,8 @@ namespace tr
 {
 	/// Default binary reader.
 	/// @tparam Defaulted Type with `enable_default_binary_io<Defaulted>{true}`.
-	template <cv_unqualified_object Defaulted>
-		requires(enable_default_binary_io<Defaulted>)
+	template <typename Defaulted>
+		requires enable_default_binary_io<Defaulted>
 	struct binary_reader<Defaulted>
 	{
 		/// Marks the reader as default, this is checked in some specializations to enable optimizations.
@@ -214,8 +214,8 @@ namespace tr
 
 	/// Default binary writer.
 	/// @tparam Defaulted Type with `enable_default_binary_io<Defaulted>{true}`.
-	template <cv_unqualified_object Defaulted>
-		requires(enable_default_binary_io<Defaulted>)
+	template <typename Defaulted>
+		requires enable_default_binary_io<Defaulted>
 	struct binary_writer<Defaulted>
 	{
 		/// Marks the writer as default, this is checked in some specializations to enable optimizations.

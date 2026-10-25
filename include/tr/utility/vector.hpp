@@ -29,7 +29,7 @@ namespace tr
 	/// @tparam Element Type of the vector elements.
 	/// @param v Vector to get the square length of.
 	/// @return '|v|²'.
-	template <int Dimensions, arithmetic Element>
+	template <int Dimensions, typename Element>
 	[[nodiscard]] constexpr Element length2(glm::vec<Dimensions, Element> v) noexcept
 	{
 		if constexpr (Dimensions == 1) {
@@ -56,7 +56,7 @@ namespace tr
 	/// @param a Vector to the first point.
 	/// @param b Vector to the second point.
 	/// @return `|b-a|²`.
-	template <int Dimensions, arithmetic ElementL, arithmetic ElementR>
+	template <int Dimensions, typename ElementL, typename ElementR>
 	[[nodiscard]] constexpr std::common_type_t<ElementL, ElementR> distance2(glm::vec<Dimensions, ElementL> a,
 																			 glm::vec<Dimensions, ElementR> b) noexcept
 	{
@@ -69,7 +69,7 @@ namespace tr
 	/// @tparam Element Type of the vector elements.
 	/// @param v Vector to get the inverse of.
 	/// @return `v⁻¹`.
-	template <int Dimensions, arithmetic Element>
+	template <int Dimensions, typename Element>
 	[[nodiscard]] constexpr glm::vec<Dimensions, float> inverse(glm::vec<Dimensions, Element> v) noexcept
 	{
 		glm::vec<Dimensions, float> result;
@@ -85,7 +85,7 @@ namespace tr
 	/// @tparam ElementR Type of the right vector elements.
 	/// @param a, b Vector values.
 	/// @return `a×b`.
-	template <arithmetic ElementL, arithmetic ElementR>
+	template <typename ElementL, typename ElementR>
 	[[nodiscard]] constexpr std::common_type_t<ElementL, ElementR> cross(glm::tvec2<ElementL> a, glm::tvec2<ElementR> b) noexcept
 	{
 		return a.x * b.y - a.y * b.x;

@@ -2,7 +2,7 @@
 /// @brief Provides `tr::pointer_iterator`.
 
 #pragma once
-#include <tr/utility/concepts.hpp>
+#include <tr/utility/common.hpp>
 
 //
 
@@ -12,7 +12,8 @@ namespace tr
 	/// @details This may be used to ensure that an iterator is unique to a class.
 	/// @tparam Iterator Derived iterator type.
 	/// @tparam Pointer Raw pointer type.
-	template <typename Iterator, pointer Pointer>
+	template <typename Iterator, typename Pointer>
+		requires std::is_pointer_v<Pointer>
 	class pointer_iterator
 	{
 	  public:

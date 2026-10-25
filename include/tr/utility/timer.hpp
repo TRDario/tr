@@ -3,8 +3,6 @@
 
 #pragma once
 #include <tr/utility/chrono.hpp>
-#include <tr/utility/concepts.hpp>
-#include <tr/utility/specialization_of.hpp>
 
 //
 
@@ -34,7 +32,7 @@ namespace tr
 		/// @tparam Callback Base callback object type.
 		/// @param interval Interval at which the callback is called.
 		/// @param cb Callback object.
-		template <arithmetic Rep, specialization_of_c<std::ratio> Period, std::convertible_to<std::function<void()>> Callback>
+		template <typename Rep, typename Period, std::convertible_to<std::function<void()>> Callback>
 		[[nodiscard]] timer(const std::chrono::duration<Rep, Period>& interval, Callback&& cb)
 			: m_active{std::make_shared<std::atomic_bool>(true)}
 			, m_thread{timer_loop, std::chrono::duration_cast<duration>(interval), callback{std::forward<Callback>(cb)}, m_active}

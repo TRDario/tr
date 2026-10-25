@@ -17,7 +17,8 @@ namespace tr
 	/// Instances of `tr::inplace_vector` are copyable if `Element` is copyable and movable if `Element` is movable.
 	/// @tparam Element Type of the elements of the vector.
 	/// @tparam Capacity Maximum capacity of the vector.
-	template <nothrow_destructible Element, usize Capacity>
+	template <typename Element, usize Capacity>
+		requires std::is_nothrow_destructible_v<Element>
 	class inplace_vector
 	{
 	  public:
@@ -170,7 +171,7 @@ namespace tr
 		/// @param rhs Vector to move. The vector will be in a cleared state after this operation.
 		/// @return Reference to `*this`.
 		inplace_vector& operator=(inplace_vector&& rhs) noexcept(std::is_nothrow_move_constructible_v<Element>)
-			requires(std::move_constructible<Element>)
+			requires std::move_constructible<Element>
 		{
 			std::destroy(begin(), end());
 			std::uninitialized_move(rhs.begin(), rhs.end(), begin());
@@ -395,8 +396,9 @@ namespace tr
 		/// @pre The size of the string must be less than `Capacity`.
 		/// @return Iterator to the position where the value was inserted.
 		iterator insert(const_iterator where, const Element& value)
-			noexcept(nothrow_movable<Element> && std::is_nothrow_copy_constructible_v<Element>)
-			requires(std::move_constructible<Element> && move_assignable<Element> && std::copy_constructible<Element>)
+			noexcept(std::is_nothrow_move_constructible_v<Element> && std::is_nothrow_move_assignable_v<Element> &&
+					 std::is_nothrow_copy_constructible_v<Element>)
+			requires std::move_constructible<Element> && std::is_move_assignable_v<Element> && std::copy_constructible<Element>
 		{
 			return emplace(where, value);
 		}
@@ -406,8 +408,9 @@ namespace tr
 		/// @param value Value to move into the vector.
 		/// @pre The size of the string must be less than `Capacity`.
 		/// @return Iterator to the position where the value was inserted.
-		iterator insert(const_iterator where, Element&& value) noexcept(nothrow_movable<Element>)
-			requires(std::move_constructible<Element> && move_assignable<Element>)
+		iterator insert(const_iterator where, Element&& value)
+			noexcept(std::is_nothrow_move_constructible_v<Element> && std::is_nothrow_move_assignable_v<Element>)
+			requires std::move_constructible<Element> && std::is_move_assignable_v<Element>
 		{
 			return emplace(where, std::move(value));
 		}
@@ -421,9 +424,10 @@ namespace tr
 		/// @pre `this->size() + std::distance(first, last)` must be less than or equal to `Capacity`.
 		/// @return Iterator to the position where the range was inserted.
 		template <forward_iterator_to<Element> Iterator, std::sentinel_for<Iterator> Sentinel>
-			requires(std::move_constructible<Element> && move_assignable<Element>)
+			requires std::move_constructible<Element> && std::is_move_assignable_v<Element>
 		iterator insert(const_iterator where, Iterator first, Sentinel last)
-			noexcept(nothrow_movable<Element> && nothrow_forward_iterator_to<Iterator, Element>)
+			noexcept(std::is_nothrow_move_constructible_v<Element> && std::is_nothrow_move_assignable_v<Element> &&
+					 nothrow_forward_iterator_to<Iterator, Element>)
 		{
 			const auto inserted_elements{std::ranges::distance(first, last)};
 
@@ -455,10 +459,11 @@ namespace tr
 		/// @param range Range to insert.
 		/// @pre `this->size() + std::ranges::size(range)` must be less than or equal to `Capacity`.
 		/// @return Iterator to the position where the range was inserted.
-		template <forward_range_to_convertible_to<Element> Range>
-			requires(std::move_constructible<Element> && move_assignable<Element>)
+		template <forward_range_to<Element> Range>
+			requires std::move_constructible<Element> && std::is_move_assignable_v<Element>
 		iterator insert(const_iterator where, Range&& range)
-			noexcept(nothrow_movable<Element> && nothrow_forward_range_to_convertible_to<Range, Element>)
+			noexcept(std::is_nothrow_move_constructible_v<Element> && std::is_nothrow_move_assignable_v<Element> &&
+					 nothrow_forward_range_to<Range, Element>)
 		{
 			return insert(where, std::ranges::begin(range), std::ranges::end(range));
 		}
@@ -469,8 +474,9 @@ namespace tr
 		/// @pre `this->size() + init.size()` must be less than or equal to `Capacity`.
 		/// @return Iterator to the position where the list was inserted.
 		iterator insert(const_iterator where, std::initializer_list<Element> init)
-			noexcept(nothrow_movable<Element> && std::is_nothrow_copy_constructible_v<Element>)
-			requires(std::move_constructible<Element> && move_assignable<Element> && std::copy_constructible<Element>)
+			noexcept(std::is_nothrow_move_constructible_v<Element> && std::is_nothrow_move_assignable_v<Element> &&
+					 std::is_nothrow_copy_constructible_v<Element>)
+			requires std::move_constructible<Element> && std::is_move_assignable_v<Element> && std::copy_constructible<Element>
 		{
 			return insert(where, init.begin(), init.end());
 		}
@@ -482,9 +488,10 @@ namespace tr
 		/// @pre The size of the string must be less than `Capacity`.
 		/// @return Iterator to the position where the value was inserted.
 		template <typename... Args>
-			requires(std::move_constructible<Element> && move_assignable<Element> && std::constructible_from<Element, Args...>)
+			requires std::move_constructible<Element> && std::is_move_assignable_v<Element> && std::constructible_from<Element, Args...>
 		iterator emplace(const_iterator where, Args&&... args)
-			noexcept(nothrow_movable<Element> && std::is_nothrow_constructible_v<Element, Args...>)
+			noexcept(std::is_nothrow_move_constructible_v<Element> && std::is_nothrow_move_assignable_v<Element> &&
+					 std::is_nothrow_constructible_v<Element, Args...>)
 		{
 			TR_ASSERT(m_size < Capacity, "Tried to insert into an inplace vector that is already at its capacity of {}.", Capacity);
 			TR_ASSERT(where >= begin() && where <= end(), "Tried to pass an invalid iterator to inplace_vector::insert.");
@@ -504,7 +511,7 @@ namespace tr
 		/// @param where Iterator to the value to erase.
 		/// @return Iterator to the position where the character was erased.
 		iterator erase(const_iterator where) noexcept(std::is_nothrow_move_assignable_v<Element>)
-			requires(move_assignable<Element>)
+			requires std::is_move_assignable_v<Element>
 		{
 			TR_ASSERT(where >= begin() && where < end(), "Tried to pass an invalid iterator to inplace_vector::erase.");
 
@@ -520,7 +527,7 @@ namespace tr
 		/// @param last Iterator to one past the last value to erase.
 		/// @return Iterator to the position where the first character was erased.
 		iterator erase(const_iterator first, const_iterator last) noexcept(std::is_nothrow_move_assignable_v<Element>)
-			requires(move_assignable<Element>)
+			requires std::is_move_assignable_v<Element>
 		{
 			TR_ASSERT(first >= begin() && first < end(), "Tried to pass an invalid start iterator to inplace_vector::erase.");
 			TR_ASSERT(last >= begin() && last <= end(), "Tried to pass an invalid end iterator to inplace_vector::erase.");
@@ -539,7 +546,7 @@ namespace tr
 		/// @pre The size of the string must be less than `Capacity`.
 		/// @return Reference to the appended value.
 		reference push_back(const Element& value) noexcept(std::is_nothrow_copy_constructible_v<Element>)
-			requires(std::copy_constructible<Element>)
+			requires std::copy_constructible<Element>
 		{
 			return emplace_back(value);
 		}
@@ -549,7 +556,7 @@ namespace tr
 		/// @pre The size of the string must be less than `Capacity`.
 		/// @return Reference to the appended value.
 		reference push_back(Element&& value) noexcept(std::is_nothrow_move_constructible_v<Element>)
-			requires(std::move_constructible<Element>)
+			requires std::move_constructible<Element>
 		{
 			return emplace_back(std::move(value));
 		}
@@ -560,7 +567,7 @@ namespace tr
 		/// @pre The size of the string must be less than `Capacity`.
 		/// @return Reference to the emplaced value.
 		template <typename... Args>
-			requires(std::constructible_from<Element, Args...>)
+			requires std::constructible_from<Element, Args...>
 		reference emplace_back(Args&&... args) noexcept(std::is_nothrow_constructible_v<Element, Args...>)
 		{
 			return *emplace(end(), std::forward<Args>(args)...);
@@ -584,8 +591,8 @@ namespace tr
 		/// @param range Range to append.
 		/// @pre `this->size() + std::ranges::size(range)` must be less than or equal to `Capacity`.
 		/// @return Iterator to the position where the first element was appended.
-		template <forward_range_to_convertible_to<Element> Range>
-		iterator append(Range&& range) noexcept(nothrow_forward_range_to_convertible_to<Range, Element>)
+		template <forward_range_to<Element> Range>
+		iterator append(Range&& range) noexcept(nothrow_forward_range_to<Range, Element>)
 		{
 			return append(std::ranges::begin(range), std::ranges::end(range));
 		}
@@ -595,7 +602,7 @@ namespace tr
 		/// @pre `this->size() + init.size()` must be less than or equal to `Capacity`.
 		/// @return Iterator to the position where the first element was appended.
 		iterator append(std::initializer_list<Element> init) noexcept(std::is_nothrow_copy_constructible_v<Element>)
-			requires(std::copy_constructible<Element>)
+			requires std::copy_constructible<Element>
 		{
 			return append(init.begin(), init.end());
 		}
@@ -611,7 +618,7 @@ namespace tr
 		/// @param size New size of the vector.
 		/// @pre `size` must be less than or equal to `Capacity`.
 		void resize(size_type size) noexcept(std::is_nothrow_default_constructible_v<Element>)
-			requires(std::default_initializable<Element>)
+			requires std::default_initializable<Element>
 		{
 			TR_ASSERT(size <= max_size(), "Tried to resize an inplace vector with capacity {} to size {}.", max_size(), size);
 
@@ -630,7 +637,7 @@ namespace tr
 		/// @param value Value to fill the vector with.
 		/// @pre `size` must be less than or equal to `Capacity`.
 		void resize(size_type size, const Element& value) noexcept(std::is_nothrow_copy_constructible_v<Element>)
-			requires(std::copy_constructible<Element>)
+			requires std::copy_constructible<Element>
 		{
 			TR_ASSERT(size <= max_size(), "Tried to resize an inplace vector with capacity {} to size {}.", max_size(), size);
 

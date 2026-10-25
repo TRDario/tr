@@ -2,7 +2,7 @@
 /// @brief Provides `tr::iterator_interface`.
 
 #pragma once
-#include <tr/utility/concepts.hpp>
+#include <tr/utility/common.hpp>
 
 //
 
@@ -133,9 +133,7 @@ namespace tr
 		/// Synthesized pointer dereferencing operator.
 		/// @return Pointer to the dereferenced value.
 		[[nodiscard]] constexpr auto operator->() const noexcept(noexcept(*base()))
-			requires(requires {
-				{ *base() } -> lvalue_reference;
-			})
+			requires std::is_lvalue_reference_v<decltype(*base())>
 		{
 			return &*base();
 		}
