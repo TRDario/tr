@@ -1,7 +1,7 @@
 type summary add -w tr -s "(${var.x}, ${var.y})" -x "^glm::.*vec2$"
 type summary add -w tr -s "(${var.x}, ${var.y}, ${var.z})" -x "^glm::.*vec3$"
 type summary add -w tr -s "(${var.x}, ${var.y}, ${var.z}, ${var.w})" -x "^glm::.*vec4$"
-type summary add -w tr -s "${var.m_rads}rad" -x "^tr::angle$"
+type summary add -w tr -s "${var.m_rads}rad" -x "^tr::angle<.+>$"
 type summary add -w tr -s "${var.m_entries}" -x "^tr::atlas_entries<.+>$"
 type summary add -w tr -s "${var.m_ptr}" -x "^tr::basic_zstring_view<.+>$"
 type summary add -w tr -s "${var.m_value}" -x "^tr::enum_wrapper<.+>$"

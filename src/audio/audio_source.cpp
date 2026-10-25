@@ -336,21 +336,21 @@ void tr::audio_source::set_gain_outside_cone(float end_gain, fsecs time)
 
 //
 
-tr::angle tr::audio_source::inner_cone_width() const noexcept
+tr::angle<float> tr::audio_source::inner_cone_width() const noexcept
 {
 	float width;
 	context().al().get_source_property_f(context().unwrap(), unwrap(), AL_CONE_INNER_ANGLE, &width);
 	return degs(width);
 }
 
-tr::angle tr::audio_source::outer_cone_width() const noexcept
+tr::angle<float> tr::audio_source::outer_cone_width() const noexcept
 {
 	float width;
 	context().al().get_source_property_f(context().unwrap(), unwrap(), AL_CONE_OUTER_ANGLE, &width);
 	return degs(width);
 }
 
-void tr::audio_source::set_cone_widths(angle inner, angle outer) noexcept
+void tr::audio_source::set_cone_widths(tr::angle<float> inner, tr::angle<float> outer) noexcept
 {
 	TR_ASSERT(inner >= 0_deg && inner < 360_deg, "Tried to set audio source inner cone width to invalid value '{:d}'.", inner);
 	TR_ASSERT(outer >= 0_deg && outer < 360_deg, "Tried to set audio source outer cone width to invalid value '{:d}'.", outer);
@@ -360,7 +360,7 @@ void tr::audio_source::set_cone_widths(angle inner, angle outer) noexcept
 	context().al().set_source_property_f(context().unwrap(), unwrap(), AL_CONE_OUTER_ANGLE, outer.degs());
 }
 
-void tr::audio_source::set_cone_widths(angle inner, angle outer, fsecs time)
+void tr::audio_source::set_cone_widths(tr::angle<float> inner, tr::angle<float> outer, fsecs time)
 {
 	context().create_command(*this, &audio_source::set_cone_widths, std::tuple{inner_cone_width(), outer_cone_width()},
 							 std::tuple{inner, outer}, time);

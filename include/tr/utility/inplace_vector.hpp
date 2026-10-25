@@ -5,6 +5,7 @@
 #include <tr/utility/binary_io_specializations.hpp>
 #include <tr/utility/macro.hpp>
 #include <tr/utility/pointer_iterator.hpp>
+#include <tr/utility/range_concepts.hpp>
 
 //
 
@@ -114,8 +115,8 @@ namespace tr
 		/// @tparam Range Forward range type to elements converible to `Element`.
 		/// @param range Range to copy into the vector.
 		/// @pre `std::ranges::size(range)` must be less than or equal to `Capacity`.
-		template <forward_range_to_convertible_to<Element> Range>
-		[[nodiscard]] explicit inplace_vector(Range&& range) noexcept(nothrow_forward_range_to_convertible_to<Range, Element>)
+		template <forward_range_to<Element> Range>
+		[[nodiscard]] explicit inplace_vector(Range&& range) noexcept(nothrow_forward_range_to<Range, Element>)
 			: inplace_vector{std::ranges::begin(range), std::ranges::end(range)}
 		{
 		}

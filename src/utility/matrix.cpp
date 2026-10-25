@@ -20,12 +20,12 @@ glm::mat4 tr::scale_around(const glm::mat4& matrix, glm::vec3 center, glm::vec3 
 	return glm::translate(glm::scale(glm::translate(matrix, center), scale), -center);
 }
 
-glm::mat4 tr::rotate_around(const glm::mat4& matrix, glm::vec2 center, angle rotation) noexcept
+glm::mat4 tr::rotate_around(const glm::mat4& matrix, glm::vec2 center, angle<float> rotation) noexcept
 {
 	return rotate_around(matrix, {center, 0}, rotation, z_axis);
 }
 
-glm::mat4 tr::rotate_around(const glm::mat4& matrix, glm::vec3 center, angle rotation, glm::vec3 axis) noexcept
+glm::mat4 tr::rotate_around(const glm::mat4& matrix, glm::vec3 center, angle<float> rotation, glm::vec3 axis) noexcept
 {
 	return glm::translate(glm::rotate(glm::translate(matrix, center), rotation.rads(), axis), -center);
 }

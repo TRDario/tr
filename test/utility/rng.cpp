@@ -117,27 +117,12 @@ TEST_F(RngTest, FloatMinMaxDistributionIsBalanced)
 	EXPECT_NEAR(sum / 1000000, -0.5, 1e-2);
 }
 
-/// Tests for a balanced angle distribution in the range [0tr, 1tr).
-TEST_F(RngTest, AngleDistributionIsBalanced)
-{
-	using namespace tr::angle_literals;
-
-	tr::angle sum{};
-	for (int i = 0; i < 100000; ++i) {
-		const tr::angle result{rng.generate<tr::angle>()};
-		EXPECT_GE(result, 0_tr);
-		EXPECT_LT(result, 1_tr);
-		sum += result;
-	}
-	EXPECT_NEAR((sum / 100000).turns(), 0.5, 0.01);
-}
-
 /// Tests for a balanced angle distribution in the range [0tr, MAX).
 TEST_F(RngTest, AngleMaxDistributionIsBalanced)
 {
 	using namespace tr::angle_literals;
 
-	tr::angle sum{};
+	tr::angle<double> sum{};
 	for (int i = 0; i < 100000; ++i) {
 		const tr::angle result{rng.generate(180_deg)};
 		EXPECT_GE(result, 0_deg);
@@ -152,7 +137,7 @@ TEST_F(RngTest, AngleMinMaxDistributionIsBalanced)
 {
 	using namespace tr::angle_literals;
 
-	tr::angle sum{};
+	tr::angle<double> sum{};
 	for (int i = 0; i < 100000; ++i) {
 		const tr::angle result{rng.generate(0_deg, 270_deg)};
 		EXPECT_GE(result, 0_deg);

@@ -22,9 +22,9 @@ static_assert(tr::valid_format_string_for<"A: {}, B: {}, C: {}", int, float, cha
 			  "String \"A: {}, B: {}, C: {}\" should be a valid format string for <int, float, char>, but is not!");
 
 /// Tests `tr::valid_format_string_for` on a negative case.
-static_assert(!tr::valid_format_string_for<"A: {}, B: {}, C: {}", int, tr::angle, char>,
-			  "String \"A: {}, B: {}, C: {}\" should not be a valid format string for <int, tr::angle, char>, but is!");
+static_assert(!tr::valid_format_string_for<"A: {}, B: {}, C: {}", int, tr::angle<float>, char>,
+			  "String \"A: {}, B: {}, C: {}\" should not be a valid format string for <int, tr::angle<float>, char>, but is!");
 
 /// Tests `tr::valid_format_string_for` on a positive case.
-static_assert(tr::valid_format_string_for<"A: {}, B: {:d}, C: {}", int, tr::angle, char>,
-			  "String \"A: {}, B: {}, C: {}\" should be a valid format string for <int, tr::angle, char>, but is not!");
+static_assert(tr::valid_format_string_for<"A: {}, B: {:d}, C: {}", int, tr::angle<float>, char>,
+			  "String \"A: {}, B: {}, C: {}\" should be a valid format string for <int, tr::angle<float>, char>, but is not!");

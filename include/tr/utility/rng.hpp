@@ -113,26 +113,28 @@ namespace tr
 			return generate<FloatingPoint>() * (max - min) + min;
 		}
 
-		/// Generates a random angle value in the range [0tr, 1tr).
-		/// @return Random angle in the range [0tr, 1tr).
-		template <std::same_as<angle>>
-		[[nodiscard]] angle generate() noexcept
-		{
-			return turns(generate<float>());
-		}
-
 		/// Generates a random angle value in the range [0, `max`).
 		/// @param max Upper bound of the random range.
 		/// @pre `max` must be greater than 0.
 		/// @return Random angle in the range [0, `max`).
-		[[nodiscard]] angle generate(angle max) noexcept;
+		template <std::floating_point Rep>
+		[[nodiscard]] angle<Rep> generate(angle<Rep> max) noexcept
+		{
+			return rads(generate(max.rads()));
+		}
 
 		/// Generates a random angle value in the range [`min`, `max`).
 		/// @param min Lower bound of the random range.
 		/// @param max Upper bound of the random range.
 		/// @pre `min` must be less than `max`.
 		/// @return Random angle in the range [`min`, `max`).
-		[[nodiscard]] angle generate(angle min, angle max) noexcept;
+		template <std::floating_point Rep>
+		[[nodiscard]] angle<Rep> generate(angle<Rep> min, angle<Rep> max) noexcept
+		{
+			TR_ASSERT(min < max, "RNG range minimum must be less than the maximum (Currenly: {:r} !< {:r})", min, max);
+
+			return rads(generate(min.rads(), max.rads()));
+		}
 
 		/// Generates a random vector with a specific magnitude.
 		/// @param magnitude Magnitude of the vector.

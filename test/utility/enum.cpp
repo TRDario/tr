@@ -2,6 +2,7 @@
 /// @brief Tests utility/enum.hpp.
 
 #include <tr/utility/enum.hpp>
+#include <tr/utility/integer.hpp>
 
 //
 

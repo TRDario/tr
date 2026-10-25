@@ -49,7 +49,7 @@ namespace tr
 	/// @param center Point to rotate around.
 	/// @param rotation Angle of rotation.
 	/// @return Result of the transformation applied upon `matrix`.
-	[[nodiscard]] glm::mat4 rotate_around(const glm::mat4& matrix, glm::vec2 center, angle rotation) noexcept;
+	[[nodiscard]] glm::mat4 rotate_around(const glm::mat4& matrix, glm::vec2 center, angle<float> rotation) noexcept;
 
 	/// Applies a 3D rotation around a point to a matrix.
 	/// @param matrix Base matrix to apply the transformation to.
@@ -57,7 +57,7 @@ namespace tr
 	/// @param rotation Angle of rotation.
 	/// @param axis Axis of rotation.
 	/// @return Result of the transformation applied upon `matrix`.
-	[[nodiscard]] glm::mat4 rotate_around(const glm::mat4& matrix, glm::vec3 center, angle rotation, glm::vec3 axis) noexcept;
+	[[nodiscard]] glm::mat4 rotate_around(const glm::mat4& matrix, glm::vec3 center, angle<float> rotation, glm::vec3 axis) noexcept;
 
 	/// @}
 

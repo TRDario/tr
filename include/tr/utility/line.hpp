@@ -64,7 +64,7 @@ namespace tr
 	/// @param lth Angle of the first line.
 	/// @param rhs Line segment to check for intersection.
 	/// @return Intersection point of the lines, if one exists.
-	[[nodiscard]] std::optional<glm::vec2> intersection(glm::vec2 lp, angle lth, const line_segment& rhs) noexcept;
+	[[nodiscard]] std::optional<glm::vec2> intersection(glm::vec2 lp, angle<float> lth, const line_segment& rhs) noexcept;
 
 	/// Calculates the intersection point of two lines.
 	/// @param lp Point on the first line.
@@ -72,14 +72,14 @@ namespace tr
 	/// @param rp Point on the second line.
 	/// @param rth Angle of the second line.
 	/// @return Intersection point of the lines, if one exists.
-	[[nodiscard]] std::optional<glm::vec2> intersection(glm::vec2 lp, angle lth, glm::vec2 rp, angle rth) noexcept;
+	[[nodiscard]] std::optional<glm::vec2> intersection(glm::vec2 lp, angle<float> lth, glm::vec2 rp, angle<float> rth) noexcept;
 
 	/// Calculates the intersection point of two lines.
 	/// @param lp Point on the first line.
 	/// @param lth Angle of the first line.
 	/// @param ra, rb Points on the second line.
 	/// @return Intersection point of the lines, if one exists.
-	[[nodiscard]] std::optional<glm::vec2> intersection(glm::vec2 lp, angle lth, glm::vec2 ra, glm::vec2 rb) noexcept;
+	[[nodiscard]] std::optional<glm::vec2> intersection(glm::vec2 lp, angle<float> lth, glm::vec2 ra, glm::vec2 rb) noexcept;
 
 	/// Calculates the intersection point of two lines.
 	/// @param la, lb Points on the first line.

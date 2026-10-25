@@ -2,6 +2,7 @@
 /// @brief Provides `tr::render_target`.
 
 #pragma once
+#include <tr/utility/integer.hpp>
 #include <tr/utility/rectangle.hpp>
 #include <tr/utility/ref.hpp>
 

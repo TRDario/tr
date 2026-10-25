@@ -31,7 +31,7 @@ namespace tr
 	/// @param r Pixel radius of the arc.
 	/// @param sizeth Angle size of the arc.
 	/// @return Number of segments needed to draw a smooth arc.
-	[[nodiscard]] inline usize smooth_arc_vertices(float r, angle sizeth) noexcept
+	[[nodiscard]] inline usize smooth_arc_vertices(float r, angle<double> sizeth) noexcept
 	{
 		TR_ASSERT(r > 0, "Tried to pass a negative radius to smooth_arc_vertices.");
 		TR_ASSERT(sizeth >= 0_tr && sizeth <= 1_tr, "Tried to pass an arc size of more than one turn to smooth_arc_vertices.");
@@ -274,7 +274,7 @@ namespace tr
 	/// @pre `out` needs to have space for 4 vertices.
 	/// @return Iterator to the end of the written range.
 	template <std::output_iterator<glm::vec2> Iterator>
-	Iterator fill_rectangle_vertices(Iterator out, glm::vec2 pos, glm::vec2 anchor, glm::vec2 size, angle rotation)
+	Iterator fill_rectangle_vertices(Iterator out, glm::vec2 pos, glm::vec2 anchor, glm::vec2 size, angle<float> rotation)
 	{
 		if (rotation == 0_rad) {
 			return fill_rectangle_vertices(out, {pos - anchor, size});
@@ -293,7 +293,7 @@ namespace tr
 	/// @param rotation Rotation of the rectangle.
 	/// @pre `out` must have a size of 4.
 	template <sized_output_range<glm::vec2> Range>
-	void fill_rectangle_vertices(Range&& out, glm::vec2 pos, glm::vec2 anchor, glm::vec2 size, angle rotation)
+	void fill_rectangle_vertices(Range&& out, glm::vec2 pos, glm::vec2 anchor, glm::vec2 size, angle<float> rotation)
 	{
 		TR_ASSERT(std::size(out) == 4, "Tried to fill a range of size {} with rectangle vertices", std::size(out));
 
@@ -371,7 +371,8 @@ namespace tr
 	/// @pre `out` needs to have space for 8 vertices.
 	/// @return Iterator to the end of the written range.
 	template <std::output_iterator<glm::vec2> Iterator>
-	Iterator fill_rectangle_outline_vertices(Iterator out, glm::vec2 pos, glm::vec2 anchor, glm::vec2 size, angle rotation, float thickness)
+	Iterator fill_rectangle_outline_vertices(Iterator out, glm::vec2 pos, glm::vec2 anchor, glm::vec2 size, angle<float> rotation,
+											 float thickness)
 	{
 		if (rotation == 0_rad) {
 			return fill_rectangle_outline_vertices(out, pos - anchor, size, thickness);
@@ -391,7 +392,8 @@ namespace tr
 	/// @param thickness Thickness of the rectangle outline.
 	/// @pre `out` must have a size of 8.
 	template <sized_output_range<glm::vec2> Range>
-	void fill_rectangle_outline_vertices(Range&& out, glm::vec2 pos, glm::vec2 anchor, glm::vec2 size, angle rotation, float thickness)
+	void fill_rectangle_outline_vertices(Range&& out, glm::vec2 pos, glm::vec2 anchor, glm::vec2 size, angle<float> rotation,
+										 float thickness)
 	{
 		TR_ASSERT(std::size(out) == 8, "Tried to fill a range of size {} with rectangle outline vertices", std::size(out));
 
@@ -410,7 +412,7 @@ namespace tr
 	/// @pre `out` needs to have space for `vertices` vertices.
 	/// @return Iterator to the end of the written range.
 	template <std::output_iterator<glm::vec2> Iterator>
-	Iterator fill_arc_vertices(Iterator out, usize vertices, circle circle, angle start, angle size)
+	Iterator fill_arc_vertices(Iterator out, usize vertices, circle circle, angle<float> start, angle<float> size)
 	{
 		angle dth{size / vertices};
 		float dsin{dth.sin()};
@@ -430,7 +432,7 @@ namespace tr
 	/// @param start Starting angle of the arc on the circle.
 	/// @param size Angle size of the arc.
 	template <sized_output_range<glm::vec2> Range>
-	void fill_arc_vertices(Range&& out, circle circle, angle start, angle size)
+	void fill_arc_vertices(Range&& out, circle circle, angle<float> start, angle<float> size)
 	{
 		fill_arc_vertices(std::begin(out), std::size(out), circle, start, size);
 	}
@@ -444,7 +446,7 @@ namespace tr
 	/// @pre `out` needs to have space for `vertices` vertices.
 	/// @return Iterator to the end of the written range.
 	template <std::output_iterator<glm::vec2> Iterator>
-	Iterator fill_regular_polygon_vertices(Iterator out, usize vertices, circle circle, angle rotation)
+	Iterator fill_regular_polygon_vertices(Iterator out, usize vertices, circle circle, angle<float> rotation)
 	{
 		return fill_arc_vertices(out, vertices, circle, rotation, 1_tr);
 	}
@@ -455,7 +457,7 @@ namespace tr
 	/// @param circle Circumscribed circle of the polygon.
 	/// @param rotation Rotation of the polygon.
 	template <sized_output_range<glm::vec2> Range>
-	void fill_regular_polygon_vertices(Range&& out, circle circle, angle rotation)
+	void fill_regular_polygon_vertices(Range&& out, circle circle, angle<float> rotation)
 	{
 		fill_regular_polygon_vertices(std::begin(out), std::size(out), circle, rotation);
 	}
@@ -495,7 +497,7 @@ namespace tr
 	/// @pre `out` needs to have space for `vertices * 2` vertices.
 	/// @return Iterator to the end of the written range.
 	template <std::output_iterator<glm::vec2> Iterator>
-	Iterator fill_regular_polygon_outline_vertices(Iterator out, usize vertices, circle circle, angle rotation, float thickness)
+	Iterator fill_regular_polygon_outline_vertices(Iterator out, usize vertices, circle circle, angle<float> rotation, float thickness)
 	{
 		out = fill_regular_polygon_vertices(out, vertices, {circle.center, circle.radius + thickness / 2}, rotation);
 		return fill_regular_polygon_vertices(out, vertices, {circle.center, circle.radius - thickness / 2}, rotation);
@@ -508,7 +510,7 @@ namespace tr
 	/// @param rotation Rotation of the polygon.
 	/// @param thickness Thickness of the polygon outline.
 	template <sized_output_range<glm::vec2> Range>
-	void fill_regular_polygon_outline_vertices(Range&& out, circle circle, angle rotation, float thickness)
+	void fill_regular_polygon_outline_vertices(Range&& out, circle circle, angle<float> rotation, float thickness)
 	{
 		fill_regular_polygon_outline_vertices(std::begin(out), std::size(out) / 2, circle, rotation, thickness);
 	}

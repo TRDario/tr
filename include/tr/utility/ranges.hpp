@@ -164,7 +164,7 @@ namespace tr
 	/// @return Span of `const Element`.
 	template <typename Element, typename Range>
 		requires std::is_standard_layout_v<Element> && std::ranges::contiguous_range<Range> && std::ranges::borrowed_range<Range> &&
-				 std::same_as<std::byte, std::remove_reference_t<std::ranges::range_reference_t<Range>>>
+				 std::same_as<const std::byte, std::add_const_t<std::remove_reference_t<std::ranges::range_reference_t<Range>>>>
 	[[nodiscard]] auto as_objects(Range&& bytes) noexcept
 	{
 		const auto span{tr::range_bytes(bytes)};

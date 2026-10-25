@@ -56,7 +56,7 @@ TEST(MatrixTest, CreatesCentered3DScalingTransformation)
 /// Tests creating a 2D rotation transformation centered on a point.
 TEST(MatrixTest, CreatesCentered2DRotationTransformation)
 {
-	const glm::mat4 transform{tr::rotate_around(glm::mat4{1.0f}, {250, 250}, 90_deg)};
+	const glm::mat4 transform{tr::rotate_around(glm::mat4{1.0f}, {250, 250}, 90_degf)};
 
 	const glm::vec2 transformed0{transform * glm::vec2{200, 250}};
 	EXPECT_FLOAT_EQ(transformed0.x, 250);
@@ -70,7 +70,7 @@ TEST(MatrixTest, CreatesCentered2DRotationTransformation)
 /// Tests creating a 3D rotation transformation centered on a point.
 TEST(MatrixTest, CreatesCentered3DRotationTransformation)
 {
-	const glm::mat4 transform{tr::rotate_around(glm::mat4{1.0f}, {100, 100, 100}, 180_deg, tr::x_axis)};
+	const glm::mat4 transform{tr::rotate_around(glm::mat4{1.0f}, {100, 100, 100}, 180_degf, tr::x_axis)};
 
 	const glm::vec3 transformed0{transform * glm::vec3{100, 100, 200}};
 	EXPECT_FLOAT_EQ(transformed0.x, 100);
@@ -86,7 +86,7 @@ TEST(MatrixTest, CreatesCentered3DRotationTransformation)
 /// Tests multiplying matrices with vectors.
 TEST(MatrixTest, MultipliesVectors)
 {
-	const glm::mat4 transform{tr::rotate_around(glm::mat4{1.0f}, {100, 100, 100}, 45_deg, tr::y_axis)};
+	const glm::mat4 transform{tr::rotate_around(glm::mat4{1.0f}, {100, 100, 100}, 45_degf, tr::y_axis)};
 
 	const glm::vec4 regular_operator0{transform * glm::vec4{250, 250, 0, 1}};
 	const glm::vec2 custom_operator0{transform * glm::vec2{250, 250}};

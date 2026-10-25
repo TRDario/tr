@@ -14,13 +14,13 @@ namespace tr
 	/// Creates a normalized vector from an angle value.
 	/// @param th Angle defining the direction the vector will be pointing in.
 	/// @return Normalized vector pointing in the direction defined by `th`.
-	[[nodiscard]] glm::vec2 normal(angle th) noexcept;
+	[[nodiscard]] glm::vec2 normal(angle<float> th) noexcept;
 
 	/// Creates a vector from a magnitude and angle.
 	/// @param mag Magnitude of the vector.
 	/// @param th Angle defining the direction the vector will be pointing in.
 	/// @return Vector pointing in the direction defined by `th` with magnitude `mag`.
-	[[nodiscard]] glm::vec2 magth(float mag, angle th) noexcept;
+	[[nodiscard]] glm::vec2 magth(float mag, angle<float> th) noexcept;
 
 	//
 

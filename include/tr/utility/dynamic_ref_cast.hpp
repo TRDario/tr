@@ -16,7 +16,7 @@ namespace tr
 	/// @tparam To Type to cast to.
 	/// @tparam From Type to cast from. `To` must be derived from `From`.
 	/// @param ref Reference to cast.
-	/// @return Reference casted to `To`, or `nullopt` if the cast was not successful.
+	/// @return Reference cast to `To`, or `nullopt` if the cast was not successful.
 	template <typename To, typename From>
 		requires(std::derived_from<To, From>)
 	[[nodiscard]] constexpr tr::opt_ref<To> dynamic_ref_cast(From& ref) noexcept
@@ -28,7 +28,7 @@ namespace tr
 	/// @tparam To Type to cast to.
 	/// @tparam From Type to cast from. `To` must be derived from `From`.
 	/// @param ref Reference to cast.
-	/// @return Reference casted to `To`, or `nullopt` if the cast was not successful.
+	/// @return Reference cast to `To`, or `nullopt` if the cast was not successful.
 	template <typename To, typename From>
 		requires(std::derived_from<To, From>)
 	[[nodiscard]] constexpr tr::opt_ref<To> dynamic_ref_cast(ref<From> ref) noexcept
@@ -40,7 +40,7 @@ namespace tr
 	/// @tparam To Type to cast to.
 	/// @tparam From Type to cast from. `To` must be derived from `From`.
 	/// @param ref Optional reference to cast.
-	/// @return Reference casted to `To`, or `nullopt` if the cast was not successful or `ref` was empty.
+	/// @return Reference cast to `To`, or `nullopt` if the cast was not successful or `ref` was empty.
 	template <typename To, typename From>
 		requires(std::derived_from<To, From>)
 	[[nodiscard]] constexpr tr::opt_ref<To> dynamic_ref_cast(opt_ref<From> ref) noexcept

@@ -183,14 +183,14 @@ TEST_F(AudioSourceTests, ControlsGainOutsideCone)
 /// Tests controlling the cone widths of an audio source.
 TEST_F(AudioSourceTests, ControlsConeWidths)
 {
-	source->set_cone_widths(60_deg, 120_deg);
-	EXPECT_EQ(source->inner_cone_width(), 60_deg);
-	EXPECT_EQ(source->outer_cone_width(), 120_deg);
+	source->set_cone_widths(60_degf, 120_degf);
+	EXPECT_EQ(source->inner_cone_width(), 60_degf);
+	EXPECT_EQ(source->outer_cone_width(), 120_degf);
 
-	source->set_cone_widths(120_deg, 240_deg);
+	source->set_cone_widths(120_degf, 240_degf);
 	std::this_thread::sleep_for(0.2s);
-	EXPECT_EQ(source->inner_cone_width(), 120_deg);
-	EXPECT_EQ(source->outer_cone_width(), 240_deg);
+	EXPECT_EQ(source->inner_cone_width(), 120_degf);
+	EXPECT_EQ(source->outer_cone_width(), 240_degf);
 }
 
 /// Tests controlling the position of an audio source.

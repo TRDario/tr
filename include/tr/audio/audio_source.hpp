@@ -8,11 +8,6 @@
 #include <tr/utility/inplace_vector.hpp>
 #include <tr/utility/optional_variant.hpp>
 
-namespace tr
-{
-	class angle;
-} // namespace tr
-
 //
 
 namespace tr
@@ -241,22 +236,22 @@ namespace tr
 
 		/// Gets the width of the inner cone of the source (where no direction attenuation is done).
 		/// @return Inner cone width of the source.
-		[[nodiscard]] angle inner_cone_width() const noexcept;
+		[[nodiscard]] angle<float> inner_cone_width() const noexcept;
 
 		/// Gets the width of the outer cone of the source (where direction attenuation is done).
 		/// @return Outer cone width of the source.
-		[[nodiscard]] angle outer_cone_width() const noexcept;
+		[[nodiscard]] angle<float> outer_cone_width() const noexcept;
 
 		/// Sets the width of the inner and outer cones of the source.
 		/// @param inner Inner cone width of the source.
 		/// @param outer Outer cone width of the source.
-		void set_cone_widths(angle inner, angle outer) noexcept;
+		void set_cone_widths(angle<float> inner, angle<float> outer) noexcept;
 
 		/// Sets the width of the inner and outer cones of the source over time.
 		/// @param inner Target inner cone width of the source.
 		/// @param outer Target outer cone width of the source.
 		/// @param time Transition time.
-		void set_cone_widths(angle inner, angle outer, fsecs time);
+		void set_cone_widths(angle<float> inner, angle<float> outer, fsecs time);
 
 		/// @}
 		/// @name Position

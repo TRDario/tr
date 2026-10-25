@@ -3,6 +3,7 @@
 
 #pragma once
 #include <tr/sysgfx/pixel_format.hpp>
+#include <tr/utility/integer.hpp>
 #include <tr/utility/rgba.hpp>
 
 //

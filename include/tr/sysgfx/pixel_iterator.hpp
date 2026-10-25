@@ -3,6 +3,7 @@
 
 #pragma once
 #include <tr/sysgfx/pixel_format.hpp>
+#include <tr/utility/integer.hpp>
 #include <tr/utility/iterator_interface.hpp>
 #include <tr/utility/opt_ref.hpp>
 

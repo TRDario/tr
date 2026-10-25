@@ -71,9 +71,8 @@ namespace tr
 	/// @param mod Divisor value.
 	/// @return `v % mod`.
 	template <typename T1, typename T2>
-		requires(arithmetic<T1> && arithmetic<T2>)
 	[[nodiscard]] constexpr auto mod(T1 v, T2 mod)
-		requires arithmetic<T1> && arithmetic<T2> || requires { v % mod; }
+		requires requires { v % mod; } || (arithmetic<T1> && arithmetic<T2>)
 	{
 		if constexpr ((std::floating_point<T1> || std::floating_point<T2>) && std::is_arithmetic_v<T1> && std::is_arithmetic_v<T2>) {
 			return static_cast<std::common_type_t<T1, T2>>(v) - static_cast<i64>(v / mod) * mod;
@@ -91,7 +90,7 @@ namespace tr
 	/// @return Euclidian `v % mod`.
 	template <typename T1, typename T2>
 	[[nodiscard]] constexpr auto eucmod(T1 v, T2 mod)
-		requires arithmetic<T1> && arithmetic<T2> || requires { v % mod; }
+		requires requires { v % mod; } || (arithmetic<T1> && arithmetic<T2>)
 	{
 		const auto normal_mod{tr::mod(v, mod)};
 		return normal_mod >= decltype(normal_mod){} ? normal_mod : normal_mod + mod;
@@ -103,8 +102,8 @@ namespace tr
 	/// @param x, y Sample values.
 	/// @param a Interpolation factor.
 	/// @return `a + t * (b − a)`.
-	template <typename T, typename Ratio>
-	[[nodiscard]] constexpr T lerp(const T& x, const T& y, Ratio a) noexcept(noexcept(x * (1 - a) + y * a))
+	template <typename X, typename Y, typename A>
+	[[nodiscard]] constexpr auto lerp(const X& x, const Y& y, A a) noexcept(noexcept(x * (1 - a) + y * a))
 		requires requires { x * (1 - a) + y * a; }
 	{
 		return x * (1 - a) + y * a;

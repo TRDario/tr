@@ -3,6 +3,7 @@
 
 #pragma once
 #include <tr/utility/binary_io_specializations.hpp>
+#include <tr/utility/iterator_concepts.hpp>
 #include <tr/utility/macro.hpp>
 #include <tr/utility/pointer_iterator.hpp>
 

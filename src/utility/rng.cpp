@@ -38,15 +38,3 @@ int tr::rng::generate_sign() noexcept
 {
 	return generate<bool>() * 2 - 1;
 }
-
-tr::angle tr::rng::generate(angle max) noexcept
-{
-	return rads(generate(max.rads()));
-}
-
-tr::angle tr::rng::generate(angle min, angle max) noexcept
-{
-	TR_ASSERT(min < max, "RNG range minimum must be less than the maximum (Currenly: {:r} !< {:r})", min, max);
-
-	return rads(generate(min.rads(), max.rads()));
-}

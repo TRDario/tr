@@ -133,5 +133,5 @@ namespace tr::internal
 	};
 
 	/// Generic audio command.
-	using generic_audio_command = variant<audio_command<float>, audio_command<angle, angle>, audio_command<glm::vec3>>;
+	using generic_audio_command = variant<audio_command<float>, audio_command<angle<float>, angle<float>>, audio_command<glm::vec3>>;
 } // namespace tr::internal
