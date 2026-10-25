@@ -173,7 +173,7 @@ namespace tr
 		/// @param offset Index of the character within the string.
 		/// @pre `offset` must be less than the size of the string.
 		/// @return Reference to a character within the string.
-		[[nodiscard]] constexpr reference operator[](size_type offset) noexcept
+		[[nodiscard]] constexpr reference at(size_type offset) noexcept
 		{
 			TR_ASSERT(offset < m_size, "Tried to get out-of-bounds element {} in inplace string of size {}.", offset, m_size);
 
@@ -184,11 +184,29 @@ namespace tr
 		/// @param offset Index of the character within the string.
 		/// @pre `offset` must be less than the size of the string.
 		/// @return Reference to a character within the string.
-		[[nodiscard]] constexpr const_reference operator[](size_type offset) const noexcept
+		[[nodiscard]] constexpr const_reference at(size_type offset) const noexcept
 		{
 			TR_ASSERT(offset < m_size, "Tried to get out-of-bounds element {} in inplace string of size {}.", offset, m_size);
 
 			return m_buffer[offset];
+		}
+
+		/// Gets a reference to a character in the string.
+		/// @param offset Index of the character within the string.
+		/// @pre `offset` must be less than the size of the string.
+		/// @return Reference to a character within the string.
+		[[nodiscard]] constexpr reference operator[](size_type offset) noexcept
+		{
+			return at(offset);
+		}
+
+		/// Gets a reference to a character in the string.
+		/// @param offset Index of the character within the string.
+		/// @pre `offset` must be less than the size of the string.
+		/// @return Reference to a character within the string.
+		[[nodiscard]] constexpr const_reference operator[](size_type offset) const noexcept
+		{
+			return at(offset);
 		}
 
 		/// Gets a reference to the first character in the string.
@@ -198,7 +216,7 @@ namespace tr
 		{
 			TR_ASSERT(!empty(), "Tried to get front element of an empty inplace string.");
 
-			return *begin();
+			return m_buffer[0];
 		}
 
 		/// Gets a reference to the first character in the string.
@@ -208,7 +226,7 @@ namespace tr
 		{
 			TR_ASSERT(!empty(), "Tried to get front element of an empty inplace string.");
 
-			return *begin();
+			return m_buffer[0];
 		}
 
 		/// Gets a reference to the last character in the string.
@@ -218,7 +236,7 @@ namespace tr
 		{
 			TR_ASSERT(!empty(), "Tried to get back element of an empty inplace string.");
 
-			return *std::prev(end());
+			return m_buffer[size() - 1];
 		}
 
 		/// Gets a reference to the last character in the string.
@@ -228,7 +246,7 @@ namespace tr
 		{
 			TR_ASSERT(!empty(), "Tried to get back element of an empty inplace string.");
 
-			return *std::prev(end());
+			return m_buffer[size() - 1];
 		}
 
 		/// Gets a pointer to the data of the string.
@@ -440,7 +458,7 @@ namespace tr
 			TR_ASSERT(where >= begin() && where <= end(), "Tried to pass an invalid iterator to basic_inplace_string::insert.");
 
 			const iterator mut_where{begin() + (where - begin())};
-			std::ranges::copy_backward(begin() + mut_where, end(), end() + str.size());
+			std::ranges::copy_backward(mut_where, end(), end() + str.size());
 			std::ranges::copy(str, mut_where);
 			m_size = m_size + str.size();
 			return mut_where;
@@ -530,6 +548,29 @@ namespace tr
 	/// @}
 } // namespace tr
 
+//
+
+/// Formatter for inplace strings.
+/// @tparam CharT Character type used by the string.
+/// @tparam Capacity Maximum capacity of the string.
+/// @tparam Traits Character traits used by the string.
+template <typename CharT, tr::usize Capacity, typename Traits>
+struct std::formatter<tr::basic_inplace_string<CharT, Capacity, Traits>, CharT>
+	: std::formatter<std::basic_string_view<CharT, Traits>, CharT>
+{
+};
+
+#ifndef TR_DOXYGEN
+/// Inplace string hasher.
+/// @tparam CharT Character type used by the string.
+/// @tparam Capacity Maximum capacity of the string.
+/// @tparam Traits Character traits used by the string.
+template <typename CharT, tr::usize Capacity, typename Traits>
+struct boost::hash<tr::basic_inplace_string<CharT, Capacity, Traits>> : boost::hash<std::basic_string_view<CharT, Traits>>
+{
+};
+#endif
+
 /// inplace string binary reader.
 /// @tparam CharT Character type used by the string.
 /// @tparam Capacity Maximum capacity of the string.
@@ -562,14 +603,4 @@ struct tr::binary_writer<tr::basic_inplace_string<CharT, Capacity, Traits>>
 		write_binary(os, in.size());
 		write_binary(os, std::span{in});
 	}
-};
-
-/// Formatter for inplace strings.
-/// @tparam CharT Character type used by the string.
-/// @tparam Capacity Maximum capacity of the string.
-/// @tparam Traits Character traits used by the string.
-template <typename CharT, tr::usize Capacity, typename Traits>
-struct std::formatter<tr::basic_inplace_string<CharT, Capacity, Traits>, CharT>
-	: std::formatter<std::basic_string_view<CharT, Traits>, CharT>
-{
 };

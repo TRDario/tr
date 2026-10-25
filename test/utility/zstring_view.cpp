@@ -74,7 +74,7 @@ TEST(ZstringViewTest, Compares)
 }
 
 /// Tests iterating through a NUL-terminated string view.
-TEST(ZstringViewTest, IsIterable)
+TEST(ZstringViewTest, Iterates)
 {
 	const tr::zstring_view view{"This is a test!"};
 
@@ -133,7 +133,7 @@ TEST(ZstringViewTest, Formats)
 }
 
 /// Tests binary-writing a NUL-terminated string view.
-TEST(ZstringViewTest, IsBinaryWritable)
+TEST(ZstringViewTest, WritesBinary)
 {
 	std::stringstream stream;
 	tr::write_binary(stream, "test"_zsv);

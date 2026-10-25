@@ -24,6 +24,7 @@ add_executable(
 	hash_map.cpp
 	iostream.cpp
 	iterator_concepts.cpp
+	inplace_string.cpp
 	inplace_vector.cpp
 	iterator_interface.cpp
 	line.cpp
