@@ -27,7 +27,7 @@ namespace tr
 		/// @name Conversion operators
 		/// @{
 
-		/// Casts the line segment to a line segment represented with another datatype.
+		/// Casts the line segment to a line segment represented with another representation type.
 		/// @tparam TargetRep Representation type to cast to.
 		/// @return Cast line segment value.
 		template <std::floating_point TargetRep>
@@ -63,7 +63,7 @@ namespace tr
 		/// @tparam PointRep Representation type of the point to project.
 		/// @param point Point to project onto the line.
 		/// @return Projection of `point` onto the line.
-		template <std::floating_point PointRep>
+		template <arithmetic PointRep>
 		[[nodiscard]] constexpr glm::tvec2<std::common_type_t<Rep, PointRep>> closest_point(glm::tvec2<PointRep> point) const noexcept
 		{
 			using CommonRep = std::common_type_t<Rep, PointRep>;
