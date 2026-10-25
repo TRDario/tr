@@ -47,6 +47,7 @@
 #include <tr/utility/optional_result.hpp>           // IWYU pragma: export
 #include <tr/utility/optional_variant.hpp>          // IWYU pragma: export
 #include <tr/utility/out_handle.hpp>                // IWYU pragma: export
+#include <tr/utility/pack_traits.hpp>               // IWYU pragma: export
 #include <tr/utility/pointer_iterator.hpp>          // IWYU pragma: export
 #include <tr/utility/polygon.hpp>                   // IWYU pragma: export
 #include <tr/utility/ranges.hpp>                    // IWYU pragma: export

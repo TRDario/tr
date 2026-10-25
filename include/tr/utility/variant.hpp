@@ -2,9 +2,9 @@
 /// @brief Provides variant utilities.
 
 #pragma once
-#include <tr/utility/concepts.hpp>
 #include <tr/utility/copy_qualifiers.hpp>
 #include <tr/utility/opt_ref.hpp>
+#include <tr/utility/pack_traits.hpp>
 #include <tr/utility/type_name.hpp>
 
 //

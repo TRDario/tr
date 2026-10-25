@@ -35,6 +35,7 @@ add_executable(
 	optional_variant.cpp
 	optional_result.cpp
 	out_handle.cpp
+	pack_traits.cpp
 	pointer_iterator.cpp
 	polygon.cpp
 	ranges.cpp

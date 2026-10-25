@@ -5,6 +5,7 @@
 #include <tr/sysgfx/keyboard.hpp>
 #include <tr/sysgfx/mouse.hpp>
 #include <tr/sysgfx/window_view.hpp>
+#include <tr/utility/pack_traits.hpp>
 
 union SDL_Event;
 namespace tr
