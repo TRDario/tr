@@ -3,6 +3,7 @@
 
 #pragma once
 #include <tr/utility/format_concepts.hpp>
+#include <tr/utility/hash_concepts.hpp>
 #include <tr/utility/inplace_string.hpp>
 #include <tr/utility/opt_ref.hpp>
 #include <tr/utility/type_name.hpp>

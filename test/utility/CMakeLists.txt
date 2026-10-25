@@ -19,6 +19,7 @@ add_executable(
 	exception.cpp
 	format_concepts.cpp
 	handle.cpp
+	hash_concepts.cpp
 	hash_map.cpp
 	iostream.cpp
 	iterator_concepts.cpp

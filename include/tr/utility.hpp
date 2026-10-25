@@ -25,6 +25,7 @@
 #include <tr/utility/exception.hpp>                 // IWYU pragma: export
 #include <tr/utility/format_concepts.hpp>           // IWYU pragma: export
 #include <tr/utility/handle.hpp>                    // IWYU pragma: export
+#include <tr/utility/hash_concepts.hpp>             // IWYU pragma: export
 #include <tr/utility/hash_map.hpp>                  // IWYU pragma: export
 #include <tr/utility/hsv.hpp>                       // IWYU pragma: export
 #include <tr/utility/inplace_string.hpp>            // IWYU pragma: export
