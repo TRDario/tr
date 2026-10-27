@@ -140,7 +140,7 @@ namespace tr
 		using pointer = const value_type*;
 
 		/// Difference type used by the iterator.
-		using difference_type = ssize;
+		using difference_type = int;
 
 		/// @cond implementation_details
 		/// @name Constructors and destructors

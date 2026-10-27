@@ -56,15 +56,16 @@ void tr::shader::find_uniforms(const internal::opengl& gl)
 	for (int i = 0; i < uniforms; ++i) {
 		std::array<int, uniform_properties.size()> values;
 		const auto& [block_index, var_type, array_size, name_length, location]{values};
-		gl.get_program_resource_iv(unwrap(), GL_UNIFORM, i, uniform_properties.size(), uniform_properties.data(), values.size(), NULL,
-								   values.data());
+		gl.get_program_resource_iv(unwrap(), GL_UNIFORM, i, static_cast<int>(uniform_properties.size()), uniform_properties.data(),
+								   values.size(), NULL, values.data());
 
 		if (block_index != -1) {
 			continue;
 		}
 
 		std::string uniform_name_buffer(name_length, '\0');
-		gl.get_program_resource_name(unwrap(), GL_UNIFORM, i, uniform_name_buffer.size(), NULL, uniform_name_buffer.data());
+		gl.get_program_resource_name(unwrap(), GL_UNIFORM, i, static_cast<int>(uniform_name_buffer.size()), NULL,
+									 uniform_name_buffer.data());
 		m_uniforms.insert({
 			static_cast<unsigned int>(location),
 			{std::move(uniform_name_buffer), static_cast<internal::glsl_type>(var_type), array_size},
@@ -82,11 +83,12 @@ void tr::shader::find_inputs(const internal::opengl& gl)
 	for (int i = 0; i < inputs; ++i) {
 		std::array<int, input_properties.size()> values;
 		const auto& [var_type, array_size, name_length, location]{values};
-		gl.get_program_resource_iv(unwrap(), GL_PROGRAM_INPUT, i, input_properties.size(), input_properties.data(), values.size(), NULL,
-								   values.data());
+		gl.get_program_resource_iv(unwrap(), GL_PROGRAM_INPUT, i, static_cast<int>(input_properties.size()), input_properties.data(),
+								   values.size(), NULL, values.data());
 
 		std::string input_name_buffer(name_length, '\0');
-		gl.get_program_resource_name(unwrap(), GL_PROGRAM_INPUT, i, input_name_buffer.size(), NULL, input_name_buffer.data());
+		gl.get_program_resource_name(unwrap(), GL_PROGRAM_INPUT, i, static_cast<int>(input_name_buffer.size()), NULL,
+									 input_name_buffer.data());
 		if (!input_name_buffer.starts_with("gl_")) {
 			m_inputs.insert({
 				static_cast<unsigned int>(location),
@@ -137,7 +139,7 @@ void tr::shader::find_outputs(const internal::opengl& gl)
 		TR_ASSERT(valid(), "Tried to set a uniform on a shader in an invalid state.");                                                     \
 		const opt_ref<internal::glsl_variable> uniform{try_get(m_uniforms, index)};                                                        \
 		TR_ASSERT(uniform.has_value(), "Tried to set uniform with invalid index '{}' in shader {}.", index, *this);                        \
-		TR_ASSERT(uniform->type == internal::as_glsl_type<target_type> && uniform->array_size == int(value.size()),                        \
+		TR_ASSERT(uniform->type == internal::as_glsl_type<target_type> && uniform->array_size == static_cast<int>(value.size()),           \
 				  "Tried to set uniform with signature '{}' in shader {} with a value of type '{}[{}]'.", *uniform, *this,                 \
 				  internal::as_glsl_type<target_type>, value.size());                                                                      \
 	} while (0)

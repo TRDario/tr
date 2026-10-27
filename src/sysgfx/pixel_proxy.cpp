@@ -50,7 +50,7 @@ tr::pixel_format tr::pixel_proxy::format() const noexcept
 	return m_format;
 }
 
-tr::pixel_proxy::operator tr::rgba<u8>() const noexcept
+tr::pixel_proxy::operator tr::rgba<tr::u8>() const noexcept
 {
 	u32 value{0};
 	std::memcpy(&value, m_data, pixel_bytes(m_format));
