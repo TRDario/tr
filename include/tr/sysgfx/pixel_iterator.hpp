@@ -30,6 +30,12 @@ namespace tr
 		/// Difference type used by the iterator.
 		using difference_type = int;
 
+		/// Iterator category of the iterator.
+		using iterator_category = std::random_access_iterator_tag;
+
+		/// Iterator concept of the iterator.
+		using iterator_concept = std::random_access_iterator_tag;
+
 		/// @cond implementation_details
 		/// @name Constructors and destructors
 		/// @{
@@ -141,6 +147,12 @@ namespace tr
 
 		/// Difference type used by the iterator.
 		using difference_type = int;
+
+		/// Iterator category of the iterator.
+		using iterator_category = std::random_access_iterator_tag;
+
+		/// Iterator concept of the iterator.
+		using iterator_concept = std::random_access_iterator_tag;
 
 		/// @cond implementation_details
 		/// @name Constructors and destructors

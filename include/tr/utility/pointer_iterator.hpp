@@ -29,8 +29,11 @@ namespace tr
 		/// Reference type used by the iterator.
 		using reference = value_type&;
 
-		/// Iterator category the iterator belongs to.
-		using iterator_category = std::contiguous_iterator_tag;
+		/// Iterator category of the iterator.
+		using iterator_category = std::random_access_iterator_tag;
+
+		/// Iterator concept of the iterator.
+		using iterator_concept = std::contiguous_iterator_tag;
 
 		//
 

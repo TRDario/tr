@@ -33,6 +33,12 @@ namespace tr
 		/// Differenec type used by the iterator.
 		using difference_type = std::ptrdiff_t;
 
+		/// Iterator category of the iterator.
+		using iterator_category = std::forward_iterator_tag;
+
+		/// Iterator concept of the iterator.
+		using iterator_concept = std::forward_iterator_tag;
+
 		/// @name Constructors and destructors
 		/// @{
 

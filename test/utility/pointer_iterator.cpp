@@ -26,9 +26,6 @@ static_assert(std::same_as<test_pointer_iterator::pointer, int*>);
 /// Tests the pointer iterator's reference type.
 static_assert(std::same_as<test_pointer_iterator::reference, int&>);
 
-/// Tests the pointer iterator's iterator category.
-static_assert(std::same_as<test_pointer_iterator::iterator_category, std::contiguous_iterator_tag>);
-
 /// Tests that the derived iterator models a contiguous iterator.
 static_assert(std::contiguous_iterator<test_pointer_iterator>);
 

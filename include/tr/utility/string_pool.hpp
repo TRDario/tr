@@ -25,8 +25,11 @@ namespace tr
 			/// Difference type used by the iterator.
 			using difference_type = std::ptrdiff_t;
 
-			/// Category of the iterator.
+			/// Iterator category of the iterator.
 			using iterator_category = std::bidirectional_iterator_tag;
+
+			/// Iterator concept of the iterator.
+			using iterator_concept = std::bidirectional_iterator_tag;
 
 			/// @cond Implementation details
 			/// @name Constructors and destructors
