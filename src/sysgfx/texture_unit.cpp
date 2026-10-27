@@ -12,14 +12,14 @@ tr::internal::texture_unit::texture_unit(graphics_context& context) noexcept
 {
 }
 
-void tr::internal::texture_unit::deleter::operator()(unsigned int id) const noexcept
+void tr::internal::texture_unit::deleter::operator()(int id) const noexcept
 {
 	context->free_texture_unit(id);
 }
 
 //
 
-unsigned int tr::internal::texture_unit::id() const noexcept
+int tr::internal::texture_unit::id() const noexcept
 {
 	return m_handle.get();
 }
@@ -29,5 +29,5 @@ unsigned int tr::internal::texture_unit::id() const noexcept
 void tr::internal::texture_unit::set(texture_view texture) noexcept
 {
 	const unsigned int texture_id{texture.unwrap()};
-	m_handle.get_deleter().context->gl().bind_textures(m_handle.get(), 1, &texture_id);
+	m_handle.get_deleter().context->gl().bind_textures(static_cast<unsigned int>(m_handle.get()), 1, &texture_id);
 }

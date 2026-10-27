@@ -403,7 +403,7 @@ void tr::graphics_context::draw(primitive type, usize offset, usize vertices) no
 	assert_valid_drawing_state(check_index_buffer::no);
 #endif
 
-	gl().draw_arrays(std::to_underlying(type), offset, vertices);
+	gl().draw_arrays(std::to_underlying(type), static_cast<int>(offset), static_cast<int>(vertices));
 }
 
 void tr::graphics_context::draw_instances(primitive type, usize offset, usize vertices, int instances) noexcept
@@ -412,7 +412,7 @@ void tr::graphics_context::draw_instances(primitive type, usize offset, usize ve
 	assert_valid_drawing_state(check_index_buffer::no);
 #endif
 
-	gl().draw_arrays_instanced(std::to_underlying(type), offset, vertices, instances);
+	gl().draw_arrays_instanced(std::to_underlying(type), static_cast<int>(offset), static_cast<int>(vertices), instances);
 }
 
 void tr::graphics_context::draw_indexed(primitive type, usize offset, usize indices) noexcept
@@ -422,7 +422,7 @@ void tr::graphics_context::draw_indexed(primitive type, usize offset, usize indi
 #endif
 
 	const void* const byte_offset{reinterpret_cast<const void*>(offset * sizeof(u16))};
-	gl().draw_elements(std::to_underlying(type), indices, GL_UNSIGNED_SHORT, byte_offset);
+	gl().draw_elements(std::to_underlying(type), static_cast<int>(indices), GL_UNSIGNED_SHORT, byte_offset);
 }
 
 void tr::graphics_context::draw_indexed_instances(primitive type, usize offset, usize indices, int instances) noexcept
@@ -432,7 +432,7 @@ void tr::graphics_context::draw_indexed_instances(primitive type, usize offset, 
 #endif
 
 	const void* const byte_offset{reinterpret_cast<const void*>(offset * sizeof(u16))};
-	gl().draw_elements_instanced(std::to_underlying(type), indices, GL_UNSIGNED_SHORT, byte_offset, instances);
+	gl().draw_elements_instanced(std::to_underlying(type), static_cast<int>(indices), GL_UNSIGNED_SHORT, byte_offset, instances);
 }
 
 //
@@ -482,19 +482,19 @@ boost::unordered_flat_set<tr::internal::graphics_object_id>& tr::graphics_contex
 
 //
 
-unsigned int tr::graphics_context::allocate_texture_unit() noexcept
+int tr::graphics_context::allocate_texture_unit() noexcept
 {
-	for (unsigned int free_index{0}; free_index < m_allocated_texture_units.size(); ++free_index) {
+	for (usize free_index{0}; free_index < m_allocated_texture_units.size(); ++free_index) {
 		if (!m_allocated_texture_units[free_index]) {
 			m_allocated_texture_units[free_index] = true;
-			return free_index;
+			return static_cast<int>(free_index);
 		}
 	}
 	TR_ASSERT(false, "Tried to allocate more than 80 texture units simultaneously.");
 	TR_UNREACHABLE;
 }
 
-void tr::graphics_context::free_texture_unit(unsigned int texture_unit) noexcept
+void tr::graphics_context::free_texture_unit(int texture_unit) noexcept
 {
 	TR_ASSERT(m_allocated_texture_units[texture_unit], "Tried to free already free texture unit.");
 
@@ -533,7 +533,7 @@ void tr::graphics_context::move_label(unsigned int type, unsigned int old_id, un
 	if (label_length > 0) {
 		std::string label(label_length, '\0');
 		gl.get_object_label(type, old_id, label_length, &label_length, label.data());
-		gl.set_object_label(type, new_id, label.size(), label.data());
+		gl.set_object_label(type, new_id, static_cast<int>(label.size()), label.data());
 		gl.set_object_label(type, old_id, 0, nullptr);
 	}
 }

@@ -78,7 +78,7 @@ void tr::timer_query::set_label(std::string_view label) noexcept
 {
 	TR_ASSERT(valid(), "Tried to set the label of a timer query in an invalid state.");
 
-	context().gl().set_object_label(GL_QUERY, unwrap(), label.size(), label.data());
+	context().gl().set_object_label(GL_QUERY, unwrap(), static_cast<int>(label.size()), label.data());
 }
 
 //

@@ -123,12 +123,12 @@ tr::texture tr::texture::allocate(glm::ivec2 size, mipmaps mipmaps, pixel_format
 
 //
 
-tr::texture::operator mutable_texture_view() noexcept
+tr::texture::operator tr::mutable_texture_view() noexcept
 {
 	return view();
 }
 
-tr::texture::operator texture_view() const noexcept
+tr::texture::operator tr::texture_view() const noexcept
 {
 	return view();
 }
@@ -276,7 +276,7 @@ void tr::texture::set_label(std::string_view label) noexcept
 {
 	TR_ASSERT(valid(), "Tried to set the label of a texture in an invalid state.");
 
-	context().gl().set_object_label(GL_TEXTURE, m_handle.get(), label.size(), label.data());
+	context().gl().set_object_label(GL_TEXTURE, m_handle.get(), static_cast<int>(label.size()), label.data());
 }
 
 //

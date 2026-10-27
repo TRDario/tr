@@ -28,7 +28,7 @@ namespace tr
 		using pointer = const value_type*;
 
 		/// Difference type used by the iterator.
-		using difference_type = ssize;
+		using difference_type = int;
 
 		/// @cond implementation_details
 		/// @name Constructors and destructors
@@ -87,11 +87,6 @@ namespace tr
 		/// @return Reference to `*this`.
 		const_pixel_iterator& operator--() noexcept;
 
-		/// Gets the difference between two iterators.
-		/// @param lhs, rhs Iterators to get the difference of.
-		/// @return Distance between `lhs` and `rhs`.
-		friend difference_type operator-(const const_pixel_iterator& lhs, const const_pixel_iterator& rhs) noexcept;
-
 		/// @}
 		/// @name Position
 		/// @{
@@ -122,6 +117,10 @@ namespace tr
 
 		/// Computes the pixel offset from the beginning of the bitmap.
 		[[nodiscard]] difference_type pixel_offset() const noexcept;
+
+		//
+
+		friend difference_type operator-(const const_pixel_iterator& lhs, const const_pixel_iterator& rhs) noexcept;
 	};
 
 	/// Mutable bitmap pixel iterator.
@@ -203,7 +202,6 @@ namespace tr
 		/// Gets the difference between two iterators.
 		/// @param lhs, rhs Iterators to get the difference of.
 		/// @return Distance between `lhs` and `rhs`.
-		friend difference_type operator-(const pixel_iterator& lhs, const pixel_iterator& rhs) noexcept;
 
 		/// @}
 		/// @name Position
@@ -235,5 +233,24 @@ namespace tr
 
 		/// Computes the pixel offset from the beginning of the bitmap.
 		[[nodiscard]] difference_type pixel_offset() const noexcept;
+
+		//
+
+		friend difference_type operator-(const pixel_iterator& lhs, const pixel_iterator& rhs) noexcept;
 	};
+
+	/// @name Pixel iterator operators
+	/// @{
+
+	/// Gets the difference between two iterators.
+	/// @param lhs, rhs Iterators to get the difference of.
+	/// @return Distance between `lhs` and `rhs`.
+	const_pixel_iterator::difference_type operator-(const const_pixel_iterator& lhs, const const_pixel_iterator& rhs) noexcept;
+
+	/// Gets the difference between two iterators.
+	/// @param lhs, rhs Iterators to get the difference of.
+	/// @return Distance between `lhs` and `rhs`.
+	pixel_iterator::difference_type operator-(const pixel_iterator& lhs, const pixel_iterator& rhs) noexcept;
+
+	/// @}
 } // namespace tr

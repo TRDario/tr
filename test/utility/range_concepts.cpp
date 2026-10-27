@@ -27,8 +27,8 @@ static_assert(!tr::input_iterator_to<std::vector<int>::iterator, float&>,
 			  "std::vector<int>::iterator should not fulfill tr::input_iterator_to<float&>, but does!");
 
 /// Tests `tr::input_iterator_to` in the negative case.
-static_assert(!tr::input_iterator_to<std::back_insert_iterator<std::vector<int>>::iterator, int>,
-			  "std::back_insert_iterator<std::vector<int>>::iterator should not fulfill tr::input_iterator_to<int>, but does!");
+static_assert(!tr::input_iterator_to<std::back_insert_iterator<std::vector<int>::iterator>, int>,
+			  "std::back_insert_iterator<std::vector<int>::iterator> should not fulfill tr::input_iterator_to<int>, but does!");
 
 //
 
@@ -45,8 +45,8 @@ static_assert(!tr::forward_iterator_to<std::vector<int>::iterator, float&>,
 			  "std::vector<int>::iterator should not fulfill tr::forward_iterator_to<float&>, but does!");
 
 /// Tests `tr::forward_iterator_to` in the negative case.
-static_assert(!tr::forward_iterator_to<std::back_insert_iterator<std::vector<int>>::iterator, int>,
-			  "std::back_insert_iterator<std::vector<int>>::iterator should not fulfill tr::forward_iterator_to<int>, but does!");
+static_assert(!tr::forward_iterator_to<std::back_insert_iterator<std::vector<int>::iterator>, int>,
+			  "std::back_insert_iterator<std::vector<int>::iterator> should not fulfill tr::forward_iterator_to<int>, but does!");
 
 //
 
@@ -63,5 +63,5 @@ static_assert(!tr::nothrow_forward_iterator_to<std::vector<int>::iterator, float
 			  "std::vector<int>::iterator should not fulfill tr::nothrow_forward_iterator_to<float&>, but does!");
 
 /// Tests `tr::nothrow_forward_iterator_to` in the negative case.
-static_assert(!tr::nothrow_forward_iterator_to<std::back_insert_iterator<std::vector<int>>::iterator, int>,
-			  "std::back_insert_iterator<std::vector<int>>::iterator should not fulfill tr::nothrow_forward_iterator_to<int>, but does!");
+static_assert(!tr::nothrow_forward_iterator_to<std::back_insert_iterator<std::vector<int>::iterator>, int>,
+			  "std::back_insert_iterator<std::vector<int>::iterator> should not fulfill tr::nothrow_forward_iterator_to<int>, but does!");

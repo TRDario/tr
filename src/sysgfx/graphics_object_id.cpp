@@ -26,7 +26,7 @@ tr::internal::graphics_object_id_handle& tr::internal::graphics_object_id_handle
 
 //
 
-tr::internal::graphics_object_id_handle::operator graphics_object_id() const noexcept
+tr::internal::graphics_object_id_handle::operator tr::internal::graphics_object_id() const noexcept
 {
 	return m_id;
 }

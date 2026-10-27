@@ -391,11 +391,11 @@ namespace tr
 
 		/// Allocates a texture unit.
 		/// @return Allocated texture unit index.
-		unsigned int allocate_texture_unit() noexcept;
+		int allocate_texture_unit() noexcept;
 
 		/// Frees a texture unit.
 		/// @param texture_unit Index of the texture unit.
-		void free_texture_unit(unsigned int texture_unit) noexcept;
+		void free_texture_unit(int texture_unit) noexcept;
 
 		//
 

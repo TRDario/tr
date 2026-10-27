@@ -545,7 +545,7 @@ void tr::shader::set_label(std::string_view label) noexcept
 {
 	TR_ASSERT(valid(), "Tried to set the label of a shader in an invalid state.");
 
-	context().gl().set_object_label(GL_PROGRAM, unwrap(), label.size(), label.data());
+	context().gl().set_object_label(GL_PROGRAM, unwrap(), static_cast<int>(label.size()), label.data());
 }
 
 std::string tr::shader::label() const

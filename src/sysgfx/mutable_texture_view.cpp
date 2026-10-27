@@ -14,7 +14,7 @@ tr::mutable_texture_view::mutable_texture_view(unsigned int id, pixel_format for
 
 //
 
-tr::mutable_texture_view::operator texture_view() const noexcept
+tr::mutable_texture_view::operator tr::texture_view() const noexcept
 {
 	return texture_view{m_id};
 }

@@ -62,7 +62,7 @@ std::string tr::graphics_buffer::label() const
 
 void tr::graphics_buffer::set_label(std::string_view label) noexcept
 {
-	context().gl().set_object_label(GL_BUFFER, unwrap(), label.size(), label.data());
+	context().gl().set_object_label(GL_BUFFER, unwrap(), static_cast<int>(label.size()), label.data());
 }
 
 //

@@ -23,8 +23,8 @@ jobs:
             cxx_compiler: g++-14
           - os: ubuntu-24.04
             compiler: Clang
-            c_compiler: clang
-            cxx_compiler: clang++
+            c_compiler: clang-23
+            cxx_compiler: clang++-23
           - os: windows-2025-vs2026
             compiler: MSVC
             toolset: v145

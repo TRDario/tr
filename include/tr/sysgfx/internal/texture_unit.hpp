@@ -30,7 +30,7 @@ namespace tr::internal
 
 		/// Gets the ID of the texture unit.
 		/// @return ID of the texture unit.
-		[[nodiscard]] unsigned int id() const noexcept;
+		[[nodiscard]] int id() const noexcept;
 
 		//
 
@@ -49,10 +49,10 @@ namespace tr::internal
 
 			/// Frees the texture unit.
 			/// @param unit ID of the texture unit.
-			void operator()(unsigned int unit) const noexcept;
+			void operator()(int unit) const noexcept;
 		};
 
 		/// Handle to the texture unit.
-		handle<unsigned int, UINT_MAX, deleter> m_handle;
+		handle<int, -1, deleter> m_handle;
 	};
 } // namespace tr::internal

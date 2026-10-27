@@ -41,12 +41,12 @@ tr::texture_target::texture_target(graphics_context& context, sub_bitmap bitmap,
 
 //
 
-tr::texture_target::operator mutable_texture_view() noexcept
+tr::texture_target::operator tr::mutable_texture_view() noexcept
 {
 	return view();
 }
 
-tr::texture_target::operator texture_view() const noexcept
+tr::texture_target::operator tr::texture_view() const noexcept
 {
 	return view();
 }

@@ -65,7 +65,7 @@ bool tr::window::valid() const noexcept
 
 //
 
-tr::window::operator window_view() noexcept
+tr::window::operator tr::window_view() noexcept
 {
 	return view();
 }
