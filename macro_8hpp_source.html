@@ -191,7 +191,13 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('macro_8hpp_sou
 <div class="line"><a id="l00102" name="l00102"></a><span class="lineno"><a class="line" href="macro_8hpp.html#aa3a3d6d8ac219f1a5137f331189f861e">  102</a></span><span class="preprocessor">#define TR_PATH_CSTR(path) (path).c_str()</span></div>
 <div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span></div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno"><a class="line" href="macro_8hpp.html#ad2f9fd581e4dc8f2fa82c3d4bb81d91b">  107</a></span><span class="preprocessor">#define TR_UNSPECIALIZED_VARIABLE_TEMPLATE(template_arg, return_type, message) [] -&gt; return_type { static_assert(false, message); }()</span></div>
+<div class="foldopen" id="foldopen00107" data-start="" data-end="">
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno"><a class="line" href="macro_8hpp.html#ad2f9fd581e4dc8f2fa82c3d4bb81d91b">  107</a></span><span class="preprocessor">#define TR_UNSPECIALIZED_VARIABLE_TEMPLATE(template_arg, return_type, message)                                                             \</span></div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span><span class="preprocessor">    [] -&gt; return_type {                                                                                                                    \</span></div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span><span class="preprocessor">        static_assert(false, message);                                                                                                     \</span></div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span><span class="preprocessor">        TR_UNREACHABLE;                                                                                                                    \</span></div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span><span class="preprocessor">    }()</span></div>
+</div>
 <div class="ttc" id="acommon_8hpp_html"><div class="ttname"><a href="common_8hpp.html">common.hpp</a></div><div class="ttdoc">Provides commonly included headers.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
