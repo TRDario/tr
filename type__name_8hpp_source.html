@@ -141,10 +141,10 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('type__name_8hp
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#ifdef __clang__</span></div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        <span class="keyword">constexpr</span> std::string_view function_name{std::source_location::current().function_name()};</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        <span class="keywordflow">return</span> std::string_view{function_name.begin() + 43, function_name.end() - 1};</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#elifdef(_MSC_VER)</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#elifdef _MSC_VER</span></div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        <span class="keyword">constexpr</span> std::string_view function_name{std::source_location::current().function_name()};</div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        <span class="keywordflow">return</span> std::string_view{function_name.begin() + 93, function_name.end() - 7};</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#elifdef(__GNUC__)</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#elifdef __GNUC__</span></div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>        <span class="keyword">constexpr</span> std::string_view function_name{</div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>            []&lt;<span class="keyword">typename</span>&gt;() { <span class="keywordflow">return</span> std::source_location::current().function_name(); }.template operator()&lt;Target&gt;()};</div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        <span class="keywordflow">return</span> std::string_view{function_name.begin() + 14, function_name.begin() + function_name.find(<span class="stringliteral">&quot;lambda&quot;</span>) - 6};</div>
