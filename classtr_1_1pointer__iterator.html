@@ -160,8 +160,10 @@ Public Types</h2></td></tr>
 <tr class="memdesc:af421db3098980120634fb66f55c5412d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer type used by the iterator.  <br /></td></tr>
 <tr class="memitem:a3cdb18e417791febeb42b9e212091d9e" id="r_a3cdb18e417791febeb42b9e212091d9e"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a3cdb18e417791febeb42b9e212091d9e">reference</a> = <a class="el" href="#af81146c759eb8933c1eb8e8361c70110">value_type</a>&amp;</td></tr>
 <tr class="memdesc:a3cdb18e417791febeb42b9e212091d9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reference type used by the iterator.  <br /></td></tr>
-<tr class="memitem:ae7ea9b6c1ee56caf75c87363ee04aba7" id="r_ae7ea9b6c1ee56caf75c87363ee04aba7"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#ae7ea9b6c1ee56caf75c87363ee04aba7">iterator_category</a> = std::contiguous_iterator_tag</td></tr>
-<tr class="memdesc:ae7ea9b6c1ee56caf75c87363ee04aba7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterator category the iterator belongs to.  <br /></td></tr>
+<tr class="memitem:a0d61a513564e78b194dc9bd9f84cbec3" id="r_a0d61a513564e78b194dc9bd9f84cbec3"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a0d61a513564e78b194dc9bd9f84cbec3">iterator_category</a> = std::random_access_iterator_tag</td></tr>
+<tr class="memdesc:a0d61a513564e78b194dc9bd9f84cbec3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterator category of the iterator.  <br /></td></tr>
+<tr class="memitem:ac498499e539bf3da107ad87d53bcb4ac" id="r_ac498499e539bf3da107ad87d53bcb4ac"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#ac498499e539bf3da107ad87d53bcb4ac">iterator_concept</a> = std::contiguous_iterator_tag</td></tr>
+<tr class="memdesc:ac498499e539bf3da107ad87d53bcb4ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterator concept of the iterator.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -263,8 +265,8 @@ template&lt;typename Iterator, typename Pointer&gt; </div>
 
 </div>
 </div>
-<a id="ae7ea9b6c1ee56caf75c87363ee04aba7" name="ae7ea9b6c1ee56caf75c87363ee04aba7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae7ea9b6c1ee56caf75c87363ee04aba7">&#9670;&#160;</a></span>iterator_category</h2>
+<a id="a0d61a513564e78b194dc9bd9f84cbec3" name="a0d61a513564e78b194dc9bd9f84cbec3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0d61a513564e78b194dc9bd9f84cbec3">&#9670;&#160;</a></span>iterator_category</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -272,12 +274,30 @@ template&lt;typename Iterator, typename Pointer&gt; </div>
 template&lt;typename Iterator, typename Pointer&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="classtr_1_1pointer__iterator.html">tr::pointer_iterator</a>&lt; Iterator, Pointer &gt;::iterator_category = std::contiguous_iterator_tag</td>
+          <td class="memname">using <a class="el" href="classtr_1_1pointer__iterator.html">tr::pointer_iterator</a>&lt; Iterator, Pointer &gt;::iterator_category = std::random_access_iterator_tag</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Iterator category the iterator belongs to. </p>
+<p>Iterator category of the iterator. </p>
+
+</div>
+</div>
+<a id="ac498499e539bf3da107ad87d53bcb4ac" name="ac498499e539bf3da107ad87d53bcb4ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac498499e539bf3da107ad87d53bcb4ac">&#9670;&#160;</a></span>iterator_concept</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename Iterator, typename Pointer&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="classtr_1_1pointer__iterator.html">tr::pointer_iterator</a>&lt; Iterator, Pointer &gt;::iterator_concept = std::contiguous_iterator_tag</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Iterator concept of the iterator. </p>
 
 </div>
 </div>

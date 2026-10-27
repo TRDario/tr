@@ -1,5 +1,13 @@
 var NAVTREEINDEX4 =
 {
+"classtr_1_1dynamic__vertex__buffer.html#a308409b26993bc4c8b37b879c9717a32":[4,0,0,99,10],
+"classtr_1_1dynamic__vertex__buffer.html#a308409b26993bc4c8b37b879c9717a32":[6,0,1,86,10],
+"classtr_1_1dynamic__vertex__buffer.html#a5bb1441c1af07c09e107f67243e21395":[4,0,0,99,13],
+"classtr_1_1dynamic__vertex__buffer.html#a5bb1441c1af07c09e107f67243e21395":[6,0,1,86,13],
+"classtr_1_1dynamic__vertex__buffer.html#a7c89ce7ccf6eb531a7f523388533fce5":[4,0,0,99,8],
+"classtr_1_1dynamic__vertex__buffer.html#a7c89ce7ccf6eb531a7f523388533fce5":[6,0,1,86,8],
+"classtr_1_1dynamic__vertex__buffer.html#a989ea402d606539bede518268ffd0876":[4,0,0,99,0],
+"classtr_1_1dynamic__vertex__buffer.html#a989ea402d606539bede518268ffd0876":[6,0,1,86,0],
 "classtr_1_1dynamic__vertex__buffer.html#aa11a084d8790a89fe054243ecbfa61d0":[4,0,0,99,11],
 "classtr_1_1dynamic__vertex__buffer.html#aa11a084d8790a89fe054243ecbfa61d0":[6,0,1,86,11],
 "classtr_1_1dynamic__vertex__buffer.html#abadc48a11178303b004d360413dd2f75":[4,0,0,99,4],
@@ -241,13 +249,5 @@ var NAVTREEINDEX4 =
 "classtr_1_1handle.html#ac5771b88587cd7c483f73b30c3f3a1b2":[4,0,0,113,14],
 "classtr_1_1handle.html#ac5771b88587cd7c483f73b30c3f3a1b2":[6,0,1,100,14],
 "classtr_1_1handle.html#ac7d61b6aa5cdd7428798e0aa319bea13":[4,0,0,113,5],
-"classtr_1_1handle.html#ac7d61b6aa5cdd7428798e0aa319bea13":[6,0,1,100,5],
-"classtr_1_1handle.html#ac90170ab18e2320edc788b5f526df5ba":[4,0,0,113,4],
-"classtr_1_1handle.html#ac90170ab18e2320edc788b5f526df5ba":[6,0,1,100,4],
-"classtr_1_1handle.html#ad1290a431524f76f75f18126503c20a8":[4,0,0,113,11],
-"classtr_1_1handle.html#ad1290a431524f76f75f18126503c20a8":[6,0,1,100,11],
-"classtr_1_1handle.html#ad3a18339ce940d0c17ea8f1ad76424d2":[4,0,0,113,13],
-"classtr_1_1handle.html#ad3a18339ce940d0c17ea8f1ad76424d2":[6,0,1,100,13],
-"classtr_1_1handle.html#ad6a15840ab1524440783560ad5897cb1":[4,0,0,113,12],
-"classtr_1_1handle.html#ad6a15840ab1524440783560ad5897cb1":[6,0,1,100,12]
+"classtr_1_1handle.html#ac7d61b6aa5cdd7428798e0aa319bea13":[6,0,1,100,5]
 };

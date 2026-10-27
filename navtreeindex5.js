@@ -1,5 +1,13 @@
 var NAVTREEINDEX5 =
 {
+"classtr_1_1handle.html#ac90170ab18e2320edc788b5f526df5ba":[4,0,0,113,4],
+"classtr_1_1handle.html#ac90170ab18e2320edc788b5f526df5ba":[6,0,1,100,4],
+"classtr_1_1handle.html#ad1290a431524f76f75f18126503c20a8":[4,0,0,113,11],
+"classtr_1_1handle.html#ad1290a431524f76f75f18126503c20a8":[6,0,1,100,11],
+"classtr_1_1handle.html#ad3a18339ce940d0c17ea8f1ad76424d2":[4,0,0,113,13],
+"classtr_1_1handle.html#ad3a18339ce940d0c17ea8f1ad76424d2":[6,0,1,100,13],
+"classtr_1_1handle.html#ad6a15840ab1524440783560ad5897cb1":[4,0,0,113,12],
+"classtr_1_1handle.html#ad6a15840ab1524440783560ad5897cb1":[6,0,1,100,12],
 "classtr_1_1handle.html#adca993a8c6c8fa864e7d9a3a1605c97d":[4,0,0,113,7],
 "classtr_1_1handle.html#adca993a8c6c8fa864e7d9a3a1605c97d":[6,0,1,100,7],
 "classtr_1_1handle.html#af6225f7bded61d2c1179c3a2f2c50698":[4,0,0,113,17],
@@ -241,13 +249,5 @@ var NAVTREEINDEX5 =
 "classtr_1_1mapped__graphics__buffer__object.html":[4,0,0,146],
 "classtr_1_1mapped__graphics__buffer__object.html":[6,0,1,133],
 "classtr_1_1mapped__graphics__buffer__object.html#a30574abb2fcac402296e7c4c2c138f9d":[4,0,0,146,5],
-"classtr_1_1mapped__graphics__buffer__object.html#a30574abb2fcac402296e7c4c2c138f9d":[6,0,1,133,5],
-"classtr_1_1mapped__graphics__buffer__object.html#a38dffc4dbc196d444af13e31098e8ea9":[4,0,0,146,4],
-"classtr_1_1mapped__graphics__buffer__object.html#a38dffc4dbc196d444af13e31098e8ea9":[6,0,1,133,4],
-"classtr_1_1mapped__graphics__buffer__object.html#a720c5181e9dfda9184d6692d932abdc8":[4,0,0,146,0],
-"classtr_1_1mapped__graphics__buffer__object.html#a720c5181e9dfda9184d6692d932abdc8":[6,0,1,133,0],
-"classtr_1_1mapped__graphics__buffer__object.html#a761cd6cad0970c1cf954dfa888ec4834":[4,0,0,146,3],
-"classtr_1_1mapped__graphics__buffer__object.html#a761cd6cad0970c1cf954dfa888ec4834":[6,0,1,133,3],
-"classtr_1_1mapped__graphics__buffer__object.html#a91f9d81ad353e71da85541bbd761afd9":[4,0,0,146,7],
-"classtr_1_1mapped__graphics__buffer__object.html#a91f9d81ad353e71da85541bbd761afd9":[6,0,1,133,7]
+"classtr_1_1mapped__graphics__buffer__object.html#a30574abb2fcac402296e7c4c2c138f9d":[6,0,1,133,5]
 };

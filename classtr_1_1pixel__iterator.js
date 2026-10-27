@@ -5,6 +5,8 @@ var classtr_1_1pixel__iterator =
     [ "const_reference", "classtr_1_1pixel__iterator.html#afc24ff53b1a8ad34d12f75ef1e2f5051", null ],
     [ "pointer", "classtr_1_1pixel__iterator.html#a73bf8d1414d748f4295966d79644db08", null ],
     [ "difference_type", "classtr_1_1pixel__iterator.html#a22af7c0f5c7081a41d9ff09b097f6ab8", null ],
+    [ "iterator_category", "classtr_1_1pixel__iterator.html#a81da6e03230fb9e66e85a3169fe83c27", null ],
+    [ "iterator_concept", "classtr_1_1pixel__iterator.html#aa55d11428eb484cecc86c49d2510131b", null ],
     [ "operator<=>", "classtr_1_1pixel__iterator.html#a1dde86033104069f78a5557f524592df", null ],
     [ "operator==", "classtr_1_1pixel__iterator.html#a82b7e14ca68985c14397b80b57a731d7", null ],
     [ "operator*", "classtr_1_1pixel__iterator.html#a00eb55274be7d3bf8e56809a99901144", null ],

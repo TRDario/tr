@@ -3,6 +3,8 @@ var classtr_1_1const__pixel__iterator =
     [ "value_type", "classtr_1_1const__pixel__iterator.html#a59d35e124ffb7a8e5d91bc2961dc966d", null ],
     [ "pointer", "classtr_1_1const__pixel__iterator.html#aec963bb3fbd834e251c37e969f0dea32", null ],
     [ "difference_type", "classtr_1_1const__pixel__iterator.html#a5b0cc5729b5d84bf0d33c475ac748eac", null ],
+    [ "iterator_category", "classtr_1_1const__pixel__iterator.html#a49a288c7c5f381d175e58700cbc026ae", null ],
+    [ "iterator_concept", "classtr_1_1const__pixel__iterator.html#a9fe59602bc28d5bd9d0a4bcfe85171b5", null ],
     [ "operator<=>", "classtr_1_1const__pixel__iterator.html#a69e186f9865b1886c2a3cddf69979337", null ],
     [ "operator==", "classtr_1_1const__pixel__iterator.html#aafab7b5ba2e507a06ddd6807713fd91c", null ],
     [ "operator*", "classtr_1_1const__pixel__iterator.html#a9254b3841c55e8709b52663a262f57c5", null ],

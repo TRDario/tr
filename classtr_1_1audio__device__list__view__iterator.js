@@ -7,6 +7,8 @@ var classtr_1_1audio__device__list__view__iterator =
     [ "const_reference", "classtr_1_1audio__device__list__view__iterator.html#a9bcb099a27d44799ed4e97b1b7b4cc9e", null ],
     [ "size_type", "classtr_1_1audio__device__list__view__iterator.html#a4d765203c31b07b7b7c7f9c069af19e2", null ],
     [ "difference_type", "classtr_1_1audio__device__list__view__iterator.html#a0f2000bc043b22dff8595805bb1baafd", null ],
+    [ "iterator_category", "classtr_1_1audio__device__list__view__iterator.html#a0b32f966922561e16b3bb3ae03a8b45e", null ],
+    [ "iterator_concept", "classtr_1_1audio__device__list__view__iterator.html#a020463a9759195af96d13c3d15cc55a9", null ],
     [ "audio_device_list_view_iterator", "classtr_1_1audio__device__list__view__iterator.html#afb46fa7b5dd18767004fc7b621aa422f", null ],
     [ "operator*", "classtr_1_1audio__device__list__view__iterator.html#a32c57cebf5244c62692ae71ad4c470d6", null ],
     [ "operator->", "classtr_1_1audio__device__list__view__iterator.html#afade09c87c65f86872921d0529bb6f7b", null ],
