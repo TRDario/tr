@@ -128,10 +128,9 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('md_pages_2buil
 <div class="textblock"><p><a class="anchor" id="autotoc_md0"></a></p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md1"></a>
 Tooling</h1>
-<p>tr requires a C++23-compatible compiler and standard library, as well as CMake 3.23 to build.</p>
+<p>tr requires a C++23-compatible compiler and standard library, as well as CMake 3.23 to build. The library has been tested on and guaranteed to build with Clang 22+ on Linux and Windows, GCC 14+ on Linux, and MSVC v145.</p>
 <p>tr has dependencies on a number of third-party libraries. By default, these libraries are downloaded, configured, and built alongside tr automatically using FetchContent. If you wish to reduce configuration/build times and use system libraries instead, set <span class="tt">TR_USE_SYSTEM_LIBRARIES</span> to <span class="tt">ON</span> during CMake configuration.</p>
 <p>It is recommended to use <span class="tt">tr_target_template(YOUR_TARGET)</span> in your CMakeLists.txt file to automatically configure a target with tr-friendly settings. The command takes care of several compile options, compile definitions, and linking to tr. See <a class="el" href="md_pages_2cmake.html" title="CMake Library">the page on CMake</a> for more information on available definitions and functions.</p>
-<dl class="section note"><dt>Note</dt><dd>The library has been tested on and guaranteed to build with Clang/libstdc++ on Linux and clang-cl/MSVC STL on Windows. Other combinations of compilers and standard libraries that meet the requirements are likely to work, but are largely untested and deprioritized as of now.</dd></dl>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md2"></a>
 Modules</h1>
 <p>tr is divided into several distinct modules; which modules are built may be controlled when configuring CMake.</p>
