@@ -36,7 +36,7 @@ namespace tr
 		/// Casts a derived type back to a qualified `tr::variant`.
 		/// @tparam Self Derived variant type.
 		template <typename Self>
-		using base_t = decltype(std::forward_like<Self>(std::declval<variant>()));
+		using base_t = copy_qualifiers_t<variant, Self>;
 
 		/// @name Constructors and destructors
 		/// @{

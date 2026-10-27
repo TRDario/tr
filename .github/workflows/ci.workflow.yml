@@ -68,7 +68,7 @@ jobs:
           cmake -S . -B build -G "Visual Studio 18 2026" -A x64 -T ${{ matrix.toolset }}
           -DTR_BUILD_TESTS=ON
           -DCMAKE_CXX_SCAN_FOR_MODULES=OFF
-          -DCMAKE_POLICY_VERSION_MINIMUM=3.5
+          -DCMAKE_POLICY_VERSION_MINIMUM="3.5"
       
       - name: Build and test all configurations
         shell: bash
