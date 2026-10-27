@@ -10,6 +10,7 @@ else()
     set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
     FetchContent_MakeAvailable(gtest)
 endif()
+include(GoogleTest)
 
 add_subdirectory(utility)
 if(TR_BUILD_SYSGFX)
