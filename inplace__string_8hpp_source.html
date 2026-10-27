@@ -448,7 +448,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('inplace__strin
 <div class="line"><a id="l00381" name="l00381"></a><span class="lineno"><a class="line" href="classtr_1_1basic__inplace__string.html#a3ed7edbe1cf3e316ac50f1ad00176fc5">  381</a></span>        <span class="keyword">constexpr</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classtr_1_1basic__inplace__string.html#a3ed7edbe1cf3e316ac50f1ad00176fc5">append</a>(Iterator first, Sentinel last) <span class="keyword">noexcept</span>(<span class="keyword">noexcept</span>(std::ranges::copy(first, last, <a class="code hl_function" href="classtr_1_1basic__inplace__string.html#aed93b1090dec79df178ec1f75ecaac09">end</a>())))</div>
 <div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span>        {</div>
 <div class="line"><a id="l00383" name="l00383"></a><span class="lineno">  383</span>            std::ranges::copy(first, last, <a class="code hl_function" href="classtr_1_1basic__inplace__string.html#aed93b1090dec79df178ec1f75ecaac09">end</a>());</div>
-<div class="line"><a id="l00384" name="l00384"></a><span class="lineno">  384</span>            m_size = m_size + std::ranges::distance(first, last);</div>
+<div class="line"><a id="l00384" name="l00384"></a><span class="lineno">  384</span>            m_size += std::ranges::distance(first, last);</div>
 <div class="line"><a id="l00385" name="l00385"></a><span class="lineno">  385</span>        }</div>
 </div>
 <div class="line"><a id="l00386" name="l00386"></a><span class="lineno">  386</span></div>
@@ -459,7 +459,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('inplace__strin
 <div class="line"><a id="l00392" name="l00392"></a><span class="lineno">  392</span>                      <span class="stringliteral">&quot;Tried to do an append onto an inplace string that would put it past its capacity of {}.&quot;</span>, Capacity);</div>
 <div class="line"><a id="l00393" name="l00393"></a><span class="lineno">  393</span> </div>
 <div class="line"><a id="l00394" name="l00394"></a><span class="lineno">  394</span>            std::ranges::copy(str, <a class="code hl_function" href="classtr_1_1basic__inplace__string.html#aed93b1090dec79df178ec1f75ecaac09">end</a>());</div>
-<div class="line"><a id="l00395" name="l00395"></a><span class="lineno">  395</span>            m_size = m_size + str.size();</div>
+<div class="line"><a id="l00395" name="l00395"></a><span class="lineno">  395</span>            m_size += str.size();</div>
 <div class="line"><a id="l00396" name="l00396"></a><span class="lineno">  396</span>        }</div>
 </div>
 <div class="line"><a id="l00397" name="l00397"></a><span class="lineno">  397</span></div>
@@ -499,7 +499,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('inplace__strin
 <div class="line"><a id="l00442" name="l00442"></a><span class="lineno">  442</span>            <span class="keyword">const</span> iterator mut_where{<a class="code hl_function" href="classtr_1_1basic__inplace__string.html#ac32671f4a726d5c54f35e50cf9fcae22">begin</a>() + (where - <a class="code hl_function" href="classtr_1_1basic__inplace__string.html#ac32671f4a726d5c54f35e50cf9fcae22">begin</a>())};</div>
 <div class="line"><a id="l00443" name="l00443"></a><span class="lineno">  443</span>            std::ranges::copy_backward(mut_where, <a class="code hl_function" href="classtr_1_1basic__inplace__string.html#aed93b1090dec79df178ec1f75ecaac09">end</a>(), <a class="code hl_function" href="classtr_1_1basic__inplace__string.html#aed93b1090dec79df178ec1f75ecaac09">end</a>() + <a class="code hl_function" href="classtr_1_1basic__inplace__string.html#a195b29c11dd70f8e387f9db9ffe99a52">size</a>);</div>
 <div class="line"><a id="l00444" name="l00444"></a><span class="lineno">  444</span>            std::ranges::copy(first, last, mut_where);</div>
-<div class="line"><a id="l00445" name="l00445"></a><span class="lineno">  445</span>            m_size = m_size + <a class="code hl_function" href="classtr_1_1basic__inplace__string.html#a195b29c11dd70f8e387f9db9ffe99a52">size</a>;</div>
+<div class="line"><a id="l00445" name="l00445"></a><span class="lineno">  445</span>            m_size += <a class="code hl_function" href="classtr_1_1basic__inplace__string.html#a195b29c11dd70f8e387f9db9ffe99a52">size</a>;</div>
 <div class="line"><a id="l00446" name="l00446"></a><span class="lineno">  446</span>            <span class="keywordflow">return</span> mut_where;</div>
 <div class="line"><a id="l00447" name="l00447"></a><span class="lineno">  447</span>        }</div>
 </div>
@@ -514,7 +514,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('inplace__strin
 <div class="line"><a id="l00460" name="l00460"></a><span class="lineno">  460</span>            <span class="keyword">const</span> iterator mut_where{<a class="code hl_function" href="classtr_1_1basic__inplace__string.html#ac32671f4a726d5c54f35e50cf9fcae22">begin</a>() + (where - <a class="code hl_function" href="classtr_1_1basic__inplace__string.html#ac32671f4a726d5c54f35e50cf9fcae22">begin</a>())};</div>
 <div class="line"><a id="l00461" name="l00461"></a><span class="lineno">  461</span>            std::ranges::copy_backward(mut_where, <a class="code hl_function" href="classtr_1_1basic__inplace__string.html#aed93b1090dec79df178ec1f75ecaac09">end</a>(), <a class="code hl_function" href="classtr_1_1basic__inplace__string.html#aed93b1090dec79df178ec1f75ecaac09">end</a>() + str.size());</div>
 <div class="line"><a id="l00462" name="l00462"></a><span class="lineno">  462</span>            std::ranges::copy(str, mut_where);</div>
-<div class="line"><a id="l00463" name="l00463"></a><span class="lineno">  463</span>            m_size = m_size + str.size();</div>
+<div class="line"><a id="l00463" name="l00463"></a><span class="lineno">  463</span>            m_size += str.size();</div>
 <div class="line"><a id="l00464" name="l00464"></a><span class="lineno">  464</span>            <span class="keywordflow">return</span> mut_where;</div>
 <div class="line"><a id="l00465" name="l00465"></a><span class="lineno">  465</span>        }</div>
 </div>
@@ -548,7 +548,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('inplace__strin
 <div class="line"><a id="l00496" name="l00496"></a><span class="lineno">  496</span> </div>
 <div class="line"><a id="l00497" name="l00497"></a><span class="lineno">  497</span>            <span class="keyword">const</span> iterator mut_start{<a class="code hl_function" href="classtr_1_1basic__inplace__string.html#ac32671f4a726d5c54f35e50cf9fcae22">begin</a>() + (start - <a class="code hl_function" href="classtr_1_1basic__inplace__string.html#ac32671f4a726d5c54f35e50cf9fcae22">begin</a>())};</div>
 <div class="line"><a id="l00498" name="l00498"></a><span class="lineno">  498</span>            std::ranges::copy(mut_start + (<a class="code hl_function" href="classtr_1_1basic__inplace__string.html#aed93b1090dec79df178ec1f75ecaac09">end</a> - start), this-&gt;<a class="code hl_function" href="classtr_1_1basic__inplace__string.html#aed93b1090dec79df178ec1f75ecaac09">end</a>(), mut_start);</div>
-<div class="line"><a id="l00499" name="l00499"></a><span class="lineno">  499</span>            m_size = m_size - (<a class="code hl_function" href="classtr_1_1basic__inplace__string.html#aed93b1090dec79df178ec1f75ecaac09">end</a> - start);</div>
+<div class="line"><a id="l00499" name="l00499"></a><span class="lineno">  499</span>            m_size -= <a class="code hl_function" href="classtr_1_1basic__inplace__string.html#aed93b1090dec79df178ec1f75ecaac09">end</a> - start;</div>
 <div class="line"><a id="l00500" name="l00500"></a><span class="lineno">  500</span>            <span class="keywordflow">return</span> mut_start;</div>
 <div class="line"><a id="l00501" name="l00501"></a><span class="lineno">  501</span>        }</div>
 </div>
