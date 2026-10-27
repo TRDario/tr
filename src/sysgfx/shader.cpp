@@ -57,7 +57,7 @@ void tr::shader::find_uniforms(const internal::opengl& gl)
 		std::array<int, uniform_properties.size()> values;
 		const auto& [block_index, var_type, array_size, name_length, location]{values};
 		gl.get_program_resource_iv(unwrap(), GL_UNIFORM, i, static_cast<int>(uniform_properties.size()), uniform_properties.data(),
-								   values.size(), NULL, values.data());
+								   static_cast<int>(values.size()), NULL, values.data());
 
 		if (block_index != -1) {
 			continue;
@@ -84,7 +84,7 @@ void tr::shader::find_inputs(const internal::opengl& gl)
 		std::array<int, input_properties.size()> values;
 		const auto& [var_type, array_size, name_length, location]{values};
 		gl.get_program_resource_iv(unwrap(), GL_PROGRAM_INPUT, i, static_cast<int>(input_properties.size()), input_properties.data(),
-								   values.size(), NULL, values.data());
+								   static_cast<int>(values.size()), NULL, values.data());
 
 		std::string input_name_buffer(name_length, '\0');
 		gl.get_program_resource_name(unwrap(), GL_PROGRAM_INPUT, i, static_cast<int>(input_name_buffer.size()), NULL,
@@ -108,11 +108,12 @@ void tr::shader::find_outputs(const internal::opengl& gl)
 	for (int i = 0; i < inputs; ++i) {
 		std::array<int, output_properties.size()> values;
 		const auto& [var_type, array_size, name_length, location]{values};
-		gl.get_program_resource_iv(unwrap(), GL_PROGRAM_OUTPUT, i, output_properties.size(), output_properties.data(), values.size(), NULL,
-								   values.data());
+		gl.get_program_resource_iv(unwrap(), GL_PROGRAM_OUTPUT, i, static_cast<int>(output_properties.size()), output_properties.data(),
+								   static_cast<int>(values.size()), NULL, values.data());
 
 		std::string output_name_buffer(name_length, '\0');
-		gl.get_program_resource_name(unwrap(), GL_PROGRAM_OUTPUT, i, output_name_buffer.size(), NULL, output_name_buffer.data());
+		gl.get_program_resource_name(unwrap(), GL_PROGRAM_OUTPUT, i, static_cast<int>(output_name_buffer.size()), NULL,
+									 output_name_buffer.data());
 		if (!output_name_buffer.starts_with("gl_")) {
 			m_outputs.insert({
 				static_cast<unsigned int>(location),
@@ -186,7 +187,7 @@ void tr::shader::set_uniform(int index, std::span<const int> value) noexcept
 {
 	TR_ASSERT_SHADER_ARRAY_UNIFORM(int);
 
-	context().gl().set_program_uniform_1iv(unwrap(), index, value.size(), value.data());
+	context().gl().set_program_uniform_1iv(unwrap(), index, static_cast<int>(value.size()), value.data());
 }
 
 void tr::shader::set_uniform(int index, glm::ivec2 value) noexcept
@@ -200,7 +201,7 @@ void tr::shader::set_uniform(int index, std::span<const glm::ivec2> value) noexc
 {
 	TR_ASSERT_SHADER_ARRAY_UNIFORM(glm::ivec2);
 
-	context().gl().set_program_uniform_2iv(unwrap(), index, value.size(), value_ptr(value[0]));
+	context().gl().set_program_uniform_2iv(unwrap(), index, static_cast<int>(value.size()), value_ptr(value[0]));
 }
 
 void tr::shader::set_uniform(int index, glm::ivec3 value) noexcept
@@ -214,7 +215,7 @@ void tr::shader::set_uniform(int index, std::span<const glm::ivec3> value) noexc
 {
 	TR_ASSERT_SHADER_ARRAY_UNIFORM(glm::ivec3);
 
-	context().gl().set_program_uniform_3iv(unwrap(), index, value.size(), value_ptr(value[0]));
+	context().gl().set_program_uniform_3iv(unwrap(), index, static_cast<int>(value.size()), value_ptr(value[0]));
 }
 
 void tr::shader::set_uniform(int index, glm::ivec4 value) noexcept
@@ -228,7 +229,7 @@ void tr::shader::set_uniform(int index, std::span<const glm::ivec4> value) noexc
 {
 	TR_ASSERT_SHADER_ARRAY_UNIFORM(glm::ivec4);
 
-	context().gl().set_program_uniform_4iv(unwrap(), index, value.size(), value_ptr(value[0]));
+	context().gl().set_program_uniform_4iv(unwrap(), index, static_cast<int>(value.size()), value_ptr(value[0]));
 }
 
 void tr::shader::set_uniform(int index, unsigned int value) noexcept
@@ -242,7 +243,7 @@ void tr::shader::set_uniform(int index, std::span<const unsigned int> value) noe
 {
 	TR_ASSERT_SHADER_ARRAY_UNIFORM(unsigned int);
 
-	context().gl().set_program_uniform_1uiv(unwrap(), index, value.size(), value.data());
+	context().gl().set_program_uniform_1uiv(unwrap(), index, static_cast<int>(value.size()), value.data());
 }
 
 void tr::shader::set_uniform(int index, glm::uvec2 value) noexcept
@@ -256,7 +257,7 @@ void tr::shader::set_uniform(int index, std::span<const glm::uvec2> value) noexc
 {
 	TR_ASSERT_SHADER_ARRAY_UNIFORM(glm::uvec2);
 
-	context().gl().set_program_uniform_2uiv(unwrap(), index, value.size(), value_ptr(value[0]));
+	context().gl().set_program_uniform_2uiv(unwrap(), index, static_cast<int>(value.size()), value_ptr(value[0]));
 }
 
 void tr::shader::set_uniform(int index, glm::uvec3 value) noexcept
@@ -270,7 +271,7 @@ void tr::shader::set_uniform(int index, std::span<const glm::uvec3> value) noexc
 {
 	TR_ASSERT_SHADER_ARRAY_UNIFORM(glm::uvec3);
 
-	context().gl().set_program_uniform_3uiv(unwrap(), index, value.size(), value_ptr(value[0]));
+	context().gl().set_program_uniform_3uiv(unwrap(), index, static_cast<int>(value.size()), value_ptr(value[0]));
 }
 
 void tr::shader::set_uniform(int index, glm::uvec4 value) noexcept
@@ -284,7 +285,7 @@ void tr::shader::set_uniform(int index, std::span<const glm::uvec4> value) noexc
 {
 	TR_ASSERT_SHADER_ARRAY_UNIFORM(glm::uvec4);
 
-	context().gl().set_program_uniform_4uiv(unwrap(), index, value.size(), value_ptr(value[0]));
+	context().gl().set_program_uniform_4uiv(unwrap(), index, static_cast<int>(value.size()), value_ptr(value[0]));
 }
 
 void tr::shader::set_uniform(int index, float value) noexcept
@@ -298,7 +299,7 @@ void tr::shader::set_uniform(int index, std::span<const float> value) noexcept
 {
 	TR_ASSERT_SHADER_ARRAY_UNIFORM(float);
 
-	context().gl().set_program_uniform_1fv(unwrap(), index, value.size(), value.data());
+	context().gl().set_program_uniform_1fv(unwrap(), index, static_cast<int>(value.size()), value.data());
 }
 
 void tr::shader::set_uniform(int index, glm::vec2 value) noexcept
@@ -312,7 +313,7 @@ void tr::shader::set_uniform(int index, std::span<const glm::vec2> value) noexce
 {
 	TR_ASSERT_SHADER_ARRAY_UNIFORM(glm::vec2);
 
-	context().gl().set_program_uniform_2fv(unwrap(), index, value.size(), value_ptr(value[0]));
+	context().gl().set_program_uniform_2fv(unwrap(), index, static_cast<int>(value.size()), value_ptr(value[0]));
 }
 
 void tr::shader::set_uniform(int index, glm::vec3 value) noexcept
@@ -326,7 +327,7 @@ void tr::shader::set_uniform(int index, std::span<const glm::vec3> value) noexce
 {
 	TR_ASSERT_SHADER_ARRAY_UNIFORM(glm::vec3);
 
-	context().gl().set_program_uniform_3fv(unwrap(), index, value.size(), value_ptr(value[0]));
+	context().gl().set_program_uniform_3fv(unwrap(), index, static_cast<int>(value.size()), value_ptr(value[0]));
 }
 
 void tr::shader::set_uniform(int index, glm::vec4 value) noexcept
@@ -340,7 +341,7 @@ void tr::shader::set_uniform(int index, std::span<const glm::vec4> value) noexce
 {
 	TR_ASSERT_SHADER_ARRAY_UNIFORM(glm::vec4);
 
-	context().gl().set_program_uniform_4fv(unwrap(), index, value.size(), value_ptr(value[0]));
+	context().gl().set_program_uniform_4fv(unwrap(), index, static_cast<int>(value.size()), value_ptr(value[0]));
 }
 
 void tr::shader::set_uniform(int index, const glm::mat2& value) noexcept
@@ -354,7 +355,7 @@ void tr::shader::set_uniform(int index, std::span<const glm::mat2> value) noexce
 {
 	TR_ASSERT_SHADER_ARRAY_UNIFORM(glm::mat2);
 
-	context().gl().set_program_uniform_matrix2fv(unwrap(), index, value.size(), false, value_ptr(value[0]));
+	context().gl().set_program_uniform_matrix2fv(unwrap(), index, static_cast<int>(value.size()), false, value_ptr(value[0]));
 }
 
 void tr::shader::set_uniform(int index, const glm::mat3& value) noexcept
@@ -368,7 +369,7 @@ void tr::shader::set_uniform(int index, std::span<const glm::mat3> value) noexce
 {
 	TR_ASSERT_SHADER_ARRAY_UNIFORM(glm::mat3);
 
-	context().gl().set_program_uniform_matrix3fv(unwrap(), index, value.size(), false, value_ptr(value[0]));
+	context().gl().set_program_uniform_matrix3fv(unwrap(), index, static_cast<int>(value.size()), false, value_ptr(value[0]));
 }
 
 void tr::shader::set_uniform(int index, const glm::mat4& value) noexcept
@@ -382,7 +383,7 @@ void tr::shader::set_uniform(int index, std::span<const glm::mat4> value) noexce
 {
 	TR_ASSERT_SHADER_ARRAY_UNIFORM(glm::mat4);
 
-	context().gl().set_program_uniform_matrix4fv(unwrap(), index, value.size(), false, value_ptr(value[0]));
+	context().gl().set_program_uniform_matrix4fv(unwrap(), index, static_cast<int>(value.size()), false, value_ptr(value[0]));
 }
 
 void tr::shader::set_uniform(int index, const glm::mat2x3& value) noexcept
@@ -396,7 +397,7 @@ void tr::shader::set_uniform(int index, std::span<const glm::mat2x3> value) noex
 {
 	TR_ASSERT_SHADER_ARRAY_UNIFORM(glm::mat2x3);
 
-	context().gl().set_program_uniform_matrix2x3fv(unwrap(), index, value.size(), false, value_ptr(value[0]));
+	context().gl().set_program_uniform_matrix2x3fv(unwrap(), index, static_cast<int>(value.size()), false, value_ptr(value[0]));
 }
 
 void tr::shader::set_uniform(int index, const glm::mat2x4& value) noexcept
@@ -410,7 +411,7 @@ void tr::shader::set_uniform(int index, std::span<const glm::mat2x4> value) noex
 {
 	TR_ASSERT_SHADER_ARRAY_UNIFORM(glm::mat2x4);
 
-	context().gl().set_program_uniform_matrix2x4fv(unwrap(), index, value.size(), false, value_ptr(value[0]));
+	context().gl().set_program_uniform_matrix2x4fv(unwrap(), index, static_cast<int>(value.size()), false, value_ptr(value[0]));
 }
 
 void tr::shader::set_uniform(int index, const glm::mat3x2& value) noexcept
@@ -424,7 +425,7 @@ void tr::shader::set_uniform(int index, std::span<const glm::mat3x2> value) noex
 {
 	TR_ASSERT_SHADER_ARRAY_UNIFORM(glm::mat3x2);
 
-	context().gl().set_program_uniform_matrix3x2fv(unwrap(), index, value.size(), false, value_ptr(value[0]));
+	context().gl().set_program_uniform_matrix3x2fv(unwrap(), index, static_cast<int>(value.size()), false, value_ptr(value[0]));
 }
 
 void tr::shader::set_uniform(int index, const glm::mat3x4& value) noexcept
@@ -438,7 +439,7 @@ void tr::shader::set_uniform(int index, std::span<const glm::mat3x4> value) noex
 {
 	TR_ASSERT_SHADER_ARRAY_UNIFORM(glm::mat3x4);
 
-	context().gl().set_program_uniform_matrix3x4fv(unwrap(), index, value.size(), false, value_ptr(value[0]));
+	context().gl().set_program_uniform_matrix3x4fv(unwrap(), index, static_cast<int>(value.size()), false, value_ptr(value[0]));
 }
 
 void tr::shader::set_uniform(int index, const glm::mat4x2& value) noexcept
@@ -452,7 +453,7 @@ void tr::shader::set_uniform(int index, std::span<const glm::mat4x2> value) noex
 {
 	TR_ASSERT_SHADER_ARRAY_UNIFORM(glm::mat4x2);
 
-	context().gl().set_program_uniform_matrix4x2fv(unwrap(), index, value.size(), false, value_ptr(value[0]));
+	context().gl().set_program_uniform_matrix4x2fv(unwrap(), index, static_cast<int>(value.size()), false, value_ptr(value[0]));
 }
 
 void tr::shader::set_uniform(int index, const glm::mat4x3& value) noexcept
@@ -466,7 +467,7 @@ void tr::shader::set_uniform(int index, std::span<const glm::mat4x3> value) noex
 {
 	TR_ASSERT_SHADER_ARRAY_UNIFORM(glm::mat4x3);
 
-	context().gl().set_program_uniform_matrix4x3fv(unwrap(), index, value.size(), false, value_ptr(value[0]));
+	context().gl().set_program_uniform_matrix4x3fv(unwrap(), index, static_cast<int>(value.size()), false, value_ptr(value[0]));
 }
 
 //

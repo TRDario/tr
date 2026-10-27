@@ -35,10 +35,10 @@ namespace tr
 		/// Constructs a set of edges with the same value.
 		/// @param left Uniform edge value.
 		[[nodiscard]] constexpr rectangle_edges(Rep left) noexcept
-			: top{left}
+			: left{left}
+			, top{left}
 			, right{left}
 			, bottom{left}
-			, left{left}
 		{
 		}
 

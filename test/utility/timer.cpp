@@ -2,6 +2,7 @@
 /// @brief Tests utility/timer.hpp.
 
 #include <gtest/gtest.h>
+#include <tr/utility/integer.hpp>
 #include <tr/utility/timer.hpp>
 
 using namespace std::chrono_literals;
@@ -25,7 +26,7 @@ class callback_counter
 	/// Waits for a minimum count.
 	/// @param minimum_count Minimum count to wait for.
 	/// @return Whether the wait was successful.
-	[[nodiscard]] bool wait_for(int minimum_count)
+	[[nodiscard]] bool wait_for(tr::usize minimum_count)
 	{
 		std::unique_lock lock{m_mutex};
 		return m_cv.wait_for(lock, 2s, [&] { return m_timestamps.size() >= minimum_count; });

@@ -66,11 +66,8 @@ add_executable(
 	zstring_view.cpp
 	zstring_view_zspan.cpp
 )
-target_link_libraries(
-	utility_test
-	tr::utility
-	GTest::gtest_main
-)
+tr_target_template(utility_test)
+target_link_libraries(utility_test PRIVATE GTest::gtest_main)
 
 include(GoogleTest)
 gtest_discover_tests(utility_test)

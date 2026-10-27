@@ -63,6 +63,6 @@ TEST(DynamicRefCastTest, CastsOptTrReference)
 	tr::opt_ref<derived> wrapped_data1_ref{tr::dynamic_ref_cast<derived>(data1_ref)};
 	EXPECT_EQ(wrapped_data1_ref, std::nullopt);
 
-	tr::opt_ref<derived> wrapped_empty_ref{tr::dynamic_ref_cast<derived>(data1_ref)};
+	tr::opt_ref<derived> wrapped_empty_ref{tr::dynamic_ref_cast<derived>(empty_ref)};
 	EXPECT_EQ(wrapped_empty_ref, std::nullopt);
 }

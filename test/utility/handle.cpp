@@ -40,7 +40,7 @@ struct tagged_deleter
 	//
 
 	/// Mock deletion.
-	void operator()(int value) const noexcept {}
+	void operator()(int) const noexcept {}
 };
 
 /// Handle using a stateless deleter.

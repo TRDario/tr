@@ -17,7 +17,11 @@ namespace tr
 	{
 #ifdef __clang__
 		constexpr std::string_view function_name{std::source_location::current().function_name()};
+#ifdef _MSC_VER
+		return std::string_view{function_name.begin() + 55, function_name.end() - 1};
+#else
 		return std::string_view{function_name.begin() + 43, function_name.end() - 1};
+#endif
 #elifdef _MSC_VER
 		constexpr std::string_view function_name{std::source_location::current().function_name()};
 		return std::string_view{function_name.begin() + 93, function_name.end() - 7};

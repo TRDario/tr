@@ -382,8 +382,8 @@ namespace tr
 		{
 			const ssize size{static_cast<ssize>(std::ranges::distance(first, last))};
 
-			TR_ASSERT(m_size + size <= Capacity, "Tried to do an append onto an inplace string that would put it past its capacity of {}.",
-					  Capacity);
+			TR_ASSERT(static_cast<usize>(m_size + size) <= Capacity,
+					  "Tried to do an append onto an inplace string that would put it past its capacity of {}.", Capacity);
 
 			std::ranges::copy(first, last, end());
 			m_size += static_cast<size_type>(size);
@@ -393,7 +393,7 @@ namespace tr
 		/// @pre `this->size() + str.size()` must be less than or equal to `Capacity`.
 		constexpr void append(std::basic_string_view<CharT, Traits> str) noexcept
 		{
-			TR_ASSERT(m_size + str.size() <= Capacity,
+			TR_ASSERT(static_cast<usize>(m_size + str.size()) <= Capacity,
 					  "Tried to do an append onto an inplace string that would put it past its capacity of {}.", Capacity);
 
 			std::ranges::copy(str, end());
@@ -440,8 +440,8 @@ namespace tr
 		{
 			const ssize size{static_cast<ssize>(std::ranges::distance(first, last))};
 
-			TR_ASSERT(m_size + size <= Capacity, "Tried to do an insert into an inplace string that would put it past its capacity of {}.",
-					  Capacity);
+			TR_ASSERT(static_cast<usize>(m_size + size) <= Capacity,
+					  "Tried to do an insert into an inplace string that would put it past its capacity of {}.", Capacity);
 			TR_ASSERT(where >= begin() && where <= end(), "Tried to pass an invalid iterator to basic_inplace_string::insert.");
 
 			const iterator mut_where{begin() + (where - begin())};
@@ -458,7 +458,7 @@ namespace tr
 		/// @return Iterator to the position where the substring was inserted.
 		constexpr iterator insert(const_iterator where, std::basic_string_view<CharT, Traits> str) noexcept
 		{
-			TR_ASSERT(m_size + str.size() <= Capacity,
+			TR_ASSERT(static_cast<usize>(m_size + str.size()) <= Capacity,
 					  "Tried to do an insert into an inplace string that would put it past its capacity of {}.", Capacity);
 			TR_ASSERT(where >= begin() && where <= end(), "Tried to pass an invalid iterator to basic_inplace_string::insert.");
 

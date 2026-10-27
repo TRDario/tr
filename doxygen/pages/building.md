@@ -3,6 +3,7 @@
 ## Tooling
 
 tr requires a C++23-compatible compiler and standard library, as well as CMake 3.23 to build.
+The library has been tested on and guaranteed to build with Clang 22+ on Linux and Windows, GCC 14+ on Linux, and MSVC v145.
 
 tr has dependencies on a number of third-party libraries. By default, these libraries are downloaded, configured, and built alongside tr
 automatically using FetchContent. If you wish to reduce configuration/build times and use system libraries instead,
@@ -11,10 +12,6 @@ set `TR_USE_SYSTEM_LIBRARIES` to `ON` during CMake configuration.
 It is recommended to use `tr_target_template(YOUR_TARGET)` in your CMakeLists.txt file to automatically configure a target with tr-friendly
 settings. The command takes care of several compile options, compile definitions, and linking to tr.
 See [the page on CMake](cmake.md) for more information on available definitions and functions.
-
-@note
-The library has been tested on and guaranteed to build with Clang/libstdc++ on Linux and clang-cl/MSVC STL on Windows.
-Other combinations of compilers and standard libraries that meet the requirements are likely to work, but are largely untested and deprioritized as of now.
 
 ## Modules
 

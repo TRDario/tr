@@ -12,8 +12,7 @@ C++23 game development framework based on SDL3, OpenGL 4.5, and OpenAL.
 ## Build Instructions
 
 Requires a C++23-compatible compiler and standard library, as well as CMake 3.23 to build.
-
-Tested on and guaranteed to build with Clang/libstdc++ on Linux and clang-cl/MSVC STL on Windows. Other combinations of compilers and standard libraries are untested as of now.
+Tested on and guaranteed to build with Clang 22+ on Linux and Windows, GCC 14+ on Linux, and MSVC v145.
 
 For more details, see [this page from the documentation](https://trdario.github.io/tr/md_pages_2building.html).
 

@@ -72,7 +72,7 @@ TEST(VariantTest, GetsAlternative)
 /// Tests visiting a variant.
 TEST(VariantTest, Visits)
 {
-	constexpr auto visitor{[]<typename T>(const T& v) { return std::same_as<T, int>; }};
+	constexpr auto visitor{[]<typename T>(const T&) { return std::same_as<T, int>; }};
 
 	const tr::variant<int, float, char> var1{5};
 	EXPECT_TRUE(var1.visit(visitor));
