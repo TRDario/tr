@@ -117,14 +117,14 @@ namespace tr
 		/// @return Angle represented in degrees.
 		[[nodiscard]] constexpr Rep degs() const noexcept
 		{
-			return m_rads * (180 / std::numbers::pi);
+			return static_cast<Rep>(m_rads * (180 / std::numbers::pi));
 		}
 
 		/// Converts the angle value into a numeric turn value.
 		/// @return Angle represented in turns.
 		[[nodiscard]] constexpr Rep turns() const noexcept
 		{
-			return m_rads / (2 * std::numbers::pi);
+			return static_cast<Rep>(m_rads / (2 * std::numbers::pi));
 		}
 
 		/// @}

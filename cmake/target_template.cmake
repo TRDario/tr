@@ -24,7 +24,6 @@ function(tr_target_template TARGET)
 			-Wall
 			-Wextra
 			-Wpedantic
-			-Wshadow
 			-Werror=return-type
 			-fno-trapping-math
 			-fno-math-errno
@@ -33,6 +32,7 @@ function(tr_target_template TARGET)
 			-ffp-contract=fast
 		)
 		if(TR_HAS_CLANG)
+			target_compile_options(${TARGET} PRIVATE -Wshadow)
 			target_link_options(${TARGET} PRIVATE -fuse-ld=lld)
 		endif()
 	elseif(TR_HAS_CLANG_CL)

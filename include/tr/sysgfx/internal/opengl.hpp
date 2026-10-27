@@ -84,7 +84,7 @@ namespace tr::internal
 		void (*create_program_pipelines)(int n, unsigned int* pipelines) noexcept;
 
 		/// Pointer to glCreateShaderProgramv.
-		[[nodiscard]] unsigned int (*create_shader_program_v)(unsigned int type, int count, const char** strings) noexcept;
+		unsigned int (*create_shader_program_v)(unsigned int type, int count, const char** strings) noexcept;
 
 		/// Pointer to glCreateTextures.
 		void (*create_textures)(unsigned int target, int n, unsigned int* textures) noexcept;
@@ -147,7 +147,7 @@ namespace tr::internal
 		void (*generate_texture_mipmap)(unsigned int texture) noexcept;
 
 		/// Pointer to glGetError.
-		[[nodiscard]] unsigned int (*get_error)() noexcept;
+		unsigned int (*get_error)() noexcept;
 
 		/// Pointer to glGetNamedBufferParameteriv.
 		void (*get_buffer_parameter_iv)(unsigned int buffer, unsigned int pname, int* params) noexcept;
@@ -191,8 +191,7 @@ namespace tr::internal
 		void (*invalidate_buffer_data)(unsigned int buffer) noexcept;
 
 		/// Pointer to glMapNamedBufferRange.
-		[[nodiscard]] void* (*map_buffer_range)(unsigned int buffer, std::intptr_t offset, std::intptr_t length,
-												unsigned int access) noexcept;
+		void* (*map_buffer_range)(unsigned int buffer, std::intptr_t offset, std::intptr_t length, unsigned int access) noexcept;
 
 		/// Pointer to glTextureSubImage2D.
 		void (*set_2d_texture_sub_image)(unsigned int texture, int level, int xoffset, int yoffset, int width, int height,

@@ -570,7 +570,7 @@ void tr::graphics_context::assert_valid_drawing_state(check_index_buffer check_i
 			TR_CHECKED_GRAPHICS_ASSERT(lhs.type == rhs.type && lhs.elements == rhs.elements,
 									   "Tried to perform a drawing operation with a vertex buffer in slot {} holding a type different from "
 									   "the one in the set vertex format (expected '{}' in attribute {}, got '{}').",
-									   m_bound_vertex_format_bindings[slot].attrs, rhs, i, lhs);
+									   m_bound_vertex_format_bindings[slot].attrs[i], rhs, i, lhs);
 		}
 	}
 	TR_CHECKED_GRAPHICS_ASSERT(check_index_buffer == check_index_buffer::no || registered_buffers().contains(m_bound_index_buffer),

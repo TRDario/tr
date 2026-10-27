@@ -34,7 +34,7 @@ tr::audio_context::audio_context(audio_device& device)
 	m_class_gains.fill(1.0f);
 
 	try {
-		m_thread = std::jthread{&audio_context::thread_loop, this};
+		m_thread = std::jthread{[this](std::stop_token stoken) { thread_loop(stoken); }};
 	}
 	catch (...) {
 	}
@@ -178,7 +178,7 @@ void tr::audio_context::thread_loop(std::stop_token stoken) noexcept
 			}
 			erase_if(m_commands, [](auto& cmd) { return cmd.visit([]<typename T>(T& cmd) { return cmd.execute() == T::status::done; }); });
 		}
-		catch (std::exception& err) {
+		catch (std::exception&) {
 			return;
 		}
 		std::this_thread::sleep_for(std::chrono::milliseconds{10});

@@ -32,7 +32,7 @@ namespace tr::internal
 		void (*get_buffer_property_iv)(ALCcontext* context, unsigned int source, unsigned int param, int* values) noexcept;
 
 		/// Pointer to alGetErrorDirect.
-		[[nodiscard]] unsigned int (*get_error)(ALCcontext* context) noexcept;
+		unsigned int (*get_error)(ALCcontext* context) noexcept;
 
 		/// Pointer to alGetListenerfDirect.
 		void (*get_listener_property_f)(ALCcontext* context, unsigned int param, float* value) noexcept;
