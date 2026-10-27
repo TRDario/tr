@@ -125,7 +125,7 @@ TEST(DrawGeometryTest, FillsRotatedRectangleVertices)
 	EXPECT_NEAR(filled_by_range[2].y, 35, 1e-5f);
 
 	std::array<glm::vec2, 4> filled_by_iterator;
-	const std::array<glm::vec2, 3>::iterator filled_by_iterator_end{
+	const std::array<glm::vec2, 4>::iterator filled_by_iterator_end{
 		tr::fill_rectangle_vertices(filled_by_iterator.begin(), glm::vec2{10, 20}, glm::vec2{5, 10}, glm::vec2{20, 10}, 90_deg),
 	};
 	EXPECT_EQ(filled_by_iterator_end, filled_by_iterator.end());

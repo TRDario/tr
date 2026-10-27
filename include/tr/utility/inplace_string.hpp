@@ -380,8 +380,13 @@ namespace tr
 		template <forward_iterator_to<value_type> Iterator, std::sentinel_for<Iterator> Sentinel>
 		constexpr void append(Iterator first, Sentinel last) noexcept(noexcept(std::ranges::copy(first, last, end())))
 		{
+			const ssize size{static_cast<ssize>(std::ranges::distance(first, last))};
+
+			TR_ASSERT(m_size + size <= Capacity, "Tried to do an append onto an inplace string that would put it past its capacity of {}.",
+					  Capacity);
+
 			std::ranges::copy(first, last, end());
-			m_size += std::ranges::distance(first, last);
+			m_size += static_cast<size_type>(size);
 		}
 
 		/// Appends a substring to the string.
@@ -392,7 +397,7 @@ namespace tr
 					  "Tried to do an append onto an inplace string that would put it past its capacity of {}.", Capacity);
 
 			std::ranges::copy(str, end());
-			m_size += str.size();
+			m_size += static_cast<size_type>(str.size());
 		}
 
 		/// Appends a substring to the string.
@@ -433,7 +438,7 @@ namespace tr
 		constexpr iterator insert(const_iterator where, Iterator first, Sentinel last)
 			noexcept(noexcept(std::ranges::copy(first, last, begin() + (where - begin()))))
 		{
-			const usize size{usize(std::ranges::distance(first, last))};
+			const ssize size{static_cast<ssize>(std::ranges::distance(first, last))};
 
 			TR_ASSERT(m_size + size <= Capacity, "Tried to do an insert into an inplace string that would put it past its capacity of {}.",
 					  Capacity);
@@ -442,7 +447,7 @@ namespace tr
 			const iterator mut_where{begin() + (where - begin())};
 			std::ranges::copy_backward(mut_where, end(), end() + size);
 			std::ranges::copy(first, last, mut_where);
-			m_size += size;
+			m_size += static_cast<size_type>(size);
 			return mut_where;
 		}
 
@@ -460,7 +465,7 @@ namespace tr
 			const iterator mut_where{begin() + (where - begin())};
 			std::ranges::copy_backward(mut_where, end(), end() + str.size());
 			std::ranges::copy(str, mut_where);
-			m_size += str.size();
+			m_size += static_cast<size_type>(str.size());
 			return mut_where;
 		}
 
@@ -496,7 +501,7 @@ namespace tr
 
 			const iterator mut_start{begin() + (start - begin())};
 			std::ranges::copy(mut_start + (end - start), this->end(), mut_start);
-			m_size -= end - start;
+			m_size -= static_cast<size_type>(end - start);
 			return mut_start;
 		}
 

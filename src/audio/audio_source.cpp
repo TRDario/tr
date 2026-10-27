@@ -236,7 +236,7 @@ void tr::audio_source::set_gain(float gain) noexcept
 	TR_ASSERT(gain >= 0.0f, "Tried to set audio source gain to invalid value '{}'.", gain);
 
 	m_gain = gain;
-	for (usize i = 0; i < audio_class_count; ++i) {
+	for (audio_class_id i{0}; i < audio_class_count; ++i) {
 		if (m_class_mask[i]) {
 			gain *= context().class_gain(i);
 		}

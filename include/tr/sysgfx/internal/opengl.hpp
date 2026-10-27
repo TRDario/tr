@@ -179,7 +179,7 @@ namespace tr::internal
 		void (*get_query_object_i64v)(unsigned int id, unsigned int pname, std::int64_t* params) noexcept;
 
 		/// Pointer to glGetString.
-		[[nodiscard]] const unsigned char* (*get_string)(unsigned int name) noexcept;
+		const unsigned char* (*get_string)(unsigned int name) noexcept;
 
 		/// Pointer to glGetTextureParameterfv.
 		void (*get_texture_parameter_fv)(unsigned int texture, unsigned int pname, float* params) noexcept;

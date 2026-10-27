@@ -19,11 +19,12 @@ function(tr_target_template TARGET)
 	set_target_properties (${TARGET} PROPERTIES DEBUG_POSTFIX "d")
 	target_compile_features(${TARGET} PUBLIC cxx_std_23)
 
-	if(TR_HAS_CLANG OR TR_HAS_GCC)
+	if(TR_HAS_CLANG)
 		target_compile_options(${TARGET} PRIVATE
 			-Wall
 			-Wextra
 			-Wpedantic
+			-Wshadow
 			-Werror=return-type
 			-fno-trapping-math
 			-fno-math-errno
@@ -31,12 +32,7 @@ function(tr_target_template TARGET)
 			-fassociative-math
 			-ffp-contract=fast
 		)
-		if(TR_HAS_CLANG)
-			target_compile_options(${TARGET} PRIVATE -Wshadow)
-			target_link_options(${TARGET} PRIVATE -fuse-ld=lld)
-		else()
-			target_compile_options(${TARGET} PRIVATE -Wno-changes-meaning)
-		endif()
+		target_link_options(${TARGET} PRIVATE -fuse-ld=lld)
 	elseif(TR_HAS_CLANG_CL)
 		target_compile_options(${TARGET} PRIVATE
 			/clang:-Wall
@@ -50,6 +46,19 @@ function(tr_target_template TARGET)
 			/clang:-fassociative-math
 			/clang:-ffp-contract=fast
 		)
+	elseif(TR_HAS_GCC)
+		target_compile_options(${TARGET} PRIVATE
+			-Wall
+			-Wextra
+			-Wpedantic
+			-Werror=return-type
+			-Wno-changes-meaning
+			-fno-trapping-math
+			-fno-math-errno
+			-fno-signed-zeros
+			-fassociative-math
+			-ffp-contract=fast
+		)
 	elseif(TR_HAS_MSVC)
 		target_compile_options(${TARGET} PUBLIC
 			/Zc:preprocessor
@@ -60,6 +69,8 @@ function(tr_target_template TARGET)
 	
 	if(LINUX)
 		target_compile_definitions(${TARGET} PUBLIC $<$<CONFIG:Debug>:_GLIBCXX_DEBUG _GLIBCXX_DEBUG_PEDANTIC>)
+	elseif(WIN32)
+		target_compile_definitions(${TARGET} PUBLIC _CRT_SECURE_NO_WARNINGS)
 	endif()
 	target_compile_definitions(${TARGET} PUBLIC
 		$<$<CONFIG:Debug>:TR_ENABLE_LOG_TRACE>

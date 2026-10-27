@@ -104,4 +104,8 @@
 
 /// Disables the default specialization of a templated variable with an error.
 /// @hideinitializer
-#define TR_UNSPECIALIZED_VARIABLE_TEMPLATE(template_arg, return_type, message) [] -> return_type { static_assert(false, message); }()
+#define TR_UNSPECIALIZED_VARIABLE_TEMPLATE(template_arg, return_type, message)                                                             \
+	[] -> return_type {                                                                                                                    \
+		static_assert(false, message);                                                                                                     \
+		TR_UNREACHABLE;                                                                                                                    \
+	}()

@@ -112,7 +112,7 @@ tr::string_pool::iterator tr::string_pool::append(std::string_view string)
 	TR_ASSERT(!std::ranges::contains(string, '\0'), "Tried to append string with embedded NUL characters to a string pool.");
 
 	const usize offset{m_data.size()};
-	m_data.append_range(string);
+	m_data.insert(m_data.end(), string.begin(), string.end());
 	m_data.push_back('\0');
 	return iterator{m_data.begin(), m_data.begin() + offset};
 }
