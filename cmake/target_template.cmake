@@ -34,6 +34,8 @@ function(tr_target_template TARGET)
 		if(TR_HAS_CLANG)
 			target_compile_options(${TARGET} PRIVATE -Wshadow)
 			target_link_options(${TARGET} PRIVATE -fuse-ld=lld)
+		else()
+			target_compile_options(${TARGET} PRIVATE -Wno-changes-meaning)
 		endif()
 	elseif(TR_HAS_CLANG_CL)
 		target_compile_options(${TARGET} PRIVATE

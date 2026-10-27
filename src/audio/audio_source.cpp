@@ -56,7 +56,7 @@ tr::fsecs tr::audio_source::buffered_stream::tell() const
 
 void tr::audio_source::buffered_stream::seek(fsecs where)
 {
-	m_stream->seek(where.count() * m_stream->sample_rate());
+	m_stream->seek(static_cast<usize>(where.count() * m_stream->sample_rate()));
 }
 
 //
@@ -84,12 +84,12 @@ void tr::audio_source::buffered_stream::set_looping(bool looping)
 void tr::audio_source::buffered_stream::set_loop_points(fsecs start_point, fsecs end_point)
 {
 	if (start_point >= loop_end()) {
-		m_stream->set_loop_end(end_point.count() * m_stream->sample_rate());
-		m_stream->set_loop_start(start_point.count() * m_stream->sample_rate());
+		m_stream->set_loop_end(static_cast<usize>(end_point.count() * m_stream->sample_rate()));
+		m_stream->set_loop_start(static_cast<usize>(start_point.count() * m_stream->sample_rate()));
 	}
 	else {
-		m_stream->set_loop_start(start_point.count() * m_stream->sample_rate());
-		m_stream->set_loop_end(end_point.count() * m_stream->sample_rate());
+		m_stream->set_loop_start(static_cast<usize>(start_point.count() * m_stream->sample_rate()));
+		m_stream->set_loop_end(static_cast<usize>(end_point.count() * m_stream->sample_rate()));
 	}
 }
 

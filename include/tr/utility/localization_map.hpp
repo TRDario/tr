@@ -16,7 +16,7 @@ namespace tr
 	/// @hideinitializer
 	template <typename Target>
 	concept localization_key_value_pair =
-#ifdef __clang__
+#if defined(__clang__) && __has_builtin(__builtin_structured_binding_size)
 		requires {
 			requires __builtin_structured_binding_size(std::remove_cvref_t<Target>) == 2;
 			requires std::convertible_to<internal::binding_t<0, Target>, std::string_view>;

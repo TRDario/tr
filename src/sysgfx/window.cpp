@@ -6,6 +6,9 @@
 #include <tr/sysgfx/exception.hpp>
 #include <tr/sysgfx/window.hpp>
 #include <tr/sysgfx/window_view.hpp>
+#ifdef _WIN32
+#include <tr/sysgfx/mouse.hpp>
+#endif
 
 //
 
@@ -201,7 +204,7 @@ void tr::window::set_mouse_mode(mouse_mode mode)
 		break;
 	case mouse_mode::relative:
 		if (!m_cursor_reset_timer.has_value()) {
-			m_cursor_reset_timer.emplace(std::chrono::seconds{1}, [] {
+			m_cursor_reset_timer.emplace(std::chrono::seconds{1}, [this] {
 				float x, y;
 				SDL_GetMouseState(&x, &y);
 				SDL_SetWindowRelativeMouseMode(m_ptr.get(), false);

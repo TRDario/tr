@@ -8,7 +8,7 @@
 
 namespace tr::internal
 {
-#ifdef __clang__
+#if defined(__clang__) && __has_builtin(__builtin_structured_binding_size)
 	// clang-format off
     /// Gets the type of the `Index`th member of a structured binding of `Target`.
     /// @tparam Index Index of the structured binding member.
