@@ -13,5 +13,5 @@ var classtr_1_1pixel__iterator =
     [ "operator+=", "classtr_1_1pixel__iterator.html#ab468f0da6aca906f594fb6c19b15c9e0", null ],
     [ "operator--", "classtr_1_1pixel__iterator.html#acc658974c16e9b48dfacf2fd9c7892d5", null ],
     [ "pos", "classtr_1_1pixel__iterator.html#a5f11b1773b54cd7d9fe256144c3c0f63", null ],
-    [ "operator-", "classtr_1_1pixel__iterator.html#af6ec3236998e89beff157aae296555db", null ]
+    [ "operator-", "classtr_1_1pixel__iterator.html#a538ac2f118b8d24d85aa94d305e15c8e", null ]
 ];

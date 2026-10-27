@@ -659,6 +659,8 @@ var namespacetr =
     [ "executable_directory", "namespacetr.html#a7cd08e1d8ab689d537f64de2683dc7a1", null ],
     [ "user_directory", "namespacetr.html#a9cd73fd577159e94afeceae9d8c8fb61", null ],
     [ "pixel_bytes", "namespacetr.html#a863741db9393b682758ed4093cfbab2d", null ],
+    [ "operator-", "namespacetr.html#a503572b5265213ae4554804682e5b533", null ],
+    [ "operator-", "namespacetr.html#a248a59b6a07ac8dd723872ed831788ed", null ],
     [ "load_vertex_shader", "namespacetr.html#aa1273845e0b14a04d63c33e18411f041", null ],
     [ "load_fragment_shader", "namespacetr.html#a8dcdd4ed9ae2a883111eadc41f26178d", null ],
     [ "load_compute_shader", "namespacetr.html#aef7690624edce9038a1a0f6478bdb0c8", null ],

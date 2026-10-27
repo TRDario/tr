@@ -147,8 +147,8 @@ Public Types</h2></td></tr>
 <tr class="memdesc:a59d35e124ffb7a8e5d91bc2961dc966d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Value type used by the iterator.  <br /></td></tr>
 <tr class="memitem:aec963bb3fbd834e251c37e969f0dea32" id="r_aec963bb3fbd834e251c37e969f0dea32"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#aec963bb3fbd834e251c37e969f0dea32">pointer</a> = const <a class="el" href="#a59d35e124ffb7a8e5d91bc2961dc966d">value_type</a>*</td></tr>
 <tr class="memdesc:aec963bb3fbd834e251c37e969f0dea32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pointer type used by the iterator.  <br /></td></tr>
-<tr class="memitem:ac975a7e1b657bab2ea1a681a91e1a0e4" id="r_ac975a7e1b657bab2ea1a681a91e1a0e4"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#ac975a7e1b657bab2ea1a681a91e1a0e4">difference_type</a> = <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a0cfca98bbeed1e31ae9ef0344fb39389">ssize</a></td></tr>
-<tr class="memdesc:ac975a7e1b657bab2ea1a681a91e1a0e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Difference type used by the iterator.  <br /></td></tr>
+<tr class="memitem:a5b0cc5729b5d84bf0d33c475ac748eac" id="r_a5b0cc5729b5d84bf0d33c475ac748eac"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a5b0cc5729b5d84bf0d33c475ac748eac">difference_type</a> = int</td></tr>
+<tr class="memdesc:a5b0cc5729b5d84bf0d33c475ac748eac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Difference type used by the iterator.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -157,7 +157,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a69e186f9865b1886c2a3cddf69979337"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares iterators.  <br /></td></tr>
 <tr class="memitem:aafab7b5ba2e507a06ddd6807713fd91c" id="r_aafab7b5ba2e507a06ddd6807713fd91c"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#aafab7b5ba2e507a06ddd6807713fd91c">operator==</a> (const <a class="el" href="classtr_1_1const__pixel__iterator.html">const_pixel_iterator</a> &amp;rhs) const noexcept</td></tr>
 <tr class="memdesc:aafab7b5ba2e507a06ddd6807713fd91c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compares iterators for equality.  <br /></td></tr>
-<tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Position</div></td></tr>
+<tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Other operators</div></td></tr>
+<tr class="memitem:a9254b3841c55e8709b52663a262f57c5" id="r_a9254b3841c55e8709b52663a262f57c5"><td class="memItemLeft"><a class="el" href="#a59d35e124ffb7a8e5d91bc2961dc966d">value_type</a>&#160;</td><td class="memItemRight"><a class="el" href="#a9254b3841c55e8709b52663a262f57c5">operator*</a> () const noexcept</td></tr>
+<tr class="memdesc:a9254b3841c55e8709b52663a262f57c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dereferences the iterator.  <br /></td></tr>
+<tr class="memitem:acdd7fa2a9f812d50a345a3bb369e6b38" id="r_acdd7fa2a9f812d50a345a3bb369e6b38"><td class="memItemLeft"><a class="el" href="classtr_1_1const__pixel__iterator.html">const_pixel_iterator</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#acdd7fa2a9f812d50a345a3bb369e6b38">operator++</a> () noexcept</td></tr>
+<tr class="memdesc:acdd7fa2a9f812d50a345a3bb369e6b38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Increments the iterator.  <br /></td></tr>
+<tr class="memitem:ab31c418f677a8cda795a2a33b95ba105" id="r_ab31c418f677a8cda795a2a33b95ba105"><td class="memItemLeft"><a class="el" href="classtr_1_1const__pixel__iterator.html">const_pixel_iterator</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ab31c418f677a8cda795a2a33b95ba105">operator+=</a> (<a class="el" href="#a5b0cc5729b5d84bf0d33c475ac748eac">difference_type</a> diff) noexcept</td></tr>
+<tr class="memdesc:ab31c418f677a8cda795a2a33b95ba105"><td class="mdescLeft">&#160;</td><td class="mdescRight">Advances the iterator.  <br /></td></tr>
+<tr class="memitem:a9850ca120741f111f653edaf799668d5" id="r_a9850ca120741f111f653edaf799668d5"><td class="memItemLeft"><a class="el" href="classtr_1_1const__pixel__iterator.html">const_pixel_iterator</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a9850ca120741f111f653edaf799668d5">operator+=</a> (glm::ivec2 diff) noexcept</td></tr>
+<tr class="memdesc:a9850ca120741f111f653edaf799668d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Advances an iterator.  <br /></td></tr>
+<tr class="memitem:a717f5aa8cb1830b1c5b124a2a552c76b" id="r_a717f5aa8cb1830b1c5b124a2a552c76b"><td class="memItemLeft"><a class="el" href="classtr_1_1const__pixel__iterator.html">const_pixel_iterator</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a717f5aa8cb1830b1c5b124a2a552c76b">operator--</a> () noexcept</td></tr>
+<tr class="memdesc:a717f5aa8cb1830b1c5b124a2a552c76b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrements the iterator.  <br /></td></tr>
+<tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Position</div></td></tr>
 <tr class="memitem:a5f03de18f62c562f3cacc9adac716e1c" id="r_a5f03de18f62c562f3cacc9adac716e1c"><td class="memItemLeft">glm::ivec2&#160;</td><td class="memItemRight"><a class="el" href="#a5f03de18f62c562f3cacc9adac716e1c">pos</a> () const noexcept</td></tr>
 <tr class="memdesc:a5f03de18f62c562f3cacc9adac716e1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the 2D position of the iterator within the bitmap.  <br /></td></tr>
 <tr class="inherit_header pub_methods_classtr_1_1iterator__interface"><td colspan="2" class="dyn-inherit"><span class="dynarrow"><span class="arrowhead closed"></span></span>Public Member Functions inherited from <a class="el" href="classtr_1_1iterator__interface.html">tr::iterator_interface&lt; const_pixel_iterator, glm::ivec2 &gt;</a></td></tr>
@@ -165,19 +176,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:aec41afd62c20aa017c2ebaed29351d9a inherit pub_methods_classtr_1_1iterator__interface"><td class="mdescLeft">&#160;</td><td class="mdescRight">Synthesized pointer dereferencing operator.  <br /></td></tr>
 <tr class="memitem:a41b475644dedff39f9a727a63a230d27 inherit pub_methods_classtr_1_1iterator__interface" id="r_a41b475644dedff39f9a727a63a230d27"><td class="memItemLeft">constexpr decltype(auto)&#160;</td><td class="memItemRight"><a class="el" href="classtr_1_1iterator__interface.html#a41b475644dedff39f9a727a63a230d27">operator[]</a> (Difference diff) const noexcept(noexcept(*(base()+diff)))</td></tr>
 <tr class="memdesc:a41b475644dedff39f9a727a63a230d27 inherit pub_methods_classtr_1_1iterator__interface"><td class="mdescLeft">&#160;</td><td class="mdescRight">Synthesized subscripting operator.  <br /></td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 id="header-member-group" class="groupheader"><a id="member-group" name="member-group"></a>
-Other operators</h2></td></tr>
-<tr class="memitem:a9254b3841c55e8709b52663a262f57c5" id="r_a9254b3841c55e8709b52663a262f57c5"><td class="memItemLeft"><a class="el" href="#a59d35e124ffb7a8e5d91bc2961dc966d">value_type</a>&#160;</td><td class="memItemRight"><a class="el" href="#a9254b3841c55e8709b52663a262f57c5">operator*</a> () const noexcept</td></tr>
-<tr class="memdesc:a9254b3841c55e8709b52663a262f57c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dereferences the iterator.  <br /></td></tr>
-<tr class="memitem:acdd7fa2a9f812d50a345a3bb369e6b38" id="r_acdd7fa2a9f812d50a345a3bb369e6b38"><td class="memItemLeft"><a class="el" href="classtr_1_1const__pixel__iterator.html">const_pixel_iterator</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#acdd7fa2a9f812d50a345a3bb369e6b38">operator++</a> () noexcept</td></tr>
-<tr class="memdesc:acdd7fa2a9f812d50a345a3bb369e6b38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Increments the iterator.  <br /></td></tr>
-<tr class="memitem:ab31c418f677a8cda795a2a33b95ba105" id="r_ab31c418f677a8cda795a2a33b95ba105"><td class="memItemLeft"><a class="el" href="classtr_1_1const__pixel__iterator.html">const_pixel_iterator</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ab31c418f677a8cda795a2a33b95ba105">operator+=</a> (<a class="el" href="#ac975a7e1b657bab2ea1a681a91e1a0e4">difference_type</a> diff) noexcept</td></tr>
-<tr class="memdesc:ab31c418f677a8cda795a2a33b95ba105"><td class="mdescLeft">&#160;</td><td class="mdescRight">Advances the iterator.  <br /></td></tr>
-<tr class="memitem:a9850ca120741f111f653edaf799668d5" id="r_a9850ca120741f111f653edaf799668d5"><td class="memItemLeft"><a class="el" href="classtr_1_1const__pixel__iterator.html">const_pixel_iterator</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a9850ca120741f111f653edaf799668d5">operator+=</a> (glm::ivec2 diff) noexcept</td></tr>
-<tr class="memdesc:a9850ca120741f111f653edaf799668d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Advances an iterator.  <br /></td></tr>
-<tr class="memitem:a717f5aa8cb1830b1c5b124a2a552c76b" id="r_a717f5aa8cb1830b1c5b124a2a552c76b"><td class="memItemLeft"><a class="el" href="classtr_1_1const__pixel__iterator.html">const_pixel_iterator</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a717f5aa8cb1830b1c5b124a2a552c76b">operator--</a> () noexcept</td></tr>
-<tr class="memdesc:a717f5aa8cb1830b1c5b124a2a552c76b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decrements the iterator.  <br /></td></tr>
 </table>
 <a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Member Typedef Documentation</h2>
 <a id="a59d35e124ffb7a8e5d91bc2961dc966d" name="a59d35e124ffb7a8e5d91bc2961dc966d"></a>
@@ -212,14 +210,14 @@ Other operators</h2></td></tr>
 
 </div>
 </div>
-<a id="ac975a7e1b657bab2ea1a681a91e1a0e4" name="ac975a7e1b657bab2ea1a681a91e1a0e4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac975a7e1b657bab2ea1a681a91e1a0e4">&#9670;&#160;</a></span>difference_type</h2>
+<a id="a5b0cc5729b5d84bf0d33c475ac748eac" name="a5b0cc5729b5d84bf0d33c475ac748eac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b0cc5729b5d84bf0d33c475ac748eac">&#9670;&#160;</a></span>difference_type</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="#ac975a7e1b657bab2ea1a681a91e1a0e4">tr::const_pixel_iterator::difference_type</a> = <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a0cfca98bbeed1e31ae9ef0344fb39389">ssize</a></td>
+          <td class="memname">using <a class="el" href="#a5b0cc5729b5d84bf0d33c475ac748eac">tr::const_pixel_iterator::difference_type</a> = int</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -365,7 +363,7 @@ Other operators</h2></td></tr>
         <tr>
           <td class="memname"><a class="el" href="classtr_1_1const__pixel__iterator.html">const_pixel_iterator</a> &amp; tr::const_pixel_iterator::operator+= </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="#ac975a7e1b657bab2ea1a681a91e1a0e4">difference_type</a></td>          <td class="paramname"><span class="paramname"><em>diff</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="#a5b0cc5729b5d84bf0d33c475ac748eac">difference_type</a></td>          <td class="paramname"><span class="paramname"><em>diff</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>

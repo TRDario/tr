@@ -1,5 +1,7 @@
 var NAVTREEINDEX17 =
 {
+"structtr_1_1binary__reader_3_01tr_1_1scan__chord_01_4.html":[6,0,1,37],
+"structtr_1_1binary__reader_3_01tr_1_1scan__chord_01_4.html#a7636219441fe3bff0feb35561916915d":[4,0,0,50,0],
 "structtr_1_1binary__reader_3_01tr_1_1scan__chord_01_4.html#a7636219441fe3bff0feb35561916915d":[6,0,1,37,0],
 "structtr_1_1binary__writer.html":[4,0,0,51],
 "structtr_1_1binary__writer.html":[6,0,1,38],
@@ -247,7 +249,5 @@ var NAVTREEINDEX17 =
 "structtr_1_1localization__script__expected__equals__or__opening__brace.html#a6c6894a7f8cbef016dc33df588d7befa":[6,0,1,119,2],
 "structtr_1_1localization__script__expected__equals__or__opening__brace.html#a7a3b48fe8fc9eee93fa01e40f7028a26":[4,0,0,132,1],
 "structtr_1_1localization__script__expected__equals__or__opening__brace.html#a7a3b48fe8fc9eee93fa01e40f7028a26":[6,0,1,119,1],
-"structtr_1_1localization__script__expected__equals__or__opening__brace.html#add74250c4b15b8e6ea76ffb0589d66df":[4,0,0,132,0],
-"structtr_1_1localization__script__expected__equals__or__opening__brace.html#add74250c4b15b8e6ea76ffb0589d66df":[6,0,1,119,0],
-"structtr_1_1localization__script__expected__string.html":[4,0,0,133]
+"structtr_1_1localization__script__expected__equals__or__opening__brace.html#add74250c4b15b8e6ea76ffb0589d66df":[4,0,0,132,0]
 };
