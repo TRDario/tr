@@ -97,7 +97,7 @@ var NAVTREEINDEX =
 "classtr_1_1dynamic__vertex__buffer.html#aa11a084d8790a89fe054243ecbfa61d0",
 "classtr_1_1handle.html#adca993a8c6c8fa864e7d9a3a1605c97d",
 "classtr_1_1mapped__graphics__buffer__object.html#a93c9374f3d3368d10bd1daf4ccc4b1f0",
-"classtr_1_1pixel__iterator.html#ab468f0da6aca906f594fb6c19b15c9e0",
+"classtr_1_1pixel__iterator.html#a88b488b359b3b7a156c87b8ed7e2be36",
 "classtr_1_1shader__array.html",
 "classtr_1_1temporary__file.html#a621c8c5a6ef168dcb49c72dc2c3d5684",
 "classtr_1_1untyped__dynamic__vertex__buffer.html#a2c5c352444ab4d10ed3add4a8cd03f9a",
