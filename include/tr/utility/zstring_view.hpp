@@ -118,7 +118,7 @@ namespace tr
 
 		/// Converts the view into a standard path.
 		/// @return Standard path equivalent to `*this`.
-		[[nodiscard]] explicit constexpr operator std::filesystem::path() const noexcept
+		[[nodiscard]] explicit operator std::filesystem::path() const noexcept
 		{
 			return std::filesystem::path{c_str()};
 		}
