@@ -1,5 +1,3 @@
-
-
 add_executable(
 	audio_test
 	audio_buffer.cpp
@@ -8,11 +6,6 @@ add_executable(
     audio_device_list_view.cpp
 	audio_source.cpp
 )
-target_link_libraries(
-	audio_test
-	tr::audio
-	GTest::gtest_main
-)
-
-include(GoogleTest)
+tr_target_template(audio_test)
+target_link_libraries(audio_test PUBLIC GTest::gtest_main)
 gtest_discover_tests(audio_test)

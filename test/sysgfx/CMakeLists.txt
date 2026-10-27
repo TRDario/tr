@@ -3,11 +3,6 @@ add_executable(
 	file_dialog.cpp
     logger.cpp
 )
-target_link_libraries(
-	sysgfx_test
-	tr::sysgfx
-	GTest::gtest_main
-)
-
-include(GoogleTest)
+tr_target_template(sysgfx_test)
+target_link_libraries(sysgfx_test PUBLIC GTest::gtest_main)
 gtest_discover_tests(sysgfx_test)

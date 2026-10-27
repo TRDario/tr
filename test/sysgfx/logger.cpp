@@ -105,7 +105,7 @@ TEST_F(LoggerTest, MultipleThreadsLogging)
 	constexpr tr::usize thread_messages{400};
 
 	auto test_thread = [](int id) {
-		for (int i = 0; i < thread_messages; ++i) {
+		for (tr::usize i = 0; i < thread_messages; ++i) {
 			TR_LOG_INFO("test", "{} {}", id, i);
 		}
 	};

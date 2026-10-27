@@ -11,7 +11,6 @@ else()
     FetchContent_MakeAvailable(gtest)
 endif()
 
-enable_testing()
 add_subdirectory(utility)
 if(TR_BUILD_SYSGFX)
     add_subdirectory(sysgfx)

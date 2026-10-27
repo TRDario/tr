@@ -12,18 +12,24 @@ namespace tr
 {
 	/// Concept denoting a type suitable for a localization key-value pair.
 	/// @details To fulfill this concept, a type has to destructure to two values convertible to `std::string_view`.
-	/// @note This concept is currently only enforced on Clang.
+	/// @note The requirement for this concept is relaxed on Clang (does not require dealing with `std::tuple_size` and
+	/// `std::tuple_element`).
 	/// @hideinitializer
 	template <typename Target>
 	concept localization_key_value_pair =
-#if defined(__clang__) && __has_builtin(__builtin_structured_binding_size)
+#if defined(__has_builtin) && __has_builtin(__builtin_structured_binding_size)
 		requires {
 			requires __builtin_structured_binding_size(std::remove_cvref_t<Target>) == 2;
 			requires std::convertible_to<internal::binding_t<0, Target>, std::string_view>;
 			requires std::convertible_to<internal::binding_t<1, Target>, std::string_view>;
 		}
 #else
-		true
+		requires {
+			typename std::tuple_size<std::remove_cvref_t<Target>>::type;
+			requires std::tuple_size_v<std::remove_cvref_t<Target>> == 2;
+			requires std::convertible_to<std::tuple_element_t<0, std::remove_cvref_t<Target>>, std::string_view>;
+			requires std::convertible_to<std::tuple_element_t<1, std::remove_cvref_t<Target>>, std::string_view>;
+		}
 #endif
 	;
 
