@@ -1,7 +1,7 @@
 var classtr_1_1variant =
 [
     [ "alternative_t", "classtr_1_1variant.html#a33265f55117f300b6e55ac1b873f074d", null ],
-    [ "base_t", "classtr_1_1variant.html#aaf4077bc70e20d60e8d5604c035ca2b4", null ],
+    [ "base_t", "classtr_1_1variant.html#ab464d46e1ec7e33836d8459d14256e8b", null ],
     [ "operator opt_ref< Alternative >", "classtr_1_1variant.html#a4ede1af2476b6a7f6aa21431feed3d4f", null ],
     [ "operator opt_ref< const Alternative >", "classtr_1_1variant.html#a7e10f17dba0ab7389b2e61c6acdf4cd3", null ],
     [ "get_if", "classtr_1_1variant.html#adca8cea4cde95b30af8ae7c1aee97bcf", null ],

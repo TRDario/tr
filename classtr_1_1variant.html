@@ -151,9 +151,9 @@ Public Types</h2></td></tr>
 <tr class="memitem:a33265f55117f300b6e55ac1b873f074d" id="r_a33265f55117f300b6e55ac1b873f074d"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> I&gt; </td></tr>
 <tr class="memitem:a33265f55117f300b6e55ac1b873f074d template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a33265f55117f300b6e55ac1b873f074d">alternative_t</a> = std::variant_alternative_t&lt;I, std::variant&lt;Alternatives...&gt;&gt;</td></tr>
 <tr class="memdesc:a33265f55117f300b6e55ac1b873f074d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Member version of <span class="tt">std::variant_alternative_t</span>.  <br /></td></tr>
-<tr class="memitem:aaf4077bc70e20d60e8d5604c035ca2b4" id="r_aaf4077bc70e20d60e8d5604c035ca2b4"><td class="memTemplParams" colspan="2">template&lt;typename Self&gt; </td></tr>
-<tr class="memitem:aaf4077bc70e20d60e8d5604c035ca2b4 template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#aaf4077bc70e20d60e8d5604c035ca2b4">base_t</a> = decltype(std::forward_like&lt;Self&gt;(std::declval&lt;<a class="el" href="classtr_1_1variant.html">variant</a>&gt;()))</td></tr>
-<tr class="memdesc:aaf4077bc70e20d60e8d5604c035ca2b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Casts a derived type back to a qualified <span class="tt"><a class="el" href="classtr_1_1variant.html" title="Expanded variant interface.">tr::variant</a></span>.  <br /></td></tr>
+<tr class="memitem:ab464d46e1ec7e33836d8459d14256e8b" id="r_ab464d46e1ec7e33836d8459d14256e8b"><td class="memTemplParams" colspan="2">template&lt;typename Self&gt; </td></tr>
+<tr class="memitem:ab464d46e1ec7e33836d8459d14256e8b template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#ab464d46e1ec7e33836d8459d14256e8b">base_t</a> = <a class="el" href="namespacetr.html#add1efd9f78d98225507b7ed51d28214e">copy_qualifiers_t</a>&lt;<a class="el" href="classtr_1_1variant.html">variant</a>, Self&gt;</td></tr>
+<tr class="memdesc:ab464d46e1ec7e33836d8459d14256e8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Casts a derived type back to a qualified <span class="tt"><a class="el" href="classtr_1_1variant.html" title="Expanded variant interface.">tr::variant</a></span>.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -213,8 +213,8 @@ template&lt;<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#
 
 </div>
 </div>
-<a id="aaf4077bc70e20d60e8d5604c035ca2b4" name="aaf4077bc70e20d60e8d5604c035ca2b4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaf4077bc70e20d60e8d5604c035ca2b4">&#9670;&#160;</a></span>base_t</h2>
+<a id="ab464d46e1ec7e33836d8459d14256e8b" name="ab464d46e1ec7e33836d8459d14256e8b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab464d46e1ec7e33836d8459d14256e8b">&#9670;&#160;</a></span>base_t</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -224,7 +224,7 @@ template&lt;typename... Alternatives&gt; </div>
 template&lt;typename Self&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="classtr_1_1variant.html">tr::variant</a>&lt; Alternatives &gt;::base_t = decltype(std::forward_like&lt;Self&gt;(std::declval&lt;<a class="el" href="classtr_1_1variant.html">variant</a>&gt;()))</td>
+          <td class="memname">using <a class="el" href="classtr_1_1variant.html">tr::variant</a>&lt; Alternatives &gt;::base_t = <a class="el" href="namespacetr.html#add1efd9f78d98225507b7ed51d28214e">copy_qualifiers_t</a>&lt;<a class="el" href="classtr_1_1variant.html">variant</a>, Self&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
