@@ -1,6 +1,7 @@
 /// @file
 /// @brief Implements shader_pipeline.hpp.
 
+#include "internal/checked_graphics_assert.hpp"
 #include "internal/opengl_definitions.hpp"
 #include <tr/sysgfx/graphics_context.hpp>
 #include <tr/sysgfx/shader.hpp>
@@ -58,23 +59,23 @@ void tr::shader_pipeline::set_shaders(const vertex_shader& vertex_shader, const 
 	TR_ASSERT(&fragment_shader.context() == &context(),
 			  "Tried to set fragment shader {} to pipeline {} despite them not being on the same graphics context.", fragment_shader,
 			  *this);
-	TR_ASSERT(vertex_shader.outputs().size() == fragment_shader.inputs().size(),
-			  "Tried to set mismatched shaders to shader pipeline {}:\n"
-			  "Vertex shader {} has {} outputs, fragment shader {} has {} inputs.",
-			  *this, vertex_shader, vertex_shader.outputs().size(), fragment_shader, fragment_shader.inputs().size());
+	TR_CHECKED_GRAPHICS_ASSERT(vertex_shader.outputs().size() == fragment_shader.inputs().size(),
+							   "Tried to set mismatched shaders to shader pipeline {}:\n"
+							   "Vertex shader {} has {} outputs, fragment shader {} has {} inputs.",
+							   *this, vertex_shader, vertex_shader.outputs().size(), fragment_shader, fragment_shader.inputs().size());
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 	for (const auto& [location, info] : vertex_shader.outputs()) {
-		TR_ASSERT(fragment_shader.inputs().contains(location),
-				  "Tried to set mismatched shaders to shader pipeline {}:\n"
-				  "Vertex shader {} has output '{}' at location {} that was not found in fragment shader {}'s inputs.",
-				  *this, vertex_shader, info, location, fragment_shader);
+		TR_CHECKED_GRAPHICS_ASSERT(fragment_shader.inputs().contains(location),
+								   "Tried to set mismatched shaders to shader pipeline {}:\n"
+								   "Vertex shader {} has output '{}' at location {} that was not found in fragment shader {}'s inputs.",
+								   *this, vertex_shader, info, location, fragment_shader);
 
 		const internal::glsl_variable& frag_info{get(fragment_shader.inputs(), location)};
-		TR_ASSERT(frag_info.type == info.type && frag_info.array_size == info.array_size,
-				  "Tried to set mismatched shaders to shader pipeline {}:\n"
-				  "Vertex shader {} has output '{}' at location {}, but the input '{}' at the same location in fragment shader {} is "
-				  "not compatible with it.",
-				  *this, vertex_shader, info, location, get(fragment_shader.inputs(), location), fragment_shader);
+		TR_CHECKED_GRAPHICS_ASSERT(frag_info.type == info.type && frag_info.array_size == info.array_size,
+								   "Tried to set mismatched shaders to shader pipeline {}:\n"
+								   "Vertex shader {} has output '{}' at location {}, but the input '{}' at the same location in fragment "
+								   "shader {} is not compatible with it.",
+								   *this, vertex_shader, info, location, get(fragment_shader.inputs(), location), fragment_shader);
 	}
 #endif
 

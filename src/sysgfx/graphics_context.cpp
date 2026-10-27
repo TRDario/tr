@@ -1,6 +1,7 @@
 /// @file
 /// @brief Implements graphics_context.hpp.
 
+#include "internal/checked_graphics_assert.hpp"
 #include "internal/opengl_debug_callback.hpp"
 #include "internal/opengl_definitions.hpp"
 #include <SDL3/SDL.h>
@@ -56,16 +57,16 @@ tr::graphics_context::graphics_context(window_view window)
 
 void tr::graphics_context::deleter::operator()(SDL_GLContextState* context) const noexcept
 {
-#ifdef TR_ENABLE_CHECKED_GRAPHICS
-	TR_ASSERT(registered_framebuffers.empty(),
-			  "Tried to destroy a graphics context while one or more framebuffers were still alive on it.");
-	TR_ASSERT(registered_shaders.empty(), "Tried to destroy a graphics context while one or more shaders were still alive on it.");
-	TR_ASSERT(registered_shader_pipelines.empty(),
-			  "Tried to destroy a graphics context while one or more shader pipelines were still alive on it.");
-	TR_ASSERT(registered_vertex_formats.empty(),
-			  "Tried to destroy a graphics context while one or more vertex formats were still alive on it.");
-	TR_ASSERT(registered_buffers.empty(), "Tried to destroy a graphics context while one or more buffers were still alive on it.");
-#endif
+	TR_CHECKED_GRAPHICS_ASSERT(registered_framebuffers.empty(),
+							   "Tried to destroy a graphics context while one or more framebuffers were still alive on it.");
+	TR_CHECKED_GRAPHICS_ASSERT(registered_shaders.empty(),
+							   "Tried to destroy a graphics context while one or more shaders were still alive on it.");
+	TR_CHECKED_GRAPHICS_ASSERT(registered_shader_pipelines.empty(),
+							   "Tried to destroy a graphics context while one or more shader pipelines were still alive on it.");
+	TR_CHECKED_GRAPHICS_ASSERT(registered_vertex_formats.empty(),
+							   "Tried to destroy a graphics context while one or more vertex formats were still alive on it.");
+	TR_CHECKED_GRAPHICS_ASSERT(registered_buffers.empty(),
+							   "Tried to destroy a graphics context while one or more buffers were still alive on it.");
 
 	if (internal::current_graphics_context == context) {
 		internal::current_graphics_context = nullptr;
@@ -149,11 +150,10 @@ void tr::graphics_context::set_render_target(const render_target& target) noexce
 {
 	const internal::graphics_object_id framebuffer_id{target.framebuffer_id()};
 
-#ifdef TR_ENABLE_CHECKED_GRAPHICS
-	TR_ASSERT(&target.context() == this, "Tried to set render target to a context it is not associated with.");
-	TR_ASSERT(framebuffer_id == internal::graphics_object_id::invalid || registered_framebuffers().contains(framebuffer_id),
-			  "Tried to set render target on a framebuffer in an invalid state to a context.");
-#endif
+	TR_CHECKED_GRAPHICS_ASSERT(&target.context() == this, "Tried to set render target to a context it is not associated with.");
+	TR_CHECKED_GRAPHICS_ASSERT(framebuffer_id == internal::graphics_object_id::invalid ||
+								   registered_framebuffers().contains(framebuffer_id),
+							   "Tried to set render target on a framebuffer in an invalid state to a context.");
 
 	const internal::opengl& gl{this->gl()};
 	const rectangle<u16> viewport{target.viewport()};
@@ -195,12 +195,10 @@ void tr::graphics_context::set_shader_pipeline(const shader_pipeline& pipeline) 
 {
 	TR_ASSERT(pipeline.valid(), "Tried to set a shader pipeline in an invalid state to a context.");
 	TR_ASSERT(&pipeline.context() == this, "Tried to set shader pipeline {} to a context it is not associated with.", pipeline);
-#ifdef TR_ENABLE_CHECKED_GRAPHICS
-	TR_ASSERT(registered_shaders().contains(pipeline.vertex_shader_id()), "Tried to set shader pipeline {} with invalid set vertex shader.",
-			  pipeline);
-	TR_ASSERT(registered_shaders().contains(pipeline.fragment_shader_id()),
-			  "Tried to set shader pipeline {} with invalid set fragment shader.", pipeline);
-#endif
+	TR_CHECKED_GRAPHICS_ASSERT(registered_shaders().contains(pipeline.vertex_shader_id()),
+							   "Tried to set shader pipeline {} with invalid set vertex shader.", pipeline);
+	TR_CHECKED_GRAPHICS_ASSERT(registered_shaders().contains(pipeline.fragment_shader_id()),
+							   "Tried to set shader pipeline {} with invalid set fragment shader.", pipeline);
 
 	const internal::opengl& gl{this->gl()};
 	if (m_bound_shader != internal::graphics_object_id::invalid) {
@@ -270,10 +268,10 @@ void tr::graphics_context::check_typed_vertex_buffer(const std::string& label, i
 			  m_bound_vertex_format_bindings.size());
 
 	const std::span<const vertex_attribute> ref{m_bound_vertex_format_bindings.begin()[slot].attrs};
-	TR_ASSERT(
-		vertex_attributes.size() == ref.size(),
-		"Tried to set vertex buffer '{}' of a different type from the one in the set vertex format (has {} attributes instead of {}).",
-		label, vertex_attributes.size(), ref.size());
+	TR_ASSERT(vertex_attributes.size() == ref.size(),
+			  "Tried to set vertex buffer '{}' of a different type from the one in the set vertex format (has {} attributes "
+			  "instead of {}).",
+			  label, vertex_attributes.size(), ref.size());
 	for (usize i = 0; i < vertex_attributes.size(); ++i) {
 		const vertex_attribute& lhs{vertex_attributes.begin()[i]};
 		const vertex_attribute& rhs{ref.begin()[i]};
@@ -545,34 +543,37 @@ void tr::graphics_context::move_label(unsigned int type, unsigned int old_id, un
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 void tr::graphics_context::assert_valid_drawing_state(check_index_buffer check_index_buffer) noexcept
 {
-	TR_ASSERT(m_bound_framebuffer == internal::graphics_object_id::invalid || registered_framebuffers().contains(m_bound_framebuffer),
-			  "Tried to perform a drawing operation with an invalid set render target.");
-	TR_ASSERT(registered_shader_pipelines().contains(m_bound_shader_pipeline),
-			  "Tried to perform a drawing operation with an invalid set shader pipeline.");
-	TR_ASSERT(registered_vertex_formats().contains(m_bound_vertex_format),
-			  "Tried to perform a drawing operation with an invalid set vertex format.");
+	TR_CHECKED_GRAPHICS_ASSERT(m_bound_framebuffer == internal::graphics_object_id::invalid ||
+								   registered_framebuffers().contains(m_bound_framebuffer),
+							   "Tried to perform a drawing operation with an invalid set render target.");
+	TR_CHECKED_GRAPHICS_ASSERT(registered_shader_pipelines().contains(m_bound_shader_pipeline),
+							   "Tried to perform a drawing operation with an invalid set shader pipeline.");
+	TR_CHECKED_GRAPHICS_ASSERT(registered_vertex_formats().contains(m_bound_vertex_format),
+							   "Tried to perform a drawing operation with an invalid set vertex format.");
 	for (usize slot = 0; slot < m_bound_vertex_format_bindings.size(); ++slot) {
-		TR_ASSERT(registered_buffers().contains(m_bound_vertex_buffers[slot].id),
-				  "Tried to perform a drawing operation with an invalid set vertex buffer in slot {}.", slot);
+		TR_CHECKED_GRAPHICS_ASSERT(registered_buffers().contains(m_bound_vertex_buffers[slot].id),
+								   "Tried to perform a drawing operation with an invalid set vertex buffer in slot {}.", slot);
 
 		if (m_bound_vertex_buffers[slot].vertex_attributes.empty()) {
 			continue;
 		}
 
-		TR_ASSERT(m_bound_vertex_buffers[slot].vertex_attributes.size() == m_bound_vertex_format_bindings[slot].attrs.size(),
-				  "Tried to perform a drawing operation with a vertex buffer in slot {} holding a different type from the one in the set "
-				  "vertex format (has {} attributes instead of {}).",
-				  slot, m_bound_vertex_buffers[slot].vertex_attributes.size(), m_bound_vertex_format_bindings[slot].attrs.size());
+		TR_CHECKED_GRAPHICS_ASSERT(m_bound_vertex_buffers[slot].vertex_attributes.size() ==
+									   m_bound_vertex_format_bindings[slot].attrs.size(),
+								   "Tried to perform a drawing operation with a vertex buffer in slot {} holding a different type from the "
+								   "one in the set vertex format (has {} attributes instead of {}).",
+								   slot, m_bound_vertex_buffers[slot].vertex_attributes.size(),
+								   m_bound_vertex_format_bindings[slot].attrs.size());
 		for (usize i = 0; i < m_bound_vertex_format_bindings[i].attrs.size(); ++i) {
 			const vertex_attribute& lhs{m_bound_vertex_buffers[i].vertex_attributes[i]};
 			const vertex_attribute& rhs{m_bound_vertex_format_bindings[i].attrs[i]};
-			TR_ASSERT(lhs.type == rhs.type && lhs.elements == rhs.elements,
-					  "Tried to perform a drawing operation with a vertex buffer in slot {} holding a type different from than the one in "
-					  "the set vertex format (expected '{}' in attribute {}, got '{}').",
-					  m_bound_vertex_format_bindings[slot].attrs, rhs, i, lhs);
+			TR_CHECKED_GRAPHICS_ASSERT(lhs.type == rhs.type && lhs.elements == rhs.elements,
+									   "Tried to perform a drawing operation with a vertex buffer in slot {} holding a type different from "
+									   "the one in the set vertex format (expected '{}' in attribute {}, got '{}').",
+									   m_bound_vertex_format_bindings[slot].attrs, rhs, i, lhs);
 		}
 	}
-	TR_ASSERT(check_index_buffer == check_index_buffer::no || registered_buffers().contains(m_bound_index_buffer),
-			  "Tried to perform a drawing operation with an invalid set index buffer.");
+	TR_CHECKED_GRAPHICS_ASSERT(check_index_buffer == check_index_buffer::no || registered_buffers().contains(m_bound_index_buffer),
+							   "Tried to perform a drawing operation with an invalid set index buffer.");
 }
 #endif

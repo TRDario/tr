@@ -25,10 +25,10 @@ jobs:
             compiler: Clang
             c_compiler: clang
             cxx_compiler: clang++
-          - os: windows-2022
+          - os: windows-2025-vs2026
             compiler: MSVC
-            toolset: v143
-          - os: windows-2022
+            toolset: v145
+          - os: windows-2025-vs2026
             compiler: Clang
             toolset: ClangCL
 
@@ -43,11 +43,15 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           sudo apt-get update
-          sudo apt-get install -y --no-install-recommends ninja-build pkg-config gnome-desktop-testing libasound2-dev libpulse-dev libaudio-dev libjack-dev libsndio-dev libx11-dev libxext-dev libxrandr-dev libxcursor-dev libxfixes-dev libxi-dev libxss-dev libxtst-dev libwayland-dev libxkbcommon-dev libdrm-dev libgbm-dev libgl1-mesa-dev libgles2-mesa-dev libegl1-mesa-dev libdbus-1-dev libibus-1.0-dev libudev-dev libpipewire-0.3-dev libdecor-0-dev
+          sudo apt-get install -y --no-install-recommends libstdc++-14-dev ninja-build pkg-config gnome-desktop-testing libasound2-dev libpulse-dev libaudio-dev libjack-dev libsndio-dev libx11-dev libxext-dev libxrandr-dev libxcursor-dev libxfixes-dev libxi-dev libxss-dev libxtst-dev libwayland-dev libxkbcommon-dev libdrm-dev libgbm-dev libgl1-mesa-dev libgles2-mesa-dev libegl1-mesa-dev libdbus-1-dev libibus-1.0-dev libudev-dev libpipewire-0.3-dev libdecor-0-dev
       
-      - name: Install Clang and lld (Linux)
+      - name: Install LLVM (Linux)
+        shell: bash
         if: runner.os == 'Linux' && matrix.compiler == 'Clang'
-        run: sudo apt-get install -y --no-install-recommends clang lld
+        run: |
+          sudo apt-get install -y --no-install-recommends wget
+          chmod +x llvm.sh
+          ./llvm.sh 23
       
       - name: Configure (Linux)
         if: runner.os == 'Linux'
@@ -60,8 +64,9 @@ jobs:
       - name: Configure (Windows)
         if: runner.os == 'Windows'
         run: >-
-          cmake -S . -B build -G "Visual Studio 17 2022" -A x64 -T ${{ matrix.toolset }}
+          cmake -S . -B build -G "Visual Studio 18 2026" -A x64 -T ${{ matrix.toolset }}
           -DTR_BUILD_TESTS=ON
+          -DCMAKE_CXX_SCAN_FOR_MODULES=OFF
       
       - name: Build and test all configurations
         shell: bash

@@ -1,6 +1,7 @@
 /// @file
 /// @brief Implements shader.hpp.
 
+#include "internal/checked_graphics_assert.hpp"
 #include "internal/opengl_definitions.hpp"
 #include <tr/sysgfx/exception.hpp>
 #include <tr/sysgfx/graphics_context.hpp>
@@ -491,9 +492,10 @@ void tr::shader::set_image_uniform(int index, mutable_texture_view texture, acce
 	TR_ASSERT(valid(), "Tried to set a uniform on a shader in an invalid state.");
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 	const auto uniform_it{m_uniforms.find(index)};
-	TR_ASSERT(uniform_it != m_uniforms.end(), "Tried to set uniform with invalid index '{}' in shader {}.", index, *this);
-	TR_ASSERT(uniform_it->second.type == internal::glsl_type::image2D && uniform_it->second.array_size == 1,
-			  "Tried to set uniform with signature '{}' in shader {} with a value of type 'image2D'.", uniform_it->second, *this);
+	TR_CHECKED_GRAPHICS_ASSERT(uniform_it != m_uniforms.end(), "Tried to set uniform with invalid index '{}' in shader {}.", index, *this);
+	TR_CHECKED_GRAPHICS_ASSERT(uniform_it->second.type == internal::glsl_type::image2D && uniform_it->second.array_size == 1,
+							   "Tried to set uniform with signature '{}' in shader {} with a value of type 'image2D'.", uniform_it->second,
+							   *this);
 #endif
 
 	auto unit_it{m_image_units.find(index)};
