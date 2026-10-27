@@ -1,5 +1,7 @@
 var NAVTREEINDEX16 =
 {
+"ping__pong__target_8hpp_source.html":[7,0,0,0,1,32],
+"pixel__format_8hpp.html":[7,0,0,0,1,33],
 "pixel__format_8hpp_source.html":[7,0,0,0,1,33],
 "pixel__iterator_8hpp.html":[7,0,0,0,1,34],
 "pixel__iterator_8hpp_source.html":[7,0,0,0,1,34],
@@ -247,7 +249,5 @@ var NAVTREEINDEX16 =
 "structtr_1_1binary__reader_3_01std_1_1array_3_01Element_00_01Size_01_4_01_4.html":[6,0,1,28],
 "structtr_1_1binary__reader_3_01std_1_1map_3_01Key_00_01Value_00_01Other_8_8_8_01_4_01_4.html":[4,0,0,42],
 "structtr_1_1binary__reader_3_01std_1_1map_3_01Key_00_01Value_00_01Other_8_8_8_01_4_01_4.html":[6,0,1,29],
-"structtr_1_1binary__reader_3_01std_1_1pair_3_01First_00_01Second_01_4_01_4.html":[4,0,0,43],
-"structtr_1_1binary__reader_3_01std_1_1pair_3_01First_00_01Second_01_4_01_4.html":[6,0,1,30],
-"structtr_1_1binary__reader_3_01std_1_1set_3_01Key_00_01Other_8_8_8_01_4_01_4.html":[4,0,0,44]
+"structtr_1_1binary__reader_3_01std_1_1pair_3_01First_00_01Second_01_4_01_4.html":[4,0,0,43]
 };
