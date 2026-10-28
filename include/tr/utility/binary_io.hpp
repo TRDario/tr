@@ -50,7 +50,7 @@ namespace tr
 
 	/// Type able to be read with a stream write_binary.
 	template <typename Target>
-	concept binary_writable = requires(std::ostream& os, const Target& in) { tr::binary_writer<Target>{}(os, in); };
+	concept binary_writable = requires(std::ostream& os, const Target& in) { tr::binary_writer<std::remove_const_t<Target>>{}(os, in); };
 
 	/// @name Binary IO
 	/// @{
@@ -153,7 +153,7 @@ namespace tr
 	template <binary_writable In>
 	void write_binary(std::ostream& os, const In& in)
 	{
-		binary_writer<std::remove_cv_t<In>>{}(os, in);
+		binary_writer<std::remove_const_t<In>>{}(os, in);
 	}
 
 	/// Writes binary data to a stream.
