@@ -35,6 +35,12 @@ namespace tr
 		/// @return Always empty.
 		[[nodiscard]] std::string_view details() const noexcept override;
 
+		//
+
+		/// Gets the path to the file that wasn't found.
+		/// @return Path to the file that wasn't found.
+		[[nodiscard]] const std::string& path() const noexcept;
+
 		/// @}
 
 	  private:
@@ -68,6 +74,12 @@ namespace tr
 		/// Gets further details about the error.
 		/// @return Always empty.
 		[[nodiscard]] std::string_view details() const noexcept override;
+
+		//
+
+		/// Gets the path to the file that failed to open.
+		/// @return Path to the file that failed to open.
+		[[nodiscard]] const std::string& path() const noexcept;
 
 		/// @}
 

@@ -25,6 +25,11 @@ std::string_view tr::file_not_found::details() const noexcept
 	return std::string_view{};
 }
 
+const std::string& tr::file_not_found::path() const noexcept
+{
+	return m_path;
+}
+
 //
 
 tr::file_open_error::file_open_error(std::string_view path)
@@ -47,6 +52,11 @@ std::string_view tr::file_open_error::description() const noexcept
 std::string_view tr::file_open_error::details() const noexcept
 {
 	return std::string_view{};
+}
+
+const std::string& tr::file_open_error::path() const noexcept
+{
+	return m_path;
 }
 
 //
