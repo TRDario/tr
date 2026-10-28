@@ -10,7 +10,7 @@ var searchData=
   ['parse_5flocalization_5fscript_5fresult_7',['parse_localization_script_result',['../structtr_1_1parse__localization__script__result.html',1,'tr']]],
   ['parse_5flocalization_5fscript_5fto_8',['parse_localization_script_to',['../namespacetr.html#a44de36ac2535c6ad468d3024709fdc80',1,'tr::parse_localization_script_to(localization_map &amp;out, ErrorOut error_out, Iterator begin, Sentinel end, std::string_view chunk_name=&quot;&lt;unnamed&gt;&quot;)'],['../namespacetr.html#a75500f68a50debf01a9182bae8d3a662',1,'tr::parse_localization_script_to(localization_map &amp;out, ErrorOut error_out, Range &amp;&amp;range, std::string_view chunk_name=&quot;&lt;unnamed&gt;&quot;)']]],
   ['patches_9',['patches',['../namespacetr.html#a400576423c7753c57e41f5375e765753a6b0d3600d50944ab08b6145722eaa7c2',1,'tr']]],
-  ['path_10',['path',['../classtr_1_1temporary__file.html#a336abb05ad8fc93bc99e3aad34026667',1,'tr::temporary_file']]],
+  ['path_10',['path',['../classtr_1_1file__not__found.html#a619a4db991b4b8682e4a7cb3b6440821',1,'tr::file_not_found::path()'],['../classtr_1_1file__open__error.html#a3cd14211dde0aa6bd20c25797794ee8d',1,'tr::file_open_error::path()'],['../classtr_1_1temporary__file.html#a336abb05ad8fc93bc99e3aad34026667',1,'tr::temporary_file::path()']]],
   ['path_2ehpp_11',['path.hpp',['../path_8hpp.html',1,'']]],
   ['path_5ferror_12',['path_error',['../classtr_1_1path__error.html',1,'tr::path_error'],['../classtr_1_1path__error.html#aedbac1e0063b3d279ff2cfd8ced8037e',1,'tr::path_error::path_error()']]],
   ['pattern_13',['pattern',['../structtr_1_1file__dialog__filter.html#a3ef83a31b2ce421b8bc601a967fe9567',1,'tr::file_dialog_filter']]],

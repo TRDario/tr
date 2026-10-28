@@ -139,7 +139,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('iostream_8hpp_
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    {</div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>      <span class="keyword">public</span>:</div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span></div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="classtr_1_1file__not__found.html#a00b5c4def5409764bc00c23c190de1b0">   20</a></span>        [[nodiscard]] <a class="code hl_function" href="classtr_1_1file__not__found.html#a00b5c4def5409764bc00c23c190de1b0">file_not_found</a>(std::string_view path);</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="classtr_1_1file__not__found.html#a00b5c4def5409764bc00c23c190de1b0">   20</a></span>        [[nodiscard]] <a class="code hl_function" href="classtr_1_1file__not__found.html#a00b5c4def5409764bc00c23c190de1b0">file_not_found</a>(std::string_view <a class="code hl_function" href="classtr_1_1file__not__found.html#a619a4db991b4b8682e4a7cb3b6440821">path</a>);</div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span></div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span></div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="classtr_1_1file__not__found.html#ab06d3b888479de9d12bdf96075ae41e9">   28</a></span>        [[nodiscard]] std::string_view <a class="code hl_function" href="classtr_1_1file__not__found.html#ab06d3b888479de9d12bdf96075ae41e9">name</a>() const noexcept override;</div>
@@ -147,48 +147,58 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('iostream_8hpp_
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="classtr_1_1file__not__found.html#aed244c63e89b6ecf6d04255185f10c61">   32</a></span>        [[nodiscard]] std::string_view <a class="code hl_function" href="classtr_1_1file__not__found.html#aed244c63e89b6ecf6d04255185f10c61">description</a>() const noexcept override;</div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span></div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="classtr_1_1file__not__found.html#ae280b3573818c09b401fb83a8193448a">   36</a></span>        [[nodiscard]] std::string_view <a class="code hl_function" href="classtr_1_1file__not__found.html#ae280b3573818c09b401fb83a8193448a">details</a>() const noexcept override;</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span></div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>      private:</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        std::<span class="keywordtype">string</span> m_path;</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    };</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        <span class="comment">//</span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="classtr_1_1file__not__found.html#a619a4db991b4b8682e4a7cb3b6440821">   42</a></span>        [[nodiscard]] const std::<span class="keywordtype">string</span>&amp; <a class="code hl_function" href="classtr_1_1file__not__found.html#a619a4db991b4b8682e4a7cb3b6440821">path</a>() const noexcept;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>      private:</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>        std::<span class="keywordtype">string</span> m_path;</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    };</div>
 </div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span></div>
-<div class="foldopen" id="foldopen00046" data-start="{" data-end="};">
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="classtr_1_1file__open__error.html">   46</a></span>    class <a class="code hl_function" href="classtr_1_1file__open__error.html#a7cb2b31cdd3988fddd2a15c848050a63">file_open_error</a> : public <a class="code hl_class" href="classtr_1_1exception.html">exception</a></div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    {</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>      <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span></div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="classtr_1_1file__open__error.html#a7cb2b31cdd3988fddd2a15c848050a63">   54</a></span>        [[nodiscard]] <a class="code hl_function" href="classtr_1_1file__open__error.html#a7cb2b31cdd3988fddd2a15c848050a63">file_open_error</a>(std::string_view path);</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span></div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span></div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno"><a class="line" href="classtr_1_1file__open__error.html#adf5e5b8112401c1a644105ecd955cf40">   62</a></span>        [[nodiscard]] std::string_view <a class="code hl_function" href="classtr_1_1file__open__error.html#adf5e5b8112401c1a644105ecd955cf40">name</a>() const noexcept override;</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span></div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno"><a class="line" href="classtr_1_1file__open__error.html#a6cb989a87084b3bc748a5922c5dc13ff">   66</a></span>        [[nodiscard]] std::string_view <a class="code hl_function" href="classtr_1_1file__open__error.html#a6cb989a87084b3bc748a5922c5dc13ff">description</a>() const noexcept override;</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span></div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno"><a class="line" href="classtr_1_1file__open__error.html#aa33ee3e9722566c4db967094a433b9eb">   70</a></span>        [[nodiscard]] std::string_view <a class="code hl_function" href="classtr_1_1file__open__error.html#aa33ee3e9722566c4db967094a433b9eb">details</a>() const noexcept override;</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span></div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>      private:</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        std::<span class="keywordtype">string</span> m_path;</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    };</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span></div>
+<div class="foldopen" id="foldopen00052" data-start="{" data-end="};">
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="classtr_1_1file__open__error.html">   52</a></span>    class <a class="code hl_function" href="classtr_1_1file__open__error.html#a7cb2b31cdd3988fddd2a15c848050a63">file_open_error</a> : public <a class="code hl_class" href="classtr_1_1exception.html">exception</a></div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    {</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>      <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span></div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="classtr_1_1file__open__error.html#a7cb2b31cdd3988fddd2a15c848050a63">   60</a></span>        [[nodiscard]] <a class="code hl_function" href="classtr_1_1file__open__error.html#a7cb2b31cdd3988fddd2a15c848050a63">file_open_error</a>(std::string_view <a class="code hl_function" href="classtr_1_1file__open__error.html#a3cd14211dde0aa6bd20c25797794ee8d">path</a>);</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span></div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span></div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno"><a class="line" href="classtr_1_1file__open__error.html#adf5e5b8112401c1a644105ecd955cf40">   68</a></span>        [[nodiscard]] std::string_view <a class="code hl_function" href="classtr_1_1file__open__error.html#adf5e5b8112401c1a644105ecd955cf40">name</a>() const noexcept override;</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span></div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno"><a class="line" href="classtr_1_1file__open__error.html#a6cb989a87084b3bc748a5922c5dc13ff">   72</a></span>        [[nodiscard]] std::string_view <a class="code hl_function" href="classtr_1_1file__open__error.html#a6cb989a87084b3bc748a5922c5dc13ff">description</a>() const noexcept override;</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span></div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno"><a class="line" href="classtr_1_1file__open__error.html#aa33ee3e9722566c4db967094a433b9eb">   76</a></span>        [[nodiscard]] std::string_view <a class="code hl_function" href="classtr_1_1file__open__error.html#aa33ee3e9722566c4db967094a433b9eb">details</a>() const noexcept override;</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        <span class="comment">//</span></div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span></div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno"><a class="line" href="classtr_1_1file__open__error.html#a3cd14211dde0aa6bd20c25797794ee8d">   82</a></span>        [[nodiscard]] const std::<span class="keywordtype">string</span>&amp; <a class="code hl_function" href="classtr_1_1file__open__error.html#a3cd14211dde0aa6bd20c25797794ee8d">path</a>() const noexcept;</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span></div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>      private:</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        std::<span class="keywordtype">string</span> m_path;</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>    };</div>
 </div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    <span class="comment">//</span></div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span></div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno"><a class="line" href="namespacetr.html#ad3015981052bf741b1eff02708e32789">   86</a></span>    [[nodiscard]] std::ofstream <a class="code hl_function" href="namespacetr.html#ad3015981052bf741b1eff02708e32789">open_file_w</a>(const std::filesystem::path&amp; path, std::ios::openmode openmode = std::ios::out);</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span></div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno"><a class="line" href="namespacetr.html#aeb86995a8c01c3f3a9988717176abb8b">   94</a></span>    [[nodiscard]] std::ifstream <a class="code hl_function" href="namespacetr.html#aeb86995a8c01c3f3a9988717176abb8b">open_file_r</a>(const std::filesystem::path&amp; path, std::ios::openmode openmode = std::ios::in);</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span> </div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    <span class="comment">//</span></div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span></div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno"><a class="line" href="namespacetr.html#a68b81ff0036f7e206c9e3a1dec904e19">  101</a></span>    [[nodiscard]] <span class="keywordtype">bool</span> <a class="code hl_function" href="namespacetr.html#a68b81ff0036f7e206c9e3a1dec904e19">reached_eof</a>(std::istream&amp; stream);</div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>} <span class="comment">// namespace tr</span></div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>    <span class="comment">//</span></div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span></div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno"><a class="line" href="namespacetr.html#ad3015981052bf741b1eff02708e32789">   98</a></span>    [[nodiscard]] std::ofstream <a class="code hl_function" href="namespacetr.html#ad3015981052bf741b1eff02708e32789">open_file_w</a>(const std::filesystem::<a class="code hl_function" href="classtr_1_1file__not__found.html#a619a4db991b4b8682e4a7cb3b6440821">path</a>&amp; <a class="code hl_function" href="classtr_1_1file__not__found.html#a619a4db991b4b8682e4a7cb3b6440821">path</a>, std::ios::openmode openmode = std::ios::out);</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span></div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno"><a class="line" href="namespacetr.html#aeb86995a8c01c3f3a9988717176abb8b">  106</a></span>    [[nodiscard]] std::ifstream <a class="code hl_function" href="namespacetr.html#aeb86995a8c01c3f3a9988717176abb8b">open_file_r</a>(const std::filesystem::<a class="code hl_function" href="classtr_1_1file__not__found.html#a619a4db991b4b8682e4a7cb3b6440821">path</a>&amp; <a class="code hl_function" href="classtr_1_1file__not__found.html#a619a4db991b4b8682e4a7cb3b6440821">path</a>, std::ios::openmode openmode = std::ios::in);</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> </div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>    <span class="comment">//</span></div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span></div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno"><a class="line" href="namespacetr.html#a68b81ff0036f7e206c9e3a1dec904e19">  113</a></span>    [[nodiscard]] <span class="keywordtype">bool</span> <a class="code hl_function" href="namespacetr.html#a68b81ff0036f7e206c9e3a1dec904e19">reached_eof</a>(std::istream&amp; stream);</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>} <span class="comment">// namespace tr</span></div>
 <div class="ttc" id="aclasstr_1_1exception_html"><div class="ttname"><a href="classtr_1_1exception.html">tr::exception</a></div><div class="ttdoc">Extension of std::exception and base class of tr errors.</div><div class="ttdef"><b>Definition</b> utility/exception.hpp:16</div></div>
 <div class="ttc" id="aclasstr_1_1file__not__found_html_a00b5c4def5409764bc00c23c190de1b0"><div class="ttname"><a href="classtr_1_1file__not__found.html#a00b5c4def5409764bc00c23c190de1b0">tr::file_not_found::file_not_found</a></div><div class="ttdeci">file_not_found(std::string_view path)</div><div class="ttdoc">Constructs an exception.</div></div>
+<div class="ttc" id="aclasstr_1_1file__not__found_html_a619a4db991b4b8682e4a7cb3b6440821"><div class="ttname"><a href="classtr_1_1file__not__found.html#a619a4db991b4b8682e4a7cb3b6440821">tr::file_not_found::path</a></div><div class="ttdeci">const std::string &amp; path() const noexcept</div><div class="ttdoc">Gets the path to the file that wasn&#39;t found.</div></div>
 <div class="ttc" id="aclasstr_1_1file__not__found_html_ab06d3b888479de9d12bdf96075ae41e9"><div class="ttname"><a href="classtr_1_1file__not__found.html#ab06d3b888479de9d12bdf96075ae41e9">tr::file_not_found::name</a></div><div class="ttdeci">std::string_view name() const noexcept override</div><div class="ttdoc">Gets the name of the error.</div></div>
 <div class="ttc" id="aclasstr_1_1file__not__found_html_ae280b3573818c09b401fb83a8193448a"><div class="ttname"><a href="classtr_1_1file__not__found.html#ae280b3573818c09b401fb83a8193448a">tr::file_not_found::details</a></div><div class="ttdeci">std::string_view details() const noexcept override</div><div class="ttdoc">Gets further details about the error.</div></div>
 <div class="ttc" id="aclasstr_1_1file__not__found_html_aed244c63e89b6ecf6d04255185f10c61"><div class="ttname"><a href="classtr_1_1file__not__found.html#aed244c63e89b6ecf6d04255185f10c61">tr::file_not_found::description</a></div><div class="ttdeci">std::string_view description() const noexcept override</div><div class="ttdoc">Gets the description of the error.</div></div>
+<div class="ttc" id="aclasstr_1_1file__open__error_html_a3cd14211dde0aa6bd20c25797794ee8d"><div class="ttname"><a href="classtr_1_1file__open__error.html#a3cd14211dde0aa6bd20c25797794ee8d">tr::file_open_error::path</a></div><div class="ttdeci">const std::string &amp; path() const noexcept</div><div class="ttdoc">Gets the path to the file that failed to open.</div></div>
 <div class="ttc" id="aclasstr_1_1file__open__error_html_a6cb989a87084b3bc748a5922c5dc13ff"><div class="ttname"><a href="classtr_1_1file__open__error.html#a6cb989a87084b3bc748a5922c5dc13ff">tr::file_open_error::description</a></div><div class="ttdeci">std::string_view description() const noexcept override</div><div class="ttdoc">Gets the description of the error.</div></div>
 <div class="ttc" id="aclasstr_1_1file__open__error_html_a7cb2b31cdd3988fddd2a15c848050a63"><div class="ttname"><a href="classtr_1_1file__open__error.html#a7cb2b31cdd3988fddd2a15c848050a63">tr::file_open_error::file_open_error</a></div><div class="ttdeci">file_open_error(std::string_view path)</div><div class="ttdoc">Constructs an exception.</div></div>
 <div class="ttc" id="aclasstr_1_1file__open__error_html_aa33ee3e9722566c4db967094a433b9eb"><div class="ttname"><a href="classtr_1_1file__open__error.html#aa33ee3e9722566c4db967094a433b9eb">tr::file_open_error::details</a></div><div class="ttdeci">std::string_view details() const noexcept override</div><div class="ttdoc">Gets further details about the error.</div></div>
