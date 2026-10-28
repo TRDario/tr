@@ -9,7 +9,7 @@
 
 namespace tr
 {
-	class event;
+	class event_view;
 	class graphics_context;
 	class texture;
 	class texture_view;
@@ -33,7 +33,7 @@ namespace tr
 		/// Processes an event for Dear ImGui.
 		/// @note This function should preferably be called on every `tr_main::handle_event` call.
 		/// @param event Event to process.
-		void ProcessEvent(const event& event);
+		void ProcessEvent(event_view event);
 
 		/// Shuts the Dear ImGui backends needed to work with tr down.
 		/// @note This function should be called once before `::ImGui::DestroyContext`.

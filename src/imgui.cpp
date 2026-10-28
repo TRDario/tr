@@ -4,7 +4,7 @@
 #include <backends/imgui_impl_opengl3.h>
 #include <backends/imgui_impl_sdl3.h>
 #include <tr/imgui.hpp>
-#include <tr/sysgfx/event.hpp>
+#include <tr/sysgfx/event_view.hpp>
 #include <tr/sysgfx/graphics_context.hpp>
 #include <tr/sysgfx/texture_view.hpp>
 #include <tr/sysgfx/window_view.hpp>
@@ -17,7 +17,7 @@ void tr::ImGui::Init(graphics_context& context)
 	ImGui_ImplOpenGL3_Init("#version 150");
 }
 
-void tr::ImGui::ProcessEvent(const event& event)
+void tr::ImGui::ProcessEvent(event_view event)
 {
 	ImGui_ImplSDL3_ProcessEvent(&event.unwrap());
 }

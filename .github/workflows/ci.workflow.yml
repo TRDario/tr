@@ -59,6 +59,7 @@ jobs:
           cmake -S . -B build -G "Ninja Multi-Config"
           -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
           -DCMAKE_CXX_COMPILER=${{ matrix.cxx_compiler }}
+          -DTR_BUILD_IMGUI=ON
           -DTR_BUILD_TESTS=ON
           -DCMAKE_POLICY_VERSION_MINIMUM=3.5
       
@@ -66,6 +67,7 @@ jobs:
         if: runner.os == 'Windows'
         run: >-
           cmake -S . -B build -G "Visual Studio 18 2026" -A x64 -T ${{ matrix.toolset }}
+          -DTR_BUILD_IMGUI=ON
           -DTR_BUILD_TESTS=ON
           -DCMAKE_CXX_SCAN_FOR_MODULES=OFF
           -DCMAKE_POLICY_VERSION_MINIMUM="3.5"
