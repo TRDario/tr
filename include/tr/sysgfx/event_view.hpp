@@ -83,111 +83,120 @@ namespace tr
 		/// @name Alternatives
 		/// @{
 
-		/// Checks whether the event is of a certain type.
-		/// @tparam Event Event type.
-		/// @return Whether the event holds an event of type `Event`.
-		template <event_type Event>
+		/// Checks whether the event holds an alternative of a specific type.
+		/// @tparam Alternative Event type.
+		/// @return Whether the event holds an event of type `Alternative`.
+		template <event_type Alternative>
 		[[nodiscard]] bool is() const noexcept
 		{
-			if constexpr (std::same_as<Event, quit_event>) {
+			if constexpr (std::same_as<Alternative, quit_event>) {
 				return type() == 0x100;
 			}
-			else if constexpr (std::same_as<Event, window_show_event>) {
+			else if constexpr (std::same_as<Alternative, window_show_event>) {
 				return type() == 0x202;
 			}
-			else if constexpr (std::same_as<Event, window_hide_event>) {
+			else if constexpr (std::same_as<Alternative, window_hide_event>) {
 				return type() == 0x203;
 			}
-			else if constexpr (std::same_as<Event, backbuffer_resize_event>) {
+			else if constexpr (std::same_as<Alternative, backbuffer_resize_event>) {
 				return type() == 0x207;
 			}
-			else if constexpr (std::same_as<Event, window_mouse_enter_event>) {
+			else if constexpr (std::same_as<Alternative, window_mouse_enter_event>) {
 				return type() == 0x20C;
 			}
-			else if constexpr (std::same_as<Event, window_mouse_leave_event>) {
+			else if constexpr (std::same_as<Alternative, window_mouse_leave_event>) {
 				return type() == 0x20D;
 			}
-			else if constexpr (std::same_as<Event, window_gain_focus_event>) {
+			else if constexpr (std::same_as<Alternative, window_gain_focus_event>) {
 				return type() == 0x20E;
 			}
-			else if constexpr (std::same_as<Event, window_lose_focus_event>) {
+			else if constexpr (std::same_as<Alternative, window_lose_focus_event>) {
 				return type() == 0x20F;
 			}
-			else if constexpr (std::same_as<Event, key_down_event>) {
+			else if constexpr (std::same_as<Alternative, key_down_event>) {
 				return type() == 0x300;
 			}
-			else if constexpr (std::same_as<Event, key_up_event>) {
+			else if constexpr (std::same_as<Alternative, key_up_event>) {
 				return type() == 0x301;
 			}
-			else if constexpr (std::same_as<Event, text_input_event>) {
+			else if constexpr (std::same_as<Alternative, text_input_event>) {
 				return type() == 0x303;
 			}
-			else if constexpr (std::same_as<Event, mouse_motion_event>) {
+			else if constexpr (std::same_as<Alternative, mouse_motion_event>) {
 				return type() == 0x400;
 			}
-			else if constexpr (std::same_as<Event, mouse_down_event>) {
+			else if constexpr (std::same_as<Alternative, mouse_down_event>) {
 				return type() == 0x401;
 			}
-			else if constexpr (std::same_as<Event, mouse_up_event>) {
+			else if constexpr (std::same_as<Alternative, mouse_up_event>) {
 				return type() == 0x402;
 			}
-			else if constexpr (std::same_as<Event, mouse_wheel_event>) {
+			else if constexpr (std::same_as<Alternative, mouse_wheel_event>) {
 				return type() == 0x403;
 			}
 		}
 
-		/// Converts the event into a sub-type.
-		/// @tparam Event Event type.
-		/// @pre The event must hold an event of type `Event`.
-		/// @return Held event subtype.
-		template <event_type Event>
-		[[nodiscard]] Event as() const noexcept
+		/// Gets an alternative of the event if it holds it.
+		/// @tparam Alternative Event type.
+		/// @return Alternative held by the event if it exists, `std::nullopt` otherwise.
+		template <event_type Alternative>
+		[[nodiscard]] std::optional<Alternative> get_if() const noexcept
 		{
-			TR_ASSERT(is<Event>(), "Tried to convert event to a sub-type it is not.");
+			return is<Alternative>() ? std::optional{get<Alternative>()} : std::nullopt;
+		}
 
-			if constexpr (std::same_as<Event, quit_event>) {
+		/// Gets an alternative of the event.
+		/// @tparam Event Event type.
+		/// @pre The event must hold an event of type `Alternative`.
+		/// @return Alternative held by the event.
+		template <event_type Alternative>
+		[[nodiscard]] Alternative get() const noexcept
+		{
+			TR_ASSERT(is<Alternative>(), "Tried to convert event to a sub-type it is not.");
+
+			if constexpr (std::same_as<Alternative, quit_event>) {
 				return quit_event{};
 			}
-			else if constexpr (std::same_as<Event, window_show_event>) {
+			else if constexpr (std::same_as<Alternative, window_show_event>) {
 				return window_show_event{*this};
 			}
-			else if constexpr (std::same_as<Event, window_hide_event>) {
+			else if constexpr (std::same_as<Alternative, window_hide_event>) {
 				return window_hide_event{*this};
 			}
-			else if constexpr (std::same_as<Event, backbuffer_resize_event>) {
+			else if constexpr (std::same_as<Alternative, backbuffer_resize_event>) {
 				return backbuffer_resize_event{*this};
 			}
-			else if constexpr (std::same_as<Event, window_mouse_enter_event>) {
+			else if constexpr (std::same_as<Alternative, window_mouse_enter_event>) {
 				return window_mouse_enter_event{*this};
 			}
-			else if constexpr (std::same_as<Event, window_mouse_leave_event>) {
+			else if constexpr (std::same_as<Alternative, window_mouse_leave_event>) {
 				return window_mouse_leave_event{*this};
 			}
-			else if constexpr (std::same_as<Event, window_gain_focus_event>) {
+			else if constexpr (std::same_as<Alternative, window_gain_focus_event>) {
 				return window_gain_focus_event{*this};
 			}
-			else if constexpr (std::same_as<Event, window_lose_focus_event>) {
+			else if constexpr (std::same_as<Alternative, window_lose_focus_event>) {
 				return window_lose_focus_event{*this};
 			}
-			else if constexpr (std::same_as<Event, key_down_event>) {
+			else if constexpr (std::same_as<Alternative, key_down_event>) {
 				return key_down_event{*this};
 			}
-			else if constexpr (std::same_as<Event, key_up_event>) {
+			else if constexpr (std::same_as<Alternative, key_up_event>) {
 				return key_up_event{*this};
 			}
-			else if constexpr (std::same_as<Event, text_input_event>) {
+			else if constexpr (std::same_as<Alternative, text_input_event>) {
 				return text_input_event{*this};
 			}
-			else if constexpr (std::same_as<Event, mouse_motion_event>) {
+			else if constexpr (std::same_as<Alternative, mouse_motion_event>) {
 				return mouse_motion_event{*this};
 			}
-			else if constexpr (std::same_as<Event, mouse_down_event>) {
+			else if constexpr (std::same_as<Alternative, mouse_down_event>) {
 				return mouse_down_event{*this};
 			}
-			else if constexpr (std::same_as<Event, mouse_up_event>) {
+			else if constexpr (std::same_as<Alternative, mouse_up_event>) {
 				return mouse_up_event{*this};
 			}
-			else if constexpr (std::same_as<Event, mouse_wheel_event>) {
+			else if constexpr (std::same_as<Alternative, mouse_wheel_event>) {
 				return mouse_wheel_event{*this};
 			}
 		}
@@ -257,8 +266,8 @@ namespace tr
 
 		//
 
-		/// Gets the event subtype.
-		/// @return SDL event subtype ID.
+		/// Gets the event type ID.
+		/// @return SDL event type ID.
 		[[nodiscard]] u32 type() const noexcept;
 	};
 } // namespace tr
