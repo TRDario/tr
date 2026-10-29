@@ -1,5 +1,7 @@
 var NAVTREEINDEX15 =
 {
+"namespacetr_1_1aliases_1_1integer__aliases.html":[4,0,0,0,1],
+"namespacetr_1_1aliases_1_1integer__aliases.html#a05fd0f6a77fb5d76ef80eb0f1c0da2cb":[4,0,0,6,7],
 "namespacetr_1_1aliases_1_1integer__aliases.html#a05fd0f6a77fb5d76ef80eb0f1c0da2cb":[4,0,0,313],
 "namespacetr_1_1aliases_1_1integer__aliases.html#a05fd0f6a77fb5d76ef80eb0f1c0da2cb":[4,0,0,0,1,7],
 "namespacetr_1_1aliases_1_1integer__aliases.html#a05fd0f6a77fb5d76ef80eb0f1c0da2cb":[4,0,0,0,25],
@@ -247,7 +249,5 @@ var NAVTREEINDEX15 =
 "out__handle_8hpp.html":[7,0,0,0,2,46],
 "out__handle_8hpp_source.html":[7,0,0,0,2,46],
 "owning__shader__pipeline_8hpp.html":[7,0,0,0,1,30],
-"owning__shader__pipeline_8hpp_source.html":[7,0,0,0,1,30],
-"pack__traits_8hpp.html":[7,0,0,0,2,47],
-"pack__traits_8hpp_source.html":[7,0,0,0,2,47]
+"owning__shader__pipeline_8hpp_source.html":[7,0,0,0,1,30]
 };

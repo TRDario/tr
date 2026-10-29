@@ -141,12 +141,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a57422499dd6909ce329c047bdfba761b" id="r_a57422499dd6909ce329c047bdfba761b"><td class="memItemLeft"><a class="el" href="#a8321df57a52c4be5173f9e102d508d58">event_view</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a57422499dd6909ce329c047bdfba761b">operator=</a> (const <a class="el" href="#a8321df57a52c4be5173f9e102d508d58">event_view</a> &amp;rhs) noexcept=default</td></tr>
 <tr class="memdesc:a57422499dd6909ce329c047bdfba761b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event views are trivially copyable.  <br /></td></tr>
 <tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Alternatives</div></td></tr>
-<tr class="memitem:a4feb83925085f278ad53948b3c5ba47d" id="r_a4feb83925085f278ad53948b3c5ba47d"><td class="memTemplParams" colspan="2">template&lt;event_type Event&gt; </td></tr>
+<tr class="memitem:a4feb83925085f278ad53948b3c5ba47d" id="r_a4feb83925085f278ad53948b3c5ba47d"><td class="memTemplParams" colspan="2">template&lt;event_type Alternative&gt; </td></tr>
 <tr class="memitem:a4feb83925085f278ad53948b3c5ba47d template"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a4feb83925085f278ad53948b3c5ba47d">is</a> () const noexcept</td></tr>
-<tr class="memdesc:a4feb83925085f278ad53948b3c5ba47d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether the event is of a certain type.  <br /></td></tr>
-<tr class="memitem:a263387e2ea3a6728c355815722f2c0e0" id="r_a263387e2ea3a6728c355815722f2c0e0"><td class="memTemplParams" colspan="2">template&lt;event_type Event&gt; </td></tr>
-<tr class="memitem:a263387e2ea3a6728c355815722f2c0e0 template"><td class="memItemLeft">Event&#160;</td><td class="memItemRight"><a class="el" href="#a263387e2ea3a6728c355815722f2c0e0">as</a> () const noexcept</td></tr>
-<tr class="memdesc:a263387e2ea3a6728c355815722f2c0e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts the event into a sub-type.  <br /></td></tr>
+<tr class="memdesc:a4feb83925085f278ad53948b3c5ba47d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether the event holds an alternative of a specific type.  <br /></td></tr>
+<tr class="memitem:a9f9096ae57daee2efeae7bd232c6f57b" id="r_a9f9096ae57daee2efeae7bd232c6f57b"><td class="memTemplParams" colspan="2">template&lt;event_type Alternative&gt; </td></tr>
+<tr class="memitem:a9f9096ae57daee2efeae7bd232c6f57b template"><td class="memItemLeft">std::optional&lt; Alternative &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a9f9096ae57daee2efeae7bd232c6f57b">get_if</a> () const noexcept</td></tr>
+<tr class="memdesc:a9f9096ae57daee2efeae7bd232c6f57b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an alternative of the event if it holds it.  <br /></td></tr>
+<tr class="memitem:a7852894e2e151068559e07cc14ffd4d3" id="r_a7852894e2e151068559e07cc14ffd4d3"><td class="memTemplParams" colspan="2">template&lt;event_type Alternative&gt; </td></tr>
+<tr class="memitem:a7852894e2e151068559e07cc14ffd4d3 template"><td class="memItemLeft">Alternative&#160;</td><td class="memItemRight"><a class="el" href="#a7852894e2e151068559e07cc14ffd4d3">get</a> () const noexcept</td></tr>
+<tr class="memdesc:a7852894e2e151068559e07cc14ffd4d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an alternative of the event.  <br /></td></tr>
 <tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Visiting</div></td></tr>
 <tr class="memitem:a7cba699cf727d974abaca67a924a57a5" id="r_a7cba699cf727d974abaca67a924a57a5"><td class="memTemplParams" colspan="2">template&lt;event_view_visitor Visitor&gt; </td></tr>
 <tr class="memitem:a7cba699cf727d974abaca67a924a57a5 template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="#a7cba699cf727d974abaca67a924a57a5">visit</a> (Visitor &amp;&amp;visitor) const noexcept(nothrow_event_view_visitor&lt; Visitor &gt;)</td></tr>
@@ -214,7 +217,7 @@ Public Member Functions</h2></td></tr>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;event_type Event&gt; </div>
+template&lt;event_type Alternative&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -233,30 +236,30 @@ template&lt;event_type Event&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Checks whether the event is of a certain type. </p>
+<p>Checks whether the event holds an alternative of a specific type. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">Event</td><td>Event type. </td></tr>
+    <tr><td class="paramname">Alternative</td><td>Event type. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Whether the event holds an event of type <span class="tt">Event</span>. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Whether the event holds an event of type <span class="tt">Alternative</span>. </dd></dl>
 
 </div>
 </div>
-<a id="a263387e2ea3a6728c355815722f2c0e0" name="a263387e2ea3a6728c355815722f2c0e0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a263387e2ea3a6728c355815722f2c0e0">&#9670;&#160;</a></span>as()</h2>
+<a id="a9f9096ae57daee2efeae7bd232c6f57b" name="a9f9096ae57daee2efeae7bd232c6f57b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f9096ae57daee2efeae7bd232c6f57b">&#9670;&#160;</a></span>get_if()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;event_type Event&gt; </div>
+template&lt;event_type Alternative&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">Event tr::event_view::as </td>
+          <td class="memname">std::optional&lt; Alternative &gt; tr::event_view::get_if </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -269,15 +272,51 @@ template&lt;event_type Event&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Converts the event into a sub-type. </p>
+<p>Gets an alternative of the event if it holds it. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Alternative</td><td>Event type. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Alternative held by the event if it exists, <span class="tt">std::nullopt</span> otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="a7852894e2e151068559e07cc14ffd4d3" name="a7852894e2e151068559e07cc14ffd4d3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7852894e2e151068559e07cc14ffd4d3">&#9670;&#160;</a></span>get()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;event_type Alternative&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Alternative tr::event_view::get </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets an alternative of the event. </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
     <tr><td class="paramname">Event</td><td>Event type. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section pre"><dt>Precondition</dt><dd>The event must hold an event of type <span class="tt">Event</span>. </dd></dl>
-<dl class="section return"><dt>Returns</dt><dd>Held event subtype. </dd></dl>
+<dl class="section pre"><dt>Precondition</dt><dd>The event must hold an event of type <span class="tt">Alternative</span>. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Alternative held by the event. </dd></dl>
 
 </div>
 </div>
