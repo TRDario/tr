@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('type__name_8hp
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#elifdef _MSC_VER</span></div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        <span class="keyword">constexpr</span> std::string_view function_name{std::source_location::current().function_name()};</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        <span class="keywordflow">return</span> std::string_view{function_name.begin() + 93, function_name.end() - 7};</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        <span class="keywordflow">return</span> std::string_view{function_name.begin() + 88, function_name.end() - 16};</div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="preprocessor">#elifdef __GNUC__</span></div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        <span class="keyword">constexpr</span> std::string_view function_name{</div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>            []&lt;<span class="keyword">typename</span>&gt;() { <span class="keywordflow">return</span> std::source_location::current().function_name(); }.template operator()&lt;Target&gt;()};</div>

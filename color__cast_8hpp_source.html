@@ -145,57 +145,63 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('color__cast_8h
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="structtr_1_1color__caster.html">   21</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="structtr_1_1color__caster.html">color_caster</a></div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    {</div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        <span class="keyword">static_assert</span>(<span class="stringliteral">&quot;color_caster is not specialized for this combination of types!&quot;</span>);</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span></div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="structtr_1_1color__caster.html#a80d57abab6a809597066fab4e6588c21">   28</a></span>        <span class="keyword">static</span> <span class="keyword">constexpr</span> To <a class="code hl_function" href="structtr_1_1color__caster.html#a80d57abab6a809597066fab4e6588c21">operator()</a>(<span class="keyword">const</span> From&amp; from) <span class="keyword">noexcept</span> = <span class="keyword">delete</span>;</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    };</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="preprocessor">#ifdef TR_DOXYGEN</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="structtr_1_1color__caster.html#acba1de45541df05ee4ecf0241f433560">   29</a></span>        <span class="keyword">static</span> <span class="keyword">constexpr</span> To <a class="code hl_function" href="structtr_1_1color__caster.html#acba1de45541df05ee4ecf0241f433560">operator()</a>(<span class="keyword">const</span> From&amp; from) <span class="keyword">noexcept</span>;</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    };</div>
 </div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span></div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span></div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Target, <span class="keyword">typename</span> To&gt;</div>
-<div class="foldopen" id="foldopen00037" data-start="{" data-end="}">
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="concepttr_1_1directly__color__castable__to.html">   37</a></span>    <span class="keyword">concept </span><a class="code hl_concept" href="concepttr_1_1directly__color__castable__to.html">directly_color_castable_to</a> = <span class="keyword">requires</span>(<span class="keyword">const</span> Target&amp; from) {</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        { <a class="code hl_struct" href="structtr_1_1color__caster.html">color_caster&lt;Target, To&gt;</a>{}(from) } -&gt; std::same_as&lt;To&gt;;</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    };</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span></div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Target, <span class="keyword">typename</span> To&gt;</div>
+<div class="foldopen" id="foldopen00039" data-start="{" data-end="}">
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="concepttr_1_1directly__color__castable__to.html">   39</a></span>    <span class="keyword">concept </span><a class="code hl_concept" href="concepttr_1_1directly__color__castable__to.html">directly_color_castable_to</a> = std::same_as&lt;Target, To&gt; || <span class="keyword">requires</span>(<span class="keyword">const</span> Target&amp; from) {</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        { <a class="code hl_struct" href="structtr_1_1color__caster.html">color_caster&lt;Target, To&gt;</a>{}(from) } -&gt; std::same_as&lt;To&gt;;</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    };</div>
 </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span></div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Target, <span class="keyword">typename</span> To&gt;</div>
-<div class="foldopen" id="foldopen00046" data-start="{" data-end="}">
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="concepttr_1_1indirectly__color__castable__to.html">   46</a></span>    <span class="keyword">concept </span><a class="code hl_concept" href="concepttr_1_1indirectly__color__castable__to.html">indirectly_color_castable_to</a> = <span class="keyword">requires</span>(<span class="keyword">const</span> Target&amp; from, <span class="keyword">const</span> <a class="code hl_struct" href="structtr_1_1rgba.html">rgba&lt;double&gt;</a>&amp; pivot) {</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        { <a class="code hl_struct" href="structtr_1_1color__caster.html">color_caster&lt;Target, rgba&lt;double&gt;</a>&gt;{}(from) } -&gt; std::same_as&lt;rgba&lt;double&gt;&gt;;</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>        { <a class="code hl_struct" href="structtr_1_1color__caster.html">color_caster&lt;rgba&lt;double&gt;</a>, To&gt;{}(pivot) } -&gt; std::same_as&lt;To&gt;;</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    };</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span></div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Target, <span class="keyword">typename</span> To&gt;</div>
+<div class="foldopen" id="foldopen00048" data-start="{" data-end="}">
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="concepttr_1_1indirectly__color__castable__to.html">   48</a></span>    <span class="keyword">concept </span><a class="code hl_concept" href="concepttr_1_1indirectly__color__castable__to.html">indirectly_color_castable_to</a> = <a class="code hl_concept" href="concepttr_1_1directly__color__castable__to.html">directly_color_castable_to&lt;Target, To&gt;</a> ||</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>                                           <span class="keyword">requires</span>(<span class="keyword">const</span> Target&amp; from, <span class="keyword">const</span> <a class="code hl_struct" href="structtr_1_1rgba.html">rgba&lt;double&gt;</a>&amp; pivot) {</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>                                               { <a class="code hl_struct" href="structtr_1_1color__caster.html">color_caster&lt;Target, rgba&lt;double&gt;</a>&gt;{}(from) } -&gt; std::same_as&lt;rgba&lt;double&gt;&gt;;</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>                                               { <a class="code hl_struct" href="structtr_1_1color__caster.html">color_caster&lt;rgba&lt;double&gt;</a>, To&gt;{}(pivot) } -&gt; std::same_as&lt;To&gt;;</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>                                           };</div>
 </div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span></div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Target, <span class="keyword">typename</span> To&gt;</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="concepttr_1_1color__castable__to.html">   53</a></span>    <span class="keyword">concept </span><a class="code hl_concept" href="concepttr_1_1color__castable__to.html">color_castable_to</a> = std::same_as&lt;Target, To&gt; || <a class="code hl_concept" href="concepttr_1_1directly__color__castable__to.html">directly_color_castable_to&lt;Target, To&gt;</a> ||</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>                                <a class="code hl_concept" href="concepttr_1_1indirectly__color__castable__to.html">indirectly_color_castable_to&lt;Target, To&gt;</a>;</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span></div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span></div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> To, color_castable_to&lt;To&gt; From&gt;</div>
-<div class="foldopen" id="foldopen00066" data-start="{" data-end="}">
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno"><a class="line" href="namespacetr.html#a06aeaa45377e5bfdce392f3dfb7e6bc3">   66</a></span>    [[nodiscard]] <span class="keyword">constexpr</span> To <a class="code hl_function" href="namespacetr.html#a06aeaa45377e5bfdce392f3dfb7e6bc3">color_cast</a>(<span class="keyword">const</span> From&amp; from) <span class="keyword">noexcept</span></div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    {</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::same_as&lt;From, To&gt;) {</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>            <span class="keywordflow">return</span> from;</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        }</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        <span class="keywordflow">else</span> <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (<a class="code hl_concept" href="concepttr_1_1directly__color__castable__to.html">directly_color_castable_to&lt;From, To&gt;</a>) {</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>            <span class="keywordflow">return</span> <a class="code hl_struct" href="structtr_1_1color__caster.html">color_caster&lt;From, To&gt;</a>{}(from);</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        }</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>            <span class="keywordflow">return</span> <a class="code hl_struct" href="structtr_1_1color__caster.html">color_caster&lt;rgba&lt;double&gt;</a>, To&gt;{}(<a class="code hl_struct" href="structtr_1_1color__caster.html">color_caster&lt;From, rgba&lt;double&gt;</a>&gt;{}(from));</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        }</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    }</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span></div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Color&gt;</div>
+<div class="foldopen" id="foldopen00065" data-start="{" data-end="}">
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno"><a class="line" href="namespacetr.html#aca4e11ffbcf5030d72fe3907a6d99189">   65</a></span>    [[nodiscard]] <span class="keyword">constexpr</span> Color <a class="code hl_function" href="namespacetr.html#aca4e11ffbcf5030d72fe3907a6d99189">color_cast</a>(<span class="keyword">const</span> std::type_identity_t&lt;Color&gt;&amp; from) <span class="keyword">noexcept</span></div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    {</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        <span class="keywordflow">return</span> from;</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    }</div>
 </div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span></div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>} <span class="comment">// namespace tr</span></div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span></div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> To, directly_color_castable_to&lt;To&gt; From&gt;</div>
+<div class="foldopen" id="foldopen00077" data-start="{" data-end="}">
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno"><a class="line" href="namespacetr.html#a06aeaa45377e5bfdce392f3dfb7e6bc3">   77</a></span>    [[nodiscard]] <span class="keyword">constexpr</span> To <a class="code hl_function" href="namespacetr.html#aca4e11ffbcf5030d72fe3907a6d99189">color_cast</a>(<span class="keyword">const</span> From&amp; from) <span class="keyword">noexcept</span></div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    {</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        <span class="keywordflow">return</span> <a class="code hl_struct" href="structtr_1_1color__caster.html">color_caster&lt;From, To&gt;</a>{}(from);</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    }</div>
+</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span></div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> To, indirectly_color_castable_to&lt;To&gt; From&gt;</div>
+<div class="foldopen" id="foldopen00089" data-start="{" data-end="}">
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno"><a class="line" href="namespacetr.html#a06aeaa45377e5bfdce392f3dfb7e6bc3">   89</a></span>    [[nodiscard]] <span class="keyword">constexpr</span> To <a class="code hl_function" href="namespacetr.html#aca4e11ffbcf5030d72fe3907a6d99189">color_cast</a>(<span class="keyword">const</span> From&amp; from) <span class="keyword">noexcept</span></div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    {</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>        <span class="keywordflow">return</span> <a class="code hl_struct" href="structtr_1_1color__caster.html">color_caster&lt;rgba&lt;double&gt;</a>, To&gt;{}(<a class="code hl_struct" href="structtr_1_1color__caster.html">color_caster&lt;From, rgba&lt;double&gt;</a>&gt;{}(from));</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    }</div>
+</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span></div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>} <span class="comment">// namespace tr</span></div>
 <div class="ttc" id="aarithmetic__concepts_8hpp_html"><div class="ttname"><a href="arithmetic__concepts_8hpp.html">arithmetic_concepts.hpp</a></div><div class="ttdoc">Provides arithmetic concepts.</div></div>
-<div class="ttc" id="aconcepttr_1_1color__castable__to_html"><div class="ttname"><a href="concepttr_1_1color__castable__to.html">tr::color_castable_to</a></div><div class="ttdoc">Type that is castable to To using tr::color_cast() directly or indirectly.</div><div class="ttdef"><b>Definition</b> color_cast.hpp:53</div></div>
-<div class="ttc" id="aconcepttr_1_1directly__color__castable__to_html"><div class="ttname"><a href="concepttr_1_1directly__color__castable__to.html">tr::directly_color_castable_to</a></div><div class="ttdoc">Type that is directly castable to To using tr::color_cast().</div><div class="ttdef"><b>Definition</b> color_cast.hpp:37</div></div>
-<div class="ttc" id="aconcepttr_1_1indirectly__color__castable__to_html"><div class="ttname"><a href="concepttr_1_1indirectly__color__castable__to.html">tr::indirectly_color_castable_to</a></div><div class="ttdoc">Type that is indirectly castable to To using tr::color_cast().</div><div class="ttdef"><b>Definition</b> color_cast.hpp:46</div></div>
+<div class="ttc" id="aconcepttr_1_1directly__color__castable__to_html"><div class="ttname"><a href="concepttr_1_1directly__color__castable__to.html">tr::directly_color_castable_to</a></div><div class="ttdoc">Type that is directly castable to To using tr::color_cast().</div><div class="ttdef"><b>Definition</b> color_cast.hpp:39</div></div>
+<div class="ttc" id="aconcepttr_1_1indirectly__color__castable__to_html"><div class="ttname"><a href="concepttr_1_1indirectly__color__castable__to.html">tr::indirectly_color_castable_to</a></div><div class="ttdoc">Type that is indirectly castable to To using tr::color_cast().</div><div class="ttdef"><b>Definition</b> color_cast.hpp:48</div></div>
 <div class="ttc" id="anamespacetr_html"><div class="ttname"><a href="namespacetr.html">tr</a></div><div class="ttdoc">Namespace containing all tr functionality.</div><div class="ttdef"><b>Definition</b> audio_buffer.hpp:10</div></div>
-<div class="ttc" id="anamespacetr_html_a06aeaa45377e5bfdce392f3dfb7e6bc3"><div class="ttname"><a href="namespacetr.html#a06aeaa45377e5bfdce392f3dfb7e6bc3">tr::color_cast</a></div><div class="ttdeci">constexpr To color_cast(const From &amp;from) noexcept</div><div class="ttdoc">Casts a color to an equivalent value of type To.</div><div class="ttdef"><b>Definition</b> color_cast.hpp:66</div></div>
+<div class="ttc" id="anamespacetr_html_aca4e11ffbcf5030d72fe3907a6d99189"><div class="ttname"><a href="namespacetr.html#aca4e11ffbcf5030d72fe3907a6d99189">tr::color_cast</a></div><div class="ttdeci">constexpr Color color_cast(const std::type_identity_t&lt; Color &gt; &amp;from) noexcept</div><div class="ttdoc">Casts a color to an equivalent value of type To.</div><div class="ttdef"><b>Definition</b> color_cast.hpp:65</div></div>
 <div class="ttc" id="astructtr_1_1color__caster_html"><div class="ttname"><a href="structtr_1_1color__caster.html">tr::color_caster</a></div><div class="ttdoc">Interface for custom casters for use in tr::color_cast.</div><div class="ttdef"><b>Definition</b> color_cast.hpp:22</div></div>
-<div class="ttc" id="astructtr_1_1color__caster_html_a80d57abab6a809597066fab4e6588c21"><div class="ttname"><a href="structtr_1_1color__caster.html#a80d57abab6a809597066fab4e6588c21">tr::color_caster::operator()</a></div><div class="ttdeci">static constexpr To operator()(const From &amp;from) noexcept=delete</div><div class="ttdoc">Casts a color from From to an equivalent value of type To.</div></div>
+<div class="ttc" id="astructtr_1_1color__caster_html_acba1de45541df05ee4ecf0241f433560"><div class="ttname"><a href="structtr_1_1color__caster.html#acba1de45541df05ee4ecf0241f433560">tr::color_caster::operator()</a></div><div class="ttdeci">static constexpr To operator()(const From &amp;from) noexcept</div><div class="ttdoc">Casts a color from From to an equivalent value of type To.</div></div>
 <div class="ttc" id="astructtr_1_1rgba_html"><div class="ttname"><a href="structtr_1_1rgba.html">tr::rgba</a></div><div class="ttdoc">Color stored in the RGBA color model.</div><div class="ttdef"><b>Definition</b> rgba.hpp:24</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

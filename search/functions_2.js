@@ -19,7 +19,7 @@ var searchData=
   ['clipboard_5ftext_16',['clipboard_text',['../namespacetr.html#a944937f5f284001e3b0e74439c1db0d0',1,'tr']]],
   ['closest_5fpoint_17',['closest_point',['../structtr_1_1line__segment.html#a665d538c07d89615453cec7b1dc4e26a',1,'tr::line_segment']]],
   ['collinear_18',['collinear',['../namespacetr.html#a493f5cf2f1edf9eed391cd6f7a2e2850',1,'tr']]],
-  ['color_5fcast_19',['color_cast',['../namespacetr.html#a06aeaa45377e5bfdce392f3dfb7e6bc3',1,'tr']]],
+  ['color_5fcast_19',['color_cast',['../namespacetr.html#aca4e11ffbcf5030d72fe3907a6d99189',1,'tr::color_cast(const std::type_identity_t&lt; Color &gt; &amp;from) noexcept'],['../namespacetr.html#a06aeaa45377e5bfdce392f3dfb7e6bc3',1,'tr::color_cast(const From &amp;from) noexcept'],['../namespacetr.html#a06aeaa45377e5bfdce392f3dfb7e6bc3',1,'tr::color_cast(const From &amp;from) noexcept']]],
   ['complete_20',['complete',['../classtr_1_1dynamic__atlas.html#ae10582c3464692325499b0b24ac8adc8',1,'tr::dynamic_atlas::complete()'],['../classtr_1_1ping__pong__target.html#a11ad6a13bd614144db33bae71aedac0f',1,'tr::ping_pong_target::complete()'],['../classtr_1_1texture.html#a7e10239f1be5df5ea38ce04f1a49fe9c',1,'tr::texture::complete()'],['../classtr_1_1texture__target.html#a4ce4df898894d44a52d948d67463ec61',1,'tr::texture_target::complete()']]],
   ['compute_5fshader_21',['compute_shader',['../classtr_1_1compute__shader.html#acb1d79698126a12981da7bfc9d17d681',1,'tr::compute_shader']]],
   ['concatenate_5fstring_5fliterals_22',['concatenate_string_literals',['../namespacetr.html#ac77167404aadd5d7e323e7228821e618',1,'tr']]],

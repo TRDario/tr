@@ -126,17 +126,17 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('color__hex__co
 </div><!--header-->
 <div class="contents">
 
-<p>Provides <span class="tt"><a class="el" href="namespacetr.html#a73ac9e6c05b46c0e1fbc2986cd997f42" title="Creates a color value from a hex code string.">tr::from_hex_code()</a></span> and color hex literals.  
+<p>Provides <span class="tt"><a class="el" href="namespacetr.html#a642fbdd022b8f2fb36e724d5295da35e" title="Creates a color value from a hex code string.">tr::from_hex_code()</a></span> and color hex literals.  
 <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Provides <span class="tt"><a class="el" href="namespacetr.html#a73ac9e6c05b46c0e1fbc2986cd997f42" title="Creates a color value from a hex code string.">tr::from_hex_code()</a></span> and color hex literals. </p>
+<div class="textblock"><p>Provides <span class="tt"><a class="el" href="namespacetr.html#a642fbdd022b8f2fb36e724d5295da35e" title="Creates a color value from a hex code string.">tr::from_hex_code()</a></span> and color hex literals. </p>
 </div>
 <p><a href="color__hex__code_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:tr_3A_3Ainvalid_5Fhex_5Fcode" id="r_tr_3A_3Ainvalid_5Fhex_5Fcode"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classtr_1_1invalid__hex__code.html">tr::invalid_hex_code</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exception thrown for an invalid hex code string in <span class="tt"><a class="el" href="namespacetr.html#a73ac9e6c05b46c0e1fbc2986cd997f42" title="Creates a color value from a hex code string.">tr::from_hex_code()</a></span>.  <a href="classtr_1_1invalid__hex__code.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Exception thrown for an invalid hex code string in <span class="tt"><a class="el" href="namespacetr.html#a642fbdd022b8f2fb36e724d5295da35e" title="Creates a color value from a hex code string.">tr::from_hex_code()</a></span>.  <a href="classtr_1_1invalid__hex__code.html#details">More...</a><br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-namespaces" class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
@@ -150,10 +150,10 @@ Namespaces</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr id="func-members-0" class="groupHeader"><td colspan="2"><div class="groupHeader">Color casts</div></td></tr>
-<tr class="memitem:a73ac9e6c05b46c0e1fbc2986cd997f42" id="r_a73ac9e6c05b46c0e1fbc2986cd997f42"><td class="memTemplParams" colspan="2">template&lt;typename Color = rgba&lt;u8&gt;&gt; <br />
-requires color_castable_to&lt;<a class="el" href="structtr_1_1rgba.html">rgba</a>&lt;<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a942cfbfc8bf5094139c2f52fba2b8b17">u8</a>&gt;, Color&gt;</td></tr>
-<tr class="memitem:a73ac9e6c05b46c0e1fbc2986cd997f42 template"><td class="memItemLeft">constexpr Color&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#a73ac9e6c05b46c0e1fbc2986cd997f42">tr::from_hex_code</a> (std::string_view hex_code)</td></tr>
-<tr class="memdesc:a73ac9e6c05b46c0e1fbc2986cd997f42"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a color value from a hex code string.  <br /></td></tr>
+<tr class="memitem:a642fbdd022b8f2fb36e724d5295da35e" id="r_a642fbdd022b8f2fb36e724d5295da35e"><td class="memTemplParams" colspan="2">template&lt;typename Color = rgba&lt;u8&gt;&gt; <br />
+requires indirectly_color_castable_to&lt;<a class="el" href="structtr_1_1rgba.html">rgba</a>&lt;<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a942cfbfc8bf5094139c2f52fba2b8b17">u8</a>&gt;, Color&gt;</td></tr>
+<tr class="memitem:a642fbdd022b8f2fb36e724d5295da35e template"><td class="memItemLeft">constexpr Color&#160;</td><td class="memItemRight"><a class="el" href="namespacetr.html#a642fbdd022b8f2fb36e724d5295da35e">tr::from_hex_code</a> (std::string_view hex_code)</td></tr>
+<tr class="memdesc:a642fbdd022b8f2fb36e724d5295da35e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a color value from a hex code string.  <br /></td></tr>
 <tr id="func-members-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Color literals</div></td></tr>
 <tr class="memitem:a09e726e245574c85ad4cf512fb2c1764" id="r_a09e726e245574c85ad4cf512fb2c1764"><td class="memItemLeft">consteval <a class="el" href="structtr_1_1rgb.html">rgb</a>&lt; <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a942cfbfc8bf5094139c2f52fba2b8b17">u8</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="namespacetr_1_1literals_1_1color__literals.html#a09e726e245574c85ad4cf512fb2c1764">tr::literals::color_literals::operator&quot;&quot;_rgb8</a> (const char *str, <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> length) noexcept</td></tr>
 <tr class="memdesc:a09e726e245574c85ad4cf512fb2c1764"><td class="mdescLeft">&#160;</td><td class="mdescRight">8-bit RGB hex code color literal.  <br /></td></tr>

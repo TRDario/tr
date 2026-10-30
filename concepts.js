@@ -13,7 +13,6 @@ var concepts =
       [ "binary_constructible", "concepttr_1_1binary__constructible.html", null ],
       [ "binary_readable", "concepttr_1_1binary__readable.html", null ],
       [ "binary_writable", "concepttr_1_1binary__writable.html", null ],
-      [ "color_castable_to", "concepttr_1_1color__castable__to.html", null ],
       [ "cvref_specialization_of", "concepttr_1_1cvref__specialization__of.html", null ],
       [ "cvref_specialization_of_c", "concepttr_1_1cvref__specialization__of__c.html", null ],
       [ "cvref_specialization_of_ct", "concepttr_1_1cvref__specialization__of__ct.html", null ],
