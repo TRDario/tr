@@ -1,35 +1,11 @@
 /// @file
 /// @brief Implements ttfont.hpp.
 
+#include "internal/fix_alpha_artifacts.hpp"
 #include <SDL3_ttf/SDL_ttf.h>
 #include <tr/sysgfx/bitmap.hpp>
 #include <tr/sysgfx/exception.hpp>
 #include <tr/sysgfx/ttfont.hpp>
-
-//
-
-namespace tr
-{
-	namespace
-	{
-		/// Fixes alpha artifacts in transparent text.
-		/// @param bitmap Rendered text bitmap.
-		/// @param max_alpah Maximum allowed alpha.
-		/// @return Bitmap with fixed alpha artifacts.
-		[[nodiscard]] bitmap fix_alpha_artifacts(bitmap&& bitmap, u8 max_alpha) noexcept
-		{
-			// We know the bitmap is ARGB_8888.
-			u8* row_it{reinterpret_cast<u8*>(bitmap.data())};
-			for (int y = 0; y < bitmap.size().y; ++y) {
-				for (int x = 0; x < bitmap.size().x; ++x) {
-					row_it[x * 4 + 3] = std::min(row_it[x * 4 + 3], max_alpha);
-				}
-				row_it += bitmap.pitch();
-			}
-			return std::move(bitmap);
-		}
-	} // namespace
-} // namespace tr
 
 //
 
@@ -174,7 +150,7 @@ tr::bitmap tr::ttfont::render(std::string_view text, int max_w, halign align, rg
 	TTF_SetFontWrapAlignment(m_ptr.get(), static_cast<TTF_HorizontalAlignment>(align));
 	SDL_Surface* const ptr{TTF_RenderText_Blended_Wrapped(m_ptr.get(), text.data(), text.size(), std::bit_cast<SDL_Color>(color), max_w)};
 	if (ptr != nullptr) {
-		return bitmap{ptr};
+		return internal::fix_alpha_artifacts(bitmap{ptr}, color.a);
 	}
 	else {
 		throw ttfont_render_error{SDL_GetError()};

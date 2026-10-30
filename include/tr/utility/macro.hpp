@@ -6,6 +6,17 @@
 
 //
 
+/// Checks whether a compiler supports a built-in function.
+/// @param builtin Name of the built-in function to check for.
+/// @hideinitializer
+#ifdef __has_builtin
+#define TR_HAS_BUILTIN(builtin) __has_builtin(builtin)
+#else
+#define TR_HAS_BUILTIN(builtin) false
+#endif
+
+//
+
 /// @cond implementation_details
 #ifdef TR_ENABLE_ASSERTS
 #define TR_IMPL_UNREACHABLE(file, line)                                                                                                    \
