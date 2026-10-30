@@ -139,200 +139,198 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('localization__
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Target&gt;</div>
 <div class="foldopen" id="foldopen00019" data-start="{" data-end="}">
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="concepttr_1_1localization__key__value__pair.html">   19</a></span>    <span class="keyword">concept </span><a class="code hl_concept" href="concepttr_1_1localization__key__value__pair.html">localization_key_value_pair</a> =</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#ifdef __has_builtin</span></div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#if __has_builtin(__builtin_structured_binding_size)</span></div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        <span class="keyword">requires</span> {</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>            <span class="keyword">requires</span> __builtin_structured_binding_size(std::remove_cvref_t&lt;Target&gt;) == 2;</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>            <span class="keyword">requires</span> std::convertible_to&lt;internal::binding_t&lt;0, Target&gt;, std::string_view&gt;;</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>            <span class="keyword">requires</span> std::convertible_to&lt;internal::binding_t&lt;1, Target&gt;, std::string_view&gt;;</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        }</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="preprocessor">#else</span></div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        <span class="keyword">requires</span> {</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>            <span class="keyword">typename</span> std::tuple_size&lt;std::remove_cvref_t&lt;Target&gt;&gt;<a class="code hl_class" href="structtr_1_1copy__qualifiers.html">::type</a>;</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>            <span class="keyword">requires</span> std::tuple_size_v&lt;std::remove_cvref_t&lt;Target&gt;&gt; == 2;</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>            <span class="keyword">requires</span> std::convertible_to&lt;std::tuple_element_t&lt;0, std::remove_cvref_t&lt;Target&gt;&gt;, std::string_view&gt;;</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>            <span class="keyword">requires</span> std::convertible_to&lt;std::tuple_element_t&lt;1, std::remove_cvref_t&lt;Target&gt;&gt;, std::string_view&gt;;</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>        }</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#if TR_HAS_BUILTIN(__builtin_structured_binding_size)</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        <span class="keyword">requires</span> {</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>            <span class="keyword">requires</span> __builtin_structured_binding_size(std::remove_cvref_t&lt;Target&gt;) == 2;</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>            <span class="keyword">requires</span> std::convertible_to&lt;internal::binding_t&lt;0, Target&gt;, std::string_view&gt;;</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>            <span class="keyword">requires</span> std::convertible_to&lt;internal::binding_t&lt;1, Target&gt;, std::string_view&gt;;</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>        }</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        <span class="keyword">requires</span> {</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>            <span class="keyword">typename</span> std::tuple_size&lt;std::remove_cvref_t&lt;Target&gt;&gt;<a class="code hl_class" href="structtr_1_1copy__qualifiers.html">::type</a>;</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>            <span class="keyword">requires</span> std::tuple_size_v&lt;std::remove_cvref_t&lt;Target&gt;&gt; == 2;</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>            <span class="keyword">requires</span> std::convertible_to&lt;std::tuple_element_t&lt;0, std::remove_cvref_t&lt;Target&gt;&gt;, std::string_view&gt;;</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>            <span class="keyword">requires</span> std::convertible_to&lt;std::tuple_element_t&lt;1, std::remove_cvref_t&lt;Target&gt;&gt;, std::string_view&gt;;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        }</div>
 </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    ;</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span></div>
-<div class="foldopen" id="foldopen00039" data-start="{" data-end="};">
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="classtr_1_1localization__map.html">   39</a></span>    <span class="keyword">class </span><a class="code hl_function" href="classtr_1_1localization__map.html#a5fb5ce712340d4a1ba129fa84f9536d4">localization_map</a></div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    {</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>      <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span></div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="classtr_1_1localization__map.html#a5fb5ce712340d4a1ba129fa84f9536d4">   46</a></span>        [[nodiscard]] <a class="code hl_function" href="classtr_1_1localization__map.html#a5fb5ce712340d4a1ba129fa84f9536d4">localization_map</a>() noexcept = default;</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span></div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        template &lt;std::input_iterator Iterator, std::sentinel_for&lt;Iterator&gt; Sentinel&gt;</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>            requires <a class="code hl_concept" href="concepttr_1_1localization__key__value__pair.html">localization_key_value_pair</a>&lt;std::iter_reference_t&lt;Iterator&gt;&gt;</div>
-<div class="foldopen" id="foldopen00056" data-start="{" data-end="}">
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="classtr_1_1localization__map.html#a74f0019a4251421b953694c2277cb968">   56</a></span>        [[nodiscard]] <a class="code hl_function" href="classtr_1_1localization__map.html#a5fb5ce712340d4a1ba129fa84f9536d4">localization_map</a>(Iterator begin, Sentinel end)</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        {</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>            <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::forward_iterator&lt;Iterator&gt;) {</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="preprocessor">#ifdef TR_ENABLE_ASSERTS</span></div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>                <span class="keywordflow">for</span> (Iterator it = begin; it != end; ++it) {</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>                    <span class="keywordflow">for</span> (Iterator jt = std::next(it); jt != end; ++jt) {</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>                        <span class="keyword">auto</span>&amp;&amp; [ikey, ivalue]{*it};</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>                        <span class="keyword">auto</span>&amp;&amp; [jkey, jvalue]{*jt};</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>                        <span class="keywordflow">if</span> (<span class="keyword">static_cast&lt;</span>std::string_view<span class="keyword">&gt;</span>(ikey) == <span class="keyword">static_cast&lt;</span>std::string_view<span class="keyword">&gt;</span>(jkey)) {</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>                            <a class="code hl_define" href="macro_8hpp.html#a9524128b336bcd23aef93fde1b1bed05">TR_ASSERT</a>(<span class="keyword">false</span>, <span class="stringliteral">&quot;Localization key-value range contains duplicate keys.&quot;</span>);</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>                        }</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>                    }</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>                }</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>                <a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> keys{0};</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>                <a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> string_pool_capacity{0};</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>                <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; [key, value] : std::ranges::subrange{begin, end}) {</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>                    ++keys;</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>                    string_pool_capacity += (<span class="keyword">static_cast&lt;</span>std::string_view<span class="keyword">&gt;</span>(key).size() + <span class="keyword">static_cast&lt;</span>std::string_view<span class="keyword">&gt;</span>(value).<a class="code hl_function" href="classtr_1_1localization__map.html#aad710390afc9aa883820bbe54418dace">size</a>() + 2);</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>                }</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>                m_pool.reserve(string_pool_capacity);</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>                m_keys.reserve(keys);</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>            }</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>            <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; [key, value] : std::ranges::subrange{begin, end}) {</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>                m_pool.append(key);</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>                m_pool.append(value);</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>            }</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>            <span class="keywordflow">for</span> (<a class="code hl_class" href="classtr_1_1string__pool_1_1iterator.html">string_pool::iterator</a> it{m_pool.begin()}; it != m_pool.end(); std::advance(it, 2)) {</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>                m_keys.insert(it);</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>            }</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        }</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    ;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span></div>
+<div class="foldopen" id="foldopen00037" data-start="{" data-end="};">
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="classtr_1_1localization__map.html">   37</a></span>    <span class="keyword">class </span><a class="code hl_function" href="classtr_1_1localization__map.html#a5fb5ce712340d4a1ba129fa84f9536d4">localization_map</a></div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    {</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>      <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="classtr_1_1localization__map.html#a5fb5ce712340d4a1ba129fa84f9536d4">   44</a></span>        [[nodiscard]] <a class="code hl_function" href="classtr_1_1localization__map.html#a5fb5ce712340d4a1ba129fa84f9536d4">localization_map</a>() noexcept = default;</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        template &lt;std::input_iterator Iterator, std::sentinel_for&lt;Iterator&gt; Sentinel&gt;</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>            requires <a class="code hl_concept" href="concepttr_1_1localization__key__value__pair.html">localization_key_value_pair</a>&lt;std::iter_reference_t&lt;Iterator&gt;&gt;</div>
+<div class="foldopen" id="foldopen00054" data-start="{" data-end="}">
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="classtr_1_1localization__map.html#a74f0019a4251421b953694c2277cb968">   54</a></span>        [[nodiscard]] <a class="code hl_function" href="classtr_1_1localization__map.html#a5fb5ce712340d4a1ba129fa84f9536d4">localization_map</a>(Iterator begin, Sentinel end)</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        {</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>            <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::forward_iterator&lt;Iterator&gt;) {</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="preprocessor">#ifdef TR_ENABLE_ASSERTS</span></div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>                <span class="keywordflow">for</span> (Iterator it = begin; it != end; ++it) {</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>                    <span class="keywordflow">for</span> (Iterator jt = std::next(it); jt != end; ++jt) {</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>                        <span class="keyword">auto</span>&amp;&amp; [ikey, ivalue]{*it};</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>                        <span class="keyword">auto</span>&amp;&amp; [jkey, jvalue]{*jt};</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>                        <span class="keywordflow">if</span> (<span class="keyword">static_cast&lt;</span>std::string_view<span class="keyword">&gt;</span>(ikey) == <span class="keyword">static_cast&lt;</span>std::string_view<span class="keyword">&gt;</span>(jkey)) {</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>                            <a class="code hl_define" href="macro_8hpp.html#a9524128b336bcd23aef93fde1b1bed05">TR_ASSERT</a>(<span class="keyword">false</span>, <span class="stringliteral">&quot;Localization key-value range contains duplicate keys.&quot;</span>);</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>                        }</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>                    }</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>                }</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>                <a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> keys{0};</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>                <a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> string_pool_capacity{0};</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>                <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; [key, value] : std::ranges::subrange{begin, end}) {</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>                    ++keys;</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>                    string_pool_capacity += (<span class="keyword">static_cast&lt;</span>std::string_view<span class="keyword">&gt;</span>(key).size() + <span class="keyword">static_cast&lt;</span>std::string_view<span class="keyword">&gt;</span>(value).<a class="code hl_function" href="classtr_1_1localization__map.html#aad710390afc9aa883820bbe54418dace">size</a>() + 2);</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>                }</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>                m_pool.reserve(string_pool_capacity);</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>                m_keys.reserve(keys);</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>            }</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>            <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; [key, value] : std::ranges::subrange{begin, end}) {</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>                m_pool.append(key);</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>                m_pool.append(value);</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>            }</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>            <span class="keywordflow">for</span> (<a class="code hl_class" href="classtr_1_1string__pool_1_1iterator.html">string_pool::iterator</a> it{m_pool.begin()}; it != m_pool.end(); std::advance(it, 2)) {</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>                m_keys.insert(it);</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>            }</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        }</div>
 </div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span></div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>        <span class="keyword">template</span> &lt;std::ranges::input_range Range = std::initializer_list&lt;std::pair&lt;std::<span class="keywordtype">string</span>_view, std::<span class="keywordtype">string</span>_view&gt;&gt;&gt;</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>            <span class="keyword">requires</span> <a class="code hl_concept" href="concepttr_1_1localization__key__value__pair.html">localization_key_value_pair&lt;std::ranges::range_reference_t&lt;Range&gt;</a>&gt;</div>
-<div class="foldopen" id="foldopen00096" data-start="{" data-end="}">
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno"><a class="line" href="classtr_1_1localization__map.html#a4014e47687d9e1089410a400f702d88c">   96</a></span>        [[nodiscard]] <span class="keyword">explicit</span> <a class="code hl_function" href="classtr_1_1localization__map.html#a4014e47687d9e1089410a400f702d88c">localization_map</a>(Range&amp;&amp; range)</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>            : <a class="code hl_function" href="classtr_1_1localization__map.html#a5fb5ce712340d4a1ba129fa84f9536d4">localization_map</a>(std::ranges::begin(range), std::ranges::end(range))</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>        {</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>        }</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span></div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>        <span class="keyword">template</span> &lt;std::ranges::input_range Range = std::initializer_list&lt;std::pair&lt;std::<span class="keywordtype">string</span>_view, std::<span class="keywordtype">string</span>_view&gt;&gt;&gt;</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>            <span class="keyword">requires</span> <a class="code hl_concept" href="concepttr_1_1localization__key__value__pair.html">localization_key_value_pair&lt;std::ranges::range_reference_t&lt;Range&gt;</a>&gt;</div>
+<div class="foldopen" id="foldopen00094" data-start="{" data-end="}">
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno"><a class="line" href="classtr_1_1localization__map.html#a4014e47687d9e1089410a400f702d88c">   94</a></span>        [[nodiscard]] <span class="keyword">explicit</span> <a class="code hl_function" href="classtr_1_1localization__map.html#a4014e47687d9e1089410a400f702d88c">localization_map</a>(Range&amp;&amp; range)</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>            : <a class="code hl_function" href="classtr_1_1localization__map.html#a5fb5ce712340d4a1ba129fa84f9536d4">localization_map</a>(std::ranges::begin(range), std::ranges::end(range))</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>        {</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        }</div>
 </div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span></div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno"><a class="line" href="classtr_1_1localization__map.html#ac674ba0328ecc61f9f0b609f2f9fb1c9">  103</a></span>        [[nodiscard]] <a class="code hl_function" href="classtr_1_1localization__map.html#ac674ba0328ecc61f9f0b609f2f9fb1c9">localization_map</a>(<span class="keyword">const</span> <a class="code hl_function" href="classtr_1_1localization__map.html#a5fb5ce712340d4a1ba129fa84f9536d4">localization_map</a>&amp; rhs);</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span></div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno"><a class="line" href="classtr_1_1localization__map.html#a7531343a7916c38c6f3c77b436f52f44">  108</a></span>        [[nodiscard]] <a class="code hl_function" href="classtr_1_1localization__map.html#a7531343a7916c38c6f3c77b436f52f44">localization_map</a>(<a class="code hl_function" href="classtr_1_1localization__map.html#a5fb5ce712340d4a1ba129fa84f9536d4">localization_map</a>&amp;&amp; rhs) <span class="keyword">noexcept</span> = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span></div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span></div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno"><a class="line" href="classtr_1_1localization__map.html#a2c5b59c5bab98a7c508cc8976b776f50">  117</a></span>        <a class="code hl_function" href="classtr_1_1localization__map.html#a5fb5ce712340d4a1ba129fa84f9536d4">localization_map</a>&amp; <a class="code hl_function" href="classtr_1_1localization__map.html#a2c5b59c5bab98a7c508cc8976b776f50">operator=</a>(<span class="keyword">const</span> <a class="code hl_function" href="classtr_1_1localization__map.html#a5fb5ce712340d4a1ba129fa84f9536d4">localization_map</a>&amp; rhs);</div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span></div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno"><a class="line" href="classtr_1_1localization__map.html#a45d56fb2546e7ca551970a86a18e51fa">  123</a></span>        <a class="code hl_function" href="classtr_1_1localization__map.html#a5fb5ce712340d4a1ba129fa84f9536d4">localization_map</a>&amp; <a class="code hl_function" href="classtr_1_1localization__map.html#a45d56fb2546e7ca551970a86a18e51fa">operator=</a>(<a class="code hl_function" href="classtr_1_1localization__map.html#a5fb5ce712340d4a1ba129fa84f9536d4">localization_map</a>&amp;&amp; rhs) <span class="keyword">noexcept</span> = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span></div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span></div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno"><a class="line" href="classtr_1_1localization__map.html#aad710390afc9aa883820bbe54418dace">  131</a></span>        [[nodiscard]] <a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> <a class="code hl_function" href="classtr_1_1localization__map.html#aad710390afc9aa883820bbe54418dace">size</a>() const noexcept;</div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span></div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno"><a class="line" href="classtr_1_1localization__map.html#a024f2aecad978da4bd8e017313531d87">  136</a></span>        [[nodiscard]] <span class="keywordtype">bool</span> <a class="code hl_function" href="classtr_1_1localization__map.html#a024f2aecad978da4bd8e017313531d87">contains</a>(std::string_view key) const noexcept;</div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span></div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno"><a class="line" href="classtr_1_1localization__map.html#adc0aedf4d0ea7f8962f860a0b3e4f8db">  142</a></span>        [[nodiscard]] std::string_view operator[](std::string_view key) const noexcept;</div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span></div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span></div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno"><a class="line" href="classtr_1_1localization__map.html#af77e50710f7befac642e2e229d8c1dd0">  149</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classtr_1_1localization__map.html#af77e50710f7befac642e2e229d8c1dd0">clear</a>() noexcept;</div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span></div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno"><a class="line" href="classtr_1_1localization__map.html#a95b7d0486da43d33d6c544ccdb22f06e">  155</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classtr_1_1localization__map.html#a95b7d0486da43d33d6c544ccdb22f06e">update</a>(std::string_view key, std::string_view value);</div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span></div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>        template &lt;std::input_iterator Iterator, std::sentinel_for&lt;Iterator&gt; Sentinel&gt;</div>
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>            requires <a class="code hl_concept" href="concepttr_1_1localization__key__value__pair.html">localization_key_value_pair</a>&lt;std::iter_reference_t&lt;Iterator&gt;&gt;</div>
-<div class="foldopen" id="foldopen00166" data-start="{" data-end="}">
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno"><a class="line" href="classtr_1_1localization__map.html#a3138c662c94991c57be608e3e7cc0496">  166</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classtr_1_1localization__map.html#a95b7d0486da43d33d6c544ccdb22f06e">update</a>(Iterator begin, Sentinel end)</div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>        {</div>
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>            <a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> keys{0};</div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>            <span class="keywordtype">bool</span> stale_keys{<span class="keyword">false</span>};</div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>            <span class="keyword">const</span> <a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> old_pool_capacity{m_pool.capacity()};</div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span> </div>
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>            <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; [key, value] : std::ranges::subrange{begin, end}) {</div>
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>                ++keys;</div>
-<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>                <span class="keywordflow">if</span> (!stale_keys) {</div>
-<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>                    <span class="keywordflow">if</span> (<span class="keyword">const</span> <span class="keyword">auto</span> existing_copy_it{m_keys.find(key)}; existing_copy_it != m_keys.end()) {</div>
-<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>                        stale_keys = <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>                        m_pool.erase(*existing_copy_it, std::next(*existing_copy_it, 2));</div>
-<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>                    }</div>
-<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>                }</div>
-<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>                <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>                    <span class="keywordflow">for</span> (<span class="keyword">auto</span> it = m_pool.begin(); it != m_pool.end(); std::advance(it, 2)) {</div>
-<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>                        <span class="keywordflow">if</span> (*it == key) {</div>
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>                            m_pool.erase(it, std::next(it, 2));</div>
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>                            <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>                        }</div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>                    }</div>
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>                }</div>
-<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span> </div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>                m_pool.append(key);</div>
-<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>                m_pool.append(value);</div>
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>                <span class="keywordflow">if</span> (m_pool.capacity() &gt; old_pool_capacity) {</div>
-<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>                    stale_keys = <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>                }</div>
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>            }</div>
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span> </div>
-<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>            <span class="keywordflow">if</span> (stale_keys) {</div>
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>                m_keys.clear();</div>
-<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>                <span class="keywordflow">for</span> (<a class="code hl_class" href="classtr_1_1string__pool_1_1iterator.html">string_pool::iterator</a> it{m_pool.begin()}; it != m_pool.end(); std::advance(it, 2)) {</div>
-<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>                    m_keys.insert(it);</div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>                }</div>
-<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>            }</div>
-<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!m_pool.empty()) {</div>
-<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>                for (auto [i, it] = std::pair{0uz, std::prev(m_pool.end(), 2)}; i &lt; keys; ++i, std::advance(it, -2)) {</div>
-<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>                    m_keys.insert(it);</div>
-<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>                }</div>
-<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>            }</div>
-<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>        }</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span></div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno"><a class="line" href="classtr_1_1localization__map.html#ac674ba0328ecc61f9f0b609f2f9fb1c9">  101</a></span>        [[nodiscard]] <a class="code hl_function" href="classtr_1_1localization__map.html#ac674ba0328ecc61f9f0b609f2f9fb1c9">localization_map</a>(<span class="keyword">const</span> <a class="code hl_function" href="classtr_1_1localization__map.html#a5fb5ce712340d4a1ba129fa84f9536d4">localization_map</a>&amp; rhs);</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span></div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno"><a class="line" href="classtr_1_1localization__map.html#a7531343a7916c38c6f3c77b436f52f44">  106</a></span>        [[nodiscard]] <a class="code hl_function" href="classtr_1_1localization__map.html#a7531343a7916c38c6f3c77b436f52f44">localization_map</a>(<a class="code hl_function" href="classtr_1_1localization__map.html#a5fb5ce712340d4a1ba129fa84f9536d4">localization_map</a>&amp;&amp; rhs) <span class="keyword">noexcept</span> = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span></div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span></div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno"><a class="line" href="classtr_1_1localization__map.html#a2c5b59c5bab98a7c508cc8976b776f50">  115</a></span>        <a class="code hl_function" href="classtr_1_1localization__map.html#a5fb5ce712340d4a1ba129fa84f9536d4">localization_map</a>&amp; <a class="code hl_function" href="classtr_1_1localization__map.html#a2c5b59c5bab98a7c508cc8976b776f50">operator=</a>(<span class="keyword">const</span> <a class="code hl_function" href="classtr_1_1localization__map.html#a5fb5ce712340d4a1ba129fa84f9536d4">localization_map</a>&amp; rhs);</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span></div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno"><a class="line" href="classtr_1_1localization__map.html#a45d56fb2546e7ca551970a86a18e51fa">  121</a></span>        <a class="code hl_function" href="classtr_1_1localization__map.html#a5fb5ce712340d4a1ba129fa84f9536d4">localization_map</a>&amp; <a class="code hl_function" href="classtr_1_1localization__map.html#a45d56fb2546e7ca551970a86a18e51fa">operator=</a>(<a class="code hl_function" href="classtr_1_1localization__map.html#a5fb5ce712340d4a1ba129fa84f9536d4">localization_map</a>&amp;&amp; rhs) <span class="keyword">noexcept</span> = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span></div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span></div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno"><a class="line" href="classtr_1_1localization__map.html#aad710390afc9aa883820bbe54418dace">  129</a></span>        [[nodiscard]] <a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> <a class="code hl_function" href="classtr_1_1localization__map.html#aad710390afc9aa883820bbe54418dace">size</a>() const noexcept;</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span></div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno"><a class="line" href="classtr_1_1localization__map.html#a024f2aecad978da4bd8e017313531d87">  134</a></span>        [[nodiscard]] <span class="keywordtype">bool</span> <a class="code hl_function" href="classtr_1_1localization__map.html#a024f2aecad978da4bd8e017313531d87">contains</a>(std::string_view key) const noexcept;</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span></div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno"><a class="line" href="classtr_1_1localization__map.html#adc0aedf4d0ea7f8962f860a0b3e4f8db">  140</a></span>        [[nodiscard]] std::string_view operator[](std::string_view key) const noexcept;</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span></div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span></div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno"><a class="line" href="classtr_1_1localization__map.html#af77e50710f7befac642e2e229d8c1dd0">  147</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classtr_1_1localization__map.html#af77e50710f7befac642e2e229d8c1dd0">clear</a>() noexcept;</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span></div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno"><a class="line" href="classtr_1_1localization__map.html#a95b7d0486da43d33d6c544ccdb22f06e">  153</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classtr_1_1localization__map.html#a95b7d0486da43d33d6c544ccdb22f06e">update</a>(std::string_view key, std::string_view value);</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span></div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>        template &lt;std::input_iterator Iterator, std::sentinel_for&lt;Iterator&gt; Sentinel&gt;</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>            requires <a class="code hl_concept" href="concepttr_1_1localization__key__value__pair.html">localization_key_value_pair</a>&lt;std::iter_reference_t&lt;Iterator&gt;&gt;</div>
+<div class="foldopen" id="foldopen00164" data-start="{" data-end="}">
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno"><a class="line" href="classtr_1_1localization__map.html#a3138c662c94991c57be608e3e7cc0496">  164</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classtr_1_1localization__map.html#a95b7d0486da43d33d6c544ccdb22f06e">update</a>(Iterator begin, Sentinel end)</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>        {</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>            <a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> keys{0};</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>            <span class="keywordtype">bool</span> stale_keys{<span class="keyword">false</span>};</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>            <span class="keyword">const</span> <a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> old_pool_capacity{m_pool.capacity()};</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span> </div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>            <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; [key, value] : std::ranges::subrange{begin, end}) {</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>                ++keys;</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>                <span class="keywordflow">if</span> (!stale_keys) {</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>                    <span class="keywordflow">if</span> (<span class="keyword">const</span> <span class="keyword">auto</span> existing_copy_it{m_keys.find(key)}; existing_copy_it != m_keys.end()) {</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>                        stale_keys = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>                        m_pool.erase(*existing_copy_it, std::next(*existing_copy_it, 2));</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>                    }</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>                }</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>                <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>                    <span class="keywordflow">for</span> (<span class="keyword">auto</span> it = m_pool.begin(); it != m_pool.end(); std::advance(it, 2)) {</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>                        <span class="keywordflow">if</span> (*it == key) {</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>                            m_pool.erase(it, std::next(it, 2));</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>                            <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>                        }</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>                    }</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>                }</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span> </div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>                m_pool.append(key);</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>                m_pool.append(value);</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>                <span class="keywordflow">if</span> (m_pool.capacity() &gt; old_pool_capacity) {</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>                    stale_keys = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>                }</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>            }</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span> </div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>            <span class="keywordflow">if</span> (stale_keys) {</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>                m_keys.clear();</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>                <span class="keywordflow">for</span> (<a class="code hl_class" href="classtr_1_1string__pool_1_1iterator.html">string_pool::iterator</a> it{m_pool.begin()}; it != m_pool.end(); std::advance(it, 2)) {</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>                    m_keys.insert(it);</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>                }</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>            }</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!m_pool.empty()) {</div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>                for (auto [i, it] = std::pair{0uz, std::prev(m_pool.end(), 2)}; i &lt; keys; ++i, std::advance(it, -2)) {</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>                    m_keys.insert(it);</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>                }</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>            }</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>        }</div>
 </div>
-<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span></div>
-<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>        <span class="keyword">template</span> &lt;std::ranges::input_range Range = std::initializer_list&lt;std::pair&lt;std::<span class="keywordtype">string</span>_view, std::<span class="keywordtype">string</span>_view&gt;&gt;&gt;</div>
-<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>            <span class="keyword">requires</span> localization_key_value_pair&lt;std::ranges::range_reference_t&lt;Range&gt;&gt;</div>
-<div class="foldopen" id="foldopen00216" data-start="{" data-end="}">
-<div class="line"><a id="l00216" name="l00216"></a><span class="lineno"><a class="line" href="classtr_1_1localization__map.html#aaf1048a95ef69c07e80c9603d66bd6b7">  216</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classtr_1_1localization__map.html#aaf1048a95ef69c07e80c9603d66bd6b7">update</a>(Range&amp;&amp; range)</div>
-<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>        {</div>
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>            <a class="code hl_function" href="classtr_1_1localization__map.html#a95b7d0486da43d33d6c544ccdb22f06e">update</a>(std::ranges::begin(range), std::ranges::end(range));</div>
-<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>        }</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span></div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>        <span class="keyword">template</span> &lt;std::ranges::input_range Range = std::initializer_list&lt;std::pair&lt;std::<span class="keywordtype">string</span>_view, std::<span class="keywordtype">string</span>_view&gt;&gt;&gt;</div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>            <span class="keyword">requires</span> localization_key_value_pair&lt;std::ranges::range_reference_t&lt;Range&gt;&gt;</div>
+<div class="foldopen" id="foldopen00214" data-start="{" data-end="}">
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno"><a class="line" href="classtr_1_1localization__map.html#aaf1048a95ef69c07e80c9603d66bd6b7">  214</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classtr_1_1localization__map.html#aaf1048a95ef69c07e80c9603d66bd6b7">update</a>(Range&amp;&amp; range)</div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>        {</div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>            <a class="code hl_function" href="classtr_1_1localization__map.html#a95b7d0486da43d33d6c544ccdb22f06e">update</a>(std::ranges::begin(range), std::ranges::end(range));</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>        }</div>
 </div>
-<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span></div>
-<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span> </div>
-<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>      <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>        <span class="keyword">struct </span>string_pool_iterator_hash : <span class="keyword">public</span> <a class="code hl_struct" href="structtr_1_1string__hash.html">string_hash</a></div>
-<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>        {</div>
-<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>            <span class="keyword">using </span>string_hash::operator();</div>
-<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span></div>
-<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>            [[nodiscard]] <a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> operator()(<a class="code hl_class" href="classtr_1_1string__pool_1_1iterator.html">string_pool::iterator</a> it) <span class="keyword">const</span> <span class="keyword">noexcept</span>;</div>
-<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>        };</div>
-<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span></div>
-<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>        <span class="keyword">struct </span>string_pool_iterator_eq : <span class="keyword">public</span> string_eq, <span class="keyword">public</span> std::equal_to&lt;string_pool::iterator&gt;</div>
-<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>        {</div>
-<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>            <span class="keyword">using </span>string_eq::operator();</div>
-<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span> </div>
-<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>            <span class="keyword">using </span>std::equal_to&lt;string_pool::iterator&gt;::operator();</div>
-<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span></div>
-<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>            [[nodiscard]] <span class="keywordtype">bool</span> operator()(string_pool::iterator lhs, std::string_view rhs) <span class="keyword">const</span> <span class="keyword">noexcept</span>;</div>
-<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span></div>
-<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>            [[nodiscard]] <span class="keywordtype">bool</span> operator()(std::string_view lhs, string_pool::iterator rhs) <span class="keyword">const</span> <span class="keyword">noexcept</span>;</div>
-<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>        };</div>
-<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span> </div>
-<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>        <span class="comment">//</span></div>
-<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span></div>
-<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>        <a class="code hl_class" href="classtr_1_1string__pool.html">string_pool</a> m_pool;</div>
-<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span></div>
-<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>        boost::unordered_flat_set&lt;string_pool::iterator, string_pool_iterator_hash, string_pool_iterator_eq&gt; m_keys;</div>
-<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>    };</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span></div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span> </div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>      <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>        <span class="keyword">struct </span>string_pool_iterator_hash : <span class="keyword">public</span> <a class="code hl_struct" href="structtr_1_1string__hash.html">string_hash</a></div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>        {</div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>            <span class="keyword">using </span>string_hash::operator();</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span></div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>            [[nodiscard]] <a class="code hl_typedef" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> operator()(<a class="code hl_class" href="classtr_1_1string__pool_1_1iterator.html">string_pool::iterator</a> it) <span class="keyword">const</span> <span class="keyword">noexcept</span>;</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>        };</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span></div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>        <span class="keyword">struct </span>string_pool_iterator_eq : <span class="keyword">public</span> string_eq, <span class="keyword">public</span> std::equal_to&lt;string_pool::iterator&gt;</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>        {</div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>            <span class="keyword">using </span>string_eq::operator();</div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span> </div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>            <span class="keyword">using </span>std::equal_to&lt;string_pool::iterator&gt;::operator();</div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span></div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>            [[nodiscard]] <span class="keywordtype">bool</span> operator()(string_pool::iterator lhs, std::string_view rhs) <span class="keyword">const</span> <span class="keyword">noexcept</span>;</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span></div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>            [[nodiscard]] <span class="keywordtype">bool</span> operator()(std::string_view lhs, string_pool::iterator rhs) <span class="keyword">const</span> <span class="keyword">noexcept</span>;</div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>        };</div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span> </div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>        <span class="comment">//</span></div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span></div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>        <a class="code hl_class" href="classtr_1_1string__pool.html">string_pool</a> m_pool;</div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span></div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>        boost::unordered_flat_set&lt;string_pool::iterator, string_pool_iterator_hash, string_pool_iterator_eq&gt; m_keys;</div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>    };</div>
 </div>
-<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>} <span class="comment">// namespace tr</span></div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>} <span class="comment">// namespace tr</span></div>
 <div class="ttc" id="aclasstr_1_1localization__map_html_a024f2aecad978da4bd8e017313531d87"><div class="ttname"><a href="classtr_1_1localization__map.html#a024f2aecad978da4bd8e017313531d87">tr::localization_map::contains</a></div><div class="ttdeci">bool contains(std::string_view key) const noexcept</div><div class="ttdoc">Gets whether a key has a corresponding localization string in the map.</div></div>
 <div class="ttc" id="aclasstr_1_1localization__map_html_a2c5b59c5bab98a7c508cc8976b776f50"><div class="ttname"><a href="classtr_1_1localization__map.html#a2c5b59c5bab98a7c508cc8976b776f50">tr::localization_map::operator=</a></div><div class="ttdeci">localization_map &amp; operator=(const localization_map &amp;rhs)</div><div class="ttdoc">Copies a localization map.</div></div>
-<div class="ttc" id="aclasstr_1_1localization__map_html_a4014e47687d9e1089410a400f702d88c"><div class="ttname"><a href="classtr_1_1localization__map.html#a4014e47687d9e1089410a400f702d88c">tr::localization_map::localization_map</a></div><div class="ttdeci">localization_map(Range &amp;&amp;range)</div><div class="ttdoc">Constructs a localization map from a key-value range.</div><div class="ttdef"><b>Definition</b> localization_map.hpp:96</div></div>
+<div class="ttc" id="aclasstr_1_1localization__map_html_a4014e47687d9e1089410a400f702d88c"><div class="ttname"><a href="classtr_1_1localization__map.html#a4014e47687d9e1089410a400f702d88c">tr::localization_map::localization_map</a></div><div class="ttdeci">localization_map(Range &amp;&amp;range)</div><div class="ttdoc">Constructs a localization map from a key-value range.</div><div class="ttdef"><b>Definition</b> localization_map.hpp:94</div></div>
 <div class="ttc" id="aclasstr_1_1localization__map_html_a45d56fb2546e7ca551970a86a18e51fa"><div class="ttname"><a href="classtr_1_1localization__map.html#a45d56fb2546e7ca551970a86a18e51fa">tr::localization_map::operator=</a></div><div class="ttdeci">localization_map &amp; operator=(localization_map &amp;&amp;rhs) noexcept=default</div><div class="ttdoc">Moves a localization map.</div></div>
 <div class="ttc" id="aclasstr_1_1localization__map_html_a5fb5ce712340d4a1ba129fa84f9536d4"><div class="ttname"><a href="classtr_1_1localization__map.html#a5fb5ce712340d4a1ba129fa84f9536d4">tr::localization_map::localization_map</a></div><div class="ttdeci">localization_map() noexcept=default</div><div class="ttdoc">Constructs an empty localization map.</div></div>
 <div class="ttc" id="aclasstr_1_1localization__map_html_a7531343a7916c38c6f3c77b436f52f44"><div class="ttname"><a href="classtr_1_1localization__map.html#a7531343a7916c38c6f3c77b436f52f44">tr::localization_map::localization_map</a></div><div class="ttdeci">localization_map(localization_map &amp;&amp;rhs) noexcept=default</div><div class="ttdoc">Moves a localization map.</div></div>
 <div class="ttc" id="aclasstr_1_1localization__map_html_a95b7d0486da43d33d6c544ccdb22f06e"><div class="ttname"><a href="classtr_1_1localization__map.html#a95b7d0486da43d33d6c544ccdb22f06e">tr::localization_map::update</a></div><div class="ttdeci">void update(std::string_view key, std::string_view value)</div><div class="ttdoc">Adds or replaces a key-value pair in the map.</div></div>
 <div class="ttc" id="aclasstr_1_1localization__map_html_aad710390afc9aa883820bbe54418dace"><div class="ttname"><a href="classtr_1_1localization__map.html#aad710390afc9aa883820bbe54418dace">tr::localization_map::size</a></div><div class="ttdeci">usize size() const noexcept</div><div class="ttdoc">Gets the number of entries in the map.</div></div>
-<div class="ttc" id="aclasstr_1_1localization__map_html_aaf1048a95ef69c07e80c9603d66bd6b7"><div class="ttname"><a href="classtr_1_1localization__map.html#aaf1048a95ef69c07e80c9603d66bd6b7">tr::localization_map::update</a></div><div class="ttdeci">void update(Range &amp;&amp;range)</div><div class="ttdoc">Adds and replaces key-value pairs in the map.</div><div class="ttdef"><b>Definition</b> localization_map.hpp:216</div></div>
+<div class="ttc" id="aclasstr_1_1localization__map_html_aaf1048a95ef69c07e80c9603d66bd6b7"><div class="ttname"><a href="classtr_1_1localization__map.html#aaf1048a95ef69c07e80c9603d66bd6b7">tr::localization_map::update</a></div><div class="ttdeci">void update(Range &amp;&amp;range)</div><div class="ttdoc">Adds and replaces key-value pairs in the map.</div><div class="ttdef"><b>Definition</b> localization_map.hpp:214</div></div>
 <div class="ttc" id="aclasstr_1_1localization__map_html_ac674ba0328ecc61f9f0b609f2f9fb1c9"><div class="ttname"><a href="classtr_1_1localization__map.html#ac674ba0328ecc61f9f0b609f2f9fb1c9">tr::localization_map::localization_map</a></div><div class="ttdeci">localization_map(const localization_map &amp;rhs)</div><div class="ttdoc">Copies a localization map.</div></div>
 <div class="ttc" id="aclasstr_1_1localization__map_html_af77e50710f7befac642e2e229d8c1dd0"><div class="ttname"><a href="classtr_1_1localization__map.html#af77e50710f7befac642e2e229d8c1dd0">tr::localization_map::clear</a></div><div class="ttdeci">void clear() noexcept</div><div class="ttdoc">Clears the localization map.</div></div>
 <div class="ttc" id="aclasstr_1_1string__pool_1_1iterator_html"><div class="ttname"><a href="classtr_1_1string__pool_1_1iterator.html">tr::string_pool::iterator</a></div><div class="ttdoc">Iterator type used by the string pool.</div><div class="ttdef"><b>Definition</b> string_pool.hpp:20</div></div>
 <div class="ttc" id="aclasstr_1_1string__pool_html"><div class="ttname"><a href="classtr_1_1string__pool.html">tr::string_pool</a></div><div class="ttdoc">Pooled string storage.</div><div class="ttdef"><b>Definition</b> string_pool.hpp:15</div></div>
 <div class="ttc" id="aconcepttr_1_1localization__key__value__pair_html"><div class="ttname"><a href="concepttr_1_1localization__key__value__pair.html">tr::localization_key_value_pair</a></div><div class="ttdoc">Concept denoting a type suitable for a localization key-value pair.</div><div class="ttdef"><b>Definition</b> localization_map.hpp:19</div></div>
 <div class="ttc" id="ahash__map_8hpp_html"><div class="ttname"><a href="hash__map_8hpp.html">hash_map.hpp</a></div><div class="ttdoc">Provides miscellaneous hash map functionality.</div></div>
-<div class="ttc" id="amacro_8hpp_html_a9524128b336bcd23aef93fde1b1bed05"><div class="ttname"><a href="macro_8hpp.html#a9524128b336bcd23aef93fde1b1bed05">TR_ASSERT</a></div><div class="ttdeci">#define TR_ASSERT(condition, fmt,...)</div><div class="ttdoc">Custom assertion macro.</div><div class="ttdef"><b>Definition</b> macro.hpp:93</div></div>
+<div class="ttc" id="amacro_8hpp_html_a9524128b336bcd23aef93fde1b1bed05"><div class="ttname"><a href="macro_8hpp.html#a9524128b336bcd23aef93fde1b1bed05">TR_ASSERT</a></div><div class="ttdeci">#define TR_ASSERT(condition, fmt,...)</div><div class="ttdoc">Custom assertion macro.</div><div class="ttdef"><b>Definition</b> macro.hpp:104</div></div>
 <div class="ttc" id="anamespacetr_1_1aliases_1_1integer__aliases_html_a401704cad707ec504dfeae361641bb9b"><div class="ttname"><a href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">tr::aliases::integer_aliases::usize</a></div><div class="ttdeci">std::size_t usize</div><div class="ttdoc">Unsigned size integer.</div><div class="ttdef"><b>Definition</b> integer.hpp:29</div></div>
 <div class="ttc" id="anamespacetr_html"><div class="ttname"><a href="namespacetr.html">tr</a></div><div class="ttdoc">Namespace containing all tr functionality.</div><div class="ttdef"><b>Definition</b> audio_buffer.hpp:10</div></div>
 <div class="ttc" id="astring__pool_8hpp_html"><div class="ttname"><a href="string__pool_8hpp.html">string_pool.hpp</a></div><div class="ttdoc">Provides tr::string_pool.</div></div>

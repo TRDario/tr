@@ -1,5 +1,6 @@
 var NAVTREEINDEX18 =
 {
+"structtr_1_1localization__error__formatter.html#abf71686aff9c17bb84cc60ab45fe191b":[4,0,0,128,0],
 "structtr_1_1localization__error__formatter.html#abf71686aff9c17bb84cc60ab45fe191b":[6,0,1,115,0],
 "structtr_1_1localization__script__duplicate__key.html":[4,0,0,130],
 "structtr_1_1localization__script__duplicate__key.html":[6,0,1,117],
@@ -248,6 +249,5 @@ var NAVTREEINDEX18 =
 "structtr_1_1rgb.html#ae53d94c82ce65905fe0f1bdfabcf528b":[4,0,0,183,1],
 "structtr_1_1rgb.html#ae53d94c82ce65905fe0f1bdfabcf528b":[6,0,1,170,1],
 "structtr_1_1rgb.html#ae73f0627557ce587562e7e8390f221f2":[4,0,0,183,5],
-"structtr_1_1rgb.html#ae73f0627557ce587562e7e8390f221f2":[6,0,1,170,5],
-"structtr_1_1rgb.html#af34359d93f617c44e4edaa1195a0ae92":[4,0,0,183,11]
+"structtr_1_1rgb.html#ae73f0627557ce587562e7e8390f221f2":[6,0,1,170,5]
 };

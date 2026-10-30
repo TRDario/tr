@@ -1,5 +1,6 @@
 var macro_8hpp =
 [
+    [ "TR_HAS_BUILTIN", "macro_8hpp.html#a56520aa5fdf095568b26f55812a717c1", null ],
     [ "TR_UNREACHABLE", "macro_8hpp.html#a2ba7b799c46dfa140bb14ccb2ee4bbcc", null ],
     [ "TR_STRINGIFY", "macro_8hpp.html#a700ea98c90f9e40c626d3631b5d23d6c", null ],
     [ "TR_JOIN", "macro_8hpp.html#aeb217b3c5792ac1f5f5c865085d5d186", null ],

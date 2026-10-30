@@ -103,10 +103,10 @@ var NAVTREEINDEX =
 "classtr_1_1ttfont__render__error.html#abffd8873c93954c6d4c4426ff4c4f425",
 "classtr_1_1window.html#a2792f0ad5b977af38c0a371b975e5ec7",
 "functions_f.html",
-"namespacetr.html#a201e74a7c64f0a982e1d10eaacb752a8",
-"namespacetr.html#abf5c5a702993e9866dc12fad5b2fe91b",
+"namespacetr.html#a1ff6a498bf24f988e4028807d2c36ab7",
+"namespacetr.html#abf4d1094c8865c581c862d90eda4993e",
 "namespacetr_1_1aliases_1_1integer__aliases.html",
-"pack__traits_8hpp.html",
+"owning__shader__pipeline_8hpp_source.html",
 "structtr_1_1binary__reader_3_01boost_1_1unordered__node__set_3_01Key_00_01Other_8_8_8_01_4_01_4.html",
 "structtr_1_1localization__error__formatter.html#abf71686aff9c17bb84cc60ab45fe191b",
 "structtr_1_1rgb.html#af34359d93f617c44e4edaa1195a0ae92"
