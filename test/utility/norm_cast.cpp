@@ -11,11 +11,11 @@
 TEST(NormCastTest, FloatToFloat)
 {
 	EXPECT_FLOAT_EQ(tr::norm_cast<float>(0.0), 0.0f);
-	EXPECT_FLOAT_EQ(tr::norm_cast<double>(0.0f), 0.0);
-	EXPECT_FLOAT_EQ(tr::norm_cast<float>(0.2), 0.2f);
-	EXPECT_FLOAT_EQ(tr::norm_cast<double>(0.2f), 0.2);
+	EXPECT_DOUBLE_EQ(tr::norm_cast<double>(0.0f), 0.0);
+	EXPECT_NEAR(tr::norm_cast<float>(0.2), 0.2f, std::numeric_limits<float>::epsilon());
+	EXPECT_NEAR(tr::norm_cast<double>(0.2f), 0.2, std::numeric_limits<float>::epsilon());
 	EXPECT_FLOAT_EQ(tr::norm_cast<float>(1.0), 1.0f);
-	EXPECT_FLOAT_EQ(tr::norm_cast<double>(1.0f), 1.0);
+	EXPECT_DOUBLE_EQ(tr::norm_cast<double>(1.0f), 1.0);
 }
 
 /// Tests an int-to-int sign conversion normalized cast.

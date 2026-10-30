@@ -8,20 +8,22 @@
 
 namespace tr::internal
 {
-#if defined(__clang__) && __has_builtin(__builtin_structured_binding_size)
+#ifdef __has_builtin
+#if __has_builtin(__builtin_structured_binding_size)
 	// clang-format off
-    /// Gets the type of the `Index`th member of a structured binding of `Target`.
-    /// @tparam Index Index of the structured binding member.
-    /// @tparam Target Type being destructured.
+	/// Gets the type of the `Index`th member of a structured binding of `Target`.
+	/// @tparam Index Index of the structured binding member.
+	/// @tparam Target Type being destructured.
 	template <usize Index, typename Target>
 		requires(Index < __builtin_structured_binding_size(std::remove_cvref_t<Target>))
 	using binding_t = std::invoke_result_t<decltype([](Target&& v) -> decltype(auto) {
-        #pragma clang diagnostic push
-        #pragma clang diagnostic ignored "-Wc++26-extensions"
+		#pragma clang diagnostic push
+		#pragma clang diagnostic ignored "-Wc++26-extensions"
 		auto&& [... p]{std::forward<Target>(v)};
 		return p...[Index];
-        #pragma clang diagnostic pop
+		#pragma clang diagnostic pop
 	}), Target>;
 	// clang-format on
+#endif
 #endif
 } // namespace tr::internal

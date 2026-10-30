@@ -65,11 +65,6 @@ namespace tr
 			}
 
 			/// @}
-
-		  private:
-			using pointer_iterator<iterator, const CharT* const*>::operator*;
-
-			using pointer_iterator<iterator, const CharT* const*>::operator[];
 		};
 
 		/// Constant iterator type used by the span.

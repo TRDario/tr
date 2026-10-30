@@ -54,7 +54,7 @@ namespace tr
 		template <arithmetic RhsRep>
 		constexpr angle& operator+=(angle<RhsRep> rhs) noexcept
 		{
-			m_rads += rhs.rads();
+			m_rads = static_cast<Rep>(m_rads + rhs.rads());
 			return *this;
 		}
 
@@ -65,7 +65,7 @@ namespace tr
 		template <arithmetic RhsRep>
 		constexpr angle& operator-=(angle<RhsRep> rhs) noexcept
 		{
-			m_rads -= rhs.rads();
+			m_rads = static_cast<Rep>(m_rads - rhs.rads());
 			return *this;
 		}
 
@@ -76,7 +76,7 @@ namespace tr
 		template <arithmetic Scalar>
 		constexpr angle& operator*=(Scalar rhs) noexcept
 		{
-			m_rads *= rhs;
+			m_rads = static_cast<Rep>(m_rads * rhs);
 			return *this;
 		}
 
@@ -87,7 +87,7 @@ namespace tr
 		template <arithmetic Scalar>
 		constexpr angle& operator/=(Scalar rhs) noexcept
 		{
-			m_rads /= rhs;
+			m_rads = static_cast<Rep>(m_rads / rhs);
 			return *this;
 		}
 
@@ -98,7 +98,7 @@ namespace tr
 		template <arithmetic RhsRep>
 		constexpr angle& operator%=(angle<RhsRep> rhs) noexcept
 		{
-			m_rads = std::fmod(m_rads, rhs.rads());
+			m_rads = static_cast<Rep>(std::fmod(m_rads, rhs.rads()));
 			return *this;
 		}
 

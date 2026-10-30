@@ -450,7 +450,7 @@ namespace tr
 				}
 			}
 			std::uninitialized_copy(first, last, mwhere);
-			m_size += inserted_elements;
+			m_size += static_cast<size_type>(inserted_elements);
 			return mwhere;
 		}
 
@@ -501,7 +501,7 @@ namespace tr
 			if (mwhere != end()) {
 				new (end().base()) Element{std::move(back())};
 				std::move_backward(mwhere, end() - 1, end());
-				mwhere->~Element();
+				std::destroy_at(mwhere.base());
 			}
 			new (mwhere.base()) Element{std::forward<Args>(args)...};
 			++m_size;
@@ -518,7 +518,7 @@ namespace tr
 
 			const iterator mwhere{begin() + (where - begin())};
 			std::move(mwhere + 1, end(), mwhere);
-			back().~Element();
+			std::destroy_at(&back());
 			--m_size;
 			return mwhere;
 		}
@@ -535,10 +535,10 @@ namespace tr
 
 			const iterator mfirst{begin() + (first - begin())};
 			const iterator mlast{begin() + (last - begin())};
-			const difference_type erased_elements{std::distance(mfirst, mlast)};
+			const auto erased_elements{std::ranges::distance(mfirst, mlast)};
 			std::move(mlast, end(), mfirst);
 			std::destroy(end() - erased_elements, end());
-			m_size -= erased_elements;
+			m_size -= static_cast<size_type>(erased_elements);
 			return mfirst;
 		}
 

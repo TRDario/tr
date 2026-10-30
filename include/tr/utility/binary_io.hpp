@@ -17,10 +17,12 @@ namespace tr
 	{
 		static_assert("binary_reader is not specialized for this type!");
 
+#ifdef TR_DOXYGEN
 		/// Reads a variable from a stream.
 		/// @param is Input stream.
 		/// @param out Output parameter.
-		static void operator()(std::istream& is, Out& out) = delete;
+		static void operator()(std::istream& is, Out& out);
+#endif
 	};
 
 	/// Interface for custom writers for use in write_binary.
@@ -31,10 +33,12 @@ namespace tr
 	{
 		static_assert("binary_writer is not specialized for this type!");
 
+#ifdef TR_DOXYGEN
 		/// Writes a variable to a stream.
 		/// @param os Output stream.
 		/// @param in Variable to write to the stream.
-		static void operator()(std::ostream& os, const In& in) = delete;
+		static void operator()(std::ostream& os, const In& in);
+#endif
 	};
 
 	//

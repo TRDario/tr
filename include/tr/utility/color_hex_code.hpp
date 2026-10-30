@@ -57,7 +57,7 @@ namespace tr
 	/// @param hex_code Hex code string. Must be in the format %"#XXYYZZ" or %"#XXYYZZWW" with no whitespace.
 	/// @exception invalid_hex_code If the hex code string is invalid.
 	template <typename Color = rgba<u8>>
-		requires color_castable_to<rgba<u8>, Color>
+		requires indirectly_color_castable_to<rgba<u8>, Color>
 	[[nodiscard]] constexpr Color from_hex_code(std::string_view hex_code)
 	{
 		if (hex_code.size() != 7 && hex_code.size() != 9) {

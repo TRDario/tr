@@ -25,13 +25,13 @@ static_assert(std::same_as<decltype(tr::angle<float>{1.0f} + tr::angle<double>{2
 /// Tests constructing and converting angles between units.
 TEST(AngleTest, ConstructsAndConvertsUnits)
 {
-	EXPECT_FLOAT_EQ(tr::rads(2.0).rads(), 2.0f);
-	EXPECT_FLOAT_EQ(tr::degs(180).rads(), std::numbers::pi);
-	EXPECT_FLOAT_EQ(tr::turns(0.5).rads(), std::numbers::pi);
+	EXPECT_DOUBLE_EQ(tr::rads(2.0).rads(), 2.0);
+	EXPECT_DOUBLE_EQ(tr::degs(180).rads(), std::numbers::pi);
+	EXPECT_DOUBLE_EQ(tr::turns(0.5).rads(), std::numbers::pi);
 
-	EXPECT_FLOAT_EQ(tr::degs(90).degs(), 90.0f);
-	EXPECT_FLOAT_EQ(tr::turns(0.25).turns(), 0.25f);
-	EXPECT_FLOAT_EQ(tr::rads(std::numbers::pi).turns(), 0.5f);
+	EXPECT_DOUBLE_EQ(tr::degs(90).degs(), 90.0);
+	EXPECT_DOUBLE_EQ(tr::turns(0.25).turns(), 0.25);
+	EXPECT_DOUBLE_EQ(tr::rads(std::numbers::pi).turns(), 0.5);
 }
 
 /// Tests converting angle values between representation types.
@@ -39,10 +39,10 @@ TEST(AngleTest, ConvertsRepresentationTypes)
 {
 	const tr::angle<double> precise{1.23456789};
 	const tr::angle<float> approximate{static_cast<tr::angle<float>>(precise)};
-	EXPECT_FLOAT_EQ(approximate.rads(), static_cast<float>(precise.rads()));
+	EXPECT_DOUBLE_EQ(approximate.rads(), static_cast<float>(precise.rads()));
 
 	const tr::angle<long double> extended{1.234567890123456789L};
-	EXPECT_EQ(extended.rads(), 1.234567890123456789L);
+	EXPECT_DOUBLE_EQ(extended.rads(), 1.234567890123456789L);
 }
 
 /// Tests the degree, radian, and turn literals.
@@ -73,7 +73,7 @@ TEST(AngleTest, PerformsArithmetic)
 	EXPECT_EQ(30_deg * 3, 90_deg);
 	EXPECT_EQ(3 * 30_deg, 90_deg);
 	EXPECT_EQ(90_deg / 3, 30_deg);
-	EXPECT_FLOAT_EQ(90_deg / 30_deg, 3);
+	EXPECT_DOUBLE_EQ(90_deg / 30_deg, 3);
 	EXPECT_NEAR((100_deg % 30_deg).rads(), (10_deg).rads(), 1e-6);
 
 	tr::angle<float> value{10_deg};

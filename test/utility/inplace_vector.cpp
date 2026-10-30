@@ -410,6 +410,7 @@ TEST(InplaceVectorTest, Resizes)
 /// Tests whether an inplace vector correctly handles the lifetimes of its elements.
 TEST(InplaceVectorTest, CorrectlyHandlesElementLifetimes)
 {
+	tracked_int::reset_counts();
 	{
 		tr::inplace_vector<tracked_int, 256> vector{};
 		vector.emplace_back(1);

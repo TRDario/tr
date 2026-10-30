@@ -143,7 +143,7 @@ tr::ttf_measure_result tr::ttfont::measure_text(std::string_view text, int max_w
 	if (!TTF_MeasureString(m_ptr.get(), text.data(), text.size(), max_w, &result.size, &length)) {
 		throw ttfont_error{"Failed to measure text '{}'.", text};
 	}
-	result.text = {text.begin(), text.begin() + length};
+	result.text = std::string_view{text.begin(), text.begin() + length};
 	return result;
 }
 
@@ -161,14 +161,24 @@ glm::ivec2 tr::ttfont::text_size(std::string_view text, int max_w) const
 tr::bitmap tr::ttfont::render(u32 glyph, rgba<u8> color) const
 {
 	SDL_Surface* const ptr{TTF_RenderGlyph_Blended(m_ptr.get(), glyph, std::bit_cast<SDL_Color>(color))};
-	return ptr != nullptr ? bitmap{ptr} : throw ttfont_render_error{SDL_GetError()};
+	if (ptr != nullptr) {
+		return bitmap{ptr};
+	}
+	else {
+		throw ttfont_render_error{SDL_GetError()};
+	}
 }
 
 tr::bitmap tr::ttfont::render(std::string_view text, int max_w, halign align, rgba<u8> color) const
 {
 	TTF_SetFontWrapAlignment(m_ptr.get(), static_cast<TTF_HorizontalAlignment>(align));
 	SDL_Surface* const ptr{TTF_RenderText_Blended_Wrapped(m_ptr.get(), text.data(), text.size(), std::bit_cast<SDL_Color>(color), max_w)};
-	return ptr != nullptr ? fix_alpha_artifacts(bitmap{ptr}, color.a) : throw ttfont_render_error{SDL_GetError()};
+	if (ptr != nullptr) {
+		return bitmap{ptr};
+	}
+	else {
+		throw ttfont_render_error{SDL_GetError()};
+	}
 }
 
 //
@@ -183,7 +193,12 @@ TTF_Font* tr::ttfont::unwrap() const noexcept
 tr::ttfont tr::load_embedded_ttfont(std::span<const std::byte> data, float size)
 {
 	TTF_Font* const ptr{TTF_OpenFontIO(SDL_IOFromConstMem(data.data(), data.size()), true, size)};
-	return ptr != nullptr ? ttfont{ptr} : throw ttfont_load_error{"(Embedded)", SDL_GetError()};
+	if (ptr != nullptr) {
+		return ttfont{ptr};
+	}
+	else {
+		throw ttfont_load_error{"(Embedded)", SDL_GetError()};
+	}
 }
 
 tr::ttfont tr::load_ttfont_file(const std::filesystem::path& path, float size)
@@ -193,7 +208,12 @@ tr::ttfont tr::load_ttfont_file(const std::filesystem::path& path, float size)
 	}
 
 	TTF_Font* const ptr{TTF_OpenFont(TR_PATH_CSTR(path), size)};
-	return ptr != nullptr ? ttfont{ptr} : throw ttfont_load_error{path.string(), SDL_GetError()};
+	if (ptr != nullptr) {
+		return ttfont{ptr};
+	}
+	else {
+		throw ttfont_load_error{path.string(), SDL_GetError()};
+	}
 }
 
 //

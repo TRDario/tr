@@ -42,14 +42,15 @@ void tr::encrypt_to(std::vector<std::byte>& out, std::span<const std::byte> raw)
 {
 	const std::byte key{static_cast<std::byte>(generate_random_seed())};
 
-	out.resize(LZ4_compressBound(raw.size()) + header_size);
+	out.resize(LZ4_compressBound(static_cast<int>(raw.size())) + header_size);
 
 	omstream header{std::views::take(out, header_size)};
 	write_binary_magic(header, "tr");
 	write_binary(header, key, static_cast<u8>(static_cast<u8>(key) - 3), static_cast<u32>(raw.size()));
 
 	const std::span<char> compressed{reinterpret_span<char>(std::span{out}).subspan(header_size)};
-	const int used_size{LZ4_compress_default(reinterpret_cast<const char*>(raw.data()), compressed.data(), raw.size(), compressed.size())};
+	const int used_size{LZ4_compress_default(reinterpret_cast<const char*>(raw.data()), compressed.data(), static_cast<int>(raw.size()),
+											 static_cast<int>(compressed.size()))};
 	out.resize(used_size + header_size);
 
 	for (std::byte& byte : std::views::drop(out, 3)) {
@@ -89,7 +90,8 @@ void tr::decrypt_to(std::vector<std::byte>& out, std::vector<std::byte> encrypte
 	}
 
 	out.resize(read_binary<u32>(header));
-	const int real_size{LZ4_decompress_safe(compressed.data(), reinterpret_cast<char*>(out.data()), compressed.size(), out.size())};
+	const int real_size{LZ4_decompress_safe(compressed.data(), reinterpret_cast<char*>(out.data()), static_cast<int>(compressed.size()),
+											static_cast<int>(out.size()))};
 	if (static_cast<usize>(real_size) != out.size()) {
 		throw decryption_error{"Failed to decompress data after decryption."};
 	}

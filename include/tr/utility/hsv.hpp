@@ -105,20 +105,20 @@ struct tr::color_caster<tr::rgba<double>, tr::hsv>
 		const double delta{minmax.second - minmax.first};
 
 		hsv hsv;
-		hsv.v = minmax.second;
+		hsv.v = static_cast<float>(minmax.second);
 		if (delta == 0) {
 			hsv.h = 0;
 		}
 		else if (minmax.second == rgba.r) {
-			hsv.h = 60.0 * eucmod((rgba.g - rgba.b) / delta, 6.0);
+			hsv.h = static_cast<float>(60.0 * eucmod((rgba.g - rgba.b) / delta, 6.0));
 		}
 		else if (minmax.second == rgba.g) {
-			hsv.h = 60.0 * ((rgba.b - rgba.r) / delta + 2.0);
+			hsv.h = static_cast<float>(60.0 * ((rgba.b - rgba.r) / delta + 2.0));
 		}
 		else {
-			hsv.h = 60.0 * ((rgba.r - rgba.g) / delta + 4.0);
+			hsv.h = static_cast<float>(60.0 * ((rgba.r - rgba.g) / delta + 4.0));
 		}
-		hsv.s = minmax.second != 0 ? delta / minmax.second : 0;
+		hsv.s = minmax.second != 0 ? static_cast<float>(delta / minmax.second) : 0;
 		return hsv;
 	}
 };

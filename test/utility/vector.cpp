@@ -50,9 +50,9 @@ TEST(VectorTest, ComputesSquaredDistance)
 TEST(VectorTest, ComputesInverse)
 {
 	const glm::dvec3 inverse{tr::inverse(glm::ivec3{2, 4, -5})};
-	EXPECT_FLOAT_EQ(inverse.x, 0.5);
-	EXPECT_FLOAT_EQ(inverse.y, 0.25);
-	EXPECT_FLOAT_EQ(inverse.z, -0.2);
+	EXPECT_DOUBLE_EQ(inverse.x, 0.5);
+	EXPECT_DOUBLE_EQ(inverse.y, 0.25);
+	EXPECT_DOUBLE_EQ(inverse.z, -0.2);
 }
 
 /// Tests the signed 2D cross product for same and mixed representation types.

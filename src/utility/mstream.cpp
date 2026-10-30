@@ -42,7 +42,7 @@ tr::memorybuf::pos_type tr::memorybuf::seekoff(off_type offset, std::ios_base::s
 	}
 	if (which & std::ios_base::out && ooffset >= 0 && ooffset <= static_cast<off_type>(m_buffer.size())) {
 		setp(pbase(), epptr());
-		pbump(ooffset);
+		pbump(static_cast<int>(ooffset));
 		result = ooffset;
 	}
 

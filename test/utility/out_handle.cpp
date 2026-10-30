@@ -13,7 +13,7 @@ struct stateless_deleter
 	inline static int deleted_count{0};
 
 	/// Last deleted value.
-	inline static int last_deleted_value{0};
+	inline static int last_deleted_value{-1};
 
 	//
 
@@ -46,6 +46,9 @@ TEST(OutHandleTest, SetsHandle)
 /// Tests setting a handle to empty via `tr::out_handle()`.
 TEST(OutHandleTest, SetsHandleToEmpty)
 {
+	stateless_deleter::deleted_count = 0;
+	stateless_deleter::last_deleted_value = -1;
+
 	tr::handle<int, 0, stateless_deleter> handle{10};
 	set_c_handle(tr::out_handle(handle, tr::maybe_empty), 0);
 	EXPECT_FALSE(handle.has_value());
