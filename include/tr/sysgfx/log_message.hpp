@@ -73,16 +73,16 @@ class std::formatter<tr::log_message>
 	template <typename FormatContext>
 	FormatContext::iterator format(const tr::log_message& message, FormatContext& context) const
 	{
-		switch (m_message_format) {
-		case message_format::no_source:
-			return std::format_to(context.out(), "[{:02}:{:02}:{:02}] [{}] {}", message.timestamp.tm_hour, message.timestamp.tm_min,
-								  message.timestamp.tm_sec, message.level, message.string);
-		case message_format::with_source:
-			return std::format_to(context.out(), "[{:02}:{:02}:{:02}] [{}] [{}] {}", message.timestamp.tm_hour, message.timestamp.tm_min,
-								  message.timestamp.tm_sec, message.source, message.level, message.string);
-		default:
-			TR_UNREACHABLE;
+		context.advance_to(std::format_to(context.out(), "[{:02}:{:02}:{:02}]", message.timestamp.tm_hour, message.timestamp.tm_min,
+										  message.timestamp.tm_sec));
+		if (m_message_format == message_format::with_source) {
+			context.advance_to(std::format_to(context.out(), " [{}]", message.source));
 		}
+		context.advance_to(std::format_to(context.out(), " [{}]", message.level));
+		if (message.level == tr::log_level::info || message.level == tr::log_level::warning) {
+			context.advance_to(context.out()++ = ' ');
+		}
+		return std::format_to(context.out(), " {}", message.string);
 	}
 
   private:

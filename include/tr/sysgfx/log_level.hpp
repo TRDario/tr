@@ -54,7 +54,7 @@ namespace tr
 		case log_level::info:
 			return "INFO";
 		case log_level::warning:
-			return "WARNING";
+			return "WARN";
 		case log_level::error:
 			return "ERROR";
 		case log_level::fatal:

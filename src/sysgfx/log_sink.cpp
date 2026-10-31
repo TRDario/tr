@@ -62,6 +62,13 @@ tr::directory_log_sink::directory_log_sink(std::filesystem::path directory_path)
 void tr::directory_log_sink::log(const log_message& message) noexcept
 {
 	try {
+		std::ofstream file{open_file_w(m_directory_path / std::format("all.log", message.source), std::ios::app)};
+		std::format_to(std::ostreambuf_iterator<char>{file}, "{}\n", message);
+	}
+	catch (...) {
+	}
+
+	try {
 		std::ofstream file{open_file_w(m_directory_path / std::format("{}.log", message.source), std::ios::app)};
 		std::format_to(std::ostreambuf_iterator<char>{file}, "{:n}\n", message);
 	}
