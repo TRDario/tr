@@ -126,17 +126,20 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1str
 </div><!--header-->
 <div class="contents">
 
-<p>Pooled string storage.  
+<p>Container storing a series of immutable NUL-terminated strings in a single allocation.  
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Pooled string storage. </p>
+<div class="textblock"><p>Container storing a series of immutable NUL-terminated strings in a single allocation. </p>
+<p><span class="tt"><a class="el" href="classtr_1_1string__pool.html" title="Container storing a series of immutable NUL-terminated strings in a single allocation.">tr::string_pool</a></span> is designed for efficient storage and lifetime management of a series of immutable strings. Rather than allocating individual buffers for each string, all strings are packed sequentially inside a single, contiguous buffer. This eliminates allocation overhead and heap fragmentation for scenarios where several strings share a common lifetime and do not require mutability. The underlying buffer is dynamically resizable and may be reallocated when its capacity is exceeded.</p>
+<p>The invalidation rules of <span class="tt"><a class="el" href="classtr_1_1string__pool.html" title="Container storing a series of immutable NUL-terminated strings in a single allocation.">tr::string_pool</a></span> largely mirror those of <span class="tt">std::vector</span>: Any operation that triggers in a reallocation invalidates all iterators and views to strings in the pool. Appending without reallocation invalidates the end iterator. Erasing invalidates all iterators and views to strings starting from the first erased string to the end of the pool.</p>
+<p><span class="tt"><a class="el" href="classtr_1_1string__pool.html" title="Container storing a series of immutable NUL-terminated strings in a single allocation.">tr::string_pool</a></span> on its own does not do any sort of caching or indexing of the strings it stores. This means that iterating through the string pool is linear with respect not to the number of strings, but rather the total number of bytes taken up by said strings. This also means that <span class="tt"><a class="el" href="classtr_1_1string__pool.html" title="Container storing a series of immutable NUL-terminated strings in a single allocation.">tr::string_pool</a></span> does not provide a constant-time <span class="tt">size()</span> function returning the number of stored strings. </p>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:iterator" id="r_iterator"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classtr_1_1string__pool_1_1iterator.html">iterator</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterator type used by the string pool.  <a href="classtr_1_1string__pool_1_1iterator.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterator to a string in a string pool.  <a href="classtr_1_1string__pool_1_1iterator.html#details">More...</a><br /></td></tr>
 <tr class="memitem:string_5Fbuilder_5Ft" id="r_string_5Fbuilder_5Ft"><td class="memItemLeft">class &#160;</td><td class="memItemRight"><a class="el" href="classtr_1_1string__pool_1_1string__builder__t.html">string_builder_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">String builder object.  <a href="classtr_1_1string__pool_1_1string__builder__t.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">String builder used for inplace string building into a string pool.  <a href="classtr_1_1string__pool_1_1string__builder__t.html#details">More...</a><br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -144,37 +147,39 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a0942f662a0f397404bbef8b165ee78a1" id="r_a0942f662a0f397404bbef8b165ee78a1"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a0942f662a0f397404bbef8b165ee78a1">string_pool</a> () noexcept=default</td></tr>
 <tr class="memdesc:a0942f662a0f397404bbef8b165ee78a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs an empty string pool.  <br /></td></tr>
 <tr class="memitem:ab1f82106ea72eaf5503e707689bd3d3f" id="r_ab1f82106ea72eaf5503e707689bd3d3f"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ab1f82106ea72eaf5503e707689bd3d3f">string_pool</a> (const string_pool &amp;rhs)=default</td></tr>
-<tr class="memdesc:ab1f82106ea72eaf5503e707689bd3d3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copies a string pool.  <br /></td></tr>
+<tr class="memdesc:ab1f82106ea72eaf5503e707689bd3d3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a string pool by copying the contents of another pool.  <br /></td></tr>
 <tr class="memitem:a78593baa7fd50fe1ea79e85e20e45ef1" id="r_a78593baa7fd50fe1ea79e85e20e45ef1"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a78593baa7fd50fe1ea79e85e20e45ef1">string_pool</a> (string_pool &amp;&amp;rhs) noexcept=default</td></tr>
-<tr class="memdesc:a78593baa7fd50fe1ea79e85e20e45ef1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves a string pool.  <br /></td></tr>
+<tr class="memdesc:a78593baa7fd50fe1ea79e85e20e45ef1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a string pool by moving the contents of another pool.  <br /></td></tr>
 <tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Assignment operators</div></td></tr>
-<tr class="memitem:ad22ba1aee24c84bfa91004f6314694e1" id="r_ad22ba1aee24c84bfa91004f6314694e1"><td class="memItemLeft"><a class="el" href="#a0942f662a0f397404bbef8b165ee78a1">string_pool</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ad22ba1aee24c84bfa91004f6314694e1">operator=</a> (const <a class="el" href="#a0942f662a0f397404bbef8b165ee78a1">string_pool</a> &amp;rhs)=default</td></tr>
-<tr class="memdesc:ad22ba1aee24c84bfa91004f6314694e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copies a string pool.  <br /></td></tr>
+<tr class="memitem:a3ed78021ee68d20a36cc0899130e4e22" id="r_a3ed78021ee68d20a36cc0899130e4e22"><td class="memItemLeft"><a class="el" href="#a0942f662a0f397404bbef8b165ee78a1">string_pool</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a3ed78021ee68d20a36cc0899130e4e22">operator=</a> (const <a class="el" href="#a0942f662a0f397404bbef8b165ee78a1">string_pool</a> &amp;rhs)</td></tr>
+<tr class="memdesc:a3ed78021ee68d20a36cc0899130e4e22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replaces the contents of the pool with a copy of those of another pool.  <br /></td></tr>
 <tr class="memitem:a0eab1f0e1495f8c0f93fb728962960b2" id="r_a0eab1f0e1495f8c0f93fb728962960b2"><td class="memItemLeft"><a class="el" href="#a0942f662a0f397404bbef8b165ee78a1">string_pool</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a0eab1f0e1495f8c0f93fb728962960b2">operator=</a> (<a class="el" href="#a0942f662a0f397404bbef8b165ee78a1">string_pool</a> &amp;&amp;rhs) noexcept=default</td></tr>
-<tr class="memdesc:a0eab1f0e1495f8c0f93fb728962960b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copies a string pool.  <br /></td></tr>
+<tr class="memdesc:a0eab1f0e1495f8c0f93fb728962960b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replaces the contents of the pool with those moved from another pool.  <br /></td></tr>
 <tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Iterators</div></td></tr>
 <tr class="memitem:a3bad35fea9ffde352a964739a0bba742" id="r_a3bad35fea9ffde352a964739a0bba742"><td class="memItemLeft"><a class="el" href="classtr_1_1string__pool_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a3bad35fea9ffde352a964739a0bba742">begin</a> () const noexcept</td></tr>
-<tr class="memdesc:a3bad35fea9ffde352a964739a0bba742"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an iterator to the beginning of the pool.  <br /></td></tr>
+<tr class="memdesc:a3bad35fea9ffde352a964739a0bba742"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an iterator to the first string in the pool.  <br /></td></tr>
 <tr class="memitem:a066d8397347df3bcad13ce5e491cd431" id="r_a066d8397347df3bcad13ce5e491cd431"><td class="memItemLeft"><a class="el" href="classtr_1_1string__pool_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a066d8397347df3bcad13ce5e491cd431">end</a> () const noexcept</td></tr>
-<tr class="memdesc:a066d8397347df3bcad13ce5e491cd431"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets an iterator to the end of the pool.  <br /></td></tr>
-<tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Capacity</div></td></tr>
+<tr class="memdesc:a066d8397347df3bcad13ce5e491cd431"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an iterator to the position after the last string in the pool.  <br /></td></tr>
+<tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Size and capacity</div></td></tr>
 <tr class="memitem:a9cfb892f879f364ec7aa3827c42f2c4c" id="r_a9cfb892f879f364ec7aa3827c42f2c4c"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a9cfb892f879f364ec7aa3827c42f2c4c">empty</a> () const noexcept</td></tr>
-<tr class="memdesc:a9cfb892f879f364ec7aa3827c42f2c4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the string pool is empty.  <br /></td></tr>
-<tr class="memitem:a4bf75b079be06079e933795d988a75ab" id="r_a4bf75b079be06079e933795d988a75ab"><td class="memItemLeft"><a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a>&#160;</td><td class="memItemRight"><a class="el" href="#a4bf75b079be06079e933795d988a75ab">capacity</a> () const noexcept</td></tr>
-<tr class="memdesc:a4bf75b079be06079e933795d988a75ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the capacity of the string pool.  <br /></td></tr>
-<tr class="memitem:acad714fe08899f36df42a1a55ca201f5" id="r_acad714fe08899f36df42a1a55ca201f5"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#acad714fe08899f36df42a1a55ca201f5">reserve</a> (<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> capacity)</td></tr>
-<tr class="memdesc:acad714fe08899f36df42a1a55ca201f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reserves a certain capacity in the string pool.  <br /></td></tr>
+<tr class="memdesc:a9cfb892f879f364ec7aa3827c42f2c4c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether the string pool is empty.  <br /></td></tr>
+<tr class="memitem:ac57d7bd09abdd57cbc4f13ec2c81f19e" id="r_ac57d7bd09abdd57cbc4f13ec2c81f19e"><td class="memItemLeft"><a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a>&#160;</td><td class="memItemRight"><a class="el" href="#ac57d7bd09abdd57cbc4f13ec2c81f19e">size_bytes</a> () const noexcept</td></tr>
+<tr class="memdesc:ac57d7bd09abdd57cbc4f13ec2c81f19e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the amount of space taken up by strings in the pool.  <br /></td></tr>
+<tr class="memitem:a6f54f560c411fec2a696d4fb3f90987d" id="r_a6f54f560c411fec2a696d4fb3f90987d"><td class="memItemLeft"><a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a>&#160;</td><td class="memItemRight"><a class="el" href="#a6f54f560c411fec2a696d4fb3f90987d">capacity_bytes</a> () const noexcept</td></tr>
+<tr class="memdesc:a6f54f560c411fec2a696d4fb3f90987d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the amount of space that may be taken up by strings in the pool without requiring reallocation.  <br /></td></tr>
+<tr class="memitem:af0fcc198bbc724b39b02a265dd9da7db" id="r_af0fcc198bbc724b39b02a265dd9da7db"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#af0fcc198bbc724b39b02a265dd9da7db">reserve_bytes</a> (<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> capacity)</td></tr>
+<tr class="memdesc:af0fcc198bbc724b39b02a265dd9da7db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Increases the capacity of the pool.  <br /></td></tr>
 <tr id="pub-methods-4" class="groupHeader"><td colspan="2"><div class="groupHeader">Manipulation</div></td></tr>
 <tr class="memitem:a83f5bc48a319d86d042fb09b41b45170" id="r_a83f5bc48a319d86d042fb09b41b45170"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a83f5bc48a319d86d042fb09b41b45170">clear</a> () noexcept</td></tr>
-<tr class="memdesc:a83f5bc48a319d86d042fb09b41b45170"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the string pool.  <br /></td></tr>
+<tr class="memdesc:a83f5bc48a319d86d042fb09b41b45170"><td class="mdescLeft">&#160;</td><td class="mdescRight">Erases all strings from the pool.  <br /></td></tr>
 <tr class="memitem:a453ca4d667c2764f21f3d2c661387932" id="r_a453ca4d667c2764f21f3d2c661387932"><td class="memItemLeft"><a class="el" href="classtr_1_1string__pool_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a453ca4d667c2764f21f3d2c661387932">append</a> (std::string_view string)</td></tr>
-<tr class="memdesc:a453ca4d667c2764f21f3d2c661387932"><td class="mdescLeft">&#160;</td><td class="mdescRight">Appends a string to the string pool.  <br /></td></tr>
+<tr class="memdesc:a453ca4d667c2764f21f3d2c661387932"><td class="mdescLeft">&#160;</td><td class="mdescRight">Appends a string to the end of the pool.  <br /></td></tr>
 <tr class="memitem:a960d4ff1ca98a318e0744fc164280ba9" id="r_a960d4ff1ca98a318e0744fc164280ba9"><td class="memItemLeft"><a class="el" href="classtr_1_1string__pool_1_1string__builder__t.html">string_builder_t</a>&#160;</td><td class="memItemRight"><a class="el" href="#a960d4ff1ca98a318e0744fc164280ba9">string_builder</a> () noexcept</td></tr>
-<tr class="memdesc:a960d4ff1ca98a318e0744fc164280ba9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a string builder object to enable inplace string emplacement.  <br /></td></tr>
+<tr class="memdesc:a960d4ff1ca98a318e0744fc164280ba9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a string builder object that allows inplace string emplacement into the pool.  <br /></td></tr>
 <tr class="memitem:ad7753a5666773be2d6ed83b21b79c9c8" id="r_ad7753a5666773be2d6ed83b21b79c9c8"><td class="memItemLeft"><a class="el" href="classtr_1_1string__pool_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#ad7753a5666773be2d6ed83b21b79c9c8">erase</a> (<a class="el" href="classtr_1_1string__pool_1_1iterator.html">iterator</a> where) noexcept</td></tr>
-<tr class="memdesc:ad7753a5666773be2d6ed83b21b79c9c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Erases a string from the string pool.  <br /></td></tr>
+<tr class="memdesc:ad7753a5666773be2d6ed83b21b79c9c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Erases a string from the pool.  <br /></td></tr>
 <tr class="memitem:a6420cec62a0ddfa59549b8e42b04020d" id="r_a6420cec62a0ddfa59549b8e42b04020d"><td class="memItemLeft"><a class="el" href="classtr_1_1string__pool_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#a6420cec62a0ddfa59549b8e42b04020d">erase</a> (<a class="el" href="classtr_1_1string__pool_1_1iterator.html">iterator</a> begin, <a class="el" href="classtr_1_1string__pool_1_1iterator.html">iterator</a> end) noexcept</td></tr>
-<tr class="memdesc:a6420cec62a0ddfa59549b8e42b04020d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Erases a range of strings from the string pool.  <br /></td></tr>
+<tr class="memdesc:a6420cec62a0ddfa59549b8e42b04020d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Erases a range of strings from the pool.  <br /></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a0942f662a0f397404bbef8b165ee78a1" name="a0942f662a0f397404bbef8b165ee78a1"></a>
@@ -227,13 +232,15 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Copies a string pool. </p>
+<p>Constructs a string pool by copying the contents of another pool. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">rhs</td><td>Pool to copy. </td></tr>
+    <tr><td class="paramname">rhs</td><td>Pool to copy the contents of. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section user"><dt>Complexity</dt><dd>Linear time with respect to <span class="tt">rhs.size_bytes()</span>. </dd></dl>
+<dl class="section user"><dt>Exception safety</dt><dd>If an exception is thrown, this function has no effect (strong exception guarantee). </dd></dl>
 
 </div>
 </div>
@@ -260,25 +267,24 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Moves a string pool. </p>
+<p>Constructs a string pool by moving the contents of another pool. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">rhs</td><td>Pool to move. </td></tr>
+    <tr><td class="paramname">rhs</td><td>Pool to move the contents of. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section user"><dt>Invalidation</dt><dd>All iterators (including <span class="tt"><a class="el" href="#a066d8397347df3bcad13ce5e491cd431" title="Returns an iterator to the position after the last string in the pool.">end()</a></span>) and views to strings previously stored in <span class="tt">rhs</span> stay valid, but now point to the equivalent strings stored in <span class="tt">*this</span>. </dd></dl>
+<dl class="section post"><dt>Postcondition</dt><dd><span class="tt">rhs</span> is left in a valid, but unspecified state after the move. </dd></dl>
 
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="ad22ba1aee24c84bfa91004f6314694e1" name="ad22ba1aee24c84bfa91004f6314694e1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad22ba1aee24c84bfa91004f6314694e1">&#9670;&#160;</a></span>operator=() <span class="overload">[1/2]</span></h2>
+<a id="a3ed78021ee68d20a36cc0899130e4e22" name="a3ed78021ee68d20a36cc0899130e4e22"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3ed78021ee68d20a36cc0899130e4e22">&#9670;&#160;</a></span>operator=() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="#a0942f662a0f397404bbef8b165ee78a1">string_pool</a> &amp; tr::string_pool::operator= </td>
@@ -287,21 +293,19 @@ Public Member Functions</h2></td></tr>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel default">default</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p>Copies a string pool. </p>
-<dl class="section note"><dt>Note</dt><dd>This invalidates all string views and iterators to strings previously held in the pool. </dd></dl>
+<p>Replaces the contents of the pool with a copy of those of another pool. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">rhs</td><td>Pool to copy. </td></tr>
+    <tr><td class="paramname">rhs</td><td>Pool to copy the contents of. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section pre"><dt>Precondition</dt><dd>There may not be an active string builder associated with this pool at the time this function is called. </dd></dl>
+<dl class="section user"><dt>Invalidation</dt><dd>All iterators (including <span class="tt"><a class="el" href="#a066d8397347df3bcad13ce5e491cd431" title="Returns an iterator to the position after the last string in the pool.">end()</a></span>) and views to strings previously stored in <span class="tt">*this</span> are invalidated. </dd></dl>
+<dl class="section user"><dt>Complexity</dt><dd>Linear time with respect to <span class="tt">rhs.size_bytes()</span>. </dd></dl>
+<dl class="section user"><dt>Exception safety</dt><dd>If an exception is thrown, <span class="tt">*this</span> is left in a valid, but unspecified state (basic exception guarantee). </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>Reference to <span class="tt">*this</span>. </dd></dl>
 
 </div>
@@ -329,14 +333,16 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Copies a string pool. </p>
-<dl class="section note"><dt>Note</dt><dd>This invalidates all string views and iterators to strings previously held in the pool. </dd></dl>
+<p>Replaces the contents of the pool with those moved from another pool. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">rhs</td><td>Pool to move. </td></tr>
+    <tr><td class="paramname">rhs</td><td>Pool to move the contents of. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section pre"><dt>Precondition</dt><dd>There may not be an active string builder associated with <span class="tt">*this</span> or <span class="tt">rhs</span> at the time this function is called. </dd></dl>
+<dl class="section user"><dt>Invalidation</dt><dd>All iterators (including <span class="tt"><a class="el" href="#a066d8397347df3bcad13ce5e491cd431" title="Returns an iterator to the position after the last string in the pool.">end()</a></span>) and views to strings previously stored in the pool are invalidated. </dd></dl>
+<dl class="section post"><dt>Postcondition</dt><dd><span class="tt">rhs</span> is left in a valid, but unspecified state after the move. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>Reference to <span class="tt">*this</span>. </dd></dl>
 
 </div>
@@ -364,8 +370,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Gets an iterator to the beginning of the pool. </p>
-<dl class="section return"><dt>Returns</dt><dd>Iterator to the beginning of the pool. </dd></dl>
+<p>Returns an iterator to the first string in the pool. </p>
+<p>If the pool is empty, the returned iterator will be equal to <span class="tt"><a class="el" href="#a066d8397347df3bcad13ce5e491cd431" title="Returns an iterator to the position after the last string in the pool.">end()</a></span>. </p><dl class="section return"><dt>Returns</dt><dd>Iterator to the first string in the pool. </dd></dl>
 
 </div>
 </div>
@@ -392,8 +398,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Gets an iterator to the end of the pool. </p>
-<dl class="section return"><dt>Returns</dt><dd>Iterator to the end of the pool. </dd></dl>
+<p>Returns an iterator to the position after the last string in the pool. </p>
+<p>The <span class="tt"><a class="el" href="#a066d8397347df3bcad13ce5e491cd431" title="Returns an iterator to the position after the last string in the pool.">end()</a></span> iterator cannot be dereferenced. </p><dl class="section return"><dt>Returns</dt><dd>Iterator to the position after the last string in the pool. </dd></dl>
 
 </div>
 </div>
@@ -420,13 +426,13 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Gets whether the string pool is empty. </p>
+<p>Checks whether the string pool is empty. </p>
 <dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the string pool is empty, <span class="tt">false</span> otherwise. </dd></dl>
 
 </div>
 </div>
-<a id="a4bf75b079be06079e933795d988a75ab" name="a4bf75b079be06079e933795d988a75ab"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4bf75b079be06079e933795d988a75ab">&#9670;&#160;</a></span>capacity()</h2>
+<a id="ac57d7bd09abdd57cbc4f13ec2c81f19e" name="ac57d7bd09abdd57cbc4f13ec2c81f19e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac57d7bd09abdd57cbc4f13ec2c81f19e">&#9670;&#160;</a></span>size_bytes()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -435,7 +441,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> tr::string_pool::capacity </td>
+          <td class="memname"><a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> tr::string_pool::size_bytes </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -448,19 +454,47 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Gets the capacity of the string pool. </p>
-<dl class="section return"><dt>Returns</dt><dd>Capacity of the string pool in bytes. </dd></dl>
+<p>Returns the amount of space taken up by strings in the pool. </p>
+<dl class="section return"><dt>Returns</dt><dd>Amount of space (in bytes) taken up by strings in the pool. </dd></dl>
 
 </div>
 </div>
-<a id="acad714fe08899f36df42a1a55ca201f5" name="acad714fe08899f36df42a1a55ca201f5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acad714fe08899f36df42a1a55ca201f5">&#9670;&#160;</a></span>reserve()</h2>
+<a id="a6f54f560c411fec2a696d4fb3f90987d" name="a6f54f560c411fec2a696d4fb3f90987d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f54f560c411fec2a696d4fb3f90987d">&#9670;&#160;</a></span>capacity_bytes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> tr::string_pool::capacity_bytes </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the amount of space that may be taken up by strings in the pool without requiring reallocation. </p>
+<dl class="section return"><dt>Returns</dt><dd>Amount of space (in bytes) that may be taken up by strings in the pool without requiring reallocation. </dd></dl>
+
+</div>
+</div>
+<a id="af0fcc198bbc724b39b02a265dd9da7db" name="af0fcc198bbc724b39b02a265dd9da7db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af0fcc198bbc724b39b02a265dd9da7db">&#9670;&#160;</a></span>reserve_bytes()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tr::string_pool::reserve </td>
+          <td class="memname">void tr::string_pool::reserve_bytes </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a></td>          <td class="paramname"><span class="paramname"><em>capacity</em></span></td><td>)</td>
           <td></td>
@@ -468,13 +502,17 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Reserves a certain capacity in the string pool. </p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Increases the capacity of the pool. </p>
+<p>The capacity of a string pool is the amount of space that may be taken up by strings in the pool without requiring reallocation.</p>
+<p>The capacity of a string pool may never shrink, so reserving a capacity smaller than <span class="tt"><a class="el" href="#a6f54f560c411fec2a696d4fb3f90987d" title="Returns the amount of space that may be taken up by strings in the pool without requiring reallocatio...">capacity_bytes()</a></span> does nothing. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">capacity</td><td>Desired capacity of the string pool in bytes. </td></tr>
+    <tr><td class="paramname">capacity</td><td>Desired capacity (in bytes) of the pool. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section user"><dt>Invalidation</dt><dd>If <span class="tt">capacity</span> exceeds <span class="tt"><a class="el" href="#a6f54f560c411fec2a696d4fb3f90987d" title="Returns the amount of space that may be taken up by strings in the pool without requiring reallocatio...">capacity_bytes()</a></span>, all iterators (including <span class="tt"><a class="el" href="#a066d8397347df3bcad13ce5e491cd431" title="Returns an iterator to the position after the last string in the pool.">end()</a></span>) and views to strings stored in the pool are invalidated. Otherwise, no iterators or references are invalidated. </dd></dl>
+<dl class="section user"><dt>Complexity</dt><dd>At most linear with respect to <span class="tt">capacity</span>. </dd></dl>
+<dl class="section user"><dt>Exception safety</dt><dd>If an exception is thrown, this function has no effect (strong exception guarantee). </dd></dl>
 
 </div>
 </div>
@@ -501,7 +539,9 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Clears the string pool. </p>
+<p>Erases all strings from the pool. </p>
+<p>The <span class="tt"><a class="el" href="#a6f54f560c411fec2a696d4fb3f90987d" title="Returns the amount of space that may be taken up by strings in the pool without requiring reallocatio...">capacity_bytes()</a></span> of the pool stays unchanged. </p><dl class="section pre"><dt>Precondition</dt><dd>There may not be an active string builder associated with this pool at the time this function is called. </dd></dl>
+<dl class="section user"><dt>Invalidation</dt><dd>All iterators and views to strings stored in the pool are invalidated. </dd></dl>
 
 </div>
 </div>
@@ -520,14 +560,18 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Appends a string to the string pool. </p>
-<dl class="section note"><dt>Note</dt><dd>This invalidates all string views and iterators to strings in the pool if a reallocation occurs. </dd></dl>
+<p>Appends a string to the end of the pool. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">string</td><td>String to append. Must not contain any embedded NUL characters. </td></tr>
+    <tr><td class="paramname">string</td><td>String to append. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section pre"><dt>Precondition</dt><dd><span class="tt">string</span> may not contain any embedded NUL characters. </dd>
+<dd>
+There may not be an active string builder associated with this pool at the time this function is called. </dd></dl>
+<dl class="section user"><dt>Invalidation</dt><dd>If <span class="tt"><a class="el" href="#ac57d7bd09abdd57cbc4f13ec2c81f19e" title="Returns the amount of space taken up by strings in the pool.">size_bytes()</a> + string.size() + 1</span> exceeds <span class="tt">capacity()</span>, all iterators (including <span class="tt"><a class="el" href="#a066d8397347df3bcad13ce5e491cd431" title="Returns an iterator to the position after the last string in the pool.">end()</a></span>) and views to strings stored in the pool are invalidated. Otherwise, only the <span class="tt"><a class="el" href="#a066d8397347df3bcad13ce5e491cd431" title="Returns an iterator to the position after the last string in the pool.">end()</a></span> iterator is invalidated. </dd></dl>
+<dl class="section user"><dt>Exception safety</dt><dd>If an exception is thrown, this function has no effect (strong exception guarantee). </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>Iterator to the appended string. </dd></dl>
 
 </div>
@@ -555,10 +599,10 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Creates a string builder object to enable inplace string emplacement. </p>
-<dl class="section note"><dt>Note</dt><dd>It is not allowed to have multiple string builders alive at once for a given string pool. </dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd>Keeping any iterators to the string pool and especially iterating through it are not allowed while a string builder is alive for it. </dd></dl>
-<dl class="section return"><dt>Returns</dt><dd>String builder object. </dd></dl>
+<p>Constructs a string builder object that allows inplace string emplacement into the pool. </p>
+<dl class="section pre"><dt>Precondition</dt><dd>There may not already be an active string builder associated with this pool at the time this function is called. </dd></dl>
+<dl class="section user"><dt>Invalidation</dt><dd>If <span class="tt"><a class="el" href="#a6f54f560c411fec2a696d4fb3f90987d" title="Returns the amount of space that may be taken up by strings in the pool without requiring reallocatio...">capacity_bytes()</a></span> is exceeded at any point during the emplacement, all iterators (including <span class="tt"><a class="el" href="#a066d8397347df3bcad13ce5e491cd431" title="Returns an iterator to the position after the last string in the pool.">end()</a></span>) and views to strings stored in the pool are invalidated. Otherwise, only <span class="tt"><a class="el" href="#a066d8397347df3bcad13ce5e491cd431" title="Returns an iterator to the position after the last string in the pool.">end()</a></span> is invalidated once the string builder goes out of scope. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>String builder object that allows inplace string emplacement into the pool. </dd></dl>
 
 </div>
 </div>
@@ -585,15 +629,16 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Erases a string from the string pool. </p>
-<dl class="section note"><dt>Note</dt><dd>This invalidates all string views and iterators to strings after <span class="tt">where</span> in the pool. </dd></dl>
+<p>Erases a string from the pool. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">where</td><td>Iterator to the erased string. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Iterator to the string after the erased string. </dd></dl>
+<dl class="section pre"><dt>Precondition</dt><dd><span class="tt">where</span> cannot be the <span class="tt"><a class="el" href="#a066d8397347df3bcad13ce5e491cd431" title="Returns an iterator to the position after the last string in the pool.">end()</a></span> iterator. </dd></dl>
+<dl class="section user"><dt>Invalidation</dt><dd>All iterators (including <span class="tt"><a class="el" href="#a066d8397347df3bcad13ce5e491cd431" title="Returns an iterator to the position after the last string in the pool.">end()</a></span>) and views to strings at and after <span class="tt">where</span> are invalidated. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Iterator to the string following the erased string, or <span class="tt"><a class="el" href="#a066d8397347df3bcad13ce5e491cd431" title="Returns an iterator to the position after the last string in the pool.">end()</a></span> if the erased string was the last in the pool. </dd></dl>
 
 </div>
 </div>
@@ -624,16 +669,16 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Erases a range of strings from the string pool. </p>
-<dl class="section note"><dt>Note</dt><dd>This invalidates all string views and iterators to strings after <span class="tt"><a class="el" href="#a066d8397347df3bcad13ce5e491cd431" title="Gets an iterator to the end of the pool.">end</a></span> in the pool. </dd></dl>
+<p>Erases a range of strings from the pool. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">begin</td><td>Iterator to the first erased string. </td></tr>
-    <tr><td class="paramname">end</td><td>Iterator to one past the last erased string. </td></tr>
+    <tr><td class="paramname">begin,end</td><td>Pair of iterators defining the range of strings to erase. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Iterator to the string after the erased strings. </dd></dl>
+<dl class="section pre"><dt>Precondition</dt><dd><span class="tt">begin</span> cannot be the <span class="tt"><a class="el" href="#a066d8397347df3bcad13ce5e491cd431" title="Returns an iterator to the position after the last string in the pool.">end()</a></span> iterator. </dd></dl>
+<dl class="section user"><dt>Invalidation</dt><dd>All iterators (including <span class="tt"><a class="el" href="#a066d8397347df3bcad13ce5e491cd431" title="Returns an iterator to the position after the last string in the pool.">end()</a></span>) and views to strings at and after <span class="tt">begin</span> are invalidated. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Iterator to the string following the last erased string, or <span class="tt"><a class="el" href="#a066d8397347df3bcad13ce5e491cd431" title="Returns an iterator to the position after the last string in the pool.">end()</a></span> if <span class="tt">end</span> pointed to the previous <span class="tt"><a class="el" href="#a066d8397347df3bcad13ce5e491cd431" title="Returns an iterator to the position after the last string in the pool.">end()</a></span>. </dd></dl>
 
 </div>
 </div>

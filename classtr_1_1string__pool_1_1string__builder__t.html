@@ -126,10 +126,13 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1str
 </div><!--header-->
 <div class="contents">
 
-<p>String builder object.  
+<p>String builder used for inplace string building into a string pool.  
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>String builder object. </p>
+<div class="textblock"><p>String builder used for inplace string building into a string pool. </p>
+<p>To avoid a situation in which a temporary string has to be built just to be appended to a string pool, <span class="tt"><a class="el" href="classtr_1_1string__pool.html#a960d4ff1ca98a318e0744fc164280ba9" title="Constructs a string builder object that allows inplace string emplacement into the pool.">string_builder()</a></span> is provided as a method of directly emplacing a string into a pool.</p>
+<p>The emplaced string is kept as a shadow element at the end of the pool until the builder goes out of scope, at which point the string is finalized and starts beign treated as a full element of the pool.</p>
+<p>Several string pool operations are incompatible with the string builder. Weaving a string builder with regular string pool operations is thus generally not recommended. </p>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -139,17 +142,17 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a4c38cbf7a85e9a213c12f8b8f2fde917" id="r_a4c38cbf7a85e9a213c12f8b8f2fde917"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a4c38cbf7a85e9a213c12f8b8f2fde917">string_builder_t</a> (const string_builder_t &amp;)=delete</td></tr>
 <tr class="memdesc:a4c38cbf7a85e9a213c12f8b8f2fde917"><td class="mdescLeft">&#160;</td><td class="mdescRight">String builders are not copyable.  <br /></td></tr>
 <tr class="memitem:a719c3d8f9c210d94a365eda642bfb25f" id="r_a719c3d8f9c210d94a365eda642bfb25f"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a719c3d8f9c210d94a365eda642bfb25f">string_builder_t</a> (string_builder_t &amp;&amp;rhs) noexcept</td></tr>
-<tr class="memdesc:a719c3d8f9c210d94a365eda642bfb25f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves a string builder.  <br /></td></tr>
+<tr class="memdesc:a719c3d8f9c210d94a365eda642bfb25f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Takes over the task from another string builder.  <br /></td></tr>
 <tr class="memitem:a8917938973efcc6787769b919c6e7fbe" id="r_a8917938973efcc6787769b919c6e7fbe"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a8917938973efcc6787769b919c6e7fbe">~string_builder_t</a> () noexcept</td></tr>
 <tr class="memdesc:a8917938973efcc6787769b919c6e7fbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finalizes building the string.  <br /></td></tr>
 <tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Assignment operators</div></td></tr>
 <tr class="memitem:a98d768030e10706b2ce95b1b4817f10e" id="r_a98d768030e10706b2ce95b1b4817f10e"><td class="memItemLeft"><a class="el" href="#ab11b7e71e01447fb15842f9e30e948a7">string_builder_t</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a98d768030e10706b2ce95b1b4817f10e">operator=</a> (const <a class="el" href="#ab11b7e71e01447fb15842f9e30e948a7">string_builder_t</a> &amp;)=delete</td></tr>
 <tr class="memdesc:a98d768030e10706b2ce95b1b4817f10e"><td class="mdescLeft">&#160;</td><td class="mdescRight">String builders are not copyable.  <br /></td></tr>
 <tr class="memitem:a7009b50ac9edc749b112af002cd63bd2" id="r_a7009b50ac9edc749b112af002cd63bd2"><td class="memItemLeft"><a class="el" href="#ab11b7e71e01447fb15842f9e30e948a7">string_builder_t</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a7009b50ac9edc749b112af002cd63bd2">operator=</a> (<a class="el" href="#ab11b7e71e01447fb15842f9e30e948a7">string_builder_t</a> &amp;&amp;rhs) noexcept</td></tr>
-<tr class="memdesc:a7009b50ac9edc749b112af002cd63bd2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves a string builder.  <br /></td></tr>
+<tr class="memdesc:a7009b50ac9edc749b112af002cd63bd2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finalizes building the current string and takes over the task from another string builder.  <br /></td></tr>
 <tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Iterator</div></td></tr>
 <tr class="memitem:a7e5fcb69b648725b65a2ad3c26a77026" id="r_a7e5fcb69b648725b65a2ad3c26a77026"><td class="memItemLeft">std::back_insert_iterator&lt; std::vector&lt; char &gt; &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a7e5fcb69b648725b65a2ad3c26a77026">out</a> () const noexcept</td></tr>
-<tr class="memdesc:a7e5fcb69b648725b65a2ad3c26a77026"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a character back inserter iterator from the appender.  <br /></td></tr>
+<tr class="memdesc:a7e5fcb69b648725b65a2ad3c26a77026"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a character output iterator.  <br /></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ab11b7e71e01447fb15842f9e30e948a7" name="ab11b7e71e01447fb15842f9e30e948a7"></a>
@@ -176,6 +179,12 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Constructs a string builder. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pool</td><td>Pool delegating string building to this string builder. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -229,13 +238,14 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Moves a string builder. </p>
+<p>Takes over the task from another string builder. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">rhs</td><td>String builder to move. </td></tr>
+    <tr><td class="paramname">rhs</td><td>String builder to transfer the task from. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section post"><dt>Postcondition</dt><dd><span class="tt">rhs</span> is left in a special state where it is unassociated with any pool, and thus <span class="tt"><a class="el" href="#a7e5fcb69b648725b65a2ad3c26a77026" title="Returns a character output iterator.">out()</a></span> cannot be called. </dd></dl>
 
 </div>
 </div>
@@ -317,13 +327,14 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Moves a string builder. </p>
+<p>Finalizes building the current string and takes over the task from another string builder. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">rhs</td><td>String builder to move. </td></tr>
+    <tr><td class="paramname">rhs</td><td>String builder to transfer the task from. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section post"><dt>Postcondition</dt><dd><span class="tt">rhs</span> is left in a special state where it is unassociated with any pool, and thus <span class="tt"><a class="el" href="#a7e5fcb69b648725b65a2ad3c26a77026" title="Returns a character output iterator.">out()</a></span> cannot be called. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>Reference to <span class="tt">*this</span>. </dd></dl>
 
 </div>
@@ -351,8 +362,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Gets a character back inserter iterator from the appender. </p>
-<dl class="section return"><dt>Returns</dt><dd>Character back inserter iterator. </dd></dl>
+<p>Returns a character output iterator. </p>
+<dl class="section return"><dt>Returns</dt><dd>Character output iterator. </dd></dl>
 
 </div>
 </div>
