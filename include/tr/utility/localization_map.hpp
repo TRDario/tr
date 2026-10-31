@@ -72,7 +72,7 @@ namespace tr
 					++keys;
 					string_pool_capacity += (static_cast<std::string_view>(key).size() + static_cast<std::string_view>(value).size() + 2);
 				}
-				m_pool.reserve(string_pool_capacity);
+				m_pool.reserve_bytes(string_pool_capacity);
 				m_keys.reserve(keys);
 			}
 
@@ -165,7 +165,7 @@ namespace tr
 		{
 			usize keys{0};
 			bool stale_keys{false};
-			const usize old_pool_capacity{m_pool.capacity()};
+			const usize old_pool_capacity{m_pool.capacity_bytes()};
 
 			for (const auto& [key, value] : std::ranges::subrange{begin, end}) {
 				++keys;
@@ -186,7 +186,7 @@ namespace tr
 
 				m_pool.append(key);
 				m_pool.append(value);
-				if (m_pool.capacity() > old_pool_capacity) {
+				if (m_pool.capacity_bytes() > old_pool_capacity) {
 					stale_keys = true;
 				}
 			}

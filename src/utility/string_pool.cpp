@@ -73,6 +73,15 @@ std::back_insert_iterator<std::vector<char>> tr::string_pool::string_builder_t::
 
 //
 
+tr::string_pool& tr::string_pool::operator=(const string_pool& rhs)
+{
+	m_data.clear();
+	m_data.insert(m_data.end(), rhs.begin().base(), rhs.end().base());
+	return *this;
+}
+
+//
+
 tr::string_pool::iterator tr::string_pool::begin() const noexcept
 {
 	return iterator{m_data.begin(), m_data.begin()};
@@ -80,7 +89,12 @@ tr::string_pool::iterator tr::string_pool::begin() const noexcept
 
 tr::string_pool::iterator tr::string_pool::end() const noexcept
 {
-	return iterator{m_data.begin(), m_data.end()};
+	if (!m_data.empty() && m_data.back() != '\0') {
+		return iterator{m_data.begin(), std::ranges::find_last(m_data, '\0').begin() + 1};
+	}
+	else {
+		return iterator{m_data.begin(), m_data.end()};
+	}
 }
 
 //
@@ -90,12 +104,17 @@ bool tr::string_pool::empty() const noexcept
 	return m_data.empty();
 }
 
-tr::usize tr::string_pool::capacity() const noexcept
+tr::usize tr::string_pool::size_bytes() const noexcept
+{
+	return m_data.size();
+}
+
+tr::usize tr::string_pool::capacity_bytes() const noexcept
 {
 	return m_data.capacity();
 }
 
-void tr::string_pool::reserve(usize capacity)
+void tr::string_pool::reserve_bytes(usize capacity)
 {
 	m_data.reserve(capacity);
 }
@@ -110,6 +129,11 @@ void tr::string_pool::clear() noexcept
 tr::string_pool::iterator tr::string_pool::append(std::string_view string)
 {
 	TR_ASSERT(!std::ranges::contains(string, '\0'), "Tried to append string with embedded NUL characters to a string pool.");
+
+	const usize required_capacity{m_data.size() + string.size() + 1};
+	if (required_capacity > m_data.capacity()) {
+		m_data.reserve(std::bit_ceil(required_capacity));
+	}
 
 	const usize offset{m_data.size()};
 	m_data.insert(m_data.end(), string.begin(), string.end());

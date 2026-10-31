@@ -16,6 +16,8 @@ TEST(StringPoolTest, DefaultConstructsEmpty)
 {
 	const tr::string_pool pool;
 	EXPECT_TRUE(pool.empty());
+	EXPECT_EQ(pool.size_bytes(), 0);
+	EXPECT_EQ(pool.capacity_bytes(), 0);
 	EXPECT_EQ(pool.begin(), pool.end());
 	EXPECT_EQ(std::ranges::distance(pool), 0);
 }
@@ -24,11 +26,12 @@ TEST(StringPoolTest, DefaultConstructsEmpty)
 TEST(StringPoolTest, AppendsStrings)
 {
 	tr::string_pool pool;
-	pool.reserve(64);
+	pool.reserve_bytes(64);
 	const tr::string_pool::iterator first{pool.append("first")};
 	const tr::string_pool::iterator second{pool.append("")};
 	const tr::string_pool::iterator third{pool.append("third")};
 	EXPECT_FALSE(pool.empty());
+	EXPECT_EQ(pool.size_bytes(), 13);
 	EXPECT_EQ(*first, "first");
 	EXPECT_EQ(*second, "");
 	EXPECT_EQ(*third, "third");
@@ -68,8 +71,8 @@ TEST(StringPoolTest, IteratesBackwards)
 TEST(StringPoolTest, ReservesCapacity)
 {
 	tr::string_pool pool;
-	pool.reserve(64);
-	EXPECT_GE(pool.capacity(), 64);
+	pool.reserve_bytes(64);
+	EXPECT_GE(pool.capacity_bytes(), 64);
 }
 
 /// Tests clearing a string pool.
@@ -103,7 +106,7 @@ TEST(StringPoolTest, StringBuilderBuildsString)
 TEST(StringPoolTest, ErasesString)
 {
 	tr::string_pool pool;
-	pool.reserve(64);
+	pool.reserve_bytes(64);
 	pool.append("first");
 	const tr::string_pool::iterator erased{pool.append("erased")};
 	pool.append("last");
@@ -118,7 +121,7 @@ TEST(StringPoolTest, ErasesString)
 TEST(StringPoolTest, ErasesStringRange)
 {
 	tr::string_pool pool;
-	pool.reserve(64);
+	pool.reserve_bytes(64);
 	pool.append("first");
 	const tr::string_pool::iterator erase_begin{pool.append("second")};
 	const tr::string_pool::iterator erase_end{pool.append("third")};

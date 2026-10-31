@@ -59,7 +59,7 @@ void tr::localization_map::update(std::string_view key, std::string_view value)
 	const auto old_key_it{m_keys.find(key)};
 	const string_pool::iterator new_key_it{m_pool.end()};
 	const bool replaced_key{old_key_it != m_keys.end()};
-	const usize old_pool_capacity{m_pool.capacity()};
+	const usize old_pool_capacity{m_pool.capacity_bytes()};
 
 	if (replaced_key) {
 		m_pool.erase(*old_key_it, std::next(*old_key_it, 2));
@@ -67,7 +67,7 @@ void tr::localization_map::update(std::string_view key, std::string_view value)
 	m_pool.append(key);
 	m_pool.append(value);
 
-	if (replaced_key || m_pool.capacity() > old_pool_capacity) {
+	if (replaced_key || m_pool.capacity_bytes() > old_pool_capacity) {
 		m_keys.clear();
 		for (string_pool::iterator it{m_pool.begin()}; it != m_pool.end(); std::advance(it, 2)) {
 			m_keys.insert(it);
