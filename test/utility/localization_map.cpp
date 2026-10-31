@@ -6,6 +6,77 @@
 
 //
 
+/// @brief Downgrades an iterator to a strictly input iterator.
+/// @tparam Base Base iterator type.
+template <std::input_iterator Base>
+class strict_input_iterator
+{
+  public:
+	/// Value type used by the iterator.
+	using value_type = std::iterator_traits<Base>::value_type;
+
+	/// Difference type used by the iterator.
+	using difference_type = std::iterator_traits<Base>::difference_type;
+
+	/// Reference type used by the iterator.
+	using reference = std::iterator_traits<Base>::reference;
+
+	/// @brief Category of the iterator.
+	using iterator_category = std::input_iterator_tag;
+
+	/// @brief Concept of the iterator.
+	using iterator_concept = std::input_iterator_tag;
+
+	/// @name Constructors and destructors
+	/// @{
+
+	/// @brief Constructs a singular iterator.
+	explicit strict_input_iterator() noexcept = default;
+
+	/// @brief Wraps an input iterator.
+	/// @param base Base iterator
+	explicit strict_input_iterator(Base base) noexcept
+		: m_base{base}
+	{
+	}
+
+	/// @}
+	/// @name Operators
+	/// @{
+
+	/// @brief Compares two iterators for equality.
+	friend bool operator==(strict_input_iterator a, strict_input_iterator b) noexcept = default;
+
+	/// @brief Dereferences the iterator.
+	/// @return Dereferenced iterator value.
+	[[nodiscard]] reference operator*() const noexcept
+	{
+		return *m_base;
+	}
+
+	/// @brief Increments the iterator.
+	/// @return Reference to `*this`.
+	strict_input_iterator& operator++() noexcept
+	{
+		++m_base;
+		return *this;
+	}
+
+	/// @brief Increments the iterator.
+	/// @return Previous value of `*this`.
+	[[nodiscard]] strict_input_iterator operator++(int) noexcept
+	{
+		strict_input_iterator prev{*this};
+		++m_base;
+		return prev;
+	}
+
+  private:
+	Base m_base;
+};
+
+//
+
 /// Tests that a localization map default-constructs empty.
 TEST(LocalizationMapTest, DefaultConstructsEmpty)
 {
@@ -96,15 +167,17 @@ TEST(LocalizationMapTest, AccessWithPresentKeyReturnsValue)
 {
 	const tr::localization_map map{{{"first", "First"}, {"second", "Second"}}};
 	EXPECT_EQ(map["first"], "First");
-	EXPECT_EQ(map["second"], "Second");
+	EXPECT_EQ(map.value_or("second", "error"), "Second");
 }
 
-/// Tests that accessing a localization map with a missing key returns the passed key.
-TEST(LocalizationMapTest, AccessWithMissingKeyReturnsKey)
+/// Tests that accessing a localization map with a missing key returns the passed key or a default value.
+TEST(LocalizationMapTest, AccessWithMissingKeyReturnsKeyOrDefaultValue)
 {
 	const tr::localization_map map{{{"first", "First"}, {"second", "Second"}}};
 	const std::string_view missing_key{"third"};
+	const std::string_view default_value{"default"};
 	EXPECT_EQ(map[missing_key].data(), missing_key.data());
+	EXPECT_EQ(map.value_or(missing_key, default_value), default_value);
 }
 
 /// Tests that clearing a localization map erases its values.
@@ -134,8 +207,20 @@ TEST(LocalizationMapTest, UpdateWithPresentKeyReplacesValue)
 	EXPECT_EQ(map["first"], "1st");
 }
 
-/// Tests updating a localization map with an iterator pair to a range of key-value pairs.
-TEST(LocalizationMapTest, UpdatesWithIteratorPair)
+/// Tests updating a localization map with an input iterator pair to a range of key-value pairs.
+TEST(LocalizationMapTest, UpdatesWithInputIteratorPair)
+{
+	constexpr std::array<std::pair<std::string_view, std::string_view>, 2> extra{{{"third", "Third"}, {"first", "1st"}}};
+
+	tr::localization_map map{{{"first", "First"}, {"second", "Second"}}};
+	map.update(strict_input_iterator{extra.begin()}, strict_input_iterator{extra.end()});
+	EXPECT_EQ(map.size(), 3);
+	EXPECT_EQ(map["first"], "1st");
+	EXPECT_EQ(map["third"], "Third");
+}
+
+/// Tests updating a localization map with a forward iterator pair to a range of key-value pairs.
+TEST(LocalizationMapTest, UpdatesWithForwardIteratorPair)
 {
 	constexpr std::array<std::pair<std::string_view, std::string_view>, 2> extra{{{"third", "Third"}, {"first", "1st"}}};
 

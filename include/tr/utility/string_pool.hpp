@@ -18,7 +18,7 @@ namespace tr
 	/// mutability. The underlying buffer is dynamically resizable and may be reallocated when its capacity is exceeded.
 	///
 	/// The invalidation rules of `tr::string_pool` largely mirror those of `std::vector`:
-	/// Any operation that triggers in a reallocation invalidates all iterators and views to strings in the pool.
+	/// Any operation that triggers a reallocation invalidates all iterators and views to strings in the pool.
 	/// Appending without reallocation invalidates the end iterator.
 	/// Erasing invalidates all iterators and views to strings starting from the first erased string to the end of the pool.
 	///
@@ -116,7 +116,7 @@ namespace tr
 		/// provided as a method of directly emplacing a string into a pool.
 		///
 		/// The emplaced string is kept as a shadow element at the end of the pool until the builder goes out of scope, at which point the
-		/// string is finalized and starts beign treated as a full element of the pool.
+		/// string is finalized and starts being treated as a full element of the pool.
 		///
 		/// Several string pool operations are incompatible with the string builder. Weaving a string builder with regular string pool
 		/// operations is thus generally not recommended.
@@ -306,9 +306,8 @@ namespace tr
 
 		/// Erases a range of strings from the pool.
 		/// @param begin, end Pair of iterators defining the range of strings to erase.
-		/// @pre `%begin` cannot be the `end()` iterator.
 		/// @par Invalidation
-		/// All iterators (including `end()`) and views to strings at and after `%begin` are invalidated.
+		/// All iterators (including `end()`) and views to strings at and after `%begin` are invalidated if `begin != end`.
 		/// @return Iterator to the string following the last erased string, or `end()` if `%end` pointed to the previous `end()`.
 		iterator erase(iterator begin, iterator end) noexcept;
 

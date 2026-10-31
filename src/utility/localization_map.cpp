@@ -17,12 +17,18 @@ tr::localization_map::localization_map(const localization_map& rhs)
 
 tr::localization_map& tr::localization_map::operator=(const localization_map& rhs)
 {
-	m_pool = rhs.m_pool;
-	m_keys.clear();
-	for (string_pool::iterator it{m_pool.begin()}; it != m_pool.end(); std::advance(it, 2)) {
-		m_keys.insert(it);
+	try {
+		m_pool = rhs.m_pool;
+		m_keys.clear();
+		for (string_pool::iterator it{m_pool.begin()}; it != m_pool.end(); std::advance(it, 2)) {
+			m_keys.insert(it);
+		}
+		return *this;
 	}
-	return *this;
+	catch (std::exception& error) {
+		clear();
+		throw error;
+	}
 }
 
 //
@@ -39,11 +45,20 @@ bool tr::localization_map::contains(std::string_view key) const noexcept
 
 std::string_view tr::localization_map::operator[](std::string_view key) const noexcept
 {
-	const auto it{m_keys.find(key)};
+	const decltype(m_keys)::const_iterator it{m_keys.find(key)};
 	if (it == m_keys.end()) {
 		return key;
 	}
-	return std::string_view{*std::next(*it)};
+	return std::string_view{*std::ranges::next(*it)};
+}
+
+std::string_view tr::localization_map::value_or(std::string_view key, std::string_view default_value) const noexcept
+{
+	const decltype(m_keys)::const_iterator it{m_keys.find(key)};
+	if (it == m_keys.end()) {
+		return default_value;
+	}
+	return std::string_view{*std::ranges::next(*it)};
 }
 
 //
@@ -56,20 +71,35 @@ void tr::localization_map::clear() noexcept
 
 void tr::localization_map::update(std::string_view key, std::string_view value)
 {
-	const auto old_key_it{m_keys.find(key)};
-	const string_pool::iterator new_key_it{m_pool.end()};
-	const bool replaced_key{old_key_it != m_keys.end()};
-	const usize old_pool_capacity{m_pool.capacity_bytes()};
+	const usize old_size{size()};
+	const decltype(m_keys)::iterator key_it_it{m_keys.find(key)};
+	const bool replaced_key{key_it_it != m_keys.end()};
+	string_pool::iterator key_it{replaced_key ? *key_it_it : m_pool.end()};
+
+	const usize erased_bytes{replaced_key ? key.size() + std::ranges::distance(*std::ranges::next(key_it)) + 2uz : 0uz};
+	const usize appended_bytes{key.size() + value.size() + 2};
+	const usize new_pool_size{m_pool.size_bytes() - erased_bytes + appended_bytes};
+	const bool reallocated_pool{m_pool.capacity_bytes() < new_pool_size};
+
+	if (!replaced_key) {
+		m_keys.reserve(old_size + 1);
+	}
+	if (reallocated_pool) {
+		const ssize raw_key_distance{std::ranges::distance(m_pool.begin().base(), key_it.base())};
+		m_pool.reserve_bytes(std::bit_ceil(new_pool_size));
+		m_keys.clear();
+		key_it = string_pool::iterator{m_pool.begin().base(), m_pool.begin().base() + raw_key_distance};
+	}
 
 	if (replaced_key) {
-		m_pool.erase(*old_key_it, std::next(*old_key_it, 2));
+		m_keys.clear();
+		m_pool.erase(key_it, std::ranges::next(key_it, 2));
 	}
-	m_pool.append(key);
+	const string_pool::iterator new_key_it{m_pool.append(key)};
 	m_pool.append(value);
 
-	if (replaced_key || m_pool.capacity_bytes() > old_pool_capacity) {
-		m_keys.clear();
-		for (string_pool::iterator it{m_pool.begin()}; it != m_pool.end(); std::advance(it, 2)) {
+	if (replaced_key || reallocated_pool) {
+		for (string_pool::iterator it{m_pool.begin()}; it != m_pool.end(); std::ranges::advance(it, 2)) {
 			m_keys.insert(it);
 		}
 	}
