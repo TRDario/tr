@@ -82,7 +82,6 @@ void tr::ping_pong_target::clear_destination(rgba<float> color) noexcept
 void tr::ping_pong_target::set_filtering(min_filter min_filter, mag_filter mag_filter) noexcept
 {
 	TR_ASSERT(valid(), "Tried to set filtering of a ping-pong target in an invalid state.");
-	TR_ASSERT(complete(), "Tried to set filtering of an incomplete ping-pong target.");
 
 	for (texture_target& target : m_targets) {
 		target.set_filtering(min_filter, mag_filter);
@@ -92,7 +91,6 @@ void tr::ping_pong_target::set_filtering(min_filter min_filter, mag_filter mag_f
 void tr::ping_pong_target::set_wrap(wrap wrap) noexcept
 {
 	TR_ASSERT(valid(), "Tried to set wrapping of a ping-pong target in an invalid state.");
-	TR_ASSERT(complete(), "Tried to set wrapping of an incomplete ping-pong target.");
 
 	for (texture_target& target : m_targets) {
 		target.set_wrap(wrap);
@@ -102,7 +100,6 @@ void tr::ping_pong_target::set_wrap(wrap wrap) noexcept
 void tr::ping_pong_target::set_border_color(rgba<float> color) noexcept
 {
 	TR_ASSERT(valid(), "Tried to set border color of a ping-pong target in an invalid state.");
-	TR_ASSERT(complete(), "Tried to set border color of an incomplete ping-pong target.");
 
 	for (texture_target& target : m_targets) {
 		target.set_border_color(color);
