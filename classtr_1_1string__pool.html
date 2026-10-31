@@ -341,8 +341,8 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section pre"><dt>Precondition</dt><dd>There may not be an active string builder associated with <span class="tt">*this</span> or <span class="tt">rhs</span> at the time this function is called. </dd></dl>
-<dl class="section user"><dt>Invalidation</dt><dd>All iterators (including <span class="tt"><a class="el" href="#a066d8397347df3bcad13ce5e491cd431" title="Returns an iterator to the position after the last string in the pool.">end()</a></span>) and views to strings previously stored in the pool are invalidated. </dd></dl>
-<dl class="section post"><dt>Postcondition</dt><dd><span class="tt">rhs</span> is left in a valid, but unspecified state after the move. </dd></dl>
+<dl class="section user"><dt>Invalidation</dt><dd>All iterators (including <span class="tt"><a class="el" href="#a066d8397347df3bcad13ce5e491cd431" title="Returns an iterator to the position after the last string in the pool.">end()</a></span>) and views to strings previously stored in the pool are invalidated.</dd></dl>
+<p>All iterators (including <span class="tt"><a class="el" href="#a066d8397347df3bcad13ce5e491cd431" title="Returns an iterator to the position after the last string in the pool.">end()</a></span>) and views to strings previously stored in <span class="tt">rhs</span> stay valid, but now point to the equivalent strings stored in <span class="tt">*this</span>. </p><dl class="section post"><dt>Postcondition</dt><dd><span class="tt">rhs</span> is left in a valid, but unspecified state after the move. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>Reference to <span class="tt">*this</span>. </dd></dl>
 
 </div>
