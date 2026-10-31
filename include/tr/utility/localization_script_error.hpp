@@ -229,7 +229,8 @@ namespace tr
 		FormatContext::iterator format(const Error& error, FormatContext& context) const
 		{
 			context.advance_to(std::format_to(context.out(), "{}:", error.chunk));
-			context.advance_to(error.line != EOF ? std::format_to(context.out(), "{}: ", error) : std::format_to(context.out(), "<eof>: "));
+			context.advance_to(error.line != EOF ? std::format_to(context.out(), "{}: ", error.line)
+												 : std::format_to(context.out(), "<eof>: "));
 			return static_cast<const Base*>(this)->format_message(error, context);
 		}
 	};
