@@ -126,11 +126,11 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('concepttr_1_1l
 </div><!--header-->
 <div class="contents">
 
-<p>Concept denoting a type suitable for a localization key-value pair.  
+<p>Concept checking whether variables of type <span class="tt">Target</span> are suitable for use as key-value input pairs for <span class="tt"><a class="el" href="classtr_1_1localization__map.html" title="Read-optimized container for storing key-value string pairs.">tr::localization_map</a></span>.  
 <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Concept denoting a type suitable for a localization key-value pair. </p>
-<p>To fulfill this concept, a type has to destructure to two values convertible to <span class="tt">std::string_view</span>. </p><dl class="section note"><dt>Note</dt><dd>The requirement for this concept is relaxed on Clang (does not require dealing with <span class="tt">std::tuple_size</span> and <span class="tt">std::tuple_element</span>). </dd></dl>
+<div class="textblock"><p>Concept checking whether variables of type <span class="tt">Target</span> are suitable for use as key-value input pairs for <span class="tt"><a class="el" href="classtr_1_1localization__map.html" title="Read-optimized container for storing key-value string pairs.">tr::localization_map</a></span>. </p>
+<p>To fulfill this concept, variables of type <span class="tt">Target</span> must be able to destructure to two values convertible to <span class="tt">std::string_view</span>. On platforms other than Clang, <span class="tt">Target</span> must have defined <span class="tt">std::tuple_size</span> and <span class="tt">std::tuple_element</span> specializations to qualify. </p>
 </div><h2 id="header-conceptdef" class="groupheader">Concept definition</h2>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Target&gt;</div>
 <div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concepttr_1_1localization__key__value__pair.html">localization_key_value_pair</a> =</div>
@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('concepttr_1_1l
 <div class="line">        }</div>
 <div class="line"> </div>
 <div class="line">    </div>
-<div class="ttc" id="aconcepttr_1_1localization__key__value__pair_html"><div class="ttname"><a href="concepttr_1_1localization__key__value__pair.html">tr::localization_key_value_pair</a></div><div class="ttdoc">Concept denoting a type suitable for a localization key-value pair.</div><div class="ttdef"><b>Definition</b> localization_map.hpp:19</div></div>
+<div class="ttc" id="aconcepttr_1_1localization__key__value__pair_html"><div class="ttname"><a href="concepttr_1_1localization__key__value__pair.html">tr::localization_key_value_pair</a></div><div class="ttdoc">Concept checking whether variables of type Target are suitable for use as key-value input pairs for t...</div><div class="ttdef"><b>Definition</b> localization_map.hpp:20</div></div>
 <div class="ttc" id="astructtr_1_1copy__qualifiers_html"><div class="ttname"><a href="structtr_1_1copy__qualifiers.html">tr::type</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

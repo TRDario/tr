@@ -10,8 +10,10 @@ var classtr_1_1localization__map =
     [ "size", "classtr_1_1localization__map.html#aad710390afc9aa883820bbe54418dace", null ],
     [ "contains", "classtr_1_1localization__map.html#a024f2aecad978da4bd8e017313531d87", null ],
     [ "operator[]", "classtr_1_1localization__map.html#adc0aedf4d0ea7f8962f860a0b3e4f8db", null ],
+    [ "value_or", "classtr_1_1localization__map.html#ac723cd13324c58599e4d33b7c231117f", null ],
     [ "clear", "classtr_1_1localization__map.html#af77e50710f7befac642e2e229d8c1dd0", null ],
     [ "update", "classtr_1_1localization__map.html#a95b7d0486da43d33d6c544ccdb22f06e", null ],
+    [ "update", "classtr_1_1localization__map.html#a3138c662c94991c57be608e3e7cc0496", null ],
     [ "update", "classtr_1_1localization__map.html#a3138c662c94991c57be608e3e7cc0496", null ],
     [ "update", "classtr_1_1localization__map.html#aaf1048a95ef69c07e80c9603d66bd6b7", null ]
 ];

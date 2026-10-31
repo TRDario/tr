@@ -126,10 +126,12 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('classtr_1_1loc
 </div><!--header-->
 <div class="contents">
 
-<p>Optimized localization key-value map.  
+<p>Read-optimized container for storing key-value string pairs.  
  <a href="#details">More...</a></p>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Optimized localization key-value map. </p>
+<div class="textblock"><p>Read-optimized container for storing key-value string pairs. </p>
+<p><span class="tt"><a class="el" href="classtr_1_1localization__map.html" title="Read-optimized container for storing key-value string pairs.">tr::localization_map</a></span> is designed for efficient storage and lookup of string key-value pairs, primarily for use in storing localization strings. Rather than allocating individual buffers for each string, all strings are packed sequentially inside a single, contiguous buffer, eliminating allocation overhead and heap fragmentation.</p>
+<p>While most optimized when created complete and treated as read-only, localization maps can also be dynamically expanded and updated at any point. Doing this invalidates all previously obtained views to strings stored in the map. </p>
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -139,40 +141,46 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a74f0019a4251421b953694c2277cb968" id="r_a74f0019a4251421b953694c2277cb968"><td class="memTemplParams" colspan="2">template&lt;std::input_iterator Iterator, std::sentinel_for&lt; Iterator &gt; Sentinel&gt; <br />
 requires localization_key_value_pair&lt;std::iter_reference_t&lt;Iterator&gt;&gt;</td></tr>
 <tr class="memitem:a74f0019a4251421b953694c2277cb968 template"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a74f0019a4251421b953694c2277cb968">localization_map</a> (Iterator begin, Sentinel end)</td></tr>
-<tr class="memdesc:a74f0019a4251421b953694c2277cb968"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a localization map from a key-value iterator pair range.  <br /></td></tr>
+<tr class="memdesc:a74f0019a4251421b953694c2277cb968"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a localization map by copying a range of values.  <br /></td></tr>
 <tr class="memitem:a4014e47687d9e1089410a400f702d88c" id="r_a4014e47687d9e1089410a400f702d88c"><td class="memTemplParams" colspan="2">template&lt;std::ranges::input_range Range = std::initializer_list&lt;std::pair&lt;std::string_view, std::string_view&gt;&gt;&gt; <br />
 requires localization_key_value_pair&lt;std::ranges::range_reference_t&lt;Range&gt;&gt;</td></tr>
 <tr class="memitem:a4014e47687d9e1089410a400f702d88c template"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a4014e47687d9e1089410a400f702d88c">localization_map</a> (Range &amp;&amp;range)</td></tr>
-<tr class="memdesc:a4014e47687d9e1089410a400f702d88c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a localization map from a key-value range.  <br /></td></tr>
+<tr class="memdesc:a4014e47687d9e1089410a400f702d88c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a localization map by copying a range of values.  <br /></td></tr>
 <tr class="memitem:ac674ba0328ecc61f9f0b609f2f9fb1c9" id="r_ac674ba0328ecc61f9f0b609f2f9fb1c9"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ac674ba0328ecc61f9f0b609f2f9fb1c9">localization_map</a> (const localization_map &amp;rhs)</td></tr>
-<tr class="memdesc:ac674ba0328ecc61f9f0b609f2f9fb1c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copies a localization map.  <br /></td></tr>
+<tr class="memdesc:ac674ba0328ecc61f9f0b609f2f9fb1c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a localization map by copying the contents of another map.  <br /></td></tr>
 <tr class="memitem:a7531343a7916c38c6f3c77b436f52f44" id="r_a7531343a7916c38c6f3c77b436f52f44"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a7531343a7916c38c6f3c77b436f52f44">localization_map</a> (localization_map &amp;&amp;rhs) noexcept=default</td></tr>
-<tr class="memdesc:a7531343a7916c38c6f3c77b436f52f44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves a localization map.  <br /></td></tr>
+<tr class="memdesc:a7531343a7916c38c6f3c77b436f52f44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a localization map by moving the contents of another map.  <br /></td></tr>
 <tr id="pub-methods-1" class="groupHeader"><td colspan="2"><div class="groupHeader">Assignment operators</div></td></tr>
 <tr class="memitem:a2c5b59c5bab98a7c508cc8976b776f50" id="r_a2c5b59c5bab98a7c508cc8976b776f50"><td class="memItemLeft"><a class="el" href="#a5fb5ce712340d4a1ba129fa84f9536d4">localization_map</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a2c5b59c5bab98a7c508cc8976b776f50">operator=</a> (const <a class="el" href="#a5fb5ce712340d4a1ba129fa84f9536d4">localization_map</a> &amp;rhs)</td></tr>
-<tr class="memdesc:a2c5b59c5bab98a7c508cc8976b776f50"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copies a localization map.  <br /></td></tr>
+<tr class="memdesc:a2c5b59c5bab98a7c508cc8976b776f50"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replaces the contents of the localization map with a copy of those of another pool.  <br /></td></tr>
 <tr class="memitem:a45d56fb2546e7ca551970a86a18e51fa" id="r_a45d56fb2546e7ca551970a86a18e51fa"><td class="memItemLeft"><a class="el" href="#a5fb5ce712340d4a1ba129fa84f9536d4">localization_map</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a45d56fb2546e7ca551970a86a18e51fa">operator=</a> (<a class="el" href="#a5fb5ce712340d4a1ba129fa84f9536d4">localization_map</a> &amp;&amp;rhs) noexcept=default</td></tr>
-<tr class="memdesc:a45d56fb2546e7ca551970a86a18e51fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves a localization map.  <br /></td></tr>
+<tr class="memdesc:a45d56fb2546e7ca551970a86a18e51fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replaces the contents of the localization map with those moved from another pool.  <br /></td></tr>
 <tr id="pub-methods-2" class="groupHeader"><td colspan="2"><div class="groupHeader">Access</div></td></tr>
 <tr class="memitem:aad710390afc9aa883820bbe54418dace" id="r_aad710390afc9aa883820bbe54418dace"><td class="memItemLeft"><a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a>&#160;</td><td class="memItemRight"><a class="el" href="#aad710390afc9aa883820bbe54418dace">size</a> () const noexcept</td></tr>
-<tr class="memdesc:aad710390afc9aa883820bbe54418dace"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the number of entries in the map.  <br /></td></tr>
+<tr class="memdesc:aad710390afc9aa883820bbe54418dace"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of entries in the map.  <br /></td></tr>
 <tr class="memitem:a024f2aecad978da4bd8e017313531d87" id="r_a024f2aecad978da4bd8e017313531d87"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a024f2aecad978da4bd8e017313531d87">contains</a> (std::string_view key) const noexcept</td></tr>
-<tr class="memdesc:a024f2aecad978da4bd8e017313531d87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether a key has a corresponding localization string in the map.  <br /></td></tr>
+<tr class="memdesc:a024f2aecad978da4bd8e017313531d87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether a key has an associated value string in the map.  <br /></td></tr>
 <tr class="memitem:adc0aedf4d0ea7f8962f860a0b3e4f8db" id="r_adc0aedf4d0ea7f8962f860a0b3e4f8db"><td class="memItemLeft">std::string_view&#160;</td><td class="memItemRight"><a class="el" href="#adc0aedf4d0ea7f8962f860a0b3e4f8db">operator[]</a> (std::string_view key) const noexcept</td></tr>
-<tr class="memdesc:adc0aedf4d0ea7f8962f860a0b3e4f8db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a localization string associated with a key.  <br /></td></tr>
+<tr class="memdesc:adc0aedf4d0ea7f8962f860a0b3e4f8db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tries to return the value string associated with a key string.  <br /></td></tr>
+<tr class="memitem:ac723cd13324c58599e4d33b7c231117f" id="r_ac723cd13324c58599e4d33b7c231117f"><td class="memItemLeft">std::string_view&#160;</td><td class="memItemRight"><a class="el" href="#ac723cd13324c58599e4d33b7c231117f">value_or</a> (std::string_view key, std::string_view default_value) const noexcept</td></tr>
+<tr class="memdesc:ac723cd13324c58599e4d33b7c231117f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the value string associated with a key string or a default value if one doesn't exist.  <br /></td></tr>
 <tr id="pub-methods-3" class="groupHeader"><td colspan="2"><div class="groupHeader">Modification</div></td></tr>
 <tr class="memitem:af77e50710f7befac642e2e229d8c1dd0" id="r_af77e50710f7befac642e2e229d8c1dd0"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#af77e50710f7befac642e2e229d8c1dd0">clear</a> () noexcept</td></tr>
-<tr class="memdesc:af77e50710f7befac642e2e229d8c1dd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the localization map.  <br /></td></tr>
+<tr class="memdesc:af77e50710f7befac642e2e229d8c1dd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Erases all entries from the map.  <br /></td></tr>
 <tr class="memitem:a95b7d0486da43d33d6c544ccdb22f06e" id="r_a95b7d0486da43d33d6c544ccdb22f06e"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a95b7d0486da43d33d6c544ccdb22f06e">update</a> (std::string_view key, std::string_view value)</td></tr>
 <tr class="memdesc:a95b7d0486da43d33d6c544ccdb22f06e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds or replaces a key-value pair in the map.  <br /></td></tr>
+<tr class="memitem:a3138c662c94991c57be608e3e7cc0496" id="r_a3138c662c94991c57be608e3e7cc0496"><td class="memTemplParams" colspan="2">template&lt;std::forward_iterator Iterator, std::sentinel_for&lt; Iterator &gt; Sentinel&gt; <br />
+requires localization_key_value_pair&lt;std::iter_reference_t&lt;Iterator&gt;&gt;</td></tr>
+<tr class="memitem:a3138c662c94991c57be608e3e7cc0496 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a3138c662c94991c57be608e3e7cc0496">update</a> (Iterator begin, Sentinel end)</td></tr>
+<tr class="memdesc:a3138c662c94991c57be608e3e7cc0496"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds or replaces a range of key-value pairs in the map.  <br /></td></tr>
 <tr class="memitem:a3138c662c94991c57be608e3e7cc0496" id="r_a3138c662c94991c57be608e3e7cc0496"><td class="memTemplParams" colspan="2">template&lt;std::input_iterator Iterator, std::sentinel_for&lt; Iterator &gt; Sentinel&gt; <br />
 requires localization_key_value_pair&lt;std::iter_reference_t&lt;Iterator&gt;&gt;</td></tr>
 <tr class="memitem:a3138c662c94991c57be608e3e7cc0496 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a3138c662c94991c57be608e3e7cc0496">update</a> (Iterator begin, Sentinel end)</td></tr>
-<tr class="memdesc:a3138c662c94991c57be608e3e7cc0496"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds and replaces key-value pairs in the map.  <br /></td></tr>
+<tr class="memdesc:a3138c662c94991c57be608e3e7cc0496"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds or replaces a range of key-value pairs in the map.  <br /></td></tr>
 <tr class="memitem:aaf1048a95ef69c07e80c9603d66bd6b7" id="r_aaf1048a95ef69c07e80c9603d66bd6b7"><td class="memTemplParams" colspan="2">template&lt;std::ranges::input_range Range = std::initializer_list&lt;std::pair&lt;std::string_view, std::string_view&gt;&gt;&gt; <br />
 requires localization_key_value_pair&lt;std::ranges::range_reference_t&lt;Range&gt;&gt;</td></tr>
 <tr class="memitem:aaf1048a95ef69c07e80c9603d66bd6b7 template"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aaf1048a95ef69c07e80c9603d66bd6b7">update</a> (Range &amp;&amp;range)</td></tr>
-<tr class="memdesc:aaf1048a95ef69c07e80c9603d66bd6b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds and replaces key-value pairs in the map.  <br /></td></tr>
+<tr class="memdesc:aaf1048a95ef69c07e80c9603d66bd6b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds or replaces a range of key-value pairs in the map.  <br /></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a5fb5ce712340d4a1ba129fa84f9536d4" name="a5fb5ce712340d4a1ba129fa84f9536d4"></a>
@@ -232,22 +240,23 @@ requires localization_key_value_pair&lt;std::iter_reference_t&lt;Iterator&gt;&gt
 </table>
 </div><div class="memdoc">
 
-<p>Constructs a localization map from a key-value iterator pair range. </p>
-<dl class="section pre"><dt>Precondition</dt><dd>The key-value range must not contain duplicate keys. </dd></dl>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
+<p>Constructs a localization map by copying a range of values. </p>
+<p>If <span class="tt">Iterator</span> models <span class="tt">std::forward_iterator</span>, the range <span class="tt">[begin, end)</span> is iterated through at least twice: once to precalculate the required allocation size, and once to populate the map. Otherwise, every iterator in <span class="tt">[begin, end)</span> is dereferenced exactly once. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">Iterator</td><td>Input iterator to a range of key-value pairs. </td></tr>
+    <tr><td class="paramname">Iterator</td><td>Input iterator to a key-value pair. </td></tr>
     <tr><td class="paramname">Sentinel</td><td>Sentinel for <span class="tt">Iterator</span>. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">begin</td><td>Iterator to the first key-value pair to add. </td></tr>
-    <tr><td class="paramname">end</td><td>Ending sentinel for the key-value pair range. </td></tr>
+    <tr><td class="paramname">begin,end</td><td>Pair of iterators defining the range of key-value pairs to copy from. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section pre"><dt>Precondition</dt><dd>The key-value range must not contain duplicate keys. </dd></dl>
+<dl class="section user"><dt>Complexity</dt><dd>Linear time with respect to the size of <span class="tt">[begin, end)</span>. </dd></dl>
+<dl class="section user"><dt>Exception safety</dt><dd>If an exception is thrown other than from an iterator operation, this function has no effect (strong exception guarantee). </dd></dl>
 
 </div>
 </div>
@@ -277,20 +286,22 @@ requires localization_key_value_pair&lt;std::ranges::range_reference_t&lt;Range&
 </table>
 </div><div class="memdoc">
 
-<p>Constructs a localization map from a key-value range. </p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
+<p>Constructs a localization map by copying a range of values. </p>
+<p>If <span class="tt">Range</span> models <span class="tt">std::forward_range</span>, <span class="tt">range</span> is iterated through at least twice: once to precalculate the required allocation size, and once to populate the map. Otherwise, every iterator in <span class="tt">range</span> is dereferenced exactly once. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">Range</td><td>Key-value pair input range type. </td></tr>
+    <tr><td class="paramname">Range</td><td>Input range of key-value pairs. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section pre"><dt>Precondition</dt><dd>The key-value range must not contain duplicate keys. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">range</td><td>Key-value pair input range. </td></tr>
+    <tr><td class="paramname">range</td><td>Range of key-value pairs to copy from. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section pre"><dt>Precondition</dt><dd><span class="tt">range</span> must not contain duplicate keys. </dd></dl>
+<dl class="section user"><dt>Complexity</dt><dd>Linear time with respect to the size of <span class="tt">range</span>. </dd></dl>
+<dl class="section user"><dt>Exception safety</dt><dd>If an exception is thrown other than from an iterator operation, this function has no effect (strong exception guarantee). </dd></dl>
 
 </div>
 </div>
@@ -317,13 +328,15 @@ requires localization_key_value_pair&lt;std::ranges::range_reference_t&lt;Range&
 </table>
 </div><div class="memdoc">
 
-<p>Copies a localization map. </p>
+<p>Constructs a localization map by copying the contents of another map. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">rhs</td><td>Localization map to copy. </td></tr>
+    <tr><td class="paramname">rhs</td><td>Map to copy the contents of. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section user"><dt>Complexity</dt><dd>Linear time with respect to <span class="tt">rhs.size()</span>. </dd></dl>
+<dl class="section user"><dt>Exception safety</dt><dd>If an exception is thrown, this function has no effect (strong exception guarantee). </dd></dl>
 
 </div>
 </div>
@@ -350,13 +363,14 @@ requires localization_key_value_pair&lt;std::ranges::range_reference_t&lt;Range&
 </table>
 </div><div class="memdoc">
 
-<p>Moves a localization map. </p>
-<p><span class="tt">rhs</span> will be left empty after the move. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Constructs a localization map by moving the contents of another map. </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">rhs</td><td>Localization map to move. </td></tr>
+    <tr><td class="paramname">rhs</td><td>Map to move the contents of. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section post"><dt>Postcondition</dt><dd><span class="tt">rhs</span> is left in a valid, but unspecified state after the move. </dd></dl>
 
 </div>
 </div>
@@ -376,13 +390,16 @@ requires localization_key_value_pair&lt;std::ranges::range_reference_t&lt;Range&
       </table>
 </div><div class="memdoc">
 
-<p>Copies a localization map. </p>
+<p>Replaces the contents of the localization map with a copy of those of another pool. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">rhs</td><td>Localization map to copy. </td></tr>
+    <tr><td class="paramname">rhs</td><td>Map to copy the contents of. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section user"><dt>Invalidation</dt><dd>All views to strings previously stored in <span class="tt">*this</span> are invalidated. </dd></dl>
+<dl class="section user"><dt>Complexity</dt><dd>Linear time with respect to <span class="tt">rhs.size()</span>. </dd></dl>
+<dl class="section user"><dt>Exception safety</dt><dd>If an exception is thrown, <span class="tt">*this</span> is left in a valid, but unspecified state (basic exception guarantee). </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>Reference to <span class="tt">*this</span>. </dd></dl>
 
 </div>
@@ -410,13 +427,15 @@ requires localization_key_value_pair&lt;std::ranges::range_reference_t&lt;Range&
 </table>
 </div><div class="memdoc">
 
-<p>Moves a localization map. </p>
-<p><span class="tt">rhs</span> will be left empty after the move. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Replaces the contents of the localization map with those moved from another pool. </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">rhs</td><td>Localization map to move. </td></tr>
+    <tr><td class="paramname">rhs</td><td>Map to move the contents of. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section user"><dt>Invalidation</dt><dd>All views to strings previously stored in <span class="tt">*this</span> are invalidated. </dd></dl>
+<dl class="section post"><dt>Postcondition</dt><dd><span class="tt">rhs</span> is left in a valid, but unspecified state after the move. </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>Reference to <span class="tt">*this</span>. </dd></dl>
 
 </div>
@@ -444,7 +463,7 @@ requires localization_key_value_pair&lt;std::ranges::range_reference_t&lt;Range&
 </table>
 </div><div class="memdoc">
 
-<p>Gets the number of entries in the map. </p>
+<p>Returns the number of entries in the map. </p>
 <dl class="section return"><dt>Returns</dt><dd>Number of entries in the map. </dd></dl>
 
 </div>
@@ -472,14 +491,14 @@ requires localization_key_value_pair&lt;std::ranges::range_reference_t&lt;Range&
 </table>
 </div><div class="memdoc">
 
-<p>Gets whether a key has a corresponding localization string in the map. </p>
+<p>Checks whether a key has an associated value string in the map. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">key</td><td>Localization key to check. </td></tr>
+    <tr><td class="paramname">key</td><td>Key string to check. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if a string is associated with <span class="tt">key</span>, <span class="tt">false</span> otherwise. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if a value string associated with <span class="tt">key</span> exists in the map, <span class="tt">false</span> otherwise. </dd></dl>
 
 </div>
 </div>
@@ -506,15 +525,55 @@ requires localization_key_value_pair&lt;std::ranges::range_reference_t&lt;Range&
 </table>
 </div><div class="memdoc">
 
-<p>Gets a localization string associated with a key. </p>
+<p>Tries to return the value string associated with a key string. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">key</td><td>Localization key to get a localization string for. </td></tr>
+    <tr><td class="paramname">key</td><td>Key string to get the associated value string for. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section post"><dt>Postcondition</dt><dd>The string <span class="tt">key</span> is a view of must stay alive after the function returns in case it's returned. </dd></dl>
-<dl class="section return"><dt>Returns</dt><dd>Localization string associated with a key, or <span class="tt">key</span> if one doesn't exist. </dd></dl>
+<dl class="section post"><dt>Postcondition</dt><dd>The string backing <span class="tt">key</span> must stay valid after the function returns in case it's returned. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Value string associated with <span class="tt">key</span>, or <span class="tt">key</span> if one doesn't exist. </dd></dl>
+
+</div>
+</div>
+<a id="ac723cd13324c58599e4d33b7c231117f" name="ac723cd13324c58599e4d33b7c231117f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac723cd13324c58599e4d33b7c231117f">&#9670;&#160;</a></span>value_or()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string_view tr::localization_map::value_or </td>
+          <td>(</td>
+          <td class="paramtype">std::string_view</td>          <td class="paramname"><span class="paramname"><em>key</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string_view</td>          <td class="paramname"><span class="paramname"><em>default_value</em></span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the value string associated with a key string or a default value if one doesn't exist. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>Key string to get the associated value string for. </td></tr>
+    <tr><td class="paramname">default_value</td><td>Default value string to return if there is no value string associated with <span class="tt">key</span> in the map. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section post"><dt>Postcondition</dt><dd>The string backing <span class="tt">default_value</span> must stay valid after the function returns in case it's returned. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Value string associated with <span class="tt">key</span>, or <span class="tt">default_value</span> if one doesn't exist. </dd></dl>
 
 </div>
 </div>
@@ -541,12 +600,13 @@ requires localization_key_value_pair&lt;std::ranges::range_reference_t&lt;Range&
 </table>
 </div><div class="memdoc">
 
-<p>Clears the localization map. </p>
+<p>Erases all entries from the map. </p>
+<p>No allocations made by the map are released by this operation. </p><dl class="section user"><dt>Invalidation</dt><dd>All views to strings previously stored in the map are invalidated. </dd></dl>
 
 </div>
 </div>
 <a id="a95b7d0486da43d33d6c544ccdb22f06e" name="a95b7d0486da43d33d6c544ccdb22f06e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a95b7d0486da43d33d6c544ccdb22f06e">&#9670;&#160;</a></span>update() <span class="overload">[1/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a95b7d0486da43d33d6c544ccdb22f06e">&#9670;&#160;</a></span>update() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -565,19 +625,71 @@ requires localization_key_value_pair&lt;std::ranges::range_reference_t&lt;Range&
 </div><div class="memdoc">
 
 <p>Adds or replaces a key-value pair in the map. </p>
-<dl class="section note"><dt>Note</dt><dd>This may invalidate any previously obtained localization string views. </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">key</td><td>Localization key. </td></tr>
-    <tr><td class="paramname">value</td><td>Localization value associated with <span class="tt">key</span>. </td></tr>
+    <tr><td class="paramname">key</td><td>Key string. </td></tr>
+    <tr><td class="paramname">value</td><td>Value string associated with <span class="tt">key</span>. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section user"><dt>Invalidation</dt><dd>All views to strings previously stored in the map are invalidated. </dd></dl>
+<dl class="section user"><dt>Complexity</dt><dd>At most linear with respect to <span class="tt"><a class="el" href="#aad710390afc9aa883820bbe54418dace" title="Returns the number of entries in the map.">size()</a></span>. </dd></dl>
+<dl class="section user"><dt>Exception safety</dt><dd>If an exception is thrown, this function has no effect (strong exception guarantee). </dd></dl>
 
 </div>
 </div>
 <a id="a3138c662c94991c57be608e3e7cc0496" name="a3138c662c94991c57be608e3e7cc0496"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3138c662c94991c57be608e3e7cc0496">&#9670;&#160;</a></span>update() <span class="overload">[2/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a3138c662c94991c57be608e3e7cc0496">&#9670;&#160;</a></span>update() <span class="overload">[2/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;std::forward_iterator Iterator, std::sentinel_for&lt; Iterator &gt; Sentinel&gt; <br />
+requires localization_key_value_pair&lt;std::iter_reference_t&lt;Iterator&gt;&gt;</div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tr::localization_map::update </td>
+          <td>(</td>
+          <td class="paramtype">Iterator</td>          <td class="paramname"><span class="paramname"><em>begin</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Sentinel</td>          <td class="paramname"><span class="paramname"><em>end</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Adds or replaces a range of key-value pairs in the map. </p>
+<p>The range <span class="tt">[begin, end)</span> is iterated through at least twice: once to precalculate the required allocation size, and once to populate the map. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Iterator</td><td>Forward input iterator to a key-value pair. </td></tr>
+    <tr><td class="paramname">Sentinel</td><td>Sentinel for <span class="tt">Iterator</span>. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">begin,end</td><td>Pair of iterators defining the range of key-value pairs to update from. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section user"><dt>Invalidation</dt><dd>All views to strings previously stored in the map are invalidated. </dd></dl>
+<dl class="section user"><dt>Complexity</dt><dd>At most O(n * m) with respect to <span class="tt"><a class="el" href="#aad710390afc9aa883820bbe54418dace" title="Returns the number of entries in the map.">size()</a></span> and <span class="tt">[begin, end)</span>. </dd></dl>
+<dl class="section user"><dt>Exception safety</dt><dd>If an exception is thrown other than from an iterator operation, this function has no effect (strong exception guarantee). </dd></dl>
+
+</div>
+</div>
+<a id="a3138c662c94991c57be608e3e7cc0496" name="a3138c662c94991c57be608e3e7cc0496"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3138c662c94991c57be608e3e7cc0496">&#9670;&#160;</a></span>update() <span class="overload">[3/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -606,28 +718,28 @@ requires localization_key_value_pair&lt;std::iter_reference_t&lt;Iterator&gt;&gt
 </table>
 </div><div class="memdoc">
 
-<p>Adds and replaces key-value pairs in the map. </p>
-<dl class="section note"><dt>Note</dt><dd>This may invalidate any previously obtained localization string views. </dd></dl>
-<dl class="section pre"><dt>Precondition</dt><dd>The key-value range must not contain duplicate keys. </dd></dl>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
+<p>Adds or replaces a range of key-value pairs in the map. </p>
+<p>The range <span class="tt">[begin, end)</span> is iterated through exactly once. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">Iterator</td><td>Input iterator to a range of key-value pairs. </td></tr>
+    <tr><td class="paramname">Iterator</td><td>Input iterator to a key-value pair. </td></tr>
     <tr><td class="paramname">Sentinel</td><td>Sentinel for <span class="tt">Iterator</span>. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">begin</td><td>Iterator to the first key-value pair to add or replace. </td></tr>
-    <tr><td class="paramname">end</td><td>Ending sentinel for the key-value pair range. </td></tr>
+    <tr><td class="paramname">begin,end</td><td>Pair of iterators defining the range of key-value pairs to update from. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section user"><dt>Invalidation</dt><dd>All views to strings previously stored in the map are invalidated unless the range is empty. </dd></dl>
+<dl class="section user"><dt>Complexity</dt><dd>At most O(n * m) with respect to <span class="tt"><a class="el" href="#aad710390afc9aa883820bbe54418dace" title="Returns the number of entries in the map.">size()</a></span> and <span class="tt">[begin, end)</span>. </dd></dl>
+<dl class="section user"><dt>Exception safety</dt><dd>If an exception is thrown, <span class="tt">*this</span> is left in a valid, but unspecified state (basic exception guarantee). </dd></dl>
 
 </div>
 </div>
 <a id="aaf1048a95ef69c07e80c9603d66bd6b7" name="aaf1048a95ef69c07e80c9603d66bd6b7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaf1048a95ef69c07e80c9603d66bd6b7">&#9670;&#160;</a></span>update() <span class="overload">[3/3]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf1048a95ef69c07e80c9603d66bd6b7">&#9670;&#160;</a></span>update() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -652,21 +764,22 @@ requires localization_key_value_pair&lt;std::ranges::range_reference_t&lt;Range&
 </table>
 </div><div class="memdoc">
 
-<p>Adds and replaces key-value pairs in the map. </p>
-<dl class="section note"><dt>Note</dt><dd>This may invalidate any previously obtained localization string views. </dd></dl>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
+<p>Adds or replaces a range of key-value pairs in the map. </p>
+<p>If <span class="tt">Range</span> models <span class="tt">std::forward_range</span>, <span class="tt">range</span> is iterated through at least twice: once to precalculate the required allocation size, and once to populate the map. Otherwise, every iterator in <span class="tt">range</span> is dereferenced exactly once. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">Iterator</td><td>Input iterator to a range of key-value pairs. </td></tr>
-    <tr><td class="paramname">Sentinel</td><td>Sentinel for <span class="tt">Iterator</span>. </td></tr>
+    <tr><td class="paramname">Range</td><td>Input range of key-value pairs. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">range</td><td>Key-value pair input range. </td></tr>
+    <tr><td class="paramname">range</td><td>Range of key-value pairs to update from. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section user"><dt>Invalidation</dt><dd>All views to strings previously stored in the map are invalidated unless the range is empty. </dd></dl>
+<dl class="section user"><dt>Complexity</dt><dd>At most linear with respect to <span class="tt"><a class="el" href="#aad710390afc9aa883820bbe54418dace" title="Returns the number of entries in the map.">size()</a></span> and the size of <span class="tt">range</span>. </dd></dl>
+<dl class="section user"><dt>Exception safety</dt><dd>If <span class="tt">Range</span> models <span class="tt">std::ranges::forward_range</span> and an exception is thrown other than from an iterator operation, this function has no effect (strong exception guarantee). Otherwise, <span class="tt">*this</span> is left in a valid, but unspecified state (basic exception guarantee). </dd></dl>
 
 </div>
 </div>
