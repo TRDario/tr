@@ -1,9 +1,5 @@
 var NAVTREEINDEX15 =
 {
-"namespacetr_1_1aliases_1_1chrono__aliases.html#af6cd937ef53ab489606e388d3b0d5133":[4,0,0,0,0,6],
-"namespacetr_1_1aliases_1_1chrono__aliases.html#af6cd937ef53ab489606e388d3b0d5133":[4,0,0,0,8],
-"namespacetr_1_1aliases_1_1chrono__aliases.html#afe24d78ac5137aa0cc0f5e66dd1d5336":[4,0,0,2,12],
-"namespacetr_1_1aliases_1_1chrono__aliases.html#afe24d78ac5137aa0cc0f5e66dd1d5336":[4,0,0,295],
 "namespacetr_1_1aliases_1_1chrono__aliases.html#afe24d78ac5137aa0cc0f5e66dd1d5336":[4,0,0,0,0,12],
 "namespacetr_1_1aliases_1_1chrono__aliases.html#afe24d78ac5137aa0cc0f5e66dd1d5336":[4,0,0,0,14],
 "namespacetr_1_1aliases_1_1integer__aliases.html":[4,0,0,6],
@@ -249,5 +245,9 @@ var NAVTREEINDEX15 =
 "opt__ref_8hpp_source.html":[7,0,0,0,2,43],
 "optional__result_8hpp.html":[7,0,0,0,2,44],
 "optional__result_8hpp_source.html":[7,0,0,0,2,44],
-"optional__variant_8hpp.html":[7,0,0,0,2,45]
+"optional__variant_8hpp.html":[7,0,0,0,2,45],
+"optional__variant_8hpp_source.html":[7,0,0,0,2,45],
+"orientation_8hpp.html":[7,0,0,0,0,8],
+"orientation_8hpp_source.html":[7,0,0,0,0,8],
+"out__handle_8hpp.html":[7,0,0,0,2,46]
 };

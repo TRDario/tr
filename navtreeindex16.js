@@ -1,9 +1,5 @@
 var NAVTREEINDEX16 =
 {
-"optional__variant_8hpp_source.html":[7,0,0,0,2,45],
-"orientation_8hpp.html":[7,0,0,0,0,8],
-"orientation_8hpp_source.html":[7,0,0,0,0,8],
-"out__handle_8hpp.html":[7,0,0,0,2,46],
 "out__handle_8hpp_source.html":[7,0,0,0,2,46],
 "owning__shader__pipeline_8hpp.html":[7,0,0,0,1,30],
 "owning__shader__pipeline_8hpp_source.html":[7,0,0,0,1,30],
@@ -249,5 +245,9 @@ var NAVTREEINDEX16 =
 "structtr_1_1binary__reader_3_01Defaulted_01_4.html":[4,0,0,40],
 "structtr_1_1binary__reader_3_01Defaulted_01_4.html":[6,0,1,27],
 "structtr_1_1binary__reader_3_01Defaulted_01_4.html#a85a2c6eb80cf4129e77de41fc5f7f1a5":[4,0,0,40,0],
-"structtr_1_1binary__reader_3_01Defaulted_01_4.html#a85a2c6eb80cf4129e77de41fc5f7f1a5":[6,0,1,27,0]
+"structtr_1_1binary__reader_3_01Defaulted_01_4.html#a85a2c6eb80cf4129e77de41fc5f7f1a5":[6,0,1,27,0],
+"structtr_1_1binary__reader_3_01boost_1_1unordered__flat__map_3_01Key_00_01Value_00_01Other_8_8_8_01_4_01_4.html":[4,0,0,36],
+"structtr_1_1binary__reader_3_01boost_1_1unordered__flat__map_3_01Key_00_01Value_00_01Other_8_8_8_01_4_01_4.html":[6,0,1,23],
+"structtr_1_1binary__reader_3_01boost_1_1unordered__flat__set_3_01Key_00_01Other_8_8_8_01_4_01_4.html":[4,0,0,37],
+"structtr_1_1binary__reader_3_01boost_1_1unordered__flat__set_3_01Key_00_01Other_8_8_8_01_4_01_4.html":[6,0,1,24]
 };
