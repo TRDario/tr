@@ -151,14 +151,9 @@ namespace tr
 		/// @param str Chord string.
 		[[nodiscard]] constexpr explicit scan_chord(std::string_view str) noexcept
 		{
-			const usize first_delimiter_pos{str.find('+')};
-			if (first_delimiter_pos == str.npos) {
-				scan = to_scancode(str);
-				return;
-			}
-
-			std::string_view substr{str.begin(), str.begin() + first_delimiter_pos};
-			while (substr.end() != str.end()) {
+			std::string_view::iterator next_delimiter_it{std::ranges::find(str, '+')};
+			while (next_delimiter_it != str.end()) {
+				std::string_view substr{str.begin(), next_delimiter_it};
 				if (substr == "Shift") {
 					mods |= keymod::shift;
 				}
@@ -173,10 +168,10 @@ namespace tr
 					return;
 				}
 
-				const usize next_start{str.find('+', substr.end() - str.begin() + 1)};
-				substr = {substr.end() + 1, next_start == str.npos ? str.end() : str.begin() + next_start};
+				str = std::string_view{next_delimiter_it + 1, str.end()};
+				next_delimiter_it = std::ranges::find(str, '+');
 			}
-			scan = to_scancode(substr);
+			scan = to_scancode(str);
 		}
 
 		/// @}
@@ -248,14 +243,9 @@ namespace tr
 		/// @param cstr Chord string.
 		[[nodiscard]] constexpr explicit key_chord(zstring_view cstr) noexcept
 		{
-			const zstring_view::iterator first_delimiter_pos{std::ranges::find(cstr, '+')};
-			if (first_delimiter_pos == cstr.end()) {
-				key = to_keycode(cstr);
-				return;
-			}
-
-			std::string_view substr{cstr.begin(), first_delimiter_pos};
-			while (*substr.end() != '\0') {
+			zstring_view::iterator next_delimiter_it{std::ranges::find(cstr, '+')};
+			while (next_delimiter_it != cstr.end()) {
+				std::string_view substr{cstr.begin(), next_delimiter_it};
 				if (substr == "Shift") {
 					mods |= keymod::shift;
 				}
@@ -269,9 +259,11 @@ namespace tr
 					mods = keymod::unknown;
 					return;
 				}
-				substr = {first_delimiter_pos + 1, std::ranges::find(first_delimiter_pos + 1, cstr.end(), '+')};
+
+				cstr = zstring_view{next_delimiter_it + 1};
+				next_delimiter_it = std::ranges::find(cstr, '+');
 			}
-			key = to_keycode(substr.data());
+			key = to_keycode(cstr);
 		}
 
 		/// @}
