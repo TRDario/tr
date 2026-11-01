@@ -44,6 +44,14 @@ TEST(ZstringViewTest, ConstructsFromString)
 	EXPECT_EQ(string.c_str(), source.c_str());
 }
 
+TEST(ZStringViewTest, ConstructsFromIterator)
+{
+	const tr::zstring_view source{"literal"};
+	const tr::zstring_view iterator{source.begin() + 3};
+	EXPECT_FALSE(iterator.empty());
+	EXPECT_STREQ(iterator.c_str(), "eral");
+}
+
 /// Tests converting a NUL-terminated string view to a standard string view.
 TEST(ZstringViewTest, ConvertsToStringView)
 {

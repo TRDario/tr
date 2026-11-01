@@ -58,9 +58,6 @@ namespace tr
 			}
 		};
 
-		/// Constant iterator type used by the string.
-		using const_iterator = iterator;
-
 		/// @name Constructors and destructors
 		/// @{
 
@@ -80,6 +77,13 @@ namespace tr
 		template <typename Allocator>
 		[[nodiscard]] constexpr basic_zstring_view(const std::basic_string<CharT, Traits, Allocator>& str) noexcept
 			: m_ptr{str.c_str()}
+		{
+		}
+
+		/// Constructs a string view from an iterator to another string view.
+		/// @param it Iterator to the first character in the string view.
+		[[nodiscard]] explicit constexpr basic_zstring_view(basic_zstring_view::iterator it) noexcept
+			: m_ptr{it.base()}
 		{
 		}
 
@@ -133,8 +137,8 @@ namespace tr
 		[[nodiscard]] constexpr std::strong_ordering operator<=>(this basic_zstring_view lhs,
 																 std::type_identity_t<basic_zstring_view> rhs) noexcept
 		{
-			typename basic_zstring_view<CharT, Traits>::const_iterator lhs_it{lhs.begin()};
-			typename basic_zstring_view<CharT, Traits>::const_iterator rhs_it{rhs.begin()};
+			typename basic_zstring_view<CharT, Traits>::iterator lhs_it{lhs.begin()};
+			typename basic_zstring_view<CharT, Traits>::iterator rhs_it{rhs.begin()};
 			while (lhs_it != lhs.end() && rhs_it != rhs.end()) {
 				const bool equal{Traits::eq(*lhs_it, *rhs_it)};
 				if (!equal) {
@@ -153,8 +157,8 @@ namespace tr
 		/// @return Whether the string views are equal.
 		[[nodiscard]] constexpr bool operator==(this basic_zstring_view lhs, std::type_identity_t<basic_zstring_view> rhs) noexcept
 		{
-			typename basic_zstring_view<CharT, Traits>::const_iterator lhs_it{lhs.begin()};
-			typename basic_zstring_view<CharT, Traits>::const_iterator rhs_it{rhs.begin()};
+			typename basic_zstring_view<CharT, Traits>::iterator lhs_it{lhs.begin()};
+			typename basic_zstring_view<CharT, Traits>::iterator rhs_it{rhs.begin()};
 			while (lhs_it != lhs.end() && rhs_it != rhs.end()) {
 				const bool equal{Traits::eq(*lhs_it++, *rhs_it++)};
 				if (!equal) {
@@ -175,23 +179,9 @@ namespace tr
 			return iterator{m_ptr};
 		}
 
-		/// Gets an iterator to the beginning of the string.
-		/// @return Iterator to the beginning of the string.
-		[[nodiscard]] constexpr const_iterator cbegin() const noexcept
-		{
-			return const_iterator{m_ptr};
-		}
-
 		/// Gets an iterator sentinel to the end of the string.
 		/// @return Iterator sentinel to the end of the string.
 		[[nodiscard]] constexpr end_sentinel end() const noexcept
-		{
-			return end_sentinel{};
-		}
-
-		/// Gets an iterator sentinel to the end of the string.
-		/// @return Iterator sentinel to the end of the string.
-		[[nodiscard]] constexpr end_sentinel cend() const noexcept
 		{
 			return end_sentinel{};
 		}
