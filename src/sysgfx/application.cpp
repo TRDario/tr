@@ -105,8 +105,9 @@ SDL_AppResult tr::internal::initialize_application(void**, int, char** argv)
 	try {
 		return static_cast<SDL_AppResult>(running_application->initialize(zstring_view_zspan{argv}));
 	}
-	catch (std::exception& err) {
-		show_fatal_error_message_box(err);
+	catch (const std::exception& error) {
+		show_fatal_error_message_box(error);
+		running_application.reset();
 		return SDL_APP_FAILURE;
 	}
 }
@@ -116,8 +117,9 @@ SDL_AppResult tr::internal::handle_application_event(void*, SDL_Event* sdl_event
 	try {
 		return static_cast<SDL_AppResult>(running_application->handle_event(event_view{*sdl_event}));
 	}
-	catch (std::exception& err) {
-		internal::show_fatal_error_message_box(err);
+	catch (const std::exception& error) {
+		internal::show_fatal_error_message_box(error);
+		running_application.reset();
 		return SDL_APP_FAILURE;
 	}
 }
@@ -131,8 +133,9 @@ SDL_AppResult tr::internal::update_application(void*)
 		prev = now;
 		return static_cast<SDL_AppResult>(running_application->update(delta));
 	}
-	catch (std::exception& err) {
-		internal::show_fatal_error_message_box(err);
+	catch (const std::exception& error) {
+		internal::show_fatal_error_message_box(error);
+		running_application.reset();
 		return SDL_APP_FAILURE;
 	}
 }
