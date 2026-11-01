@@ -3,7 +3,7 @@
 
 #pragma once
 #include <tr/sysgfx/mapped_untyped_graphics_buffer_span.hpp>
-#include <tr/utility/integer.hpp>
+#include <tr/utility/ranges.hpp>
 
 //
 
@@ -101,7 +101,7 @@ namespace tr
 		/// @return Span of bytes covering the buffer map.
 		[[nodiscard]] std::span<Element> span() const noexcept
 		{
-			return as_objects<Element>(m_raw_map.span());
+			return as_mut_objects<Element>(m_raw_map.span());
 		}
 
 		/// @}

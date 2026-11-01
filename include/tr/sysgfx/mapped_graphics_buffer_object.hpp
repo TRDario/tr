@@ -3,6 +3,7 @@
 
 #pragma once
 #include <tr/sysgfx/mapped_untyped_graphics_buffer_span.hpp>
+#include <tr/utility/ranges.hpp>
 
 //
 
