@@ -1,5 +1,17 @@
 var NAVTREEINDEX15 =
 {
+"namespacetr_1_1aliases_1_1chrono__aliases.html#adbd43724ed6e1464d7e9601c4353aa20":[4,0,0,0,0,0],
+"namespacetr_1_1aliases_1_1chrono__aliases.html#adbd43724ed6e1464d7e9601c4353aa20":[4,0,0,0,2],
+"namespacetr_1_1aliases_1_1chrono__aliases.html#ae7f6a749ace4e62739ab57151197530f":[4,0,0,2,8],
+"namespacetr_1_1aliases_1_1chrono__aliases.html#ae7f6a749ace4e62739ab57151197530f":[4,0,0,291],
+"namespacetr_1_1aliases_1_1chrono__aliases.html#ae7f6a749ace4e62739ab57151197530f":[4,0,0,0,0,8],
+"namespacetr_1_1aliases_1_1chrono__aliases.html#ae7f6a749ace4e62739ab57151197530f":[4,0,0,0,10],
+"namespacetr_1_1aliases_1_1chrono__aliases.html#af6cd937ef53ab489606e388d3b0d5133":[4,0,0,2,6],
+"namespacetr_1_1aliases_1_1chrono__aliases.html#af6cd937ef53ab489606e388d3b0d5133":[4,0,0,289],
+"namespacetr_1_1aliases_1_1chrono__aliases.html#af6cd937ef53ab489606e388d3b0d5133":[4,0,0,0,0,6],
+"namespacetr_1_1aliases_1_1chrono__aliases.html#af6cd937ef53ab489606e388d3b0d5133":[4,0,0,0,8],
+"namespacetr_1_1aliases_1_1chrono__aliases.html#afe24d78ac5137aa0cc0f5e66dd1d5336":[4,0,0,2,12],
+"namespacetr_1_1aliases_1_1chrono__aliases.html#afe24d78ac5137aa0cc0f5e66dd1d5336":[4,0,0,295],
 "namespacetr_1_1aliases_1_1chrono__aliases.html#afe24d78ac5137aa0cc0f5e66dd1d5336":[4,0,0,0,0,12],
 "namespacetr_1_1aliases_1_1chrono__aliases.html#afe24d78ac5137aa0cc0f5e66dd1d5336":[4,0,0,0,14],
 "namespacetr_1_1aliases_1_1integer__aliases.html":[4,0,0,6],
@@ -237,17 +249,5 @@ var NAVTREEINDEX15 =
 "namespacetr_1_1utf8.html#a90d625233d38a04030aed40aec690483":[4,0,0,12,17],
 "namespacetr_1_1utf8.html#aa76696bf6a51b53a2e8b904a4011cd66":[4,0,0,12,16],
 "namespacetr_1_1utf8.html#ac4275623f5f902b51da47c79d9ad1ed2":[4,0,0,12,13],
-"namespacetr_1_1utf8.html#af6d90913aa4723a99f5467805d50068d":[4,0,0,12,12],
-"namespacetr_1_1utf8.html#afc54d9bcc1d16f44b80af8837b8ccb15":[4,0,0,12,10],
-"norm__cast_8hpp.html":[7,0,0,0,2,42],
-"norm__cast_8hpp_source.html":[7,0,0,0,2,42],
-"opt__ref_8hpp.html":[7,0,0,0,2,43],
-"opt__ref_8hpp_source.html":[7,0,0,0,2,43],
-"optional__result_8hpp.html":[7,0,0,0,2,44],
-"optional__result_8hpp_source.html":[7,0,0,0,2,44],
-"optional__variant_8hpp.html":[7,0,0,0,2,45],
-"optional__variant_8hpp_source.html":[7,0,0,0,2,45],
-"orientation_8hpp.html":[7,0,0,0,0,8],
-"orientation_8hpp_source.html":[7,0,0,0,0,8],
-"out__handle_8hpp.html":[7,0,0,0,2,46]
+"namespacetr_1_1utf8.html#af6d90913aa4723a99f5467805d50068d":[4,0,0,12,12]
 };

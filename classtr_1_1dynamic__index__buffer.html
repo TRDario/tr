@@ -178,13 +178,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a4c94b17221b0bb84769d50cc662676d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the contents of the buffer, potentially reallocating in the process.  <br /></td></tr>
 <tr class="memitem:aa54d57ec981fc828abfae51403c88c49" id="r_aa54d57ec981fc828abfae51403c88c49"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#aa54d57ec981fc828abfae51403c88c49">set_region</a> (<a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">usize</a> offset, std::span&lt; const <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a6991e9925796abf87530c4ec24b82bb8">u16</a> &gt; data) noexcept</td></tr>
 <tr class="memdesc:aa54d57ec981fc828abfae51403c88c49"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets a region of the buffer.  <br /></td></tr>
-<tr id="pub-methods-4" class="groupHeader"><td colspan="2"><div class="groupHeader">Context</div></td></tr>
+<tr id="pub-methods-4" class="groupHeader"><td colspan="2"><div class="groupHeader">Mapping</div></td></tr>
+<tr class="memitem:ad1e32dde8286b9b3e997353a22e95cf2" id="r_ad1e32dde8286b9b3e997353a22e95cf2"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#ad1e32dde8286b9b3e997353a22e95cf2">mapped</a> () const noexcept</td></tr>
+<tr class="memdesc:ad1e32dde8286b9b3e997353a22e95cf2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the buffer is mapped.  <br /></td></tr>
+<tr class="memitem:a034df9c2ca7e16490cbb3e5a4aa2c6ae" id="r_a034df9c2ca7e16490cbb3e5a4aa2c6ae"><td class="memItemLeft"><a class="el" href="classtr_1_1mapped__graphics__buffer__span.html">mapped_graphics_buffer_span</a>&lt; <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a6991e9925796abf87530c4ec24b82bb8">u16</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a034df9c2ca7e16490cbb3e5a4aa2c6ae">map</a> ()</td></tr>
+<tr class="memdesc:a034df9c2ca7e16490cbb3e5a4aa2c6ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maps the buffer.  <br /></td></tr>
+<tr id="pub-methods-5" class="groupHeader"><td colspan="2"><div class="groupHeader">Context</div></td></tr>
 <tr class="memitem:a2c5c352444ab4d10ed3add4a8cd03f9a" id="r_a2c5c352444ab4d10ed3add4a8cd03f9a"><td class="memItemLeft"><a class="el" href="classtr_1_1graphics__context.html">graphics_context</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a2c5c352444ab4d10ed3add4a8cd03f9a">context</a> () const noexcept</td></tr>
 <tr class="memdesc:a2c5c352444ab4d10ed3add4a8cd03f9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a reference to the graphics context the buffer is on.  <br /></td></tr>
-<tr id="pub-methods-5" class="groupHeader"><td colspan="2"><div class="groupHeader">State</div></td></tr>
+<tr id="pub-methods-6" class="groupHeader"><td colspan="2"><div class="groupHeader">State</div></td></tr>
 <tr class="memitem:ab3a7924563ab5b21ec88e5004dd17d6a" id="r_ab3a7924563ab5b21ec88e5004dd17d6a"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#ab3a7924563ab5b21ec88e5004dd17d6a">valid</a> () const noexcept</td></tr>
 <tr class="memdesc:ab3a7924563ab5b21ec88e5004dd17d6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the buffer is in a valid state.  <br /></td></tr>
-<tr id="pub-methods-6" class="groupHeader"><td colspan="2"><div class="groupHeader">Label</div></td></tr>
+<tr id="pub-methods-7" class="groupHeader"><td colspan="2"><div class="groupHeader">Label</div></td></tr>
 <tr class="memitem:ada4364c0295af892b869f2be3ed62777" id="r_ada4364c0295af892b869f2be3ed62777"><td class="memItemLeft">std::string&#160;</td><td class="memItemRight"><a class="el" href="#ada4364c0295af892b869f2be3ed62777">label</a> () const</td></tr>
 <tr class="memdesc:ada4364c0295af892b869f2be3ed62777"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the label of the buffer.  <br /></td></tr>
 <tr class="memitem:ab5e025d8fb771727e580f881a1e65fac" id="r_ab5e025d8fb771727e580f881a1e65fac"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ab5e025d8fb771727e580f881a1e65fac">set_label</a> (std::string_view label) noexcept</td></tr>
@@ -573,6 +578,62 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section pre"><dt>Precondition</dt><dd><span class="tt">offset + data.size()</span> must be less than or equal to the size of the buffer. </dd></dl>
+
+</div>
+</div>
+<a id="ad1e32dde8286b9b3e997353a22e95cf2" name="ad1e32dde8286b9b3e997353a22e95cf2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1e32dde8286b9b3e997353a22e95cf2">&#9670;&#160;</a></span>mapped()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool tr::dynamic_index_buffer::mapped </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets whether the buffer is mapped. </p>
+<dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the buffer is mapped, <span class="tt">false</span> otherwise. </dd></dl>
+
+</div>
+</div>
+<a id="a034df9c2ca7e16490cbb3e5a4aa2c6ae" name="a034df9c2ca7e16490cbb3e5a4aa2c6ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a034df9c2ca7e16490cbb3e5a4aa2c6ae">&#9670;&#160;</a></span>map()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classtr_1_1mapped__graphics__buffer__span.html">mapped_graphics_buffer_span</a>&lt; <a class="el" href="namespacetr_1_1aliases_1_1integer__aliases.html#a6991e9925796abf87530c4ec24b82bb8">u16</a> &gt; tr::dynamic_index_buffer::map </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Maps the buffer. </p>
+<dl class="section return"><dt>Returns</dt><dd>Write-only map of the buffer. </dd></dl>
 
 </div>
 </div>

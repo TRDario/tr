@@ -13,6 +13,8 @@ var classtr_1_1untyped__dynamic__vertex__buffer =
     [ "reserve", "classtr_1_1untyped__dynamic__vertex__buffer.html#aa8b5079f528886299247754344e9cc4a", null ],
     [ "set", "classtr_1_1untyped__dynamic__vertex__buffer.html#a934037f263d9c35c61e77971239ce102", null ],
     [ "set_region", "classtr_1_1untyped__dynamic__vertex__buffer.html#a813e40140da59020b69d86041a3198d3", null ],
+    [ "mapped", "classtr_1_1untyped__dynamic__vertex__buffer.html#a212aff5a312470a6c93e4390439d4876", null ],
+    [ "map", "classtr_1_1untyped__dynamic__vertex__buffer.html#a03b3ed988d87be8366ff3a16c5b04c14", null ],
     [ "context", "classtr_1_1untyped__dynamic__vertex__buffer.html#a2c5c352444ab4d10ed3add4a8cd03f9a", null ],
     [ "valid", "classtr_1_1untyped__dynamic__vertex__buffer.html#ab3a7924563ab5b21ec88e5004dd17d6a", null ],
     [ "label", "classtr_1_1untyped__dynamic__vertex__buffer.html#ada4364c0295af892b869f2be3ed62777", null ],

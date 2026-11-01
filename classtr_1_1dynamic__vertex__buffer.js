@@ -12,6 +12,8 @@ var classtr_1_1dynamic__vertex__buffer =
     [ "reserve", "classtr_1_1dynamic__vertex__buffer.html#abed811bef9ec0cd5771ce3d9b82b8176", null ],
     [ "set", "classtr_1_1dynamic__vertex__buffer.html#a308409b26993bc4c8b37b879c9717a32", null ],
     [ "set_region", "classtr_1_1dynamic__vertex__buffer.html#aa11a084d8790a89fe054243ecbfa61d0", null ],
+    [ "map", "classtr_1_1dynamic__vertex__buffer.html#a4f229c73b9d28fa675afcd43e1531514", null ],
     [ "empty", "classtr_1_1dynamic__vertex__buffer.html#abbfc975338cb65f62022b35f37df4599", null ],
-    [ "clear", "classtr_1_1dynamic__vertex__buffer.html#a5bb1441c1af07c09e107f67243e21395", null ]
+    [ "clear", "classtr_1_1dynamic__vertex__buffer.html#a5bb1441c1af07c09e107f67243e21395", null ],
+    [ "mapped", "classtr_1_1dynamic__vertex__buffer.html#a212aff5a312470a6c93e4390439d4876", null ]
 ];

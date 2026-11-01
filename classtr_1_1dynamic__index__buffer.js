@@ -13,6 +13,8 @@ var classtr_1_1dynamic__index__buffer =
     [ "reserve", "classtr_1_1dynamic__index__buffer.html#afbb35ec10cf4e6e2d31467386b838342", null ],
     [ "set", "classtr_1_1dynamic__index__buffer.html#a4c94b17221b0bb84769d50cc662676d1", null ],
     [ "set_region", "classtr_1_1dynamic__index__buffer.html#aa54d57ec981fc828abfae51403c88c49", null ],
+    [ "mapped", "classtr_1_1dynamic__index__buffer.html#ad1e32dde8286b9b3e997353a22e95cf2", null ],
+    [ "map", "classtr_1_1dynamic__index__buffer.html#a034df9c2ca7e16490cbb3e5a4aa2c6ae", null ],
     [ "context", "classtr_1_1dynamic__index__buffer.html#a2c5c352444ab4d10ed3add4a8cd03f9a", null ],
     [ "valid", "classtr_1_1dynamic__index__buffer.html#ab3a7924563ab5b21ec88e5004dd17d6a", null ],
     [ "label", "classtr_1_1dynamic__index__buffer.html#ada4364c0295af892b869f2be3ed62777", null ],
