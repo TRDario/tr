@@ -207,7 +207,8 @@ struct std::formatter<tr::dynamic_vertex_buffer<Element>>
 	FormatContext::iterator format(const tr::dynamic_vertex_buffer<Element>& buffer, FormatContext& context) const
 	{
 		if (buffer.valid()) {
-			return std::format_to(context.out(), "\"{}\" (ID: {}, VBO: {})", buffer.label(), buffer.id(), buffer.unwrap());
+			return std::format_to(context.out(), "\"{}\" (ID: {}, VBO: {})", buffer.label(), std::to_underlying(buffer.id()),
+								  buffer.unwrap());
 		}
 		else {
 			return std::format_to(context.out(), "<invalid {} dynamic vertex buffer at {}>", tr::type_name<Element>(),
