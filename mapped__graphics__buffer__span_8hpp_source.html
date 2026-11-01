@@ -186,7 +186,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('mapped__graphi
 <div class="foldopen" id="foldopen00102" data-start="{" data-end="}">
 <div class="line"><a id="l00102" name="l00102"></a><span class="lineno"><a class="line" href="classtr_1_1mapped__graphics__buffer__span.html#a587ca6aea98c992767af150b85c0c180">  102</a></span>        [[nodiscard]] std::span&lt;Element&gt; <a class="code hl_function" href="classtr_1_1mapped__graphics__buffer__span.html#a587ca6aea98c992767af150b85c0c180">span</a>() const noexcept</div>
 <div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        {</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>            <span class="keywordflow">return</span> <a class="code hl_function" href="namespacetr.html#ab9ef4f54716282f8be3e1978d4255dde">as_objects&lt;Element&gt;</a>(m_raw_map.span());</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>            <span class="keywordflow">return</span> <a class="code hl_function" href="namespacetr.html#ae42dafae39b60b9531c6cc7ed2c7735b">as_mut_objects&lt;Element&gt;</a>(m_raw_map.span());</div>
 <div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>        }</div>
 </div>
 <div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span></div>
@@ -255,7 +255,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('mapped__graphi
 <div class="ttc" id="amapped__untyped__graphics__buffer__span_8hpp_html"><div class="ttname"><a href="mapped__untyped__graphics__buffer__span_8hpp.html">mapped_untyped_graphics_buffer_span.hpp</a></div><div class="ttdoc">Provides tr::mapped_untyped_graphics_buffer_span.</div></div>
 <div class="ttc" id="anamespacetr_1_1aliases_1_1integer__aliases_html_a401704cad707ec504dfeae361641bb9b"><div class="ttname"><a href="namespacetr_1_1aliases_1_1integer__aliases.html#a401704cad707ec504dfeae361641bb9b">tr::aliases::integer_aliases::usize</a></div><div class="ttdeci">std::size_t usize</div><div class="ttdoc">Unsigned size integer.</div><div class="ttdef"><b>Definition</b> integer.hpp:29</div></div>
 <div class="ttc" id="anamespacetr_html"><div class="ttname"><a href="namespacetr.html">tr</a></div><div class="ttdoc">Namespace containing all tr functionality.</div><div class="ttdef"><b>Definition</b> audio_buffer.hpp:10</div></div>
-<div class="ttc" id="anamespacetr_html_ab9ef4f54716282f8be3e1978d4255dde"><div class="ttname"><a href="namespacetr.html#ab9ef4f54716282f8be3e1978d4255dde">tr::as_objects</a></div><div class="ttdeci">auto as_objects(Range &amp;&amp;bytes) noexcept</div><div class="ttdoc">Reinterprets a range of immutable bytes as a span of objects.</div><div class="ttdef"><b>Definition</b> ranges.hpp:168</div></div>
+<div class="ttc" id="anamespacetr_html_ae42dafae39b60b9531c6cc7ed2c7735b"><div class="ttname"><a href="namespacetr.html#ae42dafae39b60b9531c6cc7ed2c7735b">tr::as_mut_objects</a></div><div class="ttdeci">auto as_mut_objects(Range &amp;&amp;bytes) noexcept</div><div class="ttdoc">Reinterprets a range of mutable bytes as a span of objects.</div><div class="ttdef"><b>Definition</b> ranges.hpp:143</div></div>
 <div class="ttc" id="aranges_8hpp_html"><div class="ttname"><a href="ranges_8hpp.html">ranges.hpp</a></div><div class="ttdoc">Provides miscellaneous range utilities.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
