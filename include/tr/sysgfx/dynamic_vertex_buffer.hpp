@@ -2,6 +2,7 @@
 /// @brief Provides `tr::dynamic_vertex_buffer`.
 
 #pragma once
+#include <tr/sysgfx/mapped_graphics_buffer_span.hpp>
 #include <tr/sysgfx/untyped_dynamic_vertex_buffer.hpp>
 #include <tr/utility/type_name.hpp>
 
@@ -135,6 +136,19 @@ namespace tr
 		void set_region(usize offset, std::span<const Element> data) noexcept
 		{
 			untyped_dynamic_vertex_buffer::set_region(offset * sizeof(Element), std::as_bytes(data));
+		}
+
+		/// @}
+		/// @name Mapping
+		/// @{
+
+		using untyped_dynamic_vertex_buffer::mapped;
+
+		/// Maps the buffer.
+		/// @return Write-only map of the buffer.
+		[[nodiscard]] mapped_graphics_buffer_span<Element> map()
+		{
+			return mapped_graphics_buffer_span<Element>{untyped_dynamic_vertex_buffer::map()};
 		}
 
 		/// @}

@@ -9,12 +9,20 @@
 
 //
 
+namespace
+{
+	/// Uniform buffer storage flags.
+	constexpr unsigned int storage_flags{GL_DYNAMIC_STORAGE_BIT | GL_MAP_WRITE_BIT};
+} // namespace
+
+//
+
 tr::untyped_uniform_buffer::untyped_uniform_buffer(graphics_context& context, usize size, std::string_view label)
 	: graphics_buffer{context, label}
 	, m_size{size}
 {
 	const internal::opengl& gl{context.gl()};
-	gl.allocate_buffer_storage(unwrap(), size, nullptr, GL_DYNAMIC_STORAGE_BIT | GL_MAP_WRITE_BIT);
+	gl.allocate_buffer_storage(unwrap(), size, nullptr, storage_flags);
 	if (gl.get_error() == GL_OUT_OF_MEMORY) {
 		throw out_of_memory{"allocation of uniform buffer {}", *this};
 	}
@@ -51,8 +59,7 @@ tr::mapped_untyped_graphics_buffer_span tr::untyped_uniform_buffer::map()
 	TR_ASSERT(!mapped(), "Tried to map already-mapped uniform buffer {}.", *this);
 
 	const internal::opengl& gl{context().gl()};
-	const unsigned int flags{GL_DYNAMIC_STORAGE_BIT | GL_MAP_WRITE_BIT};
-	std::byte* const map_pointer{static_cast<std::byte*>(gl.map_buffer_range(unwrap(), 0, m_size, flags))};
+	std::byte* const map_pointer{static_cast<std::byte*>(gl.map_buffer_range(unwrap(), 0, m_size, storage_flags))};
 	if (gl.get_error() == GL_OUT_OF_MEMORY) {
 		throw out_of_memory{"mapping of uniform buffer {}", *this};
 	}

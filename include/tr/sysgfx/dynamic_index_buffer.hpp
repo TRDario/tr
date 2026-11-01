@@ -3,6 +3,7 @@
 
 #pragma once
 #include <tr/sysgfx/graphics_buffer.hpp>
+#include <tr/sysgfx/mapped_graphics_buffer_span.hpp>
 #include <tr/utility/integer.hpp>
 
 //
@@ -104,6 +105,18 @@ namespace tr
 		/// @param data Data to copy into the buffer.
 		/// @pre `offset + data.size()` must be less than or equal to the size of the buffer.
 		void set_region(usize offset, std::span<const u16> data) noexcept;
+
+		/// @}
+		/// @name Mapping
+		/// @{
+
+		/// Gets whether the buffer is mapped.
+		/// @return `true` if the buffer is mapped, `false` otherwise.
+		[[nodiscard]] bool mapped() const noexcept;
+
+		/// Maps the buffer.
+		/// @return Write-only map of the buffer.
+		[[nodiscard]] mapped_graphics_buffer_span<u16> map();
 
 		/// @}
 		/// @name State
