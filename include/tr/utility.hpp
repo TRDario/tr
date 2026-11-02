@@ -43,7 +43,6 @@
 #include <tr/utility/macro.hpp>                     // IWYU pragma: export
 #include <tr/utility/math.hpp>                      // IWYU pragma: export
 #include <tr/utility/matrix.hpp>                    // IWYU pragma: export
-#include <tr/utility/mstream.hpp>                   // IWYU pragma: export
 #include <tr/utility/norm_cast.hpp>                 // IWYU pragma: export
 #include <tr/utility/opt_ref.hpp>                   // IWYU pragma: export
 #include <tr/utility/optional_result.hpp>           // IWYU pragma: export

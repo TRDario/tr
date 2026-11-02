@@ -67,7 +67,6 @@ target_sources(tr_utility PRIVATE
 	src/utility/localization_map.cpp
 	src/utility/localization_parser.cpp
 	src/utility/matrix.cpp
-	src/utility/mstream.cpp
 	src/utility/polygon.cpp
 	src/utility/rng.cpp
 	src/utility/string_pool.cpp

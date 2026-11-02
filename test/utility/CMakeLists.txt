@@ -34,7 +34,6 @@ add_executable(
 	lock_free_queue.cpp
 	math.cpp
 	matrix.cpp
-	mstream.cpp
 	norm_cast.cpp
 	opt_ref.cpp
 	optional_variant.cpp

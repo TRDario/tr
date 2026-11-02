@@ -5,7 +5,6 @@
 #include <tr/utility/binary_io.hpp>
 #include <tr/utility/binary_io_specializations.hpp>
 #include <tr/utility/encryption.hpp>
-#include <tr/utility/mstream.hpp>
 #include <tr/utility/rng.hpp>
 
 namespace
@@ -44,7 +43,7 @@ void tr::encrypt_to(std::vector<std::byte>& out, std::span<const std::byte> raw)
 
 	out.resize(LZ4_compressBound(static_cast<int>(raw.size())) + header_size);
 
-	omstream header{std::views::take(out, header_size)};
+	std::ospanstream header{tr::reinterpret_span<char>(std::span{std::views::take(out, header_size)})};
 	write_binary_magic(header, "tr");
 	write_binary(header, key, static_cast<u8>(static_cast<u8>(key) - 3), static_cast<u32>(raw.size()));
 
@@ -73,7 +72,7 @@ void tr::decrypt_to(std::vector<std::byte>& out, std::vector<std::byte> encrypte
 		throw decryption_error{"Invalid or missing encrypted data header."};
 	}
 
-	imstream header{std::views::take(encrypted, header_size)};
+	std::ispanstream header{reinterpret_span<char>(std::span{std::views::take(encrypted, header_size)})};
 	const std::span<const char> compressed{reinterpret_span<const char>(std::span{encrypted}).subspan(header_size)};
 
 	if (!read_binary_magic(header, "tr")) {
