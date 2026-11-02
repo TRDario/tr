@@ -70,7 +70,6 @@ target_sources(tr_utility PRIVATE
 	src/utility/mstream.cpp
 	src/utility/polygon.cpp
 	src/utility/rng.cpp
-	src/utility/stopwatch.cpp
 	src/utility/string_pool.cpp
 	src/utility/temporary_file.cpp
 	src/utility/timer.cpp

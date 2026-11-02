@@ -62,7 +62,6 @@
 #include <tr/utility/rgba.hpp>                      // IWYU pragma: export
 #include <tr/utility/rng.hpp>                       // IWYU pragma: export
 #include <tr/utility/specialization_of.hpp>         // IWYU pragma: export
-#include <tr/utility/stopwatch.hpp>                 // IWYU pragma: export
 #include <tr/utility/string_literal.hpp>            // IWYU pragma: export
 #include <tr/utility/string_pool.hpp>               // IWYU pragma: export
 #include <tr/utility/temporary_file.hpp>            // IWYU pragma: export

@@ -53,7 +53,6 @@ add_executable(
 	rgb.cpp
 	rgba.cpp
 	specialization_of.cpp
-	stopwatch.cpp
 	string_pool.cpp
 	string_literal.cpp
 	temporary_file.cpp
