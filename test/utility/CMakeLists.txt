@@ -41,7 +41,6 @@ add_executable(
 	out_handle.cpp
 	pack_traits.cpp
 	pointer_iterator.cpp
-	polygon.cpp
 	range_concepts.cpp
 	ranges.cpp
 	rectangle_edges.cpp
@@ -56,7 +55,6 @@ add_executable(
 	string_literal.cpp
 	temporary_file.cpp
 	timer.cpp
-	triangle.cpp
 	type_name.cpp
 	utf8.cpp
 	variant.cpp

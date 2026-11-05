@@ -5,10 +5,8 @@
 #include <tr/utility/angle.hpp>
 #include <tr/utility/circle.hpp>
 #include <tr/utility/matrix.hpp>
-#include <tr/utility/polygon.hpp>
 #include <tr/utility/range_concepts.hpp>
 #include <tr/utility/rectangle.hpp>
-#include <tr/utility/triangle.hpp>
 
 //
 
@@ -174,28 +172,53 @@ namespace tr
 		TR_ASSERT(vertices.size() >= 3, "Tried to calculate indices for {}-sided polygon.", vertices.size());
 		TR_ASSERT(base + vertices.size() <= UINT16_MAX, "Index overflow detected in fill_simple_polygon_indices.");
 
-		const winding_order winding_order{polygon_winding_order(vertices)};
+		float polygon_winding{0};
+		for (usize i = 0; i < vertices.size(); ++i) {
+			polygon_winding += cross(vertices[i], vertices[(i + 1) % static_cast<ssize>(vertices.size())]);
+		}
 
 		std::vector<u16> indices(vertices.size());
 		std::iota(indices.begin(), indices.end(), 0_u16);
 		while (indices.size() >= 3) {
 			for (usize i = 0; i < indices.size(); ++i) {
-				const u16 left{static_cast<u16>(i == 0 ? indices.size() - 1 : i - 1)};
-				const u16 right{static_cast<u16>(i == indices.size() - 1 ? 0 : i + 1)};
+				const u16 left_index{static_cast<u16>((i - 1) % static_cast<ssize>(indices.size()))};
+				const u16 right_index{static_cast<u16>((i + 1) % static_cast<ssize>(indices.size()))};
 
 				if (indices.size() > 3) {
-					const triangle<float> tri{vertices[indices[left]], vertices[indices[i]], vertices[indices[right]]};
-					const auto is_in_tri{[&](usize j) { return j != left && j != i && j != right && tri.contains(vertices[indices[j]]); }};
-					if (tri.winding_order() != winding_order || std::ranges::any_of(std::views::iota(0uz, indices.size()), is_in_tri)) {
+					const glm::vec2 a{vertices[left_index]};
+					const glm::vec2 b{vertices[indices[i]]};
+					const glm::vec2 c{vertices[right_index]};
+					const float winding{cross(b - a, c - a)};
+					if ((polygon_winding < 0) != (winding < 0)) {
 						continue;
+					}
+
+					for (usize j = 0; j < indices.size(); ++j) {
+						if (j == left_index || j == i || j == right_index) {
+							continue;
+						}
+
+						const glm::vec2 p{vertices[indices[j]]};
+						const float dx{p.x - c.x};
+						const float dy{p.y - c.y};
+						const float dx_cb{c.x - b.x};
+						const float dy_bc{b.y - c.y};
+						const float d{dy_bc * (a.x - c.x) + dx_cb * (a.y - c.y)};
+						const float s{dy_bc * dx + dx_cb * dy};
+						const float t{(c.y - a.y) * dx + (a.x - c.x) * dy};
+						if (d < 0 ? (s <= 0 && t <= 0 && s + t >= d) : (s >= 0 && t >= 0 && s + t <= d)) {
+							goto next_triangle;
+						};
 					}
 				}
 
-				*out++ = indices[left] + base;
-				*out++ = indices[i] + base;
-				*out++ = indices[right] + base;
+				*out++ = static_cast<u16>(indices[left_index] + base);
+				*out++ = static_cast<u16>(indices[i] + base);
+				*out++ = static_cast<u16>(indices[right_index] + base);
 				indices.erase(indices.begin() + i--);
 				break;
+
+			next_triangle:;
 			}
 		}
 
