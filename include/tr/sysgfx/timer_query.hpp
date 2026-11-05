@@ -3,9 +3,8 @@
 
 #pragma once
 #include <tr/utility/chrono.hpp>
-#include <tr/utility/handle.hpp>
-#include <tr/utility/integer.hpp>
 #include <tr/utility/ref.hpp>
+#include <tr/utility/unique_handle.hpp>
 
 namespace tr
 {
@@ -119,7 +118,7 @@ namespace tr
 		};
 
 		/// Handle to the OpenGL query object.
-		handle<unsigned int, 0, deleter> m_handle;
+		unique_handle<unsigned int, 0, deleter> m_handle;
 	};
 } // namespace tr
 

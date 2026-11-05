@@ -3,10 +3,10 @@
 
 #pragma once
 #include <tr/sysgfx/pixel_format.hpp>
-#include <tr/utility/handle.hpp>
 #include <tr/utility/rectangle.hpp>
 #include <tr/utility/ref.hpp>
 #include <tr/utility/rgba.hpp>
+#include <tr/utility/unique_handle.hpp>
 
 namespace tr
 {
@@ -307,7 +307,7 @@ namespace tr
 		//
 
 		/// Handle to the OpenGL texture.
-		mutable handle<unsigned int, 0, deleter> m_handle;
+		mutable unique_handle<unsigned int, 0, deleter> m_handle;
 
 		/// Pixel format of the texture.
 		pixel_format m_format;

@@ -14,7 +14,7 @@
 tr::audio_buffer::audio_buffer(audio_context& context) noexcept
 	: m_handle{deleter{context}}
 {
-	context.al().generate_buffers(context.unwrap(), 1, out_handle(m_handle));
+	context.al().generate_buffers(context.unwrap(), 1, out_handle{m_handle});
 }
 
 void tr::audio_buffer::deleter::operator()(unsigned int id) const noexcept

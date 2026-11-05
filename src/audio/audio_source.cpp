@@ -128,7 +128,7 @@ tr::audio_source::audio_source(audio_context& context, int priority)
 	, m_class_mask{}
 	, m_gain{1.0f}
 {
-	context.al().generate_sources(context.unwrap(), 1, out_handle(m_handle));
+	context.al().generate_sources(context.unwrap(), 1, out_handle{m_handle});
 }
 
 void tr::audio_source::deleter::operator()(unsigned int id) const noexcept

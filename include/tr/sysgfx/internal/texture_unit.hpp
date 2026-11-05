@@ -2,8 +2,8 @@
 /// @brief Provides a texture unit class.
 
 #pragma once
-#include <tr/utility/handle.hpp>
 #include <tr/utility/ref.hpp>
+#include <tr/utility/unique_handle.hpp>
 
 namespace tr
 {
@@ -53,6 +53,6 @@ namespace tr::internal
 		};
 
 		/// Handle to the texture unit.
-		handle<int, -1, deleter> m_handle;
+		unique_handle<int, -1, deleter> m_handle;
 	};
 } // namespace tr::internal

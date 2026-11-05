@@ -12,7 +12,7 @@
 tr::framebuffer::framebuffer(graphics_context& context, std::string_view label) noexcept
 	: m_handle{deleter{context}}
 {
-	context.gl().create_framebuffers(1, out_handle(m_handle));
+	context.gl().create_framebuffers(1, out_handle{m_handle});
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 	context.registered_framebuffers().emplace(id());
 #endif
@@ -58,7 +58,7 @@ void tr::framebuffer::detach(attachment attachment) noexcept
 
 bool tr::framebuffer::valid() const noexcept
 {
-	return m_handle.has_value();
+	return static_cast<bool>(m_handle);
 }
 
 //

@@ -3,8 +3,7 @@
 
 #pragma once
 #include <tr/utility/chrono.hpp>
-#include <tr/utility/handle.hpp>
-#include <tr/utility/integer.hpp>
+#include <tr/utility/unique_handle.hpp>
 
 namespace tr
 {
@@ -131,7 +130,7 @@ namespace tr
 		//
 
 		/// Handle to the OpenAL buffer.
-		handle<unsigned int, 0, deleter> m_handle;
+		unique_handle<unsigned int, 0, deleter> m_handle;
 	};
 
 	/// @name Factories

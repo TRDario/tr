@@ -2,9 +2,8 @@
 /// @brief Provides an image unit class.
 
 #pragma once
-#include <tr/utility/handle.hpp>
-#include <tr/utility/integer.hpp>
 #include <tr/utility/ref.hpp>
+#include <tr/utility/unique_handle.hpp>
 
 namespace tr
 {
@@ -56,6 +55,6 @@ namespace tr::internal
 		};
 
 		/// Handle to the image unit.
-		handle<unsigned int, UINT_MAX, deleter> m_handle;
+		unique_handle<unsigned int, UINT_MAX, deleter> m_handle;
 	};
 } // namespace tr::internal

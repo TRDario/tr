@@ -14,7 +14,7 @@
 tr::shader_pipeline::shader_pipeline(graphics_context& context, std::string_view label) noexcept
 	: m_handle{deleter{context}}
 {
-	context.gl().create_program_pipelines(1, out_handle(m_handle));
+	context.gl().create_program_pipelines(1, out_handle{m_handle});
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 	context.registered_shader_pipelines().emplace(id());
 #endif
@@ -206,7 +206,7 @@ std::string tr::shader_pipeline::label() const
 
 bool tr::shader_pipeline::valid() const noexcept
 {
-	return m_handle.has_value();
+	return static_cast<bool>(m_handle);
 }
 
 //

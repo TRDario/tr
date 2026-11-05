@@ -15,7 +15,7 @@ tr::vertex_format::vertex_format(graphics_context& context, std::span<const vert
 #endif
 {
 	const internal::opengl& gl{context.gl()};
-	gl.create_vertex_arrays(1, out_handle(m_handle));
+	gl.create_vertex_arrays(1, out_handle{m_handle});
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 	context.registered_vertex_formats().emplace(id());
 #endif
@@ -80,7 +80,7 @@ tr::graphics_context& tr::vertex_format::context() const noexcept
 
 bool tr::vertex_format::valid() const noexcept
 {
-	return m_handle.has_value();
+	return static_cast<bool>(m_handle);
 }
 
 //

@@ -539,7 +539,7 @@ void tr::shader::set_uniform_buffer(unsigned int index, const untyped_uniform_bu
 
 bool tr::shader::valid() const noexcept
 {
-	return m_handle.has_value();
+	return static_cast<bool>(m_handle);
 }
 
 //

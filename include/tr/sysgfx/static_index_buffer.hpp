@@ -3,7 +3,6 @@
 
 #pragma once
 #include <tr/sysgfx/graphics_buffer.hpp>
-#include <tr/utility/integer.hpp>
 
 //
 

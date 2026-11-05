@@ -4,7 +4,6 @@
 #pragma once
 #include <tr/sysgfx/graphics_buffer.hpp>
 #include <tr/sysgfx/mapped_graphics_buffer_span.hpp>
-#include <tr/utility/integer.hpp>
 
 //
 

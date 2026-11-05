@@ -19,14 +19,14 @@ tr::texture::texture(graphics_context& context, std::string_view label) noexcept
 	, m_format{}
 	, m_size{0, 0}
 {
-	context.gl().create_textures(GL_TEXTURE_2D, 1, out_handle(m_handle));
+	context.gl().create_textures(GL_TEXTURE_2D, 1, out_handle{m_handle});
 	if (!label.empty()) {
 		set_label(label);
 	}
 }
 
 tr::texture::texture(graphics_context& context, unsigned int handle, pixel_format format, glm::ivec2 size) noexcept
-	: m_handle{handle, deleter{context}, maybe_empty}
+	: m_handle{handle, deleter{context}}
 	, m_format{format}
 	, m_size{size}
 {
@@ -102,8 +102,8 @@ tr::texture tr::texture::allocate(glm::ivec2 size, mipmaps mipmaps, pixel_format
 		m_handle.reset(new_handle);
 	}
 	else {
-		if (!m_handle.has_value()) {
-			gl.create_textures(GL_TEXTURE_2D, 1, out_handle(m_handle));
+		if (!m_handle) {
+			gl.create_textures(GL_TEXTURE_2D, 1, out_handle{m_handle});
 		}
 		old_handle = 0;
 		old_format = {};
@@ -160,7 +160,7 @@ tr::graphics_context& tr::texture::context() const noexcept
 
 bool tr::texture::valid() const noexcept
 {
-	return m_handle.has_value();
+	return static_cast<bool>(m_handle);
 }
 
 bool tr::texture::complete() const noexcept

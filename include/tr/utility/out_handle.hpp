@@ -2,89 +2,56 @@
 /// @brief Provides `tr::out_handle()`.
 
 #pragma once
-#include <tr/utility/handle.hpp>
+#include <tr/utility/unique_handle.hpp>
 
 //
 
 namespace tr
 {
-	/// Wrapper type returned by out_handle.
-	/// @tparam Base Handle base type.
-	/// @tparam Empty Empty handle sentinel value.
-	/// @tparam Deleter Handle deleter type.
-	/// @tparam SkipEmptyHandleCheck Whether to skip the empty handle check when constructing the wrapper.
-	template <std::regular Base, Base Empty, handle_deleter<Base> Deleter, bool SkipEmptyHandleCheck>
-	class out_handle_t
+	/// @brief Wrapper over a smart handle for use in functions that output using a pointer, akin to `std::out_ptr`.
+	/// @tparam SmartHandle Smart handle type being wrapped.
+	template <typename SmartHandle>
+		requires requires(SmartHandle& smart) {
+			typename SmartHandle::handle_type;
+			SmartHandle::empty_sentinel;
+			smart.reset(typename SmartHandle::handle_type{});
+		}
+	class out_handle
 	{
 	  public:
-		/// @name Constructors and destructors
+		/// @name Constructors, destructors, and assignment operators
 		/// @{
 
-		/// Wraps an output handle.
+		/// @brief Wraps an output handle.
 		/// @param handle Handle to wrap.
-		[[nodiscard]] out_handle_t(handle<Base, Empty, Deleter>& handle) noexcept
+		[[nodiscard]] out_handle(SmartHandle& handle) noexcept
 			: m_handle{handle}
 		{
 		}
 
-		/// Sets the handle.
-		~out_handle_t() noexcept
+		/// @brief Sets the handle.
+		~out_handle() noexcept
 		{
-			if constexpr (SkipEmptyHandleCheck) {
-				m_handle.reset(m_temporary, maybe_empty);
-			}
-			else {
-				m_handle.reset(m_temporary);
-			}
+			m_handle.reset(m_temporary);
 		}
 
 		/// @}
-		/// @name Conversion operators
+		/// @name Observers
 		/// @{
 
-		/// Gets a pointer that can be used by a function writing a base value.
-		/// @return Pointer that can be used by a function writing a base value.
-		[[nodiscard]] operator Base*() noexcept
+		/// @brief Returns a pointer that can be used by a function writing a handle.
+		/// @return Pointer that can be used by a function writing a handle.
+		[[nodiscard]] operator SmartHandle::handle_type*() noexcept
 		{
 			return &m_temporary;
 		}
 
 		/// @}
-
 	  private:
-		/// Handle being modified.
-		handle<Base, Empty, Deleter>& m_handle;
+		/// @brief Smart handle being modified.
+		SmartHandle& m_handle;
 
-		/// Temporary that is written to before the handle is set to it.
-		Base m_temporary{Empty};
+		/// @brief Temporary that is written to before the smart handle is set to it.
+		typename SmartHandle::handle_type m_temporary{SmartHandle::empty_sentinel};
 	};
-
-	/// @name Output handle
-	/// @{
-
-	/// Wraps a handle for use in functions that output using a pointer, akin to std::out_ptr.
-	/// @tparam Base Handle base type.
-	/// @tparam Empty Empty handle sentinel value.
-	/// @tparam Deleter Handle deleter type.
-	/// @param handle Handle to wrap.
-	/// @return Wrapped output handle.
-	template <std::regular Base, Base Empty, handle_deleter<Base> Deleter>
-	[[nodiscard]] out_handle_t<Base, Empty, Deleter, false> out_handle(handle<Base, Empty, Deleter>& handle) noexcept
-	{
-		return handle;
-	}
-
-	/// Wraps a handle for use in functions that output using a pointer, akin to std::out_ptr.
-	/// @tparam Base Handle base type.
-	/// @tparam Empty Empty handle sentinel value.
-	/// @tparam Deleter Handle deleter type.
-	/// @param handle Handle to wrap.
-	/// @return Wrapped output handle.
-	template <std::regular Base, Base Empty, handle_deleter<Base> Deleter>
-	[[nodiscard]] out_handle_t<Base, Empty, Deleter, true> out_handle(handle<Base, Empty, Deleter>& handle, maybe_empty_t) noexcept
-	{
-		return handle;
-	}
-
-	/// @}
 } // namespace tr

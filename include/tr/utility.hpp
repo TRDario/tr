@@ -25,7 +25,6 @@
 #include <tr/utility/enum.hpp>                      // IWYU pragma: export
 #include <tr/utility/exception.hpp>                 // IWYU pragma: export
 #include <tr/utility/format_concepts.hpp>           // IWYU pragma: export
-#include <tr/utility/handle.hpp>                    // IWYU pragma: export
 #include <tr/utility/hash_concepts.hpp>             // IWYU pragma: export
 #include <tr/utility/hash_map.hpp>                  // IWYU pragma: export
 #include <tr/utility/hsv.hpp>                       // IWYU pragma: export
@@ -50,7 +49,6 @@
 #include <tr/utility/out_handle.hpp>                // IWYU pragma: export
 #include <tr/utility/pack_traits.hpp>               // IWYU pragma: export
 #include <tr/utility/pointer_iterator.hpp>          // IWYU pragma: export
-#include <tr/utility/polygon.hpp>                   // IWYU pragma: export
 #include <tr/utility/range_concepts.hpp>            // IWYU pragma: export
 #include <tr/utility/ranges.hpp>                    // IWYU pragma: export
 #include <tr/utility/rectangle.hpp>                 // IWYU pragma: export
@@ -65,8 +63,8 @@
 #include <tr/utility/string_pool.hpp>               // IWYU pragma: export
 #include <tr/utility/temporary_file.hpp>            // IWYU pragma: export
 #include <tr/utility/timer.hpp>                     // IWYU pragma: export
-#include <tr/utility/triangle.hpp>                  // IWYU pragma: export
 #include <tr/utility/type_name.hpp>                 // IWYU pragma: export
+#include <tr/utility/unique_handle.hpp>             // IWYU pragma: export
 #include <tr/utility/utf8.hpp>                      // IWYU pragma: export
 #include <tr/utility/variant.hpp>                   // IWYU pragma: export
 #include <tr/utility/vector.hpp>                    // IWYU pragma: export

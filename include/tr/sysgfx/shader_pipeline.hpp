@@ -3,8 +3,8 @@
 
 #pragma once
 #include <tr/sysgfx/internal/graphics_object_id.hpp>
-#include <tr/utility/handle.hpp>
 #include <tr/utility/ref.hpp>
+#include <tr/utility/unique_handle.hpp>
 
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 #include <tr/sysgfx/internal/glsl_variable.hpp>
@@ -202,7 +202,7 @@ namespace tr
 		//
 
 		/// Handle to the OpenGL shader pipeline.
-		handle<unsigned int, 0, deleter> m_handle;
+		unique_handle<unsigned int, 0, deleter> m_handle;
 
 		/// Unique graphics object ID of the vertex shader.
 		internal::graphics_object_id m_vertex_shader_id{internal::graphics_object_id::invalid};

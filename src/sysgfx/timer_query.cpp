@@ -11,7 +11,7 @@
 tr::timer_query::timer_query(graphics_context& context) noexcept
 	: m_handle{deleter{context}}
 {
-	context.gl().generate_queries(1, out_handle(m_handle));
+	context.gl().generate_queries(1, out_handle{m_handle});
 }
 
 void tr::timer_query::deleter::operator()(unsigned int qo) const noexcept

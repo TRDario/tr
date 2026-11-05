@@ -5,8 +5,8 @@
 #pragma once
 #include <tr/sysgfx/internal/graphics_object_id.hpp>
 #include <tr/sysgfx/vertex_binding.hpp>
-#include <tr/utility/handle.hpp>
 #include <tr/utility/ref.hpp>
+#include <tr/utility/unique_handle.hpp>
 
 namespace tr
 {
@@ -146,7 +146,7 @@ namespace tr
 		//
 
 		/// Handle to the OpenGL VAO.
-		handle<unsigned int, 0, deleter> m_handle;
+		unique_handle<unsigned int, 0, deleter> m_handle;
 
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 		/// Information about the vertex format's bindings.

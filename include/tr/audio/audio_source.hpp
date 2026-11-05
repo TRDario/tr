@@ -512,7 +512,7 @@ namespace tr
 		//
 
 		/// Handle to the OpenAL source.
-		handle<unsigned int, 0, deleter> m_handle;
+		unique_handle<unsigned int, 0, deleter> m_handle;
 
 		/// Data source of the source.
 		optional_variant<std::shared_ptr<audio_buffer>, buffered_stream> m_data_source;

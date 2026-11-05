@@ -2,8 +2,8 @@
 /// @brief Provides `tr::mapped_untyped_graphics_buffer_span`.
 
 #pragma once
-#include <tr/utility/handle.hpp>
 #include <tr/utility/ref.hpp>
+#include <tr/utility/unique_handle.hpp>
 
 namespace tr
 {
@@ -93,7 +93,7 @@ namespace tr
 		//
 
 		/// Handle to the graphics buffer for the purposes of unmapping.
-		handle<unsigned int, 0, unmapper> m_handle;
+		unique_handle<unsigned int, 0, unmapper> m_handle;
 
 		/// Span of the buffer map.
 		std::span<std::byte> m_span;

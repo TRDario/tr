@@ -11,7 +11,7 @@
 tr::graphics_buffer::graphics_buffer(graphics_context& context, std::string_view label) noexcept
 	: m_handle{deleter{context}}
 {
-	context.gl().create_buffers(1, out_handle(m_handle));
+	context.gl().create_buffers(1, out_handle{m_handle});
 #ifdef TR_ENABLE_CHECKED_GRAPHICS
 	context.registered_buffers().emplace(id());
 #endif
@@ -39,7 +39,7 @@ tr::graphics_context& tr::graphics_buffer::context() const noexcept
 
 bool tr::graphics_buffer::valid() const noexcept
 {
-	return m_handle.has_value();
+	return static_cast<bool>(m_handle);
 }
 
 //

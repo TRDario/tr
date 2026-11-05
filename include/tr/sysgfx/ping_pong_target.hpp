@@ -3,7 +3,6 @@
 
 #pragma once
 #include <tr/sysgfx/texture_target.hpp>
-#include <tr/utility/integer.hpp>
 
 //
 
