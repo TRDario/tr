@@ -1,5 +1,9 @@
 /// @file
-/// @brief Provides `tr::inplace_vector`.
+/// @brief Provides `tr::inplace_vector` and related functionality.
+
+/// @ingroup containers
+/// @defgroup inplace_vector Inplace vector
+/// @brief Contains `tr::inplace_vector` and related functionality.
 
 #pragma once
 #include <tr/utility/binary_io_specializations.hpp>
@@ -11,7 +15,7 @@
 
 namespace tr
 {
-	/// @ingroup containers
+	/// @ingroup inplace_vector
 	/// @brief Inplace-allocated, fixed-capacity vector.
 	/// @details
 	/// `tr::inplace_vector` mirrors the interace of `std::vector`, but its elements are stored inplace within the object. This eliminates
@@ -783,30 +787,43 @@ namespace tr
 
 //
 
-/// @brief Inplace vector binary reader.
-template <tr::binary_constructible Element, tr::usize Capacity>
+/// @ingroup inplace_vector
+/// @brief Binary reader for inplace vectors.
+/// @tparam Element Binary constructible element type.
+/// @tparam Capacity Maximum capacity of the vector.
+template <typename Element, tr::usize Capacity>
 struct tr::binary_reader<tr::inplace_vector<Element, Capacity>>
 {
-	/// @brief Reads a variable from a stream.
-	/// @param is Input stream.
-	/// @param out Output parameter.
-	void operator()(std::istream& is, inplace_vector<Element, Capacity>& out) const
+	/// @brief Reads an inplace vector from a binary source.
+	/// @tparam Source Binary source type.
+	/// @param source Binary source to read from.
+	/// @param output Inplace vector to output to.
+	/// @exception binary_read_error If reading the inplace vector failed.
+	template <binary_source Source>
+		requires binary_constructible_with<Element, Source>
+	static constexpr void operator()(Source& source, inplace_vector<Element, Capacity>& output)
 	{
-		out.resize(read_binary<typename inplace_vector<Element, Capacity>::size_type>(is));
-		read_binary(is, std::span{out});
+		output.resize(static_cast<typename inplace_vector<Element, Capacity>::size_type>(read_binary<u32>(source)));
+		read_binary(source, std::span{output});
 	}
 };
 
-/// @brief Inplace vector binary writer.
-template <tr::binary_writable Element, tr::usize Capacity>
+/// @ingroup inplace_vector
+/// @brief Binary writer for inplace vectors.
+/// @tparam Element Binary writable element type.
+/// @tparam Capacity Maximum capacity of the vector.
+template <typename Element, tr::usize Capacity>
 struct tr::binary_writer<tr::inplace_vector<Element, Capacity>>
 {
-	/// @brief Writes a variable to a stream.
-	/// @param os Output stream.
-	/// @param in Variable to write to the stream.
-	void operator()(std::ostream& os, const inplace_vector<Element, Capacity>& in) const
+	/// @brief Writes an inplace vector to a binary source.
+	/// @tparam Sink Binary sink type.
+	/// @param sink Binary sink to write to.
+	/// @param input Inplace vector to write.
+	/// @exception binary_write_error If writing the inplace vector failed.
+	template <binary_sink Sink>
+		requires binary_writable_with<const Element&, Sink>
+	static constexpr void operator()(Sink& sink, const inplace_vector<Element, Capacity>& input)
 	{
-		write_binary(os, in.size());
-		write_binary(os, std::span{in});
+		write_binary(sink, static_cast<u32>(input.size()), std::span{input});
 	}
 };

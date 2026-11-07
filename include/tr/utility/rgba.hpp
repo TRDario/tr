@@ -7,8 +7,8 @@
 
 #pragma once
 #include <tr/utility/arithmetic_concepts.hpp>
+#include <tr/utility/binary_io.hpp>
 #include <tr/utility/color_cast.hpp>
-#include <tr/utility/default_binary_io.hpp>
 #include <tr/utility/norm_cast.hpp>
 
 namespace tr
@@ -284,9 +284,50 @@ namespace tr
 
 //
 
-/// @brief Enables default binary IO for `tr::rgba`.
+/// @ingroup rgba
+/// @brief Specialization of `std::tuple_size` for `tr::rgba`.
 template <typename Rep>
-inline constexpr bool tr::enable_default_binary_io<tr::rgba<Rep>>{true};
+struct std::tuple_size<tr::rgba<Rep>> : std::integral_constant<std::size_t, 4>
+{
+};
+
+/// @ingroup rgba
+/// @brief Specialization of `std::tuple_element` for `tr::rgba`.
+/// @tparam Index Index of the element.
+template <std::size_t Index, typename Rep>
+struct std::tuple_element<Index, tr::rgba<Rep>> : std::tuple_element<Index, std::tuple<Rep, Rep, Rep, Rep>>
+{
+};
+
+namespace tr
+{
+	/// @ingroup rgba
+	/// @brief Returns an element from an RGBA color.
+	/// @tparam Index Index of the element to return.
+	/// @tparam Rgba Potentially cvref-qualified instance of `tr::rgba`.
+	/// @param rgba Color to return an element from.
+	/// @return Element from `rgba`.
+	template <usize Index, typename Rgba>
+		requires cvref_specialization_of<Rgba, rgba>
+	[[nodiscard]] decltype(auto) get(Rgba&& rgba) noexcept
+	{
+		if constexpr (Index == 0) {
+			return std::forward_like<Rgba>(rgba.r);
+		}
+		else if constexpr (Index == 1) {
+			return std::forward_like<Rgba>(rgba.g);
+		}
+		else if constexpr (Index == 2) {
+			return std::forward_like<Rgba>(rgba.b);
+		}
+		else if constexpr (Index == 3) {
+			return std::forward_like<Rgba>(rgba.a);
+		}
+		else {
+			TR_UNREACHABLE;
+		}
+	}
+} // namespace tr
 
 //
 

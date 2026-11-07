@@ -1,185 +1,281 @@
 /// @file
-/// @brief Provides an interface for reading and writing binary data.
+/// @brief Provides an interface for reading and writing objects in a portable and compact binary format.
+
+/// @ingroup utility
+/// @defgroup binary_io Binary reading and writing
+/// @brief Contains an interface for reading and writing objects in a portable and compact binary format.
 
 #pragma once
-#include <tr/utility/integer.hpp>
+#include <tr/utility/binary_sink.hpp>
+#include <tr/utility/binary_source.hpp>
+#include <tr/utility/ranges.hpp>
 #include <tr/utility/specialization_of.hpp>
 
 //
 
 namespace tr
 {
-	/// @brief Interface for custom readers for use in read_binary.
-	/// @tparam Out Output type.
+	/// @ingroup binary_io
+	/// @brief Error thrown when a binary read fails.
+	class binary_read_error : public exception
+	{
+	  public:
+		/// @name Constructors, destructors, and assignment operators
+		/// @{
+
+		/// @brief Constructs a binary read error.
+		/// @param start_position Starting position of the read that threw the error.
+		/// @param expected_bytes Number of bytes expected to be read.
+		/// @param read_bytes Number of bytes actually read.
+		/// @par Exception safety
+		/// If an exception is thrown, this function has no effect (strong exception guarantee).
+		[[nodiscard]] binary_read_error(usize start_position, usize expected_bytes, usize read_bytes);
+
+		/// @}
+		/// @name Observers
+		/// @{
+
+		/// @brief Returns the name of the error.
+		/// @return Always `"Binary read error"`.
+		[[nodiscard]] std::string_view name() const noexcept override;
+
+		/// @brief Returns the description of the error.
+		/// @return String containing the error description.
+		[[nodiscard]] std::string_view description() const noexcept override;
+
+		/// @brief Returns further details about the error.
+		/// @return Always empty.
+		[[nodiscard]] std::string_view details() const noexcept override;
+
+		/// @brief Returns the starting position of the read that threw the error.
+		/// @return Starting position of the read that threw the error.
+		[[nodiscard]] usize start_position() const noexcept;
+
+		/// @brief Returns the number of bytes expected to be read.
+		/// @return Number of bytes expected to be read.
+		[[nodiscard]] usize expected_bytes() const noexcept;
+
+		/// @brief Returns the number of bytes actually read.
+		/// @return Number of bytes actually read.
+		[[nodiscard]] usize read_bytes() const noexcept;
+
+		/// @}
+
+	  private:
+		/// @brief Starting position of the read that threw the error.
+		usize m_start_position;
+
+		/// @brief Number of bytes expected to be read.
+		usize m_expected_bytes;
+
+		/// @brief Number of bytes actually read.
+		usize m_read_bytes;
+
+		/// @brief Description of the error.
+		std::string m_description;
+	};
+
+	/// @ingroup binary_io
+	/// @brief Error thrown when a binary write fails.
+	class binary_write_error : public exception
+	{
+	  public:
+		/// @brief Constructs a binary write error.
+		/// @param start_position Starting position of the write that triggered the error.
+		/// @param expected_bytes Number of bytes expected to be written.
+		/// @param written_bytes Number of bytes actually written.
+		/// @par Exception safety
+		/// If an exception is thrown, this function has no effect (strong exception guarantee).
+		binary_write_error(usize start_position, usize expected_bytes, usize written_bytes);
+
+		/// @name Observers
+		/// @{
+
+		/// @brief Returns the name of the error.
+		/// @return Always `"Binary write error"`.
+		[[nodiscard]] std::string_view name() const noexcept override;
+
+		/// @brief Returns the description of the error.
+		/// @return String containing the error description.
+		[[nodiscard]] std::string_view description() const noexcept override;
+
+		/// @brief Returns further details about the error.
+		/// @return Always empty.
+		[[nodiscard]] std::string_view details() const noexcept override;
+
+		/// @brief Returns the starting position of the write that threw the error.
+		/// @return Starting position of the write that threw the error.
+		[[nodiscard]] usize start_position() const noexcept;
+
+		/// @brief Returns the number of bytes expected to be written.
+		/// @return Number of bytes expected to be written.
+		[[nodiscard]] usize expected_bytes() const noexcept;
+
+		/// @brief Returns the number of bytes actually written.
+		/// @return Number of bytes actually written.
+		[[nodiscard]] usize written_bytes() const noexcept;
+
+		/// @}
+
+	  private:
+		/// @brief Starting position of the write that threw the error.
+		usize m_start_position;
+
+		/// @brief Number of bytes expected to be written.
+		usize m_expected_bytes;
+
+		/// @brief Number of bytes actually written.
+		usize m_written_bytes;
+
+		/// @brief Description of the error.
+		std::string m_description;
+	};
+
+	//
+
+	/// @ingroup binary_io
+	/// @brief Interface for custom readers for use in `tr::read_binary()`.
+	/// @tparam Output Output object type.
 	/// @note Any overloads to const or reference-qualified types will be ignored.
-	template <typename Out>
+	template <typename Output>
 	struct binary_reader
 	{
-		static_assert("binary_reader is not specialized for this type!");
+		static_assert(false, "tr::binary_reader is not specialized for this type!");
 
 #ifdef TR_DOXYGEN
-		/// @brief Reads a variable from a stream.
-		/// @param is Input stream.
-		/// @param out Output parameter.
-		static void operator()(std::istream& is, Out& out);
+		/// @brief Reads a value from a binary source.
+		/// @details It's recommended to throw `tr::binary_read_error` on failed reads.
+		/// @tparam Source Binary source type.
+		/// @param source Binary source to read from.
+		/// @param output Object to output to.
+		template <binary_source Source>
+		static constexpr void operator()(Source& source, Output& output);
 #endif
 	};
 
-	/// @brief Interface for custom writers for use in write_binary.
-	/// @tparam In Input type.
+	/// @ingroup binary_io
+	/// @brief Interface for custom writers for use in `tr::write_binary()`.
+	/// @tparam Input Input object type.
 	/// @note Any overloads to const or reference-qualified types will be ignored.
-	template <typename In>
+	template <typename Input>
 	struct binary_writer
 	{
-		static_assert("binary_writer is not specialized for this type!");
+		static_assert(false, "tr::binary_writer is not specialized for this type!");
 
 #ifdef TR_DOXYGEN
-		/// @brief Writes a variable to a stream.
-		/// @param os Output stream.
-		/// @param in Variable to write to the stream.
-		static void operator()(std::ostream& os, const In& in);
+		/// @brief Writes a value to a binary sink.
+		/// @details It's recommended to throw `tr::binary_write_error` on failed writes.
+		/// @tparam Sink Binary sink type.
+		/// @param sink Binary sink to write to.
+		/// @param input Object to write.
+		template <binary_sink Sink>
+		static constexpr void operator()(Sink& sink, const Input& input);
 #endif
 	};
 
-	/// @name Binary IO concepts
-	/// @{
+	//
 
-	/// @brief Concept checking for a type able to be read with `tr::read_binary()`.
-	/// @tparam Target Type to check for being able to be read with `tr::read_binary()`.
-	template <typename Target>
-	concept binary_readable = requires(std::istream& is, Target& out) { tr::binary_reader<std::remove_cvref_t<Target>>{}(is, out); } ||
-							  specialization_of_tc<std::remove_cvref_t<Target>, std::span>;
+	/// @ingroup binary_io
+	/// @brief Concept checking for a type readable with `tr::read_binary()` using a source of type `Source`.
+	/// @tparam Target Type to check for readility with `tr::read_binary()` using a source of type `Source`.
+	/// @tparam Source Binary source type being used.
+	template <typename Target, typename Source>
+	concept binary_readable_with = requires(Source&& source, Target&& output) {
+		tr::binary_reader<std::remove_cvref_t<Target>>{}(source, std::forward<Target>(output));
+	};
 
-	/// @brief Concept checking for a type able to be constructed with `tr::read_binary()`.
-	/// @tparam Target Type to check for being able to be constructed with `tr::read_binary()`.
-	template <typename Target>
-	concept binary_constructible = binary_readable<Target> && std::default_initializable<Target>;
+	/// @ingroup binary_io
+	/// @brief Concept checking for a type constructible with `tr::read_binary()` using a source of type `Source`.
+	/// @tparam Target Type to check for constructibility with `tr::read_binary()` using a source of type `Source`.
+	/// @tparam Source Binary source type being used.
+	template <typename Target, typename Source>
+	concept binary_constructible_with = binary_readable_with<Target&, Source> && std::default_initializable<Target>;
 
-	/// @brief Concept checking for a type able to be written with `tr::write_binary()`.
-	/// @tparam Target Type to check for being able to be written with `tr::write_binary()`.
-	template <typename Target>
-	concept binary_writable = requires(std::ostream& os, const Target& in) { tr::binary_writer<std::remove_const_t<Target>>{}(os, in); };
+	/// @ingroup binary_io
+	/// @brief Concept checking for a type writable with `tr::write_binary()` using a sink of type `Sink`.
+	/// @tparam Target Type to check for writability with `tr::write_binary()` using a sink of type `Sink`.
+	/// @tparam Sink Binary sink type being used.
+	template <typename Target, typename Sink>
+	concept binary_writable_with = requires(Sink&& sink, Target&& input) {
+		tr::binary_writer<std::remove_cvref_t<Target>>{}(sink, std::forward<Target>(input));
+	};
 
-	/// @}
-	/// @name Binary IO
-	/// @{
+	//
 
-	/// @brief Reads binary data from a stream.
-	/// @tparam Out Binary-readable type.
-	/// @param is Input stream.
-	/// @param out Output variable.
-	template <binary_readable Out>
-	void read_binary(std::istream& is, Out& out)
+	/// @ingroup binary_io
+	/// @brief Reads objects encoded in a binary format from a source.
+	/// @tparam Source Binary source type.
+	/// @tparam Outputs Output object types.
+	/// @param source Binary source to read from.
+	/// @param outputs Objects to read to.
+	/// @exception binary_read_error If reading an object failed.
+	template <binary_source Source, binary_readable_with<Source>... Outputs>
+		requires(sizeof...(Outputs) >= 1)
+	constexpr void read_binary(Source&& source, Outputs&&... outputs)
 	{
-		binary_reader<Out>{}(is, out);
+		(tr::binary_reader<std::remove_cvref_t<Outputs>>{}(source, std::forward<Outputs>(outputs)), ...);
 	}
 
-	/// @brief Reads binary data from a stream.
-	/// @tparam Out Binary-readable type.
-	/// @tparam Size Size of the output span.
-	/// @param is Input stream.
-	/// @param out Output span.
-	template <binary_readable Out, usize Size>
-	void read_binary(std::istream& is, std::span<Out, Size> out)
+	/// @ingroup binary_io
+	/// @brief Reads an object encoded in a binary format from a source.
+	/// @tparam Source Binary source type.
+	/// @tparam Output Output object type.
+	/// @param source Binary source to read from.
+	/// @exception binary_read_error If reading the object failed.
+	/// @return Read object.
+	template <typename Output, binary_source Source>
+		requires binary_constructible_with<Output, Source>
+	[[nodiscard]] constexpr Output read_binary(Source&& source)
 	{
-		if constexpr (requires { requires std::same_as<typename binary_reader<Out>::default_reader, std::true_type>; }) {
-			is.read(reinterpret_cast<char*>(out.data()), out.size_bytes());
-		}
-		else {
-			for (Out& v : out) {
-				read_binary(is, v);
-			}
-		}
-	}
-
-	/// @brief Reads binary data from a stream.
-	/// @tparam Outs Binary-readable types.
-	/// @param is Input stream.
-	/// @param outs Output variables.
-	template <typename... Outs>
-		requires(sizeof...(Outs) >= 2 && (binary_readable<Outs> && ...))
-	void read_binary(std::istream& is, Outs&&... outs)
-	{
-		(read_binary(is, outs), ...);
-	}
-
-	/// @brief Reads binary data from a stream.
-	/// @tparam Out Binary-readable type.
-	/// @param is Input stream.
-	/// @return Read variable.
-	template <binary_constructible Out>
-	[[nodiscard]] Out read_binary(std::istream& is)
-	{
-		Out out;
-		read_binary(is, out);
+		Output out;
+		read_binary(source, out);
 		return out;
 	}
 
-	/// @brief Checks for magic bytes from a stream.
-	/// @param is Input stream.
+	/// @ingroup binary_io
+	/// @brief Checks for magic bytes.
+	/// @tparam Source Binary source type.
+	/// @tparam Size Size of the magic byte string literal.
+	/// @param source Binary source.
 	/// @param magic Magic bytes to match.
 	/// @return `true` if the magic bytes were matched, `false` otherwise.
-	[[nodiscard]] bool read_binary_magic(std::istream& is, std::string_view magic);
+	template <binary_source Source, usize Size>
+	[[nodiscard]] constexpr bool check_binary_magic(Source&& source, const char (&magic)[Size])
+	{
+		std::array<char, Size - 1> buffer;
+		read_binary(source, as_mut_bytes(buffer));
+		return std::string_view{buffer.data(), Size - 1} == std::string_view{magic};
+	}
 
 	//
 
-	/// @brief Flushes the rest of the stream into an output iterator.
-	/// @tparam Iterator Iterator to a character-like type.
-	/// @param is Input stream.
-	/// @param out Output iterator.
-	template <typename Iterator>
-		requires std::output_iterator<Iterator, char> || std::output_iterator<Iterator, signed char> ||
-				 std::output_iterator<Iterator, unsigned char> || std::output_iterator<Iterator, std::byte>
-	void flush_binary(std::istream& is, Iterator out)
+	/// @ingroup binary_io
+	/// @brief Writes an object encoded in a binary format to a sink.
+	/// @tparam Sink Binary sink type.
+	/// @tparam Inputs Input object types.
+	/// @param sink Binary sink to write to.
+	/// @param inputs Objects to write.
+	/// @exception binary_write_error If writing an object failed.
+	template <binary_sink Sink, binary_writable_with<Sink>... Inputs>
+	constexpr void write_binary(Sink&& sink, Inputs&&... inputs)
 	{
-		while (is.peek() != EOF) {
-			if constexpr (std::output_iterator<Iterator, char>) {
-				*out++ = static_cast<char>(is.get());
-			}
-			else if constexpr (std::output_iterator<Iterator, signed char>) {
-				*out++ = static_cast<signed char>(is.get());
-			}
-			else if constexpr (std::output_iterator<Iterator, unsigned char>) {
-				*out++ = static_cast<unsigned char>(is.get());
-			}
-			else {
-				*out++ = static_cast<std::byte>(is.get());
-			}
+		(tr::binary_writer<std::remove_cvref_t<Inputs>>{}(sink, std::forward<Inputs>(inputs)), ...);
+	}
+
+	/// @ingroup binary_io
+	/// @brief Writes magic bytes to a sink.
+	/// @tparam Sink Binary sink type.
+	/// @param sink Binary sink to write to.
+	/// @param magic Magic bytes to output.
+	/// @exception binary_write_error If writing the magic bytes failed.
+	template <binary_sink Sink>
+	constexpr void write_binary_magic(Sink&& sink, std::string_view magic)
+	{
+		const usize start_position{sink.position()};
+		const usize written_bytes{sink.write(range_bytes(magic))};
+		if (written_bytes != magic.size()) {
+			throw binary_write_error{start_position, magic.size(), written_bytes};
 		}
 	}
 
-	/// @brief Flushes the rest of the stream into a vector of bytes.
-	/// @param is Input stream.
-	/// @return Vector containing the remaining contents of the stream.
-	[[nodiscard]] std::vector<std::byte> flush_binary(std::istream& is);
-
-	//
-
-	/// @brief Writes binary data to a stream.
-	/// @tparam In Binary-writable type.
-	/// @param os Output stream.
-	/// @param in Variable to write to the stream.
-	template <binary_writable In>
-	void write_binary(std::ostream& os, const In& in)
-	{
-		binary_writer<std::remove_const_t<In>>{}(os, in);
-	}
-
-	/// @brief Writes binary data to a stream.
-	/// @tparam Ins Binary-writable types.
-	/// @param os Output stream.
-	/// @param ins Variables to write to the stream.
-	template <binary_writable... Ins>
-		requires(sizeof...(Ins) >= 2)
-	void write_binary(std::ostream& os, const Ins&... ins)
-	{
-		(write_binary(os, ins), ...);
-	}
-
-	/// @brief Writes magic bytes to a stream.
-	/// @param os Output stream.
-	/// @param magic Magic bytes to write to the stream.
-	void write_binary_magic(std::ostream& os, std::string_view magic);
-
-	/// @}
 } // namespace tr

@@ -438,12 +438,12 @@ TEST(InplaceVectorTest, CorrectlyHandlesElementLifetimes)
 /// @brief Tests roundtripped an inplace vector through binary IO.
 TEST(InplaceVectorTest, BinaryIoRoundtrips)
 {
-	std::stringstream io;
-
+	tr::vector_binary_sink sink;
 	const tr::inplace_vector<int, 5> original{1, 2, 3, 4};
-	tr::write_binary(io, original);
+	tr::write_binary(sink, original);
 
+	tr::span_binary_source source{sink.vector()};
 	tr::inplace_vector<int, 5> copy;
-	tr::read_binary(io, copy);
+	tr::read_binary(source, copy);
 	EXPECT_TRUE(std::ranges::equal(original, copy));
 }

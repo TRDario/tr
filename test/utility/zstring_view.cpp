@@ -147,7 +147,7 @@ TEST(ZstringViewTest, Formats)
 /// @brief Tests binary-writing a NUL-terminated string view.
 TEST(ZstringViewTest, WritesBinary)
 {
-	std::stringstream stream;
-	tr::write_binary(stream, "test"_zsv);
-	EXPECT_EQ(tr::read_binary<std::string>(stream), "test");
+	tr::vector_binary_sink sink;
+	tr::write_binary(sink, "test"_zsv);
+	EXPECT_EQ(tr::read_binary<std::string>(tr::span_binary_source{sink.vector()}), "test");
 }

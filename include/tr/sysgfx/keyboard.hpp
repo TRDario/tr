@@ -411,6 +411,63 @@ struct boost::hash<tr::key_chord>
 
 //
 
+/// @brief Specialization of `std::tuple_size` for `tr::scan_chord`.
+template <>
+struct std::tuple_size<tr::scan_chord> : std::integral_constant<std::size_t, 2>
+{
+};
+
+/// @brief Specialization of `std::tuple_size` for `tr::key_chord`.
+template <>
+struct std::tuple_size<tr::key_chord> : std::integral_constant<std::size_t, 2>
+{
+};
+
+namespace tr
+{
+	/// @brief Returns an element from a scan chord.
+	/// @tparam Index Index of the element to return.
+	/// @tparam Rectangle Potentially cvref-qualified instance of `tr::scan_chord`.
+	/// @param chord Scan chord to return an element from.
+	/// @return Element from `chord`.
+	template <usize Index, typename ScanChord>
+		requires std::same_as<std::remove_cvref_t<ScanChord>, scan_chord>
+	[[nodiscard]] decltype(auto) get(ScanChord&& chord) noexcept
+	{
+		if constexpr (Index == 0) {
+			return std::forward_like<ScanChord>(chord.scan);
+		}
+		else if constexpr (Index == 1) {
+			return std::forward_like<ScanChord>(chord.mods);
+		}
+		else {
+			TR_UNREACHABLE;
+		}
+	}
+
+	/// @brief Returns an element from a key chord.
+	/// @tparam Index Index of the element to return.
+	/// @tparam Rectangle Potentially cvref-qualified instance of `tr::key_chord`.
+	/// @param chord Key chord to return an element from.
+	/// @return Element from `chord`.
+	template <usize Index, typename KeyChord>
+		requires std::same_as<std::remove_cvref_t<KeyChord>, key_chord>
+	[[nodiscard]] decltype(auto) get(KeyChord&& chord) noexcept
+	{
+		if constexpr (Index == 0) {
+			return std::forward_like<KeyChord>(chord.key);
+		}
+		else if constexpr (Index == 1) {
+			return std::forward_like<KeyChord>(chord.mods);
+		}
+		else {
+			TR_UNREACHABLE;
+		}
+	}
+} // namespace tr
+
+//
+
 /// Scancode formatter.
 template <>
 struct std::formatter<tr::scancode>
@@ -522,16 +579,6 @@ struct std::formatter<tr::key_chord>
 		return std::ranges::copy(chord.name(), context.out()).out;
 	}
 };
-
-//
-
-/// Enables default binary IO for scancodes.
-template <>
-inline constexpr bool tr::enable_default_binary_io<tr::scancode>{true};
-
-/// Enables default binary IO for keycodes.
-template <>
-inline constexpr bool tr::enable_default_binary_io<tr::keycode>{true};
 
 //
 

@@ -7,7 +7,9 @@
 
 #pragma once
 #include <tr/utility/arithmetic_concepts.hpp>
-#include <tr/utility/default_binary_io.hpp>
+#include <tr/utility/integer.hpp>
+#include <tr/utility/macro.hpp>
+#include <tr/utility/specialization_of.hpp>
 
 //
 
@@ -114,6 +116,47 @@ namespace tr
 
 //
 
-/// @brief Enables default binary IO for rectangle edges.
+/// @ingroup rectangle_edges
+/// @brief Specialization of `std::tuple_size` for `tr::rectangle_edges`.
 template <typename Rep>
-inline constexpr bool tr::enable_default_binary_io<tr::rectangle_edges<Rep>>{true};
+struct std::tuple_size<tr::rectangle_edges<Rep>> : std::integral_constant<std::size_t, 4>
+{
+};
+
+/// @ingroup rectangle_edges
+/// @brief Specialization of `std::tuple_element` for `tr::rectangle_edges`.
+/// @tparam Index Index of the element.
+template <std::size_t Index, typename Rep>
+struct std::tuple_element<Index, tr::rectangle_edges<Rep>> : std::tuple_element<Index, std::tuple<Rep, Rep, Rep, Rep>>
+{
+};
+
+namespace tr
+{
+	/// @ingroup rectangle_edges
+	/// @brief Returns an element from a set of rectangle edges.
+	/// @tparam Index Index of the element to return.
+	/// @tparam RectangleEdges Potentially cvref-qualified instance of `tr::rectangle_edges`.
+	/// @param edges Edges to return an element from.
+	/// @return Element from `edges`.
+	template <usize Index, typename RectangleEdges>
+		requires cvref_specialization_of<RectangleEdges, rectangle_edges>
+	[[nodiscard]] decltype(auto) get(RectangleEdges&& edges) noexcept
+	{
+		if constexpr (Index == 0) {
+			return std::forward_like<RectangleEdges>(edges.left);
+		}
+		else if constexpr (Index == 1) {
+			return std::forward_like<RectangleEdges>(edges.top);
+		}
+		else if constexpr (Index == 2) {
+			return std::forward_like<RectangleEdges>(edges.right);
+		}
+		else if constexpr (Index == 3) {
+			return std::forward_like<RectangleEdges>(edges.bottom);
+		}
+		else {
+			TR_UNREACHABLE;
+		}
+	}
+} // namespace tr

@@ -8,6 +8,8 @@ add_executable(
 	atlas_entries.cpp
 	benchmark.cpp
 	binary_io.cpp
+	binary_sink.cpp
+	binary_source.cpp
 	chrono.cpp
 	circle.cpp
 	copy_qualifiers.cpp

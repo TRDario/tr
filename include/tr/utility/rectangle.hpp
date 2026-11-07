@@ -201,6 +201,41 @@ namespace tr
 
 //
 
-/// @brief Enables default binary IO for rectangles.
+/// @ingroup rectangle
+/// @brief Specialization of `std::tuple_size` for `tr::rectangle`.
 template <typename Rep>
-inline constexpr bool tr::enable_default_binary_io<tr::rectangle<Rep>>{true};
+struct std::tuple_size<tr::rectangle<Rep>> : std::integral_constant<std::size_t, 2>
+{
+};
+
+/// @ingroup rectangle
+/// @brief Specialization of `std::tuple_element` for `tr::rectangle`.
+/// @tparam Index Index of the element.
+template <std::size_t Index, typename Rep>
+struct std::tuple_element<Index, tr::rectangle<Rep>> : std::tuple_element<Index, std::tuple<glm::tvec2<Rep>, glm::tvec2<Rep>>>
+{
+};
+
+namespace tr
+{
+	/// @ingroup rectangle
+	/// @brief Returns an element from a rectangle.
+	/// @tparam Index Index of the element to return.
+	/// @tparam Rectangle Potentially cvref-qualified instance of `tr::rectangle`.
+	/// @param rectangle Rectangle to return an element from.
+	/// @return Element from `rectangle`.
+	template <usize Index, typename Rectangle>
+		requires cvref_specialization_of<Rectangle, rectangle>
+	[[nodiscard]] decltype(auto) get(Rectangle&& rectangle) noexcept
+	{
+		if constexpr (Index == 0) {
+			return std::forward_like<Rectangle>(rectangle.tl);
+		}
+		else if constexpr (Index == 1) {
+			return std::forward_like<Rectangle>(rectangle.size);
+		}
+		else {
+			TR_UNREACHABLE;
+		}
+	}
+} // namespace tr

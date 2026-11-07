@@ -6,7 +6,7 @@
 /// @brief Contains `tr::angle` and related functions.
 
 #pragma once
-#include <tr/utility/default_binary_io.hpp>
+#include <tr/utility/binary_io.hpp>
 #include <tr/utility/macro.hpp>
 #include <tr/utility/math.hpp>
 #include <tr/utility/rng.hpp>
@@ -712,6 +712,38 @@ class std::formatter<tr::angle<Rep>, CharT>
 
 //
 
-/// @brief Enables default binary IO for angles.
+/// @ingroup angle
+/// @brief Binary reader for angles.
+/// @tparam Rep Portable angle representation type.
 template <typename Rep>
-inline constexpr bool tr::enable_default_binary_io<tr::angle<Rep>>{true};
+struct tr::binary_reader<tr::angle<Rep>>
+{
+	/// @brief Reads an angle from a binary source.
+	/// @tparam Source Binary source type.
+	/// @param source Binary source to read from.
+	/// @param output Angle to output to.
+	/// @exception binary_read_error If reading the angle failed.
+	template <binary_source Source>
+	static constexpr void operator()(Source& source, angle<Rep>& output)
+	{
+		output = rads(read_binary<Rep>(source));
+	}
+};
+
+/// @ingroup angle
+/// @brief Binary writer for angles.
+/// @tparam Rep Portable angle representation type.
+template <typename Rep>
+struct tr::binary_writer<tr::angle<Rep>>
+{
+	/// @brief Writes an angle to a binary sink.
+	/// @tparam Sink Binary sink type.
+	/// @param sink Binary sink to write to.
+	/// @param input Angle to write.
+	/// @exception binary_write_error If writing the angle failed.
+	template <binary_sink Sink>
+	static constexpr void operator()(Sink& sink, angle<Rep> input)
+	{
+		write_binary(sink, input.rads());
+	}
+};

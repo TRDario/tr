@@ -58,6 +58,8 @@ target_sources(tr_utility PRIVATE
 	src/utility/atlas_packer.cpp
 	src/utility/benchmark.cpp
 	src/utility/binary_io.cpp
+	src/utility/binary_sink.cpp
+	src/utility/binary_source.cpp
 	src/utility/chrono.cpp
 	src/utility/color_hex_code.cpp
 	src/utility/encryption.cpp

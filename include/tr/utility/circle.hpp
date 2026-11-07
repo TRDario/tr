@@ -1,16 +1,20 @@
 /// @file
-/// @brief Provides `tr::circle`.
+/// @brief Provides `tr::circle` and related functionality.
+
+/// @ingroup math
+/// @defgroup circle Circle
+/// @brief Contains `tr::circle` and related functionality.
 
 #pragma once
 #include <tr/utility/arithmetic_concepts.hpp>
-#include <tr/utility/default_binary_io.hpp>
+#include <tr/utility/binary_io.hpp>
 #include <tr/utility/vector.hpp>
 
 //
 
 namespace tr
 {
-	/// @ingroup math
+	/// @ingroup circle
 	/// @brief Circle in 2D space defined by a center and radius.
 	/// @tparam Rep Representation type used by the circle.
 	template <std::floating_point Rep>
@@ -89,6 +93,41 @@ namespace tr
 
 //
 
-/// @brief Enables default binary IO for circles.
+/// @ingroup circle
+/// @brief Specialization of `std::tuple_size` for `tr::circle`.
 template <typename Rep>
-inline constexpr bool tr::enable_default_binary_io<tr::circle<Rep>>{true};
+struct std::tuple_size<tr::circle<Rep>> : std::integral_constant<std::size_t, 2>
+{
+};
+
+/// @ingroup circle
+/// @brief Specialization of `std::tuple_element` for `tr::circle`.
+/// @tparam Index Index of the element.
+template <std::size_t Index, typename Rep>
+struct std::tuple_element<Index, tr::circle<Rep>> : std::tuple_element<Index, std::tuple<glm::tvec2<Rep>, Rep>>
+{
+};
+
+namespace tr
+{
+	/// @ingroup circle
+	/// @brief Returns an element from a circle.
+	/// @tparam Index Index of the element to return.
+	/// @tparam Rectangle Potentially cvref-qualified instance of `tr::circle`.
+	/// @param circle Circle to return an element from.
+	/// @return Element from `circle`.
+	template <usize Index, typename Circle>
+		requires cvref_specialization_of<Circle, circle>
+	[[nodiscard]] decltype(auto) get(Circle&& circle) noexcept
+	{
+		if constexpr (Index == 0) {
+			return std::forward_like<Circle>(circle.center);
+		}
+		else if constexpr (Index == 1) {
+			return std::forward_like<Circle>(circle.radius);
+		}
+		else {
+			TR_UNREACHABLE;
+		}
+	}
+} // namespace tr

@@ -249,11 +249,3 @@ TEST(InplaceStringTest, Formats)
 {
 	EXPECT_EQ(std::format("{}", tr::inplace_string<4>{"test"}), "test");
 }
-
-/// @brief Tests binary-writing an inplace string.
-TEST(InplaceStringTest, WritesBinary)
-{
-	std::stringstream stream;
-	tr::write_binary(stream, tr::inplace_string<4>{"test"});
-	EXPECT_EQ(tr::read_binary<tr::inplace_string<4>>(stream), "test");
-}

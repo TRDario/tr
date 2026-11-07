@@ -2,53 +2,85 @@
 /// @brief Implements binary_io.hpp.
 
 #include <tr/utility/binary_io.hpp>
-#include <tr/utility/binary_io_specializations.hpp>
 
 //
 
-void tr::binary_reader<std::string>::operator()(std::istream& is, std::string& out)
+tr::binary_read_error::binary_read_error(usize start_position, usize expected_bytes, usize read_bytes)
+	: m_start_position{start_position}
+	, m_expected_bytes{expected_bytes}
+	, m_read_bytes{read_bytes}
+	, m_description{std::format("Expected to read {} bytes from position {}, read {} instead.", expected_bytes, start_position, read_bytes)}
 {
-	out.resize(read_binary<u32>(is));
-	is.read(out.data(), out.size());
 }
 
-bool tr::read_binary_magic(std::istream& is, std::string_view magic)
+std::string_view tr::binary_read_error::name() const noexcept
 {
-	for (char chr : magic) {
-		if (is.get() != chr) {
-			return false;
-		}
-	}
-	return true;
+	return "Binary read error";
 }
 
-std::vector<std::byte> tr::flush_binary(std::istream& is)
+std::string_view tr::binary_read_error::description() const noexcept
 {
-	std::vector<std::byte> out;
-	flush_binary(is, std::back_inserter(out));
-	out.shrink_to_fit();
-	return out;
+	return m_description;
+}
+
+std::string_view tr::binary_read_error::details() const noexcept
+{
+	return std::string_view{};
+}
+
+tr::usize tr::binary_read_error::start_position() const noexcept
+{
+	return m_start_position;
+}
+
+tr::usize tr::binary_read_error::expected_bytes() const noexcept
+{
+	return m_expected_bytes;
+}
+
+tr::usize tr::binary_read_error::read_bytes() const noexcept
+{
+	return m_read_bytes;
 }
 
 //
 
-void tr::binary_writer<const char*>::operator()(std::ostream& os, const char* in)
+tr::binary_write_error::binary_write_error(usize start_position, usize expected_bytes, usize written_bytes)
+	: m_start_position{start_position}
+	, m_expected_bytes{expected_bytes}
+	, m_written_bytes{written_bytes}
+	, m_description{
+		  std::format("Expected to write {} bytes from position {}, wrote {} instead.", expected_bytes, start_position, written_bytes),
+	  }
 {
-	write_binary(os, std::string_view{in});
 }
 
-void tr::binary_writer<std::string_view>::operator()(std::ostream& os, const std::string_view& in)
+std::string_view tr::binary_write_error::name() const noexcept
 {
-	write_binary(os, static_cast<u32>(in.size()));
-	os.write(in.data(), in.size());
+	return "Binary write error";
 }
 
-void tr::binary_writer<std::string>::operator()(std::ostream& os, const std::string& in)
+std::string_view tr::binary_write_error::description() const noexcept
 {
-	write_binary(os, std::string_view{in});
+	return m_description;
 }
 
-void tr::write_binary_magic(std::ostream& os, std::string_view magic)
+std::string_view tr::binary_write_error::details() const noexcept
 {
-	os.write(magic.data(), magic.size());
+	return std::string_view{};
+}
+
+tr::usize tr::binary_write_error::start_position() const noexcept
+{
+	return m_start_position;
+}
+
+tr::usize tr::binary_write_error::expected_bytes() const noexcept
+{
+	return m_expected_bytes;
+}
+
+tr::usize tr::binary_write_error::written_bytes() const noexcept
+{
+	return m_written_bytes;
 }

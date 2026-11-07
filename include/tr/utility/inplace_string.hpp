@@ -6,7 +6,7 @@
 /// @brief Contains `tr::basic_inplace_string` and related functionality.
 
 #pragma once
-#include <tr/utility/binary_io_specializations.hpp>
+#include <tr/utility/integer.hpp>
 #include <tr/utility/iterator_concepts.hpp>
 #include <tr/utility/macro.hpp>
 #include <tr/utility/pointer_iterator.hpp>
@@ -686,33 +686,3 @@ struct boost::hash<tr::basic_inplace_string<CharT, Capacity, Traits>> : boost::h
 {
 };
 #endif
-
-/// @ingroup inplace_string
-/// @brief Inplace string binary reader.
-template <typename CharT, tr::usize Capacity, typename Traits>
-struct tr::binary_reader<tr::basic_inplace_string<CharT, Capacity, Traits>>
-{
-	/// @brief Reads a variable from a stream.
-	/// @param is Input stream.
-	/// @param out Output parameter.
-	void operator()(std::istream& is, basic_inplace_string<CharT, Capacity, Traits>& out) const
-	{
-		out.resize(read_binary<typename basic_inplace_string<CharT, Capacity, Traits>::size_type>(is));
-		is.read(out.data(), out.size());
-	}
-};
-
-/// @ingroup inplace_string
-/// @brief Inplace string binary writer.
-template <typename CharT, tr::usize Capacity, typename Traits>
-struct tr::binary_writer<tr::basic_inplace_string<CharT, Capacity, Traits>>
-{
-	/// @brief Writes a variable to a stream.
-	/// @param os Output stream.
-	/// @param in Variable to write to the stream.
-	void operator()(std::ostream& os, const basic_inplace_string<CharT, Capacity, Traits>& in) const
-	{
-		write_binary(os, in.size());
-		write_binary(os, std::span{in});
-	}
-};

@@ -7,7 +7,6 @@
 
 #pragma once
 #include <tr/utility/color_cast.hpp>
-#include <tr/utility/default_binary_io.hpp>
 #include <tr/utility/math.hpp>
 #include <tr/utility/rgba.hpp>
 
@@ -42,9 +41,47 @@ namespace tr
 
 //
 
-/// @brief Enables default binary IO for `tr::hsv`.
+/// @ingroup hsv
+/// @brief Specialization of `std::tuple_size` for `tr::hsv`.
 template <>
-inline constexpr bool tr::enable_default_binary_io<tr::hsv>{true};
+struct std::tuple_size<tr::hsv> : std::integral_constant<std::size_t, 3>
+{
+};
+
+/// @ingroup hsv
+/// @brief Specialization of `std::tuple_element` for `tr::hsv`.
+/// @tparam Index Index of the element.
+template <std::size_t Index>
+struct std::tuple_element<Index, tr::hsv> : std::tuple_element<Index, std::tuple<float, float, float>>
+{
+};
+
+namespace tr
+{
+	/// @ingroup hsv
+	/// @brief Returns an element from an HSV color.
+	/// @tparam Index Index of the element to return.
+	/// @tparam Hsv Potentially cvref-qualified instance of `tr::hsv`.
+	/// @param hsv Color to return an element from.
+	/// @return Element from `hsv`.
+	template <usize Index, typename Hsv>
+		requires std::same_as<std::remove_cvref_t<Hsv>, hsv>
+	[[nodiscard]] decltype(auto) get(Hsv&& hsv) noexcept
+	{
+		if constexpr (Index == 0) {
+			return std::forward_like<Hsv>(hsv.h);
+		}
+		else if constexpr (Index == 1) {
+			return std::forward_like<Hsv>(hsv.s);
+		}
+		else if constexpr (Index == 2) {
+			return std::forward_like<Hsv>(hsv.v);
+		}
+		else {
+			TR_UNREACHABLE;
+		}
+	}
+} // namespace tr
 
 //
 

@@ -7,8 +7,8 @@
 
 #pragma once
 #include <tr/utility/arithmetic_concepts.hpp>
+#include <tr/utility/binary_io.hpp>
 #include <tr/utility/color_cast.hpp>
-#include <tr/utility/default_binary_io.hpp>
 
 //
 
@@ -278,9 +278,47 @@ namespace tr
 
 //
 
-/// @brief Enables default binary IO for `tr::rgb`.
+/// @ingroup rgb
+/// @brief Specialization of `std::tuple_size` for `tr::rgb`.
 template <typename Rep>
-inline constexpr bool tr::enable_default_binary_io<tr::rgb<Rep>>{true};
+struct std::tuple_size<tr::rgb<Rep>> : std::integral_constant<std::size_t, 3>
+{
+};
+
+/// @ingroup rgb
+/// @brief Specialization of `std::tuple_element` for `tr::rgb`.
+/// @tparam Index Index of the element.
+template <std::size_t Index, typename Rep>
+struct std::tuple_element<Index, tr::rgb<Rep>> : std::tuple_element<Index, std::tuple<Rep, Rep, Rep>>
+{
+};
+
+namespace tr
+{
+	/// @ingroup rgb
+	/// @brief Returns an element from an RGB color.
+	/// @tparam Index Index of the element to return.
+	/// @tparam Rgb Potentially cvref-qualified instance of `tr::rgb`.
+	/// @param rgb Color to return an element from.
+	/// @return Element from `rgb`.
+	template <usize Index, typename Rgb>
+		requires cvref_specialization_of<Rgb, rgb>
+	[[nodiscard]] decltype(auto) get(Rgb&& rgb) noexcept
+	{
+		if constexpr (Index == 0) {
+			return std::forward_like<Rgb>(rgb.r);
+		}
+		else if constexpr (Index == 1) {
+			return std::forward_like<Rgb>(rgb.g);
+		}
+		else if constexpr (Index == 2) {
+			return std::forward_like<Rgb>(rgb.b);
+		}
+		else {
+			TR_UNREACHABLE;
+		}
+	}
+} // namespace tr
 
 //
 
